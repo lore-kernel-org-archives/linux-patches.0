@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3973F7873;
-	Fri,  4 Sep 2026 05:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332C818D636;
+	Fri,  4 Sep 2026 05:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501151; cv=none; b=c/2gJvZzt5bSSlUhcJSnbm9nzcH5Gfn2oFbOU7nlL9O3c8O5ZN21+uFMn9HpHyrd6uKTmEb0PZHJNtPWMa+jdPhh/iFga2ry2+ZH4z3jCdExeKeerVutJwNJo1n3oL13wHsT48bfITP3E53X+WUHVxMvbCtmlG7Kw1ITS46u1qU=
+	t=1788501154; cv=none; b=P5a+AxbTpskz1W3xjski/88KzSFDbYr8HBQCzWythwq2nmxj+qMxWcJ+luq+CEHmeghtKxhSZRu2qs2AU4wmxZyLYZ5tYXRNnIcI6E/SBRNOakdBp2ndMs0sw6/O7JzLEr/BlRdb/V52SOqJKkDnolwAC0fuDk96lgHgbVRGL5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501151; c=relaxed/simple;
-	bh=surVgFxeyC1QQKpp7gEfuIjV0tQbCBjWm0ELla0IzFQ=;
+	s=arc-20240116; t=1788501154; c=relaxed/simple;
+	bh=5/rt44bV2wd425UZU6KCB2x7WUpabgoMNw6kMBUJfPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJAxS2KeGdp1oUJBKm+d9DdUaDEB2p+tFTFE8Ko2mU3PJXkt94digzYQCi1lbEpNJAADOy3YjlTHNus4b9W3EikG7GgJRI585fcttsPY8JYdKrFtPIEaB7iUlPCHqLEc2lIsVEcVdNJH3s0atcWGPxO1EG9N42nNlHZzLnapnds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDQvd5S/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cc9jKuakjF3mKAyNlOUXN/GHRGxNXxj7uS+mKUF034d5wo/EdNNBq/FIgva9ZwuzssCBifrQvYoSPnBw6bVPoiUtxNRz1711STeYPYutqiestIMpkAAAnl2celT39vV2IshryEV20oi53RuXWQhCgjYNUIvwX0v9XBxm10e6qHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KS/Tw13Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDQvd5S/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F4F1F00A3D;
-	Fri,  4 Sep 2026 05:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KS/Tw13Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C341F00A3D;
+	Fri,  4 Sep 2026 05:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501150;
-	bh=CxK8LlPiCdOSlVshY5VlcX/kAkZe0jZ/LMpbpUapmBM=;
+	s=korg; t=1788501153;
+	bh=p+8SswEl1XW61HxXFxvLUkC3Af+AWZedONECD2EFyGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KDQvd5S/H/Q6FiEsyOLK6XJxSZ4km1K6b8+bkcGxYkJEZzAB+EFXLN+lYGXPiy4xd
-	 z9GFtLXJvgWVIK3grgEE3BPIDZfg6UYDe3W8Bj8GhhGCXVHtDk3R5ZsJFbX2Lw9hGk
-	 Zdd+wHpcCR1kxlJhxTLN3TVrpr7BYy3ExhpUnFHM=
+	b=KS/Tw13QMty1EJewKWqK4SDvNrMd+4dFddKhiOBS0JCv9/uIK4AfPPZN0LOgTJf1g
+	 A5j9MgMr1ZmhAz+XFTG8HuMIOjrnLEhIfg/BoUI3yUtzU3EXgqoJFTA0c0QttX0HE/
+	 3rjpPQGioz3JlrfOCl8WhPH6llhxNephNafUeE6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.18 301/552] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
-Date: Fri,  4 Sep 2026 06:57:38 +0200
-Message-ID: <20260904045756.986126228@linuxfoundation.org>
+	Michael Scott <mike.scott@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Val Packett <val@packett.cool>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.18 310/552] arm64: dts: qcom: x1-dell-thena: mark l12b and l15b always-on
+Date: Fri,  4 Sep 2026 06:57:47 +0200
+Message-ID: <20260904045757.311692926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,49 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Michael Scott <mike.scott@oss.qualcomm.com>
 
-commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
+commit 06c8fc3e132ce8659bc9f0877b5c6daaf41aadbd upstream.
 
-ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
-assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
-bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
-bounds the declared lengths from above (their sum must fit the received
-event), but an assoc request/response shorter than its fixed offset still
-underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
-cfg80211_roamed() then treat that wrapped value as the IE length and copy
-that many bytes out of the small assoc_info buffer to user space via
-nl80211, disclosing adjacent slab memory.
+The l12b and l15b supplies are used by components that are not (fully)
+described (and some never will be) and must never be disabled.
 
-Clamp both lengths to their offsets before subtracting.
+Mark the regulators as always-on to prevent them from being disabled,
+for example, when consumers probe defer or suspend.
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing lower bound is evident from source. Compile-tested.
+Note that these supplies currently have no consumers described in
+mainline for dell-thena beyond the audio codec (vdd-buck/vdd-rxtx/
+vdd-io on wcd938x), which can release them when the codec goes idle.
+The board-level gpio-fixed regulators that feed the Type-C retimer's
+VDDIO and other rails are not described with a vin-supply link, so
+the kernel cannot keep their parent LDOs alive on its own.
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+This mirrors the same change Johan Hovold applied to every other
+X1E80100 board in a March 2025 series; commit 63169c07d740
+("arm64: dts: qcom: x1e80100-dell-xps13-9345: mark l12b and l15b always-on")
+is representative. The dell-thena board file was introduced four months
+later and did not inherit that change; this patch closes the gap.
+
+Fixes: e7733b42111c ("arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Michael Scott <mike.scott@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Acked-by: Val Packett <val@packett.cool>
+Link: https://lore.kernel.org/r/20260521010935.1333494-4-mike.scott@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
-+++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-@@ -753,6 +753,11 @@ void ath6kl_cfg80211_connect_event(struc
- 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
- 	    assoc_resp_ie_offset;
+diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+index db291730130c..d6de4da02dcd 100644
+--- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+@@ -589,6 +589,7 @@ vreg_l12b_1p2: ldo12 {
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
  
-+	if (assoc_req_len < assoc_req_ie_offset)
-+		assoc_req_len = assoc_req_ie_offset;
-+	if (assoc_resp_len < assoc_resp_ie_offset)
-+		assoc_resp_len = assoc_resp_ie_offset;
-+
- 	assoc_req_len -= assoc_req_ie_offset;
- 	assoc_resp_len -= assoc_resp_ie_offset;
+ 		vreg_l13b_3p0: ldo13 {
+@@ -610,6 +611,7 @@ vreg_l15b_1p8: ldo15 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
+ 	};
  
+-- 
+2.55.0
+
 
 
