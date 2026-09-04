@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D76637F306;
-	Fri,  4 Sep 2026 06:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FB7346FC3;
+	Fri,  4 Sep 2026 06:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501696; cv=none; b=HFemICYvkTLjq5VRgkTAZtHBgE4ePaKOdOhOqzDe2PvU4/CLiUqFTIFSuXXQQp6uz5d2nxQLLrJ8RoCM1uZDgHKudjZm7GVQQBFt9CzFw73U6qU44PhIYCqP9OVtWZ4y3+8RKPRFZgdccOq49vofHW4Pa9IeVo6nlMKteQGqEEk=
+	t=1788501699; cv=none; b=mlV1V0JYcdYn7WhycP+u2vfSgmwZJRK78ythXSpTvz7LZYbdoWpT9q5hh81SuFmLIZv8zL87uLuxfWv1fvIOF13olnn3uxEQ1f3+62KxvPAluNX9eTxQI3IPs9ANKwlK16d8X9GiUEI5L2dYRZDn8RqvCeASnNrGzSWP1tvmFEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501696; c=relaxed/simple;
-	bh=8AH+Y4Rbt1a1PTyLBeEIx5+I9kJvpO6FvTCDCG+51dY=;
+	s=arc-20240116; t=1788501699; c=relaxed/simple;
+	bh=CsGrHhDQBnpLeR8WZzCJSNFprKIIamSF600xjpOKO0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njbirs2HsNnq0PEbk6lCLdfLX0k6D+0qZ07aX3xC5RocTVBLCW+CLj5SvACnBLMPF8dtIejgFeFnuQZUvXUFshttqfOGbBqDORo1U1OyPVGk646XBTiZcHglQPNBgDFlOVRhjs/px94ns/ItVNDasOHptKqPp0g1Ymq6JbaqSkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgC7EaXj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjereLHuGOV7+BjQQn2XsECWqHaO156tdfYQ7bOQehx2rXDmUr/9Zo1RhFbtmrgxPAMlUVdkUEXO4LWkKdSnnVkwLxAtDyff2+7e4J0fHMmmh7l11PulkxIJFV87m12uWKahtB+9/QtFiYMfKzUpal8iUDveeWNyXVpOAJGiLO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcTJNiZG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgC7EaXj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974851F00A3F;
-	Fri,  4 Sep 2026 06:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcTJNiZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F71D1F00A3D;
+	Fri,  4 Sep 2026 06:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501695;
-	bh=ERGUXhC12TDEyqtXIwt7QJ/tMHfLKuKenmY+wQbnDEw=;
+	s=korg; t=1788501698;
+	bh=6N9kjtFzz5jSvKvo/omZ5C8lMl+IGHZNRDccaeS7hbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mgC7EaXjlQqAjnGN+Ea1Fk8hFvcVIZHd978surGQOs5y/XMOFgHeGX26MuojPj19q
-	 QprO0rHc7qNt+ars06qMhqqI4ZRQCyIZihL2rjYcG1B2uq68dPL2jnsjETfWsjPWOw
-	 x+DWD9JQNDhAFtj8l3JVUF3itWnWo5y5UH7Dn+Lo=
+	b=PcTJNiZGmVj5qN1bsFzhHEarVxHH5CvB+73CLnghGqWR5ddRPgVz3msJF9GoMtf3H
+	 LJJYTVsidbJnYs5Px23P+/KWjlVEaftR7QZJc124bS3wgiKrgARgGh0hJuL+LkXh7Q
+	 MIyoaOCGkC72LtdycS4giYfDlZmv8ZJ/+23TBb10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Burak Emir <burak.emir@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 501/552] rust: rust_is_available: warn for `bindgen` < 0.72.1 && libclang >= 22
-Date: Fri,  4 Sep 2026 07:00:58 +0200
-Message-ID: <20260904045802.011460539@linuxfoundation.org>
+Subject: [PATCH 6.18 502/552] net/smc: carry oversized SMC-Rv2 LLC messages in the queue entry
+Date: Fri,  4 Sep 2026 07:00:59 +0200
+Message-ID: <20260904045802.033371357@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,161 +53,303 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit dc01dfb37b34beeefcfe1c3055364d41a4070c7e ]
+[ Upstream commit 8d3c1ab82c11d4fadebf817a825fd221b3e197ea ]
 
-Starting with LLVM 22, `clang_getTypeDeclaration()` may return a forward
-declaration instead of the type definition. This made `bindgen` generate
-opaque types [1][2], which in turn made us fail with e.g.
+smc_llc_rmt_delete_rkey() and smc_llc_save_add_link_rkeys() read the part
+of a v2 message that does not fit into the 44-byte union smc_llc_msg, and
+both bound themselves by the size of the buffer it landed in, not by what
+arrived. On a link with a shared v2 receive buffer a 44-byte
+DELETE_RKEY_V2 declaring 255 rkeys reaches rkey[9..254] in whatever an
+earlier message left in lgr->wr_rx_buf_v2, and passes each of them to
+smc_rtoken_delete(). One of those 255 matched a registered rtoken and
+deleted it. An ADD_LINK on such a link installs up to 255 rtokens from
+the same bytes.
 
-    error[E0609]: no field `__bindgen_anon_1` on type `bindings::kernel_param`
-      --> rust/kernel/module_param.rs:78:46
-       |
-    78 |         let container = unsafe { &*((*param).__bindgen_anon_1.arg.cast::<SetOnce<T>>()) };
-       |                                              ^^^^^^^^^^^^^^^^ unknown field
-       |
-       = note: available field is: `_address`
+Copy the tail into the queue entry, so its length is the length of the
+message that arrived, and declare the rkeys that fit inline as a member of
+the union instead of reaching them through a cast. The same
+DELETE_RKEY_V2 now processes the 9 rkeys it carries. The copy is limited
+to the longest tail the two functions can read, so the peer does not pick
+the size of the entry.
 
-This was fixed in `bindgen` 0.72.1 [3].
+The bound the previous patch placed on links without a shared v2 receive
+buffer is no longer needed.
 
-In order to clarify what is going on and avoid confusion [4][5], add
-a warning to `rust_is_available.sh` about it when the versions match,
-similar to past warnings like the one removed in:
-
-  commit ae64324ad5c1 ("rust: rust_is_available: remove warning for `bindgen` < 0.69.5 && libclang >= 19.1")
-
-In addition, even if the versions match, check if the issue appears to
-not reproduce with the given binaries, to avoid a warning in such a case.
-
-Finally, include tests.
-
-[ Nathan, in parallel, updated the instructions of the LLVM+Rust
-  kernel.org toolchains [6] so that `--version` is not passed to
-  `cargo` for `bindgen`, and thus the latest `bindgen` is installed
-  by default, which should help to avoid some of these situations.
-
-  Thanks!
-
-    - Miguel ]
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust-bindgen/issues/3264 [1]
-Link: https://github.com/Rust-for-Linux/linux/issues/353 [2] # "Missing fields in nested class with LLVM 22."
-Link: https://github.com/rust-lang/rust-bindgen/pull/3278 [3]
-Reported-by: Burak Emir <burak.emir@gmail.com>
-Link: https://github.com/Rust-for-Linux/linux/issues/1247 [4]
-Link: https://lore.kernel.org/rust-for-linux/CABwQupNfMAJOGqRM9ke6tj4f53dCCsBDKU7Vp+zf8mwk7bqt8Q@mail.gmail.com/ [5]
-Link: https://mirrors.edge.kernel.org/pub/tools/llvm/rust/ [6]
-Tested-by: Burak Emir <burak.emir@gmail.com>
-Link: https://patch.msgid.link/20260719120514.159914-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 27ef6a9981fe ("net/smc: support SMC-R V2 for rdma devices with max_recv_sge equals to 1")
+Cc: stable@vger.kernel.org
+Suggested-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20260819023306.644849-4-yhlee@isslab.korea.ac.kr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/rust_is_available.sh                  | 14 +++++++++
- .../rust_is_available_bindgen_libclang_22.h   |  5 ++++
- scripts/rust_is_available_test.py             | 30 ++++++++++++++++++-
- 3 files changed, 48 insertions(+), 1 deletion(-)
- create mode 100644 scripts/rust_is_available_bindgen_libclang_22.h
+ net/smc/smc_llc.c | 125 ++++++++++++++++++++++++++++++++--------------
+ net/smc/smc_wr.c  |   6 +--
+ 2 files changed, 91 insertions(+), 40 deletions(-)
 
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index d2323de0692c1..82be88d44c184 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -242,6 +242,20 @@ if [ "$bindgen_libclang_cversion" -ge 1900100 ] &&
- 	fi
- fi
+diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
+index 53db1e0a05797..51937265203c8 100644
+--- a/net/smc/smc_llc.c
++++ b/net/smc/smc_llc.c
+@@ -157,6 +157,7 @@ struct smc_llc_msg_confirm_rkey {	/* type 0x06 */
+ };
  
-+if [ "$bindgen_libclang_cversion" -ge 2200000 ] &&
-+	[ "$rust_bindings_generator_cversion" -lt 7201 ]; then
-+	# Distributions may have patched the issue.
-+	if ! "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang_22.h | grep -q 'pub foo'; then
-+		echo >&2 "***"
-+		echo >&2 "*** Rust bindings generator '$BINDGEN' < 0.72.1 together with libclang >= 22"
-+		echo >&2 "*** may not work due to a bug (https://github.com/rust-lang/rust-bindgen/pull/3278)."
-+		echo >&2 "***   Your bindgen version:  $rust_bindings_generator_version"
-+		echo >&2 "***   Your libclang version: $bindgen_libclang_version"
-+		echo >&2 "***"
-+		warning=1
-+	fi
-+fi
-+
- # If the C compiler is Clang, then we can also check whether its version
- # matches the `libclang` version used by the Rust bindings generator.
- #
-diff --git a/scripts/rust_is_available_bindgen_libclang_22.h b/scripts/rust_is_available_bindgen_libclang_22.h
-new file mode 100644
-index 0000000000000..6b33544c14a81
---- /dev/null
-+++ b/scripts/rust_is_available_bindgen_libclang_22.h
-@@ -0,0 +1,5 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+struct S;
-+struct S {
-+	int foo;
+ #define SMC_LLC_DEL_RKEY_MAX	8
++#define SMC_LLC_DEL_RKEY_V2_INLINE	9
+ #define SMC_LLC_FLAG_RKEY_RETRY	0x10
+ #define SMC_LLC_FLAG_RKEY_NEG	0x20
+ 
+@@ -177,6 +178,15 @@ struct smc_llc_msg_delete_rkey_v2 {	/* type 0x29 */
+ 	__be32 rkey[];
+ };
+ 
++/* the leading rkeys of a DELETE_RKEY_V2 fit into union smc_llc_msg */
++struct smc_llc_msg_delete_rkey_v2_inline {	/* type 0x29 */
++	struct smc_llc_hdr hd;
++	u8 num_rkeys;
++	u8 num_inval_rkeys;
++	u8 reserved[2];
++	__be32 rkey[SMC_LLC_DEL_RKEY_V2_INLINE];
 +};
-diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_available_test.py
-index 4fcc319dea84e..a5fadef98132f 100755
---- a/scripts/rust_is_available_test.py
-+++ b/scripts/rust_is_available_test.py
-@@ -54,7 +54,7 @@ else:
- """)
++
+ union smc_llc_msg {
+ 	struct smc_llc_msg_confirm_link confirm_link;
+ 	struct smc_llc_msg_add_link add_link;
+@@ -186,6 +196,7 @@ union smc_llc_msg {
  
-     @classmethod
--    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False):
-+    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False, libclang_22_patched=False):
-         if libclang_stderr is None:
-             libclang_case = f"raise SystemExit({cls.bindgen_default_bindgen_libclang_failure_exit_code})"
-         else:
-@@ -70,6 +70,11 @@ else:
-         else:
-             libclang_concat_case = "pass"
+ 	struct smc_llc_msg_confirm_rkey confirm_rkey;
+ 	struct smc_llc_msg_delete_rkey delete_rkey;
++	struct smc_llc_msg_delete_rkey_v2_inline delete_rkey_v2;
  
-+        if libclang_22_patched:
-+            libclang_22_case = "print('pub foo: ::std::os::raw::c_int,')"
-+        else:
-+            libclang_22_case = "pass"
-+
-         return cls.generate_executable(f"""#!/usr/bin/env python3
- import sys
- if "rust_is_available_bindgen_libclang.h" in " ".join(sys.argv):
-@@ -78,6 +83,8 @@ elif "rust_is_available_bindgen_0_66.h" in " ".join(sys.argv):
-     {version_0_66_case}
- elif "rust_is_available_bindgen_libclang_concat.h" in " ".join(sys.argv):
-     {libclang_concat_case}
-+elif "rust_is_available_bindgen_libclang_22.h" in " ".join(sys.argv):
-+    {libclang_22_case}
- else:
-     print({repr(version_stdout)})
- """)
-@@ -300,6 +307,27 @@ else:
-                 bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_concat_patched=True)
-                 result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
+ 	struct smc_llc_msg_test_link test_link;
+ 	struct {
+@@ -194,15 +205,25 @@ union smc_llc_msg {
+ 	} raw;
+ };
  
-+    def test_bindgen_bad_libclang_22(self):
-+        for (bindgen_version, libclang_version, expected_not_patched) in (
-+            ("0.71.1", "21.1.0", self.Expected.SUCCESS),
-+            ("0.71.1", "22.0.0", self.Expected.SUCCESS_WITH_WARNINGS),
-+            ("0.71.1", "22.1.0", self.Expected.SUCCESS_WITH_WARNINGS),
++static_assert(SMC_LLC_DEL_RKEY_V2_INLINE ==
++	      (sizeof(union smc_llc_msg) -
++	       offsetof(struct smc_llc_msg_delete_rkey_v2, rkey)) /
++	      sizeof(__be32));
++static_assert(offsetof(struct smc_llc_msg_delete_rkey_v2_inline, rkey) ==
++	      offsetof(struct smc_llc_msg_delete_rkey_v2, rkey));
 +
-+            ("0.72.0", "22.0.0", self.Expected.SUCCESS_WITH_WARNINGS),
+ #define SMC_LLC_FLAG_RESP		0x80
+ 
+ struct smc_llc_qentry {
+ 	struct list_head list;
+ 	struct smc_link *link;
++	u16 body_len;
+ 	union smc_llc_msg msg;
++	u8 body[] __counted_by(body_len);
+ };
+ 
+-static void smc_llc_enqueue(struct smc_link *link, union smc_llc_msg *llc);
++static void smc_llc_enqueue(struct smc_link *link, union smc_llc_msg *llc,
++			    u32 byte_len);
+ 
+ struct smc_llc_qentry *smc_llc_flow_qentry_clr(struct smc_llc_flow *flow)
+ {
+@@ -998,22 +1019,19 @@ static int smc_llc_cli_conf_link(struct smc_link *link,
+ 
+ static void smc_llc_save_add_link_rkeys(struct smc_link *link,
+ 					struct smc_link *link_new,
+-					u8 *llc_msg)
++					struct smc_llc_qentry *qentry)
+ {
+ 	const u32 rt_off = offsetof(struct smc_llc_msg_add_link_v2_ext, rt);
+ 	struct smc_llc_msg_add_link_v2_ext *ext;
+ 	struct smc_link_group *lgr = link->lgr;
+ 	int max, i;
+ 
+-	/* Without a shared v2 receive buffer the extension is not copied
+-	 * into the queue entry, so not even ext->num_rkeys is there.
+-	 */
+-	if (!smc_link_shared_v2_rxbuf(link))
++	/* the rkey count itself is only there if enough bytes arrived */
++	if (qentry->body_len < rt_off)
+ 		return;
+-	ext = (struct smc_llc_msg_add_link_v2_ext *)(llc_msg +
+-						     SMC_WR_TX_SIZE);
++	ext = (struct smc_llc_msg_add_link_v2_ext *)qentry->body;
+ 	max = min_t(u8, ext->num_rkeys, SMC_LLC_RKEYS_PER_MSG_V2);
+-	max = min_t(u32, max, (SMC_WR_BUF_V2_SIZE - SMC_WR_TX_SIZE - rt_off) /
++	max = min_t(u32, max, (qentry->body_len - rt_off) /
+ 			      sizeof(ext->rt[0]));
+ 	down_write(&lgr->rmbs_lock);
+ 	for (i = 0; i < max; i++) {
+@@ -1107,9 +1125,7 @@ int smc_llc_cli_add_link(struct smc_link *link, struct smc_llc_qentry *qentry)
+ 	if (rc)
+ 		goto out_clear_lnk;
+ 	if (lgr->smc_version == SMC_V2) {
+-		u8 *llc_msg = smc_link_shared_v2_rxbuf(link) ?
+-			(u8 *)lgr->wr_rx_buf_v2 : (u8 *)llc;
+-		smc_llc_save_add_link_rkeys(link, lnk_new, llc_msg);
++		smc_llc_save_add_link_rkeys(link, lnk_new, qentry);
+ 	} else {
+ 		rc = smc_llc_cli_rkey_exchange(link, lnk_new);
+ 		if (rc) {
+@@ -1510,9 +1526,7 @@ int smc_llc_srv_add_link(struct smc_link *link,
+ 	if (rc)
+ 		goto out_err;
+ 	if (lgr->smc_version == SMC_V2) {
+-		u8 *llc_msg = smc_link_shared_v2_rxbuf(link) ?
+-			(u8 *)lgr->wr_rx_buf_v2 : (u8 *)add_llc;
+-		smc_llc_save_add_link_rkeys(link, link_new, llc_msg);
++		smc_llc_save_add_link_rkeys(link, link_new, qentry);
+ 	} else {
+ 		rc = smc_llc_srv_rkey_exchange(link, link_new);
+ 		if (rc)
+@@ -1561,7 +1575,8 @@ void smc_llc_add_link_local(struct smc_link *link)
+ 	add_llc.hd.common.llc_type = SMC_LLC_ADD_LINK;
+ 	smc_llc_init_msg_hdr(&add_llc.hd, link->lgr, sizeof(add_llc));
+ 	/* no dev and port needed */
+-	smc_llc_enqueue(link, (union smc_llc_msg *)&add_llc);
++	smc_llc_enqueue(link, (union smc_llc_msg *)&add_llc,
++			sizeof(union smc_llc_msg));
+ }
+ 
+ /* worker to process an add link message */
+@@ -1597,7 +1612,8 @@ void smc_llc_srv_delete_link_local(struct smc_link *link, u8 del_link_id)
+ 	del_llc.link_num = del_link_id;
+ 	del_llc.reason = htonl(SMC_LLC_DEL_LOST_PATH);
+ 	del_llc.hd.flags |= SMC_LLC_FLAG_DEL_LINK_ORDERLY;
+-	smc_llc_enqueue(link, (union smc_llc_msg *)&del_llc);
++	smc_llc_enqueue(link, (union smc_llc_msg *)&del_llc,
++			sizeof(union smc_llc_msg));
+ }
+ 
+ static void smc_llc_process_cli_delete_link(struct smc_link_group *lgr)
+@@ -1819,27 +1835,28 @@ static void smc_llc_rmt_delete_rkey(struct smc_link_group *lgr)
+ 	link = qentry->link;
+ 
+ 	if (lgr->smc_version == SMC_V2) {
+-		const u32 rkey_off =
+-			offsetof(struct smc_llc_msg_delete_rkey_v2, rkey);
+-		struct smc_llc_msg_delete_rkey_v2 *llcv2;
+-		u32 buf_len;
+-
+-		if (smc_link_shared_v2_rxbuf(link)) {
+-			memcpy(lgr->wr_rx_buf_v2, llc, sizeof(*llc));
+-			llcv2 = (struct smc_llc_msg_delete_rkey_v2 *)lgr->wr_rx_buf_v2;
+-			buf_len = SMC_WR_BUF_V2_SIZE;
+-		} else {
+-			llcv2 = (struct smc_llc_msg_delete_rkey_v2 *)llc;
+-			buf_len = sizeof(qentry->msg);
+-		}
++		struct smc_llc_msg_delete_rkey_v2_inline *llcv2;
 +
-+            ("0.72.1", "22.0.0", self.Expected.SUCCESS),
-+        ):
-+            with self.subTest(bindgen_version=bindgen_version, libclang_version=libclang_version):
-+                cc = self.generate_clang(f"clang version {libclang_version}")
-+                libclang_stderr = f"scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version {libclang_version} [-W#pragma-messages], err: false"
-+                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr)
-+                result = self.run_script(expected_not_patched, { "BINDGEN": bindgen, "CC": cc })
-+                if expected_not_patched == self.Expected.SUCCESS_WITH_WARNINGS:
-+                    self.assertIn(f"Rust bindings generator '{bindgen}' < 0.72.1 together with libclang >= 22", result.stderr)
++		/* The leading SMC_LLC_DEL_RKEY_V2_INLINE rkeys are declared in
++		 * the message itself, any further ones were received into
++		 * qentry->body.
++		 */
++		llcv2 = &qentry->msg.delete_rkey_v2;
+ 		llcv2->num_inval_rkeys = 0;
+ 
+ 		max = min_t(u8, llcv2->num_rkeys, SMC_LLC_RKEYS_PER_MSG_V2);
+-		/* bound by the buffer llcv2 points at */
+-		max = min_t(u32, max, (buf_len - rkey_off) /
+-				      sizeof(llcv2->rkey[0]));
++		max = min_t(u32, max, SMC_LLC_DEL_RKEY_V2_INLINE +
++				      qentry->body_len / sizeof(__be32));
+ 		for (i = 0; i < max; i++) {
+-			if (smc_rtoken_delete(link, llcv2->rkey[i]))
++			__be32 rkey;
 +
-+                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_22_patched=True)
-+                result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
++			if (i < SMC_LLC_DEL_RKEY_V2_INLINE)
++				rkey = llcv2->rkey[i];
++			else
++				memcpy(&rkey, qentry->body +
++					      (i - SMC_LLC_DEL_RKEY_V2_INLINE) *
++					      sizeof(rkey), sizeof(rkey));
++			if (smc_rtoken_delete(link, rkey))
+ 				llcv2->num_inval_rkeys++;
+ 		}
+ 		memset(&llc->rkey[0], 0, sizeof(llc->rkey));
+@@ -2081,18 +2098,52 @@ static void smc_llc_rx_response(struct smc_link *link,
+ 	wake_up(&link->lgr->llc_msg_waiter);
+ }
+ 
+-static void smc_llc_enqueue(struct smc_link *link, union smc_llc_msg *llc)
++/* the longest tail either reader of qentry->body can use */
++static u32 smc_llc_max_body_len(union smc_llc_msg *llc)
++{
++	switch (llc->raw.hdr.common.llc_type) {
++	case SMC_LLC_ADD_LINK:
++		return offsetof(struct smc_llc_msg_add_link_v2_ext, rt) +
++		       SMC_LLC_RKEYS_PER_MSG_V2 *
++		       sizeof(struct smc_llc_msg_add_link_cont_rt);
++	case SMC_LLC_DELETE_RKEY:
++		return (SMC_LLC_RKEYS_PER_MSG_V2 -
++			SMC_LLC_DEL_RKEY_V2_INLINE) * sizeof(__be32);
++	default:
++		return 0;
++	}
++}
 +
-     def test_clang_matches_bindgen_libclang_different_bindgen(self):
-         bindgen = self.generate_bindgen_libclang("scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version 999.0.0 [-W#pragma-messages], err: false")
-         result = self.run_script(self.Expected.SUCCESS_WITH_WARNINGS, { "BINDGEN": bindgen })
++static void smc_llc_enqueue(struct smc_link *link, union smc_llc_msg *llc,
++			    u32 byte_len)
+ {
+ 	struct smc_link_group *lgr = link->lgr;
+ 	struct smc_llc_qentry *qentry;
+ 	unsigned long flags;
++	u16 body_len = 0;
++
++	/* V2 messages can be longer than the inline union smc_llc_msg. Carry
++	 * the remainder in the qentry itself, so that its lifetime and its
++	 * length match the message the peer actually sent.
++	 */
++	if (lgr->smc_version == SMC_V2 && byte_len > SMC_WR_TX_SIZE)
++		body_len = min_t(u32, byte_len, SMC_WR_BUF_V2_SIZE) -
++			   SMC_WR_TX_SIZE;
++	body_len = min_t(u32, body_len, smc_llc_max_body_len(llc));
+ 
+-	qentry = kmalloc(sizeof(*qentry), GFP_ATOMIC);
++	qentry = kmalloc_flex(*qentry, body, body_len, GFP_ATOMIC);
+ 	if (!qentry)
+ 		return;
++	qentry->body_len = body_len;
+ 	qentry->link = link;
+ 	INIT_LIST_HEAD(&qentry->list);
+ 	memcpy(&qentry->msg, llc, sizeof(union smc_llc_msg));
++	if (body_len) {
++		u8 *src = smc_link_shared_v2_rxbuf(link) ?
++			(u8 *)lgr->wr_rx_buf_v2 : (u8 *)llc;
++
++		memcpy(qentry->body, src + SMC_WR_TX_SIZE, body_len);
++	}
+ 
+ 	/* process responses immediately */
+ 	if ((llc->raw.hdr.flags & SMC_LLC_FLAG_RESP) &&
+@@ -2124,7 +2175,7 @@ static void smc_llc_rx_handler(struct ib_wc *wc, void *buf)
+ 			return; /* invalid message */
+ 	}
+ 
+-	smc_llc_enqueue(link, llc);
++	smc_llc_enqueue(link, llc, wc->byte_len);
+ }
+ 
+ /***************************** worker, utils *********************************/
+diff --git a/net/smc/smc_wr.c b/net/smc/smc_wr.c
+index b04a21b8c5111..4624817137be8 100644
+--- a/net/smc/smc_wr.c
++++ b/net/smc/smc_wr.c
+@@ -602,9 +602,9 @@ static void smc_wr_init_sge(struct smc_link *lnk)
+ 
+ 	/* With SMC-Rv2 there can be messages larger than SMC_WR_TX_SIZE.
+ 	 * Each ib_recv_wr gets 2 sges, the second one is a spillover buffer
+-	 * and the same buffer for all sges. When a larger message arrived then
+-	 * the content of the first small sge is copied to the beginning of
+-	 * the larger spillover buffer, allowing easy data mapping.
++	 * and the same buffer for all sges. The spillover sge starts at
++	 * SMC_WR_TX_SIZE, so the leading bytes of that buffer are never
++	 * written.
+ 	 */
+ 	for (i = 0; i < lnk->wr_rx_cnt; i++) {
+ 		int x = i * lnk->wr_rx_sge_cnt;
 -- 
 2.53.0
 
