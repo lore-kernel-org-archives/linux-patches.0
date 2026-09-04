@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCB61AA1F4;
-	Fri,  4 Sep 2026 05:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5421AA1F4;
+	Fri,  4 Sep 2026 05:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498878; cv=none; b=HE8qhjpj1KN6BohNHNFcXc+GQ1tu3lkS5aAWQca6MzCZ3vlrriL1iZmTe3/BUaed61/kTY0Wmf4O1njNk9rzXfJc0WRN0OEtYJmmU/rI07S0RqGFHk5SItrV6O4OwqaXxyauWjH3Zi6jtdOO7fPcO4DEuUxvzE1rrOz9QSc5KvY=
+	t=1788498881; cv=none; b=FlX9JSnzSOg0XuyrhDamVbv/JMQPEQTXdFL/WM7Jbny50HBx7uWT+KxS12L7iETGyyDgP5Qp+Jqk7gssnh8RdW0oFxY6sW2MhG1qygpeYL6U8PTb6jOiJP3Ykm7HLVGQfy78iZcKlk8LNEQJl9uZ3DhGqhV3AaMhwrNSwjOYUd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498878; c=relaxed/simple;
-	bh=N29dBMuOjrxs7rgnK8uOYTaX9L4WhZpilu869qUbKrU=;
+	s=arc-20240116; t=1788498881; c=relaxed/simple;
+	bh=06lw379w0TKu7SF7iEy9jEzg5ZSmkn7TcO7niw2wHJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZCuDIYoxG2PfxP9BKw4XHINcOdSP0U8MJv3oOxcqVDBpKQlhfGVlF57XpL+XarACykBYLrp59S0s2eGytB5vIlHSaVrJzqtabaMYrMzydzC6p/v6c5NoeIbP/CSO2Oy4YrBXcVA0n4aCiWYR3i9ACmX9MKNnLDqP0rz1LamjcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVkm38rc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u0bkHWAQoHZbgfP5P38mWHJ8Bm9lh7ye7Koybt4Qm86vXxEChXIy2ZSDHNJmfmxYnI3zSnhYpoaQaAAPOiMUyT5yOtbRTiQMcXPrTdl8a8y4PDDyykGpEIG2WpSv8vJYIrrD3WeWPie80TXk9401WlaRsTosQ6ocIC7z2Qo39OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTpzU9Nl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVkm38rc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EE51F00A3D;
-	Fri,  4 Sep 2026 05:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTpzU9Nl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD8A1F00A3D;
+	Fri,  4 Sep 2026 05:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498877;
-	bh=eyWD//Z1aDQ9q98jy6Hph6dA4A4r2ujyIAkLEN9/H0M=;
+	s=korg; t=1788498879;
+	bh=LAAxFV0RcW28g96IkeTHRSESRPGLSPcQGcO6Aaw8nO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pVkm38rcKgDR1IoalJjuuBD9ujtxziBeV9sUFeWIn30yZEht1wzkvwPYt4kHya1+a
-	 QHui9kzuHCzlsKcsekMuvCzRs59O/mnxTL87HkXGRFGnH3gPeoq+8gx4FUJpqptBuu
-	 iAJBTKbMtQJURDuXT9tVSDmCaRUmXVQC2rDnt6aA=
+	b=eTpzU9Nlb5vb9pfr0BnB1lA0FhAT9mBSWIMtRT4ZO1oE6gVmqoqItbGv22xjYTaLX
+	 0ADftnmGBh0tnhT6ELEZOBNRJhcypRJ3FqUX25ulwHSrPOZMk+kswGEIJvsWyfWQXo
+	 fylh+HKYSM5uvMTH4l/YR3/0ZEtdjdjJSKWdptKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@hammerspace.com>
-Subject: [PATCH 7.2 175/713] nfsd: ensure nfsd_file_do_acquire() does not use a non-opened file
-Date: Fri,  4 Sep 2026 06:52:23 +0200
-Message-ID: <20260904045807.741080030@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.2 176/713] nfsd: fix BUG_ON in nfsd4_alloc_layout_stateid on racing delegation revoke
+Date: Fri,  4 Sep 2026 06:52:24 +0200
+Message-ID: <20260904045807.763308335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,60 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 5859cc01fee06a2cd7458905a9593082fbab06e1 upstream.
+commit ca94ba36172046be6a694a7986f6931e47ed4d51 upstream.
 
-->atomic_open is permitted to return success without actually opening
-the file.  It indicates this by calling finish_no_open().
-This means dentry_create() can return a file which hasn't been opened.
-This is extremely unlikely as ->atomic_open handlers typically
-use finish_no_open() only for already existing files, and dentry_create()
-isn't called in that case, and the parent being locked should prevent
-races.
+nfsd4_alloc_layout_stateid reads fp->fi_deleg_file without holding
+fi_lock when the parent stateid is a delegation. A concurrent delegation
+revoke via the laundromat can clear fi_deleg_file under fi_lock, causing
+nfsd_file_get() to return NULL and triggering the BUG_ON.
 
-However out of an abundance of caution it seems wise to teach nfsd to
-only use the file returned by dentry_create() if FMODE_OPENED is set,
-indicating that it has in fact been opened.
+This race is client-reachable: two NFS clients can trigger it by having
+one hold a delegation while another opens the same file to force a
+recall. When the first client doesn't respond to the recall, the
+laundromat revokes it. A concurrent LAYOUTGET from any client using the
+delegation stateid hits the race window.
 
-Fixes: 64a989dbd144 ("VFS/knfsd: Teach dentry_create() to use atomic_open()")
+Fix this by taking fi_lock around the fi_deleg_file read in the
+SC_TYPE_DELEG path, matching the locking discipline of the
+find_any_file() arm, and replacing the BUG_ON with a graceful error
+return that cleans up the partially-initialized layout stateid.
+
+Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
 Cc: stable@vger.kernel.org
-Signed-off-by: NeilBrown <neil@brown.name>
-Link: https://patch.msgid.link/20260526053004.4014491-3-neilb@ownmail.net
+Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-1-f27e8eb4d974@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4layouts.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -1236,7 +1236,7 @@ open_file:
- 		nf->nf_mark = nfsd_file_mark_find_or_create(inode);
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -247,11 +247,17 @@ nfsd4_alloc_layout_stateid(struct nfsd4_
+ 	nfsd4_init_cb(&ls->ls_recall, clp, &nfsd4_cb_layout_ops,
+ 			NFSPROC4_CLNT_CB_LAYOUT);
  
- 	if (type != S_IFREG || nf->nf_mark) {
--		if (file) {
-+		if (file && (file->f_mode & FMODE_OPENED)) {
- 			get_file(file);
- 			nf->nf_file = file;
- 			status = nfs_ok;
-@@ -1383,12 +1383,12 @@ nfsd_file_acquire_local(struct net *net,
-  * @rqstp: the RPC transaction being executed
-  * @fhp: the NFS filehandle of the file just created
-  * @may_flags: NFSD_MAY_ settings for the file
-- * @file: cached, already-open file (may be NULL)
-+ * @file: cached, already-open file (may be NULL or not yet opened)
-  * @pnf: OUT: new or found "struct nfsd_file" object
-  *
-  * Acquire a nfsd_file object that is not GC'ed. If one doesn't already exist,
-- * and @file is non-NULL, use it to instantiate a new nfsd_file instead of
-- * opening a new one.
-+ * and @file has FMODE_OPENED set, use it to instantiate a new nfsd_file
-+ * instead of opening a new one.
-  *
-  * Return values:
-  *   %nfs_ok - @pnf points to an nfsd_file with its reference
+-	if (parent->sc_type == SC_TYPE_DELEG)
++	if (parent->sc_type == SC_TYPE_DELEG) {
++		spin_lock(&fp->fi_lock);
+ 		ls->ls_file = nfsd_file_get(fp->fi_deleg_file);
+-	else
++		spin_unlock(&fp->fi_lock);
++	} else {
+ 		ls->ls_file = find_any_file(fp);
+-	BUG_ON(!ls->ls_file);
++	}
++	if (!ls->ls_file) {
++		nfs4_put_stid(stp);
++		return NULL;
++	}
+ 
+ 	ls->ls_fenced = false;
+ 	ls->ls_fence_delay = 0;
 
 
