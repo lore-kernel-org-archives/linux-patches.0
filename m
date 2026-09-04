@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29C13D6664;
-	Fri,  4 Sep 2026 05:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD3826AC3;
+	Fri,  4 Sep 2026 05:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499730; cv=none; b=YwgN8Na/YT6Rvi/uSsjRAl95a+zW0m6/FJAvgeWfeR+835Lh0tvKGCdRpEGkPEQB7F/TacplQXc6I+oPA/K6E3enBLgeLDgZbl/nGTWcaJO1dLFrJi09jI0viymlwE7VL0Q3M+Tx98dwwtDVvaI4r6BgztPTxicqPkOzt3yQeg0=
+	t=1788499732; cv=none; b=PHHRxGXbA0czaemfbSR07PoNM9WjRlpsWeol5OxF0Kt5oE32nzHDxftuQ1oBOiDuDtnKwa8xLlOMyDv/AnolDbyMOZ/ixuwsD49n8Y1QJL7e1ngsFPzHCaBYsa215COiUf4eHLpUEWgsgKmBWeIjTCY+W77g06NNaMCvvW4evmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499730; c=relaxed/simple;
-	bh=WD8osbeEO/AlfHqnJvMVdLfnHqNQnUJiEzkZqaLhWHk=;
+	s=arc-20240116; t=1788499732; c=relaxed/simple;
+	bh=QA337aWWQytN9tqYw9nVsReZg677+vno3mNBXagkBtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5HBNWMui7X19y9z7RTj7sf2C3n0+9m8OcEr4qYYP3xGQ7owF9qq0DYwGuww7K52nNsUGYCh7L1ekC7BNNckby9uKgARkFVRYWxIiTURIHRZ/FHPpmKBmV1zHDYNKyROs1jzhfWF52szH1xKF/mixiGQGei39m+B4ObJK7kkJAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOZ4seea; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kA5kvZiKZyjeyoisYy9RNPRVLnPBRAcJvdxyce6e7dENOP7fRwHGm3VCz1LwaJdEiWB8Ji+KsQUQHdRE8txhNoWoEoWOY/V0+rMmgHFi2FiuijsFwVeLgC/y10eBF7v4ljYsZXrYra3cMepfBF5sA2AOP2VBPE4snkox+SGKT2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taDoZQ0h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOZ4seea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4098C1F00A3D;
-	Fri,  4 Sep 2026 05:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taDoZQ0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C29E1F00A3D;
+	Fri,  4 Sep 2026 05:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499728;
-	bh=7M6PJhIr3onfS6156CVf9qAHt59lw/0vQJgfEMzNqlg=;
+	s=korg; t=1788499731;
+	bh=s5KDi0CB9RXscdlI3IxgQBoQVrZgcasn67NgbAWKQiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LOZ4seeawMQXFFMTMYzpmYAjHoaGSmp+8Mjf5Tv9M4Pzav0OjYABXjag6QUS9TE+2
-	 /1FB1Q76Z8uWToEznM//QSJT1NzP/F0uCPrEjLlVFaC5iyV8Fpa+5BitTnexI5Us8p
-	 t4teuVCZW3bh8XW/CtTaoqAclRdwTblJQlSW/JGU=
+	b=taDoZQ0hWkSXp5RyJ/lD7PNe4KhgJb5ubuP2uayj0onp1xsdcThO7wwyyq/holuwW
+	 iB87qDfIHtzF4wVPEa2ugoqJyXASYv4Qivn8PpA90DuXDGU6YxIKUoBmhrrId9+NkS
+	 RoHMxvKWssnryaB/xX8ahvmlK+AMZIZAfMJAbZQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Aditya Garg <gargaditya@linux.microsoft.com>,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 7.2 520/713] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
-Date: Fri,  4 Sep 2026 06:58:08 +0200
-Message-ID: <20260904045815.475265684@linuxfoundation.org>
+	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH 7.2 521/713] PCI: Fix 32-bit config write in Intel PCH Root Port MPC ACS quirk
+Date: Fri,  4 Sep 2026 06:58:09 +0200
+Message-ID: <20260904045815.497695921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -55,47 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
 
-commit 86bdd16e8f390d51bae9e77a4bc4164ca2f580fe upstream.
+commit 23d7eed5974989de56273c964d7e510e4aad91e8 upstream.
 
-The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
+pci_quirk_enable_intel_rp_mpc_acs() reads a 32-bit DWORD from the MPC
+register, sets bit 26 (INTEL_MPC_REG_IRBNCE), but it writes it back using
+pci_write_config_word().
 
-On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
-the outgoing CPU to a new target. If an interrupt still has its pending bit
-set in the outgoing CPU's IRR at that point, fixup_irqs() resends it on the
-new target through the irqchip's irq_retrigger() callback. As the Hyper-V
-PCI/MSI chip does not provide that callback, the pending interrupt is
-silently dropped, which can result in lost interrupts, stalls and "No irq
-handler for vector" messages during CPU hotplug.
+Because bit 26 resides in the upper 16 bits of the 32-bit register, a
+16-bit write drops the newly set bit. The quirk logs that it is enabling
+IRBNCE, but the hardware never actually receives the command.
 
-Install irq_chip_retrigger_hierarchy() as the irq_retrigger() callback for
-the Hyper-V PCI/MSI irqchip, so that a pending interrupt is resent on its
-new target CPU via the parent x86 vector domain.
+Use pci_write_config_dword() to ensure the full 32-bit value is written
+back to the hardware.
 
-Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+Fixes: d99321b63b1f ("PCI: Enable quirks for PCIe ACS on Intel PCH root ports")
+Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Long Li <longli@microsoft.com>
-Suggested-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
-Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Link: https://patch.msgid.link/20260723171203.4892-1-raizudeen.kerneldev@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/quirks.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -2119,6 +2119,7 @@ static bool hv_pcie_init_dev_msi_info(st
- 	info->ops->msi_prepare = hv_msi_prepare;
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5361,7 +5361,7 @@ static void pci_quirk_enable_intel_rp_mp
+ 	if (!(mpc & INTEL_MPC_REG_IRBNCE)) {
+ 		pci_info(dev, "Enabling MPC IRBNCE\n");
+ 		mpc |= INTEL_MPC_REG_IRBNCE;
+-		pci_write_config_word(dev, INTEL_MPC_REG, mpc);
++		pci_write_config_dword(dev, INTEL_MPC_REG, mpc);
+ 	}
+ }
  
- 	chip->irq_set_affinity = irq_chip_set_affinity_parent;
-+	chip->irq_retrigger = irq_chip_retrigger_hierarchy;
- 
- 	if (IS_ENABLED(CONFIG_X86))
- 		chip->flags |= IRQCHIP_MOVE_DEFERRED;
 
 
