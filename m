@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057673B95FA;
-	Fri,  4 Sep 2026 05:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58DE3B19BC;
+	Fri,  4 Sep 2026 05:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500048; cv=none; b=geyQT4PicRzJo19qPfpMKlyzf0kNqr8Gv/Q/CmQdPpceeoekjK4oVRT8OIP9+kmwoQsCQfWNx/6BRW/C1miHypU5GddkMiSiFz94hHJS1GkHeyazIj73jcbTM2yG9ED2EoS6QExp24x2dMHXPdgujLk2TYeUiulJVTlKOAHcUKc=
+	t=1788500050; cv=none; b=uAX3rk4JmI4tD7l9vA3Zs3sZNVXti7kBaqT563JaNFm+FN/NixV1em/el8DkHB3qwOi47yJyeMyCXHCC50XIqIpW6q4BIaIxVA7fcfiBfP7546AbSPTpOtBWwqedUvFH9z7S7o9rvSE2bMTtKbeRyjyyDcJpjINFThmU+b+3Zwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500048; c=relaxed/simple;
-	bh=QB9jlp79k0xCgjA6AuROMID7tm+eqYkJwxpXKblY09A=;
+	s=arc-20240116; t=1788500050; c=relaxed/simple;
+	bh=gYMbNcDWvKbdsv4bNY8PwMsetonp3hLfcoB2YiDJEnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPTEjlaKtZIXziMNMV1LqLBnw0fZcxJruCCDe0LLK6HMaik9R0LYH5Xt6TOt0eqF1sP+a/3ofjxz+uklgMnasxUvFTUkILU6bZeyn3F4yZqD8SfoP9BuRcbqKslE35KLcb2rgYzjunfgU035aQwOE9wpHv4r2TQesLbE50jgWKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJvc7pqj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WXm8yZB3ssJA1fNyrDs9HRftUe0FKM/XCqNk5dwyJYFk37T0kqq/VUXNNvyfmAnFdeB2JTkGhyIQoTZwB3RQODNEOGkQcbhQJPMyBKrchMbUxOHDWeDFTRCv17rLrYZtLnvfpcwsZMAcI+b1sbMqy6mYdYTcvefowpc3Lde1Gzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc7+GKSK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJvc7pqj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDE91F00A3D;
-	Fri,  4 Sep 2026 05:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc7+GKSK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9CE1F00A3D;
+	Fri,  4 Sep 2026 05:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500046;
-	bh=GmsB0PpVFZ07SpAkUCtMkqdRr21oJvFmoTByc/KbPwE=;
+	s=korg; t=1788500049;
+	bh=9HTBlVRRW45TLX/jndM7NIDWvRGub2Dd/CLqm2imzs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YJvc7pqjgE1BvgFoeU38IGCe3Q9vZ/TwZ2iB99FirX2avyF1UqyxW6dgwTICm8kUV
-	 pOSWn7Q7Y+WD6dqjXqf1nQ4JZdAbDNeuzIC+URQ4WEklJVm7gf6fNEa1arEE4tHJUF
-	 yxReYkxyv1LGDYZ6rY7hk8v4YC0UyHfTOb0LFag4=
+	b=Fc7+GKSKQLOk8TiEn33i4CXKFmPCsd9htkgi+u/VQ6lmHZ/9IbMuiLqxn19TXTLAv
+	 cYFKh3rHDp/QNkmlEwyIu1q4+JIf6BM/xTPJ5k6yeZemPU7W5zfhpXcY4qS9na4IWV
+	 6qmeax+zmyEZvgPvUn0C1thvVLKvHWK8B1vkCCJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 7.2 630/713] seg6: reset IP6CB after IPv6 decapsulation
-Date: Fri,  4 Sep 2026 06:59:58 +0200
-Message-ID: <20260904045817.951525363@linuxfoundation.org>
+	Can Peng <pengcan@kylinos.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.2 631/713] hwrng: stm32 - Fix runtime PM cleanup on registration failure
+Date: Fri,  4 Sep 2026 06:59:59 +0200
+Message-ID: <20260904045817.974858455@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,69 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Can Peng <pengcan@kylinos.cn>
 
-commit f967455fb2a5a2079b9eb5823e9ccf359174bf9f upstream.
+commit 1163a476a568f6c0f852d469c8e4c5a5f805adac upstream.
 
-decap_and_validate() pulls the outer SRv6 headers and makes the inner
-packet the skb network header. The IPv6 control block still contains
-values collected while parsing the outer packet, including nhoff and
-extension-header flags.
+stm32_rng_probe() enables autosuspend and runtime PM before registering the
+hwrng. If devm_hwrng_register() fails, probe returns with runtime PM left
+enabled and autosuspend still selected.
 
-End.DX6 and End.DT6 route the inner IPv6 packet directly to the IPv6
-input path. An unprivileged user can reach End.DT6 from a user and net
-namespace by installing a local SID and injecting an outer packet with
-Hop-by-Hop and Destination Options headers followed by an SRH and a
-minimal inner IPv6 packet.
+The remove callback also only disables runtime PM and does not undo
+pm_runtime_use_autosuspend().
 
-The outer extension headers leave a large nhoff in IP6CB. After
-decapsulation, ip6_protocol_deliver_rcu() uses that stale offset on the
-inner packet and reads beyond the skb head. KASAN reports:
+Use devm_pm_runtime_enable() so runtime PM is unwound automatically on
+probe failure and driver detach. Since the managed cleanup also disables
+runtime PM,drop the remove callback.
 
-  BUG: KASAN: slab-out-of-bounds in ip6_protocol_deliver_rcu
-  ip6_protocol_deliver_rcu+0x1118/0x1450
-  ip6_input_finish+0x11b/0x240
-  seg6_local_input_core+0xed/0x2e0
-  lwtunnel_input+0x1e9/0x4e0
-  ipv6_rthdr_rcv+0x525f/0x6c50
-  ip6_protocol_deliver_rcu+0xcb7/0x1450
-
-Before clearing IP6CB for an inner IPv6 packet, save its incoming
-interface index and L3 slave state. Restore both after the clear and set
-nhoff to the inner IPv6 base-header nexthdr field.
-
-Use IP6CB(skb)->iif rather than skb->skb_iif because VRF processing can
-replace skb_iif with the L3 master while IP6CB keeps the receiving
-interface. Preserve IP6SKB_L3SLAVE for the same reason.
-
-Fixes: d7a669dd2f8b ("ipv6: sr: add helper functions for seg6local")
+Fixes: c6a97c42e399 ("hwrng: stm32 - add support for STM32 HW RNG")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_local.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/char/hw_random/stm32-rng.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -261,6 +261,15 @@ static bool decap_and_validate(struct sk
+--- a/drivers/char/hw_random/stm32-rng.c
++++ b/drivers/char/hw_random/stm32-rng.c
+@@ -368,11 +368,6 @@ static int stm32_rng_init(struct hwrng *
+ 	return 0;
+ }
  
- 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
- 		IPCB(skb)->iif = iif;
-+	} else if (proto == IPPROTO_IPV6) {
-+		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
-+		int iif = IP6CB(skb)->iif;
-+
-+		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
-+		IP6CB(skb)->iif = iif;
-+		IP6CB(skb)->nhoff = offsetof(struct ipv6hdr, nexthdr);
-+		if (l3slave)
-+			IP6CB(skb)->flags |= IP6SKB_L3SLAVE;
- 	}
+-static void stm32_rng_remove(struct platform_device *ofdev)
+-{
+-	pm_runtime_disable(&ofdev->dev);
+-}
+-
+ static int __maybe_unused stm32_rng_runtime_suspend(struct device *dev)
+ {
+ 	struct stm32_rng_private *priv = dev_get_drvdata(dev);
+@@ -590,7 +585,9 @@ static int stm32_rng_probe(struct platfo
  
- 	return true;
+ 	pm_runtime_set_autosuspend_delay(dev, 100);
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
+ 
+ 	return devm_hwrng_register(dev, &priv->rng);
+ }
+@@ -602,7 +599,6 @@ static struct platform_driver stm32_rng_
+ 		.of_match_table = stm32_rng_match,
+ 	},
+ 	.probe = stm32_rng_probe,
+-	.remove = stm32_rng_remove,
+ };
+ 
+ module_platform_driver(stm32_rng_driver);
 
 
