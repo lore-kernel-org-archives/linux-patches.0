@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0785A3F23DB;
-	Fri,  4 Sep 2026 05:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2ED3A7F4C;
+	Fri,  4 Sep 2026 05:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499113; cv=none; b=At8i4Zw5GxZZHozvhkYcE4uszFWELEr1dBKAcT/2YYKBy9ws9qvUN8MaN784Zp7zHwOrwyjYtkR9VdPXVuan7lyBloY8Ppavzx+x4/vsxGUmNl4+nv2wsdxLH0EIKdoF2O/zc5p7Mk6YtonfEPDY9DUjNl/PLGxiHbSOM8yLi3Q=
+	t=1788499115; cv=none; b=kRm0Y52LFx72MBn5UTi0CBKpd1qL8kVHoHLafT+cooN/8gPkwUO8nWeHOc2F9d+FRpdhr3R5Ufu9c4yRhDqz7ufnWVXhfbvGpqO13QgdHsygRpGCxM1U/mCWedU+2osSIBhl5maAhm8xYVIbrK3f3A6++xD/T/hb3FsBby5irl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499113; c=relaxed/simple;
-	bh=yStgy1t6Xwj+HzuOTib8ygUhr6NPn4n6hg/FxeEtzZo=;
+	s=arc-20240116; t=1788499115; c=relaxed/simple;
+	bh=9gtia8sQBCdBTODuE6tclhrJ7atQedgdGrctrAHQwtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TSnlAaF4WHjvOjP+Sjmn1SPdPI9MwGPHwqUZHNxrAPWn2tRJcgrfAMMITUafP5y9pA4D5hztLu3JPyz+Nqy9kOKERwTMkVapGrq+vpq1kOdmL0yO0ZBuBIkajxNhMMi8u2FOo6RRKp70N6Hvy7e4/EnMUwB7AaqmmR/41gEqxo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCDiwf4I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NRh7BNRMCeA0vk/p0aoFJzv4BKoKaLWbXWEeTLjawmAFm22/EebOioXAeeo6hBTYvHnWx/WOI5ariZUEbmP3vd5QKEekgwgvbxPZXyB5dnBbTP9jPtmy98ktBCQHobIusBKA3Bbhm97vngHJa5yFD9H8boZKXVMHKz6hHzURyoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHlxwmC9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCDiwf4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F571F00A3D;
-	Fri,  4 Sep 2026 05:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHlxwmC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326F31F00A3D;
+	Fri,  4 Sep 2026 05:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499111;
-	bh=anIJChQM4TFZcXa4ib/Qk3ujYqxEQVrzmjJdKGelDNw=;
+	s=korg; t=1788499114;
+	bh=qiQTV56UjPl3flG6zAfFmf7aFZ+VJHsVKXH2MGCTUgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCDiwf4InU7h8RTc7pQ/0wQo0/zGwtM2VV3kUH2Tao7wi0ufwlrSTs3MeMw5DmOJ1
-	 HGJ37oa2JXcJ2ruVcTEE4NGVZpCL5pgx46Bkyl3lgojKlNDGG5Uu5hNCB92lSB4l3s
-	 h3EnKsONX2TeuCJtEgwWK2bxcVXiwIyesmWZvqGU=
+	b=JHlxwmC9nuc8XnCCeeXhlQNexGba2w9zIv9QLFysKowm2Ki4TScyyL1QcR3B4B2wa
+	 xVmTdKtDSIRPK4x0ipO5QS3qJEBxgrLUX67AtszEt9e7DNdjEjxypm+37c2S3LDU8i
+	 lPWw4Y4jWr95x+FCI9edm+J4phpVvFs+Dnf2k9ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anirudh Prasad <icarus@a0rg.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.2 301/713] ACPI: pfr_update: fix stack buffer overflow in query_capability()
-Date: Fri,  4 Sep 2026 06:54:29 +0200
-Message-ID: <20260904045810.587682245@linuxfoundation.org>
+	Robert Morris <rtm@csail.mit.edu>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.2 266/713] ntfs: reject invalid MFT LCNs from boot sector
+Date: Fri,  4 Sep 2026 06:53:54 +0200
+Message-ID: <20260904045809.799266832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,115 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anirudh Prasad <icarus@a0rg.com>
+From: Hyunchul Lee <hyc.lee@gmail.com>
 
-commit ced45be0073a8a31b30b4a7f68cd3a15734515de upstream.
+commit cc9d09fef78410bcd37ac05168cbd5f6dd75d3d2 upstream.
 
-query_capability() copies four ACPI buffer objects returned by the
-firmware _DSM into fixed-size u8[16] fields in struct
-pfru_update_cap_info using memcpy with the firmware-supplied length:
+The NTFS boot sector stores the MFT and MFTMirr locations as unsigned
+64-bit LCNs, but parse_ntfs_boot_sector() decoded them into an s64.
 
-  memcpy(&cap_hdr->code_type,
-         elements[CAP_CODE_TYPE_IDX].buffer.pointer,
-         elements[CAP_CODE_TYPE_IDX].buffer.length);
+A crafted high-bit value could therefore become negative and pass
+the existing upper-bound check. The invalid value then propagated into
+the MFT zone allocator and could result in an out-of-bounds access to
+lcn_empty_bits_per_page.
 
-The same pattern repeats for drv_type, platform_id, and oem_id.
-If the firmware returns buffer.length > 16 for any of these fields,
-memcpy writes past the destination array.
-
-struct pfru_update_cap_info is stack-allocated in pfru_ioctl().
-
-Confirmed with KASAN on 7.2-rc6: three stack-out-of-bounds reports
-are generated when a DSM returns 64-byte buffers, with writes reaching
-44 bytes past the end of cap_hdr's [64, 156) frame window into
-adjacent stack redzones.
-
-Introduce a helper pointer to out_obj->package.elements and use it
-to validate each buffer length against its destination field size
-before copying, returning -EINVAL if the firmware supplies an
-oversized buffer.
-
-Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Anirudh Prasad <icarus@a0rg.com>
-Link: https://patch.msgid.link/1a001e1fee9.637da6dc3533246.238498880682901704@a0rg.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 11ccc9107dc4 ("ntfs: update runlist handling and cluster allocator")
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Closes: https://lore.kernel.org/all/57514.1787000602@localhost
+Cc: stable@vger.kernel.org
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/pfr_update.c |   45 ++++++++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 21 deletions(-)
+ fs/ntfs/super.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -120,7 +120,7 @@ static int query_capability(struct pfru_
- 			    struct pfru_device *pfru_dev)
+diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
+index 8abe7bee4c0d..cd8fa2c13370 100644
+--- a/fs/ntfs/super.c
++++ b/fs/ntfs/super.c
+@@ -645,7 +645,7 @@ static bool parse_ntfs_boot_sector(struct ntfs_volume *vol,
  {
- 	acpi_handle handle = ACPI_HANDLE(pfru_dev->parent_dev);
--	union acpi_object *out_obj;
-+	union acpi_object *out_obj, *elem;
- 	int ret = -EINVAL;
+ 	unsigned int sectors_per_cluster, sectors_per_cluster_bits, nr_hidden_sects;
+ 	int clusters_per_mft_record, clusters_per_index_record;
+-	s64 ll;
++	u64 ll;
  
- 	out_obj = acpi_evaluate_dsm_typed(handle, &pfru_guid,
-@@ -150,7 +150,9 @@ static int query_capability(struct pfru_
- 		goto free_acpi_buffer;
+ 	vol->sector_size = le16_to_cpu(b->bpb.bytes_per_sector);
+ 	vol->sector_size_bits = ffs(vol->sector_size) - 1;
+@@ -755,23 +755,23 @@ static bool parse_ntfs_boot_sector(struct ntfs_volume *vol,
+ 	 * the same as it is much faster on 32-bit CPUs.
+ 	 */
+ 	ll = le64_to_cpu(b->number_of_sectors) >> sectors_per_cluster_bits;
+-	if ((u64)ll >= 1ULL << 32) {
++	if (ll >= 1ULL << 32) {
+ 		ntfs_error(vol->sb, "Cannot handle 64-bit clusters.");
+ 		return false;
  	}
- 
--	cap_hdr->status = out_obj->package.elements[CAP_STATUS_IDX].integer.value;
-+	elem = out_obj->package.elements;
-+
-+	cap_hdr->status = elem[CAP_STATUS_IDX].integer.value;
- 	if (cap_hdr->status != DSM_SUCCEED) {
- 		ret = -EBUSY;
- 		dev_dbg(pfru_dev->parent_dev, "Query cap Error Status:%d\n",
-@@ -158,29 +160,30 @@ static int query_capability(struct pfru_
- 		goto free_acpi_buffer;
+ 	vol->nr_clusters = ll;
+ 	ntfs_debug("vol->nr_clusters = 0x%llx", vol->nr_clusters);
+ 	ll = le64_to_cpu(b->mft_lcn);
+-	if (ll >= vol->nr_clusters) {
+-		ntfs_error(vol->sb, "MFT LCN (%lli, 0x%llx) is beyond end of volume.  Weird.",
++	if (ll >= (u64)vol->nr_clusters) {
++		ntfs_error(vol->sb, "MFT LCN (%llu, 0x%llx) is beyond end of volume.  Weird.",
+ 				ll, ll);
+ 		return false;
  	}
- 
--	cap_hdr->update_cap = out_obj->package.elements[CAP_UPDATE_IDX].integer.value;
-+	if (elem[CAP_CODE_TYPE_IDX].buffer.length > sizeof(cap_hdr->code_type) ||
-+	    elem[CAP_DRV_TYPE_IDX].buffer.length > sizeof(cap_hdr->drv_type) ||
-+	    elem[CAP_PLAT_ID_IDX].buffer.length > sizeof(cap_hdr->platform_id) ||
-+	    elem[CAP_OEM_ID_IDX].buffer.length > sizeof(cap_hdr->oem_id))
-+		goto free_acpi_buffer;
-+
-+	cap_hdr->update_cap = elem[CAP_UPDATE_IDX].integer.value;
- 	memcpy(&cap_hdr->code_type,
--	       out_obj->package.elements[CAP_CODE_TYPE_IDX].buffer.pointer,
--	       out_obj->package.elements[CAP_CODE_TYPE_IDX].buffer.length);
--	cap_hdr->fw_version =
--		out_obj->package.elements[CAP_FW_VER_IDX].integer.value;
--	cap_hdr->code_rt_version =
--		out_obj->package.elements[CAP_CODE_RT_VER_IDX].integer.value;
-+	       elem[CAP_CODE_TYPE_IDX].buffer.pointer,
-+	       elem[CAP_CODE_TYPE_IDX].buffer.length);
-+	cap_hdr->fw_version = elem[CAP_FW_VER_IDX].integer.value;
-+	cap_hdr->code_rt_version = elem[CAP_CODE_RT_VER_IDX].integer.value;
- 	memcpy(&cap_hdr->drv_type,
--	       out_obj->package.elements[CAP_DRV_TYPE_IDX].buffer.pointer,
--	       out_obj->package.elements[CAP_DRV_TYPE_IDX].buffer.length);
--	cap_hdr->drv_rt_version =
--		out_obj->package.elements[CAP_DRV_RT_VER_IDX].integer.value;
--	cap_hdr->drv_svn =
--		out_obj->package.elements[CAP_DRV_SVN_IDX].integer.value;
-+	       elem[CAP_DRV_TYPE_IDX].buffer.pointer,
-+	       elem[CAP_DRV_TYPE_IDX].buffer.length);
-+	cap_hdr->drv_rt_version = elem[CAP_DRV_RT_VER_IDX].integer.value;
-+	cap_hdr->drv_svn = elem[CAP_DRV_SVN_IDX].integer.value;
- 	memcpy(&cap_hdr->platform_id,
--	       out_obj->package.elements[CAP_PLAT_ID_IDX].buffer.pointer,
--	       out_obj->package.elements[CAP_PLAT_ID_IDX].buffer.length);
-+	       elem[CAP_PLAT_ID_IDX].buffer.pointer,
-+	       elem[CAP_PLAT_ID_IDX].buffer.length);
- 	memcpy(&cap_hdr->oem_id,
--	       out_obj->package.elements[CAP_OEM_ID_IDX].buffer.pointer,
--	       out_obj->package.elements[CAP_OEM_ID_IDX].buffer.length);
--	cap_hdr->oem_info_len =
--		out_obj->package.elements[CAP_OEM_INFO_IDX].buffer.length;
-+	       elem[CAP_OEM_ID_IDX].buffer.pointer,
-+	       elem[CAP_OEM_ID_IDX].buffer.length);
-+	cap_hdr->oem_info_len = elem[CAP_OEM_INFO_IDX].buffer.length;
- 
- 	ret = 0;
- 
+ 	vol->mft_lcn = ll;
+ 	ntfs_debug("vol->mft_lcn = 0x%llx", vol->mft_lcn);
+ 	ll = le64_to_cpu(b->mftmirr_lcn);
+-	if (ll >= vol->nr_clusters) {
+-		ntfs_error(vol->sb, "MFTMirr LCN (%lli, 0x%llx) is beyond end of volume.  Weird.",
++	if (ll >= (u64)vol->nr_clusters) {
++		ntfs_error(vol->sb, "MFTMirr LCN (%llu, 0x%llx) is beyond end of volume.  Weird.",
+ 				ll, ll);
+ 		return false;
+ 	}
+-- 
+2.55.0
+
 
 
