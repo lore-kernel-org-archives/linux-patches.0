@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A529A424664;
-	Fri,  4 Sep 2026 06:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8262323BD1B;
+	Fri,  4 Sep 2026 06:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502443; cv=none; b=AUez/jYR6R7VZlWLgY07wVfaB51+ZOqOGjs59IP8P+7DRSY7RG85/vKccNBOow0QaXmb2/XD2OMV6erkl51ql8CQt2NA3SZWylGWug593ZN9gL2slkeJ5qq+KXHHy/14898qErLfcitK83vwkWHcBIU9VYm0T4cuWgg3emyg1T4=
+	t=1788502446; cv=none; b=Ggs4k/p0mc9HIRvteOZrUSUpDrzQRf8EabdFRRAwrnpdRVyQMGpWXtVJOzO3VwPdiFvMYP0PHjGJS4VSzA4+K63Y0fv7XSKdtvsRXmPFvPaYrJPFkIclOghNvghiyErT0GammkcopGEaJI3ErIjCvqyneOLMMbUD5GHya2M2N0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502443; c=relaxed/simple;
-	bh=qiIoUFEkVukm9ts5ZGFP7BawAdyWMXNUQ6eox6tCVjA=;
+	s=arc-20240116; t=1788502446; c=relaxed/simple;
+	bh=sAbg+zpe7oj7xU1AoVktapp9EnnKE9daTqJasZE0e+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTO741Gy2n2xMwQKnxFVRyD39pXjW3/7XMITC1vVQVJ/JIJEqjvkSS+LuU/Eqdw9zMDrq167n1tnSY78/CBtKQ3j2zBJnS0l8rIgy92Gxf8Hu2qpij4M4B+/o14pKXtwsGI1eJYUQgIfeku7VCPm5+EDTP74k+qHzkyi+CBnrqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDNGffAj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M0t5fWrmHIpHRRvfaCwKhov2cGE9IfE6QAcq2MKwl0Jz5d7gc5+9cEv8lfXGbjyIbcJztehPpwodHJOdDpCer7M/tm5KRrHcWjvre6L/FdUAFno8Al7zEUyNQ0GOWw/taB/MwygW2vSVvAY+dk/huT83qqavG+MCnDtYBW+l7x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHOnfnOC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDNGffAj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CC51F00A3D;
-	Fri,  4 Sep 2026 06:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHOnfnOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D962B1F00A3D;
+	Fri,  4 Sep 2026 06:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502442;
-	bh=94daQXh1mvHzeurPrQHTevZqne4+/eo3XiSfMr6zWPY=;
+	s=korg; t=1788502445;
+	bh=P4dNvlDvpbT4B9HmCrZIEX9vVsaVmMwBD6HoxU3o+mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDNGffAjwEr9nYV+WGG7g5vz6gI9neD4EDhQh8P67x3yMJi04DWQmGmX/9rCcUwnC
-	 otTLpHUmyaoJgV+KYSgnLRfWl7gIzrU4gmDooZwTwCuz9s1wnBlhMfullXIShiyyH4
-	 uyDa7f+AN9iLgTjsSSB12zdBsKZ957bWYPmfsISc=
+	b=eHOnfnOCID2TP1xNR/qzRPcpsKb7yxvzQM8wwWALP4EzzmJnbgr9vVHwt8OOra6ZF
+	 RMNreJjtUJLddhEqRR+LoOhcNSay7pQmW1souffpkOdXYKxFrTZYpjjqHHstgrA5uZ
+	 xlfecAQtcLHKwzEo2Q8OoMwKy9dOad/bFTgWhEjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 208/403] SUNRPC: harden gss_krb5_unwrap_v2 against short tokens
-Date: Fri,  4 Sep 2026 07:00:11 +0200
-Message-ID: <20260904045739.584928929@linuxfoundation.org>
+Subject: [PATCH 6.12 209/403] SUNRPC: harden gss_unwrap_resp_priv length checks
+Date: Fri,  4 Sep 2026 07:00:12 +0200
+Message-ID: <20260904045739.607431706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,101 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <clm@meta.com>
 
-commit 6959297aaa9572783d620a226d73c3fb94494888 upstream.
+commit 87831b92112c81db251d46756d65daa4f91af6a2 upstream.
 
-gss_krb5_unwrap_v2() reads the EC and RRC header fields at ptr+4 and
-ptr+6 before validating that the token is at least GSS_KRB5_TOK_HDR_LEN
-(16) bytes long, and its rotate_left() helper passes buf->len - base
-to xdr_buf_subsegment() without verifying that base <= buf->len. When
-a caller hands in a sub-16-byte token, or a token whose declared len
-leaves base past the end of the buffer, three distinct failures follow:
+gss_unwrap_resp_priv() validates the RPCSEC_GSS opaque length with
 
-    gss_krb5_unwrap_v2(offset, len, buf)
-      ptr = buf->head[0].iov_base + offset
-      ec  = *(ptr + 4)              /* OOB read on short head */
-      rrc = *(ptr + 6)              /* OOB read on short head */
-      rotate_left(offset + 16, buf, rrc)
-        xdr_buf_subsegment(buf, &subbuf,
-                           base, buf->len - base)   /* u32 wrap when base > len */
-        _rotate_left(&subbuf, shift)
-          shift %= buf->len         /* divide-by-zero when base == len */
+    offset = (u8 *)(p) - (u8 *)head->iov_base;
+    if (offset + opaque_len > rcv_buf->len)
+            goto unwrap_failed;
+    maj_stat = gss_unwrap(ctx->gc_gss_ctx, offset,
+                          offset + opaque_len, rcv_buf);
 
-After decryption, the cleanup arithmetic has the same shape:
+Both operands are u32 and the sum is computed in u32. A reply with
+opaque_len near 0xffffffff makes offset + opaque_len wrap to a small
+value that is below rcv_buf->len, so the bound check passes and
+gss_unwrap() is called with end < begin. The check also lacks a
+lower bound, so any opaque_len in [0, GSS_KRB5_TOK_HDR_LEN) is
+accepted and forwarded to gss_krb5_unwrap_v2(), whose pre-decrypt
+header reads at ptr+4 and ptr+6 then run past the token.
 
-    movelen = min_t(unsigned int, buf->head[0].iov_len, len);
-    movelen -= offset + GSS_KRB5_TOK_HDR_LEN + headskip;
-    BUG_ON(offset + GSS_KRB5_TOK_HDR_LEN + headskip + movelen >
-                                            buf->head[0].iov_len);
+A krb5p NFS server returning a crafted RPCSEC_GSS reply can drive
+the client into out-of-bounds reads in gss_krb5_unwrap_v2() and the
+rotate_left() loop that follows.
 
-The BUG_ON re-adds the value just subtracted, so it reduces to
-min(A, B) > A and is permanently false; it cannot catch the unsigned
-underflow of movelen, which then drives a ~UINT_MAX-byte memmove().
+Fix by replacing the single combined check with three guards that
+are safe in u32 arithmetic and that enforce the RFC 4121 minimum
+outer token length:
 
-Add four defense-in-depth guards inside the unwrap core so it is safe
-regardless of what its callers validate:
+    if (offset > rcv_buf->len)
+            goto unwrap_failed;
+    if (opaque_len > rcv_buf->len - offset)
+            goto unwrap_failed;
+    if (opaque_len < GSS_KRB5_TOK_HDR_LEN)
+            goto unwrap_failed;
 
-  - reject tokens with len - offset < GSS_KRB5_TOK_HDR_LEN before
-    touching ptr+4/ptr+6;
-  - bail from rotate_left() when buf->len <= base, covering both the
-    underflow and zero-length cases;
-  - return early from _rotate_left() when buf->len is zero, so the
-    shift %= buf->len modulo cannot fault;
-  - replace the dead BUG_ON with a live check that returns
-    GSS_S_DEFECTIVE_TOKEN before the movelen subtraction.
+The first guard makes the subtraction in the second guard
+unconditionally safe; offset is derived from a successful
+xdr_inline_decode() in the head kvec, so in practice it already
+satisfies the bound. The floor mirrors the server-side check added
+in commit 5b757c2e57a5 ("SUNRPC: svcauth_gss: enforce krb5 token
+minimum length").
 
-Fixes: de9c17eb4a91 ("gss_krb5: add support for new token formats in rfc4121")
+Fixes: 2d2da60c63b6 ("RPCSEC_GSS: client-side privacy support")
 Cc: stable@vger.kernel.org
 Assisted-by: kres (claude-opus-4-7)
 Signed-off-by: Chris Mason <clm@meta.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260524010213.557424-5-cel@kernel.org
+Link: https://patch.msgid.link/20260524010213.557424-3-cel@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/gss_krb5_wrap.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/sunrpc/auth_gss/auth_gss.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
-+++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
-@@ -74,6 +74,8 @@ static void _rotate_left(struct xdr_buf
- 	int shifted = 0;
- 	int this_shift;
+--- a/net/sunrpc/auth_gss/auth_gss.c
++++ b/net/sunrpc/auth_gss/auth_gss.c
+@@ -2070,7 +2070,11 @@ gss_unwrap_resp_priv(struct rpc_task *ta
+ 		goto unwrap_failed;
+ 	opaque_len = be32_to_cpup(p++);
+ 	offset = (u8 *)(p) - (u8 *)head->iov_base;
+-	if (offset + opaque_len > rcv_buf->len)
++	if (offset > rcv_buf->len)
++		goto unwrap_failed;
++	if (opaque_len > rcv_buf->len - offset)
++		goto unwrap_failed;
++	if (opaque_len <= GSS_KRB5_TOK_HDR_LEN)
+ 		goto unwrap_failed;
  
-+	if (!buf->len)
-+		return;
- 	shift %= buf->len;
- 	while (shifted < shift) {
- 		this_shift = min(shift - shifted, LOCAL_BUF_LEN);
-@@ -86,6 +88,8 @@ static void rotate_left(u32 base, struct
- {
- 	struct xdr_buf subbuf;
- 
-+	if (buf->len <= base)
-+		return;
- 	xdr_buf_subsegment(buf, &subbuf, base, buf->len - base);
- 	_rotate_left(&subbuf, shift);
- }
-@@ -155,6 +159,9 @@ gss_krb5_unwrap_v2(struct krb5_ctx *kctx
- 
- 	dprintk("RPC:       %s\n", __func__);
- 
-+	if (len - offset <= GSS_KRB5_TOK_HDR_LEN)
-+		return GSS_S_DEFECTIVE_TOKEN;
-+
- 	ptr = buf->head[0].iov_base + offset;
- 
- 	if (be16_to_cpu(*((__be16 *)ptr)) != KG2_TOK_WRAP)
-@@ -221,9 +228,9 @@ gss_krb5_unwrap_v2(struct krb5_ctx *kctx
- 	 * head buffer space rather than that actually occupied.
- 	 */
- 	movelen = min_t(unsigned int, buf->head[0].iov_len, len);
-+	if (movelen < offset + GSS_KRB5_TOK_HDR_LEN + headskip)
-+		return GSS_S_DEFECTIVE_TOKEN;
- 	movelen -= offset + GSS_KRB5_TOK_HDR_LEN + headskip;
--	BUG_ON(offset + GSS_KRB5_TOK_HDR_LEN + headskip + movelen >
--							buf->head[0].iov_len);
- 	memmove(ptr, ptr + GSS_KRB5_TOK_HDR_LEN + headskip, movelen);
- 	buf->head[0].iov_len -= GSS_KRB5_TOK_HDR_LEN + headskip;
- 	buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
+ 	maj_stat = gss_unwrap(ctx->gc_gss_ctx, offset,
 
 
