@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9D541C2FF;
-	Fri,  4 Sep 2026 06:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2373B423E87;
+	Fri,  4 Sep 2026 06:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502906; cv=none; b=FrYhwmiSo/2ORYjMj0zpA5Omte1zv3aUzgCKOmCf2o+S8yfUP4FkI4WGzxzNeKNMwvFwR7+WP6tPjVP334GiW0K3nBLbRkuHGoJUFRoJnyxfWw/3FYop4AFBXYNW/dTgbHhaQQyS6kmJV8oqUGGAGBC7t3qE8zMN1Gf9fswsMyY=
+	t=1788502909; cv=none; b=UPcJMVaF/AKO0aSj5Bj1R7Akxhsn+ivjfFkOlrg6vS56QAOkNJf+PU+T6b1I7x+coaHwKm8bKEgqwigKxMd7V80sGnmUMAl1VzV8RImjvtwWA08cThuArtuSfcnk8ULf1xbiNqHkMujxPzN1MrykVw0OZD/ZN+Rh0Tz0QX2DYvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502906; c=relaxed/simple;
-	bh=WWw+WWX4wQvb4LiBLrGSlxJgObl8h1IIHJEZDBW2DG8=;
+	s=arc-20240116; t=1788502909; c=relaxed/simple;
+	bh=few677coHUC4fvLczYY614DaS2ZGQ16CA7bZWx+nh6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJRNjzUWp33tqWnfALv0C/vHAzQBs/r24EmQa/OhkYI0louREzM1w1PuMOzYmtFQ9BNOpHgLW+k5nYBiu1P8RuSSD0ki5gumY5DENCA61ZN4x4oGJkef2xxUu07i/Frb5BmD72gn2N6Fw/I2FNMwwCHWxp7J5DqIU/uMPj3pqxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0S9y4fkA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d2cez9hHSJd9D/BqS81VrgDPKRc0MlE8V/zyM9veNiOaPl955q9QY10GUApmTx7/uuXgs1de/Zd94FhAqzob1mU3APQlFhCVAo8Nh9rn39TkxJbW6h4s6KgFDSQDrIq5rDVNbktBX/n4qTUN5V81G4q7N5RbUvaqY7tyY2476z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lwc19VZN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0S9y4fkA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DCD1F00A3D;
-	Fri,  4 Sep 2026 06:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lwc19VZN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE6A1F00A3D;
+	Fri,  4 Sep 2026 06:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502904;
-	bh=DWrVA+8cYue0Vc5EoJFbOryz3QcA2UrOQjtMSG5xRdU=;
+	s=korg; t=1788502907;
+	bh=ro01bNV9beQl6h006vXKv7YQBUgHXs+srjRN5F992ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0S9y4fkANvAqqpX/RxaDpefwYBgBxMtKWgKeLkw0omlkNiyEmMud/qulsE0RPEnVY
-	 PAZyOQ9HQoWc95qaxQ2GCSlqxawG/SmVwr+WdwwitSF6kzWGzRRczbeweXY3K57jEG
-	 vFgvOTHa1ZKYuf661VFp6YHOU42M53biLMk6rFbk=
+	b=Lwc19VZN8R9HrKrJNzHgfl13GgT1TuwI5kFxKkWBy0hMYd4tyzxqWRmz7xQHTQPwJ
+	 OEDeovRc47WKlT0jF+gwngE/Ui1iqrLNYflD/rneFNlp4FMzRYw+vRGoxobWYVLRbK
+	 JLFyyevy4NIdWW7smakvpbmxnftUiZnfCcXusLFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Stable@vger.kernel.org,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Burak Emir <burak.emir@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 372/403] x86/sev: Fix broken SNP support with KVM module built-in
-Date: Fri,  4 Sep 2026 07:02:55 +0200
-Message-ID: <20260904045743.256665315@linuxfoundation.org>
+Subject: [PATCH 6.12 373/403] rust: rust_is_available: warn for `bindgen` < 0.72.1 && libclang >= 22
+Date: Fri,  4 Sep 2026 07:02:56 +0200
+Message-ID: <20260904045743.278104195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -55,304 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 409f45387c937145adeeeebc6d6032c2ec232b35 ]
+[ Upstream commit dc01dfb37b34beeefcfe1c3055364d41a4070c7e ]
 
-Fix issues with enabling SNP host support and effectively SNP support
-which is broken with respect to the KVM module being built-in.
+Starting with LLVM 22, `clang_getTypeDeclaration()` may return a forward
+declaration instead of the type definition. This made `bindgen` generate
+opaque types [1][2], which in turn made us fail with e.g.
 
-SNP host support is enabled in snp_rmptable_init() which is invoked as
-device_initcall(). SNP check on IOMMU is done during IOMMU PCI init
-(IOMMU_PCI_INIT stage). And for that reason snp_rmptable_init() is
-currently invoked via device_initcall() and cannot be invoked via
-subsys_initcall() as core IOMMU subsystem gets initialized via
-subsys_initcall().
+    error[E0609]: no field `__bindgen_anon_1` on type `bindings::kernel_param`
+      --> rust/kernel/module_param.rs:78:46
+       |
+    78 |         let container = unsafe { &*((*param).__bindgen_anon_1.arg.cast::<SetOnce<T>>()) };
+       |                                              ^^^^^^^^^^^^^^^^ unknown field
+       |
+       = note: available field is: `_address`
 
-Now, if kvm_amd module is built-in, it gets initialized before SNP host
-support is enabled in snp_rmptable_init() :
+This was fixed in `bindgen` 0.72.1 [3].
 
-[   10.131811] kvm_amd: TSC scaling supported
-[   10.136384] kvm_amd: Nested Virtualization enabled
-[   10.141734] kvm_amd: Nested Paging enabled
-[   10.146304] kvm_amd: LBR virtualization supported
-[   10.151557] kvm_amd: SEV enabled (ASIDs 100 - 509)
-[   10.156905] kvm_amd: SEV-ES enabled (ASIDs 1 - 99)
-[   10.162256] kvm_amd: SEV-SNP enabled (ASIDs 1 - 99)
-[   10.171508] kvm_amd: Virtual VMLOAD VMSAVE supported
-[   10.177052] kvm_amd: Virtual GIF supported
-...
-...
-[   10.201648] kvm_amd: in svm_enable_virtualization_cpu
+In order to clarify what is going on and avoid confusion [4][5], add
+a warning to `rust_is_available.sh` about it when the versions match,
+similar to past warnings like the one removed in:
 
-And then svm_x86_ops->enable_virtualization_cpu()
-(svm_enable_virtualization_cpu) programs MSR_VM_HSAVE_PA as following:
-wrmsrl(MSR_VM_HSAVE_PA, sd->save_area_pa);
+  commit ae64324ad5c1 ("rust: rust_is_available: remove warning for `bindgen` < 0.69.5 && libclang >= 19.1")
 
-So VM_HSAVE_PA is non-zero before SNP support is enabled on all CPUs.
+In addition, even if the versions match, check if the issue appears to
+not reproduce with the given binaries, to avoid a warning in such a case.
 
-snp_rmptable_init() gets invoked after svm_enable_virtualization_cpu()
-as following :
-...
-[   11.256138] kvm_amd: in svm_enable_virtualization_cpu
-...
-[   11.264918] SEV-SNP: in snp_rmptable_init
+Finally, include tests.
 
-This triggers a #GP exception in snp_rmptable_init() when snp_enable()
-is invoked to set SNP_EN in SYSCFG MSR:
+[ Nathan, in parallel, updated the instructions of the LLVM+Rust
+  kernel.org toolchains [6] so that `--version` is not passed to
+  `cargo` for `bindgen`, and thus the latest `bindgen` is installed
+  by default, which should help to avoid some of these situations.
 
-[   11.294289] unchecked MSR access error: WRMSR to 0xc0010010 (tried to write 0x0000000003fc0000) at rIP: 0xffffffffaf5d5c28 (native_write_msr+0x8/0x30)
-...
-[   11.294404] Call Trace:
-[   11.294482]  <IRQ>
-[   11.294513]  ? show_stack_regs+0x26/0x30
-[   11.294522]  ? ex_handler_msr+0x10f/0x180
-[   11.294529]  ? search_extable+0x2b/0x40
-[   11.294538]  ? fixup_exception+0x2dd/0x340
-[   11.294542]  ? exc_general_protection+0x14f/0x440
-[   11.294550]  ? asm_exc_general_protection+0x2b/0x30
-[   11.294557]  ? __pfx_snp_enable+0x10/0x10
-[   11.294567]  ? native_write_msr+0x8/0x30
-[   11.294570]  ? __snp_enable+0x5d/0x70
-[   11.294575]  snp_enable+0x19/0x20
-[   11.294578]  __flush_smp_call_function_queue+0x9c/0x3a0
-[   11.294586]  generic_smp_call_function_single_interrupt+0x17/0x20
-[   11.294589]  __sysvec_call_function+0x20/0x90
-[   11.294596]  sysvec_call_function+0x80/0xb0
-[   11.294601]  </IRQ>
-[   11.294603]  <TASK>
-[   11.294605]  asm_sysvec_call_function+0x1f/0x30
-...
-[   11.294631]  arch_cpu_idle+0xd/0x20
-[   11.294633]  default_idle_call+0x34/0xd0
-[   11.294636]  do_idle+0x1f1/0x230
-[   11.294643]  ? complete+0x71/0x80
-[   11.294649]  cpu_startup_entry+0x30/0x40
-[   11.294652]  start_secondary+0x12d/0x160
-[   11.294655]  common_startup_64+0x13e/0x141
-[   11.294662]  </TASK>
+  Thanks!
 
-This #GP exception is getting triggered due to the following errata for
-AMD family 19h Models 10h-1Fh Processors:
+    - Miguel ]
 
-Processor may generate spurious #GP(0) Exception on WRMSR instruction:
-Description:
-The Processor will generate a spurious #GP(0) Exception on a WRMSR
-instruction if the following conditions are all met:
-- the target of the WRMSR is a SYSCFG register.
-- the write changes the value of SYSCFG.SNPEn from 0 to 1.
-- One of the threads that share the physical core has a non-zero
-value in the VM_HSAVE_PA MSR.
-
-The document being referred to above:
-https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/revision-guides/57095-PUB_1_01.pdf
-
-To summarize, with kvm_amd module being built-in, KVM/SVM initialization
-happens before host SNP is enabled and this SVM initialization
-sets VM_HSAVE_PA to non-zero, which then triggers a #GP when
-SYSCFG.SNPEn is being set and this will subsequently cause
-SNP_INIT(_EX) to fail with INVALID_CONFIG error as SYSCFG[SnpEn] is not
-set on all CPUs.
-
-Essentially SNP host enabling code should be invoked before KVM
-initialization, which is currently not the case when KVM is built-in.
-
-Add fix to call snp_rmptable_init() early from iommu_snp_enable()
-directly and not invoked via device_initcall() which enables SNP host
-support before KVM initialization with kvm_amd module built-in.
-
-Add additional handling for `iommu=off` or `amd_iommu=off` options.
-
-Note that IOMMUs need to be enabled for SNP initialization, therefore,
-if host SNP support is enabled but late IOMMU initialization fails
-then that will cause PSP driver's SNP_INIT to fail as IOMMU SNP sanity
-checks in SNP firmware will fail with invalid configuration error as
-below:
-
-[    9.723114] ccp 0000:23:00.1: sev enabled
-[    9.727602] ccp 0000:23:00.1: psp enabled
-[    9.732527] ccp 0000:a2:00.1: enabling device (0000 -> 0002)
-[    9.739098] ccp 0000:a2:00.1: no command queues available
-[    9.745167] ccp 0000:a2:00.1: psp enabled
-[    9.805337] ccp 0000:23:00.1: SEV-SNP: failed to INIT rc -5, error 0x3
-[    9.866426] ccp 0000:23:00.1: SEV API:1.53 build:5
-
-Fixes: c3b86e61b756 ("x86/cpufeatures: Enable/unmask SEV-SNP CPU feature")
-Co-developed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Co-developed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Acked-by: Joerg Roedel <jroedel@suse.de>
-Message-ID: <138b520fb83964782303b43ade4369cd181fdd9c.1739226950.git.ashish.kalra@amd.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[sean: handcode/port the sev.c changes]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Link: https://github.com/rust-lang/rust-bindgen/issues/3264 [1]
+Link: https://github.com/Rust-for-Linux/linux/issues/353 [2] # "Missing fields in nested class with LLVM 22."
+Link: https://github.com/rust-lang/rust-bindgen/pull/3278 [3]
+Reported-by: Burak Emir <burak.emir@gmail.com>
+Link: https://github.com/Rust-for-Linux/linux/issues/1247 [4]
+Link: https://lore.kernel.org/rust-for-linux/CABwQupNfMAJOGqRM9ke6tj4f53dCCsBDKU7Vp+zf8mwk7bqt8Q@mail.gmail.com/ [5]
+Link: https://mirrors.edge.kernel.org/pub/tools/llvm/rust/ [6]
+Tested-by: Burak Emir <burak.emir@gmail.com>
+Link: https://patch.msgid.link/20260719120514.159914-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/sev.h |  2 ++
- arch/x86/virt/svm/sev.c    | 21 ++++++---------------
- drivers/iommu/amd/init.c   | 34 ++++++++++++++++++++++++++++++----
- 3 files changed, 38 insertions(+), 19 deletions(-)
+ scripts/rust_is_available.sh                  | 14 +++++++++
+ .../rust_is_available_bindgen_libclang_22.h   |  5 ++++
+ scripts/rust_is_available_test.py             | 30 ++++++++++++++++++-
+ 3 files changed, 48 insertions(+), 1 deletion(-)
+ create mode 100644 scripts/rust_is_available_bindgen_libclang_22.h
 
-diff --git a/arch/x86/include/asm/sev.h b/arch/x86/include/asm/sev.h
-index ee34ab00a8d6d..2524ada3708e4 100644
---- a/arch/x86/include/asm/sev.h
-+++ b/arch/x86/include/asm/sev.h
-@@ -440,6 +440,7 @@ static inline void snp_update_svsm_ca(void) { }
+diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
+index 93c0ef7fb3fb2..c7577705d4964 100755
+--- a/scripts/rust_is_available.sh
++++ b/scripts/rust_is_available.sh
+@@ -240,6 +240,20 @@ if [ "$bindgen_libclang_cversion" -ge 1900100 ] &&
+ 	fi
+ fi
  
- #ifdef CONFIG_KVM_AMD_SEV
- bool snp_probe_rmptable_info(void);
-+int snp_rmptable_init(void);
- int snp_lookup_rmpentry(u64 pfn, bool *assigned, int *level);
- void snp_dump_hva_rmpentry(unsigned long address);
- int psmash(u64 pfn);
-@@ -450,6 +451,7 @@ void kdump_sev_callback(void);
- void snp_fixup_e820_tables(void);
- #else
- static inline bool snp_probe_rmptable_info(void) { return false; }
-+static inline int snp_rmptable_init(void) { return -ENOSYS; }
- static inline int snp_lookup_rmpentry(u64 pfn, bool *assigned, int *level) { return -ENODEV; }
- static inline void snp_dump_hva_rmpentry(unsigned long address) {}
- static inline int psmash(u64 pfn) { return -ENODEV; }
-diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
-index 9a6a943d8e410..738698390ebf0 100644
---- a/arch/x86/virt/svm/sev.c
-+++ b/arch/x86/virt/svm/sev.c
-@@ -189,7 +189,7 @@ void __init snp_fixup_e820_tables(void)
-  * described in the SNP_INIT_EX firmware command description in the SNP
-  * firmware ABI spec.
-  */
--static int __init snp_rmptable_init(void)
-+int __init snp_rmptable_init(void)
- {
- 	u64 max_rmp_pfn, calc_rmp_sz, rmptable_size, rmp_end, val;
- 	void *rmptable_start;
-@@ -197,11 +197,11 @@ static int __init snp_rmptable_init(void)
- 	if (!cc_platform_has(CC_ATTR_HOST_SEV_SNP))
- 		return 0;
- 
--	if (!amd_iommu_snp_en)
--		goto nosnp;
-+	if (WARN_ON_ONCE(!amd_iommu_snp_en))
-+		return -ENOSYS;
- 
- 	if (!probed_rmp_size)
--		goto nosnp;
-+		return -ENOSYS;
- 
- 	rmp_end = probed_rmp_base + probed_rmp_size - 1;
- 
-@@ -218,13 +218,13 @@ static int __init snp_rmptable_init(void)
- 	if (calc_rmp_sz > probed_rmp_size) {
- 		pr_err("Memory reserved for the RMP table does not cover full system RAM (expected 0x%llx got 0x%llx)\n",
- 		       calc_rmp_sz, probed_rmp_size);
--		goto nosnp;
-+		return -ENOSYS;
- 	}
- 
- 	rmptable_start = memremap(probed_rmp_base, probed_rmp_size, MEMREMAP_WB);
- 	if (!rmptable_start) {
- 		pr_err("Failed to map RMP table\n");
--		goto nosnp;
-+		return -ENOSYS;
- 	}
- 
- 	/*
-@@ -261,17 +261,8 @@ static int __init snp_rmptable_init(void)
- 	crash_kexec_post_notifiers = true;
- 
- 	return 0;
--
--nosnp:
--	cc_platform_clear(CC_ATTR_HOST_SEV_SNP);
--	return -ENOSYS;
- }
- 
--/*
-- * This must be called after the IOMMU has been initialized.
-- */
--device_initcall(snp_rmptable_init);
--
- static struct rmpentry *get_rmpentry(u64 pfn)
- {
- 	if (WARN_ON_ONCE(pfn > rmptable_max_pfn))
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 0e270533bf12b..54f3c17520d51 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3219,7 +3219,7 @@ static bool __init detect_ivrs(void)
- 	return true;
- }
- 
--static void iommu_snp_enable(void)
-+static __init void iommu_snp_enable(void)
- {
- #ifdef CONFIG_KVM_AMD_SEV
- 	if (!cc_platform_has(CC_ATTR_HOST_SEV_SNP))
-@@ -3244,6 +3244,14 @@ static void iommu_snp_enable(void)
- 		goto disable_snp;
- 	}
- 
-+	/*
-+	 * Enable host SNP support once SNP support is checked on IOMMU.
-+	 */
-+	if (snp_rmptable_init()) {
-+		pr_warn("SNP: RMP initialization failed, SNP cannot be supported.\n");
-+		goto disable_snp;
-+	}
++if [ "$bindgen_libclang_cversion" -ge 2200000 ] &&
++	[ "$rust_bindings_generator_cversion" -lt 7201 ]; then
++	# Distributions may have patched the issue.
++	if ! "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang_22.h | grep -q 'pub foo'; then
++		echo >&2 "***"
++		echo >&2 "*** Rust bindings generator '$BINDGEN' < 0.72.1 together with libclang >= 22"
++		echo >&2 "*** may not work due to a bug (https://github.com/rust-lang/rust-bindgen/pull/3278)."
++		echo >&2 "***   Your bindgen version:  $rust_bindings_generator_version"
++		echo >&2 "***   Your libclang version: $bindgen_libclang_version"
++		echo >&2 "***"
++		warning=1
++	fi
++fi
 +
- 	pr_info("IOMMU SNP support enabled.\n");
- 	return;
+ # If the C compiler is Clang, then we can also check whether its version
+ # matches the `libclang` version used by the Rust bindings generator.
+ #
+diff --git a/scripts/rust_is_available_bindgen_libclang_22.h b/scripts/rust_is_available_bindgen_libclang_22.h
+new file mode 100644
+index 0000000000000..6b33544c14a81
+--- /dev/null
++++ b/scripts/rust_is_available_bindgen_libclang_22.h
+@@ -0,0 +1,5 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++struct S;
++struct S {
++	int foo;
++};
+diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_available_test.py
+index 4fcc319dea84e..a5fadef98132f 100755
+--- a/scripts/rust_is_available_test.py
++++ b/scripts/rust_is_available_test.py
+@@ -54,7 +54,7 @@ else:
+ """)
  
-@@ -3381,6 +3389,19 @@ static int __init iommu_go_to_state(enum iommu_init_state state)
- 		ret = state_next();
- 	}
+     @classmethod
+-    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False):
++    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False, libclang_22_patched=False):
+         if libclang_stderr is None:
+             libclang_case = f"raise SystemExit({cls.bindgen_default_bindgen_libclang_failure_exit_code})"
+         else:
+@@ -70,6 +70,11 @@ else:
+         else:
+             libclang_concat_case = "pass"
  
-+	/*
-+	 * SNP platform initilazation requires IOMMUs to be fully configured.
-+	 * If the SNP support on IOMMUs has NOT been checked, simply mark SNP
-+	 * as unsupported. If the SNP support on IOMMUs has been checked and
-+	 * host SNP support enabled but RMP enforcement has not been enabled
-+	 * in IOMMUs, then the system is in a half-baked state, but can limp
-+	 * along as all memory should be Hypervisor-Owned in the RMP. WARN,
-+	 * but leave SNP as "supported" to avoid confusing the kernel.
-+	 */
-+	if (ret && cc_platform_has(CC_ATTR_HOST_SEV_SNP) &&
-+	    !WARN_ON_ONCE(amd_iommu_snp_en))
-+		cc_platform_clear(CC_ATTR_HOST_SEV_SNP);
++        if libclang_22_patched:
++            libclang_22_case = "print('pub foo: ::std::os::raw::c_int,')"
++        else:
++            libclang_22_case = "pass"
 +
- 	return ret;
- }
+         return cls.generate_executable(f"""#!/usr/bin/env python3
+ import sys
+ if "rust_is_available_bindgen_libclang.h" in " ".join(sys.argv):
+@@ -78,6 +83,8 @@ elif "rust_is_available_bindgen_0_66.h" in " ".join(sys.argv):
+     {version_0_66_case}
+ elif "rust_is_available_bindgen_libclang_concat.h" in " ".join(sys.argv):
+     {libclang_concat_case}
++elif "rust_is_available_bindgen_libclang_22.h" in " ".join(sys.argv):
++    {libclang_22_case}
+ else:
+     print({repr(version_stdout)})
+ """)
+@@ -300,6 +307,27 @@ else:
+                 bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_concat_patched=True)
+                 result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
  
-@@ -3489,18 +3510,23 @@ void __init amd_iommu_detect(void)
- 	int ret;
- 
- 	if (no_iommu || (iommu_detected && !gart_iommu_aperture))
--		return;
-+		goto disable_snp;
- 
- 	if (!amd_iommu_sme_check())
--		return;
-+		goto disable_snp;
- 
- 	ret = iommu_go_to_state(IOMMU_IVRS_DETECTED);
- 	if (ret)
--		return;
-+		goto disable_snp;
- 
- 	amd_iommu_detected = true;
- 	iommu_detected = 1;
- 	x86_init.iommu.iommu_init = amd_iommu_init;
-+	return;
++    def test_bindgen_bad_libclang_22(self):
++        for (bindgen_version, libclang_version, expected_not_patched) in (
++            ("0.71.1", "21.1.0", self.Expected.SUCCESS),
++            ("0.71.1", "22.0.0", self.Expected.SUCCESS_WITH_WARNINGS),
++            ("0.71.1", "22.1.0", self.Expected.SUCCESS_WITH_WARNINGS),
 +
-+disable_snp:
-+	if (cc_platform_has(CC_ATTR_HOST_SEV_SNP))
-+		cc_platform_clear(CC_ATTR_HOST_SEV_SNP);
- }
- 
- /****************************************************************************
++            ("0.72.0", "22.0.0", self.Expected.SUCCESS_WITH_WARNINGS),
++
++            ("0.72.1", "22.0.0", self.Expected.SUCCESS),
++        ):
++            with self.subTest(bindgen_version=bindgen_version, libclang_version=libclang_version):
++                cc = self.generate_clang(f"clang version {libclang_version}")
++                libclang_stderr = f"scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version {libclang_version} [-W#pragma-messages], err: false"
++                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr)
++                result = self.run_script(expected_not_patched, { "BINDGEN": bindgen, "CC": cc })
++                if expected_not_patched == self.Expected.SUCCESS_WITH_WARNINGS:
++                    self.assertIn(f"Rust bindings generator '{bindgen}' < 0.72.1 together with libclang >= 22", result.stderr)
++
++                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_22_patched=True)
++                result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
++
+     def test_clang_matches_bindgen_libclang_different_bindgen(self):
+         bindgen = self.generate_bindgen_libclang("scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version 999.0.0 [-W#pragma-messages], err: false")
+         result = self.run_script(self.Expected.SUCCESS_WITH_WARNINGS, { "BINDGEN": bindgen })
 -- 
 2.53.0
 
