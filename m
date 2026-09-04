@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4387396572;
-	Fri,  4 Sep 2026 06:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5CF2F9DA1;
+	Fri,  4 Sep 2026 06:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502206; cv=none; b=VaS8cNwhcCu+90p1AbKKd+308pdmofc+mQnKjI848qjADrTtMoNxEAi0zuGD7DPeSMtX/BqvtIZ/NhTXSN1OtdruIlG1GbsjU2h5TXd+Ln4v0bSCySVMwtDUU6e/0/QVmGb5IGvoqJmaNFj1U9wPMRt1V/EmJ3p74UPvZAp/CVg=
+	t=1788502209; cv=none; b=RlW/Ld53hEBJpI+z50bHjJVbSiq0dzIeE11tRWg3Xq+rfl853rtmGHciZV4lSHbXgL984xh3j/fBhmEoTQb+CK9Nc05HmFBdE0RjOy+oZWhJFV1GWxtWmdhDR/vdKlk+CbCboSOMBgu9omCtu56i8xNJ3kDz9lzQoO/yOfaJ0HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502206; c=relaxed/simple;
-	bh=y1i+LWZE0yJTpKsc/lNu31xEytJ3HalF5ZGpBFSLMDo=;
+	s=arc-20240116; t=1788502209; c=relaxed/simple;
+	bh=myUb1PGLHTtj7BZmQ3FboJc4LAE4For8llFWUfeH/ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnj5kNpuelMuY3992iDaV92gUyXyRPp5ywKRq1j6/XENBK+XGq/72H4RjxirveEgH1CUnlSgwBYeYz+lYIxQY4/FnaUAuoGkvABJwZp3c5sOvGYvBtPtx05ojgXBKd9/+TNqcGnB7BQk41cYgGcpUGoaFFLOXmvHARJ3gjsOJw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8sQuqFt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jixgeYOPBJy1ixmkHtWLdcXsGOR2xpixVZwOqhKDkDWnAqQQ3HgcEDiv4TkVblGbIpcmsPbLWGIBQ3+0PnDDcnO2wKZ5bh1+nNod55rvU4v6HgxYGuETyNanVwYgkSGOa8Dv/IqSoNQOfVIAH0IBNuIXm5+TdzrXJpVxgVGLZsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMpwbfFD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8sQuqFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186C31F00A3D;
-	Fri,  4 Sep 2026 06:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMpwbfFD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A201F00A3D;
+	Fri,  4 Sep 2026 06:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502205;
-	bh=vRhJDpQihJT1vxqxjDWFAsdAtHVoqm9La2xy0dC/gGo=;
+	s=korg; t=1788502208;
+	bh=SlEqudfNoV2v6fynp6dTamTf8Y7Nhew/CynLPdttrkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I8sQuqFtKiEJkrTwpLRIONBGWtsg07nqcDQSIN35C1tsZvoj7DjMor9jUQCIbPM38
-	 8fzJ6taY2Duz8pEp3sPvOGtv6gQqrFTVlLiocIkiAVQqH+d9kEmzhZ9uacPmnOoAsP
-	 CeMFagjqP+lXvzagqYfFq52cS0zmYh8j/6oFdYIg=
+	b=pMpwbfFDyjBi9TksbVD76apxSyX1WuGGJCOh+4uBAUUH9DOY+GyR3RXEnsBdCT2kP
+	 fjO6t716/EHiw0dm1f0kTd6miQBGH+gjpU0lDm3KvjH11qsydNJwrbYdnPa4imaHpL
+	 m7NVocvWeFVdNzWSbEl16cgwdkYACmb/O4Ou7f6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 125/403] HID: picolcd: clamp eeprom debugfs read to bytes actually received
-Date: Fri,  4 Sep 2026 06:58:48 +0200
-Message-ID: <20260904045737.681018366@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 090/403] nfsd: drop the stateid, not the stateowner, on seqid_op replay retry
+Date: Fri,  4 Sep 2026 06:58:13 +0200
+Message-ID: <20260904045736.880976577@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,64 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit e9c667395ac1f8024f623250b32bae4c7af9caa0 upstream.
+commit 5e4627d3513e60accfce9d5f4c7fa95251ef93d6 upstream.
 
-picolcd_debug_eeprom_read() trusts resp->raw_data[2] -- a length byte
-supplied by the device in its REPORT_EE_DATA reply -- clamped only to
-the caller's read() count:
+In nfs4_preprocess_seqid_op() the stateid is obtained from
+nfsd4_lookup_stateid(), which holds a reference on the nfs4_stid
+(sc_count) but takes no reference on the stateowner. openlockstateid()
+merely casts that stid and likewise takes no reference.
 
-	ret = resp->raw_data[2];
-	if (ret > s)
-		ret = s;
-	if (copy_to_user(u, resp->raw_data+3, ret))
+When nfsd4_cstate_assign_replay() returns -EAGAIN (the replay owner is
+being torn down, RP_UNHASHED) it has not taken a stateowner reference on
+that path. The error handling nevertheless called
+nfs4_put_stateowner(stp->st_stateowner), dropping an so_count reference
+the function never acquired -- risking a stateowner refcount underflow and
+use-after-free -- while leaking the sc_count reference held on the stid.
+The leaked stid reference can also stall a concurrent
+nfsd4_close_open_stateid() waiting for sc_count to drop.
 
-It never checks resp->raw_size, the number of bytes picolcd_raw_event()
-actually copied into the 64-byte raw_data[] of the kmalloc'd struct
-picolcd_pending. A device (or a spoofed picoLCD) returning a length byte
-of 0xff, read with a count >= 255, makes copy_to_user() read past
-raw_data[] into adjacent slab memory and return it to userspace through
-the debugfs "eeprom" file:
+Drop the reference actually held -- the stid -- before retrying. The
+stateowner stays alive through the reference held by the stid. This mirrors
+the open path in nfsd4_process_open1(), where the put balances a reference
+that path explicitly holds on the stateowner.
 
-	BUG: KASAN: slab-out-of-bounds in _copy_to_user
-	Read of size 255 ... picolcd_debug_eeprom_read+0x214/0x2f0 [hid_picolcd]
-
-The debug-dump path in the same file already validates the device length
-byte against the received size before trusting it; this read does not.
-The file is created S_IRUSR (root-only) and a crafted device is needed,
-so it is neither unprivileged- nor remotely-triggerable.
-
-Clamp the copy length to resp->raw_size - 3 (the payload actually
-received, minus the 3-byte header), floored at 0 for short replies.
-
-Fixes: 9bbf2b98ba11 ("HID: add experimental access to PicoLCD device's EEPROM and FLASH")
+Fixes: eec762080008 ("nfsd: replace rp_mutex to avoid deadlock in move_to_close_lru()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-21-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-picolcd_debugfs.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/nfsd/nfs4state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-picolcd_debugfs.c
-+++ b/drivers/hid/hid-picolcd_debugfs.c
-@@ -98,6 +98,15 @@ static ssize_t picolcd_debug_eeprom_read
- 		ret = resp->raw_data[2];
- 		if (ret > s)
- 			ret = s;
-+		/*
-+		 * raw_data[2] is a device-supplied length; also clamp it to
-+		 * what picolcd_raw_event() actually stored (raw_size), or a
-+		 * hostile device overruns the raw_data[] buffer.
-+		 */
-+		if (ret > resp->raw_size - 3)
-+			ret = resp->raw_size - 3;
-+		if (ret < 0)
-+			ret = 0;
- 		if (copy_to_user(u, resp->raw_data+3, ret))
- 			ret = -EFAULT;
- 		else
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7405,7 +7405,7 @@ retry:
+ 		return status;
+ 	stp = openlockstateid(s);
+ 	if (nfsd4_cstate_assign_replay(cstate, stp->st_stateowner) == -EAGAIN) {
+-		nfs4_put_stateowner(stp->st_stateowner);
++		nfs4_put_stid(&stp->st_stid);
+ 		goto retry;
+ 	}
+ 
 
 
