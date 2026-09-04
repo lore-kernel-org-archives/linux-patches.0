@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFEB37F306;
-	Fri,  4 Sep 2026 06:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4EF424641;
+	Fri,  4 Sep 2026 06:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502438; cv=none; b=Hgi8ysoUPxF7rJXD2JjLSEJhmHA3sqsr0fZ6NKmzH4ThWFG4XnHd73yVpF57zWj0uI+ejSQWXlg6dHT0L+r4oY3kEbiFQJqERfHL6IsSRJNaUGa9IH+CzsL+2xEDffEsntiBSjKRXpzO6ydI0gWvvnshHo4xWVEU5sCv00Fu3ys=
+	t=1788502441; cv=none; b=I0HdKknf4Q6K7b32zdqSwrG/hvB5jXfMO4pOrDjIS8mjMEDucbIxU+VRcoK3xTk65lIRjw8RBg0wRqEswJb9RAevAbvh/gKN60TqmmQm+mE5Orw+yvdDZpWs/OnEaaK2JMmTQv8+072u6B4fhmJMqxMd+MXlw5B3sZ/t7tYoiug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502438; c=relaxed/simple;
-	bh=P0K4PkBMRBhM/e9ZegBEy4Bw3RN478W/rp86iadHuU4=;
+	s=arc-20240116; t=1788502441; c=relaxed/simple;
+	bh=uucXBYCFuSZ+2MRTIcZmp2d2FyZHGfanRxdX3YsTkO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1nwzqRR2FP0ynElxr3GmgeCwjcr6Jx11gIcf/kFLjhGtdGHJ6JR3r8cBbl797xEnZpU27nc+PV2iShRSOYTrtEuR0YNqgpt2UiCVJxJwoOBeVPxlauFjRPvp8XTi+hNlLYSVxfIDU/3hsbuMY7unCvZFFGus9Qpd5fA5tvjQMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojuspOa3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F4bdgQKsXRuzQ8ixBkcNv3dN4EUV6MA0cSOWXvyN8D5IyC8IMfH+o/JZh2MS3r8s8PnbJJQW4yE84kA/fqKQ86fDTn7Y5N3140wNk8CSnReClLlM0mvM8Dd1zngUW0vd+yxE18xhkgMEE/0SRif9WIo23G+p796uCQ/i5toq8j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNtfLDo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojuspOa3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CF51F00A3D;
-	Fri,  4 Sep 2026 06:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNtfLDo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C18A1F00A3D;
+	Fri,  4 Sep 2026 06:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502436;
-	bh=PO+0LwatQ7zE51oKCOT9ZUYomF5Cz9fc+1wl6sSZCZc=;
+	s=korg; t=1788502439;
+	bh=p2mtALIWc8HtBpyR6YobU4bK98QgWUQdzKYGf2y7YIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ojuspOa3tIuzA9BkF/P9MB0QKLhNPIh+M86iVrxCb6rpUjR4WsLhbme4PmapiVePZ
-	 bdhXToinS7vHVlGjJ47Fuf1Z6hGaarSc31+hL42iY0qFPqgDj/Zv7r7wX64H4E9lfR
-	 CyCT/iCbBItupuGsKQAZG2mWVTb+vbWv5F3bPc7E=
+	b=bNtfLDo++39jsYDPuoF7kktgfnpiFmNXZGKIUZ/4bogQwzIEPrv02S/tHsbb3TR4S
+	 IMe2BdXagLAUoCbdonadi3xTdMgXkYBxz4SSwYIBJ4iOojFTrajK/1yeOo+Lhebr01
+	 yn9xC4OMnjqWauIkCsRZ4pPFdnW+NtiVo7x1qKEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 207/403] SUNRPC: Guard svcauth_gss_release() dispatch on rq_auth_stat
-Date: Fri,  4 Sep 2026 07:00:10 +0200
-Message-ID: <20260904045739.563008917@linuxfoundation.org>
+	Xin Chen <xin.chen2@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 181/403] Bluetooth: hci_core: use skb_get() instead of skb_clone() for req_skb
+Date: Fri,  4 Sep 2026 06:59:44 +0200
+Message-ID: <20260904045738.974042637@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,55 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Xin Chen <xin.chen2@oss.qualcomm.com>
 
-commit f8870b9b75afb77986bc65940a231d54068ff2b1 upstream.
+commit f5afdff569a09d1cb8cf19826199d024725576cb upstream.
 
-svcauth_gss_release() reads gc_proc and switches on gc_svc before
-consulting rq_auth_stat.  On the SVC_DENIED path after a failed
-svcauth_gss_accept(), those fields may hold stale values from a
-prior request or uninitialized slab residue: svcauth_gss_accept()
-allocates gss_svc_data with non-zeroing kmalloc and clears only
-gsd_databody_offset and rsci per request, not clcred.
+BT enable fails intermittently with -ETIMEDOUT (-110).  The kernel log
+shows the HCI Read Local Version command was sent and the firmware
+replied with status 0x00 (logged by hci_req_cmd_complete() BT_DBG),
+but the waiter in __hci_cmd_sync_sk() never woke up and timed out
+after 10 s:
 
-Because RPC_GSS_PROC_DATA is zero, a zeroed or stale-zero gc_proc
-passes the existing guard and falls through into the gc_svc switch,
-which can dispatch to svcauth_gss_wrap_integ() or
-svcauth_gss_wrap_priv().  Both wrap helpers call
-svcauth_gss_prepare_to_wrap() before any rsci->mechctx dereference,
-and that helper already returns early when rq_auth_stat is not
-rpc_auth_ok, so the downstream NULL dereference is blocked.  The
-dispatch itself remains structurally wrong: it reads scalars that
-the caller has no contract to have initialized after a failed
-authentication.
+  bluetooth hci0: Opcode 0xfc00              // __hci_cmd_sync_sk
+  bluetooth hci0: opcode 0xfc00 plen 1       // hci_cmd_sync_add
+  bluetooth hci0: skb len 4                  // hci_cmd_sync_alloc
+  bluetooth hci0: length 1                   // hci_req_sync_run
+  Bluetooth: hci0 cmd_cnt 1 cmd queued 1     // hci_cmd_work
+  Bluetooth: hci0 type 1 len 4               // hci_send_frame
+  Bluetooth: opcode 0xfc00 status 0x00       // hci_req_cmd_complete
+  <-- req_skb NULL: req_complete_skb not set,
+      hci_cmd_sync_complete() never called,
+      req_status stays HCI_REQ_PEND            -->
+  <-- 10 s later: wait_event_interruptible_timeout expires -->
+  bluetooth hci0: end: err -110              // __hci_cmd_sync_sk
 
-Mirror the existing rq_auth_stat gate in
-svcauth_gss_prepare_to_wrap() one frame up, so
-svcauth_gss_release() skips the clcred dispatch entirely when
-authentication has not succeeded.  The cleanup tail that releases
-rq_client, rq_gssclient, cr_group_info, and rsci still runs.
+The root cause is that hci_send_cmd_sync() clones the sent command
+into hdev->req_skb so that hci_req_cmd_complete() can locate the
+registered completion callback.  Under memory pressure this
+skb_clone() fails, leaving hdev->req_skb NULL.  The firmware reply
+is received and processed, but hci_req_cmd_complete() finds NULL
+req_skb, so hci_cmd_sync_complete() is never called, req_status
+stays HCI_REQ_PEND, and the waiter times out with -ETIMEDOUT.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+req_skb is only used to read bt_cb(skb)->hci callbacks and opcode --
+it is never modified.  Replace skb_clone() with skb_get(), which
+simply increments the reference count of hdev->sent_cmd without
+allocating new memory and therefore cannot fail.
+
+This issue was first observed as a use-after-free in ttyport_close()
+when ttyport_open() failed, which was investigated in an earlier
+patch series [1].  That investigation led to the discovery of the
+true root cause described above.
+
+[1] https://lore.kernel.org/all/20250430111617.1151390-1-quic_cxin@quicinc.com/
+
+Fixes: 2615fd9a7c25 ("Bluetooth: hci_sync: Fix overwriting request callback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-4-d026a1415e0b@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Xin Chen <xin.chen2@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1946,6 +1946,8 @@ svcauth_gss_release(struct svc_rqst *rqs
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4124,7 +4124,7 @@ static int hci_send_cmd_sync(struct hci_
+ 	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND &&
+ 	    !hci_dev_test_and_set_flag(hdev, HCI_CMD_PENDING)) {
+ 		kfree_skb(hdev->req_skb);
+-		hdev->req_skb = skb_clone(hdev->sent_cmd, GFP_KERNEL);
++		hdev->req_skb = skb_get(hdev->sent_cmd);
+ 	}
  
- 	if (!gsd)
- 		goto out;
-+	if (rqstp->rq_auth_stat != rpc_auth_ok)
-+		goto out;
- 	gc = &gsd->clcred;
- 	if (gc->gc_proc != RPC_GSS_PROC_DATA)
- 		goto out;
+ 	return err;
 
 
