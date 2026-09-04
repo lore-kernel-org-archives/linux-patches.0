@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB59132470E;
-	Fri,  4 Sep 2026 06:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F1032470E;
+	Fri,  4 Sep 2026 06:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502635; cv=none; b=EtQJy51jalG/flZoe0QCAewWW9xPrDKjF/tm8egAWNqMHO3xMMf/8CEPp2jD16FcEI6nnwxFiD4l7wIIW4VskhhNcxNATRYXX64BItrtpqUXY259rwfTIpeixrRcgdzKMZb4i4jz31RvV6OvXFZZKw0Eab+ZXmimXAOYFTwnn5w=
+	t=1788502637; cv=none; b=CsyacCtcARWTNqeZTT7jB6+A3UO9vo7R/LXSMeXbDN1x1HM6mCQs9X/DKZg1550ONfhFPMJyxPQqKfVe+8yQUmnxCKiMa3M/ZPWxdpHYU68Bldzf40l6shKt7MAdbdh6iqoCm5vVmIYMJqAv2740aNeaHc2uvsrJD8crtO6+VU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502635; c=relaxed/simple;
-	bh=LpX9jcgqFdD4sgSaL3MH2h9hXKhmSW98aQZ67NPwoIo=;
+	s=arc-20240116; t=1788502637; c=relaxed/simple;
+	bh=LgzkOeHzPziCVUFLI42NKpSsYMwPdKi70YwiXE/f8Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/1lKhlNJrG5VSImaCSTQNqHlBIu92pDxKnMIphBdb1IVz49ChTrBrYLMix6Zace1clWX84szYANy8GDmUkzlx0eE4SpmKKo8H2K/TVGkfotGyU5GAZdjGZtRZ6o5JYLPzgnEPGyazGwd98lwc3re7sQPiZSanbJNHWyYI+oabg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oTLP7wJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E4mNDZmfkaTWhH0Z4ehJ94uwpogjtOng+/I7+uPAKIi6La3uuvZPA8/OHR/7sfFA0l9vq5s06e551O8JkH4yJb6AcfhphyHz8qfrr375bYia+t6H1yYUZXjYp+Cyrh70cn+VImJK0kgua6h7DkRNdGKJqLzTP33VbOQyl0hCGy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjybPMpK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oTLP7wJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF931F00A3D;
-	Fri,  4 Sep 2026 06:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjybPMpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D541F00A3E;
+	Fri,  4 Sep 2026 06:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502633;
-	bh=F+cQWbbUUXSp5BJQaYYi8Zs/hVgfd0jEiB9rlQKu2GM=;
+	s=korg; t=1788502636;
+	bh=QyCKyPqYz7qLINIiOPvTlbugxeRD3OV1nJXS+BPcR3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0oTLP7wJSx/aCwAlFuG8jnquqQPOhCu9LiY1zrF6mA+qH6SRa9Nk1/xT6N1YTCkq2
-	 /R/gcJxUHFv0TC3cfCtx1i9ZTiPFn1lz7e2pTGZ2xL+91MA1jZwqtAiEMYuXgMOkiG
-	 ejSB/RMHSB+aL7pcYSu/T9SB+RtaF4phb7mLV+Xw=
+	b=UjybPMpKVGnPgH8JSKNffmLBEf7GDemI/pW7H4UoooGyZxqN5cLu8FwxllBEN28s2
+	 8olhVjpUkdqNuZrRByliQdJWqGylfe9aj7korku0Af7pZc/HP1GQHOk7uPci5dae9j
+	 Z1rBSBGYztP+PCsOaUiztyPUCnDQNc3KBObP933A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.12 233/403] RDMA/cxgb4: Cancel reg_work before freeing device on remove
-Date: Fri,  4 Sep 2026 07:00:36 +0200
-Message-ID: <20260904045740.166553103@linuxfoundation.org>
+	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 224/403] staging: media: tegra-video: vi: fix probe failure on skipped last port
+Date: Fri,  4 Sep 2026 07:00:27 +0200
+Message-ID: <20260904045739.957156494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,45 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit a7100601aa1a39f799a566acce10db20eaf4b7f2 upstream.
+commit ae15adeed9f7ec54989175fe3c9e0815186821bc upstream.
 
-c4iw_uld_state_change() queues reg_work to register the RDMA device.
-c4iw_remove() can free ctx->dev while this work is pending or running,
-leaving c4iw_register_device() accessing the freed device.
+tegra_vi_channels_alloc() iterates over port nodes and skips those
+whose reg property cannot be read or whose remote endpoint fails
+v4l2_fwnode_endpoint_parse(), leaving the negative result of the
+failed call in ret. If that happens on the last port node, the loop
+ends with ret still negative and tegra_vi_init() fails the whole VI
+probe.
 
-Cancel reg_work before removing the device.  The registration work can
-tear down ctx->dev when registration fails, so do not unregister or
-deallocate it again in that case.
+The same defective port earlier in the ports node is skipped silently,
+so probing succeeds or fails depending on the order of the port nodes.
+The CSI equivalent, tegra_csi_channels_alloc(), returns 0
+unconditionally after its loop and does not have this problem.
 
-This issue was found by an in-house static analysis tool.
+Use a separate variable for the per-port checks so that only fatal
+errors end up in ret.
 
-Fixes: 1c8f1da5d851 ("iw_cxgb4: Fix possible circular dependency locking warning")
-Link: https://patch.msgid.link/r/20260806130128.465460-1-fanwu01@zju.edu.cn
+Fixes: 1ebaeb09830f ("media: tegra-video: Add support for external sensor capture")
+Fixes: 2ac4035a78c9 ("media: tegra-video: Add support for x8 captures with gang ports")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/cxgb4/device.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/staging/media/tegra-video/vi.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/hw/cxgb4/device.c
-+++ b/drivers/infiniband/hw/cxgb4/device.c
-@@ -953,6 +953,12 @@ void c4iw_dealloc(struct uld_ctx *ctx)
- static void c4iw_remove(struct uld_ctx *ctx)
- {
- 	pr_debug("c4iw_dev %p\n", ctx->dev);
-+
-+	/* c4iw_register_device() may still be using ctx->dev. */
-+	cancel_work_sync(&ctx->reg_work);
-+	if (!ctx->dev)
-+		return;
-+
- 	debugfs_remove_recursive(ctx->dev->debugfs_root);
- 	c4iw_unregister_device(ctx->dev);
- 	c4iw_dealloc(ctx);
+--- a/drivers/staging/media/tegra-video/vi.c
++++ b/drivers/staging/media/tegra-video/vi.c
+@@ -1262,6 +1262,7 @@ static int tegra_vi_channels_alloc(struc
+ 	struct device_node *parent;
+ 	struct v4l2_fwnode_endpoint v4l2_ep = { .bus_type = 0 };
+ 	unsigned int lanes;
++	int err;
+ 	int ret = 0;
+ 
+ 	ports = of_get_child_by_name(node, "ports");
+@@ -1272,8 +1273,8 @@ static int tegra_vi_channels_alloc(struc
+ 		if (!of_node_name_eq(port, "port"))
+ 			continue;
+ 
+-		ret = of_property_read_u32(port, "reg", &port_num);
+-		if (ret < 0)
++		err = of_property_read_u32(port, "reg", &port_num);
++		if (err < 0)
+ 			continue;
+ 
+ 		if (port_num > vi->soc->vi_max_channels) {
+@@ -1294,10 +1295,10 @@ static int tegra_vi_channels_alloc(struc
+ 
+ 		ep = of_graph_get_endpoint_by_regs(parent, 0, 0);
+ 		of_node_put(parent);
+-		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(ep),
++		err = v4l2_fwnode_endpoint_parse(of_fwnode_handle(ep),
+ 						 &v4l2_ep);
+ 		of_node_put(ep);
+-		if (ret)
++		if (err)
+ 			continue;
+ 
+ 		lanes = v4l2_ep.bus.mipi_csi2.num_data_lanes;
 
 
