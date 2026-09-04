@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554E441F37D;
-	Fri,  4 Sep 2026 05:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2306E422522;
+	Fri,  4 Sep 2026 05:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499308; cv=none; b=U4lEw66QZLtLLzNj4HrKWpr3+6FOsIPTcfNkiSLu05vMCL+MLl6tRmDwFKQEk83RTRVEaCu0NXOAbCjEv9roJHP1+l21Qox7ej78W4KnA5QR8eonoA8FyOL3wO0ix4uVGu41NPpboEeH9WwIKTMFTwNqY/OOszGKkqvZy9oDGxI=
+	t=1788499311; cv=none; b=ViN2/JRAmJ5dx+WYtgqEmpGFAKWPIkZ9s6tBDmIvK2Kj3OmyogCWQTlbn+K8HahQZzJm1SawkJDkYHORmP4UhloBCmSbnxfVcYcioTHO+lp+GJ2eyZZcDZVCnl19xEzEUnxKG9Qjrsw0FE/45IUrD5LyRilv/mhvr3n5mE4hQSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499308; c=relaxed/simple;
-	bh=KLczzdbMZj9iC/FbJK8Tpo5xEJDjmrPqRhEoKDQWKTY=;
+	s=arc-20240116; t=1788499311; c=relaxed/simple;
+	bh=Ac7LDqEwnlGMPhKjBHRmH4NHvqxaV53h3au/Y9cC79E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hm0ATKlXV+S5PuN3WyIVONXTegvPFAZTAVd/JygpmYwX8cR+lnvILydQmAeEbX9LX7laFb7n1RMMoMoDvLSo1BM3/k+g+hdcDeNNiUyKk+IkukKC8C0Yf/jSNg7klgyA83Md+yvxAR/PU9HQjtOfbTa58KUO2BcDepj0b2rQcsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIKuD43i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dn9ECxUil2f523noTs2NaRww3A/rYHGgS96aIsAeE9OXJAKiXkDCwi4H41ubMx2Rl2AfNA28x6IncdjaPteRPy+ZvhRPXZQOVYH0N9k7OADbmbZko8nlEviR1GlxfR4IqC9h8jfvnbN3Z3OsKP6YQuNTlWHQyI3cHFP8p5IApTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kIrc8hX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIKuD43i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BDC1F00A3D;
-	Fri,  4 Sep 2026 05:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kIrc8hX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E6341F00ACA;
+	Fri,  4 Sep 2026 05:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499307;
-	bh=durPC5kN4LViOxBXChjCykftsjQtzjR0whY+QBPSZlQ=;
+	s=korg; t=1788499310;
+	bh=HvEiRtd9bSmKeHGwlNZIE4N+sj8iWHXcVpolwYRDJ1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MIKuD43iPDi29OHqXbx+a6j2+38J6AQKQe/Q5Ucs9kdoqFH68GM4p9DJpLi1B/Unf
-	 3bLbaudsC5wp2dtsk9ZAgzUhQyTsjuKrXIrETnrueMbG/Ury11rfODNuvbntCs3Ikb
-	 Ctvl98EbzatsXeiazYnHPMWVjsgL6+v/XmfxMqBU=
+	b=1kIrc8hXsOQGMzOdpUWv78Zq4U/OTFjrgkhRRPm0v04lqZtNlxp+2ThuvZtb8saK6
+	 D1ySXBpUySDYma9W56WTL/j+sCrwaoK48ao3JPqfocOq42sHpEbs28PGVuQBlGbmVZ
+	 PHUtCC2aTj84dtpazwp6SQwkwA7yPFpusMkLrhI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 372/713] SUNRPC: svcauth_gss: enforce krb5 token minimum length
-Date: Fri,  4 Sep 2026 06:55:40 +0200
-Message-ID: <20260904045812.165880803@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 373/713] sunrpc: route to a populated pool in svc_pool_for_cpu()
+Date: Fri,  4 Sep 2026 06:55:41 +0200
+Message-ID: <20260904045812.188724781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,65 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit a919c5c88769cf8fb3ec071e6078d830bf512489 upstream.
+commit f6310491c4cdb88af73aa551ec9df1f10a90c709 upstream.
 
-svcauth_gss_unwrap_priv() validates only an upper bound on the
-wire-supplied opaque length before handing the buffer to
-gss_unwrap():
+svc_set_num_threads() spreads the requested threads evenly across the
+service's pools (base = nrservs / sv_nrpools).  When a service runs
+fewer threads than it has pools -- e.g. an nfsd configured with fewer
+threads than the host has NUMA nodes while running in "pernode" or
+"percpu" mode -- the trailing pools are left with no threads at all.
 
-    if (len > xdr_stream_remaining(xdr))
-            goto unwrap_failed;
-    offset = xdr_stream_pos(xdr);
-    ...
-    maj_stat = gss_unwrap(ctx, offset, offset + len, buf);
+svc_xprt_enqueue() selects a pool from the CPU servicing the transport,
+queues the transport on that pool's sp_xprts, and only wakes a thread
+from the same pool.  Each thread services exclusively its own pool, so a
+transport that lands on a threadless pool is enqueued on sp_xprts and
+never picked up: the connection hangs indefinitely.
 
-The wire value `len` flows unchanged as the upper bound into the
-krb5 unwrap path, so a len in [0, 16] passes this check and is
-handed to gss_unwrap(). For a krb5 v2 context that lands in
-gss_krb5_unwrap_v2(), which reads the 16-byte RFC 4121 token
-header fields at ptr+4 and ptr+6 and then calls rotate_left()
-before any integrity check. With a sub-header length the header
-reads run past the token, and _rotate_left()'s `shift %= buf->len`
-path can divide by zero when buf->len has been driven to zero by
-the truncated token. A header-only token (len == 16) is equally
-invalid: with a non-zero RRC field and the opaque blob ending at
-the XDR buffer boundary, rotate_left() builds a zero-length
-subbuffer, reaching the same division.
+Have svc_pool_for_cpu() skip pools that currently have no threads,
+falling back to the next populated pool.  This trades NUMA locality for
+a guarantee that the work is actually serviced.  sp_nrthreads is only
+updated under the service mutex; the lockless read here is a best-effort
+routing hint, so annotate it with data_race().
 
-Reject the token at the server entry point before it reaches the
-krb5 unwrap core. A valid sealed RFC 4121 token must contain
-the 16-byte header plus at least some encrypted payload.
-
-Fix by adding a minimum-length check immediately after the
-existing upper-bound check:
-
-    if (len <= GSS_KRB5_TOK_HDR_LEN)
-            goto unwrap_failed;
-
-Fixes: 7c9fdcfb1b64 ("[PATCH] knfsd: svcrpc: gss: server-side implementation of rpcsec_gss privacy")
+Fixes: bfd241600a3b ("[PATCH] knfsd: make rpc threads pools numa aware")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260524010213.557424-2-cel@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260706-sunrpc-pool-mode-v5-1-6c4ee7cd89aa@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/svc.c |   29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -949,6 +949,8 @@ svcauth_gss_unwrap_priv(struct svc_rqst
- 	}
- 	if (len > xdr_stream_remaining(xdr))
- 		goto unwrap_failed;
-+	if (len <= GSS_KRB5_TOK_HDR_LEN)
-+		goto unwrap_failed;
- 	offset = xdr_stream_pos(xdr);
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -402,6 +402,7 @@ struct svc_pool *svc_pool_for_cpu(struct
+ 	struct svc_pool_map *m = &svc_pool_map;
+ 	int cpu = raw_smp_processor_id();
+ 	unsigned int pidx = 0;
++	unsigned int i;
  
- 	saved_len = buf->len;
+ 	if (serv->sv_nrpools <= 1)
+ 		return serv->sv_pools;
+@@ -414,8 +415,34 @@ struct svc_pool *svc_pool_for_cpu(struct
+ 		pidx = m->to_pool[cpu_to_node(cpu)];
+ 		break;
+ 	}
++	pidx %= serv->sv_nrpools;
+ 
+-	return &serv->sv_pools[pidx % serv->sv_nrpools];
++	/*
++	 * It's possible to have a pool with no threads. Userland can just set
++	 * things up this way directly. Also, when threads are autodistributed
++	 * they are spread evenly across the pools, but when there are fewer
++	 * threads than pools some pools can end up with none.
++	 *
++	 * A transport enqueued on a threadless pool would never be picked up,
++	 * since each thread only services its own pool. Fall back to the next
++	 * populated pool, trading NUMA locality for a guarantee that the
++	 * transport is serviced.
++	 */
++	for (i = 0; i < serv->sv_nrpools; i++) {
++		struct svc_pool *pool = &serv->sv_pools[pidx];
++
++		/* This is set under the service mutex and rarely ever
++		 * changes. A data race here is harmless.
++		 */
++		if (data_race(pool->sp_nrthreads))
++			return pool;
++
++		if (++pidx >= serv->sv_nrpools)
++			pidx = 0;
++	}
++
++	/* No pool has any threads; nothing can service the transport. */
++	return &serv->sv_pools[pidx];
+ }
+ 
+ static int svc_rpcb_setup(struct svc_serv *serv, struct net *net)
 
 
