@@ -1,53 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E3730C160;
-	Fri,  4 Sep 2026 05:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4ECF30C160;
+	Fri,  4 Sep 2026 05:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498421; cv=none; b=h2vP1sAytMQ06iZWIBrnjRXVnY/eUVNUTY0ChnltY++qV4RFyFeoadc5f8o2wSxcORhJDcR+WvMH+kAQ9LmKxG+GR8Ry45VWbsfFX1vhDQH3b+Czi3z6xa/YdpEUsBYPqIwDtbprpPzlXd8c2bAWAElIayLAYaGE81/blR4CfZU=
+	t=1788498423; cv=none; b=KUxH4kPyWZMVRbjxyW++U4qKb55w0hrjx2T+w4tOqk+u4pOLusUZwty3QrvBGPEQRC9YqZbkxri1/2FWM26NZtnOXJuc5wtKPmWisAYMjvp8niozh1bCuPpkVuub/GU5ecmW0bnk8zj44BX3mEx21V1eG8vL5w2QeFsOtue+Ik4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498421; c=relaxed/simple;
-	bh=UUp5OHPxca/aVc0atb3Rim7KUZ5tomD+43J0KWk4D8Y=;
+	s=arc-20240116; t=1788498423; c=relaxed/simple;
+	bh=uOqT4mEPXzA34DriRn5hn/wxDxmNir6vUWWv+6lzMXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+FbH+FFmWivZhBMVC32SfnUICm0JTdXjAmNhqSFXU5HUBJzwaTjsVmeF9IYHAsEdx8cswz5+zdlNdMFBxASm2Ao5VKvFSv2gfqATUA+Cla7qanJukgyCotwUsW21MSSk25SJonz0PaCbM3i3dQM6+WgIJdk0uYhRUrCMCKeeLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qH/itAjH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qFLBtUCGsN9iVIj6dpF/g7/hMyTo+Pc3QD6c4m2n4H8KIjXyDuY34G3RaSZrbM30bJqJFO16caJaGlN214XyI/D4gm0tr+MsK0ibUYml6k2qFS/ucCSaZgEPLTYJbK6hkmLJ5VuSGDwIn39LWFW4SGdc9HlvjyGI0DWiZx4TEX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzM1bQs8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qH/itAjH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B871F00A3D;
-	Fri,  4 Sep 2026 05:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzM1bQs8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113241F00A3D;
+	Fri,  4 Sep 2026 05:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498419;
-	bh=ucnmwLo8E7QEflU3TphBTEhr2Cokb98u/BAeae61oDw=;
+	s=korg; t=1788498422;
+	bh=dXcqX7ImAmN7gc0OUXvmYsxKlEZjcAvvDzwHBAN70I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qH/itAjHBH/+mPbI5IBxpo63bz1vzsz+OWzjkO7Ej/A4tgCqHzTcGYsfof71f30Uh
-	 QGklFOtts5EVwdprmtF4ISI3sml1zKukMSnsE0QHzSE8gN8DrvMsIzf1/vEDpIpcaG
-	 phG2vFIzaJn4Xr4v+HuZ3QFlww5jJ6GrdqOjyz1s=
+	b=yzM1bQs8geUVphax/LZj8A0Stm2NuuXmZEReY5skzaqMzE83xNSi1P8VqoslcWHcp
+	 Se4okJ+e2CG8iQk93cUO56pUhbH4Wm6ZSD5krk8cJ884yAOz3GkxEdNVF/zpynXknu
+	 tKaoLKq8FSXPEgSQsrFR73GXa9fV2tQ8/7vg+//U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Barry Song <baohua@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Steven Barrett <steven@liquorix.net>,
-	Suleiman Souhlal <suleiman@google.com>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Yu Zhao <yuzhao@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Gregory Price <gourry@gourry.net>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 056/713] mm/mglru: fix and remove redundant unevictable folio handling
-Date: Fri,  4 Sep 2026 06:50:24 +0200
-Message-ID: <20260904045805.093538926@linuxfoundation.org>
+Subject: [PATCH 7.2 057/713] mm/migrate: report RCU-tasks quiescent states in migrate_pages_batch()
+Date: Fri,  4 Sep 2026 06:50:25 +0200
+Message-ID: <20260904045805.115466699@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -66,110 +60,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit f7e698e326b239a91ea15844817551921209e826 upstream.
+commit efe8f86c0916f0f74eea74ae21a3b37f728c6bad upstream.
 
-sort_folio() has a shortcut for moving folios that are no longer evictable
-but are still sitting on a generation list.  However, this shortcut is
-buggy.  It does not follow the PG_lru usage convention, and it has a more
-serious issue.
+migrate_pages_batch() unmaps each folio before moving it, and every
+unmap runs the mmu_notifier invalidate callbacks.  On KVM hosts
+try_to_migrate() ends up in kvm_mmu_notifier_invalidate_range_start() ->
+tdp_mmu_zap_leafs(), which is expensive, so unmapping a large batch keeps
+the CPU busy for a long time.
 
-Unevictable folios are not threaded on lists[LRU_UNEVICTABLE], so that
-folio->lru can be reused to hold folio->mlock_count (see the comment in
-lruvec_init()).  Hence lruvec_add_folio() skips the list_add() for them,
-and every other place that turns a folio unevictable initialises
-mlock_count explicitly: lru_add() sets it to 0, __mlock_folio() and
-__mlock_new_folio() set it to !!folio_test_mlocked(folio).  sort_folio()
-sets nothing, and the lru_gen_del_folio() right above it may have already
-poisoned folio->lru via list_del(), so mlock_count ends up aliasing
-LIST_POISON2, which reads as 0x122, i.e.  290.  The result is user
-visible.  On munlock, __munlock_folio() decrements that bogus count, finds
-it still non-zero and bails out before clearing PG_mlocked, so the folio
-remains unevictable and the Mlocked accounting stays inflated until the
-folio is freed.
+The loop already calls cond_resched(), but on PREEMPTION kernels that is
+a no-op, and involuntary preemption is not a Tasks-RCU quiescent state.
 
-The shortcut also touches the LRU flags in the wrong order.  It calls
-lru_gen_del_folio() while PG_lru is still set, so a concurrent
-folio_test_clear_lru() (e.g.  compaction, folio_isolate_lru()) can succeed
-on a folio that has already been taken off the generation list, which may
-lead to unexpected behavior.
+A long batch therefore never reports a quiescent state, and the
+migrating task (e.g. kcompactd) becomes a Tasks-RCU holdout, stalling the
+Tasks-RCU grace period for minutes, which is common at Meta fleet:
 
-So fix it by isolating them as common folios and letting the generic
-shrink path cull them.  This matches the classical LRU behavior, and there
-should be no visible effect on the generic eviction or isolation behavior.
+  INFO: rcu_tasks detected stalls on tasks:
+  0000000055349ecc: .. nvcsw: 1157401/1157401 holdout: 1 idle_cpu: -1/56 task:kcompactd0      state:R  running task
+  Call Trace:
+   tdp_mmu_zap_leafs
+   tdp_mmu_next_root
+   gfn_to_pfn_cache_invalidate_start
+   kvm_mmu_notifier_invalidate_range_start
+   __mmu_notifier_invalidate_range_start
+   try_to_migrate_one
+   try_to_migrate
+   migrate_pages_batch
+   migrate_pages
+   compact_zone
+   compact_node
+   kcompactd
+   kthread
 
-There is no performance concern either, such a folio goes through this
-once, and then it is off the generation lists for good.
+Use cond_resched_tasks_rcu_qs() so a quiescent state is reported even
+when cond_resched() does nothing.
 
-Link: https://lore.kernel.org/20260812-mglru-mlock-fix-v2-1-a3fec5853c08@tencent.com
-Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Steven Barrett <steven@liquorix.net>
-Cc: Suleiman Souhlal <suleiman@google.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
+This has also been discussed at [1]
+
+Link: https://lore.kernel.org/20260727-kcompact-v1-1-bdfefddd6874@debian.org
+Link: https://lore.kernel.org/all/amdWVTs0WKOxguxP@gmail.com/ [1]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |   19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ mm/migrate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4573,7 +4573,6 @@ void lru_gen_reparent_memcg(struct mem_c
- static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_control *sc,
- 		       int tier_idx)
- {
--	bool success;
- 	int gen = folio_lru_gen(folio);
- 	int type = folio_is_file_lru(folio);
- 	int zone = folio_zonenum(folio);
-@@ -4585,15 +4584,9 @@ static bool sort_folio(struct lruvec *lr
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1830,7 +1830,7 @@ static int migrate_pages_batch(struct li
+ 			is_thp = folio_test_pmd_mappable(folio);
+ 			nr_pages = folio_nr_pages(folio);
  
- 	VM_WARN_ON_ONCE_FOLIO(gen >= MAX_NR_GENS, folio);
+-			cond_resched();
++			cond_resched_tasks_rcu_qs();
  
--	/* unevictable */
--	if (!folio_evictable(folio)) {
--		success = lru_gen_del_folio(lruvec, folio, true);
--		VM_WARN_ON_ONCE_FOLIO(!success, folio);
--		folio_set_unevictable(folio);
--		lruvec_add_folio(lruvec, folio);
--		__count_vm_events(UNEVICTABLE_PGCULLED, delta);
--		return true;
--	}
-+	/* unevictable: let it through and the generic path will cull it */
-+	if (!folio_evictable(folio))
-+		return false;
- 
- 	/* promoted */
- 	if (gen != lru_gen_from_seq(lrugen->min_seq[type])) {
-@@ -4843,11 +4836,9 @@ retry:
- 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
- 		DEFINE_MIN_SEQ(lruvec);
- 
--		if (!folio_evictable(folio)) {
--			list_del(&folio->lru);
--			folio_putback_lru(folio);
-+		/* move_folios_to_lru() culls unevictable folios via folio_putback_lru() */
-+		if (!folio_evictable(folio))
- 			continue;
--		}
- 
- 		/* retry folios that may have missed folio_rotate_reclaimable() */
- 		if (!skip_retry && !folio_test_active(folio) && !folio_mapped(folio) &&
+ 			/*
+ 			 * The rare folio on the deferred split list should
 
 
