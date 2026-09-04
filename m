@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F68378838;
-	Fri,  4 Sep 2026 06:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7353451AB;
+	Fri,  4 Sep 2026 06:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501759; cv=none; b=IR+2TKOOq+j2kTpYAbAi8Mcu77hGGP7994zAecbTZoDzm1X+NHP1zBkujvM4tAkQ5/Q2p5YV5o81hsUuju2uh7prLuIniMDBQC65C5TRU59ijzXLWTjDYVdE0y0yn7R/UH+NuoTRfkJd87/SKmnoomp1xyGi1S7oFT6d0eQUGGs=
+	t=1788501761; cv=none; b=r6cu1PleG0/t2k92IFC1KE12C296wUEM8Ml5GQaJX584MvBDMlaGSjVDK6SrP4PgyYpT1E5qwzSUuD58Vr/xqe4zBwUcP5T3VeBRUTeN8jOUiW9ScHzN9mkegV7FA01QVhzXGsWWAUDApVKLpTu87A45cWB2NlK2QBF84dusm+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501759; c=relaxed/simple;
-	bh=5uNl1gUhHyoY8UI9WWe7uFTUrHGlihIp7htACsnGgIU=;
+	s=arc-20240116; t=1788501761; c=relaxed/simple;
+	bh=1ohY4H++YukCU1hoFUZ1QkVjPwLQMFo18veMYyAxPg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gckq4gVhdWvx5ymK9SWPgMAi92aIUPDNSetHtaiM+B5XOW91Jo55VwU5drBuVi9nR24fqQh9RlCay2N8OQCHeX9HRvbUJ2uNyTOFjSYH/5+3jDF9Tnd2J57GKcUUQH0fE8nRhU1QfA9cvbeTOVVnDQtB+pjiFzVEj3ghX4iuvP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y33GVzZP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gj1Nw2yGAxba3hZV3RGQN4ii04kzNWF7EwHRsJfHkvFYyip8qiSW0UncuXDuymHKfoEzEujxeqBEMXWEag6E6/Wea41ThMTLL66FeMY6I6swwx2FtJdNwIeGnD0atYljYSkE/TcYh+WKZ2pLMeJdY0EEGt9NpxbMg2GOxz+8s7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHZ/+BOZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y33GVzZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452481F00A3D;
-	Fri,  4 Sep 2026 06:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHZ/+BOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230911F00A3D;
+	Fri,  4 Sep 2026 06:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501757;
-	bh=QTwDFu+fjrfBk3pbADOczSdlMtfxjM1OpPrsEeJdNQA=;
+	s=korg; t=1788501760;
+	bh=3zsfPNlktrOalcOpYCMOq2tV7/fPP9U/Vh8njIcFrMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y33GVzZP1UEs8d9YoB0xT7GSKLzkGgyZ8C8u4Bpe0SEmX4ayu21tMvZOLQOGHGwGb
-	 l+I9GmM5KI/GCt5qJL+Y3UC9RHVrjK1qfFuBP1saYLOfaNMH4schdq9ERcddrnGsxg
-	 wm3g6lp/UjY4E1zlyKZXMP83bWVbYumJ0C0OyPoI=
+	b=QHZ/+BOZVTzK5YiT7yJuiXVNnDKGtQTfEFHquqHVA7TLs5pOR/KWv8QBmHyDExCZN
+	 f9EIT+2bJK6m1Out3VXg4/T1ozo3M0LV9bwCtDiOQsKx9jpUw1Ueje2e4IIhUZHtrr
+	 5fDbqbXX98rBGxft2sZU17AbVWKYdRAP/B1nly+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.18 521/552] i3c: renesas: Reconfigure the DATBAS register on re-attach
-Date: Fri,  4 Sep 2026 07:01:18 +0200
-Message-ID: <20260904045802.440286742@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 522/552] wifi: brcmfmac: Fix memory leak in brcmf_sdio_read_control()
+Date: Fri,  4 Sep 2026 07:01:19 +0200
+Message-ID: <20260904045802.462442868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,57 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 1364afd3e2e76e007a2c07ec95704d56980226f0 upstream.
+commit 0d10db8e94fcb23a799789aaa696b4d8f937e207 upstream.
 
-During re-attach, the device may change its position in the i3c->addrs[]
-array. As a result, it may use a different Device Address Table Basic
-Register (DATBAS), which needs to be reconfigured.
+The memory allocated for buf is not freed in some of the error paths in
+brcmf_sdio_read_control(). Fix that by adding vfree() calls.
 
-Reconfigure the DATBAS register on re-attach. Along with it update
-software caches.
-
-Fixes: d028219a9f14 ("i3c: master: Add basic driver for the Renesas I3C controller")
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260713130545.568657-5-claudiu.beznea+renesas@tuxon.dev
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: dd43a01c5cdb ("brcmfmac: use dynamically allocated control frame buffer")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+[arend: rework as suggested by Johannes]
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260803093506.1647790-1-arend.vanspriel@broadcom.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/renesas-i3c.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/i3c/master/renesas-i3c.c
-+++ b/drivers/i3c/master/renesas-i3c.c
-@@ -893,10 +893,26 @@ static int renesas_i3c_reattach_i3c_dev(
- 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
- 	struct renesas_i3c *i3c = to_renesas_i3c(m);
- 	struct renesas_i3c_i2c_dev_data *data = i3c_dev_get_master_data(dev);
-+	int pos;
-+
-+	pos = renesas_i3c_get_free_pos(i3c);
-+
-+	if (data->index > pos && pos >= 0) {
-+		renesas_writel(i3c->regs, DATBAS(data->index), 0);
-+		i3c->addrs[data->index] = 0;
-+		i3c->free_pos |= BIT(data->index);
-+
-+		data->index = pos;
-+		i3c->free_pos &= ~BIT(data->index);
-+	}
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -1827,17 +1827,18 @@ gotpkt:
+ 	if (bus->rxctl) {
+ 		brcmf_err("last control frame is being processed.\n");
+ 		spin_unlock_bh(&bus->rxctl_lock);
+-		vfree(buf);
+ 		goto done;
+ 	}
+ 	bus->rxctl = buf + doff;
+ 	bus->rxctl_orig = buf;
+ 	bus->rxlen = len - doff;
+ 	spin_unlock_bh(&bus->rxctl_lock);
++	buf = NULL;
  
- 	i3c->addrs[data->index] = dev->info.dyn_addr ? dev->info.dyn_addr :
- 							dev->info.static_addr;
- 
-+	renesas_writel(i3c->regs, DATBAS(data->index),
-+		       DATBAS_DVSTAD(dev->info.static_addr) |
-+		       datbas_dvdyad_with_parity(i3c->addrs[data->index]));
-+
- 	return 0;
+ done:
+ 	/* Awake any waiters */
+ 	brcmf_sdio_dcmd_resp_wake(bus);
++	vfree(buf);
  }
  
+ /* Pad read to blocksize for efficiency */
 
 
