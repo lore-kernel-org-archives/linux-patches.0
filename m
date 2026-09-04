@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5183AE198;
-	Fri,  4 Sep 2026 05:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94060415F23;
+	Fri,  4 Sep 2026 05:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499452; cv=none; b=azC5W2ArcPDVphA7FplO3JSovdZl6WM3+uaHCZApIQfXs72/EIYCE1l5gyapZDMtVV25YvpMi3axYm6dlbBE8hfBunfyO8KcF4vUU/ABFfX1PwB7WRl0GOjKU0Vaj8xYvxFWO5L2ick0bvQpGYK5bOicyz8ppPdx/53U6PT0Bns=
+	t=1788499455; cv=none; b=cZ58Qxo7LGiBXrIkGJcF147dTLhG6NYb5SJHzaQZ4fuya4FRqnWmkoMpIJ7jK0/kWRq0YH3LWba6slbmL5klw9F1VLjWMy1+16XKYYa4x08QR0q2S2PfzwHh77FexTFSOW+kVNPPl9UQ6F0nucuAxtGs6OdiJ0MQ0LTFFIAzEAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499452; c=relaxed/simple;
-	bh=ed0oZRre0d4uNxntTlF0TKuq2ICeCHP5J7upbvFRNUU=;
+	s=arc-20240116; t=1788499455; c=relaxed/simple;
+	bh=kJQVnqYxk8yeiQhkAqb4ZEz85sKvrIIrlJI5EMjsEYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rAtqkkeuiGofGv5Qwdkaee7syjODhVuBp79x9uSoRs6IwDlYPQuArT1mQwrXLZxmKvEtGG373ufEIr8DQaCktAWK2Bt/EoOnL90TUK54m3JGtVBSKpHEPwGzhuuQKTTxK8WZKh7kalI5C1zr/atwybqcnkLD9TXuO9zMbEJyvjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9OuBE0Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CfrK20w/uTB2zRbsOg3SMkiWnPC5zMuwVAtU9qiG4rpp79W08pW1Q9X6gevUDOfwrX/JWMIOtQ31euVUKOGKl/F+K3vTUzWvPgSHnQIWF3Sd33AjUNjMfZ1mWbsE/7sSwkjP5eDFm97SOuuHpNvC0EstAvTYjaMH7UTtjqas5CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMmoXL1W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9OuBE0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33651F00A3D;
-	Fri,  4 Sep 2026 05:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMmoXL1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04311F00A3D;
+	Fri,  4 Sep 2026 05:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499451;
-	bh=HtZKlrIcY7ZXt6pRzvDw8515N4Cu2JeVvAToa85mL+c=;
+	s=korg; t=1788499454;
+	bh=/XwI9gyzjqvHlAbwBevMVpvHnWn7WYmL0vxsXhAmzlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p9OuBE0Y60q/EPPqI/CTfw08K/x2X1S1wM6IRWn3Pc+PY4up1+d5loUQuZwKVm7yX
-	 BzPF39VQcBh6wwzrYRXbLJAe+7sPb5xsB1V26NFZFB5lsFsw5RY10pu2HFcYFqW2BZ
-	 HnhzHIQ/rcme9wM1qjVYYs9b9DnRav4VZZNWolRc=
+	b=gMmoXL1WDdA0sBmxxjAabtu18ivcb8DYRIf6KkYgpnDy18KywjtSvZpHT+z4mheXB
+	 Uud/A04JxNZIevhh8nrSWe0pUqOvQHtpCDdTduL8vUceGhEbKRGY3C6rRcxLFt7pr9
+	 4/Dmy6O3rt+tPPUChbzUeuOW9GkrOVjY2H8g2Cu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Oren Klopfer <oklopfer37@gmail.com>
-Subject: [PATCH 7.2 422/713] Revert "arm64: dts: rockchip: Further describe the WiFi for the Pinephone Pro"
-Date: Fri,  4 Sep 2026 06:56:30 +0200
-Message-ID: <20260904045813.288666443@linuxfoundation.org>
+	stable@kernel.org,
+	Jianping Li <jianping.li@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 7.2 423/713] arm64: dts: qcom: kodiak: avoid EFI overlap for ADSP remote heap
+Date: Fri,  4 Sep 2026 06:56:31 +0200
+Message-ID: <20260904045813.311115849@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,70 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oren Klopfer <oklopfer37@gmail.com>
+From: Jianping Li <jianping.li@oss.qualcomm.com>
 
-commit 5f19535351bf28f28d702f452d11a1216ec2bd28 upstream.
+commit 9d7d847ff1c502802ac764120f9a1800b94ce497 upstream.
 
-This reverts commit 096bd8c679185f898cae9933c6a68650fa26ea4f.
+On KODIAK platforms boot can fail when the DT "adsp-rpc-remote-heap"
+reserved-memory region overlaps with firmware allocations (UEFI/EFI
+runtime). The kernel then reports failure to reserve the region and
+subsequent EFI runtime activity may trigger aborts.
 
-Just as with the Pinebook Pro, there are multiple chipset variants for
-the Pinephone Pro, and multiple firmware binaries for different
-distributions. The change causes issues with some of these combinations,
-and reverting it resolves the issues. See the Closes below for the full
-report.
+The remote heap node was described as a fixed "no-map" region, which
+turns it into a hard carveout. Replace it with a "shared-dma-pool"
+reserved memory region with reusable CMA-backed allocation, specifying
+alignment and size.
 
-Similarly with the Pinebook Pro adjustment, the original commit only
-indicates "further description" and not indicative of fixing any
-existing issues, so reverting should not kick any back up.
+This avoids hard carveouts and reduces the chance of conflicting with
+firmware memory maps while keeping an explicit pool for ADSP remote
+heap usage.
 
-Fixes: 096bd8c67918 ("arm64: dts: rockchip: Further describe the WiFi for the Pinephone Pro")
-Cc: Heiko Stuebner <heiko@sntech.de>
-Cc: Peter Robinson <pbrobinson@gmail.com>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/r/20260607225901.64019-1-oklopfer37@gmail.com/
-Signed-off-by: Oren Klopfer <oklopfer37@gmail.com>
-Link: https://patch.msgid.link/20260703201010.67311-1-oklopfer37@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 90a58ffa9c55 ("arm64: dts: qcom: kodiak: Add memory region for audiopd")
+Cc: stable@kernel.org
+Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260429073443.2027-1-jianping.li@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts |   18 ------------------
- 1 file changed, 18 deletions(-)
+ arch/arm64/boot/dts/qcom/kodiak.dtsi | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -734,12 +734,6 @@
+diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+index ac048ec9aeb5..7e73348fe0d0 100644
+--- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
++++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+@@ -191,9 +191,12 @@ rmtfs_mem: rmtfs@9c900000 {
+ 			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
+ 		};
+ 
+-		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@9cb80000 {
+-			reg = <0x0 0x9cb80000 0x0 0x800000>;
+-			no-map;
++		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
++			compatible = "shared-dma-pool";
++			alloc-ranges = <0x0 0x80000000 0x0 0x80000000>;
++			reusable;
++			alignment = <0x0 0x400000>;
++			size = <0x0 0x800000>;
  		};
  	};
  
--	wifi {
--		wifi_host_wake_l: wifi-host-wake-l {
--			rockchip,pins = <4 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
--		};
--	};
--
- 	wireless-bluetooth {
- 		bt_wake_pin: bt-wake-pin {
- 			rockchip,pins = <2 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
-@@ -766,19 +760,7 @@
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
- 	sd-uhs-sdr104;
--	#address-cells = <1>;
--	#size-cells = <0>;
- 	status = "okay";
--
--	brcmf: wifi@1 {
--		compatible = "brcm,bcm4329-fmac";
--		reg = <1>;
--		interrupt-parent = <&gpio4>;
--		interrupts = <RK_PD0 IRQ_TYPE_LEVEL_HIGH>;
--		interrupt-names = "host-wake";
--		pinctrl-names = "default";
--		pinctrl-0 = <&wifi_host_wake_l>;
--	};
- };
- 
- &pwm0 {
+-- 
+2.55.0
+
 
 
