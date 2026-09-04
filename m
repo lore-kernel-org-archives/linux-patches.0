@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304BA23BD1B;
-	Fri,  4 Sep 2026 05:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B3C3A7F4C;
+	Fri,  4 Sep 2026 05:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499025; cv=none; b=izJnG598e1DVxLsYfz3ESpDPEtWcrWSi+E0c8E3VE1xJje8DBfbFP6SinYk1ndFdFYwCgOTs2uo4s/iVBBJdOh03AdN4bJxiE38OXPu6+Q8vvuyU0KP+27mxHtrvsejs3ZCp9xkiE6qK6LT2o8eyaccu7LYSgPlCyag0eAFm53o=
+	t=1788499028; cv=none; b=tebQtblBG1sE+qyHogSv/mYCz08uRD2Q9AU16ChE0uQUmRqY84YjqnUVpv+uB/JRyW0HcSAlAo11JYaROXW6lG8btfqMmoOfeiu2m/uTit6Njlih0J8qNKeqGuCSrhKIk0rVEYtNpSjw98UI0RGg66jYsfhjG78ZOJLAG8tQMeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499025; c=relaxed/simple;
-	bh=3+wodY+a217Be561T1xaP5FeUJxz/xc26RHq5AhmbNQ=;
+	s=arc-20240116; t=1788499028; c=relaxed/simple;
+	bh=oj6LWtn8Wj8h21EauUpKi6B0gKHtAUg0mr/LYHvaonc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIjm4DWBbErBsEU8DkrTWRjODsaUefbTCAta0CDMoXQFukP5b6T028ZH0sFtd27visSy/8zdy29wNlBc2CP5xwVE495W9NsBDbR8JNjSBvo0cFO2MlKNhAMbKjyMtgDAADVcuHs+CyJzX9N1lxLCIkkzEfnojlLsPJVkhWOicdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwE3U5wh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ThjTTfNdcgfcdmp5SqS3zgZTR/roDrnbNruUHR27TzNq71mqrXlvph+L2Ll20vR6Wpx0a6NNFdQuA/asCX1S5QEx8qJgR7oJDG3COXVMZrRR6JSb4vvh+zejwelSVCZ1vVqVEI4IPeVHCK1Ofj9yoMjz9vOFdQQ81OwJrShd8b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQkQZwV7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwE3U5wh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAF91F00A3D;
-	Fri,  4 Sep 2026 05:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQkQZwV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0221F00A3D;
+	Fri,  4 Sep 2026 05:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499024;
-	bh=ijsWrcbEzgtzLQYEo1plTyHr7PQhEoboq135XyqqsKo=;
+	s=korg; t=1788499026;
+	bh=IzD/YINnhWskxV7Dex8nMO86IAbndk5u1fEsnQrLCRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zwE3U5whURY1AoJQTyBUc6zWWr4sKT0+5ADEPRlwCKrDQkn14Y5LREqSZPAl1K5gs
-	 NIEN+dwGL4orM24H6OGjIJ7tKayCN64PdnsS156f2u6SXaghq8vuwb9pAN3IJU9K8N
-	 Nu7OieIlWjjowaHFohfwyibkf3raxwiABXlKbnZw=
+	b=NQkQZwV7OdW7yvxtIUEhV/LPtEXhqP4OOx61eemdByMWxCVh1Cjk+lKT08nT+CIQf
+	 PIWz7mbvGdEnLtEL3iOLphcz1OZ7ePJTC4NUQ/M62aeuiZhcXyaE+tjQr1apd3Fhau
+	 jKfR+d29OY+7PD0yQWPyfz/bf91QYC7GK5HiTWHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
+	HanQuan <eilaimemedsnaimel@gmail.com>,
 	Tyler Hicks <code@tyhicks.com>
-Subject: [PATCH 7.2 272/713] ecryptfs: pass packet set buffer size to parser
-Date: Fri,  4 Sep 2026 06:54:00 +0200
-Message-ID: <20260904045809.934754708@linuxfoundation.org>
+Subject: [PATCH 7.2 273/713] ecryptfs: reject oversized encrypted_key_size in parse_tag_3_packet
+Date: Fri,  4 Sep 2026 06:54:01 +0200
+Message-ID: <20260904045809.957513088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,125 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: HanQuan <eilaimemedsnaimel@gmail.com>
 
-commit 2602b79c5b3e2f6fce12e38a670f8e3fda4e46a2 upstream.
+commit 5babe9c177c364521e3e682b949c5a8c47f4a441 upstream.
 
-ecryptfs_parse_packet_set() receives a pointer into the file header, but
-it calculates the remaining packet buffer size from PAGE_SIZE - 8.  For
-version 1 headers the packet set starts later in the header, so this can
-overstate the available buffer.
+parse_tag_3_packet() set encrypted_key_size from the Tag 3 packet body
+without bounding it against ECRYPTFS_MAX_KEY_BYTES (64). When
+encrypted_key_size > 64, decrypt_passphrase_encrypted_session_key()
+sets decrypted_key_size = encrypted_key_size and performs two
+out-of-bounds writes:
 
-Pass the actual packet set buffer length from the caller and calculate
-per-packet limits from the remaining bytes in that buffer.  Recompute the
-remaining length after consuming a tag 3 packet before parsing the
-following tag 11 packet.
+1. crypto_skcipher_decrypt() writes encrypted_key_size bytes into
+   decrypted_key[64] via scatterlist, overflowing into the parent
+   ecryptfs_auth_tok struct.
+2. memcpy(crypt_stat->key, decrypted_key, decrypted_key_size) writes
+   into crypt_stat->key[64], corrupting root_iv, keysig_list, and
+   mutexes in ecryptfs_crypt_stat.
+
+Only AES-192 (cipher code 0x08) enables this because it sets
+crypt_stat->key_size = 24 independently of encrypted_key_size,
+allowing crypto_skcipher_setkey() to succeed while encrypted_key_size
+exceeds ECRYPTFS_MAX_KEY_BYTES.
+
+The PKI decryption path (parse_tag_65_packet) already validates
+decrypted_key_size <= ECRYPTFS_MAX_KEY_BYTES; the passphrase path
+omits this check.
+
+Bound encrypted_key_size against ECRYPTFS_MAX_KEY_BYTES (64) rather
+than ECRYPTFS_MAX_ENCRYPTED_KEY_BYTES (512). The 64-byte limit also
+protects the 512-byte encrypted_key[] buffer, so the former 512-byte
+check is removed as redundant.
 
 Fixes: 237fead61998 ("[PATCH] ecryptfs: fs/Makefile and fs/Kconfig")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: HanQuan <eilaimemedsnaimel@gmail.com>
+[tyhicks: Adjust the code comment to refer to macros representing the
+ buffer sizes rather than mentioning the buffer size values since they
+ may change in the future]
 Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ecryptfs/crypto.c          |    2 +-
- fs/ecryptfs/ecryptfs_kernel.h |    3 ++-
- fs/ecryptfs/keystore.c        |   23 ++++++++++++++++++++---
- 3 files changed, 23 insertions(+), 5 deletions(-)
+ fs/ecryptfs/keystore.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/ecryptfs/crypto.c
-+++ b/fs/ecryptfs/crypto.c
-@@ -1197,7 +1197,7 @@ static int ecryptfs_read_headers_virt(ch
- 	} else
- 		set_default_header_data(crypt_stat);
- 	rc = ecryptfs_parse_packet_set(crypt_stat, (page_virt + offset),
--				       ecryptfs_dentry);
-+				       PAGE_SIZE - offset, ecryptfs_dentry);
- out:
- 	return rc;
- }
---- a/fs/ecryptfs/ecryptfs_kernel.h
-+++ b/fs/ecryptfs/ecryptfs_kernel.h
-@@ -580,7 +580,8 @@ int ecryptfs_generate_key_packet_set(cha
- 				     size_t *len, size_t max);
- int
- ecryptfs_parse_packet_set(struct ecryptfs_crypt_stat *crypt_stat,
--			  unsigned char *src, struct dentry *ecryptfs_dentry);
-+			  unsigned char *src, size_t src_size,
-+			  struct dentry *ecryptfs_dentry);
- int ecryptfs_truncate(struct dentry *dentry, loff_t new_length);
- ssize_t
- ecryptfs_getxattr_lower(struct dentry *lower_dentry, struct inode *lower_inode,
 --- a/fs/ecryptfs/keystore.c
 +++ b/fs/ecryptfs/keystore.c
-@@ -1704,6 +1704,7 @@ out:
-  * ecryptfs_parse_packet_set
-  * @crypt_stat: The cryptographic context
-  * @src: Virtual address of region of memory containing the packets
-+ * @src_size: Size of the packet set buffer
-  * @ecryptfs_dentry: The eCryptfs dentry associated with the packet set
-  *
-  * Get crypt_stat to have the file's session key if the requisite key
-@@ -1714,7 +1715,7 @@ out:
-  * conditions.
-  */
- int ecryptfs_parse_packet_set(struct ecryptfs_crypt_stat *crypt_stat,
--			      unsigned char *src,
-+			      unsigned char *src, size_t src_size,
- 			      struct dentry *ecryptfs_dentry)
- {
- 	size_t i = 0;
-@@ -1736,7 +1737,11 @@ int ecryptfs_parse_packet_set(struct ecr
- 	 * added the our &auth_tok_list */
- 	next_packet_is_auth_tok_packet = 1;
- 	while (next_packet_is_auth_tok_packet) {
--		size_t max_packet_size = ((PAGE_SIZE - 8) - i);
-+		size_t max_packet_size;
-+
-+		if (i >= src_size)
-+			break;
-+		max_packet_size = src_size - i;
- 
- 		switch (src[i]) {
- 		case ECRYPTFS_TAG_3_PACKET_TYPE:
-@@ -1751,12 +1756,16 @@ int ecryptfs_parse_packet_set(struct ecr
- 				goto out_wipe_list;
- 			}
- 			i += packet_size;
-+			if (i > src_size) {
-+				rc = -EIO;
-+				goto out_wipe_list;
-+			}
- 			rc = parse_tag_11_packet((unsigned char *)&src[i],
- 						 sig_tmp_space,
- 						 ECRYPTFS_SIG_SIZE,
- 						 &tag_11_contents_size,
- 						 &tag_11_packet_size,
--						 max_packet_size);
-+						 src_size - i);
- 			if (rc) {
- 				ecryptfs_printk(KERN_ERR, "No valid "
- 						"(ecryptfs-specific) literal "
-@@ -1768,6 +1777,10 @@ int ecryptfs_parse_packet_set(struct ecr
- 				goto out_wipe_list;
- 			}
- 			i += tag_11_packet_size;
-+			if (i > src_size) {
-+				rc = -EIO;
-+				goto out_wipe_list;
-+			}
- 			if (ECRYPTFS_SIG_SIZE != tag_11_contents_size) {
- 				ecryptfs_printk(KERN_ERR, "Expected "
- 						"signature of size [%d]; "
-@@ -1793,6 +1806,10 @@ int ecryptfs_parse_packet_set(struct ecr
- 				goto out_wipe_list;
- 			}
- 			i += packet_size;
-+			if (i > src_size) {
-+				rc = -EIO;
-+				goto out_wipe_list;
-+			}
- 			crypt_stat->flags |= ECRYPTFS_ENCRYPTED;
- 			break;
- 		case ECRYPTFS_TAG_11_PACKET_TYPE:
+@@ -1384,10 +1384,20 @@ parse_tag_3_packet(struct ecryptfs_crypt
+ 	}
+ 	(*new_auth_tok)->session_key.encrypted_key_size =
+ 		(body_size - (ECRYPTFS_SALT_SIZE + 5));
++	/*
++	 * Although encrypted_key_size is copied into the
++	 * encrypted_key[ECRYPTFS_MAX_ENCRYPTED_KEY_BYTES] buffer here,
++	 * it later bounds operations on a smaller buffer:
++	 * decrypt_passphrase_encrypted_session_key() sets decrypted_key_size =
++	 * encrypted_key_size and decrypts into
++	 * decrypted_key[ECRYPTFS_MAX_KEY_BYTES], then memcpy's into
++	 * crypt_stat->key[ECRYPTFS_MAX_KEY_BYTES]. Limit to
++	 * ECRYPTFS_MAX_KEY_BYTES to protect those smaller buffers.
++	 */
+ 	if ((*new_auth_tok)->session_key.encrypted_key_size
+-	    > ECRYPTFS_MAX_ENCRYPTED_KEY_BYTES) {
++	    > ECRYPTFS_MAX_KEY_BYTES) {
+ 		printk(KERN_WARNING "Tag 3 packet contains key larger "
+-		       "than ECRYPTFS_MAX_ENCRYPTED_KEY_BYTES\n");
++		       "than ECRYPTFS_MAX_KEY_BYTES\n");
+ 		rc = -EINVAL;
+ 		goto out_free;
+ 	}
 
 
