@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F72541A574;
-	Fri,  4 Sep 2026 06:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0E941A574;
+	Fri,  4 Sep 2026 06:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502498; cv=none; b=TatzaYBTuGF/1g3JnQ1G+dWUdsv8H7AwLNjQSEgOAU8iygoXDvtt3H63gyyigo1rSMy47SpCijCRCMZ2vIcMYFvzo9Fj1jHxBmr9kGHONklQv4un27YrP4Yaw8Xf0d+2/L+gO14Yp2Ig97WlZSinrdu3Omd1c65OnMrVmTUk0sQ=
+	t=1788502501; cv=none; b=LpDYvY1kfpNQ6dnWW0+45xFadbzqzQDcj4cRMNI2XEBqVaIfvFM09935DCdu/bMg2VVdAj/Srb15eP3itZ06xyxJuUsqpcxMojPdmu6rGpoIDddxq3yNEzJHap8wcD5DeIfimOumHEXeGz+7IXuiCmcx5RsJBbB5iSnxTNAPxwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502498; c=relaxed/simple;
-	bh=piRjJ1wNGfajBzXFhU7UsP8pyvwWj8JXucqxXsJBs/c=;
+	s=arc-20240116; t=1788502501; c=relaxed/simple;
+	bh=Jx0xJLXOL7TR+zZI5aoNQogCN5Gy8I7CkNnkJH3u4w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t931BnIQ99l/s1uz2pAmyoVfGFI2/Ez2Rn6S6U82P7vtHsdxx/DTUfF/YultMZ4whTLLX3P1H/tZCxAp2Q0biWVHVghAJkKsfyJhbS2upcSSqVPYDkknjEDcDUr0Cq/4goCoqiS3i2wZH7KhnMxKmIPcUr4aA1gmT/xpggYqYZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UegLIvXx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qq7QYYrkrzft9ivxTY4SKTxSLo2Aasg/5mEwUHSPyYwPLSUX9Q1LUGuBftXo/H6k5wp3aLBMNH/9+p9vl2br78/4UpuA28NerHnguPw35bmfdxVA/2wvGCJIkxPyWp7p79kuTmQ21IAWleu+NEcLN6XyEW5obOn5p54G0rFen3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbh7DLQW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UegLIvXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CBF1F00A3D;
-	Fri,  4 Sep 2026 06:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbh7DLQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD0F1F00A3D;
+	Fri,  4 Sep 2026 06:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502496;
-	bh=/vWweQfEzCXWO7T3qoXlCtWd2KfVh4I3X5C+Lo0XI4M=;
+	s=korg; t=1788502499;
+	bh=trbcU+lxIjG1MhRB4mjhWW/gjRYsRnv8AacE3EKyxf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UegLIvXxGCoh+fi8OMWoBF7a+gPTOwl9OUwzLtaHpoNp8qrVPNe7bLfb8iigN4Qun
-	 GBUpIzUQN5L2rGs/8kgVE7yHhQLJJBY8P2CdaIaDC7PP32ylImSBKjk85eMLii34OO
-	 lJuFWcVBO3ufiRjiynD+U0etetPwgskuvAQ8kxS8=
+	b=qbh7DLQWs+1SIHA1CBJYKpDHbZFE+P7uuKHyRd5gKMVwbWoYgOTb1RiVyI/XOTPCq
+	 olPHR24j6CC7XUSBjj46LgEONlUE3MJh0HZscGwnzpPSg1Oz1608IMZ9kPZLBYOBD1
+	 PhoTapMDCi5wP0Am3rIZDeaklgLv2vGRLtBAk/Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 185/403] Bluetooth: hci_sync: Clear HCI_CMD_PENDING when dropping the last request
-Date: Fri,  4 Sep 2026 06:59:48 +0200
-Message-ID: <20260904045739.062535164@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	"Zhang, Qiang1" <qiang1.zhang@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 186/403] kasan: fix cache shrink race with CPU hotplug
+Date: Fri,  4 Sep 2026 06:59:49 +0200
+Message-ID: <20260904045739.086648667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,65 +56,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
+From: Hui Su <sh_def@163.com>
 
-commit cb19774faa57c51efa189d8b8606aeabccebc53b upstream.
+commit 8790303cbaac52a11dfed4aab261f8ea60682525 upstream.
 
-A synchronous HCI command that never receives a response leaves
-HCI_CMD_PENDING set: hci_req_cmd_complete() is the only place that clears
-it, and it only runs when a response matching the last command sent
-arrives.
+kasan_quarantine_remove_cache() first invokes per_cpu_remove_cache() on
+all online CPUs.  Each callback moves objects belonging to the cache from
+cpu_quarantine to the CPU's shrink_qlist, where they can later be freed
+from task context.
 
-hci_send_cmd_sync() populates hdev->req_skb only when the flag transitions
-from clear to set, while hci_dev_open_sync() and hci_dev_close_sync() drop
-req_skb without clearing the flag. After a timeout followed by either, the
-two disagree: the flag claims a request is outstanding while req_skb is
-NULL. Subsequent synchronous commands are then sent with no req_skb, so
-hci_event_packet() has nothing to match an arriving event against, and the
-caller times out even though the controller answered.
+kmem_cache_destroy() invokes the quarantine removal path while holding
+cpus_read_lock(), but kmem_cache_shrink() does not.  The latter can
+therefore race with CPU offlining as follows:
 
-Commands answered by Command Complete recover on their own, since
-hci_req_cmd_complete() clears the flag as a side effect. Drivers using
-__hci_cmd_sync_ev() with a custom event do not, because a vendor event
-never reaches that path. On a WCN3988 (hci_qca over UART) this makes a
-controller firmware hang unrecoverable: the driver injects a hardware
-error and re-runs qca_setup(), qca_read_soc_version() waits for
-HCI_EV_VENDOR, the reply arrives within 4 ms and is discarded, and every
-retry fails the same way. The adapter is left down until the driver is
-unbound and rebound, or power is removed.
+  kmem_cache_shrink()             CPU hotplug
+  -------------------             -----------
+  on_each_cpu()
+    CPU1 moves objects to
+    CPU1's shrink_qlist
+  on_each_cpu() returns
+                                  CPU1 goes offline
+                                  kasan_cpu_offline()
+                                    drains cpu_quarantine
+                                    leaves shrink_qlist untouched
+  for_each_online_cpu()
+    skips CPU1
 
-Clear the flag wherever the last request is dropped, restoring the
-invariant that req_skb is non-NULL exactly when HCI_CMD_PENDING is set.
-Verified on hardware by forcing a command timeout: without this change
-setup fails on every attempt, with it setup succeeds on the first.
+The objects left on CPU1's shrink_qlist are not returned to the slab
+allocator.  This may prevent kmem_cache_shrink() from releasing slabs that
+would otherwise become empty.  If CPU1 remains offline, a later
+kmem_cache_destroy() also skips the list and can report that the cache
+still contains objects.
 
-Fixes: 2615fd9a7c25 ("Bluetooth: hci_sync: Fix overwriting request callback")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+An intermittent occurrence was observed with a virtio-9p filesystem.  The
+mount and umount commands both returned 0, but the kernel logged the
+following during the userspace-triggered teardown:
+
+  [  2994.380134][  T111] BUG 9p-fcall-cache-1 (Tainted: G    B              ): Objects remaining on __kmem_cache_shutdown()
+  [  2994.381140][  T111] Object 0xff11000004361118 @offset=4376
+  [  2994.381607][  T111] Allocated in p9_fcall_init+0x201/0x400 age=19564 cpu=1 pid=104
+  [  2994.382591][  T111]  p9_fcall_init+0x201/0x400
+  [  2994.382810][  T111]  p9_tag_alloc+0x12f/0x700
+  [  2994.382982][  T111]  p9_client_prepare_req+0x102/0x3e0
+  [  2994.383165][  T111]  p9_client_rpc+0x1ab/0xa50
+  [  2994.383334][  T111]  p9_client_getattr_dotl+0xb0/0x1a0
+  [  2994.383515][  T111]  v9fs_vfs_getattr_dotl+0x115/0x360
+  [  2994.383719][  T111]  vfs_getattr_nosec+0x22c/0x3a0
+  [  2994.383910][  T111]  vfs_statx+0xd7/0x170
+  [  2994.384062][  T111]  vfs_fstatat+0x45/0x80
+  [  2994.384215][  T111]  __do_sys_newfstatat+0x84/0xe0
+  [  2994.384386][  T111]  do_syscall_64+0x115/0x6a0
+  [  2994.384566][  T111]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  [  2994.399720][  T111] WARNING: mm/slub.c:1244 at __kmem_cache_shutdown+0x363/0x500, CPU#0: busybox/111
+  [  2994.405655][  T111] Call Trace:
+  [  2994.406325][  T111]  kmem_cache_destroy+0x73/0x1b0
+  [  2994.406630][  T111]  p9_client_destroy+0x271/0x3c0
+  [  2994.407210][  T111]  v9fs_session_close+0x3c/0x260
+  [  2994.407409][  T111]  v9fs_kill_super+0x48/0x90
+  [  2994.407584][  T111]  deactivate_locked_super+0xa3/0x160
+  [  2994.407778][  T111]  cleanup_mnt+0x1dd/0x3e0
+
+Thus, a successful umount left objects in the 9p fcall cache and prevented
+the cache from being destroyed cleanly.
+
+Per-CPU shrink_qlist storage exists for every possible CPU, and each list
+is protected by its own raw spinlock.  Iterate over possible CPUs so that
+a list populated before its CPU went offline is drained as well.
+
+for_each_possible_cpu() can do more work than for_each_online_cpu(), but
+this change only affects CONFIG_KASAN_GENERIC kernels.  The extra work is
+limited to cache shrink and cache destruction paths and does not affect
+the normal allocation/free fast path.  It adds one raw-spinlock-protected
+scan of each possible CPU's shrink list.  These lists are normally empty;
+a non-empty list is traversed to remove objects belonging to the cache
+being shrunk or destroyed.
+
+Link: https://lore.kernel.org/20260808031459.3032812-1-sh_def@163.com
+Fixes: 07d067e4f2ce ("kasan: fix sleeping function called from invalid context on RT kernel")
+Signed-off-by: Hui Su <sh_def@163.com>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: "Zhang, Qiang1" <qiang1.zhang@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/kasan/quarantine.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5276,6 +5276,7 @@ int hci_dev_open_sync(struct hci_dev *hd
- 		if (hdev->req_skb) {
- 			kfree_skb(hdev->req_skb);
- 			hdev->req_skb = NULL;
-+			hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
- 		}
+--- a/mm/kasan/quarantine.c
++++ b/mm/kasan/quarantine.c
+@@ -355,7 +355,12 @@ void kasan_quarantine_remove_cache(struc
+ 	 */
+ 	on_each_cpu(per_cpu_remove_cache, cache, 1);
  
- 		clear_bit(HCI_RUNNING, &hdev->flags);
-@@ -5456,6 +5457,7 @@ int hci_dev_close_sync(struct hci_dev *h
- 	if (hdev->req_skb) {
- 		kfree_skb(hdev->req_skb);
- 		hdev->req_skb = NULL;
-+		hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
- 	}
- 
- 	clear_bit(HCI_RUNNING, &hdev->flags);
+-	for_each_online_cpu(cpu) {
++	/*
++	 * A CPU can go offline after on_each_cpu() returns, leaving cache
++	 * objects on that CPU's shrink list. Scan all possible CPUs to
++	 * drain those lists.
++	 */
++	for_each_possible_cpu(cpu) {
+ 		sq = per_cpu_ptr(&shrink_qlist, cpu);
+ 		raw_spin_lock_irqsave(&sq->lock, flags);
+ 		qlist_move_cache(&sq->qlist, &to_free, cache);
 
 
