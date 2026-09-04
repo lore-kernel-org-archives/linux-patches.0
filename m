@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375543515D2;
-	Fri,  4 Sep 2026 05:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C683515D2;
+	Fri,  4 Sep 2026 05:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498356; cv=none; b=eGViE4QzkMwPqp/aWymvPqtU7IdAQZfWYrCaEGNxMzx+6S2oeu8Bor548XFuIypzfgKV7XXD4N3OXYXrXNnxEjdUF3ns9JKEal9z8yMGQRRzxhSRXn3esfCv9OX0nugOg1K9o2E0sIFskpWWYGSLjGOtqbXob7UdteG/7YqSwL0=
+	t=1788498359; cv=none; b=cJr7+a9RuZm8D2IMu33Y4/E5ye4DpvW8bSCgf1XwCsVZTlHS5fmJe4V90+E1eFcU3T7ozG69BLMm/QqCRnep7XL3rj+5sYs7AfA8b9Ddn5MVIUZWSDIqsXC4TGu1HvDRT0C04ej7nQOcZSXSeuwRAjEfJQIZlW+6yNIjnAafbYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498356; c=relaxed/simple;
-	bh=ridNOkhBUSJbTOj1xZD50lc5haTWkx2dBCuOd0YzyRU=;
+	s=arc-20240116; t=1788498359; c=relaxed/simple;
+	bh=wV4wCUTvGOO4LzO7vXyypqviS/jKkg/+8Lp+s6f8ISc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6wQfIuX0OYoSL6mUZLifwOg+IlaOd7pDYsLjPCf5/VBc8CdCe+l9rmnOU/UjDJvokQCakE3KVVOFJdoWs1MM3hwbbT5gAk0wRCDRnGlXn9DXYAHyrb04kdHDouAnJT5wh60V7ms1THeUccnpLwYnD0AHJ04iuCGlZRtdYzwYZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJi96phx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mMAL3nzfPAHgm9jPWJj33FqUTE5VzcMgkqnEfTbzaaM/ITC70DiqHs9Aarl4MsDnU0NwjSEDL/lg4t8ZD3nzO8nOSSSQVupr9Yh+VDlCq2rEA0ivwAyYfTkXty1L6gDJJzsNfQ6BFY+C0bVR7JaEvtzpocO367p10XRys5C2FR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+28Lp3s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJi96phx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928A41F00A3D;
-	Fri,  4 Sep 2026 05:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+28Lp3s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5301B1F00A3D;
+	Fri,  4 Sep 2026 05:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498355;
-	bh=F8dRMmHpO2ZpZArBfGfL51Z03UsFJtW1hO4UP0llrMI=;
+	s=korg; t=1788498357;
+	bh=8+B4RsSdOOTzSAlwshMX6LjQVmZ51jRJVnM1cie49X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jJi96phxz5BjdfW6CsKDUBTPC6KXQUK4Ma7iqNDGAwGe9gii+mugPa9fFP5lfRq+a
-	 SUyKIisZtXQterMiGA/pq9JWc7/Kqqttl6C2TZLIrq7mEdVMYU274dMMborxejLMCP
-	 OF27VKMIUt+EOLQYwulPRVNgdT3oqVxX7oS3EoZI=
+	b=F+28Lp3s+zebYVvnp8PvDcis/VYy0yrXcjv7wpkun3n6MU0t7hmhIn9m5+VO+yI0A
+	 Obc7beQxXIruK4hzduasi3lonxxZy5cYknbqCur56RwE3tWIjavYog3xZwMWFUnaBe
+	 8ux2GdQz/80k9a5krcPzGRu4CEKMMqyoPeinsoRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 7.2 032/713] rust: devres: fix race between concurrent revokers
-Date: Fri,  4 Sep 2026 06:50:00 +0200
-Message-ID: <20260904045804.551513102@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 004/713] ASoC: tegra210_mixer: sort the register default table
+Date: Fri,  4 Sep 2026 06:49:32 +0200
+Message-ID: <20260904045803.916602099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,103 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit acc516dfa1972d31836b50abc0115216cd0fccc5 upstream.
+[ Upstream commit f70bc276fc7f712ff5c8e995d5050558a3198df2 ]
 
-There is a potential race condition when two paths try to revoke a
-Devres concurrently.
+reg_defaults must be sorted by ascending register address, as
+regcache_lookup_reg() locates entries in it with bsearch().  See commit
+fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-The driver core's devres_release_all() calls Revocable::revoke() via the
-release callback, while Devres::drop() calls revoke_nosync() on another
-CPU.
+TEGRA210_MIXER_ENABLE (0x400) is the last entry of the table, after
+TEGRA210_MIXER_PEAKM_RAM_CTRL (0x434), which makes it unreachable.
+regcache_reg_needs_sync() then cannot compare it against its default and
+reports that a sync is needed, so it is written to the device on every
+regcache_sync() even when it was never touched.
 
-The revoker that does not claim the is_available swap returns
-immediately, but the revoker that did may still be executing
-drop_in_place() on the inner data. This can cause a use-after-free when
-the other revoker's caller proceeds to drop adjacent resources that
-drop_in_place() still references (e.g., Devres<DmaMappedSgt> racing with
-SGTable freeing the backing sg_table and pages).
+Sort the table by register address.
 
-Fix this by adding a Completion. The release callback signals the
-Completion after revoke() finishes, and Devres::drop() waits for it when
-it loses the is_available swap. This ensures the wrapped object is fully
-torn down before Devres::drop() returns.
-
+Fixes: 05bb3d5ec64a ("ASoC: tegra: Add Tegra210 based Mixer driver")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260612202841.2577C1F000E9@smtp.kernel.org/
-Fixes: 05aa6fb1c21d ("rust: scatterlist: Add abstraction for sg_table")
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260628174451.2275679-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20260805122748.13090-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/devres.rs |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ sound/soc/tegra/tegra210_mixer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -21,7 +21,8 @@ use crate::{
-     sync::{
-         aref::ARef,
-         rcu,
--        Arc, //
-+        Arc,
-+        Completion, //
-     },
-     types::{
-         ForeignOwnable,
-@@ -37,6 +38,8 @@ struct Inner<T> {
-     node: Opaque<bindings::devres_node>,
-     #[pin]
-     data: Revocable<T>,
-+    #[pin]
-+    revocation: Completion,
- }
+diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
+index a69774578d69f..8eb4e54b954b1 100644
+--- a/sound/soc/tegra/tegra210_mixer.c
++++ b/sound/soc/tegra/tegra210_mixer.c
+@@ -57,10 +57,10 @@ static const struct reg_default tegra210_mixer_reg_defaults[] = {
+ 	MIXER_TX_REG_DEFAULTS(3),
+ 	MIXER_TX_REG_DEFAULTS(4),
  
- /// This abstraction is meant to be used by subsystems to containerize [`Device`] bound resources to
-@@ -53,6 +56,10 @@ struct Inner<T> {
- /// After the [`Devres`] has been unbound it is not possible to access the encapsulated resource
- /// anymore.
- ///
-+/// When a [`Devres`] is dropped, it is guaranteed that `T` has been fully dropped by the time
-+/// [`Devres::drop`] returns, even if a concurrent revocation through the release callback is in
-+/// progress.
-+///
- /// [`Devres`] users should make sure to simply free the corresponding backing resource in `T`'s
- /// [`Drop`] implementation.
- ///
-@@ -218,6 +225,7 @@ impl<T: Send + 'static> Devres<T> {
-                     };
-                 }),
-                 data <- Revocable::new(data),
-+                revocation <- Completion::new(),
-             }),
-             GFP_KERNEL,
-         )?;
-@@ -255,7 +263,9 @@ impl<T: Send + 'static> Devres<T> {
-         // SAFETY: `inner` is a valid `Inner<T>` pointer.
-         let inner = unsafe { &*inner };
++	{ TEGRA210_MIXER_ENABLE, 0x1 },
+ 	{ TEGRA210_MIXER_CG, 0x00000001},
+ 	{ TEGRA210_MIXER_GAIN_CFG_RAM_CTRL, 0x00004000},
+ 	{ TEGRA210_MIXER_PEAKM_RAM_CTRL, 0x00004000},
+-	{ TEGRA210_MIXER_ENABLE, 0x1 },
+ };
  
--        inner.data.revoke();
-+        if inner.data.revoke() {
-+            inner.revocation.complete_all();
-+        }
-     }
- 
-     #[allow(clippy::missing_safety_doc)]
-@@ -362,6 +372,10 @@ impl<T: Send + 'static> Drop for Devres<
-                 // this additional reference count.
-                 drop(unsafe { Arc::from_raw(Arc::as_ptr(&self.inner)) });
-             }
-+        } else {
-+            // The release callback is concurrently revoking; wait for it to finish
-+            // `drop_in_place()` of the wrapped object before returning.
-+            self.inner.revocation.wait_for_completion();
-         }
-     }
- }
+ /* Default gain parameters */
+-- 
+2.53.0
+
 
 
