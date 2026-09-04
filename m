@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B09A41C2FF;
-	Fri,  4 Sep 2026 06:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225BA40F754;
+	Fri,  4 Sep 2026 06:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502900; cv=none; b=snI3LgJ/sOMaAoLsH3Ek8Rl1Zc0N2Xt89jBu3/UHL0PK1jgctaUUQL24KNsjquiS/ESFpMZE091oeJmnObho46Lub9dmYNa8d5G/7C1OkLrxr0Lh6+P2kdHKQL59CUNPuVdFshyxq2LBRq4Wmh3Ch0+0fp4rYf4euoMjaOusQCQ=
+	t=1788502903; cv=none; b=hptxoowBzDgVFNRcXwKVcMqqhqB5J5aR6nXpDy1z0DDZTChrsYC1/hUBE4gQTRxmjosKxu+/hgLGWizbDrxKa8Hclcce5/99cUUyxgCDIN0SqgsuxyzvBD15Ws7fEuSn8GGuPVevtfv0dfN20po3ZW2MfH6OOCgYAVE8LZjyDUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502900; c=relaxed/simple;
-	bh=DHQ3ZR4dT/0M+FBQWZlIVz/5Hm+c6nLpkkjsIv5NUOI=;
+	s=arc-20240116; t=1788502903; c=relaxed/simple;
+	bh=pJLu8lYwqaGrEC2oDZupTA5hhQQhBEcQ0vRpC/SzrCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mtmu3thMtEZnFFilOHWBATpXiyqozB2Y7z4LjGLYsKDtpevJKA2lb2qGLsikEznxEij32tJ11PjuCqFhbGZyvME23C6JokbfysvLvgBDsPZdyauS1wqciTBoZieVRvOd7sSTwSu2JU4/3jZOBjWXgT6kymBARUyCVgrFBYwu6/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvjVUtuI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lyEbiephbnnB+oCTf5x2ToyjYIgPlglrenalgvW1vdyReE8STLNXnSgZXCcQO7PIuaEdFYUlC3qft26PBuBKMKp4vZbAD6rhbXgCr59aGectEkqD/xHOiOayvT6O5+nL+ChZWVZaTbxyEYX6iK/TUDwJHBQRpGG8TU0T6uKnp48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZH7h2zQ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvjVUtuI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962E71F00A3D;
-	Fri,  4 Sep 2026 06:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZH7h2zQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771D81F00A3D;
+	Fri,  4 Sep 2026 06:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502899;
-	bh=bCRVNY5DAvVaKzgZrfztR4NodOM+4nGFDR9Dfj3CySM=;
+	s=korg; t=1788502902;
+	bh=3ZGo3du1oKscLXPrVmzwMNLLLup/eU3bl0UBLcCW0iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EvjVUtuIuvUL1xJknw7QzIDVGbZr4punOH3M+T2cqV+LVgevRMr6zXcGtKW+BNhLD
-	 uOb+wx2D1S70e7ruqHkLqTemCwBn/7252ZY7oXtPv3mOU14AjcB59pDzM7BirSQzd0
-	 dqljZUIDUr3LJgdVuMKoufI56pwqTyglg865XU/0=
+	b=ZH7h2zQ9kecmOZVB0x7IzE0isixFJPViORSRq7DUrChArL2uFz6FhyU/gQmTRwbGa
+	 aqluSsw9GjFXjTifvYnWsIbRcR8AFouxB05YrvXQgX8d30unpI6gzNDyZMNtTuxkha
+	 /7fRKM7UbwhcdTzm2+XZ5PKm+xjUK9PQ41yMa5UI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 316/403] platform/x86: ISST: Validate parameter for frequency and priority
-Date: Fri,  4 Sep 2026 07:01:59 +0200
-Message-ID: <20260904045742.024199515@linuxfoundation.org>
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 363/403] ALSA: bcd2000: clear the URB pointers on disconnect
+Date: Fri,  4 Sep 2026 07:02:46 +0200
+Message-ID: <20260904045743.063443667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -44,58 +45,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 574b59bb4b6bfcfd1f639d02f1041b314d43a2e6 upstream.
+commit 459d3a64766f5ca2f1886daeaf24582831a5f5ab upstream.
 
-Validate range for frequency and proportional priority while setting
-CLOS parameters.
+bcd2000_free_usb_related_resources() frees both URBs and leaves the
+pointers behind:
 
-Fixes: 12a7d2cb811d ("platform/x86: ISST: Add SST-CP support via TPMI")
+	usb_kill_urb(bcd2k->midi_out_urb);
+	usb_kill_urb(bcd2k->midi_in_urb);
+
+	usb_free_urb(bcd2k->midi_out_urb);
+	usb_free_urb(bcd2k->midi_in_urb);
+
+The rawmidi device outlives that call.  A substream that is still open
+when the device is unplugged reaches bcd2000_midi_send() from the
+trigger path on close.  That function writes to the freed URB and then
+hands it to the USB core:
+
+	bcd2k->midi_out_urb->transfer_buffer_length = BUFSIZE;
+	...
+	ret = usb_submit_urb(bcd2k->midi_out_urb, GFP_ATOMIC);
+
+usb_kill_urb() does not stop a later submission either, so a submit that
+races the disconnect can requeue the URB after it has been reaped.
+midi_in_urb is exposed the same way: bcd2000_input_complete() resubmits
+it from the completion handler.
+
+KASAN on 7.2.0-rc5 (arm64):
+
+  BUG: KASAN: slab-use-after-free in bcd2000_midi_send [snd_bcd2000]
+  Write of size 4 at addr ffff00001827d388 by task bpoc/168
+   __asan_store4
+   bcd2000_midi_send [snd_bcd2000]
+   bcd2000_midi_output_trigger [snd_bcd2000]
+   snd_rawmidi_kernel_write1
+   close_substream.part.0
+  Freed by task 168:
+   usb_free_urb
+   bcd2000_disconnect [snd_bcd2000]
+
+  BUG: KASAN: slab-use-after-free in usb_submit_urb
+  Read of size 8 at addr ffff00001827d3b8 by task bpoc/168
+
+Clear both pointers after freeing and test them on the paths that can
+still run.  Poison the URBs before freeing them: usb_poison_urb() waits
+for a running completion handler and rejects any later submission, so
+after it returns the input path is quiesced and only the rawmidi trigger
+path can still reach bcd2000_midi_send().  No unpoison is needed; the
+URBs are freed on the next line.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: b47a22290d58 ("ALSA: MIDI driver for Behringer BCD2000 USB device")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260811221514.3905817-5-srinivas.pandruvada@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260805013428.38204-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/usb/bcd2000/bcd2000.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -656,6 +656,9 @@ static long isst_if_core_power_state(voi
+--- a/sound/usb/bcd2000/bcd2000.c
++++ b/sound/usb/bcd2000/bcd2000.c
+@@ -134,6 +134,9 @@ static void bcd2000_midi_send(struct bcd
+ 	if (!midi_out_substream)
+ 		return;
  
- #define SST_MAX_CLOS			3
- 
-+#define SST_MAX_FREQ			0xff
-+#define SST_CLOS_MAX_PRIORITY		0x0f
++	if (!bcd2k->midi_out_urb)
++		return;
 +
- static long isst_if_clos_param(void __user *argp)
+ 	/* copy command prefix bytes */
+ 	memcpy(bcd2k->midi_out_buf, device_cmd_prefix,
+ 		sizeof(device_cmd_prefix));
+@@ -178,7 +181,7 @@ static int bcd2000_midi_output_close(str
  {
- 	struct tpmi_per_power_domain_info *power_domain_info;
-@@ -675,6 +678,15 @@ static long isst_if_clos_param(void __us
- 		if (power_domain_info->write_blocked)
- 			return -EPERM;
+ 	struct bcd2000 *bcd2k = substream->rmidi->private_data;
  
-+		if (!in_range(clos_param.min_freq_mhz / SST_MUL_FACTOR_FREQ, 0, SST_MAX_FREQ + 1))
-+			return -EINVAL;
-+
-+		if (!in_range(clos_param.max_freq_mhz / SST_MUL_FACTOR_FREQ, 0, SST_MAX_FREQ + 1))
-+			return -EINVAL;
-+
-+		if (!in_range(clos_param.prop_prio, 0, SST_CLOS_MAX_PRIORITY + 1))
-+			return -EINVAL;
-+
- 		_write_cp_info("clos.min_freq", clos_param.min_freq_mhz,
- 			       (SST_CLOS_CONFIG_0_OFFSET + clos_param.clos * SST_REG_SIZE),
- 			       SST_CLOS_CONFIG_MIN_START, SST_CLOS_CONFIG_MIN_WIDTH,
+-	if (bcd2k->midi_out_active) {
++	if (bcd2k->midi_out_active && bcd2k->midi_out_urb) {
+ 		usb_kill_urb(bcd2k->midi_out_urb);
+ 		bcd2k->midi_out_active = 0;
+ 	}
+@@ -348,11 +351,13 @@ static int bcd2000_init_midi(struct bcd2
+ static void bcd2000_free_usb_related_resources(struct bcd2000 *bcd2k,
+ 						struct usb_interface *interface)
+ {
+-	usb_kill_urb(bcd2k->midi_out_urb);
+-	usb_kill_urb(bcd2k->midi_in_urb);
++	usb_poison_urb(bcd2k->midi_out_urb);
++	usb_poison_urb(bcd2k->midi_in_urb);
+ 
+ 	usb_free_urb(bcd2k->midi_out_urb);
+ 	usb_free_urb(bcd2k->midi_in_urb);
++	bcd2k->midi_out_urb = NULL;
++	bcd2k->midi_in_urb = NULL;
+ 
+ 	if (bcd2k->intf) {
+ 		usb_set_intfdata(bcd2k->intf, NULL);
 
 
