@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730EE30C160;
-	Fri,  4 Sep 2026 06:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002E33815E1;
+	Fri,  4 Sep 2026 06:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501870; cv=none; b=baL/JDQV4TlJTiZ5ZLjVhhYjHG+roGVGFT1iv8+P5T6bS6/Xpuw8yL7CFqhtQa28s6kfrQFIkBvaNwTvTzYBYVK+ggg8orX+sRSXnXpBy9P0/qqfSY6zE75j7RczHHOcm65sO3AYd/0YS5LLHlmbm7aYkN7FTdFM0R5PoDAZwIk=
+	t=1788501873; cv=none; b=O1ygs+niTIq7EdbBX7b+OVfwl75xOVKdVnlIYwgdzPCJQ6cHeIpID3As217md1nwcFy3loRhIylTFKo4qZc8mIZWeaSXB1KB4AywDQIxN8vsXpEVmuvffj7EWfBy+yjd6tyhipWhOzj5MYdAjcPJtwfM/ioGDLuCp8MjIRxopho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501870; c=relaxed/simple;
-	bh=AvKesyjkAjbddFgrbokOD2nDc0/CxnOQ8MJ6toikMP0=;
+	s=arc-20240116; t=1788501873; c=relaxed/simple;
+	bh=2cvdWBRJMZVNf4zZvh49LDkBb+gSgHXlfE0NBF+ofAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Thk/JRnuYXSS0yMejhToev5fTDdi9ocAdAV+Djxiu4mK4JotQpUdQeqgj6d23VKX0+SsL/3Xh3cOGbg/R8ets6BJAdXL7oZhI+DJEWQTLetPsLiJlQG5UnOyywUHG5MtmQiU7piT/0/A8TQQlNIgyHrZBfM6mdxE5l1rc6V/YfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMvovVZJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=THK9jMb3Xc4eN1wm95ouvTUSJ4ESLLipGh9w0H/EKHmrllWK8thWrID9lPUYpfXl3SvHGcRN5zneNapxZ1w3QQNvMYHuaJ3xxDBtVIo4lGkOE3/WqlVLgp2rQiDXPpiAZT97/VCTyVFmuRvHsTRpKV//aCtHoT59mvuKKaV1tFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwUdeaxQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMvovVZJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818901F00A3D;
-	Fri,  4 Sep 2026 06:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwUdeaxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B831F00A3D;
+	Fri,  4 Sep 2026 06:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501869;
-	bh=pLAvynXV7jcN0utx2uylg/nCc7QESsd2o9ZZ5x+9veg=;
+	s=korg; t=1788501871;
+	bh=0T//oIN/wQE/yGolkxQ0okipFnV4YFZdtpI8ZKTJ6LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nMvovVZJRzItwCNvJI/Wp5DVruqSmwqZHgJczl1UqpNjqZoiCzIN4Nqf/EkjoD7Eb
-	 Wx4OAsUkV2+PERp3qY6HCmRp/6AXzs1W5AxXSRriA6koEmN/TrsvEmjiIwbksTt+MF
-	 V5B9pgvaLdPumm9bu23xmu75YU6J2rv4hGaFIoVU=
+	b=FwUdeaxQHzhNwWDGVyXKdf6z/R+PSb7cP9uibyfO6BjGQQOsT2yFRXV+lV7B/tmcL
+	 rIMdQMhDfQJMJ9v5plwNNgekmQiy1Dn4QlnTx+DKiwH48YYpXw8c5IGyFVQJo5iVg+
+	 9XexOC2aAZF/wbsubgOKDGOGJyAGWbGjwALZ6Qzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/403] bnxt_en: Mask the bd_cnt field in the TX BD properly
-Date: Fri,  4 Sep 2026 06:56:44 +0200
-Message-ID: <20260904045734.841604558@linuxfoundation.org>
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>
+Subject: [PATCH 6.12 010/403] alpha: fix ieee_swcr_to_fpcr setting FPCR_DNOD unconditionally
+Date: Fri,  4 Sep 2026 06:56:53 +0200
+Message-ID: <20260904045735.043853542@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -55,90 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit 107b25db61122d8f990987895c2912927b8b6e3f ]
+commit 49672d026cc4773608e1222b69b29fd70f41336b upstream.
 
-The bd_cnt field in the TX BD specifies the total number of BDs for
-the TX packet.  The bd_cnt field has 5 bits and the maximum number
-supported is 32 with the value 0.
+ieee_swcr_to_fpcr() converts the software IEEE trap-enable and status
+bits kept in thread_info.ieee_state into the hardware FPCR format.  It
+contained:
 
-CONFIG_MAX_SKB_FRAGS can be modified and the total number of SKB
-fragments can approach or exceed the maximum supported by the chip.
-Add a macro to properly mask the bd_cnt field so that the value 32
-will be properly masked and set to 0 in the bd_cnd field.
+	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
 
-Without this patch, the out-of-range bd_cnt value will corrupt the
-TX BD and may cause TX timeout.
+FPCR_DNOD (bit 47) disables denormal operand traps: with it set the
+hardware handles a denormal operand itself, treating it as zero, instead
+of trapping for software completion.  The intent was to set DNOD when the
+user has not asked for SIGFPE on denormal operands, but
+IEEE_TRAP_ENABLE_DNO is clear by default, so ieee_swcr_to_fpcr(0) always
+set DNOD.
 
-The next patch will check for values exceeding 32.
+Instructions built with the software completion suffix therefore never
+trapped on a denormal operand.  The hardware silently substituted zero
+and produced wrong results, affecting every program compiled with -mieee
+and default FPU settings, glibc included.
 
-Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250321211639.3812992-2-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Set FPCR_DNOD only when IEEE_MAP_DMZ is requested, which is exactly the
+case where flushing denormal inputs to zero is what the user asked for.
+DNOD then encodes MAP_DMZ, which ieee_fpcr_to_swcr() already recovers
+from FPCR_DNZ, so drop its attempt to recover IEEE_TRAP_ENABLE_DNO from
+DNOD; the DNO trap enable lives solely in ieee_state.
+
+Both functions are in a uapi header, so the encoding change is visible to
+userspace, but nothing outside the kernel is known to depend on DNOD
+carrying the DNO trap enable, and the kernel is the only writer of the
+FPCR.
+
+This must not be backported on its own.  Re-enabling denormal operand
+traps exposes a second bug, fixed in the following patch: those traps
+usually find an exact result, and for an exact result the emulator did
+not write the FPCR back, leaving hardware-fabricated exception bits
+visible to user space.  Taken alone this change would make spurious
+exception flags more common.
+
+The bug predates the git history, so there is no commit to reference in a
+Fixes tag.
+
+Cc: stable@vger.kernel.org # 5.15+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-1-c99d75608e60@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 4 ++--
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     | 2 ++
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 3 +--
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ arch/alpha/include/uapi/asm/fpu.h |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 2356b7ba7fcfb..e14e2a0bf89ce 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -553,7 +553,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 					TX_BD_FLAGS_LHINT_512_AND_SMALLER |
- 					TX_BD_FLAGS_COAL_NOW |
- 					TX_BD_FLAGS_PACKET_END |
--					(2 << TX_BD_FLAGS_BD_CNT_SHIFT));
-+					TX_BD_CNT(2));
+--- a/arch/alpha/include/uapi/asm/fpu.h
++++ b/arch/alpha/include/uapi/asm/fpu.h
+@@ -101,7 +101,12 @@ ieee_swcr_to_fpcr(unsigned long sw)
+ 		      | IEEE_TRAP_ENABLE_OVF)) << 48;
+ 	fp |= (~sw & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE)) << 57;
+ 	fp |= (sw & IEEE_MAP_UMZ ? FPCR_UNDZ | FPCR_UNFD : 0);
+-	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
++	/*
++	 * Disable denormal operand traps only when denormal inputs are to be
++	 * flushed to zero.  Otherwise they must keep trapping, so that /S
++	 * instructions reach the kernel emulation handler.
++	 */
++	fp |= (sw & IEEE_MAP_DMZ ? FPCR_DNOD : 0);
+ 	return fp;
+ }
  
- 		if (skb->ip_summed == CHECKSUM_PARTIAL)
- 			tx_push1->tx_bd_hsize_lflags =
-@@ -628,7 +628,7 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+@@ -116,7 +121,6 @@ ieee_fpcr_to_swcr(unsigned long fp)
+ 			     | IEEE_TRAP_ENABLE_OVF);
+ 	sw |= (~fp >> 57) & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE);
+ 	sw |= (fp >> 47) & IEEE_MAP_UMZ;
+-	sw |= (~fp >> 41) & IEEE_TRAP_ENABLE_DNO;
+ 	return sw;
+ }
  
- 	dma_unmap_addr_set(tx_buf, mapping, mapping);
- 	flags = (len << TX_BD_LEN_SHIFT) | TX_BD_TYPE_LONG_TX_BD |
--		((last_frag + 2) << TX_BD_FLAGS_BD_CNT_SHIFT);
-+		TX_BD_CNT(last_frag + 2);
- 
- 	txbd->tx_bd_haddr = cpu_to_le64(mapping);
- 	txbd->tx_bd_opaque = SET_TX_OPAQUE(bp, txr, prod, 2 + last_frag);
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index f50fe72f83ac6..67a82b3262d58 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -79,6 +79,8 @@ struct tx_bd {
- #define TX_OPAQUE_PROD(bp, opq)	((TX_OPAQUE_IDX(opq) + TX_OPAQUE_BDS(opq)) &\
- 				 (bp)->tx_ring_mask)
- 
-+#define TX_BD_CNT(n)	(((n) << TX_BD_FLAGS_BD_CNT_SHIFT) & TX_BD_FLAGS_BD_CNT)
-+
- struct tx_bd_ext {
- 	__le32 tx_bd_hsize_lflags;
- 	#define TX_BD_FLAGS_TCP_UDP_CHKSUM			(1 << 0)
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index fa3c6515cc4d6..850dabebdbf22 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -48,8 +48,7 @@ struct bnxt_sw_tx_bd *bnxt_xmit_bd(struct bnxt *bp,
- 		tx_buf->page = virt_to_head_page(xdp->data);
- 
- 	txbd = &txr->tx_desc_ring[TX_RING(bp, prod)][TX_IDX(prod)];
--	flags = (len << TX_BD_LEN_SHIFT) |
--		((num_frags + 1) << TX_BD_FLAGS_BD_CNT_SHIFT) |
-+	flags = (len << TX_BD_LEN_SHIFT) | TX_BD_CNT(num_frags + 1) |
- 		bnxt_lhint_arr[len >> 9];
- 	txbd->tx_bd_len_flags_type = cpu_to_le32(flags);
- 	txbd->tx_bd_opaque = SET_TX_OPAQUE(bp, txr, prod, 1 + num_frags);
--- 
-2.53.0
-
 
 
