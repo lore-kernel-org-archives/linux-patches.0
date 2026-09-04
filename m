@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58E134EF15;
-	Fri,  4 Sep 2026 05:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDF6351C04;
+	Fri,  4 Sep 2026 05:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499639; cv=none; b=cA2fcNsVPWKW2A/GvYaq3OrTTEh2YGVeh4+4/4rncf+Vifajli6zz76C6BCtf6mC2Wk7UTPjvHgNrwajBzVxfs1DUHpWKc9fpohjGo6+MbHpXtzUG9DXCL3sklJisjVT1/gs3zPtHQo6tJSRWPL1tOJZW3whMZ3Kzax0yhGydsg=
+	t=1788499642; cv=none; b=a3qlWmSAEOk3M3o2lt6G5kbyY9VV/Qu2vq1/XSo2ZtzGrjy20qHybp1GyhxqnHzOdx+bY4g2xi0SccHtVPlSGDn7daeiikwcGaEYnpnTI9THxJYJ099d9oA7Q9vNdZHBDJe+8eoL74Ad9Kmca5m1b3dI6bcF1TeDZvTU6Lz2eOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499639; c=relaxed/simple;
-	bh=VZs15+yiQvA4yXC8vMHLghd6Iksj29tdpxIGRMQ68xs=;
+	s=arc-20240116; t=1788499642; c=relaxed/simple;
+	bh=Qt4LOTV4VGE33Zvu8gVY2hm9WnoUF1Gi6Kqyy/98Z4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JvKnfyLEx77FFvwV1cp/FyZckCWjv4gRaSmBhA64A/1Ij1TT1gtlS7AOOscDyAtl8hMROZIfxkRUqBjg7ew3SWPc+zSbqZSlusj0oXT5NNG4ogjF6/Yed5zdVKksOFfrsGETldohgsQZ4wQogkqfB4y/AKT0uGUAkMp9lKRU2X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlQuLv74; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XT8LIV1ccu/sQHh0O1qs3p3k9xC400LeytgYsQssM/Lm5f9mfw1CMCZOKrGgTL+akzwGaE+eCKfIiq8MGFBN6bciUYV9YHBndSWD1KzXNaGwryV68iOgv9t2s3dyH3RZCw5liCoFQl1C2J9CNZPHNqJpa4yVy1L9/4N/dPE95KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFKW+GVe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlQuLv74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBEF1F00A3D;
-	Fri,  4 Sep 2026 05:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFKW+GVe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA161F00A3D;
+	Fri,  4 Sep 2026 05:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499638;
-	bh=/2DsLhgX8Tn0UFATdBMGcQpv2hD9RSdkla6NHSZVbU0=;
+	s=korg; t=1788499641;
+	bh=7qXDhVsHgw+adXQEOrCFKOFNvwHghjKCtw/3VJEEyC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rlQuLv746cU27us4T4nkkNiuCq95Opj/tAsTbaDVd9XdlalyBGBfxvk+lvfzK7Ef2
-	 JmNv/k4Yq0Au0noHznOfWm3YA4l1Zxnb+r8amaZ+Hy2Q+K9jiKsaRSu0A3PZBFknie
-	 EqRVBSVnv3jVpQYj3VTNXQSH4Zb1H0mK3PKiqxpw=
+	b=LFKW+GVeg46LXKNZbF5Ch4ukni+QJ/NpDoX5zmninhKgosMeJG2zs5alX6DVbB6GC
+	 6Mf9mUNgREJTU2BgU5Lu0B53GlCMH/e2qXNqTStGpURHvIr2lTwVfxh4tEbINvb51X
+	 iuvvJ7b0K39aey00L+t4vERs31XW3G473NMxGNVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 451/713] regulator: qcom-refgen: correct the regulator type to CURRENT
-Date: Fri,  4 Sep 2026 06:56:59 +0200
-Message-ID: <20260904045813.937427809@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.2 487/713] nvme: nvme-fc: Fix nvme_fc_create_hw_io_queues() queue deletion in error path
+Date: Fri,  4 Sep 2026 06:57:35 +0200
+Message-ID: <20260904045814.744611484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,44 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+From: Ewan D. Milne <emilne@redhat.com>
 
-commit 05dfeb2d0ccf87a7b92cd149a393b8423a26a04e upstream.
+commit 22eb631bf86ee3246f47885e4fa94154a46863e4 upstream.
 
-As per the REFGEN IP team, this block supplies the reference current to
-the PHYs in the SoC. So, correct the regulator type to REGULATOR_CURRENT
-to match with the HW behavior.
+nvme_fc_create_hw_io_queues() will call __nvme_fc_delete_hw_queue() for the
+last queue on which __nvme_fc_create_hw_queue() reported an error when deleting
+all the io queues if they cannot all be created.  This is incorrect since the
+last queue did not actually get created.
 
-Fixes: 7cbfbe237960 ("regulator: Introduce Qualcomm REFGEN regulator driver")
+The most recent change to this code was commit 17a1ec08ce70 ("nvme/fc: simplify
+error handling of nvme_fc_create_hw_io_queues") which moved the cleanup to the
+delete_queues: label and changed the loop bounds, however the code was not
+correct prior to this change in a different way.  The original commit
+e399441de911 ("nvme-fabrics: Add host support for FC transport") had a
+different error which called __nvme_fc_delete_hw_queue() on queue index 0 which
+is used for the admin queue.
+
+Fix this by correcting the initial loop index when deleting the io queues.
+
+Fixes: 17a1ec08ce70 ("nvme/fc: simplify error handling of nvme_fc_create_hw_io_queues")
+Fixes: e399441de911 ("nvme-fabrics: Add host support for FC transport")
 Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260617-ipq9650_refgen-v4-1-c505ea6c6661@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: Claude:claude-opus-4-6
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/qcom-refgen-regulator.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/fc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/regulator/qcom-refgen-regulator.c
-+++ b/drivers/regulator/qcom-refgen-regulator.c
-@@ -66,7 +66,7 @@ static const struct regulator_desc sdm84
- 	.enable_time = 5,
- 	.name = "refgen",
- 	.owner = THIS_MODULE,
--	.type = REGULATOR_VOLTAGE,
-+	.type = REGULATOR_CURRENT,
- 	.ops = &(const struct regulator_ops) {
- 		.enable		= qcom_sdm845_refgen_enable,
- 		.disable	= qcom_sdm845_refgen_disable,
-@@ -82,7 +82,7 @@ static const struct regulator_desc sm825
- 	.enable_time = 5,
- 	.name = "refgen",
- 	.owner = THIS_MODULE,
--	.type = REGULATOR_VOLTAGE,
-+	.type = REGULATOR_CURRENT,
- 	.ops = &(const struct regulator_ops) {
- 		.enable		= regulator_enable_regmap,
- 		.disable	= regulator_disable_regmap,
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2318,7 +2318,7 @@ nvme_fc_create_hw_io_queues(struct nvme_
+ 	return 0;
+ 
+ delete_queues:
+-	for (; i > 0; i--)
++	for (--i; i > 0; i--)
+ 		__nvme_fc_delete_hw_queue(ctrl, &ctrl->queues[i], i);
+ 	return ret;
+ }
 
 
