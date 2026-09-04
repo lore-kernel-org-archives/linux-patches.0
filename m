@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6589A4137B2;
-	Fri,  4 Sep 2026 05:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F714137B2;
+	Fri,  4 Sep 2026 05:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499937; cv=none; b=c2QL2YSFwmPWLfCzgsW/pFF2m9qJXdkMcX73whz5FSkiFgLpSeUnwGvU44uk1hA/OK+A3tLtP214Rmvh2OhKtTvJLZ7/BNhCMQCq0BCWMG8m6IkD5N6mcFpXFTP5iQAxMtM//DMhxBf27RNZ9zbJXToj1aSx9OLAGluXiRRj33I=
+	t=1788499940; cv=none; b=ntt2FXQ2hdDiyeX91u2jGvzwlHo3ro42Bt793YMm5kyoOmb2vN5tJ5mThMs+EngnzB4efHUGeZ8M4ErZug6rtRCTmEhT3hR/FrfMQNvSW9mpBGq/f9zYu7UY21TKyhMhtqBny0GRRF6yyEpF/G4unaS21fMBJhi+pYNvBTWP8AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499937; c=relaxed/simple;
-	bh=AmdraST8IHbcq2v9W8uHO83MgF68ZkxgrQlegHyY3ew=;
+	s=arc-20240116; t=1788499940; c=relaxed/simple;
+	bh=JqKq01sUkC9xFDSjo+b7V14TBk9RYQZ6/C+mpPrH/3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wq9ZkOO46szEJkUkz7lDoDMZPW7YPzeBeGvVmBasuu0N6KqovnvWLQ54vpTzPa8Ll/qD/Lg3ulQCu449TvsU6CqzvclMPiREWMd3u2/cr105/0nX8/zpUSC4+AKUA7d9LosDnMf2VaCmXGkOsgXeGlupdCErqJNHZfOLcFOs6vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpTpm2nG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LVKPuhcojjSLubjO+d1OALpodkDzmMvdOa7ao+QUjj3NmpSS0FlZ+mKTmAVyZOiUPkrxB+/LewhSL+ixknihy0OjWyWqwNqM4RHLkIhgGgl0MHw8VRhN5ONHs6akeklf0zy9nlsTwJuuSgCy3tpJWVf3evEqJ9Ob9MwqBR3GxKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkvmUuq5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpTpm2nG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD00C1F00A3D;
-	Fri,  4 Sep 2026 05:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkvmUuq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971E91F00A3D;
+	Fri,  4 Sep 2026 05:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499936;
-	bh=nx3Jo2vfjQDiEt9alA0EyU2fnOkFDXPcOTYe2i0xt3o=;
+	s=korg; t=1788499939;
+	bh=IUsuo/Nu6D3uhSrHQo8YMeJI33rkUYuFPgYe5ICDRok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CpTpm2nG7OkSFsZLu2PES9qfxYgzx6UirbwwD0+0hRdbdwBbugacH/ph9qOpOp6pQ
-	 KBqpJoLWeFo5dbZ1/juGa7UzT/s/y2FcQFAD/RZyqj2Ii4vSoCYJaYSsXqUi8NAYo8
-	 /0GpqE//nyzEYDF9qLPZ9nu5s5W8P6bn4TnMIRA4=
+	b=nkvmUuq5U09MHvQ+FSGZhJELDgMgVKWYiV9PxBgznlsXbDkd7R5OGPz0+ZKwbQ+ZK
+	 2ltRda2Tj7+AaF7CwK+Nf0laHjirs5C9odfDT3m/AUx7uWyoCRDtjuJ/ism4fPiuAH
+	 7c+4meaGpXTrUhiEyh8ZCCr1u4ydh2Cc0qMRYZaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 7.2 539/713] iommu/sva: Set handle->dev before the SVA handle is visible
-Date: Fri,  4 Sep 2026 06:58:27 +0200
-Message-ID: <20260904045815.902685817@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 587/713] io_uring/waitid: avoid siginfo copy during ring teardown
+Date: Fri,  4 Sep 2026 06:59:15 +0200
+Message-ID: <20260904045816.976343288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,47 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Hui Su <sh_def@163.com>
 
-commit 530f8f9c3546cb3ebee1b135375aaee08a073ebb upstream.
+commit 2cf20c4e0f72d523b8673053e7120d092ff1f074 upstream.
 
-iommu_attach_device_pasid() installs the new SVA attach handle in the
-group PASID lookup before iommu_sva_bind_device() returns. A concurrent
-bind can therefore find and reuse the same handle after iommu_sva_lock is
-dropped.
+During ring teardown, io_ring_exit_work() cancels outstanding requests
+from a kworker with a NULL tctx. The waitid cancellation path eventually
+reaches io_waitid_finish(), which copies the stored siginfo to the
+userspace pointer supplied with the request.
 
-handle->dev was initialized after dropping iommu_sva_lock. This leaves a
-window where a racing bind can return a handle whose dev pointer is still
-NULL. A subsequent iommu_sva_unbind_device() can then dereference it via
-handle->dev->iommu_group.
+Ring-wide teardown does not run in the task context that submitted the
+request, so it must not access that task's userspace pointer. Depending
+on the address and mm state, the copy may fail with -EFAULT, but the
+uaccess itself is inappropriate from the teardown kworker.
 
-Initialize handle->dev before releasing iommu_sva_lock so any visible SVA
-handle is fully initialized.
+Use a no-copy cancellation callback when io_waitid_remove_all() is
+called without an owning task context. Complete the request with
+-ECANCELED while releasing the waitid state without touching siginfo.
 
-Fixes: be51b1d6bbff ("iommu/sva: Refactoring iommu_sva_bind/unbind_device()")
+Keep the existing siginfo handling for explicit async cancellation and
+task-scoped cancellation.
+
+Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
 Cc: stable@vger.kernel.org
-Assisted-by: Qoder:Qwen-3.8-MAX-Preview
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://patch.msgid.link/20260818103336.1922818-3-sh_def@163.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommu-sva.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/waitid.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/iommu/iommu-sva.c
-+++ b/drivers/iommu/iommu-sva.c
-@@ -145,8 +145,8 @@ struct iommu_sva *iommu_sva_bind_device(
- 	list_add(&domain->next, &iommu_mm->sva_domains);
- out:
- 	refcount_set(&handle->users, 1);
--	mutex_unlock(&iommu_sva_lock);
- 	handle->dev = dev;
-+	mutex_unlock(&iommu_sva_lock);
- 	return handle;
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -146,7 +146,7 @@ static void io_waitid_complete(struct io
+ 	io_req_set_res(req, ret, 0);
+ }
  
- out_free_domain:
+-static bool __io_waitid_cancel(struct io_kiocb *req)
++static bool __io_waitid_cancel(struct io_kiocb *req, bool copy_si)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
+ 
+@@ -162,21 +162,32 @@ static bool __io_waitid_cancel(struct io
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 		return false;
+ 
+-	io_waitid_complete(req, -ECANCELED, true);
++	io_waitid_complete(req, -ECANCELED, copy_si);
+ 	io_req_queue_tw_complete(req, -ECANCELED);
+ 	return true;
+ }
+ 
++static bool io_waitid_cancel_cb(struct io_kiocb *req)
++{
++	return __io_waitid_cancel(req, true);
++}
++
++static bool io_waitid_cancel_nocopy_cb(struct io_kiocb *req)
++{
++	return __io_waitid_cancel(req, false);
++}
++
+ int io_waitid_cancel(struct io_ring_ctx *ctx, struct io_cancel_data *cd,
+ 		     unsigned int issue_flags)
+ {
+-	return io_cancel_remove(ctx, cd, issue_flags, &ctx->waitid_list, __io_waitid_cancel);
++	return io_cancel_remove(ctx, cd, issue_flags, &ctx->waitid_list, io_waitid_cancel_cb);
+ }
+ 
+ bool io_waitid_remove_all(struct io_ring_ctx *ctx, struct io_uring_task *tctx,
+ 			  bool cancel_all)
+ {
+-	return io_cancel_remove_all(ctx, tctx, &ctx->waitid_list, cancel_all, __io_waitid_cancel);
++	return io_cancel_remove_all(ctx, tctx, &ctx->waitid_list, cancel_all,
++				       tctx ? io_waitid_cancel_cb : io_waitid_cancel_nocopy_cb);
+ }
+ 
+ static inline bool io_waitid_drop_issue_ref(struct io_kiocb *req)
 
 
