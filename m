@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4B14195A0;
-	Fri,  4 Sep 2026 06:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE7E419FBB;
+	Fri,  4 Sep 2026 06:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502469; cv=none; b=Km16DgLFCqrRl5CldWaSoFE0aXM85LG1WEiJgjsuFQVC9+sI3Iu6K4IeVwxohAHdTz/bLvwsn2/EfVH/SbUs/xPGOCHVPa/9NT9qHSQsMlepP2R0m/sMRxhyAgs7TjMyIGeCVJYb5jFwV/Q7GzP2eVfYDOc+/vMm/OyQit4Qt/4=
+	t=1788502472; cv=none; b=UjTRPhmEWf7Lr1eZVCLKeMkU9nfZrDS5vQo79IuB1alM/PvhuhoUlrlw7mht1h4uToaps+7RH8Av9f2f9qfObuwKeG4E+0kfp830Z1ZgNtPRtU5RHqqGO7xz8/7YgcOnevtWlrOfmnRDDLr6s0TuLZW+8eUvUpyYG3pppstYrMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502469; c=relaxed/simple;
-	bh=EoigsQpEqnERCPG+spYVHiNYvqOrXUw4gkSRswHY70I=;
+	s=arc-20240116; t=1788502472; c=relaxed/simple;
+	bh=AsV/cOseMC2ecYZgWsEyNRKCzHKlp0Z9MXdMLVlZtL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3vGraQBnjy1QPIFzrMxJwJZ0gOXCF1b4Gj4Jvv7c3/ai19gpycEKjfPbngsVYFkPShJCSPlwbkl8FpSuVIuldaoWmqODh/ujVi1+V4/5J1Zokj1iKHn27Z2xSAfzz5PNOQ75JUQJYNlrI7n24e7sKseg7g2CaAdjDRncAokIDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYAGJuVx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LbVkO+p+39yAtsFHtKxHbdTTuhwoIk4wUqntc9F4bGWnc8dMmpj1lGz1PMBUEkFUlE0/1Bfpk3PbLAJm9COM18GHHbJxsznklhX6DUBBcjx7wejG+946vSKBXIjwmmHZceXfO1xvl5aXfjTyPSm3SdKKJ7YAu0FhdDahvk46ru8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOBQ7+L3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYAGJuVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99DD1F00A3D;
-	Fri,  4 Sep 2026 06:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOBQ7+L3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950BF1F00A3D;
+	Fri,  4 Sep 2026 06:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502468;
-	bh=O2FYRHkC2s69+yRi7/eL5cNJJbkxqbLqNz8v2icZnK8=;
+	s=korg; t=1788502471;
+	bh=Y1n6ue0mcG180K0Nrbk3njiLeVHvh/HarOiOUE8BgoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bYAGJuVxCxXvESZhARk1lceEpCOwfbWdIX/PFszoNbvNRdPQS5Q3vA9Oq+kYJJGx/
-	 +UHBkIFMyfnY4YCb50u6jLPx4tGhiL5SyWyOgtK6Q/EjPKKkhm9IUwnGtH7gu4HxxL
-	 aTRRBZN6EbRLSRB0H2wqA3uSJSxznffjj46p7gHo=
+	b=xOBQ7+L3tgEdnJnf1rFa6uVzchlwhHsc5mPXFqeZijpx5/3oOCLAIYMdvzGcXMkT+
+	 ikGTs4sQ1XJSW1/UbFfOQNQDnzPhOlTCWYQqqFDYU97yoGiua4twVbtvZdGYBPhBmI
+	 yO9KKYxEyF5mIH54TKQ39irnMAvZY7LYGJgqWUkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 217/403] svcrdma: Reject connection when transport allocation fails
-Date: Fri,  4 Sep 2026 07:00:20 +0200
-Message-ID: <20260904045739.798053733@linuxfoundation.org>
+	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 182/403] Bluetooth: hci_event: clear HCI_LE_ADV only on a created connection
+Date: Fri,  4 Sep 2026 06:59:45 +0200
+Message-ID: <20260904045738.995820746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,79 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 
-commit 0944462247dcb7de7622cdaaadf5f05c52707dab upstream.
+commit 941929abe5feaed672b9a52e330e547d333240c6 upstream.
 
-handle_connect_req() returns without action when
-svc_rdma_create_xprt() fails to allocate the new transport.
-The CM core returns 0 for CONNECT_REQUEST events, so it does
-not destroy the new rdma_cm_id. Each allocation failure under
-memory pressure leaks one rdma_cm_id, and a remote peer driving
-connection attempts can amplify this.
+le_conn_complete_evt() clears HCI_LE_ADV before looking at the event
+status, on the premise stated in its comment that all controllers stop
+advertising when a connection is created.
 
-Reject the connection by returning a non-zero status from the
-CM event handler, which tells the CM core to destroy the
-orphaned cm_id.
+That premise only holds when a connection was actually created. On a
+non-zero status none was, and the controller is still advertising: after
+the host issues LE Create Connection Cancel the event arrives with
+Unknown Connection Identifier (0x02), and a connection timeout behaves
+the same way. Clearing the flag there leaves the host believing
+advertising is off while the controller has it on.
 
-Fixes: 377f9b2f4529 ("rdma: SVCRDMA Core Transport Services")
+It is also wrong for extended advertising, where several sets can be
+advertising at once. hci_cc_le_set_ext_adv_enable() is careful about
+this - on disabling one set it walks hdev->adv_instances and only clears
+HCI_LE_ADV once no instance is still enabled. The unconditional clear
+here discards that bookkeeping, so one set connecting drops the flag
+while the others keep advertising.
+
+The direction of the error matters. A flag left set is self-correcting:
+hci_disable_advertising_sync() sends LE Set Advertising Enable(0) and
+the command complete puts the state back. A flag left clear is not,
+because that same function returns early without sending anything while
+the flag is clear:
+
+  - LE Set Advertising Parameters is then sent to a controller that is
+    still advertising, and is correctly rejected with Command Disallowed
+    (0x0c);
+  - hci_enable_advertising_sync() returns at that point, before the
+    LE Set Advertising Enable that would set HCI_LE_ADV again.
+
+On a controller without LE Extended Advertising that is reachable from
+here: hci_schedule_adv_instance_sync() re-arms adv_instance_expire every
+HCI_DEFAULT_ADV_DURATION (2 s) and its "already advertising" shortcut
+tests HCI_LE_ADV, which can no longer become true, so the parameter
+write is retried for as long as advertising is configured:
+
+  Bluetooth: hci0: Opcode 0x2006 failed: -16
+
+Only clear the flag when a connection was established.
+
+Note this is not on its own sufficient to stop that retry loop - the
+redundant enable queued by hci_le_conn_failed() clears HCI_LE_ADV itself
+and recreates the same mismatch, which patch 1 addresses. This patch
+fixes the event handler reporting a state the controller is not in.
+
+Verified on the affected device (BCM43455, legacy advertising only) with
+this patch and patch 1 applied. A 221 s btmon capture with an out-of-range
+peer at -90 dBm contains two outgoing connection attempts that the host
+cancelled, each producing exactly the event this patch changes:
+
+  < LE Set Advertising Parameters  0x2006   Success
+  < LE Set Advertising Enable      0x200a   Success
+  < LE Create Connection Cancel    0x200e   Success
+  > LE Connection Complete   Unknown Connection Identifier (0x02), central
+
+Nothing follows either one; the next command is an unrelated scan restart
+70 ms later. Over the whole capture: 7 LE Set Advertising Parameters sent,
+all Success; 10 LE Set Advertising Enable, all Success; no Command
+Disallowed of any opcode, and no 2 s cadence anywhere. Two central
+connections to other peers completed normally afterwards, with feature
+exchange and a connection parameter update, so advertising was still live
+across the cancelled attempts.
+
+The extended advertising case above is a code argument, not a measurement:
+this controller has no LE Extended Advertising, so that path is not
+exercised by the capture.
+
+Fixes: fbd96c151cdc ("Bluetooth: Fix clearing HCI_LE_ADV for LE connections")
 Cc: stable@vger.kernel.org
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-4-1b09bd87b6cd@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-opus-5 btmon
+Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/bluetooth/hci_event.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -227,12 +227,16 @@ svc_rdma_parse_connect_private(struct sv
-  * structure for the listening endpoint.
-  *
-  * This function creates a new xprt for the new connection and enqueues it on
-- * the accept queue for the listent xprt. When the listen thread is kicked, it
-+ * the accept queue for the listen xprt. When the listen thread is kicked, it
-  * will call the recvfrom method on the listen xprt which will accept the new
-  * connection.
-+ *
-+ * Return values:
-+ *     %0: Do not destroy @new_cma_id
-+ *     %1: Destroy @new_cma_id (allocation failure)
-  */
--static void handle_connect_req(struct rdma_cm_id *new_cma_id,
--			       struct rdma_conn_param *param)
-+static int handle_connect_req(struct rdma_cm_id *new_cma_id,
-+			      struct rdma_conn_param *param)
- {
- 	struct svcxprt_rdma *listen_xprt = new_cma_id->context;
- 	struct svcxprt_rdma *newxprt;
-@@ -242,7 +246,7 @@ static void handle_connect_req(struct rd
- 				       listen_xprt->sc_xprt.xpt_net,
- 				       ibdev_to_node(new_cma_id->device));
- 	if (!newxprt)
--		return;
-+		return 1;
- 	newxprt->sc_cm_id = new_cma_id;
- 	new_cma_id->context = newxprt;
- 	svc_rdma_parse_connect_private(newxprt, param);
-@@ -276,6 +280,7 @@ static void handle_connect_req(struct rd
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5650,10 +5650,11 @@ static void le_conn_complete_evt(struct
  
- 	set_bit(XPT_CONN, &listen_xprt->sc_xprt.xpt_flags);
- 	svc_xprt_enqueue(&listen_xprt->sc_xprt);
-+	return 0;
- }
+ 	hci_dev_lock(hdev);
  
- /**
-@@ -299,8 +304,7 @@ static int svc_rdma_listen_handler(struc
+-	/* All controllers implicitly stop advertising in the event of a
+-	 * connection, so ensure that the state bit is cleared.
++	/* Advertising stops when a connection is created. On a failed
++	 * connection it keeps running, so leave the state bit alone.
+ 	 */
+-	hci_dev_clear_flag(hdev, HCI_LE_ADV);
++	if (!status)
++		hci_dev_clear_flag(hdev, HCI_LE_ADV);
  
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_CONNECT_REQUEST:
--		handle_connect_req(cma_id, &event->param.conn);
--		break;
-+		return handle_connect_req(cma_id, &event->param.conn);
- 	case RDMA_CM_EVENT_ADDR_CHANGE:
- 		listen_id = svc_rdma_create_listen_id(cma_rdma->xpt_net,
- 						      sap, cma_xprt);
+ 	/* Check for existing connection:
+ 	 *
 
 
