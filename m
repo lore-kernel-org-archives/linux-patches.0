@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBBE351C04;
-	Fri,  4 Sep 2026 05:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B9C351C04;
+	Fri,  4 Sep 2026 05:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499651; cv=none; b=bmtpzMRrTbid1IPPCyUUuZ+B7pdttBLiixOHAJJ/thl35U0jHvIdo7ZKeeXrBJ9TRpUiSSByRLX5LeSvtiLYuOfnyrSZBi+cQPe/NwE5YukCP6XN7pRfOj+yS6qh1aCYHu7QNbc3QiU2LzWKIS1MryX0dVA89mIFXsyelgmFxJc=
+	t=1788499653; cv=none; b=jSLYQiJ/+d8p3i1nZUXHJWWDVZSQFII8yRdC9+wsOci9NMpkY4nX/QWUXd8EDFf+gTi9hlm0iCviqNVOdsMCxrhyHmF3lWgGAz+QQkvZSavyhb18x+EuDoL3ut5Ft/VdpFMW8P8JCTWDjgNQOfsUXlepK1MuEAZoA69l5nI4FqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499651; c=relaxed/simple;
-	bh=iaRgHbqSnTXjY6CrUtSl+95nwJc/Zb7tIdCMk6g8KTU=;
+	s=arc-20240116; t=1788499653; c=relaxed/simple;
+	bh=koWUoF8H5Pc3V7zvxn/DpfOP+ZJ+EgBSu05nbEZ1BIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRzhmH646EzG+iHuDXLySghkO+4L3JCsFIZ0HgUmIyfEuNxpvMrmjC57pMAiGzkutvrbV3jLMYD++brITnDxyD84uvhDChzaEC3CwZjFBjsWqmJDRg8Qi22HxpTWsrhhNc8vHyNvJ4wU1trX9q7yzd/PxS1RIA3mQ6jNhrueAc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJaMI/uC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FuAoQGKM91Aq/+G00gZIqZnqhveGreL3gsaGzexliIaN9jT52qkKZ5vL1piAvRPqsuh2I5LFpQ3833EJWXEbNmzdqiWK+N3ML47aSrf4SaZ5PW++Aq7jOuP7mIVFk1tf87/GnB4WgXkpZ0Bm6dTgovvsAV6AJw3Hz4L6kqc5lf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsvtgnf6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJaMI/uC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B721F00A3E;
-	Fri,  4 Sep 2026 05:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsvtgnf6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C591F00A3D;
+	Fri,  4 Sep 2026 05:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499649;
-	bh=G+uB8sx+/k+1vAEgudTTPmBf8uzy1Byn3Hvq5oPsPgI=;
+	s=korg; t=1788499652;
+	bh=ib7qs2nfmA1ACkIZxCV7TMPJ7OY2c/ReUB7xlw6WTUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bJaMI/uCCxhUtE08JR4zknrd6cfdAGf3Bh6OexMKxhY9eDB0dFhLuXnQhAZRvmuM7
-	 96qr60+Kn2wfQEcwCnoLqHJKT2DTiFIIhu9c5w+ajkMKWPwo+SCGTImVS13p6HpNDN
-	 P0KAmHaNss1BprfV2OOic/AALcSGgUOLA1+855Y8=
+	b=qsvtgnf6f/FSq7pb6K0u0eO3BJFLHnDBfga/PZYMofI4AOlFAJSTy/BB7ATmZh2u+
+	 wHyKRm8P2OLM3bz4b26yU7qwzZnLZSYTgfJ1s8Si9UcrU87bk2P4U6M+7guaWF+MHj
+	 tEyvHmX5g0ZxnrtTnMVivAEAl4YR4y3n8X3Y2waI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 490/713] nvme-tcp: do not accept C2HData based on blk_rq_payload_bytes() alone
-Date: Fri,  4 Sep 2026 06:57:38 +0200
-Message-ID: <20260904045814.809714544@linuxfoundation.org>
+Subject: [PATCH 7.2 491/713] nvme-tcp: fix host memory disclosure on R2T for a read command
+Date: Fri,  4 Sep 2026 06:57:39 +0200
+Message-ID: <20260904045814.833369349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,97 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 3a4aa9e6ad3e35f8e24d5eaf38ee4d437075fb36 upstream.
+commit 6efbc52237facda35d2d874fe1765bb4839275d8 upstream.
 
-Commit 25e5cb780e62 ("nvme-tcp: fix possible crash in write_zeroes
-processing") established that blk_rq_payload_bytes() must not be read
-without first checking blk_rq_nr_phys_segments(), and recorded the
-result in nvme_tcp_setup_cmd_pdu() as req->data_len. The receive side
-was left as it was.
+nvme_tcp_handle_r2t() does not check the direction of the request the
+R2T refers to. A malicious controller can send an R2T for a READ and
+the host will answer it: nvme_tcp_setup_h2c_data_pdu() builds the
+H2CData header and nvme_tcp_try_send_data() sends the request's data
+buffer. That buffer is the READ destination, so its contents go to the
+controller.
 
-The two differ for REQ_OP_WRITE_ZEROES, which has no physical segments
-but a non-zero blk_rq_bytes(), so setup leaves req->iter untouched
-while the receive gate lets a C2HData through and nvme_tcp_recv_data()
-copies into whatever the previous command on that tag left there. The
-driver-private area is zeroed only when the tag set is allocated.
+The command then completes normally and nothing is logged.
 
-Reproduced with a test target that leaves a residual iterator on a tag
-and then sends a C2HData for a WRITE_ZEROES command on the same tag:
+Against a test controller that answers every READ with an R2T, a 4096
+byte buffered read returned all 4096 bytes, split over two R2Ts. The
+pages contained stale kernel data, including an array of struct page
+pointers.
 
-BUG: KASAN: wild-memory-access in _copy_to_iter+0x642/0x1330
-Write of size 512 at addr ffe728c2175dfa81 by task kworker/0:1H/103
+Reject an R2T for a request that is not a write.
 
-CPU: 0 UID: 0 PID: 103 Comm: kworker/0:1H Not tainted 7.2.0-rc5-NVMETCP-gf5098b6bae76 #1 PREEMPT(lazy)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: nvme_tcp_wq nvme_tcp_io_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x53/0x70
- kasan_report+0xce/0x100
- ? _copy_to_iter+0x642/0x1330
- kasan_check_range+0x105/0x1b0
- __asan_memcpy+0x3c/0x60
- _copy_to_iter+0x642/0x1330
- ? __pfx_sock_has_perm+0x10/0x10
- ? worker_thread+0x45b/0xd10
- ? __pfx__copy_to_iter+0x10/0x10
- ? _raw_spin_lock_bh+0x83/0xe0
- ? __pfx__raw_spin_lock_bh+0x10/0x10
- __skb_datagram_iter+0xf3/0x820
- ? __pfx_simple_copy_to_iter+0x10/0x10
- ? __asan_memcpy+0x3c/0x60
- ? skb_copy_bits+0x58d/0x830
- skb_copy_datagram_iter+0x37/0x120
- nvme_tcp_recv_skb+0xa07/0x4320
- ? __pfx_nvme_tcp_recv_skb+0x10/0x10
- __tcp_read_sock+0x1ab/0x810
- ? __pfx_nvme_tcp_recv_skb+0x10/0x10
- ? __pfx_lock_sock_nested+0x10/0x10
- ? __pfx___tcp_read_sock+0x10/0x10
- nvme_tcp_try_recv+0x152/0x1e0
- ? __pfx_nvme_tcp_try_recv+0x10/0x10
- ? __pfx_mutex_unlock+0x10/0x10
- nvme_tcp_io_work+0x1e4/0x6c0
- ? __schedule+0x181a/0x49f0
- ? __pfx_nvme_tcp_io_work+0x10/0x10
- process_one_work+0x633/0x1030
-
-Keep the blk_rq_payload_bytes() test and add req->data_len to it. The
-old test is what rejects a C2HData naming a tag that is no longer in
-flight, because blk_update_request() zeroes rq->__data_len on
-completion; req->data_len and req->curr_bio are driver-private and
-survive completion, so they cannot stand in for it. Setup initialises
-the iterator only when both req->curr_bio and req->data_len are set, so
-the gate now tests the same two.
-
-Fixes: 25e5cb780e62 ("nvme-tcp: fix possible crash in write_zeroes processing")
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
 --- a/drivers/nvme/host/tcp.c
 +++ b/drivers/nvme/host/tcp.c
-@@ -644,6 +644,7 @@ static int nvme_tcp_process_nvme_cqe(str
- static int nvme_tcp_handle_c2h_data(struct nvme_tcp_queue *queue,
- 		struct nvme_tcp_data_pdu *pdu)
- {
-+	struct nvme_tcp_request *req;
- 	struct request *rq;
- 
- 	rq = nvme_find_rq(nvme_tcp_tagset(queue), pdu->command_id);
-@@ -654,7 +655,8 @@ static int nvme_tcp_handle_c2h_data(stru
- 		return -ENOENT;
+@@ -750,6 +750,13 @@ static int nvme_tcp_handle_r2t(struct nv
  	}
+ 	req = blk_mq_rq_to_pdu(rq);
  
--	if (!blk_rq_payload_bytes(rq)) {
-+	req = blk_mq_rq_to_pdu(rq);
-+	if (!blk_rq_payload_bytes(rq) || !req->curr_bio || !req->data_len) {
++	if (unlikely(rq_data_dir(rq) != WRITE)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"req %d unexpected r2t for a non-write command\n",
++			rq->tag);
++		return -EPROTO;
++	}
++
+ 	if (unlikely(!r2t_length)) {
  		dev_err(queue->ctrl->ctrl.device,
- 			"queue %d tag %#x unexpected data\n",
- 			nvme_tcp_queue_id(queue), rq->tag);
+ 			"req %d r2t len is %u, probably a bug...\n",
 
 
