@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6AE4CCDC7;
-	Fri,  4 Sep 2026 05:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE47235CB7C;
+	Fri,  4 Sep 2026 05:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500565; cv=none; b=bzXAEWKvpI58e1ky1NmvsAWHhZJ5AlCkxIyiIKKbFA66+5szhim1DCY97oZZgP7hoEX+qBNyTNynwB7omkAO2JZdnJgjdyzQifcxpIbl9WvpPeXB2FErN0K1E/pM9KkXAYy9oCmvns0VPOUfQyg7CpX4I2D3ziEQZko7W0klJzo=
+	t=1788500567; cv=none; b=lqXJLsYH/Unv/J0nWCW9YbwwxQ92xYmRUwM+zknJ39d3tW4v/uZHkEonmFiZdPBwqGbO1yxlj88yYKJNeOsQH7pzRH/M5AWOAj3ypazfUAh0eigsAxz1CzwHthi85kjBKkPVSF4jjEleAZAl/eZZV4iRUjnRV5IajcRGO+gIjbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500565; c=relaxed/simple;
-	bh=Vo1uUVWyJG5Euipi4M7ulL+E/FTSY1pMAcyX/4PlozU=;
+	s=arc-20240116; t=1788500567; c=relaxed/simple;
+	bh=rwekhnGv/NbRz8CPMUUZR6ZiQ1omMrnzqCB9BouCCAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FCYn6e4QXDZsxMSpq6m+KHnkgy+c88Twkd5rqct0KNHeqQCj/d5PHIKs7e+zxB079vjkO15wM5qt1FxCD+AqnonKWpKtF1MMQIzzcANeVsqcgLwfVjlOyUrGz1hVlGHoPjJWaHNXGFCJZAWeEdCqLmxRhRksQO200gkMyoBhY0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxvuWKU7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HWFYzaKtMFupSWyj6YZB94xuEdv11vWHzfyiVCUMg8G1oaS2q6xnFz/TqXoj9scRRGMnJghC3crDt13wiMnl99X3BROpanUXhQI68/CkJUqm9l07X0Q+u65988OvOKq6CdkuZLh/wB+NgJuI6hFsoe7nNwckt8Z7LN5/kgKn9ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsuQmiEC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxvuWKU7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F231F00A3E;
-	Fri,  4 Sep 2026 05:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsuQmiEC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225E81F00A3D;
+	Fri,  4 Sep 2026 05:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500563;
-	bh=pune1hhnBVQ5KMECcK467/sX7FLcFmi0pDzUNaItiWQ=;
+	s=korg; t=1788500566;
+	bh=L5pLEzzlFn+vubiZJ8eadxHwByk1bcast1YckYTrLXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TxvuWKU7I8ed6JcIB8FS9S2MFx83TVB3VpSt0R2kC6QSMPq0YAKIi3277tO22NPqy
-	 OapjzQ+cvBJZ++2WXIUqFDjkeEfjIMseObKMl8j52plBJshyJVYktjZtlIm+sgKvau
-	 IhrRmCBuLc5fZwtJmZZveffUvxKVK6/deUphWJ8A=
+	b=lsuQmiECaU4oeMiMmkCTj3tn3eCtOB/yQfn180UJYXZznuniPY3G1bAWM7kRNfVNn
+	 +7c6kk+JNjbyYjuBXMboZf7QDj4FxP498TkoAvgLGksWZTzbWErgQipDp7NzcoaxkG
+	 OUte9v+tc8EjSsVnpRQxtqiCg1fHz0fQenNeUMeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 100/552] NFSD: Encode only the status in NFS-ACL v2 GETACL error replies
-Date: Fri,  4 Sep 2026 06:54:17 +0200
-Message-ID: <20260904045750.171180396@linuxfoundation.org>
+Subject: [PATCH 6.18 101/552] NFSD: Fix off-by-one in DRC bucket pruning limit
+Date: Fri,  4 Sep 2026 06:54:18 +0200
+Message-ID: <20260904045750.195504495@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,74 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit ed4edddad19babf76b56882ad9600f5646b167a0 upstream.
+commit d0728723c80dcb3432effd67c7e919b596004b1d upstream.
 
-The NFSv2 ACL GETACL reply is a union that carries file attributes
-and ACL data only when the status is NFS_OK. All error cases are
-void results. However, currently the NFSv2 ACL GETACL result encoder
-decides whether to append the "OK" body by testing only whether the
-file handle resolved to a positive dentry, not the actual reply
-status.
+nfsd_prune_bucket_locked() evicts an entry before checking
+the freed count against @max. The check uses "++freed > max",
+which does not break until freed exceeds max, resulting in
+max + 1 evictions. Use ">=" so the limit stated in the
+function comment is honored.
 
-A GETACL request that resolves its file handle but then fails for
-another reason (an unsupported mask value, a getattr failure, or an
-ACL retrieval error) therefore appends file attributes and ACL data
-after the error status on the wire. Worse, when the mask is
-rejected, fh_getattr() hasn't been called at all, so those
-attributes are serialized from a zero-filled kstat and are junk.
-
-The logic before the xdr_stream conversion used the reply status.
-Revert to that approach (but keep the xdr_stream conversion in
-place).
-
-Fixes: f8cba47344f7 ("NFSD: Update the NFSv2 GETACL result encoder to use struct xdr_stream")
+Fixes: a9507f6af145 ("NFSD: Replace nfsd_prune_bucket()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260712150911.48461-1-cel@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Link: https://patch.msgid.link/20260717001232.438792-2-cel@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs2acl.c |   31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ fs/nfsd/nfscache.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -248,22 +248,21 @@ nfsaclsvc_encode_getaclres(struct svc_rq
+--- a/fs/nfsd/nfscache.c
++++ b/fs/nfsd/nfscache.c
+@@ -275,7 +275,7 @@ nfsd_prune_bucket_locked(struct nfsd_net
+ 		nfsd_cacherep_unlink_locked(nn, b, rp);
+ 		list_add(&rp->c_lru, dispose);
  
- 	if (!svcxdr_encode_stat(xdr, resp->status))
- 		return false;
--
--	if (dentry == NULL || d_really_is_negative(dentry))
--		return true;
--	inode = d_inode(dentry);
--
--	if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
--		return false;
--	if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
--		return false;
--
--	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
--				   resp->mask & NFS_ACL, 0))
--		return false;
--	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
--				   resp->mask & NFS_DFACL, NFS_ACL_DEFAULT))
--		return false;
-+	switch (resp->status) {
-+	case nfs_ok:
-+		inode = d_inode(dentry);
-+		if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
-+			return false;
-+		if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
-+			return false;
-+		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
-+					   resp->mask & NFS_ACL, 0))
-+			return false;
-+		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
-+					   resp->mask & NFS_DFACL, NFS_ACL_DEFAULT))
-+			return false;
-+		break;
-+	}
- 
- 	return true;
+-		if (max && ++freed > max)
++		if (max && ++freed >= max)
+ 			break;
+ 	}
  }
 
 
