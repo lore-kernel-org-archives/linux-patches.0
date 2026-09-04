@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A85423BD1B;
-	Fri,  4 Sep 2026 05:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B92D23BD1B;
+	Fri,  4 Sep 2026 05:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499053; cv=none; b=nLF03uG4gPglt3/M4GDRMaDB5Ja2clAYbcLdaFW43OtxumYEOPxz+sXftCyC97kCNl168hvclUZqksCYXK9I+myMk8hXCZYG/WTHZSuHPoRpubYZBqqNBNX3XzeGT0E0A7zLB4YRi9KuzComJr/WJZBk7atmx1g95zaLSIAO5wk=
+	t=1788499057; cv=none; b=QHpGP/rdckFHm6EtVPLIh0GpFSW6zR3g2HdAbHrTblyArp9YjPUUfzJZ1EN6uKqWHgVceOHagwJMhxaNULhI+rZShfwFfed97HKhS4CWcWprROhMczsaEQ6gaKSwsUu9ICwrq9/QSsMHjacAKJ4KbqlN9VL4IPtx36PWOdwFc+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499053; c=relaxed/simple;
-	bh=9bLr10rzmHJf5kEkg72JXSAbaToQdZF97oeJbKWhQZY=;
+	s=arc-20240116; t=1788499057; c=relaxed/simple;
+	bh=JcQEmVPlk/dz220v9FjZ55/oBP7+CYgKiS62ac96XkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7TaaU9XXDNLuPiztL0hE5LHlZdKSqI+Zfl3LaH6prJoywnKCr+18C0BYejnZoRKU0ucmp6Hf6Oci+/GGdYkYwLgLb2yP2eXZlikJlnPJid/zkUkeyzBwzASrXgd7IMnDvQtjscfU9Cq8tEa5W7gaFU9gHW/P4/2ajVJ+HZ3p7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvPiXwpw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKvJqQArRrZvY0giEHhdvvKFntAwm+9dGF//egN3PLS6B2eYinfaIoOi4eiCjpsMyTLIBsPQUG1ZrPbPv1ZEEksowi9zT+QxZ5zWon8YSiRAKkWCEiv0LNdwUrQ87c3iO7DvU07dQEjJSJlYE0MZtarYhdof6u2fDGKKXnRP0Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toF0Oz8P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvPiXwpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E431F00A3D;
-	Fri,  4 Sep 2026 05:17:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toF0Oz8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4A91F00A3D;
+	Fri,  4 Sep 2026 05:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499052;
-	bh=sAKLmGMdnrE4U6pB39+aDI8sD08WBbyxP7syXmn66Y0=;
+	s=korg; t=1788499055;
+	bh=EIHP/mYZOwWHnstRfrdQxfU7SGKMEjPq/WJEFsWmSII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uvPiXwpws/LrGUXS5En+Kx8Gq5wsOEYvwpb/lNZbttWNOHiYMELvzwv5bZHg/lOt8
-	 f4VMPXbxKoGhIAeIU9ChqshaSq2yLjQ4qlkUC3aA+BaLpJsX4g1Rakw0+Hi/ozR2yW
-	 e1XHtmDm5AjKROqk02ZmatXY4HvJqtXyxp82wVns=
+	b=toF0Oz8Ptgbl5FZKtXf0W/cU/+JAsRb84fu59MhWt087x7sesUnkqMyoZCRh4FXy0
+	 /7+O1scpRhTOyMkT5RYix61Qop9ysCjCZIEzrKlPdqjXwBXDAa+wqzFGc3y812LzRm
+	 wnIOC32yGeXEe+MiYSLHEBokNzOphcpzs6BTREI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.2 264/713] ntfs: bound the free-cluster bitmap scan to the volume
-Date: Fri,  4 Sep 2026 06:53:52 +0200
-Message-ID: <20260904045809.755453048@linuxfoundation.org>
+	Yemu Lu <prcups@krgm.moe>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
+	Christian Brauner <brauner@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 282/713] fat: restore original value when fat_ent_write failed
+Date: Fri,  4 Sep 2026 06:54:10 +0200
+Message-ID: <20260904045810.161364967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,73 +57,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Yemu Lu <prcups@krgm.moe>
 
-commit 19cac7902a8ab748e15f98ddaafcf5f8882be21d upstream.
+commit 64d9183203eebe33de6188b70a8c1e91f52885db upstream.
 
-vol->lcn_empty_bits_per_page is sized from vol->nr_clusters at mount, but
-ntfs_cluster_alloc() bounds its scan of that array by the size of $Bitmap.
-Those are independent on-disk quantities and the mount-time check only
-rejects a $Bitmap that is too small, so an image whose $Bitmap covers more
-clusters than the volume has lets the scan index past the array.  A run
-whose LCN lies in that gap takes the allocator straight there, since the
-caller passes the file's own last LCN as its locality hint.  KASAN reports
-a slab out-of-bounds read when a file on such a volume is extended.
+fat_ent_write() may have committed the new link to the primary FAT but
+then failed on the mirror copy, leaving the chain pointing to new_dclus
+even though the caller will free it.  Restore the original value to keep
+the chain consistent.
 
-Clamp the scan to what that array covers, mirroring the max_index
-calculation the mount-time scan already uses, and reject a decoded LCN
-at or beyond nr_clusters in the mapping pairs decoder.  Conforming
-volumes are unaffected.
-
-Fixes: 11ccc9107dc4 ("ntfs: update runlist handling and cluster allocator")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Link: https://lore.kernel.org/20260525085649.781643-1-n05ec@lzu.edu.cn
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yemu Lu <prcups@krgm.moe>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/lcnalloc.c | 7 ++++++-
- fs/ntfs/runlist.c  | 7 +++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ fs/fat/misc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ntfs/lcnalloc.c b/fs/ntfs/lcnalloc.c
-index 835a041023a2..aa2e017a4384 100644
---- a/fs/ntfs/lcnalloc.c
-+++ b/fs/ntfs/lcnalloc.c
-@@ -298,7 +298,12 @@ struct runlist_element *ntfs_cluster_alloc(struct ntfs_volume *vol, const s64 st
- 	clusters = count;
- 	rlpos = rlsize = 0;
- 	mapping = lcnbmp_vi->i_mapping;
--	i_size = i_size_read(lcnbmp_vi);
-+	/*
-+	 * lcn_empty_bits_per_page is sized from nr_clusters, but $Bitmap can
-+	 * cover more clusters than that; bound the scan by the array.
-+	 */
-+	i_size = min_t(s64, i_size_read(lcnbmp_vi),
-+		       ((s64)vol->nr_clusters + 7) >> 3);
- 	while (1) {
- 		ntfs_debug("Start of outer while loop: done_zones 0x%x, search_zone %i, pass %i, zone_start 0x%llx, zone_end 0x%llx, bmp_initial_pos 0x%llx, bmp_pos 0x%llx, rlpos %i, rlsize %i.",
- 				done_zones, search_zone, pass,
-diff --git a/fs/ntfs/runlist.c b/fs/ntfs/runlist.c
-index 8e0fd400e7f7..17eb275a21ff 100644
---- a/fs/ntfs/runlist.c
-+++ b/fs/ntfs/runlist.c
-@@ -884,6 +884,13 @@ struct runlist_element *ntfs_mapping_pairs_decompress(const struct ntfs_volume *
- 					ntfs_error(vol->sb, "lcn == -1");
- 			}
- #endif
-+			/* Check lcn is within the volume. */
-+			if (unlikely(lcn >= (s64)vol->nr_clusters)) {
-+				ntfs_error(vol->sb,
-+						"LCN >= nr_clusters in mapping pairs array.");
-+				goto err_out;
-+			}
+--- a/fs/fat/misc.c
++++ b/fs/fat/misc.c
+@@ -133,7 +133,11 @@ int fat_chain_add(struct inode *inode, i
+ 		ret = fat_ent_read(inode, &fatent, last);
+ 		if (ret >= 0) {
+ 			int wait = inode_needs_sync(inode);
++			int old = ret;
 +
- 			/* Check lcn is not below -1. */
- 			if (unlikely(lcn < -1)) {
- 				ntfs_error(vol->sb, "Invalid s64 < -1 in mapping pairs array.");
--- 
-2.55.0
-
+ 			ret = fat_ent_write(inode, &fatent, new_dclus, wait);
++			if (ret < 0)
++				fat_ent_write(inode, &fatent, old, wait);
+ 			fatent_brelse(&fatent);
+ 		}
+ 		if (ret < 0)
 
 
