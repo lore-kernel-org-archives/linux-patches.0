@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770C13AFB1C;
-	Fri,  4 Sep 2026 05:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE562264A3;
+	Fri,  4 Sep 2026 05:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500505; cv=none; b=rjY3SotNdWLEV8VbVV4y0SoVKEdoS7kd7bcV53bgD3d0YvnqjTC0eCVsj5k0dE6hTR176KB8refMqq5cTtxBKRRGVbqdh/hpkpWFl6QHGKZ3YZ1zvv7hSSXj6H6g9iQ68f56mmx1cCEiZFjY9mtmUugwz4vofYuMG+BR7IQtoeY=
+	t=1788500508; cv=none; b=F6AkxI6KCvquXQ8LQ8gNKORZIUMYVRUCYwW83ByzEdF4UQxJ4fTdwYZKvEppr9Su8O0yTohXDu53BuFyp/XMIWiZOToUQqOzW8RDvh839shzzW6ntserh93CEO215QhM4q8Gfjaq+W5mgVs4dI+m52/UOp8ZpoZg6q4d0bmrQjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500505; c=relaxed/simple;
-	bh=6l1VEKrZ0iCqgwu6R5jCmwCdD8NOGbuvdtgtR3pHHG8=;
+	s=arc-20240116; t=1788500508; c=relaxed/simple;
+	bh=xcBlsHEFGovYD0JnwVNVBcNrR16RTWkkgnkHOtmsFiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6Hquu89WIewfo8BG61BIdGIvXrNLBCe+j4R5yrhv5Nx1BocFIBxP05XAZT4QeolJdPFjaRF4Q2MsBhOyCXjq5rtrS8HPW/pjD/GEaNHK9k9s/V4HohrckuLpzFJ/GzsEGZ/MZqsZqrhGr+MJz/XmhnI1P/89Y4nDtY5sr+xreI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ornEqSq7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tQp2xyhuFpGm1XmL7Y5g4/TiWDStyBUosi1idwTD1SNpswXkIWk8LuT2OWZZwFaCkwOX/f88Xldqzgu1dGFo5NvRgKwZJzujGPhg0/IggtN/M1b3BvpkV7djjNUSTmfzDraKHgRFl3db6Wpdz2IkqsI6A55POvQkTUKzAbJIfgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJvK2kkR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ornEqSq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8B01F00A3D;
-	Fri,  4 Sep 2026 05:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJvK2kkR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD5E1F00A3D;
+	Fri,  4 Sep 2026 05:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500504;
-	bh=szy0sA+By/vcJTp8zsqu/mz6Eqzaa7Jwx1RmeVkbQlA=;
+	s=korg; t=1788500507;
+	bh=YrQcWmXTZEwafXVhLyRUml3Ui5OSOCuYhe75rgfHSow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ornEqSq7vzLJV+ZPZCjQPDVw47YA/zl/z47DpLNME1eeswaJRVn+FkgoFtg5vKrVA
-	 4w+t56HefZAopuG8z7/WCHnZBfcmsI0z5tF8vbuKaHpf5iuKgYiZB9fkTn9sh+kJ70
-	 k/hDsakdBddg2D0wPuif/VivRpUIXA9CkRCWsHyc=
+	b=WJvK2kkRkPri5/b2UQeKaoQ5CSYpnNgiIQvgn3dKs3qdy5z/lAIGqSINvAea0b1Zq
+	 +96lnq/C1iEw2UWPvL1Fe3j6xvKJ53QcyM88j5Wj/rTZopOiSHlAWI5igzwFH8uNUA
+	 hkeovzsAfx3pmDqHZyzhj1z5LsPsgiDW7sXwpmOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c9f9d646b08f3b6032fe@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>
-Subject: [PATCH 6.18 081/552] usb: gadget: f_tcm: fix deadlock in usbg_make_tpg()
-Date: Fri,  4 Sep 2026 06:53:58 +0200
-Message-ID: <20260904045749.703047391@linuxfoundation.org>
+	syzbot+8dcac923582c28505fd7@syzkaller.appspotmail.com,
+	Jeffin Philip <jeffinphilip14@gmail.com>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.18 082/552] usb: gadget: uvc: Fix null pointer dereference in uvcg_video_init()
+Date: Fri,  4 Sep 2026 06:53:59 +0200
+Message-ID: <20260904045749.727357469@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,94 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Jeffin Philip <jeffinphilip14@gmail.com>
 
-commit 9dbf74f4022f80f7669d2b3c22c5deb46c1b5674 upstream.
+commit 5b1da38592efdc1a263d4c0353298cba19e9d6fc upstream.
 
-usbg_make_tpg() held dep_lock while calling
-configfs_depend_item_unlocked(), which acquires the configfs root
-inode lock when operating across subsystems. This creates a circular
-lock dependency with configfs_rmdir():
+In uvcg_video_init(), if kthread_run_worker() fails,
+the error logged uses uvcg_err(), however, the pointer it uses:
+video->uvc is not assigned at this point, triggering a null
+pointer dereference. Fix this by directly using uvc->func which
+is assigned already.
 
-  dep_lock -> configfs root inode lock -> su_mutex -> dep_lock
-
-In usbg_make_tpg(), dep_lock only serialized the read of opts->ready,
-which is a monotonic flag that transitions from false to true exactly
-once (in tcm_set_name()) and never reverts. Remove dep_lock from
-usbg_make_tpg() entirely and use READ_ONCE/WRITE_ONCE to access
-opts->ready locklessly instead.
-
-Reported-by: syzbot+c9f9d646b08f3b6032fe@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c9f9d646b08f3b6032fe
-Fixes: 4bb8548df632 ("usb: gadget: f_tcm: add configfs support")
+Reported-by: syzbot+8dcac923582c28505fd7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8dcac923582c28505fd7
+Fixes: f0bbfbd16b3b ("usb: gadget: uvc: rework to enqueue in pump worker from encoded queue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Link: https://patch.msgid.link/20260731081151.285599-1-yun.zhou@windriver.com
+Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
+Reviewed-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260804034338.7976-1-jeffinphilip14@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/usb/gadget/function/uvc_video.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1674,19 +1674,25 @@ static struct se_portal_group *usbg_make
- 
- 	opts = container_of(tpg_instances[i].func_inst, struct f_tcm_opts,
- 		func_inst);
--	mutex_lock(&opts->dep_lock);
--	if (!opts->ready)
--		goto unlock_dep;
-+	if (!READ_ONCE(opts->ready))
-+		goto unlock_inst;
- 
- 	if (opts->has_dep) {
- 		if (!try_module_get(opts->dependent))
--			goto unlock_dep;
-+			goto unlock_inst;
- 	} else {
-+		/*
-+		 * configfs_depend_item_unlocked() may acquire the configfs
-+		 * root inode lock when the target belongs to a different
-+		 * subsystem. Calling it under dep_lock would create a
-+		 * circular dependency:
-+		 *   dep_lock -> configfs inode lock -> su_mutex -> dep_lock
-+		 */
- 		ret = configfs_depend_item_unlocked(
- 			wwn->wwn_group.cg_subsys,
- 			&opts->func_inst.group.cg_item);
- 		if (ret)
--			goto unlock_dep;
-+			goto unlock_inst;
+--- a/drivers/usb/gadget/function/uvc_video.c
++++ b/drivers/usb/gadget/function/uvc_video.c
+@@ -821,7 +821,7 @@ int uvcg_video_init(struct uvc_video *vi
+ 	/* Allocate a kthread for asynchronous hw submit handler. */
+ 	video->kworker = kthread_run_worker(0, "UVCG");
+ 	if (IS_ERR(video->kworker)) {
+-		uvcg_err(&video->uvc->func, "failed to create UVCG kworker\n");
++		uvcg_err(&uvc->func, "failed to create UVCG kworker\n");
+ 		return PTR_ERR(video->kworker);
  	}
  
- 	tpg = kzalloc(sizeof(struct usbg_tpg), GFP_KERNEL);
-@@ -1713,7 +1719,6 @@ static struct se_portal_group *usbg_make
- 
- 	tpg_instances[i].tpg = tpg;
- 	tpg->fi = tpg_instances[i].func_inst;
--	mutex_unlock(&opts->dep_lock);
- 	mutex_unlock(&tpg_instances_lock);
- 	return &tpg->se_tpg;
- 
-@@ -1726,8 +1731,6 @@ unref_dep:
- 		module_put(opts->dependent);
- 	else
- 		configfs_undepend_item_unlocked(&opts->func_inst.group.cg_item);
--unlock_dep:
--	mutex_unlock(&opts->dep_lock);
- unlock_inst:
- 	mutex_unlock(&tpg_instances_lock);
- 
-@@ -2664,9 +2667,7 @@ static int tcm_set_name(struct usb_funct
- 
- 	pr_debug("tcm: Activating %s\n", name);
- 
--	mutex_lock(&opts->dep_lock);
--	opts->ready = true;
--	mutex_unlock(&opts->dep_lock);
-+	WRITE_ONCE(opts->ready, true);
- 
- 	return 0;
- }
 
 
