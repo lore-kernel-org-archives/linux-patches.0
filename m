@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE7E419FBB;
-	Fri,  4 Sep 2026 06:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3105C4195A0;
+	Fri,  4 Sep 2026 06:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502472; cv=none; b=UjTRPhmEWf7Lr1eZVCLKeMkU9nfZrDS5vQo79IuB1alM/PvhuhoUlrlw7mht1h4uToaps+7RH8Av9f2f9qfObuwKeG4E+0kfp830Z1ZgNtPRtU5RHqqGO7xz8/7YgcOnevtWlrOfmnRDDLr6s0TuLZW+8eUvUpyYG3pppstYrMk=
+	t=1788502475; cv=none; b=YYs4JPGLoFuzElLYGwzGCSB3PUJ8dxHksXNJUPNeecFhJVFtFxNUfc3siW3q1GaRMj1w9vt46EBHatzwRl8pWYNWj5nG8p7TR9dJuUyPrcR7UKomLRmE5xe7pTc2BrC1SgEbyuV/YdjqeL9rzm4W6/PUZtyFr95gAXEM3zOjZUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502472; c=relaxed/simple;
-	bh=AsV/cOseMC2ecYZgWsEyNRKCzHKlp0Z9MXdMLVlZtL0=;
+	s=arc-20240116; t=1788502475; c=relaxed/simple;
+	bh=jZFrrwKCKmsV8QJst2ZWc3cuZutxsTnov3APfZ5TI4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LbVkO+p+39yAtsFHtKxHbdTTuhwoIk4wUqntc9F4bGWnc8dMmpj1lGz1PMBUEkFUlE0/1Bfpk3PbLAJm9COM18GHHbJxsznklhX6DUBBcjx7wejG+946vSKBXIjwmmHZceXfO1xvl5aXfjTyPSm3SdKKJ7YAu0FhdDahvk46ru8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOBQ7+L3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tyj8YjAVRhUocCdYoYm0MFW4/39WHqmvMJ8vfr71oqDtn+xp/yEjxfGSTjJyb1a2PDARuUy2QaycrV4H5N62EBq6fopNbIjuF3rLUqS+73byaMl1438rG6pMBqk9vRZN1qmBewAnkmMjYq4pb6NVFj3EwfvYMATIA6pGvku8oKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOgkgWbO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOBQ7+L3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950BF1F00A3D;
-	Fri,  4 Sep 2026 06:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOgkgWbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836901F00A3D;
+	Fri,  4 Sep 2026 06:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502471;
-	bh=Y1n6ue0mcG180K0Nrbk3njiLeVHvh/HarOiOUE8BgoA=;
+	s=korg; t=1788502474;
+	bh=3BYOKNZtkQQ36rEh9bBNrzc2NUoWdpbqz7tJ5EtRwGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xOBQ7+L3tgEdnJnf1rFa6uVzchlwhHsc5mPXFqeZijpx5/3oOCLAIYMdvzGcXMkT+
-	 ikGTs4sQ1XJSW1/UbFfOQNQDnzPhOlTCWYQqqFDYU97yoGiua4twVbtvZdGYBPhBmI
-	 yO9KKYxEyF5mIH54TKQ39irnMAvZY7LYGJgqWUkk=
+	b=MOgkgWbOuaqrDALlqNlDC2oVcqw1B7ABgwHzdvpO+XrjKNlz320obzUdWA2jArzvV
+	 vhCc9GLUrai0ltfBSsuiZ8gFsHqU0anFYQy8xjrIjrG2UFdWyD65djbtxgmyAGO2wr
+	 zDXIGH77wCJ9K4NoEGctsBlGBJaFO/VTB64yUVTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 182/403] Bluetooth: hci_event: clear HCI_LE_ADV only on a created connection
-Date: Fri,  4 Sep 2026 06:59:45 +0200
-Message-ID: <20260904045738.995820746@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 218/403] svcrdma: Reject inline replies that overflow the pull-up buffer
+Date: Fri,  4 Sep 2026 07:00:21 +0200
+Message-ID: <20260904045739.821826044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,103 +50,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+From: Chuck Lever <cel@kernel.org>
 
-commit 941929abe5feaed672b9a52e330e547d333240c6 upstream.
+commit 0fbe20dfe74b783d255bf389a6ea77aa25dc7860 upstream.
 
-le_conn_complete_evt() clears HCI_LE_ADV before looking at the event
-status, on the premise stated in its comment that all controllers stop
-advertising when a connection is created.
+An RPC-over-RDMA client can request a reply, such as an NFS READ
+payload, without providing a Write list or a Reply chunk to carry
+it. When such a reply needs more scatter/gather entries than the
+device's Send Queue supports, svc_rdma_pull_up_needed() selects
+pull-up and svc_rdma_pull_up_reply_msg() linearizes the whole
+reply into sctxt->sc_xprt_buf. That buffer is only sc_max_req_size
+bytes, while the reply on this path is bounded only by the client's
+request, so svc_rdma_xb_linearize() copies past the end of the
+buffer and corrupts adjacent slab memory. The oversized length is
+then stored in sc_sges[0].length and posted, so the device also
+reads beyond the mapped region.
 
-That premise only holds when a connection was actually created. On a
-non-zero status none was, and the controller is still advertising: after
-the host issues LE Create Connection Cancel the event arrives with
-Unknown Connection Identifier (0x02), and a connection timeout behaves
-the same way. Clearing the flag there leaves the host believing
-advertising is off while the controller has it on.
+The SGE-exhaustion branch is the only pull-up path that can exceed
+the buffer: the threshold branch pulls up only replies smaller
+than RPCRDMA_PULLUP_THRESH, and replies that fit the device's SGE
+budget are sent directly without linearization. Make
+svc_rdma_pull_up_needed() report -E2BIG when the reply it would
+pull up cannot fit sc_max_req_size, and fail the request with
+ERR_CHUNK as RFC 8166 Section 4.5.3 directs rather than dropping
+the connection.
 
-It is also wrong for extended advertising, where several sets can be
-advertising at once. hci_cc_le_set_ext_adv_enable() is careful about
-this - on disabling one set it walks hdev->adv_instances and only clears
-HCI_LE_ADV once no instance is still enabled. The unconditional clear
-here discards that bookkeeping, so one set connecting drops the flag
-while the others keep advertising.
+The helper no longer answers a simple yes/no question: it now
+reports pull-up, no pull-up, or -E2BIG for a reply too large to
+linearize. Rename svc_rdma_pull_up_needed() to
+svc_rdma_check_pull_up() so its name no longer implies a boolean
+predicate.
 
-The direction of the error matters. A flag left set is self-correcting:
-hci_disable_advertising_sync() sends LE Set Advertising Enable(0) and
-the command complete puts the state back. A flag left clear is not,
-because that same function returns early without sending anything while
-the flag is clear:
-
-  - LE Set Advertising Parameters is then sent to a controller that is
-    still advertising, and is correctly rejected with Command Disallowed
-    (0x0c);
-  - hci_enable_advertising_sync() returns at that point, before the
-    LE Set Advertising Enable that would set HCI_LE_ADV again.
-
-On a controller without LE Extended Advertising that is reachable from
-here: hci_schedule_adv_instance_sync() re-arms adv_instance_expire every
-HCI_DEFAULT_ADV_DURATION (2 s) and its "already advertising" shortcut
-tests HCI_LE_ADV, which can no longer become true, so the parameter
-write is retried for as long as advertising is configured:
-
-  Bluetooth: hci0: Opcode 0x2006 failed: -16
-
-Only clear the flag when a connection was established.
-
-Note this is not on its own sufficient to stop that retry loop - the
-redundant enable queued by hci_le_conn_failed() clears HCI_LE_ADV itself
-and recreates the same mismatch, which patch 1 addresses. This patch
-fixes the event handler reporting a state the controller is not in.
-
-Verified on the affected device (BCM43455, legacy advertising only) with
-this patch and patch 1 applied. A 221 s btmon capture with an out-of-range
-peer at -90 dBm contains two outgoing connection attempts that the host
-cancelled, each producing exactly the event this patch changes:
-
-  < LE Set Advertising Parameters  0x2006   Success
-  < LE Set Advertising Enable      0x200a   Success
-  < LE Create Connection Cancel    0x200e   Success
-  > LE Connection Complete   Unknown Connection Identifier (0x02), central
-
-Nothing follows either one; the next command is an unrelated scan restart
-70 ms later. Over the whole capture: 7 LE Set Advertising Parameters sent,
-all Success; 10 LE Set Advertising Enable, all Success; no Command
-Disallowed of any opcode, and no 2 s cadence anywhere. Two central
-connections to other peers completed normally afterwards, with feature
-exchange and a connection parameter update, so advertising was still live
-across the cancelled attempts.
-
-The extended advertising case above is a code argument, not a measurement:
-this controller has no LE Extended Advertising, so that path is not
-exercised by the capture.
-
-Fixes: fbd96c151cdc ("Bluetooth: Fix clearing HCI_LE_ADV for LE connections")
+Fixes: e248aa7be86e ("svcrdma: Remove max_sge check at connect time")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5 btmon
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Chris Mason <clm@meta.com>
+Assisted-by: kres:claude-opus-4-7
+Link: https://patch.msgid.link/20260623014728.826032-1-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_sendto.c |   47 +++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 15 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5650,10 +5650,11 @@ static void le_conn_complete_evt(struct
+--- a/net/sunrpc/xprtrdma/svc_rdma_sendto.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
+@@ -690,20 +690,21 @@ static int svc_rdma_xb_count_sges(const
+ }
  
- 	hci_dev_lock(hdev);
+ /**
+- * svc_rdma_pull_up_needed - Determine whether to use pull-up
++ * svc_rdma_check_pull_up - Determine whether to use pull-up
+  * @rdma: controlling transport
+  * @sctxt: send_ctxt for the Send WR
+  * @write_pcl: Write chunk list provided by client
+  * @xdr: xdr_buf containing RPC message to transmit
+  *
+  * Returns:
+- *   %true if pull-up must be used
+- *   %false otherwise
++ *   %1 if pull-up must be used
++ *   %0 if pull-up is not needed
++ *   %-E2BIG if the reply is too large to be pulled up
+  */
+-static bool svc_rdma_pull_up_needed(const struct svcxprt_rdma *rdma,
+-				    const struct svc_rdma_send_ctxt *sctxt,
+-				    const struct svc_rdma_pcl *write_pcl,
+-				    const struct xdr_buf *xdr)
++static int svc_rdma_check_pull_up(const struct svcxprt_rdma *rdma,
++				   const struct svc_rdma_send_ctxt *sctxt,
++				   const struct svc_rdma_pcl *write_pcl,
++				   const struct xdr_buf *xdr)
+ {
+ 	/* Resources needed for the transport header */
+ 	struct svc_rdma_pullup_data args = {
+@@ -715,11 +716,22 @@ static bool svc_rdma_pull_up_needed(cons
+ 	ret = pcl_process_nonpayloads(write_pcl, xdr,
+ 				      svc_rdma_xb_count_sges, &args);
+ 	if (ret < 0)
+-		return false;
++		return 0;
  
--	/* All controllers implicitly stop advertising in the event of a
--	 * connection, so ensure that the state bit is cleared.
-+	/* Advertising stops when a connection is created. On a failed
-+	 * connection it keeps running, so leave the state bit alone.
+ 	if (args.pd_length < RPCRDMA_PULLUP_THRESH)
+-		return true;
+-	return args.pd_num_sges >= rdma->sc_max_send_sges;
++		return 1;
++	if (args.pd_num_sges < rdma->sc_max_send_sges)
++		return 0;
++
++	/*
++	 * The reply has too many SGEs to Send inline, so it has to be
++	 * linearized into sc_xprt_buf. That buffer holds only
++	 * sc_max_req_size bytes, so a larger reply cannot be pulled up.
++	 * RFC 8166 Section 4.5.3 requires responding with ERR_CHUNK.
++	 */
++	if (args.pd_length > rdma->sc_max_req_size)
++		return -E2BIG;
++	return 1;
+ }
+ 
+ /**
+@@ -775,7 +787,7 @@ static int svc_rdma_xb_linearize(const s
+  * Assemble the elements of @xdr into the transport header buffer.
+  *
+  * Assumptions:
+- *  pull_up_needed has determined that @xdr will fit in the buffer.
++ *  check_pull_up has determined that @xdr will fit in the buffer.
+  *
+  * Returns:
+  *   %0 if pull-up was successful
+@@ -810,6 +822,7 @@ static int svc_rdma_pull_up_reply_msg(co
+  *
+  * Returns:
+  *   %0 if DMA mapping was successful.
++ *   %-E2BIG if the reply is too large to be pulled up
+  *   %-EMSGSIZE if a buffer manipulation problem occurred
+  *   %-EIO if DMA mapping failed
+  *
+@@ -825,6 +838,7 @@ int svc_rdma_map_reply_msg(struct svcxpr
+ 		.md_rdma	= rdma,
+ 		.md_ctxt	= sctxt,
+ 	};
++	int ret;
+ 
+ 	/* Set up the (persistently-mapped) transport header SGE. */
+ 	sctxt->sc_send_wr.num_sge = 1;
+@@ -839,7 +853,10 @@ int svc_rdma_map_reply_msg(struct svcxpr
+ 	/* For pull-up, svc_rdma_send() will sync the transport header.
+ 	 * No additional DMA mapping is necessary.
  	 */
--	hci_dev_clear_flag(hdev, HCI_LE_ADV);
-+	if (!status)
-+		hci_dev_clear_flag(hdev, HCI_LE_ADV);
+-	if (svc_rdma_pull_up_needed(rdma, sctxt, write_pcl, xdr))
++	ret = svc_rdma_check_pull_up(rdma, sctxt, write_pcl, xdr);
++	if (ret < 0)
++		return ret;
++	if (ret)
+ 		return svc_rdma_pull_up_reply_msg(rdma, sctxt, write_pcl, xdr);
  
- 	/* Check for existing connection:
- 	 *
+ 	return pcl_process_nonpayloads(write_pcl, xdr,
+@@ -1023,7 +1040,7 @@ int svc_rdma_sendto(struct svc_rqst *rqs
+ 						   &rctxt->rc_reply_pcl, sctxt,
+ 						   &rqstp->rq_res);
+ 		if (ret < 0)
+-			goto reply_chunk;
++			goto send_err;
+ 		rc_size = ret;
+ 	}
+ 
+@@ -1044,10 +1061,10 @@ int svc_rdma_sendto(struct svc_rqst *rqs
+ 
+ 	ret = svc_rdma_send_reply_msg(rdma, sctxt, rctxt, rqstp);
+ 	if (ret < 0)
+-		goto put_ctxt;
++		goto send_err;
+ 	return 0;
+ 
+-reply_chunk:
++send_err:
+ 	if (ret != -E2BIG && ret != -EINVAL)
+ 		goto put_ctxt;
+ 
 
 
