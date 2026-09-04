@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57C941A4F8;
-	Fri,  4 Sep 2026 06:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF494195A3;
+	Fri,  4 Sep 2026 06:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502302; cv=none; b=KqBy0XadTenxB2uIccd6XI3F1HfZhbBlAHT0tvG/9EXnG1ET3zFMxE3Fag7uU+rsqjdJCa53vAnEfpbIKg3Yw69Ya3iV58WzJSHAh4ib0MFKIoW0oay1/zdUwaH5kNCu/CtRCcGgaz2qUt+ma88zxescXdg4ZkPnvI3J6ubnzbU=
+	t=1788502304; cv=none; b=aLQDeSXxjVe2L+vuhuInLrf0+/i6bfrkwNv9LW5upCclWr54DXr6HMsK+LQMF46NkazbAhmyUvWvYygn6VF4WPC/VyBr6btVtCbbOe411CnMXMCb4XuqA9aqjyctdLu5ubpdNluR2o/vuYgNrsH6TOjeAmtE+/K1n2yVs7o1Kq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502302; c=relaxed/simple;
-	bh=fpsfdcMzICmcJ8TVBojv+4qzgTFerQeiiBywlCzJZtI=;
+	s=arc-20240116; t=1788502304; c=relaxed/simple;
+	bh=hFJWxYT6rm3z6r0f5kPqoY/5l0QH5YYIzUxyce67M84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVUh8h5m6j1VqISGL65txz1kwtesc1jIPoF+lRvxeZgEt9XRa03aOL1Tp7hVVB/DRHpJgckt8mdLVJSY4VCy6C4M6Jyq7y5n9eV9AzmoKwEXvPQZ+KAA5bHKnYpu5msQcH/nUkTagBDICgpqFKux7gGwTZnD4vHKmJxXbZtQQgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zd1TrwHP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fXIT4HrJPYWqEocbh2GdGtDXS03hfHV2iZNBXB05yRH36/xSuTmTypdFkYz/pRO31s3NfSRbRtlqUyzgDnpSg1XPASDXGgXGjcxkxm5h4dPTdKG2zfd0vhI0M8Z3OxW6TVEFEvfd/2Fwnj/eREvvjMzsf5EJ101soBIRd20Tkzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaxxjGxF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zd1TrwHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196D01F00A3D;
-	Fri,  4 Sep 2026 06:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaxxjGxF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD651F00A3E;
+	Fri,  4 Sep 2026 06:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502299;
-	bh=dTzqEaPWy3u/naU7oA4Yqg0Uz/O6SN6nssmMvJ1xIzc=;
+	s=korg; t=1788502302;
+	bh=VFV4nvDTHG+V4TPNbr32D4NgHTHF4nqmk2U+VJuiyE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zd1TrwHPJ1/s5olubqd22/KG0eXQUIBGANQs1X7aALCdRg51FU6qukpcFb7TF5LuS
-	 qOJKiPwYLGIQjt43/kQw2KUh8dzha6UADVh/o6PxCIfWO5Odan1M52Di0aHpSdQDJB
-	 wISMM06gCzoURciPc+jxxcK1Rh17o+n3uNVQF0nY=
+	b=XaxxjGxFuIBH7cnXUUl8SFHNqaUhe+ZIxbqbQ4My76SxbSCZh/boOyW216vWTT9k9
+	 1jTtUrkQWCprY7i4aRYuVU/jNEoy68z7FpEo51oAcgxiU6yejT7owtHRGbxCssJj+y
+	 9cbNBGPlMO94D2dvSLZoKfm9YrUIyZ4fXnMqJErE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.12 159/403] auxdisplay: charlcd: cancel backlight work on registration failure
-Date: Fri,  4 Sep 2026 06:59:22 +0200
-Message-ID: <20260904045738.468065946@linuxfoundation.org>
+	Lianqin Hu <hulianqin@vivo.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 160/403] block: set QUEUE_FLAG_DYING unconditionally in blk_mark_disk_dead()
+Date: Fri,  4 Sep 2026 06:59:23 +0200
+Message-ID: <20260904045738.490504146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -45,82 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: 胡连勤 <hulianqin@vivo.com>
 
-commit e3e3bf40916c1e810df03958cfa7ba6883cdce79 upstream.
+commit 7e9a46004b471eaf69b082c473d865316a4158e0 upstream.
 
-With CONFIG_CHARLCD_BL_FLASH, charlcd_init() schedules bl_work before
-charlcd_register() calls misc_register(). If registration fails, the
-caller frees the charlcd object while delayed work still contains its
-address.
+Disks created via blk_mq_alloc_disk_for_queue() (e.g. SCSI SD disks)
+do not have GD_OWNS_QUEUE set.  Currently __blk_mark_disk_dead() only
+sets QUEUE_FLAG_DYING when GD_OWNS_QUEUE is set, so for such disks
+blk_queue_enter() and __bio_queue_enter() cannot detect the dying
+state via blk_queue_dying() and remain blocked waiting for I/O that
+will never complete after surprise removal.
 
-Add charlcd_deinit() to cancel the delayed work and turn the backlight
-off. Use it for both registration rollback and normal unregistration.
+blk_mark_disk_dead() is the explicit "surprise removal" API -- the
+caller has already decided the disk is dead.  Setting QUEUE_FLAG_DYING
+unconditionally here is appropriate: any in-flight I/O from other
+threads should get -ENODEV immediately from blk_queue_enter()
+regardless of GD_OWNS_QUEUE ownership.
 
-Fixes: 39f8ea46724e ("auxdisplay: charlcd: Extract character LCD core from misc/panel")
+For disks that already have GD_OWNS_QUEUE set, __blk_mark_disk_dead()
+will set the flag again which is harmless.
+
+Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
 Cc: stable@vger.kernel.org
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/PUZPR06MB62247E82E66A3ED46CC3E6C7D2DC2@PUZPR06MB6224.apcprd06.prod.outlook.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/auxdisplay/charlcd.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ block/genhd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/auxdisplay/charlcd.c
-+++ b/drivers/auxdisplay/charlcd.c
-@@ -595,6 +595,16 @@ static int charlcd_init(struct charlcd *
- 	return 0;
- }
- 
-+static void charlcd_deinit(struct charlcd *lcd)
-+{
-+	struct charlcd_priv *priv = charlcd_to_priv(lcd);
-+
-+	if (lcd->ops->backlight) {
-+		cancel_delayed_work_sync(&priv->bl_work);
-+		lcd->ops->backlight(lcd, CHARLCD_OFF);
-+	}
-+}
-+
- struct charlcd *charlcd_alloc(unsigned int drvdata_size)
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -616,6 +616,7 @@ static bool __blk_mark_disk_dead(struct
+  */
+ void blk_mark_disk_dead(struct gendisk *disk)
  {
- 	struct charlcd_priv *priv;
-@@ -654,8 +664,10 @@ int charlcd_register(struct charlcd *lcd
- 		return ret;
- 
- 	ret = misc_register(&charlcd_dev);
--	if (ret)
-+	if (ret) {
-+		charlcd_deinit(lcd);
- 		return ret;
-+	}
- 
- 	the_charlcd = lcd;
- 	register_reboot_notifier(&panel_notifier);
-@@ -665,16 +677,11 @@ EXPORT_SYMBOL_GPL(charlcd_register);
- 
- int charlcd_unregister(struct charlcd *lcd)
- {
--	struct charlcd_priv *priv = charlcd_to_priv(lcd);
--
- 	unregister_reboot_notifier(&panel_notifier);
- 	charlcd_puts(lcd, "\x0cLCD driver unloaded.\x1b[Lc\x1b[Lb\x1b[L-");
- 	misc_deregister(&charlcd_dev);
- 	the_charlcd = NULL;
--	if (lcd->ops->backlight) {
--		cancel_delayed_work_sync(&priv->bl_work);
--		priv->lcd.ops->backlight(&priv->lcd, CHARLCD_OFF);
--	}
-+	charlcd_deinit(lcd);
- 
- 	return 0;
++	blk_queue_flag_set(QUEUE_FLAG_DYING, disk->queue);
+ 	__blk_mark_disk_dead(disk);
+ 	blk_report_disk_dead(disk, true);
  }
 
 
