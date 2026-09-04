@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A26D3A9629;
-	Fri,  4 Sep 2026 05:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347E0372B4B;
+	Fri,  4 Sep 2026 05:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500333; cv=none; b=P9NQLrN9FMDvbap2uwg6AosU/bv/kkTM9eLmGz57caeZZutIvzKnoxBxlVWI+IxEWaf3nBlBEfNzD9Icoek1Elf0w6qfhZGWkqzh9O2vLqMDg3iPPUSqXgSdhJxu2b0W9srw3ihWp+oBY0TRgRf++mMjqc3KVfmmPP3IZWjiEJI=
+	t=1788500336; cv=none; b=g9wAQqkjQ+pD4Z2+UUw4Z17vhUMqfraF/dY7TZo1LSFJiT07//N0ghjcDpj9l75lcgak3vbjh5pdMPWHdA0VdbNrm9kSlqsVZXz9fs1kg8P+n/NuM/OaNJo3fY6py0LKEw0oz4curH2evyPcpGEXJEhrQ7lxeKBY+ZRAS/QoL0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500333; c=relaxed/simple;
-	bh=DFKdlPAZJH3OLRLHE8zFgWTWpTjwL9Zxh9AVF8cVhYw=;
+	s=arc-20240116; t=1788500336; c=relaxed/simple;
+	bh=HcSl+e2SPaGUu38o7COy3RuqE61JGUPQfLpcO8Lt4t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDAPFR0DJyjWeNug43OiOxoaIWN3DDnii4beLTVDGsILsUTOyqrvALoHqKnfyXbixwU/pUzXf8enuKOmd/8G3WoUbDZ17Xq1uUuLhpoY7w8nG5/veatAmoM+inBxBhDCK83BP1EUSnVydr+0Br8U2fQoVoicQC1J4DGocnPm/Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0gUIfNZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XxlQV3Io8r06Eo0uxVWiolFyJnRdTkv7wgZgqYOnsExIzF1pBRUHFeO5975o6FCO5dq+E7HLZZifFBQDFr3yxICwh5Hv8/QoF3gR6AJhYuGz6WjmicBUbZIXXro5iq8wao0L/VyLkiTNZU2hoUUbh/azPJj7R/b9pxS7Bo6u7b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQpHIGZr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0gUIfNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBBD1F00A3D;
-	Fri,  4 Sep 2026 05:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQpHIGZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1C31F00A3D;
+	Fri,  4 Sep 2026 05:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500332;
-	bh=G00Cwh9lfC7DEfTa8hTzbsV7CiXr14OHGa1ygxcHRbg=;
+	s=korg; t=1788500335;
+	bh=v9pvPHK7PHY1wVf1Z9qNAhBfVEP2doVBbgj6w5TfHxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0gUIfNZgAP0s/hkobMEsbhBYR7q0Hcwyz1kT4/qOEjxYT05jA6Y7htsb4JMXU+sD
-	 DxIFPVgHfmbP9uCgVHqataPdiIwxatXWjYDK/s1Y6ltNtL4yxhpj1inci+ZojFBXIB
-	 oETZqBasRUNTlbUwSUzvHxE+ImdwhChZc4tNXwM4=
+	b=fQpHIGZryyh/hPPgPFDveI7srgZFW0gJYObHdV26ygaAsKkXBW957OLspvRd1Y+69
+	 leOyStXYTByJ2Pb6CwJY2ctc864RwyPd9VFEKyvpGTNYHnYDVgxNCm7LzQOyyfsGML
+	 0bzxREzguHCx9PPMYlV19LzwSPO4jugVxO7ZxA/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/552] wifi: mt76: Fix memory leak after mt76_connac_mcu_alloc_sta_req()
-Date: Fri,  4 Sep 2026 06:52:39 +0200
-Message-ID: <20260904045747.877049359@linuxfoundation.org>
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Paul Moore <paul@paul-moore.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 020/552] fs: fix user path of nested backing files
+Date: Fri,  4 Sep 2026 06:52:57 +0200
+Message-ID: <20260904045748.282886326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,121 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit c41075ce8cf05ed8c0e7b7efef000dce548ffc42 ]
+commit f2381b546e7e6a35c9fcee0d0ccb6c042a9aeb5d upstream.
 
-mt76_connac_mcu_alloc_sta_req() allocates an skb which is expected to
-be freed eventually by mt76_mcu_skb_send_msg(). However, currently if
-an intermediate function fails before sending, the allocated skb is
-leaked.
+backing_file_open() derives the path to be stored in the new backing
+file from user_file->f_path.  This is incorrect when user_file itself
+is a backing file, which is the case for nested stacking filesystems,
+e.g. overlayfs mounts where the lowerdir of one overlayfs is the merged
+directory of another.  Since commit def3ae83da02 ("fs: store real path
+instead of fake path in backing file f_path") the f_path of a backing
+file holds the real path of the intermediate layer, not the path that
+the user opened.
 
-Specifically, mt76_connac_mcu_sta_wed_update() and
-mt76_connac_mcu_sta_key_tlv() may fail, leading to an immediate memory
-leak in the error path.
+Commit 924577e4f6ca ("ovl: Fix nested backing file paths") fixed this
+for such configurations by passing file_user_path() from
+ovl_open_realfile().  However, commit 6af36aeb147a ("lsm: add
+backing_file LSM hooks") changed the first argument of
+backing_file_open() from the user path back to the user file and
+derived the path from user_file->f_path again, silently re-introducing
+the problem.
 
-Fix this by explicitly freeing the skb in these error paths.
-Commit 7c0f63fe37a5 ("wifi: mt76: mt7996: fix memory leak on
-mt7996_mcu_sta_key_tlv error") made a similar change.
+As a result, files mapped through a nested overlayfs show the wrong
+path in /proc/<pid>/maps and in perf/ftrace mmap records.  For example,
+with two nested overlayfs mounts:
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
+  mkdir -p /ovl/{lower,upper,work,merged} /ovl/nested
+  echo hello > /ovl/lower/foo
+  mount -t overlay overlay \
+	-o lowerdir=/ovl/lower,upperdir=/ovl/upper,workdir=/ovl/work \
+	/ovl/merged
+  # at least two lowerdirs are needed when upperdir is nonexistent
+  mount -t overlay overlay \
+	-o lowerdir=/ovl/merged:/ovl/lower /ovl/nested
 
-Fixes: d1369e515efe ("wifi: mt76: connac: introduce mt76_connac_mcu_sta_wed_update utility routine")
-Fixes: 6683d988089c ("mt76: connac: move mt76_connac_mcu_add_key in connac module")
-Fixes: 4f831d18d12d ("wifi: mt76: mt7915: enable WED RX support")
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20260116144919.1482558-1-zilin@seu.edu.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+mapping /ovl/nested/foo shows a disconnected path instead of the user
+path:
+
+  # readlink /proc/self/fd/3
+  /ovl/nested/foo
+  # grep foo /proc/self/maps
+  7f6e2c100000-7f6e2c101000 r--s 00000000 00:24 15813027 /foo
+
+The bogus path is derived from the f_path of the intermediate backing
+file, whose mount is a private clone that d_path() cannot resolve.
+
+Fix this by using file_user_path(), which returns the outermost
+user-visible path for backing files and falls back to
+&user_file->f_path for regular files.  This restores the behavior of
+commit 924577e4f6ca ("ovl: Fix nested backing file paths") for
+overlayfs and also fixes the same problem for the other
+backing_file_open() callers, fuse passthrough and erofs ishare, when
+their user file is itself a backing file.
+
+backing_tmpfile_open() has the same pattern but is not affected: it is
+only called by ovl_create_tmpfile() for the upper layer, and another
+overlayfs is rejected as upperdir by the DCACHE_OP_REAL check in
+ovl_mount_dir_check(), so its user_file can never be a backing file.
+
+Fixes: 6af36aeb147a ("lsm: add backing_file LSM hooks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260804034204.3487077-1-libaokun@linux.alibaba.com
+Tested-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/wireless/mediatek/mt76/mt76_connac_mcu.c | 16 ++++++++++++----
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.c  |  4 +++-
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c  |  4 +++-
- 3 files changed, 18 insertions(+), 6 deletions(-)
+ fs/backing-file.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 2aa7b711c774e..46e337307c3d8 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -1295,8 +1295,10 @@ int mt76_connac_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif_link *mvif,
- 				    wtbl_hdr);
+--- a/fs/backing-file.c
++++ b/fs/backing-file.c
+@@ -34,7 +34,7 @@ struct file *backing_file_open(const str
+ 			       const struct path *real_path,
+ 			       const struct cred *cred)
+ {
+-	const struct path *user_path = &user_file->f_path;
++	const struct path *user_path = file_user_path(user_file);
+ 	struct file *f;
+ 	int error;
  
- 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	ret = mt76_mcu_skb_send_msg(dev, skb, cmd, true);
- 	if (ret)
-@@ -1309,8 +1311,10 @@ int mt76_connac_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif_link *mvif,
- 	mt76_connac_mcu_sta_ba_tlv(skb, params, enable, tx);
- 
- 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	return mt76_mcu_skb_send_msg(dev, skb, cmd, true);
- }
-@@ -2766,12 +2770,16 @@ int mt76_connac_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
- 		return PTR_ERR(skb);
- 
- 	ret = mt76_connac_mcu_sta_key_tlv(sta_key_conf, skb, key, cmd);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index f60e2eaea2af4..bd121eec51651 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -1773,8 +1773,10 @@ int mt7915_mcu_add_sta(struct mt7915_dev *dev, struct ieee80211_vif *vif,
- 	}
- out:
- 	ret = mt76_connac_mcu_sta_wed_update(&dev->mt76, skb);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	return mt76_mcu_skb_send_msg(&dev->mt76, skb,
- 				     MCU_EXT_CMD(STA_REC_UPDATE), true);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 647efa963db48..bc19e800b41c9 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -1290,8 +1290,10 @@ int mt7925_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
- 		return PTR_ERR(skb);
- 
- 	ret = mt7925_mcu_sta_key_tlv(wcid, sta_key_conf, skb, key, cmd, msta);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
- 
- 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
- }
--- 
-2.53.0
-
 
 
