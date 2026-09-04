@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6994156F0;
-	Fri,  4 Sep 2026 05:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4153B7B7B;
+	Fri,  4 Sep 2026 05:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499353; cv=none; b=YRA9EI4+0apVxuausESSNgQRyl/EYzLRJ5rSGQB/5Rm1zxJQI6oW2fOc7gpiT54UUEMMXJyTSJehD6PsBBdCKyQEFIBiUaReydEXoEz3FVQoB8XmtoruCNk5cqQxjd8yoFl8RJOd+Ht+ceRzUpvaRhZfYGw8F2pTrslclAfg6cg=
+	t=1788499357; cv=none; b=axaWAkSL613Kpkk+AER02uOXnkq0owBKW1X+tvU26oe92eVZmFNGSjBC5I6jxQzzXtGVETLve6wZn83R7aI8cgkPD6t4Qb3/LNvJ/2mIXVbOSl9w/cMPdkJ15FNHinvAfW9v9uMEBrwl9XZIjUdtfXlF6oW4AKE5Pd65emSeymI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499353; c=relaxed/simple;
-	bh=Zkel/7Zfdqa04IsDYzKHnG540e36ic9a/mba6EwLQJY=;
+	s=arc-20240116; t=1788499357; c=relaxed/simple;
+	bh=HyD5UYGAEVEvdiEPqWsHGLSajF2C1IFV0Mydxiaf/Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEI/vNCC3hhWlyUYJNWd4k1FqSQ0GtpPukCicsZIz4rBMtsZyE8NdtGTiQjQpJg33kJR7qteevOIFRboXVH42JRWki73+zUZTC1a4LAZqxVuq5SzaxXWqNsGYa/YNLc80UTCPnb7aIl4gJ4ytPzNiUDrkRpLr96P46mMUub8n/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCbavjaP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h3B/5G16RwcH++DeQy7s8tnJVSA/CELPV0aNazsxyxoauf8ljBxzr9exE7JjbawYD31Ae1bEHuNU/6Ws5oq/quvmMPqZ8NOgO8sOAqvnRqOm/yG14LyALouh3LQIniuWgB+kNMduTnCpnFHfNHAP3Owk4wC7fGtiVKnosZzcTMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4nXI8qZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCbavjaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26481F00A3D;
-	Fri,  4 Sep 2026 05:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4nXI8qZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41CF1F00A3D;
+	Fri,  4 Sep 2026 05:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499352;
-	bh=ayCTKDVP28wmMNAD4U0L5F7ivNxZXl1p6eA1Fkwvrj0=;
+	s=korg; t=1788499355;
+	bh=Y39Wzqa5C/4uvtbSe+P9ixCC8NAiE5fpOhNf9pu0SFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cCbavjaP8fLF96AvAInp5vwUCp9PeJY0WfWXk+P85lzp/uz914cuV3YXlSV6G6lPY
-	 T9vgwkC+hJPhDYS6PezziOXgbKGhC/knyCvs0vY6x6rrPry76D24S6AVy+8dfj6y32
-	 lIjes//NprPRL/Pu/FJOvdKmvT6wHFanrLzLcIJI=
+	b=c4nXI8qZ47DNXh/eyV5sjGBKjJMpWBJu30PBaO0VvqtnnQCGe3V9EJLBPDazEGJVn
+	 r/+nGtNHYJ69rMpLsBxqbbMIP2IzMYZ6wtHcWYuxKOvPTN/Xj4zw2n12b0gsrnR7cI
+	 l+oE0fUPVa0N7sp2FhjM1XGaB8Ldw2P30WIdvs2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 386/713] SUNRPC: Reject krb5 v2 wrap tokens with oversized ec field
-Date: Fri,  4 Sep 2026 06:55:54 +0200
-Message-ID: <20260904045812.476770647@linuxfoundation.org>
+Subject: [PATCH 7.2 387/713] SUNRPC: Reject short RFC 4121 MIC tokens in gss_krb5_verify_mic_v2
+Date: Fri,  4 Sep 2026 06:55:55 +0200
+Message-ID: <20260904045812.498218751@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,58 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-commit ad484748eec0a66eac0f13ab53b3fbedb7333c91 upstream.
+commit b94f6719dcd9f7a609bc5f459f85795900e77d25 upstream.
 
-gss_krb5_unwrap_v2() sets buf->len to a logical
-length, which can be much smaller than head[0].iov_len
-(the allocated receive-page capacity).  It then calls
-xdr_buf_trim() with a trim length derived from the 16-bit
-"extra count" (ec) field in the Kerberos v2 token header.
+gss_krb5_verify_mic_v2() reads the token ID at ptr[0..1], the flags
+byte at ptr[2], and padding at ptr[3..7], then passes
+ptr + GSS_KRB5_TOK_HDR_LEN and cksum_len to gss_krb5_mic_build_sg().
+None of these accesses check read_token->len first.
 
-The ec field is authenticated by the post-decrypt memcmp()
-against the encrypted header copy, so a randomly-mutated
-value is rejected.  However, any peer holding a valid GSS
-context can legitimately encrypt a token whose ec exceeds
-the plaintext length.  Per RFC 4121, such a token is
-structurally malformed.
+The minimum safe token size is GSS_KRB5_TOK_HDR_LEN (16) plus
+ctx->krb5e->cksum_len (12-24, depending on the enctype).  All callers
+accept shorter tokens from the wire:
 
-Although xdr_buf_trim() now clamps the buf->len subtraction
-to avoid unsigned underflow, the buffer is still left in a
-semantically invalid state (zero length, inconsistent iov
-lengths) when ec is oversized.
+ - gss_unwrap_resp_integ() enforces only an upper bound
+   (offset + len <= rcv_buf->len) before allocating
+   mic.data = kmalloc(len) and passing it to gss_verify_mic().
+   A malicious NFS server can therefore supply a short checksum
+   opaque, producing a small slab allocation that the Kerberos MIC
+   verifier reads past.
 
-Reject these tokens before calling xdr_buf_trim(), giving
-callers a well-defined GSS_S_DEFECTIVE_TOKEN error and
-keeping the xdr_buf internally consistent.  The wrapped blob
-begins at a nonzero offset -- both callers pass len as
-offset + opaque_len -- so buf->len still counts the offset
-bytes that precede the blob.  Compare the trim length
-against the remaining wrapped segment, buf->len - offset,
-rather than the whole buffer; comparing against buf->len
-alone leaves an offset-wide window in which an oversized ec
-passes the test and xdr_buf_trim() cuts into the bytes ahead
-of the blob.
+ - gss_validate() enforces only len <= RPC_MAX_AUTH_SIZE (400)
+   before passing the wire-supplied length to
+   gss_validate_seqno_mic(), which constructs a mic xdr_netobj
+   and calls gss_verify_mic().
 
-Fixes: cf4c024b9083 ("sunrpc: trim off EC bytes in GSSAPI v2 unwrap")
+ - svcauth_gss_verify_header() enforces only
+   checksum.len >= XDR_UNIT (4 bytes) before dispatching to
+   gss_verify_mic().
+
+ - svcauth_gss_unwrap_integ() checks only that the checksum fits
+   in gsd->gsd_scratch.
+
+Add a length guard at the top of gss_krb5_verify_mic_v2(), before any
+ptr[] access or scatterlist construction.  Well-formed MIC tokens from
+gss_krb5_get_mic_v2() already have exactly GSS_KRB5_TOK_HDR_LEN +
+cksum_len bytes, so valid traffic is unaffected.
+
+Reported-by: Chris Mason <clm@meta.com>
+Fixes: de9c17eb4a91 ("gss_krb5: add support for new token formats in rfc4121")
 Cc: stable@vger.kernel.org
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-1-d026a1415e0b@oracle.com
+Link: https://patch.msgid.link/20260523165237.510204-1-cel@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/gss_krb5_wrap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/auth_gss/gss_krb5_unseal.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
-+++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
-@@ -235,6 +235,8 @@ gss_krb5_unwrap_v2(struct krb5_ctx *kctx
- 	buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
+--- a/net/sunrpc/auth_gss/gss_krb5_unseal.c
++++ b/net/sunrpc/auth_gss/gss_krb5_unseal.c
+@@ -89,6 +89,9 @@ gss_krb5_verify_mic_v2(struct krb5_ctx *
  
- 	/* Trim off the trailing "extra count" and checksum blob */
-+	if (ec + GSS_KRB5_TOK_HDR_LEN + tailskip > buf->len - offset)
+ 	dprintk("RPC:       %s\n", __func__);
+ 
++	if (read_token->len < GSS_KRB5_TOK_HDR_LEN + cksum_len)
 +		return GSS_S_DEFECTIVE_TOKEN;
- 	xdr_buf_trim(buf, ec + GSS_KRB5_TOK_HDR_LEN + tailskip);
- 
- 	*align = XDR_QUADLEN(GSS_KRB5_TOK_HDR_LEN + headskip);
++
+ 	memcpy(&be16_ptr, (char *) ptr, 2);
+ 	if (be16_to_cpu(be16_ptr) != KG2_TOK_MIC)
+ 		return GSS_S_DEFECTIVE_TOKEN;
 
 
