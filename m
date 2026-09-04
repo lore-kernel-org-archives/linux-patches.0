@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7F0351C04;
-	Fri,  4 Sep 2026 05:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E758F351C04;
+	Fri,  4 Sep 2026 05:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499631; cv=none; b=kd49IRO7sLu0ZAJGj3fIYW5dJ36pEbJl2VjIrsrEqR0gKlqcyFEuQ/cRpC9qZz4VGoJSSqqJleIzf/9fIVl2eAYICXyACSAN7h7PjZ3SihyzTKIAR+pKBz1U7nQdI+Q+8CgrQEJAaenxY/ber8VIatqW12F4logqMcbHGS/7shc=
+	t=1788499634; cv=none; b=pNoX5fOfPLdD8RRHw8vHl/oRuumVFN1uqscMNjgnqxOgkULkPFRrYIB9LSje3gMsZe5JL+64O4L7YEOM3C3GKXDo6YyzD+Ic2TIQhg9LdwIHmTboHf0Yr33meHQSxKQkDo91gI3UD3+fxd41kDI/ajjw04HaaVyar/OIlElROcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499631; c=relaxed/simple;
-	bh=HXskMTt1yyCZLBL6K8QhbJRuMkYfh/OMi57k0qLVWfU=;
+	s=arc-20240116; t=1788499634; c=relaxed/simple;
+	bh=zIwL1XtmEHBdSP+CTiKAwOOfa8wLcV101YmOLu3cDNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVec/Ob3JHchvpyjiCbw443YqGklDSPRoLjxmkE2C9hsUsUIFZ/G+Ns7tkKzB1QnUy87k6lNW6ugLTlS/P5ISb7qQOWhhZK3syT0QiIHMXSK2icKIsCLthq+ysomSrg3PYZH6w8XWZcBUioCy44wfMm+YplxJFBUNCC0d/xR3sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnPw5VVo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O3SXw0F8R12JleV2lcLsnPWQJN6ZQrZRC5Vp/RJFxD00A5KOUZaOAEG5+siWB2UN1DIsE2bXURK2x15SOycyJYQc99U7YinYEVSeq/KLfeLsK3i90DCDGkxuKEQPphM21JM1khYrRklyhiYqrTmfvaE5sisYjCASeBc/LyNiP3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FX40pEwA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnPw5VVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6829A1F00A3D;
-	Fri,  4 Sep 2026 05:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FX40pEwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC8C1F00A3D;
+	Fri,  4 Sep 2026 05:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499629;
-	bh=9BJhdn0xr/xt1tucyUdA9xEQAUdVocIfiC3h+0+tw2w=;
+	s=korg; t=1788499632;
+	bh=a3yYwHbbmcbkVK0TGA/cbWOcu6bbuPloThsC4R6f5v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NnPw5VVo2osNrlpJNlae3jPmFQGB/8kcZJiGMQ1++tGx+5B0r1W5I2F5rjQuiH+jN
-	 VCibjvH+N7SImoufmzyDw6e/lOFF88OMS/sDcIBNnyvYHyhHa6LSMVmKVNNO8QxBnJ
-	 M5LDcyrYcUrSmJ0JyNU3eJuvd/6S5s8UDgwyrcy8=
+	b=FX40pEwAAx4/JmrXHM83+2Q/YO0ibm1C19Txds/GzpF1H60mEmy1aHsO20HxItaV2
+	 qNBZBm5DjQLVna59okHSGKCo/TW26S/JJtHDs0RQWfmv6kqIwXrR5DPtkdVeW5aCWs
+	 j7aPw4JnnvOCZ17PfO9BEwFFUo1KP8C9s9LKHOAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.2 484/713] lockd: fix NLMv4 GRANTED_MSG handling
-Date: Fri,  4 Sep 2026 06:57:32 +0200
-Message-ID: <20260904045814.675192728@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 7.2 485/713] lockd: fix NULL dereference on lockowner allocation failure
+Date: Fri,  4 Sep 2026 06:57:33 +0200
+Message-ID: <20260904045814.698928965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,46 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit 88e90d3f7e0251770e52d85c5319f037024b2c59 upstream.
+commit 4c7fc129db061c7daab841c4f3c342d894832362 upstream.
 
-GRANTED_MSG is a server-to-client callback, so it runs on the client,
-where nfsd never registers nlmsvc_ops. The nlm4svc_lookup_host()
-helper is for the server-side request handlers
-(TEST/LOCK/CANCEL/UNLOCK), which reach nlmsvc_ops->fopen and must
-reject requests when nfsd isn't running. GRANTED_MSG only calls
-nlmclnt_grant(). Instead, of calling nlm4svc_lookup_host(), which
-results in a client failing a GRANTED_MSG call, call
-nlmsvc_lookup_host().
+nlmclnt_locks_init_private() installs NLM file lock operations even when
+nlmclnt_find_lockowner() fails to allocate a lockowner. nlmclnt_proc()
+then returns -ENOMEM, but the VFS still tears down the partially
+initialized file_lock and calls locks_release_private().
 
-Fixes: 62721885e861 ("lockd: Use xdrgen XDR functions for the NLMv4 GRANTED_MSG procedure")
+That invokes nlmclnt_locks_release_private(), which dereferences
+fl->fl_u.nfs_fl.owner and crashes because the owner was never installed.
+
+Clear fl_ops before attempting to initialize the NLM private state, and
+install the NLM lock operations only after a lockowner has been allocated
+successfully.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Reviewed-by: NeilBrown <neil@brown.name>
-Link: https://patch.msgid.link/20260625211852.31972-1-okorniev@redhat.com
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svc4proc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/lockd/clntproc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
-index 080dffce9d8e..b73004a7987e 100644
---- a/fs/lockd/svc4proc.c
-+++ b/fs/lockd/svc4proc.c
-@@ -872,7 +872,8 @@ static __be32 nlm4svc_proc_granted_msg(struct svc_rqst *rqstp)
- 	struct nlm4_testargs_wrapper *argp = rqstp->rq_argp;
- 	struct nlm_host *host;
+--- a/fs/lockd/clntproc.c
++++ b/fs/lockd/clntproc.c
+@@ -487,9 +487,12 @@ static const struct file_lock_operations
+ static void nlmclnt_locks_init_private(struct file_lock *fl, struct nlm_host *host)
+ {
+ 	fl->fl_u.nfs_fl.state = 0;
++	fl->fl_ops = NULL;
+ 	fl->fl_u.nfs_fl.owner = nlmclnt_find_lockowner(host,
+ 						       fl->c.flc_owner);
+ 	INIT_LIST_HEAD(&fl->fl_u.nfs_fl.list);
++	if (!fl->fl_u.nfs_fl.owner)
++		return;
+ 	fl->fl_ops = &nlmclnt_lock_ops;
+ }
  
--	host = nlm4svc_lookup_host(rqstp, argp->xdrgen.alock.caller_name, false);
-+	host = nlmsvc_lookup_host(rqstp, argp->xdrgen.alock.caller_name.data,
-+				  argp->xdrgen.alock.caller_name.len);
- 	if (!host)
- 		return rpc_system_err;
- 
--- 
-2.55.0
-
 
 
