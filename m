@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB633EE1FC;
-	Fri,  4 Sep 2026 06:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134C73EE1FC;
+	Fri,  4 Sep 2026 06:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502620; cv=none; b=CXqEgJM0MpDgGjtXUBFTTh0boz0ll+RCC6Tdls1VEzlxP4rYAI+L/Hdo+OzZ2sq+prGUQsgP19SII7ziiM/D6DRbsTS3MQEzxXHsZHIpbOQwy4IicdtpM/E0EVQpWwRp3owW5SifeOVbXUUz3XqcKkmF/g8T/ieSL9W3T1TlSH8=
+	t=1788502623; cv=none; b=I4ITtEhFeraem5sE3qohfJj+YPz+71jGkhKQF6EF1wppBtFyRX/c27FwuF8JzKEgIvtQt3SnrMr+Ci9EgrUDMObMBgHHWt7eUguf8zewMxPR8DQnp9IY8k7uT7npRBPbZgjwA/9ArnSzuwbMHk+doPokKjHFbWuLwx1ehOfSHeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502620; c=relaxed/simple;
-	bh=LE35SlLTRIhzaz6ofvLnVIVB2XzN/0YGNfO/jD4mcJc=;
+	s=arc-20240116; t=1788502623; c=relaxed/simple;
+	bh=/Ivz7fnh95yxqDGgvOx3NVn/zilvGDaGK/5li8rGsCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nh/UVHOUBGk7uZgoJUMfvj3ENe5EWg4LlhThUZvJulsi7fYYc3Xm9PRS8M3pcp+kvzhp3uQWjH7xDVid8wlnpRBxUICsInFm0AG9Qav+Y+qUiOFxpjVHATbYD0l5j4y8pl+BI4AurgCQM9/zgk2fRZ21U4iMMcnk5Yrth/Ajsb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODMbrCn4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TGZG2O+Wh/2BGs4Dm0PE9WM/GT9zw6GhU6cyWwRvHsKqlMv9n1AOCMIe48iX3AhHGVKVb1VYwTZDpdMVKa8T3OWIbDXaR+Zqvnkq/pNHvFFb0FaAZrtIp8lHgXm34F78aRmhMPdIrnJwxAYXkybLznNGNhLu1MmAflvcJNYPPFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK5X3E44; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODMbrCn4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966511F00A3D;
-	Fri,  4 Sep 2026 06:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK5X3E44"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAB61F00A3D;
+	Fri,  4 Sep 2026 06:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502619;
-	bh=PWfh6IqTgimQ1FV9VzX91ENws0FO8LGuaILdVPiFhro=;
+	s=korg; t=1788502622;
+	bh=zParSpiLtchGkUwnv4qaVvHnaCD0y4oOcM98Sm+s1s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ODMbrCn4hIg0IQ2KCy3Z7FgD2eUVxx9xpWFd7tru90vq1wCEEPgx/RVcva/bDotvd
-	 lzTl+QO7pLSe5orgoyZoLd132U4silN+3wkKT24MGl8KddlRheK1Wvx5zAyike4KfV
-	 pvd0C7LTAdWqib9BvHx9tP/qmCw8xVFngXawFXyA=
+	b=pK5X3E44hVdYnLyvLxvriW65ia5zlQrqu7blH9CZKcpNINz/jVUSfzjQZLVN0NSMZ
+	 XOIescMl8GclIl8X/VAQIJWgVe1/Sif13ic2JkuiOLIen8MlYTYWZWZIGzXKRJPHVt
+	 3W23pw3LkHsHloVMgI8frCx0iJ69a42xz6FAuEYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 269/403] sctp: fix stream->outcnt underflow on duplicate RECONF responses
-Date: Fri,  4 Sep 2026 07:01:12 +0200
-Message-ID: <20260904045740.976600395@linuxfoundation.org>
+	Fabio Estevam <festevam@nabladev.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.12 229/403] arm64: dts: rockchip: Fix rk3399-roc-pc-plus analog audio
+Date: Fri,  4 Sep 2026 07:00:32 +0200
+Message-ID: <20260904045740.072271238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,164 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Fabio Estevam <festevam@nabladev.com>
 
-commit 3faf13aff243ca9f78d08b1a2956ef5a6fc77b6e upstream.
+commit 4f7259ebe1eba4778768a4f5a0bbbe439d10f3f3 upstream.
 
-A cached RECONF chunk may contain more than one request parameter.  A
-duplicate response can therefore find and process the same ADD_OUT request
-again while another parameter is still outstanding, rolling back outcnt
-twice and possibly underflowing it.
+The ES8388 sound card on the rk3399-roc-pc-plus fails to probe because
+i2s1 cannot claim its MCLK pin:
 
-Track outstanding request types as bits and clear each bit after its first
-response.  Later responses for the same request are then ignored.
+pinctrl: pin gpio4-0 already requested by ff880000.i2s; cannot claim for ff890000.i2s
+pinctrl: error -EINVAL: pin-128 (ff890000.i2s)
+pinctrl: error -EINVAL: could not request pin 128 (gpio4-0) from group i2s-8ch-mclk-pin
+on device rockchip-pinctrl
 
-Fixes: 11ae76e67a17 ("sctp: implement receiver-side procedures for the Reconf Response Parameter")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Link: https://lore.kernel.org/netdev/20260730110225.37371-1-juny24602@gmail.com/
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Assisted-by: tencentos-corvus-ai:kimi-k3
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Link: https://patch.msgid.link/20260824081832.98717-3-juny24602@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+GPIO4_A0 is routed as SCLK_I2S_8CH_OUT and is used by i2s1 as the
+external MCLK for the ES8388 codec. The board dts already removes
+GPIO4_A0 from the i2s0_8ch_bus pin group, but i2s0 still claims the
+same pin through its bclk_off state.
+
+Since the i2s driver requests both states, this blocks i2s1 pinctrl
+setup and leaves the simple-audio-card deferred with a parse error.
+
+Override i2s0_8ch_bus_bclk_off as well, matching the existing
+i2s0_8ch_bus override, so GPIO4_A0 is left for i2s1/ES8388 audio.
+
+Cc: stable@vger.kernel.org
+Fixes: 6d9a7bd6a13c ("arm64: dts: rockchip: add support for Firefly ROC-RK3399-PC-PLUS")
+Signed-off-by: Fabio Estevam <festevam@nabladev.com>
+Link: https://patch.msgid.link/20260717010736.578419-1-festevam@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sctp/structs.h |    2 +-
- net/sctp/stream.c          |   39 ++++++++++++++++++++++++++++-----------
- 2 files changed, 29 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/include/net/sctp/structs.h
-+++ b/include/net/sctp/structs.h
-@@ -2085,7 +2085,7 @@ struct sctp_association {
- 	     force_delay:1;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
+@@ -132,6 +132,18 @@
+ 		<3 RK_PD7 1 &pcfg_pull_none>;
+ };
  
- 	__u8 strreset_enable;
--	__u8 strreset_outstanding; /* request param count on the fly */
-+	__u8 strreset_outstanding; /* request param bitmask on the fly */
- 
- 	__u32 strreset_outseq; /* Update after receiving response */
- 	__u32 strreset_inseq; /* Update after receiving request */
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -22,6 +22,15 @@
- #include <net/sctp/sm.h>
- #include <net/sctp/stream_sched.h>
- 
-+#define SCTP_STRRESET_MASK(type) \
-+	BIT(ntohs(type) - ntohs(SCTP_PARAM_RESET_OUT_REQUEST))
-+#define SCTP_STRRESET_TEST(asoc, type) \
-+	((asoc)->strreset_outstanding & SCTP_STRRESET_MASK(type))
-+#define SCTP_STRRESET_SET(asoc, type) \
-+	((asoc)->strreset_outstanding |= SCTP_STRRESET_MASK(type))
-+#define SCTP_STRRESET_CLEAR(asoc, type) \
-+	((asoc)->strreset_outstanding &= ~SCTP_STRRESET_MASK(type))
++&i2s0_8ch_bus_bclk_off {
++	rockchip,pins =
++		<3 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>,
++		<3 RK_PD1 1 &pcfg_pull_none>,
++		<3 RK_PD2 1 &pcfg_pull_none>,
++		<3 RK_PD3 1 &pcfg_pull_none>,
++		<3 RK_PD4 1 &pcfg_pull_none>,
++		<3 RK_PD5 1 &pcfg_pull_none>,
++		<3 RK_PD6 1 &pcfg_pull_none>,
++		<3 RK_PD7 1 &pcfg_pull_none>;
++};
 +
- static void sctp_stream_shrink_out(struct sctp_stream *stream, __u16 outcnt)
- {
- 	struct sctp_association *asoc;
-@@ -372,7 +381,10 @@ int sctp_send_reset_streams(struct sctp_
- 		goto out;
- 	}
- 
--	asoc->strreset_outstanding = out + in;
-+	if (out)
-+		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_OUT_REQUEST);
-+	if (in)
-+		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_IN_REQUEST);
- 
- out:
- 	return retval;
-@@ -417,7 +429,7 @@ int sctp_send_reset_assoc(struct sctp_as
- 		return retval;
- 	}
- 
--	asoc->strreset_outstanding = 1;
-+	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_TSN_REQUEST);
- 
- 	return 0;
- }
-@@ -474,7 +486,10 @@ int sctp_send_add_streams(struct sctp_as
- 		goto out;
- 	}
- 
--	asoc->strreset_outstanding = !!out + !!in;
-+	if (out)
-+		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_OUT_STREAMS);
-+	if (in)
-+		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS);
- 
- out:
- 	return retval;
-@@ -564,13 +579,14 @@ struct sctp_chunk *sctp_process_strreset
- 	if (asoc->strreset_chunk) {
- 		if (!sctp_chunk_lookup_strreset_param(
- 				asoc, outreq->response_seq,
--				SCTP_PARAM_RESET_IN_REQUEST, true)) {
-+				SCTP_PARAM_RESET_IN_REQUEST, true) ||
-+		    !SCTP_STRRESET_TEST(asoc, SCTP_PARAM_RESET_IN_REQUEST)) {
- 			/* same process with outstanding isn't 0 */
- 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
- 			goto out;
- 		}
- 
--		asoc->strreset_outstanding--;
-+		SCTP_STRRESET_CLEAR(asoc, SCTP_PARAM_RESET_IN_REQUEST);
- 		asoc->strreset_outseq++;
- 
- 		if (!asoc->strreset_outstanding) {
-@@ -669,7 +685,7 @@ struct sctp_chunk *sctp_process_strreset
- 			SCTP_SO(stream, i)->state = SCTP_STREAM_CLOSED;
- 
- 	asoc->strreset_chunk = chunk;
--	asoc->strreset_outstanding = 1;
-+	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_OUT_REQUEST);
- 	sctp_chunk_hold(asoc->strreset_chunk);
- 
- 	result = SCTP_STRRESET_PERFORMED;
-@@ -816,13 +832,14 @@ struct sctp_chunk *sctp_process_strreset
- 
- 	if (asoc->strreset_chunk) {
- 		if (!sctp_chunk_lookup_strreset_param(
--			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false)) {
-+			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false) ||
-+		    !SCTP_STRRESET_TEST(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS)) {
- 			/* same process with outstanding isn't 0 */
- 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
- 			goto out;
- 		}
- 
--		asoc->strreset_outstanding--;
-+		SCTP_STRRESET_CLEAR(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS);
- 		asoc->strreset_outseq++;
- 
- 		if (!asoc->strreset_outstanding) {
-@@ -899,7 +916,7 @@ struct sctp_chunk *sctp_process_strreset
- 		goto out;
- 
- 	asoc->strreset_chunk = chunk;
--	asoc->strreset_outstanding = 1;
-+	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_OUT_STREAMS);
- 	sctp_chunk_hold(asoc->strreset_chunk);
- 
- 	stream->outcnt = outcnt;
-@@ -929,7 +946,7 @@ struct sctp_chunk *sctp_process_strreset
- 
- 	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0,
- 					       true);
--	if (!req)
-+	if (!req || !SCTP_STRRESET_TEST(asoc, req->type))
- 		return NULL;
- 
- 	result = ntohl(resp->result);
-@@ -1079,7 +1096,7 @@ struct sctp_chunk *sctp_process_strreset
- 			nums, 0, GFP_ATOMIC);
- 	}
- 
--	asoc->strreset_outstanding--;
-+	SCTP_STRRESET_CLEAR(asoc, req->type);
- 	asoc->strreset_outseq++;
- 
- 	/* remove everything for this reconf request */
+ &i2s1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2s_8ch_mclk_pin>, <&i2s1_2ch_bus>;
 
 
