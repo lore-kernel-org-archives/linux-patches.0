@@ -1,50 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A02F3B19BC;
-	Fri,  4 Sep 2026 05:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDFC37C106;
+	Fri,  4 Sep 2026 05:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501253; cv=none; b=u3qnW5nQ46gq39H7s9nZpee+Zx5QeUC2GYWXYUkOgAL7L5OMH3+9FDiUyKyiPVN/aj5JnkTsIrkc1kecNl6EZJ39tx3FfIQEMKSD3zEZkyAF8M3Wg99WC8yrgV9ev0wE6QLssqeqR29/A/5QVW4KV0xGkEHhxTffNBc7Z5PVXOo=
+	t=1788501255; cv=none; b=tIxY57Pc83CCvpR6f0T8YFN3Lwftmkl0rKE+moOOzBiDCm7IgVAk5KRh+PC5/286xEzfMJ7HJXturiY+fopcjfMX8+HFGB+hkq+l/qM8/dNn4ESy1807VENI9EhWuJItjffIrNDYHhPLM63Hrqi/IkAtW43arwZIfRpfMmcXYx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501253; c=relaxed/simple;
-	bh=V4zGj/GmGfDOSWoP5xdykrOSvqDE/0eTerkmZVheoEI=;
+	s=arc-20240116; t=1788501255; c=relaxed/simple;
+	bh=c9B5NlKCwJ8xqoRAjGLD5ytRl9Ech889Y/UFIWKu/4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcK5yGg7V18v7T7XkbdayVaRromDKKvv0u321QxRdsau79deciDEYPGEUci3Vqft4TW858MQGbbOfHjY2GuoA6FNfNrAPkrWx99xFmv459zeEIYLIevpGNFB0UixGKApPex1h1/HEfsn7eTxcWpaTlWlGyhBR0Ebnu4q0zjsxAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBAFSOGI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RT0Qivptmuyftg4H3KOF0YhKoM9nR2FEqNFgvT21p8C1zBvrmkHBM7LgPKjInvaI7QO5vi5yWyftIMckjHdeesklpKyI5YU/HWA7ayPPVseDQZNQNacG7UZanWNnw05vqgC1U90tQpTqy4zsq4yxnqfnF6jyE+9WcUch7oPfBm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XScLfM4h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBAFSOGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0153A1F00A3D;
-	Fri,  4 Sep 2026 05:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XScLfM4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019CE1F00A3D;
+	Fri,  4 Sep 2026 05:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501251;
-	bh=g/r4pRMHbYVhJ3q2BBwcJVfWzDl5mcaITn3gT4o1oQ8=;
+	s=korg; t=1788501254;
+	bh=sKUluryQABa6TAUi/chiEPxl0GGBIqMEoyn9z3elZ5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VBAFSOGIN8HAee1C7rQX3S6ZEmkPX+i8wCCiq5Grn0kKMm9BtcY2rpLzEQ627yZSx
-	 r1rQwVbuSLmrZo1UNoZ2oB1ful6gIxT/fMiLY5pU8IbguB3zZETyCaXtqBHGEAIP27
-	 dAd+Rn/vKB4eDJ6QuE7cRePQhdaDo85VVf99hfAs=
+	b=XScLfM4hOvNTbGD3LOXgE2UKlJDLu0eee1vST5c02SDRbggsFt92q/yrIcPXuZevP
+	 0kyFRSpBZ/6OMCoiXqmmJr42t22t082R3Aaz/5w691HblvyZTipK4jV6EnoQfPNgOs
+	 ZxHKAdUje1SprykX4pIZuV/pC7Hc6rXRf8Kw91aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Ted Tso <tytso@mit.edu>,
-	"zhangyi (F)" <yi.zhang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 342/552] ocfs2: fix readdir position truncation on 32-bit kernels
-Date: Fri,  4 Sep 2026 06:58:19 +0200
-Message-ID: <20260904045758.008387788@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Stafford Horne <shorne@gmail.com>
+Subject: [PATCH 6.18 343/552] openrisc: fix arbitrary kernel memory access via or1k_atomic syscall
+Date: Fri,  4 Sep 2026 06:58:20 +0200
+Message-ID: <20260904045758.031107981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -63,77 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit a63308ab426f3a3c7e33b02c150ea59054620261 upstream.
+commit 78004e9a87f240df03e2f73120d291763c32e0a7 upstream.
 
-In ocfs2_dir_foreach_blk_el(), the directory cookie position is
-rebuilt with
+sys_or1k_atomic() (syscall 244 in the "or1k" ABI) takes two user
+pointers, v1 and v2, and swaps the words they point to in hand-written
+assembly.
 
-	ctx->pos = (ctx->pos & ~(sb->s_blocksize - 1)) | offset;
+    l.lwz   r29,0(r4)
+    l.lwz   r27,0(r5)
+    l.sw    0(r4),r27
+    l.sw    0(r5),r29
 
-`ctx->pos` is loff_t (signed 64-bit), while `sb->s_blocksize` is
-unsigned long.  On 32-bit kernels unsigned long is 32-bit, so the mask
+The pointers are not checked with access_ok(). The four memory
+accesses also have no exception table entries.
 
-	~(sb->s_blocksize - 1)
+A caller passes a kernel address as either pointer, and the syscall
+reads from and writes to it directly.
 
-is computed as a 32-bit unsigned value (e.g. 0xfffff000 for a 4 KiB
-block size).  In the AND expression with the 64-bit `ctx->pos`, that
-unsigned operand is zero-extended to 64 bits per the usual arithmetic
-conversions, yielding 0x00000000fffff000.  The high 32 bits of
-`ctx->pos` are silently cleared, even though directory size is
-allowed to exceed 4 GiB.
+This gives an unprivileged process a kernel read/write primitive. It
+overwrites kernel data such as the sys_call_table, gaining code
+execution in kernel context.
 
-When readdir() crosses the 4 GiB boundary on a 32-bit kernel the
-position is reset back into the first 4 GiB block, making the
-re-validation path re-enumerate already-returned dirents indefinitely.
+Check both pointers before entering the critical section. Add fixups
+for the four memory accesses so faults on valid but unmapped user
+addresses return -EFAULT.
 
-This is ocfs2_dir_foreach_blk_el(), the extent-list readdir path taken
-for all non-inline directories, so a directory large enough to cross
-4 GiB reaches it.
-
-This is the same class of bug that commit 3dce5bb82c97 ("exfat: Fix
-bitwise operation having different size") fixed in exfat, and the
-fix mirrors the equivalent ext4 fix in this series.  Cast the operand
-to loff_t so the mask is 64-bit before the AND:
-
-	ctx->pos = (ctx->pos & ~((loff_t)sb->s_blocksize - 1)) | offset;
-
-64-bit kernels are unaffected.
-
-Link: https://lore.kernel.org/20260806022044.167962-3-zhanxusheng@xiaomi.com
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Ted Ts'o <tytso@mit.edu>
-Cc: "zhangyi (F)" <yi.zhang@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[shorne@gmail.com: fix comment style]
+Fixes: 9d02a4283e9c ("OpenRISC: Boot code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/openrisc/kernel/entry.S |   43 +++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 39 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/dir.c
-+++ b/fs/ocfs2/dir.c
-@@ -1888,7 +1888,7 @@ static int ocfs2_dir_foreach_blk_el(stru
- 				i += le16_to_cpu(de->rec_len);
- 			}
- 			offset = i;
--			ctx->pos = (ctx->pos & ~(sb->s_blocksize - 1))
-+			ctx->pos = (ctx->pos & ~((loff_t)sb->s_blocksize - 1))
- 				| offset;
- 			*f_version = inode_query_iversion(inode);
- 		}
+--- a/arch/openrisc/kernel/entry.S
++++ b/arch/openrisc/kernel/entry.S
+@@ -1223,15 +1223,50 @@ _no_syscall_trace:
+  *
+  */
+ 
++/* Keep this literal; hi()/lo() can't use the UL-suffixed TASK_SIZE. */
++#define OR1K_ATOMIC_ADDR_LIMIT	0x7ffffffc
++
+ ENTRY(sys_or1k_atomic)
+ 	/* FIXME: This ignores r3 and always does an XCHG */
++
++	/* Check both user pointers before accessing them. */
++	l.movhi	r13,hi(OR1K_ATOMIC_ADDR_LIMIT)
++	l.ori	r13,r13,lo(OR1K_ATOMIC_ADDR_LIMIT)
++	l.sfgtu	r4,r13
++	l.bf	9f
++	 l.nop
++	l.sfgtu	r5,r13
++	l.bf	9f
++	 l.nop
++
+ 	DISABLE_INTERRUPTS(r17,r19)
+-	l.lwz	r29,0(r4)
+-	l.lwz	r27,0(r5)
+-	l.sw	0(r4),r27
+-	l.sw	0(r5),r29
++10:	l.lwz	r29,0(r4)
++11:	l.lwz	r27,0(r5)
++12:	l.sw	0(r4),r27
++13:	l.sw	0(r5),r29
+ 	ENABLE_INTERRUPTS(r17)
+ 	l.jr	r9
+ 	 l.or	r11,r0,r0
+ 
++	/*
++	 * Either pointer was outside user space, or turned out to be
++	 * unmapped/inaccessible when we actually touched it.
++	 */
++9:	l.jr	r9
++	 l.addi	r11,r0,-EFAULT
++
++	.section .fixup, "ax"
++14:
++	ENABLE_INTERRUPTS(r17)
++	l.j	9b
++	 l.nop
++	.previous
++
++	.section __ex_table, "a"
++	.long	10b, 14b
++	.long	11b, 14b
++	.long	12b, 14b
++	.long	13b, 14b
++	.previous
++
+ /* ============================================================[ EOF ]=== */
 
 
