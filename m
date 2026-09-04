@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3217730C160;
-	Fri,  4 Sep 2026 05:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0268230C160;
+	Fri,  4 Sep 2026 05:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500440; cv=none; b=jT4j2wPRcCKw8hn0AYyeO0BKCF3DFkXi0GAY0SUkfMJlwthAML7dZbao96XeREb2/sm9fzaVPMaNNBH1TXy3xH3y0/hNR6FZUYnYSE09KcbzVEAMPVN7BTNa7YZasEj+FublV1tCrCeecA7iFSpk+ipvYE0MtIT1cujdojJ+0KY=
+	t=1788500443; cv=none; b=BgdQwcylqi+SR019E+Zkk8mwUy67/jDfAV9WkyVjFNwjY577BynMd/QxccX71ZmwZr6+QPmFJl9Z6Rhf+Zb3bt/i1Ro0Swu3SLFohQT7frvkn3csKZTTHY6CYs8xV3k4M/PddKTcoVVvUUMp3fPIatNL/Cy8KA6jDmKfQcaT4oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500440; c=relaxed/simple;
-	bh=AolyUMRDw7UkRJlwplKa46lyHo9xjcPu+N15Eh59Eo0=;
+	s=arc-20240116; t=1788500443; c=relaxed/simple;
+	bh=X37scVslSvEBpJ3QWrimi5Xeytdd6MtkYK1VkD+kTa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4jzinI728jIZ5IFtvGpUoEH2086Jb77QjlqzEq5uOBShpRVkwkNhj5Kr8UmJJTEbPg9ExlEBLT611tBT/07soS06Z+uAx1KxVVadoAhVixQ/qM9izLn9cKQ4e4VY3Lspjoekmd0SVo5uiTskBuO8ebQQ0xpXGbJYZs16o2KGjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cR5fzKqX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DJOZoD5KwPR1+GLUotzxM/zf8bQC9P3UWQV0zVwHdOkwo7WRkR5Z8rm4Q5HHm8fTJCarY8iuPXeXpE2rdMqAzOxQm4g7GawScOGix7k6C/OIAHklKG5XMrr5AvezZF3FInW4SWPWJAMj7hU2jcuFeaAkfBhsh3EYTFWXdVjD/ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2Ib4CPO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cR5fzKqX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC0A1F00A3D;
-	Fri,  4 Sep 2026 05:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2Ib4CPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCCE1F00A3D;
+	Fri,  4 Sep 2026 05:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500439;
-	bh=uPcYzvt0otMrqOIR7fjx09+j6Zp2cphM9mKZNL4Yuf0=;
+	s=korg; t=1788500441;
+	bh=Ki0ZbA58b2jF9eB47WSkRYrT/PSd5MYSP9kSV6P7Oy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cR5fzKqXNRjrCVM5qztVTURjN8qvarS7lJkwROIC3KU6faLcx3C1flHBgyOHp0YDY
-	 ynMKTTzva1YeS7EMOG1xtqZ0P1/6DkjRhM/7qw6oFuN0eI3fsYUXW3PZ+Iwn2eEOfv
-	 Yr5jxOntlaWQpjrLwLPKkomgcA85Te3+9x85ckcE=
+	b=A2Ib4CPOoz62ZxrEjymOU7Y4iSvTw+RgDNDmsJaz0Wyjx6bUDUKuvz1IQJ6IAFmz0
+	 21uKUWnQKr0RHZL2pECYo5j01oRBIGLGoAWUSu3E2o/c7aWNIZU5I9kwgpI++DWWcF
+	 jEp7GKkV7Dgz+Yq9Ig6C2HQ9ZOtruXT3Av2AmKsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borys Tsyrulnikov <tsyrulnikov.borys@gmail.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>
-Subject: [PATCH 6.18 056/552] x86/tdx: Fix zero-extension for 32-bit port I/O
-Date: Fri,  4 Sep 2026 06:53:33 +0200
-Message-ID: <20260904045749.115978939@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Sizhe Liu <liusizhe5@huawei.com>,
+	Yicong Yang <yangyccccc@gmail.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 6.18 057/552] hwtracing: hisi_ptt: Propagate DMA reset timeout in trace_start()
+Date: Fri,  4 Sep 2026 06:53:34 +0200
+Message-ID: <20260904045749.139406963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,57 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 941370fc93cc3474e26811f4d3b062903eefe2cf upstream.
+commit 75d42d990335322852ed5f7ce324b701c0949d79 upstream.
 
-According to x86 architecture rules, 32-bit operations zero-extend the
-result to 64 bits. The current implementation of handle_in() only masks
-the lower 32 bits, which preserves the upper 32 bits of RAX when a
-32-bit port IN instruction is emulated.
+hisi_ptt_wait_dma_reset_done() discards the return value of
+readl_poll_timeout_atomic(). If the DMA engine does not complete its
+reset within the timeout, hisi_ptt_trace_start() proceeds to start
+tracing regardless.
 
-Use insn_assign_reg() to write the result back into RAX with proper
-partial-register-write semantics: 1- and 2-byte forms leave the upper
-bits untouched, the 4-byte form zero-extends to the full register.
+Return a bool from hisi_ptt_wait_dma_reset_done(), consistent with the
+other wait helpers in this driver. On timeout, log an error, de-assert
+the reset bit, and return -ETIMEDOUT. Move ctrl->started to the
+successful path so a failed start does not leave the trace marked as
+active.
 
-Fixes: 03149948832a ("x86/tdx: Port I/O: Add runtime hypercalls")
-Reported-by: Borys Tsyrulnikov <tsyrulnikov.borys@gmail.com>
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Link: https://lore.kernel.org/all/CAKw_Dz96rfSQc6Rn+9QBcUFHhmkK+9zu+P=bxowfZwxrATCBRg@mail.gmail.com/
-Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20260713133753.223947-4-kirill@shutemov.name
+Fixes: ff0de066b463 ("hwtracing: hisi_ptt: Add trace function support for HiSilicon PCIe Tune and Trace device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Reviewed-by: Sizhe Liu <liusizhe5@huawei.com>
+Reviewed-by: Yicong Yang <yangyccccc@gmail.com>
+Tested-by: Sizhe Liu <liusizhe5@huawei.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260414172451.14331-2-sanman.pradhan@hpe.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/tdx/tdx.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/hwtracing/ptt/hisi_ptt.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/arch/x86/coco/tdx/tdx.c
-+++ b/arch/x86/coco/tdx/tdx.c
-@@ -693,8 +693,8 @@ static bool handle_in(struct pt_regs *re
- 		.r13 = PORT_READ,
- 		.r14 = port,
- 	};
--	u64 mask = GENMASK(BITS_PER_BYTE * size - 1, 0);
- 	bool success;
-+	u64 val;
- 
- 	/*
- 	 * Emulate the I/O read via hypercall. More info about ABI can be found
-@@ -702,11 +702,9 @@ static bool handle_in(struct pt_regs *re
- 	 * "TDG.VP.VMCALL<Instruction.IO>".
- 	 */
- 	success = !__tdx_hypercall(&args);
-+	val = success ? args.r11 : 0;
- 
--	/* Update part of the register affected by the emulated instruction */
--	regs->ax &= ~mask;
--	if (success)
--		regs->ax |= args.r11 & mask;
-+	insn_assign_reg(&regs->ax, val, size);
- 
- 	return success;
+--- a/drivers/hwtracing/ptt/hisi_ptt.c
++++ b/drivers/hwtracing/ptt/hisi_ptt.c
+@@ -171,13 +171,13 @@ static bool hisi_ptt_wait_trace_hw_idle(
+ 					  HISI_PTT_WAIT_TRACE_TIMEOUT_US);
  }
+ 
+-static void hisi_ptt_wait_dma_reset_done(struct hisi_ptt *hisi_ptt)
++static bool hisi_ptt_wait_dma_reset_done(struct hisi_ptt *hisi_ptt)
+ {
+ 	u32 val;
+ 
+-	readl_poll_timeout_atomic(hisi_ptt->iobase + HISI_PTT_TRACE_WR_STS,
+-				  val, !val, HISI_PTT_RESET_POLL_INTERVAL_US,
+-				  HISI_PTT_RESET_TIMEOUT_US);
++	return !readl_poll_timeout_atomic(hisi_ptt->iobase + HISI_PTT_TRACE_WR_STS,
++					  val, !val, HISI_PTT_RESET_POLL_INTERVAL_US,
++					  HISI_PTT_RESET_TIMEOUT_US);
+ }
+ 
+ static void hisi_ptt_trace_end(struct hisi_ptt *hisi_ptt)
+@@ -202,14 +202,18 @@ static int hisi_ptt_trace_start(struct h
+ 		return -EBUSY;
+ 	}
+ 
+-	ctrl->started = true;
+-
+ 	/* Reset the DMA before start tracing */
+ 	val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
+ 	val |= HISI_PTT_TRACE_CTRL_RST;
+ 	writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
+ 
+-	hisi_ptt_wait_dma_reset_done(hisi_ptt);
++	if (!hisi_ptt_wait_dma_reset_done(hisi_ptt)) {
++		pci_err(hisi_ptt->pdev, "timed out waiting for DMA reset\n");
++		val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
++		val &= ~HISI_PTT_TRACE_CTRL_RST;
++		writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
++		return -ETIMEDOUT;
++	}
+ 
+ 	val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
+ 	val &= ~HISI_PTT_TRACE_CTRL_RST;
+@@ -234,6 +238,8 @@ static int hisi_ptt_trace_start(struct h
+ 	if (!hisi_ptt->trace_ctrl.is_port)
+ 		val |= HISI_PTT_TRACE_CTRL_FILTER_MODE;
+ 
++	ctrl->started = true;
++
+ 	/* Start the Trace */
+ 	val |= HISI_PTT_TRACE_CTRL_EN;
+ 	writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
 
 
