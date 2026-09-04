@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0553DAAC8;
-	Fri,  4 Sep 2026 05:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234263DAAC8;
+	Fri,  4 Sep 2026 05:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499176; cv=none; b=Rh3eLWJi0fVg6Nv36jBCXFRWsUo/zDg6B39LX9MKcBh9moVMeb94nfUJ9a6qqQSDhrPioc/6nhuUcGbvFC8LrWiiWVOlLzUNDzbtXimNRmEaH6DvSYdt0Ps+xk2J/4ijgVGZWhEMiTjUv2bs59UuRa7mRvSgX14bqOReblB3obY=
+	t=1788499178; cv=none; b=ITRctj/PMO09s2/PCtFiun1qJXPkoyjlwI+DDM6/eZwps/k9XCYfR9AKpFM+uORdNisZsAaTNqNWHcelNDfyNQGHqG7AZW0ISBK3ynjXITBgiQkIJvO2P6UCmfnfuIR/iYWn7mjmrPdmJuJKHl8pFfs6lTWm302vCBTPeS9f4zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499176; c=relaxed/simple;
-	bh=ZhAhW7rFJlIIds73Q5Gl5q+djXB0gN6t/aOWM2vAByA=;
+	s=arc-20240116; t=1788499178; c=relaxed/simple;
+	bh=48djMVNErc1BFq97h3zG8eQeeQb9GqkNFoGTK+zGFAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HWV4VlF0yzEYcHfBC6O85F6LBcSK1tPI/6/0FhsvJSrzu1Ho6SYwCf32Hk3vvWzpFFsWe5qatPFK86DheW/ikVhZKtE5CVbnymJhfaJQcT/IjgwC1iae2kwS96NJZoPq205EORJa4JKTUW/RRf4eqWAqq1t0Lcs2X/EvM7Ww7JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iACxMqz3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j9535D+VkiUQLPoSkfxRq7koiRSAogln5htQR6aFjF6zIcY7ED/KlIUK7L8s2JaPegsrzJmLnb3O3qubDxOMF6lZVsqUbk8kX7T5jlGq2m9di2KGeA+dd244vWHxcMeFvF4gKJttBP4Q8MyDkHLPLTOxgPFrLtZFOiTPgSdeSLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+RvFQ8t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iACxMqz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62581F00A3D;
-	Fri,  4 Sep 2026 05:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+RvFQ8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5CC1F00A3D;
+	Fri,  4 Sep 2026 05:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499174;
-	bh=TsAOUGS3O+J9HGEXWkb3dV4cjZfH2Xt9pZX1W1weK8o=;
+	s=korg; t=1788499177;
+	bh=yMvIlkGlshd+a/xR8FmUlQT2xmJKe+u9haS1zgND/o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iACxMqz3SZFd7sDUDMyQ540VTXQpBu76EKhEY4DS8dQUvE652elcyQ+/xEfi/0mhX
-	 wUIjUuW+FR7gm07/u87wdgF22ADjJiuaDLvWnSw4QusPTW3oEDKXl9WLuyJ0nEYlUA
-	 /acUNziteCN8hp/W6MMeZGckJf9kzLVQI7vyeBTU=
+	b=X+RvFQ8t5jP4gvvQ3tqj5CyrJBxojv8MK44Z0PGXQnH1a4fhWMc+hJ8qVkAuGeWyZ
+	 ZwAPi67UtjrfhOIrOtL1X0WQ9Ms5gRqweZNVfADVQ7s85Hhg5oyfm54bpTONhMamiR
+	 aLvhR+ZfclTQ4lxszDUuuHKeX6NlVDxkejDdlK5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	liyouhong <liyouhong@kylinos.cn>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.2 325/713] dm-io: report non-retryable errors separatedly
-Date: Fri,  4 Sep 2026 06:54:53 +0200
-Message-ID: <20260904045811.116965078@linuxfoundation.org>
+Subject: [PATCH 7.2 326/713] dm-era: fix shadowed superblock leak on take-snap failure
+Date: Fri,  4 Sep 2026 06:54:54 +0200
+Message-ID: <20260904045811.138162015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -49,585 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: liyouhong <liyouhong@kylinos.cn>
 
-commit 47a5e62f39875f371bded6e34ffb9cf15ccd813d upstream.
+commit 39c5aa3bd8ec3912d2cd0b3fe092642b0d2b0713 upstream.
 
-The error codes BLK_STS_NOTSUPP and BLK_STS_INVAL should not cause leg
-failure on dm-raid1. This patch changes the interface to dm-io, so that
-it reports two error bitmaps - error_bits and unsup_bits. The unsup_bit
-bitmap tracks BLK_STS_NOTSUPP or BLK_STS_INVAL errors, the error_bits
-bitmap tracks all the other errors.
+metadata_take_snap() bumps the live superblock refcount and then
+dm_tm_shadow_block() allocates a new block for the metadata snapshot.
+If the subsequent dm_sm_inc_block() of writeset_tree_root or
+era_array_root fails, the function only unlocks the clone and
+returns.  The newly allocated shadow block is never returned to the
+metadata space map, so each failed take-snap permanently leaks one
+metadata block.
 
-dm-raid1 is changed so that it won't fail a leg if it receives an error
-in the unsup_bits bitmap.
+Free the clone with dm_sm_dec_block() on those error paths, matching
+the final step of metadata_drop_snap().
 
-This patch (with 62dc37a819a5) fixes misbehavior if the user uses
-unaligned bio vectors on dm-raid1.
-
-Fixes: 7eac33186957 ("iomap: simplify direct io validity check")
-Fixes: 5ff3f74e145a ("block: simplify direct io validity check")
+Fixes: eec40579d848 ("dm: add era target")
 Cc: stable@vger.kernel.org
+Signed-off-by: liyouhong <liyouhong@kylinos.cn>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-bufio.c           |   10 +++++-----
- drivers/md/dm-integrity.c       |   32 +++++++++++++++++++-------------
- drivers/md/dm-io.c              |   29 +++++++++++++++++++++--------
- drivers/md/dm-kcopyd.c          |   10 +++++-----
- drivers/md/dm-log.c             |    4 ++--
- drivers/md/dm-raid1.c           |   26 +++++++++++++++++---------
- drivers/md/dm-snap-persistent.c |    4 ++--
- drivers/md/dm-verity-target.c   |    2 +-
- drivers/md/dm-writecache.c      |   14 ++++++++------
- include/linux/dm-io.h           |    6 +++---
- 10 files changed, 83 insertions(+), 54 deletions(-)
+ drivers/md/dm-era-target.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/md/dm-bufio.c
-+++ b/drivers/md/dm-bufio.c
-@@ -1287,11 +1287,11 @@ static void free_buffer(struct dm_buffer
-  * dm-io completion routine. It just calls b->bio.bi_end_io, pretending
-  * that the request was handled directly with bio interface.
-  */
--static void dmio_complete(unsigned long error, void *context)
-+static void dmio_complete(unsigned long error, unsigned long unsup, void *context)
+--- a/drivers/md/dm-era-target.c
++++ b/drivers/md/dm-era-target.c
+@@ -1034,6 +1034,7 @@ static int metadata_checkpoint(struct er
+ static int metadata_take_snap(struct era_metadata *md)
  {
- 	struct dm_buffer *b = context;
+ 	int r, inc;
++	dm_block_t location;
+ 	struct dm_block *clone;
  
--	b->end_io(b, unlikely(error != 0) ? BLK_STS_IOERR : 0);
-+	b->end_io(b, unlikely(error != 0) ? BLK_STS_IOERR : unlikely(unsup != 0) ? BLK_STS_NOTSUPP : 0);
- }
- 
- static void use_dmio(struct dm_buffer *b, enum req_op op, sector_t sector,
-@@ -1319,7 +1319,7 @@ static void use_dmio(struct dm_buffer *b
- 		io_req.mem.ptr.vma = (char *)b->data + offset;
- 	}
- 
--	r = dm_io(&io_req, 1, &region, NULL, ioprio);
-+	r = dm_io(&io_req, 1, &region, NULL, NULL, ioprio);
- 	if (unlikely(r))
- 		b->end_io(b, errno_to_blk_status(r));
- }
-@@ -2220,7 +2220,7 @@ int dm_bufio_issue_flush(struct dm_bufio
- 	if (WARN_ON_ONCE(dm_bufio_in_request()))
- 		return -EINVAL;
- 
--	return dm_io(&io_req, 1, &io_reg, NULL, IOPRIO_DEFAULT);
-+	return dm_io(&io_req, 1, &io_reg, NULL, NULL, IOPRIO_DEFAULT);
- }
- EXPORT_SYMBOL_GPL(dm_bufio_issue_flush);
- 
-@@ -2246,7 +2246,7 @@ int dm_bufio_issue_discard(struct dm_buf
- 	if (WARN_ON_ONCE(dm_bufio_in_request()))
- 		return -EINVAL; /* discards are optional */
- 
--	return dm_io(&io_req, 1, &io_reg, NULL, IOPRIO_DEFAULT);
-+	return dm_io(&io_req, 1, &io_reg, NULL, NULL, IOPRIO_DEFAULT);
- }
- EXPORT_SYMBOL_GPL(dm_bufio_issue_discard);
- 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -562,7 +562,7 @@ static int sync_rw_sb(struct dm_integrit
- 		}
- 	}
- 
--	r = dm_io(&io_req, 1, &io_loc, NULL, IOPRIO_DEFAULT);
-+	r = dm_io(&io_req, 1, &io_loc, NULL, NULL, IOPRIO_DEFAULT);
- 	if (unlikely(r))
+ 	if (md->metadata_snap != SUPERBLOCK_LOCATION) {
+@@ -1071,7 +1072,9 @@ static int metadata_take_snap(struct era
+ 	r = dm_sm_inc_block(md->sm, md->writeset_tree_root);
+ 	if (r) {
+ 		DMERR("%s: couldn't inc writeset tree root", __func__);
++		location = dm_block_location(clone);
+ 		dm_tm_unlock(md->tm, clone);
++		dm_sm_dec_block(md->sm, location);
  		return r;
- 
-@@ -1035,12 +1035,14 @@ static void encrypt_journal(struct dm_in
- 		return crypt_journal(ic, encrypt, section, n_sections, comp);
- }
- 
--static void complete_journal_io(unsigned long error, void *context)
-+static void complete_journal_io(unsigned long error, unsigned long unsup, void *context)
- {
- 	struct journal_completion *comp = context;
- 
- 	if (unlikely(error != 0))
- 		dm_integrity_io_error(comp->ic, "writing journal", -EIO);
-+	else if (unlikely(unsup != 0))
-+		dm_integrity_io_error(comp->ic, "writing journal", -EOPNOTSUPP);
- 	complete_journal_op(comp);
- }
- 
-@@ -1055,7 +1057,7 @@ static void rw_journal_sectors(struct dm
- 
- 	if (unlikely(dm_integrity_failed(ic))) {
- 		if (comp)
--			complete_journal_io(-1UL, comp);
-+			complete_journal_io(-1UL, -1UL, comp);
- 		return;
  	}
  
-@@ -1080,13 +1082,13 @@ static void rw_journal_sectors(struct dm
- 	io_loc.sector = ic->start + SB_SECTORS + sector;
- 	io_loc.count = n_sectors;
- 
--	r = dm_io(&io_req, 1, &io_loc, NULL, IOPRIO_DEFAULT);
-+	r = dm_io(&io_req, 1, &io_loc, NULL, NULL, IOPRIO_DEFAULT);
- 	if (unlikely(r)) {
- 		dm_integrity_io_error(ic, (opf & REQ_OP_MASK) == REQ_OP_READ ?
- 				      "reading journal" : "writing journal", r);
- 		if (comp) {
- 			WARN_ONCE(1, "asynchronous dm_io failed: %d", r);
--			complete_journal_io(-1UL, comp);
-+			complete_journal_io(-1UL, -1UL, comp);
- 		}
- 	}
- }
-@@ -1177,7 +1179,7 @@ static void copy_from_journal(struct dm_
- 	BUG_ON((target | n_sectors | offset) & (unsigned int)(ic->sectors_per_block - 1));
- 
- 	if (unlikely(dm_integrity_failed(ic))) {
--		fn(-1UL, data);
-+		fn(-1UL, -1UL, data);
- 		return;
+@@ -1079,7 +1082,9 @@ static int metadata_take_snap(struct era
+ 	if (r) {
+ 		DMERR("%s: couldn't inc era tree root", __func__);
+ 		dm_sm_dec_block(md->sm, md->writeset_tree_root);
++		location = dm_block_location(clone);
+ 		dm_tm_unlock(md->tm, clone);
++		dm_sm_dec_block(md->sm, location);
+ 		return r;
  	}
  
-@@ -1197,10 +1199,10 @@ static void copy_from_journal(struct dm_
- 	io_loc.sector = target;
- 	io_loc.count = n_sectors;
- 
--	r = dm_io(&io_req, 1, &io_loc, NULL, IOPRIO_DEFAULT);
-+	r = dm_io(&io_req, 1, &io_loc, NULL, NULL, IOPRIO_DEFAULT);
- 	if (unlikely(r)) {
- 		WARN_ONCE(1, "asynchronous dm_io failed: %d", r);
--		fn(-1UL, data);
-+		fn(-1UL, -1UL, data);
- 	}
- }
- 
-@@ -1493,12 +1495,14 @@ struct flush_request {
- 	struct completion comp;
- };
- 
--static void flush_notify(unsigned long error, void *fr_)
-+static void flush_notify(unsigned long error, unsigned long unsup, void *fr_)
- {
- 	struct flush_request *fr = fr_;
- 
- 	if (unlikely(error != 0))
- 		dm_integrity_io_error(fr->ic, "flushing disk cache", -EIO);
-+	else if (unlikely(unsup != 0))
-+		dm_integrity_io_error(fr->ic, "flushing disk cache", -EOPNOTSUPP);
- 	complete(&fr->comp);
- }
- 
-@@ -1521,7 +1525,7 @@ static void dm_integrity_flush_buffers(s
- 		fr.io_reg.count = 0;
- 		fr.ic = ic;
- 		init_completion(&fr.comp);
--		r = dm_io(&fr.io_req, 1, &fr.io_reg, NULL, IOPRIO_DEFAULT);
-+		r = dm_io(&fr.io_req, 1, &fr.io_reg, NULL, NULL, IOPRIO_DEFAULT);
- 		BUG_ON(r);
- 	}
- 
-@@ -1837,7 +1841,7 @@ static noinline void integrity_recheck(s
- 			buffer_offset = (sector - io_loc.sector) << SECTOR_SHIFT;
- 			io_loc.count = round_up(io_loc.count, alignment);
- 
--			r = dm_io(&io_req, 1, &io_loc, NULL, IOPRIO_DEFAULT);
-+			r = dm_io(&io_req, 1, &io_loc, NULL, NULL, IOPRIO_DEFAULT);
- 			if (unlikely(r)) {
- 				dio->bi_status = errno_to_blk_status(r);
- 				goto free_ret;
-@@ -2890,7 +2894,7 @@ release_flush_bios:
- 	}
- }
- 
--static void complete_copy_from_journal(unsigned long error, void *context)
-+static void complete_copy_from_journal(unsigned long error, unsigned long unsup, void *context)
- {
- 	struct journal_io *io = context;
- 	struct journal_completion *comp = io->comp;
-@@ -2900,6 +2904,8 @@ static void complete_copy_from_journal(u
- 	mempool_free(io, &ic->journal_io_mempool);
- 	if (unlikely(error != 0))
- 		dm_integrity_io_error(ic, "copying from journal", -EIO);
-+	else if (unlikely(unsup != 0))
-+		dm_integrity_io_error(ic, "copying from journal", -EOPNOTSUPP);
- 	complete_journal_op(comp);
- }
- 
-@@ -3215,7 +3221,7 @@ next_chunk:
- 	io_loc.sector = get_data_sector(ic, area, offset);
- 	io_loc.count = n_sectors;
- 
--	r = dm_io(&io_req, 1, &io_loc, NULL, IOPRIO_DEFAULT);
-+	r = dm_io(&io_req, 1, &io_loc, NULL, NULL, IOPRIO_DEFAULT);
- 	if (unlikely(r)) {
- 		dm_integrity_io_error(ic, "reading data", r);
- 		goto err;
---- a/drivers/md/dm-io.c
-+++ b/drivers/md/dm-io.c
-@@ -33,6 +33,7 @@ struct dm_io_client {
-  */
- struct io {
- 	unsigned long error_bits;
-+	unsigned long unsup_bits;
- 	atomic_t count;
- 	struct dm_io_client *client;
- 	io_notify_fn callback;
-@@ -119,6 +120,7 @@ static void retrieve_io_and_region_from_
- static void complete_io(struct io *io)
- {
- 	unsigned long error_bits = io->error_bits;
-+	unsigned long unsup_bits = io->unsup_bits;
- 	io_notify_fn fn = io->callback;
- 	void *context = io->context;
- 
-@@ -127,13 +129,17 @@ static void complete_io(struct io *io)
- 					     io->vma_invalidate_size);
- 
- 	mempool_free(io, &io->client->pool);
--	fn(error_bits, context);
-+	fn(error_bits, unsup_bits, context);
- }
- 
- static void dec_count(struct io *io, unsigned int region, blk_status_t error)
- {
--	if (error)
--		set_bit(region, &io->error_bits);
-+	if (unlikely(error)) {
-+		if (error == BLK_STS_NOTSUPP || error == BLK_STS_INVAL)
-+			set_bit(region, &io->unsup_bits);
-+		else
-+			set_bit(region, &io->error_bits);
-+	}
- 
- 	if (atomic_dec_and_test(&io->count))
- 		complete_io(io);
-@@ -394,6 +400,7 @@ static void async_io(struct dm_io_client
- 
- 	io = mempool_alloc(&client->pool, GFP_NOIO);
- 	io->error_bits = 0;
-+	io->unsup_bits = 0;
- 	atomic_set(&io->count, 1); /* see dispatch_io() */
- 	io->client = client;
- 	io->callback = fn;
-@@ -407,20 +414,23 @@ static void async_io(struct dm_io_client
- 
- struct sync_io {
- 	unsigned long error_bits;
-+	unsigned long unsup_bits;
- 	struct completion wait;
- };
- 
--static void sync_io_complete(unsigned long error, void *context)
-+static void sync_io_complete(unsigned long error, unsigned long unsup, void *context)
- {
- 	struct sync_io *sio = context;
- 
- 	sio->error_bits = error;
-+	sio->unsup_bits = unsup;
- 	complete(&sio->wait);
- }
- 
- static int sync_io(struct dm_io_client *client, unsigned int num_regions,
- 		   struct dm_io_region *where, blk_opf_t opf, struct dpages *dp,
--		   unsigned long *error_bits, unsigned short ioprio)
-+		   unsigned long *error_bits, unsigned long *unsup_bits,
-+		   unsigned short ioprio)
- {
- 	struct sync_io sio;
- 
-@@ -433,8 +443,10 @@ static int sync_io(struct dm_io_client *
- 
- 	if (error_bits)
- 		*error_bits = sio.error_bits;
-+	if (unsup_bits)
-+		*unsup_bits = sio.unsup_bits;
- 
--	return sio.error_bits ? -EIO : 0;
-+	return sio.error_bits ? -EIO : sio.unsup_bits ? -EOPNOTSUPP : 0;
- }
- 
- static int dp_init(struct dm_io_request *io_req, struct dpages *dp,
-@@ -481,7 +493,7 @@ static int dp_init(struct dm_io_request
- 
- int dm_io(struct dm_io_request *io_req, unsigned int num_regions,
- 	  struct dm_io_region *where, unsigned long *sync_error_bits,
--	  unsigned short ioprio)
-+	  unsigned long *sync_unsup_bits, unsigned short ioprio)
- {
- 	int r;
- 	struct dpages dp;
-@@ -497,7 +509,8 @@ int dm_io(struct dm_io_request *io_req,
- 
- 	if (!io_req->notify.fn)
- 		return sync_io(io_req->client, num_regions, where,
--			       io_req->bi_opf, &dp, sync_error_bits, ioprio);
-+			       io_req->bi_opf, &dp, sync_error_bits,
-+			       sync_unsup_bits, ioprio);
- 
- 	async_io(io_req->client, num_regions, where, io_req->bi_opf, &dp,
- 		 io_req->notify.fn, io_req->notify.context, ioprio);
---- a/drivers/md/dm-kcopyd.c
-+++ b/drivers/md/dm-kcopyd.c
-@@ -517,16 +517,16 @@ static int run_complete_job(struct kcopy
- 	return 0;
- }
- 
--static void complete_io(unsigned long error, void *context)
-+static void complete_io(unsigned long error, unsigned long unsup, void *context)
- {
- 	struct kcopyd_job *job = context;
- 	struct dm_kcopyd_client *kc = job->kc;
- 
- 	io_job_finish(kc->throttle);
- 
--	if (error) {
-+	if (unlikely((error | unsup) != 0)) {
- 		if (op_is_write(job->op))
--			job->write_err |= error;
-+			job->write_err |= error | unsup;
- 		else
- 			job->read_err = 1;
- 
-@@ -578,9 +578,9 @@ static int run_io_job(struct kcopyd_job
- 	io_job_start(job->kc->throttle);
- 
- 	if (job->op == REQ_OP_READ)
--		r = dm_io(&io_req, 1, &job->source, NULL, IOPRIO_DEFAULT);
-+		r = dm_io(&io_req, 1, &job->source, NULL, NULL, IOPRIO_DEFAULT);
- 	else
--		r = dm_io(&io_req, job->num_dests, job->dests, NULL, IOPRIO_DEFAULT);
-+		r = dm_io(&io_req, job->num_dests, job->dests, NULL, NULL, IOPRIO_DEFAULT);
- 
- 	return r;
- }
---- a/drivers/md/dm-log.c
-+++ b/drivers/md/dm-log.c
-@@ -300,7 +300,7 @@ static int rw_header(struct log_c *lc, e
- {
- 	lc->io_req.bi_opf = op;
- 
--	return dm_io(&lc->io_req, 1, &lc->header_location, NULL, IOPRIO_DEFAULT);
-+	return dm_io(&lc->io_req, 1, &lc->header_location, NULL, NULL, IOPRIO_DEFAULT);
- }
- 
- static int flush_header(struct log_c *lc)
-@@ -313,7 +313,7 @@ static int flush_header(struct log_c *lc
- 
- 	lc->io_req.bi_opf = REQ_OP_WRITE | REQ_PREFLUSH;
- 
--	return dm_io(&lc->io_req, 1, &null_location, NULL, IOPRIO_DEFAULT);
-+	return dm_io(&lc->io_req, 1, &null_location, NULL, NULL, IOPRIO_DEFAULT);
- }
- 
- static int read_header(struct log_c *log)
---- a/drivers/md/dm-raid1.c
-+++ b/drivers/md/dm-raid1.c
-@@ -258,7 +258,7 @@ out:
- static int mirror_flush(struct dm_target *ti)
- {
- 	struct mirror_set *ms = ti->private;
--	unsigned long error_bits;
-+	unsigned long error_bits, unsup_bits;
- 
- 	unsigned int i;
- 	struct dm_io_region io[MAX_NR_MIRRORS];
-@@ -277,8 +277,8 @@ static int mirror_flush(struct dm_target
- 	}
- 
- 	error_bits = -1;
--	dm_io(&io_req, ms->nr_mirrors, io, &error_bits, IOPRIO_DEFAULT);
--	if (unlikely(error_bits != 0)) {
-+	dm_io(&io_req, ms->nr_mirrors, io, &error_bits, &unsup_bits, IOPRIO_DEFAULT);
-+	if (unlikely((error_bits | unsup_bits) != 0)) {
- 		for (i = 0; i < ms->nr_mirrors; i++)
- 			if (test_bit(i, &error_bits))
- 				fail_mirror(ms->mirror + i,
-@@ -511,7 +511,7 @@ static void hold_bio(struct mirror_set *
-  * Reads
-  *---------------------------------------------------------------
-  */
--static void read_callback(unsigned long error, void *context)
-+static void read_callback(unsigned long error, unsigned long unsup, void *context)
- {
- 	struct bio *bio = context;
- 	struct mirror *m;
-@@ -520,6 +520,8 @@ static void read_callback(unsigned long
- 	bio_set_m(bio, NULL);
- 
- 	if (likely(!error)) {
-+		if (unlikely(unsup != 0))
-+			bio->bi_status = BLK_STS_INVAL;
- 		bio_endio(bio);
- 		return;
- 	}
-@@ -553,7 +555,7 @@ static void read_async_bio(struct mirror
- 
- 	map_region(&io, m, bio);
- 	bio_set_m(bio, m);
--	BUG_ON(dm_io(&io_req, 1, &io, NULL, IOPRIO_DEFAULT));
-+	BUG_ON(dm_io(&io_req, 1, &io, NULL, NULL, IOPRIO_DEFAULT));
- }
- 
- static inline int region_in_sync(struct mirror_set *ms, region_t region,
-@@ -600,7 +602,7 @@ static void do_reads(struct mirror_set *
-  * NOSYNC:	increment pending, just write to the default mirror
-  *---------------------------------------------------------------------
-  */
--static void write_callback(unsigned long error, void *context)
-+static void write_callback(unsigned long error, unsigned long unsup, void *context)
- {
- 	unsigned int i;
- 	struct bio *bio = context;
-@@ -617,7 +619,7 @@ static void write_callback(unsigned long
- 	 * This way we handle both writes to SYNC and NOSYNC
- 	 * regions with the same code.
- 	 */
--	if (likely(!error)) {
-+	if (likely(!(error | unsup))) {
- 		bio_endio(bio);
- 		return;
- 	}
-@@ -632,6 +634,12 @@ static void write_callback(unsigned long
- 		return;
- 	}
- 
-+	if (!error && unsup) {
-+		bio->bi_status = BLK_STS_INVAL;
-+		bio_endio(bio);
-+		return;
-+	}
-+
- 	for (i = 0; i < ms->nr_mirrors; i++)
- 		if (test_bit(i, &error))
- 			fail_mirror(ms->mirror + i, DM_RAID1_WRITE_ERROR);
-@@ -680,7 +688,7 @@ static void do_write(struct mirror_set *
- 	 */
- 	bio_set_m(bio, get_default_mirror(ms));
- 
--	BUG_ON(dm_io(&io_req, ms->nr_mirrors, io, NULL, IOPRIO_DEFAULT));
-+	BUG_ON(dm_io(&io_req, ms->nr_mirrors, io, NULL, NULL, IOPRIO_DEFAULT));
- }
- 
- static void do_writes(struct mirror_set *ms, struct bio_list *writes)
-@@ -1262,7 +1270,7 @@ static int mirror_end_io(struct dm_targe
- 		return DM_ENDIO_DONE;
- 	}
- 
--	if (*error == BLK_STS_NOTSUPP)
-+	if (*error == BLK_STS_NOTSUPP || *error == BLK_STS_INVAL)
- 		goto out;
- 
- 	if (bio->bi_opf & REQ_RAHEAD)
---- a/drivers/md/dm-snap-persistent.c
-+++ b/drivers/md/dm-snap-persistent.c
-@@ -223,7 +223,7 @@ static void do_metadata(struct work_stru
- {
- 	struct mdata_req *req = container_of(work, struct mdata_req, work);
- 
--	req->result = dm_io(req->io_req, 1, req->where, NULL, IOPRIO_DEFAULT);
-+	req->result = dm_io(req->io_req, 1, req->where, NULL, NULL, IOPRIO_DEFAULT);
- }
- 
- /*
-@@ -247,7 +247,7 @@ static int chunk_io(struct pstore *ps, v
- 	struct mdata_req req;
- 
- 	if (!metadata)
--		return dm_io(&io_req, 1, &where, NULL, IOPRIO_DEFAULT);
-+		return dm_io(&io_req, 1, &where, NULL, NULL, IOPRIO_DEFAULT);
- 
- 	req.where = &where;
- 	req.io_req = &io_req;
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -395,7 +395,7 @@ static noinline int verity_recheck(struc
- 	io_loc.bdev = v->data_dev->bdev;
- 	io_loc.sector = cur_block << (v->data_dev_block_bits - SECTOR_SHIFT);
- 	io_loc.count = 1 << (v->data_dev_block_bits - SECTOR_SHIFT);
--	r = dm_io(&io_req, 1, &io_loc, NULL, IOPRIO_DEFAULT);
-+	r = dm_io(&io_req, 1, &io_loc, NULL, NULL, IOPRIO_DEFAULT);
- 	if (unlikely(r))
- 		goto free_ret;
- 
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -474,12 +474,14 @@ struct io_notify {
- 	atomic_t count;
- };
- 
--static void writecache_notify_io(unsigned long error, void *context)
-+static void writecache_notify_io(unsigned long error, unsigned long unsup, void *context)
- {
- 	struct io_notify *endio = context;
- 
- 	if (unlikely(error != 0))
- 		writecache_error(endio->wc, -EIO, "error writing metadata");
-+	else if (unlikely(unsup != 0))
-+		writecache_error(endio->wc, -EOPNOTSUPP, "error writing metadata");
- 	BUG_ON(atomic_read(&endio->count) <= 0);
- 	if (atomic_dec_and_test(&endio->count))
- 		complete(&endio->c);
-@@ -530,11 +532,11 @@ static void ssd_commit_flushed(struct dm
- 		req.notify.context = &endio;
- 
- 		/* writing via async dm-io (implied by notify.fn above) won't return an error */
--		(void) dm_io(&req, 1, &region, NULL, IOPRIO_DEFAULT);
-+		(void) dm_io(&req, 1, &region, NULL, NULL, IOPRIO_DEFAULT);
- 		i = j;
- 	}
- 
--	writecache_notify_io(0, &endio);
-+	writecache_notify_io(0, 0, &endio);
- 	wait_for_completion_io(&endio.c);
- 
- 	if (wait_for_ios)
-@@ -567,7 +569,7 @@ static void ssd_commit_superblock(struct
- 	req.notify.fn = NULL;
- 	req.notify.context = NULL;
- 
--	r = dm_io(&req, 1, &region, NULL, IOPRIO_DEFAULT);
-+	r = dm_io(&req, 1, &region, NULL, NULL, IOPRIO_DEFAULT);
- 	if (unlikely(r))
- 		writecache_error(wc, r, "error writing superblock");
- }
-@@ -595,7 +597,7 @@ static void writecache_disk_flush(struct
- 	req.client = wc->dm_io;
- 	req.notify.fn = NULL;
- 
--	r = dm_io(&req, 1, &region, NULL, IOPRIO_DEFAULT);
-+	r = dm_io(&req, 1, &region, NULL, NULL, IOPRIO_DEFAULT);
- 	if (unlikely(r))
- 		writecache_error(wc, r, "error flushing metadata: %d", r);
- }
-@@ -989,7 +991,7 @@ static int writecache_read_metadata(stru
- 	req.client = wc->dm_io;
- 	req.notify.fn = NULL;
- 
--	return dm_io(&req, 1, &region, NULL, IOPRIO_DEFAULT);
-+	return dm_io(&req, 1, &region, NULL, NULL, IOPRIO_DEFAULT);
- }
- 
- static void writecache_resume(struct dm_target *ti)
---- a/include/linux/dm-io.h
-+++ b/include/linux/dm-io.h
-@@ -27,7 +27,7 @@ struct page_list {
- 	struct page *page;
- };
- 
--typedef void (*io_notify_fn)(unsigned int long error, void *context);
-+typedef void (*io_notify_fn)(unsigned long int error, unsigned long int unsup, void *context);
- 
- enum dm_io_mem_type {
- 	DM_IO_PAGE_LIST,/* Page list */
-@@ -80,8 +80,8 @@ void dm_io_client_destroy(struct dm_io_c
-  * error occurred doing io to the corresponding region.
-  */
- int dm_io(struct dm_io_request *io_req, unsigned int num_regions,
--	  struct dm_io_region *region, unsigned int long *sync_error_bits,
--	  unsigned short ioprio);
-+	  struct dm_io_region *region, unsigned long int *sync_error_bits,
-+	  unsigned long int *sync_unsup_bits, unsigned short ioprio);
- 
- #endif	/* __KERNEL__ */
- #endif	/* _LINUX_DM_IO_H */
 
 
