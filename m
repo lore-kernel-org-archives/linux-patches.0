@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCC841A574;
-	Fri,  4 Sep 2026 05:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5068E41A4F8;
+	Fri,  4 Sep 2026 05:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499460; cv=none; b=ip54EPR+PkAzMfEwmu9j3B4RXg2QTY8oJHWMItMkWBWw+xOH7G15rNLT/L4mwUE6yH9x6e41AYsl1H/EBS9BhoY/W40t59vPVYfa0ZL+bWulBiUb63T+eNZIE9NO0XH2uYKUol1kSGiiMT69YO6vIGryY5YWcUL9olRKk1WCKsI=
+	t=1788499462; cv=none; b=o/OeKODlQMhYLa/D9P9xxClMRchLsY1+MA2TyR9hB4/y7AjE2ckK2Axohu3Lfkygm14YAbmn9kZsa5n3buOKY9/JZu8X2+BQAFeH6Dhn/LX65vKvbYBoG9ykHitEqrrS5XOlJsW/DhtI0YEwa1smsAQ0346X5xCck2sEZpZAni8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499460; c=relaxed/simple;
-	bh=HE5oSTqeAPOIUsAU59P2II/5Ow9kcLxwllUOAvaA1bc=;
+	s=arc-20240116; t=1788499462; c=relaxed/simple;
+	bh=SWu2RQnVqtmZGr0WS/4qJoVu8V8PkCUs09N89RHTs6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bM+8MTqRORSa51Cmm98/728laKsbNfsNpMWQdA6l9S5k3LFme84B9leSdRtiyw+APT/GCge9GIM6NQF+yO0BwE7aokRBSxyK6RCET2Ra/yFYm4yx20Ihs+ArBKDE8YoHeJisAH0+IalIs6VldQ7c4l4wMui3kvT0vNyS+yI18XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfbMlqml; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dscoShSTS+ZJXiR9MODZa5cWhef7j99C4A5SR/vBI7KzGLrxmah5Lvuglav8F+VAmqDX1p3NG+oc1CdBweVGGM+DfJ5tBohiQWiU0e2fixsdwK7XPYOl6gnI/L65v7NNIYvIag9fA9QB+n2e8+U0tz7RE7ZCtPKHOIHp1D5edn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QihwGmWc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfbMlqml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5C91F00ADE;
-	Fri,  4 Sep 2026 05:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QihwGmWc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F5C1F00A3D;
+	Fri,  4 Sep 2026 05:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499457;
-	bh=le1NXjROAlMVXqYoZ9G/N82U77TZY3eDH0oxpj9qe1E=;
+	s=korg; t=1788499459;
+	bh=NlOB2mrby1XbgtvhRkstiO396xtvGUttzvxCtwSC6f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nfbMlqmlvWhlB3b+vQjVL6EV5PID3utfJsj/B/QBtebzMzjajsW9ZeFT4UJpo+hNI
-	 gyhj0qaN8QhcPb7/wgX/qQ4lxeZYzROd4SHXgftKzTLQ37/tZ2FyhQNdsfjVtBfN5X
-	 pmlqYVmu6MdFqDtXykCLOZn36AVXPIdHMR862ooI=
+	b=QihwGmWc1TIQDOxmj/hpoaMrGMc6j217mLpA0DWN4ryzOjUEc9Vv57q+JoL/Byjpf
+	 STXBLih2eR/mPFfwsVSo1uZk6m3Nlq7y+VI71wyKAFcB3zrtPQtr6CfAg43vDEjahY
+	 9tyQ0t+0a8Zfu9ybF8+DV/U5UFNrEYLrjxxEtaJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Michael Scott <mike.scott@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Val Packett <val@packett.cool>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 7.2 424/713] arm64: dts: qcom: sm6115-pro1x: Correct touchscreen GPIO flags
-Date: Fri,  4 Sep 2026 06:56:32 +0200
-Message-ID: <20260904045813.332524915@linuxfoundation.org>
+Subject: [PATCH 7.2 425/713] arm64: dts: qcom: x1-dell-thena: mark l12b and l15b always-on
+Date: Fri,  4 Sep 2026 06:56:33 +0200
+Message-ID: <20260904045813.354100650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,40 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Michael Scott <mike.scott@oss.qualcomm.com>
 
-commit 8e73ae5c34e4fbbd25a8324e3c0eb1e845d7f01e upstream.
+commit 06c8fc3e132ce8659bc9f0877b5c6daaf41aadbd upstream.
 
-IRQ_TYPE_xxx flags are not correct in the context of GPIO flags.
-These are simple defines so they could be used in DTS but they will not
-have the same meaning: IRQ_TYPE_LEVEL_LOW = 8 = GPIO_TRANSITORY.
+The l12b and l15b supplies are used by components that are not (fully)
+described (and some never will be) and must never be disabled.
 
-Correct the touchscreen irq-gpios to use proper flags, assuming the
-author of the code wanted similar logical behavior:
+Mark the regulators as always-on to prevent them from being disabled,
+for example, when consumers probe defer or suspend.
 
-  IRQ_TYPE_LEVEL_LOW => GPIO_ACTIVE_LOW
+Note that these supplies currently have no consumers described in
+mainline for dell-thena beyond the audio codec (vdd-buck/vdd-rxtx/
+vdd-io on wcd938x), which can release them when the codec goes idle.
+The board-level gpio-fixed regulators that feed the Type-C retimer's
+VDDIO and other rails are not described with a vin-supply link, so
+the kernel cannot keep their parent LDOs alive on its own.
 
-Fixes: e46b455e67f8 ("arm64: dts: qcom: sm6115-pro1x: Add Goodix Touchscreen")
+This mirrors the same change Johan Hovold applied to every other
+X1E80100 board in a March 2025 series; commit 63169c07d740
+("arm64: dts: qcom: x1e80100-dell-xps13-9345: mark l12b and l15b always-on")
+is representative. The dell-thena board file was introduced four months
+later and did not inherit that change; this patch closes the gap.
+
+Fixes: e7733b42111c ("arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Michael Scott <mike.scott@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260413090527.53000-2-krzysztof.kozlowski@oss.qualcomm.com
+Acked-by: Val Packett <val@packett.cool>
+Link: https://lore.kernel.org/r/20260521010935.1333494-4-mike.scott@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-@@ -151,7 +151,7 @@
+--- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+@@ -589,6 +589,7 @@
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
  
- 		interrupts-extended = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
+ 		vreg_l13b_3p0: ldo13 {
+@@ -610,6 +611,7 @@
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
+ 	};
  
--		irq-gpios = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
-+		irq-gpios = <&tlmm 80 GPIO_ACTIVE_LOW>;
- 		reset-gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
- 		AVDD28-supply = <&ts_vdd_supply>;
- 		VDDIO-supply = <&ts_vddio_supply>;
 
 
