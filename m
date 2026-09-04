@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6FB378838;
-	Fri,  4 Sep 2026 06:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC8E30C366;
+	Fri,  4 Sep 2026 06:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502118; cv=none; b=WPF9JX6Txe2Ac+vDEUME11MkgbRvs7caGxcnP/KcInsxj6gErby6LTOd9tbjnPN0wWz3ZJVSCuaV15bpUsVtsqt4SbQR+kdPMyG356NziHaG5jaENOEMBC1a32DNhZxfrOCvEc6gPwSwlQNETl1yN9Gl+twj4oiwqmmE8EA3e8c=
+	t=1788502121; cv=none; b=rdyNIWgzv5Hj6w+R/Gf3OjOA0bKd/2LlcJKtNpX7JoOvv68M1FeHHPQiJV4WlMkzQZkbpWYP67zyqYFYbyxmhhQLouWgOAp+1hBCDM9NMCw9ZIwqEjxjzcEN7d6ECyT9iz/EwT74o8T3dtjwHYMmMVVBExUO61gljCCqgQkox0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502118; c=relaxed/simple;
-	bh=t4Tq8X2O9NvyP7uvZHKLzzmCDm47WaI3+WfIVbwp08M=;
+	s=arc-20240116; t=1788502121; c=relaxed/simple;
+	bh=M4tM2nGFp6UcPzKutTQGDu+RtCfmHvuSAIQRurB1MxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i0PF/y563Z7AzWm7MJKPZbTWhBegdGy2/mOM4c8DMoaBsbAqDAiB8iA5UaGy/yDBlVbR8VNsvJpjzeVBkp8EDGfXXPSjfYc2i95MnG6hZAbZbAkhEnfS9pozfabYJkUy3XVjvt/zjMyFJ+17uspfDKjMTpCP2J13YRnZck3SULg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cit2CBRj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pwQ5SqdaADKruWuxWazZ2ZBTv/C3mQxXgC8WL/pm9obuFQtMUZ2M3nbdB1u1pkJy3Ej++NI+DO2vnxdiQOu9ZkZ1xF8chvWDIErRJY4L8ifgxxdFY3FXl8SrYx0out/qgvgedV9mZUpf6o3Yh0ZjXO3g2RMG7dRcUTMtBIeGzr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnLsJLnh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cit2CBRj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C24B1F00A3D;
-	Fri,  4 Sep 2026 06:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnLsJLnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31ECF1F00A3D;
+	Fri,  4 Sep 2026 06:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502116;
-	bh=ytWH7UHvtZzCkZm8R4tw1ksnriuSa8jvNQQfQAqqufs=;
+	s=korg; t=1788502119;
+	bh=ywaKnVVWTiTMt8olKp5P3OwCsIBH34q+jMVyYwzcRp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cit2CBRjL5aQ9lcRqiOEqFiCvtew06B4HILGbeutnkv0Pj6MMuzBimXTMyT/qIJOW
-	 RPCenquDCS8YKL4m0PEUjCFxkfWRybCmxsavqyz9QlRnE9r2zqjZ9Wx/0qAqAuLiYK
-	 xMJcOAU3li1OREjqpxmpKiZqepX9w0GPRn2boa7s=
+	b=wnLsJLnhs8yERYDDKPW+aLSok/iebXEjkyfbuxZBvGO/xMFpAwMNV3d388vTsTP1t
+	 0fDsaMWsfxmI7hjvbWitFCGb1tJy835a3vjXJ9bKOVuaCf1FjlZC1uCHyI5lq3l5Sx
+	 AqTcU4Z6hG4uYvCMedzZdgNFk5bj/MbeTrLse07M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 096/403] nfsd: fix version mismatch loops in nfsd_acl_init_request()
-Date: Fri,  4 Sep 2026 06:58:19 +0200
-Message-ID: <20260904045737.015903061@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 097/403] nfsd: fix XDR length calculation in nfsd4_ff_encode_layoutget
+Date: Fri,  4 Sep 2026 06:58:20 +0200
+Message-ID: <20260904045737.040434721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,46 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 9bc761051dcd9a4a8b59e64b2b185172d13c716d upstream.
+commit f9868174af49d207fbaf0c5e055d088a983684af upstream.
 
-The loops that compute the supported version range for PROG_MISMATCH
-test nfsd_support_acl_version(rqstp->rq_vers) instead of
-nfsd_support_acl_version(i), so every iteration fails and the
-function returns rpc_prog_unavail instead of rpc_prog_mismatch.
+The XDR buffer size calculation in nfsd4_ff_encode_layoutget() has
+multiple errors that can result in either an out-of-bounds write or
+leaking uninitialized kernel memory to the client:
 
-Replace rqstp->rq_vers with the loop variable i, matching the
-pattern used by the sibling nfsd_init_request() function.
+ - fh_len doesn't account for XDR padding on the file handle data
+ - uid and gid lengths use "8 + len" but xdr_encode_opaque() actually
+   writes "4 + xdr_align_size(len)" bytes
+ - ds_len omits the flags and stats_collect_hint fields (8 bytes),
+   while len's header constant overestimates by 8 bytes -- these
+   partially cancel but leave a net mismatch
 
-Fixes: e333f3bbefe3 ("nfsd: Allow containers to set supported nfs versions")
+The worst case occurs with short strings (e.g. uid=0, gid=0 with an
+odd-sized file handle), where the function writes up to 5 bytes past
+the reserved XDR buffer. Conversely, when string lengths happen to be
+4-byte aligned, the reservation is too large and stale buffer content
+is sent to the client.
+
+Fix this by breaking out every encoded field explicitly in the ds_len
+calculation, using xdr_align_size() for all variable-length opaque
+fields, and correcting the header constants.
+
+Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
+Assisted-by: kres:claude-opus-4-7
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-9-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20260528-pnfs-fixes-v1-1-8a1255ae2f16@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfssvc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/flexfilelayoutxdr.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -871,7 +871,7 @@ nfsd_acl_init_request(struct svc_rqst *r
+--- a/fs/nfsd/flexfilelayoutxdr.c
++++ b/fs/nfsd/flexfilelayoutxdr.c
+@@ -30,19 +30,24 @@ nfsd4_ff_encode_layoutget(struct xdr_str
+ 	struct ff_idmap uid;
+ 	struct ff_idmap gid;
  
- 	ret->mismatch.lovers = NFSD_ACL_NRVERS;
- 	for (i = NFSD_ACL_MINVERS; i < NFSD_ACL_NRVERS; i++) {
--		if (nfsd_support_acl_version(rqstp->rq_vers) &&
-+		if (nfsd_support_acl_version(i) &&
- 		    nfsd_vers(nn, i, NFSD_TEST)) {
- 			ret->mismatch.lovers = i;
- 			break;
-@@ -881,7 +881,7 @@ nfsd_acl_init_request(struct svc_rqst *r
- 		return rpc_prog_unavail;
- 	ret->mismatch.hivers = NFSD_ACL_MINVERS;
- 	for (i = NFSD_ACL_NRVERS - 1; i >= NFSD_ACL_MINVERS; i--) {
--		if (nfsd_support_acl_version(rqstp->rq_vers) &&
-+		if (nfsd_support_acl_version(i) &&
- 		    nfsd_vers(nn, i, NFSD_TEST)) {
- 			ret->mismatch.hivers = i;
- 			break;
+-	fh_len = 4 + fl->fh.size;
++	fh_len = 4 + xdr_align_size(fl->fh.size);
+ 
+ 	uid.len = sprintf(uid.buf, "%u", from_kuid(&init_user_ns, fl->uid));
+ 	gid.len = sprintf(gid.buf, "%u", from_kgid(&init_user_ns, fl->gid));
+ 
+-	/* 8 + len for recording the length, name, and padding */
+-	ds_len = 20 + sizeof(stateid_opaque_t) + 4 + fh_len +
+-		 8 + uid.len + 8 + gid.len;
++	/* data server entry: deviceid + efficiency + stateid + fh list +
++	 * user + group + flags + stats_collect_hint
++	 */
++	ds_len = 16 + 4 + 4 + sizeof(stateid_opaque_t) + 4 + fh_len +
++		 4 + xdr_align_size(uid.len) +
++		 4 + xdr_align_size(gid.len) +
++		 4 + 4;
+ 
++	/* mirror: ds_count + ds */
+ 	mirror_len = 4 + ds_len;
+ 
+-	/* The layout segment */
+-	len = 20 + mirror_len;
++	/* stripe_unit + mirror_count + mirror */
++	len = 12 + mirror_len;
+ 
+ 	p = xdr_reserve_space(xdr, sizeof(__be32) + len);
+ 	if (!p)
 
 
