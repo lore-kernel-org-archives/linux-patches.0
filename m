@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC6C412C05;
-	Fri,  4 Sep 2026 05:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98385415B76;
+	Fri,  4 Sep 2026 05:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498524; cv=none; b=BeHIOOy+/EsQOHGMx3RgxExamltbEiOJuMzngoXwrG55sIl1z3ydy4m+Ir/yUvpjYUGKSco9Ukh4M6L4xLlMJH5VpuyHJ4mfA51/a+ckBMz0a/2P+L1WtgFKjDFswpGlAVT8twGQBl0lvMS6UGt85mGxAOXWf9vutLW4dRE74GE=
+	t=1788498526; cv=none; b=YYlPB29BbWMpkKo9wzZiXK+cVolcm8Sl6KCMxYPtoP0nESC5OPuN3cjMclE1etyLCyFytYvNJGAr7F5c+r/rk+gAYkl1gD9YeHrVzdWMfNSvER9IYLlRhjZvIYuKkCkuWDlRc1b9IPvlb4F7R7YHxvXalMRaqI67OHQkrTxScSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498524; c=relaxed/simple;
-	bh=Tyloo+cVw7Ti4BhJtiePjtFylAtlrtysuml6dux3PlQ=;
+	s=arc-20240116; t=1788498526; c=relaxed/simple;
+	bh=t8s7IVenwWfjqkn5dcwh1cYZptmuh01DVAsBFkqWTPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlMx8iI3Rz5m7uTJHJaWzrS4VD3tyCZRTvwzJdOnm69SNuBYedBx1fY2TvaB3dyR+0Bu2KdswisSq/f3eRSSKXmSoxdtzsY4TrNWccPJhShID+Q9Xo23qv+LyoiMtfqWuxdKxiIQpdDion7izDkNt/z3i/iiqpE988csRSbIF1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8A/bT7K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjFlotFQA5bQTIIa6yTc5RwDYhAa2qG4bYT/EOLWqrK08FVqZ3d6SogesiZRohoKl5pVRkkKlyGtoUuHT9e4o462um6kU6wMYArD1ZVJBdJoKK+KOtr1o7ZDKNk/1Z1tbq2/wAhuaL6xeq8yCWVEw3dco4gz27zCJ6aFgu7IzdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYnkTalk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8A/bT7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A303C1F00A3E;
-	Fri,  4 Sep 2026 05:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYnkTalk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE981F00A3D;
+	Fri,  4 Sep 2026 05:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498520;
-	bh=BmSqD/HYU7ayt+fuNVJ063L+08defXewcQgYCy89iFk=;
+	s=korg; t=1788498522;
+	bh=pVEs5q7ubVugWXMHc961hQzS61KSkFMr4NAGmMHMzng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u8A/bT7KN+u2Q2/540Ecvc5my1ae59LzuNNODtEvGm4AiokDFZQDHmv7bOJpiHtTb
-	 4liGB7wKgot/LEyTDjURdobR1ErkXiSSGvJvcaPPT7LGvgd2vm4GDlS7B+Mn55xiJ1
-	 h8K8GWyqCzvd+uZ9SlJaO1QNMAP87R9RZvu6HrAo=
+	b=uYnkTalkC/9f8ccPdSk1M5D9841QexvblY/BcvnecBrFjzYNq7+jmpT0VfB+7Wam9
+	 HwK3SyPlZR2oYvr8h1pxYaZ5kW9/7LnPh86gcngtU6Qb1FSnOp8Nmhmfa2D3OJR21y
+	 eBUy6MEWCAHeaJVKHTE0PzGxOIQXOJvQoj1Z96CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 093/713] tracing: Fix use-after-free with same-name named triggers
-Date: Fri,  4 Sep 2026 06:51:01 +0200
-Message-ID: <20260904045805.922731747@linuxfoundation.org>
+	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
+	Nikhil Agarwal <Nikhil.agarwal@amd.com>,
+	Nipun Gupta <nipun.gupta@amd.com>
+Subject: [PATCH 7.2 094/713] cdx: Fix double free when sysfs file creation fails
+Date: Fri,  4 Sep 2026 06:51:02 +0200
+Message-ID: <20260904045805.945848455@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,83 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
 
-commit a7318172aa332a161fb9618286e64454c827f8fd upstream.
+commit 6f4acc3a3c300e174e3f586b97b04ed8f5948c36 upstream.
 
-When two hist triggers on different events are registered with the same
-name=, the second one reuses the first as named_data.  Both are added to
-tr->hist_vars by save_hist_vars() during event_hist_trigger_parse(),
-because save_hist_vars() is called before event_trigger_register() while
-the named reuse is only detected later, in hist_register_trigger().
+In cdx_create_res_attr(), if sysfs_create_bin_file() fails, the code
+frees res_attr but doesn't set cdx_dev->res_attr[num] to NULL. This
+leaves a dangling pointer in the array. Then cdx_destroy_res_attr()
+frees the already-freed memory. Fix the double free by initializing
+cdx_dev->res_attr[num] after sysfs_create_bin_file() completes.
 
-In the named-data branch hist_register_trigger() then frees the second
-histogram's hist_data via destroy_hist_data(), but never removes its
-tr->hist_vars list entry, leaving a dangling pointer and leaking the
-trace_array reference it holds.
-
-A later hist trigger that references a variable makes find_var_file()
-walk tr->hist_vars and dereference the freed hist_data.  The bug is
-reproducible from userspace by writing three hist triggers to tracefs:
-
-  cd /sys/kernel/tracing
-  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_switch/trigger
-  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_process_fork/trigger
-  echo 'hist:keys=common_pid:vals=$x' > events/sched/sched_process_exit/trigger
-
-The third write panics the kernel:
-
-  BUG: KASAN: slab-use-after-free in find_var_file.part.0+0x272/0x290
-  Read of size 8 at addr ffff888001f8a0e0 by task sh/1
-  CPU: 1 UID: 0 PID: 1 Comm: sh Tainted: G      D          N
-  Call Trace:
-    find_var_file.part.0
-    find_event_var
-    parse_atom
-    parse_expr
-    __create_val_field
-    event_hist_trigger_parse
-    trigger_process_regex
-    event_trigger_write
-    vfs_write
-    ksys_write
-    do_syscall_64
-    entry_SYSCALL_64_after_hwframe
-  Allocated by task 1:
-    event_hist_trigger_parse
-  Freed by task 1:
-    hist_register_trigger+0x618/0xa30
-    event_hist_trigger_parse
-  The buggy address belongs to freed 2048-byte region
-  Oops: general protection fault ... RIP: find_var_file.part.0
-  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
-
-Fix by removing the hist_data from tr->hist_vars and releasing the
-trace_array reference in the named-data branch of hist_register_trigger()
-before freeing the hist_data.
-
+Fixes: aeda33ab8160 ("cdx: create sysfs bin files for cdx resources")
 Cc: stable@vger.kernel.org
-Fixes: 6f86bdeab633 ("tracing: Fix bad hist from corrupting named_triggers list")
-Link: https://patch.msgid.link/20260816100427.33642-3-sh_def@163.com
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+Acked-by: Nikhil Agarwal <Nikhil.agarwal@amd.com>
+Acked-by: Nipun Gupta <nipun.gupta@amd.com>
+Link: https://patch.msgid.link/20260724092712.2119149-1-ptsm@linux.microsoft.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cdx/cdx.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6641,8 +6641,10 @@ static int hist_register_trigger(char *g
- 		tracing_set_filter_buffering(file->tr, true);
- 	}
+--- a/drivers/cdx/cdx.c
++++ b/drivers/cdx/cdx.c
+@@ -738,7 +738,6 @@ static int cdx_create_res_attr(struct cd
  
--	if (named_data)
-+	if (named_data) {
-+		remove_hist_vars(hist_data);
- 		destroy_hist_data(hist_data);
+ 	sysfs_bin_attr_init(res_attr);
+ 
+-	cdx_dev->res_attr[num] = res_attr;
+ 	sprintf(res_attr_name, "resource%d", num);
+ 
+ 	res_attr->mmap = cdx_mmap_resource;
+@@ -747,8 +746,12 @@ static int cdx_create_res_attr(struct cd
+ 	res_attr->size = cdx_resource_len(cdx_dev, num);
+ 	res_attr->private = (void *)(unsigned long)num;
+ 	ret = sysfs_create_bin_file(&cdx_dev->dev.kobj, res_attr);
+-	if (ret)
++	if (ret) {
+ 		kfree(res_attr);
++		return ret;
 +	}
-  out:
++
++	cdx_dev->res_attr[num] = res_attr;
+ 
  	return ret;
  }
 
