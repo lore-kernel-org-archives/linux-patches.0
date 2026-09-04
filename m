@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D19730C160;
-	Fri,  4 Sep 2026 05:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C971D7080D;
+	Fri,  4 Sep 2026 05:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498963; cv=none; b=VMa+LEJQzVD/cP2FVfxZpiLOe2BX60MeUVgtdAnEbekYbAdiCrOIAZ9x3OwGK9PwiGn9fROYS6uvqJGYOgLo8NjiJZatHdnKeun5QEQraB3rfj4ylspB+TWPH9qucb5tAMtCk0mTuQhTXp3WNjbMqKnIhWJp/wEOXWkwzi6r84I=
+	t=1788498964; cv=none; b=tKoceOmqAeIa4nk8q2i2zt49+J7g36Org6Kfn/srP9/Q4SuddjD+7s5QWQTP4skBEaFHnrfWzWt0Zfn/uSlkTk2RZl4Vc2i+0Qe2wOcoeaj+2sod3AKkvV1it2rqSYHew93G3PrPOQ5iODKK/16OtEc02UTxi8RZBiOlOx5tHoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498963; c=relaxed/simple;
-	bh=9ifWBE2N4GdM6ma8NDigrS/cx+nJS5gDtm58bAY/I54=;
+	s=arc-20240116; t=1788498964; c=relaxed/simple;
+	bh=dRCTieCIdE3lDnZGHF1tO3HIvlcFeOSnwbMr95PipRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXfX6VwhalroTDtqewKwb7FSZGJjI+0nFRzXt618PtrdeOU655lH/cnCiNkNJ5mPHk86IZilTjsWvCXjtJKCatD6WxKhAqB1w2pQ7ldLbf0cjK9/PWwxIIhCLSHSstAoXidQuQgGQAwVc8VsmFbEGb6Y2jv93A1Ar3eTddt7N5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2sDnPiT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sS1M29HD8fvDjqPMkZag3K8khsn/R0d93i4wVWhHfTHiBUro1YcXj4kyitZl8CmuvmoQlOHxeRspwKTaAF9ThD+nbjn+LhBJ5nJQkabmAmsEMtwpB86d60ObV9eQGxQxtTRL/9H7wPL0z/Us3SGGW36DCAfjGfR5v2OrPPE33hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcHhs58A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2sDnPiT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859D51F00A3E;
-	Fri,  4 Sep 2026 05:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcHhs58A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32171F00A3D;
+	Fri,  4 Sep 2026 05:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498962;
-	bh=d9thOP713h0NDI2BfTb5se43v2/pbFqH1bJwMJJdvfo=;
+	s=korg; t=1788498959;
+	bh=6bT6e2isHTG1ue+ABhgNKxL2Udm0RkygungU6YUzD+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r2sDnPiT9lwQhMcSlNALoOoqG0WL9KwU2hMAHAxRGFkinuYxBCS/sWZ7kQJ+mlT3r
-	 3Pbk9NH4f+lczoWQaaENzNHsCDuuIpKlBQc8WumXo66BxtVVnFbf/EmloE86FOEU5w
-	 vFfVYHodDjAZ4N5RiZ3ZZw5TtDT2X2O9mZX1atnY=
+	b=gcHhs58Agp8vNoGtsyJFFaYfLXF4Dvj1hAPB9sY/MExKZpmXR5JTcfgqEr/vEdioD
+	 CNJzjmubafU5/HQ3kM2B81Qt83cHXSny+fOIuuC6I/UG6DK9D4ftEV7lr9g2bnknKP
+	 d9iDAkZXscgcM5H3ZqcVIlaVGBeWTP4iUvMfQN1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 248/713] HID: picolcd: clamp eeprom debugfs read to bytes actually received
-Date: Fri,  4 Sep 2026 06:53:36 +0200
-Message-ID: <20260904045809.393657818@linuxfoundation.org>
+Subject: [PATCH 7.2 247/713] HID: corsair-void: Check size of status and firmware events before reading them
+Date: Fri,  4 Sep 2026 06:53:35 +0200
+Message-ID: <20260904045809.370724866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,64 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 
-commit e9c667395ac1f8024f623250b32bae4c7af9caa0 upstream.
+commit 08d8814521885e67b1bdf6a3036ee264e3e58377 upstream.
 
-picolcd_debug_eeprom_read() trusts resp->raw_data[2] -- a length byte
-supplied by the device in its REPORT_EE_DATA reply -- clamped only to
-the caller's read() count:
+Malformed status and firmware events could cause an out-of-bounds read since
+the size wasn't being checked. Check the size and warn on unexpected values to
+avoid this.
 
-	ret = resp->raw_data[2];
-	if (ret > s)
-		ret = s;
-	if (copy_to_user(u, resp->raw_data+3, ret))
-
-It never checks resp->raw_size, the number of bytes picolcd_raw_event()
-actually copied into the 64-byte raw_data[] of the kmalloc'd struct
-picolcd_pending. A device (or a spoofed picoLCD) returning a length byte
-of 0xff, read with a count >= 255, makes copy_to_user() read past
-raw_data[] into adjacent slab memory and return it to userspace through
-the debugfs "eeprom" file:
-
-	BUG: KASAN: slab-out-of-bounds in _copy_to_user
-	Read of size 255 ... picolcd_debug_eeprom_read+0x214/0x2f0 [hid_picolcd]
-
-The debug-dump path in the same file already validates the device length
-byte against the received size before trusting it; this read does not.
-The file is created S_IRUSR (root-only) and a crafted device is needed,
-so it is neither unprivileged- nor remotely-triggerable.
-
-Clamp the copy length to resp->raw_size - 3 (the payload actually
-received, minus the 3-byte header), floored at 0 for short replies.
-
-Fixes: 9bbf2b98ba11 ("HID: add experimental access to PicoLCD device's EEPROM and FLASH")
+Fixes: 6ea2a6fd3872 ("HID: corsair-void: Add Corsair Void headset family driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-picolcd_debugfs.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hid/hid-corsair-void.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/hid/hid-picolcd_debugfs.c
-+++ b/drivers/hid/hid-picolcd_debugfs.c
-@@ -99,6 +99,15 @@ static ssize_t picolcd_debug_eeprom_read
- 		ret = resp->raw_data[2];
- 		if (ret > s)
- 			ret = s;
-+		/*
-+		 * raw_data[2] is a device-supplied length; also clamp it to
-+		 * what picolcd_raw_event() actually stored (raw_size), or a
-+		 * hostile device overruns the raw_data[] buffer.
-+		 */
-+		if (ret > resp->raw_size - 3)
-+			ret = resp->raw_size - 3;
-+		if (ret < 0)
-+			ret = 0;
- 		if (copy_to_user(u, resp->raw_data+3, ret))
- 			ret = -EFAULT;
- 		else
+--- a/drivers/hid/hid-corsair-void.c
++++ b/drivers/hid/hid-corsair-void.c
+@@ -92,6 +92,9 @@
+ #define CORSAIR_VOID_STATUS_REPORT_ID		0x64
+ #define CORSAIR_VOID_FIRMWARE_REPORT_ID		0x66
+ 
++#define CORSAIR_VOID_STATUS_REPORT_SIZE		5
++#define CORSAIR_VOID_FIRMWARE_REPORT_SIZE	5
++
+ #define CORSAIR_VOID_USB_SIDETONE_REQUEST	0x1
+ #define CORSAIR_VOID_USB_SIDETONE_REQUEST_TYPE	0x21
+ #define CORSAIR_VOID_USB_SIDETONE_VALUE		0x200
+@@ -742,6 +745,13 @@ static int corsair_void_raw_event(struct
+ 
+ 	/* Description of packets are documented at the top of this file */
+ 	if (hid_report->id == CORSAIR_VOID_STATUS_REPORT_ID) {
++		if (size < CORSAIR_VOID_STATUS_REPORT_SIZE) {
++			hid_warn_ratelimited(hid_dev,
++			                     "unexpected status report of size %d",
++			                     size);
++			return 1;
++		}
++
+ 		drvdata->mic_up = FIELD_GET(CORSAIR_VOID_MIC_MASK, data[2]);
+ 		drvdata->connected = (data[3] == CORSAIR_VOID_WIRELESS_CONNECTED) ||
+ 				     drvdata->is_wired;
+@@ -750,6 +760,13 @@ static int corsair_void_raw_event(struct
+ 					      FIELD_GET(CORSAIR_VOID_CAPACITY_MASK, data[2]),
+ 					      data[3], data[4]);
+ 	} else if (hid_report->id == CORSAIR_VOID_FIRMWARE_REPORT_ID) {
++		if (size < CORSAIR_VOID_FIRMWARE_REPORT_SIZE) {
++			hid_warn_ratelimited(hid_dev,
++			                     "unexpected firmware report of size %d",
++			                     size);
++			return 1;
++		}
++
+ 		drvdata->fw_receiver_major = data[1];
+ 		drvdata->fw_receiver_minor = data[2];
+ 		drvdata->fw_headset_major = data[3];
 
 
