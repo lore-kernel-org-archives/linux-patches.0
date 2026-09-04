@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5B73D6664;
-	Fri,  4 Sep 2026 05:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC853D6664;
+	Fri,  4 Sep 2026 05:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499766; cv=none; b=jMollMGjA2Ij6LhdR3ZGWLIQWA30G4Ac4VhCDjbKBhZb66Xi52mwUq5VczMZuxYmAQZsqxkwa+aqoELsq69Edo3P/ZRpPXUp7RK3O+4MHtk7nMUaJart3ZoOWtusS/nccmd0rgnb/V3swO+tCUxed3o8mRgYj1oGazYRVSt0zj8=
+	t=1788499769; cv=none; b=W5nt+wScwAj2OOfCT5RR2qfuVKuLtT4J/jKDu6/zCX9EjGwCoLpNYgTfuOp95BRPGc4slB9P31vEgUBEqYgtLpgaFX253yEnTLbBKIsKHUeTxoAMVkGeRbi95riLZ8uBBIsHhk/Mm24Qh0rrmkfKGccL1I6LiCCrVWXqhIlGFRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499766; c=relaxed/simple;
-	bh=27eKrLTW74i66HBomWsUKXITAQq6HdMnhBsGFA1FWRU=;
+	s=arc-20240116; t=1788499769; c=relaxed/simple;
+	bh=wHr0HcsBUbSoCdSjCUGsx6kBMUS9ZG+jWayfqX4i5b4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YpYbdATw9COtyK43UeamUiOK2M1nBvzTB+0kydulZPY6Y3krVc6bdDQAVPTkHqlK4eEEY0HUSKEy07VyGs/+t1cCnRHo5j8sKBsM/mtNOy5c+5OJyvWyceltG5x63dt/55Jf5SJLK69K2Ke1cdw1n8WAvowEHfhHJULuQHz2Lq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbZPEgsh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OUXOWW/bxvy3RzKZrhLxPdDYnBsd3A3byksAJ49ES6Nk2KU+pyC5N3Z2KEBhtxs/wnVD7rGqQtBRCSLb9Rr1OVCTb2KbiuGkaxLUQDr/jmRDibjSbmBCSn1zOf7tj6TvSFAVZoDFpeys4DROH0uuDNCWIFz3AYtqWfcKNSlZRog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT/DqdCB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbZPEgsh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FB71F00A3D;
-	Fri,  4 Sep 2026 05:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT/DqdCB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FD51F00A3D;
+	Fri,  4 Sep 2026 05:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499765;
-	bh=Neoe+Ms9Ilc2bVxIyVlE7DyPMFIOILsMZZICY+beoko=;
+	s=korg; t=1788499768;
+	bh=Z1o+kOthrDlL9qQRJAtJGei/qbEbVfpoQ80yp7kIVNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AbZPEgsh6m233ejcmRc+RKsTjIZ8yhXUpZ33qrxAJJcz4UGZe2e+FRCLaqWrtzt/2
-	 +l1AOibEjGtbIzpQ0PdsR9kHuFQx/2gJUn2Uf6lPgSGgElGuuwpucQqjUsgqBs0FrH
-	 +B2XzFutoeLfVzB2Nk00a+nmaygsKDX5AjGv8C3Y=
+	b=WT/DqdCBd5wAS0Ve+ywcA535OhPXh3Myjwhlwlf/715fmZiq8rWovDTLEnfKGBlpd
+	 69l52ZFDbyLQTsJh6GuE8328S7X/obtGvPw5MeTUR/nc/1O/9q/w60pH7zX21otgXR
+	 uC7XrNg4r4tqPk6Hpsk7rNElSGIxBu1NdLbmLiSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Darshit Shah <darnshah@amazon.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Subject: [PATCH 7.2 532/713] PCI/DPC: Allow DPC on all Downstream Ports when OS controls AER
-Date: Fri,  4 Sep 2026 06:58:20 +0200
-Message-ID: <20260904045815.744991650@linuxfoundation.org>
+	stable@kernel.org,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.2 497/713] sctp: fix stream->outcnt underflow on duplicate RECONF responses
+Date: Fri,  4 Sep 2026 06:57:45 +0200
+Message-ID: <20260904045814.966203703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,48 +53,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darshit Shah <darnshah@amazon.de>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit 97ca178c899d0049210d325b123ed024eb5ac000 upstream.
+commit 3faf13aff243ca9f78d08b1a2956ef5a6fc77b6e upstream.
 
-PCIe r7.0, sec 6.2.11, "Implementation Note: Determination of DPC Control",
-recommends that "... operating systems always link control of DPC to the
-control of Advanced Error Reporting."
+A cached RECONF chunk may contain more than one request parameter.  A
+duplicate response can therefore find and process the same ADD_OUT request
+again while another parameter is still outstanding, rolling back outcnt
+twice and possibly underflowing it.
 
-Any PCIe device may advertise AER, but only Root Ports and Root Complex
-Event Collectors can generate AER interrupts, so the AER driver only binds
-to RPs and RCECs.
+Track outstanding request types as bits and clear each bit after its first
+response.  Later responses for the same request are then ignored.
 
-Any Root Port or Switch Downstream Port may advertise Downstream Port
-Containment (DPC), but previously the DPC driver was limited to devices the
-AER driver could bind to, i.e., only RPs that advertised AER.
-
-Since any Port with DPC can generate DPC interrupts, allow the DPC driver
-to bind to such a Port as long as the OS controls AER, regardless of
-whether the AER driver binds to it.
-
-Signed-off-by: Darshit Shah <darnshah@amazon.de>
-[bhelgaas: commit log, reorder || operands to simplify patch]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251211164257.81655-1-darnshah@amazon.de
+Fixes: 11ae76e67a17 ("sctp: implement receiver-side procedures for the Reconf Response Parameter")
+Cc: stable@kernel.org
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Link: https://lore.kernel.org/netdev/20260730110225.37371-1-juny24602@gmail.com/
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Assisted-by: tencentos-corvus-ai:kimi-k3
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Link: https://patch.msgid.link/20260824081832.98717-3-juny24602@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/portdrv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/sctp/structs.h |    2 +-
+ net/sctp/stream.c          |   39 ++++++++++++++++++++++++++++-----------
+ 2 files changed, 29 insertions(+), 12 deletions(-)
 
---- a/drivers/pci/pcie/portdrv.c
-+++ b/drivers/pci/pcie/portdrv.c
-@@ -264,7 +264,7 @@ static int get_port_device_capability(st
- 	 */
- 	if (pci_find_ext_capability(dev, PCI_EXT_CAP_ID_DPC) &&
- 	    pci_aer_available() &&
--	    (pcie_ports_dpc_native || (services & PCIE_PORT_SERVICE_AER)))
-+	    (pcie_ports_dpc_native || host->native_aer))
- 		services |= PCIE_PORT_SERVICE_DPC;
+--- a/include/net/sctp/structs.h
++++ b/include/net/sctp/structs.h
+@@ -2057,7 +2057,7 @@ struct sctp_association {
+ 	     force_delay:1;
  
- 	/* Enable bandwidth control if more than one speed is supported. */
+ 	__u8 strreset_enable;
+-	__u8 strreset_outstanding; /* request param count on the fly */
++	__u8 strreset_outstanding; /* request param bitmask on the fly */
+ 
+ 	__u32 strreset_outseq; /* Update after receiving response */
+ 	__u32 strreset_inseq; /* Update after receiving request */
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -22,6 +22,15 @@
+ #include <net/sctp/sm.h>
+ #include <net/sctp/stream_sched.h>
+ 
++#define SCTP_STRRESET_MASK(type) \
++	BIT(ntohs(type) - ntohs(SCTP_PARAM_RESET_OUT_REQUEST))
++#define SCTP_STRRESET_TEST(asoc, type) \
++	((asoc)->strreset_outstanding & SCTP_STRRESET_MASK(type))
++#define SCTP_STRRESET_SET(asoc, type) \
++	((asoc)->strreset_outstanding |= SCTP_STRRESET_MASK(type))
++#define SCTP_STRRESET_CLEAR(asoc, type) \
++	((asoc)->strreset_outstanding &= ~SCTP_STRRESET_MASK(type))
++
+ static void sctp_stream_shrink_out(struct sctp_stream *stream, __u16 outcnt)
+ {
+ 	struct sctp_association *asoc;
+@@ -372,7 +381,10 @@ int sctp_send_reset_streams(struct sctp_
+ 		goto out;
+ 	}
+ 
+-	asoc->strreset_outstanding = out + in;
++	if (out)
++		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_OUT_REQUEST);
++	if (in)
++		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_IN_REQUEST);
+ 
+ out:
+ 	return retval;
+@@ -417,7 +429,7 @@ int sctp_send_reset_assoc(struct sctp_as
+ 		return retval;
+ 	}
+ 
+-	asoc->strreset_outstanding = 1;
++	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_TSN_REQUEST);
+ 
+ 	return 0;
+ }
+@@ -474,7 +486,10 @@ int sctp_send_add_streams(struct sctp_as
+ 		goto out;
+ 	}
+ 
+-	asoc->strreset_outstanding = !!out + !!in;
++	if (out)
++		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_OUT_STREAMS);
++	if (in)
++		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS);
+ 
+ out:
+ 	return retval;
+@@ -564,13 +579,14 @@ struct sctp_chunk *sctp_process_strreset
+ 	if (asoc->strreset_chunk) {
+ 		if (!sctp_chunk_lookup_strreset_param(
+ 				asoc, outreq->response_seq,
+-				SCTP_PARAM_RESET_IN_REQUEST, true)) {
++				SCTP_PARAM_RESET_IN_REQUEST, true) ||
++		    !SCTP_STRRESET_TEST(asoc, SCTP_PARAM_RESET_IN_REQUEST)) {
+ 			/* same process with outstanding isn't 0 */
+ 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
+ 			goto out;
+ 		}
+ 
+-		asoc->strreset_outstanding--;
++		SCTP_STRRESET_CLEAR(asoc, SCTP_PARAM_RESET_IN_REQUEST);
+ 		asoc->strreset_outseq++;
+ 
+ 		if (!asoc->strreset_outstanding) {
+@@ -669,7 +685,7 @@ struct sctp_chunk *sctp_process_strreset
+ 			SCTP_SO(stream, i)->state = SCTP_STREAM_CLOSED;
+ 
+ 	asoc->strreset_chunk = chunk;
+-	asoc->strreset_outstanding = 1;
++	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_OUT_REQUEST);
+ 	sctp_chunk_hold(asoc->strreset_chunk);
+ 
+ 	result = SCTP_STRRESET_PERFORMED;
+@@ -816,13 +832,14 @@ struct sctp_chunk *sctp_process_strreset
+ 
+ 	if (asoc->strreset_chunk) {
+ 		if (!sctp_chunk_lookup_strreset_param(
+-			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false)) {
++			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false) ||
++		    !SCTP_STRRESET_TEST(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS)) {
+ 			/* same process with outstanding isn't 0 */
+ 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
+ 			goto out;
+ 		}
+ 
+-		asoc->strreset_outstanding--;
++		SCTP_STRRESET_CLEAR(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS);
+ 		asoc->strreset_outseq++;
+ 
+ 		if (!asoc->strreset_outstanding) {
+@@ -899,7 +916,7 @@ struct sctp_chunk *sctp_process_strreset
+ 		goto out;
+ 
+ 	asoc->strreset_chunk = chunk;
+-	asoc->strreset_outstanding = 1;
++	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_OUT_STREAMS);
+ 	sctp_chunk_hold(asoc->strreset_chunk);
+ 
+ 	stream->outcnt = outcnt;
+@@ -929,7 +946,7 @@ struct sctp_chunk *sctp_process_strreset
+ 
+ 	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0,
+ 					       true);
+-	if (!req)
++	if (!req || !SCTP_STRRESET_TEST(asoc, req->type))
+ 		return NULL;
+ 
+ 	result = ntohl(resp->result);
+@@ -1079,7 +1096,7 @@ struct sctp_chunk *sctp_process_strreset
+ 			nums, 0, GFP_ATOMIC);
+ 	}
+ 
+-	asoc->strreset_outstanding--;
++	SCTP_STRRESET_CLEAR(asoc, req->type);
+ 	asoc->strreset_outseq++;
+ 
+ 	/* remove everything for this reconf request */
 
 
