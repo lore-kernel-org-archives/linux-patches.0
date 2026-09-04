@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C51415F29;
-	Fri,  4 Sep 2026 06:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E2D416878;
+	Fri,  4 Sep 2026 06:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501810; cv=none; b=nYOQisxSb36Ef8XklFPZjGcWxiFKuFyQ4LbOo5Ijdhc+yDrLy4c2m6KXVbhisaDI87n8HYxena0QOlgCX7nEdJ0zvg5LM40j3zFMnzdEjpWoQsv9F1k3iZzI+9bbFtnx08p3w6+Jf1HjrIlz0pTPickeLcEXdrN1BbtSVzwg+Gg=
+	t=1788501813; cv=none; b=hu1Vvz1v7rNWbz4GoyY1C1dXKh4gv5003NPlGIRfAgHosWJu4YQ+0E4lkkem/CtL44PZzYhjIi3WuKPZPEvNIeHkxiBgmxJid00udOxLJBFy50sRb34DFm5cGeLG4vtHNn0ejDuikb/A51qpfjVQGpsRqvf7FR/Tb5sAgo1nmho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501810; c=relaxed/simple;
-	bh=wstLkAp2E25rdC3iA4Io5ofatm/l9zsXs4nY/CAcF7s=;
+	s=arc-20240116; t=1788501813; c=relaxed/simple;
+	bh=J44rcLTQnpwDeTPvUUmwJCIl8S85eYwlVZD2xHNj63Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbTYudCPvcM+bGCYVjZ5IfuA2ZKI4q8axfGxW2g3qceLuM6O2SJPAm/kJvpc4Jtuu/H1fNFtTA0/S7cO61O26Wtg4c6hQCnFzshPmYIqHV77v6jXbpfQqPe9RQVvK93X6R6rJObwdBTB7pt6L98bAZetV3y4oS7woxYDWORcPKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7E4Y3GE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QgoPuzGLH1nowWw6YZCuEHFndO6R0kqB3c6kyxl0oP0Aaiz0Yk+xjaFHjBDK5gEqUyFGHuf/21PdWzJBcE1w6L0IKOLLZ8ZgmBaxGyz4FU3tjrM9hmSM60QBeri3SbalM6Pn3hVft23NfggbV1qQuRqWeP6M0mRDep/hXBKCF54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdlXYBqA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7E4Y3GE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A075E1F00A3D;
-	Fri,  4 Sep 2026 06:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdlXYBqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E611F00A3D;
+	Fri,  4 Sep 2026 06:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501809;
-	bh=t66usvJv/yUDvVVQNeYIdsoo6gLoS8rnnapxI0Yig7M=;
+	s=korg; t=1788501812;
+	bh=cubmWU/O6hdzH/d8GzMUhcLtSWLI6OXwiw1nCFHOiIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C7E4Y3GEL8fsPiH+3GreA5C8Zr9PWd0iWjK4AxNeB31O5NyzesT20qgYTwYoXtFrc
-	 GG5tOD48wcfKGK7z7g5TRhcAbb6xFHaOGSS0UFIK4xdFFS8p34N/s2jno44SFOEN2B
-	 4N21J3ohNbqReDY7DAhCrmfouQvUORIBOvqQRAN4=
+	b=BdlXYBqAgM99k8oAFLkZ2AtcKCXN7lHnXdX95amlpHAW/QAjiQ73ThHYR8cFk5EJE
+	 3RZnkrl+m9gCTqXWB1VXLkJ288HFlKNhaKiz/LXgV7vhZZxXT4DzL6nZokWV7pzZ3k
+	 N6xUXCpARI+4iwHZc71fex33DNfAZD+MC/gs0H1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Xu Rao <raoxu@uniontech.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 541/552] zloop: truncate finished zones to zone capacity
-Date: Fri,  4 Sep 2026 07:01:38 +0200
-Message-ID: <20260904045802.874646518@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.18 542/552] tpm: tpm_i2c_nuvoton: disable IRQ on wait timeout
+Date: Fri,  4 Sep 2026 07:01:39 +0200
+Message-ID: <20260904045802.895667120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,68 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 72e67c118642634c25465db0c8bcfa54c4ce086c upstream.
+commit 705c4ed0643366963547b2616d53165f2519c81f upstream.
 
-The size of a sequential zone backing file records the amount of data
-written and is used to restore the zone state. A backing file whose size
-is equal to the zone capacity is restored as a full zone, while a file
-larger than the zone capacity is rejected as invalid.
+i2c_nuvoton_wait_for_stat() enables the IRQ before waiting for the
+interrupt handler to report a status change. If the wait times out, or is
+interrupted before the handler runs, the function returns without
+balancing the enable_irq() call.
 
-However, zloop_finish_zone() currently truncates the backing file to the
-zone size. For devices with a reduced zone capacity, finishing a zone
-therefore creates a backing file larger than the zone capacity. After the
-device is removed and later re-added, that zone file is rejected instead
-of being restored as a full zone.
+Disable the IRQ before leaving the failed wait path. Also preserve an
+interrupted wait's original error code instead of converting it to
+-ETIMEDOUT inside the helper.
 
-Truncate finished sequential zones to the zone capacity, matching the
-persistent representation accepted by zloop_update_seq_zone() for a full
-zone.
-
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/B39E5FD81D1A07F4+20260804023403.939767-1-raoxu@uniontech.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: 4c336e4b1556 ("tpm: Add support for the Nuvoton NPCT501 I2C TPM")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260626091653.54929-1-mhun512@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/blockdev/zoned_loop.rst |    9 ++++-----
- drivers/block/zloop.c                             |    3 ++-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/char/tpm/tpm_i2c_nuvoton.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/Documentation/admin-guide/blockdev/zoned_loop.rst
-+++ b/Documentation/admin-guide/blockdev/zoned_loop.rst
-@@ -30,11 +30,10 @@ indicates the position of the write poin
- 
- When resetting a sequential zone, its backing file size is truncated to zero.
- Conversely, for a zone finish operation, the backing file is truncated to the
--zone size. With this, the maximum capacity of a zloop zoned block device created
--can be larger configured to be larger than the storage space available on the
--backing file system. Of course, for such configuration, writing more data than
--the storage space available on the backing file system will result in write
--errors.
-+zone capacity. With this, a zloop zoned block device can be configured with a
-+larger capacity than the storage space available on the backing file system. Of
-+course, for such configuration, writing more data than the storage space
-+available on the backing file system will result in write errors.
- 
- The zoned loop block device driver implements a complete zone transition state
- machine. That is, zones can be empty, implicitly opened, explicitly opened,
---- a/drivers/block/zloop.c
-+++ b/drivers/block/zloop.c
-@@ -319,7 +319,8 @@ static int zloop_finish_zone(struct zloo
- 	    zone->cond == BLK_ZONE_COND_FULL)
- 		goto unlock;
- 
--	if (vfs_truncate(&zone->file->f_path, zlo->zone_size << SECTOR_SHIFT)) {
-+	if (vfs_truncate(&zone->file->f_path,
-+			 zlo->zone_capacity << SECTOR_SHIFT)) {
- 		set_bit(ZLOOP_ZONE_SEQ_ERROR, &zone->flags);
- 		ret = -EIO;
- 		goto unlock;
+--- a/drivers/char/tpm/tpm_i2c_nuvoton.c
++++ b/drivers/char/tpm/tpm_i2c_nuvoton.c
+@@ -182,8 +182,10 @@ static int i2c_nuvoton_wait_for_stat(str
+ 						      timeout);
+ 		if (rc > 0)
+ 			return 0;
+-		/* At this point we know that the SINT pin is asserted, so we
+-		 * do not need to do i2c_nuvoton_check_status */
++
++		disable_irq(priv->irq);
++		if (rc < 0)
++			return rc;
+ 	} else {
+ 		unsigned long ten_msec, stop;
+ 		bool status_valid;
 
 
