@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDFC37C106;
-	Fri,  4 Sep 2026 05:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B44411FBF;
+	Fri,  4 Sep 2026 05:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501255; cv=none; b=tIxY57Pc83CCvpR6f0T8YFN3Lwftmkl0rKE+moOOzBiDCm7IgVAk5KRh+PC5/286xEzfMJ7HJXturiY+fopcjfMX8+HFGB+hkq+l/qM8/dNn4ESy1807VENI9EhWuJItjffIrNDYHhPLM63Hrqi/IkAtW43arwZIfRpfMmcXYx0=
+	t=1788501258; cv=none; b=R1lQuXxtqTJ/dVNn+NVb/r7TK4eFu/pdVmN759ulG6mUVMnIgffI3oF8pvzK3PI5AALLI7jYCdyMW0AIA5rtq+EXlIemTqUHHUbEqwNDcV7S/QC7bSy99umXiEAnl1YF4eUO+kkB+DKiuahDIQjCI6bRr5mXinhGWy4XmFSriDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501255; c=relaxed/simple;
-	bh=c9B5NlKCwJ8xqoRAjGLD5ytRl9Ech889Y/UFIWKu/4Q=;
+	s=arc-20240116; t=1788501258; c=relaxed/simple;
+	bh=Th6+yGq+NNV/X/ZaHa7lvRggPWfKFC4sNP+RJhxSJOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RT0Qivptmuyftg4H3KOF0YhKoM9nR2FEqNFgvT21p8C1zBvrmkHBM7LgPKjInvaI7QO5vi5yWyftIMckjHdeesklpKyI5YU/HWA7ayPPVseDQZNQNacG7UZanWNnw05vqgC1U90tQpTqy4zsq4yxnqfnF6jyE+9WcUch7oPfBm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XScLfM4h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ot8ksnxuCoscYRQpPG05qhQIOtTDTSwrcr1wXH74srJ0R9/cpAB9B/AIa1VVPtyTKKFhSoCmNYTnbHXVMB+9QW9ve234E4cEI84R2b9WCdeB0+U/q2Z5LXjwn1PJg3kGMa3eu4m5LpAQyToACD+jPE9eDuh6eJSTTz2KI0EDj5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Znh+GFtc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XScLfM4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019CE1F00A3D;
-	Fri,  4 Sep 2026 05:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Znh+GFtc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C5D1F00A3D;
+	Fri,  4 Sep 2026 05:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501254;
-	bh=sKUluryQABa6TAUi/chiEPxl0GGBIqMEoyn9z3elZ5A=;
+	s=korg; t=1788501257;
+	bh=NWpxzLKeJjVd/LQmwotUEIBwST5e0xv+gnnO98GgW1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XScLfM4hOvNTbGD3LOXgE2UKlJDLu0eee1vST5c02SDRbggsFt92q/yrIcPXuZevP
-	 0kyFRSpBZ/6OMCoiXqmmJr42t22t082R3Aaz/5w691HblvyZTipK4jV6EnoQfPNgOs
-	 ZxHKAdUje1SprykX4pIZuV/pC7Hc6rXRf8Kw91aA=
+	b=Znh+GFtco9nQpg8Jct6LuftLvfeQZyISId2PX3kRkz3SQ6HcpxPpeQWhTZKdBMrag
+	 q+bFCLsuef8hDA9otHvkwoR3OFXLRxEGFPocIMIS6MPmONkVKWkVWp5asz6hLnMHSg
+	 J8rQX3Jv2YvgajQmKGwxEaL5mWk7tRB3E5dzsdag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 6.18 343/552] openrisc: fix arbitrary kernel memory access via or1k_atomic syscall
-Date: Fri,  4 Sep 2026 06:58:20 +0200
-Message-ID: <20260904045758.031107981@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jongmin Jang <payload.jang@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 344/552] openvswitch: only skb_tx_error() a packet we are about to drop
+Date: Fri,  4 Sep 2026 06:58:21 +0200
+Message-ID: <20260904045758.052878869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,99 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 78004e9a87f240df03e2f73120d291763c32e0a7 upstream.
+commit 0dbc2398fca3bb33eda963849f865ddb1b3aa05e upstream.
 
-sys_or1k_atomic() (syscall 244 in the "or1k" ABI) takes two user
-pointers, v1 and v2, and swaps the words they point to in hand-written
-assembly.
+queue_userspace_packet() borrows the packet skb -- it only copies it into
+a private netlink message (user_skb) and does not own it; on return
+do_execute_actions() keeps forwarding it through the flow's remaining
+actions. Its error path nevertheless calls skb_tx_error(skb), which via
+skb_zcopy_clear() does skb_shinfo(skb)->flags &= ~SKBFL_ALL_ZEROCOPY,
+stripping SKBFL_SHARED_FRAG from that live skb (skb_tx_error()'s kerneldoc
+says "skb must be freed afterwards").
 
-    l.lwz   r29,0(r4)
-    l.lwz   r27,0(r5)
-    l.sw    0(r4),r27
-    l.sw    0(r5),r29
+For a MSG_ZEROCOPY skb carrying page-cache frags, SKBFL_SHARED_FRAG is
+what makes esp_input() skb_cow_data() before in-place AEAD; once it is
+stripped a later local ESP-in-UDP delivery decrypts in place over pages
+the sender does not own -- an unprivileged page-cache write (the
+"Fragnesia" primitive).
+do_execute_actions() ignores output_userspace()'s return value, so any
+action after a failed USERSPACE upcall inherits the stripped skb.
 
-The pointers are not checked with access_ok(). The four memory
-accesses also have no exception table entries.
+Move the skb_tx_error() to the flow-miss drop path - the "default"
+branch of ovs_dp_process_packet()'s switch(error), before kfree_skb().
 
-A caller passes a kernel address as either pointer, and the syscall
-reads from and writes to it directly.
+The call has been here since commit 36d5fe6a0007 ("core, nfqueue,
+openvswitch: Orphan frags in skb_zerocopy and handle errors") but was
+harmless until esp_input() began relying on SKBFL_SHARED_FRAG to gate
+in-place decrypt; only then did stripping it on a still-forwarded skb
+become a page-cache write primitive.
 
-This gives an unprivileged process a kernel read/write primitive. It
-overwrites kernel data such as the sys_call_table, gaining code
-execution in kernel context.
-
-Check both pointers before entering the critical section. Add fixups
-for the four memory accesses so faults on valid but unmapped user
-addresses return -EFAULT.
-
-[shorne@gmail.com: fix comment style]
-Fixes: 9d02a4283e9c ("OpenRISC: Boot code")
+Fixes: 36d5fe6a0007 ("core, nfqueue, openvswitch: Orphan frags in skb_zerocopy and handle errors")
+Fixes: f4c50a4034e6 ("xfrm: esp: avoid in-place decrypt on shared skb frags")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Tested-by: Jongmin Jang <payload.jang@gmail.com>
+Link: https://patch.msgid.link/55A52703-7548-4A55-A9CE-2A37145BDCAD@doyensec.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/openrisc/kernel/entry.S |   43 +++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 39 insertions(+), 4 deletions(-)
+ net/openvswitch/datapath.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/openrisc/kernel/entry.S
-+++ b/arch/openrisc/kernel/entry.S
-@@ -1223,15 +1223,50 @@ _no_syscall_trace:
-  *
-  */
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -285,6 +285,7 @@ void ovs_dp_process_packet(struct sk_buf
+ 			consume_skb(skb);
+ 			break;
+ 		default:
++			skb_tx_error(skb);
+ 			kfree_skb(skb);
+ 			break;
+ 		}
+@@ -601,8 +602,6 @@ static int queue_userspace_packet(struct
+ 	err = genlmsg_unicast(ovs_dp_get_net(dp), user_skb, upcall_info->portid);
+ 	user_skb = NULL;
+ out:
+-	if (err)
+-		skb_tx_error(skb);
+ 	consume_skb(user_skb);
+ 	consume_skb(nskb);
  
-+/* Keep this literal; hi()/lo() can't use the UL-suffixed TASK_SIZE. */
-+#define OR1K_ATOMIC_ADDR_LIMIT	0x7ffffffc
-+
- ENTRY(sys_or1k_atomic)
- 	/* FIXME: This ignores r3 and always does an XCHG */
-+
-+	/* Check both user pointers before accessing them. */
-+	l.movhi	r13,hi(OR1K_ATOMIC_ADDR_LIMIT)
-+	l.ori	r13,r13,lo(OR1K_ATOMIC_ADDR_LIMIT)
-+	l.sfgtu	r4,r13
-+	l.bf	9f
-+	 l.nop
-+	l.sfgtu	r5,r13
-+	l.bf	9f
-+	 l.nop
-+
- 	DISABLE_INTERRUPTS(r17,r19)
--	l.lwz	r29,0(r4)
--	l.lwz	r27,0(r5)
--	l.sw	0(r4),r27
--	l.sw	0(r5),r29
-+10:	l.lwz	r29,0(r4)
-+11:	l.lwz	r27,0(r5)
-+12:	l.sw	0(r4),r27
-+13:	l.sw	0(r5),r29
- 	ENABLE_INTERRUPTS(r17)
- 	l.jr	r9
- 	 l.or	r11,r0,r0
- 
-+	/*
-+	 * Either pointer was outside user space, or turned out to be
-+	 * unmapped/inaccessible when we actually touched it.
-+	 */
-+9:	l.jr	r9
-+	 l.addi	r11,r0,-EFAULT
-+
-+	.section .fixup, "ax"
-+14:
-+	ENABLE_INTERRUPTS(r17)
-+	l.j	9b
-+	 l.nop
-+	.previous
-+
-+	.section __ex_table, "a"
-+	.long	10b, 14b
-+	.long	11b, 14b
-+	.long	12b, 14b
-+	.long	13b, 14b
-+	.previous
-+
- /* ============================================================[ EOF ]=== */
 
 
