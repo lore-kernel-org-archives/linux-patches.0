@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139732264A3;
-	Fri,  4 Sep 2026 05:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAD33AFB1C;
+	Fri,  4 Sep 2026 05:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500528; cv=none; b=efDBaeadwgvysKBypXtqGVrPKpUJgYz5bsHO2eOylTXI0hBMgXwa8FRTCq7JjyJ0Z3lfFjEG8cLpl7TqJBQcgs4fSm4MR3iNU2zATCwBY4q35uacTyRqK4pJoSva74qtDcpyXlUHOe/ZTjqhsNX+Ff/VzY1dSY0wfrWhxtGBGE0=
+	t=1788500531; cv=none; b=PnY6Uco8aE0bxVIYRdNd2qwwkRDergQZKZxHdT4E4pKAm4rQdbhYXZB8I4hw+vbL9pSchvyuC49BKd0XmEeCBBhxx2hct+/u2xPfJ2bFJ66+IpOb/47fFSSdloXZV8mD3n2EZckbpKbljNRTD72Isytf7SAwL3erdNvPjVLBjwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500528; c=relaxed/simple;
-	bh=45UJr6e6ctFuOm5FgyPjUm+2hlidhC7ZIT5dPz9HYmE=;
+	s=arc-20240116; t=1788500531; c=relaxed/simple;
+	bh=tR6CFgUpzdVK+9LnYFoGiUFzdd3pD73XLORgbsgcTUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZAquxNjuXieWRbVkunnB4WNSZ/LMsX4U+VgaqKuJx0eDBUYlNN0yLVvpzpXe9ZqWRPzdBkWReGTpwVtHlu/MPXQKg9mjuWJpx/zv4akcoH0RsUFQ86d/58VHKlifXtR3Nwf4fIhwFIa595d4EbIH7BiByzXEjrtR0D1GeeBSnNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Viwf9t/n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Frwk6CdbNH2nO9BarKV6/rj7u6N7y2H8YSWy3Kf63e3awQwn4d2YveSRPpy1Y9MQpJaIk/bQ0d6W70Enae/GlUez5N2B0h99Y297h9+L5NyqvuEv74Tg+KUxyb/UnNNQiu65kZqpk+g4/waR3bstI/7lLenJ832toavJadSyAkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmFXqBtt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Viwf9t/n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE771F00A3D;
-	Fri,  4 Sep 2026 05:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmFXqBtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFA21F00A3D;
+	Fri,  4 Sep 2026 05:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500527;
-	bh=taC0UwbLJUF4Tj4fVyOUFAm4+Z+YGISApgrWLh58X3w=;
+	s=korg; t=1788500529;
+	bh=KWkhrC4p1jHOm/RyxoFz2qV9vhV7HufYRaZUql9XcpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Viwf9t/n8NZovOslM6wrZ6Trnk88CxWopKFK1mp28Yij7oSAFXk4zEg+si4hH7NUV
-	 5yqmVZGUJj0lH/yGj5U40yv/siy6xe+AouJLcLdVA/yUiuWAkbMwQgqBxPdsSbrguT
-	 nYyRNXHFVlQhufHS6dxcPY8EK7aaaYeMZUjJxcfs=
+	b=NmFXqBttHH3Uq+DaCJnFz2PSlCizTI1g+4YisNbOKLtj/SrczlMG8ON/l0NsEKj65
+	 QO/PUEyyRBaVAvIkp9rErHbyUXv+GzrpNL0BMKEpAUuE0aim/yWUpYhJoX29HJDaSq
+	 0omhy6J2CpU+bHD88WT+GMrA5b86w+sldpTm00VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 089/552] media: vicodec: fix out-of-bounds write in FWHT encoder
-Date: Fri,  4 Sep 2026 06:54:06 +0200
-Message-ID: <20260904045749.895577041@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Subject: [PATCH 6.18 072/552] usb: dwc3: gadget: Fix use-after-free in dwc3_gadget_free_endpoints due to race condition
+Date: Fri,  4 Sep 2026 06:53:49 +0200
+Message-ID: <20260904045749.480490945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,52 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit cf4500ebf6fb57bf4ab83c3dd349a40257dbe2a9 upstream.
+commit 9c855832790cd488d87de1885974f4c37cfe7358 upstream.
 
-vidioc_s_fmt_vid_out() sizes the encoder CAPTURE buffer from the
-compressed descriptor pixfmt_fwht, whose sizeimage_mult is 3:
-coded_w * coded_h * 3 + sizeof(struct fwht_cframe_hdr). fwht_encode_frame()
-encodes one plane per component, and an incompressible plane takes the
-FWHT_FRAME_UNENCODED path in encode_plane(), copying the plane verbatim.
+In dwc3_gadget_init_endpoint, &dep->nostream_work is bound with
+dwc3_nostream_work, and dwc3_gadget_endpoint_stream_event can queue
+this delayed work on system_percpu_wq when a DEPEVT_STREAM_NOSTREAM
+event is received.
 
-For a 4-component pixel format all four planes are full resolution
-(width_div == height_div == 1), so a frame that forces every plane
-through the unencoded fallback writes
-sizeof(struct fwht_cframe_hdr) + 4 * coded_w * coded_h bytes, overrunning
-the plane by coded_w * coded_h, which can result in corruption
-of adjacent kernel heap memory.
+If we remove the gadget, dwc3_gadget_free_endpoints makes cleanup and
+the memory allocated for dep with kzalloc() is released by kfree(dep),
+while the delayed work mentioned above may still be pending or
+running. The sequence of operations that may lead to a UAF bug is as
+follows:
 
-Bump pixfmt_fwht.sizeimage_mult from 3 to 4, matching the largest
-components_num among the supported raw formats, so the capture buffer is
-always large enough for the unencoded fallback.
+CPU0                                      CPU1
 
-Fixes: 16ecf6dff97c ("media: vicodec: Add support for 4 planes formats")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+                                          | dwc3_thread_interrupt
+                                          | dwc3_endpoint_interrupt
+                                          | dwc3_gadget_endpoint_stream_event
+                                          | queue_delayed_work(system_percpu_wq,
+                                          |                    &dep->nostream_work)
+dwc3_gadget_free_endpoints                |
+dwc3_free_trb_pool(dep)                   |
+list_del(&dep->endpoint.ep_list)          |
+dwc3_debugfs_remove_endpoint_dir(dep)     |
+kfree(dep)                                |
+// dep is freed                           |
+                                          | dwc3_nostream_work
+                                          | // use dep (use-after-free)
+
+Fix it by canceling the delayed work before kfree(dep) in
+dwc3_gadget_free_endpoints.
+
+Fixes: dcfe437492e2 ("usb: dwc3: gadget: Reinitiate stream for all host NoStream behavior")
+Assisted-by: Codex:deepseek-v4-flash
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/331d1d5133496d2b4184e05f8848adb06930a138.1785893865.git.xiaopei01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vicodec/vicodec-core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/gadget.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/test-drivers/vicodec/vicodec-core.c
-+++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
-@@ -63,11 +63,11 @@ struct pixfmt_info {
- };
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3497,6 +3497,7 @@ static void dwc3_gadget_free_endpoints(s
+ 		}
  
- static const struct v4l2_fwht_pixfmt_info pixfmt_fwht = {
--	V4L2_PIX_FMT_FWHT, 0, 3, 1, 1, 1, 1, 1, 0, 1
-+	V4L2_PIX_FMT_FWHT, 0, 4, 1, 1, 1, 1, 1, 0, 1
- };
- 
- static const struct v4l2_fwht_pixfmt_info pixfmt_stateless_fwht = {
--	V4L2_PIX_FMT_FWHT_STATELESS, 0, 3, 1, 1, 1, 1, 1, 0, 1
-+	V4L2_PIX_FMT_FWHT_STATELESS, 0, 4, 1, 1, 1, 1, 1, 0, 1
- };
- 
- static void vicodec_dev_release(struct device *dev)
+ 		dwc3_debugfs_remove_endpoint_dir(dep);
++		cancel_delayed_work_sync(&dep->nostream_work);
+ 		kfree(dep);
+ 	}
+ }
 
 
