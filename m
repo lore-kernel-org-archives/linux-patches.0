@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D29A3E866B;
-	Fri,  4 Sep 2026 05:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2653BCD0A;
+	Fri,  4 Sep 2026 05:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501405; cv=none; b=FB7MEcQKq0HWhZQ8qU16phRPk0RxSz5/Pu8L13zcsQAEodDCSm1QA8vAfiln+60OwNK706ViznF/dx+F9/YaHUc/xd/x8QbXL4Klxj6wxZu4ha5iMcgXfUBMCsNYRmE4RHdJOcqsANa8pEWy0ABsLOwyimyjUw4ba8sNLiGtKcM=
+	t=1788501408; cv=none; b=bIW4fdpQWL9NmkIR+M9PW5AzwFjK/VYsKepl1O7eMe4qDxscET8RH5RXXlskXK85a16gNX3DC7fOKsj+kT8Ui3UaRGSfP8/FOu0Y+CLZ+koncFbwF6gnRbcUJJ6hJ4pJ30nmbGsQyFsa44NVHgxY4n+sOm1HPIvJ+207QxAvcrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501405; c=relaxed/simple;
-	bh=ocDAWXGG3h2Rc1EDJRxLlKoi+8/b2ziDJcy7RZ2l3IQ=;
+	s=arc-20240116; t=1788501408; c=relaxed/simple;
+	bh=hvLDBkCMBVLY8dMpNbYpiaEQmkDsbj/ydogBn5QdxWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pI/EGLxQ4+Oag4llL2SVnel4Z1yQuP2sMAtAK7/jHOH46dwJ/NAz/NOw5La3yw7W6WWI/GFaphMgwFhoxpjf5LriPZujYLD0Yb+wg+akhrBqFaiDwF8oScqAdHDkRXxyfGf/myLgGEb/1Ih5CyzjtqBihRUj+Kgka55IwPfuxVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nnsm10KN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aWXxmOYYLk6BiW2bzoy2HZORoXJLexlt3ZmEnDFGvQIWn6fzQqGsOyCOdtGzvtQrHa2Suo3B7YSZCakgLb9yWI29g+GgSZW8SObdZMDR6jmYLS+5lX8ndx1QSg02H4SOAFLKnM7KL9/GeXfcJBQ2hNYNfDAvjFMb30Mo2NMi/cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cevb+0lO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nnsm10KN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3661F00A3D;
-	Fri,  4 Sep 2026 05:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cevb+0lO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB0F1F00A3D;
+	Fri,  4 Sep 2026 05:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501404;
-	bh=I0SGB0H5xsRKAzg4/yxhSravHfVZxaq/Y5xZQ0zzJr4=;
+	s=korg; t=1788501407;
+	bh=WBDS0bKcPTTY1hdJnxFB4k3CGGnAkrPp22diEAbCkAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nnsm10KNGDRunkvuWKJerGyrM8oKJVtaby6Y7C65QN/FGp8MCcRX11uUXsyqlxJYi
-	 Q+/FAVWXEWjpgkDk/qEK4OF/j1WGMZevoNpFZT/RNy3M5FnRJLICR4s8IEQgUvvAJ0
-	 aHFiZ9mxWhmUqBz16BVtitrxnf2INjva4rXGTpS8=
+	b=Cevb+0lODI+PrPmGEa5W2RjMZ8xI9B9nKdvbq0EPYZPfuuOynVEnMMl8pgJlGhfo5
+	 h1csFzrk7JohQGajeKvT1+y3txgLmsLcZJDJH9qgYhgNpY2rfKtFM27K5s5htjtAJA
+	 YKMBBMMBUElSqOOfHjl6mtF/j7DUS4YDqusL0xac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 355/552] nvme: nvme-fc: Fix nvme_fc_create_hw_io_queues() queue deletion in error path
-Date: Fri,  4 Sep 2026 06:58:32 +0200
-Message-ID: <20260904045758.289117956@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 346/552] arm64: compat: Fix decrementing LDM/STM alignment emulation
+Date: Fri,  4 Sep 2026 06:58:23 +0200
+Message-ID: <20260904045758.096053945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,49 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ewan D. Milne <emilne@redhat.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 22eb631bf86ee3246f47885e4fa94154a46863e4 upstream.
+commit f5b8b9037df387394a73aab47c5437bbac975077 upstream.
 
-nvme_fc_create_hw_io_queues() will call __nvme_fc_delete_hw_queue() for the
-last queue on which __nvme_fc_create_hw_queue() reported an error when deleting
-all the io queues if they cannot all be created.  This is incorrect since the
-last queue did not actually get created.
+The compat alignment emulator inherited unsigned long data addresses from
+the 32-bit ARM implementation.
 
-The most recent change to this code was commit 17a1ec08ce70 ("nvme/fc: simplify
-error handling of nvme_fc_create_hw_io_queues") which moved the cleanup to the
-delete_queues: label and changed the loop bounds, however the code was not
-correct prior to this change in a different way.  The original commit
-e399441de911 ("nvme-fabrics: Add host support for FC transport") had a
-different error which called __nvme_fc_delete_hw_queue() on queue index 0 which
-is used for the admin queue.
+In do_alignment_ldmstm(), nr_regs is an unsigned int holding the transfer
+size. The function uses the same address addition for both transfer
+directions, negating nr_regs first for a decrementing LDM or STM. The
+32-bit negation wraps before the addition, so the handler adds nearly
+4 GiB instead of subtracting the transfer size.
+The resulting address lies outside the compat task's address space, so
+decrementing LDM/STM emulation fails, while incrementing forms work.
 
-Fix this by correcting the initial loop index when deleting the io queues.
+For example, a backwards-moving copy routine using decrementing LDM/STM can
+take an alignment fault when called with unaligned pointers. The compat
+handler should emulate the transfer, but this bug instead causes SIGBUS.
 
-Fixes: 17a1ec08ce70 ("nvme/fc: simplify error handling of nvme_fc_create_hw_io_queues")
-Fixes: e399441de911 ("nvme-fabrics: Add host support for FC transport")
+The offset negated in do_alignment_finish_ldst() is offset_union.un, which
+is already unsigned long and does not have this width mismatch.
+
+Make nr_regs unsigned long so its negation and the address arithmetic
+use the same width.
+
+Fixes: 3fc24ef32d3b ("arm64: compat: Implement misalignment fixups for multiword loads")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/fc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/compat_alignment.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -2316,7 +2316,7 @@ nvme_fc_create_hw_io_queues(struct nvme_
- 	return 0;
+--- a/arch/arm64/kernel/compat_alignment.c
++++ b/arch/arm64/kernel/compat_alignment.c
+@@ -114,8 +114,8 @@ do_alignment_ldrdstrd(unsigned long addr
+ static int
+ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+-	unsigned int rd, rn, nr_regs, regbits;
+-	unsigned long eaddr, newaddr;
++	unsigned int rd, rn, regbits;
++	unsigned long eaddr, newaddr, nr_regs;
+ 	unsigned int val;
  
- delete_queues:
--	for (; i > 0; i--)
-+	for (--i; i > 0; i--)
- 		__nvme_fc_delete_hw_queue(ctrl, &ctrl->queues[i], i);
- 	return ret;
- }
+ 	/* count the number of registers in the mask to be transferred */
 
 
