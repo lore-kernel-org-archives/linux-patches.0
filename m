@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F34241D4F3;
-	Fri,  4 Sep 2026 06:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C2C41D4F3;
+	Fri,  4 Sep 2026 06:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502820; cv=none; b=lNMoSY2EOCKS2Oq9lDXWAv5j3DLKbBk5rDIAgFPOsMAFn7sU1as2WQB4LOuOP5uI/dIGrzTGWqnC2BbysBJEOJydOGWSr0gVRu95TuxZ8T2NJb4uC///dgqVjHPOB7yjSG+78tyyHeBxdV4FRxGHGlRPo0fLqy+pBMfOPAu0gCc=
+	t=1788502823; cv=none; b=cHAuanLYGR6jg4jPGmRn4D5AZFCmch2nlDYikE4LKpD9kfTbsrHrI4BkYfvmh4MSUhq6N/ViiAcv317tZJYDdeXdq1C/en1nMtlFsNBngZMSzvtvNtdVNkIwIxF8M9rlXIZ6U2R9tSPorIS48oTPvMJ3rp3TDMPgafggng1uWwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502820; c=relaxed/simple;
-	bh=+RywVo8Z4LPKkoW289Xi3p4+MfVZ0GG/AYVcMnTNrTo=;
+	s=arc-20240116; t=1788502823; c=relaxed/simple;
+	bh=MvqRUp9Zs7EILbZ3+ZzXT+ZBemVfgSpCos9kK+UjJ5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LMI+/rJONxWkgJI9PdmhiBqoiGwB06ZAM+1ySAq1f1/GwKVmVlVusgkQTqRWwTqYfzWKPUY2T1V3gHBx4hcnKiZaWDXt1TkY//RI73YlKkdehKekq5Z3YCAjB+K0scpa0Kg+h+kXNeW3BNm6VvJfqPOE88mLJEhsws4OZ0iDxYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ze1foa6S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I/YHFpOxiavwhKmipINKqwQutUJMfgYYhuOa22UmUoDOn8KCjIlkw99ox3sv2xDYCZAkXNcnEo7vU8tImvvAwzJWQBTo4EFlD7v7gcuZsCXzifxatlyWusafBH67DDQmwjagDfmlhEGAiKT7kDrKlF4fZ2fr+WEoKldnbfadch8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLO9ROon; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ze1foa6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770DC1F00A3D;
-	Fri,  4 Sep 2026 06:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLO9ROon"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577571F00A3D;
+	Fri,  4 Sep 2026 06:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502819;
-	bh=PR/9qmDfVt9542qtdOSgvEpMXFl2OYydCZPCNQoeSvA=;
+	s=korg; t=1788502821;
+	bh=HyjlZwHjE2TdLhebE5F1kFboL2sSTBy4Ih2y9GkIXJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ze1foa6So2I+pLjw23Wo+tRDetv2DCwA5j+gUo4VjoO4ywaO3Oi8s1tdA15RLgCY1
-	 bKbsM/zCri6XneXnLRhgTd7epdqcNt95mdm7krcK4RST6fhDuoZYQ+6re3lGtIm2tj
-	 yVQDbUKAppB+YKuKoiqvRtZec900P+FoLF0fxoOo=
+	b=XLO9ROonnP+yW4AfMDz24rsHnI6Ou6GDE7ewsaxAJQ7sJlWh2M2WA61gt2oz69Emk
+	 x4kfovLSGVnFjTcJHeHyYFZxghLxNN1PuLd0vE0lWfyfNcFpJAEJSPTvWIgilrcZqS
+	 INyqvU6mhAnAypeOYnOqzIa2kpHSDEfxLY34OrQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 341/403] net: openvswitch: fix flow mask use-after-free on flow deletion
-Date: Fri,  4 Sep 2026 07:02:24 +0200
-Message-ID: <20260904045742.573016800@linuxfoundation.org>
+Subject: [PATCH 6.12 342/403] net: openvswitch: fix nf_connlabels leak in ovs_ct_init
+Date: Fri,  4 Sep 2026 07:02:25 +0200
+Message-ID: <20260904045742.596352886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,138 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit 4e30317ff67a2eb12b4d890d39f72fd7e7117d48 upstream.
+commit f9de5db270a4c2641de87ee558c16a9bc6eb4cd8 upstream.
 
-The commit in the Fixes tag below made so flow->mask free is scheduled
-via RCU right after it is removed from the flow table.  The pointer
-stays in the flow structure and it can be accessible while in the same
-RCU critical section.  This is done to avoid requiring ovs_mutex for
-the ovs_flow_free().
+ovs_ct_init() acquires a connlabels reference before initializing the
+conntrack limit state. If ovs_ct_limit_init() fails, its error is returned
+directly. The pernet core does not invoke the exit callback for the
+operation whose initialization failed, so ovs_ct_exit() cannot drop the
+reference.
 
-However, while removing the flow during processing of CMD_DEL, we do
-not take RCU read lock before the removal, and ovs_flow_cmd_fill_info()
-uses the flow->mask pointer afterwards.  The RCU read lock is taken,
-but it's already late at that point.  The comment on that line
-acknowledges that the lock is cosmetic and doesn't serve a real purpose.
+This leaves labels_used elevated when Open vSwitch pernet registration
+fails for an existing network namespace. Subsequent conntrack entries in
+that namespace may allocate label extensions even though Open vSwitch
+failed to register.
 
-This leads to use-after-free if the RCU grace period passes between
-removal and the filling.  It is a short race window, but it is there
-and can lead to a real crash in case memory allocation for the info
-takes a bit longer:
+Drop the connlabels reference before returning a conntrack limit
+initialization error. ovs_ct_limit_init() already releases its partial
+state, and the original error remains unchanged.
 
- BUG: KASAN: slab-use-after-free in __ovs_nla_put_key
-             net/openvswitch/flow_netlink.c:1996
- BUG: KASAN: slab-use-after-free in ovs_nla_put_key+0x2463/0x2e30
-             net/openvswitch/flow_netlink.c:2250
- Read of size 4 at addr ffff88801ee89970 by task ovs_flow_del_ec/9487
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
- Call Trace:
-  <TASK>
-  __ovs_nla_put_key net/openvswitch/flow_netlink.c:1996
-  ovs_nla_put_key+0x2463/0x2e30 net/openvswitch/flow_netlink.c:2250
-  ovs_flow_cmd_fill_info+0x420/0x9c0 net/openvswitch/datapath.c:930
-  ovs_flow_cmd_del+0x53a/0x970 net/openvswitch/datapath.c:1467
-  ...
-  netlink_rcv_skb+0x156/0x420 net/netlink/af_netlink.c:2556
-  </TASK>
-
- Allocated by task 9487:
-  mask_alloc net/openvswitch/flow_table.c:967
-  flow_mask_insert net/openvswitch/flow_table.c:1012
-  ovs_flow_tbl_insert+0xea2/0x1a90 net/openvswitch/flow_table.c:1084
-  ovs_flow_cmd_new+0x7e3/0xd90 net/openvswitch/datapath.c:1086
-  ...
-  netlink_rcv_skb+0x156/0x420 net/netlink/af_netlink.c:2556
-
- Freed by task 9485:
-  rcu_free_sheaf+0x1e/0x100 mm/slub.c:5978
-  rcu_do_batch kernel/rcu/tree.c:2645
-  rcu_core+0x59c/0x10c0 kernel/rcu/tree.c:2897
-  handle_softirqs+0x1e4/0x9a0 kernel/softirq.c:622
-  ...
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1062
-
-ovs_flow_tbl_remove() must be called after the ovs_flow_cmd_fill_info()
-to avoid this race.  This also helps with cleaning up the forced cast
-and the cosmetic RCU read lock.  Before the commit in the Fixes tag the
-order did not matter as long as the flow object itself was not freed.
-
-A wider RCU critical section could be another option, but we have a
-GFP_KERNEL allocation in the way.
-
-Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-32042.
-
-Fixes: 56c19868e115 ("openvswitch: Make flow mask removal symmetric.")
+Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260815005915.1097270-1-i.maximets@ovn.org
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260815151729.3757984-1-ruoyuw560@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/datapath.c |   45 +++++++++++++++++++++++----------------------
- 1 file changed, 23 insertions(+), 22 deletions(-)
+ net/openvswitch/conntrack.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -1442,33 +1442,34 @@ static int ovs_flow_cmd_del(struct sk_bu
- 		goto unlock;
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -2003,6 +2003,7 @@ int ovs_ct_init(struct net *net)
+ {
+ 	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
+ 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
++	int err = 0;
+ 
+ 	if (nf_connlabels_get(net, n_bits - 1)) {
+ 		ovs_net->xt_label = false;
+@@ -2012,10 +2013,11 @@ int ovs_ct_init(struct net *net)
  	}
  
--	ovs_flow_tbl_remove(&dp->table, flow);
--	ovs_unlock();
--
--	reply = ovs_flow_cmd_alloc_info((const struct sw_flow_actions __force *) flow->sf_acts,
-+	reply = ovs_flow_cmd_alloc_info(ovsl_dereference(flow->sf_acts),
- 					&flow->id, info, false, ufid_flags);
--	if (likely(reply)) {
--		if (!IS_ERR(reply)) {
--			rcu_read_lock();	/*To keep RCU checker happy. */
--			err = ovs_flow_cmd_fill_info(flow, ovs_header->dp_ifindex,
--						     reply, info->snd_portid,
--						     info->snd_seq, 0,
--						     OVS_FLOW_CMD_DEL,
--						     ufid_flags);
--			rcu_read_unlock();
--			if (WARN_ON_ONCE(err < 0)) {
--				kfree_skb(reply);
--				goto out_free;
--			}
-+	if (IS_ERR(reply)) {
-+		netlink_set_err(sock_net(skb->sk)->genl_sock, 0, 0,
-+				PTR_ERR(reply));
-+		reply = NULL;
-+	}
+ #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+-	return ovs_ct_limit_init(net, ovs_net);
+-#else
+-	return 0;
++	err = ovs_ct_limit_init(net, ovs_net);
++	if (err && ovs_net->xt_label)
++		nf_connlabels_put(net);
+ #endif
++	return err;
+ }
  
--			ovs_notify(&dp_flow_genl_family, reply, info);
--		} else {
--			netlink_set_err(sock_net(skb->sk)->genl_sock, 0, 0,
--					PTR_ERR(reply));
-+	if (likely(reply)) {
-+		err = ovs_flow_cmd_fill_info(flow, ovs_header->dp_ifindex,
-+					     reply, info->snd_portid,
-+					     info->snd_seq, 0,
-+					     OVS_FLOW_CMD_DEL, ufid_flags);
-+		if (WARN_ON_ONCE(err < 0)) {
-+			kfree_skb(reply);
-+			reply = NULL;
- 		}
- 	}
-+	/* Removal has to happen after ovs_flow_cmd_fill_info(), as it uses
-+	 * the flow->mask that can be scheduled to be freed by the
-+	 * ovs_flow_tbl_remove() and we're not holding the RCU read lock.
-+	 */
-+	ovs_flow_tbl_remove(&dp->table, flow);
-+	ovs_unlock();
-+
-+	if (likely(reply))
-+		ovs_notify(&dp_flow_genl_family, reply, info);
- 
--out_free:
- 	ovs_flow_free(flow, true);
- 	return 0;
- unlock:
+ void ovs_ct_exit(struct net *net)
 
 
