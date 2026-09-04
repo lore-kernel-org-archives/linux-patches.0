@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73157339872;
-	Fri,  4 Sep 2026 06:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE543F0A9E;
+	Fri,  4 Sep 2026 06:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501608; cv=none; b=p5XSiER69hhRh+NsROIFu93P/e0kZv1yKzcVtJGg2xETpp65BSDzAfAG5XwOHDv52lzvZEif3iGroFbBrFU4mixtz0hKgsJsPnLd5pSuxwm9OaOjGxyB+qIRJDle+nxUVx6+BHyI3hcEFCS5NGCnSN4SMO9Ugdby+0Ys8GzzbbQ=
+	t=1788501611; cv=none; b=kG2t2dnvx0cLTqR90xZ+iGYmVGsX64Ll2c2XiyuiQ2mK325O2v24enn2WctYxdsyyieHft9mnz86AAwawg+Oiq7r0N3nv+496UePEXKQ14X940J94+bk648n/Znv8tTHnyIlfyxO4pTgtGPaCasxuEOgFtoOgySfIwNm++gSX68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501608; c=relaxed/simple;
-	bh=TYIjs+wUkfgWgH/mHNcpVmxXRwIPSdH0/zj3KDWNL0g=;
+	s=arc-20240116; t=1788501611; c=relaxed/simple;
+	bh=iQhUWROFZDpXP/h/8W2qRSVkp3E/9wfE/nLswYXt4pA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uBO7dyheEtAZYG4l8AvM8LvvxieKsHyOj/KDLh75I5lqre0Owszas67QRC2ijtJs9K7F1Ane3mL3Mg4Hl2RNHd+zNOCmkqx4i3m4EBD5O659wXtLkUDEzwu4SRbk2rrIffs5/8XOuXfaXnE8tCFuEOiMRyxsvgGhNQ4Yivb8bAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nv2AisOL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JMRBNwhKL8cPYOZMyPR+wPAAU9v303TgY94N1vKgqANy50lJa3PPAkQEf8DqNHV3Crlb8wRHZOBUTZhx8KpLXDIh1WECn49oslnTQvKPhakAbTXfLOJ+a9jmWCMJOjZbTi8BUdcyAllFK1gnvy911dNGPtz6kzKgDNL4XxYCBRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJJxbq7R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nv2AisOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7641F00A3D;
-	Fri,  4 Sep 2026 06:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJJxbq7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A496F1F00A3D;
+	Fri,  4 Sep 2026 06:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501607;
-	bh=FM6hTHJwAr3+ysSNnb+3yJJiivRrY7nEcmpir4zrlag=;
+	s=korg; t=1788501610;
+	bh=X4bTK7W0cWqFMn4ABtZxHBMu4AyY0e/sfi34wcI53KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nv2AisOLi3nWw7RSvigh2rmYuBAMOr5rTIIZplvn1bx+N+iLFCuIs0roSIwI03Q72
-	 AgJyl5+Yb1LjMdrUOGRNr1SLUha7Bg826klc3B29h+BA/XPkL/RE7eGGOsW8EUNfRl
-	 elNtyKYE1B98ZS8sUb/c5tK/lW0cSX057ebUT1SY=
+	b=kJJxbq7RbjRorTjCvNwrT6XH1W6a+EXfZw5qnMKcTmL8NE/rgbxf1J4qtcN/Os2UC
+	 EPRuZxs9kw/8tLHgu6/kGWqN61OWvcKQTt4c7DqjKRlvNksvaUe8szIe/OrZ1k9+hS
+	 EjuK+SP0+HWBGKVvGBF7/D0BBOHCCTRuZHU4n4V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 442/552] platform/x86: hp-bioscfg: pass validated element count to package parsers
-Date: Fri,  4 Sep 2026 06:59:59 +0200
-Message-ID: <20260904045800.610542137@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 469/552] net: ntb_netdev: Fix TX busy and drop handling
+Date: Fri,  4 Sep 2026 07:00:26 +0200
+Message-ID: <20260904045801.326176289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -44,260 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit e0ddfd77c0c320b7d12b6c9169303b140b798775 upstream.
+commit 8aaa47351db0f93a5c5297fbafdfa8bc75e8ae49 upstream.
 
-The per-type package parsers are handed the wrong element count.
+Currently, ntb_netdev returns NETDEV_TX_BUSY for every enqueue error. It
+also increments the drop and error counters while leaving the skb owned
+by the qdisc, and may return BUSY with the subqueue still awake.
+Retrying a permanent error cannot succeed either.
 
-hp_init_bios_package_attribute() validates obj->package.count and then
-calls one of the five hp_populate_*_package_data() wrappers (string,
-integer, enumeration, ordered list, password). Each wrapper forwards a
-count to its hp_populate_*_elements_from_package() parser, but instead
-of forwarding the validated obj->package.count it derives the count
-from elements[0]. elements[0] is the NAME field and is always an
-ACPI_TYPE_STRING, so reading ->package.count from it in fact reads
-->string.length through the union acpi_object. The parsers thus bound
-themselves against the length of the name string rather than against
-the real number of elements in the package.
+The unconditional BUSY return and premature accounting date back to the
+initial driver. The error-path queue stop was later removed without
+changing that return value. The current flow-control code includes a
+resource check, but ntb_netdev does not honor its result before enqueue.
 
-This is safe today because hp_init_bios_package_attribute() refuses any
-package that has fewer than the type's element count, so a parser only
-ever runs on a full package and never reads past it regardless of the
-bogus bound.
+Honor the resource check before enqueue. For -EAGAIN and -EBUSY, stop
+the subqueue, arm the existing reaper timer, and return BUSY without
+touching the skb. For other errors, free the skb, increment tx_dropped,
+and return NETDEV_TX_OK.
 
-An upcoming change relaxes that check to accept shorter packages. Once
-a parser can receive fewer elements than its per-type count, a bound
-taken from the name length no longer reflects the array size, and the
-"elem < count" loop conditions and "elem + n >= count" sub-loop guards
-read past the end of elements[] - an out-of-bounds heap read.
-
-Forward the validated obj->package.count to every *_package_data()
-wrapper so the parsers bound themselves against the real package size.
-This does not change behaviour for the packages that enumerate
-correctly today and is a prerequisite for accepting shorter packages
-safely.
-
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
+Fixes: d723485cb4ca ("ntb_netdev: remove tx timeout")
+Fixes: e74bfeedad08 ("NTB: Add flow control to the ntb_netdev")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260709165900.30615-2-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260817053519.4135287-3-den@valinux.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c               |    5 +++++
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.h               |    5 +++++
- drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c       |    4 +++-
- drivers/platform/x86/hp/hp-bioscfg/int-attributes.c        |    4 +++-
- drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    6 ++++--
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c  |    6 ++++--
- drivers/platform/x86/hp/hp-bioscfg/string-attributes.c     |    4 +++-
- 7 files changed, 27 insertions(+), 7 deletions(-)
+ drivers/net/ntb_netdev.c |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -736,26 +736,31 @@ static int hp_init_bios_package_attribut
- 	switch (attr_type) {
- 	case HPWMI_STRING_TYPE:
- 		ret = hp_populate_string_package_data(elements,
-+						      obj->package.count,
- 						      instance_id,
- 						      attr_name_kobj);
- 		break;
- 	case HPWMI_INTEGER_TYPE:
- 		ret = hp_populate_integer_package_data(elements,
-+						       obj->package.count,
- 						       instance_id,
- 						       attr_name_kobj);
- 		break;
- 	case HPWMI_ENUMERATION_TYPE:
- 		ret = hp_populate_enumeration_package_data(elements,
-+							   obj->package.count,
- 							   instance_id,
- 							   attr_name_kobj);
- 		break;
- 	case HPWMI_ORDERED_LIST_TYPE:
- 		ret = hp_populate_ordered_list_package_data(elements,
-+							    obj->package.count,
- 							    instance_id,
- 							    attr_name_kobj);
- 		break;
- 	case HPWMI_PASSWORD_TYPE:
- 		ret = hp_populate_password_package_data(elements,
-+							obj->package.count,
- 							instance_id,
- 							attr_name_kobj);
- 		break;
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
-@@ -404,6 +404,7 @@ int hp_populate_string_buffer_data(u8 *b
- int hp_alloc_string_data(void);
- void hp_exit_string_attributes(void);
- int hp_populate_string_package_data(union acpi_object *str_obj,
-+				    int str_obj_count,
- 				    int instance_id,
- 				    struct kobject *attr_name_kobj);
- 
-@@ -414,6 +415,7 @@ int hp_populate_integer_buffer_data(u8 *
- int hp_alloc_integer_data(void);
- void hp_exit_integer_attributes(void);
- int hp_populate_integer_package_data(union acpi_object *integer_obj,
-+				     int integer_obj_count,
- 				     int instance_id,
- 				     struct kobject *attr_name_kobj);
- 
-@@ -424,6 +426,7 @@ int hp_populate_enumeration_buffer_data(
- int hp_alloc_enumeration_data(void);
- void hp_exit_enumeration_attributes(void);
- int hp_populate_enumeration_package_data(union acpi_object *enum_obj,
-+					 int enum_obj_count,
- 					 int instance_id,
- 					 struct kobject *attr_name_kobj);
- 
-@@ -435,6 +438,7 @@ int hp_populate_ordered_list_buffer_data
- int hp_alloc_ordered_list_data(void);
- void hp_exit_ordered_list_attributes(void);
- int hp_populate_ordered_list_package_data(union acpi_object *order_obj,
-+					  int order_obj_count,
- 					  int instance_id,
- 					  struct kobject *attr_name_kobj);
- 
-@@ -443,6 +447,7 @@ int hp_populate_password_buffer_data(u8
- 				     int instance_id,
- 				     struct kobject *attr_name_kobj);
- int hp_populate_password_package_data(union acpi_object *password_obj,
-+				      int password_obj_count,
- 				      int instance_id,
- 				      struct kobject *attr_name_kobj);
- int hp_alloc_password_data(void);
---- a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-@@ -304,10 +304,12 @@ exit_enumeration_package:
-  * Populate all properties of an instance under enumeration attribute
-  *
-  * @enum_obj: ACPI object with enumeration data
-+ * @enum_obj_count: Number of elements in @enum_obj
-  * @instance_id: The instance to enumerate
-  * @attr_name_kobj: The parent kernel object
-  */
- int hp_populate_enumeration_package_data(union acpi_object *enum_obj,
-+					 int enum_obj_count,
- 					 int instance_id,
- 					 struct kobject *attr_name_kobj)
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -187,8 +187,10 @@ static int __ntb_netdev_maybe_stop_tx(st
+ static int ntb_netdev_maybe_stop_tx(struct net_device *ndev,
+ 				    struct ntb_netdev_queue *q, int size)
  {
-@@ -316,7 +318,7 @@ int hp_populate_enumeration_package_data
- 	enum_data->attr_name_kobj = attr_name_kobj;
+-	if (__netif_subqueue_stopped(ndev, q->qid) ||
+-	    (ntb_transport_tx_free_entry(q->qp) >= size))
++	if (__netif_subqueue_stopped(ndev, q->qid))
++		return -EBUSY;
++
++	if (ntb_transport_tx_free_entry(q->qp) >= size)
+ 		return 0;
  
- 	hp_populate_enumeration_elements_from_package(enum_obj,
--						      enum_obj->package.count,
-+						      enum_obj_count,
- 						      instance_id);
- 	hp_update_attribute_permissions(enum_data->common.is_readonly,
- 					&enumeration_current_val);
---- a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-@@ -277,10 +277,12 @@ exit_integer_package:
-  * Populate all properties of an instance under integer attribute
-  *
-  * @integer_obj: ACPI object with integer data
-+ * @integer_obj_count: Number of elements in @integer_obj
-  * @instance_id: The instance to enumerate
-  * @attr_name_kobj: The parent kernel object
-  */
- int hp_populate_integer_package_data(union acpi_object *integer_obj,
-+				     int integer_obj_count,
- 				     int instance_id,
- 				     struct kobject *attr_name_kobj)
- {
-@@ -288,7 +290,7 @@ int hp_populate_integer_package_data(uni
+ 	return __ntb_netdev_maybe_stop_tx(ndev, q, size);
+@@ -237,21 +239,30 @@ static netdev_tx_t ntb_netdev_start_xmit
  
- 	integer_data->attr_name_kobj = attr_name_kobj;
- 	hp_populate_integer_elements_from_package(integer_obj,
--						  integer_obj->package.count,
-+						  integer_obj_count,
- 						  instance_id);
- 	hp_update_attribute_permissions(integer_data->common.is_readonly,
- 					&integer_current_val);
---- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-@@ -303,10 +303,12 @@ exit_list:
-  * Populate all properties of an instance under ordered_list attribute
-  *
-  * @order_obj: ACPI object with ordered_list data
-+ * @order_obj_count: Number of elements in @order_obj
-  * @instance_id: The instance to enumerate
-  * @attr_name_kobj: The parent kernel object
-  */
--int hp_populate_ordered_list_package_data(union acpi_object *order_obj, int instance_id,
-+int hp_populate_ordered_list_package_data(union acpi_object *order_obj, int order_obj_count,
-+					  int instance_id,
- 					  struct kobject *attr_name_kobj)
- {
- 	struct ordered_list_data *ordered_list_data = &bioscfg_drv.ordered_list_data[instance_id];
-@@ -314,7 +316,7 @@ int hp_populate_ordered_list_package_dat
- 	ordered_list_data->attr_name_kobj = attr_name_kobj;
+ 	q = &dev->queues[qid];
  
- 	hp_populate_ordered_list_elements_from_package(order_obj,
--						       order_obj->package.count,
-+						       order_obj_count,
- 						       instance_id);
- 	hp_update_attribute_permissions(ordered_list_data->common.is_readonly,
- 					&ordered_list_current_val);
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -389,10 +389,12 @@ exit_package:
-  *	Populate all properties for an instance under password attribute
-  *
-  * @password_obj: ACPI object with password data
-+ * @password_obj_count: Number of elements in @password_obj
-  * @instance_id: The instance to enumerate
-  * @attr_name_kobj: The parent kernel object
-  */
--int hp_populate_password_package_data(union acpi_object *password_obj, int instance_id,
-+int hp_populate_password_package_data(union acpi_object *password_obj, int password_obj_count,
-+				      int instance_id,
- 				      struct kobject *attr_name_kobj)
- {
- 	struct password_data *password_data = &bioscfg_drv.password_data[instance_id];
-@@ -400,7 +402,7 @@ int hp_populate_password_package_data(un
- 	password_data->attr_name_kobj = attr_name_kobj;
+-	ntb_netdev_maybe_stop_tx(ndev, q, tx_stop);
++	if (unlikely(ntb_netdev_maybe_stop_tx(ndev, q, tx_stop)))
++		return NETDEV_TX_BUSY;
  
- 	hp_populate_password_elements_from_package(password_obj,
--						   password_obj->package.count,
-+						   password_obj_count,
- 						   instance_id);
+ 	rc = ntb_transport_tx_enqueue(q->qp, skb, skb->data, skb->len);
+-	if (rc)
+-		goto err;
++	if (rc) {
++		if (rc == -EAGAIN || rc == -EBUSY) {
++			netif_stop_subqueue(ndev, q->qid);
++			mod_timer(&q->tx_timer,
++				  jiffies + usecs_to_jiffies(tx_time));
++			return NETDEV_TX_BUSY;
++		}
++
++		goto drop;
++	}
  
- 	hp_friendly_user_name_update(password_data->common.path,
---- a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
-@@ -265,10 +265,12 @@ exit_string_package:
-  * Populate all properties of an instance under string attribute
-  *
-  * @string_obj: ACPI object with string data
-+ * @string_obj_count: Number of elements in @string_obj
-  * @instance_id: The instance to enumerate
-  * @attr_name_kobj: The parent kernel object
-  */
- int hp_populate_string_package_data(union acpi_object *string_obj,
-+				    int string_obj_count,
- 				    int instance_id,
- 				    struct kobject *attr_name_kobj)
- {
-@@ -277,7 +279,7 @@ int hp_populate_string_package_data(unio
- 	string_data->attr_name_kobj = attr_name_kobj;
+ 	/* check for next submit */
+ 	ntb_netdev_maybe_stop_tx(ndev, q, tx_stop);
  
- 	hp_populate_string_elements_from_package(string_obj,
--						 string_obj->package.count,
-+						 string_obj_count,
- 						 instance_id);
+ 	return NETDEV_TX_OK;
  
- 	hp_update_attribute_permissions(string_data->common.is_readonly,
+-err:
++drop:
++	dev_kfree_skb_any(skb);
+ 	ndev->stats.tx_dropped++;
+-	ndev->stats.tx_errors++;
+-	return NETDEV_TX_BUSY;
++	return NETDEV_TX_OK;
+ }
+ 
+ static void ntb_netdev_tx_timer(struct timer_list *t)
 
 
