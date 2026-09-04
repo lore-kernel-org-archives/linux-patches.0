@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13569415F06;
-	Fri,  4 Sep 2026 05:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE05B412BE7;
+	Fri,  4 Sep 2026 05:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498791; cv=none; b=Kb98z0yBuFl2/KuPOgCHb7/KYsGBwaXpBQVDWYfN+lO4Sbsw+L+TcVAttS0MgLZhJt0Y3qJkE3Ru4j2KiGuoDts3xd/9owm1saAGs+oyjvGhSj/2Ei5sjMEptRs084miZX2HfhdTtQHYvykZq8AlTn3/BQB+QOBHSvyZfl23kow=
+	t=1788498793; cv=none; b=F6RhjQghrXWW4DUepA7PaiuLbDe3tNmjSA2Q5DlafCNAWjFDfm7HRtMjffoXtaPzmzp3a3+tju0nxg9u1IRdanLTJpQ1mHaMG/ZxHp/O5r8wnq6bXBY8/K8w8FW+IEysIMDGdZSXbIZGyLXg4yqm2ZSzO/iJbtZ+uHsIwvwmfNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498791; c=relaxed/simple;
-	bh=tlv1r2SYEt9JJMD6agcv0rFDfdwwcBlhCi/6k+4jgGw=;
+	s=arc-20240116; t=1788498793; c=relaxed/simple;
+	bh=a2axMRWXUdGpa/ylwcjFMxCeD/GDROcbUkyXNz/YdZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VAIGT+97GHJY8D1r0AsuMQRJiSzi66v/MMcQqGMhGzqD9IN+1jM+LfapN4oeUQvWxMdXLpLBmIzkjRILF6ldj/o68QxklLn/3gt6EU4UBtsRCsxHitzBTr2jmjY5TQmE6hZtyORFkyma9TvkJdQApz7MnXSyOvNJZj0H8v687gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtE3/Qri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R6QOjN/eFrN5i+kQicCLacDb3U9x/M8hjxGs+yLbFd+Cr4N1oWARu9smPVmSSZzURmGqvBSIkcYgDSnISTRTc+tfXY1pl4KZdTDeNCb+iSrHGYkgAnfN01SVMgtuyyI7ArwRxsW6LG34JwE6xAH2lUbGiaehmM/C+DMXwI+EWyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fH/nE4iW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtE3/Qri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606AE1F00A3D;
-	Fri,  4 Sep 2026 05:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fH/nE4iW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330E91F00A3D;
+	Fri,  4 Sep 2026 05:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498789;
-	bh=ZQCIQPxD2x3a1BWMGKDgOLX3/EgRbVFQEY9EMifpCMk=;
+	s=korg; t=1788498792;
+	bh=2kGB25baV5oC4xQSDMBS3hnT9jJ7eh2DVa3ZVVM1UFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xtE3/Qri5pI1BoW98LQl3qcik4KaXQC+4KlQ4uJ08H9HeA914lQpaSistr4IlDHHS
-	 DhnK4p7AS21AUFYnwPfdY4utQ2ioZ99dATAem8180lR+xWIBUrD+ZRi1Sr+V6b1HQu
-	 Nj/Dcx/5DHtHBOxD1wwkKZlm8O+QnlOdpDG5AzVI=
+	b=fH/nE4iWIqP6hBO561t7+G0XiJ9f7hSsWu8q0tf0EQkZBpmdvWUN7G3i1Gehkb64i
+	 007FcHa1BFuCt7ZgDL8P64srz1nIGtVnCVMcYmEODu61H3Zw0xdJbgYRVKtSxOvpth
+	 5Wa3XzZF8WUJXBsKqoTQLul2QIRYWHPv7P41K2nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 171/713] nfsd: defer setting NFSD4_CALLBACK_RUNNING in deleg_reaper
-Date: Fri,  4 Sep 2026 06:52:19 +0200
-Message-ID: <20260904045807.654035436@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 189/713] nfsd: fix reply size estimate for GET_DIR_DELEGATION
+Date: Fri,  4 Sep 2026 06:52:37 +0200
+Message-ID: <20260904045808.049715001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,43 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 108969960dc54de673869814c5f37c22f6cf404a upstream.
+commit 46f929b907b3bc488593c006f0c97e35baba9ea4 upstream.
 
-deleg_reaper() sets NFSD4_CALLBACK_RUNNING before checking the
-5-second rate limit and cl_cb_state gates.  When either gate fires
-the loop continues without queuing callback work, so the bit's only
-clear site in nfsd41_destroy_cb() is never reached and RECALL_ANY
-dispatch is permanently disabled for the affected client.
+nfsd4_get_dir_delegation_rsize() returns its estimate in XDR words, but
+the COMPOUND reply-size machinery works in bytes: every other op's
+_rsize helper multiplies its word count by sizeof(__be32). Since
+GET_DIR_DELEGATION is OP_MODIFIES_SOMETHING, this estimate is consulted
+before the op executes to ensure the reply will fit. The ~4x too-small
+estimate lets a compound near the session/reply limit pass the check,
+grant a directory delegation, and then fail to encode the reply with
+NFS4ERR_RESOURCE/REP_TOO_BIG, leaving the client without the returned
+stateid.
 
-Move the test_and_set_bit() below both non-queueing gates so the
-bit is taken only when nfsd4_run_cb() will be called.
+Multiply the estimate by sizeof(__be32) like the other _rsize helpers.
 
-Fixes: 424dd3df1f99 ("nfsd: eliminate cl_ra_cblist and NFSD4_CLIENT_CB_RECALL_ANY")
+Fixes: 33a1e6ea73e5 ("nfsd: trivial GET_DIR_DELEGATION support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-cb_recall_any_callback_running_stuck-v1-1-310011a028f3@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260616-dir-deleg-v7-17-6cbc7eac0ade@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7223,12 +7223,12 @@ deleg_reaper(struct nfsd_net *nn)
- 			continue;
- 		if (atomic_read(&clp->cl_delegs_in_recall))
- 			continue;
--		if (test_and_set_bit(NFSD4_CALLBACK_RUNNING, &clp->cl_ra->ra_cb.cb_flags))
--			continue;
- 		if (ktime_get_boottime_seconds() - clp->cl_ra_time < 5)
- 			continue;
- 		if (clp->cl_cb_state != NFSD4_CB_UP)
- 			continue;
-+		if (test_and_set_bit(NFSD4_CALLBACK_RUNNING, &clp->cl_ra->ra_cb.cb_flags))
-+			continue;
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -3540,7 +3540,7 @@ static u32 nfsd4_get_dir_delegation_rsiz
+ 		op_encode_stateid_maxsz +
+ 		2 /* gddr_notification */ +
+ 		2 /* gddr_child_attributes */ +
+-		2 /* gddr_dir_attributes */);
++		2 /* gddr_dir_attributes */) * sizeof(__be32);
+ }
  
- 		/* release in nfsd4_cb_recall_any_release */
- 		kref_get(&clp->cl_nfsdfs.cl_ref);
+ #ifdef CONFIG_NFSD_PNFS
 
 
