@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7884195D2;
-	Fri,  4 Sep 2026 05:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CB641A547;
+	Fri,  4 Sep 2026 05:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500761; cv=none; b=JD0L9SbgpH4e93iLcYz+PB9d8yLf3BNtztcMXGv9J00Sdk7aQm9ZRaAESr/FJWmeqv+pcDb4OBQx/5xYrC5kWyG0+jcInC9NX8MzhT/VgQ0j7DAgGgN0lRtLrMVHWdQE4KDD9rcREfQinqwXqEkT5BbTyfHL23eoyutKMpdptD4=
+	t=1788500764; cv=none; b=WiaBv/SkZoHUa8Lkhe00YcS3cDMCGSMEX/5KD1u8U1yhh+MWm+/RYHO7cHDRF8solIivYNRtb0X+Y7xz8sFyG7W8FTmuPcpb9sWko4XaByzHL6ffMVqdDpj7PqOq1EVbkcGVsVRw3nut9+87VvEa+CoHLRKNNvSqmDNMVxQAYbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500761; c=relaxed/simple;
-	bh=le1c7Wa1idUhYhyHDXIHdcR8UyZ22QOC9fFYMF7GstM=;
+	s=arc-20240116; t=1788500764; c=relaxed/simple;
+	bh=+PH6jkouoB6kKyDYVkobvUixuL74i55ElygkX8WC1Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNnGATbxkaFXxrOJ7nRaiUydgWvp1gxa9duG654x9k+ep90OynjVa1bHJQCGkWgz4Pw0EKqDUPs+lfY0Bsc//SBKjUVQFQONBcDyEhsvzrMoepJZzFbvAe0bKav5wQWenp36y8OoeEwJU5HIb6UBLBY7o1yuYFm/v58YOPkyHRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1eiCT/qX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V2lljmjPteWnGFEJgMZRCVZ18+IDzitlMD1i00vU7+WafsXZIMZPTGy9i9+exYlKTmrtuj6lSLAWflmWO4SC57A2+U5HDwQrkpIURCxo6hgqiWhokfET0fTbwUmgOCkFQgH8uIsOrNdpynudeh1l1i2P8kiCHPrIPTWr1m+wYRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3t0WEtR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1eiCT/qX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2CD1F00A3D;
-	Fri,  4 Sep 2026 05:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3t0WEtR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80991F00A3D;
+	Fri,  4 Sep 2026 05:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500759;
-	bh=jeIHOuGRKCVAFVcDo27uheKBvp7V91nPNZxFTQrGBdQ=;
+	s=korg; t=1788500762;
+	bh=I+/9wimgmPNc6Jr8zXTobalZS1VzESfuanoekzzq1cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1eiCT/qXuk6pfis4sKZszd8zBuaFNsTTDHCjrzhBgOIE1GlB6TRgcbuQrs8j3FIyN
-	 r/g2EsNy2XdLjXU6NciXrOnvCCtxCgYFEp9+g8n63YkAS2ziTbxWrvfnGsAnotfPsX
-	 YRB8Mzeh4cCWYCQ3EtTMyOVU+xDwjhSleL6tSIxo=
+	b=G3t0WEtRosTF7l1Q4tLkpoi/0B5DttpZDQkdVjG2BuvFMzL32JW5/InTr32hPtCQp
+	 6weHWFMrJRW9yMCjQwr5wUcf0SUJTalEoGMQxvhyLd/4J7DcHAKPlvwkhcsJA00EHk
+	 /zNOsK7mxSWdYhN7AEGNXfK34K/gmJn/Tk/Ce/cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.18 163/552] btrfs: drop recovered reloc root refs on recovery failure
-Date: Fri,  4 Sep 2026 06:55:20 +0200
-Message-ID: <20260904045752.718049768@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.org>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.18 172/552] smb: client: fix copy-paste error in WSL EA length accounting for $LXDEV
+Date: Fri,  4 Sep 2026 06:55:29 +0200
+Message-ID: <20260904045752.923583030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,115 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit 6d8ba4572922e336f0b59a80751b018e1e135164 upstream.
+commit 5d14030b46af1a958fd104b020fbb93631c98822 upstream.
 
-During relocation recovery, each fs root gets a reference to its relocation
-root. If loading or adding a later root fails, or if the first transaction
-commit fails, btrfs_recover_relocation() jumps to out_unset before
-merge_reloc_roots() and clean_dirty_subvols().
+The LXDEV block in cifs_query_path_info() uses SMB2_WSL_XATTR_MODE_SIZE
+(4) instead of SMB2_WSL_XATTR_DEV_SIZE (8), undercounting eas_len by 4
+bytes per $LXDEV EA.
 
-put_reloc_control() drops the list-owned relocation root references, but it
-does not clear fs_root->reloc_root or drop the references owned by those
-pointers. Mount cleanup only drops them when BTRFS_FS_ERROR is set, so an
-error such as -ENOMEM while processing a later root can leave references
-behind.
+eas_len is used only as a zero/non-zero presence flag so there is no
+current functional impact, but the value is incorrect and misleading.
 
-Keep temporary references to the fs roots associated during recovery. On
-failure, clear their reloc_root pointers and drop the corresponding
-references. Once the first transaction commit succeeds, drop only the
-temporary fs root references and let the normal merge and cleanup paths
-handle the relocation roots.
-
-Fault injection on a pending-relocation image confirmed the cleanup gap.
-With an injected first-commit failure, 25 fs roots had reloc_root set with
-fs_error=0. With this fix, the same failure path drops that count to 0
-before mount fails.
-
-Fixes: f44deb7442ed ("btrfs: hold a ref on the root->reloc_root")
-CC: stable@vger.kernel.org
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 97db41604555 ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
+Cc: stable@vger.kernel.org
+Cc: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |   31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ fs/smb/client/smb1ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -4056,6 +4056,24 @@ static noinline_for_stack int mark_garba
- 	return ret;
- }
- 
-+static void release_recovered_fs_roots(struct list_head *roots, bool drop_reloc_refs)
-+{
-+	struct btrfs_root *root;
-+	struct btrfs_root *next;
-+
-+	list_for_each_entry_safe(root, next, roots, reloc_dirty_list) {
-+		list_del_init(&root->reloc_dirty_list);
-+		if (drop_reloc_refs) {
-+			struct btrfs_root *reloc_root = root->reloc_root;
-+
-+			ASSERT(reloc_root);
-+			root->reloc_root = NULL;
-+			btrfs_put_root(reloc_root);
-+		}
-+		btrfs_put_root(root);
-+	}
-+}
-+
- /*
-  * recover relocation interrupted by system crash.
-  *
-@@ -4065,6 +4083,7 @@ static noinline_for_stack int mark_garba
- int btrfs_recover_relocation(struct btrfs_fs_info *fs_info)
- {
- 	LIST_HEAD(reloc_roots);
-+	LIST_HEAD(recovered_roots);
- 	struct btrfs_key key;
- 	struct btrfs_root *fs_root;
- 	struct btrfs_root *reloc_root;
-@@ -4176,7 +4195,7 @@ int btrfs_recover_relocation(struct btrf
- 			ret = PTR_ERR(fs_root);
- 			list_add_tail(&reloc_root->root_list, &reloc_roots);
- 			btrfs_end_transaction(trans);
--			goto out_unset;
-+			goto out_drop_reloc_refs;
- 		}
- 
- 		ret = __add_reloc_root(reloc_root);
-@@ -4185,15 +4204,17 @@ int btrfs_recover_relocation(struct btrf
- 			list_add_tail(&reloc_root->root_list, &reloc_roots);
- 			btrfs_put_root(fs_root);
- 			btrfs_end_transaction(trans);
--			goto out_unset;
-+			goto out_drop_reloc_refs;
- 		}
-+		ASSERT(list_empty(&fs_root->reloc_dirty_list));
- 		fs_root->reloc_root = btrfs_grab_root(reloc_root);
--		btrfs_put_root(fs_root);
-+		list_add_tail(&fs_root->reloc_dirty_list, &recovered_roots);
- 	}
- 
- 	ret = btrfs_commit_transaction(trans);
- 	if (ret)
--		goto out_unset;
-+		goto out_drop_reloc_refs;
-+	release_recovered_fs_roots(&recovered_roots, false);
- 
- 	merge_reloc_roots(rc);
- 
-@@ -4209,6 +4230,8 @@ out_clean:
- 	ret2 = clean_dirty_subvols(rc);
- 	if (ret2 < 0 && !ret)
- 		ret = ret2;
-+out_drop_reloc_refs:
-+	release_recovered_fs_roots(&recovered_roots, true);
- out_unset:
- 	unset_reloc_control(rc);
- 	reloc_chunk_end(fs_info);
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -727,7 +727,7 @@ static int cifs_query_path_info(const un
+ 			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_DEV_SIZE);
+ 			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_DEV, SMB2_WSL_XATTR_NAME_LEN + 1);
+ 			data->wsl.eas_len += ALIGN(sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
+-						   SMB2_WSL_XATTR_MODE_SIZE, 4);
++						   SMB2_WSL_XATTR_DEV_SIZE, 4);
+ 			rc = 0;
+ 		} else if (rc >= 0) {
+ 			/* It is an error if EA $LXDEV has wrong size. */
 
 
