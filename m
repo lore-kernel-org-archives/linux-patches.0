@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898AA38E8DD;
-	Fri,  4 Sep 2026 05:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DADB3DAAB7;
+	Fri,  4 Sep 2026 05:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499534; cv=none; b=dnbGjagfB8PmGAtCWjU9+Qpi4C5ilLb/uO6qG8VtwH4Nx537p++KWaktnnDZEmYCjiYWr58i5lj7s7AAtM3ai5qmVBVId5sCnrUmGwjPKwH7dBvOSBvPe5XqW1FJdp9ERsqRW9qra60maaqfN2ikTxz8LDeY5VVTQ/akfO1EtuQ=
+	t=1788499537; cv=none; b=KE07u+m7iBIxkIzhfATfYD2jjgZ5dnHN4ZEaytSsvNWc2eRnxNtLpOXymyJRRvreFcH7FRtRIODeYpPlh+enVWcpDivd6kNvW1G4bLTj+ajs/DgzX7ndM8+/8VQZKkhJYdy80EoJ3is1WJaFMkqy+d2Vs5rqpPtfmVn31s59ugs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499534; c=relaxed/simple;
-	bh=XAHv8hW6IVa/0kFa5PFcd3Ah02LM4sT9INQShFLoMrM=;
+	s=arc-20240116; t=1788499537; c=relaxed/simple;
+	bh=NGGDj4srUI0sk7wbxN45XiscAKNN4oL35Cu9iOcXpFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMvgc6D+qM2QnbhTsNxDA+DnjDiIGQV7F1hBpzXJKzjTQL0nkU/mFzVCuS+E6YJMZgsxIC0mcUtGmAOWrbF4Qzt4jwH4PAkEeu5AMcRNVSWINo+MWmlJUB0NrL2SCGcF3G/M3R+6EmccdvPNjW6/xvcrqJ1oP6I9pEcIexBKof0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyZTP1pn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bHE5Juzh//WuF4XJ1bdb+1s8ZXucAJ0rJsLE5tgKECx3DHVF+6IuZMD7fhT1F3XuCePmD4VbIlWHbP3fKy4hWWeXSPnAs5Ll7AbLQPCMp2qf2tJOkn336B8DRYw694cR77Fa0n15ofgQhKKhEPXCPLHsxIdDT4ZU1oNDJ0HlUc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qap5Ihbn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyZTP1pn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A111F00A3D;
-	Fri,  4 Sep 2026 05:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qap5Ihbn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D961F00A3D;
+	Fri,  4 Sep 2026 05:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499533;
-	bh=J95O6uSuXd+90r3echqbxLy6WyY/HV1rRdrDbki3ERU=;
+	s=korg; t=1788499536;
+	bh=FMONBQ9NrdQS595wYSL/I1zndHXd9nlUKy9ONYWUVlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UyZTP1pnWbGygWXpRY6eeRKyHcCd7U3O9DQNRZm6dcgmlnq8nEoONpI9Ts7/fbqWo
-	 fuTMUijI8oBMbG89VHOy8KelI6h9ljG2BVKpPEUN802VBEwaP++mjkkMaT27lqByPb
-	 EsA/l3ye2iuYZXbA+W3VclYgCZNo8MpGdULuW7vs=
+	b=Qap5IhbnCe96vFcScPKGY7HAN03dY4iOckKFM3X/CR59z1aunKrS49zNqpcnmnrzP
+	 tkxl32ncnMp3GdEFCafNi1PPeuREocbvPZ0NUwl0APMC6fu+0HRbIuxHH5ij9Cxvr1
+	 498ZmEhbtRd+P11sN1WSoKJyEOgpmPwj3ikx0fNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tejun Heo <tj@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.2 407/713] sched/core: Handle pick_task() releasing the rq lock
-Date: Fri,  4 Sep 2026 06:56:15 +0200
-Message-ID: <20260904045812.945277783@linuxfoundation.org>
+Subject: [PATCH 7.2 408/713] sched/core: Make core-sched flips wait for in-flight selections
+Date: Fri,  4 Sep 2026 06:56:16 +0200
+Message-ID: <20260904045812.970275403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,102 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Tejun Heo <tj@kernel.org>
 
-commit c10b216a072ff5c57bc880a05f87eb519aecc529 upstream.
+commit f3629c63a4af3e491381780bc6c123cb498c4c40 upstream.
 
-Core scheduling's pick_next_task() breaks when a ->pick_task()
-implementation can release the rq lock. The selection state derived on entry
-is only valid while the lock is held continuously. Once a pick can drop the
-lock, an interleaving selection can invalidate all of it: the single-CPU
-fast path can commit an uncookied pick although the core went cookied during
-the release, and forceidle committed by the interleaving selection skews the
-restarted pass's accounting.
+Core scheduling's pick_next_task() operates on all sibling rqs under one
+acquisition of the shared core-wide lock. A ->pick_task() that releases the
+rq lock leaves every sibling __lock momentarily free, letting
+__sched_core_flip(false) complete mid-selection and rebind rq_lockp() under
+it. The selection resumes on the split locks, touching sibling state it no
+longer protects, and __schedule() finally releases a lock that was never
+taken while leaking the one that was.
 
-Fix it by restarting the whole selection when a pick returns RETRY_TASK
-after releasing the lock: a single restart point above the state derivation
-replaces the per-loop restart labels, so a retry picks up state committed by
-interleaving selections and accounts and resets forceidle like a fresh
-selection would.
+Count in-flight core-wide selections in the leader's rq->core_pick_in_flight
+and make __sched_core_flip() wait for the count to drain. The count only
+changes under the shared lock, which the flip holds while sampling, so no
+other ordering is needed. The wait can repeat while selections overlap, but
+the flip backs off between samples and flips are rare cookie-lifetime
+events.
 
-need_sync and fi_before latch across retries. Clock validity can't be
-re-derived - there is no program-ordered way to tell whether the own and
-core rq clocks are still updated after the lock was released, as other
-lockers' pin cycles may or may not have invalidated them. When restarting,
-clear core_clock_updated so that the sibling loop re-updates the core rq,
-and update the own rq clock if invalidated.
+sched_core_cpu_deactivate() moves the count to the new leader - a stale copy
+left behind would bias it forever if that CPU later returns as its own
+leader.
 
-Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
-Cc: stable@vger.kernel.org # v6.19+
+Fixes: 539f65125d20 ("sched: Add core wide task selection and scheduling")
+Cc: stable@vger.kernel.org # v5.14+
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ kernel/sched/core.c  |   22 ++++++++++++++++++++++
+ kernel/sched/sched.h |    1 +
+ 2 files changed, 23 insertions(+)
 
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -6223,7 +6223,7 @@ pick_next_task(struct rq *rq, struct rq_
- 	unsigned long cookie;
- 	int i, cpu, occ = 0;
- 	struct rq *rq_i;
--	bool need_sync;
-+	bool need_sync = false;
+@@ -443,6 +443,17 @@ static void __sched_core_flip(bool enabl
  
- 	if (!sched_core_enabled(rq))
+ 		sched_core_lock(cpu, &flags);
+ 
++		/*
++		 * A core-wide selection may have the shared rq lock temporarily
++		 * released by a lock-dropping ->pick_task(). Flipping would
++		 * rebind rq_lockp() under it. Wait it out.
++		 */
++		while (cpu_rq(cpu)->core->core_pick_in_flight) {
++			sched_core_unlock(cpu, &flags);
++			cpu_relax();
++			sched_core_lock(cpu, &flags);
++		}
++
+ 		for_each_cpu(t, smt_mask)
+ 			cpu_rq(t)->core_enabled = enabled;
+ 
+@@ -6242,6 +6253,8 @@ pick_next_task(struct rq *rq, struct rq_
  		return __pick_next_task(rq, rf);
-@@ -6266,7 +6266,9 @@ pick_next_task(struct rq *rq, struct rq_
- 	prev_balance(rq, rf);
+ 	}
  
- 	smt_mask = cpu_smt_mask(cpu);
--	need_sync = !!rq->core->core_cookie;
++	rq->core->core_pick_in_flight++;
 +
-+restart:
-+	need_sync |= !!rq->core->core_cookie;
+ 	/*
+ 	 * If there were no {en,de}queues since we picked (IOW, the task
+ 	 * pointers are all still valid), and we haven't scheduled the last
+@@ -6456,6 +6469,7 @@ restart:
+ 	}
  
- 	/* reset state */
- 	rq->core->core_cookie = 0UL;
-@@ -6301,10 +6303,15 @@ pick_next_task(struct rq *rq, struct rq_
- 	 * and there are no cookied tasks running on siblings.
- 	 */
- 	if (!need_sync) {
--restart_single:
- 		next = pick_task(rq, rf);
--		if (unlikely(next == RETRY_TASK))
--			goto restart_single;
-+		if (unlikely(next == RETRY_TASK)) {
-+			/* rq lock may have been dropped, clocks invalidated */
-+			core_clock_updated = false;
-+			if (!(rq->clock_update_flags & RQCF_UPDATED))
-+				update_rq_clock(rq);
-+			goto restart;
-+		}
+ out_set_next:
++	rq->core->core_pick_in_flight--;
+ 	put_prev_set_next_task(rq, rq->donor, next);
+ 	if (rq->core->core_forceidle_count && next == rq->idle)
+ 		queue_core_balance(rq);
+@@ -6651,6 +6665,13 @@ static void sched_core_cpu_deactivate(un
+ 	core_rq->core_forceidle_occupation = rq->core_forceidle_occupation;
+ 
+ 	/*
++	 * A stale leftover would bias the count forever if this CPU later
++	 * returns as its own leader. Move, don't copy.
++	 */
++	core_rq->core_pick_in_flight       = rq->core_pick_in_flight;
++	rq->core_pick_in_flight            = 0;
 +
- 		if (!next->core_cookie) {
- 			rq->core_pick = NULL;
- 			rq->core_dl_server = NULL;
-@@ -6324,7 +6331,6 @@ restart_single:
- 	 *
- 	 * Tie-break prio towards the current CPU
- 	 */
--restart_multi:
- 	max = NULL;
- 	for_each_cpu_wrap(i, smt_mask, cpu) {
- 		rq_i = cpu_rq(i);
-@@ -6338,8 +6344,13 @@ restart_multi:
- 			update_rq_clock(rq_i);
++	/*
+ 	 * Accounting edge for forced idle is handled in pick_next_task().
+ 	 * Don't need another one here, since the hotplug thread shouldn't
+ 	 * have a cookie.
+@@ -9064,6 +9085,7 @@ void __init sched_init(void)
+ 		rq->core_forceidle_count = 0;
+ 		rq->core_forceidle_occupation = 0;
+ 		rq->core_forceidle_start = 0;
++		rq->core_pick_in_flight = 0;
  
- 		p = pick_task(rq_i, rf);
--		if (unlikely(p == RETRY_TASK))
--			goto restart_multi;
-+		if (unlikely(p == RETRY_TASK)) {
-+			/* rq lock may have been dropped, clocks invalidated */
-+			core_clock_updated = false;
-+			if (!(rq->clock_update_flags & RQCF_UPDATED))
-+				update_rq_clock(rq);
-+			goto restart;
-+		}
+ 		rq->core_cookie = 0UL;
+ #endif
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1358,6 +1358,7 @@ struct rq {
+ 	unsigned int		core_forceidle_seq;
+ 	unsigned int		core_forceidle_occupation;
+ 	u64			core_forceidle_start;
++	unsigned int		core_pick_in_flight;
+ #endif /* CONFIG_SCHED_CORE */
  
- 		rq_i->core_pick = p;
- 		rq_i->core_dl_server = rq_i->dl_server;
+ 	/* Scratch cpumask to be temporarily used under rq_lock */
 
 
