@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AE93242BD;
-	Fri,  4 Sep 2026 05:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF2C35AC03;
+	Fri,  4 Sep 2026 05:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501337; cv=none; b=lqyQt15oZP7XAO8lxU9glyGChVi/9fytYyVmcOXhpY3d1p9sYKnAtDRg+HKIru966uUr9WhZj2C9QsX3lfo+ufd5VxPRUYJXOKtS9Xd05LDsjvNSi5QD0esRjVWywl1jtYy34OhV1el0kOA9XK42LnXjQHBxiErTkRpq6bC8K4U=
+	t=1788501340; cv=none; b=NCC4BYsweHJxdOIUTKX1iVjs3ulkc03il+WB5fyM/89cCWRjGRK2WhWKnYaJiPygoe9+4B3l6mn6HcDqmlJKgTtyzOnwjniE6FChATtTQsEmX5zqKqmk+oqwR08lesACDhSm9/50hG4+oD3nVAfAyKSlck+pUd5Cmlv/U6GPynE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501337; c=relaxed/simple;
-	bh=vyIHwju8xJRbRyN/iDHpb75wuz+EQyXZo5AydcqRBL0=;
+	s=arc-20240116; t=1788501340; c=relaxed/simple;
+	bh=/EYH0W4OXCf0WN5TGwwzp2POBaD1tZRihYxCmt1f7Ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDdkBNSe7DqmUy+SytuDDGEuerPc64c2Vah4Ftbfq0ugQw6bv69R2e1CTQK51SuIvYJ7y4YPw/JWNhnP/dneIqi0JJ0c+PSBz1wip6QjcyVTO35N2anS8MNCxtIiRrH0oobql0SctT6JLcNzMkpE3um3ibJjlft9lDo+xpj39G8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOeoB5Xo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bfbvI+5HVj82VAGpG8vpe1FR4jVD0KVWuNIa514J5o6L5CFD5RaVTBXwJhOOeBuYuXizSABTMXjvEvCSrAu9oWx5ZyaiOiPNlKUThOh782QP6v1IEEfeKNM60zq42ngebbP4QssdUtPWnewRCJPuQtU74Ovoef392AgtAi11r+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtID53uj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOeoB5Xo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AE81F00A3D;
-	Fri,  4 Sep 2026 05:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtID53uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74501F00A3D;
+	Fri,  4 Sep 2026 05:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501336;
-	bh=tjFqi/26L7lWhEQbQUSvfMaNFvghYQhTNFb8DQqvC0A=;
+	s=korg; t=1788501339;
+	bh=GJ+AFxhYLiVt3DSPvC9Pq4yPKdxDh9IR0yp3whgXnHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tOeoB5Xoa8OBoSSB/y5PMarZbbJmvvIeeYu2i5UvYXSkCPRkw7vOTp7iPkS6bED8Q
-	 36frz1Io+qXkHW9SfYJ5840J8XvMQMupOo4wjmmczpCwbf/XP9y9EMNuLBPzr6aAGP
-	 rJBRe2GDR2bh/AOsHcm3ed7AQZ3YrFpT93F/PdLQ=
+	b=LtID53ujoakMJQh5lj9nj6MSmpdTZjHQvF/NTePQXOuaEtRDLqYPfq6raAVhpHckN
+	 75LKKO4X0rLi5VrdZKx6cHtZrGskifyHOMKgLXPLQ+MorLhUEM2DBGDmgh0oG3ScUh
+	 JvlOn5H97DE3M5jkk1yPfHYx2U1pMzl7jUkTF/fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 374/552] power: supply: qcom_battmgr: fix use-after-free
-Date: Fri,  4 Sep 2026 06:58:51 +0200
-Message-ID: <20260904045758.702347185@linuxfoundation.org>
+Subject: [PATCH 6.18 375/552] power: supply: qcom_battmgr: terminate the strings from firmware
+Date: Fri,  4 Sep 2026 06:58:52 +0200
+Message-ID: <20260904045758.724098003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,65 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 4e40befedfc8ed86f44e1f81df92d13c149c9f8d upstream.
+commit ab1112df8f4ffa88cb024dd370c432ced80f77d8 upstream.
 
-qcom_battmgr_pdr_notify() queues enable_work when the PMIC GLINK service
-comes up, and the worker recovers battmgr through container_of() to issue
-firmware requests. The PMIC GLINK client stays on the client list until
-its devres release action runs, so a PDR notification can keep queueing
-the work, and a pending or running worker can access battmgr after devres
-frees it.
+The qcom_battmgr_sc8280xp_strcpy() takes a Pascal-style string when the
+firmware sends one. Otherwise it copies all BATTMGR_STRING_LEN bytes and
+leaves the destination without a terminator.
 
-Make enable_work device-managed with devm_work_autocancel(), registered
-before the PMIC GLINK client is allocated. The devres cleanup then
-releases the client first, so no further notification can queue the work,
-and cancels the work before battmgr is freed.
+Those destinations are model_number, serial_number and oem_info, each
+BATTMGR_STRING_LEN and declared next to each other. They go out to user
+space as val->strval, which power_supply_format_property() prints with
+"%s", so a firmware string that fills the whole field makes that read run
+into the following members.
 
-This issue was found by an in-house static analysis tool.
+Use strscpy() so the copy always terminates, the way the SM8350 path
+already does for the same field.
 
 Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260731022006.317192-1-fanwu01@zju.edu.cn
-Link: https://patch.msgid.link/20260801051923.354496-1-fanwu01@zju.edu.cn
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260727074119.2585463-1-sammiee5311@gmail.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/qcom_battmgr.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/power/supply/qcom_battmgr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/power/supply/qcom_battmgr.c
 +++ b/drivers/power/supply/qcom_battmgr.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- #include <linux/auxiliary_bus.h>
-+#include <linux/devm-helpers.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/nvmem-consumer.h>
-@@ -1650,7 +1651,6 @@ static int qcom_battmgr_probe(struct aux
- 	psy_cfg_supply.supplied_to = qcom_battmgr_battery;
- 	psy_cfg_supply.num_supplicants = 1;
- 
--	INIT_WORK(&battmgr->enable_work, qcom_battmgr_enable_worker);
- 	mutex_init(&battmgr->lock);
- 	init_completion(&battmgr->ack);
- 
-@@ -1713,6 +1713,11 @@ static int qcom_battmgr_probe(struct aux
- 					     "failed to register wireless charing power supply\n");
+@@ -1236,7 +1236,7 @@ static void qcom_battmgr_sc8280xp_strcpy
+ 		memcpy(dest, src + 1, len);
+ 		dest[len] = '\0';
+ 	} else {
+-		memcpy(dest, src, BATTMGR_STRING_LEN);
++		strscpy(dest, src, BATTMGR_STRING_LEN);
  	}
+ }
  
-+	ret = devm_work_autocancel(dev, &battmgr->enable_work,
-+				   qcom_battmgr_enable_worker);
-+	if (ret)
-+		return ret;
-+
- 	battmgr->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_BATTMGR,
- 						       qcom_battmgr_callback,
- 						       qcom_battmgr_pdr_notify,
 
 
