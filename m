@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157404CCDC7;
-	Fri,  4 Sep 2026 05:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2040419302;
+	Fri,  4 Sep 2026 05:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500288; cv=none; b=dK6JUzDrjcvoujLlV5w/hUdPE7w7BZoKLkq1unHwfXmhk+X8QLSQIcYpLi0sEv7r1Z7fSY+ntY5VE4BE0x97zw/WurxG3XAOPxTcn27ULXfLGVpXhMg9pB3xLt3bVUqfP7xl5F2whx+z/DRNQ18UbQjqf3U5wE4HyhleyIQ9Qo4=
+	t=1788500291; cv=none; b=BLISptSzkPGtdNDeDQb/QaYf983DtHxJBz4b26XeYmnY6roMMXBIiojJFsum9zECZF4OGl0nOAsCrj5Lx1I/64T1Ct0bzfWxiceWbQAYxnhpdelL+2tCljpxprmUBt1Yld5c8tmVPLB+vydlOA8s8gp3WukJ1pmazZevP9iLFpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500288; c=relaxed/simple;
-	bh=ldEpsdlJzpM9rL2PfnGzGv78VbANPjCfC/F8+bIwLdI=;
+	s=arc-20240116; t=1788500291; c=relaxed/simple;
+	bh=+2XC0H6ufmdbWAMi7HzQoqa3hsWudjwldMnHzl9sj8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rv0PTSdcQe8wFAu9df8AgD3ASR+qQbim/UgUwQYWNaHfKu1wMHhMTiUklSTBCquYuBta683m5n1UdYCjwE2L8D6bcD8MotvTtA4h5pP6H0e8M9lMC+jmfSNVnOvjEKvNoL9biEWoBt6vIujLGGUIsPD+CIXlTJ1YaQftI9VL2G8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdyNr2fJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hgJ0n3Dg0IZghOYD00l5UA9h3ClUD0ZgDigcJfM3eurqsH2OczHVj+S3OMTYv/IyD3sA4IeLc1BlhyzseOwroYwGPmisouHW71pHd4ikuO8IMzGTK7x+E3HibAsUPaExe1iEejn6JVoe0rLUqh2entd5/QIX1505AHlNpPyTD80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sD63clL6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdyNr2fJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746311F00A3D;
-	Fri,  4 Sep 2026 05:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sD63clL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392A11F00A3D;
+	Fri,  4 Sep 2026 05:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500287;
-	bh=/aDtz6hsh+IgbHrQTj5k1rDSbO4VYjoxptKJZLhetNI=;
+	s=korg; t=1788500289;
+	bh=gLQVO5B8qHt4hwXtdXM0a4Wit2ugsbs85MuVSQ6CpLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZdyNr2fJ33mqnfxIiDJkQjiokkEEmP6DI8zHThlX4Q98XI+o/rs53lDV+3Hh8NhN6
-	 pEtDOFQDPqS9JO1OpmvuiZzObk+9baNNn0GeFv18v8AW+03SHPGvGWeZ6uYDZjKkOU
-	 cDilAPI3EV5bcOZvejcd7Ycioh2gUHgYVS8TKH4A=
+	b=sD63clL6K/PGZRGoHoY1JFrxkowl+7CbSoK96F1BZEThDSiO/5yr4I8zuWv5p5Nfk
+	 qS9ATmXWJW13F62CuzoMrNNNqW8T7s3kBSwygLgghcxSLn2hho9tmt05x84oPjNEmU
+	 sCU/jaOjgoMJvItHHbO3ggvhWyVYPoIhvVgkMvMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 684/713] mm/kmemleak: report RCU-tasks quiescent states during the scan
-Date: Fri,  4 Sep 2026 07:00:52 +0200
-Message-ID: <20260904045819.173255373@linuxfoundation.org>
+	Fabio Estevam <festevam@nabladev.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.2 685/713] wifi: mwifiex: Detach sync cmd buffer on interrupted wait
+Date: Fri,  4 Sep 2026 07:00:53 +0200
+Message-ID: <20260904045819.196711110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -49,128 +44,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Fabio Estevam <festevam@nabladev.com>
 
-[ Upstream commit 3541a2b06ecd78ba333188df04368dcf97273d6a ]
+commit ef06882c7d8a7400b67d0d003b1008093dd589ed upstream.
 
-kmemleak_scan() can run for ages on large debug kernels. It was
-causing some soft-lockups which I got fixed with commit
-3175fcfec8b16baeb ("mm/kmemleak: avoid soft lockup when scanning task
-stacks") with our beloved cond_resched().
+mwifiex synchronous commands keep the caller-provided data buffer in
+cmd_node->data_buf. Several callers pass stack-allocated objects there.
 
-I've got the fix above deployed in the Meta fleet, and now I am seeing:
+If wait_event_interruptible_timeout() is interrupted, the caller can
+return and release that stack object while the firmware command is still
+the current command. A late firmware response then reaches the normal
+response handler, which can copy data through cmd_node->data_buf into the
+stale stack address.
 
-  INFO: rcu_tasks detected stalls on tasks:
-    task:kmemleak state:R ... nvcsw: 274/274 holdout: 1 idle_cpu: -1/3
-     scan_block
-     scan_gray_list
-     kmemleak_scan
+This fixes a stack corruption observed during repeated association and
+disassociation cycles. The panic trace showed the command wait being
+interrupted immediately before a bad pointer dereference:
 
-and, worse, blocks the callers waiting on that grace period.  Here a BPF
-struct_ops map free, which waits via synchronize_rcu_mult(call_rcu,
-call_rcu_tasks), is stuck long enough to also trip the hung task check:
+  cmd_wait_q terminated: -512
+  Unable to handle kernel paging request at virtual address 002c583837384662
+  Kernel panic - not syncing: stack-protector: Kernel stack is corrupted
+  ...
+  Tainted: [M]=MACHINE_CHECK
 
-  INFO: task kworker/...:bpf_map_free_deferred blocked for 122 seconds
-     __wait_rcu_gp
-     bpf_struct_ops_map_free
+The fault address decodes as little-endian ASCII:
 
-Then I've learned that cond_resched() is not an RCU-tasks quiescent
-state, so, we need to use stronger primitives.
+  0x002c583837384662 -> "bF878X,\0"
 
-Use cond_resched_tasks_rcu_qs() at the scan reschedule points so the scan
-reports an RCU-tasks quiescent state as it proceeds.
+which is a fragment of the VERSION_EXT firmware string exposed as
+debugfs "verext":
 
-Inspired by commit b96285e10aad ("tracing: Have osnoise_main() add a
-quiescent state for task rcu").
+  w8997o-V4, RF878X, FP92, 16.92.21.p153.7
 
-Link: https://lore.kernel.org/20260720-kmemleak_rcu_task-v1-1-5b460ade777d@debian.org
-Fixes: c4b28963fd79 ("mm/kmemleak: rely on rcu for task stack scanning")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Puranjay Mohan <puranjay@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ adapted scan_large_block() to the branch’s existing void implementation without interruption propagation. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The same runs also showed corrupted control data containing:
+
+  0x2400372e333531 -> "153.7\0$"
+
+which is the tail of the same VERSION_EXT string. This points at a late
+VERSION_EXT response writing through a stale stack-backed data_buf after
+the interrupted wait returned.
+
+After cancelling pending commands on an interrupted or timed-out wait,
+detach the caller-owned data buffer from the still-current command. This
+preserves the existing command cancellation behaviour while preventing a
+late response from writing through a pointer whose lifetime ended with the
+waiting caller.
+
+Tested on an i.MX8MP board using an 88W8997.
+
+Cc: stable@vger.kernel.org
+Fixes: 3d026d09b28d ("mwifiex: cancel pending commands for signal")
+Signed-off-by: Fabio Estevam <festevam@nabladev.com>
+Link: https://patch.msgid.link/20260724203320.78793-1-festevam@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/sta_ioctl.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -1569,7 +1569,7 @@ static void scan_large_block(void *start
- 		next = min(start + MAX_SCAN_SIZE, end);
- 		scan_block(start, next, NULL);
- 		start = next;
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
+--- a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
+@@ -57,6 +57,18 @@ int mwifiex_wait_queue_complete(struct m
+ 		mwifiex_dbg(adapter, ERROR, "cmd_wait_q terminated: %d\n",
+ 			    status);
+ 		mwifiex_cancel_all_pending_cmd(adapter);
++
++		/* The command response path writes through cmd_node->data_buf.
++		 * On an interrupted wait, the caller can return and release a
++		 * stack-allocated data_buf before a late firmware response is
++		 * processed. Detach the caller-owned buffer from the current
++		 * command so a late response cannot corrupt freed stack memory.
++		 */
++		spin_lock_bh(&adapter->mwifiex_cmd_lock);
++		if (adapter->curr_cmd == cmd_queued)
++			adapter->curr_cmd->data_buf = NULL;
++		spin_unlock_bh(&adapter->mwifiex_cmd_lock);
++
+ 		return status;
  	}
- }
- #endif
-@@ -1604,7 +1604,7 @@ static void scan_object(struct kmemleak_
- 			scan_block(start, end, object);
  
- 			raw_spin_unlock_irqrestore(&object->lock, flags);
--			cond_resched();
-+			cond_resched_tasks_rcu_qs();
- 			raw_spin_lock_irqsave(&object->lock, flags);
- 			if (!(object->flags & OBJECT_ALLOCATED))
- 				break;
-@@ -1626,7 +1626,7 @@ static void scan_object(struct kmemleak_
- 				break;
- 
- 			raw_spin_unlock_irqrestore(&object->lock, flags);
--			cond_resched();
-+			cond_resched_tasks_rcu_qs();
- 			raw_spin_lock_irqsave(&object->lock, flags);
- 		} while (object->flags & OBJECT_ALLOCATED);
- 	} else {
-@@ -1654,7 +1654,7 @@ static void scan_gray_list(void)
- 	 */
- 	object = list_entry(gray_list.next, typeof(*object), gray_list);
- 	while (&object->gray_list != &gray_list) {
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
- 
- 		/* may add new objects to the list */
- 		if (!scan_should_stop())
-@@ -1689,7 +1689,7 @@ static void kmemleak_cond_resched(struct
- 	raw_spin_unlock_irq(&kmemleak_lock);
- 
- 	rcu_read_unlock();
--	cond_resched();
-+	cond_resched_tasks_rcu_qs();
- 	rcu_read_lock();
- 
- 	raw_spin_lock_irq(&kmemleak_lock);
-@@ -1734,7 +1734,7 @@ static void kmemleak_scan_task_stacks(vo
- 			}
- 			put_task_struct(p);
- 		}
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
- 	} while (pid && !stop);
- }
- 
-@@ -1908,7 +1908,7 @@ static void kmemleak_scan(void)
- 			struct page *page = pfn_to_online_page(pfn);
- 
- 			if (!(pfn & 63))
--				cond_resched();
-+				cond_resched_tasks_rcu_qs();
- 
- 			if (!page)
- 				continue;
 
 
