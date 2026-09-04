@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53F5400DE8;
-	Fri,  4 Sep 2026 06:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C92318ED6;
+	Fri,  4 Sep 2026 06:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501742; cv=none; b=Qts9NzgqW+SfXvTAYioXyVfMBNGYhvRj1oslRy+qW6RQ2+xbb+meUz9p63cy207hajOaOUH3f9CIuroe46oex+mtH+G138G1V0gK7hAuudV1aPT/AvsMZp753uSKl4/KctOxOL4BRvGESghZRvcls3oOAUFL+Xkxn0kT1xNZnzw=
+	t=1788501744; cv=none; b=m2ud6PvvCJoi8DaxKpgf3w4+Qkqi42xVn5Sc4yZ5P4mS/MyQgEtzH9j8fWtxrW5iMtcdacyTBJB9IcGhhw/0y42lk3rBuNYMUgS0XVhlrL81b694L/wvwfq6VlbHaFZTYBSC3Ttu9RtmsQLqQzvti3kwaAXHhsmdF92sdvbNwZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501742; c=relaxed/simple;
-	bh=MJJwPkT7Fa1bX4L3JSmW4/hg61jQ4gXJEX5DphJSi7Q=;
+	s=arc-20240116; t=1788501744; c=relaxed/simple;
+	bh=hR5Y2+WWxSrQ/or/DQqwRRbFB+aJlofUCOQSlndV93c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBpJuaUV4cUt3RrFN71XCviAWFWDe2mDx7QC0J0uFTd335y0aSTLguRtcb5dJxoPtbOXDyOMFKtidHlcmytUgBA382pJ5eq0BtsEAfovZv/xpCHUQvSAJHfym34WaG9vfNtmDm0PiN/lr+lenLn/pnz82AEfYDzoOC1col0aVJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnbQjlND; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NOV0TSWBS38oGXBfLG/m/be9EVLBliPLh/ju/gS6WGGMtWxrrlO9xHWEi87SJ/p5CqdNemsySqwirp6FOky2ZrfQukotJLNCn+9A6knQ1m8HTvNf4CoNJrUypGyaxHnIe62tiFVNSHfbV7PyeICkv/hg/XfR0tX86evitT8GAsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjZPdUVO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnbQjlND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2D61F00A3D;
-	Fri,  4 Sep 2026 06:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjZPdUVO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063AC1F00A3E;
+	Fri,  4 Sep 2026 06:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501740;
-	bh=tJHpsqt0vFdLtOdsahLq6qReoNPAMfabjwiCvOhVtKk=;
+	s=korg; t=1788501743;
+	bh=ZFA+hr/Qn0fv7wW0IIpa66ZTZHptFTpxNPqXCBH/g20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TnbQjlNDkjOPSSvtV8IH/c07LzeEt+pVByWaZoE5m7D+9q92rAitUdji9/ras4zIT
-	 FD9MHUy4AGTDQM1U7+b2xeVfnk0Ya4e556ipkases6+NUuCU+dFm038q+sCN3FNfr3
-	 CeBMTqFj4MjnoHSxCfqldZrtTVBEhgedYKJU1EFw=
+	b=YjZPdUVOFLK0XtywfPCFrbICC1CgfwnZZbIbvjk3UvZQ9hO7aKhB5lRTEqcy2SJr+
+	 lRdC3nGKS+la7xuu6Ab0wuyr6xdrjXouSbFzlrRZZDQzuIobw/RnfsozERWXXmuk/I
+	 xbpNvp0QBmuup9caeMDOLTOXW9FB8wyZPcCXeqXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	sashiko-bot@kernel.org,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.18 515/552] i3c: master: adi: initialize the lock before enabling interrupts
-Date: Fri,  4 Sep 2026 07:01:12 +0200
-Message-ID: <20260904045802.307487901@linuxfoundation.org>
+Subject: [PATCH 6.18 516/552] i3c: master: Fix info leak and UAF in device unregister path
+Date: Fri,  4 Sep 2026 07:01:13 +0200
+Message-ID: <20260904045802.328556896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,78 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 8a53f9102a0d3eeb8784999f925028acf339c276 upstream.
+commit d2c743efd2d1ee64e94324664808f623dd865872 upstream.
 
-adi_i3c_master_probe() requests the IRQ and unmasks REG_IRQ_PENDING_CMDR
-before the controller's IBI state, transfer queue list and transfer
-queue lock are initialized.  A pending CMDR interrupt can therefore run
-adi_i3c_master_irq() and take master->xferqueue.lock before the dynamic
-lock has been initialized.
+i3c_master_unregister_i3c_devs() clears i3cdev->dev->desc before
+calling device_unregister().  During device_unregister(),
+device_del() emits a KOBJ_REMOVE uevent and unbinds the driver while
+the device descriptor is still expected to be valid.  As a result,
+i3c_device_uevent() and a racing modalias_show() can observe a NULL
+desc and fall back to an uninitialized stack struct i3c_device_info,
+leaking kernel stack contents in the generated modalias.  Driver
+.remove() callbacks may also encounter an unexpected NULL desc during
+unbind.
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+Keep desc valid until device_unregister() has completed.  Since
+device_unregister() drops the device reference and may free the device,
+take an extra reference with get_device() before unregistering.  Clear
+desc afterwards and release the extra reference with put_device().
+This preserves the release-time invariant that desc must be NULL while
+avoiding both the information leak and a potential use-after-free from
+writing desc after the device has been released.
 
-The grounded PoC kept the probe ordering and the IRQ path
-adi_i3c_master_probe() -> adi_i3c_master_irq() -> xferqueue.lock, with a
-pending CMDR interrupt arriving after REG_IRQ_PENDING_CMDR is unmasked.
-Lockdep reported:
-
-  INFO: trying to register non-static key.
-  you didn't initialize this object before use?
-  lock_acquire+0xbb/0x290
-  _raw_spin_lock_irqsave+0x36/0x60
-  adi_i3c_master_irq+0x32/0x56 [vuln_msv]
-  adi_i3c_master_probe+0x5a/0xf47 [vuln_msv]
-
-Initialize the transfer queue and IBI state before requesting and
-unmasking the IRQ.
-
-Fixes: a79ac2cdc91d ("i3c: master: Add driver for Analog Devices I3C Controller IP")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/linux-i3c/20260702190003.8BF741F000E9@smtp.kernel.org/
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260617150138.628578-1-runyu.xiao@seu.edu.cn
+Link: https://patch.msgid.link/20260723075747.34049-1-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/adi-i3c-master.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/i3c/master.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/i3c/master/adi-i3c-master.c
-+++ b/drivers/i3c/master/adi-i3c-master.c
-@@ -967,17 +967,9 @@ static int adi_i3c_master_probe(struct p
- 	writel(0x00, master->regs + REG_ENABLE);
- 	writel(0x00, master->regs + REG_IRQ_MASK);
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2808,11 +2808,12 @@ static void i3c_master_unregister_i3c_de
+ 		if (!i3cdev->dev)
+ 			continue;
  
--	ret = devm_request_irq(&pdev->dev, irq, adi_i3c_master_irq, 0,
--			       dev_name(&pdev->dev), master);
--	if (ret)
--		return ret;
--
- 	platform_set_drvdata(pdev, master);
- 
- 	master->free_rr_slots = GENMASK(ADI_MAX_DEVS, 1);
--
--	writel(REG_IRQ_PENDING_CMDR, master->regs + REG_IRQ_MASK);
--
- 	spin_lock_init(&master->ibi.lock);
- 	master->ibi.num_slots = 15;
- 	master->ibi.slots = devm_kcalloc(&pdev->dev, master->ibi.num_slots,
-@@ -989,6 +981,13 @@ static int adi_i3c_master_probe(struct p
- 	spin_lock_init(&master->xferqueue.lock);
- 	INIT_LIST_HEAD(&master->xferqueue.list);
- 
-+	ret = devm_request_irq(&pdev->dev, irq, adi_i3c_master_irq, 0,
-+			       dev_name(&pdev->dev), master);
-+	if (ret)
-+		return ret;
-+
-+	writel(REG_IRQ_PENDING_CMDR, master->regs + REG_IRQ_MASK);
-+
- 	return i3c_master_register(&master->base, &pdev->dev,
- 				   &adi_i3c_master_ops, false);
+-		i3cdev->dev->desc = NULL;
+-		if (device_is_registered(&i3cdev->dev->dev))
++		if (device_is_registered(&i3cdev->dev->dev)) {
++			get_device(&i3cdev->dev->dev);
+ 			device_unregister(&i3cdev->dev->dev);
+-		else
+-			put_device(&i3cdev->dev->dev);
++		}
++		i3cdev->dev->desc = NULL;
++		put_device(&i3cdev->dev->dev);
+ 		i3cdev->dev = NULL;
+ 	}
  }
 
 
