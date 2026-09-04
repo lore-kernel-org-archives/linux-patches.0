@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934C53876CC;
-	Fri,  4 Sep 2026 05:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783403AA187;
+	Fri,  4 Sep 2026 05:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498390; cv=none; b=J+Q9fUtw839jw7abAKAK2vjIHuSTwvgLYI2A5yopLKm3OGQPWbNqtVIRuMCTk1tjFL7WUC0vhRvagbH1qver8J7o2ZQ4nCwir3fOtjlttBg3k3RrroBLsf4YE+LNB056msi57dZTwvNkM20kAg5I70E+o8BKFLj5h6KokuhvPnE=
+	t=1788498394; cv=none; b=XhEYKpHt/HF+X20lQR7kGSSyV4i3p+b9TBIp8gQoVOkex4y/nc/IZTtD6M3YoIOhOAGyPH9r6OfWKN2XR7y7NSQHrSJKPWZUNIPVEMRUOeSPywJJkvSe617ddell5DBhWyVDRCn0Nwhr556E70HAaFIoINv/alB64so4nEogqnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498390; c=relaxed/simple;
-	bh=sA/NqdVn7cZ6n7LX/HEVDmhO3LrlzILicBEF+OV6igU=;
+	s=arc-20240116; t=1788498394; c=relaxed/simple;
+	bh=uTGJC1ucixC312fR4WkQTUhLQFruXPk0Ti6mZeYQZcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMBf9KISTZ2n+BIV/7qCEsvyS8wYAkzpTkVwOckkOUOISr1bjapPLxLoJZs/HeSRfOlPtFxEuau7VYDieOb5RZfbcLwfTagGWhm0mXlzXlxZlbVf4j0BigKQYcqqeoXyYIcGaRPJ7IRXnsQGyy8pwHNwN5ousI/aHIXxSuxDTjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4TXkXRb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tz0lPULQYE5bdJ5ID7wC1LvvJwvR+QyD4U/RihyFbhqEQlfZZKpirBouz17iL4OPlQzRyS4das/+khhGBplgBj6tILKrkGYgw6yZo05GE1MLhefHvePZ8NqUByk5Cwvp7dc8oKC2es2Z0HrPWK+tq8OzgQ6rFHvI6Ldogs2Tmwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USIDHo6n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4TXkXRb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71331F00A3D;
-	Fri,  4 Sep 2026 05:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USIDHo6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01671F00A3D;
+	Fri,  4 Sep 2026 05:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498389;
-	bh=GSV3P1j8UOPdi7LeJRxWGarQmnebaUaicnFoBmZzhMc=;
+	s=korg; t=1788498392;
+	bh=T3ouV8Q6p0EM79CewoQ+gJuer1qW3f5SAFw+d/sMy3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N4TXkXRb24bSXRndBYv/OKjQXYWGCjxe++2ni2nKcDJnsTwARsIkQ+euAexUXtSWY
-	 qEr2ONDxPGYV+Ri2Asi0Mv1FB6RuQlEPpv6ypUcAA+zH6ZNrY1fuxGstYExh+CEr2D
-	 tjuOy5ViSf9oWwShjv5MZFYXrM+g2Hhcy47qG+sE=
+	b=USIDHo6nl0hpJPblb8lHLeSmFQGBh19VO/cpb7BsCo3nLTmNl197Z3xguGTVWyYnx
+	 aZ3Cy6xDIL/a29Z6+degcgPJiHzvc4SgDZorNuhSp6hS6y7EH4wknspxyj7FGXd5o8
+	 haZ//yiNhrh8nQQ9fmT+4pM3dBGLGWIHmv2b9Cuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Barry Song <baohua@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Kairui Song <kasong@tencent.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baoquan He <baoquan.he@linux.dev>,
-	Chris Li <chrisl@kernel.org>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Oscar Salvador <osalvador@suse.de>,
+	Hugh Dickins <hughd@google.com>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 046/713] mm, swap: ratelimit bad swap entry reports
-Date: Fri,  4 Sep 2026 06:50:14 +0200
-Message-ID: <20260904045804.861727572@linuxfoundation.org>
+Subject: [PATCH 7.2 047/713] mm/gup: fix always draining LRU caches in collect_longterm_unpinnable_folios()
+Date: Fri,  4 Sep 2026 06:50:15 +0200
+Message-ID: <20260904045804.884187104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -59,63 +56,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-commit f9dc428249ed962a70acf301f01eae8578449161 upstream.
+commit 078e1a0fc41a42baaf113383b52dab8874c0b967 upstream.
 
-A corrupt page table hands the same bogus entry to get_swap_device() on
-every access to the mapping, and every rejection is logged.  One machine
-logged 6185620 copies of the same line in a few hours.
+folio_may_be_lru_cached() is currently only true for small folios, and
+for small folios FOLL_PIN adds GUP_PIN_COUNTING_BIAS references instead
+of 1 in try_grab_folio()/try_grab_folio_fast().
 
-swap_dup_entry_direct() prints the same message from the fork path, once
-per call: the WARN_ON_ONCE() guarding it warns once, the pr_err() inside
-does not.
+Consequently, our
 
-Rate limit all three prints.
+	folio_ref_count(folio) != folio_expected_ref_count(folio) + 1
 
-Link: https://lore.kernel.org/20260818-swap_part_one-v1-1-a4fc58119fc0@debian.org
-Fixes: 23b230ba8ac3 ("mm/swap: print bad swap offset entry in get_swap_device")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Acked-by: Kairui Song <kasong@tencent.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Oscar Salvador <osalvador@suse.de>
+check in collect_longterm_unpinnable_folios() will currently always
+identify "reference mismatch" and first drain the local LRU cache to then
+drain the LRU cache on all CPUs, as collect_longterm_unpinnable_folios()
+is really called after pinning the folios with FOLL_PIN.
+
+Add a comment because the current code is not quite intuitive: we used to
+drain only to make sure the folio_isolate_lru() would succeed. But then we
+also started draining to make later migration more reliable.
+
+We'll refactor that code soon a bit, to also make it usable in other
+context where we really want to remove any references from LRU caches.
+
+Let's add CC stable, because having an easy way for excessive LRU cache
+draining on all CPUs does not sound right. In common scenarios we
+don't expect to ever have to drain.
+
+Link: https://lore.kernel.org/20260731-check_and_migrate_movable_folios-v1-1-e0002d7b791e@kernel.org
+Fixes: 98c6d259319e ("mm/gup: check ref_count instead of lru before migration")
+Fixes: a09a8a1fbb37 ("mm/gup: local lru_add_drain() to avoid lru_add_drain_all()")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Hugh Dickins <hughd@google.com>
+Cc: Ackerley Tng <ackerleytng@google.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/swapfile.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/gup.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/mm/swapfile.c
-+++ b/mm/swapfile.c
-@@ -1893,11 +1893,11 @@ struct swap_info_struct *get_swap_device
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2273,6 +2273,7 @@ static unsigned long collect_longterm_un
  
- 	return si;
- bad_nofile:
--	pr_err("%s: %s%08lx\n", __func__, Bad_file, entry.val);
-+	pr_err_ratelimited("%s: %s%08lx\n", __func__, Bad_file, entry.val);
- out:
- 	return NULL;
- put_out:
--	pr_err("%s: %s%08lx\n", __func__, Bad_offset, entry.val);
-+	pr_err_ratelimited("%s: %s%08lx\n", __func__, Bad_offset, entry.val);
- 	percpu_ref_put(&si->users);
- 	return NULL;
- }
-@@ -3871,7 +3871,7 @@ int swap_dup_entry_direct(swp_entry_t en
+ 	for (folio = pofs_get_folio(pofs, i); folio;
+ 	     folio = pofs_next_folio(folio, pofs, &i)) {
++		const int pin_refs = folio_has_pincount(folio) ? 1 : GUP_PIN_COUNTING_BIAS;
  
- 	si = swap_entry_to_info(entry);
- 	if (WARN_ON_ONCE(!si)) {
--		pr_err("%s%08lx\n", Bad_file, entry.val);
-+		pr_err_ratelimited("%s%08lx\n", Bad_file, entry.val);
- 		return -EINVAL;
- 	}
+ 		if (folio_is_longterm_pinnable(folio))
+ 			continue;
+@@ -2287,15 +2288,20 @@ static unsigned long collect_longterm_un
+ 			continue;
+ 		}
  
++		/*
++		 * We drain not only to make the folio_isolate_lru() succeed,
++		 * but also to remove any other folio references from LRU
++		 * caches.
++		 */
+ 		if (drained == 0 && folio_may_be_lru_cached(folio) &&
+ 				folio_ref_count(folio) !=
+-				folio_expected_ref_count(folio) + 1) {
++				folio_expected_ref_count(folio) + pin_refs) {
+ 			lru_add_drain();
+ 			drained = 1;
+ 		}
+ 		if (drained == 1 && folio_may_be_lru_cached(folio) &&
+ 				folio_ref_count(folio) !=
+-				folio_expected_ref_count(folio) + 1) {
++				folio_expected_ref_count(folio) + pin_refs) {
+ 			lru_add_drain_all();
+ 			drained = 2;
+ 		}
 
 
