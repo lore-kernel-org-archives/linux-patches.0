@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7DB41BA82;
-	Fri,  4 Sep 2026 06:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0465141CB50;
+	Fri,  4 Sep 2026 06:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502549; cv=none; b=eb72gEkP4W+1vXzz+0H0WZMNvgLiwbtw48RO1zA8kvY/6GmdLV4TbLWly6TiJjS3Jn4ntx3WMXUluAYQ3G/3da3uYylYMhz7WvdvazwEuKj8kujAUShzLkfEqjS1acxfyduRC/I4F/wGGbdkGbUoEBAa/CvCZfpkjNAHMGqhXbA=
+	t=1788502552; cv=none; b=LS3Eb65Yy9vMJCMd3MLKxIa9b/E8OqbeSbKenVdc1l+AzJYSdZUDhxb20l/MMj6GbmvroQ3IWs6WaB8ANs0g34zB2oNcd430ZfcVlfGyAAKiUQ4Kfdz1DYkI2mNCLtflCk5rZA5S+UONZxyWqwc2kwirBEYPPTs3EX8dzrlvArY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502549; c=relaxed/simple;
-	bh=dj8V3OlfIZrJ2Gd7ftTwCi1a9alzSlRZXVDvWGGNNCE=;
+	s=arc-20240116; t=1788502552; c=relaxed/simple;
+	bh=IjTkeXNy3hT31Nwa8KeJyOlUsjVRmmwkFlJoN3dhJjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ukUfGwHmG+JpHIu/Gk4yApil55M+JHfD90vWo0hympG1v//Sfio1XMGHblsTbwEB0PiGb8aYiX0ZnIA7+cNJmExUuUcmfVWNmvsTfXJDVYx6a+xPuX4SGSVDy1ysT1J4ZweZp1M9sI7aMpeVZOdVRgQ4wpLI2288PXGGOKSoxUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBf2TVFF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DOKrFT2jujiB7sz12+4sl59RThMzwu4SrKhk1TkoOhBB9TnFMfmBAdKF7aupaWZNF5muJyE6QvWUH+0KG5IZwUMxhVGvnR1Be2VtmxgQzVREv0j8H/+p10QPs+1t9f99R71lidAgekn4eNd+QAjwg+Xs0VNSSbE7tUvjDJSpYEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2xu9a/l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBf2TVFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFD51F00A3D;
-	Fri,  4 Sep 2026 06:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2xu9a/l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326B81F00A3D;
+	Fri,  4 Sep 2026 06:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502547;
-	bh=9Sk0osuVMqSZC3PECpfHz8vqi4mk3QJ1BFmOYZXckVY=;
+	s=korg; t=1788502550;
+	bh=D4vamMytn3e2LBYvvGeC/Qvk4NWnAHu0Rzl+7K38S1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jBf2TVFFp0lZ5wXhPXdhJY+HYuNkXoYaMyG08CS0yViE1TmJMTBbOphJco/d8LcAH
-	 9aZ1rx/cUIQ/azVh8NjdxfFugP2fJAzMD03SIrZgnSJI875pTEljJQ66xMiTF+DEhk
-	 2CDSTr6uaSVPIR2ZwOCLdZKWI77rxH3lPJluz4d4=
+	b=M2xu9a/lrXtxVGrr+ED7wrFG6dBzDHU+7fwQGxJ8s3QwBHBX8eKkXhErOfArC5I5g
+	 oHhh1nDFDLDw6QN5FdizWfv8fChhT6cOL76FTd2mlYfesEIeIAt8lke+MRXv2jpepd
+	 uxGbAGqRrvntwD9dx/PzjLBMOSJKtbQNNBy98+Ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -35,9 +35,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxiao Bi <junxiao.bi@oracle.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 246/403] ocfs2: cluster: dont sleep while holding o2hb_live_lock in o2hb_region_pin()
-Date: Fri,  4 Sep 2026 07:00:49 +0200
-Message-ID: <20260904045740.466472075@linuxfoundation.org>
+Subject: [PATCH 6.12 247/403] ocfs2: cluster: avoid lock order inversion in o2hb_region_pin() from drop_item
+Date: Fri,  4 Sep 2026 07:00:50 +0200
+Message-ID: <20260904045740.488558686@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,7 +50,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -59,77 +58,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit af09df89db9a68a1d76df0f75667998135bc8d65 upstream.
+commit cd789996db3c87427343f54f509d17810bd7ba7c upstream.
 
-Patch series "ocfs2: cluster: o2hb_region_pin() fixes", v2.
+o2hb_heartbeat_group_drop_item() is called from configfs rmdir with the
+parent directory's inode_lock held.  It calls o2hb_region_pin() ->
+o2nm_depend_item() -> configfs_depend_item(), which acquires the configfs
+root inode_lock.  This creates a parent -> root inode_lock nesting that
+could deadlock against paths taking root -> parent (e.g.  subsystem
+unregistration).
 
-This series fixes three related issues in o2hb_region_pin(), all are from
-the original implementation in commit: 58a3158a5d17 ("ocfs2/cluster:
-Pin/unpin o2hb regions"):
+Fix this by using configfs_depend_item_unlocked() when o2hb_region_pin()
+is called from a configfs callback context.  This variant skips the root
+inode_lock when caller and target are in the same subsystem, which is safe
+because VFS already holds a lock preventing unregistration.
 
-1) It is called with o2hb_live_lock (a spinlock) held, but the
-   underlying configfs_depend_item() sleeps (takes inode rwsem and
-   pins the filesystem).  This triggers BUG under
-   CONFIG_DEBUG_ATOMIC_SLEEP.
+Add o2nm_depend_item_unlocked() wrapper and a from_callback parameter to
+o2hb_region_pin() to select the appropriate variant.
 
-2) When called from the configfs drop_item callback, it creates a
-   lock order inversion: parent inode_lock -> configfs root
-   inode_lock, which can deadlock against subsystem unregistration
-   paths taking root -> parent.
-
-3) If pinning fails partway through o2hb_region_inc_user(), the
-   o2hb_dependent_users counter is leaked and partially-pinned
-   regions are never released, leaving heartbeat regions
-   unprotected on subsequent mounts.
-
-Patch 1 reworks o2hb_region_pin() to drop o2hb_live_lock across each
-sleeping configfs_depend_item() call, using a config_item reference to
-keep the region alive while unlocked.
-
-Patch 2 adds a from_callback parameter to select
-configfs_depend_item_unlocked() when called from configfs context,
-avoiding the inode_lock nesting.
-
-Patch 3 fixes the error path in o2hb_region_inc_user() to unpin and
-decrement the counter on failure.
-
-
-This patch (of 3):
-
-o2hb_region_pin() is always called with the o2hb_live_lock spinlock held
-(from o2hb_region_inc_user() and o2hb_heartbeat_group_drop_item()), but it
-calls o2nm_depend_item() -> configfs_depend_item(), which sleeps: it pins
-the configfs filesystem and takes the configfs root inode rwsem.  Under
-CONFIG_DEBUG_ATOMIC_SLEEP this triggers:
-
-  BUG: sleeping function called from invalid context at kernel/locking/rwsem.c
-  in_atomic(): 1, ... name: mount.ocfs2
-    down_write
-    configfs_depend_item
-    o2hb_region_pin
-    o2hb_region_inc_user
-    o2hb_register_callback
-    dlm_register_domain_handlers
-    ...
-    ocfs2_dlm_init
-    ocfs2_mount_volume
-    ocfs2_fill_super
-
-Rework o2hb_region_pin() to pin one region at a time with the lock dropped
-across the sleeping call: under o2hb_live_lock find the next eligible
-region and take a config_item reference to keep it alive, drop the lock,
-call o2nm_depend_item(), then retake the lock and record the pin.  The
-config_item_put() is done with the lock released as well, since
-o2hb_region_release() also acquires o2hb_live_lock and can sleep.  The
-region list may change while unlocked, so the scan restarts from the top
-after each pin.  Local heartbeat still pins only the matching region;
-global heartbeat pins all eligible regions.
-
-The unpin path is unaffected: configfs_undepend_item() only takes a
-spinlock and does not sleep.
-
-Link: https://lore.kernel.org/20260722124933.430554-1-joseph.qi@linux.alibaba.com
-Link: https://lore.kernel.org/20260722124933.430554-2-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20260722124933.430554-3-joseph.qi@linux.alibaba.com
 Fixes: 58a3158a5d17 ("ocfs2/cluster: Pin/unpin o2hb regions")
 Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Changwei Ge <gechangwei@live.cn>
@@ -142,205 +88,96 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/cluster/heartbeat.c |  126 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 101 insertions(+), 25 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c   |   17 ++++++++++-------
+ fs/ocfs2/cluster/nodemanager.c |    6 ++++++
+ fs/ocfs2/cluster/nodemanager.h |    1 +
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
 --- a/fs/ocfs2/cluster/heartbeat.c
 +++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -42,6 +42,14 @@ static DECLARE_RWSEM(o2hb_callback_sem);
-  * whenever any of the threads sees activity from the node in its region.
+@@ -145,7 +145,7 @@ static unsigned int o2hb_dependent_users
+  * In global heartbeat mode, we pin/unpin all o2hb regions. This solution
+  * works for both file system and userdlm domains.
   */
- static DEFINE_SPINLOCK(o2hb_live_lock);
-+/*
-+ * Serializes region pin/unpin dependency management (o2hb_dependent_users
-+ * and the o2nm_depend_item()/o2nm_undepend_item() calls). o2hb_region_pin()
-+ * has to drop o2hb_live_lock across the sleeping o2nm_depend_item(), so the
-+ * spinlock alone can no longer keep pin and unpin mutually exclusive; this
-+ * mutex, taken outside o2hb_live_lock, does.
-+ */
-+static DEFINE_MUTEX(o2hb_dependency_mutex);
- static struct list_head o2hb_live_slots[O2NM_MAX_NODES];
- static unsigned long o2hb_live_node_bitmap[BITS_TO_LONGS(O2NM_MAX_NODES)];
- static LIST_HEAD(o2hb_node_events);
-@@ -2116,6 +2124,7 @@ static void o2hb_heartbeat_group_drop_it
- 	 * If global heartbeat active and there are dependent users,
- 	 * pin all regions if quorum region count <= CUT_OFF
- 	 */
-+	mutex_lock(&o2hb_dependency_mutex);
- 	spin_lock(&o2hb_live_lock);
+-static int o2hb_region_pin(const char *region_uuid);
++static int o2hb_region_pin(const char *region_uuid, bool from_callback);
+ static void o2hb_region_unpin(const char *region_uuid);
  
- 	if (!o2hb_dependent_users)
-@@ -2127,6 +2136,7 @@ static void o2hb_heartbeat_group_drop_it
+ /* Only sets a new threshold if there are no active regions.
+@@ -2132,7 +2132,7 @@ static void o2hb_heartbeat_group_drop_it
+ 
+ 	if (bitmap_weight(o2hb_quorum_region_bitmap,
+ 			   O2NM_MAX_REGIONS) <= O2HB_PIN_CUT_OFF)
+-		o2hb_region_pin(NULL);
++		o2hb_region_pin(NULL, true);
  
  unlock:
  	spin_unlock(&o2hb_live_lock);
-+	mutex_unlock(&o2hb_dependency_mutex);
- }
- 
- static ssize_t o2hb_heartbeat_group_dead_threshold_show(struct config_item *item,
-@@ -2265,46 +2275,108 @@ EXPORT_SYMBOL_GPL(o2hb_setup_callback);
+@@ -2273,7 +2273,7 @@ EXPORT_SYMBOL_GPL(o2hb_setup_callback);
+  * In local, we only pin the matching region. In global we pin all the active
+  * regions.
   */
- static int o2hb_region_pin(const char *region_uuid)
+-static int o2hb_region_pin(const char *region_uuid)
++static int o2hb_region_pin(const char *region_uuid, bool from_callback)
  {
--	int ret = 0, found = 0;
--	struct o2hb_region *reg;
-+	int ret = 0, found;
-+	struct o2hb_region *reg, *pinned;
- 	char *uuid;
- 
- 	assert_spin_locked(&o2hb_live_lock);
- 
--	list_for_each_entry(reg, &o2hb_all_regions, hr_all_item) {
--		if (reg->hr_item_dropped)
--			continue;
-+	do {
-+		found = 0;
-+		pinned = NULL;
- 
--		uuid = config_item_name(&reg->hr_item);
-+		list_for_each_entry(reg, &o2hb_all_regions, hr_all_item) {
-+			if (reg->hr_item_dropped)
-+				continue;
- 
--		/* local heartbeat */
--		if (region_uuid) {
--			if (strcmp(region_uuid, uuid))
-+			uuid = config_item_name(&reg->hr_item);
-+
-+			/* local heartbeat */
-+			if (region_uuid) {
-+				if (strcmp(region_uuid, uuid))
-+					continue;
-+				found = 1;
-+			}
-+
-+			if (reg->hr_item_pinned || reg->hr_item_dropped) {
-+				if (found)
-+					break;
- 				continue;
--			found = 1;
-+			}
-+
-+			/*
-+			 * Found a region that needs pinning. Take a reference
-+			 * so it stays alive while we drop the lock below.
-+			 */
-+			pinned = reg;
-+			config_item_get(&reg->hr_item);
-+			break;
- 		}
- 
--		if (reg->hr_item_pinned || reg->hr_item_dropped)
--			goto skip_pin;
-+		if (!pinned)
-+			break;
-+
-+		uuid = config_item_name(&pinned->hr_item);
-+
-+		/*
-+		 * o2nm_depend_item() -> configfs_depend_item() can sleep (it
-+		 * takes the configfs root inode rwsem), so it must not run
-+		 * under o2hb_live_lock. Drop the lock across it; @pinned is
-+		 * kept alive by the reference taken above. The region list may
-+		 * change while unlocked, so we rescan from the top afterwards.
-+		 */
-+		spin_unlock(&o2hb_live_lock);
+ 	int ret = 0, found;
+ 	struct o2hb_region *reg, *pinned;
+@@ -2328,7 +2328,10 @@ static int o2hb_region_pin(const char *r
+ 		spin_unlock(&o2hb_live_lock);
  
  		/* Ignore ENOENT only for local hb (userdlm domain) */
--		ret = o2nm_depend_item(&reg->hr_item);
-+		ret = o2nm_depend_item(&pinned->hr_item);
-+
-+		spin_lock(&o2hb_live_lock);
+-		ret = o2nm_depend_item(&pinned->hr_item);
++		if (from_callback)
++			ret = o2nm_depend_item_unlocked(&pinned->hr_item);
++		else
++			ret = o2nm_depend_item(&pinned->hr_item);
+ 
+ 		spin_lock(&o2hb_live_lock);
  		if (!ret) {
--			mlog(ML_CLUSTER, "Pin region %s\n", uuid);
--			reg->hr_item_pinned = 1;
--		} else {
--			if (ret == -ENOENT && found)
--				ret = 0;
--			else {
--				mlog(ML_ERROR, "Pin region %s fails with %d\n",
--				     uuid, ret);
-+			/*
-+			 * o2hb_live_lock was dropped across o2nm_depend_item().
-+			 * o2hb_set_quorum_device() runs in the heartbeat thread
-+			 * without o2hb_dependency_mutex, so for global heartbeat
-+			 * it may have crossed O2HB_PIN_CUT_OFF and unpinned the
-+			 * regions while we slept. If that happened this pin is
-+			 * no longer wanted; undo it and stop rather than
-+			 * resurrecting it on the rescan below.
-+			 */
-+			if (!region_uuid &&
-+			    bitmap_weight(o2hb_quorum_region_bitmap,
-+					  O2NM_MAX_REGIONS) > O2HB_PIN_CUT_OFF) {
-+				o2nm_undepend_item(&pinned->hr_item);
-+				spin_unlock(&o2hb_live_lock);
-+				config_item_put(&pinned->hr_item);
-+				spin_lock(&o2hb_live_lock);
- 				break;
- 			}
-+			mlog(ML_CLUSTER, "Pin region %s\n", uuid);
-+			pinned->hr_item_pinned = 1;
-+		} else if (ret == -ENOENT && (found || !region_uuid)) {
-+			/*
-+			 * For local hb (found): ignore ENOENT from userdlm
-+			 * domains as before.  For global hb (!region_uuid):
-+			 * the region may have been detached from configfs
-+			 * while the lock was dropped — skip it and continue
-+			 * pinning the remaining regions.
-+			 */
-+			ret = 0;
-+		} else {
-+			mlog(ML_ERROR, "Pin region %s fails with %d\n",
-+			     uuid, ret);
- 		}
--skip_pin:
--		if (found)
--			break;
--	}
-+
-+		/*
-+		 * config_item_put() may drop the last reference and run
-+		 * o2hb_region_release(), which also grabs o2hb_live_lock and
-+		 * can sleep, so it must happen with the lock released.
-+		 */
-+		spin_unlock(&o2hb_live_lock);
-+		config_item_put(&pinned->hr_item);
-+		spin_lock(&o2hb_live_lock);
-+
-+		/* local hb pins a single matching region */
-+	} while (!ret && !region_uuid);
- 
- 	return ret;
- }
-@@ -2349,6 +2421,7 @@ static int o2hb_region_inc_user(const ch
- {
- 	int ret = 0;
- 
-+	mutex_lock(&o2hb_dependency_mutex);
- 	spin_lock(&o2hb_live_lock);
+@@ -2426,8 +2429,8 @@ static int o2hb_region_inc_user(const ch
  
  	/* local heartbeat */
-@@ -2371,11 +2444,13 @@ static int o2hb_region_inc_user(const ch
+ 	if (!o2hb_global_heartbeat_active()) {
+-	    ret = o2hb_region_pin(region_uuid);
+-	    goto unlock;
++		ret = o2hb_region_pin(region_uuid, false);
++		goto unlock;
+ 	}
+ 
+ 	/*
+@@ -2440,7 +2443,7 @@ static int o2hb_region_inc_user(const ch
+ 
+ 	if (bitmap_weight(o2hb_quorum_region_bitmap,
+ 			   O2NM_MAX_REGIONS) <= O2HB_PIN_CUT_OFF)
+-		ret = o2hb_region_pin(NULL);
++		ret = o2hb_region_pin(NULL, false);
  
  unlock:
  	spin_unlock(&o2hb_live_lock);
-+	mutex_unlock(&o2hb_dependency_mutex);
- 	return ret;
+--- a/fs/ocfs2/cluster/nodemanager.c
++++ b/fs/ocfs2/cluster/nodemanager.c
+@@ -776,6 +776,12 @@ int o2nm_depend_item(struct config_item
+ 	return configfs_depend_item(&o2nm_cluster_group.cs_subsys, item);
  }
  
- static void o2hb_region_dec_user(const char *region_uuid)
++int o2nm_depend_item_unlocked(struct config_item *item)
++{
++	return configfs_depend_item_unlocked(&o2nm_cluster_group.cs_subsys,
++					     item);
++}
++
+ void o2nm_undepend_item(struct config_item *item)
  {
-+	mutex_lock(&o2hb_dependency_mutex);
- 	spin_lock(&o2hb_live_lock);
+ 	configfs_undepend_item(item);
+--- a/fs/ocfs2/cluster/nodemanager.h
++++ b/fs/ocfs2/cluster/nodemanager.h
+@@ -64,6 +64,7 @@ void o2nm_node_get(struct o2nm_node *nod
+ void o2nm_node_put(struct o2nm_node *node);
  
- 	/* local heartbeat */
-@@ -2394,6 +2469,7 @@ static void o2hb_region_dec_user(const c
- 
- unlock:
- 	spin_unlock(&o2hb_live_lock);
-+	mutex_unlock(&o2hb_dependency_mutex);
- }
- 
- int o2hb_register_callback(const char *region_uuid,
+ int o2nm_depend_item(struct config_item *item);
++int o2nm_depend_item_unlocked(struct config_item *item);
+ void o2nm_undepend_item(struct config_item *item);
+ int o2nm_depend_this_node(void);
+ void o2nm_undepend_this_node(void);
 
 
