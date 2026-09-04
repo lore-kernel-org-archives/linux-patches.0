@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FB7346FC3;
-	Fri,  4 Sep 2026 06:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BC837F306;
+	Fri,  4 Sep 2026 06:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501699; cv=none; b=mlV1V0JYcdYn7WhycP+u2vfSgmwZJRK78ythXSpTvz7LZYbdoWpT9q5hh81SuFmLIZv8zL87uLuxfWv1fvIOF13olnn3uxEQ1f3+62KxvPAluNX9eTxQI3IPs9ANKwlK16d8X9GiUEI5L2dYRZDn8RqvCeASnNrGzSWP1tvmFEk=
+	t=1788501702; cv=none; b=oaBvc1+XuE1c+tw62sCOoChF6B/jhQuKMqCGFDMQyhOhWtk3Z2eLhYJKNZZKpxEmTv1LU9i/1YFY3tqZxo8F68Ma6jPUkTJesz6lAgr97iS+2QWcHrphJYTJBg3KbN4kEd4ouuAoiA/csyvCXUOBywVEiBJRYhQwAyyjlJLcRew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501699; c=relaxed/simple;
-	bh=CsGrHhDQBnpLeR8WZzCJSNFprKIIamSF600xjpOKO0w=;
+	s=arc-20240116; t=1788501702; c=relaxed/simple;
+	bh=mqE2nGr70+Qh7r4WlveZb4NRuAysh91wtIr6090TGFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AjereLHuGOV7+BjQQn2XsECWqHaO156tdfYQ7bOQehx2rXDmUr/9Zo1RhFbtmrgxPAMlUVdkUEXO4LWkKdSnnVkwLxAtDyff2+7e4J0fHMmmh7l11PulkxIJFV87m12uWKahtB+9/QtFiYMfKzUpal8iUDveeWNyXVpOAJGiLO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcTJNiZG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yz+xiMMcZa1iA6iIvWxglns3+69+CvNMp+9YpJ36eXDDOG6odDtWWSBYxViSJiR+8mWrFmpjkZlt8idIduSTYOt8CoRzTxMO+arnxB3a0B2M3DiXwGvhSEvVW/oLTq+Pcde+h/acPmsBRISAkpO/VXv/fvfRmvUej8ALfYIyjXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+R5itD5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcTJNiZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F71D1F00A3D;
-	Fri,  4 Sep 2026 06:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+R5itD5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6ED1F00A3D;
+	Fri,  4 Sep 2026 06:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501698;
-	bh=6N9kjtFzz5jSvKvo/omZ5C8lMl+IGHZNRDccaeS7hbg=;
+	s=korg; t=1788501700;
+	bh=ImY+heLHJcm9QsqMfavv0Eh97dE5pGECIQNcqileaWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PcTJNiZGmVj5qN1bsFzhHEarVxHH5CvB+73CLnghGqWR5ddRPgVz3msJF9GoMtf3H
-	 LJJYTVsidbJnYs5Px23P+/KWjlVEaftR7QZJc124bS3wgiKrgARgGh0hJuL+LkXh7Q
-	 MIyoaOCGkC72LtdycS4giYfDlZmv8ZJ/+23TBb10=
+	b=d+R5itD5lD2SnZlAEGOCQe+5tAkRS0Bky1eQ3gZkPSNKaVnRAyyGTiOnakMksasN1
+	 8/iU2QK4dEqXHjilIbwDzvwLb+fj/AJYB5FtprWUANtcJnVVrq0iP6aKKBhJW+Hdqd
+	 oiorIA2yzO+TaNnYn6bIrvtDvqY8WSuIHtVhVLxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 502/552] net/smc: carry oversized SMC-Rv2 LLC messages in the queue entry
-Date: Fri,  4 Sep 2026 07:00:59 +0200
-Message-ID: <20260904045802.033371357@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 503/552] arch_numa: avoid false positive fortify warning in setup_node_to_cpumask_map()
+Date: Fri,  4 Sep 2026 07:01:00 +0200
+Message-ID: <20260904045802.054703817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,305 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 8d3c1ab82c11d4fadebf817a825fd221b3e197ea ]
+commit f2b1cb39d5ccab090d8353788f186f7e7a1fffd4 upstream.
 
-smc_llc_rmt_delete_rkey() and smc_llc_save_add_link_rkeys() read the part
-of a v2 message that does not fit into the 44-byte union smc_llc_msg, and
-both bound themselves by the size of the buffer it landed in, not by what
-arrived. On a link with a shared v2 receive buffer a 44-byte
-DELETE_RKEY_V2 declaring 255 rkeys reaches rkey[9..254] in whatever an
-earlier message left in lgr->wr_rx_buf_v2, and passes each of them to
-smc_rtoken_delete(). One of those 255 matched a registered rtoken and
-deleted it. An ADD_LINK on such a link installs up to 255 rtokens from
-the same bytes.
+When building ARCH=riscv using clang with CONFIG_FORTIFY_SOURCE and
+CONFIG_UBSAN_BOUNDS enabled, CONFIG_NR_CPUS > 64, and the default value of
+2 for CONFIG_NODES_SHIFT, there is a compiletime warning from the fortify
+routines.
 
-Copy the tail into the queue entry, so its length is the length of the
-message that arrived, and declare the rkeys that fit inline as a member of
-the union instead of reaching them through a cast. The same
-DELETE_RKEY_V2 now processes the 9 rkeys it carries. The copy is limited
-to the longest tail the two functions can read, so the peer does not pick
-the size of the entry.
+  In file included from mm/arch_numa.c:11:
+  In file included from include/linux/acpi.h:14:
+  In file included from include/linux/resource_ext.h:11:
+  In file included from include/linux/slab.h:17:
+  In file included from include/linux/gfp.h:7:
+  In file included from include/linux/mmzone.h:8:
+  In file included from include/linux/spinlock.h:60:
+  In file included from include/linux/interrupt_rc.h:17:
+  In file included from include/linux/smp.h:13:
+  In file included from include/linux/cpumask.h:11:
+  In file included from include/linux/bitmap.h:13:
+  In file included from include/linux/string.h:383:
+  include/linux/fortify-string.h:430:4: warning: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Wattribue-warning]
+    430 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  include/linux/fortify-string.h:430:4: note: called by function 'fortify_memset_chk(unsigned long, unsigned long, unsigned long)'
+  include/linux/bitmap.h:248:3: note: inlined by function 'setup_node_to_cpumask_map'
+    248 |                 memset(dst, 0, len);
+        |                 ^
+  include/linux/fortify-string.h:462:25: note: expanded from macro 'memset'
+    462 | #define memset(p, c, s) __fortify_memset_chk(p, c, s,                   \
+        |                         ^
+  include/linux/fortify-string.h:453:2: note: expanded from macro '__fortify_memset_chk'
+    453 |         fortify_memset_chk(__fortify_size, p_size, p_size_field),       \
+        |         ^
+  include/linux/fortify-string.h:430:4: note: use '-gline-directives-only' (implied by '-g1') or higher for more accurate inlining chain locations
+    430 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  1 warning generated.
 
-The bound the previous patch placed on links without a shared v2 receive
-buffer is no longer needed.
+In this configuration, MAX_NUMNODES is 4.  clang unrolls the for loop in
+setup_node_to_cpumask_map() past this, which triggers the fortify check
+when accessing node_to_cpumask_map on the theoretical fifth loop iteration
+because it would be an out of bounds write.
 
-Fixes: 27ef6a9981fe ("net/smc: support SMC-R V2 for rdma devices with max_recv_sge equals to 1")
-Cc: stable@vger.kernel.org
-Suggested-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260819023306.644849-4-yhlee@isslab.korea.ac.kr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Make it clear to clang that nr_node_ids is bounded by MAX_NUMNODES due to
+the logic in setup_nr_node_ids() by early returning in
+setup_node_to_cpumask_map() should that condition be violated.
+
+Link: https://lore.kernel.org/20260813-arch_numa-avoid-fortify-warning-v2-1-093ad97a78df@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2174
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_llc.c | 125 ++++++++++++++++++++++++++++++++--------------
- net/smc/smc_wr.c  |   6 +--
- 2 files changed, 91 insertions(+), 40 deletions(-)
+ drivers/base/arch_numa.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index 53db1e0a05797..51937265203c8 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -157,6 +157,7 @@ struct smc_llc_msg_confirm_rkey {	/* type 0x06 */
- };
+--- a/drivers/base/arch_numa.c
++++ b/drivers/base/arch_numa.c
+@@ -105,6 +105,18 @@ static void __init setup_node_to_cpumask
+ 	if (nr_node_ids == MAX_NUMNODES)
+ 		setup_nr_node_ids();
  
- #define SMC_LLC_DEL_RKEY_MAX	8
-+#define SMC_LLC_DEL_RKEY_V2_INLINE	9
- #define SMC_LLC_FLAG_RKEY_RETRY	0x10
- #define SMC_LLC_FLAG_RKEY_NEG	0x20
- 
-@@ -177,6 +178,15 @@ struct smc_llc_msg_delete_rkey_v2 {	/* type 0x29 */
- 	__be32 rkey[];
- };
- 
-+/* the leading rkeys of a DELETE_RKEY_V2 fit into union smc_llc_msg */
-+struct smc_llc_msg_delete_rkey_v2_inline {	/* type 0x29 */
-+	struct smc_llc_hdr hd;
-+	u8 num_rkeys;
-+	u8 num_inval_rkeys;
-+	u8 reserved[2];
-+	__be32 rkey[SMC_LLC_DEL_RKEY_V2_INLINE];
-+};
-+
- union smc_llc_msg {
- 	struct smc_llc_msg_confirm_link confirm_link;
- 	struct smc_llc_msg_add_link add_link;
-@@ -186,6 +196,7 @@ union smc_llc_msg {
- 
- 	struct smc_llc_msg_confirm_rkey confirm_rkey;
- 	struct smc_llc_msg_delete_rkey delete_rkey;
-+	struct smc_llc_msg_delete_rkey_v2_inline delete_rkey_v2;
- 
- 	struct smc_llc_msg_test_link test_link;
- 	struct {
-@@ -194,15 +205,25 @@ union smc_llc_msg {
- 	} raw;
- };
- 
-+static_assert(SMC_LLC_DEL_RKEY_V2_INLINE ==
-+	      (sizeof(union smc_llc_msg) -
-+	       offsetof(struct smc_llc_msg_delete_rkey_v2, rkey)) /
-+	      sizeof(__be32));
-+static_assert(offsetof(struct smc_llc_msg_delete_rkey_v2_inline, rkey) ==
-+	      offsetof(struct smc_llc_msg_delete_rkey_v2, rkey));
-+
- #define SMC_LLC_FLAG_RESP		0x80
- 
- struct smc_llc_qentry {
- 	struct list_head list;
- 	struct smc_link *link;
-+	u16 body_len;
- 	union smc_llc_msg msg;
-+	u8 body[] __counted_by(body_len);
- };
- 
--static void smc_llc_enqueue(struct smc_link *link, union smc_llc_msg *llc);
-+static void smc_llc_enqueue(struct smc_link *link, union smc_llc_msg *llc,
-+			    u32 byte_len);
- 
- struct smc_llc_qentry *smc_llc_flow_qentry_clr(struct smc_llc_flow *flow)
- {
-@@ -998,22 +1019,19 @@ static int smc_llc_cli_conf_link(struct smc_link *link,
- 
- static void smc_llc_save_add_link_rkeys(struct smc_link *link,
- 					struct smc_link *link_new,
--					u8 *llc_msg)
-+					struct smc_llc_qentry *qentry)
- {
- 	const u32 rt_off = offsetof(struct smc_llc_msg_add_link_v2_ext, rt);
- 	struct smc_llc_msg_add_link_v2_ext *ext;
- 	struct smc_link_group *lgr = link->lgr;
- 	int max, i;
- 
--	/* Without a shared v2 receive buffer the extension is not copied
--	 * into the queue entry, so not even ext->num_rkeys is there.
--	 */
--	if (!smc_link_shared_v2_rxbuf(link))
-+	/* the rkey count itself is only there if enough bytes arrived */
-+	if (qentry->body_len < rt_off)
- 		return;
--	ext = (struct smc_llc_msg_add_link_v2_ext *)(llc_msg +
--						     SMC_WR_TX_SIZE);
-+	ext = (struct smc_llc_msg_add_link_v2_ext *)qentry->body;
- 	max = min_t(u8, ext->num_rkeys, SMC_LLC_RKEYS_PER_MSG_V2);
--	max = min_t(u32, max, (SMC_WR_BUF_V2_SIZE - SMC_WR_TX_SIZE - rt_off) /
-+	max = min_t(u32, max, (qentry->body_len - rt_off) /
- 			      sizeof(ext->rt[0]));
- 	down_write(&lgr->rmbs_lock);
- 	for (i = 0; i < max; i++) {
-@@ -1107,9 +1125,7 @@ int smc_llc_cli_add_link(struct smc_link *link, struct smc_llc_qentry *qentry)
- 	if (rc)
- 		goto out_clear_lnk;
- 	if (lgr->smc_version == SMC_V2) {
--		u8 *llc_msg = smc_link_shared_v2_rxbuf(link) ?
--			(u8 *)lgr->wr_rx_buf_v2 : (u8 *)llc;
--		smc_llc_save_add_link_rkeys(link, lnk_new, llc_msg);
-+		smc_llc_save_add_link_rkeys(link, lnk_new, qentry);
- 	} else {
- 		rc = smc_llc_cli_rkey_exchange(link, lnk_new);
- 		if (rc) {
-@@ -1510,9 +1526,7 @@ int smc_llc_srv_add_link(struct smc_link *link,
- 	if (rc)
- 		goto out_err;
- 	if (lgr->smc_version == SMC_V2) {
--		u8 *llc_msg = smc_link_shared_v2_rxbuf(link) ?
--			(u8 *)lgr->wr_rx_buf_v2 : (u8 *)add_llc;
--		smc_llc_save_add_link_rkeys(link, link_new, llc_msg);
-+		smc_llc_save_add_link_rkeys(link, link_new, qentry);
- 	} else {
- 		rc = smc_llc_srv_rkey_exchange(link, link_new);
- 		if (rc)
-@@ -1561,7 +1575,8 @@ void smc_llc_add_link_local(struct smc_link *link)
- 	add_llc.hd.common.llc_type = SMC_LLC_ADD_LINK;
- 	smc_llc_init_msg_hdr(&add_llc.hd, link->lgr, sizeof(add_llc));
- 	/* no dev and port needed */
--	smc_llc_enqueue(link, (union smc_llc_msg *)&add_llc);
-+	smc_llc_enqueue(link, (union smc_llc_msg *)&add_llc,
-+			sizeof(union smc_llc_msg));
- }
- 
- /* worker to process an add link message */
-@@ -1597,7 +1612,8 @@ void smc_llc_srv_delete_link_local(struct smc_link *link, u8 del_link_id)
- 	del_llc.link_num = del_link_id;
- 	del_llc.reason = htonl(SMC_LLC_DEL_LOST_PATH);
- 	del_llc.hd.flags |= SMC_LLC_FLAG_DEL_LINK_ORDERLY;
--	smc_llc_enqueue(link, (union smc_llc_msg *)&del_llc);
-+	smc_llc_enqueue(link, (union smc_llc_msg *)&del_llc,
-+			sizeof(union smc_llc_msg));
- }
- 
- static void smc_llc_process_cli_delete_link(struct smc_link_group *lgr)
-@@ -1819,27 +1835,28 @@ static void smc_llc_rmt_delete_rkey(struct smc_link_group *lgr)
- 	link = qentry->link;
- 
- 	if (lgr->smc_version == SMC_V2) {
--		const u32 rkey_off =
--			offsetof(struct smc_llc_msg_delete_rkey_v2, rkey);
--		struct smc_llc_msg_delete_rkey_v2 *llcv2;
--		u32 buf_len;
--
--		if (smc_link_shared_v2_rxbuf(link)) {
--			memcpy(lgr->wr_rx_buf_v2, llc, sizeof(*llc));
--			llcv2 = (struct smc_llc_msg_delete_rkey_v2 *)lgr->wr_rx_buf_v2;
--			buf_len = SMC_WR_BUF_V2_SIZE;
--		} else {
--			llcv2 = (struct smc_llc_msg_delete_rkey_v2 *)llc;
--			buf_len = sizeof(qentry->msg);
--		}
-+		struct smc_llc_msg_delete_rkey_v2_inline *llcv2;
-+
-+		/* The leading SMC_LLC_DEL_RKEY_V2_INLINE rkeys are declared in
-+		 * the message itself, any further ones were received into
-+		 * qentry->body.
-+		 */
-+		llcv2 = &qentry->msg.delete_rkey_v2;
- 		llcv2->num_inval_rkeys = 0;
- 
- 		max = min_t(u8, llcv2->num_rkeys, SMC_LLC_RKEYS_PER_MSG_V2);
--		/* bound by the buffer llcv2 points at */
--		max = min_t(u32, max, (buf_len - rkey_off) /
--				      sizeof(llcv2->rkey[0]));
-+		max = min_t(u32, max, SMC_LLC_DEL_RKEY_V2_INLINE +
-+				      qentry->body_len / sizeof(__be32));
- 		for (i = 0; i < max; i++) {
--			if (smc_rtoken_delete(link, llcv2->rkey[i]))
-+			__be32 rkey;
-+
-+			if (i < SMC_LLC_DEL_RKEY_V2_INLINE)
-+				rkey = llcv2->rkey[i];
-+			else
-+				memcpy(&rkey, qentry->body +
-+					      (i - SMC_LLC_DEL_RKEY_V2_INLINE) *
-+					      sizeof(rkey), sizeof(rkey));
-+			if (smc_rtoken_delete(link, rkey))
- 				llcv2->num_inval_rkeys++;
- 		}
- 		memset(&llc->rkey[0], 0, sizeof(llc->rkey));
-@@ -2081,18 +2098,52 @@ static void smc_llc_rx_response(struct smc_link *link,
- 	wake_up(&link->lgr->llc_msg_waiter);
- }
- 
--static void smc_llc_enqueue(struct smc_link *link, union smc_llc_msg *llc)
-+/* the longest tail either reader of qentry->body can use */
-+static u32 smc_llc_max_body_len(union smc_llc_msg *llc)
-+{
-+	switch (llc->raw.hdr.common.llc_type) {
-+	case SMC_LLC_ADD_LINK:
-+		return offsetof(struct smc_llc_msg_add_link_v2_ext, rt) +
-+		       SMC_LLC_RKEYS_PER_MSG_V2 *
-+		       sizeof(struct smc_llc_msg_add_link_cont_rt);
-+	case SMC_LLC_DELETE_RKEY:
-+		return (SMC_LLC_RKEYS_PER_MSG_V2 -
-+			SMC_LLC_DEL_RKEY_V2_INLINE) * sizeof(__be32);
-+	default:
-+		return 0;
-+	}
-+}
-+
-+static void smc_llc_enqueue(struct smc_link *link, union smc_llc_msg *llc,
-+			    u32 byte_len)
- {
- 	struct smc_link_group *lgr = link->lgr;
- 	struct smc_llc_qentry *qentry;
- 	unsigned long flags;
-+	u16 body_len = 0;
-+
-+	/* V2 messages can be longer than the inline union smc_llc_msg. Carry
-+	 * the remainder in the qentry itself, so that its lifetime and its
-+	 * length match the message the peer actually sent.
++	/*
++	 * This check should never be true but it makes it clear to compilers
++	 * that node_to_cpumask_map is bound by nr_node_ids, avoiding false
++	 * positive fortify warnings when accessing node_to_cpumask_map in the
++	 * for loop below.
 +	 */
-+	if (lgr->smc_version == SMC_V2 && byte_len > SMC_WR_TX_SIZE)
-+		body_len = min_t(u32, byte_len, SMC_WR_BUF_V2_SIZE) -
-+			   SMC_WR_TX_SIZE;
-+	body_len = min_t(u32, body_len, smc_llc_max_body_len(llc));
- 
--	qentry = kmalloc(sizeof(*qentry), GFP_ATOMIC);
-+	qentry = kmalloc_flex(*qentry, body, body_len, GFP_ATOMIC);
- 	if (!qentry)
- 		return;
-+	qentry->body_len = body_len;
- 	qentry->link = link;
- 	INIT_LIST_HEAD(&qentry->list);
- 	memcpy(&qentry->msg, llc, sizeof(union smc_llc_msg));
-+	if (body_len) {
-+		u8 *src = smc_link_shared_v2_rxbuf(link) ?
-+			(u8 *)lgr->wr_rx_buf_v2 : (u8 *)llc;
-+
-+		memcpy(qentry->body, src + SMC_WR_TX_SIZE, body_len);
++	if (unlikely(nr_node_ids > MAX_NUMNODES)) {
++		pr_err("nr_node_ids (%u) is larger than MAX_NUMNODES (%u)\n",
++		       nr_node_ids, MAX_NUMNODES);
++		return;
 +	}
- 
- 	/* process responses immediately */
- 	if ((llc->raw.hdr.flags & SMC_LLC_FLAG_RESP) &&
-@@ -2124,7 +2175,7 @@ static void smc_llc_rx_handler(struct ib_wc *wc, void *buf)
- 			return; /* invalid message */
- 	}
- 
--	smc_llc_enqueue(link, llc);
-+	smc_llc_enqueue(link, llc, wc->byte_len);
- }
- 
- /***************************** worker, utils *********************************/
-diff --git a/net/smc/smc_wr.c b/net/smc/smc_wr.c
-index b04a21b8c5111..4624817137be8 100644
---- a/net/smc/smc_wr.c
-+++ b/net/smc/smc_wr.c
-@@ -602,9 +602,9 @@ static void smc_wr_init_sge(struct smc_link *lnk)
- 
- 	/* With SMC-Rv2 there can be messages larger than SMC_WR_TX_SIZE.
- 	 * Each ib_recv_wr gets 2 sges, the second one is a spillover buffer
--	 * and the same buffer for all sges. When a larger message arrived then
--	 * the content of the first small sge is copied to the beginning of
--	 * the larger spillover buffer, allowing easy data mapping.
-+	 * and the same buffer for all sges. The spillover sge starts at
-+	 * SMC_WR_TX_SIZE, so the leading bytes of that buffer are never
-+	 * written.
- 	 */
- 	for (i = 0; i < lnk->wr_rx_cnt; i++) {
- 		int x = i * lnk->wr_rx_sge_cnt;
--- 
-2.53.0
-
++
+ 	/* allocate and clear the mapping */
+ 	for (node = 0; node < nr_node_ids; node++) {
+ 		alloc_bootmem_cpumask_var(&node_to_cpumask_map[node]);
 
 
