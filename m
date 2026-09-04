@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523283815E1;
-	Fri,  4 Sep 2026 05:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575D73EC6AE;
+	Fri,  4 Sep 2026 05:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500201; cv=none; b=ijgs9wUIIt/XtmzsvLWKiZXYtpOB/cxMLXewp97DlbhGPUuIzcBmPuVI3MGeiZJcAUzG5Ijak8We1a+QE0Xwjk0fJtYBOQe/24GvsRoH++foRCtUl3PU9wikTUdG2B2oJrOkJk84fyHMmGo8pj/dbVQv8XOKUeYe004/2bjpdaU=
+	t=1788500204; cv=none; b=sFjHgnIfq94Mdamkm1cHaKRh6K6NP9TBuB6rHg1vYNDhFuvoPjoGAoShbbsfieb34bWFBkdJUaXUpHa2z6XE2qNbieBMHfXbIf3EIxIx+v6vYebGAzzbJ5Y+7TUZEJYCws0lLf+GIQ7HopfGtkaJ/gTR5zV34Pch7xOPD1d3z+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500201; c=relaxed/simple;
-	bh=Jp/SsPcnWr2o4VYdHLf4hCmBd103wWLdkyR6swEt36E=;
+	s=arc-20240116; t=1788500204; c=relaxed/simple;
+	bh=Iw+ia2OnKR/JexBuGliP/LBzdpg5djrfTxuWtaxEImA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=givLSep3NJIzPDuXM10t5ct7jd27vwabztrkuv2OB/wzz16zf5FOdNP8pIisBl18FJDc1TKzuMx+XSNS3gRa5Wru1AvzjxPVyx8G/hiSlPhD7Ss06b5QGJ7Ivj/KGofTgpIj1lfslZXd2hv2/E00rvgOWImYE9SViuT861sOFzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veFfPJqi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nU4PmzeX1nWtkwev//BnbG2rnADgrGZ5xGhCZ+oDli6dWLfdvon/O0cRtX4On9qkbpoD76NUbnXJ97uJEF4NBSWHDKCo0AfcSFQpzGShdVloudPsa1q4M5EBP7rfDj57Oz3+fLlDXmQa2MHKbjZ2BNyHiLVzf6p+zSUSq4sYPw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fN7IJfuV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veFfPJqi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F731F00A3D;
-	Fri,  4 Sep 2026 05:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fN7IJfuV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751331F00A3D;
+	Fri,  4 Sep 2026 05:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500200;
-	bh=Tgzj0wJaYZUTFkpF7JKP0hjxo2X6erxLGleBRxvaQ7Y=;
+	s=korg; t=1788500203;
+	bh=RM73ezDd3x+zxZPOg7bAd1rvafgj8Xz4FUrDLLLKdCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=veFfPJqi00D2P96a+nIjj6Mh4SlpspjbWdWMcmOIoAnM6UMz91RLFragoqUVQXtQE
-	 60sYffX8ETOz4FF1VaVwkXicH+vdm56bhMA6TG9VNrzJwEMMqWWmoV2gBHL8pz5avs
-	 q4H46vx4qSKxpYQAsSvsc6dRJ8Yl7mDPrVTtlkCg=
+	b=fN7IJfuV6f2kxyJLIzMhV2b1eXZKJ9sZ5Qlc90xChLDs1+IM383TCiNeUmvpQmpr/
+	 mcX5jJSg0AOZBwvVoQEcxO05pUFkif9cRNMTLFjrp6NAOAgWAgYPkXEjdTbDUuV8d1
+	 ChGX11X5gr2N3olN7qHxlFHrE6kl2c5t3ddVU2RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Bernd Schubert <bernd@bsbernd.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 679/713] fuse: copy request headers via a stack buffer for io-uring
-Date: Fri,  4 Sep 2026 07:00:47 +0200
-Message-ID: <20260904045819.057041169@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 7.2 688/713] wifi: rtlwifi: rtl8192du: Fix possible memory leak in rtl92du_init_sw_vars()
+Date: Fri,  4 Sep 2026 07:00:56 +0200
+Message-ID: <20260904045819.263946630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -54,90 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit fd10f40af314f07b6d6e028b1ca25c8b49903aab ]
+commit 6496ce90845df2d22fb8e8ed235cd2936fad41c8 upstream.
 
-The fuse-io-uring transport copies req->in.h out to the ring in
-fuse_uring_copy_to_ring() and req->out.h back in fuse_uring_commit().
-Both headers live inside the fuse_request slab object, whose cache
-(fuse_req_cachep) is created without a usercopy whitelist, so copying
-them directly to/from userspace trips CONFIG_HARDENED_USERCOPY and
-panics:
+The memory allocated inside rtl92du_init_shared_data() is not freed in
+any of the subsequent error paths in rtl92du_init_sw_vars().
+Fix that by adding a call to rtl92du_deinit_shared_data() in the error
+path.
 
-  usercopy: Kernel memory exposure attempt detected from SLUB object
-  'fuse_request' (offset 56, size 40)!
-  kernel BUG at mm/usercopy.c:102!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:usercopy_abort (mm/usercopy.c:90)
-  Call Trace:
-   __check_heap_object (mm/slub.c:8268)
-   __check_object_size (mm/usercopy.c:197 mm/usercopy.c:258 mm/usercopy.c:223)
-   copy_header_to_ring (fs/fuse/dev_uring.c:618)
-   fuse_uring_prepare_send (fs/fuse/dev_uring.c:776 fs/fuse/dev_uring.c:785)
-   fuse_uring_send_in_task (fs/fuse/dev_uring.c:1306)
-   tctx_task_work_run (io_uring/tw.c:96)
-   task_work_run (kernel/task_work.c:233)
-   io_run_task_work (io_uring/tw.h:84)
-   io_cqring_wait (io_uring/wait.c:278)
-   __do_sys_io_uring_enter (io_uring/io_uring.c:2685)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-Bounce both headers through an on-stack copy so the usercopy touches
-stack memory, not the slab object.
-
-Fixes: c090c8abae4b ("fuse: Add io-uring sqe commit and fetch support")
+Fixes: b5dc8873b6ff ("wifi: rtlwifi: Add rtl8192du/sw.c")
 Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ adapted context due to a pre-existing local `ring` local variable from an earlier already-backported commit shifting line numbers ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260723114539.136986-1-nihaal@cse.iitm.ac.in
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev_uring.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8192du/sw.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/fuse/dev_uring.c
-+++ b/fs/fuse/dev_uring.c
-@@ -745,6 +745,7 @@ static int fuse_uring_copy_to_ring(struc
- {
- 	struct fuse_ring_queue *queue = ent->queue;
- 	struct fuse_ring *ring = queue->ring;
-+	struct fuse_in_header in_header;
- 	int err;
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192du/sw.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192du/sw.c
+@@ -145,8 +145,10 @@ static int rtl92du_init_sw_vars(struct i
  
- 	err = -EIO;
-@@ -766,8 +767,9 @@ static int fuse_uring_copy_to_ring(struc
+ 	/* for firmware buf */
+ 	rtlpriv->rtlhal.pfirmware = kmalloc(0x8000, GFP_KERNEL);
+-	if (!rtlpriv->rtlhal.pfirmware)
+-		return -ENOMEM;
++	if (!rtlpriv->rtlhal.pfirmware) {
++		err = -ENOMEM;
++		goto error;
++	}
+ 
+ 	rtlpriv->max_fw_size = 0x8000;
+ 	pr_info("Driver for Realtek RTL8192DU WLAN interface\n");
+@@ -160,10 +162,14 @@ static int rtl92du_init_sw_vars(struct i
+ 		pr_err("Failed to request firmware!\n");
+ 		kfree(rtlpriv->rtlhal.pfirmware);
+ 		rtlpriv->rtlhal.pfirmware = NULL;
+-		return err;
++		goto error;
  	}
  
- 	/* copy fuse_in_header */
--	return copy_header_to_ring(ent, FUSE_URING_HEADER_IN_OUT, &req->in.h,
--				   sizeof(req->in.h));
-+	in_header = req->in.h;
-+	return copy_header_to_ring(ent, FUSE_URING_HEADER_IN_OUT, &in_header,
-+				   sizeof(in_header));
+ 	return 0;
++
++error:
++	rtl92du_deinit_shared_data(hw);
++	return err;
  }
  
- static int fuse_uring_prepare_send(struct fuse_ring_ent *ent,
-@@ -872,11 +874,13 @@ static void fuse_uring_commit(struct fus
- 			      unsigned int issue_flags)
- {
- 	struct fuse_ring *ring = ent->queue->ring;
-+	struct fuse_out_header out_header;
- 	ssize_t err = -EFAULT;
- 
--	if (copy_header_from_ring(ent, FUSE_URING_HEADER_IN_OUT, &req->out.h,
--				  sizeof(req->out.h)))
-+	if (copy_header_from_ring(ent, FUSE_URING_HEADER_IN_OUT, &out_header,
-+				  sizeof(out_header)))
- 		goto out;
-+	req->out.h = out_header;
- 
- 	err = fuse_uring_out_header_has_err(&req->out.h, req);
- 	if (err) {
+ static void rtl92du_deinit_sw_vars(struct ieee80211_hw *hw)
 
 
