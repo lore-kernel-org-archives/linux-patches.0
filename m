@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488B2415F22;
-	Fri,  4 Sep 2026 05:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A98341A56F;
+	Fri,  4 Sep 2026 05:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499325; cv=none; b=m1LKm80cLFBLnFU2GJFGN0HfG+L1TWOWhvoP3Sj2eEug7DXmCE0Te22Fe2VbYzw+/xDwHTmLyo5It+W0PWuib0o9Z0sIrs/LTtlszpvbD00u2XqP4I2+8YLVG0NF10OguvQhLbSNt9tcfvN+2dRKPFB/d+nrwCqeWDbxB3HzG5o=
+	t=1788499328; cv=none; b=QaLtY7rZRShTqsckiexGkZtKJKWPEw0E76hzW+74AFYUb/oMeUfAPE1CAbBN7YA0ptytrFyCavJpBP7zibIaiEZJVf7xUXTczBN6fTsLlSOxyvBUeARSk1ZfaG1HjNRqG3Ml+wW1Q02mp0//WBZC/7mSVdutG4GYx6HTnvNV4TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499325; c=relaxed/simple;
-	bh=4q9STuB6rR3Q0vDZDgtfiI4gbWDky56CwzHng9EFCaU=;
+	s=arc-20240116; t=1788499328; c=relaxed/simple;
+	bh=prIQlDiLeQnNP1mkp/M4zNCg7xu3A7BAicMFD0hNL10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWL8DYLK34oZWw5NW9G9xQaGmoeqKSPLXZ9iHMuIASgc9Ri0k9Qcw7f/U2SPMq6lREZvtYgEzoN5RH7ekUVIjy4jZr/B/dyFRpaXP18bRDkLRQ0J/Mm0daBAMCH0y5583m/6bfLwaKCLxyZXoNEWr92qILg1zvCQJH2Mo/9ydJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQDiAHsC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SrG5IzsONaV/kMKvmPUcXDcFc4c4jBV0KVtyHytUefqy3QsLnOVjVqCGiP5/A2hW7wlvCHLoh2+LFYocAPIoRZ40zAW/qXkceR4p1KZmVxr7pa/UvkEJxcZsExXjn5DF13AlXp30ktXgH2fvbk1JpL1uwnrhSGUGSL2Kq0qxcd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrmR9oF9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQDiAHsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44D31F00A3D;
-	Fri,  4 Sep 2026 05:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrmR9oF9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2AF1F00A3F;
+	Fri,  4 Sep 2026 05:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499324;
-	bh=Jay8LQpXSS5wQlr0mTI3cUcrfQe57SYi/Vr7EDZBosQ=;
+	s=korg; t=1788499327;
+	bh=RZimqwaTuHSTXm/s7en9sM2Xk9dCFsKApGcp8q6lIAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NQDiAHsCLW4FPE+3jvRJmR8l7IUn/9Dzk61s14Hoz4sq4xVRZoPmmCj8jHhOgMmzg
-	 z+0gV+76mdQWmwUZrbsW//AjrnPRPN48zMMrssbeoAHzVTF+N3u0o1VRHGrnNauQVK
-	 Vyj44PpHI+mp2NvNFmBh5ibiCV91EJHEmxTwtWQQ=
+	b=UrmR9oF9tYEPsbCMtA9/pjBQAwZEJRyv2MTBLwiAEWNP1GCSsGOLA/SjtVohjbzhp
+	 GF05a9HZKVq2q8RhLNWzdv0viPqc9Z5siWe48ozJn3/4w5QCqsOWSZgtdZwrFI+qaa
+	 jsVAdRtsHQY4XKJUIgODPrv1hfKL3xPihl7WrpDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 377/713] SUNRPC: close backchannel before destroying callback service
-Date: Fri,  4 Sep 2026 06:55:45 +0200
-Message-ID: <20260904045812.276885771@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 378/713] sunrpc: defer rq_argp and rq_resp free until after RCU grace period
+Date: Fri,  4 Sep 2026 06:55:46 +0200
+Message-ID: <20260904045812.299851101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,164 +44,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 3674f780f47d2906b5a0f7199b66973067bdfeca upstream.
+commit c479bde671cbe2f9e152834a8b0eb7c3c295bbaf upstream.
 
-A backchannel receive can complete a request while the NFS callback
-service is being torn down.  xprt_complete_bc_request() removes the
-request from bc_pa_list, drops bc_alloc_count, marks the request in use,
-and then asks xprt_enqueue_bc_request() to hand it to the callback
-service.
+svc_rqst_free() frees rqstp->rq_argp and rqstp->rq_resp synchronously
+via kfree(), but defers the rqstp struct free via kfree_rcu().  After
+svc_exit_thread() calls list_del_rcu() and svc_rqst_free(), there is
+a window where RCU readers that started before list_del_rcu() can still
+traverse the thread list and find the rqstp.  These readers (e.g.
+nfsd_nl_rpc_status_get_dumpit()) dereference rqstp->rq_argp, which has
+already been freed — a use-after-free.
 
-If teardown has already cleared xprt->bc_serv, xprt_enqueue_bc_request()
-currently returns without enqueueing or freeing the committed request.
-The xprt_get() taken on entry is leaked as well.  If the producer wins
-the race before bc_serv is cleared, it can also enqueue onto sv_cb_list
-after nfs_callback_down() has stopped the callback threads, leaving the
-request linked to a svc_serv that is about to be freed.
+Fix this by moving the kfree of rq_argp and rq_resp into an explicit
+call_rcu() callback alongside the struct free.  Resources not accessed
+by RCU readers (bvec, buffer pages, scratch folio, auth_data) remain
+synchronously freed.
 
-Close the producer side before callback threads are stopped.  Add
-xprt_svc_shutdown_bc() to clear xprt->bc_serv under bc_pa_lock, and call
-it on callback shutdown and callback-start failure before stopping the
-service threads.  Requests that lose the NULL transition in
-xprt_enqueue_bc_request() are released through the normal backchannel
-free path after balancing bc_slot_count.  Finally, drain any remaining
-sv_cb_list requests after the callback threads have stopped and before
-svc_destroy() frees the service.
-
-Fixes: 441244d4273a ("SUNRPC: cleanup common code in backchannel request")
-Fixes: 9e9fdd0ad0fb ("NFSv4.1: protect destroying and nullifying bc_serv structure")
+Fixes: 812443865c5f ("sunrpc: add a rcu_head to svc_rqst and use kfree_rcu to free it")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-6-d026a1415e0b@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-4-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/callback.c              |  4 +++-
- include/linux/sunrpc/bc_xprt.h |  5 +++++
- net/sunrpc/backchannel_rqst.c  | 38 +++++++++++++++++++++++++++-------
- 3 files changed, 39 insertions(+), 8 deletions(-)
+ net/sunrpc/svc.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
-index ff4e9fd38e83..bc282b744f34 100644
---- a/fs/nfs/callback.c
-+++ b/fs/nfs/callback.c
-@@ -231,8 +231,9 @@ int nfs_callback_up(u32 minorversion, struct rpc_xprt *xprt)
- 	cb_info->users++;
- err_net:
- 	if (!cb_info->users) {
-+		xprt_svc_shutdown_bc(xprt);
- 		svc_set_num_threads(cb_info->serv, 0, 0);
--		svc_destroy(&cb_info->serv);
-+		xprt_svc_destroy_nullify_bc(xprt, &cb_info->serv);
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -743,6 +743,15 @@ svc_release_buffer(struct svc_rqst *rqst
  	}
- err_create:
- 	mutex_unlock(&nfs_callback_mutex);
-@@ -254,6 +255,7 @@ void nfs_callback_down(int minorversion, struct net *net, struct rpc_xprt *xprt)
- 
- 	mutex_lock(&nfs_callback_mutex);
- 	serv = cb_info->serv;
-+	xprt_svc_shutdown_bc(xprt);
- 	nfs_callback_down_net(minorversion, serv, net);
- 	cb_info->users--;
- 	if (cb_info->users == 0) {
-diff --git a/include/linux/sunrpc/bc_xprt.h b/include/linux/sunrpc/bc_xprt.h
-index 98939cb664cf..59d0cc889beb 100644
---- a/include/linux/sunrpc/bc_xprt.h
-+++ b/include/linux/sunrpc/bc_xprt.h
-@@ -32,6 +32,7 @@ int xprt_setup_bc(struct rpc_xprt *xprt, unsigned int min_reqs);
- void xprt_destroy_bc(struct rpc_xprt *xprt, unsigned int max_reqs);
- void xprt_free_bc_rqst(struct rpc_rqst *req);
- unsigned int xprt_bc_max_slots(struct rpc_xprt *xprt);
-+void xprt_svc_shutdown_bc(struct rpc_xprt *xprt);
- void xprt_svc_destroy_nullify_bc(struct rpc_xprt *xprt, struct svc_serv **serv);
- 
- /*
-@@ -71,6 +72,10 @@ static inline void xprt_free_bc_request(struct rpc_rqst *req)
- {
  }
  
-+static inline void xprt_svc_shutdown_bc(struct rpc_xprt *xprt)
++static void svc_rqst_free_rcu(struct rcu_head *head)
 +{
++	struct svc_rqst *rqstp = container_of(head, struct svc_rqst, rq_rcu_head);
++
++	kfree(rqstp->rq_resp);
++	kfree(rqstp->rq_argp);
++	kfree(rqstp);
 +}
 +
- static inline void xprt_svc_destroy_nullify_bc(struct rpc_xprt *xprt, struct svc_serv **serv)
+ static void
+ svc_rqst_free(struct svc_rqst *rqstp)
  {
- 	svc_destroy(serv);
-diff --git a/net/sunrpc/backchannel_rqst.c b/net/sunrpc/backchannel_rqst.c
-index 0ffa4d01a938..1482b06e0f38 100644
---- a/net/sunrpc/backchannel_rqst.c
-+++ b/net/sunrpc/backchannel_rqst.c
-@@ -25,20 +25,39 @@ unsigned int xprt_bc_max_slots(struct rpc_xprt *xprt)
+@@ -751,10 +760,8 @@ svc_rqst_free(struct svc_rqst *rqstp)
+ 	svc_release_buffer(rqstp);
+ 	if (rqstp->rq_scratch_folio)
+ 		folio_put(rqstp->rq_scratch_folio);
+-	kfree(rqstp->rq_resp);
+-	kfree(rqstp->rq_argp);
+ 	kfree(rqstp->rq_auth_data);
+-	kfree_rcu(rqstp, rq_rcu_head);
++	call_rcu(&rqstp->rq_rcu_head, svc_rqst_free_rcu);
  }
  
- /*
-- * Helper function to nullify backchannel server pointer in transport.
-- * We need to synchronize setting the pointer to NULL (done so after
-- * the backchannel server is shutdown) with the usage of that pointer
-- * by the backchannel request processing routines
-- * xprt_complete_bc_request() and rpcrdma_bc_receive_call().
-+ * Close the backchannel producer side, drain any requests still
-+ * queued on sv_cb_list, then destroy the callback service.
-  */
- void xprt_svc_destroy_nullify_bc(struct rpc_xprt *xprt, struct svc_serv **serv)
- {
--	spin_lock(&xprt->bc_pa_lock);
-+	struct svc_serv *bc_serv = *serv;
-+	struct rpc_rqst *req;
-+
-+	xprt_svc_shutdown_bc(xprt);
-+	while ((req = lwq_dequeue(&bc_serv->sv_cb_list, struct rpc_rqst,
-+				  rq_bc_list)) != NULL) {
-+		atomic_dec(&req->rq_xprt->bc_slot_count);
-+		xprt_free_bc_request(req);
-+	}
- 	svc_destroy(serv);
-+}
-+EXPORT_SYMBOL_GPL(xprt_svc_destroy_nullify_bc);
-+
-+/*
-+ * Clear the backchannel server pointer in the transport.  The NULL
-+ * store is serialized under bc_pa_lock against readers of
-+ * xprt->bc_serv in xprt_complete_bc_request() and
-+ * rpcrdma_bc_receive_call().  Clearing it before the callback service
-+ * is stopped prevents a producer from enqueueing onto a service that
-+ * is being torn down.
-+ */
-+void xprt_svc_shutdown_bc(struct rpc_xprt *xprt)
-+{
-+	spin_lock(&xprt->bc_pa_lock);
- 	xprt->bc_serv = NULL;
- 	spin_unlock(&xprt->bc_pa_lock);
- }
--EXPORT_SYMBOL_GPL(xprt_svc_destroy_nullify_bc);
-+EXPORT_SYMBOL_GPL(xprt_svc_shutdown_bc);
- 
- /*
-  * Helper routines that track the number of preallocation elements
-@@ -393,7 +412,12 @@ void xprt_enqueue_bc_request(struct rpc_rqst *req)
- 	if (bc_serv) {
- 		lwq_enqueue(&req->rq_bc_list, &bc_serv->sv_cb_list);
- 		svc_pool_wake_idle_thread(&bc_serv->sv_pools[0]);
-+		spin_unlock(&xprt->bc_pa_lock);
-+		return;
- 	}
- 	spin_unlock(&xprt->bc_pa_lock);
-+
-+	atomic_dec(&xprt->bc_slot_count);
-+	xprt_free_bc_request(req);
- }
- EXPORT_SYMBOL_GPL(xprt_enqueue_bc_request);
--- 
-2.55.0
-
+ static struct svc_rqst *
 
 
