@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA30D3B95FA;
-	Fri,  4 Sep 2026 05:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79D43B19BC;
+	Fri,  4 Sep 2026 05:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500034; cv=none; b=bBY4GLBCFjH2gBaxc7y2+ysCxpv0oO932mZmXtagh/NZxvO5guYOdq5v9AoXSxrvRF3vEXcGzD+l9IFEkgT3t5IpaCg3zb019QTzfimQVu3Ugl4cnMe4O2CNCbzMdqrBrs+/+jXpRwYFBMZ6RVDsU+/SunfOy6HM7rRwYD44ljs=
+	t=1788500036; cv=none; b=DKvpY1kkbLlqf0MHHYj/rDrEK2hRhw6uu3j3aVRmbJLMyhH3wFNmUhgbUu8ka53u9UWHgrlZdpvRdDrDSfsqNAq4jwOM+lr1+ll4liB2RO9Fgla5fw3UxY8UEEUDkuUk1htm6pxdX9ZYeILQlDWln/Kdn/TXMdGyy78gRBNXC3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500034; c=relaxed/simple;
-	bh=ujKpelvGaBmXg7ipCYBfhRcu9bYpzuQD3LJFnDOjxOk=;
+	s=arc-20240116; t=1788500036; c=relaxed/simple;
+	bh=kPocpikQoxoZFrdrazJ8QILnOs458NGgeoV6t4QywyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7um/rbxzPQ6joxTj3sdIp+9WRPD5s0dBMmbRtEGfgikx1p/VUc00XtISaPKg+axyRf0dvbtY3nkRKMS/nQRNtvD3+TVQpHI4JeKtGe/g8ZTiCLctxBFcbZWgwm4s23ztXPQnAw2JyurfVUAHDk3kbCWRt1NDf+i3VvqDv8jddQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4E+5czW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bk/83sOSCeaBCddYcnE6aogh6z3SU05sS57iOhqWdp/TsiI1INBvhDGyC0VP0wTmYQUih1E24N7KKnCZ9Z1N9prSSl1xnticIo4gMqD1NHHHQcxiE4T99i7cMEri5k9ak7KBJ204toxEb1VwrE0H/K4DC1ljvs/N1fq8J6DK7Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ti6m/Gi5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4E+5czW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390371F00A3D;
-	Fri,  4 Sep 2026 05:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ti6m/Gi5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040DB1F00A3D;
+	Fri,  4 Sep 2026 05:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500032;
-	bh=NwqhDW1PvkHx4WVbFl/HNXOs+iRudJf/TKwV7tcwCZM=;
+	s=korg; t=1788500035;
+	bh=K36bie49i4pHTcTkVuwBk1ByY0xT2sQ9XQGvf1hbgas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q4E+5czWoJYXlkL+nNMHX+1J/OL2c9paDMrd9nfi4bkhf8gEnCnYgtL4TEAxyWMJ/
-	 1d4wLCg2HEAID24IhO4RoIVS9Y6arfISWAboG/iLNkI4JUslQO0el/7PyHMe84VaoO
-	 aihurX8TIosd+uqfBc3nQh7ltb/T713qfZfNQ5IM=
+	b=ti6m/Gi50twVyLqXuA5YSga6mIfGMJIisLXTUSZiXTzA7LTcddP0Gpe73Ao3ETghF
+	 5IYy94eCfzxsFvV6+OXJ4mx/wUgVfZfbFnVjFHxQUo2B43QN/r/Mg9j0efyRPVjTOH
+	 B7unpqB0AMJfpaRbzrSqel4O0uYKL0Dh8iS3Jiu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 7.2 590/713] ipmi: ipmb: validate write message length
-Date: Fri,  4 Sep 2026 06:59:18 +0200
-Message-ID: <20260904045817.042862884@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 626/713] net/smc: unregister the connection before draining the rx tasklet
+Date: Fri,  4 Sep 2026 06:59:54 +0200
+Message-ID: <20260904045817.860261247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,48 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 53637506884dbd5c91a89b1a3547d99d80f8ed2c upstream.
+commit 36cdf5d48ca191dcd71c28cadbe0981b1d25318d upstream.
 
-ipmb_write() read message fields before validating the length byte.
+smc_conn_free() calls smc_ism_unset_conn() only while the link group is
+still on its device list, and never sets conn->killed.
+smc_lgr_terminate_sched() unlinks the group immediately and defers killing
+its connections to a work item, so a connection freed in that window keeps
+its smcd->conn[] slot with both gates in smcd_handle_irq() open, and the
+device can re-arm the receive tasklet after tasklet_kill() has returned. On
+the DMB-nocopy path the ghost send buffer is freed right after that drain,
+so the re-armed tasklet dereferences it.
 
-A zero or short write can read uninitialized stack bytes.
+Unregister unconditionally and drain before the detach at both teardown
+sites, mirroring rmb_desc, which smc_buf_unuse() releases after the drain.
+Clear conn->sndbuf_desc before freeing it as well, so a reader that samples
+the pointer cannot get one that is already freed.
 
-A length smaller than the SMBus header underflows the block write length.
-
-Require a non-empty buffer and the minimum IPMB request length.
-
-Also require the length byte plus payload before parsing the message.
-
-Fixes: 51bd6f291583 ("Add support for IPMB driver")
+Fixes: ae2be35cbed2 ("net/smc: {at|de}tach sndbuf to peer DMB if supported")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Message-ID: <20260624175353.8592-1-alhouseenyousef@gmail.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Link: https://patch.msgid.link/20260808-b4-disp-22f119e6-v2-1-61647601a6f3@proton.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmb_dev_int.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/smc/smc_core.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/char/ipmi/ipmb_dev_int.c
-+++ b/drivers/char/ipmi/ipmb_dev_int.c
-@@ -141,13 +141,14 @@ static ssize_t ipmb_write(struct file *f
- 	u8 msg[MAX_MSG_LEN];
- 	ssize_t ret;
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1209,14 +1209,16 @@ static void smcd_buf_detach(struct smc_c
+ {
+ 	struct smcd_dev *smcd = conn->lgr->smcd;
+ 	u64 peer_token = conn->peer_token;
++	struct smc_buf_desc *buf_desc;
  
--	if (count > sizeof(msg))
-+	if (!count || count > sizeof(msg))
- 		return -EINVAL;
+ 	if (!conn->sndbuf_desc)
+ 		return;
  
- 	if (copy_from_user(&msg, buf, count))
- 		return -EFAULT;
+ 	smc_ism_detach_dmb(smcd, peer_token);
  
--	if (count < msg[0])
-+	if (msg[IPMB_MSG_LEN_IDX] < IPMB_REQUEST_LEN_MIN ||
-+	    count < (size_t)msg[IPMB_MSG_LEN_IDX] + 1)
- 		return -EINVAL;
+-	kfree(conn->sndbuf_desc);
++	buf_desc = conn->sndbuf_desc;
+ 	conn->sndbuf_desc = NULL;
++	kfree(buf_desc);
+ }
  
- 	rq_sa = GET_7BIT_ADDR(msg[RQ_SA_8BIT_IDX]);
+ static void smc_buf_unuse(struct smc_connection *conn,
+@@ -1268,11 +1270,10 @@ void smc_conn_free(struct smc_connection
+ 		goto lgr_put;
+ 
+ 	if (lgr->is_smcd) {
+-		if (!list_empty(&lgr->list))
+-			smc_ism_unset_conn(conn);
++		smc_ism_unset_conn(conn);
++		tasklet_kill(&conn->rx_tsklet);
+ 		if (smc_ism_support_dmb_nocopy(lgr->smcd))
+ 			smcd_buf_detach(conn);
+-		tasklet_kill(&conn->rx_tsklet);
+ 	} else {
+ 		smc_cdc_wait_pend_tx_wr(conn);
+ 		if (current_work() != &conn->abort_work)
+@@ -1525,12 +1526,12 @@ static void smc_conn_kill(struct smc_con
+ 	smc_sk_wake_ups(smc);
+ 	if (conn->lgr->is_smcd) {
+ 		smc_ism_unset_conn(conn);
+-		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
+-			smcd_buf_detach(conn);
+ 		if (soft)
+ 			tasklet_kill(&conn->rx_tsklet);
+ 		else
+ 			tasklet_unlock_wait(&conn->rx_tsklet);
++		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
++			smcd_buf_detach(conn);
+ 	} else {
+ 		smc_cdc_wait_pend_tx_wr(conn);
+ 	}
 
 
