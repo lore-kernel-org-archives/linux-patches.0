@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D413242BD;
-	Fri,  4 Sep 2026 05:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B7835AC03;
+	Fri,  4 Sep 2026 05:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500981; cv=none; b=hnQ3EQOr5Wq5TjSETBkl4gHQFgfc6I+pItDDhwYxOznTd9zNw6KogA3TJ2c6n9/SwkkuJUBfuG/MKWWNU2lUOCJ4x9P+lb6KwRbAMl1Euz1OWTuWnyeEHvder3YXtRaA0gVdWdH8MmwdmOWErSws2ChyMi70wVlstGP/eer2RRQ=
+	t=1788500984; cv=none; b=MJACJODSDhnJDzDDPO9Q6cGCO/5JfjD0hhdgx+OkSTSL136q3iwedgDc1HoaaQSMTb+cyYdNt9mz+c7xXFopc6q6PqDKCZHp4+2uOXMeVF+Z+52EJvPXDl0BH0LHdCaBhDd1lp+PoXltp0SfgijvgF7ozk5G9GxELrpUz+javLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500981; c=relaxed/simple;
-	bh=SS3sWk8fmG8FaB2nbJN5HYdRus9Vsq7DFI38bAJyeGU=;
+	s=arc-20240116; t=1788500984; c=relaxed/simple;
+	bh=Nt9QhZeZH+HrZh1b4gwJWWlPXPNuY5ts8a8URDU4V0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ouXiTMjnCYssGsVwZQrbW5uHsOv4wcV29FibmEvNgSLao98D+BHe5g2oEEpqSFg9VH3lCP/mgcOdwNkfELnU7UUcmd3jz2njCMxnDMUhIOapjHWDz8lk9a+6kJPL7kvwZJq2gY/8Wfj3MoCtQKkyRj9rQPvIxOODPqae5iO5p/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGVMIrA8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jK8TozGCjArMXDAlN5iiZ8+vUdp2k11LWr4SKGjvWctfAG0ARQisnIm5PNTemhDBgbMozg9cuNnQMHvKALwIHbTXxKQmUdVjVXe4fU6BtYu8QKc7bohbrk1swYystorSJ3WR3+P5OXv5QU8UPf9zGW+hktOPpl9HTTji6+3PzX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tD/thxX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGVMIrA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D1A1F00A3D;
-	Fri,  4 Sep 2026 05:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tD/thxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D44D1F00A3D;
+	Fri,  4 Sep 2026 05:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500980;
-	bh=WtaH4Xjwb61elKPsbJ231Uf+jP7hpnOzCsAAoO/spR0=;
+	s=korg; t=1788500983;
+	bh=C6eUTHUI9f1I1JTe6/AqUlnwQgWY/kDDmATJ64VHNN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bGVMIrA8bxEEEI/bClO/XU1BiN1Zxjd5w+COeD4jm8/JahJ17ZPACS4Rn6vBhGuu2
-	 4SRwr2vSL4sRioA+ZBpLXUlqJpR6lnqw//maSEbLL3E7ujaQYwBdCP1vFiLFOXTWZa
-	 NIBk+8JEoSRsccRqKk43zSg8tL8MKKZv74EU+Tys=
+	b=2tD/thxXhJCRJ+nDDA7gbxixpISOh3NMejjRBPMqVTBOhHb+pJP+5JS+6jPEic9AI
+	 sOqhaELEgG90aPW+VPvdFIiQd37EFnrmlflwX6Ivw7RORP69m9eq0z8pxn5WC+ervH
+	 YpodFuGfYkNsRt9ms60y9BzB/i6wY0WjpqAc7hJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hang Nan <2122295973@qq.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 247/552] Bluetooth: ISO: fix use-after-free of listener socket in iso_conn_ready
-Date: Fri,  4 Sep 2026 06:56:44 +0200
-Message-ID: <20260904045755.162830922@linuxfoundation.org>
+	ZhaoJinming <zhaojinming@uniontech.com>,
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Subject: [PATCH 6.18 212/552] accel/rocket: Fix error path handling in rocket_job_run()
+Date: Fri,  4 Sep 2026 06:56:09 +0200
+Message-ID: <20260904045754.189190471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,67 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hang Nan <2122295973@qq.com>
+From: ZhaoJinming <zhaojinming@uniontech.com>
 
-commit 560bef609fa5992745929e8d7d458b9d88dd2830 upstream.
+commit 9b2dedadf6a91ac3fc9fae268bb556a041222711 upstream.
 
-iso_conn_ready() looks up the BIS listener socket with iso_get_sock(),
-which takes a reference, and then, without re-checking its state,
-creates a child socket from it:
+In rocket_job_run(), after taking an extra fence reference for
+job->done_fence via dma_fence_get(), the error paths have three bugs:
 
-    parent = iso_get_sock(hdev, ...);
-    if (!parent)
-        return;
+- The dma_fence reference held by job->done_fence is never released,
+  causing a reference leak.
+- pm_runtime_get_sync() increments the usage counter even on failure,
+  but the error path does not decrement it, leaking the runtime PM
+  reference and preventing the NPU from suspending.
+- A valid but unsignaled fence is returned to the DRM scheduler,
+  which triggers WARN("Fence ... released with pending signals!")
+  when the scheduler drops its reference.
 
-    lock_sock(parent);
-    sk = iso_sock_alloc(sock_net(parent), NULL, BTPROTO_ISO, ...);
-    ...
-    iso_chan_add(conn, sk, parent);
-    ...
-    release_sock(parent);
-    sock_put(parent);
+Fix by replacing pm_runtime_get_sync() with pm_runtime_resume_and_get()
+which auto-balances the usage counter on failure, releasing both fence
+references on error, and returning ERR_PTR(ret) instead of the
+unsignaled fence.
 
-If the listener socket is closed concurrently, between iso_get_sock()
-and lock_sock(), the reference taken by iso_get_sock() may be the last
-one: the close path drops the link-list reference, and once
-iso_conn_ready() drops its own reference at the end of the function the
-socket is freed.  The child socket, however, is already linked to the
-freed parent, and a later disconnect of the child runs iso_chan_del()
--> bt_accept_unlink(), which dereferences the dangling parent pointer
-into the freed accept queue (a use-after-free).  The same dangling
-pointer is also dereferenced through parent->***() in
-iso_chan_del().
-
-Fix it the same way the connected (non-BIS) path was fixed in commit
-0d255e63fcf3 ("Bluetooth: ISO: hold sk properly in iso_conn_ready"):
-after taking the socket lock, re-check that the parent is still a
-listening, alive socket, and bail out otherwise.
-
-Fixes: ccf74f2390d60 ("Bluetooth: Add BTPROTO_ISO socket type")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hang Nan <2122295973@qq.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
+Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
+Link: https://lore.kernel.org/r/20260610071045.3414828-1-zhaojinming@uniontech.com
+[tomeu: Refactored error paths to use consolidated goto labels]
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/accel/rocket/rocket_job.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2148,6 +2148,14 @@ static void iso_conn_ready(struct iso_co
+--- a/drivers/accel/rocket/rocket_job.c
++++ b/drivers/accel/rocket/rocket_job.c
+@@ -317,13 +317,13 @@ static struct dma_fence *rocket_job_run(
+ 		dma_fence_put(job->done_fence);
+ 	job->done_fence = dma_fence_get(fence);
  
- 		lock_sock(parent);
+-	ret = pm_runtime_get_sync(core->dev);
++	ret = pm_runtime_resume_and_get(core->dev);
+ 	if (ret < 0)
+-		return fence;
++		goto err_put_fences;
  
-+		/* The listener may have been closed concurrently. */
-+		if (parent->sk_state != BT_LISTEN ||
-+		    sock_flag(parent, SOCK_ZAPPED)) {
-+			release_sock(parent);
-+			sock_put(parent);
-+			return;
-+		}
+ 	ret = iommu_attach_group(job->domain->domain, core->iommu_group);
+ 	if (ret < 0)
+-		return fence;
++		goto err_put_pm;
+ 
+ 	scoped_guard(mutex, &core->job_lock) {
+ 		core->in_flight_job = job;
+@@ -331,6 +331,14 @@ static struct dma_fence *rocket_job_run(
+ 	}
+ 
+ 	return fence;
 +
- 		sk = iso_sock_alloc(sock_net(parent), NULL,
- 				    BTPROTO_ISO, GFP_ATOMIC, 0);
- 		if (!sk) {
++err_put_pm:
++	pm_runtime_put(core->dev);
++err_put_fences:
++	dma_fence_put(job->done_fence);
++	job->done_fence = NULL;
++	dma_fence_put(fence);
++	return ERR_PTR(ret);
+ }
+ 
+ static void rocket_job_handle_irq(struct rocket_core *core)
 
 
