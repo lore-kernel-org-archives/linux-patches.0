@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE9B419FD2;
-	Fri,  4 Sep 2026 06:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8168C42641B;
+	Fri,  4 Sep 2026 06:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502832; cv=none; b=PbgASYruCoqc+oTbj1ypUFRhzzPF6Boj6FgXoeCMZ0kTLi7Hpf5d1LCqQD3S46Ypi6jVRzwrNI7wcRSEzQiN5++gpkxgzjJvfYcinTRaOvY6cBpKC8FHFvO5xLFV9glCJ0hRVUwkvGFO+9huJ5V9/JEfWrj7U02KJmafp6ZgVrw=
+	t=1788502834; cv=none; b=gtm6sE5W9E4NLEiJu5rqlqkQqfFvRNXCAG0NEg43qaQt/lzFbjSje3lYxPdFt3ECmHCEDY3YjadCWeSLP1q6uPsZR8v3kH6+Dy/Ylv/vDG+lfEmVaHP/waAXEevptkALyYBFK4IJwB2RV1N4tM4FBgWuDCF1EIW7m393WWZWYjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502832; c=relaxed/simple;
-	bh=P6fFYYrGPkuCPFREbkKZti1P8ndGavbUq5lYxyl9kKM=;
+	s=arc-20240116; t=1788502834; c=relaxed/simple;
+	bh=njeH4aqy2g4NZEXttIBJ89/T2D8YuEkaXTkAGU9S3tA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5+zYaeicmnz6qR4tNApK6JvZ9zfPXH4Qs9lh/kqmwrsWi1bfaXeJAgZ2KIfAYDgPk41zMWXsHoDvtN8/7m8a2jeegv1nOFOil1b4do5HiQ78ai7PL/Y4wMSKkJPDYr+/5MPBehgDfSoloyI75lb03poQPwrNav4vcT4OZmVvfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHQZVC92; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DFFK9dGZUpsIJg5huNTdx45ote8VTycJeeZOBoVrqeEKZapIZd1qq2ibW/fJIqy8PkSmnxtZ+HvgFoGgy8eC0WYGo1D7luwxmTC63Lek+tnmANldOAVVSjixapN8qFfzgFanA7fSltPVUjil4e2nxRDOOx4Lz7ilqD3hEf5h4CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODkE2JzO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHQZVC92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E721F00A3E;
-	Fri,  4 Sep 2026 06:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODkE2JzO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D030B1F00A3D;
+	Fri,  4 Sep 2026 06:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502830;
-	bh=/VQwOdtoayso9p0Ltb8FgwDRlj09omu4su2fylRBMwc=;
+	s=korg; t=1788502833;
+	bh=5EM3as57zyoG70LxcujMBwVToMGEfR74+bRa13YkE2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PHQZVC92UjWQWTenIs5Twug1k9jMry0EVFFxvY6jzbdszuB0TlShB5AKG/94uHAq9
-	 HDvBQZsTp+cP8qbu4346kV1b5lhtKRd5q5zGyAaKYdDIdrDUNIaMqiiNZ0FEDfNPFJ
-	 VSeCegC4PV61o0qVZn8RHzkl6uFlyOVFNRVFpLxs=
+	b=ODkE2JzOS14TQd7xNkeu0ToWl7JEHUmrsC6b/72FyK1DUYb7zm3UOH2pRZND403cY
+	 Rrd5u7Xee4mQA8+Az7GClaYZTA/sjyxPiD9+fL/qYXALddxUrmmo7X7lVDe8nJnmii
+	 rs1FAoJKz0QtJ7Jte/FJw8jkwwWNscLNTKoL5+C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Ye <fy15309206903@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 345/403] net: thunderbolt: Release the Rx HopID that was handed out on mismatch
-Date: Fri,  4 Sep 2026 07:02:28 +0200
-Message-ID: <20260904045742.662064950@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 6.12 319/403] platform/chrome: sensorhub: Bound the EC-reported sensor number
+Date: Fri,  4 Sep 2026 07:02:02 +0200
+Message-ID: <20260904045742.090111308@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,42 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Ye <fy15309206903@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 2f1463554d0561a2fead81e3888604e5c1125e29 upstream.
+commit 833740a2333c2e4db4e02e3d0ffba04e8718a5f3 upstream.
 
-tb_xdomain_alloc_in_hopid() passes the wanted HopID to ida_alloc_range()
-as the lower bound, so a taken id is not an error there: the allocator
-returns the next free one above it. tbnet_connected_work() asks for the
-peer's transmit path, treats any other id as a failure and returns
-without releasing what it got, so that allocation stays live for the rest
-of the XDomain connection with nothing left holding a reference to it.
+Each EC FIFO event carries an 8-bit sensor number (in->sensor_num).
+cros_ec_sensorhub_ring_handler() validates the FIFO event count, the
+per-read count and the ring bound, but not the sensor number, which
+cros_ec_sensor_ring_process_event() then uses unchecked to index
+sensorhub->batch_state[] - allocated with only sensorhub->sensor_num
+entries. A sensor number of sensor_num or larger is an out-of-bounds
+read and write of batch_state[].
 
-Release the id when it is not the one we asked for, the same way the
-error unwind at the end of the function releases the expected one.
+Validate the sensor number in the ring handler, where each event is read
+from the EC, and drop a malformed event before it is used.
 
-Fixes: 180b0689425c ("thunderbolt: Allow multiple DMA tunnels over a single XDomain connection")
+Fixes: 145d59baff59 ("platform/chrome: cros_ec_sensorhub: Add FIFO support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Ye <fy15309206903@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260811-b4-tbnet-hopid-v3-1-9e75d1b51331@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://lore.kernel.org/r/20260618-b4-disp-adb3f790-v3-1-3a164ed63cbd@proton.me
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/thunderbolt/main.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/chrome/cros_ec_sensorhub_ring.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/thunderbolt/main.c
-+++ b/drivers/net/thunderbolt/main.c
-@@ -650,6 +650,8 @@ static void tbnet_connected_work(struct
- 	ret = tb_xdomain_alloc_in_hopid(net->xd, net->remote_transmit_path);
- 	if (ret != net->remote_transmit_path) {
- 		netdev_err(net->dev, "failed to allocate Rx HopID\n");
-+		if (ret >= 0)
-+			tb_xdomain_release_in_hopid(net->xd, ret);
- 		return;
- 	}
+--- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+@@ -879,6 +879,14 @@ static void cros_ec_sensorhub_ring_handl
  
+ 		for (in = sensorhub->resp->fifo_read.data, j = 0;
+ 		     j < number_data; j++, in++) {
++			/* Skip event if sensor_num from EC is out of bounds. */
++			if (in->sensor_num >= sensorhub->sensor_num) {
++				dev_warn_ratelimited(sensorhub->dev,
++						     "Invalid sensor number %u from EC\n",
++						     in->sensor_num);
++				continue;
++			}
++
+ 			if (cros_ec_sensor_ring_process_event(
+ 						sensorhub, fifo_info,
+ 						fifo_timestamp,
 
 
