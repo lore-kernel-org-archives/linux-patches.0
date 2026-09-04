@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86538414DF6;
-	Fri,  4 Sep 2026 06:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783FD410D36;
+	Fri,  4 Sep 2026 06:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501822; cv=none; b=hBqG/KjVUigy3IC5g/y595UGr0E0PgJv/wOunm+lZcbe5e4UWJDsyTRtu7rtoll7m3/3Nc+ly5DbKJEWThfnrIU0i56US9nW+u3pdtbWHEDy+Q939DwPiwI7ktgjqAPT59k9QKOh9aPwwsbZ7Z26lZ0CAD5jleJUTHZ4qVMgBK0=
+	t=1788501824; cv=none; b=BcGCknARwP5a/dT7B8q52d8TFTCIBCUqSwmSGiaYMLM+10zLz6kTZJmWenyR+dA/tETCAhLSC4HC7H3G5B8rugdvYYZOuY39xy09zxAT2/GuHk5laTAj05Efks+vSSxaZSE6gHSzWvNBOM2O2yXpd0yMh0hPRgxHADopt9eaU4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501822; c=relaxed/simple;
-	bh=7XNxe6FNuuCClWFBFDlLYeyMp8/tQDAwnQfMSvdzCqU=;
+	s=arc-20240116; t=1788501824; c=relaxed/simple;
+	bh=s8So7b+RohfWSbSvBo/YsoenvV6/ZbXxx65ESzLkmlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXwz45JmbQwRpiXwmNlCFxnrENGZR6CaSfUYhXvvTDvQR5uUBRsZbUXyBAOFrHF9tEhQwo5H1GP2A+g/fArVrbgLGCAxiJubYliJXXCJCbVZINt5wSgSL2N0hskhyPZ8ruXuXMwA8nQS5CjS8o6CweVVIjbizPFe+EWIxZCuZRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LJY/y2m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xgdc6shUdXO8GpcIHuEk0XXCROeLUCL7TSk5P0CRD7GUYYWRY4DTr9YWx1KQoSXVBwv0vx15m7pw+LN153JdWbP+uWJA1+62Zqpq02azzsRV6IeFVrJwtO6LduIgcwVYUBijOH+KoNUvwoiJr2JSYgwA21b/luP+5i9eeCLs9AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lK3AKwpO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LJY/y2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4AD1F00A3D;
-	Fri,  4 Sep 2026 06:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lK3AKwpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61A81F00A3D;
+	Fri,  4 Sep 2026 06:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501820;
-	bh=2ZTYHEn9kmSsEBHbvtyHsayTnCti0OWRkFGkYC2ZbN4=;
+	s=korg; t=1788501823;
+	bh=RVQ1TgPLz5SMrTyZfU1EskEoVqU6tO6JDv6zcLTZWss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1LJY/y2mb6x7CenzX11JCRka6wRcPhZjjoLgX8k2OPGVNfzeqcW9T74G3LmgKQgGz
-	 uXMySavbznsSY3rLX+jsgf67sAlgi2l+n5g1yJSBdrK2UQRzJ7Uk1mxA4GlMasqFPy
-	 xGB8Whl5WiG0JjuYqdFzjp1gMbDGRSrKBjNT9qIg=
+	b=lK3AKwpOXB49CSbPXCGNHnIN22miUFmGAJiu19VZb4sbnfmmioBgev3OWtJA3uRTx
+	 X5SnR3QGB6wXupmQQEBof2r1kkGJq/TpDyKHiryRpwWXJ3wqGrERdFqNfcRnz0y3/a
+	 k0CS8SVVa7ydw3ClbJW+aiDuVKtHGE05a+HjIQSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Adrian Huang <adrianhuang0701@gmail.com>,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Marco Elver <elver@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 545/552] signal: avoid shared siginfo namespace rewrites
-Date: Fri,  4 Sep 2026 07:01:42 +0200
-Message-ID: <20260904045802.959495408@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Casey Schaufler <casey@schaufler-ca.com>
+Subject: [PATCH 6.18 546/552] smack: fix cred UAF in smack_file_send_sigiotask()
+Date: Fri,  4 Sep 2026 07:01:43 +0200
+Message-ID: <20260904045802.980359515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -60,54 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Jann Horn <jannh@google.com>
 
-commit d19cdc167e696714509e87d3f7ae765b6e164589 upstream.
+commit fedc88e38ce979a720cd2de042578cb5df3dc8de upstream.
 
-send_signal_locked() rewrites sender ids for the target namespace.  Group
-sends reuse the same siginfo, so one recipient can affect the next.
+When inspecting the credentials of another task, objective credentials
+(->real_cred, accessed with __task_cred()) must always be used.
 
-Copy the siginfo before changing it.
+Accessing ->cred on a non-current task is forbidden unless that task is
+being created or destroyed; a task is allowed to change its own ->cred
+pointer with no synchronization, and changing ->cred should only affect the
+current syscall.
 
-Link: https://lore.kernel.org/86a8857d58d43ee26a8b365b837fd24830343494.1782159692.git.include@grrlz.net
-Fixes: 7a0cf094944e ("signal: Correct namespace fixups of si_pid and si_uid")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Adrian Huang <adrianhuang0701@gmail.com>
-Cc: Aleksandr Nogikh <nogikh@google.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Marco Elver <elver@google.com>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+smack_file_send_sigiotask() was accessing both sets of credentials: First
+tsk->cred, then __task_cred(tsk).
+
+Fix it, always access the objective credentials here.
+
+I have tested that this bug can lead to a KASAN-reported UAF of struct cred
+in smack_file_send_sigiotask(), and that this fix prevents the race.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/signal.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ security/smack/smack_lsm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -1183,6 +1183,7 @@ static inline bool has_si_pid_and_uid(st
- int send_signal_locked(int sig, struct kernel_siginfo *info,
- 		       struct task_struct *t, enum pid_type type)
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -1969,7 +1969,7 @@ static int smack_file_send_sigiotask(str
  {
-+	struct kernel_siginfo rewritten;
- 	/* Should SIGKILL or SIGSTOP be received by a pid namespace init? */
- 	bool force = false;
- 
-@@ -1196,6 +1197,9 @@ int send_signal_locked(int sig, struct k
- 		/* SIGKILL and SIGSTOP is special or has ids */
- 		struct user_namespace *t_user_ns;
- 
-+		rewritten = *info;
-+		info = &rewritten;
-+
- 		rcu_read_lock();
- 		t_user_ns = task_cred_xxx(t, user_ns);
- 		if (current_user_ns() != t_user_ns) {
+ 	struct smack_known **blob;
+ 	struct smack_known *skp;
+-	struct smack_known *tkp = smk_of_task(smack_cred(tsk->cred));
++	struct smack_known *tkp = smk_of_task_struct_obj(tsk);
+ 	const struct cred *tcred;
+ 	struct file *file;
+ 	int rc;
 
 
