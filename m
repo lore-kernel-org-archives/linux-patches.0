@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85C74137BF;
-	Fri,  4 Sep 2026 05:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4248E24A05D;
+	Fri,  4 Sep 2026 05:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498508; cv=none; b=VtdXy1GZPajoaoaAfSGl3xJfdY6BnN+2WZ4c8qGUzDqRshIW2nJo97RJONbZAKNFx2oq6V05DsuNF4jRQwPZc1XoLdACxdkIYNti5pYapTazRx9fWTB3QHZSZFeyxZzfnMfdqWQjulhXXdEH5j0MPPACEB7SvNQQvDB5PxskMQo=
+	t=1788498509; cv=none; b=nYXT0F4F2a8hcfG3l2nMsEkxdQQwryLYgA2CA8HnkHynwWwYiVgrFsQX7hytt+Xm7kaspNUzInHBXO4KULPeA0+ifhc3JR705HwPBN7mNfpR1j2iRu2ToWkwL09kMV74DnJJdu0pQvRYGeSphjDcr9dD0dnvf7mtUkfD9IRaZ9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498508; c=relaxed/simple;
-	bh=RU+OnnN1JLwiXr4acrSOa7OVc8LLFmCVDXTzT2V092M=;
+	s=arc-20240116; t=1788498509; c=relaxed/simple;
+	bh=YWhvGFiSV7sts7qXZTeEYINC2KzYQi/wl0+7bScgUPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCMD41o/+GoS4eY5tNyz3okwCehXTCeCS16NM9QAPpY6UdwoFUkxQbB2/PtxI5GKgF4WuqCrOw7Zx5Vbe969CVpdDR6KEc+uj1QmrZ2YHUV+vv7c9z2gDipT9iLMZ9rMgiztQGSqXgt6dWl90ZvbmQyn/i3bnp1I5XKS+e8X3ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrzH7Fvr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nm+4f1qPBnskIa0BBAhkMANJizibfTjjVIJ5p10uNhxRw2eusYuYN4dIludxw2ApbBsw8OVdWihIOZq1dZWKT4yU5TI/F3Nt+MkWN+u7Ql5Haqg6J9B8yfx/XcIGggLCcCSw7Q0fKNsRBwy7riRJk81afvO6RkZCx93Y+OSyzvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2i0SIbGv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrzH7Fvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37701F00A3E;
-	Fri,  4 Sep 2026 05:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2i0SIbGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813391F00A3D;
+	Fri,  4 Sep 2026 05:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498500;
-	bh=lgn9x219zlw5lgEB7WJt27qIapcHZUlCm2GCD2k1Gd8=;
+	s=korg; t=1788498506;
+	bh=BGjgRumM+KDlrC1DTCNlbfWfddbwXo4MamO6Zm6K5SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IrzH7FvrmoVuwiDPhGyUkvPXJUjTrnEHgQGqn0YD+BrYtNhGsM0/7jlXwboGT1LmQ
-	 8k5L5cnKOsxXhxM8A+S/R4JzLnAChdRZZzB2cFR2BpkSQR0tzBCoS77V8vxDku2zlO
-	 RsfqFyXBSxvUc2WTwZBE3P4OBVFImQwIzYxv9dJU=
+	b=2i0SIbGvM4HTZlhRfhTstAPj7ANTZzKJe4YVzaCdzvIdpvWthvQFn44Hbnzd2U5E6
+	 V7KHDv1M3zJE6tVy0o+UhVmFE2sIjFHiCx6RVLXCLyb/DR3R3gyAUSPKgxs4Np0FlB
+	 elBBDIM5NdWX8dx3NOKv6z7D4jyew735Y+lFiRqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Gregory Price <gourry@gourry.net>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Brendan Jackman <jackmanb@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 078/713] mm: page_alloc: move capture_control to the page allocator
-Date: Fri,  4 Sep 2026 06:50:46 +0200
-Message-ID: <20260904045805.588357974@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Bradley Morgan <brads@mainlining.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 088/713] tracing/user_events: Clear copied tracing state before fork duplication
+Date: Fri,  4 Sep 2026 06:50:56 +0200
+Message-ID: <20260904045805.811126438@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -56,265 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit aee220f565cce38f0efcff940ae2b44bdc495408 upstream.
+commit 390f6bd8583d177029d9df4bea6667509e55a765 upstream.
 
-The compaction capturing code assumes the allocation request order and
-compaction target order are the same.  That won't be true once defrag_mode
-promotes sub-block allocations to pageblock-order compaction: compaction
-targets the larger order, while capture should remain at the original
-allocation order.
+dup_task_struct() copies user_event_mm from the parent into the child,
+without grabbing a reference to it. user_event_mm_dup() should
+replace it, but it leaves that copied pointer unmodified if
+user_event_mm_alloc() fails.
 
-Move the capture_control to the page allocator and give it its own copies
-of what the page freeing path matches against - zone, migratetype and the
-allocation order - rather than reaching into compaction's live
-compact_control.  __alloc_pages_direct_compact() fills in migratetype and
-order, and installs and hides current->capture_control around the whole
-compaction call; try_to_compact_pages() aims capc->zone at each zone while
-it is being compacted.  compact_zone_order() no longer deals with capture
-at all.
+When the child exits, user_event_mm_remove() decrements a reference
+the child never owned, which ultimately frees user_event_mm, while
+the parent still as a stale pointer to it. This creates a UAF, which
+KASAN reports as:
 
-Pass the capture_control through try_to_compact_pages() /
-compact_zone_order() in place of the bare struct page **.
+    BUG: KASAN: slab-use-after-free in
+    current_user_event_mm+0x51/0x1d0 Write of size 4 at addr
+    ffff888005010d30 by task init/44
 
-No functional change.
+    Call Trace:
+     <TASK>
+     kasan_report+0xce/0x100
+     kasan_check_range+0x10f/0x1e0
+     current_user_event_mm+0x51/0x1d0
+     user_events_ioctl+0x82e/0x15c0
+     __x64_sys_ioctl+0x139/0x1c0
+     do_syscall_64+0xce/0x450
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Link: https://lore.kernel.org/20260722150006.3848560-4-hannes@cmpxchg.org
-Fixes: e3aa7df331bc ("mm: page_alloc: defrag_mode")
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Co-developed-by: Johannes Weiner <hannes@cmpxchg.org>
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+    Allocated by task 44:
+     __kasan_kmalloc+0x8f/0xa0
+     __kmalloc_cache_noprof+0x180/0x3a0
+     user_event_mm_alloc+0x3c/0x1f0
+     current_user_event_mm+0x88/0x1d0
+
+    Freed by task 42:
+     __kasan_slab_free+0x43/0x70
+     kfree+0x13a/0x390
+     process_one_work+0x696/0xf90
+     worker_thread+0x420/0xba0
+
+The fix simply clears the copied pointer before any possible failure.
+In case of failure, the child then has nothing to free.
+
+Cc: stable@vger.kernel.org
+Fixes: 7235759084a4 ("tracing/user_events: Use remote writes for event enablement")
+Link: https://patch.msgid.link/20260827184321.2964601-2-Jeremy.Jean@oss.cyber.gouv.fr
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compaction.h |    3 +-
- mm/compaction.c            |   50 ++++++++++++---------------------------------
- mm/internal.h              |    4 ++-
- mm/page_alloc.c            |   45 ++++++++++++++++++++++++++++++++++------
- 4 files changed, 57 insertions(+), 45 deletions(-)
+ kernel/trace/trace_events_user.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/linux/compaction.h
-+++ b/include/linux/compaction.h
-@@ -58,6 +58,7 @@ enum compact_result {
- };
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -868,6 +868,9 @@ void user_event_mm_dup(struct task_struc
+ 	struct user_event_mm *mm = user_event_mm_alloc(t);
+ 	struct user_event_enabler *enabler;
  
- struct alloc_context; /* in mm/internal.h */
-+struct capture_control; /* in mm/internal.h */
- 
- /*
-  * Number of free order-0 pages that should be available above given watermark
-@@ -92,7 +93,7 @@ extern int fragmentation_index(struct zo
- extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
- 		unsigned int order, unsigned int alloc_flags,
- 		const struct alloc_context *ac, enum compact_priority prio,
--		struct page **page);
-+		struct capture_control *capc);
- extern void reset_isolation_suitable(pg_data_t *pgdat);
- extern bool compaction_suitable(struct zone *zone, int order,
- 				unsigned long watermark, int highest_zoneidx);
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -2802,9 +2802,8 @@ out:
- static enum compact_result compact_zone_order(struct zone *zone, int order,
- 		gfp_t gfp_mask, enum compact_priority prio,
- 		unsigned int alloc_flags, int highest_zoneidx,
--		struct page **capture)
-+		struct capture_control *capc)
- {
--	enum compact_result ret;
- 	struct compact_control cc = {
- 		.order = order,
- 		.search_order = order,
-@@ -2819,38 +2818,8 @@ static enum compact_result compact_zone_
- 		.ignore_skip_hint = (prio == MIN_COMPACT_PRIORITY),
- 		.ignore_block_suitable = (prio == MIN_COMPACT_PRIORITY)
- 	};
--	struct capture_control capc = {
--		.cc = &cc,
--		.page = NULL,
--	};
--
--	/*
--	 * Make sure the structs are really initialized before we expose the
--	 * capture control, in case we are interrupted and the interrupt handler
--	 * frees a page.
--	 */
--	barrier();
--	WRITE_ONCE(current->capture_control, &capc);
--
--	ret = compact_zone(&cc, &capc);
--
--	/*
--	 * Make sure we hide capture control first before we read the captured
--	 * page pointer, otherwise an interrupt could free and capture a page
--	 * and we would leak it.
--	 */
--	WRITE_ONCE(current->capture_control, NULL);
--	*capture = READ_ONCE(capc.page);
--	/*
--	 * Technically, it is also possible that compaction is skipped but
--	 * the page is still captured out of luck(IRQ came and freed the page).
--	 * Returning COMPACT_SUCCESS in such cases helps in properly accounting
--	 * the COMPACT[STALL|FAIL] when compaction is skipped.
--	 */
--	if (*capture)
--		ret = COMPACT_SUCCESS;
- 
--	return ret;
-+	return compact_zone(&cc, capc);
- }
- 
- /**
-@@ -2860,13 +2829,13 @@ static enum compact_result compact_zone_
-  * @alloc_flags: The allocation flags of the current allocation
-  * @ac: The context of current allocation
-  * @prio: Determines how hard direct compaction should try to succeed
-- * @capture: Pointer to free page created by compaction will be stored here
-+ * @capc: Free page capture bypassing the freelist
-  *
-  * This is the main entry point for direct page compaction.
-  */
- enum compact_result try_to_compact_pages(gfp_t gfp_mask, unsigned int order,
- 		unsigned int alloc_flags, const struct alloc_context *ac,
--		enum compact_priority prio, struct page **capture)
-+		enum compact_priority prio, struct capture_control *capc)
- {
- 	struct zoneref *z;
- 	struct zone *zone;
-@@ -2893,8 +2862,17 @@ enum compact_result try_to_compact_pages
- 			continue;
- 		}
- 
-+		WRITE_ONCE(capc->zone, zone);
++	/* On failure, do not free parent's copy */
++	t->user_event_mm = NULL;
 +
- 		status = compact_zone_order(zone, order, gfp_mask, prio,
--				alloc_flags, ac->highest_zoneidx, capture);
-+				alloc_flags, ac->highest_zoneidx, capc);
-+
-+		WRITE_ONCE(capc->zone, NULL);
-+
-+		/* Stop if a page has been captured */
-+		if (READ_ONCE(capc->page))
-+			status = COMPACT_SUCCESS;
-+
- 		rc = max(status, rc);
+ 	if (!mm)
+ 		return;
  
- 		/* The allocation should succeed, stop compacting */
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -1059,7 +1059,9 @@ struct compact_control {
-  * immediately when one is created during the free path.
-  */
- struct capture_control {
--	struct compact_control *cc;
-+	struct zone *zone;
-+	int migratetype;
-+	int order;
- 	struct page *page;
- };
- 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -721,14 +721,14 @@ static inline struct capture_control *ta
- 	return unlikely(capc) &&
- 		!(current->flags & PF_KTHREAD) &&
- 		!capc->page &&
--		capc->cc->zone == zone ? capc : NULL;
-+		capc->zone == zone ? capc : NULL;
- }
- 
- static inline bool
- compaction_capture(struct capture_control *capc, struct page *page,
- 		   int order, int migratetype)
- {
--	if (!capc || order != capc->cc->order)
-+	if (!capc || order != capc->order)
- 		return false;
- 
- 	/* Do not accidentally pollute CMA or isolated regions*/
-@@ -744,12 +744,12 @@ compaction_capture(struct capture_contro
- 	 * have trouble finding a high-order free page.
- 	 */
- 	if (order < pageblock_order && migratetype == MIGRATE_MOVABLE &&
--	    capc->cc->migratetype != MIGRATE_MOVABLE)
-+	    capc->migratetype != MIGRATE_MOVABLE)
- 		return false;
- 
--	if (migratetype != capc->cc->migratetype)
--		trace_mm_page_alloc_extfrag(page, capc->cc->order, order,
--					    capc->cc->migratetype, migratetype);
-+	if (migratetype != capc->migratetype)
-+		trace_mm_page_alloc_extfrag(page, capc->order, order,
-+					    capc->migratetype, migratetype);
- 
- 	capc->page = page;
- 	return true;
-@@ -4146,6 +4146,12 @@ __alloc_pages_direct_compact(gfp_t gfp_m
- 	struct page *page = NULL;
- 	unsigned long pflags;
- 	unsigned int noreclaim_flag;
-+	struct capture_control capc = {
-+		.zone = NULL,
-+		.migratetype = ac->migratetype,
-+		.order = order,
-+		.page = NULL,
-+	};
- 
- 	if (!order)
- 		return NULL;
-@@ -4155,8 +4161,33 @@ __alloc_pages_direct_compact(gfp_t gfp_m
- 	fs_reclaim_acquire(gfp_mask);
- 	noreclaim_flag = memalloc_noreclaim_save();
- 
-+	/*
-+	 * Make sure the structs are really initialized before we expose the
-+	 * capture control, in case we are interrupted and the interrupt handler
-+	 * frees a page.
-+	 */
-+	barrier();
-+	WRITE_ONCE(current->capture_control, &capc);
-+
- 	*compact_result = try_to_compact_pages(gfp_mask, order, alloc_flags, ac,
--								prio, &page);
-+							       prio, &capc);
-+
-+	/*
-+	 * Make sure we hide capture control first before we read the captured
-+	 * page pointer, otherwise an interrupt could free and capture a page
-+	 * and we would leak it.
-+	 */
-+	WRITE_ONCE(current->capture_control, NULL);
-+	page = READ_ONCE(capc.page);
-+
-+	/*
-+	 * Technically, it is also possible that compaction is skipped but
-+	 * the page is still captured out of luck(IRQ came and freed the page).
-+	 * Returning COMPACT_SUCCESS in such cases helps in properly accounting
-+	 * the COMPACT[STALL|FAIL] when compaction is skipped.
-+	 */
-+	if (page)
-+		*compact_result = COMPACT_SUCCESS;
- 
- 	memalloc_noreclaim_restore(noreclaim_flag);
- 	fs_reclaim_release(gfp_mask);
 
 
