@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8E3424D46;
-	Fri,  4 Sep 2026 06:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893BA41BA60;
+	Fri,  4 Sep 2026 06:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502540; cv=none; b=gVMgq4m/AOBW2Kwi6pJkRceYY/6UeyCCJ+Yi1aZsvMKTZX4Zo7Hj/VMAv71qc4OD7PzAC8ic+8EUSIkuWx+2JUNxkcXLyYkY7oER/Z9zDi0WdZ+3ky6KHIhQu0UCh7Tz6nSqC2LNQwiKVEQmG1H1saUo0pfordceMGrMNaTxH9g=
+	t=1788502543; cv=none; b=BQyXIT05Oc+GHNLyyvEIhhglu6YkrChoCSibTLXZChaqv4cBoBpQipcd/JhxryouldDpaz/oRP9TfKppl86cwMtHphi6GTDJppohriOSYwZ4C+Oz/hdjak7rB2qmLMpitfU/4XAxDXODAV53md2OU0gPOPc+KiGFPvSLoIz+GxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502540; c=relaxed/simple;
-	bh=GGR4rXoqdxwT9tlQnjSg3LLWSpPn3lpUN8MpFLOEyNc=;
+	s=arc-20240116; t=1788502543; c=relaxed/simple;
+	bh=rxottXjKfA+tRJi6K3MOQ/ksZLwpTui+8oA1J2T8eoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/3cwq7hVAdT6p0q9AWb1Z9zYbbbj2nPscJcEqitItVQiQzZzqmGVrHwlDCZM88zxmTvhGAczzomNzdZz9xcRxxsmjIujHm9fjt4Rkk17YWYk8ogyxhhIDpaJGBGgpjmAXV+ZfmWayDFluAsOkZXz0lIU8hz6ErckGekLS2JCDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeSo9xbe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=anW4g3KCEehBVshM6+R0DH9RKu5Ia+7mmI4AiI1SHlo/XstFWXRQqaKHLAwUnFU32I0lsqkeqhk8/sjS5DLIvRemhE6HGGG1D8ASWw4lzZgpcx5MRmT8JycsmZjPKIu7gDFSxpSZlw3Je9zRnT4BEcE3hsmyHgVH4PWHjc+FyIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6vpZu0l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeSo9xbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C121F00A3D;
-	Fri,  4 Sep 2026 06:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6vpZu0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6CA1F00A3D;
+	Fri,  4 Sep 2026 06:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502539;
-	bh=bmoluMAzCFRBpcpqhwe82j1kaGJbWfYlep80aldpX2g=;
+	s=korg; t=1788502542;
+	bh=NSxKNSHbzaVxPa5PtMu6hiFVZLEgPijb/NQ4ecJxHjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CeSo9xbe8sSa5Yo5GWYENlzzphq2lMmkBTJVhcLtn0DqHtdMUF31g7P193t68DulI
-	 ro0/cfYQxjdtceVzGkUxWp6+eChdpY12XGOPi30OkhuGBx7fcTZNIeev0RrTpUNiNa
-	 o9uX9TDXONnGYGGySQiKZ9nH4pPUn63A000qCFm4=
+	b=F6vpZu0lAsFxQaWghRUFqxnYnrqXF/d0uoDJPk/ClA6VtwjPLUcljgbhhTRvjG/ba
+	 piF0Us6/gjNyaG3dogdSrMRU4g/NpWRuGQQ/RElXmHgIxyS9wXaZHPPknRZzYfUzxm
+	 +y6JAoD8GPUirnGd7uP+xJ/hWbqjlHtaIIzOmZVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunkai Deng <chunkai.deng@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 226/403] rpmsg: glink: smem: order FIFO read after availability check
-Date: Fri,  4 Sep 2026 07:00:29 +0200
-Message-ID: <20260904045740.001378721@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 244/403] ocfs2: validate lengths in dlm_mig_lockres_handler
+Date: Fri,  4 Sep 2026 07:00:47 +0200
+Message-ID: <20260904045740.421525220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,48 +57,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 786439ad58763e04b91bc2ec5f590e463939f197 upstream.
+commit b54e03d9b3697d25f4a0063cf717d459c5e3ad94 upstream.
 
-glink_smem_rx_peek() reads the RX FIFO payload after the caller has
-determined data is available via glink_smem_rx_avail(), which reads the
-remote-updated head index. A control dependency between the head read
-and the subsequent payload read does not order the two loads, so the
-CPU may speculatively read the FIFO before observing the head update
-and consume stale data the remote has not yet published.
+A node receiving a DLM_MIG_LOCKRES message trusts several fields of the
+peer-supplied dlm_migratable_lockres without validation.  num_locks and
+lockname_len are bounded only on the sending side, and the message is
+never checked to actually carry num_locks migratable_lock entries.  As a
+result dlm_process_recovery_data() walks mres->ml[0..num_locks) past the
+kmalloc(data_len) copy of the message (an out-of-bounds read that ends in
+a BUG_ON panic), and dlm_init_lockres() copies lockname_len bytes into the
+fixed 32-byte o2dlm_lockname slab object (a heap out-of-bounds write).
+Both are reachable by any node in the domain.
 
-Add rmb() in glink_smem_rx_peek() before the memcpy_fromio() so the
-availability (head) read is ordered ahead of the FIFO payload read,
-matching the consumer pattern in
-Documentation/core-api/circular-buffers.rst.
+Validate these fields right after dlm_grab(), before anything uses them --
+including the not-joined error path, which already prints mres->lockname
+with the unbounded lockname_len as a %.*s precision.  Reject the message
+unless lockname_len <= DLM_LOCKID_NAME_MAX, num_locks <=
+DLM_MAX_MIGRATABLE_LOCKS (the bound the sender already asserts), and the
+payload is large enough to hold the claimed locks.  Conforming recovery
+and migration messages are unaffected.
 
-Fixes: caf989c350e8 ("rpmsg: glink: Introduce glink smem based transport")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260618-rpmsg-glink-smem-mb-v1-1-68a026453a69@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-2-6953bcc0421f@proton.me
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_smem.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ocfs2/dlm/dlmrecovery.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -103,6 +103,13 @@ static void glink_smem_rx_peek(struct qc
- 	if (tail >= pipe->native.length)
- 		tail -= pipe->native.length;
+--- a/fs/ocfs2/dlm/dlmrecovery.c
++++ b/fs/ocfs2/dlm/dlmrecovery.c
+@@ -1359,6 +1359,15 @@ int dlm_mig_lockres_handler(struct o2net
+ 	if (!dlm_grab(dlm))
+ 		return -EINVAL;
  
-+	/*
-+	 * Order the availability (head) read in glink_smem_rx_avail()
-+	 * against the FIFO payload read below, so APPS never consumes
-+	 * stale data the remote has not yet published.
-+	 */
-+	rmb();
++	if (mres->lockname_len > DLM_LOCKID_NAME_MAX ||
++	    mres->num_locks > DLM_MAX_MIGRATABLE_LOCKS ||
++	    be16_to_cpu(msg->data_len) < struct_size(mres, ml, mres->num_locks)) {
++		mlog(ML_ERROR, "%s: invalid lockres migration message from %u\n",
++		     dlm->name, mres->master);
++		dlm_put(dlm);
++		return -EINVAL;
++	}
 +
- 	len = min_t(size_t, count, pipe->native.length - tail);
- 	if (len)
- 		memcpy_fromio(data, pipe->fifo + tail, len);
+ 	if (!dlm_joined(dlm)) {
+ 		mlog(ML_ERROR, "Domain %s not joined! "
+ 			  "lockres %.*s, master %u\n",
 
 
