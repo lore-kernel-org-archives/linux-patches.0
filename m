@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0920E4156F0;
-	Fri,  4 Sep 2026 05:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6AA414A29;
+	Fri,  4 Sep 2026 05:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499852; cv=none; b=kpdrNw8oWmsHbmNEpC+lfjlbAWFQdo3Sntg0rrABfzG1KrVY/HKA4ZfnBY3bmvWOKQpw9YeQGHeB2HNbX94i3BJrjg7y4xCnMlxySSdTRWmEbvmwu1Se9dynq7fSGcz+1C+Sdk/lAHtFrCFC8M19hiQlhKeUie9azndEBArH3Sc=
+	t=1788499854; cv=none; b=PHReDIXC0/PJIqMyh90lW9X8yrBvdnSmATIXyo1HAEnB33KIcOt1NPYl4zB1jGma1HNJ5PzP6qvZXzzLERJtLwOami99jiJqt0uHVk4KRSrWmgXM/6goIZf4m+RMI7fmiZA4fO+T9VScO1eHhn9W5no7pn6z+xN36YhvPpE57uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499852; c=relaxed/simple;
-	bh=+n6V/4o4rT599/10VUGtiRHKNgumsKaPG5Qv/2QW2Ks=;
+	s=arc-20240116; t=1788499854; c=relaxed/simple;
+	bh=RDnHPjmAjFSHn4MPr+0yMlWvFNl1rKpKl/dDFY1Qqrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ifn6IOZKc3NwlaFNXYdUWk1HgEkdbRKrPhgUPmSY34SU2gMJFYSUS1YPHpu1G0ffrLzRwPdPH32k0Hb6jxLAuZhYdi+Pf5HrgHohDUtvlCS1Figwvc2ymsMSgzZpD7KZvVfbJYsMvsltFpki+l4qKgOnNxeZZLyVKsirYTmNeO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jxlD2Xz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=th/kURgHLmP7rF6vixJwbdRSdeJnybbyj13JfdW2dVXBfZVbZLdWwQqTzI6SSjZo499KRwXdJ3j+Bs/d+353gqAcavKw59kQBqDuqo5wt7hA4F3iDwhiTLPSjc1FKyhxNrxylS+hGc15mtSESCYNncRPYcrkx3DRfiQT5XDhQRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJEo43kl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jxlD2Xz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188061F00A3D;
-	Fri,  4 Sep 2026 05:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJEo43kl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2D81F00A3D;
+	Fri,  4 Sep 2026 05:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499850;
-	bh=RCUNtF57TbU3T8ez8IYVnKHHhXfvydH85u43VgbzqLw=;
+	s=korg; t=1788499853;
+	bh=OXCOqGEv8rD5SqE3aryvkPGHEV+ili0hsOuyIczq66g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0jxlD2Xzuf9886p8TYw8hKWGyrCkNrsBkUVkmf81SLBIQVPUG48EmvF9/ftljFOHU
-	 S2rGFWEjduEO+tH6od+S1YRxda6QBeOxlP0V5WEx08G0uLyFpxPa+D4sjs7Zk3bCsE
-	 Fg6OWlRy+bDmsteu155AyTGqXMV+5OL9f47WgPak=
+	b=nJEo43kl8Kq4foGdSWLJGJT/0rF3gHdWtf2eyUZ8BQDSXp2z5nmnu55Hs0iECbHd7
+	 l/dOd7W0+dWUsLmKc6Mj8Do+Ui7KlzR4h1pZeJ6TsLBVqDg2/36bgp/J5UmntjZQRF
+	 h49xWy+z0sPZvg7bQ95f7g3OylW082sjsSZfKnf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yahia Ahmed <yahmedd043@gmail.com>,
-	Krishna Chomal <krishna.chomal108@gmail.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.2 563/713] platform/x86: hp-wmi: Add support for OMEN MAX 16-ak0xxx (8DD6)
-Date: Fri,  4 Sep 2026 06:58:51 +0200
-Message-ID: <20260904045816.438557296@linuxfoundation.org>
+Subject: [PATCH 7.2 564/713] platform/x86: int1092: Fix potential memory leak in sar_probe()
+Date: Fri,  4 Sep 2026 06:58:52 +0200
+Message-ID: <20260904045816.461905221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,47 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Chomal <krishna.chomal108@gmail.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit a7320d6eb9c4240c948cd9c64582b3bd04cbaf4b upstream.
+commit 30c906cff490c3601ee9ff110fe8115fabe75fd4 upstream.
 
-The HP OMEN MAX 16-ak0xxx (board ID: 8DD6) has the same WMI interface
-as other Victus S boards, but requires quirks for correctly switching
-thermal profile.
+The memory allocated for device_mode_info in parse_package() called by
+sar_get_data() is not freed in some of the error paths in sar_probe().
+Fix that by converting to use device managed allocations.
 
-After testing we know that (similar to another HP Omen Max 16 device,
-board ID 8D87), the embedded controller on this board does not expose
-thermal profile which means we have to intentionally disable EC readback.
-
-Add the DMI board name to victus_s_thermal_profile_boards[] table and
-map it to omen_v1_no_ec_thermal_params.
-
-Testing on board 8DD6 confirmed that platform profile is registered
-successfully and fan RPMs are readable and controllable.
-
-Tested-by: Yahia Ahmed <yahmedd043@gmail.com>
-Cc: stable@vger.kernel.org # v6.18+
-Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
-Link: https://patch.msgid.link/20260623141314.33947-1-krishna.chomal108@gmail.com
+Fixes: dcfbd31ef4bc ("platform/x86: BIOS SAR driver for Intel M.2 Modem")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20260723-platx86-v4-1-93b4a178b595@cse.iitm.ac.in
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/platform/x86/intel/int1092/intel_sar.c |   32 +++++++------------------
+ 1 file changed, 10 insertions(+), 22 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -266,6 +266,10 @@ static const struct dmi_system_id victus
- 		.driver_data = (void *)&omen_v1_no_ec_thermal_params,
- 	},
- 	{
-+		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8DD6") },
-+		.driver_data = (void *)&omen_v1_no_ec_thermal_params,
-+	},
-+	{
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8E35") },
- 		.driver_data = (void *)&omen_v1_legacy_thermal_params,
- 	},
+--- a/drivers/platform/x86/intel/int1092/intel_sar.c
++++ b/drivers/platform/x86/intel/int1092/intel_sar.c
+@@ -91,8 +91,10 @@ static acpi_status parse_package(struct
+ 	    item->package.count <= data->total_dev_mode)
+ 		return AE_ERROR;
+ 
+-	data->device_mode_info = kmalloc_objs(struct wwan_device_mode_info,
+-					      data->total_dev_mode);
++	data->device_mode_info = devm_kmalloc_array(&context->sar_device->dev,
++						    data->total_dev_mode,
++						    sizeof(*data->device_mode_info),
++						    GFP_KERNEL);
+ 	if (!data->device_mode_info)
+ 		return AE_ERROR;
+ 
+@@ -253,7 +255,7 @@ static int sar_probe(struct platform_dev
+ 	if (!handle)
+ 		return -ENODEV;
+ 
+-	context = kzalloc_obj(*context);
++	context = devm_kzalloc(&device->dev, sizeof(*context), GFP_KERNEL);
+ 	if (!context)
+ 		return -ENOMEM;
+ 
+@@ -264,7 +266,7 @@ static int sar_probe(struct platform_dev
+ 	result = guid_parse(SAR_DSM_UUID, &context->guid);
+ 	if (result) {
+ 		dev_err(&device->dev, "SAR UUID parse error: %d\n", result);
+-		goto r_free;
++		return result;
+ 	}
+ 
+ 	for (reg = 0; reg < MAX_REGULATORY; reg++)
+@@ -272,43 +274,29 @@ static int sar_probe(struct platform_dev
+ 
+ 	if (sar_get_device_mode(device) != AE_OK) {
+ 		dev_err(&device->dev, "Failed to get device mode\n");
+-		result = -EIO;
+-		goto r_free;
++		return -EIO;
+ 	}
+ 
+ 	result = sysfs_create_group(&device->dev.kobj, &intcsar_group);
+ 	if (result) {
+ 		dev_err(&device->dev, "sysfs creation failed\n");
+-		goto r_free;
++		return result;
+ 	}
+ 
+ 	if (acpi_install_notify_handler(ACPI_HANDLE(&device->dev), ACPI_DEVICE_NOTIFY,
+ 					sar_notify, (void *)device) != AE_OK) {
+ 		dev_err(&device->dev, "Failed acpi_install_notify_handler\n");
+-		result = -EIO;
+-		goto r_sys;
++		sysfs_remove_group(&device->dev.kobj, &intcsar_group);
++		return -EIO;
+ 	}
+ 	return 0;
+-
+-r_sys:
+-	sysfs_remove_group(&device->dev.kobj, &intcsar_group);
+-r_free:
+-	kfree(context);
+-	return result;
+ }
+ 
+ static void sar_remove(struct platform_device *device)
+ {
+-	struct wwan_sar_context *context = dev_get_drvdata(&device->dev);
+-	int reg;
+-
+ 	acpi_remove_notify_handler(ACPI_HANDLE(&device->dev),
+ 				   ACPI_DEVICE_NOTIFY, sar_notify);
+ 	sysfs_remove_group(&device->dev.kobj, &intcsar_group);
+-	for (reg = 0; reg < MAX_REGULATORY; reg++)
+-		kfree(context->config_data[reg].device_mode_info);
+-
+-	kfree(context);
+ }
+ 
+ static struct platform_driver sar_driver = {
 
 
