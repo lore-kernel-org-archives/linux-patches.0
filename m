@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CE6422556;
-	Fri,  4 Sep 2026 06:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB56421F0F;
+	Fri,  4 Sep 2026 06:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502517; cv=none; b=PN+QBefLNPHm4ccdDgy+9/fmyYlPuxReKnvYOzc1BdW2gHuSomeDxnj65k2ayFdDm7ZbfH6aksn5CEZfx9o21UmtvNpaJ2VUjCTRfARN+Cha6LdM73AEAwvYuyWUcSPQPpDi4zpWJKU0RIHYoWr8YtbFny40CgLq9QK6nYR2XnE=
+	t=1788502520; cv=none; b=TaECX5zsvvJlNywv5LGnC47+SD98FRvx6eKwS6j4OgilILLfwklOoVF9U1VKHhiURuxjUDNsl5RHPqFv7WSRWMeilvHbzGqDTiH40cbSNmFIZizporRwZweib8PbNKJbvSut/57Q0GN0LgD8zEoqNVV3ZNcoUxSukV9aRRKRG5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502517; c=relaxed/simple;
-	bh=+FSFvDEmz3u+61vjI2YdjSsUSYYNiF9MkoM9VKfwiPI=;
+	s=arc-20240116; t=1788502520; c=relaxed/simple;
+	bh=bxpYq0tXAfoDGPYmoNOgrbuKONUkvTNJDP5/hbUF4ZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brZaPtdNhsIv1VHXTBRckuXObqnmY0bhQW2ObgIF37dvZRSOLeMKd0ZAacRG2Rwr09/bxGZgRu5cABF+Z4Lt/kX4JAG5DcsNSQrivN7796p9r9Qqd4qJR5Zzymx8W41RGST8VkSl3z2YV0RLSnUWuiF4n70femUaWC3jQ2CrO74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxSwRTBd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sCi+cuwduhF5PwMonsQT53FhXryAsFHWKV/y+HU16Rck+V8NIqSdf93vwljwuNvVhAGFFi+BljEttlg+aaz7Skix2WfI24QIrMrmUbg1YoGx5GcR3RuOc95hT+fywtjKk9PFvU1z9m8arxbypoMts79VNxtbkNKrxei/YWOTyoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQ2tC5Px; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxSwRTBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3764E1F00A3D;
-	Fri,  4 Sep 2026 06:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQ2tC5Px"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110C41F00A3D;
+	Fri,  4 Sep 2026 06:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502516;
-	bh=jEcUkUaGKn6vqyTyzKDJU9CF7HnqVsT8KfQ5fCUDcpM=;
+	s=korg; t=1788502519;
+	bh=SPubsipdYR8ugPDMsfmiXswHvUcksbqfSCnn4sSBih4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BxSwRTBd97AlUiPCSVGtZa0cP2C9JvSKXP8wU1WtHpePwfcVNc7Bea+0Yg25MrIid
-	 uvjgGvQGQ6ffROJsbQ/0jQTdJOpL14Rid6ukJ1dv3E/frVjjF/JuersfA8TBachi0s
-	 TPjZdvwD//ve04hGfeQO/KJK5Mbg1LuQWrImBOpk=
+	b=gQ2tC5Pxf/tTUjlEU7I0dYWHcB4h1PYVJ3o8oN0kkp3bSV8qaJOBJc0xRPdPvZRJ2
+	 m59LdwtJ0iJkaSTlmVCkY1RhM2UyktJ3XayshDmkgiykgK6mPXFiRTNA1yC6vpB+TA
+	 7oeF/Je9auwLiehKGbqDmDSzCfFKUua19TPedXD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 236/403] regulator: max8998_pmic_dt_parse_pdata: of_node_put on reg_np after ownership transferred to rdata
-Date: Fri,  4 Sep 2026 07:00:39 +0200
-Message-ID: <20260904045740.236904198@linuxfoundation.org>
+Subject: [PATCH 6.12 237/403] regulator: qcom-refgen: correct the regulator type to CURRENT
+Date: Fri,  4 Sep 2026 07:00:40 +0200
+Message-ID: <20260904045740.260488817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-commit 7c8cc25d8d86f9eb3979255935cfdc7d062ad746 upstream.
+commit 05dfeb2d0ccf87a7b92cd149a393b8423a26a04e upstream.
 
-In max8998_pmic_dt_parse_pdata(), of_get_child_by_name() acquires a
-reference on reg_np which is then stored in rdata->reg_node, transferring
-ownership to the regulator data array. The subsequent of_node_put(reg_np)
-at the end of the function releases the last matched regulator node's
-reference, leaving rdata->reg_node as a dangling pointer for the last
-entry.
+As per the REFGEN IP team, this block supplies the reference current to
+the PHYs in the SoC. So, correct the regulator type to REGULATOR_CURRENT
+to match with the HW behavior.
 
-Remove the spurious of_node_put(reg_np) call.
-
+Fixes: 7cbfbe237960 ("regulator: Introduce Qualcomm REFGEN regulator driver")
 Cc: stable@vger.kernel.org
-Fixes: 156f252857df ("drivers: regulator: add Maxim 8998 driver")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260626160326.54457-1-vulab@iscas.ac.cn
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260617-ipq9650_refgen-v4-1-c505ea6c6661@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/max8998.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/regulator/qcom-refgen-regulator.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/regulator/max8998.c
-+++ b/drivers/regulator/max8998.c
-@@ -582,7 +582,6 @@ static int max8998_pmic_dt_parse_pdata(s
- 	}
- 	pdata->num_regulators = rdata - pdata->regulators;
- 
--	of_node_put(reg_np);
- 	of_node_put(regulators_np);
- 
- 	pdata->buck_voltage_lock = of_property_read_bool(pmic_np, "max8998,pmic-buck-voltage-lock");
+--- a/drivers/regulator/qcom-refgen-regulator.c
++++ b/drivers/regulator/qcom-refgen-regulator.c
+@@ -66,7 +66,7 @@ static const struct regulator_desc sdm84
+ 	.enable_time = 5,
+ 	.name = "refgen",
+ 	.owner = THIS_MODULE,
+-	.type = REGULATOR_VOLTAGE,
++	.type = REGULATOR_CURRENT,
+ 	.ops = &(const struct regulator_ops) {
+ 		.enable		= qcom_sdm845_refgen_enable,
+ 		.disable	= qcom_sdm845_refgen_disable,
+@@ -82,7 +82,7 @@ static const struct regulator_desc sm825
+ 	.enable_time = 5,
+ 	.name = "refgen",
+ 	.owner = THIS_MODULE,
+-	.type = REGULATOR_VOLTAGE,
++	.type = REGULATOR_CURRENT,
+ 	.ops = &(const struct regulator_ops) {
+ 		.enable		= regulator_enable_regmap,
+ 		.disable	= regulator_disable_regmap,
 
 
