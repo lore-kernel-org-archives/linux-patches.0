@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B993C3A5445;
-	Fri,  4 Sep 2026 05:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C2B3242BD;
+	Fri,  4 Sep 2026 05:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501303; cv=none; b=g/+FZilVH1YyiQoAkChw8WZmmcUeSIOmIvBE1NRTLfwlKYP4u13lvK0ctedC+MkHdOBr/ILUzLhWqi9XfZev6P+G7eVr34PM30gH0bI5RDNoI4PHQzMXS8pLMEgo2aTU8of2XxS5shoILK62ITXBp6JVBz7pbCODR2AvrqhSpIo=
+	t=1788501306; cv=none; b=kDEmM93Zk8XoBvyriJi5jb4mPRFvoraqHHrJUbVCqdqBcEXuawybtnvWr7bSdctxI25b7FLXdwsYzTfH1Pn2WhbVPJU43MP5hlHBtbM4c/C6kfmoq/qkflMbp5/VmcfLE8kFgoBWqE+f5JK1IhLMaYvLIo49JYYfZruy8+Ytcoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501303; c=relaxed/simple;
-	bh=R3BUl2EaU9m9cjylwAqsJYtZIK+4eVlKWfebgXOSWzk=;
+	s=arc-20240116; t=1788501306; c=relaxed/simple;
+	bh=fJvRMI4E07GtKPxZA3WdusZJz45XwgQHKBXtwomlciw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dk9FM61GsuDbKx51C/wMvpGuxUBKdtPZwtBzIOygr9svFLZ8JgC0bd4s9AQX43oQ9ClCcT+MF13aixQQOshQnjAB4v4kQ4463kt++lTOCYHrESZOBP9U/Qd1e7W4/k/czjvFaKEbng7++cVOZYjCWWe98Zyjpfs76/K0siMmIQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMYGrEBa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6P6tY7TOpLPHFfSF5BQzfcN/YgKmZWBXQqcB8kmNERqK3t9uG3jwOBZ6d/k3q0MK5UHAh8UhAUlJf7oFjBInR/Ffbe/dyrHvgAeJO7gH4Ftw8suGZX1/nn+7zKJmvXXkSlonJHKcTfzHxka8Bh4M2TZetr01flkb90hClBWIG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUjdqQ6W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMYGrEBa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110CC1F00A3D;
-	Fri,  4 Sep 2026 05:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUjdqQ6W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05E91F00A3D;
+	Fri,  4 Sep 2026 05:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501302;
-	bh=+/9D9g7Rm61gkh7q+oWOO/1wNPqDA1TlQtzxKjnZXfg=;
+	s=korg; t=1788501305;
+	bh=aFdoIeDxQqxjazQBmoyRnvT5jsm/VDpl6JfA9ZRf4v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMYGrEBaXs+LPsWGt4KNtdTgBFyozLFeZAZChVI1f8qcPAfbZ38m81R407SN4+gyM
-	 VI8Gq5A6AvDf8MUbRAcrYF8zM6MVaHntqYCPXWITNwVah5w6qsigcyYyhTTWkSSrGp
-	 v7bHR8Mh1/IoGKcsZQavS/OwAjJ7uKg7moUCQUJ8=
+	b=dUjdqQ6W1YW0WuKH2o3lUdicuLp9QHnkBuN2IduWDPCfd6No5WmvFo4lmYOffiy35
+	 S1cCKyxvVDuxcDbe2e3FREpPDkSLCfnXN+khqR5/ACVUpfRHeDinOATlbxKDybrGpk
+	 7lmrBle+vm/nMdgZwAjlgau/+MzCOe7cY1gMc+Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
+	stable@kernel.org,
+	Simon Horman <horms@kernel.org>,
 	Xin Long <lucien.xin@gmail.com>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Jun Yang <junvyyang@tencent.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 363/552] sctp: fix NULL deref on untransmitted RECONF completion
-Date: Fri,  4 Sep 2026 06:58:40 +0200
-Message-ID: <20260904045758.462631441@linuxfoundation.org>
+Subject: [PATCH 6.18 364/552] sctp: distinguish sequence zero from wildcard in reconf lookup
+Date: Fri,  4 Sep 2026 06:58:41 +0200
+Message-ID: <20260904045758.484155198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,79 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit 2db9bfa3e27bdea15e05ea70b56bad3d21e570ec upstream.
+commit 63f44178f0a0f86060c9b576d6efab8a3ffa403e upstream.
 
-sctp_process_strreset_outreq(), sctp_process_strreset_addstrm_out() and
-sctp_process_strreset_resp() complete a pending stream reconfiguration
-request by stopping the reconf timer on the transport it was sent on:
+Zero is a valid response sequence after strreset_outseq wraps, but
+sctp_chunk_lookup_strreset_param() currently treats it as a wildcard.
 
-	t = asoc->strreset_chunk->transport;
-	if (timer_delete(&t->reconf_timer))
-		sctp_transport_put(t);
+Add match_seq so response lookups match zero exactly while the one
+type-only lookup can still ignore the sequence.
 
-chunk->transport is assigned by __sctp_packet_append_chunk() when the
-chunk is appended to an outbound packet, and sctp_outq_flush_ctrl() arms
-the reconf timer at that same point. A request already published in
-asoc->strreset_chunk but not yet transmitted has neither, so completing
-it dereferences NULL.
-
-Two ways to get there. sctp_send_asconf_del_ip() sets
-asoc->src_out_of_asoc_ok without sending anything when the address being
-removed is the association's last one, and sctp_outq_flush_ctrl() then
-leaves every non-ASCONF control chunk queued; as only
-sctp_process_asconf_ack() clears that flag, it persists. An unprivileged
-process that removes such an address and then asks for a stream reset
-panics the kernel from softirq. A peer needs neither ASCONF nor local
-help: sctp_cmd_interpreter() uncorks the outqueue only once the whole
-packet has been processed, so a reply built while walking a RECONF chunk
-stays untransmitted for the rest of that walk, and one RECONF chunk
-carrying [Incoming SSN Reset Request, Outgoing SSN Reset Request,
-Response] -- or two RECONF chunks in one packet -- reaches the same
-dereference.
-
-  KASAN: null-ptr-deref in range [0x00000000000001e8-0x00000000000001ef]
-  RIP: 0010:timer_delete+0x67/0x110
-  Call Trace:
-   <IRQ>
-   sctp_process_strreset_addstrm_out (net/sctp/stream.c:832)
-   sctp_sf_do_reconf (net/sctp/sm_statefuns.c:4212)
-   sctp_do_sm (net/sctp/sm_sideeffect.c:1172)
-   sctp_assoc_bh_rcv (net/sctp/associola.c:1044)
-   sctp_rcv (net/sctp/input.c:243)
-   ip_local_deliver (net/ipv4/ip_input.c:262)
-   process_backlog (net/core/dev.c:6680)
-   </IRQ>
-
-A response can only acknowledge a request that was actually sent, so do
-not match asoc->strreset_chunk while chunk->transport is NULL. Guarding
-the lookup covers all three completion sites.
-
-Fixes: 810544764536 ("sctp: implement receiver-side procedures for the Outgoing SSN Reset Request Parameter")
-Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Fixes: 50a41591f110 ("sctp: implement receiver-side procedures for the Add Outgoing Streams Request Parameter")
+Cc: stable@kernel.org
+Suggested-by: Simon Horman <horms@kernel.org>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260823172857.896146-2-bestswngs@gmail.com
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Link: https://patch.msgid.link/20260824081832.98717-2-juny24602@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/stream.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 --- a/net/sctp/stream.c
 +++ b/net/sctp/stream.c
-@@ -488,7 +488,7 @@ static struct sctp_paramhdr *sctp_chunk_
- 	struct sctp_reconf_chunk *hdr;
- 	union sctp_params param;
+@@ -482,7 +482,7 @@ out:
  
--	if (!chunk)
-+	if (!chunk || !chunk->transport)
+ static struct sctp_paramhdr *sctp_chunk_lookup_strreset_param(
+ 			struct sctp_association *asoc, __be32 resp_seq,
+-			__be16 type)
++			__be16 type, bool match_seq)
+ {
+ 	struct sctp_chunk *chunk = asoc->strreset_chunk;
+ 	struct sctp_reconf_chunk *hdr;
+@@ -499,7 +499,7 @@ static struct sctp_paramhdr *sctp_chunk_
+ 		 */
+ 		struct sctp_strreset_tsnreq *req = param.v;
+ 
+-		if ((!resp_seq || req->request_seq == resp_seq) &&
++		if ((!match_seq || req->request_seq == resp_seq) &&
+ 		    (!type || type == req->param_hdr.type))
+ 			return param.v;
+ 	}
+@@ -564,7 +564,7 @@ struct sctp_chunk *sctp_process_strreset
+ 	if (asoc->strreset_chunk) {
+ 		if (!sctp_chunk_lookup_strreset_param(
+ 				asoc, outreq->response_seq,
+-				SCTP_PARAM_RESET_IN_REQUEST)) {
++				SCTP_PARAM_RESET_IN_REQUEST, true)) {
+ 			/* same process with outstanding isn't 0 */
+ 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
+ 			goto out;
+@@ -816,7 +816,7 @@ struct sctp_chunk *sctp_process_strreset
+ 
+ 	if (asoc->strreset_chunk) {
+ 		if (!sctp_chunk_lookup_strreset_param(
+-			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS)) {
++			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false)) {
+ 			/* same process with outstanding isn't 0 */
+ 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
+ 			goto out;
+@@ -927,7 +927,8 @@ struct sctp_chunk *sctp_process_strreset
+ 	struct sctp_paramhdr *req;
+ 	__u32 result;
+ 
+-	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0);
++	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0,
++					       true);
+ 	if (!req)
  		return NULL;
  
- 	hdr = (struct sctp_reconf_chunk *)chunk->chunk_hdr;
 
 
