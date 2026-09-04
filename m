@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADFD41A56F;
-	Fri,  4 Sep 2026 06:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC7C369204;
+	Fri,  4 Sep 2026 06:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502318; cv=none; b=DcVdD10aXxosVW7F73tglkl0W4JA7AG1qW856B4SilxdGY0wDcI6xjTo//0HNBkl9quFBJw7oH/pNt517/qrj6bBfawJYkfmnwxHaxwku4Cezgv106wTGJIgh5FaTY3quCBiQkWMJg9czlQrYRnzJ/uBRC9yzrqkNDzCSqf7knA=
+	t=1788502321; cv=none; b=OqA+X1Rzd4rLQ81J4L/+eHttOoTuSPXdhJtJ4KvYD/KAtVIHwK1bUvNBHQrUfPfx0TVxfoOoRPSeacAQrFQkf5TwrpYyD3jpetgIgEyUyZ4eN8M1HgpCfBGI5x4hyYQsSAzjug7SyK3d6TlMRf038P+TVPCkW1PtHDcdYYzWdXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502318; c=relaxed/simple;
-	bh=9rNr5XIAw48IUs7lwxc7HIGo63vqIb8kvP+tzY0RRTg=;
+	s=arc-20240116; t=1788502321; c=relaxed/simple;
+	bh=ieJLYBMwc+yAFsq+sPOtj4IWxK9Pm349fAHRdw4B1lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSShLi5g5Eb7gJThRdz5Bk5eOo8pnCvpCEzzz6h+UjdJwk++7dEr8lXMkRrDoatYfhCRG0u36YYPO7kZHrMRdHtoNAcDeJ+OhIDYUS+QaInsuGVq3dYXd7yPlyLczNISX68Z4PPKEJeCVtpVvCmRpgO+3BLdRt6DSDmt6ZlpaE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oh4Jku/Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jvAtfX8ypJMtSb1tNcxG2CiTNfTS2+MAMTkHVqUp7zLhbGoAvnz8hQn3UG8sXin8ES6jlDElCy+WqqLCcWbk9eQTmC9+zhHcUpFNJ0ewyNy2jPw7SgdJQ3EkLunlNQCnXCUvQzDVqIAzUynDgZpurtOj8CgGjk6VqilrvD2ZvGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOhO83/y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oh4Jku/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB341F00A3D;
-	Fri,  4 Sep 2026 06:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOhO83/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173D51F00A3D;
+	Fri,  4 Sep 2026 06:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502316;
-	bh=grjmor5K2EZSMKlrM1Dl4LV4JKNL7ncUvK9Q7L1LOhM=;
+	s=korg; t=1788502319;
+	bh=l6OkRnE/dZeTF0ZFFms+/3FPvBHDEk3SRPU17hjINAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oh4Jku/Ysil/TOkGtekAZ6vT70hmf6FszQNT/y3FM/gwaVp/zKTSODvAkWdrsACBq
-	 PzuOEFpL2e3ERM8vVDiXwVW7rSMQEszZvC4RqXZHffuOv5Wc14xHrLbxXSBUTPbkto
-	 WKgaVmhq0YaAR62iA8gnAWB9sIXwg4Tn2KA4caXA=
+	b=lOhO83/yCrPP2ZgepqASG/J8n3iiB1uStasnyHpIBZr6a4LGESjlEdSW/s+Tu29yM
+	 p6623IEAZ7jZhMdowSzDc+/pdaRUlrTaGSHjGyyaWzCip87zqMl88EejBL5uPV4O62
+	 at1X6IZRIo7wSmPfmQxpkX6dUf6+TT2UTGMBym7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 164/403] bnx2x: fix double free in bnx2x_init_firmware() error path
-Date: Fri,  4 Sep 2026 06:59:27 +0200
-Message-ID: <20260904045738.582582554@linuxfoundation.org>
+	Vineet Gupta <vineet.gupta@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>
+Subject: [PATCH 6.12 165/403] bpf, x86: Fix per-CPU address resolution into an extended register
+Date: Fri,  4 Sep 2026 06:59:28 +0200
+Message-ID: <20260904045738.606365581@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,46 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Vineet Gupta <vineet.gupta@linux.dev>
 
-commit d2796ffe38cb4155afe0eab23636295b096c27a5 upstream.
+commit 5bbbce02e500d47d8e259a45be5a7be9741d0533 upstream.
 
-bnx2x_init_firmware() frees bp->init_ops, bp->init_data and
-bp->init_ops_offsets in its error path without setting them to NULL.
-The cleanup function bnx2x_release_firmware() frees the same three
-pointers unconditionally, so if init_firmware fails and
-release_firmware is later called (e.g. from __bnx2x_remove or through
-the function state machine), all three are freed a second time.
+The destination of the per-CPU address MOV is encoded in ModRM.reg,
+which is extended by REX.R, but the REX prefix is built with
+add_1mod(), which sets REX.B. REX.B extends ModRM.rm and SIB.base, and
+this instruction addresses memory as disp32 with no base, so the bit
+has no effect at all and the high register bit is simply lost.
 
-Set each pointer to NULL after kfree() in the error path so that the
-subsequent kfree(NULL) in bnx2x_release_firmware() is a safe no-op.
+Every is_ereg() destination therefore resolves to the wrong register,
+picking whichever one shares the low three bits:
 
-Fixes: 94a78b79cb5f ("bnx2x: Separated FW from the source.")
+  R5 -> RAX    R7 -> RBP    R8 -> RSI    R9 -> RDI
+
+With BPF_REG_5, whose reg2hex is 0, the emitted
+
+  65 49 03 04 25 <off>	add %gs:<off>,%rax
+
+adds the per-CPU offset to RAX rather than R8. The destination keeps
+the unadjusted address and RAX is clobbered, so the program goes on to
+dereference a pointer that was never made per-CPU:
+
+  BUG: unable to handle page fault for address: 0000607e386a8894
+  RIP: bpf_prog_707837aafd2aa9ae_update_percpu_data+0x93/0xc9
+  Call Trace:
+   __bpf_prog_test_run_raw_tp+0x2dc/0x7d0
+   __flush_smp_call_function_queue+0x1e9/0xc80
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+R5 is the mildest of the four, aliasing a scratch register and faulting
+at the store. R7 aliases RBP and would corrupt the frame pointer, R8
+and R9 alias the argument registers.
+
+Use add_2mod() so the register goes through REX.R, matching how
+add_2reg() places it in ModRM.reg and how emit_priv_frame_ptr()
+hardcodes 0x4c for the same instruction with R9. Encodings for the
+non-extended registers are unchanged.
+
+Problem showed up when trying to resurrect BPF_GCC CI (selftests built
+with BPF_GCC).
+
+This has gone unnoticed because clang reloads the address into R1
+before each per-CPU access, so the destination is never an extended
+register. GCC keeps several per-CPU addresses live at once, and
+test_progs-bpf_gcc panics the kernel in global_percpu_data/init, where
+the address of a .percpu variable ends up in R5.
+
+Fixes: 7bdbf7446305 ("bpf: add special internal-only MOV instruction to resolve per-CPU addrs")
+Signed-off-by: Vineet Gupta <vineet.gupta@linux.dev>
+Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260815122149.951215-1-yijiangshan@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260814220254.3797467-2-vineet.gupta@linux.dev
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/net/bpf_jit_comp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-@@ -13474,10 +13474,13 @@ static int bnx2x_init_firmware(struct bn
- 
- iro_alloc_err:
- 	kfree(bp->init_ops_offsets);
-+	bp->init_ops_offsets = NULL;
- init_offsets_alloc_err:
- 	kfree(bp->init_ops);
-+	bp->init_ops = NULL;
- init_ops_alloc_err:
- 	kfree(bp->init_data);
-+	bp->init_data = NULL;
- request_firmware_exit:
- 	release_firmware(bp->firmware);
- 	bp->firmware = NULL;
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -1578,7 +1578,7 @@ static int do_jit(struct bpf_prog *bpf_p
+ 				EMIT_mov(dst_reg, src_reg);
+ #ifdef CONFIG_SMP
+ 				/* add <dst>, gs:[<off>] */
+-				EMIT2(0x65, add_1mod(0x48, dst_reg));
++				EMIT2(0x65, add_2mod(0x48, 0, dst_reg));
+ 				EMIT3(0x03, add_2reg(0x04, 0, dst_reg), 0x25);
+ 				EMIT((u32)(unsigned long)&this_cpu_off, 4);
+ #endif
 
 
