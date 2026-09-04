@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784963876CC;
-	Fri,  4 Sep 2026 06:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B67041C2FF;
+	Fri,  4 Sep 2026 06:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502937; cv=none; b=Fg+Wz/F3glHh8ZcZOOUujgQLRUyZu1WeSLhcoiZ3TucsDPLePp56D7KnKWxOEeqymhSTa29vDgSskE4TiCDhGPu3Um4o/bqKooYEB9sEh6y3MC3t3kXyHZo56u4XH8GpQMno5w+m1G51dyaHtVQOmzAzCKKahgC9ncFxv5TsotQ=
+	t=1788502941; cv=none; b=tm9+Bkxy/5i9hpy6OD6zLclbRt1AQxH/myd2N0MKC78IN+KGd1gj1pn/QEhbGfL9AF+sgo5aFvZRvuiGQXGLZlWn7zNLQMUmIaZinf/yFVVDsnUt6LEIIM87GFV8Pf2UsT+Pn3TqdlbdriHJUSHubuWMHmiuXQ0opXA5/CIFGYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502937; c=relaxed/simple;
-	bh=LV1G4EQqtDT8GTNePHgfrEW0Kp+Frqbj6r0Bhe2qgxc=;
+	s=arc-20240116; t=1788502941; c=relaxed/simple;
+	bh=18ha5Q7iW85unqXxQQIdNpDcGaXR1LSFl4O3dqoHgxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQ9uMNCANiD0k+BIDAdlyJEugt0FV2tXilOakzR2jjvrx9OXcI+VI+WY5g/hpHg/U8bDzJhGZuObs6wOizSjz2JsgfyCYgDRxLhzfDZwAFcjoQo9m9lg0aubv3Y8g95WZBE/kEG4zDTPQA/lwMfx7oAYFaVeDHlamCjVaUFIz3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0l/MRba; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kJqlWJDHlam3HXWm0TQ7Ji1yoYfVWVNELetmBs4qwkQer47IkapInxLnAa4duOaBZTDFoznQg4PMpxUfewcggOyEpm/DfUaVVk9p96IKkQ23OBbuRoS7YSUa6wj7veXLO/uOaE8m73B/0nITiKOWoMYsd4/0fJrfBjMmCAc7FNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5fpjdjD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0l/MRba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C245B1F00A3D;
-	Fri,  4 Sep 2026 06:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5fpjdjD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53221F00A3D;
+	Fri,  4 Sep 2026 06:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502936;
-	bh=Te9Qhp2smVuhNNOXy7eL4SBLRK8b28i1mrK+FQ622Jg=;
+	s=korg; t=1788502939;
+	bh=KqniNSqyW5se1m9K+gsL/8RUJXzf9mKZGvyQomgpz7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h0l/MRbaKf3UmHC91x1u4ETIWc0ItmoUQKFKNHfZS538RRRYtegJkObCyCH+GykWw
-	 ajkEu/Pb5R6ZtjjlG7BknkBRmVS+Kvk84PjfdzF8QiRUw5bKTLZTPNL6+U7dkUhFjp
-	 Sc2s/u4ZusLMvhsO65eT9FNWHGPlE59XaS5C95Ws=
+	b=s5fpjdjDkd4pUzlhKS2EpiIiJizvQ/+teP0N9u7CuKCHjCab8hNLpdMD8049ShteW
+	 BsosKee568TuQFe09h6A5nFBWzbMGpRxccJyCOWxvJSpaNyRAN/G+LjN8feP6efVyQ
+	 GpCR/fXqVqipzaO44Ziu27GotH9p9GALQpTgojIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 382/403] wifi: brcmfmac: Fix memory leak in brcmf_sdio_read_control()
-Date: Fri,  4 Sep 2026 07:03:05 +0200
-Message-ID: <20260904045743.480545247@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.12 383/403] wifi: rtl8xxxu: fix use-after-free from rx_urb_wq on stop
+Date: Fri,  4 Sep 2026 07:03:06 +0200
+Message-ID: <20260904045743.501484928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,46 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 0d10db8e94fcb23a799789aaa696b4d8f937e207 upstream.
+commit 6c080026ecc17eecb103f8927c64ea73a74bb818 upstream.
 
-The memory allocated for buf is not freed in some of the error paths in
-brcmf_sdio_read_control(). Fix that by adding vfree() calls.
+rtl8xxxu arms rx_urb_wq from the RX completion path:
+rtl8xxxu_rx_complete() hands the URB to rtl8xxxu_queue_rx_urb(), which
+queues it on rx_urb_pending_list and, once the list grows past
+RTL8XXXU_RX_URB_PENDING_WATER, schedules rx_urb_wq.  The worker
+rtl8xxxu_rx_urb_work() drains rx_urb_pending_list, recovers priv through
+container_of, and resubmits each URB through rtl8xxxu_submit_rx_urb(),
+which anchors it on rx_anchor and dereferences priv->udev.
 
+rtl8xxxu_stop() cancels the sibling work items (c2hcmd_work, ra_watchdog,
+update_beacon_work) but never cancels rx_urb_wq, so a worker armed during
+the last burst of RX traffic can run rtl8xxxu_rx_urb_work() after
+rtl8xxxu_disconnect() has called ieee80211_free_hw(), which frees priv,
+producing a use-after-free.  The window opens under active RX traffic
+(pending count above the watermark) followed by a disconnect.
+
+There are two teardown races to close:
+
+  * rtl8xxxu_queue_rx_urb() decided whether to enqueue under rx_urb_lock
+    but called schedule_work() after dropping the lock.  A completion
+    that observed shutdown == false and released the lock could then call
+    schedule_work() after rtl8xxxu_stop() had set shutdown and
+    cancel_work_sync() had already returned, arming the worker to run
+    after the teardown.  Move schedule_work() under the same !shutdown
+    branch so the arming decision is atomic with the shutdown check.
+
+  * rtl8xxxu_rx_urb_work() anchors every URB it drained back onto
+    rx_anchor through rtl8xxxu_submit_rx_urb().  A worker still running
+    when usb_kill_anchored_urbs(&priv->rx_anchor) returned would submit a
+    URB that escaped the kill.  In rtl8xxxu_stop(), call
+    cancel_work_sync(&priv->rx_urb_wq) before the kill so the worker is
+    drained first.
+
+After priv->shutdown is set under rx_urb_lock, completions can no longer
+queue rx_urb_wq. cancel_work_sync() then drains the last queued or running
+worker, and the following usb_kill_anchored_urbs() kills the URBs it may
+have submitted.
+
+rtl8xxxu_disconnect() is covered because ieee80211_unregister_hw()
+guarantees .stop() runs for a live interface before ieee80211_free_hw()
+frees priv.  The probe error path needs no cancel: rx_urb_wq is
+INIT_WORK()'d there but cannot have been scheduled, since no URB is
+submitted before ieee80211_register_hw() succeeds.
+
+This bug was found by static analysis.
+
+Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
 Cc: stable@vger.kernel.org
-Fixes: dd43a01c5cdb ("brcmfmac: use dynamically allocated control frame buffer")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-[arend: rework as suggested by Johannes]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260803093506.1647790-1-arend.vanspriel@broadcom.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260630033117.3377-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtl8xxxu/core.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -1826,17 +1826,18 @@ gotpkt:
- 	if (bus->rxctl) {
- 		brcmf_err("last control frame is being processed.\n");
- 		spin_unlock_bh(&bus->rxctl_lock);
--		vfree(buf);
- 		goto done;
- 	}
- 	bus->rxctl = buf + doff;
- 	bus->rxctl_orig = buf;
- 	bus->rxlen = len - doff;
- 	spin_unlock_bh(&bus->rxctl_lock);
-+	buf = NULL;
+--- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+@@ -5863,14 +5863,19 @@ static void rtl8xxxu_queue_rx_urb(struct
+ {
+ 	struct sk_buff *skb;
+ 	unsigned long flags;
+-	int pending = 0;
  
- done:
- 	/* Awake any waiters */
- 	brcmf_sdio_dcmd_resp_wake(bus);
-+	vfree(buf);
+ 	spin_lock_irqsave(&priv->rx_urb_lock, flags);
+ 
+ 	if (!priv->shutdown) {
+ 		list_add_tail(&rx_urb->list, &priv->rx_urb_pending_list);
+ 		priv->rx_urb_pending_count++;
+-		pending = priv->rx_urb_pending_count;
++		/*
++		 * Arm the worker under rx_urb_lock so this is atomic with the
++		 * shutdown check: moving it out of the lock would let a
++		 * completion arm the work after rtl8xxxu_stop() canceled it.
++		 */
++		if (priv->rx_urb_pending_count > RTL8XXXU_RX_URB_PENDING_WATER)
++			schedule_work(&priv->rx_urb_wq);
+ 	} else {
+ 		skb = (struct sk_buff *)rx_urb->urb.context;
+ 		dev_kfree_skb_irq(skb);
+@@ -5878,9 +5883,6 @@ static void rtl8xxxu_queue_rx_urb(struct
+ 	}
+ 
+ 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
+-
+-	if (pending > RTL8XXXU_RX_URB_PENDING_WATER)
+-		schedule_work(&priv->rx_urb_wq);
  }
  
- /* Pad read to blocksize for efficiency */
+ static void rtl8xxxu_rx_urb_work(struct work_struct *work)
+@@ -7527,6 +7529,13 @@ static void rtl8xxxu_stop(struct ieee802
+ 	priv->shutdown = true;
+ 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
+ 
++	/*
++	 * Cancel before killing rx_anchor: the worker re-anchors every URB
++	 * it drained via rtl8xxxu_submit_rx_urb(), so a worker still running
++	 * after the kill could submit a URB that escapes it.
++	 */
++	cancel_work_sync(&priv->rx_urb_wq);
++
+ 	usb_kill_anchored_urbs(&priv->rx_anchor);
+ 	usb_kill_anchored_urbs(&priv->tx_anchor);
+ 	if (priv->usb_interrupts)
 
 
