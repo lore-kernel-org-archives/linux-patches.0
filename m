@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E936351C04;
-	Fri,  4 Sep 2026 05:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E5B2DCF57;
+	Fri,  4 Sep 2026 05:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499676; cv=none; b=puWWrhoOwkvOmaRjN58DyUpg3V1H7TNY/WJKCwk43/rUDzTTAz4jzT5lU7W2T/oyDlpqTlE+Huyw09jHWOMzRkyImw/D3HjnW1wAr0FFYiDQAL9bT2RIvowIlpGZn2RCmqRVuskQMhpCdqyV3RR7/70zsSdSMQl2NH+3pU9ldxA=
+	t=1788499679; cv=none; b=gtSXxwyCuLnJJyANSwcITKRXIDnox0it3mzD6gr6fBWp/ez6EWiLm9NWxc0WQ/NsubD5pTLAStKzNxc4HJ8T62H6HmCXTkfv+xiJiwF/OJ5OPrp3Oe65+m8TSB2pwpV2JKg+RM0fZZ6XBccZZPUClZi6kbCT+gLfGkSc/LrwbBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499676; c=relaxed/simple;
-	bh=VELE0jIiCP/40c9C+YZ15jooFM+o2BPIIeYGJaNkZnM=;
+	s=arc-20240116; t=1788499679; c=relaxed/simple;
+	bh=lj2nAjiQ/2PtE1qe/vvxkFgUp3YdIDcWstos2h37xNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofBtuJ/4B6+b3kLR8+pNgGxthc0aL4rGeazYyZgnllrCvxEDIenHsYrmK6oZCnaKgEHpoiilYlfEj/9tnuTGtdUOqcO3C8cTI2Z7wb2y8egdFzkOxaqUaQ2l0xW+9SiuiAoLCV/IiZHCfQfYPBHSUjtueDauAMnK+dwGMQadGxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGuddK83; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gw2psrLmSVPv7vnJrNzm/ihpGQGZD6s+tYpBlc1aJsF/rtzPte9GB5Q22KPsizCjRGpxCEDvxazKsgZosO0BYxO+zRH/WtOtcXsnu5+Ie1WZVFato8I3k3DiBk+Ch7S6iQ+3hWd+FpReSMJb5D2bfMKM1auKwI3VoGGlUjxge1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXnX8Gjp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGuddK83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985A11F00A3D;
-	Fri,  4 Sep 2026 05:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXnX8Gjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D001F00A3D;
+	Fri,  4 Sep 2026 05:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499675;
-	bh=qAEE2D/azlCwP6/WLBOURejz3SkXoEdgfWrUnTm3kNc=;
+	s=korg; t=1788499678;
+	bh=/lgLOdekPnX8nZytzI6cEWoQsPGGbgW0ki/iEXqwlhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uGuddK83Dj077eK3ZXZikv1HNFXeCBKHaIuRUV8b6isIfrQOIEbmTZs83veXqZKne
-	 RdzNez5DkipZ1sHqTubO3+X8q2bo4XGXWZKeeQmlnTfW+2lzL0TmM13YdOVg162lhI
-	 bvfgnoPcNA4ljWNzu9ThdK8Lxt1qvwcEDXwGMkgY=
+	b=aXnX8Gjpb+LInMzVjttWZWzNK9KWvS46z1E8gumN0cihD/DCoroWCOANFHNpckf4y
+	 ixH4ivWL/WjrXKLgBPgx0s8FZzAFlJaO3TkrtB8g+rM6oU4AUhajTlo26/S2UAX+IK
+	 nwfN7QjvmLWdbBbD1oR5xwhlSFisG9lVOpLC8ELg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 494/713] sctp: drop a chunk if its transport was removed
-Date: Fri,  4 Sep 2026 06:57:42 +0200
-Message-ID: <20260904045814.899760883@linuxfoundation.org>
+	Jameson Thies <jthies@google.com>,
+	Benson Leung <bleung@chromium.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 7.2 503/713] power: supply: cros_usbpd: Limit port counts to EC_USB_PD_MAX_PORTS
+Date: Fri,  4 Sep 2026 06:57:51 +0200
+Message-ID: <20260904045815.099729495@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,58 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Jameson Thies <jthies@google.com>
 
-commit 03a9d10ecf71f54b2af8020935f2033d4a132be5 upstream.
+commit 657cd3a42e937276262c0a8ae6b01a87004309de upstream.
 
-sctp_rcv() resolves the transport once per packet and leaves it in
-chunk->transport. The lookup reference, or the one sctp_add_backlog() takes
-if the socket is owned by userspace, keeps it around until the chunk has
-been processed.
+Currently the cros_usbpd-charger driver probe iterates based on raw
+charger port count returned by the embedded controller. The only check
+is against the number of USB PD ports which the embedded controller
+also defines. A malicious embedded controller could return an inaccurate
+port count (up to 255) resulting in an out of bounds write and
+subsequent memory corruption.
 
-An authenticated ASCONF DEL-IP can remove it in the meantime.
-sctp_assoc_rm_peer() takes the transport out of the association and calls
-sctp_transport_free(), which tags it dead and drops the reference the
-association held. There is a window on both paths: the packet can sit on
-the socket backlog, and on the direct path the lookup completes before
-bh_lock_sock().
+Update helper functions in cros_usbpd-charger to limit port counts to
+EC_USB_PD_MAX_PORTS.
 
-The DATA chunk in that packet puts the removed transport back into
-asoc->peer.last_data_from. Once the packet is done that reference goes
-away and the transport is freed by RCU, so the next delayed SACK carries
-the pointer into the SACK chunk and sctp_outq_select_transport() reads the
-freed transport's state.
-
-Drop the chunk in sctp_inq_push(), next to the existing rcvr->dead check.
-Both paths reach it with the association's socket lock held. The peer
-retransmits it.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 3af15cfacd1e ("power: supply: cros: add support for dedicated port")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/aoUJHQmxL0LFIMCw@v4bel
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jameson Thies <jthies@google.com>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://patch.msgid.link/20260722195059.1420738-1-jthies@google.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/inqueue.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/power/supply/cros_usbpd-charger.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -71,8 +71,11 @@ void sctp_inq_free(struct sctp_inq *queu
-  */
- void sctp_inq_push(struct sctp_inq *q, struct sctp_chunk *chunk)
- {
--	/* Directly call the packet handling routine. */
--	if (chunk->rcvr->dead) {
-+	/* Directly call the packet handling routine.  Drop the chunk if the
-+	 * receiver or the transport it was looked up on is gone.
-+	 */
-+	if (chunk->rcvr->dead ||
-+	    (chunk->transport && chunk->transport->dead)) {
- 		sctp_chunk_free(chunk);
- 		return;
- 	}
+--- a/drivers/power/supply/cros_usbpd-charger.c
++++ b/drivers/power/supply/cros_usbpd-charger.c
+@@ -124,6 +124,11 @@ static int cros_usbpd_charger_get_num_po
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (resp.port_count > EC_USB_PD_MAX_PORTS) {
++		dev_warn(charger->dev, "Charge port count out of bounds\n");
++		return EC_USB_PD_MAX_PORTS;
++	}
++
+ 	return resp.port_count;
+ }
+ 
+@@ -137,6 +142,11 @@ static int cros_usbpd_charger_get_usbpd_
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (resp.num_ports > EC_USB_PD_MAX_PORTS) {
++		dev_warn(charger->dev, "USB PD port count out of bounds\n");
++		return EC_USB_PD_MAX_PORTS;
++	}
++
+ 	return resp.num_ports;
+ }
+ 
 
 
