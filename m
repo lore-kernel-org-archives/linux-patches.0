@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD2830C160;
-	Fri,  4 Sep 2026 05:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2275F30C160;
+	Fri,  4 Sep 2026 05:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500316; cv=none; b=EUYs6ru3bbjdvO5AlXHxTQcB+k1w53eqL/NPAwW0j73vVyUUH+f4qY8I0CgI6ljCHWLUeLPH08GUCY8NHp0rw7aBNy/ZbCpvGDldrbXIpkAjhXNkTtsiot7g1rGSvpDFo1obSydCjAhTmOfBwmD5p2Qam6ZAZMAieOXlMPZaUjg=
+	t=1788500319; cv=none; b=fbrfsnxR/orIDRsyhex4G6qA1E+JSHoPpzCWvtEnC1kVgpsfz7bV/pLqmWK6xu8kyjcU624Vg6fQ+EYtG9u1rKgHOehHenfgaA2neBHSVcP1stZIS0bL22eFgmDFGotUsbJwZ7qDAyDLhJFb+n55I2Xs+IVpgOEsa7P2gOIF9Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500316; c=relaxed/simple;
-	bh=AkGHtbJZ114cFNMrLxANjYDMiqhwYLeuTpTfLFWlE8U=;
+	s=arc-20240116; t=1788500319; c=relaxed/simple;
+	bh=d+ZD4f7oZ8Vij5tJWR66tNc4+FfjMRm98KKxhVef2Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1D7lmQr5aIY8lPB9W7ro9hHpb19qykUcilO0uHkrzx/C3oAjqvzUDK7049Io2ODRQubs/nmx5Lznf65UfbbUd/cmdWs0OXK40W/jkkFE9kQM09+/LD++TBep7auF30uov0haI62my7aeSnvO1LWOrqInJV3E6c14FHykKy8ga4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=li6Gm0od; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RSPPhZuBMu25iihGz1pjk+p207F6k/kO7hDH4KTxcWTgpjkepLZwwM8P4G2IGWH17URxt6ssEV9StNsKKgnmHaalGms3FyGQqL794+1c4EuxI/g4lX67AWkcOuO7UAiYYjSM+OhL9KahcSuFWdGjJgFp+mF9jSaYH/yD4iIPFkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQGuQvpx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="li6Gm0od"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADE41F00A3D;
-	Fri,  4 Sep 2026 05:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQGuQvpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBDF1F00A3D;
+	Fri,  4 Sep 2026 05:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500315;
-	bh=Aov0Rva8Xe3suB/0i/q5iJgf9geHrG2Rj1Bq/lKlvYo=;
+	s=korg; t=1788500318;
+	bh=aqcudiEP8F4ck7y0YlFTmwdc/Lv/Rw0P0BVUoIr0qKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=li6Gm0odwFoARCgnhEVHXIdAooqNo5p+KnLx+0eNCOapU7ulK+42dxiIphTxchsLH
-	 HIwhyF0mjyB7b4sO0FpvAd51Vi/ou05bADwEFCyQfS9/nxT8A97ZjnfwHiYsOchJ7k
-	 kBe8fi8GpKMCaYB3m787CRqlyCSxvAlSTzfXDrSE=
+	b=XQGuQvpxkC4/2TtLfcdRLfHQAtmtRDVvc05ZxvGHtDSev+zTwID12FIsNiDRG378u
+	 BlBePwaGyJJql/n8+F6WywkcaSkIQPItzSJv0M2yMdMradQDAOwWTopZVdjLT8Yi1B
+	 Xh9ptUAMlTZCUdSj6vr9ByflhsokkOUyl64A4BGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <wayne.lin@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/552] drm/amd/display: Prune per-tile Timing from Apple Studio Display Primary Tile
-Date: Fri,  4 Sep 2026 06:52:51 +0200
-Message-ID: <20260904045748.148698941@linuxfoundation.org>
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>
+Subject: [PATCH 6.18 015/552] alpha: fix ieee_swcr_to_fpcr setting FPCR_DNOD unconditionally
+Date: Fri,  4 Sep 2026 06:52:52 +0200
+Message-ID: <20260904045748.170181948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -54,98 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <jerry.zuo@amd.com>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit 7a4dd08c3f921576c6a7524f60e4f0e4601835d2 ]
+commit 49672d026cc4773608e1222b69b29fd70f41336b upstream.
 
-[why]
-The Apple Studio Display primary tile advertises both the full 5120x2880
-mode and the per-tile 2560x2880 timing. With the secondary tile already
-hidden from userspace, the stray 2560x2880 mode on the primary connector
-can still be picked by compositors, defeating the single 5K stream goal.
+ieee_swcr_to_fpcr() converts the software IEEE trap-enable and status
+bits kept in thread_info.ieee_state into the hardware FPCR format.  It
+contained:
 
-[how]
-Prune the per-tile timing from the primary connector during get_modes:
-when the sink carries the disable_second_tile quirk and the connector is
-the primary tile (tile_h_loc == 0 && tile_v_loc == 0), drop any probed
-mode matching the advertised tile size (tile_h_size x tile_v_size) so
-userspace only sees the full 5120x2880 mode.
+	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
 
-Fixes: 49521be4809d ("drm/amd/display: hide Apple Studio Display secondary tile")
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Adjust for lack of movement from amdgpu_dm.c to amdgpu_dm_connector.c
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+FPCR_DNOD (bit 47) disables denormal operand traps: with it set the
+hardware handles a denormal operand itself, treating it as zero, instead
+of trapping for software completion.  The intent was to set DNOD when the
+user has not asked for SIGFPE on denormal operands, but
+IEEE_TRAP_ENABLE_DNO is clear by default, so ieee_swcr_to_fpcr(0) always
+set DNOD.
+
+Instructions built with the software completion suffix therefore never
+trapped on a denormal operand.  The hardware silently substituted zero
+and produced wrong results, affecting every program compiled with -mieee
+and default FPU settings, glibc included.
+
+Set FPCR_DNOD only when IEEE_MAP_DMZ is requested, which is exactly the
+case where flushing denormal inputs to zero is what the user asked for.
+DNOD then encodes MAP_DMZ, which ieee_fpcr_to_swcr() already recovers
+from FPCR_DNZ, so drop its attempt to recover IEEE_TRAP_ENABLE_DNO from
+DNOD; the DNO trap enable lives solely in ieee_state.
+
+Both functions are in a uapi header, so the encoding change is visible to
+userspace, but nothing outside the kernel is known to depend on DNOD
+carrying the DNO trap enable, and the kernel is the only writer of the
+FPCR.
+
+This must not be backported on its own.  Re-enabling denormal operand
+traps exposes a second bug, fixed in the following patch: those traps
+usually find an exact result, and for an exact result the emulator did
+not write the FPCR back, leaving hardware-fabricated exception bits
+visible to user space.  Taken alone this change would make spurious
+exception flags more common.
+
+The bug predates the git history, so there is no commit to reference in a
+Fixes tag.
+
+Cc: stable@vger.kernel.org # 5.15+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-1-c99d75608e60@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 43 +++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ arch/alpha/include/uapi/asm/fpu.h |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 1f6663090c25c..deac90c49d638 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -8540,6 +8540,47 @@ static void amdgpu_dm_connector_add_common_modes(struct drm_encoder *encoder,
- 	}
+--- a/arch/alpha/include/uapi/asm/fpu.h
++++ b/arch/alpha/include/uapi/asm/fpu.h
+@@ -101,7 +101,12 @@ ieee_swcr_to_fpcr(unsigned long sw)
+ 		      | IEEE_TRAP_ENABLE_OVF)) << 48;
+ 	fp |= (~sw & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE)) << 57;
+ 	fp |= (sw & IEEE_MAP_UMZ ? FPCR_UNDZ | FPCR_UNFD : 0);
+-	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
++	/*
++	 * Disable denormal operand traps only when denormal inputs are to be
++	 * flushed to zero.  Otherwise they must keep trapping, so that /S
++	 * instructions reach the kernel emulation handler.
++	 */
++	fp |= (sw & IEEE_MAP_DMZ ? FPCR_DNOD : 0);
+ 	return fp;
  }
  
-+/*
-+ * The Apple Studio Display primary tile advertises both the full 5120x2880
-+ * mode and the per-tile 2560x2880 timing. As the secondary tile is hidden from
-+ * userspace (see amdgpu_dm_hide_secondary_tile_from_userspace()), drop the
-+ * per-tile timing from the primary connector so compositors only pick the full
-+ * 5K mode.
-+ */
-+static void amdgpu_dm_prune_primary_tile_modes(struct drm_connector *connector)
-+{
-+	struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
-+	struct drm_display_mode *mode, *t;
-+
-+	if (!aconnector->dc_sink)
-+		return;
-+
-+	if (!aconnector->dc_sink->edid_caps.panel_patch.disable_second_tile)
-+		return;
-+
-+	if (!connector->has_tile)
-+		return;
-+
-+	/* Only prune the per-tile timing from the primary tile. */
-+	if (connector->tile_h_loc || connector->tile_v_loc)
-+		return;
-+
-+	list_for_each_entry_safe(mode, t, &connector->probed_modes, head) {
-+		if (mode->hdisplay != connector->tile_h_size ||
-+		    mode->vdisplay != connector->tile_v_size)
-+			continue;
-+
-+		drm_dbg_kms(connector->dev,
-+			    "[CONNECTOR:%d:%s] pruning per-tile %dx%d timing from primary Apple Studio Display tile\n",
-+			    connector->base.id, connector->name,
-+			    mode->hdisplay, mode->vdisplay);
-+
-+		list_del(&mode->head);
-+		drm_mode_destroy(connector->dev, mode);
-+		aconnector->num_modes--;
-+	}
-+}
-+
- static void amdgpu_set_panel_orientation(struct drm_connector *connector)
- {
- 	struct drm_encoder *encoder;
-@@ -8582,6 +8623,8 @@ static void amdgpu_dm_connector_ddc_get_modes(struct drm_connector *connector,
- 		amdgpu_dm_connector->num_modes =
- 				drm_edid_connector_add_modes(connector);
+@@ -116,7 +121,6 @@ ieee_fpcr_to_swcr(unsigned long fp)
+ 			     | IEEE_TRAP_ENABLE_OVF);
+ 	sw |= (~fp >> 57) & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE);
+ 	sw |= (fp >> 47) & IEEE_MAP_UMZ;
+-	sw |= (~fp >> 41) & IEEE_TRAP_ENABLE_DNO;
+ 	return sw;
+ }
  
-+		amdgpu_dm_prune_primary_tile_modes(connector);
-+
- 		/* sorting the probed modes before calling function
- 		 * amdgpu_dm_get_native_mode() since EDID can have
- 		 * more than one preferred mode. The modes that are
--- 
-2.53.0
-
 
 
