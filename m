@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD1639B943;
-	Fri,  4 Sep 2026 05:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F5B3AFB1C;
+	Fri,  4 Sep 2026 05:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498937; cv=none; b=BkeHntlMRKfE9c8gPfXIy89hf0oEZTttREToOCBxRxjyFRYt37nWnGYm676Pq2SDpVa85MHAJ5OO7oPCppyyb5GkbA8+uUuyoOmlxw6mZB0PJfqFmWX928Ee94pmTWqlO7maJ1Ulk96EiESkqBJyQuQKzgIzlOSJwBeyjPOJAHs=
+	t=1788498940; cv=none; b=eTuGyi8siAAapuborOgpgdT8rVG6KLqzSp8KFd1gUk4SCrRBgh7BEx2NrPuZ+Q1IfmeBRB7XpRgSyrLFvqprONzemkFzNLLQg/QE+oMEWNLuBOaoWkaOLORrMaYZHLBlZ1UBg921R64vPngmF+HICu0A17UiufX3/Fq+VU1f81k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498937; c=relaxed/simple;
-	bh=X6PWd3ZEb9szOjDa+bdc6qqteKnqzSXhvaq0ejto84w=;
+	s=arc-20240116; t=1788498940; c=relaxed/simple;
+	bh=tIrGtPvaxoP4cQeGHR2hWQrWxhdL8vURS3slTXcx/2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaaMPtndtLLvVnY+Gq9wYLdmGmdsL/o02TPQSlPRGlCw5pR4kbiVcEcWcIRn235bHhL+Rbeuwhdc2Ez6ZQefl60OtZmHRxdGenNzb34ISx9g5knpMiNJzQ/1QUKvFvqeL975i+Td0z7qPCCDDKzOZIIrU/28p4LpGsqrxe3TVUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9pANMnA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IbQ/iFvPAvcmd+2dT0v9kivrmt8FIU6MASyk3ArkMttzNFmeAPBLm1gzhkIZTPVQhbaWg060VlIdj4iTTwMLGSvZr3JCqvf7l1frkQ5cZRQSv0Mgi22hQtifG2dzkwBsKTH9EkbLfXYW+5TNapFp+RpIG+2pbtHjOTg9z8QcnQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G05DC5LV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9pANMnA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105241F00A3D;
-	Fri,  4 Sep 2026 05:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G05DC5LV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE3A1F00A3D;
+	Fri,  4 Sep 2026 05:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498936;
-	bh=tLXaqTsP0zryrDCO6i0Q1dfdVMcxxp/ylqU0Up18ofM=;
+	s=korg; t=1788498939;
+	bh=GlkjhbG8AJth7BXCb7oGKAzbF9vgBssNl3YvzHHFYgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9pANMnAG1yKRq8H+a8Zg3zVZlxmw07yGnKUNJF5mByPv2pCVimjY0DOhwoqx+IPB
-	 OGz2Hx5s5xXD7eXbrF89HXXfeT7j+TvgP/+P8b2UUgOQjg28/spN9BNPRUNcAsFJBD
-	 cdo2Zmei1IL2ta+F9E7hyZQuh9aOwPr3BBQaofyY=
+	b=G05DC5LV1Ou6YeuDQbHXGswbRUJBIUblL7jti7qgAaoh+Q7Vo12PTIasm4pmHPspF
+	 0gxhWLHfUSZRC9ui7LiaM1RWeMamuUbFIeryNtB8VGB0XebISyUeqrIz3uqXGAIg4n
+	 3pe4fH0wsc+wqx2EZu7fDvaYTyQR5ryAy335zPQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>,
+	Shen Yongchao <grayhat@foxmail.com>,
 	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.2 240/713] smb: client: fix copy-paste error in WSL EA length accounting for $LXDEV
-Date: Fri,  4 Sep 2026 06:53:28 +0200
-Message-ID: <20260904045809.207175072@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.2 241/713] smb: client: fix OOB read/write from unvalidated DataOffset in coalesce_t2()
+Date: Fri,  4 Sep 2026 06:53:29 +0200
+Message-ID: <20260904045809.233058711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,36 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Sorenson <sorenson@redhat.com>
 
-commit 5d14030b46af1a958fd104b020fbb93631c98822 upstream.
+commit 6343c1da561962688f203362d80d6a3bfa39fa1b upstream.
 
-The LXDEV block in cifs_query_path_info() uses SMB2_WSL_XATTR_MODE_SIZE
-(4) instead of SMB2_WSL_XATTR_DEV_SIZE (8), undercounting eas_len by 4
-bytes per $LXDEV EA.
+coalesce_t2() computes data pointers directly from server-supplied
+DataOffset fields with no validation against buffer bounds:
 
-eas_len is used only as a zero/non-zero presence flag so there is no
-current functional impact, but the value is incorrect and misleading.
+  data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
+                     get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
+  data_area_of_src = (char *)&pSMBs->hdr.Protocol +
+                     get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+  data_area_of_tgt += total_in_tgt;
+  ...
+  memcpy(data_area_of_tgt, data_area_of_src, total_in_src);
 
-Fixes: 97db41604555 ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
+A small DataOffset can push a pointer below the actual byte area,
+overwriting header fields; a large one can push it past the buffer
+end, causing out-of-bounds heap reads (source) or writes (target).
+The BCC overflow guard does not prevent this: BCC reflects how much
+data is present, while DataOffset controls where in the buffer it
+starts.
+
+The "validate target area" comment present since the function was
+first written in 2005 was a placeholder that was never implemented.
+
+Add lower- and upper-bound checks for both data pointers before the
+memcpy, and before any target header fields are modified.
+
+Fixes: e4eb295d38b5 ("[PATCH] cifs: Handle multiple response transact2 part 1 of 2")
 Cc: stable@vger.kernel.org
-Cc: Paulo Alcantara <pc@manguebit.org>
+Reported-by: Shen Yongchao <grayhat@foxmail.com>
 Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb1ops.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb1transport.c |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -717,7 +717,7 @@ static int cifs_query_path_info(const un
- 			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_DEV_SIZE);
- 			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_DEV, SMB2_WSL_XATTR_NAME_LEN + 1);
- 			data->wsl.eas_len += ALIGN(sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
--						   SMB2_WSL_XATTR_MODE_SIZE, 4);
-+						   SMB2_WSL_XATTR_DEV_SIZE, 4);
- 			rc = 0;
- 		} else if (rc >= 0) {
- 			/* It is an error if EA $LXDEV has wrong size. */
+--- a/fs/smb/client/smb1transport.c
++++ b/fs/smb/client/smb1transport.c
+@@ -375,12 +375,31 @@ coalesce_t2(char *second_buf, struct smb
+ 	data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
+ 				get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
+ 
+-	/* validate target area */
+ 	data_area_of_src = (char *)&pSMBs->hdr.Protocol +
+ 				get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+ 
+ 	data_area_of_tgt += total_in_tgt;
+ 
++	/*
++	 * DataOffset fields are server-supplied and not validated against
++	 * buffer bounds; check both data pointers before mutating the
++	 * target header.
++	 */
++	if (data_area_of_tgt < (char *)target_hdr +
++				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
++	    data_area_of_tgt + total_in_src >
++	    (char *)target_hdr + CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
++		cifs_dbg(VFS, "%s: target data area out of bounds\n", __func__);
++		return -EPROTO;
++	}
++	if (data_area_of_src < second_buf +
++				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
++	    data_area_of_src + total_in_src >
++	    second_buf + smbCalcSize((struct smb_hdr *)second_buf)) {
++		cifs_dbg(VFS, "%s: secondary data area out of bounds\n", __func__);
++		return -EPROTO;
++	}
++
+ 	total_in_tgt += total_in_src;
+ 	/* is the result too big for the field? */
+ 	if (total_in_tgt > USHRT_MAX) {
 
 
