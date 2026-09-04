@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B7F2D738A;
-	Fri,  4 Sep 2026 06:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D4130C366;
+	Fri,  4 Sep 2026 06:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502175; cv=none; b=etfbVpZC5Krz+W6w5BwvBqjTm9CvqAveUf8sg4X/dWPiSjlMYD29QkqIDlBVXtmR5JsGvQylPMP+GIc+/kEoJqhp+GH+dL8XwsflvJORVrr85LG/vtAVQQW5oOlafXgoIxc0C+Zoq0T2KmAslrERGqg4E1aHUqkc7fFcL3+X6I8=
+	t=1788502178; cv=none; b=StdoaLWegXfT3uZz0tpcuUt2kXtw/agA/Ago50f4ZwwNW4A5JczCWsSYXM7LJl+pm9LOZKlxN9gl7DJ4XJXnWXjMGNqEMhqUPSTSaq/mwRc+80HxKDnI5tVtrkktYN6Y2tx8XGBgcSXNSRGM0NJUFJX79NwE31+p7op//RWSL7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502175; c=relaxed/simple;
-	bh=BdGszDbZAx5vEJvP157YebNRwNPO+ZyWEoAh9apU5Wg=;
+	s=arc-20240116; t=1788502178; c=relaxed/simple;
+	bh=GR+vdKSlGoIKAG3xJHEWRIeMR1k8wsmqVNmhQiDRXPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egPDEIR8qKGLS2pGPnUdif8mx8a2gK6/EbrGfsbzsT5CHfv4nbyAJB5hMz88reDjtJIjaLz7D1aTV//hRMvnCaWjEXDplQSAWjp6+i1DHDf13kgj88idkUd+B+JoXjO017Sx0uP/mYXvsYHlIGYDy+gKUgYd5DQneOYiD+FDtRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0Qbetwy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hSQU+uXLSnlSX7qqO25V7IqEvRXeYBnPBMBpymgs+PM9FG50N0UzjeKL/zJUjAfYN9I4SZsz2ahiW8EBXJeiuaciKpEPVV6h9I1vvvq1/Shd5SC1z+S2M74Nplj9c6qNvyFBoCdo8d4ehl1LiOGjUFkUD7YnxzCWwBAURE/P8DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KamS7IOK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0Qbetwy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1FD1F00A3D;
-	Fri,  4 Sep 2026 06:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KamS7IOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A3B1F00A3D;
+	Fri,  4 Sep 2026 06:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502174;
-	bh=ACRk3YdTT1cR7WN+78v2Hygn4U8imyDYakB1RzjMZxg=;
+	s=korg; t=1788502177;
+	bh=ev/AYym2IN1zWQtJjeZ+iZc0jjclM1NovnwIRCITh0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z0QbetwyBsQKUdFl82jyR5VVD3tptwsHHT98TA4lFIRCiEmEiy4Km7D4jpG5EmLkh
-	 esECNoOYXPxprMfRflFrKKWKMEufqK9q+JntL7dbcFXfREaYLauAAUGmj/PVrBQOdt
-	 9QO6BbDzCqSjCrn27/CPqXhjTTm64Yd7noe+Hqps=
+	b=KamS7IOK8iEp9evJA/FIaqs6jF+Wmg8mqmdULLQVFRiEVd11TjjqaBdJG168QDV5V
+	 7GUwMovwqoO6JCETTjs6F1xWIZMDY3e8nWgjxU5S/2UphLl/KY5CAa6x31z0EN6mh+
+	 MGtocKoC2rmjo/X0XItPwniIvTvtI5KT02rSXPNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 115/403] ceph: bound num_export_targets array for mds info v2/v3
-Date: Fri,  4 Sep 2026 06:58:38 +0200
-Message-ID: <20260904045737.448732731@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 089/403] nfsd: defer vfree of compound ops to fix rpc_status UAF
+Date: Fri,  4 Sep 2026 06:58:12 +0200
+Message-ID: <20260904045736.860358910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -45,92 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit a3eb169ee297aa99670ba927c659990bd1e453f3 upstream.
+commit fca26a3fc19ed02278aa2a150af82d43db0302cb upstream.
 
-ceph_mdsmap_decode() in fs/ceph/mdsmap.c reads num_export_targets from
-each per-mds info record and advances the decode cursor by
-num_export_targets * sizeof(u32) without first checking that many bytes
-remain. The only upper-bound check that catches a runaway cursor
-(*p > info_end) is gated on info_v >= 4, because info_end is left NULL
-for info_v 2 and 3. When the monitor sends an MDS map whose per-mds
-info version is 2 or 3 with an oversized num_export_targets, the cursor
-moves past the message front buffer and the later export-targets loop
-calls the unchecked ceph_decode_32() on out-of-bounds memory.
+The rpc_status netlink dumpit walks every in-flight svc_rqst under
+rcu_read_lock and, for NFSv4 requests, reads opnums out of
+args->ops[]. But args->ops is a separate vmalloc buffer freed
+synchronously by vfree() in nfsd4_release_compoundargs() at the end
+of every compound. The dumpit's rcu_read_lock pins the svc_rqst
+struct itself (freed via kfree_rcu), but nothing defers the vfree
+of the ops buffer across the RCU grace period. A concurrent compound
+completion can therefore free the buffer while the dumpit is reading
+it — a use-after-free on vmalloc memory.
 
-A kernel client processes CEPH_MSG_MDS_MAP from its monitor session
-(net/ceph/mon_client.c dispatches it; fs/ceph/super.c routes it to
-ceph_mdsc_handle_mdsmap(), which sets end to the front buffer bound and
-calls ceph_mdsmap_decode()). A malicious or compromised monitor, or an
-on-path attacker on an unsigned/unencrypted messenger session, can
-therefore drive an out-of-bounds read in the client kernel; on x86_64
-with KASAN it is reported as a slab-out-of-bounds read in
-ceph_mdsmap_decode(). The decoded values land in the internal
-info->export_targets[] array, so the consequence is a kernel
-out-of-bounds read, not an information leak to the attacker.
+The trailing seqcount recheck (smp_load_acquire of rq_status_counter)
+cannot undo a load that already retired against freed memory.
 
-Impact: a malicious or compromised Ceph monitor sending an MDS map with
-a per-mds info version of 2 or 3 and an oversized num_export_targets
-field triggers an out-of-bounds read in the CephFS client kernel.
+Fix by replacing vfree(args->ops) with kvfree_rcu_mightsleep(), which
+defers the free until after an RCU grace period. This makes the
+existing rcu_read_lock in the dumpit sufficient to protect the read.
+The tradeoff is that completed compound ops buffers (up to
+200 * sizeof(struct nfsd4_op)) persist in memory slightly longer,
+across one grace period, before being reclaimed.
 
-Add a ceph_decode_need() for the export-targets array before advancing
-the cursor, so the bound is enforced for every info_v >= 2, not only
-info_v >= 4. This mirrors the count-then-need idiom already used for
-m_data_pg_pools later in the same function.
-
-Compute the export-targets byte count with size_mul() and reuse that
-checked length when advancing the cursor, so the attacker-controlled
-num_export_targets multiplication fails closed on overflow rather than
-relying on the later kcalloc() guard.
-
+Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
 Cc: stable@vger.kernel.org
-Fixes: d463a43d69f4 ("ceph: CEPH_FEATURE_MDSENC support")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260602-nfsd-testing-v2-1-e4ea62e3cd5c@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mdsmap.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -3,6 +3,7 @@
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -5878,8 +5878,10 @@ void nfsd4_release_compoundargs(struct s
  
- #include <linux/bug.h>
- #include <linux/err.h>
-+#include <linux/overflow.h>
- #include <linux/random.h>
- #include <linux/slab.h>
- #include <linux/types.h>
-@@ -126,6 +127,7 @@ struct ceph_mdsmap *ceph_mdsmap_decode(s
- 	u8 mdsmap_v;
- 	u16 mdsmap_ev;
- 	u32 target;
-+	size_t export_targets_len;
- 
- 	m = kzalloc(sizeof(*m), GFP_NOFS);
- 	if (!m)
-@@ -224,8 +226,11 @@ struct ceph_mdsmap *ceph_mdsmap_decode(s
- 		*p += namelen;
- 		if (info_v >= 2) {
- 			ceph_decode_32_safe(p, end, num_export_targets, bad);
-+			export_targets_len = size_mul(num_export_targets,
-+						      sizeof(u32));
-+			ceph_decode_need(p, end, export_targets_len, bad);
- 			pexport_targets = *p;
--			*p += num_export_targets * sizeof(u32);
-+			*p += export_targets_len;
- 		} else {
- 			num_export_targets = 0;
- 		}
+ 	args->opcnt = 0;
+ 	if (args->ops != args->iops) {
+-		vfree(args->ops);
++		void *old_ops = args->ops;
++
+ 		args->ops = args->iops;
++		kvfree_rcu_mightsleep(old_ops);
+ 	}
+ 	while (args->to_free) {
+ 		struct svcxdr_tmpbuf *tb = args->to_free;
 
 
