@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67C54CCDC7;
-	Fri,  4 Sep 2026 05:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECC9415B71;
+	Fri,  4 Sep 2026 05:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500638; cv=none; b=gHN4CJR2Jj6XVk65nmK8Zn++l3zvpfw7dJpJCyLB4JFRK1NXxc4Okf5c0lsXIvQLG7j3esTEO+UWXxj8W25AULXz6REDxXMLOWjbs6JtRDyZAcOEnhsmAq3zZHLVTj8gI4c5sXIk8gHYuHwnoRoqqk1Img1Fo/h7dTwcbG1Rbgs=
+	t=1788500641; cv=none; b=Qp9dUBJKu0FDRhYYeAM4YCNjJ5nafvtThnm1iNJ84t3K1xCp9imSVwdRvMhAelfjrZTzq57gz6TW5W/TAAVHfgS2BkVkHdZrrsUwGafLEMgvpyv6uCLODtjJOVJU1nu9AQBYpZAerx7r1QKyAmLLnXi0umGii31Fe9ec2CJDAX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500638; c=relaxed/simple;
-	bh=0VJwyd4lNeLxNGfPFHtqc5YLFonvmw1qu+hTAj/puYI=;
+	s=arc-20240116; t=1788500641; c=relaxed/simple;
+	bh=HeBhQ/2lcTbIN0UtuIQvYPopfscHqklUk8RV5MreWjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWMideiJyomtnZZwI0hJWBvwKpzgnScev2YWPGTHW7qkXN2fqlfw3OA08q64bdi8UqeBoWIdgw2f7LS64ZpC6qAn7uLhJP8MGoyWfgZTf4ADfjKxjBxmojZJ2WVh6gmhIADAcU+V51TgYVfYuyiU9cYNEyarR6sbo148RHPNbnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqCACb/m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YsZQq9dATxwgcPLO7QDCF7YMpjezSZcSsZYRH/FrBZEb687GYFtTLSTCUqptvQB8/sHNrY/zJ1cngr5un/0F/Tdw6o5agyvAHkmzrQIdBgegFqgT1cmZ9LYTrhSZ4EvThrUNjtjggzgDzH43H09+9c71Q98wzT3IRzIEH55Huvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiNzy42W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqCACb/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD28A1F00A3D;
-	Fri,  4 Sep 2026 05:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiNzy42W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84681F00A3D;
+	Fri,  4 Sep 2026 05:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500637;
-	bh=xeLKwPiSreTcb69ysWMdvFXnysAiTx865NZP/TklerY=;
+	s=korg; t=1788500640;
+	bh=I6XsRNgXKSZkpeLksl6kVKeuquih/8XpqBv7E8H/9hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OqCACb/mZkg/2BRfgjQ8XUA0uG5FjE3C8wJfU1e43PWjV//qG0AYrOhO+KtbZAj5y
-	 D8/aLRPr1s2F0JciCLhbsLbxsIfMamOYjamOLklAyTX43LKhcCP4Hq2ik6B5v+ZTgN
-	 Qw5uzMlRqP++7d2EZaec7ZTT5lz5xlDfslOgf6Y8=
+	b=JiNzy42WpKH2Qi2p1Jge7fqXD/sPSN/wFx7wXjYtonPSWoMWXs98tmlcUSeuXtWau
+	 xebK54q14y3sMJuHAqPwYmTlOSsNVJIs+A3ll4oLdA4wrOqIBNV/Q3uwNfVUdbUncG
+	 ow+8gXxKybXfhEgIbk1J2Fx97tIkNF+yfpVWxo6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 128/552] nfsd: fix BUG_ON in nfsd4_alloc_layout_stateid on racing delegation revoke
-Date: Fri,  4 Sep 2026 06:54:45 +0200
-Message-ID: <20260904045751.183089601@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 129/552] nfsd: fix cpntf publish race in nfs4_init_cp_state
+Date: Fri,  4 Sep 2026 06:54:46 +0200
+Message-ID: <20260904045751.230783338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,60 +50,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chris Mason <clm@meta.com>
 
-commit ca94ba36172046be6a694a7986f6931e47ed4d51 upstream.
+commit be3a5c1d857b0dcbc11796cea603ef25834f75b2 upstream.
 
-nfsd4_alloc_layout_stateid reads fp->fi_deleg_file without holding
-fi_lock when the parent stateid is a delegation. A concurrent delegation
-revoke via the laundromat can clear fi_deleg_file under fi_lock, causing
-nfsd_file_get() to return NULL and triggering the BUG_ON.
+nfs4_alloc_init_cpntf_state() published the new cpntf entry into the
+s2s_cp_stateids IDR (with cs_type set) in one s2s_cp_lock section, then
+took the lock again to list_add() it onto p_stid->sc_cp_list. In the gap
+the entry is reachable by so_id but cp_list is still {NULL,NULL} from
+kzalloc. A racing OFFLOAD_CANCEL (so_id is echoed to the client as
+cnr_stateid, so any NFSv4.2 client can drive it) reaches
+manage_cpntf_state() -> _free_cpntf_state_locked() and does list_del() on
+the zeroed list_head, oopsing the server.
 
-This race is client-reachable: two NFS clients can trigger it by having
-one hold a delegation while another opens the same file to force a
-recall. When the first client doesn't respond to the recall, the
-laundromat revokes it. A concurrent LAYOUTGET from any client using the
-delegation stateid hits the race window.
+Fold the cs_type assignment and the list_add() into the same critical
+section as idr_alloc_cyclic(), so a concurrent lookup either misses the
+entry or sees a fully linked cp_list. INIT_LIST_HEAD() the entry after
+allocation and switch _free_cpntf_state_locked() to list_del_init() so a
+stale unlink is a no-op. nfs4_init_copy_state() passes NULL p_stid and
+skips the list_add, preserving NFS4_COPY_STID semantics.
 
-Fix this by taking fi_lock around the fi_deleg_file read in the
-SC_TYPE_DELEG path, matching the locking discipline of the
-find_any_file() arm, and replacing the BUG_ON with a graceful error
-return that cleans up the partially-initialized layout stateid.
-
-Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
+Fixes: 624322f1adc5 ("NFSD add COPY_NOTIFY operation")
 Cc: stable@vger.kernel.org
 Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-1-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Chris Mason <clm@meta.com>
+Link: https://patch.msgid.link/20260710-nfsd-testing-v3-1-a0ff7db6aa3e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4layouts.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c |   35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -249,11 +249,17 @@ nfsd4_alloc_layout_stateid(struct nfsd4_
- 	nfsd4_init_cb(&ls->ls_recall, clp, &nfsd4_cb_layout_ops,
- 			NFSPROC4_CLNT_CB_LAYOUT);
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -944,7 +944,7 @@ out_free:
+  * Create a unique stateid_t to represent each COPY.
+  */
+ static int nfs4_init_cp_state(struct nfsd_net *nn, copy_stateid_t *stid,
+-			      unsigned char cs_type)
++			      unsigned char cs_type, struct nfs4_stid *p_stid)
+ {
+ 	int new_id;
  
--	if (parent->sc_type == SC_TYPE_DELEG)
-+	if (parent->sc_type == SC_TYPE_DELEG) {
-+		spin_lock(&fp->fi_lock);
- 		ls->ls_file = nfsd_file_get(fp->fi_deleg_file);
--	else
-+		spin_unlock(&fp->fi_lock);
-+	} else {
- 		ls->ls_file = find_any_file(fp);
--	BUG_ON(!ls->ls_file);
+@@ -954,19 +954,34 @@ static int nfs4_init_cp_state(struct nfs
+ 	idr_preload(GFP_KERNEL);
+ 	spin_lock(&nn->s2s_cp_lock);
+ 	new_id = idr_alloc_cyclic(&nn->s2s_cp_stateids, stid, 0, 0, GFP_NOWAIT);
+-	stid->cs_stid.si_opaque.so_id = new_id;
+-	stid->cs_stid.si_generation = 1;
++	if (new_id >= 0) {
++		stid->cs_stid.si_opaque.so_id = new_id;
++		stid->cs_stid.si_generation = 1;
++		/*
++		 * Set cs_type and link onto sc_cp_list under the same lock
++		 * that installed the IDR entry, so a concurrent
++		 * manage_cpntf_state() sees either no entry or a fully
++		 * linked cp_list.
++		 */
++		stid->cs_type = cs_type;
++		if (p_stid) {
++			struct nfs4_cpntf_state *cps =
++				container_of(stid, struct nfs4_cpntf_state,
++					     cp_stateid);
++
++			list_add(&cps->cp_list, &p_stid->sc_cp_list);
++		}
 +	}
-+	if (!ls->ls_file) {
-+		nfs4_put_stid(stp);
-+		return NULL;
-+	}
+ 	spin_unlock(&nn->s2s_cp_lock);
+ 	idr_preload_end();
+ 	if (new_id < 0)
+ 		return 0;
+-	stid->cs_type = cs_type;
+ 	return 1;
+ }
  
- 	if (nfsd4_layout_setlease(ls)) {
- 		nfs4_put_stid(stp);
+ int nfs4_init_copy_state(struct nfsd_net *nn, struct nfsd4_copy *copy)
+ {
+-	return nfs4_init_cp_state(nn, &copy->cp_stateid, NFS4_COPY_STID);
++	return nfs4_init_cp_state(nn, &copy->cp_stateid, NFS4_COPY_STID, NULL);
+ }
+ 
+ struct nfs4_cpntf_state *nfs4_alloc_init_cpntf_state(struct nfsd_net *nn,
+@@ -977,13 +992,13 @@ struct nfs4_cpntf_state *nfs4_alloc_init
+ 	cps = kzalloc(sizeof(struct nfs4_cpntf_state), GFP_KERNEL);
+ 	if (!cps)
+ 		return NULL;
++	/* So a stale list_del_init() before linking is a no-op. */
++	INIT_LIST_HEAD(&cps->cp_list);
+ 	cps->cpntf_time = ktime_get_boottime_seconds();
+ 	refcount_set(&cps->cp_stateid.cs_count, 1);
+-	if (!nfs4_init_cp_state(nn, &cps->cp_stateid, NFS4_COPYNOTIFY_STID))
++	if (!nfs4_init_cp_state(nn, &cps->cp_stateid, NFS4_COPYNOTIFY_STID,
++				p_stid))
+ 		goto out_free;
+-	spin_lock(&nn->s2s_cp_lock);
+-	list_add(&cps->cp_list, &p_stid->sc_cp_list);
+-	spin_unlock(&nn->s2s_cp_lock);
+ 	return cps;
+ out_free:
+ 	kfree(cps);
+@@ -7372,7 +7387,7 @@ _free_cpntf_state_locked(struct nfsd_net
+ 	WARN_ON_ONCE(cps->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID);
+ 	if (!refcount_dec_and_test(&cps->cp_stateid.cs_count))
+ 		return;
+-	list_del(&cps->cp_list);
++	list_del_init(&cps->cp_list);
+ 	idr_remove(&nn->s2s_cp_stateids,
+ 		   cps->cp_stateid.cs_stid.si_opaque.so_id);
+ 	kfree(cps);
 
 
