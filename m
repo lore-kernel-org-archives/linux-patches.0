@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E011358378;
-	Fri,  4 Sep 2026 06:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668F3358378;
+	Fri,  4 Sep 2026 06:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502092; cv=none; b=LHp0A/Bs1epYIjmPT2VmAwcy8TYWrlXZiuqG5D7XQeZNnVApHJy8hBNPOYVZMBXxsUBUuWNHwHvdzG6ca3qqSeS1NWPlSo0twDTL+nqcwfsYYtl8SA+bAF67j3gg0K1phbZ/7EEx3t60uIt584BRy/K1oE7VTDbSCikXb39OsPw=
+	t=1788502095; cv=none; b=YfCcy4FBJv57M5WWWg5sTFSNGhNKR1EULPB2wxamutUw7jmVJIKqDMFowzasrah7cIEuKh7d0le6FVNvdFv6ZCuFg7l2Df4r5dd4fQMoJEMy9wXfuFstw4AO2tEL+mT0KUrCa6lvQVnNVkCBKJgXiHrkWRw4exsLIG7QogfG51s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502092; c=relaxed/simple;
-	bh=fBu/Sgr3Fbd+62GFLVjqXxbHw2Wz2+14dS72j/Ldbd8=;
+	s=arc-20240116; t=1788502095; c=relaxed/simple;
+	bh=Yeuv29S/kDHMIJCumVMl7DoPWqyDRK807W4hl3O58aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2D2FEx852f6tZJ3cew8YBxxBpcZJJoj5DMVpih5VArzb7YHd48R17frm56pAh4XfvUMuTDJH7ojO+mwPO5lAx/IA7vIv9ql90DVeZX+9UUtmXmQqYvRPujGIJZrQr8Ro1IDVkZDA/3k9gZCxSLjjjW+HFMXn+CfgbntyFjukx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6FidtYu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wiwy2gdooRwvkS8886dhBUxeVnCcAmWiHYny7QzSvj/BewPymYf7+SPIxx1ByMo0SMlWymegpLuym+hxxjSSD9z2xANou8Go4DlU4gF28pbWiAC/+Y5EMWCx2WdY2Yh0zpte1xDNqK5xvLEiMXM3Ic8xQi+z9u2e+Ql2DrnYIzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1t046bl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6FidtYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8700B1F00A3D;
-	Fri,  4 Sep 2026 06:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1t046bl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706111F00A3D;
+	Fri,  4 Sep 2026 06:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502091;
-	bh=1qLQnDB4mzts7cKrzhsZMsUjCT/lEq9uQb3ICpapo8o=;
+	s=korg; t=1788502094;
+	bh=79Zz5Vc9jPeLlOlIsnb61FL477350gfQ9fAz5sAZWaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6FidtYun1x1CkOCc/Kkcih3NWn96JFx3alZshuhHkulsBvND7K5k+zmNQUQ9+UUI
-	 7ZFma4e6yGqjeiKsORo7V8S9/YJdaQFDYr/trVQ9wWrNKgQK2rG06hkd/7A3Qq4XSK
-	 eiadwGuy/YN9Re8nqpXcem1tUOX0CNrQjyikE9Mw=
+	b=Z1t046blih6le0KVCOqBFaAph8EwBk2awd7eiKNnGGDaWdg1A5LJ7FGrBvtF54stW
+	 5Ha3AF3UxZ5dq2cOMRbZOtf2pVDllxj3XI5uJ3Y/A7PARxojbFFoMwttBzWlBuulkX
+	 s4v4TvsR2/xa9b02ae5U7ExeNMqDkVlXCCcqqbFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 084/403] nfsd: add filehandle match check to nfsd4_delegreturn()
-Date: Fri,  4 Sep 2026 06:58:07 +0200
-Message-ID: <20260904045736.743406277@linuxfoundation.org>
+Subject: [PATCH 6.12 085/403] nfsd: add missing read barrier to rpc_status_get dumpit seqcount retry
+Date: Fri,  4 Sep 2026 06:58:08 +0200
+Message-ID: <20260904045736.767862384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,39 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 04cce9d79f2b1a114f7128e08bf60a473e10f1ec upstream.
+commit a71f161a857117e8e0264deb7d14fff5c98adcf5 upstream.
 
-nfsd4_delegreturn() is the only stateful NFSv4 operation that does
-not call nfs4_check_fh() to verify the delegation's file matches
-cstate->current_fh. A client can DELEGRETURN with a mismatched
-filehandle, destroying the correct delegation but waking the wrong
-inode's waiters.
+The hand-rolled seqcount-like protocol in nfsd_nl_rpc_status_get_dumpit()
+is missing a read memory barrier (smp_rmb) before its second counter
+check.  The standard kernel read_seqcount_retry() includes smp_rmb()
+to ensure that all data reads complete before the counter is re-checked.
 
-Add the missing nfs4_check_fh() call after the generation check.
+Without this barrier, on weakly-ordered architectures (ARM, POWER),
+the CPU may reorder field reads past the second counter check, making
+the retry logic ineffective: it could observe a consistent counter pair
+while reading fields that have been concurrently modified by the writer.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Add smp_rmb() before the second counter check to order the field reads
+ahead of it, matching the barrier semantics of the standard seqcount
+read-side.  The begin-side smp_load_acquire() already pairs with the
+smp_store_release() in nfsd_dispatch(); with the smp_rmb() now ordering
+the field reads, the retry check no longer needs acquire semantics and
+reads the counter with a plain READ_ONCE(), as read_seqcount_retry()
+does.
+
+Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-6-5b90e276f2d9@kernel.org
+[ cel: Use READ_ONCE instead of smp_load_acquire() ]
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-2-5b90e276f2d9@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfsd/nfsctl.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7643,6 +7643,10 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
- 	if (status)
- 		goto put_stateid;
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1635,11 +1635,14 @@ int nfsd_nl_rpc_status_get_dumpit(struct
+ #endif /* CONFIG_NFSD_V4 */
  
-+	status = nfs4_check_fh(&cstate->current_fh, &dp->dl_stid);
-+	if (status)
-+		goto put_stateid;
-+
- 	trace_nfsd_deleg_return(stateid);
- 	destroy_delegation(dp);
- 	smp_mb__after_atomic();
+ 			/*
+-			 * Acquire rq_status_counter before reporting the rqst
+-			 * fields to the user.
++			 * Read-side load-load fence: order the field reads
++			 * above before the counter re-read below, mirroring
++			 * the smp_rmb() in the standard seqcount retry. The
++			 * begin-side smp_load_acquire() above pairs with the
++			 * smp_store_release() in nfsd_dispatch().
+ 			 */
+-			if (smp_load_acquire(&rqstp->rq_status_counter) !=
+-			    status_counter)
++			smp_rmb();
++			if (READ_ONCE(rqstp->rq_status_counter) != status_counter)
+ 				continue;
+ 
+ 			ret = nfsd_genl_rpc_status_compose_msg(skb, cb,
 
 
