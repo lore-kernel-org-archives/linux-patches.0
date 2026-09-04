@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28333B95FA;
-	Fri,  4 Sep 2026 05:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE20F408035;
+	Fri,  4 Sep 2026 05:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499929; cv=none; b=h6eHP1cAVwV0gtC5uzGs1ky+reIrd83Fq7IvQYmBdCTUE4v08REsxOPBl7HgRqUNUgzWEWw8ePe86LWKs/oltncQGQE8GELMctlHPm0i9eHtaAUresYsUTl+6SaTodrNZ58ycY0tSDnU5iVfekezYk0hBremRhigh0ISqLyx1Dg=
+	t=1788499931; cv=none; b=dgDVzx7zlILUF4y+DOLPxBbBBGG4udayjl441v1RtfbJhokT1eiebZ49heAHncQ8V66cGyfkMeb5jylush2A33xq739f3aaBK+kY91375EC50cqa+g3U9a46MUL3jbRA1eoZnlPV/obAG2on2RW0zrj0g0yj4Kyi/MqLBi7Neq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499929; c=relaxed/simple;
-	bh=09bFYUyXFOzlC+Y9CgO42bUt8X+9x8+HlyGKJFOLp98=;
+	s=arc-20240116; t=1788499931; c=relaxed/simple;
+	bh=FtQSNWYZcUZxMpWKnQIvvlaCRpV7hZyypNCWFGb37DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H76FDLOnr1mqEOh2lSLsXpofOXQAam4G7H7+gibjA7NQHodaEZpL2joNT9+7Npjd2iYC1TQmsUPViUrDlS3cBI8o6Ro5mCOrvgUJKShe7hYO004AJohyzCcXU/Nb4mpG0Brxd3ssVxwbcQnJgnAG9pD1G/IBGBJrVcrimN/snDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1l3mRsz4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=srwfqocYDA/CjUEj5jdfN3MwEbUZa1TS5j4FkySWshgRm/3Pn8chEcdCjxd3x6BwzPrWOVhPtS/mwPyv0Py4QsZJXNGp8eBvPyrk0X13jHIcYdFVB93Ms6rbULvVaCbiFz+bbTYGanr/t9wTafGJ1CbiA/5xRPOEO0ZKQiCY32E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yD7Fp2G5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1l3mRsz4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A76B1F00A3D;
-	Fri,  4 Sep 2026 05:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yD7Fp2G5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0563E1F00A3D;
+	Fri,  4 Sep 2026 05:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499927;
-	bh=RxYy9VFQl/+3+R8TVpUrhjbfSxVu7w8+HNCjm1rJCrY=;
+	s=korg; t=1788499930;
+	bh=PsrfMl8c+rJ4oi/HLJ/JFvTXmApCLvJVLXtnFOmDbds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1l3mRsz4/t7Hq+hqygBpoMSgkCPsbFsKFMKMotVA7Bvi4e2txPNFjb2qFq2fKWp1T
-	 kiw2XSYlNKItkYAFt0kiLfwa2/R6eeEM0p9MvyCuXWy9EeA0kF+mhDsWGYOoTA44DB
-	 9M7wkjClE/OAG8H/f72obpsHufUZzTwE6mI5YSOE=
+	b=yD7Fp2G5BhfX9am5uahVKq2AZJlj/+m0ePmtHz+V6o4Hyrz7zSM610CduGqAY/Y6C
+	 YFaW1TlpiSOpfCci14tsjNoawd55jZRXKqiOvMTHvnJf8PFuL53pde7Lh43OANyN6X
+	 XAVQP+HjR92RP5zXoEfCpYlHERVitDoOi1aXhJV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
 	Kevin Tian <kevin.tian@intel.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 7.2 546/713] iommupt: Return zero for invalid iova_to_phys() ranges
-Date: Fri,  4 Sep 2026 06:58:34 +0200
-Message-ID: <20260904045816.055936486@linuxfoundation.org>
+Subject: [PATCH 7.2 547/713] iommufd: Avoid locking internal accesses during unmap
+Date: Fri,  4 Sep 2026 06:58:35 +0200
+Message-ID: <20260904045816.078676929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -55,44 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit 41cdc2a3d41b505c1dff9e6c1ab4c76d4cc1f995 upstream.
+commit 0dbcdf4473a614adbd732d567c9b39ac0e040e0c upstream.
 
-DOMAIN_NS(iova_to_phys) returns a phys_addr_t and follows the IOMMU
-iova_to_phys() convention of returning 0 when there is no valid
-translation.
+iommufd_access_notify_unmap() skips internal accesses because they do
+not have an external unmap callback to invoke.
 
-make_range() returns a negative errno if the input IOVA cannot be
-represented by this page table format. Returning that errno directly
-casts it to phys_addr_t. Callers treat zero as no translation and use
-non-zero values as physical addresses, so this can make them consume a
-bogus physical address instead of seeing a failed translation.
+However, the current test calls iommufd_lock_obj() before checking
+whether the access is internal. If iommufd_lock_obj() succeeds, the loop
+then sees the internal access and continues, bypassing the matching
+iommufd_put_object() used by the normal unmap path. This leaks the
+object reference taken by iommufd_lock_obj().
 
-Match the page-table walk failure path and return 0 for range validation
-failures too.
+Check for internal accesses first so skipped entries are never locked.
 
-Fixes: 9d4c274cd7d5 ("iommupt: Add iova_to_phys op")
+Fixes: 27b77ea5feaa ("iommufd/access: Bypass access->ops->unmap for internal use")
 Cc: stable@vger.kernel.org
 Assisted-by: Qoder:Qwen-3.8-MAX-Preview
 Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/generic_pt/iommu_pt.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommufd/device.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/generic_pt/iommu_pt.h
-+++ b/drivers/iommu/generic_pt/iommu_pt.h
-@@ -224,7 +224,7 @@ phys_addr_t DOMAIN_NS(iova_to_phys)(stru
+--- a/drivers/iommu/iommufd/device.c
++++ b/drivers/iommu/iommufd/device.c
+@@ -1307,8 +1307,8 @@ void iommufd_access_notify_unmap(struct
  
- 	ret = make_range(common_from_iommu(iommu_table), &range, iova, 1);
- 	if (ret)
--		return ret;
-+		return 0;
+ 	xa_lock(&ioas->iopt.access_list);
+ 	xa_for_each(&ioas->iopt.access_list, index, access) {
+-		if (!iommufd_lock_obj(&access->obj) ||
+-		    iommufd_access_is_internal(access))
++		if (iommufd_access_is_internal(access) ||
++		    !iommufd_lock_obj(&access->obj))
+ 			continue;
+ 		xa_unlock(&ioas->iopt.access_list);
  
- 	ret = pt_walk_range(&range, __iova_to_phys, &res);
- 	/* PHYS_ADDR_MAX would be a better error code */
 
 
