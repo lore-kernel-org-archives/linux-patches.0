@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98385415B76;
-	Fri,  4 Sep 2026 05:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F88412BF7;
+	Fri,  4 Sep 2026 05:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498526; cv=none; b=YYlPB29BbWMpkKo9wzZiXK+cVolcm8Sl6KCMxYPtoP0nESC5OPuN3cjMclE1etyLCyFytYvNJGAr7F5c+r/rk+gAYkl1gD9YeHrVzdWMfNSvER9IYLlRhjZvIYuKkCkuWDlRc1b9IPvlb4F7R7YHxvXalMRaqI67OHQkrTxScSo=
+	t=1788498527; cv=none; b=Ky9WQG2QuKmRINK5Phn2CE++3gIOSR/aoMqaOfNo10Q27b4BRoOJ9eTMUtVfWoVQ+pouZEwGp0fBTXZiCj1pBB+lP0KiL3OEWBug3dkAudUDc9fxoWSp/XT2wB2r5DqgUodWh7OZPJbwuTwq+DrsMzMfcoqXhRDZnT04mBOBKME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498526; c=relaxed/simple;
-	bh=t8s7IVenwWfjqkn5dcwh1cYZptmuh01DVAsBFkqWTPQ=;
+	s=arc-20240116; t=1788498527; c=relaxed/simple;
+	bh=nibX7xYesoMzwGUrnZkSuGSDF01n3P15+CQdJzjq1HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjFlotFQA5bQTIIa6yTc5RwDYhAa2qG4bYT/EOLWqrK08FVqZ3d6SogesiZRohoKl5pVRkkKlyGtoUuHT9e4o462um6kU6wMYArD1ZVJBdJoKK+KOtr1o7ZDKNk/1Z1tbq2/wAhuaL6xeq8yCWVEw3dco4gz27zCJ6aFgu7IzdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYnkTalk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t9kTmUm9UcKAkrHfF7kzyg0//QCdm5TB/jX8mXIgqJFbpBqc+JjPJjMchtiEamLoDNgMOGrJnR8g81scd0LOQxBfQp0HcbHnPZ1V71tLd2ROs9YX/kaLUIw7facePBUhTNdUbqefZRNuen5rvclctRr9xxigfEi5PMnvkMlKaZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnF9+NQN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYnkTalk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE981F00A3D;
-	Fri,  4 Sep 2026 05:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnF9+NQN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003131F00A3E;
+	Fri,  4 Sep 2026 05:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498522;
-	bh=pVEs5q7ubVugWXMHc961hQzS61KSkFMr4NAGmMHMzng=;
+	s=korg; t=1788498525;
+	bh=dtnI66eaMvmKOcpatnIBLZZ8V7P5ZbW+X1wxEN/8C8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uYnkTalkC/9f8ccPdSk1M5D9841QexvblY/BcvnecBrFjzYNq7+jmpT0VfB+7Wam9
-	 HwK3SyPlZR2oYvr8h1pxYaZ5kW9/7LnPh86gcngtU6Qb1FSnOp8Nmhmfa2D3OJR21y
-	 eBUy6MEWCAHeaJVKHTE0PzGxOIQXOJvQoj1Z96CM=
+	b=AnF9+NQNC3XAs/zKIz0pG54PlSMEBe6+dqwXtd7mbOtDsy1JW0oGJvocGxhXYUea+
+	 J3xw+i7GaRpy4xJ/qTraRXVsWtzQky5l3V2dAvkfgSuQnl6GrQ3yEY0/18g2FpV+XZ
+	 8gs1F+9VZlS6Q4m8mTBn1ZVl18GPpU2tpFNI+Cko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
-	Nikhil Agarwal <Nikhil.agarwal@amd.com>,
-	Nipun Gupta <nipun.gupta@amd.com>
-Subject: [PATCH 7.2 094/713] cdx: Fix double free when sysfs file creation fails
-Date: Fri,  4 Sep 2026 06:51:02 +0200
-Message-ID: <20260904045805.945848455@linuxfoundation.org>
+	Chun-Yi Lee <jlee@suse.com>,
+	David Howells <dhowells@redhat.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Matthew Garrett <mjg59@srcf.ucam.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	driver-core@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Disha Goel <disgoel@linux.ibm.com>
+Subject: [PATCH 7.2 095/713] debugfs: Fix lockdown check for mmap_prepare
+Date: Fri,  4 Sep 2026 06:51:03 +0200
+Message-ID: <20260904045805.968087505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,50 +59,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+From: Chun-Yi Lee <jlee@suse.com>
 
-commit 6f4acc3a3c300e174e3f586b97b04ed8f5948c36 upstream.
+commit f81808de37338aac8e167f99bfae647b1b835c70 upstream.
 
-In cdx_create_res_attr(), if sysfs_create_bin_file() fails, the code
-frees res_attr but doesn't set cdx_dev->res_attr[num] to NULL. This
-leaves a dangling pointer in the array. Then cdx_destroy_res_attr()
-frees the already-freed memory. Fix the double free by initializing
-cdx_dev->res_attr[num] after sysfs_create_bin_file() completes.
+Commit 651fdda8406d ("relay: update relay to use mmap_prepare")
+changed the `mmap` file operation to `mmap_prepare` for relayfs, but
+the lockdown check in debugfs was not updated accordingly.
 
-Fixes: aeda33ab8160 ("cdx: create sysfs bin files for cdx resources")
+This prevents debugfs from being locked down when the kernel is in
+integrity mode if a file uses `mmap_prepare` but not `mmap`.
+
+Since the conversion to `mmap_prepare` across the kernel is not yet
+complete, update the lockdown check to look for both `mmap` and
+`mmap_prepare` to ensure comprehensive coverage.
+
+Fixes: 651fdda8406d ("relay: update relay to use mmap_prepare")
+Signed-off-by: Chun-Yi Lee <jlee@suse.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Matthew Garrett <mjg59@srcf.ucam.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: driver-core@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
-Acked-by: Nikhil Agarwal <Nikhil.agarwal@amd.com>
-Acked-by: Nipun Gupta <nipun.gupta@amd.com>
-Link: https://patch.msgid.link/20260724092712.2119149-1-ptsm@linux.microsoft.com
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Link: https://patch.msgid.link/20260615104750.1000-1-jlee@suse.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cdx/cdx.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/debugfs/file.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/cdx/cdx.c
-+++ b/drivers/cdx/cdx.c
-@@ -738,7 +738,6 @@ static int cdx_create_res_attr(struct cd
+--- a/fs/debugfs/file.c
++++ b/fs/debugfs/file.c
+@@ -273,7 +273,8 @@ static int debugfs_locked_down(struct in
+ 	    (!real_fops ||
+ 	     (!real_fops->unlocked_ioctl &&
+ 	      !real_fops->compat_ioctl &&
+-	      !real_fops->mmap)))
++	      !real_fops->mmap &&
++	      !real_fops->mmap_prepare)))
+ 		return 0;
  
- 	sysfs_bin_attr_init(res_attr);
- 
--	cdx_dev->res_attr[num] = res_attr;
- 	sprintf(res_attr_name, "resource%d", num);
- 
- 	res_attr->mmap = cdx_mmap_resource;
-@@ -747,8 +746,12 @@ static int cdx_create_res_attr(struct cd
- 	res_attr->size = cdx_resource_len(cdx_dev, num);
- 	res_attr->private = (void *)(unsigned long)num;
- 	ret = sysfs_create_bin_file(&cdx_dev->dev.kobj, res_attr);
--	if (ret)
-+	if (ret) {
- 		kfree(res_attr);
-+		return ret;
-+	}
-+
-+	cdx_dev->res_attr[num] = res_attr;
- 
- 	return ret;
- }
+ 	if (security_locked_down(LOCKDOWN_DEBUGFS))
 
 
