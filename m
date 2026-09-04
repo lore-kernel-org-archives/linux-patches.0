@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EC030C160;
-	Fri,  4 Sep 2026 05:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB353BFAE0;
+	Fri,  4 Sep 2026 05:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498808; cv=none; b=rYQ+cUE0CvQOxIvAGOts15OanKSStDjC17Zxh7msZhAM2Q6FWGC2cSMkZI76PD3AHIT/0a28stWGG7UoYptdPtYSYFInBTqQ4iI6cEwfsDeSV1Q+Yy2MdHN39Mon84aTgRiSU0jCShu1gVYwwxA7oMC7sCKDL7bvro4zRElyCCo=
+	t=1788498811; cv=none; b=LO+OuJewJqIazzR+YBn2R1VOnOFAVXMZmGA6lhftEQyAbKbEEcgE9ng2Luh7jf8QumjJezUrbds04TFGe6q0FxYHcSvDn0xbdJI320M6gyl+AwScf052F+SYAgNIqQWDpQiQzKFQq4qiKJ45CzIqN/enbzk0r92Zgv5WfEFhKDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498808; c=relaxed/simple;
-	bh=ViGIVtUSmQUEMwlKgUlGouA17MlYgYPJiV+CqafwHeg=;
+	s=arc-20240116; t=1788498811; c=relaxed/simple;
+	bh=w9Ul2ENtag1f5WCjCTaj66JBVkxqigCPfaM3NRelE1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=latiOFzb/++PlK9M9ccMlOVBl/08W5Si3jWVJhLMb5Dz2nBRkxRSxdFvSroIci68UW5jz4lzVzSWRwVwfaxK5/ZMR7hxXWzuK8tsOvYQIDHjbyH0G4ud/ClzxIeme1ih4drpwrafnQ7cxJ1V2QWMataTBmZzhv0wWWtAe+rIyDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcq/Mh66; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rovc/suD+ypbSEOKZtlXrChKbx64tUJUv44PcBZ4s5nOQ8KIjLB+mPEEx9jKxk7nc6KIFafswsH9p5vEELtLKHTrhDi1MGaMR4q7wQbdT/sK1SgDPfONmhcXrvdWoZkO0rbXeGQI13hvcr0/4Y0cQk3UdPw6B/8A/11DZCfrmtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W06GZhEX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcq/Mh66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638081F00A3D;
-	Fri,  4 Sep 2026 05:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W06GZhEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360D71F00A3D;
+	Fri,  4 Sep 2026 05:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498806;
-	bh=gh27oh09ldce79gIm24QHcwR21s5xNc+aK8+c6kkxqA=;
+	s=korg; t=1788498809;
+	bh=K85Yx8K1oUiZCGh8N5m+SYQ54x2mzZ7mLZR+A7/TVeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kcq/Mh66HLKYPT/HHsqMFycUwh8DQY5dqi7MmCCZ41RiMUcj0mBWUYKRkOewREWSL
-	 mn44N3K3WjaUwSWNkGkGcwMdEJ9F2oPeiezCLnfDuBwh2+Vhx8AJuXuyboMn+O8+zj
-	 lSPTh8Cr1nTsq6J7sGpNcgxgyH6QurqoW1vr8o8c=
+	b=W06GZhEX9hN6wMCq2SMcJDM80S81jpNAs43oubnGh9WGITLjJYwoj3KGqxiqfA6tC
+	 3I+l3McJDGTVlnYqggK4Cw7U/szuhuLHPLs49NSGs9+J36M/gEvtmT3Oya135jlW5m
+	 4PHp3I8VsC4IKpPqoz20AKzWwdBtzKNSedodj/cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 194/713] nfsd: fix XDR padding calculation in ff_encode_getdeviceinfo
-Date: Fri,  4 Sep 2026 06:52:42 +0200
-Message-ID: <20260904045808.161175412@linuxfoundation.org>
+Subject: [PATCH 7.2 195/713] nfsd: gate nfs2 setacl by argp->mask
+Date: Fri,  4 Sep 2026 06:52:43 +0200
+Message-ID: <20260904045808.183310327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,43 +49,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 8b989aaec85e1293a871d602590c951fe44b8647 upstream.
+commit a3a7e20ed66d3f04d37883c398da8a113b430769 upstream.
 
-nfsd4_ff_encode_getdeviceinfo() computes the da_addr_body reservation
-as 16 + netid_len + addr_len, but the subsequent xdr_encode_opaque()
-calls emit 8 + round_up(netid_len, 4) + round_up(addr_len, 4) bytes.
-The mismatch means the declared da_addr_body length exceeds the actual
-encoded data by 2-8 bytes on every flexfile GETDEVICEINFO reply,
-leaking stale reply-page content to the client and mis-aligning the
-subsequent version list decode.
+The NFSACL v2 SETACL path shares the decoder convention used by its
+v3 sibling: nfsaclsvc_decode_setaclargs() fills in argp->acl_access
+only when NFS_ACL is set in the request mask and argp->acl_default
+only when NFS_DFACL is set, leaving the other pointer NULL because
+the argument buffer is zeroed up to pc_argzero before decode.
 
-Use xdr_align_size() for each string length to match what
-xdr_encode_opaque() actually writes.
+nfsacld_proc_setacl() then hands both pointers to set_posix_acl()
+unconditionally. set_posix_acl(idmap, dentry, type, NULL) is the VFS
+"remove this ACL type" operation, so an omitted arm is
+indistinguishable from an explicit request to delete that ACL. A
+SETACL carrying only NFS_ACL silently strips the directory's default
+ACL; mask=0 strips both.
 
-Fixes: efcae97fa425 ("NFSD: da_addr_body field missing in some GETDEVICEINFO replies")
+This is the same defect just fixed in nfsd3_proc_setacl(); apply the
+same remedy. Gate each set_posix_acl() call on its mask bit and
+initialize error to 0 so that a request with neither bit set leaves
+the on-disk ACLs untouched and returns success. The out_drop_lock
+path and the unconditional posix_acl_release() in
+nfsaclsvc_release_setacl() already tolerate the skipped arms.
+
+Fixes: a257cdd0e217 ("[PATCH] NFSD: Add server support for NFSv3 ACLs.")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-pnfs-fixes-v1-1-784f39dc1eca@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/flexfilelayoutxdr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs2acl.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/fs/nfsd/flexfilelayoutxdr.c
-+++ b/fs/nfsd/flexfilelayoutxdr.c
-@@ -99,7 +99,8 @@ nfsd4_ff_encode_getdeviceinfo(struct xdr
- 	}
+--- a/fs/nfsd/nfs2acl.c
++++ b/fs/nfsd/nfs2acl.c
+@@ -115,14 +115,19 @@ static __be32 nfsacld_proc_setacl(struct
  
- 	/* len + padding for two strings */
--	addr_len = 16 + da->netaddr.netid_len + da->netaddr.addr_len;
-+	addr_len = 8 + xdr_align_size(da->netaddr.netid_len) +
-+		   xdr_align_size(da->netaddr.addr_len);
- 	ver_len = 20;
+ 	inode_lock(inode);
  
- 	len = 4 + ver_len + 4 + addr_len;
+-	error = set_posix_acl(&nop_mnt_idmap, fh->fh_dentry, ACL_TYPE_ACCESS,
+-			      argp->acl_access);
+-	if (error)
+-		goto out_drop_lock;
+-	error = set_posix_acl(&nop_mnt_idmap, fh->fh_dentry, ACL_TYPE_DEFAULT,
+-			      argp->acl_default);
+-	if (error)
+-		goto out_drop_lock;
++	error = 0;
++	if (argp->mask & NFS_ACL) {
++		error = set_posix_acl(&nop_mnt_idmap, fh->fh_dentry,
++				      ACL_TYPE_ACCESS, argp->acl_access);
++		if (error)
++			goto out_drop_lock;
++	}
++	if (argp->mask & NFS_DFACL) {
++		error = set_posix_acl(&nop_mnt_idmap, fh->fh_dentry,
++				      ACL_TYPE_DEFAULT, argp->acl_default);
++		if (error)
++			goto out_drop_lock;
++	}
+ 
+ 	inode_unlock(inode);
+ 
 
 
