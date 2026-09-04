@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEC83D6664;
-	Fri,  4 Sep 2026 05:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58FA3A961E;
+	Fri,  4 Sep 2026 05:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499229; cv=none; b=RSlimCuYpK4cQIKnLumDPdoGPFBLoSCY5kOBRFF71OfEOZ6WY7a9Gg1H1OPQbp5iiBC0JOqtUgu2FeziFMrCtnWl+5g3/3iRp1RNT2gCJc/4d81BbaS4bUJOogYVNn9IUAK5hwbgf8dilPIf0osrF0tbFOEFu15agr1Vw3aWKxM=
+	t=1788499231; cv=none; b=XWNGY9Xy6OGGpY01z6Cv6m4XT7ZxP6ZxDIq7sJn6rQcYK11DoxM6zTkLhiJoSNTslBXJRaD2d4kwyFcwx67FQg/60NTP8rmP0bPvsaOgemULyeZn+a3mzkeLHhpEMfSr0WMYKbIrIZOzdLdE3w94SZ0xBk8t1vFIrZnxdMe0fYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499229; c=relaxed/simple;
-	bh=r4n9N0IepGrX5+tQfeCqrwTGlKGYnI2ys6IoxyDNMLw=;
+	s=arc-20240116; t=1788499231; c=relaxed/simple;
+	bh=6J7Cn9ETJNCWA+TFTmNH8I4XzXXBo8kNtYQxPpBJAy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QI9ajDW/9Nq6nR0k3u728Ew0BzV8FGTkJDr3DR/b8pXkHFqTadUWRA6GOZGhgnMBp5hAyC4mX8IADeZIjXdBhyTlbAdbb9mI9pTbb+j7KDfiWLLHgGbP6VhIHELSBdg2UzPGSRQ5MhQAIXzaAcYxghOUlDzufLVnvdHiWYom7hA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVHaXYdC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EEeoTzgwM6QQ1TUeDkpTfihVij6GgofpSYR+NoT1b5JsqD/h/p+o4Tby4t2Mf7NlhRGg9aOr0t2gdQWDg2GVb1zZmCLSmGBdoeLIUiW6ohLGUNXGN3jkPY0Nmg5u/ZLQRUQD2SPK0Hw67uqCEWGYDYmtLHpVau53+ZUj9zEUWrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=talUZvqi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVHaXYdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EDB1F00A3D;
-	Fri,  4 Sep 2026 05:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="talUZvqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3AD1F00A3D;
+	Fri,  4 Sep 2026 05:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499227;
-	bh=ySYIMU2e/u2ga8PfDWFvXWAfuPt/dOz/E9ChVwSZNCw=;
+	s=korg; t=1788499230;
+	bh=0d1kfJnwlIh6zq8MWjq+6J8JBGvatq7Lb7ljbVtfZF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dVHaXYdCjQFDEoNSPifhIe4z+r3NCas3Qk9j/e5G0Zfu1xBcO5VBfd72Qo1PbWEEe
-	 cF18uilcdsnzb5Iv5C6mYBRzeBbY2CEgS9BnwmRS/TpyZxSnWfW1/H+/UU37YHEBvl
-	 wXAvLPxSmKLq7JdyrNOZc6evPIVByl87k7lSy+Ag=
+	b=talUZvqifKN0ty7Lw6kYHILsEhbEA/c4evVVPiEzgIzJA1dbn3Wte7ikb61BHs8dR
+	 iMU29dSgychkP5nxOIDcO4a+iW5tMf25vfCu9sKLDNxHXHj3wTipjOVhp96sY7geet
+	 R1XpGB4d1LR/LYkNHEO3W8OERg3fA0pUgMhYHED4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
+	Xin Chen <xin.chen2@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 342/713] Bluetooth: hci_conn: re-enable advertising only for peripheral role
-Date: Fri,  4 Sep 2026 06:55:10 +0200
-Message-ID: <20260904045811.495621078@linuxfoundation.org>
+Subject: [PATCH 7.2 343/713] Bluetooth: hci_core: use skb_get() instead of skb_clone() for req_skb
+Date: Fri,  4 Sep 2026 06:55:11 +0200
+Message-ID: <20260904045811.518298026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,94 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+From: Xin Chen <xin.chen2@oss.qualcomm.com>
 
-commit ed5fb41d3b6b6e665e7f97fd54bd1f9531c7477f upstream.
+commit f5afdff569a09d1cb8cf19826199d024725576cb upstream.
 
-hci_le_conn_failed() unconditionally calls hci_enable_advertising(),
-although its own comment states advertising should be re-enabled only
-when the failed attempt was made as a peripheral.
+BT enable fails intermittently with -ETIMEDOUT (-110).  The kernel log
+shows the HCI Read Local Version command was sent and the firmware
+replied with status 0x00 (logged by hci_req_cmd_complete() BT_DBG),
+but the waiter in __hci_cmd_sync_sk() never woke up and timed out
+after 10 s:
 
-hci_le_conn_failed() is reached from hci_conn_failed() for every failed
-LE connection, including outgoing central connections. For a central
-attempt this enable is redundant: hci_le_create_conn_sync() already
-restores advertising via hci_resume_advertising_sync() in its done:
-block. Because hci_enable_advertising() only queues the work on
-cmd_sync_work, it runs *after* that resume has already succeeded and
-set HCI_LE_ADV.
+  bluetooth hci0: Opcode 0xfc00              // __hci_cmd_sync_sk
+  bluetooth hci0: opcode 0xfc00 plen 1       // hci_cmd_sync_add
+  bluetooth hci0: skb len 4                  // hci_cmd_sync_alloc
+  bluetooth hci0: length 1                   // hci_req_sync_run
+  Bluetooth: hci0 cmd_cnt 1 cmd queued 1     // hci_cmd_work
+  Bluetooth: hci0 type 1 len 4               // hci_send_frame
+  Bluetooth: opcode 0xfc00 status 0x00       // hci_req_cmd_complete
+  <-- req_skb NULL: req_complete_skb not set,
+      hci_cmd_sync_complete() never called,
+      req_status stays HCI_REQ_PEND            -->
+  <-- 10 s later: wait_event_interruptible_timeout expires -->
+  bluetooth hci0: end: err -110              // __hci_cmd_sync_sk
 
-The resulting HCI sequence, captured on a BCM43455 (no LE Extended
-Advertising, so legacy advertising is used):
+The root cause is that hci_send_cmd_sync() clones the sent command
+into hdev->req_skb so that hci_req_cmd_complete() can locate the
+registered completion callback.  Under memory pressure this
+skb_clone() fails, leaving hdev->req_skb NULL.  The firmware reply
+is received and processed, but hci_req_cmd_complete() finds NULL
+req_skb, so hci_cmd_sync_complete() is never called, req_status
+stays HCI_REQ_PEND, and the waiter times out with -ETIMEDOUT.
 
-  LE Create Connection                     Status Success
-  ... 13.8 s, peer never answers ...
-  LE Set Advertising Parameters (0x2006)   Success   <- done: resume,
-  LE Set Advertising Enable     (0x200a)   Success      HCI_LE_ADV set
-  LE Create Connection Cancel   (0x200e)   Success
-  LE Connection Complete                   Unknown Conn Id
-  LE Set Advertising Parameters (0x2006)   Command Disallowed (0x0c)
+req_skb is only used to read bt_cb(skb)->hci callbacks and opcode --
+it is never modified.  Replace skb_clone() with skb_get(), which
+simply increments the reference count of hdev->sent_cmd without
+allocating new memory and therefore cannot fail.
 
-The last command is the queued enable from hci_le_conn_failed() running
-as a second hci_enable_advertising_sync() pass. It clears HCI_LE_ADV
-(hci_sync.c, "Clear the HCI_LE_ADV bit temporarily"), then sends
-LE Set Advertising Parameters while the controller is still advertising,
-which the controller correctly rejects with Command Disallowed.
+This issue was first observed as a use-after-free in ttyport_close()
+when ttyport_open() failed, which was investigated in an earlier
+patch series [1].  That investigation led to the discovery of the
+true root cause described above.
 
-The disable-first call at the top of hci_enable_advertising_sync()
-cannot prevent this: hci_disable_advertising_sync() returns early
-without sending anything when HCI_LE_ADV is clear, so it is a no-op
-exactly when the flag is wrong.
+[1] https://lore.kernel.org/all/20250430111617.1151390-1-quic_cxin@quicinc.com/
 
-hci_enable_advertising_sync() then returns without sending LE Set
-Advertising Enable, so HCI_LE_ADV is never set again. The legacy
-software rotation loop re-arms hci_schedule_adv_instance_sync() every
-HCI_DEFAULT_ADV_DURATION (2 s), and its "already advertising" shortcut
-tests HCI_LE_ADV, which can no longer become true. The command is
-therefore retried every 2 s indefinitely:
-
-  Bluetooth: hci0: Opcode 0x2006 failed: -16
-
-Observed on a gateway as 5326 occurrences over 3 hours, ending only when
-bluetoothd was restarted. Connection attempts that succeed do not call
-hci_le_conn_failed() and never trigger this.
-
-Add the role test the comment already describes. Both other
-hci_enable_advertising() call sites reached from a failed/closed LE
-connection (hci_cs_disconnect() and hci_disconn_complete_evt()) already
-guard on conn->role == HCI_ROLE_SLAVE; this one was missed.
-
-Reproducing needs legacy advertising (ext_adv_capable() false, so the
-software rotation loop is used), simultaneous peripheral advertising and
-outgoing central connects, and a central connect that times out rather
-than failing fast.
-
-The Fixes tag points at the commit that introduced the advertising
-restart into this path for the directed-advertising (peripheral) case;
-the role test that the later commit 0b1db38ca26b ("Bluetooth: Fix check
-for direct advertising") added to the sibling paths was never applied
-here.
-
-Fixes: 3c857757ef6e ("Bluetooth: Add directed advertising support through connect()")
+Fixes: 2615fd9a7c25 ("Bluetooth: hci_sync: Fix overwriting request callback")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5 btmon
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+Signed-off-by: Xin Chen <xin.chen2@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1381,7 +1381,8 @@ static void hci_le_conn_failed(struct hc
- 	/* Enable advertising in case this was a failed connection
- 	 * attempt as a peripheral.
- 	 */
--	hci_enable_advertising(hdev);
-+	if (conn->role == HCI_ROLE_SLAVE)
-+		hci_enable_advertising(hdev);
- }
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4091,7 +4091,7 @@ static int hci_send_cmd_sync(struct hci_
+ 	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND &&
+ 	    !hci_dev_test_and_set_flag(hdev, HCI_CMD_PENDING)) {
+ 		kfree_skb(hdev->req_skb);
+-		hdev->req_skb = skb_clone(hdev->sent_cmd, GFP_KERNEL);
++		hdev->req_skb = skb_get(hdev->sent_cmd);
+ 	}
  
- /* This function requires the caller holds hdev->lock */
+ 	return err;
 
 
