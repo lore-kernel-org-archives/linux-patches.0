@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C6B41DEDA;
-	Fri,  4 Sep 2026 06:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB77419FBB;
+	Fri,  4 Sep 2026 06:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502694; cv=none; b=UZuaI2zFdPtU0BeflARACQ494h8anzovFRd5g+TmG8lFM+kK8C1YmDIlmyzDP9jpeIoEsqaTrtWonRn1o91b1zFZnQG9zQ1IyhTvKiJpIB8G5aoUfVR+0Ivtkx5StnjdDnJy2qOn2+NQiH+30JEZfz0JwCTllqt7k9kLL9AHSEc=
+	t=1788502697; cv=none; b=JFzst1m7QbWBGLSBTLj9EfhKTrfYL7QTf3kYne2aFqg1KiIpqC9LcFNJvEhAA9y3nF2SU7Ds8/06Woc8huED/zCffVbdoGSmFXIMoffeCKqYBNbYaVYj1JyFd4eSLNxYYg5QjfyoBdOC1pvbZPQ09xb+BnYfkJJsDTG3srDD9n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502694; c=relaxed/simple;
-	bh=tCnJBvo8UajeDl+i0iLOamofNPYiTclOiSz/3WcI9xI=;
+	s=arc-20240116; t=1788502697; c=relaxed/simple;
+	bh=7n8qzOz21Tc0Wn65VsE3HpG8uXbkBtyA+vRXdL7l8H8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5qbkJE8rvEVnn+C8IvFev55VLwvLajiO0GiNpcFW4ym9504F22KIfgEMYTohviBFwgJn04z2ZlfZ4S4RUr2fKVZU/TC6mT41GFRhGx/vcsk4J6NlGT1icEeBA/4Y4Ilb164B52s8L38RNs3Wy2oETSVOEtLaJnSWw5VE7YNDvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuvbrFHb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J75lmaFyLIKjhGkDoUaN3sfErK6R9PHDJQyyEz5S0UJFU5bV5IrGuwJYU1XfNDydS6LwxFGl3KQSUqP4M7XWjyvGgA8uievkRC19tFQP/3l8xLtjQRu33T7LA/Yb6DbVJOF5Reqhzbta1uYpPm7o7fzrMW1M6KOXAPQAGvq9V0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVK3AbcD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuvbrFHb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA921F00A3D;
-	Fri,  4 Sep 2026 06:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVK3AbcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57B11F00A3D;
+	Fri,  4 Sep 2026 06:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502693;
-	bh=0VNg7nJGO0pWMWVW7l1nCktoT8wWK69gs6OdkWVHOSw=;
+	s=korg; t=1788502696;
+	bh=KPx2EBgt4iHTdsc6YVqDEvzOxKlGL1vVlc4t44qR7Dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IuvbrFHb5bHm9wxvxAwgpi9CQSHBScoyQZL58GPnbby1vTcgK/Vng1guPZtD7AFhl
-	 cfWHNLmzxDtN88hIScElMMsiTRy3I5Ay9dMAL9+lsDJkJICfbhO6ypqQrTZzTG+FsF
-	 RjsII7yO9/TX/NZ8KsHuJ/Jj8AgcnptDLkrqoIhU=
+	b=VVK3AbcD3k3Qs/xkmi+IoD3nWen4aomPiUZgkHYzIpep1fmWKpKjQSvhH4zZ1CbYV
+	 34JIxSlu5CRoglVYINM0437Puh7hUrQbA5c/fB3Rt/ZqwAjhl0vCSBxSNI24e6mzdr
+	 7xWKRmDPmmRul2NY8ENJtt5FmY6cixEr0tytwsJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Darshit Shah <darnshah@amazon.de>,
+	Farhan Ali <alifm@linux.ibm.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Subject: [PATCH 6.12 297/403] PCI/DPC: Allow DPC on all Downstream Ports when OS controls AER
-Date: Fri,  4 Sep 2026 07:01:40 +0200
-Message-ID: <20260904045741.598177049@linuxfoundation.org>
+	Thomas Gleixner <tglx@kernel.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>
+Subject: [PATCH 6.12 298/403] PCI/MSI: Enable memory decoding before restoring MSI-X messages
+Date: Fri,  4 Sep 2026 07:01:41 +0200
+Message-ID: <20260904045741.621263481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,48 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darshit Shah <darnshah@amazon.de>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-commit 97ca178c899d0049210d325b123ed024eb5ac000 upstream.
+commit 231c7a57d19304beb0931e6cbe3a4929daf49747 upstream.
 
-PCIe r7.0, sec 6.2.11, "Implementation Note: Determination of DPC Control",
-recommends that "... operating systems always link control of DPC to the
-control of Advanced Error Reporting."
+The current MSI-X restoration path assumes the Command register Memory bit
+is enabled when writing MSI-X messages. But it's possible the last saved
+and restored state of a device may not have the Memory bit enabled, even if
+a device driver later enables Memory bit and MSI-X. Attempting to access
+Memory space without Memory bit enabled can lead to Unsupported Request
+(UR) from the device. Fix this by enabling Memory bit and restore it
+afterwards.
 
-Any PCIe device may advertise AER, but only Root Ports and Root Complex
-Event Collectors can generate AER interrupts, so the AER driver only binds
-to RPs and RCECs.
-
-Any Root Port or Switch Downstream Port may advertise Downstream Port
-Containment (DPC), but previously the DPC driver was limited to devices the
-AER driver could bind to, i.e., only RPs that advertised AER.
-
-Since any Port with DPC can generate DPC interrupts, allow the DPC driver
-to bind to such a Port as long as the OS controls AER, regardless of
-whether the AER driver binds to it.
-
-Signed-off-by: Darshit Shah <darnshah@amazon.de>
-[bhelgaas: commit log, reorder || operands to simplify patch]
+Fixes: 41017f0cac92 ("[PATCH] PCI: MSI(X) save/restore for suspend/resume")
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+[bhelgaas: comment]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251211164257.81655-1-darnshah@amazon.de
+Link: https://patch.msgid.link/20260805165518.794-6-alifm@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/portdrv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/msi/msi.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/pci/pcie/portdrv.c
-+++ b/drivers/pci/pcie/portdrv.c
-@@ -264,7 +264,7 @@ static int get_port_device_capability(st
- 	 */
- 	if (pci_find_ext_capability(dev, PCI_EXT_CAP_ID_DPC) &&
- 	    pci_aer_available() &&
--	    (pcie_ports_dpc_native || (services & PCIE_PORT_SERVICE_AER)))
-+	    (pcie_ports_dpc_native || host->native_aer))
- 		services |= PCIE_PORT_SERVICE_DPC;
+--- a/drivers/pci/msi/msi.c
++++ b/drivers/pci/msi/msi.c
+@@ -862,6 +862,7 @@ void __pci_restore_msix_state(struct pci
+ {
+ 	struct msi_desc *entry;
+ 	bool write_msg;
++	u16 cmd;
  
- 	if (pci_pcie_type(dev) == PCI_EXP_TYPE_DOWNSTREAM ||
+ 	if (!dev->msix_enabled)
+ 		return;
+@@ -871,6 +872,14 @@ void __pci_restore_msix_state(struct pci
+ 	pci_msix_clear_and_set_ctrl(dev, 0,
+ 				PCI_MSIX_FLAGS_ENABLE | PCI_MSIX_FLAGS_MASKALL);
+ 
++	/*
++	 * The restored device state may not have Memory Space enabled.
++	 * Since the MSI-X Table and PBA are in Memory Space, enable it
++	 * while restoring them.
++	 */
++	pci_read_config_word(dev, PCI_COMMAND, &cmd);
++	pci_write_config_word(dev, PCI_COMMAND, cmd | PCI_COMMAND_MEMORY);
++
+ 	write_msg = arch_restore_msi_irqs(dev);
+ 
+ 	msi_lock_descs(&dev->dev);
+@@ -881,6 +890,7 @@ void __pci_restore_msix_state(struct pci
+ 	}
+ 	msi_unlock_descs(&dev->dev);
+ 
++	pci_write_config_word(dev, PCI_COMMAND, cmd);
+ 	pci_msix_clear_and_set_ctrl(dev, PCI_MSIX_FLAGS_MASKALL, 0);
+ }
+ 
 
 
