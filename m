@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAA73876B3;
-	Fri,  4 Sep 2026 05:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB0F3DAAB7;
+	Fri,  4 Sep 2026 05:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498447; cv=none; b=PEYvg9S+8lFbhzMVQGvL6tfddBQSi6bXKCK6YYlQLdt2f17Pmqw8xmcZHrB93J1FBSoeB1tc2MPhqd1OUOtaVLE5rEeSVb4tfQBnamyxENgCzSbk4azocdxIb6WYytqGWVftLQk+c6GGU2DTcOy8OrHfsbulYXBWo3A5IUzrQPs=
+	t=1788498450; cv=none; b=E5yVhZInlOj4hBZVs3Hkax8JIBG32HZPCJRV0Fkcl2oS1uJ91NMfs8lepuvniuW3n6Ro1S1xGU69FU6s5qNya2CtCMlm+CHrCwHOA6XFjCniXx8hWWEIlqb24mNOewNqdgLjznmRp0bTlkx8sW5FW1B43CUJLooyu8kmk4k+rDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498447; c=relaxed/simple;
-	bh=ZjE06zKzGtlFYe5hMdYp4ZpTk11T75wbL23+6Cfy1LM=;
+	s=arc-20240116; t=1788498450; c=relaxed/simple;
+	bh=YW81rcT6EqePAXv63L7hMwELG6WUhHMO+l74NSwsM/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEeNalgYDj9FVdbMRkE91GZGJ59I1wJlrgQ68WIB9x/3vIWiQVBcx+kmBNwYntJOy6S9OcpnikzsrUGaR2YOrgWfnrQ3CFGvnGHZN5MD4UPEwYZx361lOgZvfoyyo7QyZ3Qtkk/8fyjlGTtBFpuhLYFQeWc/Ok37GXulZMrOEgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSrwxrgh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JJU8fKWKA2Ap28ch+GZ9VRjF40oFLaTp5KhQYRWQieblShdrkPqQ6Sv6LSRhyXdwznHmhiFKVm3k2kcb5q3eGn8XeNxuo+W7O9y88OxLRe44wvnwa9lNHapTXMXdfbl2f746a0HS+z9T0cWxSTUHEDzkyy2iwwgtPUf0hHhu6es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRseEyjI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSrwxrgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C50B1F00A3D;
-	Fri,  4 Sep 2026 05:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRseEyjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25DD1F00A3E;
+	Fri,  4 Sep 2026 05:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498444;
-	bh=OxK+8sCo/121dy7eG6dM8MfnDK438sor41q5iB7R+04=;
+	s=korg; t=1788498447;
+	bh=/zy7V2+jXAj7j8YDCH7VtUimubsJJQFXyjuaxrQNPsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sSrwxrghTAjBEnQPNCV2f+sYKPxgHgsXFdQY9rBAnYdWz/DbxuB+UnSqUP+wDHte7
-	 Rqbo1Mgwi3cVuzPBa1v2geAIjVIzeT1hsSoNfROe3rdg6U5ahJv3dJXrlnHSGbou+P
-	 LbZg8DqlpgYxPYIZlnP3KFoedJahHFZemJyvdZb0=
+	b=sRseEyjImVD/VP4ro4fC+eSbr2G4xlZ1shBJoSi4Fe76o6Fn13shza6IQYOA4VlDI
+	 ExnLXlfwYBRL5lTkChypgzMJlPmseLpMpmmV4zEyhGTtaD7tWVUq4Pr4hUGC9jau0s
+	 s+FmKclpn5EZCyLMeuZqdQ2z61mRZhbJrUkJ/gdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dev Jain <dev.jain@arm.com>,
-	David Hildenbrand <david@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Alistair Popple <apopple@nvidia.com>,
 	Andi Kleen <ak@linux.intel.com>,
 	Anshuman Khandual <anshuman.khandual@arm.com>,
@@ -60,9 +60,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Will Deacon <will@kernel.org>,
 	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 064/713] mm/rmap: use huge_ptep_get() in try_to_unmap_one()
-Date: Fri,  4 Sep 2026 06:50:32 +0200
-Message-ID: <20260904045805.274508298@linuxfoundation.org>
+Subject: [PATCH 7.2 065/713] mm/rmap: use huge_ptep_get() in try_to_migrate_one()
+Date: Fri,  4 Sep 2026 06:50:33 +0200
+Message-ID: <20260904045805.297897815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -83,28 +83,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Dev Jain <dev.jain@arm.com>
 
-commit f5407e9b697c940e78b27ff63c6e14d8d171adc3 upstream.
+commit 9be12ffa78cd087d41086f937a156435d4e588e9 upstream.
 
-Patch series "Fix incorrect access of hugetlb pte entries", v3.
-
-There are various places which use ptep_get() to get the pte entry
-corresponding to a hugetlb folio.  Some arches (like s390) have special
-handling to compute the pteval, so they provide huge_ptep_get().  Use this
-helper consistently.
-
-Additionally, some code paths may provide huge_ptep_get with an unaligned
-address.  This is a problem on arm64 (I checked other arches and it looks
-fine for them), which is fixed in patch 1.  The fix is made to be
-backport-friendly: the cleaner fix would be to perhaps pass the hstate to
-huge_ptep_get() - that is wider churn and we can do that later.
-
-
-This patch (of 5):
-
-try_to_unmap_one() handles hugetlb folios when memory failure needs to
-replace a poisoned hugetlb mapping with a hwpoison entry.  In that case
-page_vma_mapped_walk() returns the pte pointer to the hugetlb folio in
-pvmw.pte, but the code reads it with ptep_get().
+try_to_migrate_one() is used by folio migration to replace a present
+mapping with a migration entry. For hugetlb folios, page_vma_mapped_walk()
+returns the pte pointer to the hugetlb folio in pvmw.pte, but the code
+reads the huge pte entry with ptep_get().
 
 On arches which provide their own huge_ptep_get() to dereference a huge
 pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
@@ -112,14 +96,16 @@ etc to misbehave.
 
 It is not clear whether this has a trivially visible effect to userspace.
 
-Just use huge_ptep_get() for dereferencing a huge pte pointer.
+Use huge_ptep_get() to dereference a huge pte pointer.
 
-Link: https://lore.kernel.org/20260703114202.365553-1-dev.jain@arm.com
-Link: https://lore.kernel.org/20260703114202.365553-3-dev.jain@arm.com
-Fixes: c7ab0d2fdc84 ("mm: convert try_to_unmap_one() to use page_vma_mapped_walk()")
+Commit a98a2f0c8ce1 copied the bug from try_to_unmap_one into
+try_to_migrate_one.
+
+[akpm@linux-foundation.org: coding-style cleanups]
+Link: https://lore.kernel.org/20260703114202.365553-4-dev.jain@arm.com
+Fixes: a98a2f0c8ce1 ("mm/rmap: split migration into its own function")
 Signed-off-by: Dev Jain <dev.jain@arm.com>
-Reported-by: David Hildenbrand <david@kernel.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: Muchun Song <muchun.song@linux.dev>
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 Cc: Alistair Popple <apopple@nvidia.com>
 Cc: Andi Kleen <ak@linux.intel.com>
@@ -154,24 +140,12 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hugetlb.h |    2 ++
- mm/rmap.c               |   16 ++++++++++------
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ mm/rmap.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -1262,6 +1262,8 @@ static inline void hugetlb_count_sub(lon
- {
- }
- 
-+pte_t huge_ptep_get(struct mm_struct *mm, unsigned long addr, pte_t *ptep);
-+
- static inline pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
- 					  unsigned long addr, pte_t *ptep)
- {
 --- a/mm/rmap.c
 +++ b/mm/rmap.c
-@@ -2095,14 +2095,19 @@ static bool try_to_unmap_one(struct foli
+@@ -2505,14 +2505,18 @@ static bool try_to_migrate_one(struct fo
  		/* Unexpected PMD-mapped THP? */
  		VM_BUG_ON_FOLIO(!pvmw.pte, folio);
  
@@ -181,11 +155,10 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -		 */
 -		pteval = ptep_get(pvmw.pte);
 +		address = pvmw.address;
-+		if (folio_test_hugetlb(folio)) {
++		if (folio_test_hugetlb(folio))
 +			pteval = huge_ptep_get(mm, address, pvmw.pte);
-+		} else {
++		else
 +			pteval = ptep_get(pvmw.pte);
-+		}
  		if (likely(pte_present(pteval))) {
  			pfn = pte_pfn(pteval);
  		} else {
@@ -196,7 +169,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  			const softleaf_t entry = softleaf_from_pte(pteval);
  
  			pfn = softleaf_to_pfn(entry);
-@@ -2110,7 +2115,6 @@ static bool try_to_unmap_one(struct foli
+@@ -2520,7 +2524,6 @@ static bool try_to_migrate_one(struct fo
  		}
  
  		subpage = folio_page(folio, pfn - folio_pfn(folio));
