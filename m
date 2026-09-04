@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2275F30C160;
-	Fri,  4 Sep 2026 05:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020E5372B4B;
+	Fri,  4 Sep 2026 05:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500319; cv=none; b=fbrfsnxR/orIDRsyhex4G6qA1E+JSHoPpzCWvtEnC1kVgpsfz7bV/pLqmWK6xu8kyjcU624Vg6fQ+EYtG9u1rKgHOehHenfgaA2neBHSVcP1stZIS0bL22eFgmDFGotUsbJwZ7qDAyDLhJFb+n55I2Xs+IVpgOEsa7P2gOIF9Yk=
+	t=1788500322; cv=none; b=JktlVZICcRZW51h7WUdhMcTz0ZcRwA7STeKFAmYUesbGoKTTcclaHwW7lA+RmsCZi8yJMqbU8mBf1ZJBszM/A9lHtQS7HgV1EeOIo+HRQgL9Md9bj0M4avnTmSDL+VRulvsRbsv51fFKM3/uEfKp9AQV1vqq37NPaTvCzgg8oEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500319; c=relaxed/simple;
-	bh=d+ZD4f7oZ8Vij5tJWR66tNc4+FfjMRm98KKxhVef2Ag=;
+	s=arc-20240116; t=1788500322; c=relaxed/simple;
+	bh=e8P6Dh3q++1gQzg4HVbawnfx3xxb08sBH6XYB2zg9GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSPPhZuBMu25iihGz1pjk+p207F6k/kO7hDH4KTxcWTgpjkepLZwwM8P4G2IGWH17URxt6ssEV9StNsKKgnmHaalGms3FyGQqL794+1c4EuxI/g4lX67AWkcOuO7UAiYYjSM+OhL9KahcSuFWdGjJgFp+mF9jSaYH/yD4iIPFkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQGuQvpx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mDc04FXLCDVL3MjDeAqcpRtlrmhVobpHeoedPaB07b5s5buaNg6UzEbNCNdEivFyxPyP/052U9DkiPAXtukl7V7Cn9SwhIYOPfCEl3pdlPWgEAjYLJC67LbGrIxhamPTzo+hURnTkJl+y+Dbl47Tt0h4fXiImVXBPkxrN0oY1Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RADF2SFX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQGuQvpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBDF1F00A3D;
-	Fri,  4 Sep 2026 05:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RADF2SFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526A51F00A3D;
+	Fri,  4 Sep 2026 05:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500318;
-	bh=aqcudiEP8F4ck7y0YlFTmwdc/Lv/Rw0P0BVUoIr0qKM=;
+	s=korg; t=1788500320;
+	bh=dcOk1S8XuzXPcju9G/SmGvuqG26JK9q5W3Gzb3Vf+tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQGuQvpxkC4/2TtLfcdRLfHQAtmtRDVvc05ZxvGHtDSev+zTwID12FIsNiDRG378u
-	 BlBePwaGyJJql/n8+F6WywkcaSkIQPItzSJv0M2yMdMradQDAOwWTopZVdjLT8Yi1B
-	 Xh9ptUAMlTZCUdSj6vr9ByflhsokkOUyl64A4BGI=
+	b=RADF2SFXtXyStRAseF9hqeO6/G6Zj8b4jll5wNXfhdFZZwCOeOvdeYJtDBaxxWTQt
+	 6bLrodmGqVIyviqwoY5YczXZcRY6kpj+m0CAdONuaiTE3EwImGXUZGfKPFTohWVYkc
+	 mBFVphyGf44t/UHhL8bdNxIp7ukV5EzVhfH/N+kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>
-Subject: [PATCH 6.18 015/552] alpha: fix ieee_swcr_to_fpcr setting FPCR_DNOD unconditionally
-Date: Fri,  4 Sep 2026 06:52:52 +0200
-Message-ID: <20260904045748.170181948@linuxfoundation.org>
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 016/552] rust: time: fix as_micros_ceil() rounding near i64::MAX
+Date: Fri,  4 Sep 2026 06:52:53 +0200
+Message-ID: <20260904045748.193382461@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,83 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-commit 49672d026cc4773608e1222b69b29fd70f41336b upstream.
+commit ec90dfcf05f02206c280bb59af660bbb3ae177d0 upstream.
 
-ieee_swcr_to_fpcr() converts the software IEEE trap-enable and status
-bits kept in thread_info.ieee_state into the hardware FPCR format.  It
-contained:
+The ceiling adjustment used saturating_add(NSEC_PER_USEC - 1) before
+dividing. Once the nanosecond value gets within NSEC_PER_USEC - 1 of
+i64::MAX the addition saturates to i64::MAX, which drops the ceiling
+bias and can yield a result one microsecond too small.
 
-	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
-
-FPCR_DNOD (bit 47) disables denormal operand traps: with it set the
-hardware handles a denormal operand itself, treating it as zero, instead
-of trapping for software completion.  The intent was to set DNOD when the
-user has not asked for SIGFPE on denormal operands, but
-IEEE_TRAP_ENABLE_DNO is clear by default, so ieee_swcr_to_fpcr(0) always
-set DNOD.
-
-Instructions built with the software completion suffix therefore never
-trapped on a denormal operand.  The hardware silently substituted zero
-and produced wrong results, affecting every program compiled with -mieee
-and default FPU settings, glibc included.
-
-Set FPCR_DNOD only when IEEE_MAP_DMZ is requested, which is exactly the
-case where flushing denormal inputs to zero is what the user asked for.
-DNOD then encodes MAP_DMZ, which ieee_fpcr_to_swcr() already recovers
-from FPCR_DNZ, so drop its attempt to recover IEEE_TRAP_ENABLE_DNO from
-DNOD; the DNO trap enable lives solely in ieee_state.
-
-Both functions are in a uapi header, so the encoding change is visible to
-userspace, but nothing outside the kernel is known to depend on DNOD
-carrying the DNO trap enable, and the kernel is the only writer of the
-FPCR.
-
-This must not be backported on its own.  Re-enabling denormal operand
-traps exposes a second bug, fixed in the following patch: those traps
-usually find an exact result, and for an exact result the emulator did
-not write the FPCR back, leaving hardware-fabricated exception bits
-visible to user space.  Taken alone this change would make spurious
-exception flags more common.
-
-The bug predates the git history, so there is no commit to reference in a
-Fixes tag.
-
-Cc: stable@vger.kernel.org # 5.15+
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-1-c99d75608e60@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Fixes: fae0cdc12340 ("rust: time: Introduce Delta type")
+Reported-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Closes: https://lore.kernel.org/rust-for-linux/CANiq72mtS0ABA2JnT5tpz6J9c_mnxY+vyPvghV_ukngWvN8F2w@mail.gmail.com/
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Acked-by: Andreas Hindborg <a.hindborg@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260807130531.1056209-1-tomo@flapping.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/uapi/asm/fpu.h |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ rust/kernel/time.rs |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/arch/alpha/include/uapi/asm/fpu.h
-+++ b/arch/alpha/include/uapi/asm/fpu.h
-@@ -101,7 +101,12 @@ ieee_swcr_to_fpcr(unsigned long sw)
- 		      | IEEE_TRAP_ENABLE_OVF)) << 48;
- 	fp |= (~sw & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE)) << 57;
- 	fp |= (sw & IEEE_MAP_UMZ ? FPCR_UNDZ | FPCR_UNFD : 0);
--	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
-+	/*
-+	 * Disable denormal operand traps only when denormal inputs are to be
-+	 * flushed to zero.  Otherwise they must keep trapping, so that /S
-+	 * instructions reach the kernel emulation handler.
-+	 */
-+	fp |= (sw & IEEE_MAP_DMZ ? FPCR_DNOD : 0);
- 	return fp;
- }
+--- a/rust/kernel/time.rs
++++ b/rust/kernel/time.rs
+@@ -421,22 +421,25 @@ impl Delta {
+     /// to the value in the [`Delta`].
+     #[inline]
+     pub fn as_micros_ceil(self) -> i64 {
++        // Only positive values need to be rounded up: truncating division already
++        // rounds towards zero, i.e. up, for negative values.
++        //
++        // The usual `(nanos + d - 1) / d` is not used because the addition overflows
++        // once `nanos` exceeds `i64::MAX - (d - 1)`; saturating the addition instead
++        // would drop the rounding bias and return a result one unit too small.
+         let n = self.as_nanos();
+-        let n = if n >= 0 {
+-            n.saturating_add(NSEC_PER_USEC - 1)
+-        } else {
+-            n
+-        };
++
++        let (n, add) = if n > 0 { (n - 1, 1) } else { (n, 0) };
  
-@@ -116,7 +121,6 @@ ieee_fpcr_to_swcr(unsigned long fp)
- 			     | IEEE_TRAP_ENABLE_OVF);
- 	sw |= (~fp >> 57) & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE);
- 	sw |= (fp >> 47) & IEEE_MAP_UMZ;
--	sw |= (~fp >> 41) & IEEE_TRAP_ENABLE_DNO;
- 	return sw;
- }
+         #[cfg(CONFIG_64BIT)]
+         {
+-            n / NSEC_PER_USEC
++            n / NSEC_PER_USEC + add
+         }
+ 
+         #[cfg(not(CONFIG_64BIT))]
+         // SAFETY: It is always safe to call `ktime_to_us()` with any value.
+         unsafe {
+-            bindings::ktime_to_us(n)
++            bindings::ktime_to_us(n) + add
+         }
+     }
  
 
 
