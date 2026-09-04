@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58DE3B19BC;
-	Fri,  4 Sep 2026 05:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D923B19BC;
+	Fri,  4 Sep 2026 05:34:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500050; cv=none; b=uAX3rk4JmI4tD7l9vA3Zs3sZNVXti7kBaqT563JaNFm+FN/NixV1em/el8DkHB3qwOi47yJyeMyCXHCC50XIqIpW6q4BIaIxVA7fcfiBfP7546AbSPTpOtBWwqedUvFH9z7S7o9rvSE2bMTtKbeRyjyyDcJpjINFThmU+b+3Zwo=
+	t=1788500053; cv=none; b=Dm0Z8ZNDoKfoUwgOrzbcAd7rRfcnY/UMNJkt8QAA1FbKLvwuzv0wJohuF1eCWQFo0qOYTVIrZJF/jO6O9zwJcmGPEksRVMF3IvT2M5JLDVefOhNcJRShs+iks9m1tX0FWQJyo0VKYcQnaow+xSo2NUh+c75DHM2D21gHEYFI92k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500050; c=relaxed/simple;
-	bh=gYMbNcDWvKbdsv4bNY8PwMsetonp3hLfcoB2YiDJEnM=;
+	s=arc-20240116; t=1788500053; c=relaxed/simple;
+	bh=5Q5wiQwksj00+tzRn4hK/xcdYzj3k58ftm3LacwhDYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXm8yZB3ssJA1fNyrDs9HRftUe0FKM/XCqNk5dwyJYFk37T0kqq/VUXNNvyfmAnFdeB2JTkGhyIQoTZwB3RQODNEOGkQcbhQJPMyBKrchMbUxOHDWeDFTRCv17rLrYZtLnvfpcwsZMAcI+b1sbMqy6mYdYTcvefowpc3Lde1Gzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc7+GKSK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PFxqgKk15oo+JaUXqNSgy5JYnkHzAXqeYgYUTzNTPu9wglCn/MQn1LnmB4nqyh0JwiXpxFNyNUVNeo9I+iN5LEYa7eJyd6/Y85cVHLaEf8BAU5gj1a61iBob9OFry7V3vM5hKhtr/A05U5rTlyPRvRKx2CIQt12CeyzdxVOiBi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFbEseyv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc7+GKSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9CE1F00A3D;
-	Fri,  4 Sep 2026 05:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFbEseyv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5601F00A3D;
+	Fri,  4 Sep 2026 05:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500049;
-	bh=9HTBlVRRW45TLX/jndM7NIDWvRGub2Dd/CLqm2imzs4=;
+	s=korg; t=1788500052;
+	bh=8h7dWS8W5PYRbAvWyVW4KfcpPt1JLlW0UD+ShVm2DF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fc7+GKSKQLOk8TiEn33i4CXKFmPCsd9htkgi+u/VQ6lmHZ/9IbMuiLqxn19TXTLAv
-	 cYFKh3rHDp/QNkmlEwyIu1q4+JIf6BM/xTPJ5k6yeZemPU7W5zfhpXcY4qS9na4IWV
-	 6qmeax+zmyEZvgPvUn0C1thvVLKvHWK8B1vkCCJM=
+	b=HFbEseyvV9444yy+Y0D/po//ZXiBFRLZGE40xxDuTs5OlT3D/uEIxWJrmMFeBdek0
+	 Y2sxihZjZHUmgPvnSPPURKHYWPQAeUGvQtWXkSvU9yzSarSrw+CxaZL24YKt5fbbLP
+	 OZmjdrNwc5jwIP8jjKRkm9MB/eTWWq3LJXeLvKB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.2 631/713] hwrng: stm32 - Fix runtime PM cleanup on registration failure
-Date: Fri,  4 Sep 2026 06:59:59 +0200
-Message-ID: <20260904045817.974858455@linuxfoundation.org>
+	Yuho Choi <dbgh9129@gmail.com>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 7.2 591/713] ipmi: Remove all sysfs files on registration failure
+Date: Fri,  4 Sep 2026 06:59:19 +0200
+Message-ID: <20260904045817.069383619@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,63 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-commit 1163a476a568f6c0f852d469c8e4c5a5f805adac upstream.
+commit b6c46ab0bdee90c238e96ea4a74972118c97900d upstream.
 
-stm32_rng_probe() enables autosuspend and runtime PM before registering the
-hwrng. If devm_hwrng_register() fails, probe returns with runtime PM left
-enabled and autosuspend still selected.
+ipmi_add_smi() creates the nr_users and nr_msgs files before trying to
+create the maintenance_mode file. If that last creation fails, the error
+path removes only nr_users before dropping the final reference to the
+interface.
 
-The remove callback also only disables runtime PM and does not undo
-pm_runtime_use_autosuspend().
+Remove nr_msgs as well so no sysfs attribute embedded in the freed
+interface remains registered.
 
-Use devm_pm_runtime_enable() so runtime PM is unwound automatically on
-probe failure and driver detach. Since the managed cleanup also disables
-runtime PM,drop the remove callback.
-
-Fixes: c6a97c42e399 ("hwrng: stm32 - add support for STM32 HW RNG")
-Cc: stable@vger.kernel.org
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 627118470fcc ("ipmi: Add a maintenance mode sysfs file")
+Cc: stable@vger.kernel.org # 6.18
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Message-ID: <20260803015550.618808-1-dbgh9129@gmail.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/stm32-rng.c |   10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/char/hw_random/stm32-rng.c
-+++ b/drivers/char/hw_random/stm32-rng.c
-@@ -368,11 +368,6 @@ static int stm32_rng_init(struct hwrng *
- 	return 0;
- }
- 
--static void stm32_rng_remove(struct platform_device *ofdev)
--{
--	pm_runtime_disable(&ofdev->dev);
--}
--
- static int __maybe_unused stm32_rng_runtime_suspend(struct device *dev)
- {
- 	struct stm32_rng_private *priv = dev_get_drvdata(dev);
-@@ -590,7 +585,9 @@ static int stm32_rng_probe(struct platfo
- 
- 	pm_runtime_set_autosuspend_delay(dev, 100);
- 	pm_runtime_use_autosuspend(dev);
--	pm_runtime_enable(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return ret;
- 
- 	return devm_hwrng_register(dev, &priv->rng);
- }
-@@ -602,7 +599,6 @@ static struct platform_driver stm32_rng_
- 		.of_match_table = stm32_rng_match,
- 	},
- 	.probe = stm32_rng_probe,
--	.remove = stm32_rng_remove,
- };
- 
- module_platform_driver(stm32_rng_driver);
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3741,6 +3741,7 @@ int ipmi_add_smi(struct module         *
+ 	sysfs_attr_init(&intf->maintenance_mode_devattr.attr);
+ 	rv = device_create_file(intf->si_dev, &intf->maintenance_mode_devattr);
+ 	if (rv) {
++		device_remove_file(intf->si_dev, &intf->nr_msgs_devattr);
+ 		device_remove_file(intf->si_dev, &intf->nr_users_devattr);
+ 		goto out_err_bmc_reg;
+ 	}
 
 
