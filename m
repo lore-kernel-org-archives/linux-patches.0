@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CAB4399F8;
-	Fri,  4 Sep 2026 06:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2038240F754;
+	Fri,  4 Sep 2026 06:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502863; cv=none; b=uhrNj/sx1QfbI2JxdDk1HES9SytrBPRYafcOCtmn2P0FyUiXLzVxCEAVX1aRk7e8usyIwcyzSwAwwrkMbO1yKXw2Ak+CLg6WOZBXLi5V+xadZttCj6bow0qTIpevBHdP0hGgSoiKWLAA3FihLbjs5P8HuQkoiwZu63mS8fdnA4k=
+	t=1788502866; cv=none; b=d1fTYN2r3rJUDwRX4D5k7FcV/1uvdlejuQboMonD0R0JZtb3cSzKx43vs2O23Qn2sTHH/4SlwOs4KkYLCaC6L0Ko/WnpJRdZsMEJ+lyegVd0y2vZt8VG5CC61yV3r8/wbS5yF5ovnFW1FsVwteo/ZQFtX6HiogFZUjNz/Ua3MDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502863; c=relaxed/simple;
-	bh=Bw1GymIcEtrX0Vwwt3r9SorOo4LZm8OeDemnMo6oyqs=;
+	s=arc-20240116; t=1788502866; c=relaxed/simple;
+	bh=fni5Kpg3pKsqNCdC43V+2N3v0L1g14G1zbFulMcS4Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbXRpPucXBBbc8ouzl1iLZ0Q58bpUQh1k+aGVNl1cAqOuzcLabmaSI3cElIKi49BBpIkDq+cVcm9CjHKe/LuGh11V+M6a8RdPGTf30OlXlSZmUaLl5c+Dn4dVo3kVH+KMlV9W+ZWnVB8NUv/NVlWvjWwaoLUuwJIqK7mmJ3K+gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00K8QuOI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=b5qWfebAPQCgYDLfRk5w7e66vSQPyDuBXRfj3LA5E2NiXZRtloqiRQf9jYVadzYkf3xTiHJP3+f/L9DM0UA6TmyqbKp18K6iQOBnPomaIvRNfkz23s5i+mvX/GjCjsipmwA3eC/EpKsYz2QAS4DN/DoI00MoM4dGErgerarH4Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w560eDbi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00K8QuOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613821F00A3D;
-	Fri,  4 Sep 2026 06:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w560eDbi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F22E1F00A3D;
+	Fri,  4 Sep 2026 06:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502861;
-	bh=bYOuqPMztS/yMyaQz6VdZ68pPmfEdN7oYayHHj4WehU=;
+	s=korg; t=1788502864;
+	bh=LO4QlyZPjxL6OrAhHyPME73JcGvqAH81vlem/SEh8b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=00K8QuOIFxJVBxj+YZOEL9uMBFwbesdGQenT3C1Ii2/KX0vQiUci0cqtDzfZCoB66
-	 lpEJIcmpot991pCk+OOlepDdJKjTGEhyqvpuKnNDQaJtvGqIsVqRBpW5TKoKhfE/2d
-	 foX+CxdNnNVassszz/MO0FNeMzUHQzI8oZr/Age8=
+	b=w560eDbigIiu9zzJHRTokAlfeYBJSS4+jLYrF/TowYkzbjZ9kBN31zCm2fiRePhUQ
+	 lQKOUtmpCwkZ5Hvj9c6dicdrMf1FF/kDGbu/h3biG94Hp3WXbJv/ePXbXsoCCABjyW
+	 bbEU/+My9inMld3yW4oJ1LQM1xe7scyV+4oZuuGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 355/403] net/smc: unregister the connection before draining the rx tasklet
-Date: Fri,  4 Sep 2026 07:02:38 +0200
-Message-ID: <20260904045742.887970852@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 320/403] platform/x86: hp-bioscfg: accept reduced ACPI packages from older HP BIOS
+Date: Fri,  4 Sep 2026 07:02:03 +0200
+Message-ID: <20260904045742.111193723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -46,90 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 36cdf5d48ca191dcd71c28cadbe0981b1d25318d upstream.
+commit 40e10e6cc8f70c041431a1e30186807e28ec46e0 upstream.
 
-smc_conn_free() calls smc_ism_unset_conn() only while the link group is
-still on its device list, and never sets conn->killed.
-smc_lgr_terminate_sched() unlinks the group immediately and defers killing
-its connections to a work item, so a connection freed in that window keeps
-its smcd->conn[] slot with both gates in smcd_handle_irq() open, and the
-device can re-arm the receive tasklet after tasklet_kill() has returned. On
-the DMB-nocopy path the ghost send buffer is freed right after that drain,
-so the re-armed tasklet dereferences it.
+hp_init_bios_package_attribute() hard-fails when a WMI ACPI package
+contains fewer elements than the type-specific expected count (e.g. 11
+elements instead of 13 for INTEGER or ENUMERATION attributes). This
+causes the entire hp_bioscfg driver to skip attribute enumeration on
+older HP hardware whose BIOS returns shortened packages when optional
+fields like prerequisites or possible values are absent.
 
-Unregister unconditionally and drain before the detach at both teardown
-sites, mirroring rmb_desc, which smc_buf_unuse() releases after the drain.
-Clear conn->sndbuf_desc before freeing it as well, so a reader that samples
-the pointer cannot get one that is already freed.
+Observed on HP EliteBook 840 G2 (BIOS M71 Ver. 01.31):
 
-Fixes: ae2be35cbed2 ("net/smc: {at|de}tach sndbuf to peer DMB if supported")
+  hp_bioscfg: ACPI-package does not have enough elements: 11 < 13
+
+The element layout has two tiers:
+  - Elements 0-9 (SECURITY_LEVEL+1 = 10): common to all attribute types
+  - Elements 10-N: type-specific (bounds, values, encodings, ...)
+
+The per-type populate functions (hp_populate_*_elements_from_package)
+already handle sparse packages correctly via their own elem < count
+loop guards and inner-loop bounds checks. The only unsafe case is when
+we lack even the common elements needed to register the attribute.
+
+Fix by introducing COMMON_ELEM_CNT to mark the hard minimum (10), and
+splitting the check into two tiers:
+  - Fewer than COMMON_ELEM_CNT elements: hard fail, can't proceed.
+  - Fewer than expected type-specific elements: warn, but let the
+    populate function parse what is available.
+
+Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Link: https://patch.msgid.link/20260808-b4-disp-22f119e6-v2-1-61647601a6f3@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260709165900.30615-4-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_core.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.c |   11 ++++++++---
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.h |    3 +++
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1190,14 +1190,16 @@ static void smcd_buf_detach(struct smc_c
- {
- 	struct smcd_dev *smcd = conn->lgr->smcd;
- 	u64 peer_token = conn->peer_token;
-+	struct smc_buf_desc *buf_desc;
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+@@ -664,12 +664,17 @@ static int hp_init_bios_package_attribut
+ 	int ret = 0;
  
- 	if (!conn->sndbuf_desc)
- 		return;
- 
- 	smc_ism_detach_dmb(smcd, peer_token);
- 
--	kfree(conn->sndbuf_desc);
-+	buf_desc = conn->sndbuf_desc;
- 	conn->sndbuf_desc = NULL;
-+	kfree(buf_desc);
- }
- 
- static void smc_buf_unuse(struct smc_connection *conn,
-@@ -1249,11 +1251,10 @@ void smc_conn_free(struct smc_connection
- 		goto lgr_put;
- 
- 	if (lgr->is_smcd) {
--		if (!list_empty(&lgr->list))
--			smc_ism_unset_conn(conn);
-+		smc_ism_unset_conn(conn);
-+		tasklet_kill(&conn->rx_tsklet);
- 		if (smc_ism_support_dmb_nocopy(lgr->smcd))
- 			smcd_buf_detach(conn);
--		tasklet_kill(&conn->rx_tsklet);
- 	} else {
- 		smc_cdc_wait_pend_tx_wr(conn);
- 		if (current_work() != &conn->abort_work)
-@@ -1506,12 +1507,12 @@ static void smc_conn_kill(struct smc_con
- 	smc_sk_wake_ups(smc);
- 	if (conn->lgr->is_smcd) {
- 		smc_ism_unset_conn(conn);
--		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
--			smcd_buf_detach(conn);
- 		if (soft)
- 			tasklet_kill(&conn->rx_tsklet);
- 		else
- 			tasklet_unlock_wait(&conn->rx_tsklet);
-+		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
-+			smcd_buf_detach(conn);
- 	} else {
- 		smc_cdc_wait_pend_tx_wr(conn);
+ 	/* Take action appropriate to each ACPI TYPE */
+-	if (obj->package.count < min_elements) {
+-		pr_err("ACPI-package does not have enough elements: %d < %d\n",
+-		       obj->package.count, min_elements);
++	if (obj->package.count < COMMON_ELEM_CNT) {
++		pr_err("ACPI-package is missing common elements: %d < %d\n",
++		       obj->package.count, COMMON_ELEM_CNT);
+ 		goto pack_attr_exit;
  	}
+ 
++	if (obj->package.count < min_elements) {
++		pr_warn("ACPI-package has fewer elements than expected: %d < %d, parsing available elements\n",
++			obj->package.count, min_elements);
++	}
++
+ 	elements = obj->package.elements;
+ 
+ 	/* sanity checking */
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
+@@ -279,6 +279,9 @@ enum hp_wmi_data_elements {
+ 	PSWD_ENCODINGS = 13,
+ 	PSWD_IS_SET = 14,
+ 	PSWD_ELEM_CNT = 15,
++
++	/* Minimum elements shared by all attribute types (NAME..SECURITY_LEVEL) */
++	COMMON_ELEM_CNT = SECURITY_LEVEL + 1,
+ };
+ 
+ #define GET_INSTANCE_ID(type)						\
 
 
