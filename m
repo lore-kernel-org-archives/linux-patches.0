@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FD54137B2;
-	Fri,  4 Sep 2026 05:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC08C372B4B;
+	Fri,  4 Sep 2026 05:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500429; cv=none; b=ItTXtcU/MzwI76pePT9hSVCJVJt/UY0Prl+SSCuaJluX+BTpqxSplGdm8NNYOq85O8gqiN128iOe8LZdmm4XsoDGBl1b5kwPozaZGe6GqcJkYvdjey9Kvme2t6D75POYPb0IDN6Xda7HKDWBUH8s/rcK9zunMgJzVVi4Lg6LPWo=
+	t=1788500431; cv=none; b=QRLDpWebIV6BYzF42fun5fsTAeoK3nD49jhbwFeB0dQNjylU5yHmMEHQu24LKUkJ9+6+ibD1rBF4fVj9vD4Y7tG83d2Rdw5W7tr6UyaxJBrDdeA1x1YW/3tKRNhB9HWymnlplTDVmFUYMZOYKleL+RfAWjebeHG9o349o0Jw58M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500429; c=relaxed/simple;
-	bh=GHS+Oese6zrKsbAZvih1jys89tWDIiDmfzUFQ6hL+E0=;
+	s=arc-20240116; t=1788500431; c=relaxed/simple;
+	bh=TxRdiEHqVSLPaqMQUPYoc+Sl9N7xNw7K5sxXq65x4tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FEdn/FUtnQjTEeZo66iSrcwUtwoPEgpUT0ovwpyqsb+XH3CTzGJ6shrkGuttzPFsEXJRNk/dIJOPOj+sPqcf9uFMV6hoDlYN3GY3nPjSoOHeEMpJkltR9h3BOZONz3EdtyX1j2FWX0tOW9r3hCBOTD4javJSgy8dNbenmIDHjrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxSVjBa/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lw+H4fWsMGQIiofqYEmYfyqqjJRXSpmM1P8fzeAGXM+pZNKLmN3wYhjDOtHBmNKxsD1giDO2kwMDhkVIIHFKCmEGEd2iizIGx3dhd+eTPZeMeTB5Itv+nxmg9QbbTfmDCiqImOcWazwHPNyeLzMsC0J+Nfqmd3c0+ZF4IHO7gEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oti1YA2R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxSVjBa/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485141F00A3D;
-	Fri,  4 Sep 2026 05:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oti1YA2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229861F00A3D;
+	Fri,  4 Sep 2026 05:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500427;
-	bh=HfY8OjI3WjBZn5aaLS/0ME4wSW/uGKQdhgx736yPdR0=;
+	s=korg; t=1788500430;
+	bh=sCgEdKG5w0wTgm9rAkPuwtKQ4Q8848yKWxGWKNEqxdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yxSVjBa/t9oSoiqNvQ/CPRja7+/p669+YI0hGV+xZ8T4mkJEvUY7pDQveez0jy9Y7
-	 RWiSAhltJeL93ui53Qo4hahT1V1iObz2l8OWZ2T/QRx4q3MOIiuYrRCAQM1rt4qYTQ
-	 t3ytAo5KNy6ZOXgV0wc3HOm35gn9xptnTOOXpaLw=
+	b=Oti1YA2RvZsZ6FrB6EHqpfirGOwiQKijwLbbEMbkL5WUtMCUyuJvrXPVaBNWjmnkL
+	 LyTnHmdQ0U1Vws/IZ7QLfhh85SFDXGcUpVUiAXnwbqQqaMUcD/DOuEOveOlupT5ca5
+	 kQlpo34wVArjRdGXhIpftMlDFrtUlrymhRrQEKL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 053/552] x86/insn-eval: Move assign_register() out of KVM as insn_assign_reg()
-Date: Fri,  4 Sep 2026 06:53:30 +0200
-Message-ID: <20260904045749.043180982@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.18 027/552] KEYS: trusted: Fix TPM teardown ordering
+Date: Fri,  4 Sep 2026 06:53:04 +0200
+Message-ID: <20260904045748.441609507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,149 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 1fe104b048d77d6cb25bd938e6a67450fb50e61d upstream.
+commit 5e2d672280d97d83de43031d93761b12dadd7b8a upstream.
 
-KVM's instruction emulator has a small helper, assign_register(), that
-writes a value into a register following the x86 rules for writes to
-general-purpose registers: an 8- or 16-bit write leaves the rest of the
-register untouched, a 32-bit write zero-extends the result to 64 bits,
-and a 64-bit write replaces the whole register.
+trusted_tpm_exit() drops the TPM chip reference and frees the digest
+array before unregistering the trusted key type. key_type_lookup()
+holds key_types_sem for reading until the key operation finishes, while
+unregister_key_type() takes it for writing. It therefore provides the
+synchronization point that must precede backend teardown.
 
-The TDX guest #VE handler needs the same logic for port I/O emulation
-to get 32-bit zero-extension right.  Rather than add a third copy of
-the same switch, move the helper verbatim to <asm/insn-eval.h>, rename
-it to insn_assign_reg(), and route KVM's callers through it.
+The current order permits this interleaving:
 
-Add <asm/insn.h> to the header's includes so it builds standalone in
-callers that have not pulled it in transitively.
+  CPU 0                              CPU 1
+  trusted_tpm_exit()                 key_type_lookup("trusted")
+    put_device(&chip->dev)             trusted_tpm_seal()
+    kfree(digests)                       pcrlock()
+    unregister_key_type()                  tpm_pcr_extend(..., digests)
 
-No functional change.
+CPU 1 can consequently dereference the freed digest array. The chip can
+also be released before callbacks stop using it.
 
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Sean Christopherson <seanjc@google.com>
-Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20260713133753.223947-3-kirill@shutemov.name
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in tpm_pcr_extend+0x1f0/0x200
+  Read of size 2 at addr ffff88810872d000 by task poc/89
+  Call Trace:
+    tpm_pcr_extend+0x1f0/0x200
+    pcrlock+0x42/0x70 [trusted]
+    trusted_tpm_seal+0x1b6/0x570 [trusted]
+    trusted_instantiate+0x293/0x340 [trusted]
+    __key_instantiate_and_link+0xb2/0x2b0
+    __key_create_or_update+0x61e/0xb50
+    __do_sys_add_key+0x1b8/0x310
+  Allocated by task 88:
+    __kmalloc_noprof+0x1a7/0x490
+    do_one_initcall+0xa1/0x390
+    do_init_module+0x2df/0x840
+  Freed by task 90:
+    kfree+0x131/0x3c0
+    trusted_tpm_exit+0x59/0xa0 [trusted]
+    __do_sys_delete_module+0x346/0x510
+
+Move unregister_key_type() before releasing either resource. This stops
+new lookups and waits for in-flight key operations to finish before the
+backend state is destroyed.
+
+Fixes: 0b6cf6b97b7e ("tpm: pass an array of tpm_extend_digest structures to tpm_pcr_extend()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Link: https://lore.kernel.org/r/20260731140925.2973492-1-nicoyip.dev@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/insn-eval.h |   36 ++++++++++++++++++++++++++++++++++++
- arch/x86/kvm/emulate.c           |   26 ++++----------------------
- 2 files changed, 40 insertions(+), 22 deletions(-)
+ security/keys/trusted-keys/trusted_tpm1.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/insn-eval.h
-+++ b/arch/x86/include/asm/insn-eval.h
-@@ -9,6 +9,7 @@
- #include <linux/compiler.h>
- #include <linux/bug.h>
- #include <linux/err.h>
-+#include <asm/insn.h>
- #include <asm/ptrace.h>
- 
- #define INSN_CODE_SEG_ADDR_SZ(params) ((params >> 4) & 0xf)
-@@ -44,4 +45,39 @@ enum insn_mmio_type {
- 
- enum insn_mmio_type insn_decode_mmio(struct insn *insn, int *bytes);
- 
-+/*
-+ * Write @val into *@reg following the x86 rules for writes to
-+ * general-purpose registers (Intel SDM Vol. 1, "General-Purpose
-+ * Registers in 64-Bit Mode"): an 8- or 16-bit write leaves the rest of
-+ * the register untouched, a 32-bit write zero-extends the result into
-+ * the upper 32 bits, and a 64-bit write replaces the whole register.
-+ *
-+ * @bytes is the width of the write, not a property of the instruction:
-+ * an instruction that, say, sign-extends a 32-bit immediate into a
-+ * 64-bit register does a 64-bit write here.
-+ *
-+ * @reg need not be 8-byte aligned: KVM's instruction emulator offsets
-+ * the pointer by one byte to address the high-byte registers (AH, CH,
-+ * DH, BH).  Use narrow stores for the sub-word cases so the access
-+ * width matches @bytes and the adjacent bytes are left alone.
-+ */
-+static inline void insn_assign_reg(unsigned long *reg, u64 val, int bytes)
-+{
-+	switch (bytes) {
-+	case 1:
-+		*(u8 *)reg = (u8)val;
-+		break;
-+	case 2:
-+		*(u16 *)reg = (u16)val;
-+		break;
-+	case 4:
-+		/* A 32-bit write zero-extends into the upper 32 bits. */
-+		*reg = (u32)val;
-+		break;
-+	case 8:
-+		*reg = val;
-+		break;
-+	}
-+}
-+
- #endif /* _ASM_X86_INSN_EVAL_H */
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -24,6 +24,7 @@
- #include "kvm_emulate.h"
- #include <linux/stringify.h>
- #include <asm/debugreg.h>
-+#include <asm/insn-eval.h>
- #include <asm/nospec-branch.h>
- #include <asm/ibt.h>
- #include <asm/text-patching.h>
-@@ -436,25 +437,6 @@ static void assign_masked(ulong *dest, u
- 	*dest = (*dest & ~mask) | (src & mask);
- }
- 
--static void assign_register(unsigned long *reg, u64 val, int bytes)
--{
--	/* The 4-byte case *is* correct: in 64-bit mode we zero-extend. */
--	switch (bytes) {
--	case 1:
--		*(u8 *)reg = (u8)val;
--		break;
--	case 2:
--		*(u16 *)reg = (u16)val;
--		break;
--	case 4:
--		*reg = (u32)val;
--		break;	/* 64b: zero-extend */
--	case 8:
--		*reg = val;
--		break;
--	}
--}
--
- static inline unsigned long ad_mask(struct x86_emulate_ctxt *ctxt)
+--- a/security/keys/trusted-keys/trusted_tpm1.c
++++ b/security/keys/trusted-keys/trusted_tpm1.c
+@@ -981,9 +981,9 @@ err_put:
+ static void trusted_tpm_exit(void)
  {
- 	return (1UL << (ctxt->ad_bytes << 3)) - 1;
-@@ -502,7 +484,7 @@ register_address_increment(struct x86_em
- {
- 	ulong *preg = reg_rmw(ctxt, reg);
- 
--	assign_register(preg, *preg + inc, ctxt->ad_bytes);
-+	insn_assign_reg(preg, *preg + inc, ctxt->ad_bytes);
- }
- 
- static void rsp_increment(struct x86_emulate_ctxt *ctxt, int inc)
-@@ -1756,7 +1738,7 @@ static int load_segment_descriptor(struc
- 
- static void write_register_operand(struct operand *op)
- {
--	return assign_register(op->addr.reg, op->val, op->bytes);
-+	return insn_assign_reg(op->addr.reg, op->val, op->bytes);
- }
- 
- static int writeback(struct x86_emulate_ctxt *ctxt, struct operand *op)
-@@ -1989,7 +1971,7 @@ static int em_popa(struct x86_emulate_ct
- 		rc = emulate_pop(ctxt, &val, ctxt->op_bytes);
- 		if (rc != X86EMUL_CONTINUE)
- 			break;
--		assign_register(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
-+		insn_assign_reg(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
- 		--reg;
+ 	if (chip) {
++		unregister_key_type(&key_type_trusted);
+ 		put_device(&chip->dev);
+ 		kfree(digests);
+-		unregister_key_type(&key_type_trusted);
  	}
- 	return rc;
+ }
+ 
 
 
