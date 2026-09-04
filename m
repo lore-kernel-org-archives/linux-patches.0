@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375392F9DA1;
-	Fri,  4 Sep 2026 05:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B92B2F9DA1;
+	Fri,  4 Sep 2026 05:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501083; cv=none; b=uIEhKCdIk+SsEhK3gaI0Zn2LvUb9gxX64iNJDOqawm6iJKCtCS+qkWs/Klzk7n0FN9AnTcSYB1TohDYE/PAh2XbkHfuCSOzWta+lwl+W5aa1szs8s9b3M0T3MJOO4T3/YB3IceN/z0m6gtDTCXrPzQD+vvBAq+cP+oEjlvYxHOI=
+	t=1788501086; cv=none; b=i65z7Ch18iCpSt0iVSsrq8tHz9Gh4+ORTN9eMmPw3MM2rsTo/EiSFzfNSIgKe1FfoSVMQqCyzzF/xaRef1kg84mpzLDT5pRIWi+XybO12VaV3lvmeKSqHtatngndIt0BsvQwdWHyFkDrai22LAnm0H8xrAtkzo9VeuUXFwIl2Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501083; c=relaxed/simple;
-	bh=FBqV8nxv8JVgnSLMXISG7dd/pbC2j9QbsAS+ERcPPdk=;
+	s=arc-20240116; t=1788501086; c=relaxed/simple;
+	bh=Ac2R8kwmdxgQoxCj7Tcw3oxxBMriXUETXdLyr0obQpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6qYNh3T98gXxQMQMlWnI0Q5QLeEh+O5m7ZDYKDAkAMCA0Wi/9YPVyavxVl3bih0PsZZDjaflEWdhVU8aN9/YyQSpkjxATCxpLCSDmJ7hmPg61EKkNSO71Lqy0hnKnjKYhPJJpmyUcFgq4f0cvsearC/H9/AGc9+IDCvX8vPjjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5NQGIOj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oi2K9xL3yzRlbkczOMo2YriZrQJO6f+Zq2WgGcPmDAJEHqW6C7gsFnjHInqLIlBTUNRCdnzX2q/vzPv/KRTMOavxuWqe7A9vH/da159a5ZwMJoatHhZp+ItzahZd+prV7NbGpgybXM6EzFdT/yDczqpx1AdLelX+Q7rEB5EX/Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMKywqRc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5NQGIOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB461F00A3D;
-	Fri,  4 Sep 2026 05:51:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMKywqRc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3FD1F00A3D;
+	Fri,  4 Sep 2026 05:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501082;
-	bh=C+QTCua6V8h8Fv9lt6v44Iksor2/qaKQKeD/Sv2hPnM=;
+	s=korg; t=1788501085;
+	bh=zl2FvrQ3I653hDEjF+syMWMYh0OH/vzgqFo0cOFg5Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T5NQGIOjLKO9rGiypxjLGT9lVmBcK+fkeHb+rsmiGgCzl5udWu33EGAFe9iyJG5Ld
-	 vh7qISAb8bxB/hwmM1rZ+hD+209uqfaCYORYbygd1xlbek/aMx+81WUpyooQpZuQ+B
-	 UBntN3+vX8dmU+3XHER0oI0xEr7uJ303pwi8Zw8E=
+	b=gMKywqRcIn2uAuCCC7AC48sRk7YAqPMXRs2D7i2rmXMuUA1OEH69PhGMgjvlYQFxA
+	 RAauFgwoZ+tIKl0vbWIc6pJYCtFdFhp96vPhAq0Ntorv/3stgV9x3aV6a+2dGxpPvB
+	 t38fN8Yxn+XZgutmEj00myNeB3oV18d3QpkAT5oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 257/552] jbd2: check need_resched() when skipping busy checkpoint buffers
-Date: Fri,  4 Sep 2026 06:56:54 +0200
-Message-ID: <20260904045755.599505802@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <dstsmallbird@foxmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.18 284/552] sunrpc: fix use-after-free in __rpc_clnt_handle_event and __rpc_clnt_remove_pipedir
+Date: Fri,  4 Sep 2026 06:57:21 +0200
+Message-ID: <20260904045756.399713079@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,55 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit f213e12ff5c9590b1034ae8da0e6d09665c772d0 upstream.
+commit 932a8cf6abb2b2f8677b79153a823108d8861fe2 upstream.
 
-journal_shrink_one_cp_list() skips busy checkpoint buffers when called
-with JBD2_SHRINK_BUSY_SKIP.  The continue statement on this path also
-skips the need_resched() check at the end of the loop body.
+Normal client creation goes through rpc_setup_pipedir(), which records
+clnt->pipefs_sb, but the mount-event path in __rpc_clnt_handle_event()
+calls rpc_setup_pipedir_sb() directly and never refreshes that field.
+The umount path also removes the directory without clearing
+clnt->pipefs_sb.
 
-Consequently, when a checkpoint list contains mostly busy buffers, the
-shrinker can walk the entire list while holding journal->j_list_lock,
-even when a reschedule has been requested.  Large checkpoint lists under
-memory pressure can therefore cause long lock hold times and leave other
-CPUs spinning on j_list_lock, resulting in soft lockups or RCU stalls.
+After a late pipefs mount or any remount, rpc_clnt_remove_pipedir()
+compares the current superblock against a stale pipefs_sb pointer and
+skips cleanup, leaving pipefs dentries whose inode private data still
+points at a freed rpc_clnt, leading to a potential use-after-free during
+subsequent rpc_info_open() or rpc_show_info() calls.
 
-Route the busy-buffer path through the need_resched() check so that the
-shrinker can release j_list_lock and reschedule promptly, restoring
-parity with the clean-buffer path, which already checks need_resched().
-This does not change which checkpoint buffers are eligible for removal.
+Fix this by properly updating clnt->pipefs_sb upon mount events and
+clearing it during unmount or failure paths.
 
-Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
+Fixes: bfca5fb4e97c ("SUNRPC: Fix RPC client cleaned up the freed pipefs dentries")
 Cc: stable@vger.kernel.org
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260713102229.1598812-2-max.kellermann@ionos.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Xin Liu <dstsmallbird@foxmail.com>
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/checkpoint.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sunrpc/clnt.c |   22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -392,7 +392,7 @@ static unsigned long journal_shrink_one_
- 			ret = jbd2_journal_try_remove_checkpoint(jh);
- 			if (ret < 0) {
- 				if (type == JBD2_SHRINK_BUSY_SKIP)
--					continue;
-+					goto next;
- 				break;
- 			}
- 		}
-@@ -403,6 +403,7 @@ static unsigned long journal_shrink_one_
- 			break;
- 		}
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -96,7 +96,10 @@ static void rpc_unregister_client(struct
  
-+next:
- 		if (need_resched())
- 			break;
- 	} while (jh != last_jh && (!nr_to_scan || *nr_to_scan));
+ static void __rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
+ {
+-	rpc_remove_client_dir(clnt);
++	if (clnt->pipefs_sb) {
++		rpc_remove_client_dir(clnt);
++		clnt->pipefs_sb = NULL;
++	}
+ }
+ 
+ static void rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
+@@ -177,19 +180,28 @@ static int rpc_clnt_skip_event(struct rp
+ }
+ 
+ static int __rpc_clnt_handle_event(struct rpc_clnt *clnt, unsigned long event,
+-				   struct super_block *sb)
++				    struct super_block *sb)
+ {
++	int err = 0;
++
+ 	switch (event) {
+ 	case RPC_PIPEFS_MOUNT:
+-		return rpc_setup_pipedir_sb(sb, clnt);
++		clnt->pipefs_sb = sb;
++		err = rpc_setup_pipedir_sb(sb, clnt);
++		if (err)
++			clnt->pipefs_sb = NULL;
++		break;
+ 	case RPC_PIPEFS_UMOUNT:
+-		__rpc_clnt_remove_pipedir(clnt);
++		if (clnt->pipefs_sb == sb) {
++			__rpc_clnt_remove_pipedir(clnt);
++			clnt->pipefs_sb = NULL;
++		}
+ 		break;
+ 	default:
+ 		printk(KERN_ERR "%s: unknown event: %ld\n", __func__, event);
+ 		return -ENOTSUPP;
+ 	}
+-	return 0;
++	return err;
+ }
+ 
+ static int __rpc_pipefs_event(struct rpc_clnt *clnt, unsigned long event,
 
 
