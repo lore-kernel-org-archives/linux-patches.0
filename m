@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73AE3E7631;
-	Fri,  4 Sep 2026 05:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8533A7F4C;
+	Fri,  4 Sep 2026 05:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501511; cv=none; b=SlYYStSpKq7tgfZstQ0GhcyAHDhntFvODWhkst4rr67mObMO91SCZOj0IiY5DKiYxl8ecT8gArfVMV+b+hjXlARSU3z7TJtCDchTnGkBzuxcnquSod/aUi4k9lO3pn850+ohEA3vT9UYl81Br2hGshLs8M0BXoQPMu5lhOMVNgg=
+	t=1788501515; cv=none; b=q7pI9hbiA8yuwy+ZlnrRG0gNdbhRrJwn94TmRn/Z0+uwaJtTs18C2uxWVdBLeY9yoc2qlioKW58X3stWF7lWl55gylKT/yL5rzAF192LD7nQTA7KK2b/Yz6F1WEnG3a4jo4VcKQ9bFIZ3tt0S4MDGXXcTs88TqAqf2NPMAYHrQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501511; c=relaxed/simple;
-	bh=W9bQ/gbb+4CyBrxjVwfp4hvBb+ersORLHTsGEw87UeE=;
+	s=arc-20240116; t=1788501515; c=relaxed/simple;
+	bh=xI6dFi9P8gVb/YFEru0STcb+a1pdoCB0cfSq2CSb8DM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MX8+PbCYWk/rSj+O/iPN8olbiLCm9cDoElnVHTQd/jBEF0oynqNUbMgaFSODseVp6vB9+JnWsbJKSSqdzd6xXYUlGa13FBkXsPD6qjn2uqbjZ/H3oCm+et5ek8xRZlhy2NWQBiyRWjDJgjpvfruKhmMHsHZy2FEcJxto15jhlaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1hEo0I0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rxKLnZOu7Q7TyO3nTfrV3lkPqu1fsp2W/Dj4IlvL68UvbrcDGAe0l2WKMzBsZgaREjoAMwcNo9E0jNXiJCd77BK+YhvRxXX+HYCBUAcEAw28KTW6iyLFidzqdHLvJjAeD2jym5gl3z82Vmv3x63OtHSPyqgab2I10L7GrnU8zJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yT4/TFwY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1hEo0I0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1DC1F00A3D;
-	Fri,  4 Sep 2026 05:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yT4/TFwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB28F1F00A3D;
+	Fri,  4 Sep 2026 05:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501509;
-	bh=X1aaj7ZMv8xqVk9eSh+eeJJapziCpdHMvPf8VTDSQGU=;
+	s=korg; t=1788501512;
+	bh=3I4uFsBauJnvfbrUJ/CFEQh6g963P02RtTOx2Fg/qCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1hEo0I0aJA6v4JMAvp03Ulv1Y+0PF4WJQHT8m1DkqqzU91FBuFjD8CEjfMYgoQUd
-	 0BzSlDAfUleeTHoCiS/XKw3JoxGjUEFvlHXfQeypCC4WVlynKswtkghO2eP13shXHF
-	 5p9kZUFNaAo2EqZ7YoSf1S0QrFOiPcfj/NU8Juic=
+	b=yT4/TFwYK6khOkWMyv2rxrEBcFhYSTOzK+Z8vkU8rCu/bApDh5+uqlYCcnTWINum3
+	 Vjk3G72QCQfRxLV84DzgYumOuEegXQRkM5h3Pz+X4zEZopilA2K+jsftsda8yO4gHJ
+	 p10EOVE/5aIcBQus37dekftivTYb11Myxi71F+VM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francis De Brabandere <francisdb@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 433/552] platform/x86/amd/pmc: Fix LPS0 and debugfs leaks when STB init fails
-Date: Fri,  4 Sep 2026 06:59:50 +0200
-Message-ID: <20260904045800.410902329@linuxfoundation.org>
+Subject: [PATCH 6.18 434/552] platform/x86: hp-bioscfg: accept reduced ACPI packages from older HP BIOS
+Date: Fri,  4 Sep 2026 06:59:51 +0200
+Message-ID: <20260904045800.434842733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,73 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 76f650a76d6a36a4bee79d94db90a0e935a95477 upstream.
+commit 40e10e6cc8f70c041431a1e30186807e28ec46e0 upstream.
 
-amd_pmc_probe() registers the LPS0 s2idle handler with
-acpi_register_lps0_dev() and creates the driver's debugfs directory before
-calling amd_stb_s2d_init(), which is the last step in probe that can fail.
+hp_init_bios_package_attribute() hard-fails when a WMI ACPI package
+contains fewer elements than the type-specific expected count (e.g. 11
+elements instead of 13 for INTEGER or ENUMERATION attributes). This
+causes the entire hp_bioscfg driver to skip attribute enumeration on
+older HP hardware whose BIOS returns shortened packages when optional
+fields like prerequisites or possible values are absent.
 
-When amd_stb_s2d_init() fails (for example the S2D telemetry region cannot
-be ioremapped on a long-running system, or the SMU rejects the S2D setup)
-the error path only calls pci_dev_put() and returns.  This leaves
-amd_pmc_s2idle_dev_ops on the global lps0_s2idle_devops_head list and leaks
-the debugfs directory, while the devm-managed resources backing the handler
-are torn down.
+Observed on HP EliteBook 840 G2 (BIOS M71 Ver. 01.31):
 
-Reloading the module then walks the corrupted list in
-acpi_register_lps0_dev() and hits:
+  hp_bioscfg: ACPI-package does not have enough elements: 11 < 13
 
-  list_add corruption. next->prev should be prev, but was NULL.
-  kernel BUG at lib/list_debug.c:29!
-   acpi_register_lps0_dev+0x44/0x80
-   amd_pmc_probe+0x224/0x380 [amd_pmc]
-   platform_probe+0x67/0x90
+The element layout has two tiers:
+  - Elements 0-9 (SECURITY_LEVEL+1 = 10): common to all attribute types
+  - Elements 10-N: type-specific (bounds, values, encodings, ...)
 
-Even without a reload, the stale registration means the next s2idle
-transition calls into torn-down driver state.
+The per-type populate functions (hp_populate_*_elements_from_package)
+already handle sparse packages correctly via their own elem < count
+loop guards and inner-loop bounds checks. The only unsafe case is when
+we lack even the common elements needed to register the attribute.
 
-Unwind the debugfs directory and the LPS0 registration on the
-amd_stb_s2d_init() error path.  acpi_unregister_lps0_dev() is safe to call
-unconditionally here: it is guarded on the same conditions as
-acpi_register_lps0_dev(), which is exactly what amd_pmc_remove() already
-relies on.
+Fix by introducing COMMON_ELEM_CNT to mark the hard minimum (10), and
+splitting the check into two tiers:
+  - Fewer than COMMON_ELEM_CNT elements: hard fail, can't proceed.
+  - Fewer than expected type-specific elements: warn, but let the
+    populate function parse what is available.
 
-Reported-by: Francis De Brabandere <francisdb@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221759
-Tested-by: Francis De Brabandere <francisdb@gmail.com>
-Fixes: 83ad6974dd3b ("platform/x86/amd/pmc: Move STB block into amd_pmc_s2d_init()")
+Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260721181756.143084-6-mario.limonciello@amd.com
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260709165900.30615-4-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.c |   11 ++++++++---
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.h |    3 +++
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -870,13 +870,17 @@ static int amd_pmc_probe(struct platform
- 	amd_pmc_dbgfs_register(dev);
- 	err = amd_stb_s2d_init(dev);
- 	if (err)
--		goto err_pci_dev_put;
-+		goto err_dbgfs_unregister;
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+@@ -661,12 +661,17 @@ static int hp_init_bios_package_attribut
+ 	int ret = 0;
  
- 	if (IS_ENABLED(CONFIG_AMD_MP2_STB))
- 		amd_mp2_stb_init(dev);
- 	pm_report_max_hw_sleep(U64_MAX);
- 	return 0;
+ 	/* Take action appropriate to each ACPI TYPE */
+-	if (obj->package.count < min_elements) {
+-		pr_err("ACPI-package does not have enough elements: %d < %d\n",
+-		       obj->package.count, min_elements);
++	if (obj->package.count < COMMON_ELEM_CNT) {
++		pr_err("ACPI-package is missing common elements: %d < %d\n",
++		       obj->package.count, COMMON_ELEM_CNT);
+ 		goto pack_attr_exit;
+ 	}
  
-+err_dbgfs_unregister:
-+	amd_pmc_dbgfs_unregister(dev);
-+	if (IS_ENABLED(CONFIG_SUSPEND))
-+		acpi_unregister_lps0_dev(&amd_pmc_s2idle_dev_ops);
- err_pci_dev_put:
- 	pci_dev_put(rdev);
- 	return err;
++	if (obj->package.count < min_elements) {
++		pr_warn("ACPI-package has fewer elements than expected: %d < %d, parsing available elements\n",
++			obj->package.count, min_elements);
++	}
++
+ 	elements = obj->package.elements;
+ 
+ 	/* sanity checking */
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
+@@ -279,6 +279,9 @@ enum hp_wmi_data_elements {
+ 	PSWD_ENCODINGS = 13,
+ 	PSWD_IS_SET = 14,
+ 	PSWD_ELEM_CNT = 15,
++
++	/* Minimum elements shared by all attribute types (NAME..SECURITY_LEVEL) */
++	COMMON_ELEM_CNT = SECURITY_LEVEL + 1,
+ };
+ 
+ #define GET_INSTANCE_ID(type)						\
 
 
