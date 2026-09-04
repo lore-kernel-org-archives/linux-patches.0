@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937E83515D2;
-	Fri,  4 Sep 2026 05:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C023876B3;
+	Fri,  4 Sep 2026 05:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498364; cv=none; b=EUFggOX0XdaF0z117faWaaV+RH+N79sWYN7ZDkyzTQ/hH6BcwvHaEG6r3qA3P4N1DP+FkMnJO5YcrMrVzaAn4fBrq/3HriNsjH6tq4SNvlRuLnh6IxOzZVcOdaNcb5JKv8oklQ6vNpjzsXQJVUlZJjTGOxbt3LpC7c4ANvAfkn0=
+	t=1788498367; cv=none; b=mo49FXb6L8fG9a0xDcNJIB07htDOhAxRBZH/iEEkPymm7Nscza69+YmhvKWYwmb66xrixYlz/TOaZeg1uyFfFL6EXtLdPGQh90Acs1Ij907Qc300PB/aQlKm9GlTMFTfM1vFAwMXWA5tMD+yiETSlY3CnUYmOdXdRfRXHHTFkm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498364; c=relaxed/simple;
-	bh=Mr5iUff1ElxNHciB/H5xbGvf7Y2bPEjcxiBRX3JaW+Y=;
+	s=arc-20240116; t=1788498367; c=relaxed/simple;
+	bh=eSmbn4lwynv2IfG0t9f4BvO0GjeeHMvdYFf9eSwdQxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvXwngAHiwLxS4SGcpiBt+A//iUE3GpL6N8v/4xsXxUq2G0zH0N7B8HDG4uVHc2vIfRhRl2YQT/xTIP1pDtAyLElUL0uI1TY9ZL6MFFKk0dl5vrxlmupzM1Lxlr07WAg6g9uAb3dSgUPYd1U/8rn2sjXm/R9Hv+dphUxOu4JfQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyziUWuI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=axQCJWqBbXG9YiP9kQHvJCyz73Vq5AnU99WBDKnU/Bus+sq5QzgDxcXLPn2u/KYjLbjHG4UpWmwj6xITPBW9wbM0vF/oTDI/WuADGPmUV2244JY+G47MAWssFDKhpgDx3Gbr8O6BH50Cgy5c0cbsDIeczCUtZ9OU+MiNIv7L6IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6j8iUyM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyziUWuI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE54A1F00A3D;
-	Fri,  4 Sep 2026 05:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6j8iUyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92AF1F00A3D;
+	Fri,  4 Sep 2026 05:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498363;
-	bh=qP/QhIaeVYQ01i3R2vHOVnp7kaMltW5rCyzdhaXgO6w=;
+	s=korg; t=1788498366;
+	bh=X94CClXCNF6eIOjkrpR9GwzDZWOZdJGfnqf3jK3CYGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HyziUWuIW1HeHYZ2ets1AYWZiWUTAJn7FI8FNEGZY57Qx+rykqbYgd9lajEU2mG07
-	 fOEtNoIffucTBcSE85eLTMASdmFPlMsCgbokjEvQ/PoOIqP0CMmeDneMp2gK0g3lhI
-	 fWYaY8ItwEjQj9n1WMjV9lRBRbEZGE94RX39sLQg=
+	b=G6j8iUyMTqJT03IrkRuCmsrjSrXpio69oq6rR3Kr1YFt1ni7nrpo8GSdSjCCHgy+k
+	 YL+eDyd0waZDoGY9o1Xwpwe3W+xRuXtgr81mUi0Tqm/qBT4GrMcLRuN2epNaa3osTN
+	 H2FTkdnd5Sfn/Jv+FmQ54yid50AIPsS6Pw0W4Hqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 006/713] ASoC: tegra: Fix the MIXER enable default value
-Date: Fri,  4 Sep 2026 06:49:34 +0200
-Message-ID: <20260904045803.960222834@linuxfoundation.org>
+Subject: [PATCH 7.2 007/713] ASoC: tegra: Sort ADMAIF register defaults
+Date: Fri,  4 Sep 2026 06:49:35 +0200
+Message-ID: <20260904045803.981516787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,57 +53,269 @@ Content-Transfer-Encoding: 8bit
 
 From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 5442b8093a2f94ecd4696b3875194be09e2676c5 ]
+[ Upstream commit 18d48bfd1bc178da7cfc7a1be3eaa1c8cb10f05c ]
 
 Commit 4b05ccb17f92 ("regcache: Sort the local copy of an unsorted
-reg_defaults array") exposed an issue in the Tegra MIXER driver where
-the register default for the TEGRA210_MIXER_ENABLE is specified as 1,
-but the hardware default is actually 0. After this commit was added the
-MIXER driver is no longer working and so fix this by correcting the
-default value for this register and explicitly configuring the
-MIXER_ENABLE register when runtime resuming the MIXER device.
+reg_defaults array") exposed an issue in the Tegra ADMAIF driver and now
+the following warning is observed:
 
-Fixes: 05bb3d5ec64a ("ASoC: tegra: Add Tegra210 based Mixer driver")
+ tegra210-admaif 290f000.admaif: Driver needs fixing: Unsorted
+  reg_defaults, sorting the copy
+
+This warning occurs because register defaults in the structures
+tegra186_admaif_reg_defaults and tegra264_admaif_reg_defaults are not
+specified in ascending order which is required by regmap. Fix this by
+sorting the register defaults according to their address. Note that in
+order to do this it is necessary to split the macro ADMAIF_REG_DEFAULTS
+into separate RX and TX macros to the RX and TX registers.
+
+Fixes: f74028e159bb ("ASoC: tegra: Add Tegra210 based ADMAIF driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260821153734.158426-3-jonathanh@nvidia.com
+Link: https://patch.msgid.link/20260821153734.158426-4-jonathanh@nvidia.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/tegra/tegra210_mixer.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/soc/tegra/tegra210_admaif.c | 208 ++++++++++++++++++++----------
+ 1 file changed, 138 insertions(+), 70 deletions(-)
 
-diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
-index 8eb4e54b954b1..96259a6cbc59b 100644
---- a/sound/soc/tegra/tegra210_mixer.c
-+++ b/sound/soc/tegra/tegra210_mixer.c
-@@ -57,7 +57,7 @@ static const struct reg_default tegra210_mixer_reg_defaults[] = {
- 	MIXER_TX_REG_DEFAULTS(3),
- 	MIXER_TX_REG_DEFAULTS(4),
+diff --git a/sound/soc/tegra/tegra210_admaif.c b/sound/soc/tegra/tegra210_admaif.c
+index 7299c6bfcf158..87e898cc35e42 100644
+--- a/sound/soc/tegra/tegra210_admaif.c
++++ b/sound/soc/tegra/tegra210_admaif.c
+@@ -26,94 +26,162 @@
  
--	{ TEGRA210_MIXER_ENABLE, 0x1 },
-+	{ TEGRA210_MIXER_ENABLE, 0x0 },
- 	{ TEGRA210_MIXER_CG, 0x00000001},
- 	{ TEGRA210_MIXER_GAIN_CFG_RAM_CTRL, 0x00004000},
- 	{ TEGRA210_MIXER_PEAKM_RAM_CTRL, 0x00004000},
-@@ -86,11 +86,15 @@ static int tegra210_mixer_runtime_suspend(struct device *dev)
- static int tegra210_mixer_runtime_resume(struct device *dev)
- {
- 	struct tegra210_mixer *mixer = dev_get_drvdata(dev);
-+	int err;
+ #define CH_RX_REG(reg, id) CH_REG(admaif->soc_data->rx_base, reg, id)
  
- 	regcache_cache_only(mixer->regmap, false);
--	regcache_sync(mixer->regmap);
-+	err = regcache_sync(mixer->regmap);
-+	if (err)
-+		return err;
+-#define REG_DEFAULTS(id, rx_ctrl, tx_ctrl, tx_base, rx_base, cif_ctrl)	       \
++#define RX_REG_DEFAULTS(id, rx_ctrl, rx_base, cif_ctrl)			       \
+ 	{ CH_REG(rx_base, TEGRA_ADMAIF_RX_INT_MASK, id), 0x00000001 },	       \
+ 	{ CH_REG(rx_base, TEGRA_ADMAIF_CH_ACIF_RX_CTRL, id), cif_ctrl },     \
+-	{ CH_REG(rx_base, TEGRA_ADMAIF_RX_FIFO_CTRL, id), rx_ctrl },	       \
++	{ CH_REG(rx_base, TEGRA_ADMAIF_RX_FIFO_CTRL, id), rx_ctrl }
++
++#define TX_REG_DEFAULTS(id, tx_ctrl, tx_base, cif_ctrl)			       \
+ 	{ CH_REG(tx_base, TEGRA_ADMAIF_TX_INT_MASK, id), 0x00000001 },	       \
+ 	{ CH_REG(tx_base, TEGRA_ADMAIF_CH_ACIF_TX_CTRL, id), cif_ctrl },     \
+ 	{ CH_REG(tx_base, TEGRA_ADMAIF_TX_FIFO_CTRL, id), tx_ctrl }
  
--	return 0;
-+	return regmap_write(mixer->regmap, TEGRA210_MIXER_ENABLE,
-+			    TEGRA210_MIXER_EN);
- }
+-#define ADMAIF_REG_DEFAULTS(id, chip)					       \
+-	REG_DEFAULTS((id) - 1,						       \
++#define ADMAIF_RX_REG_DEFAULTS(id, chip)				       \
++	RX_REG_DEFAULTS((id) - 1,					       \
+ 		chip ## _ADMAIF_RX ## id ## _FIFO_CTRL_REG_DEFAULT,	       \
++		chip ## _ADMAIF_RX_BASE,				       \
++		chip ## _ADMAIF_CIF_REG_DEFAULT)
++
++#define ADMAIF_TX_REG_DEFAULTS(id, chip)				       \
++	TX_REG_DEFAULTS((id) - 1,					       \
+ 		chip ## _ADMAIF_TX ## id ## _FIFO_CTRL_REG_DEFAULT,	       \
+ 		chip ## _ADMAIF_TX_BASE,				       \
+-		chip ## _ADMAIF_RX_BASE,				       \
+ 		chip ## _ADMAIF_CIF_REG_DEFAULT)
  
- static int tegra210_mixer_write_ram(struct tegra210_mixer *mixer,
+ static const struct reg_default tegra186_admaif_reg_defaults[] = {
+-	{(TEGRA_ADMAIF_GLOBAL_CG_0 + TEGRA186_ADMAIF_GLOBAL_BASE), 0x00000003},
+-	ADMAIF_REG_DEFAULTS(1, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(2, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(3, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(4, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(5, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(6, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(7, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(8, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(9, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(10, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(11, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(12, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(13, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(14, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(15, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(16, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(17, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(18, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(19, TEGRA186),
+-	ADMAIF_REG_DEFAULTS(20, TEGRA186)
++	ADMAIF_RX_REG_DEFAULTS(1, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(2, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(3, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(4, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(5, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(6, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(7, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(8, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(9, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(10, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(11, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(12, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(13, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(14, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(15, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(16, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(17, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(18, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(19, TEGRA186),
++	ADMAIF_RX_REG_DEFAULTS(20, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(1, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(2, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(3, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(4, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(5, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(6, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(7, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(8, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(9, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(10, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(11, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(12, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(13, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(14, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(15, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(16, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(17, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(18, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(19, TEGRA186),
++	ADMAIF_TX_REG_DEFAULTS(20, TEGRA186),
++	{(TEGRA_ADMAIF_GLOBAL_CG_0 + TEGRA186_ADMAIF_GLOBAL_BASE), 0x00000003}
+ };
+ 
+ static const struct reg_default tegra210_admaif_reg_defaults[] = {
+-	{(TEGRA_ADMAIF_GLOBAL_CG_0 + TEGRA210_ADMAIF_GLOBAL_BASE), 0x00000003},
+-	ADMAIF_REG_DEFAULTS(1, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(2, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(3, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(4, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(5, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(6, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(7, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(8, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(9, TEGRA210),
+-	ADMAIF_REG_DEFAULTS(10, TEGRA210)
++	ADMAIF_RX_REG_DEFAULTS(1, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(2, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(3, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(4, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(5, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(6, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(7, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(8, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(9, TEGRA210),
++	ADMAIF_RX_REG_DEFAULTS(10, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(1, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(2, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(3, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(4, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(5, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(6, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(7, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(8, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(9, TEGRA210),
++	ADMAIF_TX_REG_DEFAULTS(10, TEGRA210),
++	{(TEGRA_ADMAIF_GLOBAL_CG_0 + TEGRA210_ADMAIF_GLOBAL_BASE), 0x00000003}
+ };
+ 
+ static const struct reg_default tegra264_admaif_reg_defaults[] = {
+-	{(TEGRA_ADMAIF_GLOBAL_CG_0 + TEGRA264_ADMAIF_GLOBAL_BASE), 0x00000003},
+-	ADMAIF_REG_DEFAULTS(1, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(2, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(3, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(4, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(5, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(6, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(7, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(8, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(9, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(10, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(11, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(12, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(13, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(14, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(15, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(16, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(17, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(18, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(19, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(20, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(21, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(22, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(23, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(24, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(25, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(26, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(27, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(28, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(29, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(30, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(31, TEGRA264),
+-	ADMAIF_REG_DEFAULTS(32, TEGRA264)
++	ADMAIF_RX_REG_DEFAULTS(1, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(2, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(3, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(4, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(5, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(6, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(7, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(8, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(9, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(10, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(11, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(12, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(13, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(14, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(15, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(16, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(17, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(18, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(19, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(20, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(21, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(22, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(23, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(24, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(25, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(26, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(27, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(28, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(29, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(30, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(31, TEGRA264),
++	ADMAIF_RX_REG_DEFAULTS(32, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(1, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(2, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(3, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(4, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(5, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(6, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(7, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(8, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(9, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(10, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(11, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(12, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(13, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(14, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(15, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(16, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(17, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(18, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(19, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(20, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(21, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(22, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(23, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(24, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(25, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(26, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(27, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(28, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(29, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(30, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(31, TEGRA264),
++	ADMAIF_TX_REG_DEFAULTS(32, TEGRA264),
++	{(TEGRA_ADMAIF_GLOBAL_CG_0 + TEGRA264_ADMAIF_GLOBAL_BASE), 0x00000003}
+ };
+ 
+ static bool tegra_admaif_wr_reg(struct device *dev, unsigned int reg)
 -- 
 2.53.0
 
