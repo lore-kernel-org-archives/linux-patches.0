@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A534534EF15;
-	Fri,  4 Sep 2026 05:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EBA351C04;
+	Fri,  4 Sep 2026 05:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499619; cv=none; b=ADHuNdc4PmYJCbddqM96+xaF1y+4A8szY1EG+SfdwKOHOPXYY1jR1RUzEqe8xuVd4AP9eoI4RLdAOb696fthn2ypDvPCMtPuOFlsbOBkl7R7a37RSArzEA74G1kL4VlPZGQzHv5EjCYx1WsxQtpjG9lvXG5szIuKbCNfHsCaFBU=
+	t=1788499622; cv=none; b=iCB+KKirFLM/JAEWl49kha6cYA5HKX1sfrgtlnKIqhoSbEEVjgNa0V1rnaeN4Ug52NQaQhYe82pJ0DHRkVIgY7w90R/Wd96B4bE1WDN/8uW5Qo2yQPSbAKlzQjmPgg89s9lkMamMPIVE1Utq9DDqNMqGWDLxe7NMZhRyqpzkiXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499619; c=relaxed/simple;
-	bh=2LkmRko1EexvxMzWJjuA7aPVMoSQN2NOFcrwOnm6r3c=;
+	s=arc-20240116; t=1788499622; c=relaxed/simple;
+	bh=BIWXpttg/p+x1QuX1N8aWtgzOxzTDRNqtSWYadUN06M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwgBNt6Zh6ci4YcYDdWkaCe5d+dpHSa+eMIdwEX5cYkV3ohNFLHximGbXofjLhk6DoMQOeyUWbP2WcnviuPi1zdYL9O5ekXcZD7KDnSLUdDIjEpf4ZyFRZaJudjSFndDBaUVtaBnCGCYuNIt0jtLDQpJxcRDUOeb+2Rhd0ShYyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHikttX6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hbA5ourpvdzOBw8HWGBE3Gimi8yvujKm85cLW6QYPD6s/hH5vNBCqs5uHNU1mt4X1eLUN9mbSljv/LIW8jGbcER4rNs+r7f7mVkbEKRWLvQhkqUe8ELvAwUht7TnjQdsxmXaMbckr9wbs21suRg2RBT3qK5TuIPZJBLqu03Vuvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJAFjoWN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHikttX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CF11F00A3D;
-	Fri,  4 Sep 2026 05:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJAFjoWN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB00F1F00A3D;
+	Fri,  4 Sep 2026 05:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499618;
-	bh=Mq8gJ3EFX6T7e7cOodXd9jAZx5GYXUPLWLYZN4sJaIo=;
+	s=korg; t=1788499621;
+	bh=a5dVHoQNX09uztsIZ9S8KjGZ1B/EmttaUMAUw7pTxPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iHikttX6xScXuH8Ls9kJqq9TgftWlxxJfKu/dKi7ASwO5Jz7bsJ+SJ7RR6IRokXMS
-	 hHmryKSwjuBlefYo7+TF4k3zZd/HHoQvR+Y/j4KBKY7c2r7CWQQF/OSM7s7shWEOH6
-	 cgjTdr89rD8fa1AxQjbJiuNpRyIjwdcuQlAedpC4=
+	b=vJAFjoWN+Tj5p91rO5cFVAjU/mmYRXz9qkgDnKt5gGcrgNzzrTI0DfDOgtOdBKOnW
+	 dkLvoG7/uWMBZwkkbx/vLkSnpzLMsKR93Si5c9r68G1D86ZkEAxrOJckFIJR/G0RaU
+	 O6gUGU4goyqj1v2aYq2TqHdNxCD6RLe0pES9zzBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.2 480/713] hwmon: (max6621) fix temperature clamp range
-Date: Fri,  4 Sep 2026 06:57:28 +0200
-Message-ID: <20260904045814.583984366@linuxfoundation.org>
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 7.2 481/713] i2c: mxs: fix DMA channel leak on probe error
+Date: Fri,  4 Sep 2026 06:57:29 +0200
+Message-ID: <20260904045814.605908003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,45 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit 24fbeb83d9b750a36da42cb835a154d80fd3d495 upstream.
+commit 777979e627115734052b323d2721cdb500e81dcf upstream.
 
-MAX6621_TEMP_INPUT_MIN and MAX6621_TEMP_INPUT_MAX are used to clamp the
-writable offset and critical thresholds. They are defined as -127000 and
-128000.
+mxs_i2c_probe() requests an exclusive DMA channel before resetting the
+controller and registering the I2C adapter. If either later operation
+fails, probe returns without releasing the channel because the remove
+callback is not invoked after a failed probe.
 
-The driver decodes the temperature through an s8 and its own comment in
-max6621_read() documents an 8-bit two's complement value, whose range is
--128 to +127 degrees C. The current limits therefore reject the valid
--128 degrees C and accept +128 degrees C, which does not fit the 8-bit
-range.
+Use devm_dma_request_chan() so the device core releases the channel on
+probe failure and driver detach. Remove the manual release from the
+remove callback because the channel is now device-managed.
 
-Correct the limits to -128000 and 127000.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Fixes: 92b64580f14b ("hwmon: (max6621) Add support for Maxim MAX6621 temperature sensor")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Link: https://lore.kernel.org/r/9d3a4f1895a47794bb359a2a32fb1ccd6a15812c.1786334038.git.congnt264@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 62885f59a261 ("MXS: Implement DMA support into mxs-i2c")
+Assisted-by: unnamed:claude-opus-4.8 typestate
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Cc: <stable@vger.kernel.org> # v3.7+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260815151720.3757460-1-ruoyuw560@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/max6621.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-mxs.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/hwmon/max6621.c
-+++ b/drivers/hwmon/max6621.c
-@@ -17,8 +17,8 @@
+--- a/drivers/i2c/busses/i2c-mxs.c
++++ b/drivers/i2c/busses/i2c-mxs.c
+@@ -839,7 +839,7 @@ static int mxs_i2c_probe(struct platform
+ 	}
  
- #define MAX6621_DRV_NAME		"max6621"
- #define MAX6621_TEMP_INPUT_REG_NUM	9
--#define MAX6621_TEMP_INPUT_MIN		-127000
--#define MAX6621_TEMP_INPUT_MAX		128000
-+#define MAX6621_TEMP_INPUT_MIN		-128000
-+#define MAX6621_TEMP_INPUT_MAX		127000
- #define MAX6621_TEMP_ALERT_CHAN_SHIFT	1
+ 	/* Setup the DMA */
+-	i2c->dmach = dma_request_chan(dev, "rx-tx");
++	i2c->dmach = devm_dma_request_chan(dev, "rx-tx");
+ 	if (IS_ERR(i2c->dmach)) {
+ 		return dev_err_probe(dev, PTR_ERR(i2c->dmach),
+ 				     "Failed to request dma\n");
+@@ -877,9 +877,6 @@ static void mxs_i2c_remove(struct platfo
  
- #define MAX6621_TEMP_S0D0_REG		0x00
+ 	i2c_del_adapter(&i2c->adapter);
+ 
+-	if (i2c->dmach)
+-		dma_release_channel(i2c->dmach);
+-
+ 	writel(MXS_I2C_CTRL0_SFTRST, i2c->regs + MXS_I2C_CTRL0_SET);
+ }
+ 
 
 
