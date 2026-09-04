@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DE9372B4B;
-	Fri,  4 Sep 2026 05:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD79D415F22;
+	Fri,  4 Sep 2026 05:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500630; cv=none; b=tWlaSJy5TWOjinRgKhmCzd9qe4mlJcZcCDwKf49/1x+EfYolGL0VxzAZ3eXqIU9b7YA0IHdxTe6BV1IiYRRDEezDg5t42PmdmIrmnXfPJas//3XgVjDccnpT2X8qgwKRcUx2hwYodxcRnfT9Hz3Ec5qJws/Rvvr6zCAFITls6wg=
+	t=1788500633; cv=none; b=KGLlAdow2VmvjZ8GEEnjEVkKZ9fH+7uGLIBEcwDpBycZewHFoJxVE576+GbAIBL0UmULucBHcRgDPA3y+Yp7UokZokprPvUVY+1ZI8HqnFrTq7f3IVb4HBrIzrjvjs5hmwRdDpvFcO/fmssjMxtm7bdolaQ0mMVAq9hYhSd80/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500630; c=relaxed/simple;
-	bh=idEYm5tRNHT6hpgip5cYYAdNXKpzVBGa6yqbAjGC048=;
+	s=arc-20240116; t=1788500633; c=relaxed/simple;
+	bh=Id41L3Xpa/ULM66svKn8KhaAmIe7yROa2iv96xDF9bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GcVkUke1rTpNqJIt+v7A+j4jOHRtjoDkKXAqvcWODuEr552qkK9Lp8XU8Z9jlTpgnJJFaTOCC/TwswYsUiCabl35JtmpA9K2LBYApRCocoUwpP+5XKng7sM/jZc+sCPk8l4vGedQjS0xYgkF/Aurw5cH1pyJ/HCxiPz269cFz94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzdBlwVh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=axb5/vdHzF94KW+G3vrOICqyu6USFacrSZnuQ6NtaPQiYR0X4MTR1q2I06ykELZ/MSNeZNn7h3H6DzSOgN6qItC6jCqIbgtzLaxxE1iwj7TQnrac3kfAZ6CMpS654An1UHsgtVLT2tY1l1/snCa/ckdmsTPNsHgTxoO35UQlzWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAL/0hqI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzdBlwVh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B101F00A3D;
-	Fri,  4 Sep 2026 05:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAL/0hqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2731F00A3D;
+	Fri,  4 Sep 2026 05:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500628;
-	bh=ksO4V8A9d3Lt3jOR7dRCecC+eZYItm9awuiTjvgb030=;
+	s=korg; t=1788500631;
+	bh=tKjf698iBtW+qkDNPkaXqy45UXRvOwJk0fq9DpQM5Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gzdBlwVhgpmoVwJVQ3wz4EMb0tRKBd6Jagj9gnLOmNOs9PVALOcfBhsMgb5656Pa9
-	 A8OIaUFJlidopSk31C4wpIW+gA1O+PdR+TPzXznvBbZWo46s5CnyhSHN/Y5tFbzIWJ
-	 WHWR9fa2aY+aprhsJ/+LHAPRgAdt/8/gV2AgtTos=
+	b=AAL/0hqIIfgqjEbe3bSb+J3Aib0gwV46MpGKZL3Z3gZJ+/19s6I/30aUX8sjLEfYy
+	 gJQXkjbdaN/y66AF9ndGDKwvi07XDzoEe6nmY+MjN65Qt3Jz1pN9WHwco9gndJhiKj
+	 8JhU08tQsDTJdDcAKw2HlH/RSsWEq8oNIEYtzdJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 117/552] nfsd: add fh_want_write() for early-verified SETATTR in nfsd_proc_setattr()
-Date: Fri,  4 Sep 2026 06:54:34 +0200
-Message-ID: <20260904045750.627160464@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 126/552] nfsd: dont free session slots that are still in use
+Date: Fri,  4 Sep 2026 06:54:43 +0200
+Message-ID: <20260904045751.085062217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,48 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 4e475be769aa9f7a2c1ce55a2b8592cfccacddcc upstream.
+commit f5d22e372f4ac3eb287037a488c29691d52a6330 upstream.
 
-The BOTH_TIME_SET branch calls fh_verify() early so setattr_prepare()
-can inspect the dentry. This causes nfsd_setattr() to skip
-fh_want_write(), so notify_change() runs without a mount write
-reference.
+nfsd4_sequence() can free the very slot it is currently processing.
+When the session shrinker has reduced se_target_maxslots below
+se_fchannel.maxreqs, the shrink path checks three conditions before
+calling free_session_slots():
 
-Add the missing fh_want_write() call after the early fh_verify().
+  1. se_target_maxslots < maxreqs  (shrink was advertised)
+  2. slot->sl_generation == se_slot_gen  (slot is up-to-date)
+  3. seq->maxslots <= se_target_maxslots  (client acknowledges)
 
-Fixes: cc265089ce1b ("nfsd: Disable NFSv2 timestamp workaround for NFSv3+")
+However, seq->slotid is never checked against se_target_maxslots.
+A client using a slot in the range [se_target_maxslots, maxreqs) can
+satisfy all three conditions: its slot has the current generation
+(set by a prior SEQUENCE), and it sends sa_highest_slotid <=
+se_target_maxslots to acknowledge the reduction.
+
+free_session_slots() then kfrees every slot at index >=
+se_target_maxslots, including the caller's own slot. The function
+continues to write sl_seqid, sl_flags, sl_generation, and stores the
+dangling pointer in cstate->slot. Later, nfsd4_store_cache_entry()
+copies up to maxresp_cached bytes of the compound reply into the freed
+sl_data[] array, corrupting whatever slab object now occupies that
+address.
+
+Additionally, a concurrent thread processing SEQUENCE on a different
+high-numbered slot can have its slot freed out from under it.
+NFSD4_SLOT_INUSE is set under nn->client_lock before the lock is
+released, so any concurrent thread past SEQUENCE will have its slot
+marked. However, free_session_slots() does not check NFSD4_SLOT_INUSE
+before freeing.
+
+Fix both problems by:
+ 1. Checking that the current request's slotid is below the shrink
+    boundary.
+ 2. Scanning slots in the to-be-freed range for NFSD4_SLOT_INUSE and
+    deferring the shrink if any are active.
+
+Fixes: fc8738c68d0b ("nfsd: add support for freeing unused session-DRC slots")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
+Assisted-by: Claude:claude-opus-4-6
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-11-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20260526-nfsd4_sequence_shrink_uaf_on_loaded_slot-v2-1-74a89db0639e@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsproc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/nfsd/nfs4state.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -82,6 +82,7 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
- 		.na_iattr	= iap,
- 	};
- 	struct svc_fh *fhp;
-+	int hosterr;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4396,6 +4396,19 @@ static void nfsd4_construct_sequence_res
+ 		seq->status_flags |= SEQ4_STATUS_ADMIN_STATE_REVOKED;
+ }
  
- 	dprintk("nfsd: SETATTR  %s, valid=%x, size=%ld\n",
- 		SVCFH_fmt(&argp->fh),
-@@ -117,6 +118,12 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
- 		if (resp->status != nfs_ok)
- 			goto out;
- 
-+		hosterr = fh_want_write(fhp);
-+		if (hosterr) {
-+			resp->status = nfserrno(hosterr);
-+			goto out;
-+		}
++static bool nfsd4_slots_inuse(struct nfsd4_session *ses, int from)
++{
++	int i;
 +
- 		if (delta < 0)
- 			delta = -delta;
- 		if (delta < MAX_TOUCH_TIME_ERROR &&
++	for (i = from; i < ses->se_fchannel.maxreqs; i++) {
++		struct nfsd4_slot *slot = xa_load(&ses->se_slots, i);
++
++		if (slot->sl_flags & NFSD4_SLOT_INUSE)
++			return true;
++	}
++	return false;
++}
++
+ __be32
+ nfsd4_sequence(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		union nfsd4_op_u *u)
+@@ -4475,7 +4488,9 @@ nfsd4_sequence(struct svc_rqst *rqstp, s
+ 
+ 	if (session->se_target_maxslots < session->se_fchannel.maxreqs &&
+ 	    slot->sl_generation == session->se_slot_gen &&
+-	    seq->maxslots <= session->se_target_maxslots)
++	    seq->maxslots <= session->se_target_maxslots &&
++	    seq->slotid < session->se_target_maxslots &&
++	    !nfsd4_slots_inuse(session, session->se_target_maxslots))
+ 		/* Client acknowledged our reduce maxreqs */
+ 		free_session_slots(session, session->se_target_maxslots);
+ 
 
 
