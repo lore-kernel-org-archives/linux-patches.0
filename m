@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250AE3515D2;
-	Fri,  4 Sep 2026 05:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D953DAAB7;
+	Fri,  4 Sep 2026 05:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498458; cv=none; b=GNa6eMq3wkbqUQA2e8SYnm08iwSokWksdk8FAgAP1wiq0GYOR/VFORwIS/z2dr4MIXxvqXmP3o1PO9aI1gD9M94m2WtdQrI4lYTTdesnjynY4JiweJMIXjeYCzY61VCRK/92m3c5O/XV/Q6QtpuNrofmitxoB8oSCV9YZFIRDDw=
+	t=1788498460; cv=none; b=cdRSJlDkriYLPfxXD2XbYWK985iLlPADbadsgivyjf0m4U3kQvy26nYVWBQRT6psTKM0UtPOavwfJl4YS3EUjWNy85ZLt/Ek1xx2tA4u5Ob3icQ+DIkpzdBPkxCfJVAjnxUrm4bJ4Gd6UugnQ2pQ6oGMPenwzt9RCLcodxbjn2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498458; c=relaxed/simple;
-	bh=DFFmzBvmJhLGFFSiqk+0I+WxFHe7ynMJQPf8cQBlbnY=;
+	s=arc-20240116; t=1788498460; c=relaxed/simple;
+	bh=/uMUZkA9vD2epHdn+wJ9ECvzcSUqC7i1+QJQsjQ+nnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFhdQYuSStDtUIDzqtOD8ojg4wZ8JexwtM2gf6eHzD5sHXzB2DHDYkm1GeD69disPq9uXewu9NIGv0/sCnCVWyLwUFuRu3EQk8B/AOO7whjN8E7GZOEZJfX3TDigjHmChxg2VDg+BOGLropaykOy4E992UtD70CofEskplXi1oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6izonaE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EVrsTaD9gDbhsZwMU2dNxZwtmdQ2XETsUlLt3vvxg8Hln6q9Wvs0aH2VrS04mHToNqds1Sr2A3GDiIvWfUPBBw9YyimwUdeGL4IONrSByjMNCv+JMxPq/pYOWJpwcL0uXtOHAz1o0ChwXrgwoapTI8VxgnPCWTZY5SDL6Wj7EqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AB9jjJ4K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6izonaE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD4D1F00A3D;
-	Fri,  4 Sep 2026 05:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AB9jjJ4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BCD1F00A3E;
+	Fri,  4 Sep 2026 05:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498456;
-	bh=2Jly1HdUGoeMe8QCyjwulRwUz1ddK7Pu1NCyE8eJUkc=;
+	s=korg; t=1788498458;
+	bh=FWHFp06zRoNaAeoZefGnTxSFGVaaUAQ7avkHT4sEEBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K6izonaEr7BbMKkbyjBLX7L7xGiwv5XTiwcwpDR5oKm/t3FqMhwwpVqixScmDZd5G
-	 DQu1bm/Au8QAywgAfxVqPGagpL9Y0hQRTupJMIsA51hiFakKge7RT9ST8o3oZ4UuPq
-	 8EVi5GWOSNTBIMv3KPi9zc16NawCjMB42QCXEuY4=
+	b=AB9jjJ4KKopyWFtvQ0zXp/BZL1euoC+zSagFu14XcJ5KZfM4U2d/aGT7RF2IDOAlO
+	 nYEC34rAdPxHlm4lwdmkai2OT9rr1Z2QG+3Ay/dGYdY3c5+vSRv7XeGG+17/LxYC1c
+	 yf4IP/c8Zx7QIJhqKj9k8z9sVubsJMocqgBcw3OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Lytkin <iprintercanon@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	shivamkalra98@zohomail.in
-Subject: [PATCH 7.2 068/713] mm/vmalloc: make vm_struct.nr_pages an unsigned long
-Date: Fri,  4 Sep 2026 06:50:36 +0200
-Message-ID: <20260904045805.365842990@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 069/713] mm/vmscan: report RCU-tasks quiescent states in shrink_lruvec()
+Date: Fri,  4 Sep 2026 06:50:37 +0200
+Message-ID: <20260904045805.387037413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,245 +61,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Lytkin <iprintercanon@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 272b0d84b17f72f6396254dbaa6264f2f74a7997 upstream.
+commit 25f52e81216884a7444bf07a606691feb09a94e3 upstream.
 
-vm_struct::nr_pages is an unsigned int, and the file keeps deriving byte
-counts from it as nr_pages << PAGE_SHIFT.  A shift is evaluated in the
-type of its promoted left operand, so those are 32-bit arithmetic and wrap
-at 4 GiB of bytes, which is 2^20 pages.  Every site depends on a cast
-being remembered; vmap() has one, two recent commits did not.
-vread_iter() then computes a size of zero for a 4 GiB VM_ALLOC area and
-/proc/kcore returns it as zeros while reporting a successful read, which
-drgn, crash or gdb cannot tell from real memory, and the vrealloc()
-grow-in-place check declines a request that would have fit.
+I am seeing some rcu_tasks stalls in the Meta fleet during reclaim.
 
-Widen the field so the class of bug goes away instead of one site at a
-time.  Everything feeding or consuming it widens too:
-vm_area_alloc_pages() and its accumulators, nr_small_pages, new_nr_pages
-and old_nr_pages, the index range of vm_area_free_pages(), and three page
-indexes that were plain int.  Five casts go.  Two prints needed fixing as
-well, %u in vmalloc_dump_obj() and %d for the unsigned field in
-vmalloc_info_show().
+  INFO: rcu_tasks detected stalls on tasks:
+	0000000088620d09: .. nvcsw: 6735/6735 holdout: 1 idle_cpu: -1/8
+	task:GlobalCPUThread state:R  running task  pid:2552016 tgid:2524552
+  Call Trace:
+   shrink_lruvec
+   mem_cgroup_iter
+   shrink_node
+   do_try_to_free_pages
+   try_to_free_pages
+   __alloc_frozen_pages_noprof
+   alloc_pages_noprof
+   pte_alloc_one
+   __pte_alloc
+   handle_mm_fault
 
-No bug report behind this, I found it reading the code.  The 4 GiB wrap
-needs only a machine with over 4 GiB of memory.  Neither larger threshold
-is a practical concern: 2^32 pages, where the field itself truncates, is
-16 TiB and beyond what hardware can populate, and 2^31, where the plain
-int indexes break, is 8 TiB and larger than anything in the tree asks for.
-The int *nr cursor in the mapping path is unchanged and is separate work.
-Users outside mm/vmalloc.c need no change either.  Those handing the
-count to a narrower parameter cannot drive it near 2^31, and
-kho_preserve_vmalloc() stores it into a 32-bit ABI field that still
-receives the same low bits; above 2^32 pages the truncation just moves out
-of vm_struct into that store.
+Nothing promises direct reclaim returns in bounded time, and the scan loop
+in shrink_lruvec() only calls cond_resched(), which is a no-op on
+PREEMPTION kernels.  Involuntary preemption is not a Tasks-RCU quiescent
+state, so the reclaiming task never reports one and becomes a holdout.
 
-sizeof(struct vm_struct) on x86-64 stays 72 bytes with
-CONFIG_HAVE_ARCH_HUGE_VMALLOC=n and goes from 72 to 80 with it enabled,
-both inside the kmalloc-96 bucket it already comes from.
+Upgrade it to cond_resched_tasks_rcu_qs(), which reports a quiescent state
+even when cond_resched() does nothing.
 
-Link: https://lore.kernel.org/20260801114915.115224-1-iprintercanon@gmail.com
-Fixes: 0bca23804632 ("mm/vmalloc: use physical page count in vread_iter() for VM_ALLOC areas")
-Fixes: d57ac904ffdc ("mm/vmalloc: use physical page count for vrealloc() grow-in-place check")
-Signed-off-by: Artem Lytkin <iprintercanon@gmail.com>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <shivamkalra98@zohomail.in>
+PS: This has been discussed in [1]
+
+Link: https://lore.kernel.org/20260810-rcu_task_shrink_lruvec-v1-1-4d9f7d5251cb@debian.org
+Link: https://lore.kernel.org/all/amdWVTs0WKOxguxP@gmail.com/ [1]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/vmalloc.h |    2 -
- mm/vmalloc.c            |   60 +++++++++++++++++++++++-------------------------
- 2 files changed, 30 insertions(+), 32 deletions(-)
+ mm/vmscan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/vmalloc.h
-+++ b/include/linux/vmalloc.h
-@@ -62,7 +62,7 @@ struct vm_struct {
- #ifdef CONFIG_HAVE_ARCH_HUGE_VMALLOC
- 	unsigned int		page_order;
- #endif
--	unsigned int		nr_pages;
-+	unsigned long		nr_pages;
- 	phys_addr_t		phys_addr;
- 	const void		*caller;
- 	unsigned long		requested_size;
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -3360,7 +3360,7 @@ struct vm_struct *remove_vm_area(const v
- static inline void set_area_direct_map(const struct vm_struct *area,
- 				       int (*set_direct_map)(struct page *page))
- {
--	int i;
-+	unsigned long i;
- 
- 	/* HUGE_VMALLOC passes small pages to set_direct_map */
- 	for (i = 0; i < area->nr_pages; i++)
-@@ -3376,7 +3376,7 @@ static void vm_reset_perms(struct vm_str
- 	unsigned long start = ULONG_MAX, end = 0;
- 	unsigned int page_order = vm_area_page_order(area);
- 	int flush_dmap = 0;
--	int i;
-+	unsigned long i;
- 
- 	/*
- 	 * Find the start and end range of the direct mappings to make sure that
-@@ -3449,10 +3449,10 @@ void vfree_atomic(const void *addr)
-  * Caller is responsible for unmapping (vunmap_range) and KASAN
-  * poisoning before calling this.
-  */
--static void vm_area_free_pages(struct vm_struct *vm, unsigned int start_idx,
--			       unsigned int end_idx)
-+static void vm_area_free_pages(struct vm_struct *vm, unsigned long start_idx,
-+			       unsigned long end_idx)
- {
--	unsigned int i;
-+	unsigned long i;
- 
- 	if (!(vm->flags & VM_MAP_PUT_PAGES)) {
- 		for (i = start_idx; i < end_idx; i++)
-@@ -3664,12 +3664,12 @@ static inline gfp_t vmalloc_gfp_adjust(g
- 	return flags;
- }
- 
--static inline unsigned int
-+static inline unsigned long
- vm_area_alloc_pages(gfp_t gfp, int nid,
--		unsigned int order, unsigned int nr_pages, struct page **pages)
-+		unsigned int order, unsigned long nr_pages, struct page **pages)
- {
--	unsigned int nr_allocated = 0;
--	unsigned int nr_remaining = nr_pages;
-+	unsigned long nr_allocated = 0;
-+	unsigned long nr_remaining = nr_pages;
- 	unsigned int max_attempt_order = MAX_PAGE_ORDER;
- 	struct page *page;
- 	int i;
-@@ -3717,7 +3717,7 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
- 	if (!order) {
- 		while (nr_allocated < nr_pages) {
- 			unsigned int nr, nr_pages_request;
--			int i;
-+			unsigned long i;
- 
- 			/*
- 			 * A maximum allowed request is hard-coded and is 100
-@@ -3725,7 +3725,7 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
- 			 * long preemption off scenario in the bulk-allocator
- 			 * so the range is [1:100].
- 			 */
--			nr_pages_request = min(100U, nr_pages - nr_allocated);
-+			nr_pages_request = min(100UL, nr_pages - nr_allocated);
- 
- 			/* memory allocation should consider mempolicy, we can't
- 			 * wrongly use nearest node when nid == NUMA_NO_NODE,
-@@ -3871,12 +3871,12 @@ static void *__vmalloc_area_node(struct
- 	unsigned long addr = (unsigned long)area->addr;
- 	unsigned long size = get_vm_area_size(area);
- 	unsigned long array_size;
--	unsigned int nr_small_pages = size >> PAGE_SHIFT;
-+	unsigned long nr_small_pages = size >> PAGE_SHIFT;
- 	unsigned int page_order;
- 	unsigned int flags;
- 	int ret;
- 
--	array_size = (unsigned long)nr_small_pages * sizeof(struct page *);
-+	array_size = nr_small_pages * sizeof(struct page *);
- 
- 	/* __GFP_NOFAIL and "noblock" flags are mutually exclusive. */
- 	if (!gfpflags_allow_blocking(gfp_mask))
-@@ -4374,7 +4374,7 @@ void *vrealloc_node_align_noprof(const v
- 	}
- 
- 	if (size <= old_size) {
--		unsigned int new_nr_pages = PAGE_ALIGN(size) >> PAGE_SHIFT;
-+		unsigned long new_nr_pages = PAGE_ALIGN(size) >> PAGE_SHIFT;
- 
- 		/* Zero out "freed" memory, potentially for future realloc. */
- 		if (want_init_on_free() || want_init_on_alloc(flags))
-@@ -4403,7 +4403,7 @@ void *vrealloc_node_align_noprof(const v
- 		    !(vm->flags & (VM_FLUSH_RESET_PERMS | VM_USERMAP)) &&
- 		    gfp_has_io_fs(flags)) {
- 			unsigned long addr = (unsigned long)kasan_reset_tag(p);
--			unsigned int old_nr_pages = vm->nr_pages;
-+			unsigned long old_nr_pages = vm->nr_pages;
- 
- 			/*
- 			 * Use the node lock to synchronize with concurrent
-@@ -4416,16 +4416,13 @@ void *vrealloc_node_align_noprof(const v
- 			spin_unlock(&vn->busy.lock);
- 
- 			/* Notify kmemleak of the reduced allocation size before unmapping. */
--			kmemleak_free_part(
--				(void *)addr + ((unsigned long)new_nr_pages
--						<< PAGE_SHIFT),
--				(unsigned long)(old_nr_pages - new_nr_pages)
--					<< PAGE_SHIFT);
--
--			vunmap_range(addr + ((unsigned long)new_nr_pages
--					     << PAGE_SHIFT),
--				     addr + ((unsigned long)old_nr_pages
--					     << PAGE_SHIFT));
-+			kmemleak_free_part((void *)addr +
-+					   (new_nr_pages << PAGE_SHIFT),
-+					   (old_nr_pages - new_nr_pages)
-+						<< PAGE_SHIFT);
-+
-+			vunmap_range(addr + (new_nr_pages << PAGE_SHIFT),
-+				     addr + (old_nr_pages << PAGE_SHIFT));
- 
- 			vm_area_free_pages(vm, new_nr_pages, old_nr_pages);
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -5918,7 +5918,7 @@ static void shrink_lruvec(struct lruvec
+ 			}
  		}
-@@ -5250,7 +5247,7 @@ bool vmalloc_dump_obj(void *object)
- 	struct vmap_area *va;
- 	struct vmap_node *vn;
- 	unsigned long addr;
--	unsigned int nr_pages;
-+	unsigned long nr_pages;
  
- 	addr = PAGE_ALIGN((unsigned long) object);
- 	vn = addr_to_node(addr);
-@@ -5270,7 +5267,7 @@ bool vmalloc_dump_obj(void *object)
- 	nr_pages = vm->nr_pages;
- 	spin_unlock(&vn->busy.lock);
+-		cond_resched();
++		cond_resched_tasks_rcu_qs();
  
--	pr_cont(" %u-page vmalloc region starting at %#lx allocated at %pS\n",
-+	pr_cont(" %lu-page vmalloc region starting at %#lx allocated at %pS\n",
- 		nr_pages, addr, caller);
- 
- 	return true;
-@@ -5288,16 +5285,17 @@ bool vmalloc_dump_obj(void *object)
- static void show_numa_info(struct seq_file *m, struct vm_struct *v,
- 				 unsigned int *counters)
- {
--	unsigned int nr;
- 	unsigned int step = 1U << vm_area_page_order(v);
-+	unsigned long i;
-+	unsigned int nr;
- 
- 	if (!counters)
- 		return;
- 
- 	memset(counters, 0, nr_node_ids * sizeof(unsigned int));
- 
--	for (nr = 0; nr < v->nr_pages; nr += step)
--		counters[page_to_nid(v->pages[nr])] += step;
-+	for (i = 0; i < v->nr_pages; i += step)
-+		counters[page_to_nid(v->pages[i])] += step;
- 	for_each_node_state(nr, N_HIGH_MEMORY)
- 		if (counters[nr])
- 			seq_printf(m, " N%u=%u", nr, counters[nr]);
-@@ -5355,7 +5353,7 @@ static int vmalloc_info_show(struct seq_
- 				seq_printf(m, " %pS", v->caller);
- 
- 			if (v->nr_pages)
--				seq_printf(m, " pages=%d", v->nr_pages);
-+				seq_printf(m, " pages=%lu", v->nr_pages);
- 
- 			if (v->phys_addr)
- 				seq_printf(m, " phys=%pa", &v->phys_addr);
+ 		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
+ 			continue;
 
 
