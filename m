@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DA840F754;
-	Fri,  4 Sep 2026 06:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4E54195A0;
+	Fri,  4 Sep 2026 06:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502874; cv=none; b=BeilgP7LDpbNLIsf/N9Yg1f4n2aNmXIHFtnNhU4WckCFqKmkctQqX0cMzppOblGRtUEFJc63MWT4T3ln0Ye90Wx7TKgDCEBqOFDA29AkPZs2P0E26/8C7Wr7ICc6g5zaLgHym8cQVGSj+n390vHMGYemp21BrY/SiW/hICNUSuw=
+	t=1788502877; cv=none; b=isW2NMwfgEq8KQ5erMqSu3GonyymJ+Cm8KlT029MN7xciMgf+78pVEMcADU9eB4URndLFphtMjuvS9SwvQUcZe36X28LWeNna1LI2Lj5gthfGd0D77ZZp0bJlkIcAAwEdFI3yk68z8j3+p+HtuxlL3KNfWigwZuWC7fuxxsTCAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502874; c=relaxed/simple;
-	bh=nU0oL85gUEN2aYcbDvNvTox1kV1NOP9cfx7E1iLwhGw=;
+	s=arc-20240116; t=1788502877; c=relaxed/simple;
+	bh=9F1664KdfwpZ9pFt7c251znmIBmhabWnrwnyELIKAC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfdROvZJnSXkBoh98ndGP2idvQwzqWNd9pDAzcnWT0ZjsquLDa+qRqzidAWAyVkoFIQhxwRhvUjD/uXi4CfKfxctJ5/vi4bVubA36IapGd+eBw9R2pQ1vzB3SmGS06uNDMl8cfMER6aiTpoRaWwLI13xj2U4RIIDfjYwNm622c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVZOLHHw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DUaQEvJk5sLwgihAkEIBxagkgUh7nDl5ZQ9PSTSlSBf7se/YPbYjwfE8YbuPoWhfeCtMhtzYzXv4ac0qEtT8fJ2KSs/94+G2VwEcGoH5MOB163m6O4Fn43UcBVrY3g4lc6p/y3C5YwrE9iVNGKnkkISjXEsxNBUxWT9npnXUspY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8jYRW2p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVZOLHHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4C01F00A3D;
-	Fri,  4 Sep 2026 06:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8jYRW2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF331F00A3D;
+	Fri,  4 Sep 2026 06:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502873;
-	bh=QTK+bNe8UjXA8701WcA6U7ygHXMv003aGNqsYsLx4ng=;
+	s=korg; t=1788502876;
+	bh=apYCS5Gbn7hxcOcHEpmN9PQ0JQ33xNbXugLqnzoR0CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WVZOLHHwsrMpkzxC/sHOAsKd4AgVu9BeBa2FH84ygjvAdmsnVkNC0CwmoaQUKLvsM
-	 GQBZc38lXxEwieGSD+mAahdHdpV0DlQ+SVhiYnt11L8P/xtBCZwySrOOe4gJ3S0p1V
-	 nsiNrLACEKFbcbOKX0o/w6MAhvVZW02bwsvUaJz8=
+	b=D8jYRW2prA8rKfLy9Q+6qjtnxK1bbPzes9RLcMn3sLJ5ygaSAb+cg0fWbCjFSpK+X
+	 l6rdZHzfHmzG+gDc6SDGyubeQQWBNyxQdDMulu8ysUrufu3lijBq9r3cxXg1zXS4iy
+	 Hjr5pTttKOYS5bi112r1RBT9AkeLbVLbBBm36kGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Norbert Szetei <norbert@doyensec.com>,
-	Jongmin Jang <payload.jang@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 358/403] net: skbuff: dont touch shared zerocopy state in skb_tx_error()
-Date: Fri,  4 Sep 2026 07:02:41 +0200
-Message-ID: <20260904045742.955429978@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.12 359/403] seg6: reset IP6CB after IPv6 decapsulation
+Date: Fri,  4 Sep 2026 07:02:42 +0200
+Message-ID: <20260904045742.977200265@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,58 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit f66bdb1cc0fcd227a062378f8be0b5873aa5600a upstream.
+commit f967455fb2a5a2079b9eb5823e9ccf359174bf9f upstream.
 
-skb_tx_error() completes the zerocopy uarg and clears
-SKBFL_ALL_ZEROCOPY, and skb_zcopy_downgrade_managed() clears
-SKBFL_MANAGED_FRAG_REFS. Both live in skb_shinfo(), which every clone
-shares, while the caller only owns the reference it is about to drop.
-Through a clone it tells the producer its pages are free and drops
-SKBFL_SHARED_FRAG for an skb that is still in flight.
+decap_and_validate() pulls the outer SRv6 headers and makes the inner
+packet the skb network header. The IPv6 control block still contains
+values collected while parsing the outer packet, including nhoff and
+extension-header flags.
 
-Open vSwitch reaches this with a non-last OVS_ACTION_ATTR_RECIRC:
-clone_execute() sends a skb_clone() into ovs_dp_process_packet() while
-do_execute_actions() keeps forwarding the original, and skb_clone()
-does not privatise the frags here -- skb_orphan_frags() returns early
-on SKBFL_DONT_ORPHAN. A flow miss on the clone then strips the marker
-from the packet still being forwarded, and a later local ESP delivery
-decrypts in place over frags it does not own privately.
+End.DX6 and End.DT6 route the inner IPv6 packet directly to the IPv6
+input path. An unprivileged user can reach End.DT6 from a user and net
+namespace by installing a local SID and injecting an outer packet with
+Hop-by-Hop and Destination Options headers followed by an SRH and a
+minimal inner IPv6 packet.
 
-Skip it for a cloned skb. Nothing is lost: skb_release_data() clears
-the zerocopy state once the last reference to the shared data goes.
+The outer extension headers leave a large nhoff in IP6CB. After
+decapsulation, ip6_protocol_deliver_rcu() uses that stale offset on the
+inner packet and reads beyond the skb head. KASAN reports:
 
-Fixes: 25121173f7b1 ("skb: api to report errors for zero copy skbs")
+  BUG: KASAN: slab-out-of-bounds in ip6_protocol_deliver_rcu
+  ip6_protocol_deliver_rcu+0x1118/0x1450
+  ip6_input_finish+0x11b/0x240
+  seg6_local_input_core+0xed/0x2e0
+  lwtunnel_input+0x1e9/0x4e0
+  ipv6_rthdr_rcv+0x525f/0x6c50
+  ip6_protocol_deliver_rcu+0xcb7/0x1450
+
+Before clearing IP6CB for an inner IPv6 packet, save its incoming
+interface index and L3 slave state. Restore both after the clear and set
+nhoff to the inner IPv6 base-header nexthdr field.
+
+Use IP6CB(skb)->iif rather than skb->skb_iif because VRF processing can
+replace skb_iif with the L3 master while IP6CB keeps the receiving
+interface. Preserve IP6SKB_L3SLAVE for the same reason.
+
+Fixes: d7a669dd2f8b ("ipv6: sr: add helper functions for seg6local")
 Cc: stable@vger.kernel.org
-Suggested-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Jongmin Jang <payload.jang@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/CFAB292A-674B-4C14-BB2C-BB8830AD5659@doyensec.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv6/seg6_local.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1403,10 +1403,13 @@ EXPORT_SYMBOL(skb_dump);
-  *
-  *	Report xmit error if a device callback is tracking this skb.
-  *	skb must be freed afterwards.
-+ *
-+ *	Does nothing for a cloned skb: the zerocopy state lives in
-+ *	skb_shinfo(), which the clones share.
-  */
- void skb_tx_error(struct sk_buff *skb)
- {
--	if (skb) {
-+	if (skb && !skb_cloned(skb)) {
- 		skb_zcopy_downgrade_managed(skb);
- 		skb_zcopy_clear(skb, true);
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -261,6 +261,15 @@ static bool decap_and_validate(struct sk
+ 
+ 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
+ 		IPCB(skb)->iif = iif;
++	} else if (proto == IPPROTO_IPV6) {
++		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
++		int iif = IP6CB(skb)->iif;
++
++		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
++		IP6CB(skb)->iif = iif;
++		IP6CB(skb)->nhoff = offsetof(struct ipv6hdr, nexthdr);
++		if (l3slave)
++			IP6CB(skb)->flags |= IP6SKB_L3SLAVE;
  	}
+ 
+ 	return true;
 
 
