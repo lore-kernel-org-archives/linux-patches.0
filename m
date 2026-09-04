@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C095D3BFAE0;
-	Fri,  4 Sep 2026 05:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB76372B2F;
+	Fri,  4 Sep 2026 05:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498855; cv=none; b=c8eZKgRZgE772kC/vL71c9AqqEp4gmAl4IRW6t5Ynb0e+ujP3NUEbbHqck1VZJmVSXvizMk7d3fEzlS3v7m1LeaiLXGOnay0HVD14BhTrPrk4FHnbv+6kzl5q/w8j8S3A/H2RBG2gtiUgAz9zzWGu+r6YbOS/k13ySkTMGJkNDc=
+	t=1788498858; cv=none; b=ro7yPeWPoEKm3MgjvhXnRujYdrJnC8FW701WqzHTqBZghLsPSGmyPT+x23yNepIir+AnAzTfhFVbsZgbDfZmWW+ag8goAo9ggtDK4a2XzeM7CtkEI6kYPn1aNoBXv+QafaqZowfy7fvuXaQ7Jh1RaRqECCfqEEYePKr8IkPQr1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498855; c=relaxed/simple;
-	bh=OR62eUGGd2z6qV5Mhxe0SvArp/FrWUsl9TetgkcpaRs=;
+	s=arc-20240116; t=1788498858; c=relaxed/simple;
+	bh=+AU6y6zOonasSAuz7KGhrlOT9YJezYRHW/uofYCIFVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=px48q4vBemKEYLYZS+kGPoAnALOVr6A3C5H1hMgpKCbrT0kbIZqcWIiYEE+XegkETvcmDPAk/+rgM8nfAjFVmZsyy/6KRxS5ErBajLOIi0YAp8v2vRrC+UKMiGhx1Upg+x9lscP12ji2EBstvui+y6X2J1xJ26EI648RQQE/5kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3TeEro9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u6npVmX+WeVF3h4IXbaUoBM4cmRVIunIQbMCrOQE5soD25b8Z+/3pMMb2jaG75FFKHTqn0ebp57or9IKw/DNCnKUz+SwMmkst2/V7LimwWZr/7S9nfW7H1Cy84WZngta2bF94CIB6nTcC2lkUwMCQ4NY+XlPBzCcW1qwuHWoYYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIlTwIoR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3TeEro9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271E91F00A3D;
-	Fri,  4 Sep 2026 05:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIlTwIoR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CBA1F00A3D;
+	Fri,  4 Sep 2026 05:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498854;
-	bh=Dl68zU3wfsI4rjuvfF91bgeQHhQX9T/cCNnSGPxcd24=;
+	s=korg; t=1788498857;
+	bh=SluM7AUW9T1mHQwLPa8xSWfi4Ct529iH8c5oNRBGzR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3TeEro960my6ItU3d7DgUXtHBSzSbbiLf9GWkMNDUV0/0uaFRpESkjW9LmhONXej
-	 ukmNEwu3J46yh0+HRnxhWRv9EktLFai8Mcel1XOtfn62FD+fUe/hcOnFBARwHRTuR5
-	 MOtrsRdBJRbxNCbBFvryyr7ASzq67eyORuhq79+Y=
+	b=GIlTwIoRnySlflVD4CdJs4rzQ16kC+myngLZzlLAQZpDsW83NT71yQudfcdxfVtFt
+	 EjpEHuleDaNZ8dYVTg/+6utAhg8arIw0OCchOARcbcuw7D6ltgrXC14YmfnFfOpO8R
+	 mx4XF2TCX1RwGek+QLh80Jt8mqf/oMdzpCWELWBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	NeilBrown <neil@brown.name>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.2 209/713] NFSD: Prevent client use-after-free during admin state revocation
-Date: Fri,  4 Sep 2026 06:52:57 +0200
-Message-ID: <20260904045808.502496830@linuxfoundation.org>
+Subject: [PATCH 7.2 210/713] NFSD: Prevent client use-after-free during delegation revoke
+Date: Fri,  4 Sep 2026 06:52:58 +0200
+Message-ID: <20260904045808.524526567@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,83 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit e270e5a0778e5bff852c8862ce9576ce70359393 upstream.
+commit 4683ca76b3b7e5808338491c6eb3c20e6b4894d5 upstream.
 
-A stateid holds only a bare pointer to its nfs4_client; a stateid
-reference does not pin it.  The client survives only because
-__destroy_client() drains its stateids before free_client() runs.
+A delegation stateid holds only a bare pointer to its owning
+nfs4_client and does not keep it alive.  The client survives its
+stateids only because __destroy_client() drains cl_delegations and
+cl_revoked before free_client() runs.
 
-nfsd4_revoke_states() drops nn->client_lock across revoke_one_stid(),
-which dereferences the client to revoke a stateid and read
-clp->cl_minorversion.  A teardown racing the dropped lock can free
-the client first.
+nfs4_laundromat() breaks that invariant: it unhashes an
+expired delegation from cl_delegations, drops deleg_lock, then
+revoke_delegation() relinks it onto cl_revoked under cl_lock.  In that
+window the delegation is on neither list, so client_has_state() can
+report no remaining state.
 
-Pinning cl_rpc_users under client_lock blocks the DESTROY_CLIENTID and
-EXCHANGE_ID teardown, which refuses while cl_rpc_users is non-zero.
-force_expire_client() ignores it: once its wait for cl_rpc_users to
-reach zero has passed, a later pin goes unnoticed.
+Every teardown path first requires cl_rpc_users to be zero, but
+the laundromat holds no such reference.  A client whose recalled
+delegation has just timed out can therefore reach free_client()
+while revoke_delegation() is still about to dereference cl_lock,
+a use-after-free.
 
-Under client_lock, skip a client whose cl_time is already zero --
-force_expire_client() clears it there before waiting -- otherwise pin
-cl_rpc_users before dropping the lock.  The walk then either sees the
-expiry and skips, or pins in time for that wait to cover the revoke.
+Pin the client with cl_rpc_users across the revoke so teardown blocks
+until it completes, then reap the delegation from cl_revoked.  A client
+already expiring reaps its own, so skip it and leave the delegation on
+del_recall_lru.
 
-Fixes: 1c13bf9f2e3c ("nfsd: allow lock state ids to be revoked and then freed")
+Fixes: 3bd64a5ba171 ("nfsd4: implement SEQ4_STATUS_RECALLABLE_STATE_REVOKED")
 Cc: stable@vger.kernel.org
 Reviewed-by: NeilBrown <neil@brown.name>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260709-cel-v4-3-1d519d9be0cb@kernel.org
+Link: https://patch.msgid.link/20260709-cel-v4-2-1d519d9be0cb@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ fs/nfsd/netns.h     |    6 ++++--
+ fs/nfsd/nfs4state.c |   23 +++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -115,7 +115,8 @@ struct nfsd_net {
+ 	struct list_head client_lru;
+ 	struct list_head close_lru;
+ 
+-	/* protects del_recall_lru and delegation hash/unhash */
++	/* protects del_recall_lru and delegation hash/unhash;
++	 * nests outside client_lock */
+ 	spinlock_t deleg_lock ____cacheline_aligned;
+ 	struct list_head del_recall_lru;
+ 
+@@ -124,7 +125,8 @@ struct nfsd_net {
+ 
+ 	struct delayed_work laundromat_work;
+ 
+-	/* client_lock protects the client lru list and session hash table */
++	/* client_lock protects the client lru list and session hash
++	 * table; nests inside deleg_lock */
+ 	spinlock_t client_lock;
+ 
+ 	/* protects blocked_locks_lru */
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -1960,9 +1960,19 @@ void nfsd4_revoke_states(struct nfsd_net
- 		struct nfs4_client *clp;
- 	retry:
- 		list_for_each_entry(clp, head, cl_idhash) {
--			struct nfs4_stid *stid = find_one_sb_stid(clp, sb,
--								  sc_types);
-+			struct nfs4_stid *stid;
-+
-+			/*
-+			 * force_expire_client() ignores cl_rpc_users once
-+			 * its wait_event() has passed, so pinning cannot
-+			 * keep an already-expiring client alive; the
-+			 * expiry path revokes its states instead.
-+			 */
+@@ -7204,6 +7204,7 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 		.new_timeo = nn->nfsd4_lease
+ 	};
+ 	struct nfs4_cpntf_state *cps;
++	struct nfs4_client *clp;
+ 	copy_stateid_t *cps_t;
+ 	int i;
+ 
+@@ -7232,6 +7233,18 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 		dp = list_entry (pos, struct nfs4_delegation, dl_recall_lru);
+ 		if (!state_expired(&lt, dp->dl_time))
+ 			break;
++		clp = dp->dl_stid.sc_client;
++		spin_lock(&nn->client_lock);
++		if (is_client_expired(clp)) {
++			spin_unlock(&nn->client_lock);
++			continue;
++		}
++		/*
++		 * Pin without reviving: get_client_locked() would
++		 * flip a courtesy client back to NFSD4_ACTIVE.
++		 */
++		atomic_inc(&clp->cl_rpc_users);
++		spin_unlock(&nn->client_lock);
+ 		refcount_inc(&dp->dl_stid.sc_count);
+ 		unhash_delegation_locked(dp, SC_STATUS_REVOKED);
+ 		list_add(&dp->dl_recall_lru, &reaplist);
+@@ -7240,8 +7253,18 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 	while (!list_empty(&reaplist)) {
+ 		dp = list_first_entry(&reaplist, struct nfs4_delegation,
+ 					dl_recall_lru);
++		clp = dp->dl_stid.sc_client;
+ 		list_del_init(&dp->dl_recall_lru);
+ 		revoke_delegation(dp);
++		/*
++		 * Unpin without renewing: put_client_renew() would
++		 * renew the reaped client's lease.
++		 */
++		if (atomic_dec_and_lock(&clp->cl_rpc_users, &nn->client_lock)) {
 +			if (is_client_expired(clp))
-+				continue;
-+			stid = find_one_sb_stid(clp, sb, sc_types);
- 			if (stid) {
-+				atomic_inc(&clp->cl_rpc_users);
- 				spin_unlock(&nn->client_lock);
- 				revoke_one_stid(nn, clp, stid);
- 				nfs4_put_stid(stid);
-@@ -1975,6 +1985,9 @@ void nfsd4_revoke_states(struct nfsd_net
- 					 */
- 					nn->nfs40_last_revoke =
- 						ktime_get_boottime_seconds();
-+				if (atomic_dec_and_test(&clp->cl_rpc_users) &&
-+				    is_client_expired(clp))
-+					wake_up_all(&expiry_wq);
- 				goto retry;
- 			}
- 		}
-@@ -3347,6 +3360,11 @@ static void force_expire_client(struct n
++				wake_up_all(&expiry_wq);
++			spin_unlock(&nn->client_lock);
++		}
+ 	}
  
- 	trace_nfsd_clid_admin_expired(&clp->cl_clientid);
- 
-+	/*
-+	 * cl_time is cleared under client_lock before the wait so a
-+	 * revocation walk pinning cl_rpc_users under it either skips
-+	 * this client or is seen by this wait_event().
-+	 */
  	spin_lock(&nn->client_lock);
- 	clp->cl_time = 0;
- 	spin_unlock(&nn->client_lock);
 
 
