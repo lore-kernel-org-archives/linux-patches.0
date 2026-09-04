@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC493D6664;
-	Fri,  4 Sep 2026 05:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603203DAAC8;
+	Fri,  4 Sep 2026 05:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499198; cv=none; b=oDQjH41vcGpd7fUWsPeYjEn/qq4BrogLQyxx9UEmXNO4Z80aTDsrD3UPz2vZtig0TOiy0cz/4ZXO/MMB+oY+RvQTaDB+D6L4ZV+niCWhawBqBsCkMg320XF2vL9x2WdFXnKUQXCRQYA5Z1OFBFtVBz/8uAaNY4nV90Z9Dybomns=
+	t=1788499201; cv=none; b=TFjkc8tCi9PxR4yXQGYT7rczCH3kPtnhjRZYFe9vaaXUSXTry5UbsWDB5gIRXNGq8RR2CQVVB4ikSMPABBzCHcBGRelDY1Vebnlpl2MWkQMHamWHkVN6b4loBcgZafS4Ai5JU6BPKUgSzPOYrJ4XhMQ7k/thcnCV3/NOcJpBNKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499198; c=relaxed/simple;
-	bh=1Fzfm1E3CBbNLyP1T1GwKl4nZBLBsgjhqqWwgfks2c0=;
+	s=arc-20240116; t=1788499201; c=relaxed/simple;
+	bh=2jUYav/4yVwym5x7OgSzX6DTu92h/JP0FdPuJB33bng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnzontexqqpbBWg7+PT67R7oje5c0jJYs3lFgACT6DVuLytFkFm92DeongRx1MIq3lahso8SrCl6DHqxtopRkRQM0lRgXM91TRE4YUuLi+8UGY5R/PrYxpY9PfmI1m0ztJh7hxwMZE0iG/Z4n/8s5DPQvEaedXtqHFCw/F8ho2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHb8MwyD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U2YPcqztqDYoTZm8JyqBNffR7VP9ccJBOYLBcw8QjnykkbirC3x5w/Qj2LAgv+MsKNdR6iQRgZx56DiY62DPTRCHDLM/qXdYaKKT83NFtjF/Nqcm1mWLE9oorBi89+vEeclQsMvOP+Hcyr6LmW9sCkQQ4hNqVfbAnTw/5Yj/PxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLX07sr/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHb8MwyD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A37F1F00A3D;
-	Fri,  4 Sep 2026 05:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLX07sr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3391B1F00A3D;
+	Fri,  4 Sep 2026 05:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499196;
-	bh=wv1TR1VGv91dpPbY4+3HhGuiIwzQF5vff1UNRtZrRa0=;
+	s=korg; t=1788499199;
+	bh=IP3Tpj1tea31dg8kCNUYuxDbEHs4guf5AKTxWHCgKOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jHb8MwyDWMRQeqJK53yEUKqqnDc+1f3ORuSZv49FNOLPUJ8TDEvoJ4Nb3QheReeEa
-	 0x6DfV5XgVXmZ2Vs0TcRAq8u/LDdtBEQcS8ywZxa2dNZlTqsYbUuRw6foF25/Eadlb
-	 hSQWQvMfzvMCn1I34DlMj+8HbSLIpk2W35MCtau8=
+	b=MLX07sr/+0z7mZaA+HHjFuB2kqA2roZLc10HAya6Z2oAPZM7OhZAk9lt8hvSxwO9b
+	 WYwP2DAEeaG1D/mO/QzctUDjrbw5Rx5pkt/jrrpb3vR/ClF7Q9xo8PQjF40uhMa9+K
+	 ng5H0IJGOGYZtnKCWdKZSMUhW4rKo6rR2wJpgYJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.2 332/713] cpufreq: schedutil: Fix rate limit overflow
-Date: Fri,  4 Sep 2026 06:55:00 +0200
-Message-ID: <20260904045811.273510100@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Zhenhao Wan <whi4ed0g@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 7.2 333/713] cxl/features: bound fwctl command payload to the input buffer
+Date: Fri,  4 Sep 2026 06:55:01 +0200
+Message-ID: <20260904045811.295293868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,72 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Zhenhao Wan <whi4ed0g@gmail.com>
 
-commit 3bff8f8e95fdc6ad19c8a1a8f87029094747e4bf upstream.
+commit f687394af983df5660b6afae7e0d06969f3af206 upstream.
 
-rate_limit_us is an unsigned int, while NSEC_PER_USEC is defined as
-1000L. On 32-bit systems, the multiplication is therefore performed
-using 32-bit unsigned arithmetic before the result is assigned to
-freq_update_delay_ns.
+fwctl_cmd_rpc() copies cmd->in_len bytes into inbuf = kvzalloc(cmd->in_len)
+and passes inbuf and in_len to ->fw_rpc(). The CXL callback cxlctl_fw_rpc()
+ignores in_len and never checks the user-controlled op_size against it.
 
-For example, writing 4294968 to rate_limit_us wraps the delay from
-4294968000 ns to 704 ns. This makes schedutil update far more often
-than configured.
+cxlctl_set_feature() bounds op_size only from below
+(op_size <= sizeof(feat_in->hdr)) and then reads op_size - sizeof(hdr)
+bytes from feat_in->feat_data via cxl_set_feature(). With a small in_len
+and a large op_size the first memcpy() already reads past the
+kvzalloc(in_len) buffer; the out-of-bounds bytes are placed in the mailbox
+payload and sent to the device, and a large enough op_size can walk into
+unmapped memory and oops the kernel. The Get paths pin op_size to a fixed
+size but likewise read the input struct without checking in_len.
 
-Add sugov_update_rate_limit_us() to widen rate_limit_us to s64 before
-converting it to nanoseconds. Use the helper when updating the tunable
-through sysfs and when starting the governor, so both paths perform the
-conversion without overflow.
+Reject, at the single dispatch point, any request whose fixed header plus
+op_size does not fit in the copied-in buffer. The lower-bound test guards
+the subtraction and ensures op_size was copied in before it is read.
 
-Fixes: 9bdcb44e391d ("cpufreq: schedutil: New governor based on scheduler utilization data")
-Signed-off-by: Hui Su <sh_def@163.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260806142304.1761454-1-sh_def@163.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: eb5dfcb9e36d ("cxl: Add support to handle user feature commands for set feature")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://patch.msgid.link/20260620-cxl-fwctl-oob-v1-1-5758e34d784a@gmail.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpufreq_schedutil.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/cxl/core/features.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -61,6 +61,17 @@ static DEFINE_PER_CPU(struct sugov_cpu,
- 
- /************************ Governor internals ***********************/
- 
-+static void sugov_update_rate_limit_us(struct sugov_policy *sg_policy)
-+{
-+	/*
-+	 * Cast rate_limit_us before multiplication to force 64-bit arithmetic.
-+	 * Otherwise, on 32-bit platforms, both operands are converted to
-+	 * 32-bit unsigned long and the multiplication may overflow.
-+	 */
-+	sg_policy->freq_update_delay_ns =
-+		(s64)sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
-+}
+--- a/drivers/cxl/core/features.c
++++ b/drivers/cxl/core/features.c
+@@ -649,7 +649,13 @@ static void *cxlctl_fw_rpc(struct fwctl_
+ 	struct cxl_memdev *cxlmd = fwctl_to_memdev(fwctl_dev);
+ 	struct cxl_features_state *cxlfs = to_cxlfs(cxlmd->cxlds);
+ 	const struct fwctl_rpc_cxl *rpc_in = in;
+-	u16 opcode = rpc_in->opcode;
++	u16 opcode;
 +
- static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
- {
- 	s64 delta_ns;
-@@ -606,7 +617,7 @@ rate_limit_us_store(struct gov_attr_set
- 	tunables->rate_limit_us = rate_limit_us;
++	if (in_len < sizeof(rpc_in->hdr) ||
++	    rpc_in->op_size > in_len - sizeof(rpc_in->hdr))
++		return ERR_PTR(-EINVAL);
++
++	opcode = rpc_in->opcode;
  
- 	list_for_each_entry(sg_policy, &attr_set->policy_list, tunables_hook)
--		sg_policy->freq_update_delay_ns = rate_limit_us * NSEC_PER_USEC;
-+		sugov_update_rate_limit_us(sg_policy);
- 
- 	return count;
- }
-@@ -848,7 +859,7 @@ static int sugov_start(struct cpufreq_po
- 	void (*uu)(struct update_util_data *data, u64 time, unsigned int flags);
- 	unsigned int cpu;
- 
--	sg_policy->freq_update_delay_ns	= sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
-+	sugov_update_rate_limit_us(sg_policy);
- 	sg_policy->last_freq_update_time	= 0;
- 	sg_policy->next_freq			= 0;
- 	sg_policy->work_in_progress		= false;
+ 	if (!cxlctl_validate_hw_command(cxlfs, rpc_in, scope, opcode))
+ 		return ERR_PTR(-EINVAL);
 
 
