@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B1F412294;
-	Fri,  4 Sep 2026 05:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF55415B71;
+	Fri,  4 Sep 2026 05:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500434; cv=none; b=Wb1Jpg5uN0HaKc7pewImBM9BrhWD8ZCOKbUroWO5spAMNdRrw99U7H1NAPOZXp51jR037hrHOWVL1DH5GorkZDYEEZvyz5w2ud6sP63UryaPH3M6H55x/THUmDsAq+dvam9kHOZtaPgJ4hYGhd1+TcmHghtcngnSmrbIg9JprY8=
+	t=1788500437; cv=none; b=DMwi1Vjv/j3carW8yb7X+LXkmsS8kLkbTy/SxIp5KXHF1MynMmuMn0ldFM0LpzMARl589tk6whFfgwidSyIvQ7tObCVj3GpmAfezPMUkGkKslKD5wgt5PuaBxVPtTxmW1ku7j0kLj7bYPGKuRFFXxbW/AcWq9MlZAmtG+Op6kfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500434; c=relaxed/simple;
-	bh=C81G8wiVXtcMwH6qplELhaV0lvbclAyDoDjYVsVeAws=;
+	s=arc-20240116; t=1788500437; c=relaxed/simple;
+	bh=DZO9WC8URcIlsar44YwJenlwx5KxEwwi4lwbYLXdSnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2ql06SmNscjYasaS8GuUl34KqlHPcdbVAlZ1Kv5iGw9GBFMySA8bbn0HaMyILwKSzkUKXLeqBy6AX5k9Fqdoq1ZX39CM6CcXqR81wriIHWUmhZekQTBUIPUgZKpXSnZV26IJqVrbgncma0werAspE7cAlQ6JYP+57FukYnujBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/jGpc9a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mddWcQdeanY3pbUN89Xdk9FYDAVEzCbV6V6rNwBycEk4dKDOXj9CXNTMhK0jbpIhmqj0PhInvOGJ5cDiY8riTeh/IYnKhDCbmY/z84r8WMDgLwZlKgf27Md9RCoW8c+kx3EFT+7qEgxHQkE8YXq/wHgJ8Jpfmz9DEfGmW3ECUsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6n+4Eo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/jGpc9a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34A11F00A3D;
-	Fri,  4 Sep 2026 05:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6n+4Eo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05AB1F00A3D;
+	Fri,  4 Sep 2026 05:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500433;
-	bh=uBj6XaSFJd2eDhTN5VJfUBlbPKOrdXT8dqkjaAUl13g=;
+	s=korg; t=1788500436;
+	bh=A/imvOwY1DyIJZY9x8H01OcWBavMoLwRY4AoBBcqyb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D/jGpc9aONYYt5BZNb2vbwrUiSpn56XXwHL8PXrI9W0R9xV1RrkpNhE7kknmAtrz+
-	 947NQeZEFoaTpKgJfWMZYbCGzYw/nq3qiEHLijNrHIHC9Fhns8wCr5YXA0izWXQmRK
-	 rSkPDg7FFYYY4fdi3fF+GcQdNGuJNgFwJ2PfbcKM=
+	b=V6n+4Eo+QJqQY//yAeA5u6xL0slxwQjE1pjqrci5uPi/cQuhHG9fusJWFh83UZXHi
+	 mLBewA+W2QR8cM4t2Xpefi124wO33IvX5MEFLeyVJMj13Vj/zYpDvdxGVOmwaJ7/1y
+	 D4UO/3SHNhUvSxHtotfpo+9yDBEJrag/Q6vk/QK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <me@ziyao.cc>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.18 054/552] x86/locking: Use sfence for wmb() if SSE is available
-Date: Fri,  4 Sep 2026 06:53:31 +0200
-Message-ID: <20260904045749.065640413@linuxfoundation.org>
+	Borys Tsyrulnikov <tsyrulnikov.borys@gmail.com>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: [PATCH 6.18 055/552] x86/tdx: Fix off-by-one in port I/O handling
+Date: Fri,  4 Sep 2026 06:53:32 +0200
+Message-ID: <20260904045749.090665475@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,37 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <me@ziyao.cc>
+From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit d824ed1307680dd482f607b0e707c575f70668c4 upstream.
+commit 0f63e656b1c679d32ac595de29d10c03efca6a25 upstream.
 
-When adding cc clobber to wmb()'s definition, the alternative()
-condition to use sfence was incorrectly raised from X86_FEATURE_XMM to
-X86_FEATURE_XMM2.
+handle_in() and handle_out() in arch/x86/coco/tdx/tdx.c use:
 
-Restore the correct constraint for potential better performance on
-machines without SSE2.
+    u64 mask = GENMASK(BITS_PER_BYTE * size, 0);
 
-Fixes: bd922477d935 ("locking/x86: Add cc clobber for ADDL")
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260801182953.15069-1-me@ziyao.cc
+GENMASK(h, l) includes bit h. For size=1 (INB), this produces
+GENMASK(8, 0) = 0x1FF (9 bits) instead of GENMASK(7, 0) = 0xFF (8
+bits). The mask is one bit too wide for all I/O sizes.
+
+Fix the mask calculation.
+
+Fixes: 03149948832a ("x86/tdx: Port I/O: Add runtime hypercalls")
+Reported-by: Borys Tsyrulnikov <tsyrulnikov.borys@gmail.com>
+Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Link: https://lore.kernel.org/all/CAKw_Dz96rfSQc6Rn+9QBcUFHhmkK+9zu+P=bxowfZwxrATCBRg@mail.gmail.com/
+Cc:stable@vger.kernel.org
+Link: https://patch.msgid.link/20260713133753.223947-2-kirill@shutemov.name
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/barrier.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/coco/tdx/tdx.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/barrier.h
-+++ b/arch/x86/include/asm/barrier.h
-@@ -17,7 +17,7 @@
- #define rmb() asm volatile(ALTERNATIVE("lock addl $0,-4(%%esp)", "lfence", \
- 				       X86_FEATURE_XMM2) ::: "memory", "cc")
- #define wmb() asm volatile(ALTERNATIVE("lock addl $0,-4(%%esp)", "sfence", \
--				       X86_FEATURE_XMM2) ::: "memory", "cc")
-+				       X86_FEATURE_XMM) ::: "memory", "cc")
- #else
- #define __mb()	asm volatile("mfence":::"memory")
- #define __rmb()	asm volatile("lfence":::"memory")
+--- a/arch/x86/coco/tdx/tdx.c
++++ b/arch/x86/coco/tdx/tdx.c
+@@ -693,7 +693,7 @@ static bool handle_in(struct pt_regs *re
+ 		.r13 = PORT_READ,
+ 		.r14 = port,
+ 	};
+-	u64 mask = GENMASK(BITS_PER_BYTE * size, 0);
++	u64 mask = GENMASK(BITS_PER_BYTE * size - 1, 0);
+ 	bool success;
+ 
+ 	/*
+@@ -713,7 +713,7 @@ static bool handle_in(struct pt_regs *re
+ 
+ static bool handle_out(struct pt_regs *regs, int size, int port)
+ {
+-	u64 mask = GENMASK(BITS_PER_BYTE * size, 0);
++	u64 mask = GENMASK(BITS_PER_BYTE * size - 1, 0);
+ 
+ 	/*
+ 	 * Emulate the I/O write via hypercall. More info about ABI can be found
 
 
