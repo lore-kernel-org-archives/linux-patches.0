@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FCB415B8F;
-	Fri,  4 Sep 2026 05:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3708F415B85;
+	Fri,  4 Sep 2026 05:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498482; cv=none; b=OzyBe75IjnmY9PBZpprlPx4ckQ9E7jukmfVpXmt1qGdm7MvIAG66mB7JkkSzXZLzgeEZLR6WqB/9sFKfgTPejdY/KDoA3QbHI4AszgJlHwSwVWskhzogEc6Ubb8MYX4qJlT1Kj/Slxxi6RqZe2s9kdfXEYK8TaTgFMKH2gDVCXE=
+	t=1788498487; cv=none; b=uCTXeUjIkemEbYcaLDEHmylLX9pC91LZNsWHQribsYHt4o4pDg0rZn4hHoA26ULTzjnYvCFWsU0aYVCz1gIhRVvUVrLQikQoPgP5OIY/VUIrNWbNuvjLNUMLjH8ttMlRR029rcZD26Yr0ytEShP8hmJUepsTUmt27HcKwgErQB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498482; c=relaxed/simple;
-	bh=qzjtt3ip2pnxdi4+KVLwm7H2HJJ4WwAezzqXvzHhSzE=;
+	s=arc-20240116; t=1788498487; c=relaxed/simple;
+	bh=L+p6AC0HOnPo4B0srajphgurL9f4WErt1ZftJQSGfmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnNdqO7bsBwGac+XVsiuJeL5qAUmccaeFSzd9EntYVMALuXq8raXiBbYevuUACOPV0m2kDI3xYjk+Nu71eWFZrsS/ls3as2D6Oj6jtFEENcvbrkVshnINlxXJTmXpy3a9yXslbv7CpKkXO6Q3wmvnguznXGEny7dCWRS/6hLAKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1aVtWPx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s7ydlqDZ3oT65ZBCUOF8J6yxfcOyw3h13MXN3L0sYkuPJ+qJowIT5hUgxgJiIIMgerCc6peRG486tGhCwEmXK0YCvfTKOWQPfFt4AoF05vs0aXDkJfI+YKSuo+22tNChkMJs+SQJhMrrkC1sXP4/ou6aBKGJGqCk4j/lVZgvjlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vn2Ssbq/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1aVtWPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFDD1F00A3D;
-	Fri,  4 Sep 2026 05:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vn2Ssbq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DD11F00A3D;
+	Fri,  4 Sep 2026 05:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498480;
-	bh=RH8sB5wa+wqybl1Tn8hlnk9f9wvN3ZWatlA00TW+cSI=;
+	s=korg; t=1788498483;
+	bh=zkkLYuG+1UIo8MWRpeagVq+4pQR62gY/bjXmDLu2OCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E1aVtWPxJBN+e+1wtDwc+X935i3JFxCtXQ9oy0bi5EVLomz4fxsVN87JeVMVZ/WU7
-	 UyBLeVkjNovbsmP2A792FtyVuMLce671d+4hmW4FLdHM4WnJ0GWQcB8XMH1U7zjPgT
-	 VnDBoUA8v+3Sr28Q8aYy+TTW0db86+wH9gyxin9s=
+	b=vn2Ssbq/agLjamQO6SFTfY79NvSJuMiXATgJAtLAa4MWpw7rm84/uqzIIfdT6Q3e3
+	 j9GiZCA5RjTAfqv2d9oHHPTKEXwhMDjgOxrggxghm1DHCoCcQiYSVIrx7DqZDwDu53
+	 hqbT/03sPdE4w46zelZ4uy/pbN5oN4n60nUOobT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Neha Gholkar <nehagholkar@gmail.com>,
-	Gregory Price <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Byungchul Park <byungchul@sk.com>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 076/713] mm: mempolicy: fix automatic numa balancing for shmem
-Date: Fri,  4 Sep 2026 06:50:44 +0200
-Message-ID: <20260904045805.543518991@linuxfoundation.org>
+	kernel test robot <yi1.lai@intel.com>,
+	Gary Guo <gary@garyguo.net>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.2 038/713] rust: cfi: disable function merging if CFI is enabled
+Date: Fri,  4 Sep 2026 06:50:06 +0200
+Message-ID: <20260904045804.685199955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -61,94 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Gary Guo <gary@garyguo.net>
 
-commit d230991493b521eeff39f32434fddcbcdb109eb0 upstream.
+commit 29b03d1de967a177176d12811d970cac7882afcf upstream.
 
-Neha reports that mapped shmem aren't considered for NUMA balancing,
-noting convergence problems and bandwidth bottlenecking for cachelib based
-workloads on tiered memory systems.
+In Rust doc tests, there is a dummy `__module_firmware_test_init` function
+generated by the example in `module_firmware!`'s documentation, which
+just returns zero. Many other documentation examples generate functions
+that produce zero. LKP test robot reports [1] a `Flags::zeroed` instance;
+my local reproduction has a `Bounded::new::<0>`.
 
-Looking at the code and going through the git history, this doesn't
-actually seem intentional:
+LLVM's MergeFunctionsPass incorrectly merges functions with different
+KCFI types, causing `__module_firmware_test_init` to be merged into
+one of the zero-returning functions. As module init is invoked via an
+indirect function call, KCFI is checked and this produces a KCFI failure.
 
-Commit fc3147245d19 ("mm: numa: Limit NUMA scanning to migrate-on-fault
-VMAs") added a vma_policy_mof() gate to task_numa_work() so VMAs whose
-policy lacks MPOL_F_MOF are skipped from NUMA balancing scans.  The
-motivation was a real usecase: Oracle was pinning shared segments with
-mbind(MPOL_BIND) so trapping faults was both expensive and pointless.
+I've reported this bug to upstream LLVM [2]; in the meantime, disable
+function merging if CFI is enabled. No separate treatment is needed for
+CONFIG_RUST_INLINE_HELPERS, as Clang does not enable function merging
+by default.
 
-The handling of NULL from vm_ops->get_policy, however, treated "user
-explicitly opted out" the same as "user never specified anything." For
-VMAs whose shared policy is absent - the common case for shmem - the scan
-was disabled too.
+[ LLVM already has a pending PR:
 
-This issue is old.  It probably hurts less in conventional NUMA.  But it's
-very noticeable on tiered systems, where entire tmpfs workingsets can get
-stuck on lower-bandwidth memory.
+    https://github.com/llvm/llvm-project/pull/217665
 
-Fix this by having vma_policy_mof() use __get_vma_policy() directly, and
-thereby handle the fallback to task policy (-> preferred_node_policy() has
-MPOL_F_MOF per default).  Every other consumer of vm_ops->get_policy
-already handles it this way, the scan-eligibility check was the outlier.
+  which solves the issue. In addition, I asked upstream Rust if the
+  unstable `-Zmerge-functions=disabled` flag will remain around:
 
-This preserves Mel's intended fix: don't scan stuff the user explicitly
-pinned.  But allow default policy vmas to participate in balancing.
+    https://rust-lang.zulipchat.com/#narrow/channel/425075-rust-for-linux/topic/.60-Zmerge-functions.3Ddisabled.60/
 
-Link: https://lore.kernel.org/20260629163337.1264881-1-hannes@cmpxchg.org
-Fixes: fc3147245d19 ("mm: numa: Limit NUMA scanning to migrate-on-fault VMAs")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reported-by: Neha Gholkar <nehagholkar@gmail.com>
-Tested-by: Neha Gholkar <nehagholkar@gmail.com>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Balbir Singh <balbirs@nvidia.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  and it does indeed look like that will be the case. - Miguel ]
+
+Reported-by: kernel test robot <yi1.lai@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202608201017.100a4511-lkp@intel.com [1]
+Link: https://github.com/llvm/llvm-project/issues/217629 [2]
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Cc: stable@vger.kernel.org
+Fixes: ca627e636551 ("rust: cfi: add support for CFI_CLANG with Rust")
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://patch.msgid.link/20260820135733.37121-1-gary@kernel.org
+[ Fixed typos as discussed. Reworded slightly for other typos. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |   21 ++++++---------------
- 1 file changed, 6 insertions(+), 15 deletions(-)
+ Makefile |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -2059,24 +2059,15 @@ struct mempolicy *get_vma_policy(struct
- bool vma_policy_mof(struct vm_area_struct *vma)
- {
- 	struct mempolicy *pol;
-+	pgoff_t ilx;
-+	bool mof;
- 
--	if (vma->vm_ops && vma->vm_ops->get_policy) {
--		bool ret = false;
--		pgoff_t ilx;		/* ignored here */
--
--		pol = vma->vm_ops->get_policy(vma, vma->vm_start, &ilx);
--		if (pol && (pol->flags & MPOL_F_MOF))
--			ret = true;
--		mpol_cond_put(pol);
--
--		return ret;
--	}
--
--	pol = vma->vm_policy;
-+	pol = __get_vma_policy(vma, vma->vm_start, &ilx);
- 	if (!pol)
- 		pol = get_task_policy(current);
--
--	return pol->flags & MPOL_F_MOF;
-+	mof = pol->flags & MPOL_F_MOF;
-+	mpol_cond_put(pol);
-+	return mof;
- }
- 
- bool apply_policy_zone(struct mempolicy *policy, enum zone_type zone)
+--- a/Makefile
++++ b/Makefile
+@@ -1118,7 +1118,8 @@ endif
+ ifdef CONFIG_RUST
+ 	# Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST selects
+ 	# CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
+-	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers
++	# Disable function merging as LLVM incorrectly merges functions with different KCFI types.
++	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers -Zmerge-functions=disabled
+ 	KBUILD_RUSTFLAGS += $(RUSTC_FLAGS_CFI)
+ 	export RUSTC_FLAGS_CFI
+ endif
 
 
