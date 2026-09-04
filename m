@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9E0415F22;
-	Fri,  4 Sep 2026 05:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2194034EF15;
+	Fri,  4 Sep 2026 05:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499410; cv=none; b=nsoWWoF2bl6S0u9TbwU7IhlT6CgsTZH1H+vZgFofLzMMt2GGaXkxCjv7ivuq8W+AxJwtUWT5jsQvO1fAi0vAd3rHLe1Box86P5JjgMfgrpLRlyY4BDz0sp+OslouQ+QE8Z1IFX9ly2FjVERz4lf9qn1ooeVuhbODXWIr+9VGiQs=
+	t=1788499413; cv=none; b=a/5fmxhtYzuL0412Yttty/sNWu2ag/8bsCPZEPjvAki+kG2U+abRNpgIoQtcJKVIRZjW4Xhd8jazxYmxvqRwE0gsrB4zkuzHLLBErrARCxcrG1A5MyJ22lhzilC06XmswKt2h0/kJ6UcAowKGB85hTciAHkDEjfQ3Nrv25MSlj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499410; c=relaxed/simple;
-	bh=1+wKcL9Jd4/NRSspsgcEYDPLJ0q79Bh8Gxn3aGU0mHg=;
+	s=arc-20240116; t=1788499413; c=relaxed/simple;
+	bh=Y4dXVFYW7dKJy5ybEUS3EtP6TrtfB1s0LDVpy/bsHpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mamn0+copakn39oyLwNxTRaXGxKqBW2LjakG036sfaCxxJ2lILt42+raHAwWP94a8Qjp7ChTxlkZDhlvPIhnL1XYlY3K5+KSjsCYTFG/ARd5d2MFmuRt26pMk2mQ8smNvXJ2Yb2kZjU1VrYW6exDW0PpVp3KqqJv0Rt0PaWZyL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcAo3+MN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YtonHlelamw2BmmXfD3KNEYHsSci4mNWsT5M40uBETGamLZlONlCaNe1gQZU2R9+4GjJBkcxBpnj3eQszha9QL4mWm+vF1rYHMGIItwn6/7yCkuG/8mMrhBZ+SlK8E1BMAzVubiyEtY8K/kBzyJ46fa+4xjxzWb2DaKFwroVBTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9Yje1Sb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcAo3+MN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25081F00A3D;
-	Fri,  4 Sep 2026 05:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9Yje1Sb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A89C1F00A3D;
+	Fri,  4 Sep 2026 05:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499409;
-	bh=XkGKG2cyzgZVkJ+8n2aXNW+E3WHLEeBgM9rcB9/H3AA=;
+	s=korg; t=1788499412;
+	bh=VfXfkUJdSHxN8rPewixOk5ErEQ5Xk3y22KBPZeyVwHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lcAo3+MNsnyDGS31KbEv7kNlWNOGX9JTaUCpGhJ222CRNac6qoxH9cEq9LrTVkV/o
-	 18XJ/GIb+QYyRZAPopFeEdmLa6dJ1Cy+uhoYxzuXPzsqCousNlIpM7dVIIEQuxx6pv
-	 Fr7xSzRX6YflZc/HHGBAEiWN53UZAuVqAeoZIKkw=
+	b=k9Yje1SbzppOgaaE2V1bzTEZmuzFpLpbQvShTn0FVopWMXw2+Iaf7dbwPMjKs721g
+	 dZ0YNz4vFWKajx+NP0QGasiiKQy5zikS1yWGI7IDsF/4vWeOLIEHxLq8LWykcL5yfJ
+	 mmluEI/TVtTYXepgQ9xVU8taQSQBjTCwuj8aEdBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 354/713] ip6_tunnel: use skb_cow_head() in ip6_tnl_xmit()
-Date: Fri,  4 Sep 2026 06:55:22 +0200
-Message-ID: <20260904045811.764666603@linuxfoundation.org>
+	David Lee <david.lee@trailofbits.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 7.2 401/713] udf: reject VAT indexes equal to the entry count
+Date: Fri,  4 Sep 2026 06:56:09 +0200
+Message-ID: <20260904045812.813887656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,70 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: David Lee <david.lee@trailofbits.com>
 
-commit 87f21b59ddc618eff9670c174842964ad65fdade upstream.
+commit cac0cb07f29ccfb373fd4a36c81e908ef3ce608c upstream.
 
-ip6_tnl_xmit() may need to expand headroom before it can push the
-outer IPv6 and optional encap headers. It currently does that with
-skb_realloc_headroom(), copies skb->sk ownership, consumes the original
-skb, and then continues processing with the replacement skb kept only in
-its local variable.
+UDF 1.50 virtual partition mapping uses the VAT as an array of physical
+block mappings. s_num_entries stores the number of entries in that array,
+not the highest valid index. The valid VAT indexes are therefore below
+s_num_entries.
 
-That is safe only if the helper cannot fail afterwards. But this helper
-still has post-reallocation error exits. collect_md tunnels reject
-non-NONE encap after the replacement, and ip6_tnl_encap() can also fail
-later. In those cases the helper returns an error to its callers while
-the caller still only has the original skb pointer.
+udf_get_pblock_virt15() currently rejects only indexes greater than
+s_num_entries. A crafted image can request index s_num_entries, pass the
+bounds check, and make the kernel read one entry past the allocated VAT table.
 
-Both ip6_tnl_start_xmit() and the IPv6 GRE paths free the caller skb on
-error, so they can end up freeing an skb that ip6_tnl_xmit() already
-consumed.
+Change the check to reject block >= s_num_entries, so the count is handled as
+an exclusive upper bound.
 
-Use skb_cow_head() instead. It provides the required headroom and
-writability without privately replacing the caller-owned skb, so later
-error returns cannot leave callers with a stale pointer.
+A crafted UDF image reproduced this on origin/master commit
+0e35b9b6ec0ffcc5e23cbdec09f5c622ad532b53 with a KASAN slab-out-of-bounds
+report in udf_get_pblock_virt15().
 
-The Ethernet users, ip6gretap and ip6erspan, clear IFF_TX_SKB_SHARING
-and already call skb_cow_head() before entering ip6_tnl_xmit(). They do
-not rely on the removed skb_shared() reallocation. This also makes the
-IPv6 tunnel path consistent with ip_tunnel_xmit().
+Trail of Bits has a reproducer that triggers kernel panic demonstrating the bug, and can share it if needed.
 
-Fixes: 058214a4d1df ("ip6_tun: Add infrastructure for doing encapsulation")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/30807a062ccc5c9c8a5ec2c5eb805ef279c50bdd.1786452593.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Link: https://patch.msgid.link/20260708101712.1706564-1-david.lee@trailofbits.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_tunnel.c |   15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ fs/udf/partition.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1236,19 +1236,8 @@ route_lookup:
- 	 */
- 	max_headroom += LL_RESERVED_SPACE(tdev);
+--- a/fs/udf/partition.c
++++ b/fs/udf/partition.c
+@@ -55,7 +55,7 @@ uint32_t udf_get_pblock_virt15(struct su
+ 	map = &sbi->s_partmaps[partition];
+ 	vdata = &map->s_type_specific.s_virtual;
  
--	if (skb_headroom(skb) < max_headroom || skb_shared(skb) ||
--	    (skb_cloned(skb) && !skb_clone_writable(skb, 0))) {
--		struct sk_buff *new_skb;
--
--		new_skb = skb_realloc_headroom(skb, max_headroom);
--		if (!new_skb)
--			goto tx_err_dst_release;
--
--		if (skb->sk)
--			skb_set_owner_w(new_skb, skb->sk);
--		consume_skb(skb);
--		skb = new_skb;
--	}
-+	if (skb_cow_head(skb, max_headroom))
-+		goto tx_err_dst_release;
- 
- 	if (t->parms.collect_md) {
- 		if (t->encap.type != TUNNEL_ENCAP_NONE)
+-	if (block > vdata->s_num_entries) {
++	if (block >= vdata->s_num_entries) {
+ 		udf_debug("Trying to access block beyond end of VAT (%u max %u)\n",
+ 			  block, vdata->s_num_entries);
+ 		return 0xFFFFFFFF;
 
 
