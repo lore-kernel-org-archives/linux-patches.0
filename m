@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24965419FBB;
-	Fri,  4 Sep 2026 06:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20313AA4F2;
+	Fri,  4 Sep 2026 06:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502700; cv=none; b=lcsynZHyfHEpwh8fNNnrMpKMHPf0S3/1UIonzBUV+7YfdMEzxYLgVAJAnciZqprdKMCTPW8M7iwtBSoVbuMQkdW1z8U8m37UZ1gB6UHttG6Slb4nM5Z93vyAT0xIbxH/7CREIAWFsjUXYOoCLcL9/AHHgMpwmC5udhpBvIE0APc=
+	t=1788502704; cv=none; b=PpCnkghl25ZbYfR2ElW4LNaphTW59HTxd2H5pcJN+ZWVzuHCUptE4bwBc/FE/K9WuwYeQvi7HjnItp/vg+m2VM03LzbC7naffnlB7J7Qg6AdkoIvqwN1tshV0nfdeBBUTbuBeqIaPuSXQSsxCsRVCgPvO2CDehEjR+HL+oAuhLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502700; c=relaxed/simple;
-	bh=W2g2jdh5yeiFQEe7ZV9R+mlgXu3r34MWoJ94Sp8an4g=;
+	s=arc-20240116; t=1788502704; c=relaxed/simple;
+	bh=WrGo2H7G2QszZb+gp/gCCcnupk0SbbtwtYTmvYKmc4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YeptxKc8ElmJRSce3yo1/1LbivWw5geGVVr3ST7SjnorCGckQCbMQE4iDnIfTYKnB7H+UDS/HutjJTsYAv7ISRRa1VPatCHRVNgVr2egS740EPmRQeaDqY8z3NFg8CK58jqDDQsIdMwP5abmh7U4DtT8e/CObkoNnsodcTSXwiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ur5SdTKq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CHGyDPYzVBO9F/wxYLj9lqqfXnMqS8ON8If87xVn7EypTgD3EzsYb864erGI21vqKD0LTHY08d6q/zCbee0rnqs1NeE/ywua5hRjo/+hrU5T4rbLqJqr8q55/OPzMqx+zg2X4SeaDqVpQQ43J6MISZt4yVjy4/4ZBooMmONNd3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9XwQTCE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ur5SdTKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF511F00A3D;
-	Fri,  4 Sep 2026 06:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9XwQTCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535F71F00A3D;
+	Fri,  4 Sep 2026 06:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502699;
-	bh=bYhDGOFYzhpZPH4NYVZ/qE9YFdXSTlHh1eCIu/ADIcw=;
+	s=korg; t=1788502701;
+	bh=iK2VGRkvcwcmDojSg+eulwXZeuTrhVWGcs06N9LV/qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ur5SdTKq3Ky8AW4ACr8SAL4kiAQHcOTUosqBFfMwtHMwKmAJQAOE6wCO1zbxokBet
-	 nGHTA/I0f6NCTBq88fiCm4zf3J9qFgEk41U5lQjqZdMntj32aP9G6SfDAgymVXNpYu
-	 ccb3eMaawymWTlR53EYnEfeCOBLht0/hYXZjvsOc=
+	b=y9XwQTCEV/T301xn28UW5dqdxqaAJ4LCVgxz4O7r3obIeuZ6BTuehSYxsEe85qeEX
+	 GEARh3Z4zkzxhwZ0fAfNhuInBgTcm4F8l6UY2H7M/l8CKMVaKXkPxJQWDtQmj6M9YK
+	 tsSuxrdSgCIEshgGm0gOZeB+B7FL1trLZxmvc+aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.12 299/403] PCI/proc: Avoid spurious runtime PM wakeup on config space accesses
-Date: Fri,  4 Sep 2026 07:01:42 +0200
-Message-ID: <20260904045741.642555721@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.12 273/403] power: supply: charger-manager: register regulators before exposing sysfs
+Date: Fri,  4 Sep 2026 07:01:16 +0200
+Message-ID: <20260904045741.066312502@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -44,71 +44,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 4ff664a81d729b37f2eb65de80a670abfb61c9a0 upstream.
+commit c57cb36f76eb7ced45f57af1a890d8f3a6d76342 upstream.
 
-Currently, proc_bus_pci_read() and proc_bus_pci_write() do not return early
-for zero-length configuration space accesses at valid offsets.
+charger_manager_remove() and the err_reg_extcon probe error path free each
+charger regulator with regulator_put() before tearing down the power_supply
+sysfs entries (power_supply_unregister()). charger_manager_remove() also
+calls try_charger_enable(cm, false) after the regulator_put() loop. A
+concurrent write to a charger's externally_control sysfs attribute that
+lands between regulator_put() and power_supply_unregister() can run
+charger_externally_control_store() and call try_charger_enable(), which,
+when charging is enabled, dereferences the already-freed consumer handle.
+When charging is enabled, try_charger_enable(cm, false) in .remove() also
+dereferences the freed handles directly. Both leave use-after-free windows.
+Symmetrically, probe registers the sysfs entries (power_supply_register)
+before acquiring the regulators (regulator_get, inside
+charger_manager_register_extcon), so userspace can reach externally_control
+before the regulators are available.
 
-Such an access invokes pci_config_pm_runtime_get() and
-pci_config_pm_runtime_put() around transfer blocks that do nothing.
+Split charger_manager_register_extcon() on the sync/async boundary:
+charger_manager_get_regulators() (regulator_get only, no async producer)
+now runs before power_supply_register() so sysfs is not live before
+regulators are available, and charger_manager_register_extcon() keeps only
+the extcon notifier/work setup, still after power_supply_register() so a
+power_supply_register() failure cannot reach extcon setup. This keeps the
+sysfs setup/teardown ordering symmetric without introducing an asynchronous
+producer on the earlier probe-error path.
 
-This is a problem because pci_config_pm_runtime_get() synchronously resumes
-the upstream bridge through pm_runtime_get_sync(), and resumes the device
-itself through pm_runtime_resume() when it is in D3cold, only for the
-handler to return zero immediately afterwards.  Such a spurious wakeup
-wastes power and adds needless resume latency.
+Move power_supply_unregister() and try_charger_enable(cm, false) ahead of
+the regulator_put() loop on both teardown paths, and adjust err_reg_extcon
+(power_supply_unregister() then fall through err_regulator for
+regulator_put(); get_regulators self-rolls back on its own failure).
 
-The sysfs core already returns early for in-range zero-length binary
-attribute accesses before pci_read_config() or pci_write_config() is
-invoked.  In contrast, the VFS forwards zero-length requests to the procfs
-callbacks, where they continue into runtime PM handling.
+This does not address the separate extcon-notifier-driven deref of the same
+handles, which needs its own synchronization design.
 
-Return early from proc_bus_pci_read() and proc_bus_pci_write() when nbytes
-is zero, before any runtime PM involvement.
+Found by an in-house static analysis tool.
 
-The value returned to userspace at these offsets remains zero,
-so the change is not visible to userspace.
-
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: order tags]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 3950c7865cd7 ("charger-manager: Add support sysfs entry for charger")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260729075909.1219906-1-kwilczynski@kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260728030123.230202-1-fanwu01@zju.edu.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/proc.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/power/supply/charger-manager.c |   54 +++++++++++++++++++++++----------
+ 1 file changed, 39 insertions(+), 15 deletions(-)
 
---- a/drivers/pci/proc.c
-+++ b/drivers/pci/proc.c
-@@ -45,6 +45,9 @@ static ssize_t proc_bus_pci_read(struct
- 	else
- 		size = 64;
+--- a/drivers/power/supply/charger-manager.c
++++ b/drivers/power/supply/charger-manager.c
+@@ -1017,6 +1017,29 @@ static int charger_extcon_init(struct ch
+ 	return 0;
+ }
  
-+	if (!nbytes)
-+		return 0;
++static int charger_manager_get_regulators(struct charger_manager *cm)
++{
++	struct charger_desc *desc = cm->desc;
++	struct charger_regulator *charger;
++	int i, ret;
 +
- 	if (pos >= size)
- 		return 0;
- 	if (nbytes >= size)
-@@ -121,6 +124,9 @@ static ssize_t proc_bus_pci_write(struct
- 	if (ret)
- 		return ret;
++	for (i = 0; i < desc->num_charger_regulators; i++) {
++		charger = &desc->charger_regulators[i];
++		charger->consumer = regulator_get(cm->dev,
++						  charger->regulator_name);
++		if (IS_ERR(charger->consumer)) {
++			dev_err(cm->dev, "Cannot find charger(%s)\n",
++				charger->regulator_name);
++			ret = PTR_ERR(charger->consumer);
++			while (i-- > 0)
++				regulator_put(desc->charger_regulators[i].consumer);
++			return ret;
++		}
++		charger->cm = cm;
++	}
++	return 0;
++}
++
+ /**
+  * charger_manager_register_extcon - Register extcon device to receive state
+  *				     of charger cable.
+@@ -1039,15 +1062,6 @@ static int charger_manager_register_extc
+ 	for (i = 0; i < desc->num_charger_regulators; i++) {
+ 		charger = &desc->charger_regulators[i];
  
-+	if (!nbytes)
-+		return 0;
+-		charger->consumer = regulator_get(cm->dev,
+-					charger->regulator_name);
+-		if (IS_ERR(charger->consumer)) {
+-			dev_err(cm->dev, "Cannot find charger(%s)\n",
+-				charger->regulator_name);
+-			return PTR_ERR(charger->consumer);
+-		}
+-		charger->cm = cm;
+-
+ 		for (j = 0; j < charger->num_cables; j++) {
+ 			struct charger_cable *cable = &charger->cables[j];
+ 
+@@ -1584,13 +1598,23 @@ static int charger_manager_probe(struct
+ 	}
+ 	psy_cfg.attr_grp = desc->sysfs_groups;
+ 
++	/*
++	 * Acquire charger regulators before exposing the sysfs entries, so
++	 * userspace cannot reach externally_control before the regulators
++	 * (and charger->cm) are available.  Mirrors the order in remove().
++	 */
++	ret = charger_manager_get_regulators(cm);
++	if (ret < 0)
++		return ret;
 +
- 	if (pos >= size)
- 		return 0;
- 	if (nbytes >= size)
+ 	cm->charger_psy = power_supply_register(&pdev->dev,
+ 						&cm->charger_psy_desc,
+ 						&psy_cfg);
+ 	if (IS_ERR(cm->charger_psy)) {
+ 		dev_err(&pdev->dev, "Cannot register charger-manager with name \"%s\"\n",
+ 			cm->charger_psy_desc.name);
+-		return PTR_ERR(cm->charger_psy);
++		ret = PTR_ERR(cm->charger_psy);
++		goto err_regulator;
+ 	}
+ 
+ 	/* Register extcon device for charger cable */
+@@ -1624,11 +1648,11 @@ static int charger_manager_probe(struct
+ 	return 0;
+ 
+ err_reg_extcon:
++	power_supply_unregister(cm->charger_psy);
++err_regulator:
+ 	for (i = 0; i < desc->num_charger_regulators; i++)
+ 		regulator_put(desc->charger_regulators[i].consumer);
+ 
+-	power_supply_unregister(cm->charger_psy);
+-
+ 	return ret;
+ }
+ 
+@@ -1646,12 +1670,12 @@ static void charger_manager_remove(struc
+ 	cancel_work_sync(&setup_polling);
+ 	cancel_delayed_work_sync(&cm_monitor_work);
+ 
+-	for (i = 0 ; i < desc->num_charger_regulators ; i++)
+-		regulator_put(desc->charger_regulators[i].consumer);
++	try_charger_enable(cm, false);
+ 
+ 	power_supply_unregister(cm->charger_psy);
+ 
+-	try_charger_enable(cm, false);
++	for (i = 0 ; i < desc->num_charger_regulators ; i++)
++		regulator_put(desc->charger_regulators[i].consumer);
+ }
+ 
+ static const struct platform_device_id charger_manager_id[] = {
 
 
