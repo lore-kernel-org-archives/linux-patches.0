@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E56E4137B2;
-	Fri,  4 Sep 2026 05:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5912264A3;
+	Fri,  4 Sep 2026 05:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500096; cv=none; b=boaKC/CWlPdeJS1ncSH9BTZ0MHOYo4rfPQd/sOlzClCL6zRHsZfvew1YZTkBQdY0CoG4sYVFoAMIgOwnhSNLlMXJ+ImaC5XdDs7d9Q68G45sFO0uM1soRt//G9uZwmCbsi/7TupiBd4M/RZONC8NYMF6vM/AbKjLJYZD1NzRBys=
+	t=1788500099; cv=none; b=FRcdJJEhky5b+1Lism9z7318Lfz5XNkLmphd/DeXgwyMMjX7tWWkzJSmen5RQw5qWe66byMJfT98hHV1a+ZHcWML8cjSx2ChIQE+fl1AgAvyh8DAe7OiRLUq7hXPLrtBAHlqxHq1UFdTl7ftS3FcMI3ASPa2s8ecGP1MzLDz/p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500096; c=relaxed/simple;
-	bh=Q7bSDdalGCEiSo7EyivCP2PGYuw0ujKDClM9C0AVZl8=;
+	s=arc-20240116; t=1788500099; c=relaxed/simple;
+	bh=jaHvLGqfvDlp+6IW5MDqFPCfYjPRBFWWroqS8RHDNQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cG+AWS6k+ytfMmp8w4P97ARcsXPEPTheMoyX4bIEgM3BBIOrwKhjthGWjkCohdLHQXLDbKhZ2pepuPcLfYpuLHGnJeG6bxUQ/ewyFhKxNlA9lEtec3btESpGSc0jp6M4YTtoBYL5bK/bwZJ/idA1UD0J2tZb5Zj2A342V20XqoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=El0Hnoln; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NU7rdRmM7mjdB9LBrkfD4ki5AodPtZKxZoPj+J5lXCTwetduViRgOH6HZ8Ujg66UgjVbZ80wgmYN1vhHiAaC2qKAgQpQrmfkdIftfVNHLjHhNyi3Hct0PcXo81YskEN2gld5RrRJrVFHHOP00HG9uKPbLOwhfTQM0zzWxx+ZkG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdJmM7mE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="El0Hnoln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE39E1F00A3D;
-	Fri,  4 Sep 2026 05:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdJmM7mE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717821F00A3D;
+	Fri,  4 Sep 2026 05:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500095;
-	bh=aBmMi0jbuVTj/nkTca6diyMqZLFqY5+uWd6bbDfuQL4=;
+	s=korg; t=1788500098;
+	bh=ED7t0TOk2qdUKv4yTIRJlTgxncQV8GxNHSY0S1hSCF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=El0HnolnLQ4oiMlebIkzciCuvpfhMohzptAQ4Plm61tj9cO4tuuPvCU7luq6KsyYO
-	 cd1OLyvvv8+Lj0v2ZSNyc955uWv2o67znZY/2OARVT9JGQfp5hsvRlajHy4HTO16HY
-	 McHFtDoEdX1lrKhSdq83doiRNZNFnoCg85HNPsJE=
+	b=FdJmM7mEHrPJ8vFWioYady3Onvj0KFtlE8FWsnnlrSdvTREna56PgIT/JbTCetIp3
+	 ii7h4LhZ+2ZqSSPHJRo3J11D16lhZ9jlrF8qsxJtyPjsd36lWejb2yg7eK8unlxJCy
+	 NOa74iiTsGtaREb9e/WiHLo0Lmy+CDi/JqEHSuvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliot Courtney <ecourtney@nvidia.com>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Gary Guo <gary@garyguo.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 650/713] rust: num: reject Bounded::shr overshifts at build time
-Date: Fri,  4 Sep 2026 07:00:18 +0200
-Message-ID: <20260904045818.403227432@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 651/713] arch_numa: avoid false positive fortify warning in setup_node_to_cpumask_map()
+Date: Fri,  4 Sep 2026 07:00:19 +0200
+Message-ID: <20260904045818.425691861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -54,48 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eliot Courtney <ecourtney@nvidia.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 223aa25aee82e188ddf043a8703b16e5fdfc37d8 ]
+commit f2b1cb39d5ccab090d8353788f186f7e7a1fffd4 upstream.
 
-Make `shr` reject shifts of at least the type's bit width at build
-time, instead of panicking or masking the shift amount at runtime.
+When building ARCH=riscv using clang with CONFIG_FORTIFY_SOURCE and
+CONFIG_UBSAN_BOUNDS enabled, CONFIG_NR_CPUS > 64, and the default value of
+2 for CONFIG_NODES_SHIFT, there is a compiletime warning from the fortify
+routines.
 
-[ This implies we can break the type invariant, which in turn means
-  we can trigger UB via `Deref`, e.g.:
+  In file included from mm/arch_numa.c:11:
+  In file included from include/linux/acpi.h:14:
+  In file included from include/linux/resource_ext.h:11:
+  In file included from include/linux/slab.h:17:
+  In file included from include/linux/gfp.h:7:
+  In file included from include/linux/mmzone.h:8:
+  In file included from include/linux/spinlock.h:60:
+  In file included from include/linux/interrupt_rc.h:17:
+  In file included from include/linux/smp.h:13:
+  In file included from include/linux/cpumask.h:11:
+  In file included from include/linux/bitmap.h:13:
+  In file included from include/linux/string.h:383:
+  include/linux/fortify-string.h:430:4: warning: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Wattribue-warning]
+    430 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  include/linux/fortify-string.h:430:4: note: called by function 'fortify_memset_chk(unsigned long, unsigned long, unsigned long)'
+  include/linux/bitmap.h:248:3: note: inlined by function 'setup_node_to_cpumask_map'
+    248 |                 memset(dst, 0, len);
+        |                 ^
+  include/linux/fortify-string.h:462:25: note: expanded from macro 'memset'
+    462 | #define memset(p, c, s) __fortify_memset_chk(p, c, s,                   \
+        |                         ^
+  include/linux/fortify-string.h:453:2: note: expanded from macro '__fortify_memset_chk'
+    453 |         fortify_memset_chk(__fortify_size, p_size, p_size_field),       \
+        |         ^
+  include/linux/fortify-string.h:430:4: note: use '-gline-directives-only' (implied by '-g1') or higher for more accurate inlining chain locations
+    430 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  1 warning generated.
 
-      rust_kernel: panicked at rust/kernel/num/bounded.rs:528:22:
-      unsafe precondition(s) violated: hint::unreachable_unchecked must never be reached
+In this configuration, MAX_NUMNODES is 4.  clang unrolls the for loop in
+setup_node_to_cpumask_map() past this, which triggers the fortify check
+when accessing node_to_cpumask_map on the theoretical fifth loop iteration
+because it would be an out of bounds write.
 
-    - Miguel ]
+Make it clear to clang that nr_node_ids is bounded by MAX_NUMNODES due to
+the logic in setup_nr_node_ids() by early returning in
+setup_node_to_cpumask_map() should that condition be violated.
 
-Signed-off-by: Eliot Courtney <ecourtney@nvidia.com>
-Acked-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: c59a2d14cd24 ("rust: num: add `shr` and `shl` methods to `Bounded`")
-Link: https://patch.msgid.link/20260810-pramin-split-v2-2-65a00b3c7309@nvidia.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20260813-arch_numa-avoid-fortify-warning-v2-1-093ad97a78df@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2174
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/num/bounded.rs | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/arch_numa.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/rust/kernel/num/bounded.rs b/rust/kernel/num/bounded.rs
-index 304ef04d86cd9..6d766c22e61b5 100644
---- a/rust/kernel/num/bounded.rs
-+++ b/rust/kernel/num/bounded.rs
-@@ -495,6 +495,7 @@ pub fn cast<U>(self) -> Bounded<U, N>
-     /// assert_eq!(v_shifted.get(), 0xff);
-     /// ```
-     pub fn shr<const SHIFT: u32, const RES: u32>(self) -> Bounded<T, RES> {
-+        const_assert!(SHIFT < T::BITS);
-         const { assert!(RES + SHIFT >= N) }
+--- a/drivers/base/arch_numa.c
++++ b/drivers/base/arch_numa.c
+@@ -105,6 +105,18 @@ static void __init setup_node_to_cpumask
+ 	if (nr_node_ids == MAX_NUMNODES)
+ 		setup_nr_node_ids();
  
-         // SAFETY: We shift the value right by `SHIFT`, reducing the number of bits needed to
--- 
-2.53.0
-
++	/*
++	 * This check should never be true but it makes it clear to compilers
++	 * that node_to_cpumask_map is bound by nr_node_ids, avoiding false
++	 * positive fortify warnings when accessing node_to_cpumask_map in the
++	 * for loop below.
++	 */
++	if (unlikely(nr_node_ids > MAX_NUMNODES)) {
++		pr_err("nr_node_ids (%u) is larger than MAX_NUMNODES (%u)\n",
++		       nr_node_ids, MAX_NUMNODES);
++		return;
++	}
++
+ 	/* allocate and clear the mapping */
+ 	for (node = 0; node < nr_node_ids; node++) {
+ 		alloc_bootmem_cpumask_var(&node_to_cpumask_map[node]);
 
 
