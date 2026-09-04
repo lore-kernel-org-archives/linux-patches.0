@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D30408035;
-	Fri,  4 Sep 2026 05:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC88408035;
+	Fri,  4 Sep 2026 05:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500769; cv=none; b=NnQkFAYTrmoHBnn8b0RSqNCs2cSnRE4Djupd7QNKfdniV8YghLtDlOB/QciVr8FrK21umQJDPtVT7KKDWTcS+T+esJJ9XkMQ2UJDZR5aX+C7zc5UdkqIkSZdI8oq8wMmn4tS9ptV8aLtKWpcb0Ef9iCOiOH7EKMAoNKYffAm2Kk=
+	t=1788500772; cv=none; b=neZ6zZBFb4ANZRZTpq4FBD2Sv7jyZUbxM5L7mLfrT12ARxx+dytncat+6D2867oZQKWd2WhGEIMGalYoVYDSAzrm0oBKQhq/fYNh76Qdw4OCdT0Kh0S4KzVWVahTVdrhqkAgMejDShRpr0f/Sk26p2oCsIWsW8OvGlfPJQhosHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500769; c=relaxed/simple;
-	bh=Yf34zX7P5uz4hpI6sKsYuF/Zo4pbqSF8UCybWbMymvM=;
+	s=arc-20240116; t=1788500772; c=relaxed/simple;
+	bh=P57h/Y6TiuyhraSkiEDlX30IJ+hbs4wqdFTAkn7fLGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P0m/PyRWfNTrs4SFTfcbXIeaIia+NMKsTR0a7FbYy4O/s5BTAOk64eAIYdflvwbD4POmU0uhDLrxHCd7+5oUyN31O3Gws2t0JNpka7OqEWSNKDGFLQyfuOoatjceTrxaPD3DlgB7QtrjuD6GIKciAPlppnZzfdO0gC5R65RmT4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBWNB3nI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rq2FBqm6/teWp872SilAJXA5LEpkxl6e/NeNhDsGD+42oVksc8Wzhg7dbX4bqWYtEKdw94iWC9dXb4l68V+YmSqhojgWTTpcNJHsRe9znJvW7xSPaPsSIcIqVXvswRJ5hICPbt0MRGU4zkgSst6fO7vjtxreA6tgnkhKMOsSg04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0nBmz4Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBWNB3nI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732981F00A3D;
-	Fri,  4 Sep 2026 05:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0nBmz4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505621F00A3D;
+	Fri,  4 Sep 2026 05:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500768;
-	bh=lNXRkoM+8TZmCQG4WXcgLK/w7Cls9rgGZNGFKBkzwzE=;
+	s=korg; t=1788500770;
+	bh=k8koMPhERBodvjlp50Hri5cCKkScW9WhuSSkPKWR0HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qBWNB3nIZfyme+t1aTHjxdgKssOSB9+RurqdiQU+CXHo7T85GUgDCQAZz+hiIls2H
-	 CoVMmQSyCe0kQLC7Pwo4yVBbX65t27FFGOLAG5yReZwZSCACniAooXSBah2r/qffT7
-	 W6IzSGGmviOtFf33trFE/S7fcvw6YZ9sVh5tZOgk=
+	b=t0nBmz4Y6Qcu3npF6wF4VTU/stEhHknTD6SnEyUu6k3nJ3idpt7pEnM6Sw03fVVFY
+	 2au75eJYGHSqwFxbJnHpENM4+QKpBZKnhW43ji86FweziGY5NPeqKbP2jJa1VZne9Z
+	 6RxAKvatTIOjThRvg/t4IKP6HYQDo7ZeB09smafo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Eikmeyer <dev@deq.rocks>,
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 174/552] HID: apple: preserve keyboard backlight across T2 resume
-Date: Fri,  4 Sep 2026 06:55:31 +0200
-Message-ID: <20260904045752.967307430@linuxfoundation.org>
+Subject: [PATCH 6.18 175/552] HID: corsair-void: Check size of status and firmware events before reading them
+Date: Fri,  4 Sep 2026 06:55:32 +0200
+Message-ID: <20260904045752.990039941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,82 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Eikmeyer <dev@deq.rocks>
+From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 
-commit 2b5d1495bd101f3d9c13caf3923754f48ee7371a upstream.
+commit 08d8814521885e67b1bdf6a3036ee264e3e58377 upstream.
 
-The T2 virtual USB host controller re-enumerates the internal keyboard
-after system resume. The butterfly keyboard backlight currently uses
-LED_CORE_SUSPENDRESUME, so the LED core sends a blocking request to the
-old HID device while it is disappearing. That request fails with -ENODEV
-and the newly probed device starts with its backlight off.
+Malformed status and firmware events could cause an out-of-bounds read since
+the size wasn't being checked. Check the size and warn on unexpected values to
+avoid this.
 
-To fix this, we cache the requested brightness when the old HID device is
-removed and restore it when the replacement is probed. We let
-re-enumeration handle restoration instead of issuing a request through the
-stale device.
-
-Fixes: 1f95a6cd5ad7 ("HID: apple: ensure the keyboard backlight is off if suspending")
+Fixes: 6ea2a6fd3872 ("HID: corsair-void: Add Corsair Void headset family driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-apple.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/hid/hid-corsair-void.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -91,6 +91,9 @@ struct apple_sc_backlight {
- 	struct hid_device *hdev;
- };
+--- a/drivers/hid/hid-corsair-void.c
++++ b/drivers/hid/hid-corsair-void.c
+@@ -92,6 +92,9 @@
+ #define CORSAIR_VOID_STATUS_REPORT_ID		0x64
+ #define CORSAIR_VOID_FIRMWARE_REPORT_ID		0x66
  
-+/* T2 VHCI re-enumerates the internal keyboard across system resume. */
-+static int apple_backlight_resume_brightness = -1;
++#define CORSAIR_VOID_STATUS_REPORT_SIZE		5
++#define CORSAIR_VOID_FIRMWARE_REPORT_SIZE	5
 +
- struct apple_backlight_config_report {
- 	u8 report_id;
- 	u8 version;
-@@ -823,6 +826,7 @@ static int apple_backlight_led_set(struc
- static int apple_backlight_init(struct hid_device *hdev)
- {
- 	int ret;
-+	int brightness;
- 	struct apple_sc *asc = hid_get_drvdata(hdev);
- 	struct apple_backlight_config_report *rep;
+ #define CORSAIR_VOID_USB_SIDETONE_REQUEST	0x1
+ #define CORSAIR_VOID_USB_SIDETONE_REQUEST_TYPE	0x21
+ #define CORSAIR_VOID_USB_SIDETONE_VALUE		0x200
+@@ -742,6 +745,13 @@ static int corsair_void_raw_event(struct
  
-@@ -858,13 +862,20 @@ static int apple_backlight_init(struct h
- 	asc->backlight->cdev.name = "apple::kbd_backlight";
- 	asc->backlight->cdev.max_brightness = rep->backlight_on_max;
- 	asc->backlight->cdev.brightness_set_blocking = apple_backlight_led_set;
--	asc->backlight->cdev.flags = LED_CORE_SUSPENDRESUME;
-+	/* VHCI re-enumeration restores the cached brightness in the next probe. */
+ 	/* Description of packets are documented at the top of this file */
+ 	if (hid_report->id == CORSAIR_VOID_STATUS_REPORT_ID) {
++		if (size < CORSAIR_VOID_STATUS_REPORT_SIZE) {
++			hid_warn_ratelimited(hid_dev,
++			                     "unexpected status report of size %d",
++			                     size);
++			return 1;
++		}
 +
-+	brightness = READ_ONCE(apple_backlight_resume_brightness);
-+	if (brightness < 0)
-+		brightness = LED_OFF;
-+	else
-+		brightness = min_t(int, brightness, rep->backlight_on_max);
- 
--	ret = apple_backlight_set(hdev, 0, 0);
-+	ret = apple_backlight_set(hdev, brightness, 0);
- 	if (ret < 0) {
- 		hid_err(hdev, "backlight set request failed: %d\n", ret);
- 		goto cleanup_and_exit;
- 	}
-+	asc->backlight->cdev.brightness = brightness;
- 
- 	ret = devm_led_classdev_register(&hdev->dev, &asc->backlight->cdev);
- 
-@@ -997,6 +1008,9 @@ static void apple_remove(struct hid_devi
- 
- 	if (asc->quirks & APPLE_RDESC_BATTERY)
- 		timer_delete_sync(&asc->battery_timer);
-+	if (asc->backlight)
-+		WRITE_ONCE(apple_backlight_resume_brightness,
-+			   asc->backlight->cdev.brightness);
- 
- 	hid_hw_stop(hdev);
- }
+ 		drvdata->mic_up = FIELD_GET(CORSAIR_VOID_MIC_MASK, data[2]);
+ 		drvdata->connected = (data[3] == CORSAIR_VOID_WIRELESS_CONNECTED) ||
+ 				     drvdata->is_wired;
+@@ -750,6 +760,13 @@ static int corsair_void_raw_event(struct
+ 					      FIELD_GET(CORSAIR_VOID_CAPACITY_MASK, data[2]),
+ 					      data[3], data[4]);
+ 	} else if (hid_report->id == CORSAIR_VOID_FIRMWARE_REPORT_ID) {
++		if (size < CORSAIR_VOID_FIRMWARE_REPORT_SIZE) {
++			hid_warn_ratelimited(hid_dev,
++			                     "unexpected firmware report of size %d",
++			                     size);
++			return 1;
++		}
++
+ 		drvdata->fw_receiver_major = data[1];
+ 		drvdata->fw_receiver_minor = data[2];
+ 		drvdata->fw_headset_major = data[3];
 
 
