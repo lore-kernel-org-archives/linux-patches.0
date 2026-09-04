@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEA538AC65;
-	Fri,  4 Sep 2026 05:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8FD38AC65;
+	Fri,  4 Sep 2026 05:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500922; cv=none; b=bOwpJ+Fg2ZpGE9Cb0QdYx+W7RCVTsqY2iWverL0Jo39BJ8STRU/dZ5gpqGiti00nzhD1+bckR3iU+B4HZPbvmscIxFi0EkL8yNhXz6dPO+d2Tzubb5HRNSJhwLexk0AP4w5gdj3NiDMfI3d3PsHSIP3yYdMF8l+qyqabZQ7Oyos=
+	t=1788500925; cv=none; b=gekvDpk76b61jwooZTSpzTlk15fcHOLTae1ziavodvfx/v5Zw8ti7pY2bxLTrGOqoY7HSRXWsaYeis0ZgHKMAT86pjsqNMlxGjBB2u6vCFBRXdzXM6ZCO7lka1XTAP3vgtm0Hbq/9+h36GEgJ3hIfgqxbybSSvmXJ2GO4baXvEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500922; c=relaxed/simple;
-	bh=GBOpy20vLScsOeia6o/QkMGlEwCPGP3BJXrZyLu5Eac=;
+	s=arc-20240116; t=1788500925; c=relaxed/simple;
+	bh=T58gAth/uFqpw6WOOPBv6Ym1cuiFrHQtilxChaiQw84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hzg2zxUTdjPPxSXuyIjSg7SZxMXlqFiRUVus2PyoCwQTHFVRB7NV73wjAhu1OkjmrOxBr2WuzmwJBtzKGpVgo+AqtOrycdXOhRn83UazXsIbVBBgCTFVwRQZQYY9e8TudT7XKPZ1WUSNQYnF+Jc8KUPOF10skmmRm1y35qalxBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+XHXQev; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UdTjo4Nj0m8SZn5jYwH3nNKOuqp8rxod5WO54keRUyNbtYVrwhtjtg1XwKvrQfEn2b9dnT30qlsgw93Wqx9zew/5FFNymoihP9u07t+4rKP3vlAH93ZzhlvqiCMdatGqR8fNE2S4kT1bw1S293vS1F7YTvbdCsQ1ZuKwlUmSFlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1uf6SAA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+XHXQev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A452D1F00A3D;
-	Fri,  4 Sep 2026 05:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1uf6SAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7634E1F00A3D;
+	Fri,  4 Sep 2026 05:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500921;
-	bh=E/f4wCpy4j9Fbg8csTkMetO0lj5ufVipS6XwluSE/Ms=;
+	s=korg; t=1788500924;
+	bh=7kFF29naiLRKafq429lRF9rFg+cZoLmrXAvoj3cVPZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P+XHXQevnhXQkEMV1xLzoeyf6UWq1Qn5icTEbYItUo815j5C6Lj+vXKr/0u5bWLyn
-	 hbpxpolO83vXZPGPAFJ81AljsjijFvSImyajBqtdHKmk06wcwJ0VNuFYew69Wk6h9I
-	 NrPiJ192YoN63szqJqErQwFqF/FlDS4ISNtjRq2s=
+	b=b1uf6SAAzLMQ+FLzpK9tnfWAvFaS4DXhFrjOPcmd4GKTYrN893JSZwmcfl9ocm4rj
+	 Q8WjGHilHxto9j9gAp/VrNH/bBLwM7CZSoAxD8epgAf7487Aw2ScrhBxixOoLr2wOl
+	 h16fwoZXwaWK16iMtdV7bVan1Fsismq3GDuHq8DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Subject: [PATCH 6.18 210/552] accel/rocket: fix NULL dereference and integer overflow in rocket_job_push()
-Date: Fri,  4 Sep 2026 06:56:07 +0200
-Message-ID: <20260904045754.101244804@linuxfoundation.org>
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 228/552] bnx2x: fix double free in bnx2x_init_firmware() error path
+Date: Fri,  4 Sep 2026 06:56:25 +0200
+Message-ID: <20260904045754.659798830@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,87 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit a85402bff218f2b8f0d806e46c16c2f3d49cdda7 upstream.
+commit d2796ffe38cb4155afe0eab23636295b096c27a5 upstream.
 
-rocket_job_push() allocates a temporary array to hold all input and
-output GEM object pointers:
+bnx2x_init_firmware() frees bp->init_ops, bp->init_data and
+bp->init_ops_offsets in its error path without setting them to NULL.
+The cleanup function bnx2x_release_firmware() frees the same three
+pointers unconditionally, so if init_firmware fails and
+release_firmware is later called (e.g. from __bnx2x_remove or through
+the function state machine), all three are freed a second time.
 
-    bos = kvmalloc_array(job->in_bo_count + job->out_bo_count,
-                         sizeof(void *), GFP_KERNEL);
-    memcpy(bos, job->in_bos, job->in_bo_count * sizeof(void *));
-    memcpy(&bos[job->in_bo_count], job->out_bos, ...);
+Set each pointer to NULL after kfree() in the error path so that the
+subsequent kfree(NULL) in bnx2x_release_firmware() is a safe no-op.
 
-Two bugs exist:
-
-1. Missing NULL check: if kvmalloc_array() fails, bos is NULL and
-   the subsequent memcpy() dereferences it, causing a kernel NULL
-   pointer dereference.
-
-2. Integer overflow: in_bo_count and out_bo_count are both u32, set
-   directly from userspace-supplied in_bo_handle_count and
-   out_bo_handle_count with no prior validation. Their sum is computed
-   in u32 arithmetic and can wrap to a smaller value, causing the
-   allocation count passed to kvmalloc_array() to be smaller than
-   intended. Subsequent uses still operate on the original counts when
-   copying and locking objects, which may lead to out-of-bounds accesses
-   on the temporary array.
-
-Fix by using check_add_overflow() to detect count overflow before the
-allocation, and adding a NULL check on the allocation result.
-
-Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
+Fixes: 94a78b79cb5f ("bnx2x: Separated FW from the source.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/r/20260524155716.90955-1-meatuni001@gmail.com
-Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260815122149.951215-1-yijiangshan@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/rocket/rocket_job.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/accel/rocket/rocket_job.c
-+++ b/drivers/accel/rocket/rocket_job.c
-@@ -8,6 +8,7 @@
- #include <drm/drm_gem.h>
- #include <drm/rocket_accel.h>
- #include <linux/interrupt.h>
-+#include <linux/overflow.h>
- #include <linux/iommu.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
-@@ -188,14 +189,19 @@ static int rocket_job_push(struct rocket
- 	struct rocket_device *rdev = job->rdev;
- 	struct drm_gem_object **bos;
- 	struct ww_acquire_ctx acquire_ctx;
-+	u32 bo_count;
- 	int ret = 0;
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
+@@ -13474,10 +13474,13 @@ static int bnx2x_init_firmware(struct bn
  
--	bos = kvmalloc_array(job->in_bo_count + job->out_bo_count, sizeof(void *),
--			     GFP_KERNEL);
-+	if (check_add_overflow(job->in_bo_count, job->out_bo_count, &bo_count))
-+		return -EINVAL;
-+
-+	bos = kvmalloc_array(bo_count, sizeof(*bos), GFP_KERNEL);
-+	if (!bos)
-+		return -ENOMEM;
- 	memcpy(bos, job->in_bos, job->in_bo_count * sizeof(void *));
- 	memcpy(&bos[job->in_bo_count], job->out_bos, job->out_bo_count * sizeof(void *));
- 
--	ret = drm_gem_lock_reservations(bos, job->in_bo_count + job->out_bo_count, &acquire_ctx);
-+	ret = drm_gem_lock_reservations(bos, bo_count, &acquire_ctx);
- 	if (ret)
- 		goto err;
- 
-@@ -220,7 +226,7 @@ static int rocket_job_push(struct rocket
- 	rocket_attach_object_fences(job->out_bos, job->out_bo_count, job->inference_done_fence);
- 
- err_unlock:
--	drm_gem_unlock_reservations(bos, job->in_bo_count + job->out_bo_count, &acquire_ctx);
-+	drm_gem_unlock_reservations(bos, bo_count, &acquire_ctx);
- err:
- 	kvfree(bos);
- 
+ iro_alloc_err:
+ 	kfree(bp->init_ops_offsets);
++	bp->init_ops_offsets = NULL;
+ init_offsets_alloc_err:
+ 	kfree(bp->init_ops);
++	bp->init_ops = NULL;
+ init_ops_alloc_err:
+ 	kfree(bp->init_data);
++	bp->init_data = NULL;
+ request_firmware_exit:
+ 	release_firmware(bp->firmware);
+ 	bp->firmware = NULL;
 
 
