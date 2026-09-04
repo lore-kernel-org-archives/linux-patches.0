@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1058F3AE198;
-	Fri,  4 Sep 2026 05:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFB33AE198;
+	Fri,  4 Sep 2026 05:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499164; cv=none; b=GRjmKMGtD5O45Aha8FdgDlPMiMOGtA0zBCa6MHE4rczgBZ+2DQL6q4VM82zxeqXvtbklstpNEa6JgtrHlTnB3GMMlhsYNwcVFc8s0+BsZheYGOHJJvUpveFRc2EQslLYLO7fyXHZb36k7QMTLlY94PRFMYE7WAP3QcKaF9Zx5CI=
+	t=1788499167; cv=none; b=D9shyiF5eUHDPPSRNYMqIzXpBafPdnLDOXhOyrQ2rMScKkKvZSeRRPFQ9Z1lTulJ7NHZ0hd69d6EU3t349x0KNeu8G0nfPDkKlkIS3+Rsry12Ju4vvRcmm3Iw1ao5VY1pQmh3pCQhBLEkvk17pmg0ipXoLs8Ndo6Evsr2KEcfyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499164; c=relaxed/simple;
-	bh=jnXhT+kMM690hxrXrTW98WmZaMMxH3ZTprENuhITX6s=;
+	s=arc-20240116; t=1788499167; c=relaxed/simple;
+	bh=LdGb2TmMxishhcje2e5ejCHP9/1BQYdA35xdvfm4WNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Weva3svXaGvY1ZscVLUiTp6UtiW0qlqZFp1iA8+WCARXQJnVAnqdF+OrhV1AQRMdK58YHv0ofWCC9SgTQu87WhSADqLAqgYNXoZSsNHuFqIDkNKym/YGPpPfGgRM8pNrmBBX+Ntfg2UWI4Q/vEdi6+bFS0jxTa5HdUf48XjMJE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRQRLh1I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UfmO17TYgaJeRsLVkNmuvLJ6jt5Tchz1af95zWau1AMiLKjMkfAotw02LHrPFQpwx4ZG/xC26Pwn/YKX3U/CXKN2wrhRFeJIte4OsCpT6Pv0iG2wdRxEZBIFFcPZ5lLQU94GAluz2kD3mq0wHyivUrtSvzkGa1YOL+dp2GHJrZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJBy1N9b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRQRLh1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2351F00A3D;
-	Fri,  4 Sep 2026 05:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJBy1N9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428501F00A3D;
+	Fri,  4 Sep 2026 05:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499163;
-	bh=M/SB/TGfLRLoSKf9T/E6zE3PZ7pnH8xv3OVrY7Of3P8=;
+	s=korg; t=1788499165;
+	bh=bY/kDyr7Q7jetyZM3bm3h+T+YHe1GR6MCsFLqL1FFmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRQRLh1I4bQLnXSCtteBxJQ5htpLGuD/wdvyaSgzm8TKIzw924Yj23YV4RFCREOTu
-	 J/tdYResjJxLNYtJ4lydSMwHGEHjuwtyrL1VrN8ydlseMHzHCcjw3CUIQBZA7pmJsc
-	 0LSmB8GITWi1j/tIU+nHzsUhPcEahl3FNHy0p4/g=
+	b=MJBy1N9bWPIEW5gP0YX9hEcXv+rOKHvgFiZMzBhwhhjenGctAgZrR0+S6LkPk+n8T
+	 lxDXqgudTbnqCEAqSzH4tWCtb82VTfhi3ZGGCwyX7AlgpRVPdpAkFa3ui9+eo8JTP3
+	 CitAbByznWWixHsR5Yr+fZ+ZvHToKGqwQP9b9Khw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	STAR Labs SG <info@starlabs.sg>,
-	Daniel Borkmann <borkmann@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>
-Subject: [PATCH 7.2 321/713] bpf: Disable preemption in __bpf_get_stack
-Date: Fri,  4 Sep 2026 06:54:49 +0200
-Message-ID: <20260904045811.025238838@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jan Kara <jack@suse.cz>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 7.2 322/713] buffer: avoid tail commit walk for uptodate folios
+Date: Fri,  4 Sep 2026 06:54:50 +0200
+Message-ID: <20260904045811.047388465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,81 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <borkmann@iogearbox.net>
+From: Jia Zhu <zhujia.zj@bytedance.com>
 
-commit b1a47b2708d4e95dbd23aee2ec83752190897b3f upstream.
+commit f10b9cc1eb20637351f4e33372bfb464f89de59b upstream.
 
-get_perf_callchain() returns a per-CPU perf_callchain_entry buffer and
-releases its recursion slot via put_callchain_entry() before returning,
-so nothing keeps the entry reserved while __bpf_get_stack() consumes
-it below.
+block_commit_write() always walks every buffer_head attached to the
+folio.  That was cheap for order-0 folios, but large folios can contain
+hundreds of buffer_heads.  For a small buffered overwrite of an
+already-uptodate large folio, the commit work is therefore proportional
+to the folio size rather than the copied range.
 
-A preemptible BPF program (e.g. a non-sleepable raw tracepoint program
-on a PREEMPT kernel, which runs under migrate_disable() but not
-preempt_disable()) can be scheduled out between obtaining the entry
-and the copy. Another task scheduled on the same CPU then reuses the
-same per-CPU buffer and overwrites trace->nr with a larger value.
-copy_len is then computed from the inflated trace->nr and can exceed
-the caller's buffer, causing an out-of-bounds write in the memcpy()
-and in the build_id path.
+This became visible with ext4 regular-file large folios, where cached
+small overwrites reach block_commit_write() through block_write_end().
+Before ext4 enabled large folios for regular files, this path was only
+hit with order-0 folios for normal ext4 buffered writes, so the full walk
+was bounded.  The ext4 large-folio commit is therefore the regression
+point for this generic helper cost.
 
-The rcu_read_lock() taken here alone does not prevent this. It is
-only taken on the may_fault path, and under CONFIG_PREEMPT_RCU it does
-not disable preemption; it merely keeps perf's callchain buffer array
-alive (freed via call_rcu()) and does nothing to stop another task
-from reusing the entry.
+The full walk is still needed when the folio is not uptodate, because
+block_commit_write() uses per-buffer uptodate state to decide whether
+the whole folio can be marked uptodate.  Keep those folios on the old
+full-buffer path.
 
-Disable preemption around obtaining the callchain entry and copying
-it into the caller's buffer, so the entry cannot be reused underneath
-us and trace->nr stays bounded by max_depth. Build ID resolution may
-fault and is therefore deferred until after preemption is re-enabled;
-by then the instruction pointers have already been copied into buf,
-so it operates only on that private copy. Note, preempt_disable() also
-subsumes the buffer-lifetime guarantee the rcu_read_lock() provided,
-since a preempt-disabled section is an RCU read-side critical section
-for the callchain buffers' call_rcu() reclaim.
+For a folio that was already uptodate on entry, the commit no longer
+needs tail buffers for folio-uptodate discovery.  The copied range has
+already been processed once block_start reaches @to, so stop there and
+avoid the suffix walk.
 
-Fixes: c195651e565a ("bpf: add bpf_get_stack helper")
-Reported-by: Tao Chen <chen.dylane@linux.dev>
-Reported-by: STAR Labs SG <info@starlabs.sg>
-Signed-off-by: Daniel Borkmann <borkmann@iogearbox.net>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260803210149.296496-11-jolsa@kernel.org
+Fixes: 7ac67301e82f0 ("ext4: enable large folio for regular file")
+Suggested-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: stable@vger.kernel.org # v6.16+
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
+Link: https://patch.msgid.link/20260609035202.90669-2-zhujia.zj@bytedance.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-Closes: https://lore.kernel.org/bpf/20260206090653.1336687-1-chen.dylane@linux.dev/
-[ changed Fixes: commit ]
 ---
- kernel/bpf/stackmap.c |    3 +++
+ fs/buffer.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -718,6 +718,7 @@ static long __bpf_get_stack(struct pt_re
+--- a/fs/buffer.c
++++ b/fs/buffer.c
+@@ -2177,6 +2177,7 @@ void block_commit_write(struct folio *fo
+ {
+ 	size_t block_start, block_end;
+ 	bool partial = false;
++	bool uptodate = folio_test_uptodate(folio);
+ 	unsigned blocksize;
+ 	struct buffer_head *bh, *head;
  
- 	max_depth = stack_map_calculate_max_depth(size, elem_size, flags);
+@@ -2199,6 +2200,8 @@ void block_commit_write(struct folio *fo
+ 			clear_buffer_new(bh);
  
-+	preempt_disable();
- 	if (may_fault)
- 		rcu_read_lock(); /* need RCU for perf's callchain below */
+ 		block_start = block_end;
++		if (uptodate && block_start >= to)
++			break;
+ 		bh = bh->b_this_page;
+ 	} while (bh != head);
  
-@@ -734,6 +735,7 @@ static long __bpf_get_stack(struct pt_re
- 	if (unlikely(!trace) || trace->nr < skip) {
- 		if (may_fault)
- 			rcu_read_unlock();
-+		preempt_enable();
- 		goto err_fault;
- 	}
- 
-@@ -754,6 +756,7 @@ static long __bpf_get_stack(struct pt_re
- 	/* trace/ips should not be dereferenced after this point */
- 	if (may_fault)
- 		rcu_read_unlock();
-+	preempt_enable();
- 
- 	if (user_build_id)
- 		stack_map_get_build_id_offset(buf, trace_nr, user, may_fault);
 
 
