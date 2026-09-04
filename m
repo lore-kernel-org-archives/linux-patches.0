@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BFA3BCD0A;
-	Fri,  4 Sep 2026 05:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33663401A25;
+	Fri,  4 Sep 2026 05:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501374; cv=none; b=V3RBr0hLq4Z2qxbtUSALKh2tYIa8yVQzb4MXuPQVeiemIJ4aUV4kk338e9d6KYrz+LqWOjDHhFkB1EfLq8XHKM985SvKYO2S7D20yllTLpvewJ1T0vR++p0RM4vPGHZON2YoPS5PyF5MsLfmY3+8CXEx/IPdjXYqbP/SdEPTfsM=
+	t=1788501377; cv=none; b=dZzKKWjsfjKgAo3ySVZIK5M7UoFb9+6R3iCyBmTYwuEQQM8HffRPkVO4ijDUhPrzTBU0QRABdv43NH93L5cZNu5sVcuuo4SICmYb6y3pTjEB+M2rijdzZGm5/I733C1vU4+D4ljY1LawYUE3q/0TnsKM9+QMaLhM+lv2xexqLwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501374; c=relaxed/simple;
-	bh=Gz32rTMrtl5zTsoCX/kUW7SKUfKITmwKKHZlmq7P9VQ=;
+	s=arc-20240116; t=1788501377; c=relaxed/simple;
+	bh=tF6GfiBDmI3ZvgnrMkClJ7CyQ9vamu7ursHifBVU9ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnTPqTmgepsROmlQo9AJ8ddFXIqP60xlk7UTZwDK8KcIndTCIpEWQKm+KkjWyW06dA2BDTL3/oNG6zgD6KtaGMSQeR+y16ja9E68+N6aMhE3Y8dHR9FbqJF3oJrB1r0WaQzponIqQ+lxi7KmqX1bhNx4nqlykJM1+0A6LMnKJQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rbYGPDT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EvlS19BBUn/oLVVQXLu7I0ZpeV0SF+HLT3TRDWALnkpMk8WpYixrOkLH2zfifANI/3v1zPaFwpQNMLXlMvmrOBfynOjhZkB9ODh7snrJM8Lw+veTTZNOzynswzHbw2G08qfEb/26Q+CSY1E5uqAre18Utta8DFNzlZZuHm2I/Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMHtg0P/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rbYGPDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D761F00A3D;
-	Fri,  4 Sep 2026 05:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMHtg0P/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90ED31F00A3D;
+	Fri,  4 Sep 2026 05:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501373;
-	bh=69PnInnCVdY73lgcpVB6GR0CZwq+atmBNuPlsk/E7Q4=;
+	s=korg; t=1788501376;
+	bh=35MPgSu0SNGLHtX1MU+Kp24DKMrRw1I6EzkaIQmKDPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1rbYGPDTcfcDYgc2IMKQwlOshcvoCeDLFe0Uh/QXxq3+V5o+RH/3rmI+wGk5GGOYP
-	 0fpkTcog6UGFpe1pYL9mx3X7SDuODNOI2xyDDOSbbfEAKaqcPlcm2EgC1A4Dm19JKe
-	 GNlWCBBGCb++bp2j6ZXNez6jvCJUXVlYqqFodyxg=
+	b=SMHtg0P/htNE8096F8whalDHSARqso7tNbCzKPCAd57WVZNzDHSTF4nsz6KE58QxD
+	 FiRMDrwLk7j+Q+2XzB9YfQ1fTqtAuLyWCMFUi3pPhWm9XMIVlGS1dtkGa0KgAgpRZq
+	 QBoatTlXgnvZdU8u11uPxh99kfjiv+IWXzUbTsFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 350/552] hwmon: (max6621) fix temperature clamp range
-Date: Fri,  4 Sep 2026 06:58:27 +0200
-Message-ID: <20260904045758.182634813@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Aditya Garg <gargaditya@linux.microsoft.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.18 386/552] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
+Date: Fri,  4 Sep 2026 06:59:03 +0200
+Message-ID: <20260904045758.960147336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,45 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-commit 24fbeb83d9b750a36da42cb835a154d80fd3d495 upstream.
+commit 86bdd16e8f390d51bae9e77a4bc4164ca2f580fe upstream.
 
-MAX6621_TEMP_INPUT_MIN and MAX6621_TEMP_INPUT_MAX are used to clamp the
-writable offset and critical thresholds. They are defined as -127000 and
-128000.
+The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
 
-The driver decodes the temperature through an s8 and its own comment in
-max6621_read() documents an 8-bit two's complement value, whose range is
--128 to +127 degrees C. The current limits therefore reject the valid
--128 degrees C and accept +128 degrees C, which does not fit the 8-bit
-range.
+On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
+the outgoing CPU to a new target. If an interrupt still has its pending bit
+set in the outgoing CPU's IRR at that point, fixup_irqs() resends it on the
+new target through the irqchip's irq_retrigger() callback. As the Hyper-V
+PCI/MSI chip does not provide that callback, the pending interrupt is
+silently dropped, which can result in lost interrupts, stalls and "No irq
+handler for vector" messages during CPU hotplug.
 
-Correct the limits to -128000 and 127000.
+Install irq_chip_retrigger_hierarchy() as the irq_retrigger() callback for
+the Hyper-V PCI/MSI irqchip, so that a pending interrupt is resent on its
+new target CPU via the parent x86 vector domain.
 
-Fixes: 92b64580f14b ("hwmon: (max6621) Add support for Maxim MAX6621 temperature sensor")
+Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Link: https://lore.kernel.org/r/9d3a4f1895a47794bb359a2a32fb1ccd6a15812c.1786334038.git.congnt264@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Suggested-by: Long Li <longli@microsoft.com>
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
+Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/max6621.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-hyperv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/max6621.c
-+++ b/drivers/hwmon/max6621.c
-@@ -17,8 +17,8 @@
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -2120,6 +2120,7 @@ static bool hv_pcie_init_dev_msi_info(st
+ 	info->ops->msi_prepare = hv_msi_prepare;
  
- #define MAX6621_DRV_NAME		"max6621"
- #define MAX6621_TEMP_INPUT_REG_NUM	9
--#define MAX6621_TEMP_INPUT_MIN		-127000
--#define MAX6621_TEMP_INPUT_MAX		128000
-+#define MAX6621_TEMP_INPUT_MIN		-128000
-+#define MAX6621_TEMP_INPUT_MAX		127000
- #define MAX6621_TEMP_ALERT_CHAN_SHIFT	1
+ 	chip->irq_set_affinity = irq_chip_set_affinity_parent;
++	chip->irq_retrigger = irq_chip_retrigger_hierarchy;
  
- #define MAX6621_TEMP_S0D0_REG		0x00
+ 	if (IS_ENABLED(CONFIG_X86))
+ 		chip->flags |= IRQCHIP_MOVE_DEFERRED;
 
 
