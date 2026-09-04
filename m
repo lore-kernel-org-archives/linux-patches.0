@@ -1,36 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED778427F85;
-	Fri,  4 Sep 2026 06:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69BB42AF8A;
+	Fri,  4 Sep 2026 06:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502983; cv=none; b=icSmpk8Hrv/icV7Dh8pSQKqcxrrRbErAqFjvmEmCmSfM2T0cag0b05g1qeLgjGxZKOtvPoF9FgDT+Mgc8QtAc8gTLci5bbf/g2ylyCZGT4sFSayuTrGTt5T+Awl06kAqHTsTQAneqwPSyywGyUOHfTEzb0HWKNbLtMR5n4x/zYc=
+	t=1788502985; cv=none; b=XeP1fg0/nSlPTwwrLF0XPjH4YrwDVwghwGW5h69zIDvaJOwAWjAop4CRXhE2qnSKlN3xaCRlKVGZAEo/W5UOM8rtMAjLltAkA1PoFKcZgjxmnI5y14U+C/w66uCa87zYtYf5CZOKX0KCsaZTet9eCxh/AGsU3Lz1uV3VHjaoLNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502983; c=relaxed/simple;
-	bh=n/1bSZZrPkI7wGZiY5ea7WP+XvsyRWTrOPFoHly3qZY=;
+	s=arc-20240116; t=1788502985; c=relaxed/simple;
+	bh=midn41aHURlmzYFma3J3LxlROfc2mmFqUipc0ovtql8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aWxpboAvZiHKJzeVzO5rx1iwD+O0N69/hX5tiaHDpBjyPymYpie56ls2ZZ0WOefWfbamEa/PXl5iD1cTNUBr7LTY69eqXozIszwij6M4/yVHnAayFnZEnc2y9+TlGFVgNYswyIBUGsASUbugixSS23zumraJsz3HJ+dIuqJpjLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mx0ZoaqY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jZ6uijks9zE9LFEmtYriyMvkkUghyAOZYzkckOti9HOO2xmZ8F5LWJDJG/zqyUtxc6PnrOIicoaQK+p81VIw36g9sQr1TJgb/v52a1ClRQotFP83ra8X3jK3WLsNFiTyLkWfrfPFWaORTcNqpadsBjCYhpjfBGuby2Yi1tbyDPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8878KOM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mx0ZoaqY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516271F00ACA;
-	Fri,  4 Sep 2026 06:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8878KOM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066A01F00AC4;
+	Fri,  4 Sep 2026 06:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502981;
-	bh=CqApgxfev6b3xGwU2/e6iRrQwcGNAggNLxjXQra+rh8=;
+	s=korg; t=1788502984;
+	bh=vuVGwdSJ4waqHMvMo+V3vlUOE3InrZaBcl3HORFwxOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mx0ZoaqYnzU45KqDBHydRvBFrKue/YB97vcwfVsL8fIMG6H3BR0cObBw6GdFjo4pg
-	 Skb8V+JrLteH3KGGoyeDMR9J/3B+im1waO+Lvgy4zUJ1WChe/mYUKdn0BScyKwf4If
-	 zEGT957Xer6SfAWVE2n95l9QoVmDuAcANmpNXH0o=
+	b=N8878KOMseYLK5mPNRZc/RLo8n63oxM5kg9fml2ysphc3SI6eQTAvqDwcLibPmI8X
+	 JeUsdh7NvQ6+PylL1qrvGIaKxRgb2lUos0eQUaYc+r5uhpredCm/J0p3ns1NYjYA1Y
+	 DrFpe3J1x+BlsLzMzV1SVatk0Ji5XMGO0F5iCsMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 397/403] sticon/parisc: Detect default STI graphics card for console output
-Date: Fri,  4 Sep 2026 07:03:20 +0200
-Message-ID: <20260904045743.808812236@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Adrian Huang <adrianhuang0701@gmail.com>,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Marco Elver <elver@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 398/403] signal: avoid shared siginfo namespace rewrites
+Date: Fri,  4 Sep 2026 07:03:21 +0200
+Message-ID: <20260904045743.830560030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -49,69 +60,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Bradley Morgan <include@grrlz.net>
 
-commit de508ece1d37cdbbbfa52f074954310f9b066b13 upstream.
+commit d19cdc167e696714509e87d3f7ae765b6e164589 upstream.
 
-If a machine has multiple graphic cards, detect the graphic card which is used
-to display firmware messages and use that one as the default graphic card for
-sticon and fbcon.
+send_signal_locked() rewrites sender ids for the target namespace.  Group
+sends reuse the same siginfo, so one recipient can affect the next.
 
-On parisc machines the default graphic card used for BCH (boot console
-handler, aka BIOS menu) is stored in the stable storage (equivalent to CMOS
-storage on x86) or in the console path in page zero. Extract that path and
-store it as default STI path for later comparism. Take care that the graphic
-card can be a GSC or a PCI card which use different path strings.
+Copy the siginfo before changing it.
 
-Increase max string size for default_sti_path to 32 chars as the
-print_pa_hwpath() function formats a hardware path using unbounded sprintf
-calls for up to 6 bus converter components and 1 module component (e.g.,
-255/255/...), which can produce a string up to 28 bytes long.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/86a8857d58d43ee26a8b365b837fd24830343494.1782159692.git.include@grrlz.net
+Fixes: 7a0cf094944e ("signal: Correct namespace fixups of si_pid and si_uid")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Adrian Huang <adrianhuang0701@gmail.com>
+Cc: Aleksandr Nogikh <nogikh@google.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/sticore.c |   22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ kernel/signal.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/video/sticore.c
-+++ b/drivers/video/sticore.c
-@@ -325,7 +325,7 @@ static void sti_rom_copy(unsigned long b
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -1214,6 +1214,7 @@ static inline bool has_si_pid_and_uid(st
+ int send_signal_locked(int sig, struct kernel_siginfo *info,
+ 		       struct task_struct *t, enum pid_type type)
+ {
++	struct kernel_siginfo rewritten;
+ 	/* Should SIGKILL or SIGSTOP be received by a pid namespace init? */
+ 	bool force = false;
  
+@@ -1227,6 +1228,9 @@ int send_signal_locked(int sig, struct k
+ 		/* SIGKILL and SIGSTOP is special or has ids */
+ 		struct user_namespace *t_user_ns;
  
- 
--static char default_sti_path[21] __read_mostly;
-+static char default_sti_path[32] __read_mostly;
- 
- #ifndef MODULE
- static int __init sti_setup(char *str)
-@@ -1148,6 +1148,26 @@ static void sti_init_roms(void)
- 	pr_info("STI GSC/PCI core graphics driver "
- 			STI_DRIVERVERSION "\n");
- 
-+	/*
-+	 * Find default console by hardware path which is either stored in
-+	 * console entry in stable storage or alternatively from console path
-+	 * in PAGE0 used by BCH and PDC.
-+	 */
-+	if (!default_sti_path[0]) {
-+		struct pdc_module_path conspath;
-+		struct device *dev = NULL;
++		rewritten = *info;
++		info = &rewritten;
 +
-+		if (pdc_stable_read(0x60, &conspath, sizeof(conspath)) == PDC_OK)
-+			dev = hwpath_to_device(&conspath.path);
-+		if (!dev)
-+			dev = hwpath_to_device(&PAGE0->mem_cons.dp.path);
-+		if (dev && dev_is_pci(dev))
-+			print_pci_hwpath(to_pci_dev(dev), default_sti_path);
-+		else if (dev && !dev_is_pci(dev))
-+			print_pa_hwpath(to_parisc_device(dev), default_sti_path);
-+		pr_debug("default graphic card: %s\n", default_sti_path);
-+	}
-+
- 	/* Register drivers for native & PCI cards */
- 	register_parisc_driver(&pa_sti_driver);
- 	WARN_ON(pci_register_driver(&pci_sti_driver));
+ 		rcu_read_lock();
+ 		t_user_ns = task_cred_xxx(t, user_ns);
+ 		if (current_user_ns() != t_user_ns) {
 
 
