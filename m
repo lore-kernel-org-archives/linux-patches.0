@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A213876CC;
-	Fri,  4 Sep 2026 05:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7884195D2;
+	Fri,  4 Sep 2026 05:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500758; cv=none; b=tsKYdyswly67jJZWatDjWdnn+Q/NxWqRnOJUdRFw0b9jtEX5mSsiFuvH9RI5W4pTla/ZGuFRCTjKvtjVNYF4dqeXvUhignBRPsHcsWWTDvKDnjLb57zWp2hKM1UllEtmcUjjnI/7ybLFzptFZELP/O9O/p61TGP+IFBM1rkpqa0=
+	t=1788500761; cv=none; b=JD0L9SbgpH4e93iLcYz+PB9d8yLf3BNtztcMXGv9J00Sdk7aQm9ZRaAESr/FJWmeqv+pcDb4OBQx/5xYrC5kWyG0+jcInC9NX8MzhT/VgQ0j7DAgGgN0lRtLrMVHWdQE4KDD9rcREfQinqwXqEkT5BbTyfHL23eoyutKMpdptD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500758; c=relaxed/simple;
-	bh=t8+L26/cDqMPp5CRQ3xZ/RamsqoQq1Y+mCDh4T4hnYw=;
+	s=arc-20240116; t=1788500761; c=relaxed/simple;
+	bh=le1c7Wa1idUhYhyHDXIHdcR8UyZ22QOC9fFYMF7GstM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vj5F5SeZseTK1eDGQnB6Q6KyUX9LekvOW8KNDnMdbCQo2GTcRlLXymh4vxpRLEbb3ofYfFoYKnq/P5PKe7+P0nxExvM6tbIWnmKHPY2xsMVN/VAq0pr8B0y7clBWz4+cDiWklkHS86qAHh3usjoUeXhVDx/zTnFo/tJDHImi4Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9sD35Xr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cNnGATbxkaFXxrOJ7nRaiUydgWvp1gxa9duG654x9k+ep90OynjVa1bHJQCGkWgz4Pw0EKqDUPs+lfY0Bsc//SBKjUVQFQONBcDyEhsvzrMoepJZzFbvAe0bKav5wQWenp36y8OoeEwJU5HIb6UBLBY7o1yuYFm/v58YOPkyHRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1eiCT/qX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9sD35Xr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CAF41F00A3D;
-	Fri,  4 Sep 2026 05:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1eiCT/qX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2CD1F00A3D;
+	Fri,  4 Sep 2026 05:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500756;
-	bh=X3Etm3hkryWALTH5Iey3U3Hqu/pTRzpE66DOlGluZKw=;
+	s=korg; t=1788500759;
+	bh=jeIHOuGRKCVAFVcDo27uheKBvp7V91nPNZxFTQrGBdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u9sD35XrtGQJy0r1R/xM+nG7QVbCiJ3mpwz8gLoibp5D/rTpCkoM04VTANHPhBgn8
-	 STiqiwFMbeKZZly6LFP2iI383VT3Adh6ZMR16cjl8YdBem+PcIFHAvJw05wDkxw0tu
-	 bAZ5aRkm17jspgOgFZ95vpBH6v9pwzxT2IUCrFH8=
+	b=1eiCT/qXuk6pfis4sKZszd8zBuaFNsTTDHCjrzhBgOIE1GlB6TRgcbuQrs8j3FIyN
+	 r/g2EsNy2XdLjXU6NciXrOnvCCtxCgYFEp9+g8n63YkAS2ziTbxWrvfnGsAnotfPsX
+	 YRB8Mzeh4cCWYCQ3EtTMyOVU+xDwjhSleL6tSIxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 116/552] nfsd: validate symlink target length in NFSv4 CREATE
-Date: Fri,  4 Sep 2026 06:54:33 +0200
-Message-ID: <20260904045750.591559824@linuxfoundation.org>
+	Guanghui Yang <3497809730@qq.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.18 163/552] btrfs: drop recovered reloc root refs on recovery failure
+Date: Fri,  4 Sep 2026 06:55:20 +0200
+Message-ID: <20260904045752.718049768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,44 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Guanghui Yang <3497809730@qq.com>
 
-commit 041f57056e5fb9c80adc088269322d2c61074406 upstream.
+commit 6d8ba4572922e336f0b59a80751b018e1e135164 upstream.
 
-nfsd4_decode_create() accepts an unbounded cr_datalen from the wire for
-NF4LNK symlink targets, allowing a client to force a kmalloc of up to
-the maximum RPC payload size (several MiB) per COMPOUND op that persists
-until compound teardown.  The VFS rejects oversized targets with
-ENAMETOOLONG, but the allocation has already occurred.
+During relocation recovery, each fs root gets a reference to its relocation
+root. If loading or adding a later root fails, or if the first transaction
+commit fails, btrfs_recover_relocation() jumps to out_unset before
+merge_reloc_roots() and clean_dirty_subvols().
 
-Reject cr_datalen == 0 early with nfserr_inval and cr_datalen greater
-than NFS4_MAXPATHLEN (PATH_MAX) with nfserr_nametoolong to bound the
-allocation.
+put_reloc_control() drops the list-owned relocation root references, but it
+does not clear fs_root->reloc_root or drop the references owned by those
+pointers. Mount cleanup only drops them when BTRFS_FS_ERROR is set, so an
+error such as -ENOMEM while processing a later root can leave references
+behind.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-9-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Keep temporary references to the fs roots associated during recovery. On
+failure, clear their reloc_root pointers and drop the corresponding
+references. Once the first transaction commit succeeds, drop only the
+temporary fs root references and let the normal merge and cleanup paths
+handle the relocation roots.
+
+Fault injection on a pending-relocation image confirmed the cleanup gap.
+With an injected first-commit failure, 25 fs roots had reloc_root set with
+fs_error=0. With this fix, the same failure path drops that count to 0
+before mount fails.
+
+Fixes: f44deb7442ed ("btrfs: hold a ref on the root->reloc_root")
+CC: stable@vger.kernel.org
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/relocation.c |   31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -826,6 +826,10 @@ nfsd4_decode_create(struct nfsd4_compoun
- 	case NF4LNK:
- 		if (xdr_stream_decode_u32(argp->xdr, &create->cr_datalen) < 0)
- 			return nfserr_bad_xdr;
-+		if (create->cr_datalen == 0)
-+			return nfserr_inval;
-+		if (create->cr_datalen > NFS4_MAXPATHLEN)
-+			return nfserr_nametoolong;
- 		p = xdr_inline_decode(argp->xdr, create->cr_datalen);
- 		if (!p)
- 			return nfserr_bad_xdr;
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -4056,6 +4056,24 @@ static noinline_for_stack int mark_garba
+ 	return ret;
+ }
+ 
++static void release_recovered_fs_roots(struct list_head *roots, bool drop_reloc_refs)
++{
++	struct btrfs_root *root;
++	struct btrfs_root *next;
++
++	list_for_each_entry_safe(root, next, roots, reloc_dirty_list) {
++		list_del_init(&root->reloc_dirty_list);
++		if (drop_reloc_refs) {
++			struct btrfs_root *reloc_root = root->reloc_root;
++
++			ASSERT(reloc_root);
++			root->reloc_root = NULL;
++			btrfs_put_root(reloc_root);
++		}
++		btrfs_put_root(root);
++	}
++}
++
+ /*
+  * recover relocation interrupted by system crash.
+  *
+@@ -4065,6 +4083,7 @@ static noinline_for_stack int mark_garba
+ int btrfs_recover_relocation(struct btrfs_fs_info *fs_info)
+ {
+ 	LIST_HEAD(reloc_roots);
++	LIST_HEAD(recovered_roots);
+ 	struct btrfs_key key;
+ 	struct btrfs_root *fs_root;
+ 	struct btrfs_root *reloc_root;
+@@ -4176,7 +4195,7 @@ int btrfs_recover_relocation(struct btrf
+ 			ret = PTR_ERR(fs_root);
+ 			list_add_tail(&reloc_root->root_list, &reloc_roots);
+ 			btrfs_end_transaction(trans);
+-			goto out_unset;
++			goto out_drop_reloc_refs;
+ 		}
+ 
+ 		ret = __add_reloc_root(reloc_root);
+@@ -4185,15 +4204,17 @@ int btrfs_recover_relocation(struct btrf
+ 			list_add_tail(&reloc_root->root_list, &reloc_roots);
+ 			btrfs_put_root(fs_root);
+ 			btrfs_end_transaction(trans);
+-			goto out_unset;
++			goto out_drop_reloc_refs;
+ 		}
++		ASSERT(list_empty(&fs_root->reloc_dirty_list));
+ 		fs_root->reloc_root = btrfs_grab_root(reloc_root);
+-		btrfs_put_root(fs_root);
++		list_add_tail(&fs_root->reloc_dirty_list, &recovered_roots);
+ 	}
+ 
+ 	ret = btrfs_commit_transaction(trans);
+ 	if (ret)
+-		goto out_unset;
++		goto out_drop_reloc_refs;
++	release_recovered_fs_roots(&recovered_roots, false);
+ 
+ 	merge_reloc_roots(rc);
+ 
+@@ -4209,6 +4230,8 @@ out_clean:
+ 	ret2 = clean_dirty_subvols(rc);
+ 	if (ret2 < 0 && !ret)
+ 		ret = ret2;
++out_drop_reloc_refs:
++	release_recovered_fs_roots(&recovered_roots, true);
+ out_unset:
+ 	unset_reloc_control(rc);
+ 	reloc_chunk_end(fs_info);
 
 
