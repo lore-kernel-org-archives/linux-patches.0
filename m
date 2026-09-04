@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D297D3D903B;
-	Fri,  4 Sep 2026 06:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B092541A76F;
+	Fri,  4 Sep 2026 06:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502769; cv=none; b=j/Ix0pgr6L+mA0cMIgoBQMX1y0qwPua0SsQ4Bp7k9FREVXVwT9VxmmVG4CK1ILpJ+giy9Zoegit4sd2NjwEteDVurpI73DfuO2fLcnaD96QuqcTkjCGeeUynt1ExaaQdwb7idAU+pXqxDQVAJKnhOJvtGN1hvnhPz5Mxofdm06o=
+	t=1788502771; cv=none; b=QLTJcD4xciPiz3aLxqLaNOb6+NGQXjfbQSOQw7J/8BZDuiQXEk3xABGEf5IC63n0liA4s9CR4ErE9PVezxTEx4opwYkAdKaWJp1DXxvg6d3YKtPVST2g2ceYOOqUBn5zxHuPixtRkrL/GDXsQWDn1jH9VDBziCnFz5Dasdf+oMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502769; c=relaxed/simple;
-	bh=BDYH7h7ELbNX6INPymrNetd852jITDHmpRpfRfOsVLk=;
+	s=arc-20240116; t=1788502771; c=relaxed/simple;
+	bh=9mvS0MlZPWyBGB+s72NxQaoGs01kixJUJZZv5zv1Uks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jy47MZ0q1R5ruhJmsRzku4I1IOodtneDlOe2R0KAAzV/9OcGEHzzqtrONiiewf4ea1OSZrczqGPPA4qRJlw27Sr7ojtaEoLo6hmOpJlAKzv4X6wsrk9DNLOaR3IbD9Y10V8XQzt7efd1YfGx1x0BkaB3TwcARml5gnRx287QHj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0POXN3kN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uhe7VGsygLW2e2gduBRLlu/0GRgcC09/2/DFA1Y5N0FoY2CYs3o+PYaUl9Q8TbBhAPgnv6v1YUH31YQqTiHOVqCQvSmxPlqF5QWOO5sfcM4MYS0E89Yd4hZurNKGyVbGaJC1/dYxp+G2GYfOChm3aejQ9KxMc5HQBU9kVzsJxXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlExhu9c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0POXN3kN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371901F00A3D;
-	Fri,  4 Sep 2026 06:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlExhu9c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCEC1F00A3E;
+	Fri,  4 Sep 2026 06:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502767;
-	bh=vE/Tlzq4s+agsUNtbBUV57x1P5U/92hSfDV/ErhZtTM=;
+	s=korg; t=1788502770;
+	bh=DWmVn/BpRnmfNel3ctDEOY82CP80j+fqZW25uY/gT6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0POXN3kNt2GJPQIDqsdrAiVC6ZihGiU/d/SXcV3njGdq/VYxJOJHvl+2oAR6jMmOL
-	 TR2azu3QtOvcsGMyyhUAupcF6wVjTdoZTZ0xaCQmF1DNHQnDYHJK8iczMtPy85wVzt
-	 46eMx/m6MTxh7gUr44Y+kXtl0hgj6i6ydIHyo53w=
+	b=zlExhu9c3KxMm4dp3SpgisSe7NqwBpBv8qzx+abYPyrvPhyt5vRfYnLYbzU6nDPXz
+	 AEnYU9ZrdKsGYOEO1Vg4ds8YA3C8VvYa026RLwTKTza+VQskFr9B68f88yuGXFE2CY
+	 aelC+af7eOK70owc/KQrwm/uI4TsdJAPVnFUa9DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 270/403] power: supply: bq24257: fix use-after-free on remove
-Date: Fri,  4 Sep 2026 07:01:13 +0200
-Message-ID: <20260904045740.997999465@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 317/403] platform/x86: ISST: Return error during profile addition
+Date: Fri,  4 Sep 2026 07:02:00 +0200
+Message-ID: <20260904045742.046329812@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -44,87 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit 9d34c9d660c3d0931d2cc749c46c47cf31f96e48 upstream.
+commit f9a647cb8d90c09633a49a1e766e140e78012444 upstream.
 
-The STAT-pin interrupt is devm-managed, so it stays armed until the devm
-cleanup that runs after remove() returns. remove() cancels
-bq->iilimit_setup_work while the threaded handler can still fire; that
-handler reschedules the work and dereferences bq, so the work runs
-against freed memory once devm frees bq.
+If sst_add_perf_profiles() fails for memory allocation, it continues
+to allow SST-CP (core-power) feature. But in practice this is not
+very useful as to achieve some frequencies via SST-CP, an SST-PP
+(perf-profile) level change is required.
 
-Make the delayed work device-managed with devm_delayed_work_autocancel(),
-registered before the interrupt request. The devm cleanup then releases
-the interrupt first, so the handler can no longer reschedule the work,
-and cancels the work before bq is freed. The explicit
-cancel_delayed_work_sync() in remove() is no longer needed and is dropped.
-
-Found by static analysis.
-
-Fixes: 2219a935963e ("power_supply: Add TI BQ24257 charger driver")
+Fixes: 0ab147bb840f ("platform/x86: ISST: Parse SST MMIO and update instance")
+Cc: HyeongJun An <sammiee5311@gmail.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260731143554.334179-1-fanwu01@zju.edu.cn
-Link: https://patch.msgid.link/20260801051958.354528-1-fanwu01@zju.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20260811222134.3912626-2-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq24257_charger.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/power/supply/bq24257_charger.c
-+++ b/drivers/power/supply/bq24257_charger.c
-@@ -18,6 +18,7 @@
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
- #include <linux/delay.h>
-+#include <linux/devm-helpers.h>
- 
- #include <linux/acpi.h>
- #include <linux/of.h>
-@@ -1003,10 +1004,6 @@ static int bq24257_probe(struct i2c_clie
- 	if (bq->info->chip == BQ24250)
- 		bq->iilimit_autoset_enable = false;
- 
--	if (bq->iilimit_autoset_enable)
--		INIT_DELAYED_WORK(&bq->iilimit_setup_work,
--				  bq24257_iilimit_setup_work);
--
- 	/*
- 	 * The BQ24250 doesn't have a dedicated Power Good (PG) pin so let's
- 	 * not probe for it and instead use a SW-based approach to determine
-@@ -1047,6 +1044,14 @@ static int bq24257_probe(struct i2c_clie
- 		return ret;
+--- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+@@ -337,7 +337,7 @@ static int sst_add_perf_profiles(struct
+ 	if (!pd_info->perf_levels) {
+ 		pd_info->pp_header.allowed_level_mask = 0;
+ 		pd_info->pp_header.level_en_mask = 0;
+-		return 0;
++		return -ENOMEM;
  	}
  
-+	if (bq->iilimit_autoset_enable) {
-+		ret = devm_delayed_work_autocancel(dev,
-+						   &bq->iilimit_setup_work,
-+						   bq24257_iilimit_setup_work);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
- 					bq24257_irq_handler_thread,
- 					IRQF_TRIGGER_FALLING |
-@@ -1064,9 +1069,6 @@ static void bq24257_remove(struct i2c_cl
+ 	pd_info->ratio_unit = pd_info->pp_header.ratio_unit;
+@@ -368,7 +368,7 @@ static int sst_add_perf_profiles(struct
+ static int sst_main(struct auxiliary_device *auxdev, struct tpmi_per_power_domain_info *pd_info)
  {
- 	struct bq24257_device *bq = i2c_get_clientdata(client);
+ 	struct device *dev = &auxdev->dev;
+-	int i, mask, levels;
++	int i, ret, mask, levels;
  
--	if (bq->iilimit_autoset_enable)
--		cancel_delayed_work_sync(&bq->iilimit_setup_work);
--
- 	bq24257_field_write(bq, F_RESET, 1); /* reset to defaults */
+ 	*((u64 *)&pd_info->sst_header) = readq(pd_info->sst_base);
+ 	pd_info->sst_header.cp_offset *= 8;
+@@ -400,8 +400,12 @@ static int sst_main(struct auxiliary_dev
+ 			levels = i;
+ 		mask <<= 1;
+ 	}
++
++	ret = sst_add_perf_profiles(auxdev, pd_info, levels + 1);
++	if (ret)
++		return ret;
++
+ 	pd_info->max_level = levels;
+-	sst_add_perf_profiles(auxdev, pd_info, levels + 1);
+ 
+ 	return 0;
  }
- 
 
 
