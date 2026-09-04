@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D516416869;
-	Fri,  4 Sep 2026 05:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8483DAAC8;
+	Fri,  4 Sep 2026 05:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499441; cv=none; b=k34WpOHPZJwZgOVzDkIQ/LS0az6JSOFt/ZWxrCJF6X/+EH2uCqGJf2mmKKtF7y2XHdrlNIuCLJfrldMTqfyo5BJjeUx759GGPV/39dufiLn4LGdB4KZZuuYYoJ+WM95e07PDZk5Tqlldmj9evyE+qPG5Bmc5emleBBr2YjHDMzM=
+	t=1788499444; cv=none; b=MlF1kMd3qH6YJQRCgvOt4Ctzql0L9KahmtzoikrnrRWmQ8eLUxjngMuY6FnUz0cDlS+nh5rWO2Q590bPyB49T5Me54cP9z/gJ/iDZdnU4SX1HCK4N7ppeA5thIIfgj64Cm/YP4Fz4mMKvAZf1CXCoOo6hs0xtmr8UzmPpTjeM7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499441; c=relaxed/simple;
-	bh=U9t2f5p0taTn12wJAqnL4nzSE02Yq25ro6wUclricG8=;
+	s=arc-20240116; t=1788499444; c=relaxed/simple;
+	bh=Rq7s/7/FyVyYOXmoMfKh3pdYXuXxmuWJxtwatLAgDhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ESOp0CNSKLslUGdA8fNGM7vDreUHgmHUGX+le7Nn/nZ0D4OOsA56p08Khjh3Apu7wheb530fl0fOF3wRnnqn1xiDOy0ZEofhy0AV8ZalxXJbBi5Pz0zb6lvy9PyNo1IkfBRndSpW+bvCNIG3FX34PAG4Jlge4m0iqwoyqFGFRhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRZZmNV3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gr9Dt1/bECH7+/11XXQL7DZ4As0dsWS5p+fL22nzXq7oRWQMBqWE4w4u60xYgju+Xy9b6ZyQtuh2zEPOj0MuDki97/0YBTb5n14DmYzYzTUFZBWF/zMIm+ZYhhaVxXKvfnYx8XZSbR2Oevw7MgoLVWWhw8h5oaz4EhdNrIkruDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP0RYWGm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRZZmNV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8695B1F00ACA;
-	Fri,  4 Sep 2026 05:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP0RYWGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677831F00A3D;
+	Fri,  4 Sep 2026 05:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499440;
-	bh=VeQAiiz80ti/bZaecdl70c8Fca+guHltY98N92hPDIg=;
+	s=korg; t=1788499442;
+	bh=AdSc0aHbwruevrHEZuJr0Kdi9KipQGmRaYpsASY2Gh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HRZZmNV3TLJBI0SLg+oF+CoyMFhLe7H1PgxCBCCHpkmpeh1pU/rlI4qcozKQRLsr0
-	 EHv29KIgIJTLJuGZ+h0rin3CkTG/xOZGaQ9mg6E59pG0wq/m6RJedHEEQMzXPhFT0M
-	 bSNwg6BB35+b/b1ROuOUd8tZHz0wt4XiQSGn2jh0=
+	b=CP0RYWGm45gSp3SCT0gv4yWArdU2/7ftlZqvjtzowl5HWAHqDrrHezW1pVGvz9Sod
+	 WWBAEAO4wv0K+yOMEL0QHDbTJOhmaM6wx7it/EygiEHyTCfob+mmK70PTpj6XLhAW0
+	 yaRnacLw55DGTZM8sikthVDsRr+PRUUfVwS+KiDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vaganov <p.vaganov@ideco.ru>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 419/713] scsi: core: Fill in DMA padding bytes in scsi_alloc_sgtables()
-Date: Fri,  4 Sep 2026 06:56:27 +0200
-Message-ID: <20260904045813.224004124@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 7.2 402/713] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
+Date: Fri,  4 Sep 2026 06:56:10 +0200
+Message-ID: <20260904045812.836422471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,89 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Vaganov <p.vaganov@ideco.ru>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 626147717bea776b61ed3631d2c26283760c4cc4 upstream.
+commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
 
-During fuzz testing, the following issue was discovered:
+ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
+assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
+bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
+bounds the declared lengths from above (their sum must fit the received
+event), but an assoc request/response shorter than its fixed offset still
+underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
+cfg80211_roamed() then treat that wrapped value as the IE length and copy
+that many bytes out of the small assoc_info buffer to user space via
+nl80211, disclosing adjacent slab memory.
 
-BUG: KMSAN: uninit-value in __dma_map_sg_attrs+0x217/0x310
- __dma_map_sg_attrs+0x217/0x310
- dma_map_sg_attrs+0x4a/0x70
- ata_qc_issue+0x9f8/0x1420
- __ata_scsi_queuecmd+0x1657/0x1740
- ata_scsi_queuecmd+0x79a/0x920
- scsi_queue_rq+0x4472/0x4f40
- blk_mq_dispatch_rq_list+0x1cca/0x3ee0
- __blk_mq_sched_dispatch_requests+0x458/0x630
- blk_mq_sched_dispatch_requests+0x15b/0x340
- __blk_mq_run_hw_queue+0xe5/0x250
- __blk_mq_delay_run_hw_queue+0x138/0x780
- blk_mq_run_hw_queue+0x4bb/0x7e0
- blk_mq_sched_insert_request+0x2a7/0x4c0
- blk_execute_rq+0x497/0x8a0
- sg_io+0xbe0/0xe20
- scsi_ioctl+0x2b36/0x3c60
- sr_block_ioctl+0x319/0x440
- blkdev_ioctl+0x80f/0xd70
- __se_sys_ioctl+0x219/0x420
- __x64_sys_ioctl+0x93/0xe0
- x64_sys_call+0x1d6c/0x3ad0
- do_syscall_64+0x4c/0xa0
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Clamp both lengths to their offsets before subtracting.
 
-Uninit was created at:
- __alloc_pages+0x5c0/0xc80
- alloc_pages+0xe0e/0x1050
- blk_rq_map_user_iov+0x2b77/0x6100
- blk_rq_map_user_io+0x2fa/0x4d0
- sg_io+0xad6/0xe20
- scsi_ioctl+0x2b36/0x3c60
- sr_block_ioctl+0x319/0x440
- blkdev_ioctl+0x80f/0xd70
- __se_sys_ioctl+0x219/0x420
- __x64_sys_ioctl+0x93/0xe0
- x64_sys_call+0x1d6c/0x3ad0
- do_syscall_64+0x4c/0xa0
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Found by 0sec (https://0sec.ai) using automated source analysis; the
+missing lower bound is evident from source. Compile-tested.
 
-Bytes 14-15 of 16 are uninitialized
-Memory access of size 16 starts at ffff88800cbdb000
-
-When processing the last unaligned element of the scatterlist, it is
-supplemented with missing bytes in the amount of pad_len.  These bytes
-remain uninitialized, which leads to a problem.
-
-Extend last_sg->length by pad_len first, then use sg_zero_buffer() to
-zero those pad_len bytes.  sg_zero_buffer() uses sg_miter internally,
-which correctly handles sg entries spanning multiple pages and padding
-that crosses a page boundary.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 40b01b9bbdf5 ("block: update bio according to DMA alignment padding")
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Petr Vaganov <p.vaganov@ideco.ru>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260628185229.37957-1-p.vaganov@ideco.ru
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_lib.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -1187,8 +1187,10 @@ blk_status_t scsi_alloc_sgtables(struct
- 	if (blk_rq_bytes(rq) & rq->q->limits.dma_pad_mask) {
- 		unsigned int pad_len =
- 			(rq->q->limits.dma_pad_mask & ~blk_rq_bytes(rq)) + 1;
-+		unsigned int data_len = last_sg->length;
+--- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
++++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
+@@ -754,6 +754,11 @@ void ath6kl_cfg80211_connect_event(struc
+ 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
+ 	    assoc_resp_ie_offset;
  
- 		last_sg->length += pad_len;
-+		sg_zero_buffer(last_sg, 1, pad_len, data_len);
- 		cmd->extra_len += pad_len;
- 	}
++	if (assoc_req_len < assoc_req_ie_offset)
++		assoc_req_len = assoc_req_ie_offset;
++	if (assoc_resp_len < assoc_resp_ie_offset)
++		assoc_resp_len = assoc_resp_ie_offset;
++
+ 	assoc_req_len -= assoc_req_ie_offset;
+ 	assoc_resp_len -= assoc_resp_ie_offset;
  
 
 
