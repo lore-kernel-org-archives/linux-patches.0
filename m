@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14026372B4B;
-	Fri,  4 Sep 2026 05:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2BA3AA187;
+	Fri,  4 Sep 2026 05:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500602; cv=none; b=FBo1ZBkU5OMDkNiqnh9hVlripvODJw8VTcjtPy93boKwlAP5m1AI/mCfdDkolthHX2HtYN/9ChnRCFnRy+IUON2yezsee9Ozqpuz54Mni6+kZVK+dfmY/gbRloNVUz8FEPGT/HUymQuceuFcOf08ailEtfieRuI/19b8C+HXd5o=
+	t=1788500604; cv=none; b=uTUYQpjxNKLS6ARiq0ttzLDHOF7bZiwGBWdkmQh5g2mrYz9g9HWVxVmQS9HgGnCW2BZwfRGnBCMSo9GHeYVys9OZdz8vStofARN2/RPUNaZ7hB42RTDkzeBn3Tphpx4/I7/9uRTWtq4omnchxv8UKoV2PRo+kA4jpQHAhDPMPJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500602; c=relaxed/simple;
-	bh=nyxX4RWVfGN2+JOnbxjgy6zaQKQD2V6qPR2y2JpV5oM=;
+	s=arc-20240116; t=1788500604; c=relaxed/simple;
+	bh=M31Ev4xexaZCgR4NSE3Wnx8ZsqtiI7BpiL4Wt4P4y8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z05x/8NmglISHPm+kqfxE4mWCY8qtdsLZUzEcdGstGKKUN3NKTyLiQi1MejrMA4qDelbsPpGUW7Gh3y+BB0elRDTstTj5/xsLs2uAtgiDwD2LcFgBrk9WAAkvOQXSCfA5Zs1njwYolHxis6nyLtIfcqwoTasKMqgPB4QN3xevRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBLbmi/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QCl8iDOkpFZR5PTYtUxl9G17WYhdy6v5XW3XsGBjGy5/BFkJGyHylsp5V/Q50y3KXmsjziX+0UIhHIysxpSKdNbwlG03//aYfyb3aq7h2LHo3EvsykPeLHDEfAcBEt2y+J57DKgdcI7EQxKuh1izEhpOza5iobe2fvYgNbXHuaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymMmUBtQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBLbmi/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6411F00A3D;
-	Fri,  4 Sep 2026 05:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymMmUBtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049191F00A3D;
+	Fri,  4 Sep 2026 05:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500600;
-	bh=qxNt0tGjuEDJ+EI3ktG8hsIgcMubtwW8a82zO+3+YeE=;
+	s=korg; t=1788500603;
+	bh=OJPz/TznN6hKrjRXRrCS/HZU8Cw/MEuIB4cEsrUuLl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBLbmi/7FhfSFWvLsxzOMqUdpUItT+E5FWmhThL6Qc5Ckdbo2lYCUe9XUTFSxP5HX
-	 nM4WYfbp7zro0kL0wZcPmfAA6ZX5XWgeUX0coS2WEIy7AfyRNl90jJkNzPhOUld/wW
-	 dVpstPwPDE/RMy6ghcoCbtvG/cuOl8XIfQlD4DdA=
+	b=ymMmUBtQM0E68vpQ/MMlWTbwAc3q1E2amtoJh11wRG1f2yqmplKDB70jsiLUIchva
+	 PqEkmL1TpQPDne+ihP1E1ftehwEQTZeY+INVVBJIJanNdt4P3Tfl6eW3V4Bk7jYH1P
+	 a8EFeHU/J7xsKLL4VAHYz8uAJIxAmRkwuEImwW+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Chris Mason <clm@meta.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 112/552] nfsd: set SC_STATUS_FREED in nfsd4_drop_revoked_stid for delegations
-Date: Fri,  4 Sep 2026 06:54:29 +0200
-Message-ID: <20260904045750.443247465@linuxfoundation.org>
+Subject: [PATCH 6.18 113/552] nfsd: size fh_verify server sockaddr slot by xpt_locallen
+Date: Fri,  4 Sep 2026 06:54:30 +0200
+Message-ID: <20260904045750.467054498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,41 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Chris Mason <clm@meta.com>
 
-commit 650d370cfbc66a96dd14d517bd704689b5bda4e5 upstream.
+commit 71d068490098b1d23c63b2345e40675d3a1ca763 upstream.
 
-nfsd4_drop_revoked_stid() handles FREE_STATEID for admin-revoked
-delegations but does not set SC_STATUS_FREED before releasing cl_lock.
-revoke_delegation() uses this flag to detect whether FREE_STATEID has
-already processed the delegation -- without it, the freed delegation is
-added to cl_revoked via list_add(), producing a use-after-free when
-cl_revoked is later traversed in __destroy_client().
+The nfsd_fh_verify and nfsd_fh_verify_err tracepoints declare the
+server sockaddr slot sized by xpt_remotelen but fill it from
+xpt_local using xpt_locallen:
 
-The SC_STATUS_REVOKED path in nfsd4_free_stateid() (line 7983) already
-sets SC_STATUS_FREED correctly. Apply the same pattern to the
-SC_STATUS_ADMIN_REVOKED path in nfsd4_drop_revoked_stid().
+    TP_STRUCT__entry(
+            ...
+            __sockaddr(server, rqstp->rq_xprt->xpt_remotelen)
+            ...
+    )
+    TP_fast_assign(
+            ...
+            __assign_sockaddr(server, &rqstp->rq_xprt->xpt_local,
+                              rqstp->rq_xprt->xpt_locallen);
+            ...
+    )
 
-Fixes: 8dd91e8d31fe ("nfsd: fix race between laundromat and free_stateid")
+When xpt_locallen exceeds xpt_remotelen, __assign_sockaddr's memcpy
+writes past the reserved ring-buffer slot. In the reverse direction
+(xpt_locallen < xpt_remotelen) the slot is oversized and the
+unwritten tail leaks prior ring-buffer contents to trace consumers.
+
+The write-past-end case is reachable on NFS/UDP. svc_xprt_set_remote()
+is only called from svc_tcp_accept() (net/sunrpc/svcsock.c) and from
+the RDMA connect path; svc_create_socket() for UDP calls only
+svc_xprt_set_local(), so xpt_remotelen stays 0 for the xprt's
+lifetime. Every fh_verify trace for an NFSv2/v3-over-UDP request
+then copies 16 or 28 bytes from xpt_local into a zero-byte slot.
+
+The other NFSD tracepoints that record the server address
+(NFSD_TRACE_PROC_CALL_FIELDS, NFSD_TRACE_PROC_RES_FIELDS,
+SVC_RQST_ENDPOINT_FIELDS) already size the server slot by
+xpt_locallen; nfsd_fh_verify and nfsd_fh_verify_err were the only
+exceptions.
+
+Fix by sizing the server slot with xpt_locallen so the declared slot
+matches the copy length. The client slot and its assignment already
+agree on xpt_remotelen and are left untouched.
+
+Fixes: 051382885552 ("NFSD: Instrument fh_verify()")
+Fixes: 948755efc951 ("NFSD: Replace dprintk() call site in fh_verify()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526104554.46262-1-kipreyyy@gmail.com
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+Link: https://patch.msgid.link/20260531-nfsd-testing-v1-1-7bfa481b0540@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/trace.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5072,6 +5072,7 @@ static void nfsd4_drop_revoked_stid(stru
- 	case SC_TYPE_DELEG:
- 		dp = delegstateid(s);
- 		list_del_init(&dp->dl_recall_lru);
-+		s->sc_status |= SC_STATUS_FREED;
- 		spin_unlock(&cl->cl_lock);
- 		nfs4_put_stid(s);
- 		break;
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -236,7 +236,7 @@ TRACE_EVENT_CONDITION(nfsd_fh_verify,
+ 	TP_CONDITION(rqstp != NULL),
+ 	TP_STRUCT__entry(
+ 		__field(unsigned int, netns_ino)
+-		__sockaddr(server, rqstp->rq_xprt->xpt_remotelen)
++		__sockaddr(server, rqstp->rq_xprt->xpt_locallen)
+ 		__sockaddr(client, rqstp->rq_xprt->xpt_remotelen)
+ 		__field(u32, xid)
+ 		__field(u32, fh_hash)
+@@ -275,7 +275,7 @@ TRACE_EVENT_CONDITION(nfsd_fh_verify_err
+ 	TP_CONDITION(rqstp != NULL && error),
+ 	TP_STRUCT__entry(
+ 		__field(unsigned int, netns_ino)
+-		__sockaddr(server, rqstp->rq_xprt->xpt_remotelen)
++		__sockaddr(server, rqstp->rq_xprt->xpt_locallen)
+ 		__sockaddr(client, rqstp->rq_xprt->xpt_remotelen)
+ 		__field(u32, xid)
+ 		__field(u32, fh_hash)
 
 
