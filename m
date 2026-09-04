@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2841F3F9F2F;
-	Fri,  4 Sep 2026 05:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05185415F01;
+	Fri,  4 Sep 2026 05:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498673; cv=none; b=ZdTQ/8QMOV3+XVJTSfq0zKNnMVCIC0e9nydUOhASCEDPooQp73+CtBm/Ylzta75YgtfMszSvGPnPt+Jt/31cAKCT2pHUnsXXR3oDHUgQ7myC4bT1NJOYCRZ6l9MhcZ8kyUKGKNuarlfQUzdjAhROfrvAsLD69/hnr64lhJVCOVQ=
+	t=1788498676; cv=none; b=iedC7MLY+l2un4XzK2+DvMIGbWaB41xku1je8faVd7xdiCepFsrjaJgqBQoasTNH+PBiQfY+kumRfqJGXmtAzsyhInjBi/Def2bDrw+pjs/BnuyGYJuLv18CJwugTcmo5N0E10oKQzdQVdq7VxC+wCpMBWbMD392v6wExKR9ykY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498673; c=relaxed/simple;
-	bh=2FEO6Furku7b7+cRFWJ9PDQj1JUvBSaan4XGc5VEPxs=;
+	s=arc-20240116; t=1788498676; c=relaxed/simple;
+	bh=tUlfeGPBSbUFtpo36wUQCQL68OT3qlCQxiLwyRdqeTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dy44iNPJCIfEyCf5FQautBk7KO2V+d6MdzVnpFrlef2bEGBHG3z88p8D631RTi2faUDMoE2k/9RYMXsvAdjhhDnJyxyjdmCidVVA2dgSPCSVVBYGMHocxd3JsycgyuZ22pGG4IXk2BExCdIOgnOlDT3Jol6N/BdhsZQkxe8Pj2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+dzBWQu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ISNOPKepQzh1xZIefGCfh7grnWw4yXfoSkQLXKYQo7Gqw7WpGsh3MNkE+vMEmvbwKiUcTQl02JpOxUZeRuURCJ9MlrGdhc/jx0r9XOST3iK295R0+owunGaV+YZxmBiLtBkOkaV4sREslL9HYcuO/xUKdE1pzOfKZxQjtTyX97I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrvHVeKT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+dzBWQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA091F00A3F;
-	Fri,  4 Sep 2026 05:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrvHVeKT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9CE1F00A3D;
+	Fri,  4 Sep 2026 05:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498672;
-	bh=4ioRaornOt0M6ZHYZB4FNOk1ufEF39r8am3zLOs6rnM=;
+	s=korg; t=1788498674;
+	bh=wGwvpdN6xFFfUrphHJTxrNuou5kY+KQ5nogyaUfkb4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V+dzBWQuC6iIXAe3IFnNP9gE0PLg7pvA8orj/FeM1F+gjaub458DzOYc/vW3+CNTZ
-	 TF0aA4B+Dph0YD4AvKljIjlqgh+fLXgxz6Q/A05JbsILC5KEfGWVeWBloSN4P+tVgp
-	 UCHo+ri0AL5OHONXSr393FZ0ptf9/7Qk6Nf3HfLw=
+	b=jrvHVeKTFOq5bnnPTBpyn54vgBzhYVdzzCFtoL8WrJGSNKuXh1x7mQPIlzuqLcIH+
+	 KNLkylGdNCOn2ppvpeui8fvqZFpq7F8AWdDsnzY0MUsG1XkJ7l1pw03DT3HKtQGU/T
+	 3XDjNNs2Q54jbtqf03Ai4bEklD4aRim93zbvBAM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Menninger <tmenninger@everpuredata.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 7.2 146/713] pNFS: Fix EBUSY check in pnfs_layout_need_return
-Date: Fri,  4 Sep 2026 06:51:54 +0200
-Message-ID: <20260904045807.100091839@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 147/713] lockd, nfsd: RCU-protect nlmsvc_ops dispatch
+Date: Fri,  4 Sep 2026 06:51:55 +0200
+Message-ID: <20260904045807.121881275@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,41 +50,247 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Menninger <tmenninger@everpuredata.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 20358201777496fd0bb7b4336fcb4d3fc13cad28 upstream.
+commit 641e5e20852359b8c31149be4598884e30652f60 upstream.
 
-Commit 41d0a8ead9720 ("NFSv4/pnfs: Add support for the
-PNFS_LAYOUT_FILE_BULK_RETURN flag") replaced
-pnfs_layout_segments_returnable() in pnfs_layout_need_return() with a
-direct call to pnfs_mark_layout_stateid_return().
+nlmsvc_ops is published by nfsd_lockd_init() and cleared by
+nfsd_lockd_shutdown() with plain stores, while lockd dereferences
+it unguarded from dispatch sites in fs/lockd/svcsubs.c. The pointer
+targets nfsd's .rodata and the fopen/fclose callbacks live in nfsd's
+.text, so a stale load after rmmod nfsd results in either a NULL
+deref or a module-text use-after-free.
 
-The old helper checked the return value against -EBUSY, but the
-replacement compares against EBUSY. Since
-pnfs_mark_layout_stateid_return() returns negative errno values, the
--EBUSY case is never detected.
+Declare nlmsvc_ops as __rcu, publish via rcu_assign_pointer(), clear
+via RCU_INIT_POINTER() + synchronize_rcu(). Add a struct module
+*owner field to nlmsvc_binding and pin the module across indirect
+calls with try_module_get/module_put. When the binding is torn down,
+fall back to fput() to avoid leaking struct file references.
 
-Fix the comparison in pnfs_layout_need_return() to check against -EBUSY.
-
-Fixes: 41d0a8ead9720 ("NFSv4/pnfs: Add support for the PNFS_LAYOUT_FILE_BULK_RETURN flag")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-16-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/lockd/svc.c             |    4 +--
+ fs/lockd/svc4proc.c        |    4 +--
+ fs/lockd/svcproc.c         |    4 +--
+ fs/lockd/svcsubs.c         |   52 ++++++++++++++++++++++++++++++++++++++-------
+ fs/nfsd/lockd.c            |    6 +++--
+ include/linux/lockd/bind.h |   12 +++++++---
+ 6 files changed, 64 insertions(+), 18 deletions(-)
 
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1389,7 +1389,7 @@ pnfs_layout_need_return(struct pnfs_layo
- 		return false;
- 	return pnfs_mark_layout_stateid_return(lo, &lo->plh_return_segs,
- 					       lo->plh_return_iomode,
--					       lo->plh_return_seq) != EBUSY;
-+					       lo->plh_return_seq) != -EBUSY;
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -47,7 +47,7 @@
+ 
+ static struct svc_program	nlmsvc_program;
+ 
+-const struct nlmsvc_binding	*nlmsvc_ops;
++const struct nlmsvc_binding __rcu *nlmsvc_ops;
+ EXPORT_SYMBOL_GPL(nlmsvc_ops);
+ 
+ static DEFINE_MUTEX(nlmsvc_mutex);
+@@ -142,7 +142,7 @@ lockd(void *vrqstp)
+ 		nlmsvc_retry_blocked(rqstp);
+ 		svc_recv(rqstp, 0);
+ 	}
+-	if (nlmsvc_ops)
++	if (rcu_access_pointer(nlmsvc_ops))
+ 		nlmsvc_invalidate_all();
+ 	nlm_shutdown_hosts();
+ 	cancel_delayed_work_sync(&ln->grace_period_end);
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -128,7 +128,7 @@ nlm4svc_lookup_host(struct svc_rqst *rqs
+ {
+ 	struct nlm_host *host;
+ 
+-	if (!nlmsvc_ops)
++	if (!rcu_access_pointer(nlmsvc_ops))
+ 		return NULL;
+ 	host = nlmsvc_lookup_host(rqstp, caller.data, caller.len);
+ 	if (!host)
+@@ -894,7 +894,7 @@ static __be32 nlm4svc_proc_granted_res(s
+ {
+ 	struct nlm4_res_wrapper *argp = rqstp->rq_argp;
+ 
+-	if (!nlmsvc_ops)
++	if (!rcu_access_pointer(nlmsvc_ops))
+ 		return rpc_success;
+ 
+ 	if (nlm4_netobj_to_cookie(&argp->cookie, &argp->xdrgen.cookie))
+--- a/fs/lockd/svcproc.c
++++ b/fs/lockd/svcproc.c
+@@ -133,7 +133,7 @@ nlm3svc_lookup_host(struct svc_rqst *rqs
+ {
+ 	struct nlm_host *host;
+ 
+-	if (!nlmsvc_ops)
++	if (!rcu_access_pointer(nlmsvc_ops))
+ 		return NULL;
+ 	host = nlmsvc_lookup_host(rqstp, caller.data, caller.len);
+ 	if (!host)
+@@ -924,7 +924,7 @@ static __be32 nlmsvc_proc_granted_res(st
+ {
+ 	struct nlm_res_wrapper *argp = rqstp->rq_argp;
+ 
+-	if (!nlmsvc_ops)
++	if (!rcu_access_pointer(nlmsvc_ops))
+ 		return rpc_success;
+ 
+ 	if (nlm_netobj_to_cookie(&argp->cookie, &argp->xdrgen.cookie))
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -90,22 +90,35 @@ int lock_to_openmode(struct file_lock *l
+ static __be32 nlm_do_fopen(struct svc_rqst *rqstp,
+ 			   struct nlm_file *file, int mode)
+ {
++	const struct nlmsvc_binding *ops;
+ 	__be32 nlmerr = nlm__int__failed;
+ 	__be32 deferred = 0;
+ 	int error;
+ 	int m;
+ 
++	rcu_read_lock();
++	ops = rcu_dereference(nlmsvc_ops);
++	if (!ops || !try_module_get(ops->owner)) {
++		rcu_read_unlock();
++		return nlm__int__failed;
++	}
++	rcu_read_unlock();
++
+ 	for (m = O_RDONLY; m <= O_WRONLY; m++) {
+ 		struct file **fp = &file->f_file[m];
+ 
+ 		if (mode != O_RDWR && mode != m)
+ 			continue;
+-		if (*fp)
++		if (*fp) {
++			module_put(ops->owner);
+ 			return nlm_granted;
++		}
+ 
+-		error = nlmsvc_ops->fopen(rqstp, &file->f_handle, fp, m);
+-		if (!error)
++		error = ops->fopen(rqstp, &file->f_handle, fp, m);
++		if (!error) {
++			module_put(ops->owner);
+ 			return nlm_granted;
++		}
+ 
+ 		dprintk("lockd: open failed (errno %d)\n", error);
+ 		switch (error) {
+@@ -122,6 +135,7 @@ static __be32 nlm_do_fopen(struct svc_rq
+ 		}
+ 	}
+ 
++	module_put(ops->owner);
+ 	return deferred ? deferred : nlmerr;
  }
  
- static void pnfs_layoutreturn_before_put_layout_hdr(struct pnfs_layout_hdr *lo)
+@@ -186,6 +200,33 @@ out_free:
+ }
+ 
+ /*
++ * Release the struct file references held by a nlm_file.
++ */
++static void nlm_release_files(struct nlm_file *file)
++{
++	const struct nlmsvc_binding *ops;
++	bool have_ops;
++
++	rcu_read_lock();
++	ops = rcu_dereference(nlmsvc_ops);
++	have_ops = ops && try_module_get(ops->owner);
++	rcu_read_unlock();
++
++	if (have_ops) {
++		if (file->f_file[O_RDONLY])
++			ops->fclose(file->f_file[O_RDONLY]);
++		if (file->f_file[O_WRONLY])
++			ops->fclose(file->f_file[O_WRONLY]);
++		module_put(ops->owner);
++	} else {
++		if (file->f_file[O_RDONLY])
++			fput(file->f_file[O_RDONLY]);
++		if (file->f_file[O_WRONLY])
++			fput(file->f_file[O_WRONLY]);
++	}
++}
++
++/*
+  * Delete a file after having released all locks, blocks and shares
+  */
+ static inline void
+@@ -194,10 +235,7 @@ nlm_delete_file(struct nlm_file *file)
+ 	nlm_debug_print_file("closing file", file);
+ 	if (!hlist_unhashed(&file->f_list)) {
+ 		hlist_del(&file->f_list);
+-		if (file->f_file[O_RDONLY])
+-			nlmsvc_ops->fclose(file->f_file[O_RDONLY]);
+-		if (file->f_file[O_WRONLY])
+-			nlmsvc_ops->fclose(file->f_file[O_WRONLY]);
++		nlm_release_files(file);
+ 		kfree(file);
+ 	} else {
+ 		printk(KERN_WARNING "lockd: attempt to release unknown file!\n");
+--- a/fs/nfsd/lockd.c
++++ b/fs/nfsd/lockd.c
+@@ -92,6 +92,7 @@ nlm_fclose(struct file *filp)
+ }
+ 
+ static const struct nlmsvc_binding nfsd_nlm_ops = {
++	.owner		= THIS_MODULE,
+ 	.fopen		= nlm_fopen,		/* open file for locking */
+ 	.fclose		= nlm_fclose,		/* close file */
+ };
+@@ -100,11 +101,12 @@ void
+ nfsd_lockd_init(void)
+ {
+ 	dprintk("nfsd: initializing lockd\n");
+-	nlmsvc_ops = &nfsd_nlm_ops;
++	rcu_assign_pointer(nlmsvc_ops, &nfsd_nlm_ops);
+ }
+ 
+ void
+ nfsd_lockd_shutdown(void)
+ {
+-	nlmsvc_ops = NULL;
++	RCU_INIT_POINTER(nlmsvc_ops, NULL);
++	synchronize_rcu();
+ }
+--- a/include/linux/lockd/bind.h
++++ b/include/linux/lockd/bind.h
+@@ -16,17 +16,23 @@ struct svc_rqst;
+ struct rpc_task;
+ struct rpc_clnt;
+ struct super_block;
++struct module;
+ 
+-/*
+- * This is the set of functions for lockd->nfsd communication
++/**
++ * struct nlmsvc_binding - lockd -> nfsd callback table
++ * @owner:  module that provides this binding.
++ * @fopen:  open a file by NFS file handle on behalf of an NLM request.
++ * @fclose: close a file that was previously opened via @fopen.
++ *          Implementations MUST be semantically equivalent to fput().
+  */
+ struct nlmsvc_binding {
++	struct module	*owner;
+ 	int		(*fopen)(struct svc_rqst *rqstp, struct nfs_fh *f,
+ 				 struct file **filp, int flags);
+ 	void		(*fclose)(struct file *filp);
+ };
+ 
+-extern const struct nlmsvc_binding *nlmsvc_ops;
++extern const struct nlmsvc_binding __rcu *nlmsvc_ops;
+ 
+ /*
+  * Similar to nfs_client_initdata, but without the NFS-specific
 
 
