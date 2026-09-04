@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF2C35AC03;
-	Fri,  4 Sep 2026 05:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BED3A5445;
+	Fri,  4 Sep 2026 05:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501340; cv=none; b=NCC4BYsweHJxdOIUTKX1iVjs3ulkc03il+WB5fyM/89cCWRjGRK2WhWKnYaJiPygoe9+4B3l6mn6HcDqmlJKgTtyzOnwjniE6FChATtTQsEmX5zqKqmk+oqwR08lesACDhSm9/50hG4+oD3nVAfAyKSlck+pUd5Cmlv/U6GPynE=
+	t=1788501343; cv=none; b=ZMaMWy0QA3AKK/GhUzQDDm0I1gkxAXNmk4dYeiUMD+LHztEXJNkKGRH49bw9Bxuw2VjE8LO0W8LUwiLrMado6AUaPep6E+3SuvcvDvugLNsWr5k9+TaRMmY7lVJd7NJsITZDBMMFgzPcSxPDqAb4gFNkK2UXrRB+iN1NwRH3vQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501340; c=relaxed/simple;
-	bh=/EYH0W4OXCf0WN5TGwwzp2POBaD1tZRihYxCmt1f7Ho=;
+	s=arc-20240116; t=1788501343; c=relaxed/simple;
+	bh=DXSeXrhFp1SBZW6B9XedrMXxAjPudvRVNvP95W6g7Bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfbvI+5HVj82VAGpG8vpe1FR4jVD0KVWuNIa514J5o6L5CFD5RaVTBXwJhOOeBuYuXizSABTMXjvEvCSrAu9oWx5ZyaiOiPNlKUThOh782QP6v1IEEfeKNM60zq42ngebbP4QssdUtPWnewRCJPuQtU74Ovoef392AgtAi11r+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtID53uj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ub3uuxI4LI93G125nI89jl7YgPl3Fi3xVZbujEbW45cHtvp6r3x1v686VyfpD9WJSFLSyAKERAsp88ZwrXMX0rYpM9eF+FL5N8OQGFEOLPeiVabz2Hhg3XUWJrgTADvLMlJ+WRIPGj8U2SHI+zISfkK1JJZSx/JWkycFxe9fFeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sW/77w0h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtID53uj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74501F00A3D;
-	Fri,  4 Sep 2026 05:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sW/77w0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831A41F00A3D;
+	Fri,  4 Sep 2026 05:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501339;
-	bh=GJ+AFxhYLiVt3DSPvC9Pq4yPKdxDh9IR0yp3whgXnHI=;
+	s=korg; t=1788501342;
+	bh=yHpH2t/kS5DycaVGBR+b+yzLUllNV5m4/fELuabb6o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtID53ujoakMJQh5lj9nj6MSmpdTZjHQvF/NTePQXOuaEtRDLqYPfq6raAVhpHckN
-	 75LKKO4X0rLi5VrdZKx6cHtZrGskifyHOMKgLXPLQ+MorLhUEM2DBGDmgh0oG3ScUh
-	 JvlOn5H97DE3M5jkk1yPfHYx2U1pMzl7jUkTF/fA=
+	b=sW/77w0hlTlwl7XTyFIzwcHyxEMm7uR2be50ngcbMX5+BOImPNWFlgyeZzX0O3Api
+	 fzpf0Xk7IngpSCxTtp18vRKxkV+07GLCredY5cGTtQQ7BasUuH/FKTIM8i78PM6N8t
+	 ETSmpi52jLnqPexDzbZy241SczIdvKE1R6RYuXnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 375/552] power: supply: qcom_battmgr: terminate the strings from firmware
-Date: Fri,  4 Sep 2026 06:58:52 +0200
-Message-ID: <20260904045758.724098003@linuxfoundation.org>
+	Cong Nguyen <congnt264@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 349/552] hwmon: (max6621) fix negative temperature offset and crit readings
+Date: Fri,  4 Sep 2026 06:58:26 +0200
+Message-ID: <20260904045758.160777596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,44 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit ab1112df8f4ffa88cb024dd370c432ced80f77d8 upstream.
+commit acc52bd431e2d8698fae8d82a74ac45d79b62e0a upstream.
 
-The qcom_battmgr_sc8280xp_strcpy() takes a Pascal-style string when the
-firmware sends one. Otherwise it copies all BATTMGR_STRING_LEN bytes and
-leaves the destination without a terminator.
+max6621_read() reads the CONFIG2 offset and the critical alert threshold
+registers into a u32 and scales them without sign extension:
 
-Those destinations are model_number, serial_number and oem_info, each
-BATTMGR_STRING_LEN and declared next to each other. They go out to user
-space as val->strval, which power_supply_format_property() prints with
-"%s", so a firmware string that fills the whole field makes that read run
-into the following members.
+	/* offset */ *val = (regval >> MAX6621_REG_TEMP_SHIFT) * 1000L;
+	/* crit   */ *val = regval * 1000L;
 
-Use strscpy() so the copy always terminates, the way the SM8350 path
-already does for the same field.
+Both attributes are writable and their write paths clamp to a negative
+minimum and encode negative values, so a value written as negative is read
+back as a large positive number. For example, writing a -10 degrees C
+offset stores max6621_temp_mc2reg(-10000) = (-10 << 6) = 0xfd80; the read
+then computes 0xfd80 >> 6 = 1014 -> 1014000 instead of -10000.
 
-Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
+Cast the register value to s16 before scaling so the read preserves the
+sign the write path encodes. The temperature input path already uses an s8
+intermediate and is left unchanged.
+
+Fixes: 92b64580f14b ("hwmon: (max6621) Add support for Maxim MAX6621 temperature sensor")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260727074119.2585463-1-sammiee5311@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://lore.kernel.org/r/ad0baddbd6163cf73545c8e9273258136718585c.1786334038.git.congnt264@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/qcom_battmgr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/max6621.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -1236,7 +1236,7 @@ static void qcom_battmgr_sc8280xp_strcpy
- 		memcpy(dest, src + 1, len);
- 		dest[len] = '\0';
- 	} else {
--		memcpy(dest, src, BATTMGR_STRING_LEN);
-+		strscpy(dest, src, BATTMGR_STRING_LEN);
- 	}
- }
+--- a/drivers/hwmon/max6621.c
++++ b/drivers/hwmon/max6621.c
+@@ -239,7 +239,7 @@ max6621_read(struct device *dev, enum hw
+ 			if (ret)
+ 				return ret;
  
+-			*val = (regval >> MAX6621_REG_TEMP_SHIFT) *
++			*val = ((s16)regval >> MAX6621_REG_TEMP_SHIFT) *
+ 			       1000L;
+ 
+ 			break;
+@@ -254,7 +254,7 @@ max6621_read(struct device *dev, enum hw
+ 			if (ret)
+ 				return ret;
+ 
+-			*val = regval * 1000L;
++			*val = (s16)regval * 1000L;
+ 
+ 			break;
+ 		case hwmon_temp_crit_alarm:
 
 
