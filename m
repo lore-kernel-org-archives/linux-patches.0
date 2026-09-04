@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DBE3515D2;
-	Fri,  4 Sep 2026 05:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159163515D2;
+	Fri,  4 Sep 2026 05:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498339; cv=none; b=hhioQErtQEdHw8fZNWnYUlt3nbRISWO1qZG9rC6+CSj8TAR22WfaAQXwcPcgVmd93d324LZEhiQd3LkWPG1G+RQ/FUh1sI7Mkb7tMeYuFTETKQeXZyzQBKCSi3+KgA1rsX22T5TAM9RzT8WTFQbtCB9G87Lyu4OqmU784PZqEac=
+	t=1788498342; cv=none; b=ERfmlSnVYUWqAZgis69147fxueOFo3gr3yRmWGc+tcTPFDS3apmthTYl34IarbhleHfZT8+r9r9WQ3s2iuw6qU4zVfnK7BwZR98E29bY6UhbzzEZ+5ITE9EQGr9V9E7bWJnOMLNemXysWkBz6GbBbIpAc6oc4Mul6mhX93WO1qA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498339; c=relaxed/simple;
-	bh=nzCGzvzX6XHuObztr7ub4BHi4lSQK95+SNRBqwhd/s4=;
+	s=arc-20240116; t=1788498342; c=relaxed/simple;
+	bh=QYv+1EJwAVAC5o1/2SekDePNhhF4j4IVBacmrqf5eyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AhIBMkuavSFLG8QFO+JLFj8mlozdOhI/DW2tPkm0KHqecain1Kgijy6GvhS5L9rXm2+RKsMWKfEvZZpgcR3pOH6uzcJaZ0usRjKNn/LquC8eaDVsc3fADrgos7oMuohqDwTJpVUKUyzHd2O1CBM1Qz8JU+hd3zOh5A5C1uS+w5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCt7uMfM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hvb+L37s0u5wX/5jR0QsrAgC0fcGUiWPZR/oUB1zWBteg/4uJFpq/8h01qnXR6NPHqNXYVYBKiXssqvJ76N3D75a2TbSUuFjmnujYJsCMbC8XSpEQnDkPH5UZxmfzAApvpWV/jwdxaS0/EAR5d0f9EfpLJxvhnQxMdg70IWUKh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LS/rRHJB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCt7uMfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A411F00A3E;
-	Fri,  4 Sep 2026 05:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LS/rRHJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6DB1F00A3E;
+	Fri,  4 Sep 2026 05:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498338;
-	bh=tXudOnGMMF2BMfX43DSetSmP9kPI9jNbt8buj49h+Z8=;
+	s=korg; t=1788498341;
+	bh=P62HMlfCNpzgHe70+bFUf1obsR1C7GC2E36wYSXL0A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sCt7uMfMnkNZ2e0Sq0jGcI82NdHVTma1qOnh7oXmb52/ALtkxGBTuEV64pWxgagHK
-	 rGJIz/a18P1BqbrJwi0wBGIvXmkbdhvYnnwt6RUeDBLoamFu/HDeU2w21eChoLqyPW
-	 LzVATuOT7g4D6bX8dvAydE2h9CSS4sFsYOSI43m0=
+	b=LS/rRHJBWNJgTrylszccinYXEU9a0sKGU/44ztVAi/NVVZHSDP1TMG79zAk15sZ1q
+	 R66hrbRN87twwVNMZGzyW5kG9fStRQo+0q9W/wEG6nZ47/DFfgtTubsu0IqguDxZrN
+	 zkIDixa8SbQhInEgHI6gtmdjwhU6ApfrwDELHDoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>
-Subject: [PATCH 7.2 027/713] rust: bug: skip arch-specific asm in `testlib` builds
-Date: Fri,  4 Sep 2026 06:49:55 +0200
-Message-ID: <20260904045804.438654783@linuxfoundation.org>
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.2 028/713] rust: bug: fix warn_on macro build error on UML
+Date: Fri,  4 Sep 2026 06:49:56 +0200
+Message-ID: <20260904045804.460058901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,90 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-commit 5d9668f3930609ead91f39b059ef4fe53db04942 upstream.
+commit 30a449e04a32033d8e4844fdb4938a0ebccfa37b upstream.
 
-Running `make rusttest` with `ARCH=` set to an architecture other than
-the host's fails, e.g. `ARCH=arm64` on an x86_64 host:
+Callers that go through `kernel::prelude` have `CStrExt` in scope, but
+code inside the `kernel` crate imports explicitly and may not. Using
+`warn_on!` from such a module fails to build on UML, which is the only
+configuration where `warn_flags!` needs a C string pointer rather than an
+inline asm bug entry:
 
-error: invalid instruction mnemonic 'brk'
-  --> rust/kernel/bug.rs:63:17
-   |
-63 | /                 concat!(
-64 | |                     "/* {size} */",
-65 | |                     include!(concat!(env!("OBJTREE"), "/rust/kernel/generated_arch_warn_asm.rs")),
-66 | |                     include!(concat!(env!("OBJTREE"), "/rust/kernel/generated_arch_reachable_asm.rs")));
-   | |_______________________________________________________________________________________________________^
-   |
-note: instantiated into assembly here
-  --> <inline asm>:1:115
-   |
- 1 |     /* 8 */.pushsection __bug_table,"aw"; .align 2; 14470: .long 14471f - .;.short 2305;.align 2; .popsection; 14471:brk 0x800
-   |                                                                                                                      ^^^
+error[E0599]: no method named `as_char_ptr` found for reference `&ffi::CStr` in the current scope
+   --> linux/rust/kernel/bug.rs:83:49
+    |
+ 83 |                 $crate::c_str!(::core::file!()).as_char_ptr(),
+    |                                                 ^^^^^^^^^^^
+    |
+   ::: linux/rust/kernel/time.rs:427:9
+    |
+427 |         warn_on!(self.nanos < 0);
+    |         ------------------------ in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is in scope
+    = note: this error originates in the macro `$crate::warn_flags` which comes from the expansion of the macro `warn_on` (in Nightly builds, run with -Z mac)
+help: trait `CStrExt` which provides `as_char_ptr` is implemented but not in scope; perhaps you want to import it
+   --> linux/rust/kernel/time.rs:27:1
+    |
+ 27 + use crate::str::CStrExt;
 
-The reason is that `rusttest` builds the `kernel` crate as a host
-library: it passes the `CONFIG_*` cfgs of the configured architecture,
-but not `--target`, so code generation happens for the
-host. `warn_flags!` then selects the arch-specific inline asm arm
-based on `CONFIG_*`, and the host assembler rejects it.
+Call the method through its fully qualified path, which resolves
+without any import at the expansion site.
 
-This does not happen with the current `master` because `warn_on!` has
-no user inside the `kernel` crate itself yet, but it will as soon as
-one is added.
-
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Closes: https://lore.kernel.org/all/CANiq72n4=fz=JNKY0Jdm8BnLa=RmHB2B7s0bO47YTJ7hygqBZg@mail.gmail.com/
-Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
 Cc: stable@vger.kernel.org
 Fixes: dff64b072708 ("rust: Add warn_on macro")
-Link: https://patch.msgid.link/20260808022608.1125174-1-tomo@flapping.org
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Link: https://patch.msgid.link/20260807112427.1039056-1-tomo@flapping.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/bug.rs |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ rust/kernel/bug.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/rust/kernel/bug.rs
 +++ b/rust/kernel/bug.rs
-@@ -8,6 +8,7 @@
- 
- #[macro_export]
- #[doc(hidden)]
-+#[cfg(not(testlib))]
- #[cfg(all(CONFIG_BUG, not(CONFIG_UML), not(CONFIG_LOONGARCH), not(CONFIG_ARM)))]
- #[cfg(CONFIG_DEBUG_BUGVERBOSE)]
- macro_rules! warn_flags {
-@@ -47,6 +48,7 @@ macro_rules! warn_flags {
- 
- #[macro_export]
- #[doc(hidden)]
-+#[cfg(not(testlib))]
- #[cfg(all(CONFIG_BUG, not(CONFIG_UML), not(CONFIG_LOONGARCH), not(CONFIG_ARM)))]
- #[cfg(not(CONFIG_DEBUG_BUGVERBOSE))]
- macro_rules! warn_flags {
-@@ -73,6 +75,7 @@ macro_rules! warn_flags {
- 
- #[macro_export]
- #[doc(hidden)]
-+#[cfg(not(testlib))]
- #[cfg(all(CONFIG_BUG, CONFIG_UML))]
- macro_rules! warn_flags {
-     ($file:expr, $flags:expr) => {
-@@ -91,6 +94,7 @@ macro_rules! warn_flags {
- 
- #[macro_export]
- #[doc(hidden)]
-+#[cfg(not(testlib))]
- #[cfg(all(CONFIG_BUG, any(CONFIG_LOONGARCH, CONFIG_ARM)))]
- macro_rules! warn_flags {
-     ($file:expr, $flags:expr) => {
-@@ -101,7 +105,7 @@ macro_rules! warn_flags {
- 
- #[macro_export]
- #[doc(hidden)]
--#[cfg(not(CONFIG_BUG))]
-+#[cfg(any(testlib, not(CONFIG_BUG)))]
- macro_rules! warn_flags {
-     ($file:expr, $flags:expr) => {};
- }
+@@ -83,7 +83,7 @@ macro_rules! warn_flags {
+         // with a valid null-terminated string.
+         unsafe {
+             $crate::bindings::warn_slowpath_fmt(
+-                $crate::c_str!(::core::file!()).as_char_ptr(),
++                $crate::str::CStrExt::as_char_ptr($crate::c_str!(::core::file!())),
+                 line!() as $crate::ffi::c_int,
+                 $flags as $crate::ffi::c_uint,
+                 ::core::ptr::null(),
 
 
