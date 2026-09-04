@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225BA40F754;
-	Fri,  4 Sep 2026 06:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9D541C2FF;
+	Fri,  4 Sep 2026 06:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502903; cv=none; b=hptxoowBzDgVFNRcXwKVcMqqhqB5J5aR6nXpDy1z0DDZTChrsYC1/hUBE4gQTRxmjosKxu+/hgLGWizbDrxKa8Hclcce5/99cUUyxgCDIN0SqgsuxyzvBD15Ws7fEuSn8GGuPVevtfv0dfN20po3ZW2MfH6OOCgYAVE8LZjyDUE=
+	t=1788502906; cv=none; b=FrYhwmiSo/2ORYjMj0zpA5Omte1zv3aUzgCKOmCf2o+S8yfUP4FkI4WGzxzNeKNMwvFwR7+WP6tPjVP334GiW0K3nBLbRkuHGoJUFRoJnyxfWw/3FYop4AFBXYNW/dTgbHhaQQyS6kmJV8oqUGGAGBC7t3qE8zMN1Gf9fswsMyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502903; c=relaxed/simple;
-	bh=pJLu8lYwqaGrEC2oDZupTA5hhQQhBEcQ0vRpC/SzrCY=;
+	s=arc-20240116; t=1788502906; c=relaxed/simple;
+	bh=WWw+WWX4wQvb4LiBLrGSlxJgObl8h1IIHJEZDBW2DG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyEbiephbnnB+oCTf5x2ToyjYIgPlglrenalgvW1vdyReE8STLNXnSgZXCcQO7PIuaEdFYUlC3qft26PBuBKMKp4vZbAD6rhbXgCr59aGectEkqD/xHOiOayvT6O5+nL+ChZWVZaTbxyEYX6iK/TUDwJHBQRpGG8TU0T6uKnp48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZH7h2zQ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DJRNjzUWp33tqWnfALv0C/vHAzQBs/r24EmQa/OhkYI0louREzM1w1PuMOzYmtFQ9BNOpHgLW+k5nYBiu1P8RuSSD0ki5gumY5DENCA61ZN4x4oGJkef2xxUu07i/Frb5BmD72gn2N6Fw/I2FNMwwCHWxp7J5DqIU/uMPj3pqxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0S9y4fkA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZH7h2zQ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771D81F00A3D;
-	Fri,  4 Sep 2026 06:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0S9y4fkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DCD1F00A3D;
+	Fri,  4 Sep 2026 06:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502902;
-	bh=3ZGo3du1oKscLXPrVmzwMNLLLup/eU3bl0UBLcCW0iY=;
+	s=korg; t=1788502904;
+	bh=DWrVA+8cYue0Vc5EoJFbOryz3QcA2UrOQjtMSG5xRdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZH7h2zQ9kecmOZVB0x7IzE0isixFJPViORSRq7DUrChArL2uFz6FhyU/gQmTRwbGa
-	 aqluSsw9GjFXjTifvYnWsIbRcR8AFouxB05YrvXQgX8d30unpI6gzNDyZMNtTuxkha
-	 /7fRKM7UbwhcdTzm2+XZ5PKm+xjUK9PQ41yMa5UI=
+	b=0S9y4fkANvAqqpX/RxaDpefwYBgBxMtKWgKeLkw0omlkNiyEmMud/qulsE0RPEnVY
+	 PAZyOQ9HQoWc95qaxQ2GCSlqxawG/SmVwr+WdwwitSF6kzWGzRRczbeweXY3K57jEG
+	 vFgvOTHa1ZKYuf661VFp6YHOU42M53biLMk6rFbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 363/403] ALSA: bcd2000: clear the URB pointers on disconnect
-Date: Fri,  4 Sep 2026 07:02:46 +0200
-Message-ID: <20260904045743.063443667@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Stable@vger.kernel.org,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 372/403] x86/sev: Fix broken SNP support with KVM module built-in
+Date: Fri,  4 Sep 2026 07:02:55 +0200
+Message-ID: <20260904045743.256665315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,106 +55,306 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-commit 459d3a64766f5ca2f1886daeaf24582831a5f5ab upstream.
+[ Upstream commit 409f45387c937145adeeeebc6d6032c2ec232b35 ]
 
-bcd2000_free_usb_related_resources() frees both URBs and leaves the
-pointers behind:
+Fix issues with enabling SNP host support and effectively SNP support
+which is broken with respect to the KVM module being built-in.
 
-	usb_kill_urb(bcd2k->midi_out_urb);
-	usb_kill_urb(bcd2k->midi_in_urb);
+SNP host support is enabled in snp_rmptable_init() which is invoked as
+device_initcall(). SNP check on IOMMU is done during IOMMU PCI init
+(IOMMU_PCI_INIT stage). And for that reason snp_rmptable_init() is
+currently invoked via device_initcall() and cannot be invoked via
+subsys_initcall() as core IOMMU subsystem gets initialized via
+subsys_initcall().
 
-	usb_free_urb(bcd2k->midi_out_urb);
-	usb_free_urb(bcd2k->midi_in_urb);
+Now, if kvm_amd module is built-in, it gets initialized before SNP host
+support is enabled in snp_rmptable_init() :
 
-The rawmidi device outlives that call.  A substream that is still open
-when the device is unplugged reaches bcd2000_midi_send() from the
-trigger path on close.  That function writes to the freed URB and then
-hands it to the USB core:
+[   10.131811] kvm_amd: TSC scaling supported
+[   10.136384] kvm_amd: Nested Virtualization enabled
+[   10.141734] kvm_amd: Nested Paging enabled
+[   10.146304] kvm_amd: LBR virtualization supported
+[   10.151557] kvm_amd: SEV enabled (ASIDs 100 - 509)
+[   10.156905] kvm_amd: SEV-ES enabled (ASIDs 1 - 99)
+[   10.162256] kvm_amd: SEV-SNP enabled (ASIDs 1 - 99)
+[   10.171508] kvm_amd: Virtual VMLOAD VMSAVE supported
+[   10.177052] kvm_amd: Virtual GIF supported
+...
+...
+[   10.201648] kvm_amd: in svm_enable_virtualization_cpu
 
-	bcd2k->midi_out_urb->transfer_buffer_length = BUFSIZE;
-	...
-	ret = usb_submit_urb(bcd2k->midi_out_urb, GFP_ATOMIC);
+And then svm_x86_ops->enable_virtualization_cpu()
+(svm_enable_virtualization_cpu) programs MSR_VM_HSAVE_PA as following:
+wrmsrl(MSR_VM_HSAVE_PA, sd->save_area_pa);
 
-usb_kill_urb() does not stop a later submission either, so a submit that
-races the disconnect can requeue the URB after it has been reaped.
-midi_in_urb is exposed the same way: bcd2000_input_complete() resubmits
-it from the completion handler.
+So VM_HSAVE_PA is non-zero before SNP support is enabled on all CPUs.
 
-KASAN on 7.2.0-rc5 (arm64):
+snp_rmptable_init() gets invoked after svm_enable_virtualization_cpu()
+as following :
+...
+[   11.256138] kvm_amd: in svm_enable_virtualization_cpu
+...
+[   11.264918] SEV-SNP: in snp_rmptable_init
 
-  BUG: KASAN: slab-use-after-free in bcd2000_midi_send [snd_bcd2000]
-  Write of size 4 at addr ffff00001827d388 by task bpoc/168
-   __asan_store4
-   bcd2000_midi_send [snd_bcd2000]
-   bcd2000_midi_output_trigger [snd_bcd2000]
-   snd_rawmidi_kernel_write1
-   close_substream.part.0
-  Freed by task 168:
-   usb_free_urb
-   bcd2000_disconnect [snd_bcd2000]
+This triggers a #GP exception in snp_rmptable_init() when snp_enable()
+is invoked to set SNP_EN in SYSCFG MSR:
 
-  BUG: KASAN: slab-use-after-free in usb_submit_urb
-  Read of size 8 at addr ffff00001827d3b8 by task bpoc/168
+[   11.294289] unchecked MSR access error: WRMSR to 0xc0010010 (tried to write 0x0000000003fc0000) at rIP: 0xffffffffaf5d5c28 (native_write_msr+0x8/0x30)
+...
+[   11.294404] Call Trace:
+[   11.294482]  <IRQ>
+[   11.294513]  ? show_stack_regs+0x26/0x30
+[   11.294522]  ? ex_handler_msr+0x10f/0x180
+[   11.294529]  ? search_extable+0x2b/0x40
+[   11.294538]  ? fixup_exception+0x2dd/0x340
+[   11.294542]  ? exc_general_protection+0x14f/0x440
+[   11.294550]  ? asm_exc_general_protection+0x2b/0x30
+[   11.294557]  ? __pfx_snp_enable+0x10/0x10
+[   11.294567]  ? native_write_msr+0x8/0x30
+[   11.294570]  ? __snp_enable+0x5d/0x70
+[   11.294575]  snp_enable+0x19/0x20
+[   11.294578]  __flush_smp_call_function_queue+0x9c/0x3a0
+[   11.294586]  generic_smp_call_function_single_interrupt+0x17/0x20
+[   11.294589]  __sysvec_call_function+0x20/0x90
+[   11.294596]  sysvec_call_function+0x80/0xb0
+[   11.294601]  </IRQ>
+[   11.294603]  <TASK>
+[   11.294605]  asm_sysvec_call_function+0x1f/0x30
+...
+[   11.294631]  arch_cpu_idle+0xd/0x20
+[   11.294633]  default_idle_call+0x34/0xd0
+[   11.294636]  do_idle+0x1f1/0x230
+[   11.294643]  ? complete+0x71/0x80
+[   11.294649]  cpu_startup_entry+0x30/0x40
+[   11.294652]  start_secondary+0x12d/0x160
+[   11.294655]  common_startup_64+0x13e/0x141
+[   11.294662]  </TASK>
 
-Clear both pointers after freeing and test them on the paths that can
-still run.  Poison the URBs before freeing them: usb_poison_urb() waits
-for a running completion handler and rejects any later submission, so
-after it returns the input path is quiesced and only the rawmidi trigger
-path can still reach bcd2000_midi_send().  No unpoison is needed; the
-URBs are freed on the next line.
+This #GP exception is getting triggered due to the following errata for
+AMD family 19h Models 10h-1Fh Processors:
 
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+Processor may generate spurious #GP(0) Exception on WRMSR instruction:
+Description:
+The Processor will generate a spurious #GP(0) Exception on a WRMSR
+instruction if the following conditions are all met:
+- the target of the WRMSR is a SYSCFG register.
+- the write changes the value of SYSCFG.SNPEn from 0 to 1.
+- One of the threads that share the physical core has a non-zero
+value in the VM_HSAVE_PA MSR.
 
-Fixes: b47a22290d58 ("ALSA: MIDI driver for Behringer BCD2000 USB device")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013428.38204-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The document being referred to above:
+https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/revision-guides/57095-PUB_1_01.pdf
+
+To summarize, with kvm_amd module being built-in, KVM/SVM initialization
+happens before host SNP is enabled and this SVM initialization
+sets VM_HSAVE_PA to non-zero, which then triggers a #GP when
+SYSCFG.SNPEn is being set and this will subsequently cause
+SNP_INIT(_EX) to fail with INVALID_CONFIG error as SYSCFG[SnpEn] is not
+set on all CPUs.
+
+Essentially SNP host enabling code should be invoked before KVM
+initialization, which is currently not the case when KVM is built-in.
+
+Add fix to call snp_rmptable_init() early from iommu_snp_enable()
+directly and not invoked via device_initcall() which enables SNP host
+support before KVM initialization with kvm_amd module built-in.
+
+Add additional handling for `iommu=off` or `amd_iommu=off` options.
+
+Note that IOMMUs need to be enabled for SNP initialization, therefore,
+if host SNP support is enabled but late IOMMU initialization fails
+then that will cause PSP driver's SNP_INIT to fail as IOMMU SNP sanity
+checks in SNP firmware will fail with invalid configuration error as
+below:
+
+[    9.723114] ccp 0000:23:00.1: sev enabled
+[    9.727602] ccp 0000:23:00.1: psp enabled
+[    9.732527] ccp 0000:a2:00.1: enabling device (0000 -> 0002)
+[    9.739098] ccp 0000:a2:00.1: no command queues available
+[    9.745167] ccp 0000:a2:00.1: psp enabled
+[    9.805337] ccp 0000:23:00.1: SEV-SNP: failed to INIT rc -5, error 0x3
+[    9.866426] ccp 0000:23:00.1: SEV API:1.53 build:5
+
+Fixes: c3b86e61b756 ("x86/cpufeatures: Enable/unmask SEV-SNP CPU feature")
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Co-developed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Acked-by: Joerg Roedel <jroedel@suse.de>
+Message-ID: <138b520fb83964782303b43ade4369cd181fdd9c.1739226950.git.ashish.kalra@amd.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[sean: handcode/port the sev.c changes]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/bcd2000/bcd2000.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/sev.h |  2 ++
+ arch/x86/virt/svm/sev.c    | 21 ++++++---------------
+ drivers/iommu/amd/init.c   | 34 ++++++++++++++++++++++++++++++----
+ 3 files changed, 38 insertions(+), 19 deletions(-)
 
---- a/sound/usb/bcd2000/bcd2000.c
-+++ b/sound/usb/bcd2000/bcd2000.c
-@@ -134,6 +134,9 @@ static void bcd2000_midi_send(struct bcd
- 	if (!midi_out_substream)
- 		return;
+diff --git a/arch/x86/include/asm/sev.h b/arch/x86/include/asm/sev.h
+index ee34ab00a8d6d..2524ada3708e4 100644
+--- a/arch/x86/include/asm/sev.h
++++ b/arch/x86/include/asm/sev.h
+@@ -440,6 +440,7 @@ static inline void snp_update_svsm_ca(void) { }
  
-+	if (!bcd2k->midi_out_urb)
-+		return;
-+
- 	/* copy command prefix bytes */
- 	memcpy(bcd2k->midi_out_buf, device_cmd_prefix,
- 		sizeof(device_cmd_prefix));
-@@ -178,7 +181,7 @@ static int bcd2000_midi_output_close(str
+ #ifdef CONFIG_KVM_AMD_SEV
+ bool snp_probe_rmptable_info(void);
++int snp_rmptable_init(void);
+ int snp_lookup_rmpentry(u64 pfn, bool *assigned, int *level);
+ void snp_dump_hva_rmpentry(unsigned long address);
+ int psmash(u64 pfn);
+@@ -450,6 +451,7 @@ void kdump_sev_callback(void);
+ void snp_fixup_e820_tables(void);
+ #else
+ static inline bool snp_probe_rmptable_info(void) { return false; }
++static inline int snp_rmptable_init(void) { return -ENOSYS; }
+ static inline int snp_lookup_rmpentry(u64 pfn, bool *assigned, int *level) { return -ENODEV; }
+ static inline void snp_dump_hva_rmpentry(unsigned long address) {}
+ static inline int psmash(u64 pfn) { return -ENODEV; }
+diff --git a/arch/x86/virt/svm/sev.c b/arch/x86/virt/svm/sev.c
+index 9a6a943d8e410..738698390ebf0 100644
+--- a/arch/x86/virt/svm/sev.c
++++ b/arch/x86/virt/svm/sev.c
+@@ -189,7 +189,7 @@ void __init snp_fixup_e820_tables(void)
+  * described in the SNP_INIT_EX firmware command description in the SNP
+  * firmware ABI spec.
+  */
+-static int __init snp_rmptable_init(void)
++int __init snp_rmptable_init(void)
  {
- 	struct bcd2000 *bcd2k = substream->rmidi->private_data;
+ 	u64 max_rmp_pfn, calc_rmp_sz, rmptable_size, rmp_end, val;
+ 	void *rmptable_start;
+@@ -197,11 +197,11 @@ static int __init snp_rmptable_init(void)
+ 	if (!cc_platform_has(CC_ATTR_HOST_SEV_SNP))
+ 		return 0;
  
--	if (bcd2k->midi_out_active) {
-+	if (bcd2k->midi_out_active && bcd2k->midi_out_urb) {
- 		usb_kill_urb(bcd2k->midi_out_urb);
- 		bcd2k->midi_out_active = 0;
+-	if (!amd_iommu_snp_en)
+-		goto nosnp;
++	if (WARN_ON_ONCE(!amd_iommu_snp_en))
++		return -ENOSYS;
+ 
+ 	if (!probed_rmp_size)
+-		goto nosnp;
++		return -ENOSYS;
+ 
+ 	rmp_end = probed_rmp_base + probed_rmp_size - 1;
+ 
+@@ -218,13 +218,13 @@ static int __init snp_rmptable_init(void)
+ 	if (calc_rmp_sz > probed_rmp_size) {
+ 		pr_err("Memory reserved for the RMP table does not cover full system RAM (expected 0x%llx got 0x%llx)\n",
+ 		       calc_rmp_sz, probed_rmp_size);
+-		goto nosnp;
++		return -ENOSYS;
  	}
-@@ -348,11 +351,13 @@ static int bcd2000_init_midi(struct bcd2
- static void bcd2000_free_usb_related_resources(struct bcd2000 *bcd2k,
- 						struct usb_interface *interface)
+ 
+ 	rmptable_start = memremap(probed_rmp_base, probed_rmp_size, MEMREMAP_WB);
+ 	if (!rmptable_start) {
+ 		pr_err("Failed to map RMP table\n");
+-		goto nosnp;
++		return -ENOSYS;
+ 	}
+ 
+ 	/*
+@@ -261,17 +261,8 @@ static int __init snp_rmptable_init(void)
+ 	crash_kexec_post_notifiers = true;
+ 
+ 	return 0;
+-
+-nosnp:
+-	cc_platform_clear(CC_ATTR_HOST_SEV_SNP);
+-	return -ENOSYS;
+ }
+ 
+-/*
+- * This must be called after the IOMMU has been initialized.
+- */
+-device_initcall(snp_rmptable_init);
+-
+ static struct rmpentry *get_rmpentry(u64 pfn)
  {
--	usb_kill_urb(bcd2k->midi_out_urb);
--	usb_kill_urb(bcd2k->midi_in_urb);
-+	usb_poison_urb(bcd2k->midi_out_urb);
-+	usb_poison_urb(bcd2k->midi_in_urb);
+ 	if (WARN_ON_ONCE(pfn > rmptable_max_pfn))
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 0e270533bf12b..54f3c17520d51 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -3219,7 +3219,7 @@ static bool __init detect_ivrs(void)
+ 	return true;
+ }
  
- 	usb_free_urb(bcd2k->midi_out_urb);
- 	usb_free_urb(bcd2k->midi_in_urb);
-+	bcd2k->midi_out_urb = NULL;
-+	bcd2k->midi_in_urb = NULL;
+-static void iommu_snp_enable(void)
++static __init void iommu_snp_enable(void)
+ {
+ #ifdef CONFIG_KVM_AMD_SEV
+ 	if (!cc_platform_has(CC_ATTR_HOST_SEV_SNP))
+@@ -3244,6 +3244,14 @@ static void iommu_snp_enable(void)
+ 		goto disable_snp;
+ 	}
  
- 	if (bcd2k->intf) {
- 		usb_set_intfdata(bcd2k->intf, NULL);
++	/*
++	 * Enable host SNP support once SNP support is checked on IOMMU.
++	 */
++	if (snp_rmptable_init()) {
++		pr_warn("SNP: RMP initialization failed, SNP cannot be supported.\n");
++		goto disable_snp;
++	}
++
+ 	pr_info("IOMMU SNP support enabled.\n");
+ 	return;
+ 
+@@ -3381,6 +3389,19 @@ static int __init iommu_go_to_state(enum iommu_init_state state)
+ 		ret = state_next();
+ 	}
+ 
++	/*
++	 * SNP platform initilazation requires IOMMUs to be fully configured.
++	 * If the SNP support on IOMMUs has NOT been checked, simply mark SNP
++	 * as unsupported. If the SNP support on IOMMUs has been checked and
++	 * host SNP support enabled but RMP enforcement has not been enabled
++	 * in IOMMUs, then the system is in a half-baked state, but can limp
++	 * along as all memory should be Hypervisor-Owned in the RMP. WARN,
++	 * but leave SNP as "supported" to avoid confusing the kernel.
++	 */
++	if (ret && cc_platform_has(CC_ATTR_HOST_SEV_SNP) &&
++	    !WARN_ON_ONCE(amd_iommu_snp_en))
++		cc_platform_clear(CC_ATTR_HOST_SEV_SNP);
++
+ 	return ret;
+ }
+ 
+@@ -3489,18 +3510,23 @@ void __init amd_iommu_detect(void)
+ 	int ret;
+ 
+ 	if (no_iommu || (iommu_detected && !gart_iommu_aperture))
+-		return;
++		goto disable_snp;
+ 
+ 	if (!amd_iommu_sme_check())
+-		return;
++		goto disable_snp;
+ 
+ 	ret = iommu_go_to_state(IOMMU_IVRS_DETECTED);
+ 	if (ret)
+-		return;
++		goto disable_snp;
+ 
+ 	amd_iommu_detected = true;
+ 	iommu_detected = 1;
+ 	x86_init.iommu.iommu_init = amd_iommu_init;
++	return;
++
++disable_snp:
++	if (cc_platform_has(CC_ATTR_HOST_SEV_SNP))
++		cc_platform_clear(CC_ATTR_HOST_SEV_SNP);
+ }
+ 
+ /****************************************************************************
+-- 
+2.53.0
+
 
 
