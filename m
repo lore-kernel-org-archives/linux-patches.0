@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67594378838;
-	Fri,  4 Sep 2026 06:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFA0415F0B;
+	Fri,  4 Sep 2026 06:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501844; cv=none; b=qYn9e9hmtMmnzBe0uTDbTj7KpSv4tX6os69zbkWHMFJwh7F2TRa8Id7XGBY8OFSTsEBocscKwSNx82n10+NxWEvQ+GPAHD+dJ/dNWjVTykMRYnztBxJWzhZMv4RHAXN4y67PMwXHVvmlk6gL/eEuHlGyWqdZh9Lh88z334h6dJ4=
+	t=1788501847; cv=none; b=bxWVxQRWrsc2reoP0kpUhLMNaFhBBrA2vmXZxeeEsrIF4YK+yKaJ9wtHopqo3r1sjON3CjNSe1hEjWVD3XIxjIsekKOZDOpsyXaiK/xq/IY2B4aERbcjzVS2Yl/XjvDS114920EpJyT+c5aLQwPZEXMCNoxgZH23iEIHqhLoL0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501844; c=relaxed/simple;
-	bh=8MuEpEFVr8YFmUTh1TalmGgiZKMQNyDRXg1Wy27iKh8=;
+	s=arc-20240116; t=1788501847; c=relaxed/simple;
+	bh=1hBm7HkAI/tLuj9oQsJKG7IU6/xMav9Yzsz2RCfqzPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0FhQEuNRhXJNHwkwQckBu17KItdNiufJbjiDTjzxB0YhNsvVeuOCKrTzljwN9zynz0hgqvV+PfnuL2fcqJHN07RDgsukNQ42KV7PdjHSe7nLLGlvtiE6cX1eDOgS4pTXZaRFEsW9LBB5e+L/cmleV21QFJ+1Dxtn0BHUIL7978=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8bhCbMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SKsPBvqViuAAn3yndTApHkC0QNTGHlAiUI5CzyL2df6RpReWtCLmsnG2xkR7P9Ux0EwDxBLIuuFd60UgHTYhy0gliefeF2GHtsdIEA+tzh5ewnOjqmKBu8BUC6i3GACXE1Buy7kTHb7jxvfGxKi+QX7aYnHkIf9ldqBYJIy19A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qzUJrGW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8bhCbMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9241F00A3D;
-	Fri,  4 Sep 2026 06:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qzUJrGW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E571F00A3D;
+	Fri,  4 Sep 2026 06:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501843;
-	bh=1LUjaytzzfjFy00MC6JaDUCQpNFfJ9ep5MYAtKoX9tk=;
+	s=korg; t=1788501846;
+	bh=lMiId92N6vkcpCX18uecL7Kv5/AZIAd8FYkL9zfyoHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U8bhCbMhIai6Aei6LbTI0S+m6fmIpFHKPTXmUWUhKdOM59klLNiqRQqvevFogUeTP
-	 IepBICUG70RnJuBAJDaid6u5KXyTWlEYebWlgAydeYB4Xx2atYgkC4WiDlr209YuNp
-	 SDLqWX6a3ZmqONI0/EvlkUuDexy8KIFX9RXtgjDU=
+	b=0qzUJrGWJKCNzMf01zD62uyxaekTaoTEiD1KWkPL2t6ndH/NAqUEeVx3XOHGk9gkR
+	 lBE+Iow1VVfzjw4KdsCZJfIrpv+NH2KReSNNipz9/EE0CyShGIq+u+UQLXW14IBZ3e
+	 T5A2AsUWVHlFANfMpQ2Dsv4DVjxtLSCl78C3Zc8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Figa <tfiga@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 6.18 552/552] platform/chrome: sensorhub: Fix dropped timestamp events and log spam
-Date: Fri,  4 Sep 2026 07:01:49 +0200
-Message-ID: <20260904045803.108188779@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.18 534/552] wifi: mt76: mt7915: bound the device EEPROM address before the EFUSE copy
+Date: Fri,  4 Sep 2026 07:01:31 +0200
+Message-ID: <20260904045802.721442438@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,83 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 9a3f43b30373c61477d0d3ab52946c05f9492bf9 upstream.
+commit 44b5adfe49499f53002737f5fe81d608c08122fc upstream.
 
-Commit 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported
-sensor number") evaluated the `sensor_num` against the bounds limit even
-for timestamp events.  A timestamp event typically has a `sensor_num` of
-0xff [1], causing the driver to flag it as invalid and skip to the next
-event.
+mt7915_mcu_get_eeprom() copies a fixed EFUSE block into the driver's
+dev->mt76.eeprom.data buffer at the offset reported by the MCU response
+(res->addr, a device-controlled __le32) without checking it against the
+buffer size. A malicious or malfunctioning device can report an arbitrary
+address and drive a 16-byte out-of-bounds write past eeprom.data.
 
-As a result, we'd see a flooding of "Invalid sensor number 255 from EC"
-warning logs and these timestamp events were being dropped.
+Reject a response whose address would place the copy outside eeprom.data
+before deriving the destination pointer. Devices that echo the requested
+in-bounds offset are unaffected.
 
-Move the bounds-check into cros_ec_sensor_ring_process_event() and
-evaluate it only after standalone timestamp events have already been
-processed and returned early.
-
-[1] https://crrev.com/219ca6ef82ba266da788b673ee4ad50bd3ea1285/common/motion_sense_fifo.c#427
-
-Fixes: 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported sensor number")
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Link: https://lore.kernel.org/r/20260715024454.4127571-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260625-b4-disp-16f99062-v1-1-aee52ecf61b9@proton.me
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub_ring.c |   27 ++++++++++++-----------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-@@ -464,6 +464,21 @@ cros_ec_sensor_ring_process_event(struct
- 						  fifo_timestamp,
- 						  *current_timestamp,
- 						  now);
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -2917,8 +2917,15 @@ int mt7915_mcu_get_eeprom(struct mt7915_
+ 		return ret;
+ 
+ 	res = (struct mt7915_mcu_eeprom_info *)skb->data;
+-	if (!buf)
+-		buf = dev->mt76.eeprom.data + le32_to_cpu(res->addr);
++	if (!buf) {
++		u32 addr = le32_to_cpu(res->addr);
 +
-+		/*
-+		 * A standalone timestamp event typically has a sensor_num of
-+		 * 0xff.  Return early here to prevent it from hitting the
-+		 * bounds check below and spamming the logs.
-+		 */
-+		return false;
++		if (addr > dev->mt76.eeprom.size - MT7915_EEPROM_BLOCK_SIZE) {
++			dev_kfree_skb(skb);
++			return -EINVAL;
++		}
++		buf = dev->mt76.eeprom.data + addr;
 +	}
-+
-+	/* Skip event if sensor_num from EC is out of bounds. */
-+	if (in->sensor_num >= sensorhub->sensor_num) {
-+		dev_warn_ratelimited(sensorhub->dev,
-+				     "Invalid sensor number %u from EC\n",
-+				     in->sensor_num);
-+		return false;
- 	}
+ 	memcpy(buf, res->data, MT7915_EEPROM_BLOCK_SIZE);
  
- 	if (in->flags & MOTIONSENSE_SENSOR_FLAG_ODR) {
-@@ -491,10 +506,6 @@ cros_ec_sensor_ring_process_event(struct
- 		return true;
- 	}
- 
--	if (in->flags & MOTIONSENSE_SENSOR_FLAG_TIMESTAMP)
--		/* If we just have a timestamp, skip this entry. */
--		return false;
--
- 	/* Regular sample */
- 	out->sensor_id = in->sensor_num;
- 	trace_cros_ec_sensorhub_data(in->sensor_num,
-@@ -879,14 +890,6 @@ static void cros_ec_sensorhub_ring_handl
- 
- 		for (in = sensorhub->resp->fifo_read.data, j = 0;
- 		     j < number_data; j++, in++) {
--			/* Skip event if sensor_num from EC is out of bounds. */
--			if (in->sensor_num >= sensorhub->sensor_num) {
--				dev_warn_ratelimited(sensorhub->dev,
--						     "Invalid sensor number %u from EC\n",
--						     in->sensor_num);
--				continue;
--			}
--
- 			if (cros_ec_sensor_ring_process_event(
- 						sensorhub, fifo_info,
- 						fifo_timestamp,
+ 	dev_kfree_skb(skb);
 
 
