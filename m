@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9000D386C13;
-	Fri,  4 Sep 2026 05:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675E63AFB1C;
+	Fri,  4 Sep 2026 05:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498909; cv=none; b=owyKf4O242NxGOE0zdFDQhnZMj1ivOt8FBVylEo1K7uJOxg+XRGbkAM7CSYkePa6Hsiwg+id/mUrCZt8BPZcaLbkxcu0K6XUUdn+45/RWmawpx9dR8F+GenALtJHDj2s+zLbF55Pz598222B18KXwWCfdsfBN4gFB3yq9MtclJs=
+	t=1788498912; cv=none; b=C9rEnoPvgzO7kLAcxBxkyis1WEnjGhXqMl5NJc0tu+6DASbykxQh7VjBgdpx6nSDzUTT5eYSqQoHcd/UEWITkOg/SZF7sVz/WX8Tu+9d65/c1wH7S6A5S34/S6PPF0qkxUyjNMbLrf1iij9Jr3Ys//j5wpMHPP420xlOl2XzmiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498909; c=relaxed/simple;
-	bh=UQZfIWa6jJOGtB+CEMSw1O0WsNI4wj8v+yAbz4sqwVI=;
+	s=arc-20240116; t=1788498912; c=relaxed/simple;
+	bh=a3CF45Xks44Ds4eNfMTGlKNx2Cm6JH9GYkt3Uhwytq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ov/owqfNQ2XFtyvLm9aDNR0i9KbtfaPzLaQI4zdtosESak8KVMtnagYEp5aXkOelmBoWi/3J5n01tVUPk4WiQQQDY5ngAd+4wIj91yC+MdUo/b31FgW1sqSyaL7QjSdRSL0Lfl5ikdJxFjAdyHH8/mztEu5SVwf67olN5x7JQ+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTdJS2h6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OPHYQgwNY83OKBq+mZ/Ke9h5WyxYo4t30c0qJHRLWhvKKAzWL82h/ao00IONqR/DXfHsRNq5l7MqIb1DvMyi6cIjUnEAkfeXZcxtRqGcTh9zEnOQnZJP0jjgZ4F2x01F0/LW/zVDY3ruB8+VJU2/kaL0vTbNSBg0jNvAL7pPxpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoWS7tir; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTdJS2h6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEA31F00A3D;
-	Fri,  4 Sep 2026 05:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoWS7tir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00801F00A3D;
+	Fri,  4 Sep 2026 05:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498908;
-	bh=tGQMI4tlo/ILQAXnJWqMGiAcOwUDwWPTfqdU6KM36AY=;
+	s=korg; t=1788498911;
+	bh=7lII9MWXskw7naGipjg2YFsqcVcqPh0Zn9VQhkP+khw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aTdJS2h6weKKk/j5dJg8GLXXtyk1/2J6NxKKYoRLlmAk9M8sXw4INMS2Jxz2rH8N2
-	 7GsHgQ/ENobjTnFM5iViwYiVnBKqNH6KERXft6Yd02Mzwv507lQ/w6wHpUs2p+4So9
-	 poj1qHwrj5I/uY6KbYIa8XlT7LYffEpo9ecYI1MQ=
+	b=xoWS7tirgeBlOLBSRcFXmDT+1XSWIP5odRAxak0bnsJxzwyPpg/GDm2RABc9bH1EY
+	 bp4UN+zf4FyMSnvWgeYQPqWdGcLLHbYtr0BPbI4tl845alX8V4SzLPbPfI7A72l6p2
+	 xAVhQAJ53udBjIr5gvs5PubwKQsB1RsEpWMcbbtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.com>,
 	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 231/713] cifs: call pagecache_isize_extended() in cifs_setsize() when extending
-Date: Fri,  4 Sep 2026 06:53:19 +0200
-Message-ID: <20260904045809.000840968@linuxfoundation.org>
+Subject: [PATCH 7.2 232/713] cifs: clear tcon after cifsFileInfo_put() in cifs_file_set_size()
+Date: Fri,  4 Sep 2026 06:53:20 +0200
+Message-ID: <20260904045809.023619228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -54,41 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Sorenson <sorenson@redhat.com>
 
-commit c510edb9734af1c274d18f4f31a471a166bbc7e8 upstream.
+commit b96db32fed8dfb2478d7c208f89bf383beed1535 upstream.
 
-cifs_setsize() calls truncate_pagecache() but skips
-pagecache_isize_extended() on extension.  truncate_setsize() shows
-the correct pattern:
+When the else branch of cifs_file_set_size() finds a writable file handle
+via find_writable_file(), it borrows tcon and server from the handle's
+tlink, attempts the handle-based set_file_size() RPC, and then releases
+the handle with cifsFileInfo_put().
 
-  i_size_write(inode, newsize);
-  if (newsize > oldsize)
-      pagecache_isize_extended(inode, oldsize, newsize);
-  truncate_pagecache(inode, newsize);
+If set_file_size() fails, execution falls through to the path-based
+fallback, which reuses the borrowed tcon and server under the
+"if (tcon == NULL)" guard.  Since tcon is not NULL at that point, the
+guard is skipped.  If cifsFileInfo_put() dropped the last reference on a
+tlink that was already removed from the tlink tree (TCON_LINK_IN_TREE
+cleared, as happens during reconnection or session teardown),
+cifs_put_tlink() will have freed tcon; the subsequent set_path_size()
+call is then a use-after-free.
 
-pagecache_isize_extended() zeroes the tail of the page straddling old
-EOF.  Without it, dirty bytes in that region can be written back to
-the server, exposing stale data in the newly extended range.
+Setting tcon = NULL after cifsFileInfo_put() causes the existing guard
+to take the cifs_sb_tlink() path, which acquires a fresh reference for
+the path-based operation or fails cleanly if the session is gone.
 
+Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
 Cc: stable@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>
+Cc: Paulo Alcantara <pc@manguebit.com>
 Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/inode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/fs/smb/client/inode.c
 +++ b/fs/smb/client/inode.c
-@@ -3057,6 +3057,8 @@ void cifs_setsize(struct inode *inode, l
- 		inode->i_blocks = blocks;
- 	spin_unlock(&inode->i_lock);
- 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
-+	if (offset > old_size)
-+		pagecache_isize_extended(inode, old_size, offset);
- 	truncate_pagecache(inode, offset);
- 	netfs_wait_for_outstanding_io(inode);
- }
+@@ -3118,6 +3118,7 @@ int cifs_file_set_size(const unsigned in
+ 							size, false);
+ 			cifs_dbg(FYI, "%s: set_file_size: rc = %d\n", __func__, rc);
+ 			cifsFileInfo_put(open_file);
++			tcon = NULL;
+ 		}
+ 	}
+ 
 
 
