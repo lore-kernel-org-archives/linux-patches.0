@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B257408035;
-	Fri,  4 Sep 2026 05:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B162415B8F;
+	Fri,  4 Sep 2026 05:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500025; cv=none; b=lobDi0CJsfxARPuY9FsnKdVhRn/LUCtGpTq26e0yiNZkHmX5V3kCxU6zsQi/YyxA6+5YJ+6ba1tS4h0O2FJ2EK0NCKySrDfxOV5CJgAzXfqA3543oO70xvgrv8P2ptSUQucUC2NkHi6v+TLazIMGgINi8ABs94weEF3bhZV5kEc=
+	t=1788500028; cv=none; b=Z+raP7qLmtBeRft3lav8HjqE/QLO1V1lYSVb2AAk9gQOflB06jGYqkeZQg8n3y58Fouqe/EKFBcAGvEvmAKKj5UvRQc84+odTubUsVY+LvR6BPBr920Z75Ay4PE8yOhy3nXUoEQ9S6hC9P4t/1jk8qS79sf7J2PllUAljzwmcyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500025; c=relaxed/simple;
-	bh=bn7fdgB1V1jQa0CsrbU75rvg4o7KuiiYaLTTJFL1yCA=;
+	s=arc-20240116; t=1788500028; c=relaxed/simple;
+	bh=uTB5shcy6G2tLlrzA47qT23vAKpOsI2uFaNIW0p8eMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mI46XoUlbqPmT526QRICBsch7i1nH5DIkden45y3O1r8Is2drRtnMUU2ZGU6egshnw4d4la9vZDiuEFJmte7ANELFKfFLJ3KhceWmUH0y2Bt3leWFo/76pBvdMECRPJRP4p2Ggzy11SGqYhDlJRAjbCZk0xSH0yDjjxAS0QRpV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCoDcc9w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iHMOu+DuVE1ZqQp43YJYaIkofTPnhgVyu8froqgXXex9kp8tsU/fNL8HE5oZp9YbfXyN4EkaktC9wL38oKNvwEFToZ7akVf20TQ06RtxtmCNPkxYfyX6Zq1S6qtNUqSAaD+lEhuhPRdCv9/a6IlaAK9d/ywjHGroPXVDA5YXgsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqGOyxls; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCoDcc9w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D601F00A3F;
-	Fri,  4 Sep 2026 05:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqGOyxls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3441F00A3D;
+	Fri,  4 Sep 2026 05:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500024;
-	bh=a7+ctGf2X4Y8H7L26TbnYTfVxKHYUXqIkuH+0bVLq/k=;
+	s=korg; t=1788500027;
+	bh=GwMV5FUf1H+ERDVu5m1CkGsED3n8Rp5yxHzkFak38uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xCoDcc9wH+sPasvgCNsjiuMu/eHsSopzImX6HFMW+TVB5juGh7w8PIcFlWHYAHU5f
-	 BOO1d83NqHenN+dyXS6e8yeXAtE7L71bVQwAUrCRNUdyB3Q61ctjQoAEkVSIaHPSEs
-	 3dMztTwd2bzhNcGwgmQqWLWglOjdwLadLxhu9WXI=
+	b=eqGOyxlsJ/BC8P7sfHvFAaIenS7Wixd4H5AgN7nRqvcUk3i8o3fbyn7lhoDnmKPKy
+	 0s9O2S+sJkT/Uf9pFWoEd1HDNV97f0RNH6zPXs7N/498w3tG3XZJQl3R2gRdoGJY/E
+	 wYRDvpB2ESdtYCrOpel2V/t+HYHR0ENSERQ+Dp6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Breno Leitao <leitao@debian.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 623/713] net/smc: fix use-after-free in smc_rx_pipe_buf_release()
-Date: Fri,  4 Sep 2026 06:59:51 +0200
-Message-ID: <20260904045817.791319246@linuxfoundation.org>
+Subject: [PATCH 7.2 624/713] net/smc: fix use-after-free of the LLC qentry in smc_llc_srv_add_link()
+Date: Fri,  4 Sep 2026 06:59:52 +0200
+Message-ID: <20260904045817.813579328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,63 +52,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit c924884743e948e25625b7fbf3ee2a9325a204a7 upstream.
+commit a42a459ef0e54cb0c4b3e43e21cb0e658e664f64 upstream.
 
-smc_rx_splice() hands RMB pages to a pipe and takes a socket reference
-per entry so the smc_sock stays alive until the reader finishes. The
-connection does not: a concurrent close runs smc_conn_free(), which
-releases the receive buffer back to the link group pool.
+smc_llc_srv_add_link() keeps add_llc pointing into the queue entry:
 
-smc_rx_pipe_buf_release() tests sk_state before taking the socket lock.
-The state can change between the test and the lock, and
-smc_rx_update_cons() then dereferences conn->rmb_desc and walks
-conn->lgr, which smc_conn_free() has already released. On the
-is_reg_err path smcr_buf_unuse() frees the descriptor outright, so
-this is a use-after-free.
+  add_llc = &qentry->msg.add_link;			smc_llc.c:1482
+  ...
+  smc_llc_save_add_link_info(link_new, add_llc);	smc_llc.c:1494
+  smc_llc_flow_qentry_del(&lgr->llc_flow_lcl);		smc_llc.c:1495
+  ...
+  u8 *llc_msg = smc_link_shared_v2_rxbuf(link) ?
+	(u8 *)lgr->wr_rx_buf_v2 : (u8 *)add_llc;	smc_llc.c:1504
+  smc_llc_save_add_link_rkeys(link, link_new, llc_msg);	smc_llc.c:1506
 
-Take the socket lock first and test conn->freed instead.
-smc_conn_free() sets that flag before releasing anything, and every
-caller holds the socket lock. The two paths exclude each other: either
-the pipe release runs first with everything valid, or it sees the flag
-and skips the update.
+smc_llc_flow_qentry_del() kfree()s the entry, so on a link without a shared
+v2 receive buffer the pointer handed to smc_llc_save_add_link_rkeys() is
+already freed. Before the Fixes: commit that branch always used
+lgr->wr_rx_buf_v2 and add_llc was not used after the free.
 
-Fixes: 9014db202cb7 ("smc: add support for splice()")
+Reproduced on an unpatched tree over rxe, with KASAN, kasan_multi_shot
+and a link forced to max_recv_sge == 1: the entry is freed and read by
+the same call, and the freeing frame is smc_llc_srv_add_link() itself.
+
+  [    2.523161] BUG: KASAN: slab-use-after-free in smc_llc_save_add_link_rkeys+0x333/0x350
+  [    2.523499] Read of size 2 at addr ffff8880052194de by task kworker/0:1/11
+  [    2.523789]
+  [    2.523862] CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 7.2.0-rc5-p0-g2c9dd296545d #35 PREEMPT(lazy)
+  [    2.523865] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+  [    2.523866] Workqueue: smc_hs_wq smc_listen_work
+  [    2.523869] Call Trace:
+  [    2.523870]  <TASK>
+  [    2.523871]  dump_stack_lvl+0x53/0x70
+  [    2.523872]  print_report+0xd0/0x630
+  [    2.523874]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+  [    2.523876]  ? smc_llc_save_add_link_rkeys+0x333/0x350
+  [    2.523878]  kasan_report+0xce/0x100
+  [    2.523879]  ? smc_llc_save_add_link_rkeys+0x333/0x350
+  [    2.523881]  smc_llc_save_add_link_rkeys+0x333/0x350
+  [    2.523883]  ? smcr_buf_reg_lgr+0x2a4/0x660
+  [    2.523885]  smc_llc_srv_add_link+0xaa2/0x1e50
+  [    2.523888]  ? _printk+0xba/0xf0
+  [    2.523897]  ? __pfx_smc_llc_srv_add_link+0x10/0x10
+  [    2.523899]  ? down_write+0xb0/0x130
+  [    2.523903]  ? __pfx_down_write+0x10/0x10
+  [    2.523905]  smc_listen_work+0x489e/0x4d00
+  [    2.523907]  ? kmem_cache_free+0x1c6/0x3a0
+  [    2.523911]  ? __pfx_smc_listen_work+0x10/0x10
+  [    2.523913]  ? release_sock+0x148/0x1d0
+  [    2.523915]  ? smc_tcp_listen_work+0xb4f/0xfc0
+  [    2.523917]  ? _raw_spin_lock_irq+0x80/0xe0
+  [    2.523918]  ? __pfx__raw_spin_lock_irq+0x10/0x10
+  [    2.523920]  process_one_work+0x633/0x1030
+  [    2.523922]  ? assign_work+0x11d/0x370
+  [    2.523924]  worker_thread+0x45b/0xd10
+  [    2.523926]  ? __pfx_worker_thread+0x10/0x10
+  [    2.523928]  ? __pfx_worker_thread+0x10/0x10
+  [    2.523929]  kthread+0x2c6/0x3b0
+  [    2.523931]  ? recalc_sigpending+0x15c/0x1e0
+  [    2.523934]  ? __pfx_kthread+0x10/0x10
+  [    2.523935]  ret_from_fork+0x36e/0x5a0
+  [    2.523937]  ? __pfx_ret_from_fork+0x10/0x10
+  [    2.523938]  ? __switch_to+0x572/0xdd0
+  [    2.523943]  ? __pfx_kthread+0x10/0x10
+  [    2.523944]  ret_from_fork_asm+0x1a/0x30
+  [    2.523947]  </TASK>
+  [    2.523948]
+  [    2.531253] Allocated by task 48:
+  [    2.531399]  kasan_save_stack+0x33/0x60
+  [    2.531570]  kasan_save_track+0x14/0x30
+  [    2.531737]  __kasan_kmalloc+0x8f/0xa0
+  [    2.531905]  __kmalloc_cache_noprof+0x158/0x370
+  [    2.532100]  smc_llc_enqueue+0x72/0x560
+  [    2.532268]  smc_wr_rx_tasklet_fn+0x474/0xa80
+  [    2.532491]  tasklet_action_common+0x20f/0x8a0
+  [    2.532714]  handle_softirqs+0x18e/0x590
+  [    2.532886]  do_softirq+0x3b/0x60
+  [    2.533036]  __local_bh_enable_ip+0x61/0x70
+  [    2.533221]  __alloc_skb+0x732/0x890
+  [    2.533384]  rxe_init_packet+0x16b/0x4f0
+  [    2.533567]  prepare_ack_packet+0xb8/0x830
+  [    2.533760]  rxe_receiver+0x495/0x96e0
+  [    2.533933]  do_work+0x144/0x470
+  [    2.534078]  process_one_work+0x633/0x1030
+  [    2.534257]  worker_thread+0x45b/0xd10
+  [    2.534424]  kthread+0x2c6/0x3b0
+  [    2.534569]  ret_from_fork+0x36e/0x5a0
+  [    2.534737]  ret_from_fork_asm+0x1a/0x30
+  [    2.534907]
+  [    2.534980] Freed by task 11:
+  [    2.535112]  kasan_save_stack+0x33/0x60
+  [    2.535279]  kasan_save_track+0x14/0x30
+  [    2.535444]  kasan_save_free_info+0x3b/0x60
+  [    2.535625]  __kasan_slab_free+0x43/0x70
+  [    2.535798]  kfree+0x121/0x380
+  [    2.535935]  smc_llc_srv_add_link+0x9a8/0x1e50
+  [    2.536128]  smc_listen_work+0x489e/0x4d00
+  [    2.536305]  process_one_work+0x633/0x1030
+  [    2.536482]  worker_thread+0x45b/0xd10
+  [    2.536652]  kthread+0x2c6/0x3b0
+  [    2.536794]  ret_from_fork+0x36e/0x5a0
+  [    2.536958]  ret_from_fork_asm+0x1a/0x30
+  [    2.537133]
+  [    2.537205] The buggy address belongs to the object at ffff888005219480
+  [    2.537205]  which belongs to the cache kmalloc-96 of size 96
+  [    2.537719] The buggy address is located 94 bytes inside of
+  [    2.537719]  freed 96-byte region [ffff888005219480, ffff8880052194e0)
+  [    2.538216]
+  [    2.538289] The buggy address belongs to the physical page:
+  [    2.538524] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x5219
+  [    2.538857] flags: 0x100000000000000(node=0|zone=1)
+  [    2.539066] page_type: f5(slab)
+  [    2.539210] raw: 0100000000000000 ffff888001041280 dead000000000122 0000000000000000
+  [    2.539534] raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
+  [    2.539863] page dumped because: kasan: bad access detected
+  [    2.540098]
+  [    2.540170] Memory state around the buggy address:
+  [    2.540379]  ffff888005219380: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+  [    2.540684]  ffff888005219400: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+  [    2.540988] >ffff888005219480: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+  [    2.541291]                                                     ^
+  [    2.541548]  ffff888005219500: 00 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc
+  [    2.541857]  ffff888005219580: 00 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc
+
+The offset is past the 72-byte queue entry because the out-of-bounds read
+fixed by the next patch is on the same line; what this patch removes is the
+free at smc_llc_srv_add_link+0x9a8 happening before the read at +0xaa2.
+
+Detach the entry instead of freeing it there, and free it at the single
+exit label. The reject path has to detach as well, otherwise it would be
+freed twice.
+
+This changes only the lifetime of the entry. The same read still runs past
+its end until the next two patches bound it, so a backport wants all three.
+
+Fixes: 27ef6a9981fe ("net/smc: support SMC-R V2 for rdma devices with max_recv_sge equals to 1")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260820074642.966856-3-hidayath@linux.ibm.com
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260819023306.644849-2-yhlee@isslab.korea.ac.kr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_rx.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/smc/smc_llc.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -115,16 +115,15 @@ static void smc_rx_pipe_buf_release(stru
- 				    struct pipe_buffer *buf)
- {
- 	struct smc_spd_priv *priv = (struct smc_spd_priv *)buf->private;
-+	struct smc_connection *conn = &priv->smc->conn;
- 	struct smc_sock *smc = priv->smc;
--	struct smc_connection *conn;
- 	struct sock *sk = &smc->sk;
+--- a/net/smc/smc_llc.c
++++ b/net/smc/smc_llc.c
+@@ -1505,7 +1505,7 @@ int smc_llc_srv_add_link(struct smc_link
+ 	}
+ 	add_llc = &qentry->msg.add_link;
+ 	if (add_llc->hd.flags & SMC_LLC_FLAG_ADD_LNK_REJ) {
+-		smc_llc_flow_qentry_del(&lgr->llc_flow_lcl);
++		smc_llc_flow_qentry_clr(&lgr->llc_flow_lcl);
+ 		rc = -ENOLINK;
+ 		goto out_err;
+ 	}
+@@ -1516,7 +1516,8 @@ int smc_llc_srv_add_link(struct smc_link
+ 		lgr_new_t = SMC_LGR_ASYMMETRIC_PEER;
+ 	}
+ 	smc_llc_save_add_link_info(link_new, add_llc);
+-	smc_llc_flow_qentry_del(&lgr->llc_flow_lcl);
++	/* add_llc still points into qentry, so only detach it here */
++	smc_llc_flow_qentry_clr(&lgr->llc_flow_lcl);
  
--	if (sk->sk_state == SMC_CLOSED ||
--	    sk->sk_state == SMC_PEERFINCLOSEWAIT ||
--	    sk->sk_state == SMC_APPFINCLOSEWAIT)
--		goto out;
--	conn = &smc->conn;
- 	lock_sock(sk);
-+	if (conn->freed) {
-+		release_sock(sk);
-+		goto out;
-+	}
- 	smc_rx_update_cons(smc, priv->len);
- 	release_sock(sk);
- 	if (atomic_sub_and_test(priv->len, &conn->splice_pending))
+ 	rc = smc_ib_ready_link(link_new);
+ 	if (rc)
+@@ -1534,14 +1535,14 @@ int smc_llc_srv_add_link(struct smc_link
+ 	rc = smc_llc_srv_conf_link(link, link_new, lgr_new_t);
+ 	if (rc)
+ 		goto out_err;
+-	kfree(ini);
+-	return 0;
++	goto out;
+ out_err:
+ 	if (link_new) {
+ 		link_new->state = SMC_LNK_INACTIVE;
+ 		smcr_link_clear(link_new, false);
+ 	}
+ out:
++	kfree(qentry);
+ 	kfree(ini);
+ 	if (send_req_add_link_resp)
+ 		smc_llc_send_req_add_link_response(req_qentry);
 
 
