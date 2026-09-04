@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914063242BD;
-	Fri,  4 Sep 2026 05:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183092F9DA1;
+	Fri,  4 Sep 2026 05:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501032; cv=none; b=tOgrtSVatKPqLCrjxgBVYeUydp4szmgzc/iCahf8+41Ztam8G7cPtAQSHPRrMv3N4HOQs/tC2iO6olkQt33Fyf70o7W3KjhjkX7v/N1GLlaji3fiBNR4w/f7L+g+XhPboTUvZjiHBiUVWVgMzcf7xWYr3xL8jJVquZv8hbEtPQM=
+	t=1788501035; cv=none; b=OLMCiOEOdY3oALZKEGpx6gG7ZRZpH/viT16HmTipFCWZ9nttNmWw3F1BSiAsvfk4Pp0gobqyI+lfqul++5AOCofXMpt4BF6Qruy7AK70JGWrOVxDgPo5AYfdyiMRSHUv8790FrdjZTlgF9FdKHwtyG3ydpsKQDWTe1ejHpxJeQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501032; c=relaxed/simple;
-	bh=UVLIf5GwRRFctBODoJMGMVM9w1oVTky2MMeCZBfyflI=;
+	s=arc-20240116; t=1788501035; c=relaxed/simple;
+	bh=pcCAtf0n9pFdGylkEnrJIFgMZR/oLq5n7Um7KFE15qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxuK67hiQf68I9YxqvoE08Dp41aFi8/F+r2YVz7lDowK5dUTsrflw6CmMSkA3D+FHTP+tPWd+wVuYIXeNIbfT78BTeIre3VAQgEoS+TpmigJoTZTkXZRgiLmC6Y69/rzfOd1gK/cOw9YlAYpPqbSb9iPkF5dDxxpO1Raa4NDcY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3RnnkgO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M57ygUh/bWM4DZ+npJ93RGpr2ScZrM+AMqjUEQtXZWx2vCCPmi8VktkVxEZ+hjWCtsFjphPq4RI4SO0qCwHlcPRvdoQVCsJDHNIIrV3fHeJeHNtZsZsKucUZIzbAKWaT6pNGwNZYqhHA9zE6qpZo/1uxYz+VF8o8zKjBAlAyuNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9sIpNby; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3RnnkgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCB51F00A3D;
-	Fri,  4 Sep 2026 05:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9sIpNby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733191F00A3D;
+	Fri,  4 Sep 2026 05:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501031;
-	bh=B891ENmIbl2QwsaH06gG1p5ZOrh81CYGcvwl4j0YH1c=;
+	s=korg; t=1788501034;
+	bh=tfijud5p6/ZyySaXsXY+Y96zv3ZnXSLgLfVTF/vcQ58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u3RnnkgO7uibeXb4NIVd59GohBxUrKf4kfLMKxaYAIoLaLTa4ovio83a0UzPsmlC2
-	 VYJm/KOqfy7cgn3dC+dVt4NDeP9+gPBm4lO6qJAJCJWLF67Koz/ZnUDg/PVUERno34
-	 dvH1luOogi93ngg+t510aAUeK6EBDrAzdjZuNC6g=
+	b=e9sIpNbyjAY8MNHkZPTfqxD5bbAa3WHE3KlGWnJWamCmgNdtWXeT1xDjSfcjh1Fm9
+	 rUEwzE7WShkiBNaHMZQlKCaTIRv46/6JJ4+tuatnZTiBAnwM7f70ZPT2ZLHVQPtYcM
+	 fjoxEEOpKMkSJBvaM8+c2vbUBrmmMohnBlqqKfeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunye Zhao <yunye.zhao@linux.alibaba.com>,
-	Mykola Marzhan <mykola@meshstor.io>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Ramesh Adhikari <adhikari.resume@gmail.com>,
+	Coly Li <colyli@fygo.io>,
 	Yu Kuai <yukuai@fygo.io>
-Subject: [PATCH 6.18 267/552] md/raid10: fix still_degraded being inverted in raid10_sync_request()
-Date: Fri,  4 Sep 2026 06:57:04 +0200
-Message-ID: <20260904045756.009592466@linuxfoundation.org>
+Subject: [PATCH 6.18 268/552] md: do overflow check for sb->bblog_shift in super_1_load()
+Date: Fri,  4 Sep 2026 06:57:05 +0200
+Message-ID: <20260904045756.048605176@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,57 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunye Zhao <yunye.zhao@linux.alibaba.com>
+From: Coly Li <colyli@fygo.io>
 
-commit 47f1441b281decde6954a2fa82b4131637d685ac upstream.
+commit 35d522bd32462afcf1981dab6da8a9256c26c1e0 upstream.
 
-Commit fe6a19d40ceb ("md/md-bitmap: merge md_bitmap_start_sync() into
-bitmap_operations") converted still_degraded from int to bool, but
-inverted the assignment in the loop that checks whether the array will
-still be degraded after the current device is recovered:
-"still_degraded = 1" became "still_degraded = false".
+In super_1_load(), sb->bblog_shift is an __u8 type value loaded from on-
+disk superblock. It is used for badblocks API badblocks_set() by the
+following sequence,
 
-As a result, recovering a device while another mirror is still missing
-calls md_bitmap_start_sync() with degraded == false, which clears bitmap
-bits that the still-missing device needs.  When that device is re-added,
-its bitmap-based recovery finds the bits already cleared and skips every
-region written while the array was degraded, so it is marked In_sync
-while holding stale data: silent corruption.
+ 1930   rdev->badblocks.shift = sb->bblog_shift;
+ 1931   for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
+ 1932           u64 bb = le64_to_cpu(*bbp);
+ 1933           int count = bb & (0x3ff);
+ 1934           u64 sector = bb >> 10;
+ 1935           sector <<= sb->bblog_shift;
+ 1936           count <<= sb->bblog_shift;
+ 1937           if (bb + 1 == 0)
+ 1938                   break;
+ 1939           if (!badblocks_set(&rdev->badblocks, sector, count, 1))
+ 1940                   return -EINVAL;
+ 1941   }
 
-Reproducer (raid10 near=2, 4 disks, internal bitmap):
- - fail and remove one disk of each mirror pair
- - write to the degraded array
- - re-add both disks and let recovery finish
- - "check" reports mismatch_cnt=262272 after 256 MiB of degraded
-   writes and file contents differ; the second disk's "recovery"
-   completes in milliseconds because everything is skipped
+bb->bblog_shit is in range of 0-255, variable sector is 64bit width, for
+an invalid bb->bblog_shit, it is possible to make sector be overflowed
+by the following calculation,
+ 1935           sector <<= sb->bblog_shift;
+Then in turn when call badblocks_set() at line 1939 with the invalid
+rdev->badblocks.shift set at line 1930, may result an overflow inside
+_badblocks_clear() in block/badblocks.c.
 
-The same conversion in raid1 got it right (still_degraded = true).
-Restore the correct value.
+Although there are many places to call badblocks APIs, the non-zero
+shift value is only used in super_1_load(), other places always use 0 as
+the shift value. Therefore it is unnecessary to do a general shift value
+overflow check inside badblock API, and just check here as the caller.
 
-Fixes: fe6a19d40ceb ("md/md-bitmap: merge md_bitmap_start_sync() into bitmap_operations")
+This may avoid unnecessary check, make the badblocks API code more simple
+and elegant.
+
+Fixes: 2699b67223ac ("md: load/store badblock list from v1.x metadata")
+Fixes: 1726c7746783 ("badblocks: improve badblocks_set() for multiple ranges handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>
-Reviewed-by: Mykola Marzhan <mykola@meshstor.io>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: Ramesh Adhikari <adhikari.resume@gmail.com>
+Signed-off-by: Coly Li <colyli@fygo.io>
 Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260723135535.101995-2-yunye.zhao@linux.alibaba.com
+Link: https://patch.msgid.link/20260720111400.2120834-1-colyli@fygo.io
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3384,7 +3384,7 @@ static sector_t raid10_sync_request(stru
- 				struct md_rdev *rdev = conf->mirrors[j].rdev;
- 
- 				if (rdev == NULL || test_bit(Faulty, &rdev->flags)) {
--					still_degraded = false;
-+					still_degraded = true;
- 					break;
- 				}
- 			}
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -1917,6 +1917,13 @@ static int super_1_load(struct md_rdev *
+ 				  rdev->bb_page, REQ_OP_READ, true))
+ 			return -EIO;
+ 		bbp = (__le64 *)page_address(rdev->bb_page);
++
++		/* check for badblocks api. */
++		if (sb->bblog_shift >= BITS_PER_TYPE(sector_t)) {
++			pr_err("md: %pg: bogus bblog_shift %u for badblocks.\n",
++			       rdev->bdev, sb->bblog_shift);
++			return -EINVAL;
++		}
+ 		rdev->badblocks.shift = sb->bblog_shift;
+ 		for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
+ 			u64 bb = le64_to_cpu(*bbp);
 
 
