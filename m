@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940E2420479;
-	Fri,  4 Sep 2026 06:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276273B05AC;
+	Fri,  4 Sep 2026 06:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502509; cv=none; b=lc/9qmBmOaLNOhy7dEMxw98UNjAUYdrIbJBD5RryCzDsH+yP2V0aVrKvdH6mclEm/9BcYJS0xDk7WYxViZf77tiAVeMjNNG1P/mRhjKVR7uKTSETBRW5A1HZDEs7e9+6H4AMyGdJDnLUrr2Jaw9bEaXu8M8dLitrve6amubwDc8=
+	t=1788502512; cv=none; b=qfC3JgD4wNO+4+WWyf1TEPeeD9LOpjza6DkyBBg44hZ2qUkkq7mTAO70iHg/taW+s5bbJoICb3RKZauBrToLBAHlT+IvQqVbHEpAcgpcEMb4bg3l8r79EyxBBE406p/I5rUEPGTMlS/8L9lZZ7mH+SXgCmEPxk3MaO62t7fQnkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502509; c=relaxed/simple;
-	bh=XdCp4adrVuOTJpYg8DpQjuJxrGsqkazn2sh2FamCKug=;
+	s=arc-20240116; t=1788502512; c=relaxed/simple;
+	bh=7fxy08qth1jdhTY358YfdKgX88euQRIvlsHnGcyYgl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BB/Ty65QYlNbh2k8TEMzSzEZp4ksu5vS96N2C0sCPEf/yp54wx+38QqTKm+czhT00HR9YOHJZ2MsSZzSDz3swEOJJeWaVOdQMA4PbiCoBEXH9AbIhe00AHsZQPAD/CSEtzs66s+Jw7tRApk6T6UqedzlW5mJovVBMFn2ZF3m4yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgUULvN3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KCpCvpzf3HgWHfx0yQ97B9VkSEk7ugOBHdenAh7PGNhDtzR3si4qQ9AgbT1lsNg7i8H7J+o/eSP8tWi4iXg+ClhifHkg0j+XYlktRVp+xKZbWSahoObinULKsmL8pMs/K0c2mlQS3SoCf0y5L0tSZ9HUIyL0dlDNKGpyIhyUwAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X32vmeab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgUULvN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0C71F00A3D;
-	Fri,  4 Sep 2026 06:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X32vmeab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818511F00A3E;
+	Fri,  4 Sep 2026 06:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502508;
-	bh=uEvCI1ricXwAbiWQRf4wSV9FE9MNx8/fxm0GUjfjRxY=;
+	s=korg; t=1788502511;
+	bh=S/jsHBWaYsz02FnLfdoiHrNfUHAQdPqfb+mqVFdRMDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LgUULvN3/RVYs2rWEE7dimubMRuByS6dsbxD/YG9YYRXA1d8pmPPk08mlP2sZ7yFr
-	 wM2DyljeFw81+lODKT1vQcYWpM+GI0XlVwicXEyCoQ7dI8/zckTGHUrHec9HZUrBJj
-	 rDlPbhtIMw+5wFdtKnqMb4MEyU1bl4N6nsa/5jWI=
+	b=X32vmeabrXcFcqE9OU3W05rQpidspKgJWCmCtkv7P82/ZuJp9cYuytK8Zs/Xbn35s
+	 EPfu/Z8jDmZBT57NBfXtYPjmp08ZaFU5UB2xxRk2355+nRVnopld5gKCxZQ5LlGRpy
+	 r/kdPbmHdlZqA5exv3MpKu0Biaj4fX/Gc/55Jc1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vaganov <p.vaganov@ideco.ru>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.12 225/403] scsi: core: Fill in DMA padding bytes in scsi_alloc_sgtables()
-Date: Fri,  4 Sep 2026 07:00:28 +0200
-Message-ID: <20260904045739.979489565@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.12 234/403] RDMA/ucma: Lock the handler in ucma_set_ib_path()
+Date: Fri,  4 Sep 2026 07:00:37 +0200
+Message-ID: <20260904045740.189845294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,89 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Vaganov <p.vaganov@ideco.ru>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 626147717bea776b61ed3631d2c26283760c4cc4 upstream.
+commit ecbe7d36dc2de07e5dfbb4a8ff5b315ab43de820 upstream.
 
-During fuzz testing, the following issue was discovered:
+ucma_set_ib_path() calls ucma_event_handler() straight from the write()
+path, without the handler lock that keeps ctx->file stable while a uevent
+is queued.  The handler re-reads ctx->file for every dereference:
 
-BUG: KMSAN: uninit-value in __dma_map_sg_attrs+0x217/0x310
- __dma_map_sg_attrs+0x217/0x310
- dma_map_sg_attrs+0x4a/0x70
- ata_qc_issue+0x9f8/0x1420
- __ata_scsi_queuecmd+0x1657/0x1740
- ata_scsi_queuecmd+0x79a/0x920
- scsi_queue_rq+0x4472/0x4f40
- blk_mq_dispatch_rq_list+0x1cca/0x3ee0
- __blk_mq_sched_dispatch_requests+0x458/0x630
- blk_mq_sched_dispatch_requests+0x15b/0x340
- __blk_mq_run_hw_queue+0xe5/0x250
- __blk_mq_delay_run_hw_queue+0x138/0x780
- blk_mq_run_hw_queue+0x4bb/0x7e0
- blk_mq_sched_insert_request+0x2a7/0x4c0
- blk_execute_rq+0x497/0x8a0
- sg_io+0xbe0/0xe20
- scsi_ioctl+0x2b36/0x3c60
- sr_block_ioctl+0x319/0x440
- blkdev_ioctl+0x80f/0xd70
- __se_sys_ioctl+0x219/0x420
- __x64_sys_ioctl+0x93/0xe0
- x64_sys_call+0x1d6c/0x3ad0
- do_syscall_64+0x4c/0xa0
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+	mutex_lock(&ctx->file->mut);			/* file A */
+	list_add_tail(&uevent->list, &ctx->file->event_list);	/* file B */
+	mutex_unlock(&ctx->file->mut);			/* file B */
+	wake_up_interruptible(&ctx->file->poll_wait);	/* file B */
 
-Uninit was created at:
- __alloc_pages+0x5c0/0xc80
- alloc_pages+0xe0e/0x1050
- blk_rq_map_user_iov+0x2b77/0x6100
- blk_rq_map_user_io+0x2fa/0x4d0
- sg_io+0xad6/0xe20
- scsi_ioctl+0x2b36/0x3c60
- sr_block_ioctl+0x319/0x440
- blkdev_ioctl+0x80f/0xd70
- __se_sys_ioctl+0x219/0x420
- __x64_sys_ioctl+0x93/0xe0
- x64_sys_call+0x1d6c/0x3ad0
- do_syscall_64+0x4c/0xa0
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+A concurrent ucma_migrate_id() reassigns ctx->file while the SET_OPTION
+caller sleeps in mutex_lock(), so the list_add_tail() lands on file B's
+event_list while only file A's mutex is held, racing every other user of
+that list:
 
-Bytes 14-15 of 16 are uninitialized
-Memory access of size 16 starts at ffff88800cbdb000
+  BUG: KASAN: slab-use-after-free in __list_add_valid_or_report+0x1aa/0x1c0
+  Read of size 8 at addr ffff888153c6a418 by task poc_corr/486
+  Call Trace:
+   __list_add_valid_or_report+0x1aa/0x1c0
+   ucma_event_handler+0x1be/0xc00
+   ucma_set_ib_path+0x45e/0x710
+   ucma_set_option+0x32e/0x590
+   ucma_write+0x1f9/0x330
+  Allocated by task 505:
+   ucma_write_cm_event+0x1a1/0x660
+  Freed by task 505:
+   kfree+0x1da/0x4c0
+   ucma_get_event+0x5d5/0x7e0
 
-When processing the last unaligned element of the scatterlist, it is
-supplemented with missing bytes in the amount of pad_len.  These bytes
-remain uninitialized, which leads to a problem.
+The freed object is a ucma_event that another thread dequeued from file B's
+list under file B's mutex.  File A's mut is left held on top of that,
+wedging its next writer in uninterruptible sleep.
 
-Extend last_sg->length by pad_len first, then use sg_zero_buffer() to
-zero those pad_len bytes.  sg_zero_buffer() uses sg_miter internally,
-which correctly handles sg entries spanning multiple pages and padding
-that crosses a page boundary.
+This path needs a bound and address-resolved cm_id, so it requires an RDMA
+device to be present.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Take the handler lock around the call.
 
-Fixes: 40b01b9bbdf5 ("block: update bio according to DMA alignment padding")
+Fixes: 09e328e47a69 ("RDMA/ucma: Fix the locking of ctx->file")
+Link: https://patch.msgid.link/r/2823D190-92D5-4714-8769-4FB643C64FF3@doyensec.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Petr Vaganov <p.vaganov@ideco.ru>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260628185229.37957-1-p.vaganov@ideco.ru
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_lib.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/core/ucma.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -1181,8 +1181,10 @@ blk_status_t scsi_alloc_sgtables(struct
- 	if (blk_rq_bytes(rq) & rq->q->limits.dma_pad_mask) {
- 		unsigned int pad_len =
- 			(rq->q->limits.dma_pad_mask & ~blk_rq_bytes(rq)) + 1;
-+		unsigned int data_len = last_sg->length;
+--- a/drivers/infiniband/core/ucma.c
++++ b/drivers/infiniband/core/ucma.c
+@@ -1335,7 +1335,10 @@ static int ucma_set_ib_path(struct ucma_
  
- 		last_sg->length += pad_len;
-+		sg_zero_buffer(last_sg, 1, pad_len, data_len);
- 		cmd->extra_len += pad_len;
- 	}
+ 	memset(&event, 0, sizeof event);
+ 	event.event = RDMA_CM_EVENT_ROUTE_RESOLVED;
+-	return ucma_event_handler(ctx->cm_id, &event);
++	rdma_lock_handler(ctx->cm_id);
++	ret = ucma_event_handler(ctx->cm_id, &event);
++	rdma_unlock_handler(ctx->cm_id);
++	return ret;
+ }
  
+ static int ucma_set_option_ib(struct ucma_context *ctx, int optname,
 
 
