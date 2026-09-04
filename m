@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A684CCDC7;
-	Fri,  4 Sep 2026 05:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B415C412294;
+	Fri,  4 Sep 2026 05:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500195; cv=none; b=R/fK8o6qB9xBH3+Jh6RTFHJC8uyw2Q2ksMFf+d2Gm81zJQfIWurp4fV3Gmrprma1bBy1soVI5w7Z3Q7PNEfe4BugcygbxcyEG8iZFL78bNu0b/8fv3QcvPar8VIVaXmefEDdyu8pvWbs3lfqkDIsUh3KUEndUNtEsrl/A3ePf/c=
+	t=1788500198; cv=none; b=qekf4TXJdoDoquduBxiTyIbmJLx/76GVyZBbDjHAA7BWtVe0TfJAZEXu+FnBOAjzp7gQBdwPLSYU5ZSCEUizNcixM3vG3S0cABTgXfrzAGda43cU6FyiwHB6IZ/4Exbcmyc4OjlaPU+pPacyxT+7leRMVO37VCrp/pf+uVp7rIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500195; c=relaxed/simple;
-	bh=VAD2R5qQTU5ZFd9UdRILFBRCf1Lb3xxXYkuQIVY8y64=;
+	s=arc-20240116; t=1788500198; c=relaxed/simple;
+	bh=LN3UsFGlktXMcuZIp5JO1lWMREiZvEHtLG6n0A70Qq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPvzRAUGlQ/kzN4JPXnQIEMwv6ct9a+LkW2+gIOr/8S+C3mYvZN5s+KoJtoa4ZQDjPY7pl9MFWRylAr6v5AJdO/Twnk8JAwECTym33VIoC10QmC9bId9sNtlSB01wYhG7ynvopNIHiplkiyL9VUgtJXs6QPE+LmTC9HIT7VMBlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzbu/GZO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aI9VTxH2ohTQhs8x0fIx+5AVhxC3NMQdcWL3hSB8dMCgIqq7ZYlBcQRVL4Q9W1UYj6okN6MWLZ8v28azjpanfy1gBLylB7ZsavgozZNCC4k5FhVVQw/kPAyCfhcBeiqrbsmXGmRUGmoi11g2hcY+XnTw3zpLk8930oRY7Sp73zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1IFt8ul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzbu/GZO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4FA1F00A3D;
-	Fri,  4 Sep 2026 05:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1IFt8ul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56B11F00A3D;
+	Fri,  4 Sep 2026 05:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500194;
-	bh=gRBQE7UN0uGDnxnwpagj8ykHJAnYYo8nBIO3+saReUg=;
+	s=korg; t=1788500197;
+	bh=rTZd+s26cpHyh5DiQOkD46erl4o/VMXiYloCluNHRDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mzbu/GZO+zHR3YET19Xx0StteZilZCD+i/gvVUvuiic7sLPNjxrDgr+ky3InbqYAM
-	 W9cs6y3KN5an94izvnWBZSxBI22VDRi5p6zSMoPx2MqFBWq7IYvrVhGUfHhJF0zb0Y
-	 xeDbTUPLHXe14wfbWqeIXr7lmEbIlgZTH0enphDs=
+	b=H1IFt8ulqOSATFDdNdvTRxCshn5W7v4gYBxaV11xrrNXjtp9EZOgvCWztSpIRFKSl
+	 WCJGSw7pVDYGaAinYdQEXzEIH6bboqTM5/8C3eXER45xv/4h4hy67Yz+PIE7HLks3k
+	 5DHrsBd9b4b+0rlLwxD7aesgmkRL4ROutaVMRP28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 641/713] ALSA: mts64: Check card index validity at probe
-Date: Fri,  4 Sep 2026 07:00:09 +0200
-Message-ID: <20260904045818.199147170@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Thomas Richard <thomas.richard@bootlin.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 7.2 632/713] mfd: cgbc: Fix teardown ordering in cgbc_remove()
+Date: Fri,  4 Sep 2026 07:00:00 +0200
+Message-ID: <20260904045817.997097756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -49,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Thomas Richard <thomas.richard@bootlin.com>
 
-commit d18a260720f86a5f8b5fcfefc4ba2e9dd01c10f8 upstream.
+commit 2970c2db8ab3d97ea6250c14ca49b1e1731115ab upstream.
 
-Although mts64 driver has a check of the given devptr->id value, it
-doesn't check for a negative id, which is often given as "none" or
-such value when bound via sysfs.  This may lead to OOB access for
-index[] and other parameters.
-
-Add a sanity check for the card index and warn/correct it if it's a
-value out of the range.
+Release Board Controller session once children are removed by the core.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260806153227.1460166-6-tiwai@suse.de
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/cover.1783507945.git.u.kleine-koenig%40baylibre.com?part=19
+Fixes: 6f1067cfbee7 ("mfd: Add Congatec Board Controller driver")
+Signed-off-by: Thomas Richard <thomas.richard@bootlin.com>
+Link: https://patch.msgid.link/20260713-cgbc-core-fix-cgbc-remove-v1-1-79274ad62b3a@bootlin.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/mts64.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mfd/cgbc-core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/drivers/mts64.c
-+++ b/sound/drivers/mts64.c
-@@ -900,6 +900,12 @@ static int snd_mts64_probe(struct platfo
- 	p = platform_get_drvdata(pdev);
- 	platform_set_drvdata(pdev, NULL);
+--- a/drivers/mfd/cgbc-core.c
++++ b/drivers/mfd/cgbc-core.c
+@@ -364,9 +364,9 @@ static void cgbc_remove(struct platform_
+ {
+ 	struct cgbc_device_data *cgbc = platform_get_drvdata(pdev);
  
-+	if (dev < 0) {
-+		dev_warn(&pdev->dev,
-+			 "Invalid card index %d, using default 0\n", dev);
-+		dev = 0;
-+	}
+-	cgbc_session_release(cgbc);
+-
+ 	mfd_remove_devices(&pdev->dev);
 +
- 	if (dev >= SNDRV_CARDS)
- 		return -ENODEV;
- 	if (!enable[dev]) 
++	cgbc_session_release(cgbc);
+ }
+ 
+ static struct platform_driver cgbc_driver = {
 
 
