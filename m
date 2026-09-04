@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6913EC6AE;
-	Fri,  4 Sep 2026 05:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4BE4137B2;
+	Fri,  4 Sep 2026 05:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500271; cv=none; b=hCw742c18s91LfO+Qh+360bdQ3DHy13tuprDs741UajG6bIlgsrunGHHcsWGzQvz0Jva99LR022qfOoLCa0gJbiucTN5Zd3XHDSc6o/Ii3lil/TiDuQSlUMWKSYqQjsTrKDJV7ybbQaRjWWtkFrU7JbXQmNpBP0loRnc31o91OE=
+	t=1788500274; cv=none; b=DIQeHmJzgMqJIlPiZGpaySY3q6Kt+NeeEcS/h1yZeg4/qvgEHujP3ep99DrAdbXuYKFlUB479ReG94BVj+DGJN0ZGqDAsCT1Sf8/GdpBU4gBzRX1tJcAS2/2KiOUcR+CKD570OWWx6uy1rT3CJm3gl5fndXLrXRGpkRkhEgChWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500271; c=relaxed/simple;
-	bh=+PNWobQoW4FFN+TS9TeJ/AfSqF69K4Hqq0s3jYZ4/qk=;
+	s=arc-20240116; t=1788500274; c=relaxed/simple;
+	bh=277QS+bnOzOM/mJP4J0jP/By0eH+2vQ7JLngtoC9zzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KmXhWIbXdeX/JtYQBC8m1/YL/2utPmcMljwYo6E0bXeiTsitfXrBgNbstks1p7EZFtOZeDvUJPPQQkQZZ5GVkQb9JUEIAO8/FN0Q1HeP5ouAYizq4Fq00Wqnpw24snKJ0x1CFJiySjpoulMG6QJ6L9OsBjxJi6KHjwaxfoILLVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W2a1cNx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdxEdXS2gvaKkL7HqQzoRUG/DW2Egb/o3ws9tYGm7wvDyKLThxOv64p5AAH2beUW07UU0RuhKuMhfbvrgCdy8K8N55R86bhF7eDMSAkav14a5EADep+tJcdgPe+tl22B3e50u1QsKGDHSG44iXg1tZCrnQZr2Rpq/3S/spZkMhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgXqyeBo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W2a1cNx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7EEA1F00A3D;
-	Fri,  4 Sep 2026 05:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgXqyeBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6381F00A3D;
+	Fri,  4 Sep 2026 05:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500270;
-	bh=AqeHMXWNH0EiMhIoeAKHr1j3fujnN4i9jixTqEapoHc=;
+	s=korg; t=1788500273;
+	bh=3fIdmkQIopeLAD9ROUyL0xQ90Mwr4PFzAWBUMbinSzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0W2a1cNxwYJNYc8dCMyjb1P2EM27Gv7dkJHC0phJj1pn4k+QSUtJClpDWKlRDa5sm
-	 2X5Vf2SSe6M4Lon9hHdzKUiVeG1VR4lzz3EGx8zmc9xpuhSVOYhz2ZQi/6GfXkIjr6
-	 Au0VTCgT5AOw/3p/4qs551blYCHJ11LllBy6PaSg=
+	b=jgXqyeBobG1onwy/g5ZxfF5mdAHDvoVxYrEsKoyR4Wvc/Ci0R1LKU6V2j7/ZWGdZz
+	 /RNQK2SKKiLFmO33oBcjf/MG41npFZkHYqSvxl65qJaFw/HnjjuCKGikcxDsxnbP9j
+	 s1dHpBqnVFKs2mXSnVEK/yGyKceQ1wGCsUPWv6ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 7.2 710/713] udf: Fix i_lenExtents truncation on 32-bit kernels
-Date: Fri,  4 Sep 2026 07:01:18 +0200
-Message-ID: <20260904045819.762815585@linuxfoundation.org>
+	Injae Ryou <injaeryou@gmail.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 711/713] selftests/mm: fix on-fault-limit false failure under sudo-rs
+Date: Fri,  4 Sep 2026 07:01:19 +0200
+Message-ID: <20260904045819.785389929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,46 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Injae Ryou <injaeryou@gmail.com>
 
-commit a5a5ed23b1340ff0f32a14a7ca8585f7c4e9b2e2 upstream.
+commit 98df164036bed307a16e7c124ad023c2c13c4b76 upstream.
 
-In udf_do_extend_file() the total extent length is rounded up to a block
-boundary with:
+run_vmtests.sh runs on-fault-limit as the nobody user via "sudo -u nobody
+./on-fault-limit", guarded by a check that nobody can access the binary
+("sudo -u nobody ls ./on-fault-limit").
 
-	iinfo->i_lenExtents = (iinfo->i_lenExtents + sb->s_blocksize - 1) &
-			      ~(sb->s_blocksize - 1);
+The guard resolves the relative path from the inherited working directory,
+which only requires search permission on the test directory itself.
+Classic sudo passes the relative path through to execve() the same way, so
+the two agree.  However, sudo-rs (the default sudo implementation since
+Ubuntu 25.10) canonicalizes the command to an absolute path before
+executing it, which requires search permission on every ancestor
+directory.  When the kernel tree lives under a private home directory
+(mode 0750, the Ubuntu default for new users since 21.04), the guard
+passes but the execution fails with "command not found", and the test is
+reported as a false FAIL:
 
-i_lenExtents is a __u64, but sb->s_blocksize is unsigned long.  On 32-bit
-kernels unsigned long is 32-bit, so ~(sb->s_blocksize - 1) is a 32-bit
-value (e.g. 0xfffff800 for a 2 KiB block) that is zero-extended in the AND,
-clearing the upper 32 bits of i_lenExtents.  For UDF files whose total
-extent length exceeds 4 GiB this truncates i_lenExtents when the file is
-extended, corrupting the tracked extent length.
+  # running sudo -u nobody ./on-fault-limit
+  sudo: './on-fault-limit': command not found
+  # [FAIL]
 
-Cast the block size to 64-bit before forming the mask.  64-bit kernels are
-unaffected.
+Wrap the command in "sh -c" so that sudo only resolves the shell binary,
+and the relative path is resolved by nobody's shell from the inherited
+working directory, matching what the guard checks.  This is the only "sudo
+-u nobody" invocation in the script; uid, cwd, rlimits (including
+RLIMIT_MEMLOCK, which this test exercises) and the exit status are
+unchanged through sh.
 
-Fixes: 48d6d8ff7dca ("udf: cache struct udf_inode_info")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Link: https://patch.msgid.link/20260722082425.213311-1-zhanxusheng@xiaomi.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Verified on Ubuntu 26.04 (sudo-rs 0.2.13): the test now runs and passes
+instead of failing.  Verified on Ubuntu 24.04 (sudo 1.9.15p5): behavior is
+unchanged.
+
+Link: https://lore.kernel.org/20260713092700.464376-1-injaeryou@gmail.com
+Fixes: 5d2146a3354f ("selftests/mm: skip mlock tests if nobody user can't read it")
+Signed-off-by: Injae Ryou <injaeryou@gmail.com>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |    2 +-
+ tools/testing/selftests/mm/run_vmtests.sh |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -531,7 +531,7 @@ static int udf_do_extend_file(struct ino
- 			  sb->s_blocksize - 1) & ~(sb->s_blocksize - 1));
- 		iinfo->i_lenExtents =
- 			(iinfo->i_lenExtents + sb->s_blocksize - 1) &
--			~(sb->s_blocksize - 1);
-+			~((u64)sb->s_blocksize - 1);
- 	}
+--- a/tools/testing/selftests/mm/run_vmtests.sh
++++ b/tools/testing/selftests/mm/run_vmtests.sh
+@@ -303,7 +303,7 @@ CATEGORY="compaction" run_test ./compact
  
- 	add = 0;
+ if command -v sudo &> /dev/null && sudo -u nobody ls ./on-fault-limit >/dev/null;
+ then
+-	CATEGORY="mlock" run_test sudo -u nobody ./on-fault-limit
++	CATEGORY="mlock" run_test sudo -u nobody sh -c ./on-fault-limit
+ else
+ 	echo "# SKIP ./on-fault-limit"
+ fi
 
 
