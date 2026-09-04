@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04652412BE7;
-	Fri,  4 Sep 2026 05:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5523412BE7;
+	Fri,  4 Sep 2026 05:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501445; cv=none; b=rFhvv2mo57AA90U5rgrmk0ZHzdysrGFQnMab1A+FmgySqwdXn8ZuaPzmwtCW0JqQHA0jz2dDxTI9F8MQTmEPElSo87kHS/jJIfgYpxqnrzgO4g/Iu5qBflcE8bLuc2jqbk4OqjuxIGK1osdaeEPllTAfRY4dnhcoADz0qACKV78=
+	t=1788501447; cv=none; b=QDbaQ5sRPaumVBjyOIT1vyp4duVNxRShywDai4VPRH/GUiAGYA5is+7Jq16k5sUprWAQnXlNt16YfB126PbcRsEtu7FRk/7Ei0xhPwy9W/LhKZciVq52qRydEzFCzFb45TTsJ+122ltjK/7stzZ+XK453Kva73yNGPMRTaOaxMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501445; c=relaxed/simple;
-	bh=TqMCxqzgpPojUb3vvgYOckk/wwSUMxjfASCxxfk8q2Y=;
+	s=arc-20240116; t=1788501447; c=relaxed/simple;
+	bh=vzQHLbic70SPmuQkeYoexSnhZzbBJKl2EdM0XYDzfdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRFhpZnlksd7hFZKvoCOvrP3mRcLSHw3hY+jm6qr44qMQ36QNPaKLjEiZ0VFh3AhSdshXEWuhDIHHHuTY8UMMJ5vfnaxs7rLdjZtQ96RqcozzMCInXKiTxGw0Z/iutEMf/O39Qry1xtzoVNwwTDLaZH3V1lL5bdbnJCTooPVvfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+xmAuF0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k7FKJjDNN3uoPkRLJGeGTC/US3HQmaGifnpYaF27cwRsBlZy8PcuxByFwUFndecCDbkYe2L0CfWwgVfcgZ09PnJrovW3li6I/8dl15UAPmgz+1ZGzXU6YJo44oTHc7dSxRAI/OZadaENlHePeJYQjL+5IOm3sLms3Tau/O8rdZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mo/CXfNU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+xmAuF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624E71F00A3D;
-	Fri,  4 Sep 2026 05:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mo/CXfNU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375651F00A3D;
+	Fri,  4 Sep 2026 05:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501443;
-	bh=UpMa56h0DFCwEm4pQaNAOdQOz3iLtuJ2nJGEinXtwRs=;
+	s=korg; t=1788501446;
+	bh=dTK+QZ+Qngz3bh9a8E4qg+A3BwdqwPxyWYlxGHBiTrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R+xmAuF0ifyl9hiI1uuwMfuWZo28OJTSiU+X3pWftSHSeyc76EkAKK5UFo/a6tFLy
-	 5M5E6NQl0+/2K9MPZN4IFrrYdbGBjN7EPsqBa/vbpiyedb6ra9MDUTEJd+zciCiVak
-	 jkFWfa8nlQwSHhCX0+Mkjb/PN0iYaDz30TuD+EGw=
+	b=mo/CXfNUVAxCEzZEbTvW6xq3o3ciP6X1poq5vsQvxdB3fTRDqVN8Fe2OOue9oOWT5
+	 d+/KXlagH/OErpJMcx2atJnyHNe0bvOWGd73XP0hlq30zAfbzKcZGp3xoMk0deL/Sv
+	 z6qeo9akh2hWpH/i9CDVaGNQpDVo2QiVNrqGhXSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 412/552] iommufd: Fix UAF in selftest IOPF reporting
-Date: Fri,  4 Sep 2026 06:59:29 +0200
-Message-ID: <20260904045759.959454952@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 413/552] platform/x86: dell-wmi-sysman: Dont hex dump attribute security buffer
+Date: Fri,  4 Sep 2026 06:59:30 +0200
+Message-ID: <20260904045759.980699741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -45,181 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 8c07df7cdfcf52f1ff276c588612aabc6c6b8399 upstream.
+commit 83c80495e45eddf64c6525fb582d8db68f256b71 upstream.
 
-IOMMUFD selftest TRIGGER_IOPF borrows an attach handle from
-group->pasid_array without synchronizing against PASID detach,
-then a concurrent iommu_report_device_fault() can dereference
-that borrowed handle's domain pointer after the detach erases
-the handle and frees the backing struct iommufd_attach_handle.
-TRIGGER_IOPF then dereferences the freed handle, causing a UAF.
+set_attribute() populates the security area of the BIOS attribute request
+buffer with the current admin password via populate_security_buffer(), then
+dumps the whole request buffer with print_hex_dump_bytes(). This can expose
+the plaintext admin password in the kernel log.
 
-Fix by adding a iopf_rwsem in mock_dev to follow the expected design
-of a real driver. Hold its read side across the whole
-iommu_report_device_fault() call, and its write side around every
-path that attaches, detaches, or replaces a device domain.
-This can block new reports and drains in-flight reports before an old
-attach handle or the IOPF fault parameter can be removed.
-Also take the write side while registering a mock device, since
-it can invoke the mock driver's default-domain attach callback.
+The same issue was fixed for the password attribute path by
+commit d1a196e0a6dc ("platform/x86: dell-wmi-sysman: Don't hex dump
+plaintext password data"). Remove the remaining dump from the BIOS
+attribute path.
 
-Closes: https://lore.kernel.org/all/D5E3AA41600B2056+f4e15662-bd2b-43ea-91cb-518de429e72c@smail.nju.edu.cn/
-Fixes: ddee19971081 ("iommufd/selftest: Add IOPF support for mock device")
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
 Cc: stable@vger.kernel.org
-Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
-Assisted-by: Codex:gpt-5.6-terra
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Link: https://patch.msgid.link/38C8DF0A118B7176+20260811095551.2756745-1-peiyang_he@smail.nju.edu.cn
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Assisted-by: Codex:gpt-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260614045353.143500-1-sammiee5311@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/selftest.c |   31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -183,6 +183,7 @@ struct mock_dev {
- 	struct device dev;
- 	struct mock_viommu *viommu;
- 	struct rw_semaphore viommu_rwsem;
-+	struct rw_semaphore iopf_rwsem;
- 	unsigned long flags;
- 	unsigned long vdev_id;
- 	int id;
-@@ -1101,6 +1102,7 @@ static struct mock_dev *mock_dev_create(
- 		return ERR_PTR(-ENOMEM);
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c
+@@ -84,7 +84,6 @@ int set_attribute(const char *a_name, co
+ 	if (ret < 0)
+ 		goto out;
  
- 	init_rwsem(&mdev->viommu_rwsem);
-+	init_rwsem(&mdev->iopf_rwsem);
- 	device_initialize(&mdev->dev);
- 	mdev->flags = dev_flags;
- 	mdev->dev.release = mock_dev_release;
-@@ -1126,7 +1128,9 @@ static struct mock_dev *mock_dev_create(
- 		goto err_put;
- 	}
- 
-+	down_write(&mdev->iopf_rwsem);
- 	rc = iommu_mock_device_add(&mdev->dev, &mock_iommu.iommu_dev);
-+	up_write(&mdev->iopf_rwsem);
- 	if (rc)
- 		goto err_put;
- 	return mdev;
-@@ -1181,7 +1185,9 @@ static int iommufd_test_mock_domain(stru
- 	}
- 	sobj->idev.idev = idev;
- 
-+	down_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	rc = iommufd_device_attach(idev, IOMMU_NO_PASID, &pt_id);
-+	up_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	if (rc)
- 		goto out_unbind;
- 
-@@ -1196,7 +1202,9 @@ static int iommufd_test_mock_domain(stru
- 	return 0;
- 
- out_detach:
-+	down_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	iommufd_device_detach(idev, IOMMU_NO_PASID);
-+	up_write(&sobj->idev.mock_dev->iopf_rwsem);
- out_unbind:
- 	iommufd_device_unbind(idev);
- out_mdev:
-@@ -1240,7 +1248,9 @@ static int iommufd_test_mock_domain_repl
- 	if (IS_ERR(sobj))
- 		return PTR_ERR(sobj);
- 
-+	down_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	rc = iommufd_device_replace(sobj->idev.idev, IOMMU_NO_PASID, &pt_id);
-+	up_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	if (rc)
- 		goto out_sobj;
- 
-@@ -1852,10 +1862,16 @@ static int iommufd_test_trigger_iopf(str
- {
- 	struct iopf_fault event = {};
- 	struct iommufd_device *idev;
-+	struct mock_dev *mdev;
- 
- 	idev = iommufd_get_device(ucmd, cmd->trigger_iopf.dev_id);
- 	if (IS_ERR(idev))
- 		return PTR_ERR(idev);
-+	if (!iommufd_selftest_is_mock_dev(idev->dev)) {
-+		iommufd_put_object(ucmd->ictx, &idev->obj);
-+		return -EINVAL;
-+	}
-+	mdev = to_mock_dev(idev->dev);
- 
- 	event.fault.prm.flags = IOMMU_FAULT_PAGE_REQUEST_LAST_PAGE;
- 	if (cmd->trigger_iopf.pasid != IOMMU_NO_PASID)
-@@ -1866,7 +1882,9 @@ static int iommufd_test_trigger_iopf(str
- 	event.fault.prm.grpid = cmd->trigger_iopf.grpid;
- 	event.fault.prm.perm = cmd->trigger_iopf.perm;
- 
-+	down_read(&mdev->iopf_rwsem);
- 	iommu_report_device_fault(idev->dev, &event);
-+	up_read(&mdev->iopf_rwsem);
- 	iommufd_put_object(ucmd->ictx, &idev->obj);
- 
- 	return 0;
-@@ -1974,14 +1992,19 @@ static int iommufd_test_pasid_attach(str
- 	if (IS_ERR(sobj))
- 		return PTR_ERR(sobj);
- 
-+	down_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	rc = iommufd_device_attach(sobj->idev.idev, cmd->pasid_attach.pasid,
- 				   &cmd->pasid_attach.pt_id);
-+	up_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	if (rc)
- 		goto out_sobj;
- 
- 	rc = iommufd_ucmd_respond(ucmd, sizeof(*cmd));
--	if (rc)
-+	if (rc) {
-+		down_write(&sobj->idev.mock_dev->iopf_rwsem);
- 		iommufd_device_detach(sobj->idev.idev, cmd->pasid_attach.pasid);
-+		up_write(&sobj->idev.mock_dev->iopf_rwsem);
-+	}
- 
- out_sobj:
- 	iommufd_put_object(ucmd->ictx, &sobj->obj);
-@@ -1998,8 +2021,10 @@ static int iommufd_test_pasid_replace(st
- 	if (IS_ERR(sobj))
- 		return PTR_ERR(sobj);
- 
-+	down_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	rc = iommufd_device_replace(sobj->idev.idev, cmd->pasid_attach.pasid,
- 				    &cmd->pasid_attach.pt_id);
-+	up_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	if (rc)
- 		goto out_sobj;
- 
-@@ -2019,7 +2044,9 @@ static int iommufd_test_pasid_detach(str
- 	if (IS_ERR(sobj))
- 		return PTR_ERR(sobj);
- 
-+	down_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	iommufd_device_detach(sobj->idev.idev, cmd->pasid_detach.pasid);
-+	up_write(&sobj->idev.mock_dev->iopf_rwsem);
- 	iommufd_put_object(ucmd->ictx, &sobj->obj);
- 	return 0;
- }
-@@ -2030,7 +2057,9 @@ void iommufd_selftest_destroy(struct iom
- 
- 	switch (sobj->type) {
- 	case TYPE_IDEV:
-+		down_write(&sobj->idev.mock_dev->iopf_rwsem);
- 		iommufd_device_detach(sobj->idev.idev, IOMMU_NO_PASID);
-+		up_write(&sobj->idev.mock_dev->iopf_rwsem);
- 		iommufd_device_unbind(sobj->idev.idev);
- 		mock_dev_destroy(sobj->idev.mock_dev);
- 		break;
+-	print_hex_dump_bytes("set attribute data: ", DUMP_PREFIX_NONE, buffer, buffer_size);
+ 	ret = call_biosattributes_interface(wmi_priv.bios_attr_wdev,
+ 					    buffer, buffer_size,
+ 					    SETATTRIBUTE_METHOD_ID);
 
 
