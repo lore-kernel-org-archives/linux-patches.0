@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAF935AC03;
-	Fri,  4 Sep 2026 06:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8DB35AC03;
+	Fri,  4 Sep 2026 06:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501954; cv=none; b=iSZxqb+0pzObgpl/yLznfKH2nRtvOk00fWjHksMssTbq94LRGZx5Xx4Zt1fM7O/oa37pkLrZJH2Qw4++n44otNKp3m9HqLyRTcc6uqS1ECEiGN99YRHIBIkLzrvSc4g/4KhFg3+rXee6hcYerZvluGulUTyOeqHRsnSNTk/mbLA=
+	t=1788501957; cv=none; b=sajwYkYoHfY1Afcy4+qej0IjWkLuINT5PjHAXJWkwZ+lOhynlSekMnfm/uuUjoyPyxpNBgK/iFn2wUYOGLoJJmXA2BWSGPAbvprrmQ0hJ/jbEgXKD/hmM6a68SbV1MMj5whVgY8p+pPYgh6hLlSqtYMMlqANf6dzhjvoj518k6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501954; c=relaxed/simple;
-	bh=t7xoMR1gF3CH1ugH18AceQiNIeGUg4NL/NTtc3FIgT0=;
+	s=arc-20240116; t=1788501957; c=relaxed/simple;
+	bh=DA0t6ZxoW06qVYm+VY3NULyRPQYDIE4Pkf0lG0YNK6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcq9r0d9WWeBMUjemRfDeZfds2rP0iyVSUFC3hnk+iiPMscTT7FsQ85/LohldR+qcuAVDjcXdVwXsvQFYVxJC/M3am+Et1MBgiCout6i5eSlvoRG+gX2raLj/bUyO515u/+RKEtpSXfKTGcYFej855oRn7rU50TAKpWDEXfdjic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjuQqVBY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W7+Upm1fNqfssqqwgBIkaeWnhW3K1A1wJh0QnGSauKwdfjmYmuDmdYMJGevY/CU+R0f0IUuQEtTEaVjNzJrcFfXuXILHocm7pQo2LS6DY1UpHYdr7OmDZ/vbYD9KqMOQlrYZv+Hjnq3eTJJUa36+nHBVF471bGF3YReSCTaLTWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SD29WnWL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjuQqVBY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E431F00A3D;
-	Fri,  4 Sep 2026 06:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SD29WnWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FA31F00A3D;
+	Fri,  4 Sep 2026 06:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501953;
-	bh=m7xmll0hCLSQeZRz3hvmVeIlCUSKrDqyJySTru+Beww=;
+	s=korg; t=1788501956;
+	bh=eSzOR57Kq1uM+1q0WcnUEjzAMDlnSO/75jC+hQvvGKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zjuQqVBYcR0Xyz0zcILW1oi3TxoRkdKu6HadbWqaMorZEgJeicOSOe/dgWAo3IQ4x
-	 KixwIjiGRbSt8Q9BIYNRxPVhproEZwWtKBzhbE26kv8IMV3MCrd+VjQrlcLmUh0tnM
-	 sb/G1lWdd9Y72R1I0BD5/oLDVli09OVElL3tzd18=
+	b=SD29WnWLA6auU3t0Er1FDPmtbzJXGg2iX3Gm4iWbcoXlPcx3Q02TFQvTKrgjAHQcB
+	 b4Cp2wImuSMaenodUz7CQm4pVbzmZrABnGrEGwF1mRTaoejVA+2Zk27/z84mli8Wei
+	 LZD+jA9bBIyeJIrTfkjQbR9FsJ8QCN2Cs7MtlE+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+685955db58555575fdd2@syzkaller.appspotmail.com,
-	Bradley Morgan <include@grrlz.net>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Hui Su <sh_def@163.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 037/403] tracing: Fix use-after-free in trace_pipe read on sub-buffer order change
-Date: Fri,  4 Sep 2026 06:57:20 +0200
-Message-ID: <20260904045735.658979055@linuxfoundation.org>
+Subject: [PATCH 6.12 038/403] tracing: Fix use-after-free with same-name named triggers
+Date: Fri,  4 Sep 2026 06:57:21 +0200
+Message-ID: <20260904045735.680089142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,66 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Hui Su <sh_def@163.com>
 
-commit 372f8534244d632ad5118e8a87a11291b01712d3 upstream.
+commit a7318172aa332a161fb9618286e64454c827f8fd upstream.
 
-Writing to buffer_subbuf_size_kb calls ring_buffer_subbuf_order_set(),
-which frees every sub-buffer of the ring buffer, including the reader
-page, and replaces them with newly allocated ones.
+When two hist triggers on different events are registered with the same
+name=, the second one reuses the first as named_data.  Both are added to
+tr->hist_vars by save_hist_vars() during event_hist_trigger_parse(),
+because save_hist_vars() is called before event_trigger_register() while
+the named reuse is only detected later, in hist_register_trigger().
 
-Readers of trace_pipe hold pointers into those pages. ring_buffer_peek()
-looks up an event under cpu_buffer->reader_lock but returns the event
-pointer after dropping the lock, and peek_next_entry() then calls
-ring_buffer_event_length() and ring_buffer_event_data() on it. If the
-sub-buffer order is changed in that window, the reader dereferences
-freed memory:
+In the named-data branch hist_register_trigger() then frees the second
+histogram's hist_data via destroy_hist_data(), but never removes its
+tr->hist_vars list entry, leaving a dangling pointer and leaking the
+trace_array reference it holds.
 
-  BUG: KASAN: use-after-free in ring_buffer_peek+0x3e0/0x430
-  Read of size 1 at addr ffff88802a4cf010 by task syz-executor989/6002
+A later hist trigger that references a variable makes find_var_file()
+walk tr->hist_vars and dereference the freed hist_data.  The bug is
+reproducible from userspace by writing three hist triggers to tracefs:
 
-  Freed by:
-   free_buffer_page kernel/trace/ring_buffer.c:398 [inline]
-   ring_buffer_subbuf_order_set+0x1325/0x18e0 kernel/trace/ring_buffer.c:7444
-   buffer_subbuf_size_write+0x182/0x280 kernel/trace/trace.c:8221
+  cd /sys/kernel/tracing
+  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_switch/trigger
+  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_process_fork/trigger
+  echo 'hist:keys=common_pid:vals=$x' > events/sched/sched_process_exit/trigger
 
-Take trace_access_lock(RING_BUFFER_ALL_CPUS) around the order change.
-This is the lock trace_pipe readers already hold across their entire
-peek-and-print loop, so the swap can no longer race with a reader that
-is dereferencing a peeked event.
+The third write panics the kernel:
+
+  BUG: KASAN: slab-use-after-free in find_var_file.part.0+0x272/0x290
+  Read of size 8 at addr ffff888001f8a0e0 by task sh/1
+  CPU: 1 UID: 0 PID: 1 Comm: sh Tainted: G      D          N
+  Call Trace:
+    find_var_file.part.0
+    find_event_var
+    parse_atom
+    parse_expr
+    __create_val_field
+    event_hist_trigger_parse
+    trigger_process_regex
+    event_trigger_write
+    vfs_write
+    ksys_write
+    do_syscall_64
+    entry_SYSCALL_64_after_hwframe
+  Allocated by task 1:
+    event_hist_trigger_parse
+  Freed by task 1:
+    hist_register_trigger+0x618/0xa30
+    event_hist_trigger_parse
+  The buggy address belongs to freed 2048-byte region
+  Oops: general protection fault ... RIP: find_var_file.part.0
+  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+
+Fix by removing the hist_data from tr->hist_vars and releasing the
+trace_array reference in the named-data branch of hist_register_trigger()
+before freeing the hist_data.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260817140655.5694-1-kartikey406@gmail.com
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
-Reported-by: syzbot+685955db58555575fdd2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=685955db58555575fdd2
-Tested-by: syzbot+685955db58555575fdd2@syzkaller.appspotmail.com
-Reviewed-by: Bradley Morgan <include@grrlz.net>
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Fixes: 6f86bdeab633 ("tracing: Fix bad hist from corrupting named_triggers list")
+Link: https://patch.msgid.link/20260816100427.33642-3-sh_def@163.com
+Signed-off-by: Hui Su <sh_def@163.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/trace/trace_events_hist.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9148,6 +9148,8 @@ buffer_subbuf_size_write(struct file *fi
- 	/* Do not allow tracing while changing the order of the ring buffer */
- 	tracing_stop_tr(tr);
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6585,8 +6585,10 @@ static int hist_register_trigger(char *g
+ 		tracing_set_filter_buffering(file->tr, true);
+ 	}
  
-+	trace_access_lock(RING_BUFFER_ALL_CPUS);
-+
- 	old_order = ring_buffer_subbuf_order_get(tr->array_buffer.buffer);
- 	if (old_order == order)
- 		goto out;
-@@ -9187,6 +9189,7 @@ buffer_subbuf_size_write(struct file *fi
- #endif
- 	(*ppos)++;
+-	if (named_data)
++	if (named_data) {
++		remove_hist_vars(hist_data);
+ 		destroy_hist_data(hist_data);
++	}
   out:
-+	trace_access_unlock(RING_BUFFER_ALL_CPUS);
- 	if (ret)
- 		cnt = ret;
- 	tracing_start_tr(tr);
+ 	return ret;
+ }
 
 
