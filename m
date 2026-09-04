@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011352F9DA1;
-	Fri,  4 Sep 2026 05:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA1430C366;
+	Fri,  4 Sep 2026 05:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501123; cv=none; b=hVlACfcLDvi+dCLAo10CA3IYNwQWn4B2+XXRXmuMYbUnhmoYrT648aFJ4T383Wl0xflSMBZLBS0kAHBnv+uEkxMceEsgJN7Si7x2RAts/udo8dZIDRUJhX/Yii0jXBhAlkdJDr8vVBTdyE7JnOLJVejVtHosxopB2XRsV9Q5+NI=
+	t=1788501126; cv=none; b=SlffzTL0Pbv35kXS4akeOls8fTVYOOMMomPibyiUNQzuKDIPplL5Ju/iE/fdhEDZW/rd4tDlLfqUiUTBOyvEl67ciHZj8KDpOTGNyrL2tEUx0MRYAIdDlSuZpd52Gmnp4x2DbuaSKjeQ547o/CF7czf0N3ER/6z0ASe4EUKvHVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501123; c=relaxed/simple;
-	bh=uhSmtzQ3RbVF2KWiqJfqTRnMkWr3aT+xMuP1t4Bf8W0=;
+	s=arc-20240116; t=1788501126; c=relaxed/simple;
+	bh=O7NaSAZYbprhDvjBOcDkPTFKxZAOnXkg+PtcdmgshZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KeZwsAEoJpG3awiz2PM+Kdcxsa+hoKtVdIS0/6hQHPZaYTShYvxn8PKqy2gmk3KaogY3omMsY0yhxgg5Plwa9ReeIG66uSVarIh806Fl9N7/RX/xDM/ixIzEhR5uTpGPm2bdAn+QNnsNllorBH26EnjEOb9Pt2K3Jv2PXBk4qf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmb0kG6G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VcEYplIa7HKTAuTTI1m8i8sFmqXmwukxgiJ9LhHsTqtJmdePC8qSeNkSYlOwWQCcJ5VUwOh4XJvCdK99FFWHeiv9E1nn1S8JT3KKCuE7J+BXUwGh6sasfi/YrNv7a1mZSavVnsCs4qPJg3ZlqZH/1KbfRwBDu9F9rrjdJ9X+9dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1j+v3q2b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmb0kG6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5909A1F00A3D;
-	Fri,  4 Sep 2026 05:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1j+v3q2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D051F00A3D;
+	Fri,  4 Sep 2026 05:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501121;
-	bh=C2wjjCxNhVkVdKoAxikhm/jbivRb1X82BV9ZEGchBpk=;
+	s=korg; t=1788501124;
+	bh=VJS2ZV9s3A0dLvACxU97nkM6U+VPvjJzRJV0zXvWBAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mmb0kG6GfcgemJwdMqg6/dPYDpHdmCM+d34CmXX9LoarpXPHZxZYGU3gZPahmwtg8
-	 oM2QEeu4V+nTN18LSOlQwny9ANbcHbx2bwbXR2FbSdx3C1kPBk+kBC8drCLSrC8nIo
-	 vzvvK6r1jA88Fy0cbbfyholKfDX45hqfZ6drBM6k=
+	b=1j+v3q2bTr1/W7F6lJj4omY+1Y2WhFtsOBivS4cKJ+btRiS8mgNfSuKMf945bA2x+
+	 4WwuQjSI0T8DkMCRwa4Z6b5IeQ4nHG8S7dMA5g/UQG7bsfS8qpGYSXvsqdtv9SsqaZ
+	 EosPEhZzlWjyNFn+UCX3dtJi9A2F+SnnB3GBhS3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <clm@meta.com>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 296/552] svcrdma: Reject inline replies that overflow the pull-up buffer
-Date: Fri,  4 Sep 2026 06:57:33 +0200
-Message-ID: <20260904045756.770913372@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 297/552] svcrdma: Reject Write/Reply chunks with segcount 0
+Date: Fri,  4 Sep 2026 06:57:34 +0200
+Message-ID: <20260904045756.816662861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,163 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Chris Mason <clm@meta.com>
 
-commit 0fbe20dfe74b783d255bf389a6ea77aa25dc7860 upstream.
+commit 9808eb7656666acc7291bae9ab6b987bd16e47e0 upstream.
 
-An RPC-over-RDMA client can request a reply, such as an NFS READ
-payload, without providing a Write list or a Reply chunk to carry
-it. When such a reply needs more scatter/gather entries than the
-device's Send Queue supports, svc_rdma_pull_up_needed() selects
-pull-up and svc_rdma_pull_up_reply_msg() linearizes the whole
-reply into sctxt->sc_xprt_buf. That buffer is only sc_max_req_size
-bytes, while the reply on this path is bounded only by the client's
-request, so svc_rdma_xb_linearize() copies past the end of the
-buffer and corrupts adjacent slab memory. The oversized length is
-then stored in sc_sges[0].length and posted, so the device also
-reads beyond the mapped region.
+A peer can send a Write or Reply chunk whose segcount field is zero.
+xdr_check_write_chunk() only rejects segcount > rc_maxpages, so zero
+passes the range check, and xdr_inline_decode(stream, 0) returns the
+current (non-NULL) cursor without advancing. The function returns
+true and pcl_alloc_write() then links a struct svc_rdma_chunk with
+ch_segcount == 0 onto rc_write_pcl or rc_reply_pcl.
 
-The SGE-exhaustion branch is the only pull-up path that can exceed
-the buffer: the threshold branch pulls up only replies smaller
-than RPCRDMA_PULLUP_THRESH, and replies that fit the device's SGE
-budget are sent directly without linearization. Make
-svc_rdma_pull_up_needed() report -E2BIG when the reply it would
-pull up cannot fit sc_max_req_size, and fail the request with
-ERR_CHUNK as RFC 8166 Section 4.5.3 directs rather than dropping
-the connection.
+An earlier patch in this series made pcl_for_each_segment() safe for
+ch_segcount == 0, so this no longer drives the memory walk it used
+to. Rejecting the malformed frame at the decode boundary is still
+worthwhile as defense in depth: it keeps degenerate zero-segment
+chunks off the parsed chunk lists entirely, so any future consumer
+that walks ch_segments directly cannot observe one, and it makes the
+zero-floor easy to backport to trees where the macro change is more
+intrusive. RFC 8166 has no meaning for a Write/Reply chunk that
+describes no remote buffer, so no legitimate client is affected.
 
-The helper no longer answers a simple yes/no question: it now
-reports pull-up, no pull-up, or -E2BIG for a reply too large to
-linearize. Rename svc_rdma_pull_up_needed() to
-svc_rdma_check_pull_up() so its name no longer implies a boolean
-predicate.
+xdr_check_reply_chunk() funnels Reply chunks through
+xdr_check_write_chunk() and inherits the same rejection.
 
-Fixes: e248aa7be86e ("svcrdma: Remove max_sge check at connect time")
+pcl_alloc_write() also links each chunk onto the parsed chunk list
+before filling its segment array. If a future change weakens the
+segcount-0 rejection, an incomplete chunk is visible to consumers
+during the fill loop. Reorder so that list_add_tail() follows the
+segment fill loop, ensuring only fully-populated chunks appear on
+the list.
+
+Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
 Cc: stable@vger.kernel.org
-Reported-by: Chris Mason <clm@meta.com>
-Assisted-by: kres:claude-opus-4-7
-Link: https://patch.msgid.link/20260623014728.826032-1-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-5-e251306ccca9@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_sendto.c |   47 +++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 15 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_pcl.c      |    2 +-
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c |    9 ++++++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_sendto.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
-@@ -700,20 +700,21 @@ static int svc_rdma_xb_count_sges(const
- }
+--- a/net/sunrpc/xprtrdma/svc_rdma_pcl.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_pcl.c
+@@ -213,7 +213,6 @@ bool pcl_alloc_write(struct svc_rdma_rec
+ 		chunk = pcl_alloc_chunk(segcount, 0);
+ 		if (!chunk)
+ 			return false;
+-		list_add_tail(&chunk->ch_list, &pcl->cl_chunks);
  
- /**
-- * svc_rdma_pull_up_needed - Determine whether to use pull-up
-+ * svc_rdma_check_pull_up - Determine whether to use pull-up
-  * @rdma: controlling transport
-  * @sctxt: send_ctxt for the Send WR
-  * @write_pcl: Write chunk list provided by client
-  * @xdr: xdr_buf containing RPC message to transmit
-  *
-  * Returns:
-- *   %true if pull-up must be used
-- *   %false otherwise
-+ *   %1 if pull-up must be used
-+ *   %0 if pull-up is not needed
-+ *   %-E2BIG if the reply is too large to be pulled up
-  */
--static bool svc_rdma_pull_up_needed(const struct svcxprt_rdma *rdma,
--				    const struct svc_rdma_send_ctxt *sctxt,
--				    const struct svc_rdma_pcl *write_pcl,
--				    const struct xdr_buf *xdr)
-+static int svc_rdma_check_pull_up(const struct svcxprt_rdma *rdma,
-+				   const struct svc_rdma_send_ctxt *sctxt,
-+				   const struct svc_rdma_pcl *write_pcl,
-+				   const struct xdr_buf *xdr)
- {
- 	/* Resources needed for the transport header */
- 	struct svc_rdma_pullup_data args = {
-@@ -725,11 +726,22 @@ static bool svc_rdma_pull_up_needed(cons
- 	ret = pcl_process_nonpayloads(write_pcl, xdr,
- 				      svc_rdma_xb_count_sges, &args);
- 	if (ret < 0)
--		return false;
-+		return 0;
- 
- 	if (args.pd_length < RPCRDMA_PULLUP_THRESH)
--		return true;
--	return args.pd_num_sges >= rdma->sc_max_send_sges;
-+		return 1;
-+	if (args.pd_num_sges < rdma->sc_max_send_sges)
-+		return 0;
-+
-+	/*
-+	 * The reply has too many SGEs to Send inline, so it has to be
-+	 * linearized into sc_xprt_buf. That buffer holds only
-+	 * sc_max_req_size bytes, so a larger reply cannot be pulled up.
-+	 * RFC 8166 Section 4.5.3 requires responding with ERR_CHUNK.
-+	 */
-+	if (args.pd_length > rdma->sc_max_req_size)
-+		return -E2BIG;
-+	return 1;
- }
- 
- /**
-@@ -785,7 +797,7 @@ static int svc_rdma_xb_linearize(const s
-  * Assemble the elements of @xdr into the transport header buffer.
-  *
-  * Assumptions:
-- *  pull_up_needed has determined that @xdr will fit in the buffer.
-+ *  check_pull_up has determined that @xdr will fit in the buffer.
-  *
-  * Returns:
-  *   %0 if pull-up was successful
-@@ -820,6 +832,7 @@ static int svc_rdma_pull_up_reply_msg(co
-  *
-  * Returns:
-  *   %0 if DMA mapping was successful.
-+ *   %-E2BIG if the reply is too large to be pulled up
-  *   %-EMSGSIZE if a buffer manipulation problem occurred
-  *   %-EIO if DMA mapping failed
-  *
-@@ -835,6 +848,7 @@ int svc_rdma_map_reply_msg(struct svcxpr
- 		.md_rdma	= rdma,
- 		.md_ctxt	= sctxt,
- 	};
-+	int ret;
- 
- 	/* Set up the (persistently-mapped) transport header SGE. */
- 	sctxt->sc_send_wr.num_sge = 1;
-@@ -849,7 +863,10 @@ int svc_rdma_map_reply_msg(struct svcxpr
- 	/* For pull-up, svc_rdma_send() will sync the transport header.
- 	 * No additional DMA mapping is necessary.
- 	 */
--	if (svc_rdma_pull_up_needed(rdma, sctxt, write_pcl, xdr))
-+	ret = svc_rdma_check_pull_up(rdma, sctxt, write_pcl, xdr);
-+	if (ret < 0)
-+		return ret;
-+	if (ret)
- 		return svc_rdma_pull_up_reply_msg(rdma, sctxt, write_pcl, xdr);
- 
- 	return pcl_process_nonpayloads(write_pcl, xdr,
-@@ -1033,7 +1050,7 @@ int svc_rdma_sendto(struct svc_rqst *rqs
- 						   &rctxt->rc_reply_pcl, sctxt,
- 						   &rqstp->rq_res);
- 		if (ret < 0)
--			goto reply_chunk;
-+			goto send_err;
- 		rc_size = ret;
+ 		for (j = 0; j < segcount; j++) {
+ 			segment = &chunk->ch_segments[j];
+@@ -225,6 +224,7 @@ bool pcl_alloc_write(struct svc_rdma_rec
+ 			chunk->ch_length += segment->rs_length;
+ 			chunk->ch_segcount++;
+ 		}
++		list_add_tail(&chunk->ch_list, &pcl->cl_chunks);
  	}
+ 	return true;
+ }
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -498,10 +498,13 @@ static bool xdr_check_write_chunk(struct
+ 		return false;
  
-@@ -1054,10 +1071,10 @@ int svc_rdma_sendto(struct svc_rqst *rqs
+ 	/* Before trusting the segcount value enough to use it in
+-	 * a computation, perform a simple range check. This is an
+-	 * arbitrary but sensible limit (ie, not architectural).
++	 * a computation, perform a simple range check. A zero
++	 * segcount describes no remote buffer and is rejected so
++	 * downstream consumers never see a degenerate ch_segcount==0
++	 * chunk. The upper bound is an arbitrary but sensible limit
++	 * (ie, not architectural).
+ 	 */
+-	if (unlikely(segcount > rctxt->rc_maxpages))
++	if (segcount == 0 || unlikely(segcount > rctxt->rc_maxpages))
+ 		return false;
  
- 	ret = svc_rdma_send_reply_msg(rdma, sctxt, rctxt, rqstp);
- 	if (ret < 0)
--		goto put_ctxt;
-+		goto send_err;
- 	return 0;
- 
--reply_chunk:
-+send_err:
- 	if (ret != -E2BIG && ret != -EINVAL)
- 		goto put_ctxt;
- 
+ 	p = xdr_inline_decode(&rctxt->rc_stream,
 
 
