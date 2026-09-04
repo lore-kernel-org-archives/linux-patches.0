@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F60F414DF6;
-	Fri,  4 Sep 2026 05:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A1B3815E1;
+	Fri,  4 Sep 2026 05:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500062; cv=none; b=Q1NMjbqWFUOkWJ+R65ymBawyRDDY+oTrzXo4a4lVgGflW1jQhDVdaRtMQxP7ozPGOjC+GAe1KP3DGq1YekTZfxJlkmXGg4GbJMQ7I2p7DA6muV2poUCJ4M7gfWmj4ZU/XJozQm9RqOgn18YqwU9mdfkbZkDs8WTYcyTDo8cc4Gg=
+	t=1788500065; cv=none; b=Ns0rqPpsgWVQhnjJAL2s4wNR+1JEiy3kY/xi0ILD8Z4KFgyVucLATG3C7xPnmXXP30qpUggb77S0xR/HHp9mQs1c322vOp7UYriPWcXjdVI6Oj9c1jB1z7YYN1WoxXxXY5XMrHW0GGd0Od2KjOKFG9XP8TKVKmp5C9SwDw0kiQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500062; c=relaxed/simple;
-	bh=l5tRz+irQBa8I2YBj5Xd3JvC/Tpas16ymd+MKN+aPFE=;
+	s=arc-20240116; t=1788500065; c=relaxed/simple;
+	bh=AmyQa0E4/tk6FQhdlCLrSpBde2CxMHq5hAeLgVLkqbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYOhVHFZKyz67o0lmnUxuoXVd7Zcit1yFitBunbUnhrDkVLJu3Zd6XYv1VZpWU5XwrLXkSfCQKfnKEkg6EofN04UCLnfVGp00BjaMP5VfhKRH7iS8eyZiNbKg4vDuguMdlYPaiKS8mE7OAUY9fiNM9lQpi6pwBdAH/YKRJn+ym8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCNtWBKh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cbsjm2Z6YZ0Ay8XsxPmtc1cXs4dUGi1qw5cHBCG+yLaatXbhsvMEa57TVxVwZt6lHNPzBPJWOXJml+/A6g7Ju/0+SAOuTncxuYywo3pdBRdtsRAVbbIBrsVgfiBT5T0thfwq2PkhU5WfhN3J17pEbLqKsF7C9D3GTwEEqdPly6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bk6EtY0+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCNtWBKh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998D51F00A3D;
-	Fri,  4 Sep 2026 05:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bk6EtY0+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741C11F00A3D;
+	Fri,  4 Sep 2026 05:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500061;
-	bh=Ji79QvJxxyNJ84Nkdg26Axx6XquOdCFJj/CDMykrJjw=;
+	s=korg; t=1788500064;
+	bh=1HyX/Q7sYFLUWdh27c/lZf+HHpPXzHQWlx96CE1firY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UCNtWBKh8v1xxmsGam1T1M1BamnR2ntFTC8ZqnQ8ZMicAq269kNm/4ZrYvjV727Va
-	 Z8vr2/SLubcnTXnc6jGF/rEIIfSMPheIjDszHNmrtiAqNoZ6AZx2kVYVy4bQGuWTWo
-	 RtIhoryDB/bDDGHYWERKhcxn26j0Z6KrXgcRrT3U=
+	b=bk6EtY0+CjBX13NoEVH5HWGoZi3vrtfQohnePtzAZF4Bw7jlmnqZw1Cay6Jq3AUwA
+	 u/t6sm7pJC75qLWbJ6daKXwnn7x1TJ2soWdypZwA4b/dQdHFTp7N4yYLViBx7ISh5r
+	 h8e+thvIqs+zNBVRWa+u1jGbUmVQaygL0VKALZOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>
-Subject: [PATCH 7.2 594/713] net/iucv: filter frames in afiucv_hs_rcv() by ingress device
-Date: Fri,  4 Sep 2026 06:59:22 +0200
-Message-ID: <20260904045817.139462756@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 595/713] xdp: fix zero-copy frame layout
+Date: Fri,  4 Sep 2026 06:59:23 +0200
+Message-ID: <20260904045817.161863229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,79 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 80230a18c164a4b5bbc048fe2768b219ac17bc5a upstream.
+commit 71283aaa6c65b3cec84caf1dc78560985737641f upstream.
 
-afiucv_hs_rcv() selects a socket from iucv_sk_list by matching four 8-byte
-name fields in the transport header alone. No check is made against the
-net_device the frame arrived on.
+xdp_convert_zc_to_xdp_frame() clones an XSK packet into an order-0 page
+and advertises PAGE_SIZE as its frame size.  It allows the copied frame
+to occupy the page tail needed by skb_shared_info and records zero
+headroom even when metadata separates the frame header from packet data.
+An AF_XDP zero-copy packet redirected through cpumap can therefore make
+the skb overlap skb_shared_info or place it beyond the allocated page.
 
-This can cause a frame arriving on any netdev to be delivered to an AF_IUCV
-socket. Three problems follow.
+Limit the copied layout to SKB_WITH_OVERHEAD(PAGE_SIZE) and include the
+metadata length in frame headroom.  Redirect callers already handle a
+NULL conversion result.
 
-First, a frame arriving over HiperSockets can be delivered to a socket
-bound to the classic z/VM IUCV transport, which has iucv->hs_dev == NULL.
-iucv_sock_bind() takes the classic path whenever the requested userid
-matches iucv_userid, even on a guest that also has a HiperSockets device
-carrying the same identifier. The child socket created by
-afiucv_hs_callback_syn() for such a match inherits hs_dev = NULL and
-transport = AF_IUCV_TRANS_HIPER, so the first send() on it returns -ENODEV.
-The socket delivered to accept() is unusable.
+BUG: KASAN: slab-out-of-bounds in skb_gro_receive
+Write of size 4 at addr ffff88800cf37004 by task cpumap/1/map:1/146
+Call Trace:
+ skb_gro_receive (net/core/gro.c:174)
+ udp_gro_receive (net/ipv4/udp_offload.c:812)
+ inet_gro_receive (net/ipv4/af_inet.c:1539)
+ dev_gro_receive (net/core/gro.c:515)
+ gro_receive_skb (net/core/gro.c:633)
+ cpu_map_kthread_run (kernel/bpf/cpumap.c:395)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (arch/x86/kernel/process.c:164)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:255)
+Kernel panic - not syncing: KASAN: panic_on_warn set ...
 
-Second, a frame arriving on one netdev can be delivered to a socket bound
-to a different IQD device. Which can lead to
-- Accept-queue exhaustion (DoS)
-- Attacker-controlled peer identity in the child socket
-- Data injection into existing sockets
-- Fabric noise on the IQD fabric, where bogus replies are sent
-- killing established connections
-
-Third, all AF_IUCV sockets live in init_net, as iucv_sock_alloc() calls
-sk_alloc(&init_net, ...). But even frames arriving on netdev devices in a
-namespace can be delivered to an IUCV socket. So a process in an
-unprivileged user and network namespace holding only the CAP_NET_RAW
-capability valid within that namespace can send a raw ETH_P_AF_IUCV frame
-on its own lo device and have it matched against init_net sockets.
-
-Fix all three by skipping any socket whose hs_dev does not match the
-ingress device. A classic z/VM IUCV socket has hs_dev == NULL; the ingress
-dev is never NULL, so classic sockets are skipped automatically. An unbound
-HIPER socket also has hs_dev == NULL and is skipped. A bound HIPER socket
-is only reachable from the exact IQD device it was bound to. Because hs_dev
-is always a device in init_net (iucv_sock_bind() scans
-for_each_netdev_rcu(&init_net, ...) exclusively), a frame whose ingress
-device belongs to another namespace never matches any socket.
-
-Note that AF_IUCV over HiperSockets provides no per-connection
-authentication: no sequence numbers, no TLS, no nonce. The four name fields
-identifying a connection are exchanged in plaintext on the shared
-HiperSockets segment (VCHID). Any host on the same HiperSockets segment
-could spoof any frame type against an existing connection. That is a
-protocol-level property unchanged by this patch. The fix reduces the attack
-surface to peers present on the same HiperSockets segment.
-
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Fixes: b0d1beeff2a9 ("xdp: implement convert_to_xdp_frame for MEM_TYPE_ZERO_COPY")
 Cc: stable@vger.kernel.org
-Co-developed-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260821125501.3718748-1-wintera@linux.ibm.com
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260818154516.793517-1-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/iucv/af_iucv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/core/xdp.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -2079,6 +2079,8 @@ static int afiucv_hs_rcv(struct sk_buff
- 	sk = NULL;
- 	read_lock(&iucv_sk_list.lock);
- 	sk_for_each(sk, &iucv_sk_list.head) {
-+		if (iucv_sk(sk)->hs_dev != dev)
-+			continue;
- 		if (trans_hdr->flags == AF_IUCV_FLAG_SYN) {
- 			if ((!memcmp(&iucv_sk(sk)->src_name,
- 				     trans_hdr->destAppName, 8)) &&
+--- a/net/core/xdp.c
++++ b/net/core/xdp.c
+@@ -585,7 +585,7 @@ struct xdp_frame *xdp_convert_zc_to_xdp_
+ 		   xdp->data - xdp->data_meta;
+ 	totsize = xdp->data_end - xdp->data + metasize;
+ 
+-	if (sizeof(*xdpf) + totsize > PAGE_SIZE)
++	if (sizeof(*xdpf) + totsize > SKB_WITH_OVERHEAD(PAGE_SIZE))
+ 		return NULL;
+ 
+ 	page = dev_alloc_page();
+@@ -602,7 +602,7 @@ struct xdp_frame *xdp_convert_zc_to_xdp_
+ 
+ 	xdpf->data = addr + metasize;
+ 	xdpf->len = totsize - metasize;
+-	xdpf->headroom = 0;
++	xdpf->headroom = metasize;
+ 	xdpf->metasize = metasize;
+ 	xdpf->frame_sz = PAGE_SIZE;
+ 	xdpf->mem_type = MEM_TYPE_PAGE_ORDER0;
 
 
