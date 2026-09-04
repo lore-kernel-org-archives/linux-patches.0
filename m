@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674C418D636;
-	Fri,  4 Sep 2026 05:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEC018D636;
+	Fri,  4 Sep 2026 05:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501326; cv=none; b=UYNX9Y0rWjKlvVUtXIJwEjq0NShSn97+njNRyoZGhjQSgnbS3D+fwcDoLHaGZxgj5vAVHg+xCFxLagCOtiPg8YC6bciclcNdvw5+VZyNSypYIpVU0FAfkE0WcCnOaNTiFZ58oKPUctge+k4GA5L6j0IHCyalB3YT1XDTy9dE5R8=
+	t=1788501329; cv=none; b=jVLyrB96Lem7sklp58cwuhYuBvE2BoqmOwGxQKIZUZbzLIUDvFI5Hm+3y9pLO3zt1J88HRc3/R7jlLpHK46q/VRSIqIRlsjhdVNGzfUNvOzhEcmV1b2zMh1m7T9cMlkM8/DCdH3b7QhdaEOsCrJ7L1vgRvzvKlaLxuAVm8fQIww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501326; c=relaxed/simple;
-	bh=HW/IJ1HItgRphm4R+pY51kiWIsvE7RGBgHgQLG6x5cQ=;
+	s=arc-20240116; t=1788501329; c=relaxed/simple;
+	bh=DualSPhzGXeuXt3Tp7wEDEEZm6yj7cITn8FffGP1aSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUyvvEHjEw6L3yXIwCI+6B8C5alzR3ldYl8l+x45bxOnX3nwAOzunOZ30FLam0yKhfAAo9kwIvLWBfpBcltOeg5fvL9xSDO6YxRoyXwr7yT1e28q4Brip/VWEVd8Fy+LIVWr0vd0B1E64gdm/lzMxyxuUxEJStdWMuyr3W4w72Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGCHhA0T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GYspBAyJnz4WxIeDCoVVmOzC+7WsJDfUnQeiCnD4hgwwtwT+15qNgMWVf9HIFmcYj7qeEkQCOen4n2q+bjRfI+bvVBfb21ghbJZq8EQo3IbBiAxm3d+/vIKfurya9asg9XfP8ihhfhF+1RoidGjMeqQbZOtCCu7zEY6C1Mm2iec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zf4CdO2y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGCHhA0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B181B1F00A3D;
-	Fri,  4 Sep 2026 05:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zf4CdO2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FBF1F00A3D;
+	Fri,  4 Sep 2026 05:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501325;
-	bh=I3H0R2Gu+BnzGUs9rlUwbxsqwD7UtZB5zjCI3T96KpU=;
+	s=korg; t=1788501327;
+	bh=jeKA5/vqto9qWZFGvwYHeKMcfu2FVuxO9a145IMOT4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MGCHhA0ThiXFmEFzMnEhm8bxl2d9DtP9O9TgL4AGSc5GiaSJnJ9QoAJUSs0vgrQ09
-	 8AxSSPMN2G1Ux553cvFUlOnrTjPwu9py+yrEcSRpuJSkUIPwX8dOIJXtetGBRqX079
-	 v3+G8u4LpZmGnE/6oRI/FDGTazpBz4sw6emb6OQY=
+	b=zf4CdO2y3fn/3rSCcPCJDduOWO76t5O/Eatv7UiYg+7Y3iEOFSj/fRWcs+CCD+qzk
+	 FAVxbXkekQrjfFC1VrCSmTVtVLmbzbjIA4kF0gWcMlZGy+MzuDR5I6mqj3YHsuxSgd
+	 eE5QJkQNRi/J40LrpjMYwuH805n2dW+P2Wi/U89A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Jameson Thies <jthies@google.com>,
+	Benson Leung <bleung@chromium.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 370/552] power: supply: cros_usbpd-charger: bound the EC-reported port count
-Date: Fri,  4 Sep 2026 06:58:47 +0200
-Message-ID: <20260904045758.614493226@linuxfoundation.org>
+Subject: [PATCH 6.18 371/552] power: supply: cros_usbpd: Limit port counts to EC_USB_PD_MAX_PORTS
+Date: Fri,  4 Sep 2026 06:58:48 +0200
+Message-ID: <20260904045758.636601741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,66 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Jameson Thies <jthies@google.com>
 
-commit 48355ce49359740f52e94d3623f6fc557ce341f0 upstream.
+commit 657cd3a42e937276262c0a8ae6b01a87004309de upstream.
 
-cros_usbpd_charger_probe() reads two port counts from the EC and uses
-one of them, num_charger_ports, as the loop bound when populating a
-fixed-size array:
+Currently the cros_usbpd-charger driver probe iterates based on raw
+charger port count returned by the embedded controller. The only check
+is against the number of USB PD ports which the embedded controller
+also defines. A malicious embedded controller could return an inaccurate
+port count (up to 255) resulting in an out of bounds write and
+subsequent memory corruption.
 
-	struct port_data *ports[EC_USB_PD_MAX_PORTS];	/* 8 entries */
-	...
-	for (i = 0; i < charger->num_charger_ports; i++)
-		charger->ports[charger->num_registered_psy++] = port;
+Update helper functions in cros_usbpd-charger to limit port counts to
+EC_USB_PD_MAX_PORTS.
 
-Both num_usbpd_ports (from EC_CMD_USB_PD_PORTS) and num_charger_ports
-(from EC_CMD_CHARGE_PORT_COUNT) are u8 values reported by the EC. The
-only validation is a sanity check that compares the two EC-reported
-values against each other:
-
-	if (num_charger_ports < num_usbpd_ports ||
-	    num_charger_ports > num_usbpd_ports + 1)
-		return -EPROTO;
-
-It never checks either count against EC_USB_PD_MAX_PORTS, the size of
-the ports[] array. A malfunctioning, malicious or compromised EC that
-reports num_usbpd_ports == num_charger_ports == N for any N > 8 (for
-example both 255) passes this check, and the loop then writes N pointers
-into the 8-entry ports[] array embedded in the devm_kzalloc()'d
-charger_data, overflowing it by up to 255 - 8 = 247 entries (~1976
-bytes): a slab out-of-bounds write.
-
-Reject a port count larger than the ports[] array can hold.
-
-Fixes: f68b883e8fad ("power: supply: add cros-ec USBPD charger driver.")
+Fixes: 3af15cfacd1e ("power: supply: cros: add support for dedicated port")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260616-b4-disp-5e197080-v2-1-8aa5bffce945@proton.me
+Signed-off-by: Jameson Thies <jthies@google.com>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://patch.msgid.link/20260722195059.1420738-1-jthies@google.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/power/supply/cros_usbpd-charger.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 --- a/drivers/power/supply/cros_usbpd-charger.c
 +++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -589,10 +589,13 @@ static int cros_usbpd_charger_probe(stru
+@@ -125,6 +125,11 @@ static int cros_usbpd_charger_get_num_po
+ 	if (ret < 0)
+ 		return ret;
  
- 	/*
- 	 * Sanity checks on the number of ports:
--	 *  there should be at most 1 dedicated port
-+	 *  there should be at most 1 dedicated port, and the count must
-+	 *  not exceed the maximum number of supported ports
-+	 *  (EC_USB_PD_MAX_PORTS).
- 	 */
- 	if (charger->num_charger_ports < charger->num_usbpd_ports ||
--	    charger->num_charger_ports > (charger->num_usbpd_ports + 1)) {
-+	    charger->num_charger_ports > (charger->num_usbpd_ports + 1) ||
-+	    charger->num_charger_ports > EC_USB_PD_MAX_PORTS) {
- 		dev_err(dev, "Unexpected number of charge port count\n");
- 		ret = -EPROTO;
- 		goto fail_nowarn;
++	if (resp.port_count > EC_USB_PD_MAX_PORTS) {
++		dev_warn(charger->dev, "Charge port count out of bounds\n");
++		return EC_USB_PD_MAX_PORTS;
++	}
++
+ 	return resp.port_count;
+ }
+ 
+@@ -138,6 +143,11 @@ static int cros_usbpd_charger_get_usbpd_
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (resp.num_ports > EC_USB_PD_MAX_PORTS) {
++		dev_warn(charger->dev, "USB PD port count out of bounds\n");
++		return EC_USB_PD_MAX_PORTS;
++	}
++
+ 	return resp.num_ports;
+ }
+ 
 
 
