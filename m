@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94060415F23;
-	Fri,  4 Sep 2026 05:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCC841A574;
+	Fri,  4 Sep 2026 05:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499455; cv=none; b=cZ58Qxo7LGiBXrIkGJcF147dTLhG6NYb5SJHzaQZ4fuya4FRqnWmkoMpIJ7jK0/kWRq0YH3LWba6slbmL5klw9F1VLjWMy1+16XKYYa4x08QR0q2S2PfzwHh77FexTFSOW+kVNPPl9UQ6F0nucuAxtGs6OdiJ0MQ0LTFFIAzEAU=
+	t=1788499460; cv=none; b=ip54EPR+PkAzMfEwmu9j3B4RXg2QTY8oJHWMItMkWBWw+xOH7G15rNLT/L4mwUE6yH9x6e41AYsl1H/EBS9BhoY/W40t59vPVYfa0ZL+bWulBiUb63T+eNZIE9NO0XH2uYKUol1kSGiiMT69YO6vIGryY5YWcUL9olRKk1WCKsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499455; c=relaxed/simple;
-	bh=kJQVnqYxk8yeiQhkAqb4ZEz85sKvrIIrlJI5EMjsEYM=;
+	s=arc-20240116; t=1788499460; c=relaxed/simple;
+	bh=HE5oSTqeAPOIUsAU59P2II/5Ow9kcLxwllUOAvaA1bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfrK20w/uTB2zRbsOg3SMkiWnPC5zMuwVAtU9qiG4rpp79W08pW1Q9X6gevUDOfwrX/JWMIOtQ31euVUKOGKl/F+K3vTUzWvPgSHnQIWF3Sd33AjUNjMfZ1mWbsE/7sSwkjP5eDFm97SOuuHpNvC0EstAvTYjaMH7UTtjqas5CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMmoXL1W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bM+8MTqRORSa51Cmm98/728laKsbNfsNpMWQdA6l9S5k3LFme84B9leSdRtiyw+APT/GCge9GIM6NQF+yO0BwE7aokRBSxyK6RCET2Ra/yFYm4yx20Ihs+ArBKDE8YoHeJisAH0+IalIs6VldQ7c4l4wMui3kvT0vNyS+yI18XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfbMlqml; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMmoXL1W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04311F00A3D;
-	Fri,  4 Sep 2026 05:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfbMlqml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5C91F00ADE;
+	Fri,  4 Sep 2026 05:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499454;
-	bh=/XwI9gyzjqvHlAbwBevMVpvHnWn7WYmL0vxsXhAmzlw=;
+	s=korg; t=1788499457;
+	bh=le1NXjROAlMVXqYoZ9G/N82U77TZY3eDH0oxpj9qe1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gMmoXL1WDdA0sBmxxjAabtu18ivcb8DYRIf6KkYgpnDy18KywjtSvZpHT+z4mheXB
-	 Uud/A04JxNZIevhh8nrSWe0pUqOvQHtpCDdTduL8vUceGhEbKRGY3C6rRcxLFt7pr9
-	 4/Dmy6O3rt+tPPUChbzUeuOW9GkrOVjY2H8g2Cu0=
+	b=nfbMlqmlvWhlB3b+vQjVL6EV5PID3utfJsj/B/QBtebzMzjajsW9ZeFT4UJpo+hNI
+	 gyhj0qaN8QhcPb7/wgX/qQ4lxeZYzROd4SHXgftKzTLQ37/tZ2FyhQNdsfjVtBfN5X
+	 pmlqYVmu6MdFqDtXykCLOZn36AVXPIdHMR862ooI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jianping Li <jianping.li@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 7.2 423/713] arm64: dts: qcom: kodiak: avoid EFI overlap for ADSP remote heap
-Date: Fri,  4 Sep 2026 06:56:31 +0200
-Message-ID: <20260904045813.311115849@linuxfoundation.org>
+Subject: [PATCH 7.2 424/713] arm64: dts: qcom: sm6115-pro1x: Correct touchscreen GPIO flags
+Date: Fri,  4 Sep 2026 06:56:32 +0200
+Message-ID: <20260904045813.332524915@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,57 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianping Li <jianping.li@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit 9d7d847ff1c502802ac764120f9a1800b94ce497 upstream.
+commit 8e73ae5c34e4fbbd25a8324e3c0eb1e845d7f01e upstream.
 
-On KODIAK platforms boot can fail when the DT "adsp-rpc-remote-heap"
-reserved-memory region overlaps with firmware allocations (UEFI/EFI
-runtime). The kernel then reports failure to reserve the region and
-subsequent EFI runtime activity may trigger aborts.
+IRQ_TYPE_xxx flags are not correct in the context of GPIO flags.
+These are simple defines so they could be used in DTS but they will not
+have the same meaning: IRQ_TYPE_LEVEL_LOW = 8 = GPIO_TRANSITORY.
 
-The remote heap node was described as a fixed "no-map" region, which
-turns it into a hard carveout. Replace it with a "shared-dma-pool"
-reserved memory region with reusable CMA-backed allocation, specifying
-alignment and size.
+Correct the touchscreen irq-gpios to use proper flags, assuming the
+author of the code wanted similar logical behavior:
 
-This avoids hard carveouts and reduces the chance of conflicting with
-firmware memory maps while keeping an explicit pool for ADSP remote
-heap usage.
+  IRQ_TYPE_LEVEL_LOW => GPIO_ACTIVE_LOW
 
-Fixes: 90a58ffa9c55 ("arm64: dts: qcom: kodiak: Add memory region for audiopd")
-Cc: stable@kernel.org
-Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
+Fixes: e46b455e67f8 ("arm64: dts: qcom: sm6115-pro1x: Add Goodix Touchscreen")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260429073443.2027-1-jianping.li@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260413090527.53000-2-krzysztof.kozlowski@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/kodiak.dtsi | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
-index ac048ec9aeb5..7e73348fe0d0 100644
---- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
-+++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
-@@ -191,9 +191,12 @@ rmtfs_mem: rmtfs@9c900000 {
- 			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
- 		};
+--- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
++++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+@@ -151,7 +151,7 @@
  
--		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@9cb80000 {
--			reg = <0x0 0x9cb80000 0x0 0x800000>;
--			no-map;
-+		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
-+			compatible = "shared-dma-pool";
-+			alloc-ranges = <0x0 0x80000000 0x0 0x80000000>;
-+			reusable;
-+			alignment = <0x0 0x400000>;
-+			size = <0x0 0x800000>;
- 		};
- 	};
+ 		interrupts-extended = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
  
--- 
-2.55.0
-
+-		irq-gpios = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
++		irq-gpios = <&tlmm 80 GPIO_ACTIVE_LOW>;
+ 		reset-gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
+ 		AVDD28-supply = <&ts_vdd_supply>;
+ 		VDDIO-supply = <&ts_vddio_supply>;
 
 
