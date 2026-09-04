@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E758F351C04;
-	Fri,  4 Sep 2026 05:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DA2351C04;
+	Fri,  4 Sep 2026 05:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499634; cv=none; b=pNoX5fOfPLdD8RRHw8vHl/oRuumVFN1uqscMNjgnqxOgkULkPFRrYIB9LSje3gMsZe5JL+64O4L7YEOM3C3GKXDo6YyzD+Ic2TIQhg9LdwIHmTboHf0Yr33meHQSxKQkDo91gI3UD3+fxd41kDI/ajjw04HaaVyar/OIlElROcI=
+	t=1788499636; cv=none; b=ig8A98ScC6rNTsJ8gSJjwPNkT1kmlO8P9lGAEWEQQHaPvUOERdBYgNQ3olCPMrwYcGLPcNFxpEXKixXBhPpP7IQHyx6S6IowHxHPdw0yNtoWt0BFI0xssGCu6wMc0aHaqoKqQ1EMUq6s/1i0bbDzlfk61zuh3RgHLxVge7wGHk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499634; c=relaxed/simple;
-	bh=zIwL1XtmEHBdSP+CTiKAwOOfa8wLcV101YmOLu3cDNA=;
+	s=arc-20240116; t=1788499636; c=relaxed/simple;
+	bh=M9xYhpjLBY7H1gIZE7EliEUEk6d3Cn9ecJwhI/8ChVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3SXw0F8R12JleV2lcLsnPWQJN6ZQrZRC5Vp/RJFxD00A5KOUZaOAEG5+siWB2UN1DIsE2bXURK2x15SOycyJYQc99U7YinYEVSeq/KLfeLsK3i90DCDGkxuKEQPphM21JM1khYrRklyhiYqrTmfvaE5sisYjCASeBc/LyNiP3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FX40pEwA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uhHJXyW/2aPMwLruyYJmWxSs9CWw4MMiGzTKkQQYqMudQh/7h88FgBqQFHNgV5PoLi+6QOWUqbKjH9+3isBDoPaEN6IckN2N54NewtW11892/0Bk2znAxf8d632WWKkZbPf9NULfcWXAKUIUvXOndWxA7INdFcXDj9wfE2QAE5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cosrRSGA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FX40pEwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC8C1F00A3D;
-	Fri,  4 Sep 2026 05:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cosrRSGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1639D1F00A3D;
+	Fri,  4 Sep 2026 05:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499632;
-	bh=a3yYwHbbmcbkVK0TGA/cbWOcu6bbuPloThsC4R6f5v4=;
+	s=korg; t=1788499635;
+	bh=2uSEEaJraov9661jj3fxpsss+SajdZARYnAXE5Otu9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FX40pEwAAx4/JmrXHM83+2Q/YO0ibm1C19Txds/GzpF1H60mEmy1aHsO20HxItaV2
-	 qNBZBm5DjQLVna59okHSGKCo/TW26S/JJtHDs0RQWfmv6kqIwXrR5DPtkdVeW5aCWs
-	 j7aPw4JnnvOCZ17PfO9BEwFFUo1KP8C9s9LKHOAo=
+	b=cosrRSGAUUV6XCRFnu8Pc4aDRPBSLn2rtsaQ0YDfBWRn536yvefQNla2rBwN0XhPQ
+	 EvkVC8W4LmAA4U/XGEs0nwwy6Cnlp6LUWqDv/w5g8GPEhQ5B3WhqZO4IPCTMc1UycI
+	 dXh4NMNfXy/T3yJlPkDbiSd9jbBtFkWkm3cVKd9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 7.2 485/713] lockd: fix NULL dereference on lockowner allocation failure
-Date: Fri,  4 Sep 2026 06:57:33 +0200
-Message-ID: <20260904045814.698928965@linuxfoundation.org>
+	Oscar Ou <oscarou@synology.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 486/713] lockd: fix swapped arguments in nlmsvc_match_ip()
+Date: Fri,  4 Sep 2026 06:57:34 +0200
+Message-ID: <20260904045814.722935699@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,45 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Oscar Ou <oscarou@synology.com>
 
-commit 4c7fc129db061c7daab841c4f3c342d894832362 upstream.
+commit b9060689f49dc663e9a3d069c4a65ff63a836e66 upstream.
 
-nlmclnt_locks_init_private() installs NLM file lock operations even when
-nlmclnt_find_lockowner() fails to allocate a lockowner. nlmclnt_proc()
-then returns -ENOMEM, but the VFS still tears down the partially
-initialized file_lock and calls locks_release_private().
+When releasing locks by server IP address via /proc/fs/nfsd/unlock_ip,
+nlmsvc_unlock_all_by_ip() calls nlm_traverse_files() with the server
+sockaddr as the opaque @data argument:
 
-That invokes nlmclnt_locks_release_private(), which dereferences
-fl->fl_u.nfs_fl.owner and crashes because the owner was never installed.
+	nlm_traverse_files(server_addr, nlmsvc_match_ip, NULL);
 
-Clear fl_ops before attempting to initialize the NLM private state, and
-install the NLM lock operations only after a lockowner has been allocated
-successfully.
+The match callback is later invoked from nlm_traverse_locks() as:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+	match(lockhost, host);
+
+where the first argument is the nlm_host that owns the lock, and the
+second argument is the @data that was originally passed down (here the
+server sockaddr).  This is the convention every other match callback
+relies on (nlmsvc_mark_host(), nlmsvc_same_host(), nlmsvc_is_client()):
+arg1 is the real nlm_host, arg2 is the caller-supplied reference value.
+
+nlmsvc_match_ip() has had these two arguments reversed ever since the
+unlock-by-IP feature was introduced in commit 4373ea84c84d ("lockd:
+unlock lockd locks associated with a given server ip"):
+
+	return rpc_cmp_addr(nlm_srcaddr(host), datap);
+
+Here @host is actually the server sockaddr, so nlm_srcaddr(host)
+dereferences a struct sockaddr as a struct nlm_host and reads garbage
+at the offset of h_srcaddr; meanwhile @datap is actually the lock
+owner's nlm_host but is compared as a sockaddr.  As a result the
+comparison practically never matches and locks are not released for the
+requested IP.
+
+Swap the arguments so the lock owner's source address is compared
+against the requested server address:
+
+	return rpc_cmp_addr(nlm_srcaddr(datap), (struct sockaddr *)host);
+
+Fixes: 4373ea84c84d ("lockd: unlock lockd locks associated with a given server ip")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Oscar Ou <oscarou@synology.com>
+[ cel: fix the misleading typedef parameter names too ]
+Link: https://patch.msgid.link/20260617075738.1151797-1-oscarou@synology.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/clntproc.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/lockd/lockd.h   |    2 +-
+ fs/lockd/svcsubs.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/lockd/clntproc.c
-+++ b/fs/lockd/clntproc.c
-@@ -487,9 +487,12 @@ static const struct file_lock_operations
- static void nlmclnt_locks_init_private(struct file_lock *fl, struct nlm_host *host)
+--- a/fs/lockd/lockd.h
++++ b/fs/lockd/lockd.h
+@@ -314,7 +314,7 @@ void		  nsm_release(struct nsm_handle *n
+  * This is used in garbage collection and resource reclaim
+  * A return value != 0 means destroy the lock/block/share
+  */
+-typedef int	  (*nlm_host_match_fn_t)(void *cur, struct nlm_host *ref);
++typedef int	  (*nlm_host_match_fn_t)(void *owner, struct nlm_host *ref);
+ 
+ /*
+  * Server-side lock handling
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -557,7 +557,7 @@ EXPORT_SYMBOL_GPL(nlmsvc_unlock_all_by_s
+ static int
+ nlmsvc_match_ip(void *datap, struct nlm_host *host)
  {
- 	fl->fl_u.nfs_fl.state = 0;
-+	fl->fl_ops = NULL;
- 	fl->fl_u.nfs_fl.owner = nlmclnt_find_lockowner(host,
- 						       fl->c.flc_owner);
- 	INIT_LIST_HEAD(&fl->fl_u.nfs_fl.list);
-+	if (!fl->fl_u.nfs_fl.owner)
-+		return;
- 	fl->fl_ops = &nlmclnt_lock_ops;
+-	return rpc_cmp_addr(nlm_srcaddr(host), datap);
++	return rpc_cmp_addr(nlm_srcaddr(datap), (struct sockaddr *)host);
  }
  
+ /**
 
 
