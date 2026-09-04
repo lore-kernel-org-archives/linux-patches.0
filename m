@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD9735AC03;
-	Fri,  4 Sep 2026 05:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E593242BD;
+	Fri,  4 Sep 2026 05:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500953; cv=none; b=uMtQGW3KiMC4KSTvQYryAIla9vpjd+kKUrbDlfXOm4jg5eNAmn2MDvUZHlY3EXAs3DFYoKVOzRSuAAOCd2YyJZ5+yMWmItmlIYaxhcE9BzENl+X3nlcxEu3uBeaKyEmwQAWE7Ybm2XhlvXhZrw7sgzAX6o7gnTs7qh0vUz/2M70=
+	t=1788500956; cv=none; b=B2tCF7lTX092L08rUNcZMSbvCn/G4tm6tlrUSnSJFTd477R59bqDShUzXw0HhCiBN/ZAsREfUyaQ6Vp8xJsQmTlJl5zhEiPtveFEPHIlf9eob4WFrz7G4ch3Iw9vKr1D75XwYh6xVd/1SOfRUjFENwluQi5AQESE8TDDVGkFyU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500953; c=relaxed/simple;
-	bh=t74MXM2QyhYnPkyYvQoGJoIIXEjMjb+czDQo9WhKgZA=;
+	s=arc-20240116; t=1788500956; c=relaxed/simple;
+	bh=kQWwLk3IFpFrcZkkNNo40kkOlVfaNnOv8xhjK8vrC8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRUvpthp48yYioe5w74AwZsiZ1J3YFn4KpJ226R11T6eL5KFJEaGjwsXgZXV+w+enC7jAZK8nC4wWOFELdpGJKmeZcVYrxsi2+Uq0SJWM8I5IyyuDp0BdG5kLd/RuqEToAvycO1RKfyyKZy4Au2r8ePCOi1IrMPsr77Uki45Ws0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plY1jjaY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RJ2TTqhPeqtoHo/4SHpRlrfnp5JIN4NSbhKLeGYLs2+e6Sw9ZiT+LO3f+BgyflEfsDk3kuhwBWCETUrzMV3Ue9ltNa67nyeIdScdj0hMktwT/IbCUxkRiyIJMqgoc86blzv5Lx3Fgws3riAxlp24tuVw5L53w0oPNh1vVsLXwhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PReAKTP8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plY1jjaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3F61F00A3D;
-	Fri,  4 Sep 2026 05:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PReAKTP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5D31F00A3D;
+	Fri,  4 Sep 2026 05:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500952;
-	bh=9351m2xPzQnyO/pdeZD1rBwkGbfrBZDRb7A8Mu8bbDg=;
+	s=korg; t=1788500955;
+	bh=3Uuqcds2B8TdX16u7Ez2WvaJAv6GIy43J7etc2Jzr7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=plY1jjaYl97vGIrDhFla1S5w4/KYjkmylBeafNJ1FnINLHqHSBnn6TkUagWf77yHL
-	 /bnCXl0XxbyCtaPUpRkpYiOmft5V1Vu5FzWmranjKyOsJkfd3DNh1Gvr1IXeyW3rKs
-	 6b0tE45KDbMbegPFM9dJm38iGx+4T3HMECZcOkJo=
+	b=PReAKTP8VROcR3uTV7InP5d1RUXY/N2i7S5uK+ylqKb/htbv110Iyq0Mvn0zYtYtL
+	 5hzglcpb6yMxVhJXTNJ6uJ9KOhmpkMFbTqfk/q43bvuLZB5siHuMhusL06o2V3NEFY
+	 5HSXCIkg0txDLFBqqZO8WI1g9Wxy0hXS8BaeiZnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuvam Pandey <shuvampandey1@gmail.com>,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Subject: [PATCH 6.18 211/552] accel/rocket: initialize job domain before cleanup paths
-Date: Fri,  4 Sep 2026 06:56:08 +0200
-Message-ID: <20260904045754.142157285@linuxfoundation.org>
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.18 238/552] dm array: validate array block headers on read
+Date: Fri,  4 Sep 2026 06:56:35 +0200
+Message-ID: <20260904045754.875999458@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,57 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 70e6a33d68a9b03335c5426332666e52d07f45d6 upstream.
+commit 2965787723084835b18dfe993cd450ebf5bd4540 upstream.
 
-rocket_ioctl_submit_job() releases rjob through rocket_job_put() on
-allocation error paths. rocket_job_cleanup() unconditionally calls
-rocket_iommu_domain_put(job->domain), but job->domain is assigned only
-after task copying and BO lookups. A failure before that assignment can
-therefore clean up a job with a NULL domain pointer.
+array_block_check() validates blocknr and csum and nothing else, while
+node_check(), next to it, has bounded the structural fields since both
+were written. dm_array_cursor_next() takes its loop bound from the
+on-disk nr_entries and element_at() is unguarded pointer arithmetic, so
+a count larger than the block holds keeps the cursor in one block while
+the index grows past it and the read walks off the dm-bufio buffer --
+dm_cache_load_mappings() drives it once per cache block at activation.
 
-Take the per-file domain reference before the first error path can release
-rjob. Also clear rjob->tasks after freeing it in rocket_copy_tasks(), so
-the common cleanup path cannot free the task array again after a task-copy
-error.
+Check the header against itself: reject a zero value_size, require
+max_entries to equal calc_max_entries() for that value_size and block
+size, and require nr_entries to fit. Equality rather than an upper bound,
+since a count below the real capacity trips BUG_ON() in fill_ablock() and
+trim_ablock(). Metadata dm-array writes satisfies all three.
 
-Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
+Fixes: 6513c29f44f2 ("dm persistent data: add transactional array")
+Suggested-by: Ming-Hung Tsai <mtsai@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-Link: https://lore.kernel.org/r/6a454b48.6a8fa39a.27019b.984b@mx.google.com
-Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/rocket/rocket_job.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/persistent-data/dm-array.c |   37 ++++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
---- a/drivers/accel/rocket/rocket_job.c
-+++ b/drivers/accel/rocket/rocket_job.c
-@@ -103,6 +103,7 @@ rocket_copy_tasks(struct drm_device *dev
+--- a/drivers/md/persistent-data/dm-array.c
++++ b/drivers/md/persistent-data/dm-array.c
+@@ -38,6 +38,14 @@ struct array_block {
+  */
+ #define CSUM_XOR 595846735
  
- fail:
- 	kvfree(rjob->tasks);
-+	rjob->tasks = NULL;
- 	return ret;
++/*
++ * Each array block can hold this many values.
++ */
++static uint32_t calc_max_entries(size_t value_size, size_t size_of_block)
++{
++	return (size_of_block - sizeof(struct array_block)) / value_size;
++}
++
+ static void array_block_prepare_for_write(const struct dm_block_validator *v,
+ 					  struct dm_block *b,
+ 					  size_t size_of_block)
+@@ -55,6 +63,7 @@ static int array_block_check(const struc
+ 			     size_t size_of_block)
+ {
+ 	struct array_block *bh_le = dm_block_data(b);
++	uint32_t nr_entries, max_entries, value_size;
+ 	__le32 csum_disk;
+ 
+ 	if (dm_block_location(b) != le64_to_cpu(bh_le->blocknr)) {
+@@ -74,6 +83,26 @@ static int array_block_check(const struc
+ 		return -EILSEQ;
+ 	}
+ 
++	nr_entries = le32_to_cpu(bh_le->nr_entries);
++	max_entries = le32_to_cpu(bh_le->max_entries);
++	value_size = le32_to_cpu(bh_le->value_size);
++
++	if (!value_size) {
++		DMERR_LIMIT("%s failed: value_size is zero", __func__);
++		return -EILSEQ;
++	}
++
++	if (max_entries != calc_max_entries(value_size, size_of_block)) {
++		DMERR_LIMIT("%s failed: max_entries %u invalid for value_size %u",
++			    __func__, max_entries, value_size);
++		return -EILSEQ;
++	}
++
++	if (nr_entries > max_entries) {
++		DMERR_LIMIT("%s failed: too many entries", __func__);
++		return -EILSEQ;
++	}
++
+ 	return 0;
  }
  
-@@ -556,6 +557,7 @@ static int rocket_ioctl_submit_job(struc
- 	kref_init(&rjob->refcount);
+@@ -139,14 +168,6 @@ static void dec_ablock_entries(struct dm
+ }
  
- 	rjob->rdev = rdev;
-+	rjob->domain = rocket_iommu_domain_get(file_priv);
- 
- 	ret = drm_sched_job_init(&rjob->base,
- 				 &file_priv->sched_entity,
-@@ -581,8 +583,6 @@ static int rocket_ioctl_submit_job(struc
- 
- 	rjob->out_bo_count = job->out_bo_handle_count;
- 
--	rjob->domain = rocket_iommu_domain_get(file_priv);
+ /*
+- * Each array block can hold this many values.
+- */
+-static uint32_t calc_max_entries(size_t value_size, size_t size_of_block)
+-{
+-	return (size_of_block - sizeof(struct array_block)) / value_size;
+-}
 -
- 	ret = rocket_job_push(rjob);
- 	if (ret)
- 		goto out_cleanup_job;
+-/*
+  * Allocate a new array block.  The caller will need to unlock block.
+  */
+ static int alloc_ablock(struct dm_array_info *info, size_t size_of_block,
 
 
