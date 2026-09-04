@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9734F2F9DA1;
-	Fri,  4 Sep 2026 05:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB8530C366;
+	Fri,  4 Sep 2026 05:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501009; cv=none; b=ezduFcf2R2r5RwK1b3bDVkwLV8hjYeKFnrAtPxc+D7FW8XHXvhpPg/ts7PQE3K3hr2NeyAAIIQFJQJBmNFILXhcfGWF8fJ5oE3EMrCjT51z2mCAho7pJJVLEp4XO3F9NhiJWtlCcPRLD0BWEwMY8tl0yiy3GmXj56q/eQwnZcvc=
+	t=1788501012; cv=none; b=QqsP1L0ncqOQ+vbUQUjL4DcE8r8LqvEQFig10kFefD99ZMYNUqYOkDBaR+lh5qJdOyZzjtW1ra32ScQXp1EGaVSNlkbZWTYmV3gxm6m9yoqj1bY05tNcvR4VGS+M32mY8jjcz9dY5WcCSnqs9leO1F6h9nM+I39X0HGGWNCbRFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501009; c=relaxed/simple;
-	bh=Tl+Va6EkSH+Pynn7ZdGeUK65o8sCqNlkezPx6bbQy9c=;
+	s=arc-20240116; t=1788501012; c=relaxed/simple;
+	bh=7EajbN9X9g/qa7pdZ43Awx76Hz+mO+QNOP31pZka1SI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IzauZDcsfRmPqv6jpbzRH04SYgPa1+jKSNQkNm9pwp2RCTKhB91FVXLPmtwhYWuhvsj04jo6IJ7MocypZrJPNTZLP/tn/QQLO50uiluAiY4Qjn7EJ6oyt+3UXoC3UulVAiHb1r0J9Ll3K97Jkxjd/Sz7+hHcJ7lY3qfdz7jhsNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IggnoB3m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RzamycILml5zZTqmUpa/u8dDpm7t206OXYOAk2Q6UwpCDHiRYu90n6cT+C5w18wzHY1LdEfGF5y7Y/+DTatOeUZxkfBEhzWNm0tWqGxwyzdiwehN9xobelVpRHIyDxIHrPnK6Pi/IWOYqNJ+pq4kUB0HpEU37MEa9JIwc1BIfHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eihMGxr2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IggnoB3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D4B1F00A3D;
-	Fri,  4 Sep 2026 05:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eihMGxr2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16171F00A3D;
+	Fri,  4 Sep 2026 05:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501008;
-	bh=P5Q/RMwTngzqnoZKe9PJ3/E42wYeyRZP+Abtm3+dB+w=;
+	s=korg; t=1788501011;
+	bh=Jm5V1BvCXx5PrywQjqpewOtzIZtrjkdiYBMgE35/Yfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IggnoB3mxZbHUEBgdnbqd4QVWa/lKfIbTunOFlCUtG40HXRe1GoDsLV81XL32PFKE
-	 UIlFddYnT0XqjbGHbwVoOoLQTNzQMk7BmIsgrlHzwmdZU6kxwYGEI4zkyIE2BvgxoO
-	 dsd6dF56g54/6rLMlaBWmyGfk3qE0FHcIlbGr+/8=
+	b=eihMGxr2bDJyKREscx6BtPIr1FOCSozrr1YEbdJQdo9Hb0sRF5X8e+ahVgD/Ngifm
+	 I+RPzPfQ9PKwUlDFSDiPJI9svnfrJ2AzeAYKq05Yz7RCGuCFTx6YiyksY7b1xUmI5t
+	 OhWXlEsLl8lc9lh31FgVSQ+oceykOoR1j/FR5tjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TanZheng <tanzheng@kylinos.cn>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Anirudh Prasad <icarus@a0rg.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 215/552] ACPI: APEI: GHES: fix ARM section length accounting after header
-Date: Fri,  4 Sep 2026 06:56:12 +0200
-Message-ID: <20260904045754.329174082@linuxfoundation.org>
+Subject: [PATCH 6.18 216/552] ACPI: pfr_update: fix stack buffer overflow in query_capability()
+Date: Fri,  4 Sep 2026 06:56:13 +0200
+Message-ID: <20260904045754.376864754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,42 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: TanZheng <tanzheng@kylinos.cn>
+From: Anirudh Prasad <icarus@a0rg.com>
 
-commit 903308ea40adf0577d82eab69882faf8836326ce upstream.
+commit ced45be0073a8a31b30b4a7f68cd3a15734515de upstream.
 
-In ghes_handle_arm_hw_error(), after skipping the cper_sec_proc_arm
-header with (err + 1), the remaining length was reduced by sizeof(err)
-(pointer size) instead of sizeof(*err) (structure size).
+query_capability() copies four ACPI buffer objects returned by the
+firmware _DSM into fixed-size u8[16] fields in struct
+pfru_update_cap_info using memcpy with the firmware-supplied length:
 
-That overestimates the bytes left for cper_arm_err_info records and can
-let the parser read past the CPER section when err_info_num is large
-enough relative to error_data_length.
+  memcpy(&cap_hdr->code_type,
+         elements[CAP_CODE_TYPE_IDX].buffer.pointer,
+         elements[CAP_CODE_TYPE_IDX].buffer.length);
 
-Use sizeof(*err) so the length accounting matches the pointer advance
-and the earlier sizeof(*err) size check.
+The same pattern repeats for drv_type, platform_id, and oem_id.
+If the firmware returns buffer.length > 16 for any of these fields,
+memcpy writes past the destination array.
 
-Fixes: 87880af2d24e ("APEI/GHES: ARM processor Error: don't go past allocated memory")
-Cc: stable@vger.kernel.org
-Signed-off-by: TanZheng <tanzheng@kylinos.cn>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Link: https://patch.msgid.link/20260806010944.32384-1-kensanya@163.com
+struct pfru_update_cap_info is stack-allocated in pfru_ioctl().
+
+Confirmed with KASAN on 7.2-rc6: three stack-out-of-bounds reports
+are generated when a DSM returns 64-byte buffers, with writes reaching
+44 bytes past the end of cap_hdr's [64, 156) frame window into
+adjacent stack redzones.
+
+Introduce a helper pointer to out_obj->package.elements and use it
+to validate each buffer length against its destination field size
+before copying, returning -EINVAL if the firmware supplies an
+oversized buffer.
+
+Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Anirudh Prasad <icarus@a0rg.com>
+Link: https://patch.msgid.link/1a001e1fee9.637da6dc3533246.238498880682901704@a0rg.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/apei/ghes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/pfr_update.c |   45 ++++++++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -581,7 +581,7 @@ static bool ghes_handle_arm_hw_error(str
- 		return false;
+--- a/drivers/acpi/pfr_update.c
++++ b/drivers/acpi/pfr_update.c
+@@ -120,7 +120,7 @@ static int query_capability(struct pfru_
+ 			    struct pfru_device *pfru_dev)
+ {
+ 	acpi_handle handle = ACPI_HANDLE(pfru_dev->parent_dev);
+-	union acpi_object *out_obj;
++	union acpi_object *out_obj, *elem;
+ 	int ret = -EINVAL;
  
- 	p = (char *)(err + 1);
--	length -= sizeof(err);
-+	length -= sizeof(*err);
+ 	out_obj = acpi_evaluate_dsm_typed(handle, &pfru_guid,
+@@ -150,7 +150,9 @@ static int query_capability(struct pfru_
+ 		goto free_acpi_buffer;
+ 	}
  
- 	for (i = 0; i < err->err_info_num; i++) {
- 		struct cper_arm_err_info *err_info;
+-	cap_hdr->status = out_obj->package.elements[CAP_STATUS_IDX].integer.value;
++	elem = out_obj->package.elements;
++
++	cap_hdr->status = elem[CAP_STATUS_IDX].integer.value;
+ 	if (cap_hdr->status != DSM_SUCCEED) {
+ 		ret = -EBUSY;
+ 		dev_dbg(pfru_dev->parent_dev, "Query cap Error Status:%d\n",
+@@ -158,29 +160,30 @@ static int query_capability(struct pfru_
+ 		goto free_acpi_buffer;
+ 	}
+ 
+-	cap_hdr->update_cap = out_obj->package.elements[CAP_UPDATE_IDX].integer.value;
++	if (elem[CAP_CODE_TYPE_IDX].buffer.length > sizeof(cap_hdr->code_type) ||
++	    elem[CAP_DRV_TYPE_IDX].buffer.length > sizeof(cap_hdr->drv_type) ||
++	    elem[CAP_PLAT_ID_IDX].buffer.length > sizeof(cap_hdr->platform_id) ||
++	    elem[CAP_OEM_ID_IDX].buffer.length > sizeof(cap_hdr->oem_id))
++		goto free_acpi_buffer;
++
++	cap_hdr->update_cap = elem[CAP_UPDATE_IDX].integer.value;
+ 	memcpy(&cap_hdr->code_type,
+-	       out_obj->package.elements[CAP_CODE_TYPE_IDX].buffer.pointer,
+-	       out_obj->package.elements[CAP_CODE_TYPE_IDX].buffer.length);
+-	cap_hdr->fw_version =
+-		out_obj->package.elements[CAP_FW_VER_IDX].integer.value;
+-	cap_hdr->code_rt_version =
+-		out_obj->package.elements[CAP_CODE_RT_VER_IDX].integer.value;
++	       elem[CAP_CODE_TYPE_IDX].buffer.pointer,
++	       elem[CAP_CODE_TYPE_IDX].buffer.length);
++	cap_hdr->fw_version = elem[CAP_FW_VER_IDX].integer.value;
++	cap_hdr->code_rt_version = elem[CAP_CODE_RT_VER_IDX].integer.value;
+ 	memcpy(&cap_hdr->drv_type,
+-	       out_obj->package.elements[CAP_DRV_TYPE_IDX].buffer.pointer,
+-	       out_obj->package.elements[CAP_DRV_TYPE_IDX].buffer.length);
+-	cap_hdr->drv_rt_version =
+-		out_obj->package.elements[CAP_DRV_RT_VER_IDX].integer.value;
+-	cap_hdr->drv_svn =
+-		out_obj->package.elements[CAP_DRV_SVN_IDX].integer.value;
++	       elem[CAP_DRV_TYPE_IDX].buffer.pointer,
++	       elem[CAP_DRV_TYPE_IDX].buffer.length);
++	cap_hdr->drv_rt_version = elem[CAP_DRV_RT_VER_IDX].integer.value;
++	cap_hdr->drv_svn = elem[CAP_DRV_SVN_IDX].integer.value;
+ 	memcpy(&cap_hdr->platform_id,
+-	       out_obj->package.elements[CAP_PLAT_ID_IDX].buffer.pointer,
+-	       out_obj->package.elements[CAP_PLAT_ID_IDX].buffer.length);
++	       elem[CAP_PLAT_ID_IDX].buffer.pointer,
++	       elem[CAP_PLAT_ID_IDX].buffer.length);
+ 	memcpy(&cap_hdr->oem_id,
+-	       out_obj->package.elements[CAP_OEM_ID_IDX].buffer.pointer,
+-	       out_obj->package.elements[CAP_OEM_ID_IDX].buffer.length);
+-	cap_hdr->oem_info_len =
+-		out_obj->package.elements[CAP_OEM_INFO_IDX].buffer.length;
++	       elem[CAP_OEM_ID_IDX].buffer.pointer,
++	       elem[CAP_OEM_ID_IDX].buffer.length);
++	cap_hdr->oem_info_len = elem[CAP_OEM_INFO_IDX].buffer.length;
+ 
+ 	ret = 0;
+ 
 
 
