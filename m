@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBCD35B632;
-	Fri,  4 Sep 2026 05:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223E1348C47;
+	Fri,  4 Sep 2026 05:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500871; cv=none; b=eh1vlljUdck/eznAI0EsJmGuf7Fd2X/rHAxbJ71kgwvPgUaagexsZBgRwSCQxh9qqR/BkT7rszOR6/DbSBoNX5s4MiR7oqmRHap3fjw0UsgFl6CeZmhpLh2DN6sU0pWV5CCGtPTcXf+eU9pkRhwRXdB8v6p+nnPGN5hYwmpY6O4=
+	t=1788500874; cv=none; b=gW2Ce1eHnOBT4JKTYMb6Jw0ErAreCIOwEzb4xvSF62fP6e5ypKSh/7JihrtMFYXazypNy1KXfMFnuNWLUtOOl5QMc46P/8W9eqa7/W9naiYsDhx5OLuSwE5Whh8KdYku03Cyr02Ok9Kgx6pCfA/EAH93ylQjfZ1sf0u3rRBBfJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500871; c=relaxed/simple;
-	bh=ozcY+dKkq3Iy3y3mBSOlETmYZSvJDlOAB7Qr3U6+Qhs=;
+	s=arc-20240116; t=1788500874; c=relaxed/simple;
+	bh=cd/g+7PDoDPgvtMpYRPdoZsKtTTI1LRWVBhigGPR0eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8XwF9/7paK0Z7vpBPPLH5a8qgXV7e2o/0M2SnfDIqq5ep5ReWuhSrflF1sH8BUA/otVdsT3MkzY4YzG/ijAgcQnNcSXJqAak1pTsWqBR3pgMq06vUGIKxLzrDLbMY6YkzfMePbO57Epppll9PvUg3y28v2jy8fLd079QlpYGEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKcyF4T5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvkvSbuu6GJbdzQsSSrTldXElf9VdhWxuSiUv/svsSmC7j2wAp+7ppUwX8IMwmM6LwDO60oX8DHV2HWsa4UxbKW+AmlkyvdMKTD1ATyZ600BGnI9C6Jj6Ykgnt4yDxkKVC535X6SRl2WPmU/ZVCx7/WBAVHEnusyn65DvqCWyCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHCxsrSS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKcyF4T5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B771F00A3D;
-	Fri,  4 Sep 2026 05:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHCxsrSS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3851F00A3D;
+	Fri,  4 Sep 2026 05:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500870;
-	bh=YdgB9D1rAU5betbIH2smCdY35BH1kT39TOYET2ob8Hg=;
+	s=korg; t=1788500873;
+	bh=HE0+f8Vee08xfLvXCmMSNrNemiP+t3AuS3/3wPCrMro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AKcyF4T59OnjrCcDmMFpoyfxXjEBYtIelMZwr1kITC8nzkOlncb8K3pzXdIOGK7kD
-	 I/JsdO+k5DDUMeoIbzeSpfPHS0DhnRV9GPkOtihYkvwMf0Xu6Z+GnrSwep3qter2W4
-	 WRzCFaFNBjhUxLJWrf0qyDu1z4J9gPoCX9BqNWc4=
+	b=QHCxsrSSZHr2PoW0kEDRcKAHw8EzRQgFKaaLsl6HbX7obqj3+PYudrPSMcwvNVpbn
+	 KwNAfo45gRhb5uZqakWt0S0e/2bkiBWR0JLygJ0IMxhbkPRrwQfT2sv8YeNmxk/oEV
+	 XcHod4UjnpSuEKpQRr3x5NB75hxuCjBR3cwfQVO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tien Sung Ang <tien.sung.ang@altera.com>,
-	Tze Yee Ng <tze.yee.ng@altera.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 6.18 207/552] fpga: stratix10-soc: Fix SVC mailbox handling during reconfiguration
-Date: Fri,  4 Sep 2026 06:56:04 +0200
-Message-ID: <20260904045753.988588388@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 167/552] cifs: clear tcon after cifsFileInfo_put() in cifs_file_set_size()
+Date: Fri,  4 Sep 2026 06:55:24 +0200
+Message-ID: <20260904045752.812930591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,86 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tien Sung Ang <tien.sung.ang@altera.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit c14a8b15c87b49efc3ef898cec8ac7c30336a080 upstream.
+commit b96db32fed8dfb2478d7c208f89bf383beed1535 upstream.
 
-Fix incorrect stratix10_svc_done() usage during FPGA reconfiguration.
+When the else branch of cifs_file_set_size() finds a writable file handle
+via find_writable_file(), it borrows tcon and server from the handle's
+tlink, attempts the handle-based set_file_size() RPC, and then releases
+the handle with cifsFileInfo_put().
 
-Do not call stratix10_svc_done() at the end of write_init() on success, so
-the SVC session remains active through write() and write_complete(). Call
-stratix10_svc_done() on failure in write_init() and write() so the shared
-SVC mailbox is released when reconfiguration aborts, allowing coexistence
-with other SVC clients such as soc64-hwmon.
+If set_file_size() fails, execution falls through to the path-based
+fallback, which reuses the borrowed tcon and server under the
+"if (tcon == NULL)" guard.  Since tcon is not NULL at that point, the
+guard is skipped.  If cifsFileInfo_put() dropped the last reference on a
+tlink that was already removed from the tlink tree (TCON_LINK_IN_TREE
+cleared, as happens during reconnection or session teardown),
+cifs_put_tlink() will have freed tcon; the subsequent set_path_size()
+call is then a use-after-free.
 
-Fixes: e7eef1d7633a ("fpga: add intel stratix10 soc fpga manager driver")
-Cc: stable@vger.kernel.org # 5.1+
-Signed-off-by: Tien Sung Ang <tien.sung.ang@altera.com>
-Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/8768ce3260489c9febdfce08e27d03f5f5ed9c33.1782801986.git.tze.yee.ng@altera.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Setting tcon = NULL after cifsFileInfo_put() causes the existing guard
+to take the cifs_sb_tlink() path, which acquires a fresh reference for
+the path-based operation or fails cleanly if the session is gone.
+
+Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
+Cc: stable@vger.kernel.org
+Cc: Paulo Alcantara <pc@manguebit.com>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/stratix10-soc.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ fs/smb/client/inode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/fpga/stratix10-soc.c
-+++ b/drivers/fpga/stratix10-soc.c
-@@ -195,20 +195,18 @@ static int s10_ops_write_init(struct fpg
- 	ret = s10_svc_send_msg(priv, COMMAND_RECONFIG,
- 			       &ctype, sizeof(ctype));
- 	if (ret < 0)
--		goto init_done;
-+		goto init_error;
- 
--	ret = wait_for_completion_timeout(
--		&priv->status_return_completion, S10_RECONFIG_TIMEOUT);
--	if (!ret) {
-+	if (!wait_for_completion_timeout(&priv->status_return_completion,
-+					 S10_RECONFIG_TIMEOUT)) {
- 		dev_err(dev, "timeout waiting for RECONFIG_REQUEST\n");
- 		ret = -ETIMEDOUT;
--		goto init_done;
-+		goto init_error;
- 	}
- 
--	ret = 0;
- 	if (!test_and_clear_bit(SVC_STATUS_OK, &priv->status)) {
- 		ret = -ETIMEDOUT;
--		goto init_done;
-+		goto init_error;
- 	}
- 
- 	/* Allocate buffers from the service layer's pool. */
-@@ -217,14 +215,16 @@ static int s10_ops_write_init(struct fpg
- 		if (IS_ERR(kbuf)) {
- 			s10_free_buffers(mgr);
- 			ret = PTR_ERR(kbuf);
--			goto init_done;
-+			goto init_error;
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3080,6 +3080,7 @@ int cifs_file_set_size(const unsigned in
+ 							size, false);
+ 			cifs_dbg(FYI, "%s: set_file_size: rc = %d\n", __func__, rc);
+ 			cifsFileInfo_put(open_file);
++			tcon = NULL;
  		}
- 
- 		priv->svc_bufs[i].buf = kbuf;
- 		priv->svc_bufs[i].lock = 0;
  	}
- 
--init_done:
-+	return 0;
-+
-+init_error:
- 	stratix10_svc_done(priv->chan);
- 	return ret;
- }
-@@ -342,6 +342,9 @@ static int s10_ops_write(struct fpga_man
- 	if (!s10_free_buffers(mgr))
- 		dev_err(dev, "%s not all buffers were freed\n", __func__);
- 
-+	if (ret < 0)
-+		stratix10_svc_done(priv->chan);
-+
- 	return ret;
- }
  
 
 
