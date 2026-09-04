@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EC0418A44;
-	Fri,  4 Sep 2026 05:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130C538E8DD;
+	Fri,  4 Sep 2026 05:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499608; cv=none; b=Q8NDnZ7umayS8JJVwRVjgBNn4ZxK/RGA3HWpRBnD2oQItW+rNCLcNEhcaaeUY+7iPEqzBHYTdrjRygQJrxNkd7Zjpeb8O+Yg8NyzuIff/hNbV7zm/l0NhstGGMDw3W+EAEVPy3bgMWnE3qxmrlBOutAkRexeU9ad9LWpbsHPZY4=
+	t=1788499611; cv=none; b=mw6oh58o3RjcCc+CpAcpMfSllQa6BpzLUPQRLKsgXMhfkbf42O3FE0FjYXCy4IR6EftRnJsfV4I4oD22DuPvb7VlQbXDGCgD+OBQfSOZQkUR1O7CBVY49gSyDm7AhPXS8/AVPfIbqNeimQI4HaNQA5L122NZtDweOsvrLZCPwG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499608; c=relaxed/simple;
-	bh=vCOqE+bRUFS2+cBUyq1BkBjTl6PVWL42+ydq0C+fPZA=;
+	s=arc-20240116; t=1788499611; c=relaxed/simple;
+	bh=jz0ldKHIrXqCOB+C9sZHpCwjRDqVeYwE4pnF1zDLwDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8C4vXBVO9o+cznFqxFGZD9Cl2IUXR+CFATcWG/cmIlVgXm5pBc3nFAwKJkoOcVldfEWRiLicAFBlHA8wZNBBRvKSUSbnv8BiROBREzbsgJ3PXdIOQyi4cz0ozG4ws8KYEVafyyjQNKlynWwDipiycr3BSiRWgqxQoP33fEJuB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbNvz3Vo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tu6Blg94A2FN+/0E6f00HnHoxJZeH0rI25kprYB8RakldiIF5SGNWT7Da4SjLwSLObMACUnexrtsjwfP8U1PbzEe9+7La8VwcIMwdLkfAZdIxGu+TykTyt3sh+8qMYcvbcFrJC28iWIWekrClUL62ms8ipx6OrRCiF/iteO81TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOxSf6an; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbNvz3Vo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914111F00A3D;
-	Fri,  4 Sep 2026 05:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOxSf6an"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4FF1F00ACA;
+	Fri,  4 Sep 2026 05:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499607;
-	bh=1UUJbt6GxWZjhSU9iS5dQlcoOF5HnnG6dq3cp74q1/4=;
+	s=korg; t=1788499610;
+	bh=Ng1rElYdUwuvXAbggPYjeLdWRVy1kDgxRJnGYSxw7lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VbNvz3VoV44aDwzzcGksRvs4nQkHiwD+aZLSyYr75DHYNxl2JpWx4WDeWCkwNCGXC
-	 PRwdqQH55KSPNmwm4q7QhVe76PnEe8cn/1S0gIZtomjGJUgVfZhixO4bqZAwWylL7+
-	 Hj2wj4xtx/1Jm1D4dPDMQBJrFrD/wZpDz3D138kY=
+	b=AOxSf6anwyDcYBmJtpYl9OgLJnr1GgZOGzbU38izybmQYlsGoTJ5f6+5oozxHeJ1p
+	 3/H5GprGNtyarG5E5EiEgs9/sE0AC7WGOZuNENeXqYfOVSfg59qeB/N27NT53EZddt
+	 C8bwCQDLJRmrbLN9YdQXhG5WxtTLX15kjpb8MJuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
+	Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 450/713] regulator: max8998_pmic_dt_parse_pdata: of_node_put on reg_np after ownership transferred to rdata
-Date: Fri,  4 Sep 2026 06:56:58 +0200
-Message-ID: <20260904045813.915404181@linuxfoundation.org>
+Subject: [PATCH 7.2 477/713] ASoC: codecs: aw88261: only check PLL and clock state at power-up
+Date: Fri,  4 Sep 2026 06:57:25 +0200
+Message-ID: <20260904045814.516860474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,38 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
 
-commit 7c8cc25d8d86f9eb3979255935cfdc7d062ad746 upstream.
+commit 06b6f1245567a4be862c3e1cc74577922ceb05fb upstream.
 
-In max8998_pmic_dt_parse_pdata(), of_get_child_by_name() acquires a
-reference on reg_np which is then stored in rdata->reg_node, transferring
-ownership to the regulator data array. The subsequent of_node_put(reg_np)
-at the end of the function releases the last matched regulator node's
-reference, leaving rdata->reg_node as a dangling pointer for the last
-entry.
+The SYSST check performed during device start requires SWS (amplifier
+switching, bit 8) and BSTS (boost finished, bit 9) on top of PLL lock
+and clock stability. Those bits cannot be asserted at this point in the
+sequence: the check runs after amppd release but before the
+hmute/ULS-hmute release, and the amplifier neither switches nor
+finishes ramping its boost converter while it is still muted. With the
+Fairphone (Gen. 6) firmware profile, aw88261_dev_start() therefore
+always fails with
 
-Remove the spurious of_node_put(reg_np) call.
+  check sysst fail, reg_val=0x0011, check:0x311
 
+and playback aborts, even though the amplifier is fine and PLL lock
+and stable clocks are present.
+
+Check only PLL lock and clock stability, for which a definition
+already exists; this still re-validates the clocks after amppd release
+(aw88261_dev_check_syspll() checked them before it). This matches the
+vendor aw882xx driver, which only validates PLL lock and clock
+stability at this stage, and the in-tree aw88399 driver, which skips
+the SWS check whenever the amplifier may legitimately not be switching
+(AW88399_BIT_SYSST_NOSWS_CHECK).
+
+Fixes: 028a2ae25691 ("ASoC: codecs: Add aw88261 amplifier driver")
 Cc: stable@vger.kernel.org
-Fixes: 156f252857df ("drivers: regulator: add Maxim 8998 driver")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260626160326.54457-1-vulab@iscas.ac.cn
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
+Link: https://patch.msgid.link/20260704192857.88366-1-jorijnvdgraaf@catcrafts.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/max8998.c |    1 -
- 1 file changed, 1 deletion(-)
+ sound/soc/codecs/aw88261.c |    6 +++---
+ sound/soc/codecs/aw88261.h |    6 ------
+ 2 files changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/regulator/max8998.c
-+++ b/drivers/regulator/max8998.c
-@@ -582,7 +582,6 @@ static int max8998_pmic_dt_parse_pdata(s
- 	}
- 	pdata->num_regulators = rdata - pdata->regulators;
+--- a/sound/soc/codecs/aw88261.c
++++ b/sound/soc/codecs/aw88261.c
+@@ -206,10 +206,10 @@ static int aw88261_dev_check_sysst(struc
+ 			return ret;
  
--	of_node_put(reg_np);
- 	of_node_put(regulators_np);
+ 		check_val = reg_val & (~AW88261_BIT_SYSST_CHECK_MASK)
+-							& AW88261_BIT_SYSST_CHECK;
+-		if (check_val != AW88261_BIT_SYSST_CHECK) {
++							& AW88261_BIT_PLL_CHECK;
++		if (check_val != AW88261_BIT_PLL_CHECK) {
+ 			dev_dbg(aw_dev->dev, "check sysst fail, reg_val=0x%04x, check:0x%x",
+-				reg_val, AW88261_BIT_SYSST_CHECK);
++				reg_val, AW88261_BIT_PLL_CHECK);
+ 			usleep_range(AW88261_2000_US, AW88261_2000_US + 10);
+ 		} else {
+ 			return 0;
+--- a/sound/soc/codecs/aw88261.h
++++ b/sound/soc/codecs/aw88261.h
+@@ -194,12 +194,6 @@
+ 		AW88261_OTHS_OT_VALUE | \
+ 		AW88261_PLLS_LOCKED_VALUE))
  
- 	pdata->buck_voltage_lock = of_property_read_bool(pmic_np, "max8998,pmic-buck-voltage-lock");
+-#define AW88261_BIT_SYSST_CHECK \
+-		(AW88261_BSTS_FINISHED_VALUE | \
+-		AW88261_SWS_SWITCHING_VALUE | \
+-		AW88261_CLKS_STABLE_VALUE | \
+-		AW88261_PLLS_LOCKED_VALUE)
+-
+ #define AW88261_ULS_HMUTE_START_BIT	(14)
+ #define AW88261_ULS_HMUTE_BITS_LEN	(1)
+ #define AW88261_ULS_HMUTE_MASK		\
 
 
