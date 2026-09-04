@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90124078C0;
-	Fri,  4 Sep 2026 05:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F63417BCA;
+	Fri,  4 Sep 2026 05:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499220; cv=none; b=udewBz+D9QM3JpxOlw/CfJNLxio9oUIeCpx9w1hr5+6ztAgNKoIURwNulKbH7quwu/7lCn42fc2YWv80Fp4q4oUuf+quHc6NGQkM1sWwCCpduCQXYGDnVTSUJPsGtxonibXuITzxy3a/MUj1+bYIsyxqgNuTdn6YkD/bwpSf2K4=
+	t=1788499223; cv=none; b=jA+SoC7p3151vsTOfIV1JXReyr/wFWQPM/k5DkK9TfK2P86Cqv9UlbqlgyLQt9sEsILU64BtyfYWaw9UFboGNSfYJzmGBowvohcrZExwN3zbkeGGdfvu0lCVpJt5nAKXLVZ2rmsPL2koo59Q23TNlh8eq+kNEMJiGj2LMnni/Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499220; c=relaxed/simple;
-	bh=BWaVRX5W3W605Aguq0cVxqvG16xpBFj0tLaV4b7hU1w=;
+	s=arc-20240116; t=1788499223; c=relaxed/simple;
+	bh=PVPqcEekISZHJvdfTrmHHA70InYWeOgq5e7qkclYUdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhF/TNRUpFOdqvf+Ql1HwKFNdVBP7n5ZDhFWnL73u2scEJzcN53KPIIjRnfT/oK1vVacXJmCU0hxH3QycNpcXLNAZFEohhj4HwafLKCriEoDpvQmz1iQmEGaTdWDDboxwdK66R5f9RRsMbfzbBP8os2CYZawOIHY1fRdJsS0eK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIIufe84; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b6Pca4gaATF4o/OSHAv20in5fhu/a5bxXbH++wWkwMIhMhYHhiQsfGMLCE+BMO/hNeEsiqS08fNHkCEaAqhCz2JY0qpz2xtby9Q8aOmk0d1ZBikmjsJMVRrYrFd7VWkVGywcopQhpXJUKWiDLLO+wIlaZ6dI0FK6i6/itz3x8A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VY3aChi/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIIufe84"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86F71F00A3E;
-	Fri,  4 Sep 2026 05:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VY3aChi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2681F00ACA;
+	Fri,  4 Sep 2026 05:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499219;
-	bh=uacM6tUZw3R3Dmzspda+iMgsEnPuf9jlX/dY1t2rcHo=;
+	s=korg; t=1788499222;
+	bh=KiKkK+NJ5sd6txN+gfvj0tuIPJaanHSCTbzhbaMHbHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mIIufe84l2NF3PBxH0HQNF8xHiL8tBDKHP/toJtu6wCTl2InrnksvR2zkkH+tDL2D
-	 +XGatzbhsqfN//KUzZckQ080Jy9PE4sqcDuoIGCILzeLutSCPzovlxEAMHkFxANWhP
-	 msI713Dqf/4OFUC3UxyPN3GR+zfwVjZa0l7ARzV0=
+	b=VY3aChi/LRNN8jm7J923vKfFbQ44Ih6fst349LkpHLV9k9Un5ojCNZbF1VG5nVj7V
+	 sGqBF0FrKtJP58Moes3zD4y49VQcqFmEtjBqaV6Us1HvkYJFfH+iG41kFec23BhS6A
+	 hlLggqNonRFpO37UuFIeVp/nbtHeOvHSdO+y5elo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gongwei Li <ligongwei@kylinos.cn>,
+	Hang Nan <2122295973@qq.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 339/713] Bluetooth: hci_uart: Fix false success return in hci_uart_setup()
-Date: Fri,  4 Sep 2026 06:55:07 +0200
-Message-ID: <20260904045811.426378286@linuxfoundation.org>
+Subject: [PATCH 7.2 340/713] Bluetooth: ISO: fix use-after-free of listener socket in iso_conn_ready
+Date: Fri,  4 Sep 2026 06:55:08 +0200
+Message-ID: <20260904045811.449450186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,48 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gongwei Li <ligongwei@kylinos.cn>
+From: Hang Nan <2122295973@qq.com>
 
-commit a9355799343e10014f2acfd4b6844d2335ecafea upstream.
+commit 560bef609fa5992745929e8d7d458b9d88dd2830 upstream.
 
-When reading the local version information for vendor detection
-fails, the error is only printed and 0 is returned, which masks the
-setup failure from the HCI core.
+iso_conn_ready() looks up the BIS listener socket with iso_get_sock(),
+which takes a reference, and then, without re-checking its state,
+creates a child socket from it:
 
-Return PTR_ERR(skb) instead.
+    parent = iso_get_sock(hdev, ...);
+    if (!parent)
+        return;
 
-Fixes: fb2ce8d11f039 ("Bluetooth: hci_uart: Add support for vendor detection flag")
-Fixes: 82f5169bf3d3b ("Bluetooth: hci_uart: add serdev driver support library")
+    lock_sock(parent);
+    sk = iso_sock_alloc(sock_net(parent), NULL, BTPROTO_ISO, ...);
+    ...
+    iso_chan_add(conn, sk, parent);
+    ...
+    release_sock(parent);
+    sock_put(parent);
+
+If the listener socket is closed concurrently, between iso_get_sock()
+and lock_sock(), the reference taken by iso_get_sock() may be the last
+one: the close path drops the link-list reference, and once
+iso_conn_ready() drops its own reference at the end of the function the
+socket is freed.  The child socket, however, is already linked to the
+freed parent, and a later disconnect of the child runs iso_chan_del()
+-> bt_accept_unlink(), which dereferences the dangling parent pointer
+into the freed accept queue (a use-after-free).  The same dangling
+pointer is also dereferenced through parent->***() in
+iso_chan_del().
+
+Fix it the same way the connected (non-BIS) path was fixed in commit
+0d255e63fcf3 ("Bluetooth: ISO: hold sk properly in iso_conn_ready"):
+after taking the socket lock, re-check that the parent is still a
+listening, alive socket, and bail out otherwise.
+
+Fixes: ccf74f2390d60 ("Bluetooth: Add BTPROTO_ISO socket type")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
+Signed-off-by: Hang Nan <2122295973@qq.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_ldisc.c  |    2 +-
- drivers/bluetooth/hci_serdev.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/iso.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -451,7 +451,7 @@ static int hci_uart_setup(struct hci_dev
- 	if (IS_ERR(skb)) {
- 		BT_ERR("%s: Reading local version information failed (%ld)",
- 		       hdev->name, PTR_ERR(skb));
--		return 0;
-+		return PTR_ERR(skb);
- 	}
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -2277,6 +2277,14 @@ static void iso_conn_ready(struct iso_co
  
- 	if (skb->len != sizeof(*ver)) {
---- a/drivers/bluetooth/hci_serdev.c
-+++ b/drivers/bluetooth/hci_serdev.c
-@@ -221,7 +221,7 @@ static int hci_uart_setup(struct hci_dev
- 	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Reading local version info failed (%ld)",
- 			   PTR_ERR(skb));
--		return 0;
-+		return PTR_ERR(skb);
- 	}
+ 		lock_sock(parent);
  
- 	if (skb->len != sizeof(*ver))
++		/* The listener may have been closed concurrently. */
++		if (parent->sk_state != BT_LISTEN ||
++		    sock_flag(parent, SOCK_ZAPPED)) {
++			release_sock(parent);
++			sock_put(parent);
++			return;
++		}
++
+ 		sk = iso_sock_alloc(sock_net(parent), NULL,
+ 				    BTPROTO_ISO, GFP_ATOMIC, 0);
+ 		if (!sk) {
 
 
