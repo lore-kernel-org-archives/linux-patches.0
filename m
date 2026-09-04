@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A9F415F06;
-	Fri,  4 Sep 2026 05:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4238A4CCDC7;
+	Fri,  4 Sep 2026 05:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500240; cv=none; b=LHcHq2nWZd+7joIqAnkgYSB2/1rMp33Moj3LaWbEpJEnFcyPR5PaxkbvLsPRHovxxFqwEKx8k0upEmBaETHK/81Np4JKxiTvrk/MWMfZwShvHs2a792S5LDRepbQ7jLlHzRqcmQ1slCP3Kc6+vGbVQ0pR+7EzchTvWKKiRYFq0I=
+	t=1788500243; cv=none; b=HPg6sr4N4b92xNPXb8vxy70g1lKwBNh0XgeYaeaN75GoMcwqBoP/F3j5pYn2fcwxNXxM9o3Ft8goXOcmdFZzusifPnrG4rrhNh9T+yrl13vTLHbaUzoMuIXkaePwxfeypxPF4Zz7bE6/Ey/MZiWCVTd/svqZg8633s6VyPzguQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500240; c=relaxed/simple;
-	bh=IWf+IwbEzFVhHfRC4Fn0/N5nrDP04hEo/fO4QizZ36g=;
+	s=arc-20240116; t=1788500243; c=relaxed/simple;
+	bh=U1wDoblRRf/RkZ7mUv6DuQLKyzGw03puwm7vQ/rta/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnHRwYcemePo2RtHF8nSuALHTpX5ZROQX7R1PnJwUlLb8jqfdhOegsfL2utyA1wJHvrG4KeeYTxXfjChjbqU2NepKvLuZpsFxKF4SLsSF5ZNtxTCjWSgJXneaNXrr91KSsdFphbGTuqfgwmh7kxjE9JZn7tCR2rTSzmm/zag1TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eN2qnos2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LaCr7bUezHb9PfdNCcVshL7vqPe0MGuFtd4mYTLJglFLtxY7lOovMIkE7s82QRAAFwu6dAPngnf6UTZOv5drPJCbYg7tcA3iswqG6HncmDbV79QJjh9h7hnBxuuqGTlO8cc3eM+YYrKIqCjhYLvTwW7NFKs1il7iYXOiNcIphGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJCf6bTS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eN2qnos2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17621F00A3D;
-	Fri,  4 Sep 2026 05:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJCf6bTS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7011F00A3D;
+	Fri,  4 Sep 2026 05:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500239;
-	bh=9ur+0XjpMr7xQsW7LJtvkDh9xEB/PDx4XmQAfj+/L4M=;
+	s=korg; t=1788500242;
+	bh=4+d+lwrF8ZvD7WDk5gDDM+Da9JF2E3sT90jO1B6MwrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eN2qnos24Tvjxmr7G29ky281EXXdYW+Ssgm3jI0b+geON7hca5j7lIu3v+Hemcmkj
-	 5C7LhGofu78AaDF0v6O4fAhZRCn4nuGABpwCCDDFkKnpmWAoTSMSaAhxCp2LycJMh9
-	 Es1cWke30WPcjiCxjfgUXdaem0JE8RLwZ6+sx9AI=
+	b=SJCf6bTSD9WBnSiHebqRNVnpUihY3Em+6SJ3wq7I3bZfjt6SbsqGhuvumps6DLrjU
+	 DJIcNzIA9Icwftp9aIrKdz8kpHoXebro8EhI+ePCRiiiMXSsjvzyWIaMQnN05zdY8e
+	 HbOA2xxG6tbBe5jYpy7wyhSDaBcop9ZucgbBOmzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	William Kucharski <william.kucharski@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 700/713] xarray: honor XA_FLAGS_ACCOUNT in xas_split_alloc()
-Date: Fri,  4 Sep 2026 07:01:08 +0200
-Message-ID: <20260904045819.537976424@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 701/713] zloop: truncate finished zones to zone capacity
+Date: Fri,  4 Sep 2026 07:01:09 +0200
+Message-ID: <20260904045819.559343326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -61,51 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 789763523fb43cdc328de5cb5dcd19240ccf90d8 upstream.
+commit 72e67c118642634c25465db0c8bcfa54c4ce086c upstream.
 
-XArray operations that allocate xa_nodes, such as xas_nomem() and
-xas_alloc(), add __GFP_ACCOUNT when the array has XA_FLAGS_ACCOUNT set.
-This charges the allocated memory and avoids the workingset convergence
-issue described by commit 7b785645e8f13 ("mm: fix page cache convergence
-regression").
+The size of a sequential zone backing file records the amount of data
+written and is used to restore the zone state. A backing file whose size
+is equal to the zone capacity is restored as a full zone, while a file
+larger than the zone capacity is rejected as invalid.
 
-xas_split_alloc() does not add _GFP_ACCOUNT when XA_FLAGS_ACCOUNT is
-present.  Fix it.
+However, zloop_finish_zone() currently truncates the backing file to the
+zone size. For devices with a reduced zone capacity, finishing a zone
+therefore creates a backing file larger than the zone capacity. After the
+device is removed and later re-added, that zone file is rejected instead
+of being restored as a full zone.
 
-Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-2-38cb3ff325c5@nvidia.com
-Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: William Kucharski <william.kucharski@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Truncate finished sequential zones to the zone capacity, matching the
+persistent representation accepted by zloop_update_seq_zone() for a full
+zone.
+
+Suggested-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/B39E5FD81D1A07F4+20260804023403.939767-1-raoxu@uniontech.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/xarray.c |    3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/admin-guide/blockdev/zoned_loop.rst |    9 ++++-----
+ drivers/block/zloop.c                             |    3 ++-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/lib/xarray.c
-+++ b/lib/xarray.c
-@@ -1053,6 +1053,9 @@ void xas_split_alloc(struct xa_state *xa
- 	if (xas->xa_shift + XA_CHUNK_SHIFT > order)
- 		return;
+--- a/Documentation/admin-guide/blockdev/zoned_loop.rst
++++ b/Documentation/admin-guide/blockdev/zoned_loop.rst
+@@ -30,11 +30,10 @@ indicates the position of the write poin
  
-+	if (xas->xa->xa_flags & XA_FLAGS_ACCOUNT)
-+		gfp |= __GFP_ACCOUNT;
-+
- 	do {
- 		struct xa_node *node;
+ When resetting a sequential zone, its backing file size is truncated to zero.
+ Conversely, for a zone finish operation, the backing file is truncated to the
+-zone size. With this, the maximum capacity of a zloop zoned block device created
+-can be larger configured to be larger than the storage space available on the
+-backing file system. Of course, for such configuration, writing more data than
+-the storage space available on the backing file system will result in write
+-errors.
++zone capacity. With this, a zloop zoned block device can be configured with a
++larger capacity than the storage space available on the backing file system. Of
++course, for such configuration, writing more data than the storage space
++available on the backing file system will result in write errors.
  
+ The zoned loop block device driver implements a complete zone transition state
+ machine. That is, zones can be empty, implicitly opened, explicitly opened,
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -478,7 +478,8 @@ static int zloop_finish_zone(struct zloo
+ 	    zone->cond == BLK_ZONE_COND_FULL)
+ 		goto unlock;
+ 
+-	if (vfs_truncate(&zone->file->f_path, zlo->zone_size << SECTOR_SHIFT)) {
++	if (vfs_truncate(&zone->file->f_path,
++			 zlo->zone_capacity << SECTOR_SHIFT)) {
+ 		set_bit(ZLOOP_ZONE_SEQ_ERROR, &zone->flags);
+ 		ret = -EIO;
+ 		goto unlock;
 
 
