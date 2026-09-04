@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6AD38E8DD;
-	Fri,  4 Sep 2026 05:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E936351C04;
+	Fri,  4 Sep 2026 05:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499673; cv=none; b=LDReUZN0fyhQbOxHcbJVFWXreMiawzKStSnVmvqnoF7z5fn7GkJvrdWdVYn3i+0mMEDhMJP1pErW4cED3D2iNrsyXirZ8vQPBD6JT0ZYXarhKmzYHOAAB321ZXNe7/UV4fA1RtwTDiRTLDZ6yipkPjfEhXpMEuq9HSY7x72OkUM=
+	t=1788499676; cv=none; b=puWWrhoOwkvOmaRjN58DyUpg3V1H7TNY/WJKCwk43/rUDzTTAz4jzT5lU7W2T/oyDlpqTlE+Huyw09jHWOMzRkyImw/D3HjnW1wAr0FFYiDQAL9bT2RIvowIlpGZn2RCmqRVuskQMhpCdqyV3RR7/70zsSdSMQl2NH+3pU9ldxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499673; c=relaxed/simple;
-	bh=dODgK9hedy8/fT/aUmNdxJ5Hn6GTvir1L4Y6Yj5PoiQ=;
+	s=arc-20240116; t=1788499676; c=relaxed/simple;
+	bh=VELE0jIiCP/40c9C+YZ15jooFM+o2BPIIeYGJaNkZnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieyOHAve6dQriOVb3wdxv4CIzwqqvF6WI4fnz6MCeKsrkHRCoVqCMSEQBBawRNpuPO53iR/cdjgGvmXWfUdf9IEZHlPdVEQ8gjXaqmGzkF4AltwWcJSIc0wDdRId4VRdjLm+MUNIcQjZEetR8lTmJYWslDUPX7Bb9ECDCKVsdBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6pgPPQF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ofBtuJ/4B6+b3kLR8+pNgGxthc0aL4rGeazYyZgnllrCvxEDIenHsYrmK6oZCnaKgEHpoiilYlfEj/9tnuTGtdUOqcO3C8cTI2Z7wb2y8egdFzkOxaqUaQ2l0xW+9SiuiAoLCV/IiZHCfQfYPBHSUjtueDauAMnK+dwGMQadGxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGuddK83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6pgPPQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C291F00A3D;
-	Fri,  4 Sep 2026 05:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGuddK83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985A11F00A3D;
+	Fri,  4 Sep 2026 05:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499672;
-	bh=VTtN/I2Q+xDOE/audSynXPafqPqJrS5kHdVC5Vfww9c=;
+	s=korg; t=1788499675;
+	bh=qAEE2D/azlCwP6/WLBOURejz3SkXoEdgfWrUnTm3kNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e6pgPPQFUuT+m1HD1tnhHvPzO8vDkw8cb8KquIXC2rYYxrGU/7aHid25WJT1ITYon
-	 hHz/2WJHCSZgIFufqFe4HR/Bx7XrLtvlipY1s4nY0V5zWxbPBDFgQBFVjgnHYyGelQ
-	 wUkxF50hzq63KTeiby1C2jQVKELGeV6gl4rnxXpY=
+	b=uGuddK83Dj077eK3ZXZikv1HNFXeCBKHaIuRUV8b6isIfrQOIEbmTZs83veXqZKne
+	 RdzNez5DkipZ1sHqTubO3+X8q2bo4XGXWZKeeQmlnTfW+2lzL0TmM13YdOVg162lhI
+	 bvfgnoPcNA4ljWNzu9ThdK8Lxt1qvwcEDXwGMkgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.2 447/713] RDMA/uverbs: Add UVERBS_ATTR_UHW to UVERBS_METHOD_REG_MR
-Date: Fri,  4 Sep 2026 06:56:55 +0200
-Message-ID: <20260904045813.850354872@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 494/713] sctp: drop a chunk if its transport was removed
+Date: Fri,  4 Sep 2026 06:57:42 +0200
+Message-ID: <20260904045814.899760883@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,50 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 011199f46f44a9fd93a9e5ab5d7fd1328d80e9bf upstream.
+commit 03a9d10ecf71f54b2af8020935f2033d4a132be5 upstream.
 
-The original commit missed that three drivers (mthca, irdma, siw) have UHW
-data associated with reg_mr that cannot be passed through the ioctl. They
-also assume that the udata cannot be NULL, so failing to pass a valid
-udata can trigger a NULL udata crash in those drivers.
+sctp_rcv() resolves the transport once per packet and leaves it in
+chunk->transport. The lookup reference, or the one sctp_add_backlog() takes
+if the socket is owned by userspace, keeps it around until the chunk has
+been processed.
 
-This never happens in real systems since in rdma-core ibv_cmd_reg_mr_ex()
-does not accept a udata and those three drivers don't use it, however a
-malicious userspace could trigger it.
+An authenticated ASCONF DEL-IP can remove it in the meantime.
+sctp_assoc_rm_peer() takes the transport out of the association and calls
+sctp_transport_free(), which tags it dead and drops the reference the
+association held. There is a window on both paths: the packet can sit on
+the socket backlog, and on the direct path the lookup completes before
+bh_lock_sock().
 
+The DATA chunk in that packet puts the removed transport back into
+asoc->peer.last_data_from. Once the packet is done that reference goes
+away and the transport is freed by RCU, so the next delayed SACK carries
+the pointer into the SACK chunk and sctp_outq_select_transport() reads the
+freed transport's state.
+
+Drop the chunk in sctp_inq_push(), next to the existing rcvr->dead check.
+Both paths reach it with the association's socket lock held. The peer
+retransmits it.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: 5b2e45049dc0 ("IB/core: Add UVERBS_METHOD_REG_MR on the MR object")
-Reported-by: Jacob Moroni <jmoroni@google.com>
-Closes: https://lore.kernel.org/all/CAHYDg1TOGxRGZrS69d4Y--Shj_DZv0nJuM73iHUBwBM70g_t3Q@mail.gmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/aoUJHQmxL0LFIMCw@v4bel
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/uverbs_std_types_mr.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/sctp/inqueue.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/core/uverbs_std_types_mr.c
-+++ b/drivers/infiniband/core/uverbs_std_types_mr.c
-@@ -364,7 +364,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_
- 							dmah, attrs);
- 	else
- 		mr = pd->device->ops.reg_user_mr(pd, addr, length, iova,
--						 access_flags, dmah, NULL);
-+						 access_flags, dmah,
-+						 &attrs->driver_udata);
- 
- 	if (IS_ERR(mr))
- 		return PTR_ERR(mr);
-@@ -527,7 +528,8 @@ DECLARE_UVERBS_NAMED_METHOD(
- 			    UA_MANDATORY),
- 	UVERBS_ATTR_PTR_OUT(UVERBS_ATTR_REG_MR_RESP_RKEY,
- 			    UVERBS_ATTR_TYPE(u32),
--			    UA_MANDATORY));
-+			    UA_MANDATORY),
-+	UVERBS_ATTR_UHW());
- 
- DECLARE_UVERBS_NAMED_METHOD_DESTROY(
- 	UVERBS_METHOD_MR_DESTROY,
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -71,8 +71,11 @@ void sctp_inq_free(struct sctp_inq *queu
+  */
+ void sctp_inq_push(struct sctp_inq *q, struct sctp_chunk *chunk)
+ {
+-	/* Directly call the packet handling routine. */
+-	if (chunk->rcvr->dead) {
++	/* Directly call the packet handling routine.  Drop the chunk if the
++	 * receiver or the transport it was looked up on is gone.
++	 */
++	if (chunk->rcvr->dead ||
++	    (chunk->transport && chunk->transport->dead)) {
+ 		sctp_chunk_free(chunk);
+ 		return;
+ 	}
 
 
