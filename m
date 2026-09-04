@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C74423784;
-	Fri,  4 Sep 2026 06:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DF442E416;
+	Fri,  4 Sep 2026 06:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502991; cv=none; b=sORZ+IBU0t5Dfx2p413YQ1zVwx4Q/KgpIb4btwuJ9PQrkILeb87UcCY/fv8q5EdFpjzYd0gdNN2oRzPqUJuxST0OV+rTrgF2pm40BaQeot34JJFKqwZecCquyDGkyn8PtDJk77U+oawHlRIScjVYZBUpX5Amx4m/YtokN3/IpYs=
+	t=1788502994; cv=none; b=qJuHVRGt4sgv0RbLKaz0RWNLTUFFEFPiqcoGCu5Lpb62Ao7gtfVQgykvx81YPZUydmPUS4yH84Fj4w4o52UN7besG0VykLdR+XheiEauH2xvV+u4eGu+7qmgsWh0K+gEYTO26PQJu3J9K+Mi4KcN24u1RojlJOzrTnWrUsu1Ew8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502991; c=relaxed/simple;
-	bh=kOKrsYJp8zkIwp5Ni/wQHKUL9SqfYoIdKCdvpTvbbGA=;
+	s=arc-20240116; t=1788502994; c=relaxed/simple;
+	bh=ZkSf4rnCc52112y714jiT2TAlOeElZz0Kpa8RRDiJAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKRpTzIBS6IwETxm8qLbAS1X6LVj0Ua/JpYVsxIh+QTrShPXZ+RNsdXbemVZFq3Nb7wDEa2s/rN9zvwgSOlWAcjPDi2Mf7yWrkYZ0LBXsJcfl3X1cmMeusw3r77J5JTs3uVVruqCwT80o9J1ExqPNkEbIvN5W3UKEMovTxEyVpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPIuv+Lo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hiYEZpG01x1FdgvtOZKFyPXowhAKnX2ryEG9hxiVgK96gVs+DvpPkmWpYeh8nYkYCOMFgku/HYgln5VkxLjhexTvN4FRhAPDeOtDFI804xvCP6Zai/qE00ZObKhoAcoQzQMrhQz52ek+dZQsQ4aOaNNhH5ZcD7LiMDFD94D5AC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8svjkZk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPIuv+Lo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFE61F00A3F;
-	Fri,  4 Sep 2026 06:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8svjkZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7C71F00A3E;
+	Fri,  4 Sep 2026 06:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502990;
-	bh=6J54pBUjN6WiEbrL8Ld8sXa/2ENc78EnYOa+PmvirsE=;
+	s=korg; t=1788502993;
+	bh=vwU1G5iwyXid5pvAmGLowPfTfFacK5QAahrUqfviEvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YPIuv+Lojz3f0bgwPsGfsADPXP+QDLLRSDkkP/4YCmw+adhAvLAeH9rBmljUGcuFY
-	 snOpQX9i3rfKKnxQpliA953si8FXKsMCMm/2vjvGO94YlvV6/0M5RJZjgn7/XR8Og7
-	 Qh0G4VHwWhA96uVR+S18I1pWTJNKqX52gGigqgag=
+	b=n8svjkZk9tEcIomVDvxgUtSX0K6g6qfCYCduUky1Ejoqd9fWl5ysuPqy3J2svt6NN
+	 gw5Uc3DXXn+M83sKLuA+jxm+wbE6xrYJytpwj21tvy5sNnf7UP1evCcwAIUDAihMw9
+	 a6Fqnt6ZZyLPywce30L2bYIPYZCSoGM6nbEafhTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Oleg Deomi <oleg.deomi@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Balbir Singh <bsingharora@gmail.com>
-Subject: [PATCH 6.12 400/403] taskstats: fix cpumask parsing cutting off the last character
-Date: Fri,  4 Sep 2026 07:03:23 +0200
-Message-ID: <20260904045743.875262878@linuxfoundation.org>
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.12 401/403] timer: Keep debugobjects state consistent in migrate_timer_list()
+Date: Fri,  4 Sep 2026 07:03:24 +0200
+Message-ID: <20260904045743.897744563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,53 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit 1f58a5335cdd14b3fb5f2a5d3763dee1f5cba1d3 upstream.
+commit c793bbfc4a0a9f5a66978fc91559e9681748dbeb upstream.
 
-parse() hands nla_strscpy() len as dstsize, and nla_strscpy() copies at
-most dstsize - 1 bytes.  When the attr payload comes in without a trailing
-NUL, srclen == len >= dstsize and the last character of the cpumask string
-gets cut off.  Register "0-15" and you are silently listening on "0-1",
-exit data for the rest never shows up.
+When timers are migrated away from an offline CPU the debugobjects state
+gets corrupted. The timer is accounted as inactive on deletion, but the
+enqueue on the alive CPU lacks the activation call.
 
-The bug only bites when the sender doesn't NUL terminate the payload;
-senders that include the NUL were always fine (srclen gets decremented for
-the trailing NUL, so srclen < dstsize).  Thats probably why this survived
-20 years.  And the policy is NLA_STRING, not NLA_NUL_STRING, so a payload
-without the trailing NUL is legit input here.
+That used to work, but got broken when the trace point and the debug
+objects call got separated. That change missed to fixup
+migrate_timer_list().
 
-Skip the kmalloc/nla_strscpy dance entirely and use nla_strdup(), which
-already allocates srclen + 1 and terminates.  The nla_len() bounds checks
-stay as they were.
+Add the missing debug_timer_activate() invocation to fix it.
 
-Link: https://lore.kernel.org/EC49FE41-7F5F-41E0-A07A-ABEB8ECA514D@grrlz.net
-Fixes: f9fd8914c1ac ("[PATCH] per-task delay accounting taskstats interface: control exit data through cpumasks")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Reported-by: Oleg Deomi <oleg.deomi@gmail.com>
-Closes: https://lore.kernel.org/CAByWkfZ6b1=3H9pwkz-dDQOs9cZaF-HYQ6b9Yb0=Hq2r1Vv_Pw@mail.gmail.com
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Balbir Singh <bsingharora@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: dc1e7dc5ac62 ("timer: Move trace point to get proper index")
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/87bjb0l7ha.ffs@fw13
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/taskstats.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/time/timer.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/taskstats.c
-+++ b/kernel/taskstats.c
-@@ -368,10 +368,9 @@ static int parse(struct nlattr *na, stru
- 		return -E2BIG;
- 	if (len < 1)
- 		return -EINVAL;
--	data = kmalloc(len, GFP_KERNEL);
-+	data = nla_strdup(na, GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
--	nla_strscpy(data, na, len);
- 	ret = cpulist_parse(data, mask);
- 	kfree(data);
- 	return ret;
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -2673,6 +2673,7 @@ static void migrate_timer_list(struct ti
+ 		timer = hlist_entry(head->first, struct timer_list, entry);
+ 		detach_timer(timer, false);
+ 		timer->flags = (timer->flags & ~TIMER_BASEMASK) | cpu;
++		debug_timer_activate(timer);
+ 		internal_add_timer(new_base, timer);
+ 	}
+ }
 
 
