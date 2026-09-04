@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4691D378838;
-	Fri,  4 Sep 2026 06:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CCB37A84A;
+	Fri,  4 Sep 2026 06:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501770; cv=none; b=bPH6b3y7XYzg8eW+ymEYnFwKcJShHDaKglKQRPNA87u+DgXMFn22rG3G9czfsCXN5i1ACdADaAaKPLVCtJnhl4dO4k+975R+XY+9qOVVrxnHOV4xU8SBnhKl4xMbI+NjAsPJDWLf2+uGdimcynjxoLew3uCqNg3s9eqP3qlc8EM=
+	t=1788501775; cv=none; b=qsUN5JYHXDjnfk3v/bYGWGa8O/NgQSQHWARry3vdFA6rMXaYuCM2ULK+tYX41+AExTDAwLaJ1Q8kINhMrREphjmcZVsuUiVcnbETWrQLLcwSDPF5KczRzv/47gmN3l1kHCbaE2QC6NcppmU6GIzncMezg9ExgqDG3/XeBsafKLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501770; c=relaxed/simple;
-	bh=OZm19TLwTtwtz0Nvp3eqQkBGm9Y8+q/QARrGCWHoQ0U=;
+	s=arc-20240116; t=1788501775; c=relaxed/simple;
+	bh=BYlp2MuG9dENW2n3JVCaH07Y8CRdvIcNJ7THBIFGT08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b63HCMgSVMoyuWqNvxoDR3+g5smTgW6pxTsKQqOfhbXcfoJMZgzwHpeClC6V7VPifVBDU9RUqvWQ9BJF2QLGGgS7PotB1PXLOPh8aZL4izvP8NtX9lq07BabSnoY/eZaKy2wZnr2D7gbFnSvbSaX0c+dsc1mf3ppILPiODvZ4yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXUK61rY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GrBsDASKvjVP+gjeN5K9OiIXRQUmsdSBEGZ++KzjImwEz7vKNRaxZK6kJ3ku9Wyec/DBXrJaJK/g0ILyIw6d0tTt54VAMzOGLuff2WfFj2gU8Ikj1Lt9GVMrh75KAmaC5FUerxOKE/POB9s0eHm6NxkUYeYtqRY8kljnxtVQkRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1D1qHlZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXUK61rY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11F51F00A3E;
-	Fri,  4 Sep 2026 06:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1D1qHlZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC741F00A3D;
+	Fri,  4 Sep 2026 06:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501769;
-	bh=w4oCOMx0l7ZULFa9ATulooEa9JQCBxbRP34uTeM59DM=;
+	s=korg; t=1788501772;
+	bh=JbDKc53j0ryR4SbYtopHa9VeL0zc+UhZqn0CIyuDgm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DXUK61rYCrnHWF0esz1uNEfmzAIOImU6iiRrMyF/Z+idxSvhBq4IOk2Y8UNuSUEa7
-	 aeDFj94nUTYtHRmGgceWCiSsPtbwDbzdlSCILPQ0avx8lNLlgPML9df7AeFbSOXW3K
-	 ALbV8qQMYcHPZsAd1Fw/R2UOwwMEdjhV4t5AOYvA=
+	b=c1D1qHlZgv51GvhIIJ2eRNrSxCrDxQp6Jmmnd8rpi30Gy03X08Z4feq5HQaTi+X3y
+	 5tByWywe31O+CHkK/oHgp3aYhkI3l65uKGWleaW4CGHK4Z8z6lx/yrZ1oFFOmoea57
+	 5LjQqnTA6M99gk2akBYLrn5VdM6y7r7xCyAY/Vm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 489/552] ALSA: hda/ext: preserve PPLCCTL bits when clearing reset
-Date: Fri,  4 Sep 2026 07:00:46 +0200
-Message-ID: <20260904045801.752752566@linuxfoundation.org>
+	Corentin Labbe <clabbe.montjoie@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 525/552] crypto: sun8i-ce - Remove crypto_rng interface
+Date: Fri,  4 Sep 2026 07:01:22 +0200
+Message-ID: <20260904045802.527055332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,49 +51,478 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 36aa66de481d29edd63cbad9b5c4dc18c340fdf6 upstream.
+commit 011556f71d094da61379ae3672692cae2795304e upstream.
 
-snd_hdac_ext_stream_reset() polls PPLCCTL for STRST by masking the
-register value with AZX_PPLCCTL_STRST:
+Since the crypto_rng interface for hardware PRNGs is unused and is
+redundant with hwrng and the actual Linux RNG, it's being phased out.
+Most drivers for it were already removed.  Go ahead and remove the
+sun8i-ce support which is one of the only remaining ones.
 
-	val = readl(...) & AZX_PPLCCTL_STRST;
+Note that the sun8i-ce support for hwrng remains in place.  That is the
+interface that actually matters.
 
-The same masked value is then used when clearing STRST. Since val
-contains no bits other than STRST, clearing STRST from it always
-produces zero. The subsequent writel() therefore writes zero to the
-entire PPLCCTL register instead of clearing only the reset bit.
+As usual for crypto_rng, this driver was also buggy: its ->generate()
+function had a use-after-free vulnerability due to using
+wait_for_completion_interruptible_timeout() without handling shutting
+down the DMA operation if a signal is sent.  There's no point in fixing
+this separately only to remove the code anyway, so this commit is marked
+with Fixes and Cc stable.
 
-PPLCCTL contains other stream control fields, including the stream tag
-in AZX_PPLCCTL_STRM_MASK. Those fields must not be modified as a side
-effect of clearing stream reset.
-
-Use snd_hdac_updatel() to clear STRST, matching the existing set-reset
-path and preserving all unrelated PPLCCTL bits.
-
-Fixes: df203a4e46f4 ("ALSA: hdac_ext: add extended stream capabilities")
+Fixes: 5eb7e9468884 ("crypto: sun8i-ce - Add support for the PRNG")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/43BB7930B0F07C09+20260813065524.1955696-1-raoxu@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Corentin Labbe <clabbe.montjoie@gmail.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/core/ext/stream.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/allwinner/Kconfig                  |    8 -
+ drivers/crypto/allwinner/sun8i-ce/Makefile        |    1 
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c |   57 -------
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-prng.c |  159 ----------------------
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h      |   29 ----
+ 5 files changed, 254 deletions(-)
+ delete mode 100644 drivers/crypto/allwinner/sun8i-ce/sun8i-ce-prng.c
 
---- a/sound/hda/core/ext/stream.c
-+++ b/sound/hda/core/ext/stream.c
-@@ -211,8 +211,8 @@ void snd_hdac_ext_stream_reset(struct hd
- 			break;
- 		udelay(3);
- 	} while (--timeout);
--	val &= ~AZX_PPLCCTL_STRST;
--	writel(val, hext_stream->pplc_addr + AZX_REG_PPLCCTL);
-+	snd_hdac_updatel(hext_stream->pplc_addr, AZX_REG_PPLCCTL,
-+			 AZX_PPLCCTL_STRST, 0);
- 	udelay(3);
+--- a/drivers/crypto/allwinner/Kconfig
++++ b/drivers/crypto/allwinner/Kconfig
+@@ -70,14 +70,6 @@ config CRYPTO_DEV_SUN8I_CE_HASH
+ 	help
+ 	  Say y to enable support for hash algorithms.
  
- 	timeout = 50;
+-config CRYPTO_DEV_SUN8I_CE_PRNG
+-	bool "Support for Allwinner Crypto Engine PRNG"
+-	depends on CRYPTO_DEV_SUN8I_CE
+-	select CRYPTO_RNG
+-	help
+-	  Select this option if you want to provide kernel-side support for
+-	  the Pseudo-Random Number Generator found in the Crypto Engine.
+-
+ config CRYPTO_DEV_SUN8I_CE_TRNG
+ 	bool "Support for Allwinner Crypto Engine TRNG"
+ 	depends on CRYPTO_DEV_SUN8I_CE
+--- a/drivers/crypto/allwinner/sun8i-ce/Makefile
++++ b/drivers/crypto/allwinner/sun8i-ce/Makefile
+@@ -1,5 +1,4 @@
+ obj-$(CONFIG_CRYPTO_DEV_SUN8I_CE) += sun8i-ce.o
+ sun8i-ce-y += sun8i-ce-core.o sun8i-ce-cipher.o
+ sun8i-ce-$(CONFIG_CRYPTO_DEV_SUN8I_CE_HASH) += sun8i-ce-hash.o
+-sun8i-ce-$(CONFIG_CRYPTO_DEV_SUN8I_CE_PRNG) += sun8i-ce-prng.o
+ sun8i-ce-$(CONFIG_CRYPTO_DEV_SUN8I_CE_TRNG) += sun8i-ce-trng.o
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
+@@ -12,7 +12,6 @@
+ 
+ #include <crypto/engine.h>
+ #include <crypto/internal/hash.h>
+-#include <crypto/internal/rng.h>
+ #include <crypto/internal/skcipher.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+@@ -49,7 +48,6 @@ static const struct ce_variant ce_h3_var
+ 		{ "mod", 50000000, 0 },
+ 		},
+ 	.esr = ESR_H3,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ID_NOTSUPP,
+ };
+ 
+@@ -66,7 +64,6 @@ static const struct ce_variant ce_h5_var
+ 		{ "mod", 300000000, 0 },
+ 		},
+ 	.esr = ESR_H5,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ID_NOTSUPP,
+ };
+ 
+@@ -80,7 +77,6 @@ static const struct ce_variant ce_h6_var
+ 	},
+ 	.cipher_t_dlen_in_bytes = true,
+ 	.hash_t_dlen_in_bits = true,
+-	.prng_t_dlen_in_bytes = true,
+ 	.trng_t_dlen_in_bytes = true,
+ 	.ce_clks = {
+ 		{ "bus", 0, 200000000 },
+@@ -88,7 +84,6 @@ static const struct ce_variant ce_h6_var
+ 		{ "ram", 0, 400000000 },
+ 		},
+ 	.esr = ESR_H6,
+-	.prng = CE_ALG_PRNG_V2,
+ 	.trng = CE_ALG_TRNG_V2,
+ };
+ 
+@@ -102,7 +97,6 @@ static const struct ce_variant ce_h616_v
+ 	},
+ 	.cipher_t_dlen_in_bytes = true,
+ 	.hash_t_dlen_in_bits = true,
+-	.prng_t_dlen_in_bytes = true,
+ 	.trng_t_dlen_in_bytes = true,
+ 	.needs_word_addresses = true,
+ 	.ce_clks = {
+@@ -112,7 +106,6 @@ static const struct ce_variant ce_h616_v
+ 		{ "trng", 0, 0 },
+ 		},
+ 	.esr = ESR_H6,
+-	.prng = CE_ALG_PRNG_V2,
+ 	.trng = CE_ALG_TRNG_V2,
+ };
+ 
+@@ -129,7 +122,6 @@ static const struct ce_variant ce_a64_va
+ 		{ "mod", 300000000, 0 },
+ 		},
+ 	.esr = ESR_A64,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ID_NOTSUPP,
+ };
+ 
+@@ -148,7 +140,6 @@ static const struct ce_variant ce_d1_var
+ 		{ "trng", 0, 0 },
+ 		},
+ 	.esr = ESR_D1,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ALG_TRNG,
+ };
+ 
+@@ -165,7 +156,6 @@ static const struct ce_variant ce_r40_va
+ 		{ "mod", 300000000, 0 },
+ 		},
+ 	.esr = ESR_R40,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ID_NOTSUPP,
+ };
+ 
+@@ -614,25 +604,6 @@ static struct sun8i_ce_alg_template ce_a
+ 	},
+ },
+ #endif
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_CE_PRNG
+-{
+-	.type = CRYPTO_ALG_TYPE_RNG,
+-	.alg.rng = {
+-		.base = {
+-			.cra_name		= "stdrng",
+-			.cra_driver_name	= "sun8i-ce-prng",
+-			.cra_priority		= 300,
+-			.cra_ctxsize		= sizeof(struct sun8i_ce_rng_tfm_ctx),
+-			.cra_module		= THIS_MODULE,
+-			.cra_init		= sun8i_ce_prng_init,
+-			.cra_exit		= sun8i_ce_prng_exit,
+-		},
+-		.generate               = sun8i_ce_prng_generate,
+-		.seed                   = sun8i_ce_prng_seed,
+-		.seedsize               = PRNG_SEED_SIZE,
+-	}
+-},
+-#endif
+ };
+ 
+ static int sun8i_ce_debugfs_show(struct seq_file *seq, void *v)
+@@ -692,12 +663,6 @@ static int sun8i_ce_debugfs_show(struct
+ 			seq_printf(seq, "\tFallback due to SG numbers: %lu\n",
+ 				   ce_algs[i].stat_fb_maxsg);
+ 			break;
+-		case CRYPTO_ALG_TYPE_RNG:
+-			seq_printf(seq, "%s %s reqs=%lu bytes=%lu\n",
+-				   ce_algs[i].alg.rng.base.cra_driver_name,
+-				   ce_algs[i].alg.rng.base.cra_name,
+-				   ce_algs[i].stat_req, ce_algs[i].stat_bytes);
+-			break;
+ 		}
+ 	}
+ #if defined(CONFIG_CRYPTO_DEV_SUN8I_CE_TRNG) && \
+@@ -925,23 +890,6 @@ static int sun8i_ce_register_algs(struct
+ 				return err;
+ 			}
+ 			break;
+-		case CRYPTO_ALG_TYPE_RNG:
+-			if (ce->variant->prng == CE_ID_NOTSUPP) {
+-				dev_info(ce->dev,
+-					 "DEBUG: Algo of %s not supported\n",
+-					 ce_algs[i].alg.rng.base.cra_name);
+-				ce_algs[i].ce = NULL;
+-				break;
+-			}
+-			dev_info(ce->dev, "Register %s\n",
+-				 ce_algs[i].alg.rng.base.cra_name);
+-			err = crypto_register_rng(&ce_algs[i].alg.rng);
+-			if (err) {
+-				dev_err(ce->dev, "Fail to register %s\n",
+-					ce_algs[i].alg.rng.base.cra_name);
+-				ce_algs[i].ce = NULL;
+-			}
+-			break;
+ 		default:
+ 			ce_algs[i].ce = NULL;
+ 			dev_err(ce->dev, "ERROR: tried to register an unknown algo\n");
+@@ -968,11 +916,6 @@ static void sun8i_ce_unregister_algs(str
+ 				 ce_algs[i].alg.hash.base.halg.base.cra_name);
+ 			crypto_engine_unregister_ahash(&ce_algs[i].alg.hash);
+ 			break;
+-		case CRYPTO_ALG_TYPE_RNG:
+-			dev_info(ce->dev, "Unregister %d %s\n", i,
+-				 ce_algs[i].alg.rng.base.cra_name);
+-			crypto_unregister_rng(&ce_algs[i].alg.rng);
+-			break;
+ 		}
+ 	}
+ }
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-prng.c
++++ /dev/null
+@@ -1,159 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-/*
+- * sun8i-ce-prng.c - hardware cryptographic offloader for
+- * Allwinner H3/A64/H5/H2+/H6/R40 SoC
+- *
+- * Copyright (C) 2015-2020 Corentin Labbe <clabbe@baylibre.com>
+- *
+- * This file handle the PRNG
+- *
+- * You could find a link for the datasheet in Documentation/arch/arm/sunxi.rst
+- */
+-#include "sun8i-ce.h"
+-#include <linux/dma-mapping.h>
+-#include <linux/pm_runtime.h>
+-#include <crypto/internal/rng.h>
+-
+-int sun8i_ce_prng_init(struct crypto_tfm *tfm)
+-{
+-	struct sun8i_ce_rng_tfm_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	memset(ctx, 0, sizeof(struct sun8i_ce_rng_tfm_ctx));
+-	return 0;
+-}
+-
+-void sun8i_ce_prng_exit(struct crypto_tfm *tfm)
+-{
+-	struct sun8i_ce_rng_tfm_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	kfree_sensitive(ctx->seed);
+-	ctx->seed = NULL;
+-	ctx->slen = 0;
+-}
+-
+-int sun8i_ce_prng_seed(struct crypto_rng *tfm, const u8 *seed,
+-		       unsigned int slen)
+-{
+-	struct sun8i_ce_rng_tfm_ctx *ctx = crypto_rng_ctx(tfm);
+-
+-	if (ctx->seed && ctx->slen != slen) {
+-		kfree_sensitive(ctx->seed);
+-		ctx->slen = 0;
+-		ctx->seed = NULL;
+-	}
+-	if (!ctx->seed)
+-		ctx->seed = kmalloc(slen, GFP_KERNEL | GFP_DMA);
+-	if (!ctx->seed)
+-		return -ENOMEM;
+-
+-	memcpy(ctx->seed, seed, slen);
+-	ctx->slen = slen;
+-
+-	return 0;
+-}
+-
+-int sun8i_ce_prng_generate(struct crypto_rng *tfm, const u8 *src,
+-			   unsigned int slen, u8 *dst, unsigned int dlen)
+-{
+-	struct sun8i_ce_rng_tfm_ctx *ctx = crypto_rng_ctx(tfm);
+-	struct rng_alg *alg = crypto_rng_alg(tfm);
+-	struct sun8i_ce_alg_template *algt;
+-	struct sun8i_ce_dev *ce;
+-	dma_addr_t dma_iv, dma_dst;
+-	int err = 0;
+-	int flow = 3;
+-	unsigned int todo;
+-	struct sun8i_ce_flow *chan;
+-	struct ce_task *cet;
+-	u32 common, sym;
+-	void *d;
+-
+-	algt = container_of(alg, struct sun8i_ce_alg_template, alg.rng);
+-	ce = algt->ce;
+-
+-	if (ctx->slen == 0) {
+-		dev_err(ce->dev, "not seeded\n");
+-		return -EINVAL;
+-	}
+-
+-	/* we want dlen + seedsize rounded up to a multiple of PRNG_DATA_SIZE */
+-	todo = dlen + ctx->slen + PRNG_DATA_SIZE * 2;
+-	todo -= todo % PRNG_DATA_SIZE;
+-
+-	d = kzalloc(todo, GFP_KERNEL | GFP_DMA);
+-	if (!d) {
+-		err = -ENOMEM;
+-		goto err_mem;
+-	}
+-
+-	dev_dbg(ce->dev, "%s PRNG slen=%u dlen=%u todo=%u multi=%u\n", __func__,
+-		slen, dlen, todo, todo / PRNG_DATA_SIZE);
+-
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_CE_DEBUG
+-	algt->stat_req++;
+-	algt->stat_bytes += todo;
+-#endif
+-
+-	dma_iv = dma_map_single(ce->dev, ctx->seed, ctx->slen, DMA_TO_DEVICE);
+-	if (dma_mapping_error(ce->dev, dma_iv)) {
+-		dev_err(ce->dev, "Cannot DMA MAP IV\n");
+-		err = -EFAULT;
+-		goto err_iv;
+-	}
+-
+-	dma_dst = dma_map_single(ce->dev, d, todo, DMA_FROM_DEVICE);
+-	if (dma_mapping_error(ce->dev, dma_dst)) {
+-		dev_err(ce->dev, "Cannot DMA MAP DST\n");
+-		err = -EFAULT;
+-		goto err_dst;
+-	}
+-
+-	err = pm_runtime_resume_and_get(ce->dev);
+-	if (err < 0)
+-		goto err_pm;
+-
+-	mutex_lock(&ce->rnglock);
+-	chan = &ce->chanlist[flow];
+-
+-	cet = &chan->tl[0];
+-	memset(cet, 0, sizeof(struct ce_task));
+-
+-	cet->t_id = cpu_to_le32(flow);
+-	common = ce->variant->prng | CE_COMM_INT;
+-	cet->t_common_ctl = cpu_to_le32(common);
+-
+-	/* recent CE (H6) need length in bytes, in word otherwise */
+-	if (ce->variant->prng_t_dlen_in_bytes)
+-		cet->t_dlen = cpu_to_le32(todo);
+-	else
+-		cet->t_dlen = cpu_to_le32(todo / 4);
+-
+-	sym = PRNG_LD;
+-	cet->t_sym_ctl = cpu_to_le32(sym);
+-	cet->t_asym_ctl = 0;
+-
+-	cet->t_key = desc_addr_val_le32(ce, dma_iv);
+-	cet->t_iv = desc_addr_val_le32(ce, dma_iv);
+-
+-	cet->t_dst[0].addr = desc_addr_val_le32(ce, dma_dst);
+-	cet->t_dst[0].len = cpu_to_le32(todo / 4);
+-
+-	err = sun8i_ce_run_task(ce, 3, "PRNG");
+-	mutex_unlock(&ce->rnglock);
+-
+-	pm_runtime_put(ce->dev);
+-
+-err_pm:
+-	dma_unmap_single(ce->dev, dma_dst, todo, DMA_FROM_DEVICE);
+-err_dst:
+-	dma_unmap_single(ce->dev, dma_iv, ctx->slen, DMA_TO_DEVICE);
+-
+-	if (!err) {
+-		memcpy(dst, d, dlen);
+-		memcpy(ctx->seed, d + dlen, ctx->slen);
+-	}
+-err_iv:
+-	kfree_sensitive(d);
+-err_mem:
+-	return err;
+-}
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h
+@@ -15,7 +15,6 @@
+ #include <linux/hw_random.h>
+ #include <crypto/internal/hash.h>
+ #include <crypto/md5.h>
+-#include <crypto/rng.h>
+ #include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ 
+@@ -58,9 +57,7 @@
+ #define CE_ALG_SHA384           20
+ #define CE_ALG_SHA512           21
+ #define CE_ALG_TRNG		48
+-#define CE_ALG_PRNG		49
+ #define CE_ALG_TRNG_V2		0x1c
+-#define CE_ALG_PRNG_V2		0x1d
+ 
+ /* Used in ce_variant */
+ #define CE_ID_NOTSUPP		0xFF
+@@ -96,10 +93,6 @@
+ #define ESR_H6	4
+ #define ESR_D1	5
+ 
+-#define PRNG_DATA_SIZE (160 / 8)
+-#define PRNG_SEED_SIZE DIV_ROUND_UP(175, 8)
+-#define PRNG_LD BIT(17)
+-
+ #define CE_DIE_ID_SHIFT	16
+ #define CE_DIE_ID_MASK	0x07
+ 
+@@ -136,13 +129,10 @@ struct ce_clock {
+  *				bytes or words
+  * @hash_t_dlen_in_bytes:	Does the request size for hash is in
+  *				bits or words
+- * @prng_t_dlen_in_bytes:	Does the request size for PRNG is in
+- *				bytes or words
+  * @trng_t_dlen_in_bytes:	Does the request size for TRNG is in
+  *				bytes or words
+  * @ce_clks:	list of clocks needed by this variant
+  * @esr:	The type of error register
+- * @prng:	The CE_ALG_XXX value for the PRNG
+  * @trng:	The CE_ALG_XXX value for the TRNG
+  */
+ struct ce_variant {
+@@ -151,12 +141,10 @@ struct ce_variant {
+ 	u32 op_mode[CE_ID_OP_MAX];
+ 	bool cipher_t_dlen_in_bytes;
+ 	bool hash_t_dlen_in_bits;
+-	bool prng_t_dlen_in_bytes;
+ 	bool trng_t_dlen_in_bytes;
+ 	bool needs_word_addresses;
+ 	struct ce_clock ce_clks[CE_MAX_CLOCKS];
+ 	int esr;
+-	unsigned char prng;
+ 	unsigned char trng;
+ };
+ 
+@@ -328,16 +316,6 @@ struct sun8i_ce_hash_reqctx {
+ };
+ 
+ /*
+- * struct sun8i_ce_prng_ctx - context for PRNG TFM
+- * @seed:	The seed to use
+- * @slen:	The size of the seed
+- */
+-struct sun8i_ce_rng_tfm_ctx {
+-	void *seed;
+-	unsigned int slen;
+-};
+-
+-/*
+  * struct sun8i_ce_alg_template - crypto_alg template
+  * @type:		the CRYPTO_ALG_TYPE for this template
+  * @ce_algo_id:		the CE_ID for this template
+@@ -357,7 +335,6 @@ struct sun8i_ce_alg_template {
+ 	union {
+ 		struct skcipher_engine_alg skcipher;
+ 		struct ahash_engine_alg hash;
+-		struct rng_alg rng;
+ 	} alg;
+ 	unsigned long stat_req;
+ 	unsigned long stat_fb;
+@@ -398,11 +375,5 @@ int sun8i_ce_hash_finup(struct ahash_req
+ int sun8i_ce_hash_digest(struct ahash_request *areq);
+ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq);
+ 
+-int sun8i_ce_prng_generate(struct crypto_rng *tfm, const u8 *src,
+-			   unsigned int slen, u8 *dst, unsigned int dlen);
+-int sun8i_ce_prng_seed(struct crypto_rng *tfm, const u8 *seed, unsigned int slen);
+-void sun8i_ce_prng_exit(struct crypto_tfm *tfm);
+-int sun8i_ce_prng_init(struct crypto_tfm *tfm);
+-
+ int sun8i_ce_hwrng_register(struct sun8i_ce_dev *ce);
+ void sun8i_ce_hwrng_unregister(struct sun8i_ce_dev *ce);
 
 
