@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435243D6664;
-	Fri,  4 Sep 2026 05:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E7B34EF15;
+	Fri,  4 Sep 2026 05:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499503; cv=none; b=KwCG8aUkzU4F797ytlyZThSxkOUaLU28ehhrIIuWkZyjDk8Y2PTFT3roHl6kzqHVJk0QQf75UWilL7F5ztJ3+mT30cyxHC70MSj/+TBC+NgLAdI8sTHS2TjsYcr2L5Qq5NuqWc9fvTXRhN6cORDgBVnCGbEp8fZbCxcNDeDiE7I=
+	t=1788499506; cv=none; b=nu/hSLZcoZs5tQSgLoUvwvZ/gepba05btH/PPkb34/XQ/kfYMWHWkUZo2ROZAbV+FFcFnX2KEVDe/BB0VBuN0XJu8/BBq5ud180M650labpHxTGzQMN4bM0ELjyMQoAAuaBunpARPnsUbCU6sxuet02CCKWoQ47mQZDT4T0xH5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499503; c=relaxed/simple;
-	bh=i5V7o8NPSzE6sIyRFI14mRsK48hiSy7/zFWARJQ08h4=;
+	s=arc-20240116; t=1788499506; c=relaxed/simple;
+	bh=rcnZbZnvbg8hZW/DKjCbFaPuqq5pbZNMZeCM7uvJz5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uge0I46EBrF9FMZG5qAkfZEPvNMNwSJe/tDuMAZxZc+aDHEBT+HnC6AsxlMRR5+1FP/yy8FDsrkPgoH7hErlXkeIEfTiswq0hIlBUnaIwqamVXRlo3QOGAh2YGuB+GRTR7kdUCwy53che8PtGkM5DHGqNcRLgLm5jW0rUUfhWkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5avQNPK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NsRxDv3wAk851q6E//0Myax0jzwNPtOncAETC5rNKa5K/51DLL3GOpZTntbp+d5QMP9yH3zXAb7SMhqBLHKTyhj7NVpK7gJ3Xhfo5YOSV7DCftEircU/Vbbqekw+/MjCKhDv8+/48B2tWOvzlcO8uxO9pHpjbGpBTHzGJ7r0/AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sc/lmBcv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5avQNPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F241F00A3E;
-	Fri,  4 Sep 2026 05:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sc/lmBcv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D561F00A3E;
+	Fri,  4 Sep 2026 05:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499502;
-	bh=Fmic6I81IzQpeAzw8/9VXxD/tDw1la5MDNPpYrk8GXQ=;
+	s=korg; t=1788499505;
+	bh=7IrfwDpA+Lt2Sn32mQ/++ISzg4yfAwJUk9ZjzKMjqNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K5avQNPKiZoW0dRfGeoJE5M7hV/mV8PCJay2pONLNNZbjdpJtoVSOR+lK8TdImr3G
-	 BGbLjEv+LeXrJHzKENr6OOkmmxMQ+z74j06kvxzKwwvDSB76J0JiJRjZD5mheHn4K7
-	 3G25o1/Q3EOrA6JcmpHPl8s6qgNqJHAklpe4gJLs=
+	b=sc/lmBcvdDw7RhXJWgz4V9w6LNz4GnW8lhJ1cj7sJji9Bfr5XPBuO/s7uDznJZWLE
+	 OQyoQjmd6uRM4iBW8MdaihCae1rq2Yq/75jpZL3fM3cTBaqLLwi8HEwxNBb3g07URI
+	 pm56i5DQ9OXUNk6YYx/xtPJ4galHedXihK0udNkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erin Lo <erin.lo@mediatek.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 7.2 439/713] remoteproc: scp: Fix device reference leak on failed lookup
-Date: Fri,  4 Sep 2026 06:56:47 +0200
-Message-ID: <20260904045813.670195805@linuxfoundation.org>
+	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.2 404/713] staging: media: tegra-video: fix of_node_put() on VIP parse errors
+Date: Fri,  4 Sep 2026 06:56:12 +0200
+Message-ID: <20260904045812.879120351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,51 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit 22f9efb3ae07f966a1901d929d16df1388cce65c upstream.
+commit 7393372f79db940acff206b43e2905685a0c57ad upstream.
 
-Make sure to drop the reference taken to the SCP device when attempting
-to look up its driver data before the driver has been bound.
+tegra_vip_channel_of_parse() initializes np from dev->of_node without
+taking a reference, but its error paths drop one through the
+err_node_put label. This underflows the refcount of the VIP device's
+OF node when endpoint parsing fails on a malformed device tree.
 
-Note that holding a reference to a device does not prevent its driver
-data from going away.
+The only reference the function takes on np is the success-path
+of_node_get() stored in vip->chan.of_node, and that one is already
+released by the tegra_vip_init() error path and by tegra_vip_exit().
 
-Fixes: 63c13d61eafe ("remoteproc/mediatek: add SCP support for mt8183")
-Cc: stable@vger.kernel.org	# 5.6
-Cc: Erin Lo <erin.lo@mediatek.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20260706065614.389412-1-johan@kernel.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Return errors directly instead of jumping to the bogus cleanup label.
+
+Fixes: e740d199cf0f ("staging: media: tegra-video: add support for Tegra20 parallel input")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/mtk_scp.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/staging/media/tegra-video/vip.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -36,6 +36,7 @@ struct mtk_scp *scp_get(struct platform_
- 	struct device *dev = &pdev->dev;
- 	struct device_node *scp_node;
- 	struct platform_device *scp_pdev;
-+	struct mtk_scp *scp;
- 
- 	scp_node = of_parse_phandle(dev->of_node, "mediatek,scp", 0);
- 	if (!scp_node) {
-@@ -51,7 +52,13 @@ struct mtk_scp *scp_get(struct platform_
- 		return NULL;
+--- a/drivers/staging/media/tegra-video/vip.c
++++ b/drivers/staging/media/tegra-video/vip.c
+@@ -126,7 +126,7 @@ static int tegra_vip_channel_of_parse(st
+ 	if (!ep) {
+ 		err = -EINVAL;
+ 		dev_err_probe(dev, err, "%pOF: error getting endpoint node\n", np);
+-		goto err_node_put;
++		return err;
  	}
  
--	return platform_get_drvdata(scp_pdev);
-+	scp = platform_get_drvdata(scp_pdev);
-+	if (!scp) {
-+		put_device(&scp_pdev->dev);
-+		return NULL;
-+	}
-+
-+	return scp;
- }
- EXPORT_SYMBOL_GPL(scp_get);
+ 	fwh = of_fwnode_handle(ep);
+@@ -134,14 +134,14 @@ static int tegra_vip_channel_of_parse(st
+ 	of_node_put(ep);
+ 	if (err) {
+ 		dev_err_probe(dev, err, "%pOF: failed to parse v4l2 endpoint\n", np);
+-		goto err_node_put;
++		return err;
+ 	}
  
+ 	num_pads = of_graph_get_endpoint_count(np);
+ 	if (num_pads != TEGRA_VIP_PADS_NUM) {
+ 		err = -EINVAL;
+ 		dev_err_probe(dev, err, "%pOF: need 2 pads, got %d\n", np, num_pads);
+-		goto err_node_put;
++		return err;
+ 	}
+ 
+ 	vip->chan.of_node = of_node_get(np);
+@@ -149,10 +149,6 @@ static int tegra_vip_channel_of_parse(st
+ 	vip->chan.pads[TEGRA_VIP_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE;
+ 
+ 	return 0;
+-
+-err_node_put:
+-	of_node_put(np);
+-	return err;
+ }
+ 
+ static int tegra_vip_channel_init(struct tegra_vip *vip)
 
 
