@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7164C38E8DD;
-	Fri,  4 Sep 2026 05:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389AF3BFAE0;
+	Fri,  4 Sep 2026 05:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498848; cv=none; b=V4A7fcx2pc9YM+o+A5ahQTRGr4hleYZq4cnlQlniLY5e+9+jPE2K/2+gQW4eS6tCFeCxFeGHr7H9aQ6i/UV0H9BVPyVlCmX8ZDdC7BIMJHxRA374q0MhPEF2oeZgWWJ94ACLtF5l2QGhknq6/VREzUtFv5ULbemRVwZFxEQumjM=
+	t=1788498850; cv=none; b=MOBHwYePxA8r4tHW9vDAKomCstkczNZTJAyzzVQ7wVrLXRI26wNUaGMq+VQ9lWYAveIrTxtshZnZzGlTXhKAm+kVpiASBY7ILI2R+krTPh9oqvMxFeRKKUJHCXxX4rfiyxnoRPudUu903szH701UG2PpU4xosmMkAvhnKDHsxEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498848; c=relaxed/simple;
-	bh=HA9zY1Cb+3tyn5LOaf0w4RyMsCAoPLCHf9faTfLW7iQ=;
+	s=arc-20240116; t=1788498850; c=relaxed/simple;
+	bh=/wtz1AX030dRagQIKqbnUvH/MqIYsaY+Vy/yQq0nyGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+iT7k13gRdax9+xAgvB8bcEwgiI4KA4SYtAZSyYxN3aWbTJrW/TwNkd5RngvBnELneuWvQprwjn7DZ3Mcgw+yhtYGZ6OwO7lgwtSHV/6x59RM2ZlIogFdHfy19rSVmqOmOIjchILY2ZB4bt2t+vmomEWyYd0lsRXpQLs7bPKjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EGrwUes; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CFK9hs6dxQnecInAHsjPvQxtqn/qDXYP+iWSy6AMjPhdmGSppC6M2Z9hhqmebpVs6XzAIU8B8RglhTiQ241NtR7j/E+w6E5bFQa1sNPR7VaM8d1sYZ7uxJcyGcLgFZANxlvpL+f2ZYGE6mAKUbd1Q7FN4xpJCz6RfIEzs1ri0XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlTycZSD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EGrwUes"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9B21F00A3D;
-	Fri,  4 Sep 2026 05:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlTycZSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943231F00A3D;
+	Fri,  4 Sep 2026 05:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498846;
-	bh=Ho85w38Hn4oaVNfc/z1h1fV3VT+GyFXiOYfnw05qCU8=;
+	s=korg; t=1788498849;
+	bh=JsnjRRA4QKQieG/aCbSCG3nDUfXshhl+bsrvgs+EjbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0EGrwUesFrFfE2VOpTBP3TZOjvDeeXfxUVtNJm+G9x7xCzJCdhJJ2I9w7ic7egNmZ
-	 eHV8ozAr49xjS2jfCAdTcaGiw9OR9RJDnty5yyQBi6XkwRiHTkwfWRkgqu5eIG+VyG
-	 w3NXxqX1qwJ7FuGJFPl4HObrUOzzPpd5iOauLsbo=
+	b=OlTycZSDM2qV74opdQnRMfdwFlqkf5LSX2rRv8N11wkEuEo6vGcSkB4zgrNETqrkW
+	 7MA2m2HEchFhsxXCQ+BewSUkR71r0765lCrzh3HVsGGz9lukDfbPcXcREBEOA+f+JX
+	 B6Fx7sqfCGn2yghIrkPnG76ZHaMeibc96FYFoETo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfgang Walter <linux@stwm.de>,
-	NeilBrown <neil@brown.name>,
+	Musaab Khan <musaab.khan@protonmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.2 207/713] NFSD: Prevent lock owner use-after-free during client teardown
-Date: Fri,  4 Sep 2026 06:52:55 +0200
-Message-ID: <20260904045808.455755373@linuxfoundation.org>
+Subject: [PATCH 7.2 208/713] NFSD: Prevent post-shutdown use-after-free in unlock_filesystem
+Date: Fri,  4 Sep 2026 06:52:56 +0200
+Message-ID: <20260904045808.479358030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -54,71 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit 5e2fa29d223a9a1e6a948e40b109d09081d1decd upstream.
+commit 292d915d3ba6fd15eeb88351fa10581683073109 upstream.
 
-__destroy_client() releases a client's open owners, but a lock owner
-whose only reference is a blocked lock (nbl) stays on
-cl_ownerstr_hashtbl.  client_has_state() does not count a bare owner,
-so DESTROY_CLIENTID can reach __destroy_client() with such owners
-present.
+Writing a filesystem path to /proc/fs/nfsd/unlock_filesystem runs
+nfsd4_cancel_copy_by_sb() before nfsd_mutex is held and before the
+handler confirms that nn->nfsd_serv is set. Once nfsd has shut down,
+nfs4_state_destroy_net() has freed nn->conf_id_hashtbl but left the
+pointer intact, so the cancel helper iterates freed slab memory as an
+array of struct list_head and then dereferences a bogus nfs4_client
+when it takes clp->async_lock. A local administrator holding
+CAP_SYS_ADMIN can reach this use-after-free by stopping the server and
+then writing to unlock_filesystem; KASAN reports a slab-use-after-free
+read in nfsd4_cancel_copy_by_sb().
 
-__destroy_client() then walks the table, calling remove_blocked_locks()
-on each owner without a reference.  Freeing a blocked lock drops the
-owner reference held via flc_owner.  The per-net laundromat reaps
-blocked locks from nn->blocked_locks_lru independently of client state.
-The two paths share blocked_locks_lock only for the list splice, not
-the owner's lifetime.  The laundromat therefore frees the owner as
-__destroy_client() dereferences it, a NULL dereference in
-remove_blocked_locks().
+nfsd4_revoke_states() walks the same state tables and for that reason
+already runs only under nfsd_mutex with nn->nfsd_serv confirmed
+present. Move the async COPY cancel into that protected section so
+every NFSv4 state-table walker on this path observes a running server.
+Async copies exist only while the server runs, so gating the cancel on
+nn->nfsd_serv loses nothing.
 
-nfsd4_release_lockowner() holds a reference across the same call;
-__destroy_client() does not.  Hold cl_lock across the walk, taking a
-reference and unhashing each owner, then drop it before
-remove_blocked_locks() and nfs4_put_stateowner(), which take
-blocked_locks_lock and cl_lock.
-
-Reported-by: Wolfgang Walter <linux@stwm.de>
-Closes: https://lore.kernel.org/linux-nfs/6eccafaaaa60651ef091257c3439c46b@stwm.de/
-Fixes: 68ef3bc31664 ("nfsd: remove blocked locks on client teardown")
+Reported-by: Musaab Khan <musaab.khan@protonmail.com>
+Fixes: 3daab3112f03 ("nfsd: cancel async COPY operations when admin revokes filesystem state")
 Cc: stable@vger.kernel.org
-Reviewed-by: NeilBrown <neil@brown.name>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260709-cel-v4-1-1d519d9be0cb@kernel.org
+Link: https://patch.msgid.link/20260613-unlock-filesystem-uaf-v1-1-462b9bec8c84@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ fs/nfsd/nfsctl.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2712,14 +2712,24 @@ __destroy_client(struct nfs4_client *clp
- 		release_openowner(oo);
- 	}
- 	for (i = 0; i < OWNER_HASH_SIZE; i++) {
--		struct nfs4_stateowner *so, *tmp;
-+		struct nfs4_stateowner *so;
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -296,14 +296,15 @@ static ssize_t write_unlock_fs(struct fi
+ 	 * 2.  Is that directory a mount point, or
+ 	 * 3.  Is that directory the root of an exported file system?
+ 	 */
+-	nfsd4_cancel_copy_by_sb(netns(file), path.dentry->d_sb);
+ 	error = nlmsvc_unlock_all_by_sb(path.dentry->d_sb);
+ 	mutex_lock(&nfsd_mutex);
+ 	nn = net_generic(netns(file), nfsd_net_id);
+-	if (nn->nfsd_serv)
++	if (nn->nfsd_serv) {
++		nfsd4_cancel_copy_by_sb(netns(file), path.dentry->d_sb);
+ 		nfsd4_revoke_states(nn, path.dentry->d_sb);
+-	else
++	} else {
+ 		error = -EINVAL;
++	}
+ 	mutex_unlock(&nfsd_mutex);
  
--		list_for_each_entry_safe(so, tmp, &clp->cl_ownerstr_hashtbl[i],
--					 so_strhash) {
-+		spin_lock(&clp->cl_lock);
-+		while (!list_empty(&clp->cl_ownerstr_hashtbl[i])) {
-+			so = list_first_entry(&clp->cl_ownerstr_hashtbl[i],
-+					      struct nfs4_stateowner, so_strhash);
- 			/* Should be no openowners at this point */
- 			WARN_ON_ONCE(so->so_is_open_owner);
-+			nfs4_get_stateowner(so);
-+			unhash_lockowner_locked(lockowner(so));
-+			spin_unlock(&clp->cl_lock);
-+
- 			remove_blocked_locks(lockowner(so));
-+			nfs4_put_stateowner(so);
-+
-+			spin_lock(&clp->cl_lock);
- 		}
-+		spin_unlock(&clp->cl_lock);
- 	}
- 	nfsd4_return_all_client_layouts(clp);
- 	nfsd4_shutdown_copy(clp);
+ 	path_put(&path);
 
 
