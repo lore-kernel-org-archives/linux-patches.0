@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FF437C106;
-	Fri,  4 Sep 2026 05:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375392F9DA1;
+	Fri,  4 Sep 2026 05:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501080; cv=none; b=XYtIrAwRrD7elB/r/Q76wCZm2555mDoEabl2JKUdwN2uGFi9JcE83nDiyPMdDrQdrefwflwDNBiYsvSADv5tXkSJYXuOcxkGmNdMuTUffDnXEu1wKIIjh6QvptqlQrxSfHvOC1LGFGgqYJ98yY7R6wTLro0gYrbYuXVuce1HHeE=
+	t=1788501083; cv=none; b=uIEhKCdIk+SsEhK3gaI0Zn2LvUb9gxX64iNJDOqawm6iJKCtCS+qkWs/Klzk7n0FN9AnTcSYB1TohDYE/PAh2XbkHfuCSOzWta+lwl+W5aa1szs8s9b3M0T3MJOO4T3/YB3IceN/z0m6gtDTCXrPzQD+vvBAq+cP+oEjlvYxHOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501080; c=relaxed/simple;
-	bh=0m4ITbiJ52g1jOA7rUXbWkQtQ7wgDSflbwWY4q3bbzM=;
+	s=arc-20240116; t=1788501083; c=relaxed/simple;
+	bh=FBqV8nxv8JVgnSLMXISG7dd/pbC2j9QbsAS+ERcPPdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XU/wR4J61qO6WJPptymbIf6WGRMMBoLyQh2uWkTI/mGNX4jTNeWoDNs7XP3g1PIgn7snMv8wlPXZZy1zNx08E7L96BanLJDR8eeTsfiLkpCikbDTCyKEjhKB8JafLGcbCCwJWW2++NCtwqf12TKipFIjEbkNqiMs0Z6+EwJO+V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAC7Kq0P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T6qYNh3T98gXxQMQMlWnI0Q5QLeEh+O5m7ZDYKDAkAMCA0Wi/9YPVyavxVl3bih0PsZZDjaflEWdhVU8aN9/YyQSpkjxATCxpLCSDmJ7hmPg61EKkNSO71Lqy0hnKnjKYhPJJpmyUcFgq4f0cvsearC/H9/AGc9+IDCvX8vPjjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5NQGIOj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAC7Kq0P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B212B1F00A3D;
-	Fri,  4 Sep 2026 05:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5NQGIOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB461F00A3D;
+	Fri,  4 Sep 2026 05:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501079;
-	bh=dL6oBLolo61PVV9QMLYe5GhDqGJuvVMKfJQpybe95Ys=;
+	s=korg; t=1788501082;
+	bh=C+QTCua6V8h8Fv9lt6v44Iksor2/qaKQKeD/Sv2hPnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iAC7Kq0PhcjzJ5MR2lLvuBf85E6aPaeMGDbtOQ+DcCUHIyEkQja+kdZWycJIi/6dS
-	 GScbNpr/dTxIi6Vo/S/tEZIeBMVsPx8zCZOtfpsNvA8+c9KStmEMsFBe+Pq37LCh/M
-	 u1LEoJ0xORhDL52FMVVc/b6sH90eOXh9tLgmQ53o=
+	b=T5NQGIOjLKO9rGiypxjLGT9lVmBcK+fkeHb+rsmiGgCzl5udWu33EGAFe9iyJG5Ld
+	 vh7qISAb8bxB/hwmM1rZ+hD+209uqfaCYORYbygd1xlbek/aMx+81WUpyooQpZuQ+B
+	 UBntN3+vX8dmU+3XHER0oI0xEr7uJ303pwi8Zw8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 283/552] sunrpc: defer rq_argp and rq_resp free until after RCU grace period
-Date: Fri,  4 Sep 2026 06:57:20 +0200
-Message-ID: <20260904045756.377784635@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.18 257/552] jbd2: check need_resched() when skipping busy checkpoint buffers
+Date: Fri,  4 Sep 2026 06:56:54 +0200
+Message-ID: <20260904045755.599505802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -44,70 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit c479bde671cbe2f9e152834a8b0eb7c3c295bbaf upstream.
+commit f213e12ff5c9590b1034ae8da0e6d09665c772d0 upstream.
 
-svc_rqst_free() frees rqstp->rq_argp and rqstp->rq_resp synchronously
-via kfree(), but defers the rqstp struct free via kfree_rcu().  After
-svc_exit_thread() calls list_del_rcu() and svc_rqst_free(), there is
-a window where RCU readers that started before list_del_rcu() can still
-traverse the thread list and find the rqstp.  These readers (e.g.
-nfsd_nl_rpc_status_get_dumpit()) dereference rqstp->rq_argp, which has
-already been freed — a use-after-free.
+journal_shrink_one_cp_list() skips busy checkpoint buffers when called
+with JBD2_SHRINK_BUSY_SKIP.  The continue statement on this path also
+skips the need_resched() check at the end of the loop body.
 
-Fix this by moving the kfree of rq_argp and rq_resp into an explicit
-call_rcu() callback alongside the struct free.  Resources not accessed
-by RCU readers (bvec, buffer pages, scratch folio, auth_data) remain
-synchronously freed.
+Consequently, when a checkpoint list contains mostly busy buffers, the
+shrinker can walk the entire list while holding journal->j_list_lock,
+even when a reschedule has been requested.  Large checkpoint lists under
+memory pressure can therefore cause long lock hold times and leave other
+CPUs spinning on j_list_lock, resulting in soft lockups or RCU stalls.
 
-Fixes: 812443865c5f ("sunrpc: add a rcu_head to svc_rqst and use kfree_rcu to free it")
+Route the busy-buffer path through the need_resched() check so that the
+shrinker can release j_list_lock and reschedule promptly, restoring
+parity with the clean-buffer path, which already checks need_resched().
+This does not change which checkpoint buffers are eligible for removal.
+
+Fixes: b98dba273a0e ("jbd2: remove journal_clean_one_cp_list()")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-4-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260713102229.1598812-2-max.kellermann@ionos.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/jbd2/checkpoint.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -723,6 +723,15 @@ svc_release_buffer(struct svc_rqst *rqst
- 	kfree(rqstp->rq_pages);
- }
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -392,7 +392,7 @@ static unsigned long journal_shrink_one_
+ 			ret = jbd2_journal_try_remove_checkpoint(jh);
+ 			if (ret < 0) {
+ 				if (type == JBD2_SHRINK_BUSY_SKIP)
+-					continue;
++					goto next;
+ 				break;
+ 			}
+ 		}
+@@ -403,6 +403,7 @@ static unsigned long journal_shrink_one_
+ 			break;
+ 		}
  
-+static void svc_rqst_free_rcu(struct rcu_head *head)
-+{
-+	struct svc_rqst *rqstp = container_of(head, struct svc_rqst, rq_rcu_head);
-+
-+	kfree(rqstp->rq_resp);
-+	kfree(rqstp->rq_argp);
-+	kfree(rqstp);
-+}
-+
- static void
- svc_rqst_free(struct svc_rqst *rqstp)
- {
-@@ -731,10 +740,8 @@ svc_rqst_free(struct svc_rqst *rqstp)
- 	svc_release_buffer(rqstp);
- 	if (rqstp->rq_scratch_folio)
- 		folio_put(rqstp->rq_scratch_folio);
--	kfree(rqstp->rq_resp);
--	kfree(rqstp->rq_argp);
- 	kfree(rqstp->rq_auth_data);
--	kfree_rcu(rqstp, rq_rcu_head);
-+	call_rcu(&rqstp->rq_rcu_head, svc_rqst_free_rcu);
- }
- 
- static struct svc_rqst *
++next:
+ 		if (need_resched())
+ 			break;
+ 	} while (jh != last_jh && (!nr_to_scan || *nr_to_scan));
 
 
