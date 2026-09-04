@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FB03EC6AE;
-	Fri,  4 Sep 2026 05:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C4D3815E1;
+	Fri,  4 Sep 2026 05:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500395; cv=none; b=TvABP7boXX0omx0BDGm7Je/Y1eQ5gxgv7K4rdrLpbgMrOzSxLzP3fWSFwG1didzljuahyAZ6p9R1eM8RmZJ/YZNHfCYTC0EUVdc1IcogxDf2Jb1rAnidoGE9t82ARLvYTTHKUgAKMnS/zm3uiJ0jv3VBOpeP5pBunQEs6HNVSlc=
+	t=1788500398; cv=none; b=kZJZI/B5iPz8AwZJ+xR3Co7fkkanl0G/konaDCQsd322g3JOWsJMSXvnTtpJ7gc2ldTZ2V9kwQg69PTlWIgucpCny2n3gsUYWNngVAaV0YX5HUnangIMUqyuAcdyBQnqD3zG8ybc0CcCVNbwQX+72v4d3dU/2cMa5MPu5Koq8Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500395; c=relaxed/simple;
-	bh=OTW9vARbKx8rQ//OMiJYV10IgcEJv3xJAALvgIz9uvg=;
+	s=arc-20240116; t=1788500398; c=relaxed/simple;
+	bh=dyEDzwF1hSG6tRbuboEVgNJo+PnC21d1m4PJPf0p1As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jriDYicg+Iih5yDeg4vrTcXj6/7/xhyoURHiNvOWUwpgpd8L/n0oi1xOQ3o3e3AZNWP693lws6XQnT5MozkqUU1OA4R+iYsg5WTxYnW/8MKgxyJk+vStj1K51+RmI1Z9HxRoeCVxsBheFhFaAtCEAQcUhzyJskulOi+L3+pewrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxnKy7EN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GJCphG/gwPga7VGWeQEgNbicpHOXHDrm0K6fzbMkfB8J1Bx5GcnQsBEHoueEVIq6CdL8EenqHFByZiJzaQWW1mE4Qs42W6VvCJtIz7puOXzRjlZPQEtqGgfKQxw+ZVCTu/v6hKvKLR3vYy+rYoASa8RZLRwMwTAvz7j7LJyu7ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0Gq+463; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxnKy7EN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D4B1F00A3D;
-	Fri,  4 Sep 2026 05:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0Gq+463"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F301F00A3D;
+	Fri,  4 Sep 2026 05:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500394;
-	bh=3bj0hL7LHg9pozthhd4OL1rL1oduKk2ti/Zm5lUn3c4=;
+	s=korg; t=1788500397;
+	bh=Om1EvdfuXZi0Xdc71hjmnSbtPpop01Ip9onMdb82GTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qxnKy7ENMZgxbomz/CFdVf9n4Dz9lJbBstLFjYNi8q/HRKciqW03RLp+kmQMPSgwM
-	 QCFePGkmfl7kMDe3G8etF+cjgZdZAaEGHXh5p1Vl0Lri75cviVP9W830e5CKmTg6gk
-	 L+bA9Kyv+SzfwF4nTzunGmim/HjQAr9xR+dC4uS0=
+	b=P0Gq+463FfAn5HAlsgAjj+y37b2WKLvAxbu/9/JF495+of3OA+Lgozbn1/nH0bzxp
+	 HnFVjFhql3WkjaT7Ob/OH9ZIlFNR7jgwO40+Sq+d0RWxS5gzO5Y9GqmKrCBhqk+p6T
+	 ANkoD+Kb4sjHdp/dpNvfdDiwoNvYJXreJL2bu5Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Gregory Price <gourry@gourry.net>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Brendan Jackman <jackmanb@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
 	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Muchun Song <muchun.song@linux.dev>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Zi Yan <ziy@nvidia.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 042/552] mm: compaction: support non-movable compaction for pageblock requests
-Date: Fri,  4 Sep 2026 06:53:19 +0200
-Message-ID: <20260904045748.787052700@linuxfoundation.org>
+Subject: [PATCH 6.18 043/552] mm: memcg-v1: fix wrong linux-mm list address in deprecation warnings
+Date: Fri,  4 Sep 2026 06:53:20 +0200
+Message-ID: <20260904045748.810121095@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -62,122 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-commit 1b4b697a5743e624cc259d6c31a8d8716b796305 upstream.
+commit 45b1ec4887bdcc58af885540d9fefa8b67d17d57 upstream.
 
-While trying to fix a reclaim storm in defrag_mode, I noticed that
-non-movable direct compaction is extremely inefficient.
+The deprecation warnings for memory.oom_control and memory.pressure_level
+use linux-mm-@kvack.org instead of the linux-mm mailing list address.
+Remove the extra hyphen.
 
-When searching for space to evacuate, compaction only allows blocks of the
-same type as the incoming request.  This is to prevent migratetype
-pollution, where a small non-movable request frees space in a movable
-block and provokes the allocator to fall back and pollute it.
-
-This protection is reasonable on one hand, but the downside is that it
-makes non-movable direct compaction nearly useless: if we get the type
-annotations right, by definition there aren't any movable pages inside the
-non-movable blocks it is allowed to scan.
-
-With defrag_mode, the goal is the production of whole blocks, which are
-essentially type neutral: __rmqueue_claim() will convert them wholesale on
-alloc.  This makes type mixing and pollution a non-issue.
-
-Fix the pollution gates to take the requested order into account, and
-allow whole-block requests to scan blocks of other types.
-
-The only exception is CMA blocks.  That type is sticky and these blocks
-cannot be claimed to other types.  Continue to be strict with them, and
-allow only explicit ALLOC_CMA requests and kcompactd to evacuate them.
-
-Link: https://lore.kernel.org/20260722150006.3848560-3-hannes@cmpxchg.org
-Fixes: e3aa7df331bc ("mm: page_alloc: defrag_mode")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Zi Yan <ziy@nvidia.com>
+Link: https://lore.kernel.org/20260713085756.2973549-1-guopeng.zhang@linux.dev
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/compaction.c |   46 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 39 insertions(+), 7 deletions(-)
+ mm/memcontrol-v1.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -1364,12 +1364,44 @@ static bool suitable_migration_source(st
- 	if (pageblock_skip_persistent(page))
- 		return false;
+--- a/mm/memcontrol-v1.c
++++ b/mm/memcontrol-v1.c
+@@ -1139,13 +1139,13 @@ static ssize_t memcg_write_event_control
+ 		event->unregister_event = mem_cgroup_usage_unregister_event;
+ 	} else if (!strcmp(name, "memory.oom_control")) {
+ 		pr_warn_once("oom_control is deprecated and will be removed. "
+-			     "Please report your usecase to linux-mm-@kvack.org"
++			     "Please report your usecase to linux-mm@kvack.org"
+ 			     " if you depend on this functionality.\n");
+ 		event->register_event = mem_cgroup_oom_register_event;
+ 		event->unregister_event = mem_cgroup_oom_unregister_event;
+ 	} else if (!strcmp(name, "memory.pressure_level")) {
+ 		pr_warn_once("pressure_level is deprecated and will be removed. "
+-			     "Please report your usecase to linux-mm-@kvack.org "
++			     "Please report your usecase to linux-mm@kvack.org "
+ 			     "if you depend on this functionality.\n");
+ 		event->register_event = vmpressure_register_event;
+ 		event->unregister_event = vmpressure_unregister_event;
+@@ -1982,7 +1982,7 @@ static int mem_cgroup_oom_control_write(
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
  
--	if ((cc->mode != MIGRATE_ASYNC) || !cc->direct_compaction)
-+	/*
-+	 * Background compaction produces blocks for the zone at
-+	 * large, with no particular allocation context. Allow all
-+	 * block types, including CMA.
-+	 */
-+	if (!cc->direct_compaction)
- 		return true;
+ 	pr_warn_once("oom_control is deprecated and will be removed. "
+-		     "Please report your usecase to linux-mm-@kvack.org if you "
++		     "Please report your usecase to linux-mm@kvack.org if you "
+ 		     "depend on this functionality.\n");
  
- 	block_mt = get_pageblock_migratetype(page);
- 
--	if (cc->migratetype == MIGRATE_MOVABLE)
-+	/*
-+	 * CMA pages can only be taken by ALLOC_CMA requests. For anybody
-+	 * else, vacating a CMA block consumes free pages the caller
-+	 * could have used, and produces free pages it cannot.
-+	 */
-+	if (is_migrate_cma(block_mt) && !(cc->alloc_flags & ALLOC_CMA))
-+		return false;
-+
-+	/*
-+	 * Per default, scans are restricted to blocks compatible with
-+	 * the request, to prevent cross-contamination. Once
-+	 * compaction priority escalates to synchronous scans, though,
-+	 * scan all blocks to try to make forward progress. For
-+	 * movable request, this likely helps little: there shouldn't
-+	 * be many migratable pages inside non-movable blocks besides
-+	 * allocator fallbacks. For non-movable requests, this helps a
-+	 * lot, as they can finally scan movable blocks.
-+	 */
-+	if (cc->mode != MIGRATE_ASYNC)
-+		return true;
-+
-+	/*
-+	 * Prevent <pageblock_order unmovable/reclaimable requests from
-+	 * polluting movable blocks through fallbacks. Whole-block production
-+	 * (directly requested, or defrag_mode) is exempt as the allocator
-+	 * claims and converts these.
-+	 */
-+	if (cc->migratetype == MIGRATE_MOVABLE || cc->order >= pageblock_order)
- 		return is_migrate_movable(block_mt);
- 	else
- 		return block_mt == cc->migratetype;
-@@ -1957,12 +1989,12 @@ static unsigned long fast_find_migratebl
- 		return pfn;
- 
- 	/*
--	 * Only allow kcompactd and direct requests for movable pages to
--	 * quickly clear out a MOVABLE pageblock for allocation. This
--	 * reduces the risk that a large movable pageblock is freed for
--	 * an unmovable/reclaimable small allocation.
-+	 * Prevent <pageblock_order unmovable/reclaimable requests from
-+	 * polluting movable blocks through fallbacks. Whole-block production
-+	 * is exempt as the allocator claims and converts these.
- 	 */
--	if (cc->direct_compaction && cc->migratetype != MIGRATE_MOVABLE)
-+	if (cc->direct_compaction && cc->migratetype != MIGRATE_MOVABLE &&
-+	    cc->order < pageblock_order)
- 		return pfn;
- 
- 	/*
+ 	/* cannot set to root cgroup and only 0 and 1 are allowed */
 
 
