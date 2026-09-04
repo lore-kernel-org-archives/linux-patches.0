@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBE641D624;
-	Fri,  4 Sep 2026 06:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F72541A574;
+	Fri,  4 Sep 2026 06:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502495; cv=none; b=bT5gqlVlbgIEJyWF6a8638xHsQ8yes/OKp8rDgFXgQKdwIBN3D5FjqRC1IxCznpO5a7xiRMy/8PT2mKW0S9ohQv1tjnAdcmsjqh4A+1N3FHP5p6nQCqOCkInZZAkljNUpMYFvZUWApdk6EebnCyotT27YNxh8W6ttfgCh/97/gQ=
+	t=1788502498; cv=none; b=TatzaYBTuGF/1g3JnQ1G+dWUdsv8H7AwLNjQSEgOAU8iygoXDvtt3H63gyyigo1rSMy47SpCijCRCMZ2vIcMYFvzo9Fj1jHxBmr9kGHONklQv4un27YrP4Yaw8Xf0d+2/L+gO14Yp2Ig97WlZSinrdu3Omd1c65OnMrVmTUk0sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502495; c=relaxed/simple;
-	bh=MaTjjREhhi+Mg4VYOhrABHVZiSCqN1kEw6gpbvqqGzk=;
+	s=arc-20240116; t=1788502498; c=relaxed/simple;
+	bh=piRjJ1wNGfajBzXFhU7UsP8pyvwWj8JXucqxXsJBs/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSuIvoaRy2fywa2BmQNtfwUCH3SzkebHQaYq4ZQwyI7gpMGzwXkgHt6CIfQbF7xpfTFXqg0dhx4AkLe/Bt9Y2B0gSFcxp5wuz56+VJ8+rcbWdTatYQjsvGwYwNGveUysSBEm3uLTwqQq+jHkOMbdYIq2ne/R/yUW6be4knun8Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDjNumzY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t931BnIQ99l/s1uz2pAmyoVfGFI2/Ez2Rn6S6U82P7vtHsdxx/DTUfF/YultMZ4whTLLX3P1H/tZCxAp2Q0biWVHVghAJkKsfyJhbS2upcSSqVPYDkknjEDcDUr0Cq/4goCoqiS3i2wZH7KhnMxKmIPcUr4aA1gmT/xpggYqYZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UegLIvXx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDjNumzY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788B91F00A3D;
-	Fri,  4 Sep 2026 06:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UegLIvXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CBF1F00A3D;
+	Fri,  4 Sep 2026 06:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502494;
-	bh=OAbBrv9KfH24em1cUmMGKiP/dDH+3aihfPc+1mow7ok=;
+	s=korg; t=1788502496;
+	bh=/vWweQfEzCXWO7T3qoXlCtWd2KfVh4I3X5C+Lo0XI4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LDjNumzYiY+h8t3kXHjV3d4TOsFnej9HJihwQFhZJW6hwssRyt4j4YqiqBkwQv7X1
-	 blz8zujU6cd/ra+ZmGTBvIfiWcRNgL7iqqzGCghb05mBVupe+ovCqXhZuw9fDVUjVG
-	 NzneWxnKjUlv1PBlNMwgSpZXMbXocXRwAuTjeie8=
+	b=UegLIvXxGCoh+fi8OMWoBF7a+gPTOwl9OUwzLtaHpoNp8qrVPNe7bLfb8iigN4Qun
+	 GBUpIzUQN5L2rGs/8kgVE7yHhQLJJBY8P2CdaIaDC7PP32ylImSBKjk85eMLii34OO
+	 lJuFWcVBO3ufiRjiynD+U0etetPwgskuvAQ8kxS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 184/403] Bluetooth: hci_intel: fix usage_count leak when autosuspend_delay is negative
-Date: Fri,  4 Sep 2026 06:59:47 +0200
-Message-ID: <20260904045739.040915242@linuxfoundation.org>
+Subject: [PATCH 6.12 185/403] Bluetooth: hci_sync: Clear HCI_CMD_PENDING when dropping the last request
+Date: Fri,  4 Sep 2026 06:59:48 +0200
+Message-ID: <20260904045739.062535164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,43 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
 
-commit c7e9a8cb6918656884a0757c92465075c7555ffa upstream.
+commit cb19774faa57c51efa189d8b8606aeabccebc53b upstream.
 
-intel_set_power() calls pm_runtime_use_autosuspend() when powering on
-the device, but the power-off path does not call the matching
-pm_runtime_dont_use_autosuspend() before disabling runtime PM.
+A synchronous HCI command that never receives a response leaves
+HCI_CMD_PENDING set: hci_req_cmd_complete() is the only place that clears
+it, and it only runs when a response matching the last command sent
+arrives.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
+hci_send_cmd_sync() populates hdev->req_skb only when the flag transitions
+from clear to set, while hci_dev_open_sync() and hci_dev_close_sync() drop
+req_skb without clearing the flag. After a timeout followed by either, the
+two disagree: the flag claims a request is outstanding while req_skb is
+NULL. Subsequent synchronous commands are then sent with no req_skb, so
+hci_event_packet() has nothing to match an arriving event against, and the
+caller times out even though the controller answered.
 
-Add the missing pm_runtime_dont_use_autosuspend() call before disabling
-runtime PM.
+Commands answered by Command Complete recover on their own, since
+hci_req_cmd_complete() clears the flag as a side effect. Drivers using
+__hci_cmd_sync_ev() with a custom event do not, because a vendor event
+never reaches that path. On a WCN3988 (hci_qca over UART) this makes a
+controller firmware hang unrecoverable: the driver injects a hardware
+error and re-runs qca_setup(), qca_read_soc_version() waits for
+HCI_EV_VENDOR, the reply arrives within 4 ms and is discarded, and every
+retry fails the same way. The adapter is left down until the driver is
+unbound and rebound, or power is removed.
 
-This issue was found by manual code inspection.
+Clear the flag wherever the last request is dropped, restoring the
+invariant that req_skb is non-NULL exactly when HCI_CMD_PENDING is set.
+Verified on hardware by forcing a command timeout: without this change
+setup fails on every attempt, with it setup succeeds on the first.
 
-Fixes: 74cdad37cd24 ("Bluetooth: hci_intel: Add runtime PM support")
+Fixes: 2615fd9a7c25 ("Bluetooth: hci_sync: Fix overwriting request callback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_intel.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_sync.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/bluetooth/hci_intel.c
-+++ b/drivers/bluetooth/hci_intel.c
-@@ -348,6 +348,7 @@ static int intel_set_power(struct hci_ua
- 			devm_free_irq(&idev->pdev->dev, idev->irq, idev);
- 			device_wakeup_disable(&idev->pdev->dev);
- 
-+			pm_runtime_dont_use_autosuspend(&idev->pdev->dev);
- 			pm_runtime_disable(&idev->pdev->dev);
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5276,6 +5276,7 @@ int hci_dev_open_sync(struct hci_dev *hd
+ 		if (hdev->req_skb) {
+ 			kfree_skb(hdev->req_skb);
+ 			hdev->req_skb = NULL;
++			hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
  		}
+ 
+ 		clear_bit(HCI_RUNNING, &hdev->flags);
+@@ -5456,6 +5457,7 @@ int hci_dev_close_sync(struct hci_dev *h
+ 	if (hdev->req_skb) {
+ 		kfree_skb(hdev->req_skb);
+ 		hdev->req_skb = NULL;
++		hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
  	}
+ 
+ 	clear_bit(HCI_RUNNING, &hdev->flags);
 
 
