@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213ED30C160;
-	Fri,  4 Sep 2026 05:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2846630C160;
+	Fri,  4 Sep 2026 05:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498949; cv=none; b=U+FPERaa+UBMBTcD0nSAfZOfu6er8/Y8/On0tg+K/2lTDIRph27IooL53Lz/ohGSqb1yoRPhBpKqald4ZsUvqxP/7ZwiFYkUAaofLoj+VBpEgEWlQyunr56Q8vaOdPGEigPCcl4aEV+SyiVTkcTeTF5fPzbQlxw9xU6/SZUi5eQ=
+	t=1788498952; cv=none; b=YYYCv6L9S4AqCQfRhVBWXbLnv8D0FVfTVosif6a46GEfkI1tqdXPYKUggY6Vt2r3elaVCHTxaOAQTChui7RuN0yHYd16PY7oBSD4jWs6k+su8M9jnN9WNEnembovnlrS21YmFFrNUdOab+XH400rvv2Gds7kEySfYKkaNRlg0Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498949; c=relaxed/simple;
-	bh=VXLBIqu/8ESoLK1BbRS5rao4fnDKhH5B8kYeX190DxA=;
+	s=arc-20240116; t=1788498952; c=relaxed/simple;
+	bh=eM+VHNpU3PF8vfYU1He6yjoJEoHXQw5MvNU/nU2VQqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ua1E09wrp5sTbYPsuE8WLZH3+qup96hPFmJ3HdPrlqUyi+OA9xUAu0s1WmNsa218jo+UUPngJXtwVoAAGPLSqCEpOEXNz+foxp1XFmy48F2rgZtnhCc88l3H8TucXHu5mUEn14jZ00Jm3bbNdKr+IWrMb2M8+o7+wMvmcb8/MUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSUyXbvz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jswCLM0IDSHVWCVSx1ViPW9j1AvjloyYcS/8eABlGcGX5kyqJULjgMuarUz4j7ingZ2PgKJwTGHfBfhDUFIQIptDKnNGk4TlrrX4wJu/DQqVQzixcOyY3DEpqeHLwWLpHbsR989nDWDIxA1qNeI1l9bulPQYl35cQ11WISKLtJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FV84FRpK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSUyXbvz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1381F00A3D;
-	Fri,  4 Sep 2026 05:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FV84FRpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2E41F00A3D;
+	Fri,  4 Sep 2026 05:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498948;
-	bh=tgn88gia7wzl22yk2a5QmACO4d9hQ885nTDFSI6TF3w=;
+	s=korg; t=1788498950;
+	bh=HKqNZBRZgeBvsUNWwqvfihHnPJdaaHilsKzYWhzAQhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hSUyXbvz6cMjsObWi6IzFheDIwc6RO/kBZy0wxNG+vYdRqNofs7ycoksLGXyKWfaU
-	 Ot/Xr4407t8pAs0ZATdacW/7Zl8+H1paFo+WHrR8zXCMbeTWVYzm4OMZQjdok4QSVd
-	 r4h/T4dTYZFnBjfPTWrPoH7XRGSC9YmYYUzHM+WQ=
+	b=FV84FRpKws3BNgBg2BEFn9qNuaWpN11LLck64yvXAbeM/XXdCUSu7shwZfxqTEfky
+	 mx4Ebx5ZYg/O2ajdxI3AyhXz6ypzS4pYSI0Tla979PX/tsrzkSdzwdjfDpePKnpsLl
+	 pIjjWAt0kcDo0cwCRpMBzThq9XAel46ZD3nrJ1pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Bryam Vargas <hexlabsecurity@proton.me>,
-	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 244/713] smb: client: reject a tree connect response whose byte count is too small
-Date: Fri,  4 Sep 2026 06:53:32 +0200
-Message-ID: <20260904045809.303462535@linuxfoundation.org>
+Subject: [PATCH 7.2 245/713] smb: client: restore the data_offset bound in is_valid_oplock_break()
+Date: Fri,  4 Sep 2026 06:53:33 +0200
+Message-ID: <20260904045809.324792893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,72 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 65deb18359341141d37dc86fc7853511be3c87a7 upstream.
+commit ba22f575de9deeae4ae0859ca4315a7698226237 upstream.
 
-CIFSTCon() bounds its strnlen() over the byte area with the server's
-ByteCount minus two, which for ByteCount 0 or 1 goes negative as an int
-and converts to a huge size_t.  The later subtraction wraps the __u16
-bytes_left, and that is what bounds cifs_strndup_from_utf16(): a bound of
-up to 65535 against a ~16 KB cifs_req_poolp object runs off the end of the
-slab object, and the bytes reach userspace through tcon->nativeFileSystem
-in /proc/fs/cifs/DebugData.
+Commit 83bfbd0bb902 ("cifs: Remove the RFC1002 header from smb_hdr")
+changed the quantity this bound is measured against.  It used to be
+srv->total_read minus the 4-byte RFC1002 preamble that total_read then
+included, so it was the SMB message length.  The same commit stopped
+counting the preamble, and the mechanical substitution to
+srv->total_read - srv->pdu_size left an expression that is identically
+zero: standard_receive3() reads MID_HEADER_SIZE() bytes and then exactly
+pdu_length - MID_HEADER_SIZE() more, adding both to total_read.
 
-Reject a byte area too small for what the parser consumes.  Two bytes is
-the least it can consume, and no conformant response carries fewer.  The
-new trace point is the 129th smb_eio_trace entry, which __mode(byte)
-cannot represent, so the attribute goes with it.
+len is therefore 0, the subtraction below it wraps, and no __u32
+DataOffset can exceed the result, so the check from commit 097f5863b1a0
+("cifs: read overflow in is_valid_oplock_break()") no longer rejects
+anything.  Use total_read, which is now the message length on its own.
 
-Fixes: cc20c031bb06 ("cifs: convert CIFSTCon to use new unicode helper functions")
-Cc: stable@vger.kernel.org
+Fixes: 83bfbd0bb902 ("cifs: Remove the RFC1002 header from smb_hdr")
+Cc: stable@kernel.org
 Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifssmb.c |    6 ++++++
- fs/smb/client/trace.h   |    3 ++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ fs/smb/client/smb1misc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -615,6 +615,11 @@ CIFSTCon(const unsigned int xid, struct
- 		tcon->tid = smb_buffer_response->Tid;
- 		bcc_ptr = pByteArea(smb_buffer_response);
- 		bytes_left = get_bcc(smb_buffer_response);
-+		if (bytes_left < 2) {
-+			rc = smb_EIO2(smb_eio_trace_tcon_bcc_too_small,
-+				      bytes_left, 2);
-+			goto out;
-+		}
- 		length = strnlen(bcc_ptr, bytes_left - 2);
- 		if (smb_buffer->Flags2 & SMBFLG2_UNICODE)
- 			is_unicode = true;
-@@ -670,6 +675,7 @@ CIFSTCon(const unsigned int xid, struct
- 			reset_cifs_unix_caps(xid, tcon, NULL, NULL);
- 		}
- 	}
-+out:
- 	cifs_buf_release(smb_buffer);
- 	return rc;
- }
---- a/fs/smb/client/trace.h
-+++ b/fs/smb/client/trace.h
-@@ -133,6 +133,7 @@
- 	EM(smb_eio_trace_sym_slash,			"sym_slash") \
- 	EM(smb_eio_trace_sym_target_len,		"sym_target_len") \
- 	EM(smb_eio_trace_symlink_file_size,		"symlink_file_size") \
-+	EM(smb_eio_trace_tcon_bcc_too_small,		"tcon_bcc_too_small") \
- 	EM(smb_eio_trace_tdis_in_reconnect,		"tdis_in_reconnect") \
- 	EM(smb_eio_trace_tx_chained_async,		"tx_chained_async") \
- 	EM(smb_eio_trace_tx_compress_failed,		"tx_compress_failed") \
-@@ -213,7 +214,7 @@
- #define EM(a, b) a,
- #define E_(a, b) a
+diff --git a/fs/smb/client/smb1misc.c b/fs/smb/client/smb1misc.c
+index ba56023010d8..cdfbbff24b72 100644
+--- a/fs/smb/client/smb1misc.c
++++ b/fs/smb/client/smb1misc.c
+@@ -80,7 +80,8 @@ is_valid_oplock_break(char *buffer, struct TCP_Server_Info *srv)
+ 			(struct smb_com_transaction_change_notify_rsp *)buf;
+ 		struct file_notify_information *pnotify;
+ 		__u32 data_offset = 0;
+-		size_t len = srv->total_read - srv->pdu_size;
++		/* total_read excludes the RFC1002 preamble */
++		size_t len = srv->total_read;
  
--enum smb_eio_trace		{ smb_eio_traces } __mode(byte);
-+enum smb_eio_trace		{ smb_eio_traces };
- enum smb3_rw_credits_trace	{ smb3_rw_credits_traces } __mode(byte);
- enum smb3_tcon_ref_trace	{ smb3_tcon_ref_traces } __mode(byte);
- 
+ 		if (get_bcc(buf) > sizeof(struct file_notify_information)) {
+ 			data_offset = le32_to_cpu(pSMBr->DataOffset);
+-- 
+2.55.0
+
 
 
