@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF984119F9;
-	Fri,  4 Sep 2026 05:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68C83DAAC8;
+	Fri,  4 Sep 2026 05:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499181; cv=none; b=SNuoX7ezvoGNdZIwyXoev9iV7PCrJVf9d1tBT00Dx9KnbUlePaHJwvkx1tSJmWHmuSbpTfrL0cxPTMznvc/1hkU5dS9OLIjOcSQy6Nywft3zpo1Uuy12pCN8Qnq/X4P1dmwUQyMSBpgd4DLYrm/TpRDvvJnTjFkIpuTEp7IIJsc=
+	t=1788499183; cv=none; b=lVgiWoSL95bCQ5pCQ/E/49397nBZQ8/0lmWd+aW1RyoQtZPcMM08uCCKqVgVVa0CV1zpFUVDMBndhqBKM2+m4XjhjoyT+EqQdBDGOhiEa+/iPnH5Kddi0I/VaHfvfpezroldFrWfVdMnuqX30SId7dbuiEmm2ERNyW5dTc8nYwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499181; c=relaxed/simple;
-	bh=qvT2Vg5u1F24vbGlenOpE1N1SNFPoERMsz5Q7caXH5E=;
+	s=arc-20240116; t=1788499183; c=relaxed/simple;
+	bh=v5QWKbbRMSQdvDWxuv7RCPCHjyiZGJ0yqyXbnFP+ZP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRYJFoB5Dmv0lQZb/rIUi+HeCZavAJZjubhyZGTd5S08iDbmsusTu8mSrAUw5vQ27dkbhs4Rz7azr0fL2GVWL5b+KJJ6ecFtgkLVNXatbB8L8yKTAHCVy/CBa8J0qNvZSIhfTw7kQO+jBqDEkRpYPGNf3XEdgooOEgBkevjrQvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePjYiJCD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lE3JpqDcLuJedjqNMl5JfPdjohaejIlQkMZ8Q1au9WRll0Hv2b2G5dEE+MKJaNFtWeuEFw8EZKs1Rx2og6+v6z1ehmD4Ehb4WZh+Qk+EStb66kLt3zM72w5gcqLp36cg4p9JXI0oo76kK2dC9rhMUo2feYPTUqFNpMKPxlGoa6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeiFMFdX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePjYiJCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C3B1F00A3D;
-	Fri,  4 Sep 2026 05:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeiFMFdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287A61F00A3D;
+	Fri,  4 Sep 2026 05:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499179;
-	bh=BX7UNxEVZXHAnL3QIJo/l23nezJ1F+kmVMATQjcJJgU=;
+	s=korg; t=1788499182;
+	bh=ikO8OFHz9NnAPAU+n5jLsMFJm7mxJbZd+HVZsXoYJRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ePjYiJCDPTYD2MuAG/d5KzQAQDLGYe3s+Gss+oem1yUpWDmqXfAuyMfHm/fbQ7ZmR
-	 CfpkYWow+1pZrOKN1J90kXn4i5e+zeCJXhtJI556uoG7peVNHcQz/TCG6zh60Y5g3a
-	 Af+xerKA+3z6wpWR+ttot1zK9t7bYO1GTsnZ/2js=
+	b=oeiFMFdXvQLOMPfxr3Qu2gn91+kbeI/C0XYy1FJZ3+0zNOWg8tEcowFrkWeeq7W8y
+	 L/d5c1xCaV/5sIsC0gcIqPQarTK3x/FKcngiHTcfnLTSxCehiH+ZzeJ1CaYLz4u/DW
+	 PlBhJPn6WwXFEPDxV4UH1YbbDR3vnPbiXDPPgu1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Krutskih <devsec@tpz.ru>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.2 327/713] dm raid1: reserve space for NUL-terminator in build_constructor_string()
-Date: Fri,  4 Sep 2026 06:54:55 +0200
-Message-ID: <20260904045811.161310039@linuxfoundation.org>
+	Junjie Cao <junjie.cao@linux.dev>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 7.2 310/713] backlight: aw99706: Fix DT property names to match binding
+Date: Fri,  4 Sep 2026 06:54:38 +0200
+Message-ID: <20260904045810.784844205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,31 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Krutskih <devsec@tpz.ru>
+From: Junjie Cao <junjie.cao@linux.dev>
 
-commit 73c37fe54cd056d07461b142ab0b8b81e1ef6ad8 upstream.
+commit daf120e464386f750b3870dc04d5bc6a786f0000 upstream.
 
-Reserve space for the termination NUL after the maximum 20 decimal
-digits of a long long value to avoid buffer overflow in sprintf().
+The driver reads four tuning properties without the unit suffixes that
+the binding mandates: "awinic,sw-freq" instead of "awinic,sw-freq-hz",
+"awinic,sw-ilmt" instead of "awinic,sw-ilmt-microamp", "awinic,iled-max"
+instead of "awinic,iled-max-microamp", and "awinic,uvlo-thres" instead
+of "awinic,uvlo-thres-microvolt".
 
-Fixes: f5db4af466e2 ("dm raid1: add userspace log")
+As a result, device_property_read_u32() never finds these properties in
+a binding-conformant device tree and silently falls back to the compiled-in
+defaults for switching frequency, switching current limit, max LED current,
+and UVLO threshold.
+
+Fix by aligning the property name strings in aw99706_dt_props[] with the
+binding. No value/range changes are needed since both sides already use
+the same units and enumerations.
+
+Fixes: 147b38a5ad06 ("backlight: aw99706: Add support for Awinic AW99706 backlight")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Krutskih <devsec@tpz.ru>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Link: https://patch.msgid.link/20260804030255.1934470-2-junjie.cao@intel.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-log-userspace-base.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/backlight/aw99706.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-log-userspace-base.c
-+++ b/drivers/md/dm-log-userspace-base.c
-@@ -139,6 +139,7 @@ static int build_constructor_string(stru
- 		str_size += strlen(argv[i]) + 1; /* +1 for space between args */
+--- a/drivers/video/backlight/aw99706.c
++++ b/drivers/video/backlight/aw99706.c
+@@ -130,23 +130,23 @@ static const struct aw99706_dt_prop aw99
+ 		AW99706_CFG0_REG, AW99706_DIM_MODE_MASK, 1,
+ 	},
+ 	{
+-		"awinic,sw-freq", aw99706_dt_property_lookup,
++		"awinic,sw-freq-hz", aw99706_dt_property_lookup,
+ 		aw99706_sw_freq_tbl, ARRAY_SIZE(aw99706_sw_freq_tbl),
+ 		AW99706_CFG1_REG, AW99706_SW_FREQ_MASK, 750000,
+ 	},
+ 	{
+-		"awinic,sw-ilmt", aw99706_dt_property_lookup,
++		"awinic,sw-ilmt-microamp", aw99706_dt_property_lookup,
+ 		aw99706_sw_ilmt_tbl, ARRAY_SIZE(aw99706_sw_ilmt_tbl),
+ 		AW99706_CFG1_REG, AW99706_SW_ILMT_MASK, 3000000,
+ 	},
+ 	{
+-		"awinic,iled-max", aw99706_dt_property_iled_max_convert,
++		"awinic,iled-max-microamp", aw99706_dt_property_iled_max_convert,
+ 		NULL, 0,
+ 		AW99706_CFG2_REG, AW99706_ILED_MAX_MASK, 20000,
  
- 	str_size += 20; /* Max number of chars in a printed u64 number */
-+	str_size++; /* For NUL-terminator */
- 
- 	str = kzalloc(str_size, GFP_KERNEL);
- 	if (!str) {
+ 	},
+ 	{
+-		"awinic,uvlo-thres", aw99706_dt_property_lookup,
++		"awinic,uvlo-thres-microvolt", aw99706_dt_property_lookup,
+ 		aw99706_ulvo_thres_tbl, ARRAY_SIZE(aw99706_ulvo_thres_tbl),
+ 		AW99706_CFG2_REG, AW99706_UVLOSEL_MASK, 2200000,
+ 	},
 
 
