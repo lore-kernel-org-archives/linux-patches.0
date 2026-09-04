@@ -1,68 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF40A39EF1C;
-	Fri,  4 Sep 2026 05:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25981414A2A;
+	Fri,  4 Sep 2026 05:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500386; cv=none; b=hs675VcPBPLv0Ta5QK/DALpRs5TbB3EkBHLRUXSn7U9v5U8fHLqaA5hLOH4cV0u9SqKTsmm6l9csGOzuR92FIZ6L95MbJfIzqMbxnq0/4MpZjD59yGE3u0GTEsAwoTf9eBsXO+UYS7x4M5tDBHFtEjLiZ3ngSaghy00iS2ifuac=
+	t=1788500387; cv=none; b=s8/5AnfoTLKUaafMYCVJU4AcJ+PVTPAylu1GFeWSEMVsCS5mfHHaCPGTVh3vv3Fo9TSN4VLmcv8+Kwh2xzr3+t1VvhSAYEZ81ozVfDAOxjGKbN6rPXuZBnwq8uwUWMWP3oE1ztUns5EwtkEc1EM/iRvLAYUnOQKWqVS950obeMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500386; c=relaxed/simple;
-	bh=ru+x/cWP62+Vf1nvZQzrJm6Kcps+KINE8+r+GP0082Q=;
+	s=arc-20240116; t=1788500387; c=relaxed/simple;
+	bh=+w4m7mG70dg3fuleGmD7yYPE8LmgELka0wGQAKI8X+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYX6bLxhmdFrNbQThKTGO79485BayoZ5EKVXE1+jxUj9S83Jtq1acaNJjZWaekc+vXjHbp4qq+YVjyVozbKGLjN5ahIq53wFPiM0exQZYkr9roq1NzwDci2ErlHv3rpChydMgIsK3y5Pa8rew8XfCYrJ1rro79t7K8rhnfCwMu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYMme6iz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qc9BIU2xKYBm29bttsqXTLXcl7RQ2KnL/VAFPu12nPGZoRRIcgDamo10SHtv/icklG2LeKq6qQG13OeSLIO5I+rpmwaYkUQGT0o06002LTG95YrapJTOYYnv6f8mK5t07TA4hlpweHgwdyfKuMgbfY55PE0y9eN6Zc0Jlpg3Yto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqXyse50; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYMme6iz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B55E1F00A3D;
-	Fri,  4 Sep 2026 05:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqXyse50"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888921F00A3E;
+	Fri,  4 Sep 2026 05:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500383;
-	bh=MvHrgdupDInZ0RX4slAigZTT81KQzXsuTEpyVuV/0kg=;
+	s=korg; t=1788500386;
+	bh=qvqZ63w2cNh13uB/8djDHvoBr0d77gTeihENHDVlMtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EYMme6izXP4FJxY0COyvpkPofRw0JZY/mQObDggEKubIWY273GL2gxyMAw/ykLZ+9
-	 wYQfPVy9DzP2b6o2VPppYQEZ7w15PqlXzgJqgz0q5FF5HQpKSfTM+mY76bex6gkXpy
-	 zbVIoyrpXWDM6NCZkJrnFkZooU8DmeMw4wweibIk=
+	b=lqXyse50ekgN1gqxRy2cZvcNcPTCHhMAosIA22jhAau+oGBYloYpHofq0Y7CbWmJi
+	 +Va9wMER1afhOc1nYOgc6MCVVwzKO9gUTZ1obXXP3sHCgFCxAVG1R+LG3MFLCSJvVW
+	 Ppxs+GuRNNIOAipMH71LjytwRMGwuF9VobNKyYyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
+	Max Boone <mboone@akamai.com>,
 	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 038/552] mm/page_vma_mapped: use huge_ptep_get() for hugetlb
-Date: Fri,  4 Sep 2026 06:53:15 +0200
-Message-ID: <20260904045748.693901462@linuxfoundation.org>
+Subject: [PATCH 6.18 039/552] mm/pagewalk: fix stale walk->action escaping walk_pmd_range()
+Date: Fri,  4 Sep 2026 06:53:16 +0200
+Message-ID: <20260904045748.719097230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -81,80 +58,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit e87df0d5d6962bde50f55f6d02b779daa394f894 upstream.
+commit aedf2efd18977e0cef7eb963166e2b1fcc0aa321 upstream.
 
-check_pte() is the final validation step in page_vma_mapped_walk().  It
-reads pvmw->pte with ptep_get() to decide whether the entry maps the PFN
-range being walked.  For hugetlb VMAs, that pointer refers to a hugetlb
-entry.
+If ->pmd_entry() sets walk->action = ACTION_AGAIN, the pmd_none() check is
+retried.  The PMD entry may be cleared at the point of retry.
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
-etc to misbehave.
+In this case, if walk->ops->install_pte is not specified, the code
+continues to the next PMD entry in the range without resetting
+walk->action to ACTION_SUBTREE.
 
-It is not clear whether this has a trivially visible effect to userspace.
+This leaves walk->action erroneously set to ACTION_AGAIN, which is
+incorrect.
 
-Use huge_ptep_get() to dereference a huge pte pointer.
+This was incorrect but not problematic up until commit 3b89863c3fa4
+("mm/pagewalk: fix race between concurrent split and refault") which
+updated walk_pud_range() to check for walk->action == ACTION_AGAIN upon
+walk_pmd_range()'s return, causing the PUD walk to be retried.
 
-Link: https://lore.kernel.org/20260703114202.365553-6-dev.jain@arm.com
-Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
+In this case this results in duplicate walk callbacks being invoked,
+which is erroneous and will break any caller that is not idempotent
+with respect to this (and waste time for those which are).  The result
+is an out-of-bounds write, triggered by a local fuzzer:
+
+[    2.272695] ==================================================================
+[    2.273471] BUG: KASAN: slab-out-of-bounds in __mincore_unmapped_range+0x14f/0x190
+[    2.274302] Write of size 1 at addr ffff888008d9b000 by task poc/106
+[    2.274966]
+[    2.275154] CPU: 0 UID: 1000 PID: 106 Comm: poc Not tainted 7.2.0-rc6-00429-ga7c7074b58d2 #55 PREEMPT(lazy)
+[    2.275159] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    2.275164] Call Trace:
+[    2.275170]  <TASK>
+[    2.275172]  dump_stack_lvl+0x53/0x70
+[    2.275200]  print_report+0xd0/0x630
+[    2.275210]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[    2.275219]  ? irqentry_exit+0xd2/0x670
+[    2.275224]  ? irqentry_exit+0xd2/0x670
+[    2.275226]  ? __virt_addr_valid+0xef/0x1a0
+[    2.275239]  ? __mincore_unmapped_range+0x14f/0x190
+[    2.275242]  kasan_report+0xce/0x100
+[    2.275245]  ? __mincore_unmapped_range+0x14f/0x190
+[    2.275248]  __mincore_unmapped_range+0x14f/0x190
+[    2.275252]  mincore_unmapped_range+0x45/0x70
+[    2.275254]  walk_pgd_range+0xafc/0xfc0
+[    2.275261]  ? __pfx_walk_pgd_range+0x10/0x10
+[    2.275264]  ? __update_load_avg_se+0x3d1/0x670
+[    2.275275]  __walk_page_range+0xc0/0x310
+[    2.275278]  ? __pfx_find_vma+0x10/0x10
+[    2.275281]  ? finish_task_switch.isra.0+0x16d/0x4f0
+[    2.275290]  walk_page_range_mm_unsafe+0x26f/0x3a0
+[    2.275293]  ? __pfx_mtree_load+0x10/0x10
+[    2.275298]  ? __pfx_walk_page_range_mm_unsafe+0x10/0x10
+[    2.275302]  ? __free_frozen_pages+0x54d/0x7e0
+[    2.275308]  __do_sys_mincore+0x132/0x380
+[    2.275311]  do_syscall_64+0xf9/0x540
+[    2.275316]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[    2.275322] RIP: 0033:0x422ccd
+[    2.275326] Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+[    2.275329] RSP: 002b:00007fffffffec18 EFLAGS: 00000287 ORIG_RAX: 000000000000001b
+[    2.275337] RAX: ffffffffffffffda RBX: 0000000000000066 RCX: 0000000000422ccd
+[    2.275339] RDX: 00000000004d0940 RSI: 0000000001000000 RDI: 00007ffff4000000
+[    2.275340] RBP: 00000000004d0940 R08: 0000000000000100 R09: 0000000000000100
+[    2.275342] R10: 0000000000000100 R11: 0000000000000287 R12: 20c49ba5e353f7cf
+[    2.275343] R13: 00000000004990d3 R14: 0000000000000000 R15: 0000000000000001
+[    2.275346]  </TASK>
+[    2.275347]
+[    2.296904] The buggy address belongs to the object at ffff888008d9b000
+[    2.296904]  which belongs to the cache sigqueue of size 80
+[    2.298151] The buggy address is located 0 bytes inside of
+[    2.298151]  allocated 80-byte region [ffff888008d9b000, ffff888008d9b050)
+[    2.299408]
+[    2.299601] The buggy address belongs to the physical page:
+[    2.300191] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8d9b
+[    2.301001] flags: 0x100000000000000(node=0|zone=1)
+[    2.301535] page_type: f5(slab)
+[    2.301884] raw: 0100000000000000 ffff888107e46780 dead000000000122 0000000000000000
+[    2.302687] raw: 0000000000000000 0000000800240024 00000000f5000000 0000000000000000
+[    2.303489] page dumped because: kasan: bad access detected
+[    2.304092]
+[    2.304276] Memory state around the buggy address:
+[    2.304801]  ffff888008d9af00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    2.305567]  ffff888008d9af80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    2.306340] >ffff888008d9b000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.307115]                    ^
+[    2.307474]  ffff888008d9b080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.308237]  ffff888008d9b100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.308997] ==================================================================
+
+A specific example of this breaking things is mincore which walks an
+internal cursor data structure a byte at a time on assumption that page
+table entry callbacks are called only once for each entry.
+
+Fix the problem by resetting walk->action to ACTION_SUBTREE prior to the
+none check.
+
+The pattern also exists in walk_pud_range() so fix it there too.
+
+This issue was found through AI-based fuzzing.
+
+Link: https://lore.kernel.org/20260811161949.3879321-2-imv4bel@gmail.com
+Fixes: 3b89863c3fa4 ("mm/pagewalk: fix race between concurrent split and refault")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Max Boone <mboone@akamai.com>
 Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_vma_mapped.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ mm/pagewalk.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/mm/page_vma_mapped.c
-+++ b/mm/page_vma_mapped.c
-@@ -104,7 +104,13 @@ again:
- static bool check_pte(struct page_vma_mapped_walk *pvmw, unsigned long pte_nr)
- {
- 	unsigned long pfn;
--	pte_t ptent = ptep_get(pvmw->pte);
-+	pte_t ptent;
-+
-+	if (is_vm_hugetlb_page(pvmw->vma))
-+		ptent = huge_ptep_get(pvmw->vma->vm_mm, pvmw->address,
-+				      pvmw->pte);
-+	else
-+		ptent = ptep_get(pvmw->pte);
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -127,6 +127,7 @@ static int walk_pmd_range(pud_t *pud, un
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ again:
++		walk->action = ACTION_SUBTREE;
+ 		next = pmd_addr_end(addr, end);
+ 		if (pmd_none(*pmd)) {
+ 			if (has_install)
+@@ -139,8 +140,6 @@ again:
+ 				continue;
+ 		}
  
- 	if (pvmw->flags & PVMW_MIGRATION) {
- 		swp_entry_t entry;
+-		walk->action = ACTION_SUBTREE;
+-
+ 		/*
+ 		 * This implies that each ->pmd_entry() handler
+ 		 * needs to know about pmd_trans_huge() pmds
+@@ -197,6 +196,7 @@ static int walk_pud_range(p4d_t *p4d, un
+ 	pud = pud_offset(p4d, addr);
+ 	do {
+  again:
++		walk->action = ACTION_SUBTREE;
+ 		next = pud_addr_end(addr, end);
+ 		if (pud_none(*pud)) {
+ 			if (has_install)
+@@ -209,8 +209,6 @@ static int walk_pud_range(p4d_t *p4d, un
+ 				continue;
+ 		}
+ 
+-		walk->action = ACTION_SUBTREE;
+-
+ 		if (ops->pud_entry)
+ 			err = ops->pud_entry(pud, addr, next, walk);
+ 		if (err)
 
 
