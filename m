@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8297537C106;
-	Fri,  4 Sep 2026 05:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539B135AC03;
+	Fri,  4 Sep 2026 05:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501043; cv=none; b=bnriyLjJzmXjq1dyzG2pMiQW5hZi68Sj9g/vOExj5rVaQbUwxJMgzvmZf0kRx+CPA3BDVPQlLDGc3evbCLEa4FAievq5HD2/Rp/f+Wss50P1O/cxFVK0nyXsh4KHfVgOdgfh74JHSfzIGRMmLwAwso3y2cjLr2ZgptnZzcMVk2E=
+	t=1788501046; cv=none; b=LVNb3i7uMX76ejbDLWM6rEzb3xrKo3YwOIQmazMLvM/sWIgz0Sw/K1aD/5JMny8PvCyhQM6q3HOEqicVoT8eNYbQeYcmr2Nrcr0/3XaWntpqx3dsVm6o1kK2EfUQ8OsRfBUim3/cPCM/aQsF/v0xx0NDZfMPD/nwFsPWl5U9fEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501043; c=relaxed/simple;
-	bh=ABVRpiwtbndl9NL3DlMLhTqk/CtFOlJwIyxr4dQZx7s=;
+	s=arc-20240116; t=1788501046; c=relaxed/simple;
+	bh=lcTj8+ej5jZsAq3IicJ3GzCzHMSsQpimqmg9ss9+krA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxwHkJyj1WmvhvKVkb5CdicpKr6hZLQOo0F3Vgie//m4xtiiu+lJGAjp9fFe3ZDhD9vtBMK1H4YC3AoAlJ41UNbsD2RDFyb5NMLdGjBJQylue5S1BZbDeSz+1xVoUTtMhDCIr1HPRqXfJvPrqAiSVmJ63HQoPh3YYdCqnuaN3vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t89+hHP4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SqyHsn9NxZhX3qNhemdZJQEIYd2oPm4/wE6MQwjeTmmGnTMsoF/qmpXC4hrHOKxiB3w6+PqXJO1HKJl3InmJiKgKmyxYCieT/p+gOCE3UDYlPVLmdMuebF4lctoRyaaezPUgl+pmzblKIfXp5xf/QI4I280JjR+wDeesRF/+ejA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNfVSLnC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t89+hHP4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3E21F00A3D;
-	Fri,  4 Sep 2026 05:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNfVSLnC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD01C1F00A3D;
+	Fri,  4 Sep 2026 05:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501042;
-	bh=MOUryWweQcnj2GtkRHYsReHa/zgvmWV7Q0Dwn1nkqFA=;
+	s=korg; t=1788501045;
+	bh=lOmdBhvBcvQaPFAgO8HI7fS8P/onVOTu4y7e+1Bchr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t89+hHP4O5WcwUgErbC5qbUYIsL7QnJR6eYfHAN085CwCefsIVcGfMbU3ILGClTzb
-	 D+DCthgQoefN9bijCz0c7yLSFGU8bJHjFJ5qC2z3etlULDya2tHOko1Jb8NE4un0/X
-	 k7wQxb8fiIlpuKJLuQVaiNuZ86VOyG09SG5J/G24=
+	b=QNfVSLnCUi4fdNW5qzX4cLSdsQHJcji5NFCueAIVjPZUubZnOfO9LCc7VeNf+4e8u
+	 gUlEB/N6JgQsmO8wPvoi97/Rp5/LKU5wlZHUsF4oipbehcCT9y0hH/wuTBB7u+3o0E
+	 9eSvP25Sy2HeRBBaCJcn/sHzl8yFTczR+rfUN150=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Varu <harshitvaru666@gmail.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 271/552] mptcp: fix uninitialized local_id in syncookie MP_JOIN reconstruction
-Date: Fri,  4 Sep 2026 06:57:08 +0200
-Message-ID: <20260904045756.121723113@linuxfoundation.org>
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Petr Pavlu <petr.pavlu@suse.com>
+Subject: [PATCH 6.18 272/552] module/kallsyms: fix nextval for data symbol lookup
+Date: Fri,  4 Sep 2026 06:57:09 +0200
+Message-ID: <20260904045756.142832268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,44 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Varu <harshitvaru666@gmail.com>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-commit b878dfdd12d7a5b8722a78d35e313506140ca3d9 upstream.
+commit 0e9f090a4e9bfae5a190ccf89eab3bf14f6b0f96 upstream.
 
-mptcp_token_join_cookie_init_state() restores remote_nonce, local_nonce,
-backup, join_id, token and msk from the saved cookie entry when rebuilding
-the request socket for a MP_JOIN 4th-ACK handled under SYN cookies, but it
-does not restore local_id, even though the SYN path saved it.
-subflow_ulp_clone() then reads that uninitialized field and stores it as
-the joined subflow's address-ID. Because the request-sock slab is
-SLAB_TYPESAFE_BY_RCU and not zeroed on allocation, the value is the stale
-byte of a previously freed request socket, which an off-path peer can
-influence by sending concurrent MP_JOIN SYNs. This corrupts the path
-manager's id-based subflow bookkeeping for the connection.
+The symbol lookup code assumes the queried address resides in either
+MOD_TEXT or MOD_INIT_TEXT. This breaks for addresses in other module
+memory regions (e.g. rodata or data), resulting in incorrect upper
+bounds and wrong symbol size.
 
-Restore subflow_req->local_id from the cookie entry, as done for the other
-fields.
+Select the module memory region the address belongs to instead of
+hardcoding text sections. Also initialize the lower bound to the start
+of that region, as searching from address 0 is unnecessary.
 
-Fixes: 9466a1ccebbe ("mptcp: enable JOIN requests even if cookies are in use")
 Cc: stable@vger.kernel.org
-Signed-off-by: Harshit Varu <harshitvaru666@gmail.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260815115205.197151-1-harshitvaru666@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/syncookies.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/module/kallsyms.c |   24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
---- a/net/mptcp/syncookies.c
-+++ b/net/mptcp/syncookies.c
-@@ -118,6 +118,7 @@ bool mptcp_token_join_cookie_init_state(
- 	subflow_req->local_nonce = e->local_nonce;
- 	subflow_req->backup = e->backup;
- 	subflow_req->remote_id = e->join_id;
-+	subflow_req->local_id = e->local_id;
- 	subflow_req->token = e->token;
- 	subflow_req->msk = msk;
- 	spin_unlock_bh(&join_entry_locks[i]);
+--- a/kernel/module/kallsyms.c
++++ b/kernel/module/kallsyms.c
+@@ -258,17 +258,25 @@ static const char *find_kallsyms_symbol(
+ 	unsigned int i, best = 0;
+ 	unsigned long nextval, bestval;
+ 	struct mod_kallsyms *kallsyms = rcu_dereference(mod->kallsyms);
+-	struct module_memory *mod_mem;
++	struct module_memory *mod_mem = NULL;
+ 
+-	/* At worse, next value is at end of module */
+-	if (within_module_init(addr, mod))
+-		mod_mem = &mod->mem[MOD_INIT_TEXT];
+-	else
+-		mod_mem = &mod->mem[MOD_TEXT];
++	for_each_mod_mem_type(type) {
++#ifndef CONFIG_KALLSYMS_ALL
++		if (!mod_mem_type_is_text(type))
++			continue;
++#endif
++		if (within_module_mem_type(addr, mod, type)) {
++			mod_mem = &mod->mem[type];
++			break;
++		}
++	}
+ 
+-	nextval = (unsigned long)mod_mem->base + mod_mem->size;
++	if (!mod_mem)
++		return NULL;
+ 
+-	bestval = kallsyms_symbol_value(&kallsyms->symtab[best]);
++	/* Initialize bounds within memory region the address belongs to. */
++	nextval = (unsigned long)mod_mem->base + mod_mem->size;
++	bestval = (unsigned long)mod_mem->base - 1;
+ 
+ 	/*
+ 	 * Scan for closest preceding symbol, and next symbol. (ELF
 
 
