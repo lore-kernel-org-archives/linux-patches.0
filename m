@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8850D37C106;
-	Fri,  4 Sep 2026 05:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FD240BCD4;
+	Fri,  4 Sep 2026 05:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501576; cv=none; b=nCaHWcFmm55qDPRy2UEoGQbHF5ygrIpn644opu/Lkc2flefUo0HPxNQFSH+jpYETCDJtyvSRqfufa2k2HmOVwwDzsCUox4PRygLnP+ePTOxgJIM13B4R9simS9Ta1Mk9el9XZmHFUQN8K3omQO2hfBqTKaI0h85VWNJjIRixFq0=
+	t=1788501579; cv=none; b=M1xLkEq8T5642K86/dgvPEMGRGZnrO9eZLRTtrs2UOB2G0oG1tyIRSzLLXjyJttKl2yMseYU7btDhpex5kzTiM8uSvqWNK2IYEKmH4Thyxn5EJpWW9n5aGmbbsH7dJJxRIo6u/BuHK/qPjj0K8ARHkaJF4n+jvh5nGdtdXWrncc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501576; c=relaxed/simple;
-	bh=Se4A/JleIfyihEqsBcOjcebVM9BWzjfIWdqs/lOwlvc=;
+	s=arc-20240116; t=1788501579; c=relaxed/simple;
+	bh=8inaShIpfCmtTCofYttpg5/kElXXLs9jL/x784pmZ6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FYL0gorTxtNsPafKM9/pa7DS2uG/y+ix36VE7y2dM/ptB32qnK3y1MJUx33Vvwfrjv9mi6lLZ+EEpri71Kp1C7jyCDWtiqh5Cq9MMGv8LTIJUjXvd2rjyqjY0kB67mb18gJ9wRaVJ+nqcuQB4GVAFzRFToVND6YZRCMcnbu0WQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cwb+EdV4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JPPxzvkxjM7A3RR0DQCS4ANdw/I9Zd3Iibss+rFdrSbO6T2xayr+O/npIYD0kLGCN2saZ4uJjPPCYlSpetHdiKuO5FeI+G1gE32Bht9yAmEkcSY4KvY9CclojnzBEvF6QS3jfsViPEx8YIX5iF/dU4SoQOOq5vOM0HEEDfUgUzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lo+PKSq9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cwb+EdV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E661F00A3D;
-	Fri,  4 Sep 2026 05:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lo+PKSq9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC241F00A3D;
+	Fri,  4 Sep 2026 05:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501575;
-	bh=kxPADy7x0x6xQ/vZAcp8JRoGrevho6HFBzHvzFST4UU=;
+	s=korg; t=1788501578;
+	bh=ZLIiXj0iscxY3smVjW11CLTp8HhWhbO2QNRGSxI6hjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cwb+EdV4uSs4R6aXZd0vrZVZgvIp5nciZsUbyN5RH54pDH4stO2lxLldIRMfBH1VV
-	 pkYb3xWSVoo01zWDAAJ55bbWC2zmEftkDZPIcgC1LSaWbolU6iByTkR8VxWjBUZ7AJ
-	 bmPX1SqoE5K24o0QJKJ8zi0iiLvwC7oBPe4rIvZ4=
+	b=lo+PKSq9sQNeJcOXMdA6ELF9TfQi4/FPRj3P6VNGFFxcLPDtFJtV9mQfQPLP6JIF4
+	 nQ/67Yq38PQzMQzMC5OceFI1893hp0iYTqwpCEZVEG0WC2lUZnXZtaM0MEPmVTHiaG
+	 wAi8O40mZsM/pLjqxeYY70cmxogMFK0P/4sDd0SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 441/552] platform/x86: hp-bioscfg: fix ORD_LIST_ELEMENTS never being parsed
-Date: Fri,  4 Sep 2026 06:59:58 +0200
-Message-ID: <20260904045800.587233151@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 459/552] net: openvswitch: fix flow mask use-after-free on flow deletion
+Date: Fri,  4 Sep 2026 07:00:16 +0200
+Message-ID: <20260904045801.106180105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -44,66 +45,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit cb6b1b0fb236a9581cae213c2a9182e68cc3ffe5 upstream.
+commit 4e30317ff67a2eb12b4d890d39f72fd7e7117d48 upstream.
 
-The ACPI_TYPE_STRING case explicitly skips the string conversion for
-elem == ORD_LIST_ELEMENTS:
+The commit in the Fixes tag below made so flow->mask free is scheduled
+via RCU right after it is removed from the flow table.  The pointer
+stays in the flow structure and it can be accessible while in the same
+RCU critical section.  This is done to avoid requiring ovs_mutex for
+the ovs_flow_free().
 
-	if (elem != PREREQUISITES && elem != ORD_LIST_ELEMENTS) {
-		ret = hp_convert_hexstr_to_str(..., &str_value, &value_len);
-		if (ret)
-			continue;
-	}
+However, while removing the flow during processing of CMD_DEL, we do
+not take RCU read lock before the removal, and ovs_flow_cmd_fill_info()
+uses the flow->mask pointer afterwards.  The RCU read lock is taken,
+but it's already late at that point.  The comment on that line
+acknowledges that the lock is cosmetic and doesn't serve a real purpose.
 
-so by the time the ORD_LIST_ELEMENTS case in the eloc switch runs,
-str_value is NULL (it was freed and reset to NULL at the end of the
-previous iteration). That case then does:
+This leads to use-after-free if the RCU grace period passes between
+removal and the filling.  It is a short race window, but it is there
+and can lead to a real crash in case memory allocation for the info
+takes a bit longer:
 
-	ret = hp_convert_hexstr_to_str(str_value, value_len, &tmpstr, &tmp_len);
+ BUG: KASAN: slab-use-after-free in __ovs_nla_put_key
+             net/openvswitch/flow_netlink.c:1996
+ BUG: KASAN: slab-use-after-free in ovs_nla_put_key+0x2463/0x2e30
+             net/openvswitch/flow_netlink.c:2250
+ Read of size 4 at addr ffff88801ee89970 by task ovs_flow_del_ec/9487
 
-hp_convert_hexstr_to_str() rejects a NULL input with -EINVAL, which
-sends this function to exit_list, and exit_list unconditionally
-returns 0. The net effect is that any ordered-list attribute with
-elements present silently ends up with an empty elements list, with no
-error surfaced anywhere.
+ Call Trace:
+  <TASK>
+  __ovs_nla_put_key net/openvswitch/flow_netlink.c:1996
+  ovs_nla_put_key+0x2463/0x2e30 net/openvswitch/flow_netlink.c:2250
+  ovs_flow_cmd_fill_info+0x420/0x9c0 net/openvswitch/datapath.c:930
+  ovs_flow_cmd_del+0x53a/0x970 net/openvswitch/datapath.c:1467
+  ...
+  netlink_rcv_skb+0x156/0x420 net/netlink/af_netlink.c:2556
+  </TASK>
 
-Fix by converting the current element directly, order_obj[elem], the
-same way the PREREQUISITES case already handles its own array
-elements, instead of reusing the unrelated str_value/value_len left
-over from earlier processing.
+ Allocated by task 9487:
+  mask_alloc net/openvswitch/flow_table.c:967
+  flow_mask_insert net/openvswitch/flow_table.c:1012
+  ovs_flow_tbl_insert+0xea2/0x1a90 net/openvswitch/flow_table.c:1084
+  ovs_flow_cmd_new+0x7e3/0xd90 net/openvswitch/datapath.c:1086
+  ...
+  netlink_rcv_skb+0x156/0x420 net/netlink/af_netlink.c:2556
 
-Fixes: 4b2672ec71a3 ("platform/x86: hp-bioscfg: order-list-attributes")
+ Freed by task 9485:
+  rcu_free_sheaf+0x1e/0x100 mm/slub.c:5978
+  rcu_do_batch kernel/rcu/tree.c:2645
+  rcu_core+0x59c/0x10c0 kernel/rcu/tree.c:2897
+  handle_softirqs+0x1e4/0x9a0 kernel/softirq.c:622
+  ...
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1062
+
+ovs_flow_tbl_remove() must be called after the ovs_flow_cmd_fill_info()
+to avoid this race.  This also helps with cleaning up the forced cast
+and the cosmetic RCU read lock.  Before the commit in the Fixes tag the
+order did not matter as long as the flow object itself was not freed.
+
+A wider RCU critical section could be another option, but we have a
+GFP_KERNEL allocation in the way.
+
+Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-32042.
+
+Fixes: 56c19868e115 ("openvswitch: Make flow mask removal symmetric.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260812111829.172273-9-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260815005915.1097270-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/openvswitch/datapath.c |   45 +++++++++++++++++++++++----------------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-@@ -264,7 +264,9 @@ static int hp_populate_ordered_list_elem
- 			 * Ordered list data is stored in hex and comma separated format
- 			 * Convert the data and split it to show each element
- 			 */
--			ret = hp_convert_hexstr_to_str(str_value, value_len, &tmpstr, &tmp_len);
-+			ret = hp_convert_hexstr_to_str(order_obj[elem].string.pointer,
-+						       order_obj[elem].string.length,
-+						       &tmpstr, &tmp_len);
- 			if (ret)
- 				goto exit_list;
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1472,33 +1472,34 @@ static int ovs_flow_cmd_del(struct sk_bu
+ 		goto unlock;
+ 	}
  
+-	ovs_flow_tbl_remove(&dp->table, flow);
+-	ovs_unlock();
+-
+-	reply = ovs_flow_cmd_alloc_info((const struct sw_flow_actions __force *) flow->sf_acts,
++	reply = ovs_flow_cmd_alloc_info(ovsl_dereference(flow->sf_acts),
+ 					&flow->id, info, false, ufid_flags);
+-	if (likely(reply)) {
+-		if (!IS_ERR(reply)) {
+-			rcu_read_lock();	/*To keep RCU checker happy. */
+-			err = ovs_flow_cmd_fill_info(flow, ovs_header->dp_ifindex,
+-						     reply, info->snd_portid,
+-						     info->snd_seq, 0,
+-						     OVS_FLOW_CMD_DEL,
+-						     ufid_flags);
+-			rcu_read_unlock();
+-			if (WARN_ON_ONCE(err < 0)) {
+-				kfree_skb(reply);
+-				goto out_free;
+-			}
++	if (IS_ERR(reply)) {
++		netlink_set_err(sock_net(skb->sk)->genl_sock, 0, 0,
++				PTR_ERR(reply));
++		reply = NULL;
++	}
+ 
+-			ovs_notify(&dp_flow_genl_family, reply, info);
+-		} else {
+-			netlink_set_err(sock_net(skb->sk)->genl_sock, 0, 0,
+-					PTR_ERR(reply));
++	if (likely(reply)) {
++		err = ovs_flow_cmd_fill_info(flow, ovs_header->dp_ifindex,
++					     reply, info->snd_portid,
++					     info->snd_seq, 0,
++					     OVS_FLOW_CMD_DEL, ufid_flags);
++		if (WARN_ON_ONCE(err < 0)) {
++			kfree_skb(reply);
++			reply = NULL;
+ 		}
+ 	}
++	/* Removal has to happen after ovs_flow_cmd_fill_info(), as it uses
++	 * the flow->mask that can be scheduled to be freed by the
++	 * ovs_flow_tbl_remove() and we're not holding the RCU read lock.
++	 */
++	ovs_flow_tbl_remove(&dp->table, flow);
++	ovs_unlock();
++
++	if (likely(reply))
++		ovs_notify(&dp_flow_genl_family, reply, info);
+ 
+-out_free:
+ 	ovs_flow_free(flow, true);
+ 	return 0;
+ unlock:
 
 
