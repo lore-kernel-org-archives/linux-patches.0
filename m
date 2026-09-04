@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9034B3DAAB7;
-	Fri,  4 Sep 2026 05:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707BD26AC3;
+	Fri,  4 Sep 2026 05:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499687; cv=none; b=f2WRr16XTP3mq1NesQ1yOmwjqtAbHsLSLGSzvXaAl2+L0u81+k7lTOY5tixV9aHsYlXLvBkK0PvV7mpOsqlt7BmCC4id3uIelZveug206ovBNORyEqUSS4PF67Eg+sc74McJLUbrqt4cvH8z7FaNJqf0d1bc6eexaECNoqgTeTY=
+	t=1788499691; cv=none; b=tFApNpVprWtUhgVoK2NtJ0gW5Ezzsai/jmzB5rkLiZzZBgJK3hcI7aJXqmgN7FND5+vzlhkAEWr5UkGOsYZB5FvmWHCvh9PM6iGw3inG8SzY2ocFxO/6Q8Ds3gIiyDk2vYX3vo/YUaY8+9Iy/Vl4Lwfk0p2rqBmv0cIQeBD1Ruk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499687; c=relaxed/simple;
-	bh=gfcj+8+lv07y2JpApLcAuI4/9TgyGrNJg7Fzw+Z+SWg=;
+	s=arc-20240116; t=1788499691; c=relaxed/simple;
+	bh=8BYqu7kexVhH93/EzpUblUiRWp6+s/VYCFsnv0mJZvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IM6Oqpo4ZX0rw23zNEWzjZ7oj6vH9Domz20H1cGym0MJieFrs9EYghzFEggPm503zWCok8ia9eJXDmWIDkP3fTEJcXMwbFP8tRbd0YSgfKT/kwTt9dNMVEu8KNfvHnfxKB8oS5Eo8o+M3Znk/bzgWSuuXIPLZugu+LLcQJC/EaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pc+npqAc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h+lm2zgVpv0t5NfrLCU3lZEdRsmvzApi+38vdLOdvHjI1vjZaUW3GXrpO9XQNUkqBqO0JHoQMGyWSAZg/wTZecafL68DkaaodjIkVeevy35SLKDkd943+X9gYLhdTzIdVqADLBy/9SxaydHVo1OE0WPvuAuaWjI2VoUcmuRao4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tznZ5Xld; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pc+npqAc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A4E1F00A3D;
-	Fri,  4 Sep 2026 05:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tznZ5Xld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D9D1F00A3D;
+	Fri,  4 Sep 2026 05:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499686;
-	bh=yDrn/zlacMOecMFuGjb1l4Fd1zGsu0cVtK0wi/+daKI=;
+	s=korg; t=1788499689;
+	bh=RsMcnIBbfNHngvAIAZCr/E7kGrKJFUH7m2Tcr26Sjnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pc+npqAcfimtY6OONDV8qFd6GwTKOEWpeK1Pqc1/Wvt7cTKi7Lla/Hmij0CHoWIfI
-	 c6fp8oHwqHXO2zbeJIz6XL6w6v6LXDoveexyjD5zLsQybYz2dJqY9lV23yUV+P7AsZ
-	 WI6cU4LwpF8X0N8FpcKr4pHC69HlGKzpzIg1UEhg=
+	b=tznZ5XldEARri3qhhXx46W5XxPjojcrRiXgH6Ftyl2ZZtHKeyPVw6zBNKvNgqnzn0
+	 whv6E8USpofOPweo5vvtEvbRVtax1aEVYjZqOx343nM2ZTRGk9sd8EBFNNSXawn7T5
+	 VEDdcsNpWL8sy7CmYEUHuajz5LWKS2Y40moXrZYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 7.2 506/713] power: supply: pf1550: enable charging when battery profile exists
-Date: Fri,  4 Sep 2026 06:57:54 +0200
-Message-ID: <20260904045815.165124533@linuxfoundation.org>
+Subject: [PATCH 7.2 507/713] power: supply: qcom_battmgr: fix use-after-free
+Date: Fri,  4 Sep 2026 06:57:55 +0200
+Message-ID: <20260904045815.187276653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,42 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit af4ee48a09cfb7a2440cc4822e9fda43a76cfbe5 upstream.
+commit 4e40befedfc8ed86f44e1f81df92d13c149c9f8d upstream.
 
-PF1550 starts in charger mode 1, where charging is disabled. The driver
-comment says that mode 2 should be selected for applications using a
-battery, but the condition is inverted: PF1550_CHG_BAT_ON is written only
-when power_supply_get_battery_info() fails.
+qcom_battmgr_pdr_notify() queues enable_work when the PMIC GLINK service
+comes up, and the worker recovers battmgr through container_of() to issue
+firmware requests. The PMIC GLINK client stays on the client list until
+its devres release action runs, so a PDR notification can keep queueing
+the work, and a pending or running worker can access battmgr after devres
+frees it.
 
-Consequently, a board with a valid monitored-battery profile is left in
-the default charger-off mode, while a board without battery information
-enables charging with fallback settings.
+Make enable_work device-managed with devm_work_autocancel(), registered
+before the PMIC GLINK client is allocated. The devres cleanup then
+releases the client first, so no further notification can queue the work,
+and cancels the work before battmgr is freed.
 
-Select mode 2 when battery information is available.
+This issue was found by an in-house static analysis tool.
 
-Fixes: 4b6b6433a97d ("power: supply: pf1550: add battery charger support")
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/097F0559A936ACCB+20260724095437.368905-1-raoxu@uniontech.com
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260731022006.317192-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260801051923.354496-1-fanwu01@zju.edu.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/pf1550-charger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/qcom_battmgr.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/pf1550-charger.c
-+++ b/drivers/power/supply/pf1550-charger.c
-@@ -514,7 +514,7 @@ static int pf1550_reg_init(struct pf1550
- 	 * a battery. The other supported mode is mode 2, the charger is turned
- 	 * on to charge a battery when present.
- 	 */
--	if (power_supply_get_battery_info(chg->charger, &info)) {
-+	if (!power_supply_get_battery_info(chg->charger, &info)) {
- 		ret = regmap_write(chg->pf1550->regmap,
- 				   PF1550_CHARG_REG_CHG_OPER,
- 				   PF1550_CHG_BAT_ON);
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ #include <linux/auxiliary_bus.h>
++#include <linux/devm-helpers.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/nvmem-consumer.h>
+@@ -1648,7 +1649,6 @@ static int qcom_battmgr_probe(struct aux
+ 	psy_cfg_supply.supplied_to = qcom_battmgr_battery;
+ 	psy_cfg_supply.num_supplicants = 1;
+ 
+-	INIT_WORK(&battmgr->enable_work, qcom_battmgr_enable_worker);
+ 	mutex_init(&battmgr->lock);
+ 	init_completion(&battmgr->ack);
+ 
+@@ -1711,6 +1711,11 @@ static int qcom_battmgr_probe(struct aux
+ 					     "failed to register wireless charing power supply\n");
+ 	}
+ 
++	ret = devm_work_autocancel(dev, &battmgr->enable_work,
++				   qcom_battmgr_enable_worker);
++	if (ret)
++		return ret;
++
+ 	battmgr->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_BATTMGR,
+ 						       qcom_battmgr_callback,
+ 						       qcom_battmgr_pdr_notify,
 
 
