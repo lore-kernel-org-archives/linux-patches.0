@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9012AD37;
-	Fri,  4 Sep 2026 05:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F62372B4B;
+	Fri,  4 Sep 2026 05:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500576; cv=none; b=MP9oU92KnY3Co4EngnHSoAzDvEjCYGwXbWC74JTe/FaL9VXYz+FuR9R/TyPfBh7Lc5cry3Duok5tGrvD3WdpdBjT5ofIa+iuwDtSvzyaqe9rw7I/w19EVmJIcjegNkGf/WnxqU9s6p7CgUf2i+RsJIMjECA661I2IXo7mnYV91E=
+	t=1788500579; cv=none; b=UXrebhKVlmn3eBt2/GZ5l2wlL5OfOl2E1MSkYoEjtn6NTYHHO29h4nhu3xma7aAz3E8LbY2F83V9rjcBT4KMTtxw2baVeg+WyaUYnnBJVR6eOh5URGEWUluxRr9D0pC+M6o1gfyz1maTxwMYyCh6vNi5NyX+BWQo70Npsu2oKD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500576; c=relaxed/simple;
-	bh=fB/b9xM2Vi0LWlEst0xNo1lXvwtvjWLO4iHF1xhUKdw=;
+	s=arc-20240116; t=1788500579; c=relaxed/simple;
+	bh=339eoocxCvoudsbsV0BYKCirjMuRklzU4QJBfuo5cV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CgjJuB8AXj4DY5QYV54gw2RoL8TEwPKD9P4wVic+0yjohvM/nzZ93X+/2zuz+EZ+B0lRjvnlKBRAJ45qQTozs9b90nJ04XmPR/NO7Gz6phu9Lt8ig08hs4LntUPut46BYbGgUDU5zf98GvEvf4b9ZCjyG/azL3tNQfuJyWtG2VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKdpKrg4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tXRGBIwJKOSPUdTPMGkd9NLUB343eo2QWEqek6JBC3XeFYbd1aX8TMwfOmoOKyCBM0nddiJLHjsEbmR1M+SiR8P3SaRXqBvrmUFoXEfoRNd76Uf5CupPUyvlHef0txffVhqtZusIGtnn//Nf5pL17aAaDUMCfACwD8x1+OLJOWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHNQqYKp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKdpKrg4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DFC1F00A3D;
-	Fri,  4 Sep 2026 05:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHNQqYKp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800921F00A3D;
+	Fri,  4 Sep 2026 05:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500575;
-	bh=9Zq02yBkhXfFaNpI0b+TRM0Am6XZIi4Vz/iVFG362mM=;
+	s=korg; t=1788500578;
+	bh=G5hcmIpVdkMq7a3xHi9AdTYkTNaJhWNhiMURj+zbIV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKdpKrg4Re/cJwoYMGbv0Jr43WKe5zFDjkG+VlfUi4xLZ0crm5ZQFKxgZyViYdWiA
-	 aMlxpAiiAZ/lenNRlNIfqyF1U138MBVY78AhiK7ogdceeqXz15BgTA42P4ZhCOCnlu
-	 vRxTonwW3O6JyxBdk0ZK5lvDcqaMfv7jX7HpTiOU=
+	b=oHNQqYKpJ5efQEAeD8s8Lf3dnuWj9Nn0kaJ+pFCh8BDUjxTYBx1oxtn9FfJOuYghc
+	 7wBboUCsybipFlQx3iVW1YILSNPzaje4ypxDGg+uk0G86rkb/cLJt8ws9DpJWbONCy
+	 oQWSZziBFENHiaNPTp3noUC6DrGnf6Oln6S7U+ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 104/552] nfsd: guard nfsd_serv deref in nfsd_file_net_dispose
-Date: Fri,  4 Sep 2026 06:54:21 +0200
-Message-ID: <20260904045750.262491031@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.18 105/552] NFSv4.1: fix layout segment leak on the pnfs_layout_process() forget path
+Date: Fri,  4 Sep 2026 06:54:22 +0200
+Message-ID: <20260904045750.285033818@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,71 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 9f1ddfc8cb9076592401a611eb3a44d36186d014 upstream.
+commit ee5a386cfe60f3f8286de16a9db8e1a08f0bc124 upstream.
 
-nfsd_file_net_dispose() is the consumer side of l->freeme: the nfsd
-service thread loop calls it to drain entries that the filecache
-garbage collector and shrinker append via
-nfsd_file_dispose_list_delayed().  During per-net teardown,
-nn->nfsd_serv is cleared before the filecache laundrette is shut
-down, so the service thread can still run a dispose pass that finds
-more than eight entries on l->freeme and dereferences a NULL
-svc_serv:
+When the server returns a new layout stateid while a valid one is still
+held, pnfs_layout_process() calls pnfs_mark_matching_lsegs_return() on
+the on-stack free_me list and jumps to out_forget. Segments whose
+reference count drops to zero are unlinked from lo->plh_segs and moved
+to free_me by mark_lseg_invalid(); for an idle cached segment the layout
+header holds the only reference, so this happens on the first decrement.
 
-    nfsd service thread loop
-      nfsd_file_net_dispose(nn)
-        if (!list_empty(&l->freeme)) {
-            ...
-            svc_wake_up(nn->nfsd_serv);   /* nn->nfsd_serv == NULL */
-        }
+out_forget never drains free_me -- only the success path calls
+pnfs_free_lseg_list().
 
-The sibling helper nfsd_file_dispose_list_delayed() already documents
-this ordering and caches nn->nfsd_serv into a local before testing it
-for NULL.  nfsd_file_net_dispose() was introduced with the same raw
-svc_wake_up(nn->nfsd_serv) call and never picked up the guard.
+Commit 814b84971388 ("pNFS/NFSv4: Fix a layout segment leak in
+pnfs_layout_process()") added the drain; commit 08bd8dbe8882
+("pNFS/NFSv4: Try to return invalid layout in pnfs_layout_process()")
+removed it while switching the destination to lo->plh_return_segs, which
+is drained elsewhere. Commit fb700ef02676 ("NFSv4.1: Simplify layout
+return in pnfs_layout_process()") switched the destination back to
+free_me without restoring the drain.
 
-Fix by loading nn->nfsd_serv into a local svc_serv pointer and only
-calling svc_wake_up() when it is non-NULL, matching the pattern in
-nfsd_file_dispose_list_delayed().
+Restore the pnfs_free_lseg_list() call.
 
-Fixes: ffb402596147 ("nfsd: Don't leave work of closing files to a work queue")
+Fixes: fb700ef02676 ("NFSv4.1: Simplify layout return in pnfs_layout_process()")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Chris Mason <clm@meta.com>
-Link: https://patch.msgid.link/20260602-nfsd-testing-v2-4-e4ea62e3cd5c@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/nfs/pnfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -471,11 +471,20 @@ void nfsd_file_net_dispose(struct nfsd_n
- 		for (i = 0; i < 8 && !list_empty(&l->freeme); i++)
- 			list_move(l->freeme.next, &dispose);
- 		spin_unlock(&l->lock);
--		if (!list_empty(&l->freeme))
--			/* Wake up another thread to share the work
-+		if (!list_empty(&l->freeme)) {
-+			/*
-+			 * Wake up another thread to share the work
- 			 * *before* doing any actual disposing.
-+			 *
-+			 * The filecache laundrette is shut down after
-+			 * the nn->nfsd_serv pointer is cleared, but
-+			 * before the svc_serv is freed.
- 			 */
--			svc_wake_up(nn->nfsd_serv);
-+			struct svc_serv *serv = nn->nfsd_serv;
-+
-+			if (serv)
-+				svc_wake_up(serv);
-+		}
- 		nfsd_file_dispose_list(&dispose);
- 	}
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2631,6 +2631,7 @@ out_forget:
+ 	spin_unlock(&ino->i_lock);
+ 	lseg->pls_layout = lo;
+ 	NFS_SERVER(ino)->pnfs_curr_ld->free_lseg(lseg);
++	pnfs_free_lseg_list(&free_me);
+ 	return ERR_PTR(-EAGAIN);
  }
+ 
 
 
