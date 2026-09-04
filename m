@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999CB410D36;
-	Fri,  4 Sep 2026 06:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4918417BF8;
+	Fri,  4 Sep 2026 06:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501804; cv=none; b=BgNjDrsCVC/ae+Geeb/Vup39oezx1emQHONOkAoGo5JNwai1IZlrxrboCM6THBmSGbhDjqAhjOfpWby1iFVFEDzgkDwGbWSpsfoUvFZaJsL0OwVwe4Yccl+9TDQmJmb5u1G/Gz8xe6R77yOPhP+yVGTmXx1pBbW0PpWnr3Y8p3o=
+	t=1788501807; cv=none; b=SMnIiYNy4SDAX+fmbjS1LaM9mr51WB3OzgOO8Ci+IpqDqYSTSrPTzAq+WLFCf6ihX9FSDlzWhQW/llr8kgFPRkPOPKVe6mEVcbk7goHHenmb6f3muhLZBvi0E9mx18aR43ywSApwVJUyemhs0q1z1PDl3n3ZxgYKffJaHtZ7m48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501804; c=relaxed/simple;
-	bh=y9hCQuZ9zZRqCaSZ7XPh1Dax44u78dl3zHZSZsENRZ4=;
+	s=arc-20240116; t=1788501807; c=relaxed/simple;
+	bh=jBXtXwC9B8b90YLWeEet812grWKHpW7SQuyCv7HC4js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S6pRWAU9MtD0q1AhUmZPBk48861CIu150UCCvNOJKnCuxpb34OOjN+GYeZkWumm/nPt5zyfa1rmO+xS7S5sdfuvoIvRLSsiLuCS3iENpKKaz5kH0RucwYO8KXvPMMsZE0qbjATj56d70EzPUTqlDuOh/xHdugjoLmnzi1HJUBrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMWrSlLS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rLzlAVP9/xdeBLMT+y7DCstYtsJEI+ZR5u2JoeNkWS+IzBv1rfTk7Z7mWDJGHvr/aeL+whOOgaNqr0HN8oGLAa6ukWrTyPpywm6Z0ssxyiv8MFmx3Rizr9cyMlY8Qjqrg42B1+Hxc3LuZyra+g3UUhWw36vQFItgwJP74ahocxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsefnuOz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMWrSlLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F200C1F00A3D;
-	Fri,  4 Sep 2026 06:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsefnuOz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D351F00A3D;
+	Fri,  4 Sep 2026 06:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501803;
-	bh=4Pyrqr6QpcKgxXLtFR87rcyrezgL52n5gzkMlSSpwcA=;
+	s=korg; t=1788501806;
+	bh=Cn2lbQcZXeaGNtCkOzPExulDSqxeRSnoZAT2nGZKVwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PMWrSlLSXoBUtFQ8PRbXZdO3wA+Tt/XEvt77I5fQ5Yo+AMahgaDFuz71j1s2eaf0b
-	 FxEg3fs7FnP7S2fZwO5GuDoaOY6tmrojE0o+buI3XadyImet/R+SiS54w2C+h7MC1i
-	 erzNLQiHxgbn/OMHqCe/MrZfDMYea3RHbzXxwu3U=
+	b=HsefnuOzwZb/hHQ3ZknonK5shYGKeEUnda8+y3A/gqwqk/PhJaa0x1+OC8e1oX340
+	 2OxcXJZdFSgPyQgNmkncyiaNNJdVtwBSY/edlbTV1uFqc4FjBG/TRW2ocFftdUpFYL
+	 v3Lg86YvToIS/txCZIPjXjtpb1NtNAdYcEXo4Npg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.18 485/552] mfd: sm501: Fix potential memory leaks during remove
-Date: Fri,  4 Sep 2026 07:00:42 +0200
-Message-ID: <20260904045801.666606279@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.18 532/552] wifi: rtw88: pci: fix resource leak on failed NAPI setup
+Date: Fri,  4 Sep 2026 07:01:29 +0200
+Message-ID: <20260904045802.678653462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,42 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 83feedd9d83c0c5199f98c72df0a6196b4aefb4d upstream.
+commit e779df4806cd29cbcca5c9dc0a1073662c76b889 upstream.
 
-The memory allocated for struct sm501_devdata in sm501_pci_probe() and
-sm501_plat_probe() is not freed by the corresponding remove functions
-sm501_pci_remove() and sm501_plat_remove(). Fix that by adding a call to
-kfree().
+rtw_pci_probe() allocates PCI resources through
+rtw_pci_setup_resource() before it sets up NAPI. If
+rtw_pci_napi_init() fails, the error path jumps straight to
+err_pci_declaim and skips rtw_pci_destroy(), leaving the PCI
+resources allocated by rtw_pci_setup_resource() behind.
 
-Fixes: b6d6454fdb66 ("[PATCH] mfd: SM501 core driver")
+Add a dedicated cleanup label for the NAPI setup failure path so probe
+destroys the PCI resources.
+
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing current
+mainline kernels. The tool is still under development and is not yet
+publicly available. Manual inspection confirms that the bug is still
+present in v7.1-rc7.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+suitable rtw88 PCI board to test with, no runtime testing was able to be
+performed.
+
+Fixes: d0bcb10e7b94 ("wifi: rtw88: Un-embed dummy device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260720113836.73133-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260617013502.114057-1-dawei.feng@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/sm501.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtw88/pci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mfd/sm501.c
-+++ b/drivers/mfd/sm501.c
-@@ -1627,6 +1627,7 @@ static void sm501_pci_remove(struct pci_
- 	release_mem_region(sm->io_res->start, 0x100);
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1799,7 +1799,7 @@ int rtw_pci_probe(struct pci_dev *pdev,
+ 	ret = rtw_pci_napi_init(rtwdev);
+ 	if (ret) {
+ 		rtw_err(rtwdev, "failed to setup NAPI\n");
+-		goto err_pci_declaim;
++		goto err_destroy_rsrc;
+ 	}
  
- 	pci_disable_device(dev);
-+	kfree(sm);
- }
+ 	ret = rtw_chip_info_setup(rtwdev);
+@@ -1831,6 +1831,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
  
- static void sm501_plat_remove(struct platform_device *dev)
-@@ -1637,6 +1638,7 @@ static void sm501_plat_remove(struct pla
- 	iounmap(sm->regs);
+ err_destroy_pci:
+ 	rtw_pci_napi_deinit(rtwdev);
++
++err_destroy_rsrc:
+ 	rtw_pci_destroy(rtwdev, pdev);
  
- 	release_mem_region(sm->io_res->start, 0x100);
-+	kfree(sm);
- }
- 
- static const struct pci_device_id sm501_pci_tbl[] = {
+ err_pci_declaim:
 
 
