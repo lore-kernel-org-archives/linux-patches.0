@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03FA242910;
-	Fri,  4 Sep 2026 06:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C541242910;
+	Fri,  4 Sep 2026 06:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501639; cv=none; b=RRMTYZaiaWS1g+QDAx5d2OCKgoY4zWgCad4r9XEMgxcUoRYFPaSZkDHxBtoMtC6+ocoX+sL9vNrOa2F68Ym8qFlPHQTVhImQAnk+WqHhdKzMWQCE+oEAlA5kkYvL+nQ4U4GVO1MQ0O9pzZjDgzkFL1XyEKTQon2DanlGSN8FJUg=
+	t=1788501642; cv=none; b=XWw1TFwYGBOc+H9mmjFoufpRNhTy6Y2KQ+jlL7mZves6yUzva6/IJulY5CDfgDevXFVRyamr5k+lwbCbqv4ybwFZ2M8UqI02sDIMoriG5pvyWY2y1ctIvP/UrGRsYVVoj+R8P8KdFDtUtaDVivfLis3oxhRNFMSwRk0qRoBX3u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501639; c=relaxed/simple;
-	bh=GRJWcG9R6XfMAUOHxrTUFcQZ6Mgjz9croM2+jVT56vU=;
+	s=arc-20240116; t=1788501642; c=relaxed/simple;
+	bh=KREGQcF3TqHbxO3dG1ESl49I1p4/OvsxqarhPW64Roc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r5ibN7FzF4ltIRgwLIvyZzG3O4ERlbc7B92Gi3Fl7asqXeM73vECCdEBh+DvNW1shZWRzXnKP+8FJQ3g0eOH+ZciGdaLEFzajJWgyaclzWgGWHlom+Zr2exAa77pgXynaZi+UZX8dALetgkL7sLjXWGUjxXJMi0Erh6zV863CH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGE5wumi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MlhlvCeEuygAa76yP3K2dg2MRgkYzev2pgdGWaOacoELJ+KyS1E5+5KZA+V5bOsNXwB3ccxvb1r5devJyoJTO0LDsK3a15a5utZf01gqd7AqYNh3z22PkBrwb47YDVq4/i5B+lI7MNZ+33KQvlmH/OjWh4udeInUXlDargCMVMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZbZ1Hyh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGE5wumi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065701F00A3D;
-	Fri,  4 Sep 2026 06:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZbZ1Hyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D366A1F00A3D;
+	Fri,  4 Sep 2026 06:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501638;
-	bh=wJjKgLNTG5uZhX2JgGiQqftnJCc/k4R8v4OApoyJa40=;
+	s=korg; t=1788501641;
+	bh=OcA0l2PHoPC4B01idMrCZsTDHZp0q4kEBPBdHHUt7g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FGE5wumitbeG/aTiJowh/u9NljNKQ81Uv6YRvocxouYjt5N4EUvM6Z674e+bIjGe3
-	 paVv31luywjrZ4RWKWQU1bt12+hV0O+PRFPClN8JcqDg1Rth3tDPGDa0qavXEFCiT5
-	 JDqkXmcgunIiUd1dZTbqg3/ulpogwRgT4J1fngvU=
+	b=NZbZ1HyhaA3lvAaGQssO7JWehzFdfd74TQgfxMpQzYS5p/gmAtVKOoA8LsGdx05pi
+	 gnl3AjuulcHRa7qSnFSBl5bYPdZ7sRRoejsg4k1tRTsUsW6aVTboo3gYTrex31E/5n
+	 dDwRS2LSHql0dvtAeQSVUfSL9+w7VmoTMxYhMwsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 443/552] platform/x86: hp-bioscfg: warn on element type mismatch instead of failing
-Date: Fri,  4 Sep 2026 07:00:00 +0200
-Message-ID: <20260904045800.648279634@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 479/552] net: cap advertised IP tunnel headroom
+Date: Fri,  4 Sep 2026 07:00:36 +0200
+Message-ID: <20260904045801.537982343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -45,63 +46,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit b0e2af3ec94e0431adb59d9f249ebbd3b7285158 upstream.
+commit 6b222adeb9340306e2ff97127c76117abb9b3df8 upstream.
 
-hp_populate_enumeration_elements_from_package() returns -EIO and aborts
-enumeration of the entire attribute when any single element has an
-unexpected ACPI type. This is observed on HP EliteBook 840 G2 when the
-BIOS returns malformed ACPI data following a failed WMI query:
+IP tunnel devices derive their advertised needed_headroom from lower
+output devices. A stack of user-created devices can make the derived
+value larger than the 16-bit skb header offsets can represent. Once IP
+output reserves it, skb head expansion can wrap those offsets.
 
-  ACPI BIOS Error (bug): AE_AML_BUFFER_LIMIT, Index (0x000000032)
-    is beyond end of object (length 0x32)
-  ACPI Error: Aborting method \_SB.WMID.WQBE due to previous error
-  Error expected type 2 for elem 13, but got type 1 instead
-  hp_bioscfg: Returned error 0x3,
-    "Invalid command value/Feature not supported"
+The runtime transmit path already caps a growing needed_headroom at 512.
+Apply the same cap when tunnel configuration publishes needed_headroom
+derived from a lower output device.
 
-Aborting immediately discards the attribute entirely.
+Capping the advertised value is safe: IP tunnel transmit still expands
+the skb when a packet needs more headroom. A nonsensical stacked
+configuration can therefore incur an extra reallocation, but it cannot
+publish an unbounded reservation to upper layers.
 
-Warn about the unexpected element type, free the temporary string, skip
-the offending element, and continue parsing the remaining package
-instead of failing the whole attribute.
-
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
+Fixes: 1a37e412a022 ("net: Use 16bits for *_headers fields of struct skbuff")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260709165900.30615-5-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/ba04a1fd6bfae2377607fad5d8f80f7eb80fd4c4.1786542637.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/net/ip_tunnels.h |   11 +++++++++--
+ net/ipv4/ip_tunnel.c     |    2 +-
+ net/ipv6/ip6_gre.c       |    7 +++++--
+ net/ipv6/ip6_tunnel.c    |    7 +++++--
+ net/ipv6/sit.c           |    2 +-
+ 5 files changed, 21 insertions(+), 8 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-@@ -163,10 +163,11 @@ static int hp_populate_enumeration_eleme
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -629,8 +629,7 @@ struct metadata_dst *iptunnel_metadata_r
+ int skb_tunnel_check_pmtu(struct sk_buff *skb, struct dst_entry *encap_dst,
+ 			  int headroom, bool reply);
  
- 		/* Check that both expected and read object type match */
- 		if (expected_enum_types[eloc] != enum_obj[elem].type) {
--			pr_err("Error expected type %d for elem %d, but got type %d instead\n",
--			       expected_enum_types[eloc], elem, enum_obj[elem].type);
-+			pr_warn("Unexpected element type at elem %d: expected %d, got %d, skipping\n",
-+				elem, expected_enum_types[eloc], enum_obj[elem].type);
- 			kfree(str_value);
--			return -EIO;
-+			str_value = NULL;
-+			continue;
- 		}
+-static inline void ip_tunnel_adj_headroom(struct net_device *dev,
+-					  unsigned int headroom)
++static inline unsigned int ip_tunnel_limit_headroom(unsigned int headroom)
+ {
+ 	/* we must cap headroom to some upperlimit, else pskb_expand_head
+ 	 * will overflow header offsets in skb_headers_offset_update().
+@@ -640,6 +639,14 @@ static inline void ip_tunnel_adj_headroo
+ 	if (headroom > max_allowed)
+ 		headroom = max_allowed;
  
- 		/* Assign appropriate element value to corresponding field */
++	return headroom;
++}
++
++static inline void ip_tunnel_adj_headroom(struct net_device *dev,
++					  unsigned int headroom)
++{
++	headroom = ip_tunnel_limit_headroom(headroom);
++
+ 	if (headroom > READ_ONCE(dev->needed_headroom))
+ 		WRITE_ONCE(dev->needed_headroom, headroom);
+ }
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -317,7 +317,7 @@ static int ip_tunnel_bind_dev(struct net
+ 		mtu = min(tdev->mtu, IP_MAX_MTU);
+ 	}
+ 
+-	dev->needed_headroom = t_hlen + hlen;
++	dev->needed_headroom = ip_tunnel_limit_headroom(t_hlen + hlen);
+ 	mtu -= t_hlen + (dev->type == ARPHRD_ETHER ? dev->hard_header_len : 0);
+ 
+ 	if (mtu < IPV4_MIN_MTU)
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1136,8 +1136,11 @@ static void ip6gre_tnl_link_config_route
+ 			return;
+ 
+ 		if (rt->dst.dev) {
+-			dev->needed_headroom = rt->dst.dev->hard_header_len +
+-					       t_hlen;
++			unsigned int headroom;
++
++			headroom = rt->dst.dev->hard_header_len + t_hlen;
++			headroom = ip_tunnel_limit_headroom(headroom);
++			dev->needed_headroom = headroom;
+ 
+ 			if (set_mtu) {
+ 				int mtu = rt->dst.dev->mtu - t_hlen;
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1506,8 +1506,11 @@ static void ip6_tnl_link_config(struct i
+ 			tdev = __dev_get_by_index(t->net, p->link);
+ 
+ 		if (tdev) {
+-			dev->needed_headroom = tdev->hard_header_len +
+-				tdev->needed_headroom + t_hlen;
++			unsigned int headroom;
++
++			headroom = tdev->hard_header_len + tdev->needed_headroom;
++			headroom += t_hlen;
++			dev->needed_headroom = ip_tunnel_limit_headroom(headroom);
+ 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
+ 
+ 			mtu = mtu - t_hlen;
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1128,7 +1128,7 @@ static void ipip6_tunnel_bind_dev(struct
+ 		WRITE_ONCE(dev->mtu, mtu);
+ 		hlen = tdev->hard_header_len + tdev->needed_headroom;
+ 	}
+-	dev->needed_headroom = t_hlen + hlen;
++	dev->needed_headroom = ip_tunnel_limit_headroom(t_hlen + hlen);
+ }
+ 
+ static void ipip6_tunnel_update(struct ip_tunnel *t,
 
 
