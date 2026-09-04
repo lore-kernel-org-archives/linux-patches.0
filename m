@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E532941687B;
-	Fri,  4 Sep 2026 05:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129DC2550D5;
+	Fri,  4 Sep 2026 05:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499546; cv=none; b=eANHA6vvs6YDTAtnl8Bcs5udR/NfhieVnQxCEPEDzKtIkrXJQQ2rc4ZfIy6bTqO8ufH0ZkAU2tG+qG+NTgOLfsvCQ/5mAwShZ6g163b5dQ/VvPoA3ebR+XWCd61tOQLN+E8MwgS7S9aXdI+hrgKTi44u6a5nnfi5ENyjoQjGco4=
+	t=1788499549; cv=none; b=HITfoR6HWwnBoIuCqoXe1+ph8zqf4owWVEfcNeyJYqH3Kpq+nQ4MY0TIIbfB9pfSqk1z7CCWZxLg0jcppVT87ImH4k1bOfV3r/IZ/17iu2Cuo3hLxlcQnkyrvg8m0h0MSoGrRw24gdu0X6RcOC51yz1drVnLepAx2So3l5kVcxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499546; c=relaxed/simple;
-	bh=dcmzQQQ2nij+vagg8ivnt/jX/HuebKyE/vrTeEQWxKM=;
+	s=arc-20240116; t=1788499549; c=relaxed/simple;
+	bh=PBPqD4W+/hmdLEKqBHm2+hkO0oWoUrwVKSskxkSXrls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOzMTyclAmSQsbb9D2EqME0XnW6o61ExDfm9WxKeS1yTTTbPn5oZa83cN4BBhZiakZY+vs8lzez2gmpLdByr1pGLyEl+q1QlyQuJidkkgES+7QEx+d/2lDAiL0vcdMTTLX6ptN1eh8HKygIef+1OWNH0R3g5Hw0nMkUh+PkMyXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPea4Hjp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B5XXmgr1kaXjSGkidJAieBvTiDHIvT068Ix95QTwks3hxb2hnUhAEpGITWjcBJ9Bz0IKnktH/GMJvUyWpLrUsXpoCP3PeTAWs744Vxdcb8F1n0m0ykxsC4pBFIgXxKD0ep/M2H9GYL+cjXmwMcaQ2DGcV9iFSj2Wpat2jXlHGwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YrgLq4Sy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPea4Hjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5021F00A3D;
-	Fri,  4 Sep 2026 05:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YrgLq4Sy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D481F00A3D;
+	Fri,  4 Sep 2026 05:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499544;
-	bh=q3ez42wNZkCCtrr/5/MfUfuP1pg88jhbUKyXM51EL2M=;
+	s=korg; t=1788499547;
+	bh=ebEWt9rQBqZiQbyR2NGSuxQqnmc1zt1idxzg0KDuMP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EPea4HjpHdirNHwJPry8/1/ViNke3qgOUuTafmcmrHgqOAWY4EzDUV2rh9MplfJgv
-	 fvK97hRShe/8mBVkmufiHA9700RMt46/90iTPpY5Y95JQ3GP+ViJ2uClo9dGV7IVKx
-	 zw3XvKs9DOj+ZNwWOOuAtJWyckCLrR4jHGPrerq8=
+	b=YrgLq4Syy1Kh8erSy2eDM+lg04JfhixueNK9xFVxyYa4/dK6YX3v85HO47WUVzaJ4
+	 NTvWaNerNU/jPJq4Qp/8vAzF6FDRzQvscAqJVjqYKjzgnJTYCVfcA6PKiaMb7uPUO2
+	 sgydM8uQ15M9AkZTvgaIqaaT8JQmP1H/t1uqQqjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhang Pan <242270054@hdu.edu.cn>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.2 448/713] RDMA/uverbs: Guard legacy bundles without method_elm
-Date: Fri,  4 Sep 2026 06:56:56 +0200
-Message-ID: <20260904045813.871533541@linuxfoundation.org>
+	Shibo Zhu <3499129952@qq.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 7.2 457/713] PM: sleep: Unblock runtime PM when device prepare fails
+Date: Fri,  4 Sep 2026 06:57:05 +0200
+Message-ID: <20260904045814.069736233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,60 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuhang Pan <242270054@hdu.edu.cn>
+From: Shibo Zhu <3499129952@qq.com>
 
-commit 60a42d510113f46de47e86a84bf5758597644487 upstream.
+commit cb258d651d747a7f7063d40f145418bee562ceaf upstream.
 
-The legacy write() path dispatches through a uverbs_api_write_method, but
-the uverbs_attr_bundle passed to provider code does not have an ioctl
-method element. If malformed provider input causes the common uverbs
-validation code to emit an error message, uverbs_get_handler_fn()
-dereferences the uninitialized method_elm pointer.
+device_prepare() blocks runtime PM for a device with runtime PM disabled
+before invoking its system-sleep ->prepare() callback. For a device that
+has never enabled runtime PM, this changes dev->power.last_status from
+RPM_INVALID to RPM_BLOCKED.
 
-Initialize method_elm explicitly for legacy bundles and make
-uverbs_get_handler_fn() return NULL when no ioctl method is present. The
-legacy dispatcher continues to use its local write method, while the ioctl
-path continues to use the registered ioctl handler.
+If the callback returns an error, dpm_prepare() does not move the device
+to dpm_prepared_list. Consequently, the recovery path through
+dpm_complete() never calls device_complete() for the failing device.
 
-Cc: stable@vger.kernel.org
-Fixes: 7122ff96068a ("RDMA/core: Do not read wild stack memory in uverbs_get_handler_fn()")
-Link: https://patch.msgid.link/r/AOYAQgCQK3IXqJLr1TB5Qao9.1.1787036796115.Hmail.242270054@hdu.edu.cn
-Signed-off-by: Yuhang Pan <242270054@hdu.edu.cn>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+The error path drops the runtime PM usage reference, but does not clear
+RPM_BLOCKED. A later legitimate pm_runtime_enable() then reports:
+
+  Attempt to enable runtime PM when it is blocked
+
+before clearing the stale state.
+
+Call pm_runtime_unblock() on the prepare error path before dropping the
+runtime PM reference, matching the cleanup performed by device_complete().
+
+The issue was reproduced with a platform test device whose ->prepare()
+callback returns -EIO while runtime PM has never been enabled. Before
+the fix, last_status remained RPM_BLOCKED after the failed suspend and
+the first pm_runtime_enable() produced the warning above. With the fix,
+last_status is restored to RPM_INVALID and the warning is absent.
+
+Fixes: 3e5eee147b7b ("PM: Block enabling of runtime PM during system suspend")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Shibo Zhu <3499129952@qq.com>
+Link: https://patch.msgid.link/tencent_C5AC0A02FC01F700E764F8C2E3ECE4F41009@qq.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/ib_core_uverbs.c | 3 +++
- drivers/infiniband/core/uverbs_main.c    | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/base/power/main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/ib_core_uverbs.c b/drivers/infiniband/core/ib_core_uverbs.c
-index dbbc0875132a..41c84ffe8c09 100644
---- a/drivers/infiniband/core/ib_core_uverbs.c
-+++ b/drivers/infiniband/core/ib_core_uverbs.c
-@@ -424,6 +424,9 @@ static uverbs_api_ioctl_handler_fn uverbs_get_handler_fn(struct ib_udata *udata)
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -2234,6 +2234,7 @@ unlock:
  
- 	lockdep_assert_held(&bundle->ufile->device->disassociate_srcu);
- 
-+	if (!bundle->method_elm)
-+		return NULL;
-+
- 	return srcu_dereference(bundle->method_elm->handler,
- 				&bundle->ufile->device->disassociate_srcu);
- }
-diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
-index 3ccf58e96aed..0d88b2ee68ff 100644
---- a/drivers/infiniband/core/uverbs_main.c
-+++ b/drivers/infiniband/core/uverbs_main.c
-@@ -556,6 +556,7 @@ static ssize_t ib_uverbs_write(struct file *filp, const char __user *buf,
- 	bundle.ufile = file;
- 	bundle.context = NULL; /* only valid if bundle has uobject */
- 	bundle.uobject = NULL;
-+	bundle.method_elm = NULL;
- 	if (!method_elm->is_ex) {
- 		size_t in_len = hdr.in_words * 4 - sizeof(hdr);
- 		size_t out_len = hdr.out_words * 4;
--- 
-2.55.0
-
+ 	if (ret < 0) {
+ 		suspend_report_result(dev, callback, ret);
++		pm_runtime_unblock(dev);
+ 		pm_runtime_put(dev);
+ 		return ret;
+ 	}
 
 
