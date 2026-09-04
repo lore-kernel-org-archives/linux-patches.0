@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAB22264A3;
-	Fri,  4 Sep 2026 05:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F7F2264A3;
+	Fri,  4 Sep 2026 05:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500553; cv=none; b=tDVcKhJsq3JgEmWK9ny80VOYAE9dTtVlKEkQjXkkYUaIqVgLc314poNpvPf12eiMxHXoRbbrNNjEsmPfofN2maD43R8MZq/9LYffTjo4ZtxjOOTKJawEV9G5HxPWqDcc9RKXAXVIVwQ4KkHT0qA5tflt36exG6d0PdugxsKsn6Y=
+	t=1788500556; cv=none; b=dgEC7jKNqaSdXSB/p69feIq5JCoWH+FbtlxyFcGT/DE6HwTqtSsN9G9y3Zmqfp65IVIMNSWVCIi62RB4aYE+W0H4gFrkobOIry4JY0lJaZRIW/tdio306U6MPKfg3LY4vZX06l4/bSx3LuyZx+whWibTIiiIMhMftLIkVPKHE7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500553; c=relaxed/simple;
-	bh=nBls42ohAMFEUs+w2MdSfqyFbnHjtSctc7x3Iz1BGPg=;
+	s=arc-20240116; t=1788500556; c=relaxed/simple;
+	bh=2U4Zv1f4z6I0S4IKqXeGLasUBYFmvNUMiTto0tbvih8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PtIW2jVhHBtCdV3QkcSeMQR25NwNSKMuuRk5rGcxy+ci2ayw05m7BzL21qKdXo4zVKQIkkZwSn1q2dimYDk0vy0zmbiG/Qa1ikBO1FqbJ1Pa0sAiqvbPJgX7s+BzAE1mKdLNOY/wFBEAf2yHJDPHoJo1tvdOzw0v4Ho2C4lfY6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVATLZcj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X12QHI6TaWvmhMlrur0GaLoJ6LpWEWQxpAWwDMNyMYJV+EO0x94k+wVw8NOQ7gpVuFxZX0gxJD0fmLt36djEWjbgjP+WB4xRyCkVco6MOEnKgStRLRpXiGHqi+7LbjenNTuslWo9ne8DI9ZX0Rvkt/AGegDM896pAEtjKZM6qYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1Afpu8p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVATLZcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A0D1F00A3D;
-	Fri,  4 Sep 2026 05:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1Afpu8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92D11F00A3D;
+	Fri,  4 Sep 2026 05:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500552;
-	bh=JXFiZOLjiTUbq4gPNNg5g+dL5m8h6PoSGm6vd+TsBPM=;
+	s=korg; t=1788500555;
+	bh=BDwMY2/u9Z+E4hWeZU3Ef7zP3u8owwGSIV+OlkYylnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JVATLZcjmoyuLQlJjz2Qns1wDPB3y/vmtlnbsFQkFJ4pEnlCXLXRlfPN3qvWfkDVD
-	 mhm+PcaiWLTJoa8rsuKlwiuw8DQw/LVNlgf6tzfVnSCyckIcfJbNMEz/nYVYUjlmyo
-	 HVQcEsxt/4+VVS+kGyANrF9jHM+SRQIWrQzu7Wqk=
+	b=V1Afpu8pNR5tYJI2SRKwCWdNgXel+oyzBnZff/uq1XwVI26Nnrbdct2zasJ96azGi
+	 wVPRfgCn12IeGU3m4vpTBkKo3rhTdsn626e0DxVx1jDwnJz+tvvFmsafFO8GYFwSCJ
+	 rSR3qm19BpuNbf1qnCel8VHwnp7Nch03Ii17k5QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 097/552] NFS/localio: fix ref leak on nfs_uuid_add_file failure
-Date: Fri,  4 Sep 2026 06:54:14 +0200
-Message-ID: <20260904045750.095579133@linuxfoundation.org>
+	Nate Prodromou <nate@prodromou.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.18 098/552] NFS: fix delegation_hash_table leak when nfs4_server_common_setup() fails
+Date: Fri,  4 Sep 2026 06:54:15 +0200
+Message-ID: <20260904045750.118770693@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,80 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Nate Prodromou <nate@prodromou.com>
 
-commit ca018c19e0ba38975e5ddc3ef8117d5b734313aa upstream.
+commit 2092f5b38f88be306140c77aeeeb43fc1adacacc upstream.
 
-When nfs_uuid_add_file() races with nfs_uuid_put() tearing down
-uuid->net, it returns -ENXIO without publishing nfl->nfs_uuid via
-rcu_assign_pointer().  nfs_open_local_fh() then enters its error
-branch and only releases the slot's file ref and its paired net
-ref plus its own entry-time net ref, while the close path is a
-no-op:
+nfs4_server_common_setup() allocates server->delegation_hash_table
+first, but server->destroy - the only path that frees the table via
+nfs4_destroy_server() - is not assigned until the very end of the
+function. If any intermediate step fails (the is_ds_only_client()
+check, nfs4_init_session(), nfs4_get_rootfh(), or nfs_probe_server()),
+the function returns with server->destroy still NULL, so the caller's
+nfs_free_server() skips the destroy callback and the hash table is
+leaked (4 KiB per attempt with the default delegation watermark).
 
-    nfs_close_local_fh()
-      nfs_uuid = rcu_dereference(nfl->nfs_uuid);
-      if (!nfs_uuid) { rcu_read_unlock(); return; }  /* always */
+This is trivially reachable from userspace: every failed NFSv4 mount
+leaks one allocation. A client that persistently retries a mount that
+cannot succeed leaks kernel memory without bound. Observed in
+production where a Longhorn backup poller retried mount.nfs4 against
+an NFSv3-only server roughly 10 times per second, leaking ~3.4 GiB of
+unreclaimable slab (kmalloc-rnd-13-4k) per day; the node accumulated
+12 GiB of leaked slab before the source was identified via the
+kmem:kmalloc tracepoint (call_site=nfs4_delegation_hash_alloc).
 
-nfsd_open_local_fh() returns localio holding a caller-owned +1
-nfsd_file reference (from nfsd_file_get() after
-nfsd_file_acquire_local()) and an entry-time nfsd_net reference
-(from its first nfsd_net_try_get()) embedded as nf->nf_net.  Both
-are leaked on the failure path, pinning one nfsd_file (and the
-underlying struct file, dentry, inode) and one nfsd_net_ref per
-occurrence, which blocks nfsd_net and netns teardown.
+Reproducer:
 
-Fix by releasing the caller-owned file ref and its net ref through
-the existing helper, using a stack-local RCU pointer so the helper
-can xchg it out, then returning -ENXIO so callers do not
-dereference a localio whose slot has been cleared:
+  # server exports NFSv3 only (or export path absent for v4)
+  while :; do mount -t nfs4 <server>:/missing /mnt; done
+  # watch SUnreclaim in /proc/meminfo grow 4 KiB per iteration
 
-    struct nfsd_file __rcu *tmp = RCU_INITIALIZER(localio);
+Free the table on the error paths between the allocation and the
+assignment of server->destroy.
 
-    nfs_to_nfsd_file_put_local(pnf);
-    nfs_to_nfsd_file_put_local(&tmp);
-    localio = ERR_PTR(-ENXIO);
-
-The trailing nfs_to_nfsd_net_put(net) continues to release the
-outer net ref, so all three nfsd_net_try_get() increments are
-balanced on the error branch.
-
-Fixes: fdd015de7679 ("NFS/localio: nfs_uuid_put() fix races with nfs_open/close_local_fh()")
+Fixes: f5b3108e6a14 ("NFS: use a hash table for delegation lookup")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Chris Mason <clm@meta.com>
-Link: https://patch.msgid.link/20260602-nfsd-testing-v2-3-e4ea62e3cd5c@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Nate Prodromou <nate@prodromou.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs_common/nfslocalio.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4client.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/fs/nfs_common/nfslocalio.c
-+++ b/fs/nfs_common/nfslocalio.c
-@@ -292,8 +292,22 @@ struct nfsd_file *nfs_open_local_fh(nfs_
- 	localio = nfs_to->nfsd_open_local_fh(net, uuid->dom, rpc_clnt, cred,
- 					     nfs_fh, pnf, fmode);
- 	if (!IS_ERR(localio) && nfs_uuid_add_file(uuid, nfl) < 0) {
--		/* Delete the cached file when racing with nfs_uuid_put() */
-+		/*
-+		 * Delete the cached file when racing with nfs_uuid_put().
-+		 * Since nfl->nfs_uuid was never published via
-+		 * rcu_assign_pointer(), nfs_close_local_fh() will early-return
-+		 * and cannot clean up after us.  Drop the slot's file ref and
-+		 * its paired net ref, then drop the caller-owned nfsd_file ref
-+		 * (+1) and the entry-time nfsd_net ref carried via nf->nf_net,
-+		 * and return -ENXIO so the caller never dereferences the
-+		 * now-cleared localio.
-+		 */
-+		struct nfsd_file __rcu *tmp =
-+			(struct nfsd_file __force __rcu *)localio;
-+
- 		nfs_to_nfsd_file_put_local(pnf);
-+		nfs_to_nfsd_file_put_local(&tmp);
-+		localio = ERR_PTR(-ENXIO);
- 	}
- 	nfs_to_nfsd_net_put(net);
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -1095,20 +1095,22 @@ static int nfs4_server_common_setup(stru
+ 		return error;
  
+ 	/* data servers support only a subset of NFSv4.1 */
+-	if (is_ds_only_client(server->nfs_client))
+-		return -EPROTONOSUPPORT;
++	if (is_ds_only_client(server->nfs_client)) {
++		error = -EPROTONOSUPPORT;
++		goto out_free_delegation_hash;
++	}
+ 
+ 	/* We must ensure the session is initialised first */
+ 	error = nfs4_init_session(server->nfs_client);
+ 	if (error < 0)
+-		return error;
++		goto out_free_delegation_hash;
+ 
+ 	nfs_server_set_init_caps(server);
+ 
+ 	/* Probe the root fh to retrieve its FSID and filehandle */
+ 	error = nfs4_get_rootfh(server, mntfh, auth_probe);
+ 	if (error < 0)
+-		return error;
++		goto out_free_delegation_hash;
+ 
+ 	dprintk("Server FSID: %llx:%llx\n",
+ 			(unsigned long long) server->fsid.major,
+@@ -1117,7 +1119,7 @@ static int nfs4_server_common_setup(stru
+ 
+ 	error = nfs_probe_server(server, mntfh);
+ 	if (error < 0)
+-		return error;
++		goto out_free_delegation_hash;
+ 
+ 	nfs4_session_limit_rwsize(server);
+ 	nfs4_session_limit_xasize(server);
+@@ -1129,6 +1131,11 @@ static int nfs4_server_common_setup(stru
+ 	server->mount_time = jiffies;
+ 	server->destroy = nfs4_destroy_server;
+ 	return 0;
++
++out_free_delegation_hash:
++	kfree(server->delegation_hash_table);
++	server->delegation_hash_table = NULL;
++	return error;
+ }
+ 
+ /*
 
 
