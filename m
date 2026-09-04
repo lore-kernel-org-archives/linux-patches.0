@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C96369204;
-	Fri,  4 Sep 2026 06:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6359D41A504;
+	Fri,  4 Sep 2026 06:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502406; cv=none; b=WYWcbI71Wxwg0veLmr17/ri1FCvr0Kpds/iGos1r6bp7XESQgxMcGUbLQU0LCnd9CB313K0kE7ZzcLWFLeR9xgpsLllLqXyIYV6w8xihpVst/VoQnSv23NGXTSn3J1R9PhFRK/UNk2mnXZTFjGHH1xvCGw1ouz6H8BbmMRQ4iEA=
+	t=1788502409; cv=none; b=twJFNYV/aDN8rbju+up2bB7g+3Ln/Hz6h6JycSJK+VyXBLI0Y3avTuGU+bd31+Iil1hpkr2nB5roeJtVHoWWlOszazQVUc47ugVGKzyz6znbzo5hqcx7zwyaf0r6jhJVlblVbV/Ob31PIKoNmRDXk4bMJtEjPjoDJbOmjKzYIPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502406; c=relaxed/simple;
-	bh=sXdkGICF3lq8hAj/hr0AYszH7vXEqYGdoYlygG3uaKo=;
+	s=arc-20240116; t=1788502409; c=relaxed/simple;
+	bh=0Re4X6qF4e7vk+9d42vn916D41JBgX8BUnxGrAcKa8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAS37SOc/1i/QcfKBIxMIXZHAf1g7nNqbg097TxrfXK16LCXgSJS7Jvlx2cPFAokaDu/WzT/3nNdcAZOg7XpyIBpUBpIjLF+HbsZzEgJZIgxOerBZDRH0N1kqj46cRV8m11W171OmZbRg/y92QdOAmabho+nz4+lGEjn/wXpEAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVOguxt2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PX5hk+Vr4hqnI0lEShN0soGW4Elg7c+clyoZfVXpfTWIJBmFE3UObq8gJG5gAKC+FOEsrW+X/29S/dyXcXkz+YKrXJluRWEVEalfpDHRbFIQzth/CN/jhiCQGYe8CSDB09wwuuubH5WcJf3Ciav4eCDUG3UAp1gNtULxnG7tv08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPs+tcmB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVOguxt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7DB1F00A3D;
-	Fri,  4 Sep 2026 06:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPs+tcmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61F31F00A3D;
+	Fri,  4 Sep 2026 06:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502405;
-	bh=TShzF0qWfv0pUVS4FNuX8b2vk5k3gIoPQ4kCffDLsyY=;
+	s=korg; t=1788502408;
+	bh=NoGPdbUzRMA7rfN4DxCNOFAY98iAMzKRWEPtWdSwo+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kVOguxt2T3igTNnbp03FZhGcmfjNcsgWHEwOzAiR7P6uV3c/djexfHzf293N+AGRm
-	 E5qXVTnAo0+UKMVsRFoxMvBOFVL1AYFl1L4Z86M9VmlugjpzvID9wgFXno0Bx0RSYl
-	 fU7xgpfv4tFJ4mDdiZ7uL6/lMyJmlxDhRDhTl+T8=
+	b=PPs+tcmB2fWCTo1HGnIDFvGIYDBUBSoSVm8R9aSvnl4n5/llQXdxRLUlIFjbK3zFH
+	 idD/rPxIYf0c1GXnm7uuHXX+zNsuchS0tp318NRcgEeV1XWxiSLOZZasECCVU52fIj
+	 +SkHfKFwMttnqoAT9Ywqo7DMxAi8sXyPH8fFEc38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 197/403] mpls: reload header after pskb_may_pull()
-Date: Fri,  4 Sep 2026 07:00:00 +0200
-Message-ID: <20260904045739.335455954@linuxfoundation.org>
+	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 180/403] Bluetooth: hci_conn: re-enable advertising only for peripheral role
+Date: Fri,  4 Sep 2026 06:59:43 +0200
+Message-ID: <20260904045738.951584858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,76 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 
-commit 29e63b8d9fc150cc191b1c6eb7e16e1247e1b650 upstream.
+commit ed5fb41d3b6b6e665e7f97fd54bd1f9531c7477f upstream.
 
-mpls_select_multipath() calls mpls_multipath_hash() to choose a nexthop
-when an MPLS route has multiple nexthops.  While walking the MPLS label
-stack, the hash routine caches hdr for the current label.  After finding
-the bottom-of-stack label, it calls pskb_may_pull() before reading the
-inner IP header.
+hci_le_conn_failed() unconditionally calls hci_enable_advertising(),
+although its own comment states advertising should be re-enabled only
+when the failed attempt was made as a peripheral.
 
-If an skb is constructed with the inner IP header in nonlinear data and
-insufficient tailroom in the linear head, pskb_may_pull() calls
-pskb_expand_head() to replace the skb head and free the old one.  This
-leaves hdr pointing to freed memory.  The IPv6 path can invalidate hdr
-again when it performs a second pull for the larger header.
+hci_le_conn_failed() is reached from hci_conn_failed() for every failed
+LE connection, including outgoing central connections. For a central
+attempt this enable is redundant: hci_le_create_conn_sync() already
+restores advertising via hci_resume_advertising_sync() in its done:
+block. Because hci_enable_advertising() only queues the work on
+cmd_sync_work, it runs *after* that resume has already succeeded and
+set HCI_LE_ADV.
 
-The issue was found through static analysis.  A reproducer sending a legal
-Geneve packet through a bareudp/MPLS multipath setup triggered the same
-KASAN report in 2 of 2 unpatched runs:
+The resulting HCI sequence, captured on a BCM43455 (no LE Extended
+Advertising, so legacy advertising is used):
 
-  BUG: KASAN: slab-use-after-free in mpls_select_multipath
-  Read of size 1 at addr ffff88800ecc6e20 by task ksoftirqd/1/23
+  LE Create Connection                     Status Success
+  ... 13.8 s, peer never answers ...
+  LE Set Advertising Parameters (0x2006)   Success   <- done: resume,
+  LE Set Advertising Enable     (0x200a)   Success      HCI_LE_ADV set
+  LE Create Connection Cancel   (0x200e)   Success
+  LE Connection Complete                   Unknown Conn Id
+  LE Set Advertising Parameters (0x2006)   Command Disallowed (0x0c)
 
-  Call Trace:
-   mpls_select_multipath
-   mpls_forward
-   __netif_receive_skb_list_core
-   netif_receive_skb_list_internal
-   napi_complete_done
-   gro_cell_poll
-   __napi_poll
-   net_rx_action
+The last command is the queued enable from hci_le_conn_failed() running
+as a second hci_enable_advertising_sync() pass. It clears HCI_LE_ADV
+(hci_sync.c, "Clear the HCI_LE_ADV bit temporarily"), then sends
+LE Set Advertising Parameters while the controller is still advertising,
+which the controller correctly rejects with Command Disallowed.
 
-  Freed by task 23:
-   kfree
-   pskb_expand_head
-   __pskb_pull_tail
-   mpls_select_multipath
+The disable-first call at the top of hci_enable_advertising_sync()
+cannot prevent this: hci_disable_advertising_sync() returns early
+without sending anything when HCI_LE_ADV is clear, so it is a no-op
+exactly when the flag is wrong.
 
-Reload hdr from the current skb head after each successful pull before
-deriving the inner IPv4 or IPv6 header pointer.
+hci_enable_advertising_sync() then returns without sending LE Set
+Advertising Enable, so HCI_LE_ADV is never set again. The legacy
+software rotation loop re-arms hci_schedule_adv_instance_sync() every
+HCI_DEFAULT_ADV_DURATION (2 s), and its "already advertising" shortcut
+tests HCI_LE_ADV, which can no longer become true. The command is
+therefore retried every 2 s indefinitely:
 
-Fixes: 9f427a0e474a ("net: mpls: Fix multipath selection for LSR use case")
+  Bluetooth: hci0: Opcode 0x2006 failed: -16
+
+Observed on a gateway as 5326 occurrences over 3 hours, ending only when
+bluetoothd was restarted. Connection attempts that succeed do not call
+hci_le_conn_failed() and never trigger this.
+
+Add the role test the comment already describes. Both other
+hci_enable_advertising() call sites reached from a failed/closed LE
+connection (hci_cs_disconnect() and hci_disconn_complete_evt()) already
+guard on conn->role == HCI_ROLE_SLAVE; this one was missed.
+
+Reproducing needs legacy advertising (ext_adv_capable() false, so the
+software rotation loop is used), simultaneous peripheral advertising and
+outgoing central connects, and a central connect that times out rather
+than failing fast.
+
+The Fixes tag points at the commit that introduced the advertising
+restart into this path for the directed-advertising (peripheral) case;
+the role test that the later commit 0b1db38ca26b ("Bluetooth: Fix check
+for direct advertising") added to the sibling paths was never applied
+here.
+
+Fixes: 3c857757ef6e ("Bluetooth: Add directed advertising support through connect()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260814095404.7205-1-a0yami@mailbox.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: Claude:claude-opus-5 btmon
+Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mpls/af_mpls.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_conn.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -198,6 +198,7 @@ static u32 mpls_multipath_hash(struct mp
- 		if (pskb_may_pull(skb, mpls_hdr_len + sizeof(struct iphdr))) {
- 			const struct iphdr *v4hdr;
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1263,7 +1263,8 @@ static void hci_le_conn_failed(struct hc
+ 	/* Enable advertising in case this was a failed connection
+ 	 * attempt as a peripheral.
+ 	 */
+-	hci_enable_advertising(hdev);
++	if (conn->role == HCI_ROLE_SLAVE)
++		hci_enable_advertising(hdev);
+ }
  
-+			hdr = mpls_hdr(skb) + label_index;
- 			v4hdr = (const struct iphdr *)(hdr + 1);
- 			if (v4hdr->version == 4) {
- 				hash = jhash_3words(ntohl(v4hdr->saddr),
-@@ -208,6 +209,7 @@ static u32 mpls_multipath_hash(struct mp
- 						 sizeof(struct ipv6hdr))) {
- 				const struct ipv6hdr *v6hdr;
- 
-+				hdr = mpls_hdr(skb) + label_index;
- 				v6hdr = (const struct ipv6hdr *)(hdr + 1);
- 				hash = __ipv6_addr_jhash(&v6hdr->saddr, hash);
- 				hash = __ipv6_addr_jhash(&v6hdr->daddr, hash);
+ /* This function requires the caller holds hdev->lock */
 
 
