@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE5F351C35;
-	Fri,  4 Sep 2026 05:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2CD351C35;
+	Fri,  4 Sep 2026 05:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499778; cv=none; b=LUyZGX5xZAD0wNrBYqpHF41+VeKNX4zSi9rbppim/9kJ3KI+4CSOzKl/TOwGFyUDE6UQsb3AEO3TBr7Buj9Yyr8VKcE/MgyDtOIbQ5dHpqw92vC9McUvGX7VjAzhHnBiVjeRherwvcbvLXmf+EleaTODaykEbhBpGBKFdRQ92+M=
+	t=1788499780; cv=none; b=UK0VlLjPT8cOI1Je9gI+mRTMD5rBhmPcwgG0oE56vCFi9OMvjbUq2RyMfgE2GsCdGpRMyBfE4hqTGS+bryKhCizf6VJg3UN5G6nb/ZGb9hSHHAKJkawVW7bgcyO5RDzrh3L7ssZi6XhJmdvilBWgTVrqgVCzYYQ8AmzRdk1pnYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499778; c=relaxed/simple;
-	bh=/DGlaIYKS5zPaGjoOChESjtjZRWpPa8+L+tzvVGGkuI=;
+	s=arc-20240116; t=1788499780; c=relaxed/simple;
+	bh=NAJWKGeVQx+hlhbqL5N08UcqbRiuJPOL+Ywm3t1UyAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sdPs342ClBTqZoUxXOiHiwhq80B4wdeJ5lyQ2S+b2l/E2OMGGCbD+UD4JhJly+dqhmhWlM2d7/0C7Y/7TybS8jilG4i7mIduOkq2Uu6J0BBJWmAsbp9Pykudd4+0Z3zk2zjm26ypa6ACw3PTC8eM9vdz9aFvDWL2+AVUCBDeKFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3UzjpVT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=M8ZIkJIC7KyiWpqc1qEBp6010LlAs7VbkCvhqJ/hSThrbU6WtfIAqmx6XaMr/OBi/5h3aKW6GT650EkN6knFohfd89IVNWII3wB49Wg/wfu6r2R3FQZTlbadvklc3LIIECFDWLCeqDSLogLmix2oeI8VOufyPOzoheJGaS1oBTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BMsswXx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3UzjpVT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECA71F00A3D;
-	Fri,  4 Sep 2026 05:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BMsswXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017D61F00A3D;
+	Fri,  4 Sep 2026 05:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499776;
-	bh=HeNp3EE8qlzCwxbEN7Km7kl61mWHFPeChAIfZHJ01MY=;
+	s=korg; t=1788499779;
+	bh=5LucWR9MIwSsGnG77SJTJTrvA9YLuOF5Fem46Ennwqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k3UzjpVTA1FwiUQAyVJRfXRDs12VBiWiwFmh8E+DLc+QYuXEiVjLg7AbQdnqGpI8C
-	 h6OCEGdtF3GpmtP9zK4esOrZM/X8Gfx1lLOCLn/5gaXKh+EP4mFwqBB4M3Pf7QU+0C
-	 ghaQq/ArkXIrMBS3QRY+gN0LauOzIv8g/ZMndjBg=
+	b=2BMsswXxGnK8XyFYcrxVhVOaS7F46B98nu8qFYr/hvvk05mAoPhB7TyjTOJDVlj1x
+	 mQHSBnJP014VMD3Ay7O6erloIiYnt861VZg2pMgsVrfT5OqGXZw+38YnBOmIpbuqhD
+	 IQMpSVj/oseesR4GibJTfyYqG4xhOioceqD3JWS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 7.2 535/713] PCI/proc: Use file_ns_capable() when checking config space read access
-Date: Fri,  4 Sep 2026 06:58:23 +0200
-Message-ID: <20260904045815.813072738@linuxfoundation.org>
+Subject: [PATCH 7.2 536/713] PCI/proc: Warn on writes to kernel-exclusive config space regions
+Date: Fri,  4 Sep 2026 06:58:24 +0200
+Message-ID: <20260904045815.835504879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,58 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit f82f53e75eff382fc8f56b73279b54f7cf5a5c65 upstream.
+commit 3359e044d597dd5344f17613e4be6b6e12067f60 upstream.
 
-proc_bus_pci_read() decides how much of the config space is readable based
-on capable(CAP_SYS_ADMIN), which checks the credentials of the task calling
-read(), not the credentials of the process that opened the file.
+Currently, a driver can claim a region of a device's config space as
+exclusive using pci_request_config_region_exclusive(), after which a write
+to that region originating from user space is expected to emit a warning
+and taint the kernel.  The check is advisory only, as the write itself is
+still allowed to proceed.
 
-The sysfs equivalent, pci_read_config(), has checked the credentials of the
-opening process since commit de139a339395 ("pci: check caps from sysfs file
-open to read device dependent config space"), so a privileged process can
-open the config space file and pass the file descriptor to an unprivileged
-process (for example, a process running a KVM guest with an assigned
-device), which can then read the entire config space.  The check was
-subsequently routed through the LSM framework in commit 47970b1b2aa6 ("pci:
-use security_capable() when checking capablities during config space read")
-and converted to the dedicated helper in commit ab0fa82b2df9 ("pci-sysfs:
-use proper file capability helper function").
+Since commit 278294798ac9 ("PCI: Allow drivers to request exclusive config
+regions"), the sysfs config space attribute performs this check in
+pci_write_config(), but the procfs interface was never updated.  A write
+performed through /proc/bus/pci/BB/DD.F therefore bypasses the detection
+entirely, even though both interfaces offer the same level of access.
 
-Thus, the two interfaces check the same capability against different
-credentials.  Checking the credentials of the task calling read() makes the
-outcome depend on who reads rather than who opened, so the restriction is
-bypassed whenever a more privileged process reads through the descriptor.
-Checking the credentials recorded in file->f_cred settles the decision at
-open() time and ties it to the file, where it cannot change with the
-caller.
-
-Use file_ns_capable() to check CAP_SYS_ADMIN against the credentials in
-effect when the file was opened, bringing the procfs interface in line with
-the sysfs behaviour.
-
-As a result, a file descriptor opened by a privileged process and passed to
-an unprivileged one now allows the entire config space to be read through
-procfs, matching sysfs.
+Add the same resource_is_exclusive() check to proc_bus_pci_write().
 
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260720204145.1500105-1-kwilczynski@kernel.org
+Link: https://patch.msgid.link/20260729075413.1215821-1-kwilczynski@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/proc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/drivers/pci/proc.c
 +++ b/drivers/pci/proc.c
-@@ -39,7 +39,7 @@ static ssize_t proc_bus_pci_read(struct
- 	 * undefined locations (think of Intel PIIX4 as a typical example).
- 	 */
+@@ -14,6 +14,8 @@
+ #include <linux/capability.h>
+ #include <linux/uaccess.h>
+ #include <linux/security.h>
++#include <linux/panic.h>
++#include <linux/sched.h>
+ #include <asm/byteorder.h>
+ #include "pci.h"
  
--	if (capable(CAP_SYS_ADMIN))
-+	if (file_ns_capable(file, &init_user_ns, CAP_SYS_ADMIN))
- 		size = dev->cfg_size;
- 	else if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS)
- 		size = 128;
+@@ -128,6 +130,12 @@ static ssize_t proc_bus_pci_write(struct
+ 	if (!nbytes)
+ 		return 0;
+ 
++	if (resource_is_exclusive(&dev->driver_exclusive_resource, pos, nbytes)) {
++		pci_warn_once(dev, "%s: Unexpected write to kernel-exclusive config offset %x",
++			      current->comm, pos);
++		add_taint(TAINT_USER, LOCKDEP_STILL_OK);
++	}
++
+ 	if (pos >= size)
+ 		return 0;
+ 	if (nbytes >= size)
 
 
