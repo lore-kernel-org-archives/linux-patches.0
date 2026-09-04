@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575D73EC6AE;
-	Fri,  4 Sep 2026 05:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E551D4CCDC7;
+	Fri,  4 Sep 2026 05:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500204; cv=none; b=sFjHgnIfq94Mdamkm1cHaKRh6K6NP9TBuB6rHg1vYNDhFuvoPjoGAoShbbsfieb34bWFBkdJUaXUpHa2z6XE2qNbieBMHfXbIf3EIxIx+v6vYebGAzzbJ5Y+7TUZEJYCws0lLf+GIQ7HopfGtkaJ/gTR5zV34Pch7xOPD1d3z+Q=
+	t=1788500207; cv=none; b=LkcKx3FZw4IHFCz3kpxbxrlShwUWMDi/BAT4SKifaRXi4BHUaJyhsiEu2XgnhZleJGfdC9BcInz8cKuAv7UunqX7MOy8XxHT9MB0z8yM9ro+nrRz7C0FcsKArjbdHA2RVdndgk0lwlIaqfa3RDLJmMi7K824bV/0IPG3uT6YuKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500204; c=relaxed/simple;
-	bh=Iw+ia2OnKR/JexBuGliP/LBzdpg5djrfTxuWtaxEImA=;
+	s=arc-20240116; t=1788500207; c=relaxed/simple;
+	bh=TFH+rn130qAEmHesqL8Ldtlc5Q2v8jmGJ0psRirHy4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nU4PmzeX1nWtkwev//BnbG2rnADgrGZ5xGhCZ+oDli6dWLfdvon/O0cRtX4On9qkbpoD76NUbnXJ97uJEF4NBSWHDKCo0AfcSFQpzGShdVloudPsa1q4M5EBP7rfDj57Oz3+fLlDXmQa2MHKbjZ2BNyHiLVzf6p+zSUSq4sYPw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fN7IJfuV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=utNXqySYqjC3KMqo06c6wkyIIjwhTwneMKiQ6Btv02Gi6G+SAKNcdbFzVkKYT0sa+cNeR1XGV8t4hLymCNG4v60niNoH9AZGBbr62nAD2U9VQ7SJ+E68qfGyvm2TEaCXKLyZqiCMTfA6xGZPI895Ao8uSslTBMHNvKMbGC5/N1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9UbNEb/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fN7IJfuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751331F00A3D;
-	Fri,  4 Sep 2026 05:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9UbNEb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443071F00A3D;
+	Fri,  4 Sep 2026 05:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500203;
-	bh=RM73ezDd3x+zxZPOg7bAd1rvafgj8Xz4FUrDLLLKdCE=;
+	s=korg; t=1788500205;
+	bh=u5svkUEWh3ySIc7fEKUg1j/WUgnT3/5E3eW0uq8cVio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fN7IJfuV6f2kxyJLIzMhV2b1eXZKJ9sZ5Qlc90xChLDs1+IM383TCiNeUmvpQmpr/
-	 mcX5jJSg0AOZBwvVoQEcxO05pUFkif9cRNMTLFjrp6NAOAgWAgYPkXEjdTbDUuV8d1
-	 ChGX11X5gr2N3olN7qHxlFHrE6kl2c5t3ddVU2RE=
+	b=k9UbNEb/san2Wsk1AsFeNATD4ppkZa9rsq3aroYwWGL6ehscv0L4vUupxl0suPuOT
+	 xyL39yU52mDDnq/dFaaFcvx1ygPke66BG4LZzfov9N6++/gqoophUWHNYmVTPj53Xp
+	 jBDWZaWloGaHmBXyOP8NPMjCWZI0FND9ZPttRoi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 7.2 688/713] wifi: rtlwifi: rtl8192du: Fix possible memory leak in rtl92du_init_sw_vars()
-Date: Fri,  4 Sep 2026 07:00:56 +0200
-Message-ID: <20260904045819.263946630@linuxfoundation.org>
+Subject: [PATCH 7.2 689/713] wifi: rtw88: Fix potential memory leak in rtw_txq_push_skb()
+Date: Fri,  4 Sep 2026 07:00:57 +0200
+Message-ID: <20260904045819.285941354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,54 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 6496ce90845df2d22fb8e8ed235cd2936fad41c8 upstream.
+commit 9f2948010764d708bda27369d09ce6f194abe8e3 upstream.
 
-The memory allocated inside rtl92du_init_shared_data() is not freed in
-any of the subsequent error paths in rtl92du_init_sw_vars().
-Fix that by adding a call to rtl92du_deinit_shared_data() in the error
-path.
+The skb passed to the rtw_hci_tx_write() is expected to be freed when
+the function fails, but the error path in rtw_txq_push_skb() does not
+free the skb before returning. This can lead to a memory leak in
+rtw_txq_push() where a dequeued skb is passed to rtw_txq_push_skb().
 
-Fixes: b5dc8873b6ff ("wifi: rtlwifi: Add rtl8192du/sw.c")
+Fixes: aaab5d0e6737 ("rtw88: kick off TX packets once for higher efficiency")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260723114539.136986-1-nihaal@cse.iitm.ac.in
+Link: https://patch.msgid.link/20260727064223.61836-1-nihaal@cse.iitm.ac.in
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192du/sw.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw88/tx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192du/sw.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192du/sw.c
-@@ -145,8 +145,10 @@ static int rtl92du_init_sw_vars(struct i
- 
- 	/* for firmware buf */
- 	rtlpriv->rtlhal.pfirmware = kmalloc(0x8000, GFP_KERNEL);
--	if (!rtlpriv->rtlhal.pfirmware)
--		return -ENOMEM;
-+	if (!rtlpriv->rtlhal.pfirmware) {
-+		err = -ENOMEM;
-+		goto error;
-+	}
- 
- 	rtlpriv->max_fw_size = 0x8000;
- 	pr_info("Driver for Realtek RTL8192DU WLAN interface\n");
-@@ -160,10 +162,14 @@ static int rtl92du_init_sw_vars(struct i
- 		pr_err("Failed to request firmware!\n");
- 		kfree(rtlpriv->rtlhal.pfirmware);
- 		rtlpriv->rtlhal.pfirmware = NULL;
--		return err;
-+		goto error;
+--- a/drivers/net/wireless/realtek/rtw88/tx.c
++++ b/drivers/net/wireless/realtek/rtw88/tx.c
+@@ -619,6 +619,7 @@ static int rtw_txq_push_skb(struct rtw_d
+ 	ret = rtw_hci_tx_write(rtwdev, &pkt_info, skb);
+ 	if (ret) {
+ 		rtw_err(rtwdev, "failed to write TX skb to HCI\n");
++		ieee80211_free_txskb(rtwdev->hw, skb);
+ 		return ret;
  	}
- 
  	return 0;
-+
-+error:
-+	rtl92du_deinit_shared_data(hw);
-+	return err;
- }
- 
- static void rtl92du_deinit_sw_vars(struct ieee80211_hw *hw)
 
 
