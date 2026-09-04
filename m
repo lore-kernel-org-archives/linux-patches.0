@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F158C3B14B4;
-	Fri,  4 Sep 2026 05:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948523A7F4C;
+	Fri,  4 Sep 2026 05:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499000; cv=none; b=b2nkMjgYpNifqp6xH+JeLl87BjzIZpnJ3vwZcFpjTjKfbY5+XUQIxQX/VAklQW17EuL41g+1LW+qUlFNvwEDRaXExt4CT0HVEQHc5i5HVZ3VpO6BlOxAjdC4IXEQu7VHgXlqUpP9XjINhrUVp8aBiVApzZnsxbas3gAygDhEjuU=
+	t=1788499002; cv=none; b=ebe9hoB1WbPK+l0nN4wxB0vu5nH9Gjt4eh1VLuVjA6bdDRjtFLqw+xfTOnsyaWjwgm3Ao/Y6oK/RKYmMG7gqk3dd9899ZB/Uo441ykYawAToF394XFsbiJ035Yqc//rE8k5P+h7FfZ/dmh4pQHdHcBxO/7z1BZpdvM/DBmPCYAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499000; c=relaxed/simple;
-	bh=qvQxj31RhmV4ygNo87gDYmN1mHc7yerDsyDDxhy83+E=;
+	s=arc-20240116; t=1788499002; c=relaxed/simple;
+	bh=7jSpbRY9fXCU8EGypVURAzd6ATUViw+YdJXemDI9dgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGOZzJYfDMM6y1//FGY9rXkAQDiESirj1q8YKJeWyctbcWCm8BXFvubeLAE4s7HKHq2nyTn2ZTlAGwYMVoQWqM3H7+T28ammBEwKBIG6Ml23n/x9Aie3nFBR9xgy0QsZJePowJ8IsGnTNCdfW7WlICeJi0NmzL82qioay6iY7Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZI3XFubi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aaCyUhPjYb3cdML+Gx7on4KElhAzz6w6V4GILShGp7XzcnVFFafAysVPFyox42N0Gwm3Zx2jDqzq9YQcB7fbljlJbaq+zJR5qxKH2QkLTZow5aDXPvTY+qLU76YiO9gug2eXSNlRedvgdHlP17r6souFfxffUNI+ae/R9qUeE58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UM8+M5eL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZI3XFubi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7F51F00A3D;
-	Fri,  4 Sep 2026 05:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UM8+M5eL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE341F00A3D;
+	Fri,  4 Sep 2026 05:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498998;
-	bh=5sLZz4Xg8enDJfFqKIDgDY0plIPBJl/VwDARS/5VlQ8=;
+	s=korg; t=1788499001;
+	bh=qU3uOuB7LM4KvOTFy5L6HFmGYF7CImgWn2RW32S8cpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZI3XFubijpm8Kd81RWrI8FxH2tYzrrvZmzCP8KxvVrO8lR3wD/yNqydfJ+w6t379q
-	 g9kXRxuUYVIMv/fMVisR3vJycZWxt+cfT3DdryCyZVwUU4OBd/pPNqVAamhPmzggT0
-	 auYlJtPgoR6jqqEakQeQFJK6y+AzMasZYvTLGeao=
+	b=UM8+M5eLwbJA6gwx1YGsfKmO1h28kiPXwJ5ww4CGZmlVofnjA4BVpvzE8pTob3TG4
+	 WX+gGcD250RkOnFZ9N2y7Wu2amfe/AG2IX4Ste3EVVt6q6TsIvPYny8Q8SXcyflLOm
+	 qIo3o3lPXllTYUj5XZzJCdmqbIdd9dA7fUZ0NXlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ef80b4ed02226d04a06@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 260/713] eventfs: Initialize ei->children and ei->list in init_ei()
-Date: Fri,  4 Sep 2026 06:53:48 +0200
-Message-ID: <20260904045809.666111967@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.2 261/713] fs/ntfs3: validate dirty page table on log replay
+Date: Fri,  4 Sep 2026 06:53:49 +0200
+Message-ID: <20260904045809.687840622@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,61 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 1704aaaf5d22bc765c168402350d191e24e245bc upstream.
+commit 006cb7713dec10368e699abc4367e5faa334c9a5 upstream.
 
-eventfs_create_dir() allocates the eventfs_inode and initializes it with
-init_ei(). But this does not initialize the eventfs_inode list_heads. If
-the eventfs_create_dir() fails due to memory pressure, it will call
-free_ei() before it initialized the lists, and that checks to make sure
-the eventfs_inode has no children. But because the list wasn't
-initialized, it will give a false warning.
+Each DIR_PAGE_ENTRY ends in a page_lcns[] array whose length is the on-disk
+lcns_follow field. check_rstbl() validates the table bookkeeping but never
+checks that this array fits in the entry, so a crafted lcns_follow lets the
+v0->v1 conversion memmove and later replay passes run off the entry.
 
-Fix it by moving the list initialization into init_ei().
+Add check_dp_table() to reject, right after check_rstbl(), any entry larger
+than its size claims via struct_size() (the same expression used to allocate
+these entries, so the check is overflow-safe by construction). All consumers
+can then trust lcns_follow as the real capacity. This covers every
+page_lcns[] access whose index is bounded by the entry itself (the
+conversion memmove, the HotFix store via find_dp(), and the self-bounded
+scan loops). Accesses whose index comes from the log record need a separate
+bound and are handled in a follow-up patch.
 
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Fixes: 5790b1fb3d67 ("eventfs: Remove eventfs_file and just use eventfs_inode")
-Reported-by: syzbot+3ef80b4ed02226d04a06@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=3ef80b4ed02226d04a06
-Link: https://patch.msgid.link/20260824144653.54044-1-kartikey406@gmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-[ Rewrote change log ]
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ fs/ntfs3/fslog.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -438,6 +438,8 @@ static inline struct eventfs_inode *init
- 	if (!ei->name)
- 		return NULL;
- 	kref_init(&ei->kref);
-+	INIT_LIST_HEAD(&ei->children);
-+	INIT_LIST_HEAD(&ei->list);
- 	return ei;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -789,6 +789,20 @@ static bool check_rstbl(const struct RES
+ 	return true;
  }
  
-@@ -725,8 +727,6 @@ struct eventfs_inode *eventfs_create_dir
- 	ei->entries = entries;
- 	ei->nr_entries = size;
- 	ei->data = data;
--	INIT_LIST_HEAD(&ei->children);
--	INIT_LIST_HEAD(&ei->list);
++static bool check_dp_table(const struct RESTART_TABLE *dptbl)
++{
++	u32 rsize = le16_to_cpu(dptbl->size);
++	struct DIR_PAGE_ENTRY *dp = NULL;
++
++	while ((dp = enum_rstbl((struct RESTART_TABLE *)dptbl, dp))) {
++		if (struct_size(dp, page_lcns, le32_to_cpu(dp->lcns_follow)) >
++		    rsize)
++			return false;
++	}
++
++	return true;
++}
++
+ /*
+  * free_rsttbl_idx - Free a previously allocated index a Restart Table.
+  */
+@@ -4294,6 +4308,11 @@ check_dirty_page_table:
+ 		err = -EINVAL;
+ 		goto out;
+ 	}
++
++	if (!check_dp_table(rt)) {
++		err = -EINVAL;
++		goto out;
++	}
  
- 	scoped_guard(mutex, &eventfs_mutex) {
- 		if (!parent->is_freed)
-@@ -798,9 +798,6 @@ struct eventfs_inode *eventfs_create_eve
- 	ei->attr.uid = uid;
- 	ei->attr.gid = gid;
- 
--	INIT_LIST_HEAD(&ei->children);
--	INIT_LIST_HEAD(&ei->list);
--
- 	ti = get_tracefs(inode);
- 	ti->flags |= TRACEFS_EVENT_INODE;
- 	ti->private = ei;
+ 	dptbl = kmemdup(rt, t32, GFP_NOFS);
+ 	if (!dptbl) {
 
 
