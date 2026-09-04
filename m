@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A145B369204;
-	Fri,  4 Sep 2026 06:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7938F3B42F7;
+	Fri,  4 Sep 2026 06:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502283; cv=none; b=VqqDRP/2aerK/v3BrwYcfHhhwbjCT0nDTv+xHEuxd9ZYGHS4ibk6onZBTAA9YQZ/fZjDtSO450hBWibQXliqsE8alTXnVN9Uw9nKnjgMk1UVnvOdXJssHVBT7zwqDBWbuwvwMc+o5d24Njymrn+QHwgFO6dOdbfdbsac0uj8d84=
+	t=1788502286; cv=none; b=PIxgAOIVPr4LjE5ONFOiedhOgG5G8Xdzty8Su+fPj9I54aDQCqOLP8wZ7iXCK2Y0qB3Fsn3FiuWgp4QFQL2DYszdpGsbwO7DF7HoAd30UHmnKozQNVY0rPsUu9eBJ+RYyW2Zhsaz2IzP/leVBw2Do4i3VaazXljy2LXcskSB2q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502283; c=relaxed/simple;
-	bh=SVG6UgM07BrRt817kc2Wp7ZptzjDZgFU0Pe2cKhtCZQ=;
+	s=arc-20240116; t=1788502286; c=relaxed/simple;
+	bh=0t682lkUxWEOhShx+iPCm3qRTAWAb1iMWghudvdN9qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kk5ldubAF1Ya11KLefG6y2uhlP8J2+o03MgpbbpchBU878TFukO1EyU7kCT0hLpyK0+vmmXBCxpli/GQ8/sR5MgIWuxLYsHcPSxoiobPo3iEpEhGblqEFEpa9c9buWm7t4M9scOKSwQqx+JgoDPfDkKpTcVt9ilfm4D56VNxHh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpR81+zs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=K4XVnwXQOgGspCB45NT3dZgjRvV0AAEMczRwVPmnBCo7lUU9fVDPT3zKMIbXOUFer5z60j8eGYRYse/+drQcYqhkNrv9Ap6xrThVML1mgTegySASEbviHD2xAaZCOZZ2M+oQCVhKKaF0m0Fht9mF02CYBhK2qQswtinIDyPUNqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS/7pAnZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpR81+zs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081371F00A3D;
-	Fri,  4 Sep 2026 06:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS/7pAnZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E8C1F00A3D;
+	Fri,  4 Sep 2026 06:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502282;
-	bh=erTJXJTr7ZMeD7xR/Np5mMy0Bn6qzuL9FwaIgNs2GZY=;
+	s=korg; t=1788502285;
+	bh=+Rg1mFcfP0N1Ypzc/FucShA1kqe9G8q86KOS3lIa+DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vpR81+zs6eQ0nO8wC4vEGK3KJNorvqldA9EIpWfQNtmBBjk2aXuAlbc5TJ+6dN7fd
-	 6qSYdAa/sMAPPYQ4RpeP111gV4hgSvdMj/+zSOcH8PcDyKoIJw/8MMl5b+bKOf3COs
-	 pr7HgJ3ZxXuaRKq59bjJjJtDEsosofWMAFOu8wHw=
+	b=YS/7pAnZ/OLkD3hdrJLtNHmkTURAFL4e1BWmq09w5U//h8PxXv6EhaW9UhJaQPuyH
+	 JYOWmrc1QaWT4c6Dr2iOnviJq8DoQfH0ip4ymC8kcN7YzKffMiS0fuV7gd60WyCbJu
+	 ClZ91yU0AF+rc+zojEFI9iejNHrVTkejMUnJs8/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anirudh Prasad <icarus@a0rg.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 153/403] ACPI: pfr_update: fix stack buffer overflow in query_capability()
-Date: Fri,  4 Sep 2026 06:59:16 +0200
-Message-ID: <20260904045738.329106802@linuxfoundation.org>
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Magnus Lindholm <linmag7@gmail.com>
+Subject: [PATCH 6.12 154/403] alpha/PCI: Fix I/O port accessor argument order in pci_legacy_write()
+Date: Fri,  4 Sep 2026 06:59:17 +0200
+Message-ID: <20260904045738.351456729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -44,120 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anirudh Prasad <icarus@a0rg.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit ced45be0073a8a31b30b4a7f68cd3a15734515de upstream.
+commit 651fb94aaf245430590216d497fb8b02dd73d5f9 upstream.
 
-query_capability() copies four ACPI buffer objects returned by the
-firmware _DSM into fixed-size u8[16] fields in struct
-pfru_update_cap_info using memcpy with the firmware-supplied length:
+pci_legacy_write() in arch/alpha/kernel/pci-sysfs.c passes its arguments to
+outb(), outw() and outl() in the wrong order:
 
-  memcpy(&cap_hdr->code_type,
-         elements[CAP_CODE_TYPE_IDX].buffer.pointer,
-         elements[CAP_CODE_TYPE_IDX].buffer.length);
+  outb(port, val);
 
-The same pattern repeats for drv_type, platform_id, and oem_id.
-If the firmware returns buffer.length > 16 for any of these fields,
-memcpy writes past the destination array.
+The Alpha I/O accessors in arch/alpha/include/asm/io.h take the value first
+and the port second:
 
-struct pfru_update_cap_info is stack-allocated in pfru_ioctl().
+  extern void outb(u8 b, unsigned long port);
 
-Confirmed with KASAN on 7.2-rc6: three stack-out-of-bounds reports
-are generated when a DSM returns 64-byte buffers, with writes reaching
-44 bytes past the end of cap_hdr's [64, 156) frame window into
-adjacent stack redzones.
+So the port number is written as data to the I/O address taken from the
+user-supplied value, and the intended write to the requested port never
+happens.
 
-Introduce a helper pointer to out_obj->package.elements and use it
-to validate each buffer length against its destination field size
-before copying, returning -EINVAL if the firmware supplies an
-oversized buffer.
+The arguments have been reversed since the file was added, and the function
+returns the access size regardless, so the caller sees success while the
+requested port is left untouched.
 
-Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Anirudh Prasad <icarus@a0rg.com>
-Link: https://patch.msgid.link/1a001e1fee9.637da6dc3533246.238498880682901704@a0rg.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 10a0ef39fbd1 ("PCI/alpha: pci sysfs resources")
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Acked-by: Magnus Lindholm <linmag7@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260706175423.98305-1-kwilczynski@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/pfr_update.c |   45 ++++++++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 21 deletions(-)
+ arch/alpha/kernel/pci-sysfs.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -120,7 +120,7 @@ static int query_capability(struct pfru_
- 			    struct pfru_device *pfru_dev)
- {
- 	acpi_handle handle = ACPI_HANDLE(pfru_dev->parent_dev);
--	union acpi_object *out_obj;
-+	union acpi_object *out_obj, *elem;
- 	int ret = -EINVAL;
+--- a/arch/alpha/kernel/pci-sysfs.c
++++ b/arch/alpha/kernel/pci-sysfs.c
+@@ -364,17 +364,17 @@ int pci_legacy_write(struct pci_bus *bus
  
- 	out_obj = acpi_evaluate_dsm_typed(handle, &pfru_guid,
-@@ -144,36 +144,39 @@ static int query_capability(struct pfru_
- 	    out_obj->package.elements[CAP_OEM_INFO_IDX].type != ACPI_TYPE_BUFFER)
- 		goto free_acpi_buffer;
- 
--	cap_hdr->status = out_obj->package.elements[CAP_STATUS_IDX].integer.value;
-+	elem = out_obj->package.elements;
-+
-+	cap_hdr->status = elem[CAP_STATUS_IDX].integer.value;
- 	if (cap_hdr->status != DSM_SUCCEED) {
- 		ret = -EBUSY;
- 		dev_dbg(pfru_dev->parent_dev, "Error Status:%d\n", cap_hdr->status);
- 		goto free_acpi_buffer;
+ 	switch(size) {
+ 	case 1:
+-		outb(port, val);
++		outb(val, port);
+ 		return 1;
+ 	case 2:
+ 		if (port & 1)
+ 			return -EINVAL;
+-		outw(port, val);
++		outw(val, port);
+ 		return 2;
+ 	case 4:
+ 		if (port & 3)
+ 			return -EINVAL;
+-		outl(port, val);
++		outl(val, port);
+ 		return 4;
  	}
- 
--	cap_hdr->update_cap = out_obj->package.elements[CAP_UPDATE_IDX].integer.value;
-+	if (elem[CAP_CODE_TYPE_IDX].buffer.length > sizeof(cap_hdr->code_type) ||
-+	    elem[CAP_DRV_TYPE_IDX].buffer.length > sizeof(cap_hdr->drv_type) ||
-+	    elem[CAP_PLAT_ID_IDX].buffer.length > sizeof(cap_hdr->platform_id) ||
-+	    elem[CAP_OEM_ID_IDX].buffer.length > sizeof(cap_hdr->oem_id))
-+		goto free_acpi_buffer;
-+
-+	cap_hdr->update_cap = elem[CAP_UPDATE_IDX].integer.value;
- 	memcpy(&cap_hdr->code_type,
--	       out_obj->package.elements[CAP_CODE_TYPE_IDX].buffer.pointer,
--	       out_obj->package.elements[CAP_CODE_TYPE_IDX].buffer.length);
--	cap_hdr->fw_version =
--		out_obj->package.elements[CAP_FW_VER_IDX].integer.value;
--	cap_hdr->code_rt_version =
--		out_obj->package.elements[CAP_CODE_RT_VER_IDX].integer.value;
-+	       elem[CAP_CODE_TYPE_IDX].buffer.pointer,
-+	       elem[CAP_CODE_TYPE_IDX].buffer.length);
-+	cap_hdr->fw_version = elem[CAP_FW_VER_IDX].integer.value;
-+	cap_hdr->code_rt_version = elem[CAP_CODE_RT_VER_IDX].integer.value;
- 	memcpy(&cap_hdr->drv_type,
--	       out_obj->package.elements[CAP_DRV_TYPE_IDX].buffer.pointer,
--	       out_obj->package.elements[CAP_DRV_TYPE_IDX].buffer.length);
--	cap_hdr->drv_rt_version =
--		out_obj->package.elements[CAP_DRV_RT_VER_IDX].integer.value;
--	cap_hdr->drv_svn =
--		out_obj->package.elements[CAP_DRV_SVN_IDX].integer.value;
-+	       elem[CAP_DRV_TYPE_IDX].buffer.pointer,
-+	       elem[CAP_DRV_TYPE_IDX].buffer.length);
-+	cap_hdr->drv_rt_version = elem[CAP_DRV_RT_VER_IDX].integer.value;
-+	cap_hdr->drv_svn = elem[CAP_DRV_SVN_IDX].integer.value;
- 	memcpy(&cap_hdr->platform_id,
--	       out_obj->package.elements[CAP_PLAT_ID_IDX].buffer.pointer,
--	       out_obj->package.elements[CAP_PLAT_ID_IDX].buffer.length);
-+	       elem[CAP_PLAT_ID_IDX].buffer.pointer,
-+	       elem[CAP_PLAT_ID_IDX].buffer.length);
- 	memcpy(&cap_hdr->oem_id,
--	       out_obj->package.elements[CAP_OEM_ID_IDX].buffer.pointer,
--	       out_obj->package.elements[CAP_OEM_ID_IDX].buffer.length);
--	cap_hdr->oem_info_len =
--		out_obj->package.elements[CAP_OEM_INFO_IDX].buffer.length;
-+	       elem[CAP_OEM_ID_IDX].buffer.pointer,
-+	       elem[CAP_OEM_ID_IDX].buffer.length);
-+	cap_hdr->oem_info_len = elem[CAP_OEM_INFO_IDX].buffer.length;
- 
- 	ret = 0;
- 
+ 	return -EINVAL;
 
 
