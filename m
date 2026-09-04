@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5CC414DF6;
-	Fri,  4 Sep 2026 06:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AD0378838;
+	Fri,  4 Sep 2026 06:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501816; cv=none; b=NFWLJxwHYWWdei8L9pvqmTh/BIX3vr4gwjh1O/YHHxHnVdAltmmG/R859QXAYrSk+bAoY6BpKizq/d7dJLZy2KVRZY1vNI8l00hkop6efDPxQgV1UA48wdt2IGe/cRjOp8CZKAOZIx8KhBkLfSuqUu6WWXcGU9brYGAtQb3ZQ0Q=
+	t=1788501819; cv=none; b=Lj0VyaJKOuLxLBxCCrhejZ9AdHb9Q5yLgv/9JdIGDGUfaYWzl5eetCgtoJsIPOyfNVtoK/9nLkxQy8jCNQfJ3dIejoka9JfQoEPBB2HnOzE8LwDwb2lAOsz3dNjaR0pbd89xKMngG8Pe9CIlFv8rYYs5qah09wWiDDuDiNUik90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501816; c=relaxed/simple;
-	bh=hrG2xd2jq9O916g+vHkvSFmCRQamNtW6CKBQN96xvtM=;
+	s=arc-20240116; t=1788501819; c=relaxed/simple;
+	bh=XIkqfLP8qLMAWF7ta87nB00QX1JnYUtLzLiO9g3S1vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBroCdwWrlSwjFM9LDCuhcGDhndOUsWUbCSxcY0nV2URMQuC75KC8Ao9v/cOXYCqU5tN7rcG9ZAVmAjhwn/wPbBzXpy5OaTokZICokGvJwc5T33DVICw0cAI3FLif0lMfwv3A9tswtHgvdaQLYbWIEJj+3P+iKUtqWQvmtdXEsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Bilv2Nf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DW8agU+ixGGVWj6b2ZouMaRl58gdJ6JzTxsMvyBESMyF3ydzJ6+iYke9qCeXa0076Fp6io5HbbeQkjplLfhG6PP0kFjcs5X5mIiM/I5FLi/WMttcsb62Hy7F87F+A/f5jXNQpNna1ASub3no8xGHYNehfBhE6+EW+97veWn4OKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAvDf7yk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Bilv2Nf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0281F00A3D;
-	Fri,  4 Sep 2026 06:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAvDf7yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EA81F00A3D;
+	Fri,  4 Sep 2026 06:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501814;
-	bh=6/46i5kt24y0hjXPNNcxHUd3j6iYlXCPOPXEgigxvZQ=;
+	s=korg; t=1788501817;
+	bh=aCMTgwg/Gkm9ffII7BkcNaaNDWKNkNfEGFIOaOO/fdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Bilv2NfROVDMlDxhEv/tgv2FfGN9xgMTmtPaV2tKBMgPFNU+Rvxs+VEFQXiThEEq
-	 Td1PSBzHv4SmPxismOuY+S3d/XnHegSmIRTHRcmeJ0WcT1S/7ClUAMCk53rV1O5oS3
-	 YdHkV/AFAluseoMXkhgFs1QkBdiTp2c2El0lFAwA=
+	b=kAvDf7yka3qbEyxl9GByq9mdRgtePBapww68WH2/SiAIGmtgWFqpR7U450sdl8OOy
+	 YnZnup/C5rRvlpLDrUANAatlVzFvtpzRxaHPk+Qu9H7+bHq/UrA9mMverL8kiJEoUJ
+	 +8HUQrByr/nNsK/ts1LwOCgeqEAnmMie0zaDLhPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Alexey Gladkov <legion@kernel.org>,
-	Bradley Morgan <include@grrlz.net>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	Joel Granados <joel.granados@kernel.org>
-Subject: [PATCH 6.18 543/552] sysctl: move the "cad_pid" entry from pid_table[] to kern_reboot_table[]
-Date: Fri,  4 Sep 2026 07:01:40 +0200
-Message-ID: <20260904045802.917519270@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 544/552] sticon/parisc: Detect default STI graphics card for console output
+Date: Fri,  4 Sep 2026 07:01:41 +0200
+Message-ID: <20260904045802.938472472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,127 +49,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 7170ca01623b399c97f2ae9d3e228badc1f25ea3 upstream.
+commit de508ece1d37cdbbbfa52f074954310f9b066b13 upstream.
 
-cad_pid is global, and kill_cad_pid() is only used in the root namespace.
+If a machine has multiple graphic cards, detect the graphic card which is used
+to display firmware messages and use that one as the default graphic card for
+sticon and fbcon.
 
-However, due to pid_table_root_permissions(), a non-root user can unshare
-pid/user namespaces and modify it from the child namespace. This makes no
-sense and is simply wrong.
+On parisc machines the default graphic card used for BCH (boot console
+handler, aka BIOS menu) is stored in the stable storage (equivalent to CMOS
+storage on x86) or in the console path in page zero. Extract that path and
+store it as default STI path for later comparism. Take care that the graphic
+card can be a GSC or a PCI card which use different path strings.
 
-Move it to kern_reboot_table[] where it logically belongs; this ensures
-that only GLOBAL_ROOT_UID can read/modify this sysctl.
+Increase max string size for default_sti_path to 32 chars as the
+print_pa_hwpath() function formats a hardware path using unbounded sprintf
+calls for up to 6 bus converter components and 1 module component (e.g.,
+255/255/...), which can produce a string up to 28 bytes long.
 
-Note that this patch doesn't preserve "#ifdef CONFIG_PROC_SYSCTL" around
-the "cad_pid"; CONFIG_PROC_SYSCTL selects CONFIG_SYSCTL, so it is always
-set when kern_reboot_table[] is compiled.
-
+Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: stable@vger.kernel.org
-Fixes: e054bcbe7e7a ("sysctl: move cad_pid into kernel/pid.c")
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Alexey Gladkov <legion@kernel.org>
-Reviewed-by: Bradley Morgan <include@grrlz.net>
-Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Signed-off-by: Joel Granados <joel.granados@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/pid.c    |   31 -------------------------------
- kernel/reboot.c |   29 +++++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 31 deletions(-)
+ drivers/video/sticore.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
---- a/kernel/pid.c
-+++ b/kernel/pid.c
-@@ -715,29 +715,6 @@ static struct ctl_table_root pid_table_r
- 	.set_ownership	= pid_table_root_set_ownership,
- };
+--- a/drivers/video/sticore.c
++++ b/drivers/video/sticore.c
+@@ -325,7 +325,7 @@ static void sti_rom_copy(unsigned long b
  
--static int proc_do_cad_pid(const struct ctl_table *table, int write, void *buffer,
--		size_t *lenp, loff_t *ppos)
--{
--	struct pid *new_pid;
--	pid_t tmp_pid;
--	int r;
--	struct ctl_table tmp_table = *table;
--
--	tmp_pid = pid_vnr(cad_pid);
--	tmp_table.data = &tmp_pid;
--
--	r = proc_dointvec(&tmp_table, write, buffer, lenp, ppos);
--	if (r || !write)
--		return r;
--
--	new_pid = find_get_pid(tmp_pid);
--	if (!new_pid)
--		return -ESRCH;
--
--	put_pid(xchg(&cad_pid, new_pid));
--	return 0;
--}
--
- static const struct ctl_table pid_table[] = {
- 	{
- 		.procname	= "pid_max",
-@@ -748,14 +725,6 @@ static const struct ctl_table pid_table[
- 		.extra1		= &pid_max_min,
- 		.extra2		= &pid_max_max,
- 	},
--#ifdef CONFIG_PROC_SYSCTL
--	{
--		.procname	= "cad_pid",
--		.maxlen		= sizeof(int),
--		.mode		= 0600,
--		.proc_handler	= proc_do_cad_pid,
--	},
--#endif
- };
- #endif
  
---- a/kernel/reboot.c
-+++ b/kernel/reboot.c
-@@ -1366,6 +1366,29 @@ static struct attribute *reboot_attrs[]
- };
  
- #ifdef CONFIG_SYSCTL
-+static int proc_do_cad_pid(const struct ctl_table *table, int write, void *buffer,
-+			   size_t *lenp, loff_t *ppos)
-+{
-+	struct ctl_table tmp_table = *table;
-+	struct pid *new_pid;
-+	pid_t tmp_pid;
-+	int r;
-+
-+	tmp_pid = pid_vnr(cad_pid);
-+	tmp_table.data = &tmp_pid;
-+
-+	r = proc_dointvec(&tmp_table, write, buffer, lenp, ppos);
-+	if (r || !write)
-+		return r;
-+
-+	new_pid = find_get_pid(tmp_pid);
-+	if (!new_pid)
-+		return -ESRCH;
-+
-+	put_pid(xchg(&cad_pid, new_pid));
-+	return 0;
-+}
-+
- static const struct ctl_table kern_reboot_table[] = {
- 	{
- 		.procname       = "poweroff_cmd",
-@@ -1381,6 +1404,12 @@ static const struct ctl_table kern_reboo
- 		.mode           = 0644,
- 		.proc_handler   = proc_dointvec,
- 	},
-+	{
-+		.procname	= "cad_pid",
-+		.maxlen		= sizeof(int),
-+		.mode		= 0600,
-+		.proc_handler	= proc_do_cad_pid,
-+	},
- };
+-static char default_sti_path[21] __read_mostly;
++static char default_sti_path[32] __read_mostly;
  
- static void __init kernel_reboot_sysctls_init(void)
+ #ifndef MODULE
+ static int __init sti_setup(char *str)
+@@ -1148,6 +1148,26 @@ static void sti_init_roms(void)
+ 	pr_info("STI GSC/PCI core graphics driver "
+ 			STI_DRIVERVERSION "\n");
+ 
++	/*
++	 * Find default console by hardware path which is either stored in
++	 * console entry in stable storage or alternatively from console path
++	 * in PAGE0 used by BCH and PDC.
++	 */
++	if (!default_sti_path[0]) {
++		struct pdc_module_path conspath;
++		struct device *dev = NULL;
++
++		if (pdc_stable_read(0x60, &conspath, sizeof(conspath)) == PDC_OK)
++			dev = hwpath_to_device(&conspath.path);
++		if (!dev)
++			dev = hwpath_to_device(&PAGE0->mem_cons.dp.path);
++		if (dev && dev_is_pci(dev))
++			print_pci_hwpath(to_pci_dev(dev), default_sti_path);
++		else if (dev && !dev_is_pci(dev))
++			print_pa_hwpath(to_parisc_device(dev), default_sti_path);
++		pr_debug("default graphic card: %s\n", default_sti_path);
++	}
++
+ 	/* Register drivers for native & PCI cards */
+ 	register_parisc_driver(&pa_sti_driver);
+ 	WARN_ON(pci_register_driver(&pci_sti_driver));
 
 
