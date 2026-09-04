@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6317412BE7;
-	Fri,  4 Sep 2026 05:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D27537C106;
+	Fri,  4 Sep 2026 05:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501591; cv=none; b=aRHQdDsnPShiS8p14TbSz8kFmYsPDLwCfqWI94VrWFK78UOBC0RkWY6www1/t5sIsHVPWfRityWzASrGAtMLTs20EK1+H2BqlodkA4Jz13PV1YhpLSVBJD1YPqX6wqUTXSI8N8zYmzIvoX9sgiRNmEXNvO1pxHOOpS39ZoKVmsk=
+	t=1788501593; cv=none; b=D3hvZkb1p6b7NqDbrERjLyItULlmXXJsOXr9WAeiHOIF4ORW5uDjP587dELmAAHsUSUi1YTLARkkmthFbcwqIum+dbVdWMugd9AiIpmInkyDm46YkGO5SpVQ2qiOdJalwYz6KL1W6BkAIzbeWA14/UkRQt/qXznMWWjN2ycmBE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501591; c=relaxed/simple;
-	bh=Le3t9QhDU6M6LfVbiTEwRDWAUwgMo2EOklshr4XM/ig=;
+	s=arc-20240116; t=1788501593; c=relaxed/simple;
+	bh=N/+GgSHIHz7t3CPo8YI0xQEhhp4+nRwcjDQwEw2TOV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZqZW4OsF/Iu8XkkTmmt2VjjawUQDhgRGcxDFXlXzcbqD4xPveAQ9bXfZE9WKnHB6tk7mlNLQrc95OScVv/PzaL10ZDet6sfyTqdXVDcVrFtz3Te0owWCt1ZyBC0pHviK0Wxpr/tb0XHXYfiEaUHyqMXO/tJP7bhXcHxKnXduVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDxDw06N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a8+gQndqHoGQRBNMmbmG/h5LYlqraaI9cemDkx+6+pqIPEP77IkUOJ7A2iC/y1om9CpM6X8hzdtdXhyurewYJyliXlpIhuKIsmh7nNhajsV1pkoPU6V5Agrdzv+Mx3VvTzqk6hElz1g0BefciAZ71L0G3ystqQyRDfzOwQ2/3ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AOxf31N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDxDw06N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C781F00A3D;
-	Fri,  4 Sep 2026 05:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AOxf31N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E4A1F00A3D;
+	Fri,  4 Sep 2026 05:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501589;
-	bh=1eOiPLcbBNgtskGVQksQfXwFbaERap2bNSyVXYYr/LY=;
+	s=korg; t=1788501592;
+	bh=EUuDPJ/ZbhT9y8HZhIogx2IftWh413ryZc/VttdJDPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jDxDw06N/+bzU/D9IjTOLevSCtzSTHASX4eRfFBx2+rPKzg8ay0UGrrkX1L6wJpOW
-	 xwgsqYArhDOiOl0+sYLl5K/1jc7Th6RcQyKdVFHyJ7L4tlcORkq/3tHbLmcxkFwOPZ
-	 BDhIgRY8tjNoPI3AbgN9NiU0pOcBsyXJ45eO9rP0=
+	b=2AOxf31NI6AtJsB3vsz8YG+XFHiEXNr68XymduD5g3QZm4W+7ZXzASen90/bUv7yo
+	 F3Pgbdc+4jladS35/yYMZN16HVOC1NkOvd6GDfQQo9GO9fQd6TkZUr+xyFQX/wSYGG
+	 Ampie8y1UL9pbm8LbwAwx3EXPyq2fBq1Wi4N1lXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Fan Ye <fy15309206903@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 463/552] net: ravb: serialize PTP clock teardown
-Date: Fri,  4 Sep 2026 07:00:20 +0200
-Message-ID: <20260904045801.197294556@linuxfoundation.org>
+Subject: [PATCH 6.18 464/552] net: thunderbolt: Release the Rx HopID that was handed out on mismatch
+Date: Fri,  4 Sep 2026 07:00:21 +0200
+Message-ID: <20260904045801.217643771@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,130 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Fan Ye <fy15309206903@gmail.com>
 
-commit 1cb9663789c5b7a12fcd419fcca6d6254c398252 upstream.
+commit 2f1463554d0561a2fead81e3888604e5c1125e29 upstream.
 
-ravb_ptp_interrupt() can race with ravb_ptp_stop() and pass the clock to
-ptp_clock_event() while ptp_clock_unregister() is freeing it. This can
-lead to a use-after-free.
+tb_xdomain_alloc_in_hopid() passes the wanted HopID to ida_alloc_range()
+as the lower bound, so a taken id is not an error there: the allocator
+returns the next free one above it. tbnet_connected_work() asks for the
+peer's transmit path, treats any other id as a failure and returns
+without releasing what it got, so that allocation stays live for the rest
+of the XDomain connection with nothing left holding a reference to it.
 
-Use READ_ONCE() and WRITE_ONCE() for lockless access to the clock pointer.
-Atomically detach it with xchg() before disabling PTP interrupts, then
-synchronize all IRQs which can invoke ravb_ptp_interrupt() before
-unregistering the detached clock.
+Release the id when it is not the one we asked for, the same way the
+error unwind at the end of the function releases the expected one.
 
-A handler which read the old pointer completes before the clock is
-unregistered, while later handlers read NULL and skip the event.
-
-Fixes: a0d2f20650e8 ("Renesas Ethernet AVB PTP clock driver")
+Fixes: 180b0689425c ("thunderbolt: Allow multiple DMA tunnels over a single XDomain connection")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260811103733.62599-3-xuanqiang.luo@linux.dev
+Signed-off-by: Fan Ye <fy15309206903@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260811-b4-tbnet-hopid-v3-1-9e75d1b51331@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb.h      |    2 +
- drivers/net/ethernet/renesas/ravb_main.c |    6 +++--
- drivers/net/ethernet/renesas/ravb_ptp.c  |   37 ++++++++++++++++++++++++-------
- 3 files changed, 35 insertions(+), 10 deletions(-)
+ drivers/net/thunderbolt/main.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/renesas/ravb.h
-+++ b/drivers/net/ethernet/renesas/ravb.h
-@@ -1134,6 +1134,8 @@ struct ravb_private {
- 	int msg_enable;
- 	int speed;
- 	int emac_irq;
-+	int err_irq;
-+	int mgmt_irq;
- 
- 	unsigned no_avb_link:1;
- 	unsigned avb_link_active_low:1;
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2896,11 +2896,13 @@ static int ravb_setup_irqs(struct ravb_p
- 		return error;
- 
- 	if (info->err_mgmt_irqs) {
--		error = ravb_setup_irq(priv, "err_a", "err_a", NULL, ravb_multi_interrupt);
-+		error = ravb_setup_irq(priv, "err_a", "err_a", &priv->err_irq,
-+				       ravb_multi_interrupt);
- 		if (error)
- 			return error;
- 
--		error = ravb_setup_irq(priv, "mgmt_a", "mgmt_a", NULL, ravb_multi_interrupt);
-+		error = ravb_setup_irq(priv, "mgmt_a", "mgmt_a", &priv->mgmt_irq,
-+				       ravb_multi_interrupt);
- 		if (error)
- 			return error;
- 	}
---- a/drivers/net/ethernet/renesas/ravb_ptp.c
-+++ b/drivers/net/ethernet/renesas/ravb_ptp.c
-@@ -289,16 +289,17 @@ static const struct ptp_clock_info ravb_
- void ravb_ptp_interrupt(struct net_device *ndev)
- {
- 	struct ravb_private *priv = netdev_priv(ndev);
-+	struct ptp_clock *clock = READ_ONCE(priv->ptp.clock);
- 	u32 gis = ravb_read(ndev, GIS);
- 
- 	gis &= ravb_read(ndev, GIC);
--	if (gis & GIS_PTCF) {
-+	if ((gis & GIS_PTCF) && clock) {
- 		struct ptp_clock_event event;
- 
- 		event.type = PTP_CLOCK_EXTTS;
- 		event.index = 0;
- 		event.timestamp = ravb_read(ndev, GCPT);
--		ptp_clock_event(priv->ptp.clock, &event);
-+		ptp_clock_event(clock, &event);
- 	}
- 	if (gis & GIS_PTMF) {
- 		struct ravb_ptp_perout *perout = priv->ptp.perout;
-@@ -334,19 +335,39 @@ void ravb_ptp_init(struct net_device *nd
- 		clock = NULL;
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -650,6 +650,8 @@ static void tbnet_connected_work(struct
+ 	ret = tb_xdomain_alloc_in_hopid(net->xd, net->remote_transmit_path);
+ 	if (ret != net->remote_transmit_path) {
+ 		netdev_err(net->dev, "failed to allocate Rx HopID\n");
++		if (ret >= 0)
++			tb_xdomain_release_in_hopid(net->xd, ret);
+ 		return;
  	}
  
--	priv->ptp.clock = clock;
-+	WRITE_ONCE(priv->ptp.clock, clock);
- 	if (clock)
- 		WRITE_ONCE(priv->ptp.phc_index, ptp_clock_index(clock));
- }
- 
--void ravb_ptp_stop(struct net_device *ndev)
-+static void ravb_ptp_disable(struct net_device *ndev)
- {
--	struct ravb_private *priv = netdev_priv(ndev);
--
- 	ravb_write(ndev, 0, GIC);
- 	ravb_write(ndev, 0, GIS);
-+}
-+
-+static void ravb_ptp_sync_irqs(struct net_device *ndev)
-+{
-+	struct ravb_private *priv = netdev_priv(ndev);
-+
-+	synchronize_irq(ndev->irq);
-+	if (priv->info->err_mgmt_irqs) {
-+		synchronize_irq(priv->err_irq);
-+		synchronize_irq(priv->mgmt_irq);
-+	}
-+}
-+
-+void ravb_ptp_stop(struct net_device *ndev)
-+{
-+	struct ravb_private *priv = netdev_priv(ndev);
-+	struct ptp_clock *clock;
- 
- 	WRITE_ONCE(priv->ptp.phc_index, -1);
--	if (priv->ptp.clock)
--		ptp_clock_unregister(priv->ptp.clock);
-+	clock = xchg(&priv->ptp.clock, NULL);
-+
-+	ravb_ptp_disable(ndev);
-+	ravb_ptp_sync_irqs(ndev);
-+
-+	if (clock)
-+		ptp_clock_unregister(clock);
- }
 
 
