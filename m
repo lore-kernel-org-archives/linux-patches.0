@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F17940BCD4;
-	Fri,  4 Sep 2026 05:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528F435AC03;
+	Fri,  4 Sep 2026 05:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501388; cv=none; b=W2K2KRJDeOCKX0BZhli2P0Se5OHgRtUpwJRbjgG1Wm/axKzQ0JEdcR9U9REYHul4se89aDaXyqzPapCs6nqTBgMSvN3W4DOtOSY7p+4jvH9QPL25KrZP+mamGEAimwgO5hAY3Pl4WVF8yfrs7x6PO1a3Fyg7yUInfGnJxm3QKTk=
+	t=1788501391; cv=none; b=TWxnL+dqNiaKPBmCer9MC6Tny8qHfbq0sLki6rXjcXQCfMAr2WSz/J1WB5Xan7lMk+4lS6W2dSvDuAWxE0r7VQTgghEwfxZIuPCr9v5Nl/iPmop2LjWKREvlkS+ZCcozdUVxIksAtcsWAA+bA05PWHvRjPrw0CcxHGFe8V3n5yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501388; c=relaxed/simple;
-	bh=WYdJn/XrgEtFrWPJixXwqtpwCaWCZpT8uWNLLDIkQcA=;
+	s=arc-20240116; t=1788501391; c=relaxed/simple;
+	bh=QjArBVN9KpXVm8FS9R/GphiPM2YeSWu+g6WviRjCNow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+o1PbZWChCv6Whi3n+DDEAVIDm0YRAn+A9CuuWNJKoe+QBdLrPRkKuIRvXs+HM4Z9hBNEFeZaQmA+r2Y0TfUAONFk7TnfyH6u7mOs+yJL/WBqOO8ViAylck+ZRJF8iUvYrRbS4UMtcohIS07SE8RIzKJ/qJH82sS5ErLBBz8wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rotO/oB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fitlUlAaW+f635vjzWRPzelmIJrAAWuYCcK1nzR8AKYJG/xKJuqnafJ2YCCgQm5NsyqJ3h+l9ORiiI551/m1/46UvGYt36boTSg/e58XAuN1IR7YnmOuRYv5jrjEFhOIHxdxrVkeWiwjyXTI8/9AmqTVWIFImZsomhIffnca7WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ko1I+hla; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rotO/oB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AF21F00A3D;
-	Fri,  4 Sep 2026 05:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ko1I+hla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9311F00A3D;
+	Fri,  4 Sep 2026 05:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501387;
-	bh=efpPzS0/vYHOGvYYL3oqdEyQZE4Uz6Ep5NPRldioOEg=;
+	s=korg; t=1788501390;
+	bh=AoWazLNd7WJClD9/Ri8Qduj8GgAZST7p8jkxhzvEnRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1rotO/oBCl9FGsZYMMAbxah63ms9yBb9aHXWB0R5EEFbOBlx1F5DJyBPi+aOqGXen
-	 wCay1l0WtltWpUwT4pXFFGAGg2e7xNE4241GN6OvCFn4fQYuuIKfbirnsWdU3AsQzV
-	 8rw7ICaEcvAHuWkn21YfR8b8I0tOS08s7zWFEXec=
+	b=Ko1I+hlaZunltYSTnA9ugAuLdiHMEz4wCc+2ArPMW14DGPXZMRfs5mWpIRJv1QZJ9
+	 gu4/9jteiQrtId478H9ct+DZpdUKjqHXeYTgI097N6QWdqfCl4fjo4lrZ1Qn2cJDvP
+	 hM4pCnMgIrVlZAyvp390lJD8Qb7iRM6F9Zhvz/Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Tariq <alitariq45892@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: [PATCH 6.18 390/552] PCI: plda: Fix IRQ domain leaks in the error paths of plda_init_interrupts()
-Date: Fri,  4 Sep 2026 06:59:07 +0200
-Message-ID: <20260904045759.048616768@linuxfoundation.org>
+	Tim Harvey <tharvey@gateworks.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.18 391/552] PCI: Add ACS quirk for Pericom PI7C9X2G608 switches [12d8:2608]
+Date: Fri,  4 Sep 2026 06:59:08 +0200
+Message-ID: <20260904045759.071772765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,116 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Tariq <alitariq45892@gmail.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-commit 19a30bbb6477bfd7e3109b7a2943e6597ee9de37 upstream.
+commit 062fb7f816439da6bf3860386889343482a66bd4 upstream.
 
-plda_init_interrupts() initializes IRQ domains and creates IRQ mapping but
-does not unwind them when later step fails.
+The Pericom PI7C9X2G608 6-port Gen2 PCIe switch is also affected by the
+PI7C9X2G errata per the errata document:
 
-If platform_get_irq() or either irq_create_mapping() fails
-in plda_init_interrupts(), the domains are never deinitialized. If
-irq_create_mapping() fails, port->intx_irq stays initialized.
+  E2: ACS P2P Request Redirect Is Not Functional
 
-Hence, remove the IRQ domains in the error path by calling
-plda_pcie_irq_domain_deinit().
+Apply the same quirk to this PCI ID as well to apply the workaround
+required if using ACS.
 
-Since plda_pcie_irq_domain_deinit() now disposes of the intx_irq and
-msi_irq mappings itself before removing their domains, the msi_irq
-mapping failure path can go directly to err_irq_domain_deinit instead of
-disposing of port->intx_irq separately first.
-
-This issue was found by automated review of sashiko-bot
-
-Fixes: 4602c370bdf6 ("PCI: microchip: Move IRQ functions to pcie-plda-host.c")
-Fixes: 76c911396807 ("PCI: plda: Add host init/deinit and map bus functions")
-Closes: https://lore.kernel.org/linux-pci/20260718120701.DF4111F000E9@smtp.kernel.org/
-Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Fixes: acd61ffb2f16 ("PCI: Add ACS quirk for Pericom PI7C9X2G switches")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260723142824.726655-1-alitariq45892@gmail.com
+Link: https://patch.msgid.link/20260720215718.2139510-1-tharvey@gateworks.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/plda/pcie-plda-host.c |   28 ++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/pci/quirks.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/pci/controller/plda/pcie-plda-host.c
-+++ b/drivers/pci/controller/plda/pcie-plda-host.c
-@@ -419,6 +419,8 @@ static int plda_pcie_init_irq_domains(st
- 	return plda_allocate_msi_domains(port);
- }
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -6210,6 +6210,10 @@ DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_P
+ 			 pci_fixup_pericom_acs_store_forward);
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_PERICOM, 0xb404,
+ 			 pci_fixup_pericom_acs_store_forward);
++DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_PERICOM, 0x2608,
++			 pci_fixup_pericom_acs_store_forward);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_PERICOM, 0x2608,
++			 pci_fixup_pericom_acs_store_forward);
  
-+static void plda_pcie_irq_domain_deinit(struct plda_pcie_rp *pcie);
-+
- int plda_init_interrupts(struct platform_device *pdev,
- 			 struct plda_pcie_rp *port,
- 			 const struct plda_event *event)
-@@ -440,14 +442,17 @@ int plda_init_interrupts(struct platform
- 	}
- 
- 	port->irq = platform_get_irq(pdev, 0);
--	if (port->irq < 0)
--		return -ENODEV;
-+	if (port->irq < 0) {
-+		ret = -ENODEV;
-+		goto err_irq_domain_deinit;
-+	}
- 
- 	for_each_set_bit(i, &port->events_bitmap, port->num_events) {
- 		event_irq = irq_create_mapping(port->event_domain, i);
- 		if (!event_irq) {
- 			dev_err(dev, "failed to map hwirq %d\n", i);
--			return -ENXIO;
-+			ret = -ENXIO;
-+			goto err_irq_domain_deinit;
- 		}
- 
- 		if (event->request_event_irq)
-@@ -459,7 +464,7 @@ int plda_init_interrupts(struct platform
- 
- 		if (ret) {
- 			dev_err(dev, "failed to request IRQ %d\n", event_irq);
--			return ret;
-+			goto err_irq_domain_deinit;
- 		}
- 	}
- 
-@@ -467,7 +472,8 @@ int plda_init_interrupts(struct platform
- 					    event->intx_event);
- 	if (!port->intx_irq) {
- 		dev_err(dev, "failed to map INTx interrupt\n");
--		return -ENXIO;
-+		ret = -ENXIO;
-+		goto err_irq_domain_deinit;
- 	}
- 
- 	/* Plug the INTx chained handler */
-@@ -475,8 +481,11 @@ int plda_init_interrupts(struct platform
- 
- 	port->msi_irq = irq_create_mapping(port->event_domain,
- 					   event->msi_event);
--	if (!port->msi_irq)
--		return -ENXIO;
-+	if (!port->msi_irq) {
-+		dev_err(dev, "failed to map MSI interrupt\n");
-+		ret = -ENXIO;
-+		goto err_irq_domain_deinit;
-+	}
- 
- 	/* Plug the MSI chained handler */
- 	irq_set_chained_handler_and_data(port->msi_irq, plda_handle_msi, port);
-@@ -485,6 +494,11 @@ int plda_init_interrupts(struct platform
- 	irq_set_chained_handler_and_data(port->irq, plda_handle_event, port);
- 
- 	return 0;
-+
-+err_irq_domain_deinit:
-+	plda_pcie_irq_domain_deinit(port);
-+
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(plda_init_interrupts);
- 
+ static void nvidia_ion_ahci_fixup(struct pci_dev *pdev)
+ {
 
 
