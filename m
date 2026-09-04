@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C58381AF9;
-	Fri,  4 Sep 2026 05:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC68381AF9;
+	Fri,  4 Sep 2026 05:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500723; cv=none; b=d+Uc/c0rZWaBdf62W0H1v5yD6WCvcygSCkI3P83vwvzoGTplgtRV22PaL6y93CaGszuDEyTUS2RYy/hJiD0jYgFP8X7kAw1lk6zx6V+wdL+IdCLyVrG2JKyaiBjiv2UNf05a92zahXdOoHTJHGcO8KIhC7gGb1sexVVm135Jd3c=
+	t=1788500726; cv=none; b=PEh1WTqYL2Ovx/QzQrM9c7SfOBsuTeT4Amr/3Hc4c5h3dZ3UGXEfRcHiLjzuuiyEjEzfd1k6UaF+1tIdBG7eJ5bKzQ45F0RI8qAGyn2a1FSCwLkrE7roo4qHx/l+Tsu2LrJdT/cNg5W3czBei8Oub32g72dN/L2zfET4DSop6y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500723; c=relaxed/simple;
-	bh=BVjDkYM2fhsDy9Nofh6MMt7bNawHKP6aSm4uNRQGPdA=;
+	s=arc-20240116; t=1788500726; c=relaxed/simple;
+	bh=5VnrDp9gjuoQxuQUXldoGhbOMb3WLPOjPFRH2Zx9jZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXQ+PVxb/8bhpJFmIYsafXnsp7BMkimTsxKocHtO7zoWg8G7jzikTSOlJmd+m7LZOR0whULkBWtmwqn9wxDVX5wZFhn5mJaZVugOLZw6Sg659AqxExO/B20DsFD3LKGfUyOmPnSu01PORXR8DhQcB5cctBIEw4/V+U7xkNkSLAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vww7l0HD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uF0n/TClCe9VOO6xM+2XrgI+RA6dOtvAIQ0rl9OYMek+v09Q6+6ZI8RhN0A/VtzfKkq8EwWo3FdhbgibFwvPMrn8NB9rupEtriCqVas39/FJhNEDOUUms4pf8c1JXvdl1D1O7amoKcfAw4fvjrA6DtC8zz+DezigiMRVo/DcWzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EG5S4wM7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vww7l0HD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6971F00A3D;
-	Fri,  4 Sep 2026 05:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EG5S4wM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E6C1F00A3D;
+	Fri,  4 Sep 2026 05:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500722;
-	bh=qxmApgrlGlekeJ/qsgkqpi10WCZXY7j+hwR89IJTbh8=;
+	s=korg; t=1788500725;
+	bh=PrqLRtnMhuXzHw8D6yIK87kGfr4fly+m4yvqVo6Ke5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vww7l0HDMEUNussGv8KCNx1Cd97pmM4fvWLUS6cmqgL3YMo0PfVmi9N+5E5rcxhUy
-	 ri7/8fn1oO9AtVasTcyBfphCsnt42Jt3cJ8Crd0zpPbOLpkf6ui/mMDWRWQXzDVIVn
-	 q9CmT1PywQ8UkhFyd6bawfbBwE1Js2GmmB1Qe6Qc=
+	b=EG5S4wM7MKPwQ5rFlqKTbnuKKATkPUqsI042h4ethkjJN5mIi6OLU2ad66IPWqqq+
+	 +BbqXQ8WN23m7iM0r5jOuwgyn/5XVpPNo7MWXhmp8Kr+pb0D/pPUUn5WtmbbddINvo
+	 R3y9/+n3BCv+nGBj+yyq1kTyO4pPIda/A9HdKVkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 120/552] nfsd: block non-SAVEFH ops after FOREIGN PUTFH to prevent NULL deref
-Date: Fri,  4 Sep 2026 06:54:37 +0200
-Message-ID: <20260904045750.777408068@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 156/552] ceph: reject export_targets ranks >= CEPH_MAX_MDS in mdsmap decode
+Date: Fri,  4 Sep 2026 06:55:13 +0200
+Message-ID: <20260904045752.399005528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -44,77 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit c59738a00aa51b16adc1b5ceb7c80877168efb4d upstream.
+commit aedc9053d909508a5f56c3f49f885fc030df4730 upstream.
 
-When CONFIG_NFSD_V4_2_INTER_SSC is enabled, nfsd4_putfh() can return
-success with fh_dentry and fh_export both NULL if fh_verify() returns
-nfserr_stale and putfh->no_verify is true. The NFSD4_FH_FOREIGN flag
-is set, but the compound dispatch loop only uses this flag to bypass
-the nfserr_nofilehandle check -- it does not prevent subsequent ops
-from running with a NULL fh_dentry.
+MDSMap export_targets entries are monitor controlled. check_new_map()
+uses each entry as a bit number in a fixed stack bitmap, so a rank
+outside the protocol namespace can make set_bit() write past the end of
+the array.
 
-A remote client can exploit this by crafting a COMPOUND that includes
-an inter-SSC COPY (which causes check_if_stalefh_allowed() to set
-no_verify=true on the saved PUTFH) with an additional op inserted
-between the source PUTFH and SAVEFH. For example, SETATTR calls
-fh_want_write() which dereferences fh_export->ex_path.mnt without
-calling fh_verify() first, causing a NULL pointer dereference in the
-nfsd kthread.
+Reject ranks outside CEPH_MAX_MDS while decoding the map. Do not
+validate against possible_max_rank here because maps may legitimately
+reference ranks beyond a temporarily reduced max_mds.
 
-Fix this by gating the dispatch loop: when NFSD4_FH_FOREIGN is set
-and fh_dentry is NULL, only OP_SAVEFH (needed for the inter-SSC flow)
-and ops with ALLOWED_WITHOUT_FH (which don't need a resolved
-filehandle) may proceed. All other ops receive nfserr_stale, per
-RFC 7862 Section 15.2.3 which specifies that foreign filehandle
-validation is deferred to the consuming operation and NFS4ERR_STALE
-returned at that point.
-
-Fixes: b9e8638e3d9e ("NFSD: allow inter server COPY to have a STALE source server fh")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-putfh_foreign_fh_null_deref_consumers-v1-1-1b8a5aa28c59@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: d517b3983dd3 ("ceph: reconnect to the export targets on new mdsmaps")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/ceph/mdsmap.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2931,9 +2931,22 @@ nfsd4_proc_compound(struct svc_rqst *rqs
- 				op->status = nfsd4_open_omfg(rqstp, cstate, op);
- 			goto encode_op;
- 		}
--		if (!current_fh->fh_dentry &&
--				!HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
--			if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
-+		if (!current_fh->fh_dentry) {
-+			if (HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
-+				/*
-+				 * FOREIGN fh from inter-SSC PUTFH: only
-+				 * SAVEFH may proceed with a NULL fh_dentry.
-+				 * Per RFC 7862 S15.2.3, validation of a
-+				 * foreign fh is deferred to the operation
-+				 * that consumes it, and NFS4ERR_STALE is
-+				 * returned at that point.
-+				 */
-+				if (op->opnum != OP_SAVEFH &&
-+				    !(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
-+					op->status = nfserr_stale;
-+					goto encode_op;
+--- a/fs/ceph/mdsmap.c
++++ b/fs/ceph/mdsmap.c
+@@ -264,6 +264,10 @@ struct ceph_mdsmap *ceph_mdsmap_decode(s
+ 				goto nomem;
+ 			for (j = 0; j < num_export_targets; j++) {
+ 				target = ceph_decode_32(&pexport_targets);
++				if (target >= CEPH_MAX_MDS) {
++					err = -EIO;
++					goto corrupt;
 +				}
-+			} else if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
- 				op->status = nfserr_nofilehandle;
- 				goto encode_op;
+ 				info->export_targets[j] = target;
  			}
+ 		} else {
 
 
