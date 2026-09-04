@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586433DAAB7;
-	Fri,  4 Sep 2026 05:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3823C351C04;
+	Fri,  4 Sep 2026 05:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499588; cv=none; b=aTg2BQttJsY5i/1pmUAUiA8JudB4lFYpxsRElOGuR2p9Gokj2F1lbduYXuFZNtePMQMspYtjf/zxjLmHQWuRk+4X06mn3BB0zFu1GBE+IqnhYm8UTfs9iKXj1UdmuuzoULK91mAvO3QvJteSpjXRvac/+1nAus3y9wB4mOZwPlg=
+	t=1788499591; cv=none; b=a902AlnmCE4uKbVc9/9hKJu3bQfb4dDjwGLB44VMccdXiIyon8IP2fOER7YE0m05iA+oLutdUvt3Lutonf2nqIlJcGDs6XwrWSYeoceNSF05998taYl3FFua9n+CP4kVLlGHC7J2zgo80+vmy+dubS4lAumkaCWVvZshcFjQXE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499588; c=relaxed/simple;
-	bh=0y/v7nvStnvQyE7LufQUjRz8Pfk32dm9z/6Cww8zuQs=;
+	s=arc-20240116; t=1788499591; c=relaxed/simple;
+	bh=cswF0AB70/ijoT1b5swB0iMvdLgSF0sLcfcBs++Cg5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XoHO1Zz2lgE2y6/YBaV08C/iW1HK6xQPHOxpqrO5Vx00MNg5/S3nw1a69/GUDfCYPeKdnZNTERH5APF25erpUg2hq13UFnHsekxwgSCQlZ78c3ABxzLqQxmnSlQa6qwG3hxQNlahnca+lPS8hb1RcuS4PhrfmC1WNNiEWqgqqtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDyaffku; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OzBp9rUciHGfB7Nd+S1+tXYw+WEVqmyFYeWiFeukmtAYXhx1QzhHjU7qWcz/0lJHUB1ZSY0MW7BIpvsE3wizpJGDA4RAyVOgWlRi14k+6ehV9nt/CbDVwlZK78ypjOoy0OzcF42etDQryef3cg+PpR792Hhs8xS5j63IjD6BBPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V16lcfJY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDyaffku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A381F00A3D;
-	Fri,  4 Sep 2026 05:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V16lcfJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0901F00A3D;
+	Fri,  4 Sep 2026 05:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499587;
-	bh=TNl+vXJ+DzqqSpH0kVeqiMxpa50Ci5Ckl3a0ng8O55U=;
+	s=korg; t=1788499590;
+	bh=1biMO8cxUp0CWuzCGVTxujNM1+UnZCSFthcOP5/7nTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YDyaffkuX8AdMwFTFgEjddkZAdxwQPDwGbq5qgUZh2l32Vo+HRft9LlAAf9ShXtp3
-	 hWdaKeSV9zipZG2+8Q+itOw8SuuA3F2yXUe33Dz67/XWlXe95qfpcU8ssnjwvekZZ3
-	 W9ZMxcv8WxRn/mztMPG1CLj03hLr+F7zQIyePVpk=
+	b=V16lcfJYNMDEAoCqzTiP4UhBt04jVHnM6nZF9548LYYf8qi4r6v1zGSavgkPeYSPf
+	 8Q4KqZ+EDhg0qRJbeFxiFFAZk3Hqlc+6chVqZPZch22XO7UGVrGqZiILXIlU9OFcRF
+	 Atvx3iWfgd9lRjTDqmBqUEFwpDDccK+tkMM4hAIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 7.2 470/713] openrisc: fix arbitrary kernel memory access via or1k_atomic syscall
-Date: Fri,  4 Sep 2026 06:57:18 +0200
-Message-ID: <20260904045814.359034378@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Nan Li <tonanli66@gmail.com>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 471/713] openvswitch: Fix CT limit teardown use-after-free
+Date: Fri,  4 Sep 2026 06:57:19 +0200
+Message-ID: <20260904045814.380564916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,99 +54,447 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-commit 78004e9a87f240df03e2f73120d291763c32e0a7 upstream.
+commit 403f96c32c9e24600093d7d0c61c17daeedca957 upstream.
 
-sys_or1k_atomic() (syscall 244 in the "or1k" ABI) takes two user
-pointers, v1 and v2, and swaps the words they point to in hand-written
-assembly.
+Packet processing uses CT limit state under RCU, while netns teardown
+frees that state under ovs_mutex. The CT limit pointer was neither removed
+from readers nor protected by a grace period, allowing packet processing to
+dereference the freed state.
 
-    l.lwz   r29,0(r4)
-    l.lwz   r27,0(r5)
-    l.sw    0(r4),r27
-    l.sw    0(r5),r29
+An unprivileged user can trigger this bug from a user and network
+namespace, causing a slab-use-after-free in ovs_ct_execute() when the
+netns is torn down.
 
-The pointers are not checked with access_ok(). The four memory
-accesses also have no exception table entries.
+Publish the CT limit pointer through RCU, remove it before teardown, and
+wait for readers before freeing its contents. Keep ovs_mutex around
+individual CT limit updates, and use the RCU read-side lock while GET
+traverses the RCU-protected limit lists.
 
-A caller passes a kernel address as either pointer, and the syscall
-reads from and writes to it directly.
+Netns teardown detaches the RCU-protected CT limit state in the pernet
+.pre_exit callback while holding ovs_mutex.  The pernet core guarantees an
+RCU grace period between the .pre_exit and .exit callbacks, so the .exit
+callback completes the teardown without adding any extra synchronization.
 
-This gives an unprivileged process a kernel read/write primitive. It
-overwrites kernel data such as the sys_call_table, gaining code
-execution in kernel context.
+The netlink command handlers do not need NULL checks because the userspace
+netlink socket holds an active reference to its network namespace while a
+request is processed. The per-netns exit path therefore cannot run
+concurrently with SET, DEL, or GET for that socket's namespace.
 
-Check both pointers before entering the critical section. Add fixups
-for the four memory accesses so faults on valid but unmapped user
-addresses return -EFAULT.
-
-[shorne@gmail.com: fix comment style]
-Fixes: 9d02a4283e9c ("OpenRISC: Boot code")
+Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Link: https://lore.kernel.org/all/cover.1784711445.git.xuyuqiabc@gmail.com
+Co-developed-by: Nan Li <tonanli66@gmail.com>
+Signed-off-by: Nan Li <tonanli66@gmail.com>
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/288fbd5459d92b9dd0dcc6faf625f04819161ff3.1787280296.git.xuyuqiabc@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/openrisc/kernel/entry.S |   43 +++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 39 insertions(+), 4 deletions(-)
+ net/openvswitch/conntrack.c |  120 ++++++++++++++++++++++++++++----------------
+ net/openvswitch/conntrack.h |    6 +-
+ net/openvswitch/datapath.c  |   10 +++
+ net/openvswitch/datapath.h  |    8 ++
+ 4 files changed, 98 insertions(+), 46 deletions(-)
 
---- a/arch/openrisc/kernel/entry.S
-+++ b/arch/openrisc/kernel/entry.S
-@@ -1223,15 +1223,50 @@ _no_syscall_trace:
-  *
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -933,10 +933,14 @@ static int ovs_ct_check_limit(struct net
+ 			      const struct ovs_conntrack_info *info)
+ {
+ 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
+-	const struct ovs_ct_limit_info *ct_limit_info = ovs_net->ct_limit_info;
++	const struct ovs_ct_limit_info *ct_limit_info;
+ 	u32 per_zone_limit, connections;
+ 	u32 conncount_key;
+ 
++	ct_limit_info = rcu_dereference(ovs_net->ct_limit_info);
++	if (!ct_limit_info)
++		return 0;
++
+ 	conncount_key = info->zone.id;
+ 
+ 	per_zone_limit = ct_limit_get(ct_limit_info, info->zone.id);
+@@ -1585,40 +1589,55 @@ static void __ovs_ct_free_action(struct
+ #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+ static int ovs_ct_limit_init(struct net *net, struct ovs_net *ovs_net)
+ {
++	struct ovs_ct_limit_info *info;
+ 	int i, err;
+ 
+-	ovs_net->ct_limit_info = kmalloc_obj(*ovs_net->ct_limit_info);
+-	if (!ovs_net->ct_limit_info)
++	info = kmalloc_obj(*info);
++	if (!info)
+ 		return -ENOMEM;
+ 
+-	ovs_net->ct_limit_info->default_limit = OVS_CT_LIMIT_DEFAULT;
+-	ovs_net->ct_limit_info->limits =
++	info->default_limit = OVS_CT_LIMIT_DEFAULT;
++	info->limits =
+ 		kmalloc_objs(struct hlist_head, CT_LIMIT_HASH_BUCKETS);
+-	if (!ovs_net->ct_limit_info->limits) {
+-		kfree(ovs_net->ct_limit_info);
++	if (!info->limits) {
++		kfree(info);
+ 		return -ENOMEM;
+ 	}
+ 
+ 	for (i = 0; i < CT_LIMIT_HASH_BUCKETS; i++)
+-		INIT_HLIST_HEAD(&ovs_net->ct_limit_info->limits[i]);
++		INIT_HLIST_HEAD(&info->limits[i]);
+ 
+-	ovs_net->ct_limit_info->data = nf_conncount_init(net, sizeof(u32));
++	info->data = nf_conncount_init(net, sizeof(u32));
+ 
+-	if (IS_ERR(ovs_net->ct_limit_info->data)) {
+-		err = PTR_ERR(ovs_net->ct_limit_info->data);
+-		kfree(ovs_net->ct_limit_info->limits);
+-		kfree(ovs_net->ct_limit_info);
++	if (IS_ERR(info->data)) {
++		err = PTR_ERR(info->data);
++		kfree(info->limits);
++		kfree(info);
+ 		pr_err("openvswitch: failed to init nf_conncount %d\n", err);
+ 		return err;
+ 	}
++	rcu_assign_pointer(ovs_net->ct_limit_info, info);
+ 	return 0;
+ }
+ 
+-static void ovs_ct_limit_exit(struct net *net, struct ovs_net *ovs_net)
++static void *ovs_ct_limit_exit_start(struct ovs_net *ovs_net)
++{
++	return rcu_replace_pointer(ovs_net->ct_limit_info, NULL,
++				   lockdep_ovsl_is_held());
++}
++
++/* The CT limit state must be detached by ovs_ct_limit_exit_start() and an
++ * RCU grace period must elapse before this function runs.  The pernet core
++ * guarantees the grace period between the .pre_exit and .exit callbacks.
++ */
++static void ovs_ct_limit_exit_finish(struct net *net, void *data)
+ {
+-	const struct ovs_ct_limit_info *info = ovs_net->ct_limit_info;
++	const struct ovs_ct_limit_info *info = data;
+ 	int i;
+ 
++	if (!info)
++		return;
++
+ 	nf_conncount_destroy(net, info->data);
+ 	for (i = 0; i < CT_LIMIT_HASH_BUCKETS; ++i) {
+ 		struct hlist_head *head = &info->limits[i];
+@@ -1626,7 +1645,7 @@ static void ovs_ct_limit_exit(struct net
+ 		struct hlist_node *next;
+ 
+ 		hlist_for_each_entry_safe(ct_limit, next, head, hlist_node)
+-			kfree_rcu(ct_limit, rcu);
++			kfree(ct_limit);
+ 	}
+ 	kfree(info->limits);
+ 	kfree(info);
+@@ -1665,12 +1684,13 @@ static bool check_zone_id(int zone_id, u
+ 	return false;
+ }
+ 
+-static int ovs_ct_limit_set_zone_limit(struct nlattr *nla_zone_limit,
+-				       struct ovs_ct_limit_info *info)
++static int ovs_ct_limit_set_zone_limit(struct ovs_net *ovs_net,
++				       struct nlattr *nla_zone_limit)
+ {
+ 	struct ovs_zone_limit *zone_limit;
+-	int rem;
++	struct ovs_ct_limit_info *info;
+ 	u16 zone;
++	int rem;
+ 
+ 	rem = NLA_ALIGN(nla_len(nla_zone_limit));
+ 	zone_limit = (struct ovs_zone_limit *)nla_data(nla_zone_limit);
+@@ -1679,6 +1699,7 @@ static int ovs_ct_limit_set_zone_limit(s
+ 		if (unlikely(zone_limit->zone_id ==
+ 				OVS_ZONE_LIMIT_DEFAULT_ZONE)) {
+ 			ovs_lock();
++			info = ovsl_dereference(ovs_net->ct_limit_info);
+ 			info->default_limit = zone_limit->limit;
+ 			ovs_unlock();
+ 		} else if (unlikely(!check_zone_id(
+@@ -1695,6 +1716,7 @@ static int ovs_ct_limit_set_zone_limit(s
+ 			ct_limit->limit = zone_limit->limit;
+ 
+ 			ovs_lock();
++			info = ovsl_dereference(ovs_net->ct_limit_info);
+ 			ct_limit_set(info, ct_limit);
+ 			ovs_unlock();
+ 		}
+@@ -1709,12 +1731,13 @@ static int ovs_ct_limit_set_zone_limit(s
+ 	return 0;
+ }
+ 
+-static int ovs_ct_limit_del_zone_limit(struct nlattr *nla_zone_limit,
+-				       struct ovs_ct_limit_info *info)
++static int ovs_ct_limit_del_zone_limit(struct ovs_net *ovs_net,
++				       struct nlattr *nla_zone_limit)
+ {
+ 	struct ovs_zone_limit *zone_limit;
+-	int rem;
++	struct ovs_ct_limit_info *info;
+ 	u16 zone;
++	int rem;
+ 
+ 	rem = NLA_ALIGN(nla_len(nla_zone_limit));
+ 	zone_limit = (struct ovs_zone_limit *)nla_data(nla_zone_limit);
+@@ -1723,6 +1746,7 @@ static int ovs_ct_limit_del_zone_limit(s
+ 		if (unlikely(zone_limit->zone_id ==
+ 				OVS_ZONE_LIMIT_DEFAULT_ZONE)) {
+ 			ovs_lock();
++			info = ovsl_dereference(ovs_net->ct_limit_info);
+ 			info->default_limit = OVS_CT_LIMIT_DEFAULT;
+ 			ovs_unlock();
+ 		} else if (unlikely(!check_zone_id(
+@@ -1730,6 +1754,7 @@ static int ovs_ct_limit_del_zone_limit(s
+ 			OVS_NLERR(true, "zone id is out of range");
+ 		} else {
+ 			ovs_lock();
++			info = ovsl_dereference(ovs_net->ct_limit_info);
+ 			ct_limit_del(info, zone);
+ 			ovs_unlock();
+ 		}
+@@ -1773,6 +1798,7 @@ static int __ovs_ct_limit_get_zone_limit
+ 	return nla_put_nohdr(reply, sizeof(zone_limit), &zone_limit);
+ }
+ 
++/* Called with RCU read lock held. */
+ static int ovs_ct_limit_get_zone_limit(struct net *net,
+ 				       struct nlattr *nla_zone_limit,
+ 				       struct ovs_ct_limit_info *info,
+@@ -1796,12 +1822,10 @@ static int ovs_ct_limit_get_zone_limit(s
+ 							&zone))) {
+ 			OVS_NLERR(true, "zone id is out of range");
+ 		} else {
+-			rcu_read_lock();
+ 			limit = ct_limit_get(info, zone);
+ 
+ 			err = __ovs_ct_limit_get_zone_limit(
+ 				net, info->data, zone, limit, reply);
+-			rcu_read_unlock();
+ 			if (err)
+ 				return err;
+ 		}
+@@ -1816,6 +1840,7 @@ static int ovs_ct_limit_get_zone_limit(s
+ 	return 0;
+ }
+ 
++/* Called with RCU read lock held. */
+ static int ovs_ct_limit_get_all_zone_limit(struct net *net,
+ 					   struct ovs_ct_limit_info *info,
+ 					   struct sk_buff *reply)
+@@ -1828,19 +1853,16 @@ static int ovs_ct_limit_get_all_zone_lim
+ 	if (err)
+ 		return err;
+ 
+-	rcu_read_lock();
+ 	for (i = 0; i < CT_LIMIT_HASH_BUCKETS; ++i) {
+ 		head = &info->limits[i];
+ 		hlist_for_each_entry_rcu(ct_limit, head, hlist_node) {
+ 			err = __ovs_ct_limit_get_zone_limit(net, info->data,
+ 				ct_limit->zone, ct_limit->limit, reply);
+ 			if (err)
+-				goto exit_err;
++				return err;
+ 		}
+ 	}
+ 
+-exit_err:
+-	rcu_read_unlock();
+ 	return err;
+ }
+ 
+@@ -1850,7 +1872,6 @@ static int ovs_ct_limit_cmd_set(struct s
+ 	struct sk_buff *reply;
+ 	struct ovs_header *ovs_reply_header;
+ 	struct ovs_net *ovs_net = net_generic(sock_net(skb->sk), ovs_net_id);
+-	struct ovs_ct_limit_info *ct_limit_info = ovs_net->ct_limit_info;
+ 	int err;
+ 
+ 	reply = ovs_ct_limit_cmd_reply_start(info, OVS_CT_LIMIT_CMD_SET,
+@@ -1863,8 +1884,8 @@ static int ovs_ct_limit_cmd_set(struct s
+ 		goto exit_err;
+ 	}
+ 
+-	err = ovs_ct_limit_set_zone_limit(a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT],
+-					  ct_limit_info);
++	err = ovs_ct_limit_set_zone_limit(ovs_net,
++					  a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT]);
+ 	if (err)
+ 		goto exit_err;
+ 
+@@ -1884,7 +1905,6 @@ static int ovs_ct_limit_cmd_del(struct s
+ 	struct sk_buff *reply;
+ 	struct ovs_header *ovs_reply_header;
+ 	struct ovs_net *ovs_net = net_generic(sock_net(skb->sk), ovs_net_id);
+-	struct ovs_ct_limit_info *ct_limit_info = ovs_net->ct_limit_info;
+ 	int err;
+ 
+ 	reply = ovs_ct_limit_cmd_reply_start(info, OVS_CT_LIMIT_CMD_DEL,
+@@ -1897,8 +1917,8 @@ static int ovs_ct_limit_cmd_del(struct s
+ 		goto exit_err;
+ 	}
+ 
+-	err = ovs_ct_limit_del_zone_limit(a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT],
+-					  ct_limit_info);
++	err = ovs_ct_limit_del_zone_limit(ovs_net,
++					  a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT]);
+ 	if (err)
+ 		goto exit_err;
+ 
+@@ -1918,7 +1938,7 @@ static int ovs_ct_limit_cmd_get(struct s
+ 	struct ovs_header *ovs_reply_header;
+ 	struct net *net = sock_net(skb->sk);
+ 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
+-	struct ovs_ct_limit_info *ct_limit_info = ovs_net->ct_limit_info;
++	struct ovs_ct_limit_info *ct_limit_info;
+ 	int err;
+ 
+ 	reply = ovs_ct_limit_cmd_reply_start(info, OVS_CT_LIMIT_CMD_GET,
+@@ -1932,18 +1952,19 @@ static int ovs_ct_limit_cmd_get(struct s
+ 		goto exit_err;
+ 	}
+ 
++	rcu_read_lock();
++	ct_limit_info = rcu_dereference(ovs_net->ct_limit_info);
+ 	if (a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT]) {
+ 		err = ovs_ct_limit_get_zone_limit(
+ 			net, a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT], ct_limit_info,
+ 			reply);
+-		if (err)
+-			goto exit_err;
+ 	} else {
+ 		err = ovs_ct_limit_get_all_zone_limit(net, ct_limit_info,
+ 						      reply);
+-		if (err)
+-			goto exit_err;
+ 	}
++	rcu_read_unlock();
++	if (err)
++		goto exit_err;
+ 
+ 	nla_nest_end(reply, nla_reply);
+ 	genlmsg_end(reply, ovs_reply_header);
+@@ -2016,12 +2037,29 @@ int ovs_ct_init(struct net *net)
+ #endif
+ }
+ 
+-void ovs_ct_exit(struct net *net)
++/* Must be called with ovs_mutex held.  Detaches the RCU-protected
++ * ct_limit_info and stores it in ovs_net->ct_limit_exit_data for
++ * ovs_ct_exit_finish() to complete the teardown after an RCU grace period.
++ */
++void ovs_ct_exit_start(struct net *net __maybe_unused)
++{
++#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
++	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
++
++	ovs_net->ct_limit_exit_data = ovs_ct_limit_exit_start(ovs_net);
++#endif
++}
++
++/* Completes the CT limit teardown.  The pernet core guarantees an RCU
++ * grace period between detaching the state in ovs_ct_exit_start() and
++ * this call, so no RCU readers remain.
++ */
++void ovs_ct_exit_finish(struct net *net)
+ {
+ 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
+ 
+ #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+-	ovs_ct_limit_exit(net, ovs_net);
++	ovs_ct_limit_exit_finish(net, ovs_net->ct_limit_exit_data);
+ #endif
+ 
+ 	if (ovs_net->xt_label)
+--- a/net/openvswitch/conntrack.h
++++ b/net/openvswitch/conntrack.h
+@@ -14,7 +14,8 @@ enum ovs_key_attr;
+ 
+ #if IS_ENABLED(CONFIG_NF_CONNTRACK)
+ int ovs_ct_init(struct net *);
+-void ovs_ct_exit(struct net *);
++void ovs_ct_exit_start(struct net *net);
++void ovs_ct_exit_finish(struct net *net);
+ bool ovs_ct_verify(struct net *, enum ovs_key_attr attr);
+ int ovs_ct_copy_action(struct net *, const struct nlattr *,
+ 		       const struct sw_flow_key *, struct sw_flow_actions **,
+@@ -40,7 +41,8 @@ void ovs_ct_free_action(const struct nla
+ 
+ static inline int ovs_ct_init(struct net *net) { return 0; }
+ 
+-static inline void ovs_ct_exit(struct net *net) { }
++static inline void ovs_ct_exit_start(struct net *net) { }
++static inline void ovs_ct_exit_finish(struct net *net) { }
+ 
+ static inline bool ovs_ct_verify(struct net *net, int attr)
+ {
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -2756,6 +2756,13 @@ static void __net_exit list_vports_from_
+ 	}
+ }
+ 
++static void __net_exit ovs_pre_exit_net(struct net *dnet)
++{
++	ovs_lock();
++	ovs_ct_exit_start(dnet);
++	ovs_unlock();
++}
++
+ static void __net_exit ovs_exit_net(struct net *dnet)
+ {
+ 	struct datapath *dp, *dp_next;
+@@ -2766,7 +2773,7 @@ static void __net_exit ovs_exit_net(stru
+ 
+ 	ovs_lock();
+ 
+-	ovs_ct_exit(dnet);
++	ovs_ct_exit_finish(dnet);
+ 
+ 	list_for_each_entry_safe(dp, dp_next, &ovs_net->dps, list_node)
+ 		__dp_destroy(dp);
+@@ -2790,6 +2797,7 @@ static void __net_exit ovs_exit_net(stru
+ 
+ static struct pernet_operations ovs_net_ops = {
+ 	.init = ovs_init_net,
++	.pre_exit = ovs_pre_exit_net,
+ 	.exit = ovs_exit_net,
+ 	.id   = &ovs_net_id,
+ 	.size = sizeof(struct ovs_net),
+--- a/net/openvswitch/datapath.h
++++ b/net/openvswitch/datapath.h
+@@ -164,7 +164,10 @@ struct dp_upcall_info {
+  * Protected by genl_mutex.
+  * @dp_notify_work: A work notifier to handle port unregistering.
+  * @masks_rebalance: A work to periodically optimize flow table caches.
+- * @ct_limit_info: A hash table of conntrack zone connection limits.
++ * @ct_limit_info: Hash table of conntrack zone connection limits. Protected
++ * by RCU; updates and teardown are serialized by ovs_mutex. May be NULL during
++ * netns teardown.
++ * @ct_limit_exit_data: CT limit state detached at .pre_exit, freed at .exit.
+  * @xt_label: Whether connlables are configured for the network or not.
   */
- 
-+/* Keep this literal; hi()/lo() can't use the UL-suffixed TASK_SIZE. */
-+#define OR1K_ATOMIC_ADDR_LIMIT	0x7ffffffc
-+
- ENTRY(sys_or1k_atomic)
- 	/* FIXME: This ignores r3 and always does an XCHG */
-+
-+	/* Check both user pointers before accessing them. */
-+	l.movhi	r13,hi(OR1K_ATOMIC_ADDR_LIMIT)
-+	l.ori	r13,r13,lo(OR1K_ATOMIC_ADDR_LIMIT)
-+	l.sfgtu	r4,r13
-+	l.bf	9f
-+	 l.nop
-+	l.sfgtu	r5,r13
-+	l.bf	9f
-+	 l.nop
-+
- 	DISABLE_INTERRUPTS(r17,r19)
--	l.lwz	r29,0(r4)
--	l.lwz	r27,0(r5)
--	l.sw	0(r4),r27
--	l.sw	0(r5),r29
-+10:	l.lwz	r29,0(r4)
-+11:	l.lwz	r27,0(r5)
-+12:	l.sw	0(r4),r27
-+13:	l.sw	0(r5),r29
- 	ENABLE_INTERRUPTS(r17)
- 	l.jr	r9
- 	 l.or	r11,r0,r0
- 
-+	/*
-+	 * Either pointer was outside user space, or turned out to be
-+	 * unmapped/inaccessible when we actually touched it.
-+	 */
-+9:	l.jr	r9
-+	 l.addi	r11,r0,-EFAULT
-+
-+	.section .fixup, "ax"
-+14:
-+	ENABLE_INTERRUPTS(r17)
-+	l.j	9b
-+	 l.nop
-+	.previous
-+
-+	.section __ex_table, "a"
-+	.long	10b, 14b
-+	.long	11b, 14b
-+	.long	12b, 14b
-+	.long	13b, 14b
-+	.previous
-+
- /* ============================================================[ EOF ]=== */
+ struct ovs_net {
+@@ -172,7 +175,8 @@ struct ovs_net {
+ 	struct work_struct dp_notify_work;
+ 	struct delayed_work masks_rebalance;
+ #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+-	struct ovs_ct_limit_info *ct_limit_info;
++	struct ovs_ct_limit_info __rcu *ct_limit_info;
++	struct ovs_ct_limit_info *ct_limit_exit_data;
+ #endif
+ 	bool xt_label;
+ };
 
 
