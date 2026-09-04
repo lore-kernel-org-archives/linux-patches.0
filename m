@@ -1,68 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C552412294;
-	Fri,  4 Sep 2026 05:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DBF4137B2;
+	Fri,  4 Sep 2026 05:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500377; cv=none; b=f4qpqgJgq/go99L2qFjQxY1voUKX1xcoxjazUS9LoJgIQLbuEABOo3w1YGTsGZPy6ytYQvoJNahEUkj4BhYtx8mwgxBv913FTVvEyg60l7baSIT1MeBnA6NeSz0/ZIOhBgVt09Vv8VCrfi6o2KfPOWF+KKoVQW0wwL8MwAmLl4o=
+	t=1788500379; cv=none; b=Fxym9+nzyRSfRzIOjiuSvyy8I4La6GuAscqHHIFa4JVQaxA7qSVXA8b0v1XCrn0iMmvvFIqUnsb8oSKeFUIMU4nlDTg11wfNCq6nS8hwIQ/fzFUeI4oLlsaqHNFU1krTmK1O6/zuk1iGb/2h0//5co+bX2Z+V8Uo/75OXH9gEzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500377; c=relaxed/simple;
-	bh=1prlyI5i64/dlsp3n55FljfgbcwmZUWdgQIagrHpO8k=;
+	s=arc-20240116; t=1788500379; c=relaxed/simple;
+	bh=TPxmPDYlUGllETb7mk7fpKxZ3trXPebEIJRjEa946jk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IF8dQOEvJHQ2t0GpyPkaTKLnp4HGksWZsF61jGGtQAmyO3YHE23kbr1xh08rKKAyUn6rQEjsQjqwes8Uv0nGgtkj9KQ7KMuz3siKoqeiHuwPdverT89kcndBCddxGW/mK/I6m/usr2rrWx9TKzYvP4Ql8OgnBBxexMOAfSpigTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWJJHPGN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LWfPbg6hhh98sUJDC4dyJcyAuicpo5EPUKTYTweaLm0MXqWBTX14Wx78ZDF3SYpmX1dhi6HwW+HGKwaB80oKfKvZJOmMiXcY5nIKYYr+qZZ9pA2EhEmDZeeWbh6XK5YdkmJn72vgvq86kiIcDi1t410Tx3BR4AXi0+W6cpKqoHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsjfv6gA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWJJHPGN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538691F00A3D;
-	Fri,  4 Sep 2026 05:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsjfv6gA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA261F00A3E;
+	Fri,  4 Sep 2026 05:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500375;
-	bh=dQ+b9Bkg9Qj1mOR8PIK0INQR+FOz+PNUijuW9PHjOj0=;
+	s=korg; t=1788500377;
+	bh=1W4EDswxN/FK0ViM6mw+iO4ZTm2dHLl3lFcumItb7bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vWJJHPGN7GLiVXHuu2Cv5XemFmLzFDK71GtacUCYoT9B5/wULaXDtHDyys7pvJkJ7
-	 BGMCKUeL5EINna/KItJsha1G9lMCbIVLujKsJJkHeQa08ZWdKo3GGBaCy5MvETOIk/
-	 gagjWzF9FJDFqeLJr+uyIY8BVPKm7GJ4DTreZcHU=
+	b=lsjfv6gAf91BgwBJcHMkzyxspgb2AavxUOuwdWiGaI9Yf8+BXWYx9dq6fDdjwcMUM
+	 SuTZLVkybzWxL7G/iit6JMlIVaVPFNMb29d0z+57rrdJJ2DnmqqRtSZXQdh82pyMCv
+	 WgDXcAnKAxzbaL0uOiqZuKIhm7/7rz34TymaFhv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 035/552] mm/migrate: use huge_ptep_get() in remove_migration_pte()
-Date: Fri,  4 Sep 2026 06:53:12 +0200
-Message-ID: <20260904045748.624864659@linuxfoundation.org>
+	Alexander Graf <graf@amazon.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
+Subject: [PATCH 6.18 036/552] mm/mm_init: deferred_grow_zone(): fix out-of-range first_deferred_pfn
+Date: Fri,  4 Sep 2026 06:53:13 +0200
+Message-ID: <20260904045748.648551372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -81,78 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Alexander Graf <graf@amazon.com>
 
-commit ac1ec50d71b953524100ddc09057ee61a3dfaff3 upstream.
+commit 97090500d776c3f6d08e857e3a0a7cf092999094 upstream.
 
-remove_migration_pte() converts migration entries back to present PTEs
-after folio migration completes.  For hugetlb folios,
-page_vma_mapped_walk() returns the pte pointer to the hugetlb folio in
-pvmw.pte, but the code reads it with ptep_get().
+With CONFIG_DEFERRED_STRUCT_PAGE_INIT enabled, deferred_grow_zone()
+initializes struct pages early in boot to satisfy an allocation.
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(),
-pte_present() etc to misbehave.
+With a large CMA reservation in place, the ranges deferred_init_memmap()
+finds may not add up to the allocation it was asked for, and the function
+ends up initializing the memory map of the entire zone and still falls
+short.
 
-It is not clear whether this has a trivially visible effect to userspace.
+That is fine in itself: the function accounts for it and leaves the
+caller to decide whether it now has enough memory.
 
-Use huge_ptep_get() to dereference a huge pte pointer.
+However, the update of pgdat->first_deferred_pfn that tracks where
+uninitialized memory map starts could overflow.
 
-Link: https://lore.kernel.org/20260703114202.365553-5-dev.jain@arm.com
-Fixes: 290408d4a250 ("hugetlb: hugepage migration core")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+If the node's RAM end is not aligned on PAGES_PER_SECTION boundaries and
+some deferred struct pages were initialized, pgdat->first_deferred_pfn
+would point past the end of the node's memory.
+
+deferred_init_memmap() later picks up from pgdat->first_deferred_pfn and
+hits a BUG_ON(), because it expects a pfn within its node.
+
+For example, when running a kernel with CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
+and CONFIG_CMA=y using the following qemu command line
+
+  qemu-system-x86_64 -enable-kvm -m 8032M -kernel bzImage \
+      -append "nokaslr cma=4768M@0x100000000"
+
+the kernel panics:
+
+  kernel BUG at mm/mm_init.c:2131!
+  CPU: 3 UID: 0 PID: 36 Comm: pgdatinit0 Not tainted 7.2.0-rc6 #1
+  RIP: 0010:deferred_init_memmap+0x1b8/0x1c0
+  RAX: 0000000000236000 R13: 0000000000238000
+  Call Trace:
+   kthread+0xdf/0x120
+   ret_from_fork+0x187/0x250
+
+Make sure that the update of pgdta->first_deferred_pfn does not overflow
+when the entire zone's (and therefore node's) memory map is initialized.
+
+Fixes: 3acb913c9d5b ("mm/mm_init: use deferred_init_memmap_chunk() in deferred_grow_zone()")
+Cc: stable@vger.kernel.org
+Assisted-by: Kiro:claude-opus-5
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Link: https://patch.msgid.link/20260807031243.87904-1-graf@amazon.com
+[rppt: massaged the changelog]
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ mm/mm_init.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -370,7 +370,11 @@ static bool remove_migration_pte(struct
- 			continue;
- 		}
- #endif
--		old_pte = ptep_get(pvmw.pte);
-+		if (folio_test_hugetlb(folio))
-+			old_pte = huge_ptep_get(vma->vm_mm, pvmw.address,
-+						pvmw.pte);
-+		else
-+			old_pte = ptep_get(pvmw.pte);
- 		if (rmap_walk_arg->map_unused_to_zeropage &&
- 		    try_to_map_unused_to_zeropage(&pvmw, folio, old_pte, idx))
- 			continue;
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -2238,10 +2238,13 @@ bool __init deferred_grow_zone(struct zo
+ 	}
+ 
+ 	/*
+-	 * There were no pages to initialize and free which means the zone's
+-	 * memory map is completely initialized.
++	 * The loop only tests spfn before entering an iteration, so on exit it
++	 * may point up to a section past the end of the zone.  When it does,
++	 * the rest of the zone has already been handed to
++	 * deferred_init_memmap_chunk() and nothing is left to initialize.
+ 	 */
+-	pgdat->first_deferred_pfn = nr_pages ? spfn : ULONG_MAX;
++	pgdat->first_deferred_pfn =
++		spfn < zone_end_pfn(zone) ? spfn : ULONG_MAX;
+ 
+ 	pgdat_resize_unlock(pgdat, &flags);
+ 
 
 
