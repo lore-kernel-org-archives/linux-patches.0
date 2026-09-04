@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABEE30C366;
-	Fri,  4 Sep 2026 05:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC6B3876CC;
+	Fri,  4 Sep 2026 05:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501119; cv=none; b=SAvfiSE9Y5ZFFM1KabjNDafomObC2HQAL8ovhed3g43IuoU5myxCpY+p1Tiqj6ltUaNcQ03wCIN6lGILRhBmjGaeum1Sv2zNWwrMliI97cJFvuFjS7hyP67fe3358SBlvDZBWu2fN+q1j8Fq9AHTkbNXt0FCTHmF9TD1qpjwDqw=
+	t=1788501120; cv=none; b=cfdvsIRLc9bpm4W7w1QA9zPeKdOxzvxJT1dauQYb66DP7kg9Lbbg6GNiyHVK4Y+wdkG3sLdEhDYvGEgEsA/8euuXjmz/AX4/3q3aiHfGpE3HzU2WhI/BZy3PNUh6TysV1Cln1sgD7yg6LXC9G1cFwAoOPlCX8JxqD5a376jl0bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501119; c=relaxed/simple;
-	bh=HNLe+D8qnQ7Sfq2K27kPQceXVKflRgfP0gSlX7PHXew=;
+	s=arc-20240116; t=1788501120; c=relaxed/simple;
+	bh=z1a/v7ZvHQbLObXLO95toKcOgDBvq+7NwoJf3Gcx9HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aEpuGfRELYAHj+ix8Ly/ZI1bXPSjvBFuXu9VP+vHuuZ3dDwEo7DfWgXJZBjLSXsYAcg29KwPYiHTImOVeMA7LINSZcvQDb8DeLy8ozY/x1NxYukpXNs7ZHBXTV0FCV066Xg4gDkj7dNuYX+JaVSCwZhk5uB0+DnczRp1/sqsBU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZV3AOOj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j0mKA1rtU/y32g6AY461Fh6fwjOPOtfUamO9ITHUPFqhnXxGmQlgBhrptHwqyfYRcganmLcIzANN2+k+t1FBAOaTx6Z3HHhGUQyZ6vRrP76kVIYbbC+jaDnmin38v+Bf7YHBbY+eN6o9OtsH+ILcFQ9/TEPN56nbABcsP7ZaJTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtFr4X3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZV3AOOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59921F00A3D;
-	Fri,  4 Sep 2026 05:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtFr4X3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7821C1F00A3E;
+	Fri,  4 Sep 2026 05:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501116;
-	bh=gEeZjhf+rxvuLrnWZlocjIyepsyAZxkkdVBHfcFtl80=;
+	s=korg; t=1788501119;
+	bh=KoWtYzrxq8cOXG2fDlrQRLkEsUjNQH6gwFmoykQJ+M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NZV3AOOj+NhpP6RdhB8PKvoZj2LB7vD9pvGoIrcWaimq6aTpgmqBqZ+4J6qaNuk2o
-	 p6PAPpgkbD3pkzIGRW+8BCUNaUF5V1bCO9CesSoHeXKrwiqHFDod8/DruPTIXAlsq1
-	 3JA22+LntLAj2a7cQqgHLTZF0E1eHOcIkAzCiwfI=
+	b=mtFr4X3X4lcDMVCvc6+eKxTQrECiitplXgcNg7i0o4L8Qxeojxnn3uJYe5TqyzCss
+	 XN7Sd+ArvRg0DdxIFhZLx2tDK8ujs4sn5aWDHoVkw5hKX9PiPv6cd18FOKSBTdU8Su
+	 TmFa62HkGjA1srIJD9wF1q0y/bHpf6rme8j+HteY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 294/552] svcrdma: Fix unmatched rn_unregister on failed accept
-Date: Fri,  4 Sep 2026 06:57:31 +0200
-Message-ID: <20260904045756.698038259@linuxfoundation.org>
+Subject: [PATCH 6.18 295/552] svcrdma: Reject connection when transport allocation fails
+Date: Fri,  4 Sep 2026 06:57:32 +0200
+Message-ID: <20260904045756.732430306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,148 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 26190394c64c9429481fc88a4738f70bb92fb352 upstream.
+commit 0944462247dcb7de7622cdaaadf5f05c52707dab upstream.
 
-When svc_rdma_accept() takes the errout path before
-rpcrdma_rn_register() has succeeded, the existing cleanup block
-calls rpcrdma_rn_unregister(dev, &newxprt->sc_rn) unconditionally.
-svcxprt_rdma is kzalloc'd, so on that path sc_rn.rn_index is 0 and
-sc_rn.rn_done is NULL; the unregister therefore xa_erase()s another
-caller's slot 0 and performs an unmatched kref_put() on the
-rpcrdma_device's rd_kref.
+handle_connect_req() returns without action when
+svc_rdma_create_xprt() fails to allocate the new transport.
+The CM core returns 0 for CONNECT_REQUEST events, so it does
+not destroy the new rdma_cm_id. Each allocation failure under
+memory pressure leaks one rdma_cm_id, and a remote peer driving
+connection attempts can amplify this.
 
-The same errout also brackets the cleanup with svc_xprt_get()/
-svc_xprt_put() around the kref_init() birth reference. The kref
-goes 1 -> 2 -> 1 and never reaches 0, so the svcxprt_rdma (and the
-net/ns_tracker it pinned) is leaked on every failed accept.
+Reject the connection by returning a non-zero status from the
+CM event handler, which tells the CM core to destroy the
+orphaned cm_id.
 
-rpcrdma_rn_register() writes rn->rn_done last, only after xa_alloc()
-and kref_get() have both succeeded, so rn_done == NULL is a natural
-"never registered" sentinel. Guard rpcrdma_rn_unregister() with an
-early return when rn_done is NULL, and clear rn_done before the
-matching xa_erase() so a repeated unregister is also a no-op.
-
-With that guard in place, the accept errout drops the kref_init()
-birth reference via svc_xprt_put(), which dispatches svc_rdma_free().
-Teardown of sc_qp, sc_sq_cq, sc_rq_cq, and sc_pd runs under existing
-IS_ERR/NULL guards in svc_rdma_free(); sc_rn is covered by the new
-rn_done sentinel; sc_cm_id is non-NULL on every errout path because
-svc_rdma_accept() dereferences it above the first goto errout.
-
-svc_xprt_free() drops the module reference associated with the freed
-transport, and svc_handle_xprt() drops its pre-acquired reference
-when ->xpo_accept() returns NULL. Take a replacement module reference
-before svc_xprt_put() so the two module_put()s remain balanced.
-
-The rn_done guard also covers svc_rdma_free()'s non-listener call
-to rpcrdma_rn_unregister() for transports whose register attempt
-failed or never ran.
-
-Fixes: 8ac6fcae5dc0 ("svcrdma: Unregister the device if svc_rdma_accept() fails")
+Fixes: 377f9b2f4529 ("rdma: SVCRDMA Core Transport Services")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
 Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-1-1b09bd87b6cd@oracle.com
+Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-4-1b09bd87b6cd@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/ib_client.c          |   24 +++++++++++++++++++++++-
- net/sunrpc/xprtrdma/svc_rdma_transport.c |   28 +++++++++++++++++++++-------
- 2 files changed, 44 insertions(+), 8 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/net/sunrpc/xprtrdma/ib_client.c
-+++ b/net/sunrpc/xprtrdma/ib_client.c
-@@ -51,7 +51,11 @@ static struct rpcrdma_device *rpcrdma_ge
-  * to be invoked when the device is removed, unless this notification
-  * is unregistered first.
-  *
-- * On failure, a negative errno is returned.
-+ * On failure, a negative errno is returned. rn->rn_done is left
-+ * NULL on every failure path (it is assigned only after xa_alloc
-+ * and kref_get have both succeeded), so the @rn may safely be
-+ * passed to rpcrdma_rn_unregister() without a separate
-+ * registered/unregistered flag in the caller.
-  */
- int rpcrdma_rn_register(struct ib_device *device,
- 			struct rpcrdma_notification *rn,
-@@ -83,6 +87,10 @@ static void rpcrdma_rn_release(struct kr
-  * rpcrdma_rn_unregister - stop device removal notifications
-  * @device: monitored device
-  * @rn: notification object that no longer wishes to be notified
-+ *
-+ * It is safe to call this on an @rn whose registration never
-+ * completed or failed; rn_done == NULL is treated as
-+ * never-registered and the call is a no-op.
-  */
- void rpcrdma_rn_unregister(struct ib_device *device,
- 			   struct rpcrdma_notification *rn)
-@@ -92,6 +100,20 @@ void rpcrdma_rn_unregister(struct ib_dev
- 	if (!rd)
- 		return;
- 
-+	/*
-+	 * rn_done is the registration sentinel: rpcrdma_rn_register
-+	 * assigns it last, after xa_alloc and kref_get have both
-+	 * succeeded. A NULL rn_done means this notification was
-+	 * never registered (or its registration failed) or has
-+	 * already been unregistered, and the call is a no-op.
-+	 * Without this guard, rn_index == 0 from a kzalloc'd
-+	 * parent would erase another caller's slot 0 and underflow
-+	 * rd_kref.
-+	 */
-+	if (!rn->rn_done)
-+		return;
-+	rn->rn_done = NULL;
-+
- 	trace_rpcrdma_client_unregister(device, rn);
- 	xa_erase(&rd->rd_xa, rn->rn_index);
- 	kref_put(&rd->rd_kref, rpcrdma_rn_release);
 --- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
 +++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -43,6 +43,7 @@
+@@ -227,12 +227,16 @@ svc_rdma_parse_connect_private(struct sv
+  * structure for the listening endpoint.
+  *
+  * This function creates a new xprt for the new connection and enqueues it on
+- * the accept queue for the listent xprt. When the listen thread is kicked, it
++ * the accept queue for the listen xprt. When the listen thread is kicked, it
+  * will call the recvfrom method on the listen xprt which will accept the new
+  * connection.
++ *
++ * Return values:
++ *     %0: Do not destroy @new_cma_id
++ *     %1: Destroy @new_cma_id (allocation failure)
   */
+-static void handle_connect_req(struct rdma_cm_id *new_cma_id,
+-			       struct rdma_conn_param *param)
++static int handle_connect_req(struct rdma_cm_id *new_cma_id,
++			      struct rdma_conn_param *param)
+ {
+ 	struct svcxprt_rdma *listen_xprt = new_cma_id->context;
+ 	struct svcxprt_rdma *newxprt;
+@@ -242,7 +246,7 @@ static void handle_connect_req(struct rd
+ 				       listen_xprt->sc_xprt.xpt_net,
+ 				       ibdev_to_node(new_cma_id->device));
+ 	if (!newxprt)
+-		return;
++		return 1;
+ 	newxprt->sc_cm_id = new_cma_id;
+ 	new_cma_id->context = newxprt;
+ 	svc_rdma_parse_connect_private(newxprt, param);
+@@ -276,6 +280,7 @@ static void handle_connect_req(struct rd
  
- #include <linux/interrupt.h>
-+#include <linux/module.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-@@ -576,13 +577,26 @@ static struct svc_xprt *svc_rdma_accept(
- 	return &newxprt->sc_xprt;
- 
-  errout:
--	/* Take a reference in case the DTO handler runs */
--	svc_xprt_get(&newxprt->sc_xprt);
--	if (newxprt->sc_qp && !IS_ERR(newxprt->sc_qp))
--		ib_destroy_qp(newxprt->sc_qp);
--	rdma_destroy_id(newxprt->sc_cm_id);
--	rpcrdma_rn_unregister(dev, &newxprt->sc_rn);
--	/* This call to put will destroy the transport */
-+	/*
-+	 * Drop the kref_init birth reference. svc_xprt_free will
-+	 * dispatch xpo_free = svc_rdma_free, which tears down sc_qp,
-+	 * sc_sq_cq, sc_rq_cq, and sc_pd under existing IS_ERR/NULL
-+	 * guards, and sc_rn under the rn_done sentinel guard inside
-+	 * rpcrdma_rn_unregister.
-+	 *
-+	 * sc_cm_id is destroyed unconditionally by svc_rdma_free; that
-+	 * is safe here because sc_cm_id is non-NULL by caller invariant
-+	 * on every path that reaches this errout: handle_connect_req
-+	 * installs newxprt->sc_cm_id before queueing the new xprt for
-+	 * accept, and svc_rdma_accept has already dereferenced it above
-+	 * the first goto errout.
-+	 *
-+	 * svc_handle_xprt() drops its pre-acquired module reference when
-+	 * ->xpo_accept() returns NULL. Take a replacement reference before
-+	 * freeing @newxprt, because svc_xprt_free() drops the module
-+	 * reference associated with @newxprt.
-+	 */
-+	__module_get(newxprt->sc_xprt.xpt_class->xcl_owner);
- 	svc_xprt_put(&newxprt->sc_xprt);
- 	return NULL;
+ 	set_bit(XPT_CONN, &listen_xprt->sc_xprt.xpt_flags);
+ 	svc_xprt_enqueue(&listen_xprt->sc_xprt);
++	return 0;
  }
+ 
+ /**
+@@ -299,8 +304,7 @@ static int svc_rdma_listen_handler(struc
+ 
+ 	switch (event->event) {
+ 	case RDMA_CM_EVENT_CONNECT_REQUEST:
+-		handle_connect_req(cma_id, &event->param.conn);
+-		break;
++		return handle_connect_req(cma_id, &event->param.conn);
+ 	case RDMA_CM_EVENT_ADDR_CHANGE:
+ 		listen_id = svc_rdma_create_listen_id(cma_rdma->xpt_net,
+ 						      sap, cma_xprt);
 
 
