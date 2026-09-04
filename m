@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8DB35AC03;
-	Fri,  4 Sep 2026 06:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BF7378838;
+	Fri,  4 Sep 2026 06:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501957; cv=none; b=sajwYkYoHfY1Afcy4+qej0IjWkLuINT5PjHAXJWkwZ+lOhynlSekMnfm/uuUjoyPyxpNBgK/iFn2wUYOGLoJJmXA2BWSGPAbvprrmQ0hJ/jbEgXKD/hmM6a68SbV1MMj5whVgY8p+pPYgh6hLlSqtYMMlqANf6dzhjvoj518k6E=
+	t=1788501960; cv=none; b=cOn/d+NAkqmf+i2ti72ORceYqfP8dzWYB5W42SQYe/DD1MiLcAl7N+mPJXc5ZSuGbZ/WGK0C4rUhCZldFNmJcJecrxQqKl1USFabD4MJeUA/thWcB7cLd9mPJ/WN/qY877vBA+03NuPWNmsiiloNz+UIvkh1tgSKaiBECrd1hsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501957; c=relaxed/simple;
-	bh=DA0t6ZxoW06qVYm+VY3NULyRPQYDIE4Pkf0lG0YNK6g=;
+	s=arc-20240116; t=1788501960; c=relaxed/simple;
+	bh=nXKDim0EiW7qHs+W6vA0mk3m5Nns55xu2EAFwWBgY40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7+Upm1fNqfssqqwgBIkaeWnhW3K1A1wJh0QnGSauKwdfjmYmuDmdYMJGevY/CU+R0f0IUuQEtTEaVjNzJrcFfXuXILHocm7pQo2LS6DY1UpHYdr7OmDZ/vbYD9KqMOQlrYZv+Hjnq3eTJJUa36+nHBVF471bGF3YReSCTaLTWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SD29WnWL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g2S7iYC5InHyT9/ChsFofwFAIRgcyi5nWiaNbqSa098tWuFxeSOHBsbpGtulfgv9ZQstRIKsKE4y9GY2izg+3KUwPC7jhFyoXqwQquZnQVNsCQAs0AAb443XsTSUjSVKN751t8QjimJbtgJelsqdvMHr8dw7oivHUNfZo1v5A6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Liqdf+5D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SD29WnWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FA31F00A3D;
-	Fri,  4 Sep 2026 06:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Liqdf+5D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6691F00A3D;
+	Fri,  4 Sep 2026 06:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501956;
-	bh=eSzOR57Kq1uM+1q0WcnUEjzAMDlnSO/75jC+hQvvGKk=;
+	s=korg; t=1788501959;
+	bh=Mu72vxYFQWrUPTD2FH11W4kmZc045iHsioWpbmy+O/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SD29WnWLA6auU3t0Er1FDPmtbzJXGg2iX3Gm4iWbcoXlPcx3Q02TFQvTKrgjAHQcB
-	 b4Cp2wImuSMaenodUz7CQm4pVbzmZrABnGrEGwF1mRTaoejVA+2Zk27/z84mli8Wei
-	 LZD+jA9bBIyeJIrTfkjQbR9FsJ8QCN2Cs7MtlE+o=
+	b=Liqdf+5DuRvZEJFNPzuO5KBeDzqO9URCLXtlBb2L4lmNsQ3F4kkb8unqqbMu7Hi/C
+	 Ov98a7YCmhao8EKB8tWMOF7uzpfiE8pgjujoeFIE47NlKqM8p+DZbAPxqJt9fMwH65
+	 j6i6RNtEqqN2o2W4YRu4G4dc24MkdQp3nCTDN9dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 038/403] tracing: Fix use-after-free with same-name named triggers
-Date: Fri,  4 Sep 2026 06:57:21 +0200
-Message-ID: <20260904045735.680089142@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	John Garry <john.g.garry@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 004/403] block: mark GFP_NOIO around sysfs ->store()
+Date: Fri,  4 Sep 2026 06:56:47 +0200
+Message-ID: <20260904045734.910886138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -44,90 +48,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Ming Lei <tom.leiming@gmail.com>
 
-commit a7318172aa332a161fb9618286e64454c827f8fd upstream.
+[ Upstream commit 7c0be4ead1f8f5f8be0803f347de0de81e3b8e1c ]
 
-When two hist triggers on different events are registered with the same
-name=, the second one reuses the first as named_data.  Both are added to
-tr->hist_vars by save_hist_vars() during event_hist_trigger_parse(),
-because save_hist_vars() is called before event_trigger_register() while
-the named reuse is only detected later, in hist_register_trigger().
+sysfs ->store is called with queue freezed, meantime we have several
+->store() callbacks(update_nr_requests, wbt, scheduler) to allocate
+memory with GFP_KERNEL which may run into direct reclaim code path,
+then potential deadlock can be caused.
 
-In the named-data branch hist_register_trigger() then frees the second
-histogram's hist_data via destroy_hist_data(), but never removes its
-tr->hist_vars list entry, leaving a dangling pointer and leaking the
-trace_array reference it holds.
+Fix the issue by marking NOIO around sysfs ->store()
 
-A later hist trigger that references a variable makes find_var_file()
-walk tr->hist_vars and dereference the freed hist_data.  The bug is
-reproducible from userspace by writing three hist triggers to tracefs:
-
-  cd /sys/kernel/tracing
-  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_switch/trigger
-  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_process_fork/trigger
-  echo 'hist:keys=common_pid:vals=$x' > events/sched/sched_process_exit/trigger
-
-The third write panics the kernel:
-
-  BUG: KASAN: slab-use-after-free in find_var_file.part.0+0x272/0x290
-  Read of size 8 at addr ffff888001f8a0e0 by task sh/1
-  CPU: 1 UID: 0 PID: 1 Comm: sh Tainted: G      D          N
-  Call Trace:
-    find_var_file.part.0
-    find_event_var
-    parse_atom
-    parse_expr
-    __create_val_field
-    event_hist_trigger_parse
-    trigger_process_regex
-    event_trigger_write
-    vfs_write
-    ksys_write
-    do_syscall_64
-    entry_SYSCALL_64_after_hwframe
-  Allocated by task 1:
-    event_hist_trigger_parse
-  Freed by task 1:
-    hist_register_trigger+0x618/0xa30
-    event_hist_trigger_parse
-  The buggy address belongs to freed 2048-byte region
-  Oops: general protection fault ... RIP: find_var_file.part.0
-  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
-
-Fix by removing the hist_data from tr->hist_vars and releasing the
-trace_array reference in the named-data branch of hist_register_trigger()
-before freeing the hist_data.
-
+Reported-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Cc: stable@vger.kernel.org
-Fixes: 6f86bdeab633 ("tracing: Fix bad hist from corrupting named_triggers list")
-Link: https://patch.msgid.link/20260816100427.33642-3-sh_def@163.com
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20250113015833.698458-1-ming.lei@redhat.com
+Link: https://lore.kernel.org/linux-block/Z4RkemI9f6N5zoEF@fedora/T/#mc774c65eeca5c024d29695f9ac6152b87763f305
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ block/blk-sysfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6585,8 +6585,10 @@ static int hist_register_trigger(char *g
- 		tracing_set_filter_buffering(file->tr, true);
- 	}
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index a5b6bcdfb9aa0..d53ffff112ff2 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -668,6 +668,7 @@ queue_attr_store(struct kobject *kobj, struct attribute *attr,
+ 	struct queue_sysfs_entry *entry = to_queue(attr);
+ 	struct gendisk *disk = container_of(kobj, struct gendisk, queue_kobj);
+ 	struct request_queue *q = disk->queue;
++	unsigned int noio_flag;
+ 	ssize_t res;
  
--	if (named_data)
-+	if (named_data) {
-+		remove_hist_vars(hist_data);
- 		destroy_hist_data(hist_data);
-+	}
-  out:
- 	return ret;
- }
+ 	if (!entry->store_limit && !entry->store)
+@@ -701,7 +702,9 @@ queue_attr_store(struct kobject *kobj, struct attribute *attr,
+ 
+ 	mutex_lock(&q->sysfs_lock);
+ 	blk_mq_freeze_queue(q);
++	noio_flag = memalloc_noio_save();
+ 	res = entry->store(disk, page, length);
++	memalloc_noio_restore(noio_flag);
+ 	blk_mq_unfreeze_queue(q);
+ 	mutex_unlock(&q->sysfs_lock);
+ 	return res;
+-- 
+2.53.0
+
 
 
