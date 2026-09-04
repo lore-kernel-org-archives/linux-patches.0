@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E523EC6AE;
-	Fri,  4 Sep 2026 05:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4234408035;
+	Fri,  4 Sep 2026 05:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500260; cv=none; b=NDhjpdX8h6R4vvgrHp+3nz+PwYif3HT/MbS/pYpLJjMNh3gJNVAzKpyG8RHTnmkNlzaeGY8WdMoL3we5IPLcjXaCUArdtYXt8kdf2Y1weDfIRZV6fs9pAIzfOuSu1GlDQc2xmQHi6HiBw0JNRfbZeWIuCo3vhadiP85pBSmx3gs=
+	t=1788500263; cv=none; b=Xpneik7U4z38IasQAXnjaiIw8EP78kHhi+JdGpkTZ90HmCoF7V6MBlNIT0R6NasvbZiE9H0Fp5FdVsk2gOMjjNrT3/2WYvPdk4x8hKeN+//7kLhD+DaRb2ryNtwIeW4TL6VfV275uGO+Kkk+SDZKavezK5YR+Dwa62JyeOJTE88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500260; c=relaxed/simple;
-	bh=+VNEYL0xuXQGZ1njjC10TiwIrmwYKsp0K+tIUh+2AoE=;
+	s=arc-20240116; t=1788500263; c=relaxed/simple;
+	bh=98zQ+xc7+ASNlnSSMH27xYOY4hOelr3zbzn7v4HLcDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVr7P8NSBYex8wDO0qFxCYl3mpbfgThTiNApIG8GggsXvDD9PPUzJlTtS3MXN4w4a3rdVa3aYQqgOb9l1Rz7vj/Yc28YHaikjoJF3rLnlcU+Hl36wh2jt7JuzYhMp+Nd8orVCnT/sGBC/iz7pcvumIheESLgtkNU87NF1XIHnDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H48095AB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JNEmyvBKRd7T4Sky0BMmQegB4hYObApwXiZDNHoPueQRrjX7qg7m2dXjkVo2KQ3sSqMa25Qsv6ktn23aaOVDJ8WkG3hwA+lYFLAIfKlbdVulVuH+bO49/OZkYOtWIn7MgvL1iYn6r6D7CEYrkrjtYwjqev6wAxSxv2gnzrY0qkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sj6fifFv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H48095AB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608E41F00A3D;
-	Fri,  4 Sep 2026 05:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sj6fifFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADE71F00A3D;
+	Fri,  4 Sep 2026 05:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500258;
-	bh=/B7YCAQx5NJZr7CLWLgUv4tW5RptWji3+iE72weFQTo=;
+	s=korg; t=1788500261;
+	bh=gN+3EhXbzcvxmqQZJzXmSaekI+J7tBpyMFsXapg+alE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H48095ABBrTQAg1ROrqixfHo6xZwd9FJW9xIP0A4SCcYwuBrBHHl+yEeGoTnc7B55
-	 9dsaFXEKqlgPw3PpoyWNchNEsKyFl+k5h+H9sbD2OXxfOPkDM3WJqk23ihmIum/DnU
-	 NyU1ouK9if59R1BV1R5BV/0fYsaaIT3bdrxsvHRA=
+	b=sj6fifFvJT0Tj6DylH4rV/fGNPUBtYu8zWChJePuh/cSma92+ZszrdVG8aOlSEXUr
+	 Ewo4ov749C/u8zFUq2BDkFpcKGpwYZZdFgHStM42UjNQM47shTSOVxMY3xEKzmqibP
+	 XRiilihYOUJ12hiEn6K6lFr96g40sFMWBiXn9vog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Oleg Deomi <oleg.deomi@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Balbir Singh <bsingharora@gmail.com>
-Subject: [PATCH 7.2 707/713] taskstats: fix cpumask parsing cutting off the last character
-Date: Fri,  4 Sep 2026 07:01:15 +0200
-Message-ID: <20260904045819.697030752@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 681/713] crypto: atmel-ecc - clean up and improve ECDH comments
+Date: Fri,  4 Sep 2026 07:00:49 +0200
+Message-ID: <20260904045819.104374054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,53 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 1f58a5335cdd14b3fb5f2a5d3763dee1f5cba1d3 upstream.
+[ Upstream commit 3e84fb698abada239d3e35ed3d52a24dbfda5f6a ]
 
-parse() hands nla_strscpy() len as dstsize, and nla_strscpy() copies at
-most dstsize - 1 bytes.  When the attr payload comes in without a trailing
-NUL, srclen == len >= dstsize and the last character of the cpumask string
-gets cut off.  Register "0-15" and you are silently listening on "0-1",
-exit data for the rest never shows up.
+Improve the kerneldoc for struct atmel_ecdh_ctx by removing the stale
+"unsupported curves" wording, since the device only supports a single
+curve (P-256), and move the set_secret() constraint to the description.
 
-The bug only bites when the sender doesn't NUL terminate the payload;
-senders that include the NUL were always fine (srclen gets decremented for
-the trailing NUL, so srclen < dstsize).  Thats probably why this survived
-20 years.  And the policy is NLA_STRING, not NLA_NUL_STRING, so a payload
-without the trailing NUL is legit input here.
+In atmel_ecdh_set_secret(), clarify that the device generates the
+private key, and drop the redundant "only supports NIST P256" comment.
 
-Skip the kmalloc/nla_strscpy dance entirely and use nla_strdup(), which
-already allocates srclen + 1 and terminates.  The nla_len() bounds checks
-stay as they were.
+In atmel_ecdh_done() and atmel_ecdh_generate_public_key(), clarify the
+truncation comments. Also note that a P-256 public key consists of two
+32-byte coordinates in atmel_ecdh_compute_shared_secret(), and remove
+the unnecessary fall-through comment and other redundant comments.
 
-Link: https://lore.kernel.org/EC49FE41-7F5F-41E0-A07A-ABEB8ECA514D@grrlz.net
-Fixes: f9fd8914c1ac ("[PATCH] per-task delay accounting taskstats interface: control exit data through cpumasks")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Reported-by: Oleg Deomi <oleg.deomi@gmail.com>
-Closes: https://lore.kernel.org/CAByWkfZ6b1=3H9pwkz-dDQOs9cZaF-HYQ6b9Yb0=Hq2r1Vv_Pw@mail.gmail.com
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Balbir Singh <bsingharora@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: f07a0d251db7 ("crypto: atmel-ecc - avoid stale fallback key after set_secret failure")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/taskstats.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/crypto/atmel-ecc.c |   38 ++++++++++++++------------------------
+ 1 file changed, 14 insertions(+), 24 deletions(-)
 
---- a/kernel/taskstats.c
-+++ b/kernel/taskstats.c
-@@ -368,10 +368,9 @@ static int parse(struct nlattr *na, stru
- 		return -E2BIG;
- 	if (len < 1)
- 		return -EINVAL;
--	data = kmalloc(len, GFP_KERNEL);
-+	data = nla_strdup(na, GFP_KERNEL);
- 	if (!data)
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -27,15 +27,14 @@ static struct atmel_ecc_driver_data driv
+ 
+ /**
+  * struct atmel_ecdh_ctx - transformation context
+- * @client     : pointer to i2c client device
+- * @fallback   : used for unsupported curves or when user wants to use its own
+- *               private key.
+- * @public_key : generated when calling set_secret(). It's the responsibility
+- *               of the user to not call set_secret() while
+- *               generate_public_key() or compute_shared_secret() are in flight.
+- * @curve_id   : elliptic curve id
+- * @do_fallback: true when the device doesn't support the curve or when the user
+- *               wants to use its own private key.
++ * @client: I2C client device
++ * @fallback: ECDH fallback used for caller-provided private keys
++ * @public_key: cached public key for the device-generated private key
++ * @curve_id: elliptic curve id
++ * @do_fallback: true when ECDH operations should use @fallback
++ *
++ * The caller must not invoke set_secret() while generate_public_key()
++ * or compute_shared_secret() are in flight.
+  */
+ struct atmel_ecdh_ctx {
+ 	struct i2c_client *client;
+@@ -55,7 +54,7 @@ static void atmel_ecdh_done(struct atmel
+ 	if (status)
+ 		goto free_work_data;
+ 
+-	/* might want less than we've got */
++	/* copy only as much as requested, capped at 32 bytes */
+ 	n_sz = min(ATMEL_ECC_NIST_P256_N_SIZE, req->dst_len);
+ 
+ 	/* copy the shared secret */
+@@ -64,15 +63,15 @@ static void atmel_ecdh_done(struct atmel
+ 	if (copied != n_sz)
+ 		status = -EINVAL;
+ 
+-	/* fall through */
+ free_work_data:
+ 	kfree_sensitive(work_data);
+ 	kpp_request_complete(req, status);
+ }
+ 
+ /*
+- * A random private key is generated and stored in the device. The device
+- * returns the pair public key.
++ * If no private key is provided, generate one in the device and cache
++ * the corresponding public key. The generated private key never leaves
++ * the device.
+  */
+ static int atmel_ecdh_set_secret(struct crypto_kpp *tfm, const void *buf,
+ 				 unsigned int len)
+@@ -83,9 +82,7 @@ static int atmel_ecdh_set_secret(struct
+ 	struct ecdh params;
+ 	int ret = -ENOMEM;
+ 
+-	/* free the old public key, if any */
+ 	kfree(ctx->public_key);
+-	/* make sure you don't free the old public key twice */
+ 	ctx->public_key = NULL;
+ 
+ 	if (crypto_ecdh_decode_key(buf, len, &params) < 0) {
+@@ -94,7 +91,6 @@ static int atmel_ecdh_set_secret(struct
+ 	}
+ 
+ 	if (params.key_size) {
+-		/* fallback to ecdh software implementation */
+ 		ctx->do_fallback = true;
+ 		return crypto_kpp_set_secret(ctx->fallback, buf, len);
+ 	}
+@@ -103,11 +99,6 @@ static int atmel_ecdh_set_secret(struct
+ 	if (!cmd)
  		return -ENOMEM;
--	nla_strscpy(data, na, len);
- 	ret = cpulist_parse(data, mask);
- 	kfree(data);
- 	return ret;
+ 
+-	/*
+-	 * The device only supports NIST P256 ECC keys. The public key size will
+-	 * always be the same. Use a macro for the key size to avoid unnecessary
+-	 * computations.
+-	 */
+ 	public_key = kmalloc(ATMEL_ECC_PUBKEY_SIZE, GFP_KERNEL);
+ 	if (!public_key)
+ 		goto free_cmd;
+@@ -120,7 +111,6 @@ static int atmel_ecdh_set_secret(struct
+ 	if (ret)
+ 		goto free_public_key;
+ 
+-	/* save the public key */
+ 	memcpy(public_key, &cmd->data[RSP_DATA_IDX], ATMEL_ECC_PUBKEY_SIZE);
+ 	ctx->public_key = public_key;
+ 
+@@ -149,7 +139,7 @@ static int atmel_ecdh_generate_public_ke
+ 	if (!ctx->public_key)
+ 		return -EINVAL;
+ 
+-	/* might want less than we've got */
++	/* copy only as much as requested, capped at 64 bytes */
+ 	nbytes = min(ATMEL_ECC_PUBKEY_SIZE, req->dst_len);
+ 
+ 	/* public key was saved at private key generation */
+@@ -175,7 +165,7 @@ static int atmel_ecdh_compute_shared_sec
+ 		return crypto_kpp_compute_shared_secret(req);
+ 	}
+ 
+-	/* must have exactly two points to be on the curve */
++	/* A P-256 public key must contain two 32-byte coordinates */
+ 	if (req->src_len != ATMEL_ECC_PUBKEY_SIZE)
+ 		return -EINVAL;
+ 
 
 
