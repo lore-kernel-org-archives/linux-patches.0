@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DE7420463;
-	Fri,  4 Sep 2026 06:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756F041F5D9;
+	Fri,  4 Sep 2026 06:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502712; cv=none; b=gVvgXZxZFsw279PCzUIMtInku66guGg/sXqhY14cdN/zXdkSeL+Vgh+pKYFtZt8hiN1yJyfwGXiO6mbi4vyXPTIIGM7QAsx80dV90wEzyN1pzBg968uVavtpYTSjciyANHz2uHC5WO8O2iRSG361olt4vseJsyQPDgNDlgIxSK8=
+	t=1788502714; cv=none; b=uN0XyvOukSOuSqOdrOQsiqKSSgk9/EmddzRsZrWmzrA+teJ4cK0nvUczn7RIYv79G0hPyGK2P7zfeIDpL8AqN0LBtNMQntRdPnkMEBXHU9Sno++m40uWDvYJD83rjzXkrnJo3E5UsmliljQoyf+aaNhBqWNDMlI6nZCAEi9XUAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502712; c=relaxed/simple;
-	bh=wjP12+RjhXwotiaL3pLbX6OGwZcu5OtTgaLeRwtRJiE=;
+	s=arc-20240116; t=1788502714; c=relaxed/simple;
+	bh=IaSyVuFOGN22elHEBJdZDxQjJd9L+Sn1/hmX23ncIog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYpBB+LCNpC/u3BFSow6B0lFAz7FUUGTvM1dhsM3ocGwy+wJmXzCKs++vxKp4pl4TPeWN+WTyu7+AgQ9C9QYXlMR8ylisyeiPnGwickgvxSa5TCYEUQFt12VvuyoNUK4778TQT7aXQXGizVitefkkgE2IZHPCCcfunnygiTaCaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXbyi5aw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GDbM+qvyVaOADQXxcQBATSoV+ngxUpxNMLgwlTodcPI16+eaN319oG/DNZNXO9h6w2Tm7PzoLz2ybae3jbZBTcG3xbI+2ivoRye4wToG0d73Npsgrl8aOmeVaRQI9kcwp2T2V9c9L2u7cwXhmhBMMpjIZL/eu/brQeRh9NCUDLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DH9tqw2N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXbyi5aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DE41F00A3D;
-	Fri,  4 Sep 2026 06:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DH9tqw2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BE11F00A3D;
+	Fri,  4 Sep 2026 06:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502710;
-	bh=NGSvLUUNp2PDnTbydu2i4NgYjW3sCAyD9wlqA7bdVwc=;
+	s=korg; t=1788502713;
+	bh=aGd7wk2Zbxb5eo+A3BVx1mWWAm/wsH6y0N0pw8bGtaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fXbyi5awaZD9t2NV6ZkB2oiQE2AQ8X+effz8JzMtiqDwvdy/NejTnLL5kL+li1B01
-	 DnIhfi8HMxBao45mCrhYKNNaPhK61bQBox/p04VTb+e44o8owPIy2wJE6StkMOjoZ3
-	 QWwWI5IDb1XLJrHTy2WULdZf+tmxP8uT7oKYl2hk=
+	b=DH9tqw2NL5BKr/Ip3mwRzudgFxH8+kbtCEgt/aFbMMVnfbv6wql6dsG3rmMGPiDvT
+	 az09ObXesLIIeH/5CFQe1UpUo9HW3PmhzOaKXBckjnA/Io8v/XgH0hAdksjpBRo9VJ
+	 zyX5Be/ticvVSjXeW95DKkvqBurdtLKWOebr0oSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.12 302/403] iommu/amd: Put PCI device after handling PPR faults
-Date: Fri,  4 Sep 2026 07:01:45 +0200
-Message-ID: <20260904045741.711256910@linuxfoundation.org>
+Subject: [PATCH 6.12 303/403] iommu/sva: Set handle->dev before the SVA handle is visible
+Date: Fri,  4 Sep 2026 07:01:46 +0200
+Message-ID: <20260904045741.734501049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,57 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit af3b69b16383fbc8fe5f61b5b0150d2e41ede71f upstream.
+commit 530f8f9c3546cb3ebee1b135375aaee08a073ebb upstream.
 
-iommu_call_iopf_notifier() looks up the requester with
-pci_get_domain_bus_and_slot(), which returns a PCI device with its
-reference count incremented.
+iommu_attach_device_pasid() installs the new SVA attach handle in the
+group PASID lookup before iommu_sva_bind_device() returns. A concurrent
+bind can therefore find and reuse the same handle after iommu_sva_lock is
+dropped.
 
-Neither the successful iommu_report_device_fault() path nor the abort
-path drops that reference, so every handled PPR request leaks a PCI
-device reference.
+handle->dev was initialized after dropping iommu_sva_lock. This leaves a
+window where a racing bind can return a handle whose dev pointer is still
+NULL. A subsequent iommu_sva_unbind_device() can then dereference it via
+handle->dev->iommu_group.
 
-This is the same ownership rule that was fixed for the old iommu_v2
-ppr_notifier() path by commit 6cf0981c2233 ("iommu/amd: Fix pci device
-refcount leak in ppr_notifier()"), but iommu_call_iopf_notifier() was
-added later as a separate PPR/IOPF notifier path.
+Initialize handle->dev before releasing iommu_sva_lock so any visible SVA
+handle is fully initialized.
 
-Drop the PCI device reference after handling the PPR entry.
-
-Fixes: 978d626b8f1a ("iommu/amd: Add IO page fault notifier handler")
+Fixes: be51b1d6bbff ("iommu/sva: Refactoring iommu_sva_bind/unbind_device()")
 Cc: stable@vger.kernel.org
 Assisted-by: Qoder:Qwen-3.8-MAX-Preview
 Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/ppr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/iommu-sva.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/ppr.c b/drivers/iommu/amd/ppr.c
-index 1f8d2823bea4..80369ca1e316 100644
---- a/drivers/iommu/amd/ppr.c
-+++ b/drivers/iommu/amd/ppr.c
-@@ -151,7 +151,7 @@ static void iommu_call_iopf_notifier(struct amd_iommu *iommu, u64 *raw)
- 
- 	/* Submit event */
- 	iommu_report_device_fault(&pdev->dev, &event);
--
-+	pci_dev_put(pdev);
- 	return;
+--- a/drivers/iommu/iommu-sva.c
++++ b/drivers/iommu/iommu-sva.c
+@@ -142,8 +142,8 @@ struct iommu_sva *iommu_sva_bind_device(
  
  out:
-@@ -159,6 +159,7 @@ static void iommu_call_iopf_notifier(struct amd_iommu *iommu, u64 *raw)
- 	amd_iommu_complete_ppr(&pdev->dev, PPR_PASID(raw[0]),
- 			       IOMMU_PAGE_RESP_FAILURE,
- 			       PPR_TAG(raw[0]) & 0x1FF);
-+	pci_dev_put(pdev);
- }
+ 	refcount_set(&handle->users, 1);
+-	mutex_unlock(&iommu_sva_lock);
+ 	handle->dev = dev;
++	mutex_unlock(&iommu_sva_lock);
+ 	return handle;
  
- void amd_iommu_poll_ppr_log(struct amd_iommu *iommu)
--- 
-2.55.0
-
+ out_free_domain:
 
 
