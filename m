@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AA53F7AA9;
-	Fri,  4 Sep 2026 05:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6208D3A7F4C;
+	Fri,  4 Sep 2026 05:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499019; cv=none; b=BbgE9g0EiJ4G233MPA9mzo4Abqta6t4/M0PpvA5GK+Jfzh8Q143pwXoKM2Gw5Yzz4+Ewy/JeJfw7yh8hvOxtu6CAkJxT6kOEDKhqvGHZf+axSb2C7dKL1XZ8nsUD/c6SdYPxzrjiMxWxapddh4JARgvFCxfx4TJ3Yuk2T6vhLUg=
+	t=1788499022; cv=none; b=sSy76GTAgHvqcfaKAlojtVBXfCabDDs70fL6S3/t9T20+HlEkoko7iNOfX9fm0KsvihEsTa8rdTfGmoHGEpvnSBxbcDxEottBng5AQqdSv+xTxV5CeYxzd5g1SQxycggo6N+29HVn545SKseST23dtL/cFEhDe5mZ9wkUwjUVpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499019; c=relaxed/simple;
-	bh=9o5PKwtvaZTkOROPQi5rVy8zIyMs8/umCPN08Btd6b4=;
+	s=arc-20240116; t=1788499022; c=relaxed/simple;
+	bh=tqNd+5oK6VUYsOGvP680ZbXMcvImZ3D1tESRVWSKEJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ha6Q/LAJRjSKjJAdxObxGSh8hfetlhBHzbnChy5CB2LSCZ92EIlPMU2LiLwqcNbJ7m3/ltN8scAWJ3r/lNmH4Dck21QxIlHd8GRUNIDc44I7/AuJmBozVdDqp0Miai5jo8guemA9dSmci4AvarZNs6P3AHEr7MRnNBLA5QRLpeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEd6X4O9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fT6LCpsEMjVzrI7GT4UcGZMspBxacJ+N+9L/CnRbXWQ/53RosAugiNpjQBIuTPoaBSmNdrtct1Ro69Om0DWyU9EHU55P/rIc+P5fVE1N5BuQTNLnbnX0gTmxUByyPxTFulOneHpjyIOHWqXbKlOo5w6xeW9WPaF5BM6RV2b1nsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+B0UpKc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEd6X4O9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBEE1F00A3D;
-	Fri,  4 Sep 2026 05:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+B0UpKc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5611F00A3E;
+	Fri,  4 Sep 2026 05:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499018;
-	bh=g8nZbeNo8HZSUi1JKSEJTsRTgQkAqDFdkpwc5couVXY=;
+	s=korg; t=1788499021;
+	bh=InrhBO4ZhQ+KX1nst+N4DFO1YyWZgcvoio5emXacIzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SEd6X4O9+dEHiEiOy00J8htYsw8cJ3BvFdC5cMLtehq77LErWmJHBviIpNFO01w1J
-	 XJpsp5GnI35Rgp0jscX4Jiv76W4aLwl64i3TsPD7+Tm8ddlmPz+aU/GjS4F48QsC83
-	 qCS0z+E14fCuPgiJiQbALxlsYledVnqh5RzGyuNk=
+	b=c+B0UpKcyWgE6xq82uJzsKD09OIXkH2jGOdpZatrKF5B3Qy5h4uwN7YydZvt5EgHu
+	 S1cDiO05oh+rF7VqAvDROakkGLJoest4o8sD17nynvZgPIqJ30PYlFPmO50yU6eq/I
+	 hnRGSrfcbpLpXEuxEGXuMqfNR+AVm6hGmuZZfMeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.2 216/713] ceph: fix UAF in check_new_map() on session freed during unlock
-Date: Fri,  4 Sep 2026 06:53:04 +0200
-Message-ID: <20260904045808.659854002@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.2 263/713] fs/ntfs3: bound page_lcns[] index by the log record
+Date: Fri,  4 Sep 2026 06:53:51 +0200
+Message-ID: <20260904045809.732709550@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,106 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit ee611a7509554c4ca1f54f6aefe592fb1df7ea70 upstream.
+commit 6f7b9dbdc1b7520206abce0049bdd143eb536e75 upstream.
 
-check_new_map() iterates mdsc->sessions[] and for each active session
-drops mdsc->mutex to perform per-session operations.  The forced-close
-path (rank removed from map) correctly takes a reference on s via
-ceph_get_mds_session() before releasing mdsc->mutex, but three other
-paths do not:
+The copy_lcns loop and the redo shorten loop index page_lcns[] at j + i,
+where i runs up to the log record's lcns_follow. That count is checked only
+against the record's own length, not the target entry, so check_dp_table()
+(which validates the entry's lcns_follow) does not cover it: the copy_lcns
+entry may even be freshly allocated after that check, and find_dp() bounds j
+but not i. A crafted record thus overflows page_lcns[] of an otherwise valid
+entry.
 
-  Path A (address changed):  mutex_unlock → mutex_lock(&s->s_mutex)
-  Path B (reconnect):        mutex_unlock → send_mds_reconnect(mdsc, s)
-  Path C (active transition): mutex_unlock → mutex_lock(&s->s_mutex)
+Add dp_range_ok() and reject, before each loop, any record whose run does
+not fit the entry. These are the only two page_lcns[] accesses indexed by
+the record rather than the entry, so together with the entry validation
+every access is now bounded.
 
-Without the extra reference, another thread can acquire mdsc->mutex
-during the unlock window, call __unregister_session() which drops the
-last reference on s, and free it.  The original thread then accesses
-freed memory via s->s_mutex.
-
-Fix by adding ceph_get_mds_session(s) before each mutex_unlock and
-ceph_put_mds_session(s) after the corresponding mutex_lock, matching
-the pattern already used in the forced-close path.
-
-Race timeline (Path A):
-
-  Thread A (check_new_map)             Thread B (another map update
-    holds mdsc->mutex                      or session teardown)
-  --------------------------           --------------------------
-  s = mdsc->sessions[i]
-  (refcount == 1, held only by
-   sessions[] array)
-
-  mutex_unlock(&mdsc->mutex)
-                               --->    acquires mdsc->mutex
-                                       __unregister_session(mdsc, s)
-                                         sessions[i] = NULL
-                                         ceph_put_mds_session(s)
-                                           refcount: 1 -> 0
-                                           kfree(s)  <--- freed!
-
-  mutex_lock(&s->s_mutex)
-  UAF on freed s->s_mutex
-
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+[almaz.alexandrovich@paragon-software.com: original patch contained changes to the problem already handled, applied partly]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ntfs3/fslog.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -5834,9 +5834,11 @@ static void check_new_map(struct ceph_md
- 			   ceph_mdsmap_get_addr(newmap, i),
- 			   sizeof(struct ceph_entity_addr))) {
- 			/* just close it */
-+			ceph_get_mds_session(s);
- 			mutex_unlock(&mdsc->mutex);
- 			mutex_lock(&s->s_mutex);
- 			mutex_lock(&mdsc->mutex);
-+			ceph_put_mds_session(s);
- 			ceph_con_close(&s->s_con);
- 			mutex_unlock(&s->s_mutex);
- 			s->s_state = CEPH_MDS_SESSION_RESTARTING;
-@@ -5851,6 +5853,7 @@ static void check_new_map(struct ceph_md
- 		    newstate >= CEPH_MDS_STATE_RECONNECT) {
- 			int rc;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -648,6 +648,14 @@ static inline void *enum_rstbl(struct RE
+ }
  
-+			ceph_get_mds_session(s);
- 			mutex_unlock(&mdsc->mutex);
- 			clear_bit(i, targets);
- 			rc = send_mds_reconnect(mdsc, s);
-@@ -5859,6 +5862,7 @@ static void check_new_map(struct ceph_md
- 					       "mds%d reconnect failed: %d\n",
- 					       i, rc);
- 			mutex_lock(&mdsc->mutex);
-+			ceph_put_mds_session(s);
- 		}
+ /*
++ * dp_range_ok - true if [j, j + count) fits in a page_lcns[cap] array.
++ */
++static inline bool dp_range_ok(size_t j, u32 count, u32 cap)
++{
++	return j < cap && count <= cap - j;
++}
++
++/*
+  * find_dp - Search for a @vcn in Dirty Page Table.
+  */
+ static inline struct DIR_PAGE_ENTRY *find_dp(struct RESTART_TABLE *dptbl,
+@@ -5106,6 +5114,13 @@ find_dirty_page:
+ 	/* Shorten length by any Lcns which were deleted. */
+ 	saved_len = dlen;
  
- 		/*
-@@ -5871,9 +5875,11 @@ static void check_new_map(struct ceph_md
- 				pr_info_client(cl, "mds%d recovery completed\n",
- 					       s->s_mds);
- 			kick_requests(mdsc, i);
-+			ceph_get_mds_session(s);
- 			mutex_unlock(&mdsc->mutex);
- 			mutex_lock(&s->s_mutex);
- 			mutex_lock(&mdsc->mutex);
-+			ceph_put_mds_session(s);
- 			ceph_kick_flushing_caps(mdsc, s);
- 			mutex_unlock(&s->s_mutex);
- 			wake_up_session_caps(s, RECONNECT);
++	if (!dp_range_ok(le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn),
++			 le16_to_cpu(lrh->lcns_follow),
++			 le32_to_cpu(dp->lcns_follow))) {
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	for (i = le16_to_cpu(lrh->lcns_follow); i; i--) {
+ 		size_t j;
+ 		u32 alen, voff;
 
 
