@@ -1,48 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B845414DF6;
-	Fri,  4 Sep 2026 05:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762B93A9629;
+	Fri,  4 Sep 2026 05:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500420; cv=none; b=BI/y+3Cr6djPCyATTlMbNLoAnzXRyizaI26o7Qu6kJEOGKqtQUzrg82uOKmtMjMcz9LpIFEGbFg3/2k8Hi5ztgGOwfTKYImHLAhZxONDwmoMxlswRhgbiT/bMZtrsQVM1azPfnstfOnT2a/qVIzKT7CgZZ/bVQn2HpYDsw9Fkwk=
+	t=1788500423; cv=none; b=S1hfCpzHZctmNX2LZCr9Ft2KbygA9zQ577JKgouJxt/bpxLW4pyKwD48IvDiw4aA0WPgr249EiIQZS6e96x787/PqfS2mMHK202xiWpd4F2chLcO0/3RNETIMe85f7ZzFHl2jPCS/4XzB3g0IFrS34LFhYqLa39iaRnm4OuFoAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500420; c=relaxed/simple;
-	bh=D4iLCyiYt78TSk9StmF6sAnnxq/HKsE8jJuYNdVgqPY=;
+	s=arc-20240116; t=1788500423; c=relaxed/simple;
+	bh=LCV5fpr3F/aWI2YqNUsEQFEz5p9KdjYmk2T6/2rAASs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQVCs6xjwcUo1g8cdxpLFKgY0xwJgCtJeMlibYsmy0o7XYu5YEgR80m833m/cp1IOPcEPnYJ8+czdTxz2SAlNOO6mqE+YOryovwg4H+RBZQsxzPNyepfE+WrWQWivIxve+0Wnn+shJfn2wpqNneg2FQTNnufKKa4eUDpvWv/M2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCGzjUy7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PFDteM2CB0QSb6uLZxHg+An8+l+0H9d0kfQXMl7Vm9tj6l3VDKRAmyHXltzJS7VdD36XIoMw2ElkoDGbfYkQoM0gXfY67dg1I5XkTxv7PPj7sS75vyUbVww3bO7hl9pKUYXZgTsNZc0BELA02GoiNQRdLvVIoQXOYGW1TT/qkxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ecd3c+k4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCGzjUy7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7181F00A3D;
-	Fri,  4 Sep 2026 05:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ecd3c+k4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6426F1F00A3D;
+	Fri,  4 Sep 2026 05:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500419;
-	bh=YUD+hNKpa8hR1FYjzIhMc5YUiSv1UVCONJfsx9Twmx8=;
+	s=korg; t=1788500422;
+	bh=ksknkuZ9oZG1+KP9P1LM/SzX86hud4wEpiDZH49QXQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LCGzjUy77gll99BJLyfrwyoaP1Hn1u+Q4HVg2zfAgDbxlBseVS8fkLuDnAl7i5cUm
-	 dO9PPFFRz8bLK1OFgVuZapO+XvDwmE2lHO7ft8e5AUunqCtV4F4dNuCbjt7n+BKwz9
-	 p6pWOUKDyByIUjE/XvTrqBjGuY+NYNyOxqWom8pc=
+	b=Ecd3c+k4bgPukp2YyVRqitFaXRm+bqZ1G3oHWL78MW1M3bJtD7Vk3RDWZ+WNT+E4Z
+	 1fZRWj4orx+7Ed/7e1NxlvXNQ7Xe99JabjoYi3oKAtJJAm52jDeWRvL6F746JN/6Se
+	 2sMEZTo8vJf/KjL2hXACGQNfjhU/cRdJ3mgXUJZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ridong Chen <chenridong@xiaomi.com>,
 	Johannes Weiner <hannes@cmpxchg.org>,
-	"Brendan Jackman" <brendan.jackman@linux.dev>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Gregory Price <gourry@gourry.net>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Song Hu <husong@kylinos.cn>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Zi Yan <ziy@nvidia.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Chris Li <chrisl@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Kairui Song <kasong@tencent.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 050/552] mm: page_alloc: fix non-movable reclaim storm in defrag_mode
-Date: Fri,  4 Sep 2026 06:53:27 +0200
-Message-ID: <20260904045748.973218350@linuxfoundation.org>
+Subject: [PATCH 6.18 051/552] mm: vmscan: fix node reclaim ignoring swappiness parameter
+Date: Fri,  4 Sep 2026 06:53:28 +0200
+Message-ID: <20260904045748.996266445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -61,160 +69,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Ridong Chen <chenridong@xiaomi.com>
 
-commit 7e8756d7ad22655b935c384f123071aa9de07a27 upstream.
+commit 8a905195850d383c0465ab5bdd3c91d94269b242 upstream.
 
-As we deployed defrag_mode into Meta production, pressure spikes and
-excessive swapping were observed on some workloads.  Tracing confirmed
-that this is unmovable/reclaimable requests spinning in the allocator and
-direct reclaim, causing excessive amounts of swap.
+sc_swappiness() had two separate definitions depending on CONFIG_MEMCG.
+The !CONFIG_MEMCG variant simply returned vm_swappiness, ignoring the
+proactive_swappiness value passed through scan_control.  This caused the
+swappiness parameter written to /sys/devices/system/node/nodeX/reclaim to
+have no effect when CONFIG_MEMCG is disabled.
 
-The initial plan for defrag_mode was to rely on kswapd/kcompactd to
-produce blocks, and if those are overwhelmed under high pressure, let the
-allocator fall back (__rmqueue_steal()) after its retry loops.  However,
-that retrying results in more reclaim on some of these workloads than we'd
-hoped, sometimes excessively so, spurred on by the !costly order
-conditions in should_reclaim_retry().
+Fix this by consolidating sc_swappiness() into a single definition that
+checks sc->proactive_swappiness first, then falls back to
+mem_cgroup_swappiness() which already handles both CONFIG_MEMCG and
+!CONFIG_MEMCG.
 
-The storms are dependent on the request type.  Reclaim will inevitably
-make room in existing movable blocks, since that's where the LRU pages
-live.  So if movable requests retry on reclaim, they make progress.
+Before fix (swappiness=max ignored, mostly file pages reclaimed):
 
-When non-movable requests spin in reclaim that isn't productive.  They
-cannot use the individually freed pages, and the process is unlikely to
-accidentally free whole blocks to meet the ALLOC_NOFRAGMENT bar.  They
-spin and overreclaim excessively, which tanks performance and triggers
-userspace guards like swap exhaustion or pressure based OOM.
+    # cat /proc/sys/vm/swappiness
+    60
+    # cat /proc/vmstat | grep pgsteal
+    pgsteal_kswapd 0
+    pgsteal_direct 0
+    pgsteal_khugepaged 0
+    pgsteal_proactive 1840
+    pgsteal_anon 25
+    pgsteal_file 1815
+    # echo "64M swappiness=max" > /sys/devices/system/node/node0/reclaim
+    # cat /proc/vmstat | grep pgsteal
+    pgsteal_kswapd 0
+    pgsteal_direct 0
+    pgsteal_khugepaged 0
+    pgsteal_proactive 18013
+    pgsteal_anon 337
+    pgsteal_file 17676
 
-To fix this, send non-movable requests, regardless of order, into
-pageblock reclaim/compaction.  This way, they help move things along to
-meet the ALLOC_NOFRAGMENT bar.  After this patch, the reclaim storms and
-excess OOM rates are no longer observed in production.
+After fix (swappiness=max honored, anon pages reclaimed as expected):
 
-The longer-term plan is still to have all requests, including the movable
-ones, help make blocks to spread the cost of defragmenting more evenly and
-fairly; combined with proper watermarking to reduce allocation latencies
-in the common case.  However, doing this naively unearths scaling and
-concurrency limitations in compaction that need to be addressed first.
-Promoting just non-movables for now is the minimally viable bug fix for
-the above issue.
+    # cat /proc/vmstat | grep pgsteal
+    pgsteal_kswapd 0
+    pgsteal_direct 0
+    pgsteal_khugepaged 0
+    pgsteal_proactive 0
+    pgsteal_anon 0
+    pgsteal_file 0
+    # echo "64M swappiness=max" > /sys/devices/system/node/node0/reclaim
+    # cat /proc/vmstat | grep pgsteal
+    pgsteal_kswapd 0
+    pgsteal_direct 0
+    pgsteal_khugepaged 0
+    pgsteal_proactive 16283
+    pgsteal_anon 16283
+    pgsteal_file 0
 
-[brendan.jackman@linux.dev: fix try_to_compact_pages() kerneldoc]
-  Link: https://lore.kernel.org/DK7NM9RPUJOD.11PNJJ5N2OBED@linux.dev
-Link: https://lore.kernel.org/20260722150006.3848560-5-hannes@cmpxchg.org
-Fixes: e3aa7df331bc ("mm: page_alloc: defrag_mode")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Signed-off-by: "Brendan Jackman" <brendan.jackman@linux.dev>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Link: https://lore.kernel.org/20260723032434.2016749-3-ridong.chen@linux.dev
+Fixes: b980077899ea ("mm: introduce per-node proactive reclaim interface")
+Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Acked-by: Qi Zheng <qi.zheng@linux.dev>
+Tested-by: Song Hu <husong@kylinos.cn>
+Reviewed-by: Song Hu <husong@kylinos.cn>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Chris Li <chrisl@kernel.org>
 Cc: David Hildenbrand <david@kernel.org>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
 Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: <stable@vger.kernel.org>	[6.17+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/compaction.c |    2 +-
- mm/internal.h   |    6 ++++++
- mm/page_alloc.c |   31 ++++++++++++++++++++++++++-----
- 3 files changed, 33 insertions(+), 6 deletions(-)
+ mm/vmscan.c |   19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -2803,7 +2803,7 @@ static enum compact_result compact_zone_
- /**
-  * try_to_compact_pages - Direct compact to satisfy a high-order allocation
-  * @gfp_mask: The GFP mask of the current allocation
-- * @order: The order of the current allocation
-+ * @order: The order to try to make available
-  * @alloc_flags: The allocation flags of the current allocation
-  * @ac: The context of current allocation
-  * @prio: Determines how hard direct compaction should try to succeed
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -910,6 +910,12 @@ struct compact_control {
- struct capture_control {
- 	struct zone *zone;
- 	int migratetype;
-+	/*
-+	 * Allocation request order. May differ from the compaction
-+	 * order: defrag_mode promotes sub-block allocations to
-+	 * pageblock-order compaction; capture still matches at the
-+	 * original allocation order so prep_new_page() is consistent.
-+	 */
- 	int order;
- 	struct page *page;
- };
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4138,8 +4138,24 @@ __alloc_pages_direct_compact(gfp_t gfp_m
- 		.order = order,
- 		.page = NULL,
- 	};
-+	int compact_order = order;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -201,6 +201,13 @@ struct scan_control {
+  */
+ int vm_swappiness = 60;
  
--	if (!order)
-+	/*
-+	 * If fallbacks are not permitted (defrag_mode), we either
-+	 * need to reclaim space in a block of matching type, or clear
-+	 * out an entire block to allow __rmqueue_claim() to convert.
-+	 *
-+	 * Reclaim by itself is primarily freeing space in movable
-+	 * blocks, since that's where the LRU pages live. So this
-+	 * works for movable requests, but not for others.
-+	 *
-+	 * For those, promote the order to help make blocks, instead
-+	 * of spinning in reclaim alone unproductively.
-+	 */
-+	if ((alloc_flags & ALLOC_NOFRAGMENT) && ac->migratetype != MIGRATE_MOVABLE)
-+		compact_order = max(order, pageblock_order);
++static int sc_swappiness(struct scan_control *sc, struct mem_cgroup *memcg)
++{
++	if (sc->proactive && sc->proactive_swappiness)
++		return *sc->proactive_swappiness;
++	return mem_cgroup_swappiness(memcg);
++}
 +
-+	if (!compact_order)
- 		return NULL;
+ #ifdef CONFIG_MEMCG
  
- 	psi_memstall_enter(&pflags);
-@@ -4155,8 +4171,8 @@ __alloc_pages_direct_compact(gfp_t gfp_m
- 	barrier();
- 	WRITE_ONCE(current->capture_control, &capc);
+ /* Returns true for reclaim through cgroup limits or cgroup interfaces. */
+@@ -241,13 +248,6 @@ static bool writeback_throttling_sane(st
+ #endif
+ 	return false;
+ }
+-
+-static int sc_swappiness(struct scan_control *sc, struct mem_cgroup *memcg)
+-{
+-	if (sc->proactive && sc->proactive_swappiness)
+-		return *sc->proactive_swappiness;
+-	return mem_cgroup_swappiness(memcg);
+-}
+ #else
+ static bool cgroup_reclaim(struct scan_control *sc)
+ {
+@@ -263,11 +263,6 @@ static bool writeback_throttling_sane(st
+ {
+ 	return true;
+ }
+-
+-static int sc_swappiness(struct scan_control *sc, struct mem_cgroup *memcg)
+-{
+-	return READ_ONCE(vm_swappiness);
+-}
+ #endif
  
--	*compact_result = try_to_compact_pages(gfp_mask, order, alloc_flags, ac,
--							       prio, &capc);
-+	*compact_result = try_to_compact_pages(gfp_mask, compact_order,
-+					       alloc_flags, ac, prio, &capc);
- 
- 	/*
- 	 * Make sure we hide capture control first before we read the captured
-@@ -4200,7 +4216,7 @@ __alloc_pages_direct_compact(gfp_t gfp_m
- 		struct zone *zone = page_zone(page);
- 
- 		zone->compact_blockskip_flush = false;
--		compaction_defer_reset(zone, order, true);
-+		compaction_defer_reset(zone, compact_order, true);
- 		count_vm_event(COMPACTSUCCESS);
- 		return page;
- 	}
-@@ -4437,9 +4453,14 @@ __alloc_pages_direct_reclaim(gfp_t gfp_m
- 	struct page *page = NULL;
- 	unsigned long pflags;
- 	bool drained = false;
-+	int reclaim_order = order;
-+
-+	/* Match the slowpath compaction promotion in __alloc_pages_direct_compact */
-+	if ((alloc_flags & ALLOC_NOFRAGMENT) && ac->migratetype != MIGRATE_MOVABLE)
-+		reclaim_order = max(order, pageblock_order);
- 
- 	psi_memstall_enter(&pflags);
--	*did_some_progress = __perform_reclaim(gfp_mask, order, ac);
-+	*did_some_progress = __perform_reclaim(gfp_mask, reclaim_order, ac);
- 	if (unlikely(!(*did_some_progress)))
- 		goto out;
- 
+ /* for_each_managed_zone_pgdat - helper macro to iterate over all managed zones in a pgdat up to
 
 
