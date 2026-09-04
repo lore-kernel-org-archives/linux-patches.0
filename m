@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44803A961E;
-	Fri,  4 Sep 2026 05:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607BC3B7B7B;
+	Fri,  4 Sep 2026 05:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499189; cv=none; b=spmc6uLuVAcLh028rfl889WGBD/z78QC8fbDpyiVnJ1O64kM9Bonvr+3yBvEeEZbo9KZDCjEyUvlAYfs4tGdPbyrOubCmKqqkx+9TsM3lnKZOy8BPVcR8i5UfyMaoo4VWldczuxabN2eGfhFn5sWW9hHEZqH5IBw5OW43hFdmYw=
+	t=1788499192; cv=none; b=Lvtoz56qaP1pV+iiTAcSkAOhmHCCUoGW/rnjr2/rulgFEoLsREJJBzXvPChunHHwyrITP+26QFLANlA+BLqDE46feExef2PSoVQmh8M0Iiyf2t7Q4917LAoZa6cKbjeQ4DJbMp+8vvJ+wfCXJvvwVszM5ojFbM53ZuH0ad0sBK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499189; c=relaxed/simple;
-	bh=ucuPMvsE8kVOfINR8rz+vkVRs2uiyKuoA7hUfZ4svHI=;
+	s=arc-20240116; t=1788499192; c=relaxed/simple;
+	bh=DCJhU5mJc0IHUYJXrWbPFc+TcxDjGnQw6p+6o+JlC3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7vchsT2cB25LlUxzoNyIHMfnNmPagJePWzL8YOwH3rrh036S2Q8ap1THcnN6MxGKJG1b7remaSfsIhATVJV0kNrhbh7NgeMg7KYtjniiKajakNcaFjSu7CE9O1OETztaHIdcIrl4TcNvJvDRxfFf9oUxGh2aqhkqa4xiKk9grg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zizF2UQr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jyt38KxJrWCxoljABVWuc5g9v+lHwQjZKH0KlHfAvGEi/TOuWT601ucPX5aknkPnCKz206hemVHMYKSfA2UL0AmdgNmu8lYzuhiisvHFXIjXrXUK4fJFeRRgd8afjovuC2XXLvc6upuw6pjJ+qhT6WKxMJ+4QYZv8ssgwGrjTXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MUUw78mU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zizF2UQr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E337A1F00A3E;
-	Fri,  4 Sep 2026 05:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MUUw78mU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C4E1F00A3D;
+	Fri,  4 Sep 2026 05:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499188;
-	bh=v1xNGeLy/4swakIXRmfD3gQFtsTYOVkhkmECGBHmBDM=;
+	s=korg; t=1788499191;
+	bh=r3TD9Cf55IoL3xFosO4otca+CVvcHdF3dUnwtcwK1x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zizF2UQramKOYeAiWmDpq8tSg1f2opMPYbIKBqtdPVqW0fN7pvmE50HBtaXLANIe9
-	 6EoYpDzaY9a8tBeqyZWFXRavGgG5dbv3O4FurcJcN1HLuyz2+0v1yw8HJ68t19c80O
-	 1T9zTkWoj4pH+Rh8BT3jK3r7ozCC8Nl6rx9U3kYA=
+	b=MUUw78mULj2G9+7+duKwNpXrPj59c56RqEIYJ0MHIZlRS84NsHPUyJ0Qpqd/2IwbL
+	 gja4/T7HjLldIaiJHWjUkd2BCJQUGtxbeOa/Y17yDsHDJRC1ilhhKMiaq+pFBXrxh4
+	 YBLMXTt0qenm2VxVC72CXkUv+GVDcf8FA/aJOVRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.2 329/713] dm array: reject an array block whose value size is not the callers
-Date: Fri,  4 Sep 2026 06:54:57 +0200
-Message-ID: <20260904045811.204911215@linuxfoundation.org>
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 7.2 330/713] coresight: etm3x: Fix cntr_val_show() to match cntr_val_store() behavior
+Date: Fri,  4 Sep 2026 06:54:58 +0200
+Message-ID: <20260904045811.228888424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,65 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit 4538a287bdf5d0f9a379c678e5262b9f5783f547 upstream.
+commit 41fb4e925528aefa4b7a5f76c7f81db99c0d0f38 upstream.
 
-array_block_check() can only compare the header against itself, so a block
-with value_size 4 and max_entries 1018 is internally consistent and passes.
-dm-cache keeps two arrays -- mappings at 8 bytes and hints at 4 -- and the
-roots for both live in the superblock. Point the mappings root at a hint
-block and __load_mappings() walks it through an info whose value size is 8,
-so element_at() strides 8 bytes over 4-byte entries and reaches offset 8160
-of a 4096-byte block.
+The cntr_val_show() function was intended to print the values of all
+counters using a loop. However, due to a buffer overwrite issue with
+sprintf(), it effectively only displayed the value of the last counter.
 
-get_ablock() and __shadow_ablock() are the two places that hold the block
-and the caller at once. Reject there when the two value sizes disagree.
-Arrays only ever read their own blocks, so this fires on crafted metadata
-only.
+The companion function, cntr_val_store(), allows users to modify a
+specific counter selected by 'cntr_idx'. To maintain consistency
+between read and write operations and to align with the ETM4x driver
+behavior, modify cntr_val_show() to report only the value of the
+currently selected counter.
 
-Fixes: 6513c29f44f2 ("dm persistent data: add transactional array")
-Suggested-by: Ming-Hung Tsai <mtsai@redhat.com>
+This change removes the loop and the "counter %d:" prefix, printing
+only the hexadecimal value. It also adopts sysfs_emit() for standard
+sysfs output formatting.
+
+Fixes: a939fc5a71ad ("coresight-etm: add CoreSight ETM/PTM driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251202082613.3265761-1-visitorckw@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-array.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/hwtracing/coresight/coresight-etm3x-sysfs.c |   15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
---- a/drivers/md/persistent-data/dm-array.c
-+++ b/drivers/md/persistent-data/dm-array.c
-@@ -246,6 +246,14 @@ static int get_ablock(struct dm_array_in
- 		return r;
+--- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
++++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
+@@ -717,26 +717,19 @@ static DEVICE_ATTR_RW(cntr_rld_event);
+ static ssize_t cntr_val_show(struct device *dev,
+ 			     struct device_attribute *attr, char *buf)
+ {
+-	int i, ret = 0;
+ 	u32 val;
+ 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+ 	struct etm_config *config = &drvdata->config;
  
- 	*ab = dm_block_data(*block);
-+	if (le32_to_cpu((*ab)->value_size) != info->value_type.size) {
-+		DMERR_LIMIT("%s failed: value_size %u != wanted %u", __func__,
-+			    le32_to_cpu((*ab)->value_size),
-+			    info->value_type.size);
-+		dm_tm_unlock(info->btree_info.tm, *block);
-+		return -EILSEQ;
-+	}
-+
- 	return 0;
+ 	if (!coresight_get_mode(drvdata->csdev)) {
+ 		spin_lock(&drvdata->spinlock);
+-		for (i = 0; i < drvdata->nr_cntr; i++)
+-			ret += sprintf(buf, "counter %d: %x\n",
+-				       i, config->cntr_val[i]);
++		val = config->cntr_val[config->cntr_idx];
+ 		spin_unlock(&drvdata->spinlock);
+-		return ret;
++	} else {
++		val = etm_readl(drvdata, ETMCNTVRn(config->cntr_idx));
+ 	}
+ 
+-	for (i = 0; i < drvdata->nr_cntr; i++) {
+-		val = etm_readl(drvdata, ETMCNTVRn(i));
+-		ret += sprintf(buf, "counter %d: %x\n", i, val);
+-	}
+-
+-	return ret;
++	return sysfs_emit(buf, "%#x\n", val);
  }
  
-@@ -308,6 +316,14 @@ static int __shadow_ablock(struct dm_arr
- 		return r;
- 
- 	*ab = dm_block_data(*block);
-+	if (le32_to_cpu((*ab)->value_size) != info->value_type.size) {
-+		DMERR_LIMIT("%s failed: value_size %u != wanted %u", __func__,
-+			    le32_to_cpu((*ab)->value_size),
-+			    info->value_type.size);
-+		dm_tm_unlock(info->btree_info.tm, *block);
-+		return -EILSEQ;
-+	}
-+
- 	if (inc)
- 		inc_ablock_entries(info, *ab);
- 
+ static ssize_t cntr_val_store(struct device *dev,
 
 
