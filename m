@@ -1,68 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7308390610;
-	Fri,  4 Sep 2026 06:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6073F405C3F;
+	Fri,  4 Sep 2026 06:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501917; cv=none; b=Nfjo/Z4VjWvsn8ibL6oB4HNi1Y3Rim0N8sjD7z1QtL2wmhwoDZ434S3xzVmpMBBc7AHH9OBk7NUzw0AkP0xSWteD6H8SWRSTquE1v+I8T+XDc1XCh7aorqA26o5zA8T9xYq4FGosOV+vDB+bhly0Y4MiRvTzB7a0xfgFm0cT3/A=
+	t=1788501918; cv=none; b=feswVPuWR65SkeIfvJsgQLll2o69wdmh9elqFlTt6rFCWnQCkScwoEMUk8r/CrJZb+P5j/azF7qT9lSrcxers0N4LiF1cCWv+NosSxTipAsiTi8P74wnkWDDKITgp8GLePlvps4kBBgJgYqinl1Pu7x0iu4WtdaNarp1YnIg2Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501917; c=relaxed/simple;
-	bh=XIzhC8d1iC2I65yrRP7gEk2FbFiDK/D5yQKPa3qNeDM=;
+	s=arc-20240116; t=1788501918; c=relaxed/simple;
+	bh=gE5bXcPYjpJlQdeyAyRk8EKWL/w6s76PbqV0Z/xGMtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4xoJOwBpXyv7IrE8GvP9jhFDkXofPEr8aOAcs8vVopQJbwW2UFb7YsmBwm6i4kO4uSQ8WRY6p13qXBgCGG4/H3hpcgw/VCQrvc1F32JDbQuwODD5dEwyqci3RlWWJwatg7QAgTHp91KPz50K77Uv1k96weolZQR5R4uX1dC678=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKZ/dgHy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oxkZUDe7pwUAa4g/bJlyZ6SdoSu+JMPcGLXqH5IK9Gbm635IBtrmiuw/xhbcG5WkXo8ScdGGZMUyXSEmxc4MKw6p6Kw7xptjZNs8dKRV+1QA18Q4Bn23VoO3XlMeXdkgASpravyB1zr0T4Q/GPT5SaM947Gg0fp6aRYUc9FxNKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJ4b0WnA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKZ/dgHy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F281F00A3D;
-	Fri,  4 Sep 2026 06:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ4b0WnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA301F00A3E;
+	Fri,  4 Sep 2026 06:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501914;
-	bh=pOUQxH6HXWI0RL2fsezpkP92G9H9goq6zYAOvHkwZKc=;
+	s=korg; t=1788501916;
+	bh=nPq96M3yE4AidtXy97uMuVHx3RecoqGQMMb2nsZbRls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NKZ/dgHyTLYNVTNOxhHuBeDhLZbnv3U44ido/rRXx8Jxm9MK3mn4MEUlizspg7Gdi
-	 WZsAyjMO1YfiHmJM4QY6XASktyucOqL7CHmYR4Ljr3UihJGaZdRLoEekz0SkA/BvkP
-	 fC/ujxEQhmnWmFHW1WrBdoJEcCwu3//cAnZbNsoU=
+	b=YJ4b0WnAPBWzz7SSdo1zYzzyasaz741KvcV8bvolEsn0UtdPqu8xUbqWveXTNfF5Z
+	 TbvDfRHxUkmGadd6MV/XVFg/K7qaqhvFeXqOvvSIFB4xM9hSsqyKrJKTB31xKGPBb3
+	 yeFxpfMz88NuF2mI0GjPg8fw95wogZMOr2DTyrrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
 	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 024/403] mm/page_vma_mapped: use huge_ptep_get() for hugetlb
-Date: Fri,  4 Sep 2026 06:57:07 +0200
-Message-ID: <20260904045735.366034939@linuxfoundation.org>
+Subject: [PATCH 6.12 025/403] mm/vmscan: report RCU-tasks quiescent states in shrink_lruvec()
+Date: Fri,  4 Sep 2026 06:57:08 +0200
+Message-ID: <20260904045735.389190465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -81,80 +61,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit e87df0d5d6962bde50f55f6d02b779daa394f894 upstream.
+commit 25f52e81216884a7444bf07a606691feb09a94e3 upstream.
 
-check_pte() is the final validation step in page_vma_mapped_walk().  It
-reads pvmw->pte with ptep_get() to decide whether the entry maps the PFN
-range being walked.  For hugetlb VMAs, that pointer refers to a hugetlb
-entry.
+I am seeing some rcu_tasks stalls in the Meta fleet during reclaim.
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
-etc to misbehave.
+  INFO: rcu_tasks detected stalls on tasks:
+	0000000088620d09: .. nvcsw: 6735/6735 holdout: 1 idle_cpu: -1/8
+	task:GlobalCPUThread state:R  running task  pid:2552016 tgid:2524552
+  Call Trace:
+   shrink_lruvec
+   mem_cgroup_iter
+   shrink_node
+   do_try_to_free_pages
+   try_to_free_pages
+   __alloc_frozen_pages_noprof
+   alloc_pages_noprof
+   pte_alloc_one
+   __pte_alloc
+   handle_mm_fault
 
-It is not clear whether this has a trivially visible effect to userspace.
+Nothing promises direct reclaim returns in bounded time, and the scan loop
+in shrink_lruvec() only calls cond_resched(), which is a no-op on
+PREEMPTION kernels.  Involuntary preemption is not a Tasks-RCU quiescent
+state, so the reclaiming task never reports one and becomes a holdout.
 
-Use huge_ptep_get() to dereference a huge pte pointer.
+Upgrade it to cond_resched_tasks_rcu_qs(), which reports a quiescent state
+even when cond_resched() does nothing.
 
-Link: https://lore.kernel.org/20260703114202.365553-6-dev.jain@arm.com
-Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
+PS: This has been discussed in [1]
+
+Link: https://lore.kernel.org/20260810-rcu_task_shrink_lruvec-v1-1-4d9f7d5251cb@debian.org
+Link: https://lore.kernel.org/all/amdWVTs0WKOxguxP@gmail.com/ [1]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
 Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_vma_mapped.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ mm/vmscan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page_vma_mapped.c
-+++ b/mm/page_vma_mapped.c
-@@ -97,7 +97,13 @@ static bool map_pte(struct page_vma_mapp
- static bool check_pte(struct page_vma_mapped_walk *pvmw, unsigned long pte_nr)
- {
- 	unsigned long pfn;
--	pte_t ptent = ptep_get(pvmw->pte);
-+	pte_t ptent;
-+
-+	if (is_vm_hugetlb_page(pvmw->vma))
-+		ptent = huge_ptep_get(pvmw->vma->vm_mm, pvmw->address,
-+				      pvmw->pte);
-+	else
-+		ptent = ptep_get(pvmw->pte);
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -5761,7 +5761,7 @@ static void shrink_lruvec(struct lruvec
+ 			}
+ 		}
  
- 	if (pvmw->flags & PVMW_MIGRATION) {
- 		swp_entry_t entry;
+-		cond_resched();
++		cond_resched_tasks_rcu_qs();
+ 
+ 		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
+ 			continue;
 
 
