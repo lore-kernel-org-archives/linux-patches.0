@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8483DAAC8;
-	Fri,  4 Sep 2026 05:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D973AE198;
+	Fri,  4 Sep 2026 05:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499444; cv=none; b=MlF1kMd3qH6YJQRCgvOt4Ctzql0L9KahmtzoikrnrRWmQ8eLUxjngMuY6FnUz0cDlS+nh5rWO2Q590bPyB49T5Me54cP9z/gJ/iDZdnU4SX1HCK4N7ppeA5thIIfgj64Cm/YP4Fz4mMKvAZf1CXCoOo6hs0xtmr8UzmPpTjeM7c=
+	t=1788499447; cv=none; b=OnkG7+loTttg1eII/jmoftuC9UAI+cDt7HM9ztAi4aR3RVy10IpoL7DXrRaWjv+3IJiAu5EiKffx7NaPLSEW8SFlxmJuAAbiWkKFxXP07z6D+zM1kT7FK3bqf6pUedc3oVcBd81V3AeFEDYqQly7H2z7HOKBzheY2vYujmZj1ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499444; c=relaxed/simple;
-	bh=Rq7s/7/FyVyYOXmoMfKh3pdYXuXxmuWJxtwatLAgDhw=;
+	s=arc-20240116; t=1788499447; c=relaxed/simple;
+	bh=SSbFbPMOBajGKKnlp9q34PTSmG2A4tyfrafYjM2a0yQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gr9Dt1/bECH7+/11XXQL7DZ4As0dsWS5p+fL22nzXq7oRWQMBqWE4w4u60xYgju+Xy9b6ZyQtuh2zEPOj0MuDki97/0YBTb5n14DmYzYzTUFZBWF/zMIm+ZYhhaVxXKvfnYx8XZSbR2Oevw7MgoLVWWhw8h5oaz4EhdNrIkruDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP0RYWGm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bZw4IjYKtc8P4A84odFVnXwB3MqAM6y7owyIEAgLgyEQFHnJWDZIsoIV4/jn47bTfzvZplDDSYRJRPDHbGAVH1aOBWWNRv04LC9Mny4/05gSq/mKeYL7Bs4NmTINSRoy0krCemJ5mu9yO+2UYIf2xSxAPeWqev/kgKyne5MqzwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uA5+rdXo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP0RYWGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677831F00A3D;
-	Fri,  4 Sep 2026 05:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uA5+rdXo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A67F1F00ADF;
+	Fri,  4 Sep 2026 05:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499442;
-	bh=AdSc0aHbwruevrHEZuJr0Kdi9KipQGmRaYpsASY2Gh8=;
+	s=korg; t=1788499445;
+	bh=qe77EeOoVY+vLynbJ04hZEKPEowbUOqwRnYOYc3QrQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CP0RYWGm45gSp3SCT0gv4yWArdU2/7ftlZqvjtzowl5HWAHqDrrHezW1pVGvz9Sod
-	 WWBAEAO4wv0K+yOMEL0QHDbTJOhmaM6wx7it/EygiEHyTCfob+mmK70PTpj6XLhAW0
-	 yaRnacLw55DGTZM8sikthVDsRr+PRUUfVwS+KiDA=
+	b=uA5+rdXozmrAFePG/NvRQkxtlWSHvH/CroS1hRPORi7iu6e/5TUfE1Kzjdu8L9hqj
+	 puuMDg2fRYNdo5O5Iauy1HX1STUGEvF0J9GYFgIC5Bswsm0FL03joJC+hj5RTeRFs9
+	 TMYC36Nk6J1yIm8WYD+dX/3N2UAWGiOI6P01sk9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 7.2 402/713] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
-Date: Fri,  4 Sep 2026 06:56:10 +0200
-Message-ID: <20260904045812.836422471@linuxfoundation.org>
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 7.2 420/713] scsi: fnic: Use GFP_ATOMIC for VLAN alloc under spinlock
+Date: Fri,  4 Sep 2026 06:56:28 +0200
+Message-ID: <20260904045813.245830235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,49 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
+commit 9639c6324524ea3f934908bd51f02430000954ab upstream.
 
-ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
-assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
-bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
-bounds the declared lengths from above (their sum must fit the received
-event), but an assoc request/response shorter than its fixed offset still
-underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
-cfg80211_roamed() then treat that wrapped value as the IE length and copy
-that many bytes out of the small assoc_info buffer to user space via
-nl80211, disclosing adjacent slab memory.
+fnic_fcoe_process_vlan_resp() allocates a VLAN descriptor with
+kzalloc_obj() (default GFP_KERNEL) while holding vlans_lock via
+spin_lock_irqsave(). GFP_KERNEL may sleep, which is not allowed in this
+atomic context and can trigger a sleeping-from-invalid-context warning
+or deadlock.
 
-Clamp both lengths to their offsets before subtracting.
+Pass GFP_ATOMIC so the allocation is safe under the IRQ-safe spinlock.
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing lower bound is evident from source. Compile-tested.
-
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Fixes: 098585aa8aca ("scsi: fnic: Add and integrate support for FIP")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
+Link: https://patch.msgid.link/20260731073820.16449-1-gonglinkai@kylinos.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/scsi/fnic/fip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
-+++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-@@ -754,6 +754,11 @@ void ath6kl_cfg80211_connect_event(struc
- 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
- 	    assoc_resp_ie_offset;
+--- a/drivers/scsi/fnic/fip.c
++++ b/drivers/scsi/fnic/fip.c
+@@ -139,7 +139,7 @@ void fnic_fcoe_process_vlan_resp(struct
+ 			FNIC_FIP_DBG(KERN_INFO, fnic->host,
+ 				     fnic->fnic_num,
+ 				     "process_vlan_resp: FIP VLAN %d\n", vid);
+-			vlan = kzalloc_obj(*vlan);
++			vlan = kzalloc_obj(*vlan, GFP_ATOMIC);
  
-+	if (assoc_req_len < assoc_req_ie_offset)
-+		assoc_req_len = assoc_req_ie_offset;
-+	if (assoc_resp_len < assoc_resp_ie_offset)
-+		assoc_resp_len = assoc_resp_ie_offset;
-+
- 	assoc_req_len -= assoc_req_ie_offset;
- 	assoc_resp_len -= assoc_resp_ie_offset;
- 
+ 			if (!vlan) {
+ 				/* retry from timer */
 
 
