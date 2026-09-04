@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE4C3BCD0A;
-	Fri,  4 Sep 2026 05:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8EE3E866B;
+	Fri,  4 Sep 2026 05:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501383; cv=none; b=Xo1Cw07T6IYo/rgJGCnEYaczZ2kT7usEzoHBl5nE1PUhGVV3onuUoZp72Brj09vOkGdWxLau0E5k8o3TIKrR/pkFXj5jiCWLmQ06MQA3Uocnh0iCq2jjsdLRRo8pLOmIBv91EflFXYUoOfWsibbLTwmau/KnznJwKJjksO9xjQA=
+	t=1788501385; cv=none; b=mRF1Team3EG6CUNfH4tDTLB4My6ct/UcVzG2OpAVW1P/w+LvhnOq11RbkBJ/1HifX9WdgSm3/U0hTbfP9vwA+Mm3vUIMnJqDTrWkdV3NQM0eES2OTQuQSc0FU6aoBu48aBhv19BI86Dl93AypvY4US44RjIqlceugf+qidw4ye8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501383; c=relaxed/simple;
-	bh=sHy645F/99D7tGx3536/+7zi6BgioHRbdkQbBiW9IcA=;
+	s=arc-20240116; t=1788501385; c=relaxed/simple;
+	bh=+y50jni0xoBUT502pZAudGyi+nKKwtvvX5EaWNk64qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQbpXiOlESbO8F5lxcbQ9LiFnht6LRoNHV4wBesbfFo1I5gx2+sXuvEcwyHIIR/dq6EOEBVwRK1Ebcux1ivr2jaiurPMVladjpwC1oJ4Jyrheu7q/xIvMp8zQLqJKlmxyvMu4NLXkiAh7kMGEuniEjH0uMxfI5dyPENee8TeUv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8l6fUrv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tt7NFlL5XI695Yicvc+Uk3NsISEIlroOevSCOgTCld4x1P27dC1TCSUj/NKvFZdB3hBN18mBrWtmIjqF4VD7kTZXNAXvagA6awB4BEu3OJon1LvRMCrTh2R/h1E4DiWriANaC1yAMfcagPwbPDCM/x5Kl4WA+CE6PjQ4K20z9Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZ2VSjo0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8l6fUrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333751F00A3D;
-	Fri,  4 Sep 2026 05:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZ2VSjo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5221F00A3D;
+	Fri,  4 Sep 2026 05:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501381;
-	bh=n53tZvxCSQwMKaMuBlyBxIcmHDDMfC5stBEstp9mTmU=;
+	s=korg; t=1788501384;
+	bh=p45RrxgzCD6uyAtmx2zU7LjIXCWac0hn9sN1QAr2pB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y8l6fUrvJtWIJs+HDX1+SVF221WfXLcmx4zGTj7bD9mjgFEDZXVndXv+GyirYHNSS
-	 ld9YUPoOITGFmHfovfhOB6D2zrSfLLRyMvo4urH3obTwm2ymJ+IRiACGOq0ysBpp6/
-	 uvx0qs0uIHiN5QHgWZWdpx9lxggW36mZyvckBxg0=
+	b=EZ2VSjo0IXJW2vnBZ7KpHCpYtFQy4hBcHu2zUemrnNXWWGGHBdDGvAIE7Kn7n32FD
+	 e7uZY5jaTQLgOaPenE34GJWvJ6MJMnCeP1F8AfoiRjgoX6XOQi8zftyrAnTn5O0wH8
+	 9UrX7wreX0ty5DYFYj+AUCW1l8R9b1QhrpuuDCs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronald Claveau <linux-kernel-dev@aliel.fr>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.18 388/552] PCI: meson: Fix GPIO state while requesting PERST#
-Date: Fri,  4 Sep 2026 06:59:05 +0200
-Message-ID: <20260904045759.004959458@linuxfoundation.org>
+	Ali Tariq <alitariq45892@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH 6.18 389/552] PCI: plda: Fix use-after-free of event IRQs during teardown
+Date: Fri,  4 Sep 2026 06:59:06 +0200
+Message-ID: <20260904045759.026506140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,61 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
+From: Ali Tariq <alitariq45892@gmail.com>
 
-commit 40fb390cbcc11797c44c16dabdf763ec87643671 upstream.
+commit 26b73bae01d6eb81a4a38f36101812f20b2639de upstream.
 
-Meson devicetree defines the PERST# GPIO as 'reset' GPIO.  Commit
-4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
-inverted the PERST# assertion logic to use proper GPIO descriptor semantics
-and moved the polarity configuration to the device tree as GPIO_ACTIVE_LOW.
-However, the initial PERST# GPIO state "GPIOD_OUT_LOW" was not updated
-accordingly.
+plda_pcie_irq_domain_deinit() removes pcie->event_domain via
+irq_domain_remove(), but the per-event IRQs mapped from that domain
+are requested with devm_request_irq() in plda_init_interrupts(). The
+actual free_irq() for a devm-managed IRQ is deferred by devres until
+after the calling probe()/remove() function returns.
 
-This results in the enumeration failure of the endpoint devices as
-PERST# would get deasserted while requesting the GPIO even before
-power and REFCLK becomes stable.
+This means irq_domain_remove() can free the domain's internal data
+before the deferred free_irq() for IRQs still mapped into it has run.
+When devres later processes that deferred cleanup, it can end up
+dereferencing the already-freed domain.
 
-Without this fix:
+Free each event IRQ explicitly with devm_free_irq() before removing
+the domain. This triggers the free immediately and removes the IRQ
+from the devres tracking list, so devres will not attempt to free it
+a second time later.
 
-  ahci 0000:01:00.0: enabling device (0000 -> 0002)
-  ahci 0000:01:00.0: SSS flag set, parallel bus scan disabled
-  ahci 0000:01:00.0: Controller reset failed (0xffffffff)
-  ahci 0000:01:00.0: probe with driver ahci failed with error -5
+Also dispose of the event, INTx, and MSI IRQ mappings with
+irq_dispose_mapping() before their owning domains are removed.
 
-With this fix:
+Finally, guard the calls to irq_set_chained_handler_and_data() for
+pcie->irq, pcie->msi_irq, and pcie->intx_irq so they only run when
+those fields hold a valid (>0) IRQ number.
 
-  ahci 0000:01:00.0: enabling device (0000 -> 0002)
-  ahci 0000:01:00.0: AHCI vers 0001.0300, 32 command slots, 6 Gbps, SATA mode
-  ahci 0000:01:00.0: 1/1 ports implemented (port mask 0x1)
-  ahci 0000:01:00.0: flags: 64bit ncq led clo only pio ccc
+This is a pre-existing issue, flagged by automated review during work
+on an earlier, unrelated patch to this driver.
 
-Change the GPIO request flag from GPIOD_OUT_LOW to GPIOD_OUT_HIGH to get
-the right behaviour.
+Build-tested and boot-tested on StarFive VisionFive v1.2A board
 
-Fixes: 4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
-Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
-[mani: CCed stable and commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 76c911396807 ("PCI: plda: Add host init/deinit and map bus functions")
+Closes: https://lore.kernel.org/linux-pci/20260714115343.4D49E1F000E9@smtp.kernel.org/
+Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616-fix-meson-pcie-reset-gpio-v1-1-fca404b4c8be@aliel.fr
+Link: https://patch.msgid.link/20260723140434.675512-2-alitariq45892@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-meson.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/plda/pcie-plda-host.c |   24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-meson.c
-+++ b/drivers/pci/controller/dwc/pci-meson.c
-@@ -402,7 +402,7 @@ static int meson_pcie_probe(struct platf
- 		return PTR_ERR(mp->phy);
- 	}
+--- a/drivers/pci/controller/plda/pcie-plda-host.c
++++ b/drivers/pci/controller/plda/pcie-plda-host.c
+@@ -559,9 +559,27 @@ EXPORT_SYMBOL_GPL(plda_pcie_setup_iomems
  
--	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(mp->reset_gpio)) {
- 		dev_err(dev, "get reset gpio failed\n");
- 		return PTR_ERR(mp->reset_gpio);
+ static void plda_pcie_irq_domain_deinit(struct plda_pcie_rp *pcie)
+ {
+-	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
+-	irq_set_chained_handler_and_data(pcie->msi_irq, NULL, NULL);
+-	irq_set_chained_handler_and_data(pcie->intx_irq, NULL, NULL);
++	u32 i, event_irq;
++
++	if (pcie->irq > 0)
++		irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
++	if (pcie->msi_irq > 0)
++		irq_set_chained_handler_and_data(pcie->msi_irq, NULL, NULL);
++	if (pcie->intx_irq > 0)
++		irq_set_chained_handler_and_data(pcie->intx_irq, NULL, NULL);
++
++	for_each_set_bit(i, &pcie->events_bitmap, pcie->num_events) {
++		event_irq = irq_find_mapping(pcie->event_domain, i);
++		if (event_irq) {
++			devm_free_irq(pcie->dev, event_irq, pcie);
++			irq_dispose_mapping(event_irq);
++		}
++	}
++
++	if (pcie->intx_irq)
++		irq_dispose_mapping(pcie->intx_irq);
++	if (pcie->msi_irq)
++		irq_dispose_mapping(pcie->msi_irq);
+ 
+ 	irq_domain_remove(pcie->msi.dev_domain);
+ 
 
 
