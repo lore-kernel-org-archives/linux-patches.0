@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AF7401A25;
-	Fri,  4 Sep 2026 05:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33C718D636;
+	Fri,  4 Sep 2026 05:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501525; cv=none; b=dl6omiUpwfmyjf2o7sHqDpbZrVwhNq8RfqbMsbgZfQm8geypIQxaqI424A1v3Wfo3Syn8FsIBUdwGSltsTEG/t07Y+dW0z9pdT1PkBX8yVfm+or1WF5zcjRUsXJsSh9dCWyainQGnmAXZBh9KAcDlPy+ELvgK/KpMktxxGxGOHw=
+	t=1788501527; cv=none; b=rSWZq4p5AQpy6gJvwU4VvvU4j9VzA1hkIDM0znkA+w5cv+l8U3CQcJJZkorbh0pDCuINo2+5SPMcxTVpZa02MseDx2Wp6as/nCO1wPgH8VwOwJ1mTALlg8cAzNMgB7aV4S+7nsngs7yIAh0SAIJHVt8oDjcz8HlnCcIrZwHB0pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501525; c=relaxed/simple;
-	bh=m7O7ZWGgkqdM4QcHESWRL5YxNSUQWrqK0vPkm0gRZY4=;
+	s=arc-20240116; t=1788501527; c=relaxed/simple;
+	bh=Yg4UUrO0eAFuvIYMIpScW7JvDvrjpmvzVVFP8dzgIHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tKctZbkLDaaBknn4AXcf0fmMQQrvj8amWv7cYGgYhXwoSj9OXDBlZrleQgAHrg9zWH9C/w6yDkA6b+29c9NL5bFIQy5+RbCJwkxre1X+c7gEvzn49bLf4Sl7xceJg0MeJNC0mQC/gZ0VR4IpIbls5EcTlEa713PHoPKSbBbi6vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vwuu1Rq5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VWv6ppJWI+Ib7EsW2bGgDomHslR2R7nY/AXZKyzWOMOPkm/HBJyjvVyE0tbW9ZswBo4Jv3ExfV6wrLCb00rHOXWCXQp07voJ0tHQyJo/L8crehA8xfkZYhHWSTFoRTgfM3ERDGTWhIR64c+n9mgDZufMdDYNmh/vsK2llQCLW5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COFQH3yI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vwuu1Rq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426A11F00A3D;
-	Fri,  4 Sep 2026 05:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COFQH3yI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229A51F00A3D;
+	Fri,  4 Sep 2026 05:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501523;
-	bh=Ls9xnsCXj8ZYSd8gS2ZuugfegBBricKbOPvr7TInf9k=;
+	s=korg; t=1788501526;
+	bh=EfBP1nJ54+Oj8oNx0rf6pF4KKRq+EICwrMWluGcmihE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vwuu1Rq534Y7xQ+1mpRwpXVqAsSM0p/vGgnIiUzXLAkuAJxyIsGolRIx65+2UG6Dd
-	 Ky5cdzw01GyK/vl6sPKo3lmlxyv9/ELPAxeV+OmIQrnuhqzgV/46h766jTmANEKAqh
-	 1ibbT/18iGWQCpkfyeTwTvnO1vGM06qS96Fie/0s=
+	b=COFQH3yIosEMIdoEyooRXKZ2j/DH54KawWBYKPwg/lWFdMER/l1Dp/h29vXftU4Qv
+	 oJsh8p3ic89fEssmzQt09YNzg5cdo43XCGokdwp199zE5eHQiYH/43uztGQOZAX7CT
+	 n+QsLxmqcLW1IlCC8tXiUperE3wmCiSFFLq4Bla0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 438/552] platform/x86: hp-bioscfg: fix heap OOB read on empty password write
-Date: Fri,  4 Sep 2026 06:59:55 +0200
-Message-ID: <20260904045800.523189781@linuxfoundation.org>
+	Darshit Shah <darnshah@amazon.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 6.18 397/552] PCI/DPC: Allow DPC on all Downstream Ports when OS controls AER
+Date: Fri,  4 Sep 2026 06:59:14 +0200
+Message-ID: <20260904045759.345855068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -44,64 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Darshit Shah <darnshah@amazon.de>
 
-commit 2b2ec354f905c14e3270e8ec3ab50f7d8ad73bab upstream.
+commit 97ca178c899d0049210d325b123ed024eb5ac000 upstream.
 
-validate_password_input() computes length = strlen(buf) and then
-checks buf[length - 1] to strip a trailing newline, without checking
-that length is nonzero first. Writing an empty string (a bare '\n')
-to current_password or new_password gives length == 0, and
-buf[length - 1] reads buf[-1], one byte before the heap allocation
-holding the copied input.
+PCIe r7.0, sec 6.2.11, "Implementation Note: Determination of DPC Control",
+recommends that "... operating systems always link control of DPC to the
+control of Advanced Error Reporting."
 
-KASAN confirms this directly:
+Any PCIe device may advertise AER, but only Root Ports and Root Complex
+Event Collectors can generate AER interrupts, so the AER driver only binds
+to RPs and RCECs.
 
-  BUG: KASAN: slab-out-of-bounds in store_password_instance.constprop.0+0x223/0x2a0 [hp_bioscfg]
-  Read of size 1 at addr ffff88811bd8da9f by task sh/13740
-  ...
-  store_password_instance.constprop.0+0x223/0x2a0 [hp_bioscfg]
-  current_password_store+0x14/0x20 [hp_bioscfg]
-  ...
-  The buggy address is located 23 bytes to the right of
-  allocated 8-byte region [ffff88811bd8da80, ffff88811bd8da88)
+Any Root Port or Switch Downstream Port may advertise Downstream Port
+Containment (DPC), but previously the DPC driver was limited to devices the
+AER driver could bind to, i.e., only RPs that advertised AER.
 
-Reproduced identically via new_password_store. Execution continues
-past the bad read (the garbage byte only affects whether "length" is
-decremented by one), so the write completes and returns success; this
-is a pure information read past the buffer, not a crash, but it is
-still an out-of-bounds access KASAN correctly flags.
+Since any Port with DPC can generate DPC interrupts, allow the DPC driver
+to bind to such a Port as long as the OS controls AER, regardless of
+whether the AER driver binds to it.
 
-Fix by only checking buf[length - 1] when length is nonzero.
-
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+Signed-off-by: Darshit Shah <darnshah@amazon.de>
+[bhelgaas: commit log, reorder || operands to simplify patch]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260812111829.172273-4-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20251211164257.81655-1-darnshah@amazon.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c |    2 +-
+ drivers/pci/pcie/portdrv.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -66,7 +66,7 @@ static int validate_password_input(int i
- 	struct password_data *password_data = &bioscfg_drv.password_data[instance_id];
+--- a/drivers/pci/pcie/portdrv.c
++++ b/drivers/pci/pcie/portdrv.c
+@@ -264,7 +264,7 @@ static int get_port_device_capability(st
+ 	 */
+ 	if (pci_find_ext_capability(dev, PCI_EXT_CAP_ID_DPC) &&
+ 	    pci_aer_available() &&
+-	    (pcie_ports_dpc_native || (services & PCIE_PORT_SERVICE_AER)))
++	    (pcie_ports_dpc_native || host->native_aer))
+ 		services |= PCIE_PORT_SERVICE_DPC;
  
- 	length = strlen(buf);
--	if (buf[length - 1] == '\n')
-+	if (length > 0 && buf[length - 1] == '\n')
- 		length--;
- 
- 	if (length > MAX_PASSWD_SIZE)
+ 	/* Enable bandwidth control if more than one speed is supported. */
 
 
