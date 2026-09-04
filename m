@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DD6412294;
-	Fri,  4 Sep 2026 05:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9EF41A54B;
+	Fri,  4 Sep 2026 05:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500624; cv=none; b=cUoxEDTHXVbcU+VOPXZDzML/TuENoW4+PBFoRvhyYcvaN4gOppOTJKGjZ5rZbZhsIAb5ZI9qru9M2MTl7FEISRI/2WJeinjwnyL+77/5s9EjT87gZIc78QM41G6Smf4DGwYDVPpTDstbKZvXTMzeOWaPzj4Yduh0T685nSL8GoI=
+	t=1788500627; cv=none; b=r06IeoLUxTtX+IzVM+NALhOszWlblimx4q8BNvFmR+qSlkeHdKlirM6HOlM+AvEHjZ9TKX4F56tg291+Vt8/P87Msy6sqZaVmluJaeIAUV94ZE5eaHrNhaiOjPZjKrtJnItvIX/YkWS3Eo7hPr1oNQqoc9ctwA4oNxyFc6j/0WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500624; c=relaxed/simple;
-	bh=sPEr125l9fZOg8NHWEOUzqKYzYyXH2cybQRQ8tJ3yqM=;
+	s=arc-20240116; t=1788500627; c=relaxed/simple;
+	bh=AysQHSIA4Eq0EvRE1tY1uSiwhP8eobR1CCj/JAGJ1ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5VRQ/PdxXxMVcGKU9OVxjFeanPMHukGhDYSeDySEp1hQwVbW7QKKoe0nHf9im8MbkLL/lMQoz+2r9rRm43pq0vd+0EHVRnn7PVLf9Y/AVv0BYcZtlrMELfJJCczzXlJWbJSfHb+u+MvXuNxUDxAbytGXZTGOxTkvUR+VTZ9+Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4tJeyVI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HA1lhdSd9CHg/e+2CLv3WjNqCFDSwTdArcUAy3c30CMqDr1DPOpIZZbfJo5sGE/jajDjKyb9fOkQRNen2RlxYwmepys0GPS9vWQacylwyLCI2Uk1nQc4JNjrJxshmrQYvxq17piaoLZ0ig49Lh6NdRUHoAUtwvTjGetVQilaBSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qq1Tx7gF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4tJeyVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7011F00ADB;
-	Fri,  4 Sep 2026 05:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qq1Tx7gF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904CB1F00A3D;
+	Fri,  4 Sep 2026 05:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500623;
-	bh=DLQqfXmqxbN2AI5e2OyRWJcufMPHgUtt8YcEei8LdaA=;
+	s=korg; t=1788500626;
+	bh=LqFZ0ah7D1yWAydRXH2tM4F/6tfyHju6KNaXwqwSLno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4tJeyVIuwbXQZoNlYaInB1kF3D1zvNMj9UPcTdofdMs1kInPBXv0CYAmwC4UPjDY
-	 IfbqYVC50i4Pnp7P2kRpwUr9NpeOf4Cupb87y1EG1HOqTls+/6rEDxxihKbtf9gIPU
-	 5f6pOei29KPijSqUbS3VBCMeAj/wPK8/PQJW6aMU=
+	b=Qq1Tx7gFm7LiGCnQRkZg3DPJGWxmcZSlPZkTESr4w0sU3sZTv2IsMe11ku1jsuJ0I
+	 Z0Y3boql33s/JFcsv4Z+cslHGyUMpWvgf+3hgPp59mBvQml0NzAhBnFIafGjH9al8g
+	 ESi1R7uheicDe57KoI0M9IYe5tl0As+ki2qK8qB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>
-Subject: [PATCH 6.18 079/552] usb: gadget: snps_udc_plat: clean up PHY on probe deferral
-Date: Fri,  4 Sep 2026 06:53:56 +0200
-Message-ID: <20260904045749.653246212@linuxfoundation.org>
+	Hao-Qun Huang <alvinhuang0603@gmail.com>
+Subject: [PATCH 6.18 070/552] staging: greybus: hid: fix SET_REPORT return value
+Date: Fri,  4 Sep 2026 06:53:47 +0200
+Message-ID: <20260904045749.435637030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,46 +49,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit 886338ea7d40e4ba5123c58204d7f7e53d825825 upstream.
+commit 6d45195a9626d8aaaaed212c55638829a9c624a3 upstream.
 
-When the referenced extcon device has not registered yet,
-extcon_get_edev_by_phandle() returns -EPROBE_DEFER after the driver has
-initialized and powered on the PHY. The direct return bypasses the common
-cleanup path and leaves both operations unbalanced.
+__gb_hid_output_raw_report() stores the result of gb_hid_set_report()
+in ret and even adjusts it to account for the report ID byte, but then
+always returns 0.
 
-Store the lookup error first and route deferred probing through exit_phy,
-while retaining the existing behavior of suppressing the error message for
-deferral.
+This hides Greybus transport errors from HID_REQ_SET_REPORT callers,
+and makes hidraw report zero bytes written to user space on success,
+although hid_hw_raw_request() is expected to return the number of
+bytes transferred or a negative errno. The sibling GET_REPORT path,
+__gb_hid_get_raw_report(), already follows this convention.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Return ret like the other HID transport drivers do.
 
-Fixes: 1b9f35adb0ff ("usb: gadget: udc: Add Synopsys UDC Platform driver")
+Fixes: 96eab779e198 ("greybus: hid: add HID class driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260804140510.37639-1-mhun512@gmail.com
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Link: https://patch.msgid.link/20260704081613.434445-1-alvinhuang0603@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/snps_udc_plat.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/staging/greybus/hid.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/snps_udc_plat.c
-+++ b/drivers/usb/gadget/udc/snps_udc_plat.c
-@@ -159,10 +159,9 @@ static int udc_plat_probe(struct platfor
- 	if (of_property_present(dev->of_node, "extcon")) {
- 		udc->edev = extcon_get_edev_by_phandle(dev, 0);
- 		if (IS_ERR(udc->edev)) {
--			if (PTR_ERR(udc->edev) == -EPROBE_DEFER)
--				return -EPROBE_DEFER;
--			dev_err(dev, "Invalid or missing extcon\n");
- 			ret = PTR_ERR(udc->edev);
-+			if (ret != -EPROBE_DEFER)
-+				dev_err(dev, "Invalid or missing extcon\n");
- 			goto exit_phy;
- 		}
+--- a/drivers/staging/greybus/hid.c
++++ b/drivers/staging/greybus/hid.c
+@@ -256,7 +256,7 @@ static int __gb_hid_output_raw_report(st
+ 	if (report_id && ret >= 0)
+ 		ret++; /* add report_id to the number of transferred bytes */
  
+-	return 0;
++	return ret;
+ }
+ 
+ static int gb_hid_raw_request(struct hid_device *hid, unsigned char reportnum,
 
 
