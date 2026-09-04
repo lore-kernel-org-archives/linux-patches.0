@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0A5358378;
-	Fri,  4 Sep 2026 06:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587A92D738A;
+	Fri,  4 Sep 2026 06:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502106; cv=none; b=MtTt+r7sVYVM/0+iQ5ApMlLn57BRgVGQ84jDeUm8hebcuNKIlCPjYUdPpD7Icbjw1IrDKTJzDEH89ZopraCSZEJzwfGllSSYDMuBYqtsSdIn8cr5rqmJ5wnZ2h9g5D2m82MlVJDbuH2uOjGUT42fpRxQSb86AbfhpDaEsvVYy7k=
+	t=1788502110; cv=none; b=inVeMJDHed14atORB9OnK6ilhaNgtTY//a93IBraV/Zyhi3TL6beVeLdxBxYPyFG0SEGCQ3GE4wc+EEftGze7MjYr3q3xzRqi1KZyqiFlHaY5K57hYYld41JrcNPnMXaUV2M3WG3sVyYAICsWuu4dR+QT8vff9XobP5FX43nLes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502106; c=relaxed/simple;
-	bh=TrWzlCuBEW7+XG/I4kq+HPEEsb0MCT0+xgfY+fmSA78=;
+	s=arc-20240116; t=1788502110; c=relaxed/simple;
+	bh=6FYcwBhem/AfEMft1pLv/w5V6P7xB3Erndgivi5Npw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUzsbgLq0sMGGDC9KU97rQyuxYfbZMXJzUEvzqu9T7aaH5PsJ6HkI98lJxZAYspYfpRIfwtYtNXE3dQlwOL7bJXk+khCttwCme6g1LOj2iG/Yldv2nujN7LXJhRO63KoqXz2oKEZ8MB7AUsZJfpbjQevRj/FLGl/+aoLPfipWOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Viaui7Ra; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mRHcOoogW3m5vPZs79+R2pZYQhS3Dy1N5OfdcjA8Dw9vHmKQz90hgdBJTc3wuf1G3NxtOLtmGOJCoOi/tXI7Nz0Y0mwcwx1+O+Wxt/PrJ9A4Yx/W8y8V3SkiYEeoByNWDi0FAOmRNtbqSqoq7oGVeY+yltQrGiDGbtJdhoiht2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZGnqyOf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Viaui7Ra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D551F00A3D;
-	Fri,  4 Sep 2026 06:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZGnqyOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26CC1F00A3D;
+	Fri,  4 Sep 2026 06:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502105;
-	bh=N3uqSqjkyPzo3ZwF/wiuk257mjg0ysgLBFAAjOQdHtI=;
+	s=korg; t=1788502108;
+	bh=OdOIruTOPB8ktBTnBTEXAciLwyJBd0x3oKYxZLxL5RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Viaui7RaakwZ/Sz+4zXOf6WZQI/miWIwYmv8/GU8obvmS/nRivJ7j8sDa8xKoRXZM
-	 9s429Oj+Dx+kHAgSX0kSm1pcFMfOvERkLySlciR9Ee99875WI5AvWtsyTBdgiKgDef
-	 au0tNQ7XJjQaGot3suJh/3bXj0Xh+j2Qc67leO+8=
+	b=IZGnqyOfySOlMJAt+M91K71NmuOt1dgg16F1laf92BtRcXvh0OaSYrdvnWrDh1gDS
+	 xW7Q/rAMLBP+U6AGoXGtSY9trhQCl5TXNx2l+83rIIjuiTDms59u5HX+tk/Gh8295h
+	 i2B5I3aksO40/JOiYtkKszm6LVxJz5OQ1UEF6/58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>
-Subject: [PATCH 6.12 047/403] usb: dwc2: gadget: Exit partial power down state when changing USB pull-up
-Date: Fri,  4 Sep 2026 06:57:30 +0200
-Message-ID: <20260904045735.894016099@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 6.12 048/403] usb: gadget: at91_udc: drain polled-VBUS timer/work before udc is freed
+Date: Fri,  4 Sep 2026 06:57:31 +0200
+Message-ID: <20260904045735.918541230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -49,66 +49,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit bf1e90189a98ca4a824fd64b4f3c6043d13c98ea upstream.
+commit c27d13ce4bab80fbdf6523928071b6c24b37606c upstream.
 
-When a USB host suspends a connected device, the DWC2 USB device controller
-enters a partial power down state where controller registers are not
-accessible. If the USB gadget is then disconnected or deactivated
-(e.g. when a gadget function is unbound from the controller), the `pullup`
-callback in struct usb_gadget_ops is invoked; if the controller is kept in
-partial power down, the register write in dwc2_hsotg_core_disconnect() does
-not take effect; as a result, the USB host keeps seeing the device as
-connected, even though the device is disabled.
+In polled-VBUS mode (board.vbus_pin && board.vbus_polled), probe arms a
+self-restarting cycle: at91_vbus_timer() schedules vbus_timer_work, and
+at91_vbus_timer_work() calls at91_vbus_update() and re-arms the timer via
+mod_timer(). Both recover the same udc through container_of and dereference
+it on every iteration.
 
-Properly exit partial power down state in the pullup callback, so that the
-USB host detects a device disconnection as intended.
+Neither teardown path cancels this cycle. udc is devm-allocated, so it is
+freed after at91udc_remove() returns, and is likewise freed when probe
+fails and devres runs. A timer callback or work item that is pending or
+running at either point dereferences the freed udc.
 
-Fixes: 97861781daff ("usb: dwc2: Allow entering hibernation from USB_SUSPEND interrupt")
+Add at91_udc_shutdown_vbus_timer() and call it from at91udc_remove() and
+from the usb_add_gadget_udc() failure path in probe; the remaining probe
+error paths fail before the timer is armed. timer_shutdown_sync() waits
+for a running callback and clears timer->function, which makes the work
+handler's mod_timer() a permanent no-op; cancel_work_sync() then drains
+any pending or running work whose re-arm attempt now does nothing. The
+timer must be shut down first, since cancelling the work alone would let
+the timer re-queue it. The guard mirrors probe: in IRQ mode the timer and
+work_struct are never initialized.
+
+This does not require a fault; a normal driver unbind can interleave with
+an already queued work item.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 4037242c4f5f ("ARM: 6209/3: at91_udc: Add vbus polarity and polling mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Link: https://patch.msgid.link/20260728154420.2021519-1-flavra@baylibre.com
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719042839.3167094-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/gadget.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/at91_udc.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -4680,6 +4680,7 @@ static int dwc2_hsotg_pullup(struct usb_
- {
- 	struct dwc2_hsotg *hsotg = to_hsotg(gadget);
- 	unsigned long flags;
-+	int ret = 0;
- 
- 	dev_dbg(hsotg->dev, "%s: is_on: %d op_state: %d\n", __func__, is_on,
- 		hsotg->op_state);
-@@ -4691,6 +4692,13 @@ static int dwc2_hsotg_pullup(struct usb_
- 	}
- 
- 	spin_lock_irqsave(&hsotg->lock, flags);
-+	if (hsotg->in_ppd) {
-+		ret = dwc2_exit_partial_power_down(hsotg, 0, true);
-+		if (ret) {
-+			dev_err(hsotg->dev, "exit partial_power_down failed\n");
-+			goto exit;
-+		}
-+	}
- 	if (is_on) {
- 		hsotg->enabled = 1;
- 		dwc2_hsotg_core_init_disconnected(hsotg, false);
-@@ -4704,9 +4712,10 @@ static int dwc2_hsotg_pullup(struct usb_
- 	}
- 
- 	hsotg->gadget.speed = USB_SPEED_UNKNOWN;
-+exit:
- 	spin_unlock_irqrestore(&hsotg->lock, flags);
- 
--	return 0;
-+	return ret;
+--- a/drivers/usb/gadget/udc/at91_udc.c
++++ b/drivers/usb/gadget/udc/at91_udc.c
+@@ -1794,6 +1794,19 @@ static void at91udc_of_init(struct at91_
+ 		udc->caps = match->data;
  }
  
- static int dwc2_hsotg_vbus_session(struct usb_gadget *gadget, int is_active)
++/*
++ * The work handler re-arms this timer, so shut the timer down before
++ * draining the work; otherwise it restarts the polling cycle.
++ */
++static void at91_udc_shutdown_vbus_timer(struct at91_udc *udc)
++{
++	if (!(udc->board.vbus_pin && udc->board.vbus_polled))
++		return;
++
++	timer_shutdown_sync(&udc->vbus_timer);
++	cancel_work_sync(&udc->vbus_timer_work);
++}
++
+ static int at91udc_probe(struct platform_device *pdev)
+ {
+ 	struct device	*dev = &pdev->dev;
+@@ -1907,7 +1920,7 @@ static int at91udc_probe(struct platform
+ 	}
+ 	retval = usb_add_gadget_udc(dev, &udc->gadget);
+ 	if (retval)
+-		goto err_unprepare_iclk;
++		goto err_shutdown_vbus;
+ 	dev_set_drvdata(dev, udc);
+ 	device_init_wakeup(dev, 1);
+ 	create_debug_file(udc);
+@@ -1915,6 +1928,8 @@ static int at91udc_probe(struct platform
+ 	INFO("%s version %s\n", driver_name, DRIVER_VERSION);
+ 	return 0;
+ 
++err_shutdown_vbus:
++	at91_udc_shutdown_vbus_timer(udc);
+ err_unprepare_iclk:
+ 	clk_unprepare(udc->iclk);
+ err_unprepare_fclk:
+@@ -1933,6 +1948,9 @@ static void at91udc_remove(struct platfo
+ 	DBG("remove\n");
+ 
+ 	usb_del_gadget_udc(&udc->gadget);
++
++	at91_udc_shutdown_vbus_timer(udc);
++
+ 	if (udc->driver) {
+ 		dev_err(&pdev->dev,
+ 			"Driver still in use but removing anyhow\n");
 
 
