@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECA038E8DD;
-	Fri,  4 Sep 2026 05:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571892DCF57;
+	Fri,  4 Sep 2026 05:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499704; cv=none; b=SSF+d7asdb/025flhBo4oi9JYvF1lGzZaJzt4o2I8pBJdFwqQWYHuK+UzMY+nmI09OfWtY/3N5ryfbW7VfnaHsxyX1VroPcgaN5QIRH21FReOsOfr1U+xsX0qcHGJrhm2Z4/E+jze2GL7Nm+zbtHIWXF9D2xIt8b1d5SdysCxwU=
+	t=1788499707; cv=none; b=I/tONxyxj9Q6R183jHh8pc3kh3KHcUy+B0KqPx9+GeycweaZ9U6nVlcfCTJ3HS1dkSpUrVmHPIWgc8Aa0xtphboNmvLe5lJqjyYnltzVrHnKghtZb1wsX8KncYSgfrEIaGQ0WTmF2+QqNoTjTcwpVAlA1IMZKAUBOmI2igeZKqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499704; c=relaxed/simple;
-	bh=Byn+Mpyl2gvVS/b8IvvageUSXOkuLz2gXH8hif9HGhY=;
+	s=arc-20240116; t=1788499707; c=relaxed/simple;
+	bh=JdLSVdYHJIShvf+LZ97fDRp7mcmKRlQnGfSjhphZS3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGwAam9f2rvPqzSxIrm4B8fgUO+LRnILLW39/96y3PaycZo+BcQlLNMqJPVLWghD6otUA3vt9kZk1YvB9pgjqOnHeK9i4umNS/mr0IBn8JpLGLW77CWoeL6GfpvtNHVSKbSQ8/KAxgjEfNyDxUSW/0VHl/TK5G/V2FRdQMUuxzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOmG8FdW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OvRqRDBP3qqB2PiJc2d731B/MXSXNGAD4bsuT9t7KS3eR13kiw63VmvV0ENoSRKMhL8flK0TaH0kqr9TOYr6L5tOe/AYasdYa7qN/sY6IKdJTfMNZ9VxrVTr1UkQ5UHPXT4dLgm6v/N9cvvAr3Khzik6GfsYWBnNGUBzM8VCb88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6Aeumdy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOmG8FdW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96021F00A3D;
-	Fri,  4 Sep 2026 05:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6Aeumdy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23F81F00A3D;
+	Fri,  4 Sep 2026 05:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499703;
-	bh=3iBkPaVa+9li+ct4/Ds/YP/Ta0bJ5fWtFoz9JL+U3l8=;
+	s=korg; t=1788499706;
+	bh=0PCQwVZZMLFY34AxpUX5l8ISA+PtezIlmw/2sejrR4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bOmG8FdWeN2NQ7EdHJWpNwlYpVtpe7aWCPSrI+Sr8zOkndd7hdgSQ2YsNBDPuCU8Z
-	 SDjbI7ydZixThuMjuaRA0ysDccqUO9EoSTNPQLpS903BfUCi3qE0xLqNGPcEjovOXe
-	 Ng5tdpbdfFIX0PWIKlCamCUuRJpcwDII7qLl3Kws=
+	b=Y6AeumdyQodecPhor4FdLg2/pzWCr1yF1OtwltowoiQ2aFcHQImJqXwd7w7m+9fRF
+	 XuU3bsdPQ9WEdvtZrP4p0g1gtx5Ek96K8SVmrSJG/zJA7h+LfadsB1msled7fmF4NI
+	 rdEE4ERB8+BItivL9+wDn4gz1jgkCPXIKToSOWRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianing Li <m13940358460@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 7.2 512/713] power: supply: max17040: propagate register read errors
-Date: Fri,  4 Sep 2026 06:58:00 +0200
-Message-ID: <20260904045815.296586277@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Xin Long <lucien.xin@gmail.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.2 495/713] sctp: fix NULL deref on untransmitted RECONF completion
+Date: Fri,  4 Sep 2026 06:57:43 +0200
+Message-ID: <20260904045814.921566403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,88 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianing Li <m13940358460@163.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 659cc3d8d5ef246263873fce72c8cadeeed073cc upstream.
+commit 2db9bfa3e27bdea15e05ea70b56bad3d21e570ec upstream.
 
-max17040_get_vcell() and max17040_get_soc() ignore errors returned by
-regmap_read().  When an I2C transfer fails, the uninitialized register
-value is converted and reported to userspace as a valid voltage or state
-of charge.  The polling worker can also replace the cached state of charge
-with the bogus value and emit a spurious change event.
+sctp_process_strreset_outreq(), sctp_process_strreset_addstrm_out() and
+sctp_process_strreset_resp() complete a pending stream reconfiguration
+request by stopping the reconf timer on the transport it was sent on:
 
-Propagate read errors through the power supply get_property callback and
-keep the last valid cached state of charge when polling fails.
+	t = asoc->strreset_chunk->transport;
+	if (timer_delete(&t->reconf_timer))
+		sctp_transport_put(t);
 
-Fixes: c6f4a42de60b ("Add MAX17040 Fuel Gauge driver")
+chunk->transport is assigned by __sctp_packet_append_chunk() when the
+chunk is appended to an outbound packet, and sctp_outq_flush_ctrl() arms
+the reconf timer at that same point. A request already published in
+asoc->strreset_chunk but not yet transmitted has neither, so completing
+it dereferences NULL.
+
+Two ways to get there. sctp_send_asconf_del_ip() sets
+asoc->src_out_of_asoc_ok without sending anything when the address being
+removed is the association's last one, and sctp_outq_flush_ctrl() then
+leaves every non-ASCONF control chunk queued; as only
+sctp_process_asconf_ack() clears that flag, it persists. An unprivileged
+process that removes such an address and then asks for a stream reset
+panics the kernel from softirq. A peer needs neither ASCONF nor local
+help: sctp_cmd_interpreter() uncorks the outqueue only once the whole
+packet has been processed, so a reply built while walking a RECONF chunk
+stays untransmitted for the rest of that walk, and one RECONF chunk
+carrying [Incoming SSN Reset Request, Outgoing SSN Reset Request,
+Response] -- or two RECONF chunks in one packet -- reaches the same
+dereference.
+
+  KASAN: null-ptr-deref in range [0x00000000000001e8-0x00000000000001ef]
+  RIP: 0010:timer_delete+0x67/0x110
+  Call Trace:
+   <IRQ>
+   sctp_process_strreset_addstrm_out (net/sctp/stream.c:832)
+   sctp_sf_do_reconf (net/sctp/sm_statefuns.c:4212)
+   sctp_do_sm (net/sctp/sm_sideeffect.c:1172)
+   sctp_assoc_bh_rcv (net/sctp/associola.c:1044)
+   sctp_rcv (net/sctp/input.c:243)
+   ip_local_deliver (net/ipv4/ip_input.c:262)
+   process_backlog (net/core/dev.c:6680)
+   </IRQ>
+
+A response can only acknowledge a request that was actually sent, so do
+not match asoc->strreset_chunk while chunk->transport is NULL. Guarding
+the lookup covers all three completion sites.
+
+Fixes: 810544764536 ("sctp: implement receiver-side procedures for the Outgoing SSN Reset Request Parameter")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jianing Li <m13940358460@163.com>
-Link: https://patch.msgid.link/20260727064825.948-1-m13940358460@163.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260823172857.896146-2-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/max17040_battery.c |   26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ net/sctp/stream.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/max17040_battery.c
-+++ b/drivers/power/supply/max17040_battery.c
-@@ -192,8 +192,11 @@ static int max17040_raw_vcell_to_uvolts(
- static int max17040_get_vcell(struct max17040_chip *chip)
- {
- 	u32 vcell;
-+	int ret;
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -488,7 +488,7 @@ static struct sctp_paramhdr *sctp_chunk_
+ 	struct sctp_reconf_chunk *hdr;
+ 	union sctp_params param;
  
--	regmap_read(chip->regmap, MAX17040_VCELL, &vcell);
-+	ret = regmap_read(chip->regmap, MAX17040_VCELL, &vcell);
-+	if (ret)
-+		return ret;
+-	if (!chunk)
++	if (!chunk || !chunk->transport)
+ 		return NULL;
  
- 	return max17040_raw_vcell_to_uvolts(chip, vcell);
- }
-@@ -201,8 +204,11 @@ static int max17040_get_vcell(struct max
- static int max17040_get_soc(struct max17040_chip *chip)
- {
- 	u32 soc;
-+	int ret;
- 
--	regmap_read(chip->regmap, MAX17040_SOC, &soc);
-+	ret = regmap_read(chip->regmap, MAX17040_SOC, &soc);
-+	if (ret)
-+		return ret;
- 
- 	return soc >> (chip->quirk_double_soc ? 9 : 8);
- }
-@@ -261,7 +267,11 @@ static int max17040_get_of_data(struct m
- 
- static void max17040_check_changes(struct max17040_chip *chip)
- {
--	chip->soc = max17040_get_soc(chip);
-+	int soc;
-+
-+	soc = max17040_get_soc(chip);
-+	if (soc >= 0)
-+		chip->soc = soc;
- }
- 
- static void max17040_queue_work(struct max17040_chip *chip)
-@@ -396,10 +406,16 @@ static int max17040_get_property(struct
- 		val->intval = max17040_get_online(chip);
- 		break;
- 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
--		val->intval = max17040_get_vcell(chip);
-+		ret = max17040_get_vcell(chip);
-+		if (ret < 0)
-+			return ret;
-+		val->intval = ret;
- 		break;
- 	case POWER_SUPPLY_PROP_CAPACITY:
--		val->intval = max17040_get_soc(chip);
-+		ret = max17040_get_soc(chip);
-+		if (ret < 0)
-+			return ret;
-+		val->intval = ret;
- 		break;
- 	case POWER_SUPPLY_PROP_CAPACITY_ALERT_MIN:
- 		val->intval = chip->low_soc_alert;
+ 	hdr = (struct sctp_reconf_chunk *)chunk->chunk_hdr;
 
 
