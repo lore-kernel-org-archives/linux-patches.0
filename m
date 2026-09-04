@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7948B3242BD;
-	Fri,  4 Sep 2026 05:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE45E37C106;
+	Fri,  4 Sep 2026 05:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501196; cv=none; b=uMn4MgjDZEATYDU3w0RnD3JDBOrai+iJp8fISTHBPJVwCHVPb04k95zuTJv7AHn8Uz5KYx5o+8yri7766ARJJ7UhEpNPTJa73JS4SqvbKklnRjwjSpx5YF0YdsWtDL35Xjfxnf8M2KwPOr1C4slpjhtuzr20cbM3f6VVfjn9fNw=
+	t=1788501199; cv=none; b=BZS4UUi7cvOkX4P3oR8asvJO/eW+aKvs+T0Clt2TOQMxiXbfXqtEyaKBqn2jL9VBCC1ra057ul3V4hPecIdhHw7Xk2Ebt8d+C6eAmk8fOzaFnSV5oblK4Jcx7v4VgVOiYpoLS4NRBMzler7RXnv0yEl6ySVXqD73doaHCRpdS0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501196; c=relaxed/simple;
-	bh=NOpNBajUpWzaZfgz2AhKAVLhkzYZSEoBVez/vSesmR8=;
+	s=arc-20240116; t=1788501199; c=relaxed/simple;
+	bh=uBfHGEnp2gZv4Dhez1bH8gMr1XapbGkQiuwyZs9IH5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFH4A/8oqWOzO8k5cAW2o20RqesJDAM5IASeI8+7Ly3b/NS/TPn/3sd45Quy6DGMfdjaXO2nBXp5ws2ZjVjcnAtuUjZKFvzuQvptM6Aeo6NfbXMAKGd/PRZEasgD7rKHOWzXZoAUGnrsu38nrU81qnYA2to970K+8EGZ14ya4iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVwBu+iI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=le6pdq1Xu1BiRhEHOKoSWmFq7BW8hDuYuvNVlIF9fpNSzKsYOEzGso1Fo7Tum7v+EVTgZ5j20wATjH/WOImH+epvqkte1EantwPvAst/mkOKZFwnQLFoG1tmN9wzXn1zlv6z1uxqbVrZz9T/8MMSBoQw6gxb1hjRO2GOQUCMnZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpfhGWVM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVwBu+iI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34021F00A3D;
-	Fri,  4 Sep 2026 05:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpfhGWVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77641F00A3D;
+	Fri,  4 Sep 2026 05:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501195;
-	bh=rXGcZ5B/5pnup2O6Pg2jUBzs5PvWtcK3bCEUDYGPsFI=;
+	s=korg; t=1788501198;
+	bh=xn4xPWlyjOL1HcjbxIvR8gDPWMtWfRWA3wo9C9wCKYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NVwBu+iIOwcahVUoCEqlwgeP3BbildQ8vO2wDj580CbO5NeSx3v03t2pKVaNH5cdB
-	 8hAKxgsf44E6gJSeJdhEMl+fUVO8ucDg1a8QnfAvZSDw14Si0/TJPvYxysQgtZQzVp
-	 KGV4kNn0wmA+JAwI99T+rxMZFGJ0eeVgGWG2Hckc=
+	b=OpfhGWVMtGnqBpQteWeap2IEG1LXfqnUt6k34sDfT/18p0J4WfXm6od3Zc++i59/7
+	 R48brmzVRJ11ltaBL2F8z8gioSoAg2f1++ZIluWvTJK1+JpEV4iX9mcS10tJb0NnvT
+	 tm7OjU1ZC4ru5itbX/NOXd0CbwG6nK7d2fD/swsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
+	Jacob Moroni <jmoroni@google.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 324/552] RDMA/ucma: Lock the handler in ucma_write_cm_event()
-Date: Fri,  4 Sep 2026 06:58:01 +0200
-Message-ID: <20260904045757.614221684@linuxfoundation.org>
+Subject: [PATCH 6.18 325/552] RDMA/uverbs: Add UVERBS_ATTR_UHW to UVERBS_METHOD_REG_MR
+Date: Fri,  4 Sep 2026 06:58:02 +0200
+Message-ID: <20260904045757.637330390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,77 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit f4cc21c6a8e9d392871477f9fd98d68e5ad80272 upstream.
+commit 011199f46f44a9fd93a9e5ab5d7fd1328d80e9bf upstream.
 
-ctx->file may only be changed under the handler lock and the xa_lock, which
-is what stops uevents being queued for a ctx while ucma_migrate_id() moves
-it to another file.  The CM core takes that lock before invoking
-ucma_event_handler(), but the write() paths that queue uevents themselves
-do not.
+The original commit missed that three drivers (mthca, irdma, siw) have UHW
+data associated with reg_mr that cannot be passed through the ioctl. They
+also assume that the udata cannot be NULL, so failing to pass a valid
+udata can trigger a NULL udata crash in those drivers.
 
-ucma_write_cm_event() re-reads ctx->file for each of its four dereferences,
-so ucma_migrate_id() can swap it mid-sequence:
+This never happens in real systems since in rdma-core ibv_cmd_reg_mr_ex()
+does not accept a udata and those three drivers don't use it, however a
+malicious userspace could trigger it.
 
-	mutex_lock(&ctx->file->mut);			/* file A */
-	list_add_tail(&uevent->list, &ctx->file->event_list);	/* file B */
-	mutex_unlock(&ctx->file->mut);			/* file B */
-	wake_up_interruptible(&ctx->file->poll_wait);	/* file B */
-
-The window is the mutex_lock() itself: the writer sleeps in it while the
-migration reassigns ctx->file.  The list_add_tail() then runs on file B's
-event_list holding only file A's mutex:
-
-  list_add corruption. prev->next should be next (ffff888101320f30),
-    but was ffff88814a08c418. (prev=ffff88814a075c18).
-  kernel BUG at lib/list_debug.c:32!
-  Call Trace:
-   ucma_write_cm_event+0x36e/0x5e0
-
-and file A's mut is left held forever, wedging its next writer in D state.
-The uevent is also stranded on a list ucma_cleanup_ctx_events() will not
-walk, so it outlives its context.  /dev/infiniband/rdma_cm is 0666 and no
-RDMA device is involved, so an unprivileged user reaches all of this.
-
-Take the handler lock, as ucma_cleanup_mc_events() does; ctx->cm_id is
-pinned by the ucma_get_ctx() reference.
-
-Fixes: a3c9d0fcd371 ("RDMA/ucma: Support write an event into a CM")
-Link: https://patch.msgid.link/r/60544A67-EFD6-4D5D-974C-D983445F1070@doyensec.com
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Fixes: 5b2e45049dc0 ("IB/core: Add UVERBS_METHOD_REG_MR on the MR object")
+Reported-by: Jacob Moroni <jmoroni@google.com>
+Closes: https://lore.kernel.org/all/CAHYDg1TOGxRGZrS69d4Y--Shj_DZv0nJuM73iHUBwBM70g_t3Q@mail.gmail.com
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/ucma.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/infiniband/core/uverbs_std_types_mr.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/core/ucma.c
-+++ b/drivers/infiniband/core/ucma.c
-@@ -1779,6 +1779,13 @@ static ssize_t ucma_write_cm_event(struc
- 		goto out;
- 	}
+diff --git a/drivers/infiniband/core/uverbs_std_types_mr.c b/drivers/infiniband/core/uverbs_std_types_mr.c
+index 570b9656801d..0c72f801e0d3 100644
+--- a/drivers/infiniband/core/uverbs_std_types_mr.c
++++ b/drivers/infiniband/core/uverbs_std_types_mr.c
+@@ -364,7 +364,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_REG_MR)(
+ 							dmah, attrs);
+ 	else
+ 		mr = pd->device->ops.reg_user_mr(pd, addr, length, iova,
+-						 access_flags, dmah, NULL);
++						 access_flags, dmah,
++						 &attrs->driver_udata);
  
-+	rdma_lock_handler(ctx->cm_id);
-+	if (!ctx->uid) {
-+		kfree(uevent);
-+		ret = -EINVAL;
-+		goto err_unlock;
-+	}
-+
- 	uevent->ctx = ctx;
- 	uevent->resp.uid = ctx->uid;
- 	uevent->resp.id = ctx->id;
-@@ -1792,6 +1799,8 @@ static ssize_t ucma_write_cm_event(struc
- 	mutex_unlock(&ctx->file->mut);
- 	wake_up_interruptible(&ctx->file->poll_wait);
+ 	if (IS_ERR(mr))
+ 		return PTR_ERR(mr);
+@@ -527,7 +528,8 @@ DECLARE_UVERBS_NAMED_METHOD(
+ 			    UA_MANDATORY),
+ 	UVERBS_ATTR_PTR_OUT(UVERBS_ATTR_REG_MR_RESP_RKEY,
+ 			    UVERBS_ATTR_TYPE(u32),
+-			    UA_MANDATORY));
++			    UA_MANDATORY),
++	UVERBS_ATTR_UHW());
  
-+err_unlock:
-+	rdma_unlock_handler(ctx->cm_id);
- out:
- 	ucma_put_ctx(ctx);
- 	return ret;
+ DECLARE_UVERBS_NAMED_METHOD_DESTROY(
+ 	UVERBS_METHOD_MR_DESTROY,
+-- 
+2.55.0
+
 
 
