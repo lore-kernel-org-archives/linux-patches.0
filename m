@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB15412BFA;
-	Fri,  4 Sep 2026 05:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC85C3B19BC;
+	Fri,  4 Sep 2026 05:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499832; cv=none; b=hQZe80L1Wv30QLLGj0hPJT1VHN1rjtNGzvd9PmC8Oi9o2W7mJwkfQeyKxmBWnz2V5s9dMlFnhizV0CP4ztERB0ZAysfiL9U6QFE1pCwPPXedVprYt20oSA3jyAhNP0ipATMX8AHghrJMELobhb67iQ4UM2PsRplxiv5+iPq26Ek=
+	t=1788499834; cv=none; b=awM9nBvje9ovOKlzUOdT02ymr7zwptJWoPhJeg3JwHc3xq0ObnzY4idTBoeBU5T+j/vlynIz7PNkd0gE+SnLnZQMYsQUByefARq3YQrT1qTl7eTy2bZ0ta56NBlLqPxKLz/k9H99aBHnz0JwBljiFEwyGa//r6aZbpgwdTi6lYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499832; c=relaxed/simple;
-	bh=IkEz3rCT9iYZEMb/3dkzjt9MNKldMRwOsdOT/bBZ2Vg=;
+	s=arc-20240116; t=1788499834; c=relaxed/simple;
+	bh=L1m5eq3VRdMbQ0EwxFgmdDWGTb4f5ydMl87Ulnw3ruk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LBEPZkG6qBUkvnyJiesRlc/T0orKbX1A7H/Zam33S75j/wQlQu94ft3JAYOAjOzejlt1jueNCLf1w9Fc/y0Ed+eNMYQt28MZEzbgX24pyzqjANljUKXSf8h0DdEujZb801DBLc5twd7OCrLPibuW3y2dhQSNSEsqVIZKqLd5mfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ygtz8Ii5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RJW5vscgul38Dd9w6yy335gG9E+S+Uh2KFeY5ZnFEJfwynhfi6/yIUObF8Qq9cvi/CatW8unU0GKyGj1f2NlLmIzHLlUM6tsq71ppDUHe3xAnquZR3ck0w052oNVP7qdtAOIVCSCKRvzzV1Kb4GZcufVk6AWUNiVQarh/LrOTkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDLZ1ycm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ygtz8Ii5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CE91F00A3D;
-	Fri,  4 Sep 2026 05:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDLZ1ycm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FCA1F00A3D;
+	Fri,  4 Sep 2026 05:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499830;
-	bh=5nNltpzz9LWUWP7rZEr1KDUzDl9hqAzDkfpV8sYp/7M=;
+	s=korg; t=1788499833;
+	bh=q8dY4SQknE5opIPfPg4eg06b5jY1hAEXnKwWI2U/hok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ygtz8Ii5xAXahjImyhZt3mPpsg6bEY2CT63oWMJEh4/Aw4tc/dmw3jP//JQwYi9by
-	 DkyEbny0zphyRaBs/YdXLr8Z2MRv1tVrxyU0ORfjPOO+wNSK4qHo5Vt4zlGObnA8l0
-	 PsT/lozY30HUz+75seWlxGBVsoei/abMWnDZhVQI=
+	b=mDLZ1ycmYK830rNSBbp2EjF0vJ6+JpbULomaimRFCCFzsSgse/Byf7zqZYTZQFtS1
+	 UXPfVhU+LglNNvZCV1CeN816big9OihDf0qoqmHeDjjE2KhvIKd0ae8eMWdRjPF9gt
+	 9z67YxIUCvM7ZX8YN/h/k4hijX9keo4hbmyM8kfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.2 557/713] platform/x86: ISST: Use PP level enable mask
-Date: Fri,  4 Sep 2026 06:58:45 +0200
-Message-ID: <20260904045816.305090183@linuxfoundation.org>
+Subject: [PATCH 7.2 558/713] platform/x86: ISST: Validate logical CPU id and clos id
+Date: Fri,  4 Sep 2026 06:58:46 +0200
+Message-ID: <20260904045816.326987861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,78 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit 9b9026943b19d06ebf520b1f4786621947cf43c8 upstream.
+commit 124e2dbabe460c2a6e7440f4ad8af560131295c9 upstream.
 
-Add check for enabled levels only when reading MMIO. Some levels can be
-disabled by BIOS. If the level is not enabled, return an error.
+Validate max CLOS ID and logical CPU ID for core power feature.
+Reject any clos level or logical CPU number greater than the
+supported maximum. These are used to calculate MMIO offset.
 
-Reset the enable and allowed level masks if there is a failure to add a
-perf level.
-
-Fixes: ea009e4769fa3 ("platform/x86: ISST: Add SST-PP support via TPMI")
+Fixes: 12a7d2cb811d ("platform/x86: ISST: Add SST-CP support via TPMI")
 Cc: stable@vger.kernel.org
 Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260811221514.3905817-6-srinivas.pandruvada@linux.intel.com
+Link: https://patch.msgid.link/20260811221514.3905817-2-srinivas.pandruvada@linux.intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |   16 ++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |   13 ++++++++++++
+ 1 file changed, 13 insertions(+)
 
 --- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
 +++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -336,8 +336,11 @@ static int sst_add_perf_profiles(struct
- 	int i;
+@@ -652,6 +652,8 @@ static long isst_if_core_power_state(voi
+ #define SST_CLOS_CONFIG_MAX_START	16
+ #define SST_CLOS_CONFIG_MAX_WIDTH	8
  
- 	pd_info->perf_levels = devm_kcalloc(dev, levels, sizeof(struct perf_level), GFP_KERNEL);
--	if (!pd_info->perf_levels)
-+	if (!pd_info->perf_levels) {
-+		pd_info->pp_header.allowed_level_mask = 0;
-+		pd_info->pp_header.level_en_mask = 0;
- 		return 0;
-+	}
++#define SST_MAX_CLOS			3
++
+ static long isst_if_clos_param(void __user *argp)
+ {
+ 	struct tpmi_per_power_domain_info *power_domain_info;
+@@ -660,6 +662,9 @@ static long isst_if_clos_param(void __us
+ 	if (copy_from_user(&clos_param, argp, sizeof(clos_param)))
+ 		return -EFAULT;
  
- 	pd_info->ratio_unit = pd_info->pp_header.ratio_unit;
- 	pd_info->avx_levels = SST_MAX_AVX_LEVELS;
-@@ -880,7 +883,7 @@ static int isst_if_get_perf_level(void _
- 		      SST_PP_FEATURE_STATE_START, SST_PP_FEATURE_STATE_WIDTH, SST_MUL_FACTOR_NONE)
- 	perf_level.enabled = !!(power_domain_info->sst_header.cap_mask & BIT(1));
- 
--	level_mask = perf_level.level_mask;
-+	level_mask = perf_level.level_mask & power_domain_info->pp_header.level_en_mask;
- 	perf_level.sst_bf_support = 0;
- 	for_each_set_bit(level, &level_mask, BITS_PER_BYTE) {
- 		/*
-@@ -1318,6 +1321,9 @@ static int isst_if_get_base_freq_info(vo
- 	if (base_freq.level > power_domain_info->max_level)
- 		return -EINVAL;
- 
-+	if (!(power_domain_info->pp_header.level_en_mask & BIT(base_freq.level)))
++	if (clos_param.clos > SST_MAX_CLOS)
 +		return -EINVAL;
 +
- 	_read_bf_level_info("p1_high", base_freq.high_base_freq_mhz, base_freq.level,
- 			    SST_BF_INFO_0_OFFSET, SST_BF_P1_HIGH_START, SST_BF_P1_HIGH_WIDTH,
- 			    SST_MUL_FACTOR_FREQ)
-@@ -1357,6 +1363,9 @@ static int isst_if_get_base_freq_mask(vo
- 	if (cpumask.level > power_domain_info->max_level)
+ 	power_domain_info = get_instance(clos_param.socket_id, clos_param.power_domain_id);
+ 	if (!power_domain_info)
  		return -EINVAL;
+@@ -706,6 +711,8 @@ static long isst_if_clos_param(void __us
+ #define SST_CLOS_ASSOC_CPUS_PER_REG	16
+ #define SST_CLOS_ASSOC_BITS_PER_CPU	4
  
-+	if (!(power_domain_info->pp_header.level_en_mask & BIT(cpumask.level)))
-+		return -EINVAL;
++#define SST_CLOS_ASSOC_MAX_LOGICAL_CPU	63
 +
- 	_read_bf_level_info("BF-cpumask", mask, cpumask.level, SST_BF_INFO_1_OFFSET,
- 			    P1_HI_CORE_MASK_START, P1_HI_CORE_MASK_WIDTH,
- 			    SST_MUL_FACTOR_NONE)
-@@ -1454,6 +1463,9 @@ static int isst_if_get_turbo_freq_info(v
- 	if (turbo_freq.level > power_domain_info->max_level)
- 		return -EINVAL;
+ static long isst_if_clos_assoc(void __user *argp)
+ {
+ 	struct isst_if_clos_assoc_cmds assoc_cmds;
+@@ -732,9 +739,15 @@ static long isst_if_clos_assoc(void __us
+ 		if (copy_from_user(&clos_assoc, ptr, sizeof(clos_assoc)))
+ 			return -EFAULT;
  
-+	if (!(power_domain_info->pp_header.level_en_mask & BIT(turbo_freq.level)))
-+		return -EINVAL;
++		if (clos_assoc.clos > SST_MAX_CLOS)
++			return -EINVAL;
 +
- 	turbo_freq.max_buckets = TRL_MAX_BUCKETS;
- 	turbo_freq.max_trl_levels = TRL_MAX_LEVELS;
- 	turbo_freq.max_clip_freqs = SST_TF_MAX_LP_CLIP_RATIOS;
+ 		if (clos_assoc.socket_id >= topology_max_packages())
+ 			return -EINVAL;
+ 
++		if (clos_assoc.logical_cpu > SST_CLOS_ASSOC_MAX_LOGICAL_CPU)
++			return -EINVAL;
++
+ 		cpu = clos_assoc.logical_cpu;
+ 		clos = clos_assoc.clos;
+ 
 
 
