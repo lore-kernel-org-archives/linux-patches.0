@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDAD4195D2;
-	Fri,  4 Sep 2026 06:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C67D390610;
+	Fri,  4 Sep 2026 06:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501861; cv=none; b=KWqjIoKylFJGyPpbe5DSnN64XcAJoH3vfV/+TGZOpmSasNuArPSGy2wJAFwtvSbr1dl4+wtYXYE/b7u/kDLsihZAzT9cMsaHor8TY/QDe2NvbFK1HyE7rEze6QW9bm1fV+AQwt+RzTHtWhOxYa33sV57g6ll6C4LsL5n/KD1ZBs=
+	t=1788501864; cv=none; b=rBNYhmB2GDEr2abE1+m4RogeTYhezb6lC8QjTmARnRjoNi0Dd8NqcHy9oRHUI9xsk4BSyDbbziusYhNeK6ZpmVak6fwPLasZimAQapEAjCZ+Mgx/VCTJzbSYwv3Eyz7iwjD5RuUzoKtDZyng+OS/Wcajh6l6A6moO2CXKxWpwfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501861; c=relaxed/simple;
-	bh=SfYQRU6tcc3Vtz2u4CqJ9lhAnJIbR5WKcbjDMRpkDQg=;
+	s=arc-20240116; t=1788501864; c=relaxed/simple;
+	bh=8s6Bi5JvziqjPUJ1QD5Wkp2uQ9za+qHBCJRAS0zDBp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0/2qjZ2kp2LSq+jkDzdPU0D1k9hfF+S8biKKtn5zcqMHwjWSalNOECdEhaEADYgGHVnoy1RS0vGfT85lRaeaNQYn2/Ma8CooBLaKQATszZVBhBWH0P1Pp78PhIwHZn/hHVQEGKXHyTCw8jrvDwkFlOfJUPTm3C2k1jCjEInhhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/xkrW47; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KpG2EkHO2gcgZqkc9wdpC6Er8Y/dhwOJKxQ4x0nxjypTPahpPs/ZeSILy2KqV6L3XOGT5parWIWEBbqd8diRwiSDK99SIltVe78ki1BYXfFgpcv0ibKwLGJ4jJA+ceYD++2ynpdft9uMqu2WHlHMTD6QHqhveFK8nLeDkng5dYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwDP6Fpy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/xkrW47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BA11F00A3D;
-	Fri,  4 Sep 2026 06:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwDP6Fpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23211F00A3D;
+	Fri,  4 Sep 2026 06:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501860;
-	bh=hwOKn/KeYNpaXtzYZyaeUrl7VWZQkff1F0Ax6KBo+94=;
+	s=korg; t=1788501863;
+	bh=KpyTa5f9fk6NdgaUTx/Pc0+hce/ZyBbVBoJEkHBm1GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S/xkrW47hVAruFnDU73dn9eq6KPc9JLpEAtwc+ZisXD+oq/X+4J+SvIuehFsW9Q60
-	 LkFXJGjPXtA61ZxQQR03a07gx3aBck1ttN23UYPBYBuYTS+q0XA73oUuNV03uQHcQd
-	 l8eVtxfp4E3yxzfvSix5kVM/yiB15Gy3w4LR14tI=
+	b=lwDP6FpyZmQnwfXxbwhAAeKUSLxSyeP18WFX4dy3I9usv4U/8OkKRFUcQX7HzHbb2
+	 MdOHnSMCMZsEDMrpm2BkN8e+Ul9wJLTidi52mTjNQw9Fegi9TIJYDA3WT+MNq1zcLn
+	 ytKtaRDtIEfsTlyKL7UVyRR6eq3kESzYQLxu765E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 6.18 539/552] w1: ds28e17: reject an oversize length on an I2C block read
-Date: Fri,  4 Sep 2026 07:01:36 +0200
-Message-ID: <20260904045802.832003060@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 540/552] xarray: honor XA_FLAGS_ACCOUNT in xas_split_alloc()
+Date: Fri,  4 Sep 2026 07:01:37 +0200
+Message-ID: <20260904045802.853564513@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,62 +61,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 169ae5e65e5aaf213b6a578f6478a9fd2e523606 upstream.
+commit 789763523fb43cdc328de5cb5dcd19240ccf90d8 upstream.
 
-w1_f19_i2c_master_transfer() is the master_xfer for the DS28E17 1-Wire
-to I2C bridge. On an I2C_M_RECV_LEN read, it takes the length from the
-device. The downstream slave puts a length byte in buf[0]. The driver
-then reads that many bytes into buf[1] with w1_f19_i2c_read().
+XArray operations that allocate xa_nodes, such as xas_nomem() and
+xas_alloc(), add __GFP_ACCOUNT when the array has XA_FLAGS_ACCOUNT set.
+This charges the allocated memory and avoids the workingset convergence
+issue described by commit 7b785645e8f13 ("mm: fix page cache convergence
+regression").
 
-buf[0] is controlled by the device and can be 0 to 255.
-w1_f19_i2c_read() only rejects a zero count. The caller buffer is
-I2C_SMBUS_BLOCK_MAX + 2, so 34 bytes. A length above 32 makes the read
-run past it, up to about 222 bytes out of bounds.
+xas_split_alloc() does not add _GFP_ACCOUNT when XA_FLAGS_ACCOUNT is
+present.  Fix it.
 
-The SMBus core does check buf[0] against I2C_SMBUS_BLOCK_MAX. That
-check runs after master_xfer returns. By then the write is already
-done. i2c-algo-bit rejects an oversize length before it copies, and
-returns -EPROTO.
-
-Reject a length above I2C_SMBUS_BLOCK_MAX at both RECV_LEN sites, the
-same way i2c-algo-bit does.
-
-Fixes: ebc4768ac497 ("add w1_ds28e17 driver for the DS28E17 Onewire to I2C master bridge")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260629121043.199487-1-maoyixie.tju@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-2-38cb3ff325c5@nvidia.com
+Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_ds28e17.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ lib/xarray.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/w1/slaves/w1_ds28e17.c
-+++ b/drivers/w1/slaves/w1_ds28e17.c
-@@ -389,6 +389,10 @@ static int w1_f19_i2c_master_transfer(st
- 			 * another simple read in that case.
- 			 */
- 			if (msgs[i+1].flags & I2C_M_RECV_LEN) {
-+				if (msgs[i+1].buf[0] > I2C_SMBUS_BLOCK_MAX) {
-+					i = -EPROTO;
-+					goto error;
-+				}
- 				result = w1_f19_i2c_read(sl, msgs[i+1].addr,
- 					&(msgs[i+1].buf[1]), msgs[i+1].buf[0]);
- 				if (result < 0) {
-@@ -415,6 +419,10 @@ static int w1_f19_i2c_master_transfer(st
- 			 * another simple read in that case.
- 			 */
- 			if (msgs[i].flags & I2C_M_RECV_LEN) {
-+				if (msgs[i].buf[0] > I2C_SMBUS_BLOCK_MAX) {
-+					i = -EPROTO;
-+					goto error;
-+				}
- 				result = w1_f19_i2c_read(sl,
- 					msgs[i].addr,
- 					&(msgs[i].buf[1]),
+--- a/lib/xarray.c
++++ b/lib/xarray.c
+@@ -1053,6 +1053,9 @@ void xas_split_alloc(struct xa_state *xa
+ 	if (xas->xa_shift + XA_CHUNK_SHIFT > order)
+ 		return;
+ 
++	if (xas->xa->xa_flags & XA_FLAGS_ACCOUNT)
++		gfp |= __GFP_ACCOUNT;
++
+ 	do {
+ 		struct xa_node *node;
+ 
 
 
