@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D39E3905F4;
-	Fri,  4 Sep 2026 05:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CD83242BD;
+	Fri,  4 Sep 2026 05:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500970; cv=none; b=Yz4e2GMd0tk7vUh3ySFGZYx5DZOGvPgMhNXYVUizVlJ4OcRbpjlG0ATM37GesnuRC9Om8Q1xbAirbMpI+7RNfWSMYyRJOXYdVwAl00mbwtlLB819UiDDWVRmKMF9tdUHG92ZfoRJrVYhSAkAw3p+tGRygzwbpeJtXX1CKiqIgiI=
+	t=1788500973; cv=none; b=KNoLXD++lp5Hol1JU6JgIyw4mNBVfc26q3rSrjsyuimk0ZCYHdwfyH0sbT4AJxhM8NydXrZ4NDscMpJcWPs0Xm2A1zlvv8hYp+w2P606PzmC1JecwukijJ5drMDAEKmztuIaIfv8ngvdjdUeteXh2WQRLeqfpdQtlrq+LXyjH00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500970; c=relaxed/simple;
-	bh=YRgYUYYKCi7bMi4BLIXhVcgpoZzj7y24BAbmiL1IuQc=;
+	s=arc-20240116; t=1788500973; c=relaxed/simple;
+	bh=PLqS2Ye0YFyyVux/GmYjKUUTf1UY/YeINB0U8+Aijyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SU54zvVbiwZtvi9nyW2WV5w4JeLk0Am22Hy5MBZT//Rv9zneFeWXmIaau2ZqjdzCIhumDvjlvFTTurf9Dzjpkc17BFfOz6yrmRRQqv9h52kIkqlTt35gzxPI6S3ULMmXYpMRskm7rJ/zpEnCu2LCZch1b+qnQMhWxDRBg7ebR4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+pqEo7M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dtHkH0b3/aIyWgk1jlteCIrnm7y1akZ3JsMkyjqyRdSlu2Sy1tP8bpUIxaG4+9+dDCIyRhz0bXyGfzqGHG+DnppS/c6i3SQxfg1cU30fsTtL8dI1qv37+Qlm68CQvvjAQ2ayI7G6KrW/CfJBZklr/7Yi+VGRYYEcwkyjgXgnf3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfwopaj9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+pqEo7M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F961F00A3D;
-	Fri,  4 Sep 2026 05:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfwopaj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9701F00A3D;
+	Fri,  4 Sep 2026 05:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500969;
-	bh=LYo0NrO+aeoTGerRuhEy9KXMOBJHTiQaSbATsIadV3I=;
+	s=korg; t=1788500971;
+	bh=2P16uB6ixFUIv/uAhkcL+zJQCd953GEaPLVqT4mkftA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+pqEo7MqTle4VUjg32LCkzWDQVT+ewmH/Il4H0+puqWIJRdfJwxk9Cmpr205YzlT
-	 2jsy0syA3TZhMQITf2tT9XAeZFCBzUXh3iy1Uyboo0HAN0NOADUicKM+hcQ19/GvDo
-	 sPR2QUVRkwkrw/jwUQtFG6jHNZSRNLnUyB7Wnro8=
+	b=gfwopaj9BzZ/kITaIH8mm1xOvjq0E2GQ1toqYniEZ/1WqatjOWpZHIwntcBfwVYpj
+	 2Abtv5EYZLxsKThPoaxTOYHv20EXr+d62Ej4yUuh9RdfMQcF5ECOhsWw+EbP9mqVW8
+	 CZxwv4AeptqzPURAl2tyDx/TsR1PLqdL09BB8p9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <djbw@kernel.org>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.18 243/552] cxl/pmem: Format the nvdimm serial number as unsigned decimal
-Date: Fri,  4 Sep 2026 06:56:40 +0200
-Message-ID: <20260904045755.002100569@linuxfoundation.org>
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Sven Peter <sven@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 244/552] Bluetooth: hci_bcm4377: Ignore reserved PHY in ext adv reports on BCM4378
+Date: Fri,  4 Sep 2026 06:56:41 +0200
+Message-ID: <20260904045755.039854150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,105 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit 8a80d3d65cd06ee35b913d8517fb2f2319f8e70c upstream.
+commit aec6a8d80e3da0ab5c9303a0281fd06d077f8716 upstream.
 
-The CXL NVDIMM security passphrase key description and the nvdimm 'id'
-sysfs attribute are both derived from the CXL device serial number,
-but the serial number is not formatted consistently.
+Commit ed2a2ef16a6b ("Bluetooth: Add quirk to ignore reserved PHY bits in
+LE Extended Adv Report") added a quirk to handle creative use of the
+reserved bits in the PHY fields for 4388 controllers in Apple silicon.
 
-The key description is formatted in hexadecimal while the 'id'
-attribute is formatted in decimal. As a result, ndctl stores the key
-using a decimal description while the kernel later looks it up using
-a hexadecimal description. For serial numbers of 10 and above, the
-descriptions no longer match, preventing automatic unlock after
-reboot.
+I observed the same issue with the BCM4378 Bluetooth controller (14e4:5f69,
+rev 05) on an Apple MacBook Pro (13-inch, M2, 2022):
 
-The decimal formatting has a second problem: both the key description
-and the 'id' attribute use the signed %lld format for a u64 PCIe
-Device Serial Number. Devices whose vendor OUI sets bit 63, such as
-Montage CXL devices, appear with negative decimal serial numbers.
+> HCI Event: LE Meta Event (0x3e) plen 51
+      LE Extended Advertising Report (0x0d)
+        Num reports: 1
+        Entry 0
+          Event type: 0x2513
+            Props: 0x0013
+              Connectable
+              Scannable
+              Use legacy advertising PDUs
+            Data status: Complete
+            Reserved (0x2500)
+          Legacy PDU Type: Reserved (0x2513)
+          Address type: Random (0x01)
+          Address: EA:C1:82:F0:24:C6 (Static)
+          Primary PHY: Reserved
+          Secondary PHY: No packets
+          SID: no ADI field (0xff)
+          TX power: 127 dBm
+          RSSI: -57 dBm (0xc7)
+          Periodic advertising interval: 0.00 msec (0x0000)
+          Direct address type: Public (0x00)
+          Direct address: 00:00:00:00:00:00 (OUI 00-00-00)
+          Data length: 25
 
-Format the security key description and 'id' attribute as unsigned
-decimal, %llu, and document that the 'id' attribute is an unsigned
-decimal value.
+This results in the firmware rejecting connection attempts with
+"Unsupported Feature or Parameter Value" (0x11).
 
-The key lookup mismatch was exposed by CXL unit test cxl-security.sh
-when cxl_test mock serial numbers were extended to 10 and above.
+Fix the issue by using the same quirk for BCM4378 devices too.
 
-A work around is described for ndctl load-key users here:
-https://github.com/pmem/ndctl/issues/299
+I tested this locally and confirmed that the issue is resolved.
 
+This was observed when attempting to connect a Kinesis Advantage 360
+keyboard to the MacBook.
+
+Assisted-by: Claude:claude-fable-5
+Fixes: 2e7ed5f5e69b ("Bluetooth: hci_sync: Use advertised PHYs on hci_le_ext_create_conn_sync")
 Cc: stable@vger.kernel.org
-Fixes: b5807c80b5bc ("cxl: add dimm_id support for __nvdimm_create()")
-Acked-by: Dan Williams <djbw@kernel.org>
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/2c673a5ba0a8fa93ad160578e193bd556091fa95.1784924949.git.alison.schofield@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/ABI/testing/sysfs-bus-nvdimm |    3 ++-
- drivers/cxl/core/pmem.c                    |   10 ++++++----
- drivers/cxl/cxl.h                          |    3 ++-
- drivers/cxl/pmem.c                         |    2 +-
- 4 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/bluetooth/hci_bcm4377.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/ABI/testing/sysfs-bus-nvdimm
-+++ b/Documentation/ABI/testing/sysfs-bus-nvdimm
-@@ -48,7 +48,8 @@ What:		/sys/bus/nd/devices/nmemX/cxl/id
- Date:		November 2022
- KernelVersion:	6.2
- Contact:	Dave Jiang <dave.jiang@intel.com>
--Description:	(RO) Show the id (serial) of the device. This is CXL specific.
-+Description:	(RO) Show the id (serial) of the device, formatted as an
-+		unsigned 64-bit decimal value. This is CXL specific.
- 
- What:		/sys/bus/nd/devices/nmemX/cxl/provider
- Date:		November 2022
---- a/drivers/cxl/core/pmem.c
-+++ b/drivers/cxl/core/pmem.c
-@@ -219,12 +219,14 @@ static struct cxl_nvdimm *cxl_nvdimm_all
- 	dev->bus = &cxl_bus_type;
- 	dev->type = &cxl_nvdimm_type;
- 	/*
--	 * A "%llx" string is 17-bytes vs dimm_id that is max
--	 * NVDIMM_KEY_DESC_LEN
-+	 * dev_id is the nvdimm dimm_id used for security key lookup.
-+	 * It must match id_show(), which emits the CXL serial as an
-+	 * unsigned decimal. A u64 decimal string is at most 20 digits
-+	 * plus NUL.
- 	 */
--	BUILD_BUG_ON(sizeof(cxl_nvd->dev_id) < 17 ||
-+	BUILD_BUG_ON(sizeof(cxl_nvd->dev_id) < 21 ||
- 		     sizeof(cxl_nvd->dev_id) > NVDIMM_KEY_DESC_LEN);
--	sprintf(cxl_nvd->dev_id, "%llx", cxlmd->cxlds->serial);
-+	sprintf(cxl_nvd->dev_id, "%llu", cxlmd->cxlds->serial);
- 
- 	return cxl_nvd;
- }
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -563,7 +563,8 @@ struct cxl_nvdimm_bridge {
- 	struct nvdimm_bus_descriptor nd_desc;
- };
- 
--#define CXL_DEV_ID_LEN 19
-+/* Holds a u64 serial as a decimal string: up to 20 digits + NUL */
-+#define CXL_DEV_ID_LEN 21
- 
- enum {
- 	CXL_NVD_F_INVALIDATED = 0,
---- a/drivers/cxl/pmem.c
-+++ b/drivers/cxl/pmem.c
-@@ -52,7 +52,7 @@ static ssize_t id_show(struct device *de
- 	struct cxl_nvdimm *cxl_nvd = nvdimm_provider_data(nvdimm);
- 	struct cxl_dev_state *cxlds = cxl_nvd->cxlmd->cxlds;
- 
--	return sysfs_emit(buf, "%lld\n", cxlds->serial);
-+	return sysfs_emit(buf, "%llu\n", cxlds->serial);
- }
- static DEVICE_ATTR_RO(id);
- 
+--- a/drivers/bluetooth/hci_bcm4377.c
++++ b/drivers/bluetooth/hci_bcm4377.c
+@@ -2486,6 +2486,7 @@ static const struct bcm4377_hw bcm4377_h
+ 		.has_bar0_core2_window2 = true,
+ 		.broken_mws_transport_config = true,
+ 		.broken_le_coded = true,
++		.broken_le_ext_adv_report_phy = true,
+ 		.send_calibration = bcm4378_send_calibration,
+ 		.send_ptb = bcm4378_send_ptb,
+ 	},
 
 
