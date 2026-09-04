@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A873F23DB;
-	Fri,  4 Sep 2026 05:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE4434EF15;
+	Fri,  4 Sep 2026 05:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499557; cv=none; b=DXB7ufRXfuIye2Jm8WvUBkKIH7p6n6HeDIPpDW/gV0tXclxNXuGdDIRHZutgZMk9myN9eXZ1BUD2UNxY9epQ8+2n0tXTbyRS/xrraHG8SWLD9jycFQBnojG+0m23jr0IQGCWITViphVOve4s9vC7KogTpKPbz1IWMRmFCiNSTNI=
+	t=1788499560; cv=none; b=YdJ/YiEqUVeZnonEoUYipcvGhgE6c7O+W9T2MtARiNPdZYfPiUYHQCi/Tm5sNeTH2HFIIlmxjJtEoHYjaP1T7RNKgnACqiRaQ8RymCjnHb3dclWfU/1R6pFwot64IRqFj5kYaueoN6mmaoYk+wjVMYMKyhCUEQRSdvBi3p+h+qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499557; c=relaxed/simple;
-	bh=gzwwROuN5/tIa2PhW6ni8fyrm9/sTV1g7UR0aU0tn0E=;
+	s=arc-20240116; t=1788499560; c=relaxed/simple;
+	bh=3q1M2AIi1EqvzFU/YaP+wfsj33KbJA0g17hrd+PBZB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJ9B9DIiI7zG8X+h51aJS6y2KvArzEi3q3AR3NnjHB1a94VRsZ8Z2NzYmQWFLokCt9os0MDyLQYb/wcQ6fv0imv1KgdIZip1cu2LgONuaF2Uz7ofJ/3XGafbLkiK12MJAaHAQNgO17cnLnrKxfZL/xdVIF66E/5E8gI4wkpoaPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4kJ59H1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TITy01CtnaZ1mJEtYd4TMj5SvbZGnso9AcucEU6V6tKIpdSnvz2oAfQN+lBAAM55PEIqIIvJsYlkeXOxyRXe0KpK4QYqJaF4W3foVVfeR3kQGUzjs6go7P01MSEKfXWQGHF/yt9awKNOaCUc8YdrkhQjiJWToQbgS883qmsImFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFohchqq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4kJ59H1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77601F00A3D;
-	Fri,  4 Sep 2026 05:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFohchqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706181F00A3D;
+	Fri,  4 Sep 2026 05:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499556;
-	bh=DeKCkleQdgUbIUWLUSb65we4JXCFfQC+YOBz43SnADQ=;
+	s=korg; t=1788499558;
+	bh=O3lcO0ib5V41oymeV1HJnbC78GhV+3/1kYJrs/ZX3Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G4kJ59H1jfEcW8VrN/kFKwzBP+L2UcwahadHFapJep8cnYk1IkrKMHEnB24LNg/O2
-	 abam6l27ijgiHl4kH8c0wYXgztjlCP7H+YozV031VR85fBGR7HPZ16NWdpn2hx8xWB
-	 2A6dwZZOL+rl9cvD2noQxGo1j+MQEFOJ4Rxo/v4Q=
+	b=YFohchqqxNuARLA0UbvP+h0gXJ8vzacJA+JbjSqEYNpCkDsxf+Mbhz+5ZjqzJ/uVB
+	 GD50Cr5drbaQqdoFlLSKdSZHibmUt3+QQmCDBvzYKSkImY3yhwzo7VaFFP/8td8Uhr
+	 HTlmsFKCzZWFJl68a/yN/1tN/SyuH/H6Z9exFMMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
 	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
 	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 460/713] ocfs2: always run deallocs on copy-on-write completion
-Date: Fri,  4 Sep 2026 06:57:08 +0200
-Message-ID: <20260904045814.137609611@linuxfoundation.org>
+Subject: [PATCH 7.2 461/713] ocfs2: bound namelen in dlm_migrate_request_handler
+Date: Fri,  4 Sep 2026 06:57:09 +0200
+Message-ID: <20260904045814.159144725@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -57,185 +57,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 82ea9d4fc05fb7a387db547c6a7c0aa6a3719616 upstream.
+commit ea5b5609305a8437bc955a0834a530c12246d78f upstream.
 
-Local fuzzing of 6.12.94 has found the following memory leak
-caused by doing 'copy_file_range()' within the same filesystem:
+Patch series "ocfs2/dlm: bound peer-controlled lengths in the o2dlm".
 
-unreferenced object 0xffff88812192c980 (size 32):
-  comm "syz.0.49", pid 12095, jiffies 4294964143
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00  ................
-    c0 c5 92 21 81 88 ff ff 00 02 00 00 00 06 00 00  ...!............
-  backtrace (crc 7068d63f):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-    slab_post_alloc_hook mm/slub.c:4152 [inline]
-    slab_alloc_node mm/slub.c:4197 [inline]
-    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
-    kmalloc_noprof include/linux/slab.h:878 [inline]
-    ocfs2_find_per_slot_free_list fs/ocfs2/alloc.c:6618 [inline]
-    ocfs2_cache_block_dealloc+0x155/0x4b0 fs/ocfs2/alloc.c:6786
-    ocfs2_cache_extent_block_free fs/ocfs2/alloc.c:6819 [inline]
-    ocfs2_unlink_path+0x286/0x450 fs/ocfs2/alloc.c:2613
-    ocfs2_rotate_subtree_left fs/ocfs2/alloc.c:2779 [inline]
-    __ocfs2_rotate_tree_left+0x1f6f/0x2da0 fs/ocfs2/alloc.c:2985
-    ocfs2_rotate_tree_left+0x283/0xe00 fs/ocfs2/alloc.c:3237
-    ocfs2_try_to_merge_extent+0xf56/0x1a20 fs/ocfs2/alloc.c:3825
-    ocfs2_split_extent+0x15f4/0x2940 fs/ocfs2/alloc.c:5138
-    ocfs2_clear_ext_refcount+0x2f6/0x550 fs/ocfs2/refcounttree.c:3098
-    ocfs2_replace_clusters fs/ocfs2/refcounttree.c:3131 [inline]
-    ocfs2_make_clusters_writable fs/ocfs2/refcounttree.c:3255 [inline]
-    ocfs2_replace_cow+0x991/0x1660 fs/ocfs2/refcounttree.c:3349
-    ocfs2_refcount_cow_hunk fs/ocfs2/refcounttree.c:3427 [inline]
-    ocfs2_refcount_cow+0x5e1/0x9f0 fs/ocfs2/refcounttree.c:3470
-    ocfs2_prepare_inode_for_write fs/ocfs2/file.c:2340 [inline]
-    ocfs2_file_write_iter+0xbda/0x1880 fs/ocfs2/file.c:2451
-    iter_file_splice_write+0x890/0xf60 fs/splice.c:743
-    do_splice_from fs/splice.c:944 [inline]
-    direct_splice_actor+0x232/0x480 fs/splice.c:1167
-    splice_direct_to_actor+0x4b4/0xb60 fs/splice.c:1111
-    do_splice_direct_actor fs/splice.c:1210 [inline]
-    do_splice_direct+0x10f/0x1c0 fs/splice.c:1236
-    do_sendfile+0x430/0xbf0 fs/read_write.c:1388
+The o2dlm receive handlers trust u8 length and count fields from the wire
+without bounding them, so a node in a DLM domain can corrupt or panic any
+other node with a malformed message.  Three defects:
 
-unreferenced object 0xffff88812192c5c0 (size 32):
-  comm "syz.0.49", pid 12095, jiffies 4294964143
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    29 70 00 00 00 00 00 00 19 00 00 00 00 00 00 00  )p..............
-  backtrace (crc afec850f):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-    slab_post_alloc_hook mm/slub.c:4152 [inline]
-    slab_alloc_node mm/slub.c:4197 [inline]
-    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
-    kmalloc_noprof include/linux/slab.h:878 [inline]
-    kzalloc_noprof include/linux/slab.h:1014 [inline]
-    ocfs2_cache_block_dealloc+0x25c/0x4b0 fs/ocfs2/alloc.c:6793
-    ocfs2_cache_extent_block_free fs/ocfs2/alloc.c:6819 [inline]
-    ocfs2_unlink_path+0x286/0x450 fs/ocfs2/alloc.c:2613
-    ocfs2_rotate_subtree_left fs/ocfs2/alloc.c:2779 [inline]
-    __ocfs2_rotate_tree_left+0x1f6f/0x2da0 fs/ocfs2/alloc.c:2985
-    ocfs2_rotate_tree_left+0x283/0xe00 fs/ocfs2/alloc.c:3237
-    ocfs2_try_to_merge_extent+0xf56/0x1a20 fs/ocfs2/alloc.c:3825
-    ocfs2_split_extent+0x15f4/0x2940 fs/ocfs2/alloc.c:5138
-    ocfs2_clear_ext_refcount+0x2f6/0x550 fs/ocfs2/refcounttree.c:3098
-    ocfs2_replace_clusters fs/ocfs2/refcounttree.c:3131 [inline]
-    ocfs2_make_clusters_writable fs/ocfs2/refcounttree.c:3255 [inline]
-    ocfs2_replace_cow+0x991/0x1660 fs/ocfs2/refcounttree.c:3349
-    ocfs2_refcount_cow_hunk fs/ocfs2/refcounttree.c:3427 [inline]
-    ocfs2_refcount_cow+0x5e1/0x9f0 fs/ocfs2/refcounttree.c:3470
-    ocfs2_prepare_inode_for_write fs/ocfs2/file.c:2340 [inline]
-    ocfs2_file_write_iter+0xbda/0x1880 fs/ocfs2/file.c:2451
-    iter_file_splice_write+0x890/0xf60 fs/splice.c:743
-    do_splice_from fs/splice.c:944 [inline]
-    direct_splice_actor+0x232/0x480 fs/splice.c:1167
-    splice_direct_to_actor+0x4b4/0xb60 fs/splice.c:1111
-    do_splice_direct_actor fs/splice.c:1210 [inline]
-    do_splice_direct+0x10f/0x1c0 fs/splice.c:1236
-    do_sendfile+0x430/0xbf0 fs/read_write.c:1388
+  - dlm_migrate_request_handler() passes migrate->namelen unchecked to
+    dlm_init_mle(), which memcpy()s it into the 32-byte mname[] of an
+    o2dlm_mle slab object: a heap out-of-bounds write of up to ~215
+    attacker-controlled bytes.
 
-This happens when 'ocfs2_cache_block_dealloc()' called from
-'ocfs2_cache_extent_block_free()' uses the suballocator to
-schedule extent removal, so 'ocfs2_run_deallocs()' should
-be run unconditionally to complete the removal with
-'ocfs2_free_cached_blocks()'. An extra semi-automated static
-analysis [1] suspects that the same scenario looks possible in
-'ocfs2_attach_refcount_tree()' and 'ocfs2_reflink_remap_blocks()'
-as well, but, since 'ocfs2_run_deallocs()' is a safe no-op for
-an empty dealloc context, 'ocfs2_create_reflink_node()' and
-'ocfs2_reflink_xattrs()' may be adjusted in the same way too,
-thus keeping the code pattern consistent.
+  - dlm_mig_lockres_handler() passes mres->lockname_len unchecked to
+    dlm_init_lockres(), which memcpy()s it into the 32-byte o2dlm_lockname
+    slab object: a heap out-of-bounds write of up to ~223 bytes.
 
-Link: https://lore.kernel.org/20260721102840.387663-1-dmantipov@yandex.ru
-Link: https://lore.kernel.org/ocfs2-devel/f1d7e266-4b44-41b9-98c0-5b3868a8d9c3@yandex.ru [1]
-Fixes: 6f70fa519976 ("ocfs2: Add CoW support.")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+  - the same handler trusts mres->num_locks without checking that the
+    message is large enough to hold that many entries, so
+    dlm_process_recovery_data() walks mres->ml[] past the kmalloc(data_len)
+    copy and trips a BUG_ON (an out-of-bounds read ending in a panic).
+
+The other o2dlm receive handlers already reject an oversized name; the
+migration and recovery handlers have omitted it since the DLM was added
+(see the Fixes tags).  Patch 1 bounds namelen; patch 2 validates
+lockname_len, num_locks, and the payload size.  Conforming recovery and
+migration traffic is unaffected.
+
+o2net authenticates peers only by the DLM domain key, so any node that has
+joined the domain -- including a compromised or malicious member -- can
+send these messages.  There is no local trigger; the attacker must already
+be a member of the cluster.
+
+Each sink was confirmed under KASAN with an out-of-tree module mirroring
+it exactly -- a kmem_cache/kmalloc of the real destination size, then the
+same unclamped memcpy/loop: slab-out-of-bounds Write for the two writes,
+Read for the recovery walk, and a panic.  A userspace AddressSanitizer
+build faults identically under -m32 and -m64.  Scrubbed logs are available
+on request.
+
+I reported this privately to security@kernel.org and the ocfs2 maintainers
+on 2026-06-20; with no response after the standard embargo period I am
+posting the fix publicly.  I have no embargo requirement.
+
+
+This patch (of 2):
+
+A node receiving a DLM_MIGRATE_REQUEST message trusts the peer-supplied
+name length (migrate->namelen) without bounding it.  dlm_init_mle() then
+copies that many bytes into the fixed DLM_LOCKID_NAME_MAX-byte mname[]
+array of an o2dlm_mle slab object, so a malformed message from a cluster
+peer overflows the slab object by up to ~215 bytes: a heap out-of-bounds
+write of attacker-controlled data, reachable by any node in the domain.
+
+Reject an oversized name, the way dlm_master_request_handler() and the
+other o2dlm receive handlers already do; the migration handler omits the
+check entirely.  Conforming messages are unaffected.
+
+Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-0-6953bcc0421f@proton.me
+Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-1-6953bcc0421f@proton.me
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
 Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/refcounttree.c |   20 ++++++++------------
- fs/ocfs2/xattr.c        |    5 ++---
- 2 files changed, 10 insertions(+), 15 deletions(-)
+ fs/ocfs2/dlm/dlmmaster.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/ocfs2/refcounttree.c
-+++ b/fs/ocfs2/refcounttree.c
-@@ -3360,10 +3360,9 @@ static int ocfs2_replace_cow(struct ocfs
- 		cow_start += num_clusters;
- 	}
+--- a/fs/ocfs2/dlm/dlmmaster.c
++++ b/fs/ocfs2/dlm/dlmmaster.c
+@@ -3099,6 +3099,12 @@ int dlm_migrate_request_handler(struct o
  
--	if (ocfs2_dealloc_has_cluster(&context->dealloc)) {
-+	if (ocfs2_dealloc_has_cluster(&context->dealloc))
- 		ocfs2_schedule_truncate_log_flush(osb, 1);
--		ocfs2_run_deallocs(osb, &context->dealloc);
--	}
-+	ocfs2_run_deallocs(osb, &context->dealloc);
+ 	name = migrate->name;
+ 	namelen = migrate->namelen;
++	if (namelen > DLM_LOCKID_NAME_MAX) {
++		mlog(ML_ERROR, "%s: invalid name length %u in migrate request\n",
++		     dlm->name, namelen);
++		ret = -EINVAL;
++		goto leave;
++	}
+ 	hash = dlm_lockid_hash(name, namelen);
  
- 	return ret;
- }
-@@ -3846,10 +3845,9 @@ unlock:
- 	ocfs2_unlock_refcount_tree(osb, ref_tree, 1);
- 	brelse(ref_root_bh);
- 
--	if (!ret && ocfs2_dealloc_has_cluster(&dealloc)) {
-+	if (!ret && ocfs2_dealloc_has_cluster(&dealloc))
- 		ocfs2_schedule_truncate_log_flush(osb, 1);
--		ocfs2_run_deallocs(osb, &dealloc);
--	}
-+	ocfs2_run_deallocs(osb, &dealloc);
- out:
- 	/*
- 	 * Empty the extent map so that we may get the right extent
-@@ -4135,10 +4133,9 @@ out_unlock_refcount:
- 	ocfs2_unlock_refcount_tree(osb, ref_tree, 1);
- 	brelse(ref_root_bh);
- out:
--	if (ocfs2_dealloc_has_cluster(&dealloc)) {
-+	if (ocfs2_dealloc_has_cluster(&dealloc))
- 		ocfs2_schedule_truncate_log_flush(osb, 1);
--		ocfs2_run_deallocs(osb, &dealloc);
--	}
-+	ocfs2_run_deallocs(osb, &dealloc);
- 
- 	return ret;
- }
-@@ -4691,10 +4688,9 @@ loff_t ocfs2_reflink_remap_blocks(struct
- 	}
- 
- out:
--	if (ocfs2_dealloc_has_cluster(&dealloc)) {
-+	if (ocfs2_dealloc_has_cluster(&dealloc))
- 		ocfs2_schedule_truncate_log_flush(osb, 1);
--		ocfs2_run_deallocs(osb, &dealloc);
--	}
-+	ocfs2_run_deallocs(osb, &dealloc);
- 
- 	return ret;
- }
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -7241,10 +7241,9 @@ out_unlock:
- 				   ref_tree, 1);
- 	brelse(ref_root_bh);
- 
--	if (ocfs2_dealloc_has_cluster(&dealloc)) {
-+	if (ocfs2_dealloc_has_cluster(&dealloc))
- 		ocfs2_schedule_truncate_log_flush(OCFS2_SB(old_inode->i_sb), 1);
--		ocfs2_run_deallocs(OCFS2_SB(old_inode->i_sb), &dealloc);
--	}
-+	ocfs2_run_deallocs(OCFS2_SB(old_inode->i_sb), &dealloc);
- 
- out:
- 	return ret;
+ 	/* preallocate.. if this fails, abort */
 
 
