@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F442DCF57;
-	Fri,  4 Sep 2026 05:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170673B71A0;
+	Fri,  4 Sep 2026 05:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499755; cv=none; b=nE/O+ZcuR5g2+pjRmRpn5m1/hggXvN+9Yct8l1TO9zHC/2SD7nvrZ5S/yDY916p18pIAO1Wd/lu2/MrmxXft1Q3wSwAJ1EdrYtxWokW6POqMBb+SF8KiSJ+OpQOiLmWKQNYJ2vwti8Lxb7gZBkRGTlyUPI1aS5jUlbhijIFFr7g=
+	t=1788499758; cv=none; b=IJX7lKfQlTQNSujEgfBEErglHfqrTrrU42HyLL5+3asjKOF6QzaNMqZF6DliFPYbauw9cOcQ1RN61BBlRAkKCGPzNkNiURkwjr176SXH4OLkaSQWX2pIIWmhQIIjyRivoc9SaTc41+rSnIHciSHi6QrNrbBZvr3tM+sNErKPjbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499755; c=relaxed/simple;
-	bh=sbLKz0UnCTNfMGImButfthtEHXMvw0EIhRBCrBe25js=;
+	s=arc-20240116; t=1788499758; c=relaxed/simple;
+	bh=8zRDIBYOICp/Hfs4c0ZoO6u5/cuA9qbhnRWuv8ei77A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fah3rVrzNrD5HMkd2NXWHf6p1kyhyJGGXfF5QaWid/DlVQu+BQurDxFHRuXBs4gV/A0dQYxdr0Y48/8yGWQgvBMbxx0lQdSyt0Xjbk0FraasoCrnMtpmjpTmGg8lK48+wfQNv33ebJXFwR9BXFlMiPPZl9J/cAXrJFSxXy+Rbz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6G9yYGB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CDK8Pc/2AMffgijL2imshfnyQul7TvP3AAFyS/U/rCFnZTsDFfwOY3mhZ8brk0Er0kD5Bsbb+3F2DaUc7RH5ywWqIDsI5CUN2XI0cuea0afLiKg54fWeI4kimm9O/DNWpzuO7yLVpEHjG1ViZuNeagITOxpKZsAO5Tk+BOgqz1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFkLYLse; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6G9yYGB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5761F00A3D;
-	Fri,  4 Sep 2026 05:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFkLYLse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D5F1F00A3D;
+	Fri,  4 Sep 2026 05:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499754;
-	bh=ogvc90O3txTau5wW9qcbhXPIH7jLRC8hBMM29I20TXo=;
+	s=korg; t=1788499757;
+	bh=Dine1PVVjDnW2er+eHHnUFV5BJ56pXy+UWxYE2ejkaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6G9yYGBHcwyQ/OvdgKC9N9fhl38Y0exie7VPS9c/wft4AbOYk3gNJ0qojeJjpcki
-	 oWliPZWqodWH18Gts7v3HXuTgDWfFsxj5uqdtnO2PVxJ77Uo4x9tJ80gowfbIO0/jJ
-	 SEATwC88U4OymhdyzlRNimQsQ4tVVERU11uWsAWc=
+	b=oFkLYLsezoI1Kk3v7L/MySBsxvAYlmI3+hrkaQ/JC9v1FaKLX4qwtqHiimmr5Nyhl
+	 yTpQWsDgPgjpxhkMnH9z+fsja75C8ZL+Zwlmg96SyyK47A9Z637UkHyXAinUpazDCt
+	 +INb1ji10Hv14MbnWzLd+AtcVt0z7jwTw3EmZ9Hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
 	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 7.2 528/713] PCI/sysfs: Avoid spurious runtime PM wakeup on config space accesses
-Date: Fri,  4 Sep 2026 06:58:16 +0200
-Message-ID: <20260904045815.656181696@linuxfoundation.org>
+Subject: [PATCH 7.2 529/713] PCI/AER: Emit TLP Log only for unmasked errors
+Date: Fri,  4 Sep 2026 06:58:17 +0200
+Message-ID: <20260904045815.679093346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -44,73 +44,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit b14b2bab88d7099ab4447560cbe4b40945e5c069 upstream.
+commit a8bf2dd750de7d682fdaa2127f4e3217ce9c4a82 upstream.
 
-Currently, the boundary checks in pci_read_config() and pci_write_config()
-reject only offsets beyond the effective configuration space size.
+Per PCIe r7.0 sec 6.2.5, the prefix and header of an offending TLP is only
+recorded for unmasked Uncorrectable Errors.  Yet when the AER driver
+determines whether a prefix and header has been logged, it does not take
+the Uncorrectable Error Mask Register into account.  Fix it.
 
-An access at an offset exactly equal to that size passes the check, has its
-length clamped to zero, and then invokes pci_config_pm_runtime_get() and
-pci_config_pm_runtime_put() around transfer blocks that do nothing.
-
-This is a problem because pci_config_pm_runtime_get() synchronously resumes
-the upstream bridge through pm_runtime_get_sync() and resumes the device
-itself through pm_runtime_resume() when it is in D3cold, only for the
-handler to return zero immediately afterwards.  Such a spurious wakeup
-wastes power and adds needless resume latency.
-
-The sysfs core already clamps accesses against the attribute size set
-through the bin_size() callback, which reports either 256 or 4096 bytes.
-As such, the affected accesses are reads at offset 64 (or 128 for CardBus
-devices) through files opened without CAP_SYS_ADMIN, and reads and writes
-at the exact configuration space size on devices where a quirk sets a
-non-standard size.
-
-Reject accesses at the boundary offset as well, so they return early before
-any runtime PM involvement, matching the procfs implementations in
-proc_bus_pci_read() and proc_bus_pci_write().
-
-The value returned to userspace at these offsets remains zero, so the
-change is not visible to userspace.
-
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: tweak commit log, order tags]
+Fixes: 6c2b374d7485 ("PCI-Express AER implemetation: AER core and aerdriver")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260720204356.1501749-1-kwilczynski@kernel.org
+Cc: stable@vger.kernel.org # v2.6.19+
+Link: https://patch.msgid.link/2e712b96ba5bfc729d78bfc23f7fb7d285aa3d6d.1784905909.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-sysfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/pcie/aer.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -718,7 +718,7 @@ static ssize_t pci_read_config(struct fi
- 	else if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS)
- 		size = 128;
- 
--	if (off > size)
-+	if (off >= size)
- 		return 0;
- 	if (off + count > size) {
- 		size -= off;
-@@ -799,7 +799,7 @@ static ssize_t pci_write_config(struct f
- 		add_taint(TAINT_USER, LOCKDEP_STILL_OK);
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -942,7 +942,8 @@ void pci_print_aer(struct pci_dev *dev,
+ 		status = aer->uncor_status;
+ 		mask = aer->uncor_mask;
+ 		info.level = KERN_ERR;
+-		tlp_header_valid = tlp_header_logged(status, aer->cap_control);
++		tlp_header_valid = tlp_header_logged(status & ~mask,
++						     aer->cap_control);
  	}
  
--	if (off > dev->cfg_size)
-+	if (off >= dev->cfg_size)
- 		return 0;
- 	if (off + count > dev->cfg_size) {
- 		size = dev->cfg_size - off;
+ 	info.status = status;
+@@ -1336,7 +1337,7 @@ int aer_get_device_error_info(struct aer
+ 		pci_read_config_dword(dev, aer + PCI_ERR_CAP, &aercc);
+ 		info->first_error = PCI_ERR_CAP_FEP(aercc);
+ 
+-		if (tlp_header_logged(info->status, aercc)) {
++		if (tlp_header_logged(info->status & ~info->mask, aercc)) {
+ 			info->tlp_header_valid = 1;
+ 			pcie_read_tlp_log(dev, aer + PCI_ERR_HEADER_LOG,
+ 					  aer + PCI_ERR_PREFIX_LOG,
 
 
