@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3F8427F85;
-	Fri,  4 Sep 2026 06:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA682427F97;
+	Fri,  4 Sep 2026 06:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502800; cv=none; b=KO4twPN04OqCYliybePLebEuoPnBY5LE46MlUA6uIbp0b87q3BGgbyLzgugO7jHPS83yqyIZdL38e2KqiaJEEq376owAuLUY9O920VfqkQ9dpFFThZ/q8FJ4Kqo4LZkmIC1vrLWy65Ts4Ld17wYJK0APMJNFEd6hlTZiLJeRzME=
+	t=1788502803; cv=none; b=Kg8GcmVthU48cbiuRT4vd3Q4UtI1T+tzR7p1V6ZQyfj8vEE0oQNyYDqwISTXoKxzE2trDPX6GXfT5jDbq0NsOVFV97ebqvHBTYgTSVzuxRotmUEEnaw69Uy2svmocIiwoxa8nHMPbvJObTUsRpsqA3KEJs095mV3Uoe6XMganVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502800; c=relaxed/simple;
-	bh=Ny2kpst0phxWGDMfetjZ04rjN6b6MFapL/USkLnWmzI=;
+	s=arc-20240116; t=1788502803; c=relaxed/simple;
+	bh=bPWMBz7nqlFMnu0zu21cbGTd+rfrJApG9gqB+2cVfnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptte0cAXECmpQ3WBWWJy/+av3FkxOkjvLKFlYrmGzrMgmb8VGVrohDQv8XmP3qqJVy40DfIfRmt7fy0BxToG811+St/JBpPc/jO3ABPk6eWd9kTS78ieNohBdoVPEUUpbtz+LL25oZ9XzG9tVB1UdzKT25C7va/PoO3W9dghmMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=US7TspH2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GFQfc7kO12Tyo9kSQD0Nc5mVgaDNR1Hm4Ftyn3mJnbnSTCL65txmnrABgLv9clPwH8RCcWQOhOpdQcaxNgdzwxWuXSG3pmmdW49k9X74uTsctMZzXLglfV1l+NWFqvySJhypGgXCRfXUxhMTdYFUlj5g5J/lFu06+yK5IaT3B1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtlLTe8G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="US7TspH2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E6B1F00A3D;
-	Fri,  4 Sep 2026 06:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtlLTe8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501DA1F00A3D;
+	Fri,  4 Sep 2026 06:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502799;
-	bh=siHzXB4HY7ikPqAh7cf8Y82bCpCVC1AbCskBddauGms=;
+	s=korg; t=1788502801;
+	bh=Tc3PQEKJZTpdmz2G2c6o19i+Y1X/DpeInRBKiw4rWE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=US7TspH2XGWUATjs0IaCNpByt09LFcCFdrR5pdHmZQZtY3KT4O6ble8uHLTFy6ugF
-	 xeKKNmjMzQeMNAs2awYIsog+b0p9kZIam9uD1XIbExhZEXoKmdjt0qahzwSgJTQXM5
-	 RS86TOhmLrF4bf2tqkDENOCINvTLIgI63k9ulcts=
+	b=mtlLTe8GxAwpAtbd2VrKul8JNG5Mq8PAZZ22wrh1yGbQGU6T0nvd774hMoKS5oesj
+	 s5XHPtgz8vY6KK40rlXFeoVaKMES/ip6XbWAggunXZV1vK1mwDdqJsxzJjgg9TdNcp
+	 b8YnJ0jFgKz/7Q9SVJs29sY87O2EbuuK69Id9JS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Aleksandr Khromov <haa@amicon.ru>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 335/403] slip: fix use-after-free in sl_sync()
-Date: Fri,  4 Sep 2026 07:02:18 +0200
-Message-ID: <20260904045742.440431920@linuxfoundation.org>
+	Ma Ke <make_ruc2021@163.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 318/403] platform/x86: ishtp_eclite: Fix ACPI device reference leak in probe error path
+Date: Fri,  4 Sep 2026 07:02:01 +0200
+Message-ID: <20260904045742.068592679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -45,160 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Khromov <haa@amicon.ru>
+From: Ma Ke <make_ruc2021@163.com>
 
-commit 2c4e7c42d77e78ad595dbb9e4b5886b58b45d89d upstream.
+commit 62b57396c26a1ce54963709928ea0d01fa522eea upstream.
 
-slip_devs[] stores bare net_device pointers and takes no reference on
-them.  sl_sync() and sl_alloc() walk that table from slip_open() under
-rtnl_lock(), while an entry is dropped by sl_free_netdev(), which
-sl_setup() installs as dev->priv_destructor.
+ecl_ishtp_cl_probe() acquires a reference to an ACPI device via
+acpi_find_eclite_device() but fails to release it in the error path
+when acpi_opregion_init() fails. This results in a reference count
+leak, preventing proper cleanup of the ACPI device.
 
-priv_destructor is called from netdev_run_todo(), which deliberately
-runs with the RTNL semaphore released so that it can sleep while waiting
-for the device refcount to drop:
+Calling path: acpi_find_eclite_device() ->
+acpi_dev_get_first_match_dev() -> acpi_dev_get_next_match_dev() ->
+bus_find_device() -> get_device().
 
-	/* Snapshot list, allow later requests */
-	list_replace_init(&net_todo_list, &list);
+Found by code review.
 
-	__rtnl_unlock();
-	...
-		if (dev->priv_destructor)
-			dev->priv_destructor(dev);	/* slip_devs[i] = NULL */
-		if (dev->needs_free_netdev)
-			free_netdev(dev);
-		...
-		/* Free network device */
-		kobject_put(&dev->dev.kobj);
-
-So rtnl_lock() does not serialise slip_open() against the teardown at
-all.  sl_sync() can load slip_devs[i] while the entry is still published
-and dereference it after netdev_run_todo() has run the destructor and
-released the device:
-
-  CPU0 (slip_open)                 CPU1 (slip_close)
-                                   unregister_netdev()
-                                     rtnl_unlock()
-                                       netdev_run_todo()
-                                         __rtnl_unlock()
-  rtnl_lock()
-  sl_sync()
-    dev = slip_devs[i]
-                                         priv_destructor(dev)
-                                           slip_devs[i] = NULL
-                                         kobject_put(&dev->dev.kobj)
-                                           /* dev is freed */
-    sl = netdev_priv(dev)
-    if (sl->tty || sl->leased)     /* use-after-free */
-
-  BUG: KASAN: use-after-free in sl_sync drivers/net/slip/slip.c:730 [inline]
-  BUG: KASAN: use-after-free in slip_open+0xef4/0x1210 drivers/net/slip/slip.c:806
-  Read of size 1 at addr ffff8880712dac71 by task syz-executor.2/6506
-
-  CPU: 2 PID: 6506 Comm: syz-executor.2 Not tainted 6.1.134-syzkaller-00260-g0c8fc3469765 #0
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-  Call Trace:
-   sl_sync drivers/net/slip/slip.c:730 [inline]
-   slip_open+0xef4/0x1210 drivers/net/slip/slip.c:806
-   tty_ldisc_open+0xa2/0x120 drivers/tty/tty_ldisc.c:433
-   tty_set_ldisc+0x324/0x720 drivers/tty/tty_ldisc.c:564
-   tiocsetd drivers/tty/tty_io.c:2428 [inline]
-   tty_ioctl+0x5f0/0x1530 drivers/tty/tty_io.c:2712
-
-  Allocated by task 6502:
-   alloc_netdev_mqs+0x98/0xfe0 net/core/dev.c:10719
-   sl_alloc drivers/net/slip/slip.c:756 [inline]
-   slip_open+0x36d/0x1210 drivers/net/slip/slip.c:817
-   tty_ldisc_open+0xa2/0x120 drivers/tty/tty_ldisc.c:433
-   tty_set_ldisc+0x324/0x720 drivers/tty/tty_ldisc.c:564
-
-  Freed by task 6497:
-   device_release+0xa2/0x240 drivers/base/core.c:2507
-   kobject_put+0x179/0x280 lib/kobject.c:729
-   netdev_run_todo+0x6c8/0xef0 net/core/dev.c:10509
-   slip_close+0x166/0x1c0 drivers/net/slip/slip.c:906
-   tty_ldisc_close+0x113/0x1a0 drivers/tty/tty_ldisc.c:456
-   tty_ldisc_kill+0x94/0x160 drivers/tty/tty_ldisc.c:614
-   tty_ldisc_release+0xe3/0x2b0 drivers/tty/tty_ldisc.c:782
-   tty_release+0xbcc/0xe70 drivers/tty/tty_io.c:1860
-
-Commit e58c19124189 ("slip: Fix use-after-free Read in slip_open") fixed
-a different source of stale entries - a device left in slip_devs[] after
-slip_open() freed it on the registration error path - and does not
-address this race, which is why the report survives it.
-
-Drop the entry from ndo_uninit instead.  unregister_netdevice() calls
-ndo_uninit under RTNL, before the device is queued to netdev_run_todo(),
-so an entry that sl_sync() can still see while holding RTNL belongs to a
-device that cannot be freed until RTNL is dropped.  sl_free_netdev()
-stays only for the slip_open() error path, where register_netdevice()
-may have failed before ndo_init and ndo_uninit is then not called
-either.  Both running for the same device is harmless: they run under
-the same RTNL section, so the slot cannot have been reused in between.
-
-This also removes the second symptom of the missing exclusion: a
-destructor running after sl_alloc() had already handed the slot out to
-another channel used to clear a live entry, so sl_sync() stopped at that
-NULL, sl_alloc() returned the same index again, and
-register_netdevice() failed with -EEXIST because slN was still there.
-
-Reproduced on x86_64 with several threads looping over
-open("/dev/ptmx") + ioctl(TIOCSETD, N_SLIP) + close().
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 5342b77c4123 ("slip: Clean up create and destroy")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Aleksandr Khromov <haa@amicon.ru>
-Link: https://patch.msgid.link/20260824100547.164773-1-haa@amicon.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7b6bf51de974 ("platform/x86: Add Intel ishtp eclite driver")
+Link: https://patch.msgid.link/20260624014910.1226446-1-make_ruc2021@163.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/slip/slip.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/platform/x86/intel/ishtp_eclite.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/slip/slip.c
-+++ b/drivers/net/slip/slip.c
-@@ -628,9 +628,15 @@ static void sl_uninit(struct net_device
- 	struct slip *sl = netdev_priv(dev);
+--- a/drivers/platform/x86/intel/ishtp_eclite.c
++++ b/drivers/platform/x86/intel/ishtp_eclite.c
+@@ -600,13 +600,16 @@ static int ecl_ishtp_cl_probe(struct ish
+ 	rv = acpi_opregion_init(opr_dev);
+ 	if (rv) {
+ 		dev_err(cl_data_to_dev(opr_dev), "ACPI opregion init failed\n");
+-		goto err_exit;
++		goto err_put;
+ 	}
  
- 	sl_free_bufs(sl);
-+	/* Drop the slip_devs[] entry here rather than from the destructor:
-+	 * ndo_uninit runs under RTNL, so it cannot race sl_sync().
-+	 */
-+	slip_devs[dev->base_addr] = NULL;
- }
+ 	/* Reprobe devices depending on ECLite - battery, fan, etc. */
+ 	acpi_dev_clear_dependencies(opr_dev->adev);
  
--/* Hook the destructor so we can free slip devices at the right point in time */
-+/* Only for the slip_open() error path: register_netdevice() can fail before
-+ * ndo_init, and then ndo_uninit is not called either.
-+ */
- static void sl_free_netdev(struct net_device *dev)
- {
- 	int i = dev->base_addr;
-@@ -657,7 +663,6 @@ static void sl_setup(struct net_device *
- {
- 	dev->netdev_ops		= &sl_netdev_ops;
- 	dev->needs_free_netdev	= true;
--	dev->priv_destructor	= sl_free_netdev;
- 
- 	dev->hard_header_len	= 0;
- 	dev->addr_len		= 0;
-@@ -908,7 +913,7 @@ static void slip_close(struct tty_struct
- #endif
- 	/* Flush network side */
- 	unregister_netdev(sl->dev);
--	/* This will complete via sl_free_netdev */
-+	/* sl_uninit() has dropped the slip_devs[] entry by now */
- }
- 
- static void slip_hangup(struct tty_struct *tty)
+ 	return 0;
++
++err_put:
++	acpi_dev_put(opr_dev->adev);
+ err_exit:
+ 	ishtp_set_connection_state(ecl_ishtp_cl, ISHTP_CL_DISCONNECTING);
+ 	ishtp_cl_disconnect(ecl_ishtp_cl);
 
 
