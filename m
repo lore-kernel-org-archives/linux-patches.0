@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F62372B4B;
-	Fri,  4 Sep 2026 05:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE28372B4B;
+	Fri,  4 Sep 2026 05:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500579; cv=none; b=UXrebhKVlmn3eBt2/GZ5l2wlL5OfOl2E1MSkYoEjtn6NTYHHO29h4nhu3xma7aAz3E8LbY2F83V9rjcBT4KMTtxw2baVeg+WyaUYnnBJVR6eOh5URGEWUluxRr9D0pC+M6o1gfyz1maTxwMYyCh6vNi5NyX+BWQo70Npsu2oKD4=
+	t=1788500582; cv=none; b=P10+GMAJYRb3wq7vNeIZ6KlrgLRw3kmSO90O4+j6F1ENU1pNcFwa6DKhLKrnBNPJR28upPuh5rw8yo9NcOjMhY824Kaj6Yoywl/Y0c/TK/FT05m/VxmeZfeQlU7IBrqnOCTi+nLnpT8RBZM9k1KusUxmXycsJ+a7dVAPZiABxhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500579; c=relaxed/simple;
-	bh=339eoocxCvoudsbsV0BYKCirjMuRklzU4QJBfuo5cV8=;
+	s=arc-20240116; t=1788500582; c=relaxed/simple;
+	bh=8jlie4cRIB0hjcpUmSJ93rocpuO7k2nNp+xNPVSg4sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXRGBIwJKOSPUdTPMGkd9NLUB343eo2QWEqek6JBC3XeFYbd1aX8TMwfOmoOKyCBM0nddiJLHjsEbmR1M+SiR8P3SaRXqBvrmUFoXEfoRNd76Uf5CupPUyvlHef0txffVhqtZusIGtnn//Nf5pL17aAaDUMCfACwD8x1+OLJOWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHNQqYKp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XWXQ/9raVOmtjQU0+OgCJvrFL8WOeVy10QVUzN3uZY01HXmYhxht5DTxw8f83/oFCRfB6NgVZWfvmEN2rx2jHB2E3V0jg/+3PF1fpVm49zqKLcPz28tp1U6Ll5ue4Jo7Pef7N/Xml359fQPPR8id31U/Aaq6Ob0cF/WqOTEloi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvEOpmLs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHNQqYKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800921F00A3D;
-	Fri,  4 Sep 2026 05:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvEOpmLs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559181F00A3D;
+	Fri,  4 Sep 2026 05:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500578;
-	bh=G5hcmIpVdkMq7a3xHi9AdTYkTNaJhWNhiMURj+zbIV8=;
+	s=korg; t=1788500580;
+	bh=oqL33Zc/1gSzLWA35MFPPXWfrBeagV1pT/exrteqFqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oHNQqYKpJ5efQEAeD8s8Lf3dnuWj9Nn0kaJ+pFCh8BDUjxTYBx1oxtn9FfJOuYghc
-	 7wBboUCsybipFlQx3iVW1YILSNPzaje4ypxDGg+uk0G86rkb/cLJt8ws9DpJWbONCy
-	 oQWSZziBFENHiaNPTp3noUC6DrGnf6Oln6S7U+ts=
+	b=RvEOpmLsebfr+QyO5rEiBa7AlKrX/RrZO9OQhmjOz4HFOzFOP8D8gkamjPYwvvq03
+	 UR79Pa3AUCsuu5EFcmb1RtgPmO5iNoMEeMIQxoqNjvvPX2KlkgclVgvMRwuHylCBOP
+	 hbG4Vj6NGL/MCeiCpWZ4wooFWdS5Cz8L6jdaaLt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
+	Tim Menninger <tmenninger@everpuredata.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.18 105/552] NFSv4.1: fix layout segment leak on the pnfs_layout_process() forget path
-Date: Fri,  4 Sep 2026 06:54:22 +0200
-Message-ID: <20260904045750.285033818@linuxfoundation.org>
+Subject: [PATCH 6.18 106/552] pNFS: Fix EBUSY check in pnfs_layout_need_return
+Date: Fri,  4 Sep 2026 06:54:23 +0200
+Message-ID: <20260904045750.311927864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,50 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Tim Menninger <tmenninger@everpuredata.com>
 
-commit ee5a386cfe60f3f8286de16a9db8e1a08f0bc124 upstream.
+commit 20358201777496fd0bb7b4336fcb4d3fc13cad28 upstream.
 
-When the server returns a new layout stateid while a valid one is still
-held, pnfs_layout_process() calls pnfs_mark_matching_lsegs_return() on
-the on-stack free_me list and jumps to out_forget. Segments whose
-reference count drops to zero are unlinked from lo->plh_segs and moved
-to free_me by mark_lseg_invalid(); for an idle cached segment the layout
-header holds the only reference, so this happens on the first decrement.
+Commit 41d0a8ead9720 ("NFSv4/pnfs: Add support for the
+PNFS_LAYOUT_FILE_BULK_RETURN flag") replaced
+pnfs_layout_segments_returnable() in pnfs_layout_need_return() with a
+direct call to pnfs_mark_layout_stateid_return().
 
-out_forget never drains free_me -- only the success path calls
-pnfs_free_lseg_list().
+The old helper checked the return value against -EBUSY, but the
+replacement compares against EBUSY. Since
+pnfs_mark_layout_stateid_return() returns negative errno values, the
+-EBUSY case is never detected.
 
-Commit 814b84971388 ("pNFS/NFSv4: Fix a layout segment leak in
-pnfs_layout_process()") added the drain; commit 08bd8dbe8882
-("pNFS/NFSv4: Try to return invalid layout in pnfs_layout_process()")
-removed it while switching the destination to lo->plh_return_segs, which
-is drained elsewhere. Commit fb700ef02676 ("NFSv4.1: Simplify layout
-return in pnfs_layout_process()") switched the destination back to
-free_me without restoring the drain.
+Fix the comparison in pnfs_layout_need_return() to check against -EBUSY.
 
-Restore the pnfs_free_lseg_list() call.
-
-Fixes: fb700ef02676 ("NFSv4.1: Simplify layout return in pnfs_layout_process()")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+Fixes: 41d0a8ead9720 ("NFSv4/pnfs: Add support for the PNFS_LAYOUT_FILE_BULK_RETURN flag")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/pnfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/fs/nfs/pnfs.c
 +++ b/fs/nfs/pnfs.c
-@@ -2631,6 +2631,7 @@ out_forget:
- 	spin_unlock(&ino->i_lock);
- 	lseg->pls_layout = lo;
- 	NFS_SERVER(ino)->pnfs_curr_ld->free_lseg(lseg);
-+	pnfs_free_lseg_list(&free_me);
- 	return ERR_PTR(-EAGAIN);
+@@ -1389,7 +1389,7 @@ pnfs_layout_need_return(struct pnfs_layo
+ 		return false;
+ 	return pnfs_mark_layout_stateid_return(lo, &lo->plh_return_segs,
+ 					       lo->plh_return_iomode,
+-					       lo->plh_return_seq) != EBUSY;
++					       lo->plh_return_seq) != -EBUSY;
  }
  
+ static void pnfs_layoutreturn_before_put_layout_hdr(struct pnfs_layout_hdr *lo)
 
 
