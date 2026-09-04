@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE3635AC03;
-	Fri,  4 Sep 2026 05:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D853242BD;
+	Fri,  4 Sep 2026 05:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501332; cv=none; b=uPQwt4PGmzSb8A6J5IXdcYrQ65MfamtJjkC/tENKYr3/tn0t0kFOCLG3amaVmlzQfNufgNixSKD0RoZhdkl2ElUrA05twPEvqW6hPkTDUYi4WXAPNZUrpzwFrrE56PW6VvXpBJIFNwuzllzP2fvkLz1VLOh3Nx7ktf0YwRtA8mY=
+	t=1788501335; cv=none; b=lc9wN5dcbFyqDjgjBGvzOCyZA/nnNEjO2umY+Vp9wmujYwNHBdm7TNcKNq/i9edLAL6dpLGyQZD/HOIxyF0y0yzKKfXIeeEZ6hNeTlZu/Wu7lIVFutCFsVpGQW3UOFX2x0kVGmymZ2no8Ss+IGb1Gb3M6UFYPPQnyo9CjzzVypE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501332; c=relaxed/simple;
-	bh=Tv7egPmjmGNJzBaO265J/+EIKJaxCCb3JDNOGefTSV0=;
+	s=arc-20240116; t=1788501335; c=relaxed/simple;
+	bh=NSx243XVkoDROxdGlQS9Q97dGOBOaP8UcQjv8DZB4vA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZL8v2fFRR6ScaA8dr7edt7oYRmbzRjNSx2np09kKBC4R7k9AqA2mdwcHj5DrtVuQGV6VauanYTYvBNEhftUudSCAXyLC0545ru4ERlVuOpRsJep3bmBIgl1cAclU45iCXkUDk8jYOT5yMG0y95tKUD1oUQTt1fw79pu+SXyt4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBCT3lRQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ah+R5P+Z8tqctLR4ZATXcAuWgj5neN5GKm1j+kRnr/1+UjwgZjYHdV/eYMzJGZC1+XY+7dhMl3REFWVJFMYzqo2sx2VDZLZFhVhfiJQFDSHzhcnJpnz+wsFmV5RNDxmTpegHjaBntup5/2cdLtQIE0Ok+ol0x8Z5UXEMB+CNa3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfsSu/5n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBCT3lRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CB91F00A3D;
-	Fri,  4 Sep 2026 05:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfsSu/5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E091F00A3D;
+	Fri,  4 Sep 2026 05:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501330;
-	bh=9UIN1yTqF1PBALjesB4iSKvidsDiX+1Et9jmeqZpaP0=;
+	s=korg; t=1788501333;
+	bh=0atVxI04X99k0f8SuRSPuWHmLVVG7E1GwsA0HUU+FkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YBCT3lRQ4CTvNCJfJnsq4zTOM1LwZx1PKcFRHLhoIeX4zPZxyLGKqHg95sNfHwj4S
-	 z5uLuSWltSl57Zd1hRY+xIWmkw5b4k0REfWtF2S2yxPU+XVU2ZgZh82G3Mux1eYCQl
-	 qQaOBmZiMQEzSL2cinkrEaPUW1d0DfiisisUmn08=
+	b=HfsSu/5nqu/FRLD4BUUozv2e6xI6xfDzTxPQi4quxwAGHxxm5gVrYh462U3MxvF7S
+	 GoZ8zJYIT2+2WTtuc9BWczUE2q4ePCMnPGwBuqqy4bk4Fhzk8aen4KNOc5kGBnLGVr
+	 T1JSLU1jeo63hu7BMWG4E8HgGDBMrXGuXowsZArk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fan Wu <fanwu01@zju.edu.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 372/552] power: supply: lp8727: fix use-after-free in lp8727_release_irq()
-Date: Fri,  4 Sep 2026 06:58:49 +0200
-Message-ID: <20260904045758.657840992@linuxfoundation.org>
+Subject: [PATCH 6.18 373/552] power: supply: lp8788-charger: fix use-after-free on remove
+Date: Fri,  4 Sep 2026 06:58:50 +0200
+Message-ID: <20260904045758.679804980@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,45 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit ceb6ac43b0f591722401922ceb958ce2616935e0 upstream.
+commit 831c29a12d560f8a3225f43050b3fbb5dfd79c66 upstream.
 
-lp8727_isr_func(), the threaded IRQ handler, is the only caller that arms
-pchg->work via schedule_delayed_work().  lp8727_release_irq() currently
-cancels the work before freeing the IRQ, so an IRQ delivered in between
-can re-arm the work through the threaded handler.  After .remove returns
-the devm layer frees pchg while lp8727_delayed_func() may still run and
-dereference it.
+lp8788_charger_remove() flushes charger_work before unregistering the
+IRQs. An IRQ thread can queue charger_work after flush_work() has
+returned. The work can then run after devres frees pchg and dereference
+it in lp8788_charger_event().
 
-Free the IRQ first so the threaded handler is quiesced and can no longer
-queue work, then cancel the delayed work to drain the final generation.
+Unregister the IRQs first. free_irq() waits for any running threaded
+handler, so no handler can queue more work afterwards. Then use
+cancel_work_sync() to cancel pending work or wait for running work to
+finish.
 
 This issue was found by an in-house static analysis tool.
 
-Fixes: d71fda016102 ("lp8727_charger: Clean up the interrupt handler")
+Fixes: 98a276649358 ("power_supply: Add new lp8788 charger driver")
 Cc: stable@vger.kernel.org
 Assisted-by: Codex:gpt-5.6
 Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260807033520.8551-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260802035442.421697-1-fanwu01@zju.edu.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/lp8727_charger.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/lp8788-charger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/lp8727_charger.c
-+++ b/drivers/power/supply/lp8727_charger.c
-@@ -280,10 +280,10 @@ static int lp8727_setup_irq(struct lp872
- 
- static void lp8727_release_irq(struct lp8727_chg *pchg)
+--- a/drivers/power/supply/lp8788-charger.c
++++ b/drivers/power/supply/lp8788-charger.c
+@@ -710,8 +710,8 @@ static void lp8788_charger_remove(struct
  {
--	cancel_delayed_work_sync(&pchg->work);
--
- 	if (pchg->irq)
- 		free_irq(pchg->irq, pchg);
-+
-+	cancel_delayed_work_sync(&pchg->work);
+ 	struct lp8788_charger *pchg = platform_get_drvdata(pdev);
+ 
+-	flush_work(&pchg->charger_work);
+ 	lp8788_irq_unregister(pdev, pchg);
++	cancel_work_sync(&pchg->charger_work);
  }
  
- static enum power_supply_property lp8727_charger_prop[] = {
+ static struct platform_driver lp8788_charger_driver = {
 
 
