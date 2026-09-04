@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2373B423E87;
-	Fri,  4 Sep 2026 06:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FE1424654;
+	Fri,  4 Sep 2026 06:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502909; cv=none; b=UPcJMVaF/AKO0aSj5Bj1R7Akxhsn+ivjfFkOlrg6vS56QAOkNJf+PU+T6b1I7x+coaHwKm8bKEgqwigKxMd7V80sGnmUMAl1VzV8RImjvtwWA08cThuArtuSfcnk8ULf1xbiNqHkMujxPzN1MrykVw0OZD/ZN+Rh0Tz0QX2DYvw=
+	t=1788502911; cv=none; b=r+e50hhM48YLcyJU8geAcEUfEXS5FOgRmwU4FGXDDxrNOsOGAOzLAdPKyjI29n0BovE/1fT58oOudlrJBxTyfR5JsKrQt2oxAAyL/SeAzV66X1M5nbDaAAdb96KSdaDWJKqA++N5/jNwXqzSsFztOk7VH2OEPdL/ic5WrrnINAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502909; c=relaxed/simple;
-	bh=few677coHUC4fvLczYY614DaS2ZGQ16CA7bZWx+nh6M=;
+	s=arc-20240116; t=1788502911; c=relaxed/simple;
+	bh=B8Zw56xx3YeawfaoizBUygCP214MYWk5Q/w8GuHPiEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2cez9hHSJd9D/BqS81VrgDPKRc0MlE8V/zyM9veNiOaPl955q9QY10GUApmTx7/uuXgs1de/Zd94FhAqzob1mU3APQlFhCVAo8Nh9rn39TkxJbW6h4s6KgFDSQDrIq5rDVNbktBX/n4qTUN5V81G4q7N5RbUvaqY7tyY2476z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lwc19VZN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H1pvk7v5eZZWsecUcGrZS7nv6h90sopJ96IimH5asnQEbjfiGW135+IX4ZJfcScLDuHGa1nK1Bd63wpsiqSPH2tEKPYfGDC5eBBIxRxz+H0qvdh578Tl1XDE94FpetlCrFmWzqXQDdm1DiIgcyNgrMI7H5tWt8WZqzIerjUpgPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3O5uDYF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lwc19VZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE6A1F00A3D;
-	Fri,  4 Sep 2026 06:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3O5uDYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D541F00A3D;
+	Fri,  4 Sep 2026 06:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502907;
-	bh=ro01bNV9beQl6h006vXKv7YQBUgHXs+srjRN5F992ps=;
+	s=korg; t=1788502910;
+	bh=Jq4HU4erQu6TybB4lbkbxdDHv9cmG8LQvpV8O/zisLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lwc19VZN8R9HrKrJNzHgfl13GgT1TuwI5kFxKkWBy0hMYd4tyzxqWRmz7xQHTQPwJ
-	 OEDeovRc47WKlT0jF+gwngE/Ui1iqrLNYflD/rneFNlp4FMzRYw+vRGoxobWYVLRbK
-	 JLFyyevy4NIdWW7smakvpbmxnftUiZnfCcXusLFY=
+	b=j3O5uDYFekQTxvEtGxRtxF3mIgpJFxPme9lUdNyDseL43ueOlsxhS0KN57zpdQ6aI
+	 pD7SBm07g9sGCmr6Ar77tZwnv3DxUbonam30nYbKLxQYJIVHW45XwcPBSPortlicZg
+	 c1X5c9B5aQuJogMomnK6VhF/zq5skPaMiZ6HkZzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Burak Emir <burak.emir@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 373/403] rust: rust_is_available: warn for `bindgen` < 0.72.1 && libclang >= 22
-Date: Fri,  4 Sep 2026 07:02:56 +0200
-Message-ID: <20260904045743.278104195@linuxfoundation.org>
+Subject: [PATCH 6.12 374/403] KVM: selftests: Remove duplicate LAUNCH_UPDATE_VMSA call in SEV-ES migrate test
+Date: Fri,  4 Sep 2026 07:02:57 +0200
+Message-ID: <20260904045743.300333912@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,161 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit dc01dfb37b34beeefcfe1c3055364d41a4070c7e ]
+[ Upstream commit 25a642b6abc98bbbabbf2baef9fc498bbea6aee6 ]
 
-Starting with LLVM 22, `clang_getTypeDeclaration()` may return a forward
-declaration instead of the type definition. This made `bindgen` generate
-opaque types [1][2], which in turn made us fail with e.g.
+Drop the explicit KVM_SEV_LAUNCH_UPDATE_VMSA call when creating an SEV-ES
+VM in the SEV migration test, as sev_vm_create() automatically updates the
+VMSA pages for SEV-ES guests.  The only reason the duplicate call doesn't
+cause visible problems is because the test doesn't actually try to run the
+vCPUs.  That will change when KVM adds a check to prevent userspace from
+re-launching a VMSA (which corrupts the VMSA page due to KVM writing
+encrypted private memory).
 
-    error[E0609]: no field `__bindgen_anon_1` on type `bindings::kernel_param`
-      --> rust/kernel/module_param.rs:78:46
-       |
-    78 |         let container = unsafe { &*((*param).__bindgen_anon_1.arg.cast::<SetOnce<T>>()) };
-       |                                              ^^^^^^^^^^^^^^^^ unknown field
-       |
-       = note: available field is: `_address`
-
-This was fixed in `bindgen` 0.72.1 [3].
-
-In order to clarify what is going on and avoid confusion [4][5], add
-a warning to `rust_is_available.sh` about it when the versions match,
-similar to past warnings like the one removed in:
-
-  commit ae64324ad5c1 ("rust: rust_is_available: remove warning for `bindgen` < 0.69.5 && libclang >= 19.1")
-
-In addition, even if the versions match, check if the issue appears to
-not reproduce with the given binaries, to avoid a warning in such a case.
-
-Finally, include tests.
-
-[ Nathan, in parallel, updated the instructions of the LLVM+Rust
-  kernel.org toolchains [6] so that `--version` is not passed to
-  `cargo` for `bindgen`, and thus the latest `bindgen` is installed
-  by default, which should help to avoid some of these situations.
-
-  Thanks!
-
-    - Miguel ]
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust-bindgen/issues/3264 [1]
-Link: https://github.com/Rust-for-Linux/linux/issues/353 [2] # "Missing fields in nested class with LLVM 22."
-Link: https://github.com/rust-lang/rust-bindgen/pull/3278 [3]
-Reported-by: Burak Emir <burak.emir@gmail.com>
-Link: https://github.com/Rust-for-Linux/linux/issues/1247 [4]
-Link: https://lore.kernel.org/rust-for-linux/CABwQupNfMAJOGqRM9ke6tj4f53dCCsBDKU7Vp+zf8mwk7bqt8Q@mail.gmail.com/ [5]
-Link: https://mirrors.edge.kernel.org/pub/tools/llvm/rust/ [6]
-Tested-by: Burak Emir <burak.emir@gmail.com>
-Link: https://patch.msgid.link/20260719120514.159914-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 69f8e15ab61f ("KVM: selftests: Use the SEV library APIs in the intra-host migration test")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260310234829.2608037-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/rust_is_available.sh                  | 14 +++++++++
- .../rust_is_available_bindgen_libclang_22.h   |  5 ++++
- scripts/rust_is_available_test.py             | 30 ++++++++++++++++++-
- 3 files changed, 48 insertions(+), 1 deletion(-)
- create mode 100644 scripts/rust_is_available_bindgen_libclang_22.h
+ tools/testing/selftests/kvm/x86_64/sev_migrate_tests.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index 93c0ef7fb3fb2..c7577705d4964 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -240,6 +240,20 @@ if [ "$bindgen_libclang_cversion" -ge 1900100 ] &&
- 	fi
- fi
+diff --git a/tools/testing/selftests/kvm/x86_64/sev_migrate_tests.c b/tools/testing/selftests/kvm/x86_64/sev_migrate_tests.c
+index 0a6dfba3905b6..6b0928e69051d 100644
+--- a/tools/testing/selftests/kvm/x86_64/sev_migrate_tests.c
++++ b/tools/testing/selftests/kvm/x86_64/sev_migrate_tests.c
+@@ -36,8 +36,6 @@ static struct kvm_vm *sev_vm_create(bool es)
  
-+if [ "$bindgen_libclang_cversion" -ge 2200000 ] &&
-+	[ "$rust_bindings_generator_cversion" -lt 7201 ]; then
-+	# Distributions may have patched the issue.
-+	if ! "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang_22.h | grep -q 'pub foo'; then
-+		echo >&2 "***"
-+		echo >&2 "*** Rust bindings generator '$BINDGEN' < 0.72.1 together with libclang >= 22"
-+		echo >&2 "*** may not work due to a bug (https://github.com/rust-lang/rust-bindgen/pull/3278)."
-+		echo >&2 "***   Your bindgen version:  $rust_bindings_generator_version"
-+		echo >&2 "***   Your libclang version: $bindgen_libclang_version"
-+		echo >&2 "***"
-+		warning=1
-+	fi
-+fi
-+
- # If the C compiler is Clang, then we can also check whether its version
- # matches the `libclang` version used by the Rust bindings generator.
- #
-diff --git a/scripts/rust_is_available_bindgen_libclang_22.h b/scripts/rust_is_available_bindgen_libclang_22.h
-new file mode 100644
-index 0000000000000..6b33544c14a81
---- /dev/null
-+++ b/scripts/rust_is_available_bindgen_libclang_22.h
-@@ -0,0 +1,5 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+struct S;
-+struct S {
-+	int foo;
-+};
-diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_available_test.py
-index 4fcc319dea84e..a5fadef98132f 100755
---- a/scripts/rust_is_available_test.py
-+++ b/scripts/rust_is_available_test.py
-@@ -54,7 +54,7 @@ else:
- """)
+ 	sev_vm_launch(vm, es ? SEV_POLICY_ES : 0);
  
-     @classmethod
--    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False):
-+    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False, libclang_22_patched=False):
-         if libclang_stderr is None:
-             libclang_case = f"raise SystemExit({cls.bindgen_default_bindgen_libclang_failure_exit_code})"
-         else:
-@@ -70,6 +70,11 @@ else:
-         else:
-             libclang_concat_case = "pass"
+-	if (es)
+-		vm_sev_ioctl(vm, KVM_SEV_LAUNCH_UPDATE_VMSA, NULL);
+ 	return vm;
+ }
  
-+        if libclang_22_patched:
-+            libclang_22_case = "print('pub foo: ::std::os::raw::c_int,')"
-+        else:
-+            libclang_22_case = "pass"
-+
-         return cls.generate_executable(f"""#!/usr/bin/env python3
- import sys
- if "rust_is_available_bindgen_libclang.h" in " ".join(sys.argv):
-@@ -78,6 +83,8 @@ elif "rust_is_available_bindgen_0_66.h" in " ".join(sys.argv):
-     {version_0_66_case}
- elif "rust_is_available_bindgen_libclang_concat.h" in " ".join(sys.argv):
-     {libclang_concat_case}
-+elif "rust_is_available_bindgen_libclang_22.h" in " ".join(sys.argv):
-+    {libclang_22_case}
- else:
-     print({repr(version_stdout)})
- """)
-@@ -300,6 +307,27 @@ else:
-                 bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_concat_patched=True)
-                 result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
- 
-+    def test_bindgen_bad_libclang_22(self):
-+        for (bindgen_version, libclang_version, expected_not_patched) in (
-+            ("0.71.1", "21.1.0", self.Expected.SUCCESS),
-+            ("0.71.1", "22.0.0", self.Expected.SUCCESS_WITH_WARNINGS),
-+            ("0.71.1", "22.1.0", self.Expected.SUCCESS_WITH_WARNINGS),
-+
-+            ("0.72.0", "22.0.0", self.Expected.SUCCESS_WITH_WARNINGS),
-+
-+            ("0.72.1", "22.0.0", self.Expected.SUCCESS),
-+        ):
-+            with self.subTest(bindgen_version=bindgen_version, libclang_version=libclang_version):
-+                cc = self.generate_clang(f"clang version {libclang_version}")
-+                libclang_stderr = f"scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version {libclang_version} [-W#pragma-messages], err: false"
-+                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr)
-+                result = self.run_script(expected_not_patched, { "BINDGEN": bindgen, "CC": cc })
-+                if expected_not_patched == self.Expected.SUCCESS_WITH_WARNINGS:
-+                    self.assertIn(f"Rust bindings generator '{bindgen}' < 0.72.1 together with libclang >= 22", result.stderr)
-+
-+                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_22_patched=True)
-+                result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
-+
-     def test_clang_matches_bindgen_libclang_different_bindgen(self):
-         bindgen = self.generate_bindgen_libclang("scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version 999.0.0 [-W#pragma-messages], err: false")
-         result = self.run_script(self.Expected.SUCCESS_WITH_WARNINGS, { "BINDGEN": bindgen })
 -- 
 2.53.0
 
