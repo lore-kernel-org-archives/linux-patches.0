@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027F73B4EB2;
-	Fri,  4 Sep 2026 06:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54A138B7D4;
+	Fri,  4 Sep 2026 06:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501634; cv=none; b=utx2lgYV7VHQ2+TYA3nHasxaMVD4mUcpbWtYo1ddQW3N8BWj6TksjuzBsvfV8FsYE19a+miUrJzHFIYS9peoyOxSMbtheI6dO3TuAZ8X5LgqHVx8azq13UZK8cqDL60XUh3yzBYTaF60iQMeWCBQZcZzOq/4MCcPcLgudtjiFZ0=
+	t=1788501637; cv=none; b=M6Jk98FgAwnxD2F8jzEzdBtyNQQAxKp3PpmdXziqO8KVbcneGn2723zz9c0AWHK+CZMmbUK80vc2sjscoX3Yot4K4ntSknPrFWnyTB0Y/ARXbO4ftmVV3E8QTwpiffo/2HsEnNigLeTQ9WlppWZgMyN7fejFoO2zyS+1FHsdlkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501634; c=relaxed/simple;
-	bh=/ykHGrOa0KrrVDKWF4RMr9kdrq1QwqXYiYl1PS158c8=;
+	s=arc-20240116; t=1788501637; c=relaxed/simple;
+	bh=ZWXJn9dzLt80Fbwa2i2jEud75w6lwEdVXcRzo/NyCzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEE7sfI5L2mGDkA5oYGOjiOcoAqRbT+/dJFv8zz5MTA9Tu8sTUrPUAKjQ6L2SQK5EwTdlHhvL7ckX2KLa6a7fK195TdqQzmYwq/apqwiR72oS7ffrb7DMUm7cBkR8drhtefWQL+8pHg4N6eF0zCi9ddI0hk+EgNOAkFoZTS45Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJwYj7YY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SowVtLHZQZjyfcU8YOp8T0QW7FA3dVylGrzFMivYzm4UxsBpIg9XHMtWTwoH9R2dSZriv332HDg7fROjpclHj0rYmZEmtcDJXruliGyXn098fj2tzgkpMS+CHtTp6PS9LZa5dYPDYEPcfP4VumCiNSm9USxckIa5iIx/HsP9rfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDANmxaD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJwYj7YY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF131F00A3D;
-	Fri,  4 Sep 2026 06:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDANmxaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3181F00A3D;
+	Fri,  4 Sep 2026 06:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501632;
-	bh=RCMF56PMBqb6rOZI62seChIcWKBNrv7Byo/sjWIe6eo=;
+	s=korg; t=1788501635;
+	bh=0SqXpyecDwbHBZkh/a/w7PRLbUaQqnHaNHIxGdAgcTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cJwYj7YYQn1lezFSP8Ikd6NMxHUqETD/2E09RKFjpfYtUa0Ee4eOq8I0juIf3Uyh/
-	 t34VOKil6q+LMuO+PD+WJn4GXD7TGVD2yeiDQlhjiMdLDoI9o6FpA65PxAMEwbSAjc
-	 qt7qisKkoVv0R8zjteIQw9VecA7Kk1pyzYyoeKaQ=
+	b=rDANmxaDEXWX94sgcW3ufmggMK+5iZLcZ9L0J8YUeI2GvqokxyveKA4Kd2b4vVHns
+	 tPHH7u3vLceF7ePgKLvU4VCxTfQ6RPwFRbC+TKQfGGx2D0DW6budmtr1zl+hvwwAGb
+	 vZL4SW/GCaO40bz9G7WcD/SdYSzXzceKVC7VTC0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 477/552] net/smc: stop killed, freed and out_of_sync sharing a byte
-Date: Fri,  4 Sep 2026 07:00:34 +0200
-Message-ID: <20260904045801.496464504@linuxfoundation.org>
+Subject: [PATCH 6.18 478/552] net/smc: unregister the connection before draining the rx tasklet
+Date: Fri,  4 Sep 2026 07:00:35 +0200
+Message-ID: <20260904045801.517353158@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,54 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit db51a8658c11a82432b64999519a269c3aabb447 upstream.
+commit 36cdf5d48ca191dcd71c28cadbe0981b1d25318d upstream.
 
-The three connection state flags are single-bit bitfields, so they occupy
-one byte of struct smc_connection and every store to one is a
-read-modify-write of the other two:
+smc_conn_free() calls smc_ism_unset_conn() only while the link group is
+still on its device list, and never sets conn->killed.
+smc_lgr_terminate_sched() unlinks the group immediately and defers killing
+its connections to a work item, so a connection freed in that window keeps
+its smcd->conn[] slot with both gates in smcd_handle_irq() open, and the
+device can re-arm the receive tasklet after tasklet_kill() has returned. On
+the DMB-nocopy path the ghost send buffer is freed right after that drain,
+so the re-armed tasklet dereferences it.
 
-    u8  killed : 1;
-    u8  freed : 1;
-    u8  out_of_sync : 1;
+Unregister unconditionally and drain before the detach at both teardown
+sites, mirroring rmb_desc, which smc_buf_unuse() releases after the drain.
+Clear conn->sndbuf_desc before freeing it as well, so a reader that samples
+the pointer cannot get one that is already freed.
 
-They are not written under a common lock. smc_cdc_msg_validate() sets
-out_of_sync from the receive tasklet, while smc_conn_kill() sets killed
-from process context under lock_sock(), and the receive path does not defer
-to the backlog when the socket is owned -- smc_cdc_msg_recv() takes only
-bh_lock_sock().
-
-Give each flag its own byte so a store no longer touches its neighbours.
-All readers test them as booleans and are unchanged. struct smc_connection
-grows by two bytes.
-
-Fixes: b286a0651e44 ("net/smc: handle incoming CDC validation message")
+Fixes: ae2be35cbed2 ("net/smc: {at|de}tach sndbuf to peer DMB if supported")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260820074642.966856-2-hidayath@linux.ibm.com
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Link: https://patch.msgid.link/20260808-b4-disp-22f119e6-v2-1-61647601a6f3@proton.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/smc/smc_core.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/net/smc/smc.h
-+++ b/net/smc/smc.h
-@@ -277,9 +277,9 @@ struct smc_connection {
- 						 * 0 for SMC-R, 32 for SMC-D
- 						 */
- 	u64			peer_token;	/* SMC-D token of peer */
--	u8			killed : 1;	/* abnormal termination */
--	u8			freed : 1;	/* normal termination */
--	u8			out_of_sync : 1; /* out of sync with peer */
-+	u8			killed;		/* abnormal termination */
-+	u8			freed;		/* normal termination */
-+	u8			out_of_sync;	/* out of sync with peer */
- };
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1195,14 +1195,16 @@ static void smcd_buf_detach(struct smc_c
+ {
+ 	struct smcd_dev *smcd = conn->lgr->smcd;
+ 	u64 peer_token = conn->peer_token;
++	struct smc_buf_desc *buf_desc;
  
- struct smc_sock {				/* smc sock container */
+ 	if (!conn->sndbuf_desc)
+ 		return;
+ 
+ 	smc_ism_detach_dmb(smcd, peer_token);
+ 
+-	kfree(conn->sndbuf_desc);
++	buf_desc = conn->sndbuf_desc;
+ 	conn->sndbuf_desc = NULL;
++	kfree(buf_desc);
+ }
+ 
+ static void smc_buf_unuse(struct smc_connection *conn,
+@@ -1254,11 +1256,10 @@ void smc_conn_free(struct smc_connection
+ 		goto lgr_put;
+ 
+ 	if (lgr->is_smcd) {
+-		if (!list_empty(&lgr->list))
+-			smc_ism_unset_conn(conn);
++		smc_ism_unset_conn(conn);
++		tasklet_kill(&conn->rx_tsklet);
+ 		if (smc_ism_support_dmb_nocopy(lgr->smcd))
+ 			smcd_buf_detach(conn);
+-		tasklet_kill(&conn->rx_tsklet);
+ 	} else {
+ 		smc_cdc_wait_pend_tx_wr(conn);
+ 		if (current_work() != &conn->abort_work)
+@@ -1511,12 +1512,12 @@ static void smc_conn_kill(struct smc_con
+ 	smc_sk_wake_ups(smc);
+ 	if (conn->lgr->is_smcd) {
+ 		smc_ism_unset_conn(conn);
+-		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
+-			smcd_buf_detach(conn);
+ 		if (soft)
+ 			tasklet_kill(&conn->rx_tsklet);
+ 		else
+ 			tasklet_unlock_wait(&conn->rx_tsklet);
++		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
++			smcd_buf_detach(conn);
+ 	} else {
+ 		smc_cdc_wait_pend_tx_wr(conn);
+ 	}
 
 
