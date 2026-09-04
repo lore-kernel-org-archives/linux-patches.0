@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E19137C106;
-	Fri,  4 Sep 2026 05:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21F837C106;
+	Fri,  4 Sep 2026 05:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501281; cv=none; b=oK5jw13JUzH2FeEOAhbTPG2sOkmHwpFGwZrZ39S5yrFYIyebnuyruUkNH15Khu2dOd7O/UYrFFkK1OtQ4Lu90swiYpIV9tQGafHTeN3tCWz6Hzbe5d65wkdMUip61f/ZhBbaledIvZG5oC+n/vjB/72eKujO5TBD4suE8d4ZhU4=
+	t=1788501284; cv=none; b=Qi1luY1gVBpTesm1DR8GRun7/NGHdWOXyshg1AMyAKJ2l0cLkgaCk2yfd2JZwDHfKwLlWloNIbv3souTli1DGsaXthuX5+mmqscgWfdZV8+oeX27AtxxUqKqwXw/piYU6oSDIdU6evDmkHE3INedsQyKmZeFDSbGKvrnC4MUtKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501281; c=relaxed/simple;
-	bh=TeaPekP/nT9jLteUEgoi5Lua18e2pewA4Dh2+bZ8LYA=;
+	s=arc-20240116; t=1788501284; c=relaxed/simple;
+	bh=YtfPLUe8aDOSjlcPnbb8eXqMTclAyY7bn33/wXnsLYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W27jznLU+9ymuWp6OFu4OJpliKKzc0KAEWnn9ZLN7B01CnhfuBA3w452bcW8YWZVwwX0Okz2jzoG1JqNgqwWxkBg1qJ5s8SUJ6nyLcOhJweUgcYlNf96JaRPfow4aD2yemOF9c/ncHpnbKN3q29WlsFVqU9bRuSlDw64rd7Drq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MVbqsT/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qdIlsR7z9mE+a5lB6GSTuJNJOq+KGFpa395+VHsD3CXcs2gOoH/4Zg7rcAbCzrNeLklb40rr3jUbiEihfogiQKgjQrMRygTtMZd3beK4LCTL+Z+sQQlZQ1LdSl8UgVEyb3zM9gHuVqeKEICHrdqaAUayBZug/ysd8nKhjvyWDsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSH3GvLV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MVbqsT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6B21F00A3D;
-	Fri,  4 Sep 2026 05:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSH3GvLV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1181F00A3D;
+	Fri,  4 Sep 2026 05:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501280;
-	bh=KYGbastMBvjL2xKBhiNjQCJa33XWJsnx6YUTlFoQcW8=;
+	s=korg; t=1788501282;
+	bh=KnelQVj6F+dduQsmoA7msD3xZIj6XHo9Cg8K7RVwgdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1MVbqsT//iCY/QwTKZkONa+vVembOga6hGj9LwWx0ISu17OO4j0+qe3ilGcG+6cdo
-	 W4r0KyCsPBYRgy775FSbUeXRm/6WsiNcoAqt8/w+D9CfDfAzKk/VbDDXnJokNOkfYh
-	 sSgggr2/tbo4v7NZjOnXjnovafCHq0ThM9IN+pCE=
+	b=uSH3GvLV27KgEvlBbRxUoduPV4v5Hor1V2Hsu7hMy+yGhj+9BKyH65kv148bo93kE
+	 COy13SZL2flVIMLgbI094b3jnB1kbyAu2LiNBDlvBLkUIFanUv+tqFtEaf7ERTyOQX
+	 gnhWtk+ILxehrNEizCprwHxXFN2+dDoAAscTOPF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.18 347/552] arm64: proton-pack: Restore the nospectre_bhb command-line option
-Date: Fri,  4 Sep 2026 06:58:24 +0200
-Message-ID: <20260904045758.117431042@linuxfoundation.org>
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 356/552] nvme: zero the discard fallback page
+Date: Fri,  4 Sep 2026 06:58:33 +0200
+Message-ID: <20260904045758.311976276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,89 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 2f6fc0612607c95489c960aaefc8cb5578cdab8c upstream.
+commit bededeaaeff404978a5a8e2a605a6c3017cddd3e upstream.
 
-Commit 7f1635737823 ("arm64: proton-pack: Fix hard lockup due to print in
-scheduler context") moved the "mitigation disabled" printks into
-spectre_print_disabled_mitigations(). For spectre-v2 and spectre-v4 only
-the pr_info_once() calls were removed, but for spectre-bhb the whole
-branch went with the print:
+nvme_setup_discard() always maps sizeof(struct nvme_dsm_range) *
+NVME_DSM_MAX_RANGES = 4096 bytes as the DSM payload however many ranges
+the command declares, because some devices ignore the 'Number of Ranges'
+field - the Fixes: commit records two that read past the declared ranges.
+A single-range discard fills only the first 16 bytes.
 
-  -   } else if (cpu_mitigations_off() || __nospectre_bhb) {
-  -           pr_info_once("spectre-bhb mitigation disabled ...\n");
+Normally the buffer comes from kzalloc() and the other 4080 bytes are
+zero.  When that allocation fails the code falls back to the
+per-controller ctrl->discard_page, which nvme_init_ctrl() obtains with
+alloc_page(GFP_KERNEL) and nothing ever zeroes, so those 4080 bytes are
+whatever the page last held and are handed to the controller.  Reaching
+it requires the kzalloc(GFP_ATOMIC | __GFP_NOWARN) to fail, that is
+memory pressure; it is not remotely triggerable.  Failing the allocation
+under KMSAN reproduces it, with the leaked tail full of vmemmap struct
+page pointers.  The extent in the report is a partial transfer of the
+payload, not the whole 4096 bytes; the 16-byte boundary in it is the one
+declared range:
 
-spectre_bhb_enable_mitigation() therefore no longer tests __nospectre_bhb
-or cpu_mitigations_off() and the mitigation is enabled regardless of the
-command line. The parameter is still parsed and its flag is still checked
-by spectre_print_disabled_mitigations(), so the kernel prints "spectre-bhb
-mitigation disabled by command-line option" while
-/sys/devices/system/cpu/vulnerabilities/spectre_v2 reports "Mitigation:
-CSV2, BHB" and the vectors are switched to EL1_VECTOR_BHB_LOOP.
+[   11.991601] BUG: KMSAN: uninit-value in dma_map_phys+0x14c8/0x1900
+[   11.991969]  dma_map_phys+0x14c8/0x1900
+[   11.992220]  dma_map_page_attrs+0xcf/0x130
+[   11.992485]  e1000_xmit_frame+0x4099/0x6d10
+[   11.992768]  dev_hard_start_xmit+0x22f/0xa80
+[   11.993068]  sch_direct_xmit+0x35c/0xcb0
+[   11.993315]  __dev_queue_xmit+0x1ee5/0x5eb0
+[   11.993608]  ip_finish_output2+0x1903/0x1c30
+[   11.993881]  ip_finish_output+0x288/0x870
+[   11.994125]  ip_output+0x15e/0x400
+[   11.994365]  __ip_queue_xmit+0x1e85/0x1fb0
+[   11.994639]  ip_queue_xmit+0x60/0x80
+[   11.994899]  __tcp_transmit_skb+0x4e71/0x5fa0
+[   11.995210]  tcp_write_xmit+0x3a36/0x9160
+[   11.995533]  __tcp_push_pending_frames+0xc5/0x3c0
+[   11.995854]  tcp_push+0x7dc/0x840
+[   11.996076]  tcp_sendmsg_locked+0x766c/0x8400
+[   11.996371]  tcp_sendmsg+0x4b/0x90
+[   11.996572]  inet_sendmsg+0x134/0x2a0
+[   11.996823]  __sock_sendmsg+0x265/0x360
+[   11.997076]  sock_sendmsg+0x100/0x1e0
+[   11.997293]  nvme_tcp_try_send+0x196f/0x6370
+[   11.997605]  nvme_tcp_queue_rq+0x1d54/0x20b0
+[   11.997882]  blk_mq_dispatch_rq_list+0x5ee/0x2e50
+[   11.998175]  __blk_mq_sched_dispatch_requests+0x16dc/0x24a0
+[   11.998539]  blk_mq_sched_dispatch_requests+0x11b/0x2c0
+[   11.998865]  blk_mq_run_work_fn+0x13b/0x280
+[   11.999146]  process_scheduled_works+0x966/0x1ad0
+[   11.999465]  worker_thread+0xe44/0x1480
+[   11.999709]  kthread+0x53b/0x600
+[   11.999927]  ret_from_fork+0x29f/0x7c0
+[   12.000191]  ret_from_fork_asm+0x1a/0x30
+[   12.000460]
+[   12.000558] Uninit was created at:
+[   12.000788]  __alloc_frozen_pages_noprof+0x8bf/0xd30
+[   12.001096]  alloc_pages_mpol+0x1d0/0x5f0
+[   12.001326]  alloc_pages_noprof+0x102/0x290
+[   12.001627]  nvme_init_ctrl+0x5a3/0x9f0
+[   12.001891]  nvme_tcp_create_ctrl+0xd75/0x19b0
+[   12.002170]  nvmf_dev_write+0x4c68/0x4fd0
+[   12.002426]  vfs_write+0x587/0x1a10
+[   12.002636]  __x64_sys_write+0x207/0x4f0
+[   12.002874]  x64_sys_call+0x2ff0/0x3ea0
+[   12.003123]  do_syscall_64+0x147/0x3b0
+[   12.003400]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   12.003680]
+[   12.003777] Bytes 16-2843 of 2844 are uninitialized
+[   12.004068] Memory access of size 2844 starts at ffff888109f82000
+[   12.004412]
+[   12.004530] CPU: 0 UID: 0 PID: 101 Comm: kworker/0:1H Not tainted 7.2.0-rc5-NVMECTL-gf5098b6bae76 #1 PREEMPT(lazy)
+[   12.005127] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   12.005762] Workqueue: kblockd blk_mq_run_work_fn
+[   12.006073] =====================================================
 
-The only remaining escape is the SPECTRE_VULNERABLE arm at the top of the
-chain, which a CSV2 core never reaches, so from Cortex-A76 and Neoverse N1
-onwards both nospectre_bhb and mitigations=off are ignored. Both are
-documented in Documentation/admin-guide/kernel-parameters.txt.
+Allocate the page with __GFP_ZERO.  The single allocation site covers
+every use of it: bytes no discard has written stay zero, and bytes one
+did write hold that controller's own range list, which it has already
+been sent.
 
-The identical mistake was made on the neighbouring compile-time-option
-branch immediately before this regression and fixed shortly afterwards;
-this command-line branch was missed.
-build_bhb_mitigation() in arch/arm64/net/bpf_jit_comp.c still tests both
-flags, so nospectre_bhb currently keeps the exception-vector loop while
-dropping the cBPF epilogue mitigation.
-
-Restore the check, folded into a spectre_bhb_mitigations_off() helper
-alongside its spectre_v2/v4 counterparts, and use it for the boot-time
-print in spectre_print_disabled_mitigations() as well. The print itself
-already lives there and does not need restoring.
-
-Tested under QEMU with -cpu neoverse-n1 (CSV2, no ECBHB, no CLRBHB).
-Before, spectre_v2 read "Mitigation: CSV2, BHB" with and without the
-option; after, nospectre_bhb and mitigations=off both give "Mitigation:
-CSV2, but not BHB" and a boot without either is unchanged.
-
-Fixes: 7f1635737823 ("arm64: proton-pack: Fix hard lockup due to print in scheduler context")
-Assisted-by: Claude:claude-opus-5
+Fixes: 530436c45ef2 ("nvme: Discard workaround for non-conformant devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/proton-pack.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/proton-pack.c
-+++ b/arch/arm64/kernel/proton-pack.c
-@@ -1022,6 +1022,11 @@ static int __init parse_spectre_bhb_para
- }
- early_param("nospectre_bhb", parse_spectre_bhb_param);
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -5120,7 +5120,7 @@ int nvme_init_ctrl(struct nvme_ctrl *ctr
  
-+static bool spectre_bhb_mitigations_off(void)
-+{
-+	return __nospectre_bhb || cpu_mitigations_off();
-+}
-+
- void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *entry)
- {
- 	bp_hardening_cb_t cpu_cb;
-@@ -1035,6 +1040,8 @@ void spectre_bhb_enable_mitigation(const
- 		/* No point mitigating Spectre-BHB alone. */
- 	} else if (!IS_ENABLED(CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY)) {
- 		/* Do nothing */
-+	} else if (spectre_bhb_mitigations_off()) {
-+		/* Mitigation disabled on the command line */
- 	} else if (supports_ecbhb(SCOPE_LOCAL_CPU)) {
- 		state = SPECTRE_MITIGATED;
- 		set_bit(BHB_HW, &system_bhb_mitigations);
-@@ -1200,6 +1207,6 @@ void spectre_print_disabled_mitigations(
- 	if (spectre_v4_mitigations_off())
- 		pr_info("spectre-v4 %s", spectre_disabled_suffix);
- 
--	if (__nospectre_bhb || cpu_mitigations_off())
-+	if (spectre_bhb_mitigations_off())
- 		pr_info("spectre-bhb %s", spectre_disabled_suffix);
- }
+ 	BUILD_BUG_ON(NVME_DSM_MAX_RANGES * sizeof(struct nvme_dsm_range) >
+ 			PAGE_SIZE);
+-	ctrl->discard_page = alloc_page(GFP_KERNEL);
++	ctrl->discard_page = alloc_page(GFP_KERNEL | __GFP_ZERO);
+ 	if (!ctrl->discard_page) {
+ 		ret = -ENOMEM;
+ 		goto out;
 
 
