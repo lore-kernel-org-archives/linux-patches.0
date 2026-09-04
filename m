@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F90F3876B3;
-	Fri,  4 Sep 2026 05:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CE23BCD0A;
+	Fri,  4 Sep 2026 05:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498440; cv=none; b=Hq2xrgK+tgZRfW15ZVdQw99OqXYVLJZBG94RdC+Tr+0EGTkfxQxGG4HQObTuMEcagw2Kpc2GFA/Jp/6auNbWONb8IzJpoN24WwuHYUuxn43doU4M8dJfVj+hS7x+flNOJa/lOs5W09fEfuMOnKmzaz+vMfBPCN9CjDMWUHSvwBo=
+	t=1788498443; cv=none; b=urYU2rKQ9uss1DaLm3JleFJw1Ehsv36YpdVRw3Jdb7zLM1/KiPoHO0ubslxbbXpHtEAoIW9uyyddmKaYuezAJ73nbG96s9E0moAXnA/Dv43Czto8ENQIKC4PVYDSAMhtriqrYj+c5U7TgEbBgBwWZLKEozCxYdZ1OSTHXIwM/yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498440; c=relaxed/simple;
-	bh=QEgtE4Si16yTRphE2tpeGTQkBBQlci3QawcQgXUxrOM=;
+	s=arc-20240116; t=1788498443; c=relaxed/simple;
+	bh=YB2DoMKyCs9gUpRAFtpGatelSpG2dRCr8klFcGqH5dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWW86L5dVk0WvBFoPR/wBLfKOQVmqVoaZ5S3xtCmJbt8VO3tUADAiNBIdeX25rJiBM9H/Uh1k+pYR1WTXeUDrnhLOer8q59d7BAsSFsb3iOQBolNU5kWeTQZkgbosBOuBHsh6yIQA98ifDLy5AzgqAvF4xlSr72hMxjOVw99Qu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLrYiZK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UBde7wd4DY/mA8mtf1gKpPrclDhIv3sT86I8Bh0cuO4D0ybDgHnQ87nandIyFUltDe7Ms+iz9yzDsRpAyoL5nq4TO4ZRf1pgOm/paGj/CMgTzwYo1c+mSZ8lBXvXrx+S1hYgLiEdGy75sPBvabFmvrdmbB5Pu0hdoegGsB3rqN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhGKVgG5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLrYiZK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8786C1F00A3D;
-	Fri,  4 Sep 2026 05:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhGKVgG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2751F00A3D;
+	Fri,  4 Sep 2026 05:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498439;
-	bh=fhGMF850g8jydgyjX/R0Tp83QUYhvTqku2i23QWrgjs=;
+	s=korg; t=1788498441;
+	bh=pPfD/cdfvvPLr+utXERx04xF5htaxEMfD4ICAeUJIZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLrYiZK0VndaUtVlSJcqQyMZIuO0p9S0JGYphHm5omCM7dFoM8vMYKTvROo2TkXv+
-	 srS0YxAXIOQrOIdGaLpbfAho0ClFUZkT9ystg67c8P0VSnY4xZOCzlKqf6ibxFlW/C
-	 g91qH/N/uXZ1u9XAUboJK7brW1Q5Rl6CEc/JJ56g=
+	b=OhGKVgG5dfwFJeqUBYRxEarrdVXKyIiN8uRZaJG0Mq2JkdZiY29NBzyB5iBhjYBpg
+	 RDfVt5I+7u+BFbAoGoq5J8V7wJs+amUOR4HxQPbw+7APTZx1LzsgPv4M9ON7ZB6LYg
+	 JJ6nGvOsr52TOScrgrE/Enaocg0YBqKvJFI3nIL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.2 036/713] objtool/rust: add one more `noreturn` Rust function
-Date: Fri,  4 Sep 2026 06:50:04 +0200
-Message-ID: <20260904045804.639613701@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Max Boone <mboone@akamai.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 063/713] mm/pagewalk: fix stale walk->action escaping walk_pmd_range()
+Date: Fri,  4 Sep 2026 06:50:31 +0200
+Message-ID: <20260904045805.251099012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,70 +58,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 993f235c4af49d0e912cc28abe6d733531600237 upstream.
+commit aedf2efd18977e0cef7eb963166e2b1fcc0aa321 upstream.
 
-When the pointer formatting series [1] is applied and KUnit tests
-are enabled, `objtool` would report an error with any of our
-supported Rust versions. For instance, with Rust 1.97.1:
+If ->pmd_entry() sets walk->action = ACTION_AGAIN, the pmd_none() check is
+retried.  The PMD entry may be cleared at the point of retry.
 
-    rust/kernel.o: error: objtool: _R..._4core3fmt7Pointer3fmtB7_()
-    falls through to next function _R..._4core7convert5AsRefNtB5_4BStrE6as_ref()
+In this case, if walk->ops->install_pte is not specified, the code
+continues to the next PMD entry in the range without resetting
+walk->action to ACTION_SUBTREE.
 
-Or, with Rust 1.85.0:
+This leaves walk->action erroneously set to ACTION_AGAIN, which is
+incorrect.
 
-    rust/kernel.o: error: objtool: _R..._4core3fmt7Pointer3fmtB7_()
-    falls through to next function _R..._4core3ffi5c_str4CStrENtNtBS_3fmt7Display3fmtB7_()
+This was incorrect but not problematic up until commit 3b89863c3fa4
+("mm/pagewalk: fix race between concurrent split and refault") which
+updated walk_pud_range() to check for walk->action == ACTION_AGAIN upon
+walk_pmd_range()'s return, causing the PUD walk to be retried.
 
-This happens due to calls to the `noreturn` symbol:
+In this case this results in duplicate walk callbacks being invoked,
+which is erroneous and will break any caller that is not idempotent
+with respect to this (and waste time for those which are).  The result
+is an out-of-bounds write, triggered by a local fuzzer:
 
-    core::str::slice_error_fail
+[    2.272695] ==================================================================
+[    2.273471] BUG: KASAN: slab-out-of-bounds in __mincore_unmapped_range+0x14f/0x190
+[    2.274302] Write of size 1 at addr ffff888008d9b000 by task poc/106
+[    2.274966]
+[    2.275154] CPU: 0 UID: 1000 PID: 106 Comm: poc Not tainted 7.2.0-rc6-00429-ga7c7074b58d2 #55 PREEMPT(lazy)
+[    2.275159] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    2.275164] Call Trace:
+[    2.275170]  <TASK>
+[    2.275172]  dump_stack_lvl+0x53/0x70
+[    2.275200]  print_report+0xd0/0x630
+[    2.275210]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[    2.275219]  ? irqentry_exit+0xd2/0x670
+[    2.275224]  ? irqentry_exit+0xd2/0x670
+[    2.275226]  ? __virt_addr_valid+0xef/0x1a0
+[    2.275239]  ? __mincore_unmapped_range+0x14f/0x190
+[    2.275242]  kasan_report+0xce/0x100
+[    2.275245]  ? __mincore_unmapped_range+0x14f/0x190
+[    2.275248]  __mincore_unmapped_range+0x14f/0x190
+[    2.275252]  mincore_unmapped_range+0x45/0x70
+[    2.275254]  walk_pgd_range+0xafc/0xfc0
+[    2.275261]  ? __pfx_walk_pgd_range+0x10/0x10
+[    2.275264]  ? __update_load_avg_se+0x3d1/0x670
+[    2.275275]  __walk_page_range+0xc0/0x310
+[    2.275278]  ? __pfx_find_vma+0x10/0x10
+[    2.275281]  ? finish_task_switch.isra.0+0x16d/0x4f0
+[    2.275290]  walk_page_range_mm_unsafe+0x26f/0x3a0
+[    2.275293]  ? __pfx_mtree_load+0x10/0x10
+[    2.275298]  ? __pfx_walk_page_range_mm_unsafe+0x10/0x10
+[    2.275302]  ? __free_frozen_pages+0x54d/0x7e0
+[    2.275308]  __do_sys_mincore+0x132/0x380
+[    2.275311]  do_syscall_64+0xf9/0x540
+[    2.275316]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[    2.275322] RIP: 0033:0x422ccd
+[    2.275326] Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+[    2.275329] RSP: 002b:00007fffffffec18 EFLAGS: 00000287 ORIG_RAX: 000000000000001b
+[    2.275337] RAX: ffffffffffffffda RBX: 0000000000000066 RCX: 0000000000422ccd
+[    2.275339] RDX: 00000000004d0940 RSI: 0000000001000000 RDI: 00007ffff4000000
+[    2.275340] RBP: 00000000004d0940 R08: 0000000000000100 R09: 0000000000000100
+[    2.275342] R10: 0000000000000100 R11: 0000000000000287 R12: 20c49ba5e353f7cf
+[    2.275343] R13: 00000000004990d3 R14: 0000000000000000 R15: 0000000000000001
+[    2.275346]  </TASK>
+[    2.275347]
+[    2.296904] The buggy address belongs to the object at ffff888008d9b000
+[    2.296904]  which belongs to the cache sigqueue of size 80
+[    2.298151] The buggy address is located 0 bytes inside of
+[    2.298151]  allocated 80-byte region [ffff888008d9b000, ffff888008d9b050)
+[    2.299408]
+[    2.299601] The buggy address belongs to the physical page:
+[    2.300191] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8d9b
+[    2.301001] flags: 0x100000000000000(node=0|zone=1)
+[    2.301535] page_type: f5(slab)
+[    2.301884] raw: 0100000000000000 ffff888107e46780 dead000000000122 0000000000000000
+[    2.302687] raw: 0000000000000000 0000000800240024 00000000f5000000 0000000000000000
+[    2.303489] page dumped because: kasan: bad access detected
+[    2.304092]
+[    2.304276] Memory state around the buggy address:
+[    2.304801]  ffff888008d9af00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    2.305567]  ffff888008d9af80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    2.306340] >ffff888008d9b000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.307115]                    ^
+[    2.307474]  ffff888008d9b080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.308237]  ffff888008d9b100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.308997] ==================================================================
 
-Thus add the mangled one to the list so that `objtool` knows it is
-actually `noreturn`.
+A specific example of this breaking things is mincore which walks an
+internal cursor data structure a byte at a time on assumption that page
+table entry callbacks are called only once for each entry.
 
-See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-for more details.
+Fix the problem by resetting walk->action to ACTION_SUBTREE prior to the
+none check.
 
-[ While the series [1] mentioned above was not applied in a way
-  that triggered this, Gary found another case [2]:
+The pattern also exists in walk_pud_range() so fix it there too.
 
-    I am seeing this function causing issue on my 1.85.1 -Os build, although the
-    error message is different this time:
+This issue was found through AI-based fuzzing.
 
-        rust/kernel.o: warning: objtool: _R..._5range9RangeFromjEE5indexCsldbe0TGTmNx_6kernel+0x1d:
-        stack state mismatch: cfa1=4+8 cfa2=4+16
-
-    Disassembly shows that the function call before the warning location
-    is a call to _4core3str16slice_error_fail, and objtool thought it can
-    return (which will end up with a unbalanced stack if it does return).
-
-  Thus apply it. - Miguel ]
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/rust-for-linux/anLxXvCKBcAVf91_@google.com/
-Link: https://lore.kernel.org/rust-for-linux/20260706-hashedptr-v13-0-377a07f2f78d@kylinos.cn/ [1]
-Link: https://lore.kernel.org/rust-for-linux/DKS7U9UHY6XR.2JC0EBIPCI06Z@garyguo.net/ [2]
-Link: https://patch.msgid.link/20260805144524.233362-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://lore.kernel.org/20260811161949.3879321-2-imv4bel@gmail.com
+Fixes: 3b89863c3fa4 ("mm/pagewalk: fix race between concurrent split and refault")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Max Boone <mboone@akamai.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/objtool/check.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/pagewalk.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -195,6 +195,7 @@ static bool is_rust_noreturn(const struc
- 	return str_ends_with(func->name, "_4core3num20from_str_radix_panic")				||
- 	       str_ends_with(func->name, "_4core3num22from_ascii_radix_panic")				||
- 	       str_ends_with(func->name, "_4core3num28from_ascii_bytes_radix_panic")			||
-+	       str_ends_with(func->name, "_4core3str16slice_error_fail")				||
- 	       str_ends_with(func->name, "_4core5sliceSp15copy_from_slice17len_mismatch_fail")		||
- 	       str_ends_with(func->name, "_4core6option13expect_failed")				||
- 	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -126,6 +126,7 @@ static int walk_pmd_range(pud_t *pud, un
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ again:
++		walk->action = ACTION_SUBTREE;
+ 		next = pmd_addr_end(addr, end);
+ 		if (pmd_none(*pmd)) {
+ 			if (has_install)
+@@ -138,8 +139,6 @@ again:
+ 				continue;
+ 		}
+ 
+-		walk->action = ACTION_SUBTREE;
+-
+ 		/*
+ 		 * This implies that each ->pmd_entry() handler
+ 		 * needs to know about pmd_trans_huge() pmds
+@@ -196,6 +195,7 @@ static int walk_pud_range(p4d_t *p4d, un
+ 	pud = pud_offset(p4d, addr);
+ 	do {
+  again:
++		walk->action = ACTION_SUBTREE;
+ 		next = pud_addr_end(addr, end);
+ 		if (pud_none(*pud)) {
+ 			if (has_install)
+@@ -208,8 +208,6 @@ static int walk_pud_range(p4d_t *p4d, un
+ 				continue;
+ 		}
+ 
+-		walk->action = ACTION_SUBTREE;
+-
+ 		if (ops->pud_entry)
+ 			err = ops->pud_entry(pud, addr, next, walk);
+ 		if (err)
 
 
