@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8516740B11F;
-	Fri,  4 Sep 2026 05:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578193B2FE4;
+	Fri,  4 Sep 2026 05:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498616; cv=none; b=cJg14C2rskGZKrSIvF0BQPdLtlec9Cf7YN9mnWFh8RIOvsawBgdtbAt5BVeJ71KyvghrUirVfy0lk3FeSE/2L7vQmXc/Xi0CeuLD94KJz6VtTi4weOCSLo73EsU7+G4aaZnby/Q4pG4ATmpqEJnN9UV3YgRu6EGJTs8Lpjupqkk=
+	t=1788498619; cv=none; b=GNHPSzWKju3s2JiUsNZJcT4a7GU2HzEOlJFaFvgW7Ft1z2Sy7f37IxOWqmg6DWXtCwCdy3eXhSFicXV5jkdw+DxSjmjqE8oqXNnvFuAbQ5gnKvPy/izC8/3bnIfJncOwnM00r1hrv7yBrqBnaAghGAdMqRH4cTWMorJ07xc2GeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498616; c=relaxed/simple;
-	bh=MMeWwrMWAJ91qUC3LU5YnCXUHKWWG2qzK4RTwLAbEUQ=;
+	s=arc-20240116; t=1788498619; c=relaxed/simple;
+	bh=TCoNFg+xalz1ycQvFMDWDd0wEw9tf2m4Qcl83BsgcII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPb08YQjmf3+7lCMR+tFHicQZGLl+cg0qM0JK4Sh1fkHNAaZH697JZR/6YJtHSwFTVcJLRiPflxp6AtmKLLnAZsDd3f58G4JA6xMS82aiWUDuw5TzQ00oudMHLPv3aQDm8BxJs0RzOM2neJyuNwdtPxjlgLz9U9dWul36lJsEOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSAxADs6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W8gqWCKeOoW1mzyp+dAT6Q6to+HOlhXTSvlB4do8gkLe3VSC5E0tIke1fOiuddRTCvLSkqoI8+lr84H1juPMKHbRZ5F1hd7FvGEyHB4O+qcWXDQp+m1PdCDiUeec2JCLm6VHe2jKp45RuV3wkiPEzTZ37MlDmx1y1vqMSdbsHHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wb73cAX4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSAxADs6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06661F00A3D;
-	Fri,  4 Sep 2026 05:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wb73cAX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C8E1F00A3D;
+	Fri,  4 Sep 2026 05:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498615;
-	bh=7gWzNh2Sphbhl6rXd7IhbEneFXyCSYu1lB7TIF3RZts=;
+	s=korg; t=1788498618;
+	bh=hTI+VVLHoFM9ks7aAR0Z/brxTC4qMZF+2S4EIYRSXq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LSAxADs6WUC6cSEwFRqipyddGmoPGrkkDUB/h8qAABawABU1N74i/Ti9CIrloezxX
-	 stvSa9qzpIoSeYkiRbVrqd28zfvykDVy213SYj9gaBiMzMAR0u3rLLBdfb1rGda07K
-	 Wr61HEVdTbK4tRApjreqMbpQg+M/6WXRABwchy2M=
+	b=Wb73cAX4950eFiajUmFOmW07KcsNr2y5Qpuwiul3J58OvJGemtxVbSrImkNoSOwwA
+	 hsRzCPWX/nt1PhAyaMUrgcsiBAp7gAq/Fy7/r4l1P7bprvPgaCm/nMuqfGtWAwvJJ3
+	 u1SVntoSbYjFDfHGf2a9u/ZX4LUYRJsEVb8tpTlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Borys Tsyrulnikov <tsyrulnikov.borys@gmail.com>,
 	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.2 083/713] x86/insn-eval: Move assign_register() out of KVM as insn_assign_reg()
-Date: Fri,  4 Sep 2026 06:50:51 +0200
-Message-ID: <20260904045805.700279177@linuxfoundation.org>
+	Kai Huang <kai.huang@intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: [PATCH 7.2 084/713] x86/tdx: Fix off-by-one in port I/O handling
+Date: Fri,  4 Sep 2026 06:50:52 +0200
+Message-ID: <20260904045805.723023496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,147 +57,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit 1fe104b048d77d6cb25bd938e6a67450fb50e61d upstream.
+commit 0f63e656b1c679d32ac595de29d10c03efca6a25 upstream.
 
-KVM's instruction emulator has a small helper, assign_register(), that
-writes a value into a register following the x86 rules for writes to
-general-purpose registers: an 8- or 16-bit write leaves the rest of the
-register untouched, a 32-bit write zero-extends the result to 64 bits,
-and a 64-bit write replaces the whole register.
+handle_in() and handle_out() in arch/x86/coco/tdx/tdx.c use:
 
-The TDX guest #VE handler needs the same logic for port I/O emulation
-to get 32-bit zero-extension right.  Rather than add a third copy of
-the same switch, move the helper verbatim to <asm/insn-eval.h>, rename
-it to insn_assign_reg(), and route KVM's callers through it.
+    u64 mask = GENMASK(BITS_PER_BYTE * size, 0);
 
-Add <asm/insn.h> to the header's includes so it builds standalone in
-callers that have not pulled it in transitively.
+GENMASK(h, l) includes bit h. For size=1 (INB), this produces
+GENMASK(8, 0) = 0x1FF (9 bits) instead of GENMASK(7, 0) = 0xFF (8
+bits). The mask is one bit too wide for all I/O sizes.
 
-No functional change.
+Fix the mask calculation.
 
+Fixes: 03149948832a ("x86/tdx: Port I/O: Add runtime hypercalls")
+Reported-by: Borys Tsyrulnikov <tsyrulnikov.borys@gmail.com>
 Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Link: https://lore.kernel.org/all/CAKw_Dz96rfSQc6Rn+9QBcUFHhmkK+9zu+P=bxowfZwxrATCBRg@mail.gmail.com/
 Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20260713133753.223947-3-kirill@shutemov.name
+Link: https://patch.msgid.link/20260713133753.223947-2-kirill@shutemov.name
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/insn-eval.h |   36 ++++++++++++++++++++++++++++++++++++
- arch/x86/kvm/emulate.c           |   26 ++++----------------------
- 2 files changed, 40 insertions(+), 22 deletions(-)
+ arch/x86/coco/tdx/tdx.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/insn-eval.h
-+++ b/arch/x86/include/asm/insn-eval.h
-@@ -9,6 +9,7 @@
- #include <linux/compiler.h>
- #include <linux/bug.h>
- #include <linux/err.h>
-+#include <asm/insn.h>
- #include <asm/ptrace.h>
+--- a/arch/x86/coco/tdx/tdx.c
++++ b/arch/x86/coco/tdx/tdx.c
+@@ -694,7 +694,7 @@ static bool handle_in(struct pt_regs *re
+ 		.r13 = PORT_READ,
+ 		.r14 = port,
+ 	};
+-	u64 mask = GENMASK(BITS_PER_BYTE * size, 0);
++	u64 mask = GENMASK(BITS_PER_BYTE * size - 1, 0);
+ 	bool success;
  
- #define INSN_CODE_SEG_ADDR_SZ(params) ((params >> 4) & 0xf)
-@@ -46,4 +47,39 @@ enum insn_mmio_type insn_decode_mmio(str
+ 	/*
+@@ -714,7 +714,7 @@ static bool handle_in(struct pt_regs *re
  
- bool insn_is_nop(struct insn *insn);
- 
-+/*
-+ * Write @val into *@reg following the x86 rules for writes to
-+ * general-purpose registers (Intel SDM Vol. 1, "General-Purpose
-+ * Registers in 64-Bit Mode"): an 8- or 16-bit write leaves the rest of
-+ * the register untouched, a 32-bit write zero-extends the result into
-+ * the upper 32 bits, and a 64-bit write replaces the whole register.
-+ *
-+ * @bytes is the width of the write, not a property of the instruction:
-+ * an instruction that, say, sign-extends a 32-bit immediate into a
-+ * 64-bit register does a 64-bit write here.
-+ *
-+ * @reg need not be 8-byte aligned: KVM's instruction emulator offsets
-+ * the pointer by one byte to address the high-byte registers (AH, CH,
-+ * DH, BH).  Use narrow stores for the sub-word cases so the access
-+ * width matches @bytes and the adjacent bytes are left alone.
-+ */
-+static inline void insn_assign_reg(unsigned long *reg, u64 val, int bytes)
-+{
-+	switch (bytes) {
-+	case 1:
-+		*(u8 *)reg = (u8)val;
-+		break;
-+	case 2:
-+		*(u16 *)reg = (u16)val;
-+		break;
-+	case 4:
-+		/* A 32-bit write zero-extends into the upper 32 bits. */
-+		*reg = (u32)val;
-+		break;
-+	case 8:
-+		*reg = val;
-+		break;
-+	}
-+}
-+
- #endif /* _ASM_X86_INSN_EVAL_H */
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -24,6 +24,7 @@
- #include "kvm_emulate.h"
- #include <linux/stringify.h>
- #include <asm/debugreg.h>
-+#include <asm/insn-eval.h>
- #include <asm/nospec-branch.h>
- #include <asm/ibt.h>
- #include <asm/text-patching.h>
-@@ -439,25 +440,6 @@ static void assign_masked(ulong *dest, u
- 	*dest = (*dest & ~mask) | (src & mask);
- }
- 
--static void assign_register(unsigned long *reg, u64 val, int bytes)
--{
--	/* The 4-byte case *is* correct: in 64-bit mode we zero-extend. */
--	switch (bytes) {
--	case 1:
--		*(u8 *)reg = (u8)val;
--		break;
--	case 2:
--		*(u16 *)reg = (u16)val;
--		break;
--	case 4:
--		*reg = (u32)val;
--		break;	/* 64b: zero-extend */
--	case 8:
--		*reg = val;
--		break;
--	}
--}
--
- static inline unsigned long ad_mask(struct x86_emulate_ctxt *ctxt)
+ static bool handle_out(struct pt_regs *regs, int size, int port)
  {
- 	return (1UL << (ctxt->ad_bytes << 3)) - 1;
-@@ -505,7 +487,7 @@ register_address_increment(struct x86_em
- {
- 	ulong *preg = reg_rmw(ctxt, reg);
+-	u64 mask = GENMASK(BITS_PER_BYTE * size, 0);
++	u64 mask = GENMASK(BITS_PER_BYTE * size - 1, 0);
  
--	assign_register(preg, *preg + inc, ctxt->ad_bytes);
-+	insn_assign_reg(preg, *preg + inc, ctxt->ad_bytes);
- }
- 
- static void rsp_increment(struct x86_emulate_ctxt *ctxt, int inc)
-@@ -1767,7 +1749,7 @@ static int load_segment_descriptor(struc
- 
- static void write_register_operand(struct operand *op)
- {
--	return assign_register(op->addr.reg, op->val, op->bytes);
-+	return insn_assign_reg(op->addr.reg, op->val, op->bytes);
- }
- 
- static int writeback(struct x86_emulate_ctxt *ctxt, struct operand *op)
-@@ -2008,7 +1990,7 @@ static int em_popa(struct x86_emulate_ct
- 		rc = emulate_pop(ctxt, &val, ctxt->op_bytes);
- 		if (rc != X86EMUL_CONTINUE)
- 			break;
--		assign_register(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
-+		insn_assign_reg(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
- 		--reg;
- 	}
- 	return rc;
+ 	/*
+ 	 * Emulate the I/O write via hypercall. More info about ABI can be found
 
 
