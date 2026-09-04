@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756D7400DE8;
-	Fri,  4 Sep 2026 06:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E15D3D903B;
+	Fri,  4 Sep 2026 06:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502452; cv=none; b=mnDVWrVk1PY1Q00zWqC1Gdn/XtmRaDrOQuMurk1ehHVxwkC/GqoeIt8b/ZxAtv/bJ6Xxdj8tYJ/gYAZE8WnFd3+QkTqRoc016hFU6+zGFy6V3lrs1yJhDJiJHeeCIT9f3NuKnXXQ/tm/jnC+wHWQuNzux3TOpbKuJDbKBZPlnNc=
+	t=1788502455; cv=none; b=s49cF3GXgfrQp8kJL7XgRvnXYYUVGYMBz8baXCI+8O5CeoFoMIcD3LiqRR89aPp8yVSrbYZ8Nz9310VzgkADyiYnumEL6zeoitGnyY0/L19aVP7cDD2R2uNcaGVypsSRALgeT2Bc/BF8dIDEYynt7YsiBCa0j7bqkSTqE/hQdWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502452; c=relaxed/simple;
-	bh=3z9DgWMYFzy280wVBfkKE9hCB5ne7zrzlx+m7JAe/fU=;
+	s=arc-20240116; t=1788502455; c=relaxed/simple;
+	bh=5t+mjZA+UasNm0G/Ou3hxeVGrcQHg4zmas69tzFNtOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhGsj7iQns1LorNDhm9er4cmRMHhOr70HFSQVDwfQoBeyqDrJNbMqAM7+O32iyZTUONUoc9sz3eqHWi8cmJ5+FjBZdktfIpCpDBjJpv97kRI152E5jZX+4dzq85Nu4buFS4VRP6j0pe/aE6IopFJU2/J2ECQpZ+VHHBd/DND6U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrqdl4pJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ini5fKIpwBzLUef00+Df8WAdNC9ZvNJnBGdMtIBlwZQpVjIimQAzq6CA6+QCn6zLFUGWufRbh97tYTdPq9Dm33rjBPgjhWVn6VDoYbGTG7VHPflaPD9OHHlyDdAN7WKYuRRzJdmh+IjpGmW9NS3J94cGvJ6nOnnn9pX+xXoSYbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqQkjj2Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrqdl4pJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983EE1F00A3D;
-	Fri,  4 Sep 2026 06:14:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqQkjj2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BDF1F00A3D;
+	Fri,  4 Sep 2026 06:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502451;
-	bh=JVKpCcRj1OP5SnHunp49qlrn7fCKGdkQxQ8YYzM6tHs=;
+	s=korg; t=1788502453;
+	bh=7BWsX6Rb4u6BPb7MOOnWgAfdGW4ODs0IBTFBoeG2dMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jrqdl4pJdpe9QkvdEiBxnCQP6HTx5/M41RFNpUSpwpJM+YWl4mqP99Lx2eKr1ioQ1
-	 AFMikX3MOyr/cz9Hue+F60MQUgkljbkKuTv29c31M0Wf1X3Y/DdCmLXiXY2xc97jB0
-	 1p9Q1iNM+qWa2eH4ouQCFCHRA4dUcfdb35LXXD9A=
+	b=TqQkjj2QoE2rDjOXAWQ22mkmuCS5pn+BaoSL9WSmf0lz5dAxywRZYup1d+99wwxwW
+	 uhwkxelCVY0Tf9MnjYVhxJdSBv3hHRn+LC0f5i8Ilu/LFkAVW4mpYPtryAEqY3EwTZ
+	 oGXF9XV2D75nEUIKarbrqfMTmVJARskm339zuuLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 211/403] SUNRPC: reject duplicate CREDS_VALUE options
-Date: Fri,  4 Sep 2026 07:00:14 +0200
-Message-ID: <20260904045739.654582047@linuxfoundation.org>
+Subject: [PATCH 6.12 212/403] SUNRPC: Reject krb5 v2 wrap tokens with oversized ec field
+Date: Fri,  4 Sep 2026 07:00:15 +0200
+Message-ID: <20260904045739.677205805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,74 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 2e4ce62385c1b8a887c5370af058ac7b52a8eaf9 upstream.
+commit ad484748eec0a66eac0f13ab53b3fbedb7333c91 upstream.
 
-gssx_dec_option_array() walks the wire-supplied option array and, for
-every entry whose name matches CREDS_VALUE, calls
-gssx_dec_linux_creds() on the same struct svc_cred. That helper
-unconditionally installs a fresh groups_alloc() result into
-creds->cr_group_info without releasing whatever pointer was already
-there:
+gss_krb5_unwrap_v2() sets buf->len to a logical
+length, which can be much smaller than head[0].iov_len
+(the allocated receive-page capacity).  It then calls
+xdr_buf_trim() with a trim length derived from the 16-bit
+"extra count" (ec) field in the Kerberos v2 token header.
 
-    for (i = 0; i < count; i++) {
-        ... decode name ...
-        if (length == sizeof(CREDS_VALUE) &&
-            memcmp(p, CREDS_VALUE, sizeof(CREDS_VALUE)) == 0) {
-            err = gssx_dec_linux_creds(xdr, creds);
-            ...
-        }
-    }
+The ec field is authenticated by the post-decrypt memcmp()
+against the encrypted header copy, so a randomly-mutated
+value is rejected.  However, any peer holding a valid GSS
+context can legitimately encrypt a token whose ec exceeds
+the plaintext length.  Per RFC 4121, such a token is
+structurally malformed.
 
-A reply that carries two CREDS_VALUE entries therefore overwrites
-cr_group_info on the second iteration and orphans the group_info
-allocated by the first call. The earlier free_creds path only
-releases the last cr_group_info via free_svc_cred(), so the first
-allocation's refcount stays at one and its kvmalloc-backed storage
-is leaked. No in-tree caller of gssp_accept_sec_context_upcall()
-expects more than one CREDS_VALUE per reply.
+Although xdr_buf_trim() now clamps the buf->len subtraction
+to avoid unsigned underflow, the buffer is still left in a
+semantically invalid state (zero length, inconsistent iov
+lengths) when ec is oversized.
 
-Fix by tracking whether a CREDS_VALUE option has already been
-decoded and returning -EINVAL on any subsequent match, so the
-free_creds path releases the single group_info that was installed.
+Reject these tokens before calling xdr_buf_trim(), giving
+callers a well-defined GSS_S_DEFECTIVE_TOKEN error and
+keeping the xdr_buf internally consistent.  The wrapped blob
+begins at a nonzero offset -- both callers pass len as
+offset + opaque_len -- so buf->len still counts the offset
+bytes that precede the blob.  Compare the trim length
+against the remaining wrapped segment, buf->len - offset,
+rather than the whole buffer; comparing against buf->len
+alone leaves an offset-wide window in which an oversized ec
+passes the test and xdr_buf_trim() cuts into the bytes ahead
+of the blob.
 
-Fixes: 1d658336b05f ("SUNRPC: Add RPC based upcall mechanism for RPCGSS auth")
+Fixes: cf4c024b9083 ("sunrpc: trim off EC bytes in GSSAPI v2 unwrap")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-3-d026a1415e0b@oracle.com
+Link: https://patch.msgid.link/20260528-tier2-v1-1-d026a1415e0b@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/gss_rpc_xdr.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/sunrpc/auth_gss/gss_krb5_wrap.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/sunrpc/auth_gss/gss_rpc_xdr.c
-+++ b/net/sunrpc/auth_gss/gss_rpc_xdr.c
-@@ -230,6 +230,7 @@ static int gssx_dec_option_array(struct
- 				 struct gssx_option_array *oa)
- {
- 	struct svc_cred *creds;
-+	bool creds_decoded = false;
- 	u32 count, i;
- 	__be32 *p;
- 	int err;
-@@ -280,9 +281,14 @@ static int gssx_dec_option_array(struct
- 		if (length == sizeof(CREDS_VALUE) &&
- 		    memcmp(p, CREDS_VALUE, sizeof(CREDS_VALUE)) == 0) {
- 			/* We have creds here. parse them */
-+			if (creds_decoded) {
-+				err = -EINVAL;
-+				goto free_creds;
-+			}
- 			err = gssx_dec_linux_creds(xdr, creds);
- 			if (err)
- 				goto free_creds;
-+			creds_decoded = true;
- 			oa->data[0].value.len = 1; /* presence */
- 		} else {
- 			/* consume uninteresting buffer */
+--- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
++++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
+@@ -236,6 +236,8 @@ gss_krb5_unwrap_v2(struct krb5_ctx *kctx
+ 	buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
+ 
+ 	/* Trim off the trailing "extra count" and checksum blob */
++	if (ec + GSS_KRB5_TOK_HDR_LEN + tailskip > buf->len - offset)
++		return GSS_S_DEFECTIVE_TOKEN;
+ 	xdr_buf_trim(buf, ec + GSS_KRB5_TOK_HDR_LEN + tailskip);
+ 
+ 	*align = XDR_QUADLEN(GSS_KRB5_TOK_HDR_LEN + headskip);
 
 
