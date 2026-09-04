@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC193D6664;
-	Fri,  4 Sep 2026 05:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241A126AC3;
+	Fri,  4 Sep 2026 05:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499738; cv=none; b=aJXHvzowNxLrsLCUp5pMbZrGcNPvC5cOjQiO7WrPASU84nCy3D5dmb0l/Aob3iYeYNpEItkgHlJzoRADcrg126wiTJmjOA/vk8iXTcDz7/SZyCCqfIOVxnyU9Ci0SGvUDlud7ZHQ0DaFanjF3r+ZvfY4CXEM5b/cWP6KnoGyGcg=
+	t=1788499741; cv=none; b=RXNW3HuIFYeuJYLOaRxKSIDwIF4b4sGmB0KTnyRIw5dgWDjJiTs+SAsv+TPeHuRSpidb55v3ATttnqCmxeCuzEQh3n0Vw8uDKHpshk5KHYnDrSSZ92bM8O5woyVA8vV7sUo2M4X5Xm72wuc6Ln90JmPZZG5c0nS5GlnXO+yLGgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499738; c=relaxed/simple;
-	bh=GvHwOBf8hUHhAF1kN5wEFMrlfJqJEtdM6c5flP839hE=;
+	s=arc-20240116; t=1788499741; c=relaxed/simple;
+	bh=SuI0mtXaqWxyZOgbTymJ3q5KAbSzYTffjCdL0AoxKmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKzJ/4Ojts5XdyuqzPe4QrkNaVa7TiCC3IhSBHpfw0l280vuxbBymdiviihw71kLRd3MQws/YL9N7uWgOvl9FOVrQwftObKkmmpZ7RPUUtX0jl1YkH/4YFDQkycGQlFkM3AxLQ8af2xtl/gpRWD2U6dxO2m7JpAnkJCXGZ9TT5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXGB1q/5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pscsq1x2L9CRuTR7vtVZpaN0YuHEBoEEB3Xw7YTyCUHc7HFpcDNWu8jloR6CdrHOjTsUZtUcPtwhZ/aJtf8OOf6VSIJxLz8l9RRUOWXz0Hf917SUDR2lLGWvb+q52r52F5SgH4d6hH77vc19+M8P2xT61nRy4XXII1DzxKJVASo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdlRDZr9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXGB1q/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2601F00A3D;
-	Fri,  4 Sep 2026 05:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdlRDZr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F81F1F00A3D;
+	Fri,  4 Sep 2026 05:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499737;
-	bh=1oQU4XNPIKomyIZJGJjerWizZxPU/WmOvJmMBMOX6is=;
+	s=korg; t=1788499740;
+	bh=Jvk3P2YIx2xzogpIeKhZj3w09xcokDwLL3VW7MIGwvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lXGB1q/5AK49NZ4DeEUentHo91zraxteeEfMVcjixC6ZbAN25Ei11PrJ3A1wz0GL3
-	 9yv9uMXMDovPd4QGciVsNyy1WHD7KFPGBOxoSDgK1ch9J6bkErxQPEFrfFUYFGqxAP
-	 ywVPxmqBlYLdDZU7ztou1maec2+zM41Q2IS/fn4E=
+	b=WdlRDZr9mBqODzLJBv8szBBejsWoNPTdLPeu7McTPj9GY+WNHrhiajQgYxzLA4i5F
+	 O+MD+u+7BMZVVQrnFRLtfrg086yXKs3wQQRGaAzBxVARukXOFMnwwlanAjgbVQ2QQg
+	 zDmHk0OE9JybL4CHR9R84xaYK1eJb4efsn6EmZFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Simon Horman <horms@kernel.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 496/713] sctp: distinguish sequence zero from wildcard in reconf lookup
-Date: Fri,  4 Sep 2026 06:57:44 +0200
-Message-ID: <20260904045814.943037451@linuxfoundation.org>
+	Ali Tariq <alitariq45892@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 7.2 523/713] PCI: starfive: Fix resource leaks on error paths in host_init()
+Date: Fri,  4 Sep 2026 06:58:11 +0200
+Message-ID: <20260904045815.543608405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,75 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Ali Tariq <alitariq45892@gmail.com>
 
-commit 63f44178f0a0f86060c9b576d6efab8a3ffa403e upstream.
+commit 22877a061f81c5d58041e384b3131684bec636b9 upstream.
 
-Zero is a valid response sequence after strreset_outseq wraps, but
-sctp_chunk_lookup_strreset_param() currently treats it as a wildcard.
+starfive_pcie_host_init() acquires the PHY, clocks/resets, and an
+optional regulator in sequence, but does not correctly unwind these
+resources when a later step fails.
 
-Add match_seq so response lookups match zero exactly while the one
-type-only lookup can still ignore the sequence.
+If starfive_pcie_clk_rst_init() fails after the PHY has already been
+successfully enabled, the function returns directly without disabling
+the PHY, leaking it and leaving it powered.
 
-Fixes: 50a41591f110 ("sctp: implement receiver-side procedures for the Add Outgoing Streams Request Parameter")
-Cc: stable@kernel.org
-Suggested-by: Simon Horman <horms@kernel.org>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Link: https://patch.msgid.link/20260824081832.98717-2-juny24602@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+If regulator_enable() fails for the optional vpcie3v3 regulator, the
+failure is only logged; the function falls through and returns
+success, leaving the driver believing the regulator is enabled while
+continuing to configure PCIe hardware that may be unpowered. This
+also leaves the clocks and PHY enabled with nothing to clean them up.
+
+Disable the PHY on the clk/reset failure path, and disable the
+clocks/resets and PHY, then return the error, if the regulator fails
+to enable.
+
+Build-tested and boot-tested on StarFive VisionFive 2 v1.2A
+
+Fixes: 05a75df4182e ("PCI: starfive: Use regulator APIs to control the 3v3 power supply of PCIe slots")
+Fixes: 39b91eb40c6a ("PCI: starfive: Add JH7110 PCIe controller")
+Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260716102053.185276-1-alitariq45892@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/pci/controller/plda/pcie-starfive.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -482,7 +482,7 @@ out:
+diff --git a/drivers/pci/controller/plda/pcie-starfive.c b/drivers/pci/controller/plda/pcie-starfive.c
+index 298036c3e7f9..628f8c8d6747 100644
+--- a/drivers/pci/controller/plda/pcie-starfive.c
++++ b/drivers/pci/controller/plda/pcie-starfive.c
+@@ -304,12 +304,14 @@ static int starfive_pcie_host_init(struct plda_pcie_rp *plda)
  
- static struct sctp_paramhdr *sctp_chunk_lookup_strreset_param(
- 			struct sctp_association *asoc, __be32 resp_seq,
--			__be16 type)
-+			__be16 type, bool match_seq)
- {
- 	struct sctp_chunk *chunk = asoc->strreset_chunk;
- 	struct sctp_reconf_chunk *hdr;
-@@ -499,7 +499,7 @@ static struct sctp_paramhdr *sctp_chunk_
- 		 */
- 		struct sctp_strreset_tsnreq *req = param.v;
+ 	ret = starfive_pcie_clk_rst_init(pcie);
+ 	if (ret)
+-		return ret;
++		goto err_disable_phy;
  
--		if ((!resp_seq || req->request_seq == resp_seq) &&
-+		if ((!match_seq || req->request_seq == resp_seq) &&
- 		    (!type || type == req->param_hdr.type))
- 			return param.v;
+ 	if (pcie->vpcie3v3) {
+ 		ret = regulator_enable(pcie->vpcie3v3);
+-		if (ret)
++		if (ret) {
+ 			dev_err_probe(dev, ret, "failed to enable vpcie3v3 regulator\n");
++			goto err_clk_rst;
++		}
  	}
-@@ -564,7 +564,7 @@ struct sctp_chunk *sctp_process_strreset
- 	if (asoc->strreset_chunk) {
- 		if (!sctp_chunk_lookup_strreset_param(
- 				asoc, outreq->response_seq,
--				SCTP_PARAM_RESET_IN_REQUEST)) {
-+				SCTP_PARAM_RESET_IN_REQUEST, true)) {
- 			/* same process with outstanding isn't 0 */
- 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
- 			goto out;
-@@ -816,7 +816,7 @@ struct sctp_chunk *sctp_process_strreset
  
- 	if (asoc->strreset_chunk) {
- 		if (!sctp_chunk_lookup_strreset_param(
--			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS)) {
-+			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false)) {
- 			/* same process with outstanding isn't 0 */
- 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
- 			goto out;
-@@ -927,7 +927,8 @@ struct sctp_chunk *sctp_process_strreset
- 	struct sctp_paramhdr *req;
- 	__u32 result;
+ 	if (pcie->reset_gpio)
+@@ -379,6 +381,13 @@ static int starfive_pcie_host_init(struct plda_pcie_rp *plda)
+ 		dev_info(dev, "port link down\n");
  
--	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0);
-+	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0,
-+					       true);
- 	if (!req)
- 		return NULL;
+ 	return 0;
++
++err_clk_rst:
++	starfive_pcie_clk_rst_deinit(pcie);
++err_disable_phy:
++	starfive_pcie_disable_phy(pcie);
++
++	return ret;
+ }
  
+ static const struct plda_pcie_host_ops sf_host_ops = {
+-- 
+2.55.0
+
 
 
