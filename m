@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464C43242BD;
-	Fri,  4 Sep 2026 05:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1600037C106;
+	Fri,  4 Sep 2026 05:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501295; cv=none; b=eENuN2Y8yfrfYzregtw7Xpf762Xe9tudhGnXJoVYM2nThn+CajGaeAmbkOIcidVg35cT9Uz++VnOHsr8QFbPhGWJGlkaVy1ocP/dVUFtAe2ShWGNpHytKZzhxwbRUKfZkJ+KkyBErxg2+TNxlysMds6280/DKn4u2bJv6fSI1fA=
+	t=1788501298; cv=none; b=i1h+mvHWXAv2XEMPrhmSKGZIJKfsc4kcDE6ivJpbwcmHvAK2ppwi3IMse4nTWLUdYWKfS/fF8gCnSwL/aedlsfcsEWtixGvoXlrUoD3VzvMUcLZEjvr2oNdfg76kMv/Y6EZUyxy+NUBEZKkmdVajBUYNsSswzko8MFtI8FAyjtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501295; c=relaxed/simple;
-	bh=kBMWaAFS9Z/mzfq+ShivP9ss5Zak4ouWmLE+9cNikU4=;
+	s=arc-20240116; t=1788501298; c=relaxed/simple;
+	bh=OwQ6Y01eJNUEMSbN/YmLeYGKnydW6q9C+wMNHDQVIMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAhDx7wc+1wbfvqb9cYH4OY4VB8SgQBNSrqVR0RTItwkZIOJa6N6BT/XAvw5sNZnQqvL+jQfVGxrRncdm6CYAEcKku+ycJbtFHn5Z5lJNFU/Jl1X/0KQ7YMqLbc9ZD5TQ1GwgrnAprP4kBuBxAHJKKliilecYvjguaNyvTKDmQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwiPoql1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lPRCC87Ug+GLQL/iCY3E4IHqM4OEemMByYJw+QE1fLX02RUhnVc4RRze1EHkrq6h5DT+yT1VdL+H3zCRaoYAhS0v59sW1JCUwQsE3tTM7JR8oZ1j0i87O9lLhsZv3AtRZFKKqrVNs84lDgFsG4RSJGOBbBXEUGXOpmtPR+7mBtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ibvw6NcG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwiPoql1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE9B1F00A3D;
-	Fri,  4 Sep 2026 05:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ibvw6NcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3821F00A3D;
+	Fri,  4 Sep 2026 05:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501294;
-	bh=a+CP64ZOzFZC7oBL2f6BUlmU5O0nrifp8eemf+CuqUY=;
+	s=korg; t=1788501296;
+	bh=UB+46jsWPoevtQp6MoHPiekeeeCiczb5AnkLmqw3xGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwiPoql15SER/GtwH9/287OAdGFz+muNUsitiUJ6wU9hwOm/WsiNqdBX6bf36lGcj
-	 OAptEeFrbxthk+rGUivAxUSSe9BSYO5PCOV3qLUMcM766Jlk2YowPut1GEFKLdWmYk
-	 bsKpFxohUDU0MTeO0yKsd6Pb69Ym9fkC66h3vh2M=
+	b=Ibvw6NcGYKtphL+vjy5EoA3ABfo69ks/emLALGJE3Stu38vP1HbGemBN4wxumdT3N
+	 B5z5o/dKYEtfWBa+sbZl516xpka/L1V8sPiFxbxdvhgBsHfAYzIonrI5jqr0/EtUMv
+	 ZI9sEkrNq1YtgjqFSIrZNoCU11uPiV9gr/7YO7LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 360/552] nvme-tcp: reject a read that transferred too few bytes
-Date: Fri,  4 Sep 2026 06:58:37 +0200
-Message-ID: <20260904045758.398039999@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 361/552] sctp: stop processing a packet once its association is deleted
+Date: Fri,  4 Sep 2026 06:58:38 +0200
+Message-ID: <20260904045758.419275333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,125 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 7fa3f73f6c8ddc5f0425b50fb2a626a782ef7d12 upstream.
+commit 47e15a8d12e366d0d261bcbc394394f44418938d upstream.
 
-nvme_tcp_recv_data() completes a request once the current C2HData PDU
-has been consumed. Nothing compares the total bytes received against
-the length the command asked for: struct nvme_tcp_request has no
-receive-side counter, queue->data_remaining is per queue, and
-blk_mq_end_request() completes for blk_rq_bytes(rq) unconditionally
-with no residual concept anywhere above.
+sctp_endpoint_bh_rcv() looks the association up only when chunk->asoc is
+NULL, and caches the result in chunk->asoc and chunk->transport without
+taking a reference.
 
-A controller can therefore answer a 4096-byte read with 512 bytes and
-have it reported as a complete read; user space then gets 4096 bytes of
-which 3584 are whatever was already in the page. I reproduced that with
-a test target.
+A packet that matches no association is handed to the endpoint, so a peer
+can bundle COOKIE ECHO, SHUTDOWN and SHUTDOWN ACK in one packet. The
+COOKIE ECHO creates the association, the SHUTDOWN chunk caches it, and
+with the outqueue empty the SHUTDOWN ACK reaches sctp_sf_do_9_2_final(),
+so the association and its transports are freed.
 
-Count the bytes received and refuse to complete a successful read whose
-count does not match, at the two NVME_TCP_F_DATA_SUCCESS paths and in
-nvme_tcp_process_nvme_cqe(). The success test shifts req->status right
-by one, because the driver keeps the wire value there and shifts it on
-completion, so the check must see what the completion path will see.
-Only REQ_OP_READ is checked, because there the length comes from the
-sectors the request covers; a passthrough command is built by its
-submitter, which picks both command and buffer, so the kernel has
-nothing to compare against.
+The endpoint loop has no counterpart to the asoc->base.dead check in
+sctp_assoc_bh_rcv(). The next chunk writes to last_time_heard in the freed
+transport and is then passed to sctp_do_sm() with the freed association.
+The transport is freed through RCU, so this needs the packet to come off
+the socket backlog, where the loop runs in task context.
 
-Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+The endpoint loop cannot do the same check: it holds no reference on the
+association, so reading asoc->base.dead would itself be a use-after-free.
+Mark the packet for discard in the command interpreter, just before it
+deletes the association. That is also before sctp_inq_free() releases the
+chunk on the association receive path.
+
+sctp_sf_do_5_2_4_dupcook() issues SCTP_CMD_DELETE_TCB for the temporary
+association, while the one the packet belongs to stays alive. A restarting
+peer can bundle DATA behind its COOKIE ECHO, so compare against
+chunk->asoc and leave that case alone.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/an-YYtoqw1QpTXUL@v4bel
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |   34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ net/sctp/sm_sideeffect.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -117,6 +117,7 @@ struct nvme_tcp_request {
- 
- 	struct bio		*curr_bio;
- 	struct iov_iter		iter;
-+	u32			data_recvd;
- 
- 	/* send state */
- 	size_t			offset;
-@@ -621,6 +622,29 @@ static void nvme_tcp_error_recovery(stru
- 	queue_work(nvme_reset_wq, &to_tcp_ctrl(ctrl)->err_work);
- }
- 
-+/*
-+ * NVMe has no short read: a read that completes successfully must
-+ * have transferred everything it asked for.
-+ */
-+static bool nvme_tcp_data_in_short(struct nvme_tcp_queue *queue,
-+				   struct request *rq)
-+{
-+	struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
-+
-+	if (le16_to_cpu(req->status) >> 1)
-+		return false;
-+	if (req_op(rq) != REQ_OP_READ || !req->data_len)
-+		return false;
-+	if (likely(req->data_recvd == req->data_len))
-+		return false;
-+
-+	dev_err(queue->ctrl->ctrl.device,
-+		"queue %d tag %#x short data-in: got %u of %u\n",
-+		nvme_tcp_queue_id(queue), rq->tag,
-+		req->data_recvd, req->data_len);
-+	return true;
-+}
-+
- static int nvme_tcp_process_nvme_cqe(struct nvme_tcp_queue *queue,
- 		struct nvme_completion *cqe)
- {
-@@ -640,6 +664,9 @@ static int nvme_tcp_process_nvme_cqe(str
- 	if (req->status == cpu_to_le16(NVME_SC_SUCCESS))
- 		req->status = cqe->status;
- 
-+	if (unlikely(nvme_tcp_data_in_short(queue, rq)))
-+		return -EPROTO;
-+
- 	if (!nvme_try_complete_req(rq, req->status, cqe->result))
- 		nvme_complete_rq(rq);
- 	queue->nr_cqe++;
-@@ -971,6 +998,7 @@ static int nvme_tcp_recv_data(struct nvm
- 		*len -= recv_len;
- 		*offset += recv_len;
- 		queue->data_remaining -= recv_len;
-+		req->data_recvd += recv_len;
- 	}
- 
- 	if (!queue->data_remaining) {
-@@ -979,6 +1007,8 @@ static int nvme_tcp_recv_data(struct nvm
- 			queue->ddgst_remaining = NVME_TCP_DIGEST_LENGTH;
- 		} else {
- 			if (pdu->hdr.flags & NVME_TCP_F_DATA_SUCCESS) {
-+				if (unlikely(nvme_tcp_data_in_short(queue, rq)))
-+					return -EPROTO;
- 				nvme_tcp_end_request(rq,
- 						le16_to_cpu(req->status));
- 				queue->nr_cqe++;
-@@ -1027,6 +1057,9 @@ static int nvme_tcp_recv_ddgst(struct nv
- 					pdu->command_id);
- 		struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
- 
-+		if (unlikely(nvme_tcp_data_in_short(queue, rq)))
-+			return -EPROTO;
-+
- 		nvme_tcp_end_request(rq, le16_to_cpu(req->status));
- 		queue->nr_cqe++;
- 	}
-@@ -2729,6 +2762,7 @@ static blk_status_t nvme_tcp_setup_cmd_p
- 	req->status = cpu_to_le16(NVME_SC_SUCCESS);
- 	req->offset = 0;
- 	req->data_sent = 0;
-+	req->data_recvd = 0;
- 	req->pdu_len = 0;
- 	req->pdu_sent = 0;
- 	req->h2cdata_left = 0;
+--- a/net/sctp/sm_sideeffect.c
++++ b/net/sctp/sm_sideeffect.c
+@@ -1332,6 +1332,10 @@ static int sctp_cmd_interpreter(enum sct
+ 				sctp_outq_uncork(&asoc->outqueue, gfp);
+ 				local_cork = 0;
+ 			}
++			/* No chunk left in this packet may use this asoc. */
++			if (event_type == SCTP_EVENT_T_CHUNK &&
++			    chunk->asoc == asoc)
++				chunk->pdiscard = 1;
+ 			/* Delete the current association.  */
+ 			sctp_cmd_delete_tcb(commands, asoc);
+ 			asoc = NULL;
 
 
