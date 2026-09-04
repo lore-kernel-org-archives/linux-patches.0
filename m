@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0C24156F0;
-	Fri,  4 Sep 2026 05:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3CC3B95FA;
+	Fri,  4 Sep 2026 05:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499974; cv=none; b=QXHOWjuHxMe+LbYdR5quqBe5/ckXNDR7ZEb3O2R4At80V3lcY3//9PbxF4AYdLTXzf+r6LtBLisGh1aUNy+noo68Tr0Ap9qPWPujVBJWnB9Kn164//a49rp460GiiKzH7ws5yDndPk/F1pPhBA01IQ4HkIy2JgFQ9gjQgICzD/w=
+	t=1788499978; cv=none; b=caYBbO1DzG5m6BzLsIVccPMEtCYKKPgSGYtcpEhRodhRFKOWhuM6fODqUTqLNd+U5+x1u1IKqaqgAy1puqFeGdskwmqhLorWNHhFK5rdON2M29lnMVcDbQWro1Doy9JjtzIYJZMAd9VC0G2kTuoFsVjd06VQODXMKieZSIjVOIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499974; c=relaxed/simple;
-	bh=WVNph4k/Btc3WkA06bYxw3wuoRXTP4z3PJWxVJsDXHM=;
+	s=arc-20240116; t=1788499978; c=relaxed/simple;
+	bh=rLtHVZkOoTAZPC30kHNPkvzQ8XU/tCtAxd9TgxeWJzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHPEzk15sU3qrVp5AQN5IYOYd/GgGnZ685/UJY92kgPZxloMOABUWd7HCpJiy8L3sozeBNb3JwVQ63M8pWtwk08mMFgQYtABxfm3Z5FqXyYia1kDAmsHxPOkS8AD85qI/mCwFNvHo1Kpb//rfRZcBaLubYISqSJJbm1XAmsyUuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCgo0ZXE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eRlGYfnC4psKWff8zRsMQKIvK+3Eztdb/U5W0U+DxHKYda8Th4Y5qN0yqfcME0zT0/Q7Wp40IfGOsePD3BSgoJs0b9aXlkk+/5JLbtgQzHw/tXvaW6CoXBG+KbxmXvJHIFUZq1hvDluhljcxln5CEA3DBOSmiTzLTICPS8lg6Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKCPo4rS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCgo0ZXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B8F1F00A3D;
-	Fri,  4 Sep 2026 05:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKCPo4rS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F631F00A3D;
+	Fri,  4 Sep 2026 05:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499973;
-	bh=kLZVNXqzIVG/n0S7Z7Grft4OG+R1IWzyt0kMfJP6wRs=;
+	s=korg; t=1788499976;
+	bh=tRe31ZXGKF/TfYMNf6cVM0qyOdPlvy5InNk5kT9nI94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zCgo0ZXExwaI3j+e//fr9jHmSG0aDNMHlvieNeKln2xUXdlxw5n3vPX7RrO4tx+yR
-	 0lfGwP0BTzmilQ4KkkTAvjIxmSpJHijlUh9AR78YXS5mtRTD1rklm4/vUSierJK1+A
-	 HSUTbN5gXifTV5D9Pt8ToqoL7BueULrT0Uz1ESX4=
+	b=eKCPo4rSCXx6zlMv5hC82BgjiGk3eth3WdyyMC67R1Kt5dzU5cHnAck3hVhjZUYrC
+	 vVO8uO/ZT+b47BlztARknW8CHzr0tuKduH5Lf4pIbpVHRw7yFFzTSkuDk281/FSSCV
+	 kGiIevyxPdNfndo+Tz6IqMwEg95BT5AFu3WN39XM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 606/713] net: openvswitch: fix nf_connlabels leak in ovs_ct_init
-Date: Fri,  4 Sep 2026 06:59:34 +0200
-Message-ID: <20260904045817.410970646@linuxfoundation.org>
+Subject: [PATCH 7.2 607/713] net: phylink: correctly validate returned PCS in phylink_inband_caps
+Date: Fri,  4 Sep 2026 06:59:35 +0200
+Message-ID: <20260904045817.432790177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,63 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit f9de5db270a4c2641de87ee558c16a9bc6eb4cd8 upstream.
+commit f2849b1fd059ec9b3281b771e6ac5aad9feee851 upstream.
 
-ovs_ct_init() acquires a connlabels reference before initializing the
-conntrack limit state. If ovs_ct_limit_init() fails, its error is returned
-directly. The pernet core does not invoke the exit callback for the
-operation whose initialization failed, so ovs_ct_exit() cannot drop the
-reference.
+In phylink_inband_caps(), the PCS returned by mac_select_pcs is only
+checked if NULL but mac_select_pcs can also return an error pointer.
 
-This leaves labels_used elevated when Open vSwitch pernet registration
-fails for an existing network namespace. Subsequent conntrack entries in
-that namespace may allocate label extensions even though Open vSwitch
-failed to register.
+This can cause a kernel panic as phylink_pcs_inband_caps() only checks
+if passed PCS is not NULL and directly dereference ops from the phylink_pcs
+struct.
 
-Drop the connlabels reference before returning a conntrack limit
-initialization error. ovs_ct_limit_init() already releases its partial
-state, and the original error remains unchanged.
+Use the IS_ERR_OR_NULL macro to address both case where the returned
+PCS can be NULL or an error pointer and prevent a kernel panic.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260815151729.3757984-1-ruoyuw560@gmail.com
+Fixes: df874f9e52c3 ("net: phylink: add pcs_inband_caps() method")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Link: https://patch.msgid.link/20260817213009.13924-1-ansuelsmth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/phy/phylink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -2022,6 +2022,7 @@ int ovs_ct_init(struct net *net)
- {
- 	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
- 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
-+	int err = 0;
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -965,7 +965,7 @@ static unsigned int phylink_inband_caps(
+ 		return 0;
  
- 	if (nf_connlabels_get(net, n_bits - 1)) {
- 		ovs_net->xt_label = false;
-@@ -2031,10 +2032,11 @@ int ovs_ct_init(struct net *net)
- 	}
+ 	pcs = pl->mac_ops->mac_select_pcs(pl->config, interface);
+-	if (!pcs)
++	if (IS_ERR_OR_NULL(pcs))
+ 		return 0;
  
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
--	return ovs_ct_limit_init(net, ovs_net);
--#else
--	return 0;
-+	err = ovs_ct_limit_init(net, ovs_net);
-+	if (err && ovs_net->xt_label)
-+		nf_connlabels_put(net);
- #endif
-+	return err;
- }
- 
- /* Must be called with ovs_mutex held.  Detaches the RCU-protected
+ 	return phylink_pcs_inband_caps(pcs, interface);
 
 
