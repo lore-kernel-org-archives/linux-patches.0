@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257A22264A3;
-	Fri,  4 Sep 2026 05:40:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ABA2264A3;
+	Fri,  4 Sep 2026 05:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500460; cv=none; b=iDvsQeN89moJaTMtGhknIr/CzucRRuzqWv/mbsOGZoWoz3splalTTQWdyHbISi4YYccAAxiVDrO9O8jlVuFtlxd2nn2v4Q1IiHaj40EC4Ze/HlcT/LEkFqIydSLe/RCgpUnAEUy1a7+5b/0brQR8I2q0XOf4oWWp++G5MFWsD9Q=
+	t=1788500463; cv=none; b=pJMhfU+JPGMEXJUbi/al7rp4YUTuEftDem2dP9btdAuomWPqdtFOYJtTxFuBPuVYqYnwGard4jmMAI64Fl7CjsRfFFHaCovtPEU5L05VuJ6OPfw/VuLpgoFh3FZjJPCnaCuZwfX3dxe2WaHVshEeRMyFEO7xVqB9hXUKs8P5Ta4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500460; c=relaxed/simple;
-	bh=N50MghqRJrympRJ4Mp58TzAYKvbSqMgti4D6uA/ZGgk=;
+	s=arc-20240116; t=1788500463; c=relaxed/simple;
+	bh=0Uc8nL0wVu0tfY4LnfsRvw4GnPigXLJyRa38YLx9d7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4eMEf2PM0WockrSPnDt/xq3blu8VNmSs+AaXCd7EaAKc02zPus97worHiRs8asrHCfGnvfTWdIBGYQfiP+M1UzBoxeV538WR15uwkCDp84E1tlWOsJNg6dS0jyYEA8P4Ewr5VEigfKnunEscXGNp8DnvMjFY9wAlP1exHX/T3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lq02PIJr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AmolImAbEMFW9UUU+uzmJGZUT6wZI3jWwP9tlao+Hs1Hn2f66E/ABdiyXA2uKjPds4aF9LSBZLoo4NaQwoFKjZ+e2oKlV1fB/24xfnqzlpQNGmSymxBfEF2JVx+WwelBdZ8G7OwKgNibwLjo5HqpLR0wVEMnCCERVS5HMQHe+PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcU3KoIw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lq02PIJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802B91F00A3D;
-	Fri,  4 Sep 2026 05:40:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcU3KoIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A611F00A3D;
+	Fri,  4 Sep 2026 05:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500459;
-	bh=kHAPRCNu6p0Dvzsnr6bURTaT9LXVcqQj6MQ0jNJVqnU=;
+	s=korg; t=1788500461;
+	bh=LQ6Y0elwMwyMDWcS9EjK5dZQtAOl8/HAN4sVd5W1PZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lq02PIJrcPmlZtubhgYLnkXEyZLGiWycaxpFds34aiD67tmVzO1lhrZ0IzUAinSk3
-	 KcVPGWyurOkkMU3cWelGAUtMWZtjt6QyVSAXefIxvavsGhpturPZ6z4e8nFvo/F+qX
-	 1PHSf10JWpvefaOqE75TXvtIFyXl7Xf7oizjIy1M=
+	b=lcU3KoIwZdyiiZRzaQxRu1Qy58GTHaw9/2MbftkIp8t9SgqsKHsYalg1pkrxEp7ge
+	 b5NvYb3N6jkNhh6KzfuGE1iVrIa+uC1eu1XF6oOaQMuDXHcVsv5Dk0rki8CaEA6a3J
+	 sjHmSqr4aYa0UrwXwnsbXPPEuOrf4PbC+BPgK5f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
-	Nikhil Agarwal <Nikhil.agarwal@amd.com>,
-	Nipun Gupta <nipun.gupta@amd.com>
-Subject: [PATCH 6.18 063/552] cdx: Fix double free when sysfs file creation fails
-Date: Fri,  4 Sep 2026 06:53:40 +0200
-Message-ID: <20260904045749.276461440@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 6.18 028/552] apparmor: fix cred UAF caused by begin_current_label_crit_section()
+Date: Fri,  4 Sep 2026 06:53:05 +0200
+Message-ID: <20260904045748.465326696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,50 +50,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+From: Jann Horn <jannh@google.com>
 
-commit 6f4acc3a3c300e174e3f586b97b04ed8f5948c36 upstream.
+commit 3f4ae5fab613dca01d6a2a8210dd832e009fcf47 upstream.
 
-In cdx_create_res_attr(), if sysfs_create_bin_file() fails, the code
-frees res_attr but doesn't set cdx_dev->res_attr[num] to NULL. This
-leaves a dangling pointer in the array. Then cdx_destroy_res_attr()
-frees the already-freed memory. Fix the double free by initializing
-cdx_dev->res_attr[num] after sysfs_create_bin_file() completes.
+AppArmor's begin_current_label_crit_section() is a scary function called
+from lots of LSM hooks (in particular VFS/socket-related ones) that checks
+if the label referenced by the current creds is marked FLAG_STALE, and if
+so, attempts to use aa_replace_current_label() to replace the creds with an
+updated version that uses a new label.
 
-Fixes: aeda33ab8160 ("cdx: create sysfs bin files for cdx resources")
+The first problem with this is that it would directly lead to UAF of
+`struct cred` if anything in the kernel takes a pointer to the current
+creds and accesses these past a security hook invocation that replaces
+creds, like so:
+```
+const struct cred *cred = current_cred();
+alloc_file_pseudo(...);
+uid_t uid = cred->euid;
+```
+I don't know if anything in the kernel actually does this, but I think it
+is very surprising that this pattern could lead to UAF.
+
+The second problem is that things go wrong when aa_replace_current_label()
+runs with overridden credentials. aa_replace_current_label() bails out if
+`current_cred() != current_real_cred()` (mirroring the check in
+proc_pid_attr_write()), but this check can't actually reliably detect
+overridden credentials because the overridden creds can be the same as the
+objective creds.
+
+So in approximately the following scenario, things go wrong:
+
+1. task begins with <creds A> (as both objective and subjective creds),
+   with refcount=2
+2. task grabs an extra reference on <creds A> for overriding
+3. task calls override_creds(<creds A>), which returns a pointer to the old
+   subjective creds (<creds A>)
+4. task enters AppArmor LSM hook
+5. AppArmor checks that objective/subjective creds are equal
+6. AppArmor replaces both cred pointers with <creds B> and drops 2 refs on
+   <creds A>
+7. task leaves AppArmor LSM hook
+8. task calls revert_creds(<creds A>)
+9. now task->cred is <creds A> while task->real_cred is <creds B>, but the
+   task_struct logically holds two references to <creds B>
+10. another task drops the extra reference on <creds A> that was used for
+    overriding, refcount drops to 0
+11. now task->real_cred points to freed creds
+
+At this point, any access to current_cred() will be UAF.
+
+I have a test case where I run aa-disable on a profile while a process
+using that profile is blocked on splice() from a FUSE passthrough file into
+a full pipe; after the profile update, the pipe becomes empty, splice()
+resumes, the credentials go out of sync, and a subsequent getuid() syscall
+results in a KASAN UAF splat.
+
+To fix this, instead of directly replacing creds, do it via task_work that
+will run at the end of the current syscall. (The point in time at which the
+cred replacement happens should have no correctness impact; it is just a
+performance optimization to avoid unnecessarily touching the refcount of
+the new label.)
+
+Note that AppArmor still performs direct cred replacements in the
+sb_pivotroot LSM hook after this change, and that direct cred replacements
+can still happen in VFS ->write() callbacks via proc_pid_attr_write().
+
+There are two options for what to do with aa_dup_task_ctx(): Either
+explicitly reset new->label_replacement_pending after the entire
+aa_task_ctx has been copied, or switch to manually copying members over.
+I am switching to manually copying members over because that should make
+bugs more obvious.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
-Acked-by: Nikhil Agarwal <Nikhil.agarwal@amd.com>
-Acked-by: Nipun Gupta <nipun.gupta@amd.com>
-Link: https://patch.msgid.link/20260724092712.2119149-1-ptsm@linux.microsoft.com
+Fixes: c75afcd153f6 ("AppArmor: contexts used in attaching policy to system objects")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cdx/cdx.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ security/apparmor/include/cred.h |    6 +-----
+ security/apparmor/include/task.h |   15 +++++++++++----
+ security/apparmor/task.c         |   27 +++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+), 9 deletions(-)
 
---- a/drivers/cdx/cdx.c
-+++ b/drivers/cdx/cdx.c
-@@ -745,7 +745,6 @@ static int cdx_create_res_attr(struct cd
+--- a/security/apparmor/include/cred.h
++++ b/security/apparmor/include/cred.h
+@@ -184,13 +184,9 @@ static inline struct aa_label *begin_cur
+ {
+ 	struct aa_label *label = aa_current_raw_label();
  
- 	sysfs_bin_attr_init(res_attr);
+-	might_sleep();
+-
+ 	if (label_is_stale(label)) {
+ 		label = aa_get_newest_label(label);
+-		if (aa_replace_current_label(label) == 0)
+-			/* task cred will keep the reference */
+-			aa_put_label(label);
++		aa_schedule_stale_label_replacement();
+ 	}
  
--	cdx_dev->res_attr[num] = res_attr;
- 	sprintf(res_attr_name, "resource%d", num);
+ 	return label;
+--- a/security/apparmor/include/task.h
++++ b/security/apparmor/include/task.h
+@@ -21,15 +21,22 @@ static inline struct aa_task_ctx *task_c
+  * @onexec: profile to transition to on next exec  (MAY BE NULL)
+  * @previous: profile the task may return to     (MAY BE NULL)
+  * @token: magic value the task must know for returning to @previous_profile
++ * @label_replacement_tw: for aa_schedule_stale_label_replacement()
++ * @label_replacement_pending: is @label_replacement_tw pending?
++ *
++ * When changing this, check if aa_dup_task_ctx() needs to be updated.
+  */
+ struct aa_task_ctx {
+ 	struct aa_label *nnp;
+ 	struct aa_label *onexec;
+ 	struct aa_label *previous;
+ 	u64 token;
++	struct callback_head label_replacement_tw;
++	bool label_replacement_pending;
+ };
  
- 	res_attr->mmap = cdx_mmap_resource;
-@@ -754,8 +753,12 @@ static int cdx_create_res_attr(struct cd
- 	res_attr->size = cdx_resource_len(cdx_dev, num);
- 	res_attr->private = (void *)(unsigned long)num;
- 	ret = sysfs_create_bin_file(&cdx_dev->dev.kobj, res_attr);
--	if (ret)
-+	if (ret) {
- 		kfree(res_attr);
-+		return ret;
-+	}
-+
-+	cdx_dev->res_attr[num] = res_attr;
- 
- 	return ret;
+ int aa_replace_current_label(struct aa_label *label);
++void aa_schedule_stale_label_replacement(void);
+ void aa_set_current_onexec(struct aa_label *label, bool stack);
+ int aa_set_current_hat(struct aa_label *label, u64 token);
+ int aa_restore_previous_label(u64 cookie);
+@@ -56,10 +63,10 @@ static inline void aa_free_task_ctx(stru
+ static inline void aa_dup_task_ctx(struct aa_task_ctx *new,
+ 				   const struct aa_task_ctx *old)
+ {
+-	*new = *old;
+-	aa_get_label(new->nnp);
+-	aa_get_label(new->previous);
+-	aa_get_label(new->onexec);
++	new->nnp = aa_get_label(old->nnp);
++	new->onexec = aa_get_label(old->onexec);
++	new->previous = aa_get_label(old->previous);
++	new->token = old->token;
  }
+ 
+ /**
+--- a/security/apparmor/task.c
++++ b/security/apparmor/task.c
+@@ -14,6 +14,7 @@
+ 
+ #include <linux/gfp.h>
+ #include <linux/ptrace.h>
++#include <linux/task_work.h>
+ 
+ #include "include/audit.h"
+ #include "include/cred.h"
+@@ -88,6 +89,32 @@ int aa_replace_current_label(struct aa_l
+ 	return 0;
+ }
+ 
++static void aa_replace_stale_label_tw_func(struct callback_head *tw)
++{
++	struct aa_task_ctx *ctx = task_ctx(current);
++	struct aa_label *label;
++
++	ctx->label_replacement_pending = false;
++	label = aa_current_raw_label();
++	if (!label_is_stale(label))
++		return;
++	label = aa_get_newest_label(label);
++	aa_replace_current_label(label);
++	aa_put_label(label);
++}
++
++/* replace the current task's stale label on syscall return */
++void aa_schedule_stale_label_replacement(void)
++{
++	struct aa_task_ctx *ctx = task_ctx(current);
++
++	if (ctx->label_replacement_pending)
++		return;
++	init_task_work(&ctx->label_replacement_tw, aa_replace_stale_label_tw_func);
++	if (task_work_add(current, &ctx->label_replacement_tw, TWA_RESUME) == 0)
++		ctx->label_replacement_pending = true;
++}
++
+ 
+ /**
+  * aa_set_current_onexec - set the tasks change_profile to happen onexec
 
 
