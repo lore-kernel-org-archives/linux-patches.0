@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207103A961E;
-	Fri,  4 Sep 2026 05:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC493D6664;
+	Fri,  4 Sep 2026 05:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499195; cv=none; b=VoCLeKbzWpPOlzWvZfM6ZtqWHzsD0DdBG4xWyVY2oBEMjigQrwKC9cZFhgO3YzxnALPlMe8mOqhE72uyzNSD+Ddeqt4hNhFU7PdC5kspR+eE+GCO9x217PkeN/VCQguBMeHz+1XA8sNPTdh+4EgP/Ux3n0mtHPiiU/eCPeYgopc=
+	t=1788499198; cv=none; b=oDQjH41vcGpd7fUWsPeYjEn/qq4BrogLQyxx9UEmXNO4Z80aTDsrD3UPz2vZtig0TOiy0cz/4ZXO/MMB+oY+RvQTaDB+D6L4ZV+niCWhawBqBsCkMg320XF2vL9x2WdFXnKUQXCRQYA5Z1OFBFtVBz/8uAaNY4nV90Z9Dybomns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499195; c=relaxed/simple;
-	bh=yA1DZKM51SyMRxIMP10oRluDcLyEm8yEy2SwHUhlQUM=;
+	s=arc-20240116; t=1788499198; c=relaxed/simple;
+	bh=1Fzfm1E3CBbNLyP1T1GwKl4nZBLBsgjhqqWwgfks2c0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edkjbod5HaCXawN9e+RXGycO5oWGOgolGUicz5VtdW/t4sCCwXqR1cU2L2OXv8cIXn0xPh1ba4aXngCCM6MgogqhR4YgYzAAiSKOiFrzxyzSal+sKyRmsffSq1kE2P/4vIEmlD/9qhQyhBYjRUCVTiDcVJO0MXEZ7QyVzFzz9n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxzqtuZJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AnzontexqqpbBWg7+PT67R7oje5c0jJYs3lFgACT6DVuLytFkFm92DeongRx1MIq3lahso8SrCl6DHqxtopRkRQM0lRgXM91TRE4YUuLi+8UGY5R/PrYxpY9PfmI1m0ztJh7hxwMZE0iG/Z4n/8s5DPQvEaedXtqHFCw/F8ho2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHb8MwyD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxzqtuZJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8AE1F00A3D;
-	Fri,  4 Sep 2026 05:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHb8MwyD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A37F1F00A3D;
+	Fri,  4 Sep 2026 05:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499194;
-	bh=HpGxjzHWrXlAEyNmMIYw+Sw8V8BsUsHd1LAOek1JOJE=;
+	s=korg; t=1788499196;
+	bh=wv1TR1VGv91dpPbY4+3HhGuiIwzQF5vff1UNRtZrRa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FxzqtuZJTGObyvPbMFPf3xQwa24vE3yL6yXUlFWcW1cocxuGMmekA48Dpm26dLdPo
-	 uH6NdmH0lPltkdkHGyrUi/ndmfk5OvYd8K1oY818R/GDjWDBguu1zkYfbJEcExDUO2
-	 Zi5zjgIY8QTKW2JeUsx+xcNaQeVxMKd0rGbAmOjw=
+	b=jHb8MwyDWMRQeqJK53yEUKqqnDc+1f3ORuSZv49FNOLPUJ8TDEvoJ4Nb3QheReeEa
+	 0x6DfV5XgVXmZ2Vs0TcRAq8u/LDdtBEQcS8ywZxa2dNZlTqsYbUuRw6foF25/Eadlb
+	 hSQWQvMfzvMCn1I34DlMj+8HbSLIpk2W35MCtau8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 7.2 331/713] cpufreq: apple-soc: Fix OPP table cleanup
-Date: Fri,  4 Sep 2026 06:54:59 +0200
-Message-ID: <20260904045811.251422207@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 7.2 332/713] cpufreq: schedutil: Fix rate limit overflow
+Date: Fri,  4 Sep 2026 06:55:00 +0200
+Message-ID: <20260904045811.273510100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,108 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Hui Su <sh_def@163.com>
 
-commit d87cb889dc7ab1f2deecadf2a5e9023184bd7900 upstream.
+commit 3bff8f8e95fdc6ad19c8a1a8f87029094747e4bf upstream.
 
-apple_soc_cpufreq_init() adds OPP tables from firmware, but
-some failure paths do not remove them. The driver also uses
-dev_pm_opp_remove_all_dynamic(), which is not the right cleanup
-helper for OPP tables loaded from firmware.
+rate_limit_us is an unsigned int, while NSEC_PER_USEC is defined as
+1000L. On 32-bit systems, the multiplication is therefore performed
+using 32-bit unsigned arithmetic before the result is assigned to
+freq_update_delay_ns.
 
-Use the cpumask OPP helper after the policy CPU mask has been
-populated. Pair it with the matching cpumask remove helper on
-failure paths and in apple_soc_cpufreq_exit(). This also removes
-the separate dev_pm_opp_set_sharing_cpus() call, as the cpumask
-helper loads the DT OPP tables for all CPUs in the policy.
+For example, writing 4294968 to rate_limit_us wraps the delay from
+4294968000 ns to 704 ns. This makes schedutil update far more often
+than configured.
 
-Fixes: 6286bbb40576 ("cpufreq: apple-soc: Add new driver to control Apple SoC CPU P-states")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Add sugov_update_rate_limit_us() to widen rate_limit_us to s64 before
+converting it to nanoseconds. Use the helper when updating the tunable
+through sysfs and when starting the governor, so both paths perform the
+conversion without overflow.
+
+Fixes: 9bdcb44e391d ("cpufreq: schedutil: New governor based on scheduler utilization data")
+Signed-off-by: Hui Su <sh_def@163.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260806142304.1761454-1-sh_def@163.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/apple-soc-cpufreq.c |   36 ++++++++++++++----------------------
- 1 file changed, 14 insertions(+), 22 deletions(-)
+ kernel/sched/cpufreq_schedutil.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/cpufreq/apple-soc-cpufreq.c
-+++ b/drivers/cpufreq/apple-soc-cpufreq.c
-@@ -249,21 +249,19 @@ static int apple_soc_cpufreq_init(struct
- 		return -ENODEV;
- 	}
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -61,6 +61,17 @@ static DEFINE_PER_CPU(struct sugov_cpu,
  
--	ret = dev_pm_opp_of_add_table(cpu_dev);
--	if (ret < 0) {
--		dev_err(cpu_dev, "%s: failed to add OPP table: %d\n", __func__, ret);
--		return ret;
--	}
-+	priv = kzalloc_obj(*priv);
-+	if (!priv)
-+		return -ENOMEM;
+ /************************ Governor internals ***********************/
  
- 	ret = apple_soc_cpufreq_find_cluster(policy, &reg_base, &info);
- 	if (ret) {
- 		dev_err(cpu_dev, "%s: failed to get cluster info: %d\n", __func__, ret);
--		return ret;
-+		goto out_free_priv;
- 	}
++static void sugov_update_rate_limit_us(struct sugov_policy *sg_policy)
++{
++	/*
++	 * Cast rate_limit_us before multiplication to force 64-bit arithmetic.
++	 * Otherwise, on 32-bit platforms, both operands are converted to
++	 * 32-bit unsigned long and the multiplication may overflow.
++	 */
++	sg_policy->freq_update_delay_ns =
++		(s64)sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
++}
++
+ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
+ {
+ 	s64 delta_ns;
+@@ -606,7 +617,7 @@ rate_limit_us_store(struct gov_attr_set
+ 	tunables->rate_limit_us = rate_limit_us;
  
--	ret = dev_pm_opp_set_sharing_cpus(cpu_dev, policy->cpus);
--	if (ret) {
--		dev_err(cpu_dev, "%s: failed to mark OPPs as shared: %d\n", __func__, ret);
-+	ret = dev_pm_opp_of_cpumask_add_table(policy->cpus);
-+	if (ret < 0) {
-+		dev_err(cpu_dev, "%s: failed to add OPP table: %d\n", __func__, ret);
- 		goto out_iounmap;
- 	}
+ 	list_for_each_entry(sg_policy, &attr_set->policy_list, tunables_hook)
+-		sg_policy->freq_update_delay_ns = rate_limit_us * NSEC_PER_USEC;
++		sugov_update_rate_limit_us(sg_policy);
  
-@@ -271,19 +269,13 @@ static int apple_soc_cpufreq_init(struct
- 	if (ret <= 0) {
- 		dev_dbg(cpu_dev, "OPP table is not ready, deferring probe\n");
- 		ret = -EPROBE_DEFER;
--		goto out_free_opp;
--	}
--
--	priv = kzalloc_obj(*priv);
--	if (!priv) {
--		ret = -ENOMEM;
--		goto out_free_opp;
-+		goto out_free_table;
- 	}
- 
- 	ret = dev_pm_opp_init_cpufreq_table(cpu_dev, &freq_table);
- 	if (ret) {
- 		dev_err(cpu_dev, "failed to init cpufreq table: %d\n", ret);
--		goto out_free_priv;
-+		goto out_free_table;
- 	}
- 
- 	/* Get OPP levels (p-state indexes) and stash them in driver_data */
-@@ -318,12 +310,12 @@ static int apple_soc_cpufreq_init(struct
- 
- out_free_cpufreq_table:
- 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
--out_free_priv:
--	kfree(priv);
--out_free_opp:
--	dev_pm_opp_remove_all_dynamic(cpu_dev);
-+out_free_table:
-+	dev_pm_opp_of_cpumask_remove_table(policy->cpus);
- out_iounmap:
- 	iounmap(reg_base);
-+out_free_priv:
-+	kfree(priv);
- 	return ret;
+ 	return count;
  }
+@@ -848,7 +859,7 @@ static int sugov_start(struct cpufreq_po
+ 	void (*uu)(struct update_util_data *data, u64 time, unsigned int flags);
+ 	unsigned int cpu;
  
-@@ -332,7 +324,7 @@ static void apple_soc_cpufreq_exit(struc
- 	struct apple_cpu_priv *priv = policy->driver_data;
- 
- 	dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
--	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
-+	dev_pm_opp_of_cpumask_remove_table(policy->cpus);
- 	iounmap(priv->reg_base);
- 	kfree(priv);
- }
+-	sg_policy->freq_update_delay_ns	= sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
++	sugov_update_rate_limit_us(sg_policy);
+ 	sg_policy->last_freq_update_time	= 0;
+ 	sg_policy->next_freq			= 0;
+ 	sg_policy->work_in_progress		= false;
 
 
