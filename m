@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19ED823BD1B;
-	Fri,  4 Sep 2026 05:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F5623BD1B;
+	Fri,  4 Sep 2026 05:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499011; cv=none; b=I7CChObX0WLwYZ0S7YXpGDCHPzYgHlZDpWms15N0Pnko7QpUtCJlZtNUqMeDGRRW2gddYVOYe8ETO32i1UwhDDVSxy2ntiOrUQveV7knlybZ8MFc0/9MUITs64dkUk+0i+K991/NKzbCZT6cNZSFke3eyexpEsL93na2wdxrDc8=
+	t=1788499014; cv=none; b=sMBvxDclwoYDy84efFlX0Ed0/yTmfbCv3wA1SIKY4itKPldAT1QUx/3Ro33INvfSe7+zWjG5DFeYmxNVuZJO15uEWjGYJzwIwpY9IXG9jTJ1YFZHsL/ws0x03ZXiMJ1anpypHytMfTAeXAvEgjdP0nuKOnF+0Nyj4QXsXlQY3vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499011; c=relaxed/simple;
-	bh=KWl9RVQYYj/av5mB82f6p4Ad4l4ox+m6oMPxsF0u8Po=;
+	s=arc-20240116; t=1788499014; c=relaxed/simple;
+	bh=EDUtWxhOJdKfBRTinNd8HTXz5wNVI+xsi1hCG04h/N4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpRbvDE+H4aLQ8bcCErAYoCzOvgLsp4M2wHjXqQO3A/qDXzKHM/SqnGqwl/Bg0GSPWD9kosrESVzEp8B1IGnTYiCBS4z1fgTadKIKilD4edTgcN9QM/KTKwMXpJPO8DCn/BImWkRsGf6LyZ9uPFOO3JqC+59vDzzJdicSSk7noU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X03PifpK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SO+6JRKHTG4CZbz6aluPQtWGWs6iQCtUiUOhgSptdjTo8sWHusTnM3uQVEXJwh+Q7HrTMt/1PEQyXYZJjw1EkwGx+sadQvYhnagn4Lm7bLYPeufyv9lN49AU1XA18hy9Mbd7LX6Z8/SjQhXwnQ9q3SOpX+dzb0y8n8hJBD2SUrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnFUSC8S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X03PifpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735781F00A3D;
-	Fri,  4 Sep 2026 05:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnFUSC8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414871F00A3D;
+	Fri,  4 Sep 2026 05:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499010;
-	bh=M/3W+LBiLWCQ19pUOMEmnvB2pl7m5cSuj8B/YEmv69A=;
+	s=korg; t=1788499012;
+	bh=lBhn15p1XmraetJRsBHTrdSnnGlFQuTgjiioETTzVCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X03PifpKkcPJlkeofSqbtsxeEFyu55s3S0o4eJzyNaqg31bavU/2G1xc0rORc1H44
-	 Mdb0IkDuqQ0GDovvHH4X1aWQ0uGCE7j/Gq9bUlV4cM91oKZ9Z1No4UtxqlMZHM9YAG
-	 qtPx3Ep5EODazq2jlm3c3ZtruH8w/RdiTmL3VLlY=
+	b=NnFUSC8SIxuyWJxxziPKu4biOhsNTU0wcr2YZ/svz8Xbn4su7IRnTzsG8coqhqaCh
+	 /svPmRGOQWg9oFbq1zeNoBpZwSMsl7mChCQC4QStxKxTIwt7d18RFT9EBKh3obsEj5
+	 2nKO1RKYPPZnvL9ud8RQqVKIQR2lmEEAVpKvwX2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.2 223/713] ceph: cap delegated inode count in ceph_parse_deleg_inos()
-Date: Fri,  4 Sep 2026 06:53:11 +0200
-Message-ID: <20260904045808.817298715@linuxfoundation.org>
+Subject: [PATCH 7.2 224/713] ceph: do not repeat ceph_trim_dentries() if no progress possible
+Date: Fri,  4 Sep 2026 06:53:12 +0200
+Message-ID: <20260904045808.840240750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,206 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit 4bd3158bd62466d57ed72a3f7bc5f205fedd6919 upstream.
+commit e7d7aa7b730178278109c41fa1b17b06873065d5 upstream.
 
-ceph_parse_deleg_inos() decodes interval sets of delegated inode numbers
-from an MDS create-with-delegation reply. For each set it reads a 64-bit
-start and a 64-bit len with ceph_decode_64_safe(), which only validates
-that the eight bytes are present in the message, not the value, and then
-loops over len while inserting entries into s_delegated_inos.
+ceph_cap_reclaim_work() re-queues itself for as long as
+ceph_trim_dentries() returns -EAGAIN, which happens whenever a lease
+walk exhausts its `nr_to_scan` budget.  This creates a busy loop that
+consumes CPU without making any progress when there is nothing to
+reclaim: with no cap pressure (`count==0`) and every scanned lease
+still valid, each pass runs the full scan budget down to zero and
+returns `-EAGAIN`, only to be queued again immediately.
 
-len is fully attacker controlled. A malicious or compromised MDS can send
-one huge interval, many intervals in one reply, duplicate intervals, or
-repeated replies that accumulate delegated inodes on the same session.
-The original code bounded none of these and could spin the insert loop or
-grow the xarray without limit.
+The dir-lease walk made this worse.  When `expire_dir_lease` is
+`false` (i.e. we have no intention of reclaiming dir leases),
+__dir_lease_check() returned `TOUCH` for every valid lease.  `TOUCH`
+moves the dentry to the tail of the list and resets `di->time` via
+__dentry_dir_lease_touch(), so a walk over N valid leases pointlessly
+rewrote the list, refreshed the timestamps (preventing them from ever
+aging out) and always drained `nr_to_scan`, guaranteeing the `-EAGAIN`
+requeue.
 
-Bound both dimensions with a single enforcement point. Track the number
-of delegated inodes held by each MDS session in an atomic counter and
-grow it only in ceph_insert_deleg_ino(), which uses atomic_add_unless()
-to refuse to push the count past CEPH_MAX_DELEG_INOS. Because that helper
-is the only place the counter grows, the per-session population can never
-exceed the cap, so no separate per-session pre-check is needed. The
-counter is decremented when async create consumes a delegated inode or
-when an insert fails, incremented when a delegated inode is restored,
-initialized with the session xarray, and reset when reconnect destroys
-the xarray.
+Fix this in three steps:
 
-A per-session cap alone still lets one reply spin the insert loop on
-duplicate ranges without growing the counter, so also cap the aggregate
-interval length accepted from a single reply. Together these bound both
-the loop trip count per reply and the xarray population across replies.
+ - Return `KEEP` instead of `TOUCH` when `expire_dir_lease` is
+   `false`.  If we are not going to reclaim the lease, leave it in
+   place instead of churning the list and resetting its timestamp; the
+   walk then terminates naturally (or via `STOP` at the first fresh
+   lease).
 
-The cap is a fixed, client-chosen constant rather than a value derived
-from the MDS. mds_client_prealloc_inos is a userspace MDS configuration
-option; it is never sent to the kernel client on the wire, and a
-server-supplied bound could not be trusted for a defensive limit in any
-case. The constant is set well above that option's documented default of
-1000 (a generous multiple), so legitimate refill behavior is unaffected
-while the CPU and xarray memory a malformed delegation stream can consume
-stays bounded.
+ - Only return `-EAGAIN` from the first (dentry-lease) walk when something
+   was actually freed.  A full batch that frees nothing means retrying
+   the same list immediately is futile; fall through to the dir-lease
+   walk instead.
 
-Impact: a malicious or compromised Ceph MDS can no longer make a client
-spin through an unbounded delegated-inode interval or grow one session's
-delegated-inode xarray without limit.
+ - After both walks, bail out with success (0) when nothing was freed
+   and there is no cap pressure (`count==0`).  There is no reason to
+   keep retrying when we are not over the cap limit and made no
+   progress.
+
+Under real cap pressure (`count>0`) the reclaim path is unchanged and
+still retries via `-EAGAIN`.
+
+Without this patch, I saw 500 ceph_trim_dentries() calls per second on
+our web servers.  This is very visible in `/proc/lock_stat` (5 minute
+capture):
+
+              class name    con-bounces    contentions   waittime-min   waittime-max waittime-total   waittime-avg    acq-bounces   acquisitions   holdtime-min   holdtime-max holdtime-total   holdtime-avg
+
+ &mdsc->dentry_list_lock:        126180         128218           0.04        8063.44    15986965.20         124.69        1573354        5296812           0.04        8291.28    74164526.48          14.00
+ -----------------------
+ &mdsc->dentry_list_lock         111736          [<000000007b11e319>] __ceph_dentry_dir_lease_touch+0x7c/0xa8
+ &mdsc->dentry_list_lock           2631          [<0000000050597999>] __dentry_leases_walk+0x64/0x2c8
+ &mdsc->dentry_list_lock           3878          [<00000000c0022f62>] __ceph_dentry_lease_touch+0x5c/0xa8
+ &mdsc->dentry_list_lock           9973          [<000000002f27cb6f>] __dentry_lease_unlist+0x50/0xa0
+ -----------------------
+ &mdsc->dentry_list_lock         123621          [<0000000050597999>] __dentry_leases_walk+0x64/0x2c8
+ &mdsc->dentry_list_lock           1822          [<000000007b11e319>] __ceph_dentry_dir_lease_touch+0x7c/0xa8
+ &mdsc->dentry_list_lock           2720          [<000000002f27cb6f>] __dentry_lease_unlist+0x50/0xa0
+ &mdsc->dentry_list_lock             55          [<00000000c0022f62>] __ceph_dentry_lease_touch+0x5c/0xa8
+
+With this patch:
+
+              class name    con-bounces    contentions   waittime-min   waittime-max waittime-total   waittime-avg    acq-bounces   acquisitions   holdtime-min   holdtime-max holdtime-total   holdtime-avg
+
+ &mdsc->dentry_list_lock:          1203           1215           0.16         408.88       33082.88          27.23        4320501        7357389           0.04         500.64     1961578.00           0.27
+ -----------------------
+ &mdsc->dentry_list_lock           1029          [<000000003c9aea8a>] __ceph_dentry_dir_lease_touch+0x7c/0xa8
+ &mdsc->dentry_list_lock            169          [<000000002038c577>] __dentry_lease_unlist+0x50/0xa0
+ &mdsc->dentry_list_lock             16          [<00000000c991106d>] __ceph_dentry_lease_touch+0x5c/0xa8
+ &mdsc->dentry_list_lock              1          [<00000000612fe15f>] __dentry_leases_walk+0x64/0x2c8
+ -----------------------
+ &mdsc->dentry_list_lock            158          [<000000002038c577>] __dentry_lease_unlist+0x50/0xa0
+ &mdsc->dentry_list_lock            858          [<000000003c9aea8a>] __ceph_dentry_dir_lease_touch+0x7c/0xa8
+ &mdsc->dentry_list_lock            182          [<00000000612fe15f>] __dentry_leases_walk+0x64/0x2c8
+ &mdsc->dentry_list_lock             17          [<00000000c991106d>] __ceph_dentry_lease_touch+0x5c/0xa8
+
+__dentry_leases_walk() is almost gone.  The total wait time is reduced
+by a factor of 483.  That will give some latency gains to
+ceph_readdir().
 
 Cc: stable@vger.kernel.org
-Fixes: d48464878708 ("ceph: decode interval_sets for delegated inos")
-Suggested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Fixes: 37c4efc1ddf9 ("ceph: periodically trim stale dentries")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |   59 +++++++++++++++++++++++++++++++++++++++++++++------
- fs/ceph/mds_client.h |    1 
- fs/ceph/super.h      |    9 +++++++
- 3 files changed, 63 insertions(+), 6 deletions(-)
+ fs/ceph/dir.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -615,10 +615,36 @@ bad:
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -1764,11 +1764,11 @@ static int __dir_lease_check(const struc
+ 	if (ret > 0) {
+ 		if (time_before(jiffies, di->time + lwc->dir_lease_ttl))
+ 			return STOP;
++		if (!lwc->expire_dir_lease)
++			return KEEP;
+ 		/* Move dentry to tail of dir lease list if we don't want
+ 		 * to delete it. So dentries in the list are checked in a
+ 		 * round robin manner */
+-		if (!lwc->expire_dir_lease)
+-			return TOUCH;
+ 		if (dentry->d_lockref.count > 0 ||
+ 		    (di->flags & CEPH_DENTRY_REFERENCED))
+ 			return TOUCH;
+@@ -1795,7 +1795,7 @@ int ceph_trim_dentries(struct ceph_mds_c
+ 	lwc.dir_lease = false;
+ 	lwc.nr_to_scan  = CEPH_CAPS_PER_RELEASE * 2;
+ 	freed = __dentry_leases_walk(mdsc, &lwc);
+-	if (!lwc.nr_to_scan) /* more invalid leases */
++	if (freed > 0 && !lwc.nr_to_scan) /* more invalid leases */
+ 		return -EAGAIN;
  
- #define DELEGATED_INO_AVAILABLE		xa_mk_value(1)
- 
-+static int ceph_insert_deleg_ino(struct ceph_mds_session *s, u64 ino)
-+{
-+	struct ceph_client *cl = s->s_mdsc->fsc->client;
-+	int err;
+ 	if (lwc.nr_to_scan < CEPH_CAPS_PER_RELEASE)
+@@ -1805,6 +1805,10 @@ int ceph_trim_dentries(struct ceph_mds_c
+ 	lwc.expire_dir_lease = freed < count;
+ 	lwc.dir_lease_ttl = mdsc->fsc->mount_options->caps_wanted_delay_max * HZ;
+ 	freed +=__dentry_leases_walk(mdsc, &lwc);
++	if (freed == 0 && count == 0)
++		/* no progress possible currently, retry futile */
++		return 0;
 +
-+	/*
-+	 * Cap how many delegated inodes a single session may hold. This is
-+	 * the only place that grows the count, so atomic_add_unless() bounds
-+	 * it at exactly CEPH_MAX_DELEG_INOS; s_num_deleg_inos can never exceed
-+	 * that.
-+	 */
-+	if (!atomic_add_unless(&s->s_num_deleg_inos, 1, CEPH_MAX_DELEG_INOS)) {
-+		pr_warn_ratelimited_client(cl,
-+			"MDS session already holds %d delegated inodes\n",
-+			CEPH_MAX_DELEG_INOS);
-+		return -EOVERFLOW;
-+	}
-+
-+	err = xa_insert(&s->s_delegated_inos, ino, DELEGATED_INO_AVAILABLE,
-+			GFP_KERNEL);
-+	if (err)
-+		atomic_dec(&s->s_num_deleg_inos);
-+	return err;
-+}
-+
- static int ceph_parse_deleg_inos(void **p, void *end,
- 				 struct ceph_mds_session *s)
- {
- 	struct ceph_client *cl = s->s_mdsc->fsc->client;
-+	u64 msg_deleg_inos = 0;
- 	u32 sets;
+ 	if (!lwc.nr_to_scan) /* more to check */
+ 		return -EAGAIN;
  
- 	ceph_decode_32_safe(p, end, sets, bad);
-@@ -636,16 +662,34 @@ static int ceph_parse_deleg_inos(void **
- 				start, len);
- 			continue;
- 		}
-+
-+		/*
-+		 * Bound the number of inodes one reply may delegate.
-+		 * ceph_insert_deleg_ino() separately caps the per-session
-+		 * population, so this only has to stop one reply from spinning
-+		 * the insert loop under an attacker-controlled len.
-+		 */
-+		if (len > (u64)CEPH_MAX_DELEG_INOS ||
-+		    msg_deleg_inos > (u64)CEPH_MAX_DELEG_INOS - len) {
-+			pr_warn_ratelimited_client(cl,
-+				"MDS reply delegates too many inodes (have %llu, +%llu, max %d)\n",
-+				msg_deleg_inos, len, CEPH_MAX_DELEG_INOS);
-+			return -EIO;
-+		}
-+		msg_deleg_inos += len;
-+
- 		while (len--) {
--			int err = xa_insert(&s->s_delegated_inos, start++,
--					    DELEGATED_INO_AVAILABLE,
--					    GFP_KERNEL);
-+			int err = ceph_insert_deleg_ino(s, start++);
-+
- 			if (!err) {
- 				doutc(cl, "added delegated inode 0x%llx\n", start - 1);
- 			} else if (err == -EBUSY) {
- 				pr_warn_client(cl,
- 					"MDS delegated inode 0x%llx more than once.\n",
- 					start - 1);
-+			} else if (err == -EOVERFLOW) {
-+				/* ceph_insert_deleg_ino() already warned. */
-+				return -EIO;
- 			} else {
- 				return err;
- 			}
-@@ -663,16 +707,17 @@ u64 ceph_get_deleg_ino(struct ceph_mds_s
- 
- 	xa_for_each(&s->s_delegated_inos, ino, val) {
- 		val = xa_erase(&s->s_delegated_inos, ino);
--		if (val == DELEGATED_INO_AVAILABLE)
-+		if (val == DELEGATED_INO_AVAILABLE) {
-+			atomic_dec(&s->s_num_deleg_inos);
- 			return ino;
-+		}
- 	}
- 	return 0;
- }
- 
- int ceph_restore_deleg_ino(struct ceph_mds_session *s, u64 ino)
- {
--	return xa_insert(&s->s_delegated_inos, ino, DELEGATED_INO_AVAILABLE,
--			 GFP_KERNEL);
-+	return ceph_insert_deleg_ino(s, ino);
- }
- #else /* BITS_PER_LONG == 64 */
- /*
-@@ -1059,6 +1104,7 @@ static struct ceph_mds_session *register
- 	INIT_LIST_HEAD(&s->s_waiting);
- 	INIT_LIST_HEAD(&s->s_unsafe);
- 	xa_init(&s->s_delegated_inos);
-+	atomic_set(&s->s_num_deleg_inos, 0);
- 	INIT_LIST_HEAD(&s->s_cap_releases);
- 	INIT_WORK(&s->s_cap_release_work, ceph_cap_release_work);
- 
-@@ -5110,6 +5156,7 @@ static int send_mds_reconnect(struct cep
- 
- 	/* Serialized by s_mutex against concurrent ceph_get_deleg_ino(). */
- 	xa_destroy(&session->s_delegated_inos);
-+	atomic_set(&session->s_num_deleg_inos, 0);
- 	if (session->s_state == CEPH_MDS_SESSION_CLOSED ||
- 	    session->s_state == CEPH_MDS_SESSION_REJECTED) {
- 		pr_info_client(cl, "mds%d skipping reconnect, session %s\n",
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -300,6 +300,7 @@ struct ceph_mds_session {
- 	struct list_head  s_waiting;  /* waiting requests */
- 	struct list_head  s_unsafe;   /* unsafe requests */
- 	struct xarray	  s_delegated_inos;
-+	atomic_t	  s_num_deleg_inos;
- };
- 
- /*
---- a/fs/ceph/super.h
-+++ b/fs/ceph/super.h
-@@ -641,6 +641,15 @@ static inline int ceph_ino_compare(struc
- #define CEPH_MDS_INO_LOG_OFFSET		(2 * CEPH_MAX_MDS)
- #define CEPH_INO_SYSTEM_BASE		((6*CEPH_MAX_MDS) + (CEPH_MAX_MDS * CEPH_NUM_STRAY))
- 
-+/*
-+ * Upper bound on the number of delegated inodes a single MDS session may
-+ * hold. The MDS normally hands out a small preallocation window (the
-+ * userspace mds_client_prealloc_inos option defaults to 1000) and refills
-+ * it as the client consumes entries. This leaves generous headroom while
-+ * bounding the CPU and memory a malformed delegation interval can consume.
-+ */
-+#define CEPH_MAX_DELEG_INOS		8192
-+
- static inline bool ceph_vino_is_reserved(const struct ceph_vino vino)
- {
- 	if (vino.ino >= CEPH_INO_SYSTEM_BASE ||
 
 
