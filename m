@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B863815E1;
-	Fri,  4 Sep 2026 05:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A684CCDC7;
+	Fri,  4 Sep 2026 05:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500192; cv=none; b=DsxtcopcycVeGazW3LQLSSqwDr8Hl6ACd+pboVPEsdkbJO4oO28+cgrwyfXiwE9ADXwwljVzurKrRS6+7jzWwU6KipcXDWci2UOb92Ff2/n9GYuS7gjx8uegktk4joMkGntxGe9BHuVG6nkJZTNfgE8dkzoCtmk5jj2UEcs2wmM=
+	t=1788500195; cv=none; b=R/fK8o6qB9xBH3+Jh6RTFHJC8uyw2Q2ksMFf+d2Gm81zJQfIWurp4fV3Gmrprma1bBy1soVI5w7Z3Q7PNEfe4BugcygbxcyEG8iZFL78bNu0b/8fv3QcvPar8VIVaXmefEDdyu8pvWbs3lfqkDIsUh3KUEndUNtEsrl/A3ePf/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500192; c=relaxed/simple;
-	bh=lHsvZVmMd0R5A87pe5SbBTPIUN+sxZJwGr1qhUaM0MM=;
+	s=arc-20240116; t=1788500195; c=relaxed/simple;
+	bh=VAD2R5qQTU5ZFd9UdRILFBRCf1Lb3xxXYkuQIVY8y64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ortNrWWjb52AhYZy3zOn1u+0VKYy8tmPzlwYT30li5WmL2MJGzkVk/rlifJUj+tPMHRlLQCEojVnScYtt4ZyjvzQbbs+4jB0Uv5rf+PZZtA5Gp4XmgN8SunqnNp7aJYWPnJCYkoMhG/WkwiKc9rwFHmgsOiHAQCTiZq48b/Fpog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wss+WSi7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QPvzRAUGlQ/kzN4JPXnQIEMwv6ct9a+LkW2+gIOr/8S+C3mYvZN5s+KoJtoa4ZQDjPY7pl9MFWRylAr6v5AJdO/Twnk8JAwECTym33VIoC10QmC9bId9sNtlSB01wYhG7ynvopNIHiplkiyL9VUgtJXs6QPE+LmTC9HIT7VMBlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzbu/GZO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wss+WSi7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391CB1F00A3D;
-	Fri,  4 Sep 2026 05:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzbu/GZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4FA1F00A3D;
+	Fri,  4 Sep 2026 05:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500191;
-	bh=4S18ZXF2EU4O84VFzS8qbKik73Sv3kfLsbluuiKIWbI=;
+	s=korg; t=1788500194;
+	bh=gRBQE7UN0uGDnxnwpagj8ykHJAnYYo8nBIO3+saReUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wss+WSi7LQfP6Vt1ZjXQj4ynl92PDcR2tAOfh3kondr2MJwxeCsUPVXhEP/xs4tTd
-	 iIZbOPr5zY532M+KFIEsDaynXKQ75AA2LAAY2KVu51YL9VEDKu2HwR0PFGwal0bfqB
-	 bRoS3y0SRUeAR9DYsSDpS/aBt/JkTW1hCgYk7Q+M=
+	b=mzbu/GZO+zHR3YET19Xx0StteZilZCD+i/gvVUvuiic7sLPNjxrDgr+ky3InbqYAM
+	 W9cs6y3KN5an94izvnWBZSxBI22VDRi5p6zSMoPx2MqFBWq7IYvrVhGUfHhJF0zb0Y
+	 xeDbTUPLHXe14wfbWqeIXr7lmEbIlgZTH0enphDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 640/713] ALSA: mpu401: Check card index validity at probe
-Date: Fri,  4 Sep 2026 07:00:08 +0200
-Message-ID: <20260904045818.177369312@linuxfoundation.org>
+Subject: [PATCH 7.2 641/713] ALSA: mts64: Check card index validity at probe
+Date: Fri,  4 Sep 2026 07:00:09 +0200
+Message-ID: <20260904045818.199147170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit f7dcecb92ed192ff5fcf842918fb1aaea84b5bdd upstream.
+commit d18a260720f86a5f8b5fcfefc4ba2e9dd01c10f8 upstream.
 
-mpu401 driver blindly trusts that the given devptr->id value is within
-the proper card index range at probe.  It's OK for the devices the
-driver itself creates at the module probe time, but if the device is
-bound manually via sysfs interface, this could be -1 as "none", and
-this leads to OOB access for index[] and other parameters.
+Although mts64 driver has a check of the given devptr->id value, it
+doesn't check for a negative id, which is often given as "none" or
+such value when bound via sysfs.  This may lead to OOB access for
+index[] and other parameters.
 
 Add a sanity check for the card index and warn/correct it if it's a
 value out of the range.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260806153227.1460166-3-tiwai@suse.de
+Link: https://patch.msgid.link/20260806153227.1460166-6-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/mpu401/mpu401.c |    6 ++++++
+ sound/drivers/mts64.c |    6 ++++++
  1 file changed, 6 insertions(+)
 
---- a/sound/drivers/mpu401/mpu401.c
-+++ b/sound/drivers/mpu401/mpu401.c
-@@ -89,6 +89,12 @@ static int snd_mpu401_probe(struct platf
- 	int err;
- 	struct snd_card *card;
+--- a/sound/drivers/mts64.c
++++ b/sound/drivers/mts64.c
+@@ -900,6 +900,12 @@ static int snd_mts64_probe(struct platfo
+ 	p = platform_get_drvdata(pdev);
+ 	platform_set_drvdata(pdev, NULL);
  
-+	if (dev < 0 || dev >= SNDRV_CARDS) {
-+		dev_warn(&devptr->dev,
++	if (dev < 0) {
++		dev_warn(&pdev->dev,
 +			 "Invalid card index %d, using default 0\n", dev);
 +		dev = 0;
 +	}
 +
- 	if (port[dev] == SNDRV_AUTO_PORT) {
- 		dev_err(&devptr->dev, "specify port\n");
- 		return -EINVAL;
+ 	if (dev >= SNDRV_CARDS)
+ 		return -ENODEV;
+ 	if (!enable[dev]) 
 
 
