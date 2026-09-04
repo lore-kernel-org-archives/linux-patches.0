@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C063ECBCF;
-	Fri,  4 Sep 2026 06:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF45A423E9E;
+	Fri,  4 Sep 2026 06:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502643; cv=none; b=QU33gL9qib9IiE3iRBGtelItrFSol+RKPdOsXHuNwfsFmFSQc7cWKn31gJRfXna122PLN7vaCcu+gYs0xl11F3NnRcrVJBPrpr8r/rGPpzC6TWjRSfxQaZ/RlU9+otdIT1q+oSI+RcYXv429qfc5Elwvvjf3yf3eQWxwXgqGdkI=
+	t=1788502646; cv=none; b=dIw4sqm7QFff+vsbh/0D9jSbMkZ+n/VekxpXA+fYkwpfQWBU7LtkfwyiiRboRuwTyG8eClp1cAVX5hGE2M5U40REV36Liv4rIGc/DzFM+rWZ7Pf13mYmvtQyW49yOHgFzB3xILCag49JnA91mquSEVcZ0ERLk9KtXXHPG9WIsis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502643; c=relaxed/simple;
-	bh=+DGrQnnhA5VaPWJWOI8PA1aZ42S07nV4Gea00CQC7Io=;
+	s=arc-20240116; t=1788502646; c=relaxed/simple;
+	bh=hXQtUFgCEEcfg9p/0c0DuDLL3/WmP0vDK/ORAi7XSJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=By0Ru21WFWAEUuJWrYRCQ7xqH3SSwl+EipdHeYgMojQSq7ct566eMJqWCcWxjGbYAtxDyVb/l/gh080aeBBfvtLUiSF4rPPNnSfE3mWMPfnm/v8CfunRAfLgfY2N4F7Fu25MBah5JaprSd7I34lgHJ0+1NhbhtTAoP3Gqtj3lsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQFNBwaH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tV1C1DKUFRAAUf9dbbeKMbg3FMIX8/U5R4Azg0Y+jGtgrrLYPJPyCVPFYt2bXYf3mFlWt4Vr+wXGuIe8hQuKevkdX9JffWNIAjcnJT6734qWTh0nmaOIbzZa0NSCGzEQ6e1ENw9BvDzc/RuaiGvmok0O+V1VI8rmAGFHsWyRD2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBjmWA0R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQFNBwaH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611791F00A3D;
-	Fri,  4 Sep 2026 06:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBjmWA0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431721F00A3D;
+	Fri,  4 Sep 2026 06:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502641;
-	bh=PXC1qhxhnq/vYHVIZ95g3rxyKMzPFEMW5FBUSC9nYHg=;
+	s=korg; t=1788502644;
+	bh=pacSsvj+nlpiDFDTUYwCTiAZir8x1AwnQyPk+Lt4x34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQFNBwaHwRScK2tPabWdaNYU5hdnU+8FJ6GVAnxqUSQuYiPN097Moat0aJsOwfePC
-	 pc2ZpR5TETyb8FPqz8d4MsWwx4A9yLsdyBBtwA8TJoikeLscTMHS9X7B/h/WG0xazL
-	 NDmytS/cFnk3hKbPTkf0vTAZ2WtVbCeogzURu9cE=
+	b=zBjmWA0R1hy8eySrzb/7NiEQz2iS0kfF+ifPYzcxKLk57Qyr4jN2cbwr9cpacMXRd
+	 IhxbClCTMTz7IOYOnml1miOQ+0ucSW3Frn+SUdLR1jVypMXBGtaZZEMPpBvKF7/Pdn
+	 MWZO5G1WnkwnOSTQroE6HXY/b5nMn5/ORajVmRLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sre@kernel.org>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 280/403] power: supply: twl4030_charger: cancel workers via devm
-Date: Fri,  4 Sep 2026 07:01:23 +0200
-Message-ID: <20260904045741.227601503@linuxfoundation.org>
+Subject: [PATCH 6.12 281/403] power: supply: ucs1002: fix use-after-free on remove
+Date: Fri,  4 Sep 2026 07:01:24 +0200
+Message-ID: <20260904045741.248886122@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,64 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 6eba34732524067da2aad5ddfdfbc641ded10e9e upstream.
+commit 609af0ceeaefdfa42cd01dd060b20f2e41f9a232 upstream.
 
-bci is devm-allocated. Two workers (bci->work and bci->current_worker)
-dereference it. twl4030_bci_remove() disables charging and masks
-interrupts. It cancels neither worker. A worker pending at remove() can
-run after devm frees bci.
+ucs1002 has no remove callback, so unbind runs entirely through devm.
+The alert IRQ handler queues the health_poll delayed work, and the work
+reschedules itself while the chip reports a bad-health condition.  devm
+frees the alert IRQ, which only synchronizes the handler; it does not
+cancel the delayed work, which can then run after devm frees the driver
+data and dereference it.
 
-The USB transceiver comes from devm_usb_get_phy_by_node(). devm
-unregisters its notifier only after remove() returns. A cancel_work_sync()
-in remove() can then race a notifier reschedule. devm_work_autocancel()
-and devm_delayed_work_autocancel() avoid that. They cancel the workers
-during devm release, before bci is freed.
+Register health_poll with devm_delayed_work_autocancel() before the
+alert IRQ is requested.  devm then frees the IRQ before cancelling the
+work, so the handler can no longer queue it and the work is cancelled
+before the driver data is freed.
 
-The current_worker is registered first, since devm will cancel in
-reverse order and bci->work can reschedule current_worker.
+This issue was found by an in-house static analysis tool.
 
-Suggested-by: Sebastian Reichel <sre@kernel.org>
-Fixes: d6ccc442b1210 ("twl4030_charger: Make the driver atomic notifier safe")
+Fixes: 81196e2e57fc ("power: supply: ucs1002: fix some health status issues")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20260702172128.2001753-1-maoyixie.tju@gmail.com
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260725072540.3092504-1-maoyixie.tju@gmail.com
-[Move comment about order into the commit message]
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Link: https://patch.msgid.link/20260802051249.424015-1-fanwu01@zju.edu.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/twl4030_charger.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/power/supply/ucs1002_power.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/twl4030_charger.c
-+++ b/drivers/power/supply/twl4030_charger.c
-@@ -14,6 +14,7 @@
- #include <linux/err.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
+--- a/drivers/power/supply/ucs1002_power.c
++++ b/drivers/power/supply/ucs1002_power.c
+@@ -12,6 +12,7 @@
+ #include <linux/kernel.h>
+ #include <linux/kthread.h>
+ #include <linux/device.h>
 +#include <linux/devm-helpers.h>
- #include <linux/interrupt.h>
- #include <linux/mfd/twl.h>
- #include <linux/power_supply.h>
-@@ -1003,8 +1004,15 @@ static int twl4030_bci_probe(struct plat
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_irq.h>
+@@ -641,7 +642,10 @@ static int ucs1002_probe(struct i2c_clie
+ 	}
  
- 	platform_set_drvdata(pdev, bci);
- 
--	INIT_WORK(&bci->work, twl4030_bci_usb_work);
--	INIT_DELAYED_WORK(&bci->current_worker, twl4030_current_worker);
-+	ret = devm_delayed_work_autocancel(&pdev->dev, &bci->current_worker,
-+					   twl4030_current_worker);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_work_autocancel(&pdev->dev, &bci->work,
-+				   twl4030_bci_usb_work);
+ 	info->health = POWER_SUPPLY_HEALTH_GOOD;
+-	INIT_DELAYED_WORK(&info->health_poll, ucs1002_health_poll);
++	ret = devm_delayed_work_autocancel(dev, &info->health_poll,
++					   ucs1002_health_poll);
 +	if (ret)
 +		return ret;
  
- 	bci->channel_vac = devm_iio_channel_get(&pdev->dev, "vac");
- 	if (IS_ERR(bci->channel_vac)) {
+ 	if (irq_a_det > 0) {
+ 		ret = devm_request_threaded_irq(dev, irq_a_det, NULL,
 
 
