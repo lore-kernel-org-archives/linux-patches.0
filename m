@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F2D41D11A;
-	Fri,  4 Sep 2026 05:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D87441D204;
+	Fri,  4 Sep 2026 05:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499333; cv=none; b=YKl8A9wWotrcP246n6MLJGk8hHfSoodMQiuMTpGR8zBIooXUQNHHKqRP0GmZxAgExwu7nWNLynmwG57gPRtqmS7A7OeNcdCltU91CjzrHHY7mJPQqZeOrPo2xVenZKsdkXCecMdWcjiD5bUW8baeekI5MmRfli597xq8jVQp2Kc=
+	t=1788499336; cv=none; b=sMxf0cEsaku4YOxtRzjVc6gzd1Lvy1H5hTprIlrjPxnc6geORwyPlGVVIFzcKu214xmJqC5zPuktvkpBrH434nrK8KK5HCiGt8PV1/a7XziIboMJqiVlHMD5000kPgNB85FZY1mFNIxvPaq29kR74xA2ZhKKlEA+1C9TzpSRPE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499333; c=relaxed/simple;
-	bh=K3DbZyM08mzAg1vG253G9ZP6PfV7M7AxrJH0KA0x3es=;
+	s=arc-20240116; t=1788499336; c=relaxed/simple;
+	bh=jUANwr3CnXpfY0gHztc7pphF65WpBf5KfDb+QeB5DsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwtojyMvo1+ThSvjUNx7U8qGg0oPQ9XMNwtV2koHHcNSp9fWPVn9O0vJfzakg5fjp6wYyDr/CktnMfPS3ZeUGbbkIpDTOkwBg5KX8Hh7cIipLo/GfveGJY43USrEBdIfcPzg+aglze2eW1JJwNmVGmo7YtHONxnaOSYdEAAj9fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byNzlBOO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LKhnJLhtU5IF1pU5YLbmZrH3pb1Fio8IJrxtyjJRDunj42+N+GL2Fn9++OuRxUCx7eFmkt1Fw0Eu91d5JknkKgdkeesYlFqyoCL/+9voTpplcOTBifzp87WEVXV05A+8MIF9mL8XgOYlEnh5qWGoOjhmO8Y+iH5fyUMhMMnca7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNp4sbsd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byNzlBOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1743F1F00ACA;
-	Fri,  4 Sep 2026 05:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNp4sbsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54991F00A3D;
+	Fri,  4 Sep 2026 05:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499332;
-	bh=qBFGeI34fZ4MRXNIh/N9HF6VofCOzRErWmg3JKnnFA8=;
+	s=korg; t=1788499335;
+	bh=N2DCDAqWhQNoSJDanH7iNLKzeM6C+yBrYPxat+R0/y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=byNzlBOOevZ84IFWBbNO4jJA9ytJqgfm1R4WkNUHldqzDJhsX/yEkzTtAUjPvF7e8
-	 hh3WlqGY0mj5nIZ01VmTnF2+EXBE6voiD/YpMCKE4bnZWfZzrQyZXm6BeDhjoHOB4G
-	 m9/a08yfcI8VxEWk7p3/477beUndDRG+huKzU1w4=
+	b=fNp4sbsduxNMzXQfWhw8P1mKNb/wrwuzYMhtBRCf6yfeSqFysR35DXdflpxI7XmjL
+	 Rkp/8cFSIrSgAkVBRXCvI/qka8/gaPQONypnoOST7fScGv9zHVdsa7h4OigCZ5pnpz
+	 xZEfhiEYb5yPHxoUv//a/poK/uWY02TlEvQF70qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <dstsmallbird@foxmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 7.2 380/713] sunrpc: fix use-after-free in __rpc_clnt_handle_event and __rpc_clnt_remove_pipedir
-Date: Fri,  4 Sep 2026 06:55:48 +0200
-Message-ID: <20260904045812.342753448@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.2 381/713] SUNRPC: Guard svcauth_gss_release() dispatch on rq_auth_stat
+Date: Fri,  4 Sep 2026 06:55:49 +0200
+Message-ID: <20260904045812.365003315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,84 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Chris Mason <clm@meta.com>
 
-commit 932a8cf6abb2b2f8677b79153a823108d8861fe2 upstream.
+commit f8870b9b75afb77986bc65940a231d54068ff2b1 upstream.
 
-Normal client creation goes through rpc_setup_pipedir(), which records
-clnt->pipefs_sb, but the mount-event path in __rpc_clnt_handle_event()
-calls rpc_setup_pipedir_sb() directly and never refreshes that field.
-The umount path also removes the directory without clearing
-clnt->pipefs_sb.
+svcauth_gss_release() reads gc_proc and switches on gc_svc before
+consulting rq_auth_stat.  On the SVC_DENIED path after a failed
+svcauth_gss_accept(), those fields may hold stale values from a
+prior request or uninitialized slab residue: svcauth_gss_accept()
+allocates gss_svc_data with non-zeroing kmalloc and clears only
+gsd_databody_offset and rsci per request, not clcred.
 
-After a late pipefs mount or any remount, rpc_clnt_remove_pipedir()
-compares the current superblock against a stale pipefs_sb pointer and
-skips cleanup, leaving pipefs dentries whose inode private data still
-points at a freed rpc_clnt, leading to a potential use-after-free during
-subsequent rpc_info_open() or rpc_show_info() calls.
+Because RPC_GSS_PROC_DATA is zero, a zeroed or stale-zero gc_proc
+passes the existing guard and falls through into the gc_svc switch,
+which can dispatch to svcauth_gss_wrap_integ() or
+svcauth_gss_wrap_priv().  Both wrap helpers call
+svcauth_gss_prepare_to_wrap() before any rsci->mechctx dereference,
+and that helper already returns early when rq_auth_stat is not
+rpc_auth_ok, so the downstream NULL dereference is blocked.  The
+dispatch itself remains structurally wrong: it reads scalars that
+the caller has no contract to have initialized after a failed
+authentication.
 
-Fix this by properly updating clnt->pipefs_sb upon mount events and
-clearing it during unmount or failure paths.
+Mirror the existing rq_auth_stat gate in
+svcauth_gss_prepare_to_wrap() one frame up, so
+svcauth_gss_release() skips the clcred dispatch entirely when
+authentication has not succeeded.  The cleanup tail that releases
+rq_client, rq_gssclient, cr_group_info, and rsci still runs.
 
-Fixes: bfca5fb4e97c ("SUNRPC: Fix RPC client cleaned up the freed pipefs dentries")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Xin Liu <dstsmallbird@foxmail.com>
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260528-tier2-v1-4-d026a1415e0b@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/clnt.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -96,7 +96,10 @@ static void rpc_unregister_client(struct
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1947,6 +1947,8 @@ svcauth_gss_release(struct svc_rqst *rqs
  
- static void __rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
- {
--	rpc_remove_client_dir(clnt);
-+	if (clnt->pipefs_sb) {
-+		rpc_remove_client_dir(clnt);
-+		clnt->pipefs_sb = NULL;
-+	}
- }
- 
- static void rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
-@@ -177,19 +180,28 @@ static int rpc_clnt_skip_event(struct rp
- }
- 
- static int __rpc_clnt_handle_event(struct rpc_clnt *clnt, unsigned long event,
--				   struct super_block *sb)
-+				    struct super_block *sb)
- {
-+	int err = 0;
-+
- 	switch (event) {
- 	case RPC_PIPEFS_MOUNT:
--		return rpc_setup_pipedir_sb(sb, clnt);
-+		clnt->pipefs_sb = sb;
-+		err = rpc_setup_pipedir_sb(sb, clnt);
-+		if (err)
-+			clnt->pipefs_sb = NULL;
-+		break;
- 	case RPC_PIPEFS_UMOUNT:
--		__rpc_clnt_remove_pipedir(clnt);
-+		if (clnt->pipefs_sb == sb) {
-+			__rpc_clnt_remove_pipedir(clnt);
-+			clnt->pipefs_sb = NULL;
-+		}
- 		break;
- 	default:
- 		printk(KERN_ERR "%s: unknown event: %ld\n", __func__, event);
- 		return -ENOTSUPP;
- 	}
--	return 0;
-+	return err;
- }
- 
- static int __rpc_pipefs_event(struct rpc_clnt *clnt, unsigned long event,
+ 	if (!gsd)
+ 		goto out;
++	if (rqstp->rq_auth_stat != rpc_auth_ok)
++		goto out;
+ 	gc = &gsd->clcred;
+ 	if (gc->gc_proc != RPC_GSS_PROC_DATA)
+ 		goto out;
 
 
