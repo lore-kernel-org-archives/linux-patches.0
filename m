@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960383876CC;
-	Fri,  4 Sep 2026 05:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA332F9DA1;
+	Fri,  4 Sep 2026 05:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501145; cv=none; b=qezoKn4l4oSRj/sFKNioRVHcMU8HtJS10UFc5MCpRYtIRgYOcN7rRu9SK9lXvG9YcFVinKf4Wd57VNwyJmI89ColwJRiTDsBs0XvOhE/qS9Km1O1QwUXLT1XQ9U66YzoX0DZI9/j9X02ZigmEQmBn+Qd2gEPv1BM9/iG8u1uou0=
+	t=1788501148; cv=none; b=Btt1+Tx6tVHDdhflpUi4mHqmtO8+Oh02ENxJ4oL9242F9CElLsdAlbxj5/NRTAaWbQ4wOhCCqbEEz4O85i2SHP2ewa0WNmSfnEOO04DysXHVskLdOWWuvnc+p/bWMUmJDmEiuao01qOCnAwk2evT/1r+QKkSMIcIkdAMLlNP62A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501145; c=relaxed/simple;
-	bh=WYp6Z+BJ3CwsQhRCDtl9mb6TUjsfekn8usEJFYq0+RQ=;
+	s=arc-20240116; t=1788501148; c=relaxed/simple;
+	bh=gyjt65jz3HGKNpbYghbIAarFlzyWnR9ZwKubsLA2GMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qqc1d49KjiNPfEuqk9mED8FWdWt5iNwx3hXVB7hfqz8F5ffXIxusbgwbYbhqDTs7twbIsPgaYMz9gVYOkKXIcPx/4uQ51hlA9hIDAVs8EPUxMsDfQz/E1+GHmC8AF1JwcSDZOzbmwYIEXHj+rXphqmtC/BJeWDYUbp1pg3KiHHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozxk5qwd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MejS+5fO/k1ZKt/DRQd1LvDAK7H4VCOGnOdxo1ti2sCVF2zZlNXvwHYuwWruIK8QNYfBkGNuyd+UvSblTTj58MvDRokdgCuy+N2XFEyK3PDmgGz483bS5sjyRaa7txT3mFwUOZEwtJLI5Foo9VEW/APhCVBPHi6Rau2yS0PoRN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZUkH+dP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozxk5qwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4431F00A3D;
-	Fri,  4 Sep 2026 05:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZUkH+dP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C657D1F00A3D;
+	Fri,  4 Sep 2026 05:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501144;
-	bh=WZglRYDwwL/ONFfkmNyfbxPBV2zbQV4qXsHuO5+gBbI=;
+	s=korg; t=1788501147;
+	bh=mnQp10pf2HSl6qUfbiqXGqAZvN9pClxxNSBl1id6MA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ozxk5qwdTq91iwZ+4EDFlTNVVy3rwd3BBSqcWrmAn6IsNstP4TEAUau5qBBd7HJqI
-	 9Kr8LThEpcoT/8WCi9XYWK2k/StD5dUsL/+vbASULm66/z7s4M/gWaJ5dZyi3v7DOJ
-	 J2v7GG+LofNbfiG4WuDsZW3yfvw9njBUUzjeGE0w=
+	b=uZUkH+dPtwRTBTLFfU8/y+hBJD8nbXpCJfCKyrMCcYYTxfn8mnoBqyzvBYFpI8OLI
+	 uG99EI38uYjjE/S1ZLBrvdyGeQDvXuIIvkPZ5HqNFlokgTQ6PwJEcSpDdcncPdsCMx
+	 dzJEM6YmD7QmxLw8gk9RbfQu7ki8BFa+lSg37638=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuyang Huang <sigefriedhyy@gmail.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 263/552] ipv6: use RCU iterator to dump route exceptions
-Date: Fri,  4 Sep 2026 06:57:00 +0200
-Message-ID: <20260904045755.844709732@linuxfoundation.org>
+	Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 254/552] Bluetooth: hci_sync: Clear HCI_CMD_PENDING when dropping the last request
+Date: Fri,  4 Sep 2026 06:56:51 +0200
+Message-ID: <20260904045755.458484043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,82 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuyang Huang <sigefriedhyy@gmail.com>
+From: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
 
-commit 47cdab0d51aaa9bd85f8e4904585bd5bd4df4488 upstream.
+commit cb19774faa57c51efa189d8b8606aeabccebc53b upstream.
 
-rt6_nh_dump_exceptions() uses hlist_for_each_entry() to iterate over
-RCU-protected exception lists. The caller holds rcu_read_lock(), but does
-not hold rt6_exception_lock, so rt6_insert_exception() can concurrently
-add an entry with hlist_add_head_rcu().
+A synchronous HCI command that never receives a response leaves
+HCI_CMD_PENDING set: hci_req_cmd_complete() is the only place that clears
+it, and it only runs when a response matching the last command sent
+arrives.
 
-KCSAN reports this race (irrelevant details omitted):
+hci_send_cmd_sync() populates hdev->req_skb only when the flag transitions
+from clear to set, while hci_dev_open_sync() and hci_dev_close_sync() drop
+req_skb without clearing the flag. After a timeout followed by either, the
+two disagree: the flag claims a request is outstanding while req_skb is
+NULL. Subsequent synchronous commands are then sent with no req_skb, so
+hci_event_packet() has nothing to match an arriving event against, and the
+caller times out even though the controller answered.
 
-  ==================================================================
-  BUG: KCSAN: data-race in rt6_insert_exception / rt6_nh_dump_exceptions
+Commands answered by Command Complete recover on their own, since
+hci_req_cmd_complete() clears the flag as a side effect. Drivers using
+__hci_cmd_sync_ev() with a custom event do not, because a vendor event
+never reaches that path. On a WCN3988 (hci_qca over UART) this makes a
+controller firmware hang unrecoverable: the driver injects a hardware
+error and re-runs qca_setup(), qca_read_soc_version() waits for
+HCI_EV_VENDOR, the reply arrives within 4 ms and is discarded, and every
+retry fails the same way. The adapter is left down until the driver is
+unbound and rebound, or power is removed.
 
-  write (marked) to 0xffff8a7c44c59620 of 8 bytes by interrupt on cpu 5:
-    rt6_insert_exception+0x3bb/0x760
-    __ip6_rt_update_pmtu+0x4fe/0x750
-    ip6_sk_update_pmtu+0x19a/0x3b0
-    udpv6_err+0x3ff/0x800
-    icmpv6_notify+0x1e1/0x440
-    icmpv6_rcv+0x8c0/0xab0
-    ip6_protocol_deliver_rcu+0x616/0x840
-    ip6_input_finish+0xb9/0x160
-    ...
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Clear the flag wherever the last request is dropped, restoring the
+invariant that req_skb is non-NULL exactly when HCI_CMD_PENDING is set.
+Verified on hardware by forcing a command timeout: without this change
+setup fails on every attempt, with it setup succeeds on the first.
 
-  read to 0xffff8a7c44c59620 of 8 bytes by task 549 on cpu 14:
-    rt6_nh_dump_exceptions+0xb3/0x260
-    rt6_dump_route+0x53e/0x5f0
-    fib6_dump_node+0x6d/0xf0
-    fib6_walk_continue+0x290/0x2d0
-    fib6_dump_table+0x28d/0x360
-    inet6_dump_fib+0x37d/0x620
-    rtnl_dumpit+0x7b/0xd0
-    netlink_dump+0x3ae/0x7e0
-    ...
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  4 locks held by dumper/549:
-    ...
-    #1: (rcu_read_lock){....}-{1:3}, at: inet6_dump_fib+0x88/0x620
-    #2: (&tb->tb6_lock){+.-.}-{3:3}, at: fib6_dump_table+0x1e9/0x360
-    #3: (rcu_read_lock){....}-{1:3}, at: rt6_dump_route+0x483/0x5f0
-
-  value changed: 0xffff8a7c44e05700 -> 0xffff8a7c45d60100
-
-  Reported by Kernel Concurrency Sanitizer on:
-  CPU: 14 UID: 0 PID: 549 Comm: dumper Not tainted
-  7.2.0-rc7-virtme #38 PREEMPT(lazy)
-  ...
-
-Use hlist_for_each_entry_rcu() to safely iterate over the exception list.
-
-Fixes: 1e47b4837f3b ("ipv6: Dump route exceptions if requested")
+Fixes: 2615fd9a7c25 ("Bluetooth: hci_sync: Fix overwriting request callback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuyang Huang <sigefriedhyy@gmail.com>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260815084651.69477-1-sigefriedhyy@gmail.com
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/route.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -6017,7 +6017,7 @@ static int rt6_nh_dump_exceptions(struct
- 		return 0;
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5300,6 +5300,7 @@ int hci_dev_open_sync(struct hci_dev *hd
+ 		if (hdev->req_skb) {
+ 			kfree_skb(hdev->req_skb);
+ 			hdev->req_skb = NULL;
++			hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
+ 		}
  
- 	for (i = 0; i < FIB6_EXCEPTION_BUCKET_SIZE; i++) {
--		hlist_for_each_entry(rt6_ex, &bucket->chain, hlist) {
-+		hlist_for_each_entry_rcu(rt6_ex, &bucket->chain, hlist) {
- 			if (w->skip) {
- 				w->skip--;
- 				continue;
+ 		clear_bit(HCI_RUNNING, &hdev->flags);
+@@ -5484,6 +5485,7 @@ int hci_dev_close_sync(struct hci_dev *h
+ 	if (hdev->req_skb) {
+ 		kfree_skb(hdev->req_skb);
+ 		hdev->req_skb = NULL;
++		hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
+ 	}
+ 
+ 	clear_bit(HCI_RUNNING, &hdev->flags);
 
 
