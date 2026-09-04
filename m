@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9C4412BF7;
-	Fri,  4 Sep 2026 05:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70C7372B4B;
+	Fri,  4 Sep 2026 05:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500404; cv=none; b=Qx6johLkfwEJWTWwjV8IYfGin/DY5eYqF0MNPYGd/suVyzyzmJ5kLWeN6WIebnLWPfLhCPXLIOxoz3EoQmCPCfkS4z40VQfVjApeXBc2/Zszjy0tjtAkhDilEDW7zQ8Oo/h0UgET1ibtpU2x8+MdWbMnbZD08sw3wLMeDry6mxQ=
+	t=1788500407; cv=none; b=g5u0vVF3gViZQILPc8yInSHMKSvcnDXR78BsTe/BoZVHEQHoaI3wy46kb9+qeONk39n244LpM5Ni1N+U43Cnec0I3DqujqxtAvyV5QrHXWCA/SAo/YoueNGZ+5b61UZMeX8UqBdYUcP7uEeJQK2t90zR51nblvGkJQat57/VTnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500404; c=relaxed/simple;
-	bh=zuHR5sp7jF38YIVM27fiWFJkXHmI0KIKLwVFY6yK8s8=;
+	s=arc-20240116; t=1788500407; c=relaxed/simple;
+	bh=5bs+A09Uc+iPek02jZXzOvrsXdGBxbmnG6SIgPU1Yug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jDlgPMZ7zsW5MkUEUfbtqf0oEjnXZzAtwI+qKh0J2KknmDOG1v5P9KbSh8LdbmhyqSy/tduZdtb/O8feQiST4NCkMdIkKHN9sfiPn36nm9/EJH3bAu2ytsBToBvwJ1UA6uVL7iBtAsVt+6Aq32jvwNpjQYzNXXBpgpibCz4Ipy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHH1I6/d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I9hWoyo4NI6YIqytU7fgwbPzyOuqMCotTBmmMJ+xLRMNVCP4Jp3co86E6jWc7N//0xuWwp050YIaafINLSaowaND9aP7k0yFL7d9ysONZcNlbi+2obEQpSHDUOhQMWtvaAZSg/d7Sh3G97dl6VD07acsaRjmDlsSxD7vqsfM74Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdkhS6iu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHH1I6/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A9B1F00A3D;
-	Fri,  4 Sep 2026 05:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdkhS6iu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AD91F00A3D;
+	Fri,  4 Sep 2026 05:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500402;
-	bh=XFwsSixzK8YkTVaoPMO4SyV3OGg0xkY1aFwk7WG4bnM=;
+	s=korg; t=1788500405;
+	bh=bcIW7/K5ZUOV9HJkOYMgDIUuDwSPKKmAvi0xlBxHr6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cHH1I6/d9KfI96lT4uQaL6NdYuyxf1uRIZazkP/l6cdkKnNFyXrAYcvBR1UnwjygE
-	 tHBm3Nx65E9c4314IiV3GiVK3FT79ef9FpwCuQhBNO+nJgkdLNTiRNqydxNXdgnbUK
-	 dkfNugSDftOGr09HIhA12uMOXtuGk5lRsA+WFLck=
+	b=WdkhS6iuK7HhO8Tse162P1KnutPr8VWX/eCcv9l5LYx6BPZkq6S6ChgWFKOieseYS
+	 fqp5PdNaep1ySiiHswuKnKiswM+fydF7l16hxSkg1iJbfkP8ql4FaCAPa7hKC2+Z0u
+	 rZ6WIe1YQ/+a21nAa0i3op3PezVk1lROmqZ5OBtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@suse.com>,
 	Tao Cui <cuitao@kylinos.cn>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 044/552] mm: memcg-v1: fix memsw and TCP failcnt accounting
-Date: Fri,  4 Sep 2026 06:53:21 +0200
-Message-ID: <20260904045748.831580306@linuxfoundation.org>
+Subject: [PATCH 6.18 045/552] mm: memcg: stop reclaim when a limit update is superseded
+Date: Fri,  4 Sep 2026 06:53:22 +0200
+Message-ID: <20260904045748.856471706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -58,81 +58,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-commit 92192e9c5ee07efc657d3654bc264081fb0aa01b upstream.
+commit 9477820c63cbf4d97114238f3d1ff10dfd6bee3f upstream.
 
-Commit 0e2759afcaf9 ("page_counter: track failcnt only for legacy
-cgroups") made failcnt accounting conditional on track_failcnt.  It
-enabled the flag for memcg->memory, but not for memcg->memsw or
-memcg->tcpmem.
+kernfs serializes file operations only per open file, so separate open
+files can update the same memory.high or memory.max file concurrently.
+Both handlers store the new limit before synchronous reclaim, but continue
+to use the writer's local target in the reclaim loop.  If another writer
+raises or removes the limit, the first writer can continue reclaiming
+toward a stale target.
 
-Consequently, memory.memsw.failcnt remains zero when the memory+swap limit
-is hit.  memory.kmem.tcp.limit_in_bytes still sets memcg->tcpmem.max, but
-TCP charge failures are not reflected in memory.kmem.tcp.failcnt.
+For memory.max, this can leave the writer looping indefinitely once
+reclaim retries are exhausted.  The OOM path sees sufficient margin under
+the current limit and returns true without killing, while the writer still
+compares usage against its stale target and records another OOM event.
 
-Enable failcnt accounting for both v1 counters.
+Check the current limit at the start of each reclaim iteration and stop if
+it no longer matches the writer's target.
 
-To reproduce memory.memsw.failcnt:
+Reproducer:
 
-    CG=/sys/fs/cgroup/memory/memsw-test
-    LIMIT=33554432
-    mkdir "$CG"
-    echo "$LIMIT" > "$CG/memory.limit_in_bytes"
-    echo "$LIMIT" > "$CG/memory.memsw.limit_in_bytes"
+Populate a cgroup with anonymous memory and disable swapping.  Lower
+memory.max from one open file, then restore it to "max" through another
+open file after the new limit becomes visible.
 
-Start a child process in the cgroup and make it allocate and touch 96 MiB
-of memory, causing a memcg OOM.
+Without the patch, the first writer remains blocked and repeatedly
+increments the OOM event counter.  With the patch, it returns normally.
 
-    cat "$CG/memory.memsw.failcnt"
+This was not motivated by a reported production workload.  We found it
+through automated randomized testing for our cgroup observability work
+and reduced it to the reproducer above.
 
-Without the patch, memory.memsw.failcnt is 0. With the patch,
-memory.memsw.failcnt is greater than 0.
-
-To reproduce memory.kmem.tcp.failcnt:
-
-    CG=/sys/fs/cgroup/memory/tcpmem-test
-    LIMIT=65536
-    mkdir "$CG"
-    echo "$LIMIT" > "$CG/memory.kmem.tcp.limit_in_bytes"
-
-Start a child process in the cgroup, create a TCP socket, and reserve
-1 MiB of socket memory with SO_RESERVE_MEM. The reservation fails with
-ENOMEM.
-
-    cat "$CG/memory.kmem.tcp.failcnt"
-
-Without the patch, memory.kmem.tcp.failcnt is 0.  With the patch,
-memory.kmem.tcp.failcnt is greater than 0.
-
-Link: https://lore.kernel.org/20260811030843.109104-1-guopeng.zhang@linux.dev
-Closes: https://sashiko.dev/#/patchset/20260810074247.52747-1-guopeng.zhang@linux.dev?part=1
-Fixes: 0e2759afcaf9 ("page_counter: track failcnt only for legacy cgroups")
+Link: https://lore.kernel.org/20260724021805.1234583-1-guopeng.zhang@linux.dev
+Fixes: 8c8c383c04f6 ("mm: memcontrol: try harder to set a new memory.high")
+Fixes: b6e6edcfa405 ("mm: memcontrol: reclaim and OOM kill when shrinking memory.max below usage")
 Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Acked-by: Tao Cui <cuitao@kylinos.cn>
 Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Michal Hocko <mhocko@kernel.org>
 Cc: Muchun Song <muchun.song@linux.dev>
 Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/memcontrol.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
-@@ -3809,9 +3809,11 @@ mem_cgroup_css_alloc(struct cgroup_subsy
- 		page_counter_init(&memcg->swap, &parent->swap, false);
- #ifdef CONFIG_MEMCG_V1
- 		memcg->memory.track_failcnt = !memcg_on_dfl;
-+		memcg->memsw.track_failcnt = !memcg_on_dfl;
- 		WRITE_ONCE(memcg->oom_kill_disable, READ_ONCE(parent->oom_kill_disable));
- 		page_counter_init(&memcg->kmem, &parent->kmem, false);
- 		page_counter_init(&memcg->tcpmem, &parent->tcpmem, false);
-+		memcg->tcpmem.track_failcnt = !memcg_on_dfl;
- #endif
- 	} else {
- 		init_memcg_stats();
+@@ -4380,6 +4380,9 @@ static ssize_t memory_high_write(struct
+ 		unsigned long nr_pages = page_counter_read(&memcg->memory);
+ 		unsigned long reclaimed;
+ 
++		if (high != READ_ONCE(memcg->memory.high))
++			break;
++
+ 		if (nr_pages <= high)
+ 			break;
+ 
+@@ -4431,6 +4434,9 @@ static ssize_t memory_max_write(struct k
+ 	for (;;) {
+ 		unsigned long nr_pages = page_counter_read(&memcg->memory);
+ 
++		if (max != READ_ONCE(memcg->memory.max))
++			break;
++
+ 		if (nr_pages <= max)
+ 			break;
+ 
 
 
