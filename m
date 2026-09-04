@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65097414A2A;
-	Fri,  4 Sep 2026 06:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D76637F306;
+	Fri,  4 Sep 2026 06:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501693; cv=none; b=HQG048hEAsRqK5wAmj2/7yMSrsAZDqKIXMx6qGBjjwLe8c1wdPGeUc8Fbjo43e9ndwCYpTdlvmvDCdHIamZsizpwPi75AbC1RsD/mCZM4cXTgJDQiXW5sRUt9JpYFLOO1Z+hloUluzKNxfJay9faDxE+VoN4IuKJoOKS/+fspQQ=
+	t=1788501696; cv=none; b=HFemICYvkTLjq5VRgkTAZtHBgE4ePaKOdOhOqzDe2PvU4/CLiUqFTIFSuXXQQp6uz5d2nxQLLrJ8RoCM1uZDgHKudjZm7GVQQBFt9CzFw73U6qU44PhIYCqP9OVtWZ4y3+8RKPRFZgdccOq49vofHW4Pa9IeVo6nlMKteQGqEEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501693; c=relaxed/simple;
-	bh=cJlo8CYSiDDaFI51lFQBUlAG9nSsodVnRXwFXWtFfeA=;
+	s=arc-20240116; t=1788501696; c=relaxed/simple;
+	bh=8AH+Y4Rbt1a1PTyLBeEIx5+I9kJvpO6FvTCDCG+51dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgucIN2WY0V8ZfsbSQZ+c90lMj9LhmXecB85kUl36DNvFp5ypvB64+EC97/hzJJemIJLZsxqEA26Pau5+prPVVO+gVJ3mVcvJNqzF07bEmqsKiR4Fb1IyIqez0QveqESul6wXYoB9XBc8hBS6D4SPUqF9g8zr+vp4JSm8mTjtEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1N6QNdH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=njbirs2HsNnq0PEbk6lCLdfLX0k6D+0qZ07aX3xC5RocTVBLCW+CLj5SvACnBLMPF8dtIejgFeFnuQZUvXUFshttqfOGbBqDORo1U1OyPVGk646XBTiZcHglQPNBgDFlOVRhjs/px94ns/ItVNDasOHptKqPp0g1Ymq6JbaqSkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgC7EaXj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1N6QNdH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8611F00A3D;
-	Fri,  4 Sep 2026 06:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgC7EaXj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974851F00A3F;
+	Fri,  4 Sep 2026 06:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501692;
-	bh=Fxgw0Z5AJsI1GkqnoFLHM+afR0ioFczt8uCO4+Stz/c=;
+	s=korg; t=1788501695;
+	bh=ERGUXhC12TDEyqtXIwt7QJ/tMHfLKuKenmY+wQbnDEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U1N6QNdH2DWYHNDqCB4PF5ZHBVuOZo7ryNwnGhxzSTCtP1rh6k1Tg24/Dx2KBpk38
-	 gICEhgpk1pkwQRT2gUKpcuGIbu3OZEbhVsj8YTYU3ijXtQC2DG2ZpDx+8T554spw7e
-	 DCTgos7zX3DZUFwt+E6d74y33G3I0K/0+xeMbGQQ=
+	b=mgC7EaXjlQqAjnGN+Ea1Fk8hFvcVIZHd978surGQOs5y/XMOFgHeGX26MuojPj19q
+	 QprO0rHc7qNt+ars06qMhqqI4ZRQCyIZihL2rjYcG1B2uq68dPL2jnsjETfWsjPWOw
+	 x+DWD9JQNDhAFtj8l3JVUF3itWnWo5y5UH7Dn+Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Antonio Quartulli <antonio@openvpn.net>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Burak Emir <burak.emir@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 500/552] ovpn: run deferred work on a module-owned workqueue
-Date: Fri,  4 Sep 2026 07:00:57 +0200
-Message-ID: <20260904045801.989501778@linuxfoundation.org>
+Subject: [PATCH 6.18 501/552] rust: rust_is_available: warn for `bindgen` < 0.72.1 && libclang >= 22
+Date: Fri,  4 Sep 2026 07:00:58 +0200
+Message-ID: <20260904045802.011460539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,193 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit e9714db8041763f59dde152c812b96b3de05c6d9 upstream.
+[ Upstream commit dc01dfb37b34beeefcfe1c3055364d41a4070c7e ]
 
-ovpn queues several work items whose callbacks execute module text.
-These works currently run on the global system workqueues, so module
-exit has no driver-owned drain point that guarantees the callbacks have
-fully returned before the module text can be freed.
+Starting with LLVM 22, `clang_getTypeDeclaration()` may return a forward
+declaration instead of the type definition. This made `bindgen` generate
+opaque types [1][2], which in turn made us fail with e.g.
 
-Object references protect the objects used by the callbacks, but they do
-not prove that a workqueue function has returned. In particular, a
-worker can drop the final reference that unblocks device teardown while
-it is still executing ovpn code.
+    error[E0609]: no field `__bindgen_anon_1` on type `bindings::kernel_param`
+      --> rust/kernel/module_param.rs:78:46
+       |
+    78 |         let container = unsafe { &*((*param).__bindgen_anon_1.arg.cast::<SetOnce<T>>()) };
+       |                                              ^^^^^^^^^^^^^^^^ unknown field
+       |
+       = note: available field is: `_address`
 
-Add a module-owned workqueue and queue all ovpn work items on it. During
-module exit, unregister rtnl and netlink first, flush the workqueue so
-ordinary ovpn workers finish, run the final RCU barrier, and destroy the
-workqueue last. This keeps the workqueue available for cleanup work
-queued from RCU callbacks, while ensuring no ovpn work item can outlive
-the module text.
+This was fixed in `bindgen` 0.72.1 [3].
 
-The per-device delayed keepalive work remains explicitly disabled during
-netdev teardown (disable_delayed_work_sync in ndo_uninit), since
-flush_workqueue does not flush delayed work that is still only pending
-on its timer.
+In order to clarify what is going on and avoid confusion [4][5], add
+a warning to `rust_is_available.sh` about it when the versions match,
+similar to past warnings like the one removed in:
 
-Fixes: 3ecfd9349f40 ("ovpn: implement keepalive mechanism")
-Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+  commit ae64324ad5c1 ("rust: rust_is_available: remove warning for `bindgen` < 0.69.5 && libclang >= 19.1")
+
+In addition, even if the versions match, check if the issue appears to
+not reproduce with the given binaries, to avoid a warning in such a case.
+
+Finally, include tests.
+
+[ Nathan, in parallel, updated the instructions of the LLVM+Rust
+  kernel.org toolchains [6] so that `--version` is not passed to
+  `cargo` for `bindgen`, and thus the latest `bindgen` is installed
+  by default, which should help to avoid some of these situations.
+
+  Thanks!
+
+    - Miguel ]
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Link: https://github.com/rust-lang/rust-bindgen/issues/3264 [1]
+Link: https://github.com/Rust-for-Linux/linux/issues/353 [2] # "Missing fields in nested class with LLVM 22."
+Link: https://github.com/rust-lang/rust-bindgen/pull/3278 [3]
+Reported-by: Burak Emir <burak.emir@gmail.com>
+Link: https://github.com/Rust-for-Linux/linux/issues/1247 [4]
+Link: https://lore.kernel.org/rust-for-linux/CABwQupNfMAJOGqRM9ke6tj4f53dCCsBDKU7Vp+zf8mwk7bqt8Q@mail.gmail.com/ [5]
+Link: https://mirrors.edge.kernel.org/pub/tools/llvm/rust/ [6]
+Tested-by: Burak Emir <burak.emir@gmail.com>
+Link: https://patch.msgid.link/20260719120514.159914-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/main.c     | 19 ++++++++++++++++++-
- drivers/net/ovpn/ovpnpriv.h |  4 ++++
- drivers/net/ovpn/peer.c     |  8 ++++----
- drivers/net/ovpn/tcp.c      |  9 ++++-----
- 4 files changed, 30 insertions(+), 10 deletions(-)
+ scripts/rust_is_available.sh                  | 14 +++++++++
+ .../rust_is_available_bindgen_libclang_22.h   |  5 ++++
+ scripts/rust_is_available_test.py             | 30 ++++++++++++++++++-
+ 3 files changed, 48 insertions(+), 1 deletion(-)
+ create mode 100644 scripts/rust_is_available_bindgen_libclang_22.h
 
-diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
-index 0262926449f2e..c18ed8690baff 100644
---- a/drivers/net/ovpn/main.c
-+++ b/drivers/net/ovpn/main.c
-@@ -12,6 +12,7 @@
- #include <linux/module.h>
- #include <linux/netdevice.h>
- #include <linux/inetdevice.h>
-+#include <linux/workqueue.h>
- #include <net/gro_cells.h>
- #include <net/ip.h>
- #include <net/rtnetlink.h>
-@@ -26,6 +27,9 @@
- #include "tcp.h"
- #include "udp.h"
+diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
+index d2323de0692c1..82be88d44c184 100755
+--- a/scripts/rust_is_available.sh
++++ b/scripts/rust_is_available.sh
+@@ -242,6 +242,20 @@ if [ "$bindgen_libclang_cversion" -ge 1900100 ] &&
+ 	fi
+ fi
  
-+/* module-owned workqueue on which all ovpn-specific work is queued */
-+struct workqueue_struct *ovpn_wq;
++if [ "$bindgen_libclang_cversion" -ge 2200000 ] &&
++	[ "$rust_bindings_generator_cversion" -lt 7201 ]; then
++	# Distributions may have patched the issue.
++	if ! "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang_22.h | grep -q 'pub foo'; then
++		echo >&2 "***"
++		echo >&2 "*** Rust bindings generator '$BINDGEN' < 0.72.1 together with libclang >= 22"
++		echo >&2 "*** may not work due to a bug (https://github.com/rust-lang/rust-bindgen/pull/3278)."
++		echo >&2 "***   Your bindgen version:  $rust_bindings_generator_version"
++		echo >&2 "***   Your libclang version: $bindgen_libclang_version"
++		echo >&2 "***"
++		warning=1
++	fi
++fi
 +
- static void ovpn_priv_free(struct net_device *net)
- {
- 	struct ovpn_priv *ovpn = netdev_priv(net);
-@@ -264,10 +268,16 @@ static int __init ovpn_init(void)
+ # If the C compiler is Clang, then we can also check whether its version
+ # matches the `libclang` version used by the Rust bindings generator.
+ #
+diff --git a/scripts/rust_is_available_bindgen_libclang_22.h b/scripts/rust_is_available_bindgen_libclang_22.h
+new file mode 100644
+index 0000000000000..6b33544c14a81
+--- /dev/null
++++ b/scripts/rust_is_available_bindgen_libclang_22.h
+@@ -0,0 +1,5 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++struct S;
++struct S {
++	int foo;
++};
+diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_available_test.py
+index 4fcc319dea84e..a5fadef98132f 100755
+--- a/scripts/rust_is_available_test.py
++++ b/scripts/rust_is_available_test.py
+@@ -54,7 +54,7 @@ else:
+ """)
  
- 	ovpn_tcp_init();
+     @classmethod
+-    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False):
++    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False, libclang_22_patched=False):
+         if libclang_stderr is None:
+             libclang_case = f"raise SystemExit({cls.bindgen_default_bindgen_libclang_failure_exit_code})"
+         else:
+@@ -70,6 +70,11 @@ else:
+         else:
+             libclang_concat_case = "pass"
  
-+	ovpn_wq = alloc_workqueue("ovpn", WQ_PERCPU, 0);
-+	if (!ovpn_wq) {
-+		pr_err("ovpn: cannot allocate workqueue\n");
-+		return -ENOMEM;
-+	}
++        if libclang_22_patched:
++            libclang_22_case = "print('pub foo: ::std::os::raw::c_int,')"
++        else:
++            libclang_22_case = "pass"
 +
- 	err = rtnl_link_register(&ovpn_link_ops);
- 	if (err) {
- 		pr_err("ovpn: can't register rtnl link ops: %d\n", err);
--		return err;
-+		goto destroy_wq;
- 	}
+         return cls.generate_executable(f"""#!/usr/bin/env python3
+ import sys
+ if "rust_is_available_bindgen_libclang.h" in " ".join(sys.argv):
+@@ -78,6 +83,8 @@ elif "rust_is_available_bindgen_0_66.h" in " ".join(sys.argv):
+     {version_0_66_case}
+ elif "rust_is_available_bindgen_libclang_concat.h" in " ".join(sys.argv):
+     {libclang_concat_case}
++elif "rust_is_available_bindgen_libclang_22.h" in " ".join(sys.argv):
++    {libclang_22_case}
+ else:
+     print({repr(version_stdout)})
+ """)
+@@ -300,6 +307,27 @@ else:
+                 bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_concat_patched=True)
+                 result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
  
- 	err = ovpn_nl_register();
-@@ -280,6 +290,9 @@ static int __init ovpn_init(void)
- 
- unreg_rtnl:
- 	rtnl_link_unregister(&ovpn_link_ops);
-+destroy_wq:
-+	destroy_workqueue(ovpn_wq);
-+	ovpn_wq = NULL;
- 	return err;
- }
- 
-@@ -288,7 +301,11 @@ static __exit void ovpn_cleanup(void)
- 	ovpn_nl_unregister();
- 	rtnl_link_unregister(&ovpn_link_ops);
- 
-+	flush_workqueue(ovpn_wq);
- 	rcu_barrier();
++    def test_bindgen_bad_libclang_22(self):
++        for (bindgen_version, libclang_version, expected_not_patched) in (
++            ("0.71.1", "21.1.0", self.Expected.SUCCESS),
++            ("0.71.1", "22.0.0", self.Expected.SUCCESS_WITH_WARNINGS),
++            ("0.71.1", "22.1.0", self.Expected.SUCCESS_WITH_WARNINGS),
 +
-+	destroy_workqueue(ovpn_wq);
-+	ovpn_wq = NULL;
- }
- 
- module_init(ovpn_init);
-diff --git a/drivers/net/ovpn/ovpnpriv.h b/drivers/net/ovpn/ovpnpriv.h
-index 5898f6adada7f..84499140e4bd9 100644
---- a/drivers/net/ovpn/ovpnpriv.h
-+++ b/drivers/net/ovpn/ovpnpriv.h
-@@ -15,6 +15,10 @@
- #include <uapi/linux/if_link.h>
- #include <uapi/linux/ovpn.h>
- 
-+struct workqueue_struct;
++            ("0.72.0", "22.0.0", self.Expected.SUCCESS_WITH_WARNINGS),
 +
-+extern struct workqueue_struct *ovpn_wq;
++            ("0.72.1", "22.0.0", self.Expected.SUCCESS),
++        ):
++            with self.subTest(bindgen_version=bindgen_version, libclang_version=libclang_version):
++                cc = self.generate_clang(f"clang version {libclang_version}")
++                libclang_stderr = f"scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version {libclang_version} [-W#pragma-messages], err: false"
++                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr)
++                result = self.run_script(expected_not_patched, { "BINDGEN": bindgen, "CC": cc })
++                if expected_not_patched == self.Expected.SUCCESS_WITH_WARNINGS:
++                    self.assertIn(f"Rust bindings generator '{bindgen}' < 0.72.1 together with libclang >= 22", result.stderr)
 +
- /**
-  * struct ovpn_peer_collection - container of peers for MultiPeer mode
-  * @by_id: table of peers index by ID
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index 412ef09abd5e7..6b9f5f12fc5a8 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -62,7 +62,7 @@ void ovpn_peer_keepalive_set(struct ovpn_peer *peer, u32 interval, u32 timeout)
- 	/* now that interval and timeout have been changed, kick
- 	 * off the worker so that the next delay can be recomputed
- 	 */
--	mod_delayed_work(system_wq, &peer->ovpn->keepalive_work, 0);
-+	mod_delayed_work(ovpn_wq, &peer->ovpn->keepalive_work, 0);
- }
- 
- /**
-@@ -1366,7 +1366,7 @@ static time64_t ovpn_peer_keepalive_work_single(struct ovpn_peer *peer,
- 			   peer->id);
- 		if (WARN_ON(!ovpn_peer_hold(peer)))
- 			return 0;
--		if (!schedule_work(&peer->keepalive_work))
-+		if (!queue_work(ovpn_wq, &peer->keepalive_work))
- 			ovpn_peer_put(peer);
- 	}
- 
-@@ -1458,8 +1458,8 @@ void ovpn_peer_keepalive_work(struct work_struct *work)
- 		netdev_dbg(ovpn->dev,
- 			   "scheduling keepalive work: now=%llu next_run=%llu delta=%llu\n",
- 			   next_run, now, next_run - now);
--		schedule_delayed_work(&ovpn->keepalive_work,
--				      (next_run - now) * HZ);
-+		queue_delayed_work(ovpn_wq, &ovpn->keepalive_work,
-+				   (next_run - now) * HZ);
- 	}
- 	unlock_ovpn(ovpn, &release_list);
- }
-diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
-index 0af14055c39aa..8fe8a8e750a40 100644
---- a/drivers/net/ovpn/tcp.c
-+++ b/drivers/net/ovpn/tcp.c
-@@ -151,7 +151,7 @@ static void ovpn_tcp_rcv(struct strparser *strp, struct sk_buff *skb)
- 	/* take reference for deferred peer deletion. should never fail */
- 	if (WARN_ON(!ovpn_peer_hold(peer)))
- 		goto err_nopeer;
--	if (!schedule_work(&peer->tcp.defer_del_work))
-+	if (!queue_work(ovpn_wq, &peer->tcp.defer_del_work))
- 		ovpn_peer_put(peer);
- 	ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
- err_nopeer:
-@@ -284,13 +284,12 @@ static void ovpn_tcp_send_sock(struct ovpn_peer *peer, struct sock *sk)
- 			 * stream therefore we abort the connection
- 			 */
- 			ovpn_peer_hold(peer);
--			if (!schedule_work(&peer->tcp.defer_del_work))
-+			if (!queue_work(ovpn_wq, &peer->tcp.defer_del_work))
- 				ovpn_peer_put(peer);
- 
- 			/* we bail out immediately and keep tx_in_progress set
- 			 * to true. This way we prevent more TX attempts
--			 * which would lead to more invocations of
--			 * schedule_work()
-+			 * which would lead to more invocations of queue_work()
- 			 */
- 			return;
- 		}
-@@ -487,7 +486,7 @@ static void ovpn_tcp_write_space(struct sock *sk)
- 	rcu_read_lock();
- 	sock = rcu_dereference_sk_user_data(sk);
- 	if (likely(sock && sock->peer)) {
--		schedule_work(&sock->tcp_tx_work);
-+		queue_work(ovpn_wq, &sock->tcp_tx_work);
- 		sock->peer->tcp.sk_cb.sk_write_space(sk);
- 	}
- 	rcu_read_unlock();
++                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_22_patched=True)
++                result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
++
+     def test_clang_matches_bindgen_libclang_different_bindgen(self):
+         bindgen = self.generate_bindgen_libclang("scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version 999.0.0 [-W#pragma-messages], err: false")
+         result = self.run_script(self.Expected.SUCCESS_WITH_WARNINGS, { "BINDGEN": bindgen })
 -- 
 2.53.0
 
