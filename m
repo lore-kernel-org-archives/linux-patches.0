@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC803D6664;
-	Fri,  4 Sep 2026 05:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435243D6664;
+	Fri,  4 Sep 2026 05:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499500; cv=none; b=pf7N22xpsOSf3kBLbcRGKthLYaQAQ42laYROVQjsIe/YZ302nTRw4/UVsnxAVCECyVHHQTYzk4tnKqabrthpTxaN9fpEyyRVTbKYJZheeqU1VOOZr4WgJikub3G0jq6vEchKI4tFJyiwOzfVaaxKdOokThMYjZo7e+mj4fa45Dg=
+	t=1788499503; cv=none; b=KwCG8aUkzU4F797ytlyZThSxkOUaLU28ehhrIIuWkZyjDk8Y2PTFT3roHl6kzqHVJk0QQf75UWilL7F5ztJ3+mT30cyxHC70MSj/+TBC+NgLAdI8sTHS2TjsYcr2L5Qq5NuqWc9fvTXRhN6cORDgBVnCGbEp8fZbCxcNDeDiE7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499500; c=relaxed/simple;
-	bh=txU+OEbz0fgyi4d6Qq2NkmJsDRxsf58MZUR3vL4gKdo=;
+	s=arc-20240116; t=1788499503; c=relaxed/simple;
+	bh=i5V7o8NPSzE6sIyRFI14mRsK48hiSy7/zFWARJQ08h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubKCGa3TMLerh7pFBI4Q5THPH70Q09teiWsUbRM5LJJCCUY1N1lEYTmV/qCuIHOlvBOyxIOOaFQcTgL+tjbwvf7c/ZAJYmvPXxnw+0mCvdhvvC3SGFDxYeZKnGntq6leYF6m7U+1YaQfky+gFYGO0yxzGPYxdwY+VzFzWnMcSvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS56Jd9n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uge0I46EBrF9FMZG5qAkfZEPvNMNwSJe/tDuMAZxZc+aDHEBT+HnC6AsxlMRR5+1FP/yy8FDsrkPgoH7hErlXkeIEfTiswq0hIlBUnaIwqamVXRlo3QOGAh2YGuB+GRTR7kdUCwy53che8PtGkM5DHGqNcRLgLm5jW0rUUfhWkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5avQNPK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS56Jd9n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A711F00A3D;
-	Fri,  4 Sep 2026 05:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5avQNPK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F241F00A3E;
+	Fri,  4 Sep 2026 05:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499499;
-	bh=kzEI6PZzd2OBkI/whccCUVcIKQU4Nguf784YT8p6AeU=;
+	s=korg; t=1788499502;
+	bh=Fmic6I81IzQpeAzw8/9VXxD/tDw1la5MDNPpYrk8GXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YS56Jd9nYqewHgZbR9elo4ch3zr5dfy0Hic4hunnM0B2eTSf8+R1JRZZmNKSOwpt0
-	 wNy35bXHxmkLz61iaTXVgQiIs2Ec5wW70d6keBKfhggIpNAH+NgfgjtGfYVoUz7Pe1
-	 CckWSjsBI/mXC4sPVGVe4qKkG2zBxUX3u5xZHnI8=
+	b=K5avQNPKiZoW0dRfGeoJE5M7hV/mV8PCJay2pONLNNZbjdpJtoVSOR+lK8TdImr3G
+	 BGbLjEv+LeXrJHzKENr6OOkmmxMQ+z74j06kvxzKwwvDSB76J0JiJRjZD5mheHn4K7
+	 3G25o1/Q3EOrA6JcmpHPl8s6qgNqJHAklpe4gJLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	Nam Cao <namcao@linutronix.de>,
-	Jesse Taube <jtaubepe@redhat.com>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 7.2 438/713] riscv: unaligned: stop using kthread for check_vector_unaligned_access()
-Date: Fri,  4 Sep 2026 06:56:46 +0200
-Message-ID: <20260904045813.648997326@linuxfoundation.org>
+	Erin Lo <erin.lo@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 7.2 439/713] remoteproc: scp: Fix device reference leak on failed lookup
+Date: Fri,  4 Sep 2026 06:56:47 +0200
+Message-ID: <20260904045813.670195805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,97 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Johan Hovold <johan@kernel.org>
 
-commit 34c9cfcde29b938c416924ee6ec3519270bc2238 upstream.
+commit 22f9efb3ae07f966a1901d929d16df1388cce65c upstream.
 
-A kthread is used to run check_vector_unaligned_access() to optimize boot
-time, allowing the kernel to continue booting without waiting for the
-unaligned vector speed probe to finish.
+Make sure to drop the reference taken to the SCP device when attempting
+to look up its driver data before the driver has been bound.
 
-However, this asynchronous approach introduces several complications.
-First, the kthread may not complete before a user reads vDSO data,
-resulting in incorrect values. This was previously addressed by
-commit 5d15d2ad36b0 ("riscv: hwprobe: Fix stale vDSO data for
-late-initialized keys at boot"), which added complex synchronization
-between the kthread and vDSO reads.
+Note that holding a reference to a device does not prevent its driver
+data from going away.
 
-Second, it was discovered that the kthread may not finish before
-vec_check_unaligned_access_speed_all_cpus() (marked with __init) is freed,
-triggering a page fault.
-
-These issues raise the question of whether the kthread is worth the added
-complexity. A past boot time regression report was actually unrelated to
-synchronous probing; it was caused by the probe running serially. Since
-switching to a parallel probe, no further complaints have been made.
-Furthermore, the unaligned scalar access speed probe takes the same amount
-of time, runs synchronously, and has caused no issues.
-
-Testing shows no noticeable boot time slowdown when running the vector
-probe synchronously (0.464474s with kthread vs. 0.457991s without).
-
-Remove the kthread usage and run the probe synchronously. This simplifies
-the boot flow and allows for the revert of commit 5d15d2ad36b0 ("riscv:
-hwprobe: Fix stale vDSO data for late-initialized keys at boot")
-
-Reported-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Closes: https://lore.kernel.org/linux-riscv/20260612-vec_unaligned_drop_init-v1-1-df969210ae34@oss.tenstorrent.com/
-Fixes: e7c9d66e313b ("RISC-V: Report vector unaligned access speed hwprobe")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Acked-by: Jesse Taube <jtaubepe@redhat.com>
-Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Link: https://patch.msgid.link/1c378963f27c5960e8a57c50b8b444d30954cb54.1781666867.git.namcao@linutronix.de
-[pjw@kernel.org: updated to apply; adjusted Fixes: tag; fixed my own manual patch application error]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 63c13d61eafe ("remoteproc/mediatek: add SCP support for mt8183")
+Cc: stable@vger.kernel.org	# 5.6
+Cc: Erin Lo <erin.lo@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20260706065614.389412-1-johan@kernel.org
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/unaligned_access_speed.c |   19 ++-----------------
- 1 file changed, 2 insertions(+), 17 deletions(-)
+ drivers/remoteproc/mtk_scp.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/unaligned_access_speed.c
-+++ b/arch/riscv/kernel/unaligned_access_speed.c
-@@ -6,7 +6,6 @@
- #include <linux/cpu.h>
- #include <linux/cpumask.h>
- #include <linux/jump_label.h>
--#include <linux/kthread.h>
- #include <linux/mm.h>
- #include <linux/smp.h>
- #include <linux/types.h>
-@@ -288,18 +287,9 @@ free:
- 	__free_pages(page, MISALIGNED_BUFFER_ORDER);
- }
+--- a/drivers/remoteproc/mtk_scp.c
++++ b/drivers/remoteproc/mtk_scp.c
+@@ -36,6 +36,7 @@ struct mtk_scp *scp_get(struct platform_
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *scp_node;
+ 	struct platform_device *scp_pdev;
++	struct mtk_scp *scp;
  
--/* Measure unaligned access speed on all CPUs present at boot in parallel. */
--static int vec_check_unaligned_access_speed_all_cpus(void *unused __always_unused)
--{
--	schedule_on_each_cpu(check_vector_unaligned_access);
--	riscv_hwprobe_complete_async_probe();
--
--	return 0;
--}
- #else /* CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS */
--static int vec_check_unaligned_access_speed_all_cpus(void *unused __always_unused)
-+static void check_vector_unaligned_access(struct work_struct *work __always_unused)
- {
--	return 0;
- }
- #endif
- 
-@@ -387,12 +377,7 @@ static int __init check_unaligned_access
- 			per_cpu(vector_misaligned_access, cpu) = unaligned_vector_speed_param;
- 	} else if (!check_vector_unaligned_access_emulated_all_cpus() &&
- 		   IS_ENABLED(CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS)) {
--		riscv_hwprobe_register_async_probe();
--		if (IS_ERR(kthread_run(vec_check_unaligned_access_speed_all_cpus,
--				       NULL, "vec_check_unaligned_access_speed_all_cpus"))) {
--			pr_warn("Failed to create vec_unalign_check kthread\n");
--			riscv_hwprobe_complete_async_probe();
--		}
-+		schedule_on_each_cpu(check_vector_unaligned_access);
+ 	scp_node = of_parse_phandle(dev->of_node, "mediatek,scp", 0);
+ 	if (!scp_node) {
+@@ -51,7 +52,13 @@ struct mtk_scp *scp_get(struct platform_
+ 		return NULL;
  	}
  
- 	/*
+-	return platform_get_drvdata(scp_pdev);
++	scp = platform_get_drvdata(scp_pdev);
++	if (!scp) {
++		put_device(&scp_pdev->dev);
++		return NULL;
++	}
++
++	return scp;
+ }
+ EXPORT_SYMBOL_GPL(scp_get);
+ 
 
 
