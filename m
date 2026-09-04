@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756F041F5D9;
-	Fri,  4 Sep 2026 06:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FED421255;
+	Fri,  4 Sep 2026 06:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502714; cv=none; b=uN0XyvOukSOuSqOdrOQsiqKSSgk9/EmddzRsZrWmzrA+teJ4cK0nvUczn7RIYv79G0hPyGK2P7zfeIDpL8AqN0LBtNMQntRdPnkMEBXHU9Sno++m40uWDvYJD83rjzXkrnJo3E5UsmliljQoyf+aaNhBqWNDMlI6nZCAEi9XUAE=
+	t=1788502717; cv=none; b=iaP4nNh02KVLkneS3u1N5i0crwA5wMDr1W4QpgU1OjEZFhAzQ59DNH3GL7iaEa+17/MFLLjZEkvT29jI/flztXwoIJtLUD7WlATbMurBeVzHw5RN70UvmVFYVQTlYSdQwYOqf6IpsQe7PvOzC5B1H/nGGDDhOe72qTxUDKOIbrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502714; c=relaxed/simple;
-	bh=IaSyVuFOGN22elHEBJdZDxQjJd9L+Sn1/hmX23ncIog=;
+	s=arc-20240116; t=1788502717; c=relaxed/simple;
+	bh=FyI9uzvkufTwQC7e9enxPOYYgDWQcHiq6m9XXF5twAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDbM+qvyVaOADQXxcQBATSoV+ngxUpxNMLgwlTodcPI16+eaN319oG/DNZNXO9h6w2Tm7PzoLz2ybae3jbZBTcG3xbI+2ivoRye4wToG0d73Npsgrl8aOmeVaRQI9kcwp2T2V9c9L2u7cwXhmhBMMpjIZL/eu/brQeRh9NCUDLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DH9tqw2N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tm4eLq7V/bPYk108WBBAg8puWvs0VESMZgSIoa4FITKt7/el5dFsv/6p84YsfLTXHizzCKYoRWmpS3fYhzvBz3vMMHahTu/hMM+REDyiwZNvl7x7vibAcezj0mAJy4skkQZWmxqNrOQHbpZ/dSTrAd3FQetvEbi1MMwLfxDri8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4I5VZWM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DH9tqw2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BE11F00A3D;
-	Fri,  4 Sep 2026 06:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4I5VZWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9AB1F00A3D;
+	Fri,  4 Sep 2026 06:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502713;
-	bh=aGd7wk2Zbxb5eo+A3BVx1mWWAm/wsH6y0N0pw8bGtaE=;
+	s=korg; t=1788502716;
+	bh=V0rKv5bOq0CCKvlgT0tbqf8Gd4pQ0C6kVvNy+/Rqcw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DH9tqw2NL5BKr/Ip3mwRzudgFxH8+kbtCEgt/aFbMMVnfbv6wql6dsG3rmMGPiDvT
-	 az09ObXesLIIeH/5CFQe1UpUo9HW3PmhzOaKXBckjnA/Io8v/XgH0hAdksjpBRo9VJ
-	 zyX5Be/ticvVSjXeW95DKkvqBurdtLKWOebr0oSE=
+	b=y4I5VZWMVREAx0M+cmsyF6B4b6G65p2h52pN5PNa9+/FDIVrYYnURwCUhHJQJXw4v
+	 zsXinvxERkuHmrCIiTyCcS20IaRF+BQA3KLNoEyhAoPv1BwWKTXha4lQ+FK4G+3dlU
+	 +Wze/0PVC4YHE3rgRkmmmMnxwr1vfx9XKgij/m6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Shameer Kolothum <skolothumtho@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.12 303/403] iommu/sva: Set handle->dev before the SVA handle is visible
-Date: Fri,  4 Sep 2026 07:01:46 +0200
-Message-ID: <20260904045741.734501049@linuxfoundation.org>
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 304/403] iommu/arm-smmu-v3: Manage teardown with devm
+Date: Fri,  4 Sep 2026 07:01:47 +0200
+Message-ID: <20260904045741.756891186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,47 +53,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-commit 530f8f9c3546cb3ebee1b135375aaee08a073ebb upstream.
+commit 2bd22a0d40503a65d243b011de146603c8ce1cbc upstream.
 
-iommu_attach_device_pasid() installs the new SVA attach handle in the
-group PASID lookup before iommu_sva_bind_device() returns. A concurrent
-bind can therefore find and reuse the same handle after iommu_sva_lock is
-dropped.
+arm_smmu_device_remove() manually frees the IOPF queue, destroys the
+vmid_map and disables the device, while the IRQs and queues are devm
+managed. devm unwinds only after remove() returns, so the cleanup runs
+in the wrong order. The IOPF queue is freed before the event-queue IRQ
+whose handler uses it.
 
-handle->dev was initialized after dropping iommu_sva_lock. This leaves a
-window where a racing bind can return a handle whose dev pointer is still
-NULL. A subsequent iommu_sva_unbind_device() can then dereference it via
-handle->dev->iommu_group.
+Manage all of it with devm so the unwind order is correct. Free the IOPF
+queue and vmid_map via devm actions, and disable the device from one
+registered after arm_smmu_device_reset().
 
-Initialize handle->dev before releasing iommu_sva_lock so any visible SVA
-handle is fully initialized.
+This is also a prerequisite for fixing a Tegra241 CMDQV CMD_SYNC
+use-after-free in the subsequent patch.
 
-Fixes: be51b1d6bbff ("iommu/sva: Refactoring iommu_sva_bind/unbind_device()")
 Cc: stable@vger.kernel.org
-Assisted-by: Qoder:Qwen-3.8-MAX-Preview
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommu-sva.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   56 ++++++++++++++++++++--------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
---- a/drivers/iommu/iommu-sva.c
-+++ b/drivers/iommu/iommu-sva.c
-@@ -142,8 +142,8 @@ struct iommu_sva *iommu_sva_bind_device(
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3619,6 +3619,20 @@ int arm_smmu_cmdq_init(struct arm_smmu_d
+ 	return 0;
+ }
  
- out:
- 	refcount_set(&handle->users, 1);
--	mutex_unlock(&iommu_sva_lock);
- 	handle->dev = dev;
-+	mutex_unlock(&iommu_sva_lock);
- 	return handle;
++static void arm_smmu_free_iopf_action(void *data)
++{
++	struct iopf_queue *queue = data;
++
++	iopf_queue_free(queue);
++}
++
++static void arm_smmu_destroy_vmid_map(void *data)
++{
++	struct ida *ida = data;
++
++	ida_destroy(ida);
++}
++
+ static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
+ {
+ 	int ret;
+@@ -3646,6 +3660,11 @@ static int arm_smmu_init_queues(struct a
+ 		smmu->evtq.iopf = iopf_queue_alloc(dev_name(smmu->dev));
+ 		if (!smmu->evtq.iopf)
+ 			return -ENOMEM;
++		ret = devm_add_action_or_reset(smmu->dev,
++					       arm_smmu_free_iopf_action,
++					       smmu->evtq.iopf);
++		if (ret)
++			return ret;
+ 	}
  
- out_free_domain:
+ 	/* priq */
+@@ -3724,7 +3743,8 @@ static int arm_smmu_init_strtab(struct a
+ 
+ 	ida_init(&smmu->vmid_map);
+ 
+-	return 0;
++	return devm_add_action_or_reset(smmu->dev, arm_smmu_destroy_vmid_map,
++					&smmu->vmid_map);
+ }
+ 
+ static int arm_smmu_init_structures(struct arm_smmu_device *smmu)
+@@ -3937,6 +3957,13 @@ static int arm_smmu_device_disable(struc
+ 	return ret;
+ }
+ 
++static void arm_smmu_disable_action(void *data)
++{
++	struct arm_smmu_device *smmu = data;
++
++	arm_smmu_device_disable(smmu);
++}
++
+ static void arm_smmu_write_strtab(struct arm_smmu_device *smmu)
+ {
+ 	struct arm_smmu_strtab_cfg *cfg = &smmu->strtab_cfg;
+@@ -4646,7 +4673,7 @@ static int arm_smmu_device_probe(struct
+ 	/* Initialise in-memory data structures */
+ 	ret = arm_smmu_init_structures(smmu);
+ 	if (ret)
+-		goto err_free_iopf;
++		return ret;
+ 
+ 	/* Record our private device structure */
+ 	platform_set_drvdata(pdev, smmu);
+@@ -4656,30 +4683,30 @@ static int arm_smmu_device_probe(struct
+ 
+ 	/* Reset the device */
+ 	ret = arm_smmu_device_reset(smmu);
++	if (ret) {
++		arm_smmu_device_disable(smmu);
++		return ret;
++	}
++
++	/* Register last so it unwinds first, while the CMDQ is still up. */
++	ret = devm_add_action_or_reset(smmu->dev, arm_smmu_disable_action, smmu);
+ 	if (ret)
+-		goto err_disable;
++		return ret;
+ 
+ 	/* And we're up. Go go go! */
+ 	ret = iommu_device_sysfs_add(&smmu->iommu, dev, NULL,
+ 				     "smmu3.%pa", &ioaddr);
+ 	if (ret)
+-		goto err_disable;
++		return ret;
+ 
+ 	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register iommu\n");
+-		goto err_free_sysfs;
++		iommu_device_sysfs_remove(&smmu->iommu);
++		return ret;
+ 	}
+ 
+ 	return 0;
+-
+-err_free_sysfs:
+-	iommu_device_sysfs_remove(&smmu->iommu);
+-err_disable:
+-	arm_smmu_device_disable(smmu);
+-err_free_iopf:
+-	iopf_queue_free(smmu->evtq.iopf);
+-	return ret;
+ }
+ 
+ static void arm_smmu_device_remove(struct platform_device *pdev)
+@@ -4688,9 +4715,6 @@ static void arm_smmu_device_remove(struc
+ 
+ 	iommu_device_unregister(&smmu->iommu);
+ 	iommu_device_sysfs_remove(&smmu->iommu);
+-	arm_smmu_device_disable(smmu);
+-	iopf_queue_free(smmu->evtq.iopf);
+-	ida_destroy(&smmu->vmid_map);
+ }
+ 
+ static void arm_smmu_device_shutdown(struct platform_device *pdev)
 
 
