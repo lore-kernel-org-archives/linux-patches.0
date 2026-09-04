@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5644E2AD37;
-	Fri,  4 Sep 2026 05:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009CC2AD37;
+	Fri,  4 Sep 2026 05:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500542; cv=none; b=VJ+U5IAsJX2oDuFUsFQK9sP5Mhs7HjwAb6jJTHYG2BcIOUlp4C2jEAVrt4El5/NvXsJho5/DYf1s9l3RTL9udaA/Vj/AKKXah42eUa9O0Tf9NWP2ei2Cg/3ZBcSsW5p13NBSfYvShkXFWGjCzNC9sSvKwKsinLFKLIcS01PqUxI=
+	t=1788500545; cv=none; b=nOghW2RTc7XQtb15gTpY8JdKnmrKRsfrANeFJBaXR3+tpQ9dBobgVNIfCds550jsCOpkrDkEdWKuExvpOlTW/Dbdal2/zGN2AIh34Zc0d+xLtowFLXt44ICPz3pqjPlkAP2q0wDuuNijOcFrfIygW6Dmnx/sTOB2/z7umx45+7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500542; c=relaxed/simple;
-	bh=qyfmhTsqKUZBDqKZ+mV34N0rvdwIMuPmd4+JAlbYJyw=;
+	s=arc-20240116; t=1788500545; c=relaxed/simple;
+	bh=P/yuHBmsHMTg0Qcm/ggU+arfvaVjPpPTBlBfudzr7Ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A362l7WIn/2FavZV3xlTKSmSil+z9SeOtxwk2BK8M9aR5EG4kwior9ckBa8tQVHEdbdSJ5/gO63+xwGWFqDwYFVD7xAtS/EIM2KmLEDN1NwOdpZzmTvPSQEWtQkXbazG+5Eh5WyUIwrNRKDNQN4aIodNoCoSlLXQUj0wQH2mf50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUbbRGOr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bjH5t7h88OuKR0DPAHj1gc3zLWJx5SvMP50kdHzfKZM0pOOKBE8ugwx5OkzvBzs9eW/6rUxiHOi4ojn43yoSTJlwT6K1VpZsTJGisQwWgGHfbPg/ZDpqv8S9NoghRC6vOYvgw6pMW5vfgDr9reHt28HJaufVlSI11APfjsRNuEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLbGM4Rt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUbbRGOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2031F00A3D;
-	Fri,  4 Sep 2026 05:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLbGM4Rt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5909B1F00A3D;
+	Fri,  4 Sep 2026 05:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500541;
-	bh=DhU9gR4hnmBjb7DzdbF8wqV/1IzcwCSUt8pUeQxYg38=;
+	s=korg; t=1788500543;
+	bh=Btf+dIcOKUlusfeJj535Jh3qDe+PyE9dPPFSV3g/O/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZUbbRGOrE749ZD/2R9k8SKiLKojX0/xxBXvG0xNtRlUVUQRG3geaoqQb38ZlDX5LM
-	 eWGVJlfqKjh8Zrdm7pK/FKJd3TwAF0V29AK+LmkHsYvpBXdMbsFmD4EOGLklkkAyHe
-	 /s6fTEhulYrpiB69MpMRh3i2t7SQqh5PfoVkBDAc=
+	b=zLbGM4Rtqz76XupTKAROHcyabN5Qg6eUWrr9CrRKQC0OMc9dG92KLUgCXQYnpesMJ
+	 MLFy3hhktuTuaSjwRxoxED7lepD8MyXFEvprJv7fVTVTOQH194sqcS0toK0oXqRMu3
+	 H09x3opxuIko0g7M7m/RsyWpO+KnEVWLAOMM6kuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Yang <jason98166@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.18 093/552] phy: rockchip-samsung-dcphy: fix out-of-range max_register
-Date: Fri,  4 Sep 2026 06:54:10 +0200
-Message-ID: <20260904045749.992602992@linuxfoundation.org>
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Richard Weinberger <richard@nod.at>,
+	Zhihao Cheng <chengzhihao1@huawei.com>
+Subject: [PATCH 6.18 094/552] ubifs: fix out-of-bounds read in signature length check
+Date: Fri,  4 Sep 2026 06:54:11 +0200
+Message-ID: <20260904045750.023570931@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,39 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Yang <jason98166@gmail.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit 4486e75ba647bd8b98fc1f053101b40caceeed4b upstream.
+commit 95d27c1708bb6e8823c8e7c623f9abc2a91bf4bf upstream.
 
-The PHY register block is 64KB, so with a register stride of 4 the
-last accessible register sits at offset 0xfffc. max_register names
-0x10000, one register past the end of the mapping: dumping the
-registers through the regmap debugfs interface reads beyond the
-ioremapped region and oopses on the unmapped page. The oops fires
-with the regmap lock held, so later PHY operations deadlock.
+ubifs_sb_verify_signature() bounds the on-disk ubifs_sig_node->len field
+before handing the signature payload to verify_pkcs7_signature(), but the
+check has the wrong sign:
 
-Fixes: b2a1a2ae7818 ("phy: rockchip: Add Samsung MIPI D-/C-PHY driver")
+	if (le32_to_cpu(signode->len) > snod->len + sizeof(struct ubifs_sig_node))
+
+The signature bytes start sizeof(struct ubifs_sig_node) (UBIFS_SIG_NODE_SZ,
+64 bytes) into the node, so the payload is at most
+
+	snod->len - sizeof(struct ubifs_sig_node)
+
+bytes long. Adding the header size instead of subtracting it accepts a
+declared length up to 2 * UBIFS_SIG_NODE_SZ larger than the node actually
+holds -- past the end of c->sbuf, which is vmalloc(c->leb_size).
+verify_pkcs7_signature() -> pkcs7_parse_message() -> asn1_ber_decoder()
+is then handed that inflated length and reads beyond the allocation while
+walking the DER headers. The node length comes straight from the mounted
+image, so a crafted signed UBIFS image reaches this via
+ubifs_read_superblock() before the signature is cryptographically checked.
+
+snod->len is guaranteed to be >= UBIFS_SIG_NODE_SZ by the node scanner
+(c->ranges[UBIFS_SIG_NODE].min_len == UBIFS_SIG_NODE_SZ), so the corrected
+subtraction cannot underflow. Legitimately signed images are unaffected: a
+correct superblock never declares a signature longer than the node it is
+embedded in.
+
+Fixes: 817aa094842d ("ubifs: support offline signed images")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jason Yang <jason98166@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://patch.msgid.link/20260811-dcphy-maxreg-v1-v1-1-aa63f6a63a64@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Reviewed-by: Richard Weinberger <richard@nod.at>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c |    2 +-
+ fs/ubifs/auth.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
-+++ b/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
-@@ -1525,7 +1525,7 @@ static const struct regmap_config samsun
- 	.reg_bits = 32,
- 	.val_bits = 32,
- 	.reg_stride = 4,
--	.max_register = 0x10000,
-+	.max_register = 0xfffc,
- };
+--- a/fs/ubifs/auth.c
++++ b/fs/ubifs/auth.c
+@@ -217,7 +217,7 @@ int ubifs_sb_verify_signature(struct ubi
  
- static struct phy *samsung_mipi_dcphy_xlate(struct device *dev,
+ 	signode = snod->node;
+ 
+-	if (le32_to_cpu(signode->len) > snod->len + sizeof(struct ubifs_sig_node)) {
++	if (le32_to_cpu(signode->len) > snod->len - sizeof(struct ubifs_sig_node)) {
+ 		ubifs_err(c, "invalid signature len %d", le32_to_cpu(signode->len));
+ 		err = -EINVAL;
+ 		goto out_destroy;
 
 
