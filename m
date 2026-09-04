@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2038240F754;
-	Fri,  4 Sep 2026 06:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33ED381E83;
+	Fri,  4 Sep 2026 06:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502866; cv=none; b=d1fTYN2r3rJUDwRX4D5k7FcV/1uvdlejuQboMonD0R0JZtb3cSzKx43vs2O23Qn2sTHH/4SlwOs4KkYLCaC6L0Ko/WnpJRdZsMEJ+lyegVd0y2vZt8VG5CC61yV3r8/wbS5yF5ovnFW1FsVwteo/ZQFtX6HiogFZUjNz/Ua3MDg=
+	t=1788502869; cv=none; b=C7ekpReOqtQIgIS/56voeaq+WVdozAhCM4VVxD/xTo5FFFeWMqWIVBpSSo3brZxMDy67V4pobPN2dL/f+php1wiRIIzwmTka6m/qAKoxbmM5cYy0ZrM2gDmLsEkEgPspM2VWWYta1OgC63NkIDwMw3PS2IaPMzpSNqzLdo1kqn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502866; c=relaxed/simple;
-	bh=fni5Kpg3pKsqNCdC43V+2N3v0L1g14G1zbFulMcS4Ss=;
+	s=arc-20240116; t=1788502869; c=relaxed/simple;
+	bh=fN9qLoTNMzZ2iBXa5C8JqMa25TOqej8LgFqiQnKDAPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b5qWfebAPQCgYDLfRk5w7e66vSQPyDuBXRfj3LA5E2NiXZRtloqiRQf9jYVadzYkf3xTiHJP3+f/L9DM0UA6TmyqbKp18K6iQOBnPomaIvRNfkz23s5i+mvX/GjCjsipmwA3eC/EpKsYz2QAS4DN/DoI00MoM4dGErgerarH4Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w560eDbi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ff8vrzabgdEVYK4lyVLN6rEkGYJDh7rxu4BZfQLuKcK1sZwyoPNIZSXQTBjeVHsO8CWMVD8Kzn8pKEcjY+8NMLc8Sutdq24TA30nnAduk8NEK4WNF9CktmgSnufKPN2Y029+XqIKoQ61DDo8q8ianRYaUVVw8brBOuX234fZ0Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vzd9pVE4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w560eDbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F22E1F00A3D;
-	Fri,  4 Sep 2026 06:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vzd9pVE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282331F00A3D;
+	Fri,  4 Sep 2026 06:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502864;
-	bh=LO4QlyZPjxL6OrAhHyPME73JcGvqAH81vlem/SEh8b4=;
+	s=korg; t=1788502867;
+	bh=APxh4YJJ4Np9haDsQ9I9sqSeNJSRYBmOXWSG5iEjtto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w560eDbigIiu9zzJHRTokAlfeYBJSS4+jLYrF/TowYkzbjZ9kBN31zCm2fiRePhUQ
-	 lQKOUtmpCwkZ5Hvj9c6dicdrMf1FF/kDGbu/h3biG94Hp3WXbJv/ePXbXsoCCABjyW
-	 bbEU/+My9inMld3yW4oJ1LQM1xe7scyV+4oZuuGY=
+	b=Vzd9pVE4dfFwkdjLSFltXnSSyzNIF950C2P2liMEiJD5snfDBkPod9Z3rSDCFbJr+
+	 WGeFMYHk4vZfe4jvb7j1g8P/WxE+feGuMjD83mgGeF8tnLaJMy3rWPKcga95hgplTF
+	 kMCpRaEi2Nlkbe7dCNOnIq5MoNlPUJRkXAHxVV8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 320/403] platform/x86: hp-bioscfg: accept reduced ACPI packages from older HP BIOS
-Date: Fri,  4 Sep 2026 07:02:03 +0200
-Message-ID: <20260904045742.111193723@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 356/403] net: cap advertised IP tunnel headroom
+Date: Fri,  4 Sep 2026 07:02:39 +0200
+Message-ID: <20260904045742.909961971@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -45,90 +46,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 40e10e6cc8f70c041431a1e30186807e28ec46e0 upstream.
+commit 6b222adeb9340306e2ff97127c76117abb9b3df8 upstream.
 
-hp_init_bios_package_attribute() hard-fails when a WMI ACPI package
-contains fewer elements than the type-specific expected count (e.g. 11
-elements instead of 13 for INTEGER or ENUMERATION attributes). This
-causes the entire hp_bioscfg driver to skip attribute enumeration on
-older HP hardware whose BIOS returns shortened packages when optional
-fields like prerequisites or possible values are absent.
+IP tunnel devices derive their advertised needed_headroom from lower
+output devices. A stack of user-created devices can make the derived
+value larger than the 16-bit skb header offsets can represent. Once IP
+output reserves it, skb head expansion can wrap those offsets.
 
-Observed on HP EliteBook 840 G2 (BIOS M71 Ver. 01.31):
+The runtime transmit path already caps a growing needed_headroom at 512.
+Apply the same cap when tunnel configuration publishes needed_headroom
+derived from a lower output device.
 
-  hp_bioscfg: ACPI-package does not have enough elements: 11 < 13
+Capping the advertised value is safe: IP tunnel transmit still expands
+the skb when a packet needs more headroom. A nonsensical stacked
+configuration can therefore incur an extra reallocation, but it cannot
+publish an unbounded reservation to upper layers.
 
-The element layout has two tiers:
-  - Elements 0-9 (SECURITY_LEVEL+1 = 10): common to all attribute types
-  - Elements 10-N: type-specific (bounds, values, encodings, ...)
-
-The per-type populate functions (hp_populate_*_elements_from_package)
-already handle sparse packages correctly via their own elem < count
-loop guards and inner-loop bounds checks. The only unsafe case is when
-we lack even the common elements needed to register the attribute.
-
-Fix by introducing COMMON_ELEM_CNT to mark the hard minimum (10), and
-splitting the check into two tiers:
-  - Fewer than COMMON_ELEM_CNT elements: hard fail, can't proceed.
-  - Fewer than expected type-specific elements: warn, but let the
-    populate function parse what is available.
-
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
+Fixes: 1a37e412a022 ("net: Use 16bits for *_headers fields of struct skbuff")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260709165900.30615-4-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/ba04a1fd6bfae2377607fad5d8f80f7eb80fd4c4.1786542637.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c |   11 ++++++++---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.h |    3 +++
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ include/net/ip_tunnels.h |   11 +++++++++--
+ net/ipv4/ip_tunnel.c     |    2 +-
+ net/ipv6/ip6_gre.c       |    7 +++++--
+ net/ipv6/ip6_tunnel.c    |    7 +++++--
+ net/ipv6/sit.c           |    2 +-
+ 5 files changed, 21 insertions(+), 8 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -664,12 +664,17 @@ static int hp_init_bios_package_attribut
- 	int ret = 0;
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -615,8 +615,7 @@ struct metadata_dst *iptunnel_metadata_r
+ int skb_tunnel_check_pmtu(struct sk_buff *skb, struct dst_entry *encap_dst,
+ 			  int headroom, bool reply);
  
- 	/* Take action appropriate to each ACPI TYPE */
--	if (obj->package.count < min_elements) {
--		pr_err("ACPI-package does not have enough elements: %d < %d\n",
--		       obj->package.count, min_elements);
-+	if (obj->package.count < COMMON_ELEM_CNT) {
-+		pr_err("ACPI-package is missing common elements: %d < %d\n",
-+		       obj->package.count, COMMON_ELEM_CNT);
- 		goto pack_attr_exit;
+-static inline void ip_tunnel_adj_headroom(struct net_device *dev,
+-					  unsigned int headroom)
++static inline unsigned int ip_tunnel_limit_headroom(unsigned int headroom)
+ {
+ 	/* we must cap headroom to some upperlimit, else pskb_expand_head
+ 	 * will overflow header offsets in skb_headers_offset_update().
+@@ -626,6 +625,14 @@ static inline void ip_tunnel_adj_headroo
+ 	if (headroom > max_allowed)
+ 		headroom = max_allowed;
+ 
++	return headroom;
++}
++
++static inline void ip_tunnel_adj_headroom(struct net_device *dev,
++					  unsigned int headroom)
++{
++	headroom = ip_tunnel_limit_headroom(headroom);
++
+ 	if (headroom > READ_ONCE(dev->needed_headroom))
+ 		WRITE_ONCE(dev->needed_headroom, headroom);
+ }
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -316,7 +316,7 @@ static int ip_tunnel_bind_dev(struct net
+ 		mtu = min(tdev->mtu, IP_MAX_MTU);
  	}
  
-+	if (obj->package.count < min_elements) {
-+		pr_warn("ACPI-package has fewer elements than expected: %d < %d, parsing available elements\n",
-+			obj->package.count, min_elements);
-+	}
-+
- 	elements = obj->package.elements;
+-	dev->needed_headroom = t_hlen + hlen;
++	dev->needed_headroom = ip_tunnel_limit_headroom(t_hlen + hlen);
+ 	mtu -= t_hlen + (dev->type == ARPHRD_ETHER ? dev->hard_header_len : 0);
  
- 	/* sanity checking */
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
-@@ -279,6 +279,9 @@ enum hp_wmi_data_elements {
- 	PSWD_ENCODINGS = 13,
- 	PSWD_IS_SET = 14,
- 	PSWD_ELEM_CNT = 15,
-+
-+	/* Minimum elements shared by all attribute types (NAME..SECURITY_LEVEL) */
-+	COMMON_ELEM_CNT = SECURITY_LEVEL + 1,
- };
+ 	if (mtu < IPV4_MIN_MTU)
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1165,8 +1165,11 @@ static void ip6gre_tnl_link_config_route
+ 			return;
  
- #define GET_INSTANCE_ID(type)						\
+ 		if (rt->dst.dev) {
+-			dev->needed_headroom = rt->dst.dev->hard_header_len +
+-					       t_hlen;
++			unsigned int headroom;
++
++			headroom = rt->dst.dev->hard_header_len + t_hlen;
++			headroom = ip_tunnel_limit_headroom(headroom);
++			dev->needed_headroom = headroom;
+ 
+ 			if (set_mtu) {
+ 				int mtu = rt->dst.dev->mtu - t_hlen;
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1506,8 +1506,11 @@ static void ip6_tnl_link_config(struct i
+ 			tdev = __dev_get_by_index(t->net, p->link);
+ 
+ 		if (tdev) {
+-			dev->needed_headroom = tdev->hard_header_len +
+-				tdev->needed_headroom + t_hlen;
++			unsigned int headroom;
++
++			headroom = tdev->hard_header_len + tdev->needed_headroom;
++			headroom += t_hlen;
++			dev->needed_headroom = ip_tunnel_limit_headroom(headroom);
+ 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
+ 
+ 			mtu = mtu - t_hlen;
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1136,7 +1136,7 @@ static void ipip6_tunnel_bind_dev(struct
+ 		WRITE_ONCE(dev->mtu, mtu);
+ 		hlen = tdev->hard_header_len + tdev->needed_headroom;
+ 	}
+-	dev->needed_headroom = t_hlen + hlen;
++	dev->needed_headroom = ip_tunnel_limit_headroom(t_hlen + hlen);
+ }
+ 
+ static void ipip6_tunnel_update(struct ip_tunnel *t,
 
 
