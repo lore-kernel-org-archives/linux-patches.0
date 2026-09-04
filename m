@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331013ECBCF;
-	Fri,  4 Sep 2026 05:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BC03815E1;
+	Fri,  4 Sep 2026 05:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500133; cv=none; b=APnXXLLKL8z+cs2oS/MnmvVxOmT6n1OKczMnBHwpDFAHEGgzXmg564JXUvph2xsSerhq6Oi/qQt1awnmHEE1S9ciF7CjONkgkeUeuTp5w17z6M01xZrSBWmoyhIl22kIlFvMNla0ZFyjhpx32fJCCpEunK6mOD6MxAZaAe871aM=
+	t=1788500136; cv=none; b=Xk5+uy2ZgPr97qX2fj3zzvKUH00UHei570+2f56Uv0N1EOSOC6an5h4eeB6U+ASQ0QuQBjS9k9DLCmkdhDS/6PFXZvfU0+P9tPGDlZZoDa1ZJapZAm2ILB0z/GvT4rv4PPEF3/a/6VKpEshXqROBYXgOiLDKIuyeI/L+R+HT/uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500133; c=relaxed/simple;
-	bh=I7z2v/AEy0k6KWnkLoVDT5NMnqwxabXFtDIzrSl6wwM=;
+	s=arc-20240116; t=1788500136; c=relaxed/simple;
+	bh=V/180up1bBe+v7I/KzWcak4VZp002Hwi/9IG0FX7qng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciBBL0Hp7S1wJcj+58DZ7TPdEecorTmgLBPWkDvTDbWf5Eabhp0oqdS9gRHBbSZDZNdQk8SNVYrb1rHw/YFOhgYbu7mzNvuzLmFrxKemT0Wrv68bDRO6Muhsb5Nf+AkBOVmHQdTS9akwScSo3UW2Ms5R8qxTON6bcUk0Pdn0Vt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6pQx0wQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SkOFp6Ydo7f04CaBxOIhuYdQMv+iTY0drvo39V064sUXZ68y/AOTHDT14Lt/7c9FkkRirezqWA8CrX+9WUdQZZfZUZtVZUGw9Q9OyIpGzktoOmkDvSUX11TmNsd4AkP4Pdeahxc/3HAFQFaMr+80bLrbUiDd3zL1aTAAt7c/yTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mv5LFjUz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6pQx0wQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA761F00A3D;
-	Fri,  4 Sep 2026 05:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mv5LFjUz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3FA1F00A3D;
+	Fri,  4 Sep 2026 05:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500132;
-	bh=ruiS3HQ/NvrB/lFxGP8Eca5ldAwR4d569taFW4I99PE=;
+	s=korg; t=1788500134;
+	bh=AkGgp1jcbpgUxxTl8nKa9ZPZOF/BcrnK+6WJE2NTV94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q6pQx0wQTsRgyxg5St8d47AUDwHXYnuXNW61Pf7xJXmBC7lr7AUwMGVitJ48SBfoS
-	 0jyxfG1GNfxnCTeaM8WFg6Ko+iQaYHTjTgDuglH8KZ88Sb3PciDh1KIXn++iqc4i3e
-	 mtXyVct4qeSZ0eoQZFtfArqOMiMiN8vA81appS2Y=
+	b=mv5LFjUzTsJuIugjYPFm2URMCm/CpeUb0/wVNPyx3ggUoMKaCwgYPihLlo3NRbMP0
+	 LXKxHYl0hgwehoUTS+TtPlXgZVBSRtJGYaMCaa0p4dct/T07k0cTLVJPOFt8ecKRiE
+	 zy3oQjd2atON9VzL+tE//cNyYm6nsTfMoltcjau8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 635/713] ALSA: 6fire: bound the MIDI event length from the device
-Date: Fri,  4 Sep 2026 07:00:03 +0200
-Message-ID: <20260904045818.062674417@linuxfoundation.org>
+	Jianyun Gao <jianyungao89@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 7.2 662/713] dm-pcache: fix use-after-free and invalid seg operations in kset_replay()
+Date: Fri,  4 Sep 2026 07:00:30 +0200
+Message-ID: <20260904045818.675442763@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,91 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Jianyun Gao <jianyungao89@gmail.com>
 
-commit a478893b59e36cfe7d77a76b352f2db55502e879 upstream.
+commit c2e894eac398b258f12fdec73ed6ba081047f7b3 upstream.
 
-usb6fire_comm_receiver_handler() forwards a MIDI event using a length
-byte the device supplies, with no bound and no check that the transfer
-delivered that many bytes:
+In kset_replay, when key->seg_gen is stale (key->seg_gen <
+key->cache_pos.cache_seg->gen), cache_key_put(key) is called but then
+key->cache_pos.cache_seg is accessed as the argument to cache_seg_get().
+This is a use-after-free on the freed key memory. Although mempool
+recycled memory is not immediately reclaimed or overwritten in practice,
+this is still a potential UAF bug.
 
-	if (!urb->status) {
-		if (rt->receiver_buffer[0] == 0x10) /* midi in event */
-			if (midi_rt)
-				midi_rt->in_received(midi_rt,
-						rt->receiver_buffer + 2,
-						rt->receiver_buffer[1]);
-	}
+Additionally, for expired invalid keys, setting the cache->seg_map bit
+and calling cache_seg_get() is unreasonable since the corresponding
+segment data is no longer valid.
 
-receiver_buffer is a 64-byte kzalloc() buffer (COMM_RECEIVER_BUFSIZE), so
-only 62 bytes follow the two-byte header.  receiver_buffer[1] is a u8 the
-device chooses, so a device that answers with 0x10 and a length of 0xFF
-makes snd_rawmidi_receive() read 255 bytes starting two bytes into a
-64-byte object.  The bytes past the buffer are handed to userspace
-through the rawmidi read path.
+Fix both issues by moving cache_seg_get() and __set_bit() after the
+gen check, so they only execute for valid keys, and using continue to
+skip invalid keys.
 
-urb->actual_length is not consulted either, so a short transfer leaves
-both the type byte and the length byte at their previous values and the
-handler acts on stale data.
-
-The receiver URB is submitted from usb6fire_comm_init() at probe, so the
-read happens on plug with no user action; forwarding to userspace also
-needs a MIDI input substream open, since usb6fire_midi_in_received()
-only calls snd_rawmidi_receive() when rt->in is set.
-
-KASAN on 7.2.0-rc5 (arm64), single packet from an emulated device:
-
-  BUG: KASAN: slab-out-of-bounds in snd_rawmidi_receive
-  Read of size 255 at addr ffff000009f64682 by task bash/183
-   __asan_memcpy
-   snd_rawmidi_receive
-   usb6fire_midi_in_received [snd_usb_6fire]
-   usb6fire_comm_receiver_handler [snd_usb_6fire]
-  Allocated by task 11:
-   usb6fire_comm_init [snd_usb_6fire]
-   usb6fire_chip_probe [snd_usb_6fire]
-  The buggy address is located 2 bytes inside of
-   allocated 64-byte region [ffff000009f64680, ffff000009f646c0)
-
-Reject the event when the length exceeds the bytes that follow the
-header, and require the transfer to have delivered the header plus that
-many bytes.  The receiver URB is submitted with a 64-byte
-transfer_buffer_length, so a genuine device cannot deliver an event
-longer than those 62 bytes and nothing valid is dropped.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013423.38175-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1d57628ff95b ("dm-pcache: add persistent cache target in device-mapper")
+Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/6fire/comm.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/dm-pcache/cache_key.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/sound/usb/6fire/comm.c
-+++ b/sound/usb/6fire/comm.c
-@@ -36,11 +36,14 @@ static void usb6fire_comm_receiver_handl
- 	struct midi_runtime *midi_rt = rt->chip->midi;
+--- a/drivers/md/dm-pcache/cache_key.c
++++ b/drivers/md/dm-pcache/cache_key.c
+@@ -736,18 +736,17 @@ static int kset_replay(struct pcache_cac
+ 			goto err;
+ 		}
  
- 	if (!urb->status) {
--		if (rt->receiver_buffer[0] == 0x10) /* midi in event */
-+		u8 len = rt->receiver_buffer[1];
-+
-+		if (rt->receiver_buffer[0] == 0x10 && /* midi in event */
-+		    len <= COMM_RECEIVER_BUFSIZE - 2 &&
-+		    urb->actual_length >= len + 2)
- 			if (midi_rt)
- 				midi_rt->in_received(midi_rt,
--						rt->receiver_buffer + 2,
--						rt->receiver_buffer[1]);
-+						rt->receiver_buffer + 2, len);
+-		__set_bit(key->cache_pos.cache_seg->cache_seg_id, cache->seg_map);
+-
+ 		/* Check if the segment generation is valid for insertion. */
+ 		if (key->seg_gen < key->cache_pos.cache_seg->gen) {
+ 			cache_key_put(key);
+-		} else {
+-			cache_subtree = get_subtree(&cache->req_key_tree, key->off);
+-			spin_lock(&cache_subtree->tree_lock);
+-			cache_key_insert(&cache->req_key_tree, key, true);
+-			spin_unlock(&cache_subtree->tree_lock);
++			continue;
+ 		}
+ 
++		__set_bit(key->cache_pos.cache_seg->cache_seg_id, cache->seg_map);
++		cache_subtree = get_subtree(&cache->req_key_tree, key->off);
++		spin_lock(&cache_subtree->tree_lock);
++		cache_key_insert(&cache->req_key_tree, key, true);
++		spin_unlock(&cache_subtree->tree_lock);
+ 		cache_seg_get(key->cache_pos.cache_seg);
  	}
  
- 	if (!rt->chip->shutdown) {
 
 
