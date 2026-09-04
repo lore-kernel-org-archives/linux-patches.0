@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671D21AA1F4;
-	Fri,  4 Sep 2026 05:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0183D6664;
+	Fri,  4 Sep 2026 05:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498302; cv=none; b=PL8NAiFHHAbvNVGsZMtrFpnhT3sjCVORKE85Yyj5ST5nOs/T3cFyAgbR2qEXPJfKggEIXJQLVuSDaIX20v2D0PIdOiOlj1GY4pm0IdN5YcUxeZAU86c1Y3su+2yWrPkTjkTsSp0l4EiFN5oO9N4g1HorwHw5+gdsgRwxGnfnctI=
+	t=1788498305; cv=none; b=BIUiVMeoAZY+H67JVwh33qOYssBtb2RnqmpHCw4WE7+4RVDaP2TDfDNtKgPep0qlVCcNFHBibIzg5KI22+3rqC+5+1C3SZsYPVY8jLK6zG4SaPSXDYTbBLURJPAY40EawXeR/xTdgabx6xxx6FjSQU77xJF5OFsrr7Vs2DqdmN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498302; c=relaxed/simple;
-	bh=flG7mDKb+xywLmG1X1bh8c9Kw8V0YAP73Smj0lRJ3Sg=;
+	s=arc-20240116; t=1788498305; c=relaxed/simple;
+	bh=zsYMAX0sgcWdv5eQvU1sr6iSnZgWV9LcA3GtmqK1A0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fakVdtZjPnGLdSnx16i9yz4k1zJwNVB9fAH3cgltccGSMKO6F5iCbVj1SoCEOvS+u1DI9nT8/yaXmSzvhFZzsta5jhdg9owak8ICUSxZ+IayeOPOm2jY7VGqf4+qMxz+RaMNkgWVSJdvN/7dw0Dxpj+Z1SGuRhaDkDV0tvkBqFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CT0m0u6e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k035xfKYAvGDAXAXIuPFaU0zrC9e9P0iti9AZy5SUazR4o5PZL4mYLSzeXCbFoqF7qONqIlxyvGBZjGPZjsKP5347GBC8py2lFjsNfObXbViHGk0vanu1gx5u+yPAG0cEGW4kjOgBMyNWW6KBI/tUVbJdbDwGe2072s6XwWfsrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBg1Xtlx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CT0m0u6e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C016D1F00A3D;
-	Fri,  4 Sep 2026 05:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBg1Xtlx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63361F00A3D;
+	Fri,  4 Sep 2026 05:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498301;
-	bh=ztlSSobCffXxjau+32AvRLVXy70x52fcbg3ADnuWP4g=;
+	s=korg; t=1788498304;
+	bh=JTzWLc7bMps458OEtvO7thgIH/e0RE1uXMstXAsLlGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CT0m0u6eHsBKMXm87C0YC2Kju8FWOSFFsRxi4oWQTMWvxxlq2BGuDZUxA4v7N45C/
-	 /2W8T8M8XmNYACa2JUN9+kceYKRdTg504vZzqf5pi3/Aqh08mGAc+Kfp1qFtMAmj8e
-	 wQ+icjB3i8JAdiZBKkcPXzkvSh8Swe3t8SHMXW6I=
+	b=qBg1XtlxAOYyQ4+laJoVYnePnouTxXmbjNN2+6TWwczFL8BwgFvtQyd4zCA4nvDmx
+	 JIhl0qVSCZgTPE+CyXe/8fWogcR71nfIr+kqNrRo87OSW+IYiB74yYryRZTQnvv5Nw
+	 kQeB2U3DGLlUpeh3+Qhr9qtkMGNBajTuGRaF4+HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.2 015/713] rust: time: fix as_micros_ceil() rounding near i64::MAX
-Date: Fri,  4 Sep 2026 06:49:43 +0200
-Message-ID: <20260904045804.167109357@linuxfoundation.org>
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>
+Subject: [PATCH 7.2 016/713] alpha: dont leak hardware-fabricated FP exception bits to user space
+Date: Fri,  4 Sep 2026 06:49:44 +0200
+Message-ID: <20260904045804.188519493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,62 +50,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FUJITA Tomonori <fujita.tomonori@gmail.com>
+From: Matt Turner <mattst88@gmail.com>
 
-commit ec90dfcf05f02206c280bb59af660bbb3ae177d0 upstream.
+commit bcfe3187412e342b4619efb92c945f073855ebc0 upstream.
 
-The ceiling adjustment used saturating_add(NSEC_PER_USEC - 1) before
-dividing. Once the nanosecond value gets within NSEC_PER_USEC - 1 of
-i64::MAX the addition saturates to i64::MAX, which drops the ceiling
-bias and can yield a result one microsecond too small.
+On EV6 and later the hardware records exception status bits in the FPCR
+before delivering a software completion trap, and those bits can be wrong
+for the instruction that trapped.  Converting a double that is exactly
+representable as a subnormal float sets FPCR_UNF even though the result
+is exact, and an underflow trap additionally sets FPCR_INE even when the
+emulated operation turns out to be exact.
 
-Fixes: fae0cdc12340 ("rust: time: Introduce Delta type")
-Reported-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Closes: https://lore.kernel.org/rust-for-linux/CANiq72mtS0ABA2JnT5tpz6J9c_mnxY+vyPvghV_ukngWvN8F2w@mail.gmail.com/
-Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Acked-by: Andreas Hindborg <a.hindborg@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260807130531.1056209-1-tomo@flapping.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+alpha_fp_emul() only wrote the FPCR when soft-fp raised an exception, so
+whenever it determined that the instruction was exact the fabricated bits
+stayed in the FPCR and were reported to user space by fetestexcept().
+
+Pass the exception summary register down from do_entArith() so the
+handler can tell which exceptions the hardware attributed to the trapping
+instruction, and always write the FPCR.  Clear the exceptions that the
+trap reported but that soft-fp did not raise.  EXC_SUM reports only the
+underflow or overflow when the hardware also set INE, so treat INE as a
+candidate in that case, and treat a trap with no reported exception as a
+denormal operand trap, for which the hardware can fabricate INE and UNF
+as well.  Bits that software has already confirmed in ieee_state belong
+to this or an earlier instruction and are never cleared.
+
+The imprecise path passes no summary.  There the trap was taken somewhere
+in the trap shadow, so EXC_SUM is not attribution for the instruction
+being re-executed -- and only EV6, which traps precisely and so never
+takes that path, has fabricated bits to clear.  For the same reason the
+clearing is guarded by implver(), matching swcr_update_status().
+
+On an UP1500 (EV68) this takes the glibc math testsuite from 831 failures
+to 28, the remainder being unrelated to exception status.
+
+This belongs with the preceding fix to ieee_swcr_to_fpcr(), and should
+not be backported without it -- nor it without this.  That fix stops
+FPCR_DNOD being set unconditionally, so denormal operand traps start
+firing again.  Those traps very often find an exact result, which is
+precisely the case where the old code left the FPCR unwritten and the
+fabricated bits visible.  Applied alone it would make spurious exception
+flags more common, not less.
+
+One case cannot be resolved here: an inexact instruction without the
+software completion suffix never traps, so its INE reaches the FPCR
+without being recorded anywhere else.  Such a bit is indistinguishable
+from an INE the hardware fabricated for a trapping instruction, and is
+lost if an underflow or overflow trap with an exact result follows it.
+The FPCR is the only record of those instructions and it carries no
+attribution.
+
+The bug predates the git history, so there is no commit to reference in a
+Fixes tag.
+
+Cc: stable@vger.kernel.org # 5.15+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-2-c99d75608e60@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/time.rs |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ arch/alpha/kernel/traps.c  |    6 +--
+ arch/alpha/math-emu/math.c |   88 +++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 80 insertions(+), 14 deletions(-)
 
---- a/rust/kernel/time.rs
-+++ b/rust/kernel/time.rs
-@@ -441,22 +441,25 @@ impl Delta {
-     /// to the value in the [`Delta`].
-     #[inline]
-     pub fn as_micros_ceil(self) -> i64 {
-+        // Only positive values need to be rounded up: truncating division already
-+        // rounds towards zero, i.e. up, for negative values.
-+        //
-+        // The usual `(nanos + d - 1) / d` is not used because the addition overflows
-+        // once `nanos` exceeds `i64::MAX - (d - 1)`; saturating the addition instead
-+        // would drop the rounding bias and return a result one unit too small.
-         let n = self.as_nanos();
--        let n = if n >= 0 {
--            n.saturating_add(NSEC_PER_USEC - 1)
--        } else {
--            n
--        };
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -166,12 +166,12 @@ static long dummy_emul(void) { return 0;
+ long (*alpha_fp_emul_imprecise)(struct pt_regs *regs, unsigned long writemask)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul_imprecise);
+-long (*alpha_fp_emul) (unsigned long pc)
++long (*alpha_fp_emul) (unsigned long pc, unsigned long summary)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul);
+ #else
+ long alpha_fp_emul_imprecise(struct pt_regs *regs, unsigned long writemask);
+-long alpha_fp_emul (unsigned long pc);
++long alpha_fp_emul (unsigned long pc, unsigned long summary);
+ #endif
+ 
+ asmlinkage void
+@@ -185,7 +185,7 @@ do_entArith(unsigned long summary, unsig
+ 		   emulate the instruction.  If the processor supports
+ 		   precise exceptions, we don't have to search.  */
+ 		if (!amask(AMASK_PRECISE_TRAP))
+-			si_code = alpha_fp_emul(regs->pc - 4);
++			si_code = alpha_fp_emul(regs->pc - 4, summary);
+ 		else
+ 			si_code = alpha_fp_emul_imprecise(regs, write_mask);
+ 		if (si_code == 0)
+--- a/arch/alpha/math-emu/math.c
++++ b/arch/alpha/math-emu/math.c
+@@ -52,13 +52,13 @@ MODULE_DESCRIPTION("FP Software completi
+ MODULE_LICENSE("GPL v2");
+ 
+ extern long (*alpha_fp_emul_imprecise)(struct pt_regs *, unsigned long);
+-extern long (*alpha_fp_emul) (unsigned long pc);
++extern long (*alpha_fp_emul) (unsigned long pc, unsigned long summary);
+ 
+ static long (*save_emul_imprecise)(struct pt_regs *, unsigned long);
+-static long (*save_emul) (unsigned long pc);
++static long (*save_emul) (unsigned long pc, unsigned long summary);
+ 
+ long do_alpha_fp_emul_imprecise(struct pt_regs *, unsigned long);
+-long do_alpha_fp_emul(unsigned long);
++long do_alpha_fp_emul(unsigned long, unsigned long);
+ 
+ static int alpha_fp_emul_init_module(void)
+ {
+@@ -86,7 +86,22 @@ module_exit(alpha_fp_emul_cleanup_module
+ 
+ 
+ /*
+- * Emulate the floating point instruction at address PC.  Returns -1 if the
++ * Exception bits of the exception summary register (EXC_SUM).  Bit 0 is the
++ * software completion bit; bits 1 through 5 report the exceptions the
++ * hardware attributed to the trapping instruction, and lie at the same
++ * positions as the corresponding IEEE_TRAP_ENABLE_* bits.
++ */
++#define EXC_SUM_INV	(1UL << 1)
++#define EXC_SUM_DZE	(1UL << 2)
++#define EXC_SUM_OVF	(1UL << 3)
++#define EXC_SUM_UNF	(1UL << 4)
++#define EXC_SUM_INE	(1UL << 5)
++#define EXC_SUM_MASK	(EXC_SUM_INV | EXC_SUM_DZE | EXC_SUM_OVF	\
++			 | EXC_SUM_UNF | EXC_SUM_INE)
 +
-+        let (n, add) = if n > 0 { (n - 1, 1) } else { (n, 0) };
++/*
++ * Emulate the floating point instruction at address PC.  SUMMARY is the
++ * exception summary register the trap was delivered with.  Returns -1 if the
+  * instruction to be emulated is illegal (such as with the opDEC trap), else
+  * the SI_CODE for a SIGFPE signal, else 0 if everything's ok.
+  *
+@@ -95,7 +110,7 @@ module_exit(alpha_fp_emul_cleanup_module
+  * stick the result of the operation into the appropriate register.
+  */
+ long
+-alpha_fp_emul (unsigned long pc)
++alpha_fp_emul (unsigned long pc, unsigned long summary)
+ {
+ 	FP_DECL_EX;
+ 	FP_DECL_S(SA); FP_DECL_S(SB); FP_DECL_S(SR);
+@@ -300,12 +315,56 @@ done:
+ 		swcr |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
+ 		current_thread_info()->ieee_state
+ 		  |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
++	}
  
-         #[cfg(CONFIG_64BIT)]
-         {
--            n / NSEC_PER_USEC
-+            n / NSEC_PER_USEC + add
-         }
+-		/* Update hardware control register.  */
+-		fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
+-		fpcr |= ieee_swcr_to_fpcr(swcr);
+-		wrfpcr(fpcr);
++	/*
++	 * EV6 records exception status bits in the FPCR before delivering the
++	 * software completion trap, and swcr_update_status() above merged them
++	 * into SWCR.  Some can be wrong for the instruction we just emulated:
++	 * a CVTTS of a value exactly representable as a subnormal sets FPCR_UNF
++	 * even though the result is exact.  Clear the exceptions the trap
++	 * reported but that soft-fp did not raise.
++	 */
++	if (implver() == IMPLVER_EV6) {
++		unsigned long spurious = summary & EXC_SUM_MASK;
++
++		if (spurious & (EXC_SUM_UNF | EXC_SUM_OVF)) {
++			/*
++			 * EXC_SUM reports only the underflow or overflow,
++			 * but the hardware sets INE alongside it in the FPCR.
++			 */
++			spurious |= EXC_SUM_INE;
++		} else if (!spurious) {
++			/*
++			 * No exception reported, so this was a denormal
++			 * operand trap, for which INE and UNF can be
++			 * fabricated as well.
++			 */
++			spurious = EXC_SUM_INE | EXC_SUM_UNF;
++		}
  
-         #[cfg(not(CONFIG_64BIT))]
-         // SAFETY: It is always safe to call `ktime_to_us()` with any value.
-         unsafe {
--            bindings::ktime_to_us(n)
-+            bindings::ktime_to_us(n) + add
-         }
-     }
- 
++		/*
++		 * Never clear an exception software has confirmed.  Every
++		 * instruction that genuinely raises one traps for software
++		 * completion and is recorded in ieee_state above, so a bit
++		 * found there -- including one just set from _fex -- belongs
++		 * to this or an earlier instruction and must survive.
++		 */
++		spurious &= ~(current_thread_info()->ieee_state
++			      >> IEEE_STATUS_TO_EXCSUM_SHIFT);
++
++		swcr &= ~(spurious << IEEE_STATUS_TO_EXCSUM_SHIFT);
++	}
++
++	/*
++	 * Update hardware control register.  This has to happen even when
++	 * soft-fp raised nothing, to clear any fabricated bits.
++	 */
++	fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
++	fpcr |= ieee_swcr_to_fpcr(swcr);
++	wrfpcr(fpcr);
++
++	if (_fex) {
+ 		/* Do we generate a signal?  */
+ 		_fex = _fex & swcr & IEEE_TRAP_ENABLE_MASK;
+ 		si_code = 0;
+@@ -387,9 +446,16 @@ alpha_fp_emul_imprecise (struct pt_regs
+ 			break;
+ 		}
+ 		if (!write_mask) {
+-			/* Re-execute insns in the trap-shadow.  */
++			/*
++			 * Re-execute insns in the trap-shadow.  Pass no
++			 * exception summary: it describes the trap, which
++			 * was taken anywhere in the shadow, and so is not
++			 * attribution for this instruction.  Nothing is
++			 * lost, since only EV6 -- which traps precisely and
++			 * never comes this way -- needs it.
++			 */
+ 			regs->pc = trigger_pc + 4;
+-			si_code = alpha_fp_emul(trigger_pc);
++			si_code = alpha_fp_emul(trigger_pc, 0);
+ 			goto egress;
+ 		}
+ 		trigger_pc -= 4;
 
 
