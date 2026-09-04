@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3488358378;
-	Fri,  4 Sep 2026 06:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A78E378838;
+	Fri,  4 Sep 2026 06:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502086; cv=none; b=kLDzjU5K3ud5DqWiTf3WveHCz63155qXXz5UdS+q3yQc0IX8f6Wp12VDXDnBechObrpIRHR8/6hXPvL1uayVcPHfxYWkpDEqEISxd+To2aJpNz48bAxOgZdl5R6z8+zNwZGufHXcXyTPStD5liaC60y9nim26iajaBQvLgDwEBA=
+	t=1788502089; cv=none; b=sYipSQ0EglWLmkCdceQkZSUPBbEr8AC8rjr2JKejIXQwW4Fo1YVe1sR9J+lei95B2NAhJaL62VPM6CVU8lsotBJyIL4lfQQLUdwiB5bnYR1vHkNqxmSCg1Xq7sGA+wY+mBRw6FjzIC+2K0BycUFTVlVHNfF0/yWDBxCNaMb8tgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502086; c=relaxed/simple;
-	bh=z49NMFa+/r8NXgMkIPz3UPM8LWIRpf1wBfvZ45jSSNo=;
+	s=arc-20240116; t=1788502089; c=relaxed/simple;
+	bh=9F4m3+tLiUcMm2RsjdAUmaDK5UF0eO32LAyyvc+hFyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rV2bc8yHk1DHWkesUUZ5fHkaVlb5t9seUwZ9SBSBwvJ12ZmlNLuJXdycARZBhf/I29Z4UUdoIMuA3go5ICc+JIuX9RpJHVE2rx4FQwsWOdm70lZL+JAbKdLC0GM7DDmdxGe3BVhwaJoBnly/30SjcU0AjpzozbW72ffB8wwd8Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCv0QP8K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DBwuE2miMVNhpXTsKgJ96mdoLElSDnz8u4JyXiLHMsgD1I1Y6rSPrKjAC2Y3ch6GFswcmgingxlcpwN1dQ/NlSlNA76QMQwGADI3XjeV/AYmQ3zmfJ8uUeBQ/RCoriI1ZUw8Nc7z1Evy2uaYmfCiOOmN/Dn4lUq3vDJ5y5iJ/LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmXfOuWi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCv0QP8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC86D1F00A3D;
-	Fri,  4 Sep 2026 06:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmXfOuWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63A11F00A3D;
+	Fri,  4 Sep 2026 06:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502085;
-	bh=MEiqz9LUOFHfno+XzPFub4hDIKaBPFrX3dsVRhoXtJk=;
+	s=korg; t=1788502088;
+	bh=rinHMll7nRZV1CXWU/wa6HtP0iTYo8WjtA4fwYQG/VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yCv0QP8KeeLHVkxgoMTZ621M2sw6cU2vpva5zfKHVt/XLBMLjJG+Qo9M2jNlszqCX
-	 BOKsV+wVIB7KujGdeCwPpr9Ba+Kw4J1al9lySYVAGy/4+Hs4DhZbigDOtQ2xirGYRX
-	 RmZRNurd/rQhNCxy6sbgfNdXph1hTlZe/xUN3hsE=
+	b=RmXfOuWi7OdKYAFC5wcaVdCcjrS0U1ekLXp6dgjC3pToySe99AqV1WHjLnd9sHwgH
+	 5UzfkybA56zvfjGFYiIsk9haMbdsorGZ6lLZYRz1Ht/Xr7DdUVGSQCN0wAna0xZVSu
+	 +kYRFN9mVV2oEV6Ja/PumxQsgBhLoW2n8Mj61xmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 082/403] nfsd: validate symlink target length in NFSv4 CREATE
-Date: Fri,  4 Sep 2026 06:58:05 +0200
-Message-ID: <20260904045736.695544769@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 083/403] nfsd: add fh_want_write() for early-verified SETATTR in nfsd_proc_setattr()
+Date: Fri,  4 Sep 2026 06:58:06 +0200
+Message-ID: <20260904045736.719308798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,42 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 041f57056e5fb9c80adc088269322d2c61074406 upstream.
+commit 4e475be769aa9f7a2c1ce55a2b8592cfccacddcc upstream.
 
-nfsd4_decode_create() accepts an unbounded cr_datalen from the wire for
-NF4LNK symlink targets, allowing a client to force a kmalloc of up to
-the maximum RPC payload size (several MiB) per COMPOUND op that persists
-until compound teardown.  The VFS rejects oversized targets with
-ENAMETOOLONG, but the allocation has already occurred.
+The BOTH_TIME_SET branch calls fh_verify() early so setattr_prepare()
+can inspect the dentry. This causes nfsd_setattr() to skip
+fh_want_write(), so notify_change() runs without a mount write
+reference.
 
-Reject cr_datalen == 0 early with nfserr_inval and cr_datalen greater
-than NFS4_MAXPATHLEN (PATH_MAX) with nfserr_nametoolong to bound the
-allocation.
+Add the missing fh_want_write() call after the early fh_verify().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: cc265089ce1b ("nfsd: Disable NFSv2 timestamp workaround for NFSv3+")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-9-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-11-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfsd/nfsproc.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -800,6 +800,10 @@ nfsd4_decode_create(struct nfsd4_compoun
- 	case NF4LNK:
- 		if (xdr_stream_decode_u32(argp->xdr, &create->cr_datalen) < 0)
- 			return nfserr_bad_xdr;
-+		if (create->cr_datalen == 0)
-+			return nfserr_inval;
-+		if (create->cr_datalen > NFS4_MAXPATHLEN)
-+			return nfserr_nametoolong;
- 		p = xdr_inline_decode(argp->xdr, create->cr_datalen);
- 		if (!p)
- 			return nfserr_bad_xdr;
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -81,6 +81,7 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
+ 		.na_iattr	= iap,
+ 	};
+ 	struct svc_fh *fhp;
++	int hosterr;
+ 
+ 	dprintk("nfsd: SETATTR  %s, valid=%x, size=%ld\n",
+ 		SVCFH_fmt(&argp->fh),
+@@ -116,6 +117,12 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
+ 		if (resp->status != nfs_ok)
+ 			goto out;
+ 
++		hosterr = fh_want_write(fhp);
++		if (hosterr) {
++			resp->status = nfserrno(hosterr);
++			goto out;
++		}
++
+ 		if (delta < 0)
+ 			delta = -delta;
+ 		if (delta < MAX_TOUCH_TIME_ERROR &&
 
 
