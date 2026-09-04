@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFFE3FB04E;
-	Fri,  4 Sep 2026 05:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9254C3A6B82;
+	Fri,  4 Sep 2026 05:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498600; cv=none; b=U8/OXrW73CQEH3V85/2EUMl5V2NlZrkKBq3N0bcc9x8jP2AzHqF+NY9K+Ytq6TKxaOZNkL3RBPs7sZ89C3nAOHLLqkimCVQlrAG9u+oBJXKd1KwFrSuohEKRILvaKm4fiLqC4M+zRSRX4uCLmYgzc6AKb9NaHSvlSCneQ8zL/Kg=
+	t=1788498602; cv=none; b=BfBHzLyCkzr+nsU6zfHTJ4ioNlHrz/WWxmOoZDWRBBVYLdDFdFc49eBTwrUkbHHAQ6YGsJ7uBm/um7E4f8C0uhrdyPkAcmSKTqt9LzWDmcKBtXkHyNWAqxtSjWP6f2XZszzOKSeeLySUvU4e+BjA9e9NUbuUng1BJvFxMbNbFOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498600; c=relaxed/simple;
-	bh=wDEUEB1KUKWzFh83TJ4hwcyPNkuqxcJvRotWZL2Wd+M=;
+	s=arc-20240116; t=1788498602; c=relaxed/simple;
+	bh=bhQnuZM2NIOvFB5fG7GRBlZxQu9voYISxq0nj6ELB+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jSx+3G8nb6f72fi2zKjSzYu4usx2OBWsu3P86XJ6NhEJzLJ5rIBtxsVIJUpZUPxFZuMiND5MyTJ8CqFF7ezbMhinrg1+rCmOJpLMz12F5m+WSdVjThSFo/92xHb2lBOVCPekl+7/mjO7Hob3rcjTlggRb5SXIDbgODlaG8mIP88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edFRXo7j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RQEJ7iK5dg0a+9Ql9YU8wEHJsHOUwBIivqH51Sa+WtqcYK3yTvx8G0kVqV3RRkUY/+7VzGsGvqa5QWKcgvolXNZQdHqlDP4EO7lM/qltbVZ+gVgN1q0B7w1beNr6pabFs1+WPEf05x/H5WzAO8xskwVY7r3SqRkKeL7111tNwBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsuvvzeG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edFRXo7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358341F00A3D;
-	Fri,  4 Sep 2026 05:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsuvvzeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFC51F00A3D;
+	Fri,  4 Sep 2026 05:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498598;
-	bh=6JVLlKv/Au3btGyaft5sBSHACGdQnPC2JTKrFtxqv+w=;
+	s=korg; t=1788498601;
+	bh=pNGu1n8KgSr0MCDnSvIK87r/4/0CgUpkpPtVwem5NXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=edFRXo7j9MzeJNPz86pveJqa99Hm1B4bT5hLPRgBhYKMs6HjHLZxRiN3e0m8bQ2Jd
-	 9f+2df/htgiPc2M8ryB8voGlX3j1o5UKXeEJyZcK1Wa84yINB0caIhmLG1XXsCcIe7
-	 +RUlLroA/E7zJHzQGErMAroZ55Ln2ZjLYT4vA8fw=
+	b=nsuvvzeGfFtcgB+Jl9XaLN6T1BobO+FKv8uAHB75Az/vaDOpOCGo5NnUBQ7KZtltK
+	 sVqwM63WT4oHBDYd/w9ikEJ96JdCKlc3QVVYT/tmtUjICMaxyJY3fbcC2bfwbNLsxq
+	 yR89a4geFqMIqXYMVOW5ECUDOT0Vbm+UfMUAbHIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko@linuxfoundation.org>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 7.2 118/713] cxl/ras: Fix cxl_rch_get_aer_info() out-of-bounds AER register read
-Date: Fri,  4 Sep 2026 06:51:26 +0200
-Message-ID: <20260904045806.482384070@linuxfoundation.org>
+	Daisuke Matsuda <matsuda@preferred.jp>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 7.2 119/713] fpga: altera-cvp: Avoid out-of-bounds read in trailing byte write
+Date: Fri,  4 Sep 2026 06:51:27 +0200
+Message-ID: <20260904045806.504714879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,73 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Bowman <terry.bowman@amd.com>
+From: Daisuke Matsuda <matsuda@preferred.jp>
 
-commit 29458e62d0829cbc99435f3e44fd560f9bbf1da7 upstream.
+commit 9da70a43b5fea60d758137f7f0ccfe19356cb5bb upstream.
 
-cxl_rch_get_aer_info() copies the RCH Downstream Port AER capability from
-the RCRB MMIO block using a readl() loop bounded by sizeof(struct
-aer_capability_regs). This struct is a software layout and its embedded
-struct pcie_tlp_log is larger than the on-wire AER capability. As a
-result the loop reads past the mapped AER register block.
+The trailing byte path in altera_cvp_send_block() dereferences a u32
+pointer even when only 1-3 bytes remain in the input buffer. If the buffer
+ends at a page or scatterlist boundary, this can read past the valid image
+data and fault.
 
-The over-read also populates the software-only tail fields including
-header_log.header_len. An out-of-range header_len passed to
-pcie_print_tlp_log() can then loop past the header log buffer and cause
-a second out-of-bounds read.
+Copy the remaining bytes into a zero-initialized u32 before writing the
+final word so only valid bytes are read from the input buffer.
 
-The read was correct when introduced, but struct pcie_tlp_log has since
-grown (Header Log and TLP Prefix Log sizes, header_len and flit fields),
-so sizeof(struct aer_capability_regs) no longer matches the physical AER
-capability.
-
-Bound the read to the physical AER registers, header through the 16 byte
-Header Log. Zero the destination first so the software-only fields are
-deterministic.
-
-Fixes: 6ac07883dbb5 ("cxl/pci: Add RCH downstream port error logging")
-Reported-by: Sashiko <sashiko@linuxfoundation.org>
+Fixes: 34d1dc17ce97 ("fpga manager: Add Altera CvP driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Terry Bowman <terry.bowman@amd.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260803221810.3685703-2-terry.bowman@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Daisuke Matsuda <matsuda@preferred.jp>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260723081912.74082-1-dskmtsd@gmail.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/ras_rch.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/fpga/altera-cvp.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/cxl/core/ras_rch.c
-+++ b/drivers/cxl/core/ras_rch.c
-@@ -58,13 +58,28 @@ void cxl_disable_rch_root_ints(struct cx
- static bool cxl_rch_get_aer_info(void __iomem *aer_base,
- 				 struct aer_capability_regs *aer_regs)
+--- a/drivers/fpga/altera-cvp.c
++++ b/drivers/fpga/altera-cvp.c
+@@ -16,6 +16,7 @@
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ #include <linux/sizes.h>
++#include <linux/string.h>
+ 
+ #define CVP_BAR		0	/* BAR used for data transfer in memory mode */
+ #define CVP_DUMMY_WR	244	/* dummy writes to clear CvP state machine */
+@@ -261,7 +262,7 @@ static int altera_cvp_v2_wait_for_credit
+ static int altera_cvp_send_block(struct altera_cvp_conf *conf,
+ 				 const u32 *data, size_t len)
  {
--	int read_cnt = sizeof(struct aer_capability_regs) / sizeof(u32);
-+	/*
-+	 * Bound the copy to the physically-defined AER registers (header
-+	 * through the 16-byte Header Log). struct aer_capability_regs is a
-+	 * software layout whose embedded struct pcie_tlp_log is larger than
-+	 * the on-wire AER capability; copying sizeof(*aer_regs) would
-+	 * over-read the RCRB-mapped MMIO block.
-+	 */
-+	int read_cnt = (PCI_ERR_HEADER_LOG + 16) / sizeof(u32);
- 	u32 *aer_regs_buf = (u32 *)aer_regs;
- 	int n;
+-	u32 mask, words = len / sizeof(u32);
++	u32 words = len / sizeof(u32);
+ 	int i, remainder;
  
- 	if (!aer_base)
- 		return false;
- 
-+	/*
-+	 * Zero the destination so the software-only tail fields
-+	 * (e.g. header_log.header_len) are deterministic rather than
-+	 * left as uninitialized stack, which could drive a bogus loop
-+	 * length in pcie_print_tlp_log().
-+	 */
-+	memset(aer_regs, 0, sizeof(*aer_regs));
+ 	for (i = 0; i < words; i++)
+@@ -270,9 +271,10 @@ static int altera_cvp_send_block(struct
+ 	/* write up to 3 trailing bytes, if any */
+ 	remainder = len % sizeof(u32);
+ 	if (remainder) {
+-		mask = BIT(remainder * 8) - 1;
+-		if (mask)
+-			conf->write_data(conf, *data & mask);
++		u32 word = 0;
 +
- 	/* Use readl() to guarantee 32-bit accesses */
- 	for (n = 0; n < read_cnt; n++)
- 		aer_regs_buf[n] = readl(aer_base + n * sizeof(u32));
++		memcpy(&word, data, remainder);
++		conf->write_data(conf, word);
+ 	}
+ 
+ 	return 0;
 
 
