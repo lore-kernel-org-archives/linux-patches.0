@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB7142C500;
-	Fri,  4 Sep 2026 06:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53BB422556;
+	Fri,  4 Sep 2026 06:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502997; cv=none; b=jpOM871bl7v+Mjas184DC+zBE8eJOMclXowpdbPfpxKLKkE0CH5u3KLAon4ZsAVT9uHQYZFFUvmXXGT1e61o7SwivgkL1q2Haa/lzi1MQwx97+psBMAB67JwNqLqVU5roxDiBlf49DEH0y0vrF6t7xbIZHqb7ekv0s6QQbz7Jtg=
+	t=1788503000; cv=none; b=aP4kNemzBFlb7RHjISb0IJWRnnRSeqiwwk7eMqpi8kSsgttu/6xTiFsS0wjgBPNrwtJkdnOXiYGAwyrVZ4krYH07BGr9X1mtI5sAC9VH9bMZvUkqzDSSEvB6xKpBXQ8SMB7kXdgs/7Uljm9vUIwq0yFnBY2pUs8rJ5OHYbfwoCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502997; c=relaxed/simple;
-	bh=yUkBR9gG1DRDs6MSelhGaR0iCzfl3A1lEMKvjkg5vZg=;
+	s=arc-20240116; t=1788503000; c=relaxed/simple;
+	bh=eymuiFrGEcZcW3bxoEDOAbZMWEpzo8ZTJY+3HKk5bAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZastIOQ/F9tPAwxdXHIeNhhJJsPhPYAFurKVE2nIkNKOw2JNfsnEmDd0WERXSDCOERigF1pLiKv+H7BLSnAE3vPnqts/vkAn4IHpKCdqfdh40SauY73IdZRa4KI/YRgDI45bvv3UVw4kpdqNaRORcf81G4knGX1ZS4ZaYB3n54c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNqw/ROX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XQZiZZ23lx976MpFnXgw5x3oM0PteMRAEzXftZXlP3utyzcbL5e/pWvq+2+YgjpD2V1PUYk2jMoe5Lwjf/gUHeKarBZ8BK0IIMK2rDn6czCHXsYs8RP/nwqz1UB9LB+U24owKKIhXbGN8GgbAk+W+DQNrMnKx1dUlSp8DaJZHL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0yvo9Et; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNqw/ROX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B021F00AC4;
-	Fri,  4 Sep 2026 06:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0yvo9Et"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2231F00A3E;
+	Fri,  4 Sep 2026 06:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502995;
-	bh=EZc9daKnNnt7fjEk4YZxwWD4gWJUCg3pJfUiZjyrRNo=;
+	s=korg; t=1788502998;
+	bh=+/FyqgDdnYHmGpilXejjvc3iq46ZcKBurgAvAf3F4VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sNqw/ROXGhKQB3spk+VBIBknSYIKK9Ba3wPI5NamWxfxcJOi4Ba2RBvbcPmljTpoM
-	 0Y+EYARmxKarMZNBxHb25zdYLsMqcSdk/GKwodSRHt4Nu37G7t2RKtmSq0C72N5eeF
-	 1727Gp6ULtGOAkmunmu0lZK8pHAYZIVBOtZgigYU=
+	b=i0yvo9EtGvA4ASGzJM8l+DFJ+RXMbMZGil2GuAsW4ZNRN2JpCGQinjXQ0T5NPqocf
+	 11zqw9F8Z+3+OUBLo7o12l8UtYbVWTE3lP47GG5ACib/1zwFXDdgjyXBTmVSNReDMj
+	 Bco3+7ytjSP6WlgtDRsu8Fizto13sY2ADYoUUQic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 366/403] ALSA: pcxhr: initialize mutexes before requesting threaded IRQ
-Date: Fri,  4 Sep 2026 07:02:49 +0200
-Message-ID: <20260904045743.128867919@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.12 402/403] udf: Fix i_lenExtents truncation on 32-bit kernels
+Date: Fri,  4 Sep 2026 07:03:25 +0200
+Message-ID: <20260904045743.920401942@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,56 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 6c97817e20598e5473094e0e38d1f51f1cf4dfff upstream.
+commit a5a5ed23b1340ff0f32a14a7ca8585f7c4e9b2e2 upstream.
 
-pcxhr_probe() requests pcxhr_threaded_irq() before initializing
-mgr->lock, even though the threaded handler takes that mutex.
+In udf_do_extend_file() the total extent length is rounded up to a block
+boundary with:
 
-Initialize the manager locks before request_threaded_irq() so an
-early interrupt cannot run against uninitialized mutex state during
-probe.
+	iinfo->i_lenExtents = (iinfo->i_lenExtents + sb->s_blocksize - 1) &
+			      ~(sb->s_blocksize - 1);
 
-Fixes: 9bef72bdb26e ("ALSA: pcxhr: Use nonatomic PCM ops")
+i_lenExtents is a __u64, but sb->s_blocksize is unsigned long.  On 32-bit
+kernels unsigned long is 32-bit, so ~(sb->s_blocksize - 1) is a 32-bit
+value (e.g. 0xfffff800 for a 2 KiB block) that is zero-extended in the AND,
+clearing the upper 32 bits of i_lenExtents.  For UDF files whose total
+extent length exceeds 4 GiB this truncates i_lenExtents when the file is
+extended, corrupting the tracked extent length.
+
+Cast the block size to 64-bit before forming the mask.  64-bit kernels are
+unaffected.
+
+Fixes: 48d6d8ff7dca ("udf: cache struct udf_inode_info")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260818144717.2269918-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Link: https://patch.msgid.link/20260722082425.213311-1-zhanxusheng@xiaomi.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/pcxhr/pcxhr.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/udf/inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/pcxhr/pcxhr.c
-+++ b/sound/pci/pcxhr/pcxhr.c
-@@ -1551,6 +1551,13 @@ static int pcxhr_probe(struct pci_dev *p
- 	mgr->pci = pci;
- 	mgr->irq = -1;
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -525,7 +525,7 @@ static int udf_do_extend_file(struct ino
+ 			  sb->s_blocksize - 1) & ~(sb->s_blocksize - 1));
+ 		iinfo->i_lenExtents =
+ 			(iinfo->i_lenExtents + sb->s_blocksize - 1) &
+-			~(sb->s_blocksize - 1);
++			~((u64)sb->s_blocksize - 1);
+ 	}
  
-+	/* ISR lock  */
-+	mutex_init(&mgr->lock);
-+	mutex_init(&mgr->msg_lock);
-+
-+	/* init setup mutex*/
-+	mutex_init(&mgr->setup_mutex);
-+
- 	if (request_threaded_irq(pci->irq, pcxhr_interrupt,
- 				 pcxhr_threaded_irq, IRQF_SHARED,
- 				 KBUILD_MODNAME, mgr)) {
-@@ -1564,13 +1571,6 @@ static int pcxhr_probe(struct pci_dev *p
- 		 "Digigram at 0x%lx & 0x%lx, 0x%lx irq %i",
- 		 mgr->port[0], mgr->port[1], mgr->port[2], mgr->irq);
- 
--	/* ISR lock  */
--	mutex_init(&mgr->lock);
--	mutex_init(&mgr->msg_lock);
--
--	/* init setup mutex*/
--	mutex_init(&mgr->setup_mutex);
--
- 	mgr->prmh = kmalloc(sizeof(*mgr->prmh) +
- 			    sizeof(u32) * (PCXHR_SIZE_MAX_LONG_STATUS -
- 					   PCXHR_SIZE_MAX_STATUS),
+ 	add = 0;
 
 
