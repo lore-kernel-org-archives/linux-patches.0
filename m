@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC6B3876CC;
-	Fri,  4 Sep 2026 05:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011352F9DA1;
+	Fri,  4 Sep 2026 05:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501120; cv=none; b=cfdvsIRLc9bpm4W7w1QA9zPeKdOxzvxJT1dauQYb66DP7kg9Lbbg6GNiyHVK4Y+wdkG3sLdEhDYvGEgEsA/8euuXjmz/AX4/3q3aiHfGpE3HzU2WhI/BZy3PNUh6TysV1Cln1sgD7yg6LXC9G1cFwAoOPlCX8JxqD5a376jl0bI=
+	t=1788501123; cv=none; b=hVlACfcLDvi+dCLAo10CA3IYNwQWn4B2+XXRXmuMYbUnhmoYrT648aFJ4T383Wl0xflSMBZLBS0kAHBnv+uEkxMceEsgJN7Si7x2RAts/udo8dZIDRUJhX/Yii0jXBhAlkdJDr8vVBTdyE7JnOLJVejVtHosxopB2XRsV9Q5+NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501120; c=relaxed/simple;
-	bh=z1a/v7ZvHQbLObXLO95toKcOgDBvq+7NwoJf3Gcx9HI=;
+	s=arc-20240116; t=1788501123; c=relaxed/simple;
+	bh=uhSmtzQ3RbVF2KWiqJfqTRnMkWr3aT+xMuP1t4Bf8W0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j0mKA1rtU/y32g6AY461Fh6fwjOPOtfUamO9ITHUPFqhnXxGmQlgBhrptHwqyfYRcganmLcIzANN2+k+t1FBAOaTx6Z3HHhGUQyZ6vRrP76kVIYbbC+jaDnmin38v+Bf7YHBbY+eN6o9OtsH+ILcFQ9/TEPN56nbABcsP7ZaJTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtFr4X3X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KeZwsAEoJpG3awiz2PM+Kdcxsa+hoKtVdIS0/6hQHPZaYTShYvxn8PKqy2gmk3KaogY3omMsY0yhxgg5Plwa9ReeIG66uSVarIh806Fl9N7/RX/xDM/ixIzEhR5uTpGPm2bdAn+QNnsNllorBH26EnjEOb9Pt2K3Jv2PXBk4qf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmb0kG6G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtFr4X3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7821C1F00A3E;
-	Fri,  4 Sep 2026 05:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmb0kG6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5909A1F00A3D;
+	Fri,  4 Sep 2026 05:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501119;
-	bh=KoWtYzrxq8cOXG2fDlrQRLkEsUjNQH6gwFmoykQJ+M8=;
+	s=korg; t=1788501121;
+	bh=C2wjjCxNhVkVdKoAxikhm/jbivRb1X82BV9ZEGchBpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mtFr4X3X4lcDMVCvc6+eKxTQrECiitplXgcNg7i0o4L8Qxeojxnn3uJYe5TqyzCss
-	 XN7Sd+ArvRg0DdxIFhZLx2tDK8ujs4sn5aWDHoVkw5hKX9PiPv6cd18FOKSBTdU8Su
-	 TmFa62HkGjA1srIJD9wF1q0y/bHpf6rme8j+HteY=
+	b=mmb0kG6GfcgemJwdMqg6/dPYDpHdmCM+d34CmXX9LoarpXPHZxZYGU3gZPahmwtg8
+	 oM2QEeu4V+nTN18LSOlQwny9ANbcHbx2bwbXR2FbSdx3C1kPBk+kBC8drCLSrC8nIo
+	 vzvvK6r1jA88Fy0cbbfyholKfDX45hqfZ6drBM6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 295/552] svcrdma: Reject connection when transport allocation fails
-Date: Fri,  4 Sep 2026 06:57:32 +0200
-Message-ID: <20260904045756.732430306@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 296/552] svcrdma: Reject inline replies that overflow the pull-up buffer
+Date: Fri,  4 Sep 2026 06:57:33 +0200
+Message-ID: <20260904045756.770913372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,79 +50,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit 0944462247dcb7de7622cdaaadf5f05c52707dab upstream.
+commit 0fbe20dfe74b783d255bf389a6ea77aa25dc7860 upstream.
 
-handle_connect_req() returns without action when
-svc_rdma_create_xprt() fails to allocate the new transport.
-The CM core returns 0 for CONNECT_REQUEST events, so it does
-not destroy the new rdma_cm_id. Each allocation failure under
-memory pressure leaks one rdma_cm_id, and a remote peer driving
-connection attempts can amplify this.
+An RPC-over-RDMA client can request a reply, such as an NFS READ
+payload, without providing a Write list or a Reply chunk to carry
+it. When such a reply needs more scatter/gather entries than the
+device's Send Queue supports, svc_rdma_pull_up_needed() selects
+pull-up and svc_rdma_pull_up_reply_msg() linearizes the whole
+reply into sctxt->sc_xprt_buf. That buffer is only sc_max_req_size
+bytes, while the reply on this path is bounded only by the client's
+request, so svc_rdma_xb_linearize() copies past the end of the
+buffer and corrupts adjacent slab memory. The oversized length is
+then stored in sc_sges[0].length and posted, so the device also
+reads beyond the mapped region.
 
-Reject the connection by returning a non-zero status from the
-CM event handler, which tells the CM core to destroy the
-orphaned cm_id.
+The SGE-exhaustion branch is the only pull-up path that can exceed
+the buffer: the threshold branch pulls up only replies smaller
+than RPCRDMA_PULLUP_THRESH, and replies that fit the device's SGE
+budget are sent directly without linearization. Make
+svc_rdma_pull_up_needed() report -E2BIG when the reply it would
+pull up cannot fit sc_max_req_size, and fail the request with
+ERR_CHUNK as RFC 8166 Section 4.5.3 directs rather than dropping
+the connection.
 
-Fixes: 377f9b2f4529 ("rdma: SVCRDMA Core Transport Services")
+The helper no longer answers a simple yes/no question: it now
+reports pull-up, no pull-up, or -E2BIG for a reply too large to
+linearize. Rename svc_rdma_pull_up_needed() to
+svc_rdma_check_pull_up() so its name no longer implies a boolean
+predicate.
+
+Fixes: e248aa7be86e ("svcrdma: Remove max_sge check at connect time")
 Cc: stable@vger.kernel.org
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-4-1b09bd87b6cd@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reported-by: Chris Mason <clm@meta.com>
+Assisted-by: kres:claude-opus-4-7
+Link: https://patch.msgid.link/20260623014728.826032-1-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_sendto.c |   47 +++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 15 deletions(-)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -227,12 +227,16 @@ svc_rdma_parse_connect_private(struct sv
-  * structure for the listening endpoint.
-  *
-  * This function creates a new xprt for the new connection and enqueues it on
-- * the accept queue for the listent xprt. When the listen thread is kicked, it
-+ * the accept queue for the listen xprt. When the listen thread is kicked, it
-  * will call the recvfrom method on the listen xprt which will accept the new
-  * connection.
-+ *
-+ * Return values:
-+ *     %0: Do not destroy @new_cma_id
-+ *     %1: Destroy @new_cma_id (allocation failure)
-  */
--static void handle_connect_req(struct rdma_cm_id *new_cma_id,
--			       struct rdma_conn_param *param)
-+static int handle_connect_req(struct rdma_cm_id *new_cma_id,
-+			      struct rdma_conn_param *param)
- {
- 	struct svcxprt_rdma *listen_xprt = new_cma_id->context;
- 	struct svcxprt_rdma *newxprt;
-@@ -242,7 +246,7 @@ static void handle_connect_req(struct rd
- 				       listen_xprt->sc_xprt.xpt_net,
- 				       ibdev_to_node(new_cma_id->device));
- 	if (!newxprt)
--		return;
-+		return 1;
- 	newxprt->sc_cm_id = new_cma_id;
- 	new_cma_id->context = newxprt;
- 	svc_rdma_parse_connect_private(newxprt, param);
-@@ -276,6 +280,7 @@ static void handle_connect_req(struct rd
- 
- 	set_bit(XPT_CONN, &listen_xprt->sc_xprt.xpt_flags);
- 	svc_xprt_enqueue(&listen_xprt->sc_xprt);
-+	return 0;
+--- a/net/sunrpc/xprtrdma/svc_rdma_sendto.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_sendto.c
+@@ -700,20 +700,21 @@ static int svc_rdma_xb_count_sges(const
  }
  
  /**
-@@ -299,8 +304,7 @@ static int svc_rdma_listen_handler(struc
+- * svc_rdma_pull_up_needed - Determine whether to use pull-up
++ * svc_rdma_check_pull_up - Determine whether to use pull-up
+  * @rdma: controlling transport
+  * @sctxt: send_ctxt for the Send WR
+  * @write_pcl: Write chunk list provided by client
+  * @xdr: xdr_buf containing RPC message to transmit
+  *
+  * Returns:
+- *   %true if pull-up must be used
+- *   %false otherwise
++ *   %1 if pull-up must be used
++ *   %0 if pull-up is not needed
++ *   %-E2BIG if the reply is too large to be pulled up
+  */
+-static bool svc_rdma_pull_up_needed(const struct svcxprt_rdma *rdma,
+-				    const struct svc_rdma_send_ctxt *sctxt,
+-				    const struct svc_rdma_pcl *write_pcl,
+-				    const struct xdr_buf *xdr)
++static int svc_rdma_check_pull_up(const struct svcxprt_rdma *rdma,
++				   const struct svc_rdma_send_ctxt *sctxt,
++				   const struct svc_rdma_pcl *write_pcl,
++				   const struct xdr_buf *xdr)
+ {
+ 	/* Resources needed for the transport header */
+ 	struct svc_rdma_pullup_data args = {
+@@ -725,11 +726,22 @@ static bool svc_rdma_pull_up_needed(cons
+ 	ret = pcl_process_nonpayloads(write_pcl, xdr,
+ 				      svc_rdma_xb_count_sges, &args);
+ 	if (ret < 0)
+-		return false;
++		return 0;
  
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_CONNECT_REQUEST:
--		handle_connect_req(cma_id, &event->param.conn);
--		break;
-+		return handle_connect_req(cma_id, &event->param.conn);
- 	case RDMA_CM_EVENT_ADDR_CHANGE:
- 		listen_id = svc_rdma_create_listen_id(cma_rdma->xpt_net,
- 						      sap, cma_xprt);
+ 	if (args.pd_length < RPCRDMA_PULLUP_THRESH)
+-		return true;
+-	return args.pd_num_sges >= rdma->sc_max_send_sges;
++		return 1;
++	if (args.pd_num_sges < rdma->sc_max_send_sges)
++		return 0;
++
++	/*
++	 * The reply has too many SGEs to Send inline, so it has to be
++	 * linearized into sc_xprt_buf. That buffer holds only
++	 * sc_max_req_size bytes, so a larger reply cannot be pulled up.
++	 * RFC 8166 Section 4.5.3 requires responding with ERR_CHUNK.
++	 */
++	if (args.pd_length > rdma->sc_max_req_size)
++		return -E2BIG;
++	return 1;
+ }
+ 
+ /**
+@@ -785,7 +797,7 @@ static int svc_rdma_xb_linearize(const s
+  * Assemble the elements of @xdr into the transport header buffer.
+  *
+  * Assumptions:
+- *  pull_up_needed has determined that @xdr will fit in the buffer.
++ *  check_pull_up has determined that @xdr will fit in the buffer.
+  *
+  * Returns:
+  *   %0 if pull-up was successful
+@@ -820,6 +832,7 @@ static int svc_rdma_pull_up_reply_msg(co
+  *
+  * Returns:
+  *   %0 if DMA mapping was successful.
++ *   %-E2BIG if the reply is too large to be pulled up
+  *   %-EMSGSIZE if a buffer manipulation problem occurred
+  *   %-EIO if DMA mapping failed
+  *
+@@ -835,6 +848,7 @@ int svc_rdma_map_reply_msg(struct svcxpr
+ 		.md_rdma	= rdma,
+ 		.md_ctxt	= sctxt,
+ 	};
++	int ret;
+ 
+ 	/* Set up the (persistently-mapped) transport header SGE. */
+ 	sctxt->sc_send_wr.num_sge = 1;
+@@ -849,7 +863,10 @@ int svc_rdma_map_reply_msg(struct svcxpr
+ 	/* For pull-up, svc_rdma_send() will sync the transport header.
+ 	 * No additional DMA mapping is necessary.
+ 	 */
+-	if (svc_rdma_pull_up_needed(rdma, sctxt, write_pcl, xdr))
++	ret = svc_rdma_check_pull_up(rdma, sctxt, write_pcl, xdr);
++	if (ret < 0)
++		return ret;
++	if (ret)
+ 		return svc_rdma_pull_up_reply_msg(rdma, sctxt, write_pcl, xdr);
+ 
+ 	return pcl_process_nonpayloads(write_pcl, xdr,
+@@ -1033,7 +1050,7 @@ int svc_rdma_sendto(struct svc_rqst *rqs
+ 						   &rctxt->rc_reply_pcl, sctxt,
+ 						   &rqstp->rq_res);
+ 		if (ret < 0)
+-			goto reply_chunk;
++			goto send_err;
+ 		rc_size = ret;
+ 	}
+ 
+@@ -1054,10 +1071,10 @@ int svc_rdma_sendto(struct svc_rqst *rqs
+ 
+ 	ret = svc_rdma_send_reply_msg(rdma, sctxt, rctxt, rqstp);
+ 	if (ret < 0)
+-		goto put_ctxt;
++		goto send_err;
+ 	return 0;
+ 
+-reply_chunk:
++send_err:
+ 	if (ret != -E2BIG && ret != -EINVAL)
+ 		goto put_ctxt;
+ 
 
 
