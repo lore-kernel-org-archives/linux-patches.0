@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87F140F754;
-	Fri,  4 Sep 2026 06:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3021400DE8;
+	Fri,  4 Sep 2026 06:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502889; cv=none; b=bLsuMvug+ZlYErPnUEFJiSqKItjY/3bzD/8Yq5Ys1KyuGGQqCbK2YJxfnrysESVZ+8BHBXL382s8sarp1H5PHwuHiLI//TWBoGsU+TG/7xHTN+hs2B2ZYFjTWWUEkDICoYA3fowA+FmUfThHrwzz8IcvEOX/5PVI6rm/dhJAVLM=
+	t=1788502891; cv=none; b=FfwmKoLRYA4FhTZFMt1L6RFvkSxE0XqlWpTSWfJvy0bv6WLEsbsAexElrsGQmXIqJkL51P9718MjCedyVKDuFnOzqY40M1ic+6neOu0rCi2mYiA+vvbccUiRMMFM2lkc6Uu1IS0iNgEQvXwO406Nqwjqtah4Ls+Of/2hToxH4g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502889; c=relaxed/simple;
-	bh=f0pl3lbYBK9o38y0XrEtv7DNoRPIEWq4LdT7eK8M9Wc=;
+	s=arc-20240116; t=1788502891; c=relaxed/simple;
+	bh=lDlueuZiFyURY9WlRdYkCy7PGCPlZenuAgoeBQIMYN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N49DStcL8MUagyu2pZtdbWV7zger031ZsLt5Bisb6pojJ7yCAQkxqboazZQOvuXYsNvwbQE46XVukItvN44pxKSMhYMhl15j5dX9IqsRHoBEc6zSyY2r75y2tIWMCmqEIE83y7JJS3HVEbXykbxoAYFVaAGgXwLTGsTTTkQKwGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbBt9UX2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EaPfLAijlTuuWuEVSWV9J4V4QYMjWT5lpLWC4x8EWWvzOHe7C9Xs2TZFT6iVmFayZiQ5tu+BYNDPGCcAfenvvweexT4RDNelKECD6IYNunodX75+1r5HxRrZ2IepkKpnc9mZhG0Ma5PaKWzwQWzfLYlR9dMXz5uuvx4N7AV3MWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGSXkFa9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbBt9UX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC101F00A3D;
-	Fri,  4 Sep 2026 06:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGSXkFa9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEEF1F00A3D;
+	Fri,  4 Sep 2026 06:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502887;
-	bh=2clqeLVNlsHSIeFUHzt6XHEmNtgSHQaIyjW5/eQGlrY=;
+	s=korg; t=1788502890;
+	bh=Olj6FB4Js1OL2h2ARxeVdGBfs/OtaLHQtWhhEBTvkwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XbBt9UX27dByWaPgZavScV7QfNNCH19lNkPkg5UVjs+xo0Z9pEb8KiG5DUqUZwdmX
-	 Xu+WgOxmv7WqDnYrsYh77htwlDuYA/ybqWwS19wYLtVTCOuJFUqbBBA75v+//qhaxL
-	 64TDAyySS4wKJ0WcYcXSblgd4vrPnyiR54xGDemg=
+	b=iGSXkFa9d/IVGLlHk+Mmp/QmmuqDMXzaC0dpuQowmQ6w9mpG/qzO6DFLRnu6likEc
+	 1+mNHv/s/HpAVa8v1ZCIWze/mfjjUAcnstAbWmgJYCtdCrVhkSle+9Cwq10ZeYk0I/
+	 7Jv22aZ+j2ednZXbnkatVYGv8iqdfkiflQEYOEdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 322/403] platform/x86: hp-bioscfg: bound ordered-list parsing by the package count
-Date: Fri,  4 Sep 2026 07:02:05 +0200
-Message-ID: <20260904045742.154458304@linuxfoundation.org>
+Subject: [PATCH 6.12 323/403] platform/x86: hp-bioscfg: fix heap OOB read in sk_store() and kek_store()
+Date: Fri,  4 Sep 2026 07:02:06 +0200
+Message-ID: <20260904045742.177041591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,53 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 1d143d78299d0eb4536698bf98c1815ec69f22a9 upstream.
+commit a7508c7959ff8d037327d377ed21a9c0eabe4674 upstream.
 
-hp_populate_ordered_list_elements_from_package() differs from the other
-per-type parsers: its main loop is bounded only by the fixed per-type
-count and never checks elem against the number of elements actually
-present in the package,
+sk_store() and kek_store() strip a trailing newline from the sysfs
+write before allocating the key buffer:
 
-  for (elem = 1, eloc = 1; eloc < ORD_ELEM_CNT; elem++, eloc++)
+	length = count;
+	if (buf[length - 1] == '\n')
+		length--;
+	bioscfg_drv.spm_data.signing_key = kmemdup(buf, length, GFP_KERNEL);
 
-whereas the string, integer, enumeration and password parsers bound
-their main loop with "elem < count" as well.
+but then pass the original "count" (not "length") as the copy size to
+hp_wmi_perform_query(), which memcpy()s that many bytes out of the
+"length"-sized allocation, reading one byte past it whenever the write
+ends in a newline, the normal case for a shell "echo" into sysfs.
 
-This is safe today because hp_init_bios_package_attribute() rejects any
-package with fewer than ORD_ELEM_CNT elements before the parser runs.
-An upcoming change, however, relaxes that check to accept shorter
-packages.
+KASAN confirms this directly:
 
-Bound the loop by the validated element count as well, so it stops at
-whichever comes first, the per-type count or the real package size,
+  BUG: KASAN: slab-out-of-bounds in hp_wmi_perform_query+0x1e9/0x460 [hp_bioscfg]
+  Read of size 28 at addr ffff88813c8e2b80 by task python3/16022
+  ...
+  sk_store+0xa7/0x240 [hp_bioscfg]
+  kernfs_fop_write_iter+0x3e1/0x5d0
+  ...
+  The buggy address is located 0 bytes inside of
+  allocated 27-byte region [ffff88813c8e2b80, ffff88813c8e2b9b)
 
-  for (elem = 1, eloc = 1; eloc < ORD_ELEM_CNT && elem < order_obj_count;
-       elem++, eloc++)
+Reproduced identically for kek_store, and at multiple write sizes
+(28, 57, 201 bytes), each time reading exactly one byte past a
+kmemdup() allocation one byte smaller than the write.
 
-order_obj_count is the validated element count, now correctly forwarded
-from the caller. No functional change for packages that enumerate
-correctly today.
+Fix by passing "length" instead of "count" to hp_wmi_perform_query()
+in both functions.
 
+Fixes: b2715aa2e135 ("platform/x86: hp-bioscfg: spmobj-attributes")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260709165900.30615-3-meatuni001@gmail.com
+Link: https://patch.msgid.link/20260812111829.172273-3-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-@@ -146,7 +146,7 @@ static int hp_populate_ordered_list_elem
- 	if (!order_obj)
- 		return -EINVAL;
+--- a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+@@ -238,7 +238,7 @@ static ssize_t sk_store(struct kobject *
+ 	ret = hp_wmi_perform_query(HPWMI_SECUREPLATFORM_SET_SK,
+ 				   HPWMI_SECUREPLATFORM,
+ 				   (void *)bioscfg_drv.spm_data.signing_key,
+-				   count, 0);
++				   length, 0);
  
--	for (elem = 1, eloc = 1; eloc < ORD_ELEM_CNT; elem++, eloc++) {
-+	for (elem = 1, eloc = 1; eloc < ORD_ELEM_CNT && elem < order_obj_count; elem++, eloc++) {
+ 	if (!ret) {
+ 		bioscfg_drv.spm_data.mechanism = SIGNING_KEY;
+@@ -274,7 +274,7 @@ static ssize_t kek_store(struct kobject
+ 	ret = hp_wmi_perform_query(HPWMI_SECUREPLATFORM_SET_KEK,
+ 				   HPWMI_SECUREPLATFORM,
+ 				   (void *)bioscfg_drv.spm_data.endorsement_key,
+-				   count, 0);
++				   length, 0);
  
- 		switch (order_obj[elem].type) {
- 		case ACPI_TYPE_STRING:
+ 	if (!ret) {
+ 		bioscfg_drv.spm_data.mechanism = ENDORSEMENT_KEY;
 
 
