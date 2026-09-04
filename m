@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E3C41C30F;
-	Fri,  4 Sep 2026 05:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDABD41DEDF;
+	Fri,  4 Sep 2026 05:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499384; cv=none; b=MypXghPYGrvyklXH/BkPrdYZ1r+yR+EFd1Pfc2amOgTjEIKJshCQa7KU1Mfk5gjOENmq00vwWKfHgAgF13P2LFPdorEl51Ovsu6MjnLTawEFe9oIZhMtbiWEYmf3cwuUsVoA1wMJTvmPPqvSzTD+UP6zceeCP1gqW7+5pKduTiY=
+	t=1788499387; cv=none; b=KhLKsesfAE8dhoUuHDMANrRHLGBsZsr4D+Mk2D1XD57XUvSb4NeYIHBO2xfaoueGv5QnAQ2f0sjz6N4FDbe+IlitJ9GWHe4YZVRUoA6NWsBYm8L2vmurHnv2UhasG8cAkflRGvhNOQWk65SFURvF9Ch0e4ltbJwlzd4YC+/BwTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499384; c=relaxed/simple;
-	bh=CMoYjwkubjb6MFshUyQ7yqaV/gmTMS5mhp6JE7JTXsM=;
+	s=arc-20240116; t=1788499387; c=relaxed/simple;
+	bh=YR8ru2XXB568DyHM73OlAtX276DlhGnxFuK9hXfGH0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ap8H/nTn3YpJJUiYD7XjDcedl0RUEbytBkGkCkw+X6yr7M99KVfoJRoGGcbMDzFscE6UcSeti7ruVBHvdDPteqcm/meDdJsZu8js/yGzL/KsSmmxD74ieJBwY06yfsI7ZzTJL+fB6lWLeIvOWOniDHjI+UEaP7YjLqNpy0i+GbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3sBwsMl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RjAt+Uy8o7/3lQf/5It0zVKAVIhmrcImmpc6Qrua0OR0z04paGAhx6SZLoIjOuAZWUCBxYjcL9et4r4XUlK6PLtSiJfpLJo54xrsIH1YiJHryQON6VuOQqgqqOyGXcKQQFr+eDT2SdBwQofxSwA+yqm2al7Nrsrs3ZUwcI0X2FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efmP/hPs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3sBwsMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E21F1F00A3D;
-	Fri,  4 Sep 2026 05:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efmP/hPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09251F00A3D;
+	Fri,  4 Sep 2026 05:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499383;
-	bh=v+aTEnzEMRIL6SiKOyiS0y14qrmokdoLm/cbZZotltg=;
+	s=korg; t=1788499386;
+	bh=vS4WM2iVjizHEIURoqRhuxbGowMpko7C4mCCaG7GDsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C3sBwsMlo8b1XTKBVI7d8LtKdxjMoqCH8P+b1H/mGglaV/JL8fXPOOgfhBZQDkpic
-	 orqwhEpguO4pI9YYKT0XYTWBSeQ7zLoa2r6AJBlwBDqMkWLRD+O8wyQUue/2XOhwG2
-	 Hy7DhKFnbyc2+bvjbmImrEZBd/q4EDudN8qbW41k=
+	b=efmP/hPs5wVXll4drUmhpS3RMoMTw9PpvFXQkl1t1PkiTJLg13HaBIhiyjh+P3ko2
+	 8VMURVbKbWL8F+PlLv8RhqUx+ngvw4KmAsIBAKwTyqGc7uOt37hPCT+EOQHCH4JD3E
+	 8qxqZSseEd+QMAR896KnBXPoxtRf7ZclYepaTq64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 396/713] svcrdma: Reject oversized Read segments at decode time
-Date: Fri,  4 Sep 2026 06:56:04 +0200
-Message-ID: <20260904045812.701058771@linuxfoundation.org>
+Subject: [PATCH 7.2 397/713] svcrdma: Reject Read lists that exceed the page budget
+Date: Fri,  4 Sep 2026 06:56:05 +0200
+Message-ID: <20260904045812.723708188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,75 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-commit af6f0e06bed818ee7fc8b869915964410020a1c5 upstream.
+commit 0ca487abb3bdf581851664b5db21f364caf57682 upstream.
 
-The RPC/RDMA Read list decoder stores wire-supplied segment
-lengths without validation. xdr_count_read_segments() checks
-4-byte alignment for non-zero position values but does not
-cap the segment length.
+Individual Read segment lengths are validated at decode time, but
+nothing prevents a requester from sending multiple segments whose
+cumulative length exceeds the rq_pages array budget. When one
+segment fills the page array exactly, the runtime guard in
+svc_rdma_build_read_segment() is bypassed because len reaches zero.
+A subsequent segment then accesses the NULL sentinel slot at
+rq_pages[rq_maxpages], resulting in a NULL pointer dereference during
+DMA mapping.
 
-An oversized rs_length reaches svc_rdma_build_read_segment(),
-which derives nr_bvec from it and can drive a large dynamic
-bvec allocation before verifying that enough rq_pages remain.
-If the post-allocation page-overrun guard fires, the freshly
-acquired rw context is not returned, leaking the resource.
+Accumulate pages across all Read segments and reject the message at
+decode time when the total would overflow the page budget.
 
-Reject any segment whose length exceeds the receive context's
-page budget during Read list decoding, consistent with how
-xdr_check_write_chunk() bounds Write segment counts against
-rc_maxpages. Also return the rw context on the existing
-post-allocation overrun path in svc_rdma_build_read_segment(),
-keeping that defensive guard balanced.
-
-Fixes: 5ee62b4a9113 ("svcrdma: use bvec-based RDMA read/write API")
+Fixes: 026d958b38c6 ("svcrdma: Add recvfrom helpers to svc_rdma_rw.c")
 Cc: stable@vger.kernel.org
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-3-e251306ccca9@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 2 ++
- net/sunrpc/xprtrdma/svc_rdma_rw.c       | 5 +++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-index fe9bf0371b6e..15c1d8ae5301 100644
 --- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
 +++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -458,6 +458,8 @@ static bool xdr_count_read_segments(struct svc_rdma_recv_ctxt *rctxt, __be32 *p)
+@@ -440,11 +440,14 @@ static void svc_rdma_build_arg_xdr(struc
+  *	    to the first byte past the Read list. rc_read_pcl and
+  *	    rc_call_pcl cl_count fields are set to the number of
+  *	    Read segments in the list.
+- *  %false: Read list is corrupt. @rctxt's xdr_stream is left in an
+- *	    unknown state.
++ *  %false: Read list is corrupt or exceeds the page budget. @rctxt's
++ *	    xdr_stream is left in an unknown state.
+  */
+ static bool xdr_count_read_segments(struct svc_rdma_recv_ctxt *rctxt, __be32 *p)
+ {
++	unsigned int maxlen = rctxt->rc_maxpages << PAGE_SHIFT;
++	unsigned int total_len = 0;
++
+ 	rctxt->rc_call_pcl.cl_count = 0;
+ 	rctxt->rc_read_pcl.cl_count = 0;
+ 	while (xdr_item_is_present(p)) {
+@@ -458,7 +461,10 @@ static bool xdr_count_read_segments(stru
  
  		xdr_decode_read_segment(p, &position, &handle,
  					    &length, &offset);
-+		if (length > rctxt->rc_maxpages << PAGE_SHIFT)
+-		if (length > rctxt->rc_maxpages << PAGE_SHIFT)
++		if (length > maxlen)
 +			return false;
++		total_len += length;
++		if (PAGE_ALIGN(total_len) > maxlen)
+ 			return false;
  		if (position) {
  			if (position & 3)
- 				return false;
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_rw.c b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-index b4cb4f991235..9aaaade99e6e 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -795,7 +795,7 @@ static int svc_rdma_build_read_segment(struct svc_rqst *rqstp,
- 		len -= seg_len;
- 
- 		if (len && ((head->rc_curpage + 1) > rqstp->rq_maxpages))
--			goto out_overrun;
-+			goto out_put;
- 	}
- 
- 	ret = svc_rdma_rw_ctx_init(rdma, ctxt, segment->rs_offset,
-@@ -809,7 +809,8 @@ static int svc_rdma_build_read_segment(struct svc_rqst *rqstp,
- 	cc->cc_sqecount += ret;
- 	return 0;
- 
--out_overrun:
-+out_put:
-+	svc_rdma_put_rw_ctxt(rdma, ctxt);
- 	trace_svcrdma_page_overrun_err(&cc->cc_cid, head->rc_curpage);
- 	return -EINVAL;
- }
--- 
-2.55.0
-
 
 
