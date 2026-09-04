@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1CB3B19BC;
-	Fri,  4 Sep 2026 05:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9613815E1;
+	Fri,  4 Sep 2026 05:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500071; cv=none; b=qdhEnD8NBjIZI1cPKWLPubIaXGyJKpvIYVJbi5gUWc8pVB+ZAaIAwuEec5zV4+DdntXtWV3MGwg8O9jEbPembNZa80XRuWfw4reX/rc17I5qKSxBx0ObCTjrxgJpRUhoqLzQxYAm7ZCyOaKoygBlm0PIChb5cU0NfDXD4GqXmoo=
+	t=1788500073; cv=none; b=PHq0Aba5ReYhJOYokqBS5fwjQtxdIHWwd80/DPxonMZiqCg4Q3POjwsGqEYKTFr5PhEVvuLFFuVlmWARZzUcC2QRcGehwdoSs3ycHv8TMrX2z43h5OFSqmN6lRdD+LiUe1BWLkNi+R+dhFnLy5aD5OS+2qWJO6J3UCNWZPEpTkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500071; c=relaxed/simple;
-	bh=v71zrKhXzW7mVdA7ciRbf8KkrC4eynRZASpOdbQ62nk=;
+	s=arc-20240116; t=1788500073; c=relaxed/simple;
+	bh=4QUlXvpQGN56gOetXrn/na/jNrroffE3ptgk9lRcK0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LTiP1fVI5k4vlwCHq+QOGZXkv9XgK6kSLBNXlmMFu3UqEI5isIQBCwrlF9RVm4mYnN8z3EJ8Ir0T9/SdIiYu8RUwQM+TGt3TVJGFR3jIB2HLtNGDS1WdD9Bjy4iuWrGJtcqNJbjYQxrR5Tf4LOW9XXQ0WGx5CPRinHWaDUS2OL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+NUOH6F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WNLB+89YzZzDF83zo7uKWzIflve8otTPanHs3OQ2g1Egpg2y12l7+f9JMDw7mUEPIkfEX04xot3KBjx30VQeyKY5G5scLRmPZ1VLT96VKB2ESoMk59v+WGR3z57T7e22hNbXlkUNuiJ5t9aJAOsvrtF35fnZX5qxSUzWInRgpRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZCOCyIX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+NUOH6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A291F00A3D;
-	Fri,  4 Sep 2026 05:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZCOCyIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126181F00A3D;
+	Fri,  4 Sep 2026 05:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500069;
-	bh=aH9+WwycUo/52sZdpuwqezEfNBOgOFFDDR8/SC8Ig7g=;
+	s=korg; t=1788500072;
+	bh=t/EQVacGfxRK1draP22KSQ2Gr+yEkx+zPFY6iuy5/Ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O+NUOH6Fi9x2BlqW0JBL8VLL5EVRH1MP3b0+NMVtSefMazi4VR7B31fkJgEnKkDCK
-	 stOFBPROb9kEMWz4Pc+lIYpquIbkSzc+iS2r56fg6kG4CYCuaPb3rLA+472IHbXO1U
-	 6lq6aj0djgp0EnjBFafMRGqe+F6rflvKWvSI7sjE=
+	b=PZCOCyIXFTHgf53HCJjdDCWYTQf2IBS/wpz0Enanq190t442IWjgHpmwmMLeb6JTm
+	 vq3Zyru1XzcXuMRaFj6jCPn7kQxL7gTlKwP3/L2YjqNrWX+Y5Jqk3EVLMv7IO0+TDc
+	 XaPQz+uf5k96mhsxiWRdvFhp0GZMctRply2Zzhm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 7.2 633/713] mfd: qnap-mcu: keep the reply buffer alive past a command timeout
-Date: Fri,  4 Sep 2026 07:00:01 +0200
-Message-ID: <20260904045818.019005259@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 642/713] ALSA: pcxhr: initialize mutexes before requesting threaded IRQ
+Date: Fri,  4 Sep 2026 07:00:10 +0200
+Message-ID: <20260904045818.221981835@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,116 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 47504742cea7878ebd1bf1491bbed923df6b90b1 upstream.
+commit 6c97817e20598e5473094e0e38d1f51f1cf4dfff upstream.
 
-qnap_mcu_exec() publishes an on-stack buffer to the receive path:
+pcxhr_probe() requests pcxhr_threaded_irq() before initializing
+mgr->lock, even though the threaded handler takes that mutex.
 
-	unsigned char rx[QNAP_MCU_RX_BUFFER_SIZE];
-	...
-	reply->data = rx;
-	reply->length = length;
+Initialize the manager locks before request_threaded_irq() so an
+early interrupt cannot run against uninitialized mutex state during
+probe.
 
-and qnap_mcu_receive_buf() writes into it from the serdev receive path,
-which runs out of flush_to_ldisc() and is not serialized against
-qnap_mcu_exec() at all. bus_lock cannot cover it, because qnap_mcu_exec()
-holds that mutex across wait_for_completion_timeout().
-
-On a timeout qnap_mcu_exec() returns with reply->data still pointing at
-its own frame. A reply that arrives late, or an unsolicited message from
-the MCU, is then written into a stack frame that has been left, corrupting
-whatever runs next on that stack. The same applies when qnap_mcu_write()
-fails, since that path returns without touching the reply state either.
-
-Move the receive buffer into struct qnap_mcu. It is 37 bytes and the
-structure is devm_kzalloc()ed, so it lives as long as the driver, and a
-late write lands in memory that is still valid and is reinitialized by the
-next command. bus_lock keeps commands from sharing it.
-
-This deliberately does not clear reply->data or reply->length on the
-timeout path. Doing so races with qnap_mcu_receive_buf(), which reads both
-after its
-
-	if (!reply->length)
-		return size;
-
-check: clearing reply->data gives a NULL dereference, and clearing
-reply->length alone removes the reply->received == reply->length exit
-condition, so the copy loop runs until the uart chunk is consumed and
-overruns the buffer. Leaving both set keeps the write bounded by
-reply->length, which qnap_mcu_exec() has already checked against
-sizeof(mcu->rx).
-
-Fixes: 998f70d1806b ("mfd: Add base driver for qnap-mcu devices")
+Fixes: 9bef72bdb26e ("ALSA: pcxhr: Use nonatomic PCM ops")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://lore.kernel.org/all/20260802132012.537B81F000E9@smtp.kernel.org/
-Link: https://patch.msgid.link/20260802135307.31380-1-ali@iusegentoo.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260818144717.2269918-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/qnap-mcu.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ sound/pci/pcxhr/pcxhr.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/mfd/qnap-mcu.c
-+++ b/drivers/mfd/qnap-mcu.c
-@@ -56,6 +56,7 @@ struct qnap_mcu_reply {
-  * @reply:	Reply data structure
-  * @variant:	Device variant specific information
-  * @version:	MCU firmware version
-+ * @rx:		Receive buffer the reply is assembled in
-  */
- struct qnap_mcu {
- 	struct serdev_device *serdev;
-@@ -63,6 +64,7 @@ struct qnap_mcu {
- 	struct qnap_mcu_reply reply;
- 	const struct qnap_mcu_variant *variant;
- 	u8 version[QNAP_MCU_VERSION_LEN];
-+	u8 rx[QNAP_MCU_RX_BUFFER_SIZE];
- };
+--- a/sound/pci/pcxhr/pcxhr.c
++++ b/sound/pci/pcxhr/pcxhr.c
+@@ -1535,6 +1535,13 @@ static int pcxhr_probe(struct pci_dev *p
+ 	mgr->pci = pci;
+ 	mgr->irq = -1;
  
- /*
-@@ -214,19 +216,18 @@ int qnap_mcu_exec(struct qnap_mcu *mcu,
- 		  const u8 *cmd_data, size_t cmd_data_size,
- 		  u8 *reply_data, size_t reply_data_size)
- {
--	unsigned char rx[QNAP_MCU_RX_BUFFER_SIZE];
- 	size_t length = reply_data_size + QNAP_MCU_CHECKSUM_SIZE;
- 	struct qnap_mcu_reply *reply = &mcu->reply;
- 	int ret = 0;
++	/* ISR lock  */
++	mutex_init(&mgr->lock);
++	mutex_init(&mgr->msg_lock);
++
++	/* init setup mutex*/
++	mutex_init(&mgr->setup_mutex);
++
+ 	if (request_threaded_irq(pci->irq, pcxhr_interrupt,
+ 				 pcxhr_threaded_irq, IRQF_SHARED,
+ 				 KBUILD_MODNAME, mgr)) {
+@@ -1548,13 +1555,6 @@ static int pcxhr_probe(struct pci_dev *p
+ 		 "Digigram at 0x%lx & 0x%lx, 0x%lx irq %i",
+ 		 mgr->port[0], mgr->port[1], mgr->port[2], mgr->irq);
  
--	if (length > sizeof(rx)) {
-+	if (length > sizeof(mcu->rx)) {
- 		dev_err(&mcu->serdev->dev, "expected data too big for receive buffer");
- 		return -EINVAL;
- 	}
- 
- 	guard(mutex)(&mcu->bus_lock);
- 
--	reply->data = rx;
-+	reply->data = mcu->rx;
- 	reply->length = length;
- 	reply->received = 0;
- 	reinit_completion(&reply->done);
-@@ -242,15 +243,15 @@ int qnap_mcu_exec(struct qnap_mcu *mcu,
- 		return -ETIMEDOUT;
- 	}
- 
--	if (!qnap_mcu_verify_checksum(rx, reply->received)) {
-+	if (!qnap_mcu_verify_checksum(mcu->rx, reply->received)) {
- 		dev_err(&mcu->serdev->dev, "Invalid Checksum received from controller\n");
- 		return -EPROTO;
- 	}
- 
--	if (qnap_mcu_reply_is_any_error(mcu, rx, reply->received))
-+	if (qnap_mcu_reply_is_any_error(mcu, mcu->rx, reply->received))
- 		return -EPROTO;
- 
--	memcpy(reply_data, rx, reply_data_size);
-+	memcpy(reply_data, mcu->rx, reply_data_size);
- 
- 	return 0;
- }
+-	/* ISR lock  */
+-	mutex_init(&mgr->lock);
+-	mutex_init(&mgr->msg_lock);
+-
+-	/* init setup mutex*/
+-	mutex_init(&mgr->setup_mutex);
+-
+ 	mgr->prmh = kmalloc(sizeof(*mgr->prmh) +
+ 			    sizeof(u32) * (PCXHR_SIZE_MAX_LONG_STATUS -
+ 					   PCXHR_SIZE_MAX_STATUS),
 
 
