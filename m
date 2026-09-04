@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2003ECBCF;
-	Fri,  4 Sep 2026 06:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9EC3ECBCF;
+	Fri,  4 Sep 2026 06:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502292; cv=none; b=oKIpJbvzNJhPtI1AbjCW0VjAY3hLF6Y1tgD34j4Ytv4nPIYFCVR+HYjjqzBocq7eysdpZ60GP0j+jQ/WnwABnrZ+6N66HzH4vSsn+vPOT2ffWNAh96J76kY8npezdftWh+Rsd8/CQzJy6Gtnu0vZKZue0/y67ROf5tWapg3paOY=
+	t=1788502295; cv=none; b=luoNl0FP1vmddOUv9r53R+0aZ1GyhuBuSgOmrfkiGmy2tfjDSVGHLzsKdFxVUa4Fk+FYbpQQ5u+CIbJoRRTPAFHQ210VQgL6LSTLSMf8+/M2/U9NA813E6OmidbmU7KOJFE0w5nT6lXq03H5Xek7NO38xhNUnHiaxMRVmMtV+bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502292; c=relaxed/simple;
-	bh=/e7d4H2K5TfL+jyO+w0eMQe4O+Nw8t38JXvodyHMmvg=;
+	s=arc-20240116; t=1788502295; c=relaxed/simple;
+	bh=RIaBYXdo75B8uqMuGDw8i7OgNVgC8ykZRoNBe6CJ7/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blTO741S95FtymYiW37P6atFkTFTWjvd11+YM1Le8ZGtWBKJzuLeYmtYYzrKTvwx0A3KbapkGEejqVzc0MHpmLigfi0T+vm7edalZSaLZqke3mdLNnkWzjg+aXK+mbdj210VuclmL1Hl4DNN5fEyIszRWboAoyGrsFoKbxZ1ZGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsYATFNv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E9KDC7ILIQ1RQca+WCTlhIpFfxya4DQ0mqCqQdnMXJFvrzmiVOhSNRWwsGk6d+qVEAw4KERSMCLiMW6K90UiOQMKwjgqUCdBfzg6hNl8jIl//cdaK8KSaQVQzNkNqFhPJ6Kingn5x+UENKhoM1bMHrs8cj2A+lmEeqbGgEG2j7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJxgh6gz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsYATFNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B1E1F00A3D;
-	Fri,  4 Sep 2026 06:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJxgh6gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669E41F00A3D;
+	Fri,  4 Sep 2026 06:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502291;
-	bh=fFrazGJ6YOFrMHwyJhhuVfiOXPssJYvHB5OH0GKo/8M=;
+	s=korg; t=1788502293;
+	bh=4Dg9XYLc7gAgdqzdF+d1f/3ytE9wg1xfOUdPoM6b8aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MsYATFNvfgqiIoSfJibXRxGOXqre03tYSt6MJs6CaukVQXip0eP3dyxwDDpMPuUw8
-	 oXpT9rqxFxl5Gn/0jEuJHC8fyQA00Fi58bXh5MahoPgBQhmdhTk3HXK2HYJy128KIZ
-	 3bIXBWFNxw43U68x4EAF3ooa4hTWiY85dlCr5kJc=
+	b=oJxgh6gzpb5VGQVd4DptMyGXKYPtjxvRshYHtpwT5+TZ9OFbAp2bK+GiMWxOgSHyo
+	 E+Q3PEG+SxCutNTEhjUI0EsMLTUW5/Zj29s6rQj4kP48TGUcIrfWG0DibzXcvKe+4E
+	 2Q6bLY/RXzOGLfHFZIaig+wQqdBr2pV2nDZlI8ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>
-Subject: [PATCH 6.12 156/403] alpha: marvel: Fix lock ordering in init_io7_irqs()
-Date: Fri,  4 Sep 2026 06:59:19 +0200
-Message-ID: <20260904045738.400387702@linuxfoundation.org>
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Russell King <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 6.12 157/403] ARM: 9477/1: Disable broken eBPF JIT on the Risc PC
+Date: Fri,  4 Sep 2026 06:59:20 +0200
+Message-ID: <20260904045738.422592872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,84 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-commit 24d68db713d63dfe3660c56b50e887784844baea upstream.
+commit 7e8ee82e69fde9d589272ec5e6f702358903be1f upstream.
 
-Move irq_set_chip_and_handler() and irq_set_status_flags() calls
-outside the io7->irq_lock raw spinlock.  These functions take
-sparse_irq_lock, which is a mutex, and taking a sleeping lock while
-holding a raw spinlock is invalid.  The raw spinlock only needs to
-protect the hardware CSR accesses.
+The eBPF JIT unconditionally generates ldrh/strh instructions, which do
+not function correctly on the Risc PC because its bus is unable to
+signal half-word accesses. Work around this issue by disabling the eBPF
+JIT when building for ARMv3 (the Risc PC is the only currently
+supported machine whose kernel is built for ARMv3).
 
-This fixes the following lockdep splat during boot:
+Comments from Ethan Nelson-Moore:
 
-  [ BUG: Invalid wait context ]
-  swapper/0/0 is trying to lock:
-  sparse_irq_lock{....}-{4:4}, at: irq_mark_irq
-  other info that might help us debug this:
-  context-{5:5}
-  1 lock held by swapper/0/0:
-   #0: &io7->irq_lock{....}-{2:2}, at: init_io7_irqs.constprop.0
+ From LKML: https://lore.kernel.org/all/CAD++jL=0qYGoygUwGEXQL7C_ROnC7kfpRv8RA+H5tNWwYu+pQA@mail.gmail.com/
 
+ The commit message has been updated slightly relative to the version on LKML to clarify that the Risc PC is not actually ARMv3.
+
+Fixes: 39c13c204bb1 ("arm: eBPF JIT compiler")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260528230516.1839694-2-mattst88@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/sys_marvel.c |   25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ arch/arm/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/alpha/kernel/sys_marvel.c
-+++ b/arch/alpha/kernel/sys_marvel.c
-@@ -263,6 +263,18 @@ init_io7_irqs(struct io7 *io7,
- 	 */
- 	printk("  Interrupts reported to CPU at PE %u\n", boot_cpuid);
- 
-+	/* Set up the lsi irqs.  */
-+	for (i = 0; i < 128; ++i) {
-+		irq_set_chip_and_handler(base + i, lsi_ops, handle_level_irq);
-+		irq_set_status_flags(base + i, IRQ_LEVEL);
-+	}
-+
-+	/* Set up the msi irqs.  */
-+	for (i = 128; i < (128 + 512); ++i) {
-+		irq_set_chip_and_handler(base + i, msi_ops, handle_level_irq);
-+		irq_set_status_flags(base + i, IRQ_LEVEL);
-+	}
-+
- 	raw_spin_lock(&io7->irq_lock);
- 
- 	/* set up the error irqs */
-@@ -272,12 +284,6 @@ init_io7_irqs(struct io7 *io7,
- 	io7_redirect_irq(io7, &io7->csrs->STV_CTL.csr, boot_cpuid);
- 	io7_redirect_irq(io7, &io7->csrs->HEI_CTL.csr, boot_cpuid);
- 
--	/* Set up the lsi irqs.  */
--	for (i = 0; i < 128; ++i) {
--		irq_set_chip_and_handler(base + i, lsi_ops, handle_level_irq);
--		irq_set_status_flags(base + i, IRQ_LEVEL);
--	}
--
- 	/* Disable the implemented irqs in hardware.  */
- 	for (i = 0; i < 0x60; ++i) 
- 		init_one_io7_lsi(io7, i, boot_cpuid);
-@@ -285,13 +291,6 @@ init_io7_irqs(struct io7 *io7,
- 	init_one_io7_lsi(io7, 0x74, boot_cpuid);
- 	init_one_io7_lsi(io7, 0x75, boot_cpuid);
- 
--
--	/* Set up the msi irqs.  */
--	for (i = 128; i < (128 + 512); ++i) {
--		irq_set_chip_and_handler(base + i, msi_ops, handle_level_irq);
--		irq_set_status_flags(base + i, IRQ_LEVEL);
--	}
--
- 	for (i = 0; i < 16; ++i)
- 		init_one_io7_msi(io7, i, boot_cpuid);
- 
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -93,7 +93,7 @@ config ARM
+ 	select HAVE_ARCH_TRACEHOOK
+ 	select HAVE_ARCH_TRANSPARENT_HUGEPAGE if ARM_LPAE
+ 	select HAVE_ARM_SMCCC if CPU_V7
+-	select HAVE_EBPF_JIT if !CPU_ENDIAN_BE32
++	select HAVE_EBPF_JIT if !CPU_ENDIAN_BE32 && !CPU_32v3
+ 	select HAVE_CONTEXT_TRACKING_USER
+ 	select HAVE_C_RECORDMCOUNT
+ 	select HAVE_BUILDTIME_MCOUNT_SORT
 
 
