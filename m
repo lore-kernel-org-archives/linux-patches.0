@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0EB3B19BC;
-	Fri,  4 Sep 2026 05:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A4F414DF6;
+	Fri,  4 Sep 2026 05:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500000; cv=none; b=SaPgihHbxsgDvThMifbfHezDZVoKHNW33D3iY7CGgw6JqgBQdu03/ySQV8lkIrVL8Zc6WcZcxdh3WcR5hvlOOzPyOgOfLh5mI6TxmnWaUINzqBi4wiG+0HnWL/uOV74Mce8U5JOZCMdx6X5uMmpD0ynEZzDekmGnoUc8CYSXKek=
+	t=1788500002; cv=none; b=bJdrYmd4d+KXbOn4d9OS2uFUsdUMT2PYFWTNRARjWG+E0r7Fb211x63lw+bmVpHAnuQP0zks8vNRgBupUAvkiWnDz6SYuTQVO3BSr1Rjr9iI95T3kEXUqSo++3Wo9S45kWq3sPtqJ6R85TEtLc1IUMDaG3VNnr+Y/NvY+wTK+sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500000; c=relaxed/simple;
-	bh=/FmvxkYNJGQlI3bNFqJQHgGakdqGtlNt95djNFf9lcA=;
+	s=arc-20240116; t=1788500002; c=relaxed/simple;
+	bh=nMI2hWVyamkHxGOSBsqNmeUT4ezNYDDL0eO/90HUC8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWVnvPnGGvu3PcSiXM+LPAWXkVcT4wautbCXfgH+k9fzvv8guOX02VDs/mCzv4XTg2b1EaW/iN9tcSmHGg0MCjQ7je5XVM9X3mgP5s598L7TB4Tk9d88v3k2CmoZ1C6kG2TQBwf8i3kmd0BLZLoIqfL513VS+z7xFLMF4YRWcTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYQqGLrf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PC7EgctaTpOcuU9Wysgl01yvZYYuR2AT8iVsFaQ8ibQdzOSR5+ag3bPAFhNHVPUCN5ve9jzaFOFdwyLRoZjIygoMew3W0gf5x5oJP5zqC9ZEPDwIBxksaekXAZ12Alv+Ey7QaRv+Nq+dU11qFPgiRhu2DauRkVNwiL4YNsTLTeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkKsaUbb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYQqGLrf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411A61F00A3D;
-	Fri,  4 Sep 2026 05:33:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkKsaUbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110C21F00A3D;
+	Fri,  4 Sep 2026 05:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499998;
-	bh=iTOTF+GvHpyUKhZchuThICHYETWV5KVFGqfxEUjKzk8=;
+	s=korg; t=1788500001;
+	bh=+1HnHPOrVUAshOahmvQHf5xU7sUH3LYvEeotI6a3oZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QYQqGLrffjTqnSCqmK5/Cw5Qu5ofG9wTzaIGQaJ3eK0egdUDxEkR8PFgMinATd11z
-	 5vrKcGYMGEQYLSwBWOOzKq/hsJLHT0hWVAPem9gdhcDC/ruzVLnSXmzywk31ZLmiJj
-	 Ou7AX5W2nu6TD0JWe5VapnmvBlkN6NYkKJrDljz8=
+	b=kkKsaUbbWFCJc+7qVAEsTfqXVIbXXnHJLBfV+89pZlpAa3HvD2qz0K+Gz95CEWKq2
+	 l4WcUiELvtPoTJMYRrJeVbvgrfUT7ii9B5liEvmPdcLqy8+E4D2lueb5+78LcCCGok
+	 OcfArsQ0WRjVBoMAbmbS0FAyCSn7jY81yFzA4ES0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 615/713] net: ntb_netdev: Fix TX busy and drop handling
-Date: Fri,  4 Sep 2026 06:59:43 +0200
-Message-ID: <20260904045817.613713070@linuxfoundation.org>
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 7.2 589/713] interconnect: Fix use after free in icc_get() and of_icc_get_by_index()
+Date: Fri,  4 Sep 2026 06:59:17 +0200
+Message-ID: <20260904045817.021686367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,89 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit 8aaa47351db0f93a5c5297fbafdfa8bc75e8ae49 upstream.
+commit 25c7e242aca084fdc1098248194032317dca625d upstream.
 
-Currently, ntb_netdev returns NETDEV_TX_BUSY for every enqueue error. It
-also increments the drop and error counters while leaving the skb owned
-by the qdisc, and may return BUSY with the subqueue still awake.
-Retrying a permanent error cannot succeed either.
+In of_icc_get_by_index() and icc_get(), if the dynamic allocation for
+path->name fails via kasprintf(), the error handling path directly
+calls kfree(path) to free the path object and returns an error.
 
-The unconditional BUSY return and premature accounting date back to the
-initial driver. The error-path queue stop was later removed without
-changing that return value. The current flow-control code includes a
-resource check, but ntb_netdev does not honor its result before enqueue.
+However, prior to this point, path_find() calls path_init(), which
+already links the path's requests into the req_list of the respective
+interconnect nodes via hlist_add_head(). Directly invoking kfree(path)
+leaves dangling pointers in the hlist. A subsequent call to icc_get()
+or icc_set_bw() will traverse or modify these corrupted lists, triggering
+a slab use afterfree.
 
-Honor the resource check before enqueue. For -EAGAIN and -EBUSY, stop
-the subqueue, arm the existing reaper timer, and return BUSY without
-touching the skb. For other errors, free the skb, increment tx_dropped,
-and return NETDEV_TX_OK.
+KASAN report showing the vulnerability when reproducing via debugfs:
 
-Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
-Fixes: d723485cb4ca ("ntb_netdev: remove tx timeout")
-Fixes: e74bfeedad08 ("NTB: Add flow control to the ntb_netdev")
+  BUG: KASAN: slab-use-after-free in path_find+0x6f8/0xcfc
+  Write of size 8 at addr fff000000d43f748 by task sh/1
+  ...
+  Call trace:
+   kasan_report+0xac/0xfc
+   path_find+0x6f8/0xcfc
+   icc_get+0x148/0x380
+   icc_get_set+0xf8/0x2d0
+  ...
+  Freed by task 1:
+   kfree+0x1a0/0x4a4
+   icc_get+0x2cc/0x380
+   icc_get_set+0xf8/0x2d0
+
+Fix this by replacing kfree(path) with the proper teardown function,
+icc_put(path), which safely removes the requests from the req_list using
+hlist_del() and drops the provider usage references before freeing the
+memory.
+
+Additionally, in icc_get(), ensure that the icc_lock mutex is released
+prior to calling icc_put(path) to avoid a deadlock, as icc_put()
+internally acquires the same lock.
+
+Fixes: 3791163602f7 ("interconnect: Handle memory allocation errors")
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260817053519.4135287-3-den@valinux.co.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://patch.msgid.link/20260416190840.1753468-1-visitorckw@gmail.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ntb_netdev.c |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/interconnect/core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -199,8 +199,10 @@ static int __ntb_netdev_maybe_stop_tx(st
- static int ntb_netdev_maybe_stop_tx(struct net_device *ndev,
- 				    struct ntb_netdev_queue *q, int size)
- {
--	if (__netif_subqueue_stopped(ndev, q->qid) ||
--	    (ntb_transport_tx_free_entry(q->qp) >= size))
-+	if (__netif_subqueue_stopped(ndev, q->qid))
-+		return -EBUSY;
-+
-+	if (ntb_transport_tx_free_entry(q->qp) >= size)
- 		return 0;
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -548,7 +548,7 @@ struct icc_path *of_icc_get_by_index(str
+ 	path->name = kasprintf(GFP_KERNEL, "%s-%s",
+ 			       src_data->node->name, dst_data->node->name);
+ 	if (!path->name) {
+-		kfree(path);
++		icc_put(path);
+ 		path = ERR_PTR(-ENOMEM);
+ 	}
  
- 	return __ntb_netdev_maybe_stop_tx(ndev, q, size);
-@@ -256,21 +258,30 @@ static netdev_tx_t ntb_netdev_start_xmit
+@@ -646,8 +646,9 @@ struct icc_path *icc_get(struct device *
  
- 	q = &dev->queues[qid];
- 
--	ntb_netdev_maybe_stop_tx(ndev, q, tx_stop);
-+	if (unlikely(ntb_netdev_maybe_stop_tx(ndev, q, tx_stop)))
-+		return NETDEV_TX_BUSY;
- 
- 	rc = ntb_transport_tx_enqueue(q->qp, skb, skb->data, skb->len);
--	if (rc)
--		goto err;
-+	if (rc) {
-+		if (rc == -EAGAIN || rc == -EBUSY) {
-+			netif_stop_subqueue(ndev, q->qid);
-+			mod_timer(&q->tx_timer,
-+				  jiffies + usecs_to_jiffies(tx_time));
-+			return NETDEV_TX_BUSY;
-+		}
-+
-+		goto drop;
-+	}
- 
- 	/* check for next submit */
- 	ntb_netdev_maybe_stop_tx(ndev, q, tx_stop);
- 
- 	return NETDEV_TX_OK;
- 
--err:
-+drop:
-+	dev_kfree_skb_any(skb);
- 	ndev->stats.tx_dropped++;
--	ndev->stats.tx_errors++;
--	return NETDEV_TX_BUSY;
-+	return NETDEV_TX_OK;
- }
- 
- static void ntb_netdev_tx_timer(struct timer_list *t)
+ 	path->name = kasprintf(GFP_KERNEL, "%s-%s", src_node->name, dst_node->name);
+ 	if (!path->name) {
+-		kfree(path);
+-		path = ERR_PTR(-ENOMEM);
++		mutex_unlock(&icc_lock);
++		icc_put(path);
++		return ERR_PTR(-ENOMEM);
+ 	}
+ out:
+ 	mutex_unlock(&icc_lock);
 
 
