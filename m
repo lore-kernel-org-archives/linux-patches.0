@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A82351C04;
-	Fri,  4 Sep 2026 05:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD3E351C35;
+	Fri,  4 Sep 2026 05:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499786; cv=none; b=iUeLQoWPZBn6M/pSv+oluiz5H8DlX8ZzOIRXBsSgpGRzbhkR/0IyaPFj18yCenswdDa95zmqwLzw8SBGAhq7+a3hmcMjexYyyXBwIXZ7aaxMWStA8TWxvYp3oDfi0pX3ybX3n+kiHOyLb2Rkt5fxzdf81HjTbu66ND5cIN6zjMk=
+	t=1788499790; cv=none; b=bIZ0crAy/M5KGw6Vh3d9NERZ6wcgH97+0h+LPhfxrE02aTuT5sNgT8PwBgkL7GxoGZsQjwkYHudFaQ7udzNmFKBvuxLg93nP4yni3i42n1KqvxIJkM8rumvDeGxTCJ3ikQKq8J28We3+XbjU4T0zLywPOSphMxQT9lrB7mA2Bjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499786; c=relaxed/simple;
-	bh=yvM4UeEI/Sux7/msoXkF+ZEUGJl/5frj1ScBtgnj07Y=;
+	s=arc-20240116; t=1788499790; c=relaxed/simple;
+	bh=dGeAl19W67l1vZVSZYlsW9EkRn0cEdUhJwfInfKBppo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/7AO447fRCpmKVcF9h2I8YSpzy1ChkK840w65GdHIpCvqwHQ9wvbBElYSCFbY7j23eIvDMFmIo6eczRP2bhcfXDd/d6H/yNs+4WkebE5vDSiu8j7tkC6ZNS8VR59NBzUxJlimi2zYA9ZaMQnCFivlweXKv4ER7TqC2SisRGE+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPuJsE52; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mx18puDDzVcxLwPM6grbMax2XKKCKbsiwanpCNojnOm8fcUt+Lw8/iJEAHCpFCrNf7RWOhBEaEfJlliFVd6pEon8CT02WW0VYz7CWxrbGdvgYbQTi+JoidQF+uh/CxwFROpn7/7EVptnqlnq5fdOStQaZuAgxJT4qPwglnZxDXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpF7xKHE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPuJsE52"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C601F00A3D;
-	Fri,  4 Sep 2026 05:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpF7xKHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8654D1F00A3D;
+	Fri,  4 Sep 2026 05:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499785;
-	bh=3guxwFNL43mHqStK3cGZv3FYL1QsySbjMf1iuz1jXGY=;
+	s=korg; t=1788499788;
+	bh=opmhCaKW1TqOfcxWqYUWL6aNSeH5wfB1ZKJIsUaIHT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OPuJsE52ARpEAPwKunQPy38vDCO2ZdruNxy8ELqQYCdka3DqnLglMjptLjwkAg9/f
-	 ApFMm3E2nTgXNUM7uhyXwjQa6J1FhP995R9mHfT69z9Em8AukAlutJp96kSumbGboF
-	 ALzXjAl3uc2ZBXEs1QKrNsjKgJ859ryFeEscvpmI=
+	b=PpF7xKHEr9I9mG4aFV0VWPf49FzmxU4lb6iVH6/ZF7/iE4/cOVt/aJ2JMbOxcMQvN
+	 8J2WtTtdGh9W1klJ0RVlp5scUawwpARxxvLlkI8rVf0B4r30gHvJ0v/e2YfpDKTrXr
+	 y868N0e+IxfnauLewV25c6HCIlerMnoDev0t0YeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Weimin Xiong <xiongwm2026@163.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.2 538/713] iommu/msm: Unwind probe state on registration failure
-Date: Fri,  4 Sep 2026 06:58:26 +0200
-Message-ID: <20260904045815.881204874@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 7.2 498/713] power: supply: bq24257: fix use-after-free on remove
+Date: Fri,  4 Sep 2026 06:57:46 +0200
+Message-ID: <20260904045814.989163425@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,63 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weimin Xiong <xiongwm2026@163.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 535a200220ca2c83bc8bf54bd2cbe045d6ee70c4 upstream.
+commit 9d34c9d660c3d0931d2cc749c46c47cf31f96e48 upstream.
 
-msm_iommu_probe() adds its devm-managed IOMMU object to
-qcom_iommu_devices before adding the IOMMU sysfs device and registering
-it with the IOMMU core.
+The STAT-pin interrupt is devm-managed, so it stays armed until the devm
+cleanup that runs after remove() returns. remove() cancels
+bq->iilimit_setup_work while the threaded handler can still fire; that
+handler reschedules the work and dereferences bq, so the work runs
+against freed memory once devm frees bq.
 
-If iommu_device_sysfs_add() fails, probe returns with the object still on
-qcom_iommu_devices. The driver core then releases the devm allocation,
-leaving a dangling list entry that later list walks may dereference.
+Make the delayed work device-managed with devm_delayed_work_autocancel(),
+registered before the interrupt request. The devm cleanup then releases
+the interrupt first, so the handler can no longer reschedule the work,
+and cancels the work before bq is freed. The explicit
+cancel_delayed_work_sync() in remove() is no longer needed and is dropped.
 
-If iommu_device_register() fails, the same dangling list entry remains
-and the sysfs device is left registered as well.
+Found by static analysis.
 
-Unwind the sysfs device and global list entry in reverse setup order on
-the corresponding failure paths.
-
-Fixes: 42df43b36163 ("iommu/msm: Make use of iommu_device_register interface")
+Fixes: 2219a935963e ("power_supply: Add TI BQ24257 charger driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Weimin Xiong <xiongwm2026@163.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260731143554.334179-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260801051958.354528-1-fanwu01@zju.edu.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/msm_iommu.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/power/supply/bq24257_charger.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -784,19 +784,25 @@ static int msm_iommu_probe(struct platfo
- 				     "msm-smmu.%pa", &ioaddr);
- 	if (ret) {
- 		pr_err("Could not add msm-smmu at %pa to sysfs\n", &ioaddr);
--		return ret;
-+		goto err_remove_list;
+--- a/drivers/power/supply/bq24257_charger.c
++++ b/drivers/power/supply/bq24257_charger.c
+@@ -18,6 +18,7 @@
+ #include <linux/gpio/consumer.h>
+ #include <linux/interrupt.h>
+ #include <linux/delay.h>
++#include <linux/devm-helpers.h>
+ 
+ #include <linux/acpi.h>
+ #include <linux/of.h>
+@@ -1003,10 +1004,6 @@ static int bq24257_probe(struct i2c_clie
+ 	if (bq->info->chip == BQ24250)
+ 		bq->iilimit_autoset_enable = false;
+ 
+-	if (bq->iilimit_autoset_enable)
+-		INIT_DELAYED_WORK(&bq->iilimit_setup_work,
+-				  bq24257_iilimit_setup_work);
+-
+ 	/*
+ 	 * The BQ24250 doesn't have a dedicated Power Good (PG) pin so let's
+ 	 * not probe for it and instead use a SW-based approach to determine
+@@ -1047,6 +1044,14 @@ static int bq24257_probe(struct i2c_clie
+ 		return ret;
  	}
  
- 	ret = iommu_device_register(&iommu->iommu, &msm_iommu_ops, &pdev->dev);
- 	if (ret) {
- 		pr_err("Could not register msm-smmu at %pa\n", &ioaddr);
--		return ret;
-+		goto err_remove_sysfs;
- 	}
- 
- 	pr_info("device mapped at %p, irq %d with %d ctx banks\n",
- 		iommu->base, iommu->irq, iommu->ncb);
- 
- 	return ret;
++	if (bq->iilimit_autoset_enable) {
++		ret = devm_delayed_work_autocancel(dev,
++						   &bq->iilimit_setup_work,
++						   bq24257_iilimit_setup_work);
++		if (ret)
++			return ret;
++	}
 +
-+err_remove_sysfs:
-+	iommu_device_sysfs_remove(&iommu->iommu);
-+err_remove_list:
-+	list_del(&iommu->dev_node);
-+	return ret;
+ 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
+ 					bq24257_irq_handler_thread,
+ 					IRQF_TRIGGER_FALLING |
+@@ -1064,9 +1069,6 @@ static void bq24257_remove(struct i2c_cl
+ {
+ 	struct bq24257_device *bq = i2c_get_clientdata(client);
+ 
+-	if (bq->iilimit_autoset_enable)
+-		cancel_delayed_work_sync(&bq->iilimit_setup_work);
+-
+ 	bq24257_field_write(bq, F_RESET, 1); /* reset to defaults */
  }
  
- static const struct of_device_id msm_iommu_dt_match[] = {
 
 
