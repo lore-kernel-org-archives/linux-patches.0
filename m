@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95F724A05D;
-	Fri,  4 Sep 2026 05:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0988E3515D2;
+	Fri,  4 Sep 2026 05:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498552; cv=none; b=ayGY/8xYTjDcccvLbhzNFvsK48Fbx0jtPQv433q999HnpVAYZ8nZxRQ6D9dN/GPSUqdqbpisQJuwHvYg3zfD2/L7CR6Z7/4g0WLAhft6iMzUIbsE5ppNmiDzJ9RX3umfdukMXUqdc/7Gw00VLpOMsfpIeIPjjOrjxos8ZHPeLvo=
+	t=1788498555; cv=none; b=WTCrBqIrMJv4Z4lk+wJicckH3nl8IY2YmGuEQT+83eVbyHeM0cPe3ynutc+Jd3lcFFvWPN+2zKozUu/Zl8lZ3l+YFNEpqgpejxr/FrL50XWAWoL5omb9fFt+yoKIrRUcuSD3J1FzKktCPzQm3fBt65zis2R1xybJ6fzA7vAhF+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498552; c=relaxed/simple;
-	bh=zu7Yj0Hu3bpa8AqdrwZ9I6s1EtIRi6XTgCSum4LYXi8=;
+	s=arc-20240116; t=1788498555; c=relaxed/simple;
+	bh=fWxuUcH7u+y2lT5SIQ6kq/jwu+Q4A/ZS7dx3lyuNfws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=at4zGU8lYlQjizhuT9RF1mET4VCe7nwHhFkJEwgxIgH6ugdKp+Rzxh8HlxfXQULpwUxmtnBMqH+6/dYcC7pWaNty+GMt9bLFBIrY2EhMKRVVC/fNvyL9yYR/BDtppJqWRQrPLIybB8BTPQdqM3CfCZVOKYQhPRAkSLnxFT6rlXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFQHCWsA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=akSm/bqZb9xpEZ4FVlcSLxfqHYxIJsQXD+UhoV/Bu5FqVtNFwPTcBg5N6EmN7679yjGtrIZYdpiMog1EH/O02QvNL2GH2x0Q0EmiHsPpuTq6HXrdDhzrrmWfG31cvOZPhLIkWPhANxU97NnSGnhLIXIQOi8Pq6EhcWra7x5mGwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLkpPDIE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFQHCWsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFD41F00A3D;
-	Fri,  4 Sep 2026 05:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLkpPDIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F1D1F00A3D;
+	Fri,  4 Sep 2026 05:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498550;
-	bh=ROMkoUWmEj1bUozYib3eZ1xqTuR72+11jiXsqrw3IRo=;
+	s=korg; t=1788498553;
+	bh=HPB0QYackso/4VxxYguCNESzxMxiCFowTziuKIJHSqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vFQHCWsAle6I/MLwOmiYOWnDqUX2Kt+NnZxIheliR1jALs3aUt2BwCKjY6TKidzkA
-	 VDhv2qtBwRdSBODQhHvi5XmU//nUXzZH0ptxb/dYuB7HpLRhlWrAfou12o9imOXPRb
-	 S8tku1SOWl7ScdCsEV2tBSlHgNWVfIoSJu3roy8A=
+	b=yLkpPDIEdfDwriQQp/ipDKd3pPmBDpiAauLpxGfa2IxS5GmFCeWHSw9cm5uV/NiYQ
+	 0EqK5Goy2n2MSFP3bwnz/0jq+JyRn+slUONeoRzrEvEx5cs+sMuiII1d+8zTpygm5V
+	 TyFGQ2g4+S5iWW1IHsfFd5ddmZ+yX2i5BrT29mrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>
-Subject: [PATCH 7.2 103/713] usb: dwc2: gadget: Exit partial power down state when changing USB pull-up
-Date: Fri,  4 Sep 2026 06:51:11 +0200
-Message-ID: <20260904045806.144150736@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Subject: [PATCH 7.2 104/713] usb: dwc3: gadget: Fix use-after-free in dwc3_gadget_free_endpoints due to race condition
+Date: Fri,  4 Sep 2026 06:51:12 +0200
+Message-ID: <20260904045806.165863817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -49,66 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit bf1e90189a98ca4a824fd64b4f3c6043d13c98ea upstream.
+commit 9c855832790cd488d87de1885974f4c37cfe7358 upstream.
 
-When a USB host suspends a connected device, the DWC2 USB device controller
-enters a partial power down state where controller registers are not
-accessible. If the USB gadget is then disconnected or deactivated
-(e.g. when a gadget function is unbound from the controller), the `pullup`
-callback in struct usb_gadget_ops is invoked; if the controller is kept in
-partial power down, the register write in dwc2_hsotg_core_disconnect() does
-not take effect; as a result, the USB host keeps seeing the device as
-connected, even though the device is disabled.
+In dwc3_gadget_init_endpoint, &dep->nostream_work is bound with
+dwc3_nostream_work, and dwc3_gadget_endpoint_stream_event can queue
+this delayed work on system_percpu_wq when a DEPEVT_STREAM_NOSTREAM
+event is received.
 
-Properly exit partial power down state in the pullup callback, so that the
-USB host detects a device disconnection as intended.
+If we remove the gadget, dwc3_gadget_free_endpoints makes cleanup and
+the memory allocated for dep with kzalloc() is released by kfree(dep),
+while the delayed work mentioned above may still be pending or
+running. The sequence of operations that may lead to a UAF bug is as
+follows:
 
-Fixes: 97861781daff ("usb: dwc2: Allow entering hibernation from USB_SUSPEND interrupt")
+CPU0                                      CPU1
+
+                                          | dwc3_thread_interrupt
+                                          | dwc3_endpoint_interrupt
+                                          | dwc3_gadget_endpoint_stream_event
+                                          | queue_delayed_work(system_percpu_wq,
+                                          |                    &dep->nostream_work)
+dwc3_gadget_free_endpoints                |
+dwc3_free_trb_pool(dep)                   |
+list_del(&dep->endpoint.ep_list)          |
+dwc3_debugfs_remove_endpoint_dir(dep)     |
+kfree(dep)                                |
+// dep is freed                           |
+                                          | dwc3_nostream_work
+                                          | // use dep (use-after-free)
+
+Fix it by canceling the delayed work before kfree(dep) in
+dwc3_gadget_free_endpoints.
+
+Fixes: dcfe437492e2 ("usb: dwc3: gadget: Reinitiate stream for all host NoStream behavior")
+Assisted-by: Codex:deepseek-v4-flash
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Link: https://patch.msgid.link/20260728154420.2021519-1-flavra@baylibre.com
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/331d1d5133496d2b4184e05f8848adb06930a138.1785893865.git.xiaopei01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/gadget.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -4680,6 +4680,7 @@ static int dwc2_hsotg_pullup(struct usb_
- {
- 	struct dwc2_hsotg *hsotg = to_hsotg(gadget);
- 	unsigned long flags;
-+	int ret = 0;
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3497,6 +3497,7 @@ static void dwc3_gadget_free_endpoints(s
+ 		}
  
- 	dev_dbg(hsotg->dev, "%s: is_on: %d op_state: %d\n", __func__, is_on,
- 		hsotg->op_state);
-@@ -4691,6 +4692,13 @@ static int dwc2_hsotg_pullup(struct usb_
+ 		dwc3_debugfs_remove_endpoint_dir(dep);
++		cancel_delayed_work_sync(&dep->nostream_work);
+ 		kfree(dep);
  	}
- 
- 	spin_lock_irqsave(&hsotg->lock, flags);
-+	if (hsotg->in_ppd) {
-+		ret = dwc2_exit_partial_power_down(hsotg, 0, true);
-+		if (ret) {
-+			dev_err(hsotg->dev, "exit partial_power_down failed\n");
-+			goto exit;
-+		}
-+	}
- 	if (is_on) {
- 		hsotg->enabled = 1;
- 		dwc2_hsotg_core_init_disconnected(hsotg, false);
-@@ -4704,9 +4712,10 @@ static int dwc2_hsotg_pullup(struct usb_
- 	}
- 
- 	hsotg->gadget.speed = USB_SPEED_UNKNOWN;
-+exit:
- 	spin_unlock_irqrestore(&hsotg->lock, flags);
- 
--	return 0;
-+	return ret;
  }
- 
- static int dwc2_hsotg_vbus_session(struct usb_gadget *gadget, int is_active)
 
 
