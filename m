@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882FD1AA1F4;
-	Fri,  4 Sep 2026 05:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A9624A05D;
+	Fri,  4 Sep 2026 05:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498316; cv=none; b=mzmmx9hC+cmrTiqmK6zuBw1MmS3DLx4/2EQMSHoVzNxwcboPHqz6M+59wpbhEv984Ok1GX6x5p9TJdtgOdjsJsDGrm0Y09wJ7jOuBCSE9dCr3ufH6AZTjw43k+8YrJwMv6fw/kowzWWX/+9r0YLqnZ+FV8I5b/MQIXF9KnMehaY=
+	t=1788498319; cv=none; b=TGXRuBqtR5M7ZVqwrPjmydLune7iRFkO6y5c3WA3XPQl+DaV2gYP0bjC46BpSNglzXNMLaOG+JfscrFj9Y+pHg43Y5htbT7XfRxUzoQQ4/h9csCVke2SzdcLWwXoO5QhOiS3zDRFWKPAnuBxi0fLtmfPYltq6Ageim8PIG/NZU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498316; c=relaxed/simple;
-	bh=qRdegvdtaQE6qRjaYJ63mRWQOLxBrSxouISbatDYmMM=;
+	s=arc-20240116; t=1788498319; c=relaxed/simple;
+	bh=oHIeZp3PKlCp0OJ1iASUnEwVmpDVVaSGJUdAM4KKqCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ST84jNxdRw58J92tyO6vA2MVyC2RcwCimyH1h0yq1CSlyi6Ej9p3abyWJWlZyZVNHALZFW9cILIGAO3fhvCHTqz6WfQtHLCrrvsOnV2w81Y784RjN/FFYK41ixFw8y7EGdPz7q237Vx+4wt0i76EOdf89PE6t5M3pDbWPVf9Sk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vcq54bfu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r258Y3a8YSLWZuzWoQklvEgvuN0Vwg6YlkKvySyM5dtfEG8OM2ibFUYPtmklBj1H6H3YT4A+FIMrSKaHrUvkjXHQW8QeNqplGtv8eboPD1nI7jHM14bP7d1IG8Ii8RyR2sZAWIXVEeFYMdGOMSCVuGhWqb2OLqy4abia0q9JCrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sg3HUrt7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vcq54bfu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E141B1F00A3D;
-	Fri,  4 Sep 2026 05:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sg3HUrt7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEE21F00A3D;
+	Fri,  4 Sep 2026 05:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498315;
-	bh=/43WgJ0TUF+Uvi47jfM+zYIr/LcOMTLXOJyrrgE7GLI=;
+	s=korg; t=1788498318;
+	bh=PFtyjQfmENkyjDW1Q1nMiMInouDBG7FYcN83IrEO3/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vcq54bfu2GI27kFLuOsNTQdVknixwXwObJpsi3gvQjyjgRTk1FS6A8PkzCFIZacUg
-	 MDqNjXi+e8I1DtxkXT1DleKdaC73z4lKX8LYSvJCNaNGSUqW6WnWALIkumL3H5Apif
-	 MaTd2i/tnTMzubBDRJmmDrFjSZGnQZwybhWi4uiY=
+	b=Sg3HUrt7SLxrTxWRygtSM0trUwpttuoFT9nq3v9w3g2rAnN5JSg/kNg6wMCZfkght
+	 5/pEpv6qjkf4XQG5GmMYMw3eZR2+dLGgqr/1y4B+R9I9TIYtAmiYBP/vb7TGqiU05s
+	 FmfcZORh19QvyNx9nHm/il3tbfEEj0pqLeK2PEbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 002/713] ASoC: tegra210_i2s: sort the register default table
-Date: Fri,  4 Sep 2026 06:49:30 +0200
-Message-ID: <20260904045803.870566090@linuxfoundation.org>
+	Vivek Parikh <vivek.parikh@breachx.ai>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 020/713] ovl: fix double end_creating() on the casefold-mismatch path
+Date: Fri,  4 Sep 2026 06:49:48 +0200
+Message-ID: <20260904045804.278441515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,49 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Vivek Parikh <vivek.parikh@breachx.ai>
 
-[ Upstream commit 597273563d90d03fda852a29c3a76c41a22bf6ac ]
+commit 077ab8985ee278c3d8618182d335b0f0cd919e16 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+ovl_create_real() releases the new dentry twice when the casefold
+consistency check fails.  The S_IFDIR branch calls end_creating() and
+sets err, then falls through to the common out: label which calls
+end_creating() on the same dentry again:
 
-TEGRA210_I2S_ENABLE (0x80) is listed after TEGRA210_I2S_CG (0x88) and
-TEGRA210_I2S_TIMING (0xa4), so both it and TEGRA210_I2S_TIMING are
-unreachable.  regcache_reg_needs_sync() then cannot compare them against
-their default and reports that a sync is needed, so they are written to
-the device on every regcache_sync() even when they were never touched.
+	case S_IFDIR:
+		newdentry = ovl_do_mkdir(ofs, dir, newdentry, attr->mode);
+		err = PTR_ERR_OR_ZERO(newdentry);
+		if (!err && ofs->casefold != ovl_dentry_casefolded(newdentry)) {
+			pr_warn_ratelimited(...);
+			end_creating(newdentry);	/* first */
+			err = -EINVAL;
+		}
+		break;
+	...
+	if (err)
+		goto out;
+	...
+ out:
+	if (err) {
+		end_creating(newdentry);	/* second, same dentry */
+		return ERR_PTR(err);
+	}
 
-Sort the table by register address.
+end_creating() is end_dirop(), which does inode_unlock() on the parent
+and dput() on the dentry, so the parent directory's i_rwsem is unlocked
+twice and the dentry is put twice.  The second unlock releases a lock
+that is not held, which is what wedges every later creation under that
+parent, and the second dput() drops a reference that was never taken.
 
-Fixes: c0bfa98349d1 ("ASoC: tegra: Add Tegra210 based I2S driver")
+The branch was added by commit dfc7da402ccc ("ovl: Check for casefold
+consistency when creating new dentries") as a bare dput(), which already
+released the reference twice; commit fe497f0759e0 ("VFS: change
+vfs_mkdir() to unlock on failure.") converted both sites to
+end_creating(), adding the double unlock.
+
+This is reachable by an unprivileged user.  The casefold consistency of
+the layers is validated at mount time in ovl_parse_layer(), and again on
+every lookup in ovl_lookup_single(), but ofs->workdir is the internal
+"work" subdirectory created inside the user-supplied workdir, and that
+subdirectory is not re-checked.  Marking it casefolded after the mount
+therefore makes every ovl_create_temp() inherit the wrong state - and
+that path reaches ovl_create_real() through ovl_start_creating_temp(),
+which uses start_creating() with a generated name and so never runs the
+lookup-time check.
+
+  unshare -Urm
+  mount -t tmpfs -o casefold=utf8-12.1.0 tmpfs mnt
+  mkdir -p mnt/lower/d mnt/upper mnt/work mnt/merged
+  mount -t overlay ovl -o lowerdir=mnt/lower,\
+        upperdir=mnt/upper,workdir=mnt/work mnt/merged
+  chattr +F mnt/work/work
+  mkdir mnt/merged/d/sub		# directory copy-up
+
+  overlayfs: wrong inherited casefold (work/#5)
+
+and the next copy-up blocks forever on the parent's i_rwsem:
+
+  mkdir           D  start_creating+0x65/0xb0
+                     ovl_start_creating_temp+0xb0/0xe0 [overlay]
+                     ovl_create_temp+0xa3/0x1d0 [overlay]
+                     ovl_copy_up_one+0x1f1c/0x21c0 [overlay]
+                     ovl_copy_up_flags+0xf5/0x140 [overlay]
+                     ovl_create_object+0xb7/0x220 [overlay]
+                     ovl_mkdir+0x23/0x40 [overlay]
+
+Drop the end_creating() from the branch and let out: own the cleanup,
+which is what every other error path in this function already does.
+
+Fixes: dfc7da402ccc ("ovl: Check for casefold consistency when creating new dentries")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805122748.13090-2-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Vivek Parikh <vivek.parikh@breachx.ai>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/tegra/tegra210_i2s.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/overlayfs/dir.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/tegra/tegra210_i2s.c b/sound/soc/tegra/tegra210_i2s.c
-index ff8c72fc38c5c..fd49d2d6ee498 100644
---- a/sound/soc/tegra/tegra210_i2s.c
-+++ b/sound/soc/tegra/tegra210_i2s.c
-@@ -23,9 +23,9 @@ static const struct reg_default tegra210_i2s_reg_defaults[] = {
- 	{ TEGRA210_I2S_RX_CIF_CTRL, 0x00007700 },
- 	{ TEGRA210_I2S_TX_INT_MASK, 0x00000003 },
- 	{ TEGRA210_I2S_TX_CIF_CTRL, 0x00007700 },
-+	{ TEGRA210_I2S_ENABLE, 0x1 },
- 	{ TEGRA210_I2S_CG, 0x1 },
- 	{ TEGRA210_I2S_TIMING, 0x0000001f },
--	{ TEGRA210_I2S_ENABLE, 0x1 },
- 	/*
- 	 * Below update does not have any effect on Tegra186 and Tegra194.
- 	 * On Tegra210, I2S4 has "i2s4a" and "i2s4b" pins and below update
--- 
-2.53.0
-
+--- a/fs/overlayfs/dir.c
++++ b/fs/overlayfs/dir.c
+@@ -188,7 +188,6 @@ struct dentry *ovl_create_real(struct ov
+ 			if (!err && ofs->casefold != ovl_dentry_casefolded(newdentry)) {
+ 				pr_warn_ratelimited("wrong inherited casefold (%pd2)\n",
+ 						    newdentry);
+-				end_creating(newdentry);
+ 				err = -EINVAL;
+ 			}
+ 			break;
 
 
