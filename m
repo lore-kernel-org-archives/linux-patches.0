@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C587080D;
-	Fri,  4 Sep 2026 05:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446FA3AFB1C;
+	Fri,  4 Sep 2026 05:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498966; cv=none; b=G24+jD7GIuEzyUxVOS1BeXmDyZ8/Pt6tosUFiC0zgX2ijUmSIh54kw3hghn76uuOhrNp9Y5E0xNlB2PJ8Ek7TYuBJdVTk8uGg1VDBP55VXGJesd6fnBc8sVvShtI1768G1ih7YgMJ06okAItt+K42tcOsQym34iq3onS+zcWa7k=
+	t=1788498969; cv=none; b=ppSnuLtXTzgeNsZjadl+ACOR3/MzpQMUJwJIJJ+49PC3HeOfl6/wNTUV0/PLWoNvRvmVbuZMIQu75A9UfNyxLYo9fpy09E8Z52Q/LpdffzwXTaj8LnBH+Lp0eH5d9PMIzzcUeU4fgiHPGiqKy1JT5CTsCJczwY0QwCF+7qYx88c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498966; c=relaxed/simple;
-	bh=STuI/g7oVOQEQdOzP/nmoUrveM3WCrP9h0pByKBIrlY=;
+	s=arc-20240116; t=1788498969; c=relaxed/simple;
+	bh=gOeRfJoPppZrrFWccOny4wZAkhAeqKF7zAyZsrrEOu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpyYtu3DoSNFADHu+E8VXuFKrqFk2ht/niz8rt/YF0U64IUcJQCa3JErEvsq/jRaCCiZsVZ0aj26b5gFldawbcKv4rpKjKFQMwVwsvKeUlE5TntEDij4PQNNkomlgSti1v88EjZ8gJt71dgsaV2doR5yRfu73pvsxhYdaVbXMMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUDTjLMI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V8zOidGaMf4u23WxNseF5M+62RhRkwqQ5s5romjttw1g4sYyLYQKU2d3fCFJZAiB1YwDOEWrEf6E2dE6nqFDnU1VEbbiefLGbS4gEcXSfOeMzClw+F/yBqbXTyDjHIRKRyKLfwHUQAFmsx/b91dfAfzJ7OnPeVm6rtOjOMsHJDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8bxLnWv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUDTjLMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607461F00A3E;
-	Fri,  4 Sep 2026 05:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8bxLnWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6A51F00A3D;
+	Fri,  4 Sep 2026 05:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498964;
-	bh=T1LE1TD66En1eUvS4k88ihFfNtenuWbx5ad14Kw0hmg=;
+	s=korg; t=1788498967;
+	bh=9uHsAHnOU01pCSllXP+QRfz48ffTcxNMDCkpu72QzzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bUDTjLMIijSgtaSaFE1kwOau5Ze8nbM1jwFqaUg1Bc0BrkBMlgbSEOoLDflwvs7SI
-	 y1ta+OwwZJR0i5Of51mtdkj2FmCnmS0MqcRhf6tKms4Av+QnIZBazGuKDe7TcFi7x+
-	 WtOnNxd9cdK1EAeJfclcKaEgWYJUwlWSbUgpDXRA=
+	b=k8bxLnWvUbpf2NNlgRh1Q2WGbWjcyIDM6zmIjysx/ACC5oKKvLJOvutTdyoCpEI/Y
+	 oFRs2D/IcRbXLRD0WqN1lFrqMxo11vq7CLtMlUBshtiDv8lSZohtOwlawCHH1masMd
+	 4QvUtNAHekfZ9EoWLI4MFRL0XlCQmgI7ws7peWcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 249/713] HID: roccat: free buffered reports when destroying device
-Date: Fri,  4 Sep 2026 06:53:37 +0200
-Message-ID: <20260904045809.415765241@linuxfoundation.org>
+Subject: [PATCH 7.2 250/713] HID: sensor: custom: Fix field sysfs group cleanup on failure
+Date: Fri,  4 Sep 2026 06:53:38 +0200
+Message-ID: <20260904045809.438400216@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,65 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit bbff0ccbff360a5498075525005f6a913239a3d7 upstream.
+commit 3789d0802ddb4b3be04062caf4bfadd23496e9a7 upstream.
 
-roccat_report_event() duplicates each report with kmemdup() and stores
-the allocation in a circular-buffer slot. The allocation is released only
-when that slot is reused.
+hid_sensor_custom_add_attributes() creates one sysfs group for each
+custom sensor field. If sysfs_create_group() fails after some groups
+have already been created, the function returns the error without
+removing the previously created groups.
 
-The device destruction paths free struct roccat_device without releasing
-reports still stored in cbuf[]. This makes those allocations unreachable
-and leaks up to ROCCAT_CBUF_SIZE report buffers per device.
+Add a local unwind path to remove the groups that were already created.
+With enable_sensor exposed only after the field attributes are ready,
+this path can free sensor_inst->fields without leaving enable_sensor
+able to access pointers into that array.
 
-Add a small destructor that frees every buffered report before freeing the
-device, and use it in both paths that can destroy a registered device.
-
-Fixes: 206f5f2fcb5f ("HID: roccat: propagate special events of roccat hardware to userspace")
+Fixes: 4a7de0519df5 ("HID: sensor: Custom and Generic sensor support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-roccat.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/hid/hid-sensor-custom.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-roccat.c
-+++ b/drivers/hid/hid-roccat.c
-@@ -70,6 +70,15 @@ static struct roccat_device *devices[ROC
- /* protects modifications of devices array */
- static DEFINE_MUTEX(devices_lock);
+--- a/drivers/hid/hid-sensor-custom.c
++++ b/drivers/hid/hid-sensor-custom.c
+@@ -609,7 +609,7 @@ static int hid_sensor_custom_add_attribu
+ 					 &sensor_inst->fields[i].
+ 					 hid_custom_attribute_group);
+ 		if (ret)
+-			break;
++			goto err_remove_groups;
  
-+static void roccat_free_device(struct roccat_device *device)
-+{
-+	int i;
-+
-+	for (i = 0; i < ROCCAT_CBUF_SIZE; i++)
-+		kfree(device->cbuf[i].value);
-+	kfree(device);
-+}
-+
- static ssize_t roccat_read(struct file *file, char __user *buffer,
- 		size_t count, loff_t *ppos)
- {
-@@ -226,7 +235,7 @@ static int roccat_release(struct inode *
- 			hid_hw_power(device->hid, PM_HINT_NORMAL);
- 			hid_hw_close(device->hid);
- 		} else {
--			kfree(device);
-+			roccat_free_device(device);
- 		}
+ 		/* For power or report field store indexes */
+ 		if (sensor_inst->fields[i].attribute.attrib_id ==
+@@ -621,6 +621,13 @@ static int hid_sensor_custom_add_attribu
  	}
  
-@@ -374,7 +383,7 @@ void roccat_disconnect(int minor)
- 		hid_hw_close(device->hid);
- 		wake_up_interruptible(&device->wait);
- 	} else {
--		kfree(device);
-+		roccat_free_device(device);
- 	}
+ 	return ret;
++
++err_remove_groups:
++	while (--i >= 0)
++		sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
++				   &sensor_inst->fields[i].hid_custom_attribute_group);
++	kfree(sensor_inst->fields);
++	return ret;
  }
- EXPORT_SYMBOL_GPL(roccat_disconnect);
+ 
+ static void hid_sensor_custom_remove_attributes(struct hid_sensor_custom *
 
 
