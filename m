@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDDB18D636;
-	Fri,  4 Sep 2026 05:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D29A3E866B;
+	Fri,  4 Sep 2026 05:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501402; cv=none; b=uTLFW1uOVDFXCTca9GOsJWJxVEJ80BO7txmTwpUt5TkP4oedaGe6iPKz6MUc9zFQbayTLGQHtTdir2ldBEEJdd5ANDrb39mvjGlkTcTGV+iep08XIESrq0Cr9hD58dwtSmzAds0qQ152fhQWKjQ830AeBcfQRo2acNCudxkyUD0=
+	t=1788501405; cv=none; b=FB7MEcQKq0HWhZQ8qU16phRPk0RxSz5/Pu8L13zcsQAEodDCSm1QA8vAfiln+60OwNK706ViznF/dx+F9/YaHUc/xd/x8QbXL4Klxj6wxZu4ha5iMcgXfUBMCsNYRmE4RHdJOcqsANa8pEWy0ABsLOwyimyjUw4ba8sNLiGtKcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501402; c=relaxed/simple;
-	bh=hkscTYuskfAYtfOzMeHWZ6aBpX6yjwgUj9IM1HKW+y8=;
+	s=arc-20240116; t=1788501405; c=relaxed/simple;
+	bh=ocDAWXGG3h2Rc1EDJRxLlKoi+8/b2ziDJcy7RZ2l3IQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLgF7VC94/5XDPjLiPaDsLuzp3v9Tp+7QrcqKRCD0DIwfVL+EtedZuvqJhaeimwsDlwMGiL36KTjSpPGfvdM87yZLfnPS9E1EP8oAS9tBSeRbQ1yw5XVtP/OpSJ3dasRlY0vo5Rp1h6ux94w5t4zqjgHGJJ+4Tv56Ieh9e/X150=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4VLyqYC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pI/EGLxQ4+Oag4llL2SVnel4Z1yQuP2sMAtAK7/jHOH46dwJ/NAz/NOw5La3yw7W6WWI/GFaphMgwFhoxpjf5LriPZujYLD0Yb+wg+akhrBqFaiDwF8oScqAdHDkRXxyfGf/myLgGEb/1Ih5CyzjtqBihRUj+Kgka55IwPfuxVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nnsm10KN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4VLyqYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8A51F00A3D;
-	Fri,  4 Sep 2026 05:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nnsm10KN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3661F00A3D;
+	Fri,  4 Sep 2026 05:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501401;
-	bh=xQ3RZDokQEpACCbIFQ9ZbfKTz9I+Z0hp67jTrW13Elg=;
+	s=korg; t=1788501404;
+	bh=I0SGB0H5xsRKAzg4/yxhSravHfVZxaq/Y5xZQ0zzJr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z4VLyqYCyM9ZsQCK5GSnzrtKWQRGJEOXXUpq7MTnDVkp9Wej/GSylHeS7lmos3Paq
-	 HLhfqVI+14Kd3b0b64TOkg8385rO0h9a6ivmt0lNj0DbLc3IdK2hWpX3uYJu9uCpUY
-	 c+4DKC+O4gzae1LpcLckKDz050i1oTnUHOdbVl3Q=
+	b=Nnsm10KNGDRunkvuWKJerGyrM8oKJVtaby6Y7C65QN/FGp8MCcRX11uUXsyqlxJYi
+	 Q+/FAVWXEWjpgkDk/qEK4OF/j1WGMZevoNpFZT/RNy3M5FnRJLICR4s8IEQgUvvAJ0
+	 aHFiZ9mxWhmUqBz16BVtitrxnf2INjva4rXGTpS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.18 354/552] lockd: fix NULL dereference on lockowner allocation failure
-Date: Fri,  4 Sep 2026 06:58:31 +0200
-Message-ID: <20260904045758.268055631@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 355/552] nvme: nvme-fc: Fix nvme_fc_create_hw_io_queues() queue deletion in error path
+Date: Fri,  4 Sep 2026 06:58:32 +0200
+Message-ID: <20260904045758.289117956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,45 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Ewan D. Milne <emilne@redhat.com>
 
-commit 4c7fc129db061c7daab841c4f3c342d894832362 upstream.
+commit 22eb631bf86ee3246f47885e4fa94154a46863e4 upstream.
 
-nlmclnt_locks_init_private() installs NLM file lock operations even when
-nlmclnt_find_lockowner() fails to allocate a lockowner. nlmclnt_proc()
-then returns -ENOMEM, but the VFS still tears down the partially
-initialized file_lock and calls locks_release_private().
+nvme_fc_create_hw_io_queues() will call __nvme_fc_delete_hw_queue() for the
+last queue on which __nvme_fc_create_hw_queue() reported an error when deleting
+all the io queues if they cannot all be created.  This is incorrect since the
+last queue did not actually get created.
 
-That invokes nlmclnt_locks_release_private(), which dereferences
-fl->fl_u.nfs_fl.owner and crashes because the owner was never installed.
+The most recent change to this code was commit 17a1ec08ce70 ("nvme/fc: simplify
+error handling of nvme_fc_create_hw_io_queues") which moved the cleanup to the
+delete_queues: label and changed the loop bounds, however the code was not
+correct prior to this change in a different way.  The original commit
+e399441de911 ("nvme-fabrics: Add host support for FC transport") had a
+different error which called __nvme_fc_delete_hw_queue() on queue index 0 which
+is used for the admin queue.
 
-Clear fl_ops before attempting to initialize the NLM private state, and
-install the NLM lock operations only after a lockowner has been allocated
-successfully.
+Fix this by correcting the initial loop index when deleting the io queues.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 17a1ec08ce70 ("nvme/fc: simplify error handling of nvme_fc_create_hw_io_queues")
+Fixes: e399441de911 ("nvme-fabrics: Add host support for FC transport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Assisted-by: Claude:claude-opus-4-6
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/clntproc.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/host/fc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/lockd/clntproc.c
-+++ b/fs/lockd/clntproc.c
-@@ -487,9 +487,12 @@ static const struct file_lock_operations
- static void nlmclnt_locks_init_private(struct file_lock *fl, struct nlm_host *host)
- {
- 	fl->fl_u.nfs_fl.state = 0;
-+	fl->fl_ops = NULL;
- 	fl->fl_u.nfs_fl.owner = nlmclnt_find_lockowner(host,
- 						       fl->c.flc_owner);
- 	INIT_LIST_HEAD(&fl->fl_u.nfs_fl.list);
-+	if (!fl->fl_u.nfs_fl.owner)
-+		return;
- 	fl->fl_ops = &nlmclnt_lock_ops;
- }
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2316,7 +2316,7 @@ nvme_fc_create_hw_io_queues(struct nvme_
+ 	return 0;
  
+ delete_queues:
+-	for (; i > 0; i--)
++	for (--i; i > 0; i--)
+ 		__nvme_fc_delete_hw_queue(ctrl, &ctrl->queues[i], i);
+ 	return ret;
+ }
 
 
