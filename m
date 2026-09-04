@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCA83815E1;
-	Fri,  4 Sep 2026 05:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F60F414DF6;
+	Fri,  4 Sep 2026 05:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500059; cv=none; b=Ddiat/Ce8Q3xwLN9oenooSvxR1ixI4be7TObvW3oxvCYKYK86c11JTRD9ZEQcMFUWb88zl+fF+oqtkH8z5vPKZZkHxxPDbODnn7BafTE4yGnxnwHGmYI7jZd8VIk3NjPld5of01zMzBxO3BA22zvqj6gXWj/5IgyadMq2CvuoLQ=
+	t=1788500062; cv=none; b=Q1NMjbqWFUOkWJ+R65ymBawyRDDY+oTrzXo4a4lVgGflW1jQhDVdaRtMQxP7ozPGOjC+GAe1KP3DGq1YekTZfxJlkmXGg4GbJMQ7I2p7DA6muV2poUCJ4M7gfWmj4ZU/XJozQm9RqOgn18YqwU9mdfkbZkDs8WTYcyTDo8cc4Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500059; c=relaxed/simple;
-	bh=dUwBo5TJZK8x7RSPVHuseEcNB1xaoz+0e/dB7LE+uK0=;
+	s=arc-20240116; t=1788500062; c=relaxed/simple;
+	bh=l5tRz+irQBa8I2YBj5Xd3JvC/Tpas16ymd+MKN+aPFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNG1MJiFl8Z58qE1lTkOjVvm5XLqxzRs4VB+zi2W+N0bhC2SK0Iomvw5s4hyhSxd6Z6FAAOtvh5D1zSGrzsVXjpKrp7jg1gpFUCaXNmE7KkdJ5JyjF26wPJL+jAlhkDeAJd+2LskxtobphTY1IRfU4uhVT+lAjPtu21c7Ho+bk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpcvB0z3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aYOhVHFZKyz67o0lmnUxuoXVd7Zcit1yFitBunbUnhrDkVLJu3Zd6XYv1VZpWU5XwrLXkSfCQKfnKEkg6EofN04UCLnfVGp00BjaMP5VfhKRH7iS8eyZiNbKg4vDuguMdlYPaiKS8mE7OAUY9fiNM9lQpi6pwBdAH/YKRJn+ym8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCNtWBKh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpcvB0z3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E311F00A3D;
-	Fri,  4 Sep 2026 05:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCNtWBKh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998D51F00A3D;
+	Fri,  4 Sep 2026 05:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500058;
-	bh=m+IRfMEy1hU/SnuzLY4RZhEroyY8FG6jkvhQaiMXohE=;
+	s=korg; t=1788500061;
+	bh=Ji79QvJxxyNJ84Nkdg26Axx6XquOdCFJj/CDMykrJjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vpcvB0z3d/hQ0Fn8x/GU2WTLRVhAczcSw2WwY7Mclxv0b0Vh9zcxaxAwLlElGqqRb
-	 YKfzcavzufSvx6fVxVEOy7aXu0xbW8iCHAcIqcw98CCoWeBHvgU14VnKR3txvoV3sr
-	 vrnqlWVcpIOMsn93hhAAuTCDjBlzqrzuVC55skNg=
+	b=UCNtWBKh8v1xxmsGam1T1M1BamnR2ntFTC8ZqnQ8ZMicAq269kNm/4ZrYvjV727Va
+	 Z8vr2/SLubcnTXnc6jGF/rEIIfSMPheIjDszHNmrtiAqNoZ6AZx2kVYVy4bQGuWTWo
+	 RtIhoryDB/bDDGHYWERKhcxn26j0Z6KrXgcRrT3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 7.2 593/713] ipmi:msghandler: Cancel work cleanly on an error
-Date: Fri,  4 Sep 2026 06:59:21 +0200
-Message-ID: <20260904045817.116263905@linuxfoundation.org>
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>
+Subject: [PATCH 7.2 594/713] net/iucv: filter frames in afiucv_hs_rcv() by ingress device
+Date: Fri,  4 Sep 2026 06:59:22 +0200
+Message-ID: <20260904045817.139462756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,34 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-commit ae84a2536577057e97f23f75a202e26d0e86cf01 upstream.
+commit 80230a18c164a4b5bbc048fe2768b219ac17bc5a upstream.
 
-If an error occurs during startup of an IPMI interface, it may have
-scheduled work to run.  The work needs to be canceled before the
-interface can be freed.
+afiucv_hs_rcv() selects a socket from iucv_sk_list by matching four 8-byte
+name fields in the transport header alone. No check is made against the
+net_device the frame arrived on.
 
-Reported-by: Nilay Shroff <nilay@linux.ibm.com>
-Closes: https://sourceforge.net/p/openipmi/mailman/message/59375605/
-Fixes: 62cd145453d5 ("ipmi:msghandler: Handle error returns from the SMI sender")
-Cc: stable@vger.kernel.org # 7.0
-Tested-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+This can cause a frame arriving on any netdev to be delivered to an AF_IUCV
+socket. Three problems follow.
+
+First, a frame arriving over HiperSockets can be delivered to a socket
+bound to the classic z/VM IUCV transport, which has iucv->hs_dev == NULL.
+iucv_sock_bind() takes the classic path whenever the requested userid
+matches iucv_userid, even on a guest that also has a HiperSockets device
+carrying the same identifier. The child socket created by
+afiucv_hs_callback_syn() for such a match inherits hs_dev = NULL and
+transport = AF_IUCV_TRANS_HIPER, so the first send() on it returns -ENODEV.
+The socket delivered to accept() is unusable.
+
+Second, a frame arriving on one netdev can be delivered to a socket bound
+to a different IQD device. Which can lead to
+- Accept-queue exhaustion (DoS)
+- Attacker-controlled peer identity in the child socket
+- Data injection into existing sockets
+- Fabric noise on the IQD fabric, where bogus replies are sent
+- killing established connections
+
+Third, all AF_IUCV sockets live in init_net, as iucv_sock_alloc() calls
+sk_alloc(&init_net, ...). But even frames arriving on netdev devices in a
+namespace can be delivered to an IUCV socket. So a process in an
+unprivileged user and network namespace holding only the CAP_NET_RAW
+capability valid within that namespace can send a raw ETH_P_AF_IUCV frame
+on its own lo device and have it matched against init_net sockets.
+
+Fix all three by skipping any socket whose hs_dev does not match the
+ingress device. A classic z/VM IUCV socket has hs_dev == NULL; the ingress
+dev is never NULL, so classic sockets are skipped automatically. An unbound
+HIPER socket also has hs_dev == NULL and is skipped. A bound HIPER socket
+is only reachable from the exact IQD device it was bound to. Because hs_dev
+is always a device in init_net (iucv_sock_bind() scans
+for_each_netdev_rcu(&init_net, ...) exclusively), a frame whose ingress
+device belongs to another namespace never matches any socket.
+
+Note that AF_IUCV over HiperSockets provides no per-connection
+authentication: no sequence numbers, no TLS, no nonce. The four name fields
+identifying a connection are exchanged in plaintext on the shared
+HiperSockets segment (VCHID). Any host on the same HiperSockets segment
+could spoof any frame type against an existing connection. That is a
+protocol-level property unchanged by this patch. The fix reduces the attack
+surface to peers present on the same HiperSockets segment.
+
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Cc: stable@vger.kernel.org
+Co-developed-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260821125501.3718748-1-wintera@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/iucv/af_iucv.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3766,6 +3766,7 @@ int ipmi_add_smi(struct module         *
- 	list_del(&intf->link);
- 	mutex_unlock(&ipmi_interfaces_mutex);
- 	mutex_unlock(&smi_watchers_mutex);
-+	cancel_work_sync(&intf->smi_work);
- 	kref_put(&intf->refcount, intf_free);
- 
- 	return rv;
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -2079,6 +2079,8 @@ static int afiucv_hs_rcv(struct sk_buff
+ 	sk = NULL;
+ 	read_lock(&iucv_sk_list.lock);
+ 	sk_for_each(sk, &iucv_sk_list.head) {
++		if (iucv_sk(sk)->hs_dev != dev)
++			continue;
+ 		if (trans_hdr->flags == AF_IUCV_FLAG_SYN) {
+ 			if ((!memcmp(&iucv_sk(sk)->src_name,
+ 				     trans_hdr->destAppName, 8)) &&
 
 
