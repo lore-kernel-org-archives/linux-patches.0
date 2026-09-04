@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF712C11E7;
-	Fri,  4 Sep 2026 06:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB032C11E7;
+	Fri,  4 Sep 2026 06:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501887; cv=none; b=fSryj+fHy6FiBZ9uPs19BTYBLlvLTLrjrrNKfdliWZ48e5G08nhQO5NpD3cSQBjtCUHzc56ZDpYNny+uL5PHgM52hvk3BmnneuHBRwtUH6r77ufWbxIoN+N+Yld+7x69SA2sy8p2LsiopqkwKvpFHFineIBhHGcKERQbSZarQ6s=
+	t=1788501890; cv=none; b=rG2+ULgkt/Gmj4Z5M452USp32wD6efZxqDFsNCRzvuAw6oTIge6kmn8+z3UgfbiwbrVjN7AWoeIYw6phSjNS+h1CrSzx3cykMDKLjzcC4DrK1ifekl+rhMEjANRAxBv6CjOl8vue/wx8R5+tZrZvB8IkBuvQKlG9B5JyBfCGYZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501887; c=relaxed/simple;
-	bh=fjGq9bV3xAeMtBbxhYagJlsnA8PwmgAuR4lxfhkBngU=;
+	s=arc-20240116; t=1788501890; c=relaxed/simple;
+	bh=TMMjc7HPIgMo2yVOmPUKe/iDBXeMmorQJXuxj76u+P4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r5Bjn26mYnbwAk8cn8SkFikNlNbefKfCQHLzcAnuG0w1Oif+xZFoL5Yry7f/h22Ej81eIJR0iaTQhOjdi5Fc+nb+dUWPFJbjzIcrdC08FWNmezt7DKuqIlypNE80kSyk5zqAKMnEIo/tLKBDQffKGpTfZkUZ2Hndsw6ipZ7yoP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjxNhsAf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lfSMS03C7XCfCZDLldthz2MpZeBUzmK+lIwZyxrmuEPDb/G9NyzK26hKMBX7L1ost2mLPJM/kbk7R53KN30ow0TytE8Kas8+BqGXLa6zYsQVqd8vU+Yo1JCtm9Ty8N2oyliq5Ji0ei2ihfikIe2TWzkxeUFlBYzbUQvZjvsZHMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hM8gD4zS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjxNhsAf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64AB1F00A3D;
-	Fri,  4 Sep 2026 06:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hM8gD4zS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F481F00A3D;
+	Fri,  4 Sep 2026 06:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501886;
-	bh=Y2fFd8stFDnv2SgfnF6H1oLuA68CWUEbT+tnSiN4yO0=;
+	s=korg; t=1788501889;
+	bh=sTwwJE4rrlDa8gq0+pJQp3vCH1bIKM0SitqrgwR7U0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qjxNhsAfSxnemAWmV56k8+SBBzWUFdfhGXKxLd+umKvFRCxjenTRwc/52twt40oEr
-	 aN6CT9R8msMDX0fj/HNY8kcfl5YcKP+oE6DpNPZpUtkqnp/46q/5WgrpFZ/+EdnaXe
-	 O7yLNMGXfxJIUt/7yGsPqij5OA8Aa4wr+KIm4yYI=
+	b=hM8gD4zSUYxzJSpfvj/AzaiawBfPbRkdimVt5I8GVdBF+4c8jjgzMM2j+5Rj4PmPs
+	 h52D9uUON7hyDe3Uyau8RZrS294VQvScf1IsF6tcD/ZvdWdNGTaVty/ZhGfOQH/TZA
+	 E6gjWn+1Z0haw3KUb3s+nXYMz3Fp1nisTdLaG99s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.12 015/403] timers/itimer: Zero-init old itimerval before copy to userspace
-Date: Fri,  4 Sep 2026 06:56:58 +0200
-Message-ID: <20260904045735.160380976@linuxfoundation.org>
+	kernel test robot <yi1.lai@intel.com>,
+	Gary Guo <gary@garyguo.net>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 016/403] rust: cfi: disable function merging if CFI is enabled
+Date: Fri,  4 Sep 2026 06:56:59 +0200
+Message-ID: <20260904045735.183832226@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -44,46 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Gary Guo <gary@garyguo.net>
 
-commit 18c7d85864e554adc8fad1e8d2e9d2cb6c3911c8 upstream.
+commit 29b03d1de967a177176d12811d970cac7882afcf upstream.
 
-On native sparc64, struct __kernel_old_timeval contains a four-byte hole
-after tv_usec because tv_sec is 64-bit while __kernel_suseconds_t is 32-bit.
-put_itimerval() fills only the named fields in a stack-allocated
-__kernel_old_itimerval and copies the entire object to userspace, so
-getitimer() can expose the two padding holes.
+In Rust doc tests, there is a dummy `__module_firmware_test_init` function
+generated by the example in `module_firmware!`'s documentation, which
+just returns zero. Many other documentation examples generate functions
+that produce zero. LKP test robot reports [1] a `Flags::zeroed` instance;
+my local reproduction has a `Bounded::new::<0>`.
 
-Zero-initialize the aggregate before assigning the fields so implicit
-padding is deterministic before it crosses the user/kernel boundary.
+LLVM's MergeFunctionsPass incorrectly merges functions with different
+KCFI types, causing `__module_firmware_test_init` to be merged into
+one of the zero-returning functions. As module init is invoked via an
+indirect function call, KCFI is checked and this produces a KCFI failure.
 
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: Codex:gpt-5
+I've reported this bug to upstream LLVM [2]; in the meantime, disable
+function merging if CFI is enabled. No separate treatment is needed for
+CONFIG_RUST_INLINE_HELPERS, as Clang does not enable function merging
+by default.
+
+[ LLVM already has a pending PR:
+
+    https://github.com/llvm/llvm-project/pull/217665
+
+  which solves the issue. In addition, I asked upstream Rust if the
+  unstable `-Zmerge-functions=disabled` flag will remain around:
+
+    https://rust-lang.zulipchat.com/#narrow/channel/425075-rust-for-linux/topic/.60-Zmerge-functions.3Ddisabled.60/
+
+  and it does indeed look like that will be the case. - Miguel ]
+
+Reported-by: kernel test robot <yi1.lai@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202608201017.100a4511-lkp@intel.com [1]
+Link: https://github.com/llvm/llvm-project/issues/217629 [2]
+Signed-off-by: Gary Guo <gary@garyguo.net>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260809190428.1523014-1-Jeremy.Jean@oss.cyber.gouv.fr
+Fixes: ca627e636551 ("rust: cfi: add support for CFI_CLANG with Rust")
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://patch.msgid.link/20260820135733.37121-1-gary@kernel.org
+[ Fixed typos as discussed. Reworded slightly for other typos. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/itimer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/time/itimer.c
-+++ b/kernel/time/itimer.c
-@@ -100,7 +100,7 @@ static int do_getitimer(int which, struc
- static int put_itimerval(struct __kernel_old_itimerval __user *o,
- 			 const struct itimerspec64 *i)
- {
--	struct __kernel_old_itimerval v;
-+	struct __kernel_old_itimerval v = {};
- 
- 	v.it_interval.tv_sec = i->it_interval.tv_sec;
- 	v.it_interval.tv_usec = i->it_interval.tv_nsec / NSEC_PER_USEC;
+--- a/Makefile
++++ b/Makefile
+@@ -977,7 +977,8 @@ endif
+ ifdef CONFIG_RUST
+ 	# Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST selects
+ 	# CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
+-	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers
++	# Disable function merging as LLVM incorrectly merges functions with different KCFI types.
++	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers -Zmerge-functions=disabled
+ 	KBUILD_RUSTFLAGS += $(RUSTC_FLAGS_CFI)
+ 	export RUSTC_FLAGS_CFI
+ endif
 
 
