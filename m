@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BCA3905F4;
-	Fri,  4 Sep 2026 05:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C18335BBB;
+	Fri,  4 Sep 2026 05:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500743; cv=none; b=XQ9z3aSamcW4Tx3Do6I4kLFR+JHeChuiYCao0Kx4ACwQDSWZPpi5fqXfKQpQoenIBswsbEQvPy77P3Lsx2v0cCUA3hQbcQI835ILkKiCYwz+kGKBnYgJu3Gn9xGJElG5Q11xEP13vbcecw83OLHMHlGKBItGGC/LtD3iNLkXjgM=
+	t=1788500746; cv=none; b=ql5j7hNUeprvheQEae3W6EcETFDyzYNG921dRdZ+ii0ffBjcegb6vvNCyPiPSBdTnmapnZYRs+wLCrLg2NEwNP2/HSaEDnl6KqEsxB6xPaZny4Xi0ebrx8hGHO1u4GBWcw72AD2khMxXWiFefgxJ4kQRafdR9x41ca21FIutlKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500743; c=relaxed/simple;
-	bh=FwYEG+84gzF5Hg8AXYsHGR3b25gaPqEL0g7z4Vlyb/c=;
+	s=arc-20240116; t=1788500746; c=relaxed/simple;
+	bh=qoDcXWmAYAkUP5elpOj3gsOw3DaMFWt+MLL+iC2B6gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLyEijundacy3bJeAUuxDSt/dumBcTmXkl44GQaw7H+XUmorZdgNKWi3n07KvNXSOYU+SJfA9FYdDfVQYMLtTOq0AEzeAqXWKaU7M31UlzJyzioF6kDNCUgzVaCdPd7ZC01DLayGakQGRKJDqxJkxiK/86eHyuC0rzocVpmSgdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2L/gjhLt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jFoVUKbD9usjFRx30wnZKoBMB31x137BXGoyyxNVNTOktmnYq6eFFTWq5K3BTYSwYc1zv1z7sYZDNCkRoZgj0CCP/V6gdoCEtQjPrCO6SOJcex9MMW1F07Dmng8dOL2aALy3Rg5ty6tvAZnaCNTXVO5n1oUkHFFo4ynK/6y5nj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iv0/BM0z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2L/gjhLt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB9E1F00A3D;
-	Fri,  4 Sep 2026 05:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iv0/BM0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85071F00A3D;
+	Fri,  4 Sep 2026 05:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500742;
-	bh=TnUE/s3/Z3Cz74D8XvOXgn8oa+Y1EZqwCyGn1Qexgzo=;
+	s=korg; t=1788500745;
+	bh=gfuPmUVXTgINs7Y/+fZDJVdPvTetKcZ3SlfDHIFFTyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2L/gjhLtQpPQlNfx427WlOUd3B6VzZxHMRCiZbD3OsxTA0HK1CZXhJoaJIzKyKUgG
-	 WrNRZXt3FFRf1kt6AMdJe3krYBQ7nH+nzeD+bkPME3FwhDo5ibSxjTs0ZkyIlwyv8Z
-	 cnY0JrB3MjYVoHZYpJGjNvIHrN7ATMK5T/YkRyZ8=
+	b=iv0/BM0z0AjokVVugjnUdgY7DjQwZLD+hNUDb7YcIJ38GGx2ceDS4ijGkiCf+3yVC
+	 cVFXAFXfzW8mxT+K75SU2YBdbbv83bLF1+ctI08oHYhcm9rCENR9XFOwcwweQtsW5y
+	 Isu22WFk6+hrd5O1pqZ439SU4NCHHUqX+iMHz6Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 121/552] nfsd: check client ownership when cancelling a copy-notify stateid
-Date: Fri,  4 Sep 2026 06:54:38 +0200
-Message-ID: <20260904045750.814851343@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 122/552] nfsd: clear CALLBACK_RUNNING on failed delegation recall queue
+Date: Fri,  4 Sep 2026 06:54:39 +0200
+Message-ID: <20260904045750.849947727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,54 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 6bdbfab96e0cf25e5f57dac5c09dc1749751a4bf upstream.
+commit b036727d334b1b7cd4c1f1fba3b59ba93a6bbe96 upstream.
 
-On the OFFLOAD_CANCEL path (clp != NULL), manage_cpntf_state() freed the
-target cpntf state without checking ownership. The lookup key
-st->si_opaque.so_id is allocated cyclically (guessable) and the embedded
-clientid is the fixed per-net nn->s2s_cp_cl_id, so any authenticated
-NFSv4.2 client could cancel and free another client's copy-notify
-stateid.
+nfsd_break_one_deleg() sets NFSD4_CALLBACK_RUNNING via test_and_set_bit
+at entry to serialize recall work, then calls nfsd4_run_cb() to queue
+the recall.  When the queue attempt fails the refcount bump is undone,
+but the RUNNING bit is left set.  The only site that clears the bit is
+nfsd41_destroy_cb() (fs/nfsd/nfs4callback.c), which runs from the
+workqueue and is therefore unreachable when nothing was queued.
 
-Compare the creating clientid recorded in state->cp_p_clid against the
-requesting client's cl_clientid and return nfserr_bad_stateid on a
-mismatch instead of freeing the entry.
+The bit becomes a permanent latch on dp->dl_recall.cb_flags: every
+subsequent break_lease() on the same delegation hits the early-return
+guard in nfsd_break_one_deleg() and silently skips the recall, so the
+delegation is never broken and the conflicting open or lock stalls.
 
-Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
+Fix by clearing NFSD4_CALLBACK_RUNNING on the !queued branch alongside
+the refcount_dec.
+
+Fixes: 1054e8ffc5c4 ("nfsd: prevent callback tasks running concurrently")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260710-nfsd-testing-v3-5-a0ff7db6aa3e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20260526-cb_recall_any_callback_running_stuck-v1-2-310011a028f3@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -7383,10 +7383,20 @@ __be32 manage_cpntf_state(struct nfsd_ne
- 			state = NULL;
- 			goto unlock;
- 		}
--		if (!clp)
-+		if (!clp) {
- 			refcount_inc(&state->cp_stateid.cs_count);
--		else
-+		} else if (memcmp(&clp->cl_clientid, &state->cp_p_clid,
-+				  sizeof(clientid_t))) {
-+			/*
-+			 * OFFLOAD_CANCEL: only the creating client may cancel.
-+			 * so_id is guessable, so without this check any client
-+			 * could free another's cpntf state.
-+			 */
-+			state = NULL;
-+			goto unlock;
-+		} else {
- 			_free_cpntf_state_locked(nn, state);
-+		}
- 	}
- unlock:
- 	spin_unlock(&nn->s2s_cp_lock);
+@@ -5516,8 +5516,10 @@ static void nfsd_break_one_deleg(struct
+ 	refcount_inc(&dp->dl_stid.sc_count);
+ 	queued = nfsd4_run_cb(&dp->dl_recall);
+ 	WARN_ON_ONCE(!queued);
+-	if (!queued)
++	if (!queued) {
+ 		refcount_dec(&dp->dl_stid.sc_count);
++		clear_bit(NFSD4_CALLBACK_RUNNING, &dp->dl_recall.cb_flags);
++	}
+ }
+ 
+ /* Called from break_lease() with flc_lock held. */
 
 
