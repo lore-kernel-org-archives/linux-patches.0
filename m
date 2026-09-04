@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE48E3ECBCF;
-	Fri,  4 Sep 2026 05:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86E1351C04;
+	Fri,  4 Sep 2026 05:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499599; cv=none; b=YmtbxFxR1O6VXPmZVuIDhXG/kyjGp+1Kqc4jnceRCqfsDQwf6/4msV3QFtYolbSlR6af25CiM0JxYxRtM7NQhgldIWuJKntwfFRMxH1C9bJ9iH7hESVe0xQXflv3Q9JSZ+FXKq3yqYyp8dzW8DsWq4MLh/jnAS9f3pHHLSsVGgc=
+	t=1788499602; cv=none; b=g97SAqcbsh83MOxvPD1LNddaVXUmw4SFItceYnYVSAxZCJYoQw1oKTRAts3SKdKz/JTTDn3LQytAGf952MILxcuMyc/dGtdoiT4wD8JPcMgX8Jbzw3gdl0uxWoH+i8sHebc21xLrF35nFwOGUyw7UBARrL6pGzjST9dLhZY1SKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499599; c=relaxed/simple;
-	bh=oDqpo3Gt7yZOuMD5DZKaHNSBh94jQPQomMHK4gf3x5s=;
+	s=arc-20240116; t=1788499602; c=relaxed/simple;
+	bh=Lwc+878EeyRB2/CIQRFCWJ0GuKcflFa5o+5mY01PadA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+EEvrsQTtVVpXo4FhE1qjPxIxF/lQdVu5+CVenGsRO57WcG8AQ59yGhFpFodM5UOzTPUdk9PtFpMQ9vLCl/alW0rNPFiSX+t4lXPzIVRNdYz3M5gHyz40GAWO/4Dd3JhnVhyBESTyPH8y2omraI/ecCVc80LrBxMJ2xgxHgK8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=su8geUHk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gEhZWeOhcc3b9B2m3NaDAdwNxdL+GuYZmad17xdtGAyMv0YucHcEp1WIsVlfhRhHTsl9tAahIeWpYoweg/jLVuBM2ZiQp4Hj9z9CFdskFHC6RORGkpsov8dezRGWpKd7dllvPfO3QDxsOP6NBy/yvoqtAzZ8onISrnvb63HOTRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCxbveAc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="su8geUHk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F201F00A3D;
-	Fri,  4 Sep 2026 05:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCxbveAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0871F00A3D;
+	Fri,  4 Sep 2026 05:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499598;
-	bh=YYAL9HEl0NLvZFqc39PyDlfF7AmuOk8HG19yj1ReIOs=;
+	s=korg; t=1788499601;
+	bh=nplQxVwEniCGwsB8H+KtPJG2Ep9TcWDsgv9/hAeWmDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=su8geUHkTgbqcH0vtzLA2sFkQy+q6OBeJ1omuEj9yxPEHF8JhpDX1tXAYoTCOK4ZR
-	 DLw98vi1dFPHV9TrVXm3kAJ9XJvJppzHcexZdotYIUKAWKDBNC46EDFIBruotoL8Mi
-	 +S1c4OPjm2fNqL7nfHLwLeXcdtciTfjiMMeHMLeg=
+	b=SCxbveAcaluJeGX1z8qlSojuE+uHM982B4BzyD7rIeON4IUqhJHqMk3sK92bfxpNF
+	 lKBT6mPCdfSj5MoF3nD/1p+OtVtuC42wcUzA1lSWeB2g5drkMC5dt07eq1Vz6Xr8sO
+	 mBp+UvuhRxXxeVTcS6uy36g5ICFKyxDnHfS+RW3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.2 474/713] arm64: compat: Fix decrementing LDM/STM alignment emulation
-Date: Fri,  4 Sep 2026 06:57:22 +0200
-Message-ID: <20260904045814.448275028@linuxfoundation.org>
+Subject: [PATCH 7.2 475/713] arm64: proton-pack: Restore the nospectre_bhb command-line option
+Date: Fri,  4 Sep 2026 06:57:23 +0200
+Message-ID: <20260904045814.471735091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,52 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit f5b8b9037df387394a73aab47c5437bbac975077 upstream.
+commit 2f6fc0612607c95489c960aaefc8cb5578cdab8c upstream.
 
-The compat alignment emulator inherited unsigned long data addresses from
-the 32-bit ARM implementation.
+Commit 7f1635737823 ("arm64: proton-pack: Fix hard lockup due to print in
+scheduler context") moved the "mitigation disabled" printks into
+spectre_print_disabled_mitigations(). For spectre-v2 and spectre-v4 only
+the pr_info_once() calls were removed, but for spectre-bhb the whole
+branch went with the print:
 
-In do_alignment_ldmstm(), nr_regs is an unsigned int holding the transfer
-size. The function uses the same address addition for both transfer
-directions, negating nr_regs first for a decrementing LDM or STM. The
-32-bit negation wraps before the addition, so the handler adds nearly
-4 GiB instead of subtracting the transfer size.
-The resulting address lies outside the compat task's address space, so
-decrementing LDM/STM emulation fails, while incrementing forms work.
+  -   } else if (cpu_mitigations_off() || __nospectre_bhb) {
+  -           pr_info_once("spectre-bhb mitigation disabled ...\n");
 
-For example, a backwards-moving copy routine using decrementing LDM/STM can
-take an alignment fault when called with unaligned pointers. The compat
-handler should emulate the transfer, but this bug instead causes SIGBUS.
+spectre_bhb_enable_mitigation() therefore no longer tests __nospectre_bhb
+or cpu_mitigations_off() and the mitigation is enabled regardless of the
+command line. The parameter is still parsed and its flag is still checked
+by spectre_print_disabled_mitigations(), so the kernel prints "spectre-bhb
+mitigation disabled by command-line option" while
+/sys/devices/system/cpu/vulnerabilities/spectre_v2 reports "Mitigation:
+CSV2, BHB" and the vectors are switched to EL1_VECTOR_BHB_LOOP.
 
-The offset negated in do_alignment_finish_ldst() is offset_union.un, which
-is already unsigned long and does not have this width mismatch.
+The only remaining escape is the SPECTRE_VULNERABLE arm at the top of the
+chain, which a CSV2 core never reaches, so from Cortex-A76 and Neoverse N1
+onwards both nospectre_bhb and mitigations=off are ignored. Both are
+documented in Documentation/admin-guide/kernel-parameters.txt.
 
-Make nr_regs unsigned long so its negation and the address arithmetic
-use the same width.
+The identical mistake was made on the neighbouring compile-time-option
+branch immediately before this regression and fixed shortly afterwards;
+this command-line branch was missed.
+build_bhb_mitigation() in arch/arm64/net/bpf_jit_comp.c still tests both
+flags, so nospectre_bhb currently keeps the exception-vector loop while
+dropping the cBPF epilogue mitigation.
 
-Fixes: 3fc24ef32d3b ("arm64: compat: Implement misalignment fixups for multiword loads")
+Restore the check, folded into a spectre_bhb_mitigations_off() helper
+alongside its spectre_v2/v4 counterparts, and use it for the boot-time
+print in spectre_print_disabled_mitigations() as well. The print itself
+already lives there and does not need restoring.
+
+Tested under QEMU with -cpu neoverse-n1 (CSV2, no ECBHB, no CLRBHB).
+Before, spectre_v2 read "Mitigation: CSV2, BHB" with and without the
+option; after, nospectre_bhb and mitigations=off both give "Mitigation:
+CSV2, but not BHB" and a boot without either is unchanged.
+
+Fixes: 7f1635737823 ("arm64: proton-pack: Fix hard lockup due to print in scheduler context")
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Assisted-by: Codex:gpt-5.6-sol
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/compat_alignment.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/proton-pack.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/compat_alignment.c
-+++ b/arch/arm64/kernel/compat_alignment.c
-@@ -114,8 +114,8 @@ do_alignment_ldrdstrd(unsigned long addr
- static int
- do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
--	unsigned int rd, rn, nr_regs, regbits;
--	unsigned long eaddr, newaddr;
-+	unsigned int rd, rn, regbits;
-+	unsigned long eaddr, newaddr, nr_regs;
- 	unsigned int val;
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -1023,6 +1023,11 @@ static int __init parse_spectre_bhb_para
+ }
+ early_param("nospectre_bhb", parse_spectre_bhb_param);
  
- 	/* count the number of registers in the mask to be transferred */
++static bool spectre_bhb_mitigations_off(void)
++{
++	return __nospectre_bhb || cpu_mitigations_off();
++}
++
+ void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *entry)
+ {
+ 	bp_hardening_cb_t cpu_cb;
+@@ -1036,6 +1041,8 @@ void spectre_bhb_enable_mitigation(const
+ 		/* No point mitigating Spectre-BHB alone. */
+ 	} else if (!IS_ENABLED(CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY)) {
+ 		/* Do nothing */
++	} else if (spectre_bhb_mitigations_off()) {
++		/* Mitigation disabled on the command line */
+ 	} else if (supports_ecbhb(SCOPE_LOCAL_CPU)) {
+ 		state = SPECTRE_MITIGATED;
+ 		set_bit(BHB_HW, &system_bhb_mitigations);
+@@ -1201,6 +1208,6 @@ void spectre_print_disabled_mitigations(
+ 	if (spectre_v4_mitigations_off())
+ 		pr_info("spectre-v4 %s", spectre_disabled_suffix);
+ 
+-	if (__nospectre_bhb || cpu_mitigations_off())
++	if (spectre_bhb_mitigations_off())
+ 		pr_info("spectre-bhb %s", spectre_disabled_suffix);
+ }
 
 
