@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283B2358378;
-	Fri,  4 Sep 2026 06:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ED1416878;
+	Fri,  4 Sep 2026 06:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502032; cv=none; b=QKr7/XMIuqBqAaAJSZRLfAHmBGcGb02uxg0N03tDhK3dKFnQbKB5XaKV/0aG4c0P/hDLxetysnrCYO18uM4vR/tGQwWzAM93XvBRRqV23fVZ0F96dv6Lz/zXnyToVRZZAG6k32aqabpVI8LmJH8xXUA7RK2Xnp65b14EtN5PF9c=
+	t=1788502035; cv=none; b=KniawHbOvP+sGQpeItVHHLQq8KxTGcTr7YPY8PuSi3n1O5V5i9zBvoGNvJMguuS/wUx3fWFYwJh5Tz0ihLXe5nvJpSIQIW9zSEcXFK/9FIprhlij2vHTPPYnzuOjweAahGEF8jRvEgRAVtRQ4cemY4riaanJix44+hNSdksU5qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502032; c=relaxed/simple;
-	bh=fQMSinvSGrxJhd68jUOMop/3AExRu1w7wG7cTMzExrs=;
+	s=arc-20240116; t=1788502035; c=relaxed/simple;
+	bh=NiPyC4eLpv6H44PMmo1B0ge+weUhvSjmdYjtLz/ZUo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E0qLYhAw5B//0+cn2h8u8A70X7xi7PZBXUWmFwYZbQ70ooJ40wDTf9dvLgx+PjQiidpcQpTybrpXuFfLXDHwuABD1Vw8WFJIoJ5Dv41e2d1H3R2pt8xyMtbRo/6WJK2JXOYElbOYBFCG5by8gCgemDxAK9gQ0Tky7VHeIBoDVDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hL6Lz6JR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oVMuY8AzZY8s5pagKJdKrknb/9YA6pH0/5d0naUCk5wt+JMZS4pNs0lA/hT2GDIXYotdSaBwvMySK0PkiyTtst9Fa282+aR3ZbB2+j+CajT3qN5/gd4j85sV0eccXhN+ZG2dH5I+b6exJsEQuRqzrssV+x9otldJEy5hRz4whZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5KYmsrh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hL6Lz6JR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830AB1F00A3D;
-	Fri,  4 Sep 2026 06:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5KYmsrh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3971F00A3D;
+	Fri,  4 Sep 2026 06:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502031;
-	bh=8SZJqhEIv/79TZeGoYdyl4p9EcPd6uuN58q0N0OYK2g=;
+	s=korg; t=1788502033;
+	bh=vWqy2/uSzmIjqGVuqB6LShlUIXieM/u7F4X+hqE+Flc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hL6Lz6JR7fAn+EofLZ5F1QnHFXX3VHfDtjfZrosZLz81aQjAWCbM20baBPCug/vxB
-	 pqYQuXAP2UrMlPTbnbWUFXO0WsIChaBLP8yEw6ryIc2rGYoS/ncpHmnDij1nr0JlWk
-	 TeFNIT1eD/h6lbpFEtaFry9kjN2nm2ubCwN35+YI=
+	b=T5KYmsrhYN7zm5Kd4XOjsb1BU/2K/rQWvCs/tdfsbuT3Vbmmv3ntEiNvzW2SKZkJs
+	 SRimx4P+OWVGCVyBqV7aomOoMZOw3JgPOVu5rmMDB0iEgnrB3LTy7Kjm54ivGgmhmX
+	 0YRVcwFqZAzKnd4URE64/uFAKRfYcvfQpoRU1UkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 6.12 065/403] PCI/sysfs: Fix out-of-bounds read in pci_write_legacy_io()
-Date: Fri,  4 Sep 2026 06:57:48 +0200
-Message-ID: <20260904045736.312116667@linuxfoundation.org>
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Richard Weinberger <richard@nod.at>,
+	Zhihao Cheng <chengzhihao1@huawei.com>
+Subject: [PATCH 6.12 066/403] ubifs: fix out-of-bounds read in signature length check
+Date: Fri,  4 Sep 2026 06:57:49 +0200
+Message-ID: <20260904045736.336124733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -43,115 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit dc76258d0132df1d831a5a29758bd448ca9c566e upstream.
+commit 95d27c1708bb6e8823c8e7c623f9abc2a91bf4bf upstream.
 
-pci_write_legacy_io() loads 4 bytes from the kernfs write buffer
-regardless of how many bytes userspace wrote:
+ubifs_sb_verify_signature() bounds the on-disk ubifs_sig_node->len field
+before handing the signature payload to verify_pkcs7_signature(), but the
+check has the wrong sign:
 
-  if (count != 1 && count != 2 && count != 4)
-          return -EINVAL;
+	if (le32_to_cpu(signode->len) > snod->len + sizeof(struct ubifs_sig_node))
 
-  return pci_legacy_write(bus, off, *(u32 *)buf, count);
+The signature bytes start sizeof(struct ubifs_sig_node) (UBIFS_SIG_NODE_SZ,
+64 bytes) into the node, so the payload is at most
 
-kernfs_fop_write_iter() allocates the buffer with kmalloc(len + 1),
-so a 1-byte write to the legacy_io sysfs file allocates 2 bytes and
-the unconditional u32 load reads up to 2 bytes past the end of the
-allocation, which KASAN reports as a slab-out-of-bounds read.
-Similarly, a 2-byte write overreads by 1 byte.
+	snod->len - sizeof(struct ubifs_sig_node)
 
-Thus, read only the number of bytes requested using get_unaligned_le16()
-and get_unaligned_le32() for the 2 and 4 byte cases, interpreting the
-buffer as little-endian to match the byte ordering of PCI I/O port
-space.
+bytes long. Adding the header size instead of subtracting it accepts a
+declared length up to 2 * UBIFS_SIG_NODE_SZ larger than the node actually
+holds -- past the end of c->sbuf, which is vmalloc(c->leb_size).
+verify_pkcs7_signature() -> pkcs7_parse_message() -> asn1_ber_decoder()
+is then handed that inflated length and reads beyond the allocation while
+walking the DER headers. The node length comes straight from the mounted
+image, so a crafted signed UBIFS image reaches this via
+ubifs_read_superblock() before the signature is cryptographically checked.
 
-The PowerPC implementation previously compensated for the generic
-code's native-endian 32-bit load by shifting the value into place
-for the 1 and 2 byte cases.  The shifts were only correct on
-big-endian kernels.
+snod->len is guaranteed to be >= UBIFS_SIG_NODE_SZ by the node scanner
+(c->ranges[UBIFS_SIG_NODE].min_len == UBIFS_SIG_NODE_SZ), so the corrected
+subtraction cannot underflow. Legitimately signed images are unaffected: a
+correct superblock never declares a signature longer than the node it is
+embedded in.
 
-On little-endian PowerPC (POWER8 and later), they extracted the wrong
-bytes, so a 1-byte write wrote an out-of-bounds byte instead of the
-requested value.  On big-endian, the native load also caused out_le16()
-and out_le32() to reverse the user's bytes on the wire for 2 and 4 byte
-writes.  The little-endian helpers resolve both issues, so the shifts
-are removed.
-
-No changes are needed for the Alpha platform.
-
-The legacy_io file is root-only and exists only on Alpha and PowerPC,
-the two architectures that define HAVE_PCI_LEGACY.
-
+Fixes: 817aa094842d ("ubifs: support offline signed images")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616163131.2763281-1-kwilczynski@kernel.org
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Reviewed-by: Richard Weinberger <richard@nod.at>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/pci-common.c |    9 ++-------
- drivers/pci/pci-sysfs.c          |   18 +++++++++++++++---
- 2 files changed, 17 insertions(+), 10 deletions(-)
+ fs/ubifs/auth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/pci-common.c
-+++ b/arch/powerpc/kernel/pci-common.c
-@@ -626,19 +626,14 @@ int pci_legacy_write(struct pci_bus *bus
- 		return -ENXIO;
- 	addr = hose->io_base_virt + port;
+--- a/fs/ubifs/auth.c
++++ b/fs/ubifs/auth.c
+@@ -217,7 +217,7 @@ int ubifs_sb_verify_signature(struct ubi
  
--	/* WARNING: The generic code is idiotic. It gets passed a pointer
--	 * to what can be a 1, 2 or 4 byte quantity and always reads that
--	 * as a u32, which means that we have to correct the location of
--	 * the data read within those 32 bits for size 1 and 2
--	 */
- 	switch(size) {
- 	case 1:
--		out_8(addr, val >> 24);
-+		out_8(addr, val);
- 		return 1;
- 	case 2:
- 		if (port & 1)
- 			return -EINVAL;
--		out_le16(addr, val >> 16);
-+		out_le16(addr, val);
- 		return 2;
- 	case 4:
- 		if (port & 3)
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -907,12 +907,24 @@ static ssize_t pci_write_legacy_io(struc
- 				   loff_t off, size_t count)
- {
- 	struct pci_bus *bus = to_pci_bus(kobj_to_dev(kobj));
-+	u32 val;
+ 	signode = snod->node;
  
--	/* Only support 1, 2 or 4 byte accesses */
--	if (count != 1 && count != 2 && count != 4)
-+	/* Only support 1, 2 or 4 byte accesses. */
-+	switch (count) {
-+	case 1:
-+		val = *(u8 *)buf;
-+		break;
-+	case 2:
-+		val = get_unaligned_le16(buf);
-+		break;
-+	case 4:
-+		val = get_unaligned_le32(buf);
-+		break;
-+	default:
- 		return -EINVAL;
-+	}
- 
--	return pci_legacy_write(bus, off, *(u32 *)buf, count);
-+	return pci_legacy_write(bus, off, val, count);
- }
- 
- /**
+-	if (le32_to_cpu(signode->len) > snod->len + sizeof(struct ubifs_sig_node)) {
++	if (le32_to_cpu(signode->len) > snod->len - sizeof(struct ubifs_sig_node)) {
+ 		ubifs_err(c, "invalid signature len %d", le32_to_cpu(signode->len));
+ 		err = -EINVAL;
+ 		goto out_destroy;
 
 
