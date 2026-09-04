@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098F64CCDC7;
-	Fri,  4 Sep 2026 05:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B863815E1;
+	Fri,  4 Sep 2026 05:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500190; cv=none; b=qcXSU2PYqO9QXDnv7p2BAqNhzUxOt3xVbuSH8Qc/Pgoa1Eaq4FN1x+2dMwAPYefYqLLhoyJko6XhC8tEw2+I26sSLUm3GJyghmIMqRZHn9MwSX8LampA5yNN6lu2Xg8BDjEQqwOVonDrLxftZnsKmUOgXHfg1N4O/g8JwBsHPzU=
+	t=1788500192; cv=none; b=DsxtcopcycVeGazW3LQLSSqwDr8Hl6ACd+pboVPEsdkbJO4oO28+cgrwyfXiwE9ADXwwljVzurKrRS6+7jzWwU6KipcXDWci2UOb92Ff2/n9GYuS7gjx8uegktk4joMkGntxGe9BHuVG6nkJZTNfgE8dkzoCtmk5jj2UEcs2wmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500190; c=relaxed/simple;
-	bh=HYkOb0qytLfaCDa6zNuZIv8OmwusXr44onG0+T2btUQ=;
+	s=arc-20240116; t=1788500192; c=relaxed/simple;
+	bh=lHsvZVmMd0R5A87pe5SbBTPIUN+sxZJwGr1qhUaM0MM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fwclL5CNH8X5CMDdCmlpHn14N/golHcySTHDcBCVzrVG01Yx22kJxdar1hQmHm6RmtFhpXCGB8r9tvXqUPLTtyW/LVXLPprLP+5FJjvrwPodyffKuriHpfeT1y3DYgCNr6wWsXMXT9DxE8WDTb3FfGvcroy8m6zKMUwauAazsP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3tVqwEw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ortNrWWjb52AhYZy3zOn1u+0VKYy8tmPzlwYT30li5WmL2MJGzkVk/rlifJUj+tPMHRlLQCEojVnScYtt4ZyjvzQbbs+4jB0Uv5rf+PZZtA5Gp4XmgN8SunqnNp7aJYWPnJCYkoMhG/WkwiKc9rwFHmgsOiHAQCTiZq48b/Fpog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wss+WSi7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3tVqwEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EF81F00A3D;
-	Fri,  4 Sep 2026 05:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wss+WSi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391CB1F00A3D;
+	Fri,  4 Sep 2026 05:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500188;
-	bh=8uNTDcDsWN0Lbkq19lSXQfMAU4+0EVWF1FVimW2OvCI=;
+	s=korg; t=1788500191;
+	bh=4S18ZXF2EU4O84VFzS8qbKik73Sv3kfLsbluuiKIWbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3tVqwEwJwGGNyge8cYnMjHudPtbcR+4ReZW8GlhpTJeW50XDNoFuX3QLSolQpQR0
-	 Yp/Yzru79QLL2MnyzU1K5px959yJOHD0mERWcyyy2LerJAOM9Cso5CtzySLKOKTCLR
-	 q7PPvy5KzSm2HCv1Hl5/RQgUsyO0NZydaGIsfURk=
+	b=Wss+WSi7LQfP6Vt1ZjXQj4ynl92PDcR2tAOfh3kondr2MJwxeCsUPVXhEP/xs4tTd
+	 iIZbOPr5zY532M+KFIEsDaynXKQ75AA2LAAY2KVu51YL9VEDKu2HwR0PFGwal0bfqB
+	 bRoS3y0SRUeAR9DYsSDpS/aBt/JkTW1hCgYk7Q+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 639/713] ALSA: hda/ext: preserve PPLCCTL bits when clearing reset
-Date: Fri,  4 Sep 2026 07:00:07 +0200
-Message-ID: <20260904045818.153832544@linuxfoundation.org>
+Subject: [PATCH 7.2 640/713] ALSA: mpu401: Check card index validity at probe
+Date: Fri,  4 Sep 2026 07:00:08 +0200
+Message-ID: <20260904045818.177369312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,49 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 36aa66de481d29edd63cbad9b5c4dc18c340fdf6 upstream.
+commit f7dcecb92ed192ff5fcf842918fb1aaea84b5bdd upstream.
 
-snd_hdac_ext_stream_reset() polls PPLCCTL for STRST by masking the
-register value with AZX_PPLCCTL_STRST:
+mpu401 driver blindly trusts that the given devptr->id value is within
+the proper card index range at probe.  It's OK for the devices the
+driver itself creates at the module probe time, but if the device is
+bound manually via sysfs interface, this could be -1 as "none", and
+this leads to OOB access for index[] and other parameters.
 
-	val = readl(...) & AZX_PPLCCTL_STRST;
+Add a sanity check for the card index and warn/correct it if it's a
+value out of the range.
 
-The same masked value is then used when clearing STRST. Since val
-contains no bits other than STRST, clearing STRST from it always
-produces zero. The subsequent writel() therefore writes zero to the
-entire PPLCCTL register instead of clearing only the reset bit.
-
-PPLCCTL contains other stream control fields, including the stream tag
-in AZX_PPLCCTL_STRM_MASK. Those fields must not be modified as a side
-effect of clearing stream reset.
-
-Use snd_hdac_updatel() to clear STRST, matching the existing set-reset
-path and preserving all unrelated PPLCCTL bits.
-
-Fixes: df203a4e46f4 ("ALSA: hdac_ext: add extended stream capabilities")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/43BB7930B0F07C09+20260813065524.1955696-1-raoxu@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260806153227.1460166-3-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/core/ext/stream.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/drivers/mpu401/mpu401.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/sound/hda/core/ext/stream.c
-+++ b/sound/hda/core/ext/stream.c
-@@ -210,8 +210,8 @@ void snd_hdac_ext_stream_reset(struct hd
- 			break;
- 		udelay(3);
- 	} while (--timeout);
--	val &= ~AZX_PPLCCTL_STRST;
--	writel(val, hext_stream->pplc_addr + AZX_REG_PPLCCTL);
-+	snd_hdac_updatel(hext_stream->pplc_addr, AZX_REG_PPLCCTL,
-+			 AZX_PPLCCTL_STRST, 0);
- 	udelay(3);
+--- a/sound/drivers/mpu401/mpu401.c
++++ b/sound/drivers/mpu401/mpu401.c
+@@ -89,6 +89,12 @@ static int snd_mpu401_probe(struct platf
+ 	int err;
+ 	struct snd_card *card;
  
- 	timeout = 50;
++	if (dev < 0 || dev >= SNDRV_CARDS) {
++		dev_warn(&devptr->dev,
++			 "Invalid card index %d, using default 0\n", dev);
++		dev = 0;
++	}
++
+ 	if (port[dev] == SNDRV_AUTO_PORT) {
+ 		dev_err(&devptr->dev, "specify port\n");
+ 		return -EINVAL;
 
 
