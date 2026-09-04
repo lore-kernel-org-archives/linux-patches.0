@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933042DCF57;
-	Fri,  4 Sep 2026 05:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A17C351C35;
+	Fri,  4 Sep 2026 05:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499718; cv=none; b=TkVmFjtpcZ/8auPI2aXyrmGJiB89rzqy4cF23GvGsgqcH5+Zu6EaTVw8fGPi6ml/nX6xqUQPd7VwJQlB1Vv+N7plZBwYQy9UKeUBD9FV+MOvrXMjqDi/t/9QEJ1YH8GWOaD0JM5X8qrFGXRTRg+yg5iY6ogKdOpSlgUIv8EmsxQ=
+	t=1788499721; cv=none; b=CjNDT9inDYv11OeWFVV0hNIq1jpXbKBm1ftLIqWy90wXS0jSRA95aO0NkO4JfoIDKnRNsWCVfzna0GYve3PPFjQkxeNA0ljARelGjNGexikQK9qffORIk3IgVGtXtLkPcows1jz9xQ5q5JS/uBTF6pcZQFm4J1Fkrhhetbv8Bb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499718; c=relaxed/simple;
-	bh=dzSPVB3/XPBRAyxrer7gg8qFsJD5ty3e0LYav3EfA68=;
+	s=arc-20240116; t=1788499721; c=relaxed/simple;
+	bh=6qwnAkkH38vMmYUE3COovu1ODHVAql7QNJ2m/NCX4I8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPo2XMVkj9EBY7eEcqFVMBB91PzfL2D4eXtSzRkzaCuA+yFyypLAX60TRA8k99iHPEIwgsbZ04e5RU5OZ+wJAbPSgaPlw+VkcY0Pb5UNnG/qw50hvMR7zZIPiR8sMYJZ4/KxqO9ciL7umQn6UlnQuvJMDelBf6ch2WHk9lk6d1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUTif07Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kxRxTgPHB9Zb+2SGN/R7+uTAvSA7cfjkUxv8tikqPwDxHsOhvwY/gz1GUa19pjrIv2RXjXU8pUEBDPcDAHR+AOtiuWg6Bgc4X3vnJRUvhAuNV0X76nUKEF3Oys0ndzGVDTJblkdUyHu6LAdMvaGT71uGjjVFVGfsOUzbVsSYNyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlZXQBxz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUTif07Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF21F1F00A3D;
-	Fri,  4 Sep 2026 05:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlZXQBxz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B211F00A3D;
+	Fri,  4 Sep 2026 05:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499717;
-	bh=VwmSCeb7Hhui39gquYAgnijXJqDVSlDojfSvVQ9PNJI=;
+	s=korg; t=1788499720;
+	bh=mkjRAlJFO7+ZOq90ONJKEgJCyml90XE1v04LrXNAexE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUTif07QZB9rUKTkEGsYb3Zo5dJabXK+cBlnJZZbzuEyWqCGSkblUOM2QpssLM1jO
-	 rbwpcKQHFqu/9Z3ZpAR0dSeD2/sgZ4L1M4YdowW3e70KxvJ6vK48/zPPJwdPHCfRbs
-	 9mgwZPb4xbjZEkozkoeXT3tupe8k0no3zaKJyyCY=
+	b=JlZXQBxzoABjK3KPbtvxwMoIJBiZxSJRkwQPN5MmVLTsksGvUkyrVay9IbZjXEfts
+	 yfe/0VHde1yds5md4nu5QqQuXdwEYzFYfr7D4DLIMLMxBD9PnlcVN3sI+KbQGmEklP
+	 QPVdK2AYck9SnXHzyLU22mtURNFrXbXeZK7C/ESI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 7.2 516/713] s390/percpu: Fix MVIY_PERCPU() with older binutils
-Date: Fri,  4 Sep 2026 06:58:04 +0200
-Message-ID: <20260904045815.385842791@linuxfoundation.org>
+	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 517/713] s390/dasd: Do not complete a failed ESE read as successful
+Date: Fri,  4 Sep 2026 06:58:05 +0200
+Message-ID: <20260904045815.407258295@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,73 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 101782f8945a125044347312d74d488c05741c4a upstream.
+commit cddb447c62466f3076938ce120028d7b591f9f37 upstream.
 
-Commit a737737cdb9c ("s390/percpu: Infrastructure for more efficient
-this_cpu operations") introduced MVIY_PERCPU(), which stringifies
-arguments that are already C string literals. This generates an
-assembler macro invocation with whitespace-separated quoted arguments:
+dasd_int_handler() completes an NRF read of an unallocated ESE track by
+calling ese_read() and unconditionally marking the request
+DASD_CQR_SUCCESS. dasd_eckd_ese_read() can return an error before it has
+zeroed the destination buffer: a failed sense-data parse or a current
+track outside the requested range both return early, leaving the
+destination pages untouched. The request is still completed successfully,
+so the block layer is handed stale / uninitialized memory instead of
+zeros.
 
-  GEN_MVIY "459712" "%r3"
+Check the ese_read() return value and fail the request through the normal
+error path instead of forcing DASD_CQR_SUCCESS.
 
-GNU as versions prior to binutils 2.39 drop the separating whitespace
-between quoted macro arguments during input scrubbing. They
-consequently parse the invocation as a single argument and emit
-repeated warnings:
-
-  Warning: missing closing `"'
-
-The .ifc in GEN_MVIY never matches and GNU as exits successfully
-without emitting the mviy instruction. As a result, the interrupted
-per-CPU sequence is not marked in lowcore and the exception return
-path cannot repair the per-CPU address register after migration.
-
-All MVIY_PERCPU() callers pass C string literals. Use them directly
-and separate the assembler macro arguments with an explicit comma. The
-resulting invocation is:
-
-  GEN_MVIY 459712, %r3
-
-This form is unambiguous for GNU as and LLVM's integrated assembler.
-This behavior was fixed in GNU as from binutils 2.39, but Linux
-supports binutils 2.30.
-
-Fixes: a737737cdb9c ("s390/percpu: Infrastructure for more efficient this_cpu operations")
+Fixes: 5e6bdd37c552 ("s390/dasd: fix data corruption for thin provisioned devices")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://patch.msgid.link/20260805111612.1285190-2-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/percpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/s390/block/dasd.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/include/asm/percpu.h b/arch/s390/include/asm/percpu.h
-index 1d955dd0defa..feb58acf87d6 100644
---- a/arch/s390/include/asm/percpu.h
-+++ b/arch/s390/include/asm/percpu.h
-@@ -107,8 +107,8 @@
- 	"	.endif\n"							\
- 	".endr\n"								\
- 	".endm\n"								\
--	ALTERNATIVE("GEN_MVIY " __stringify(disp)    " " __stringify(reg) "\n",	\
--		    "GEN_MVIY " __stringify(dispalt) " " __stringify(reg) "\n",	\
-+	ALTERNATIVE("GEN_MVIY " disp    ", " reg "\n",				\
-+		    "GEN_MVIY " dispalt ", " reg "\n",				\
- 		    ALT_FEATURE(MFEATURE_LOWCORE))				\
- 	".purgem GEN_MVIY\n"
- 
--- 
-2.55.0
-
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -1698,8 +1698,10 @@ void dasd_int_handler(struct ccw_device
+ 			return;
+ 		}
+ 		if (rq_data_dir(req) == READ) {
+-			device->discipline->ese_read(cqr, irb);
+-			cqr->status = DASD_CQR_SUCCESS;
++			if (device->discipline->ese_read(cqr, irb))
++				cqr->status = DASD_CQR_ERROR;
++			else
++				cqr->status = DASD_CQR_SUCCESS;
+ 			cqr->stopclk = now;
+ 			dasd_device_clear_timer(device);
+ 			dasd_schedule_device_bh(device);
 
 
