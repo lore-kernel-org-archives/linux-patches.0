@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A5A4CCDC7;
-	Fri,  4 Sep 2026 05:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3554D4CCDC7;
+	Fri,  4 Sep 2026 05:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500215; cv=none; b=WRUab15jOOkd3hl7VuVjC4DAhYwNy+1dy7zjJSOP0Sf2kq7KjOcU60AyrY+aRTfC+YRNR1OHL6/tfKrdVGHicceXO/tNoN/ygNLA8ww3kLf5L1N8Ki7cHsx/yx46ddVnZl1m8HvMCZTzruKdDgiLo3nLwdlOPMWdLKuOfqAksGY=
+	t=1788500218; cv=none; b=XpjYyIIEljwlSSd/Lpru+MPDUMq6ophpQRaFw8Hl8WiOl/fK+KJzg9r6VooMkPL59pMLXVb8JFDVHTVjClIcHAWD2aq/Obt64y0DWwmRZC4Rc06JzGtI3xvh/flSm+gBPmNPK/u6L7sHn4RmvX3RGLwmcxkExUzR2adAx3KoP+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500215; c=relaxed/simple;
-	bh=AhFz53DZuefwxb6RONOIUaT6HrVpMMZ7KdNR96IYP+4=;
+	s=arc-20240116; t=1788500218; c=relaxed/simple;
+	bh=RU2NXlVL5iuVzuiZfMi88Mcq91r0kC1gi+nmDWv0z2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dCluT9Wj6OpKPjNQIx/n9mHECtU1YDp/ZR0DKNMsPnmdZiCGmr6S9EEEluxCjn8JCZ8E4qRbwLJY1WYUeAJd14hJo5jcd6xWGeCc/HhVR1dqHZWAsCOHe4J0Bo3hgw5gDVXDCZcX7evitEfwPENylX4thDZf0afEqnNb5JcFXWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F80qUNWk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F+qIuTWcmtdt7bQc1/0LFTVkBrYdLrx9SJA8NkMSTbSp7vXIjvM4f2YVFrJ62yf9kwfSl7nkgOPWS62lxkdIhD9mUYeAVdgNsCAllQCo+pOLbKBvxuEgBHas8tyF89ejrt9DDsiqiRxeJA1Ikb40FTUfZsxYoLrUX4WcLLjBgoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5LEGv5T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F80qUNWk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29A21F00A3D;
-	Fri,  4 Sep 2026 05:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5LEGv5T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBF61F00A3D;
+	Fri,  4 Sep 2026 05:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500214;
-	bh=zORZT/0YQYZekuxgn1QnzPuSPT/h50HvN6QH3SpajzA=;
+	s=korg; t=1788500217;
+	bh=e7NH/dm1PgWQmbnY4eAqiONqZTa0L+z+O8l/KrzNG8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F80qUNWk3aA1t5Bi0yMx0VsG1nRRWruPJnxSql9Rz3tQ1nuWzjBibg2Rm2HvRFHfq
-	 6ALnjuCSrEHMJQOpiIoQbN8vg0VUaKQJxW7M46q+r86/A2TnugjaqSm0fmrLoBGDTk
-	 sSsBWYq5fReNCppDJ51zWf5MIDVdondJI3eLxu7E=
+	b=o5LEGv5TgfDuBvzcvNx7hm7gYlBHfjKh1K5he/35FvHKUPUouUFTP3olduUbX9BKE
+	 rhvY17yksMABhtCYcU+8FJRcQ1vXVJE8p6X26J0IF/LWYvRyjt5lT18DLIJ7VaLlqy
+	 Q31edb8wMYgY2K6naIFzYe0THJWyE9qOT0lvusK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 7.2 692/713] wifi: mt76: mt7615: avoid waiting for mac work under the mt76 mutex
-Date: Fri,  4 Sep 2026 07:01:00 +0200
-Message-ID: <20260904045819.353878026@linuxfoundation.org>
+Subject: [PATCH 7.2 693/713] wifi: mt76: mt7915: bound the device EEPROM address before the EFUSE copy
+Date: Fri,  4 Sep 2026 07:01:01 +0200
+Message-ID: <20260904045819.378695706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,49 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit bda8324270b1ac91bfba1df8928e0570e29759e8 upstream.
+commit 44b5adfe49499f53002737f5fe81d608c08122fc upstream.
 
-mt7615_suspend() acquired the mt76 mutex and then called
-cancel_delayed_work_sync() on mac_work.  mt7615_mac_work() acquires the
-same mutex via mt7615_mutex_acquire() at the top of the worker, so if
-mac_work is already running and blocked on the mutex, the suspend path
-deadlocks waiting for the work it holds the mutex against.
+mt7915_mcu_get_eeprom() copies a fixed EFUSE block into the driver's
+dev->mt76.eeprom.data buffer at the offset reported by the MCU response
+(res->addr, a device-controlled __le32) without checking it against the
+buffer size. A malicious or malfunctioning device can report an arbitrary
+address and drive a 16-byte out-of-bounds write past eeprom.data.
 
-Flush scan_work and mac_work before taking the mutex, matching the
-suspend paths in mt7921 and mt7925.  scan_work only takes the mt76
-spinlock, but moving it keeps the sequence consistent.  This also keeps
-mac_work from running over an already suspended HIF, which the previous
-split (async cancel under the lock, sync cancel after release) would
-have allowed.
+Reject a response whose address would place the copy outside eeprom.data
+before deriving the destination pointer. Devices that echo the requested
+in-bounds offset are unaffected.
 
-Fixes: c6bf20109a3f ("mt76: mt7615: add WoW support")
+Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260612041331.2596331-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260625-b4-disp-16f99062-v1-1-aee52ecf61b9@proton.me
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/main.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-@@ -1239,11 +1239,12 @@ static int mt7615_suspend(struct ieee802
- 	cancel_delayed_work_sync(&dev->pm.ps_work);
- 	mt76_connac_free_pending_tx_skbs(&dev->pm, NULL);
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -2917,8 +2917,15 @@ int mt7915_mcu_get_eeprom(struct mt7915_
+ 		return ret;
  
-+	cancel_delayed_work_sync(&phy->scan_work);
-+	cancel_delayed_work_sync(&phy->mt76->mac_work);
+ 	res = (struct mt7915_mcu_eeprom_info *)skb->data;
+-	if (!buf)
+-		buf = dev->mt76.eeprom.data + le32_to_cpu(res->addr);
++	if (!buf) {
++		u32 addr = le32_to_cpu(res->addr);
 +
- 	mt7615_mutex_acquire(dev);
++		if (addr > dev->mt76.eeprom.size - MT7915_EEPROM_BLOCK_SIZE) {
++			dev_kfree_skb(skb);
++			return -EINVAL;
++		}
++		buf = dev->mt76.eeprom.data + addr;
++	}
+ 	memcpy(buf, res->data, MT7915_EEPROM_BLOCK_SIZE);
  
- 	clear_bit(MT76_STATE_RUNNING, &phy->mt76->state);
--	cancel_delayed_work_sync(&phy->scan_work);
--	cancel_delayed_work_sync(&phy->mt76->mac_work);
- 
- 	set_bit(MT76_STATE_SUSPEND, &phy->mt76->state);
- 	ieee80211_iterate_active_interfaces(hw,
+ 	dev_kfree_skb(skb);
 
 
