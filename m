@@ -1,136 +1,168 @@
-Received: from out30-119.freemail.mail.aliyun.com (out30-119.freemail.mail.aliyun.com [115.124.30.119])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011020.outbound.protection.outlook.com [40.93.194.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FBD4477E3
-	for <patches@lists.linux.dev>; Fri,  4 Sep 2026 09:52:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.119
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788515530; cv=none; b=toS73n1LaCWBRypuuDrkuZWZDypv69s6iU4FpknWlqT1o+2+X4AvuViZqFbn5Dq6uuQqUct4lysVybDbxWVMA1Sha8pXfjsOT42jSDXh0Pc2p3q1KMf5fpeXshNyiEi1uex0VBYdo6xWR2JTrEnomAeYOMIcLhofPT9sTLXdxbE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788515530; c=relaxed/simple;
-	bh=GBgZoGAzOYlhiYEFLHygWw5xhvEEb9W0OPkjhNDIOgw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ajWZ13CSB3gc4XH/2L5vuLcLXpTfLvhPOeuqFVZFrzNmhM1Y9YD2nTtLbmXmQPthfF3IQYPSmpo0pSzIPuEyS0Smyv2/lIL9TN0HZufi0bbX0K84wNNT5xCdTD/SRtqkXd9fA1vMC10BtBNNDlXQ5HQBgtTvQUN2SB5p+4aRqSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=EdTgfYW6; arc=none smtp.client-ip=115.124.30.119
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E767B433E9D
+	for <patches@lists.linux.dev>; Fri,  4 Sep 2026 10:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788518085; cv=fail; b=ialEA3QL+dJwRlOP6q2JlW0JPLBdCgven+y+UVY1mVFk4IXSombmAEg0Gn2slY5Xsi0bQ2qHTCJ9g+zSoDNAtdXX2ZbyXLArMKO6q22tNbqCkXgqEZs6/eTaRF9Q6LidUf64esAgKUbYSxGVdGOdDIJX+jkjHeEn2M1E8gSKF1M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788518085; c=relaxed/simple;
+	bh=cNfAe2FdeebffGhgqCSZVKKV+NRGF8Z5pg4jdJVQ3Hs=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=CPfev+8igWsgNwTus9w3wHzgrhgqCQKD/rz/qn8yixvZm4nbK5j1rTP9obJgiV3BR/Db1OO51hno+MEh/wP2sjJ1Vwqa87DCjcxIjZWPMgESp+2Y4GsVlSpIiJ6uo6MZa6S4WtqmxYEvNsP4ehqLSjvIeH9TyQUB/2K0XEriaVM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=JTEYnbkJ; arc=fail smtp.client-ip=40.93.194.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="EdTgfYW6"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1788515519; h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	bh=19HkBx4CJhIGhDPL9cr/SS1aulypWTvYI+SiigUORts=;
-	b=EdTgfYW686Q22UyHtu2lb745KYlYMZ9PBZfBfQSM4nwjDKIMn5J8n8dXHYgWl2ZXaovvPATGIZ/cWFXoTzcDSi7GfQnMFhTh9pwFqZYYqIgmE+qi4svMc3XGqKIaWM3qn1z1CboCO8sIxC3/5b0zo+DyGof35pXIHqYe00ukWNI=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R361e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037026112;MF=alibuda@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0XAIS-aS_1788515518;
-Received: from localhost(mailfrom:alibuda@linux.alibaba.com fp:SMTPD_---0XAIS-aS_1788515518 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Fri, 04 Sep 2026 17:51:58 +0800
-Date: Fri, 4 Sep 2026 17:51:58 +0800
-From: "D. Wythe" <alibuda@linux.alibaba.com    >
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="JTEYnbkJ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nWN6M4DCmAztd66F7C6K/iYmuMDH+RVvmC9aVF0JayJ7gsW8UnSJ4AoDyC/p0DNkbShjKtpKydarmFbecys00YSt0AHwX9+fyRw30aYFC/Q9moEkMJOsCgHaiUdQx5N0xa53m1b9TDOeDmbqE4/aaGmZPl0UQ+62ld/xeGAy0CgDm4QCqjLhib9p7oCm6NcIpfjSYSuCDyLVuXumyNBE0OuvDTKwKPfGcE1MEdGXjJRK7eWuHlWY2eV2i52Ra5TKc1QbgNEaaBfMMNorVl+Gec1bISLspFfpo0GY0pQlCWmMy3pK4WxAQi3RndupPWeXfRmyIPbl8QpWzJIZ2Lmfdw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=J/UIXL5Rjvorm6ajOZLeKf3D0FFIJld/akrQEPd67Tg=;
+ b=FrtqKQt8vvrnG+POyMrWdNDEb7U5Rm/Up4Iu+ULu7NZqqXkvEjYKhra+ETsmJmkWQfNYFHdHldi0VJdNkPKbniK/aXq8R2O1Rzy01sWSUr9jUkB1zUcxGHcm9VkvsFsJxECgWGD8sUDXf024cfjNBqrzZxwNLjRRZdmGCTazAVlS6qkWrHwtw0y8TyayHekEPK1hCVYTc1MUheKqzQC+3QOEUP03GXbYaSsExHR/Deqo/F+EH0fbdEqJo3SW3ulP/wpEK6kO965Bv6+lXuk/jZmePEg2vYiwcH+LfCtZVLS058lzLYZTW6G2elSCkhAOHScktX+CrQ845xI2GwR5pg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=J/UIXL5Rjvorm6ajOZLeKf3D0FFIJld/akrQEPd67Tg=;
+ b=JTEYnbkJfWh31CQ/QLpIkhvDzD5a1rDwPySA7hwXmlAgsl1249WB9QWZtFDb1YPaHvr8mLm02r49RDPY27ZzRmjdGUlgMV38yjtWnmnV+fRIy4FBW1OtD5LGeYbe1PkqQlKO7AJke26hC6uDN2+Eyhbwo8cBgm/He6kmQhk3BsKwcC7sH+q0npLbPp0k1i/DMSSd+/Lj5Sh+FSXU59aWkJjEf4Pxa38cqd20IlUX5OTQyhX3VEBjGRbHr0IKfPbKIDE08SEQTGlOq79cofMHF5ZtIkwNs4KMN7I6tRvJTrKgRVs10FBtl2AUpsVhdfAFLcQpiKF0UZvihMkWxsi8AA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from SJ1PR12MB6051.namprd12.prod.outlook.com (2603:10b6:a03:48a::18)
+ by PH7PR12MB5805.namprd12.prod.outlook.com (2603:10b6:510:1d1::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
+ 2026 10:34:38 +0000
+Received: from SJ1PR12MB6051.namprd12.prod.outlook.com
+ ([fe80::96e1:b300:7b78:d3a9]) by SJ1PR12MB6051.namprd12.prod.outlook.com
+ ([fe80::96e1:b300:7b78:d3a9%6]) with mapi id 15.21.0382.007; Fri, 4 Sep 2026
+ 10:34:36 +0000
+Message-ID: <88e9b4e7-284b-4943-b0f7-97795d63991b@nvidia.com>
+Date: Fri, 4 Sep 2026 11:34:27 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 000/403] 6.12.109-rc1 review
+To: Dominique Martinet <asmadeus@codewreck.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Breno Leitao <leitao@debian.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: Re: [PATCH 5.10 28/43] xfrm: espintcp: fix UAF during close
-Message-ID: <20260904095158.GA83164@j66a10360.sqa.eu95>
-References: <20260831133358.571886287@linuxfoundation.org>
- <20260831133359.883892832@linuxfoundation.org>
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260904045734.806166532@linuxfoundation.org>
+ <apqKYeQe-78JWI3u@codewreck.org>
+Content-Language: en-US
+From: Jon Hunter <jonathanh@nvidia.com>
+In-Reply-To: <apqKYeQe-78JWI3u@codewreck.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: GV3PEPF0001DBF0.SWEP280.PROD.OUTLOOK.COM
+ (2603:10a6:158:400::315) To SJ1PR12MB6051.namprd12.prod.outlook.com
+ (2603:10b6:a03:48a::18)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260831133359.883892832@linuxfoundation.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PR12MB6051:EE_|PH7PR12MB5805:EE_
+X-MS-Office365-Filtering-Correlation-Id: 583c8d71-849a-4784-bc1a-08df0a701d8e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|23010399003|1800799024|10070799003|7416014|376014|4143699003|11063799006|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	zLfsABwvoSa8reBLMe2YBzBYzy2Lv73iDTWCgnLvzQRtDPm/fknJxoKZiaSfLfS+p5VCqarbqmdn9E42elCVgO13/NRrJCDlcwvgbsQsRVPkshwrhwO7Yodqowx/XrGWw2HdG5NlD1a1rbO0B2uXRXbmO7i/WXO7rE2fbyrb1cEhfOCs2lETyRJwCqRoOrfdA02YReVBvDp1Xv8dDeGNWsEYKWgYW2wEhZTlEcuunpydysGC6HUz018TC7RGRIPwEgqet/ssGO1+xGl8iaDPP7eskk8NvhO+Ry2YWP4HtSyNe4JblJ1A0rr+naVJ2snLf5smwQY/KRti7E3UxOPMjf8nfgEjGsWNaGkNLw9Hk0dr5l8DvmdgM2RnmpJx5iQ1CLSrlQZSWIA05vM81dgqXUlYuz0r0Sxz4byHSFudFD9stNVIt92B+va27kIzaVISCI/5wgj2qbYaXCY61VZPC1HxVs1/7nfnDb5s79yjWwyt7x01geojJ6xbk1NobNWvGmEtUElqVhT9JGIwO/jAqTKPM4nka75uf41C2eWdypBc9R6SkkFNQwDqPgxZ1D5onAaOF04svYRCos431T/ML9UFT0dpcGeH//oB/D2M0BeVmjcCE1oGKcBJXf+imLPt4kgCykUC4J6AEQid0Ue8F3Ubw94xJJrvMdSewCnh3Aw=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR12MB6051.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(10070799003)(7416014)(376014)(4143699003)(11063799006)(56012099006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?V00zdXM1YnNoME11Qlc1NEFNVHh1ZTk5UGJpL3orakVHOFAyeGJhWTRTVGtX?=
+ =?utf-8?B?N1pXMkxUTTRJRUJxOFlHZnlmS1pXaGpocEVBTW0ra3NSNis3d1NxVXVvQ0cw?=
+ =?utf-8?B?bEJMZTBJcVFNNkIzK1kxYUhPQ2xGemp5dVJEbG55Mjk4T2hybGZPL1dsTnhp?=
+ =?utf-8?B?alBPcXpMbmFEa3hxMXFnV2VhUTBQUXNpRTFyNW4rSWpLVHAwNG9oYjNwcHh1?=
+ =?utf-8?B?dzBrcFRieTN1bG1lVlloWFE4Y29IOWRUREdsQzM3NzlyUGxDZFR1dkJkQjRp?=
+ =?utf-8?B?K000ck5HU3JncHZ1M0lsRHlpdUNiOFd5ZGVsWm1uYkhCQXloTDEwaTI2UGtj?=
+ =?utf-8?B?YnNrSlpXSS95RDhiallybFJqOGdLZ0RBdVBocnQ2THVYN1ZKaU9XMERQK010?=
+ =?utf-8?B?UERqRjdyZCtLOFZZN2RNU2RoNXFaNm1hQUJmK29JSG9EbWp4QzhNQXVwd2d1?=
+ =?utf-8?B?R0pESDlpeXhyMEV4S0xOM3ZreHI4MENuNURoUm01TktxWHFZMzQ2R29kcmM4?=
+ =?utf-8?B?L0YzVUl1Z1JiZE1Hak1aVDZLYjE4cjJnMGdTSkJ0Ylh6RWsxUzdmazQ0OE9i?=
+ =?utf-8?B?VmhWYmtWcW1CbWxWWUJJbmRSeVIycGdSRGVBZXRrSjNEZitzNVRTLzUwWDk5?=
+ =?utf-8?B?UHdwaDY5S3pEa2xkYkhVUlJSSWFXNlJkeENsd3NpVC9wL0FEQWl3b2ZoVGE4?=
+ =?utf-8?B?aXZ1WmVHZm9DTzJRWWtlSXNwWEdYT2xRVXl4TkdON1plUmsza055M1lHVFZI?=
+ =?utf-8?B?R2FkRy84dmQ5MkFuQk9xVXBKKyt2TnVSL0dKNDZGdmlPWjZkNXpDcno0M1hT?=
+ =?utf-8?B?VUx3b2M5UHlYZi9wYWtPRk81RldVRHRxQ0ZaWlhJOVVYU0FFUVRoVi9LNmJN?=
+ =?utf-8?B?b3FLRHlXNEdlVlBFc3NkaDlKUDlaWm9TNVFKdk81ZWJvQ2VTN0hmRjdKeFlN?=
+ =?utf-8?B?ei9zeTE0NDFmcUl0dUl2V2JpNnRoL1hnQ3VZNk9KRm1HUld0NXgwWmV0ZVJ5?=
+ =?utf-8?B?VVdIK3JsTGFReG04a3lxc1kvekxBN1lsdk96czd6MG1udG5QWXRiSTRsUkl4?=
+ =?utf-8?B?N085UDlGelRQQ3J1ZGVITDdIbnltOHVTb3RCY1d1K2ZRVGMzYml0RForQ0w0?=
+ =?utf-8?B?MW9seENjUjhsczlhZThGTmpYYmpoNDQ2S1V0UnFNSm9wNkV2RUg3N0RxdUpB?=
+ =?utf-8?B?SGp2RUNMS0lzQ3F6QU8vYWxjZmZMLzlIUU5CZnNEcGcvdTlsUWlqYWt4OUFv?=
+ =?utf-8?B?TExvMHdocXN4cVkwY2Zvek9jbDVDamtmdFU1ejMrR29ncXVFNWd0aUx3YUpo?=
+ =?utf-8?B?Ykx2SVNjcnM1R1hHb2dYSElpdy9teXRUMU10cGpYdUs4aVcvd242QnJZZTkx?=
+ =?utf-8?B?T1RJWUtxcmFZRlF5eUI5eXp3ZUJCOVRHQm15czZ3bmM4dmw3OU9IbXhrSXNP?=
+ =?utf-8?B?VU1vRGcvMXdqaU4xS1VKZFZmVWwzTHNGblgrK2djSXg4b0trMFNlMGc5RzJI?=
+ =?utf-8?B?Q1AvMkJ5TitaMEptN0JuT1V1Vm5LV3Ywbi9YQjZvNTNnV1FnUTYxWHNPa0U5?=
+ =?utf-8?B?WmN2V1E3M2tOc1Zqci9DNDdUOFJmbGZ3R1FKTEYrTE1nbzJZbUtoLzFOVmpv?=
+ =?utf-8?B?bDVibWFoVXBGMW5rV2pzdzMyd3F3MVJBcGV2VVE1bTV1cjIvTzJLN292YmQ5?=
+ =?utf-8?B?L2Q0Mm82RnpqQkJBRWpNZWtiaGlmdkpubGw4anRNRFczcHRPVkl3VytRZmQr?=
+ =?utf-8?B?OXdzZzJQQ3NZRHc2RVNUK0R3NnBPSDhMcXY3ekpwYklBRldDNUk2cWNRZU1p?=
+ =?utf-8?B?eE1RUHpldUhTelN0c2djTkRQbCtoYmNpTXA4VUlMYWJsVVB1TGNIM3h6UG1n?=
+ =?utf-8?B?SUNuQmZ6ZktCT2I2ekV0ekpNZlMvandlM1hqZ3luT3U5NDJHeEJoeXUvN2cz?=
+ =?utf-8?B?MUlhUnF1c1UxbzNGR1ZQQS9UMG5MckcvbVMyaGxqV2JwZ3I0ZHhSY1VVT3Br?=
+ =?utf-8?B?UlpXTWQ0cE5wbzJlVkdPdExzZk9KNEc3Rmx0aHE5WFUxQlo0bHdOWk5kT0tW?=
+ =?utf-8?B?SVFGbmlvVDBnV0lFOGpoU2tqcWs0MXYrd2tCUjJtUVFsZDhDTEJBWnR1cjd4?=
+ =?utf-8?B?NnFEODJCYkt3MElaWThUZ2NQQjlqL09kc2ZjTWZwWWgyWFcyTVBTTTJvYjZn?=
+ =?utf-8?B?cnAwNzhaRDRSWVpCVXpJS29hZURWVXl2VGdsTytiZFZPdGtLZVFJZmM0NEVq?=
+ =?utf-8?B?ZzdZMTZDZkYrd1lWQ29LODRBYWZWalVyVGdJVkZUZDd1T2NwdGtBc0VFT3gy?=
+ =?utf-8?B?ajZSOUJRVll3L2hWNzhXSUE1Uy9BazdCeitCNnJ1Q0ZSMzA3cUo0Q1c1WFB4?=
+ =?utf-8?Q?yWDTi7Flk6qhNIJ0wuyrZUO76kD9MbHArstOy0gD1VCWe?=
+X-MS-Exchange-AntiSpam-MessageData-1: 8JSKoA78CaANkw==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 583c8d71-849a-4784-bc1a-08df0a701d8e
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR12MB6051.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 10:34:35.9447
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Uzx3bjjtWxLHKmozqoXHGQgO69toIwgY96guh/CZiJeMpW5ZXCZBTUzJ+lj5VfgN+kYdxWyjzu/yCCeccMkQ0A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5805
 
-On Mon, Aug 31, 2026 at 03:35:36PM +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
+
+On 04/09/2026 10:07, Dominique Martinet wrote:
 > 
-> ------------------
+>> Dev Jain <dev.jain@arm.com>
+>>      mm/page_vma_mapped: use huge_ptep_get() for hugetlb
 > 
-> From: Sabrina Dubroca <sd@queasysnail.net>
+> This fails build on arm (config attached)
 > 
-> commit deb232e884877bf10b4ce2580909eedec986c284 upstream.
-> 
-> ZDI reported and analyzed a race condition during close for espintcp
-> sockets:
-> 
->     espintcp_close() frees emsg->skb via kfree_skb() without holding
->     any socket lock. Concurrently, the xfrm_trans_reinject work queue
->     invokes esp_output_tcp_finish() -> espintcp_push_skb() ->
->     espintcp_push_msgs() -> skb_send_sock_locked(), which reads the
->     same skb as a data source.
-> 
-> Fix this by adding a synchronize_rcu() call after resetting sk_prot,
-> since esp_output_tcp_finish() runs under RCU and won't use a socket
-> with sk_prot == &tcp_prot.  Simply taking the socket lock in
-> espintcp_close() could lead to leaks, if esp_output_tcp_finish()
-> re-adds an skb in the slot we just freed. After this, the existing
-> barrier() is no longer needed.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-> Reported-by: zdi-disclosures@trendmicro.com
-> Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-> Reviewed-by: Breno Leitao <leitao@debian.org>
-> Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  net/xfrm/espintcp.c |    3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> --- a/net/xfrm/espintcp.c
-> +++ b/net/xfrm/espintcp.c
-> @@ -506,7 +506,8 @@ static void espintcp_close(struct sock *
->  	strp_stop(&ctx->strp);
->  
->  	sk->sk_prot = &tcp_prot;
-> -	barrier();
-> +
-> +	synchronize_rcu();
-
-
-This backport depends on upstream
-028363685bd0 ("espintcp: remove encap socket caching to avoid reference leak"),
-which is not in 5.15.y. Without it, esp_find_tcp_sk() still
-returns the cached x->encap_sk based only on sk_state == TCP_ESTABLISHED
-(no tcp_is_ulp_esp() check), so new readers keep racing with
-espintcp_close()'s kfree_skb on ctx->partial.emsg->skb — the UAF issue
-this patch is supposed to fix.
-
-Reproduced on 5.15.219+ (with this patch applied), KASAN trimmed:
-
-  BUG: KASAN: use-after-free in __skb_send_sock+0x6cf/0x7b0
-  Workqueue: events xfrm_trans_reinject
-
-  Reader:
-    __skb_send_sock <- espintcp_push_msgs <- espintcp_push_skb <-
-    esp_output_tcp_encap_cb <- xfrm_trans_reinject
-
-  Free:
-    espintcp_close <- inet_release <- __sock_release <- sock_close <-
-    __fput
-
-  Object: skbuff_head_cache (size 224), i.e. struct sk_buff.
-
-Provenance: the static analysis (missing-prerequisite chain, code-path
-derivation) and the KASAN reproducer above were both produced by our
-internal AI-assisted backport triage pipeline. I have personally
-reviewed the reasoning line-by-line against the 5.15.y source, re-ran
-the reproducer end-to-end, and confirm the finding — sending it upstream
-on that basis.
-
-Thanks,
-D. Wythe
-
->  
->  	cancel_work_sync(&ctx->work);
->  	strp_done(&ctx->strp);
+> CC      mm/page_vma_mapped.o
+> ../mm/page_vma_mapped.c: In function 'check_pte':
+> ../mm/page_vma_mapped.c:103:25: error: implicit declaration of function 'huge_ptep_get' [-Wimplicit-function-declaratio]
+>    103 |                 ptent = huge_ptep_get(pvmw->vma->vm_mm, pvmw->address,
+>        |                         ^~~~~~~~~~~~~
+> make[3]: *** [../scripts/Makefile.build:229: mm/page_vma_mapped.o] Error
 > 
 > 
+> Don't have time to look further right now, might have a look after kids
+> sleep if nobody beat me to it
+
+
+I see the same (appears to break 6.18.y too) and bisect points to ...
+
+# first bad commit: [25fb3e9ad3b665b57e218dafb58acd13b1a672b7] mm/migrate: use huge_ptep_get() in remove_migration_pte()
+
+Jon
+
+-- 
+nvpublic
+
