@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610EB3B6C1E;
-	Fri,  4 Sep 2026 05:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FDC3B2FE4;
+	Fri,  4 Sep 2026 05:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498594; cv=none; b=KMtA1M+Vvwg8nl+ovD/TFTIVX4bMbWLs6JVem0kOe/ohqicL3IfEaKHI1CizPf3NwoW293fxjnoGl4jFI9mQTmcBQkeJW2LEG4IT8r2M1z+MxR1rHB09PlM5tnS69LrWgtThMQqW34TXBDVKXfg0hsbcG1DFXXwCHUHjMPdzAo8=
+	t=1788498597; cv=none; b=Ztm3g30OEplpZS7NoZlhlK27RnZOBWkANEtdvRgAfxNZEgKRoNliSA4ouY+vMy/LVKQj4Y+uHCWtl4tBnrfbZO1bi7qkDPt26PCbLTGQwBeqPqq8+dSYTCcS0oYMqYxb+VkE6cEZZNIoXtmzKptwhSFbq+hqHcneIOIvR7dENyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498594; c=relaxed/simple;
-	bh=wu2r2C5EGfFZkxQTGd7fTiCglbCDinnHt5813GK1yg4=;
+	s=arc-20240116; t=1788498597; c=relaxed/simple;
+	bh=Rwp/A3JKxlX38LVHtOp6vhiIatetGkWNXefcPySuI68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxE9O0yNNdBrL40kXsAuO7H0riHXr/UEer/azz/pwx5/c5A2om+QbpQP1KGovydvVn4NmWe9Uh54E8hVlqX11kirh7mPRSoe9Pv72JfQrksf5PIZi+9e9YGzmitQpXv4OBK9bqZrsPBVnnsyw2oJnCxAC7k2tYbnW0J6FKdScjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRI82kZm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j5mFu8kWAbjiggEEBUvMqqioUxumHOizooCTPxRxon0uxmb99w/a8imaHDbLvImAXI0ACivecJPwa2vbqJX1PiG5V9QTxBuUSeeNYGLrjEQWf9dTmFBDFW4KGalBBX48u/vDiSQ3uREmXjAA5MoXrUxXhc4havv3Gs1B40dodl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOdtv2kE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRI82kZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8366A1F00A3D;
-	Fri,  4 Sep 2026 05:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOdtv2kE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611F41F00A3D;
+	Fri,  4 Sep 2026 05:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498593;
-	bh=mmP22H8jq3no+6bE+G/u9VIgymdpSSXCVbfRsso9DMo=;
+	s=korg; t=1788498595;
+	bh=0Ngpv9pyAu0YbjiKERAaba+JGaoV27O9BrDpRnv8ivA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LRI82kZmex+KkUjMe1T8FUnagyOgh0b+mGqedS20hDgtU8rtPX4H0RpAeZxiKm0iU
-	 JtDzhvULx1QAaSD16t0/kT9jbc8EzS4r0riaogLkRDyCvJQ6XftjAC1woAd1nSa2ai
-	 6iSQ6gZE4t9hNBhL95tIhIEMj2fZvQZEYswfxXUU=
+	b=zOdtv2kEnYxa3c2eVpznF0K1RwFuR7iwCjdVbljrmHuvyoAo5tHWa3gQ8FBo33FYh
+	 TE+ttapJ7ox8DuBmuvwHg9cRSL1sADBvLhhc3ngy7xdCz0a+SF41UmY3mBuzNPE+7x
+	 hu0inB5N7qveqtFFpCJvirgxUTM8OdmU1lFKwS9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Joy H.J. Lee" <rkr0k0r@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	David Laight <david.laight.linux@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 081/713] tools/compiler: match glibc 2.42 definition of __attribute_const__
-Date: Fri,  4 Sep 2026 06:50:49 +0200
-Message-ID: <20260904045805.655796338@linuxfoundation.org>
+	Neill Kapron <nkapron@google.com>
+Subject: [PATCH 7.2 117/713] usb: gadget: f_fs: Prevent deadlock during ep0 read loop
+Date: Fri,  4 Sep 2026 06:51:25 +0200
+Message-ID: <20260904045806.460028224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,51 +49,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy H.J. Lee <rkr0k0r@gmail.com>
+From: Neill Kapron <nkapron@google.com>
 
-commit 8700a4761beb219873956666cf91776a2c61e698 upstream.
+commit 569dd7e5dcffe1e1c6b26ca2cd3be57eb433e082 upstream.
 
-glibc 2.42 added __attribute_const__ to sys/cdefs.h:
+Currently, ffs_ep0_read() holds ffs->mutex when it prepares to go to
+sleep waiting for an event. When no setup events are pending, it calls
+wait_event_interruptible_exclusive_locked_irq() with the mutex still
+held. The wait macro deliberately drops the waitqueue spinlock before
+sleeping but does not drop the mutex.
 
-    # define __attribute_const__ __attribute__ ((__const__))
+If a userspace daemon is polling ep0 via read() and the gadget is
+asynchronously torn down via configfs (e.g., echo "" > UDC), a
+deadlock can occur:
 
-GCC 15 warns when a macro is redefined to a different replacement list
-(-Wbuiltin-macro-redefined). Since host tool Makefiles (resolve_btfids,
-objtool) pass -Werror, this conflict becomes fatal.
+1. The configfs teardown calls functionfs_unbind(), which queues a
+   FUNCTIONFS_UNBIND event.
+2. The daemon wakes up, consumes the event, and drops the mutex.
+3. However, if the daemon loops and immediately issues another read()
+   before exiting, it reacquires ffs->mutex and again goes into an
+   interruptible sleep.
+4. Meanwhile, functionfs_unbind() continues execution and attempts to
+   acquire ffs->mutex to tear down ep0req.
+5. The kernel deadlocks because the configfs thread is stuck in an
+   uninterruptible sleep waiting for the mutex, while the userspace
+   daemon is in an interruptible sleep holding the mutex forever
+   because no more events will arrive.
 
-The warning is suppressed on standard native builds because GCC treats
-/usr/include as a system header path (-isystem), and macro-redefinition
-warnings from system headers are silently suppressed by GCC. It fires
-when glibc headers are on a regular include path (-I) instead, which
-is the case in cross-compilation setups such as NixOS, where the
-sysroot's glibc is passed explicitly via -I rather than -isystem.
+To fix this, we drop both the waitqueue spinlock and ffs->mutex before
+going to sleep, and use wait_event_interruptible_exclusive() instead.
+Upon waking up, we jump back to the `retry` label to safely reacquire
+the mutex and re-evaluate the state machine. By not sleeping with
+ffs->mutex held, we natively decouple gadget teardowns (which require
+the mutex) from userspace polling.
 
-Per (C11 6.10.3), identical replacement lists are accepted silently.
-Match the glibc definition exactly, including the space before "((", so
-the redefinition is accepted without warning regardless of whether
-glibc headers are treated as system or non-system includes.
-
-Link: https://lore.kernel.org/20260701200635.3992767-1-rkr0k0r@gmail.com
-Signed-off-by: Joy H.J. Lee <rkr0k0r@gmail.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: David Laight <david.laight.linux@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://patch.msgid.link/20260724204117.4036015-1-nkapron@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/linux/compiler.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/tools/include/linux/compiler.h
-+++ b/tools/include/linux/compiler.h
-@@ -119,7 +119,7 @@
- #define __read_mostly
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -548,6 +548,7 @@ static ssize_t ffs_ep0_read(struct file
+ 	if (ffs_setup_state_clear_cancelled(ffs) == FFS_SETUP_CANCELLED)
+ 		return -EIDRM;
  
- #ifndef __attribute_const__
--# define __attribute_const__
-+# define __attribute_const__ __attribute__ ((__const__))
- #endif
++retry:
+ 	/* Acquire mutex */
+ 	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
+ 	if (ret < 0)
+@@ -582,10 +583,15 @@ static ssize_t ffs_ep0_read(struct file
+ 			break;
+ 		}
  
- #ifndef __maybe_unused
+-		if (wait_event_interruptible_exclusive_locked_irq(ffs->ev.waitq,
+-							ffs->ev.count)) {
+-			ret = -EINTR;
+-			break;
++		if (!ffs->ev.count) {
++			spin_unlock_irq(&ffs->ev.waitq.lock);
++			mutex_unlock(&ffs->mutex);
++
++			if (wait_event_interruptible_exclusive(ffs->ev.waitq,
++							       ffs->ev.count))
++				return -EINTR;
++
++			goto retry;
+ 		}
+ 
+ 		/* unlocks spinlock */
 
 
