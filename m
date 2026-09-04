@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B46D41687B;
-	Fri,  4 Sep 2026 05:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699C941A517;
+	Fri,  4 Sep 2026 05:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499472; cv=none; b=tZ5UHnxnD2r/w4W8x7tkZn7JX366Bq7Ah709QTaTTYLZM6vQHXn2ZuLm6PhsIb+HTNh0RJae3upX4+/jxwAUNHgd87wI76Y9jAS8xLg3Z4a5oabmMfinSTXuqK5eN8pjBiDltz9ULIcGEG23tOYxV99uUOeLILJRWhc7LU5bb+Q=
+	t=1788499475; cv=none; b=aviMfqaOF7ivFykohJ3LuNcfGp54NBWU2sDieBNZWNb2sPVFvzSFpbqGsJ2TR3b9RrbQpMjCsUegZYzFNwoEcCirNtTScCHXQhvJym7hRlb4oWq6+GsbMexuzhrcu0ZhHoCxxPKevt+JTyeBySn+kzx5NsOQHJxu/H8YJe2vr64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499472; c=relaxed/simple;
-	bh=IKmzcu3MmRR8qDaGtJPnQkWowe+pT6vfqQXLmota610=;
+	s=arc-20240116; t=1788499475; c=relaxed/simple;
+	bh=tLv/J7LdB169sf7IIDZbkADhKnrMOCUzmBD/bauu5bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtJbdrwjjE0nUPpRJx7C6AHMcsLjt5MeryjJA1teGPbhv6EWRG0i8ScsPJ9Y2vFXrQKEl1z4B/+brQXWyk2/WYU5Bk6QpNu3leU+J26SCXRf2uzHTJdfraLkPYi6pkvZeyIQRjbQ2V8v27Y/ucYcp9b38PIGzFYpO5lLdnf4Ob8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sr1LuDzv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dvwRNs9pgGUmonXVfxUshS+v/db3N9tRKKWNcW8OUuyf64di3ZIX1ZzQ8qgATYMRrTcD52FfdDjFACB99o/yN4IM4O7qidBWMd4Trb8TKEIdkRiZpUldmScZo3bB7nhJTGVxC/tlhGkHAwcbPQpRsoGRJyEP5eUODThd3a+t7Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0hkJCnQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sr1LuDzv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DEF1F00A3D;
-	Fri,  4 Sep 2026 05:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0hkJCnQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0881F00A3D;
+	Fri,  4 Sep 2026 05:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499471;
-	bh=vEpXfNKfLi37guebjSxgx926DdsAx+T5TfXL0Rb78tc=;
+	s=korg; t=1788499474;
+	bh=nd9hAUi0GMp8Q9XE6l1lFFXo8rL7x/kJy2Ebzut+qRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sr1LuDzvArk3li9arEaA06Waf59APFmpUa3zTwOmPXnd1rj7H1TUAZVChlF8Ri9Eq
-	 uFaAZZ1FOG0NntX2SnkZaMWsik1cG5SJTNYPrRp5MAdD1UgGHsRgZ6+6Z5dF5vcMzf
-	 I5j6PzdsSd4wIOfHOfNG3Y8R0iaE/V8pG363jw8c=
+	b=L0hkJCnQB970nLBqKH6k60hl8ZRzHfiz9pieuV4p88dzxpeQlhC7HgkLufp94yg8v
+	 9IY5lHlZGyBaXS8w/Qr7rgxXbKfkaZhyUXbFQwXGJ0ABYwO8aAKpGDEiVcd6i345sl
+	 ukaWQAHpRR/DTz5pklQv23xNtysEpkhwdhGFD7JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@nabladev.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 7.2 429/713] arm64: dts: rockchip: Fix rk3399-roc-pc-plus analog audio
-Date: Fri,  4 Sep 2026 06:56:37 +0200
-Message-ID: <20260904045813.444588972@linuxfoundation.org>
+	Wentao Guan <guanwentao@uniontech.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 7.2 403/713] wifi: mt76: mt7925: cancel pending mlo_pm_work
+Date: Fri,  4 Sep 2026 06:56:11 +0200
+Message-ID: <20260904045812.857361491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,59 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@nabladev.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-commit 4f7259ebe1eba4778768a4f5a0bbbe439d10f3f3 upstream.
+commit 2889e84282dda147f10b10d94cf0efd90a349c53 upstream.
 
-The ES8388 sound card on the rk3399-roc-pc-plus fails to probe because
-i2s1 cannot claim its MCLK pin:
+If the device is reset, suspended or unregistered within that window,
+the pending work can still run and access vif/bss data that may already
+be freed, or send MCU commands while the firmware is not available.
 
-pinctrl: pin gpio4-0 already requested by ff880000.i2s; cannot claim for ff890000.i2s
-pinctrl: error -EINVAL: pin-128 (ff890000.i2s)
-pinctrl: error -EINVAL: could not request pin 128 (gpio4-0) from group i2s-8ch-mclk-pin
-on device rockchip-pinctrl
+Add cancel_delayed_work_sync(&dev->mlo_pm_work) in all relevant teardown
+and suspend paths:
 
-GPIO4_A0 is routed as SCLK_I2S_8CH_OUT and is used by i2s1 as the
-external MCLK for the ES8388 codec. The board dts already removes
-GPIO4_A0 from the i2s0_8ch_bus pin group, but i2s0 still claims the
-same pin through its bclk_off state.
+ - mt7925_mac_reset_work()        (chip reset recovery)
+ - mt7925e_unregister_device()    (PCIe unbind)
+ - mt7925_pci_suspend()           (PCIe bus suspend)
+ - mt7925_suspend()               (mac80211 suspend)
+ - mt7925u_suspend()              (USB bus / runtime suspend)
 
-Since the i2s driver requests both states, this blocks i2s1 pinctrl
-setup and leaves the simple-audio-card deferred with a parse error.
+This ensures the work is stopped before the device state becomes
+invalid.
 
-Override i2s0_8ch_bus_bclk_off as well, matching the existing
-i2s0_8ch_bus override, so GPIO4_A0 is left for i2s1/ES8388 audio.
+Assisted-by: kimi-cli:kimi-k2.7 code
+Assisted-by: atomcode:glm-5.2 #Reported-by
 
+Fixes: 276a568832577 ("wifi: mt76: mt7925: update the power-saving flow")
 Cc: stable@vger.kernel.org
-Fixes: 6d9a7bd6a13c ("arm64: dts: rockchip: add support for Firefly ROC-RK3399-PC-PLUS")
-Signed-off-by: Fabio Estevam <festevam@nabladev.com>
-Link: https://patch.msgid.link/20260717010736.578419-1-festevam@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Link: https://patch.msgid.link/20260630090218.3202029-1-guanwentao@uniontech.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c  |    1 +
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c |    1 +
+ drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    2 ++
+ drivers/net/wireless/mediatek/mt76/mt7925/usb.c  |    1 +
+ 4 files changed, 5 insertions(+)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
-@@ -136,6 +136,18 @@
- 		<3 RK_PD7 1 &pcfg_pull_none>;
- };
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -1323,6 +1323,7 @@ void mt7925_mac_reset_work(struct work_s
  
-+&i2s0_8ch_bus_bclk_off {
-+	rockchip,pins =
-+		<3 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>,
-+		<3 RK_PD1 1 &pcfg_pull_none>,
-+		<3 RK_PD2 1 &pcfg_pull_none>,
-+		<3 RK_PD3 1 &pcfg_pull_none>,
-+		<3 RK_PD4 1 &pcfg_pull_none>,
-+		<3 RK_PD5 1 &pcfg_pull_none>,
-+		<3 RK_PD6 1 &pcfg_pull_none>,
-+		<3 RK_PD7 1 &pcfg_pull_none>;
-+};
-+
- &i2s1 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2s_8ch_mclk_pin>, <&i2s1_2ch_bus>;
+ 	cancel_delayed_work_sync(&dev->mphy.mac_work);
+ 	cancel_delayed_work_sync(&pm->ps_work);
++	cancel_delayed_work_sync(&dev->mlo_pm_work);
+ 	cancel_work_sync(&pm->wake_work);
+ 
+ 	for (i = 0; i < 10; i++) {
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1640,6 +1640,7 @@ static int mt7925_suspend(struct ieee802
+ 	cancel_delayed_work_sync(&phy->mt76->mac_work);
+ 
+ 	cancel_delayed_work_sync(&dev->pm.ps_work);
++	cancel_delayed_work_sync(&dev->mlo_pm_work);
+ 	mt76_connac_free_pending_tx_skbs(&dev->pm, NULL);
+ 
+ 	mt792x_mutex_acquire(dev);
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
+@@ -48,6 +48,7 @@ static void mt7925e_unregister_device(st
+ 	mt76_for_each_q_rx(&dev->mt76, i)
+ 		napi_disable(&dev->mt76.napi[i]);
+ 	cancel_delayed_work_sync(&pm->ps_work);
++	cancel_delayed_work_sync(&dev->mlo_pm_work);
+ 	cancel_work_sync(&pm->wake_work);
+ 	cancel_work_sync(&dev->reset_work);
+ 
+@@ -517,6 +518,7 @@ static int mt7925_pci_suspend(struct dev
+ 	dev->hif_resumed = false;
+ 	flush_work(&dev->reset_work);
+ 	cancel_delayed_work_sync(&pm->ps_work);
++	cancel_delayed_work_sync(&dev->mlo_pm_work);
+ 	cancel_work_sync(&pm->wake_work);
+ 
+ 	mt7925_roc_abort_sync(dev);
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
+@@ -269,6 +269,7 @@ static int mt7925u_suspend(struct usb_in
+ 	pm->suspended = true;
+ 	dev->hif_resumed = false;
+ 	flush_work(&dev->reset_work);
++	cancel_delayed_work_sync(&dev->mlo_pm_work);
+ 
+ 	mt76_connac_mcu_set_hif_suspend(&dev->mt76, true, false);
+ 	ret = wait_event_timeout(dev->wait,
 
 
