@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D343B19BC;
-	Fri,  4 Sep 2026 05:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5F83B19BC;
+	Fri,  4 Sep 2026 05:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499963; cv=none; b=FdYQgtYX0I7mS2JMIjExCpUU883Kx8c5kz19tGrSJqnhxcs0Rb3OGeUvZsotTEMbuY/QTaReInYpDndv9/6caL58gj506EDZo9kUe6BiXE0RAqT8MDYermLRhuR7gJN1EbpDvI3Tq2yTLzK+myAgTPuQN8gmEAPcrnmi/fmoOQA=
+	t=1788499966; cv=none; b=R81SMdsLZNSGxG/TXEZt7KhqyQuaSesiCIEFTqrLQ9AcxACaj9O3dYh9c8q06zGEKh4FMlT6VasLtfKgLem9JdS8gUc4ooaMZ+Vlvkt0KRvJC2T5jujPdoZ+HFu7cwPIOdcRtWGRt3uKUnaW5NdXCVr22HsO+9hy5kM3L2S3gpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499963; c=relaxed/simple;
-	bh=bnsFuRLzEoZnSLoA2wdvATz7ZV7xQ+K+qnozSuFWXIk=;
+	s=arc-20240116; t=1788499966; c=relaxed/simple;
+	bh=40RTMGN2aqmTC9nrLfOwk9KbYLHjvGrN4hPKQXPvnWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoBMJ/cqhIAY2f4bTSR/B9c75mkzdpk/uFSxTfiR/bMBaFU2UtQXJzu5zzW/D38rnauvLWhsiBN72rDQwP+0HLnJZuzNemKNkszmGQRoU5BfEvcL9XAGby0yjUgWrBU6iQ5Ly0LpRDg9sObB+riAcsSkoBS7wNPQpW647jIUaEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEx0AhJs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lbsw11cupKItkCQruM2A4gdshPL78olBnRMgapmLKhUBwehZk4NhyJYAb4u4BFPzwAywgDDtGUfejLjHDDje9Nmgsd0mZ5znLaEHnizmnaIdSY/th1siXatlmvVjqXAnLAdhnEz62fst+i8KxW8/OI/3exdtDR5A7gBowjR27mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzQPTJob; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEx0AhJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712AE1F00A3E;
-	Fri,  4 Sep 2026 05:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzQPTJob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4459A1F00A3D;
+	Fri,  4 Sep 2026 05:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499962;
-	bh=SQmfmszmuzmmjlmvV4FVKLnnwyY8J0mFc4xESYriOl8=;
+	s=korg; t=1788499964;
+	bh=69nbhcVqmTAaYc8ijzEgERJls3Sx9Bp4zGyt3znd++E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PEx0AhJs6duWN0dIToWR7zsu3b6x1uXNX2NdxluVfX3nSrpBdnQSv0e9Gpr9pgdPn
-	 9cLIkhIBQcxS0jr8RPyhe7PHUXU5RMxHnVqKf9Z4C9/eCa3aUd9XmbZHju+OFEV49h
-	 ZchrtDfVSnCjm56S6QTBGb4k6zIax/FDwMrfj1jE=
+	b=xzQPTJobv9uD4T44OQsQQWprL1FLgQBhfGSdkxsEgCeqtXYHt8jO9EtLrWqgt0e3Y
+	 CH2Jy8Nx+eQ+d6d0CeR5aqhABPWM6pxrow943PxGdez/Bl6GuvRgPdgV4eHjQW6Glm
+	 QtWjF75I3xPrn/NcAgjShcf4NHohHxxo3B11Jwng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Simon Horman <horms@kernel.org>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 603/713] net: l2tp: do not propagate multicast notification errors
-Date: Fri,  4 Sep 2026 06:59:31 +0200
-Message-ID: <20260904045817.344543128@linuxfoundation.org>
+Subject: [PATCH 7.2 604/713] net: mctp: hold a reference to the route device in mctp_route_lookup()
+Date: Fri,  4 Sep 2026 06:59:32 +0200
+Message-ID: <20260904045817.365980857@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,80 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit af20e269f7459d2ce69887fdf2fad7caf986c865 upstream.
+commit 408da1df18116c971c3392e21e50586688cd3fbf upstream.
 
-The tunnel create, tunnel modify, session create, and session modify
-netlink handlers send multicast notifications through helpers that can fail
-while allocating or encoding a message, or while multicasting it.
+mctp_route_lookup() uses rt->dev without holding a reference on it.
+mctp_route_lookup_single() returns the route under RCU only, so the
+route's device can be torn down concurrently: mctp_dev_put() drops the
+last reference and synchronously kfree()s mdev->addrs.  mctp_dev_saddr()
+then reads rt->dev->addrs[0], giving a use-after-free reachable by an
+unprivileged local AF_MCTP user on the receive/forwarding path (no
+CAP_NET_RAW required):
 
-For tunnel and session create/modify, a notification is sent after the live
-operation has completed. Returning a best-effort notification error as the
-command result can therefore report failure for an operation that already
-committed and can cause callers to retry and accumulate live objects.
+  BUG: KASAN: slab-use-after-free in mctp_route_lookup
+  Read of size 1 at addr ... by task mctp_uaf/...
+   mctp_route_lookup
+   mctp_pkttype_receive
+  Freed by task ...:
+   kfree
+   mctp_dev_put
+   mctp_dev_notify
 
-Keep sending notifications for listener visibility, but do not propagate
-their best-effort status as the command result. This also keeps the tunnel
-modify command consistent with the other notification-only paths.
+In the same window mctp_dst_from_route() -> mctp_dev_hold() also
+increments a refcount that has already reached zero
+("refcount_t: addition on 0 ... mctp_dev_hold").
 
-Fixes: 33f72e6f0c67 ("l2tp : multicast notification to the registered listeners")
+This reintroduces the use-after-free class of CVE-2023-3439: the source
+address lookup was moved ahead of the point where the destination takes
+its device reference.
+
+Take a reference with refcount_inc_not_zero() before touching rt->dev,
+skip a device that is already dead, and drop the reference once the
+destination has taken its own.
+
+Fixes: 22cb45afd221 ("net: mctp: perform source address lookups when we populate our dst")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/54f48e812ca0424c47ffdb9a8182180921f7e6b2.1787247008.git.zihanx@nebusec.ai
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Link: https://patch.msgid.link/20260813022102.2792032-1-qwe.aldo@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/l2tp/l2tp_netlink.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/mctp/route.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/net/l2tp/l2tp_netlink.c
-+++ b/net/l2tp/l2tp_netlink.c
-@@ -248,8 +248,8 @@ static int l2tp_nl_cmd_tunnel_create(str
- 		kfree(tunnel);
- 		goto out;
- 	}
--	ret = l2tp_tunnel_notify(&l2tp_nl_family, info, tunnel,
--				 L2TP_CMD_TUNNEL_CREATE);
-+	l2tp_tunnel_notify(&l2tp_nl_family, info, tunnel,
-+			   L2TP_CMD_TUNNEL_CREATE);
- 	l2tp_tunnel_put(tunnel);
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -998,14 +998,29 @@ int mctp_route_lookup(struct net *net, u
+ 			mtu = mtu ?: rt->mtu;
  
- out:
-@@ -305,8 +305,8 @@ static int l2tp_nl_cmd_tunnel_modify(str
- 		goto out;
- 	}
+ 		if (rt->dst_type == MCTP_ROUTE_DIRECT) {
+-			mctp_eid_t saddr = mctp_dev_saddr(rt->dev);
++			mctp_eid_t saddr;
++
++			/* rt->dev may be going away concurrently: its last
++			 * reference is dropped in mctp_dev_put(), which frees
++			 * mdev->addrs that mctp_dev_saddr() reads, and
++			 * mctp_dst_from_route() takes a reference on it.  Pin
++			 * it before use, and skip a device that is already
++			 * dead rather than resurrecting it.
++			 */
++			if (!refcount_inc_not_zero(&rt->dev->refs))
++				break;
++
++			saddr = mctp_dev_saddr(rt->dev);
  
--	ret = l2tp_tunnel_notify(&l2tp_nl_family, info,
--				 tunnel, L2TP_CMD_TUNNEL_MODIFY);
-+	l2tp_tunnel_notify(&l2tp_nl_family, info,
-+			   tunnel, L2TP_CMD_TUNNEL_MODIFY);
+ 			/* cannot do gateway-ed routes without a src  */
+-			if (saddr == MCTP_ADDR_NULL && depth != 0)
++			if (saddr == MCTP_ADDR_NULL && depth != 0) {
++				mctp_dev_put(rt->dev);
+ 				break;
++			}
  
- 	l2tp_tunnel_put(tunnel);
- 
-@@ -645,8 +645,8 @@ static int l2tp_nl_cmd_session_create(st
- 		session = l2tp_session_get(net, tunnel->sock, tunnel->version,
- 					   tunnel_id, session_id);
- 		if (session) {
--			ret = l2tp_session_notify(&l2tp_nl_family, info, session,
--						  L2TP_CMD_SESSION_CREATE);
-+			l2tp_session_notify(&l2tp_nl_family, info, session,
-+					    L2TP_CMD_SESSION_CREATE);
- 			l2tp_session_put(session);
- 		}
- 	}
-@@ -710,8 +710,8 @@ static int l2tp_nl_cmd_session_modify(st
- 	if (info->attrs[L2TP_ATTR_RECV_TIMEOUT])
- 		session->reorder_timeout = nla_get_msecs(info->attrs[L2TP_ATTR_RECV_TIMEOUT]);
- 
--	ret = l2tp_session_notify(&l2tp_nl_family, info,
--				  session, L2TP_CMD_SESSION_MODIFY);
-+	l2tp_session_notify(&l2tp_nl_family, info,
-+			    session, L2TP_CMD_SESSION_MODIFY);
- 
- 	l2tp_session_put(session);
+ 			if (dst)
+ 				mctp_dst_from_route(dst, daddr, saddr, mtu, rt);
++			mctp_dev_put(rt->dev);
+ 			rc = 0;
+ 			break;
  
 
 
