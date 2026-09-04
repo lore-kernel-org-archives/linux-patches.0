@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F596415F29;
-	Fri,  4 Sep 2026 06:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2157D418A2D;
+	Fri,  4 Sep 2026 06:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502252; cv=none; b=InUt30C5yemB0g1zj108gl2mTLgjP9p4OPzO9lcYxEklifcG3K9CT39Hh5h45XqH+ySbePn+VRpF3cOTowM49oTryjnwE9J+7nA/S91oAzvyo1WviSN/zakkpP7I5elgYbtfegMw4sQBvT0xmZwoe6Iy0cX2LOEb+djxrVVDUeY=
+	t=1788502255; cv=none; b=U0yoILBaLF7zSSN5nQ0et29zYcY8iQy2eZ+MYkg7bPWqS8sttdpzLME0ZiIug4kwWvFfVJvct1kI/BtEt75AoMz+iqMVt3qs2PPrENaFd8ACEDB87Wa5WLXyTqw8KcVBeCrV9Zt9ndKP3+2yBRthnGBohPD2ifsD08o1PRIG7r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502252; c=relaxed/simple;
-	bh=FmTJGJw7ekv558FKeNdVnjV3dJZJtQvCq21b5YcAv14=;
+	s=arc-20240116; t=1788502255; c=relaxed/simple;
+	bh=a/maIbPlTK1JRWuN62zTSHE96Yb2ubcDjIqdr34u7hA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBxLWvaGPJ0WH9fOEQCqrewrSawNzIIxhRJqESxPQkZZzEt3NNURy3zSqneAOvMJvsyyWk+T6qHgo5WsVpq7iFpxjJ8SneZiMUihDAmECZiCPO8dEyeznJI6Fwn/vn02xXY7dq+55QQwWZhaADGWMVX5rBn54XvcjMkLHPjBOaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8pG57jy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pAzgZlAqhdhKjnq9O5NpknPmY8byy6RoUYmysA1g2JgEoqvQsebiY7BgqfkJdxgxyLlhl/zLKc9UDNlE5GbtdHWQspb/oNOSTgqu72poB+6XY0iBXE6vzQzx5N1qyZr6fGwt0wkyv5dWT8463uB18mf+Q8UdIFwaVRMAUHgu6WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJ4Dnr9R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8pG57jy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B9C1F00A3D;
-	Fri,  4 Sep 2026 06:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJ4Dnr9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B6B1F00A3D;
+	Fri,  4 Sep 2026 06:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502251;
-	bh=VOHh7pcRsiZxCHGJQpHrMu+TzC4EqPKELJVds01V4oo=;
+	s=korg; t=1788502254;
+	bh=lEtCeu1kAPd9UeV51z/uuPmPvBORPnNIIbM7A9Jrdgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r8pG57jygMrSVsFQrd1B8+x9bFbLQwjUhMXM/6rPzB2rdvaU8+7A0+N2U55U2Vu5b
-	 EOYNejZh2KQTRi0DSyDTPWWEibKLELkPVGHqk0+U9l3yEZuHnHpK55cw/bULuN4Bzq
-	 gvjniyV5MvAUkK7TJIf7NtbK+OI4RJYXVxMYypD8=
+	b=fJ4Dnr9RWVekzIgx6+M9yCpfPBS1sDO1m83QYcFPm4SwA1RLjS/pMGVDsJKMQOiKD
+	 zETgE+kVnj/uerO8vdORMzYkI7XwLwJPGz2UuA9hBE5QydQh8FvVz5jd0hoi+erj3h
+	 NJi29s+ic+Dng4G/MEEEqQuf6rKS1b/ztpLHgtAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yemu Lu <prcups@krgm.moe>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Christian Brauner <brauner@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 143/403] fat: restore original value when fat_ent_write failed
-Date: Fri,  4 Sep 2026 06:59:06 +0200
-Message-ID: <20260904045738.097244822@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 144/403] fbdev: omapfb: panel-dsi-cm: initialize lock before registering display
+Date: Fri,  4 Sep 2026 06:59:07 +0200
+Message-ID: <20260904045738.121440149@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -57,45 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yemu Lu <prcups@krgm.moe>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 64d9183203eebe33de6188b70a8c1e91f52885db upstream.
+commit f8e43fe0f22b7137ce456e6fe3581d3098174f74 upstream.
 
-fat_ent_write() may have committed the new link to the primary FAT but
-then failed on the mirror copy, leaving the chain pointing to new_dclus
-even though the caller will free it.  Restore the original value to keep
-the chain consistent.
+dsicm_probe() registers the display before initializing ddata->lock.
+Once omapdss_register_display() publishes the display, another consumer
+can reach a dsicm callback that takes this mutex while it is still
+uninitialized.
 
-Link: https://lore.kernel.org/20260525085649.781643-1-n05ec@lzu.edu.cn
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yemu Lu <prcups@krgm.moe>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Initialize the mutex before registering the display so the published
+callbacks always see a valid lock.
+
+Fixes: f76ee892a99e ("omapfb: copy omapdss & displays for omapfb")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fat/misc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/fat/misc.c
-+++ b/fs/fat/misc.c
-@@ -133,7 +133,11 @@ int fat_chain_add(struct inode *inode, i
- 		ret = fat_ent_read(inode, &fatent, last);
- 		if (ret >= 0) {
- 			int wait = inode_needs_sync(inode);
-+			int old = ret;
+--- a/drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c
++++ b/drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c
+@@ -1151,14 +1151,14 @@ static int dsicm_probe(struct platform_d
+ 	dssdev->caps = OMAP_DSS_DISPLAY_CAP_MANUAL_UPDATE |
+ 		OMAP_DSS_DISPLAY_CAP_TEAR_ELIM;
+ 
++	mutex_init(&ddata->lock);
 +
- 			ret = fat_ent_write(inode, &fatent, new_dclus, wait);
-+			if (ret < 0)
-+				fat_ent_write(inode, &fatent, old, wait);
- 			fatent_brelse(&fatent);
- 		}
- 		if (ret < 0)
+ 	r = omapdss_register_display(dssdev);
+ 	if (r) {
+ 		dev_err(dev, "Failed to register panel\n");
+ 		goto err_reg;
+ 	}
+ 
+-	mutex_init(&ddata->lock);
+-
+ 	atomic_set(&ddata->do_update, 0);
+ 
+ 	ddata->reset_gpio = devm_gpiod_get(&pdev->dev, "reset", GPIOD_OUT_LOW);
 
 
