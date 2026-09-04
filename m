@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710912F9DA1;
-	Fri,  4 Sep 2026 06:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534852F9DA1;
+	Fri,  4 Sep 2026 06:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501926; cv=none; b=jWjFiVWsvZisOsDlsxal7+LbboTj8Da6iNrrRxDPyOctI1ZPdMx7RGoiwN/FdOj105k1Lfwgv9eubwYOKGZzIiZEI6VIItbfGBwJhiSIhdpaoVixuQDdf3hiiwM1dHsUdNCt21M1N4OkLSCUrJbeVwyhqlPe3E6mSy3plvJ67TQ=
+	t=1788501929; cv=none; b=OMOmJ93rFJ7QVkYK/UOOLXKvNkVv5CpbGk7dO+E5F7TY//vTxtWXnabO5BZNk5j8dwBioo4YIs4KqBxWRgiULIYYy10VSWlZLTZYR4Y3tk0wE8tSJ00qWbGMHZlNdy1p6+p1MyHbFk+0JXonEY07wM/vOlcPLdGY7f9OT8nGyc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501926; c=relaxed/simple;
-	bh=R2aIkGhRUA9wZtRcy+eDwhvN4UbsS6KKfmBOJyRYDSE=;
+	s=arc-20240116; t=1788501929; c=relaxed/simple;
+	bh=Witn5Z+W/Y6FV8L/t/G/RfMBy8n9rt6uAuI0Mc8b7bQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgAYip3Cjw+CuN2OGKAUR+wAtZbnaXGxDsU1qbQpuExXyBhkirqDE6fzR4EazrmLCBmACXZ/e1x7hOfxHfbe6c+PvH6HfdxBb+AViej2X8tRJYJZCMLuj7JziL9J27FTLMzA3ZwSSyMY+TA6aYBrGVWRU17+p3dZdsIEraKD87w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Zcytpv4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FEsMiQLyX90jf06NEqziz/deGhkJSZSRhyKUKe6pyviZS/i8ZkNuTPOUYVlxPMIX8kOGI4L62Asf1pysNwFsMMqIUeN2mer9yeA6ZzWNAbC4ydJJunhn7cJDV77n9B4C+ylb8Ty33nwWplEUlmuk5twXqSGESzGFPJsq63nn6U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahfZtb94; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Zcytpv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1731F00A3D;
-	Fri,  4 Sep 2026 06:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahfZtb94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F49E1F00A3D;
+	Fri,  4 Sep 2026 06:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501925;
-	bh=zUE7AapD4HHAKVmjZgjKuyIEljbKmERQKcgPlpBVQ+s=;
+	s=korg; t=1788501927;
+	bh=yMHd76emzVXpcuQKmUEyFhJqH1lVbgBzxn57rV+C1cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Zcytpv4vcNPpqkA2BPO4gHzYNrpI8ZU/no5MMX/uTlnrE72QDHUbemTPl+XqBV4w
-	 Y8wKHoxyERRKyQWvkn5E3n7spZPmxkcaTJEfENtRXFyptrjhfcyHmJhgzdKRep3T79
-	 hiG3oB2MuWeMzHhq/5a3EzB9fPpwGvc/FJpN7Om4=
+	b=ahfZtb94vDQRv3ViigewbLVFF0nwwyHCK9ZN2CKz75I/iWMorO6P5tsjtJNDaqSDA
+	 9pxIUMQRUTkzy/Z+vXt9HCPH3KmNAvmyHD+MLuefHccPUMJyptBtEdJlZniXLvNj8T
+	 NQnovsazE/yaIOmFPmDYVHp7ln5jhsdsomajud3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Neha Gholkar <nehagholkar@gmail.com>,
-	Gregory Price <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Byungchul Park <byungchul@sk.com>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Zi Yan <ziy@nvidia.com>,
+	"Joy H.J. Lee" <rkr0k0r@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	David Laight <david.laight.linux@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 028/403] mm: mempolicy: fix automatic numa balancing for shmem
-Date: Fri,  4 Sep 2026 06:57:11 +0200
-Message-ID: <20260904045735.455993967@linuxfoundation.org>
+Subject: [PATCH 6.12 029/403] tools/compiler: match glibc 2.42 definition of __attribute_const__
+Date: Fri,  4 Sep 2026 06:57:12 +0200
+Message-ID: <20260904045735.477895641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -61,94 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Joy H.J. Lee <rkr0k0r@gmail.com>
 
-commit d230991493b521eeff39f32434fddcbcdb109eb0 upstream.
+commit 8700a4761beb219873956666cf91776a2c61e698 upstream.
 
-Neha reports that mapped shmem aren't considered for NUMA balancing,
-noting convergence problems and bandwidth bottlenecking for cachelib based
-workloads on tiered memory systems.
+glibc 2.42 added __attribute_const__ to sys/cdefs.h:
 
-Looking at the code and going through the git history, this doesn't
-actually seem intentional:
+    # define __attribute_const__ __attribute__ ((__const__))
 
-Commit fc3147245d19 ("mm: numa: Limit NUMA scanning to migrate-on-fault
-VMAs") added a vma_policy_mof() gate to task_numa_work() so VMAs whose
-policy lacks MPOL_F_MOF are skipped from NUMA balancing scans.  The
-motivation was a real usecase: Oracle was pinning shared segments with
-mbind(MPOL_BIND) so trapping faults was both expensive and pointless.
+GCC 15 warns when a macro is redefined to a different replacement list
+(-Wbuiltin-macro-redefined). Since host tool Makefiles (resolve_btfids,
+objtool) pass -Werror, this conflict becomes fatal.
 
-The handling of NULL from vm_ops->get_policy, however, treated "user
-explicitly opted out" the same as "user never specified anything." For
-VMAs whose shared policy is absent - the common case for shmem - the scan
-was disabled too.
+The warning is suppressed on standard native builds because GCC treats
+/usr/include as a system header path (-isystem), and macro-redefinition
+warnings from system headers are silently suppressed by GCC. It fires
+when glibc headers are on a regular include path (-I) instead, which
+is the case in cross-compilation setups such as NixOS, where the
+sysroot's glibc is passed explicitly via -I rather than -isystem.
 
-This issue is old.  It probably hurts less in conventional NUMA.  But it's
-very noticeable on tiered systems, where entire tmpfs workingsets can get
-stuck on lower-bandwidth memory.
+Per (C11 6.10.3), identical replacement lists are accepted silently.
+Match the glibc definition exactly, including the space before "((", so
+the redefinition is accepted without warning regardless of whether
+glibc headers are treated as system or non-system includes.
 
-Fix this by having vma_policy_mof() use __get_vma_policy() directly, and
-thereby handle the fallback to task policy (-> preferred_node_policy() has
-MPOL_F_MOF per default).  Every other consumer of vm_ops->get_policy
-already handles it this way, the scan-eligibility check was the outlier.
-
-This preserves Mel's intended fix: don't scan stuff the user explicitly
-pinned.  But allow default policy vmas to participate in balancing.
-
-Link: https://lore.kernel.org/20260629163337.1264881-1-hannes@cmpxchg.org
-Fixes: fc3147245d19 ("mm: numa: Limit NUMA scanning to migrate-on-fault VMAs")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reported-by: Neha Gholkar <nehagholkar@gmail.com>
-Tested-by: Neha Gholkar <nehagholkar@gmail.com>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Balbir Singh <balbirs@nvidia.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Zi Yan <ziy@nvidia.com>
+Link: https://lore.kernel.org/20260701200635.3992767-1-rkr0k0r@gmail.com
+Signed-off-by: Joy H.J. Lee <rkr0k0r@gmail.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: David Laight <david.laight.linux@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |   21 ++++++---------------
- 1 file changed, 6 insertions(+), 15 deletions(-)
+ tools/include/linux/compiler.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -1838,24 +1838,15 @@ struct mempolicy *get_vma_policy(struct
- bool vma_policy_mof(struct vm_area_struct *vma)
- {
- 	struct mempolicy *pol;
-+	pgoff_t ilx;
-+	bool mof;
+--- a/tools/include/linux/compiler.h
++++ b/tools/include/linux/compiler.h
+@@ -97,7 +97,7 @@
+ #define __read_mostly
  
--	if (vma->vm_ops && vma->vm_ops->get_policy) {
--		bool ret = false;
--		pgoff_t ilx;		/* ignored here */
--
--		pol = vma->vm_ops->get_policy(vma, vma->vm_start, &ilx);
--		if (pol && (pol->flags & MPOL_F_MOF))
--			ret = true;
--		mpol_cond_put(pol);
--
--		return ret;
--	}
--
--	pol = vma->vm_policy;
-+	pol = __get_vma_policy(vma, vma->vm_start, &ilx);
- 	if (!pol)
- 		pol = get_task_policy(current);
--
--	return pol->flags & MPOL_F_MOF;
-+	mof = pol->flags & MPOL_F_MOF;
-+	mpol_cond_put(pol);
-+	return mof;
- }
+ #ifndef __attribute_const__
+-# define __attribute_const__
++# define __attribute_const__ __attribute__ ((__const__))
+ #endif
  
- bool apply_policy_zone(struct mempolicy *policy, enum zone_type zone)
+ #ifndef __maybe_unused
 
 
