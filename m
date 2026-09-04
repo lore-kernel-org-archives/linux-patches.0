@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE193B14B4;
-	Fri,  4 Sep 2026 05:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F483A7F4C;
+	Fri,  4 Sep 2026 05:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499030; cv=none; b=teg3IBY/0bEKr1PHBuPbYHvBBIh8T2E3LHpBv1dvNL1cMypsHPn4KI8gwqNKr4a3cmy7pj3562hz7xuWI6P4Ij8uOPFSHCbbuUlGqw/OCV2jYLpIMjhdYT7qhvngj2qgOq4LVV5a8Ra1QHI1KrBdsSzYHK1A2pRwpy+FJk8nQb4=
+	t=1788499033; cv=none; b=hZgxfziMoqwUILdDmkx2SHQHywlai7Fhs4jVVQHqRTUK4FSXWOdqLh1Vr3Zf0GQ11P7rdHrHatKZ4MabmRJhSDFjr5CWBqfBOq7Xw0ifMxwA43dqtvlhi/SVO69aP1AS3pPlYikLcEdFveE7U54EPbGwGHFdhO+30bHMRcDSG2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499030; c=relaxed/simple;
-	bh=PAqMBBGtG1sKzt2o8bsg2mQaSVHiwoHkyoDga1kEKQ8=;
+	s=arc-20240116; t=1788499033; c=relaxed/simple;
+	bh=7ISmhpQyEBaosRmoEJBqSMhOUu/YmTZcxe6LgWo96oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u87zCkoV1VW43AgpGPWntmxt031KfqKmMDGUdM2IiUbeiKajpN2yMKCKKbGdKSE027/hFWTE+dghRLew3aOMcfxzX7cKaOFgQoPrt53BzX1D7pRFmBBOgFABHWPwZCgh72HYYoYizm4XYbiMqM3thtnDcOzOrp7maIM5M99Vgqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZCjFySF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PLffxWDhc9z8c55zXJJY9opEfJiuODSSAeG1g6zIHWpkLreG02jdS8YihzAwKBd6gNaFZ/V7VvrBFoCS9SFS1YwkN4rZDyWQtZ71QG8kyX7h/m75g/epkNeUvKK1dBjpXgZ0Q4WXGL6nD7AuKlYF3J3MN/blgIMxpLqDaj2WUfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESkpRHoB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZCjFySF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329A21F00A3D;
-	Fri,  4 Sep 2026 05:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESkpRHoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0766F1F00A3D;
+	Fri,  4 Sep 2026 05:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499029;
-	bh=7wrSNSdRjbU33fBSypsWWtIC5B+uQlR+Cnq9YPMlSXI=;
+	s=korg; t=1788499032;
+	bh=eQUc84FmdIuxMjoTys1xQY/UKTK4Sv/FT+3CmOv2aRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZCjFySFu8rExR8BPTCVLJlWyGalHKYxMfgyYaA1+ni0lcL8HSmJuKSWsAa/sCc2C
-	 Fe59dc7iVoVEDyDW/SGr+2x5gQH62srr3uc4KqABGjdSOxbyE/iZBEIufLTzED6o2X
-	 XGGdxyReXc2DyMmdZNqCeKBNdNjAY63+TTnflPxs=
+	b=ESkpRHoBLmpk6Qr7V+HzKROjfODVZdSBIGdTKjDYMKkQ9x8gAq2UmgTY54sgAMaC3
+	 EXcqlhTiZ3a/pU4DYHpTt1pv12U0/Srcj99XnOlLULFKmFzj9SO6cF3yhQUeHCBX2q
+	 ZLKDUYeKZ115O0Ldeba3b8j2SrMhd0iiu3vjRu6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yichong Chen <chenyichong@uniontech.com>,
 	Tyler Hicks <code@tyhicks.com>
-Subject: [PATCH 7.2 274/713] ecryptfs: reject too-small tag 70 packets
-Date: Fri,  4 Sep 2026 06:54:02 +0200
-Message-ID: <20260904045809.982484859@linuxfoundation.org>
+Subject: [PATCH 7.2 275/713] ecryptfs: release message context on send failure
+Date: Fri,  4 Sep 2026 06:54:03 +0200
+Message-ID: <20260904045810.005794646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Yichong Chen <chenyichong@uniontech.com>
 
-commit e97bbe1b2bd82ec2ae37ad2e4965b4d3e78bbf7f upstream.
+commit 219644a3ad5518217b2d62cad6d2c36a2308c949 upstream.
 
-ecryptfs_parse_tag_70_packet() subtracts fixed metadata fields from the
-parsed packet body size to derive the encrypted filename size.  A
-malformed packet with a body smaller than those fixed fields can underflow
-that size calculation.
+ecryptfs_send_message_locked() moves a message context from the free
+list to the allocated list before sending the request to the userspace
+daemon.
 
-Reject tag 70 packets before the subtraction unless the body contains the
-signature, cipher code, and at least one byte of encrypted filename data.
+If ecryptfs_send_miscdev() fails, the context is left on the
+allocated list and cannot be reused. Move it back to the free list on
+failure and clear the caller's pointer.
 
-Fixes: 9c79f34f7ee7 ("eCryptfs: Filename Encryption: Tag 70 packets")
+Fixes: f66e883eb618 ("eCryptfs: integrate eCryptfs device handle into the module.")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
 Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ecryptfs/keystore.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ecryptfs/messaging.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/ecryptfs/keystore.c
-+++ b/fs/ecryptfs/keystore.c
-@@ -894,6 +894,12 @@ ecryptfs_parse_tag_70_packet(char **file
- 		       "rc = [%d]\n", __func__, rc);
- 		goto out;
- 	}
-+	if (s->parsed_tag_70_packet_size < (ECRYPTFS_SIG_SIZE + 2)) {
-+		ecryptfs_printk(KERN_WARNING, "Invalid packet size [%zd]\n",
-+				s->parsed_tag_70_packet_size);
-+		rc = -EINVAL;
-+		goto out;
+--- a/fs/ecryptfs/messaging.c
++++ b/fs/ecryptfs/messaging.c
+@@ -286,9 +286,16 @@ ecryptfs_send_message_locked(char *data,
+ 	mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
+ 	rc = ecryptfs_send_miscdev(data, data_len, *msg_ctx, msg_type, 0,
+ 				   daemon);
+-	if (rc)
++	if (rc) {
+ 		printk(KERN_ERR "%s: Error attempting to send message to "
+ 		       "userspace daemon; rc = [%d]\n", __func__, rc);
++		mutex_lock(&ecryptfs_msg_ctx_lists_mux);
++		mutex_lock(&(*msg_ctx)->mux);
++		ecryptfs_msg_ctx_alloc_to_free(*msg_ctx);
++		mutex_unlock(&(*msg_ctx)->mux);
++		mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
++		*msg_ctx = NULL;
 +	}
- 	s->block_aligned_filename_size = (s->parsed_tag_70_packet_size
- 					  - ECRYPTFS_SIG_SIZE - 1);
- 	if ((1 + s->packet_size_len + s->parsed_tag_70_packet_size)
+ out:
+ 	return rc;
+ }
 
 
