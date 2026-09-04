@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4918417BF8;
-	Fri,  4 Sep 2026 06:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C51415F29;
+	Fri,  4 Sep 2026 06:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501807; cv=none; b=SMnIiYNy4SDAX+fmbjS1LaM9mr51WB3OzgOO8Ci+IpqDqYSTSrPTzAq+WLFCf6ihX9FSDlzWhQW/llr8kgFPRkPOPKVe6mEVcbk7goHHenmb6f3muhLZBvi0E9mx18aR43ywSApwVJUyemhs0q1z1PDl3n3ZxgYKffJaHtZ7m48=
+	t=1788501810; cv=none; b=nYOQisxSb36Ef8XklFPZjGcWxiFKuFyQ4LbOo5Ijdhc+yDrLy4c2m6KXVbhisaDI87n8HYxena0QOlgCX7nEdJ0zvg5LM40j3zFMnzdEjpWoQsv9F1k3iZzI+9bbFtnx08p3w6+Jf1HjrIlz0pTPickeLcEXdrN1BbtSVzwg+Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501807; c=relaxed/simple;
-	bh=jBXtXwC9B8b90YLWeEet812grWKHpW7SQuyCv7HC4js=;
+	s=arc-20240116; t=1788501810; c=relaxed/simple;
+	bh=wstLkAp2E25rdC3iA4Io5ofatm/l9zsXs4nY/CAcF7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLzlAVP9/xdeBLMT+y7DCstYtsJEI+ZR5u2JoeNkWS+IzBv1rfTk7Z7mWDJGHvr/aeL+whOOgaNqr0HN8oGLAa6ukWrTyPpywm6Z0ssxyiv8MFmx3Rizr9cyMlY8Qjqrg42B1+Hxc3LuZyra+g3UUhWw36vQFItgwJP74ahocxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsefnuOz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tbTYudCPvcM+bGCYVjZ5IfuA2ZKI4q8axfGxW2g3qceLuM6O2SJPAm/kJvpc4Jtuu/H1fNFtTA0/S7cO61O26Wtg4c6hQCnFzshPmYIqHV77v6jXbpfQqPe9RQVvK93X6R6rJObwdBTB7pt6L98bAZetV3y4oS7woxYDWORcPKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7E4Y3GE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsefnuOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D351F00A3D;
-	Fri,  4 Sep 2026 06:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7E4Y3GE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A075E1F00A3D;
+	Fri,  4 Sep 2026 06:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501806;
-	bh=Cn2lbQcZXeaGNtCkOzPExulDSqxeRSnoZAT2nGZKVwQ=;
+	s=korg; t=1788501809;
+	bh=t66usvJv/yUDvVVQNeYIdsoo6gLoS8rnnapxI0Yig7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HsefnuOzwZb/hHQ3ZknonK5shYGKeEUnda8+y3A/gqwqk/PhJaa0x1+OC8e1oX340
-	 2OxcXJZdFSgPyQgNmkncyiaNNJdVtwBSY/edlbTV1uFqc4FjBG/TRW2ocFftdUpFYL
-	 v3Lg86YvToIS/txCZIPjXjtpb1NtNAdYcEXo4Npg=
+	b=C7E4Y3GEL8fsPiH+3GreA5C8Zr9PWd0iWjK4AxNeB31O5NyzesT20qgYTwYoXtFrc
+	 GG5tOD48wcfKGK7z7g5TRhcAbb6xFHaOGSS0UFIK4xdFFS8p34N/s2jno44SFOEN2B
+	 4N21J3ohNbqReDY7DAhCrmfouQvUORIBOvqQRAN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.18 532/552] wifi: rtw88: pci: fix resource leak on failed NAPI setup
-Date: Fri,  4 Sep 2026 07:01:29 +0200
-Message-ID: <20260904045802.678653462@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 541/552] zloop: truncate finished zones to zone capacity
+Date: Fri,  4 Sep 2026 07:01:38 +0200
+Message-ID: <20260904045802.874646518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,59 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit e779df4806cd29cbcca5c9dc0a1073662c76b889 upstream.
+commit 72e67c118642634c25465db0c8bcfa54c4ce086c upstream.
 
-rtw_pci_probe() allocates PCI resources through
-rtw_pci_setup_resource() before it sets up NAPI. If
-rtw_pci_napi_init() fails, the error path jumps straight to
-err_pci_declaim and skips rtw_pci_destroy(), leaving the PCI
-resources allocated by rtw_pci_setup_resource() behind.
+The size of a sequential zone backing file records the amount of data
+written and is used to restore the zone state. A backing file whose size
+is equal to the zone capacity is restored as a full zone, while a file
+larger than the zone capacity is rejected as invalid.
 
-Add a dedicated cleanup label for the NAPI setup failure path so probe
-destroys the PCI resources.
+However, zloop_finish_zone() currently truncates the backing file to the
+zone size. For devices with a reduced zone capacity, finishing a zone
+therefore creates a backing file larger than the zone capacity. After the
+device is removed and later re-added, that zone file is rejected instead
+of being restored as a full zone.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing current
-mainline kernels. The tool is still under development and is not yet
-publicly available. Manual inspection confirms that the bug is still
-present in v7.1-rc7.
+Truncate finished sequential zones to the zone capacity, matching the
+persistent representation accepted by zloop_update_seq_zone() for a full
+zone.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have a
-suitable rtw88 PCI board to test with, no runtime testing was able to be
-performed.
-
-Fixes: d0bcb10e7b94 ("wifi: rtw88: Un-embed dummy device")
+Suggested-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260617013502.114057-1-dawei.feng@seu.edu.cn
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/B39E5FD81D1A07F4+20260804023403.939767-1-raoxu@uniontech.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/blockdev/zoned_loop.rst |    9 ++++-----
+ drivers/block/zloop.c                             |    3 ++-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -1799,7 +1799,7 @@ int rtw_pci_probe(struct pci_dev *pdev,
- 	ret = rtw_pci_napi_init(rtwdev);
- 	if (ret) {
- 		rtw_err(rtwdev, "failed to setup NAPI\n");
--		goto err_pci_declaim;
-+		goto err_destroy_rsrc;
- 	}
+--- a/Documentation/admin-guide/blockdev/zoned_loop.rst
++++ b/Documentation/admin-guide/blockdev/zoned_loop.rst
+@@ -30,11 +30,10 @@ indicates the position of the write poin
  
- 	ret = rtw_chip_info_setup(rtwdev);
-@@ -1831,6 +1831,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
+ When resetting a sequential zone, its backing file size is truncated to zero.
+ Conversely, for a zone finish operation, the backing file is truncated to the
+-zone size. With this, the maximum capacity of a zloop zoned block device created
+-can be larger configured to be larger than the storage space available on the
+-backing file system. Of course, for such configuration, writing more data than
+-the storage space available on the backing file system will result in write
+-errors.
++zone capacity. With this, a zloop zoned block device can be configured with a
++larger capacity than the storage space available on the backing file system. Of
++course, for such configuration, writing more data than the storage space
++available on the backing file system will result in write errors.
  
- err_destroy_pci:
- 	rtw_pci_napi_deinit(rtwdev);
-+
-+err_destroy_rsrc:
- 	rtw_pci_destroy(rtwdev, pdev);
+ The zoned loop block device driver implements a complete zone transition state
+ machine. That is, zones can be empty, implicitly opened, explicitly opened,
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -319,7 +319,8 @@ static int zloop_finish_zone(struct zloo
+ 	    zone->cond == BLK_ZONE_COND_FULL)
+ 		goto unlock;
  
- err_pci_declaim:
+-	if (vfs_truncate(&zone->file->f_path, zlo->zone_size << SECTOR_SHIFT)) {
++	if (vfs_truncate(&zone->file->f_path,
++			 zlo->zone_capacity << SECTOR_SHIFT)) {
+ 		set_bit(ZLOOP_ZONE_SEQ_ERROR, &zone->flags);
+ 		ret = -EIO;
+ 		goto unlock;
 
 
