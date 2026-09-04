@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0490C414A0E;
-	Fri,  4 Sep 2026 05:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FD54137B2;
+	Fri,  4 Sep 2026 05:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500426; cv=none; b=YQkRqpnJGRyghqLkGBFVknflisDa2ibIC1Iv+JzUNjAuP89gIHb/KwAawZmKYrV8e8F6V6CY53yab79Ean6yzYXdxGGBWWrtQhez+h7hj/RoXxyhmgu01nHRHOFo2OpjUNu7aMW4Bwlo6BgrPCbXJdZIjQBB6pP4D0SQqXWcvOo=
+	t=1788500429; cv=none; b=ItTXtcU/MzwI76pePT9hSVCJVJt/UY0Prl+SSCuaJluX+BTpqxSplGdm8NNYOq85O8gqiN128iOe8LZdmm4XsoDGBl1b5kwPozaZGe6GqcJkYvdjey9Kvme2t6D75POYPb0IDN6Xda7HKDWBUH8s/rcK9zunMgJzVVi4Lg6LPWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500426; c=relaxed/simple;
-	bh=fYDyc33E/fvAqoYuSjcMnxKcdT9tN70rtePQ9ivfsfM=;
+	s=arc-20240116; t=1788500429; c=relaxed/simple;
+	bh=GHS+Oese6zrKsbAZvih1jys89tWDIiDmfzUFQ6hL+E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k02RApTpLd2qa/V/fdlBlQ87QJLVkyB7DucaU8K8jy6z2L+g8EGa+Q9C+3l0BBFE+G8JxH2EsXvj2Qjz3cpblA7GJIRrOo4iZbMWGL84c42bYMs18OGPRwKLXJmOS0psGGWVFYHKkR3+VgGke0CD50JmGYgAQkj6i7F6RaIE9vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5aWFRJU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FEdn/FUtnQjTEeZo66iSrcwUtwoPEgpUT0ovwpyqsb+XH3CTzGJ6shrkGuttzPFsEXJRNk/dIJOPOj+sPqcf9uFMV6hoDlYN3GY3nPjSoOHeEMpJkltR9h3BOZONz3EdtyX1j2FWX0tOW9r3hCBOTD4javJSgy8dNbenmIDHjrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxSVjBa/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5aWFRJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1891F00A3D;
-	Fri,  4 Sep 2026 05:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxSVjBa/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485141F00A3D;
+	Fri,  4 Sep 2026 05:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500424;
-	bh=3OvIFK7Dn27kIAhoJI0rF2MS68PlVX5XRHytzZHUvqM=;
+	s=korg; t=1788500427;
+	bh=HfY8OjI3WjBZn5aaLS/0ME4wSW/uGKQdhgx736yPdR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W5aWFRJUigx2qjP0+79bqshFkJ1Wv332hp1qTmBx2X16drfGPViDcNgHdlvPRlNNG
-	 H2TIoKtnYty7Qj9BrbR8iStECf8kY7udiBVqfsLpuyCpNry75+IETNaaWYRodRdTD7
-	 2qRavguoXQnfJux7ZGob9NCO5IyOdYlX6r3dcNpg=
+	b=yxSVjBa/t9oSoiqNvQ/CPRja7+/p669+YI0hGV+xZ8T4mkJEvUY7pDQveez0jy9Y7
+	 RWiSAhltJeL93ui53Qo4hahT1V1iObz2l8OWZ2T/QRx4q3MOIiuYrRCAQM1rt4qYTQ
+	 t3ytAo5KNy6ZOXgV0wc3HOm35gn9xptnTOOXpaLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Joy H.J. Lee" <rkr0k0r@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	David Laight <david.laight.linux@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 052/552] tools/compiler: match glibc 2.42 definition of __attribute_const__
-Date: Fri,  4 Sep 2026 06:53:29 +0200
-Message-ID: <20260904045749.019855551@linuxfoundation.org>
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 053/552] x86/insn-eval: Move assign_register() out of KVM as insn_assign_reg()
+Date: Fri,  4 Sep 2026 06:53:30 +0200
+Message-ID: <20260904045749.043180982@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,51 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy H.J. Lee <rkr0k0r@gmail.com>
+From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit 8700a4761beb219873956666cf91776a2c61e698 upstream.
+commit 1fe104b048d77d6cb25bd938e6a67450fb50e61d upstream.
 
-glibc 2.42 added __attribute_const__ to sys/cdefs.h:
+KVM's instruction emulator has a small helper, assign_register(), that
+writes a value into a register following the x86 rules for writes to
+general-purpose registers: an 8- or 16-bit write leaves the rest of the
+register untouched, a 32-bit write zero-extends the result to 64 bits,
+and a 64-bit write replaces the whole register.
 
-    # define __attribute_const__ __attribute__ ((__const__))
+The TDX guest #VE handler needs the same logic for port I/O emulation
+to get 32-bit zero-extension right.  Rather than add a third copy of
+the same switch, move the helper verbatim to <asm/insn-eval.h>, rename
+it to insn_assign_reg(), and route KVM's callers through it.
 
-GCC 15 warns when a macro is redefined to a different replacement list
-(-Wbuiltin-macro-redefined). Since host tool Makefiles (resolve_btfids,
-objtool) pass -Werror, this conflict becomes fatal.
+Add <asm/insn.h> to the header's includes so it builds standalone in
+callers that have not pulled it in transitively.
 
-The warning is suppressed on standard native builds because GCC treats
-/usr/include as a system header path (-isystem), and macro-redefinition
-warnings from system headers are silently suppressed by GCC. It fires
-when glibc headers are on a regular include path (-I) instead, which
-is the case in cross-compilation setups such as NixOS, where the
-sysroot's glibc is passed explicitly via -I rather than -isystem.
+No functional change.
 
-Per (C11 6.10.3), identical replacement lists are accepted silently.
-Match the glibc definition exactly, including the space before "((", so
-the redefinition is accepted without warning regardless of whether
-glibc headers are treated as system or non-system includes.
-
-Link: https://lore.kernel.org/20260701200635.3992767-1-rkr0k0r@gmail.com
-Signed-off-by: Joy H.J. Lee <rkr0k0r@gmail.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: David Laight <david.laight.linux@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Sean Christopherson <seanjc@google.com>
+Cc:stable@vger.kernel.org
+Link: https://patch.msgid.link/20260713133753.223947-3-kirill@shutemov.name
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/linux/compiler.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/insn-eval.h |   36 ++++++++++++++++++++++++++++++++++++
+ arch/x86/kvm/emulate.c           |   26 ++++----------------------
+ 2 files changed, 40 insertions(+), 22 deletions(-)
 
---- a/tools/include/linux/compiler.h
-+++ b/tools/include/linux/compiler.h
-@@ -119,7 +119,7 @@
- #define __read_mostly
+--- a/arch/x86/include/asm/insn-eval.h
++++ b/arch/x86/include/asm/insn-eval.h
+@@ -9,6 +9,7 @@
+ #include <linux/compiler.h>
+ #include <linux/bug.h>
+ #include <linux/err.h>
++#include <asm/insn.h>
+ #include <asm/ptrace.h>
  
- #ifndef __attribute_const__
--# define __attribute_const__
-+# define __attribute_const__ __attribute__ ((__const__))
- #endif
+ #define INSN_CODE_SEG_ADDR_SZ(params) ((params >> 4) & 0xf)
+@@ -44,4 +45,39 @@ enum insn_mmio_type {
  
- #ifndef __maybe_unused
+ enum insn_mmio_type insn_decode_mmio(struct insn *insn, int *bytes);
+ 
++/*
++ * Write @val into *@reg following the x86 rules for writes to
++ * general-purpose registers (Intel SDM Vol. 1, "General-Purpose
++ * Registers in 64-Bit Mode"): an 8- or 16-bit write leaves the rest of
++ * the register untouched, a 32-bit write zero-extends the result into
++ * the upper 32 bits, and a 64-bit write replaces the whole register.
++ *
++ * @bytes is the width of the write, not a property of the instruction:
++ * an instruction that, say, sign-extends a 32-bit immediate into a
++ * 64-bit register does a 64-bit write here.
++ *
++ * @reg need not be 8-byte aligned: KVM's instruction emulator offsets
++ * the pointer by one byte to address the high-byte registers (AH, CH,
++ * DH, BH).  Use narrow stores for the sub-word cases so the access
++ * width matches @bytes and the adjacent bytes are left alone.
++ */
++static inline void insn_assign_reg(unsigned long *reg, u64 val, int bytes)
++{
++	switch (bytes) {
++	case 1:
++		*(u8 *)reg = (u8)val;
++		break;
++	case 2:
++		*(u16 *)reg = (u16)val;
++		break;
++	case 4:
++		/* A 32-bit write zero-extends into the upper 32 bits. */
++		*reg = (u32)val;
++		break;
++	case 8:
++		*reg = val;
++		break;
++	}
++}
++
+ #endif /* _ASM_X86_INSN_EVAL_H */
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -24,6 +24,7 @@
+ #include "kvm_emulate.h"
+ #include <linux/stringify.h>
+ #include <asm/debugreg.h>
++#include <asm/insn-eval.h>
+ #include <asm/nospec-branch.h>
+ #include <asm/ibt.h>
+ #include <asm/text-patching.h>
+@@ -436,25 +437,6 @@ static void assign_masked(ulong *dest, u
+ 	*dest = (*dest & ~mask) | (src & mask);
+ }
+ 
+-static void assign_register(unsigned long *reg, u64 val, int bytes)
+-{
+-	/* The 4-byte case *is* correct: in 64-bit mode we zero-extend. */
+-	switch (bytes) {
+-	case 1:
+-		*(u8 *)reg = (u8)val;
+-		break;
+-	case 2:
+-		*(u16 *)reg = (u16)val;
+-		break;
+-	case 4:
+-		*reg = (u32)val;
+-		break;	/* 64b: zero-extend */
+-	case 8:
+-		*reg = val;
+-		break;
+-	}
+-}
+-
+ static inline unsigned long ad_mask(struct x86_emulate_ctxt *ctxt)
+ {
+ 	return (1UL << (ctxt->ad_bytes << 3)) - 1;
+@@ -502,7 +484,7 @@ register_address_increment(struct x86_em
+ {
+ 	ulong *preg = reg_rmw(ctxt, reg);
+ 
+-	assign_register(preg, *preg + inc, ctxt->ad_bytes);
++	insn_assign_reg(preg, *preg + inc, ctxt->ad_bytes);
+ }
+ 
+ static void rsp_increment(struct x86_emulate_ctxt *ctxt, int inc)
+@@ -1756,7 +1738,7 @@ static int load_segment_descriptor(struc
+ 
+ static void write_register_operand(struct operand *op)
+ {
+-	return assign_register(op->addr.reg, op->val, op->bytes);
++	return insn_assign_reg(op->addr.reg, op->val, op->bytes);
+ }
+ 
+ static int writeback(struct x86_emulate_ctxt *ctxt, struct operand *op)
+@@ -1989,7 +1971,7 @@ static int em_popa(struct x86_emulate_ct
+ 		rc = emulate_pop(ctxt, &val, ctxt->op_bytes);
+ 		if (rc != X86EMUL_CONTINUE)
+ 			break;
+-		assign_register(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
++		insn_assign_reg(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
+ 		--reg;
+ 	}
+ 	return rc;
 
 
