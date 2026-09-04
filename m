@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F44F3EC6AE;
-	Fri,  4 Sep 2026 05:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3CF408035;
+	Fri,  4 Sep 2026 05:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500042; cv=none; b=qQPo/lxXv5hL9+TR9FrPv3qt/pLCKyFFAcohh3MiGcEVH2Di15XPjsEpYOYejOrfso4OqYzulTfLaorXMwVRKATsRN80w/z+um94ZGYm9XIvMST9ecjdeNSibUaJO6W5/wlHkkxEbtVrtVGoBgUNgRZdQpvPz26FD1/zTKNJ8OY=
+	t=1788500045; cv=none; b=uojQrsAN0tklS/SZyPUEKTolg/mizMN6OZkYOryW0XLzXwUG0VmiQL6FewOY3wWevyz/9/NFJEpXezC3AzSjfNYBeKoQTfNFshff/jiBNO03PXmyIgk3wbcWtf98UU122OiHgu6j9xTQeo0fvJABk7+gfzsoJu9gZuugZIOIMu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500042; c=relaxed/simple;
-	bh=HLoHHxjtyes4dHWHs79h6WxrcChiHLtx6+m0DQcL0To=;
+	s=arc-20240116; t=1788500045; c=relaxed/simple;
+	bh=FEmyzGK0y1LjmEADWPi27cKY/J2/oF2eG3erii90nIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/GCa9H+Gm245O9qU9kj7r7U6X+MOkXW3GxQlcQxqlaWTTy33l+bNrl2oFoubHl/eLGZ2GbtfGu81ek7huJ0Af9cdogJv62176WYoH15oxVSVyuuJ3JPqi5HLKCYM06fFKCM/vdMgOOUvqv3IB2evEEPrJjfVFizl8xWqQ3IywI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDCt5ZBj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JnqxRdTTZzxaxZUeiB87En+zHdfnhT4GxnxwCBogAToU+m5y3MWrHr2M7OM1pGlwTC8dbQEc5jgQFiRqrAZ3umDiHttYANMCO4e2guPEufSsi+rEjZ3z+j5I8KpoGCMoiDH/M1Pk5dC8Lx3nbT2JF3SUN4zv6tBYlKn9f4DkxU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlRRSf9A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDCt5ZBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79561F00A3D;
-	Fri,  4 Sep 2026 05:34:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlRRSf9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A1A1F00A3D;
+	Fri,  4 Sep 2026 05:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500041;
-	bh=2+9NIbecK3LpxA2/VsrwqbJxHDlBywLFcSetVeTXMy0=;
+	s=korg; t=1788500044;
+	bh=t4BfCXRrNHxcd2MMBmUb20K5BtMtEF0ejGrwY9dDl48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mDCt5ZBjq/wsvjsyO0tYwbU0iqjwA2tKX+mSGDN/TGUxpqKUGOz/O5CURG5OwqKZC
-	 89qqQGIoe2iJZhLiA68JhiL4GYMb4RMxcCPAXwCuxCzknIArmBZi8UeU+cunwWRU3q
-	 iqCIckFI8AeFv376ABiMeE0FzJG/0imeF/IQSRhI=
+	b=IlRRSf9ADSNOIO54sMcz4LEr6++3V5r4TWm3DOkjtr8OAM2PTobsfgm0W1zvdL9S6
+	 GIxDKMYRKzR4L2+qlLK1jQ5kdOUHgN06IbbIuc2anWwmL7FHhBBvk4jdweLNkR+hZv
+	 bAZUEnNBDIXRpQxgUvweVIUQWqno16tOnaC0wWFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jason Xing <kerneljasonxing@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Jongmin Jang <payload.jang@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 628/713] net: fix spurious TX timeout after dev_activate()
-Date: Fri,  4 Sep 2026 06:59:56 +0200
-Message-ID: <20260904045817.905618397@linuxfoundation.org>
+Subject: [PATCH 7.2 629/713] net: skbuff: dont touch shared zerocopy state in skb_tx_error()
+Date: Fri,  4 Sep 2026 06:59:57 +0200
+Message-ID: <20260904045817.929201755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,50 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 82aeed2400786bd3f79d88cb8b8f42e6127e5923 upstream.
+commit f66bdb1cc0fcd227a062378f8be0b5873aa5600a upstream.
 
-While debugging another issue today, I found out that my TX queue is
-reported as stopped for 4294907392 ms (49.7 days), on a machine that
-had been up for four minutes.
+skb_tx_error() completes the zerocopy uarg and clears
+SKBFL_ALL_ZEROCOPY, and skb_zcopy_downgrade_managed() clears
+SKBFL_MANAGED_FRAG_REFS. Both live in skb_shinfo(), which every clone
+shares, while the caller only owns the reference it is about to drop.
+Through a clone it tells the producer its pages are free and drops
+SKBFL_SHARED_FRAG for an skb that is still in flight.
 
-    bnxt_en 0002:01:00.0 eth0: NETDEV WATCHDOG: CPU: 28: transmit queue 23 timed out 4294907392 ms
+Open vSwitch reaches this with a non-last OVS_ACTION_ATTR_RECIRC:
+clone_execute() sends a skb_clone() into ovs_dp_process_packet() while
+do_execute_actions() keeps forwarding the original, and skb_clone()
+does not privatise the frags here -- skb_orphan_frags() returns early
+on SKBFL_DONT_ORPHAN. A flow miss on the clone then strips the marker
+from the packet still being forwarded, and a later local ESP delivery
+decrypts in place over frags it does not own privately.
 
-4294907392 is not an elapsed time. It is the value of jiffies at that
-moment: INITIAL_JIFFIES is 4294667296, which leaves jiffies 59 seconds
-short of wrapping.
+Skip it for a cloned skb. Nothing is lost: skb_release_data() clears
+the zerocopy state once the last reference to the shared data goes.
 
-dev_activate() runs transition_one_qdisc() over every TX queue, which
-resets trans_start to 0, and then stamps only queue 0 through
-netif_trans_update().
-
-Stamp jiffies instead. A queue stopped across dev_activate() now gets a
-full watchdog_timeo of grace, and is still reported if it is stopped
-that long.
-
-Fixes: 9b36627acecd ("net: remove dev->trans_start")
+Fixes: 25121173f7b1 ("skb: api to report errors for zero copy skbs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Link: https://patch.msgid.link/20260825-trans_start-v2-1-286b4d6d70cb@debian.org
+Suggested-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Tested-by: Jongmin Jang <payload.jang@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/CFAB292A-674B-4C14-BB2C-BB8830AD5659@doyensec.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_generic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skbuff.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -1278,7 +1278,7 @@ static void transition_one_qdisc(struct
- 
- 	rcu_assign_pointer(dev_queue->qdisc, new_qdisc);
- 	if (need_watchdog_p) {
--		WRITE_ONCE(dev_queue->trans_start, 0);
-+		WRITE_ONCE(dev_queue->trans_start, jiffies);
- 		*need_watchdog_p = 1;
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1417,10 +1417,13 @@ EXPORT_SYMBOL(skb_dump);
+  *
+  *	Report xmit error if a device callback is tracking this skb.
+  *	skb must be freed afterwards.
++ *
++ *	Does nothing for a cloned skb: the zerocopy state lives in
++ *	skb_shinfo(), which the clones share.
+  */
+ void skb_tx_error(struct sk_buff *skb)
+ {
+-	if (skb) {
++	if (skb && !skb_cloned(skb)) {
+ 		skb_zcopy_downgrade_managed(skb);
+ 		skb_zcopy_clear(skb, true);
  	}
- }
 
 
