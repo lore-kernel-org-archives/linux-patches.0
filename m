@@ -1,68 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4351415B85;
-	Fri,  4 Sep 2026 05:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F90F3876B3;
+	Fri,  4 Sep 2026 05:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498440; cv=none; b=Ox9664KQsHQ66wTBTPZZxDa3/K3iyO/3fHk+WuHtgCnEBKYTKqGeKmOGPZQJyCa+aOWTP3Vt/PD8ZJuUhotXbLwAPdh8UYCbrS2ZO1cLlU4kppBMsTnnooPlKw2LhGK8ZxOwunaMosFC7RpVs6NXj09OWUKZ5ExKy1Bxpp9rab0=
+	t=1788498440; cv=none; b=Hq2xrgK+tgZRfW15ZVdQw99OqXYVLJZBG94RdC+Tr+0EGTkfxQxGG4HQObTuMEcagw2Kpc2GFA/Jp/6auNbWONb8IzJpoN24WwuHYUuxn43doU4M8dJfVj+hS7x+flNOJa/lOs5W09fEfuMOnKmzaz+vMfBPCN9CjDMWUHSvwBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788498440; c=relaxed/simple;
-	bh=auh5VcJthaaAG1ohlXZ1YfBht89Q6VkXAYno8gbrsy4=;
+	bh=QEgtE4Si16yTRphE2tpeGTQkBBQlci3QawcQgXUxrOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqUOIyK2YiU2tRmoJU49y+4RD0ZkOznRztg7bBl74eQTtERJTeovfFM3EQKOyrlSSNBGjA94wyZrMeVlY5XgN87wLvk5Hgr8ODZYXWSFJu3VDLxm60xiBnyF2wPJ+K82uwijaoW7ijcV0tlvTViwSr2lh+jQ31ZTLpAth2JnNGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ScVuyr6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kWW86L5dVk0WvBFoPR/wBLfKOQVmqVoaZ5S3xtCmJbt8VO3tUADAiNBIdeX25rJiBM9H/Uh1k+pYR1WTXeUDrnhLOer8q59d7BAsSFsb3iOQBolNU5kWeTQZkgbosBOuBHsh6yIQA98ifDLy5AzgqAvF4xlSr72hMxjOVw99Qu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLrYiZK0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ScVuyr6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E10F1F00A3E;
-	Fri,  4 Sep 2026 05:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLrYiZK0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8786C1F00A3D;
+	Fri,  4 Sep 2026 05:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498436;
-	bh=fi0HQ7ErhX1IPa9W1Gj1AYMZpdbt8wX2S4MHcSSZdy0=;
+	s=korg; t=1788498439;
+	bh=fhGMF850g8jydgyjX/R0Tp83QUYhvTqku2i23QWrgjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ScVuyr6fpwb0PrEP6ShXmjRqqvvU5DmptQmi+jbmZhaYwpDVQxNAmZJVhuVq754e
-	 DOxy6gc+Hd8tKQd7IdNmbGxIJreA6TzUbjLhEjmLk0Rdm7GjUPB+gk+3mfwyGb+eZX
-	 SCogMewVZNL6/94JRBmUuZJxuFSdtcbU5R3fHxhw=
+	b=aLrYiZK0VndaUtVlSJcqQyMZIuO0p9S0JGYphHm5omCM7dFoM8vMYKTvROo2TkXv+
+	 srS0YxAXIOQrOIdGaLpbfAho0ClFUZkT9ystg67c8P0VSnY4xZOCzlKqf6ibxFlW/C
+	 g91qH/N/uXZ1u9XAUboJK7brW1Q5Rl6CEc/JJ56g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 062/713] mm/page_vma_mapped: use huge_ptep_get() for hugetlb
-Date: Fri,  4 Sep 2026 06:50:30 +0200
-Message-ID: <20260904045805.226681332@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.2 036/713] objtool/rust: add one more `noreturn` Rust function
+Date: Fri,  4 Sep 2026 06:50:04 +0200
+Message-ID: <20260904045804.639613701@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -81,80 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit e87df0d5d6962bde50f55f6d02b779daa394f894 upstream.
+commit 993f235c4af49d0e912cc28abe6d733531600237 upstream.
 
-check_pte() is the final validation step in page_vma_mapped_walk().  It
-reads pvmw->pte with ptep_get() to decide whether the entry maps the PFN
-range being walked.  For hugetlb VMAs, that pointer refers to a hugetlb
-entry.
+When the pointer formatting series [1] is applied and KUnit tests
+are enabled, `objtool` would report an error with any of our
+supported Rust versions. For instance, with Rust 1.97.1:
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
-etc to misbehave.
+    rust/kernel.o: error: objtool: _R..._4core3fmt7Pointer3fmtB7_()
+    falls through to next function _R..._4core7convert5AsRefNtB5_4BStrE6as_ref()
 
-It is not clear whether this has a trivially visible effect to userspace.
+Or, with Rust 1.85.0:
 
-Use huge_ptep_get() to dereference a huge pte pointer.
+    rust/kernel.o: error: objtool: _R..._4core3fmt7Pointer3fmtB7_()
+    falls through to next function _R..._4core3ffi5c_str4CStrENtNtBS_3fmt7Display3fmtB7_()
 
-Link: https://lore.kernel.org/20260703114202.365553-6-dev.jain@arm.com
-Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
+This happens due to calls to the `noreturn` symbol:
+
+    core::str::slice_error_fail
+
+Thus add the mangled one to the list so that `objtool` knows it is
+actually `noreturn`.
+
+See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+for more details.
+
+[ While the series [1] mentioned above was not applied in a way
+  that triggered this, Gary found another case [2]:
+
+    I am seeing this function causing issue on my 1.85.1 -Os build, although the
+    error message is different this time:
+
+        rust/kernel.o: warning: objtool: _R..._5range9RangeFromjEE5indexCsldbe0TGTmNx_6kernel+0x1d:
+        stack state mismatch: cfa1=4+8 cfa2=4+16
+
+    Disassembly shows that the function call before the warning location
+    is a call to _4core3str16slice_error_fail, and objtool thought it can
+    return (which will end up with a unbalanced stack if it does return).
+
+  Thus apply it. - Miguel ]
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
 Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Reported-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/rust-for-linux/anLxXvCKBcAVf91_@google.com/
+Link: https://lore.kernel.org/rust-for-linux/20260706-hashedptr-v13-0-377a07f2f78d@kylinos.cn/ [1]
+Link: https://lore.kernel.org/rust-for-linux/DKS7U9UHY6XR.2JC0EBIPCI06Z@garyguo.net/ [2]
+Link: https://patch.msgid.link/20260805144524.233362-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_vma_mapped.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/objtool/check.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/page_vma_mapped.c
-+++ b/mm/page_vma_mapped.c
-@@ -107,7 +107,13 @@ again:
- static bool check_pte(struct page_vma_mapped_walk *pvmw, unsigned long pte_nr)
- {
- 	unsigned long pfn;
--	pte_t ptent = ptep_get(pvmw->pte);
-+	pte_t ptent;
-+
-+	if (is_vm_hugetlb_page(pvmw->vma))
-+		ptent = huge_ptep_get(pvmw->vma->vm_mm, pvmw->address,
-+				      pvmw->pte);
-+	else
-+		ptent = ptep_get(pvmw->pte);
- 
- 	if (pvmw->flags & PVMW_MIGRATION) {
- 		const softleaf_t entry = softleaf_from_pte(ptent);
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -195,6 +195,7 @@ static bool is_rust_noreturn(const struc
+ 	return str_ends_with(func->name, "_4core3num20from_str_radix_panic")				||
+ 	       str_ends_with(func->name, "_4core3num22from_ascii_radix_panic")				||
+ 	       str_ends_with(func->name, "_4core3num28from_ascii_bytes_radix_panic")			||
++	       str_ends_with(func->name, "_4core3str16slice_error_fail")				||
+ 	       str_ends_with(func->name, "_4core5sliceSp15copy_from_slice17len_mismatch_fail")		||
+ 	       str_ends_with(func->name, "_4core6option13expect_failed")				||
+ 	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
 
 
