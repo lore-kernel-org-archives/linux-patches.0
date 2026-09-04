@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699C941A517;
-	Fri,  4 Sep 2026 05:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39D241A926;
+	Fri,  4 Sep 2026 05:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499475; cv=none; b=aviMfqaOF7ivFykohJ3LuNcfGp54NBWU2sDieBNZWNb2sPVFvzSFpbqGsJ2TR3b9RrbQpMjCsUegZYzFNwoEcCirNtTScCHXQhvJym7hRlb4oWq6+GsbMexuzhrcu0ZhHoCxxPKevt+JTyeBySn+kzx5NsOQHJxu/H8YJe2vr64=
+	t=1788499478; cv=none; b=l7Mhk/aWOyEmv7RK7ljMXQiCTl9HQWo+rquOuAVtqtTZ0xiIwvMsptsvNUOx+GdpcXZX6vTTk4GON09GAlrwmMI2oE2Rfs02j/nm/Nkef3+zWLGrUnQNOsnPKe9CzyxdZnJyBeQhj7Nw4iq4Az+Fe0Bc27b7gKTqlwbBpZLV1Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499475; c=relaxed/simple;
-	bh=tLv/J7LdB169sf7IIDZbkADhKnrMOCUzmBD/bauu5bo=;
+	s=arc-20240116; t=1788499478; c=relaxed/simple;
+	bh=xrU0T8h4avdEBo2Kxlp6aejFr2DliNPiSvtbEiqq0ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvwRNs9pgGUmonXVfxUshS+v/db3N9tRKKWNcW8OUuyf64di3ZIX1ZzQ8qgATYMRrTcD52FfdDjFACB99o/yN4IM4O7qidBWMd4Trb8TKEIdkRiZpUldmScZo3bB7nhJTGVxC/tlhGkHAwcbPQpRsoGRJyEP5eUODThd3a+t7Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0hkJCnQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V3dNNxfd7XY6+0smuq4yj0MCh4MtawRJQWZsTcuToQomvRldw2vitaax5UfJs0/JuoPpaXX3IqG3Jk7Pi11Z2qM6LLwwzs/rKK/oq49vXn+WfjO4lx+oYSFg6NJyfaHU7xyJfc1j4Z5yduC0woTLmNrhQJwZbt5fRcG+YRFz5iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRXxJkF4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0hkJCnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0881F00A3D;
-	Fri,  4 Sep 2026 05:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRXxJkF4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA451F00ACF;
+	Fri,  4 Sep 2026 05:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499474;
-	bh=nd9hAUi0GMp8Q9XE6l1lFFXo8rL7x/kJy2Ebzut+qRM=;
+	s=korg; t=1788499476;
+	bh=u8T5l0wegtN1belhI40HgvcOiZv0/T/tdyeZmfvPusM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L0hkJCnQB970nLBqKH6k60hl8ZRzHfiz9pieuV4p88dzxpeQlhC7HgkLufp94yg8v
-	 9IY5lHlZGyBaXS8w/Qr7rgxXbKfkaZhyUXbFQwXGJ0ABYwO8aAKpGDEiVcd6i345sl
-	 ukaWQAHpRR/DTz5pklQv23xNtysEpkhwdhGFD7JI=
+	b=kRXxJkF4h3uxJCyFczwAysgI7fWgDsd9qUaRfZRHGaTWhpybjPnKf6KmzUaxtDbVl
+	 qvV+kA390deINAWWhX+Y9rcQ2966d90M/7+wcP76jPlxt9wPkon3H9R3XiE6sSgfBB
+	 eZiA7ZC1O+UdJoxfA1cAVBn8uXOafpSjeEZT7J8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 7.2 403/713] wifi: mt76: mt7925: cancel pending mlo_pm_work
-Date: Fri,  4 Sep 2026 06:56:11 +0200
-Message-ID: <20260904045812.857361491@linuxfoundation.org>
+	Fabio Estevam <festevam@nabladev.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 7.2 430/713] arm64: dts: rockchip: Fix rk3588s-roc-pc audio description
+Date: Fri,  4 Sep 2026 06:56:38 +0200
+Message-ID: <20260904045813.466825369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,89 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Fabio Estevam <festevam@nabladev.com>
 
-commit 2889e84282dda147f10b10d94cf0efd90a349c53 upstream.
+commit b4db45b3ec97a9d0d23446084f45e095b2ba2020 upstream.
 
-If the device is reset, suspended or unregistered within that window,
-the pending work can still run and access vif/bss data that may already
-be freed, or send MCU commands while the firmware is not available.
+The rk3588s-roc-pc ES8388 codec is connected to the i2s0_8ch audio
+interface.  Use the matching I2S0 MCLK output for the codec clock
+instead of I2S1.
 
-Add cancel_delayed_work_sync(&dev->mlo_pm_work) in all relevant teardown
-and suspend paths:
+Using the I2S1 MCLK can leave the ALSA PCM running while the codec has
+no usable master clock for the active audio path, resulting in silent
+headphone output.
 
- - mt7925_mac_reset_work()        (chip reset recovery)
- - mt7925e_unregister_device()    (PCIe unbind)
- - mt7925_pci_suspend()           (PCIe bus suspend)
- - mt7925_suspend()               (mac80211 suspend)
- - mt7925u_suspend()              (USB bus / runtime suspend)
+Also make the CPU DAI provide bitclock and frame clock.  This matches
+the active Rockchip I2S controller side and avoids relying on the codec
+to drive the bus clocks.
 
-This ensures the work is stopped before the device state becomes
-invalid.
+Route the headphone output to LOUT2 and ROUT2, matching the old 5.10
+BSP device tree.  LOUT1 and ROUT1 are used for the speaker route there,
+so using them for the headphone widget can leave the headphone jack
+silent even while the ALSA path is active.
 
-Assisted-by: kimi-cli:kimi-k2.7 code
-Assisted-by: atomcode:glm-5.2 #Reported-by
+The old BSP also used hp-con-gpio on GPIO1_A4.  Model that GPIO as a
+simple audio amplifier so DAPM enables the headphone connection when the
+headphone path is active.
 
-Fixes: 276a568832577 ("wifi: mt76: mt7925: update the power-saving flow")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Link: https://patch.msgid.link/20260630090218.3202029-1-guanwentao@uniontech.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 7f9509791507 ("arm64: dts: rockchip: add DTs for Firefly ROC-RK3588S-PC")
+Signed-off-by: Fabio Estevam <festevam@nabladev.com>
+Link: https://patch.msgid.link/20260703025648.180135-1-festevam@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c  |    1 +
- drivers/net/wireless/mediatek/mt76/mt7925/main.c |    1 +
- drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    2 ++
- drivers/net/wireless/mediatek/mt76/mt7925/usb.c  |    1 +
- 4 files changed, 5 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3588s-roc-pc.dts |   23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -1323,6 +1323,7 @@ void mt7925_mac_reset_work(struct work_s
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-roc-pc.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-roc-pc.dts
+@@ -23,16 +23,19 @@
+ 		compatible = "simple-audio-card";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&hp_detect>;
++		simple-audio-card,aux-devs = <&headphones_amp>;
+ 		simple-audio-card,name = "rockchip,es8388";
+-		simple-audio-card,bitclock-master = <&masterdai>;
++		simple-audio-card,bitclock-master = <&cpudai>;
+ 		simple-audio-card,format = "i2s";
+-		simple-audio-card,frame-master = <&masterdai>;
++		simple-audio-card,frame-master = <&cpudai>;
+ 		simple-audio-card,hp-det-gpios = <&gpio1 RK_PA6 GPIO_ACTIVE_LOW>;
+ 		simple-audio-card,mclk-fs = <256>;
+ 		simple-audio-card,pin-switches = "Headphones";
+ 		simple-audio-card,routing =
+-			"Headphones", "LOUT1",
+-			"Headphones", "ROUT1",
++			"Headphones", "Headphone Amp OUTL",
++			"Headphones", "Headphone Amp OUTR",
++			"Headphone Amp INL", "LOUT2",
++			"Headphone Amp INR", "ROUT2",
+ 			"LINPUT1", "Microphone Jack",
+ 			"RINPUT1", "Microphone Jack",
+ 			"LINPUT2", "Onboard Microphone",
+@@ -47,11 +50,17 @@
+ 			system-clock-frequency = <12288000>;
+ 		};
  
- 	cancel_delayed_work_sync(&dev->mphy.mac_work);
- 	cancel_delayed_work_sync(&pm->ps_work);
-+	cancel_delayed_work_sync(&dev->mlo_pm_work);
- 	cancel_work_sync(&pm->wake_work);
+-		simple-audio-card,cpu {
++		cpudai: simple-audio-card,cpu {
+ 			sound-dai = <&i2s0_8ch>;
+ 		};
+ 	};
  
- 	for (i = 0; i < 10; i++) {
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1640,6 +1640,7 @@ static int mt7925_suspend(struct ieee802
- 	cancel_delayed_work_sync(&phy->mt76->mac_work);
- 
- 	cancel_delayed_work_sync(&dev->pm.ps_work);
-+	cancel_delayed_work_sync(&dev->mlo_pm_work);
- 	mt76_connac_free_pending_tx_skbs(&dev->pm, NULL);
- 
- 	mt792x_mutex_acquire(dev);
---- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-@@ -48,6 +48,7 @@ static void mt7925e_unregister_device(st
- 	mt76_for_each_q_rx(&dev->mt76, i)
- 		napi_disable(&dev->mt76.napi[i]);
- 	cancel_delayed_work_sync(&pm->ps_work);
-+	cancel_delayed_work_sync(&dev->mlo_pm_work);
- 	cancel_work_sync(&pm->wake_work);
- 	cancel_work_sync(&dev->reset_work);
- 
-@@ -517,6 +518,7 @@ static int mt7925_pci_suspend(struct dev
- 	dev->hif_resumed = false;
- 	flush_work(&dev->reset_work);
- 	cancel_delayed_work_sync(&pm->ps_work);
-+	cancel_delayed_work_sync(&dev->mlo_pm_work);
- 	cancel_work_sync(&pm->wake_work);
- 
- 	mt7925_roc_abort_sync(dev);
---- a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
-@@ -269,6 +269,7 @@ static int mt7925u_suspend(struct usb_in
- 	pm->suspended = true;
- 	dev->hif_resumed = false;
- 	flush_work(&dev->reset_work);
-+	cancel_delayed_work_sync(&dev->mlo_pm_work);
- 
- 	mt76_connac_mcu_set_hif_suspend(&dev->mt76, true, false);
- 	ret = wait_event_timeout(dev->wait,
++	headphones_amp: audio-amplifier-headphones {
++		compatible = "simple-audio-amplifier";
++		enable-gpios = <&gpio1 RK_PA4 GPIO_ACTIVE_HIGH>;
++		sound-name-prefix = "Headphone Amp";
++	};
++
+ 	chosen {
+ 		stdout-path = "serial2:1500000n8";
+ 	};
+@@ -327,12 +336,12 @@
+ 	es8388: audio-codec@11 {
+ 		compatible = "everest,es8388", "everest,es8328";
+ 		reg = <0x11>;
+-		clocks = <&cru I2S1_8CH_MCLKOUT>;
++		clocks = <&cru I2S0_8CH_MCLKOUT>;
+ 		AVDD-supply = <&vcc_3v3_s0>;
+ 		DVDD-supply = <&vcc_1v8_s0>;
+ 		HPVDD-supply = <&vcc_3v3_s0>;
+ 		PVDD-supply = <&vcc_3v3_s0>;
+-		assigned-clocks = <&cru I2S1_8CH_MCLKOUT>;
++		assigned-clocks = <&cru I2S0_8CH_MCLKOUT>;
+ 		assigned-clock-rates = <12288000>;
+ 		#sound-dai-cells = <0>;
+ 	};
 
 
