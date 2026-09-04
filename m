@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D853242BD;
-	Fri,  4 Sep 2026 05:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AE93242BD;
+	Fri,  4 Sep 2026 05:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501335; cv=none; b=lc9wN5dcbFyqDjgjBGvzOCyZA/nnNEjO2umY+Vp9wmujYwNHBdm7TNcKNq/i9edLAL6dpLGyQZD/HOIxyF0y0yzKKfXIeeEZ6hNeTlZu/Wu7lIVFutCFsVpGQW3UOFX2x0kVGmymZ2no8Ss+IGb1Gb3M6UFYPPQnyo9CjzzVypE=
+	t=1788501337; cv=none; b=lqyQt15oZP7XAO8lxU9glyGChVi/9fytYyVmcOXhpY3d1p9sYKnAtDRg+HKIru966uUr9WhZj2C9QsX3lfo+ufd5VxPRUYJXOKtS9Xd05LDsjvNSi5QD0esRjVWywl1jtYy34OhV1el0kOA9XK42LnXjQHBxiErTkRpq6bC8K4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501335; c=relaxed/simple;
-	bh=NSx243XVkoDROxdGlQS9Q97dGOBOaP8UcQjv8DZB4vA=;
+	s=arc-20240116; t=1788501337; c=relaxed/simple;
+	bh=vyIHwju8xJRbRyN/iDHpb75wuz+EQyXZo5AydcqRBL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ah+R5P+Z8tqctLR4ZATXcAuWgj5neN5GKm1j+kRnr/1+UjwgZjYHdV/eYMzJGZC1+XY+7dhMl3REFWVJFMYzqo2sx2VDZLZFhVhfiJQFDSHzhcnJpnz+wsFmV5RNDxmTpegHjaBntup5/2cdLtQIE0Ok+ol0x8Z5UXEMB+CNa3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfsSu/5n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KDdkBNSe7DqmUy+SytuDDGEuerPc64c2Vah4Ftbfq0ugQw6bv69R2e1CTQK51SuIvYJ7y4YPw/JWNhnP/dneIqi0JJ0c+PSBz1wip6QjcyVTO35N2anS8MNCxtIiRrH0oobql0SctT6JLcNzMkpE3um3ibJjlft9lDo+xpj39G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOeoB5Xo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfsSu/5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E091F00A3D;
-	Fri,  4 Sep 2026 05:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOeoB5Xo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AE81F00A3D;
+	Fri,  4 Sep 2026 05:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501333;
-	bh=0atVxI04X99k0f8SuRSPuWHmLVVG7E1GwsA0HUU+FkI=;
+	s=korg; t=1788501336;
+	bh=tjFqi/26L7lWhEQbQUSvfMaNFvghYQhTNFb8DQqvC0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HfsSu/5nqu/FRLD4BUUozv2e6xI6xfDzTxPQi4quxwAGHxxm5gVrYh462U3MxvF7S
-	 GoZ8zJYIT2+2WTtuc9BWczUE2q4ePCMnPGwBuqqy4bk4Fhzk8aen4KNOc5kGBnLGVr
-	 T1JSLU1jeo63hu7BMWG4E8HgGDBMrXGuXowsZArk=
+	b=tOeoB5Xoa8OBoSSB/y5PMarZbbJmvvIeeYu2i5UvYXSkCPRkw7vOTp7iPkS6bED8Q
+	 36frz1Io+qXkHW9SfYJ5840J8XvMQMupOo4wjmmczpCwbf/XP9y9EMNuLBPzr6aAGP
+	 rJBRe2GDR2bh/AOsHcm3ed7AQZ3YrFpT93F/PdLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fan Wu <fanwu01@zju.edu.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 373/552] power: supply: lp8788-charger: fix use-after-free on remove
-Date: Fri,  4 Sep 2026 06:58:50 +0200
-Message-ID: <20260904045758.679804980@linuxfoundation.org>
+Subject: [PATCH 6.18 374/552] power: supply: qcom_battmgr: fix use-after-free
+Date: Fri,  4 Sep 2026 06:58:51 +0200
+Message-ID: <20260904045758.702347185@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,42 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 831c29a12d560f8a3225f43050b3fbb5dfd79c66 upstream.
+commit 4e40befedfc8ed86f44e1f81df92d13c149c9f8d upstream.
 
-lp8788_charger_remove() flushes charger_work before unregistering the
-IRQs. An IRQ thread can queue charger_work after flush_work() has
-returned. The work can then run after devres frees pchg and dereference
-it in lp8788_charger_event().
+qcom_battmgr_pdr_notify() queues enable_work when the PMIC GLINK service
+comes up, and the worker recovers battmgr through container_of() to issue
+firmware requests. The PMIC GLINK client stays on the client list until
+its devres release action runs, so a PDR notification can keep queueing
+the work, and a pending or running worker can access battmgr after devres
+frees it.
 
-Unregister the IRQs first. free_irq() waits for any running threaded
-handler, so no handler can queue more work afterwards. Then use
-cancel_work_sync() to cancel pending work or wait for running work to
-finish.
+Make enable_work device-managed with devm_work_autocancel(), registered
+before the PMIC GLINK client is allocated. The devres cleanup then
+releases the client first, so no further notification can queue the work,
+and cancels the work before battmgr is freed.
 
 This issue was found by an in-house static analysis tool.
 
-Fixes: 98a276649358 ("power_supply: Add new lp8788 charger driver")
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
 Cc: stable@vger.kernel.org
 Assisted-by: Codex:gpt-5.6
 Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260802035442.421697-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260731022006.317192-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260801051923.354496-1-fanwu01@zju.edu.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/lp8788-charger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/qcom_battmgr.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/lp8788-charger.c
-+++ b/drivers/power/supply/lp8788-charger.c
-@@ -710,8 +710,8 @@ static void lp8788_charger_remove(struct
- {
- 	struct lp8788_charger *pchg = platform_get_drvdata(pdev);
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ #include <linux/auxiliary_bus.h>
++#include <linux/devm-helpers.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/nvmem-consumer.h>
+@@ -1650,7 +1651,6 @@ static int qcom_battmgr_probe(struct aux
+ 	psy_cfg_supply.supplied_to = qcom_battmgr_battery;
+ 	psy_cfg_supply.num_supplicants = 1;
  
--	flush_work(&pchg->charger_work);
- 	lp8788_irq_unregister(pdev, pchg);
-+	cancel_work_sync(&pchg->charger_work);
- }
+-	INIT_WORK(&battmgr->enable_work, qcom_battmgr_enable_worker);
+ 	mutex_init(&battmgr->lock);
+ 	init_completion(&battmgr->ack);
  
- static struct platform_driver lp8788_charger_driver = {
+@@ -1713,6 +1713,11 @@ static int qcom_battmgr_probe(struct aux
+ 					     "failed to register wireless charing power supply\n");
+ 	}
+ 
++	ret = devm_work_autocancel(dev, &battmgr->enable_work,
++				   qcom_battmgr_enable_worker);
++	if (ret)
++		return ret;
++
+ 	battmgr->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_BATTMGR,
+ 						       qcom_battmgr_callback,
+ 						       qcom_battmgr_pdr_notify,
 
 
