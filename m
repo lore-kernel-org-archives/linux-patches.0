@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5FB2264A3;
-	Fri,  4 Sep 2026 05:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506932AD37;
+	Fri,  4 Sep 2026 05:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500522; cv=none; b=Q0fiShZPXJzhM9yPcT+gvUn+bssc2yzIincBfsC/9LwssYB5BHtLdqwJ4CErWWvifFbS3QSR9CYqnKJ6sOhYzuHn8eNmEVEifLXE1FefYLm0etXJS/Cy/GZL0IJFW5PZXvGkGICFa06S4YzMSGQsjjqP8RwRD9rU0E9Utv9kyYo=
+	t=1788500525; cv=none; b=k/vtO/adsuMVSs7KlON62bVaqo4csEJTOQHWEwHF7qov7pTKhr+LNnkMGRp+eLD9+P5Qr7Yl3CKTTM2b6GqXA1rqaLum5jmR/HY2HJlsP3sD09D2j0jEEfxVbLVrevvSbyF5qGIiQDtl/W+5DON1VRhGAQoIkJtma0L5KmLg4VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500522; c=relaxed/simple;
-	bh=gQTrPVxNvbqIPvN9niUtB/c8Bv6e8AVVD+wy8K6Sp7E=;
+	s=arc-20240116; t=1788500525; c=relaxed/simple;
+	bh=lZUrEY4I4+0BW5E7ZGhvdEu/lJZdIb1ep6Ysr9ZRfLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TpDUK/hBKht0jWouSKxwm+rlcsuklbbWtku2mNowjtZ8N1QCzii5sG8M360ZNknU0T+6aZL1Jfp+vHQENTgkvRPXxHCJHi+1xwoRXsRwe/HrYCZhPfHjCqGLVh0ja0ph/p56KlXr9aFMEUziWvRwIA0al2ErbgIdDOAJcUanTOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOcZPprp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qB46knWih0zSk7f8NhiOAJl4XxbHjBX8friOeXMGYpMITsOUwUuwvCmsUUFG7yVcM/rNHx3JdwuDfKb6/SfMS46AOronsiDI4Yd7WXxSzlLVfa1jBnh0PzsfBjQou9qEODL441hzutwC3L4/n6iUIa3IiiephRoPHiu5W+7Kf8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boAzuJva; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOcZPprp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B8E1F00A3D;
-	Fri,  4 Sep 2026 05:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boAzuJva"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABDF1F00A3D;
+	Fri,  4 Sep 2026 05:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500521;
-	bh=cBqZu6H9dBhtNuczuzG+1j3b6PjrQpLsopiVz3n3aK8=;
+	s=korg; t=1788500524;
+	bh=yhaUXVFE8KuGp2WqZN37mhSUeyKnLhvCTQ8T3oYfuFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dOcZPprpd/kzwli14Wump4fBSaoHAy5MBVSBHUYwJ+xSOkLN3ppee8XlAQltNhqc6
-	 ZJeX3RILly4KDXHIjhdg+BlkZFpkBTkIt9uTPKzK1FWc9JCgxB+kRPNtGljvfQE+ih
-	 ipp2aE5OPUxn3IUpkkWVfB/QRy8tze2phE5ijFmg=
+	b=boAzuJvaR8XZGsYPaVpfGqVI5/Ir4Ce2ZQNsaiKLGI9cPzTm+B6yTPhYEOcDivOBn
+	 f+3sKwr6pp8JycxeBR4Zy0VzdALdUkfD+VxmyBJ1nafqn+lGuogjOwpsJlw+J68LP4
+	 kNfmoAYD1MHX4094uQ9voo8BjdytxPlCgzZozs3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 087/552] lib/ucs2_string.c: fix out-of-bounds read in ucs2_strnlen()
-Date: Fri,  4 Sep 2026 06:54:04 +0200
-Message-ID: <20260904045749.849173320@linuxfoundation.org>
+	Weigang He <geoffreyhe2@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 088/552] media: cec: stm32: prevent out-of-bounds write on RX overflow
+Date: Fri,  4 Sep 2026 06:54:05 +0200
+Message-ID: <20260904045749.872985461@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,51 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol@kernel.org>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-commit cec0d03fe785380540dc1b4d07c80f67ae2ffc78 upstream.
+commit fb9dda38d4b9e90db07ed9a0ee2d35bf85494035 upstream.
 
-Patch series "lib/ucs2_string.c: fix out-of-bounds read in
-ucs2_strnlen()", v2.
+stm32_rx_done() appends each received CEC byte to rx_msg.msg[] using
+rx_msg.len as the write index, incrementing it on every RXBR
+(receive-byte-ready) interrupt without checking it against the buffer
+size:
 
-This series fixes an off-by-one out-of-bounds read in ucs2_strnlen().
+	cec->rx_msg.msg[cec->rx_msg.len++] = val & 0xFF;
 
-The first patch is the real fix, the second patch comes as a bonus and
-fixes the code indentation.
+rx_msg.msg[] is a fixed CEC_MAX_MSG_SIZE (16) byte array in struct
+cec_msg, and rx_msg.len is only reset on RXACKE/RXOVR or after a
+completed message (RXEND). The number of bytes received before RXEND is
+decided by the remote CEC device (it sets EOM), not by the driver. A
+peer that keeps sending bytes without ending the message drives RXBR
+repeatedly, pushing rx_msg.len past 16 and writing peer-controlled bytes
+out of bounds into the surrounding memory. This is reachable in normal
+operation once the driver has probed and receiving is enabled, from the
+IRQ thread, without any local privilege.
 
+The length check in the CEC core runs on the consumer side, after the
+byte has been stored, so it does not prevent the overflow. Bound the
+index in the driver before the store, as the other platform CEC drivers
+already do (e.g. tegra_cec), dropping the excess bytes of an overlong
+frame.
 
-This patch (of 2):
+Found by static analysis tool CodeQL.
 
-ucs2_strnlen() checks the current character before checking whether the
-caller-provided maximum length has been reached.  If the input is not
-NUL-terminated within that bound, the loop can read one ucs2_char_t past
-the limit.
-
-Test the length before dereferencing to prevent an off-by-one
-out-of-bounds read.
-
-Link: https://lore.kernel.org/20260723-fix-ucs2_strnlen-v2-0-9ea94e32a358@kernel.org
-Link: https://lore.kernel.org/20260723-fix-ucs2_strnlen-v2-1-9ea94e32a358@kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d69ae57453c8 ("[media] cec: add STM32 cec driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/ucs2_string.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/cec/platform/stm32/stm32-cec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/lib/ucs2_string.c
-+++ b/lib/ucs2_string.c
-@@ -8,7 +8,7 @@ ucs2_strnlen(const ucs2_char_t *s, size_
- {
-         unsigned long length = 0;
+--- a/drivers/media/cec/platform/stm32/stm32-cec.c
++++ b/drivers/media/cec/platform/stm32/stm32-cec.c
+@@ -132,7 +132,8 @@ static void stm32_rx_done(struct stm32_c
+ 		u32 val;
  
--        while (*s++ != 0 && length < maxlength)
-+	while (length < maxlength && *s++ != 0)
-                 length++;
-         return length;
- }
+ 		regmap_read(cec->regmap, CEC_RXDR, &val);
+-		cec->rx_msg.msg[cec->rx_msg.len++] = val & 0xFF;
++		if (cec->rx_msg.len < CEC_MAX_MSG_SIZE)
++			cec->rx_msg.msg[cec->rx_msg.len++] = val & 0xFF;
+ 	}
+ 
+ 	if (cec->irq_status & RXEND) {
 
 
