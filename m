@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F6B351C04;
-	Fri,  4 Sep 2026 05:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143DE351C35;
+	Fri,  4 Sep 2026 05:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499792; cv=none; b=n2a6roMPIpkYGQ70MmcgdbK+nuFF3NGrNxCLzhrfmjKjTmCtWMOJLUqS3DkFHOjE7Y+9ly2OQm+bs3hjInerkZy7BDha4lkDSUgRpaqCmBo74nxJ1OVz1FfUo84esHHOitnhSlbeLlqMJi33GlyOMQCuJfyf6gMqY5ICz5kMVuI=
+	t=1788499795; cv=none; b=qET6wu5YuqwU/Ubn9iBMv2TtCNjFvSlssJUYxmTXYp/v3MLPyseBtD7M8tgrZyPl0ZCm6TVsZ3OoeeITvEvp+9Pd12RTrcX3+5czqc+7zDAFPv1JfglnsWNTHN2e8X8IOl1N3uPjYHsirFWr5KA7jFeeHcnapCgPHeX8ocgjOgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499792; c=relaxed/simple;
-	bh=3ayhD3I6J1/SlqhazK7KbPA8EzotQW9AjxNnTbnrxO8=;
+	s=arc-20240116; t=1788499795; c=relaxed/simple;
+	bh=wcmRQqtN7VDPWxrr5sajDGvhqmUW4t0hQx5rk1ElS0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4jsWlcfN+zA0HzSAznwkb0ZsrZ+DdHPFbB0Mm3qbnpVk6vVNKJ8XJKhnaadM1qznJdNBLEvbaMv4pxy93cHouymRh5Zv/v3awyh77tiG95RSyVf8yepUaPUbM+gc78HC+Lh40A6o4mZuiQilsYPjdDnTIqSIGLx4ozqHfvi43g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jS9J7m4w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ujt3G3BoorBU9/WT8deki5Dz2jqOyGsmCwycAM/4oPpLXfWHuYue7x1awy5M9FG/ycpB9EbBVyFN9HK5BOa5hz8CWICLlkma9bYBOCg27a61yXdOi3fQ0gOEtFg5UA1F9FMSlC/G9tUao/N0h/ixQsQBbE4ZpCwXJlBZYTQPYvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5s94y50; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jS9J7m4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0381F00A3D;
-	Fri,  4 Sep 2026 05:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5s94y50"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3057B1F00A3D;
+	Fri,  4 Sep 2026 05:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499790;
-	bh=awyFo2RO+rPh14mLgnnlaM1o7SCrx5uu39agBcJwSPU=;
+	s=korg; t=1788499793;
+	bh=qbeZIca+CgGtaCXTfsOinmZRky6WMj2jEtMI6CxemXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jS9J7m4wVs1Qe3gXlfjpjRASyZWJgabMkjeodXW15YoBoIrNWp5uyfXGLG7vJ+dqq
-	 QaodUrQG+GSL6N7EbqTbhnpi/k4SnBNzbg160erYgAiYgXLB7FkGqI7akY4I3Oh5nc
-	 KsYms3reFHAxf82hL8fgfswLHGczudnYihGttNDc=
+	b=Z5s94y50j0mjYMfiyd/Ii9iX+ZD6cL2K1xlYPGkxilPbKCMCjLbTWcj1oNG45k7sd
+	 iKPyZLzDCRH0bJfl+sjLX802iyF2A31//HCDB56KDr4caKq27S4l3CNdygipIvTRJq
+	 lXtuqU+vQEcEJ9HHFv7fYa8m7EAz/Jl4hu0PWbxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Ma Ke <make_ruc2021@163.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 7.2 499/713] power: supply: bq256xx: drain usb_work before freeing the charger
-Date: Fri,  4 Sep 2026 06:57:47 +0200
-Message-ID: <20260904045815.011520693@linuxfoundation.org>
+Subject: [PATCH 7.2 500/713] power: supply: bq25890: Fix power_supply reference leak
+Date: Fri,  4 Sep 2026 06:57:48 +0200
+Message-ID: <20260904045815.033548417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,89 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Ma Ke <make_ruc2021@163.com>
 
-commit 2dd6cd823777bea6d9a880a12a92a73ec76aee0b upstream.
+commit 863c32a83e4235eb0cbf6106f2b124e645302156 upstream.
 
-The USB-PHY notifier queues usb_work, whose handler calls
-power_supply_changed(bq->charger). The reset devm action only unregisters
-the notifier and was registered before the power supplies, so devm frees
-bq->charger on unwind before the action runs; a usb_work still queued can
-then dereference it.
+bq25890_fw_probe() acquires a reference to a secondary charger using
+power_supply_get_by_name(), but the reference is not released on later
+probe failures or on driver detach.
 
-Register the reset action after the power supplies, so it unregisters
-the notifiers and drains usb_work before the supplies are released.
-Initialize usb_work and obtain the PHY references before registering
-the notifiers, so the worker cannot run before the supplies exist.
+In particular, failures after bq25890_fw_probe() returns successfully,
+such as a failure in bq25890_hw_init(), also leak the reference.
 
-Found by static analysis.
+Register a device-managed cleanup action immediately after acquiring
+the secondary charger. This releases the reference on all subsequent
+probe failures and on driver detach.
 
-Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
+Found by code review.
+
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260804145511.103470-1-fanwu01@zju.edu.cn
+Fixes: d54bf877fd87 ("power: supply: bq25890: Add support for having a secondary charger IC")
+Link: https://patch.msgid.link/20260722044416.1623621-1-make_ruc2021@163.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq256xx_charger.c |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/power/supply/bq25890_charger.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/power/supply/bq256xx_charger.c
-+++ b/drivers/power/supply/bq256xx_charger.c
-@@ -896,6 +896,8 @@ static void bq256xx_charger_reset(void *
- 
- 	if (!IS_ERR_OR_NULL(bq->usb3_phy))
- 		usb_unregister_notifier(bq->usb3_phy, &bq->usb_nb);
-+
-+	cancel_work_sync(&bq->usb_work);
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -1389,6 +1389,14 @@ static int bq25890_fw_read_u32_props(str
+ 	return 0;
  }
  
- static int bq256xx_set_charger_property(struct power_supply *psy,
-@@ -1721,24 +1723,12 @@ static int bq256xx_probe(struct i2c_clie
- 		return ret;
++static void bq25890_release_secondary_chrg(void *data)
++{
++	struct bq25890_device *bq = data;
++
++	power_supply_put(bq->secondary_chrg);
++	bq->secondary_chrg = NULL;
++}
++
+ static int bq25890_fw_probe(struct bq25890_device *bq)
+ {
+ 	int ret;
+@@ -1401,6 +1409,10 @@ static int bq25890_fw_probe(struct bq258
+ 		bq->secondary_chrg = power_supply_get_by_name(str);
+ 		if (!bq->secondary_chrg)
+ 			return -EPROBE_DEFER;
++
++		ret = devm_add_action_or_reset(bq->dev, bq25890_release_secondary_chrg, bq);
++		if (ret)
++			return ret;
  	}
  
--	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
--	if (ret)
--		return ret;
-+	INIT_WORK(&bq->usb_work, bq256xx_usb_work);
-+	bq->usb_nb.notifier_call = bq256xx_usb_notifier;
- 
- 	/* OTG reporting */
- 	bq->usb2_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
--	if (!IS_ERR_OR_NULL(bq->usb2_phy)) {
--		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
--		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
--		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
--	}
--
- 	bq->usb3_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB3);
--	if (!IS_ERR_OR_NULL(bq->usb3_phy)) {
--		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
--		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
--		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
--	}
- 
- 	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
- 	if (ret) {
-@@ -1746,6 +1736,17 @@ static int bq256xx_probe(struct i2c_clie
- 		return ret;
- 	}
- 
-+	/* Register after the power supplies so devm runs it first. */
-+	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
-+	if (ret)
-+		return ret;
-+
-+	if (!IS_ERR_OR_NULL(bq->usb2_phy))
-+		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
-+
-+	if (!IS_ERR_OR_NULL(bq->usb3_phy))
-+		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
-+
- 	if (client->irq) {
- 		ret = devm_request_threaded_irq(dev, client->irq, NULL,
- 						bq256xx_irq_handler_thread,
+ 	/* Optional, left at 0 if property is not present */
 
 
