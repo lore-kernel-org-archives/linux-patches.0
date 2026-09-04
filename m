@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748743DAAB7;
-	Fri,  4 Sep 2026 05:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC193D6664;
+	Fri,  4 Sep 2026 05:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499735; cv=none; b=AwF/ScBJfF4aFnAW9KHo62VEtFR89cWfakI+Nv3kIpk1OAg9nji7XSaqfxcaKEffJkHWJJpgd6LTutAGOste29jKw6mzCM76YrgydZuPKfRHIEnf+cSvIRw4+3YvPfojg7adXOaBRpLUrXhWiFFWrKfXFdlVSFG+u/+5s4a1ZcQ=
+	t=1788499738; cv=none; b=aJXHvzowNxLrsLCUp5pMbZrGcNPvC5cOjQiO7WrPASU84nCy3D5dmb0l/Aob3iYeYNpEItkgHlJzoRADcrg126wiTJmjOA/vk8iXTcDz7/SZyCCqfIOVxnyU9Ci0SGvUDlud7ZHQ0DaFanjF3r+ZvfY4CXEM5b/cWP6KnoGyGcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499735; c=relaxed/simple;
-	bh=1ApNEILGMZkB2/9zN5OBDFCDPcdt35b1v3/kNGBCVQQ=;
+	s=arc-20240116; t=1788499738; c=relaxed/simple;
+	bh=GvHwOBf8hUHhAF1kN5wEFMrlfJqJEtdM6c5flP839hE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBffb/ReVhXhXSU2umNF7stFt7XPQ5YDRhYyHAASB30G+cYRdPgut0G3lq9tTg7QNN/qy4TLHs4AZSR6w3zPgjxAF0S4p8GQqTDpUQE17tTv18DlAfJzEMxW4LmxfVSCGuO9P99L2PJi1z08Y+td0pL2WKwFZUCKTJITxOv3z4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zy37OIRV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gKzJ/4Ojts5XdyuqzPe4QrkNaVa7TiCC3IhSBHpfw0l280vuxbBymdiviihw71kLRd3MQws/YL9N7uWgOvl9FOVrQwftObKkmmpZ7RPUUtX0jl1YkH/4YFDQkycGQlFkM3AxLQ8af2xtl/gpRWD2U6dxO2m7JpAnkJCXGZ9TT5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXGB1q/5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zy37OIRV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC191F00A3E;
-	Fri,  4 Sep 2026 05:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXGB1q/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2601F00A3D;
+	Fri,  4 Sep 2026 05:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499734;
-	bh=gDD7Cbv6uKvOOaPlvHLQ8MjkxoYOVaN6WXAc6Rz7wCA=;
+	s=korg; t=1788499737;
+	bh=1oQU4XNPIKomyIZJGJjerWizZxPU/WmOvJmMBMOX6is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zy37OIRV/LSlL0zvQtRMPrVqpDq88+YLjnPcnm2TbdkIQIkr1bCLTIDt1eMmUSQqM
-	 38AC868KGcJHfxiuR0CPrRzomRuhlfGq7i8kGv601wC6DkZYeeH1aBb6g9N8EQLOkW
-	 la/C606zAYMj+EtSaFMbkHySzv1aiW/aZh4uiIU4=
+	b=lXGB1q/5AK49NZ4DeEUentHo91zraxteeEfMVcjixC6ZbAN25Ei11PrJ3A1wz0GL3
+	 9yv9uMXMDovPd4QGciVsNyy1WHD7KFPGBOxoSDgK1ch9J6bkErxQPEFrfFUYFGqxAP
+	 ywVPxmqBlYLdDZU7ztou1maec2+zM41Q2IS/fn4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronald Claveau <linux-kernel-dev@aliel.fr>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 7.2 522/713] PCI: meson: Fix GPIO state while requesting PERST#
-Date: Fri,  4 Sep 2026 06:58:10 +0200
-Message-ID: <20260904045815.520182704@linuxfoundation.org>
+	stable@kernel.org,
+	Simon Horman <horms@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.2 496/713] sctp: distinguish sequence zero from wildcard in reconf lookup
+Date: Fri,  4 Sep 2026 06:57:44 +0200
+Message-ID: <20260904045814.943037451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,61 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit 40fb390cbcc11797c44c16dabdf763ec87643671 upstream.
+commit 63f44178f0a0f86060c9b576d6efab8a3ffa403e upstream.
 
-Meson devicetree defines the PERST# GPIO as 'reset' GPIO.  Commit
-4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
-inverted the PERST# assertion logic to use proper GPIO descriptor semantics
-and moved the polarity configuration to the device tree as GPIO_ACTIVE_LOW.
-However, the initial PERST# GPIO state "GPIOD_OUT_LOW" was not updated
-accordingly.
+Zero is a valid response sequence after strreset_outseq wraps, but
+sctp_chunk_lookup_strreset_param() currently treats it as a wildcard.
 
-This results in the enumeration failure of the endpoint devices as
-PERST# would get deasserted while requesting the GPIO even before
-power and REFCLK becomes stable.
+Add match_seq so response lookups match zero exactly while the one
+type-only lookup can still ignore the sequence.
 
-Without this fix:
-
-  ahci 0000:01:00.0: enabling device (0000 -> 0002)
-  ahci 0000:01:00.0: SSS flag set, parallel bus scan disabled
-  ahci 0000:01:00.0: Controller reset failed (0xffffffff)
-  ahci 0000:01:00.0: probe with driver ahci failed with error -5
-
-With this fix:
-
-  ahci 0000:01:00.0: enabling device (0000 -> 0002)
-  ahci 0000:01:00.0: AHCI vers 0001.0300, 32 command slots, 6 Gbps, SATA mode
-  ahci 0000:01:00.0: 1/1 ports implemented (port mask 0x1)
-  ahci 0000:01:00.0: flags: 64bit ncq led clo only pio ccc
-
-Change the GPIO request flag from GPIOD_OUT_LOW to GPIOD_OUT_HIGH to get
-the right behaviour.
-
-Fixes: 4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
-Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
-[mani: CCed stable and commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616-fix-meson-pcie-reset-gpio-v1-1-fca404b4c8be@aliel.fr
+Fixes: 50a41591f110 ("sctp: implement receiver-side procedures for the Add Outgoing Streams Request Parameter")
+Cc: stable@kernel.org
+Suggested-by: Simon Horman <horms@kernel.org>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Link: https://patch.msgid.link/20260824081832.98717-2-juny24602@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-meson.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/stream.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-meson.c
-+++ b/drivers/pci/controller/dwc/pci-meson.c
-@@ -401,7 +401,7 @@ static int meson_pcie_probe(struct platf
- 		return PTR_ERR(mp->phy);
- 	}
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -482,7 +482,7 @@ out:
  
--	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(mp->reset_gpio)) {
- 		dev_err(dev, "get reset gpio failed\n");
- 		return PTR_ERR(mp->reset_gpio);
+ static struct sctp_paramhdr *sctp_chunk_lookup_strreset_param(
+ 			struct sctp_association *asoc, __be32 resp_seq,
+-			__be16 type)
++			__be16 type, bool match_seq)
+ {
+ 	struct sctp_chunk *chunk = asoc->strreset_chunk;
+ 	struct sctp_reconf_chunk *hdr;
+@@ -499,7 +499,7 @@ static struct sctp_paramhdr *sctp_chunk_
+ 		 */
+ 		struct sctp_strreset_tsnreq *req = param.v;
+ 
+-		if ((!resp_seq || req->request_seq == resp_seq) &&
++		if ((!match_seq || req->request_seq == resp_seq) &&
+ 		    (!type || type == req->param_hdr.type))
+ 			return param.v;
+ 	}
+@@ -564,7 +564,7 @@ struct sctp_chunk *sctp_process_strreset
+ 	if (asoc->strreset_chunk) {
+ 		if (!sctp_chunk_lookup_strreset_param(
+ 				asoc, outreq->response_seq,
+-				SCTP_PARAM_RESET_IN_REQUEST)) {
++				SCTP_PARAM_RESET_IN_REQUEST, true)) {
+ 			/* same process with outstanding isn't 0 */
+ 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
+ 			goto out;
+@@ -816,7 +816,7 @@ struct sctp_chunk *sctp_process_strreset
+ 
+ 	if (asoc->strreset_chunk) {
+ 		if (!sctp_chunk_lookup_strreset_param(
+-			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS)) {
++			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false)) {
+ 			/* same process with outstanding isn't 0 */
+ 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
+ 			goto out;
+@@ -927,7 +927,8 @@ struct sctp_chunk *sctp_process_strreset
+ 	struct sctp_paramhdr *req;
+ 	__u32 result;
+ 
+-	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0);
++	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0,
++					       true);
+ 	if (!req)
+ 		return NULL;
+ 
 
 
