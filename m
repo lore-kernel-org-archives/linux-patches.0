@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E3D382380;
-	Fri,  4 Sep 2026 05:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8476411FB3;
+	Fri,  4 Sep 2026 05:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498904; cv=none; b=bjEtXmUNyFkGszcnhkzrWBoNW3puE03nAITAEFb+j2meIrMzRvc3NL02RYUc09+z8gMnhG01tZT8KU+8mr8hlCQNbUIbSJEVxe1YaF60qrIviwayBOyFJ/XVdHu3tFpl5wOzRyHDNUa9mDyL3Yy3cgqH5dnfVjw1u7Z7leixumE=
+	t=1788498907; cv=none; b=Zq3NbfpIXRbvi3ClQWd6SGCGT3438gQQlxCAjYlgGzTHF3BBoLU8bz9EqdTWS7pUlyE9DHf2euU8fBrKqUqDGBTdvmgkJzsk3BwbdD5F9aEeaz1uzTPqrEHbEYaPp7qMnfQs8gmx6CJTrGq/e48lFdXU34fE/VBRxs1wKUxJNug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498904; c=relaxed/simple;
-	bh=b9fyR5OcCKwdzDrU31jW1KFjUPn40tAn7wldCvQfkSg=;
+	s=arc-20240116; t=1788498907; c=relaxed/simple;
+	bh=EjQIeUsFl5u5JFbnEY9ERA6mLfDd0z/TrWDgQ+Qt7Fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l5+8HyNL/LHxiTk3hOPYHEbm6P3TouwvkcwK3eQVI0XKgu9kGeBJJ7zsscR2HBTjncPZuTvIcLw5J6Aic09EFBiROT1w3CbxRPN67h4Uzkp7zBdWZXjN6bYd6o+8hz1TMcBt3kZ5tOXYVWqCLEQCi+ypD1bY4GouP1zOJ/P2Djc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGkUhmYV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aLVV8JkzbgpYGDnsQBl/wOnUoCRrOdVIvpV2CK+RkV1teqcgk05nU7ifSzAV2y/rHVwncsrSO1qHgLv85OC+MGO1aZx/od9YCxc6fz7SsJR1yDGR8lqMo4b+wCGHpBfFNf4zrZOgrU++r/PoAE8X9ipm856SwHxuU+iuyZyV/zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NONBokh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGkUhmYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB3A1F00A3D;
-	Fri,  4 Sep 2026 05:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NONBokh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D20C1F00A3D;
+	Fri,  4 Sep 2026 05:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498902;
-	bh=r1isGLgaoZsDZVUWmMDD2f/AZ2xxXvpHA32tYPW2XxE=;
+	s=korg; t=1788498905;
+	bh=+gBn2P/VBj0xwLqiGn+YbH8/Tiz9qbyqWbLFCyg0hAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EGkUhmYVri50n1j3GuBeQu4vBuKvkPg2tCufqeZetQy1r6ynzPy2YVlc6Nu00UWUa
-	 9jq6vvEYqFNgT0r1ytjBA1USV1Gu+n8LvQXdBPoLMR5P5AkwGifuQsc6wmPh7oA5QN
-	 stu+ICV3Y3VcmJzKKtI6EoN1e1k5kiMqAoHGLwDw=
+	b=2NONBokhJTv8kHsmlwJ8F7Mz7GiFIsRW+w42SGbOZYi2P4Qui+BVZdrwj3wbNk55k
+	 jQPwzK5QZUHGZqxPtxENi821+LQUsj4aWxMuTDgsyU4W3Nttgdib9pECmEU+bCS4kr
+	 V7VZKv1//3lcECYqxHbpjqsJ+SfKeMqQBH4viC4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.2 229/713] audit: avoid dropping live tree ref on fsnotify rule autoremove
-Date: Fri,  4 Sep 2026 06:53:17 +0200
-Message-ID: <20260904045808.953096886@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.2 230/713] cifs: add cifs_resize_file_locked() to guard fscache_resize_cookie() under i_rwsem
+Date: Fri,  4 Sep 2026 06:53:18 +0200
+Message-ID: <20260904045808.977038702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -46,73 +47,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit 783f0f0974c156aca630f4ffff248671082a098d upstream.
+commit 32a7af68df7361fe7cf153cf36124d04b94aec00 upstream.
 
-audit_del_rule() is used for both netlink deletion templates and internal
-fsnotify autoremove.  The former passes a parsed template which owns a
-temporary tree reference; the latter passes the installed entry itself.
+cifs_setsize() calls fscache_resize_cookie() without holding i_rwsem.
+When the fscache cookie is active (FSCACHE_COOKIE_IS_CACHING is set),
+fscache_resize_cookie() performs a real resize that requires i_rwsem
+held exclusively.  If another file descriptor has the same inode open,
+fscache_use_cookie() was already called from that cifs_open(), making
+the cookie active.  In that case, calling cifs_setsize() from
+cifs_do_truncate() (invoked from cifs_open() without i_rwsem) races
+against concurrent fscache I/O.
 
-The unconditional audit_put_tree() at the end of audit_del_rule() assumes
-the template case.  For mixed AUDIT_DIR plus AUDIT_EXE rules, an fsnotify
-autoremove event therefore drops the installed rule's live tree reference.
-Repeating this across rules sharing the same tree can free the tree while
-another rule still references it, and a later autoremove dereferences the
-freed pathname while comparing rules.
+Strip fscache_resize_cookie() from cifs_setsize(), making it a pure
+size/page-cache helper.  Add cifs_resize_file_locked() for callers
+that already hold i_rwsem: it calls netfs_resize_file() and
+cifs_setsize(), then temporarily activates the cookie with
+fscache_use_cookie() to perform the resize under the lock, then
+deactivates it with cifs_fscache_unuse_inode_cookie().  Using
+fscache_use_cookie() before the resize ensures correctness whether or
+not another fd already holds the cookie active.
 
-Move the temporary-tree put to audit_rule_change(), the caller that owns
-deletion templates.  Keep it in the AUDIT_DEL_RULE cleanup so both
-successful deletion and -ENOENT still release the parser-owned tree.
+Switch cifs_file_set_size(), smb2_duplicate_extents(), and both size-
+extension branches of smb3_simple_falloc() to the new wrapper; those
+paths already hold i_rwsem via VFS setattr, lock_two_nondirectories(),
+or cifs_fallocate() respectively.  cifs_do_truncate() continues to
+call cifs_setsize() followed by cifs_invalidate_cache(), since it runs
+without i_rwsem.
 
-Cc: stable@kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Tested-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: dropped unnecessary comment for line length reasons]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: fa724e235cfd ("cifs: add fscache_resize_cookie() to cifs_setsize()")
+Cc: stable@vger.kernel.org
+Cc: David Howells <dhowells@redhat.com>
+Cc: Paulo Alcantara <pc@manguebit.com>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/auditfilter.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/smb/client/cifsfs.h  |    1 +
+ fs/smb/client/inode.c   |   24 +++++++++++++++++++-----
+ fs/smb/client/smb2ops.c |    9 +++------
+ 3 files changed, 23 insertions(+), 11 deletions(-)
 
---- a/kernel/auditfilter.c
-+++ b/kernel/auditfilter.c
-@@ -1023,7 +1023,6 @@ static inline int audit_add_rule(struct
- int audit_del_rule(struct audit_entry *entry)
- {
- 	struct audit_entry  *e;
--	struct audit_tree *tree = entry->rule.tree;
- 	struct list_head *list;
- 	int ret = 0;
- #ifdef CONFIG_AUDITSYSCALL
-@@ -1071,9 +1070,6 @@ int audit_del_rule(struct audit_entry *e
- out:
- 	mutex_unlock(&audit_filter_mutex);
+--- a/fs/smb/client/cifsfs.h
++++ b/fs/smb/client/cifsfs.h
+@@ -147,6 +147,7 @@ ssize_t cifs_file_copychunk_range(unsign
  
--	if (tree)
--		audit_put_tree(tree);	/* that's the temporary one */
--
- 	return ret;
+ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg);
+ void cifs_setsize(struct inode *inode, loff_t offset);
++void cifs_resize_file_locked(struct inode *inode, loff_t offset);
+ 
+ struct fs_context;
+ struct smb3_fs_context;
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3059,7 +3059,23 @@ void cifs_setsize(struct inode *inode, l
+ 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	truncate_pagecache(inode, offset);
+ 	netfs_wait_for_outstanding_io(inode);
+-	fscache_resize_cookie(cifs_inode_cookie(inode), offset);
++}
++
++void cifs_resize_file_locked(struct inode *inode, loff_t offset)
++{
++	struct fscache_cookie *cookie = cifs_inode_cookie(inode);
++
++	lockdep_assert_held_write(&inode->i_rwsem);
++
++	netfs_resize_file(netfs_inode(inode), offset, true);
++	cifs_setsize(inode, offset);
++
++	if (!cookie)
++		return;
++
++	fscache_use_cookie(cookie, true);
++	fscache_resize_cookie(cookie, offset);
++	cifs_fscache_unuse_inode_cookie(inode, true);
  }
  
-@@ -1158,6 +1154,8 @@ int audit_rule_change(int type, int seq,
- 	}
+ int cifs_file_set_size(const unsigned int xid, struct dentry *dentry,
+@@ -3125,10 +3141,8 @@ int cifs_file_set_size(const unsigned in
+ 	cifs_put_tlink(tlink);
  
- 	if (err || type == AUDIT_DEL_RULE) {
-+		if (type == AUDIT_DEL_RULE && entry->rule.tree)
-+			audit_put_tree(entry->rule.tree);
- 		if (entry->rule.exe)
- 			audit_remove_mark(entry->rule.exe);
- 		audit_free_rule(entry);
+ set_size_out:
+-	if (rc == 0) {
+-		netfs_resize_file(&cifsInode->netfs, size, true);
+-		cifs_setsize(inode, size);
+-	}
++	if (rc == 0)
++		cifs_resize_file_locked(inode, size);
+ 
+ 	return rc;
+ }
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -2222,8 +2222,7 @@ smb2_duplicate_extents(const unsigned in
+ 		rc = smb2_set_file_size(xid, tcon, trgtfile, dest_off + len, false);
+ 		if (rc)
+ 			goto duplicate_extents_out;
+-		netfs_resize_file(netfs_inode(inode), dest_off + len, true);
+-		cifs_setsize(inode, dest_off + len);
++		cifs_resize_file_locked(inode, dest_off + len);
+ 	}
+ 	rc = SMB2_ioctl(xid, tcon, trgtfile->fid.persistent_fid,
+ 			trgtfile->fid.volatile_fid,
+@@ -3776,8 +3775,7 @@ static long smb3_simple_falloc(struct fi
+ 			}
+ 
+ 			new_eof = off + len;
+-			netfs_resize_file(&cifsi->netfs, new_eof, true);
+-			cifs_setsize(inode, new_eof);
++			cifs_resize_file_locked(inode, new_eof);
+ 
+ 			qrc = SMB2_query_info(xid, tcon,
+ 					      cfile->fid.persistent_fid,
+@@ -3825,8 +3823,7 @@ static long smb3_simple_falloc(struct fi
+ 		if (rc)
+ 			goto out;
+ 
+-		netfs_resize_file(&cifsi->netfs, new_eof, true);
+-		cifs_setsize(inode, new_eof);
++		cifs_resize_file_locked(inode, new_eof);
+ 
+ 		qrc = SMB2_query_info(xid, tcon,
+ 				      cfile->fid.persistent_fid,
 
 
