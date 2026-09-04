@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2415E335BBB;
-	Fri,  4 Sep 2026 05:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C58381AF9;
+	Fri,  4 Sep 2026 05:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500721; cv=none; b=oToDZ5LrGyu453iK0XJoGnehFvpj7Rh1iUWx1EOQUghCiwXKGwKP4dD42x1HPnQSLOsfUoRv/KzF3kCKD5yaInto+jd3WvQkOSAGyRdpEgfZ5vrocaDMrLJfGkla6IiH2KeENOcA4zqaCSmX/YyZpP0EKsm/becreOOGyXGG4vg=
+	t=1788500723; cv=none; b=d+Uc/c0rZWaBdf62W0H1v5yD6WCvcygSCkI3P83vwvzoGTplgtRV22PaL6y93CaGszuDEyTUS2RYy/hJiD0jYgFP8X7kAw1lk6zx6V+wdL+IdCLyVrG2JKyaiBjiv2UNf05a92zahXdOoHTJHGcO8KIhC7gGb1sexVVm135Jd3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500721; c=relaxed/simple;
-	bh=B61YOZAW9ShpGz8nTjO7IIKuhXDJzFgSxOaTlylbRKw=;
+	s=arc-20240116; t=1788500723; c=relaxed/simple;
+	bh=BVjDkYM2fhsDy9Nofh6MMt7bNawHKP6aSm4uNRQGPdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VgLuDGnWS/ORnUqqRo6xhh4GuHrmcTVi45/ZzG68Wr9Y/vB5TwedwqdZ/ehHcHgS2UNRdi2SPTGTZ2RjiukfyRpx+5rQ/biva1d6UDqlppywbLo6GRKt+U7Q1GLU4p8+wYspZOs5NCB9/QNOfvvM3R3/Onxjt15TjpgfbhEO2Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YcVT+wP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DXQ+PVxb/8bhpJFmIYsafXnsp7BMkimTsxKocHtO7zoWg8G7jzikTSOlJmd+m7LZOR0whULkBWtmwqn9wxDVX5wZFhn5mJaZVugOLZw6Sg659AqxExO/B20DsFD3LKGfUyOmPnSu01PORXR8DhQcB5cctBIEw4/V+U7xkNkSLAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vww7l0HD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YcVT+wP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3568B1F00A3D;
-	Fri,  4 Sep 2026 05:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vww7l0HD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6971F00A3D;
+	Fri,  4 Sep 2026 05:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500719;
-	bh=3vYWrFSgQs+rY2ifKeyskR2elbgYsn8HGip6N/8vXQk=;
+	s=korg; t=1788500722;
+	bh=qxmApgrlGlekeJ/qsgkqpi10WCZXY7j+hwR89IJTbh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2YcVT+wPlO4/VllfNv7zwAK3jTfn2jTfAmiLZO0sGd0BWmoV0j07dhQ6hAqQ+3F+d
-	 i4gXvyBDd71Xfm0oBXI5zKh3UP8+T8nnVwqADDK2Gdc7i6FDu+i+NyemKr2o5xG8T/
-	 7qxAjqLcxIwSOy/wGOv61dreCkYAWuqFmIIdefXA=
+	b=Vww7l0HDMEUNussGv8KCNx1Cd97pmM4fvWLUS6cmqgL3YMo0PfVmi9N+5E5rcxhUy
+	 ri7/8fn1oO9AtVasTcyBfphCsnt42Jt3cJ8Crd0zpPbOLpkf6ui/mMDWRWQXzDVIVn
+	 q9CmT1PywQ8UkhFyd6bawfbBwE1Js2GmmB1Qe6Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 155/552] ceph: fix UAF in __kick_flushing_caps() on cf entry freed during unlock
-Date: Fri,  4 Sep 2026 06:55:12 +0200
-Message-ID: <20260904045752.354881728@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 120/552] nfsd: block non-SAVEFH ops after FOREIGN PUTFH to prevent NULL deref
+Date: Fri,  4 Sep 2026 06:54:37 +0200
+Message-ID: <20260904045750.777408068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -45,98 +44,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 7af4c4f01305b0935adf6d4301b1ec407025485d upstream.
+commit c59738a00aa51b16adc1b5ceb7c80877168efb4d upstream.
 
-list_for_each_entry() iterates ci->i_cap_flush_list but drops
-i_ceph_lock to send cap messages.  During the unlock window,
-handle_cap_flush_ack() can acquire i_ceph_lock, detach cf entries
-with tid <= flush_tid from the list, release i_ceph_lock, and free
-them via ceph_free_cap_flush() outside any lock.  When the original
-thread reacquires i_ceph_lock and the for-loop macro advances via
-cf = list_next_entry(cf, i_list), it dereferences cf->i_list.next
-on freed memory.
+When CONFIG_NFSD_V4_2_INTER_SSC is enabled, nfsd4_putfh() can return
+success with fh_dentry and fh_export both NULL if fh_verify() returns
+nfserr_stale and putfh->no_verify is true. The NFSD4_FH_FOREIGN flag
+is set, but the compound dispatch loop only uses this flag to bypass
+the nfserr_nofilehandle check -- it does not prevent subsequent ops
+from running with a NULL fh_dentry.
 
-The race timeline:
+A remote client can exploit this by crafting a COMPOUND that includes
+an inter-SSC COPY (which causes check_if_stalefh_allowed() to set
+no_verify=true on the saved PUTFH) with an additional op inserted
+between the source PUTFH and SAVEFH. For example, SETATTR calls
+fh_want_write() which dereferences fh_export->ex_path.mnt without
+calling fh_verify() first, causing a NULL pointer dereference in the
+nfsd kthread.
 
-  __kick_flushing_caps()              handle_cap_flush_ack()
-  -----------------------             -----------------------
-  holds i_ceph_lock        <---
-  iterates to cf (tid=10)
-  prepares FLUSH message
-  drops i_ceph_lock        <---
-  __send_cap() ── FLUSH(tid=10)
-	                              MDS sends FLUSH_ACK(tid=10)
-                           --->       acquires i_ceph_lock
-                                      cf->tid(10) <= flush_tid(10),
-                                      detaches cf from i_cap_flush_list
-                                      drops i_ceph_lock
-                                      ceph_free_cap_flush(cf) <- frees it!
-  acquires i_ceph_lock     <---
-  for-loop advances:
-    cf = list_next_entry(cf, i_list)
-      -- UAF on freed cf->i_list.next
+Fix this by gating the dispatch loop: when NFSD4_FH_FOREIGN is set
+and fh_dentry is NULL, only OP_SAVEFH (needed for the inter-SSC flow)
+and ops with ALLOWED_WITHOUT_FH (which don't need a resolved
+filehandle) may proceed. All other ops receive nfserr_stale, per
+RFC 7862 Section 15.2.3 which specifies that foreign filehandle
+validation is deferred to the consuming operation and NFS4ERR_STALE
+returned at that point.
 
-The cf was just sent by __kick_flushing_caps itself via __send_cap().
-The MDS may respond with FLUSH_ACK quickly enough that
-handle_cap_flush_ack() frees cf before __kick_flushing_caps can
-finish the iteration.
-
-Fix by converting to a manual while loop: save the next pointer
-under i_ceph_lock before dropping it, then use the saved pointer
-after reacquiring, so the potentially-freed cf is never accessed again.
-
+Fixes: b9e8638e3d9e ("NFSD: allow inter server COPY to have a STALE source server fh")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260527-putfh_foreign_fh_null_deref_consumers-v1-1-1b8a5aa28c59@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4proc.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -2585,9 +2585,14 @@ static void __kick_flushing_caps(struct
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -2931,9 +2931,22 @@ nfsd4_proc_compound(struct svc_rqst *rqs
+ 				op->status = nfsd4_open_omfg(rqstp, cstate, op);
+ 			goto encode_op;
  		}
- 	}
- 
--	list_for_each_entry(cf, &ci->i_cap_flush_list, i_list) {
--		if (cf->tid < first_tid)
-+	cf = list_first_entry(&ci->i_cap_flush_list, struct ceph_cap_flush, i_list);
-+	while (&cf->i_list != &ci->i_cap_flush_list) {
-+		struct ceph_cap_flush *next;
-+
-+		if (cf->tid < first_tid) {
-+			cf = list_next_entry(cf, i_list);
- 			continue;
-+		}
- 
- 		cap = ci->i_auth_cap;
- 		if (!(cap && cap->session == session)) {
-@@ -2597,6 +2602,7 @@ static void __kick_flushing_caps(struct
- 		}
- 
- 		first_tid = cf->tid + 1;
-+		next = list_next_entry(cf, i_list);
- 
- 		if (!cf->is_capsnap) {
- 			struct cap_msg_args arg;
-@@ -2637,6 +2643,7 @@ static void __kick_flushing_caps(struct
- 		}
- 
- 		spin_lock(&ci->i_ceph_lock);
-+		cf = next;
- 	}
- }
- 
+-		if (!current_fh->fh_dentry &&
+-				!HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
+-			if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
++		if (!current_fh->fh_dentry) {
++			if (HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
++				/*
++				 * FOREIGN fh from inter-SSC PUTFH: only
++				 * SAVEFH may proceed with a NULL fh_dentry.
++				 * Per RFC 7862 S15.2.3, validation of a
++				 * foreign fh is deferred to the operation
++				 * that consumes it, and NFS4ERR_STALE is
++				 * returned at that point.
++				 */
++				if (op->opnum != OP_SAVEFH &&
++				    !(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
++					op->status = nfserr_stale;
++					goto encode_op;
++				}
++			} else if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
+ 				op->status = nfserr_nofilehandle;
+ 				goto encode_op;
+ 			}
 
 
