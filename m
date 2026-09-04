@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE3730C160;
-	Fri,  4 Sep 2026 05:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC51F3CD8A4;
+	Fri,  4 Sep 2026 05:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498468; cv=none; b=genqIZA2LB66lpaahROoLf1V2sZ1hemwTp+lLfSUjNA6Z8zy71vWLCyEGHJ6rzSlm4Krg3ok6wpe6iZE22Es0hWy1Ib+MoSDA8HSK1F2hTU7CikHd7dqasBUpz8lV+oOK70r8rhnmHhkNYtfAhNAjONSHj6jqkzAD9MfOExrV0o=
+	t=1788498471; cv=none; b=DHPYquMA4GXnFKe1BAjpOrFMXZFZD9ZmrGtV4S2/LCBCtJRkuaUb0hTFidB/0OFYxBptO57nf31H/SlhEDSFX52iS0BOyuFUO/Nn2r7sHvQ1mfP3Vmv142eDY8pg4XzJBCd8x1kF8/4TY5N/0yXNfxPOG5PHuXXi4zyUU8RsYNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498468; c=relaxed/simple;
-	bh=nzV/QsCti6wDYszGB++f3KxTUJaccRjKOd0Jr929ipw=;
+	s=arc-20240116; t=1788498471; c=relaxed/simple;
+	bh=fO5JMrjvV1t3+7LQP4yEonH5MyNDkKKezrHml+hPbxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=arlWK53ICWYPvBNXsCH3iasBIeFbq1xU593OCC+I6Ct5XbTtn4Kb4WiOoY4+YVhR/cTTbfwaBAQh5WTbKFaGVa/IAzAFQk/5zpT8VXPKOhyg2QgAMtg5xzifibZBpt7cpbVeTH/ntnAZwEly3Qcm/s4gXaq5RYhGRpMttVqcQPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/W1HFVG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Knnz7+GvIxMbqjDKQEQJezqhHm4BvLU6Q/YL4w1SKqh1synh1Q98lFxLgwVLMl9Ql7IQEFE9eMRI3BNhGS7nJo72t6bOyMgo0ECSzqxZA2N4zcAg1KKPOz2PzfJ5sHoMWaxrPituYtTjTi76YGU7Ymcg1PSoXdC0wRZZCVb4VKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVkmzdxu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/W1HFVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFB51F00A3D;
-	Fri,  4 Sep 2026 05:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVkmzdxu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F641F00A3D;
+	Fri,  4 Sep 2026 05:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498467;
-	bh=cSsr4vVvHp5ILFzKDwb1PFrvCYmvDTkB5XJrlEEvQyw=;
+	s=korg; t=1788498469;
+	bh=AVZTEus+DpoUOrL35JWtQlkBMGWP7WDjFVKUbx0uwds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w/W1HFVGVJlFvGpBVX2Uf1LgDvCeW2Ap0IAI+5+JLpwWDbEHU4KMbpfqpYO1sdZFE
-	 IGZQxn54mHat8EeMNCYFQR3MlKdcDx5Ierg3hfH/xk5ZQqYOy/ccTmJUDIA++oMfG/
-	 zEbzl5xJAvnoUfD8Gz9jLtUmFYv2rc0Ejfhvbm+c=
+	b=HVkmzdxue2tj/y9R+0SowNXvPdqfIaY1+6RD9x585Gd6foHZEzD+eiqkYuz9e9VUr
+	 j5clC3VrRtRYwobb0Gxs7P2pLaAQBO+pDoCjkU9yZSKHDtcoFkJkrQtp0uf/bA/faT
+	 cPS7LguojacuW6z8LSoKEjpZBkjL+LT2+1O7ZcvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 072/713] mm: memcg-v1: fix wrong linux-mm list address in deprecation warnings
-Date: Fri,  4 Sep 2026 06:50:40 +0200
-Message-ID: <20260904045805.454703800@linuxfoundation.org>
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Younes Akhouayri <git@younes.io>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.2 037/713] rust: num: restrict bool conversion to unsigned Bounded
+Date: Fri,  4 Sep 2026 06:50:05 +0200
+Message-ID: <20260904045804.663799152@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -55,54 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Younes Akhouayri <git@younes.io>
 
-commit 45b1ec4887bdcc58af885540d9fefa8b67d17d57 upstream.
+commit 7dd6343fc127935425a81a8f1989907996c2868d upstream.
 
-The deprecation warnings for memory.oom_control and memory.pressure_level
-use linux-mm-@kvack.org instead of the linux-mm mailing list address.
-Remove the extra hyphen.
+From<bool> turns true into 1. A signed Bounded with N = 1 can hold
+only -1 and 0. The current implementation can therefore create a value
+that breaks Bounded's invariant. Deref relies on that invariant and
+calls unreachable_unchecked() when it is broken, so safe Rust can reach
+undefined behavior.
 
-Link: https://lore.kernel.org/20260713085756.2973549-1-guopeng.zhang@linux.dev
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The other primitive conversions require the source and destination to
+have the same signedness. Treat bool as an unsigned one-bit value and
+allow conversions between bool and Bounded only when the backing integer
+type is unsigned.
+
+Fixes: 01e345e82ec3 ("rust: num: add Bounded integer wrapping type")
+Closes: https://lore.kernel.org/rust-for-linux/OzuVxu0--J-9@younes.io/
+Cc: stable@vger.kernel.org
+Suggested-by: Alexandre Courbot <acourbot@nvidia.com>
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Younes Akhouayri <git@younes.io>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Link: https://patch.msgid.link/20260822-fix-rust-bounded-from-bool-submit-v4-1-aa780bfe7f30@younes.io
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol-v1.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ rust/kernel/num/bounded.rs |   30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
---- a/mm/memcontrol-v1.c
-+++ b/mm/memcontrol-v1.c
-@@ -1181,13 +1181,13 @@ static ssize_t memcg_write_event_control
- 		event->unregister_event = mem_cgroup_usage_unregister_event;
- 	} else if (!strcmp(name, "memory.oom_control")) {
- 		pr_warn_once("oom_control is deprecated and will be removed. "
--			     "Please report your usecase to linux-mm-@kvack.org"
-+			     "Please report your usecase to linux-mm@kvack.org"
- 			     " if you depend on this functionality.\n");
- 		event->register_event = mem_cgroup_oom_register_event;
- 		event->unregister_event = mem_cgroup_oom_unregister_event;
- 	} else if (!strcmp(name, "memory.pressure_level")) {
- 		pr_warn_once("pressure_level is deprecated and will be removed. "
--			     "Please report your usecase to linux-mm-@kvack.org "
-+			     "Please report your usecase to linux-mm@kvack.org "
- 			     "if you depend on this functionality.\n");
- 		event->register_event = vmpressure_register_event;
- 		event->unregister_event = vmpressure_unregister_event;
-@@ -2040,7 +2040,7 @@ static int mem_cgroup_oom_control_write(
- 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+--- a/rust/kernel/num/bounded.rs
++++ b/rust/kernel/num/bounded.rs
+@@ -13,7 +13,10 @@ use core::{
+ };
  
- 	pr_warn_once("oom_control is deprecated and will be removed. "
--		     "Please report your usecase to linux-mm-@kvack.org if you "
-+		     "Please report your usecase to linux-mm@kvack.org if you "
- 		     "depend on this functionality.\n");
+ use kernel::{
+-    num::Integer,
++    num::{
++        Integer,
++        Unsigned, //
++    },
+     prelude::*, //
+ };
  
- 	/* cannot set to root cgroup and only 0 and 1 are allowed */
+@@ -174,13 +177,16 @@ fn fits_within<T: Integer>(value: T, num
+ /// // `u8` (regardless of the passed value).
+ /// // let _ = Bounded::<u32, 6>::from(10u8);
+ ///
+-/// // Booleans can be converted into single-bit `Bounded`s.
++/// // Booleans can be converted into unsigned `Bounded`s.
+ ///
+ /// let v = Bounded::<u64, 1>::from(false);
+ /// assert_eq!(v.get(), 0);
+ ///
+ /// let v = Bounded::<u64, 1>::from(true);
+ /// assert_eq!(v.get(), 1);
++///
++/// // This does not build because `i8` is signed.
++/// // let _ = Bounded::<i8, 2>::from(true);
+ /// ```
+ ///
+ /// Infallible conversions from a [`Bounded`] to a primitive integer are also supported, and
+@@ -203,12 +209,16 @@ fn fits_within<T: Integer>(value: T, num
+ /// let _v = Bounded::<u32, 10>::new::<10>();
+ /// // assert_eq!(u8::from(_v), 10);
+ ///
+-/// // Single-bit `Bounded`s can be converted into a boolean.
++/// // Unsigned single-bit `Bounded`s can be converted into a boolean.
+ /// let v = Bounded::<u8, 1>::new::<1>();
+ /// assert_eq!(bool::from(v), true);
+ ///
+ /// let v = Bounded::<u8, 1>::new::<0>();
+ /// assert_eq!(bool::from(v), false);
++///
++/// // This does not build because `i8` is signed.
++/// // let v = Bounded::<i8, 1>::new::<-1>();
++/// // let _ = bool::from(v);
+ /// ```
+ ///
+ /// Fallible conversions from any primitive integer to any [`Bounded`] are also supported using the
+@@ -1077,31 +1087,33 @@ impl_into_primitive!(
+     i8 i16 i32 i64 isize
+ );
+ 
+-// Single-bit `Bounded`s can be converted from/to a boolean.
++// Unsigned single-bit `Bounded`s can be converted to a boolean.
+ 
+ impl<T> From<Bounded<T, 1>> for bool
+ where
+-    T: Integer + Zeroable,
++    T: Integer<Signedness = Unsigned> + Zeroable,
+ {
+     fn from(value: Bounded<T, 1>) -> Self {
+         value.get() != Zeroable::zeroed()
+     }
+ }
+ 
++// Booleans can be converted to unsigned `Bounded`s.
++
+ impl<T, const N: u32> From<bool> for Bounded<T, N>
+ where
+-    T: Integer + From<bool>,
++    T: Integer<Signedness = Unsigned> + From<bool>,
+ {
+     fn from(value: bool) -> Self {
+-        // SAFETY: A boolean can be represented using a single bit, and thus fits within any
+-        // integer type for any `N` > 0.
++        // SAFETY: A boolean is represented by `0` or `1`, so it fits within any valid unsigned
++        // `Bounded` width.
+         unsafe { Self::__new(T::from(value)) }
+     }
+ }
+ 
+ impl<T> Bounded<T, 1>
+ where
+-    T: Integer + Zeroable,
++    T: Integer<Signedness = Unsigned> + Zeroable,
+ {
+     /// Converts this [`Bounded`] into a [`bool`].
+     ///
 
 
