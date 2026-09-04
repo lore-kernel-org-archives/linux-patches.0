@@ -1,60 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158FB3AA187;
-	Fri,  4 Sep 2026 05:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B867C3B42F7;
+	Fri,  4 Sep 2026 05:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498396; cv=none; b=V/4CagYt6GUrrUHWQw59LK5ymZDThFBJ+5plkCyiKU/wwWPbQz+q7yPoXMR6bx9+IiP5b4vnIgBOfujbdnShlpialumO/Fh90NiX/oh+PgnNHG4n1m3N8hD2QkV6oC8gj1RnuBDRMWVuaCTT/xUFtSSgxL8m1nsqM7JuO3I82MM=
+	t=1788498399; cv=none; b=fbCzJsrbUecyhPAye+gBZr9zC4CqQ8fkmF4yfiB+s0AIDBscGTSSfAPRph/KHe6VyfxZuBOifCCloRe7EopjIQyh/V85GVvifVGo6jD5trB7WGiXgcFyyyCqFb8C5O+GNkp9ypiGVjVWPGnaGMJEIAveLOPHYUGVv5VoIhBzq+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498396; c=relaxed/simple;
-	bh=/HyOpSrotDOrm40O/aZ8lXJ3bjUoDmOPyZoRRUPCKTo=;
+	s=arc-20240116; t=1788498399; c=relaxed/simple;
+	bh=wZjKjyMPa+fXGatdy/UF4TayGWbEyfnXIo41pppSHZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/KfPIAzC4P7O/ICciBolwhCaCnJWt+oCYbFbDiRNNc+qessjVjzR7ppInDidh1AWITb8C+PCUvXnbNB1y78IucSO6mjkp4GblFOshK9K8O1HOngFfvVDqGX8ktqp8Uodtohio+1dqAvpokofBIxH/jgRTUdT+F5PO+fivFPKrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qt1RtGmV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LL5+Hh7M+D459bKcXdeawq5sKoxl95FQZKZ30HeWlm32dg5Ck/7zXSTOutyeiV2qmj7JyFNzcW4WpkfOUnb5F/frXfc+cdhhIn663Lf38fRefm+88PhaEUkPmkQAIOFdhAwdw7WWO1n8oLoNjfeKHh/jkFpL8PtYIXnQPtOMUIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FyzW6mE+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qt1RtGmV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AB01F00A3E;
-	Fri,  4 Sep 2026 05:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FyzW6mE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE3D1F00A3D;
+	Fri,  4 Sep 2026 05:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498395;
-	bh=mrBUx5pRhazxtV1JBsesojkppicRnvElgSytb71YP3Q=;
+	s=korg; t=1788498397;
+	bh=mUVJfwN4U/GEP3e94q4a4seSb44oHtNHuKiyX/Yh0Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qt1RtGmVmXGPpk+mhoSE/Mrm1W8SIk2457GZjR8LZ3X7RlD6JvNgJfo42fVsXCSlt
-	 zaQ5ssfUsJ7nmvqPmiFsSEBgHajw34v3zOWEma3CA3QvzgUU1KekZlZaCWPYSTwDYy
-	 B8lqLNcCjxlqKAY2erycIn3rTmYoMN77HuHwTs90=
+	b=FyzW6mE+NxpbG7jGnbRQuJ984YVZ5g8frDudy8KyaG9eemolMTmkr8O1QJSZLOQ9k
+	 1w370J3PKDfgkagbWqhbOHcpkcwjBRr9LDRvMB0liCThcbLo2VK6MyIr45QJnEPLRm
+	 ZI6u8IuJo7vNTPAP+7o4bEJ82nsvKkLv3hefVmRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
 	Zi Yan <ziy@nvidia.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Gregory Price <gourry@gourry.net>,
-	Alistair Popple <apopple@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Byungchul Park <byungchul@sk.com>,
-	Dev Jain <dev.jain@arm.com>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
 	Johannes Weiner <hannes@cmpxchg.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
 	Lance Yang <lance.yang@linux.dev>,
 	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Nico Pache <npache@redhat.com>,
-	Rakie Kim <rakie.kim@sk.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Ryan Roberts <ryan.roberts@arm.com>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	William Kucharski <william.kucharski@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 048/713] mm/huge_memory: skip device-private PMDs in madvise_free_huge_pmd
-Date: Fri,  4 Sep 2026 06:50:16 +0200
-Message-ID: <20260904045804.905616580@linuxfoundation.org>
+Subject: [PATCH 7.2 049/713] mm/huge_memory: use folios memcg inside __folio_split()
+Date: Fri,  4 Sep 2026 06:50:17 +0200
+Message-ID: <20260904045804.929328240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -73,73 +61,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: Zi Yan <ziy@nvidia.com>
 
-commit ce579dcf730ce5ed8043a5eeea18a3e6706a97e5 upstream.
+commit c299a2285d9d8bda4da024455de65e3d00de6f17 upstream.
 
-madvise_free_pte_range() checks pmd_trans_huge(*pmd) unlocked, then
-madvise_free_huge_pmd() takes pmd_trans_huge_lock().  pmd_is_huge()
-returns true for a device-private PMD, so orig_pmd can be device-private
-and enter the !pmd_present() branch.
+Patch series "Honor XA_FLAGS_ACCOUNT in xas_split_alloc() and charge to
+folio's memcg", v3.
 
-Skip device-private PMDs in that non-present branch and continue to out
-before calling pmd_folio().  Downgrade the check to VM_WARN_ON_ONCE() so
-an unexpected PMD softleaf logs a warning rather than panicking.  Drop the
-thp_migration_supported() guard: it expands to
-IS_ENABLED(CONFIG_ARCH_SUPPORTS_PMD_SOFTLEAF), and both
-pmd_is_migration_entry() and pmd_is_device_private_entry() already return
-false when that config is not selected, so the guard suppresses only the
-case where the warning would already be silent.
+__GFP_ACCOUNT is needed for xarray node allocation accounting when
+XA_FLAGS_ACCOUNT is set. Commit 7b785645e8f13 ("mm: fix page cache
+convergence regression") fixed a workingset regression with it.
+xas_split_alloc() does not have it and needs to be fixed.
 
-Potential trigger: an HMM-based GPU driver races with madvise(MADV_FREE):
-migrate_vma_pages() flips the PMD to a device-private entry between the
-caller's pmd_trans_huge() check and the callee's pmd_trans_huge_lock().
+In addition, based on Sashiko's review[1] and Johannes' confirmation[2], to
+charge the right memcg, folio's memcg needs to be active during folio
+split. Add that before adding __GFP_ACCOUNT.
 
-Link: https://lore.kernel.org/20260710105557.1987433-4-usama.arif@linux.dev
-Fixes: 368076f52ebe ("mm/huge_memory: add device-private THP support to PMD operations")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+There is no workingset convergence regression related to missing
+__GFP_ACCOUNT in xas_split_alloc() and the impact to userspace should be
+minor.
+
+
+This patch (of 2):
+
+During a pagecache folio split, an xarray node allocation can happen and
+needs to charge at folio's memcg instead of folio split invoker's memcg,
+because for example folio split can happen during reclaim and reclaim's
+active memcg might not be folio's memcg.  Switch to folio's memcg at the
+beginning and switch back afterwards.
+
+Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-0-38cb3ff325c5@nvidia.com
+Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-1-38cb3ff325c5@nvidia.com
+Link: https://sashiko.dev/#/patchset/20260727-add-gfp_account-to-xas_split_alloc-v1-1-9fae6bf64838%40nvidia.com?part=1 [1]
+Link: https://lore.kernel.org/all/amtcBZ-_QVRgCd6b@cmpxchg.org/ [2]
+Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
 Cc: Barry Song <baohua@kernel.org>
-Cc: Byungchul Park <byungchul@sk.com>
+Cc: David Hildenbrand <david@kernel.org>
 Cc: Dev Jain <dev.jain@arm.com>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
 Cc: Lance Yang <lance.yang@linux.dev>
 Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: William Kucharski <william.kucharski@oracle.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/huge_memory.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2340,8 +2340,8 @@ bool madvise_free_huge_pmd(struct mmu_ga
- 		goto out;
+@@ -4027,34 +4027,42 @@ static int __folio_split(struct folio *f
+ 	XA_STATE(xas, &folio->mapping->i_pages, folio->index);
+ 	struct folio *end_folio = folio_next(folio);
+ 	bool is_anon = folio_test_anon(folio);
++	struct mem_cgroup *memcg, *old_memcg;
+ 	struct address_space *mapping = NULL;
+ 	struct anon_vma *anon_vma = NULL;
+ 	int old_order = folio_order(folio);
+ 	struct folio *new_folio, *next;
+ 	int nr_shmem_dropped = 0;
+ 	enum ttu_flags ttu_flags = 0;
+-	int ret;
+ 	pgoff_t end = 0;
++	int ret;
  
- 	if (unlikely(!pmd_present(orig_pmd))) {
--		VM_BUG_ON(thp_migration_supported() &&
--				  !pmd_is_migration_entry(orig_pmd));
-+		VM_WARN_ON_ONCE(!pmd_is_migration_entry(orig_pmd) &&
-+				!pmd_is_device_private_entry(orig_pmd));
- 		goto out;
+ 	VM_WARN_ON_ONCE_FOLIO(!folio_test_locked(folio), folio);
+ 	VM_WARN_ON_ONCE_FOLIO(!folio_test_large(folio), folio);
+ 
+ 	if (folio != page_folio(split_at) || folio != page_folio(lock_at)) {
+ 		ret = -EINVAL;
+-		goto out;
++		goto out_no_memcg;
  	}
  
+ 	if (new_order >= old_order) {
+ 		ret = -EINVAL;
+-		goto out;
++		goto out_no_memcg;
+ 	}
+ 
+ 	ret = folio_check_splittable(folio, new_order, split_type);
+ 	if (ret) {
+ 		VM_WARN_ONCE(ret == -EINVAL, "Tried to split an unsplittable folio");
+-		goto out;
++		goto out_no_memcg;
+ 	}
+ 
++	/*
++	 * switch to folio's memcg as xarray node allocation can happen and
++	 * needs to charge to it.
++	 */
++	memcg = get_mem_cgroup_from_folio(folio);
++	old_memcg = set_active_memcg(memcg);
++
+ 	if (is_anon) {
+ 		/*
+ 		 * The caller does not necessarily hold an mmap_lock that would
+@@ -4197,6 +4205,10 @@ out_unlock:
+ 	if (mapping)
+ 		i_mmap_unlock_read(mapping);
+ out:
++	/* restore to caller's old_memcg */
++	set_active_memcg(old_memcg);
++	mem_cgroup_put(memcg);
++out_no_memcg:
+ 	xas_destroy(&xas);
+ 	if (is_pmd_order(old_order))
+ 		count_vm_event(!ret ? THP_SPLIT_PAGE : THP_SPLIT_PAGE_FAILED);
 
 
