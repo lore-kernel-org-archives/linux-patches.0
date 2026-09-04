@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0DD3B19BC;
-	Fri,  4 Sep 2026 05:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4243737DAD0;
+	Fri,  4 Sep 2026 05:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499957; cv=none; b=YGhh1KEBZ/WLmg7vDIwY5wroDlGQWwAqCYMd16QbMUCzfiA0Itb5OaU/qEL0rBwBJF5GHzsU1soZXMsOvHsStqqLqnZ37vAouOs/lO4newv4Eo2FNiQR1/IiRZbFshIFquLLVYeQxxjDu5hmSXKbXEQwkuMeWhoffjgfYP4sRr4=
+	t=1788499960; cv=none; b=oxiPwmxqRDCtOpJnWS2dzXgzYuOOUo7flCeXhK+neIhWp66d+7MykBkmAaW6J81CDeaufUDi7ryF8wjYCDrLfZAa+FfTkQeQ07zyNJvWug9BJIX7OmNjnwDJVfVdRkSiukx7gl5JmD0KcFrksvXsX0Zki2WqZnar2Zs6DMXF71c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499957; c=relaxed/simple;
-	bh=LSDgj7EFSkvxFBArQfh1CvkFocT/O2THVIWTvQGrWxA=;
+	s=arc-20240116; t=1788499960; c=relaxed/simple;
+	bh=vE6TPWJW65eqBumW6q444468RESWh1K6e+v2fF4PahQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=loqPC2wiAW4cEN18tjusoI28SCkm0E9ZNx69fxv7NLBkMP1EjVSivQtdpHxVIEqD3NGX4i5rAFksweFTAX/wKfM4A5hKmGqmrQbCLH/kUK/cf5XhLOKrfD3JvUtrKuMK1DzBhkoAvQAhuwTTPhSAi2dLb5In7GMYlqHB7IwXeC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLd1HGa3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QBQufD9QDWxGKJWYWmZMIrCCrAITU9Fh7fSchV1GkFZDldtKWy2RPyqukvhIWXkWUcm2JjOolcYkrZTx4Tj0TW/jSYMWfFIo11PTM08hupH6dy4edJBY4aTF0t8/xAadXt1j6s43OfQqrgGGZXHpBhoKd1iaNgcE+2lCPXKCcfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6ZrneLZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLd1HGa3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63B11F00A3D;
-	Fri,  4 Sep 2026 05:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6ZrneLZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955FC1F00A3D;
+	Fri,  4 Sep 2026 05:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499956;
-	bh=ip+AuXXwZEOojl9M93c6FW9GqJhG7AZPF9nx3s7GVCU=;
+	s=korg; t=1788499959;
+	bh=gzsnJp7N1CWp+IElvBdTHuwqR4TzfEoI7FUb+XSrL/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QLd1HGa3lJajoZa1Jw1y8jGn8/OvgmlvpD8MyOR2QRBie6IP6AEaLeQMqle7tCrDT
-	 I2QBaJr8CxshOg+NjIlQv7QZMpIwxLNELbm8yNLsvO/MEZ687d/FoUK0mqTtySeL6A
-	 gjS5mq4dW+dpAmWGfKjF9Jtc2SH6X2GaMMYlURNI=
+	b=V6ZrneLZZdVeQ8m1PVlOa0ApTMMGhtxFWMNxbY5pspZphnRLDb8AkJnZh1CnQPZ3k
+	 fO8OeJrY7y3ozWbOszZEFi4eo1cT6oJGBEudhZ09sVPRx4btIpilDI6p9W0yN6Pl3g
+	 zY8UE5mNN4+MAuL7jFblE1+6/equvf0J3EsRCfFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>,
 	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 601/713] net: ibm: emac: mal: fix NAPI locking
-Date: Fri,  4 Sep 2026 06:59:29 +0200
-Message-ID: <20260904045817.298994951@linuxfoundation.org>
+Subject: [PATCH 7.2 602/713] net: ipa: fix stalled modem TX queue after runtime resume
+Date: Fri,  4 Sep 2026 06:59:30 +0200
+Message-ID: <20260904045817.321488624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,88 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
 
-commit 43b0213529c6ae2fd4cbf8dbb9baff87a34c27d7 upstream.
+commit 3cbfd627ee720f3d2460d2cbe2fe9e4130240db6 upstream.
 
-Since commit 413f0271f396 ("net: protect NAPI enablement with
-netdev_lock()"), napi_enable() and napi_disable() take netdev_lock().
+ipa_start_xmit() unconditionally stops the TX queue before calling
+pm_runtime_get(), relying on the wake scheduled by runtime resume
+(ipa_modem_wake_queue_work()) to restart it once power is ACTIVE.
+But that work is queued from within the runtime resume callback,
+before the device's power state reaches RPM_ACTIVE, so it can run
+while the device is still RPM_RESUMING.  The wake is then consumed
+too early: the transmit it restarts stops the queue again,
+pm_runtime_get() returns -EINPROGRESS without arranging any future
+wake (deferred_resume exists only for RPM_SUSPENDING), and after the
+resume completes nothing is left to wake the queue.  Transmit stalls
+permanently: packets pile up in the qdisc behind the stopped queue,
+the device runtime-suspends, and since the netdev registers no
+ndo_tx_timeout the watchdog never fires.  Observed on SM7635
+(Fairphone 6) as the cellular data path going permanently deaf
+within hours, RX included, since nothing resumes the suspended
+endpoints.
 
-mal_register_commac() and mal_unregister_commac() call these helpers
-while holding mal->lock with interrupts disabled. In the unregister
-path, napi_disable() may also wait for polling to finish, while the poll
-completion path takes mal->lock.
+Close the window by making the wake work wait for the resume to
+complete (pm_runtime_get_sync()) before waking the queue.  Every
+queue stop is then guaranteed a later wake that happens while power
+is ACTIVE; a transmit racing a new suspend/resume cycle re-schedules
+the work.  If the device could not be resumed, wake the queue anyway
+so pending packets are dropped by the transmit path rather than
+stranded.
 
-Take netdev_lock() before mal->lock, use the locked NAPI helpers, and
-drop mal->lock before napi_disable_locked().
+The STARTED power flag used to narrow this window: a wake running
+before the transmit path's stop suppressed that stop, but only once,
+as the flag was cleared by the first stop it absorbed.  Removing the
+flag made a single transmit during an in-flight resume sufficient to
+strand the queue, which is the form observed.
 
-Fixes: 413f0271f396 ("net: protect NAPI enablement with netdev_lock()")
+With an accelerated reproducer (autosuspend delay shortened to 5 ms,
+~20 packets/s of TX), an unpatched kernel stalled three times in
+230 s / 4380 packets; with this patch the same test ran 3601 s /
+70298 packets without a stall.
+
+Fixes: 688de12f080f ("net: ipa: kill the STARTED IPA power flag")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260811070813.377573-1-runyu.xiao@seu.edu.cn
+Link: https://patch.msgid.link/20260815040302.653650-1-jorijnvdgraaf@catcrafts.net
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/emac/mal.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/ipa/ipa_modem.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -35,6 +35,7 @@ int mal_register_commac(struct mal_insta
+--- a/drivers/net/ipa/ipa_modem.c
++++ b/drivers/net/ipa/ipa_modem.c
+@@ -266,13 +266,29 @@ void ipa_modem_suspend(struct net_device
+  * the modem.  We can't enable the queue directly in ipa_modem_resume()
+  * because transmits restart the instant the queue is awakened; but the
+  * device power state won't be ACTIVE until *after* ipa_modem_resume()
+- * returns.
++ * returns.  A transmit restarted before that would stop the queue
++ * again and get -EINPROGRESS from pm_runtime_get(), and with this
++ * work having already run, nothing would ever wake the queue again.
++ * So wait for the resume to complete before waking the queue.
+  */
+ static void ipa_modem_wake_queue_work(struct work_struct *work)
  {
- 	unsigned long flags;
+ 	struct ipa_priv *priv = container_of(work, struct ipa_priv, work);
++	struct device *dev = priv->ipa->dev;
++	int ret;
  
-+	netdev_lock(mal->napi.dev);
- 	spin_lock_irqsave(&mal->lock, flags);
- 
- 	MAL_DBG(mal, "reg(%08x, %08x)" NL,
-@@ -44,18 +45,20 @@ int mal_register_commac(struct mal_insta
- 	if ((mal->tx_chan_mask & commac->tx_chan_mask) ||
- 	    (mal->rx_chan_mask & commac->rx_chan_mask)) {
- 		spin_unlock_irqrestore(&mal->lock, flags);
-+		netdev_unlock(mal->napi.dev);
- 		printk(KERN_WARNING "mal%d: COMMAC channels conflict!\n",
- 		       mal->index);
- 		return -EBUSY;
- 	}
- 
- 	if (list_empty(&mal->list))
--		napi_enable(&mal->napi);
-+		napi_enable_locked(&mal->napi);
- 	mal->tx_chan_mask |= commac->tx_chan_mask;
- 	mal->rx_chan_mask |= commac->rx_chan_mask;
- 	list_add(&commac->list, &mal->list);
- 
- 	spin_unlock_irqrestore(&mal->lock, flags);
-+	netdev_unlock(mal->napi.dev);
- 
- 	return 0;
- }
-@@ -64,7 +67,9 @@ void mal_unregister_commac(struct mal_in
- 		struct mal_commac *commac)
- {
- 	unsigned long flags;
-+	bool disable_napi;
- 
-+	netdev_lock(mal->napi.dev);
- 	spin_lock_irqsave(&mal->lock, flags);
- 
- 	MAL_DBG(mal, "unreg(%08x, %08x)" NL,
-@@ -73,10 +78,12 @@ void mal_unregister_commac(struct mal_in
- 	mal->tx_chan_mask &= ~commac->tx_chan_mask;
- 	mal->rx_chan_mask &= ~commac->rx_chan_mask;
- 	list_del_init(&commac->list);
--	if (list_empty(&mal->list))
--		napi_disable(&mal->napi);
-+	disable_napi = list_empty(&mal->list);
- 
- 	spin_unlock_irqrestore(&mal->lock, flags);
-+	if (disable_napi)
-+		napi_disable_locked(&mal->napi);
-+	netdev_unlock(mal->napi.dev);
++	ret = pm_runtime_get_sync(dev);
++
++	/* Wake the queue even if the device could not be resumed, so
++	 * that pending packets are dropped by the transmit path rather
++	 * than stranded behind a stopped queue.
++	 */
+ 	netif_wake_queue(priv->tx->netdev);
++
++	if (ret < 0)
++		pm_runtime_put_noidle(dev);
++	else
++		(void)pm_runtime_put_autosuspend(dev);
  }
  
- int mal_set_rcbs(struct mal_instance *mal, int channel, unsigned long size)
+ /** ipa_modem_resume() - resume callback for runtime_pm
 
 
