@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6866D3BCD0A;
-	Fri,  4 Sep 2026 05:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FE2412294;
+	Fri,  4 Sep 2026 05:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501425; cv=none; b=jOD/Jp4B2Y5kx8qxI6s6ESR2RECS6b43IJbsUJxSpy2/T+h1O1pZIDOEALXptZ1mlTaTiyYovi7jn6xKXf2vn/6rgEdX03qGPJ9bfymDCAJg+XW52JILGOLLaE4PGmdq/+dnpu6d9RCInsKoWcJJv+4DffrkiPeKzVKyFcZARlk=
+	t=1788501429; cv=none; b=U4huRUZvjQsSwxX75MgRlJPlcR4uL1brPomnYljmlTPlLnKRIdjlg+AEeVs+a9VOP6A6m6WSVQOcJy+Br20HSMylY3QEL7kQDHzFLLydPLfuNeImjF4FByXPfhPilhya1IYRfr8xCVmBpC5c1Qf6K1q0qWAMTXNfEmBi4DmhwSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501425; c=relaxed/simple;
-	bh=NoNIfPjBTp0dnkStkJ1zXU7OfvmO9n6TV/PyG21Vn0E=;
+	s=arc-20240116; t=1788501429; c=relaxed/simple;
+	bh=x4XixWUVF8JFMvIDuJN3UoesU7ktx9XKCpaqFjALYyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZppAYg7gLZjvce2VcntRJ8rU4bOE9Hf68nOUDpFXtzeuSpx/PAmkDVnjuYINQzEZdP4l4neNZ2z97O7XqxIoF0tDfMx/bovzj1CLMLOVoxUMQxu2jL3TmJqbFkjBOrsnlhAUUiDUvKpMZxLRsqSlbJ/+y4d6TKV1katKnSq18SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDXP774z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GYNCfmObmGm9k+aOVlZos4ARqfx7b2YkbpZiqf8inuHeeeYWwEeNMos9ybnc5a55M0zMF6UPr0OB+N/+AvitMwZS69HqwYFUHbJDHoFSHZ0hlqhINnpbBAYY6Er+aq8K3edNPHZX4gs8+Djqln+7JjmO7LBGSdO57fhkYx2c3nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEkIh2Kv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDXP774z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29BD1F00A3D;
-	Fri,  4 Sep 2026 05:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEkIh2Kv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8548E1F00A3D;
+	Fri,  4 Sep 2026 05:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501424;
-	bh=zuj3ovKY5Se7yhSd2xqoL/jGBqXN7/VR8278XAj6zVc=;
+	s=korg; t=1788501427;
+	bh=8qLtPKWwlIv7u6uEQip/CSVhlz05W4RVMzGohv5BlLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sDXP774zoTOZCheyn09uKpT0SzvS5RfHWity27a1TLzUjcDIgoF+Wgr613ehs+ote
-	 ceHAjesZtN3g29zu3ckczOcNEqSyocthMk+NFhu/G4oy9CeH/j4b2GfrucRxp9OdT1
-	 ploivsPH3C9ASwbsr73WTeTFpeSx31q7WEZPjWMU=
+	b=zEkIh2Kv9rsC/AoG2k7dEhD1KeJjbEnqWLxUxCX0UoOpidpRxmKqGvuQAGrDs9MsN
+	 5CDUP9nB+JRgVemefWjG6e12k4AsXsAtwKwIZjjwKVaMcKf+COrA5y+ZkQiJIBqXAY
+	 0MaBVHXFP5md61LlLIP3QIng9CwJiL/7lueoWU84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Shameer Kolothum <skolothumtho@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.18 406/552] iommu/arm-smmu-v3: Manage teardown with devm
-Date: Fri,  4 Sep 2026 06:59:23 +0200
-Message-ID: <20260904045759.766342588@linuxfoundation.org>
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 407/552] iommu: Fix dev_iommu memory leak when device_add fails in iommu_mock_device_add
+Date: Fri,  4 Sep 2026 06:59:24 +0200
+Message-ID: <20260904045759.808163512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,153 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 2bd22a0d40503a65d243b011de146603c8ce1cbc upstream.
+commit b7b0b3851474883d4aba6ed72da87141204b23e5 upstream.
 
-arm_smmu_device_remove() manually frees the IOPF queue, destroys the
-vmid_map and disables the device, while the IRQs and queues are devm
-managed. devm unwinds only after remove() returns, so the cleanup runs
-in the wrong order. The IOPF queue is freed before the event-queue IRQ
-whose handler uses it.
+iommu_mock_device_add() first calls iommu_fwspec_init(), which on
+success allocates both dev->iommu (via dev_iommu_get()) and
+dev->iommu->fwspec. If the subsequent device_add(dev) call fails,
+the error path only calls iommu_fwspec_free(dev), which frees
+fwspec but leaves dev->iommu still allocated.
 
-Manage all of it with devm so the unwind order is correct. Free the IOPF
-queue and vmid_map via devm actions, and disable the device from one
-registered after arm_smmu_device_reset().
+This triggers the following kmemleak report when fuzzing with Syzkaller:
 
-This is also a prerequisite for fixing a Tegra241 CMDQV CMD_SYNC
-use-after-free in the subsequent patch.
+BUG: memory leak
+unreferenced object 0xffff888011e0a200 (size 192):
+  comm "syz.1.1695", pid 24885, jiffies 4295222527
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 ad 4e ad de  .............N..
+    ff ff ff ff 00 00 00 00 ff ff ff ff ff ff ff ff  ................
+  backtrace (crc 25df5bb3):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+    slab_post_alloc_hook mm/slub.c:4575 [inline]
+    slab_alloc_node mm/slub.c:4899 [inline]
+    __kmalloc_cache_noprof+0x47a/0x710 mm/slub.c:5415
+    kmalloc_noprof include/linux/slab.h:950 [inline]
+    kzalloc_noprof include/linux/slab.h:1188 [inline]
+    dev_iommu_get+0x10c/0x1a0 drivers/iommu/iommu.c:408
+    iommu_fwspec_init+0x288/0x4d0 drivers/iommu/iommu.c:3087
+    iommu_mock_device_add+0x46/0xb0 drivers/iommu/iommu.c:385
+    mock_dev_create drivers/iommu/iommufd/selftest.c:1025 [inline]
+    iommufd_test_mock_domain drivers/iommu/iommufd/selftest.c:1066 [inline]
+    iommufd_test+0x2f8a/0x6190 drivers/iommu/iommufd/selftest.c:2072
+    iommufd_fops_ioctl+0x367/0x540 drivers/iommu/iommufd/main.c:533
+    vfs_ioctl fs/ioctl.c:51 [inline]
+    __do_sys_ioctl fs/ioctl.c:597 [inline]
+    __se_sys_ioctl fs/ioctl.c:583 [inline]
+    __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
+    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+    do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
+Fix this by calling dev_iommu_free(dev) instead of iommu_fwspec_free(dev)
+in the device_add() failure path. dev_iommu_free() frees both fwspec
+and the outer dev_iommu struct and clears dev->iommu.
+
+Link: https://patch.msgid.link/r/76AC62D46B998556+20260711055119.1003477-1-peiyang_he@smail.nju.edu.cn
+Reported-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Fixes: 2a918911ed3d ("iommufd: Register iommufd mock devices with fwspec")
 Cc: stable@vger.kernel.org
-Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   56 ++++++++++++++++++++--------
- 1 file changed, 40 insertions(+), 16 deletions(-)
+ drivers/iommu/iommu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3837,6 +3837,20 @@ int arm_smmu_cmdq_init(struct arm_smmu_d
- 	return 0;
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -360,7 +360,7 @@ int iommu_mock_device_add(struct device
+ 
+ 	rc = device_add(dev);
+ 	if (rc)
+-		iommu_fwspec_free(dev);
++		dev_iommu_free(dev);
+ 	return rc;
  }
- 
-+static void arm_smmu_free_iopf_action(void *data)
-+{
-+	struct iopf_queue *queue = data;
-+
-+	iopf_queue_free(queue);
-+}
-+
-+static void arm_smmu_destroy_vmid_map(void *data)
-+{
-+	struct ida *ida = data;
-+
-+	ida_destroy(ida);
-+}
-+
- static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
- {
- 	int ret;
-@@ -3864,6 +3878,11 @@ static int arm_smmu_init_queues(struct a
- 		smmu->evtq.iopf = iopf_queue_alloc(dev_name(smmu->dev));
- 		if (!smmu->evtq.iopf)
- 			return -ENOMEM;
-+		ret = devm_add_action_or_reset(smmu->dev,
-+					       arm_smmu_free_iopf_action,
-+					       smmu->evtq.iopf);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	/* priq */
-@@ -3942,7 +3961,8 @@ static int arm_smmu_init_strtab(struct a
- 
- 	ida_init(&smmu->vmid_map);
- 
--	return 0;
-+	return devm_add_action_or_reset(smmu->dev, arm_smmu_destroy_vmid_map,
-+					&smmu->vmid_map);
- }
- 
- static int arm_smmu_init_structures(struct arm_smmu_device *smmu)
-@@ -4155,6 +4175,13 @@ static int arm_smmu_device_disable(struc
- 	return ret;
- }
- 
-+static void arm_smmu_disable_action(void *data)
-+{
-+	struct arm_smmu_device *smmu = data;
-+
-+	arm_smmu_device_disable(smmu);
-+}
-+
- static void arm_smmu_write_strtab(struct arm_smmu_device *smmu)
- {
- 	struct arm_smmu_strtab_cfg *cfg = &smmu->strtab_cfg;
-@@ -4878,7 +4905,7 @@ static int arm_smmu_device_probe(struct
- 	/* Initialise in-memory data structures */
- 	ret = arm_smmu_init_structures(smmu);
- 	if (ret)
--		goto err_free_iopf;
-+		return ret;
- 
- 	/* Record our private device structure */
- 	platform_set_drvdata(pdev, smmu);
-@@ -4888,30 +4915,30 @@ static int arm_smmu_device_probe(struct
- 
- 	/* Reset the device */
- 	ret = arm_smmu_device_reset(smmu);
-+	if (ret) {
-+		arm_smmu_device_disable(smmu);
-+		return ret;
-+	}
-+
-+	/* Register last so it unwinds first, while the CMDQ is still up. */
-+	ret = devm_add_action_or_reset(smmu->dev, arm_smmu_disable_action, smmu);
- 	if (ret)
--		goto err_disable;
-+		return ret;
- 
- 	/* And we're up. Go go go! */
- 	ret = iommu_device_sysfs_add(&smmu->iommu, dev, NULL,
- 				     "smmu3.%pa", &ioaddr);
- 	if (ret)
--		goto err_disable;
-+		return ret;
- 
- 	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
- 	if (ret) {
- 		dev_err(dev, "Failed to register iommu\n");
--		goto err_free_sysfs;
-+		iommu_device_sysfs_remove(&smmu->iommu);
-+		return ret;
- 	}
- 
- 	return 0;
--
--err_free_sysfs:
--	iommu_device_sysfs_remove(&smmu->iommu);
--err_disable:
--	arm_smmu_device_disable(smmu);
--err_free_iopf:
--	iopf_queue_free(smmu->evtq.iopf);
--	return ret;
- }
- 
- static void arm_smmu_device_remove(struct platform_device *pdev)
-@@ -4920,9 +4947,6 @@ static void arm_smmu_device_remove(struc
- 
- 	iommu_device_unregister(&smmu->iommu);
- 	iommu_device_sysfs_remove(&smmu->iommu);
--	arm_smmu_device_disable(smmu);
--	iopf_queue_free(smmu->evtq.iopf);
--	ida_destroy(&smmu->vmid_map);
- }
- 
- static void arm_smmu_device_shutdown(struct platform_device *pdev)
+ EXPORT_SYMBOL_GPL(iommu_mock_device_add);
 
 
