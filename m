@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2B81AA1F4;
-	Fri,  4 Sep 2026 05:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A0438E8DD;
+	Fri,  4 Sep 2026 05:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498898; cv=none; b=dPl2Oy5Yfw3IC+0qmRueRcPgKCOqMZN3ypyapdhLty5yUund1brG5w6IErU42lT9tGGnSnNP444N//xGcmfYaRMczq8Y7aIKXod9x6BSssbPVOdMNvgjK05HqsJY+txDJSK2c43kZyFI1Up3BLmQBtv6PgMzgS3DpLXf164UurQ=
+	t=1788498901; cv=none; b=VrsVtZ/iKjB1a74RVRLPHGc8+13AMZ+VvydMUdQGKgiEMWNPkUg3sfzZLmMBru24NSQu7kQSlANBXVXrx6Vt0taH/+9EZufa0k51x8PSPfjWCQSopccY1MXHWsXOAfhML+w7HcrlnSz28bIBeOaWGYKpSybO6Zx2NAn6uLUuRPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498898; c=relaxed/simple;
-	bh=utaD6PvfdhneOQfp0AXK1lQWnfAZYw7ILByc+gd/yG8=;
+	s=arc-20240116; t=1788498901; c=relaxed/simple;
+	bh=fck6XTCF9TagrGJfq9ROcSdbnTmdrGtrXNRjCoeevvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3h0MXnEnVqWzGF3tw9oIgSI5mSC4mb4WuvQpXbg1SKG/hF3CqovVsARN0xnYxps/p/RVZ+wQ96IT2d3Um57kbIAA80CVCxsEr5SmECft36J6imEqWfSuEJuSleiTK68MQis62vwMJu/jGZX8WyRcd8UmnGKgBbYqWKiSdYB6tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khYdamlo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=peRt4wrkmVatClWHtWrvJDQVuh2ww5/QvsK9jOUI+53g8aKk1l5JK2ob0E98137zYsqfpbKZp24VqCrF+4Zp1na0nRjB2/cBazvD+9bG+WHfsP/2HDsmWFtqFW1Ys3UA+IzncKcpt1B+rMG45g3Op1k64SLhCs7r289j8OafSJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCNjksLj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khYdamlo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1131F00A3D;
-	Fri,  4 Sep 2026 05:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCNjksLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9031F00A3D;
+	Fri,  4 Sep 2026 05:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498897;
-	bh=MpvUZld9brctCdxVBQGzUHWRneHgIDSHa7KrOLjT1jI=;
+	s=korg; t=1788498900;
+	bh=zpcCulUJNgLay3s2Peoyb7LDrqGttsBLJpGMBZA7HuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=khYdamloYb6mJXi0cmqnxKRXztWxHlRdTvfqynMijBhcAjhHhKLz7quQ49N6XkBWZ
-	 Ctrx1OJxDJnZXv/2YpJINbl9tr4IJQS+8LrkcnfPyngcmuJd2GQedkR+mt4RQD3fOy
-	 T/5iGsOPiKUeosivUr6evGBCHsjBfk/6qCbxtYf8=
+	b=UCNjksLjWaboYJnTTys4jJYR5B4GmGiCsLjXxB3vuj64Us8ZbDguC9sr7S62zCvgH
+	 kW6kgwaQoy+8ZlUSrgbpcTAQwGEVfSrwQ0+8UdMAg6oP2tDGRoQoTsjnkThA90Myq3
+	 n/KywGiOTCQy8cGPhN3Oz6MDwEJ8kGg3Kc7u8AHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 7.2 227/713] btrfs: fix extent map leak in NOCOW direct I/O write
-Date: Fri,  4 Sep 2026 06:53:15 +0200
-Message-ID: <20260904045808.909889822@linuxfoundation.org>
+Subject: [PATCH 7.2 228/713] btrfs: do not overwrite NODATASUM flag when removing NODATACOW flag
+Date: Fri,  4 Sep 2026 06:53:16 +0200
+Message-ID: <20260904045808.931454641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,68 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 3f950867c307c5413d628a153ac44915bd117ffd upstream.
+commit 15f7c86215e8d5f14b24127fa88af6c79363d50e upstream.
 
-btrfs_dio_iomap_begin() calls btrfs_get_extent(), which returns an
-extent map reference that must be dropped on all exit paths.
+[TEST FAILURE]
+The test case generic/628 will fail if MOUNT_OPTIONS is set to
+"-o nodatasum":
 
-For direct writes into a NOCOW range, btrfs_get_blocks_direct_write()
-keeps using that extent map and asks btrfs_create_dio_extent() to
-allocate the ordered extent. If that fails, for example because
-btrfs_alloc_ordered_extent() fails, the function returns the error
-without dropping the input extent map. The PREALLOC path avoided this by
-dropping the input extent map before replacing it with the newly created
-one.
+  FSTYP         -- btrfs
+  PLATFORM      -- Linux/x86_64 btrfs-vm 7.1.0-rc4-custom+ #383 SMP PREEMPT_DYNAMIC Sat May 30 07:35:42 ACST 2026
+  MKFS_OPTIONS  -- -O bgt -K /dev/mapper/test-scratch1
+  MOUNT_OPTIONS -- -o nodatasum /dev/mapper/test-scratch1 /mnt/scratch
 
-Check the error from btrfs_create_dio_extent() before replacing the
-map and drop the input extent map on failure.
+#  generic/628  1s ... - output mismatch (see /home/adam/xfstests/results//generic/628.out.bad)
+#     --- tests/generic/628.out	2022-05-11 11:25:30.816666664 +0930
+#     +++ /home/adam/xfstests/results//generic/628.out.bad	2026-06-08 18:56:49.878542927 +0930
+#     @@ -8,8 +8,9 @@
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/a
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/d
+#      test reflink flag not set iflag
+#     +XFS_IOC_CLONE: Invalid argument
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/a
+#     -310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/b
+#     +d41d8cd98f00b204e9800998ecf8427e  SCRATCH_MNT/b
+#     ...
 
-Fixes: 5f9a8a51d8b9 ("Btrfs: add semaphore to synchronize direct IO writes with fsync")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
+[CAUSE]
+The direct cause is that after "chattr +S", the btrfs inode will lose its
+NODATASUM flag inherited from the mount option. E.g.:
+
+  # mkfs.btrfs -f $dev
+  # mount $dev $mnt -o nodatasum
+  # touch $mnt/foobar
+  # sync
+  # btrfs ins dump-tree -t 5 $dev | grep "(257 INODE_ITEM 0) itemoff" -A 3
+         item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
+         	generation 9 transid 9 size 0 nbytes 0
+         	block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+         	sequence 1 flags 0x1(NODATASUM)
+         	                     ^^^^^^^^^ Proper NODATASUM flag
+
+  # chattr +S $mnt/foobar
+  # sync
+  # btrfs ins dump-tree -t 5 $dev | grep "(257 INODE_ITEM 0) itemoff" -A 3
+  	item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
+         	generation 9 transid 10 size 0 nbytes 0
+         	block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+         	sequence 2 flags 0x20(SYNC)
+         	                      ^^^^ Only the new SYNC flag
+
+This makes the inode drop the old NODATASUM flag, while the new reflink
+destination will still inherit the NODATASUM flag.  The mismatching
+NODATASUM flags will cause the reflink to fail.
+
+The root cause is that, inside btrfs_fileattr_set() if no FS_NOCOW_FL is
+set, we remove both NODATASUM and NODATACOW flag.
+
+However we should not touch NODATASUM flag, as data COW doesn't require
+checksum.  Only NODATACOW implies NODATASUM, but DATACOW doesn't imply
+DATASUM.
+
+The deeper problems are:
+
+- Fileattr API is too binary
+  It either clears or sets a flag, there is no "do not change" option.
+  So that why "chattr +S" implies "chattr -C", and is forcing us to
+  change NODATACOW along with NODATASUM flag.
+
+- No way to change NODATASUM through fileattr API
+  In fact NODATASUM can only be modified through mount option.
+
+The deeper problems are much harder to attack.
+
+[FIX]
+Remove NODATACOW flag when FS_NOCOW_FL is not set, but only remove
+NODATASUM if "nodatasum" mount option is not set.
+
+This allows the existing "chattr +C" then "chattr -C" to remove
+both NODATACOW and NODATASUM flags on a default mount.
+
+But for a mount with "nodatasum" option, the NODATASUM inode flag will
+persist through either "chattr +C" and "chattr -C".
+
+Fixes: 7e97b8daf634 ("btrfs: allow setting NOCOW for a zero sized file via ioctl")
+Cc: stable@vger.kernel.org
 Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/direct-io.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ fs/btrfs/ioctl.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/direct-io.c
-+++ b/fs/btrfs/direct-io.c
-@@ -281,17 +281,24 @@ static int btrfs_get_blocks_direct_write
- 		em2 = btrfs_create_dio_extent(BTRFS_I(inode), dio_data, start,
- 					      &file_extent, type);
- 		btrfs_dec_nocow_writers(bg);
--		if (type == BTRFS_ORDERED_PREALLOC) {
--			btrfs_free_extent_map(em);
--			*map = em2;
--			em = em2;
--		}
--
- 		if (IS_ERR(em2)) {
- 			ret = PTR_ERR(em2);
-+			btrfs_free_extent_map(em);
-+			*map = NULL;
- 			goto out;
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -356,14 +356,21 @@ int btrfs_fileattr_set(struct mnt_idmap
+ 			inode_flags |= BTRFS_INODE_NODATACOW;
  		}
- 
-+		/*
-+		 * True NOCOW writes don't need to create a new extent map,
-+		 * while PREALLOC writes must replace the existing one.
-+		 */
-+		if (em2) {
-+			ASSERT(type == BTRFS_ORDERED_PREALLOC);
-+			btrfs_free_extent_map(em);
-+			*map = em2;
-+			em = em2;
-+		}
-+
- 		dio_data->nocow_done = true;
  	} else {
- 		/* Our caller expects us to free the input extent map. */
+-		/*
+-		 * Revert back under same assumptions as above
+-		 */
+-		if (S_ISREG(inode->vfs_inode.i_mode)) {
+-			if (inode->vfs_inode.i_size == 0)
+-				inode_flags &= ~(BTRFS_INODE_NODATACOW |
+-						 BTRFS_INODE_NODATASUM);
+-		} else {
++		/* We can only change NODATACOW for zero-sized regular file. */
++		if (S_ISREG(inode->vfs_inode.i_mode) && (inode->vfs_inode.i_size == 0)) {
++			inode_flags &= ~BTRFS_INODE_NODATACOW;
++			/*
++			 * There is currently no way to change NODATASUM flag
++			 * through fileattr API.  If we unconditionally keep the
++			 * current NODATASUM flag, chattr +C then chattr -C will
++			 * keep the NODATASUM flag, and no way to remove that
++			 * flag.
++			 *
++			 * So respect the current mount option for NODATASUM flag.
++			 */
++			if (!btrfs_test_opt(fs_info, NODATASUM))
++				inode_flags &= ~BTRFS_INODE_NODATASUM;
++		} else if (!S_ISREG(inode->vfs_inode.i_mode)) {
+ 			inode_flags &= ~BTRFS_INODE_NODATACOW;
+ 		}
+ 	}
 
 
