@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594C94156F0;
-	Fri,  4 Sep 2026 05:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7153B7B7B;
+	Fri,  4 Sep 2026 05:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499359; cv=none; b=OZtHFUmMDYCn2reHNFydWJeGu5avLAIq9XwCMd2VfL0CaFKJveq968nW/yZ4Lv4RoQdGR7OmbUvZ317DSI8uXAqvId3vhAhmpZsu0736854YqOT1eusLE2LfCwQWgy034vFM8uZPJhXHodfYGx9uRMh+UHOhrqAoXwJnNC7Nzd8=
+	t=1788499362; cv=none; b=GYEydBXD/cMvYJ69SBg4Wz1/zH/l2xvcxAAiUQG8ppjlKlRTYos1joxA+/nwBDO7zXnOI4nttlGXpjpixBg3R2ita8c8zH+2O8onHEdoxUwXdVhsBXbBZ/0i1quQTQ1o3ISW3O1ZV8iREyRiaz4KgSG+LxKznSHr2cudFaQGYic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499359; c=relaxed/simple;
-	bh=Om6y5VYnE+0v5iN5yZefdLIHhTvn9+poxd0FdQe2gCo=;
+	s=arc-20240116; t=1788499362; c=relaxed/simple;
+	bh=DTyY9TNLMSvYDMJQjNkadkyDvu5mimQ+eFqIalv+yy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B7IVYhjDh5lio9Sf+N2QsF8qzGHoWKX8w9lS13WtspVT1DFQE1w6G7nBZiCXKjwTg/8enMN4gfAegx6dzm6i4WkSbQ4gHg4/Pv0WrlEmKiy4YqjJwv8luz7MvRWokDjPOLKU9r9XiLZfjTi0h7Hm2U6Qd+BqiFBuVVom5aeRuqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tm4hZulH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NEcGMNS95UtrJbbeo+QswF1dEe1/j8W3FtsDaW7GSIaPWWuQCqxvw02hznFjZSb5+U9xRDbHJm6PKnv8oovHMQS0CEP6ZN144cU7eG62ZvoC+8+kmzPYTOFKzvP13VYuy99Cg929mPIc8d6LkBl0HEtKqSQ5gHIXzWSZ2lZg1ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZKZ5MKR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tm4hZulH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4271F00A3D;
-	Fri,  4 Sep 2026 05:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZKZ5MKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686281F00A3D;
+	Fri,  4 Sep 2026 05:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499358;
-	bh=M0F327jMid3gN9uSP8ovsi6DBjrg7bQtcjSpDqyJSoo=;
+	s=korg; t=1788499360;
+	bh=9MWSD+w4/Y24GXGc1roknN8z0DeBDGJa9jLkXYcvQO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tm4hZulH/Vz9btEQxmw/bIpq6h1qjKg4U+1PGM4fYYk7HsK5vCaflJOl8AfXlhaH/
-	 NrPAfmfgJYW1MfUVXY4+SimLp20w/xp5RsnnQHLbTOr1wqTXUV9Gs1N51IINf3Az7i
-	 VeUbw1d+1sb/ldbKjyeAMl74pVHYTvGeqvAwX35k=
+	b=UZKZ5MKRb6HkmmZNkMhnMqia6i8GnaSWo6BeOEHUIpsBsHDBYESMx+W1bbMz+ApR0
+	 lfF3pOBsayk9LTOU8liJpoh8eQS8aQVJCRNb9l8O6Oa2stD/x1FKtY2ULt8dOtTvt/
+	 siDt3Qu4ADh3XaLjT8q+pPA6yBcL08f3PGToedy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Chuck Lever <cel@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 7.2 388/713] SUNRPC: wait for in-flight client TLS handshake callback
-Date: Fri,  4 Sep 2026 06:55:56 +0200
-Message-ID: <20260904045812.520894196@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.2 389/713] svcrdma: Reorder rpcrdma_rn_unregister before rdma_destroy_id
+Date: Fri,  4 Sep 2026 06:55:57 +0200
+Message-ID: <20260904045812.542662421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,64 +44,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit a89dd597458848b463d284b15e42a8078beeb046 upstream.
+commit 4488e912973773d64368828acf3b8e39d93650ae upstream.
 
-xs_tls_handshake_sync() gives xs_tls_handshake_done() a reference to the
-lower transport before submitting the handshake request. On timeout or
-signal, the synchronous waiter drops that reference after calling
-tls_handshake_cancel().
+svc_rdma_free() caches rdma->sc_cm_id->device before teardown,
+then calls rdma_destroy_id(sc_cm_id) which frees the cm_id.
+rpcrdma_rn_unregister() follows, but between those two calls
+the transport's sc_rn entry is still installed in the device's
+rd_xa. A concurrent ib_unregister_device walk can dispatch
+svc_rdma_xprt_done() against the now-freed sc_cm_id.
 
-handshake_req_cancel() returns false when handshake_complete() has
-already marked the request complete. In that case the completion callback
-can still be running, so dropping the callback-owned reference in the
-waiter can free the lower transport before xs_tls_handshake_done() stores
-xprt_err or drops its own reference.
+Move rpcrdma_rn_unregister() before rdma_destroy_id() so the
+transport's notification entry is removed from the xarray before
+the cm_id it references is destroyed.
 
-If cancellation loses to completion, wait until xs_tls_handshake_done()
-signals handshake_done and let the callback release its reference. This
-mirrors the server-side handshake lifetime handling and keeps the timeout
-or signal return value unchanged.
+Also guard the sc_cm_id dereference with a NULL check: the
+following patches introduce paths that reach svc_rdma_free()
+with sc_cm_id == NULL (listener create failure, ADDR_CHANGE
+replacement failure).
 
-Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
+Fixes: c4de97f7c454 ("svcrdma: Handle device removal outside of the CM event handler")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Chuck Lever <cel@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-2-1b09bd87b6cd@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtsock.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2648,7 +2648,17 @@ static int xs_tls_handshake_sync(struct
- 	rc = wait_for_completion_interruptible_timeout(&lower_transport->handshake_done,
- 						       XS_TLS_HANDSHAKE_TO);
- 	if (rc <= 0) {
--		tls_handshake_cancel(sk);
-+		if (!tls_handshake_cancel(sk)) {
-+			/*
-+			 * Cancellation lost to handshake_complete(): the
-+			 * callback still owns its xprt reference and is in
-+			 * flight. Wait for it to finish before returning.
-+			 */
-+			wait_for_completion(&lower_transport->handshake_done);
-+			if (rc == 0)
-+				rc = -ETIMEDOUT;
-+			goto out;
-+		}
- 		if (rc == 0)
- 			rc = -ETIMEDOUT;
- 		goto out_put_xprt;
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -634,10 +634,15 @@ static void svc_rdma_free(struct svc_xpr
+ {
+ 	struct svcxprt_rdma *rdma =
+ 		container_of(xprt, struct svcxprt_rdma, sc_xprt);
+-	struct ib_device *device = rdma->sc_cm_id->device;
++	struct ib_device *device;
+ 
+ 	might_sleep();
+ 
++	if (!rdma->sc_cm_id)
++		goto out_free;
++
++	device = rdma->sc_cm_id->device;
++
+ 	/* This blocks until the Completion Queues are empty */
+ 	if (rdma->sc_qp && !IS_ERR(rdma->sc_qp))
+ 		ib_drain_qp(rdma->sc_qp);
+@@ -662,11 +667,13 @@ static void svc_rdma_free(struct svc_xpr
+ 	if (rdma->sc_pd && !IS_ERR(rdma->sc_pd))
+ 		ib_dealloc_pd(rdma->sc_pd);
+ 
++	if (!test_bit(XPT_LISTENER, &rdma->sc_xprt.xpt_flags))
++		rpcrdma_rn_unregister(device, &rdma->sc_rn);
++
+ 	/* Destroy the CM ID */
+ 	rdma_destroy_id(rdma->sc_cm_id);
+ 
+-	if (!test_bit(XPT_LISTENER, &rdma->sc_xprt.xpt_flags))
+-		rpcrdma_rn_unregister(device, &rdma->sc_rn);
++out_free:
+ 	kfree(rdma);
+ }
+ 
 
 
