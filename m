@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223E1348C47;
-	Fri,  4 Sep 2026 05:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0D2348C47;
+	Fri,  4 Sep 2026 05:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500874; cv=none; b=gW2Ce1eHnOBT4JKTYMb6Jw0ErAreCIOwEzb4xvSF62fP6e5ypKSh/7JihrtMFYXazypNy1KXfMFnuNWLUtOOl5QMc46P/8W9eqa7/W9naiYsDhx5OLuSwE5Whh8KdYku03Cyr02Ok9Kgx6pCfA/EAH93ylQjfZ1sf0u3rRBBfJY=
+	t=1788500877; cv=none; b=RhTSnjXF9OHlaPf5jvQBTeJRLs4s0ThEhGhl4lnOgs9J24BuDWtQjwQfXGNjPz8Nd2TW8pfpHvL2bT714W18o4T6aN4TXyKeiP5OpVgSZu+5iV9H39EG6r0bZcUzGJuKxGtCtLPYikBsA+yfTAvQFMmahwqMrfDvVKHyYgqgVQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500874; c=relaxed/simple;
-	bh=cd/g+7PDoDPgvtMpYRPdoZsKtTTI1LRWVBhigGPR0eo=;
+	s=arc-20240116; t=1788500877; c=relaxed/simple;
+	bh=x1TgWWm02g1Q0hubd+iIzlJL7iy2J727V3wXFo/zghs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvkvSbuu6GJbdzQsSSrTldXElf9VdhWxuSiUv/svsSmC7j2wAp+7ppUwX8IMwmM6LwDO60oX8DHV2HWsa4UxbKW+AmlkyvdMKTD1ATyZ600BGnI9C6Jj6Ykgnt4yDxkKVC535X6SRl2WPmU/ZVCx7/WBAVHEnusyn65DvqCWyCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHCxsrSS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B5EOH8MdlTRM1EavFn6yLPaUXabDBtdIsJs6jBxrFfIFT1BqTB3gsJqSQN0jjhC9yUdlAJdxMlrEHKOeZQDj3yN5TnWtOF4TyTrPnFX07NXslMehJEroPvQ5Spu3rZ97cESynVHJz+EW16lLUHKYN10Wq6EgoZsdezpViy3mGNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrtH55WC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHCxsrSS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3851F00A3D;
-	Fri,  4 Sep 2026 05:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrtH55WC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CD71F00A3D;
+	Fri,  4 Sep 2026 05:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500873;
-	bh=HE0+f8Vee08xfLvXCmMSNrNemiP+t3AuS3/3wPCrMro=;
+	s=korg; t=1788500875;
+	bh=3KzfZjmbrOZpfUld2IMZK4VEybku5cFYBR3UHTDx5ZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QHCxsrSSZHr2PoW0kEDRcKAHw8EzRQgFKaaLsl6HbX7obqj3+PYudrPSMcwvNVpbn
-	 KwNAfo45gRhb5uZqakWt0S0e/2bkiBWR0JLygJ0IMxhbkPRrwQfT2sv8YeNmxk/oEV
-	 XcHod4UjnpSuEKpQRr3x5NB75hxuCjBR3cwfQVO4=
+	b=xrtH55WC+GiyACIOUbOTFgX0MwSsvzLYQtF9mKhhoNpYgYHUQITr6uwON2aZjimdU
+	 bVfz3F8RmeYcNIDZOxA6NUf+EoM+q/F6ORLi8Wf/Geh7Yfld6mZmWoikeveE/xroDf
+	 fb4FwPpq6kp3RowtCF2d7g1a6S0fVv8SO+6C5BTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.com>,
 	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 167/552] cifs: clear tcon after cifsFileInfo_put() in cifs_file_set_size()
-Date: Fri,  4 Sep 2026 06:55:24 +0200
-Message-ID: <20260904045752.812930591@linuxfoundation.org>
+Subject: [PATCH 6.18 168/552] cifs: fix loff_t underflow in cifs_remap_file_range() when len == 0
+Date: Fri,  4 Sep 2026 06:55:25 +0200
+Message-ID: <20260904045752.835500908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,45 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Sorenson <sorenson@redhat.com>
 
-commit b96db32fed8dfb2478d7c208f89bf383beed1535 upstream.
+commit 6c322f5cf7476ded7a9a20f7be72462065a03c68 upstream.
 
-When the else branch of cifs_file_set_size() finds a writable file handle
-via find_writable_file(), it borrows tcon and server from the handle's
-tlink, attempts the handle-based set_file_size() RPC, and then releases
-the handle with cifsFileInfo_put().
+With len == 0 (clone to EOF), the effective length is computed as:
 
-If set_file_size() fails, execution falls through to the path-based
-fallback, which reuses the borrowed tcon and server under the
-"if (tcon == NULL)" guard.  Since tcon is not NULL at that point, the
-guard is skipped.  If cifsFileInfo_put() dropped the last reference on a
-tlink that was already removed from the tlink tree (TCON_LINK_IN_TREE
-cleared, as happens during reconnection or session teardown),
-cifs_put_tlink() will have freed tcon; the subsequent set_path_size()
-call is then a use-after-free.
+    len = src_inode->i_size - off;
 
-Setting tcon = NULL after cifsFileInfo_put() causes the existing guard
-to take the cifs_sb_tlink() path, which acquires a fresh reference for
-the path-based operation or fails cleanly if the session is gone.
+If off > i_size, this is a negative loff_t, corrupting the ByteCount
+in the FSCTL_DUPLICATE_EXTENTS_TO_FILE request and inverting the range
+in filemap_write_and_wait_range().  The existing off >= i_size check
+fires only after the ioctl has already been sent.
 
-Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
+Snapshot i_size_read() once for both the bounds check and the length
+calculation, eliminating the TOCTOU and 32-bit torn-read risk.  Reject
+off > src_size with -EINVAL.  Treat off == src_size as a no-op,
+consistent with __generic_remap_file_range_prep().
+
+Fixes: 04b38d601239 ("vfs: pull btrfs clone API to vfs layer")
 Cc: stable@vger.kernel.org
-Cc: Paulo Alcantara <pc@manguebit.com>
 Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/cifsfs.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3080,6 +3080,7 @@ int cifs_file_set_size(const unsigned in
- 							size, false);
- 			cifs_dbg(FYI, "%s: set_file_size: rc = %d\n", __func__, rc);
- 			cifsFileInfo_put(open_file);
-+			tcon = NULL;
- 		}
- 	}
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1364,8 +1364,19 @@ static loff_t cifs_remap_file_range(stru
+ 	 */
+ 	lock_two_nondirectories(target_inode, src_inode);
+ 
+-	if (len == 0)
+-		len = src_inode->i_size - off;
++	if (len == 0) {
++		loff_t src_size = i_size_read(src_inode);
++
++		if (off > src_size) {
++			rc = -EINVAL;
++			goto unlock;
++		}
++		len = src_size - off;
++		if (!len) {
++			rc = 0;
++			goto unlock;
++		}
++	}
+ 
+ 	cifs_dbg(FYI, "clone range\n");
  
 
 
