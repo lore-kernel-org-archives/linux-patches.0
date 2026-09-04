@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0883BCD0A;
-	Fri,  4 Sep 2026 05:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD587080D;
+	Fri,  4 Sep 2026 05:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501439; cv=none; b=jujT9MhBLDpbEsVMaqAOzEFAOBXzRZbu7kHiu1v3DDMVe1ITZP7BLI29/L3MZe/r32fnz1SCVpcB/kMAxEwzBuC2lkrDH/Rs6rZ/vFVvjuxcv9qE36J/ZkkZS29m3r8XwKrw3xT770mIwm3ZPpg0sTEWJrZY6+xBsVPV8U5qvCk=
+	t=1788501442; cv=none; b=Wj0NC2CZBZ5321/KyGQxV05U1mLGQLacg86PSXtiW6LyLNxn6ERrjsKBkd7+1RP73Z/6s3JHsxp1Jk5zawldjIt2LJEMofSCyW4Q98oa1tk+gcQQeB98j65ucAtiPq/v1HimnWdIPk5rOqmO/2QK5IZrbzZGPV9xUOE/M9Dtysw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501439; c=relaxed/simple;
-	bh=Mx+/pqZWdulycNtwCv3kvYwOG77/qeKNsNinE2MjMsA=;
+	s=arc-20240116; t=1788501442; c=relaxed/simple;
+	bh=jbpXAuKEC/J0TKiJZ6By5DoSarSCIgwfJmWNnsQYx+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pTRKPvizSpGOYmtG47oU1wZ/oEMmFwZrOR7CrOCEdiploYGaCWJbPiHpyHRlxvrTAnoVusHhUTgNanALFlEK2pGaN8Fh5yEQ5V8oWj1vKwE7Eoe0y+nrb7lClLdbF20Kf8cwiAengHwHheKL2zZ2MOaDj5e8Mrf9Si8gDeOs6og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPpZkvWD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BcvLc5I3UMjVALBVVWXrumQW5Ks/1SVInNqDBktyhWAHAyscY+d+Eokl86ImY2LQhzuI/evvC/mRkHm28aYjQz499O9A1923SBZw+UOcAgB1zeKXVdtLBTCY2axtkaat61zQ4oBx15GLYBgtCOvNvzVjvg3dKNr/rcLqEoI4swk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaWs3m6z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPpZkvWD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB8E1F00A3D;
-	Fri,  4 Sep 2026 05:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaWs3m6z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F041F00A3D;
+	Fri,  4 Sep 2026 05:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501438;
-	bh=4hCxqpFgii6fQgx0D4+8HoMQa8xesrhbNcfHD85oRc8=;
+	s=korg; t=1788501441;
+	bh=bCcDjSbV6I5pdWQmC4ZoAwvTDW3f2kPrLcwaaN1JAY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MPpZkvWD3LujIi8EOt7C/pA2/NxQRXLX0/ncE5FuXzqnbVbH3q3Ok7C+HA80i53aI
-	 hdYLbkcPToJdMHZXOZVuuheKtsmV/pYyTcaRZzPO/CSEdxa0cDuGR0PBfGlIKHMewp
-	 yKmQ3+16orIw2+CG3/rauHl/QFp8qHZrSMabcbXI=
+	b=GaWs3m6zgCHFXw0YZRG+3XqRm8+VjhVS+EDzqutPfWtsPZvVs08vHDQNL5sm6LpGw
+	 Lrx2ykyQA8mPZ+OdaspPjMcyDMTpDyStI4QTncjAQwFQIzKQwvI2PsychJlNkw/E/R
+	 WeZbJcNiNdlFB1PfY356LxBKdrxNYFuYL2R9w5qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 411/552] iommufd: Release current IOAS on xa_store() failure
-Date: Fri,  4 Sep 2026 06:59:28 +0200
-Message-ID: <20260904045759.938272747@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.18 394/552] PCI/AER: Emit TLP Log only for unmasked errors
+Date: Fri,  4 Sep 2026 06:59:11 +0200
+Message-ID: <20260904045759.210132920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,44 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 4ac2ce123824d5f885c868fa1f9f4d463141a2ba upstream.
+commit a8bf2dd750de7d682fdaa2127f4e3217ce9c4a82 upstream.
 
-iommufd_take_all_iova_rwsem() takes an object reference and the
-iova_rwsem write lock before storing the IOAS in the temporary ioas_list
-xarray.
+Per PCIe r7.0 sec 6.2.5, the prefix and header of an offending TLP is only
+recorded for unmasked Uncorrectable Errors.  Yet when the AER driver
+determines whether a prefix and header has been logged, it does not take
+the Uncorrectable Error Mask Register into account.  Fix it.
 
-If xa_store() fails, the current IOAS has not been inserted into
-ioas_list yet. iommufd_release_all_iova_rwsem() only unwinds IOAS
-objects already present in that xarray, so it cannot release the current
-IOAS.
-
-Release the current IOAS rwsem and object reference before unwinding the
-previously stored entries.
-
-Fixes: 051ae5aa73d7 ("iommufd: Lock all IOAS objects")
-Cc: stable@vger.kernel.org
-Assisted-by: Qoder:Qwen-3.8-MAX-Preview
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 6c2b374d7485 ("PCI-Express AER implemetation: AER core and aerdriver")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org # v2.6.19+
+Link: https://patch.msgid.link/2e712b96ba5bfc729d78bfc23f7fb7d285aa3d6d.1784905909.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/ioas.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/pcie/aer.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/iommufd/ioas.c
-+++ b/drivers/iommu/iommufd/ioas.c
-@@ -433,6 +433,8 @@ static int iommufd_take_all_iova_rwsem(s
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -938,7 +938,8 @@ void pci_print_aer(struct pci_dev *dev,
+ 		status = aer->uncor_status;
+ 		mask = aer->uncor_mask;
+ 		info.level = KERN_ERR;
+-		tlp_header_valid = tlp_header_logged(status, aer->cap_control);
++		tlp_header_valid = tlp_header_logged(status & ~mask,
++						     aer->cap_control);
+ 	}
  
- 		rc = xa_err(xa_store(ioas_list, index, ioas, GFP_KERNEL));
- 		if (rc) {
-+			up_write(&ioas->iopt.iova_rwsem);
-+			refcount_dec(&ioas->obj.users);
- 			iommufd_release_all_iova_rwsem(ictx, ioas_list);
- 			return rc;
- 		}
+ 	info.status = status;
+@@ -1427,7 +1428,7 @@ int aer_get_device_error_info(struct aer
+ 		pci_read_config_dword(dev, aer + PCI_ERR_CAP, &aercc);
+ 		info->first_error = PCI_ERR_CAP_FEP(aercc);
+ 
+-		if (tlp_header_logged(info->status, aercc)) {
++		if (tlp_header_logged(info->status & ~info->mask, aercc)) {
+ 			info->tlp_header_valid = 1;
+ 			pcie_read_tlp_log(dev, aer + PCI_ERR_HEADER_LOG,
+ 					  aer + PCI_ERR_PREFIX_LOG,
 
 
