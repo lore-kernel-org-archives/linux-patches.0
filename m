@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE483AA187;
-	Fri,  4 Sep 2026 05:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838E72264A3;
+	Fri,  4 Sep 2026 05:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500644; cv=none; b=dbLqUH+vL3lXtif9XcTnEmKgbepcuEeWut4x+L87OHsorFp4a/QHe5pYVTEDHivwmQUfvt3+ZILh9KjiEiEyfy+/4pxY32dz165jcY9y/2uoYYTqwv/YbfDbH1Wqwp/g05i2qcjHptwZ4N25fSjoVBYrjWz7ce5UDvPqHIMFzOk=
+	t=1788500647; cv=none; b=et4RgCnSU8OffJ2HxfdtKS77FI7Ip+TE95DsHMfurpmDkmRc3BgQPIWpuD+Q+6D5htjqNgpcrmHXhl7ZtS5GyU2mvB1wv8TXcHOAWLJIFpDDP+a9gdzh4BKSv+X8wVZKsuFCpQ8xV/yNHAphoSuzAcqhCbrD1RtU4xbs86gi/Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500644; c=relaxed/simple;
-	bh=hITZQhAL2wyNWiIjNSZXp+hqAJmJQZHOjqQ81LeWnmI=;
+	s=arc-20240116; t=1788500647; c=relaxed/simple;
+	bh=LhLEW3Q4nn5YEbIOuR/B7y8CoQ/6ByvpNXRitQ9muho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qh/YbpN+LEoNC5uMdtdRz6OypUiTsWMiw/3VC5DfOY2q0zCbz/YftHHV8ggSslWpyPjKiJHXmyXwX/mHg5BrhfaUvus0XLG3qQnq4l/muoSLLe0ixeGVKSXfzb3CUH0FhX2Brz5V/wBdhIOWorW67nyoYoSvai8Bni4oHnQ276I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkUyUgyZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WchsC5Ol7qpeqeh1KcTjPrm3eG2Vq7/5izWaDk1coyovBSD8hP8q8BJi57hEYaNQpBkgXx01hNFKtPugC0l6p8rg3aA6hoFSd1fMIs2T5lzCSCWL77KO7Jge1uks9zV1cgn+6Ze7H+MJV4gxWWE9AFLmDqJNHdqj/BvA0jZ0Ny8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fC1CQOnP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkUyUgyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863E81F00A3D;
-	Fri,  4 Sep 2026 05:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fC1CQOnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6159E1F00A3D;
+	Fri,  4 Sep 2026 05:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500643;
-	bh=o/kU72+3Hq3gDdO86LeUMnzKhiyDdQCm0OJM8iYAVfU=;
+	s=korg; t=1788500645;
+	bh=PpvFRo7mG94vyWz7pDXdCsPEQq59j/lWU9FYR7rjbqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vkUyUgyZkndJGBOLEVPPu4TYcF5p3YjqwrvTQrHcDrR6lvsjROtzItGxD0hb4JAeJ
-	 gWV99OH/ZiFbaUKxxdl/w4V9QS8yRlCXribz/1BaU7uO1HwpWQd+LFu0tNPN2o/kJ3
-	 RtwUVEIPuCp4Er63ZJvJ0M8t0i1hdpiwwQ1/zfA8=
+	b=fC1CQOnPjHKq+tSAXgkdJyjXjXAdQ6o251SyGlu1R5r6k04kshZwUtC2vPoshmFcn
+	 cehafZkU0GuTRA5pj3p8oSr4FxjJ0zFHcJ+LyQTdfBMOyzzHpoDJDRxnS0/qqlOQ4+
+	 fh2rj+5G4tbJXskdZRmVy3gnZNpIhpKOEZiuxrmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 130/552] nfsd: fix dentry ref leak on V4ROOT export filehandle lookup
-Date: Fri,  4 Sep 2026 06:54:47 +0200
-Message-ID: <20260904045751.265419721@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 131/552] nfsd: fix FL_SLEEP being set unconditionally for all LOCK types
+Date: Fri,  4 Sep 2026 06:54:48 +0200
+Message-ID: <20260904045751.299153961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,51 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 6247023fbbec1325029f2d5f2a7cdc0f9f9ea15a upstream.
+commit 246a90a5109bb2857db41f491277882ee2743b26 upstream.
 
-nfsd_set_fh_dentry() leaks the dentry reference from
-exportfs_decode_fh_raw() when the NFS3_FHSIZE or NFS_FHSIZE
-switch cases detect NFSEXP_V4ROOT and goto out. The out: label
-calls exp_put() but never dput(dentry), and fhp->fh_dentry was
-never assigned so fh_put() cannot compensate.
+The FL_SLEEP guard uses lk_type & (NFS4_READW_LT | NFS4_WRITEW_LT) which
+computes lk_type & 7, non-zero for all valid lock types including
+non-blocking ones. This was introduced by commit 7e64c5bc497c
+("NLM/NFSD: Fix lock notifications for async-capable filesystems") when
+refactoring from per-case switch arms.
 
-A crafted NFSv3 filehandle targeting a V4ROOT export's fsid
-triggers the leak on every request.
+Replace the bitmask test with explicit equality checks.
 
-Fixes: ef7f6c4904d0 ("nfsd: move V4ROOT version check to nfsd_set_fh_dentry()")
+Fixes: 7e64c5bc497c ("NLM/NFSD: Fix lock notifications for async-capable filesystems")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260531-nfsd-testing-v1-4-7bfa481b0540@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-10-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsfh.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -277,15 +277,19 @@ static __be32 nfsd_set_fh_dentry(struct
- 		if (dentry->d_sb->s_export_op->flags & EXPORT_OP_NOWCC)
- 			fhp->fh_no_wcc = true;
- 		fhp->fh_64bit_cookies = true;
--		if (exp->ex_flags & NFSEXP_V4ROOT)
-+		if (exp->ex_flags & NFSEXP_V4ROOT) {
-+			dput(dentry);
- 			goto out;
-+		}
- 		break;
- 	case NFS_FHSIZE:
- 		fhp->fh_no_wcc = true;
- 		if (EX_WGATHER(exp))
- 			fhp->fh_use_wgather = true;
--		if (exp->ex_flags & NFSEXP_V4ROOT)
-+		if (exp->ex_flags & NFSEXP_V4ROOT) {
-+			dput(dentry);
- 			goto out;
-+		}
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -8470,10 +8470,11 @@ nfsd4_lock(struct svc_rqst *rqstp, struc
+ 		goto out;
  	}
  
- 	fhp->fh_dentry = dentry;
+-	if (lock->lk_type & (NFS4_READW_LT | NFS4_WRITEW_LT) &&
+-		nfsd4_has_session(cstate) &&
+-		locks_can_async_lock(nf->nf_file->f_op))
+-			flags |= FL_SLEEP;
++	if ((lock->lk_type == NFS4_READW_LT ||
++	     lock->lk_type == NFS4_WRITEW_LT) &&
++	    nfsd4_has_session(cstate) &&
++	    locks_can_async_lock(nf->nf_file->f_op))
++		flags |= FL_SLEEP;
+ 
+ 	nbl = find_or_allocate_block(lock_sop, &fp->fi_fhandle, nn);
+ 	if (!nbl) {
 
 
