@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DBF4137B2;
-	Fri,  4 Sep 2026 05:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E0F39EF1C;
+	Fri,  4 Sep 2026 05:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500379; cv=none; b=Fxym9+nzyRSfRzIOjiuSvyy8I4La6GuAscqHHIFa4JVQaxA7qSVXA8b0v1XCrn0iMmvvFIqUnsb8oSKeFUIMU4nlDTg11wfNCq6nS8hwIQ/fzFUeI4oLlsaqHNFU1krTmK1O6/zuk1iGb/2h0//5co+bX2Z+V8Uo/75OXH9gEzM=
+	t=1788500381; cv=none; b=QzO0jCWX23q6Q53qAJ7ff5UqI50aaLTduQEeGtv2ZflK84Nq4O3W4rMVIWd26Sp+jdVd29Q5bA5reZZi/rS+FucDj2xKrUDzmqG3jQeDjXXFZ+VEVIzMBuP8CJDqLfaIIWsrR2A4kBukoJsfHWAifY3bzQ4YaNXBZvVR9Cp1P4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500379; c=relaxed/simple;
-	bh=TPxmPDYlUGllETb7mk7fpKxZ3trXPebEIJRjEa946jk=;
+	s=arc-20240116; t=1788500381; c=relaxed/simple;
+	bh=kiWHGnsvs6/GVwvwJHCmCQ/eUQBzkQkG8xMTwOOzGp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWfPbg6hhh98sUJDC4dyJcyAuicpo5EPUKTYTweaLm0MXqWBTX14Wx78ZDF3SYpmX1dhi6HwW+HGKwaB80oKfKvZJOmMiXcY5nIKYYr+qZZ9pA2EhEmDZeeWbh6XK5YdkmJn72vgvq86kiIcDi1t410Tx3BR4AXi0+W6cpKqoHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsjfv6gA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OW+Dy7QrVRPlzUOj4ipSwVVAFBO2Aubaq/R64BgaGrZOfp/QcCe+rI8JPZ40k178el1sfoba2yp/cPgGp1RLAGUOgZTU6m99SBMXtCOsrBHD5WKeajSzAWTpeJamHIz8DUPiQRO2ZuSzxvaoLIxN7DPLSilFVNxujhIx2C0ayDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/fEufCg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsjfv6gA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA261F00A3E;
-	Fri,  4 Sep 2026 05:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/fEufCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBD41F00A3D;
+	Fri,  4 Sep 2026 05:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500377;
-	bh=1W4EDswxN/FK0ViM6mw+iO4ZTm2dHLl3lFcumItb7bc=;
+	s=korg; t=1788500380;
+	bh=ZsahKBcQb7nf9OUbOkCLM1FAJBaCUMTQsUmV4fN9JEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsjfv6gAf91BgwBJcHMkzyxspgb2AavxUOuwdWiGaI9Yf8+BXWYx9dq6fDdjwcMUM
-	 SuTZLVkybzWxL7G/iit6JMlIVaVPFNMb29d0z+57rrdJJ2DnmqqRtSZXQdh82pyMCv
-	 WgDXcAnKAxzbaL0uOiqZuKIhm7/7rz34TymaFhv8=
+	b=0/fEufCgYYw9onrcir4KgLbhe9GtylH3/XQ+Ruxzx3t6dwxnB6G5BisJ86CCiz94X
+	 vicVq5/b5xpGfpGhEQbPqjmtotHiKihs5iKwdPMXpNhy1/8buLiyupQ69WCXDuUHIA
+	 aPB8gaYTAkliSCjX4hUVDIjvzN8Uaoh6AOw/AtO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Graf <graf@amazon.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Subject: [PATCH 6.18 036/552] mm/mm_init: deferred_grow_zone(): fix out-of-range first_deferred_pfn
-Date: Fri,  4 Sep 2026 06:53:13 +0200
-Message-ID: <20260904045748.648551372@linuxfoundation.org>
+	Ye Liu <ye.liu@linux.dev>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 037/552] mm/page_owner: use memcg_data snapshot to avoid TOCTOU in print_page_owner_memcg()
+Date: Fri,  4 Sep 2026 06:53:14 +0200
+Message-ID: <20260904045748.670447679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,80 +59,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Graf <graf@amazon.com>
+From: Ye Liu <ye.liu@linux.dev>
 
-commit 97090500d776c3f6d08e857e3a0a7cf092999094 upstream.
+commit 90f095b816e25c6a9e4446d299bac5007fdcb3df upstream.
 
-With CONFIG_DEFERRED_STRUCT_PAGE_INIT enabled, deferred_grow_zone()
-initializes struct pages early in boot to satisfy an allocation.
+print_page_owner_memcg() reads page->memcg_data via READ_ONCE() at the
+start to guard against tail pages and NULL data.  However, it later
+re-reads page->memcg_data locklessly in two places:
 
-With a large CMA reservation in place, the ranges deferred_init_memmap()
-finds may not add up to the allocation it was asked for, and the function
-ends up initializing the memory map of the entire zone and still falls
-short.
+1: page_memcg_check(page)
 
-That is fine in itself: the function accounts for it and leaves the
-caller to decide whether it now has enough memory.
+2: PageMemcgKmem(page) (via folio_memcg_kmem(), which includes
+   VM_BUG_ON assertions for tail pages and MEMCG_DATA_OBJEXTS)
 
-However, the update of pgdat->first_deferred_pfn that tracks where
-uninitialized memory map starts could overflow.
+If the page is concurrently freed and reallocated as a THP tail page or
+slab page between these calls, the VM_BUG_ON assertions can trigger on
+CONFIG_DEBUG_VM=y builds, crashing the kernel.
 
-If the node's RAM end is not aligned on PAGES_PER_SECTION boundaries and
-some deferred struct pages were initialized, pgdat->first_deferred_pfn
-would point past the end of the node's memory.
+Fix both TOCTOU issues by using the memcg_data snapshot throughout.
 
-deferred_init_memmap() later picks up from pgdat->first_deferred_pfn and
-hits a BUG_ON(), because it expects a pfn within its node.
-
-For example, when running a kernel with CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
-and CONFIG_CMA=y using the following qemu command line
-
-  qemu-system-x86_64 -enable-kvm -m 8032M -kernel bzImage \
-      -append "nokaslr cma=4768M@0x100000000"
-
-the kernel panics:
-
-  kernel BUG at mm/mm_init.c:2131!
-  CPU: 3 UID: 0 PID: 36 Comm: pgdatinit0 Not tainted 7.2.0-rc6 #1
-  RIP: 0010:deferred_init_memmap+0x1b8/0x1c0
-  RAX: 0000000000236000 R13: 0000000000238000
-  Call Trace:
-   kthread+0xdf/0x120
-   ret_from_fork+0x187/0x250
-
-Make sure that the update of pgdta->first_deferred_pfn does not overflow
-when the entire zone's (and therefore node's) memory map is initialized.
-
-Fixes: 3acb913c9d5b ("mm/mm_init: use deferred_init_memmap_chunk() in deferred_grow_zone()")
-Cc: stable@vger.kernel.org
-Assisted-by: Kiro:claude-opus-5
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Link: https://patch.msgid.link/20260807031243.87904-1-graf@amazon.com
-[rppt: massaged the changelog]
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Link: https://lore.kernel.org/20260714015117.78351-10-ye.liu@linux.dev
+Fixes: fcf8935832b8 ("mm/page_owner: print memcg information")
+Signed-off-by: Ye Liu <ye.liu@linux.dev>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: David Hildenbrand (Arm) <david@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mm_init.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ mm/page_owner.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -2238,10 +2238,13 @@ bool __init deferred_grow_zone(struct zo
- 	}
+--- a/mm/page_owner.c
++++ b/mm/page_owner.c
+@@ -504,6 +504,7 @@ static inline int print_page_owner_memcg
+ {
+ #ifdef CONFIG_MEMCG
+ 	unsigned long memcg_data;
++	struct obj_cgroup *objcg;
+ 	struct mem_cgroup *memcg;
+ 	bool online;
+ 	char name[80];
+@@ -513,11 +514,14 @@ static inline int print_page_owner_memcg
+ 	if (!memcg_data || PageTail(page))
+ 		goto out_unlock;
  
- 	/*
--	 * There were no pages to initialize and free which means the zone's
--	 * memory map is completely initialized.
-+	 * The loop only tests spfn before entering an iteration, so on exit it
-+	 * may point up to a section past the end of the zone.  When it does,
-+	 * the rest of the zone has already been handed to
-+	 * deferred_init_memmap_chunk() and nothing is left to initialize.
- 	 */
--	pgdat->first_deferred_pfn = nr_pages ? spfn : ULONG_MAX;
-+	pgdat->first_deferred_pfn =
-+		spfn < zone_end_pfn(zone) ? spfn : ULONG_MAX;
+-	if (memcg_data & MEMCG_DATA_OBJEXTS)
++	if (memcg_data & MEMCG_DATA_OBJEXTS) {
+ 		ret += scnprintf(kbuf + ret, count - ret,
+ 				"Slab cache page\n");
++		goto out_unlock;
++	}
  
- 	pgdat_resize_unlock(pgdat, &flags);
+-	memcg = page_memcg_check(page);
++	objcg = (void *)(memcg_data & ~OBJEXTS_FLAGS_MASK);
++	memcg = objcg ? obj_cgroup_memcg(objcg) : NULL;
+ 	if (!memcg)
+ 		goto out_unlock;
  
+@@ -525,7 +529,7 @@ static inline int print_page_owner_memcg
+ 	cgroup_name(memcg->css.cgroup, name, sizeof(name));
+ 	ret += scnprintf(kbuf + ret, count - ret,
+ 			"Charged %sto %smemcg %s\n",
+-			PageMemcgKmem(page) ? "(via objcg) " : "",
++			(memcg_data & MEMCG_DATA_KMEM) ? "(via objcg) " : "",
+ 			online ? "" : "offline ",
+ 			name);
+ out_unlock:
 
 
