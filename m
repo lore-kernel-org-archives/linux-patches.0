@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEC141D208;
-	Fri,  4 Sep 2026 06:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6C1419FBB;
+	Fri,  4 Sep 2026 06:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502571; cv=none; b=b60G/+339olILhZK2teWHD3aT1Y6XPsjMRVmbGJ52iGiA/4hKK5dUt25rJeMRMZcz0c3la++0/0AifKYGkfSMcaVXemqiQ8sCjfgJ6PKk5biDVj4iLPjDjlqnjRjTw6auIin8rePXAYIEy8ts5C94kcazENj9CMPF3PeRXrn4GM=
+	t=1788502574; cv=none; b=k39bOQny1/bkml0VxLt1/0A2aVKs5d0w185h5cucol1lXpwNWakp7Lz+osXf7zBpgXscpFnl2klOxmgS0SxJnj95HoyL51p8HH8T3GlqsiiiiJdpzHcnBcYtmdvpPgVQEiIMviIyjsUZhtg7XI7OxFb9osIb3aORrFjTwZhxMqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502571; c=relaxed/simple;
-	bh=qWYjWFRUTFvVOb2rWzJGRi/6yWtyBUjGJY1sdbhLBE0=;
+	s=arc-20240116; t=1788502574; c=relaxed/simple;
+	bh=MDUwbOIeyAD9LkGJ3nq/Iskslq+fcHv7KraR9KylqNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqAqJKohzuup8bvguYgqU/rIjH1qODiopjzBFfZmg291ox826Op3SUj25QOXosFnmv8M8H21h95JOjsCl2bnes6lBgQ5AlKyMEEeOIWH6yEZnACk3lHGyR0ydea3/+oBwTSLi2vtx1VDI3HFoPgZS8G/WUeBD8mrZAEGiK5Erx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqVfnqso; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hWAjfBpAMhzA1xNEZz7E216jRon6lO2iOwjrV/uXGKcE3M5ZrlRY+fTuTMy8Ut9qgCzM+EUWrzNrXeg6EBEQyJfXMdgBDxig2Yy/AyITD7uZDUTHAEwezdEoeg/cIdrVDdD7jxXIpQzyIxJRB36qg7ZhEMmsFH9hAROA90XtHb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uckzPo+J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqVfnqso"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5521F00A3D;
-	Fri,  4 Sep 2026 06:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uckzPo+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C887B1F00A3D;
+	Fri,  4 Sep 2026 06:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502570;
-	bh=Jjp/JyqbadJqgVH9F/aE3f7zOyzQa0GKGRfbuURpTaU=;
+	s=korg; t=1788502573;
+	bh=wnKjUAEXIRpWLmPxBdZ+rDoftwobrmQUee4pPj6aGpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qqVfnqsoRKeX+9GTVuWrMhLE84BuGxd8Xr3ea1IDy602znQaQFnt7l3aBVJ4LW47q
-	 spgAWO0O6DjbVi0rmu9TLOk/OiswDuUzU9V8BXL9gpJWJq9dW8llG+Boj5lDiD0jER
-	 Q7JZsY7YZqMw4BuoQxTyFUoi3r0GdlDkZLU1QycQ=
+	b=uckzPo+JaAkJ1Emt3DGIGoOb8DIvQB9e6pgnnCiv+2MasSD/DNMZTOixUfHi8N6QD
+	 ysilyH/O8fAudS6nfl52hT77f5GGav6UiVEl+0x9jyH7WUeOeUl8HmljHcWZCDHM5r
+	 ah5BYMuwJMjVL+QNOMuo9bzX/KkdOXNYfQxIcCDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 227/403] arm64: dts: qcom: sm6115-pro1x: Correct touchscreen GPIO flags
-Date: Fri,  4 Sep 2026 07:00:30 +0200
-Message-ID: <20260904045740.024072123@linuxfoundation.org>
+	Christopher Tolang <christophertolang@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 254/403] ASoC: amd: yc: Add DMI entry for MSI Thin A15 B7UC
+Date: Fri,  4 Sep 2026 07:00:57 +0200
+Message-ID: <20260904045740.644723439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,45 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Christopher Tolang <christophertolang@gmail.com>
 
-commit 8e73ae5c34e4fbbd25a8324e3c0eb1e845d7f01e upstream.
+commit e2aa5ad3be41accfcdcccc62348f21af7baa3a38 upstream.
 
-IRQ_TYPE_xxx flags are not correct in the context of GPIO flags.
-These are simple defines so they could be used in DTS but they will not
-have the same meaning: IRQ_TYPE_LEVEL_LOW = 8 = GPIO_TRANSITORY.
+This model requires an additional detection quirk to enable the internal
+microphone.
 
-Correct the touchscreen irq-gpios to use proper flags, assuming the
-author of the code wanted similar logical behavior:
-
-  IRQ_TYPE_LEVEL_LOW => GPIO_ACTIVE_LOW
-
-Fixes: e46b455e67f8 ("arm64: dts: qcom: sm6115-pro1x: Add Goodix Touchscreen")
+Fixes: fa991481b8b2 ("ASoC: amd: add YC machine driver using dmic")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260413090527.53000-2-krzysztof.kozlowski@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Assisted-by: OpenAI Codex
+Signed-off-by: Christopher Tolang <christophertolang@gmail.com>
+Link: https://patch.msgid.link/20260823113221.19744-1-christophertolang@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-index 0f23eaef01f2..b290f0f4c0e1 100644
---- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-@@ -151,7 +151,7 @@ touchscreen@14 {
- 
- 		interrupts-extended = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
- 
--		irq-gpios = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
-+		irq-gpios = <&tlmm 80 GPIO_ACTIVE_LOW>;
- 		reset-gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
- 		AVDD28-supply = <&ts_vdd_supply>;
- 		VDDIO-supply = <&ts_vddio_supply>;
--- 
-2.55.0
-
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -742,6 +742,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Thin A15 B7UC"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Thin A15 B7VE"),
+ 		}
+ 	},
 
 
