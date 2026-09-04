@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2983DB310;
-	Fri,  4 Sep 2026 05:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EC83AFB1C;
+	Fri,  4 Sep 2026 05:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498918; cv=none; b=jR7CnpHa6R5okG67IjCjB9j3A2ftpvUqe934kbs1vV0mys2eSsIVyCjIVE1IgZh3Skmb97BhWrVjB7sbuYRIEVRM6Fjv4b2MMZV2GYGIlJu57WXNZn8mLKLRUYossmVZOmiDcMfx/uCRpJ15oehaJNe2LIvdo1p/SiwHwprGHp8=
+	t=1788498921; cv=none; b=JRfVcxYvKOt4UohdDhH1eP4tt/rdYcC4YpqGK5+8uSQ24w5qeBHBuv79p8GfPiCzcntJsjAy127RynNMJJUUcbYv7tmRNrIhZPmPKLTgh0iGxeaPb8Ueo8XeMpbOHkenFHSTED6GsjWUqQeuTz3BHoQfb92Z9UrU8T6/1LJ9IMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498918; c=relaxed/simple;
-	bh=iinmEJVQ0UFa9hH3gYfVIXg3jKM60v7u8JoCa9pm08c=;
+	s=arc-20240116; t=1788498921; c=relaxed/simple;
+	bh=yFfP9SX7vQ2PjdCY2PF8cV1ZoYQ9+H524VbC3ExIGxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tMDsVC+VP/w5aTi8KJRuhOqTG1i1zsec7D54GYYxZyu1b1w8sBEZBCbc4ndKRofNIj0qL9qqnoyMkpZ0lDVR1c8nLpWolV+rPhYPYwVPxqOsl30z0lU9Yt7Ac0SxCsr6JsMdxUfhcBEV72ky2YCGvNaE1dxnOsxPkwpq2tSbk/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9tqf0b+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZgOvkycuhEp9j2a2suuDeRNxvCr+XvaZwzk+MWUxivM3YYaJV079/aNk3sfB6BfzLj80LkGEumDJbzShfVBKheUuP0BYeDI2gqSAMOILYKHpl+mgIGegZHjiGrnrr48+nJunGi7qD+DiQEbU698SvdHPOqaCdcphlhjc3Uip5Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCqi4TCT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9tqf0b+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AE21F00A3D;
-	Fri,  4 Sep 2026 05:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCqi4TCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9301F00A3D;
+	Fri,  4 Sep 2026 05:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498916;
-	bh=2tGubNey3+nbCdC94LCmGNi8fYenCQpFFydmwxxtU+o=;
+	s=korg; t=1788498919;
+	bh=VbUnIM+Dl5g47Arq608yCcl5D9JbZnxyozStogQlhgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9tqf0b+34EhJ3EPvyK3peVgu//rqg5IZbDNsaZ4sB/ZiwQMWlm5xjD0Rj3MmW5BY
-	 EaGjzxJ5ijnEo5XgN7FM4dUOKEJmtByuoB2Er89x0GkRvyV55cXR64UuTgziiLsSrD
-	 PM1kNMuVhin5TAXbNMSBPIDulTdS3F5g4I2nOuAY=
+	b=uCqi4TCTD01GwS/yG328ebxlEv8FJON0TDUOmwfKcQBHBos4xYGhkh+JNc3XSGuMW
+	 VCRX1fU8+vRYgHxH3B+/ExGvijDacgxwwuDlMBWBwSpVfP4rs5lklsc8cRiQ43MEA3
+	 EJimKTPuODYuyR0zs0Ljk5a5x1doolmdRsPdV4Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Frank Sorenson <sorenson@redhat.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 234/713] cifs: use cifs_invalidate_cache() in cifs_do_truncate() for O_TRUNC
-Date: Fri,  4 Sep 2026 06:53:22 +0200
-Message-ID: <20260904045809.066961074@linuxfoundation.org>
+Subject: [PATCH 7.2 235/713] smb: client: clear setuid/setgid bit on write with cifsacl/modefromsid/posix extensions
+Date: Fri,  4 Sep 2026 06:53:23 +0200
+Message-ID: <20260904045809.091600617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,42 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit 364b183230586a62660a7280c1eb20138338eeb5 upstream.
+commit b8e5dc4f95e5484159b343903f302eb6d783f2e6 upstream.
 
-cifs_do_truncate() is invoked from cifs_open() without i_rwsem, so it
-cannot use cifs_resize_file_locked() to perform a proper fscache cookie
-resize.  Instead, add cifs_invalidate_cache() after cifs_setsize().
+When a file has the setuid or setgid bit set and is written to, the VFS
+strips those bits and issues a setattr with ATTR_KILL_SUID/ATTR_KILL_SGID
+together with an ATTR_MODE carrying the already-cleared mode.
 
-cifs_invalidate_cache() calls fscache_invalidate(), which works without
-holding i_rwsem: it unconditionally increments inval_counter and sets
-FSCACHE_COOKIE_NO_DATA_TO_READ, ensuring that stale cached data is not
-served once the cookie is later activated by fscache_use_cookie().
-Truncation to zero leaves no valid cached data, making invalidation the
-correct semantic here.
+Both cifs_setattr_unix() and cifs_setattr_nounix() unconditionally dropped
+ATTR_MODE in that case:
 
-Fixes: fa724e235cfd ("cifs: add fscache_resize_cookie() to cifs_setsize()")
+	/* skip mode change if it's just for clearing setuid/setgid */
+	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
+		attrs->ia_valid &= ~ATTR_MODE;
+
+This is fine for the default mount, where the mode is only emulated via
+the DOS read-only attribute and cannot represent the setuid/setgid bits
+anyway.  However, with the "cifsacl" or "modefromsid" mount options the
+mode is stored on the server through an ACL (id_mode_to_cifs_acl()), with
+the SMB3.1.1 POSIX extensions the mode is sent to the server directly,
+and with the SMB1 Unix extensions (cifs_setattr_unix) the mode is sent
+via CIFSSMBUnixSetPathInfo().  In all those cases dropping ATTR_MODE means
+the cleared mode is never pushed to the server, so the setuid/setgid bit
+survives the write.
+
+This is a security issue: on local filesystems the setuid bit is stripped
+when a file is written, but over these cifs.ko mounts the bit persists on
+the server, potentially allowing an unexpected privilege escalation on
+subsequent execution.
+
+Fix this in two places:
+
+  1. cifs_setattr_nounix(): only take the "skip mode change" shortcut
+     when the mode is emulated via the DOS read-only attribute (i.e.
+     neither cifsacl/modefromsid nor the SMB3.1.1 POSIX extensions are
+     in effect), so that the cleared mode is propagated to the server
+     in the ACL / POSIX cases.
+
+  2. cifs_setattr_unix(): this function is only called when Unix
+     extensions are in effect, so the mode is always stored on the
+     server.  Remove the shortcut entirely so that the cleared mode is
+     always pushed.
+
+Fixes: d32c4f2626ac ("CIFS: ignore mode change if it's just for clearing setuid/setgid bits")
 Cc: stable@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>
-Cc: Paulo Alcantara <pc@manguebit.com>
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/inode.c |   29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -1016,6 +1016,7 @@ static int cifs_do_truncate(const unsign
- 		if (!rc) {
- 			netfs_resize_file(&cinode->netfs, 0, true);
- 			cifs_setsize(inode, 0);
-+			cifs_invalidate_cache(inode, 0);
- 		}
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3231,9 +3231,13 @@ cifs_setattr_unix(struct dentry *direntr
+ 		attrs->ia_valid &= ~(ATTR_CTIME | ATTR_MTIME);
  	}
- 	if (cfile)
+ 
+-	/* skip mode change if it's just for clearing setuid/setgid */
+-	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
+-		attrs->ia_valid &= ~ATTR_MODE;
++	/*
++	 * This function is only called when Unix extensions are in effect,
++	 * so the mode is always sent to and stored on the server.  Do not
++	 * skip the mode change when clearing setuid/setgid bits: dropping
++	 * ATTR_MODE here would leave those bits set on the server after a
++	 * write, which is a security issue.
++	 */
+ 
+ 	args = kmalloc_obj(*args);
+ 	if (args == NULL) {
+@@ -3442,8 +3446,23 @@ cifs_setattr_nounix(struct dentry *diren
+ 		attrs->ia_valid &= ~(ATTR_UID | ATTR_GID);
+ 	}
+ 
+-	/* skip mode change if it's just for clearing setuid/setgid */
+-	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
++	/*
++	 * Skip the mode change if it is only being done to clear the
++	 * setuid/setgid bits *and* the mode is emulated via the DOS
++	 * read-only attribute (the default, non-ACL case), which cannot
++	 * represent the setuid/setgid bits anyway.
++	 *
++	 * When the mode is instead stored on the server - i.e. with the
++	 * cifsacl or modefromsid mount options (via an ACL) or with the
++	 * SMB3.1.1 POSIX extensions - the cleared mode must be pushed to
++	 * the server.  Dropping ATTR_MODE here would leave the setuid/
++	 * setgid bit set on the server after a write, which is a security
++	 * issue (the bits are not stripped as they are on local
++	 * filesystems).
++	 */
++	if ((attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID)) &&
++	    !((sbflags & (CIFS_MOUNT_CIFS_ACL | CIFS_MOUNT_MODE_FROM_SID)) ||
++	      cifs_sb_master_tcon(cifs_sb)->posix_extensions))
+ 		attrs->ia_valid &= ~ATTR_MODE;
+ 
+ 	if (attrs->ia_valid & ATTR_MODE) {
 
 
