@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551323E7631;
-	Fri,  4 Sep 2026 05:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F24D3A7F4C;
+	Fri,  4 Sep 2026 05:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501516; cv=none; b=p2Loc4i5qigiSi2E3cPmPPudwT7lPSQt7j0XIlchcW7dZ8yCOmJmI1/txM5dzYfVaTga8NUkADe+qhr3GyP0nr8xgjFCSz322ULUEKcBTYk6zZh7rgEhqzEbithnfaNYOu86bF1KLYDIK5WcV4gQhkwkrUDhn1fP4ystOVna3i8=
+	t=1788501519; cv=none; b=TpaqEE10qQf4orp7u/FAuwlb/u4+TRbSgwRpHqHbNP7cAsBHZ/iFCUBpmxzhhk7IjMAR3hxJCWERSR3suONVCTtbPQjK4qGa9amNnh3iG7XS8e3AoCy3c/z+58x6/RaQAqRzIHGTm8o2Y68BjPHvp2O2QVybZ9rdIjtjXWy9jmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501516; c=relaxed/simple;
-	bh=avpupqnRzBxA12xS0eDcTuRETa9My4caQ2UYHUkgB/k=;
+	s=arc-20240116; t=1788501519; c=relaxed/simple;
+	bh=NBRRYsn6cz0ONvxAvoaCAEbm0LEtRlPNIrr6REWG/9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m9pi5+dbgKh3cHrZ8sIKpSW5PJit/oSNSj35koC4iHqbLe3qzkKDSd4OS/WvwXWJfrqEZi7UX+hXLLpLdlpKx+KsXMgT7fiF8vkRvAHEY5Ka+A8MCyTuT29c4OYN7RFcgcCdP29HRWqg3uo5iATMkWvoRlvgRvy6yoHn1/ujzwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17QN17KM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TPNR8u4tiRPsw1wxhp0Mm82cby41K8lgLfeVxMuQMwHr/fwE06nvKRL9I8ki8ovomdt22wVi7M8v6H79FNRUzPa9+gLzs5qaRjyVFWoeXHWztmzrEgEq7vLkhlKtQGZ18mDDzOoATnfGomOrcYl/JTB4X5jivlEMgDMjPJwaJQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiK+gARF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17QN17KM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC36F1F00A3E;
-	Fri,  4 Sep 2026 05:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiK+gARF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AE91F00A3D;
+	Fri,  4 Sep 2026 05:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501515;
-	bh=ddG9uA35qGKpXIieK5Ui5wx571fTdzpiGXiRDXzSs7I=;
+	s=korg; t=1788501518;
+	bh=y89bGZEeM+tltf0btTnvjqRScHhz/N+jp+W67CqoTdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=17QN17KMOg9UeV4a5LqNLwIRw+GHRucXG10ccwT0+TFJWlEPEPyn18c6KLj/aahp5
-	 RkpnJ8xX1W7IhKF+a+xgFDE87QQUZB9YkgKT3Y5M6LT/ive9OTKQr1wqJ5PsqaM3g7
-	 G9tJLf4HPJKaRyivDrSJU8I9BPX48sph0NjUTz4Q=
+	b=FiK+gARFYm6k8L73N1qPBbw63z1DOsvh89ZVfubUz7MiM95SMvCu9DAmREJq7Wklu
+	 Lx1HZ3jIWQ9XeYlZcXa2sjTw2/EiSLoQ60/jXJSZQOvS5uV74re4mzGt6C+1j1bw3X
+	 cW8WKSn3zKOUECNCCgUnOhwZKX7uBMmLvZB8i+2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 435/552] platform/x86: hp-bioscfg: advance elem past consumed array elements
-Date: Fri,  4 Sep 2026 06:59:52 +0200
-Message-ID: <20260904045800.456702544@linuxfoundation.org>
+Subject: [PATCH 6.18 436/552] platform/x86: hp-bioscfg: bound ordered-list parsing by the package count
+Date: Fri,  4 Sep 2026 06:59:53 +0200
+Message-ID: <20260904045800.478032280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,127 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 05c808362e808e196f75696b8a64f7aa8b2245ce upstream.
+commit 1d143d78299d0eb4536698bf98c1815ec69f22a9 upstream.
 
-The outer parsing loop in each attribute-type parser advances "elem"
-(the index into the ACPI package element array) by exactly one per
-iteration, but cases that consume multi-element arrays
-(PREREQUISITES, ENUM_POSSIBLE_VALUES, PSWD_ENCODINGS) read "size"
-consecutive elements without adjusting "elem" for the extra entries
-consumed beyond the first. The next outer iteration then re-reads a
-leftover element from the array just consumed instead of the next
-real property, and the type check fails on that stale element,
-aborting the parse with -EIO.
+hp_populate_ordered_list_elements_from_package() differs from the other
+per-type parsers: its main loop is bounded only by the fixed per-type
+count and never checks elem against the number of elements actually
+present in the package,
 
-This produces exactly the failure visible in dmesg on the test
-hardware, on every boot:
+  for (elem = 1, eloc = 1; eloc < ORD_ELEM_CNT; elem++, eloc++)
 
-  Error expected type 2 for elem 13, but got type 1 instead
-  hp_bioscfg: Returned error 0x3, "Invalid command value/Feature not
-  supported"
+whereas the string, integer, enumeration and password parsers bound
+their main loop with "elem < count" as well.
 
-Fix by advancing "elem" by (size - 1) after each array-consuming
-loop, so the outer loop's own "elem++" lands on the correct next
-element. "eloc" is intentionally left alone: it indexes the logical
-property schema, not the physical element array, and each array case
-is still exactly one logical property regardless of how many physical
-elements it spans.
+This is safe today because hp_init_bios_package_attribute() rejects any
+package with fewer than ORD_ELEM_CNT elements before the parser runs.
+An upcoming change, however, relaxes that check to accept shorter
+packages.
 
-The defect is identical across all five attribute-type parsers
-(enum, integer, string, ordered-list, password), which were
-copy-pasted from the same template when the driver was introduced.
+Bound the loop by the validated element count as well, so it stops at
+whichever comes first, the per-type count or the real package size,
 
-Fixes: 6b2770bfd6f9 ("platform/x86: hp-bioscfg: enum-attributes")
-Fixes: 6f2c06d5a467 ("platform/x86: hp-bioscfg: int-attributes")
-Fixes: e6c7b3e15559 ("platform/x86: hp-bioscfg: string-attributes")
-Fixes: 4b2672ec71a3 ("platform/x86: hp-bioscfg: order-list-attributes")
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+  for (elem = 1, eloc = 1; eloc < ORD_ELEM_CNT && elem < order_obj_count;
+       elem++, eloc++)
+
+order_obj_count is the validated element count, now correctly forwarded
+from the caller. No functional change for packages that enumerate
+correctly today.
+
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260812111829.172273-10-meatuni001@gmail.com
+Link: https://patch.msgid.link/20260709165900.30615-3-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c       |    4 ++++
- drivers/platform/x86/hp/hp-bioscfg/int-attributes.c        |    2 ++
- drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    2 ++
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c  |    4 ++++
- drivers/platform/x86/hp/hp-bioscfg/string-attributes.c     |    2 ++
- 5 files changed, 14 insertions(+)
+ drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-@@ -227,6 +227,8 @@ static int hp_populate_enumeration_eleme
- 				kfree(str_value);
- 				str_value = NULL;
- 			}
-+			if (size)
-+				elem += size - 1;
- 			break;
- 
- 		case SECURITY_LEVEL:
-@@ -280,6 +282,8 @@ static int hp_populate_enumeration_eleme
- 				kfree(str_value);
- 				str_value = NULL;
- 			}
-+			if (size)
-+				elem += (size < MAX_VALUES_SIZE ? size : MAX_VALUES_SIZE) - 1;
- 			break;
- 		default:
- 			pr_warn("Invalid element: %d found in Enumeration attribute or data may be malformed\n", elem);
---- a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-@@ -243,6 +243,8 @@ static int hp_populate_integer_elements_
- 				kfree(str_value);
- 				str_value = NULL;
- 			}
-+			if (size)
-+				elem += size - 1;
- 			break;
- 
- 		case SECURITY_LEVEL:
 --- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
 +++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-@@ -233,6 +233,8 @@ static int hp_populate_ordered_list_elem
- 				kfree(str_value);
- 				str_value = NULL;
- 			}
-+			if (size)
-+				elem += size - 1;
- 			break;
+@@ -146,7 +146,7 @@ static int hp_populate_ordered_list_elem
+ 	if (!order_obj)
+ 		return -EINVAL;
  
- 		case SECURITY_LEVEL:
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -321,6 +321,8 @@ static int hp_populate_password_elements
- 				str_value = NULL;
+-	for (elem = 1, eloc = 1; eloc < ORD_ELEM_CNT; elem++, eloc++) {
++	for (elem = 1, eloc = 1; eloc < ORD_ELEM_CNT && elem < order_obj_count; elem++, eloc++) {
  
- 			}
-+			if (size)
-+				elem += size - 1;
- 			break;
- 		case SECURITY_LEVEL:
- 			password_data->common.security_level = int_value;
-@@ -362,6 +364,8 @@ static int hp_populate_password_elements
- 				str_value = NULL;
- 
- 			}
-+			if (size)
-+				elem += size - 1;
- 			break;
- 		case PSWD_IS_SET:
- 			password_data->is_enabled = int_value;
---- a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
-@@ -233,6 +233,8 @@ static int hp_populate_string_elements_f
- 				kfree(str_value);
- 				str_value = NULL;
- 			}
-+			if (size)
-+				elem += size - 1;
- 			break;
- 
- 		case SECURITY_LEVEL:
+ 		switch (order_obj[elem].type) {
+ 		case ACPI_TYPE_STRING:
 
 
