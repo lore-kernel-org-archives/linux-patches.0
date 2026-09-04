@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8C941C2FF;
-	Fri,  4 Sep 2026 06:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFACC3876CC;
+	Fri,  4 Sep 2026 06:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502952; cv=none; b=FsTCcl2bzSvy3yF77CLi0Ia733/CgPCPRI6oDchvCcV+IZxXSdQGFrL+M+yQpuZooGdFor1NnjKGK1IjE+pGJo65e+SMHlxzsL0cC7CwAqwT2W3uWGcPB4NejNy/8XDJTLF7n9ohz03Jhe+xcajAxJOgdLbaqsVWymkRieMjdIo=
+	t=1788502955; cv=none; b=hCWrkqDuwLPXGX0nLGRuCNYynpt3Np7hQeAt/MoUqWSQHMRVPaXHEzOoWwYCV3porYSVbTkKlb8XovuioDyoOp7iLYlbUc5aAvvaZl7PHsHBs1O8cYSZqk61LE3phmY5hBOfjDK6cV1t6otT4AqS/E667oeKEMgMbdS3OB3/N/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502952; c=relaxed/simple;
-	bh=uw8IRKKOogiG02GYgoX8Gyp1BBl11LYTkkAiafkRXSQ=;
+	s=arc-20240116; t=1788502955; c=relaxed/simple;
+	bh=gCqWOwa9T7JlHvmtSeDjnx4cFgq2P3eenP+vKZkzi3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXZCtUBgXyV8aQ9LW2gJJhhX6p4cEF7rLEvJL1DEql/Klflaj/qh2m4oLeCUk3qwtsI9g2cicsi2USZw1CXMobLEVWv2XzuoGgaibPjpOdZuG9ZThfPQ6zD/JRQ7A8tSAUbymQWBAmf6MlKjYakkG1L9XbQv1RdJv3k9WPLL4GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yysalC/0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hvyUgXzRsPmcFW3GrSVkC6uPM98y1xXjzc0FJnAiUuhKPpJks9kp31TS+MiEnBnY0FImlCu6/oMZUlUiSNJ3gLyicqeYH2gnxiXRnFbvdS7E0txDWw9j7IpVrJ2Wj1OSQGRHCzA1/n3sD7K4HE4cmXhEFf8wZUuKg7R8xThk2BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPsD2OGY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yysalC/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2901F00A3D;
-	Fri,  4 Sep 2026 06:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPsD2OGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8FD91F00A3E;
+	Fri,  4 Sep 2026 06:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502950;
-	bh=4ImbqEx69NQdA01ldCMHURWqxo1tDeMfRlOUKSymJo8=;
+	s=korg; t=1788502953;
+	bh=aoHl9tATWqgVBtqgeh5a/HqEWhM0EKHMgVyMUl0aEBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yysalC/0aVABwA47yDWjx2VQVevMtmP/sowhHIANIsE6i7NgIF9Bm23KulFJ2XpvJ
-	 aC/A8jXsodUlFg7xd+X5IRYUZJ4ueaXL8jvFV1UCH1fuNQIP1OR1B4nh0VrwX/r7Ts
-	 K4IP36F7ZaZQPOn7orSofZBRLnMQJukndiIHQjjA=
+	b=WPsD2OGY6vh/wKGoulltDnYSMigxLUUOC4yJRKSjMlsJFbLHr3YZFSFvXC4Dcmq09
+	 EMeK7gs8oNHVP7yd/hp8BO5iiE6IJVhyEwLmJzELE6am1xOJguz2xeoWt58l36RzT4
+	 IMoKutbeEGRM7velsuzuFq/wPeuSVj9ilkbDJ3LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	stable@kernel.org
-Subject: [PATCH 6.12 387/403] wifi: rtl818x: initialize eeprom_93cx6 struct to zero
-Date: Fri,  4 Sep 2026 07:03:10 +0200
-Message-ID: <20260904045743.590042432@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.12 388/403] wifi: rtlwifi: rtl8192du: check QoS TID before indexing tids
+Date: Fri,  4 Sep 2026 07:03:11 +0200
+Message-ID: <20260904045743.613017738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,53 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 799b5f45cb8194ebd06c9c89e0afdad5bedd2cc5 upstream.
+commit ed4f05d9f2f42fd866f55108db8123eefcc5fb33 upstream.
 
-Commit 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra
-read clock cycle") added extra 'quirk' field to struct eeprom_93cx6.
+rtl92du_tx_fill_desc() uses ieee80211_get_tid() to read the QoS TID
+from the 802.11 header and then uses it as an index into
+sta_entry->tids[]. ieee80211_get_tid() returns the low 4-bit QoS TID
+value, so the result can be in the range 0..15.
 
-Many existing users of eeprom_93cx6, including rtl818x drivers, allocate
-the structure on the stack without initializing all fields. As a result,
-the added quirk field has an undefined value and can randomly cause
-reading wrong data from the EEPROM.
+rtlwifi only allocates MAX_TID_COUNT entries for sta_entry->tids[], and
+MAX_TID_COUNT is 9. A QoS TID greater than 8 therefore indexes past the
+aggregation state array. Keep the default RTL_AGG_STOP state for
+out-of-range TIDs, matching rtl92cu_tx_fill_desc().
 
-Fix by initializing the structures with {}.
+This issue was detected by our static analysis tool and confirmed by
+manual audit. UBSAN validation for the same bug pattern reports an
+array-index-out-of-bounds access with index 10 for type
+'rtl_tid_data [9]'.
 
-Fixes: 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle")
-Cc: stable@kernel.org # v6.13+
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Fixes: 8321424134a4 ("wifi: rtlwifi: Add rtl8192du/trx.{c,h}")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260723110640.8588-1-stf_xl@wp.pl
+Link: https://patch.msgid.link/20260620025632.46206-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c |    2 +-
- drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8192du/trx.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-+++ b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-@@ -1652,7 +1652,7 @@ static void rtl8180_eeprom_register_writ
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192du/trx.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192du/trx.c
+@@ -106,7 +106,8 @@ void rtl92du_tx_fill_desc(struct ieee802
+ 	if (sta) {
+ 		sta_entry = (struct rtl_sta_info *)sta->drv_priv;
+ 		tid = ieee80211_get_tid(hdr);
+-		agg_state = sta_entry->tids[tid].agg.agg_state;
++		if (tid < MAX_TID_COUNT)
++			agg_state = sta_entry->tids[tid].agg.agg_state;
+ 		ampdu_density = sta->deflink.ht_cap.ampdu_density;
+ 	}
  
- static void rtl8180_eeprom_read(struct rtl8180_priv *priv)
- {
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	int eeprom_cck_table_adr;
- 	u16 eeprom_val;
- 	int i;
---- a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-+++ b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-@@ -1445,7 +1445,7 @@ static int rtl8187_probe(struct usb_inte
- 	struct usb_device *udev = interface_to_usbdev(intf);
- 	struct ieee80211_hw *dev;
- 	struct rtl8187_priv *priv;
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	struct ieee80211_channel *channel;
- 	const char *chip_name;
- 	u16 txpwr, reg;
 
 
