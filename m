@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A1B3815E1;
-	Fri,  4 Sep 2026 05:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4221408035;
+	Fri,  4 Sep 2026 05:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500065; cv=none; b=Ns0rqPpsgWVQhnjJAL2s4wNR+1JEiy3kY/xi0ILD8Z4KFgyVucLATG3C7xPnmXXP30qpUggb77S0xR/HHp9mQs1c322vOp7UYriPWcXjdVI6Oj9c1jB1z7YYN1WoxXxXY5XMrHW0GGd0Od2KjOKFG9XP8TKVKmp5C9SwDw0kiQo=
+	t=1788500068; cv=none; b=nXQYEG6lkPY1xV89SvTPRzthwzsTRIlHbD13w6zFdQ9UmGt6z95IDvAoRIEK4qmS+75utk1kcdFdT+bjeb4lkwaq6THkcmIRMwBdUA9CKvk9zp1GM0rAgtQpXUAVtIkdZnrF8zQUzlVZygK5q+OXd9Hl/Xu1ZXkHkqgIeTwQI3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500065; c=relaxed/simple;
-	bh=AmyQa0E4/tk6FQhdlCLrSpBde2CxMHq5hAeLgVLkqbA=;
+	s=arc-20240116; t=1788500068; c=relaxed/simple;
+	bh=XArY7gqeoUTmjxtENGcDGyGG4VOFVUgYNCaO/JQ7tJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cbsjm2Z6YZ0Ay8XsxPmtc1cXs4dUGi1qw5cHBCG+yLaatXbhsvMEa57TVxVwZt6lHNPzBPJWOXJml+/A6g7Ju/0+SAOuTncxuYywo3pdBRdtsRAVbbIBrsVgfiBT5T0thfwq2PkhU5WfhN3J17pEbLqKsF7C9D3GTwEEqdPly6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bk6EtY0+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o+5ngao6AIszuZ4IfCeJ6LkxONKRDSXaX8vUzsnYQg2nYkP0kgBZsoY2Tfcy1TqmSfXq8/77xv24SFFb/FrueKQfinuMT/PFZzmGkR/IzZrIXgUsyhuZV0nPusJQZJWma1PBmwV2dJfYhhYwLspMWlTwoNqPn7IVsywAHTxhPn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDXyoFmX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bk6EtY0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741C11F00A3D;
-	Fri,  4 Sep 2026 05:34:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDXyoFmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572D51F00A3D;
+	Fri,  4 Sep 2026 05:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500064;
-	bh=1HyX/Q7sYFLUWdh27c/lZf+HHpPXzHQWlx96CE1firY=;
+	s=korg; t=1788500066;
+	bh=7Embin01mGy/DooOfhpW65BR+cQr20ZWNtPhrgbdUfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bk6EtY0+CjBX13NoEVH5HWGoZi3vrtfQohnePtzAZF4Bw7jlmnqZw1Cay6Jq3AUwA
-	 u/t6sm7pJC75qLWbJ6daKXwnn7x1TJ2soWdypZwA4b/dQdHFTp7N4yYLViBx7ISh5r
-	 h8e+thvIqs+zNBVRWa+u1jGbUmVQaygL0VKALZOo=
+	b=kDXyoFmX5K2+MkBXt4ItoI/ZdVteKhYU+C5KqQoey3+Jm1tyAnkfHD7FZpVSPGOOi
+	 BxAw+n9yubnkPgZngIKR2bnxQLU3hzv8HjMVuxAKPcEsbZ/Z6B11DDGoQ++hUKpHfq
+	 Dw6mMKkEqtmGvZJ8U8NmHSQF+/KVN4h7RZVB3ps4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 595/713] xdp: fix zero-copy frame layout
-Date: Fri,  4 Sep 2026 06:59:23 +0200
-Message-ID: <20260904045817.161863229@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 586/713] io_uring/waitid: honor task_work cancellation
+Date: Fri,  4 Sep 2026 06:59:14 +0200
+Message-ID: <20260904045816.954542014@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,65 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Hui Su <sh_def@163.com>
 
-commit 71283aaa6c65b3cec84caf1dc78560985737641f upstream.
+commit 14572de82e5022899e5856008bc9cac97004a88c upstream.
 
-xdp_convert_zc_to_xdp_frame() clones an XSK packet into an order-0 page
-and advertises PAGE_SIZE as its frame size.  It allows the copied frame
-to occupy the page tail needed by skb_shared_info and records zero
-headroom even when metadata separates the frame header from packet data.
-An AF_XDP zero-copy packet redirected through cpumap can therefore make
-the skb overlap skb_shared_info or place it beyond the allocated page.
+io_waitid_cb() may run through the fallback task_work path when
+task_work_add() can no longer queue work to the originating task. The
+fallback runs from a kworker and io_uring marks such task work as
+canceled through tw.cancel.
 
-Limit the copied layout to SKB_WITH_OVERHEAD(PAGE_SIZE) and include the
-metadata length in frame headroom.  Redirect callers already handle a
-NULL conversion result.
+io_waitid_cb() currently ignores tw.cancel and calls __do_wait().
+waitid is task-context dependent: __do_wait() performs child lookup
+relative to current, and the retry path also uses
+current->signal->wait_chldexit. If the callback runs from the fallback
+kworker, current is therefore not the task that submitted the request.
 
-BUG: KASAN: slab-out-of-bounds in skb_gro_receive
-Write of size 4 at addr ffff88800cf37004 by task cpumap/1/map:1/146
-Call Trace:
- skb_gro_receive (net/core/gro.c:174)
- udp_gro_receive (net/ipv4/udp_offload.c:812)
- inet_gro_receive (net/ipv4/af_inet.c:1539)
- dev_gro_receive (net/core/gro.c:515)
- gro_receive_skb (net/core/gro.c:633)
- cpu_map_kthread_run (kernel/bpf/cpumap.c:395)
- kthread (kernel/kthread.c:436)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:255)
-Kernel panic - not syncing: KASAN: panic_on_warn set ...
+Honor tw.cancel before entering __do_wait(). Complete the request with
+-ECANCELED and skip the siginfo copy, since canceled task work may run
+without the submitting task's userspace execution context.
 
-Fixes: b0d1beeff2a9 ("xdp: implement convert_to_xdp_frame for MEM_TYPE_ZERO_COPY")
+Keep the existing siginfo handling for normal waitid completion and
+explicit cancellation.
+
+Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260818154516.793517-1-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://patch.msgid.link/20260818103336.1922818-2-sh_def@163.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/xdp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/waitid.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -585,7 +585,7 @@ struct xdp_frame *xdp_convert_zc_to_xdp_
- 		   xdp->data - xdp->data_meta;
- 	totsize = xdp->data_end - xdp->data + metasize;
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -125,7 +125,7 @@ static void io_waitid_remove_wq(struct i
+ 	}
+ }
  
--	if (sizeof(*xdpf) + totsize > PAGE_SIZE)
-+	if (sizeof(*xdpf) + totsize > SKB_WITH_OVERHEAD(PAGE_SIZE))
- 		return NULL;
+-static void io_waitid_complete(struct io_kiocb *req, int ret)
++static void io_waitid_complete(struct io_kiocb *req, int ret, bool copy_si)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
  
- 	page = dev_alloc_page();
-@@ -602,7 +602,7 @@ struct xdp_frame *xdp_convert_zc_to_xdp_
+@@ -137,7 +137,10 @@ static void io_waitid_complete(struct io
+ 	hlist_del_init(&req->hash_node);
+ 	io_waitid_remove_wq(req);
  
- 	xdpf->data = addr + metasize;
- 	xdpf->len = totsize - metasize;
--	xdpf->headroom = 0;
-+	xdpf->headroom = metasize;
- 	xdpf->metasize = metasize;
- 	xdpf->frame_sz = PAGE_SIZE;
- 	xdpf->mem_type = MEM_TYPE_PAGE_ORDER0;
+-	ret = io_waitid_finish(req, ret);
++	if (copy_si)
++		ret = io_waitid_finish(req, ret);
++	else
++		io_waitid_free(req);
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
+@@ -159,7 +162,7 @@ static bool __io_waitid_cancel(struct io
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 		return false;
+ 
+-	io_waitid_complete(req, -ECANCELED);
++	io_waitid_complete(req, -ECANCELED, true);
+ 	io_req_queue_tw_complete(req, -ECANCELED);
+ 	return true;
+ }
+@@ -202,6 +205,11 @@ static void io_waitid_cb(struct io_tw_re
+ 	int ret;
+ 
+ 	io_tw_lock(ctx, tw);
++	if (unlikely(tw.cancel)) {
++		io_waitid_complete(req, -ECANCELED, false);
++		io_req_task_complete(tw_req, tw);
++		return;
++	}
+ 
+ 	ret = __do_wait(&iwa->wo);
+ 
+@@ -229,7 +237,7 @@ static void io_waitid_cb(struct io_tw_re
+ 		}
+ 	}
+ 
+-	io_waitid_complete(req, ret);
++	io_waitid_complete(req, ret, true);
+ 	io_req_task_complete(tw_req, tw);
+ }
+ 
 
 
