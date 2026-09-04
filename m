@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EFF3EE1FC;
-	Fri,  4 Sep 2026 06:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD1232470E;
+	Fri,  4 Sep 2026 06:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502628; cv=none; b=AqjNC0XLMRFtR4sbvCmrLjZm3dD3x0dIe+wKJcP+GteHewrrnotpDQSY4M3quLxN3EQz3lKneC+BHR0wF0OqZgH/XCxs2w/lvKwgeJEqpJGD3xYS0wExWyU3+eicsRSQq4/9nSf/3Uql5cB95ncAAPPSJUXnNAVpOaiae0II0nI=
+	t=1788502631; cv=none; b=AgZbY0sl/S0oXUeR6qWJx+2JgUOAa/3CZ65mLNAQu6d8q9KKbEMexVPRcKY4yvrvpAworL6DvquAGtZ4gZkd/E4Arxry0y+ec8BpA7zdvErSmWFO5iIhyllLX8c94nXxyUq48uV9QoAucWNiOghcowNlHt55inxDjO1pOhaS/FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502628; c=relaxed/simple;
-	bh=yQUBRbkUXvYVAA9vjLK3LFHp8z8JzEZ+LokYJXaaaPk=;
+	s=arc-20240116; t=1788502631; c=relaxed/simple;
+	bh=bfhw8QegvKFTADoocYtV/DLkaTYi7iq3Eqp/GXBGhaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WmqXGHWcJH4NFASoejwGGqEvLXmpAJcrFk4nzzPZ3uK1GmjUkUx0IrTD+ujxmAzN1r7K+heAib2WFRQXau9WvT9Uw7zwv4Ly/DdS0FLPwx7m8qLPT4wXFGZamUH+4DDpYhKhAyQ0dCO3ripGc3S4qNUudWMU/wuB/jrF35VyUV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqzIgBnf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLQRCvEa4//3nAR9EW8g2c/w9/JtVZBq8jUkUg30lkeJzp8EWTyC+25TrWY6l7vuZxGpeN175qJc29Wz4db5Cao4C/4W1wDON41AYLge+Fp6cuWMTsRjEumo97h5n0wA1VMobYJeEY9qJ2+CqmMPSchyXdIZ4/lrC+05Ft+xsOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+hjIGoC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqzIgBnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7E51F00A3D;
-	Fri,  4 Sep 2026 06:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+hjIGoC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCF71F00A3D;
+	Fri,  4 Sep 2026 06:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502627;
-	bh=NHdzjbMKskrLbwjWmRgPsyyTnX3IYTvejmPcly0KI0A=;
+	s=korg; t=1788502630;
+	bh=jVpCoHOjhFngVMgSamBLBt70MVKLODqLEGcfSjChITw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RqzIgBnfn/cvQ2kp5nPjtRjMdlUgzZRu6bBaImDmgp6/LxbNFczuhBdzyOAVRgwe3
-	 eEdHgjfPSE/LXvG9EEVr6zOTk06BIsiSAn2utNxEW9ggJ0DuqNPEpXRlzT5MBK6COy
-	 kTm9IURnEsaE4YeutYuouqT7Prf19DfbMDSAGSOU=
+	b=f+hjIGoClRJeZV6i9K2h8J90k5WZczE0gPv+LXbXNkT/K5FXvh7a4IcPy0EdfhOYE
+	 AbIU8xcEImXaeFQ6aeaHdw74jUwc6M1KLt1MxIKkr/f/RkKdUAQaS4agOHQ86h/0uV
+	 2Xrkezm5MwYW5akglAGLVDdgT+Tcr/uyox7HgKEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erin Lo <erin.lo@mediatek.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.12 231/403] remoteproc: scp: Fix device reference leak on failed lookup
-Date: Fri,  4 Sep 2026 07:00:34 +0200
-Message-ID: <20260904045740.118806286@linuxfoundation.org>
+	Vaibhav Nagare <vnagare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 232/403] qede: Fix NULL pointer dereference in TPA fragment processing
+Date: Fri,  4 Sep 2026 07:00:35 +0200
+Message-ID: <20260904045740.141883294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,51 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Vaibhav Nagare <nagarevaibhav@gmail.com>
 
-commit 22f9efb3ae07f966a1901d929d16df1388cce65c upstream.
+commit 06aa3d26327f24edd039ff249672fdf6f2ba5695 upstream.
 
-Make sure to drop the reference taken to the SCP device when attempting
-to look up its driver data before the driver has been bound.
+Under memory pressure, the qede driver encounters NULL pointer
+dereferences when processing TPA continuation fragments.
 
-Note that holding a reference to a device does not prevent its driver
-data from going away.
+Commit 8a8633978b84 ("qede: Add build_skb() support.") accidentally
+dropped the assignment of tpa_info->buffer.data in qede_tpa_start().
 
-Fixes: 63c13d61eafe ("remoteproc/mediatek: add SCP support for mt8183")
-Cc: stable@vger.kernel.org	# 5.6
-Cc: Erin Lo <erin.lo@mediatek.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20260706065614.389412-1-johan@kernel.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+When memory pressure causes an SKB allocation failure in qede_tpa_start(),
+the driver sets tpa_start_fail = true and attempts to recycle the physical
+page later in qede_tpa_end() via qede_reuse_page(). However, because
+buffer.data was left uninitialized (NULL), qede_reuse_page() pushes a
+"ghost" BD (valid DMA mapping but NULL data pointer) back into the
+active Rx ring.
+
+The next time the hardware uses this ring slot, it passes a NULL page
+to qede_fill_frag_skb(), causing a kernel panic.
+
+Example crash from production system:
+ BUG: unable to handle kernel NULL pointer dereference at 0x8
+ RIP: qede_fill_frag_skb+0x96/0x430 [qede]
+ Call Trace:
+   qede_rx_int+0xb06/0x1de0
+   qede_poll+0x2f4/0x6c0
+   __napi_poll+0x2d/0x130
+
+Fix the root cause by restoring the tpa_info->buffer.data assignment
+in qede_tpa_start(), ensuring valid pages are correctly tracked and
+recycled. Additionally, update the stale comment for
+struct qede_agg_info::buffer to reflect its current usage.
+
+Fixes: 8a8633978b84 ("qede: Add build_skb() support.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vaibhav Nagare <vnagare@redhat.com>
+Link: https://patch.msgid.link/20260818073309.2266072-1-vnagare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/mtk_scp.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qede/qede.h    |    8 ++++----
+ drivers/net/ethernet/qlogic/qede/qede_fp.c |    1 +
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -35,6 +35,7 @@ struct mtk_scp *scp_get(struct platform_
- 	struct device *dev = &pdev->dev;
- 	struct device_node *scp_node;
- 	struct platform_device *scp_pdev;
-+	struct mtk_scp *scp;
+--- a/drivers/net/ethernet/qlogic/qede/qede.h
++++ b/drivers/net/ethernet/qlogic/qede/qede.h
+@@ -303,10 +303,10 @@ enum qede_agg_state {
+ };
  
- 	scp_node = of_parse_phandle(dev->of_node, "mediatek,scp", 0);
- 	if (!scp_node) {
-@@ -50,7 +51,13 @@ struct mtk_scp *scp_get(struct platform_
- 		return NULL;
- 	}
+ struct qede_agg_info {
+-	/* rx_buf is a data buffer that can be placed / consumed from rx bd
+-	 * chain. It has two purposes: We will preallocate the data buffer
+-	 * for each aggregation when we open the interface and will place this
+-	 * buffer on the rx-bd-ring when we receive TPA_START. We don't want
++	/* buffer is used to retain the Rx consumer descriptor when a TPA
++	 * session starts. If the SKB allocation fails during TPA_START,
++	 * we use this saved buffer to safely recycle the physical page
++	 * back into the rx-bd-ring via qede_reuse_page(). We don't want
+ 	 * to be in a state where allocation fails, as we can't reuse the
+ 	 * consumer buffer in the rx-chain since FW may still be writing to it
+ 	 * (since header needs to be modified for TPA).
+--- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+@@ -850,6 +850,7 @@ static void qede_tpa_start(struct qede_d
+ 					      pad, false);
+ 	tpa_info->buffer.page_offset = sw_rx_data_cons->page_offset;
+ 	tpa_info->buffer.mapping = sw_rx_data_cons->mapping;
++	tpa_info->buffer.data = sw_rx_data_cons->data;
  
--	return platform_get_drvdata(scp_pdev);
-+	scp = platform_get_drvdata(scp_pdev);
-+	if (!scp) {
-+		put_device(&scp_pdev->dev);
-+		return NULL;
-+	}
-+
-+	return scp;
- }
- EXPORT_SYMBOL_GPL(scp_get);
- 
+ 	if (unlikely(!tpa_info->skb)) {
+ 		DP_NOTICE(edev, "Failed to allocate SKB for gro\n");
 
 
