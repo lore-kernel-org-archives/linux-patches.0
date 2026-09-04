@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B83415F28;
-	Fri,  4 Sep 2026 05:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329074156F9;
+	Fri,  4 Sep 2026 05:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498785; cv=none; b=AFm8mJJiNH0+Qq1nceXimTfqcWS10NaAdCxoTdtLAB0kGIE8vhY9hGSxOJVm2ywtgggbMO04JfG3+AYmZUWVo1r220LUDNSAeoQ1bWgBZWJU6DVgdSNmF6RxfAFQAI8jnzqtpx8/SfUuk0P6wmknh9p5xfoYpdM/OKarRzSYSSg=
+	t=1788498788; cv=none; b=T6xQ+TWZAqbcZYBI9RrypnSB9d7HjWxwaACMjjzG0rEjerFkgDNCH2tI4w0b5gsmCcb82IdQCPfa6RH27ex6/fwC6n82jyEGxEq80ekSxDMlP29dpI6TIJYVYrWVxJ1UOFOygqoLQf+Zameq79fFuWprTOozeVEPcEZMlDMxAe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498785; c=relaxed/simple;
-	bh=2nO9DbcxVzMZYzNn8y54PDkE65h62H8bdvD5JMZYmH4=;
+	s=arc-20240116; t=1788498788; c=relaxed/simple;
+	bh=Tn5qGr6jcCBxGNQgQn7A9Ls6/KPdP56O2zGPq75YfXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAqrjMukzlFq+Z9YWJjvwAbIcKciVkRg/KQov30o9Kvke43NZ8hC53IU7CaBkf6SB4eUcdnSqKimKWfz7rv9mA9Q74tQeyqTtkKkcayHmvz1sM7ywQUTUh+10R/ibqfLUkwiO0XhulE3/yRhXU2GGaU5tuYLOF997WYUCwdDV2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmKpnl4g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gnGFuA5Lo7D4e+ynW5F+FDm0PZ1pCa0L0F+5jH0cTXGFnRzvuF6FlBvPvAtXFfWZOd6Wz3/nSX8SU6sGCiqJDax9eCIly9BUL6PDqsR2Sa8qlbaMEiaKK3ECvkpObRICkv3etiYF841wSf10vJ+OdwKLgzVtCO08yvX4TqZJmuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXqqBgwj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmKpnl4g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F241F00A3D;
-	Fri,  4 Sep 2026 05:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXqqBgwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7DF1F00A3D;
+	Fri,  4 Sep 2026 05:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498784;
-	bh=7vnEkV5DYklJsGGMLwOtaUAwCCz4sPvx9T9U8vUCVaQ=;
+	s=korg; t=1788498787;
+	bh=dTUnBgpJKWWpUvIuwCwCgcne+Sj7idfEIr+syiyoGLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CmKpnl4gfw3rVu59TlOtnr/nf+H3HMVwD/F/eEnz3sbupmgogQ7Mqpn7Z6OkBi9Pt
-	 C2jb6CmwQsHa3xURGYWsl9lg3HP+xh2MHEyDHhXmBIOOhmadNSfwXUGQClqmykDlUu
-	 5pg51IJPEMC6z5XXr6ShRCCYLsgYMZLBR1MSDx4o=
+	b=SXqqBgwjCqyMbIXyPrT5dXnRduLeL86YtjLgijvYfrIEI3un/EasftH73/PC3lldo
+	 TfpgVuam/8NOpcyFoS5CRROeS4Qz3SouR6kJZ16qx7Dz/t/APnlK89A5BLuQPXkLt7
+	 vEG3ZxYxd/y9nWP/WAWZ44Mj9XvjVJ1s+O5qKEfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@hammerspace.com>
-Subject: [PATCH 7.2 187/713] nfsd: fix possible fh_compose of wrong dentry in nfsd4_create_file()
-Date: Fri,  4 Sep 2026 06:52:35 +0200
-Message-ID: <20260904045808.005998683@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.2 188/713] nfsd: fix refcount leak in nfsd_file_lru_add on insertion failure
+Date: Fri,  4 Sep 2026 06:52:36 +0200
+Message-ID: <20260904045808.027615530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,75 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 3e2c79360c6a89975ec5b5a7d4ef937e4db91a27 upstream.
+commit 30c2df3005c99819e117402dc492db4a2a696c2f upstream.
 
-dentry_create() can hypothetically provide a different dentry than the
-one passed in.  This could happen, for example, if the exported
-filesystem is NFS, and the server returned to OPEN a filehandle which
-matched a directory that was already in the dcache.  Clearly this would
-not be expected!
+nfsd_file_lru_add() unconditionally increments nf_ref before attempting
+to insert the nfsd_file into the LRU via list_lru_add_obj(). If the
+insertion fails (the item is already linked), the incremented reference
+is never released, permanently inflating the refcount.
 
-If this were to happen the dentry (child) that was already stored in
-resfhp could be freed and later dereferenced.
+The LRU shrinker callback (nfsd_file_lru_cb) uses refcount_dec_if_one()
+to reclaim entries, which requires nf_ref == 1. An inflated refcount
+therefore blocks eviction of the affected file cache entry for the
+lifetime of the nfsd instance.
 
-We shouldn't call fh_compose() until we are certain that we have the
-final dentry, so this patch moved the fh_compose() call to two places:
-one for the case where the target already exists, and one after
-dentry_create() where it was created.
+While this failure path is currently unreachable -- the sole caller in
+nfsd_file_do_acquire() operates on freshly-allocated objects that cannot
+already be on the LRU -- it represents a latent bug that would become
+exploitable if a future change adds another call site or alters the
+PENDING protocol.
 
-Fixes: 64a989dbd144 ("VFS/knfsd: Teach dentry_create() to use atomic_open()")
+Fix this by:
+ - Adding a compensating refcount_dec() on the failure path. Bare
+   refcount_dec (rather than nfsd_file_put) is correct here because
+   the caller in nfsd_file_do_acquire still holds its own construction
+   reference, so the count goes from 2 back to 1 without risk of
+   reaching zero.
+ - Changing WARN_ON(1) to WARN_ON_ONCE(1) to prevent log flooding if
+   this path is ever hit repeatedly.
+ - Returning early on failure to skip the unnecessary call to
+   nfsd_file_schedule_laundrette(), since no entry was added to the LRU.
+
+Fixes: 56221b42d717 ("nfsd: filecache: don't repeatedly add/remove files on the lru list")
 Cc: stable@vger.kernel.org
-Signed-off-by: NeilBrown <neil@brown.name>
-Link: https://patch.msgid.link/20260526053004.4014491-2-neilb@ownmail.net
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260602-nfsd-testing-v2-6-e4ea62e3cd5c@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/nfsd/filecache.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 3024d51d6fb7..c16ccb403a8d 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -306,10 +306,6 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 			goto out;
- 	}
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -322,8 +322,11 @@ static void nfsd_file_lru_add(struct nfs
+ 	refcount_inc(&nf->nf_ref);
+ 	if (list_lru_add_obj(&nfsd_file_lru, &nf->nf_lru))
+ 		trace_nfsd_file_lru_add(nf);
+-	else
+-		WARN_ON(1);
++	else {
++		refcount_dec(&nf->nf_ref);
++		WARN_ON_ONCE(1);
++		return;
++	}
+ 	nfsd_file_schedule_laundrette();
+ }
  
--	status = fh_compose(resfhp, fhp->fh_export, child, fhp);
--	if (status != nfs_ok)
--		goto out;
--
- 	v_mtime = 0;
- 	v_atime = 0;
- 	if (nfsd4_create_is_exclusive(open->op_createmode)) {
-@@ -335,6 +331,10 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		if (status != nfs_ok)
- 			goto out;
- 
-+		status = fh_compose(resfhp, fhp->fh_export, child, fhp);
-+		if (status != nfs_ok)
-+			goto out;
-+
- 		switch (open->op_createmode) {
- 		case NFS4_CREATE_UNCHECKED:
- 			if (!d_is_reg(child))
-@@ -385,6 +385,10 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	open->op_created = true;
- 	fh_fill_post_attrs(fhp);
- 
-+	status = fh_compose(resfhp, fhp->fh_export, child, fhp);
-+	if (status != nfs_ok)
-+		goto out;
-+
- 	/* A newly created file already has a file size of zero. */
- 	if ((iap->ia_valid & ATTR_SIZE) && (iap->ia_size == 0))
- 		iap->ia_valid &= ~ATTR_SIZE;
--- 
-2.55.0
-
 
 
