@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A7B41C2FF;
-	Fri,  4 Sep 2026 06:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AB141D631;
+	Fri,  4 Sep 2026 06:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502926; cv=none; b=G1EX4KLvQGM/3zKf+NBCkYDopMAzVVQi/FLimxUIvyV+I8f7FTJfy6dKynW/eZ67Rv8PbR1HGqBIPjhnKXgGu3SeKk77ndANjbUldDZ9aUWe4JO8qA0DRQk/KHvqfz/tHk52A2/r5ExI5Il7sSLrM8pCB2zvI7sg0UIAXHert6c=
+	t=1788502929; cv=none; b=dxUzVFFq3l2vF42zrzQoenhtd87toBrsnm6JixvurFDL4GyGtfKRD25FExE/+oVS69q1d13D2cFw3MXQfASiJLlfVbPeZV0vtb4Bc7OEL7k9YVm6AazHGMTguJCaMR395peoC053gOEl3d3K+hzCLEzE5AAiDABzPgTpo8LCcpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502926; c=relaxed/simple;
-	bh=YFyfzZMh7PvmfKR9fbXv7EmwClZixp0GzDZFKudG/aY=;
+	s=arc-20240116; t=1788502929; c=relaxed/simple;
+	bh=qJxej2e8YTU6FfBDrFb08Gtuv4OrSQa/khVn3ZIdPbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=quB9/3iE1Iuyl4b3QEDaxnKN9BIZZuX5pWCCfq1NgU3qS0r6FSdHTpXhbvv/Hgt8TSLFWXD0ayxgbrufeU7j1rR7wAjqqAQXJBbueWYbCMX8Fqv8uG0DsrrZEJxl6LYIup7VQ0//MPUI2xpeCWadyrne6KKwv5sb7AT+mBWmF6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3/yEkrg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IWT+zagpJWa4O/n8cNpsBWCBKxIIwlIQTXBCCyS+CHWNpL+8lwDBq+bsEeh6rmR7IjJFTE5YYKTRrEnOt6DgxCWODeytM3J183OhYw3ZZ47MA2kxqDxyrNPKeOrNSQVy/F/KoddEs8RgR5G35PlNAvx5lkywiTfPfATAuEWz60w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Apxxg4Q7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3/yEkrg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3C61F00A3D;
-	Fri,  4 Sep 2026 06:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Apxxg4Q7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2932D1F00A3D;
+	Fri,  4 Sep 2026 06:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502924;
-	bh=ebnX0lFQ3i+9joRXhpOup2JaMcmVMxF/RDpsqPxt9eU=;
+	s=korg; t=1788502927;
+	bh=aK+C/ReRUA1jWvtt+ElU9ykcGMkim5gT7fINj+52IkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U3/yEkrgaYjWYxDnNkuPWWW6WARwEBdNRURBzj/cs8ln1EeRNXkI3i2f+GDMqia71
-	 kbzukDlBIfRTF1L+maMgMIKV/0JIuk3q67vZpdc0OMAgI7pkVwfV7FHWTNw2aVA+Hv
-	 t/uRbAdAyIk05TRCP2K3n+EcQI/I08cnhZMHzYMk=
+	b=Apxxg4Q7L3CbQpawGt9aGa04jY7dIP3jWbUWIsqU78S6g5SflmvSvVdMgQvYe1Uj/
+	 pRtKnZThO1XjhOQPH46Brsi/zz1EQE2A6cURGeWbIqJt/BZxMvPZm/NGzZ/2iRnReg
+	 fkdQuJsh9Y5xvJDL1hvA+554w4ExXmFI1RPV/Zho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.12 379/403] i3c: master: Fix info leak and UAF in device unregister path
-Date: Fri,  4 Sep 2026 07:03:02 +0200
-Message-ID: <20260904045743.414172241@linuxfoundation.org>
+Subject: [PATCH 6.12 380/403] i3c: master: svc: bound IBI payload to the requested max_payload_len
+Date: Fri,  4 Sep 2026 07:03:03 +0200
+Message-ID: <20260904045743.435537130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,59 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit d2c743efd2d1ee64e94324664808f623dd865872 upstream.
+commit e2bda39d7f9f285ec803e200b5c1f17143d0b483 upstream.
 
-i3c_master_unregister_i3c_devs() clears i3cdev->dev->desc before
-calling device_unregister().  During device_unregister(),
-device_del() emits a KOBJ_REMOVE uevent and unbinds the driver while
-the device descriptor is still expected to be valid.  As a result,
-i3c_device_uevent() and a racing modalias_show() can observe a NULL
-desc and fall back to an uninitialized stack struct i3c_device_info,
-leaking kernel stack contents in the generated modalias.  Driver
-.remove() callbacks may also encounter an unexpected NULL desc during
-unbind.
+svc_i3c_master_handle_ibi() reads the IBI payload from the RX FIFO into
+the IBI slot. The loop is bounded by the hardware FIFO size
+(SVC_I3C_FIFO_SIZE), not by the slot size.
 
-Keep desc valid until device_unregister() has completed.  Since
-device_unregister() drops the device reference and may free the device,
-take an extra reference with get_device() before unregistering.  Clear
-desc afterwards and release the extra reference with put_device().
-This preserves the release-time invariant that desc must be NULL while
-avoiding both the information leak and a potential use-after-free from
-writing desc after the device has been released.
+slot->data points into the IBI pool, which i3c_generic_ibi_alloc_pool()
+sizes at max_payload_len per slot. svc_i3c_master_request_ibi() only
+rejects a max_payload_len larger than SVC_I3C_FIFO_SIZE, so a driver can
+request a smaller one. mctp-i3c requests 1. Each readsb() then copies the
+controller RXCOUNT bytes (up to 31) with no check against the slot size.
+A device that sends more bytes than the slot holds writes past
+slot->data, an out-of-bounds write into the IBI pool.
 
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/linux-i3c/20260702190003.8BF741F000E9@smtp.kernel.org/
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Bound the loop by dev->ibi->max_payload_len and clamp each read to the
+space left in the slot, the same way dw-i3c does. A device can still send
+more than the requested payload. Flush the leftover bytes from the RX FIFO
+so they do not leak into the next transfer.
+
+Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260723075747.34049-1-adrian.hunter@intel.com
+Link: https://patch.msgid.link/178227747353.2931373.15868718612134648277@maoyixie.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2546,11 +2546,12 @@ static void i3c_master_unregister_i3c_de
- 		if (!i3cdev->dev)
- 			continue;
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -388,14 +388,22 @@ static int svc_i3c_master_handle_ibi(str
+ 	buf = slot->data;
  
--		i3cdev->dev->desc = NULL;
--		if (device_is_registered(&i3cdev->dev->dev))
-+		if (device_is_registered(&i3cdev->dev->dev)) {
-+			get_device(&i3cdev->dev->dev);
- 			device_unregister(&i3cdev->dev->dev);
--		else
--			put_device(&i3cdev->dev->dev);
-+		}
-+		i3cdev->dev->desc = NULL;
-+		put_device(&i3cdev->dev->dev);
- 		i3cdev->dev = NULL;
+ 	while (SVC_I3C_MSTATUS_RXPEND(readl(master->regs + SVC_I3C_MSTATUS))  &&
+-	       slot->len < SVC_I3C_FIFO_SIZE) {
++	       slot->len < dev->ibi->max_payload_len) {
+ 		mdatactrl = readl(master->regs + SVC_I3C_MDATACTRL);
+ 		count = SVC_I3C_MDATACTRL_RXCOUNT(mdatactrl);
++		count = min(count, dev->ibi->max_payload_len - slot->len);
+ 		readsb(master->regs + SVC_I3C_MRDATAB, buf, count);
+ 		slot->len += count;
+ 		buf += count;
  	}
- }
+ 
++	/*
++	 * The device may have sent more than the requested payload. Drop the
++	 * extra bytes so they do not leak into the next transfer.
++	 */
++	if (SVC_I3C_MSTATUS_RXPEND(readl(master->regs + SVC_I3C_MSTATUS)))
++		writel(SVC_I3C_MDATACTRL_FLUSHRB, master->regs + SVC_I3C_MDATACTRL);
++
+ 	master->ibi.tbq_slot = slot;
+ 
+ 	return 0;
 
 
