@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294363A7F4C;
-	Fri,  4 Sep 2026 05:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78A43E866B;
+	Fri,  4 Sep 2026 05:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501488; cv=none; b=BwVC2O/ZKCSMDAX7KLblmvC/FYvGrrjLjwOupUXgzEz2ncRTSHHDVg/utOA3K5+1aQI1J1S+7NJPR4xks1F8r4rWAr/5Yrv/+R/fMUGv9aD1VCnQEYMVTj9SK10Nu6JjEZqt9qQQMu5HFfxRZecpY2r0eRp0KkjvXlm4IpMF+bk=
+	t=1788501491; cv=none; b=mgT3P0AL1h4kzqbJXHiDLTC8vyGcVXBS6lPWdOTBOJV45CTCY7N5ruGT+ppzwBDYvKmiRCUy+M6iBiSOckFSDudE+bTlt4nYBKVOO1iGNxKDfjLtTygiF3qrQbZKljTY4kLCijhY+8tyT/IwaRjgfEqSwNMP46gZchT6G2gVlD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501488; c=relaxed/simple;
-	bh=An6vFAsQb0i8KqxESEPFgTgciG+znpEiVeOlNSHa1z0=;
+	s=arc-20240116; t=1788501491; c=relaxed/simple;
+	bh=doPCerimHt6K6P5tC79lQUpyigGhTk3LK8DK8j+V55E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p+0kMn3f+GcitjyUy0MR9F8jM5X7EeetMG1fB5vx8tTc6LKNlcdUa2Le+RhAJOzz8YnSkdTa1jNFFceHEzg6nwRET3n+Ou7IzIpr1WZ0MAkCVUVzVl7YZSCDN+sI6MyqmqX8rVAWYkROVZrwMXK2EK+waKyy+adiIXPsgnUk/aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaHwAYfW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oC66ayNhOmHJESx3gG8eXnBmFhd6ZYriogVwpp0xx6wNUTo4NUB4Q4XAonP1dNYmwKhq9Shbfz3CzhZVSfEXpiLFKb8Qaq1crznTbJkYDwuG6/rTdHI41MwGsu0TLSJB7Jst6/4aLQQSKFlFy0aTiwISl+5LxWsqtCzgG6llEfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/IC3S8+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaHwAYfW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C22A1F00A3D;
-	Fri,  4 Sep 2026 05:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/IC3S8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055AB1F00A3D;
+	Fri,  4 Sep 2026 05:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501486;
-	bh=y9BOGJa7uSXZjzi5MAS2W5oG0Gz4wNC/itD7miQLrrc=;
+	s=korg; t=1788501489;
+	bh=Qd8tApj9o1ae1mOfwwZh4I/I2oatV2x6PkClLWa0Zh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XaHwAYfW7bJLmYw+N6+nH6WE4v1A32YNCUf00hqilsxmqaoefkjZVyoZ0FGcjjUuW
-	 PV1gu8wbxqQvydmE58TEEL725TTdlkxBmn2n/lomLQc+30f4cFYGDUTxLzMknJ3tHK
-	 p/uIKxsV10vgAkWDjexBW+YralJgW2WBEPdjtVKU=
+	b=J/IC3S8+xU0e9AxzLAk5J/6+m2xiIGwOHEYBEKUX8iv31zRFd9dYY031qVNGlTqTF
+	 WZiEWrUsAv5LZSaf8HwZVEkFigcdDU73NBSzfdIjyup/6rjB8tNU5nOwzHeFR0dQCC
+	 C1LpHWj+QJG9mJYLoPdGl4+kJay48jvi1ApNI2nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Haarmann <julian.haarmann@student.kit.edu>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 426/552] platform/x86: lenovo/ymc: Only match lower byte in WMI lid switch query response
-Date: Fri,  4 Sep 2026 06:59:43 +0200
-Message-ID: <20260904045800.257351529@linuxfoundation.org>
+Subject: [PATCH 6.18 427/552] platform/x86: think-lmi: Fix certificate thumbprint sysfs output
+Date: Fri,  4 Sep 2026 06:59:44 +0200
+Message-ID: <20260904045800.279324721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,60 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Haarmann <julian.haarmann@student.kit.edu>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit bbc497b5231829d32c3a53b6e66be1add76c0064 upstream.
+commit 4f3183f5ae9b8ddfe338d79a96146a05342bbe50 upstream.
 
-On newer Lenovo Yoga devices like the "Yoga 9 2-in-1 14IPH11 - Type 83SE",
-the hinge switch WMI query returns extra data in the upper bits
-(e.g. 0x50001 laptop mode, 0x50002 tablet mode, ect.).
+cert_thumbprint() already returns the accumulated output length, but
+certificate_thumbprint_show() adds that value to count again, making the
+next line use the wrong offset. Errors returned by cert_thumbprint() are
+also ignored and their negative values added to count.
 
-The driver previously checked for exact matches (0x01 laptop, 0x02 tablet,
-ect.) causing newer switches to not work.
+Assign the total length to count instead and propagate errors correctly.
 
-Mask the WMI query result to only match the lower byte and ignore upper
-bits.
-
-Signed-off-by: Julian Haarmann <julian.haarmann@student.kit.edu>
+Fixes: b49f72e7f96d ("platform/x86: think-lmi: Certificate authentication support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260614203235.235724-1-julian.haarmann@student.kit.edu
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://patch.msgid.link/20260810120556.149416-2-thorsten.blum@linux.dev
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/lenovo/ymc.c |    8 +++++++-
+ drivers/platform/x86/lenovo/think-lmi.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/lenovo/ymc.c
-+++ b/drivers/platform/x86/lenovo/ymc.c
-@@ -8,6 +8,8 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+--- a/drivers/platform/x86/lenovo/think-lmi.c
++++ b/drivers/platform/x86/lenovo/think-lmi.c
+@@ -741,6 +741,8 @@ static ssize_t certificate_thumbprint_sh
+ 		return -EOPNOTSUPP;
  
- #include <linux/acpi.h>
-+#include <linux/bitfield.h>
-+#include <linux/bits.h>
- #include <linux/dmi.h>
- #include <linux/input.h>
- #include <linux/input/sparse-keymap.h>
-@@ -20,6 +22,8 @@
- #define LENOVO_YMC_QUERY_INSTANCE 0
- #define LENOVO_YMC_QUERY_METHOD 0x01
- 
-+#define LENOVO_YMC_STATE_MASK GENMASK(7, 0)
+ 	for (i = 0; i < ARRAY_SIZE(thumbtypes); i++) {
++		ssize_t ret;
 +
- static bool force;
- module_param(force, bool, 0444);
- MODULE_PARM_DESC(force, "Force loading on boards without a convertible DMI chassis-type");
-@@ -85,7 +89,9 @@ static void lenovo_ymc_notify(struct wmi
- 			"WMI event data is not an integer\n");
- 		goto free_obj;
+ 		if (tlmi_priv.pwdcfg.core.password_mode >= TLMI_PWDCFG_MODE_MULTICERT) {
+ 			/* Format: 'SVC | SMC, Thumbtype' */
+ 			wmistr = kasprintf(GFP_KERNEL, "%s,%s",
+@@ -752,8 +754,12 @@ static ssize_t certificate_thumbprint_sh
+ 		}
+ 		if (!wmistr)
+ 			return -ENOMEM;
+-		count += cert_thumbprint(buf, wmistr, count);
++
++		ret = cert_thumbprint(buf, wmistr, count);
+ 		kfree(wmistr);
++		if (ret < 0)
++			return ret;
++		count = ret;
  	}
--	code = obj->integer.value;
-+
-+	/* strip upper bits (e.g. 0x50000) on newer devices */
-+	code = FIELD_GET(LENOVO_YMC_STATE_MASK, obj->integer.value);
  
- 	if (!sparse_keymap_report_event(priv->input_dev, code, 1, true))
- 		dev_warn(&wdev->dev, "Unknown key %d pressed\n", code);
+ 	return count;
 
 
