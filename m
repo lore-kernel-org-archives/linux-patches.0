@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF324195A0;
-	Fri,  4 Sep 2026 05:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0785A3F23DB;
+	Fri,  4 Sep 2026 05:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499110; cv=none; b=aCam30Y1uOBrOoKvJzeNXGDX1YsMXI1YYbWGCpqan1Oghl0aQIvyyfhpl+aMt5Sma9F1hl6LiSnVDmqx9oS5rNKC3qEl0/gMrab+EsKS1OQuyoGTE7VHSSC1AkXyawX3tCySDl+OnIQrbHMjbdx/NFfpqucurhCNL7+3E7S6u+E=
+	t=1788499113; cv=none; b=At8i4Zw5GxZZHozvhkYcE4uszFWELEr1dBKAcT/2YYKBy9ws9qvUN8MaN784Zp7zHwOrwyjYtkR9VdPXVuan7lyBloY8Ppavzx+x4/vsxGUmNl4+nv2wsdxLH0EIKdoF2O/zc5p7Mk6YtonfEPDY9DUjNl/PLGxiHbSOM8yLi3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499110; c=relaxed/simple;
-	bh=Ry/rRhRwak5UpLuqx+S0LZggmQP7sVZ8cj3tJK66MkU=;
+	s=arc-20240116; t=1788499113; c=relaxed/simple;
+	bh=yStgy1t6Xwj+HzuOTib8ygUhr6NPn4n6hg/FxeEtzZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hm4QGu6uorMuO/kVtQ030m220JQ6SJLMRh0kNPEg/PhQGQaxXK47CP3f9ipvQ5dH5m4ferakhP2g/JXNAdPDomACib32NuwDlk6lyTtf3/EcXtpDqOic0O2qIiPuonsDo1bjW5kHngNVqAzkvAjrnWUArdFBnWrh0tgWYTs5Lto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e67g2azL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TSnlAaF4WHjvOjP+Sjmn1SPdPI9MwGPHwqUZHNxrAPWn2tRJcgrfAMMITUafP5y9pA4D5hztLu3JPyz+Nqy9kOKERwTMkVapGrq+vpq1kOdmL0yO0ZBuBIkajxNhMMi8u2FOo6RRKp70N6Hvy7e4/EnMUwB7AaqmmR/41gEqxo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCDiwf4I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e67g2azL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E4F1F00A3D;
-	Fri,  4 Sep 2026 05:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCDiwf4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F571F00A3D;
+	Fri,  4 Sep 2026 05:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499109;
-	bh=BiY6vPhgkMZsiBsec/PfWWBR30GJc85yJlZvh02byVo=;
+	s=korg; t=1788499111;
+	bh=anIJChQM4TFZcXa4ib/Qk3ujYqxEQVrzmjJdKGelDNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e67g2azLqABzQHRN+bZSZNzQp5TdATJ+rYS1pcoVluXweGZShyt6mxi21RaLKvXQd
-	 AVpJqpdmx6GuGhdNkx/T5kH1crEY63pb8RphxA5Dn1vZqkyhb+/WtsIQ8No9xJEBSm
-	 OTwWgTKBtCx9jLWcWp5ivTspeU3DU6CGfHCVl26M=
+	b=eCDiwf4InU7h8RTc7pQ/0wQo0/zGwtM2VV3kUH2Tao7wi0ufwlrSTs3MeMw5DmOJ1
+	 HGJ37oa2JXcJ2ruVcTEE4NGVZpCL5pgx46Bkyl3lgojKlNDGG5Uu5hNCB92lSB4l3s
+	 h3EnKsONX2TeuCJtEgwWK2bxcVXiwIyesmWZvqGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Anirudh Prasad <icarus@a0rg.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.2 300/713] ACPI: CPPC: Skip desired_perf read in cppc_get_perf()
-Date: Fri,  4 Sep 2026 06:54:28 +0200
-Message-ID: <20260904045810.565696324@linuxfoundation.org>
+Subject: [PATCH 7.2 301/713] ACPI: pfr_update: fix stack buffer overflow in query_capability()
+Date: Fri,  4 Sep 2026 06:54:29 +0200
+Message-ID: <20260904045810.587682245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,73 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Anirudh Prasad <icarus@a0rg.com>
 
-commit d3576424e8fa702a15a1963718a07eb672db9be7 upstream.
+commit ced45be0073a8a31b30b4a7f68cd3a15734515de upstream.
 
-ACPI 6.5 defines _CPC revision 3 and lists Read/Write as the Optional
-Attribute of Desired Performance. ACPI 6.6 advances _CPC to revision 4 and
-lists only Write. cppc_get_perf() nevertheless reads the register when
-initializing performance controls, even though cppc-cpufreq overwrites the
-value before using it.
+query_capability() copies four ACPI buffer objects returned by the
+firmware _DSM into fixed-size u8[16] fields in struct
+pfru_update_cap_info using memcpy with the firmware-supplied length:
 
-Use the _CPC revision check from cppc_get_desired_perf() and leave
-desired_perf zero instead of reading it for _CPC revision 4 or later. Also
-exclude the register from PCC read-command detection so it cannot trigger
-an otherwise unnecessary read command.
+  memcpy(&cap_hdr->code_type,
+         elements[CAP_CODE_TYPE_IDX].buffer.pointer,
+         elements[CAP_CODE_TYPE_IDX].buffer.length);
 
-Fixes: 658fa7b1c47a ("ACPI: CPPC: Add cppc_get_perf() API to read performance controls")
-Cc: stable@vger.kernel.org
-Suggested-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260803203531.1268651-3-christian.loehle@arm.com
+The same pattern repeats for drv_type, platform_id, and oem_id.
+If the firmware returns buffer.length > 16 for any of these fields,
+memcpy writes past the destination array.
+
+struct pfru_update_cap_info is stack-allocated in pfru_ioctl().
+
+Confirmed with KASAN on 7.2-rc6: three stack-out-of-bounds reports
+are generated when a DSM returns 64-byte buffers, with writes reaching
+44 bytes past the end of cap_hdr's [64, 156) frame window into
+adjacent stack redzones.
+
+Introduce a helper pointer to out_obj->package.elements and use it
+to validate each buffer length against its destination field size
+before copying, returning -EINVAL if the firmware supplies an
+oversized buffer.
+
+Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Anirudh Prasad <icarus@a0rg.com>
+Link: https://patch.msgid.link/1a001e1fee9.637da6dc3533246.238498880682901704@a0rg.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/acpi/pfr_update.c |   45 ++++++++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 42aeb749ebe0..becb7e442b30 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1845,12 +1845,14 @@ int cppc_get_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls)
- 	u64 desired_perf = 0, min = 0, max = 0, energy_perf = 0, auto_sel = 0;
- 	int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpu);
- 	struct cppc_pcc_data *pcc_ss_data = NULL;
-+	bool read_desired_perf;
- 	int ret = 0, regs_in_pcc = 0;
+--- a/drivers/acpi/pfr_update.c
++++ b/drivers/acpi/pfr_update.c
+@@ -120,7 +120,7 @@ static int query_capability(struct pfru_
+ 			    struct pfru_device *pfru_dev)
+ {
+ 	acpi_handle handle = ACPI_HANDLE(pfru_dev->parent_dev);
+-	union acpi_object *out_obj;
++	union acpi_object *out_obj, *elem;
+ 	int ret = -EINVAL;
  
- 	if (!cpc_desc) {
- 		pr_debug("No CPC descriptor for CPU:%d\n", cpu);
- 		return -ENODEV;
+ 	out_obj = acpi_evaluate_dsm_typed(handle, &pfru_guid,
+@@ -150,7 +150,9 @@ static int query_capability(struct pfru_
+ 		goto free_acpi_buffer;
  	}
-+	read_desired_perf = cppc_desired_perf_readable(cpc_desc);
  
- 	if (!perf_ctrls) {
- 		pr_debug("Invalid perf_ctrls pointer\n");
-@@ -1864,7 +1866,8 @@ int cppc_get_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls)
- 	auto_sel_reg = &cpc_desc->cpc_regs[AUTO_SEL_ENABLE];
- 
- 	/* Are any of the regs PCC ?*/
--	if (CPC_IN_PCC(desired_perf_reg) || CPC_IN_PCC(min_perf_reg) ||
-+	if ((read_desired_perf && CPC_IN_PCC(desired_perf_reg)) ||
-+	    CPC_IN_PCC(min_perf_reg) ||
- 	    CPC_IN_PCC(max_perf_reg) || CPC_IN_PCC(energy_perf_reg) ||
- 	    CPC_IN_PCC(auto_sel_reg)) {
- 		if (pcc_ss_id < 0) {
-@@ -1896,7 +1899,7 @@ int cppc_get_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls)
+-	cap_hdr->status = out_obj->package.elements[CAP_STATUS_IDX].integer.value;
++	elem = out_obj->package.elements;
++
++	cap_hdr->status = elem[CAP_STATUS_IDX].integer.value;
+ 	if (cap_hdr->status != DSM_SUCCEED) {
+ 		ret = -EBUSY;
+ 		dev_dbg(pfru_dev->parent_dev, "Query cap Error Status:%d\n",
+@@ -158,29 +160,30 @@ static int query_capability(struct pfru_
+ 		goto free_acpi_buffer;
  	}
- 	perf_ctrls->min_perf = min;
  
--	if (CPC_SUPPORTED(desired_perf_reg)) {
-+	if (read_desired_perf && CPC_SUPPORTED(desired_perf_reg)) {
- 		ret = cpc_read(cpu, desired_perf_reg, &desired_perf);
- 		if (ret)
- 			goto out_err;
--- 
-2.55.0
-
+-	cap_hdr->update_cap = out_obj->package.elements[CAP_UPDATE_IDX].integer.value;
++	if (elem[CAP_CODE_TYPE_IDX].buffer.length > sizeof(cap_hdr->code_type) ||
++	    elem[CAP_DRV_TYPE_IDX].buffer.length > sizeof(cap_hdr->drv_type) ||
++	    elem[CAP_PLAT_ID_IDX].buffer.length > sizeof(cap_hdr->platform_id) ||
++	    elem[CAP_OEM_ID_IDX].buffer.length > sizeof(cap_hdr->oem_id))
++		goto free_acpi_buffer;
++
++	cap_hdr->update_cap = elem[CAP_UPDATE_IDX].integer.value;
+ 	memcpy(&cap_hdr->code_type,
+-	       out_obj->package.elements[CAP_CODE_TYPE_IDX].buffer.pointer,
+-	       out_obj->package.elements[CAP_CODE_TYPE_IDX].buffer.length);
+-	cap_hdr->fw_version =
+-		out_obj->package.elements[CAP_FW_VER_IDX].integer.value;
+-	cap_hdr->code_rt_version =
+-		out_obj->package.elements[CAP_CODE_RT_VER_IDX].integer.value;
++	       elem[CAP_CODE_TYPE_IDX].buffer.pointer,
++	       elem[CAP_CODE_TYPE_IDX].buffer.length);
++	cap_hdr->fw_version = elem[CAP_FW_VER_IDX].integer.value;
++	cap_hdr->code_rt_version = elem[CAP_CODE_RT_VER_IDX].integer.value;
+ 	memcpy(&cap_hdr->drv_type,
+-	       out_obj->package.elements[CAP_DRV_TYPE_IDX].buffer.pointer,
+-	       out_obj->package.elements[CAP_DRV_TYPE_IDX].buffer.length);
+-	cap_hdr->drv_rt_version =
+-		out_obj->package.elements[CAP_DRV_RT_VER_IDX].integer.value;
+-	cap_hdr->drv_svn =
+-		out_obj->package.elements[CAP_DRV_SVN_IDX].integer.value;
++	       elem[CAP_DRV_TYPE_IDX].buffer.pointer,
++	       elem[CAP_DRV_TYPE_IDX].buffer.length);
++	cap_hdr->drv_rt_version = elem[CAP_DRV_RT_VER_IDX].integer.value;
++	cap_hdr->drv_svn = elem[CAP_DRV_SVN_IDX].integer.value;
+ 	memcpy(&cap_hdr->platform_id,
+-	       out_obj->package.elements[CAP_PLAT_ID_IDX].buffer.pointer,
+-	       out_obj->package.elements[CAP_PLAT_ID_IDX].buffer.length);
++	       elem[CAP_PLAT_ID_IDX].buffer.pointer,
++	       elem[CAP_PLAT_ID_IDX].buffer.length);
+ 	memcpy(&cap_hdr->oem_id,
+-	       out_obj->package.elements[CAP_OEM_ID_IDX].buffer.pointer,
+-	       out_obj->package.elements[CAP_OEM_ID_IDX].buffer.length);
+-	cap_hdr->oem_info_len =
+-		out_obj->package.elements[CAP_OEM_INFO_IDX].buffer.length;
++	       elem[CAP_OEM_ID_IDX].buffer.pointer,
++	       elem[CAP_OEM_ID_IDX].buffer.length);
++	cap_hdr->oem_info_len = elem[CAP_OEM_INFO_IDX].buffer.length;
+ 
+ 	ret = 0;
+ 
 
 
