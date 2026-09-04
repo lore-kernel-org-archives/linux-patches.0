@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D22347532;
-	Fri,  4 Sep 2026 05:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFD93EFFAF;
+	Fri,  4 Sep 2026 05:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499866; cv=none; b=WR9GEzqvk1ctW2EcBYBAm52hOHkuDx9HXUhPR6kDDtu3ppdvLSZOuq7/ZAi1u13YgXLSUOjEPikL94SdBV2UY3HgBL6vdEaNaCsZd2ykQb19p96VWScbsI1XKYI0if5C0VtUos/2wLH/QXriK2tvECt86rbv/5fF6jiPfjC4/VA=
+	t=1788499869; cv=none; b=kWYOC75OHX9yOxCry/+qXXlNXfDEG2lS8SwktesPQkPKRW3MUcjkA9w8r2dUU+jpDWX9qfbC18iSiZXC2pIKfcrvG/jmyZr9Fc4j+BwpTQ7DNwZfV/Fs515e4lbVhCwGad6D3ThP1pJY/N0p21PA86CB6uDRpFPiDgpSSszS098=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499866; c=relaxed/simple;
-	bh=DVepi4LHITKxyqJYa/9a6ITi+Asbys2L7O3prcV/z2U=;
+	s=arc-20240116; t=1788499869; c=relaxed/simple;
+	bh=7w7ZPkR5vxd/H4q2PAgNQhK/lymBKKx8V/NN7QJy2xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QIkUgXlabBxWrysJ7aSFGK4QI0XLf5/iSh/F7MhNSKw4B79HYxw/4QrpJqF+esI/JaqKq9yojPhniDQblubB2LcZW7J3I9Ls8nGtyquyxiWrxIqRP1dW7ooFB7Ym5TDv/DKFX8uIOJJ/6NhlyTmGtcuyc648NHU7QAzv5Lx4HfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6tXqH0J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K6Ufwkv4IkNNk6+O6aI69XjyymfNglYs7IlxexuydNspn301w2sEFI+0OG1keLpRPF2JxKs9K4pFK6FyL41J+xk2nOjVKP7v67ZNf2x8PlXbLQFkFr+jjzExh7i2JkGPRYSoxOz10Cwk/dZkie46xX4Tzxb9nIBCAXdpGRszImQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJDJUlV5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6tXqH0J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB7F1F00A3D;
-	Fri,  4 Sep 2026 05:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJDJUlV5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C101F00A3D;
+	Fri,  4 Sep 2026 05:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499864;
-	bh=0l32yumRM7JNCEBVjzWzitZKKX5XUgxFkX6+hGXGCPY=;
+	s=korg; t=1788499867;
+	bh=HscF3L9h2Lvs9CtggZEmg6iOTHkH+Vf6nDNIkRAjViA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H6tXqH0Jx8Ol6h7LYn+ghPwjybLiiIbu9l2tGKhwy6Ucn1H/UUKJkIziPi8+BPvCe
-	 2dKqAf40ODMA4Wle42maowwS/+mritXf5opEoL8UQiFnm8rQJyqUeGs2NhUEidpvHf
-	 mXCb9G37KTI3mBXKh7BjE21zsQa+mEN9MoD2m4nY=
+	b=EJDJUlV5Ksj5ZJGdr5mgVPoTup4w69xZKpeMtG3U6J1aPexXldVAB3rgQrBYY7Hi/
+	 Yz66yJluDIZU3Lwdx6ziiiTWPu7VIbfACkAYpB9Ca9xPeoq2fGUmAIVKvIEfveUsyG
+	 Vi6vh69TnNjIIZDeP2+Nxo5qsUxDCAT9zQ2lR28o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.2 568/713] platform/x86: think-lmi: Fix certificate thumbprint sysfs output
-Date: Fri,  4 Sep 2026 06:58:56 +0200
-Message-ID: <20260904045816.550236085@linuxfoundation.org>
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Shameer Kolothum <skolothumtho@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.2 542/713] iommu/arm-smmu-v3: Manage teardown with devm
+Date: Fri,  4 Sep 2026 06:58:30 +0200
+Message-ID: <20260904045815.968874296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,60 +47,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-commit 4f3183f5ae9b8ddfe338d79a96146a05342bbe50 upstream.
+commit 2bd22a0d40503a65d243b011de146603c8ce1cbc upstream.
 
-cert_thumbprint() already returns the accumulated output length, but
-certificate_thumbprint_show() adds that value to count again, making the
-next line use the wrong offset. Errors returned by cert_thumbprint() are
-also ignored and their negative values added to count.
+arm_smmu_device_remove() manually frees the IOPF queue, destroys the
+vmid_map and disables the device, while the IRQs and queues are devm
+managed. devm unwinds only after remove() returns, so the cleanup runs
+in the wrong order. The IOPF queue is freed before the event-queue IRQ
+whose handler uses it.
 
-Assign the total length to count instead and propagate errors correctly.
+Manage all of it with devm so the unwind order is correct. Free the IOPF
+queue and vmid_map via devm actions, and disable the device from one
+registered after arm_smmu_device_reset().
 
-Fixes: b49f72e7f96d ("platform/x86: think-lmi: Certificate authentication support")
+This is also a prerequisite for fixing a Tegra241 CMDQV CMD_SYNC
+use-after-free in the subsequent patch.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/20260810120556.149416-2-thorsten.blum@linux.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/lenovo/think-lmi.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   56 ++++++++++++++++++++--------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
---- a/drivers/platform/x86/lenovo/think-lmi.c
-+++ b/drivers/platform/x86/lenovo/think-lmi.c
-@@ -745,6 +745,8 @@ static ssize_t certificate_thumbprint_sh
- 		return -EOPNOTSUPP;
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -4398,6 +4398,20 @@ int arm_smmu_cmdq_init(struct arm_smmu_d
+ 	return 0;
+ }
  
- 	for (i = 0; i < ARRAY_SIZE(thumbtypes); i++) {
-+		ssize_t ret;
++static void arm_smmu_free_iopf_action(void *data)
++{
++	struct iopf_queue *queue = data;
 +
- 		if (tlmi_priv.pwdcfg.core.password_mode >= TLMI_PWDCFG_MODE_MULTICERT) {
- 			/* Format: 'SVC | SMC, Thumbtype' */
- 			wmistr = kasprintf(GFP_KERNEL, "%s,%s",
-@@ -756,8 +758,12 @@ static ssize_t certificate_thumbprint_sh
- 		}
- 		if (!wmistr)
++	iopf_queue_free(queue);
++}
++
++static void arm_smmu_destroy_vmid_map(void *data)
++{
++	struct ida *ida = data;
++
++	ida_destroy(ida);
++}
++
+ static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
+ {
+ 	int ret;
+@@ -4425,6 +4439,11 @@ static int arm_smmu_init_queues(struct a
+ 		smmu->evtq.iopf = iopf_queue_alloc(dev_name(smmu->dev));
+ 		if (!smmu->evtq.iopf)
  			return -ENOMEM;
--		count += cert_thumbprint(buf, wmistr, count);
-+
-+		ret = cert_thumbprint(buf, wmistr, count);
- 		kfree(wmistr);
-+		if (ret < 0)
++		ret = devm_add_action_or_reset(smmu->dev,
++					       arm_smmu_free_iopf_action,
++					       smmu->evtq.iopf);
++		if (ret)
 +			return ret;
-+		count = ret;
  	}
  
- 	return count;
+ 	/* priq */
+@@ -4503,7 +4522,8 @@ static int arm_smmu_init_strtab(struct a
+ 
+ 	ida_init(&smmu->vmid_map);
+ 
+-	return 0;
++	return devm_add_action_or_reset(smmu->dev, arm_smmu_destroy_vmid_map,
++					&smmu->vmid_map);
+ }
+ 
+ static int arm_smmu_init_structures(struct arm_smmu_device *smmu)
+@@ -4716,6 +4736,13 @@ static int arm_smmu_device_disable(struc
+ 	return ret;
+ }
+ 
++static void arm_smmu_disable_action(void *data)
++{
++	struct arm_smmu_device *smmu = data;
++
++	arm_smmu_device_disable(smmu);
++}
++
+ static void arm_smmu_write_strtab(struct arm_smmu_device *smmu)
+ {
+ 	struct arm_smmu_strtab_cfg *cfg = &smmu->strtab_cfg;
+@@ -5479,7 +5506,7 @@ static int arm_smmu_device_probe(struct
+ 	/* Initialise in-memory data structures */
+ 	ret = arm_smmu_init_structures(smmu);
+ 	if (ret)
+-		goto err_free_iopf;
++		return ret;
+ 
+ 	/* Record our private device structure */
+ 	platform_set_drvdata(pdev, smmu);
+@@ -5489,30 +5516,30 @@ static int arm_smmu_device_probe(struct
+ 
+ 	/* Reset the device */
+ 	ret = arm_smmu_device_reset(smmu);
++	if (ret) {
++		arm_smmu_device_disable(smmu);
++		return ret;
++	}
++
++	/* Register last so it unwinds first, while the CMDQ is still up. */
++	ret = devm_add_action_or_reset(smmu->dev, arm_smmu_disable_action, smmu);
+ 	if (ret)
+-		goto err_disable;
++		return ret;
+ 
+ 	/* And we're up. Go go go! */
+ 	ret = iommu_device_sysfs_add(&smmu->iommu, dev, NULL,
+ 				     "smmu3.%pa", &ioaddr);
+ 	if (ret)
+-		goto err_disable;
++		return ret;
+ 
+ 	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register iommu\n");
+-		goto err_free_sysfs;
++		iommu_device_sysfs_remove(&smmu->iommu);
++		return ret;
+ 	}
+ 
+ 	return 0;
+-
+-err_free_sysfs:
+-	iommu_device_sysfs_remove(&smmu->iommu);
+-err_disable:
+-	arm_smmu_device_disable(smmu);
+-err_free_iopf:
+-	iopf_queue_free(smmu->evtq.iopf);
+-	return ret;
+ }
+ 
+ static void arm_smmu_device_remove(struct platform_device *pdev)
+@@ -5521,9 +5548,6 @@ static void arm_smmu_device_remove(struc
+ 
+ 	iommu_device_unregister(&smmu->iommu);
+ 	iommu_device_sysfs_remove(&smmu->iommu);
+-	arm_smmu_device_disable(smmu);
+-	iopf_queue_free(smmu->evtq.iopf);
+-	ida_destroy(&smmu->vmid_map);
+ }
+ 
+ static void arm_smmu_device_shutdown(struct platform_device *pdev)
 
 
