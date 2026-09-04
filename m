@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975BE3B95FA;
-	Fri,  4 Sep 2026 05:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D8837DAD0;
+	Fri,  4 Sep 2026 05:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499911; cv=none; b=EHN6XyeQ8VGwzpnM5x4zwhbNem1beNPYMUaeLhXgGpJfSOURgaI6tWJcPILxu5fNfqxCgq0z8fiGKsCqEpQ5CM7ddGGRX1k4x717BGIIK0M3as+E4ghHLHVqVMR50K1ombtOJ/numlP5BrW5U03g5zOp2b5XdYKfbKFtMfZfMo0=
+	t=1788499914; cv=none; b=jTB+rD+m19u7vsMxGQ9ttdKeWJjArlBUmDiCje8eBfkfgpsXygZZTT6sU9WJpBTKaWVEGJ/DTvffGBr7vn6BwRGI6UeQK64U6P2TWBu4z0Dw6/zf1Z/C/IDBpIZj9VzxrDIkSEz/TC8Abfp6PE86tkyMAVo2xTF6bDRSCw17gHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499911; c=relaxed/simple;
-	bh=HQFs2R/12DFXIpIql+slG0REgSRJV8Bs2Oo9s4hwGeo=;
+	s=arc-20240116; t=1788499914; c=relaxed/simple;
+	bh=rjljS2NH8IYvQC+Ol7cq/KzrA7BCgGNaXkUWziBjFmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EzYchwdRrfOgs/CX/XTUZk7haOkjyWmIDths3AD6WNVeqXkLqIfy/Q5+79Yyp6b4ix3b8/4j1qif1MhUt/naxIraACBsbt8d+rWqs4+dbjkSIqreC5M6Y2/FdhAbBHqtPnR6V0U6/g1Uj3hSLv/fzj3DTKEf1JdaBRiMTv1Ott8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+ConmtL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tNXzx5+c32LaRDy89f7BjeMJ11++X+UXRt6rd42yObnw3scaf8Yt22Sl5aePVMsiduzH4kGOIzNrqr0eGizJu8Qa6ia5t4ra1GqxfIHANhDQk96sEOPyOiu2hRAyGWF2nDGUspURB0bx+tp7RF1+an5mT33BlN45TUtqFwH0Fk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvijI3f4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+ConmtL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F037C1F00A3D;
-	Fri,  4 Sep 2026 05:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvijI3f4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F641F00A3D;
+	Fri,  4 Sep 2026 05:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499910;
-	bh=AtXi16RkcGqUUeYHtaAL56o9XSkRtbYfOFCeTtA+Fck=;
+	s=korg; t=1788499913;
+	bh=Yqa+9n3Asg8ZtIZWcFydbj/LgYWEe+a3B/7Tc8W1Hss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+ConmtLkYnYDSbTomzyqV4k+ywQklRXZ8qI+G5i8Z0R/ypmm4wHGyW8sDPtw3gw7
-	 BMQ04vfTdGKz5M+MJkrhK7bIvdVjUEoM9uiN5C+vauccjL3u1Vsqhy6WIQre6xhTfe
-	 Y2TVxznanggBCIwOOcl0A9oaw8S0+loyf4atH7Kg=
+	b=wvijI3f40JG5Q4Bzb0jtHccoy5KniRiPGbXmn5iKFLU73TsR63rdxAHCOtppwkFR5
+	 /orMqyR0+XRVbkf8SCdyFHXztxUjxztajkaRfeJZPr46iP3cqXVxeGVvaxaJlK6u1U
+	 9Txo7Xtzc6gJnlNznOBcWAXxjclaA7VpXAKdRVbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.2 582/713] platform/x86: hp-bioscfg: fix off-by-one write in hp_get_string_from_buffer()
-Date: Fri,  4 Sep 2026 06:59:10 +0200
-Message-ID: <20260904045816.864134123@linuxfoundation.org>
+Subject: [PATCH 7.2 583/713] platform/x86: hp-bioscfg: fix ORD_LIST_ELEMENTS never being parsed
+Date: Fri,  4 Sep 2026 06:59:11 +0200
+Message-ID: <20260904045816.887538983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,49 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit dc03f05e419f3460342fb7564884f244622634b6 upstream.
+commit cb6b1b0fb236a9581cae213c2a9182e68cc3ffe5 upstream.
 
-hp_get_string_from_buffer() clamps the converted string length against
-the destination buffer size with "size > dst_size", so when the
-converted length is exactly equal to dst_size, conv_dst_size is left
-at dst_size and the unconditional NUL terminator write
+The ACPI_TYPE_STRING case explicitly skips the string conversion for
+elem == ORD_LIST_ELEMENTS:
 
-	dst[conv_dst_size] = 0;
+	if (elem != PREREQUISITES && elem != ORD_LIST_ELEMENTS) {
+		ret = hp_convert_hexstr_to_str(..., &str_value, &value_len);
+		if (ret)
+			continue;
+	}
 
-lands one byte past the destination buffer. This is the same shape of
-bug as the previously fixed off-by-one in hp_convert_hexstr_to_str():
-the buffer is sized correctly for the content, but the terminator
-write is never checked against that size.
+so by the time the ORD_LIST_ELEMENTS case in the eloc switch runs,
+str_value is NULL (it was freed and reset to NULL at the end of the
+previous iteration). That case then does:
 
-Fix by changing the comparison to ">=" so conv_dst_size is always left
-with room for the terminator.
+	ret = hp_convert_hexstr_to_str(str_value, value_len, &tmpstr, &tmp_len);
 
-All fixed-size destinations that reach this function (path[512],
-current_value[512], current_password/current_value[64], and the
-per-entry buffers in encodings[][512] and prerequisites[][512]) are
-affected.
+hp_convert_hexstr_to_str() rejects a NULL input with -EINVAL, which
+sends this function to exit_list, and exit_list unconditionally
+returns 0. The net effect is that any ordered-list attribute with
+elements present silently ends up with an empty elements list, with no
+error surfaced anywhere.
 
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
+Fix by converting the current element directly, order_obj[elem], the
+same way the PREREQUISITES case already handles its own array
+elements, instead of reusing the unrelated str_value/value_len left
+over from earlier processing.
+
+Fixes: 4b2672ec71a3 ("platform/x86: hp-bioscfg: order-list-attributes")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260812111829.172273-2-meatuni001@gmail.com
+Link: https://patch.msgid.link/20260812111829.172273-9-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -85,7 +85,7 @@ int hp_get_string_from_buffer(u8 **buffe
- 	 * bytes.
- 	 */
- 	conv_dst_size = size;
--	if (size > dst_size)
-+	if (size >= dst_size)
- 		conv_dst_size = dst_size - 1;
+--- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
+@@ -263,7 +263,9 @@ static int hp_populate_ordered_list_elem
+ 			 * Ordered list data is stored in hex and comma separated format
+ 			 * Convert the data and split it to show each element
+ 			 */
+-			ret = hp_convert_hexstr_to_str(str_value, value_len, &tmpstr, &tmp_len);
++			ret = hp_convert_hexstr_to_str(order_obj[elem].string.pointer,
++						       order_obj[elem].string.length,
++						       &tmpstr, &tmp_len);
+ 			if (ret)
+ 				goto exit_list;
  
- 	/*
 
 
