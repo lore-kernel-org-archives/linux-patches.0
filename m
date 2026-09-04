@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5BF3A6B82;
-	Fri,  4 Sep 2026 05:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEFC3A6B82;
+	Fri,  4 Sep 2026 05:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498605; cv=none; b=FTK/mhLkFygNxIc1WtAREi32I1gS79Xagg+hD0ZxBwjs6ROoFaezDYVP6RKOdm6SkB+USyi8Sd5ntvRyJw2gl4Embyn7NK6DtuzvKP2wTpXbzDDgJXbsn0hyi5BF41cqwgJ8BZSqivWKBg6igukAuCn5ajgt6p7zq1caVoL3TYk=
+	t=1788498608; cv=none; b=mvFIqBCEmxKOO62gJvFU0prw4WR/EmaZsCB60qzeQ5LofYlGVN4K5jUUrdCv6Hn6CFCyVhPuFovDZUMP1wF/cCAIPg/vquR76WHNmQzx7+YxN12LXLbt+Z7DMih1NUKxDuxOcBhHqQqly5LLSC43kouKmh2UnMO/hgM8cPhKh5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498605; c=relaxed/simple;
-	bh=zQ2eqrodvQeJbDMw/2mq9CmA1JCyOriqBgpjG9gGlFE=;
+	s=arc-20240116; t=1788498608; c=relaxed/simple;
+	bh=HbdwMtr5TYpUwaddcIx4jPgNxnMS2hHqsDDw8qZF8PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xj33wRscGhEKyEJ2nEv3tMPmWTNTeYc6HUFaRGUwz4y0VP6PQnOg04nMuD++4Jq7f7CW0cD4GKQK0Cjqj54jnaPynElIhkZUHqI2se6oo2UaU1wK6yqc/iuZUGHbYu4XEaYBucl8EjUPRDxpEBC+6ZWVvAxDrQCcLvq+2+yUwJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDEYdTgE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gkI04tmL2bNmuzT6wqnPHTO3G9Kt740Z0xPBsaXuJLERkXxAPaOXcuw3DugsOef85fmuR4FgsjsHQeHRZzwyMn5NHDr3utIAjku5qMs+qktmvYOIgI/Zqk60Wv2UoQZyl1uoSS/48dFK7c4ckenv+zkmguI/8yTr/Af2jNRFqag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3yZ1DBe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDEYdTgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E251F00A3D;
-	Fri,  4 Sep 2026 05:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3yZ1DBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792EB1F00A3D;
+	Fri,  4 Sep 2026 05:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498604;
-	bh=6Oq5z2H5f5txMn5zX6GUPO+9dx2pKfGROkC3jMiw1AE=;
+	s=korg; t=1788498607;
+	bh=msbAmkfov5fBOXoKROUJ88dcBrjnuxM+fRYbuasJCoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fDEYdTgEi80iTc8dKASEWi1E8NM2fp3uhYGdF4hpE3sadm3P0YQMByUl2f1J79Deu
-	 WvTH75WBuijEvRehbXBEV9X1Dk35/CJVPikN9APKDkSEER0wDQ0DJjVBUoZGNH6OBy
-	 Omh1fZPSEjerD+m8FPtpg+hqeDrSyOGIKXW5rYBE=
+	b=a3yZ1DBepw5T361KSGZigrJW8a+8TUkJWKfvk0bnErXbjmcOUV55dxkcifLsSSD+T
+	 pnB+pdf7qR6QpqMs8Ol1hp58MJRhDFHtSGzQk45DnjqtBT/43hY0ypKfTx744nrqXo
+	 JvVkSwM9YVBYMIPyJjAbYJOBOEdePFXzTJ0Wsxow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Xingrui Li <baka9@bakabaka9.tech>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 120/713] HID: sensor-hub: Fix out-of-bounds write in sensor_hub_get_feature
-Date: Fri,  4 Sep 2026 06:51:28 +0200
-Message-ID: <20260904045806.526840069@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 7.2 121/713] i3c: renesas: Fix out-of-bounds access for newdevs mask
+Date: Fri,  4 Sep 2026 06:51:29 +0200
+Message-ID: <20260904045806.548691758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,99 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingrui Li <baka9@bakabaka9.tech>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit c92693f3ed099401d0383ef35ca1fe1e6ba033de upstream.
+commit 50dec95c9d1f1f82819bc898ef2b60fa83fd4ccd upstream.
 
-sensor_hub_get_feature() clamps its return value to the caller's buffer
-size, but the copy loop still copies field->report_size / 8 bytes for
-each report value. A malicious HID descriptor can advertise a large
-feature field size while an IIO caller supplies a small stack buffer,
-such as a single s32, causing an out-of-bounds write.
+When software initiates DAA (Dynamic Address Assignment), the controller
+reports the result via the NRSPQP (Normal Response Queue Port Register).
+The data length field of the response descriptor, which is accessible
+through the NRSPQP register, indicates the number of devices remaining
+after DAA. Consequently, when the bus is empty, this field contains the
+maximum number of devices supported by the controller (8 for the Renesas
+I3C controller).
 
-HID core stores parsed report values in __s32 slots and clamps extracted
-values to 32 bits. Reject feature fields that require more than one slot
-per value, guard the total byte count calculation, and clamp each
-per-value copy to the remaining caller buffer.
+Adjust the condition that computes the newly discovered devices bitmask
+to prevent an out-of-bounds when the I3C bus is empty.
 
-Fixes: 5459ada2b3cd69 ("HID: sensor-hub: Fix packing of result buffer for feature report")
-Cc: stable@kernel.org
-Assisted-by: OpenAI:GPT-5.5-Cyber
-Signed-off-by: Xingrui Li <baka9@bakabaka9.tech>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: e7218986319b ("i3c: renesas: Add suspend/resume support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Link: https://patch.msgid.link/20260713130545.568657-9-claudiu.beznea+renesas@tuxon.dev
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sensor-hub.c |   44 +++++++++++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 18 deletions(-)
+ drivers/i3c/master/renesas-i3c.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-sensor-hub.c
-+++ b/drivers/hid/hid-sensor-hub.c
-@@ -239,12 +239,17 @@ int sensor_hub_get_feature(struct hid_se
- 			   u32 field_index, int buffer_size, void *buffer)
- {
- 	struct hid_report *report;
-+	struct hid_field *field;
- 	struct sensor_hub_data *data = hid_get_drvdata(hsdev->hdev);
--	int report_size;
-+	size_t field_size;
-+	size_t report_size;
-+	size_t copied = 0;
-+	size_t to_copy;
- 	int ret = 0;
--	u8 *val_ptr;
--	int buffer_index = 0;
--	int i;
-+	unsigned int i;
+--- a/drivers/i3c/master/renesas-i3c.c
++++ b/drivers/i3c/master/renesas-i3c.c
+@@ -689,7 +689,11 @@ static int renesas_i3c_daa(struct i3c_ma
+ 
+ 	renesas_i3c_wait_xfer(i3c, xfer);
+ 
+-	newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, 0);
++	if (cmd->rx_count >= i3c->maxdevs)
++		newdevs = 0;
++	else
++		newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, 0);
 +
-+	if (!buffer || buffer_size <= 0)
-+		return -EINVAL;
+ 	newdevs &= ~olddevs;
  
- 	memset(buffer, 0, buffer_size);
- 
-@@ -258,26 +263,29 @@ int sensor_hub_get_feature(struct hid_se
- 	hid_hw_request(hsdev->hdev, report, HID_REQ_GET_REPORT);
- 	hid_hw_wait(hsdev->hdev);
- 
-+	field = report->field[field_index];
-+
- 	/* calculate number of bytes required to read this field */
--	report_size = DIV_ROUND_UP(report->field[field_index]->report_size,
--				   8) *
--				   report->field[field_index]->report_count;
--	if (!report_size) {
-+	field_size = DIV_ROUND_UP(field->report_size, 8);
-+	/* HID core stores each parsed report value in a __s32 slot. */
-+	if (!field_size || field_size > sizeof(field->value[0])) {
-+		ret = -EINVAL;
-+		goto done_proc;
-+	}
-+	if (field->report_count > SIZE_MAX / field_size) {
- 		ret = -EINVAL;
- 		goto done_proc;
- 	}
--	ret = min(report_size, buffer_size);
- 
--	val_ptr = (u8 *)report->field[field_index]->value;
--	for (i = 0; i < report->field[field_index]->report_count; ++i) {
--		if (buffer_index >= ret)
--			break;
--
--		memcpy(&((u8 *)buffer)[buffer_index], val_ptr,
--		       report->field[field_index]->report_size / 8);
--		val_ptr += sizeof(__s32);
--		buffer_index += (report->field[field_index]->report_size / 8);
-+	report_size = field_size * field->report_count;
-+	report_size = min_t(size_t, report_size, buffer_size);
-+
-+	for (i = 0; i < field->report_count && copied < report_size; ++i) {
-+		to_copy = min(field_size, report_size - copied);
-+		memcpy(&((u8 *)buffer)[copied], &field->value[i], to_copy);
-+		copied += to_copy;
- 	}
-+	ret = copied;
- 
- done_proc:
- 	mutex_unlock(&data->mutex);
+ 	for (pos = 0; pos < i3c->maxdevs; pos++) {
 
 
