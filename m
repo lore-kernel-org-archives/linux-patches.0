@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593C13B7B7B;
-	Fri,  4 Sep 2026 05:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622653B7B7B;
+	Fri,  4 Sep 2026 05:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499373; cv=none; b=BUQd/DEwHWQsdJCYYsnYB+j1+Ljn2UwuhBN2WJjaCTBkbDNhl44cB9Yz/NlKWAj7MzM5qgukdQAIziq1nGcM10SnfJpiXM2Ea6wnhR9admb3cYIvyEqQ1hWOtbsLac7p/JYBY+jl/DdtY18cnKYCpS8ZWKNIGHcsa9fXQtpAckQ=
+	t=1788499376; cv=none; b=oGkVQqPIIk1SqcUzo87nPAbunZb1wjH7ko6ZKsZ9NdJ5ufq8XIafcZVcyl+WfPu2cpCTrZt8NZIYZlwQEMZxxkid4BD1DnJTJfSCDY37F/nldTpHvzMlWeAZtMiAJk1rtENekZ/NOtsHagc7PzcI3wmZYgGedvweQiCqu1RbjqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499373; c=relaxed/simple;
-	bh=+FxgXC6ToH7/ff7dn43i3opZE7XdDqmdvz5zUiEtZv8=;
+	s=arc-20240116; t=1788499376; c=relaxed/simple;
+	bh=ewAx8RmQiHFqKhIfBb/0FVxfFX9WFaICJPjb00/2gEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7yqzxYzxM1+2aXIbbwfEv+nAowATzJ2pNoYKVmGoNJmYiVUqjLZnVXESkQme8mFdqTxiqB4etE/4y0woMkznaeXzcVvXqE67+pZAOfmzBsRF1Jl0/QHnHS/VR1vPlZP2opQ7LDhUEMDcqHaFySO2cP943Bzp9mw0AkO3F3DojI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TXhTPpg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BzWXbxcRqU3vGAKCVmtgrn++l0CMEodL1RFwSAch6lmCaRS7C6N8Q3gGbCJY3hcEHozzX4gzAkjdsoBwrZumbjydnf5gZVyr9dqS/6oDNnWK0m21DpOJ7hL54yBAY7YJo1kpvTTXu5ZjfXvJAqkx6EpFEJS5LHlOTQlzUcUxGno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J02WZiL6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TXhTPpg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9E41F00ACA;
-	Fri,  4 Sep 2026 05:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J02WZiL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8119E1F00A3D;
+	Fri,  4 Sep 2026 05:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499372;
-	bh=9gbaA7ZrL/70EfZw7EkveawH0GJbCZHDLjT1uiEhNCQ=;
+	s=korg; t=1788499375;
+	bh=5uLQJZvAceCmSKKwfY5pDF01ruczJcG9Fx8aLPrazrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2TXhTPpgjGdEtWAQNfElM/J/V9FdVg+Gs6P5z+HGKtrc6TA+G2+GH3A67uCzJjNcF
-	 T3wtwV+CSyK5DZS1tFYoeW40FI9sGhIKNVodoGwgQCKHltmhup7whMQplehOZMyVYa
-	 H43cnlxNNrbmBaRe8tA4cQvQ8RVzKllTkJyFe0is=
+	b=J02WZiL6InVfon4ZxvCIgJFSfckBNXCewhjn3sWoUa9q5AFw2zye+oyfLgNhqxrex
+	 M6GHwZ/0Iu73VXK/5k+cvdtJBNFzKm24vUcYhXENlEAzaGwyveuLjFGAHAMWSc3q/V
+	 7kjlJEqXQfzpaJcTh6QaMaWzTc7nov3frgKcFR4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 393/713] svcrdma: Fix unmatched rn_unregister on failed accept
-Date: Fri,  4 Sep 2026 06:56:01 +0200
-Message-ID: <20260904045812.634826347@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>
+Subject: [PATCH 7.2 358/713] landlock: Require LANDLOCK_ACCESS_FS_MAKE_REG for whiteout creation
+Date: Fri,  4 Sep 2026 06:55:26 +0200
+Message-ID: <20260904045811.854612571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,154 +45,231 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Günther Noack <gnoack@google.com>
 
-commit 26190394c64c9429481fc88a4738f70bb92fb352 upstream.
+commit 672fa082d48b21e1fb62cdb184fee41513e53421 upstream.
 
-When svc_rdma_accept() takes the errout path before
-rpcrdma_rn_register() has succeeded, the existing cleanup block
-calls rpcrdma_rn_unregister(dev, &newxprt->sc_rn) unconditionally.
-svcxprt_rdma is kzalloc'd, so on that path sc_rn.rn_index is 0 and
-sc_rn.rn_done is NULL; the unregister therefore xa_erase()s another
-caller's slot 0 and performs an unmatched kref_put() on the
-rpcrdma_device's rd_kref.
+Whiteout objects are used in the upper layer of an OverlayFS to
+indicate that the file with this name does not exist in the unified
+view, even if it is present in one of the lower layer file systems.
 
-The same errout also brackets the cleanup with svc_xprt_get()/
-svc_xprt_put() around the kref_init() birth reference. The kref
-goes 1 -> 2 -> 1 and never reaches 0, so the svcxprt_rdma (and the
-net/ns_tracker it pinned) is leaked on every failed accept.
+For the userspace implementations of OverlayFS (fuse-overlayfs),
+whiteout objects can be created from userspace as well:
 
-rpcrdma_rn_register() writes rn->rn_done last, only after xa_alloc()
-and kref_get() have both succeeded, so rn_done == NULL is a natural
-"never registered" sentinel. Guard rpcrdma_rn_unregister() with an
-early return when rn_done is NULL, and clear rn_done before the
-matching xa_erase() so a repeated unregister is also a no-op.
+* mknod(2) with S_IFCHR and makedev(0, 0)
+* renameat2(2) with RENAME_WHITEOUT,
+  creating the whiteout in the old place of the moved file.
 
-With that guard in place, the accept errout drops the kref_init()
-birth reference via svc_xprt_put(), which dispatches svc_rdma_free().
-Teardown of sc_qp, sc_sq_cq, sc_rq_cq, and sc_pd runs under existing
-IS_ERR/NULL guards in svc_rdma_free(); sc_rn is covered by the new
-rn_done sentinel; sc_cm_id is non-NULL on every errout path because
-svc_rdma_accept() dereferences it above the first goto errout.
+This commit guards whiteout creation in both of these cases with
+LANDLOCK_ACCESS_FS_MAKE_REG.  Whiteout objects are *not* considered
+character devices and are not bound to a driver.
 
-svc_xprt_free() drops the module reference associated with the freed
-transport, and svc_handle_xprt() drops its pre-acquired reference
-when ->xpo_accept() returns NULL. Take a replacement module reference
-before svc_xprt_put() so the two module_put()s remain balanced.
+LANDLOCK_ACCESS_FS_MAKE_REG describes the same permission class as a
+whiteout object: creating one is the only S_IFCHR creation that the VFS
+exempts from CAP_MKNOD, so it is as unprivileged as creating a regular
+file, while LANDLOCK_ACCESS_FS_MAKE_CHAR and
+LANDLOCK_ACCESS_FS_MAKE_BLOCK keep meaning the creation of devices that
+expose a kernel interface [1].
 
-The rn_done guard also covers svc_rdma_free()'s non-listener call
-to rpcrdma_rn_unregister() for transports whose register attempt
-failed or never ran.
+For the mknod(2) case, introduce a Landlock erratum.  The creation of
+whiteout objects through mknod(2) was previously guarded using
+LANDLOCK_ACCESS_FS_MAKE_CHAR, and it is now guarded using
+LANDLOCK_ACCESS_FS_MAKE_REG.
 
-Fixes: 8ac6fcae5dc0 ("svcrdma: Unregister the device if svc_rdma_accept() fails")
+For the renameat2(2) case, fix a bug: Before this commit, renameat2(2)
+with RENAME_WHITEOUT would create a directory entry even when all
+LANDLOCK_ACCESS_FS_MAKE_* rights were denied.
+
+This does not affect normal renames within layered OverlayFS mounts:
+When doing a regular rename() on a mounted fuse-overlayfs, it is the
+fuse-overlayfs daemon that exercises renameat2() with RENAME_WHITEOUT,
+and only the Landlock domain of that daemon is checked there.
+
+Suggested-by: Christian Brauner <brauner@kernel.org>
+Suggested-by: Mickaël Salaün <mic@digikod.net>
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-1-1b09bd87b6cd@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
+Depends-on: 49c9e09d9610 ("landlock: Fix handling of disconnected directories")
+Depends-on: fe72ce6710cb ("landlock: Add errata documentation section")
+Signed-off-by: Günther Noack <gnoack@google.com>
+Link: https://patch.msgid.link/20260720.chow9ohYie5b@digikod.net [1]
+Link: https://patch.msgid.link/20260813093157.1436894-3-gnoack@google.com
+[mic: Record why LANDLOCK_ACCESS_FS_MAKE_REG is the matching right, and
+add link(2) to the user doc]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/ib_client.c          |   24 +++++++++++++++++++++++-
- net/sunrpc/xprtrdma/svc_rdma_transport.c |   28 +++++++++++++++++++++-------
- 2 files changed, 44 insertions(+), 8 deletions(-)
+ include/uapi/linux/landlock.h    |    1 
+ security/landlock/errata/abi-1.h |   23 +++++++++++++++++++++
+ security/landlock/fs.c           |   41 ++++++++++++++++++++++++++++++---------
+ 3 files changed, 56 insertions(+), 9 deletions(-)
 
---- a/net/sunrpc/xprtrdma/ib_client.c
-+++ b/net/sunrpc/xprtrdma/ib_client.c
-@@ -51,7 +51,11 @@ static struct rpcrdma_device *rpcrdma_ge
-  * to be invoked when the device is removed, unless this notification
-  * is unregistered first.
-  *
-- * On failure, a negative errno is returned.
-+ * On failure, a negative errno is returned. rn->rn_done is left
-+ * NULL on every failure path (it is assigned only after xa_alloc
-+ * and kref_get have both succeeded), so the @rn may safely be
-+ * passed to rpcrdma_rn_unregister() without a separate
-+ * registered/unregistered flag in the caller.
+--- a/include/uapi/linux/landlock.h
++++ b/include/uapi/linux/landlock.h
+@@ -351,6 +351,7 @@ struct landlock_net_port_attr {
+  *   device.
+  * - %LANDLOCK_ACCESS_FS_MAKE_DIR: Create (or rename) a directory.
+  * - %LANDLOCK_ACCESS_FS_MAKE_REG: Create (or rename or link) a regular file.
++ *   This also guards the creation of whiteout objects as used in OverlayFS.
+  * - %LANDLOCK_ACCESS_FS_MAKE_SOCK: Create (or rename or link) a UNIX domain
+  *   socket.
+  * - %LANDLOCK_ACCESS_FS_MAKE_FIFO: Create (or rename or link) a named pipe.
+--- a/security/landlock/errata/abi-1.h
++++ b/security/landlock/errata/abi-1.h
+@@ -22,3 +22,26 @@
+  * from their original mount points.
   */
- int rpcrdma_rn_register(struct ib_device *device,
- 			struct rpcrdma_notification *rn,
-@@ -83,6 +87,10 @@ static void rpcrdma_rn_release(struct kr
-  * rpcrdma_rn_unregister - stop device removal notifications
-  * @device: monitored device
-  * @rn: notification object that no longer wishes to be notified
-+ *
-+ * It is safe to call this on an @rn whose registration never
-+ * completed or failed; rn_done == NULL is treated as
-+ * never-registered and the call is a no-op.
-  */
- void rpcrdma_rn_unregister(struct ib_device *device,
- 			   struct rpcrdma_notification *rn)
-@@ -92,6 +100,20 @@ void rpcrdma_rn_unregister(struct ib_dev
- 	if (!rd)
- 		return;
- 
-+	/*
-+	 * rn_done is the registration sentinel: rpcrdma_rn_register
-+	 * assigns it last, after xa_alloc and kref_get have both
-+	 * succeeded. A NULL rn_done means this notification was
-+	 * never registered (or its registration failed) or has
-+	 * already been unregistered, and the call is a no-op.
-+	 * Without this guard, rn_index == 0 from a kzalloc'd
-+	 * parent would erase another caller's slot 0 and underflow
-+	 * rd_kref.
-+	 */
-+	if (!rn->rn_done)
-+		return;
-+	rn->rn_done = NULL;
+ LANDLOCK_ERRATUM(3)
 +
- 	trace_rpcrdma_client_unregister(device, rn);
- 	xa_erase(&rd->rd_xa, rn->rn_index);
- 	kref_put(&rd->rd_kref, rpcrdma_rn_release);
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -43,6 +43,7 @@
-  */
- 
- #include <linux/interrupt.h>
-+#include <linux/module.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-@@ -599,13 +600,26 @@ static struct svc_xprt *svc_rdma_accept(
- 	return &newxprt->sc_xprt;
- 
-  errout:
--	/* Take a reference in case the DTO handler runs */
--	svc_xprt_get(&newxprt->sc_xprt);
--	if (newxprt->sc_qp && !IS_ERR(newxprt->sc_qp))
--		ib_destroy_qp(newxprt->sc_qp);
--	rdma_destroy_id(newxprt->sc_cm_id);
--	rpcrdma_rn_unregister(dev, &newxprt->sc_rn);
--	/* This call to put will destroy the transport */
-+	/*
-+	 * Drop the kref_init birth reference. svc_xprt_free will
-+	 * dispatch xpo_free = svc_rdma_free, which tears down sc_qp,
-+	 * sc_sq_cq, sc_rq_cq, and sc_pd under existing IS_ERR/NULL
-+	 * guards, and sc_rn under the rn_done sentinel guard inside
-+	 * rpcrdma_rn_unregister.
-+	 *
-+	 * sc_cm_id is destroyed unconditionally by svc_rdma_free; that
-+	 * is safe here because sc_cm_id is non-NULL by caller invariant
-+	 * on every path that reaches this errout: handle_connect_req
-+	 * installs newxprt->sc_cm_id before queueing the new xprt for
-+	 * accept, and svc_rdma_accept has already dereferenced it above
-+	 * the first goto errout.
-+	 *
-+	 * svc_handle_xprt() drops its pre-acquired module reference when
-+	 * ->xpo_accept() returns NULL. Take a replacement reference before
-+	 * freeing @newxprt, because svc_xprt_free() drops the module
-+	 * reference associated with @newxprt.
-+	 */
-+	__module_get(newxprt->sc_xprt.xpt_class->xcl_owner);
- 	svc_xprt_put(&newxprt->sc_xprt);
- 	return NULL;
++/**
++ * DOC: erratum_4
++ *
++ * Erratum 4: Creation of whiteout objects
++ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ *
++ * This fix changes the access rights required for the creation of whiteout
++ * objects through :manpage:`mknod(2)`, :manpage:`renameat2(2)`, or
++ * :manpage:`link(2)`.  Creating whiteout objects is now guarded by
++ * ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
++ *
++ * Whiteout objects are used in OverlayFS to mark the absence of a file in an
++ * upper file system.  Despite being created with ``S_IFCHR``, whiteout objects
++ * do not count as character devices.
++ *
++ * Impact:
++ *
++ * Sandboxed programs that create OverlayFS whiteouts (such as fuse-overlayfs)
++ * now require ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of
++ * ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
++ */
++LANDLOCK_ERRATUM(4)
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -20,6 +20,7 @@
+ #include <linux/falloc.h>
+ #include <linux/fs.h>
+ #include <linux/init.h>
++#include <linux/kdev_t.h>
+ #include <linux/kernel.h>
+ #include <linux/limits.h>
+ #include <linux/list.h>
+@@ -983,7 +984,8 @@ static int current_check_access_path(con
+ 	return -EACCES;
  }
+ 
+-static __attribute_const__ access_mask_t get_mode_access(const umode_t mode)
++static __attribute_const__ access_mask_t get_mode_access(const umode_t mode,
++							 const dev_t dev)
+ {
+ 	switch (mode & S_IFMT) {
+ 	case S_IFLNK:
+@@ -991,6 +993,9 @@ static __attribute_const__ access_mask_t
+ 	case S_IFDIR:
+ 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
+ 	case S_IFCHR:
++		/* Whiteout objects are guarded with MAKE_REG. */
++		if (dev == WHITEOUT_DEV)
++			return LANDLOCK_ACCESS_FS_MAKE_REG;
+ 		return LANDLOCK_ACCESS_FS_MAKE_CHAR;
+ 	case S_IFBLK:
+ 		return LANDLOCK_ACCESS_FS_MAKE_BLOCK;
+@@ -1007,6 +1012,13 @@ static __attribute_const__ access_mask_t
+ 	}
+ }
+ 
++static access_mask_t get_dentry_access(const struct dentry *const dentry)
++{
++	const struct inode *const inode = d_backing_inode(dentry);
++
++	return get_mode_access(inode->i_mode, inode->i_rdev);
++}
++
+ static access_mask_t maybe_remove(const struct dentry *const dentry)
+ {
+ 	if (d_is_negative(dentry))
+@@ -1093,6 +1105,7 @@ static bool collect_domain_accesses(cons
+  * @new_dentry: Destination file or directory.
+  * @removable: Sets to true if it is a rename operation.
+  * @exchange: Sets to true if it is a rename operation with RENAME_EXCHANGE.
++ * @whiteout: Sets to true if it is a rename operation with RENAME_WHITEOUT.
+  *
+  * Because of its unprivileged constraints, Landlock relies on file hierarchies
+  * (and not only inodes) to tie access rights to files.  Being able to link or
+@@ -1140,7 +1153,8 @@ static bool collect_domain_accesses(cons
+ static int current_check_refer_path(struct dentry *const old_dentry,
+ 				    const struct path *const new_dir,
+ 				    struct dentry *const new_dentry,
+-				    const bool removable, const bool exchange)
++				    const bool removable, const bool exchange,
++				    const bool whiteout)
+ {
+ 	const struct landlock_cred_security *const subject =
+ 		landlock_get_applicable_subject(current_cred(), any_fs, NULL);
+@@ -1159,18 +1173,25 @@ static int current_check_refer_path(stru
+ 	if (exchange) {
+ 		if (unlikely(d_is_negative(new_dentry)))
+ 			return -ENOENT;
+-		access_request_parent1 =
+-			get_mode_access(d_backing_inode(new_dentry)->i_mode);
++		access_request_parent1 = get_dentry_access(new_dentry);
+ 	} else {
+ 		access_request_parent1 = 0;
+ 	}
+-	access_request_parent2 =
+-		get_mode_access(d_backing_inode(old_dentry)->i_mode);
++	access_request_parent2 = get_dentry_access(old_dentry);
+ 	if (removable) {
+ 		access_request_parent1 |= maybe_remove(old_dentry);
+ 		access_request_parent2 |= maybe_remove(new_dentry);
+ 	}
+ 
++	/*
++	 * In case of renameat2(2) with RENAME_WHITEOUT, a whiteout object is
++	 * created in the source location, so we require an additional access
++	 * right there.
++	 */
++	if (whiteout)
++		access_request_parent1 |=
++			get_mode_access(S_IFCHR | WHITEOUT_MODE, WHITEOUT_DEV);
++
+ 	/* The mount points are the same for old and new paths, cf. EXDEV. */
+ 	if (old_dentry->d_parent == new_dir->dentry) {
+ 		/*
+@@ -1520,7 +1541,7 @@ static int hook_path_link(struct dentry
+ 			  struct dentry *const new_dentry)
+ {
+ 	return current_check_refer_path(old_dentry, new_dir, new_dentry, false,
+-					false);
++					false, false);
+ }
+ 
+ static int hook_path_rename(const struct path *const old_dir,
+@@ -1531,7 +1552,8 @@ static int hook_path_rename(const struct
+ {
+ 	/* old_dir refers to old_dentry->d_parent and new_dir->mnt */
+ 	return current_check_refer_path(old_dentry, new_dir, new_dentry, true,
+-					!!(flags & RENAME_EXCHANGE));
++					!!(flags & RENAME_EXCHANGE),
++					!!(flags & RENAME_WHITEOUT));
+ }
+ 
+ static int hook_path_mkdir(const struct path *const dir,
+@@ -1544,7 +1566,8 @@ static int hook_path_mknod(const struct
+ 			   struct dentry *const dentry, const umode_t mode,
+ 			   const unsigned int dev)
+ {
+-	return current_check_access_path(dir, get_mode_access(mode));
++	return current_check_access_path(
++		dir, get_mode_access(mode, new_decode_dev(dev)));
+ }
+ 
+ static int hook_path_symlink(const struct path *const dir,
 
 
