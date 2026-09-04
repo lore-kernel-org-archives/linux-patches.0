@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C40C33FE09;
-	Fri,  4 Sep 2026 05:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1861B3D9521;
+	Fri,  4 Sep 2026 05:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498729; cv=none; b=G942fSsPrK0JXAdvC2W4UavJBr1GKe0ltw0mIYx3e58DOG+mxbgujgqt5XI/sfoJ1LfMGO1GWttEe0ru20g1jbALRDxfV6YyFUBAO7c/dQHARigpyVqi0WPm+VaBsIMN5HFiHWulwhVRR8ll7UsvhrbhtM/lcLR6/6xKjkeqCVc=
+	t=1788498732; cv=none; b=a3e91rnu6IVOn6TqmsehvmfNc1vKqd2BgM+VFUAGGv7bTL66DjUl11iSenTQfMvZhfUDquvJ+FUEmlZ7aSpzq53EQaHaC2ohpD17vi9CU5og844EMkGq+QFc2tm0D1fXqSBaGvuukAKZOAHMA07u5i95M7AJK9IhiiHtmpCKdwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498729; c=relaxed/simple;
-	bh=Lawf82kGSqvTyatE7PQmmh/5XuL+6v7RUIZTkKeKI58=;
+	s=arc-20240116; t=1788498732; c=relaxed/simple;
+	bh=0mMTm/VpTOMw/U2CTo55hYONr51LdgnjxqDlEzxGF64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWJPvGmFkTre6tBb/Oj3mOSawAwVgIS01CRqZbtuKk9SJo/QXX206Dx07A7TQXuErdLeoglq/VsWzbe5slCS9yY1wUr090yqbZC0iUBTHo0Af9BdryczvoL9iDBqJXd4m9AvbNqK21IgkeR0gFYptCWZ6XDKFhhqIrp5nzZhCsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQq97HaN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E7GoHC/B1xShW/qPd4yEGmWcHWWpi8xD4lcDUuMcJsWU5hptJpd7DlG6nYohmDQI5qpSripgjkhVLSiZReeof3oCX3C1K2fOQnUzidtAnzJej3k5BNlgO1E//gbIELM+R10qoAWwgt9/pM6rSMSOTHpbZSkYAhScQOmJP7H9o9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5j6Xtly; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQq97HaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A771F00A3E;
-	Fri,  4 Sep 2026 05:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5j6Xtly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C171F00AC4;
+	Fri,  4 Sep 2026 05:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498728;
-	bh=uP3jTjchQvrBiJJd+g6CbH6/8nnxK4PD4/XVF74C+V0=;
+	s=korg; t=1788498731;
+	bh=27L14dBcxUnZl+d4Cyq2/kGxiaqdQQoXLUK4iE0mwjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQq97HaNNW0+mM7vTcbSl96laBt/yJUXPqueIhhE1trdbLQMv6UroYsc3U3b4nhLV
-	 +KcizWgCrH989KEGW8lVb+ZXDjJ6ZrCzvQ+xdPg5uWGC044C2H2I+bD1XaXcsn7Man
-	 TjnwLhL/xWHhWqn6QBAcT9x1FnViva6/gmMrkvbI=
+	b=E5j6Xtly89AGOGTtowpkmANCgsVJURVm12rrsKurVL2HRjZvQq1TfuDjVNyrnWUj3
+	 xZvrqB0AxTi+sYlQOoqTWrwfNy7kSR4UtRKAhKVpn/HAH8O4KWabe7KVW1VJYNHf+n
+	 ps/M7CaPydCQbzSXPNeCvkHewUknCKOd+NlEtZpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 164/713] nfsd: cap decoded POSIX ACL count to bound sort cost
-Date: Fri,  4 Sep 2026 06:52:12 +0200
-Message-ID: <20260904045807.499242482@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 165/713] nfsd: check client ownership when cancelling a copy-notify stateid
+Date: Fri,  4 Sep 2026 06:52:13 +0200
+Message-ID: <20260904045807.522451829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,72 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 4bc1108e876153a2dd6d874052b99182c3603135 upstream.
+commit 6bdbfab96e0cf25e5f57dac5c09dc1749751a4bf upstream.
 
-nfsd4_decode_posixacl() reads a u32 entry count off the wire and passes
-it straight to posix_acl_alloc() and sort_pacl_range(). The latter is
-an O(n^2) bubble sort, so a client-chosen count drives unbounded CPU in
-the server's compound processing path.
+On the OFFLOAD_CANCEL path (clp != NULL), manage_cpntf_state() freed the
+target cpntf state without checking ownership. The lookup key
+st->si_opaque.so_id is allocated cyclically (guessable) and the embedded
+clientid is the fixed per-net nn->s2s_cp_cl_id, so any authenticated
+NFSv4.2 client could cancel and free another client's copy-notify
+stateid.
 
-    nfsd4_decode_posixacl()
-      xdr_stream_decode_u32(&count)       /* uncapped u32 */
-      posix_acl_alloc(count, GFP_KERNEL)
-      sort_pacl_range(*acl, 0, count - 1) /* O(n^2) bubble sort */
+Compare the creating clientid recorded in state->cp_p_clid against the
+requesting client's cl_clientid and return nfserr_bad_stateid on a
+mismatch instead of freeing the entry.
 
-The encoder side in the same file already rejects ACLs whose a_count
-exceeds NFS_ACL_MAX_ENTRIES, but the decoder introduced in commit
-5fc51dfc2eb1 ("NFSD: Add support for XDR decoding POSIX draft ACLs")
-omitted the symmetric check.
-
-Fix by rejecting a wire count greater than NFS_ACL_MAX_ENTRIES with
-nfserr_inval, before any allocation, so the sort is bounded by
-NFS_ACL_MAX_ENTRIES^2 comparisons.
-
-While we're in here, also fix the nfserr_resource return if
-posix_acl_alloc() fails. That's not a legal error code for v4.1+. Change
-it to return nfserr_jukebox as that's more appropriate for memory
-allocation failures.
-
-Fixes: 5fc51dfc2eb1 ("NFSD: Add support for XDR decoding POSIX draft ACLs")
+Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Chris Mason <clm@meta.com>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-8-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260710-nfsd-testing-v3-5-a0ff7db6aa3e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index e17488a911f7..09068ca61b00 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -449,9 +449,18 @@ nfsd4_decode_posixacl(struct nfsd4_compoundargs *argp, struct posix_acl **acl)
- 	if (xdr_stream_decode_u32(argp->xdr, &count) < 0)
- 		return nfserr_bad_xdr;
- 
-+	/*
-+	 * The NFSv4 POSIX ACL draft doesn't define a max number of ACE's, but
-+	 * the NFSACL spec does. For NFSv4, cap the number of entries to the v3
-+	 * limit, as we want to ensure that ACLs set via NFSv4 POSIX ACL
-+	 * extensions are retrievable via NFSACL.
-+	 */
-+	if (count > NFS_ACL_MAX_ENTRIES)
-+		return nfserr_inval;
-+
- 	*acl = posix_acl_alloc(count, GFP_KERNEL);
- 	if (*acl == NULL)
--		return nfserr_resource;
-+		return nfserr_jukebox;
- 
- 	(*acl)->a_count = count;
- 	for (ace = (*acl)->a_entries; ace < (*acl)->a_entries + count; ace++) {
--- 
-2.55.0
-
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7504,10 +7504,20 @@ __be32 manage_cpntf_state(struct nfsd_ne
+ 			state = NULL;
+ 			goto unlock;
+ 		}
+-		if (!clp)
++		if (!clp) {
+ 			refcount_inc(&state->cp_stateid.cs_count);
+-		else
++		} else if (memcmp(&clp->cl_clientid, &state->cp_p_clid,
++				  sizeof(clientid_t))) {
++			/*
++			 * OFFLOAD_CANCEL: only the creating client may cancel.
++			 * so_id is guessable, so without this check any client
++			 * could free another's cpntf state.
++			 */
++			state = NULL;
++			goto unlock;
++		} else {
+ 			_free_cpntf_state_locked(nn, state);
++		}
+ 	}
+ unlock:
+ 	spin_unlock(&nn->s2s_cp_lock);
 
 
