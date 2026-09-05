@@ -1,60 +1,75 @@
-Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568AA5478D
-	for <patches@lists.linux.dev>; Sat,  5 Sep 2026 18:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AD83A6F04
+	for <patches@lists.linux.dev>; Sat,  5 Sep 2026 20:13:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788634040; cv=none; b=gPM+3knnSPZTStbudOSba/mTI8O2+c5zQ6j0wi+8DnoCX3eK21f9tKBaYxwxtkMSlsI40TNHAO9mApo8jiwBRBClkHukaOxRftRmYf7bu4dpCp7txOXbOXWnBbfzKNzhHz+tPHBBhy2ZAw0GKaTCRFerwWgQ4GPGJvF302Qh1cA=
+	t=1788639224; cv=none; b=HBxGSAvOgTGevzd+IMyw7bBrMzpRQix14wtAmIrN7rN2ROE0ZiyjujnZswJEPZJN5hEHyNc9vRPRcDpR+VJg5lbcG+HJEJEOYsH/dJragYO4VDQTX7MqXKeGj0U09QgbZx8a/JP8TE337ZcbhX0Zmn8ZkykxhLT+D1eM9yYoEiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788634040; c=relaxed/simple;
-	bh=VRk6A+H/YTnYz9SG2xBYyr6COKAP3kF4D1entXahM0o=;
+	s=arc-20240116; t=1788639224; c=relaxed/simple;
+	bh=3PKFXcmHlUz3OfVy3HJ0w8Q/d1ojlG+0EylTJLYM3SI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rDwwyAwNG+gOuCK/D0Wim8tJVcnxDfjotmsdhEilmOfK0WvTu6D6eqZ8g0pFNC8ECTJeOMXrbaeHQD0pcGemC4hzG8Np4TjIMwZYtBXbC8id3sMRj3/oWrUX52q7DDqUI2aQ6hfRMU0l/weQ0alMf1aLlMonwB1cTn9ZeeidZXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=3JNX43T7; arc=none smtp.client-ip=44.202.169.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	 In-Reply-To:Content-Type; b=Wlh/5UdKcxzMK9XNIiwBzbvenXpkgvWlCH827pIOiBHf047s4aOKAr9K1j0FyQr0wGjMeER8Psr+gU6ABov8BpM4/GXrf6F5GgpxL/pPxuTcSKWFDwLHqq/60VjncTg/g+7KbModAe0ILja4dP9/he7TKEH/leBBcZvUf6r4L0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=cVZ5spD4; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="3JNX43T7"
-Received: from eig-obgw-6007b.ext.cloudfilter.net ([10.0.30.166])
-	by cmsmtp with ESMTPS
-	id 2Z8txgwfGLvgb2vQ0x8Uyn; Sat, 05 Sep 2026 18:47:12 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id 2vPzx9M9VF2DA2vPzxaS9k; Sat, 05 Sep 2026 18:47:11 +0000
-X-Authority-Analysis: v=2.4 cv=FaM3xI+6 c=1 sm=1 tr=0 ts=6a9c63af
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=R25wJDua8JL5D/hP/FoueD5gH7uOrN14uzEfeiqYA+U=; b=3JNX43T732K0IBwy+V2Mcy35ro
-	4hwrZCHs865GJbnHyM92fR4FQdPgdU28pv8pMOVQ8N8r8bUxi0ocv0f6d6Sknbl6eDoJPRaX9turN
-	vJsVWgD3+qfxCYryeayjnNL7iu6ns8jXZl3dz1UbvKj+VbITerCmBp9GrSwWdvKJLN7x7GZLvAwB6
-	r4mM6bHukleX6vQJnfhijib4DxJdQCqWk5zLZatsnxJCPIlzPSWocwf5xKJB+dIxkf/FcZGwrXPrH
-	FPHzVc8f9lEkSpmwNnNQTXGT7/sWi7+i36DqxogoLbKw4Bu8eDoCH/TixNuOfcpBdym/eFd3FzaT5
-	1Kz7/z2A==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:49992 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.99.5)
-	(envelope-from <re@w6rz.net>)
-	id 1x2vPy-0000000098m-27e1;
-	Sat, 05 Sep 2026 12:47:10 -0600
-Message-ID: <6d25a2d5-b7b3-4f9f-b9f7-d79c45ffff41@w6rz.net>
-Date: Sat, 5 Sep 2026 11:47:09 -0700
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="cVZ5spD4"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-49b0d8bc2aaso27403325e9.0
+        for <patches@lists.linux.dev>; Sat, 05 Sep 2026 13:13:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20251104; t=1788639221; x=1789244021; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AYLQLVPrMZqzYFFCaoEPigRERkkXFvdO1k2M4yUI9oI=;
+        b=cVZ5spD4FgQBMwYPADIlxoOoQ9LsY2E9cuvknhYPjjCuAxGlhVmrFgcpvQRUKDVxxv
+         4WnLlFczZMjKtyrlhJtNwXTMF2ehYx5MQfGxu1qwIlmg3Lp73VRssqTDXiMA6a9A6XfB
+         9Eiq3Nl6jWOaQT5i79CReh8fuSG9MfQC6GXFLt1oGSsyTTxmBfnd/lrzBsNlKRuqY8BY
+         Pfutz42hw9eFgDOtVO0yQXOmpp1+2IfUS6oxjN9oXQw1ocZXYVEfBciirZD8XYGtbYcp
+         GjpUI+iWMcb49AaGoPxSQTgcR+WRZwgxJ9e9RSqhVcTVcyrUsnUG7qD0KbSFGTDLReOB
+         8W/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788639221; x=1789244021;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=AYLQLVPrMZqzYFFCaoEPigRERkkXFvdO1k2M4yUI9oI=;
+        b=oi0wmjMVxFhrO/pdC7oRVYTrKD/O7aBmKgKWiSLAJ4qnGdPjjJXYX+yYkVMbICxoGn
+         M8emtzuIpXqvxtUk9reTnRzDgW0cY0i1wrz/ZCiqn0eSRNS5Y4uyQvB0HBebo/LEWdXT
+         S+mDn+IQK2isBePxFEtlICkoAJvMyAshPRep46o03tsezGbY5K61AI3d7n7NC0vMzWQ0
+         ee8x+tqDs7pjidoLW8fj8y2D5/DWbPY80xa9/eBHB3vcbbGME/hsoNZ+QD1pbu80ypFi
+         4bTzSwdc4qEuVJOg+6rtksKZzmT15kSpREmj0YxieE8Y8J5WFtWgNeAQ/Rxi/rB9eT6Q
+         6X5w==
+X-Gm-Message-State: AFuF++mj4vSYIAi1sAxr+a8buBu+usCRT0czTpmQ9mI9PfsZrR7qdv1v
+	ZMqzRNnU8g3fPUZZNqoZgHIUbEPtOW+MUVjaPM7b66hE8uBKYCxHMHk=
+X-Gm-Gg: AYBFou0ZoAW8g1Jo85yFUM+gJIcNUoRl2XHkG+0Hv9yB6JM+JysLHj4xqkLW2+F6fLV
+	n9/q54PQmVQJSXmtu0DKvtXMvDKFvHh8U3pFY2DpNLOc0XEoV54Cln3qAqmFSV6nA++sS1drs5+
+	MF5u4xNGE7LCnzNQpuj2+nzL0WWnA5I5/X3bl22wWihJETs+uqqznIvHmD/NZU5xXhnHUzlMOOk
+	M3dDcTS1YlEySHboRXVjfNa1Uiboj3pDWThx2DY3tI+8U235gSj8OeUTFFxjRUwRXd+42fYsrRh
+	ltie1J4sytP5DCyvz9rpIIMlHyvfgbxuo9xi7ZfFBIBz/pDEz9Wg98L1A3fZbswqrnjYKktjSzo
+	+OXroRhe1lMyZIQ0ryn1ke+tDwMgitMwef7d7joGP7IEiPN5lkpoD4V/Y73LOWkj/0bUI3oklM7
+	UKTXBgwmFBD6FBXM9ajEiiOzHipiJK+Byur/OG4ICypyetRJ98ZVfWQ/ydV5gr1bQPrbvZKIfMn
+	OqZEZsfy774Ct2sy/KPeiQGn20nYTGPo3iaHkXQ
+X-Received: by 2002:a05:600c:4684:b0:49c:fc6c:be14 with SMTP id 5b1f17b1804b1-49cfc6cc10bmr112637755e9.26.1788639221125;
+        Sat, 05 Sep 2026 13:13:41 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2acda4.dip0.t-ipconnect.de. [91.42.205.164])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cee6023edsm253975395e9.7.2026.09.05.13.13.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Sep 2026 13:13:40 -0700 (PDT)
+Message-ID: <6b05880f-daa4-468c-bf98-389111b2646c@googlemail.com>
+Date: Sat, 5 Sep 2026 22:13:40 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/400] 6.12.109-rc2 review
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 000/551] 6.18.50-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -63,53 +78,33 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20260905115627.670276262@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260905115627.670276262@linuxfoundation.org>
+References: <20260905115635.269562615@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260905115635.269562615@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1x2vPy-0000000098m-27e1
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:49992
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 58
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfJ7MWW7ou9C5vAIgB6Tsx6lnR6n7BrzEAiwgP+8HxAwxj4FdbFKuqbe9sPy30/fBEqnoyRdpK10K1DdSEsOsRYTqGXcqm691XVJ0qxF1ZR63wGnFz2OW
- 1CcSYl8Fh5Jy6BeDOB+/pMdFA/DXY2ze4A6/76x2vAqYpTvH5jnoa1gfvB/IplaVPHc2lxTnL9mx6A==
+Content-Transfer-Encoding: 8bit
 
-On 9/5/26 04:58, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.109 release.
-> There are 400 patches in this series, all will be posted as a response
+Am 05.09.2026 um 13:58 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.18.50 release.
+> There are 551 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Mon, 07 Sep 2026 11:55:05 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.109-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
+
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
