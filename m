@@ -1,110 +1,169 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out30-112.freemail.mail.aliyun.com (out30-112.freemail.mail.aliyun.com [115.124.30.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63EE3B71AD
-	for <patches@lists.linux.dev>; Fri,  4 Sep 2026 21:12:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0613C2D
+	for <patches@lists.linux.dev>; Sat,  5 Sep 2026 10:22:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.112
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788556328; cv=none; b=PlFMTWDfqpDKBTuLw2AY7RtnMVPE/RLAYX5SPTj8J3Qf5/JLJ7sB3YgPvaskKCUhqXSAX0FWmwHYy/W6qtoLOvRkh7Ux09aul4/K8eqCz9wKQdAriC/3OrLNNmr2ahp7HvPWMTLyAoAjK/KYrLRIpYani+mQ8RpA7xio8zlDHDU=
+	t=1788603755; cv=none; b=oSzhdFQ57nImKQLXMRvWG+YwyTrlbYkoUlVpvaCH0kt3F78dDVwQ/qtya3oCyqPS5/Mlg6sbe9yTBY2ncrvaYL9kTorVwwk0mIZrwC2uFIo7rJ2jtyveWxQp5UVYHHWzYGHoMYG1y9VrZB9OTjdovh6fiAUDaiPU9euNYPUFwRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788556328; c=relaxed/simple;
-	bh=XZ2O6+CuggsNKjJUiXGcVa4gfM4JZiv3nmeSny7FCe4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BzRL+NwMUF8mEulTctfs9SsMq4Wr9yfGFiX2ZLk2EpgDfwNuq0tcOBTgyAIVOad289P3aNGOpX2WmP/GacsdY+qg6o7RfrBCcdKKzz9rizUOduW+3FDwyjLsH2wFhLGkAtjvBbAfcw/tcTHnSIP3z4+Dhwy2EC1VSZGKSjABgkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXsh94vW; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1788603755; c=relaxed/simple;
+	bh=3KNj/R7KYC6Zziw5jEB1qygNDTJatM/loAz/jQBWuJA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qEeAYa6JAfuPcXx/w7NL21yxQF74+NrzGBLyuaWN4bM3qXKneLQQnJTuMFupNoyBwgJvK5oZecQijuHqKfgCflaCrMt7SVa272X7jM9js4rHPP2bazipzATz72Twb5M0gacaGDRQQ+Qr9lVOHORGQlTFdh1bkE3lFUVLRFucLpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=wSajH08w; arc=none smtp.client-ip=115.124.30.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXsh94vW"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7f4f3683fbcso1670226a34.0
-        for <patches@lists.linux.dev>; Fri, 04 Sep 2026 14:12:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1788556323; x=1789161123; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5AT5dBqnr/v+Pip1Q+2K4mDw2hDT4rcmlPRVl1ccW1U=;
-        b=OXsh94vWTbeuoEUSD5TLEDkWVU9f9o/Z+S884mkEJdBNZVZOaow3ZBcN+ZfpyL71c1
-         1SKwjPw2wKglx3z6wKqbwW0wnfmhV9Cd9iYKLjVnko6YAsLiDMWaYSBsoDSxkAhrSL2W
-         RxYPV/fmceAGV8ypExsjEUz2l1cFOw291MdCw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788556323; x=1789161123;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=5AT5dBqnr/v+Pip1Q+2K4mDw2hDT4rcmlPRVl1ccW1U=;
-        b=Lb4Bb3NqBYLjd/twu/E3Ttn/N+bO5EEdCt4EtOZxSNs6Xr5k1awXzOLsMNfFOupJko
-         ey5FGqzsxzjrYxsz0Qb5a/7gj3LRJn1yHnUfliEFDDlR4gHGInx18bwuWU5Lzwsor/07
-         u/EbiLyw4QcFGbgd+j97ftEg/QfwMgfcf8f2dHbZpph+1KekjZ8hLWuYRY2qSJCRq1sz
-         tVs6RAS7Ta1WKmu+v4gtHPf37QUB7KVZ6QxxzuXXoRorO9sG8fDw5Ls2T15L+LVn97tr
-         lc5GlPg3Ua8Xoi/VitZbf4MLrCaXTTzmbY8bD32U+Y5bH1inSe3xHfjIPMxxRcKRmenk
-         tu+w==
-X-Gm-Message-State: AFuF++moB8n2GwCo0WyW3uEAjhSBxPni+4Xk60X7+Y1dcUy05+s4fyi8
-	zeDChUj7XS8EORTwvEocyODX+qBe75eDs4CM3+FUsSHZZ9LgO3lyBKeYiMZFrJ/ywZ0=
-X-Gm-Gg: AYBFou08cOOTDt5nO534GfrVuCeCqZ93Fjl44LbFk3a1n43JVkMTnDjTHcKJNSA1F4f
-	pDsR8oGRV15Xuuis6kjwxmZCdjeThQLT5DhK0w/IZBA0g6EIcBFuOAKVYbEdgYsS8W85G8DYn+k
-	LSQpMl/U+Amt/atd6RW/WVzL8TZHafzEQbCZFQW4Pqs1MpyVicrcw5VS+5R8c/ygRlsyObPdaRH
-	ig+7gMyWIRHj4pWn/D2/YIVFVVg5ALKCkX9u4wryeYN7ybYxKQym4TWC7iQ1QsvmSOrOyaWFfNB
-	QkZJ+d3mlT12j1izPZj71384tx7pv54SVDGWAz08N3DQ++Sntfwi15kcbVj6ASOZwVuDor1SZCS
-	OkXGt0nsR+GDiqQ0XztxkorA/9BKHS2/Y3TIZe1DcNomB1YH20JZb94M4gQDaXMx+t/LA1ZjmCU
-	6sWXIQELboYXWMSlGoQPgKsny0U/Cs2oNswOsjV4K0VXZ0VMvj0dYU6FLQFU8AIE/dfkxnOQ==
-X-Received: by 2002:a05:6830:4392:b0:7f1:e04d:fc4e with SMTP id 46e09a7af769-7f899a8aa7amr8040035a34.2.1788556323643;
-        Fri, 04 Sep 2026 14:12:03 -0700 (PDT)
-Received: from [192.168.1.128] ([38.15.57.99])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f9f7aeac18sm4031241a34.25.2026.09.04.14.11.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2026 14:12:03 -0700 (PDT)
-Message-ID: <82febd53-023f-48e0-a0b2-c5da95f069e2@linuxfoundation.org>
-Date: Fri, 4 Sep 2026 15:11:55 -0600
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="wSajH08w"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1788603744; h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	bh=2eP3KCWIc7gStt5fjI//Pxfe5oYZySF3OBJ8UfVxGIQ=;
+	b=wSajH08wTEA238nENtCPxhx1ZgBa5y1/5vrJ5HkX4/NRirgKRzH5m7gdBUk1hGAwOz4JhY5cvRKLJWsb83F2T+mgPHKINAi+GP8JSWRqevx3CrPF23Lgt1wIIqRXud2Rjy/yjlDBK2aVsL3P3oabPKttE47uDXYuGZT7RO1Tqrc=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R371e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045098064;MF=alibuda@linux.alibaba.com;NM=1;PH=DS;RN=8;SR=0;TI=SMTPD_---0XAKnuHb_1788603424;
+Received: from localhost(mailfrom:alibuda@linux.alibaba.com fp:SMTPD_---0XAKnuHb_1788603424 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Sat, 05 Sep 2026 18:17:05 +0800
+Date: Sat, 5 Sep 2026 18:17:04 +0800
+From: "D. Wythe" <alibuda@linux.alibaba.com    >
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "D. Wythe" <alibuda@linux.alibaba.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, zdi-disclosures@trendmicro.com,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Breno Leitao <leitao@debian.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: Re: [PATCH 5.10 28/43] xfrm: espintcp: fix UAF during close
+Message-ID: <20260905101704.GA47841@j66a10360.sqa.eu95>
+References: <20260831133358.571886287@linuxfoundation.org>
+ <20260831133359.883892832@linuxfoundation.org>
+ <20260904095158.GA83164@j66a10360.sqa.eu95>
+ <2026090409-hesitant-hug-bd90@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/403] 6.12.109-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20260904045734.806166532@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2026090409-hesitant-hug-bd90@gregkh>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-On 9/3/26 22:56, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.109 release.
-> There are 403 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Sep 04, 2026 at 02:15:30PM +0200, Greg Kroah-Hartman wrote:
+> On Fri, Sep 04, 2026 at 05:51:58PM +0800, D. Wythe wrote:
+> > On Mon, Aug 31, 2026 at 03:35:36PM +0200, Greg Kroah-Hartman wrote:
+> > > 5.10-stable review patch.  If anyone has any objections, please let me know.
+> > > 
+> > > ------------------
+> > > 
+> > > From: Sabrina Dubroca <sd@queasysnail.net>
+> > > 
+> > > commit deb232e884877bf10b4ce2580909eedec986c284 upstream.
+> > > 
+> > > ZDI reported and analyzed a race condition during close for espintcp
+> > > sockets:
+> > > 
+> > >     espintcp_close() frees emsg->skb via kfree_skb() without holding
+> > >     any socket lock. Concurrently, the xfrm_trans_reinject work queue
+> > >     invokes esp_output_tcp_finish() -> espintcp_push_skb() ->
+> > >     espintcp_push_msgs() -> skb_send_sock_locked(), which reads the
+> > >     same skb as a data source.
+> > > 
+> > > Fix this by adding a synchronize_rcu() call after resetting sk_prot,
+> > > since esp_output_tcp_finish() runs under RCU and won't use a socket
+> > > with sk_prot == &tcp_prot.  Simply taking the socket lock in
+> > > espintcp_close() could lead to leaks, if esp_output_tcp_finish()
+> > > re-adds an skb in the slot we just freed. After this, the existing
+> > > barrier() is no longer needed.
+> > > 
+> > > Cc: stable@vger.kernel.org
+> > > Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+> > > Reported-by: zdi-disclosures@trendmicro.com
+> > > Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+> > > Reviewed-by: Breno Leitao <leitao@debian.org>
+> > > Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+> > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > > ---
+> > >  net/xfrm/espintcp.c |    3 ++-
+> > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > > 
+> > > --- a/net/xfrm/espintcp.c
+> > > +++ b/net/xfrm/espintcp.c
+> > > @@ -506,7 +506,8 @@ static void espintcp_close(struct sock *
+> > >  	strp_stop(&ctx->strp);
+> > >  
+> > >  	sk->sk_prot = &tcp_prot;
+> > > -	barrier();
+> > > +
+> > > +	synchronize_rcu();
+> > 
+> > 
+> > This backport depends on upstream
+> > 028363685bd0 ("espintcp: remove encap socket caching to avoid reference leak"),
+> > which is not in 5.15.y. Without it, esp_find_tcp_sk() still
+> > returns the cached x->encap_sk based only on sk_state == TCP_ESTABLISHED
+> > (no tcp_is_ulp_esp() check), so new readers keep racing with
+> > espintcp_close()'s kfree_skb on ctx->partial.emsg->skb — the UAF issue
+> > this patch is supposed to fix.
+> > 
+> > Reproduced on 5.15.219+ (with this patch applied), KASAN trimmed:
+> > 
+> >   BUG: KASAN: use-after-free in __skb_send_sock+0x6cf/0x7b0
+> >   Workqueue: events xfrm_trans_reinject
+> > 
+> >   Reader:
+> >     __skb_send_sock <- espintcp_push_msgs <- espintcp_push_skb <-
+> >     esp_output_tcp_encap_cb <- xfrm_trans_reinject
+> > 
+> >   Free:
+> >     espintcp_close <- inet_release <- __sock_release <- sock_close <-
+> >     __fput
+> > 
+> >   Object: skbuff_head_cache (size 224), i.e. struct sk_buff.
+> > 
+> > Provenance: the static analysis (missing-prerequisite chain, code-path
+> > derivation) and the KASAN reproducer above were both produced by our
+> > internal AI-assisted backport triage pipeline. I have personally
+> > reviewed the reasoning line-by-line against the 5.15.y source, re-ran
+> > the reproducer end-to-end, and confirm the finding — sending it upstream
+> > on that basis.
 > 
-> Responses should be made by Sun, 06 Sep 2026 04:56:59 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.109-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
+> That's LLM output, what do you mean to say here to fix this?  Please
+> send a patch...
+
+Hi Greg,
+
+Sorry about the confusion. Just to clarify, this is not raw LLM output.
+I only included that note to be transparent and avoid any controversy,
+as the issue wasn't initially discovered by myself.
+
+We actually already have a patch prepared for this, but the situation is
+a bit more complicated.
+
+The fix actually has two prerequisite dependencies:
+
+Commit 028363685bd0 ("espintcp: remove encap socket caching to avoid reference leak"), as mentioned earlier.
+Commit e1512c1db9e8 ("espintcp: Fix race condition in espintcp_close()"), which relies on disable_work_sync() — an API that
+does not exist in the 5.10 tree.
+
+To avoid expanding the blast radius, we chose to use an alternative
+approach in espintcp to replace the implementation of commit
+e1512c1db9e8: introducing a stopped flag and protecting both the flag
+check and schedule_work() under the existing out_queue.lock spinlock,
+achieving the same atomic synchronization effect as
+disable_work_sync().
+
+However, doing this inevitably leads to code divergence between upstream
+and this tree for xfrm. I'm not sure what the xfrm folks' stance is on
+this. If the community feels this is overly complicated, I think it's
+also totally fine to just leave the patch here.
+
+Thanks,
+D. Wythe
+
 > 
 > thanks,
 > 
 > greg k-h
-> 
-
-Compiled and booted on my test system. No dmesg regressions.
-
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
-
-thanks,
--- Shuah
