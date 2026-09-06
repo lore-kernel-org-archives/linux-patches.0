@@ -1,47 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8522512C8;
-	Sun,  6 Sep 2026 15:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F45634B669;
+	Sun,  6 Sep 2026 15:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788706957; cv=none; b=tOhX93Pv/KSmhNa6FRbS0aJT/8XRHIwUTSaJ2j4rlreGCkIl6sFepKcVaXsVVRWzq5gWp7qocnUcdjdryBRMcE1tuaZR9u3ZpV8XmDQ5PvvNg2SDiXm6fbZ1ainFTMI8hYESPhEyijzIvcZrDV4OTuoyhzAVgugFHTcCfNrOmpk=
+	t=1788706958; cv=none; b=p9bpB8ggu6EHvA1sAwVITmwmM847kaVb66VGWZWpBH8+rKLvqtdfBUEmJe+1EQy3LRfmnnZqdlc0/WsYefhfcZu3RufFeNkXW/NtC3anIG/K2Wdlo6ZXj7u82pVBrUoV9DJhxrTVU20/mPK800KigYtHURkJ4s8To2BPxNGce5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788706957; c=relaxed/simple;
-	bh=epM8sq4bymXWhuK0aQM1VwaWRCHzsaIrgg2BHQTVQe4=;
+	s=arc-20240116; t=1788706958; c=relaxed/simple;
+	bh=MUmnn83VSG43OwuUtlYeLYw3vgS2TPzN24PzVkSNaS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hY0khzImPM5mmKeSJ/JHj7jeKTv2qvjdsNEnl6RFmH2ESVD72j23XplfJtB0yp6/XM/hc/TQmZAKzelHsibnfOeu/AqBZ/j5KFGwS8zIrsIzghlR7oLwZscg+ioebhMwSUWgBEJYMo6Vlkibc34y+XdKrD76Pm+iuPkTAymyFKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nbled6sJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B2RAXu9JjzwZId6tK70p+zhCKUQmrtRCj1Sdq6dWJ8WZ+OZjQOsItJD/4wc638Edgmx/a7ceya35DyBTDEdH38SP3tPQiYXjdAoIAVqGY0U8C/sRXVrxds75cLIRfszXYnxdG993oU/qi0noYUVRInOjUUXFVmX8gEX9ZyleCTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CQGH6g1e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nbled6sJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C9E1F00A3D;
-	Sun,  6 Sep 2026 15:02:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CQGH6g1e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749CB1F00AC4;
+	Sun,  6 Sep 2026 15:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788706956;
-	bh=IfI9e7dHNkVIoYnm+0Jl3gYrCIyG3gJEPSIXoZK/iv4=;
+	s=k20260515; t=1788706957;
+	bh=gEdc+3i6wTh14GtuWS3/qG7Eu3Ybt3buksdhTdfZKns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nbled6sJloctjJivgUthVlrPN10xwh4PxCi7PGzYl6b9NRrXTdRp6tw5ABTh17eYh
-	 QNQaI7pZIe8U0ELy48/lxjzpsDzSPD1CaVP1m147SR4NqrmoRF5Re8IotQundWbbhp
-	 iuUsMjGrIVMWZql/wGQqPow+LsCZDgH8IZ30PAp+9BJTItIPEe+KAirIsUaY41cAZi
-	 6BIAsEuUtEcTUFqv9T4/Pco5NIYGH4cn17UOmJ458oYUy8UStV8O8+dQdDxZt+JZuk
-	 q24K2fxKEboHk2ycyEqiE+V/2IO06dVYv0QKq1tuRBErnZjyxnlYdpioFpAIlsxqIl
-	 4wfKxgjgZE6yA==
+	b=CQGH6g1ejz9lEHgXkVgQHzRXrmyAtnvyG1bfn2CpkcxqIwzshYj/M0+dNYO6rXyyr
+	 hU7G1H7LPRhxC2gmr5IZF0x7v/ixtd3J3Mvmsda265K5exboy10/CwePeut+XLy7zm
+	 pNm5OCUHhYVCZMi1hkon+ayYLao2BEjwlhBCR1AXYppZjG+osl4pLT2u3XQtviFO0R
+	 1ESjeUDRodw7WzW65h9wdw2E61Qw0FDi/KpJ7HWbhGXxX7zS5a4jxZeepiEyIKqCMl
+	 65BsWkOTLmnV+8GE3eugGcCRNjpFMBmJ3/Cw0gglovvD2iIXM3QHwVbWa3vLNi/oGv
+	 wMq4c9E/JuVLw==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Max Lee <max.lee@canonical.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Vegard Nossum <vegard.nossum@oracle.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 211/403] SUNRPC: reject duplicate CREDS_VALUE options
-Date: Sun,  6 Sep 2026 11:02:27 -0400
-Message-ID: <20260906180600.reply2-sasha@kernel.org>
+Subject: Re: [PATCH 6.12 296/403] PCI/ASPM: Avoid L0s for Realtek RTS525A
+Date: Sun,  6 Sep 2026 11:02:28 -0400
+Message-ID: <20260906180700.reply3-sasha@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <c811e534-e196-4bef-b4c9-aa2bf80f204c@oracle.com>
-References: <20260904045734.806166532@linuxfoundation.org> <20260904045739.654582047@linuxfoundation.org> <c811e534-e196-4bef-b4c9-aa2bf80f204c@oracle.com>
+In-Reply-To: <727fa752-98f7-40cd-bf3c-79b11ca551ae@oracle.com>
+References: <20260904045734.806166532@linuxfoundation.org> <20260904045741.576327723@linuxfoundation.org> <727fa752-98f7-40cd-bf3c-79b11ca551ae@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,13 +51,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I think 6.12.y misses commit: 5e9a94539b1 ("SUNRPC: fix
-> gssx_dec_option_array error path bugs").  Thoughts?
->
-> I think we should pull in a prerequisite or drop this.
+> Without those prerequisites or a 6.12-specific fix, I would suggest
+> dropping commit: dbccca7f5d2f ("PCI/ASPM: Avoid L0s for Realtek
+> RTS525A"). Thoughts?
 
-Confirmed, thanks. Rather than drop it, We'll queue prerequisite
-5e9a94539b1e later.
+Dropped from 6.12, 6.6, 6.1, 5.15, and 5.10. Kept in 7.2 and 6.18,
+which already carry the three prerequisites (4495bffd86ba,
+575b98e39d81, 30579eebba6a). Thanks for the report.
 
 -- 
 Thanks,
