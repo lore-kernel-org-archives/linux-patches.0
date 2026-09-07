@@ -1,48 +1,48 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011058.outbound.protection.outlook.com [40.93.194.58])
+Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010047.outbound.protection.outlook.com [52.101.56.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5F4503BE5;
-	Mon,  7 Sep 2026 15:23:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D896650AC04;
+	Mon,  7 Sep 2026 15:34:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788794595; cv=fail; b=HHdChhBdVydmj/vyPyDKROYRLT8rAdZc+1HGNMkkBST2Bl+viNDDvVSBjPW93bwpeh26q8rnixs/WfJs2SWhIujR2ISZ7fGJVU8nw/vdGzr/mmZN+/spoDrC0ovPtE+pC4u2nYNXjAeBA5WRBRasvB4ftYaAjI9z/oys6HF0REQ=
+	t=1788795283; cv=fail; b=UdJym7r0W25LGXNKeBCSkquVXemF1EskWqqxLp8HT3ykq/YIDWTu50XWvbHm3GDoSuzxotZRbPM0aO0wHmwZk97V6wZoEK3c64f62Fm9AjVQ1aoulNYEwsfiUp7QyFHTUQGyENNgqhgqcwxwzIzzp2DS7LnBdQwfrQ2nzxNCyaY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788794595; c=relaxed/simple;
-	bh=avL1f48BTs3U7djXm3kicP5E3G+oXEjcBjikU1ZjYvA=;
+	s=arc-20240116; t=1788795283; c=relaxed/simple;
+	bh=SoWMgChI5QA/y9axYBODiiAQdaRb2saRnlhVcApBCfE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=puYhe/n5d+tggDeP64xtu1OxOAs/kEng/3wZ6dl5dszm5Bi/hf1aPjAJbc/o1s8Ctp5dJ9C1Y7j2WNOrWY0aSjkkRGLHQ34Bo5kIHVnedIUmRjl0XvY95uzQvB2vlCdSSPyjaosMRN4Scn/q9syzCOi1Ivj0XfQBunJ0Dj52UcA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=FEkQbqFQ; arc=fail smtp.client-ip=40.93.194.58
+	 Content-Disposition:In-Reply-To:MIME-Version; b=PmL50cbQhQT9k2a/gRQt7UI2F5SNmk9chGlUULPrQ3RI8ZCIUWsqnj7MMmfS+ug6vTsAhzML2sjKlqyhlHrUVWKB5SrHFNrSpnPjmQ+4GspND/cWKH9ht2MpWNmHxsrvYkomJ1bkYb1EOhQ74A7FWCP8g7kVKb1dKXeSV1CbIzQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=U5EObEmd; arc=fail smtp.client-ip=52.101.56.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FEkQbqFQ"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="U5EObEmd"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UcBbnqkpCdAPVq629MfrU1Bq8kHkMDp23efUsscSB9Ovdcwjnn7zEU+VbafKVQLYzA9AYABdJVT79ThvrZIMkdNH09UbIKJU0C1yGHLa+raShcw0VH4hgQJcCvPQlpGpRSqym4POSLlA2KZ9ZkbzT/8WjdNTQ6yM2/b84pE38OboDqhmBbke7VZsdX5FgdEQeLdR+icdm9e9PmxNsJs2Yc3bJeBErypgVCfIWHAPDmNp7hT39IARusgaAuk7mUFkUn9I/d5aeSZvpwZic01HszD334JG4tYDq0MUHFBH701pxqGXDzel3Z8Cf/jUOrSuSY64iG5fXNdmrklECnkPkQ==
+ b=Vf3crgisImaa7co2rngKAp/ubVBQUhB9Ezn4s91dKkseUk9eNgjG8qPGwLVIpo7TqsL2JDCs1NodPetQHVXaPRCcySfqfLTwWuhSl4+wJmRz32HHjYdUJBldMT/qBnVQtgR98Qp6hhuhz1drWNFp7qdBumOAeQNBWJc3O9r/cSoFtRDkRdbPvxk5B/pGy4Iz8vfrWbl6OmX6G/KehCgHTHUf89rgk3iJrKl5bx2PKGKwAgh/ut/9IKrdHRk4TCn+2f05l4ictE9vhxGfNzBRd4KyU2BkakeKVHSasibGQWkpRqkeeDpe9cyG96bQtSJ5oAyboG2MdzFWWfo2357Zeg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=G5p+JmnmUw6JLGXuwIdCfdQj1Ys6Q5WmrN6cT19ja/M=;
- b=LG+IrvaunZzabufzGbW8fViUehc3Ef2Aq7CTfrWRuRuMKxb+9UIfuqrRaEzo85iblmHB5KFJSSG7eAD2dvI+7xkI9qWt8bxuKLJerHt4PdZ3bW5JcSIJyw8ZnJ996xJN/VumuUEjxXXIGiNB29kdURir+HMB88eq4L7EprdbUjua0wPex8KyIJIrG/VXvyoT0uIdgF1dFVILb1j5aVWGaC1nys5ISZNveVZg6IERC43/QlyZ4styRrdTA9j9o2LQiitTE1SLl+2Nri0lfwdQNvc5ZgizanRKTijOiNjstIOKoiE1A7Vn/QjcYOSyCiUtiuHbpklJcblBC5FW8fQJvQ==
+ bh=XqWXRpRi/Ejp14Z9GiU1Aecj0wkvkpZIwKL5GOg6ahs=;
+ b=r1kdEDUOH6lZq+9OpVNJbPd8XoiTSKo6CbcU2aK+mxF9HO7jvAtrEo8/VQN/+uFbQoDnwmw2njjdF5JtbLIo4HCA02hxKFWJxzMolOM7Xe1fTAKhaAE3kP56oOuUR2s88JE8d7WZ3PM0t9bv6szi8Qp9NNbsk+GOLuvX74h+08Tn38sGO3zH7Y6xMnyDJKymn4vH3vd3qkvEsiDDPklH0MYRfuaVhEZD1ogvCY8jZLDtmSwLa9RqIl5XhFNLc9MbkaZTrUG88vBP77MeJeF/x6vGKwYiGxd0KZ8gBvmU0lY6igebPL3hZejGlAw5ZbdKLVLbIAAhcpD01GRST7MYLA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=G5p+JmnmUw6JLGXuwIdCfdQj1Ys6Q5WmrN6cT19ja/M=;
- b=FEkQbqFQk6LylWzGrQ5CeywLhjxBZ7jkIyu1vxularZ8GipGzTWPtOQEP0o6dm/sJdvG/8CMl/De4KqpBiCJtO6YBtyO/YEH9lkSxvX/tBy6ny9hWE2NoyYACFZxLuZD19Z4b6beLc6kheQG+dl5h24xWBzFgugSm7kWU0x9F/0giGVNJH/kFFCL+9p+YpPqXX8Bz2Kja+3a69naHhLMY/eDwxZ4eGkC8uagVanhg8sDykojEFls+7O4nKgFAV0uf7yhPYtFPviycD0toSU92T3PwLS1FS6Gxq+KilWncyGAvKVwTBQXUA1DDxQQlZJe91GJGF4DzCDprTdpyBuiZg==
+ bh=XqWXRpRi/Ejp14Z9GiU1Aecj0wkvkpZIwKL5GOg6ahs=;
+ b=U5EObEmdVP5xfO+hg0//3fNpa3ORm8X4Jjf5z16xnIM4cHZyQY12Isq0XFZik+cBpR/m3vV02VIjIYAyjNkCWfYrpdmgNRJAHwzAh9XUF7Lrhz3H1XyT3Zh0652JfVWuDZasKl4OHVTs+dseQp9hQ0hycdGy2fQYb6g1bPACyIHlx7H0fyQ74+1qgt8pub5/2NLsc2XMw3WbrgDB7hTL8SE6y+qXT74Z1I13K4I68ZDtzEDmpU8bwP/7mb+erP1CDV675a78MsaC3RNTXbDqoZGcaJCYY07nQxO07OyL+wTDZhug5Bjq+FqOjV9IjC5Y30KgBHSsNh5c8xYgz6zwQQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DM4PR12MB6424.namprd12.prod.outlook.com (2603:10b6:8:be::16) with
+ by CH2PR12MB4103.namprd12.prod.outlook.com (2603:10b6:610:7e::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
- 2026 15:23:06 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 7 Sep
+ 2026 15:34:31 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0382.014; Mon, 7 Sep 2026
- 15:23:06 +0000
-Date: Mon, 7 Sep 2026 12:23:05 -0300
+ 15:34:30 +0000
+Date: Mon, 7 Sep 2026 12:34:29 -0300
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Mostafa Saleh <smostafa@google.com>
 Cc: Catalin Marinas <catalin.marinas@arm.com>,
@@ -62,17 +62,17 @@ Cc: Catalin Marinas <catalin.marinas@arm.com>,
 	Pranjal Shrivastava <praan@google.com>,
 	Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org,
 	Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
-Subject: Re: [PATCH v5 4/9] iommu/arm-smmu-v3: Optimize range invalidation
- for latency
-Message-ID: <20260907152305.GA4157646@nvidia.com>
+Subject: Re: [PATCH v5 8/9] iommu/arm-smmu-v3: Change how the tlbi describes
+ the invalidation
+Message-ID: <20260907153429.GB4157646@nvidia.com>
 References: <0-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
- <4-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
- <ap7JiB36YSQOaV9a@google.com>
+ <8-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
+ <ap7NcebXzWC38VVo@google.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ap7JiB36YSQOaV9a@google.com>
-X-ClientProxiedBy: YT4PR01CA0027.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:fe::6) To LV8PR12MB9620.namprd12.prod.outlook.com
+In-Reply-To: <ap7NcebXzWC38VVo@google.com>
+X-ClientProxiedBy: YT3PR01CA0138.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:83::25) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -81,104 +81,213 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM4PR12MB6424:EE_
-X-MS-Office365-Filtering-Correlation-Id: 289a0583-b8a0-4052-c93c-08df0cf3ea90
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CH2PR12MB4103:EE_
+X-MS-Office365-Filtering-Correlation-Id: f727e61c-e1e5-45e8-e46a-08df0cf5827f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|7416014|366016|1800799024|376014|10067099003|22082099003|18002099003|56012099006|11063799006|4143699003;
+	BCL:0;ARA:13230040|1800799024|7416014|376014|23010399003|366016|6133799003|3023799007|4143699003|10067099003|56012099006|11063799006|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	zbZr2aBDFfW6Rye9aiMLKpILJ6CBYZAUkUYPcGWGrcMuVtpkCxt5T8uR7n2kX2gaNqKmZO17vzi86LdSFOCFCTkpGMGjUNz8FVqXhVdAyOxuB9lklMiRIPbGuUSLUx2iv+HV6Dmyiz4FHfMf47Pil8aRWoR86UbJExw69yoTLoN/7ZFHRor7Xv3HS+2m1OntE0c+WgE6sgxvrXVYUr2naFJacM/KZNUXBYaFAaLMScumkRK9JLlfjMx4yv1m/GCpcBDUdUmcXxyc0z1mtCbZCt6P7wNaEYOZ0ORQwb0FT223ziYpprXEJwyYpjTL6X/MROosgigvkp70MjE12/ULpHjzbhSovI75To5EXCvnx8HCnou/2Lf/p3dS4fZ+raiRfS2OmpSfJJMinZK+aJwOdNyBjnOftpJcTQHgrshSuzOVfRbosnL5y2DLXb0rMr/VIXd2TOX1LqNAf2JVN/FYqQRIw/hDuDzzFOo5ht19WHHwEqriHJggETUHCOKgGOeN0ki2Vl/s+Oyo//oQfVtkFKR0FjmuizkZNbyJxOaDQzqa1dNiJ/V9YaIiIs4Vo8lXvl86sJt/WIQYDN5U7Xi9PL67iLLCLS1ZjFZuMHuxyd7UBdP36WHj/Qw5WXk2kgrfaQoewXvgR5ZmH5zFnvXStF1niNifIV5Pnvb5o85sQM4=
+	F8pKmLbvzwQWYslfjr3ZDVtv+TAoNg4FN7HwrDDJP3sUdva0tesBt0v+6HqTPPHsOtMCDinuMMPMJomzPsGh8nyJsbbIkATQE6gHKUzlDZlKsSvNqgNftr6fFy3WbMbRYE0TQWqwC35g6AyUWl+wa+HjXDsdEK9usOvmV94xkIBn30NDsKjflFoPbVZqSQSg53nOPMPrgHZhur4A0rNTmNShrcHAZ2qwakUDtAffR+PB+JGsKhPrHh+8aqbUvD9mgs5DsemDeHA5A8tDTkqUweThtWfmrTo3f+ubRPbv5PWLIFNOsADAtbc97xyDSdydfrZjOEHwsrtp30BGn5fcbiZr3HM/3QExUrvelGDM99eNt8AhO/8WpjPjfiNT1/5NJ007QYNjfLKaf+gPM22uNspMIjKA7ZEiGWzM/OdrA5bhiNDAeT8kH5zZvZ2RmOeoBmXkjllnYsoJkk25zcMmCuQpya/lYGaCzK6pTpXkkjSfgo/OsgVOW5BxrY6+OPxatQw3MTWLNhkPs35CH4vHhRzRFA68Cy3N5L/vspGHf/l/8HV2LcYzHE7ugtrrwll8PhUmsZoVvFjj1d4y3LLW50Tabp9DuTknaSDocYubST9J2vub6xvr+p64nYA14fJ61p3HbysCwX0uBY9Hl8tHBQ2Cf08DGFT5v30AMtSQhHQ=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(366016)(1800799024)(376014)(10067099003)(22082099003)(18002099003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(23010399003)(366016)(6133799003)(3023799007)(4143699003)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?jfURfVm2r46a71hgmidiavzQZD98KM1JYvJmbP3pds+4FAu2I3xwQaNgnxzJ?=
- =?us-ascii?Q?9XD5/e0wB71+5IVz/geS4+uXqzuz81BCyhhzhmhySh+UYH3FeO2jiLv49kxF?=
- =?us-ascii?Q?NyzfhcPuQJPlgoGNHvbj1rWDkQeGzPlajHWJNqG3HAuxbcOlU3F9hzk/WaUn?=
- =?us-ascii?Q?atsnZfGgWWxvxTjxGgMzj5D0aV0T5KqFJTrp1DL05t2xrlnCSoohVEgjFCzF?=
- =?us-ascii?Q?hBLyyoka43mmxo0Ns68rEcHNHvUVYD0ggKCmysB4021O2r8Ie2ZqbeK5NNUl?=
- =?us-ascii?Q?QN2VvWibtkeHizDB7z2kc2/KvRVAtP/29Yyu4d1Rfw8ErYljRke1kQiNqFNZ?=
- =?us-ascii?Q?XiNhuo2n6KIrSFlIZehmWADFGegADAxld7fYiNriF/zyRfCSc1On/uR9hLIb?=
- =?us-ascii?Q?i502kJKJJT8GR3dWU2PwN0t31FHP1WKtJtLzZe47fnithfVT56bHZrazDA7f?=
- =?us-ascii?Q?bR3HuN6uFi9sCgknK4CTRfa3BSiKXFd/61rG27l+kNx7Kr1OqXofDi83vWOj?=
- =?us-ascii?Q?RmzRZA05A7FiSLTifq2CnZOa3hPmrBvhcclYBvvj1hW0OaoIO8CeE5FuY6qc?=
- =?us-ascii?Q?mvCnaWFrMKyiz606CL8k3n1ly1Ls1ThT+GuW3mIEnsfPwxrtoCr0shCqwqgl?=
- =?us-ascii?Q?w4dk+VKAMxWH1UBNdqQtnZe4dajPvUm9eYPegmtJwMpi2wpbRubQgVKCdRXu?=
- =?us-ascii?Q?kuU1wN3U0cZoTm030qmufPCQEq+H9wJMfmYJj72zKz/SfkiCnO+88RLcMpXO?=
- =?us-ascii?Q?gsFxG9BhtmrS4J3t0AOP4R1ltPR4dPHVkKUXkwo28P5SSBWhzzkMEoxM6UCs?=
- =?us-ascii?Q?uixsNC2HU5gOXsWXv0fzoU+kjRrKOJfGLKvRqkUfDI250Jh84Xy1el/afN3B?=
- =?us-ascii?Q?hToJdmyOQNAReau1o2kO7wz+xS1LaNcv3ss/Uc5sBeA89tw6pjs4gKWn1IsF?=
- =?us-ascii?Q?NIUma0VuY1vInyZewqomFklDYVRUQkTgRj0AcxmQlfNRDuKtdfh5TgSK+NnC?=
- =?us-ascii?Q?z5ZrLcq5heCazEvImRQgVZsiGTCAHUVJYodcsE6lz23ArAjHEIQu68w0idfT?=
- =?us-ascii?Q?IOci4sksVlccHf8zf4B13kPjyxEniQintcNl2XH8NZplWNY2gVtnebaPlubO?=
- =?us-ascii?Q?2D2cIWDWLEhYa8e6UzZp3jMoBxCiwJ65u4cthmp9S7qkeX50uIs+QKcrVbny?=
- =?us-ascii?Q?5cZICuoVRtJ/hVsAQsw+MHRDBWfiQFgtm02uSVolhFF1aSv8hTjKQmI780Rp?=
- =?us-ascii?Q?TF+tQHH99N3br3x5bhE1iiEPsT/fI8GnoyUJjAA8uG0gUCDjMcAktZbtAQZh?=
- =?us-ascii?Q?B48lrvtwk2I9aEz0qaYdSglYP9Uyj2uxlV1KDBPUxa1cQUY9aMIALnoYhmc/?=
- =?us-ascii?Q?qW1XuN+3VbN65QNtTTPVLbedK7M2+5lcSogQbKpK1XAB6QegdFd/Vuvy+sZ2?=
- =?us-ascii?Q?ZoLE22RtzaHOtQUYU2/NRqfFbq1hp3MveKdw+r2a1OnjGNVokG2goN053PSY?=
- =?us-ascii?Q?uNmGfD2VjfiPf4aCa0MfFzDzlhLkL1Yu9zKV9eFroeqp1wRyFH3+ndNYZjOJ?=
- =?us-ascii?Q?OzHwu4KBrf251ja4LKSUsHLLRnGudiJmjKCKEb5fo8PpEVeznf+xBLOeHJ7e?=
- =?us-ascii?Q?aW1CWK5T5AP0rdLWpDcjYHoa46KRGkkigF8j63HxArzeFVDZDbjoa1EwqVVA?=
- =?us-ascii?Q?w42QtoEvD8h79vBNzMCH2pvUiU9Ez/Z11MZ+A0JjG08d5os8?=
+	=?us-ascii?Q?2XAFQVigC9xc1Qlc2qdFvFVdOZITHscW+8HWlnTloQyWfNHkFcMRq7PLTEss?=
+ =?us-ascii?Q?ZYncekVXkyZ8GIirT+1AjO6AQbYkJhLb9zxjR/aHl5WdvnNc+eBaRYyPEa+U?=
+ =?us-ascii?Q?viguJEmWu1jqQWqplZ4GDXchJkzmGcBi+E0o8tKs6pExLzbrQy9ehGhseFb5?=
+ =?us-ascii?Q?WjUAHOis+TBR0VyUkCDaQ08o47AA3vSfUWfdoAYCkGO22iTpAfeCOPh5kCGL?=
+ =?us-ascii?Q?l9wQVGGFEndDKvdpAhL13UReY3zCmlr29uelFEKUwpDkxKNozRwO7DNIj9gS?=
+ =?us-ascii?Q?VwErc9KltW88eIEvDBvBMwSkwLz6owjWnbTHRPeAYBCwYMY9Y7Oye9WiEGYI?=
+ =?us-ascii?Q?+oJGCynOxcPiGYXEF0BRQEIcBrquxJp9AunQ/F0cMPhMw5K1JwAte6n2p3oe?=
+ =?us-ascii?Q?uHIHfHRt/XuEFXrwYdCkHCnSnKw3NX0rswkk3k1IKqMatYPT+4vhK6Uk9L2A?=
+ =?us-ascii?Q?Fx4YQ4SnBGSOENPLvd5Yo1X6GofPDTuCnDUDKzZSKlZYM2HXVtKz/Lk1tc8H?=
+ =?us-ascii?Q?+q/hASTpuV/r2OKh8qQt2qhQPesNk6HcvgW2r9QiCbF1FUSG+hvRWNZanyDL?=
+ =?us-ascii?Q?/jnaNIYdK8lAPMrixiQLmCLJS1uT+TKIgrMByd/a0upqSyCuxtQQ5Y1JakDx?=
+ =?us-ascii?Q?F46NN3UdDIxaSUIaOqbMfyYOlNp/PEPIVdr2ZWMwKQ2aZmkS84lfYtjdjjnI?=
+ =?us-ascii?Q?S1PmIRe5bC8StEpmyV8DbVOWHpLrpYvsTKydaZDqGc7EP5bwF0iBFvFPrpRk?=
+ =?us-ascii?Q?u7mLAY2CmPZhF3dEHVSVQLbKeF4Ek+hOxfsEXjAxMG7oGwfA0euGUbbsgCmF?=
+ =?us-ascii?Q?SHSaeHjskm9Qi2l7idgpfzZaHz0mQzepWab1Dqiz1y+K5nG1qX+83SiMMrMy?=
+ =?us-ascii?Q?Igf/Kv4hS7YQ90Jcbw6kOlEEwDJM5KwR1k7sjFtJ61Bc3/e2Jcyk0jX14S7Y?=
+ =?us-ascii?Q?WB6j+Di1wmd0XujfufV6yIYJtqNR6Gy3A3b/0/ScYAfhiWj+KrcEf3sXc1pa?=
+ =?us-ascii?Q?0PKA/qB1EGD91mVcfwiikOZec+uCznaR/HIIAoZ473Gow3Ju0abNFyQfS4nn?=
+ =?us-ascii?Q?5k6i2B3SL4wRPVjEOzIJ9o6T6s8CWs+nJVM/hAFxIru7VaoEmIJlT+Tgyqks?=
+ =?us-ascii?Q?SNbfASkxAkNplozQTAd7xVVCkrTBSPMvftQxFNXxiuuyHZInvIy+McUf81q8?=
+ =?us-ascii?Q?Egj5YVozN8HYoFUG/UPBvgDm4Rn8mtcbqPsjun+kTz07W9F62nwzmm6onwcx?=
+ =?us-ascii?Q?RfbrVDAioHYfgOXJ3WS+OE329zks+Ciltzk7R4NAB+UElGrZR7fQKnGilUK0?=
+ =?us-ascii?Q?7ztckKYSKX+s1KTlYOtapxDVQgpGTBME3P08X0DjUM20CndiNiBJEKC7AdtM?=
+ =?us-ascii?Q?ds2oehSEiGqehmo3vLhV0Je/3ExBJ3qKHgoU5uv3lb4u7o2dlmyFZBEEgxXG?=
+ =?us-ascii?Q?8pIytBMurXeU4WlbLgw7kd6zGtD8vktKaDf6pKhvyt7T5yxzAObbJ6PmNH5d?=
+ =?us-ascii?Q?nDtHo2JGOBSD3CWRIGLW36cdUfnjckUok9e0/SLFMwL3g5X/Z46ZIIknhxLi?=
+ =?us-ascii?Q?MqhlFVV9hSe9n3aZGjFDzvWWNh6sOYwhap5d0S24/ma3e/YKEloN1jxo6lG+?=
+ =?us-ascii?Q?xcONF7dgaZ/rcE4CU2eqiMBqTEybCHIaK3Gsc5zbT2QJwR9ETDX5TwKBOP+/?=
+ =?us-ascii?Q?T4ASHeeVGy7sLxz6WoOv2xHc/GraPZaVB4t4spv6u5qpXZdD?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 289a0583-b8a0-4052-c93c-08df0cf3ea90
+X-MS-Exchange-CrossTenant-Network-Message-Id: f727e61c-e1e5-45e8-e46a-08df0cf5827f
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 15:23:06.3454
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 15:34:30.6781
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AksQNp8H/nC4GgyBGCfOJiIg3cOeklfXxbYMBnJ5dBm7rlB0cJLdu6WASlE8/vZB
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6424
+X-MS-Exchange-CrossTenant-UserPrincipalName: /oPWxkrvNgPhxsvVedzuh8Y1jF90Wl0QYM6ap4uZDkD6FtQ5+nKYRXJHxoiiCuac
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4103
 
-On Mon, Sep 07, 2026 at 02:26:16PM +0000, Mostafa Saleh wrote:
+On Mon, Sep 07, 2026 at 02:42:57PM +0000, Mostafa Saleh wrote:
+> On Tue, Sep 01, 2026 at 02:49:57PM -0300, Jason Gunthorpe wrote:
+> > The RIL logic has long had a FIXME that there is not enough
+> > information to properly compute the RIL. There is also subtly not
+> > enough information to properly compute the single stride either.
+> > 
+> > Change tlbi to use the information format that iommupt is going to
+> > use for ARM. This prepares the invalidation code to support iommupt
+> > and fixes two small limitations with the current code.
+> > 
+> > iommupt is designed to accumulate all invalidation into a single
+> > gather, then the iommu driver should issue a small number of commands
+> > to execute the gather to control invalidation latency. This is in
+> > contrast to io-pgtable-arm.c which generates many gather flushes and
+> > direct walk cache flushes as it progresses.
+> > 
+> > To accommodate this the gather will accumulate "damage" in bitmaps,
+> > one for leaf changes and one for table changes. This is enough
+> > information for SMMUv3 to compute the proper stride for single
+> > invalidation and to generate ideal hints for range invalidation.
+> 
+> I am not sure I understand that, in what situation the leaf_bitmap
+> would be used instead of a single page size?=
+> Would iommupt combine different page sizes in a single invalidation?
 
-> > +static void arm_smmu_cmdq_batch_add_ril(struct arm_smmu_device *smmu,
-> > +					struct arm_smmu_cmdq_batch *cmds,
-> > +					struct arm_smmu_cmd *ref_cmd,
-> > +					bool leaf_only,
-> > +					const struct arm_smmu_ril_range *ril,
-> > +					u8 ttl, u8 tg_enc)
+Yes
+
+> And then I see in this patch it has:
+> if (!is_power_of_2(leaf_bitmap))
+> 	return 0;
+
+Right, ARM doesn't support mixed leaves in a RIL so we can't use TTL
+if iommupt has constructed something like that.
+
+> Would that actually be better for performance than using 2 sets of
+> RILs, one for each page size?
+> As I'd imagine the HW will spend more effort on the TTL=0 case
+> otherwise it wouldn't require it.
+
+I have no idea, it is a hint. Since SW has no knowledge I think it
+should just issue as few commands as possible. There is no way to know
+what will work better on any particular HW.
+
+> > @@ -140,17 +140,34 @@ static void arm_smmu_mm_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
+> >  {
+> >  	struct arm_smmu_domain *smmu_domain =
+> >  		container_of(mn, struct arm_smmu_domain, mmu_notifier);
+> > +	u8 tgsz_lg2 = smmu_domain->tgsz_lg2;
+> >  	struct arm_smmu_tlbi tlbi = {
+> >  		.tgsz_lg2 = smmu_domain->tgsz_lg2,
+> > -		.iova = start,
+> > +		.start = start,
+> > +		.last = end - 1,
+> >  		/*
+> > -		 * The mm_types defines vm_end as the first byte after the end
+> > -		 * address, different from IOMMU subsystem using the last
+> > -		 * address of an address range.
+> > +		 * No information comes from the mm, assume the worst case that
+> > +		 * it changed every table level. The way this is hooked into the
+> > +		 * mm is tricky, the range won't be expanded to include an
+> > +		 * entire table level if one was removed like the iommu gather
+> > +		 * does. Thus even if this is a 4k invalidation it may be
+> > +		 * including any table level too.
+> >  		 */
+> > -		.size = end - start,
+> > -		.iopte_size = PAGE_SIZE,
+> > +		.table_levels_bitmap = 0xfe,
+> 
+> What does that mean, won't arm have a max of 4 levels?
+
+It is really ~1, the extra leading 1s don't matter. Just can't have
+the leaf bit set.
+
+> > +	/*
+> > +	 * If the size is small then we can infer the invalidation is PTE only
+> > +	 * and set the PTE level only. Otherwise it could be some other
+> > +	 * combination so just set them all. This allows RIL to use TTL=3 in
+> > +	 * cases of PTE only changes. The mm must not try to partially
+> > +	 * invalidate pmd/etc.
+> > +	 */
+> 
+> How does that work with splitting blocks?  I imagine that might be
+> ossible with userspace.
+
+If mm splits anything then the invalidation will not be PAGE_SIZE
+big. A split requires invalidating the original larger size.
+
+> > +static u8 arm_smmu_tlbi_calc_stride(struct arm_smmu_tlbi *tlbi)
 > > +{
-> > +	struct arm_smmu_cmd cmd;
-> > +	unsigned int tgsz_lg2 = tg_enc * 2 + 10;
-> > +	u64 iova = ril->start_tg << tgsz_lg2;
-> > +	unsigned int num = ril->num - 1;
+> > +	u8 combined = tlbi->table_levels_bitmap | tlbi->leaf_levels_bitmap;
+> > +	u8 tg_szlg2 = tlbi->tgsz_lg2;
 > > +
-> > +	/* 16K granule TTL=1 is reserved (Section 4.4.1) */
-> > +	if (WARN_ON(tgsz_lg2 == 14 && ttl == 1))
-> > +		ttl = 0;
-> > +
-> > +	/* Verify address alignment for the TTL hint */
-> > +	if (ttl && !arm_smmu_ttl_addr_aligned(iova, tgsz_lg2, ttl))
-> > +		ttl = 0;
+> > +	if (WARN_ON(!combined))
+> > +		return U8_MAX;
 > 
-> Is that a separate fix? Can this be a separate patch in that case.
+> When can that happen?
 
-I don't know if it is because:
+It can't, thats why it is a WARN_ON :)
 
-> Also, in what cases can this happen? io-pgtable-arm should do the
-> right thing and SVA will use ttl=0
-
-This is more getting things setup right for iommupt in the next series
-which creates every imaginable kind of gather.
-
-> > -			/* Determine how many chunks of 2^scale size we have */
-> > -			num = (num_pages >> scale) & CMDQ_TLBI_RANGE_NUM_MAX;
-> > -
-> > -			/* Keep the pre-DS 5-bit truncation when scale > 31 */
-> > -			cmd->data[0] = orig_data0 |
-> > -				FIELD_PREP(CMDQ_TLBI_0_NUM, num - 1) |
-> > -				FIELD_PREP(CMDQ_TLBI_0_SCALE, scale & 0x1f);
+> > @@ -4152,21 +4237,28 @@ static void arm_smmu_flush_iotlb_all(struct iommu_domain *domain)
+> >  		arm_smmu_tlb_inv_context(smmu_domain);
+> >  }
+> >  
+> > +/*
+> > + * Called by io-pgtable-arm.c for each run of same pgsize leaf only
 > 
-> That just deletes the DS code which was recently merged.
-> I see that is added again in the last patch, but it would make more
-> sense to do it in the same patch I guess.
+> I believe that it is called from dma-iommu.c, io-pgtable-arm.c will
+> call the tlb_add_page which builds the gather though.
 
-I missed it when rebasing, I'll adjust it
+Sort of, for the purposes of this comment the important flush is
+initiated by io-pgtable-arm.c under tlb_add_page() when it calls
+arm_smmu_tlb_inv_page_nosync(), which calls
+iommu_iotlb_gather_add_page(), which calls iommu_iotlb_sync()
+
+That's done in a way that guarentees the same-pgsize property:
+
+	if ((gather->pgsize && gather->pgsize != size) ||
+
+Yes it is also called from dma-iommu.c, but only for the "trailing"
+gather and that doesn't do anything to change what is in the gather..
+
+I'll add a few more words here
+
+> > + * invalidation. If it has to change to a different leaf level then it flushes
+> > + * the gather and starts a fresh one. Thus this always targets only a single
+> > + * leaf level.
+> > + */
+> >  static void arm_smmu_iotlb_sync(struct iommu_domain *domain,
+> >  				struct iommu_iotlb_gather *gather)
+> >  {
+> >  	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
+> > +	unsigned int tg = smmu_domain->tgsz_lg2;
+> >  	struct arm_smmu_tlbi tlbi = {
+> >  		.tgsz_lg2 = smmu_domain->tgsz_lg2,
+> > -		.iova = gather->start,
+> > -		.size = gather->end - gather->start + 1,
+> > -		.iopte_size = gather->pgsize,
+> > -		.leaf_only = true,
+> > +		.start = gather->start,
+> > +		.last = gather->end,
+> >  	};
+> >  
+> > -	if (!gather->pgsize)
+> > +	if (WARN_ON(gather->pgsize < BIT(tg)))
+> >  		return;
+> >  
+> > +	tlbi.leaf_levels_bitmap = BIT((ilog2(gather->pgsize) - tg) / (tg - 3));
+> 
+> Having some page table macros would be helpful (and in other places in
+> this patch)
+
+At least this one gets deleted in the next series, so I left it like
+this deliberately. Was there something else you saw that had
+duplication?
 
 Thanks,
 Jason
