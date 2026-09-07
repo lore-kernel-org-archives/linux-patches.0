@@ -1,293 +1,325 @@
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010047.outbound.protection.outlook.com [52.101.56.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D896650AC04;
-	Mon,  7 Sep 2026 15:34:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788795283; cv=fail; b=UdJym7r0W25LGXNKeBCSkquVXemF1EskWqqxLp8HT3ykq/YIDWTu50XWvbHm3GDoSuzxotZRbPM0aO0wHmwZk97V6wZoEK3c64f62Fm9AjVQ1aoulNYEwsfiUp7QyFHTUQGyENNgqhgqcwxwzIzzp2DS7LnBdQwfrQ2nzxNCyaY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788795283; c=relaxed/simple;
-	bh=SoWMgChI5QA/y9axYBODiiAQdaRb2saRnlhVcApBCfE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=PmL50cbQhQT9k2a/gRQt7UI2F5SNmk9chGlUULPrQ3RI8ZCIUWsqnj7MMmfS+ug6vTsAhzML2sjKlqyhlHrUVWKB5SrHFNrSpnPjmQ+4GspND/cWKH9ht2MpWNmHxsrvYkomJ1bkYb1EOhQ74A7FWCP8g7kVKb1dKXeSV1CbIzQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=U5EObEmd; arc=fail smtp.client-ip=52.101.56.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBDC33C5550
+	for <patches@lists.linux.dev>; Mon,  7 Sep 2026 17:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788800486; cv=none; b=T718m61R42UFKYHwyEEIBf+nD546LJmHoBXGiTdXFt0+xiLP74UVUAFlQDgc+nL/MV9fPfY03sZaGyyxNCTBmJo0b7nvr4M/GY1Zd9fBxwJxRhTqBzj9M4SJTRo0Cxi6WlTxLTcUmjqP9clMfnP3lrTl1T89Qn8gMn30gj2TDDI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788800486; c=relaxed/simple;
+	bh=U1caXaGRX85QR2DKxI/9rgzCuQzuHyAFE2Xlgp+YOB4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I7OuYQElMAYrutJmXdDIxc8Y8o2x7jp2i1ymWgoZ6Pfc4ZB/bLZzDmvrows94297qfqG8tKMftdWNq9JrpP5UoXyJ479YbBqSmQCdGjm1QPm8ImD6HsVpbxUV7jsTpn4VznLPKRHZRbqqEEu1bj/5McGyu5uxnGYkZV9gR4HV4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=A7ficnbA; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="U5EObEmd"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Vf3crgisImaa7co2rngKAp/ubVBQUhB9Ezn4s91dKkseUk9eNgjG8qPGwLVIpo7TqsL2JDCs1NodPetQHVXaPRCcySfqfLTwWuhSl4+wJmRz32HHjYdUJBldMT/qBnVQtgR98Qp6hhuhz1drWNFp7qdBumOAeQNBWJc3O9r/cSoFtRDkRdbPvxk5B/pGy4Iz8vfrWbl6OmX6G/KehCgHTHUf89rgk3iJrKl5bx2PKGKwAgh/ut/9IKrdHRk4TCn+2f05l4ictE9vhxGfNzBRd4KyU2BkakeKVHSasibGQWkpRqkeeDpe9cyG96bQtSJ5oAyboG2MdzFWWfo2357Zeg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XqWXRpRi/Ejp14Z9GiU1Aecj0wkvkpZIwKL5GOg6ahs=;
- b=r1kdEDUOH6lZq+9OpVNJbPd8XoiTSKo6CbcU2aK+mxF9HO7jvAtrEo8/VQN/+uFbQoDnwmw2njjdF5JtbLIo4HCA02hxKFWJxzMolOM7Xe1fTAKhaAE3kP56oOuUR2s88JE8d7WZ3PM0t9bv6szi8Qp9NNbsk+GOLuvX74h+08Tn38sGO3zH7Y6xMnyDJKymn4vH3vd3qkvEsiDDPklH0MYRfuaVhEZD1ogvCY8jZLDtmSwLa9RqIl5XhFNLc9MbkaZTrUG88vBP77MeJeF/x6vGKwYiGxd0KZ8gBvmU0lY6igebPL3hZejGlAw5ZbdKLVLbIAAhcpD01GRST7MYLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XqWXRpRi/Ejp14Z9GiU1Aecj0wkvkpZIwKL5GOg6ahs=;
- b=U5EObEmdVP5xfO+hg0//3fNpa3ORm8X4Jjf5z16xnIM4cHZyQY12Isq0XFZik+cBpR/m3vV02VIjIYAyjNkCWfYrpdmgNRJAHwzAh9XUF7Lrhz3H1XyT3Zh0652JfVWuDZasKl4OHVTs+dseQp9hQ0hycdGy2fQYb6g1bPACyIHlx7H0fyQ74+1qgt8pub5/2NLsc2XMw3WbrgDB7hTL8SE6y+qXT74Z1I13K4I68ZDtzEDmpU8bwP/7mb+erP1CDV675a78MsaC3RNTXbDqoZGcaJCYY07nQxO07OyL+wTDZhug5Bjq+FqOjV9IjC5Y30KgBHSsNh5c8xYgz6zwQQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by CH2PR12MB4103.namprd12.prod.outlook.com (2603:10b6:610:7e::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 7 Sep
- 2026 15:34:31 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0382.014; Mon, 7 Sep 2026
- 15:34:30 +0000
-Date: Mon, 7 Sep 2026 12:34:29 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Mostafa Saleh <smostafa@google.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev,
-	"Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Jean-Philippe Brucker <jpb@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Will Deacon <will@kernel.org>, David Matlack <dmatlack@google.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	Pranjal Shrivastava <praan@google.com>,
-	Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org,
-	Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
-Subject: Re: [PATCH v5 8/9] iommu/arm-smmu-v3: Change how the tlbi describes
- the invalidation
-Message-ID: <20260907153429.GB4157646@nvidia.com>
-References: <0-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
- <8-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
- <ap7NcebXzWC38VVo@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ap7NcebXzWC38VVo@google.com>
-X-ClientProxiedBy: YT3PR01CA0138.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:83::25) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="A7ficnbA"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9B6081476;
+	Mon,  7 Sep 2026 10:01:19 -0700 (PDT)
+Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 06D933F528;
+	Mon,  7 Sep 2026 10:01:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1788800483; bh=U1caXaGRX85QR2DKxI/9rgzCuQzuHyAFE2Xlgp+YOB4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=A7ficnbAjBVG4u1+f5j2RkqXyRLvPwVM/rpcZyfqQx7tSiYHnr3CbbQDRRM0KWe/7
+	 BM1yDYWZHN41SZbA9qcyPLj/XaBdy0l21RIu+a9Ylu4jjVpTkiZ11xS76lglZwyMPO
+	 GULPawWYD+BI6kMrS+3gY/cUEWjP6Tv35fmgm5JI=
+Message-ID: <96eda554-64a1-4f1e-9608-98cd106b00da@arm.com>
+Date: Mon, 7 Sep 2026 18:01:20 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CH2PR12MB4103:EE_
-X-MS-Office365-Filtering-Correlation-Id: f727e61c-e1e5-45e8-e46a-08df0cf5827f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|7416014|376014|23010399003|366016|6133799003|3023799007|4143699003|10067099003|56012099006|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	F8pKmLbvzwQWYslfjr3ZDVtv+TAoNg4FN7HwrDDJP3sUdva0tesBt0v+6HqTPPHsOtMCDinuMMPMJomzPsGh8nyJsbbIkATQE6gHKUzlDZlKsSvNqgNftr6fFy3WbMbRYE0TQWqwC35g6AyUWl+wa+HjXDsdEK9usOvmV94xkIBn30NDsKjflFoPbVZqSQSg53nOPMPrgHZhur4A0rNTmNShrcHAZ2qwakUDtAffR+PB+JGsKhPrHh+8aqbUvD9mgs5DsemDeHA5A8tDTkqUweThtWfmrTo3f+ubRPbv5PWLIFNOsADAtbc97xyDSdydfrZjOEHwsrtp30BGn5fcbiZr3HM/3QExUrvelGDM99eNt8AhO/8WpjPjfiNT1/5NJ007QYNjfLKaf+gPM22uNspMIjKA7ZEiGWzM/OdrA5bhiNDAeT8kH5zZvZ2RmOeoBmXkjllnYsoJkk25zcMmCuQpya/lYGaCzK6pTpXkkjSfgo/OsgVOW5BxrY6+OPxatQw3MTWLNhkPs35CH4vHhRzRFA68Cy3N5L/vspGHf/l/8HV2LcYzHE7ugtrrwll8PhUmsZoVvFjj1d4y3LLW50Tabp9DuTknaSDocYubST9J2vub6xvr+p64nYA14fJ61p3HbysCwX0uBY9Hl8tHBQ2Cf08DGFT5v30AMtSQhHQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(23010399003)(366016)(6133799003)(3023799007)(4143699003)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?2XAFQVigC9xc1Qlc2qdFvFVdOZITHscW+8HWlnTloQyWfNHkFcMRq7PLTEss?=
- =?us-ascii?Q?ZYncekVXkyZ8GIirT+1AjO6AQbYkJhLb9zxjR/aHl5WdvnNc+eBaRYyPEa+U?=
- =?us-ascii?Q?viguJEmWu1jqQWqplZ4GDXchJkzmGcBi+E0o8tKs6pExLzbrQy9ehGhseFb5?=
- =?us-ascii?Q?WjUAHOis+TBR0VyUkCDaQ08o47AA3vSfUWfdoAYCkGO22iTpAfeCOPh5kCGL?=
- =?us-ascii?Q?l9wQVGGFEndDKvdpAhL13UReY3zCmlr29uelFEKUwpDkxKNozRwO7DNIj9gS?=
- =?us-ascii?Q?VwErc9KltW88eIEvDBvBMwSkwLz6owjWnbTHRPeAYBCwYMY9Y7Oye9WiEGYI?=
- =?us-ascii?Q?+oJGCynOxcPiGYXEF0BRQEIcBrquxJp9AunQ/F0cMPhMw5K1JwAte6n2p3oe?=
- =?us-ascii?Q?uHIHfHRt/XuEFXrwYdCkHCnSnKw3NX0rswkk3k1IKqMatYPT+4vhK6Uk9L2A?=
- =?us-ascii?Q?Fx4YQ4SnBGSOENPLvd5Yo1X6GofPDTuCnDUDKzZSKlZYM2HXVtKz/Lk1tc8H?=
- =?us-ascii?Q?+q/hASTpuV/r2OKh8qQt2qhQPesNk6HcvgW2r9QiCbF1FUSG+hvRWNZanyDL?=
- =?us-ascii?Q?/jnaNIYdK8lAPMrixiQLmCLJS1uT+TKIgrMByd/a0upqSyCuxtQQ5Y1JakDx?=
- =?us-ascii?Q?F46NN3UdDIxaSUIaOqbMfyYOlNp/PEPIVdr2ZWMwKQ2aZmkS84lfYtjdjjnI?=
- =?us-ascii?Q?S1PmIRe5bC8StEpmyV8DbVOWHpLrpYvsTKydaZDqGc7EP5bwF0iBFvFPrpRk?=
- =?us-ascii?Q?u7mLAY2CmPZhF3dEHVSVQLbKeF4Ek+hOxfsEXjAxMG7oGwfA0euGUbbsgCmF?=
- =?us-ascii?Q?SHSaeHjskm9Qi2l7idgpfzZaHz0mQzepWab1Dqiz1y+K5nG1qX+83SiMMrMy?=
- =?us-ascii?Q?Igf/Kv4hS7YQ90Jcbw6kOlEEwDJM5KwR1k7sjFtJ61Bc3/e2Jcyk0jX14S7Y?=
- =?us-ascii?Q?WB6j+Di1wmd0XujfufV6yIYJtqNR6Gy3A3b/0/ScYAfhiWj+KrcEf3sXc1pa?=
- =?us-ascii?Q?0PKA/qB1EGD91mVcfwiikOZec+uCznaR/HIIAoZ473Gow3Ju0abNFyQfS4nn?=
- =?us-ascii?Q?5k6i2B3SL4wRPVjEOzIJ9o6T6s8CWs+nJVM/hAFxIru7VaoEmIJlT+Tgyqks?=
- =?us-ascii?Q?SNbfASkxAkNplozQTAd7xVVCkrTBSPMvftQxFNXxiuuyHZInvIy+McUf81q8?=
- =?us-ascii?Q?Egj5YVozN8HYoFUG/UPBvgDm4Rn8mtcbqPsjun+kTz07W9F62nwzmm6onwcx?=
- =?us-ascii?Q?RfbrVDAioHYfgOXJ3WS+OE329zks+Ciltzk7R4NAB+UElGrZR7fQKnGilUK0?=
- =?us-ascii?Q?7ztckKYSKX+s1KTlYOtapxDVQgpGTBME3P08X0DjUM20CndiNiBJEKC7AdtM?=
- =?us-ascii?Q?ds2oehSEiGqehmo3vLhV0Je/3ExBJ3qKHgoU5uv3lb4u7o2dlmyFZBEEgxXG?=
- =?us-ascii?Q?8pIytBMurXeU4WlbLgw7kd6zGtD8vktKaDf6pKhvyt7T5yxzAObbJ6PmNH5d?=
- =?us-ascii?Q?nDtHo2JGOBSD3CWRIGLW36cdUfnjckUok9e0/SLFMwL3g5X/Z46ZIIknhxLi?=
- =?us-ascii?Q?MqhlFVV9hSe9n3aZGjFDzvWWNh6sOYwhap5d0S24/ma3e/YKEloN1jxo6lG+?=
- =?us-ascii?Q?xcONF7dgaZ/rcE4CU2eqiMBqTEybCHIaK3Gsc5zbT2QJwR9ETDX5TwKBOP+/?=
- =?us-ascii?Q?T4ASHeeVGy7sLxz6WoOv2xHc/GraPZaVB4t4spv6u5qpXZdD?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f727e61c-e1e5-45e8-e46a-08df0cf5827f
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 15:34:30.6781
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /oPWxkrvNgPhxsvVedzuh8Y1jF90Wl0QYM6ap4uZDkD6FtQ5+nKYRXJHxoiiCuac
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4103
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] arm_mpam: resctrl: Separate MPAM domains
+To: Reinette Chatre <reinette.chatre@intel.com>, james.morse@arm.com,
+ Dave.Martin@arm.com, fenghuay@nvidia.com
+Cc: tony.luck@intel.com, babu.moger@amd.com, yu.c.chen@intel.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <85ca29e89eacf12cfa7071249419e7cadb8f0691.1788220029.git.reinette.chatre@intel.com>
+ <0b0eef2d-ce3b-48c8-af08-5889e7396e4f@arm.com>
+ <a492ffb3-c12e-4986-8f36-c907382c67e5@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <a492ffb3-c12e-4986-8f36-c907382c67e5@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 07, 2026 at 02:42:57PM +0000, Mostafa Saleh wrote:
-> On Tue, Sep 01, 2026 at 02:49:57PM -0300, Jason Gunthorpe wrote:
-> > The RIL logic has long had a FIXME that there is not enough
-> > information to properly compute the RIL. There is also subtly not
-> > enough information to properly compute the single stride either.
-> > 
-> > Change tlbi to use the information format that iommupt is going to
-> > use for ARM. This prepares the invalidation code to support iommupt
-> > and fixes two small limitations with the current code.
-> > 
-> > iommupt is designed to accumulate all invalidation into a single
-> > gather, then the iommu driver should issue a small number of commands
-> > to execute the gather to control invalidation latency. This is in
-> > contrast to io-pgtable-arm.c which generates many gather flushes and
-> > direct walk cache flushes as it progresses.
-> > 
-> > To accommodate this the gather will accumulate "damage" in bitmaps,
-> > one for leaf changes and one for table changes. This is enough
-> > information for SMMUv3 to compute the proper stride for single
-> > invalidation and to generate ideal hints for range invalidation.
+Hi Reinette,
+
+On 03/09/2026 16:29, Reinette Chatre wrote:
+> Hi Ben,
 > 
-> I am not sure I understand that, in what situation the leaf_bitmap
-> would be used instead of a single page size?=
-> Would iommupt combine different page sizes in a single invalidation?
-
-Yes
-
-> And then I see in this patch it has:
-> if (!is_power_of_2(leaf_bitmap))
-> 	return 0;
-
-Right, ARM doesn't support mixed leaves in a RIL so we can't use TTL
-if iommupt has constructed something like that.
-
-> Would that actually be better for performance than using 2 sets of
-> RILs, one for each page size?
-> As I'd imagine the HW will spend more effort on the TTL=0 case
-> otherwise it wouldn't require it.
-
-I have no idea, it is a hint. Since SW has no knowledge I think it
-should just issue as few commands as possible. There is no way to know
-what will work better on any particular HW.
-
-> > @@ -140,17 +140,34 @@ static void arm_smmu_mm_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
-> >  {
-> >  	struct arm_smmu_domain *smmu_domain =
-> >  		container_of(mn, struct arm_smmu_domain, mmu_notifier);
-> > +	u8 tgsz_lg2 = smmu_domain->tgsz_lg2;
-> >  	struct arm_smmu_tlbi tlbi = {
-> >  		.tgsz_lg2 = smmu_domain->tgsz_lg2,
-> > -		.iova = start,
-> > +		.start = start,
-> > +		.last = end - 1,
-> >  		/*
-> > -		 * The mm_types defines vm_end as the first byte after the end
-> > -		 * address, different from IOMMU subsystem using the last
-> > -		 * address of an address range.
-> > +		 * No information comes from the mm, assume the worst case that
-> > +		 * it changed every table level. The way this is hooked into the
-> > +		 * mm is tricky, the range won't be expanded to include an
-> > +		 * entire table level if one was removed like the iommu gather
-> > +		 * does. Thus even if this is a 4k invalidation it may be
-> > +		 * including any table level too.
-> >  		 */
-> > -		.size = end - start,
-> > -		.iopte_size = PAGE_SIZE,
-> > +		.table_levels_bitmap = 0xfe,
+> On 9/2/26 9:10 AM, Ben Horgan wrote:
+>> Hi Reinette,
+>>
+>> On 01/09/2026 00:54, Reinette Chatre wrote:
+>>> A single struct mpam_resctrl_dom instance represents both an allocation and
+>>> monitor domain. When a system supports allocation and monitoring a single
+>>> struct mpam_resctrl_dom instance is created and then added to both the
+>>> monitor and control domain lists via
+>>> mpam_resctrl_dom::rdt_ctrl_domain::rdt_domain_hdr::list_head
+>>> and mpam_resctrl_dom::rdt_l3_mon_domain::rdt_domain_hdr::list_head
+>>> respectively.
+>>>
+>>> Representing both allocation and monitoring domains with a single
+>>> architecture domain requires that allocation and monitoring be done at the
+>>> same scope and also requires a resource to have 1:1 support for an allocation
+>>> control and monitoring. The latter means that when a resource supports
+>>> multiple controls for allocation of a resource, for example a "min" bandwidth
+>>> control as well as a "max" bandwidth control for memory bandwidth allocation,
+>>> then each domain supporting each allocation control needs a matching
+>>> monitoring domain. This does not accurately represent the resource
+>>> capabilities.
+>>
+>> For MPAM, the scope of a control is determined by where the MSC are in a system. For the MSC in the
+>> L3 we collect the MSC in a cache instance and call that a component and collect those components and
+>> call them a class. Similarly for other caches. The scope of a control is based on the component it
+>> is in. Hence, we are unable to use all the flexibility that resctrl will offer.
 > 
-> What does that mean, won't arm have a max of 4 levels?
-
-It is really ~1, the extra leading 1s don't matter. Just can't have
-the leaf bit set.
-
-> > +	/*
-> > +	 * If the size is small then we can infer the invalidation is PTE only
-> > +	 * and set the PTE level only. Otherwise it could be some other
-> > +	 * combination so just set them all. This allows RIL to use TTL=3 in
-> > +	 * cases of PTE only changes. The mm must not try to partially
-> > +	 * invalidate pmd/etc.
-> > +	 */
+> Thank you very much for this insight. Although, to me the final sentence is an
+> unexpected jump from the description since in my view resctrl is catching up to
+> what MPAM is capable of :)
 > 
-> How does that work with splitting blocks?  I imagine that might be
-> ossible with userspace.
-
-If mm splits anything then the invalidation will not be PAGE_SIZE
-big. A split requires invalidating the original larger size.
-
-> > +static u8 arm_smmu_tlbi_calc_stride(struct arm_smmu_tlbi *tlbi)
-> > +{
-> > +	u8 combined = tlbi->table_levels_bitmap | tlbi->leaf_levels_bitmap;
-> > +	u8 tg_szlg2 = tlbi->tgsz_lg2;
-> > +
-> > +	if (WARN_ON(!combined))
-> > +		return U8_MAX;
+>>
+>> For MSC at the memory we currently only consider them for resctrl if there is only one memory
+>> instance (a single NUMA node) and that this corresponds to the topology of the L3 in the system (i.e
+>> only one L3 instance). This will change when NUMA scope is introduced to resctrl but for now the
+>> domain associated with the MPAM component for MSC at the memory covers all the cpus and in such a
+>> system there is only one L3 domain. The idea being that memory bandwidth controls at the memory are
+>> effectively the same as those at L3 if only if there is only one of each and no other caches in
+>> between. The initial MPAM driver put up for upstream review was more lenient than this and so the
+>> tigtening up ended up leaving some complexity around that is no longer needed. I hope to simplify
+>> this in the future and hopefully allow MPAM component to be used more directly to resctrl domain.
 > 
-> When can that happen?
-
-It can't, thats why it is a WARN_ON :)
-
-> > @@ -4152,21 +4237,28 @@ static void arm_smmu_flush_iotlb_all(struct iommu_domain *domain)
-> >  		arm_smmu_tlb_inv_context(smmu_domain);
-> >  }
-> >  
-> > +/*
-> > + * Called by io-pgtable-arm.c for each run of same pgsize leaf only
+> For this I think this change is helpful since it makes it clear that a resctrl
+> domain is associated with an MPAM component.
 > 
-> I believe that it is called from dma-iommu.c, io-pgtable-arm.c will
-> call the tlb_add_page which builds the gather though.
-
-Sort of, for the purposes of this comment the important flush is
-initiated by io-pgtable-arm.c under tlb_add_page() when it calls
-arm_smmu_tlb_inv_page_nosync(), which calls
-iommu_iotlb_gather_add_page(), which calls iommu_iotlb_sync()
-
-That's done in a way that guarentees the same-pgsize property:
-
-	if ((gather->pgsize && gather->pgsize != size) ||
-
-Yes it is also called from dma-iommu.c, but only for the "trailing"
-gather and that doesn't do anything to change what is in the gather..
-
-I'll add a few more words here
-
-> > + * invalidation. If it has to change to a different leaf level then it flushes
-> > + * the gather and starts a fresh one. Thus this always targets only a single
-> > + * leaf level.
-> > + */
-> >  static void arm_smmu_iotlb_sync(struct iommu_domain *domain,
-> >  				struct iommu_iotlb_gather *gather)
-> >  {
-> >  	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
-> > +	unsigned int tg = smmu_domain->tgsz_lg2;
-> >  	struct arm_smmu_tlbi tlbi = {
-> >  		.tgsz_lg2 = smmu_domain->tgsz_lg2,
-> > -		.iova = gather->start,
-> > -		.size = gather->end - gather->start + 1,
-> > -		.iopte_size = gather->pgsize,
-> > -		.leaf_only = true,
-> > +		.start = gather->start,
-> > +		.last = gather->end,
-> >  	};
-> >  
-> > -	if (!gather->pgsize)
-> > +	if (WARN_ON(gather->pgsize < BIT(tg)))
-> >  		return;
-> >  
-> > +	tlbi.leaf_levels_bitmap = BIT((ilog2(gather->pgsize) - tg) / (tg - 3));
+>>
+>>>
+>>> Split MPAM allocation and monitoring domain management to enable a resource
+>>> to support multiple allocation controls. As an initial and knowingly
+>>> inefficient approach, duplicate struct mpam_resctrl_dom between the
+>>> monitoring and control lists while only initializing the relevant member
+>>> structs.
+>>>
+>>> The goal of this conservative approach is to use something that can only
+>>> be compile tested by me to learn from MPAM folks on what the best approach
+>>> should be for MPAM to support multiple allocation controls.
+>>>
+>>> This patch is extracted from the "Generic schema description" PoC [1] that,
+>>> among its various goals, aim to add support for MPAM's multiple controls
+>>> to resctrl.
+>>>
+>>> This has only been compile tested by me but Fenghua's work to enable
+>>> MPAM's CPU-less NUMA nodes [2] is using it as a baseline.
+>>>
+>>> I did consider a new layout as below but there seems to be a contradiction
+>>> in mpam_resctrl_alloc_domain() where domain addition for allocation as well
+>>> as monitoring domains unconditionally fails if there is no "ctrl_comp" while
+>>> a comment when adding a monitoring domain states "there may be no ctrl_comp
+>>> for the L3".
+>>
+>> Hmmm, confusing, but there is no real contradiction. Just some bad naming.
+>>
+>> Quoting the problem area:
+>>
+>> 	ctrl_comp = NULL;
+>> 	guard(srcu)(&mpam_srcu);
+>> 	list_for_each_entry_srcu(comp_iter, &class->components, class_list,
+>> 				 srcu_read_lock_held(&mpam_srcu)) {
+>> 		if (cpumask_test_cpu(cpu, &comp_iter->affinity)) {
+>> 			ctrl_comp = comp_iter;
+>> 			break;
+>> 		}
+>> 	}
 > 
-> Having some page table macros would be helpful (and in other places in
-> this patch)
+> Staring at this more above looks like an open-code of mpam_resctrl.c:find_component()?
 
-At least this one gets deleted in the next series, so I left it like
-this deliberately. Was there something else you saw that had
-duplication?
+Yes, I should clean that up.
+
+> 
+>>
+>> 	/* class has no component for this CPU */
+>> 	if (WARN_ON_ONCE(!ctrl_comp))
+>> 		return ERR_PTR(-EINVAL);
+>>
+>>
+>> In mpam_resctrl_alloc_domain() this initial 'ctrl_comp' check ensures that there is for the class
+>> associated with the given resource, res, a component which includes the given cpu in its affinity
+> 
+> Why does the monitoring require that there is a component associated with the resource as
+> opposed to only relying on the component associated with the the monitoring class, specifically
+> the mpam_resctrl_mon::class? (more below)
+
+The class associated with a resource does double duty and is also used as an indication of whether
+the resource is in used at all, see also mpam_resctrl_online_cpu() and mpam_resctrl_offline_cpu().
+When a resource only supports monitoring then the class providing the monitors is used for
+res->class. As such, a check that there is a component for the given cpu, in the monitor only
+resource case, is just a way to error out early when the monitoring class has no cpu. We shouldn't
+hit this though as all monitoring classes are check that they have the same topology of the l3,
+cover all cpus and there components correspond to l3 instances.
+
+The resource supports monitoring but not controls case only occurs when there are no l3 controls and
+the condidtions for pretending the memory bandwidth counters at the memory are at the l3 are met.
+Those conditions for pretending occur when there is single l3, a single NUMA node and no
+intermediate caches.
+
+> 
+> 
+>> mask. The class is all the L3 MSC or an equivalent of the same scope, see mpam_resctrl_monitor_init().
+>>
+>> 	dom = kzalloc_node(sizeof(*dom), GFP_KERNEL, cpu_to_node(cpu));
+>> 	if (!dom)
+>> 		return ERR_PTR(-ENOMEM);
+>>
+>> 	if (r->alloc_capable) {
+>> 		dom->ctrl_comp = ctrl_comp;
+>>
+>> If the resource is alloc capable this component is used as the domain ctrl_comp.
+>>
+>> 		ctrl_d = &dom->resctrl_ctrl_dom;
+>> 		mpam_resctrl_domain_hdr_init(cpu, ctrl_comp, r->rid, &ctrl_d->hdr);
+>> 		ctrl_d->hdr.type = RESCTRL_CTRL_DOMAIN;
+>> 		err = resctrl_online_ctrl_domain(r, ctrl_d);
+>> 		if (err)
+>> 			goto free_domain;
+>>
+>> 		mpam_resctrl_domain_insert(&r->ctrl_domains, &ctrl_d->hdr);
+>> 	} else {
+>> 		pr_debug("Skipped control domain online - no controls\n");
+>> 	}
+>>
+>> 	if (r->mon_capable) {
+>> 		struct mpam_component *any_mon_comp = NULL;
+>> 		struct mpam_resctrl_mon *mon;
+>> 		enum resctrl_event_id eventid;
+>>
+>> 		/*
+>> 		 * Even if the monitor domain is backed by a different
+>> 		 * component, the L3 component IDs need to be used... only
+>> 		 * there may be no ctrl_comp for the L3.
+>> 		 * Search each event's class list for a component with
+>> 		 * overlapping CPUs and set up the dom->mon_comp array.
+>> 		 */
+>> The MSC at the L3 may only have monitors and so no control component.
+> 
+> The code that follows is:
+> 
+>         for_each_mpam_resctrl_mon(mon, eventid) {
+>                 struct mpam_component *mon_comp;
+> 
+>                 if (!mon->class)
+>                         continue;       // dummy resource
+> 
+>                 mon_comp = find_component(mon->class, cpu);
+> 
+> Is this find_component() perhaps sufficient by itself (without the earlier "ctrl_comp" check)
+> to determine if there is a valid component associated with this CPU to support this
+> monitoring feature? 
+
+Yes, I think is the "ctrl_comp" check is taken away but would have failed we will end up not finding
+any relevant monitoring components.
+
+Although, as written it seems that it is ok for mon_comp to be NULL?
+
+Isn't any_mon_comp the relevant thing?
+
+> 
+> It is not clear to me if a mon_comp of NULL is able to handle all scenarios since it looks
+> like mpam_resctrl_get_mon_domain_from_cpu() and mpam_resctrl_online_domain_hdr() does not
+> consider the component at all. Would that not cause monitoring features to depend on which
+> CPU of a domain comes online first?
+> 
+> Could mon_comp perhaps be required to be !NULL here as a replacement for the earlier
+> "ctrl_comp" check to ensure there is a component with the CPU in its affinity mask?
+
+Doesn't the !any_mon_comp check provide this?
+
+> 
+>                 dom->mon_comp[eventid] = mon_comp;
+>                 if (mon_comp)
+>                         any_mon_comp = mon_comp;
+>         }
+> >
+>>
+>>
+>>
+>>
+>>
+>>> 	struct mpam_resctrl_mon_dom {
+>>> 		struct mpam_component		*mon_comp[QOS_NUM_EVENTS];
+>>> 		struct rdt_l3_mon_domain	resctrl_mon_dom;
+>>> 	}
+>>>
+>>> 	struct mpam_resctrl_ctrl_dom {
+>>> 		struct mpam_component		*ctrl_comp;
+>>> 		struct rdt_ctrl_domain		resctrl_ctrl_dom;
+>>> 	};
+>>
+>> What you have looks to work for me, with some local cmax, mbw_min, mbw_max additions but with the
+>> new layout also works. I gave it a go with this mechanical patch which uses the new layout.
+>>
+>> Thanks,
+>>
+>> Ben
+>>
+>> commit c67c624149474b96e07ccedda11a11ce968e5599
+>> Author: Ben Horgan <ben.horgan@arm.com>
+>> Date:   Tue Sep 1 17:36:29 2026 +0100
+>>
+>>     arm_mpam: resctrl: Separate monitor and control domain structure
+>>
+>> diff --git a/drivers/resctrl/mpam_internal.h b/drivers/resctrl/mpam_internal.h
+>> index 3304ef64fcae..855f06657554 100644
+>> --- a/drivers/resctrl/mpam_internal.h
+>> +++ b/drivers/resctrl/mpam_internal.h
+>> @@ -393,18 +393,14 @@ struct mpam_resctrl_ctrl {
+>>  	struct resctrl_ctrl	r_ctrl;
+>>  };
+>>
+>> -struct mpam_resctrl_dom {
+>> -	struct mpam_component		*ctrl_comp;
+>> -
+>> -	/*
+>> -	 * There is no single mon_comp because different events may be backed
+>> -	 * by different class/components. mon_comp is indexed by the event
+>> -	 * number.
+>> -	 */
+>> +struct mpam_resctrl_mon_dom {
+>>  	struct mpam_component		*mon_comp[QOS_NUM_EVENTS];
+>> +	struct rdt_l3_mon_domain	resctrl_mon_dom;
+>> +};
+>>
+>> +struct mpam_resctrl_ctrl_dom {
+>> +	struct mpam_component		*ctrl_comp;
+>>  	struct rdt_ctrl_domain		resctrl_ctrl_dom;
+>> -	struct rdt_l3_mon_domain	resctrl_mon_dom;
+>>  };
+>>
+> 
+> Thank you very much for trying this out. I find this layout better since the
+> architecture domain structure only contains those members related to the domain. 
+> I see your snippet is based on the PoC, would you prefer I incorporate it into a new
+> version of the PoC to get some more testing or to create a new version based on
+> current upstream so that we can work on its upstream inclusion for the multiple
+> controller support to build on?
+
+In the spirit of getting the precursors for your PoC upstream I think it would make sense to work on
+this for upstream. Whatever you think is best for progressing multiple control support is ok with me
+though.
 
 Thanks,
-Jason
+
+Ben
+
+> 
+> Thank you
+> 
+> Reinette
+
