@@ -1,66 +1,66 @@
 Received: from mail-ed2-f12.google.com (mail-ed2-f12.google.com [74.125.228.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3948C3859EC
-	for <patches@lists.linux.dev>; Mon,  7 Sep 2026 14:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3285E361947
+	for <patches@lists.linux.dev>; Mon,  7 Sep 2026 14:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788790914; cv=none; b=R0D9ojEr8yXbmKB+HpB/DHyZftRNTiMjD9zn6XqcR6rispCnBkyfc8uva0GcqoJ7V1FGyoDC0IuNH8rfr0MiLb7laZClVwRPVeiHN3BKFPLO1NFABORU6vajO0a1S7O+midVxAIs1cn9kUTbDPf5Owt8xCcqt6vstpSbxNh+dGQ=
+	t=1788790940; cv=none; b=moEsEA6cHmQ8UdIvp8U1bIwKcleW42GXtS8/A8LQV/bCrPDqs73SmfqLANf980U7l5/blkEttgsO0yh0eBYAQc0dG0bd50J6cSmNRN3KSi6Fz2SIugUr/nYwm8iRko62GOBa+dlDZPaEihhWbmDN2YG+tWWeOrz33/h2ulcDBq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788790914; c=relaxed/simple;
-	bh=7Regah+qf9wEx4AtaNocLUxqNjPHScB3MmjBW5AC9Ec=;
+	s=arc-20240116; t=1788790940; c=relaxed/simple;
+	bh=L5giwHFItNxyBQ4HYY6/uL44rLGUGPvpnizGzE2uDCM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q19r1Bt2Hg2kjQYjvNcv147Ujx7VqK2siOorcEkAxftdXSjeRDW3dIQGieEzhmV+ey11eDMJmsT8i0eow9nTeMoF7d1kHHuIoE083mBwOBMf0pwXFsR+eLcEp7KeVBu8754ojmfokP2GLm8X0bYQVzNMsEXvQI9wew5F6v6yxmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ndhKfbxV; arc=none smtp.client-ip=74.125.228.76
+	 Content-Type:Content-Disposition:In-Reply-To; b=NCvm1ZnsNUvu/8vkwSJBR76mHQ//YDOtMau7MaU05SUSkLrXKmSwnnn2IlV55BFSvPR02n0gqyi+n/d1IqAOMUl1941XO2J4K7qnITKpMm9DbDbIFhC2zX/K8K/3EHWmOaacNYCo/eY6iHpEP2nrl/AvWAOqtTbZ8xmZmwpJcgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rIpLPbPA; arc=none smtp.client-ip=74.125.228.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ndhKfbxV"
-Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a5d8fd8d88so15165a12.0
-        for <patches@lists.linux.dev>; Mon, 07 Sep 2026 07:21:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rIpLPbPA"
+Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a5d8fd8d88so15184a12.0
+        for <patches@lists.linux.dev>; Mon, 07 Sep 2026 07:22:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1788790910; x=1789395710; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1788790936; x=1789395736; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=VX/qjX8bBihd5ue2J42v1DAvcCr2XZH6u/7IYMXwpfs=;
-        b=ndhKfbxVqDY4x40HlUU7VGRC6HqWCQd42GUEmF/9Pf1kzTCTjMWoUz8xVess08i3hv
-         brzD7PCV/UkMTogQImzjw8vHJCJ9W1xjKXd/HdJtHFyHBUTQf2IU4V4Dwx6ixaeyF2ru
-         TL/02WWfZEiR2YhTb0x0NaK8A4CtkAoUEo6cipN/PFLROGKTjUasQFyG0p9yonyWDMiX
-         55Kxs3Pd7d+7ADszsi4latQih03Q8hO0/TQjIdmfA5F0pe4yoBYzVmuuAeZda6kCoc3N
-         eGhChV5/GjfqI6LKrK90CFcnQqXKM7OfOxph2p4THWypTHcO3XxTRgZ8jv6kMs+e7ejb
-         5a2A==
+        bh=+65O/Mn9btfawvfMn+qubKzpEX/dBj5nAHgdBd6jOu0=;
+        b=rIpLPbPA6fLDqfkhNGjACR7RObWZ/unqgHsCbEbBZnKJBdgE5Ez0zhe1HW2hPqqPVb
+         jO/PKvrotdGB72t8A1NAPq2N0PSzsi6h28J8n1leQuntbogCivnM/MoscyswsQcbf7gj
+         IehRXnXrrkATufhINzaZI/IYt4rQYglgGoem/gbVnXmprBUyv5vmid3qEM6CvVxMDHkl
+         pz5SGrN9By5vijAl4x250dgwbIaVO+MfsIyZ97gaLBbjS7yJWLPq14gERvEJ/96bD5Pc
+         dKv3TaAEQvW3r1PKvc/ge8nZvn00Bo2iKSrOuKLHDwAi2qcZnJ9viXwYraIs0OjZCk7K
+         w6NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788790910; x=1789395710;
+        d=1e100.net; s=20251104; t=1788790936; x=1789395736;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VX/qjX8bBihd5ue2J42v1DAvcCr2XZH6u/7IYMXwpfs=;
-        b=gCIFMZhrAY6Ww1ShvwI0x/6jYCwtphpPNeJix8l/YrxHjaJczLdhFKU8vXqi4a5ZDa
-         GRLUKxycpK0lBp51XdD/fwFIAribdy8TxunsWL73royH6VE7gogOtA+NmLZ3ZbBWnAHR
-         UOuUHWKOCOHdjPZrVNue5Yg+Yq5aXq6BDxb04QgB7vCq33fRSIbDZ21/xYkzfiZgnUtQ
-         GNDAFbbDjhEhje0V6KxCDPRapQMvdBmzpguz6CXyPv09+LgbekjQ2t2Ii1FaH6t1IK0E
-         nSIt/jfARvqLDpDgoMcWafMTw9eWQ5ceibkzrO7qQ5dngiu+rBHbeigkfUwXNOVugrai
-         1a6A==
-X-Forwarded-Encrypted: i=1; AKwUvBzGOtIGQXhdNbTNDh7vx3gt3EsVPs9wvI5rql9rnoP+j0/MoyK3El7wi2Kc7Cv9muzsgZ3XA3G6@lists.linux.dev
-X-Gm-Message-State: AFuF++k9iPPzPF8Tyt0f9HEDbtPr4iHBH+amLYLKjrAofZnT1ZjK0Wbh
-	Py5VPyhWtKw7DCJMD2k8HcLVW3iPwTht3tPsvl2+cJ2HLGrE3mB12R2v/WP1kIl3jQ==
-X-Gm-Gg: AYBFou319TUL42YVH6nPEsLOS3+XMNlpQ3I/yCc4YtdmqXIbOQO0R1+MrdqanTSoSEP
-	93cL5YXeTDxDF0VJHCbqqtC5Rk5pJfIXgG8+2ecn44a9f4cfUxizvg4EVJhnIdFaGMoy3Su9bGQ
-	Kjgn34pPhw0TnDmDyy4qhfSHqq8KCokHwuDZ0KtDQiXSmK9TuDOe3qeeeyjzWf3o7+CeduSe6Ka
-	GtCjJBwQJHvX1SGRfLZYG0JUKVJpgHIFwZy57buA8uLplklfKPuENSo0kzf7X2nRJ8tgrEUmtjk
-	dKvZWT7kBxqUf+NUg1Xa6KiWoG++jiicFAR9+YP+SPm9GRCaBRBfk7JerPdTMyGyqN7+OiHWcEU
-	x32j6u9Dl4khUpinxljTiO1E2rtNgmNQSFytAgNgJvBzQo1NYIV87zlKnJEzXiRRKUbRpKlE2TW
-	m+48E70TgsdOQ7m//dZQR0Kj9ep+5laYSVtT7DmaMcfDq+I89N6D9fa5tVOGSYLeOf8r18upR5h
-	b+wrCAj6MOEOxSNCGyDykCr+Njwmg==
-X-Received: by 2002:a05:6402:4602:20b0:6a6:f2a5:1b4f with SMTP id 4fb4d7f45d1cf-6a7f67ae513mr51553a12.4.1788790909668;
-        Mon, 07 Sep 2026 07:21:49 -0700 (PDT)
+        bh=+65O/Mn9btfawvfMn+qubKzpEX/dBj5nAHgdBd6jOu0=;
+        b=HiwWovG9EEfObyGD2HPy/ah2xHoEIFJdvXR+rKUi9f7Bxv6MpS/GkdcxW7bFG4O52z
+         xCrdFbN0clCs6NBh20uyMbJsHFbcMYNHS6RCo5T7qkO4C1BV6t/JRwCly27X1BHja24z
+         sx86OiaA1XbmdOET4fnpZjlRH8ILQGkb5ZvbPB6vmH/zo9KupesgZgDQZgw4RIpjz3rI
+         uI+KHYB/2a7Vpjdn93sQ4mib9lo+vz4yu0ckPwUhkvZL67EgypNoDf6WjUpKMFZ6rwfg
+         CSId6CUJM3jOlqoXCHLhipEqQCUrtIlDeYAWZ4E6W2Ij9q59nI88fSoXRt3nAfv0/TZT
+         Joqg==
+X-Forwarded-Encrypted: i=1; AKwUvBzEGwMq0ZTGUbs0Sxeo7jchWOo21dPplKJ5UeWvErKcECE6EcyWNjAjRYTbUb+kZ5oiJRc+i2eI@lists.linux.dev
+X-Gm-Message-State: AFuF++nWqRV9BfcUIEM9qdbb3n+Il6gHOMRgS5nC0wYveFchLFluwdCP
+	lf1OA6L9Dmx6gSjXdIWzxvB/Gji/flgLrHQrFw5zO15ceTJD8GfatpXjZNHzn8htmw==
+X-Gm-Gg: AYBFou1yABRba/zaAO2yc9zZsxF5JtiHceMgjhxr4G5TYHSkgOWBWlCaiMCGqe4QlwB
+	QgV2bv6xb01tfmgsylkcEV+VywjUxmTILlZ+w1xo5X8IDDDzJazZOlUtJx3nDKhPQcA+AXZndjZ
+	RqKJcY/ZDUQ5KfacPXcIDmZEzmmvS/EF2RkHEO7393CMSmEs+oyPmpTI4P9PvYArujrDH9n2Z/o
+	UAKJtDtWOQfhD/Lk5W6nl84vxLleNHvNc3XEghNbVTrVC0eloG21Hobpiu5F3z+wpEEfFZfhVqn
+	2wm2uMRUItqvSqsbbg5twa9Eti8Scp2T60nurUk21q4QTUYxijVk2fe2kdY6kKex58al+Wnl/HB
+	HLeRf0Hc/Wr1eUaY0CgqncKNguVlMYbtDhW8RtKjVoZrZzo1B1w/snYavoWf3M02Ndkn936sz+I
+	EYr0P46aVhDWA4sEq50QhsH832yT+plX6AzpOadefZCIOnYJdo6w0n4hFrM93lzd3TvmAH/I/i3
+	YGvgl5QTO8/lk4N0U6jsJGBLjB8lA==
+X-Received: by 2002:aa7:d8d6:0:b0:6a6:6ded:b4b6 with SMTP id 4fb4d7f45d1cf-6a7f689d0femr62664a12.13.1788790935870;
+        Mon, 07 Sep 2026 07:22:15 -0700 (PDT)
 Received: from google.com (250.192.189.35.bc.googleusercontent.com. [35.189.192.250])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c260d4a98efsm490693566b.14.2026.09.07.07.21.47
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c26263cb042sm348714166b.47.2026.09.07.07.22.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Sep 2026 07:21:48 -0700 (PDT)
-Date: Mon, 7 Sep 2026 14:21:44 +0000
+        Mon, 07 Sep 2026 07:22:14 -0700 (PDT)
+Date: Mon, 7 Sep 2026 14:22:11 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Catalin Marinas <catalin.marinas@arm.com>,
@@ -80,11 +80,10 @@ Cc: Catalin Marinas <catalin.marinas@arm.com>,
 	Pranjal Shrivastava <praan@google.com>,
 	Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org,
 	Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
-Subject: Re: [PATCH v5 1/9] iommu/arm-smmu-v3: Handle ARM erratum for CONT
- under invalidation with SVA
-Message-ID: <ap7IeAfVPZL3Hqt_@google.com>
+Subject: Re: [PATCH v5 3/9] iommu/arm-smmu-v3: Move pgsize out of arm_smmu_inv
+Message-ID: <ap7Ik0c5xQi647xy@google.com>
 References: <0-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
- <1-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
+ <3-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -93,263 +92,198 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
+In-Reply-To: <3-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
 
-On Tue, Sep 01, 2026 at 02:49:50PM -0300, Jason Gunthorpe wrote:
-> The erratum (MMU-700: #3777127, S3: #3673557) deals with under
-> invalidation of a CONT PTE grouping in the SMMU. The recommended work
-> around is to use a Range Invalidate (RIL) that spans the entire CONT. The
-> only user of CONT in the kernel right now is through SVA sharing a CPU
-> page table that contains a CONT created by the mm.
+On Tue, Sep 01, 2026 at 02:49:52PM -0300, Jason Gunthorpe wrote:
+> pgsize is a constant property of the domain, it is the base translation
+> granule of the page table (4k, 16k, 64k) in log2.
 > 
-> Previously it was thought that this errata was dealt with because the
-> driver always uses RIL. However, there is a subtle detail in the errata
-> that the RIL range must fully enclose the entire CONT for it to work.
+> Store it to the struct arm_smmu_domain based on how the page table was
+> created.
 > 
-> It seems that two sequential RILs, with a split point falling inside a
-> CONT grouping, will not prevent the errata.
+> Pass it around in the tlbi.
 > 
-> The SMMU's RIL generation algorithm does not produce a single RIL for a
-> single SVA invalidation request, nor does the mm carefully align the SVA
-> invalidation ranges to accommodate the RIL splitting.
-> 
-> Thus, when processing a SVA invalidation, the RIL splitting routine can
-> generate a RIL that is split in the middle of the CONT and risk under
-> invalidation from this errata. This condition could be triggered by a
-> malicious userspace manipulating the TLB gathers via mmap/mprotect/munmap.
-> 
-> Update the errata list to the include the S3 variation, detect the IOMMUs
-> that have it, and then have SVA invalidations use a simplified version of
-> the over invalidation algorithm from the tlbi rework series. This ensures
-> that a single RIL is issued for a single MMU notifier callback and now the
-> RIL is guarenteed to cover any posible CONT.
-> 
-> Future work to add CONT to iommu_domain page tables should either use this
-> one-invalidate/one-RIL algorithm or disable CONT support in the
-> iommu_domain.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 3f1ce8e85ee0 ("iommu/arm-smmu-v3: Share process page tables")
-> Cc: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  Documentation/arch/arm64/silicon-errata.rst   |  3 +-
->  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   |  7 ++
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 87 +++++++++++++++----
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  2 +
->  4 files changed, 81 insertions(+), 18 deletions(-)
-> 
-> diff --git a/Documentation/arch/arm64/silicon-errata.rst b/Documentation/arch/arm64/silicon-errata.rst
-> index ac3248b9f2f3bb..68018bf75b7910 100644
-> --- a/Documentation/arch/arm64/silicon-errata.rst
-> +++ b/Documentation/arch/arm64/silicon-errata.rst
-> @@ -271,7 +271,8 @@ stable kernels.
->  +----------------+-----------------+-----------------+-----------------------------+
->  | ARM            | MMU L1          | #3878312        | N/A                         |
->  +----------------+-----------------+-----------------+-----------------------------+
-> -| ARM            | MMU S3          | #3995052        | N/A                         |
-> +| ARM            | MMU S3          | #3995052,       | N/A                         |
-> +|                |                 | #3673557        |                             |
->  +----------------+-----------------+-----------------+-----------------------------+
->  | ARM            | GIC-700         | #2941627        | ARM64_ERRATUM_2941627       |
->  +----------------+-----------------+-----------------+-----------------------------+
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> index 0a429c64fbf3e7..a0c9078646fb55 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> @@ -215,6 +215,13 @@ bool arm_smmu_sva_supported(struct arm_smmu_device *smmu)
->  	if (system_supports_haft())
->  		feat_mask |= ARM_SMMU_FEAT_HAFT;
->  
-> +	/*
-> +	 * The workaround for ARM_SMMU_OPT_FULL_CONT_RIL requires range
-> +	 * invalidation support.
-> +	 */
-> +	if (smmu->options & ARM_SMMU_OPT_FULL_CONT_RIL)
-> +		feat_mask |= ARM_SMMU_FEAT_RANGE_INV;
-> +
->  	if ((smmu->features & feat_mask) != feat_mask)
->  		return false;
->  
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 5732f3ba0122d6..d6896e25b6632a 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -2538,6 +2538,36 @@ static void arm_smmu_cmdq_batch_add_range(struct arm_smmu_device *smmu,
->  	}
->  }
->  
-> +/*
-> + * Generate a RIL for ARM_SMMU_OPT_FULL_CONT_RIL by ensuring the entire SVA
-> + * requested range is covered with a single RIL command. The scale is adjusted
-> + * so that the RIL may extend past the end of the requested range. This ensures
-> + * that any CONT the MM is invalidating is covered by a single RIL. TTL and LEAF
-> + * are always 0 because this is only used by SVA.
-> + */
-> +static bool arm_smmu_cmdq_batch_add_ril(struct arm_smmu_device *smmu,
-> +					struct arm_smmu_cmdq_batch *cmds,
-> +					struct arm_smmu_cmd *cmd,
-> +					unsigned long iova, size_t size,
-> +					u8 tgsz_lg2)
-> +{
-> +	u64 cur_tg = iova >> tgsz_lg2;
-
-Nit: tg suffix is a bit confusing, I guess pfn is more accurate, but
-no strong opinion.
 
 Reviewed-by: Mostafa Saleh <smostafa@google.com>
 
 Thanks,
 Mostafa
 
-> +	u64 num_tg = ((iova + size - 1) >> tgsz_lg2) - cur_tg + 1;
-> +	unsigned int scale = fls64((num_tg - 1) / 32);
-> +
-> +	if (scale > 31)
-> +		return false;
-> +
-> +	cmd->data[0] |=
-> +		FIELD_PREP(CMDQ_TLBI_0_NUM,
-> +			   DIV_ROUND_UP_ULL(num_tg, 1ULL << scale) - 1) |
-> +		FIELD_PREP(CMDQ_TLBI_0_SCALE, scale);
-> +	cmd->data[1] = FIELD_PREP(CMDQ_TLBI_1_TG, (tgsz_lg2 - 10) / 2) |
-> +		       (cur_tg << tgsz_lg2);
-> +	arm_smmu_cmdq_batch_add_cmd_p(smmu, cmds, cmd);
-> +	return true;
-> +}
-> +
->  static bool arm_smmu_inv_size_too_big(struct arm_smmu_device *smmu, size_t size,
->  				      size_t granule)
->  {
-> @@ -2565,21 +2595,30 @@ static bool arm_smmu_inv_size_too_big(struct arm_smmu_device *smmu, size_t size,
->  static void arm_smmu_inv_to_cmdq_batch(struct arm_smmu_inv *inv,
->  				       struct arm_smmu_cmdq_batch *cmds,
->  				       struct arm_smmu_cmd *cmd,
-> -				       bool leaf,
-> +				       bool single_ril, bool leaf,
->  				       unsigned long iova, size_t size,
->  				       unsigned int granule)
->  {
-> -	if (arm_smmu_inv_size_too_big(inv->smmu, size, granule)) {
-> -		struct arm_smmu_cmd nsize_cmd = *cmd;
-> +	struct arm_smmu_cmd nsize_cmd;
+> ---
+>  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   |  1 +
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 29 ++++++++-----------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   | 10 ++++---
+>  3 files changed, 19 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> index a0c9078646fb55..7acb70d060ec4e 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> @@ -345,6 +345,7 @@ struct iommu_domain *arm_smmu_sva_domain_alloc(struct device *dev,
+>  	 * ARM_SMMU_FEAT_RANGE_INV is present
+>  	 */
+>  	smmu_domain->domain.pgsize_bitmap = PAGE_SIZE;
+> +	smmu_domain->tgsz_lg2 = PAGE_SHIFT;
+>  	smmu_domain->stage = ARM_SMMU_DOMAIN_SVA;
+>  	smmu_domain->smmu = smmu;
 >  
-> -		u64p_replace_bits(&nsize_cmd.data[0], inv->nsize_opcode,
-> -				  CMDQ_0_OP);
-> -		arm_smmu_cmdq_batch_add_cmd_p(inv->smmu, cmds, &nsize_cmd);
-> +	if (arm_smmu_inv_size_too_big(inv->smmu, size, granule))
-> +		goto full_inv;
-> +
-> +	if (single_ril && size > granule) {
-> +		if (!arm_smmu_cmdq_batch_add_ril(inv->smmu, cmds, cmd, iova,
-> +						 size, inv->pgsize))
-> +			goto full_inv;
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index 03723bb00de412..6413eb4021ce22 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -2463,14 +2463,13 @@ static void arm_smmu_tlb_inv_context(void *cookie)
+>  static void arm_smmu_cmdq_batch_add_range(struct arm_smmu_device *smmu,
+>  					  struct arm_smmu_cmdq_batch *cmds,
+>  					  struct arm_smmu_cmd *cmd,
+> -					  struct arm_smmu_tlbi *tlbi,
+> -					  size_t pgsize)
+> +					  struct arm_smmu_tlbi *tlbi)
+>  {
+>  	size_t inv_range = tlbi->iopte_size;
+>  	unsigned long iova = tlbi->iova;
+>  	unsigned long end = iova + tlbi->size;
+>  	unsigned long num_pages = 0;
+> -	unsigned int tg = pgsize;
+> +	u8 tg = tlbi->tgsz_lg2;
+>  	u64 orig_data0 = cmd->data[0];
+>  	u8 ttl = 0, tg_enc = 0;
+>  
+> @@ -2609,12 +2608,12 @@ static void arm_smmu_inv_to_cmdq_batch(struct arm_smmu_inv *inv,
+>  	    (inv->smmu->options & ARM_SMMU_OPT_FULL_CONT_RIL)) {
+>  		if (!arm_smmu_cmdq_batch_add_ril(inv->smmu, cmds, cmd,
+>  						 tlbi->iova, tlbi->size,
+> -						 inv->pgsize))
+> +						 tlbi->tgsz_lg2))
+>  			goto full_inv;
 >  		return;
 >  	}
 >  
-> -	arm_smmu_cmdq_batch_add_range(inv->smmu, cmds, cmd, leaf,
-> -				      iova, size, granule, inv->pgsize);
-> +	arm_smmu_cmdq_batch_add_range(inv->smmu, cmds, cmd, leaf, iova, size,
-> +				      granule, inv->pgsize);
-> +	return;
-> +
-> +full_inv:
-> +	nsize_cmd = *cmd;
-> +	u64p_replace_bits(&nsize_cmd.data[0], inv->nsize_opcode, CMDQ_0_OP);
-> +	arm_smmu_cmdq_batch_add_cmd_p(inv->smmu, cmds, &nsize_cmd);
->  }
+> -	arm_smmu_cmdq_batch_add_range(inv->smmu, cmds, cmd, tlbi, inv->pgsize);
+> +	arm_smmu_cmdq_batch_add_range(inv->smmu, cmds, cmd, tlbi);
+>  	return;
 >  
->  static inline bool arm_smmu_invs_end_batch(struct arm_smmu_inv *cur,
-> @@ -2600,7 +2639,8 @@ static inline bool arm_smmu_invs_end_batch(struct arm_smmu_inv *cur,
->  
->  static void __arm_smmu_domain_inv_range(struct arm_smmu_invs *invs,
->  					unsigned long iova, size_t size,
-> -					unsigned int granule, bool leaf)
-> +					unsigned int granule, bool single_ril,
-> +					bool leaf)
->  {
->  	struct arm_smmu_cmdq_batch cmds = {};
->  	struct arm_smmu_inv *cur;
-> @@ -2630,14 +2670,14 @@ static void __arm_smmu_domain_inv_range(struct arm_smmu_invs *invs,
->  		case INV_TYPE_S1_ASID:
->  			cmd = arm_smmu_make_cmd_tlbi(cur->size_opcode,
->  						     cur->id, 0);
-> -			arm_smmu_inv_to_cmdq_batch(cur, &cmds, &cmd, leaf,
-> -						   iova, size, granule);
-> +			arm_smmu_inv_to_cmdq_batch(cur, &cmds, &cmd, single_ril,
-> +						   leaf, iova, size, granule);
->  			break;
->  		case INV_TYPE_S2_VMID:
->  			cmd = arm_smmu_make_cmd_tlbi(cur->size_opcode,
->  						     0, cur->id);
-> -			arm_smmu_inv_to_cmdq_batch(cur, &cmds, &cmd, leaf,
-> -						   iova, size, granule);
-> +			arm_smmu_inv_to_cmdq_batch(cur, &cmds, &cmd, single_ril,
-> +						   leaf, iova, size, granule);
->  			break;
->  		case INV_TYPE_S2_VMID_S1_CLEAR:
->  			/* CMDQ_OP_TLBI_S12_VMALL already flushed S1 entries */
-> @@ -2684,6 +2724,9 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
+>  full_inv:
+> @@ -2722,6 +2721,7 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
 >  			       unsigned int granule, bool leaf)
 >  {
->  	struct arm_smmu_invs *invs;
-> +	bool single_ril =
-> +		smmu_domain->stage == ARM_SMMU_DOMAIN_SVA &&
-> +		(smmu_domain->smmu->options & ARM_SMMU_OPT_FULL_CONT_RIL);
+>  	struct arm_smmu_tlbi tlbi = {
+> +		.tgsz_lg2 = smmu_domain->tgsz_lg2,
+>  		.iova = iova,
+>  		.size = size,
+>  		.iopte_size = granule,
+> @@ -2978,6 +2978,7 @@ static int arm_smmu_domain_finalise(struct arm_smmu_domain *smmu_domain,
+>  		return -ENOMEM;
 >  
->  	/*
->  	 * An invalidation request must follow some IOPTE change and then load
-> @@ -2723,10 +2766,12 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
->  		unsigned long flags;
+>  	smmu_domain->domain.pgsize_bitmap = pgtbl_cfg.pgsize_bitmap;
+> +	smmu_domain->tgsz_lg2 = __ffs(pgtbl_cfg.pgsize_bitmap);
+>  	smmu_domain->domain.geometry.aperture_end = (1UL << pgtbl_cfg.ias) - 1;
+>  	smmu_domain->domain.geometry.force_aperture = true;
+>  	if (enable_dirty && smmu_domain->stage == ARM_SMMU_DOMAIN_S1)
+> @@ -3217,15 +3218,13 @@ static void arm_smmu_disable_iopf(struct arm_smmu_master *master,
 >  
->  		read_lock_irqsave(&invs->rwlock, flags);
-> -		__arm_smmu_domain_inv_range(invs, iova, size, granule, leaf);
-> +		__arm_smmu_domain_inv_range(invs, iova, size, granule,
-> +					    single_ril, leaf);
->  		read_unlock_irqrestore(&invs->rwlock, flags);
->  	} else {
-> -		__arm_smmu_domain_inv_range(invs, iova, size, granule, leaf);
-> +		__arm_smmu_domain_inv_range(invs, iova, size, granule,
-> +					    single_ril, leaf);
->  	}
+>  static struct arm_smmu_inv *
+>  arm_smmu_master_build_inv(struct arm_smmu_master *master,
+> -			  enum arm_smmu_inv_type type, u32 id, ioasid_t ssid,
+> -			  size_t pgsize)
+> +			  enum arm_smmu_inv_type type, u32 id, ioasid_t ssid)
+>  {
+>  	struct arm_smmu_invs *build_invs = master->build_invs;
+>  	struct arm_smmu_inv *cur, inv = {
+>  		.smmu = master->smmu,
+>  		.type = type,
+>  		.id = id,
+> -		.pgsize = pgsize,
+>  	};
 >  
->  	rcu_read_unlock();
-> @@ -5009,12 +5054,20 @@ static void arm_smmu_device_iidr_probe(struct arm_smmu_device *smmu)
->  				/* Arm errata 2268618, 2812531 */
->  				smmu->features &= ~ARM_SMMU_FEAT_NESTING;
->  			}
-> +			/* Arm errata 3777127 */
-> +			smmu->options |= ARM_SMMU_OPT_FULL_CONT_RIL;
->  			break;
->  		case IIDR_PRODUCTID_ARM_MMU_L1:
-> -		case IIDR_PRODUCTID_ARM_MMU_S3:
-> -			/* Arm errata 3878312/3995052 */
-> +			/* Arm errata 3878312 */
->  			smmu->features &= ~ARM_SMMU_FEAT_BTM;
->  			break;
-> +		case IIDR_PRODUCTID_ARM_MMU_S3:
-> +			/* Arm errata 3995052 */
-> +			smmu->features &= ~ARM_SMMU_FEAT_BTM;
-> +			/* Arm errata 3673557 */
-> +			if (variant < 1 || (variant == 1 && revision < 1))
-> +				smmu->options |= ARM_SMMU_OPT_FULL_CONT_RIL;
-> +			break;
->  		}
+>  	if (WARN_ON(build_invs->num_invs >= build_invs->max_invs))
+> @@ -3277,28 +3276,24 @@ arm_smmu_master_build_invs(struct arm_smmu_master *master, bool ats_enabled,
+>  			   ioasid_t ssid, struct arm_smmu_domain *smmu_domain)
+>  {
+>  	const bool nesting = smmu_domain->nest_parent;
+> -	size_t pgsize = 0, i;
+> +	size_t i;
+>  
+>  	iommu_group_mutex_assert(master->dev);
+>  
+>  	master->build_invs->num_invs = 0;
+>  
+> -	/* Range-based invalidation requires the leaf pgsize for calculation */
+> -	if (master->smmu->features & ARM_SMMU_FEAT_RANGE_INV)
+> -		pgsize = __ffs(smmu_domain->domain.pgsize_bitmap);
+> -
+>  	switch (smmu_domain->stage) {
+>  	case ARM_SMMU_DOMAIN_SVA:
+>  	case ARM_SMMU_DOMAIN_S1:
+>  		if (!arm_smmu_master_build_inv(master, INV_TYPE_S1_ASID,
+>  					       smmu_domain->cd.asid,
+> -					       IOMMU_NO_PASID, pgsize))
+> +					       IOMMU_NO_PASID))
+>  			return NULL;
 >  		break;
+>  	case ARM_SMMU_DOMAIN_S2:
+>  		if (!arm_smmu_master_build_inv(master, INV_TYPE_S2_VMID,
+>  					       smmu_domain->s2_cfg.vmid,
+> -					       IOMMU_NO_PASID, pgsize))
+> +					       IOMMU_NO_PASID))
+>  			return NULL;
+>  		break;
+>  	default:
+> @@ -3310,7 +3305,7 @@ arm_smmu_master_build_invs(struct arm_smmu_master *master, bool ats_enabled,
+>  	if (nesting) {
+>  		if (!arm_smmu_master_build_inv(
+>  			    master, INV_TYPE_S2_VMID_S1_CLEAR,
+> -			    smmu_domain->s2_cfg.vmid, IOMMU_NO_PASID, 0))
+> +			    smmu_domain->s2_cfg.vmid, IOMMU_NO_PASID))
+>  			return NULL;
 >  	}
+>  
+> @@ -3321,7 +3316,7 @@ arm_smmu_master_build_invs(struct arm_smmu_master *master, bool ats_enabled,
+>  		 */
+>  		if (!arm_smmu_master_build_inv(
+>  			    master, nesting ? INV_TYPE_ATS_FULL : INV_TYPE_ATS,
+> -			    master->streams[i].id, ssid, 0))
+> +			    master->streams[i].id, ssid))
+>  			return NULL;
+>  	}
+>  
 > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> index 50f8321e979cef..065d76eb148119 100644
+> index d3e81056f24afc..3e7f94339ab60e 100644
 > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> @@ -934,6 +934,8 @@ struct arm_smmu_device {
->  #define ARM_SMMU_OPT_MSIPOLL		(1 << 2)
->  #define ARM_SMMU_OPT_CMDQ_FORCE_SYNC	(1 << 3)
->  #define ARM_SMMU_OPT_TEGRA241_CMDQV	(1 << 4)
-> +/* RANGE_INV is mandatory and one RIL must fully span an invalidated CONT */
-> +#define ARM_SMMU_OPT_FULL_CONT_RIL	(1 << 5)
->  	u32				options;
+> @@ -736,10 +736,9 @@ struct arm_smmu_inv {
+>  	u8 size_opcode;
+>  	u8 nsize_opcode;
+>  	u32 id; /* ASID or VMID or SID */
+> -	union {
+> -		size_t pgsize; /* ARM_SMMU_FEAT_RANGE_INV */
+> -		u32 ssid; /* INV_TYPE_ATS */
+> -	};
+> +
+> +	/* Only used by INV_TYPE_ATS */
+> +	u32 ssid;
 >  
->  	struct arm_smmu_cmdq		cmdq;
+>  	int users; /* users=0 to mark as a trash to be purged */
+>  };
+> @@ -810,6 +809,8 @@ struct arm_smmu_tlbi {
+>  	size_t size;
+>  	/* page or block size of the leaf iopte */
+>  	unsigned int iopte_size;
+> +	/* Base Translation Granule of the page table */
+> +	u8 tgsz_lg2;
+>  	bool has_cont;
+>  	bool leaf_only;
+>  };
+> @@ -1060,6 +1061,7 @@ struct arm_smmu_domain {
+>  	spinlock_t			devices_lock;
+>  	bool				enforce_cache_coherency : 1;
+>  	bool				nest_parent : 1;
+> +	u8				tgsz_lg2;
+>  
+>  	struct mmu_notifier		mmu_notifier;
+>  };
 > -- 
 > 2.43.0
 > 
