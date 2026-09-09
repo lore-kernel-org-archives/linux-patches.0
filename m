@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881A049890A;
-	Wed,  9 Sep 2026 14:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3087652ED5E;
+	Wed,  9 Sep 2026 14:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962554; cv=none; b=r2ZhMfXrTVllUTk7tEfgLlvoTSI1L4EwzPYQLza1QdzyUI3eGVP4LAjfDQfqxzlEV5gde8pvGR6AiTH9wYR21CkiTU5kdVK/AHpXnD2nHo/Jm9R8wO2vRrWYMCIWtvG+bkCI02hqLOmK9Z39qCxYmayIyPigFGd+AJeS0IyviEQ=
+	t=1788962557; cv=none; b=PVcXU0C4Br+6FoBM0cLQxhJkF9cJSXrx74oQdQh3H/JSWjiOX5WeYpGLFeswYhANjLypmUvC8AnpOcqdCwaaG4s5ViJBiOEdPwWrU7GowD5Ro2FnLPYT9xh8c9ipGwjNsaG5FNAgNS8ltH62Brbqmc8Z0/axPj0BdkzE8yvq4/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962554; c=relaxed/simple;
-	bh=BoRybibS8S8jQOefJ7T8VgM3ul2fOIHsQNONwlrB/lc=;
+	s=arc-20240116; t=1788962557; c=relaxed/simple;
+	bh=zv+mRF26LDaZcmNq2zzub01eIoWHuWuIOuEq3nSMeAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXSW+F+zRH0y+kliji9oiA84DFeDL7Wo4nwwd9vZtTAaMsq1X4cjlFHXezLsvuaPBBl2ZeM2ZHG5qa1ay/XN+S2h3JzbqZ6AaZ0qfYj9DYvWMXAe9XsNsuIlrMhqefFPKyIMNuOZmKPNaoWcBT8LHPhGpOkXNFg0s18PKDbix0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDCKr4Jh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eI9Fa9fYjL3p/YX13Q2MDGa42vMgreMZ1xuGpD7454XY/U577czn9AnlUM+kQvNtVa6Y4q7eSPqsOpqoGtimVTGWTMUqXsZdaVf06KTIJy+UKFOMfIVqUzVOCaN0oay27fwSKex/w2KXy3EajQ7UW9i4Lejcwzeiy2RMP+iCXrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J17ZEs2g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDCKr4Jh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915EA1F00A3A;
-	Wed,  9 Sep 2026 14:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J17ZEs2g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6D31F00A3A;
+	Wed,  9 Sep 2026 14:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962553;
-	bh=7ldL15DT6MCGPRCKzfzNySRKqXUE3BOJfpffWYK37Lg=;
+	s=korg; t=1788962556;
+	bh=fh7rtaVDQ7GS33eANwvEeueMJL8hBTT715Sdiisy7fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hDCKr4Jh5mDzu6A53NSqaFKjF/t5cw7L82v1Tm5CL3cVoTRmW3hJ2SuJ9iC5WKAt1
-	 c95qMTacAgZzBDpp3hQsHTH7dk4Cc9Qcsxea31pa1r97gQJ0nx3nVzgr2yz+E8NIal
-	 K/1B3X5dJFVKvpBAd2RndnApYiZAKlOfBSt4bekU=
+	b=J17ZEs2gv9OGTd+nXIhzjy7XpffaJfYpqSYwbpWz2tYbFu26eNtkpXF/8qa5gYwfl
+	 jZkXvJJJkTL8aPVY7TlLNHk7ZzW99y7Jg/HAflQBfCDqW7PzQRSrnXRbWoBh50+Xro
+	 USWlBDexup0/m0QZ3Hu6utfHtpsSvPr+tCWlMUBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bibo Mao <maobibo@loongson.cn>,
 	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 329/556] LoongArch: KVM: Add unregister helpers for the KVM interrupt devices
-Date: Wed,  9 Sep 2026 15:40:09 +0200
-Message-ID: <20260909134242.228529426@linuxfoundation.org>
+Subject: [PATCH 7.2 330/556] LoongArch: KVM: Fix resource leak in kvm_loongarch_env_init() error path
+Date: Wed,  9 Sep 2026 15:40:10 +0200
+Message-ID: <20260909134242.263717491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,118 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-commit 4af22177032ab2357bf551fbfcdebc8fd9f2502d upstream.
+commit 910132bc7d72f26a8b288c2a38c32445a48d5be0 upstream.
 
-The IPI/EIOINTC/PCH-PIC/DMSINTC KVM devices each have a helper that
-registers their kvm_device_ops, but there is no counterpart to remove
-them, so a caller that needs to undo a registration has to open-code
-kvm_unregister_device_ops() with the matching device type.
+kvm_loongarch_env_init() allocates the per-CPU kvm_context (vmcs) and
+kvm_loongarch_ops, registers the perf callbacks, and then registers
+the IPI/EIOINTC/PCH-PIC/DMSINTC KVM devices. If any of those device
+registrations fails, the function returned the error directly, leaving
+everything acquired so far in place: vmcs and kvm_loongarch_ops are
+never freed, the perf callbacks stay registered, and all previously
+registered KVM device operations remain registered. kvm_loongarch_init()
+propagates the errors without calling kvm_loongarch_env_exit(), so
+nothing else cleans up either.
 
-Add kvm_loongarch_unregister_{ipi,eiointc,pch_pic,dmsintc}_device()
-next to the existing register helpers. kvm_unregister_device_ops() is a
-no-op when the corresponding device type is not currently registered.
-
-No functional change, as there are no callers yet.
+Unwind the error path in reverse order of registration, so that each
+failure only undoes what had actually been set up. Use the same helpers
+in kvm_loongarch_env_exit() to remove the device registrations during
+normal teardown as well.
 
 Cc: stable@vger.kernel.org
-Suggested-by: Bibo Mao <maobibo@loongson.cn>
+Fixes: c532de5a67a7 ("LoongArch: KVM: Add IPI device support")
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/kvm_dmsintc.h |    1 +
- arch/loongarch/include/asm/kvm_eiointc.h |    1 +
- arch/loongarch/include/asm/kvm_ipi.h     |    1 +
- arch/loongarch/include/asm/kvm_pch_pic.h |    1 +
- arch/loongarch/kvm/intc/dmsintc.c        |    5 +++++
- arch/loongarch/kvm/intc/eiointc.c        |    5 +++++
- arch/loongarch/kvm/intc/ipi.c            |    5 +++++
- arch/loongarch/kvm/intc/pch_pic.c        |    5 +++++
- 8 files changed, 24 insertions(+)
+ arch/loongarch/kvm/main.c |   33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/include/asm/kvm_dmsintc.h
-+++ b/arch/loongarch/include/asm/kvm_dmsintc.h
-@@ -20,6 +20,7 @@ struct dmsintc_state {
- };
+--- a/arch/loongarch/kvm/main.c
++++ b/arch/loongarch/kvm/main.c
+@@ -385,27 +385,52 @@ static int kvm_loongarch_env_init(void)
+ 	/* Register LoongArch IPI interrupt controller interface. */
+ 	ret = kvm_loongarch_register_ipi_device();
+ 	if (ret)
+-		return ret;
++		goto err_env;
  
- int kvm_loongarch_register_dmsintc_device(void);
-+void kvm_loongarch_unregister_dmsintc_device(void);
- void dmsintc_inject_irq(struct kvm_vcpu *vcpu);
- int dmsintc_set_irq(struct kvm *kvm, u64 addr, int data, int level);
- int dmsintc_deliver_msi_to_vcpu(struct kvm *kvm, struct kvm_vcpu *vcpu, u32 vector, int level);
---- a/arch/loongarch/include/asm/kvm_eiointc.h
-+++ b/arch/loongarch/include/asm/kvm_eiointc.h
-@@ -79,6 +79,7 @@ struct loongarch_eiointc {
- };
+ 	/* Register LoongArch EIOINTC interrupt controller interface. */
+ 	ret = kvm_loongarch_register_eiointc_device();
+ 	if (ret)
+-		return ret;
++		goto err_ipi;
  
- int kvm_loongarch_register_eiointc_device(void);
-+void kvm_loongarch_unregister_eiointc_device(void);
- void eiointc_set_irq(struct loongarch_eiointc *s, int irq, int level);
+ 	/* Register LoongArch PCH-PIC interrupt controller interface. */
+ 	ret = kvm_loongarch_register_pch_pic_device();
+ 	if (ret)
+-		return ret;
++		goto err_eiointc;
  
- #endif /* __ASM_KVM_EIOINTC_H */
---- a/arch/loongarch/include/asm/kvm_ipi.h
-+++ b/arch/loongarch/include/asm/kvm_ipi.h
-@@ -41,5 +41,6 @@ struct ipi_state {
- #define IOCSR_ANY_SEND		0x158
- 
- int kvm_loongarch_register_ipi_device(void);
-+void kvm_loongarch_unregister_ipi_device(void);
- 
- #endif
---- a/arch/loongarch/include/asm/kvm_pch_pic.h
-+++ b/arch/loongarch/include/asm/kvm_pch_pic.h
-@@ -70,6 +70,7 @@ struct loongarch_pch_pic {
- 
- struct kvm_kernel_irq_routing_entry;
- int kvm_loongarch_register_pch_pic_device(void);
-+void kvm_loongarch_unregister_pch_pic_device(void);
- void pch_pic_set_irq(struct loongarch_pch_pic *s, int irq, int level);
- int pch_msi_set_irq(struct kvm *kvm, struct kvm_kernel_irq_routing_entry *e, int level);
- 
---- a/arch/loongarch/kvm/intc/dmsintc.c
-+++ b/arch/loongarch/kvm/intc/dmsintc.c
-@@ -179,3 +179,8 @@ int kvm_loongarch_register_dmsintc_devic
- {
- 	return kvm_register_device_ops(&kvm_dmsintc_dev_ops, KVM_DEV_TYPE_LOONGARCH_DMSINTC);
- }
+ 	/* Register LoongArch DMSINTC interrupt contrroller interface */
+-	if (cpu_has_msgint)
++	if (cpu_has_msgint) {
+ 		ret = kvm_loongarch_register_dmsintc_device();
++		if (ret)
++			goto err_pch_pic;
++	}
 +
-+void kvm_loongarch_unregister_dmsintc_device(void)
-+{
-+	kvm_unregister_device_ops(KVM_DEV_TYPE_LOONGARCH_DMSINTC);
-+}
---- a/arch/loongarch/kvm/intc/eiointc.c
-+++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -691,3 +691,8 @@ int kvm_loongarch_register_eiointc_devic
- {
- 	return kvm_register_device_ops(&kvm_eiointc_dev_ops, KVM_DEV_TYPE_LOONGARCH_EIOINTC);
- }
++	return 0;
 +
-+void kvm_loongarch_unregister_eiointc_device(void)
-+{
-+	kvm_unregister_device_ops(KVM_DEV_TYPE_LOONGARCH_EIOINTC);
-+}
---- a/arch/loongarch/kvm/intc/ipi.c
-+++ b/arch/loongarch/kvm/intc/ipi.c
-@@ -466,3 +466,8 @@ int kvm_loongarch_register_ipi_device(vo
- {
- 	return kvm_register_device_ops(&kvm_ipi_dev_ops, KVM_DEV_TYPE_LOONGARCH_IPI);
++err_pch_pic:
++	kvm_loongarch_unregister_pch_pic_device();
++err_eiointc:
++	kvm_loongarch_unregister_eiointc_device();
++err_ipi:
++	kvm_loongarch_unregister_ipi_device();
++err_env:
++	kvm_unregister_perf_callbacks();
++	kfree(kvm_loongarch_ops);
++	kvm_loongarch_ops = NULL;
++	free_percpu(vmcs);
++	vmcs = NULL;
+ 
+ 	return ret;
  }
-+
-+void kvm_loongarch_unregister_ipi_device(void)
-+{
-+	kvm_unregister_device_ops(KVM_DEV_TYPE_LOONGARCH_IPI);
-+}
---- a/arch/loongarch/kvm/intc/pch_pic.c
-+++ b/arch/loongarch/kvm/intc/pch_pic.c
-@@ -500,3 +500,8 @@ int kvm_loongarch_register_pch_pic_devic
+ 
+ static void kvm_loongarch_env_exit(void)
  {
- 	return kvm_register_device_ops(&kvm_pch_pic_dev_ops, KVM_DEV_TYPE_LOONGARCH_PCHPIC);
- }
++	if (cpu_has_msgint)
++		kvm_loongarch_unregister_dmsintc_device();
 +
-+void kvm_loongarch_unregister_pch_pic_device(void)
-+{
-+	kvm_unregister_device_ops(KVM_DEV_TYPE_LOONGARCH_PCHPIC);
-+}
++	kvm_loongarch_unregister_pch_pic_device();
++	kvm_loongarch_unregister_eiointc_device();
++	kvm_loongarch_unregister_ipi_device();
++
+ 	if (vmcs)
+ 		free_percpu(vmcs);
+ 
 
 
