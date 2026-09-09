@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3E7568528;
-	Wed,  9 Sep 2026 14:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D5C579827;
+	Wed,  9 Sep 2026 14:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963076; cv=none; b=ibllyyZ7VxWajfM3uduqm4btBlcG5NcVe7jCcgp/CmNqBi+BTg5jimpj/go9XkwkiP8J/bQH35fBL6f0NKSVy3KB9w0Suxq0GQi1RDUXWEs5a9taiJtKt5Gvfxm93/HE4yeiH3MAgF/l1DZEImFtVsQicQVp2Cb7IptRnFvpn7k=
+	t=1788963079; cv=none; b=NoKsjP9x+YnZq38xddn9l50/P2mYPiuQIXl4vSD3Ejy753W7mLkbnqQsa1jMnRJ1udDTAIPo+bPK7VvOQ9ObsvxJj76MJSi6r+RMfSzPOuUT/IB1C7OlDjNF+urgbkpAOlS21wav0rqPnemQNJln6TGR4ATua+URR7YdI3ogHZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963076; c=relaxed/simple;
-	bh=uBDDC2Kp1aHP0RHpf8xd10ZLegd7jhhBg7gHUGNrlFc=;
+	s=arc-20240116; t=1788963079; c=relaxed/simple;
+	bh=E6uu1Jkn2us+ENhWdabVL7NJYSluEjJFqssFvD05BCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIk5j/kys18cADuPdh8UVn0ltjdCHQTA/aty9diwnwGzvzspU76F8OwGAVctWrL/wh5Ffmscgl9ChYfxVz7JOLQOS98Gb93bouksI8NnXWHfx187cbI/5AIXIPn7sol0B20gVJaOs5Bm94VpK6K37WxFaFZhLhal2ok7fbRwJmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6m4jiPJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GDNi6B36xdHFeIUD8y1maN2FmWi8zgyHqqyU/LnMS6lBWfej14SXMCKlSVKAV/nLdjSfsNWNJj7oJo12mL0y2z+czn3JesOJDRCCw0t/RvnnlbfMHOCBT6exR9LQybfYCmE36uW7YzS3Z2byg032UJrvxHuH3CauBPmgNGMLwCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HL8PQrkh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6m4jiPJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E429C1F00A3D;
-	Wed,  9 Sep 2026 14:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HL8PQrkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD85F1F00A3A;
+	Wed,  9 Sep 2026 14:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963075;
-	bh=6qZ0DWzey2mB9TSWqcAqZscpBGtpVtMph0KuCZgIksU=;
+	s=korg; t=1788963078;
+	bh=l7PoGYJ/6ovR+PwqzJB1nKbpthrhoOPLj6p6/goZpnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X6m4jiPJOJRzvIk1g/uK9a7WBkjATOoXpX0xva/EYnn85jlIFOFifxmkXjGPidfPC
-	 Mj/u/kMMdUjkTN7JO8iTxb7v6Xr6N56Xnmvo2iH85Pr0c1CsIFfwqVLKOh7eoym/rm
-	 e6L1IgvYKtR5P3h6CQW7B7nhR5gs0/AcHuZjhGEM=
+	b=HL8PQrkh7gG0+pHuSqzezR4DJuhFiRbUJe3tZn6Utz8toRJipxFZJdeFoNXqklwwc
+	 AQ9NyX+G+gTEinRhi4eVoa5uBxdevt7eBZUUqyllTu9WTt5RdIqhQmr35I7t1Ry16R
+	 Uq33CTZHx4BAzuP4D1gKChPfSGDsGNWOU8omdd5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>,
+	Sunil Khatri <sunil.khatri@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 510/556] drm/amdgpu: Skip accessing psp rum time db for APUs
-Date: Wed,  9 Sep 2026 15:43:10 +0200
-Message-ID: <20260909134248.394747187@linuxfoundation.org>
+Subject: [PATCH 7.2 511/556] drm/amdgpu: update the fw version for gfx11 userqueues
+Date: Wed,  9 Sep 2026 15:43:11 +0200
+Message-ID: <20260909134248.427127283@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,36 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit a26301203a196a991527f7b1ab884d4dd0e7c95e upstream.
+commit c748dd03df33360549ad60cdccee13570e9c0f90 upstream.
 
-Psp runtime DB is for dGPUs only.
+Update to the latest stable fw versions where userqueues
+is working as it is expected with major fixes.
 
-Signed-off-by: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
 Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dce8195027f146467c9378efb2bb1b0859cb735e)
+(cherry picked from commit d50201b891604ab97f305d4a20d888ba93305b48)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -396,6 +396,12 @@ static bool psp_get_runtime_db_entry(str
- 	bool ret = false;
- 	int i;
- 
-+	/*
-+	 * Runtime DB is for dGPUs only.
-+	 */
-+	if (adev->flags & AMD_IS_APU)
-+		return false;
-+
- 	if (amdgpu_ip_version(adev, MP0_HWIP, 0) == IP_VERSION(13, 0, 6) ||
- 	    amdgpu_ip_version(adev, MP0_HWIP, 0) == IP_VERSION(13, 0, 12) ||
- 	    amdgpu_ip_version(adev, MP0_HWIP, 0) == IP_VERSION(13, 0, 14) ||
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -1646,10 +1646,10 @@ static int gfx_v11_0_sw_init(struct amdg
+ 	case IP_VERSION(11, 0, 2):
+ 	case IP_VERSION(11, 0, 3):
+ 		if (!adev->gfx.disable_uq &&
+-		    adev->gfx.me_fw_version  >= 2420 &&
+-		    adev->gfx.pfp_fw_version >= 2580 &&
+-		    adev->gfx.mec_fw_version >= 2650 &&
+-		    adev->mes.fw_version[0] >= 120) {
++		    adev->gfx.me_fw_version  >= 3090 &&
++		    adev->gfx.pfp_fw_version >= 3190 &&
++		    adev->gfx.mec_fw_version >= 3450 &&
++		    adev->mes.fw_version[0] >= 147) {
+ 			adev->userq_funcs[AMDGPU_HW_IP_GFX] = &userq_mes_funcs;
+ 			adev->userq_funcs[AMDGPU_HW_IP_COMPUTE] = &userq_mes_funcs;
+ 		}
 
 
