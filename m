@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCD8563FAC;
-	Wed,  9 Sep 2026 14:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6AF57981A;
+	Wed,  9 Sep 2026 14:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964478; cv=none; b=Ji/dI5Jazz1OJjlhPlcg+QakWsmcOg/llPQaLhW883p4Gm9Mi1+rsCi7eUVy+ivYYIIH8Ry8cSjh7e2TpD8c5kzq0sfh6moEC6O33xLVFNJQsAph4DIXR8wAEKAcuABQ5TZ9cXmKFLYFDofRlZZ27nMGmbfc3+HEuHktY5C7Hx8=
+	t=1788964481; cv=none; b=XTazUqCUvryphTQ7kzyo5i1uKqhQrOB3uRu+qj20EH08pCufGYP1MPHUdTgIcb9gKfIhBK9ixGTyb3GqO8YlRKT/un/QCTnjCGAwPls4/2ic3a3qomko+06BCDfHzzEuDj2FDPTmCDJy6UqVwWp7JhFYOjL+ndFjcX85bsUnJM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964478; c=relaxed/simple;
-	bh=0tMaUD2HdIjfv+OW5rUXrM8pgSLVEmIaDFBxfFljGGg=;
+	s=arc-20240116; t=1788964481; c=relaxed/simple;
+	bh=DpElCHtccQh51pafdWI/i5EbnI2pSA0d8QPwDHAw8mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlyytETd7gCyTH+Cs2jaziZj4E7LWJDxlDpwduBXOjvqxcvFHLGDh442OBtjACKcV8PFNvADrWTMfCCtpThjursizio6yi+oRk8gr4zaHLcfuBRKHEdFRn/sobPhB0picEemBEo85xNENuRXX2/gVAy4Q5xWsur5GAYMvx4g2bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7v2cG8g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JKmSU6mi1kG98BxlJF4yxiFbkgtUow3WljsiBJMhnwFmnGXevPh30WMYyjZwWK+pRL7tQ9EQDdjQKpg10hT6AQpY+4Pv4qTDCUX3pCxkClSgbkOCnA0SZxjTcgvdl8zSzDKBRm8KLgZX8v/nW1ENRAxt3SiBDyEQNXn4cPLM59w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phqmyH4x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7v2cG8g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861111F00A3A;
-	Wed,  9 Sep 2026 14:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phqmyH4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616A51F00A3D;
+	Wed,  9 Sep 2026 14:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964477;
-	bh=C3MIFOoltEEEcbfj4JZszF14gG7W+2+Zk951uQ+yX/o=;
+	s=korg; t=1788964479;
+	bh=V/qkKNb9DlPpd0Xnr+ZMUz17g8Yo+1n3O/oU3X1YTuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7v2cG8g3xpqbbz/aA5Kt8AapPjE2Wc5OHJKGOzlrm54Lru7G4HbDfSNHTdoR9ieC
-	 bnGKMrRaIZvZFz2EmDqtjs2SecGX4Dk2K6394IzPzRz7f3g98Vlzi1Pa3FEG0AosaS
-	 EHpt0HNpp3QPMepgrUQKNVQvBEig9WNXuocQTdOM=
+	b=phqmyH4xVgmWlebDtYwjqlZKhP/SVn5KFq9PCiABwJPFzDnUjTXHCwG/5GP6nckId
+	 KyrB1ueUzQ22Tu1JMs360oZURjCqD88QHJ3FuKN50dWrPTPwU5YdiE4jvr5meNud8U
+	 /W98b0GF1CEh0nkNOUJIKrsQOFsXKfqf5N1gAfs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil Khatri <sunil.khatri@amd.com>,
+	Priya Hosur <Priya.Hosur@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 398/583] drm/amdgpu: use AMDGPU_GPU_PAGE_SHIFT instead of PAGE_SHIFT
-Date: Wed,  9 Sep 2026 15:41:23 +0200
-Message-ID: <20260909134251.786447099@linuxfoundation.org>
+Subject: [PATCH 6.18 399/583] drm/amdkfd: Add TLB flush after MES queue eviction/suspension
+Date: Wed,  9 Sep 2026 15:41:24 +0200
+Message-ID: <20260909134251.821489126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,33 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunil Khatri <sunil.khatri@amd.com>
+From: Priya Hosur <Priya.Hosur@amd.com>
 
-commit d6e16df7df4d2c39e2b04b355d0434fb90e2d62c upstream.
+commit 94e25cb6ab7f4f025bcdcd8ea79fda30f12843a4 upstream.
 
-For different address types the variable PAGE_SHIFT might
-not work well and it's better to use the GPU specific one
+MES (Micro Engine Scheduler) does not perform heavy-weight TLB
+invalidation after unmapping queues, unlike HWS which does this
+automatically. This causes a race condition where in-flight DMA
+descriptors can access memory that has been unmapped, leading to page
+faults and GPU queue hangs during SVM page migration.
 
-Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+The issue manifests as KFDSVMRangeTest.MultiThreadMigrationTest
+failures on gfx1151 (Strix Point) with XNACK mode 1 enabled - the GPU
+compute queue hangs with packets submitted but never consumed.
+
+Add kfd_flush_tlb() calls after MES queue removal in two locations:
+- evict_process_queues_cpsch(): after all queues removed during eviction
+- suspend_queues(): after debug/criu queue suspension (with mem_fence barrier)
+
+This ensures all in-flight memory accesses from unmapped queues are
+flushed before memory is freed or migrated.
+
+Signed-off-by: Priya Hosur <Priya.Hosur@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3494b77d10375e0f9ab784e9b20763339844b55b)
+(cherry picked from commit f5c4f88e0f9c45a8fb9dfac0c1df726c95e41b77)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2054,7 +2054,7 @@ int amdgpu_vm_bo_clear_mappings(struct a
- 			after->start = eaddr + 1;
- 			after->last = tmp->last;
- 			after->offset = tmp->offset;
--			after->offset += (after->start - tmp->start) << PAGE_SHIFT;
-+			after->offset += (after->start - tmp->start) << AMDGPU_GPU_PAGE_SHIFT;
- 			after->flags = tmp->flags;
- 			after->bo_va = tmp->bo_va;
- 			list_add(&after->list, &tmp->bo_va->invalids);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -1233,6 +1233,14 @@ static int evict_process_queues_cpsch(st
+ 		}
+ 	}
+ 
++	/*
++	 * Heavy-weight TLB flush after MES removes queues to ensure
++	 * in-flight memory accesses complete before memory is freed/migrated.
++	 * HWS does this automatically, MES does not.
++	 */
++	if (dqm->dev->kfd->shared_resources.enable_mes)
++		kfd_flush_tlb(pdd);
++
+ 	if (!dqm->dev->kfd->shared_resources.enable_mes) {
+ 		pdd->last_evict_timestamp = get_jiffies_64();
+ 		retval = execute_queues_cpsch(dqm,
+@@ -3457,8 +3465,11 @@ int suspend_queues(struct kfd_process *p
+ 		if (!per_device_suspended) {
+ 			dqm_unlock(dqm);
+ 			mutex_unlock(&p->event_mutex);
+-			if (total_suspended)
++			if (total_suspended) {
+ 				amdgpu_amdkfd_debug_mem_fence(dqm->dev->adev);
++				/* Heavy-weight TLB flush after MES suspends queues */
++				kfd_flush_tlb(pdd);
++			}
+ 			continue;
+ 		}
+ 
 
 
