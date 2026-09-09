@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9904228CF5F;
-	Wed,  9 Sep 2026 14:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823A630BF70;
+	Wed,  9 Sep 2026 14:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964221; cv=none; b=Afr6Yg2eElj51sGE+WDsUeqU9OkOGKewinHFdRfJ9bvnDP9Vv7GS/cZCFSuh5y0PqdI4IlhH9nUOF5YRns5Fv4SgTLuEbigyTJM7Hcqt0pnRbRU1KXOoV+2HE1jXxU5xPbZwgfTnAkQfa4QXb8x69QljHyQFZEveySEBufGumCQ=
+	t=1788964224; cv=none; b=oZr5m/EPR4Y+6/i95jaVbvKbZvRr57GrXaBDszMKZ6OGL8jC23w/J8yqxdY+YIxJinfs9v8I1Q87Ggt6tO2Ymb1mHEqq8tgj+T8MfrLi1lk9BEqjZYlDLyBbOsJmBRQm8JRFnoC8I+U5bFWWvOuI2b/Nv6jzMUi33Kw4oe2tVm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964221; c=relaxed/simple;
-	bh=YUE/JWKi2CVmL868TW8kIeIZ1gAC6z0tpAGNPUJb1iI=;
+	s=arc-20240116; t=1788964224; c=relaxed/simple;
+	bh=QoimBSn1JvSrgE5DnTyGYOsbnK/51NGIiIucMxCUr+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4AH63LjYPAyhXBks3hkDtstXa8fWv7tYLJ/GvF9YaaFiHw2H5DpxXmrCANxSnbg7lPt521zudxRkQhKpmPlcwlT7VVMtCVGdQrYVSMwNgsQVnA3UENmaP4c3cJvPuptrKKIkDR6Dckqvl1cxVXjwTmG3SUVKKuI2DnrKjRbXmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWHxsQJA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tc/uH5JUO2ZtYNeDAGelWVt80IDkULoNS/y5mhsrYH8+ASIymNkTarT4U7KOZaNnnRZzV4Cw0n2LPAzMLU+630vaoZKQDFUpR7Nynn7WNY8kDMVJ4jAIAhp4p+1aNpSQxAf9Fb3fYRqPTcLQUM79EYNuThNEWH5EyLLEGIG7Onk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TATtG1vH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWHxsQJA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DC81F00A3A;
-	Wed,  9 Sep 2026 14:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TATtG1vH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D321F00A3A;
+	Wed,  9 Sep 2026 14:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964220;
-	bh=br/zmUrAyBxVtVF00eZ4Zhc0eEFou3dVfH8GPuh4cwQ=;
+	s=korg; t=1788964223;
+	bh=HMW/8KmcSOg6TL1ARrBuhOHghy5fqBskBKmJSHo0ZGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWHxsQJA0TXYoAljkgZ1WQVVcaVpO9akv4DqIRh6XL56JaDiwoCbA8i0axCN5eZ1c
-	 2BkddxLmzR6tbrvLUJuJyHq775ahSlCgLR+7LV3S6ARe+mfgYGsN3NeGpHwxtDO7S7
-	 gn7QX02lLLQa4zwHcV0GIr4kd3PTT+ebdbFjBqPg=
+	b=TATtG1vHYdSeKD5AIzRraG+8f6RJOiAcaEFo7EWKky+8kQT+MRdKgkbkUYpnOHOIW
+	 8lolCHLmrkSW7J6WlIpL7B2o8LCUWENUQnPGcY04dzZTe2cfiMq1GRtitBWreVWpHg
+	 ocHtfS7aKfodLfZ3QJoZ07XXzhNVH+3+YsYB0iCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.18 347/583] scsi: qla2xxx: Hold vport_slock for host map update in report ID acquisition
-Date: Wed,  9 Sep 2026 15:40:32 +0200
-Message-ID: <20260909134250.003417723@linuxfoundation.org>
+Subject: [PATCH 6.18 348/583] scsi: qla2xxx: Use coherent DMA buffer for D_Port diagnostics
+Date: Wed,  9 Sep 2026 15:40:33 +0200
+Message-ID: <20260909134250.038105934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,44 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit 7944039ba9cb5c3a935d17c91004e3b8649ff58e upstream.
+commit 7c4f3f50d83af4545efaa99b3d0d46fb8d52031e upstream.
 
-qla24xx_report_id_acquisition() format-1 handling drops vport_slock after
-taking the vport reference and then calls qla_update_host_map() without
-the lock. That reaches qla_update_vp_map(), which mutates the ha->host_map
-btree via btree_insert32()/btree_update32()/btree_remove32() and is
-documented to require vport_slock to be held by the caller. Running it
-unlocked can race concurrent host_map updates and corrupt the btree.
+qla26xx_dport_diagnostics() streaming-maps the caller's result buffer with
+dma_map_single(). The bsg path passes &dd->buf from the __packed struct
+qla_dport_diag, where buf lands at a 2-byte offset and shares cachelines
+with the surrounding options/unused fields. Mapping such a misaligned
+sub-buffer violates the DMA API requirement that streaming buffers be
+cacheline aligned and not share a cacheline with other data, and can
+corrupt data on non-DMA-coherent architectures.
 
-The format-2 path in the same function already wraps its host_map update
-(SET_AL_PA) in vport_slock; the format-1 path is the lone outlier.
+Allocate a dedicated DMA-coherent buffer inside qla26xx_dport_diagnostics()
+for the mailbox command and copy the result back into the caller's buffer.
+This removes the streaming map of the misaligned sub-buffer entirely; the
+caller's buffer is now only a plain CPU buffer, so its packing no longer
+matters.
 
-Hold vport_slock across the format-1 qla_update_host_map() call to honor
-the documented locking contract. The vref_count taken in the loop keeps
-the vport valid, so this only adds the missing host_map serialization.
-
-Fixes: 430eef03a763 ("scsi: qla2xxx: Relocate/rename vp map")
+Fixes: ec89146215d1 ("qla2xxx: Add bsg interface to support D_Port Diagnostics.")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-24-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-29-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qla2xxx/qla_mbx.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 --- a/drivers/scsi/qla2xxx/qla_mbx.c
 +++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -4157,7 +4157,9 @@ qla24xx_report_id_acquisition(scsi_qla_h
- 			if (!found)
- 				return;
+@@ -6442,6 +6442,7 @@ qla26xx_dport_diagnostics(scsi_qla_host_
+ 	mbx_cmd_t mc;
+ 	mbx_cmd_t *mcp = &mc;
+ 	dma_addr_t dd_dma;
++	void *dd;
  
-+			spin_lock_irqsave(&ha->vport_slock, flags);
- 			qla_update_host_map(vp, id);
-+			spin_unlock_irqrestore(&ha->vport_slock, flags);
+ 	if (!IS_QLA83XX(vha->hw) && !IS_QLA27XX(vha->hw) &&
+ 	    !IS_QLA28XX(vha->hw))
+@@ -6450,15 +6451,12 @@ qla26xx_dport_diagnostics(scsi_qla_host_
+ 	ql_dbg(ql_dbg_mbx + ql_dbg_verbose, vha, 0x119f,
+ 	    "Entered %s.\n", __func__);
  
- 			/*
- 			 * Cannot configure here as we are still sitting on the
+-	dd_dma = dma_map_single(&vha->hw->pdev->dev,
+-	    dd_buf, size, DMA_FROM_DEVICE);
+-	if (dma_mapping_error(&vha->hw->pdev->dev, dd_dma)) {
+-		ql_log(ql_log_warn, vha, 0x1194, "Failed to map dma buffer.\n");
++	dd = dma_alloc_coherent(&vha->hw->pdev->dev, size, &dd_dma, GFP_KERNEL);
++	if (!dd) {
++		ql_log(ql_log_warn, vha, 0x1194, "Failed to allocate dma buffer.\n");
+ 		return QLA_MEMORY_ALLOC_FAILED;
+ 	}
+ 
+-	memset(dd_buf, 0, size);
+-
+ 	mcp->mb[0] = MBC_DPORT_DIAGNOSTICS;
+ 	mcp->mb[1] = options;
+ 	mcp->mb[2] = MSW(LSD(dd_dma));
+@@ -6480,8 +6478,9 @@ qla26xx_dport_diagnostics(scsi_qla_host_
+ 		    "Done %s.\n", __func__);
+ 	}
+ 
+-	dma_unmap_single(&vha->hw->pdev->dev, dd_dma,
+-	    size, DMA_FROM_DEVICE);
++	memcpy(dd_buf, dd, size);
++
++	dma_free_coherent(&vha->hw->pdev->dev, size, dd, dd_dma);
+ 
+ 	return rval;
+ }
 
 
