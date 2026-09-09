@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A93156E043;
-	Wed,  9 Sep 2026 14:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C929576EA1;
+	Wed,  9 Sep 2026 14:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963841; cv=none; b=edDgdc1KP4VccK8dT+PbvXIAn/TdHWqZYue6wNZvVYz4I0hjxnuanPOhjSwo/9AEgrrX0ZKXSigrxXbbSR9vM5qK2Rfqk9TdkMDFN21I64uF46/+P+zKZIzJHMVpkanMCAQAwrQuUvMMTUyaWZq+GSB+ijsKA+QjMoj87xM0r4Q=
+	t=1788963844; cv=none; b=KrzIxzkobuLjvU03e3K++ziGfgt8k1RsPYt+thpRXE7nokZ4SDwIzu6ucXs34d5BIHzizn3KkvJxCSzEkEGgSME512b0Khpm64V8W/+chVQdMpIGGsebarMvM8xBXtw4giEA94ODQsKYTjkTUYBwz8sIprPhsyIAlWaA+009c80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963841; c=relaxed/simple;
-	bh=hn7VLkXuGRfJLQ3/u6C5E/kEbCR7sMVI8B1gr2LkrMk=;
+	s=arc-20240116; t=1788963844; c=relaxed/simple;
+	bh=DcfPSClCgcvQfAGkLBOz2jkXxHlEE7wfQfcLtqT1XTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjmhF4f0W0O8yladZqClq2U/ugwaSkAsT0qui4g1YurHIpbdIIuTcXhJNn0Q2oPjG6qalFJgJfjm5dWyoE+BlRM9A2zPTu4nTtfJDPugA+mMitUoP3g34Vtck2Moe4tp4+ARCmXFjSEB40d0n8ymFwowZ3XI6Ul4CFCvDtiEYOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKkn+piu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ihnGpBxkpxUHIwSztiBxf9ubQ7PemJx0R1KVBJSnxfoKq3odF9PFwVq+JfFjdOmgsKVwyw+KTPZ8Q5Ri8nbqOVf882+Vnce8b2SoAj6u7LSG3u57GzsrucrptsM8qVC28V0dF8DcmjquPVD5eNF737nO3Hj5GG8WhhJuTUtRxAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOQZRFzY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKkn+piu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952441F00A3A;
-	Wed,  9 Sep 2026 14:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOQZRFzY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835861F00A3A;
+	Wed,  9 Sep 2026 14:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963840;
-	bh=4EGx1Gk1ne7NxvoXhlYl/SYhsDuaI+TQUaPSMBEk0CA=;
+	s=korg; t=1788963843;
+	bh=7iAFhc37Z0AhNPommXcpMBXyqQgkTyyYe7KPo6XGf0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VKkn+piuk54fIF1Us25OsAdCvFRcX9acwnrZGwNoCNeIfbx/i0zy+ZSiHQWNjkEEQ
-	 dPMeSZ2t4G4es5JPYRemvfYnnN2iavx/1G6ackOVFm1r7K8NtfCk8CYJRnmMjQfHXH
-	 8uPTnZsjaK4VcCLrn6Rp0JQDx8eyin5S1QgyEyj4=
+	b=oOQZRFzYKc239tTkzid2u3PGL1XsZe66VAFMuhljjgtzumj7F+DOUXj9onrOXBJBd
+	 JRT0aG1qXfVe7YBLc4gogDSUmkjpOo+SdXJ04FOamNelROxb6K68NjAXgC5eDmDQMf
+	 mmo89lIDEi/ImFz/Pz3hzf9Q9CP6z8WcRTdGczlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giorgi Tchankvetadze <giorgi@tchankvetadze.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 215/583] iio: light: cm32181: return zero after writing calibscale
-Date: Wed,  9 Sep 2026 15:38:20 +0200
-Message-ID: <20260909134245.592413230@linuxfoundation.org>
+Subject: [PATCH 6.18 216/583] iio: light: gp2ap002: Disable regulators on resume failure
+Date: Wed,  9 Sep 2026 15:38:21 +0200
+Message-ID: <20260909134245.628959569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,37 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giorgi Tchankvetadze <giorgi@tchankvetadze.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-commit 8756acd30919a3e9f547ea4a1d4b7f7895f4d340 upstream.
+commit a41000ba3a230bed1e422f283486ff8f77fe0d30 upstream.
 
-The write_raw callback is documented to return 0 on success or a
-negative error code.  However, the IIO_CHAN_INFO_CALIBSCALE case
-returns 'val' (the user-supplied value) instead of 0.
+If enabling VIO fails after VDD has been enabled, runtime resume
+returns without disabling VDD. Likewise, if device reinitialization
+fails, both supplies remain enabled. The runtime PM core keeps the
+device suspended when its resume callback fails, so the supplies must
+be restored to the suspended state.
 
-Fix it by returning 0 on success, matching the behavior of other
-calibscale implementations in the subsystem.
+Disable the supplies enabled by the callback before returning an error.
 
-Fixes: 971672c0b3cc ("iio: add Capella CM32181 ambient light sensor driver.")
-Signed-off-by: Giorgi Tchankvetadze <giorgi@tchankvetadze.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Fixes: 97d642e23037 ("iio: light: Add a driver for Sharp GP2AP002x00F")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/cm32181.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/gp2ap002.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/light/cm32181.c
-+++ b/drivers/iio/light/cm32181.c
-@@ -369,7 +369,7 @@ static int cm32181_write_raw(struct iio_
- 	switch (mask) {
- 	case IIO_CHAN_INFO_CALIBSCALE:
- 		cm32181->calibscale = val;
--		return val;
-+		return 0;
- 	case IIO_CHAN_INFO_INT_TIME:
- 		ret = cm32181_write_als_it(cm32181, val2);
- 		return ret;
+--- a/drivers/iio/light/gp2ap002.c
++++ b/drivers/iio/light/gp2ap002.c
+@@ -669,7 +669,7 @@ static int gp2ap002_runtime_resume(struc
+ 	ret = regulator_enable(gp2ap002->vio);
+ 	if (ret) {
+ 		dev_err(dev, "failed to enable VIO regulator in resume path\n");
+-		return ret;
++		goto out_disable_vdd;
+ 	}
+ 
+ 	msleep(20);
+@@ -677,13 +677,19 @@ static int gp2ap002_runtime_resume(struc
+ 	ret = gp2ap002_init(gp2ap002);
+ 	if (ret) {
+ 		dev_err(dev, "re-initialization failed\n");
+-		return ret;
++		goto out_disable_vio;
+ 	}
+ 
+ 	/* Re-activate the IRQ */
+ 	enable_irq(gp2ap002->irq);
+ 
+ 	return 0;
++
++out_disable_vio:
++	regulator_disable(gp2ap002->vio);
++out_disable_vdd:
++	regulator_disable(gp2ap002->vdd);
++	return ret;
+ }
+ 
+ static DEFINE_RUNTIME_DEV_PM_OPS(gp2ap002_dev_pm_ops, gp2ap002_runtime_suspend,
 
 
