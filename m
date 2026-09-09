@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40B84A2A7C;
-	Wed,  9 Sep 2026 14:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C1E56E066;
+	Wed,  9 Sep 2026 14:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964630; cv=none; b=MrFe4LF3DNxxg1nMxAXSz1LiHvbkM5wlJa7AvUCw7Ob7yJdigS9AsojlexYvsBJ1ymI26BLBy9TOzSf0dzvUlW9/FfvEzSCeR5OIlojrYQMYpFQ6gaVZ/Y1EP5Nr7WaGK8LprfQ7UuNnYm2foE2xOZiEPFkN5e++UcKacdHo/0Y=
+	t=1788964634; cv=none; b=hHcH764rNKuPGIMyFtkhATEW3N1iRbaQSTm/ZTY28IH/oUpI+/aPXZHvBOgZi0V2uVIXh4OlFbHiifRgi7bEq+riuCuUMot95sWhuLJA/wrUM+aot4eiko3hIKRazhDluuDbkI5qGGZDLI+QZoIcML7xpRynE/rramJc+PFvDog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964630; c=relaxed/simple;
-	bh=mag2pJeUdFpcQNNMXO0m4jlB/uCGajkY55j3uGTrVgY=;
+	s=arc-20240116; t=1788964634; c=relaxed/simple;
+	bh=HWmqasuZBFjr1nq7nqk40znI8/65EcCluNdRNjfUCEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aSCoSYq4YuUZc51TR2A4u97jubVqENi9FYSumYPOzMz+zpynmsLo2eZT2d9oBKd4gdXWcvo0mRk6dFt4IwBDZtkJjyyl7J+JUMqolgtNqVagkKji7LfrjBexUTs5lB/BB0/v1ppJLq4wAdE4NZVcWe5f1P8eaUD6OwYshYY6vGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swgaNFeS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lja4cDixg6HEF0/ONZKmqgvipfx1JNhD8MR4k866W8K3aods+7RRSuaW3hr+shbCqg8LxyCA2bxKnlkgkWa9u4ybn1sAYVpLQQdchin5QMc1J6ZP7Kt4ZnceKNn6nRIYTEdeWLARm0D/ni34V1MNFHeOVvHHLHtqBIGtQP94k0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJuxNnuj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swgaNFeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636CF1F00A3A;
-	Wed,  9 Sep 2026 14:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJuxNnuj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C7F1F00A3A;
+	Wed,  9 Sep 2026 14:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964628;
-	bh=vptuvHUITVabPg5io6YzAZCBYCcf1kjjsCaadtxho74=;
+	s=korg; t=1788964631;
+	bh=zjEv1/U3JsazpSpGzEBLCR+/m/+wamRvdOkPZetCHik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=swgaNFeSlT5g+Xdo05/WOxSuOxpGU0cPkT6XIBrljy+Yw8DiqGAg5JXvF5Qok9Pwp
-	 50App/fuVjUXvmtQR4myuizCTE0WcO5NsppbP63SiJrd15jaXELvezAhfsYV75lNu3
-	 VPyDw0Uq6geo8qpPYfHNC2Xj8DJdLi4BTUyQy5bw=
+	b=dJuxNnujgqI9Df9Hi9DA6T5nGi4IrbuJuoUCMb3zM66J01GtavitYn+29EqCu4YZL
+	 97mbZL9qKxxG4MIg0+LiaVeNSWO/pYhTeKTp1udlh7M1OXjfORtx1VKOECvykP69Og
+	 cWa5fQZJLot2NYYKGLpN072VU3a+v4YSrxCKAjBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Flavien Solt <flavien@nus.edu.sg>,
-	Dan Williams <djbw@kernel.org>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Ben Cheatham <benjamin.cheatham@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 490/583] cxl/mce: Make the MCE notifier per-region
-Date: Wed,  9 Sep 2026 15:42:55 +0200
-Message-ID: <20260909134254.782021557@linuxfoundation.org>
+Subject: [PATCH 6.18 491/583] SUNRPC: fix gssx_dec_option_array error path bugs
+Date: Wed,  9 Sep 2026 15:42:56 +0200
+Message-ID: <20260909134254.813859056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,256 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 775d0f4558f4cec0ee0c8966595d1add1791f36e ]
+[ Upstream commit 5e9a94539b1ec17a89177d952badfd0d844d694a ]
 
-Flavien Solt reported lifetime issues with the CXL MCE notifier, which
-can lead to NULL dereferences and use-after-free in the MCE handler.
-The notifier was registered per memory device and stored in 'struct
-cxl_memdev_state', even though it only needs the region state (the
-region's SPA range and its extended linear cache size).
+Four coupled defects in the gssx XDR option-array decoder make the
+error paths unsafe: a NULL deref in the caller, a refcount leak on
+the decoded group_info, and a latent use-after-free that the leak
+fix would otherwise expose.
 
-Instead of keeping the memory device and endpoint alive, the correct fix
-is to move the notifier into 'struct cxl_region' and register it from
-cxl_region_probe() as it should be a per-region notifier. Setup the
-registration to only happen for regions that have an extended linear
-cache as that is the only current usage.
+gssx_dec_option_array() sets oa->count = 1 before allocating
+oa->data.  If that allocation fails, -ENOMEM is returned with
+oa->count == 1 and oa->data == NULL.  All other error paths jump
+to free_oa: which frees oa->data and NULLs it but also leaves
+oa->count == 1.  The caller trusts the count:
 
-Remove cxl_port_get_spa_cache_alias() as it is now dead code.
+    gssp_accept_sec_context_upcall()
+      gssx_dec_accept_sec_context()
+        gssx_dec_option_array()        /* fails, count=1 data=NULL */
+      data = res.options.data[0].value /* NULL deref */
 
-[ dj: Update dev_warn() when notifier fails due to kconfig. (Ben) ]
+Independently, free_creds: releases the partially decoded svc_cred
+with a bare kfree(creds).  gssx_dec_linux_creds() installs a
+groups_alloc() result into creds->cr_group_info; that object is
+kvmalloc-backed and refcounted, and only put_group_info() reaches
+kvfree().  A plain kfree(creds) drops the wrapper and leaks the
+group_info allocation.
 
-Reported-by: Flavien Solt <flavien@nus.edu.sg>
-Suggested-by: Dan Williams <djbw@kernel.org>
-Fixes: 516e5bd0b6bf ("cxl: Add mce notifier to emit aliased address for extended linear cache")
+The natural fix for the leak is to call free_svc_cred(creds) before
+kfree(creds), but free_svc_cred() invokes put_group_info() on
+creds->cr_group_info unconditionally when non-NULL.  The existing
+out_free_groups: path in gssx_dec_linux_creds() already called
+groups_free() on that pointer without clearing it, so once
+free_svc_cred() is wired in, the subsequent put_group_info() would
+touch freed memory.
+
+Fix all four together:
+
+  - Move the oa->count = 1 assignment below the oa->data allocation
+    so it is never set when oa->data is NULL.
+  - Reset oa->count to 0 at free_oa: so count and data stay
+    coherent and the caller sees an empty option array.
+  - Call free_svc_cred(creds) before kfree(creds) at free_creds:
+    so the refcounted cr_group_info is released.  free_svc_cred()
+    either NULL-guards each field explicitly (cr_group_info has
+    an if() check) or delegates to a helper that is NULL-safe
+    itself (kfree for the string fields, gss_mech_put() which
+    guards with if(gm) at gss_mech_switch.c:342), so it is safe
+    to call on a partially decoded svc_cred where only
+    cr_uid/cr_gid/cr_group_info have been written and everything
+    else is zero from kzalloc.
+  - In gssx_dec_linux_creds()'s out_free_groups: path, release
+    cr_group_info with put_group_info() rather than groups_free()
+    so the teardown matches free_svc_cred()'s refcount-aware path,
+    and clear the pointer so a later free_svc_cred() on the same
+    creds does not release it a second time.
+
+Fixes: 3cfcfc102a5e ("SUNRPC: fix some memleaks in gssx_dec_option_array")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Ben Cheatham <benjamin.cheatham@amd.com>
-Link: https://patch.msgid.link/20260616224912.2567474-1-dave.jiang@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260528-tier2-v1-2-d026a1415e0b@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/mbox.c   |    8 --------
- drivers/cxl/core/mce.c    |   27 +++++++++++++--------------
- drivers/cxl/core/region.c |   43 +++++++++++++++----------------------------
- drivers/cxl/cxl.h         |    8 ++------
- drivers/cxl/cxlmem.h      |    2 --
- 5 files changed, 30 insertions(+), 58 deletions(-)
+ net/sunrpc/auth_gss/gss_rpc_xdr.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -11,7 +11,6 @@
+--- a/net/sunrpc/auth_gss/gss_rpc_xdr.c
++++ b/net/sunrpc/auth_gss/gss_rpc_xdr.c
+@@ -222,7 +222,8 @@ static int gssx_dec_linux_creds(struct x
  
- #include "core.h"
- #include "trace.h"
--#include "mce.h"
- 
- static bool cxl_raw_allow_all;
- 
-@@ -1524,7 +1523,6 @@ EXPORT_SYMBOL_NS_GPL(cxl_mailbox_init, "
- struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
- {
- 	struct cxl_memdev_state *mds;
--	int rc;
- 
- 	mds = devm_kzalloc(dev, sizeof(*mds), GFP_KERNEL);
- 	if (!mds) {
-@@ -1539,12 +1537,6 @@ struct cxl_memdev_state *cxl_memdev_stat
- 	mds->cxlds.reg_map.resource = CXL_RESOURCE_NONE;
- 	mds->cxlds.type = CXL_DEVTYPE_CLASSMEM;
- 
--	rc = devm_cxl_register_mce_notifier(dev, &mds->mce_notifier);
--	if (rc == -EOPNOTSUPP)
--		dev_warn(dev, "CXL MCE unsupported\n");
--	else if (rc)
--		return ERR_PTR(rc);
--
- 	return mds;
+ 	return 0;
+ out_free_groups:
+-	groups_free(creds->cr_group_info);
++	put_group_info(creds->cr_group_info);
++	creds->cr_group_info = NULL;
+ 	return err;
  }
- EXPORT_SYMBOL_NS_GPL(cxl_memdev_state_create, "CXL");
---- a/drivers/cxl/core/mce.c
-+++ b/drivers/cxl/core/mce.c
-@@ -4,16 +4,16 @@
- #include <linux/notifier.h>
- #include <linux/set_memory.h>
- #include <asm/mce.h>
--#include <cxlmem.h>
-+#include <cxl.h>
-+#include "core.h"
- #include "mce.h"
  
- static int cxl_handle_mce(struct notifier_block *nb, unsigned long val,
- 			  void *data)
- {
--	struct cxl_memdev_state *mds = container_of(nb, struct cxl_memdev_state,
--						    mce_notifier);
--	struct cxl_memdev *cxlmd = mds->cxlds.cxlmd;
--	struct cxl_port *endpoint = cxlmd->endpoint;
-+	struct cxl_region *cxlr = container_of(nb, struct cxl_region,
-+					       mce_notifier);
-+	struct cxl_region_params *p = &cxlr->params;
- 	struct mce *mce = data;
- 	u64 spa, spa_alias;
- 	unsigned long pfn;
-@@ -21,26 +21,25 @@ static int cxl_handle_mce(struct notifie
- 	if (!mce || !mce_usable_address(mce))
- 		return NOTIFY_DONE;
+@@ -243,12 +244,12 @@ static int gssx_dec_option_array(struct
+ 		return 0;
  
--	if (!endpoint)
--		return NOTIFY_DONE;
+ 	/* we recognize only 1 currently: CREDS_VALUE */
+-	oa->count = 1;
 -
- 	spa = mce->addr & MCI_ADDR_PHYSADDR;
+ 	oa->data = kmalloc(sizeof(struct gssx_option), GFP_KERNEL);
+ 	if (!oa->data)
+ 		return -ENOMEM;
  
--	pfn = spa >> PAGE_SHIFT;
--	if (!pfn_valid(pfn))
-+	if (!cxl_resource_contains_addr(p->res, spa))
- 		return NOTIFY_DONE;
- 
--	spa_alias = cxl_port_get_spa_cache_alias(endpoint, spa);
--	if (spa_alias == ~0ULL)
--		return NOTIFY_DONE;
-+	if (spa >= p->res->start + p->cache_size)
-+		spa_alias = spa - p->cache_size;
-+	else
-+		spa_alias = spa + p->cache_size;
- 
- 	pfn = spa_alias >> PAGE_SHIFT;
-+	if (!pfn_valid(pfn))
-+		return NOTIFY_DONE;
- 
- 	/*
- 	 * Take down the aliased memory page. The original memory page flagged
- 	 * by the MCE will be taken cared of by the standard MCE handler.
- 	 */
--	dev_emerg(mds->cxlds.dev, "Offlining aliased SPA address0: %#llx\n",
-+	dev_emerg(&cxlr->dev, "Offlining aliased SPA address0: %#llx\n",
- 		  spa_alias);
- 	if (!memory_failure(pfn, 0))
- 		set_mce_nospec(pfn);
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -15,6 +15,7 @@
- #include <cxlmem.h>
- #include <cxl.h>
- #include "core.h"
-+#include "mce.h"
- 
- /**
-  * DOC: cxl core region
-@@ -3605,34 +3606,6 @@ int cxl_add_to_region(struct cxl_endpoin
- }
- EXPORT_SYMBOL_NS_GPL(cxl_add_to_region, "CXL");
- 
--u64 cxl_port_get_spa_cache_alias(struct cxl_port *endpoint, u64 spa)
--{
--	struct cxl_region_ref *iter;
--	unsigned long index;
--
--	if (!endpoint)
--		return ~0ULL;
--
--	guard(rwsem_write)(&cxl_rwsem.region);
--
--	xa_for_each(&endpoint->regions, index, iter) {
--		struct cxl_region_params *p = &iter->region->params;
--
--		if (cxl_resource_contains_addr(p->res, spa)) {
--			if (!p->cache_size)
--				return ~0ULL;
--
--			if (spa >= p->res->start + p->cache_size)
--				return spa - p->cache_size;
--
--			return spa + p->cache_size;
--		}
--	}
--
--	return ~0ULL;
--}
--EXPORT_SYMBOL_NS_GPL(cxl_port_get_spa_cache_alias, "CXL");
--
- static int is_system_ram(struct resource *res, void *arg)
- {
- 	struct cxl_region *cxlr = arg;
-@@ -3858,6 +3831,20 @@ static int cxl_region_probe(struct devic
- 	if (rc)
- 		return rc;
- 
-+	/*
-+	 * Regions fronted by an extended linear cache need the MCE notifier to
-+	 * offline the aliased page on a memory error.
-+	 */
-+	if (p->cache_size) {
-+		rc = devm_cxl_register_mce_notifier(&cxlr->dev,
-+						    &cxlr->mce_notifier);
-+		if (rc == -EOPNOTSUPP)
-+			dev_warn(&cxlr->dev,
-+				 "CONFIG_CXL_MCE disabled, MCE notifier not registered\n");
-+		else if (rc)
-+			return rc;
-+	}
++	oa->count = 1;
 +
- 	rc = cxl_region_setup_poison(cxlr);
- 	if (rc)
- 		return rc;
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -540,6 +540,7 @@ enum cxl_partition_mode {
-  * @coord: QoS access coordinates for the region
-  * @node_notifier: notifier for setting the access coordinates to node
-  * @adist_notifier: notifier for calculating the abstract distance of node
-+ * @mce_notifier: notifier for MCE
-  */
- struct cxl_region {
- 	struct device dev;
-@@ -553,6 +554,7 @@ struct cxl_region {
- 	struct access_coordinate coord[ACCESS_COORDINATE_MAX];
- 	struct notifier_block node_notifier;
- 	struct notifier_block adist_notifier;
-+	struct notifier_block mce_notifier;
- };
+ 	creds = kzalloc(sizeof(struct svc_cred), GFP_KERNEL);
+ 	if (!creds) {
+ 		err = -ENOMEM;
+@@ -300,8 +301,10 @@ static int gssx_dec_option_array(struct
+ 	return 0;
  
- struct cxl_nvdimm_bridge {
-@@ -886,7 +888,6 @@ bool is_cxl_pmem_region(struct device *d
- struct cxl_pmem_region *to_cxl_pmem_region(struct device *dev);
- int cxl_add_to_region(struct cxl_endpoint_decoder *cxled);
- struct cxl_dax_region *to_cxl_dax_region(struct device *dev);
--u64 cxl_port_get_spa_cache_alias(struct cxl_port *endpoint, u64 spa);
- bool cxl_region_contains_resource(const struct resource *res);
- #else
- static inline bool is_cxl_pmem_region(struct device *dev)
-@@ -905,11 +906,6 @@ static inline struct cxl_dax_region *to_
- {
- 	return NULL;
- }
--static inline u64 cxl_port_get_spa_cache_alias(struct cxl_port *endpoint,
--					       u64 spa)
--{
--	return 0;
--}
- static inline bool cxl_region_contains_resource(const struct resource *res)
- {
- 	return false;
---- a/drivers/cxl/cxlmem.h
-+++ b/drivers/cxl/cxlmem.h
-@@ -484,7 +484,6 @@ static inline struct cxl_dev_state *mbox
-  * @poison: poison driver state info
-  * @security: security driver state info
-  * @fw: firmware upload / activation state
-- * @mce_notifier: MCE notifier
-  *
-  * See CXL 3.0 8.2.9.8.2 Capacity Configuration and Label Storage for
-  * details on capacity parameters.
-@@ -504,7 +503,6 @@ struct cxl_memdev_state {
- 	struct cxl_poison_state poison;
- 	struct cxl_security_state security;
- 	struct cxl_fw_state fw;
--	struct notifier_block mce_notifier;
- };
- 
- static inline struct cxl_memdev_state *
+ free_creds:
++	free_svc_cred(creds);
+ 	kfree(creds);
+ free_oa:
++	oa->count = 0;
+ 	kfree(oa->data);
+ 	oa->data = NULL;
+ 	return err;
 
 
