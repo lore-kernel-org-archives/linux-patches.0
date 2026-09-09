@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6090572699;
-	Wed,  9 Sep 2026 14:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3168581222;
+	Wed,  9 Sep 2026 14:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964684; cv=none; b=oxDJMx3VX8Wqa1KriZ3mpk6afdZP1qbwIhL9QU2NHOqytzheJECRTRT8PqTTW2pRPy3Nd6vA2BDDz0ylPbf6vuCScbfwRE6BqT/XRovpvTYK58Flc/fXzNd+fyw6Oxfit/JI0wtEe4zae0UQMAteqbrhxZGsXv8D60R256TosJ8=
+	t=1788964687; cv=none; b=tNIXiA8E/5wa/lVCRHtaZMIsgUHhRxD3r8kRPxLIV9GNpL2xhojGm+tjgB+DatupUccO8gSq0p4H1DzH7PT9t1IrzcgS3GdIW37pFBLPy5uZxFfNH4P1BI+ZJ3patFS2z2UyA/np5jyJy3cj0xKaOpGa74p+WRJDRKbVy/ij2u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964684; c=relaxed/simple;
-	bh=uCwb5cpfbxSkpwyTPUOZ8b+Ljlya3inyO0EsrJ04O/w=;
+	s=arc-20240116; t=1788964687; c=relaxed/simple;
+	bh=HUqYZldoGgXZuJ1+82gJpyTOfLfz0Fod5Uaq+2v40UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+5otG+tSfcKpJslbVRCqv8HCdQz+sIqq/wx3vShubZi9kQFYGqJnJQyvZpeTuhwR497BtW0cSBiT8s56qUVXqIwI5u3USZ2faCJzCDz27pDGOCxrojYYD0/DHKIp+DMY1+/WiTSjCSuoEuHAjoo2sX6ENqtPGC8gV+7vCmZkLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXn4elx9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sXsfv9/bXgnCSI+g/v6mdAwrSr3BZw1RwQVPzR8Me/T3gjZ+yHo0Q/C0qzn+wv4TrhIZ0Kxu2iW3h2xb/MgmZrWmfKZoEfasMXD7MNmSUPcaUGdP+L8sdDbZ4oSLbJ1eXb1E/jy2Oi/MBC349wjOr506CsEvlvOmrffOpsRpkLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+Ga8VC5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXn4elx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011DC1F00A3D;
-	Wed,  9 Sep 2026 14:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+Ga8VC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01AD1F00A3A;
+	Wed,  9 Sep 2026 14:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964682;
-	bh=6tp32J8mImBnTnNAUtVCQlU09KnopqI2egeicYUIvec=;
+	s=korg; t=1788964685;
+	bh=vx2a6K5n0cTHiJz1qlITMfoZ4MM8HaNPGMbN0G5E95k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lXn4elx9G0oAj34rNFcaGhae1YxDba8hqZ0xkAGSI95qj4Z2CJegWU9tcKvPAcwLN
-	 onsfj989UP3Ss/R6DNM8+2xYClw7TsATvn2TAZq9igQIVffA20dxvDWXD7g2tu0H4B
-	 3uYTmfczozpYArpb9WBaY2F6c+Q+O/iC+Blo6Ja0=
+	b=k+Ga8VC5Sc6GjdQLwv0JZh0ug7SCYaHyw38pbimZG7vceFQZhHS+aNq9c4v0MYnAU
+	 VOy/3myIM/hgEYxGKVfpXvqlUD2uMEsNTNzBUkFAbm7Y2oOI88btjHGSP6DqKuqtRO
+	 RqYPixDNBiwOPQcUIolKOmElZkwoLHsK0SyaMPo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Luca Weiss <luca.weiss@fairphone.com>,
+	Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 506/583] ASoC: codecs: aw88261: reduce log spam
-Date: Wed,  9 Sep 2026 15:43:11 +0200
-Message-ID: <20260909134255.288903278@linuxfoundation.org>
+Subject: [PATCH 6.18 507/583] ASoC: codecs: aw88261: only check PLL and clock state at power-up
+Date: Wed,  9 Sep 2026 15:43:12 +0200
+Message-ID: <20260909134255.320043831@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,117 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
 
-[ Upstream commit d90c361af215a9fa2a986d9f47d554d0cf3401dd ]
+[ Upstream commit 06b6f1245567a4be862c3e1cc74577922ceb05fb ]
 
-This driver would create a wall of logspam during initialization due to
-e.g. the PLL not being ready while waiting for it to stabilize. Change
-intermediate dev_err() calls to dev_dbg() to reduce the noise.
+The SYSST check performed during device start requires SWS (amplifier
+switching, bit 8) and BSTS (boost finished, bit 9) on top of PLL lock
+and clock stability. Those bits cannot be asserted at this point in the
+sequence: the check runs after amppd release but before the
+hmute/ULS-hmute release, and the amplifier neither switches nor
+finishes ramping its boost converter while it is still muted. With the
+Fairphone (Gen. 6) firmware profile, aw88261_dev_start() therefore
+always fails with
 
-While here, log the detected chip ID when that check fails.
+  check sysst fail, reg_val=0x0011, check:0x311
 
-Signed-off-by: Val Packett <val@packett.cool>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://patch.msgid.link/20260529200550.529719-4-val@packett.cool
+and playback aborts, even though the amplifier is fine and PLL lock
+and stable clocks are present.
+
+Check only PLL lock and clock stability, for which a definition
+already exists; this still re-validates the clocks after amppd release
+(aw88261_dev_check_syspll() checked them before it). This matches the
+vendor aw882xx driver, which only validates PLL lock and clock
+stability at this stage, and the in-tree aw88399 driver, which skips
+the SWS check whenever the amplifier may legitimately not be switching
+(AW88399_BIT_SYSST_NOSWS_CHECK).
+
+Fixes: 028a2ae25691 ("ASoC: codecs: Add aw88261 amplifier driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
+Link: https://patch.msgid.link/20260704192857.88366-1-jorijnvdgraaf@catcrafts.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 06b6f1245567 ("ASoC: codecs: aw88261: only check PLL and clock state at power-up")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/aw88261.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ sound/soc/codecs/aw88261.c |    6 +++---
+ sound/soc/codecs/aw88261.h |    6 ------
+ 2 files changed, 3 insertions(+), 9 deletions(-)
 
 --- a/sound/soc/codecs/aw88261.c
 +++ b/sound/soc/codecs/aw88261.c
-@@ -150,7 +150,7 @@ static int aw88261_dev_get_iis_status(st
- 	if (ret)
- 		return ret;
- 	if ((reg_val & AW88261_BIT_PLL_CHECK) != AW88261_BIT_PLL_CHECK) {
--		dev_err(aw_dev->dev, "check pll lock fail,reg_val:0x%04x", reg_val);
-+		dev_dbg(aw_dev->dev, "check pll lock fail,reg_val:0x%04x", reg_val);
- 		return -EINVAL;
- 	}
- 
-@@ -164,7 +164,7 @@ static int aw88261_dev_check_mode1_pll(s
- 	for (i = 0; i < AW88261_DEV_SYSST_CHECK_MAX; i++) {
- 		ret = aw88261_dev_get_iis_status(aw_dev);
- 		if (ret) {
--			dev_err(aw_dev->dev, "mode1 iis signal check error");
-+			dev_dbg(aw_dev->dev, "mode1 iis signal check error");
- 			usleep_range(AW88261_2000_US, AW88261_2000_US + 10);
- 		} else {
+@@ -253,10 +253,10 @@ static int aw88261_dev_check_sysst(struc
  			return ret;
-@@ -255,7 +255,7 @@ static int aw88261_dev_check_sysst(struc
+ 
  		check_val = reg_val & (~AW88261_BIT_SYSST_CHECK_MASK)
- 							& AW88261_BIT_SYSST_CHECK;
- 		if (check_val != AW88261_BIT_SYSST_CHECK) {
--			dev_err(aw_dev->dev, "check sysst fail, reg_val=0x%04x, check:0x%x",
-+			dev_dbg(aw_dev->dev, "check sysst fail, reg_val=0x%04x, check:0x%x",
- 				reg_val, AW88261_BIT_SYSST_CHECK);
+-							& AW88261_BIT_SYSST_CHECK;
+-		if (check_val != AW88261_BIT_SYSST_CHECK) {
++							& AW88261_BIT_PLL_CHECK;
++		if (check_val != AW88261_BIT_PLL_CHECK) {
+ 			dev_dbg(aw_dev->dev, "check sysst fail, reg_val=0x%04x, check:0x%x",
+-				reg_val, AW88261_BIT_SYSST_CHECK);
++				reg_val, AW88261_BIT_PLL_CHECK);
  			usleep_range(AW88261_2000_US, AW88261_2000_US + 10);
  		} else {
-@@ -549,7 +549,7 @@ static int aw88261_dev_start(struct aw88
- 	int ret;
+ 			return 0;
+--- a/sound/soc/codecs/aw88261.h
++++ b/sound/soc/codecs/aw88261.h
+@@ -181,12 +181,6 @@
+ 		AW88261_OTHS_OT_VALUE | \
+ 		AW88261_PLLS_LOCKED_VALUE))
  
- 	if (aw_dev->status == AW88261_DEV_PW_ON) {
--		dev_info(aw_dev->dev, "already power on");
-+		dev_dbg(aw_dev->dev, "already power on");
- 		return 0;
- 	}
- 
-@@ -559,7 +559,7 @@ static int aw88261_dev_start(struct aw88
- 
- 	ret = aw88261_dev_check_syspll(aw_dev);
- 	if (ret) {
--		dev_err(aw_dev->dev, "pll check failed cannot start");
-+		dev_dbg(aw_dev->dev, "pll check failed");
- 		goto pll_check_fail;
- 	}
- 
-@@ -570,7 +570,7 @@ static int aw88261_dev_start(struct aw88
- 	/* check i2s status */
- 	ret = aw88261_dev_check_sysst(aw_dev);
- 	if (ret) {
--		dev_err(aw_dev->dev, "sysst check failed");
-+		dev_dbg(aw_dev->dev, "sysst check failed");
- 		goto sysst_check_fail;
- 	}
- 
-@@ -671,18 +671,22 @@ static void aw88261_start_pa(struct aw88
- 	for (i = 0; i < AW88261_START_RETRIES; i++) {
- 		ret = aw88261_reg_update(aw88261, aw88261->phase_sync);
- 		if (ret) {
--			dev_err(aw88261->aw_pa->dev, "fw update failed, cnt:%d\n", i);
-+			dev_dbg(aw88261->aw_pa->dev,
-+				"aw88261_reg_update failed, cnt:%d, ret:%d\n", i, ret);
- 			continue;
- 		}
- 		ret = aw88261_dev_start(aw88261);
- 		if (ret) {
--			dev_err(aw88261->aw_pa->dev, "aw88261 device start failed. retry = %d", i);
-+			dev_dbg(aw88261->aw_pa->dev,
-+				"aw88261_dev_start failed, cnt:%d, ret:%d\n", i, ret);
- 			continue;
- 		} else {
--			dev_info(aw88261->aw_pa->dev, "start success\n");
-+			dev_dbg(aw88261->aw_pa->dev, "start success\n");
- 			break;
- 		}
- 	}
-+	if (ret != 0)
-+		dev_err(aw88261->aw_pa->dev, "start failure (%d)\n", ret);
- }
- 
- static void aw88261_startup_work(struct work_struct *work)
-@@ -1198,7 +1202,7 @@ static int aw88261_init(struct aw88261 *
- 		return ret;
- 	}
- 	if (chip_id != AW88261_CHIP_ID) {
--		dev_err(&i2c->dev, "unsupported device");
-+		dev_err(&i2c->dev, "unsupported device id = %x", chip_id);
- 		return -ENXIO;
- 	}
- 
+-#define AW88261_BIT_SYSST_CHECK \
+-		(AW88261_BSTS_FINISHED_VALUE | \
+-		AW88261_SWS_SWITCHING_VALUE | \
+-		AW88261_CLKS_STABLE_VALUE | \
+-		AW88261_PLLS_LOCKED_VALUE)
+-
+ #define AW88261_ULS_HMUTE_START_BIT	(14)
+ #define AW88261_ULS_HMUTE_BITS_LEN	(1)
+ #define AW88261_ULS_HMUTE_MASK		\
 
 
