@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA112492E33;
-	Wed,  9 Sep 2026 13:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E0A550DC3;
+	Wed,  9 Sep 2026 13:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962220; cv=none; b=i5oECpBlXXamOB+zlYViito9jXvGBYrsEaNbB4fXB2wFHI8yWPxDGFSA0EEEeAgAtAUfpCIDRusacPtZIY+FzaKWvcp6tXcWdua7vQqC9Pcb2oOfznSsSXHGa2aDlFEsqysDEbVLfpF9aedJCd+GbUGgkc9cAIocMnSTTF2jIxY=
+	t=1788962224; cv=none; b=q2KH9PkgO5QKPWIbouxiFfL1ZxjOdKqk80aAxlUCNePEhDibbXsAxeqPCDjtMcOuPswYok+vD54IJtrYjtFXIZHkGrP+iRw6PDdKovcLHl5/hveRgSNBZLHdL1C1yr3qd8wlfn7cgurDScRA/ynGKglq6xMq37Hawyv1rpj1QNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962220; c=relaxed/simple;
-	bh=2rE6HBXmin73fnEK8eHO9MYxetSvpfKk6X97W67eHuM=;
+	s=arc-20240116; t=1788962224; c=relaxed/simple;
+	bh=XK6zy0jT/W10nlFmma9yrkoripxAmh78O9hUYeRfE9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JcA0v4YVhy6RoxFWotDsVEWokOZquDcBgCWidETSvXwTlK/BG7qERaaqAkcuYAuV/Bd73vYpZz5DT/auil5fZZ9zRseAQ8kXd79pC+Qi91X7/qEVoYGkrSLJaRk90sLPN2S2y+dt5mVcBUFqHHltg6ZpT4bTptXr+x4DKpoJmNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLeXjuys; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tHsf/e8iNNbcC1FIAagCSBFNvgv50CRMwAND6kfio3WjBEW2ac8DV7PeRuODw87IAxwQK0Lh+aLlFOxOKl3fH+jILqk6O5dvaO7nm7gpU5iZF1dGguOsap6yJs4jz5jAqXRBQO5DCYyHa9iFdzymJEDE0W1aepbeXQpwCGEpF6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D33Ijo7v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLeXjuys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96EB1F00A3A;
-	Wed,  9 Sep 2026 13:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D33Ijo7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C348D1F00A3D;
+	Wed,  9 Sep 2026 13:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962218;
-	bh=WXkbLOPjzjo4sEGAwM57M3oFWBs8lMkDU+ejuG79TEA=;
+	s=korg; t=1788962222;
+	bh=DkNvruwWRnxUdn/B/aiY0WNt7hWl+o333Tul5Zlb2zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rLeXjuysTDKaZtKLkaXSxyXW1C6+cbnzdvRW/3tGioc888v6VlKsx5RlLfegtmL2P
-	 T/bEqnDB33zwcV/h/F+aj+FxwWbGLzzU6jideNoq6pTqmL1OO/+4mIn5kmJDJWPExa
-	 sABKZdOaCFyYjdn5cb836bm+VSeDzfmvljjj3syY=
+	b=D33Ijo7vfyPsqbFqk1oyq2dDH+0GW+sjHVvgMBNkWIVdcDLEAhOLm1R8NwlA+yfhV
+	 KpeusTO6JsqG0Y5HDWV7lXAIoHz8gdVArse0qHZqMnMXU+AmUAmUqEVwgrB6CrudZd
+	 5w9kBAKXW+/aj7xxi/UFV3P6sKcQrNfIQwNZtXcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Alison Schofield <alison.schofield@intel.com>
-Subject: [PATCH 7.2 174/556] nvdimm/btt: reject an arena whose nfree is below the lane count
-Date: Wed,  9 Sep 2026 15:37:34 +0200
-Message-ID: <20260909134236.538728408@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	caina <caina@uniontech.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Yipeng Zou <zouyipeng@huawei.com>
+Subject: [PATCH 7.2 165/556] Revert "irqchip/mbigen: Fix mbigen node address layout"
+Date: Wed,  9 Sep 2026 15:37:25 +0200
+Message-ID: <20260909134236.223768095@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,51 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: caina <caina@uniontech.com>
 
-commit 6a1f2e5ed9267ca19187038ac635393c165213ac upstream.
+commit e67091609cf85962f64391c1b0f93d4cbfcd4e22 upstream.
 
-The BTT info block's nfree field, the number of reserve free blocks, is
-read from the medium without validation.  btt_freelist_init() and
-btt_rtt_init() size the per-lane freelist[] and rtt[] arrays by nfree,
-but the I/O path indexes them by the lane from nd_region_acquire_lane(),
-which is bounded by nd_region->num_lanes (ND_MAX_LANES), not by nfree.
-A crafted or foreign arena whose nfree is below the lane count makes
-freelist[lane]/rtt[lane] run past the allocation: an out-of-bounds write.
+This reverts commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20.
 
-btt.rst documents the nlanes = min(nfree, num_cpus) invariant, which the
-code does not currently honor: num_lanes is ND_MAX_LANES regardless of
-nfree.  Reject an arena whose nfree is below num_lanes at discovery,
-before the per-lane arrays are allocated, enforcing that invariant.
+Commit 6be6cba9c437 ("irqchip/mbigen: Fix mbigen node address layout")
+appears to cause a regression on Hi1616.
 
-Fixes: 5212e11fde4d ("nd_btt: atomic sector updates")
+On-board hns NIC has two ports, enahisic2i0 and enahisic2i1, both
+behind mbigen-v2.  Port 0 works; port 1 cannot pass any traffic.
+
+Their interrupt pins fall on different mbigen nodes:
+
+  enahisic2i0: pins 1152-1198 -> all in node 9
+  enahisic2i1: pins 1200-1246 -> node 9 (1200-1215) + node 10 (1216-1246)
+
+  (nid = (hwirq - 64) / 128 + 1; pin 1215 = node 9, pin 1216 = node 10)
+
+/proc/interrupts shows the break happens exactly at the node boundary:
+
+  enahisic2i1-rx0  pin 1200  count 102   <- node 9
+  enahisic2i1-rx5  pin 1215  count   1   <- node 9, last pin
+  enahisic2i1-tx5  pin 1216  count   0   <- node 10, first pin
+  enahisic2i1-rx6  pin 1218  count   0   <- node 10
+  ...all node 10 pins stay at zero.
+
+Port 0 (entirely node 9) is unaffected.  Reverting the commit restores
+normal operation.
+
+The commit assumes CLEAR occupies a full 4 KB page at [0xa000, 0xb000)
+and collides with node 10, so node 10+ gets shifted by 0x1000.
+
+But get_mbigen_clear_reg() uses flat, chip-wide addressing -- it never
+multiplies by the node ID:
+
+    *addr = (hwirq / 32) * 4 + REG_MBIGEN_CLEAR_OFFSET;  /* 0xa000 */
+
+Over the valid hwirq range [64, 1407], CLEAR only spans 0xa008-0xa0af
+(168 bytes).  Node 10's registers are:
+
+    TYPE: 0xa000-0xa00f  (16 B)   overlaps CLEAR by 8 B (0xa008-0xa00f)
+    VEC:  0xa200-0xa3ff  (512 B)  no overlap with CLEAR
+
+Shifting the whole page moves VEC from 0xa200 to 0xb200.  The hardware
+reads the event ID from the fixed silicon address 0xa200 on interrupt
+firing, but software wrote it to 0xb200 -- so the hardware gets an
+uninitialised value and the interrupt is lost.
+
+The only real overlap is 8 bytes of TYPE.  It can only trigger when a
+single mbigen instance has devices on both node 1 (CLEAR 0xa008) and
+node 10 (TYPE 0xa008).  On Hi1616 those nodes are on separate mbigen
+instances, so it never triggers.
+
+Fixes: 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ("irqchip/mbigen: Fix mbigen node address layout")
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: caina <caina@uniontech.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Yipeng Zou <zouyipeng@huawei.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260620-b4-disp-88b2514b-v1-1-3834e707d232@proton.me
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260821091720.16665-1-caina@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/btt.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/irqchip/irq-mbigen.c |   20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
---- a/drivers/nvdimm/btt.c
-+++ b/drivers/nvdimm/btt.c
-@@ -883,6 +883,14 @@ static int discover_arenas(struct btt *b
- 		arena->external_lba_start = cur_nlba;
- 		parse_arena_meta(arena, super, cur_off);
+--- a/drivers/irqchip/irq-mbigen.c
++++ b/drivers/irqchip/irq-mbigen.c
+@@ -64,20 +64,6 @@ struct mbigen_device {
+ 	void __iomem		*base;
+ };
  
-+		if (arena->nfree < btt->nd_region->num_lanes) {
-+			dev_err(to_dev(arena),
-+				"nfree %u smaller than lane count %d\n",
-+				arena->nfree, btt->nd_region->num_lanes);
-+			ret = -ENODEV;
-+			goto out;
-+		}
-+
- 		ret = log_set_indices(arena);
- 		if (ret) {
- 			dev_err(to_dev(arena),
+-static inline unsigned int get_mbigen_node_offset(unsigned int nid)
+-{
+-	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
+-
+-	/*
+-	 * To avoid touched clear register in unexpected way, we need to directly
+-	 * skip clear register when access to more than 10 mbigen nodes.
+-	 */
+-	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
+-		offset += MBIGEN_NODE_OFFSET;
+-
+-	return offset;
+-}
+-
+ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ {
+ 	unsigned int nid, pin;
+@@ -86,7 +72,8 @@ static inline unsigned int get_mbigen_ve
+ 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
+ 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
+ 
+-	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
++	return pin * 4 + nid * MBIGEN_NODE_OFFSET
++			+ REG_MBIGEN_VEC_OFFSET;
+ }
+ 
+ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+@@ -101,7 +88,8 @@ static inline void get_mbigen_type_reg(i
+ 	*mask = 1 << (irq_ofst % 32);
+ 	ofst = irq_ofst / 32 * 4;
+ 
+-	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
++	*addr = ofst + nid * MBIGEN_NODE_OFFSET
++		+ REG_MBIGEN_TYPE_OFFSET;
+ }
+ 
+ static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
 
 
