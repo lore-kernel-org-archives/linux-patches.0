@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E2B569F2A;
-	Wed,  9 Sep 2026 14:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5D1579818;
+	Wed,  9 Sep 2026 14:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963634; cv=none; b=jC12pM08vW8kAmcEJGDZ9hglExLHuaO5NJG8fzmcfDzheHIfhzSV+Jf7lKcNgixREXTyXMJisD1uX8eFTByHxiRlDOcq0+O35duUEIDeK0nOxoCOuPJtvdo0Aq1iJL4aC6/wLWPkDBGBv+QqdCglc/x63AYENiMEMpGy5/lr2yo=
+	t=1788963637; cv=none; b=abeekTEw+sfrwzNraDgQNdM1VkA6tdRyKGvBnUb1GBb4DBC+t+Vwa7kKrAP1RXftQPlQ/naPnqVKdQFrkC3FnSy4m4T9TJZ4ahQ1QE7dW0H+L1VfxSjqxdYpOlVcRNMtseM3g2YAgWHGzWhNADmwxkF+2WU5QahuihOYD9l8ONg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963634; c=relaxed/simple;
-	bh=xBbAWKjGPdCOldwqGDi6UO6iEdl0Us+stY5XFUxvHOQ=;
+	s=arc-20240116; t=1788963637; c=relaxed/simple;
+	bh=qOtEw1lgkJCciqpwjPKEDTZ9QL/AmzDuEUTOYijL/Do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvCd56A1eL2xeX3MwRICG1C1HgI3xGoJmy0F219to5DnQ6LcU0T2oXgoJgri7zBJ+ElYHztV2cpqXL/w9sNeV5oOqXplHoSpuK/ro/stbMtqbGQvjfeBNHDf5wIy2s6nzVZOmV1oG0gDqCqCv7Jv5KOY3aqjAxiMosrtZi6CGbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eABruJ9n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ynrimc7Ld0+4v9o1C4qalZN9qDitO0UAhgIZoET8Bj+SZnrC+Nei2JJaq+2NyzDl+6UtBj2MQ4XBOoUIlNOEcdIrXXHrSDykNTxZCCSvF7+olZMeKUkMIxLeU/L94U2SSSDazMFYlphW0DhIsHmF9J5dYgue/YAeaYmGWCJq4XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQ6rkA2s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eABruJ9n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAF51F00A3A;
-	Wed,  9 Sep 2026 14:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQ6rkA2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0D21F00A3A;
+	Wed,  9 Sep 2026 14:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963632;
-	bh=L7zpsnE1IhkpB7aX/YI5m402lOHGKvZgkXGKJJic9yE=;
+	s=korg; t=1788963635;
+	bh=O8Gkv29lMvbHZI0m7RJFLBRQ7M20sUl47Ij2n7qDbsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eABruJ9nzrUd88Emr9LnS1j1Q5Gyily4ocTtJcCxzz6TmY5Kr2CsS4+aVcy4ZLWck
-	 mrFL6Z/SQCTnEMPq6Uo85LWrPz/sB3eyFvvm/Slm9sH1sF6ZXFvZseoPne8No0P+4y
-	 yAKEaaRCUHkSpwjzEl7oLPp95+f5uBcA0pNu9swA=
+	b=lQ6rkA2sa//XBMLZwi1Xh3xBgqmrkD0xtjL9ai1GwG+dW+ytsmceLhlUZRGszeNe6
+	 FriFt2qBe63+C0OWSB2/gb6W87oL+Z799pLEygXCaORsC7el/Vaf0BcH8LeCqUK7+p
+	 GAawNeFHC4dWs13x8kGam+ClR8oGrXWtusv3Lrrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 119/583] parisc: eisa: Fix infinite loop when parsing invalid IRQ value
-Date: Wed,  9 Sep 2026 15:36:44 +0200
-Message-ID: <20260909134242.254100346@linuxfoundation.org>
+	=?UTF-8?q?Pale=20L=C3=B6bl?= <pavel@loebl.cz>,
+	Brian Masney <bmasney@redhat.com>
+Subject: [PATCH 6.18 146/583] clk: clocking-wizard: fix integer overflow in rate calculation
+Date: Wed,  9 Sep 2026 15:37:11 +0200
+Message-ID: <20260909134243.234783184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -44,47 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Pavel Löbl <pavel@loebl.cz>
 
-commit 8b585431a16cfb9d8f2955a9fa0787ce3dceb3c2 upstream.
+commit 4adf593c6fc5aed4639add011f71a074a1bd3966 upstream.
 
-When an invalid value is passed via the "eisa_irq_edge=" kernel
-command line parameter (e.g. "eisa_irq_edge=16,5"), eisa_irq_setup()
-prints an error message and continues without advancing the current
-position.  As a result the same invalid value is parsed again and
-again, causing an infinite loop while the kernel boots.
+When using driver on Zynq-7000 (32-bit) determine_rate calculation
+overflows. For instance requesting 32MHz with 100MHz parent clock
+results in 100000000*(4*1000+0) 32-bit multiplication.
 
-Advance to the next comma-separated entry, or stop parsing when there
-is no next entry, before continuing so that the remaining entries are
-processed normally.
+Replace the expression with mult_frac which is already used in
+clk_wzrd_recalc_ratef.
 
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 7681f64e6404 ("clk: clocking-wizard: calculate dividers fractional parts")
+Signed-off-by: Pale Löbl <pavel@loebl.cz>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/eisa.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/xilinx/clk-xlnx-clock-wizard.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/parisc/eisa.c
-+++ b/drivers/parisc/eisa.c
-@@ -442,6 +442,11 @@ static int __init eisa_irq_setup(char *s
- 		val = (int) simple_strtoul(cur, &pe, 0);
- 		if (val > 15 || val < 0) {
- 			printk(KERN_ERR "eisa: EISA irq value are 0-15\n");
-+			cur = strchr(cur, ',');
-+			if (cur)
-+				cur++;
-+			else
-+				break;
- 			continue;
- 		}
- 		if (val == 2) {
+--- a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
++++ b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
+@@ -663,8 +663,8 @@ static int clk_wzrd_determine_rate_all(s
+ 	d = divider->d;
+ 	o = divider->o;
+ 
+-	req->rate = div_u64(req->best_parent_rate * (m * 1000 + divider->m_frac),
+-			    d * (o * 1000 + divider->o_frac));
++	req->rate = mult_frac(req->best_parent_rate, m * 1000 + divider->m_frac,
++			      d * (o * 1000 + divider->o_frac));
+ 	return 0;
+ }
+ 
 
 
