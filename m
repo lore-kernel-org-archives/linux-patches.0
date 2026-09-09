@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C07556B81;
-	Wed,  9 Sep 2026 14:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26962DA775;
+	Wed,  9 Sep 2026 14:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962523; cv=none; b=PG/ZSgPcOHuZBTymUPibUXbsGBQaI2m/fzFj0fC8TgAc8AuSLOuDB3EdnWcjpWxQqaKLqbKYrOky1zujK2j75B/Qy2Bi3HvfDwtw+xhK0RjmA3kzQNpRqCNujlaBX5rAv5aA57ho1b3nIAA+abpr+hUoA3h9OHx+3V9qCPDUGOc=
+	t=1788962527; cv=none; b=iSFeJ2kIj0fhkL7qT5Wm4CRr6h2Aj2vlErv7sc6il+0oT5xCRMa7674qiBDPQnPS2tAhuUZgCZ/cGQvb5lHFd7TR3BNaHs1KKVH8Q4p9vSIBx51AR+l1OGCYeSQQx8IinQ3ZZ6hjNlSkxn5DNlwBnXrZz7oShtcBr/m+teQb7bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962523; c=relaxed/simple;
-	bh=hway2vSAG3Cc5J6Eko3N5xqnG6z/X1cm477oiT2ZRvo=;
+	s=arc-20240116; t=1788962527; c=relaxed/simple;
+	bh=EDNLMnIkKYmqpsHDGxthgk2H2YQ5g+xkRIRLPzzBc60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6Pm9L3vHncET3RETU45/Toq2tbCJl6jtedBGs+B+6X6QF0Y/qiiuh4woV5hHAoEn3l+0gkb8ubY57ImwyDWf/HLqFhxfAn+xijK9x2et9bfFsr1rjd1+rk9o1yMzKWe+lGDnxTSftnxGB2QG7o/jS5DL1SYuEUffZ968GC48vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2EHp2wM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PlfLdDKCwqQZZc8/ndYCvQEKYjLmW9fSOvJzolt47qFh1TOdyWf+81rF+yNGqSl8Eh2eBJPD3H9QuXzUCdwY+giHcKMCXTCBo83ffpMWSFexLrFUmdL8Ycgr2t9EKhl5BXdWSPuHeNsf1dDp50kcN0vu161kzbl0E3z81FE72nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxLjV8Cd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2EHp2wM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2301D1F00A3A;
-	Wed,  9 Sep 2026 14:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxLjV8Cd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81F71F00A3A;
+	Wed,  9 Sep 2026 14:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962522;
-	bh=bZJlVVgAUSLqkR/C+iM1KfxCm87vg4JHYv8zVTuHhCA=;
+	s=korg; t=1788962525;
+	bh=gBOF5QEziX8tEVEDOkPQ737izVq8YULc+p7/e9gtQLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z2EHp2wMmZ0oWyCQITIpqtF7m4fufUaA66y230Rou5mYy9JgPhQAfNRgYkBaSNyU/
-	 fpiWAG65RejLu/Z3DGKOO+WvwUiISxhHp1bTJ20WWw6XGcdr8a0tFrZAHpSNSDQF2G
-	 urmPkPOmK4xCr40X2ljcL8TS1jAgQ+FBKypZpoDA=
+	b=rxLjV8Cd4TFGgQZtZBByVbsIiyM2Dlye9Obs+9ABVXKecEIjPQFeBJE1HaqXVhKE5
+	 a4xaPgZh0jHlE5s765uzq5cZ4cUTXqC/GskbGtvRcgvdqLjz7OqhpVykLh3m/rGIFg
+	 YA+7ck7SncuLYZWSjwdE4pT1j0BEgekCTWC8+IE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
+	Qihang <q.h.hack.winter@gmail.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oupton@kernel.org>
-Subject: [PATCH 7.2 320/556] KVM: arm64: Sign-extend VA for range-based TLBI invalidation
-Date: Wed,  9 Sep 2026 15:40:00 +0200
-Message-ID: <20260909134241.921452798@linuxfoundation.org>
+Subject: [PATCH 7.2 321/556] KVM: arm64: vgic-v3: take an LPI reference in vgic_v3_save_pending_tables
+Date: Wed,  9 Sep 2026 15:40:01 +0200
+Message-ID: <20260909134241.954158215@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,71 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Qihang <q.h.hack.winter@gmail.com>
 
-commit 2393470085649f0b973ecceb26fe8fc71edde0c1 upstream.
+commit f5b8f203bfc07a5a257dff859e66d2c500f9f509 upstream.
 
-When the decode_range_tlbi() helper was moved to be used for S1 TLBIs,
-the required sign extension was omitted. Add it.
+vgic_v3_save_pending_tables() iterates dist->lpi_xa using xa_for_each()
+and dereferences the returned struct vgic_irq in the loop body without
+holding a reference on the LPI.
 
-As a result, special care must be taken to not overflow PA bits when
-this is used for S2 invalidation.
+The xarray iterator only provides temporary RCU coverage while looking up
+the current entry. That is not sufficient for this loop body, which reads
+fields from struct vgic_irq and performs guest memory accesses before the
+iteration completes.
 
-Fixes: 85bba00425ae0 ("KVM: arm64: nv: Move TLBI range decoding to a helper")
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/r/20260801130337.EB2BA1F00AC4@smtp.kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+A concurrent path can trigger this race: the irqfd cached injection path
+(vgic_its_inject_cached_translation) obtains a transient LPI reference
+via vgic_its_check_cache() without holding kvm->lock, vcpu->mutex,
+config_lock, or its_lock. If guest ITS DISCARD then drops the cache and
+ITE references under its_lock, the transient inject reference may become
+the final one. When vgic_put_irq() drops it, the LPI is erased from
+lpi_xa and freed via kfree_rcu(). Meanwhile, vgic_v3_save_pending_tables()
+may still hold a stale pointer obtained from the xarray iterator and
+dereference it after the RCU grace period completes.
+
+Fix this by re-fetching each iterated LPI via vgic_get_irq(), which takes
+a stable reference, and dropping it with vgic_put_irq() on all paths.
+This matches the pattern already used by other lpi_xa iterators in the
+vgic ITS code.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260806091026.620700-7-maz@kernel.org
+Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260807025534.34125-1-q.h.hack.winter@gmail.com
 Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_nested.h |    7 +++++++
- arch/arm64/kvm/sys_regs.c           |   11 +++++++++++
- 2 files changed, 18 insertions(+)
+ arch/arm64/kvm/vgic/vgic-v3.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_nested.h
-+++ b/arch/arm64/include/asm/kvm_nested.h
-@@ -291,6 +291,13 @@ static inline u64 decode_range_tlbi(u64
+--- a/arch/arm64/kvm/vgic/vgic-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-v3.c
+@@ -617,9 +617,13 @@ int vgic_v3_save_pending_tables(struct k
+ 		bool is_pending;
+ 		bool stored;
  
- 	base	= (val & GENMASK(36, 0)) << shift;
- 
-+	/*
-+	 * We only deal with at most 48bit VA/IPA, so 48 is where we
-+	 * sign-extend from. Should we support FEAT_L{VP}A* at some point,
-+	 * this will need to be revisited.
-+	 */
-+	base	= (u64)sign_extend64(base, 48);
++		irq = vgic_get_irq(kvm, index);
++		if (!irq)
++			continue;
 +
- 	if (asid)
- 		*asid = FIELD_GET(TLBIR_ASID_MASK, val);
+ 		vcpu = irq->target_vcpu;
+ 		if (!vcpu)
+-			continue;
++			goto put_irq;
  
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -4057,6 +4057,7 @@ static bool handle_ripas2e1is(struct kvm
- 	u32 sys_encoding = sys_insn(p->Op0, p->Op1, p->CRn, p->CRm, p->Op2);
- 	u64 vttbr = vcpu_read_sys_reg(vcpu, VTTBR_EL2);
- 	u64 base, range;
-+	int pa_bits;
+ 		pendbase = GICR_PENDBASER_ADDRESS(vcpu->arch.vgic_cpu.pendbaser);
  
- 	if (!kvm_supported_tlbi_ipas2_op(vcpu, sys_encoding))
- 		return undef_access(vcpu, p, r);
-@@ -4068,6 +4069,16 @@ static bool handle_ripas2e1is(struct kvm
- 	 */
- 	base = decode_range_tlbi(p->regval, &range, NULL);
+@@ -630,7 +634,7 @@ int vgic_v3_save_pending_tables(struct k
+ 		if (ptr != last_ptr) {
+ 			ret = kvm_read_guest_lock(kvm, ptr, &val, 1);
+ 			if (ret)
+-				goto out;
++				goto put_irq;
+ 			last_ptr = ptr;
+ 		}
  
-+	/*
-+	 * Ignore TLBIs that start out of PA_bits range, and cap the
-+	 * invalidation to the [base:bit(PA_bits)] interval.
-+	 */
-+	pa_bits = kvm_get_pa_bits(vcpu->kvm);
-+	if (fls64(base) > pa_bits)
-+		return true;
-+
-+	range = min(range, BIT_ULL(pa_bits) - base);
-+
- 	kvm_s2_mmu_iterate_by_vmid(vcpu->kvm, get_vmid(vttbr),
- 				   &(union tlbi_info) {
- 					   .range = {
+@@ -642,7 +646,7 @@ int vgic_v3_save_pending_tables(struct k
+ 			vgic_v4_get_vlpi_state(irq, &is_pending);
+ 
+ 		if (stored == is_pending)
+-			continue;
++			goto put_irq;
+ 
+ 		if (is_pending)
+ 			val |= 1 << bit_nr;
+@@ -650,6 +654,8 @@ int vgic_v3_save_pending_tables(struct k
+ 			val &= ~(1 << bit_nr);
+ 
+ 		ret = vgic_write_guest_lock(kvm, ptr, &val, 1);
++put_irq:
++		vgic_put_irq(kvm, irq);
+ 		if (ret)
+ 			goto out;
+ 	}
 
 
