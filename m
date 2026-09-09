@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49406238C1A;
-	Wed,  9 Sep 2026 14:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D284FDE6C;
+	Wed,  9 Sep 2026 14:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962586; cv=none; b=JlkxQDNS3MhouF5lITzn0C/qmhMPlTWTxG08/Dg7PmPtgS8/TG00x7RmHQ0lfYKb3mbtkLll2OIqbQdjO3KsL9OduKbgKxN6c6/1sOM50y++nKFQcrywA50kuKPPhlyWpkxWGo5E8mi6XcnLnB1b2tRkryI8+1KPq9Bj+n0Hu00=
+	t=1788962589; cv=none; b=pwzPFvNpu7OK5uq6eaF7WpMS7GPNDwUcgzaAum6KLjdIQaDVL1BLx1kGoMHSATapPPflEBE3cXM7YRVtLKpONBFbQJusORQuD8IBkZttD77aS3HzY78Z9HVW5LORNl4d/+d9PZAbJFWJnpe3BB2WV6/vbkqnAQ8EkEM25pYlDeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962586; c=relaxed/simple;
-	bh=lQxX1bHDQRlp2MST3ly9sZey1BvyuadBzzvNQMK43Oo=;
+	s=arc-20240116; t=1788962589; c=relaxed/simple;
+	bh=IqzBocDLNx4iuhjxz59Qc8rmMtAZCgxCGlc9xjuABqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gpwrZQFIKfz42RDSQqNc9jz6z5yfn2rFHaU5S8kInEcv4mcQYe2ny3IqmUN84ynz2to8ezt/K8t3o5W/oy/cUp0f5sA6bYHOqtnzaZ4xw2rGUrBc/I3y+rKW+S4ArJd7C2fgCE4DgJflcK1Wc1u48msl87cqC5CKFXbY8qlIuc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fp80bUlw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sNOIYgs7x0fDAlu/smKnTu+sgDXk/d9Mz+xd5HPe5mmkFtL6wcdcOOvQ40wiBNLYzFIbBlqa5426wLXyFMoWIkyKNnY+DosDfcExg92koEgzCKLPAhHM9gh+vPiUns5ZjHYjEahXEv4H8BY/ha07wVC7/FTicYv0AF/fxvr39TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Do7Fuvzl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fp80bUlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498AF1F00A3A;
-	Wed,  9 Sep 2026 14:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do7Fuvzl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BA51F00A3A;
+	Wed,  9 Sep 2026 14:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962584;
-	bh=kko5ME2QRxmvyNbVSfWw80BSEqpX50vKaS41e40QkJY=;
+	s=korg; t=1788962587;
+	bh=7+OaFE1zg+5f/b8CAKqHo2w1LICO0aRX/Ebrg7Ou6CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fp80bUlw7S1znf70moyS48y2HRal/YufvBWIVsZEQQBuGFoKQ12s0trio7uQVHAJe
-	 wd4niI6pmtm1lSNxVB2vnGRiN/bOXjmEBs/2pzmaY2RV5grZzU+/X5CbAvPLP5lcWY
-	 EB+UPdcDJPPsCqgnd7lyQ7Zp7V1Kj5lNJmrieGdc=
+	b=Do7FuvzlCq9Msk9CbYqMQdUAe7I99Z6+2e7fOxC1y4l+jZ79sWLdYQHX9Vpuvc6Ww
+	 x4xhhFwOU8RsWREpZTS6Ey7FJDU5TQl+mcNwCpDQ14HFi09YP3E0hAliWAUObkHUWc
+	 xBphZoFlA8oFye6zTrKvahXH7q2i6mwWDa5kL3YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 339/556] LoongArch: BPF: Move arena register slot below TCC context
-Date: Wed,  9 Sep 2026 15:40:19 +0200
-Message-ID: <20260909134242.580520496@linuxfoundation.org>
+Subject: [PATCH 7.2 340/556] LoongArch: BPF: Fix off-by-one error for insn_is_cast_user()
+Date: Wed,  9 Sep 2026 15:40:20 +0200
+Message-ID: <20260909134242.616108682@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,99 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit cd7e356b07a27e91394838cf3fb655862b519294 upstream.
+commit 30419a0aa128135a81be917eaa3bd2f1a10c9ca3 upstream.
 
-Currently, the stack layout places the optional arena register slot
-above the tail call counter context. When arena_vm_start is dynamically
-enabled, it shifts the relative offset of the tcc_ptr slot within the
-stack frame, causing hardcoded tracking macros to mismatch and leading
-to memory misalignment or corruption potentially.
+In the LoongArch BPF JIT code, the branch offset represents the number
+of instructions. An offset of 1 means the target of the "beq" is the
+current PC plus 1 instruction (PC + 4 bytes). This matches the exact
+same path as the sequential non-branch execution, the "or" instruction
+is always executed for the cast_user JIT arm in build_insn().
 
-To fix this, move the arena register save and restore sequences below
-the tail call counter context slots in both build_prologue() and the
-epilogue.
+If the pointer is not NULL, there is no side effect. But if the pointer
+is NULL, it is incorrectly combined with the base address and turns into
+a non-zero address, meaning a zero arena offset no longer casts to NULL.
 
-Update __build_epilogue() to insert a proper offset decrement to safely
-skip the unneeded tcc_ptr reading block while accurately aligning with
-the relocated arena slot at the very bottom.
-
-With this patch, the tcc_ptr slot is always positioned at a fixed
-distance directly underneath the base callee-saved registers that is
-independent of whether the arena features are on.
+Fix this by changing the branch offset from 1 to 2, which properly skips
+the "or" instruction and jumps directly to the "move_reg" instruction if
+the pointer is NULL, ensuring the destination register is safely cleared
+to 0.
 
 Cc: stable@vger.kernel.org
-Fixes: ef54c517a937 ("LoongArch: BPF: Implement PROBE_MEM32 pseudo instructions")
+Fixes: 4fdb5dd8aeba ("LoongArch: BPF: Implement bpf_addr_space_cast instruction")
 Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ arch/loongarch/net/bpf_jit.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index b0c39d45d6a6..fd5f8c4e5360 100644
 --- a/arch/loongarch/net/bpf_jit.c
 +++ b/arch/loongarch/net/bpf_jit.c
-@@ -124,6 +124,9 @@ static void prepare_bpf_tail_call_cnt(struct jit_ctx *ctx, int *store_offset)
-  *                            |           tcc           |
-  *                            +-------------------------+
-  *                            |           tcc_ptr       |
-+ *                            +-------------------------+
-+ *                            |           arena         |
-+ *                            |         (optional)      |
-  *                            +-------------------------+ <--BPF_REG_FP
-  *                            |  prog->aux->stack_depth |
-  *                            |        (optional)       |
-@@ -145,7 +148,7 @@ static void build_prologue(struct jit_ctx *ctx)
- 	stack_adjust += sizeof(long) * 2;
- 
- 	if (ctx->arena_vm_start)
--		stack_adjust += 8;
-+		stack_adjust += sizeof(long);
- 
- 	stack_adjust = round_up(stack_adjust, 16);
- 	stack_adjust += bpf_stack_adjust;
-@@ -194,13 +197,13 @@ static void build_prologue(struct jit_ctx *ctx)
- 	store_offset -= sizeof(long);
- 	emit_insn(ctx, std, LOONGARCH_GPR_S5, LOONGARCH_GPR_SP, store_offset);
- 
-+	prepare_bpf_tail_call_cnt(ctx, &store_offset);
-+
- 	if (ctx->arena_vm_start) {
- 		store_offset -= sizeof(long);
- 		emit_insn(ctx, std, REG_ARENA, LOONGARCH_GPR_SP, store_offset);
- 	}
- 
--	prepare_bpf_tail_call_cnt(ctx, &store_offset);
--
- 	emit_insn(ctx, addid, LOONGARCH_GPR_FP, LOONGARCH_GPR_SP, stack_adjust);
- 
- 	if (bpf_stack_adjust)
-@@ -241,15 +244,18 @@ static void __build_epilogue(struct jit_ctx *ctx, bool is_tail_call)
- 	load_offset -= sizeof(long);
- 	emit_insn(ctx, ldd, LOONGARCH_GPR_S5, LOONGARCH_GPR_SP, load_offset);
- 
-+	/* Only restore the TCC state into REG_TCC from the higher slot */
-+	load_offset -= sizeof(long);
-+	emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, load_offset);
-+
-+	/* Skip the unused local 'tcc_ptr' slot to align with arena */
-+	load_offset -= sizeof(long);
-+
- 	if (ctx->arena_vm_start) {
- 		load_offset -= sizeof(long);
- 		emit_insn(ctx, ldd, REG_ARENA, LOONGARCH_GPR_SP, load_offset);
- 	}
- 
--	/* Only restore the TCC state into REG_TCC from the higher slot */
--	load_offset -= sizeof(long);
--	emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, load_offset);
--
- 	emit_insn(ctx, addid, LOONGARCH_GPR_SP, LOONGARCH_GPR_SP, stack_adjust);
- 
- 	if (!is_tail_call) {
--- 
-2.55.0
-
+@@ -734,7 +734,7 @@ static int build_insn(const struct bpf_i
+ 			move_reg(ctx, t1, src);
+ 			emit_zext_32(ctx, t1, true);
+ 			move_imm(ctx, dst, (ctx->user_vm_start >> 32) << 32, false);
+-			emit_insn(ctx, beq, t1, LOONGARCH_GPR_ZERO, 1);
++			emit_insn(ctx, beq, t1, LOONGARCH_GPR_ZERO, 2);
+ 			emit_insn(ctx, or, t1, dst, t1);
+ 			move_reg(ctx, dst, t1);
+ 			break;
 
 
