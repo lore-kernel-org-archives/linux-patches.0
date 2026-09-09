@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5DB58B6DD;
-	Wed,  9 Sep 2026 14:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D328B499F0C;
+	Wed,  9 Sep 2026 14:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963899; cv=none; b=UdGQntNJRiI8OwNSuwZixMVkWW6ZBJC2BuhVSOGlJa2twTrj9G5TZCMA/HfpoGRlV2WXWdYTs3vd0GWePIu7QqR+zNny+zCzHQbuGOxwgo6pofXF1X0b3K5orGrxwNXYkS6Ou4AQqRR5Wa91OMwRr/OmkYkM20Fn/sjccg2RcVg=
+	t=1788963902; cv=none; b=faV0mdlAKUWcG6keFuHC6pQat9Mmc8LeqfzNnm1ziz5y7B0yS2znNN66dSBrqz9JbO8IQBWi06EcMkC2wp1DWd9gcbx3h3JVM4RIF3IUyhUaFqXVHEiYe1oexa1XSxgA4qRa9x9ZJgxlqwRKb+KcfGoE5NcYWlKQc82queDVgyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963899; c=relaxed/simple;
-	bh=iKN0kii9fZH7ztf95tDEUE+QPgbb1W1gxlaBxdrkA+I=;
+	s=arc-20240116; t=1788963902; c=relaxed/simple;
+	bh=ULpncWDJMgomUF68aAY/PeSV4wBrO68j1eZMZMsP9ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXcWsiJhcYLfPkB5/jJjXHDKScKub4fHxx+1C9LH/GcluFUxuIvpH1xLPYtdSIEXGiPQfrrPvCv76EFknRSGe+So0F+N3GpMkIOlCfzy6kuH+zzuLSlk5AWB9szjwd51SgAC6WI/shoMDa0IgrcudDhwmb083Lf9P9zMt0fknjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvxQQs8G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DOs3gxkmwXQkjAQHpRxtNq0g+rp4B8qt/rweVD5Zs5MPwSSRjBZOoZKauxo4M2fxk3HqrBLa03CPu39QADDf/nW4fIxhk7uKlSSIVG7wizvIG80JrE91EcUWGe+SyRopUHIpOdhQsHW83pL8aFzO1/N/VBoUBZsozsjBJ0y6EIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k139WFNa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvxQQs8G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527D01F00A3A;
-	Wed,  9 Sep 2026 14:24:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k139WFNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E9D1F00A3A;
+	Wed,  9 Sep 2026 14:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963897;
-	bh=+azCUAM6LmwMheHbITebw27nN1+SydfsIsDwEFYl140=;
+	s=korg; t=1788963900;
+	bh=ltU/gqfcoFvcP7yHRVS2ZylT5segreVKUm5AdAvSOeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QvxQQs8G5+02mZthkhpyOGi3ZSY4loZnHPn03SvPo9FF6BZSLcj/SzK00aX2UpPru
-	 Lqo6jlf4YWx23rhsjpxNDMnSv5f36omr4wD0oqoWD2gXrf7fJARO0OQlcJm3rGSqID
-	 igSez+gI4mHwNJca2QHAtR5lVx6kgcSHDu/vlzYw=
+	b=k139WFNaVZv0qiigoK6ESfLSiUIndXLxpvUt2aInhHhh1I/fJGZG21Go++XtU1RLr
+	 I8QG5qHkXt/LJb8OvTohDUbepDPxpjqDV2+6GHO/fp5JMeEg0OfiSqMVnIOn2SKh0V
+	 IAnYbH6eE5Rdds5wJKOE1v8rzq3xdWBz+tPBQzME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 238/583] KVM: x86/mmu: Use split "zap all fast" helpers when invalidating memslot
-Date: Wed,  9 Sep 2026 15:38:43 +0200
-Message-ID: <20260909134246.396642829@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Phil Rosenthal <phil@phil.gs>
+Subject: [PATCH 6.18 239/583] KVM: x86/mmu: Consume the locked rmap value in the lockless rmap walk
+Date: Wed,  9 Sep 2026 15:38:44 +0200
+Message-ID: <20260909134246.429442043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,76 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Phil Rosenthal <phil@phil.gs>
 
-commit db095727ff5739f4f46ee641ee6ef450032886db upstream.
+commit e428f9779a43737d830111238816f1928b07aefb upstream.
 
-Manually invoke the front half and back half of the "zap all fast" flow
-when invalidating a memslot so that mmu_lock is acquired at function scope
-in kvm_arch_flush_shadow_memslot().   This will allow putting more code
-inside the critical section without having to take mmu_lock twice in quick
-succession.
+__kvm_rmap_lock() deliberately elides the rmap lock when it observes an
+empty rmap.  In that case kvm_rmap_lock_readonly() also re-enables
+preemption and returns zero, so the caller holds neither the rmap lock
+nor a preemption reference.  The elision documents the invariant it
+relies on:
 
-Opportunistically open code checking whether or not to do the fast zap, to
-discourage removing the local "zap_all" in a future cleanup, i.e. to ensure
-the SLOT_ZAP_ALL quirk is queried exactly once.  Processing the front half
-but not the back half of the fast zap (if SLOT_ZAP_ALL were disabled
-concurrently) would result in KVM unnecessarily keeping invalid TDP MMU
-roots until the VM is destroyed.
+	 * Elide the lock if the rmap is empty, as lockless walkers (read-only
+	 * mode) don't need to (and can't) walk an empty rmap, nor can they add
+	 * entries to the rmap.  I.e. the only paths that process empty rmaps
+	 * do so while holding mmu_lock for write, and are mutually exclusive.
 
-No functional change intended.
+kvm_rmap_age_gfn_range() ignores the returned value and unconditionally
+enters for_each_rmap_spte_lockless().  The iterator started with
+rmap_get_first(), which re-reads rmap_head->val rather than using the
+value returned by the lock.  If a writer populates the rmap between the
+lock's read and the iterator's re-read, the aging path walks the newly
+installed rmap without holding its lock.
 
-Cc: stable@vger.kernel.org # 6.12.x
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Link: https://patch.msgid.link/20260709204948.1988414-10-seanjc@google.com
+For a KVM_RMAP_MANY rmap this leaves the walker following a
+pte_list_desc chain that it never locked.  A writer holding mmu_lock for
+write may free that chain (e.g. kvm_zap_all_rmap_sptes() on the recycle
+path, or any rmap zap) via kmem_cache_free() while the walk is in
+progress, giving a slab use-after-free.  Nothing serialises the two: the
+aging path runs without mmu_lock when CONFIG_KVM_MMU_LOCKLESS_AGING=y,
+and the rmap lock that would otherwise exclude the writer was elided.
+Because the empty path re-enables preemption, the interval between the
+two reads can span an arbitrary scheduling delay.
+
+Fix the class of bug by having the lockless walk consume the value
+returned by the lock instead of re-reading the rmap.  Split
+rmap_get_first() into __rmap_get_first(), which starts an iterator from
+an already-read rmap value, and make for_each_rmap_spte_lockless() take
+that value and call __rmap_get_first() directly.
+kvm_rmap_age_gfn_range() passes the value returned by
+kvm_rmap_lock_readonly(): when the lock was elided the value is zero,
+__rmap_get_first() returns NULL, and the walk is skipped.  No lockless
+walker re-reads the rmap, so the lock-elision invariant cannot be
+violated, and no lock()-without-paired-unlock() path is added to the
+aging code.
+
+Fixes: af3b6a9eba48 ("KVM: x86/mmu: Walk rmaps (shadow MMU) without holding mmu_lock when aging gfns")
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Phil Rosenthal <phil@phil.gs>
+Link: https://patch.msgid.link/20260720-rmap-age-elided-submit-v2-1-668973030d47@phil.gs
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ arch/x86/kvm/mmu/mmu.c |   33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
-@@ -7348,12 +7348,6 @@ out_flush:
- 	kvm_mmu_remote_flush_or_zap(kvm, &invalid_list, flush);
- }
+@@ -1218,18 +1218,9 @@ struct rmap_iterator {
+ 	int pos;			/* index of the sptep */
+ };
  
--static inline bool kvm_memslot_flush_zap_all(struct kvm *kvm)
--{
--	return kvm->arch.vm_type == KVM_X86_DEFAULT_VM &&
--	       kvm_check_has_quirk(kvm, KVM_X86_QUIRK_SLOT_ZAP_ALL);
--}
--
- void kvm_arch_flush_shadow_memslot(struct kvm *kvm,
- 				   struct kvm_memory_slot *slot)
+-/*
+- * Iteration must be started by this function.  This should also be used after
+- * removing/dropping sptes from the rmap link because in such cases the
+- * information in the iterator may not be valid.
+- *
+- * Returns sptep if found, NULL otherwise.
+- */
+-static u64 *rmap_get_first(struct kvm_rmap_head *rmap_head,
+-			   struct rmap_iterator *iter)
++static u64 *__rmap_get_first(unsigned long rmap_val,
++			     struct rmap_iterator *iter)
  {
-@@ -7364,16 +7358,23 @@ void kvm_arch_flush_shadow_memslot(struc
- 		.may_block = true,
- 		.attr_filter = KVM_FILTER_PRIVATE | KVM_FILTER_SHARED,
- 	};
-+	bool zap_all = kvm->arch.vm_type == KVM_X86_DEFAULT_VM &&
-+		       kvm_check_has_quirk(kvm, KVM_X86_QUIRK_SLOT_ZAP_ALL);
- 	bool flush;
+-	unsigned long rmap_val = kvm_rmap_get(rmap_head);
+-
+ 	if (!rmap_val)
+ 		return NULL;
  
--	if (kvm_memslot_flush_zap_all(kvm)) {
--		kvm_mmu_zap_all_fast(kvm);
-+	write_lock(&kvm->mmu_lock);
-+
-+	if (zap_all) {
-+		__kvm_mmu_zap_all_fast_front_half(kvm);
- 	} else {
--		write_lock(&kvm->mmu_lock);
- 		flush = kvm_unmap_gfn_range(kvm, &range);
- 		kvm_mmu_zap_memslot_pages_and_flush(kvm, slot, flush);
--		write_unlock(&kvm->mmu_lock);
- 	}
-+
-+	write_unlock(&kvm->mmu_lock);
-+
-+	if (zap_all)
-+		__kvm_mmu_zap_all_fast_back_half(kvm);
+@@ -1244,6 +1235,19 @@ static u64 *rmap_get_first(struct kvm_rm
  }
  
- void kvm_mmu_invalidate_mmio_sptes(struct kvm *kvm, u64 gen)
+ /*
++ * Iteration must be started by this function.  This should also be used after
++ * removing/dropping sptes from the rmap link because in such cases the
++ * information in the iterator may not be valid.
++ *
++ * Returns sptep if found, NULL otherwise.
++ */
++static u64 *rmap_get_first(struct kvm_rmap_head *rmap_head,
++			   struct rmap_iterator *iter)
++{
++	return __rmap_get_first(kvm_rmap_get(rmap_head), iter);
++}
++
++/*
+  * Must be used with a valid iterator: e.g. after rmap_get_first().
+  *
+  * Returns sptep if found, NULL otherwise.
+@@ -1277,8 +1281,9 @@ static u64 *rmap_get_next(struct rmap_it
+ 	__for_each_rmap_spte(_rmap_head_, _iter_, _sptep_)			\
+ 		if (!WARN_ON_ONCE(!is_shadow_present_pte(*(_sptep_))))	\
+ 
+-#define for_each_rmap_spte_lockless(_rmap_head_, _iter_, _sptep_, _spte_)	\
+-	__for_each_rmap_spte(_rmap_head_, _iter_, _sptep_)			\
++#define for_each_rmap_spte_lockless(_rmap_val_, _iter_, _sptep_, _spte_)	\
++	for (_sptep_ = __rmap_get_first(_rmap_val_, _iter_);			\
++	     _sptep_; _sptep_ = rmap_get_next(_iter_))				\
+ 		if (is_shadow_present_pte(_spte_ = mmu_spte_get_lockless(sptep)))
+ 
+ static void drop_spte(struct kvm *kvm, u64 *sptep)
+@@ -1716,7 +1721,7 @@ static bool kvm_rmap_age_gfn_range(struc
+ 			rmap_head = gfn_to_rmap(gfn, level, range->slot);
+ 			rmap_val = kvm_rmap_lock_readonly(rmap_head);
+ 
+-			for_each_rmap_spte_lockless(rmap_head, &iter, sptep, spte) {
++			for_each_rmap_spte_lockless(rmap_val, &iter, sptep, spte) {
+ 				if (!is_accessed_spte(spte))
+ 					continue;
+ 
 
 
