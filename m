@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3D256511F;
-	Wed,  9 Sep 2026 13:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D39566C54;
+	Wed,  9 Sep 2026 13:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962239; cv=none; b=uvIXxkIrUcynKL0JAN2m1Z4q4T8gzhbbsFLCEEZkCYvxj3i5eMApMRkaSsPg6rstvG1xm+mz/ZL5kZyLn2nnQvJ01MH4dbjo2Xvt1X8awEqwHD6RFG4j1tPcdVQOc96OB7Y9W8Xx0XqRj0EDqjWAV3V1mYlK+IP5dhVM44qBP3s=
+	t=1788962241; cv=none; b=neqgARJLkx1xOiACEpT3rvKesQnO4Jy3u7mFcIxMuI2X3oKOXOcWs3uZ/82vlum+eZLf9mUGfZ3yGG/x2caxKt4PuOUo3Ho4L+epY1kk5sBh6J8S3Cz2h2fad6k8JIgXlc4gnCAGi7DHTx0YowAwNfRemV64HGzK6eR8JzZaTpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962239; c=relaxed/simple;
-	bh=pRlDcNrYQo/ZQQX1NY9AW5s8V9QdkbVnoAXhrKyTnVs=;
+	s=arc-20240116; t=1788962241; c=relaxed/simple;
+	bh=ecB8xQnkmmkYoP+u+ovfMz1pSZucB/YB3EO0fjT+ay4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=itR0SlIn9u5Htwr+ZLLnvqSYttOyKaUpQ5xmrxH50nUCGunIOiD8YKGgCZAJDAaGXa59RIUc969rn/cOtsSIBlSaYmDs7Q4/IN1Nj7VMiyKUT4QHRaYAxEbTfeo76i0FCpC3Jiugkd1VeTkSvRp/AVxgt7eqMhWhMI/LY01V19w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orNzFliE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AXE1Dq8t1u0EynqULSNU+k0SJBrt/ivtgFNzI/tDjFXSbPp8vMdMkNiDnD/3sX+3DtFcaV2S9COc2g31VzV3yu6yDCP+dVoEYaiPDlVqpbKshn2KvV8RUe1VJsX1UXLoF1eUL0/QErw9QWr6hhLorHOlSJzgPFewJjZIzjnBRJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oo+HjBU7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orNzFliE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EE11F00A3A;
-	Wed,  9 Sep 2026 13:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oo+HjBU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF021F00A3E;
+	Wed,  9 Sep 2026 13:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962237;
-	bh=Z4OhHtvEdFTQRkHk7yRYPFOChgkUY2l7+62GMQ80qhk=;
+	s=korg; t=1788962240;
+	bh=cOItsr6fvTQ1SxgC9/CbyQRAzWYsqRFiXvMr8VWi7KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=orNzFliEhUTtx1I6mpI87vK82cavWOkET5dPqKoGPLdAbIZ/po/PlcCdhArGl1Qbc
-	 dXSTka5TPvxReirr1MgdwltBsDvdVxi3YdoQPNMyJDfH7U2NZRxRRKVVZHFE88ZCjn
-	 DYJFHXevqqbg/7YeOFY4RwYtzHcxWxUDfelRGwWQ=
+	b=oo+HjBU7eFv4tdM9EgLVk7DINQthHX9yV2yVlxSZFtbUrjg0YyHY3xUL8ULGKLkzT
+	 tcnf4G+R23EnJFzx5BjdfqkWiwe84VrF/N6iO6WtJWWtzpTKnNR/HjyfklFwGRxgIk
+	 jy4V0d88vaSDzns/boxaBiO7hFqBLti8cGSkZcfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 222/556] ASoC: cs35l34: drain threaded IRQ before runtime suspend
-Date: Wed,  9 Sep 2026 15:38:22 +0200
-Message-ID: <20260909134238.210000622@linuxfoundation.org>
+Subject: [PATCH 7.2 223/556] ASoC: cx2072x: sort the register default table
+Date: Wed,  9 Sep 2026 15:38:23 +0200
+Message-ID: <20260909134238.246285754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,86 +50,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 4105a4c0678b2808fc8046b60321b4f1cc7dae75 upstream.
+commit b927853f70078262780a4e623631584a25eb7284 upstream.
 
-cs35l34_runtime_suspend() currently switches the codec into
-regcache_cache_only(true), asserts reset low, and powers the device off
-without first quiescing the threaded IRQ registered by
-devm_request_threaded_irq(). That leaves a window where
-cs35l34_irq_thread() can still run after suspend has removed live
-hardware access.
+reg_defaults must be sorted by ascending register address, as
+regcache_lookup_reg() locates entries in it with bsearch().  See commit
+fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-A running system can reach this during runtime PM while the driver still
-has critical fault IRQs unmasked. If the threaded handler runs in that
-window, it reads volatile INT_STATUS_1..4 after cache_only has been
-enabled, ignores the regmap_read() failures, and can still execute the
-PROT_RELEASE_CTL release sequence or the BST fault power-down writes.
+The table is grouped by function rather than by address: for every node
+the amplifier gain registers (0x41c0, 0x45c0, ...) are listed before the
+power state and stream format registers of the same node (0x4014,
+0x4414, ...).  This leaves 75 of the 132 entries unreachable.
+regcache_reg_needs_sync() then cannot compare them against their default
+and reports that a sync is needed, so they are written to the device on
+every regcache_sync() even when they were never touched.
 
-Use disable_irq() before entering cache_only/reset-low/power-off so any
-in-flight threaded handler is drained and no new IRQ thread can run
-while the device is suspended. Re-enable the IRQ only after
-runtime_resume() has restored live register access with regcache_sync().
-Since probe only logs request_threaded_irq() failures and keeps going,
-track whether the IRQ was actually installed before disabling or
-re-enabling it.
+Sort the table by register address.
 
-Fixes: c1124c09e103 ("ASoC: cs35l34: Initial commit of the cs35l34 CODEC driver.")
+Fixes: a497a4363706 ("ASoC: Add support for Conexant CX2072X CODEC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260611161553.3378721-3-runyu.xiao@seu.edu.cn
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20260805122811.13713-3-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs35l34.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ sound/soc/codecs/cx2072x.c |  122 ++++++++++++++++++++++-----------------------
+ 1 file changed, 61 insertions(+), 61 deletions(-)
 
---- a/sound/soc/codecs/cs35l34.c
-+++ b/sound/soc/codecs/cs35l34.c
-@@ -45,6 +45,7 @@ struct  cs35l34_private {
- 	int num_core_supplies;
- 	int mclk_int;
- 	bool tdm_mode;
-+	bool irq_requested;
- 	struct gpio_desc *reset_gpio;	/* Active-low reset GPIO */
+--- a/sound/soc/codecs/cx2072x.c
++++ b/sound/soc/codecs/cx2072x.c
+@@ -96,51 +96,60 @@ static const struct reg_default cx2072x_
+ 	{ CX2072X_GPIO_WAKE, 0x00000000 },
+ 	{ CX2072X_GPIO_UM_ENABLE, 0x00000000 },
+ 	{ CX2072X_GPIO_STICKY_MASK, 0x00000000 },
+-	{ CX2072X_DAC1_CONVERTER_FORMAT, 0x00000031 },
+-	{ CX2072X_DAC1_AMP_GAIN_RIGHT, 0x0000004a },
+-	{ CX2072X_DAC1_AMP_GAIN_LEFT, 0x0000004a },
+ 	{ CX2072X_DAC1_POWER_STATE, 0x00000433 },
+ 	{ CX2072X_DAC1_CONVERTER_STREAM_CHANNEL, 0x00000000 },
+ 	{ CX2072X_DAC1_EAPD_ENABLE, 0x00000000 },
+-	{ CX2072X_DAC2_CONVERTER_FORMAT, 0x00000031 },
+-	{ CX2072X_DAC2_AMP_GAIN_RIGHT, 0x0000004a },
+-	{ CX2072X_DAC2_AMP_GAIN_LEFT, 0x0000004a },
++	{ CX2072X_DAC1_AMP_GAIN_RIGHT, 0x0000004a },
++	{ CX2072X_DAC1_AMP_GAIN_LEFT, 0x0000004a },
++	{ CX2072X_DAC1_CONVERTER_FORMAT, 0x00000031 },
+ 	{ CX2072X_DAC2_POWER_STATE, 0x00000433 },
+ 	{ CX2072X_DAC2_CONVERTER_STREAM_CHANNEL, 0x00000000 },
+-	{ CX2072X_ADC1_CONVERTER_FORMAT, 0x00000031 },
++	{ CX2072X_DAC2_AMP_GAIN_RIGHT, 0x0000004a },
++	{ CX2072X_DAC2_AMP_GAIN_LEFT, 0x0000004a },
++	{ CX2072X_DAC2_CONVERTER_FORMAT, 0x00000031 },
++	{ CX2072X_ADC1_CONNECTION_SELECT_CONTROL, 0x00000000 },
++	{ CX2072X_ADC1_POWER_STATE, 0x00000433 },
++	{ CX2072X_ADC1_CONVERTER_STREAM_CHANNEL, 0x00000000 },
+ 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_0, 0x0000004a },
+-	{ CX2072X_ADC1_AMP_GAIN_LEFT_0, 0x0000004a },
+ 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_1, 0x0000004a },
+-	{ CX2072X_ADC1_AMP_GAIN_LEFT_1, 0x0000004a },
+ 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_2, 0x0000004a },
+-	{ CX2072X_ADC1_AMP_GAIN_LEFT_2, 0x0000004a },
+ 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_3, 0x0000004a },
+-	{ CX2072X_ADC1_AMP_GAIN_LEFT_3, 0x0000004a },
+ 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_4, 0x0000004a },
+-	{ CX2072X_ADC1_AMP_GAIN_LEFT_4, 0x0000004a },
+ 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_5, 0x0000004a },
+-	{ CX2072X_ADC1_AMP_GAIN_LEFT_5, 0x0000004a },
+ 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_6, 0x0000004a },
++	{ CX2072X_ADC1_AMP_GAIN_LEFT_0, 0x0000004a },
++	{ CX2072X_ADC1_AMP_GAIN_LEFT_1, 0x0000004a },
++	{ CX2072X_ADC1_AMP_GAIN_LEFT_2, 0x0000004a },
++	{ CX2072X_ADC1_AMP_GAIN_LEFT_3, 0x0000004a },
++	{ CX2072X_ADC1_AMP_GAIN_LEFT_4, 0x0000004a },
++	{ CX2072X_ADC1_AMP_GAIN_LEFT_5, 0x0000004a },
+ 	{ CX2072X_ADC1_AMP_GAIN_LEFT_6, 0x0000004a },
+-	{ CX2072X_ADC1_CONNECTION_SELECT_CONTROL, 0x00000000 },
+-	{ CX2072X_ADC1_POWER_STATE, 0x00000433 },
+-	{ CX2072X_ADC1_CONVERTER_STREAM_CHANNEL, 0x00000000 },
+-	{ CX2072X_ADC2_CONVERTER_FORMAT, 0x00000031 },
++	{ CX2072X_ADC1_CONVERTER_FORMAT, 0x00000031 },
++	{ CX2072X_ADC2_CONNECTION_SELECT_CONTROL, 0x00000000 },
++	{ CX2072X_ADC2_POWER_STATE, 0x00000433 },
++	{ CX2072X_ADC2_CONVERTER_STREAM_CHANNEL, 0x00000000 },
+ 	{ CX2072X_ADC2_AMP_GAIN_RIGHT_0, 0x0000004a },
+-	{ CX2072X_ADC2_AMP_GAIN_LEFT_0, 0x0000004a },
+ 	{ CX2072X_ADC2_AMP_GAIN_RIGHT_1, 0x0000004a },
+-	{ CX2072X_ADC2_AMP_GAIN_LEFT_1, 0x0000004a },
+ 	{ CX2072X_ADC2_AMP_GAIN_RIGHT_2, 0x0000004a },
++	{ CX2072X_ADC2_AMP_GAIN_LEFT_0, 0x0000004a },
++	{ CX2072X_ADC2_AMP_GAIN_LEFT_1, 0x0000004a },
+ 	{ CX2072X_ADC2_AMP_GAIN_LEFT_2, 0x0000004a },
+-	{ CX2072X_ADC2_CONNECTION_SELECT_CONTROL, 0x00000000 },
+-	{ CX2072X_ADC2_POWER_STATE, 0x00000433 },
+-	{ CX2072X_ADC2_CONVERTER_STREAM_CHANNEL, 0x00000000 },
++	{ CX2072X_ADC2_CONVERTER_FORMAT, 0x00000031 },
++	{ CX2072X_MIXER_POWER_STATE, 0x00000433 },
++	{ CX2072X_MIXER_GAIN_RIGHT_0, 0x0000004a },
++	{ CX2072X_MIXER_GAIN_RIGHT_1, 0x0000004a },
++	{ CX2072X_MIXER_GAIN_LEFT_0, 0x0000004a },
++	{ CX2072X_MIXER_GAIN_LEFT_1, 0x0000004a },
+ 	{ CX2072X_PORTA_CONNECTION_SELECT_CTRL, 0x00000000 },
+ 	{ CX2072X_PORTA_POWER_STATE, 0x00000433 },
+ 	{ CX2072X_PORTA_PIN_CTRL, 0x000000c0 },
+ 	{ CX2072X_PORTA_UNSOLICITED_RESPONSE, 0x00000000 },
+ 	{ CX2072X_PORTA_PIN_SENSE, 0x00000000 },
+ 	{ CX2072X_PORTA_EAPD_BTL, 0x00000002 },
++	{ CX2072X_PORTG_CONNECTION_SELECT_CTRL, 0x00000000 },
++	{ CX2072X_PORTG_POWER_STATE, 0x00000433 },
++	{ CX2072X_PORTG_PIN_CTRL, 0x00000040 },
++	{ CX2072X_PORTG_EAPD_BTL, 0x00000002 },
+ 	{ CX2072X_PORTB_POWER_STATE, 0x00000433 },
+ 	{ CX2072X_PORTB_PIN_CTRL, 0x00000000 },
+ 	{ CX2072X_PORTB_UNSOLICITED_RESPONSE, 0x00000000 },
+@@ -148,43 +157,16 @@ static const struct reg_default cx2072x_
+ 	{ CX2072X_PORTB_EAPD_BTL, 0x00000002 },
+ 	{ CX2072X_PORTB_GAIN_RIGHT, 0x00000000 },
+ 	{ CX2072X_PORTB_GAIN_LEFT, 0x00000000 },
+-	{ CX2072X_PORTC_POWER_STATE, 0x00000433 },
+-	{ CX2072X_PORTC_PIN_CTRL, 0x00000000 },
+-	{ CX2072X_PORTC_GAIN_RIGHT, 0x00000000 },
+-	{ CX2072X_PORTC_GAIN_LEFT, 0x00000000 },
+ 	{ CX2072X_PORTD_POWER_STATE, 0x00000433 },
+ 	{ CX2072X_PORTD_PIN_CTRL, 0x00000020 },
+ 	{ CX2072X_PORTD_UNSOLICITED_RESPONSE, 0x00000000 },
+ 	{ CX2072X_PORTD_PIN_SENSE, 0x00000000 },
+ 	{ CX2072X_PORTD_GAIN_RIGHT, 0x00000000 },
+ 	{ CX2072X_PORTD_GAIN_LEFT, 0x00000000 },
+-	{ CX2072X_PORTE_CONNECTION_SELECT_CTRL, 0x00000000 },
+-	{ CX2072X_PORTE_POWER_STATE, 0x00000433 },
+-	{ CX2072X_PORTE_PIN_CTRL, 0x00000040 },
+-	{ CX2072X_PORTE_UNSOLICITED_RESPONSE, 0x00000000 },
+-	{ CX2072X_PORTE_PIN_SENSE, 0x00000000 },
+-	{ CX2072X_PORTE_EAPD_BTL, 0x00000002 },
+-	{ CX2072X_PORTE_GAIN_RIGHT, 0x00000000 },
+-	{ CX2072X_PORTE_GAIN_LEFT, 0x00000000 },
+-	{ CX2072X_PORTF_POWER_STATE, 0x00000433 },
+-	{ CX2072X_PORTF_PIN_CTRL, 0x00000000 },
+-	{ CX2072X_PORTF_UNSOLICITED_RESPONSE, 0x00000000 },
+-	{ CX2072X_PORTF_PIN_SENSE, 0x00000000 },
+-	{ CX2072X_PORTF_GAIN_RIGHT, 0x00000000 },
+-	{ CX2072X_PORTF_GAIN_LEFT, 0x00000000 },
+-	{ CX2072X_PORTG_POWER_STATE, 0x00000433 },
+-	{ CX2072X_PORTG_PIN_CTRL, 0x00000040 },
+-	{ CX2072X_PORTG_CONNECTION_SELECT_CTRL, 0x00000000 },
+-	{ CX2072X_PORTG_EAPD_BTL, 0x00000002 },
+-	{ CX2072X_PORTM_POWER_STATE, 0x00000433 },
+-	{ CX2072X_PORTM_PIN_CTRL, 0x00000000 },
+-	{ CX2072X_PORTM_CONNECTION_SELECT_CTRL, 0x00000000 },
+-	{ CX2072X_PORTM_EAPD_BTL, 0x00000002 },
+-	{ CX2072X_MIXER_POWER_STATE, 0x00000433 },
+-	{ CX2072X_MIXER_GAIN_RIGHT_0, 0x0000004a },
+-	{ CX2072X_MIXER_GAIN_LEFT_0, 0x0000004a },
+-	{ CX2072X_MIXER_GAIN_RIGHT_1, 0x0000004a },
+-	{ CX2072X_MIXER_GAIN_LEFT_1, 0x0000004a },
++	{ CX2072X_PORTC_POWER_STATE, 0x00000433 },
++	{ CX2072X_PORTC_PIN_CTRL, 0x00000000 },
++	{ CX2072X_PORTC_GAIN_RIGHT, 0x00000000 },
++	{ CX2072X_PORTC_GAIN_LEFT, 0x00000000 },
+ 	{ CX2072X_SPKR_DRC_ENABLE_STEP, 0x040065a4 },
+ 	{ CX2072X_SPKR_DRC_CONTROL, 0x007b0024 },
+ 	{ CX2072X_SPKR_DRC_TEST, 0x00000000 },
+@@ -195,12 +177,15 @@ static const struct reg_default cx2072x_
+ 	{ CX2072X_I2SPCM_CONTROL3, 0x00000000 },
+ 	{ CX2072X_I2SPCM_CONTROL4, 0x00000000 },
+ 	{ CX2072X_I2SPCM_CONTROL5, 0x00000000 },
+-	{ CX2072X_I2SPCM_CONTROL6, 0x00000000 },
+ 	{ CX2072X_UM_INTERRUPT_CRTL_E, 0x00000000 },
++	{ CX2072X_I2SPCM_CONTROL6, 0x00000000 },
++	{ CX2072X_DIGITAL_TEST16, 0x00000021 },
++	{ CX2072X_DIGITAL_TEST17, 0x00000018 },
++	{ CX2072X_DIGITAL_TEST18, 0x00000024 },
++	{ CX2072X_DIGITAL_TEST19, 0x00000001 },
++	{ CX2072X_DIGITAL_TEST20, 0x00000002 },
+ 	{ CX2072X_CODEC_TEST2, 0x00000000 },
+ 	{ CX2072X_CODEC_TEST9, 0x00000004 },
+-	{ CX2072X_CODEC_TEST20, 0x00000600 },
+-	{ CX2072X_CODEC_TEST26, 0x00000208 },
+ 	{ CX2072X_ANALOG_TEST4, 0x00000000 },
+ 	{ CX2072X_ANALOG_TEST5, 0x00000000 },
+ 	{ CX2072X_ANALOG_TEST6, 0x0000059a },
+@@ -215,11 +200,26 @@ static const struct reg_default cx2072x_
+ 	{ CX2072X_DIGITAL_TEST11, 0x00000000 },
+ 	{ CX2072X_DIGITAL_TEST12, 0x00000084 },
+ 	{ CX2072X_DIGITAL_TEST15, 0x00000077 },
+-	{ CX2072X_DIGITAL_TEST16, 0x00000021 },
+-	{ CX2072X_DIGITAL_TEST17, 0x00000018 },
+-	{ CX2072X_DIGITAL_TEST18, 0x00000024 },
+-	{ CX2072X_DIGITAL_TEST19, 0x00000001 },
+-	{ CX2072X_DIGITAL_TEST20, 0x00000002 },
++	{ CX2072X_CODEC_TEST20, 0x00000600 },
++	{ CX2072X_CODEC_TEST26, 0x00000208 },
++	{ CX2072X_PORTE_CONNECTION_SELECT_CTRL, 0x00000000 },
++	{ CX2072X_PORTE_POWER_STATE, 0x00000433 },
++	{ CX2072X_PORTE_PIN_CTRL, 0x00000040 },
++	{ CX2072X_PORTE_UNSOLICITED_RESPONSE, 0x00000000 },
++	{ CX2072X_PORTE_PIN_SENSE, 0x00000000 },
++	{ CX2072X_PORTE_EAPD_BTL, 0x00000002 },
++	{ CX2072X_PORTE_GAIN_RIGHT, 0x00000000 },
++	{ CX2072X_PORTE_GAIN_LEFT, 0x00000000 },
++	{ CX2072X_PORTF_POWER_STATE, 0x00000433 },
++	{ CX2072X_PORTF_PIN_CTRL, 0x00000000 },
++	{ CX2072X_PORTF_UNSOLICITED_RESPONSE, 0x00000000 },
++	{ CX2072X_PORTF_PIN_SENSE, 0x00000000 },
++	{ CX2072X_PORTF_GAIN_RIGHT, 0x00000000 },
++	{ CX2072X_PORTF_GAIN_LEFT, 0x00000000 },
++	{ CX2072X_PORTM_CONNECTION_SELECT_CTRL, 0x00000000 },
++	{ CX2072X_PORTM_POWER_STATE, 0x00000433 },
++	{ CX2072X_PORTM_PIN_CTRL, 0x00000000 },
++	{ CX2072X_PORTM_EAPD_BTL, 0x00000002 },
  };
  
-@@ -1032,10 +1033,12 @@ static int cs35l34_i2c_probe(struct i2c_
- 	}
- 
- 	ret = devm_request_threaded_irq(&i2c_client->dev, i2c_client->irq, NULL,
--			cs35l34_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
--			"cs35l34", cs35l34);
-+				cs35l34_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
-+				"cs35l34", cs35l34);
- 	if (ret != 0)
- 		dev_err(&i2c_client->dev, "Failed to request IRQ: %d\n", ret);
-+	else
-+		cs35l34->irq_requested = true;
- 
- 	cs35l34->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
- 				"reset", GPIOD_OUT_LOW);
-@@ -1140,6 +1143,9 @@ static int cs35l34_runtime_resume(struct
- 		dev_err(dev, "Failed to restore register cache\n");
- 		goto err;
- 	}
-+
-+	if (cs35l34->irq_requested)
-+		enable_irq(to_i2c_client(dev)->irq);
- 	return 0;
- err:
- 	regcache_cache_only(cs35l34->regmap, true);
-@@ -1153,6 +1159,10 @@ static int cs35l34_runtime_suspend(struc
- {
- 	struct cs35l34_private *cs35l34 = dev_get_drvdata(dev);
- 
-+	/* Drain and block the threaded IRQ before cache_only/power-off. */
-+	if (cs35l34->irq_requested)
-+		disable_irq(to_i2c_client(dev)->irq);
-+
- 	regcache_cache_only(cs35l34->regmap, true);
- 	regcache_mark_dirty(cs35l34->regmap);
- 
+ /*
 
 
