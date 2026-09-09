@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52940565112;
-	Wed,  9 Sep 2026 14:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF3A565112;
+	Wed,  9 Sep 2026 14:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963625; cv=none; b=H7DDGVuDgQBZjlZU70Mi/eFCxSp9r549P5P6D89Mr/dtYLA1zaq91nNJD9FGcWSxbW2iIZFCnVldtzwEYzfw9VNBlQneQ4hLYHGbeFS+zSCvTnkxANEKB2t2ASp4Zjq94dDQKDxlroBf0/2vjPtnoJxDmfnPXe/Pvq8WBZ2pdow=
+	t=1788963628; cv=none; b=gphTnTj55FUam724o7a++b92V/isB8CGxo96s4uT9QGbNKeKHQPC2V6tcD6m1/7m9dpS+kGiv5+kv7S0PUZQ+6bUIqHhGBSdvMQWLzdfaneB4UD4uRXBB5yhXVLbGdSBd/BKoo3ghwZQnqThQcMp1O3EcEqgf+C/vPReQDgVcq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963625; c=relaxed/simple;
-	bh=8XC+B8MLjmRuKx7mvKvXQB8b9mZjVGAQWCN6wGI35PM=;
+	s=arc-20240116; t=1788963628; c=relaxed/simple;
+	bh=7BsAiz+YKx0XZ3DufnTosdyu8c3/KiNBuNNhR7r2d4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F7amccXcwYaHDYSFpbudMcDZ2e1MOk8Y1cc//Z7Eq5epnGauFXINcqFdeAqIZ7S2AyUkSYtEazr11kK18QVdzYESVSAxf3SVr87tBq8h5QbStuu2TF03TsOxewjI62onLWUx0Rmrcvr6wrPBIEVH80qP7jIT99m70K8tBtJhOYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/uLKmZv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EdqhxlIK1gg7XU99dgWVZ82CSKaNAYkaNlCiss/WCutToH/s5jT3ixO4AmMF3rbtRHw3DpyBDzBCdwsPHsoSyDBihbRXZ8XdwA8V4TNq+FC29xmzI2MMRc8l+UsUqKUW/fXluFAXDymz4P0i0D52jzz+8Tzby4StTWOMzhDutN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXkqP79q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/uLKmZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B071F00A3A;
-	Wed,  9 Sep 2026 14:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXkqP79q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FD41F00A3A;
+	Wed,  9 Sep 2026 14:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963624;
-	bh=oDqKW2YRs1IAvQftKnTVKH3AvzlqOxIvLDl4uMaUNRM=;
+	s=korg; t=1788963627;
+	bh=p1Rmh5cvlQj3HlgsriSAdClBw/pWrz5BOZUiF9nYw+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I/uLKmZvmdwg5+UOt7zF9cSZ84on4F3uu27N/7oXJh3SmX6E3TeuCYP8KE6j6jjpE
-	 Zje8/f6blbT7UI8/ffkR/CFat/EdvtPNiLfatevTu3lVTs9RpsGaEgaNzCfYsq47GK
-	 MH9BAgQyTlcI0x34+XvXwf6wDCyiazXJ8TN/ptbA=
+	b=RXkqP79qEwygxbrwxoFktVUgYHDj236xEQ8ds9nXAqNpFesxjNXxgRxW6GhsAFMAw
+	 gs7zmlsrXeg4sqo63Ceo+2hJ967SJH25kvFfLessxv5dbYS5RYBCcWheTR0iCBICf8
+	 Q9wOQ116SDz+L0roFYqdHmrvShxGcRmRCYldFBI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 143/583] batman-adv: dat: avoid unaligned fault in IP extraction
-Date: Wed,  9 Sep 2026 15:37:08 +0200
-Message-ID: <20260909134243.121127527@linuxfoundation.org>
+Subject: [PATCH 6.18 144/583] batman-adv: bla: fix freeing of claims on meshif deletion
+Date: Wed,  9 Sep 2026 15:37:09 +0200
+Message-ID: <20260909134243.159718399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,47 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 0121afa52cdb88cfb4d5d7bd126a23a9100121d8 upstream.
+commit 8d128c932bced74e3b1625ba3d7c78ef122a88a7 upstream.
 
-Independent of the alignment of the ARP packet in the SKB, either the
-batadv_arp_ip_src or the batadv_arp_ip_dst will have an unaligned access
-(on HW without native unaligned read support).
+When the mesh interface is getting deleted, then
+batadv_bla_del_backbone_claims() (via batadv_bla_purge_backbone_gw()) could
+make sure that all claims gets removed. But this function is only executed
+when bat_priv->bla.claim_hash is not NULL. And since batadv_bla_free() is
+always setting it to NULL before it is (indirectly) called, it was never
+actually executed.
 
-Use get_unaligned() to handle this properly on all architectures.
+But the batadv_bla_purge_claims() -> batadv_handle_unclaim() is at the
+moment too fragile because the BLA code is not handling the rehashing in
+batadv_bla_update_orig_address(). The stored backbone address doesn't have
+to be the one actually used for the hash bucket selection during the
+initial adding of the backbone. The batadv_handle_unclaim() can therefore
+fail to find the respective backbone for the unclaim and then stop the
+deletion.
 
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 5c3a0e553593 ("batman-adv: Distributed ARP Table - add ARP parsing functions")
+But the actual backbone_gw object is not needed for the unclaim because all
+relevant information is always provided by the caller. And the check for
+the existence of the backbone_gw doesn't provide any additional security
+check for the deletion of a claim.
+
+Cc: stable@kernel.org
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/distributed-arp-table.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/batman-adv/bridge_loop_avoidance.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -249,7 +249,10 @@ static u8 *batadv_arp_hw_src(struct sk_b
-  */
- static __be32 batadv_arp_ip_src(struct sk_buff *skb, int hdr_size)
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -942,26 +942,18 @@ static bool batadv_handle_unclaim(struct
+ 				  const u8 *backbone_addr, const u8 *claim_addr,
+ 				  unsigned short vid)
  {
--	return *(__force __be32 *)(batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN);
-+	u8 *src = batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN;
-+	__be32 *ip = (__force __be32 *)src;
-+
-+	return get_unaligned(ip);
+-	struct batadv_bla_backbone_gw *backbone_gw;
+-
+ 	/* unclaim in any case if it is our own */
+ 	if (primary_if && batadv_compare_eth(backbone_addr,
+ 					     primary_if->net_dev->dev_addr))
+ 		batadv_bla_send_claim(bat_priv, claim_addr, vid,
+ 				      BATADV_CLAIM_TYPE_UNCLAIM);
+ 
+-	backbone_gw = batadv_backbone_hash_find(bat_priv, backbone_addr, vid);
+-
+-	if (!backbone_gw)
+-		return true;
+-
+ 	/* this must be an UNCLAIM frame */
+ 	batadv_dbg(BATADV_DBG_BLA, bat_priv,
+ 		   "%s(): UNCLAIM %pM on vid %d (sent by %pM)...\n", __func__,
+-		   claim_addr, batadv_print_vid(vid), backbone_gw->orig);
++		   claim_addr, batadv_print_vid(vid), backbone_addr);
+ 
+ 	batadv_bla_del_claim(bat_priv, claim_addr, vid);
+-	batadv_backbone_gw_put(backbone_gw);
+ 	return true;
  }
  
- /**
-@@ -274,8 +277,9 @@ static u8 *batadv_arp_hw_dst(struct sk_b
- static __be32 batadv_arp_ip_dst(struct sk_buff *skb, int hdr_size)
- {
- 	u8 *dst = batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN * 2 + 4;
-+	__be32 *ip = (__force __be32 *)dst;
- 
--	return *(__force __be32 *)dst;
-+	return get_unaligned(ip);
- }
- 
- /**
 
 
