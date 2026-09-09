@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7840D572679;
-	Wed,  9 Sep 2026 14:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8E8576EB1;
+	Wed,  9 Sep 2026 14:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962824; cv=none; b=omBnNaIbbsBVPDXQvtyMP3Q6wLoTB02Ciimx3z/so1wMDO876WPC1OPd5pShbOtB69ABTuUYDlxkMjbzXaLEx7h8JW0pipl5fP+e5+DoM4QYmMTn1m0pE/W8y4aOeUomUJ+9ffLAlbfNj6w2reTNwsVj9LYehWarrqYFnzHWzhw=
+	t=1788962827; cv=none; b=bwdDW+u2r9CMuRWrkTIDdgHmWsSrnt/vtZx7uZAwuAoxbITfJ/FD0tW1Fna2P9mgHTrW3wdiflTDIE4+XEUsGyjFRWp/NgHpJfRRtT9rV5Z6jYBlQX+uQiFmZKQfLHC8LoffvgI5DmOH00bRo7pWu6p+5hNrAnSVYqF753cjQfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962824; c=relaxed/simple;
-	bh=NpgF5UmfaImzsXvowe9Yan/xHxyndC06wWYH/QaQjck=;
+	s=arc-20240116; t=1788962827; c=relaxed/simple;
+	bh=FsvwhzDJ62VF/Bt8a0zPSWAplaozkU1TT4nF9X14Hoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgTqTYdUBt6lJJLeSSePrEf7+8r8f2HysDjPP/GOJB6vdN3k4DWxqv9F963DoRPXga+ip/3+OJLRuBNixISZopvLHdlRRLeZcUmmLMoOzZtO8WCkYSM9/H2PBnh76z4F0pufKZe3i3EtQFJlOTRknmEn1P+6da8BrnfLEvC6Uos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZ6z+KlD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=riuLmNPAdrw2Sla0cz0g2xRZXW56KIGYaH9TwBbnXLwvQkiigBZXsKkc/91Jc9bYuyYa8O6KeuehxQeUxuXq96h1ncrrilsZnGSPdSK426rxLz8fFTRBLLZGQVVCnz7Hd0IHq5hV4192lZdjAl9FM/d8GvQtKwIZOemT4eukvXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEAGhN5c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZ6z+KlD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B5B1F00A3D;
-	Wed,  9 Sep 2026 14:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEAGhN5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52651F00A3A;
+	Wed,  9 Sep 2026 14:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962823;
-	bh=FEPoYNodn6hwu7Dsp9Rxzxd7RtLmKAfHo12mJX0gX0w=;
+	s=korg; t=1788962826;
+	bh=PArhfnCnGw7CyaWFQB7N0rK311X2WniHsCvvAtPEBN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZ6z+KlD3Vm0+GTs8/KGnEUTlROI1T3wFMbd3/20jtz9IsA5goNnqu7FAYgWxXbeQ
-	 R6NHzp3GE5Tq8sBpC0DAfMQwFVuW0TleXCsvsjpkxV7bInGWNxru+d2FCbl874VvnF
-	 0agSe7KBeVKh1v0DD+TPVAaehZLnzhVJxBG3REzw=
+	b=vEAGhN5crfRKsOo5vQifOJxk/j/gP9anDYlbadZRU3GO+YgzAEmN0z3bfyrmYmMYp
+	 5OvH1CfEUmIOb2VNW88nhfQsMAmDtiRCC/AgVBgBF2mhjU+QqV10DRyleCTphcwzAa
+	 F9aHZ1VBWQCYObYHyi2ScDH/YNrU1Kb6XV4/XD2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilesh Javali <njavali@marvell.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 423/556] scsi: qla2xxx: Check entry_status in qla24xx_modify_vp_config()
-Date: Wed,  9 Sep 2026 15:41:43 +0200
-Message-ID: <20260909134245.478114055@linuxfoundation.org>
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.2 388/556] media: rkvdec: hevc: guard INTER_REF_PIC_SET_PRED index underflow
+Date: Wed,  9 Sep 2026 15:41:08 +0200
+Message-ID: <20260909134244.315576941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,53 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 9101c51649f5b6773a97bf5271785c948589ea1d upstream.
+commit 052c5ed5a1d96a6b24fd50ccda16fc6841ee7ca3 upstream.
 
-The Modify VP Config completion handler labelled its first error branch
-"error status" but tested vpmod->comp_status instead of
-vpmod->entry_status. Because CS_COMPLETE is 0, the following
-"comp_status != CS_COMPLETE" branch duplicated that test and was dead
-code, and entry_status was never examined at all.
+st_ref_pic_set_prediction() computes the reference RPS index as
+st_rps_idx - (delta_idx_minus1 + 1) per HEVC spec equation 7-59.
+Both operands are u8, so when delta_idx_minus1 + 1 exceeds the
+current index the subtraction wraps and the subsequent array access
+at calculated_rps_st_sets[ref_rps_idx] reads far out of bounds.
 
-When firmware rejects the IOCB early it sets entry_status while leaving
-comp_status zero. As the IOCB is allocated with dma_pool_zalloc(), both
-comp_status branches evaluate false and the handler falls through to the
-success path, calling fc_vport_set_state(FC_VPORT_INITIALIZING) for a
-configuration the firmware never accepted. This can leave the virtual
-port enabled on top of an invalid config and surface later as login
-timeouts or follow-on firmware errors.
+A userspace V4L2 client that can open the RKVDEC m2m decoder can
+submit an EXT_SPS_ST_RPS control with INTER_REF_PIC_SET_PRED set
+and delta_idx_minus1 crafted to trigger the underflow.
 
-Test entry_status in the first branch, matching qla_ctrlvp_completed()
-and the login/logout/abort/reset IOCB handlers; the comp_status branch
-then becomes the live completion-status check.
+Reject the entry early when the reference index would underflow.
 
-Fixes: 2c3dfe3f6ad8 ("[SCSI] qla2xxx: add support for NPIV")
+Fixes: c9a59dc2acc7 ("media: rkvdec: Add HEVC support for the VDPU381 variant")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-50-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Suggested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -4333,10 +4333,10 @@ qla24xx_modify_vp_config(scsi_qla_host_t
- 	if (rval != QLA_SUCCESS) {
- 		ql_dbg(ql_dbg_mbx, vha, 0x10bd,
- 		    "Failed to issue VP config IOCB (%x).\n", rval);
--	} else if (vpmod->comp_status != 0) {
-+	} else if (vpmod->entry_status != 0) {
- 		ql_dbg(ql_dbg_mbx, vha, 0x10be,
- 		    "Failed to complete IOCB -- error status (%x).\n",
--		    vpmod->comp_status);
-+		    vpmod->entry_status);
- 		rval = QLA_FUNCTION_FAILED;
- 	} else if (vpmod->comp_status != cpu_to_le16(CS_COMPLETE)) {
- 		ql_dbg(ql_dbg_mbx, vha, 0x10bf,
+diff --git a/drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c b/drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c
+index f89602075121..9c4a6093af32 100644
+--- a/drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c
++++ b/drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c
+@@ -209,6 +209,9 @@ static void st_ref_pic_set_prediction(struct rkvdec_hevc_run *run, int idx,
+ 	int i, j;
+ 	int dPoc;
+ 
++	if ((unsigned int)rps_data->delta_idx_minus1 + 1 > idx)
++		return;
++
+ 	ref_rps_idx = st_rps_idx - (rps_data->delta_idx_minus1 + 1); /* 7-59 */
+ 	delta_rps = (1 - 2 * rps_data->delta_rps_sign) *
+ 		   (rps_data->abs_delta_rps_minus1 + 1); /* 7-60 */
+-- 
+2.55.0
+
 
 
