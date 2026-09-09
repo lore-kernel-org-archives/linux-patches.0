@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8482F562600;
-	Wed,  9 Sep 2026 14:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271BE562600;
+	Wed,  9 Sep 2026 14:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962898; cv=none; b=lRcXJjAtlsM7pKhRIctNgi1n+3jW2cxM15wlr75vhLm+ENbeB5C73y964McLnJDQ/0QmZTXj0/gon6hdokgcNfxB9w2AT/CyGoEYqwHWg4nHLpQVeoSP0PheCAncYUKudscUJFeofjv0Cqx3sa/32aGP1vP3l8f9irqWAwEDWB0=
+	t=1788962901; cv=none; b=ttdDFt/yY77GvZ1mNf9fnkVM0qGhm2Rvc4DAIq/qMtHJ17LkBTSpqDb3u2daw/PdBSq9JmY23uonyeHvJdirYkluaTKN+D79DV3PfbztSZWFASAKMVvMctRx2/+nJFx8Igvo7zfg3SjXVjROlSWQ4qK5ToNkc2UUWvMDeAzVF0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962898; c=relaxed/simple;
-	bh=pT183lMGRXq9V5yhiVhqJsZr/eyXs4WwsDgPIEIY4Vw=;
+	s=arc-20240116; t=1788962901; c=relaxed/simple;
+	bh=Jofqa7l9QOZyOI/ldXovhXufx2BcAzxPl8syZOdMYJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0bdq1a6dL+p2qDVY2FLyVgz/zG5BznSSQDT41BJkCNh+nZQQwBrmx63UgEMGfeVff4Qj1gEI/zSP0Ar+Nf7vU7HAcculTKg2vylMcdVoMKigNlwUiKigaOshc9WBjo7NK+iV1ZJUNSSdKJc1W8d+H35rSkzVQd03/i3495BodM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SycJIloL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I0gJ6+sCV8ZBUQjfaYzFB90ghNn/H1so2CBCKi0WQVldQJBQqgs2bIgsGdl8nM0V/Gc70D9cwwSexclPTAznUmHv9Le2SSZQxjssM2mgyKrmX1Vm9xNoLbt9Ky9GnrI97xxHDBmI586bUjDGTnVgiB7wT81skG3uHZmx2rrRars=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IMHevsE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SycJIloL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945441F00A3A;
-	Wed,  9 Sep 2026 14:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IMHevsE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B101F00A3A;
+	Wed,  9 Sep 2026 14:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962897;
-	bh=/+/ncy2xSMfAWynsU0kAIcNtVmFg106k2bZwzA2miHc=;
+	s=korg; t=1788962900;
+	bh=VCRi98SlIR6YvC+73hPCy3wAAlB8JmnuGMxBaifm4JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SycJIloL6ZQSM/PCe/etkH32EOEgQARsy3kB5015E6XrJjgELQQrTTa3zMERUgCJ6
-	 zjlyCxmqJ7CLZYY6od5jin0TCvC8TJOJCCnMmDR8+nDb6Amyf5LeXsZQ81X3rkbcza
-	 NWIpNrcfGQWv0Otc2HVARqZvYbqkSJ9Gs4dsl9BQ=
+	b=0IMHevsE0F8KgKXwYEjBrj2zS6lXQc0cKOSfHMY9ggKBXlKRFXMWbatLbetuxZR0p
+	 MIzus5p+Czh9U/RbPBXvBgDridRk/FG2Hl73GF0fAiSaa9LnQ87Dg8VVuRByg2j1vp
+	 uOYchq3vylYWMJuzwX0Ly0tmV5+T5i1ICOOWdL5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 449/556] f2fs: fix to avoid move_range and defragment on device_alias file
-Date: Wed,  9 Sep 2026 15:42:09 +0200
-Message-ID: <20260909134246.382854692@linuxfoundation.org>
+Subject: [PATCH 7.2 450/556] f2fs: validate MOVE_RANGE destination size
+Date: Wed,  9 Sep 2026 15:42:10 +0200
+Message-ID: <20260909134246.413485893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,42 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit 1b4db09b7f10895dc1a0bc32704c7de05188fb1d upstream.
+commit e533889fc26aea0cd83c90327063f272061dd820 upstream.
 
-It's forbidden to migrate blocks of device alias file.
+F2FS_IOC_MOVE_RANGE checks the source range, but not the destination end
+before updating i_size. A source hole can expose this: __clone_blkaddrs()
+skips NULL_ADDR entries and returns success, so the caller can still extend
+the destination inode with unchecked pos_out + len.
 
+Reject destination overflow and use inode_newsize_ok() before extending
+the destination inode.
+
+Fixes: 4dd6f977fc77 ("f2fs: support an ioctl to move a range of data blocks")
 Cc: stable@kernel.org
-Fixes: 128d333f0dff ("f2fs: introduce device aliasing file")
-Signed-off-by: Chao Yu <chao@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -3083,6 +3083,9 @@ static int f2fs_ioc_defragment(struct fi
- 	if (f2fs_readonly(sbi->sb))
- 		return -EROFS;
+@@ -3124,8 +3124,9 @@ static int f2fs_move_file_range(struct f
+ 	struct inode *dst = file_inode(file_out);
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(src);
+ 	struct f2fs_lock_context lc;
+-	size_t olen = len, dst_max_i_size = 0;
+-	size_t dst_osize;
++	size_t olen = len;
++	loff_t dst_max_i_size = 0;
++	loff_t dst_osize, dst_end;
+ 	int ret;
  
-+	if (IS_DEVICE_ALIASING(inode))
-+		return -EOPNOTSUPP;
-+
- 	if (copy_from_user(&range, (struct f2fs_defragment __user *)arg,
- 							sizeof(range)))
- 		return -EFAULT;
-@@ -3135,7 +3138,8 @@ static int f2fs_move_file_range(struct f
- 	if (!S_ISREG(src->i_mode) || !S_ISREG(dst->i_mode))
- 		return -EINVAL;
+ 	if (file_in->f_path.mnt != file_out->f_path.mnt ||
+@@ -3183,8 +3184,15 @@ static int f2fs_move_file_range(struct f
+ 	}
  
--	if (IS_ENCRYPTED(src) || IS_ENCRYPTED(dst))
-+	if (IS_ENCRYPTED(src) || IS_ENCRYPTED(dst) ||
-+		IS_DEVICE_ALIASING(src) || IS_DEVICE_ALIASING(dst))
- 		return -EOPNOTSUPP;
+ 	dst_osize = dst->i_size;
+-	if (pos_out + olen > dst->i_size)
+-		dst_max_i_size = pos_out + olen;
++	if (olen > LLONG_MAX - pos_out)
++		goto out_unlock;
++	dst_end = pos_out + olen;
++	if (dst_end > dst->i_size) {
++		ret = inode_newsize_ok(dst, dst_end);
++		if (ret)
++			goto out_unlock;
++		dst_max_i_size = dst_end;
++	}
  
- 	if (pos_out < 0 || pos_in < 0)
+ 	/* verify the end result is block aligned */
+ 	if (!IS_ALIGNED(pos_in, F2FS_BLKSIZE) ||
 
 
