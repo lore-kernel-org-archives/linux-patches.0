@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AD7576EBB;
-	Wed,  9 Sep 2026 14:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0193056C624;
+	Wed,  9 Sep 2026 14:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964747; cv=none; b=LKRr1i48HEmnhvIDLIpJPeIr6n1a7r5EAt4IYNJkEHdIq1Z0mzDSssvSTANkDb2Hg15cIqAf5uuJm6s6zQ+DoXx0vo7IoLRi+oHDeWWeeMqXLGwfCbv4B8/kNnGbMQtA9JUXwzZDMmsW/o5INAM/pCJ5P3Ocz+sE8MRw4H26tIc=
+	t=1788964750; cv=none; b=Q9caxmZBUxSaJEnpcEWhLKMA9avD1J+ThhAlivKjA+N7MVz1bC+QEkYz/sX20woNM5n+Sn7x+OG3f+RA6+dsRaE5Fvz4wtjTvLPF9CTVRxmM10tQDaHb/e9A+Azvpmuuig/YMZ5nw3hMhw7ChVbMuDtoK6sPHYIpPWPrZEbCsZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964747; c=relaxed/simple;
-	bh=27oWdsuz+80wYd8LCFKq0YAvS9IWBiSNewaqhizxdtM=;
+	s=arc-20240116; t=1788964750; c=relaxed/simple;
+	bh=tHsSnKYjwj8k5qf6q53EpRtBveKlL5yxpY6fttopC+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdxlU9YsCgRKdKkmfRXzefb/Zw8zGCEvYtJPfFx61rHlmWgG82G9WCCNIxutoX+I47KDppi/6M+j8qZ6vKj34j6cWVsbKsVLvUWKFJgdH0v6YHq2zoSQHC38k+nvkn/ZZKrQZ/5njl1IBFSHiuNJh6b6xvVeLXDX2oEqYKMYHj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp6qEg4Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SDw5YFZs5+A7YinKIGfVTx8KD2vkn4uNVVPp6q1aBy9D3ZYqP0+X3YFk6rzmOplIMPeRNbQ3RQkvis+XAC2HUtyoKG6cVqjPHFC1mg0UMwEprSy6KSWtU2yMgPHuhgTWcDF+xmljkRCsrTyUjrBa/kn+jQNKs0YHYaTLk3uAOHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=brbpVZtJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp6qEg4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2A31F00A3A;
-	Wed,  9 Sep 2026 14:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brbpVZtJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263A81F00A3D;
+	Wed,  9 Sep 2026 14:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964745;
-	bh=9XbRnqTCCdPA8y2jJN6SiDiXJzw+x+zVqtvmzWW6aAw=;
+	s=korg; t=1788964748;
+	bh=B36tCG+HKtWTmvRgYVi6z8V660h21ZRdMpMO0RTb7TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tp6qEg4Qe8TEJvjnt3PcTMlBFpB3o/bK1Bd9d7RYpBiUR6GIBSJaSXDKQsnkclpCs
-	 pWHnZlLvtw05ELSPJKMR3H3wVboEQoJUJGzWkGaFw5kZG4ZI4O0z19jvRcb+PRL7UY
-	 j7A3tPAiK7I7hJKA0BpcqwtRpw+8wpfTYhkOxzZ0=
+	b=brbpVZtJWWuGxIvIFRHOGRlq6lXBH1avGFZ2qr/l3HsTB26fG9oGA59bg/nNtktNX
+	 rGgVdTAWJEPvHJwFL/McoBw027yy2Gh0jqtvO9EwOk/eX1vDLk8Qh631LDADJakj/0
+	 TzHRU69bTDOf7Pjqi08OefcITrUsWEAbSryqRXS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 530/583] nfsd: widen nfsd_genl_rqstp address fields to sockaddr_storage
-Date: Wed,  9 Sep 2026 15:43:35 +0200
-Message-ID: <20260909134256.165767255@linuxfoundation.org>
+Subject: [PATCH 6.18 531/583] nfsd: fix clock domain mismatch in clients_still_reclaiming()
+Date: Wed,  9 Sep 2026 15:43:36 +0200
+Message-ID: <20260909134256.196081446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -53,81 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit a99d720ed2a5258564e5e9d5f39f3184a030d354 upstream.
+[ Upstream commit 09ea3eb9a518565f5bca386e81b993ed8825f5e8 ]
 
-struct nfsd_genl_rqstp declares rq_daddr and rq_saddr as plain
-"struct sockaddr" (16 bytes). When an IPv6 NFS client is connected,
-nfsd_genl_rpc_status_compose_msg() casts these fields to
-"struct sockaddr_in6 *" (28 bytes) and reads sin6_addr at offset 8..24,
-which extends 8 bytes past the end of the 16-byte sockaddr field into
-the adjacent rq_flags member. The 16-byte nla_put_in6_addr then ships 8
-bytes of truncated IPv6 address followed by 8 bytes of rq_flags to
-userspace via the NFSD_A_RPC_STATUS_SADDR6/DADDR6 netlink attributes.
+clients_still_reclaiming() computes a deadline from nn->boot_time
+(CLOCK_REALTIME, ~1.7 billion) but compares it against
+ktime_get_boottime_seconds() (CLOCK_BOOTTIME, seconds since boot).
+The comparison is always false — it would take ~54 years of uptime
+for BOOTTIME to exceed the REALTIME-derived deadline.
 
-This is reachable by any unprivileged process in the network namespace
-because NFSD_CMD_RPC_STATUS_GET uses GENL_CMD_CAP_DUMP without
-GENL_ADMIN_PERM.
+This means any client can hold the server in grace indefinitely by
+sending CLAIM_PREVIOUS OPEN requests, blocking all non-reclaim
+operations for all other clients.
 
-Fix by widening rq_daddr and rq_saddr to struct sockaddr_storage so the
-IPv6 casts operate within bounds, copying sizeof(struct sockaddr_storage)
-bytes in the memcpy calls so the full address is captured, and
-zero-initializing the genl_rqstp stack variable to prevent leaking
-uninitialized tail bytes through netlink.
+Add boot_time_bt (CLOCK_BOOTTIME) alongside the existing boot_time
+and use it for the deadline computation. boot_time (CLOCK_REALTIME)
+is preserved for its cl_boot clientid-nonce role.
 
-Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
+Fixes: 20b7d86f29d3 ("nfsd: use boottime for lease expiry calculation")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260602-nfsd-testing-v2-5-e4ea62e3cd5c@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-12-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ preserved the branch’s boolean fields instead of the upstream flags bitmap ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/nfsd/netns.h     |    1 +
+ fs/nfsd/nfs4state.c |    3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1412,8 +1412,8 @@ static int create_proc_exports_entry(voi
- unsigned int nfsd_net_id;
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -69,6 +69,7 @@ struct nfsd_net {
+ 	bool grace_end_forced;
+ 	bool client_tracking_active;
+ 	time64_t boot_time;
++	time64_t boot_time_bt;	/* same instant in CLOCK_BOOTTIME */
  
- struct nfsd_genl_rqstp {
--	struct sockaddr		rq_daddr;
--	struct sockaddr		rq_saddr;
-+	struct sockaddr_storage	rq_daddr;
-+	struct sockaddr_storage	rq_saddr;
- 	unsigned long		rq_flags;
- 	ktime_t			rq_stime;
- 	__be32			rq_xid;
-@@ -1448,7 +1448,7 @@ static int nfsd_genl_rpc_status_compose_
- 			NFSD_A_RPC_STATUS_PAD))
- 		goto out_cancel;
+ 	struct dentry *nfsd_client_dir;
  
--	switch (genl_rqstp->rq_saddr.sa_family) {
-+	switch (genl_rqstp->rq_saddr.ss_family) {
- 	case AF_INET: {
- 		const struct sockaddr_in *s_in, *d_in;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6769,7 +6769,7 @@ bool nfsd4_force_end_grace(struct nfsd_n
+  */
+ static bool clients_still_reclaiming(struct nfsd_net *nn)
+ {
+-	time64_t double_grace_period_end = nn->boot_time +
++	time64_t double_grace_period_end = nn->boot_time_bt +
+ 					   2 * nn->nfsd4_lease;
  
-@@ -1539,7 +1539,7 @@ int nfsd_nl_rpc_status_get_dumpit(struct
- 		list_for_each_entry_rcu(rqstp,
- 				&nn->nfsd_serv->sv_pools[i].sp_all_threads,
- 				rq_all) {
--			struct nfsd_genl_rqstp genl_rqstp;
-+			struct nfsd_genl_rqstp genl_rqstp = {};
- 			unsigned int status_counter;
- 
- 			if (rqstp_index++ < thread_skip) /* already consumed */
-@@ -1563,9 +1563,9 @@ int nfsd_nl_rpc_status_get_dumpit(struct
- 			genl_rqstp.rq_stime = rqstp->rq_stime;
- 			genl_rqstp.rq_opcnt = 0;
- 			memcpy(&genl_rqstp.rq_daddr, svc_daddr(rqstp),
--			       sizeof(struct sockaddr));
-+			       sizeof(struct sockaddr_storage));
- 			memcpy(&genl_rqstp.rq_saddr, svc_addr(rqstp),
--			       sizeof(struct sockaddr));
-+			       sizeof(struct sockaddr_storage));
- 
- #ifdef CONFIG_NFSD_V4
- 			if (rqstp->rq_vers == NFS4_VERSION &&
+ 	if (READ_ONCE(nn->grace_end_forced))
+@@ -9120,6 +9120,7 @@ static int nfs4_state_create_net(struct
+ 	nn->conf_name_tree = RB_ROOT;
+ 	nn->unconf_name_tree = RB_ROOT;
+ 	nn->boot_time = ktime_get_real_seconds();
++	nn->boot_time_bt = ktime_get_boottime_seconds();
+ 	nn->grace_ended = false;
+ 	nn->grace_end_forced = false;
+ 	nn->client_tracking_active = false;
 
 
