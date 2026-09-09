@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC82B423A85;
-	Wed,  9 Sep 2026 14:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2835678F9;
+	Wed,  9 Sep 2026 14:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963123; cv=none; b=eZRHdi9jQnMlsHRoFBVRXIpGo15Xyn8y1ZJ2elwSYFloB0bVRwgBCIpHM+FW1brdaj8qqcBGG39mxF/j+qX52/RBQe12Z0mbKHooggh+QaMnQssI0G50CyuCJ0y7vwZ6egwKVpD6gRCzZWQ6djCcH3hfVPLVP+bdBAobwh7+GCQ=
+	t=1788963126; cv=none; b=ifNQ7ZUxNmuTr1T7YLR3QnGUTyMqa4CRgwgn+eVOK+Ftc/ll3f/wQdOfenACDDGslQ9ulw10fpUFufaQSD4oy0hsFWfJrRqMUiLCC48Fei3PvpmgxJ8NgI6esKp1lxYSEiFaXi14wgJ+1U4RaxM0PGaUoksYRkh3XBpTj5kUqH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963123; c=relaxed/simple;
-	bh=dwpBM11303hVkht8czQo2t9LlqO90/gXMZ4IonKzGIU=;
+	s=arc-20240116; t=1788963126; c=relaxed/simple;
+	bh=ZI5bluV9rQ7XW8+L3uenMi7d5vz+bP5Gim0M5wxY2YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PF+soEifAi01AonwT3gRsZ8ObGzZv5qiZQbttxaVBqrL5U0PoQd4d5AuWfdEcLkaYSNIApIxCMD+PHtYjhXSoIoIWD+TQ+iAh8qhYTT554u01C+MIXIHY8Mz8eEGiEBiGScUZOvhYAL1RfUGKiHi3GeqAKwvPMMON/KuhnxUUhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLt9M0je; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OZc8DKczfbE2j1L7P5G5U0kzkK8MmLGM19qfwdBBOhdoWbj2ZCbo1VSCC+SYkCpkzSIh88P9mVkjFoA22Wg2K429n4GkVtzJ6eRPNYCQT1IV6ngLbuqfMe0/InihyRLWPhoD8+AwBEvAjwJ1fLSEC7fVO4SzibErGsqffo2pbU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQ5Ezo0j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLt9M0je"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77DD1F00A3A;
-	Wed,  9 Sep 2026 14:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQ5Ezo0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF1B1F00A3A;
+	Wed,  9 Sep 2026 14:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963121;
-	bh=2YoCkO5tkffV90uS2Wk3sxLeBtw5bzccYz0aOYSubt4=;
+	s=korg; t=1788963124;
+	bh=RnCFif4Jed9XuiAlE4u3rvfpPAUi/CjdV5DQHJHnD8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jLt9M0jeQ2U/cehWJjWNYzFCX9bA+ks1zK7PUiKTxdm1ItasrBAaixVOZKoxw6adV
-	 APgudyIWMbsFX402RrcifzSwxJAp1HfUCLR4v8/Nsc7gqaEdqtWALMRYjg8hGXL0qv
-	 kAbp7IUUw2fU6fiPP+GCP3rtyNZGJlN1bLaUyPUY=
+	b=FQ5Ezo0jFCGh+uE2TkOCHJojnkNrmWcXu6Ox3yJkSUVR+D2eYZy/8tg/txzMD69rx
+	 FodlH/w8gC5WMfV5U0/4nXC+wJ7wU3+sixtvnTdKgbB3SVNmR9t4DLS/0LCzhrU/Gg
+	 HORsASdYBkruow4k2+dI+kmNqzLsDWzt4ZdzCrEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>,
+	Marek Czernohous <marek@czernohous.de>,
 	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 7.2 528/556] drm/nouveau/gsp: use per-version DP_CONFIG_STREAM params on r570 firmware
-Date: Wed,  9 Sep 2026 15:43:28 +0200
-Message-ID: <20260909134248.985577086@linuxfoundation.org>
+Subject: [PATCH 7.2 529/556] drm/nouveau: unsubscribe the channel-kill event before the fence context
+Date: Wed,  9 Sep 2026 15:43:29 +0200
+Message-ID: <20260909134249.014879696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,235 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
+From: Marek Czernohous <marek@czernohous.de>
 
-commit 39fd4b742720c68da8695ee1ffa85c5fea4f8e11 upstream.
+commit 511585987d27d8cb668acebd399fc4deda23404c upstream.
 
-NVIDIA removed the deprecated actualPclkHz/linkClkFreqHz fields and the
-whole Legacy{activeCnt, activeFrac, activePolarity, mvidWarEnabled,
-MvidWarParams} block from the SST sub-struct of
-NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS between the 535 and 570 releases
-(compared in OpenRM tags 535.113.01 vs 570.144), shrinking the struct.
+nouveau_channel_del() tears the fence context down first and only drops
+the channel-kill subscription later, in the middle of the nvif object
+teardown:
 
-Everything nouveau writes sits at identical offsets in both layouts
-except the trailing SST.bEnableAudioOverRightPanel (written as zero), but
-the size is wrong on r570, which means r535_sor_dp_sst() and
-r535_sor_dp_vcpi() are sent with an incorrect size.
+	if (chan->fence)
+		nouveau_fence(chan->cli->drm)->context_del(chan);
+	...
+	nvif_object_dtor(&chan->vram);
+	nvif_event_dtor(&chan->kill);
 
-Route the .sst/.vcpi IOR functions through nvkm_rm_api_disp the same way
-bl_ctrl and dp.get_caps/set_indexed_link_rates already are. Keep the
-existing implementation for r535 and add an r570 implementation built
-against the 570.144 layout, which already exists in r570/nvrm/disp.h but
-was unused until now. Also add the NV0073_CTRL_CMD_DP_CONFIG_STREAM
-define that was missing from the layout.
+The subscribed handler is nouveau_channel_killed(), which calls
+nouveau_channel_kill() and from there nouveau_fence_context_kill() on
+chan->fence. A kill event delivered in that window takes fctx->lock and
+walks fctx->pending on a fence context that context_del() has already
+freed.
 
-Other DP controls sent through shared r535 code did not change layout
-between the tags.
+Nothing reaches this below Fermi today, because the subscription is
+gated on FERMI_CHANNEL_GPFIFO and nothing kills a channel there. On
+Fermi and newer the window is real but narrow, since a kill has to land
+exactly while the channel is being destroyed. That is reason enough on
+its own, which is why this carries a Fixes: tag. The last patch in this
+series subscribes Tesla channels as well; nothing kills those today, so
+it does not widen the exposure now, but it is the groundwork for a
+recovery path that would, and the ordering is better fixed before that
+lands than alongside it.
 
-Fixes: 6cc6e08d4542 ("drm/nouveau/kms: add support for GB20x")
+Drop the subscription before anything it depends on is torn down.
+
+Fixes: ea13e5abf807 ("drm/nouveau: signal pending fences when channel has been killed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Marek Czernohous <marek@czernohous.de>
+Fixes: ea13e5abf807 ("drm/nouveau: signal pending fences when channel has been killed")
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260825001408.14219-7-mohamedahmedegypt2001@gmail.com
+Link: https://patch.msgid.link/20260812231330.705425-2-mczernohous@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c      |   33 ++++--
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/disp.c      |   64 ++++++++++++
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/disp.h |    2 
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h             |    5 
- 4 files changed, 97 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_chan.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
-@@ -400,16 +400,16 @@ r535_sor_dp_audio(struct nvkm_ior *sor,
- 		r535_sor_dp_audio_mute(sor, false);
- }
- 
--static void
--r535_sor_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn)
-+static int
-+r535_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn)
+--- a/drivers/gpu/drm/nouveau/nouveau_chan.c
++++ b/drivers/gpu/drm/nouveau/nouveau_chan.c
+@@ -90,6 +90,14 @@ nouveau_channel_del(struct nouveau_chann
  {
- 	struct nvkm_disp *disp = sor->disp;
- 	struct NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS *ctrl;
+ 	struct nouveau_channel *chan = *pchan;
+ 	if (chan) {
++		/*
++		 * Drop the kill-event subscription first.  Its handler
++		 * dereferences chan->fence, which the fence context teardown
++		 * below frees, so leaving it armed across the teardown leaves
++		 * a window for a use-after-free.
++		 */
++		nvif_event_dtor(&chan->kill);
++
+ 		if (chan->fence)
+ 			nouveau_fence(chan->cli->drm)->context_del(chan);
  
- 	ctrl = nvkm_gsp_rm_ctrl_get(&disp->rm.objcom,
- 				    NV0073_CTRL_CMD_DP_CONFIG_STREAM, sizeof(*ctrl));
--	if (WARN_ON(IS_ERR(ctrl)))
--		return;
-+	if (IS_ERR(ctrl))
-+		return PTR_ERR(ctrl);
- 
- 	ctrl->subDeviceInstance = 0;
- 	ctrl->head = head;
-@@ -429,12 +429,20 @@ r535_sor_dp_vcpi(struct nvkm_ior *sor, i
- 	ctrl->MST.sendACT = 0;
- 	ctrl->MST.singleHeadMSTPipeline = 0;
- 	ctrl->MST.bEnableAudioOverRightPanel = 0;
--	WARN_ON(nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl));
-+	return nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl);
-+}
-+
-+static void
-+r535_sor_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn)
-+{
-+	const struct nvkm_rm_api *rmapi = sor->disp->engine.subdev.device->gsp->rm->api;
-+
-+	WARN_ON(rmapi->disp->dp.vcpi(sor, head, slot, slot_nr, pbn, aligned_pbn));
- }
- 
- static int
--r535_sor_dp_sst(struct nvkm_ior *sor, int head, bool ef,
--		u32 watermark, u32 hblanksym, u32 vblanksym)
-+r535_dp_sst(struct nvkm_ior *sor, int head, bool ef,
-+	    u32 watermark, u32 hblanksym, u32 vblanksym)
- {
- 	struct nvkm_disp *disp = sor->disp;
- 	struct NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS *ctrl;
-@@ -461,6 +469,15 @@ r535_sor_dp_sst(struct nvkm_ior *sor, in
- 	return nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl);
- }
- 
-+static int
-+r535_sor_dp_sst(struct nvkm_ior *sor, int head, bool ef,
-+		u32 watermark, u32 hblanksym, u32 vblanksym)
-+{
-+	const struct nvkm_rm_api *rmapi = sor->disp->engine.subdev.device->gsp->rm->api;
-+
-+	return rmapi->disp->dp.sst(sor, head, ef, watermark, hblanksym, vblanksym);
-+}
-+
- static const struct nvkm_ior_func_dp
- r535_sor_dp = {
- 	.sst = r535_sor_dp_sst,
-@@ -1782,6 +1799,8 @@ r535_disp = {
- 	.dp = {
- 		.get_caps = r535_dp_get_caps,
- 		.set_indexed_link_rates = r535_dp_set_indexed_link_rates,
-+		.sst = r535_dp_sst,
-+		.vcpi = r535_dp_vcpi,
- 	},
- 	.chan = {
- 		.set_pushbuf = r535_disp_chan_set_pushbuf,
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/disp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/disp.c
-@@ -5,6 +5,7 @@
- #include <rm/rm.h>
- 
- #include <engine/disp.h>
-+#include <engine/disp/ior.h>
- #include <engine/disp/outp.h>
- 
- #include "nvhw/drf.h"
-@@ -75,6 +76,67 @@ r570_disp_chan_set_pushbuf(struct nvkm_d
- }
- 
- static int
-+r570_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn)
-+{
-+	struct nvkm_disp *disp = sor->disp;
-+	NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS *ctrl;
-+
-+	ctrl = nvkm_gsp_rm_ctrl_get(&disp->rm.objcom,
-+				    NV0073_CTRL_CMD_DP_CONFIG_STREAM, sizeof(*ctrl));
-+	if (IS_ERR(ctrl))
-+		return PTR_ERR(ctrl);
-+
-+	ctrl->subDeviceInstance = 0;
-+	ctrl->head = head;
-+	ctrl->sorIndex = sor->id;
-+	ctrl->dpLink = sor->asy.link == 2;
-+	ctrl->bEnableOverride = 1;
-+	ctrl->bMST = 1;
-+	ctrl->hBlankSym = 0;
-+	ctrl->vBlankSym = 0;
-+	ctrl->colorFormat = 0;
-+	ctrl->bEnableTwoHeadOneOr = 0;
-+	ctrl->singleHeadMultistreamMode = 0;
-+	ctrl->MST.slotStart = slot;
-+	ctrl->MST.slotEnd = slot + slot_nr - 1;
-+	ctrl->MST.PBN = pbn;
-+	ctrl->MST.Timeslice = aligned_pbn;
-+	ctrl->MST.sendACT = 0;
-+	ctrl->MST.singleHeadMSTPipeline = 0;
-+	ctrl->MST.bEnableAudioOverRightPanel = 0;
-+	return nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl);
-+}
-+
-+static int
-+r570_dp_sst(struct nvkm_ior *sor, int head, bool ef,
-+	    u32 watermark, u32 hblanksym, u32 vblanksym)
-+{
-+	struct nvkm_disp *disp = sor->disp;
-+	NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS *ctrl;
-+
-+	ctrl = nvkm_gsp_rm_ctrl_get(&disp->rm.objcom,
-+				    NV0073_CTRL_CMD_DP_CONFIG_STREAM, sizeof(*ctrl));
-+	if (IS_ERR(ctrl))
-+		return PTR_ERR(ctrl);
-+
-+	ctrl->subDeviceInstance = 0;
-+	ctrl->head = head;
-+	ctrl->sorIndex = sor->id;
-+	ctrl->dpLink = sor->asy.link == 2;
-+	ctrl->bEnableOverride = 1;
-+	ctrl->bMST = 0;
-+	ctrl->hBlankSym = hblanksym;
-+	ctrl->vBlankSym = vblanksym;
-+	ctrl->colorFormat = 0;
-+	ctrl->bEnableTwoHeadOneOr = 0;
-+	ctrl->SST.bEnhancedFraming = ef;
-+	ctrl->SST.tuSize = 64;
-+	ctrl->SST.waterMark = watermark;
-+	ctrl->SST.bEnableAudioOverRightPanel = 0;
-+	return nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl);
-+}
-+
-+static int
- r570_dp_set_indexed_link_rates(struct nvkm_outp *outp)
- {
- 	NV0073_CTRL_CMD_DP_CONFIG_INDEXED_LINK_RATES_PARAMS *ctrl;
-@@ -255,6 +317,8 @@ r570_disp = {
- 	.dp = {
- 		.get_caps = r570_dp_get_caps,
- 		.set_indexed_link_rates = r570_dp_set_indexed_link_rates,
-+		.sst = r570_dp_sst,
-+		.vcpi = r570_dp_vcpi,
- 	},
- 	.chan = {
- 		.set_pushbuf = r570_disp_chan_set_pushbuf,
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/disp.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/disp.h
-@@ -256,6 +256,8 @@ typedef struct NV0073_CTRL_DP_CTRL_PARAM
-     NvU32 eightLaneDpcdBaseAddr;
- } NV0073_CTRL_DP_CTRL_PARAMS;
- 
-+#define NV0073_CTRL_CMD_DP_CONFIG_STREAM                   (0x731362U) /* finn: Evaluated from "(FINN_NV04_DISPLAY_COMMON_DP_INTERFACE_ID << 8) | NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS_MESSAGE_ID" */
-+
- typedef struct NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS {
-     NvU32  subDeviceInstance;
-     NvU32  head;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
-@@ -6,6 +6,7 @@
- #ifndef __NVKM_RM_H__
- #define __NVKM_RM_H__
- #include "handles.h"
-+struct nvkm_ior;
- struct nvkm_outp;
- struct r535_gr;
- 
-@@ -93,6 +94,10 @@ struct nvkm_rm_api {
- 		struct {
- 			int (*get_caps)(struct nvkm_disp *, int *link_bw, bool *mst, bool *wm);
- 			int (*set_indexed_link_rates)(struct nvkm_outp *);
-+			int (*sst)(struct nvkm_ior *, int head, bool ef,
-+				   u32 watermark, u32 hblanksym, u32 vblanksym);
-+			int (*vcpi)(struct nvkm_ior *, int head,
-+				    u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn);
- 		} dp;
- 
- 		struct {
+@@ -100,7 +108,6 @@ nouveau_channel_del(struct nouveau_chann
+ 		nvif_object_dtor(&chan->nvsw);
+ 		nvif_object_dtor(&chan->gart);
+ 		nvif_object_dtor(&chan->vram);
+-		nvif_event_dtor(&chan->kill);
+ 		nvif_object_dtor(&chan->user);
+ 		nvif_mem_dtor(&chan->mem_userd);
+ 		nouveau_vma_del(&chan->sema.vma);
 
 
