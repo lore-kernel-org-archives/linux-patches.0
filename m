@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706275616C7;
-	Wed,  9 Sep 2026 14:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D02A58FD31;
+	Wed,  9 Sep 2026 14:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964821; cv=none; b=uJgJ+xqlvrM2LeD5zIJ+N5e5ZuUwEZ6UV1nM3/bn79lpGCgT5d4xetc1EtB3wq/75OfVa2vZ7gUKPRbg1SHNh51xiOmUKs6fV+gK9FxMxje5vk6ZF/cnJ1gZ1L7JBLMjgo6N17ew4sbCzMS7FiR+D7qKsqOKKhD4J+iL/M235wg=
+	t=1788964822; cv=none; b=ADgfATDa2+XXiEHnjDTkbI2Muj/De3OkWW2Fpqrp6vXTXPVTT2jr5c+qfcjrEdOIiSkWBM9VVziWJFflyAT6GBn9zgj7o9CTeYA4FsBHQGlHcJhXheRRxm9oDXdn00QpdVsmQBrlZecl1hX1yZl4S3KpHh37Om+MH5yr2UZf/Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964821; c=relaxed/simple;
-	bh=gXKyC7q7XVfmVyZ4JDtRRv7I5SMvyYSI/lml2/Eyh6w=;
+	s=arc-20240116; t=1788964822; c=relaxed/simple;
+	bh=upQq139ox4hTU/u1lKK+BJvwUZ2hNzy5SB37HgpSmzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwOcXoupH2BVxt/Pds+9wridPE4B864eeJoPDvJ27eLI6lN8SNVYh4E1OFkResNxGFalcUB5vjawMYbNA2TNxQrTYhN9YEj3HOzTyQFJdF/c2CkDkV2iITvnooGmoWB2yD+6Ml7dqZbdENqkojve7DcoO3TWHWZLj0je/deoA6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrGB02hE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A37ZKUAbJSYOU1Xa6E8lmYHLZZz9hVSvMRjx3/vBuj0BVXvFR57nu30k50DmKvFAt4+9LyjwTcdziEYWwCjjbTdYeoTEGh9Rpr20TpdKpbFD6BiuhU6goxV7W5FOnKKOexkQzpXnbZpCPwFXm87idQUeWOjA8kg/hJd6zwQ7Qps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpSd2kPT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrGB02hE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D271E1F00A3A;
-	Wed,  9 Sep 2026 14:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpSd2kPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F581F00A3D;
+	Wed,  9 Sep 2026 14:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964818;
-	bh=nXKdDDPjlhB6R1KSSRd/ybO7E07pZVa6P9RMS/f13jA=;
+	s=korg; t=1788964821;
+	bh=tqOuJsN6cqqXGOK6p1Pven/r4LU4CeRIFamA7SBxRTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrGB02hEvppiJ1Xthgi9PDSGDIEf4qJSrPMS5yrxbCCxRUxbfkRNGgzqB3UCa+UGP
-	 Sp0gpG1vYjNtUT7e5W9oddoyGeJJeA6zS4WIf7L1MySDrnq5AzhVjzPkDEjy7ATyHu
-	 QLPobe1YQt01m1EeTt7NtMLTB2Yr6M1phQBpTCTs=
+	b=BpSd2kPT4yhayzV74VRiaRJJ3nOqKo9jA4FjklGD5CX7Fgl9RO/pCmG1nLiTtYelY
+	 fjGlvpNxa96MDD7/+YDQ78I9rMR850GW/j8S3bBe5CjvbcF5ymmAgmJYURmQC+rJpf
+	 /0ieDwqEqTfbH8HOU0spmjN+QByZ1HtI7aF3uX6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Chris Mason <clm@meta.com>,
-	Brian Geffon <bgeffon@google.com>,
-	David Stevens <stevensd@google.com>,
-	Minchan Kim <minchan@google.com>,
-	Richard Chang <richardycc@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Bernd Schubert <bschubert@ddn.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 553/583] zram: fixup read_block_state()
-Date: Wed,  9 Sep 2026 15:43:58 +0200
-Message-ID: <20260909134256.868151287@linuxfoundation.org>
+Subject: [PATCH 6.18 518/583] fuse-uring: refactor setting up copy state for payload copying
+Date: Wed,  9 Sep 2026 15:43:23 +0200
+Message-ID: <20260909134255.666897446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -56,53 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 8b05d2d8af817c6a1e23032df51e7ad83030d543 ]
+[ Upstream commit c0f9203732fc70de8d20697270bfe405481eac14 ]
 
-ac_time is now in seconds, do not use ktime_to_timespec64()
+Add a new helper function setup_fuse_copy_state() to contain the logic
+for setting up the copy state for payload copying.
 
-[akpm@linux-foundation.org: remove now-unused local `ts']
-[akpm@linux-foundation.org: fix build]
-Link: https://lkml.kernel.org/r/20260115033031.3818977-1-senozhatsky@chromium.org
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reported-by: Chris Mason <clm@meta.com>
-Closes: https://lkml.kernel.org/r/20260114124522.1326519-1-clm@meta.com
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: David Stevens <stevensd@google.com>
-Cc: Minchan Kim <minchan@google.com>
-Cc: Richard Chang <richardycc@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-[ Stable tree note: The ac_time conversion described above is not present
-  here, so retain the ktime_t conversion and microsecond output.  Move the
-  timespec64 temporary into the scan loop instead, allowing the follow-up
-  bounds fix to move nr_pages initialization under init_lock cleanly. ]
-
-Stable-dep-of: 391f057f44a5 ("zram: fix out-of-bounds access in read_block_state()")
+Reviewed-by: Bernd Schubert <bschubert@ddn.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: fd10f40af314 ("fuse: copy request headers via a stack buffer for io-uring")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/dev_uring.c |   38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1136,7 +1136,6 @@ static ssize_t read_block_state(struct f
- 	ssize_t index, written = 0;
- 	struct zram *zram = file->private_data;
- 	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
--	struct timespec64 ts;
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -645,6 +645,27 @@ static int copy_header_from_ring(struct
+ 	return 0;
+ }
  
- 	kbuf = kvmalloc(count, GFP_KERNEL);
- 	if (!kbuf)
-@@ -1151,6 +1150,7 @@ static ssize_t read_block_state(struct f
++static int setup_fuse_copy_state(struct fuse_copy_state *cs,
++				 struct fuse_ring *ring, struct fuse_req *req,
++				 struct fuse_ring_ent *ent, int dir,
++				 struct iov_iter *iter)
++{
++	int err;
++
++	err = import_ubuf(dir, ent->payload, ring->max_payload_sz, iter);
++	if (err) {
++		pr_info_ratelimited("fuse: Import of user buffer failed\n");
++		return err;
++	}
++
++	fuse_copy_init(cs, dir == ITER_DEST, iter);
++
++	cs->is_uring = true;
++	cs->req = req;
++
++	return 0;
++}
++
+ static int fuse_uring_copy_from_ring(struct fuse_ring *ring,
+ 				     struct fuse_req *req,
+ 				     struct fuse_ring_ent *ent)
+@@ -660,15 +681,10 @@ static int fuse_uring_copy_from_ring(str
+ 	if (err)
+ 		return err;
  
- 	for (index = *ppos; index < nr_pages; index++) {
- 		int copied;
-+		struct timespec64 ts;
+-	err = import_ubuf(ITER_SOURCE, ent->payload, ring->max_payload_sz,
+-			  &iter);
++	err = setup_fuse_copy_state(&cs, ring, req, ent, ITER_SOURCE, &iter);
+ 	if (err)
+ 		return err;
  
- 		zram_slot_lock(zram, index);
- 		if (!zram_allocated(zram, index))
+-	fuse_copy_init(&cs, false, &iter);
+-	cs.is_uring = true;
+-	cs.req = req;
+-
+ 	err = fuse_copy_out_args(&cs, args, ring_in_out.payload_sz);
+ 	fuse_copy_finish(&cs);
+ 	return err;
+@@ -691,15 +707,9 @@ static int fuse_uring_args_to_ring(struc
+ 		.commit_id = req->in.h.unique,
+ 	};
+ 
+-	err = import_ubuf(ITER_DEST, ent->payload, ring->max_payload_sz, &iter);
+-	if (err) {
+-		pr_info_ratelimited("fuse: Import of user buffer failed\n");
++	err = setup_fuse_copy_state(&cs, ring, req, ent, ITER_DEST, &iter);
++	if (err)
+ 		return err;
+-	}
+-
+-	fuse_copy_init(&cs, true, &iter);
+-	cs.is_uring = true;
+-	cs.req = req;
+ 
+ 	if (num_args > 0) {
+ 		/*
 
 
