@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D0D563FB0;
-	Wed,  9 Sep 2026 14:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA01E549364;
+	Wed,  9 Sep 2026 14:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962687; cv=none; b=i6gxRO2mhkfX2OPICXSYlC1KEr7jKGQ3UZy7g/NT3yGcWuyDNy5uN6fGSxAfzhWugDWXWQVUGWu8Tm3TfbOIfZ9wY/5J3+czeOhNnqT96Q5h2rWYpn0J2smnumgB2/CVZ9zvDdQpACINny91i5qqeO6A2lOgrCDBHlrXIxdkKw0=
+	t=1788962690; cv=none; b=E5PFNUvtRJL+6+wXRi9AaymxuvG1pNx1eJb/fJ5Jl9dpvonj2Y2SDhELSZF5f6nHmhJdQJw3tf0jPXYOReYx+7F8sOpjEvrxnd8t+HCbxrjNR0E1on2o6UoVK/2Hhi02ZwMiqfoZaY4TJpxANoWSFCd8PcXtRe9a1T4i3KOJ7pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962687; c=relaxed/simple;
-	bh=9jeS6p7S9BEKhS2miu0YUwJcoak/TsY/DxYJYBtzEsE=;
+	s=arc-20240116; t=1788962690; c=relaxed/simple;
+	bh=f4Yt8z59SStC4iYfK/4EzUMhBCkb3jKn69gIVBgNj5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=coH++IEQlt5SnezChwZW86ue0pOuon53HcEBBPT3PgfsKvxT6AgOsG/V7Evzge9yzvTW1TSan1rjgtYrd8+utEuiV94xCaluLMenesOrM00cBqJL94ZGBRjtZHZuCPujSaEV8/Q1Csi5BOr1rbFC21bj362fPUN/B3fcJ7h+DbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Moq3zdms; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nWEytChILehok6Mtov2fC2nmSrPnDhEClmINrSR1HHz1pCM8RXPKNe49Uu5B8v+LiCGaEZxcSBg/KfEwrLIDn9D7xMX2WXDHiYvz+l0LdGCCQcQoKdHWdnlYFCd73G6zaFGNX0UIuNuYE/FwvOAUyp7/MhzwkibBhXrR4yCSJs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vy1IXgSM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Moq3zdms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B6A1F00AC4;
-	Wed,  9 Sep 2026 14:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vy1IXgSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED76C1F00A3A;
+	Wed,  9 Sep 2026 14:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962685;
-	bh=mnk7LRVypewTeDOE0ZElnL5m9zTfBxBeNfO7F+mHuhA=;
+	s=korg; t=1788962688;
+	bh=+DFUCkUdhombJlgxktleEulmLV9NH+8MaszXimd8P5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Moq3zdmsxeJWdrRHnqInWwhLCKMSFDXWnYEDJckZODMNELE4t2U2M82ppC2JErKfk
-	 fkLElPeIZEQq7Ctr6Y/rDMuvKOWEQF6XeDR/OGTlNy9qI7zHPrfSFYGiKb9+CTPvGc
-	 nBRcbw48I6HY02Ap3pDsKpOhzJI5t51HiLAWjjs8=
+	b=vy1IXgSMeyfkBLFV/9Xuj26xZipzOft3UyuibRlAB3wh9HfcG02uGhR1liocX0ESY
+	 16ch74wWU9jX8sqg595/AWbveQnBap3D9UWdTmXsOkVLNl3fAmn070a0DNfHb1klmj
+	 xJC5D05bh7AATFm3cNu5CExVFfAdBpMyR82EkKDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Moudy Ho <moudy.ho@mediatek.com>,
 	Johan Hovold <johan@kernel.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 375/556] media: platform: mtk-mdp3: Fix SCP device refcounting
-Date: Wed,  9 Sep 2026 15:40:55 +0200
-Message-ID: <20260909134243.884854697@linuxfoundation.org>
+Subject: [PATCH 7.2 376/556] media: platform: mtk-mdp3: fix NULL deref on failed SCP lookup
+Date: Wed,  9 Sep 2026 15:40:56 +0200
+Message-ID: <20260909134243.917412889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,45 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 55793e4665b7f15151e6f5ab51ca980e73abed5d upstream.
+commit 90368323fb244da0504e3da37a182f8e89bcc3b9 upstream.
 
-mdp_probe() first tries to get the SCP handle with scp_get(). When that
-fails, it falls back to looking up the SCP platform device with
-__get_pdev_by_id() and then reads its driver data.
+Add the missing sanity check after looking up the SCP to avoid
+dereferencing a NULL-pointer in case its driver has not yet been bound.
 
-The fallback lookup returns the platform device with a reference, just
-like scp_get() does. However, the fallback path currently drops that
-reference immediately after platform_get_drvdata(). The driver later
-still calls scp_put(mdp->scp) unconditionally from the probe error path
-and from mdp_video_device_release(), which drops the SCP device
-reference again.
-
-Keep the fallback reference until the existing scp_put() call, so that
-the fallback path follows the same ownership rules as the scp_get()
-path.
-
-Fixes: 8f6f3aa21517 ("media: platform: mtk-mdp3: fix device leaks at probe")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
+Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
+Cc: stable@vger.kernel.org	# 6.1
+Cc: Moudy Ho <moudy.ho@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
 +++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-@@ -294,7 +294,6 @@ static int mdp_probe(struct platform_dev
- 			goto err_destroy_clock_wq;
- 		}
+@@ -296,6 +296,11 @@ static int mdp_probe(struct platform_dev
  		mdp->scp = platform_get_drvdata(mm_pdev);
--		put_device(&mm_pdev->dev);
  	}
  
++	if (!mdp->scp) {
++		ret = -EPROBE_DEFER;
++		goto err_destroy_clock_wq;
++	}
++
  	mdp->rproc_handle = scp_get_rproc(mdp->scp);
+ 	dev_dbg(&pdev->dev, "MDP rproc_handle: %p", mdp->rproc_handle);
+ 
 
 
