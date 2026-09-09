@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E119563FC2;
-	Wed,  9 Sep 2026 14:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0C7579828;
+	Wed,  9 Sep 2026 14:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963082; cv=none; b=LnVEFBVvaS2WdwX7Cz7XWTmyRmNfXIRg4vEwZuSLbjD/TUFcf+DrNBD4uPFB4qZoPcncgC/2oyROlrqKjAHRyT4fzyXL76E20UFo83WwTmy18s8oJL4Wj/x3xFvkH5naxiX5NhQ7eU9UupmmPiebU1JX2D8vci7e7Tdz95EeyEg=
+	t=1788963085; cv=none; b=GQKfc01nQ6tI/r3r6rmoMEJL1q9hw7EWpHEpXfXZxWiGAP+J0tPk+7ZaWN3f+cOmG7EA/5GxDpDP/5VzTSQvH8t6Ya6wSjWun/2mpDlBt+U5mYhWfDVZrmCUvtghmzs8DXjZlqpRxJNiVZQAT9GQzWWz233pwAtQDAMCXvpog7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963082; c=relaxed/simple;
-	bh=+JRmi2jCLUjr3ZSmTVGllB1ifmHUGTT3bVV5u1mj1cY=;
+	s=arc-20240116; t=1788963085; c=relaxed/simple;
+	bh=CPgPR1d3PMRsKQ2WrdORFe4hz3EWlwYSzAlOvVyzvQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtF+q9tb6AutYmmb9wpZLN0gAM7sVw9ley+KeyP/Sqw4q6MIf5peZndCGNQwLnfD3wsRB4K+s/7xd5LVoyDXc/9icsekQ0ZgexY62p21fBAIuSUYFFIo5bwgIUxriexPsqDYdwBXyg/oH0bZV4FDZ8K2jFg391DCktt65yzvwd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaHck8h0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tHI7uUXzPxYkZkCA12bGtf45yttNx3xtlDMxV56sRHZ818w38OZivtzAJeBH4pHIBpnzY9SEmgusoaflYovDeWOsljPw3oj0ORvmIhC+uu4uVh/8A4S8zZtZLOwaaLBlcfa+b6dFnQrKGarO2fyRtkJIlVIqiF6vtffItBl93p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aebx5Y/P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaHck8h0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BE41F00A3A;
-	Wed,  9 Sep 2026 14:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aebx5Y/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900E71F00A3D;
+	Wed,  9 Sep 2026 14:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963081;
-	bh=/coiL1zXP168Tvpo1UNlqcmbO3prYq3lcoQwPfz0eaw=;
+	s=korg; t=1788963084;
+	bh=uNcVAh3l19aiy2uc1VyTkG4VokmdKuhloIQ/vIHAmyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gaHck8h0T2TutHJZMrMQwezTcRKwwrc2DbK7ujDFrs71bSiPT86waxF73OzaSd8sS
-	 93YC2YN3oESG14a5jgVk4siHYViJwrkcuhFxGgpqtQWo9tOzGov9o/QM8bnH3voJmg
-	 IPNtwDyhb+W03CchDm0TOfSX8ALgsWJw4zqE29Dw=
+	b=aebx5Y/P/D0MaT6ojqiJ8nhz6UwAVDid2LO/toQgm0ho+/A10nfihnVRt8AgUmSfE
+	 34RX3w18HZJPhfHcD+WOtOfwMlA7/GL1dWa7KHl3IpoG5puAtswl/UhR30P3JMIv+H
+	 Wr7Jvi3NKMeK63Va+6R312xxzZRY3Qf0yMuLx608=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sunil Khatri <sunil.khatri@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 512/556] drm/amdgpu: update the fw version for gfx12 userqueues
-Date: Wed,  9 Sep 2026 15:43:12 +0200
-Message-ID: <20260909134248.459624922@linuxfoundation.org>
+Subject: [PATCH 7.2 513/556] drm/amdgpu: use AMDGPU_GPU_PAGE_SHIFT instead of PAGE_SHIFT
+Date: Wed,  9 Sep 2026 15:43:13 +0200
+Message-ID: <20260909134248.491574028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,37 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit 49a74a2388528c1a2e96f01114c4513e635605fe upstream.
+commit d6e16df7df4d2c39e2b04b355d0434fb90e2d62c upstream.
 
-Update to the latest stable fw versions where userqueues
-is working as it is expected with major fixes.
+For different address types the variable PAGE_SHIFT might
+not work well and it's better to use the GPU specific one
 
 Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 69fa36e3ac92f2544ee7a1b719ec212b8247a2da)
+(cherry picked from commit 3494b77d10375e0f9ab784e9b20763339844b55b)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -1434,10 +1434,10 @@ static int gfx_v12_0_sw_init(struct amdg
- 	case IP_VERSION(12, 0, 0):
- 	case IP_VERSION(12, 0, 1):
- 		if (!adev->gfx.disable_uq &&
--		    adev->gfx.me_fw_version  >= 2780 &&
--		    adev->gfx.pfp_fw_version >= 2840 &&
--		    adev->gfx.mec_fw_version >= 3050 &&
--		    adev->mes.fw_version[0] >= 123) {
-+		    adev->gfx.me_fw_version  >= 3090 &&
-+		    adev->gfx.pfp_fw_version >= 3190 &&
-+		    adev->gfx.mec_fw_version >= 3450 &&
-+		    adev->mes.fw_version[0] >= 147) {
- 			adev->userq_funcs[AMDGPU_HW_IP_GFX] = &userq_mes_funcs;
- 			adev->userq_funcs[AMDGPU_HW_IP_COMPUTE] = &userq_mes_funcs;
- 		}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2064,7 +2064,7 @@ int amdgpu_vm_bo_clear_mappings(struct a
+ 			after->start = eaddr + 1;
+ 			after->last = tmp->last;
+ 			after->offset = tmp->offset;
+-			after->offset += (after->start - tmp->start) << PAGE_SHIFT;
++			after->offset += (after->start - tmp->start) << AMDGPU_GPU_PAGE_SHIFT;
+ 			after->flags = tmp->flags;
+ 			after->bo_va = tmp->bo_va;
+ 			list_add(&after->list, &tmp->bo_va->invalids);
 
 
