@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332E85803B3;
-	Wed,  9 Sep 2026 14:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0105803A8;
+	Wed,  9 Sep 2026 14:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964259; cv=none; b=HPPFT3c/OhTSQWgn1oafqVhhxsMNKUr+lt0EPuBX7BhoknuoUlQknGwesq/1vltSK6skS4tW9fpiFO6E7LH7GkkmvkvgEzFXmi9tzYSmVPCWFHivVsGYV574vT/7tR1gQ5EB3vMODFBDeBvvDQaWxCCPFbAZfPXux/3yXDxRP7A=
+	t=1788964262; cv=none; b=nQ9v0M5HlxXO8btbo4BZMNhG1Y12XKYCTEFmoiGKLyCfz+7AyZLmyEMNbj2VyIE4+PgtfvvFwQIZmQwMqjEi1eOInAGjVIvOZXU67NkfUOvzoEgo3YDn3BSJp4v6vRJs4b5BRIxbD57V3Y+fPwcudoPemBOKrb7Dlo5rBEyF9eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964259; c=relaxed/simple;
-	bh=BdnjhPtFNbmRiiGLzzW9jc8EMHujzQtlr0QenffRwLE=;
+	s=arc-20240116; t=1788964262; c=relaxed/simple;
+	bh=pS7ZnNKGSqourWrWu/lGcS4wdp+yllt4v/o/lDYgCfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=effPgpdK6Rykv+cFMLuG7LcDXhoJBV0rffkXn/K7BowI1DJ/5bdMNQvc9gZbjkaZfHB4tULoSyKyVgJwgKPJKXwyltdQUTVnuB8ZGyjBBGRTQO2Jk7m2x+6beMj4jFi3wnXcuX1tMRUmjOHeuLMy03dhJYc755z440d2H7HDRVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7tpa5Cn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gmnZrOO/NmcxtZqP7Gpfa9Gn9aiKUo7BIKyrRapT8/TL6K0G2RPdBUPsaUTbHKxgBv4PcRyy4ByCzWKP3nh3GBvt/1b+Z5QkXO2nh6BpmR0LlXcWym7+8HJ/pFNLYmwpl1SacRGZo/aTAL+8fZ08oiberaKWGwYV+VwUjZrL/bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3NljK8S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7tpa5Cn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727361F00A3A;
-	Wed,  9 Sep 2026 14:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3NljK8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E2A1F00A3A;
+	Wed,  9 Sep 2026 14:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964258;
-	bh=NREpF3DXYF1azPFoKn0tFZ641cGqMCgOwwbPMpXpF/k=;
+	s=korg; t=1788964261;
+	bh=4yLcJa4FUpOOeVmAtvjSWsLwp3H+8NPZs47xmU3+G5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C7tpa5CnlBdqTzH2tYQAvEb5PzQEK4OINfpsIwAuG0l3/3SDvC+/jRmwrtOiEb52N
-	 l/caMJFRfv37rgbQGfps0XLqFJqS/EskyYiZbNwXoYfKosaRsEAavqRWD9Zd01belb
-	 py/+N0s2RAMXvzx1SC1nEcqPVqwyZHquSmMT0PiY=
+	b=H3NljK8SttuE+y7iosTqI9upe4eEd/7IVXaSU6o2XbyUMpD8evlJzSZmLfy4IYa51
+	 3tkNQfhCz33wp8WQpgMlhxWkYTQFttpLhl+Na40c+T+qgGJ42LguElTsnIjpowDLft
+	 lyl+Gt2OO2IK5/gYXrPFgXZ1Eiw36cRbwqyE/qv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.18 323/583] scsi: qla2xxx: Zero SFP DMA buffer in FRU/I2C bsg handlers
-Date: Wed,  9 Sep 2026 15:40:08 +0200
-Message-ID: <20260909134249.194181273@linuxfoundation.org>
+Subject: [PATCH 6.18 324/583] scsi: qla2xxx: Bound i2c->length in I2C bsg handlers
+Date: Wed,  9 Sep 2026 15:40:09 +0200
+Message-ID: <20260909134249.226424829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,91 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit b47d4a1547d9ef21b2e9d1a739fe2204d4be05dc upstream.
+commit 0918ee2c0eeb4d7f45b82b3dc11e65c2d9b7ad59 upstream.
 
-The FRU and I2C bsg handlers stage their transfer in a DMA_POOL_SIZE
-(256-byte) bounce buffer obtained from dma_pool_alloc(), which does not
-zero the allocation. They initialize only a few leading bytes before
-handing the buffer to qla2x00_write_sfp().
+struct qla_i2c_access carries a 16-bit length field alongside a fixed
+64-byte buffer:
 
-qla2x00_write_sfp() can override the transfer length with a user-supplied
-value:
+	struct qla_i2c_access {
+		uint16_t device, offset, option, length;
+		uint8_t  buffer[0x40];
+	} __packed;
 
-	if (len == 1)
-		opt |= BIT_0;
-	if (opt & BIT_0)
-		len = *sfp;
+qla2x00_write_i2c() and qla2x00_read_i2c() use the user-supplied
+i2c->length without any bounds check. i2c is overlaid on a 256-byte
+on-stack buffer and sfp is a 256-byte DMA-pool buffer, so a length up to
+65535 overruns both:
 
-*sfp is the first byte of the (user-controlled) payload, so len can grow
-up to 255. The device then DMA-reads len bytes from the 256-byte pool
-buffer. Since only a small prefix was written
-(e.g. MAX_FRU_SIZE == 36 bytes for a FRU version, one byte for a FRU
-status register), the hardware reads past the initialized region and
-writes up to ~219 bytes of stale DMA-pool heap memory to the device
-flash.
+  - write: memcpy(sfp, i2c->buffer, i2c->length) over-reads the stack and
+    over-writes the sfp heap buffer, and qla2x00_write_sfp() then DMAs
+    i2c->length bytes out of the 256-byte buffer.
+  - read: qla2x00_read_sfp() DMAs i2c->length bytes into the 256-byte sfp,
+    then memcpy(i2c->buffer, sfp, i2c->length) overflows the 64-byte
+    buffer inside the on-stack array.
 
-Allocate the buffer with dma_pool_zalloc() in all five FRU/I2C handlers
-so any bytes beyond the initialized data are zero rather than stale heap
-contents.
+A caller holding CAP_SYS_RAWIO can use this to corrupt the heap and the
+kernel stack. Reject requests whose length exceeds the buffer before any
+copy or DMA transfer in both handlers.
 
-Fixes: 697a4bc69159 ("[SCSI] qla2xxx: Provide method for updating I2C attached VPD.")
 Fixes: 9ebb5d9c69f1 ("[SCSI] qla2xxx: Add I2C BSG interface.")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-32-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-33-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 --- a/drivers/scsi/qla2xxx/qla_bsg.c
 +++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -1565,7 +1565,7 @@ qla2x00_update_fru_versions(struct bsg_j
- 	struct qla_image_version *image;
- 	uint32_t count;
- 	dma_addr_t sfp_dma;
--	void *sfp = dma_pool_alloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-+	void *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+@@ -1725,6 +1725,12 @@ qla2x00_write_i2c(struct bsg_job *bsg_jo
+ 	sg_copy_to_buffer(bsg_job->request_payload.sg_list,
+ 	    bsg_job->request_payload.sg_cnt, i2c, sizeof(*i2c));
  
- 	if (!sfp) {
- 		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
-@@ -1616,7 +1616,7 @@ qla2x00_read_fru_status(struct bsg_job *
- 	uint8_t bsg[DMA_POOL_SIZE];
- 	struct qla_status_reg *sr = (void *)bsg;
- 	dma_addr_t sfp_dma;
--	uint8_t *sfp = dma_pool_alloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-+	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
++	if (i2c->length > sizeof(i2c->buffer)) {
++		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
++		    EXT_STATUS_INVALID_PARAM;
++		goto dealloc;
++	}
++
+ 	memcpy(sfp, i2c->buffer, i2c->length);
+ 	rval = qla2x00_write_sfp(vha, sfp_dma, sfp,
+ 	    i2c->device, i2c->offset, i2c->length, i2c->option);
+@@ -1771,6 +1777,12 @@ qla2x00_read_i2c(struct bsg_job *bsg_job
+ 	sg_copy_to_buffer(bsg_job->request_payload.sg_list,
+ 	    bsg_job->request_payload.sg_cnt, i2c, sizeof(*i2c));
  
- 	if (!sfp) {
- 		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
-@@ -1667,7 +1667,7 @@ qla2x00_write_fru_status(struct bsg_job
- 	uint8_t bsg[DMA_POOL_SIZE];
- 	struct qla_status_reg *sr = (void *)bsg;
- 	dma_addr_t sfp_dma;
--	uint8_t *sfp = dma_pool_alloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-+	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
++	if (i2c->length > sizeof(i2c->buffer)) {
++		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
++		    EXT_STATUS_INVALID_PARAM;
++		goto dealloc;
++	}
++
+ 	rval = qla2x00_read_sfp(vha, sfp_dma, sfp,
+ 		i2c->device, i2c->offset, i2c->length, i2c->option);
  
- 	if (!sfp) {
- 		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
-@@ -1714,7 +1714,7 @@ qla2x00_write_i2c(struct bsg_job *bsg_jo
- 	uint8_t bsg[DMA_POOL_SIZE];
- 	struct qla_i2c_access *i2c = (void *)bsg;
- 	dma_addr_t sfp_dma;
--	uint8_t *sfp = dma_pool_alloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-+	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
- 
- 	if (!sfp) {
- 		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
-@@ -1760,7 +1760,7 @@ qla2x00_read_i2c(struct bsg_job *bsg_job
- 	uint8_t bsg[DMA_POOL_SIZE];
- 	struct qla_i2c_access *i2c = (void *)bsg;
- 	dma_addr_t sfp_dma;
--	uint8_t *sfp = dma_pool_alloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-+	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
- 
- 	if (!sfp) {
- 		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
 
 
