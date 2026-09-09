@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E02523781;
-	Wed,  9 Sep 2026 14:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FBF569F3B;
+	Wed,  9 Sep 2026 14:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963741; cv=none; b=pS3wnILJFCuPIIxgDJqmoY25pg3S9UoDgaCKLVqN2uCwP6oKis6KIg1r3wGsbq+jIqRYTe+bKub7xg6/nD3u2kbVAepjj7I+NnSweFxVsI4obOJUQn4zuxb/nTENmLjoNQPzRqwFgh6vy/I2dZqiRYF82BbobDFY0H3vdXYmgYg=
+	t=1788963744; cv=none; b=H1MKV6opQJ0y7C/IuBALdXgC2xxHt4SR9NzsLmUiO8e4lkcUMgW3ux6rq9ksyf0rOUyfFCpxX6wBX6JuWmcPC/K/RNyX+LLhQXbYzCvh9m2Vj206aq5rXy/aPjwnUskfokAj3JWayNAekRmwpFs7x2w0oKmBTaCL/o0kTdxI4o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963741; c=relaxed/simple;
-	bh=CJT4DmhVXybv8yEdw/52FV2sTQo2Zu/RzLgtTecfiws=;
+	s=arc-20240116; t=1788963744; c=relaxed/simple;
+	bh=nktzoFc/+xuEU5b9evn5locQ6kreGfRW55JT9btnETA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHjBbhKHqZhd2JwVv16o402v/9dQCfCw03KSmZly0//4xXNoZ3uMw54nnpvygDuyDBrLILJbiOGTFzziHuFBEHnCmzteKKXxlBq1wM0Tnt960DLVdIo1DervbP9dA0XBye5LG5NNbDzFv9kYRiX3XiY/oW6gdFFqVcV5EWjHxgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvLu52Fj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bV9aU+DImiC6ghLKhrnIzq+J7mg9wByJQVEKq9VW2VoLQqtCouJD2BYzLFGIMxjtQ7a1B9+SQaxNyNSDijNX10qaSYAcBd/naRaSLccr73vjIVVAUPNGmSjMaandl9wA4o2UtS7Ft2bjzBeX/WI8m/V1hQA8LMsMVAl1JdLtOi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9hG5c1Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvLu52Fj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6043D1F00A3D;
-	Wed,  9 Sep 2026 14:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9hG5c1Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446EE1F00A3D;
+	Wed,  9 Sep 2026 14:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963739;
-	bh=D4/CaHHotviFi3NzKSef+Umazb8wJc9GB7fiq7Zst1Q=;
+	s=korg; t=1788963742;
+	bh=gkROX5zkhyNo/YxYwIWrgYAfpGFmtUM1SQqaK3+ltrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvLu52Fj+MlUdndRjuWEUPl5luZk8hELsQCsX7Gm1fj7mKPC6QDWFJZCwcR4h8iml
-	 A4WAHzjQfcVA1ZHcM3og8eu1AO7Nb55ZRKWztPeDQjV4epiusOgF6I/RYYIvdIvP9F
-	 6fSGFF99bfqeLjR2ndpVuy57AHsAZ15m8Uir3qNE=
+	b=m9hG5c1QTupZ59AKmD5L2l8FIvdA6zf52xS3zJzCRBHhEINM7zu1tVcp4ED0PTjE2
+	 vGXZYQ9z2a3IoDQ55Sl6F6m48G0qUuSTEId1WAZAQqsaSEcua11cJxGx7i3Tc9MINU
+	 ufpT1tLiZJPvqTeHWNIMz1H7MhL+UCU7DvvlXXwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 184/583] ASoC: rt712-sdca-sdw: sort the register default table
-Date: Wed,  9 Sep 2026 15:37:49 +0200
-Message-ID: <20260909134244.554623547@linuxfoundation.org>
+Subject: [PATCH 6.18 185/583] ASoC: rt715-sdca: drop duplicate reg_default entries
+Date: Wed,  9 Sep 2026 15:37:50 +0200
+Message-ID: <20260909134244.586158285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,71 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit efd430c4d0426e60fbec400c5a8ce62d886f6e21 upstream.
+commit c9875bba469c19ad7f771b91b1e4c6f1c0f0a07d upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+The last two entries of rt715_reg_defaults_sdca[] repeat the ADC7_27 volume
+mute controls for CH_01 and CH_02, which are already listed a few lines
+above with the same value.
 
-rt712_sdca_reg_defaults[] is grouped by SDCA function instead, so the
-binary search does not find 4 of its entries.  regcache_reg_needs_sync()
-then cannot compare those against their default and reports that a sync
-is needed, so they are written to the device on every regcache_sync()
-even when they were never touched.
+Drop the duplicates.  No functional change, regcache_lookup_reg() only ever
+finds one of the two copies.
 
-One of them is the Mic Array Clock Source 0x1C Sample Frequency Index
-control, which a part without that function rejects:
-
-  soundwire_intel.link.0: Msg ignored for Slave 6, addr: 0x8e00
-
-Sort the table by register address.
-
-Fixes: 936abb09c1c7 ("ASoC: rt712-sdca: add the function for version B")
+Fixes: 20d17057f0a8 ("ASoC: rt715-sdca: Add RT715 sdca vendor-specific driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805090240.16991-10-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20260805090240.16991-12-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt712-sdca-sdw.h |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sound/soc/codecs/rt715-sdca-sdw.h |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/sound/soc/codecs/rt712-sdca-sdw.h
-+++ b/sound/soc/codecs/rt712-sdca-sdw.h
-@@ -11,21 +11,21 @@
- #include <linux/regmap.h>
- #include <linux/soundwire/sdw_registers.h>
- 
-+/* must stay sorted by register address, regcache_lookup_reg() does a bsearch() */
- static const struct reg_default rt712_sdca_reg_defaults[] = {
--
--	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_CS01, RT712_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
--	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_CS11, RT712_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_USER_FU05, RT712_SDCA_CTL_FU_MUTE, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_USER_FU05, RT712_SDCA_CTL_FU_MUTE, CH_02), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_USER_FU0F, RT712_SDCA_CTL_FU_MUTE, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_USER_FU0F, RT712_SDCA_CTL_FU_MUTE, CH_02), 0x01 },
--	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_PDE40, RT712_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_PDE12, RT712_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
--	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT712_SDCA_ENT_CS1C, RT712_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_CS01, RT712_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_CS11, RT712_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT712_SDCA_ENT_PDE40, RT712_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT712_SDCA_ENT_USER_FU1E, RT712_SDCA_CTL_FU_MUTE, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT712_SDCA_ENT_USER_FU1E, RT712_SDCA_CTL_FU_MUTE, CH_02), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT712_SDCA_ENT_USER_FU1E, RT712_SDCA_CTL_FU_MUTE, CH_03), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT712_SDCA_ENT_USER_FU1E, RT712_SDCA_CTL_FU_MUTE, CH_04), 0x01 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT712_SDCA_ENT_CS1C, RT712_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT712_SDCA_ENT_CS1F, RT712_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT712_SDCA_ENT_USER_FU06, RT712_SDCA_CTL_FU_MUTE, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT712_SDCA_ENT_USER_FU06, RT712_SDCA_CTL_FU_MUTE, CH_02), 0x01 },
-@@ -34,6 +34,7 @@ static const struct reg_default rt712_sd
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT712_SDCA_ENT_OT23, RT712_SDCA_CTL_VENDOR_DEF, 0), 0x00 },
+--- a/sound/soc/codecs/rt715-sdca-sdw.h
++++ b/sound/soc/codecs/rt715-sdca-sdw.h
+@@ -102,10 +102,6 @@ static const struct reg_default rt715_re
+ 		RT715_SDCA_SMPU_TRIG_EN_CTRL, CH_00), 0x02 },
+ 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_SMPU_TRIG_ST_EN,
+ 		RT715_SDCA_SMPU_TRIG_ST_CTRL, CH_00), 0x00 },
+-	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_ADC7_27_VOL,
+-		RT715_SDCA_FU_MUTE_CTRL, CH_01), 0x01 },
+-	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_ADC7_27_VOL,
+-		RT715_SDCA_FU_MUTE_CTRL, CH_02), 0x01 },
  };
  
-+/* must stay sorted by register address, regcache_lookup_reg() does a bsearch() */
- static const struct reg_default rt712_sdca_mbq_defaults[] = {
- 	{ 0x2000004, 0xaa01 },
- 	{ 0x200000e, 0x21e0 },
+ static const struct reg_default rt715_mbq_reg_defaults_sdca[] = {
 
 
