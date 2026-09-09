@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8402F12AC;
-	Wed,  9 Sep 2026 14:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5552F0661;
+	Wed,  9 Sep 2026 14:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962478; cv=none; b=ejgjNxjWMuc5JESZwqaCDlv1bupKiVlqCPId3lxSez1ilfIyHH4BUXNR4mOa7+rRmzv2SQwpG5IRRhHmBtJp48SbU9PCTTWfjuy5FNT/NUhYUgx39SXthpEIh3GZ6AXpVszKdZ+3B6jkodFsAOv1cqCTuzSXM4kF/eZsJBXkm84=
+	t=1788962481; cv=none; b=ULI+nycDOqJZVIIZao55ij52wPEPbTBmYs/L4yrrxEDldB8gSZLAkknXItwpsjor6hxjL3tUhi1b182BiYnpRQuV3c+3f4mQRTrAe9LKADUx+ezcQALGUGnAHG7U2jpn3ZUgZfgXAs7D0s7GvVDszGgAZ6C7dz3YTwhy4D+pLK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962478; c=relaxed/simple;
-	bh=4uRNHzq4ABuwJGjiTfiz3FhUH/tqV4ZPbtHtWMa8NTA=;
+	s=arc-20240116; t=1788962481; c=relaxed/simple;
+	bh=0APxJInRJfjzeKAOudv3oIunAr/EROYJwv6lxxx70fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDFEnMVoyTTwO4o78jGDJkbqcyTA4uMjLvfZcJhMMfzkopAsAYm4oxdZt5/0PM64ZsdvJzbTI8OCNevV4F835J16fzyDB5wxgwVEglYWE6Wh7+RPd5+0ZfRDDxyWLckZHUCgf4L+N3Q8zT7KntrBX9Pp2ugWVUAB9ZJJpP28yoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pie70m+K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DEdpF8F134aglIPwHch82z8BQnFFJsbM9B9wvUXC9Ati5UwKoBJ1Jo61eYJdpcYghghG02LUcrnSh+8e9Ij9jY5rNiD5DOQkPcCLEZd+EpQXJN5XK9rPskeoTLZLtPiyP5UZxNnF/3Faa8v2MpMb4Xoa+d159lO9KywJOhU7iv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elgk9TJT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pie70m+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBAA1F00A3A;
-	Wed,  9 Sep 2026 14:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elgk9TJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFDA1F00A3D;
+	Wed,  9 Sep 2026 14:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962476;
-	bh=1Ja/uI+bK4tYKTx5Ls6XUCSX3jYY5neiJBuo45jdw3g=;
+	s=korg; t=1788962479;
+	bh=CpxfVeIJrX8SoVmLZGhAK6hz9ROC08eOdjJFnFTn4is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pie70m+K8p3NpklQQinsXYXETfr3ad2uN1jQhPoAtNRyWI93ikdswQe6oxZjEiPAN
-	 dIan1oyTJRmdsw/rPWG0iQgz7tlZ1OxouqxXSGJrZC4Tjlfq6aZKwWh1CaxOfMRovu
-	 mH9AkYKu7pQ1JcMnYLSazqgmR9m1ZUGaDYvvKnYA=
+	b=elgk9TJT5Ph9PNKx9PHvCKqZnnatRGK0yJjStQjCX79Qyu1zgSlX1nWcOsBgnExya
+	 CGDwCflC0RAhEBaCAjrbMnfdoeRMrLgFM3iEgA58MY+VDPFoc0ul/XKM/KCtAE0YMZ
+	 2XSH2qAA/aeuEMTCN66ZcaLFzoIXqzfPP8R1f42A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Huang <kai.huang@intel.com>,
-	James Houghton <jthoughton@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.2 297/556] KVM: x86/mmu: Use CMPXCHG when clearing Accessed bit in TDP MMU
-Date: Wed,  9 Sep 2026 15:39:37 +0200
-Message-ID: <20260909134241.137694658@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 7.2 306/556] KVM: s390: Free guest debug data on vcpu destroy
+Date: Wed,  9 Sep 2026 15:39:46 +0200
+Message-ID: <20260909134241.441463463@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,105 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit 3d679b7cb31f74bf2303123ce4ee3266eeee999a upstream.
+commit e7f698b09d4a7c36b299acf680fc50fe868e2bcd upstream.
 
-Use LOCK CMPXCHG instead of LOCK AND to clear the Accessed bit when aging
-SPTEs in the TDP MMU, as doing a LOCK AND can corrupt a FROZEN SPTE and
-allow a third CPU to effectively overwrite the FROZEN SPTE.  As pointed
-out by AI of some kind, because the magic FROZEN_SPTE value is a "full"
-SPTE, not a single bit, and includes the Accessed bit, clearing the
-Accessed bit in a FROZEN SPTE will result in is_frozen_spte() getting a
-false negative.
+kvm_s390_clear_bp_data() is only called from
+kvm_arch_vcpu_ioctl_set_guest_debug(), i.e. when user space changes or
+disables debugging. A vCPU that is destroyed while hardware breakpoints
+are still armed - the normal case when the VMM just exits or crashes -
+leaks hw_bp_info, hw_wp_info and all old_data buffers, since generic KVM
+frees the vCPU right after kvm_arch_vcpu_destroy().
 
-E.g. if CPU0 freezes an SPTE, and CPU1 clears the Accessed bit in the
-frozen SPTE, then CPU2 could come along and overwrite the frozen SPTE with
-a shadow-present SPTE.
+That is bounded by MAX_BP_COUNT entries, so roughly 8 KiB per vCPU, but
+it is unbounded over VM lifetimes. The allocations are
+GFP_KERNEL_ACCOUNT, so the charge also outlives the exiting process and
+pins dying memcgs.
 
-Thankfully, the false negative is largely benign, because outside of TDX,
-which doesn't support aging, KVM only freezes leaf SPTEs when removing an
-upper level shadow page.  So while KVM could clobber a frozen SPTE back to
-a shadow-present SPTE, and could even use the new SPTE, the subsequent TLB
-flush will make the orphaned, shadow-present SPTE unreachable.  Failure to
-ever zap the orphaned leaf SPTE would show up in KVM's stats, but otherwise
-is benign (because KVM no longer keeps an elevated refcount for leaf SPTEs).
+Fix by clearing the debug data on vCPU destruction. Calling it
+unconditionally is fine: struct kvm_vcpu is zero allocated, so for a vCPU
+that never enabled debugging the counters are 0 and the pointers NULL.
 
-Opportunistically add a comment to warn future developers away from using
-kvm_tdp_mmu_write_spte_atomic() and tdp_mmu_clear_spte_bits_atomic(), as
-they are generally unsafe.  Keep the helpers, e.g. instead of open-coding
-the atomic64_fetch_and() in tdp_mmu_clear_spte_bits(), as scary warnings
-usually are more effective deterrent against recidivism than removal of the
-dangerous code.
-
-Alternatively, KVM could use different bits for the magic FROZEN_SPTE value,
-e.g. setting the Dirty bits (with effective IPAT and Global aliases) would
-likely be "ok", as IPAT/Global are extremely unlikely to be cleared without
-doing a full SPTE write, and KVM's clearing of Dirty bits shares logic with
-Write-Protection, which must do a full SPTE write (via cmpxchg64() in the
-TDP MMU) to ensure KVM isn't clobbering state.  But there is zero reason to
-carry that risk (beyond stubbornness in wanting to preserve a "cute" idea),
-as the cost of LOCK CMPXCHG and LOCK AND are within 1-2 uops of each other
-on modern hardware.
-
-Fixes: b146a9b34aed ("KVM: x86/mmu: Age TDP MMU SPTEs without holding mmu_lock")
+Fixes: 27291e2165b6 ("KVM: s390: hardware support for guest debugging")
 Cc: stable@vger.kernel.org
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: James Houghton <jthoughton@google.com>
-Link: https://patch.msgid.link/20260728002236.869865-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260805110455.7200-8-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/tdp_iter.h |    7 +++++++
- arch/x86/kvm/mmu/tdp_mmu.c  |   20 +++++++++-----------
- 2 files changed, 16 insertions(+), 11 deletions(-)
+ arch/s390/kvm/kvm-s390.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/mmu/tdp_iter.h
-+++ b/arch/x86/kvm/mmu/tdp_iter.h
-@@ -19,6 +19,13 @@ static inline u64 kvm_tdp_mmu_read_spte(
- 	return READ_ONCE(*rcu_dereference(sptep));
- }
- 
-+/*
-+ * WARNING!  mmu_lock must be held for write when using the "write atomic" or
-+ * "clear bits atomic" APIs, otherwise KVM could overwrite the "wrong" old SPTE
-+ * value, i.e. clobber an update from a different CPU.  The only exception is
-+ * when KVM is freezing a leaf SPTE for removal, in which case KVM doesn't care
-+ * about the exact old SPTE value (KVM will react to the actual old value).
-+ */
- static inline u64 kvm_tdp_mmu_write_spte_atomic(tdp_ptep_t sptep, u64 new_spte)
- {
- 	KVM_MMU_WARN_ON(is_ept_ve_possible(new_spte));
---- a/arch/x86/kvm/mmu/tdp_mmu.c
-+++ b/arch/x86/kvm/mmu/tdp_mmu.c
-@@ -1334,19 +1334,17 @@ static void kvm_tdp_mmu_age_spte(struct
- 	if (WARN_ON_ONCE(is_mirror_sptep(iter->sptep)))
- 		return;
- 
--	if (spte_ad_enabled(iter->old_spte)) {
--		iter->old_spte = tdp_mmu_clear_spte_bits_atomic(iter->sptep,
--								shadow_accessed_mask);
-+	if (spte_ad_enabled(iter->old_spte))
- 		new_spte = iter->old_spte & ~shadow_accessed_mask;
--	} else {
-+	else
- 		new_spte = mark_spte_for_access_track(iter->old_spte);
--		/*
--		 * It is safe for the following cmpxchg to fail. Leave the
--		 * Accessed bit set, as the spte is most likely young anyway.
--		 */
--		if (__tdp_mmu_set_spte_atomic(kvm, iter, new_spte))
--			return;
--	}
-+
-+	/*
-+	 * Don't bother retrying if another CPU modified the SPTE, the SPTE is
-+	 * either being zapped or is likely still in-use, i.e. is still young.
-+	 */
-+	if (__tdp_mmu_set_spte_atomic(kvm, iter, new_spte))
-+		return;
- 
- 	trace_kvm_tdp_mmu_spte_changed(iter->as_id, iter->gfn, iter->level,
- 				       iter->old_spte, new_spte);
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -3410,6 +3410,7 @@ void kvm_arch_vcpu_destroy(struct kvm_vc
+ 	trace_kvm_s390_destroy_vcpu(vcpu->vcpu_id);
+ 	kvm_s390_clear_local_irqs(vcpu);
+ 	kvm_clear_async_pf_completion_queue(vcpu);
++	kvm_s390_clear_bp_data(vcpu);
+ 	if (!kvm_is_ucontrol(vcpu->kvm))
+ 		sca_del_vcpu(vcpu);
+ 	kvm_s390_update_topology_change_report(vcpu->kvm, 1);
 
 
