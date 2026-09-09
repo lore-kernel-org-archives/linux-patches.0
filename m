@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33AE563FC2;
-	Wed,  9 Sep 2026 14:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6A35650F4;
+	Wed,  9 Sep 2026 14:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962793; cv=none; b=QEZAopacMrmeadKe2gOdsgfncIuomlogNkQrxTRuy0I+9UdLCeuzOE1m5Jy6avAFrimbc1GfsvZyYcJA6Xo4zYEpA7Wo8W3zR2CpgcBRCTRu5LxadjisugntiIBV2JaRnGar+xQw6Hg0Fxhe7dv3O924SyIkK+SHopXQ7nxBmsg=
+	t=1788962795; cv=none; b=RA9MwkfL2OJm38ry81+l+R3X8S6dDdP0UsLQt0HotJeRv4D5XBGn1wFhoWm2eN69xjpSrqAO7VkvI7rRtf8do/1Hqu+FZyyuM6E07izpbwGzo0eHDzeEEkzcuUT9f3jCAm7Lw+fgDJPWwCV1QA+z+vXUM8JhzR8LoH8PGyAcCpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962793; c=relaxed/simple;
-	bh=VmxQ3Ds0YNy17BOA9CngGkBPvtndvhQpl6EAGhkL5NE=;
+	s=arc-20240116; t=1788962795; c=relaxed/simple;
+	bh=VibMdN7rwNIhzWQ/uAFf41AdWO75LLicU5cYVX0XNoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRYw1JXoWe/8KBx0bEZLvoUhgPoPDTx96AZN4Dwk+yIQphtSE/6cCU9x2LMLCTuzzS1mSLi3QmuMXN9tUhC85LlrB3Ef1iPwS1EKyrcgYKU+91FwQQJqYbHBhu7bdYIuWUpO5TJ4dK+egVzjrkSFRI843b3CtGviZrbNkHk50jM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8Xmo+kg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AHKhRg3P5N511SePKERDpN/b4OMFQYH/37b/8SuX5zd7gPZokyasvxgb3i9azhwAlQKJi09vXt3T3lwadITaeY8xnL/eVR1qcEoM5b/IpHTTKbinf9xivc8ssLP3cSbt4ZakZw7Qz8ZPz35tEv0672TcbIpw0RyaRFQjsearAHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFIHs1BB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8Xmo+kg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273CD1F00A3A;
-	Wed,  9 Sep 2026 14:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFIHs1BB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA221F00A3A;
+	Wed,  9 Sep 2026 14:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962791;
-	bh=BfzGwsAuMjqUDM/8YkBi1S78YKu5PUp403wkWFmW+fs=;
+	s=korg; t=1788962794;
+	bh=7kWYuEdJoKVd2gjJ2SKNcsTiQympjFQP3naQ8BFBXeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E8Xmo+kgvW+nmYwm3Jpk/m6Gpbu0XgtzSaPYwVbOXkrBWZ1SE7oq4PWi61ROKkWea
-	 9JOxU+gFz49t4yBVQu3ubbwa00wXx9CCanU1TfDRJCEaOmFsjGYQvEAqfAkUW4MfYQ
-	 IEtfhpCLduygFufCQ9wkByLoGMvgj+cMe8OW1k+Y=
+	b=MFIHs1BBW4IugBh4xXUzIkW8jq7sFJp5+xmn+wCMO90t7lNN0FG/DyzPBTII8u1b4
+	 kVFhCWiXIl7V6lPujiSTSmvmaoJQlSpLD0rLmatW6p/tm5jgel3aMP/6tfaeOL+hr8
+	 aHTOul3Irzya6XxoOcgEJs0aaEhoWworydv1F09g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 413/556] media: chips-media: wave5: Defer job_finish() only when a DEC_PIC was queued
-Date: Wed,  9 Sep 2026 15:41:33 +0200
-Message-ID: <20260909134245.140855026@linuxfoundation.org>
+Subject: [PATCH 7.2 387/556] media: rkvdec: hevc: tighten EXT SPS RPS control dimensions
+Date: Wed,  9 Sep 2026 15:41:07 +0200
+Message-ID: <20260909134244.282624565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,77 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackson Lee <jackson.lee@chipsnmedia.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit b694ba0a5526a69f78a6924982b1553154ccfd73 upstream.
+commit f0b9d7e5be061b4858279d451f5a6ad0ed20b1be upstream.
 
-Decoder instances sharing a VPU also share one v4l2_m2m job slot, released
-when the running context calls v4l2_m2m_job_finish(). While draining,
-device_run() defers job_finish() once EOS is sent (sent_eos), expecting a
-later finish_decode() (from a DEC_PIC completion IRQ) to release the slot.
+The VDPU381 HEVC driver registers V4L2_CID_STATELESS_HEVC_EXT_SPS_ST_RPS
+and V4L2_CID_STATELESS_HEVC_EXT_SPS_LT_RPS with .cfg.dims = { 65 }, but
+the HEVC spec caps num_short_term_ref_pic_sets at 64 (ITU-T H.265 7.4.8)
+and num_long_term_ref_pics_sps at 32 (7.4.3.2.1). The hardware descriptor
+table (struct rkvdec_rps) sizes match those spec limits: refs[32] and
+short_term_ref_sets[64].
 
-But the m2m core checks job_ready() only when a job is queued, not when it
-is dispatched. A job queued while draining can run after finish_decode()
-has already moved the instance to STOP and sent EOS. device_run() then runs
-in STOP, issues no DEC_PIC, yet still skips job_finish() - so no IRQ, no
-finish_decode(), and the shared slot is leaked, stalling every instance.
-With several v4l2h264dec instances in parallel, GStreamer hangs at EOS.
+Reduce the dims to { 64 } and { 32 } respectively so the V4L2 control
+framework rejects oversized payloads before any driver code runs.
 
-Track whether the run actually queued a DEC_PIC (cmd_issued) and defer
-job_finish() only then. Otherwise finish the job immediately
-
-Fixes: a176ac5e701f ("media: chips-media: wave5: Improve performance of decoder")
+Fixes: c9a59dc2acc7 ("media: rkvdec: Add HEVC support for the VDPU381 variant")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Suggested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../media/platform/chips-media/wave5/wave5-vpu-dec.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/media/platform/rockchip/rkvdec/rkvdec.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-index 93f7b724d86c..f33c00cb801b 100644
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -1655,6 +1655,7 @@ static void wave5_vpu_dec_device_run(void *priv)
- 	struct queue_status_info q_status;
- 	u32 fail_res = 0;
- 	int ret = 0;
-+	bool cmd_issued = false;
+--- a/drivers/media/platform/rockchip/rkvdec/rkvdec.c
++++ b/drivers/media/platform/rockchip/rkvdec/rkvdec.c
+@@ -278,12 +278,12 @@ static const struct rkvdec_ctrl_desc vdp
+ 	{
+ 		.cfg.id = V4L2_CID_STATELESS_HEVC_EXT_SPS_ST_RPS,
+ 		.cfg.ops = &rkvdec_ctrl_ops,
+-		.cfg.dims = { 65 },
++		.cfg.dims = { 64 },
+ 	},
+ 	{
+ 		.cfg.id = V4L2_CID_STATELESS_HEVC_EXT_SPS_LT_RPS,
+ 		.cfg.ops = &rkvdec_ctrl_ops,
+-		.cfg.dims = { 65 },
++		.cfg.dims = { 32 },
+ 	},
+ };
  
- 	dev_dbg(inst->dev->dev, "%s: Fill the ring buffer with new bitstream data", __func__);
- 	pm_runtime_resume_and_get(inst->dev->dev);
-@@ -1752,6 +1753,7 @@ static void wave5_vpu_dec_device_run(void *priv)
- 			inst->retry = false;
- 			if (!inst->eos)
- 				inst->queuing_num--;
-+			cmd_issued = true;
- 		}
- 		break;
- 	default:
-@@ -1769,8 +1771,16 @@ static void wave5_vpu_dec_device_run(void *priv)
- 	 * in power and CPU time.
- 	 * If EOS is passed, device_run will not call job_finish no more, it is called
- 	 * only if HW is idle status in order to reduce overhead.
-+	 *
-+	 * Deferring job_finish() is only safe when this run actually queued a
-+	 * DEC_PIC command (cmd_issued): that guarantees a completion IRQ, and
-+	 * thus a later finish_decode(), will release the shared job slot. When
-+	 * device_run() is entered with no command to issue (e.g. a job that was
-+	 * queued while draining but reached the STOP state by the time it ran),
-+	 * no IRQ follows, so finish the job here to avoid leaking the slot and
-+	 * stalling every instance sharing the VPU.
- 	 */
--	if (!inst->sent_eos)
-+	if (!inst->sent_eos || !cmd_issued)
- 		v4l2_m2m_job_finish(inst->v4l2_m2m_dev, m2m_ctx);
- }
- 
--- 
-2.55.0
-
 
 
