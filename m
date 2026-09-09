@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05437577E57;
-	Wed,  9 Sep 2026 14:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE06233722;
+	Wed,  9 Sep 2026 14:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963605; cv=none; b=Yt0Z7FbbVc4p5fzxjkuG0zKWIHUk475L5kcZDR/4OUClSHumwvh9dNjrfz2BdvssD8I2mQTPhTdRkmZ0I+KMcAFgPStVs+Ef3BqcN1bWVjw+GIqdyzx7mLQgmkdYCi0uJS2KTITHCpLUeKvmET6Cw7pM0MkTbVAHwKGr2EbbB94=
+	t=1788963608; cv=none; b=SdFAY4uVPWfyyzx8Lyty3y168NLOyOGn5KMpdEnHH2qWl4dPI9iQys4VpFhLjHB3IacevveBI5uiybuud3pW/PcS/Plp3NEnF/ZG9vGxkR0SMqh0fkBoV0JqG+iMqBG5NeKWovTRM6Ep8zULCPzfXQ+Dbr/KDEsHDRRxQttGd2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963605; c=relaxed/simple;
-	bh=TBdPkZGI2MGHVGY0raHCxm5//sjlGVtEUvlkA87f/sY=;
+	s=arc-20240116; t=1788963608; c=relaxed/simple;
+	bh=+fBBwhcjvg/yOzYSvCLEKo9qg/V3u+hD/HWmyxpZJzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpSBiYJp+lsdsBroHcHTlve7uF2HeUYy9kGWg+IV+wfFARyElMD8BjDq10B+06TmdTebtFV5ksMY28ddBvi8S6YRHuLux/1NQtBz/3ezfCFH21mAhbq8dgKD3nWKjQlaX6BekhnDclXvkJ3qRECHqKnE88MXE0/bjH8nxdlkc6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DifM1Wwi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gd1evDL9TDFY2TwdHzsVlm6PVzHFc3QvYcKcWorWzp08Jo5Su7pKuPkGWA/uAH2/g2D29Ie+lzr2twYNMtaNx8eZCr4xQ5jHgtWdSQTbm9YaVGReBIrUbFnE49h+lt5fk+eXA69lM74G/dz7gtlayrr/ARdVA8hpA6/vAxcT25M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbSpFXJF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DifM1Wwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9B11F00A3A;
-	Wed,  9 Sep 2026 14:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbSpFXJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5111F00A3A;
+	Wed,  9 Sep 2026 14:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963603;
-	bh=EKSTsUQwB/FN7Gvb20vARoKCVYiegS2wbJ1UN2EDxbs=;
+	s=korg; t=1788963606;
+	bh=hy3o77qqfMWiXbDov6xY7Q3OPp5YKvr1hScbFJMsu/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DifM1WwixvCsXkm1yQTPGEUe9YsOH8TfBE3/yfteZyXFGyxl43sZKavxjlCTfd92A
-	 kZtcx0AIENKylsgPYARmyv/BihQpgn59hbwgsFQx26Ki9szTeLWVLgr2jmGJpc7ec0
-	 /ALBnJi5Yij7WIwBxdAj3IyRueoYFhY1oUcBYOsQ=
+	b=hbSpFXJFq5SIcgCnM/tXyu7FI8eoEZE25tji9PPZ/cRQklNvdW3HbBxadhPIBgpcP
+	 oPBvYVib01qZoIWkaPEEKT5+CWkaCc0KQ2H0rA8Ju7DfB1a8vcWzZCEWxnAN2YkiQP
+	 F90Ox3uTwP+viHcahq/JwV/JziRmEU60RXQ7Ql6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.18 136/583] mtd: afs: validate v2 image info bounds
-Date: Wed,  9 Sep 2026 15:37:01 +0200
-Message-ID: <20260909134242.846822804@linuxfoundation.org>
+Subject: [PATCH 6.18 137/583] mtd: mtdoops: free page bitmap when the backing MTD is removed
+Date: Wed,  9 Sep 2026 15:37:02 +0200
+Message-ID: <20260909134242.892666904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,59 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit e9290031f736e99ad17c25c00311c92c266843b7 upstream.
+commit 956e7da12c114f13c63d126ab1d79c3b6a819060 upstream.
 
-The AFS v2 parser uses footer[8] to locate the image information block
-inside the current erase block, then uses the image information
-region_count to walk entries from a fixed local array. The footer offset
-and region count come from flash contents and are not checked against the
-erase block or the local image-info array before use.
+mtdoops_notify_add() allocates oops_page_used when the configured MTD
+device is registered.  mtdoops_notify_remove() detaches from that device
+but leaves the bitmap allocated.  If the same MTD device is later
+registered again, the add path allocates a new bitmap and overwrites the
+old pointer, leaking one vmalloc allocation per remove/add cycle.
 
-Reject v2 entries whose image information offset would underflow the
-erase block calculation, and reject region counts that cannot fit in the
-local image-info array before walking region entries.
+This is only visible when the backing MTD device can disappear and be
+registered again while mtdoops remains loaded, so the usual static MTD
+case does not expose it.
 
-Fixes: b7cf5e2830bb ("mtd: afs: add v2 partition parsing")
+Free the bitmap after unregistering the dumper and flushing the pending
+workers, then clear the pointer and page count before a later attach can
+allocate fresh state.  Clearing the pointer also keeps the module exit
+path from freeing the same bitmap a second time after a remove event.
+
+Fixes: be95745f0167 ("mtd: mtdoops: keep track of used/unused pages in an array")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Acked-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/parsers/afs.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mtd/mtdoops.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mtd/parsers/afs.c
-+++ b/drivers/mtd/parsers/afs.c
-@@ -235,6 +235,9 @@ static int afs_parse_v2_partition(struct
- 	pr_debug("Parsing v2 partition @%08x-%08x\n",
- 		 off, off + mtd->erasesize);
+--- a/drivers/mtd/mtdoops.c
++++ b/drivers/mtd/mtdoops.c
+@@ -392,6 +392,9 @@ static void mtdoops_notify_remove(struct
+ 	cxt->mtd = NULL;
+ 	flush_work(&cxt->work_erase);
+ 	flush_work(&cxt->work_write);
++	vfree(cxt->oops_page_used);
++	cxt->oops_page_used = NULL;
++	cxt->oops_pages = 0;
+ }
  
-+	if (mtd->erasesize < sizeof(footer))
-+		return -EINVAL;
-+
- 	/* First read the footer */
- 	ptr = off + mtd->erasesize - sizeof(footer);
- 	ret = mtd_read(mtd, ptr, sizeof(footer), &sz, (u_char *)footer);
-@@ -245,6 +248,8 @@ static int afs_parse_v2_partition(struct
- 	}
- 	name = (char *) &footer[0];
- 	version = footer[9];
-+	if (footer[8] > mtd->erasesize - sizeof(footer))
-+		return -EINVAL;
- 	ptr = off + mtd->erasesize - sizeof(footer) - footer[8];
- 
- 	pr_debug("found image \"%s\", version %08x, info @%08x\n",
-@@ -278,6 +283,8 @@ static int afs_parse_v2_partition(struct
- 	entrypoint = imginfo[pad];
- 	attributes = imginfo[pad+1];
- 	region_count = imginfo[pad+2];
-+	if (region_count > (ARRAY_SIZE(imginfo) - pad - 3) / 4)
-+		return -EINVAL;
- 	block_start = imginfo[20];
- 	block_end = imginfo[21];
  
 
 
