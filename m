@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C726549364;
-	Wed,  9 Sep 2026 13:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF23563FB9;
+	Wed,  9 Sep 2026 13:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962126; cv=none; b=gsEnqzXVSiUw1dvTgwOH1rB7qYOXSu6iofNtxmu+FS+LuT5T/AKmljB95a5iN6UXCZnRTu+nnCOjLKJS+PQQFUjX4wMHIiXQVwttP/6fWc5CZL5te+SVqt5NGJDaox94dikkaPvt2V95NWM333qWwrhlGBVIWiFs7ujkLort48E=
+	t=1788962128; cv=none; b=hXYZuhQbrZd95C2wTHo2v/BlBKAxN3jpo0EpDJmJ0Wpf4iw3gUTp8BlRSOgrfqWYUM9BzGuybNjKQfIpNszVytUr7nm5kV2BjLZi75uzKd9P8uo75u4HZcM9utcqvX3yroRCTXeXHH2+6j3X6p5lU4RD/K5l4r43fJwDWwCQ2lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962126; c=relaxed/simple;
-	bh=TO7Qo8NxY0uIwSnSOcZHUEsZnfORiF2VGfhFnzu5uYw=;
+	s=arc-20240116; t=1788962128; c=relaxed/simple;
+	bh=lkFLg8hGz71U0NdiLy/B/F+IhFv8ws278F2u9hTAszs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCN3VpQB7zAgqQQrjCjjDAWzhfIjpbHSihLg9KDzbUgsyjLhU5dkBg/A4LZeKJcOg0pwCkUCXshZGHPXiVkIJLLslU3rmKxOO+PhJMgVGsoPDjx8itwVhb5E87xa8zksL1uNbAWo/y3jHz6I0jV/AvkFU8Ckus3bEzmL2e3qGzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTO/txKV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nAAU7mmeDbyNl0hwpeoCINgYrxXQzC0ZX/VKyC1qTzbgqvikeoCqFKEAkC+rBYaOgryyWBfVM4/466Hbb/5GkUpHe29SsIU0NpqgSTv/7b+NkROmA1TYMB3gTeMMi4CfYVYejhvI2f1oBI39iTtc7mGu8OB4VLT5tG/Lzp4et/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6ljRK83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTO/txKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053961F00A3A;
-	Wed,  9 Sep 2026 13:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6ljRK83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41371F00A3D;
+	Wed,  9 Sep 2026 13:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962124;
-	bh=4bfSgxSeaKGyYP2CzZ/O25SyPZOeczolxUVtVO2HBss=;
+	s=korg; t=1788962127;
+	bh=Z0NbhW3KJwQuDm+DF/gNSia2h945jGK1R685KK6A7mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DTO/txKVnzQ3GAT7Ip1UBSEr8/h03Gj5Gvp8bT/Ody5hG2okRXn1hQHz/NjLvHwVW
-	 lm572vEhVjq1I8KEaxOadWNk7W8XbnWy9U4L/gR9ZOg44Nfo+lhfDq8xqbLt+7aUIz
-	 LXaw9TtzwHafX8GCKaFTGrwtV2SLK++e/lFNyNt0=
+	b=K6ljRK837R/iHEAK8qyijKyLBCgB5ATCyQhXpJ2k6SM40e1fYr6RriT4RAw+/Vjc2
+	 D00afwMwK9LiFT2/9uJQU/wGSDfQf8leqRyO7x+JxC7DPNe9p9G4l8my5bxW4wbBkH
+	 czpzYr3sf608n4s2MydinoQJWBsFnT90g1HqMpH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Anthony Krowiak <akrowiak@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 7.2 183/556] s390/vfio-ap: fix stale pqap_hook pointer on error in vfio_ap_mdev_set_kvm()
-Date: Wed,  9 Sep 2026 15:37:43 +0200
-Message-ID: <20260909134236.846748942@linuxfoundation.org>
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 7.2 184/556] s390/vfio-ap: Fix stale do_remove flag across iterations in vfio_ap_mdev_cfg_remove
+Date: Wed,  9 Sep 2026 15:37:44 +0200
+Message-ID: <20260909134236.882632766@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -54,160 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Anthony Krowiak <akrowiak@linux.ibm.com>
 
-commit 4400270ec0348d05dc0439d8f0130853ce7f9e20 upstream.
+commit b1f092d94f621307927f145e3cc31893da51fc08 upstream.
 
-In vfio_ap_mdev_set_kvm(), kvm->arch.crypto.pqap_hook is set to
-&matrix_mdev->pqap_hook before the update locks are acquired and the
-mdev list is checked for a conflicting assignment. If another mdev is
-already attached to the same KVM instance, the function returns -EPERM
-without restoring the hook pointer, leaving kvm->arch.crypto.pqap_hook
-pointing at the failing matrix_mdev instead of the mdev that legitimately
-owns the KVM.
+The do_remove flag in vfio_ap_mdev_cfg_remove() is initialised to zero
+before the loop that iterates over the list of matrix mdevs, but is
+never reset at the start of each iteration. Since do_remove is
+OR-accumulated across iterations, a positive result from one mdev
+carries over to subsequent mdevs.
 
-Since matrix_mdev->kvm is never set on this error path,
-vfio_ap_mdev_unset_kvm() will not clean up the hook when matrix_mdev
-is later closed. If matrix_mdev is subsequently freed, any PQAP
-instruction executed by the guest will dereference the stale pointer
-through pqap_hook_rwsem, resulting in a use-after-free.
+The fix is to set the do_remove flag with the first call to bitmap_and;
+for example: do_remove = bitmap_an rather than do_remove |= bitmap_and.
 
-Since kvm->arch.crypto.pqap_hook is only set in the vfio_ap_mdev_set_kvm()
-function and is cleared in the vfio_ap_mdev_unset_kvm() function, a check
-for 'kvm->arch.crypto.pqap_hook != NULL' is all that is needed to determine
-whether it belongs to another mdev. This will alleviate the need to iterate
-the matrix_dev->mdev_list list to see if the kvm object is assigned to
-another mdev.This was introduced in v3 to alleviate the need to take the
-mdevs_lock while iterating the list; however, this did not prevent a
-potential race condition.
-
-The pqap_hook_rwsem(write) is now performed inside
-get_update_locks_for_kvm(), which is updated to acquire
-pqap_hook_rwsem(write) between kvm->lock and mdevs_lock. This ordering
-is consistent with the PQAP intercept path, which acquires pqap_hook_rwsem
-in read mode while srcu is held under vcpu->mutex, establishing the
-dependency: kvm->lock -> vcpu->mutex -> srcu -> pqap_hook_rwsem(read).
-
-The pqap_hook_rwsem is now released inside the
-release_update_locks_for_kvm(), which is updated to release
-pqap_hook_rwsem(write) between mdevs_lock and kvm->lock.
-
-Additionally, kvm_put_kvm() in vfio_ap_mdev_unset_kvm() is moved
-after release_update_locks_for_kvm(). Previously it was called while
-kvm->lock was held; if it were ever the last reference, kvm_destroy_vm()
-would run under kvm->lock, which would deadlock.
-
-Fixes: 86956e70761b3 ("s390/vfio-ap: replace open coded locks for VFIO_GROUP_NOTIFY_SET_KVM notification")
+Fixes: eeb386aeb5b7 ("s390/vfio-ap: handle config changed and scan complete notification")
 Cc: stable@vger.kernel.org
-Co-developed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260806173435.105044-1-akrowiak@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |   45 ++++++++++++++++----------------------
- 1 file changed, 20 insertions(+), 25 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/drivers/s390/crypto/vfio_ap_ops.c
 +++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -48,15 +48,19 @@ static void vfio_ap_mdev_reset_queue(str
-  * 1. matrix_dev->guests_lock: required to use the KVM pointer to update a KVM
-  *			       guest's APCB.
-  * 2. kvm->lock:	       required to update a guest's APCB
-- * 3. matrix_dev->mdevs_lock:  required to access data stored in a matrix_mdev
-+ * 3. kvm->arch.crypto.pqap_hook_rwsem: required to update pqap_hook and
-+ *					serialize against PQAP intercepts
-+ * 4. matrix_dev->mdevs_lock:  required to access data stored in a matrix_mdev
-  *
-- * Note: If @kvm is NULL, the KVM lock will not be taken.
-+ * Note: If @kvm is NULL, the KVM lock and pqap_hook_rwsem will not be taken.
-  */
- static inline void get_update_locks_for_kvm(struct kvm *kvm)
- {
- 	mutex_lock(&matrix_dev->guests_lock);
--	if (kvm)
-+	if (kvm) {
- 		mutex_lock(&kvm->lock);
-+		down_write(&kvm->arch.crypto.pqap_hook_rwsem);
-+	}
- 	mutex_lock(&matrix_dev->mdevs_lock);
- }
+@@ -2598,15 +2598,15 @@ static void vfio_ap_mdev_cfg_remove(unsi
+ 	DECLARE_BITMAP(aprem, AP_DEVICES);
+ 	DECLARE_BITMAP(aqrem, AP_DOMAINS);
+ 	DECLARE_BITMAP(cdrem, AP_DOMAINS);
+-	int do_remove = 0;
++	int do_remove;
  
-@@ -68,16 +72,19 @@ static inline void get_update_locks_for_
-  *
-  * The proper unlocking order is:
-  * 1. matrix_dev->mdevs_lock
-- * 2. kvm->lock
-- * 3. matrix_dev->guests_lock
-+ * 2. kvm->arch.crypto.pqap_hook_rwsem
-+ * 3. kvm->lock
-+ * 4. matrix_dev->guests_lock
-  *
-- * Note: If @kvm is NULL, the KVM lock will not be released.
-+ * Note: If @kvm is NULL, the KVM lock and pqap_hook_rwsem will not be released.
-  */
- static inline void release_update_locks_for_kvm(struct kvm *kvm)
- {
- 	mutex_unlock(&matrix_dev->mdevs_lock);
--	if (kvm)
-+	if (kvm) {
-+		up_write(&kvm->arch.crypto.pqap_hook_rwsem);
- 		mutex_unlock(&kvm->lock);
-+	}
- 	mutex_unlock(&matrix_dev->guests_lock);
- }
+ 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
+ 		mutex_lock(&matrix_mdev->kvm->lock);
+ 		mutex_lock(&matrix_dev->mdevs_lock);
  
-@@ -1821,26 +1828,17 @@ static const struct attribute_group *vfi
- static int vfio_ap_mdev_set_kvm(struct ap_matrix_mdev *matrix_mdev,
- 				struct kvm *kvm)
- {
--	struct ap_matrix_mdev *m;
--
- 	if (kvm->arch.crypto.crycbd) {
--		down_write(&kvm->arch.crypto.pqap_hook_rwsem);
--		kvm->arch.crypto.pqap_hook = &matrix_mdev->pqap_hook;
--		up_write(&kvm->arch.crypto.pqap_hook_rwsem);
--
- 		get_update_locks_for_kvm(kvm);
--
--		list_for_each_entry(m, &matrix_dev->mdev_list, node) {
--			if (m != matrix_mdev && m->kvm == kvm) {
--				release_update_locks_for_kvm(kvm);
--				return -EPERM;
--			}
-+		if (kvm->arch.crypto.pqap_hook) {
-+			release_update_locks_for_kvm(kvm);
-+			return -EPERM;
- 		}
-+		kvm->arch.crypto.pqap_hook = &matrix_mdev->pqap_hook;
- 
- 		kvm_get_kvm(kvm);
- 		matrix_mdev->kvm = kvm;
- 		vfio_ap_mdev_update_guest_apcb(matrix_mdev);
--
- 		release_update_locks_for_kvm(kvm);
- 	}
- 
-@@ -1883,18 +1881,15 @@ static void vfio_ap_mdev_unset_kvm(struc
- 	struct kvm *kvm = matrix_mdev->kvm;
- 
- 	if (kvm && kvm->arch.crypto.crycbd) {
--		down_write(&kvm->arch.crypto.pqap_hook_rwsem);
--		kvm->arch.crypto.pqap_hook = NULL;
--		up_write(&kvm->arch.crypto.pqap_hook_rwsem);
--
- 		get_update_locks_for_kvm(kvm);
-+		kvm->arch.crypto.pqap_hook = NULL;
- 
- 		kvm_arch_crypto_clear_masks(kvm);
- 		vfio_ap_mdev_reset_queues(matrix_mdev);
--		kvm_put_kvm(kvm);
- 		matrix_mdev->kvm = NULL;
- 
- 		release_update_locks_for_kvm(kvm);
-+		kvm_put_kvm(kvm);
- 	}
- }
- 
+-		do_remove |= bitmap_and(aprem, ap_remove,
+-					  matrix_mdev->matrix.apm,
+-					  AP_DEVICES);
++		do_remove = bitmap_and(aprem, ap_remove,
++				       matrix_mdev->matrix.apm,
++				       AP_DEVICES);
+ 		do_remove |= bitmap_and(aqrem, aq_remove,
+ 					  matrix_mdev->matrix.aqm,
+ 					  AP_DOMAINS);
 
 
