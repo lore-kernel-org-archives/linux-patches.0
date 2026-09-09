@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C30956B87E;
-	Wed,  9 Sep 2026 14:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE0A56B850;
+	Wed,  9 Sep 2026 14:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963176; cv=none; b=jfbDuS0Y/malAbboPv/kWzphBIz1Dt4rZgkkAB7kJ2rkzvVWynBIW44GySnr+MkgAyMXwCPH7KpEja4vcZSQ67+AxnzaCxf1rM6rkeAXy9HVMzywqJBxhi3sj3I/o8vnjF+RNQo2qd/ieOZ/2HFFBy47MJB4qt6UHYfjcWkr71Y=
+	t=1788963179; cv=none; b=TirmhEKaUthYkTwdziSl2o4mku5Is5Gyu2SQEMRDs+zO2rHZ+WCeG/dweyyQSn0kCc90NlnntBghtYnsrK56NLxAs3OIRffzTaqoMntwH38NBXJTJ+Sr+dtDANzwX0QZ/AJh/51B1EY9k5Q9uPnmNWqTgxNJW8ORxjTEQGA7i3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963176; c=relaxed/simple;
-	bh=ZOvK4/EGE1UVxB+CPVFzgq8qCsaErrYGYMfIpjegU4I=;
+	s=arc-20240116; t=1788963179; c=relaxed/simple;
+	bh=9UQ27gDBGwO80/PtfeiJrLSlDJTXAgY1PRWtLpE93nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h4R4FrZvXZ3x8IG6i798xTAXLt45rm2d6PL/rx1RsVV+iIU1FUbJgVo6y55GrjPhpNSU0MfNK4GsyfS09b5gOpF3Yooy9BHK1Kz4etzX7bLksbX2IhkhLmFM5E3pm0bS0svbf7XyJF4hC/mL0kuOxTKrpjgpAYqLmzPc5eE8MXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYMp6JsY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lbB4Kb4LqKmpJ1ZyRKuD2BwHn08+phAdPBuSwxwpTxy41M+MntTitNimyDNZE43KvF4uZTtSPTDUZYkou4Up33AReVxStdMojLjvtXjCJzSKtvJNQkMyxfKJVq38o1UXOvalUTwuFmdbYddL36mEJHBQYDDuUCu3gR361pdGv/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOMuJxRE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYMp6JsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEB31F00A3E;
-	Wed,  9 Sep 2026 14:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOMuJxRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45CB1F00A3A;
+	Wed,  9 Sep 2026 14:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963175;
-	bh=zJZ2nrs9t8yc4KNHVdhenK2anFK5panU9EZH0ryw5gw=;
+	s=korg; t=1788963178;
+	bh=Ymv1smFveDhOi+NYoTNh5eTCi7D0oFdRqiQxijwWyW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uYMp6JsYuJ0xPlYF7WtL/FF0WeEr0ISH4J26mMlyTfqM5wwP8fLiRDVPZxaEslUp5
-	 g15tkRvfv0Tp99lP7LtVT30XDNZlzG/gGMM3zTysFOSuHYW7PsID5H6AV+gKSR63cf
-	 w95Me+BYZrAAf1WCjGe2AVkUBZ2vGdnS5m7Jei68=
+	b=tOMuJxREgfH0TKR2rEQlngHNg7pdP7IqC3UlKUphYfRhuZ8vO17xyc0RpxPrepu+r
+	 UbV2kyx54duz5HnuLgnFpryDb0VcL4mLGaJTkHgmiRtmxi6rl/kOO/a62fUntYd3NZ
+	 1blw1qnmzvoJ7lnBzC85TGTMz2Z2Th2omggtDaOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 545/556] bpf: Use stack id functions instead of __bpf_get_stackid
-Date: Wed,  9 Sep 2026 15:43:45 +0200
-Message-ID: <20260909134249.564066170@linuxfoundation.org>
+	Sunday Clement <Sunday.Clement@amd.com>,
+	Alex Deucher <Alexander.Deucher@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 519/556] drm/amdkfd: Reject zero-sized AQL queue allocations after size halving
+Date: Wed,  9 Sep 2026 15:43:19 +0200
+Message-ID: <20260909134248.685287075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,127 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Sunday Clement <Sunday.Clement@amd.com>
 
-[ Upstream commit 09b3fd6caa0b57f8a39254ee5db3af30bdd53c18 ]
+commit 40ba09e11188d1b7f79d51fc28aca5ea45e0c138 upstream.
 
-Replacing __bpf_get_stackid calls with sequence of following functions:
+KFD_IOC_ALLOC_MEMORY_OF_GPU with flag
+KFD_IOC_ALLOC_MEM_FLAGS_AQL_QUEUE_MEM and size=1 triggers the AQL
+wraparound workaround (size >>= 1), reducing size to 0. The resulting
+zero passes through PAGE_ALIGN(0) = 0 without validation, bypassing the
+per-process VRAM quota check in reserve_mem_limit()
+(vram_used + 0 > vram_available is always false).
 
-  stackid_fastpath
-  stackid_new_bucket
-  stackid_install
+The fix adds post-halving zero-size validation in the primary
+allocation path (amdgpu_amdkfd_gpuvm.c). The check happens after size
+halving but before reserve_mem_limit(), and uses err_alignment_size
+error path to properly clean up the allocated kgd_mem structure and
+mutex.
 
-This makes code more structured and allows us to easily disable
-preemption only in bpf_get_stackid in following changes.
-
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260803210149.296496-5-jolsa@kernel.org
-Stable-dep-of: 15f1bd857466 ("bpf: Disable preemption in bpf_get_stackid")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sunday Clement <Sunday.Clement@amd.com>
+Reviewed-by: Alex Deucher <Alexander.Deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/stackmap.c |   43 +++++++++++++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    7 +++++++
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c         |    3 ++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -584,22 +584,13 @@ stackid_new_bucket(struct stackid *stack
- 	return bucket;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1795,6 +1795,12 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_
+ 		size >>= 1;
+ 	aligned_size = PAGE_ALIGN(size);
  
--static long __bpf_get_stackid(struct stackid *stackid, struct bpf_map *map,
--			      struct perf_callchain_entry *trace, u64 flags)
-+static long stackid_install(struct stackid *stackid, struct bpf_map *map,
-+			    struct stack_map_bucket *new_bucket, u64 flags)
- {
- 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
--	struct stack_map_bucket *new_bucket, *old_bucket;
- 	bool user = flags & BPF_F_USER_STACK;
-+	struct stack_map_bucket *old_bucket;
- 	u32 trace_len;
--	int err;
--
--	err = stackid_fastpath(stackid, map, trace, flags);
--	if (err != -ENOENT)
--		return err;
--
--	new_bucket = stackid_new_bucket(stackid, map);
--	if (!new_bucket)
--		return -ENOMEM;
- 
- 	if (stack_map_use_build_id(map)) {
- 		struct bpf_stack_build_id *id_offs;
-@@ -629,10 +620,12 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
- {
- 	u32 elem_size = stack_map_data_size(map);
- 	bool user = flags & BPF_F_USER_STACK;
-+	struct stack_map_bucket *new_bucket;
- 	struct perf_callchain_entry *trace;
- 	struct stackid stackid;
- 	bool kernel = !user;
- 	u32 max_depth;
-+	int err;
- 
- 	if (unlikely(flags & ~(BPF_F_SKIP_FIELD_MASK | BPF_F_USER_STACK |
- 			       BPF_F_FAST_STACK_CMP | BPF_F_REUSE_STACKID)))
-@@ -646,7 +639,15 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
- 		/* couldn't fetch the stack trace */
- 		return -EFAULT;
- 
--	return __bpf_get_stackid(&stackid, map, trace, flags);
-+	err = stackid_fastpath(&stackid, map, trace, flags);
-+	if (err != -ENOENT)
-+		return err;
++	/* reject AQL queue with size < 2 */
++	if (!aligned_size) {
++		ret = -EINVAL;
++		goto err_alignment_size;
++	}
 +
-+	new_bucket = stackid_new_bucket(&stackid, map);
-+	if (!new_bucket)
-+		return -ENOMEM;
-+
-+	return stackid_install(&stackid, map, new_bucket, flags);
- }
+ 	(*mem)->alloc_flags = flags;
  
- const struct bpf_func_proto bpf_get_stackid_proto = {
-@@ -674,6 +675,7 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
- 	   struct bpf_map *, map, u64, flags)
- {
- 	struct perf_event *event = ctx->event;
-+	struct stack_map_bucket *new_bucket;
- 	struct perf_callchain_entry *trace;
- 	struct stackid stackid;
- 	bool kernel, user;
-@@ -701,7 +703,6 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
+ 	amdgpu_sync_create(&(*mem)->sync);
+@@ -1886,6 +1892,7 @@ err_bo_create:
+ 	amdgpu_amdkfd_unreserve_mem_limit(adev, aligned_size, flags, xcp_id);
+ err_reserve_limit:
+ 	amdgpu_sync_free(&(*mem)->sync);
++err_alignment_size:
+ 	mutex_destroy(&(*mem)->lock);
+ 	if (gobj)
+ 		drm_gem_object_put(gobj);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1200,7 +1200,8 @@ static int kfd_ioctl_alloc_memory_of_gpu
  
- 	if (kernel) {
- 		trace->nr = nr_kernel;
--		ret = __bpf_get_stackid(&stackid, map, trace, flags);
- 	} else { /* user */
- 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
- 
-@@ -710,12 +711,22 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
- 			return -EFAULT;
- 
- 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
--		ret = __bpf_get_stackid(&stackid, map, trace, flags);
+ 		if (flags & KFD_IOC_ALLOC_MEM_FLAGS_AQL_QUEUE_MEM)
+ 			size >>= 1;
+-		atomic64_add(PAGE_ALIGN(size), &pdd->vram_usage);
++		size = PAGE_ALIGN(size);
++		atomic64_add(size, &pdd->vram_usage);
  	}
  
-+	ret = stackid_fastpath(&stackid, map, trace, flags);
-+	if (ret != -ENOENT)
-+		goto out;
-+
-+	new_bucket = stackid_new_bucket(&stackid, map);
-+	if (new_bucket) {
-+		trace->nr = nr;
-+		return stackid_install(&stackid, map, new_bucket, flags);
-+	}
-+	ret = -ENOMEM;
-+
-+out:
- 	/* restore nr */
- 	trace->nr = nr;
--
- 	return ret;
- }
- 
+ 	mutex_unlock(&p->mutex);
 
 
