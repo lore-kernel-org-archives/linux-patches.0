@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B898579822;
-	Wed,  9 Sep 2026 14:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC8457982C;
+	Wed,  9 Sep 2026 14:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962678; cv=none; b=Ujaf2ursUeitkmzyPcZ4YewztKPgyPeumZCBsywgyVQCBAu7xiDWs06+/QtuqRlcWTph3/i9ZcrRWdNlEM38WxVMguc5P05sBtd7dmH+YArJ02FVyNQ0+wJVBtL2ibWOxrtLDGzDDG3Rmv0wvhwQURL/lisuwFeYaL2CA/LRCBs=
+	t=1788962681; cv=none; b=MBC+SfhCtX8Kk3G+/5Gkp4sy5U66+amOTHPxDAICmLknR2aByteX61VEVY5FPwyTkvgKVhuPhoQ+7bNXxmK0txhF2BwbRIaSGX3lF4ppZ9p/v4M6LMuR1OBNl2OyKxeWf7h/OxoBpm8fJ8zm4Q1eQz0h+MafYjAQOkusVKZDRzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962678; c=relaxed/simple;
-	bh=bPIYXLc9ubc4Iq0VMZheDwKDlFTwkkyAxrmb8+iBYGQ=;
+	s=arc-20240116; t=1788962681; c=relaxed/simple;
+	bh=3/ks60NE7AdUBd7+a4eYdcgufzLhnE4sWk+vwR5aH8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1jtpQ2sq2NxjM655QMcRPS/jnIfxHfiZoSx3NHP6fuFMqBROEbFdBVz6z54aIZDej7umQ4JsVNXeFTiPvdtS9+ZA0+RreZ886EEgQ3XcQgHZeF8OQN5FT4YTwrYLV4XVN9Xto2rRwzh9teDpaTG5Q+VFoUCuyUmRmkYu6k/r58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6NXs8+H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=toFp5zC5XSd2ae/gQj/409BEJc3NaeJ7lPfn+Hl11jzZpsJtOoQLiQXbt82NZzmz6CHv4mEZEV22iWrhM/oztXc86WUw1IAVsALVZMtHJ1dTxMPiwDjhr/DF0ZpKT/Prr2x9HUfOSJDClMFR1RWtXjipeJCrPVr16HOuR3dextY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfusISdP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6NXs8+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746D01F00A3D;
-	Wed,  9 Sep 2026 14:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfusISdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B501F00A3F;
+	Wed,  9 Sep 2026 14:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962677;
-	bh=KadZWkGZdZZ+xkRaXOFnSNaTdstvXK+1lVVCY0xuGjM=;
+	s=korg; t=1788962679;
+	bh=/fIox7tAtpH1WO8u32aQ3/kKy74WSHmThWv5n9EcyHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i6NXs8+HfeE7B/oU+4S0Wajwhz0Ghdx1XsdlWBhTp5h5NbuAcMitTKbAuArBghrmD
-	 SAyw2bw4N+vcxastGG0reRdAldPchSRQzfA7fI9NFr4LrA8MAFuUla12/f+IvKYfKP
-	 j7BeG8kume1Obz3N40i/T5HKzJQZALH7GAXjVbgA=
+	b=ZfusISdPFCULamP3lohnDi36Qx9A7ElH5d0A4FMRLteDDo/u/WhZVnQz5R0yTF7JP
+	 8C7fboPrqNwqGGAM1y6OTIRlaGVVfWXLJsGqmCqh5RlKTKgBWsJL07GHx4OTEkO9Cg
+	 ++qXqEFqYiyRIJjnyVRQYL/Oi6Pa6RS561ILETQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Valery Borovsky <vebohr@gmail.com>
-Subject: [PATCH 7.2 346/556] media: airspy: use vb2_video_unregister_device() on disconnect to fix NULL deref
-Date: Wed,  9 Sep 2026 15:40:26 +0200
-Message-ID: <20260909134242.826626800@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>
+Subject: [PATCH 7.2 373/556] media: iris: Enumerate cap->bus_info to differentiate between encoder and decoder
+Date: Wed,  9 Sep 2026 15:40:53 +0200
+Message-ID: <20260909134243.814763519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,78 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 2f378dc45e685fc825d2dd08e7864666d6fcc009 upstream.
+commit 94ef75095d5e76df848a2e5508d71a4532a6ce23 upstream.
 
-airspy_disconnect() clears s->udev under v4l2_lock, but
-airspy_stop_streaming() unconditionally calls airspy_ctrl_msg() and
-airspy_free_stream_bufs() afterwards. If a streaming user closes the
-device after disconnect, stop_streaming() runs and dereferences the
-NULL s->udev:
+commit 66c744e28b69 ("media: venus: assign unique bus_info strings for
+encoder and decoder") introduced the naming convention
+plat:node-addr:video-codec{enc|dec}. Right now Iris does not replicate this
+naming convention.
 
-  airspy_stop_streaming()
-    airspy_ctrl_msg(s, CMD_RECEIVER_MODE, 0, 0, NULL, 0)
-      usb_sndctrlpipe(s->udev, 0)         /* NULL deref */
-    airspy_free_stream_bufs(s)
-      usb_free_coherent(s->udev, ...)     /* NULL deref */
+When we do v4l2-ctrl --list -devices we see:
+Iris Decoder (platform:aa00000.video-codec):
+	/dev/video0
+	/dev/video1
 
-The airspy driver uses vb2_fop_release() in its file_operations, so
-replace video_unregister_device(&s->vdev) with
-vb2_video_unregister_device(&s->vdev) and move it before clearing
-s->udev. vb2_video_unregister_device() releases the vb2 queue, which
-synchronously runs airspy_stop_streaming() if streaming is active, so
-the URBs, coherent DMA stream buffers and the hardware stop control
-message all execute while s->udev is still valid.
+Enumerate the bus_info field of the capabilities structure for namespace
+parity and appropriate differentiation:
+Iris Decoder (plat:aa00000.video-codec:dec):
+	/dev/video0
 
-vb2_video_unregister_device() locks vdev->queue->lock (vb_queue_lock)
-internally, and stop_streaming() locks v4l2_lock, so the previous outer
-mutex_lock(&s->vb_queue_lock) / mutex_lock(&s->v4l2_lock) pair around
-the unregister sequence would self-deadlock and has been removed. A
-short v4l2_lock critical section around s->udev = NULL remains so any
-ioctl path that still holds the file descriptor sees coherent state.
+Iris Encoder (plat:aa00000.video-codec:enc):
+	/dev/video1
 
-Issue identified by automated review of the INV-003 series at
-https://sashiko.dev/
-
-Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
+Fixes: 5ad964ad5656 ("media: iris: Initialize and deinitialize encoder instance structure")
 Cc: stable@vger.kernel.org
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/airspy/airspy.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/media/platform/qcom/iris/iris_vidc.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/airspy/airspy.c
-+++ b/drivers/media/usb/airspy/airspy.c
-@@ -464,14 +464,21 @@ static void airspy_disconnect(struct usb
+--- a/drivers/media/platform/qcom/iris/iris_vidc.c
++++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+@@ -449,14 +449,21 @@ static int iris_enum_frameintervals(stru
  
- 	dev_dbg(s->dev, "\n");
+ static int iris_querycap(struct file *filp, void *fh, struct v4l2_capability *cap)
+ {
++	struct iris_core *core = video_drvdata(filp);
+ 	struct iris_inst *inst = iris_get_inst(filp);
++	char *info;
  
--	mutex_lock(&s->vb_queue_lock);
-+	/*
-+	 * vb2_video_unregister_device() releases the vb2 queue, which
-+	 * triggers airspy_stop_streaming() if streaming is active.
-+	 * stop_streaming() dereferences s->udev via airspy_ctrl_msg() and
-+	 * airspy_free_stream_bufs(), so it must run before s->udev is
-+	 * cleared. vb2_video_unregister_device() locks vb_queue_lock
-+	 * internally and stop_streaming() locks v4l2_lock, so neither may
-+	 * be held by the caller.
-+	 */
-+	v4l2_device_disconnect(&s->v4l2_dev);
-+	vb2_video_unregister_device(&s->vdev);
-+
- 	mutex_lock(&s->v4l2_lock);
--	/* No need to keep the urbs around after disconnection */
- 	s->udev = NULL;
--	v4l2_device_disconnect(&s->v4l2_dev);
--	video_unregister_device(&s->vdev);
- 	mutex_unlock(&s->v4l2_lock);
--	mutex_unlock(&s->vb_queue_lock);
+ 	strscpy(cap->driver, IRIS_DRV_NAME, sizeof(cap->driver));
  
- 	v4l2_device_put(&s->v4l2_dev);
+-	if (inst->domain == DECODER)
++	if (inst->domain == DECODER) {
+ 		strscpy(cap->card, "Iris Decoder", sizeof(cap->card));
+-	else
++		info = "dec";
++	} else {
+ 		strscpy(cap->card, "Iris Encoder", sizeof(cap->card));
++		info = "enc";
++	}
++	snprintf(cap->bus_info, sizeof(cap->bus_info),
++		 "plat:%s:%s", dev_name(core->dev), info);
+ 
+ 	return 0;
  }
 
 
