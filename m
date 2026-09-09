@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2ED52ED5E;
-	Wed,  9 Sep 2026 14:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7FC3D967A;
+	Wed,  9 Sep 2026 14:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962591; cv=none; b=LNTst0IhnjEias+UV+AKfLN8H9qkekZvFTuU+4CovMmZ4K1M8UI4loCnx3ViJQi2lgCQwDMD8q3np5pB+VdYMdYGArkUmFr4APxyQA2jY3uVwmTuDW2OG6lVkOhnS/EVIQqfj71gqi5VdtgjitzJfu2QYHQWV5JNDJR77gqSztA=
+	t=1788962594; cv=none; b=c15MzGRo5TwtkSMIbytSZLI42B4GPJSCyF3kVw0DvaBqBmCif4U783brzVlmDFtukYPZ4PVTuZ+7voi1soDtpvkMelI17693FYqPuO9Q9V5yJLxH9BmZoevr4omd3B0Khax9y1brP9AHUu/nV/ZV3Zqq+H1Gj+RDXbn+nZ3kd1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962591; c=relaxed/simple;
-	bh=8/j/Ja+Dci1LEhXKDk7X2tTD4VU2JxW42fyvmHqYOwI=;
+	s=arc-20240116; t=1788962594; c=relaxed/simple;
+	bh=3iuCfRbkTovye5suX9azvYBotDAfEe7TCh3o+AjnDaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NC0sRj47BONMWr1hn9IZVI1hkx6XL1PBuTfG8yeSKN+PelIBLShfUUueCEU2ouf65ijLM88CckxPbz6eeAONoTovJ3OpkrA9d+C4bk24w1nO5XKEa54md1rr7+d9U33AnLOZlWVkDgkOUqOOCjXXZVm79RMm5F4Sg7k1wlysx78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uw1yyYLE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gcp2+L8aMRpnC2YS8cEVB9sKsDYCg5B7P7DIWMVs4ZsXZRI+jUO3duE4hBimhNbph0jbRCmCbhakXbsNk1Vsr/Lv0LGgl1MVhuZPj/iAv/jPFh+zKgH5FtUFnsosSqpCH5bsal67RDMuxBD7zr3JcQxamuvOyCucCh8U1ZgLGl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ7saXAw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uw1yyYLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F50E1F00A3A;
-	Wed,  9 Sep 2026 14:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ7saXAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0324B1F00A3D;
+	Wed,  9 Sep 2026 14:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962590;
-	bh=BHXHv18RHpWXTW8BN0x7FY6xoRGpo5/D2QZqJTcg2jQ=;
+	s=korg; t=1788962593;
+	bh=8/pvwdVEeO0McVDOznyV1Rbzky3Uy7bzXOHTptIkB7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uw1yyYLEF0RneVjoDg+6oTaOJQyvuhXI0gawD4kweQGov2EO6nai98N54hK4hGeYX
-	 EJrJ33oLSgVRhdY+2+UhrxpjHLAUzChe72VLRZfTMz6mkvpEXnqDmRaIwa/FoLDPjJ
-	 /JnSZnxfehZeHrFPCe/+anME2mbkhEaMM079VSWM=
+	b=WZ7saXAwOvwI716tTsbNaBxB0yOJuzjWbGC8wcLdQNtkONuhH1zkpyc+YSgRR8iFh
+	 4ZDCyWAfHUVXKwSH89e+U7/jTt5RIH3eXgKAS1sBqNDBYHL5NJ/8w1lFfelIyadFr4
+	 dVhocZ0cGUoVCgHHiPCvr2uHjByTXTAPT1n5ReVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Bibo Mao <maobibo@loongson.cn>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 341/556] LoongArch: Fix acpi_package_ids[] array overflow
-Date: Wed,  9 Sep 2026 15:40:21 +0200
-Message-ID: <20260909134242.651896335@linuxfoundation.org>
+Subject: [PATCH 7.2 342/556] LoongArch: Do not select HAVE_RUST when KASAN is enabled
+Date: Wed,  9 Sep 2026 15:40:22 +0200
+Message-ID: <20260909134242.686694965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 2a2367d46d7a4ee4122b7a86e57125542dbbe963 upstream.
+commit 63b6a48c951d63bf39d44603ada48a987ccf66eb upstream.
 
-With LoongArch virt machine, a typical setting is one core per socket,
-there will max 256 sockets (packages) on one VM. With PPTT acpi table,
-array acpi_package_ids[] will be overflowed.
+After commit 2625480a1bf7 ("hardening: Default randstruct off with rust
+for better allmodconfig support"), which allows Rust to be enabled for
+allmodconfig, ARCH=loongarch allmodconfig starts failing with:
 
-Here change the array size of acpi_package_ids[] with the max value of
-MAX_PACKAGES and KVM_MAX_VCPUS.
+  error: kernel-address sanitizer is not supported for this target
 
-Cc: stable@vger.kernel.org # 6.7+
-Fixes: 4e8f58620f67 ("LoongArch: Retrieve CPU package ID from PPTT when available")
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+  error: aborting due to 1 previous error
+
+  make[4]: *** [rust/Makefile:741: rust/core.o] Error 1
+
+For the same reason as the commit 84a0f7caafc679f7 ("ARM: Do not select
+HAVE_RUST when KASAN is enabled"), do not select HAVE_RUST when KASAN
+is enabled until the loongarch64-unknown-none-softfloat target in rustc
+supports KASAN.
+
+Cc: stable@vger.kernel.org
+Fixes: 90868ff9cade ("LoongArch: Enable initial Rust support")
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/acpi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/loongarch/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kernel/acpi.c
-+++ b/arch/loongarch/kernel/acpi.c
-@@ -13,6 +13,7 @@
- #include <linux/export.h>
- #include <linux/irq.h>
- #include <linux/irqdomain.h>
-+#include <linux/kvm_host.h>
- #include <linux/memblock.h>
- #include <linux/of_fdt.h>
- #include <linux/serial_core.h>
-@@ -202,7 +203,7 @@ static void __init acpi_process_madt(voi
- 
- int pptt_enabled;
- static int acpi_nr_packages;
--static int acpi_package_ids[MAX_PACKAGES];
-+static int acpi_package_ids[MAX(MAX_PACKAGES, KVM_MAX_VCPUS)];
- 
- int __init parse_acpi_topology(void)
- {
+--- a/arch/loongarch/Kconfig
++++ b/arch/loongarch/Kconfig
+@@ -175,7 +175,7 @@ config LOONGARCH
+ 	select HAVE_RELIABLE_STACKTRACE if UNWINDER_ORC
+ 	select HAVE_RETHOOK
+ 	select HAVE_RSEQ
+-	select HAVE_RUST
++	select HAVE_RUST if !KASAN
+ 	select HAVE_SAMPLE_FTRACE_DIRECT
+ 	select HAVE_SAMPLE_FTRACE_DIRECT_MULTI
+ 	select HAVE_SETUP_PER_CPU_AREA if NUMA
 
 
