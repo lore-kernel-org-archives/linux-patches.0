@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F4156855E;
-	Wed,  9 Sep 2026 14:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A41525783C;
+	Wed,  9 Sep 2026 14:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963433; cv=none; b=ASUwpFze/O5oNHGJNLTwVrGADFkua/FR8n+2HLPicTpob2Roq5j7zArrc6/ruNGO7zEJXnvofCOari3uGJBWY/EgsuGKHKSkwTwn++iS2WHyQivcrYoAEhSsQm0u7e7lYej+aKMqjVgSizBFnipSfxSI59+0LnWKq9Vj6A4S1po=
+	t=1788963436; cv=none; b=GET9YoxQDHEV60Hwl+9GUJ296mVLUTnL35dGoSZ0Bi1Onh1tEOfxQ4ytRVDDNMbuVzheyC+VOTwPUtrdCB7S4oekz5tNWaJ6kAEeJDUVpLGZYspwgIlO2sQ55BzyETmAfJHqn6ucE+z14i4Br3GWmCA+QLPLSd8UbLQ9JlIKI0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963433; c=relaxed/simple;
-	bh=EK2E4eOB0sduWfzDcSTU3PCflwAW0czDdb5pltuQX7o=;
+	s=arc-20240116; t=1788963436; c=relaxed/simple;
+	bh=Tsbdx5/JnNo0Jd5eMZNf/dr2Fk52HmOZ2nmMQbsso+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PkBp1C9Eln60TihHond2pU7OcU/DplFoT0ezIz44rmlbsEMpd/axZFwowJswgU+p5Jy5VSw6zUYR7Vq3y6f1W/5QSRjuaSgV5Zm+kV32EgLXscfAknV0cVDhyAdZ0WIxTPf3qiyRAnUlcEQx1iviPcmVMyUgxL15CJOGkclYtJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8MZe5BT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MHT+rgq1RwuMFoZsrUIF3bWHOzZ1iutyqrCgDnQqQgC7LvBYkMHHuA9x9gN1iu7AF0cRFeZEn+wUSB0ouP+oSKqtovSBSD4Qz8aLwy/wWg3gmQP76yMmNFXLrYjz6WGXZxt4anFjI9VVJeprgPCqYjfpytWfQx4aCPgxmqFbLL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiHm1B7i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8MZe5BT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C531F00A3A;
-	Wed,  9 Sep 2026 14:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiHm1B7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFEA1F00A3A;
+	Wed,  9 Sep 2026 14:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963432;
-	bh=OJcmK1/XrIG4avOmOQaNNK34zxDLfFTMnLBcKIKD7II=;
+	s=korg; t=1788963435;
+	bh=zV+Zmo14j9iHOGB71uZw075ZuNe//q+/dk6LTxDtNIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O8MZe5BT3xXsraOrK8TyfE7gxb/hxT8ULv2VUXeIydKBizzib+hkREG9F1TBUglh1
-	 /bIEdiHMs+3oCJt0XotAkZXFuIfunXMYgeyYHEpDN3bjAQR61nPVPNNIY6YJdq7SnT
-	 GEI4OCo/+FdJN17tp3GJ2ghYryZvS5rTnNBUVQHg=
+	b=UiHm1B7iIwj52imrH0pGv9+32jO/K5ZAOHTchci1GfO5Ihyp1yv1nToUP0YvhQ+oz
+	 47E0pma3OLdCmlntZ/lyIfi7y6lsAZlcuHmIyQMnUF5h7gDXh6ZjZEItV57cguZIMi
+	 woYmMrWsuIk0n5UjZyT3AEunz0+a9x/R5ugNJe0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanishka De Silva <kpskanna1915@gmail.com>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 038/583] ublk: clear VM_MAYWRITE on read-only ublk char device mmap
-Date: Wed,  9 Sep 2026 15:35:23 +0200
-Message-ID: <20260909134239.238580405@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.18 039/583] soc: qcom: geni-se: Use HW PROG_RAM_DEPTH to validate firmware size
+Date: Wed,  9 Sep 2026 15:35:24 +0200
+Message-ID: <20260909134239.273155822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,54 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kanishka De Silva <kpskanna1915@gmail.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-commit 6e2b571b0a54755b06e092501913e1dfefe75d6c upstream.
+commit 522bfb4f33c0930b3d14d5c5ee80bc93a883b544 upstream.
 
-ublk_ch_mmap() rejects mmap requests with VM_WRITE set, but never
-clears VM_MAYWRITE on the resulting read-only mapping. This allows
-a userspace daemon to mmap the per-queue command buffer PROT_READ,
-then upgrade it to PROT_WRITE via mprotect(), since VM_MAYWRITE was
-never cleared.
+The hardcoded MAX_GENI_CFG_RAMn_CNT limit is not accurate for all SoCs:
+some targets have less CFG RAM than the constant implies, while others
+like QCS615 need more entries than the old limit of 455 allowed, causing
+valid firmware to be rejected at load time.
 
-The command buffer holds struct ublksrv_io_desc entries that are
-kernel-written ABI; a writable mapping lets an unprivileged daemon
-process corrupt fields such as addr, op_flags, nr_sectors, and
-start_sector.
+Rather than hardcoding a constant, read PROG_RAM_DEPTH from SE_HW_PARAM_2
+at runtime to get the actual CFG RAM depth of the hardware instance and
+use that as the upper bound for firmware size validation.
 
-Same bug class as the drm/panthor and drm/vc4 VM_MAYWRITE fixes, and
-the 2026-08-13 ptp/vmclock fix (a5edadbae57e).
-
-Verified via mprotect() PoC: before the fix, a PROT_READ mapping can
-be upgraded to PROT_READ|PROT_WRITE and a write into the command
-buffer corrupts io_desc fields (confirmed under KASAN). After the
-fix, mprotect() returns -EACCES.
-
-Fixes: 3fee8d7599e1 ("ublk_drv: add io_uring based userspace block driver")
+Fixes: d4bf06592ad6 ("soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kanishka De Silva <kpskanna1915@gmail.com>
-Reviewed-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20260830070133.559-1-kpskanna1915@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260702-qup-se-increase-ram-cnt-v3-1-80b363373a5b@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/soc/qcom/qcom-geni-se.c  |   24 +++++++++++++-----------
+ include/linux/soc/qcom/geni-se.h |    4 ++++
+ 2 files changed, 17 insertions(+), 11 deletions(-)
 
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1862,6 +1862,12 @@ static int ublk_ch_mmap(struct file *fil
- 	if (vma->vm_flags & VM_WRITE)
- 		return -EPERM;
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -152,8 +152,6 @@ struct se_fw_hdr {
+ /*Magic numbers*/
+ #define SE_MAGIC_NUM			0x57464553
  
-+	/*
-+	 * The per-queue command buffer is kernel-written ABI; prevent
-+	 * the daemon from upgrading to writable via mprotect().
-+	 */
-+	vm_flags_clear(vma, VM_MAYWRITE);
-+
- 	end = UBLKSRV_CMD_BUF_OFFSET + ub->dev_info.nr_hw_queues * max_sz;
- 	if (phys_off < UBLKSRV_CMD_BUF_OFFSET || phys_off >= end)
+-#define MAX_GENI_CFG_RAMn_CNT		455
+-
+ #define MI_PBT_NON_PAGED_SEGMENT	0x0
+ #define MI_PBT_HASH_SEGMENT		0x2
+ #define MI_PBT_NOTUSED_SEGMENT		0x3
+@@ -990,24 +988,27 @@ EXPORT_SYMBOL_GPL(geni_icc_disable);
+ 
+ /**
+  * geni_find_protocol_fw() - Locate and validate SE firmware for a protocol.
+- * @dev: Pointer to the device structure.
++ * @se: Pointer to the serial engine structure.
+  * @fw: Pointer to the firmware image.
+  * @protocol: Expected serial engine protocol type.
+  *
+  * Identifies the appropriate firmware image or configuration required for a
+- * specific communication protocol instance running on a  Qualcomm GENI
+- * controller.
++ * specific communication protocol instance running on a Qualcomm GENI
++ * controller. Validates the firmware size against the hardware PROG_RAM_DEPTH
++ * read from SE_HW_PARAM_2.
+  *
+  * Return: pointer to a valid 'struct se_fw_hdr' if found, or NULL otherwise.
+  */
+-static struct se_fw_hdr *geni_find_protocol_fw(struct device *dev, const struct firmware *fw,
++static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct firmware *fw,
+ 					       enum geni_se_protocol_type protocol)
+ {
++	struct device *dev = se->dev;
+ 	const struct elf32_hdr *ehdr;
+ 	const struct elf32_phdr *phdrs;
+ 	const struct elf32_phdr	*phdr;
+ 	struct se_fw_hdr *sefw;
+ 	u32 fw_end, cfg_idx_end, cfg_val_end;
++	u32 prog_ram_depth;
+ 	u16 fw_size;
+ 	int i;
+ 
+@@ -1066,10 +1067,11 @@ static struct se_fw_hdr *geni_find_proto
+ 			sefw->fw_size_in_items = cpu_to_le16(fw_size);
+ 		}
+ 
+-		if (fw_size >= MAX_GENI_CFG_RAMn_CNT) {
+-			dev_err(dev,
+-				"Firmware size (%u) exceeds max allowed RAMn count (%u)\n",
+-				fw_size, MAX_GENI_CFG_RAMn_CNT);
++		prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
++					   readl_relaxed(se->base + SE_HW_PARAM_2));
++		if (fw_size >= prog_ram_depth) {
++			dev_err(dev, "Firmware size (%u) exceeds RAM size (%u)\n",
++				fw_size, prog_ram_depth);
+ 			continue;
+ 		}
+ 
+@@ -1193,7 +1195,7 @@ static int geni_load_se_fw(struct geni_s
+ 	int ret;
+ 	struct se_fw_hdr *hdr;
+ 
+-	hdr = geni_find_protocol_fw(se->dev, fw, protocol);
++	hdr = geni_find_protocol_fw(se, fw, protocol);
+ 	if (!hdr)
  		return -EINVAL;
+ 
+--- a/include/linux/soc/qcom/geni-se.h
++++ b/include/linux/soc/qcom/geni-se.h
+@@ -118,6 +118,7 @@ struct geni_se {
+ #define SE_DMA_RX_FSM_RST		0xd58
+ #define SE_HW_PARAM_0			0xe24
+ #define SE_HW_PARAM_1			0xe28
++#define SE_HW_PARAM_2			0xe2c
+ 
+ /* GENI_FORCE_DEFAULT_REG fields */
+ #define FORCE_DEFAULT	BIT(0)
+@@ -285,6 +286,9 @@ struct geni_se {
+ #define RX_FIFO_DEPTH_MSK		GENMASK(21, 16)
+ #define RX_FIFO_DEPTH_SHFT		16
+ 
++/* SE_HW_PARAM_2 fields */
++#define PROG_RAM_DEPTH_MSK		GENMASK(10, 0)
++
+ #define HW_VER_MAJOR_MASK		GENMASK(31, 28)
+ #define HW_VER_MAJOR_SHFT		28
+ #define HW_VER_MINOR_MASK		GENMASK(27, 16)
 
 
