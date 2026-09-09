@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A080563FA1;
-	Wed,  9 Sep 2026 14:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640A05650EF;
+	Wed,  9 Sep 2026 14:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963199; cv=none; b=DXlJhwEeNBLQsC4Ib6dGRZdLlYaALOSYvvlFrmGBm97V1/Kz6js7VTnI1r3PTvf23ZjMi+mj0zzrmE7bXfFwt3TjlgX7Fl0w611W/3C42j1D7O3AVwc1nx/rjOofytj6FSJzUufDpZdyz4d+ygABH/ESkxiosooMLUpyF5nRbPk=
+	t=1788963202; cv=none; b=qOID4RiiZl6itSQkYkMgWdfVR7O8BtI9AcF5wGHxzdGrHfBXqiFM42/QUOdn8SIdbfSu+F3MPoIQCsXUnfANdv8Zbn0Hzsrs73hA14KuFLUtMx28AgfwE53Xa9PGa69skTBHvwj3Y+Z7Z9Ge/QT3SgTfWY54kJSBWvcv8ttBVo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963199; c=relaxed/simple;
-	bh=NgTmbkCT0jZLp7n9OsRJfqGXibUNiHeMW36uXGSHO0o=;
+	s=arc-20240116; t=1788963202; c=relaxed/simple;
+	bh=/XptKsRhWMlkUpQi21ClNIbjkOTVtfSf8FPhZNWphQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRrb3xVwpB2bFf8PK/3RVoMOxqvMTiU4+TjhQp9ElgGR1/M8aKfjHWB/Cq9DAa4W8bd2pbeFdE6RGOxNUNMkudsurcRUzywMcScbMM/JH+crTwk+CiZEDBTc7ZSlQz6/HlsOM00ctlSuoRQ/R0reTGbLz2/I8aPUCBDsjxcW5sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2b9zfjw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pptl49WJxlVCvwRW62/Y15o5CNz48zEHgGROkabfuvUM+RUIcCGg51ElScrl0/33V0FeReKrtT9YPsx/N7Ua7tb65EYEENOiGek6Trws4x9Fz/K3Gw+WffAxzwKPfkN6T3tIMh9baphPbAlhRbJURR9vaR5LE9TqLR0vae2y5Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxguB2d2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2b9zfjw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D211F00A3A;
-	Wed,  9 Sep 2026 14:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxguB2d2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65771F00A3A;
+	Wed,  9 Sep 2026 14:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963198;
-	bh=fHVN9Ii6RfoEWQ6FbrdDHf1Dme3c5rPf2yK9xwNBMzY=;
+	s=korg; t=1788963201;
+	bh=/p/mv7pYWZ8NoX4FUKwdUuzj0tpWtJhyROSQpwc8JTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V2b9zfjwL0MKNb1tJljdIsaCTIXRTXOQL75qd5o7e08/rySMtyfuYc1d05EQuGL3c
-	 eackZ4d0xiIptD5EKLgPGokPDK4PCaIEqg8FDkXxWXd/IgMX2TdBrl1XmsIOxjxv2q
-	 N5zpu1IDGCo52zDhaHzSYJwtQHbMpnmmfuE/wxKY=
+	b=WxguB2d2QMfDSf8gleENoEyt4NmMOSDu+9Qn91+1zgfByThxDCWOjX/NklPW+FsEo
+	 Q+44S/9uKhQKWVuQUKM/itxYW1thZOgsheXPv4YPVGng8o59u3NNHxWTfHsUDEjmmo
+	 rEPUM36zPrJmmeOTTr8RKPc3wOmDkBocLPnCyYZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 552/556] mm/damon/ops-common: use nr_accesses moving sum for quota score
-Date: Wed,  9 Sep 2026 15:43:52 +0200
-Message-ID: <20260909134249.802300662@linuxfoundation.org>
+Subject: [PATCH 7.2 553/556] mm/damon/paddr: drop last same folio access check reuse optimization
+Date: Wed,  9 Sep 2026 15:43:53 +0200
+Message-ID: <20260909134249.836536511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,47 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-commit 6c25083f7ae7e2660d766169e5b4d3e96010503f upstream.
+commit f23f0aa62b2f32c2b12f95959fc4603ef81678b2 upstream.
 
-Since commit 42f994b71404 ("mm/damon/core: implement scheme-specific apply
-interval"), DAMOS scheme can be applied at any time.  At that time,
-nr_accesses may not be fully aggregated.  But the quota prioritization
-score is calculated using the not fully aggregated count.  As a result,
-the performance of DAMOS could be degraded.  Fix by using
-damon_nr_accesses_mvsum() instead.
+It can race when multiple kdamonds are being used.  The problem from the
+race is doubtful, but the gain from the optimization is also doubtful.
+Simply drop the optimization in favor of code simplicity.
 
-The user impact of the issue is suboptimum DAMOS performance under certain
-setups.  Nonetheless, the bug was there from the beginning of the setup
-availability.  In other words, the suboptimum performance is the baseline
-of the setup and hence it didn't cause regression.  Also the extent of the
-suboptimality was not big enough to be found from users and testers.
-Still, this is a clear bug that is better to be fixed, and can be easily
-fixed.
+The user impact is doubtfully trivial.  After all, this kind of
+interference can happen only by intentional user setup.  Even if it
+happens, it will be rare, and the consequence is degradation of the
+best-effort monitoring results.  No critical consequences like kernel
+panic or memory corruption happen.
 
-Link: https://lore.kernel.org/20260719161136.90191-1-sj@kernel.org
-Fixes: 42f994b71404 ("mm/damon/core: implement scheme-specific apply interval")
+The race was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260715031002.108504-5-sj@kernel.org
+Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
+Fixes: a28397beb55b ("mm/damon: implement primitives for physical address space monitoring")
 Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.7.x
+Cc: <stable@vger.kernel.org> # 5.16.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/ops-common.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/damon/paddr.c |   20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -111,8 +111,9 @@ int damon_hot_score(struct damon_ctx *c,
- 	unsigned int age_weight = s->quota.weight_age;
- 	int hotness;
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -65,7 +65,7 @@ static void damon_pa_prepare_access_chec
+ 	}
+ }
  
--	freq_subscore = r->nr_accesses * DAMON_MAX_SUBSCORE /
--		damon_max_nr_accesses(&c->attrs);
-+	freq_subscore = mult_frac(r->nr_accesses_bp / 10000,
-+			DAMON_MAX_SUBSCORE,
-+			damon_max_nr_accesses(&c->attrs));
+-static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
++static bool damon_pa_young(phys_addr_t paddr)
+ {
+ 	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
+ 	bool accessed;
+@@ -74,7 +74,6 @@ static bool damon_pa_young(phys_addr_t p
+ 		return false;
  
- 	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
- 	if (age_in_sec)
+ 	accessed = damon_folio_young(folio);
+-	*folio_sz = folio_size(folio);
+ 	folio_put(folio);
+ 	return accessed;
+ }
+@@ -82,23 +81,12 @@ static bool damon_pa_young(phys_addr_t p
+ static void __damon_pa_check_access(struct damon_region *r,
+ 		struct damon_attrs *attrs, unsigned long addr_unit)
+ {
+-	static phys_addr_t last_addr;
+-	static unsigned long last_folio_sz = PAGE_SIZE;
+-	static bool last_accessed;
++	bool accessed;
+ 	phys_addr_t sampling_addr = damon_pa_phys_addr(
+ 			r->sampling_addr, addr_unit);
+ 
+-	/* If the region is in the last checked page, reuse the result */
+-	if (ALIGN_DOWN(last_addr, last_folio_sz) ==
+-				ALIGN_DOWN(sampling_addr, last_folio_sz)) {
+-		damon_update_region_access_rate(r, last_accessed, attrs);
+-		return;
+-	}
+-
+-	last_accessed = damon_pa_young(sampling_addr, &last_folio_sz);
+-	damon_update_region_access_rate(r, last_accessed, attrs);
+-
+-	last_addr = sampling_addr;
++	accessed = damon_pa_young(sampling_addr);
++	damon_update_region_access_rate(r, accessed, attrs);
+ }
+ 
+ static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
 
 
