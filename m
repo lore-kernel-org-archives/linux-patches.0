@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409815678FD;
-	Wed,  9 Sep 2026 14:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42D658E2AF;
+	Wed,  9 Sep 2026 14:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964790; cv=none; b=MJ+JxP3RU+2J9ZJSxTdvwGryLM/kLv62KnbceJInWXPyAlJbYd/qXJOB8qrzizT2jSxoQWCIwpXJetz1ceWwPolkJV0auSQi/PIyRohBCZD0SbCLGKt3W262Xz92/agWS3rVK4G6YJNLV0r+x28sAC3OxnK7kD+YVlAULeWFxUU=
+	t=1788964793; cv=none; b=fD81u6Gr/tYKgsJtcfLGP4lTy6tI0AMqPNc9cQlZAD5Mv6jekJy1R57qSeqT1rYY5V0iqkXzGweQImSNgibHCcEtK83AGNaR/1UQnw6NDE2COHN+CcNvMfPqp/fwAgHCi/cksbEhhD7yd5QdBU7AxIWfTPLHkhceenWC4CcyEDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964790; c=relaxed/simple;
-	bh=WKdllDwz6mfuk8flco7wbcjIcHfaewkUcLFbi7Vzrvg=;
+	s=arc-20240116; t=1788964793; c=relaxed/simple;
+	bh=uktFxn/dLusLaAFVcDhWitdHYF/q0C9RCqYYGitzvX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWj5nhxWiUPBeByL2qhsFwcv8C9CUtNPDXtXAj8cY/MGeSYXsAY6QtLqDGuw3JzLSnJdBJgF64OckcQjH1zlSq22zx+OcN8wIXjlLK48RONaJ+l8oxZF0HNz1DSBuZO4Ipwm0hrnwsR3dR+hHCV/brcV4rs6tK3yqzQwFVXTp2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IV+DcvoU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XC6CGJix1GghpORW3z/wb/83jhEuHYjFH0TcMqtpgm4qvCXtOp2PCvRQYPLIG3a+NFXpKcffDIGyvPACzJb7X3AQ74LNEnu+AxyJdA7Cjx55yXGp/Uqo7MBMbx2oBI+avzlcZ0+NC55eVgV9SxgbzkBPgZY+Qg7cXRhsad3Mokk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wx0Io95P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IV+DcvoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5574B1F00A3A;
-	Wed,  9 Sep 2026 14:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wx0Io95P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3191F00A3A;
+	Wed,  9 Sep 2026 14:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964788;
-	bh=H0UdayIwvJjcTjQZaFT2uAed9ggFwrkIPj61BpjQ5Xs=;
+	s=korg; t=1788964791;
+	bh=+vzayxDARd1SXvo16sB9HP0oKlDUf4B2XS9wJdArTh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IV+DcvoU6mmvFwPPCetylM64qVJohAVsZxqnJ/UHbLeU9se9HlxHmXoO+z6wiNx4I
-	 jqm3qfECyVSatpf1Hi0KJA84kqlXP4Vd1T6nsi33I7kjXjF8yz0apj08nW30I+Hle8
-	 AmvZ2AodMvxizKqoSq3HSdD0DfhIe9wJgBjkOZj0=
+	b=wx0Io95PB/ca2an9uDVZsPWfLAnompOFkyRZVygxmfg5MvsO+ti5pmrPgbzyWoxCm
+	 l3L/Z1U9+JMaD/G6zYavI8KOqy7EJomlY0Vj/7ynt5A6a8l6vbUluQ6vyl44aQHelA
+	 sAsOLSSWK2EQrXBacj/ABxynNSeA8zTDy/HpCoa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Schubert <bschubert@ddn.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <sfrench@samba.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	linux-cifs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 517/583] fuse-uring: use enum types for header copying
-Date: Wed,  9 Sep 2026 15:43:22 +0200
-Message-ID: <20260909134255.636358855@linuxfoundation.org>
+Subject: [PATCH 6.18 544/583] cifs: SMB1 split: Create smb1proto.h for SMB1 declarations
+Date: Wed,  9 Sep 2026 15:43:49 +0200
+Message-ID: <20260909134256.592350564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,151 +57,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b2bbd7dcd2433e29b7e9a726aaa9571a78fa8d5f ]
+[ Upstream commit 86c666506ea2c42649879eeac7f29e7bedef2f23 ]
 
-Use enum types to identify which part of the header needs to be copied.
-This improves the interface and will simplify both kernel-space and
-user-space header addresses copying when buffer rings are added.
-
-Reviewed-by: Bernd Schubert <bschubert@ddn.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: fd10f40af314 ("fuse: copy request headers via a stack buffer for io-uring")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Steve French <sfrench@samba.org>
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: Enzo Matsumiya <ematsumiya@suse.de>
+cc: linux-cifs@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+cc: linux-kernel@vger.kernel.org
+Acked-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 730d0bb19507 ("smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev_uring.c |   66 +++++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 53 insertions(+), 13 deletions(-)
+ fs/smb/client/cifsglob.h  |    2 --
+ fs/smb/client/cifsproto.h |   11 +----------
+ fs/smb/client/smb1proto.h |   38 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+), 12 deletions(-)
+ create mode 100644 fs/smb/client/smb1proto.h
 
---- a/fs/fuse/dev_uring.c
-+++ b/fs/fuse/dev_uring.c
-@@ -31,6 +31,15 @@ struct fuse_uring_pdu {
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -2110,8 +2110,6 @@ extern mempool_t cifs_io_subrequest_pool
  
- static const struct fuse_iqueue_ops fuse_io_uring_ops;
+ /* Operations for different SMB versions */
+ #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
+-extern struct smb_version_operations smb1_operations;
+-extern struct smb_version_values smb1_values;
+ extern struct smb_version_operations smb20_operations;
+ extern struct smb_version_values smb20_values;
+ #endif /* CIFS_ALLOW_INSECURE_LEGACY */
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -14,6 +14,7 @@
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ #include "dfs_cache.h"
+ #endif
++#include "smb1proto.h"
  
-+enum fuse_uring_header_type {
-+	/* struct fuse_in_header / struct fuse_out_header */
-+	FUSE_URING_HEADER_IN_OUT,
-+	/* per op code header */
-+	FUSE_URING_HEADER_OP,
-+	/* struct fuse_uring_ent_in_out header */
-+	FUSE_URING_HEADER_RING_ENT,
+ struct statfs;
+ struct smb_rqst;
+@@ -430,16 +431,6 @@ extern int CIFSSMBSetFileSize(const unsi
+ 			      struct cifsFileInfo *cfile, __u64 size,
+ 			      bool set_allocation);
+ 
+-struct cifs_unix_set_info_args {
+-	__u64	ctime;
+-	__u64	atime;
+-	__u64	mtime;
+-	__u64	mode;
+-	kuid_t	uid;
+-	kgid_t	gid;
+-	dev_t	device;
+-};
+-
+ extern int CIFSSMBUnixSetFileInfo(const unsigned int xid,
+ 				  struct cifs_tcon *tcon,
+ 				  const struct cifs_unix_set_info_args *args,
+--- /dev/null
++++ b/fs/smb/client/smb1proto.h
+@@ -0,0 +1,38 @@
++/* SPDX-License-Identifier: LGPL-2.1 */
++/*
++ *
++ *   Copyright (c) International Business Machines  Corp., 2002,2008
++ *   Author(s): Steve French (sfrench@us.ibm.com)
++ *
++ */
++#ifndef _SMB1PROTO_H
++#define _SMB1PROTO_H
++
++struct cifs_unix_set_info_args {
++	__u64	ctime;
++	__u64	atime;
++	__u64	mtime;
++	__u64	mode;
++	kuid_t	uid;
++	kgid_t	gid;
++	dev_t	device;
 +};
 +
- static void uring_cmd_set_ring_ent(struct io_uring_cmd *cmd,
- 				   struct fuse_ring_ent *ring_ent)
- {
-@@ -581,10 +590,33 @@ err:
- 	return err;
- }
- 
--static __always_inline int copy_header_to_ring(void __user *ring,
--					       const void *header,
--					       size_t header_size)
-+static int ring_header_type_offset(enum fuse_uring_header_type type)
-+{
-+	switch (type) {
-+	case FUSE_URING_HEADER_IN_OUT:
-+		return 0;
-+	case FUSE_URING_HEADER_OP:
-+		return offsetof(struct fuse_uring_req_header, op_in);
-+	case FUSE_URING_HEADER_RING_ENT:
-+		return offsetof(struct fuse_uring_req_header, ring_ent_in_out);
-+	default:
-+		WARN_ONCE(1, "Invalid header type: %d\n", type);
-+		return -EINVAL;
-+	}
-+}
++#ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
 +
-+static int copy_header_to_ring(struct fuse_ring_ent *ent,
-+			       enum fuse_uring_header_type type,
-+			       const void *header, size_t header_size)
- {
-+	int offset = ring_header_type_offset(type);
-+	void __user *ring;
++/*
++ * cifssmb.c
++ */
 +
-+	if (offset < 0)
-+		return offset;
++/*
++ * smb1ops.c
++ */
++extern struct smb_version_operations smb1_operations;
++extern struct smb_version_values smb1_values;
 +
-+	ring = (void __user *)ent->headers + offset;
++/*
++ * smb1transport.c
++ */
 +
- 	if (copy_to_user(ring, header, header_size)) {
- 		pr_info_ratelimited("Copying header to ring failed.\n");
- 		return -EFAULT;
-@@ -593,10 +625,18 @@ static __always_inline int copy_header_t
- 	return 0;
- }
- 
--static __always_inline int copy_header_from_ring(void *header,
--						 const void __user *ring,
--						 size_t header_size)
-+static int copy_header_from_ring(struct fuse_ring_ent *ent,
-+				 enum fuse_uring_header_type type, void *header,
-+				 size_t header_size)
- {
-+	int offset = ring_header_type_offset(type);
-+	const void __user *ring;
-+
-+	if (offset < 0)
-+		return offset;
-+
-+	ring = (void __user *)ent->headers + offset;
-+
- 	if (copy_from_user(header, ring, header_size)) {
- 		pr_info_ratelimited("Copying header from ring failed.\n");
- 		return -EFAULT;
-@@ -615,8 +655,8 @@ static int fuse_uring_copy_from_ring(str
- 	int err;
- 	struct fuse_uring_ent_in_out ring_in_out;
- 
--	err = copy_header_from_ring(&ring_in_out, &ent->headers->ring_ent_in_out,
--				    sizeof(ring_in_out));
-+	err = copy_header_from_ring(ent, FUSE_URING_HEADER_RING_ENT,
-+				    &ring_in_out, sizeof(ring_in_out));
- 	if (err)
- 		return err;
- 
-@@ -667,7 +707,7 @@ static int fuse_uring_args_to_ring(struc
- 		 * Some op code have that as zero size.
- 		 */
- 		if (args->in_args[0].size > 0) {
--			err = copy_header_to_ring(&ent->headers->op_in,
-+			err = copy_header_to_ring(ent, FUSE_URING_HEADER_OP,
- 						  in_args->value,
- 						  in_args->size);
- 			if (err)
-@@ -687,8 +727,8 @@ static int fuse_uring_args_to_ring(struc
- 	}
- 
- 	ent_in_out.payload_sz = cs.ring.copied_sz;
--	return copy_header_to_ring(&ent->headers->ring_ent_in_out, &ent_in_out,
--				   sizeof(ent_in_out));
-+	return copy_header_to_ring(ent, FUSE_URING_HEADER_RING_ENT,
-+				   &ent_in_out, sizeof(ent_in_out));
- }
- 
- static int fuse_uring_copy_to_ring(struct fuse_ring_ent *ent,
-@@ -717,7 +757,7 @@ static int fuse_uring_copy_to_ring(struc
- 	}
- 
- 	/* copy fuse_in_header */
--	return copy_header_to_ring(&ent->headers->in_out, &req->in.h,
-+	return copy_header_to_ring(ent, FUSE_URING_HEADER_IN_OUT, &req->in.h,
- 				   sizeof(req->in.h));
- }
- 
-@@ -854,7 +894,7 @@ static void fuse_uring_commit(struct fus
- 	struct fuse_conn *fc = ring->fc;
- 	ssize_t err = -EFAULT;
- 
--	if (copy_header_from_ring(&req->out.h, &ent->headers->in_out,
-+	if (copy_header_from_ring(ent, FUSE_URING_HEADER_IN_OUT, &req->out.h,
- 				  sizeof(req->out.h)))
- 		goto out;
- 
++#endif /* CONFIG_CIFS_ALLOW_INSECURE_LEGACY */
++#endif /* _SMB1PROTO_H */
 
 
