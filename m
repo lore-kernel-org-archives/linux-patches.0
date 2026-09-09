@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52875867C3;
-	Wed,  9 Sep 2026 14:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DF65867C5;
+	Wed,  9 Sep 2026 14:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964337; cv=none; b=Lyobr5Hnoxc4TtO1s0Jx42zZyKOYaS0a8FvKfIDg3IQHJDZl94LPJny5NS2mTKmIw6FRXckDVfR62LCi+l7l0F4oym76SGPTC/ti4XDGYlZc6heoxh/grpKnop0wBPS/mJGrxtYtL7YDu4UtPaVjnZFkR7cAKKGCQ1DCryFwxgE=
+	t=1788964340; cv=none; b=mMaAk7ot3F9E1mVibE3k7uWrq9FE53AgkibEhKXZo06+oKkNe5ZfHWJe4vBGJo24WU0oyARx976E0fhLzp1+gE2Lzay9CfsbAW/Y57WpcPQ5QmB7y9XED5sV+gCV7ZuzYqb9Hv/0y6+zWkhjD+jfMyt6MLkW7OL5KakS73TYjvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964337; c=relaxed/simple;
-	bh=4PxNisOvjh4O7KgR0L/g/AZqOtdko1dWUYBLRe3dzMg=;
+	s=arc-20240116; t=1788964340; c=relaxed/simple;
+	bh=NduQJV4QmF+Pe81cn3MreE5MEFBB03yP3ZZ+sc8mAbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aS+Ilekd/nOP9PfUTpVhf+amxhNuk+GxjBdFiff5JzGQOsJTHn/homwbLIDTNtN5U62n2nPcGVwD21i4f3miGUqHpidZvs4ZcxR/H6D/6zyKfo3iM+9Is6NU9D9/prsy2dHcO+othHt+Uxv1THcbBaQGCnKIfxB9Waj+GkEeuo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhB+Fi/z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bO2A9i+f1b6sSRy23/dZcd3GEdGKD57at5LzZjeRE489OdKlDnn/5BwC/gbQS4VQqMOG9EjltFBagYY+FfToZAEBfh2egDIJ9vMs3vTx+XpPWZwfp578yto4BpKLmVcvLnC+zeb3cUUOmG/EODp6MzP4FzvoW1iqwdpxEnkUgMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtzAs61z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhB+Fi/z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0821F00A3A;
-	Wed,  9 Sep 2026 14:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtzAs61z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120461F00A3A;
+	Wed,  9 Sep 2026 14:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964335;
-	bh=dms0acmb5RMglFyzY/VYUZdLz7sJq+EOjvXJjOMyttU=;
+	s=korg; t=1788964338;
+	bh=vklVij6XjlJ3ZeZTHndVk0ZEZB4NdFnb/lMK9DVLc/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jhB+Fi/zCiEPyq+lFP1JAtA7cx99jjbnStQuPogPh0qie5y2v0sJERLHCAPPz6ruB
-	 3SSPjFuN2+DV9yWAUKdvL5qDa4nxeUsIvKwt0YdYZu48kyZ9A73eIC+ME1gC4nQquu
-	 GXsU1xQvhrGW9KqmYIHKnJF0jU7rMyxaRDXavZhs=
+	b=BtzAs61zbdhcFNzio4nVBbXnbR1I0lrjhAhI99JnHwwT6dFWf/pbFGf4DBJf0J83J
+	 hG2zq8WVjl3b5hS4hmGHbCqZqPjjsWFHRd2uY97WlAooKgAtDCGcjdaLpr4mDaxQ05
+	 4OsHGUOrtNGyW0/saBGF7mJlxbg0N0UlCIcP05Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+916c888ba5f1a54c9526@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
+	syzbot+9ae8e7884e451eaed5b4@syzkaller.appspotmail.com,
+	Tao Yu <tao1.yu@intel.com>,
 	Ruben Wauters <rubenru09@aol.com>
-Subject: [PATCH 6.18 387/583] drm/gud: NUL-terminate TV mode names read from the device
-Date: Wed,  9 Sep 2026 15:41:12 +0200
-Message-ID: <20260909134251.395669252@linuxfoundation.org>
+Subject: [PATCH 6.18 388/583] drm/gud: validate TV mode names before creating enum property
+Date: Wed,  9 Sep 2026 15:41:13 +0200
+Message-ID: <20260909134251.429628459@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,50 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Tao Yu <tao1.yu@intel.com>
 
-commit 500cb24cd61bad8a2747ddfc49b7034899c82d94 upstream.
+commit da1ea35fea67ad841f4ada28dd61b41be65e5437 upstream.
 
-gud_connector_add_tv_mode() reads a buffer of fixed-size mode names from
-the USB device and passes pointers into it to
-drm_mode_create_tv_properties_legacy(), which calls strlen() on each one.
-Nothing guarantees the device NUL-terminates a name, so strlen() can run
-past the end of a slot and, for the last mode, past the end of the
-allocation.
+The GUD protocol returns TV mode names as fixed-size
+GUD_CONNECTOR_TV_MODE_NAME_LEN entries and requires each name to be
+NUL-terminated.
 
-Terminate each name at the end of its slot before use.
+gud_connector_add_tv_mode() currently passes each fixed-size entry
+directly to drm_mode_create_tv_properties_legacy(), which eventually
+reaches drm_property_add_enum() and strlen(). If a device returns an
+entry without a terminating NUL byte, strlen() reads past the end of
+the slot and can run beyond the allocated buffer, triggering an
+out-of-bounds read.
 
+Validate that each returned TV mode name contains a NUL terminator
+within its fixed-size slot before passing it to the DRM property code.
+If a malformed entry is found, reject the device response with -EIO.
+
+This fixes the out-of-bounds read without changing the handling of
+valid devices, and avoids silently truncating malformed protocol data.
+
+Reported-by: syzbot+9ae8e7884e451eaed5b4@syzkaller.appspotmail.com
 Fixes: 40e1a70b4aed ("drm: Add GUD USB Display driver")
-Reported-by: syzbot+916c888ba5f1a54c9526@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=916c888ba5f1a54c9526
-Tested-by: syzbot+916c888ba5f1a54c9526@syzkaller.appspotmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Acked-by: Ruben Wauters <rubenru09@aol.com>
+Signed-off-by: Tao Yu <tao1.yu@intel.com>
+Reviewed-by: Ruben Wauters <rubenru09@aol.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Ruben Wauters <rubenru09@aol.com>
-Link: https://patch.msgid.link/20260816085234.22053-1-kartikey406@gmail.com
+Link: https://patch.msgid.link/20260819072835.4074130-1-tao1.yu@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/gud/gud_connector.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/gud/gud_connector.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 --- a/drivers/gpu/drm/gud/gud_connector.c
 +++ b/drivers/gpu/drm/gud/gud_connector.c
-@@ -396,8 +396,13 @@ static int gud_connector_add_tv_mode(str
+@@ -399,8 +399,11 @@ static int gud_connector_add_tv_mode(str
+ 	for (i = 0; i < num_modes; i++) {
+ 		char *mode = &buf[i * GUD_CONNECTOR_TV_MODE_NAME_LEN];
+ 
+-		/* The device is not trusted to NUL-terminate the name */
+-		mode[GUD_CONNECTOR_TV_MODE_NAME_LEN - 1] = '\0';
++		if (!memchr(mode, '\0', GUD_CONNECTOR_TV_MODE_NAME_LEN)) {
++			ret = -EIO;
++			goto free;
++		}
++
+ 		modes[i] = mode;
  	}
  
- 	num_modes = ret / GUD_CONNECTOR_TV_MODE_NAME_LEN;
--	for (i = 0; i < num_modes; i++)
--		modes[i] = &buf[i * GUD_CONNECTOR_TV_MODE_NAME_LEN];
-+	for (i = 0; i < num_modes; i++) {
-+		char *mode = &buf[i * GUD_CONNECTOR_TV_MODE_NAME_LEN];
-+
-+		/* The device is not trusted to NUL-terminate the name */
-+		mode[GUD_CONNECTOR_TV_MODE_NAME_LEN - 1] = '\0';
-+		modes[i] = mode;
-+	}
- 
- 	ret = drm_mode_create_tv_properties_legacy(connector->dev, num_modes, modes);
- free:
 
 
