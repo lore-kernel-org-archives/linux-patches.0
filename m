@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D2657F724;
-	Wed,  9 Sep 2026 14:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD735572694;
+	Wed,  9 Sep 2026 14:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963663; cv=none; b=Nln/peptNHA8jE/zRMXnjxyIMlBvNh7S7o94rzwJZMBQhyimkLmA6k5wz7+Uc/vrB9XevRzDsob9WdpLtK4ohxFlXy9xLnUhm4GeDFpkMi6QQ661/G5pBvcrsSJYqMKRm4jjWeBTaSOND8uuCEmyIUdezpgP0Epp/CT7XjF0TV8=
+	t=1788963665; cv=none; b=uh4Gf5de9nAFLUlKZuF24TDYpvyjfVnfnDEyWuXWxEnib3mail/j93dajCqLzJD4KyZvIQq2JohD2rbS2QNc+D1AmauYoDgtAMT1c8h1cJfpp+dRQKk96XfaViPCYSjQ2R9N+rMxc71NUYswKFTjkGxhUJVFwkN6wIRd8YDSVEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963663; c=relaxed/simple;
-	bh=QhGm6tMCO14yUNtuZDSX1qJBQiH9HHvWoh6Guw1S/pc=;
+	s=arc-20240116; t=1788963665; c=relaxed/simple;
+	bh=klEdLSr6vedEfihRpe36ZvBweFaqsoj4TrlbjacEzjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uezvj2WlBiYvpZym06HsoHwtsY5vsoNmZQN12zsPiD9uhVGM3pbhg3mE6pVkGDX8JIorqsfHZNuUAcmo4lbHyV3wS74uULDW7xqiHxllIQW/tOkU8zh/7Js/W+EvrNUjhC9Cz+SU/VBXyfNAV2hmqXNTlA79r53Xzl+PT7jXuXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=goNXX4nO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ad1JU0Pxs9YYwnTM2CcfNd62RdZKSGbOpBB9cKN2MJpr0Nlwmk0RgfW/TM7O8PY8XiMjNtTH42U8DwZX2H8iakb6FHfPyz/Fb05xsuMcgp7XXmnulACyBd7HQC6Z2YYL/i59pAkaGLnhgV9ncU01vbTZOzi0N+uG9RjzZxsg7sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SagfCLJ+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="goNXX4nO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2A11F00A3A;
-	Wed,  9 Sep 2026 14:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SagfCLJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DAC1F00A3A;
+	Wed,  9 Sep 2026 14:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963661;
-	bh=JJ1wbr5QWSm0H9tLGXLdvCY1/LH7ewQNqphVOwRjN5A=;
+	s=korg; t=1788963664;
+	bh=bUMu6bCy/7l4QHXJBESL0QQrDXQ1fd1grj91VsTPyZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=goNXX4nOsFOtEmFMoDzkRL5Dtk8EIc2mZvsSzMp0ond4ZNZzTxtSZ6epUtwMB5OED
-	 +HUCQOzZqlyNhIl2QFjTOjGXQWp1iyVHvKoiHkb+0+V4aWW8X0JGzzqrdV3dcZqfRB
-	 4NMPqIjBRvnz6bKcBhD5f+K6QHX4cyWPFmEJs0pk=
+	b=SagfCLJ+GRMQ63c0K2gOmBod+RMoByX8y4sdhVbjSvDJqB3sUMvDwIHtgT96UyuRr
+	 gYS1QGGTwPaSJLIlOeag9tnGF/Y8SlQJ1zrFPQIJUe1wK4PCnIAC9FbnIYxHwMGVRK
+	 QP/kUOqQIxiLdAYVbCn7WdanvkocjiebcLAMj1lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.18 155/583] clk: qcom: gcc-mdm9607: Fix halt_reg for gcc_apss_axi_clk
-Date: Wed,  9 Sep 2026 15:37:20 +0200
-Message-ID: <20260909134243.568511178@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 120/583] parisc: Fix alignment of asm statements in head.S
+Date: Wed,  9 Sep 2026 15:36:45 +0200
+Message-ID: <20260909134242.290392602@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,36 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Helge Deller <deller@gmx.de>
 
-commit ca7e6cc30cde4f0cbeff2e205a84bedf431e9156 upstream.
+commit 04cf68c9a76e3c6b67ad056a66a14923abf85925 upstream.
 
-gcc_apss_axi_clk specifies a halt_reg of 0x4601c, but this is already used
-by gcc_apss_ahb_clk. The correct value according to the downstream driver
-is 0x46020.
+All assembler statements need to be 4-byte aligned. Prevent a possible
+misalignment if someone changes the preceeding string and it's length is
+then suddenly not a multiple of 4 any longer.
 
 Cc: stable@vger.kernel.org
-Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-4-745565101869@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-mdm9607.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/kernel/head.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/clk/qcom/gcc-mdm9607.c
-+++ b/drivers/clk/qcom/gcc-mdm9607.c
-@@ -1414,7 +1414,7 @@ static struct clk_branch gcc_apss_ahb_cl
- };
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -105,6 +105,7 @@ $iodc_panic:
+ 	or		%r10,%r10,%r10	/* qemu idle sleep */
+ msg1:	.ascii "Can't boot kernel which was built for PA8x00 CPUs on this machine.\r\n"
+ msg1_end:
++	.align 4
  
- static struct clk_branch gcc_apss_axi_clk = {
--	.halt_reg = 0x4601c,
-+	.halt_reg = 0x46020,
- 	.halt_check = BRANCH_HALT_VOTED,
- 	.clkr = {
- 		.enable_reg = 0x45004,
+ $cpu_ok:
+ #endif
 
 
