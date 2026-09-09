@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D570857981F;
-	Wed,  9 Sep 2026 14:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B8D57D209;
+	Wed,  9 Sep 2026 14:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964487; cv=none; b=hNwrs9yI1eGPlDeYoh/twXuICklIcmJ5eBxdPIoHWpMZh/jI/6ksA8ZHWooGaKQI7X3dvPJIbqX+uBAQnJOOYAUjENvXNxNWg2kbQ4gLFpAMoeXzxMJyiuFZJSFjKus232fFEgMiQzh+q2tYnonJvxRX81BNozrBwnnX5dCK9Mg=
+	t=1788964490; cv=none; b=cQsZlj5ileZy9srGUKxVCi2SObKVVsBT1j+qe5vBgMmIEQH3nhhQUyzsphE0fn21JEQ1n4CifhBjmY6Y7Yl7yJRge0d7C8TSuZpZU3koT7JD/K4PEMHQGc4W3Z1qGUs4OiAMXlvpTMUaEJ7CVJnVle6WIpPzuAKLrTlTblctq3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964487; c=relaxed/simple;
-	bh=w0NCivkSP17NI+0lm6F8DjpjZ8bbKLbQfWSg9U9QqOA=;
+	s=arc-20240116; t=1788964490; c=relaxed/simple;
+	bh=OVu3+YkVYtLMY88VnBEKnavxuS3yt9rg/rR+SabBnYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZa8Ws5YV9myYsbL35XmCL+Dn11nmzXn6ag8gmhDgq3p/Dzn4PK9NqH06MO8TzJ4YQJG3QOAMj4cYebslcQl73sWNAE60f5utCkwalwk1pd8rnED6eukbOik3PX0KxpeHEmPLUk6/i/FJ1MCcIZkj2QmNFNoggtETnJoaZ8fvmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRtXzMWo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sx9rw3ZSncm37gCW8A3gPEeJSaQNfkFqxkXHxMlLLiNkUx54w6k9vtTxowU3J50Mh7a6xK360PZ0DEh61UYGOk8U2WZx+58aSE1MquR+lp3ROoipPPn6xeydIJ1HHZS7RQWex67tEdS4ZdxXStHsLSXCS4f9H5xArYRfk+fqtyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0r9Q/Xqv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRtXzMWo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE771F00A3A;
-	Wed,  9 Sep 2026 14:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0r9Q/Xqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A79F1F00A3A;
+	Wed,  9 Sep 2026 14:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964485;
-	bh=i1ZlVZ5gHVuUBugqIGAS6GKoP7fWLDk+DCFhj/fGPH0=;
+	s=korg; t=1788964488;
+	bh=JYBp0Y0rG5V8FFr7pk3QGN5IZD9O2IiRArW0u65P3Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jRtXzMWo75B/z7BIwJFuDI95+P9cFYUMmss/MPBrv9WYbVQ27y/poUUDf1/BDIzT2
-	 9T6iZF5kctMYWc7h3W+36w92MqEDmrEo7d2m8/Ydmf8BvuWqPOAEDWp0383ugnYEj5
-	 ITIJfxy7DIzOZhI+u05CoUwsmYwI6PBJzGaSCQY8=
+	b=0r9Q/Xqv0SeAda8ZYYkDyPQnm6Oy49wbwDKfgLFISPgdDlSqooFpooUIg6Yc7YEUP
+	 qCkonVknX8g8Y/OHLS5az3jDom/b17kiqw/0xSIaKNRE9+oTr8dNU3TZ7sT06Meazv
+	 1QFuQwKfU26GjCA9q5zyUIdeh0XrX33g/I+D5NDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaogang Chen <xiaogang.chen@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Xiang Liu <xiang.liu@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 401/583] drm/amdkfd: Fix the case that vm range is hole at svm_migrate_copy_to_vram
-Date: Wed,  9 Sep 2026 15:41:26 +0200
-Message-ID: <20260909134251.900821074@linuxfoundation.org>
+Subject: [PATCH 6.18 392/583] drm/amdgpu: clamp the isolation index for rings outside a partition
+Date: Wed,  9 Sep 2026 15:41:17 +0200
+Message-ID: <20260909134251.569409507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,78 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaogang Chen <xiaogang.chen@amd.com>
+From: Xiang Liu <xiang.liu@amd.com>
 
-commit 520e345ffe05aabef1db82beda4288afb1757ff2 upstream.
+commit b30900566642ceb2c9e12b56c2afec28d0fd91a0 upstream.
 
-When migration vm range is hole at cpu side(MIGRATE_PFN_MIGRATE set +
-MIGRATE_PFN_VALID unset) driver still allocates device pages. There is no
-dma map of src pages and migration. j is 0 and svm_migrate_copy_memory_gart()
-will return an uninitialized r. That can trigger out_free_vram_pages to drop
-all VRAM just set up.
+adev->isolation[] has one slot per partition, but a ring that is not
+assigned to one keeps AMDGPU_XCP_NO_PARTITION, which is ~0, so indexing
+the array with it is out of bounds. SDMA submissions hit this on both
+the isolation enforcement and the VM flush path and trip UBSAN.
 
-Initialize r and only call the last svm_migrate_copy_memory_gart if j > 0.
-
-Current code postponed the last page to the final copy. This patch flushes on
-the last page when reach to the end of current drm_buddy_block; avoids another
-svm_migrate_copy_memory_gart.
+Fall back to the first slot the way the cleaner shader path already
+does, and stop taking the address before the ring type check that makes
+it relevant.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiaogang Chen <xiaogang.chen@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Xiang Liu <xiang.liu@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_migrate.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    5 ++++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c     |    4 +++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-@@ -132,7 +132,7 @@ svm_migrate_copy_memory_gart(struct amdg
- 	u64 gart_s, gart_d;
- 	struct dma_fence *next;
- 	u64 size;
--	int r;
-+	int r = 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -7556,8 +7556,8 @@ struct dma_fence *amdgpu_device_enforce_
+ 						  struct amdgpu_ring *ring,
+ 						  struct amdgpu_job *job)
+ {
+-	struct amdgpu_isolation *isolation = &adev->isolation[ring->xcp_id];
+ 	struct drm_sched_fence *f = job->base.s_fence;
++	struct amdgpu_isolation *isolation;
+ 	struct dma_fence *dep;
+ 	void *owner;
+ 	int r;
+@@ -7570,6 +7570,9 @@ struct dma_fence *amdgpu_device_enforce_
+ 	    ring->funcs->type != AMDGPU_RING_TYPE_COMPUTE)
+ 		return NULL;
  
- 	mutex_lock(&adev->mman.gtt_window_lock);
- 
-@@ -278,7 +278,7 @@ svm_migrate_copy_to_vram(struct kfd_node
- 	dma_addr_t *src;
- 	u64 *dst;
- 	u64 i, j;
--	int r;
-+	int r = 0;
- 
- 	pr_debug("svms 0x%p [0x%lx 0x%lx 0x%llx]\n", prange->svms, prange->start,
- 		 prange->last, ttm_res_offset);
-@@ -304,6 +304,7 @@ svm_migrate_copy_to_vram(struct kfd_node
- 					      DMA_BIDIRECTIONAL);
- 			r = dma_mapping_error(dev, src[i]);
- 			if (r) {
-+				src[i] = 0;
- 				dev_err(dev, "%s: fail %d dma_map_page\n",
- 					__func__, r);
- 				goto out_free_vram_pages;
-@@ -328,7 +329,8 @@ svm_migrate_copy_to_vram(struct kfd_node
- 		pr_debug_ratelimited("dma mapping src to 0x%llx, pfn 0x%lx\n",
- 				     src[i] >> PAGE_SHIFT, page_to_pfn(spage));
- 
--		if (j >= (cursor.size >> PAGE_SHIFT) - 1 && i < npages - 1) {
-+		/* accumulated j + 1 pages reach end of current drm_buddy_block */
-+		if (j + 1 >= (cursor.size >> PAGE_SHIFT)) {
- 			r = svm_migrate_copy_memory_gart(adev, src + i - j,
- 							 dst + i - j, j + 1,
- 							 FROM_RAM_TO_VRAM,
-@@ -342,7 +344,8 @@ svm_migrate_copy_to_vram(struct kfd_node
- 		}
- 	}
- 
--	r = svm_migrate_copy_memory_gart(adev, src + i - j, dst + i - j, j,
-+	if (j > 0)
-+		r = svm_migrate_copy_memory_gart(adev, src + i - j, dst + i - j, j,
- 					 FROM_RAM_TO_VRAM, mfence);
- 
- out_free_vram_pages:
++	isolation = &adev->isolation[ring->xcp_id == AMDGPU_XCP_NO_PARTITION ?
++				     0 : ring->xcp_id];
++
+ 	/*
+ 	 * All submissions where enforce isolation is false are handled as if
+ 	 * they come from a single client. Use ~0l as the owner to distinct it
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -768,7 +768,9 @@ int amdgpu_vm_flush(struct amdgpu_ring *
+ 		    bool need_pipe_sync)
+ {
+ 	struct amdgpu_device *adev = ring->adev;
+-	struct amdgpu_isolation *isolation = &adev->isolation[ring->xcp_id];
++	struct amdgpu_isolation *isolation =
++		&adev->isolation[ring->xcp_id == AMDGPU_XCP_NO_PARTITION ?
++				 0 : ring->xcp_id];
+ 	unsigned vmhub = ring->vm_hub;
+ 	struct amdgpu_vmid_mgr *id_mgr = &adev->vm_manager.id_mgr[vmhub];
+ 	struct amdgpu_vmid *id = &id_mgr->ids[job->vmid];
 
 
