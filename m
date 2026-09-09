@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33A458598B;
-	Wed,  9 Sep 2026 14:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821C958F078;
+	Wed,  9 Sep 2026 14:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963545; cv=none; b=Ke2xewW9ktYQ6xlKYpdYn6uwDqW9VqHN1tZvtMIvsUgF8hEzoRj4VkMXg22rI+ur+wFZoixXlIp2xYYkpwOUYaCZ7Sv2s5bFV7Ig8m7LByQs43sVmXhVTcsAQ4vhYEQ5mE4uiOgKbD7sRxunL4OThUbITlcg3RKyh0bDIQpGgfc=
+	t=1788963547; cv=none; b=tKuG0Eo3O1L/79hCWa4ltW1pZgGGS6AXl7hZugkIMtTfTLSyjF6UybwzQqUEyOIExUIWPwV/qWREIPNiZHEaTh/nSlOzPlXzdZm772j0oRhrxJn1F1rP2wjQttmN+xSpW7OxjsJTzptvJH9HwviJHgacYeXYx8vp6aD0tSh8vfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963545; c=relaxed/simple;
-	bh=FcCA6LgSJx+3LywokHN6UI0ZW+rAqFHD4gy6wi3h2a0=;
+	s=arc-20240116; t=1788963547; c=relaxed/simple;
+	bh=QPoYDBpo9MgUioYDZ7EGSYiehh1nm2wTf3N1kbB66MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+waKh7srDP0vyLp33pZFEnsAI5oFGzB45Qa/sJc1rvPgrpAV8imyUFGxJ3lKBB9y16spPCT+MMLWnw4gC5pH6hbesuKp01YmzOnVjEmIcytagYt34XSx8PXHHytXnGax1Ulr1r0y2BieppfLs/77/D6hductN407pfdBf+mtVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeK0naX6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a5iK7FTamG1DBGAR+4xjz4DoUWURbae/9too7okIf6Dp7nvS07pHiQgBwG3J5zRHFgMQOyLh4c+7hz1mTS9WRSrJ/ltWjsbzZwTCm7IfG0D4qgGdxgUA1RbRn9phjIV3MD5l1QFCW3m7Yoina2W06pRGcAlEnZlCmKWXfHbl6iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUCDAsAN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeK0naX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E861F00A3D;
-	Wed,  9 Sep 2026 14:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUCDAsAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F7D1F00A3D;
+	Wed,  9 Sep 2026 14:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963543;
-	bh=bzIaWPXCD61Q1T800YLAIWpXHE/IL9iNoK5vFMevKBg=;
+	s=korg; t=1788963546;
+	bh=tKWda8NSaDlhl8KoPmISXClP4tsUG2hEeZiwZgeARlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LeK0naX64a4uupm5jze/TPMq203kQ5vNODIRVQ7VvcRo1VaBFnWs17+VEJq5dqCcu
-	 kmrtkYvurDwBZljgBFDLFc4BFUmlTHTV6uMHaUmOPWQHCWwytkiVHONLhleELSrXzW
-	 NJv49Q8eL0sIxEpfFoOBAWJEVAsGI5oZXSklF0GQ=
+	b=XUCDAsAN0N4ArVww1wHk/TqFBfheKsCHDVWIzmb5NzCkZDNR42W4M1NZrA4kEywEm
+	 W7wqiPMjwvWS5citQMkGLR6uQM5YHPzen97xh9uMF0KDUS530sdEVXpqUUQIsf/P/2
+	 yg1SeqhAONCCfo3VRJRaEujYY/4GNvdeaJ8P6QWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	caina <caina@uniontech.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Yipeng Zou <zouyipeng@huawei.com>
-Subject: [PATCH 6.18 114/583] Revert "irqchip/mbigen: Fix mbigen node address layout"
-Date: Wed,  9 Sep 2026 15:36:39 +0200
-Message-ID: <20260909134242.080603488@linuxfoundation.org>
+	Hajo Noerenberg <hajo-linux-ide@noerenberg.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Pali Rohar <pali@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.18 079/583] ata: ahci: work around lost interrupts on Marvell 88SE61xx
+Date: Wed,  9 Sep 2026 15:36:04 +0200
+Message-ID: <20260909134240.849123316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,114 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: caina <caina@uniontech.com>
+From: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
 
-commit e67091609cf85962f64391c1b0f93d4cbfcd4e22 upstream.
+commit dc3565a4ae538e584e5e63b3b3cd1eaf502593c1 upstream.
 
-This reverts commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20.
+ahci_single_level_irq_intr() services the ports first and clears the
+global HOST_IRQ_STAT afterwards, as recommended by AHCI 1.1 section
+10.6.2.  The Marvell 88SE6111/6121/6145 family stops reporting interrupts
+for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits:
+PxIS keeps its content, HOST_IRQ_STAT reads back as 0, the port is never
+looked at again, and the command in flight only ends in a timeout.
 
-Commit 6be6cba9c437 ("irqchip/mbigen: Fix mbigen node address layout")
-appears to cause a regression on Hi1616.
+Measured on a Seagate Blackarmor NAS440 (Marvell 88F6281 Kirkwood,
+88SE6121 rev B2 behind PCIe) by polling the AHCI registers from userspace
+while an IDENTIFY was outstanding:
 
-On-board hns NIC has two ports, enahisic2i0 and enahisic2i1, both
-behind mbigen-v2.  Port 0 works; port 1 cannot pass any traffic.
+  t=303.046  irqs 127  PxIS 0x00000000  PxCI 0x00000001
+             IDENTIFY issued
+  t=303.057  irqs 128  PxIS 0x00000020  PxCI 0x00000000
+             CI cleared, DPS set, one interrupt taken
+             ... PxIS stays 0x00000020, HOST_IRQ_STAT stays 0 ...
+  t~308.05   qc timeout after 5000 msecs
 
-Their interrupt pins fall on different mbigen nodes:
+The command had completed - PxCI was clear and PxIS had DPS set - so
+ahci_qc_complete() would have completed it.  It never got the chance
+because the handler read HOST_IRQ_STAT as 0 and returned IRQ_NONE.
 
-  enahisic2i0: pins 1152-1198 -> all in node 9
-  enahisic2i1: pins 1200-1246 -> node 9 (1200-1215) + node 10 (1216-1246)
+Marvell's own driver for these chips clears the two registers in the
+opposite order and says so ("clear global before channel"), and
+ahci_xgene handles its broken edge latch the same way.  Since the
+reordering costs at most one spurious interrupt per valid one on
+conforming controllers, do it in a private interrupt handler selected for
+board_ahci_mv instead of changing libahci for everyone.
 
-  (nid = (hwirq - 64) / 128 + 1; pin 1215 = node 9, pin 1216 = node 10)
+With this applied, SATA-2 and SATA-3 disks work at 3.0 Gbps on the
+88SE6121 without the drive-side 1.5 Gbps jumper that was needed before.
+Time from link up to a successful IDENTIFY:
 
-/proc/interrupts shows the break happens exactly at the node boundary:
+  WDC WD5000AADS-00S9B0  port 0    7 ms  (never identified before)
+  WDC WD3202ABYS-01B7A0  port 1   28 ms
+  WDC WD30EFRX-68EUZN0   port 1  200 ms  (3 TB, HPA detection ok)
 
-  enahisic2i1-rx0  pin 1200  count 102   <- node 9
-  enahisic2i1-rx5  pin 1215  count   1   <- node 9, last pin
-  enahisic2i1-tx5  pin 1216  count   0   <- node 10, first pin
-  enahisic2i1-rx6  pin 1218  count   0   <- node 10
-  ...all node 10 pins stay at zero.
+Only the 88SE6121 was tested; board_ahci_mv also covers the 88SE6145,
+which Marvell's driver treats identically.
 
-Port 0 (entirely node 9) is unaffected.  Reverting the commit restores
-normal operation.
-
-The commit assumes CLEAR occupies a full 4 KB page at [0xa000, 0xb000)
-and collides with node 10, so node 10+ gets shifted by 0x1000.
-
-But get_mbigen_clear_reg() uses flat, chip-wide addressing -- it never
-multiplies by the node ID:
-
-    *addr = (hwirq / 32) * 4 + REG_MBIGEN_CLEAR_OFFSET;  /* 0xa000 */
-
-Over the valid hwirq range [64, 1407], CLEAR only spans 0xa008-0xa0af
-(168 bytes).  Node 10's registers are:
-
-    TYPE: 0xa000-0xa00f  (16 B)   overlaps CLEAR by 8 B (0xa008-0xa00f)
-    VEC:  0xa200-0xa3ff  (512 B)  no overlap with CLEAR
-
-Shifting the whole page moves VEC from 0xa200 to 0xb200.  The hardware
-reads the event ID from the fixed silicon address 0xa200 on interrupt
-firing, but software wrote it to 0xb200 -- so the hardware gets an
-uninitialised value and the interrupt is lost.
-
-The only real overlap is 8 bytes of TYPE.  It can only trigger when a
-single mbigen instance has devices on both node 1 (CLEAR 0xa008) and
-node 10 (TYPE 0xa008).  On Hi1616 those nodes are on separate mbigen
-instances, so it never triggers.
-
-Fixes: 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ("irqchip/mbigen: Fix mbigen node address layout")
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: caina <caina@uniontech.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Yipeng Zou <zouyipeng@huawei.com>
+Fixes: cd70c26617f4 ("[libata] AHCI: Add support for Marvell AHCI-like chips (initially 6145)")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260821091720.16665-1-caina@uniontech.com
+Link: https://lore.kernel.org/linux-ide/db6b48b7-d69a-564b-24f0-75fbd6a9e543@noerenberg.de/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
+Signed-off-by: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Acked-by: Pali Rohar <pali@kernel.org>
+Link: https://lore.kernel.org/r/20260831124303.920391-1-hajo-linux-ide@noerenberg.de
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-mbigen.c |   20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ drivers/ata/ahci.c |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
---- a/drivers/irqchip/irq-mbigen.c
-+++ b/drivers/irqchip/irq-mbigen.c
-@@ -64,20 +64,6 @@ struct mbigen_device {
- 	void __iomem		*base;
- };
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -1686,6 +1686,51 @@ static irqreturn_t ahci_thunderx_irq_han
+ }
+ #endif
  
--static inline unsigned int get_mbigen_node_offset(unsigned int nid)
--{
--	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
--
--	/*
--	 * To avoid touched clear register in unexpected way, we need to directly
--	 * skip clear register when access to more than 10 mbigen nodes.
--	 */
--	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
--		offset += MBIGEN_NODE_OFFSET;
--
--	return offset;
--}
--
- static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
++/*
++ * The Marvell 88SE6111/6121/6145 ("Thor") family stops reporting interrupts
++ * for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits: PxIS
++ * keeps its content, HOST_IRQ_STAT reads back as 0, the port is never looked
++ * at again and the command in flight only ends in a timeout.  On a 88SE6121
++ * this makes every SATA-2 or SATA-3 disk fail to IDENTIFY, while SATA-1 disks
++ * happen to win the race often enough to work.
++ *
++ * Clearing the host status before servicing the ports avoids it.  Marvell's
++ * own driver for these chips does the same and says so ("clear global before
++ * channel"), and ahci_xgene handles its broken edge latch the same way.  The
++ * price is at most one spurious interrupt per valid one, which is why this is
++ * not the generic behaviour - see AHCI 1.1 section 10.6.2.
++ *
++ * Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
++ */
++static irqreturn_t ahci_mv_irq_handler(int irq, void *dev_instance)
++{
++	struct ata_host *host = dev_instance;
++	struct ahci_host_priv *hpriv = host->private_data;
++	void __iomem *mmio = hpriv->mmio;
++	unsigned int rc;
++	u32 irq_stat, irq_masked;
++
++	irq_stat = readl(mmio + HOST_IRQ_STAT);
++	if (!irq_stat)
++		return IRQ_NONE;
++
++	irq_masked = irq_stat & hpriv->port_map;
++
++	spin_lock(&host->lock);
++
++	/*
++	 * Use the unmasked value to clear the interrupt, as a spurious pending
++	 * event on a dummy port might cause a screaming IRQ.
++	 */
++	writel(irq_stat, mmio + HOST_IRQ_STAT);
++
++	rc = ahci_handle_port_intr(host, irq_masked);
++
++	spin_unlock(&host->lock);
++
++	return IRQ_RETVAL(rc);
++}
++
+ static void ahci_remap_check(struct pci_dev *pdev, int bar,
+ 		struct ahci_host_priv *hpriv)
  {
- 	unsigned int nid, pin;
-@@ -86,7 +72,8 @@ static inline unsigned int get_mbigen_ve
- 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
- 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
+@@ -1971,6 +2016,10 @@ static int ahci_init_one(struct pci_dev
+ 		return -ENOMEM;
+ 	hpriv->flags |= (unsigned long)pi.private_data;
  
--	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
-+	return pin * 4 + nid * MBIGEN_NODE_OFFSET
-+			+ REG_MBIGEN_VEC_OFFSET;
- }
- 
- static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
-@@ -101,7 +88,8 @@ static inline void get_mbigen_type_reg(i
- 	*mask = 1 << (irq_ofst % 32);
- 	ofst = irq_ofst / 32 * 4;
- 
--	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
-+	*addr = ofst + nid * MBIGEN_NODE_OFFSET
-+		+ REG_MBIGEN_TYPE_OFFSET;
- }
- 
- static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
++	/* the Marvell "Thor" family needs HOST_IRQ_STAT cleared first */
++	if (board_id == board_ahci_mv)
++		hpriv->irq_handler = ahci_mv_irq_handler;
++
+ 	/* MCP65 revision A1 and A2 can't do MSI */
+ 	if (board_id == board_ahci_mcp65 &&
+ 	    (pdev->revision == 0xa1 || pdev->revision == 0xa2))
 
 
