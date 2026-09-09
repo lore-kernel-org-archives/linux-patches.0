@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8E8576EB1;
-	Wed,  9 Sep 2026 14:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E59A55C329;
+	Wed,  9 Sep 2026 14:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962827; cv=none; b=bwdDW+u2r9CMuRWrkTIDdgHmWsSrnt/vtZx7uZAwuAoxbITfJ/FD0tW1Fna2P9mgHTrW3wdiflTDIE4+XEUsGyjFRWp/NgHpJfRRtT9rV5Z6jYBlQX+uQiFmZKQfLHC8LoffvgI5DmOH00bRo7pWu6p+5hNrAnSVYqF753cjQfk=
+	t=1788962830; cv=none; b=H+bb1K1+dZcQGwTEkA0JB0XrIowytGnf/k5Vare7YyxpaDf3wNMGD2dx2DgcySYAJdJ3spu7LROGoCSdEMg7Z9XEmqxQhyVBLm7hhSiHksh6HJEYE6SE1mcXZqGWed2XSaVKgUEnVIO1Gfunqbvom5MiQVwPI9jKfu4zWVC3rE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962827; c=relaxed/simple;
-	bh=FsvwhzDJ62VF/Bt8a0zPSWAplaozkU1TT4nF9X14Hoo=;
+	s=arc-20240116; t=1788962830; c=relaxed/simple;
+	bh=4KjCCWcn5niKYHD73KPy/2y37KoOoSgZGlCi0nzpmec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=riuLmNPAdrw2Sla0cz0g2xRZXW56KIGYaH9TwBbnXLwvQkiigBZXsKkc/91Jc9bYuyYa8O6KeuehxQeUxuXq96h1ncrrilsZnGSPdSK426rxLz8fFTRBLLZGQVVCnz7Hd0IHq5hV4192lZdjAl9FM/d8GvQtKwIZOemT4eukvXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEAGhN5c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aCWkxPtmjIvJqw6MhEGqix9wSJ1eI+gFbwcv/hpKQNjIso1DAQPk5evMX9UJCHFD0sTewG57MbFeiQ9fkf5IntJn7twO7X+2CUlSy/CITTBkCnHaVdnV1mYnuZ30/zYJyaqPxHlyxv7pbjfBcj9rJVSt+dz3pYBVJXkqzBXJny4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RziGvkiA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEAGhN5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52651F00A3A;
-	Wed,  9 Sep 2026 14:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RziGvkiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3171F00A3E;
+	Wed,  9 Sep 2026 14:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962826;
-	bh=PArhfnCnGw7CyaWFQB7N0rK311X2WniHsCvvAtPEBN0=;
+	s=korg; t=1788962829;
+	bh=hIWORxArqMtjOPi+sn5Ovc4IyKyDoNB0V4SQ/a09XFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vEAGhN5crfRKsOo5vQifOJxk/j/gP9anDYlbadZRU3GO+YgzAEmN0z3bfyrmYmMYp
-	 5OvH1CfEUmIOb2VNW88nhfQsMAmDtiRCC/AgVBgBF2mhjU+QqV10DRyleCTphcwzAa
-	 F9aHZ1VBWQCYObYHyi2ScDH/YNrU1Kb6XV4/XD2I=
+	b=RziGvkiAKLWlhLnpOwYvekb+LCjoSW8bNA7dTuRIMU5nGydyylQzPMQoTRQck6YlM
+	 S47ML/DqHmCMjmqzUv8D/TXiIOhmBf0SMuNiwGSp1zxXPmC4CDJZgoRIydpIJxh+5V
+	 97XnfbpTzqhrgnfKJKABRogU0A56klNtN/P/dkSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 388/556] media: rkvdec: hevc: guard INTER_REF_PIC_SET_PRED index underflow
-Date: Wed,  9 Sep 2026 15:41:08 +0200
-Message-ID: <20260909134244.315576941@linuxfoundation.org>
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 7.2 424/556] scsi: qla2xxx: Zero dport diagnostics buffer to avoid info leak
+Date: Wed,  9 Sep 2026 15:41:44 +0200
+Message-ID: <20260909134245.514432432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,51 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 052c5ed5a1d96a6b24fd50ccda16fc6841ee7ca3 upstream.
+commit a152edab3854f01dd2daf3eaf8f32cbabdb3834e upstream.
 
-st_ref_pic_set_prediction() computes the reference RPS index as
-st_rps_idx - (delta_idx_minus1 + 1) per HEVC spec equation 7-59.
-Both operands are u8, so when delta_idx_minus1 + 1 exceeds the
-current index the subtraction wraps and the subsequent array access
-at calculated_rps_st_sets[ref_rps_idx] reads far out of bounds.
+qla2x00_do_dport_diagnostics() allocates the qla_dport_diag response
+buffer with kmalloc_obj() (non-zeroing) and, on success, copies the full
+sizeof(*dd) back to user space via sg_copy_from_buffer(). The inbound
+sg_copy_to_buffer() only fills as many bytes as the user request payload
+provides, and qla26xx_dport_diagnostics() zeroes only dd->buf. The
+options and unused[] fields are therefore copied out uninitialized,
+leaking kernel heap contents to user space.
 
-A userspace V4L2 client that can open the RKVDEC m2m decoder can
-submit an EXT_SPS_ST_RPS control with INTER_REF_PIC_SET_PRED set
-and delta_idx_minus1 crafted to trigger the underflow.
+Allocate with kzalloc_obj(), matching qla2x00_do_dport_diagnostics_v2().
 
-Reject the entry early when the reference index would underflow.
-
-Fixes: c9a59dc2acc7 ("media: rkvdec: Add HEVC support for the VDPU381 variant")
+Fixes: ec89146215d1 ("qla2xxx: Add bsg interface to support D_Port Diagnostics.")
 Cc: stable@vger.kernel.org
-Suggested-by: Detlev Casanova <detlev.casanova@collabora.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-54-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c b/drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c
-index f89602075121..9c4a6093af32 100644
---- a/drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c
-+++ b/drivers/media/platform/rockchip/rkvdec/rkvdec-hevc-common.c
-@@ -209,6 +209,9 @@ static void st_ref_pic_set_prediction(struct rkvdec_hevc_run *run, int idx,
- 	int i, j;
- 	int dPoc;
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -2407,7 +2407,7 @@ qla2x00_do_dport_diagnostics(struct bsg_
+ 	    !IS_QLA28XX(vha->hw))
+ 		return -EPERM;
  
-+	if ((unsigned int)rps_data->delta_idx_minus1 + 1 > idx)
-+		return;
-+
- 	ref_rps_idx = st_rps_idx - (rps_data->delta_idx_minus1 + 1); /* 7-59 */
- 	delta_rps = (1 - 2 * rps_data->delta_rps_sign) *
- 		   (rps_data->abs_delta_rps_minus1 + 1); /* 7-60 */
--- 
-2.55.0
-
+-	dd = kmalloc_obj(*dd);
++	dd = kzalloc_obj(*dd);
+ 	if (!dd) {
+ 		ql_log(ql_log_warn, vha, 0x70db,
+ 		    "Failed to allocate memory for dport.\n");
 
 
