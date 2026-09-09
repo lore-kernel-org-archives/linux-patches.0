@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8A7581232;
-	Wed,  9 Sep 2026 14:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC4558123C;
+	Wed,  9 Sep 2026 14:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964710; cv=none; b=Ox3bGCzyYnpPRl6QhwyOEMacfWYMKeYszh7YAxJ7vtzkhezSdIsmCaWQ+g9p27v/EYPcGXPi+3wrhERzmoFFoUeqqDcw+gm/BzDcoLyaf82vq+v82dJgnBOIo44QEMLkm1ddNla3vSXb7fDdltsTnPOeZR+KXGj1spj9njzbbDk=
+	t=1788964716; cv=none; b=eRciMPsNDVieoOcQht2FVq2RzOnWgLr5zRx9WJC3esPFhzGBP/+wcfyEcjE0TuL4CY4JIY/mP4RQjyiImAcKZ1i265OWvix4Z//D78ZS1MOvFE1z/aeLHQGQgU7oiCZQrCn4w4P19asEK0XnJuFg4+QnKvYml2TpCsBIVE2vOcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964710; c=relaxed/simple;
-	bh=H2E2449ImO571kngc/i3kbPvo79C17UCrdLzpRQSHRQ=;
+	s=arc-20240116; t=1788964716; c=relaxed/simple;
+	bh=zR9EQ5kzqC7sxH8w2bp8xhWy8diKZ4BPlrAUlT1jyfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chtfc7Zi+nfjXiXfjdTTyfXuPB6QFnxxtiZ1oE5t/rPgcL3//Ir++jdd/AURsz4dvsTAN3mbLyWBr9BLVu/LerNN1USlLHL/oOFVPJkiWVCFrKxQ7gZjMUS/f76wU72lGxLxtelFub6ph9wZE2umeddomWwlsRuDNjUonqPaS+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlwI/kCQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PcCfhptN/yvnA0Xfbs7Apdp8he4DHXVYmCyMZsccMDyHv85UZ1HBKOPWVymbT5Vdzr4iePzmagbWUE4trH3TXEJLoQtL+uujBN92afUf8gzc9+2Nz/vSnr9qX+2gchwJc/QzolX2hmbeZ/tj7dzCS0RUqKwwa9NEwRzPtnXB+zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSSfS54g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlwI/kCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60201F00A3A;
-	Wed,  9 Sep 2026 14:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSSfS54g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE711F00A3D;
+	Wed,  9 Sep 2026 14:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964708;
-	bh=zZdY/lqimGjEmFi+PuRvGYIt8IclCUIFcWoc77+A0Ug=;
+	s=korg; t=1788964711;
+	bh=KeYEXMZ9YmeVorevGDJQ1Wn1mN8rvtdDeMATyVOTyEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NlwI/kCQU7IXawdIUmZCBQW5f/chE/O0yRARP5k5px8FmsZYZO5hKvWvqVIMWjW01
-	 szpllbh5YO2wYmAIP9ppNPMgWhKMFMI7dIQMI0IIR5q5LPIGjkfEfCxb8aeefKSlAz
-	 QtqOKBY85MynRrPl6IeMJp78fgrMBChsVy0lSZHw=
+	b=qSSfS54gaagVzK5U3pVoDB5clFUXhRy+IlI8UXa7llq6fTe5lMuWceqY7OabRBCmN
+	 xHSrICm13wkBmIbD/F9s1pnZSLmPP+QUmcPVExOp6/wviJEeG1IVaMykW3zpJSWEKk
+	 PzT3Sw+hXI2MAwnUdkMJcQdY+NY+OmueIRHOHq9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 478/583] ACPI: x86/rtc-cmos: Use platform device for driver binding
-Date: Wed,  9 Sep 2026 15:42:43 +0200
-Message-ID: <20260909134254.408815777@linuxfoundation.org>
+Subject: [PATCH 6.18 479/583] ACPI: TAD: Rearrange RT data validation checking
+Date: Wed,  9 Sep 2026 15:42:44 +0200
+Message-ID: <20260909134254.440255530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,107 +52,255 @@ Content-Transfer-Encoding: 8bit
 
 From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 2a78e42104444f948698f1225deaf515e9b7224d ]
+[ Upstream commit 3329a1416c3350449081ca5daaa94802a65b2992 ]
 
-Modify the rtc-cmos driver to bind to a platform device on systems with
-ACPI via acpi_match_table and advertise the CMOST RTC ACPI device IDs
-for driver auto-loading.  Note that adding the requisite device IDs to
-it and exposing them via MODULE_DEVICE_TABLE() is sufficient for this
-purpose.
+Move RT data validation checks from acpi_tad_set_real_time() to
+a separate function called acpi_tad_rt_is_invalid() and use it
+also in acpi_tad_get_real_time() to validate data coming from
+the platform firmware.
 
-Since the ACPI device IDs in question are the same as for the CMOS RTC
-ACPI scan handler, put them into a common header file and use the
-definition from there in both places.
-
-Additionally, to prevent a PNP device from being created for the CMOS
-RTC if a platform one is present already, make is_cmos_rtc_device()
-check cmos_rtc_platform_device_present introduced previously.
+Also make acpi_tad_set_real_time() return -EINVAL when the RT data
+passed to it is invalid (instead of -ERANGE which is somewhat
+confusing) and introduce ACPI_TAD_TZ_UNSPEC to represent the
+"unspecified timezone" value.
 
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://patch.msgid.link/13969123.uLZWGnKmhe@rafael.j.wysocki
+Link: https://patch.msgid.link/3409319.aeNJFYEL58@rafael.j.wysocki
 Stable-dep-of: a3df8bbe0a70 ("ACPI: TAD: Add locking around AML evaluations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_pnp.c     |    2 +-
- drivers/acpi/x86/cmos_rtc.c |    5 +----
- drivers/rtc/rtc-cmos.c      |   10 ++++++++++
- include/linux/acpi.h        |    6 ++++++
- 4 files changed, 18 insertions(+), 5 deletions(-)
+ drivers/acpi/acpi_tad.c |  142 ++++++++++++++++++++++++++++++++----------------
+ include/linux/acpi.h    |    4 +
+ 2 files changed, 101 insertions(+), 45 deletions(-)
 
---- a/drivers/acpi/acpi_pnp.c
-+++ b/drivers/acpi/acpi_pnp.c
-@@ -385,7 +385,7 @@ static int is_cmos_rtc_device(struct acp
- 		{ "PNP0B02" },
- 		{""},
- 	};
--	return !acpi_match_device_ids(adev, ids);
-+	return !cmos_rtc_platform_device_present && !acpi_match_device_ids(adev, ids);
+--- a/drivers/acpi/acpi_tad.c
++++ b/drivers/acpi/acpi_tad.c
+@@ -49,6 +49,9 @@ MODULE_AUTHOR("Rafael J. Wysocki");
+ /* Special value for disabled timer or expired timer wake policy. */
+ #define ACPI_TAD_WAKE_DISABLED	(~(u32)0)
+ 
++/* ACPI TAD RTC */
++#define ACPI_TAD_TZ_UNSPEC	2047
++
+ struct acpi_tad_driver_data {
+ 	u32 capabilities;
+ };
+@@ -67,6 +70,16 @@ struct acpi_tad_rt {
+ 	u8 padding[3]; /* must be 0 */
+ } __packed;
+ 
++static bool acpi_tad_rt_is_invalid(struct acpi_tad_rt *rt)
++{
++	return rt->year < 1900 || rt->year > 9999 ||
++	    rt->month < 1 || rt->month > 12 ||
++	    rt->hour > 23 || rt->minute > 59 || rt->second > 59 ||
++	    rt->tz < -1440 ||
++	    (rt->tz > 1440 && rt->tz != ACPI_TAD_TZ_UNSPEC) ||
++	    rt->daylight > 3;
++}
++
+ static int acpi_tad_set_real_time(struct device *dev, struct acpi_tad_rt *rt)
+ {
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+@@ -80,12 +93,8 @@ static int acpi_tad_set_real_time(struct
+ 	unsigned long long retval;
+ 	acpi_status status;
+ 
+-	if (rt->year < 1900 || rt->year > 9999 ||
+-	    rt->month < 1 || rt->month > 12 ||
+-	    rt->hour > 23 || rt->minute > 59 || rt->second > 59 ||
+-	    rt->tz < -1440 || (rt->tz > 1440 && rt->tz != 2047) ||
+-	    rt->daylight > 3)
+-		return -ERANGE;
++	if (acpi_tad_rt_is_invalid(rt))
++		return -EINVAL;
+ 
+ 	args[0].buffer.pointer = (u8 *)rt;
+ 	args[0].buffer.length = sizeof(*rt);
+@@ -102,7 +111,7 @@ static int acpi_tad_set_real_time(struct
+ 	return 0;
  }
  
- bool acpi_is_pnp_device(struct acpi_device *adev)
---- a/drivers/acpi/x86/cmos_rtc.c
-+++ b/drivers/acpi/x86/cmos_rtc.c
-@@ -18,10 +18,7 @@
- #include "../internal.h"
+-static int acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
++static int acpi_tad_evaluate_grt(struct device *dev, struct acpi_tad_rt *rt)
+ {
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+ 	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER };
+@@ -111,12 +120,7 @@ static int acpi_tad_get_real_time(struct
+ 	acpi_status status;
+ 	int ret = -EIO;
  
- static const struct acpi_device_id acpi_cmos_rtc_ids[] = {
--	{ "PNP0B00" },
--	{ "PNP0B01" },
--	{ "PNP0B02" },
--	{}
-+	ACPI_CMOS_RTC_IDS
- };
+-	pm_runtime_get_sync(dev);
+-
+ 	status = acpi_evaluate_object(handle, "_GRT", NULL, &output);
+-
+-	pm_runtime_put_sync(dev);
+-
+ 	if (ACPI_FAILURE(status))
+ 		goto out_free;
  
- bool cmos_rtc_platform_device_present;
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -27,6 +27,7 @@
+@@ -139,6 +143,80 @@ out_free:
+ 	return ret;
+ }
  
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include <linux/acpi.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/init.h>
-@@ -1482,6 +1483,14 @@ static __init void cmos_of_init(struct p
- #else
- static inline void cmos_of_init(struct platform_device *pdev) {}
- #endif
++static int __acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
++{
++	int ret;
 +
-+#ifdef CONFIG_ACPI
-+static const struct acpi_device_id acpi_cmos_rtc_ids[] = {
-+	ACPI_CMOS_RTC_IDS
-+};
-+MODULE_DEVICE_TABLE(acpi, acpi_cmos_rtc_ids);
-+#endif
++	ret = acpi_tad_evaluate_grt(dev, rt);
++	if (ret)
++		return ret;
 +
- /*----------------------------------------------------------------*/
++	if (acpi_tad_rt_is_invalid(rt))
++		return -ENODATA;
++
++	return 0;
++}
++
++static int acpi_tad_get_real_time(struct device *dev, struct acpi_tad_rt *rt)
++{
++	int ret;
++
++	pm_runtime_get_sync(dev);
++
++	ret = __acpi_tad_get_real_time(dev, rt);
++
++	pm_runtime_put_sync(dev);
++
++	return ret;
++}
++
++static int __acpi_tad_wake_set(struct device *dev, char *method, u32 timer_id,
++			       u32 value)
++{
++	acpi_handle handle = ACPI_HANDLE(dev);
++	union acpi_object args[] = {
++		{ .type = ACPI_TYPE_INTEGER, },
++		{ .type = ACPI_TYPE_INTEGER, },
++	};
++	struct acpi_object_list arg_list = {
++		.pointer = args,
++		.count = ARRAY_SIZE(args),
++	};
++	unsigned long long retval;
++	acpi_status status;
++
++	args[0].integer.value = timer_id;
++	args[1].integer.value = value;
++
++	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
++	if (ACPI_FAILURE(status) || retval)
++		return -EIO;
++
++	return 0;
++}
++
++static int __acpi_tad_wake_read(struct device *dev, char *method, u32 timer_id,
++				unsigned long long *retval)
++{
++	acpi_handle handle = ACPI_HANDLE(dev);
++	union acpi_object args[] = {
++		{ .type = ACPI_TYPE_INTEGER, },
++	};
++	struct acpi_object_list arg_list = {
++		.pointer = args,
++		.count = ARRAY_SIZE(args),
++	};
++	acpi_status status;
++
++	args[0].integer.value = timer_id;
++
++	status = acpi_evaluate_integer(handle, method, &arg_list, retval);
++	if (ACPI_FAILURE(status))
++		return -EIO;
++
++	return 0;
++}
++
+ static char *acpi_tad_rt_next_field(char *s, int *val)
+ {
+ 	char *p;
+@@ -251,31 +329,15 @@ static const struct attribute_group acpi
+ static int acpi_tad_wake_set(struct device *dev, char *method, u32 timer_id,
+ 			     u32 value)
+ {
+-	acpi_handle handle = ACPI_HANDLE(dev);
+-	union acpi_object args[] = {
+-		{ .type = ACPI_TYPE_INTEGER, },
+-		{ .type = ACPI_TYPE_INTEGER, },
+-	};
+-	struct acpi_object_list arg_list = {
+-		.pointer = args,
+-		.count = ARRAY_SIZE(args),
+-	};
+-	unsigned long long retval;
+-	acpi_status status;
+-
+-	args[0].integer.value = timer_id;
+-	args[1].integer.value = value;
++	int ret;
  
- /* Platform setup should have set up an RTC device, when PNP is
-@@ -1536,6 +1545,7 @@ static struct platform_driver cmos_platf
- 		.name		= driver_name,
- 		.pm		= &cmos_pm_ops,
- 		.of_match_table = of_match_ptr(of_cmos_match),
-+		.acpi_match_table = ACPI_PTR(acpi_cmos_rtc_ids),
- 	}
- };
+ 	pm_runtime_get_sync(dev);
  
+-	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
++	ret = __acpi_tad_wake_set(dev, method, timer_id, value);
+ 
+ 	pm_runtime_put_sync(dev);
+ 
+-	if (ACPI_FAILURE(status) || retval)
+-		return -EIO;
+-
+-	return 0;
++	return ret;
+ }
+ 
+ static int acpi_tad_wake_write(struct device *dev, const char *buf, char *method,
+@@ -301,27 +363,17 @@ static int acpi_tad_wake_write(struct de
+ static ssize_t acpi_tad_wake_read(struct device *dev, char *buf, char *method,
+ 				  u32 timer_id, const char *specval)
+ {
+-	acpi_handle handle = ACPI_HANDLE(dev);
+-	union acpi_object args[] = {
+-		{ .type = ACPI_TYPE_INTEGER, },
+-	};
+-	struct acpi_object_list arg_list = {
+-		.pointer = args,
+-		.count = ARRAY_SIZE(args),
+-	};
+ 	unsigned long long retval;
+-	acpi_status status;
+-
+-	args[0].integer.value = timer_id;
++	int ret;
+ 
+ 	pm_runtime_get_sync(dev);
+ 
+-	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
++	ret = __acpi_tad_wake_read(dev, method, timer_id, &retval);
+ 
+ 	pm_runtime_put_sync(dev);
+ 
+-	if (ACPI_FAILURE(status))
+-		return -EIO;
++	if (ret)
++		return ret;
+ 
+ 	if ((u32)retval == ACPI_TAD_WAKE_DISABLED)
+ 		return sprintf(buf, "%s\n", specval);
 --- a/include/linux/acpi.h
 +++ b/include/linux/acpi.h
-@@ -779,6 +779,12 @@ const char *acpi_get_subsystem_id(acpi_h
- int acpi_mrrm_max_mem_region(void);
- #endif
+@@ -785,7 +785,11 @@ int acpi_mrrm_max_mem_region(void);
+ 	{ "PNP0B02", },		\
+ 	{ "", }
  
-+#define ACPI_CMOS_RTC_IDS	\
-+	{ "PNP0B00", },		\
-+	{ "PNP0B01", },		\
-+	{ "PNP0B02", },		\
-+	{ "", }
-+
++#ifdef CONFIG_X86
  extern bool cmos_rtc_platform_device_present;
++#else
++#define cmos_rtc_platform_device_present	false
++#endif
  
  #else	/* !CONFIG_ACPI */
+ 
 
 
