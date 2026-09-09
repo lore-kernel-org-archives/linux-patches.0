@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA65275AFD;
-	Wed,  9 Sep 2026 13:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2852D2394;
+	Wed,  9 Sep 2026 13:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961701; cv=none; b=H1f8o2Ki9CcA1GpTxZbaNqxvAWpKsbRfVhRRjBsqOyGwCdlDspQqtOrhrXMU5H6aAmKpfAKt10t7oD/CPVutdec07LIRNzZpkzy2Upfig++r+IcnrhEyHMVtsdUZTW/l3esytJVAzsZkX4RCHPlw/nIdqpP1y9iBHCtun3kJSlw=
+	t=1788961704; cv=none; b=Tm4c5wwA04Uft9kcpQ+oTt7dYtwWLockfgff+DcySFB0zBqu5x7q6LmX4J2Mcxo2juwORF/tpZVMikAAWf7LH3vjE7QHFqknh1jS6bberKaNXLvl6+sMKf5IPyFW52aeHJiJVTPEmsu+bwNstLAI5kGph58ewLqrsb/a0+pJe48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961701; c=relaxed/simple;
-	bh=bacqDqUiL9MabGAZ5LddywZBfJUaQccfBJlh51cQoLQ=;
+	s=arc-20240116; t=1788961704; c=relaxed/simple;
+	bh=LSSCjPuCqUkOZ+LwYkHeMCoxs7d5NbNuTrBKTB5jTuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhrjp1bnay6V647fOiLOWJI1MH5d0KyqU1rvsTuaFJZDgTE5E4FxME3uckbPx2TnIOYUiUyRfriy4e9kQq4luJomGTXCuUbdxohDkECovVx4up5NVpF/ESZbHAqWfWv/Bk5nv+wwmyNuD4Mqc++qWm2s41BfUMNTeEUOhun26sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMKm1UbK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IZLKSGPG3ENKCCRwDh2Ryv0rASS+lr81tILZkhmldi6e5inMH/X3KlLkOYv2iGFvrJ6dZL4RSE28leXi4pQIgqVvr4gpTydO1q0OCxD2oipHpE5pWI79KOc7POkR0RaMCkNsj6ocN8FOstcq2oUNX+Xbxi7dpuVax+tX6KSmSG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nk9vmsaK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMKm1UbK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750211F00A3A;
-	Wed,  9 Sep 2026 13:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nk9vmsaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7CC1F00A3A;
+	Wed,  9 Sep 2026 13:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961700;
-	bh=YJXyqa/3//9ypWbDr4qXVO7AwIjL8CN8vLWsJvl9tOE=;
+	s=korg; t=1788961702;
+	bh=UKB4m+rq1XD0utX6RSt2kYQVu2Voony0mxBQMF8BpX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BMKm1UbKcYevPqTi5uUbSX2nwSfh+0EJs/xL0CTKMozVpxCE7eXXNoi7h236jTps/
-	 t7RA6FxLR2kyy56OXDXCZYQW5kMKCzZVRTRoryGTTOlqtLbl8g2Uyg2hVqWly+hp1W
-	 GdqbT2K3bA88YSgjjZrotoG8eAt6/gn1M46CSt6w=
+	b=nk9vmsaKCt7kIlGUeMFAwPKwvsBdpx9OW6C4RIAGn4m1ZQrBt2JDx9Bxu1/nZKgKP
+	 iENKLU2ErUZ8dGj0Hkrw6ySDcsxl/jJIknmw7/p9s9PYWHvp5Z3FX7cqi+U3ncGBCb
+	 P5dl/v1u2uDK2M2vdIJ4AWKfNWG5URHTYlLPk9Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sam Edwards <CFSworks@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 008/556] zram: fix slot lock bit position on big-endian 64-bit
-Date: Wed,  9 Sep 2026 15:34:48 +0200
-Message-ID: <20260909134230.756962550@linuxfoundation.org>
+Subject: [PATCH 7.2 009/556] ceph: properly decrypt filenames in vmalloc() buffers
+Date: Wed,  9 Sep 2026 15:34:49 +0200
+Message-ID: <20260909134230.795102248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,93 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Sam Edwards <cfsworks@gmail.com>
 
-[ Upstream commit a8b5875741d416703e19ad8eeac6fce8a12bd6e4 ]
+[ Upstream commit e939fc6a7bd969a58a150b7f188c1047138403e3 ]
 
-The slot lock is a bit operation on the whole __lock word, which flags and
-ac_time alias as two u32s.  On little-endian the lock bit lands in the
-position ZRAM_ENTRY_LOCK reserves in flags, so the aliasing works out.  On
-64-bit big-endian it lands in ac_time instead: with
-ZRAM_TRACK_ENTRY_ACTIME enabled, storing the access time from
-mark_slot_accessed() or slot_free() wipes out the held lock bit, letting
-another CPU take the same slot lock; an access time value with that bit
-set makes the slot look locked forever.
+The fscrypt subsystem uses the scatterlist crypto API, inheriting its
+requirement that any buffers are in the linear mapping region. However,
+the messenger client uses kvmalloc() to create buffers for messages,
+which will occasionally place those buffers in the vmalloc() region when
+physical memory fragmentation doesn't permit a large enough kmalloc().
+The various callers of ceph_fname_to_usr() directly pass (slices of) raw
+messages from the MDS without considering that the messages may be in
+vmalloc() buffers, resulting in oopses especially on non-x86 platforms
+(see 'Closes:' for more details and a reproducer).
 
-Shift the lock bit into the flags half of the word on big-endian 64-bit.
+Make ceph_fname_to_usr() explicitly tolerant of vmalloc()-allocated
+fname->ctext, fname->name, and/or oname->name buffers, using `tname`
+(which, when non-null, must be a linear address; when null, is briefly
+allocated as necessary) as a bounce buffer to avoid passing any
+inappropriate addresses to fscrypt_fname_disk_to_usr().
 
-Link: https://lore.kernel.org/20260810202241.2436603-1-devnexen@gmail.com
-Fixes: 2e8ff2f51dde ("zram: use u32 for entry ac_time tracking")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Additionally change parse_reply_info_readdir() -- the only function to
+supply its own `tname` -- to follow the new "tname must never come from
+vmalloc()" rule by passing NULL when the message is not in the linear
+region. Though this causes a per-dentry kmalloc()+kfree(), this overhead
+exists only when processing the minority of messages that spill into
+vmalloc(). My (crude) testing puts this at only about 1 in 8,000 readdir
+messages. Still, if the overhead proves unreasonable in the future, it
+is easy enough to mitigate: a future change could allocate a bounce
+buffer in parse_reply_info_readdir() and use that as `tname` instead.
+
+Cc: stable@vger.kernel.org # 888d33b208bd: ceph: pass fscrypt `tname` buffers directly
+Cc: stable@vger.kernel.org
+Fixes: 457117f077c6 ("ceph: add helpers for converting names for userland presentation")
+Closes: https://lore.kernel.org/ceph-devel/20260415034020.11530-1-CFSworks@gmail.com/
+Signed-off-by: Sam Edwards <CFSworks@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ adapted raw tname buffer access to the existing struct fscrypt_str interface ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    6 +++---
- drivers/block/zram/zram_drv.h |   14 ++++++++++++++
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ fs/ceph/crypto.c     |   50 +++++++++++++++++++++++++++++++++++++++-----------
+ fs/ceph/mds_client.c |    8 ++++++--
+ 2 files changed, 45 insertions(+), 13 deletions(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -81,7 +81,7 @@ static __must_check bool slot_trylock(st
+--- a/fs/ceph/crypto.c
++++ b/fs/ceph/crypto.c
+@@ -298,6 +298,11 @@ out:
+  * Otherwise, base64 decode the string, and then ask fscrypt to format it
+  * for userland presentation.
+  *
++ * Though the fscrypt/crypto subsystems broadly expect all buffers to be in the
++ * linear-mapped region, this function slightly relaxes those requirements:
++ * fname->ctext, fname->name, and oname->name may be vmalloc(), but not
++ * tname->name.
++ *
+  * Returns 0 on success or negative error code on error.
+  */
+ int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
+@@ -305,11 +310,15 @@ int ceph_fname_to_usr(const struct ceph_
  {
- 	unsigned long *lock = &zram->table[index].__lock;
+ 	struct inode *dir = fname->dir;
+ 	struct fscrypt_str _tname = FSTR_INIT(NULL, 0);
++	struct fscrypt_str _oname;
+ 	struct fscrypt_str iname;
+ 	char *name = fname->name;
+ 	int name_len = fname->name_len;
+ 	int ret;
  
--	if (!test_and_set_bit_lock(ZRAM_ENTRY_LOCK, lock)) {
-+	if (!test_and_set_bit_lock(ZRAM_ENTRY_LOCK_BIT, lock)) {
- 		mutex_acquire(&zram->table_lock_map, 0, 1, _RET_IP_);
- 		lock_acquired(&zram->table_lock_map, _RET_IP_);
- 		return true;
-@@ -95,7 +95,7 @@ static void slot_lock(struct zram *zram,
- 	unsigned long *lock = &zram->table[index].__lock;
- 
- 	mutex_acquire(&zram->table_lock_map, 0, 0, _RET_IP_);
--	wait_on_bit_lock(lock, ZRAM_ENTRY_LOCK, TASK_UNINTERRUPTIBLE);
-+	wait_on_bit_lock(lock, ZRAM_ENTRY_LOCK_BIT, TASK_UNINTERRUPTIBLE);
- 	lock_acquired(&zram->table_lock_map, _RET_IP_);
- }
- 
-@@ -104,7 +104,7 @@ static void slot_unlock(struct zram *zra
- 	unsigned long *lock = &zram->table[index].__lock;
- 
- 	mutex_release(&zram->table_lock_map, _RET_IP_);
--	clear_and_wake_up_bit(ZRAM_ENTRY_LOCK, lock);
-+	clear_and_wake_up_bit(ZRAM_ENTRY_LOCK_BIT, lock);
- }
- 
- static inline bool init_done(struct zram *zram)
---- a/drivers/block/zram/zram_drv.h
-+++ b/drivers/block/zram/zram_drv.h
-@@ -15,6 +15,7 @@
- #ifndef _ZRAM_DRV_H_
- #define _ZRAM_DRV_H_
- 
-+#include <asm/byteorder.h>
- #include <linux/rwsem.h>
- #include <linux/zsmalloc.h>
- 
-@@ -58,6 +59,19 @@ enum zram_pageflags {
- };
- 
- /*
-+ * The slot lock is a bit-wait lock on the whole __lock word, while
-+ * flags and ac_time alias that word as two u32s.  The lock bit must
-+ * land in the slot that ZRAM_ENTRY_LOCK reserves in attr.flags; on
-+ * 64-bit big-endian the flags word maps to the upper half of __lock,
-+ * so the bit position has to be shifted up.
-+ */
-+#if defined(CONFIG_64BIT) && defined(__BIG_ENDIAN)
-+#define ZRAM_ENTRY_LOCK_BIT  (ZRAM_ENTRY_LOCK + 32)
-+#else
-+#define ZRAM_ENTRY_LOCK_BIT  ZRAM_ENTRY_LOCK
-+#endif
++	if (WARN_ON_ONCE(tname && is_vmalloc_addr(tname->name)))
++		return -EIO;
 +
-+/*
-  * Allocated for each disk page.  We use bit-lock (ZRAM_ENTRY_LOCK bit
-  * of flags) to save memory.  There can be plenty of entries and standard
-  * locking primitives (e.g. mutex) will significantly increase sizeof()
+ 	/* Sanity check that the resulting name will fit in the buffer */
+ 	if (fname->name_len > NAME_MAX || fname->ctext_len > NAME_MAX)
+ 		return -EIO;
+@@ -350,31 +359,50 @@ int ceph_fname_to_usr(const struct ceph_
+ 		goto out_inode;
+ 	}
+ 
++	if ((!tname || !tname->name) &&
++	    (fname->ctext_len == 0 ||
++	     unlikely(is_vmalloc_addr(fname->ctext)) ||
++	     unlikely(is_vmalloc_addr(oname->name)))) {
++		ret = fscrypt_fname_alloc_buffer(NAME_MAX, &_tname);
++		if (ret)
++			goto out_inode;
++		tname = &_tname;
++	}
++
+ 	if (fname->ctext_len == 0) {
+ 		int declen;
+ 
+-		if (!tname) {
+-			ret = fscrypt_fname_alloc_buffer(NAME_MAX, &_tname);
+-			if (ret)
+-				goto out_inode;
+-			tname = &_tname;
+-		}
+-
+-		declen = base64_decode(name, name_len,
+-				       tname->name, false, BASE64_IMAP);
++		declen = base64_decode(name, name_len, tname->name, false,
++				       BASE64_IMAP);
+ 		if (declen <= 0) {
+ 			ret = -EIO;
+ 			goto out;
+ 		}
+ 		iname.name = tname->name;
+ 		iname.len = declen;
++	} else if (unlikely(is_vmalloc_addr(fname->ctext))) {
++		memcpy(tname->name, fname->ctext, fname->ctext_len);
++
++		iname.name = tname->name;
++		iname.len = fname->ctext_len;
+ 	} else {
+ 		iname.name = fname->ctext;
+ 		iname.len = fname->ctext_len;
+ 	}
+ 
+-	ret = fscrypt_fname_disk_to_usr(dir, 0, 0, &iname, oname);
+-	if (!ret && (dir != fname->dir)) {
++	_oname.name = unlikely(is_vmalloc_addr(oname->name)) ?
++		      tname->name : oname->name;
++	_oname.len = oname->len;
++
++	ret = fscrypt_fname_disk_to_usr(dir, 0, 0, &iname, &_oname);
++	if (ret)
++		goto out;
++
++	if (unlikely(is_vmalloc_addr(oname->name)))
++		memcpy(oname->name, _oname.name, _oname.len);
++	oname->len = _oname.len;
++
++	if (dir != fname->dir) {
+ 		char tmp_buf[BASE64_CHARS(NAME_MAX)];
+ 
+ 		name_len = snprintf(tmp_buf, sizeof(tmp_buf), "_%.*s_%llu",
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -541,9 +541,13 @@ static int parse_reply_info_readdir(void
+ 			 * to do the base64_decode in-place. It's
+ 			 * safe because the decoded string should
+ 			 * always be shorter, which is 3/4 of origin
+-			 * string.
++			 * string. If this message was allocated with
++			 * vmalloc() (happens, but rarely), leave it
++			 * NULL and let ceph_fname_to_usr() allocate
++			 * suitable temporary working space instead.
+ 			 */
+-			tname.name = _name;
++			if (likely(!is_vmalloc_addr(_name)))
++				tname.name = _name;
+ 
+ 			/*
+ 			 * Set oname to _name too, and this will be
 
 
