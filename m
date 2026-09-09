@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA405576ED4;
-	Wed,  9 Sep 2026 14:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A380F56C624;
+	Wed,  9 Sep 2026 14:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963962; cv=none; b=gncDr5f6iHDDAie5pHiu+caLGg7arJThujAsuJc3y6QsnQfKOwxYVqyOGKiGkbpIllb2Fc2IJM72nRU3RxoFprBvwwYlskUY5dDtpfJR0t6wOOLfelCtWa5re+y/bkVKNgoSTXWegjW7CmWfxjk34/xqax2f/8aflWy4le93dx4=
+	t=1788963965; cv=none; b=ePCIzjXJChtuiZzq1ClblOh5Z8pxJ0esz8M2Gfx4TA85NRnPYvtscYBnV6FKg32AWylbu+mngzIXdWH0g7tJrEqD1uzvP8/Ky2x94ik3z4I/KzHAWA4RdcjehVrpQu44rTazZc4nkQuB/7qJjaItyrVDCtWqdQ8nNADim00A+0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963962; c=relaxed/simple;
-	bh=AQTPPqyQEL71+A56oWMfIpSLl0Wib0QMT4T3HG1cGDw=;
+	s=arc-20240116; t=1788963965; c=relaxed/simple;
+	bh=n3x7OofklfWWLFUWzjL6z7U8ziGQ0Cgu6toM3TBOwLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fcq24qhEG8hkgzxr48bdUhN7fcd/twT/nTKm3ZYjZq0ZMzhbXG6SESTmsQ6srh0PgEhh8S6PfaALaCDLOuY8lPoU9dApIfWQ+NOoknD8tw+pMdumkyBGBAufrOqY39DGZ/zgG3HEC7a51xF79dHaFQIwnMSQS/qeyDE8FgrERTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IAxo6SS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P7dKUk7CvCLdyiiZwbvcY4v3yJvQ2OwC12fShuzWygbq8K3juaSNnG/eFKUhxjaDJVzGUc1eobCOlTspQPzLt26S8xanO0CFjTuty18Y9hMgHqJoDj/ua5WKblfWM+1BRFk4BVbR7oawU1AXETBAVGBlpDn4SjccnKp1IFISzNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=av761gyO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IAxo6SS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D64A1F00A3A;
-	Wed,  9 Sep 2026 14:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="av761gyO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F9D1F00A3A;
+	Wed,  9 Sep 2026 14:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963961;
-	bh=lU/QrPv9kNxgG14vo60ck/n4LDyKaVE/qQznW+DruLg=;
+	s=korg; t=1788963964;
+	bh=zzxF0gnSZXA807RbXvgjaV9UT2npL7H64/ci4b0Lwug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2IAxo6SS/DsTCvz/ro7sPHbnVoVgx1lsC3DIzXmPQ1vtGCCtku92Ta4RhWyayNP03
-	 2GPteNNDEB4FufQBQ0VjzsQVq2ZjlMopN+MT//fqXPG6uBpAxQeuBmrssMIt/FBMfM
-	 8HZZGglJ6XKj446eVGzfk0bBWPNSY+9FRbxgaV7E=
+	b=av761gyOvQmfBmjgXA/Ix0y2o8Vdd//R1uC9pPxAWufC+Z/gZ6yJmk98nUTZ03oKi
+	 fyc+YLWyAlwdQ8eBZI2TnwQENiwMDjPCgwt8I78iRNT2uyiaqHwD4wFEINLJ/4/3K5
+	 TyJxZpeiGY0jYn1KY+BZP8dWFUJiBWIJ48aAAck0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kajetan Puchalski <kajetan.puchalski@arm.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
 	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oupton@kernel.org>
-Subject: [PATCH 6.18 258/583] KVM: arm64: vgic: Fix detection of MI on no pending LR
-Date: Wed,  9 Sep 2026 15:39:03 +0200
-Message-ID: <20260909134247.050466215@linuxfoundation.org>
+Subject: [PATCH 6.18 259/583] KVM: arm64: vgic: Reset in_kernel on private IRQ allocation failure
+Date: Wed,  9 Sep 2026 15:39:04 +0200
+Message-ID: <20260909134247.083157385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kajetan Puchalski <kajetan.puchalski@arm.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-commit a342faadc5acbd5d9fd894fd4499d4fd614dfcf6 upstream.
+commit 43347154e7ab642474c886bc54ad090166c0d9c9 upstream.
 
-As per the ARM GICv3 spec, the maintenance interrupt identified by
-ICH_MISR_EL2.NP is asserted when it is enabled and no List register is
-in pending state. This is further described in the document as "no List
-registers with the State field set to 0b01 (pending)". By checking only
-the pending bit of the LR (bit 62), KVM currently asserts the MI when
-there are no LRs in "pending" or "pending and active" states.
-Fix the detection logic to consider only the "pending" state.
+kvm_vgic_create() sets vgic.in_kernel before allocating the per-vCPU
+private IRQs, but the allocation-failure path resets only vgic_model and
+leaves in_kernel set. As irqchip_in_kernel() is !!in_kernel, the VM is
+left with an in-kernel irqchip but no model, and the -EEXIST guard at the
+top of kvm_vgic_create() rejects every retry, so userspace cannot recover
+from a transient -ENOMEM.
 
+Reset in_kernel alongside vgic_model on the failure path.
+
+Fixes: 9435c1e1431003 ("KVM: arm64: gic: Set vgic_model before initing private IRQs")
 Cc: stable@vger.kernel.org
-Fixes: 96c2f03311de ("KVM: arm64: nv: Plumb handling of GICv3 EL2 accesses")
-Signed-off-by: Kajetan Puchalski <kajetan.puchalski@arm.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260810102923.2426475-2-kajetan.puchalski@arm.com
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260802150845.3485757-1-fuad.tabba@linux.dev
 Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-v3-nested.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-init.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/kvm/vgic/vgic-v3-nested.c
-+++ b/arch/arm64/kvm/vgic/vgic-v3-nested.c
-@@ -149,7 +149,7 @@ static void vgic_compute_mi_state(struct
- 			eisr |= BIT(i);
- 		if (!(lr & ICH_LR_STATE))
- 			elrsr |= BIT(i);
--		pend |= (lr & ICH_LR_PENDING_BIT);
-+		pend |= (lr & ICH_LR_STATE) == ICH_LR_PENDING_BIT;
+--- a/arch/arm64/kvm/vgic/vgic-init.c
++++ b/arch/arm64/kvm/vgic/vgic-init.c
+@@ -173,6 +173,7 @@ int kvm_vgic_create(struct kvm *kvm, u32
+ 		}
+ 
+ 		kvm->arch.vgic.vgic_model = 0;
++		kvm->arch.vgic.in_kernel = false;
+ 		goto out_unlock;
  	}
  
- 	mi_state->eisr	= eisr;
 
 
