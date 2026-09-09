@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9A453D0B8;
-	Wed,  9 Sep 2026 14:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8D451475A;
+	Wed,  9 Sep 2026 14:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962571; cv=none; b=XHm9e85dRoDa4+NfPKFUP/dFicqFV9i7ma8wmF5fKi6u2UO5o/IavxtPzNmOINLrTvuSFFVwPpJcFrHghroapNigqj8Ya+eV9F2Jj7HcnG3wtpAvEmpdBcQ75cj1lSFJuEkFu1PV++EsHek+EwTYKUtPKh+ISQNk/H+4j55c0z8=
+	t=1788962574; cv=none; b=UGkVMVAKej/aOZWD03Q9adOOzk0JwirMPuL9gJHUciTYzAc1A8OP29nQl0Syyxg2PdwcYiADUcVA2m+Fzd5LFY8bIYwIk41eOohbj+NtF4Lw3DdkIFxR0FvG5YijwWcU0BktNDfe8srHeixdws7rGlVigMv1Nq40bp3VpeW6x98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962571; c=relaxed/simple;
-	bh=wjELHO/5RBqDynFEntWbgBcmeCHfZdMljqnvPeDZoSg=;
+	s=arc-20240116; t=1788962574; c=relaxed/simple;
+	bh=//NW7p4WnSV0g9X456OtYfT6kFF4e505L99XkhSGi1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLdpGOF0iDDT5aFQgxPYzoWe+PIDTfy63Sx7j4mc5vAHTM1fzK6rrxI1jEpJWtAQrYJs/2yjz/pkXMf4HeB+e4k0CQDSFRljOF06nhxH/vhRhA7hKt2IcN35Dc+S+hPiTQNOIA+ug4RhoYRXnMWV3HKlm5U92wkttpt2eCekmU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONpxWF5J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=glrwNRYsnZA9xrHILyLs4jgtiYYy4QL4iDx7iGtAYG+vYF3isZMVhqw2AsGmG6POzeNUHoXQyLAu6Jqi9nLp2uZp4GUEq4v5QuyDSH4sYJkbSbnETxUjoGEtQnB88mqwL//5mxo6lhpgJYnOXzLQe/bqTS1qsbRptPBsGLwjPWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GI9A3GYC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONpxWF5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66B81F00A3A;
-	Wed,  9 Sep 2026 14:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GI9A3GYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA681F00A3A;
+	Wed,  9 Sep 2026 14:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962570;
-	bh=EdGPWSEup/poIEV7abivW0ZBypvdi6PCiAyIhtyP7sk=;
+	s=korg; t=1788962573;
+	bh=lmraFP7xxQ736mYGycvXy5gVdM6DqHw5DqIaXsVAmnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ONpxWF5JvIdo+/t+WfTADAXXKhAKgvny9Y8XGIHM/XvjkK1IBlv9BDHho3cBA7gkf
-	 vcJ6HyhBV0kUtCv4ii13Ci5L/coBZKKs3AeJ+Bxtak3S0rsCyTLN6xXiCCAXVYNdEc
-	 9BPvQxlRReGullaG26GN9oh85wYlRHh1KSf8Vd4Y=
+	b=GI9A3GYC2h2FapmYvUH93N+getTSQosfln1fElvhNo9TYAFBYl55s/Z9oul6sLG4k
+	 j8wfoS5WEFsDYMpU3HL/ee0rVL5Q67SR9aSbLmsfz+88gugNeDF8l9l+lmV5PqnMm5
+	 rb1/4/Hzb8/eJ3HBD8XsdAWM12iS7Ba2c4nE3myE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <gaohan@iscas.ac.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 335/556] LoongArch: Add DIRECT_MAP_PHYSMEM_END definition
-Date: Wed,  9 Sep 2026 15:40:15 +0200
-Message-ID: <20260909134242.444426021@linuxfoundation.org>
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.2 300/556] KVM: x86: Serialize writes to disabled_quirks using kvm->lock
+Date: Wed,  9 Sep 2026 15:39:40 +0200
+Message-ID: <20260909134241.234921620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,59 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Gao <gaohan@iscas.ac.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 2677f97a67fdbc62a82ce1faa67791f54451d36f upstream.
+commit ba76b23ed36ab230fc2577aba24f65851114902f upstream.
 
-get_free_mem_region() and mhp_get_pluggable_range() bound their search
-to DIRECT_MAP_PHYSMEM_END. LoongArch does not define it, so the fallback
-in include/linux/mm.h applies: under CONFIG_SPARSEMEM_VMEMMAP it is
-(1ULL << MAX_PHYSMEM_BITS) - 1, a compile-time constant that does not
-adapt to the CPU's physical address space bits (cpu_pabits, probed from
-CPUCFG1).
+Protect writes to disabled_quirks with kvm->lock to ensure KVM doesn't
+clobber state in the unlikely scenario that userspace disables disparate
+quirks from multiple tasks.  More importantly, this will allow wrapping
+accesses with {READ,WRITE}_ONCE without "needing" to also guard the writer
+with a useless and confusing READ_ONCE (since the RMW wouldn't be atomic
+anyways).
 
-The vmemmap window only covers physical space below 2^(cpu_pabits+1)
-(i.e. VMEMMAP_SIZE), so on CPUs with fewer physical address bits than
-MAX_PHYSMEM_BITS the fallback allows get_free_mem_region() to return
-a ZONE_DEVICE region outside the vmemmap window; vmemmap_populate() then
-wraps the memmap range around and maps it into low memory, silently
-corrupting the page tables. The same search also picked the top-of-
-address-space region that crashed memmap_init_zone_device() with amdkfd
-on Loongson-3C6000 in 6.16 [1]; the commit 2969b42c8f99 ("LoongArch/mm:
-align vmemmap to maximal folio size") keeps that region in bounds on
-current Loongson-3C6000 configs, but CPUs with smaller cpu_pabits (e.g.
-the Loongson-2K series) are still affected.
+Ideally, KVM would disallow disabling quirks once quirks are "live", but
+that would be a potentially breaking userspace ABI change, and while all
+existing quirks are fully live only after vCPUs have been created, several
+MMU-related quirks, IGNORE_GUEST_PAT and SLOT_ZAP_ALL, are partially live
+at all times.  Because populating MMUs requires a vCPU, the guest-visible
+behavior of IGNORE_GUEST_PAT and SLOT_ZAP_ALL requires a vCPU, but for KVM
+itself, processing the quirk (or not) has functional impact, i.e. for all
+intents and purposes, KVM can't prevent those quirks from being disabled
+after they've been consumed.
 
-Define DIRECT_MAP_PHYSMEM_END as the vmemmap-covered physical range,
-(1ULL << (cpu_pabits + 1)) - 1, capped at (1ULL << MAX_PHYSMEM_BITS) - 1
-under CONFIG_SPARSEMEM, similar to the commit f3336b48cf9d ("riscv: mm:
-Define DIRECT_MAP_PHYSMEM_END").
-
-[1] https://lore.kernel.org/amd-gfx/20250814032153.227285-1-jeffbai@aosc.io/
-
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: stable@vger.kernel.org # 6.12.x
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Link: https://patch.msgid.link/20260709204948.1988414-6-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/pgtable.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/kvm/x86.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/loongarch/include/asm/pgtable.h
-+++ b/arch/loongarch/include/asm/pgtable.h
-@@ -125,6 +125,13 @@ struct vm_area_struct;
- 
- #endif
- 
-+/* Needed to limit get_free_mem_region() */
-+#ifndef CONFIG_SPARSEMEM
-+#define DIRECT_MAP_PHYSMEM_END ((1ULL << (cpu_pabits + 1)) - 1)
-+#else
-+#define DIRECT_MAP_PHYSMEM_END min((1ULL << (cpu_pabits + 1)) - 1, (1ULL << MAX_PHYSMEM_BITS) - 1)
-+#endif
-+
- #define ptep_get(ptep) READ_ONCE(*(ptep))
- #define pmdp_get(pmdp) READ_ONCE(*(pmdp))
- 
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -6736,7 +6736,9 @@ int kvm_vm_ioctl_enable_cap(struct kvm *
+ 			break;
+ 		fallthrough;
+ 	case KVM_CAP_DISABLE_QUIRKS:
++		mutex_lock(&kvm->lock);
+ 		kvm->arch.disabled_quirks |= cap->args[0] & kvm_caps.supported_quirks;
++		mutex_unlock(&kvm->lock);
+ 		r = 0;
+ 		break;
+ 	case KVM_CAP_SPLIT_IRQCHIP: {
 
 
