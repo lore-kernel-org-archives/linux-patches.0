@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943F957267E;
-	Wed,  9 Sep 2026 14:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A6A58125F;
+	Wed,  9 Sep 2026 14:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963881; cv=none; b=XcQ1AeLix+Z+vnNVb2V/bOj34HxqU84QxenCfs+HCNraQum+R8EaOeor20PoDoLVK2QhkjAH32Vha2OGco3c0/tguoT7tCzVx6N8VOcEDGlfOf+80QwFShbzljSby55WdJI5i/E7Uo/cNq4LJulUrd0nL9u8LRmmxuSllVmcYOs=
+	t=1788963884; cv=none; b=Q/h5TH8xafpkNEKFN5UmwAAk8TCXDYPs5twfCWS+nCk+4Mvusc3Yyeu46Crvjedfq1+IGCSvrOyXl4PQ6UgswqCaMNi2FQu+MPmwbhkxCL44BnoVkleq859YjBGJTw7J+0Hb0p/RfgQoKn8MsYoO8/dToxbknp6cjBaEz1HqVPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963881; c=relaxed/simple;
-	bh=KY2XNoVxy9eh7IVKnidkNfR3gEijm3sHmnE+1pbxA8U=;
+	s=arc-20240116; t=1788963884; c=relaxed/simple;
+	bh=/Rw3Hpbii3258l19vr0icrqUOZAlAgh/rrW4XXnwB2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adpcUab5HS9QuY5Ggs5KPs2sZCulZ2yOwC/TbnM4yqCXhmLlE242UkTo9ZuVG6LJqh7kY/9avR/d0RmatfklsgiFVyWAzRnfbcXkEeojBm9XNzYf5yWRgmnCCFyPWtkHM2Jy3lrqurF58TAb1UWLDdn9+iosEp8PrKTUFdnCSLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jrn7QYZL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c5e87SfUeAOMb+Uokd+9UN63GCBbyvCe+otWKW6EI9kFtSxsNmJBFzaGXj1E3HM9OcDSfZAwT6uvnAQ7Jxp8xOHo2kKu0D6tbawx4kI5b9Dm3+0ar9/pXlrJ6rC/hKLjU7X7iucwvT3MQ5iVjoVip7z02rVuuQN+06Ec1+ohQig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZM3SXfn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jrn7QYZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2351F00A3A;
-	Wed,  9 Sep 2026 14:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZM3SXfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65141F00A3A;
+	Wed,  9 Sep 2026 14:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963880;
-	bh=8Hbu8v/9o39tMtylBGDzfBfcM9YwM8lvI9CqdFl67YU=;
+	s=korg; t=1788963883;
+	bh=ay/9o6Tg2VFq5JBNRokqGqnzgdMr4lgNNGrxKfoFwT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jrn7QYZLx4e2LlVDWRwtNy1aEc2hfEqOpTALV5Fa60Q7XBdYpuHIQQcdg8dtC2GLM
-	 xeYmSlh3F1VAlLT+zLufyh3tw7ya+pPJDSP4CxdCmZqGLBSHmHAjufMhuo62w1FFTu
-	 /p9eRctO/WcXvDTXfouG2OuwlWQ+QtjUQEglguE8=
+	b=ZZM3SXfnLw+d0yiQN1Yw1gxq5Arj8J6y6dECEJ8VOYDprjNEzVhi00aNSiozqV8GJ
+	 73Ab5invXIHQuRzXx6KTTJwUpYq2l0GUq/XUAfQdrtohuVZfu/X1E/bVwRosSiFq4e
+	 M31GXd/+epWlZy86TAjwBrmzzSrPSHFhoeVhembI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidhu Sarwal <vidhu.linux@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 224/583] iio: light: opt4060: Fix incorrect register name in threshold read error message
-Date: Wed,  9 Sep 2026 15:38:29 +0200
-Message-ID: <20260909134245.920456422@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>
+Subject: [PATCH 6.18 233/583] KVM: nVMX: Service local TLB flushes on failed nested VM-Enter
+Date: Wed,  9 Sep 2026 15:38:38 +0200
+Message-ID: <20260909134246.226241266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,36 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidhu Sarwal <vidhu.linux@gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit ad367638212a9f2495ecfa59c886f0cfb7934e9c upstream.
+commit 05a0b701d1089fb57beeb8982f23c3bbafe0fa8b upstream.
 
-opt4060_get_thresholds() correctly reads OPT4060_THRESHOLD_HIGH, but
-logs "Failed to read THRESHOLD_LOW." if the read fails. This is a
-copy-and-paste mistake, as the preceding low-threshold read already uses
-the correct error message.
+KVM services local TLB flushes on "full" nested VM-Exits (through
+__nested_vmx_vmexit()), but not if a nested VM-Enter fails (e.g. due to
+failed VMCS checks in nested_vmx_enter_non_root_mode()).
 
-Update the error message to reference OPT4060_THRESHOLD_HIGH.
+However, it is possible that KVM had queued TLB flushes that need to be
+performed, even if the nested VM-Enter was not successful. For example,
+if VPID is disabled for L2 (via nested_vmx_transition_tlb_flush(), or if
+via the MSR load lists, as the SDM says:
 
-Fixes: 0c6db4506ad0 ("iio: light: Add support for TI OPT4060 color sensor")
-Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+  If any MSR is being loaded in such a way that would architecturally
+  require a TLB flush, the TLBs are updated so that, after VM entry, the
+  logical processor will not use any translations that were cached before
+  the transition.
+
+The SDM is unclear about when the TLB flush should occur, and whether or
+not a failed VM entry would flush the TLB, so it is safer to always
+do the TLB flush in this case.
+
+More concretely, KVM also updates the last VPID L1 used for L2 in
+nested_vmx_transition_tlb_flush() (i.e. last_vpid), even if the VM entry
+ultimately fails. With the current code, KVM could miss a TLB flush if
+L1 changes L2's VPID, then does a failed VM entry followed by a
+successful one, as the failed VM entry would update last_vpid but not
+actually flush the TLB. Servicing local TLB flushes on failed VM entries
+makes sure that the TLB is always flushed when last_vpid is updated.
+
+Fixes: 5c614b3583e7 ("KVM: nVMX: nested VPID emulation")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org> # Internal review
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260722230128.1587363-1-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/opt4060.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/iio/light/opt4060.c
-+++ b/drivers/iio/light/opt4060.c
-@@ -826,7 +826,7 @@ static int opt4060_get_thresholds(struct
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3801,6 +3801,14 @@ enum nvmx_vmentry_status nested_vmx_ente
+ vmentry_fail_vmexit_guest_mode:
+ 	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING)
+ 		vcpu->arch.tsc_offset -= vmcs12->tsc_offset;
++
++	/*
++	 * Handle any TLB flush requests that were queued for L2 if KVM made it
++	 * far enough along to switch to L2 context.  Note, loading host state
++	 * will generate any flushes for L1 required by VM-Exit.
++	 */
++	kvm_service_local_tlb_flush_requests(vcpu);
++
+ 	leave_guest_mode(vcpu);
  
- 	ret = regmap_read(chip->regmap, OPT4060_THRESHOLD_HIGH, &regval);
- 	if (ret) {
--		dev_err(chip->dev, "Failed to read THRESHOLD_LOW.\n");
-+		dev_err(chip->dev, "Failed to read THRESHOLD_HIGH.\n");
- 		return ret;
- 	}
- 	*th_hi = opt4060_calc_val_from_th_reg(regval);
+ vmentry_fail_vmexit:
 
 
