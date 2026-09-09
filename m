@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A362598BE3;
-	Wed,  9 Sep 2026 14:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5A12EB874;
+	Wed,  9 Sep 2026 14:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963709; cv=none; b=CmUc50iwqRFx/T12Czzs6Bpu8yHAKbDkCdqGVOjL83XGoOo/fZ7A/cCVBwUXpKWPoFyXIINmZMLSiAzkIcNdo4qR3SIR5OIA/Ha+3sTaZgZ1rxZDOVAiY8Kr8AmLsHhUlSXJVFrQjKhHo7b/eOJWfgHrQ507TZniyUXOkwQzq0s=
+	t=1788963712; cv=none; b=NWSDdgTUthvxco+3RsrIPq0ds/Wco2z0loVZyr3se8f3SudY0gKFLUUwLJev5fM3hKDfXwGQ4xbo9Q1hDBbQ/UcY6iVBOvdqGvFKXr02pbBGO4EZH570GgEYHRA6x/posTCLQE8RcKewAWVibOPnTzgl50MEei/ukFEvQ1kiNyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963709; c=relaxed/simple;
-	bh=hVz6IL3dluVbMTTh92xAk5F1Lo1wzrtvtZX2q2o77T0=;
+	s=arc-20240116; t=1788963712; c=relaxed/simple;
+	bh=hjURy2Ur5Z9Z+ErB1KhKLZWmNanLpyUXMEyDSFxD01o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aro4BdmhGFmu8kZov82dXeuWu7LIos36YyHVLpBQttsoUguA2K7sMKVIC+1yKxV+J/ypeOwC1zrB7eu3HXKEq4rFqE98LDGOsWpntb8y6P8IDgC+/b8TuD1DoR/ABd9DI3V4bEOgf9lE4BB2FUfdpSFqwKdcER9yWROMtmbvywM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSAJK/Q4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pqRKD7iqKNM3vlW/IPc3ybV/Y0ZUeUNmoZtJmpslgKUPDLe2Tw/V+woBiW0y2VDBENC/Sxcahc1oe/NrDbgXVs4e8xPjSxnuEC195EjNIsF0zEU4bv9r4j9Nifd1i1FOPwvLRgTBZFlhHYrtZidU+lA3C4VtVNacRb0XCFHNuUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y360s8+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSAJK/Q4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08C71F00A3A;
-	Wed,  9 Sep 2026 14:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y360s8+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F951F00A3A;
+	Wed,  9 Sep 2026 14:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963708;
-	bh=xUZK+/+NedCjDDWI2AJvhOD5A3WvEc8EmQSHdWU7HjA=;
+	s=korg; t=1788963711;
+	bh=0gz3U2P40/C9vzm/oNn6zPUT42Y8VuvKYo3hqFH+gvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dSAJK/Q4PSDWQr2WjkJiElgbl1e2A55KCCJHRkO5rhMlC58BUYbFB0OCwx2RGCVrq
-	 V2i1SK01F5x5W8PO1kHLOb8yYI25kFMxEnweWxEhlp+8JAEg7l8smOQ0C2qvUt6SUJ
-	 pfa55Nayf0piuycQMtndSBczssfozjT8BLxmEQTI=
+	b=y360s8+mH83ey/h6dKajLFSbTn6E0V6XRfwiGwAQOiDUaBYMbAcv7xcX1jj9iQMds
+	 y05P2nqrIudSk4vLcAr9/o6jDGXHI/UK1mr5zJ90FGRzqY4qX9YjRubBuKplktxrbt
+	 /ViyBoKKCgRBHK/6Fpklqqh0Qpaw6r6KHItKXa34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 169/583] ASoC: ml26124: sort the register default table
-Date: Wed,  9 Sep 2026 15:37:34 +0200
-Message-ID: <20260909134244.058442978@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 122/583] powerpc/kexec_file: Prevent kexec range truncation
+Date: Wed,  9 Sep 2026 15:36:47 +0200
+Message-ID: <20260909134242.365966740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,51 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit d4d0e6e2355a6fe6517e5a0c3d9a0b8ab073b0b6 upstream.
+commit fa40f9dbdd4af53e7445d9135b5b207eb8adf372 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+Sashiko AI review pointed out the following issue.
 
-The Mic Select Control register (0xe8) is listed in the analog path
-control group, between 0x5a and 0x60, which makes it unreachable.
-regcache_reg_needs_sync() then cannot compare it against its default and
-reports that a sync is needed, so it is written to the device on every
-regcache_sync() even when it was never touched.
+The __merge_memory_ranges() function incorrectly handles overlapping
+memory ranges when merging them. Although sort_memory_ranges() sorts all
+ranges by their start address in ascending order beforehand, the merge
+logic remains defective in two ways:
 
-Move the entry to the end of the table, where it belongs by address.
+1. It compares the current range's start against the previous element (i-1)
+   instead of the running target index (idx)
 
-Fixes: d808fe9f3e7f ("ASoC: Add LAPIS Semiconductor ML26124 driver")
+2. It unconditionally overwrites 'ranges[idx].end' with 'ranges[i].end'.
+
+This logic flaw leads to critical memory truncation when a larger memory
+range completely subsumes subsequent smaller ranges.
+
+For example, consider a sorted input array with three ranges:
+  Range A (idx=0): [0x1000 - 0x9000]
+  Range B (i=1):   [0x2000 - 0x5000] (completely inside Range A)
+  Range C (i=2):   [0x6000 - 0x8000] (completely inside Range A)
+
+1. When i=1 (Range B):
+   ranges[1].start (0x2000) <= ranges[0].end + 1 (0x9001) is TRUE.
+   The code executes: ranges[0].end = ranges[1].end, which erroneously
+   shrinks Range A's end from 0x9000 down to 0x5000.
+
+2. When i=2 (Range C):
+   ranges[2].start (0x6000) <= ranges[1].end + 1 (0x5001) is FALSE.
+   The code falls into the else block, creating a broken new range.
+
+As a result, valid memory fragments [0x5001 - 0x5fff] and [0x8001 - 0x9000]
+are completely lost from the kexec exclude lists, potentially allowing
+the crash kernel to overwrite active memory, causing data corruption
+or crashes.
+
+Fix this by ensuring the start of the current range is compared against the
+end of the active merged range (idx), and use max() to safely prevent the
+outer boundary from being truncated.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805122811.13713-2-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 180adfc532a8 ("powerpc/kexec_file: Add helper functions for getting memory ranges")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260729012948.2797865-4-ruanjinjie@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/ml26124.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/powerpc/kexec/ranges.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/sound/soc/codecs/ml26124.c
-+++ b/sound/soc/codecs/ml26124.c
-@@ -224,7 +224,6 @@ static const struct reg_default ml26124_
- 	/* Analog Path Control Register */
- 	{0x54, 0x00},	/* Speaker AMP Output Control */
- 	{0x5a, 0x00},	/* Mic IF Control */
--	{0xe8, 0x01},	/* Mic Select Control */
+--- a/arch/powerpc/kexec/ranges.c
++++ b/arch/powerpc/kexec/ranges.c
+@@ -21,6 +21,7 @@
+ #include <linux/of.h>
+ #include <linux/slab.h>
+ #include <linux/memblock.h>
++#include <linux/minmax.h>
+ #include <linux/crash_core.h>
+ #include <asm/sections.h>
+ #include <asm/kexec_ranges.h>
+@@ -105,19 +106,16 @@ static void __merge_memory_ranges(struct
+ 	struct range *ranges;
+ 	int i, idx;
  
- 	/* Audio Interface Control Register */
- 	{0x60, 0x00},	/* SAI-Trans Control */
-@@ -287,6 +286,9 @@ static const struct reg_default ml26124_
- 	{0xd0, 0x01},	/* VIDEO AMP Gain Control */
- 	{0xd2, 0x01},	/* VIDEO AMP Setup 1 */
- 	{0xd4, 0x01},	/* VIDEO AMP Control2 */
-+
-+	/* Analog Path Control Register */
-+	{0xe8, 0x01},	/* Mic Select Control */
- };
+-	if (!mem_rngs)
++	if (!mem_rngs || mem_rngs->nr_ranges <= 1)
+ 		return;
  
- /* Get sampling rate value of sampling rate setting register (0x0) */
+ 	idx = 0;
+-	ranges = &(mem_rngs->ranges[0]);
++	ranges = mem_rngs->ranges;
+ 	for (i = 1; i < mem_rngs->nr_ranges; i++) {
+-		if (ranges[i].start <= (ranges[i-1].end + 1))
+-			ranges[idx].end = ranges[i].end;
++		if (ranges[i].start <= (ranges[idx].end + 1))
++			ranges[idx].end = max(ranges[idx].end, ranges[i].end);
+ 		else {
+ 			idx++;
+-			if (i == idx)
+-				continue;
+-
+ 			ranges[idx] = ranges[i];
+ 		}
+ 	}
 
 
