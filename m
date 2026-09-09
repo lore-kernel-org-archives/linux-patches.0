@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D708556853C;
-	Wed,  9 Sep 2026 13:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD42B56853C;
+	Wed,  9 Sep 2026 13:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962259; cv=none; b=Tr7QRy5dex8TtRT/bx5oMM49h82c6lc3ZCi5XLu7UkuSV4HybxTGTunLsc6P2k47ImVD1zE0yTrJ7CHH9rsfF98P+y26+XdE41bn3ua2b8fh06ovOSuevBKAO8fSfBcE6voRiqCCqvbBFqVoeIZ52RXnGGrAwkX8fiSLOcEIWx8=
+	t=1788962262; cv=none; b=Yj95RJEft6gEfzrivs/Mkuebb+EYhicg/PSiCD8W6LJj/y9nmitrlMZYAau9eDtzrC8M8FIG/phHKjR0T1o6sNfK0VtwvSkXuUWOeqWWQSxxQNiUC6sWXMNblIugi63i0swu61OUBnWZfbePEcRnGMKJOdvVZvwYP3SQO0KHiP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962259; c=relaxed/simple;
-	bh=mF7CkR2QLZX6hDghUDU/Zo25uqcM+CNsCWFqIAdb7DM=;
+	s=arc-20240116; t=1788962262; c=relaxed/simple;
+	bh=QU/KCZ2BWJLNtnGLe13VbCPUt/gL2pS0YswJuHbrM50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPn7dZ/QfzDOG4bNPMiv00wAIwuUges66VwTXEAeEkxmkunkkn2nbdWZgGzguc95P41/7gPRFHr5IfHCaXI0xk2DWf+zb7NdzJg+UrGRjaEreRPeMZcdkXu5xds6klukEf0+PssMfYYsStfj55Fw1ShAf43bQ7L3RV9QxvAD44Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoamWMEJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qe7CXKzF642qddNyJfv9IduWvthcybBCZjWbMSdeuh9DQmQHKaPo8HJSCtX24rkCNiZd8u5nUbHr1xcco2SrHCuW7QYb82miIXDLUIug+evgj4RjKu4LDiZn1DUFBV7dm3sWcx1EOD3uybc+hsSDJLVNDzVkwa0TA4njnc2T23I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7jb2S8J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoamWMEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003161F00A3E;
-	Wed,  9 Sep 2026 13:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7jb2S8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F631F00A3A;
+	Wed,  9 Sep 2026 13:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962257;
-	bh=sASk+3RheY6ahJzhQuZSLol9sG49OuQ67M6ZvzpY05E=;
+	s=korg; t=1788962260;
+	bh=qUc3Jyi9fyklgGaoayK2QRTlDHwSCTaklQbHEMGBf+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NoamWMEJ7YaHd+yHqb9mGllyrFaDurzvNgoEZZVRAib5iTTggal4NobumEAH9MLaL
-	 Ajf7VLwX/Fo+BQ0iATmgTGKw4bSrew40wezmD8ul3bI5Z1ObdxfieXR9vNoYAYMSTR
-	 wvxMyQUxb5Cmw1SqNA4gjj6DlNa81kSeEko8ZXqg=
+	b=N7jb2S8JLeV3L7DFcJTFbSCSVV9I741ydjRiNHBwFAduy6AXovEK0YCv4XxIDu/+c
+	 25KSeOZwKmD0+p5lDKZP6C3+1DerT/lVeRfq+x3hT6mHIi8cZkJYjGUYFoQos/0c/1
+	 WTlegkK82rlAPI4m8SQxZwEoOT72EfTrLkC1vq8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 7.2 211/556] clk: qcom: gcc-msm8916: Fix enable_reg for gcc_blsp1_sleep_clk
-Date: Wed,  9 Sep 2026 15:38:11 +0200
-Message-ID: <20260909134237.813270831@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.2 229/556] ASoC: loongson: Fix error handling in ACPI property parsing
+Date: Wed,  9 Sep 2026 15:38:29 +0200
+Message-ID: <20260909134238.467360173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,40 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-commit c5339edc6abb601ea10df910ea0b1592fa1016f3 upstream.
+commit 0eb0e3c623ac1da8b85d518043fef7660af7805d upstream.
 
-According to the APQ8016E TRM, the GCC_BLSP1_SLEEP_CBCR register is
-read-only and only has the CLK_OFF bit to check if the clock is running.
-This is a shared vote clock, the correct way to enable it is to vote for
-BLSP1_SLEEP_CLK_ENA (BIT(9)) in GCC_APCS_CLOCK_BRANCH_ENA_VOTE (0x45004).
+In loongson_card_parse_acpi(), the return value of
+device_property_read_string() for the `codec-dai-name` property was
+ignored. If the property is missing or invalid, an uninitialized pointer
+would be used later, potentially leading to undefined behavior.
+
+Fix this by checking the return value and propagating the error
+appropriately.
 
 Cc: stable@vger.kernel.org
-Fixes: 3966fab8b6ab ("clk: qcom: Add MSM8916 Global Clock Controller support")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-1-745565101869@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/cover.1780538113.git.zhoubinbin@loongson.cn?part=5
+Fixes: ddb538a3004b ("ASoC: loongson: Factor out loongson_card_acpi_find_device() function")
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Link: https://patch.msgid.link/08e44a54708eae053be148524346bb8dfcd55b03.1782439646.git.zhoubinbin@loongson.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-msm8916.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/loongson/loongson_card.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/qcom/gcc-msm8916.c
-+++ b/drivers/clk/qcom/gcc-msm8916.c
-@@ -1589,9 +1589,10 @@ static struct clk_branch gcc_blsp1_ahb_c
+--- a/sound/soc/loongson/loongson_card.c
++++ b/sound/soc/loongson/loongson_card.c
+@@ -91,7 +91,7 @@ static int loongson_card_parse_acpi(stru
+ 	const char *codec_dai_name;
+ 	struct acpi_device *adev;
+ 	struct device *phy_dev;
+-	int i;
++	int i, ret;
  
- static struct clk_branch gcc_blsp1_sleep_clk = {
- 	.halt_reg = 0x01004,
-+	.halt_check = BRANCH_HALT_VOTED,
- 	.clkr = {
--		.enable_reg = 0x01004,
--		.enable_mask = BIT(0),
-+		.enable_reg = 0x45004,
-+		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_blsp1_sleep_clk",
- 			.parent_data = &(const struct clk_parent_data){
+ 	/* fixup platform name based on reference node */
+ 	adev = loongson_card_acpi_find_device(card, "cpu");
+@@ -108,7 +108,9 @@ static int loongson_card_parse_acpi(stru
+ 		return -ENOENT;
+ 	snprintf(codec_name, sizeof(codec_name), "i2c-%s", acpi_dev_name(adev));
+ 
+-	device_property_read_string(card->dev, "codec-dai-name", &codec_dai_name);
++	ret = device_property_read_string(card->dev, "codec-dai-name", &codec_dai_name);
++	if (ret)
++		return ret;
+ 
+ 	for (i = 0; i < card->num_links; i++) {
+ 		loongson_dai_links[i].platforms->name = dev_name(phy_dev);
 
 
