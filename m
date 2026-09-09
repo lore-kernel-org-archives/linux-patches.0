@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BECB3D967A;
-	Wed,  9 Sep 2026 14:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599DA5678C1;
+	Wed,  9 Sep 2026 14:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963205; cv=none; b=Y5qs4KcptPkrUcZvFpCWVj4T2oxNuXtn/HJfxLwVa3wnwuJQUhIoQUWtivYVEi60o8lor8kjAoc6w0noOedl/be7zOWVc0N5ZVTTfPJG8gRcHapsxyaxeOOkcuCy+HKBQb20TSL0gQbuu3kTT+QyKgmf4LKqYwuk1MmI1m6oTwI=
+	t=1788963208; cv=none; b=GBOuKuDYNUilMLrxDOFXbCueRsWT+VzUJck6y48rGcwWALwy9Wc1/uK2VwwUpoGDr9EfpRvWw1u3alHoKjmgl8AM38b4CjFv2+6p1ICBI2pLVouEx308hbK1cx0jQa5w75A9jhGz0nXyS8PC9mCyNoyjyD02aaq6Vpg0SaIQI4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963205; c=relaxed/simple;
-	bh=w85qVZqHhGmCJH30iWmp1KotnDht3pIrLuCnVFz9rho=;
+	s=arc-20240116; t=1788963208; c=relaxed/simple;
+	bh=4NeCsl3xPt0EUoYzNNm7B/FeqhzChGROP4g5Uk4aF6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3Dc3maJOGDYyGeknqXNWQDfym5LNQiiO9S9+3s73Qbr6529cCMw+CdlzEXezzTNQlW8r4b0qQURSZNGO9VSJol8cYqsrFmf1N1wkWnp9PoNP95VfFgolCpwP7fkC99AQFOwEbuwef1CpSQU33VGBrTf51v0KPg+6Kyf8pWiohk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmbYLXYF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BfrwINI4vZA1TXL4SPMOqrH8hVg9J5YC5UrSB7Ai4APhPtPo5QWk2QS9CiglmOFd5XduoeaLPFx3KKiZzVGg3pj8tpu9ncwCdJBW36f+QpdQGqkppVXBkUaP+m6k+Tm3azS3N40sEVr85CBvlnP31WvuGwoCgUtEO8ONNN5heu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ic4x6+BJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmbYLXYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971361F00A3E;
-	Wed,  9 Sep 2026 14:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ic4x6+BJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3001F00A3A;
+	Wed,  9 Sep 2026 14:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963204;
-	bh=7mWzNEdcSl9M75u9dHogURLUcpMKq+iDgnic8JPu4po=;
+	s=korg; t=1788963207;
+	bh=DbCLwhHKsrQvuPl7c6hlRB0vBdGBu7+AOd7Y665FwRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MmbYLXYF8eXNXdn0rfTpFzXnvwwFgSkXh56rXo4YCPojvIiUSsyZorA7tkKCJ3T4K
-	 x0SeRchSkHKDy0sD+rlchlU2qb9uQfpXk/dfopf7njMS2PWBkHMoGocLmunl/9BRU+
-	 A2VnoKhI0f867cur6aXUVT3VgbFUhKdq5WpRrYsU=
+	b=Ic4x6+BJfVqgA0x1EM68lr42+ffmU7gcKbd+GNBRbG7xDR4y/5tFVrFCgA/8ikbMh
+	 aZlZREMsNVVQqvoJFIXG+tRaHVtFng1vSSij6mEkUxiwalP1s4sDsJCi2V7SZ9G/CO
+	 JjE/WvUCJZqQwzHkvC4zBJrRqpRb1Hpq4aGSmSgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 554/556] mm/damon/vaddr: drop last same folio access check optimization
-Date: Wed,  9 Sep 2026 15:43:54 +0200
-Message-ID: <20260909134249.870882779@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	linuxppc-dev@lists.ozlabs.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 555/556] PCI: Introduce PCI_SLOT_PLACEHOLDER constant for slot_nr placeholder value
+Date: Wed,  9 Sep 2026 15:43:55 +0200
+Message-ID: <20260909134249.905671911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,132 +54,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-commit 831846078caa14b7d00b2ccca8b8fe522afe3204 upstream.
+[ Upstream commit c243e6c470c4695965cc8287767925bc1d9a7867 ]
 
-The optimization can race when multiple kdamonds are running.  Meanwhile,
-the impact of the optimization is quite doubtful.  Just remove it.
+Introduce a constant for placeholder value and update the kerneldoc for
+pci_create_slot() to reference PCI_SLOT_PLACEHOLDER instead of -1
+throughout. No functional change.
 
-The user impact of the issue should be quite trivial.  After all, the race
-can happen only when the user intentionally setup DAMON in the way.  Even
-if it happens, it would be rare and only degrade the best-effort
-monitoring results.  No critical consequences like kernel panic or memory
-corruption happen.
-
-The race possibility was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
-Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SJ Park <sj@kernel.org>
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Tyrel Datwyler <tyreld@linux.ibm.com>
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://patch.msgid.link/20260805165518.794-2-alifm@linux.ibm.com
+Stable-dep-of: dcc5bec09e23 ("PCI: Allow per function PCI slots to fix slot reset on s390")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/vaddr.c |   34 ++++++----------------------------
- 1 file changed, 6 insertions(+), 28 deletions(-)
+ drivers/pci/hotplug/pnv_php.c     |    2 +-
+ drivers/pci/hotplug/rpaphp_slot.c |    2 +-
+ drivers/pci/slot.c                |   21 +++++++++++----------
+ include/linux/pci.h               |    3 +++
+ 4 files changed, 16 insertions(+), 12 deletions(-)
 
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -382,8 +382,6 @@ static void damon_va_prepare_access_chec
- }
+--- a/drivers/pci/hotplug/pnv_php.c
++++ b/drivers/pci/hotplug/pnv_php.c
+@@ -808,7 +808,7 @@ static struct pnv_php_slot *pnv_php_allo
+ 	if (dn->child && PCI_DN(dn->child))
+ 		php_slot->slot_no = PCI_SLOT(PCI_DN(dn->child)->devfn);
+ 	else
+-		php_slot->slot_no = -1;   /* Placeholder slot */
++		php_slot->slot_no = PCI_SLOT_PLACEHOLDER;   /* Placeholder slot */
  
- struct damon_young_walk_private {
--	/* size of the folio for the access checked virtual memory address */
--	unsigned long *folio_sz;
- 	bool young;
- };
+ 	kref_init(&php_slot->kref);
+ 	php_slot->state	                = PNV_PHP_STATE_INITIALIZED;
+--- a/drivers/pci/hotplug/rpaphp_slot.c
++++ b/drivers/pci/hotplug/rpaphp_slot.c
+@@ -84,7 +84,7 @@ int rpaphp_register_slot(struct slot *sl
+ 	struct hotplug_slot *php_slot = &slot->hotplug_slot;
+ 	u32 my_index;
+ 	int retval;
+-	int slotno = -1;
++	int slotno = PCI_SLOT_PLACEHOLDER;
  
-@@ -410,7 +408,6 @@ static int damon_young_pmd_entry(pmd_t *
- 					mmu_notifier_test_young(walk->mm,
- 						addr))
- 			priv->young = true;
--		*priv->folio_sz = HPAGE_PMD_SIZE;
- huge_out:
- 		spin_unlock(ptl);
- 		return 0;
-@@ -429,7 +426,6 @@ huge_out:
- 	if (pte_young(ptent) || !folio_test_idle(folio) ||
- 			mmu_notifier_test_young(walk->mm, addr))
- 		priv->young = true;
--	*priv->folio_sz = folio_size(folio);
- out:
- 	pte_unmap_unlock(pte, ptl);
- 	return 0;
-@@ -457,7 +453,6 @@ static int damon_young_hugetlb_entry(pte
- 	if (pte_young(entry) || !folio_test_idle(folio) ||
- 	    mmu_notifier_test_young(walk->mm, addr))
- 		priv->young = true;
--	*priv->folio_sz = huge_page_size(h);
+ 	dbg("%s registering slot:path[%pOF] index[%x], name[%s] pdomain[%x] type[%d]\n",
+ 		__func__, slot->dn, slot->index, slot->name,
+--- a/drivers/pci/slot.c
++++ b/drivers/pci/slot.c
+@@ -37,7 +37,7 @@ static const struct sysfs_ops pci_slot_s
  
- 	folio_put(folio);
- 
-@@ -469,11 +464,9 @@ out:
- #define damon_young_hugetlb_entry NULL
- #endif /* CONFIG_HUGETLB_PAGE */
- 
--static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
--		unsigned long *folio_sz)
-+static bool damon_va_young(struct mm_struct *mm, unsigned long addr)
+ static ssize_t address_read_file(struct pci_slot *slot, char *buf)
  {
- 	struct damon_young_walk_private arg = {
--		.folio_sz = folio_sz,
- 		.young = false,
- 	};
+-	if (slot->number == 0xff)
++	if (slot->number == PCI_SLOT_PLACEHOLDER)
+ 		return sysfs_emit(buf, "%04x:%02x\n",
+ 				  pci_domain_nr(slot->bus),
+ 				  slot->bus->number);
+@@ -210,7 +210,7 @@ static struct pci_slot *get_slot(struct
+ /**
+  * pci_create_slot - create or increment refcount for physical PCI slot
+  * @parent: struct pci_bus of parent bridge
+- * @slot_nr: PCI_SLOT(pci_dev->devfn), -1 for placeholder, or
++ * @slot_nr: PCI_SLOT(pci_dev->devfn), PCI_SLOT_PLACEHOLDER for placeholder, or
+  *	PCI_SLOT_ALL_DEVICES
+  * @name: user visible string presented in /sys/bus/pci/slots/<name>
+  * @hotplug: set if caller is hotplug driver, NULL otherwise
+@@ -236,15 +236,16 @@ static struct pci_slot *get_slot(struct
+  * In most cases, @pci_bus, @slot_nr will be sufficient to uniquely identify
+  * a slot. There is one notable exception - pSeries (rpaphp), where the
+  * @slot_nr cannot be determined until a device is actually inserted into
+- * the slot. In this scenario, the caller may pass -1 for @slot_nr.
++ * the slot. In this scenario, the caller may pass PCI_SLOT_PLACEHOLDER for @slot_nr.
+  *
+  * The following semantics are imposed when the caller passes @slot_nr ==
+- * -1. First, we no longer check for an existing %struct pci_slot, as there
+- * may be many slots with @slot_nr of -1.  The other change in semantics is
+- * user-visible, which is the 'address' parameter presented in sysfs will
+- * consist solely of a dddd:bb tuple, where dddd is the PCI domain of the
+- * %struct pci_bus and bb is the bus number. In other words, the devfn of
+- * the 'placeholder' slot will not be displayed.
++ * PCI_SLOT_PLACEHOLDER. First, we no longer check for an existing %struct
++ * pci_slot, as there may be many slots with @slot_nr of
++ * PCI_SLOT_PLACEHOLDER. The other change in semantics is user-visible,
++ * which is the 'address' parameter presented in sysfs will consist solely
++ * of a dddd:bb tuple, where dddd is the PCI domain of the %struct pci_bus
++ * and bb is the bus number. In other words, the devfn of the 'placeholder'
++ * slot will not be displayed.
+  *
+  * Bus-wide slots:
+  * For PCIe hotplug, the physical slot encompasses the entire secondary
+@@ -267,7 +268,7 @@ struct pci_slot *pci_create_slot(struct
  
-@@ -493,29 +486,18 @@ static bool damon_va_young(struct mm_str
-  * r	the region to be checked
+ 	mutex_lock(&pci_slot_mutex);
+ 
+-	if (slot_nr == -1)
++	if (slot_nr == PCI_SLOT_PLACEHOLDER)
+ 		goto placeholder;
+ 
+ 	/*
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -81,6 +81,9 @@
   */
- static void __damon_va_check_access(struct mm_struct *mm,
--				struct damon_region *r, bool same_target,
-+				struct damon_region *r,
- 				struct damon_attrs *attrs)
- {
--	static unsigned long last_addr;
--	static unsigned long last_folio_sz = PAGE_SIZE;
--	static bool last_accessed;
-+	bool accessed;
+ #define PCI_SLOT_ALL_DEVICES	0xfe
  
- 	if (!mm) {
- 		damon_update_region_access_rate(r, false, attrs);
- 		return;
- 	}
- 
--	/* If the region is in the last checked page, reuse the result */
--	if (same_target && (ALIGN_DOWN(last_addr, last_folio_sz) ==
--				ALIGN_DOWN(r->sampling_addr, last_folio_sz))) {
--		damon_update_region_access_rate(r, last_accessed, attrs);
--		return;
--	}
--
--	last_accessed = damon_va_young(mm, r->sampling_addr, &last_folio_sz);
--	damon_update_region_access_rate(r, last_accessed, attrs);
--
--	last_addr = r->sampling_addr;
-+	accessed = damon_va_young(mm, r->sampling_addr);
-+	damon_update_region_access_rate(r, accessed, attrs);
- }
- 
- static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
-@@ -524,16 +506,12 @@ static unsigned int damon_va_check_acces
- 	struct mm_struct *mm;
- 	struct damon_region *r;
- 	unsigned int max_nr_accesses = 0;
--	bool same_target;
- 
- 	damon_for_each_target(t, ctx) {
- 		mm = damon_get_mm(t);
--		same_target = false;
- 		damon_for_each_region(r, t) {
--			__damon_va_check_access(mm, r, same_target,
--					&ctx->attrs);
-+			__damon_va_check_access(mm, r, &ctx->attrs);
- 			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
--			same_target = true;
- 		}
- 		if (mm)
- 			mmput(mm);
++/* Used to identify a slot as a placeholder */
++#define PCI_SLOT_PLACEHOLDER	0xff
++
+ /* pci_slot represents a physical slot */
+ struct pci_slot {
+ 	struct pci_bus		*bus;		/* Bus this slot is on */
 
 
