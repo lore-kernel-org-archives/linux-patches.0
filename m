@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E6756B853;
-	Wed,  9 Sep 2026 14:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A76E6DCE1;
+	Wed,  9 Sep 2026 14:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964738; cv=none; b=dEZb1NdxSeGzvIKwgZaXD4a5IN+mPIjQsGLgKlxHnP3vIA6uJlAM+apM9qNee9qCpAAF/w9kU0VHDnmyvlYSwduVE9HQ0+lEiPow8h9+asGLad3lPXeTa47ff5A86K94mRBcxDycZS+W0mVbwqOKtQvj3AaBYsEurkToUgiqueg=
+	t=1788964741; cv=none; b=MpP/jVSwD5xnNPH8CIHt7K/vST25Rw54FLbqFje6GzLV/DgbaZFLyd3kCCrvZX/YMVrEnq+KQhjeMEbdOsBbSFudMGR3RSBTthHQFkMVE1aLJOAAUA6Jdu1Nn2mRYfe5IuxvIh3cBMIU23lGTSNSrs8haS6UVu+gHRSZsA89LcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964738; c=relaxed/simple;
-	bh=faQTV7Yed+CCZuzn/8xMjutzQsVWt3RS9P2CXKJzRzU=;
+	s=arc-20240116; t=1788964741; c=relaxed/simple;
+	bh=ec8VF7sFQrowADGKYNe249uEqEIeznNkIhy7ZocDpbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ek41PQ7TvvjI9RAZHMjGzR0vPUm1auVPFXyz4Ev7YiiYah3p+x110Z24nC42Hn9FLRCnODmuNCnQb47M4YUAaUoXqq63FLoYFxtmXg5/50Wx0u46M+uGKCPZ0PnDzT8M8MNnv2Uawv+iJsgGIctGsYi/CuVUoRDNKekDyUMA8jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEQRaUak; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YIEAS/p4vpdF8oDIU/zXpiJOG7QYA+YEdYdx9+xtIsP+bHsKMc9oThBIyDqjir4MuhjYOXf3COyt6Q+lSzsvKx9vwFlQqK9pMEJZWd5AgM0yGRsfAdOOQ/pJN+deUglD2TTeFlrhcD9L8p6IME5dDS1tS7cX894v+sunLRZEHVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Axt7zmdX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEQRaUak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD8E1F00A3A;
-	Wed,  9 Sep 2026 14:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Axt7zmdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1B11F00A3A;
+	Wed,  9 Sep 2026 14:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964737;
-	bh=Gjp/V4xD2ctu474uWyaK7ExN7uDz4lzPUjUkujBigjc=;
+	s=korg; t=1788964740;
+	bh=FLgdp4z9DAtNhkzgkCUG8jSmWd1AEw7PlFOpjZjxMWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wEQRaUakwjznR4NMvSQDRV/sdAs0W1vq8ayjkcC7hxrepGwY050nqFVGmze3ktqva
-	 iBmWl0sGlqtPSf/G46/tiJhpLcjukbGhhCzBo9mtLX/7OOSlqKtTnubBls7FVGJCvF
-	 167YJdsOnk57lPWOSDHI297lpKlQYsvGoydTNbLw=
+	b=Axt7zmdXbfr/FY9no1gcVgSrc8LVT/euxdw7RJiVMgEe8scKr1q1ZVORuvlZwd7mj
+	 2YEH6Q7FVbMPQPI5pUJco4Ev/r0lSk2LZ0OmWu44fXheHSbDcRX+FcCmKPx9CVBftl
+	 Z9E6bQvAoZsYs8w4r8OvvTwwnP+HbZaxkWbvy34g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 527/583] net: advertise TCP MSS from the configured MTU, not the learned PMTU
-Date: Wed,  9 Sep 2026 15:43:32 +0200
-Message-ID: <20260909134256.078836575@linuxfoundation.org>
+Subject: [PATCH 6.18 528/583] nfsd: check nfsd4_acl_to_attr() return value in nfsd4_create()
+Date: Wed,  9 Sep 2026 15:43:33 +0200
+Message-ID: <20260909134256.106676429@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,147 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 2640e64195948a601430d230c9864f5426574cde upstream.
+commit 2c7912732184773dbd371a411da87af1cc080b86 upstream.
 
-The MSS a host puts in its SYN tells the peer how big a segment it may
-send us. Right now we can shrink it with a PMTU we learned on our own
-send path, which is the wrong direction entirely.
+nfsd4_create() stores the return value of nfsd4_acl_to_attr() in
+status, but the switch(create->cr_type) block unconditionally
+overwrites it in every branch. ACL translation errors are silently
+discarded, and the CREATE proceeds without the requested ACL.
 
-On asymmetric paths this bites - think DSR load balancers, where the
-request side goes through a smaller-MTU overlay. We learn a small PMTU
-going out, then advertise a small MSS, and the peer stays capped for the
-whole connection even though its path back to us is wide. MSS only shows
-up in the SYN and never grows back.
+Add an early exit check after nfsd4_acl_to_attr(), matching the
+pattern already used in nfsd4_setattr().
 
-On symmetric paths we lose nothing by dropping it either: the peer runs
-its own PMTU discovery and usually already knows the real path MTU.
-
-So work out the advertised MSS from the configured route or device MTU
-and ignore the learned PMTU. Our send side is unchanged, still clamped by
-tcp_current_mss(). Add ip_dst_mtu_configured()/ip6_dst_mtu_configured()
-and use them from the two default_advmss() paths.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 164a5e7ad531 ("ipv4: ipv4_default_advmss() should use route mtu")
+Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260815070413.294559-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+[ cel: prefer NFS4ERR_BADTYPE over NFS4ERR_ATTRNOTSUPP ]
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-5-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ retained unconditional ACL conversion because the older helper already handles null ACLs ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ip.h        |   25 +++++++++++++++++++++++++
- include/net/ip6_route.h |   37 +++++++++++++++++++++++++++++++++++++
- net/ipv4/route.c        |    4 ++--
- net/ipv6/route.c        |    2 +-
- 4 files changed, 65 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4proc.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -506,6 +506,31 @@ out:
- 	return res;
- }
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -800,7 +800,23 @@ nfsd4_create(struct svc_rqst *rqstp, str
+ 	if (status)
+ 		return status;
  
-+/* Configured/administrative MTU of a route, for advertising the TCP MSS.
-+ *
-+ * Unlike ip_dst_mtu_maybe_forward(), this deliberately ignores the
-+ * ICMP-learned path MTU (rt->rt_pmtu).  The advertised MSS bounds what the
-+ * peer may send to us and must reflect our receive capability (the device or
-+ * route-configured MTU), not a path MTU learned on the reverse (send)
-+ * direction, which may not apply to the peer->us path and outlives the fnhe
-+ * for the whole connection.  See RFC 2923 section 2.3 and the comment above
-+ * tcp_advertise_mss().
-+ */
-+static inline unsigned int ip_dst_mtu_configured(const struct dst_entry *dst)
-+{
-+	unsigned int mtu, res;
-+
-+	rcu_read_lock();
-+	mtu = dst_metric_raw(dst, RTAX_MTU);
-+	if (!mtu)
-+		mtu = READ_ONCE(dst_dev_rcu(dst)->mtu);
-+	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
-+	res = mtu - lwtunnel_headroom(dst->lwtstate, mtu);
-+	rcu_read_unlock();
-+
-+	return res;
-+}
-+
- static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
- 					  const struct sk_buff *skb)
- {
---- a/include/net/ip6_route.h
-+++ b/include/net/ip6_route.h
-@@ -352,6 +352,43 @@ out:
- 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
- }
- 
-+/* Configured/administrative MTU of a route, for advertising the TCP MSS.
-+ *
-+ * Unlike ip6_dst_mtu_maybe_forward(), this ignores any ICMPv6-learned path
-+ * MTU (which is kept on the RTF_CACHE exception route) and returns the MTU of
-+ * the underlying route (fib6_pmtu) or the egress device.  The advertised MSS
-+ * bounds what the peer may send to us and must reflect our receive
-+ * capability, not a path MTU learned on the reverse (send) direction.  See
-+ * RFC 2923 section 2.3 and the comment above tcp_advertise_mss().
-+ */
-+static inline unsigned int ip6_dst_mtu_configured(const struct dst_entry *dst)
-+{
-+	const struct rt6_info *rt = dst_rt6_info(dst);
-+	const struct fib6_info *from;
-+	struct inet6_dev *idev;
-+	unsigned int mtu = 0;
-+
-+	rcu_read_lock();
-+	/* IPv6 keeps the learned PMTU and the configured MTU in the same
-+	 * RTAX_MTU slot: the learned value sits on this (possibly RTF_CACHE)
-+	 * dst, the configured one on the underlying route.  Reach the latter
-+	 * via ->from (fib6_pmtu), populated by ip6_route_info_create().
-+	 */
-+	from = rcu_dereference(rt->from);
-+	if (from)
-+		mtu = from->fib6_pmtu;
-+	if (!mtu) {
-+		mtu = IPV6_MIN_MTU;
-+		idev = __in6_dev_get(dst_dev_rcu(dst));
-+		if (idev)
-+			mtu = max_t(unsigned int, mtu, READ_ONCE(idev->cnf.mtu6));
++	/* Sanitize cr_type to avoid returning ATTRNOTSUPP. */
++	switch (create->cr_type) {
++	case NF4LNK:
++	case NF4BLK:
++	case NF4CHR:
++	case NF4SOCK:
++	case NF4FIFO:
++	case NF4DIR:
++		break;
++	default:
++		status = nfserr_badtype;
++		goto out_aftermask;
 +	}
-+	rcu_read_unlock();
 +
-+	mtu = min_t(unsigned int, mtu, IP6_MAX_MTU);
-+	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
-+}
-+
- u32 ip6_mtu_from_fib6(const struct fib6_result *res,
- 		      const struct in6_addr *daddr,
- 		      const struct in6_addr *saddr);
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1360,8 +1360,8 @@ static unsigned int ipv4_default_advmss(
- 
- 	rcu_read_lock();
- 	net = dst_dev_net_rcu(dst);
--	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
--				   net->ipv4.ip_rt_min_advmss);
-+	advmss = max_t(unsigned int, ip_dst_mtu_configured(dst) - header_size,
-+		       net->ipv4.ip_rt_min_advmss);
- 	rcu_read_unlock();
- 
- 	return min(advmss, IPV4_MAX_PMTU - header_size);
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3254,7 +3254,7 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
- 
- static unsigned int ip6_default_advmss(const struct dst_entry *dst)
- {
--	unsigned int mtu = dst6_mtu(dst);
-+	unsigned int mtu = ip6_dst_mtu_configured(dst);
- 	struct net *net;
- 
- 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
+ 	status = nfsd4_acl_to_attr(create->cr_type, create->cr_acl, &attrs);
++	if (status != nfs_ok)
++		goto out_aftermask;
+ 	current->fs->umask = create->cr_umask;
+ 	switch (create->cr_type) {
+ 	case NF4LNK:
+@@ -867,6 +883,7 @@ out:
+ 	fh_put(&resfh);
+ out_umask:
+ 	current->fs->umask = 0;
++out_aftermask:
+ 	nfsd_attrs_free(&attrs);
+ 	return status;
+ }
 
 
