@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821C958F078;
-	Wed,  9 Sep 2026 14:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375975908B4;
+	Wed,  9 Sep 2026 14:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963547; cv=none; b=tKuG0Eo3O1L/79hCWa4ltW1pZgGGS6AXl7hZugkIMtTfTLSyjF6UybwzQqUEyOIExUIWPwV/qWREIPNiZHEaTh/nSlOzPlXzdZm772j0oRhrxJn1F1rP2wjQttmN+xSpW7OxjsJTzptvJH9HwviJHgacYeXYx8vp6aD0tSh8vfo=
+	t=1788963550; cv=none; b=TQcbIwCf8Rpk1iO9ZUqcKhQnV3QNLwBobycnec2pkHS9NBaqH2iHn6niguBRuZ72akKy7YPhuW/lAjAoHJPQNmt3y/fVNyOS7VUBgRLynDTpvZhI4cNBeWivePaEmiylY1G2RbY2cl9O9HYRePoY5EKkkLLZF2lvlS1Ef/QjdOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963547; c=relaxed/simple;
-	bh=QPoYDBpo9MgUioYDZ7EGSYiehh1nm2wTf3N1kbB66MQ=;
+	s=arc-20240116; t=1788963550; c=relaxed/simple;
+	bh=HkcOrulLuU05XPjzfutFBtHI0o1b2l2BUJilEX+22vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5iK7FTamG1DBGAR+4xjz4DoUWURbae/9too7okIf6Dp7nvS07pHiQgBwG3J5zRHFgMQOyLh4c+7hz1mTS9WRSrJ/ltWjsbzZwTCm7IfG0D4qgGdxgUA1RbRn9phjIV3MD5l1QFCW3m7Yoina2W06pRGcAlEnZlCmKWXfHbl6iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUCDAsAN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QMo+Ib6FlOzb6AY7K2pCT5RGNQZMjam8HxMODtz9dm/pUZ0RQUfvsLukHLwASbTU/O2BApSGsdHGHue0eIC0o/aHVDJLka+iXu4si/1cxLA9Qfif6oz9ZphnJ5NyZztCcCU2JkKj4fATElZ9skXwV1QhD7YSJVfa1DeIv/+QsOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pt9darEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUCDAsAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F7D1F00A3D;
-	Wed,  9 Sep 2026 14:19:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pt9darEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A041F00A3D;
+	Wed,  9 Sep 2026 14:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963546;
-	bh=tKWda8NSaDlhl8KoPmISXClP4tsUG2hEeZiwZgeARlk=;
+	s=korg; t=1788963549;
+	bh=pGqHt0cyC8iFRRo28NAq5YzTbHulEIMi8Te1nadrw48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XUCDAsAN0N4ArVww1wHk/TqFBfheKsCHDVWIzmb5NzCkZDNR42W4M1NZrA4kEywEm
-	 W7wqiPMjwvWS5citQMkGLR6uQM5YHPzen97xh9uMF0KDUS530sdEVXpqUUQIsf/P/2
-	 yg1SeqhAONCCfo3VRJRaEujYY/4GNvdeaJ8P6QWw=
+	b=pt9darEBNvO8UBf76XmC4GrTdIIOCohTO5aNQjM8blgViFXaBMw4GCYgQKGQOgqMU
+	 hV+9/5i4nRawDlAF4paGrCuC21A8+FcwURMYIwR0+28i1wW9RhGldPfD0jzCC9oIea
+	 qNsI47V8QmxLWvzTC+doVgfSxvbeM/yosWFGxLRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hajo Noerenberg <hajo-linux-ide@noerenberg.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Pali Rohar <pali@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.18 079/583] ata: ahci: work around lost interrupts on Marvell 88SE61xx
-Date: Wed,  9 Sep 2026 15:36:04 +0200
-Message-ID: <20260909134240.849123316@linuxfoundation.org>
+	Wupeng Ma <mawupeng1@huawei.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 115/583] mm/hugetlb: fix missing migratable flag on same-node hugetlb migration
+Date: Wed,  9 Sep 2026 15:36:40 +0200
+Message-ID: <20260909134242.113152181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,128 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
+From: Wupeng Ma <mawupeng1@huawei.com>
 
-commit dc3565a4ae538e584e5e63b3b3cd1eaf502593c1 upstream.
+commit 8ee1ef0f2f8ce29338f4ab00a3d344c010208058 upstream.
 
-ahci_single_level_irq_intr() services the ports first and clears the
-global HOST_IRQ_STAT afterwards, as recommended by AHCI 1.1 section
-10.6.2.  The Marvell 88SE6111/6121/6145 family stops reporting interrupts
-for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits:
-PxIS keeps its content, HOST_IRQ_STAT reads back as 0, the port is never
-looked at again, and the command in flight only ends in a timeout.
+Commit ba23f58de896 ("mm/migrate: don't call
+folio_putback_active_hugetlb() on dst hugetlb folio") moved setting of the
+migratable flag and active-list placement from
+folio_putback_active_hugetlb(dst) into move_hugetlb_state(), so that the
+freshly allocated destination folio is handled where allocation is known
+to have succeeded.
 
-Measured on a Seagate Blackarmor NAS440 (Marvell 88F6281 Kirkwood,
-88SE6121 rev B2 behind PCIe) by polling the AHCI registers from userspace
-while an IDENTIFY was outstanding:
+Unfortunately, the new code was appended after the existing
+temporary-folio block in move_hugetlb_state(), which contains an early
+return added earlier by commit 5af1ab1d24e08 ("mm/hugetlb: optimize the
+surplus state transfer code in move_hugetlb_state()"):
 
-  t=303.046  irqs 127  PxIS 0x00000000  PxCI 0x00000001
-             IDENTIFY issued
-  t=303.057  irqs 128  PxIS 0x00000020  PxCI 0x00000000
-             CI cleared, DPS set, one interrupt taken
-             ... PxIS stays 0x00000020, HOST_IRQ_STAT stays 0 ...
-  t~308.05   qc timeout after 5000 msecs
+  if (folio_test_hugetlb_temporary(new_folio)) {
+      ...
+      if (new_nid == old_nid)
+          return;                       <-- skips the new code
+      ...
+  }
 
-The command had completed - PxCI was clear and PxIS had DPS set - so
-ahci_qc_complete() would have completed it.  It never got the chance
-because the handler read HOST_IRQ_STAT as 0 and returned IRQ_NONE.
+  /* added by ba23f58 */
+  folio_set_hugetlb_migratable(new_folio);
+  list_move_tail(&new_folio->lru, ...&h->hugepage_activelist);
 
-Marvell's own driver for these chips clears the two registers in the
-opposite order and says so ("clear global before channel"), and
-ahci_xgene handles its broken edge latch the same way.  Since the
-reordering costs at most one spurious interrupt per valid one on
-conforming controllers, do it in a private interrupt handler selected for
-board_ahci_mv instead of changing libahci for everyone.
+When the destination folio is temporary (i.e.  the hugetlb pool was
+exhausted and the migration callback fell back to
+alloc_migrate_hugetlb_folio()) and the migration does not cross a node --
+the common case, and always true on a single-NUMA system --
+move_hugetlb_state() returns before setting the migratable flag or adding
+the new folio to the active list.  The destination folio is then installed
+in the page table but cannot be isolated afterwards, since
+folio_isolate_hugetlb() rejects folios without the migratable flag; a
+subsequent soft-offline, hard-offline or memory-hotplug offline of that
+folio fails with -EBUSY.
 
-With this applied, SATA-2 and SATA-3 disks work at 3.0 Gbps on the
-88SE6121 without the drive-side 1.5 Gbps jumper that was needed before.
-Time from link up to a successful IDENTIFY:
+This was reproduced on a single-NUMA arm64 VM: a second MADV_SOFT_OFFLINE
+on an already-migrated hugetlb page returned EBUSY and logged "hugepage
+isolation failed".
 
-  WDC WD5000AADS-00S9B0  port 0    7 ms  (never identified before)
-  WDC WD3202ABYS-01B7A0  port 1   28 ms
-  WDC WD30EFRX-68EUZN0   port 1  200 ms  (3 TB, HPA detection ok)
+Keep the surplus adjustment, which is the only part that depends on the
+node crossing, guarded by `if (new_nid != old_nid)', while making the
+migratable flag and active-list placement unconditional.  This preserves
+the cleanup intent of ba23f58 and closes the early-return hole.
 
-Only the 88SE6121 was tested; board_ahci_mv also covers the 88SE6145,
-which Marvell's driver treats identically.
-
-Fixes: cd70c26617f4 ("[libata] AHCI: Add support for Marvell AHCI-like chips (initially 6145)")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-ide/db6b48b7-d69a-564b-24f0-75fbd6a9e543@noerenberg.de/
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
-Signed-off-by: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Acked-by: Pali Rohar <pali@kernel.org>
-Link: https://lore.kernel.org/r/20260831124303.920391-1-hajo-linux-ide@noerenberg.de
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/20260707110254.3147686-1-mawupeng1@huawei.com
+Fixes: ba23f58de896 ("mm/migrate: don't call folio_putback_active_hugetlb() on dst hugetlb folio")
+Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.c |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ mm/hugetlb.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -1686,6 +1686,51 @@ static irqreturn_t ahci_thunderx_irq_han
- }
- #endif
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -7916,14 +7916,14 @@ void move_hugetlb_state(struct folio *ol
+ 		 * There is no need to transfer the per-node surplus state
+ 		 * when we do not cross the node.
+ 		 */
+-		if (new_nid == old_nid)
+-			return;
+-		spin_lock_irq(&hugetlb_lock);
+-		if (h->surplus_huge_pages_node[old_nid]) {
+-			h->surplus_huge_pages_node[old_nid]--;
+-			h->surplus_huge_pages_node[new_nid]++;
++		if (new_nid != old_nid) {
++			spin_lock_irq(&hugetlb_lock);
++			if (h->surplus_huge_pages_node[old_nid]) {
++				h->surplus_huge_pages_node[old_nid]--;
++				h->surplus_huge_pages_node[new_nid]++;
++			}
++			spin_unlock_irq(&hugetlb_lock);
+ 		}
+-		spin_unlock_irq(&hugetlb_lock);
+ 	}
  
-+/*
-+ * The Marvell 88SE6111/6121/6145 ("Thor") family stops reporting interrupts
-+ * for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits: PxIS
-+ * keeps its content, HOST_IRQ_STAT reads back as 0, the port is never looked
-+ * at again and the command in flight only ends in a timeout.  On a 88SE6121
-+ * this makes every SATA-2 or SATA-3 disk fail to IDENTIFY, while SATA-1 disks
-+ * happen to win the race often enough to work.
-+ *
-+ * Clearing the host status before servicing the ports avoids it.  Marvell's
-+ * own driver for these chips does the same and says so ("clear global before
-+ * channel"), and ahci_xgene handles its broken edge latch the same way.  The
-+ * price is at most one spurious interrupt per valid one, which is why this is
-+ * not the generic behaviour - see AHCI 1.1 section 10.6.2.
-+ *
-+ * Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
-+ */
-+static irqreturn_t ahci_mv_irq_handler(int irq, void *dev_instance)
-+{
-+	struct ata_host *host = dev_instance;
-+	struct ahci_host_priv *hpriv = host->private_data;
-+	void __iomem *mmio = hpriv->mmio;
-+	unsigned int rc;
-+	u32 irq_stat, irq_masked;
-+
-+	irq_stat = readl(mmio + HOST_IRQ_STAT);
-+	if (!irq_stat)
-+		return IRQ_NONE;
-+
-+	irq_masked = irq_stat & hpriv->port_map;
-+
-+	spin_lock(&host->lock);
-+
-+	/*
-+	 * Use the unmasked value to clear the interrupt, as a spurious pending
-+	 * event on a dummy port might cause a screaming IRQ.
-+	 */
-+	writel(irq_stat, mmio + HOST_IRQ_STAT);
-+
-+	rc = ahci_handle_port_intr(host, irq_masked);
-+
-+	spin_unlock(&host->lock);
-+
-+	return IRQ_RETVAL(rc);
-+}
-+
- static void ahci_remap_check(struct pci_dev *pdev, int bar,
- 		struct ahci_host_priv *hpriv)
- {
-@@ -1971,6 +2016,10 @@ static int ahci_init_one(struct pci_dev
- 		return -ENOMEM;
- 	hpriv->flags |= (unsigned long)pi.private_data;
- 
-+	/* the Marvell "Thor" family needs HOST_IRQ_STAT cleared first */
-+	if (board_id == board_ahci_mv)
-+		hpriv->irq_handler = ahci_mv_irq_handler;
-+
- 	/* MCP65 revision A1 and A2 can't do MSI */
- 	if (board_id == board_ahci_mcp65 &&
- 	    (pdev->revision == 0xa1 || pdev->revision == 0xa2))
+ 	/*
 
 
