@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C391D5519A9;
-	Wed,  9 Sep 2026 13:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF09545D82;
+	Wed,  9 Sep 2026 13:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962040; cv=none; b=lughPt0URCeI7RwZOuRGICovUoBpg4cqq/D0NjFn1RguBov8x6JVSsox7M5c4QdbikNALe17EzsQgF2EUCQuNc8mcoyRB3PtMx1TCgHXYZT6UDG6N18sizD8zJqN9NqY6fayvjdVprQbdu0Bz++n0MAZBLwTfenXRSZBVe0uU+g=
+	t=1788962042; cv=none; b=QFAwrG0uP36TZx50Kc/MVXBreSIkQDjPkQ4oslA0uLEnKArktTrfU/bA4APUyJE/Hvk5nU6uJx3GCdH6XL6RxhNr+2KpYrh3TE8NQEa1YfjZazAZs0rocJHp0MqhN/z8/Fstr46HwCOjHJWjjBy7XJgwgdG42g9ujPZOnUVOFjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962040; c=relaxed/simple;
-	bh=JNMqyCmQ0AU3o3Z6s4NqAMZt2UgxYqaN+ChpFUWzD1o=;
+	s=arc-20240116; t=1788962042; c=relaxed/simple;
+	bh=IhmpGJIjNiRgo3K9XLDAabUfTgSlEmvGuvS7h0cJ3fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nfWhAkjjWSzR/sxbGldXIbfvBko1579iJa/+z9mPyBthiYO5VWiQs/NRcCeAR+kruquW/56x/ecDuPBDQTW/Y5A0x4ZX8HrWwZaEW5h+P07a19VMCIaTtQnmNDUCHSoA9ec+1WFdpRas6yCZmQQqWVTRk69m6uAIJoPFR87sEPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N67oLhtD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cZavq9DlCnFC5KgkOuepTFC1cspuXOcpA127MgDKoMM9svGpHtZk/T6MctagwjLigmAsd1RDfTDSDOeZ4DpNgiLB1M4Gh5PaCTr8VqBHrqx6i/NnW5sCypsMyi5NnLFra4JUXHZ1YA1YOq81d7pD43KDanmlIYNHhon82jveS0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DU87pQBy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N67oLhtD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2790D1F00A3A;
-	Wed,  9 Sep 2026 13:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DU87pQBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146121F00A3A;
+	Wed,  9 Sep 2026 13:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962038;
-	bh=VSwuP1wuXGmjSqky6aCtxEMOGkRdWTm3jjyu6Kma+0g=;
+	s=korg; t=1788962041;
+	bh=5C7gyf4q5BirYT/XUDswav17obJzgO6b9gOG21Wx+5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N67oLhtDXDgdBjCEO/sGFTreIdf8BOht9NDZXdzKn1LBdx0kQhdgt/VLO2T0x8xc0
-	 vxGwQuRutNrYAcbJh6gHr4OdmBTGJ/FhKKgC6azG5xe6p9QFO0ZqjpqoNs55W+AKk/
-	 7GUT9mw2WTM2UXZYUxhdSZA4ereYEW+nCSowJqws=
+	b=DU87pQByKyFaGntSR84uhW4gc8J7HPJz0Ff7prbdHtOjxiojdsSimT5Zk+Ck11gnr
+	 Es4hZ3O8fzB0chaztTUr4kh3CZ+Io0BtxzlAznE2cKL09mYF0m6sLV7ZYxWIagyfOh
+	 j9VMbClXJtfZZtya71+WLgGPts0fVr9FL++ZRei8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+225231fce6755d40d078@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 151/556] ALSA: pcm: Fix race between non-atomic ops and trigger-start
-Date: Wed,  9 Sep 2026 15:37:11 +0200
-Message-ID: <20260909134235.750025156@linuxfoundation.org>
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 152/556] ring-buffer: Allow splice reads on static buffers
+Date: Wed,  9 Sep 2026 15:37:12 +0200
+Message-ID: <20260909134235.783008402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,56 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-commit acac7b5e07349a9d10d78873afb4b93cd1dc721f upstream.
+commit 6365c44a824ff138e7926413932bb5c2e28a4c8c upstream.
 
-We protect the races of the concurrent state transitions between
-atomic PCM ops, but the checks between the non-atomic ops (hw_params,
-hw_free and prepare) and the atomic ops aren't perfect; there is a
-check of the conflicting PCM state at the beginning of hw_params & co,
-but the atomic PCM ops can be still issued during the non-atomic PCM
-operations.  An example such scenario is that a thread A re-issues the
-PREPARE or HW_PARAMS for the already prepared stream, while another
-thread B triggers the PCM start in the middle of the prepare
-operation.  Although this usually doesn't lead to much serious issues,
-it can give some inconsistency as reported by syzkaller (such as
-ODEBUG warning).
+ring_buffer_read_page() rejects splice (full=1) reads on static buffers
+(that is user-mapped, persistent or remote) because !read check assumes
+unread pages must be swapped. However for those buffers we have no other
+choice than memcpy the data.
 
-There are various atomic PCM ops, and basically the only problem is
-the PCM start as it operates from the PREPARED state.  Other trigger
-commands (stop, etc) are for the running or the other special state,
-hence they are filtered as pre-condition.
+For the memcpy case, only return an error when the writer is still on
+the reader page for the splice interface to wait.
 
-This patch is for preventing the PCM trigger-start during the non-
-atomic operations in order to address the problems above.
-Fortunately, the hw_params, hw_free and prepare operations call
-snd_pcm_buffer_access_lock(), and this can be used for checking the
-concurrent operations at the PCM trigger -- which sets the
-runtime->buffer_accessing to a negative (if possible), so the PCM
-trigger just needs to check the runtime->buffer_accessing value; if
-it's negative, it means the concurrent non-atomic PCM ops is running.
-
-Reported-by: syzbot+225231fce6755d40d078@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/6a8f0de8.1d9ded08.62e62.00b5.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260828115542.3999-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260901155445.1475405-2-vdonnefort@google.com
+Fixes: 117c39200d9d ("ring-buffer: Introducing ring-buffer mapping functions")
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_native.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/ring_buffer.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -1468,6 +1468,8 @@ static int snd_pcm_pre_start(struct snd_
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	if (runtime->state != SNDRV_PCM_STATE_PREPARED)
- 		return -EBADFD;
-+	if (atomic_read(&runtime->buffer_accessing) < 0)
-+		return -EBADFD; /* during hw_params, hw_free or prepare */
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
- 	    !snd_pcm_playback_data(substream))
- 		return -EPIPE;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -7182,15 +7182,8 @@ int ring_buffer_read_page(struct trace_b
+ 		unsigned int event_size;
+ 		unsigned int flags = 0;
+ 
+-		/*
+-		 * If a full page is expected, this can still be returned
+-		 * if there's been a previous partial read and the
+-		 * rest of the page can be read and the commit page is off
+-		 * the reader page.
+-		 */
+-		if (full &&
+-		    (!read || (len < (size - read)) ||
+-		     cpu_buffer->reader_page == cpu_buffer->commit_page))
++		/* If a full page is requested, it cannot be the commit page */
++		if (full && cpu_buffer->reader_page == cpu_buffer->commit_page)
+ 			return -1;
+ 
+ 		if (len > (size - read))
 
 
