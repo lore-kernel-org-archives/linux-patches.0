@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81994F55A5;
-	Wed,  9 Sep 2026 13:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865E15519A9;
+	Wed,  9 Sep 2026 13:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962086; cv=none; b=B1pRfOGtnJUqvT80z61XWKy68SxgQUEe6MXoKUDoOsr0+zwo6mw2aSOglJvMQOJsgVb32cFiMtqEyezbkuZKnAw7mGGIxSIqMFI4oZrvh6gJzjSw1wPKSBKhtZ3VkE9sq1fVMLna6Q8zQT1ZR54SoAqICmOdK2elM26jSiFw5Wo=
+	t=1788962088; cv=none; b=J3Gfz/pQWJqA8QJ3LyZ3CyE7//zHGQKAK2J+ht2q7Lzse39CCe9ve4likpuNPhWO3Ordwr90Xsskep59YTa9ZqaWKA5oLIrobzBBq8FEJDNdZ0OW2W7Fu/ymkzVoN8YRFsb/632u2M1sC3u8H6VdIoS8+UzfaCW0oF9AsXHNyu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962086; c=relaxed/simple;
-	bh=qRQZ1cXx1NznQqh5GOXQ87WUKMCEoptn5oNZ0mgnClU=;
+	s=arc-20240116; t=1788962088; c=relaxed/simple;
+	bh=fUcFpHqydFni7T5Ee8tIKRVwigSQHtZ+P75sfQtdDcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3AvxEwiz5OQh9+7kZmD14epWtpWHjLAiBmIBa/pkeOoP+N+bsUh0Mi3TOsc9XhDbA7ieSxwvYXXE9T0au+osEmwY0kk7R5B6L5wV4viL1NwmhzSNUoJ/NeyNaRgDLplsau0UIPhczXo4MaIcaUxPcsKEfwMAWq7oQeEoRj7Wzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/23XrJ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mt11ldg+/1G9M1rSh1KBlwHwaaPX/D4+lOJbh3u4K/51Mqbrab7v+xgx1MdJKk4RDeVzeZcnF+dNKdawmEJQG/ZP0IssjxMzezKKEHs0ka2imRXeyOW3C9DU8fn2It8SD8xvSCMkZGm1qXCo8NNnpOZAev60673+5f95RHi0AMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfjXiV10; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/23XrJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159991F00A3A;
-	Wed,  9 Sep 2026 13:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfjXiV10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82601F00A3A;
+	Wed,  9 Sep 2026 13:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962084;
-	bh=QvOdDSS6gBTO/NPFBtG+uDl3ZkuSeWLuiSFdHdtvoQg=;
+	s=korg; t=1788962087;
+	bh=wbIAoxUkB9If0xjnS+saDOutxAaKjWcR+eg4igvDMSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/23XrJ8rA62M2d8+sNw0MjrFzrNpsL3U2MpPLG0GUyqbois0dCbsmvoDtsS5oEaB
-	 a3dwGXcEgvou+HqT/TRnXwpOKxSWapIevYFhJo3pRwEqS2fhDDjZlsr6XDpMhgbKZG
-	 +t1Z8w32PetiAlBl4acmO82wTW+X3qvH8g+99+kI=
+	b=PfjXiV107vHpmq4RXsSHDZmkLuKfDfwzD8QUA5Pchuq5kPHv4tE849Xfg3K4HSlkc
+	 eCKWtVcX0ulI264nENGm/0Y1rLdfFHZZY9sYR1JYFjDIRRWUxMNdb111UP8nOz9bNs
+	 MW/APiQ7Vdn3jCPZxWfattoapRs8oq8XudXG03P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
-	Karl Erik Hofseth <karl.e.hofseth@opoint.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Qi Zheng <qi.zheng@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Michal Hocko <mhocko@suse.com>,
+	David Rientjes <rientjes@google.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Rik van Riel <riel@surriel.com>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 127/556] memcg: keep folios objcg same as its node
-Date: Wed,  9 Sep 2026 15:36:47 +0200
-Message-ID: <20260909134234.928180748@linuxfoundation.org>
+Subject: [PATCH 7.2 128/556] memcg: bypass the reclaim and oom killer for dying tasks once oom_reaper is done
+Date: Wed,  9 Sep 2026 15:36:48 +0200
+Message-ID: <20260909134234.960964526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -58,225 +60,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit bf4ade7dbd76d4ec8697840e4ebb15ed77c5ec26 upstream.
+commit 6b0d1083364fc8e7cc2f7d1f93ee3ee78f4d52f7 upstream.
 
-memcg_reparent_objcgs() has an inherent assumption that a folio's objcg is
-the objcg of the folio's node.  Folio migration across nodes breaks that
-assumption: the new folio simply inherits the old folio's objcg while
-living on a different node.
+At Meta, we are seeing instances where an OOM killed job is stuck in the
+exit path for several hours.  In one particular case, the job was stuck
+for more than 8 hours and I had to manually remove the memory.max limits
+to allow the process to exit.
 
-Once the assumption is broken, the reparenting of the folio's objcg and
-the reparenting of the folio's LRU list are no longer atomic.
-memcg_reparent_objcgs() handles one node per iteration and drops all the
-locks in between, so the objcg gets reparented in the iteration for the
-objcg's node while the LRU list gets spliced in the iteration for the
-folio's node.  Any LRU operation on that folio in between resolves its
-lruvec through the objcg, and thus takes the lru_lock of the wrong memcg,
-not the lru_lock of the list the folio is actually on.
+The job was a single process job and had ~55 GiB memory.max and zswap
+enabled.  It had almost 0 anon in memory and ~111 GiB in zswap compressed
+to ~51 GiB zswap pool (i.e.  almost all of memory.current was zswap).
+Nothing was left on the LRUs to reclaim.
 
-Fix this by selecting the objcg by folio_nid() at charge time, and by
-re-deriving it for the destination node in mem_cgroup_migrate() and
-mem_cgroup_replace_folio().
+On further inspection, I observed ~20k threads of that process stuck with
+the following stack:
 
-Link: https://lore.kernel.org/20260807142406.443516-1-shakeel.butt@linux.dev
-Fixes: f1cf8d2f36dc ("mm: memcontrol: eliminate the problem of dying memory cgroup for LRU folios")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+[<0>] mem_cgroup_out_of_memory+0x4e/0xa0
+[<0>] charge_memcg+0x8bf/0x990
+[<0>] mem_cgroup_swapin_charge_folio+0x4e/0x80
+[<0>] __read_swap_cache_async+0x10c/0x260
+[<0>] swapin_readahead+0x116/0x3f0
+[<0>] do_swap_page+0x13c/0x1ce0
+[<0>] handle_mm_fault+0x61d/0x11f0
+[<0>] do_user_addr_fault+0x3e7/0x6d0
+[<0>] exc_page_fault+0x8f/0x110
+[<0>] asm_exc_page_fault+0x22/0x30
+[<0>] __get_user_8+0x14/0x20
+[<0>] futex_cleanup+0x27/0x1c0
+[<0>] futex_exit_release+0x47/0x60
+[<0>] do_exit+0x107/0x940
+[<0>] do_group_exit+0x81/0xa0
+[<0>] get_signal+0x2b1/0x6e0
+[<0>] arch_do_signal_or_restart+0x1a/0x1c0
+[<0>] exit_to_user_mode_loop+0xa8/0x1c0
+[<0>] do_syscall_64+0x152/0x250
+[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+In addition the dmesg was filled with "Out of memory and no killable
+processes..." messages.
+
+I have no idea why oom reaper was not able to reap/unmap the process.  My
+guess is that since oom reaper tries to acquire mmap_lock in read mode
+limited number of times and then gives up, there might be a thread of that
+process which had mmap_lock in write mode at that time.
+
+My initial suspicion was the futex_cleanup and kernel page fault causing
+infinite fault and charge retries but that was put to rest in previous
+discussions happened on similar problem [1].
+
+My current theory is that it is just a simple slow serialization behind
+the oom_lock.  Unlike page allocator, memcg charge code takes the oom_lock
+without the "try".  Though memcg oom code uses mutex_lock_killable(), note
+that in the call stack get_signal() consumes SIGKILL (or
+sigdelset(SIGKILL)) before calling do_group_exit().  So this
+mutex_lock_killable() is just a mutex_lock() here.  Therefore 10s of
+thousands of threads are waiting on oom_lock and one by one they get
+-EFAULT from get_user() in the futex cleanup code and bails out.
+
+Discussion from [1] led to commit a75ffa26122b ("memcg, oom: do not bypass
+oom killer for dying tasks") which routes dying tasks into the OOM path
+precisely so the oom_reaper can reap their mm and free the memory
+asynchronously.  But the reaper is best-effort and one-shot: if it cannot
+take mmap_lock for read (e.g.  a sibling thread holds it for write) it
+sets MMF_OOM_SKIP and never retries, leaving only the glacial
+oom_lock-serialized synchronous drain.
+
+Once MMF_OOM_SKIP is set there is no more asynchronous reclaim coming for
+the mm, so a dying task charging against it has nothing left to wait for:
+it frees its memory only once it finishes exiting.  Running reclaim and
+the (no-victim) OOM killer for it is then pointless, and doing it for 10s
+of thousands of exiting threads is what serializes them behind oom_lock.
+So before reclaim, if current is an OOM victim whose reaper is done, fail
+the charge.
+
+Reproduced with 20k threads, each parking a robust futex head on its own
+zswapped page, OOM-group-killed while a sibling holds mmap_lock for write
+so the reaper gives up and sets MMF_OOM_SKIP.  Tested on next-20260728 and
+baseline show ~90 seconds exit time while with the patch the exit time
+reduced to ~3 seconds.
+
+Link: https://lore.kernel.org/20260729024612.3369005-1-shakeel.butt@linux.dev
+Link: https://lore.kernel.org/7a4e5591f45df455e6a485fc5400989569d3d22d.camel@surriel.com/ [1]
 Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reported-by: Karl Erik Hofseth <karl.e.hofseth@opoint.com>
-Closes: https://lore.kernel.org/all/anMmd1ADrDVwMO6v@work/
-Co-developed-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Qi Zheng <qi.zheng@linux.dev>
-Cc: Michal Hocko <mhocko@suse.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Rik van Riel <riel@surriel.com>
 Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |  100 ++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 83 insertions(+), 17 deletions(-)
+ mm/memcontrol.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
-@@ -2907,10 +2907,9 @@ struct mem_cgroup *mem_cgroup_from_virt(
- 	return folio_memcg_check(virt_to_folio(p));
- }
+@@ -2648,6 +2648,19 @@ retry:
+ 	if (!gfpflags_allow_blocking(gfp_mask))
+ 		goto nomem;
  
--static struct obj_cgroup *__get_obj_cgroup_from_memcg(struct mem_cgroup *memcg)
-+static struct obj_cgroup *__get_obj_cgroup_from_memcg(struct mem_cgroup *memcg,
-+						      int nid)
- {
--	int nid = numa_node_id();
--
- 	for (; memcg; memcg = parent_mem_cgroup(memcg)) {
- 		struct obj_cgroup *objcg = rcu_dereference(memcg->nodeinfo[nid]->objcg);
- 
-@@ -2921,12 +2920,13 @@ static struct obj_cgroup *__get_obj_cgro
- 	return NULL;
- }
- 
--static inline struct obj_cgroup *get_obj_cgroup_from_memcg(struct mem_cgroup *memcg)
-+static inline struct obj_cgroup *get_obj_cgroup_from_memcg(struct mem_cgroup *memcg,
-+							   int nid)
- {
- 	struct obj_cgroup *objcg;
- 
- 	rcu_read_lock();
--	objcg = __get_obj_cgroup_from_memcg(memcg);
-+	objcg = __get_obj_cgroup_from_memcg(memcg, nid);
- 	rcu_read_unlock();
- 
- 	return objcg;
-@@ -2970,7 +2970,7 @@ static struct obj_cgroup *current_objcg_
- 
- 		rcu_read_lock();
- 		memcg = mem_cgroup_from_task(current);
--		objcg = __get_obj_cgroup_from_memcg(memcg);
-+		objcg = __get_obj_cgroup_from_memcg(memcg, numa_node_id());
- 		rcu_read_unlock();
- 
- 		/*
-@@ -5133,7 +5133,7 @@ static int charge_memcg(struct folio *fo
- 	int ret = 0;
- 	struct obj_cgroup *objcg;
- 
--	objcg = get_obj_cgroup_from_memcg(memcg);
-+	objcg = get_obj_cgroup_from_memcg(memcg, folio_nid(folio));
- 	/* Do not account at the root objcg level. */
- 	if (!obj_cgroup_is_root(objcg))
- 		ret = try_charge_memcg(memcg, gfp, folio_nr_pages(folio));
-@@ -5332,6 +5332,46 @@ void __mem_cgroup_uncharge_folios(struct
- 		uncharge_batch(&ug);
- }
- 
-+/*
-+ * An LRU folio must hold the objcg belonging to its own node.
-+ *
-+ * memcg_reparent_objcgs() reparents a dying cgroup one node at a time: the
-+ * folios on that node's LRU lists move to the parent and that node's objcg is
-+ * redirected to the parent, atomically under the node's lru_lock.
-+ * folio_lruvec_lock() relies on this to provide a stable folio<->lruvec
-+ * binding. If a folio holds another node's objcg, its list membership and its
-+ * lruvec resolution change in separate lock sections, and an LRU operation in
-+ * between can re-add the folio to, and strand it on, the LRU list of a dead
-+ * memcg.
-+ *
-+ * So when migration transfers the memcg state to a folio on another node,
-+ * re-derive the objcg for the destination node. If the memcg is dying and the
-+ * destination node has already been reparented, the lookup walks up to the
-+ * nearest live ancestor - which is also where that node's LRU lists went.
-+ *
-+ * Returns the objcg to commit to @new, with a reference for the caller.
-+ */
-+static struct obj_cgroup *get_migration_objcg(struct folio *old,
-+					      struct folio *new)
-+{
-+	struct obj_cgroup *old_objcg, *new_objcg;
-+	int new_nid = folio_nid(new);
-+
-+	old_objcg = get_obj_cgroup_from_folio(old);
-+
-+	if (folio_nid(old) == new_nid)
-+		return old_objcg;
-+
-+	rcu_read_lock();
-+	new_objcg = __get_obj_cgroup_from_memcg(obj_cgroup_memcg(old_objcg),
-+						new_nid);
-+	rcu_read_unlock();
-+
-+	obj_cgroup_put(old_objcg);
-+
-+	return new_objcg;
-+}
-+
- /**
-  * mem_cgroup_replace_folio - Charge a folio's replacement.
-  * @old: Currently circulating folio.
-@@ -5360,21 +5400,28 @@ void mem_cgroup_replace_folio(struct fol
- 	if (folio_memcg_charged(new))
- 		return;
- 
--	objcg = folio_objcg(old);
--	VM_WARN_ON_ONCE_FOLIO(!objcg, old);
--	if (!objcg)
-+	VM_WARN_ON_ONCE_FOLIO(!folio_objcg(old), old);
-+	if (!folio_objcg(old))
- 		return;
- 
-+	objcg = get_migration_objcg(old, new);
-+
- 	rcu_read_lock();
- 	memcg = obj_cgroup_memcg(objcg);
--	/* Force-charge the new page. The old one will be freed soon */
-+
 +	/*
-+	 * Force-charge the new page. The old one will be freed soon.
-+	 *
-+	 * The rootness of the committed objcg decides whether the final
-+	 * uncharge of @new goes through the page counters (see
-+	 * uncharge_folio()); charge them only if the uncharge will.
++	 * OOM victim still needs to charge memory to exit. OOM reaper should
++	 * help but it might fail on mmap_lock contention. If the victim is a
++	 * large thread group then all exiting threads might compete on oom_lock
++	 * just to learn that there is nothing really killable anymore. Bail
++	 * out early and fail the charge to expedite their exit. They are
++	 * considered fully reclaimed by the oom reaper and they shouldn't
++	 * contribute further charges.
 +	 */
- 	if (!obj_cgroup_is_root(objcg)) {
- 		page_counter_charge(&memcg->memory, nr_pages);
- 		if (do_memsw_account())
- 			page_counter_charge(&memcg->memsw, nr_pages);
- 	}
- 
--	obj_cgroup_get(objcg);
- 	commit_charge(new, objcg);
- 	memcg1_commit_charge(new, memcg);
- 	rcu_read_unlock();
-@@ -5386,14 +5433,15 @@ void mem_cgroup_replace_folio(struct fol
-  * @new: Replacement folio.
-  *
-  * Transfer the memcg data from the old folio to the new folio for migration.
-- * The old folio's data info will be cleared. Note that the memory counters
-- * will remain unchanged throughout the process.
-+ * The old folio's data info will be cleared. The memory counters remain
-+ * unchanged, unless the charge moves out of a fully reparented ancestry
-+ * and has to be settled (see below).
-  *
-  * Both folios must be locked, @new->mapping must be set up.
-  */
- void mem_cgroup_migrate(struct folio *old, struct folio *new)
- {
--	struct obj_cgroup *objcg;
-+	struct obj_cgroup *objcg, *new_objcg;
- 
- 	VM_BUG_ON_FOLIO(!folio_test_locked(old), old);
- 	VM_BUG_ON_FOLIO(!folio_test_locked(new), new);
-@@ -5414,12 +5462,30 @@ void mem_cgroup_migrate(struct folio *ol
- 	if (!objcg)
- 		return;
- 
--	/* Transfer the charge and the objcg ref */
--	commit_charge(new, objcg);
-+	new_objcg = get_migration_objcg(old, new);
++	if (tsk_is_oom_victim(current) &&
++	    mm_flags_test(MMF_OOM_SKIP, current->signal->oom_mm))
++		goto nomem;
 +
-+	/*
-+	 * @old was charged through a non-root objcg, so its charge is in the
-+	 * page counters. If the re-derivation walked up to the root objcg -
-+	 * @old's entire ancestry is dying and already reparented - the final
-+	 * uncharge of @new will skip the page counters (see uncharge_folio()).
-+	 * Settle them now: this is @old's eventual uncharge, moved up to the
-+	 * point where its charge record ends.
-+	 */
-+	if (obj_cgroup_is_root(new_objcg) && !obj_cgroup_is_root(objcg)) {
-+		rcu_read_lock();
-+		memcg_uncharge(obj_cgroup_memcg(objcg), folio_nr_pages(old));
-+		rcu_read_unlock();
-+	}
-+
-+	commit_charge(new, new_objcg);
+ 	__memcg_memory_event(mem_over_limit, MEMCG_MAX, allow_spinning);
+ 	raised_max_event = true;
  
- 	/* Warning should never happen, so don't worry about refcount non-0 */
- 	WARN_ON_ONCE(folio_unqueue_deferred_split(old));
- 	old->memcg_data = 0;
-+
-+	/* @new holds its own reference now, drop @old's */
-+	obj_cgroup_put(objcg);
- }
- 
- DEFINE_STATIC_KEY_FALSE(memcg_sockets_enabled_key);
 
 
