@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0301576ED2;
-	Wed,  9 Sep 2026 14:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71E8563299;
+	Wed,  9 Sep 2026 14:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964695; cv=none; b=PRThPTm7YUThFhjA9rbQKwnVZjRbmqAUl+N9ZvNp2f2vf6d2PajlzOUHW/TlrgCtiaQcraDufOgkCzS8mTY8Z1jSWmr4BxdgYhrmVCU4Irztvcyz7OGX3SY8pVDQxtpPiZZbPaGB5zcsDxOoQtawjJe+AYjYVhTvJxCnkFdzafc=
+	t=1788964698; cv=none; b=r1xOnxSfD8ajJI5Omfx8Jky2wPnRKRsEHEqOgBENjQpZcYnM6AFhNbWlsXc1DcNfNt10EVwy0VXPC7c4feYAjXEKwNHe8dRcA5xcAOKXWVb0fUYsBrgTu/xHBtRhhISUj3E1xvdxbcL8dGjfyjKAKLKZqnDR1CXOnyrs2E5qouY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964695; c=relaxed/simple;
-	bh=los1Y+arljoMV32ak3GGuGtl8atsf7lNL6MJLCCwsvc=;
+	s=arc-20240116; t=1788964698; c=relaxed/simple;
+	bh=h5qMD2lRk8pAifxxznAa8MD5AfSEJlDRmrHNfHZ1JdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPoVeAUTBONjSF0Nv/lR84/z7GZxiX8vaCq55qnFI6qY8iHN7lIf7+YqaC+J/fcRGT5uWHd+ZC5n8IkoM2U3HcaRusBUGN2sZzgFRGFw1l8YZRf+uPkIRPRK7YOmNmZ6JikByYBlTOMSYu36aGGzYfOQbcCPgP2m0WcAiWS2Gzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5lRxsy4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEtuo2wVl/2r2mcHrjRa/2Z5GTc9R7caHn3adq61EBVqmvDUN4BMmSVxPeFYyW+cguA83RvA34DPmZrjhBBTSgObeMpQRrLg4znlez5TkH0LOKi6PXhjW+S9ODf6Wo6XrAkrI73HBvzN6M1PO+/2ToOgtIIOLd3+Lva17MG4eCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdWXMnQV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5lRxsy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5E11F00A3A;
-	Wed,  9 Sep 2026 14:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdWXMnQV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6581F00A3A;
+	Wed,  9 Sep 2026 14:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964693;
-	bh=8dewr8rlGJeAHk5yAZEaTVlXECQqdYxjGO/CCN+Af9U=;
+	s=korg; t=1788964696;
+	bh=ns4YCWrR7l/VrToy167gNOSkoqW2oRIiZniqJZynYuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L5lRxsy4s8Yhq/CnhCP2qzijPoraCodfbMqI3hsXa9T1YbmyKigcn17w64HC0ress
-	 /VAwlmBtCJm2w5kp/opVosZkqYm4UZy4R9K6JCRllmieEq8B4QbocQ+d18U5ahCYOR
-	 AB7AKqe5udzJLm9awZR8rfb5+VMWVBoi5cKgFE9U=
+	b=XdWXMnQVV6guZrp+1qKhVBebgsgbTVrdAjF+UGww8wTRO6fb6kR/d6XbS7oKLyBJ1
+	 yCQ5AKfoTib3ZZDJ/cTxHi3ODOF2FPg47LNNf0/U3QSzCq786wjSh1zBeW7iinKz75
+	 TsfdpcjzbomHLb2aonsBHni7FAM8nAaUaDuDgZgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kees Cook <kees@kernel.org>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Oscar Ou <oscarou@synology.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 510/583] ocfs2: validate directory-index entry counts when reading metadata
-Date: Wed,  9 Sep 2026 15:43:15 +0200
-Message-ID: <20260909134255.419093301@linuxfoundation.org>
+Subject: [PATCH 6.18 511/583] lockd: fix swapped arguments in nlmsvc_match_ip()
+Date: Wed,  9 Sep 2026 15:43:16 +0200
+Message-ID: <20260909134255.449394432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -59,124 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Oscar Ou <oscarou@synology.com>
 
-[ Upstream commit bc70726ddad53c7e9a9a85915bf2415b0d4f42f9 ]
+[ Upstream commit b9060689f49dc663e9a3d069c4a65ff63a836e66 ]
 
-ocfs2_validate_dx_leaf() and ocfs2_validate_dx_root() check the ECC and
-signature of an indexed-directory block before it reaches higher-level
-callers, but neither validator bounds the ocfs2_dx_entry_list counts
-against the capacity of the block that holds them.
+When releasing locks by server IP address via /proc/fs/nfsd/unlock_ip,
+nlmsvc_unlock_all_by_ip() calls nlm_traverse_files() with the server
+sockaddr as the opaque @data argument:
 
-ocfs2_dx_dir_search() then walks
+	nlm_traverse_files(server_addr, nlmsvc_match_ip, NULL);
 
-	for (i = 0; i < le16_to_cpu(entry_list->de_num_used); i++)
-		dx_entry = &entry_list->de_entries[i];
+The match callback is later invoked from nlm_traverse_locks() as:
 
-over de_num_used entries with no bounds check.  entry_list is either
-dx_leaf->dl_list (from ocfs2_read_dx_leaf) or, for an inline root,
-dx_root->dr_entries.  A crafted on-disk image can set de_num_used (and
-de_count, which is the __counted_by_le() bound of de_entries) to 0xffff
-and make the walk read far past the end of the 4KB metadata block, giving
-a slab out-of-bounds read reachable from any path lookup, stat() or open()
-on an indexed directory once the image is mounted.
+	match(lockhost, host);
 
-Commit 775c17386a6f ("ocfs2: validate dx_root extent list fields during
-block read") already bounds dr_list for the non-inline dx_root, but left
-the inline dr_entries path and the dx_leaf dl_list unchecked.  Add the
-same read-time validation for both entry lists: de_count must equal the
-capacity of the block (ocfs2_dx_entries_per_leaf()/per_root()) and
-de_num_used must not exceed de_count, rejecting corrupted metadata with
--EFSCORRUPTED before ocfs2_dx_dir_search() can walk an out-of-range entry
-array.
+where the first argument is the nlm_host that owns the lock, and the
+second argument is the @data that was originally passed down (here the
+server sockaddr).  This is the convention every other match callback
+relies on (nlmsvc_mark_host(), nlmsvc_same_host(), nlmsvc_is_client()):
+arg1 is the real nlm_host, arg2 is the caller-supplied reference value.
 
-de_count is always written as exactly the block capacity when a leaf or
-inline root is formatted, so the equality check does not reject any valid
-image.
+nlmsvc_match_ip() has had these two arguments reversed ever since the
+unlock-by-IP feature was introduced in commit 4373ea84c84d ("lockd:
+unlock lockd locks associated with a given server ip"):
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
+	return rpc_cmp_addr(nlm_srcaddr(host), datap);
 
-Link: https://lore.kernel.org/20260713205625.92391-1-doruk@0sec.ai
-Fixes: 9b7895efac90 ("ocfs2: Add a name indexed b-tree to directory inodes")
-Fixes: 4ed8a6bb083b ("ocfs2: Store dir index records inline")
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Here @host is actually the server sockaddr, so nlm_srcaddr(host)
+dereferences a struct sockaddr as a struct nlm_host and reads garbage
+at the offset of h_srcaddr; meanwhile @datap is actually the lock
+owner's nlm_host but is compared as a sockaddr.  As a result the
+comparison practically never matches and locks are not released for the
+requested IP.
+
+Swap the arguments so the lock owner's source address is compared
+against the requested server address:
+
+	return rpc_cmp_addr(nlm_srcaddr(datap), (struct sockaddr *)host);
+
+Fixes: 4373ea84c84d ("lockd: unlock lockd locks associated with a given server ip")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oscar Ou <oscarou@synology.com>
+[ cel: fix the misleading typedef parameter names too ]
+Link: https://patch.msgid.link/20260617075738.1151797-1-oscarou@synology.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dir.c |   45 +++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 4 deletions(-)
+ fs/lockd/svcsubs.c          |    2 +-
+ include/linux/lockd/lockd.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/dir.c
-+++ b/fs/ocfs2/dir.c
-@@ -611,6 +611,28 @@ static int ocfs2_validate_dx_root(struct
- 					  le16_to_cpu(el->l_count));
- 			goto bail;
- 		}
-+	} else {
-+		struct ocfs2_dx_entry_list *dl_list = &dx_root->dr_entries;
-+
-+		if (le16_to_cpu(dl_list->de_count) !=
-+		    ocfs2_dx_entries_per_root(sb)) {
-+			ret = ocfs2_error(sb,
-+					  "Dir Index Root # %llu has invalid de_count %u (expected %u)\n",
-+					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
-+					  le16_to_cpu(dl_list->de_count),
-+					  ocfs2_dx_entries_per_root(sb));
-+			goto bail;
-+		}
-+
-+		if (le16_to_cpu(dl_list->de_num_used) >
-+		    le16_to_cpu(dl_list->de_count)) {
-+			ret = ocfs2_error(sb,
-+					  "Dir Index Root # %llu has invalid de_num_used %u (de_count %u)\n",
-+					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
-+					  le16_to_cpu(dl_list->de_num_used),
-+					  le16_to_cpu(dl_list->de_count));
-+			goto bail;
-+		}
- 	}
- 
- bail:
-@@ -650,10 +672,25 @@ static int ocfs2_validate_dx_leaf(struct
- 		return ret;
- 	}
- 
--	if (!OCFS2_IS_VALID_DX_LEAF(dx_leaf)) {
--		ret = ocfs2_error(sb, "Dir Index Leaf has bad signature %.*s\n",
--				  7, dx_leaf->dl_signature);
--	}
-+	if (!OCFS2_IS_VALID_DX_LEAF(dx_leaf))
-+		return ocfs2_error(sb, "Dir Index Leaf has bad signature %.*s\n",
-+				   7, dx_leaf->dl_signature);
-+
-+	if (le16_to_cpu(dx_leaf->dl_list.de_count) !=
-+	    ocfs2_dx_entries_per_leaf(sb))
-+		return ocfs2_error(sb,
-+				   "Dir Index Leaf # %llu has invalid de_count %u (expected %u)\n",
-+				   (unsigned long long)le64_to_cpu(dx_leaf->dl_blkno),
-+				   le16_to_cpu(dx_leaf->dl_list.de_count),
-+				   ocfs2_dx_entries_per_leaf(sb));
-+
-+	if (le16_to_cpu(dx_leaf->dl_list.de_num_used) >
-+	    le16_to_cpu(dx_leaf->dl_list.de_count))
-+		return ocfs2_error(sb,
-+				   "Dir Index Leaf # %llu has invalid de_num_used %u (de_count %u)\n",
-+				   (unsigned long long)le64_to_cpu(dx_leaf->dl_blkno),
-+				   le16_to_cpu(dx_leaf->dl_list.de_num_used),
-+				   le16_to_cpu(dx_leaf->dl_list.de_count));
- 
- 	return ret;
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -508,7 +508,7 @@ EXPORT_SYMBOL_GPL(nlmsvc_unlock_all_by_s
+ static int
+ nlmsvc_match_ip(void *datap, struct nlm_host *host)
+ {
+-	return rpc_cmp_addr(nlm_srcaddr(host), datap);
++	return rpc_cmp_addr(nlm_srcaddr(datap), (struct sockaddr *)host);
  }
+ 
+ /**
+--- a/include/linux/lockd/lockd.h
++++ b/include/linux/lockd/lockd.h
+@@ -268,7 +268,7 @@ void		  nsm_release(struct nsm_handle *n
+  * This is used in garbage collection and resource reclaim
+  * A return value != 0 means destroy the lock/block/share
+  */
+-typedef int	  (*nlm_host_match_fn_t)(void *cur, struct nlm_host *ref);
++typedef int	  (*nlm_host_match_fn_t)(void *owner, struct nlm_host *ref);
+ 
+ /*
+  * Server-side lock handling
 
 
