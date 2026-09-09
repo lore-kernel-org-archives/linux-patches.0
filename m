@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D3E58B6DC;
-	Wed,  9 Sep 2026 14:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E1C576EB0;
+	Wed,  9 Sep 2026 14:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963512; cv=none; b=lgzSdJQd0v8OSiLmdhXi2SCjH3iMPoa37rqceCbolDEuxUyVDUGa9lUwE/Z3aPjCOjV0hrqCNySyNl4q1LSFdJerW1sSTevmTCw/PLOEHdpcy3E7KIjtrA3oPdj0bMGYH068hE65L5qEP6uTUFsEcXPvBQYD2rPNn4wsJwiff94=
+	t=1788963516; cv=none; b=MFw5dQp22Ry7hVj2rdN57JCGVDUY/j17MyauVAJbTa32mONcgnllIr6lLf9psyieUQo7rYwtDKuxcsHbD6s3QBECJNlDWKGhg7PCCN5QCpdNalcFIxwpNXeKxRqO43h1CFIbirQV60IhNRvXFHpIrURBVVfRO9aXyLv2ILgivZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963512; c=relaxed/simple;
-	bh=3psEtLFAdUCojFRiSPcKm1wgfMXsRkEsucalyKndPgQ=;
+	s=arc-20240116; t=1788963516; c=relaxed/simple;
+	bh=q6PbE29ljMt2El5rvaZZVia7uJIZLKYekcM1Ap32zss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GvqPl3MiaBHHb6PV9lWFZrzWiUSA7M90Dn+Qh80MfOIThICaionAuKkiQaM41rQzAF+5y51WFC2drTmiuFC638HBl/4i3K9bR+pKcSFpjEloH2IzRFEiRk5AzwBRhdAeSWNZK/wN8T1adms9+Kd6Rmfp6yb7XctVfCee22mauk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxqByJ5r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WjCncwPoVppa0FDwy4BbiYfbVd+sivakQ8SfhbcjrWY7tLMpLg+IWfP1sPbIgiqjJkLBphrppV3g9lgsHiXVO21uGW+YusS+eQx1VzxTIlD9H6oFUE/etcJbCCx7HzOJD4bNuu47Uirk4ilGn+23Cztlpz+x2KYoWuUz4zyrsf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLEDGe0p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxqByJ5r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8551F00A3A;
-	Wed,  9 Sep 2026 14:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLEDGe0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84D21F00A3A;
+	Wed,  9 Sep 2026 14:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963511;
-	bh=jxp8IWo3Zytbslgk0BGiNRyGL8C35/ikDT/kVbR25hA=;
+	s=korg; t=1788963514;
+	bh=wPZwZD8XHv717e8viEv+zeehl+xytorjsi6dRykT4e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uxqByJ5rgk0dz005KcPYVj4NCd/H/47T5o2Lt98v3rtazN8Wdg+98TonlgWtuzhB1
-	 8C6j9faqyUkJzMzt47sJ11PYNJPp7Y9uOC38VX30/qQXFEzg3omHo/1nRtBnhJ3nPa
-	 EZvXFi9ynJ8lkxASO0XGUMsLZTJoKZTZJ3skaR0c=
+	b=zLEDGe0pPmz0FYXaZmUK3q+m7x/0MidpRUAUZ5CCPIWPPt1erkmLxk3TNvg8n/KBh
+	 bFbxGcaJnzuH0QECQe+8aiWeVSKjR56xBPmWuLa3VZP0uHU3zJlSQSeTAwoK1bsTw5
+	 U2n4no1tJRwmVeapRKq6P4jVkb3XeUAIaf9FS+lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 104/583] ALSA: harmony: initialize locks before requesting IRQ
-Date: Wed,  9 Sep 2026 15:36:29 +0200
-Message-ID: <20260909134241.731775389@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 078/583] ceph: lock mutex in ceph_mds_check_access()
+Date: Wed,  9 Sep 2026 15:36:03 +0200
+Message-ID: <20260909134240.793789113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,49 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit 33abb7491e89285a41565670945293dda841afc4 upstream.
+commit a61c6ae1dae2611082b831b4aaa780878099c012 upstream.
 
-snd_harmony_create() registers the IRQ before initializing h->lock and
-h->mixer_lock. A pending interrupt can invoke the handler while these
-locks are uninitialized.
+MDS session OPEN handling replaces mdsc->s_cap_auths under
+mdsc->mutex, freeing the previous array and its strings.
 
-Initialize both locks before requesting the IRQ so the handler always
-sees valid lock state.
+ceph_mds_check_access() traverses this array without holding the
+mutex.  A concurrent session reopen can therefore free the array while
+it is being inspected, resulting in a use-after-free like this:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+  Unable to handle kernel paging request at virtual address 003aaad64b2c8bb9
+  [...]
+  Internal error: Oops: 0000000096000004 [#1]  SMP
+  Modules linked in:
+  CPU: 56 UID: 2953037534 PID: 1253231 Comm: php-cgi8.4 Not tainted 6.18.45-i2-ampere #1146 NONE
+  [..]
+  pc : ceph_mds_check_access+0xd4/0x550
+  lr : ceph_mds_check_access+0xc8/0x550
+  [...]
+  Call trace:
+   ceph_mds_check_access+0xd4/0x550 (P)
+   ceph_atomic_open+0x138/0xbe8
+   path_openat+0xa24/0xfa8
+   do_filp_open+0x94/0x158
+   do_sys_openat2+0x88/0xf8
+
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260830063411.2215691-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 596afb0b8933 ("ceph: add ceph_mds_check_access() helper")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/parisc/harmony.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ceph/mds_client.c |    4 ++++
+ fs/ceph/mds_client.h |    1 +
+ 2 files changed, 5 insertions(+)
 
---- a/sound/parisc/harmony.c
-+++ b/sound/parisc/harmony.c
-@@ -868,6 +868,9 @@ snd_harmony_create(struct snd_card *card
- 		goto free_and_ret;
- 	}
- 		
-+	spin_lock_init(&h->mixer_lock);
-+	spin_lock_init(&h->lock);
-+
- 	err = request_irq(padev->irq, snd_harmony_interrupt, 0,
- 			  "harmony", h);
- 	if (err) {
-@@ -877,9 +880,6 @@ snd_harmony_create(struct snd_card *card
- 	}
- 	h->irq = padev->irq;
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -5798,11 +5798,13 @@ int ceph_mds_check_access(struct ceph_md
+ 	doutc(cl, "tpath '%s', mask %d, caller_uid %d, caller_gid %d\n",
+ 	      tpath, mask, caller_uid, caller_gid);
  
--	spin_lock_init(&h->mixer_lock);
--	spin_lock_init(&h->lock);
--
- 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, h, &ops);
- 	if (err < 0)
- 		goto free_and_ret;
++	mutex_lock(&mdsc->mutex);
+ 	for (i = 0; i < mdsc->s_cap_auths_num; i++) {
+ 		struct ceph_mds_cap_auth *s = &mdsc->s_cap_auths[i];
+ 
+ 		err = ceph_mds_auth_match(mdsc, s, cred, tpath);
+ 		if (err < 0) {
++			mutex_unlock(&mdsc->mutex);
+ 			put_cred(cred);
+ 			return err;
+ 		} else if (err > 0) {
+@@ -5824,6 +5826,7 @@ int ceph_mds_check_access(struct ceph_md
+ 	doutc(cl, "root_squash_perms %d, rw_perms_s %p\n", root_squash_perms,
+ 	      rw_perms_s);
+ 	if (root_squash_perms && rw_perms_s == NULL) {
++		mutex_unlock(&mdsc->mutex);
+ 		doutc(cl, "access allowed\n");
+ 		return 0;
+ 	}
+@@ -5838,6 +5841,7 @@ int ceph_mds_check_access(struct ceph_md
+ 		      !!(mask & MAY_READ), !!(mask & MAY_WRITE));
+ 	}
+ 	doutc(cl, "access denied\n");
++	mutex_unlock(&mdsc->mutex);
+ 	return -EACCES;
+ }
+ 
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -545,6 +545,7 @@ struct ceph_mds_client {
+ 	struct rw_semaphore     pool_perm_rwsem;
+ 	struct rb_root		pool_perm_tree;
+ 
++	/* protected by mutex */
+ 	u32			 s_cap_auths_num;
+ 	struct ceph_mds_cap_auth *s_cap_auths;
+ 
 
 
