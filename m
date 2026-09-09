@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4624756C639;
-	Wed,  9 Sep 2026 14:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BF5577E4F;
+	Wed,  9 Sep 2026 14:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963352; cv=none; b=Cg5WuLHR654oYWyPQEc+La2OsDbJu0JrKHt96hw1phLJ9YC4mjoxK79EjpDZW7Kq1bo8yhllRizCnx+LZPkiFBeHgKg9957I+TaiY/D5nxq9biSiRjE8mm2EKJWNDCa5YpcZ8/cJqo0N3CNphf4S7EnWLFvyCgIfCzj9tACzx/M=
+	t=1788963355; cv=none; b=k113eDtaRH8tYQ+EB+zp79sYRL+/t6jEDLK1/YrPCPion3uIY2U3XSm3ohZLOCxCHU8d1jbG7Z6V1QMqCUPL1Ct9cP5IVTtUG5mPkCKRWXODEmw/XZZliU1y8+hYw2QidQ3+3UsOJIsrUgrDIuUUG0zGlDrwFqV4LMo3Zej6/e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963352; c=relaxed/simple;
-	bh=g9uL3ZLTCJ5GthZ2DCkDOFpHAVF4HwbyddtXtOzGEjc=;
+	s=arc-20240116; t=1788963355; c=relaxed/simple;
+	bh=5iJiNk9Z5/R/SBCHGbH0jdRpweqODVK5eWU7rgfereU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVRkrpA1NQt8Y23uq233HaJmsHeUQlLlDRBmS/v1hG7t1rUT9OvffF7Xw1S35kbKVBn+mR3gd3AoWfD6b89lF5yNraUnPm9htFLxhMyJLvxOeIq0Y+RoE8ic5UZLfnuXZt/YB/VSf6JSFm5ZK/rvjNkq2lE06ReVquyUkdntkbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcIUP7LU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RtWnuPQp47Cjk2BUTBl5SCEVqfLSzP3AA5eJyQdmG6q9Eg9KftdWQM2v3FmUG8bE5xTxWkdZAA3ZMOc0GsCFpPPsvDp6CDBq1+y+a7XNLGDFBimk3T4quzPI/cMPhAk7O3OBJs1oEG1u9lj6rTxNEkB/OGQOZC/r9q61AmJBENM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWrKwHkP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcIUP7LU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE1A1F00A3A;
-	Wed,  9 Sep 2026 14:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWrKwHkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819241F00A3A;
+	Wed,  9 Sep 2026 14:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963351;
-	bh=OgQJyGBULoV43YbODd11YHDE+VD5MOs/yUwAR4OnrUA=;
+	s=korg; t=1788963354;
+	bh=jgWD3RiFSPv4D4W15im2fD+gZ/jUGMar+ykffkUqPt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gcIUP7LUY6vmPPzZRW5s9eiiIXKSd6Xfr/ZHU62MGmgIK1ShiM2efT79Lckzu2n/j
-	 o0jKuRk432TGgsq1Gp08g73aNc8xPvcVtmSrp7a1v9F+Uhe+orP3i7+tIKyQAlOitR
-	 4kq9g94FmbrLiEM62eY5fL6DhVtNuv+R3HLnQvaA=
+	b=dWrKwHkPZVycQTEPiEJuzsAQV48aGJ0uHyKh4vE06LBwdFII/l/Cg5dafSlzPhuZH
+	 bnWRpkwdod2xr6oxV+Fh/QvEmcy5Y0jj6rzOCyjXMnsMuXSKRMyOkAAmHmt1HRf3AQ
+	 E0jlWNNA7yADloNXXsQs1rgkUKa4wETDCnePRq9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	SJ Park <sj@kernel.org>,
 	Zenghui Yu <zenghui.yu@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 050/583] samples/damon/prcl: handle damon_start() failure
-Date: Wed,  9 Sep 2026 15:35:35 +0200
-Message-ID: <20260909134239.696498985@linuxfoundation.org>
+Subject: [PATCH 6.18 051/583] samples/damon/prcl: stop and free damon ctx when damon_call() fails
+Date: Wed,  9 Sep 2026 15:35:36 +0200
+Message-ID: <20260909134239.730502123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,55 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-commit 8b724349229bb6ebbf781178be011ba9bc2cca57 upstream.
+commit a73fa45d3f0f42c446ae55c5799e3d5ef044cd5d upstream.
 
-damon_sample_prcl_start() callers assume it will clean up resources when
-it fails.  And the function does the cleanup for context buildup failures.
-However, it is not doing the cleanup for damon_start() failure.  As a
-result, when damon_start() fails, it leaks the memory for DAMON context.
-Free the context in case of the failure to fix the issues.
+damon_sample_prcl_start() calls damon_call() right after damon_start() is
+succeeded.  The kdamond that has started by the damon_start() could be
+terminated by itself before or in the middle of the damon_call()
+execution.  There could be multiple reasons for such a stop including
+monitoring target process termination and kdamond_fn() internal memory
+allocation failures.  In the case, damon_call() will fail and return an
+error without cleaning up the DAMON context object.  The
+damon_sample_prcl_start() caller assumes it would clean up the object,
+though.  When the user requests to start DAMON again,
+damon_sample_prcl_start() is called again, allocates a new DAMON context
+object and overwrites the pointer for the previous object.  As a result,
+the previous context object is leaked.
 
-Note that the issue can reliably be reproduced because the module calls
-damon_start() in the exclusive mode.  For example,
+Safely stop the kdamond and deallocate the context object when the failure
+is returned.  Note that the kdamond should be stopped first, because
+damon_call() failure means not complete termination of the kdamond but
+only the fact that the termination process has started.
 
-    $ sudo damo start
-    $ echo $$ | sudo tee /sys/module/damon_sample_prcl/parameters/target_pid
-    $ echo Y | sudo tee /sys/module/damon_sample_prcl/parameters/enabled
-    $ sudo cat /proc/allocinfo | grep damon_new_ctx
-
-Because the first command is running another DAMON instance, the third
-command fails the damon_start() call because the new DAMON instance cannot
-exclusively run.  And without this fix, by repeating the third and the
-fourth commands above, we can show the memory consumption is only
-increasing due to the leaks.  It requires the sudo permission though.
+The user impact shouldn't be that significant because the race is not easy
+to happen, and only up to one DAMON context object can be leaked per race.
 
 The issue was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260628215447.96166-3-sj@kernel.org
-Link: https://lore.kernel.org/20260609145814.70163-1-sj@kernel.org [1]
-Fixes: 2aca254620a8 ("samples/damon: introduce a skeleton of a smaple DAMON module for proactive reclamation")
+Link: https://lore.kernel.org/20260628215447.96166-7-sj@kernel.org
+Link: https://lore.kernel.org/20260610035214.4850-1-sj@kernel.org [1]
+Fixes: a6c33f1054e3 ("samples/damon/prcl: use damon_call() repeat mode instead of damon_callback")
 Signed-off-by: SJ Park <sj@kernel.org>
 Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: <stable@vger.kernel.org> # 6.14.x
+Cc: <stable@vger.kernel.org> # 6.17.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/damon/prcl.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ samples/damon/prcl.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
+index 0db259894691..edeae145c4a8 100644
 --- a/samples/damon/prcl.c
 +++ b/samples/damon/prcl.c
-@@ -106,8 +106,10 @@ static int damon_sample_prcl_start(void)
- 	damon_set_schemes(ctx, &scheme, 1);
- 
- 	err = damon_start(&ctx, 1, true);
--	if (err)
-+	if (err) {
-+		damon_destroy_ctx(ctx);
- 		return err;
-+	}
+@@ -112,7 +112,12 @@ static int damon_sample_prcl_start(void)
+ 	}
  
  	repeat_call_control.data = ctx;
- 	return damon_call(ctx, &repeat_call_control);
+-	return damon_call(ctx, &repeat_call_control);
++	err = damon_call(ctx, &repeat_call_control);
++	if (err) {
++		damon_stop(&ctx, 1);
++		damon_destroy_ctx(ctx);
++	}
++	return err;
+ }
+ 
+ static void damon_sample_prcl_stop(void)
+-- 
+2.55.0
+
 
 
