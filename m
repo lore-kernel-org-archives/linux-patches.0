@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49A6492E2A;
-	Wed,  9 Sep 2026 14:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8402F12AC;
+	Wed,  9 Sep 2026 14:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962475; cv=none; b=H8Hrgewycafzfx9VqvB3zNe6fJoyaU9ylja322enDNzR6Ja3gA21uacOwmWUjb2sE/r1DhIgAWGmD0LcY5/Pogp8dhTX1Vc7SKPCuDqT8WqB2Zel/uC8TVgLFVNzYXUyT70P496yKx7cMFNBiCRNJPWn2GKOaTWmOVInay4hhpU=
+	t=1788962478; cv=none; b=ejgjNxjWMuc5JESZwqaCDlv1bupKiVlqCPId3lxSez1ilfIyHH4BUXNR4mOa7+rRmzv2SQwpG5IRRhHmBtJp48SbU9PCTTWfjuy5FNT/NUhYUgx39SXthpEIh3GZ6AXpVszKdZ+3B6jkodFsAOv1cqCTuzSXM4kF/eZsJBXkm84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962475; c=relaxed/simple;
-	bh=fEh+jgwLJYGon39X/Z0+ll3sdhRPoW4bQDW1LBuJQUw=;
+	s=arc-20240116; t=1788962478; c=relaxed/simple;
+	bh=4uRNHzq4ABuwJGjiTfiz3FhUH/tqV4ZPbtHtWMa8NTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5ysY//x/HZqVylyTSysyTiy90yxIKIRn6HLNAaPDg5bNMPi6tMEsQLkD72yKS801RpiPWuvlVLgzFv/d0JrBxKBWBepMqK3p6a9XE1gpIKXOmhhUy2fbXZIO8DnwbF3xVe2InPcjgaUza+XZGbqtDxt4KNx6jCUtgGo/Wz+vzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnROuLwP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YDFEnMVoyTTwO4o78jGDJkbqcyTA4uMjLvfZcJhMMfzkopAsAYm4oxdZt5/0PM64ZsdvJzbTI8OCNevV4F835J16fzyDB5wxgwVEglYWE6Wh7+RPd5+0ZfRDDxyWLckZHUCgf4L+N3Q8zT7KntrBX9Pp2ugWVUAB9ZJJpP28yoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pie70m+K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnROuLwP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488911F00A3A;
-	Wed,  9 Sep 2026 14:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pie70m+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBAA1F00A3A;
+	Wed,  9 Sep 2026 14:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962473;
-	bh=iqlNBeqe9HbCVRrZfsqAqWGDDTvPVAYX175zjNCOsDQ=;
+	s=korg; t=1788962476;
+	bh=1Ja/uI+bK4tYKTx5Ls6XUCSX3jYY5neiJBuo45jdw3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BnROuLwPM6XWwCCGqtG1jWjcpBDkdW6eFF2gKjLbOfZlbXqA6qWnhptgT84LkhY4v
-	 Abmf8KwOqC8CfThZbrIQsfXw0wPFN2p1ZQWl0Czpvzyus/+ka6xhfzzALB7zjLnF0C
-	 CquemBS+9D03xKIfuavAJtnn5MRD1EDkk97nyqkE=
+	b=Pie70m+K8p3NpklQQinsXYXETfr3ad2uN1jQhPoAtNRyWI93ikdswQe6oxZjEiPAN
+	 dIan1oyTJRmdsw/rPWG0iQgz7tlZ1OxouqxXSGJrZC4Tjlfq6aZKwWh1CaxOfMRovu
+	 mH9AkYKu7pQ1JcMnYLSazqgmR9m1ZUGaDYvvKnYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 251/556] ASoC: samsung: aries_audio_probe: double of_node_put due to direct assignment without of_node_get
-Date: Wed,  9 Sep 2026 15:38:51 +0200
-Message-ID: <20260909134239.324647916@linuxfoundation.org>
+	Kai Huang <kai.huang@intel.com>,
+	James Houghton <jthoughton@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.2 297/556] KVM: x86/mmu: Use CMPXCHG when clearing Accessed bit in TDP MMU
+Date: Wed,  9 Sep 2026 15:39:37 +0200
+Message-ID: <20260909134241.137694658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,38 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-commit fb5d1b1c5f8a920ee697545fa6dee16825085717 upstream.
+commit 3d679b7cb31f74bf2303123ce4ee3266eeee999a upstream.
 
-In aries_audio_probe(), aries_dai[0].platforms->of_node is assigned the
-same pointer as aries_dai[0].cpus->of_node (from of_parse_phandle)
-without calling of_node_get(). When the sound card is deregistered, the
-ASoC framework calls of_node_put() on both cpus->of_node and
-platforms->of_node, causing a double put on the same node and a refcount
-underflow.
+Use LOCK CMPXCHG instead of LOCK AND to clear the Accessed bit when aging
+SPTEs in the TDP MMU, as doing a LOCK AND can corrupt a FROZEN SPTE and
+allow a third CPU to effectively overwrite the FROZEN SPTE.  As pointed
+out by AI of some kind, because the magic FROZEN_SPTE value is a "full"
+SPTE, not a single bit, and includes the Accessed bit, clearing the
+Accessed bit in a FROZEN SPTE will result in is_frozen_spte() getting a
+false negative.
 
-Add of_node_get(aries_dai[0].cpus->of_node) before the assignment.
+E.g. if CPU0 freezes an SPTE, and CPU1 clears the Accessed bit in the
+frozen SPTE, then CPU2 could come along and overwrite the frozen SPTE with
+a shadow-present SPTE.
 
+Thankfully, the false negative is largely benign, because outside of TDX,
+which doesn't support aging, KVM only freezes leaf SPTEs when removing an
+upper level shadow page.  So while KVM could clobber a frozen SPTE back to
+a shadow-present SPTE, and could even use the new SPTE, the subsequent TLB
+flush will make the orphaned, shadow-present SPTE unreachable.  Failure to
+ever zap the orphaned leaf SPTE would show up in KVM's stats, but otherwise
+is benign (because KVM no longer keeps an elevated refcount for leaf SPTEs).
+
+Opportunistically add a comment to warn future developers away from using
+kvm_tdp_mmu_write_spte_atomic() and tdp_mmu_clear_spte_bits_atomic(), as
+they are generally unsafe.  Keep the helpers, e.g. instead of open-coding
+the atomic64_fetch_and() in tdp_mmu_clear_spte_bits(), as scary warnings
+usually are more effective deterrent against recidivism than removal of the
+dangerous code.
+
+Alternatively, KVM could use different bits for the magic FROZEN_SPTE value,
+e.g. setting the Dirty bits (with effective IPAT and Global aliases) would
+likely be "ok", as IPAT/Global are extremely unlikely to be cleared without
+doing a full SPTE write, and KVM's clearing of Dirty bits shares logic with
+Write-Protection, which must do a full SPTE write (via cmpxchg64() in the
+TDP MMU) to ensure KVM isn't clobbering state.  But there is zero reason to
+carry that risk (beyond stubbornness in wanting to preserve a "cute" idea),
+as the cost of LOCK CMPXCHG and LOCK AND are within 1-2 uops of each other
+on modern hardware.
+
+Fixes: b146a9b34aed ("KVM: x86/mmu: Age TDP MMU SPTEs without holding mmu_lock")
 Cc: stable@vger.kernel.org
-Fixes: 7a3a7671fa6c ("ASoC: samsung: Add driver for Aries boards")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260627035251.60172-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: James Houghton <jthoughton@google.com>
+Link: https://patch.msgid.link/20260728002236.869865-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/samsung/aries_wm8994.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/mmu/tdp_iter.h |    7 +++++++
+ arch/x86/kvm/mmu/tdp_mmu.c  |   20 +++++++++-----------
+ 2 files changed, 16 insertions(+), 11 deletions(-)
 
---- a/sound/soc/samsung/aries_wm8994.c
-+++ b/sound/soc/samsung/aries_wm8994.c
-@@ -658,6 +658,7 @@ static int aries_audio_probe(struct plat
- 		goto out;
- 	}
+--- a/arch/x86/kvm/mmu/tdp_iter.h
++++ b/arch/x86/kvm/mmu/tdp_iter.h
+@@ -19,6 +19,13 @@ static inline u64 kvm_tdp_mmu_read_spte(
+ 	return READ_ONCE(*rcu_dereference(sptep));
+ }
  
-+	of_node_get(aries_dai[0].cpus->of_node);
- 	aries_dai[0].platforms->of_node = aries_dai[0].cpus->of_node;
++/*
++ * WARNING!  mmu_lock must be held for write when using the "write atomic" or
++ * "clear bits atomic" APIs, otherwise KVM could overwrite the "wrong" old SPTE
++ * value, i.e. clobber an update from a different CPU.  The only exception is
++ * when KVM is freezing a leaf SPTE for removal, in which case KVM doesn't care
++ * about the exact old SPTE value (KVM will react to the actual old value).
++ */
+ static inline u64 kvm_tdp_mmu_write_spte_atomic(tdp_ptep_t sptep, u64 new_spte)
+ {
+ 	KVM_MMU_WARN_ON(is_ept_ve_possible(new_spte));
+--- a/arch/x86/kvm/mmu/tdp_mmu.c
++++ b/arch/x86/kvm/mmu/tdp_mmu.c
+@@ -1334,19 +1334,17 @@ static void kvm_tdp_mmu_age_spte(struct
+ 	if (WARN_ON_ONCE(is_mirror_sptep(iter->sptep)))
+ 		return;
  
- 	/* Set CPU of_node for BT DAI */
+-	if (spte_ad_enabled(iter->old_spte)) {
+-		iter->old_spte = tdp_mmu_clear_spte_bits_atomic(iter->sptep,
+-								shadow_accessed_mask);
++	if (spte_ad_enabled(iter->old_spte))
+ 		new_spte = iter->old_spte & ~shadow_accessed_mask;
+-	} else {
++	else
+ 		new_spte = mark_spte_for_access_track(iter->old_spte);
+-		/*
+-		 * It is safe for the following cmpxchg to fail. Leave the
+-		 * Accessed bit set, as the spte is most likely young anyway.
+-		 */
+-		if (__tdp_mmu_set_spte_atomic(kvm, iter, new_spte))
+-			return;
+-	}
++
++	/*
++	 * Don't bother retrying if another CPU modified the SPTE, the SPTE is
++	 * either being zapped or is likely still in-use, i.e. is still young.
++	 */
++	if (__tdp_mmu_set_spte_atomic(kvm, iter, new_spte))
++		return;
+ 
+ 	trace_kvm_tdp_mmu_spte_changed(iter->as_id, iter->gfn, iter->level,
+ 				       iter->old_spte, new_spte);
 
 
