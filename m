@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538B958E2C3;
-	Wed,  9 Sep 2026 14:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C9F58E2BC;
+	Wed,  9 Sep 2026 14:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963527; cv=none; b=aN2CbaBGZmJPHJOP3APKlCVpcqgGG5hktWXM6HW5MtRWhiTsTyw6R8bEwvWcOFRI664Qq3TJ3ojy8D7DA1PE1a7+sm5I/WZr+SG8n+EH7bEZaPfl7xqcGVOvg6zVNIjNmAdgfYQr5yfgVBV0phqh9aAtsqKoB8Bvjx56hUpFnRI=
+	t=1788963530; cv=none; b=u7zqXM2+3dI97+fIHyZKOXlIfsQL0aO9M+SkccZaWRVHfsvdpKDeeG8Rd/naOX10/swTtd40Gfl7VKNf+j6WY1qnr22+ZNesBgNCpAgKTSWoLQSdbUnyBzRrysjXp+uOfBQNqTwmj6a8xYk/xtXPDO9s2qtSe+npPpz8/6AGr6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963527; c=relaxed/simple;
-	bh=KjjOD6mw6mv5+43jWyJ4s3PRIJDWI89tPePx8nQUghE=;
+	s=arc-20240116; t=1788963530; c=relaxed/simple;
+	bh=KEoVcsF5xR8BjGtKjEsXyCYfRl25eRva7JBN14xdR1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7KFfMog3IEsYPn7ddXfCtw8gSLOPtpDDN3LLJ0EXNWc+m+4x69Uysec0ZopYW9hOxvvkXT4rUV4FthHKEW837z5eK6zpcXWXJQlAWI/XEMIkbjj17VGUfTLUiI4CNDqizg6vA+2dqWxvHgeck3CFMStk+yI13AHiwAH7SRbOXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsaIOW9d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hMqbr48cb/gaJW11pRSTUArNeXy4UIgrAenmix8rsCPU1qZJ5nTgVrVbdUZqpfIX4IwYM994BuhVwgSKnIcCs6hGbHo1mqf6RhjNFsTVjjSiZZlPIj5dPkpYIsWmqbcxuEgGlDA0n8bOFjWcBU2n07cTUQ5h4+ms6xRhRox50oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGroUa7O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsaIOW9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4B91F00A3A;
-	Wed,  9 Sep 2026 14:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGroUa7O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EB01F00A3A;
+	Wed,  9 Sep 2026 14:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963525;
-	bh=rC773LbDhKQpK+fjZLqaYvCK2DctYtxAksTR2bXGeVI=;
+	s=korg; t=1788963528;
+	bh=Qma4uFQVAOhRtv26tikuatKOLXd9l1uPy+Ma/qgVt3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SsaIOW9defWIavCk5gcWYnQq2gqkHuI/H3F0OHB0BiZGw2Shcz7aMt7yZS5v/Xqja
-	 XdfLzx4epLyepaoYPuVH5RJz3Sckz1XaT1rwnGBIKorW+32URg9yEbRLR0+8mOLmgI
-	 DFh0+86Z56km9I2CeOhtJsnT6yx2gVp5Gwem2p7I=
+	b=vGroUa7O4wotUb1l2hrRI6ysUinV4/p46F106Xzm2mAW7KXNHSixq5KdV8+rABWok
+	 xZgYFh0oYdn96yvMo4n2mJSe4CJ8UiydAP+KFfESTutIgp/C8XINRuXiqVfT/rwrIp
+	 cIYg0sBSAv1gJ0j9O38hhY4TAmmmiUUFPoz8oaTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	John Garry <john.g.garry@oracle.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 108/583] nvme-tcp: check the data direction of a C2HData PDU
-Date: Wed,  9 Sep 2026 15:36:33 +0200
-Message-ID: <20260909134241.868280671@linuxfoundation.org>
+Subject: [PATCH 6.18 109/583] nvme: add missing SRCU grace period in error path
+Date: Wed,  9 Sep 2026 15:36:34 +0200
+Message-ID: <20260909134241.910846630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,73 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit f83af377c148f6ad94b41c0e8313f12adf45e1c1 upstream.
+commit ef248d5de4469fb6bbaf8dbe0c4c47800080d648 upstream.
 
-nvme_tcp_handle_c2h_data() finds the request by command id and checks
-that it has a payload, but it does not check that the command asked for
-data to be read.  A controller that answers a write command with C2HData
-therefore reaches nvme_tcp_recv_data(), where _copy_to_iter() hits
-WARN_ON_ONCE(i->data_source) and returns 0.  The receive path turns that
-into -EFAULT and resets the controller.
+nvme_alloc_ns() error path at out_unlink_ns removes ns from the
+namespace head siblings list with list_del_rcu(&ns->siblings) but
+does not wait for SRCU readers before freeing the namespace struct.
+Multipath code iterates the head->list under srcu_read_lock() in
+nvme_find_path() and nvme_mpath_revalidate_paths(), so a concurrent
+reader can still hold a reference to ns when kfree(ns) runs.
 
-No data is copied, so this is not memory corruption.  What a controller
-gets is a kernel warning it can raise at will, which is fatal on a host
-booted with panic_on_warn.
+The normal removal path in nvme_ns_remove() correctly calls
+synchronize_srcu(&ns->head->srcu) after list_del_rcu() to wait for
+in-progress readers. Add the same grace period in the error path.
 
-The send path already knows the direction - it consults rq_data_dir()
-when it builds a command - and nvme_tcp_handle_r2t() checks the length
-and the offset of the request it names.  The C2HData path does not check
-the direction at all.
-
-Reject a C2HData PDU whose command is not a read.  Rejecting it fails
-the command and resets the controller, as the neighbouring check in this
-function does; what goes away is the warning.
-
-  [    6.885580] ------------[ cut here ]------------
-  [    6.886457] WARNING: lib/iov_iter.c:193 at _copy_to_iter+0x289/0x1330, CPU#0: kworker/0:1H/71
-  [    6.888137] CPU: 0 UID: 0 PID: 71 Comm: kworker/0:1H Not tainted 7.2.0-rc5-NVMETCP-gf5098b6bae76 #1 PREEMPT(lazy)
-  [    6.891165] Workqueue: nvme_tcp_wq nvme_tcp_io_work
-  [    6.891875] RIP: 0010:_copy_to_iter+0x289/0x1330
-  [    6.903739] Call Trace:
-  [    6.904085]  <TASK>
-  [    6.909254]  __skb_datagram_iter+0x433/0x820
-  [    6.911026]  skb_copy_datagram_iter+0x37/0x120
-  [    6.911622]  nvme_tcp_recv_skb+0xa07/0x4320
-  [    6.913378]  __tcp_read_sock+0x1ab/0x810
-  [    6.915788]  nvme_tcp_try_recv+0x152/0x1e0
-  [    6.918222]  nvme_tcp_io_work+0x1e4/0x6c0
-  [    6.926906]  </TASK>
-  [    6.927226] ---[ end trace 0000000000000000 ]---
-  [    6.927878] nvme nvme0: queue 1 failed to copy request 0x71 data
-  [    6.928709] nvme nvme0: receive failed:  -14
-
-Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Fixes: ed754e5deeb1 ("nvme: track shared namespaces")
 Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nvme/host/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -688,6 +688,13 @@ static int nvme_tcp_handle_c2h_data(stru
- 		return -ENOENT;
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4218,6 +4218,9 @@ static void nvme_alloc_ns(struct nvme_ct
+ 			last_path = true;
  	}
- 
-+	if (rq_data_dir(rq) != READ) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"queue %d tag %#x unexpected data for a write\n",
-+			nvme_tcp_queue_id(queue), rq->tag);
-+		return -EIO;
-+	}
+ 	mutex_unlock(&ctrl->subsys->lock);
 +
- 	req = blk_mq_rq_to_pdu(rq);
- 	if (!blk_rq_payload_bytes(rq) || !req->curr_bio || !req->data_len) {
- 		dev_err(queue->ctrl->ctrl.device,
++	/* guarantee not available in head->list */
++	synchronize_srcu(&ns->head->srcu);
+ 	if (last_path)
+ 		nvme_put_ns_head(ns->head);
+ 	nvme_put_ns_head(ns->head);
 
 
