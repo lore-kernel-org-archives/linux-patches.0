@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A1954CF4A;
-	Wed,  9 Sep 2026 14:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAD7354AEB;
+	Wed,  9 Sep 2026 14:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964172; cv=none; b=R7f3aFgVCajbJAL8yYMJ7LRTdsSbjEPUoeWxAHKTDNrZcGCFvz1+F+/1xa4DfUbhRp24BI+bLtr2vKMZOXbvIMnljZJ6OUCaY+fy7zYj8pOtUmUWQXgHKkHivg8/6I1OtBi09lJ5YfojQ48g0WnxDXbpfW6BDVg3t+H2/RqBeyE=
+	t=1788964174; cv=none; b=uot4iXPUSnJ8y8bRnQJk67l+DO/h+iealDoe+HgjNyv3hbXg66T4DhxncF7TgeKIkNPmDOMlV4HOwEtcj4VcL8AvO9LqEKrpjHoUJJG7Ui4FqTBlK8P1ELppnRKcFZYNvz4u3esBsOKznQKLuawMtzvP+XvXgtBCz2QEch7M+Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964172; c=relaxed/simple;
-	bh=fcqPPwH4soG/+sw7FM5lKQiT1I3tPf3QOneZ62v3dbs=;
+	s=arc-20240116; t=1788964174; c=relaxed/simple;
+	bh=XGeTpw+QfqbB//Wd5DkIu34Q3+zwC1ZY2dlTBMKJuqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pu15RRYTi/bn/MtXA5RUz1avehRBB75/6oFsfmwP+FbJ9kh4EhrJTALqtNqsop23w6lG8y1piznBgaMbZGT4tywe3jSYUm2inPWW7uQrAmZBl07dPHVbGU061YBf08nZf2848pca+HcqgGvrlBXXeUr0s/tzTMd8qAkvgQN3r6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odCwMi3g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fuxlOPxsazcVKNrgsjPUGNfkDpZNAwNAP4gMznbyVbU9Szx33gJMW//bx5eCkY3vzCysA8ilP0qJldfW79vl1D8wz0N+U+jc9BuVRxlsXDerdr9+iFrjJ0HuINMsxAVPzSMxid9nytF24Y37zTXPAAQqgVrBe3IDjWshoQNJ+1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFZjBl/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odCwMi3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EC01F00A3A;
-	Wed,  9 Sep 2026 14:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFZjBl/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9051F00A3A;
+	Wed,  9 Sep 2026 14:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964170;
-	bh=YPFLpE0yfJSftJtiiPynmurYQjU5kxokqDZXl9UnS2s=;
+	s=korg; t=1788964173;
+	bh=2QnDrp6+NBEJKhwh3PsEzvxQo2UF/Rn9+F/6j08FeLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odCwMi3gbaXyrM5MdtLcWYsyWy2fMkT5IdTwqpKxaPlOZm6U+b7VH9SzOVEwQLq91
-	 UKTLJKI9r1DI0vM3BBvWMvUlR8kIB6m+GKi46v8ot2Cxh/lXo5j/IE0g0bAChPIL2F
-	 eLpkbyxPbJDhSNB8zrG2fILdWSaGgMtTA7bHQopE=
+	b=cFZjBl/uxeGRrUM1K4rkyIi3oh66Q/N+YX73mqQUapoSZvUStkoY/XLdqUoUIMnds
+	 Lfep0/z4YA7uTbY0hkPAOGQvlKyBvKOLcOcJUwVYAz9mkqRN6fOmpAFr9dkLeEQxAE
+	 BA0Z9ngncjmkojS4+5d5S9Aq2jpQLsCq8GW2qJtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.18 332/583] scsi: qla2xxx: Clamp MSI-X derived queue counts to avoid truncation
-Date: Wed,  9 Sep 2026 15:40:17 +0200
-Message-ID: <20260909134249.502385838@linuxfoundation.org>
+Subject: [PATCH 6.18 333/583] scsi: qla2xxx: Serialize flash version read in reset handler
+Date: Wed,  9 Sep 2026 15:40:18 +0200
+Message-ID: <20260909134249.537846983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,102 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit ebfd35c64433821bd5619a6d07ccc2df8b5b1de3 upstream.
+commit f606ed93de0c4f1e7e3618779e9fad731455314a upstream.
 
-ha->msix_count is u16, but ha->max_req_queues, ha->max_rsp_queues and
-ha->max_qpairs are u8. Deriving the queue count as
-"ha->max_req_queues = ha->msix_count - 1" therefore truncates: a board
-(or a misconfigured/malicious hot-plugged device) advertising 257 MSI-X
-vectors yields msix_count - 1 == 256, which truncates to 0. An MSI-X
-count of 1 zeroes it as well, and in target mode the subsequent
-"ha->max_req_queues--" then underflows 0 to 255.
+The "update cache versions without reset" sysfs reset operation (0x20261)
+calls get_flash_version(), which reads hardware flash registers, without
+holding ha->optrom_mutex. The VPD update path serializes the same call
+under optrom_mutex, so this reset path can interleave its flash register
+accesses with a concurrent VPD or optrom flash operation and corrupt the
+reads.
 
-When the count is 0, qla2x00_alloc_queues() calls
-kzalloc_objs(struct req_que *, 0), which returns ZERO_SIZE_PTR. That is
-not NULL, so the allocation check passes and the following
-"ha->req_q_map[0] = req" dereferences ZERO_SIZE_PTR, corrupting memory
-or crashing the kernel.
+Hold ha->optrom_mutex across the get_flash_version() call to match the
+VPD update path.
 
-Add qla_calc_queue_count() to clamp the derived value into
-[1, QLA_MAX_QUEUES - 1] so it always fits in u8 and is never zero, and
-use it at all three derivation sites (qla25xx_iospace_config(),
-qla83xx_iospace_config() and qla24xx_enable_msix()). Also guard the
-target-mode decrement so it cannot reintroduce a zero (which would in
-turn underflow max_qpairs).
-
-Fixes: d74595278f4a ("scsi: qla2xxx: Add multiple queue pair functionality.")
-Cc: stable@vger.kernel.org
+Fixes: 8c2cf7d4e387 ("[SCSI] qla2xxx: Add a new interface to update versions.")
 Reported-by: Sashiko <sashiko-dev@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-2-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-4-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_inline.h |   13 +++++++++++++
- drivers/scsi/qla2xxx/qla_isr.c    |    4 ++--
- drivers/scsi/qla2xxx/qla_os.c     |    6 +++---
- 3 files changed, 18 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_attr.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_inline.h
-+++ b/drivers/scsi/qla2xxx/qla_inline.h
-@@ -54,6 +54,19 @@ qla2x00_debounce_register(volatile __le1
- 	return (first);
- }
- 
-+static inline u8
-+qla_calc_queue_count(u16 msix_count)
-+{
-+	/*
-+	 * Request/response queues are bounded by the MSI-X vector count less
-+	 * the mailbox vector.  These counters are u8, so a board advertising
-+	 * e.g. 257 vectors would truncate msix_count - 1 (256) to 0 and hand
-+	 * kzalloc_objs() a zero count (ZERO_SIZE_PTR), faulting on the first
-+	 * ha->req_q_map[0] store.  Clamp into [1, QLA_MAX_QUEUES - 1].
-+	 */
-+	return clamp_t(u16, msix_count - 1, 1, QLA_MAX_QUEUES - 1);
-+}
-+
- static inline void
- qla2x00_poll(struct rsp_que *rsp)
- {
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -4548,10 +4548,10 @@ qla24xx_enable_msix(struct qla_hw_data *
- 		ha->msix_count = ret;
- 		/* Recalculate queue values */
- 		if (ha->mqiobase && (ql2xmqsupport || ql2xnvmeenable)) {
--			ha->max_req_queues = ha->msix_count - 1;
-+			ha->max_req_queues = qla_calc_queue_count(ha->msix_count);
- 
- 			/* ATIOQ needs 1 vector. That's 1 less QPair */
--			if (QLA_TGT_MODE_ENABLED())
-+			if (QLA_TGT_MODE_ENABLED() && ha->max_req_queues > 1)
- 				ha->max_req_queues--;
- 
- 			ha->max_rsp_queues = ha->max_req_queues;
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -2127,7 +2127,7 @@ skip_pio:
- 		ha->msix_count = msix + 1;
- 		/* Max queues are bounded by available msix vectors */
- 		/* MB interrupt uses 1 vector */
--		ha->max_req_queues = ha->msix_count - 1;
-+		ha->max_req_queues = qla_calc_queue_count(ha->msix_count);
- 		ha->max_rsp_queues = ha->max_req_queues;
- 		/* Queue pairs is the max value minus the base queue pair */
- 		ha->max_qpairs = ha->max_rsp_queues - 1;
-@@ -2213,10 +2213,10 @@ qla83xx_iospace_config(struct qla_hw_dat
- 		 */
- 		if (ql2xmqsupport || ql2xnvmeenable) {
- 			/* MB interrupt uses 1 vector */
--			ha->max_req_queues = ha->msix_count - 1;
-+			ha->max_req_queues = qla_calc_queue_count(ha->msix_count);
- 
- 			/* ATIOQ needs 1 vector. That's 1 less QPair */
--			if (QLA_TGT_MODE_ENABLED())
-+			if (QLA_TGT_MODE_ENABLED() && ha->max_req_queues > 1)
- 				ha->max_req_queues--;
- 
- 			ha->max_rsp_queues = ha->max_req_queues;
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -816,7 +816,9 @@ qla2x00_sysfs_write_reset(struct file *f
+ 			    "Unable to allocate memory for VPD information update.\n");
+ 			return -ENOMEM;
+ 		}
++		mutex_lock(&ha->optrom_mutex);
+ 		ha->isp_ops->get_flash_version(vha, tmp_data);
++		mutex_unlock(&ha->optrom_mutex);
+ 		vfree(tmp_data);
+ 		break;
+ 	}
 
 
