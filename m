@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A76855C1D2;
-	Wed,  9 Sep 2026 14:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFD5565112;
+	Wed,  9 Sep 2026 14:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964100; cv=none; b=cIQb8fTMzbFghui5H8iFBI8sqisMVjEDoWkfmBBXjsqQnJ+aFiWRrgvwNcCFIg1ZdcRHf73TqmY2LlEuaKavDiPmYjqPhnYGhR3h0rfiMVpVS9GBY++SRZi8QrrB0W3We/o4VI05N/l/AGYOXeAHYbPK2r0mB+DQ03SuEjyDWbA=
+	t=1788964102; cv=none; b=GkNl3YDnFTuYG2c7or5dhXRCywl5PWqs0v2uY/9iBXwhBalpVwZmLB8bLy19sJxRACZI2EjnvshAda5C/OqMdW/4MoStHKK9PN2rPfTVGPkQ18VIKoDa8gABWaiyvE0B52d+8DMXIpGvjt8a+2OdxRZ+1hfUf3jhl5hK3oN9Muw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964100; c=relaxed/simple;
-	bh=e5QNryxGdeghiBa2uAHNIrBxGa9JH+MOzU9dnDD2FzM=;
+	s=arc-20240116; t=1788964102; c=relaxed/simple;
+	bh=V0qG6K76HmHET7qfMi2ZNDzEF5+xIGPjyCtFVaAoq4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gf4bw1fO5yzwsnpGebxYQHtdYX0PrBt1+ZlZjHlPWBQWs9XgEPZnfkEtfy7ffyc6H1OkTR5gCjDDPoIBJ9/09YRwrWbYXrQZVUO3ypKmSlkhUHKNX/SUCp5iIZ/RFlI0bPgm1sacSs3Jj+s8l7fWkcbMiHBJTiOWeLnBty33foU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdAzO9hc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nTnIn1kfErs61qr8YZq5mue4SJxSBNLiTYkgjLICDo1ZniveWdzYLkpcxAhEGA9M4zwcva8BAM6LzswuuuScXsCSijvbyHLkJEGvmhNxODZR/uGenGS+zo2s6FdVwwyxBLww+IHVaypiRJP/spVsFV1/anTwtVSXlpBTeH6/7mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDUUgmHE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdAzO9hc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0F61F00A3A;
-	Wed,  9 Sep 2026 14:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDUUgmHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8AE1F00A3A;
+	Wed,  9 Sep 2026 14:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964098;
-	bh=aAj6uUdeUNhFVm7/Wb9h6MBQnQLcPHJN7sA1Ec5Iyf0=;
+	s=korg; t=1788964101;
+	bh=pTJUTJdKKv1eOHd24NvDuXNu5bXP3IupIGCwOKc6s+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TdAzO9hcP+tIedt56H60n3Qya5ll5ZIEeM0n538NV0z0agM3aMggAqTqQDA9hXVUX
-	 JzAYLHGtLkB2SRz0JQY9kzrqbjYpIQ6owjdIbGCEbxKovwb/pvREK9PYyM3YBlly/5
-	 jF8DMBFwJGOjBcwAkm4HDTl9L6RdO75IhN6EdEJA=
+	b=MDUUgmHEOi2uyFWUF5PfjtEXdcf5Gs+0cQuPrpNzlwPLQTD4lkzREv+9j887sCBjZ
+	 knOKOb15pVtxnsCjv51OeunLikVixbWLB8Zk+AjDkucuQ6xNoS0SevgROTbCkfPOtu
+	 OOqdIgiA50qDl2as9Dy89CKHWHCT97Bt/E5SpapI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 305/583] media: rtl2832_sdr: release URBs and stream buffers on start_streaming() failure
-Date: Wed,  9 Sep 2026 15:39:50 +0200
-Message-ID: <20260909134248.581245001@linuxfoundation.org>
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.18 306/583] media: rzg2l-cru: Align bytesperline to hardware DMA stride requirement
+Date: Wed,  9 Sep 2026 15:39:51 +0200
+Message-ID: <20260909134248.615712373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,62 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 
-commit fe50cdaebf12cd32ff9a44d92bfd6fbc2300dbd4 upstream.
+commit 56c29fa3ee666197516a231e75aed789ae9c530d upstream.
 
-rtl2832_sdr_start_streaming() calls rtl2832_sdr_alloc_stream_bufs(),
-rtl2832_sdr_alloc_urbs() and rtl2832_sdr_submit_urbs() in sequence and
-shares a single err: label that only unlocks the mutex and returns.
-When alloc_urbs() succeeds but submit_urbs() fails, or when alloc_urbs()
-itself returns -ENOMEM after alloc_stream_bufs() has already succeeded,
-the URBs and/or the coherent DMA stream buffers stay allocated while
-streaming reports failure to vb2. Two latent defects follow on the next
-VIDIOC_STREAMON:
+The RZ/G3E CRU programs the line stride via the AMnIS register, whose
+IS field encodes the value in units of 128 bytes. If bytesperline is
+not a multiple of 128, the division truncates and the hardware uses a
+wrong stride, causing horizontal banding.
 
-1) rtl2832_sdr_alloc_stream_bufs() unconditionally resets dev->buf_num
-   to 0 and overwrites dev->buf_list[]/dev->dma_addr[], permanently
-   leaking the coherent DMA memory allocated by the previous attempt.
+Commit ace92ccef0c9 ("media: platform: rzg2l-cru: Use v4l2_fill_pixfmt()")
+replaced the open-coded aligned calculation with v4l2_fill_pixfmt(),
+which sets no alignment, reintroducing the issue.
 
-2) rtl2832_sdr_alloc_urbs() never resets dev->urbs_initialized and only
-   increments it. After a second successful pass urbs_initialized can
-   exceed MAX_BULK_BUFS, so the subsequent rtl2832_sdr_free_urbs() walks
-   from urbs_initialized - 1 down to 0 and reads past the end of
-   dev->urb_list[], passing garbage pointers to usb_free_urb().
+Round bytesperline up to RZG2L_CRU_STRIDE_ALIGN and recompute
+sizeimage when info->has_stride is set. RZ/G2L has no AMnIS register
+and keeps the values from v4l2_fill_pixfmt() unchanged.
 
-Mirror the teardown that stop_streaming() already performs: on the error
-path call rtl2832_sdr_free_urbs() and rtl2832_sdr_free_stream_bufs()
-before unlocking. Both helpers are idempotent (free_urbs kills and zeros
-urbs_initialized; free_stream_bufs is gated on URB_BUF and clears the
-buf_num counter), so partial-failure paths and the no-allocation paths
-remain safe.
-
-Issue identified by automated review of the INV-003 series at
-https://sashiko.dev/
-
-Fixes: 771138920eaf ("[media] rtl2832_sdr: Realtek RTL2832 SDR driver module")
+Fixes: ace92ccef0c9 ("media: platform: rzg2l-cru: Use v4l2_fill_pixfmt()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/rtl2832_sdr.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/dvb-frontends/rtl2832_sdr.c
-+++ b/drivers/media/dvb-frontends/rtl2832_sdr.c
-@@ -906,9 +906,12 @@ static int rtl2832_sdr_start_streaming(s
- 		goto err;
+--- a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
++++ b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
+@@ -934,6 +934,11 @@ static void rzg2l_cru_format_align(struc
  
- 	mutex_unlock(&dev->v4l2_lock);
+ 	v4l2_fill_pixfmt(pix, pix->pixelformat, pix->width, pix->height);
+ 
++	if (info->has_stride) {
++		pix->bytesperline = ALIGN(pix->bytesperline, RZG2L_CRU_STRIDE_ALIGN);
++		pix->sizeimage = pix->bytesperline * pix->height;
++	}
 +
- 	return 0;
- 
- err:
-+	rtl2832_sdr_free_urbs(dev);
-+	rtl2832_sdr_free_stream_bufs(dev);
- 	rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
- 	mutex_unlock(&dev->v4l2_lock);
- 
+ 	dev_dbg(cru->dev, "Format %ux%u bpl: %u size: %u\n",
+ 		pix->width, pix->height, pix->bytesperline, pix->sizeimage);
+ }
 
 
