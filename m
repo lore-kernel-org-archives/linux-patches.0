@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF2C583AB0;
-	Wed,  9 Sep 2026 14:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0337756855A;
+	Wed,  9 Sep 2026 14:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964653; cv=none; b=eA0em6GyMDJwf2okpN7ZSDXTiErsviACipmOyOhVlE+vHuvRyEis4kDPqcVTOApDrSVBja1osv9rkv8zfGYxjP4Y6XMh6w3rNL+BfpYrHw2VcAU5AB5LCahRtAJ5udTb1vGPD+V2o/HCeLR5sgZMsrNvlql7F2B32Wnd41IQm2k=
+	t=1788964656; cv=none; b=ghnIdr6pAN7m9ts8eBCNrAxy+aYqdPDJVjAkULFgI1Y7Jn3gLteACMYerzBRskB/KwtXxJ1Inur39YqQ5bwdX5idTW7AVakbqZS6vTMnoBscBy/5feRHoXCMEEiHiB3JGQ42j/hMzy/pjgd6mkeU1AXe3YjZgOmJPKFFs4z5HOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964653; c=relaxed/simple;
-	bh=thurqkP8P6gGpOwlEQaSeAi1Xf6fu7hImbH9OviCTzE=;
+	s=arc-20240116; t=1788964656; c=relaxed/simple;
+	bh=yV1EkTvAtzpZ/nX2i8oBqFC2NL3Ui0F3MLuXYN+VHBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JlbSiBdAEXiRc/GdA3JPxc1OfUZkqe+fB172Oyu33KBmgVaUIQtIGbY1xfRAvk6pMVB0VBxQ+W+SpzGPdwkUHBKVKcjqFbUbVGstMhMLNgjtO48BrhUDyXIJvRh5ZtOKzQbiiDEnqrzzrHrnxetdxTYoYiUzwuI14AJosqqaBi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxGxsqtb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jKRLA9tXhfgsXmdbfCyQfqOsLAbRs/EtBdRN89VsW9r2iOIvnUjgyeanr13LP4t3aen8bsAqcBj1p4InsQ4TiytV9YfGnGPIVaHrKLM0rFkUDjwCkX28FA5lcQoPwCkIztbIXzQF9Edr2GQgIbnYzJLydawvCNhQwURI+1rkQIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9Vr+3eG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxGxsqtb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584C01F00A3A;
-	Wed,  9 Sep 2026 14:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9Vr+3eG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354001F00A3A;
+	Wed,  9 Sep 2026 14:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964651;
-	bh=ozMzHIvjLaj8gHXprbIzQSd37RtnPqDxg9jVWgdqxiU=;
+	s=korg; t=1788964654;
+	bh=4lkzwoIMQaeveQj94FBekic3AAK0OgQelrT8Mqr1QuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CxGxsqtbhi/TvkPOkkEx5d8SgCTQg5/QfKviWTNvtINHr6Fo5qfGuFEJFgH1twamx
-	 Wb5mIYUCYyk7HoyyLed9kt63QkHs/wcvbm6gXsWzBDvmLiVQcbYs3VOpIR1v5piiTu
-	 6BqCRjlNjbAOZibvuRzgjYX/Co6zaBRwbvXw//oI=
+	b=I9Vr+3eGyEUSsHjS4B80QYwtXIra4OxZAG6wXhwhaYyY+RXk6LX7miRfLyAyVu7B/
+	 Ekq4iS/pT0VTC57cKQYBWSAekkzWbpiRhHiy1mVK44sTfgzWGy4TggEqBShx31+s2R
+	 vb0e+oHteXmF+mfoQ3nzL3QNZt3A/SQc04N2E1Vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	fangqiurong <fangqiurong@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Abhijit Gangurde <abhijit.gangurde@amd.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 497/583] sched_ext: Fix exit_task leak on fork failure during enable
-Date: Wed,  9 Sep 2026 15:43:02 +0200
-Message-ID: <20260909134254.996984932@linuxfoundation.org>
+Subject: [PATCH 6.18 498/583] RDMA/ionic: Embed counter driver data in rdma_counter allocation
+Date: Wed,  9 Sep 2026 15:43:03 +0200
+Message-ID: <20260909134255.031364445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,38 +51,253 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: fangqiurong <fangqiurong@kylinos.cn>
+From: Abhijit Gangurde <abhijit.gangurde@amd.com>
 
-[ Upstream commit 03506edca637a8465dba9f635c50e9884fbcaf4e ]
+[ Upstream commit cf3ebd89e754015625fee90aa938f6bc79a2c974 ]
 
-scx_fork() initializes tasks when scx_init_task_enabled is set, but
-scx_cancel_fork() only exits them when scx_enabled() is true. A fork
-that fails in the enable window (between releasing scx_fork_rwsem and
-setting __scx_enabled) runs ops.init_task() but never ops.exit_task().
+Commit 7e53b31acc7f ("RDMA/core: Create and destroy rdma_counter using
+rdma_zalloc_drv_obj()") requires drivers implementing counter ops to
+embed struct rdma_counter in a driver-specific struct, register its size
+via INIT_RDMA_OBJ_SIZE, and provide a counter_init callback.
 
-Gate scx_cancel_fork() on scx_init_task_enabled.
+The ionic driver was merged without this adaptation, causing a NULL
+pointer dereference in alloc_and_bind() since rdma_zalloc_drv_obj()
+allocates zero bytes when size_rdma_counter is unset.
 
-Fixes: 4269c603cc26 ("sched_ext: Enable scx_ops_init_task() separately")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ Adjusted the target file path from kernel/sched/ext/ext.c to kernel/sched/ext.c. ]
+Consolidate struct ionic_counter into a new struct ionic_rdma_counter
+that embeds struct rdma_counter, replace the xarray with a lightweight
+ida for ID allocation, and add the required counter_init and
+INIT_RDMA_OBJ_SIZE declarations.
+
+Fixes: ea4c399642b8 ("RDMA/ionic: Implement device stats ops")
+Cc: stable@vger.kernel.org # 6.18
+Signed-off-by: Abhijit Gangurde <abhijit.gangurde@amd.com>
+Link: https://patch.msgid.link/20260805053254.4023262-2-abhijit.gangurde@amd.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[ adapted kzalloc_obj(*cntr) removal to the older kzalloc(sizeof(*cntr), GFP_KERNEL) allocation. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/ionic/ionic_hw_stats.c |  101 ++++++++++++---------------
+ drivers/infiniband/hw/ionic/ionic_ibdev.h    |   11 ++
+ 2 files changed, 54 insertions(+), 58 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3007,7 +3007,7 @@ void scx_post_fork(struct task_struct *p
- 
- void scx_cancel_fork(struct task_struct *p)
+--- a/drivers/infiniband/hw/ionic/ionic_hw_stats.c
++++ b/drivers/infiniband/hw/ionic/ionic_hw_stats.c
+@@ -237,35 +237,34 @@ err_dma:
+ static struct rdma_hw_stats *
+ ionic_counter_alloc_stats(struct rdma_counter *counter)
  {
--	if (scx_enabled()) {
-+	if (scx_init_task_enabled) {
- 		struct rq *rq;
- 		struct rq_flags rf;
++	struct ionic_rdma_counter *cntr = to_ionic_rdma_counter(counter);
+ 	struct ionic_ibdev *dev = to_ionic_ibdev(counter->device);
+-	struct ionic_counter *cntr;
+-	int err;
++	struct rdma_hw_stats *stats;
++	int id;
  
+-	cntr = kzalloc(sizeof(*cntr), GFP_KERNEL);
+-	if (!cntr)
+-		return NULL;
+-
+-	/* buffer for current values from the device */
+ 	cntr->vals = kzalloc(PAGE_SIZE, GFP_KERNEL);
+ 	if (!cntr->vals)
+-		goto err_vals;
+-
+-	err = xa_alloc(&dev->counter_stats->xa_counters, &counter->id,
+-		       cntr,
+-		       XA_LIMIT(0, IONIC_MAX_QPID),
+-		       GFP_KERNEL);
+-	if (err)
+-		goto err_xa;
+-
+-	INIT_LIST_HEAD(&cntr->qp_list);
++		return NULL;
+ 
+-	return rdma_alloc_hw_stats_struct(dev->counter_stats->stats_hdrs,
+-					 dev->counter_stats->queue_stats_count,
+-					 RDMA_HW_STATS_DEFAULT_LIFESPAN);
+-err_xa:
++	id = ida_alloc_max(&dev->counter_stats->counter_ida,
++			   IONIC_MAX_QPID, GFP_KERNEL);
++	if (id < 0)
++		goto err_ida;
++
++	counter->id = id;
++
++	stats = rdma_alloc_hw_stats_struct(dev->counter_stats->stats_hdrs,
++					   dev->counter_stats->queue_stats_count,
++					   RDMA_HW_STATS_DEFAULT_LIFESPAN);
++	if (!stats)
++		goto err_hw_stats;
++
++	return stats;
++
++err_hw_stats:
++	ida_free(&dev->counter_stats->counter_ida, id);
++err_ida:
+ 	kfree(cntr->vals);
+-err_vals:
+-	kfree(cntr);
+ 
+ 	return NULL;
+ }
+@@ -273,14 +272,10 @@ err_vals:
+ static int ionic_counter_dealloc(struct rdma_counter *counter)
+ {
+ 	struct ionic_ibdev *dev = to_ionic_ibdev(counter->device);
+-	struct ionic_counter *cntr;
+-
+-	cntr = xa_erase(&dev->counter_stats->xa_counters, counter->id);
+-	if (!cntr)
+-		return -EINVAL;
++	struct ionic_rdma_counter *cntr = to_ionic_rdma_counter(counter);
+ 
++	ida_free(&dev->counter_stats->counter_ida, counter->id);
+ 	kfree(cntr->vals);
+-	kfree(cntr);
+ 
+ 	return 0;
+ }
+@@ -289,13 +284,8 @@ static int ionic_counter_bind_qp(struct
+ 				 struct ib_qp *ibqp,
+ 				 u32 port)
+ {
+-	struct ionic_ibdev *dev = to_ionic_ibdev(counter->device);
++	struct ionic_rdma_counter *cntr = to_ionic_rdma_counter(counter);
+ 	struct ionic_qp *qp = to_ionic_qp(ibqp);
+-	struct ionic_counter *cntr;
+-
+-	cntr = xa_load(&dev->counter_stats->xa_counters, counter->id);
+-	if (!cntr)
+-		return -EINVAL;
+ 
+ 	list_add_tail(&qp->qp_list_counter, &cntr->qp_list);
+ 	ibqp->counter = counter;
+@@ -315,29 +305,23 @@ static int ionic_counter_unbind_qp(struc
+ 	return 0;
+ }
+ 
+-static int ionic_get_qp_stats(struct ib_device *ibdev,
+-			      struct rdma_hw_stats *hw_stats,
+-			      u32 counter_id)
+-{
+-	struct ionic_ibdev *dev = to_ionic_ibdev(ibdev);
+-	struct ionic_counter_stats *cs;
+-	struct ionic_counter *cntr;
++static int ionic_counter_update_stats(struct rdma_counter *counter)
++{
++	struct ionic_rdma_counter *cntr = to_ionic_rdma_counter(counter);
++	struct ionic_ibdev *dev = to_ionic_ibdev(counter->device);
++	struct ionic_counter_stats *cs = dev->counter_stats;
+ 	dma_addr_t hw_stats_dma;
+ 	struct ionic_qp *qp;
+ 	int rc, stat_i = 0;
+ 
+-	cs = dev->counter_stats;
+-	cntr = xa_load(&cs->xa_counters, counter_id);
+-	if (!cntr)
+-		return -EINVAL;
+-
+ 	hw_stats_dma = dma_map_single(dev->lif_cfg.hwdev, cntr->vals,
+ 				      PAGE_SIZE, DMA_FROM_DEVICE);
+ 	rc = dma_mapping_error(dev->lif_cfg.hwdev, hw_stats_dma);
+ 	if (rc)
+ 		return rc;
+ 
+-	memset(hw_stats->value, 0, sizeof(u64) * hw_stats->num_counters);
++	memset(counter->stats->value, 0,
++	       sizeof(u64) * counter->stats->num_counters);
+ 
+ 	list_for_each_entry(qp, &cntr->qp_list, qp_list_counter) {
+ 		rc = ionic_hw_stats_cmd(dev, hw_stats_dma, PAGE_SIZE,
+@@ -347,7 +331,7 @@ static int ionic_get_qp_stats(struct ib_
+ 			goto err_cmd;
+ 
+ 		for (stat_i = 0; stat_i < cs->queue_stats_count; ++stat_i)
+-			hw_stats->value[stat_i] +=
++			counter->stats->value[stat_i] +=
+ 				ionic_v1_stat_val(&cs->hdr[stat_i],
+ 						  cntr->vals,
+ 						  PAGE_SIZE);
+@@ -362,11 +346,6 @@ err_cmd:
+ 	return rc;
+ }
+ 
+-static int ionic_counter_update_stats(struct rdma_counter *counter)
+-{
+-	return ionic_get_qp_stats(counter->device, counter->stats, counter->id);
+-}
+-
+ static int ionic_alloc_counters(struct ionic_ibdev *dev)
+ {
+ 	struct ionic_counter_stats *cs = dev->counter_stats;
+@@ -427,12 +406,22 @@ static const struct ib_device_ops ionic_
+ 	.get_hw_stats = ionic_get_hw_stats,
+ };
+ 
++static void ionic_counter_init(struct rdma_counter *counter)
++{
++	struct ionic_rdma_counter *cntr = to_ionic_rdma_counter(counter);
++
++	INIT_LIST_HEAD(&cntr->qp_list);
++}
++
+ static const struct ib_device_ops ionic_counter_stats_ops = {
+ 	.counter_alloc_stats = ionic_counter_alloc_stats,
+ 	.counter_dealloc = ionic_counter_dealloc,
+ 	.counter_bind_qp = ionic_counter_bind_qp,
+ 	.counter_unbind_qp = ionic_counter_unbind_qp,
+ 	.counter_update_stats = ionic_counter_update_stats,
++	.counter_init = ionic_counter_init,
++
++	INIT_RDMA_OBJ_SIZE(rdma_counter, ionic_rdma_counter, rdma_counter),
+ };
+ 
+ void ionic_stats_init(struct ionic_ibdev *dev)
+@@ -462,7 +451,7 @@ void ionic_stats_init(struct ionic_ibdev
+ 			return;
+ 		}
+ 
+-		xa_init_flags(&dev->counter_stats->xa_counters, XA_FLAGS_ALLOC);
++		ida_init(&dev->counter_stats->counter_ida);
+ 
+ 		ib_set_device_ops(&dev->ibdev, &ionic_counter_stats_ops);
+ 	}
+@@ -471,7 +460,7 @@ void ionic_stats_init(struct ionic_ibdev
+ void ionic_stats_cleanup(struct ionic_ibdev *dev)
+ {
+ 	if (dev->counter_stats) {
+-		xa_destroy(&dev->counter_stats->xa_counters);
++		ida_destroy(&dev->counter_stats->counter_ida);
+ 		kfree(dev->counter_stats->hdr);
+ 		kfree(dev->counter_stats->stats_hdrs);
+ 		kfree(dev->counter_stats);
+--- a/drivers/infiniband/hw/ionic/ionic_ibdev.h
++++ b/drivers/infiniband/hw/ionic/ionic_ibdev.h
+@@ -331,14 +331,21 @@ struct ionic_counter_stats {
+ 	int queue_stats_count;
+ 	struct ionic_v1_stat *hdr;
+ 	struct rdma_stat_desc *stats_hdrs;
+-	struct xarray xa_counters;
++	struct ida counter_ida;
+ };
+ 
+-struct ionic_counter {
++struct ionic_rdma_counter {
++	struct rdma_counter rdma_counter;
+ 	void *vals;
+ 	struct list_head qp_list;
+ };
+ 
++static inline struct ionic_rdma_counter *
++to_ionic_rdma_counter(struct rdma_counter *counter)
++{
++	return container_of(counter, struct ionic_rdma_counter, rdma_counter);
++}
++
+ static inline struct ionic_ibdev *to_ionic_ibdev(struct ib_device *ibdev)
+ {
+ 	return container_of(ibdev, struct ionic_ibdev, ibdev);
 
 
