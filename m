@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A982DB780;
-	Wed,  9 Sep 2026 14:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46A42DB780;
+	Wed,  9 Sep 2026 14:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964213; cv=none; b=VeD8jCeNJq+a9e6ZDMBh1OP/YeXgxbf4PbyNG+OrBo+fCX+viqSxXd814YYhMLJj0DjouJ+tZdxhYHf3c8Ga8J/sx2O2kR3pc6L2r60DnV6+X1XJgYU1JCgB6L6KGK2l9EDQaBFThh3zvsJJ9w933ZGGw+hCHgn2pWVW7NTJcR0=
+	t=1788964216; cv=none; b=Y1A0DuuNz3+7r1mETVrlPAw7A0JBuvwLR+W9d+94YNdTaC8Vks73KeAICzdU+v9Te3xZaC7XrrEIE1Y/CYhzF7C1KV7DJh5DwQ7iYpfR1Y76er9c4s1tWqRAc+lkYv2hmVzIqwMVVSxi6r6mH1ZVRkZKnyLAM9z4mwU61c0ZGFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964213; c=relaxed/simple;
-	bh=J040fLqTJI+2U9qNLPLCQuNNSaWkeK54UgOC4vZylxw=;
+	s=arc-20240116; t=1788964216; c=relaxed/simple;
+	bh=cFNm7I03CTHL6abiwZ046w/0F4CkLvRJd8HV03vqqk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7/XuQC6/osFVKpShRnBnO5m/vmgxY38N3XThoagnywvrUD2zVyEBRtin3OrqEQpF5vQHUmWPFZtHqaR0QiNSPLHnSZvvqr2LZV+bRRT9PuHcNPWHDU11+mGDb0HK0LYggcMpYRCWW6aQGO+bGddLflQXXA7xLdV3z9a9nBgtk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKfrkQMk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hBr7XaIQwBWFMfALc/V02Vx1R113pfyI9Vub2UOfcv3J3WgYIOVq1CP/7ymg7Ypa3ImovvnvMNCZxIehsZnPI3K167MXtClpHFleBW3xJkGvzgd6km2oQlAvs00+PCycnD+a7wjimBOnBgoBDeUahUkuAlDm1gQWl5ySEFlS9jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3MX0Bak; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKfrkQMk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A391F00A3A;
-	Wed,  9 Sep 2026 14:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3MX0Bak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2EF1F00A3A;
+	Wed,  9 Sep 2026 14:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964211;
-	bh=3H8TRjSEJQ16mXfpC8JdWhEwCNtL01yGEF+2g185K9M=;
+	s=korg; t=1788964214;
+	bh=bzsrbA8Eg0Ded9BSYl1FrXjtt2OM/5yI1OE6BvC87pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wKfrkQMkQUbD5GoL9fAZM59Ug4JIaroFDb92qhowCHzSmxlruiUfrKSFbHtsum8oY
-	 UuzOFiHAVrbzNxSQ8rxmwxqvgYcgFZh/afascMKEM1FP0U4F5Nb17E2rHtb008RZQJ
-	 patk2uyYkgHtKWaBGgig65EZThFTBq7gU62gBtdQ=
+	b=a3MX0Bak3vR1P39wz4fuR/Z9lYnxz6/8aM/zGf84rpgm2kXr33oZ/yT2UqSj0TRMo
+	 mus3CeXFomCt6gURxI4VFJYMSuPHIZpjNtQxZyIUSvGs0IdD761PNWCWewrb/EgRwk
+	 OUMPkrTSkVYSwz9QwLVhXWEGsq5+lKruXEQMEZ2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 318/583] media: zoran: Avoid freeing a registered video_device twice
-Date: Wed,  9 Sep 2026 15:40:03 +0200
-Message-ID: <20260909134249.024247507@linuxfoundation.org>
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 6.18 345/583] scsi: qla2xxx: Fix NVMe abort reference leak on repeated abort
+Date: Wed,  9 Sep 2026 15:40:30 +0200
+Message-ID: <20260909134249.931433986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,46 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 0735e0b5a96761a9ce277a238e834008ad92a0a5 upstream.
+commit 06b5b2a5d499323f1c3256ead35798e8e3d15e60 upstream.
 
-zoran_init_video_device() installs zoran_vdev_release() as the
-video_device release callback through zoran_template. After
-video_register_device() succeeds, video_unregister_device() drops the
-registered video_device reference and the V4L2 core eventually invokes
-that release callback, which kfree()s the video_device.
+qla_nvme_ls_abort() and qla_nvme_fcp_abort() take a command reference with
+kref_get_unless_zero() and then call schedule_work() on priv->abort_work,
+ignoring its return value. qla_nvme_abort_work() runs once and drops
+exactly one reference via kref_put(&sp->cmd_kref, sp->put_fn).
 
-zoran_exit_video_devices() called video_unregister_device() and then
-kfree(zr->video_dev), so device teardown could free the same
-video_device twice.
+Since the per-abort INIT_WORK() was moved to submission time,
+schedule_work() now returns false when the work is already pending, for
+example on a concurrent transport teardown and timeout-driven abort of
+the same command. In that case the reference taken for the second abort
+is never released because the work still executes only once, leaking a
+reference. The command is then never returned to the NVMe-FC transport,
+which can hang the port.
 
-Remove the direct kfree() and clear the cached pointer after
-unregistering. The pre-registration failure path keeps its manual free
-because the video_device was not registered there.
+Drop the reference when schedule_work() returns false, so each
+kref_get_unless_zero() is balanced regardless of whether the work was
+newly queued. The held reference keeps priv->sp valid for the put.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 82e3a496eb56 ("media: staging: media: zoran: move videodev alloc")
+Fixes: 7e85f6dbc856 ("scsi: qla2xxx: Initialize NVMe abort_work once at submission")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-25-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/zoran/zoran_card.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_nvme.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/zoran/zoran_card.c
-+++ b/drivers/media/pci/zoran/zoran_card.c
-@@ -885,7 +885,7 @@ static int zoran_init_video_device(struc
- static void zoran_exit_video_devices(struct zoran *zr)
- {
- 	video_unregister_device(zr->video_dev);
--	kfree(zr->video_dev);
-+	zr->video_dev = NULL;
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -466,7 +466,8 @@ static void qla_nvme_ls_abort(struct nvm
+ 	}
+ 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
+ 
+-	schedule_work(&priv->abort_work);
++	if (!schedule_work(&priv->abort_work))
++		kref_put(&priv->sp->cmd_kref, priv->sp->put_fn);
  }
  
- static int zoran_init_video_devices(struct zoran *zr)
+ static int qla_nvme_ls_req(struct nvme_fc_local_port *lport,
+@@ -548,7 +549,8 @@ static void qla_nvme_fcp_abort(struct nv
+ 	}
+ 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
+ 
+-	schedule_work(&priv->abort_work);
++	if (!schedule_work(&priv->abort_work))
++		kref_put(&priv->sp->cmd_kref, priv->sp->put_fn);
+ }
+ 
+ static inline int qla2x00_start_nvme_mq(srb_t *sp)
 
 
