@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1233C576EC3;
-	Wed,  9 Sep 2026 14:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95F4576ECE;
+	Wed,  9 Sep 2026 14:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962837; cv=none; b=uecMipFGZnJdpzej14BN75ZdvBJ0cyI0C7TveoDGVytQ+iC8HyFDr42DN3cYKA31IzV9zfw51tzVlpVu1DNL55WVclRqE+JfA+L2h36xfp0fO2xOdb/O/ttrNC5Kpti4jHGbCxYeFVwooGY9f6tGbwA51ZOsYEBHYnSGQ+5ex2k=
+	t=1788962840; cv=none; b=o4u78ONA+rJwSWAWukZ8nebmRpIn2IECu9+EHZqLPK5njG9b/B+6Zp5WAn2oWeVR7Ze9NJckLn2MRsECPDe/aTjfLVgjH9DiRQ76KqI/CXFY+9M+pzaR+nD0kUUN94MWkdrMxPJ+4cHla5eq9Rbzon2B+H2unxv+w8eK4VHLPYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962837; c=relaxed/simple;
-	bh=6nhIUt9BIx2MN6mx6g+YTs3jUDsoStm41OOAPpcWR/s=;
+	s=arc-20240116; t=1788962840; c=relaxed/simple;
+	bh=yDCZWbKwHFhaANaiBgoVMs0I2sPFfBMP4hmOGGQECIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kOYPRpybPi9oxC0mzYdUvFq0BZY+Pg5cfo55BIF7aMRNrYEmD1/FCm53MfhHrd+lXjtlmLD66Xn4JnMZ4cprrYrz6T2r/WUahaX2R+cTwW2DDGwdFYXb0ZKjq+1zc//YXjTAUoK1UveXJCcue+fwHfXaEmK1Y8/GB+46Ogv2yeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KIHysmzX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LxYafPWRnA1ofaGZGWSOndRSYEmKQfthYUWjcGpsnz6pShp6C8Xz2mfYI6sz0NHSLLo6HQCf7xaRo2dcjnOhG2wiEtzPiEzYkIbzeoVyH2VuAf0F7XDV9NnC3PIYlsUAsFjh0sjniTtQWSIFRM3v8o/G6DiI5vYqvyjYWGrGs8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tK6ThBth; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KIHysmzX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220F41F00A3D;
-	Wed,  9 Sep 2026 14:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tK6ThBth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C421A1F00A3A;
+	Wed,  9 Sep 2026 14:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962835;
-	bh=M+ymtVTH5rkZPQl3+3sZBiXrICXKoIk5/UKFw1uzdSk=;
+	s=korg; t=1788962839;
+	bh=WZndpMSYLwoW7xH5XUqCPdIgeJAMTXEgV16dFR1jG1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KIHysmzXWNkP5jXuJKPTniZyputdl+d9hrqw1W8slfXDNJz7+gx/ILtZx5CDgap7O
-	 DgI0SmRAezjUH2eLXkf82WbVmUDX9dN9D/FrZSOXpekD7D0ut4V+CnERpsM0Xw+Pvm
-	 Zh9/xk+VxYKiP7NA9+h+fyxXMMWTJTstyZPxJ3ec=
+	b=tK6ThBthN45rCxmjLrXGiG33WA4zidoOyxgO+Ptt0gqyw5PIz+f+SaFPSBvPvYslB
+	 4gkFX6W7Ig+jDPl/XfUua6ngCi0+W+pEsaOvhAcCYoxqPtsJcKIOBsE8KzdXz6iNlt
+	 3WExn5LaFq9f5O82po7Q3z/pzXUcDz92svGZ09iQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilesh Javali <njavali@marvell.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 426/556] scsi: qla2xxx: Hold qpair lock when sending NVMe LS reject
-Date: Wed,  9 Sep 2026 15:41:46 +0200
-Message-ID: <20260909134245.585099451@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Valery Borovsky <vebohr@gmail.com>
+Subject: [PATCH 7.2 389/556] media: rtl2832_sdr: use vb2_video_unregister_device() on remove to fix DMA leak
+Date: Wed,  9 Sep 2026 15:41:09 +0200
+Message-ID: <20260909134244.351467889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,92 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit f743488e4a203049f27ec5d8cd0caccc483af01e upstream.
+commit dabb047c62668f280998e29117c55e41aabac336 upstream.
 
-qla_nvme_ls_reject_iocb() allocates from and advances the request ring
-through __qla2x00_alloc_iocbs() (which assumes the hardware_lock is
-held) and qla2x00_start_iocbs() (which advances the ring and rings the
-request-in doorbell), but takes no lock itself. Two of its callers
-invoke it without the producer lock held:
+rtl2832_sdr_remove() runs on USB disconnect and clears dev->udev to
+NULL before any pending streaming teardown has run. When user space
+later closes its file descriptor, vb2 calls rtl2832_sdr_stop_streaming()
+which in turn calls rtl2832_sdr_free_stream_bufs(). That helper releases
+each coherent buffer with:
 
- - qla_nvme_xmt_ls_rsp(), the NVMe-FC .xmt_ls_rsp transport callback, on
-   its error path, and
+    usb_free_coherent(dev->udev, dev->buf_size,
+                      dev->buf_list[dev->buf_num],
+                      dev->dma_addr[dev->buf_num]);
 
- - qla2xxx_process_purls_pkt(), run from the purex work/DPC context.
+usb_free_coherent() returns immediately when its dev argument is NULL,
+so every DMA stream buffer that was live at disconnect is silently
+leaked. The URBs allocated in rtl2832_sdr_alloc_urbs() outlive the
+device for the same reason.
 
-Both use ha->base_qpair, whose qp_lock_ptr is hardware_lock, so they can
-run concurrently with normal I/O submission on the base ring and corrupt
-the ring producer state, leading to duplicated or dropped commands. The
-third caller, qla2xxx_process_purls_iocb(), runs inside
-qla24xx_process_response_queue() with the qpair lock already held and is
-safe; that is also why the lock cannot be taken inside the helper itself
-(it would recursively re-acquire hardware_lock on the response path).
+The rtl2832_sdr driver uses vb2_fop_release() in its file_operations,
+so replace video_unregister_device(&dev->vdev) with
+vb2_video_unregister_device(&dev->vdev) and move it before clearing
+dev->udev. vb2_video_unregister_device() releases the vb2 queue, which
+synchronously runs rtl2832_sdr_stop_streaming() if streaming is active,
+so URBs and coherent DMA stream buffers are freed while dev->udev is
+still valid.
 
-Take qp_lock_ptr around the two unlocked callers and document the helper
-as caller-locked. Both run in process context, so spin_lock_irqsave() is
-used and nothing in the locked region sleeps.
+vb2_video_unregister_device() locks vdev->queue->lock (vb_queue_lock)
+internally, and stop_streaming() locks v4l2_lock, so the previous outer
+mutex_lock(&dev->vb_queue_lock) / mutex_lock(&dev->v4l2_lock) pair
+around the unregister sequence would self-deadlock and has been removed.
+A short v4l2_lock critical section around dev->udev = NULL remains so
+any ioctl path that still holds the file descriptor sees coherent state.
 
-Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
+Issue identified by automated review of the INV-003 series at
+https://sashiko.dev/
+
+Fixes: 771138920eaf ("[media] rtl2832_sdr: Realtek RTL2832 SDR driver module")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-53-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/media/dvb-frontends/rtl2832_sdr.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -374,6 +374,7 @@ static int qla_nvme_xmt_ls_rsp(struct nv
- 	srb_t *sp;
- 	int rval = QLA_FUNCTION_FAILED;
- 	uint8_t cnt = 0;
-+	unsigned long flags;
+--- a/drivers/media/dvb-frontends/rtl2832_sdr.c
++++ b/drivers/media/dvb-frontends/rtl2832_sdr.c
+@@ -1477,14 +1477,22 @@ static void rtl2832_sdr_remove(struct pl
  
- 	if (!fcport || fcport->deleted)
- 		goto out;
-@@ -440,7 +441,9 @@ out:
- 	a.vp_idx = vha->vp_idx;
- 	a.nport_handle = uctx->nport_handle;
- 	a.xchg_address = uctx->exchange_address;
-+	spin_lock_irqsave(ha->base_qpair->qp_lock_ptr, flags);
- 	qla_nvme_ls_reject_iocb(vha, ha->base_qpair, &a, true);
-+	spin_unlock_irqrestore(ha->base_qpair->qp_lock_ptr, flags);
- 	kfree(uctx);
- 	return rval;
+ 	dev_dbg(&pdev->dev, "\n");
+ 
+-	mutex_lock(&dev->vb_queue_lock);
++	/*
++	 * vb2_video_unregister_device() releases the vb2 queue, which
++	 * triggers rtl2832_sdr_stop_streaming() if streaming is active.
++	 * stop_streaming() uses dev->udev to free URBs and coherent DMA
++	 * stream buffers via usb_free_coherent(), so it must run before
++	 * dev->udev is cleared. vb2_video_unregister_device() locks
++	 * vb_queue_lock internally and stop_streaming() locks v4l2_lock,
++	 * so neither may be held by the caller.
++	 */
++	v4l2_device_disconnect(&dev->v4l2_dev);
++	vb2_video_unregister_device(&dev->vdev);
++
+ 	mutex_lock(&dev->v4l2_lock);
+-	/* No need to keep the urbs around after disconnection */
+ 	dev->udev = NULL;
+-	v4l2_device_disconnect(&dev->v4l2_dev);
+-	video_unregister_device(&dev->vdev);
+ 	mutex_unlock(&dev->v4l2_lock);
+-	mutex_unlock(&dev->vb_queue_lock);
++
+ 	v4l2_device_put(&dev->v4l2_dev);
+ 	module_put(pdev->dev.parent->driver->owner);
  }
-@@ -1127,6 +1130,10 @@ static void qla_nvme_lsrjt_pt_iocb(struc
- 	lsrjt_iocb->rx_byte_count = 0;
- }
- 
-+/*
-+ * Allocates from and advances the request ring, so the caller must hold
-+ * qp->qp_lock_ptr (the response-queue caller already holds it).
-+ */
- static int
- qla_nvme_ls_reject_iocb(struct scsi_qla_host *vha, struct qla_qpair *qp,
- 			struct qla_nvme_lsrjt_pt_arg *a, bool is_xchg_terminate)
-@@ -1183,6 +1190,7 @@ qla2xxx_process_purls_pkt(struct scsi_ql
- {
- 	struct qla_nvme_unsol_ctx *uctx = item->purls_context;
- 	struct qla_nvme_lsrjt_pt_arg a;
-+	unsigned long flags;
- 	int ret = 1;
- 
- #if (IS_ENABLED(CONFIG_NVME_FC))
-@@ -1195,7 +1203,9 @@ qla2xxx_process_purls_pkt(struct scsi_ql
- 		a.vp_idx = vha->vp_idx;
- 		a.nport_handle = uctx->nport_handle;
- 		a.xchg_address = uctx->exchange_address;
-+		spin_lock_irqsave(vha->hw->base_qpair->qp_lock_ptr, flags);
- 		qla_nvme_ls_reject_iocb(vha, vha->hw->base_qpair, &a, true);
-+		spin_unlock_irqrestore(vha->hw->base_qpair->qp_lock_ptr, flags);
- 		list_del(&uctx->elem);
- 		kfree(uctx);
- 	}
 
 
