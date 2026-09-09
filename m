@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2835678F9;
-	Wed,  9 Sep 2026 14:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4217D568FB9;
+	Wed,  9 Sep 2026 14:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963126; cv=none; b=ifNQ7ZUxNmuTr1T7YLR3QnGUTyMqa4CRgwgn+eVOK+Ftc/ll3f/wQdOfenACDDGslQ9ulw10fpUFufaQSD4oy0hsFWfJrRqMUiLCC48Fei3PvpmgxJ8NgI6esKp1lxYSEiFaXi14wgJ+1U4RaxM0PGaUoksYRkh3XBpTj5kUqH4=
+	t=1788963128; cv=none; b=hTdqd9S88nWDgPu3pTveSbs+oEjaYeN1DKLCBDewRDz+Zz+TPVkY1U35R5UCDFgi+Z5b6qJfto8YwPShgxtEi6m3WobG/baeUJhsW7XboG/UG1tB+EQjcczFeCjJEPdZ1DGL/twai9saDJWxKVDjhJ9t+MO3uxF7imZBYLB22V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963126; c=relaxed/simple;
-	bh=ZI5bluV9rQ7XW8+L3uenMi7d5vz+bP5Gim0M5wxY2YU=;
+	s=arc-20240116; t=1788963128; c=relaxed/simple;
+	bh=dkYzeEEMWusCGrPv0fNXNfBsw3XxJhlsiUGXjf9OQY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZc8DKczfbE2j1L7P5G5U0kzkK8MmLGM19qfwdBBOhdoWbj2ZCbo1VSCC+SYkCpkzSIh88P9mVkjFoA22Wg2K429n4GkVtzJ6eRPNYCQT1IV6ngLbuqfMe0/InihyRLWPhoD8+AwBEvAjwJ1fLSEC7fVO4SzibErGsqffo2pbU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQ5Ezo0j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gc7vC3dg4wdovat+k0cCRG1NPZAHflSWUzdQvRzkeYQuPU3xEHEULFqHZqR/T+VezXqi29TDB6Ys2TO1+q3+vgZOqt3Jx2ydQoDd6DU2qPd8w0N/FS0iRqRqp2RUtBH4j6/yT5DFQ0h5mtzm1TM4l6ziDAArbODA7dmQvrR49jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vF6X+C6S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQ5Ezo0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF1B1F00A3A;
-	Wed,  9 Sep 2026 14:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vF6X+C6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2011F00A3A;
+	Wed,  9 Sep 2026 14:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963124;
-	bh=RnCFif4Jed9XuiAlE4u3rvfpPAUi/CjdV5DQHJHnD8o=;
+	s=korg; t=1788963127;
+	bh=dtDzqujV37moPoW0hMsFyENH3NKl2AHHLl1t3LlPAiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FQ5Ezo0jFCGh+uE2TkOCHJojnkNrmWcXu6Ox3yJkSUVR+D2eYZy/8tg/txzMD69rx
-	 FodlH/w8gC5WMfV5U0/4nXC+wJ7wU3+sixtvnTdKgbB3SVNmR9t4DLS/0LCzhrU/Gg
-	 HORsASdYBkruow4k2+dI+kmNqzLsDWzt4ZdzCrEI=
+	b=vF6X+C6SfmiO9Xgdw9eS/Hs2vVrKvs5JaBknPmKosoWepDarw9gX/eOkLhuT1rW4k
+	 izQxyn7bSFTWw08eaXg1d9G0ND1dtbVRb0mhSMKCZpLrQ6MN0Y4ZdskaVpBr/M/1S5
+	 V0/DGGVA3uyV0roNttbPn+2i630I2xnfYDD7fwjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Czernohous <marek@czernohous.de>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 7.2 529/556] drm/nouveau: unsubscribe the channel-kill event before the fence context
-Date: Wed,  9 Sep 2026 15:43:29 +0200
-Message-ID: <20260909134249.014879696@linuxfoundation.org>
+	Faith Ekstrand <faith.ekstrand@collabora.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 7.2 530/556] drm/nouveau: Use write-combined maps for coherent
+Date: Wed,  9 Sep 2026 15:43:30 +0200
+Message-ID: <20260909134249.050870377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,75 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Czernohous <marek@czernohous.de>
+From: Faith Ekstrand <faith.ekstrand@collabora.com>
 
-commit 511585987d27d8cb668acebd399fc4deda23404c upstream.
+commit 774b73428e6eabb4f0382aeeb76e569c7b106a29 upstream.
 
-nouveau_channel_del() tears the fence context down first and only drops
-the channel-kill subscription later, in the middle of the nvif object
-teardown:
+On Tegra devices, uncached maps translate to device memory, causing
+unaligned accesses by userspace resulting in a SIGBUS. Instead, use
+write-combined maps to ensure proper access.
 
-	if (chan->fence)
-		nouveau_fence(chan->cli->drm)->context_del(chan);
-	...
-	nvif_object_dtor(&chan->vram);
-	nvif_event_dtor(&chan->kill);
+This would also affect discrete cards on any Arm device. It was
+determined that discrete cards regardless of cpu arch should use
+write-combined maps for coherent anyways. Thus this change is made for
+all gpu types.
 
-The subscribed handler is nouveau_channel_killed(), which calls
-nouveau_channel_kill() and from there nouveau_fence_context_kill() on
-chan->fence. A kill event delivered in that window takes fctx->lock and
-walks fctx->pending on a fence context that context_del() has already
-freed.
-
-Nothing reaches this below Fermi today, because the subscription is
-gated on FERMI_CHANNEL_GPFIFO and nothing kills a channel there. On
-Fermi and newer the window is real but narrow, since a kill has to land
-exactly while the channel is being destroyed. That is reason enough on
-its own, which is why this carries a Fixes: tag. The last patch in this
-series subscribes Tesla channels as well; nothing kills those today, so
-it does not widen the exposure now, but it is the groundwork for a
-recovery path that would, and the ordering is better fixed before that
-lands than alongside it.
-
-Drop the subscription before anything it depends on is torn down.
-
-Fixes: ea13e5abf807 ("drm/nouveau: signal pending fences when channel has been killed")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
-Fixes: ea13e5abf807 ("drm/nouveau: signal pending fences when channel has been killed")
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260812231330.705425-2-mczernohous@gmail.com
+Signed-off-by: Faith Ekstrand <faith.ekstrand@collabora.com>
+Co-developed-by: Aaron Kling <webgeek1234@gmail.com>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Fixes: 1b4ea4c5980f ("drm/ttm: set the tt caching state at creation time")
+Link: https://patch.msgid.link/20260821-tegra-coherent-wc-v2-1-2b1ddb67bf18@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_chan.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_sgdma.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_chan.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_chan.c
-@@ -90,6 +90,14 @@ nouveau_channel_del(struct nouveau_chann
- {
- 	struct nouveau_channel *chan = *pchan;
- 	if (chan) {
-+		/*
-+		 * Drop the kill-event subscription first.  Its handler
-+		 * dereferences chan->fence, which the fence context teardown
-+		 * below frees, so leaving it armed across the teardown leaves
-+		 * a window for a use-after-free.
-+		 */
-+		nvif_event_dtor(&chan->kill);
-+
- 		if (chan->fence)
- 			nouveau_fence(chan->cli->drm)->context_del(chan);
+--- a/drivers/gpu/drm/nouveau/nouveau_sgdma.c
++++ b/drivers/gpu/drm/nouveau/nouveau_sgdma.c
+@@ -72,9 +72,7 @@ nouveau_sgdma_create_ttm(struct ttm_buff
+ 	struct nouveau_sgdma_be *nvbe;
+ 	enum ttm_caching caching;
  
-@@ -100,7 +108,6 @@ nouveau_channel_del(struct nouveau_chann
- 		nvif_object_dtor(&chan->nvsw);
- 		nvif_object_dtor(&chan->gart);
- 		nvif_object_dtor(&chan->vram);
--		nvif_event_dtor(&chan->kill);
- 		nvif_object_dtor(&chan->user);
- 		nvif_mem_dtor(&chan->mem_userd);
- 		nouveau_vma_del(&chan->sema.vma);
+-	if (nvbo->force_coherent)
+-		caching = ttm_uncached;
+-	else if (drm->agp.bridge)
++	if (nvbo->force_coherent || drm->agp.bridge)
+ 		caching = ttm_write_combined;
+ 	else
+ 		caching = ttm_cached;
 
 
