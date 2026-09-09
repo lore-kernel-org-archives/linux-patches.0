@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF5B579818;
-	Wed,  9 Sep 2026 14:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F2E57D214;
+	Wed,  9 Sep 2026 14:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962846; cv=none; b=EnFqSmIqqh+9PShSGLwZ9ZzG2AVgfc3C6Pbuksm5Tx5+998Nq7TbiRHrrN6VVUobGpVtQ3UpgqxmtDZaG6ijUh3+/qllCyDSJCTuBQaMd0rQW9WIABDLNleY7A1/lw9NMGsk2Nh4AnlA4iR2T94ntKoqXk0jdBtqGvE5skXpilk=
+	t=1788962849; cv=none; b=T+mFxmgjBe+qq+sqa2SNh0HFLYeoIllYcB6DfIjXpfU3o/Lq4IgXCXBxM0W/VrdqutzJKm9qUtjgQc2jDEDQWO6V7ppajtpgOeAQibF8rfNCdxmayJRHdah7smSI5S7tG4FfdxlZpHPcubypylsOrTspCD5doNwVBFeTXUmJCaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962846; c=relaxed/simple;
-	bh=MDLoriD0Zc8dMs8kWPJc8z/NbICi+eG+0hBNvQElXIM=;
+	s=arc-20240116; t=1788962849; c=relaxed/simple;
+	bh=UcNNxCugn5mP7GaxA55OvefLb1UoIMM2USNKg4YaVwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLV7pA02nwFrZJJOM+PIvKO15o8HTOGzFAOdmutN+By3Ld1Fcm/p2k3up+bmVzEA2XMUB9i16F7YxLOk93eLr+s9JeJw4m/Hsb0YJL/QxdLgnAJr9ZOqWPzziWkVr7hRL65yqDf32cq8H6NEfO4m/0/AopVMkSyDyXQ0KOb92vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jx3KDCma; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RBldRWZnlyDA6JddMoNXIoqOaIxro+VrtiNwwwwXxkDVEOxFCiK+vQnE+CvQGDoJsPR2wmmSTNwjvuCBF6qiRnKBk8ocgX2vI4DlOFYSJ9GOXjctLSzoXFeVk7YOMnWgIetGJhZE0kM4A0LCbnhFmyP8ZQx/UWwakLqfwPDyYpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbiEY1Ni; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jx3KDCma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D3E1F00A3A;
-	Wed,  9 Sep 2026 14:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbiEY1Ni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE041F00A3A;
+	Wed,  9 Sep 2026 14:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962845;
-	bh=bIP1j6ejGbhXjd4dJq4ufO819w5qKIEF95r9srbouCw=;
+	s=korg; t=1788962848;
+	bh=l/fqtT5Mbxeis6nqDg6YLd9NzqAfO8HBfGU5FQmRuew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jx3KDCmaSSEfgy23qC8zPz0tmN/zp89HUdeH0tnL9E9vVxGyBGGNz9IY2+4rtSZO/
-	 Md0JzjphD7+9t9tX9zCk8fEovx9y1drNmVSVq1CA73i28q0pRaVd8wN9c4WUBz+pXB
-	 uUVpmXcLPLEr/u9KaXoQLDxdNLP3iYc03mAQMVVY=
+	b=DbiEY1Nio2x/ErKer4V/P6Gb3hY+neEJpxfRyHwlU1RRmwtEkv0vYCOyLFOHLFe6E
+	 vKCcmVmXIhTeBmrGmCL2H8h6XDN0eXnCJW9ph63vu6NYjn8X5tjM007D+mAdswkKy9
+	 mtiRYuDPMwFfzRWY9JQVJWvyXH0BLAoLblWC3xVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 7.2 391/556] media: rzg2l-cru: Align bytesperline to hardware DMA stride requirement
-Date: Wed,  9 Sep 2026 15:41:11 +0200
-Message-ID: <20260909134244.415936005@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.2 392/556] media: s2255: bound JPEG frame size before copying into the buffer
+Date: Wed,  9 Sep 2026 15:41:12 +0200
+Message-ID: <20260909134244.451088451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,46 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 56c29fa3ee666197516a231e75aed789ae9c530d upstream.
+commit e504cc888f42999dd76b6a43788c422610f2aad2 upstream.
 
-The RZ/G3E CRU programs the line stride via the AMnIS register, whose
-IS field encodes the value in units of 128 bytes. If bytesperline is
-not a multiple of 128, the division truncates and the hardware uses a
-wrong stride, causing horizontal banding.
+s2255_fillbuff() memcpy()s vc->jpg_size bytes of a captured JPEG/MJPEG
+frame into the vb2 plane.  vc->jpg_size is taken verbatim from the
+S2255_MARKER_FRAME header the device sends (pdword[4] in save_frame())
+and, unlike the frame payload length just above it, is never bounded:
 
-Commit ace92ccef0c9 ("media: platform: rzg2l-cru: Use v4l2_fill_pixfmt()")
-replaced the open-coded aligned calculation with v4l2_fill_pixfmt(),
-which sets no alignment, reintroducing the issue.
+	payload = le32_to_cpu(pdword[3]);
+	if (payload > vc->req_image_size)	/* payload is checked ... */
+		return -EINVAL;
+	vc->pkt_size = payload;
+	vc->jpg_size = le32_to_cpu(pdword[4]);	/* ... jpg_size is not */
 
-Round bytesperline up to RZG2L_CRU_STRIDE_ALIGN and recompute
-sizeimage when info->has_stride is set. RZ/G2L has no AMnIS register
-and keeps the values from v4l2_fill_pixfmt() unchanged.
+A malicious or malfunctioning device can therefore report a jpg_size
+larger than the destination vb2 plane, and the memcpy() writes past it.
+jpg_size is a signed int, so a value with the top bit set also turns
+into a huge length.
 
-Fixes: ace92ccef0c9 ("media: platform: rzg2l-cru: Use v4l2_fill_pixfmt()")
+Reject a frame whose jpg_size is negative or exceeds the plane size
+before copying it.
+
+Fixes: 38f993ad8b1f ("V4L/DVB (8125): This driver adds support for the Sensoray 2255 devices.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/usb/s2255/s2255drv.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
-+++ b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
-@@ -851,6 +851,11 @@ static void rzg2l_cru_format_align(struc
- 
- 	v4l2_fill_pixfmt(pix, pix->pixelformat, pix->width, pix->height);
- 
-+	if (info->has_stride) {
-+		pix->bytesperline = ALIGN(pix->bytesperline, RZG2L_CRU_STRIDE_ALIGN);
-+		pix->sizeimage = pix->bytesperline * pix->height;
-+	}
-+
- 	dev_dbg(cru->dev, "Format %ux%u bpl: %u size: %u\n",
- 		pix->width, pix->height, pix->bytesperline, pix->sizeimage);
- }
+--- a/drivers/media/usb/s2255/s2255drv.c
++++ b/drivers/media/usb/s2255/s2255drv.c
+@@ -617,6 +617,12 @@ static void s2255_fillbuff(struct s2255_
+ 			break;
+ 		case V4L2_PIX_FMT_JPEG:
+ 		case V4L2_PIX_FMT_MJPEG:
++			if (jpgsize < 0 ||
++			    jpgsize > vb2_plane_size(&buf->vb.vb2_buf, 0)) {
++				dprintk(dev, 1, "bad JPEG frame size %d\n",
++					jpgsize);
++				break;
++			}
+ 			vb2_set_plane_payload(&buf->vb.vb2_buf, 0, jpgsize);
+ 			memcpy(vbuf, tmpbuf, jpgsize);
+ 			break;
 
 
