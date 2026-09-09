@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466DF563FB6;
-	Wed,  9 Sep 2026 13:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA7654B1C6;
+	Wed,  9 Sep 2026 13:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961950; cv=none; b=UQYWhqoXDLMLFiW1HjzvdwgOy4e1rWTwMAmA5QksfYaD+Ui8iJiEe/01f/r/36BWlonpHR/6aixZ+8OU99DnIpQ9culyM0OY7ZvM/0btTq+0kKZDjJlZhFBr1jXCltO1VzFiv67uRFGbttKvorx1h4BblbnMx5k5F8+lv2OVSuY=
+	t=1788961953; cv=none; b=kSccLaSYIYA6FvRJvFVGKV8fg/KfN7jUk19SoxqhjyT7fpTsVt+X+jM22TuxOEEF6OMHAxee3We/t+P3Ol3NMm0dxVzitx08Dgy99ChdWJ4HRdHbbaI/zStjUZ9PSo35+Xs52AD3efkhCItrtPKGvcOfQNa9+urQ6hZMuibhZP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961950; c=relaxed/simple;
-	bh=SZC6b5gozHTg+ahgiiBosabUySfOrBo+FJ5b1BF0lFs=;
+	s=arc-20240116; t=1788961953; c=relaxed/simple;
+	bh=2BFLYtFbyfiqewBe8dLqMpZDXrFnXcErEDS/zARUsGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2ZxC+66RoMbQT70lacQJ/QTTaxDRKSFIx9WkUTCby55CLZtrbuPeUae81P3QwuQtXWhN6N5DmTiD8eHLEpohANpMhEqM6ljlR6wjRQNnU3yTd4PVzzsFBB2a3mfErxuxwEtmHqyb6m1phkmAcWS3ylY4Y7YhceFXTio8NE92dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5FRQ6V8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YGn83cEPOf7UeW0JtrXWaCDwuiYK51XxKCnXDg8KkM4RlUeZBngDUp4Qw2xhh08tgpwE5MY3HNFhAfeDhDvQpG6dTX2eSCxIpntKL6llkJvhi111eUjrmqTixigXbdBpi3az+OXe4ZIbHTD0nheZAo2v+xKkzzI2eSekejg0fes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHTlewhP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5FRQ6V8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B75D1F00A3D;
-	Wed,  9 Sep 2026 13:52:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHTlewhP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8021D1F00A3A;
+	Wed,  9 Sep 2026 13:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961949;
-	bh=Ai2i0wJYXqpeLrMLkW3E/gR8GPsNjuk7aTRHUw+NpAE=;
+	s=korg; t=1788961952;
+	bh=WJvhlV5zV6PStzzFlId8DqzZL5HirMtT0HyjeL4jNAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5FRQ6V8Dr/rQcIckmuPb5TiiQDi2aBhyijzJ2sQenp4IldhnNMLTHqgmAWXNfS/b
-	 ndn2kd2YPCDLDzk3vgQ9kpEB+ghSAxlgWChSe5TlZsxE8egJhBjZbflEJgdlUJFBny
-	 qTN6vGsgYZ9CKKlX7K/QyNuantExpIb6F5n/9JNI=
+	b=RHTlewhPlXjJ4POYREzPZmBGHdtA67wCP31zUafP8eo2Yi6WfA7QxwrwdTmkYeoyF
+	 S1ZFu8SoZBQrxU0cNlE+u6XMFKQ+xvU/hUjk2b3uIaCs9P0YUbt7XiaY8eH8GOV87n
+	 kQcXXdgN7OSmFVSl1NOXT3pg27/cwVes/iXAlnBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.2 119/556] ceph: lock mutex in ceph_mds_check_access()
-Date: Wed,  9 Sep 2026 15:36:39 +0200
-Message-ID: <20260909134234.654244089@linuxfoundation.org>
+	Hajo Noerenberg <hajo-linux-ide@noerenberg.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Pali Rohar <pali@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 7.2 120/556] ata: ahci: work around lost interrupts on Marvell 88SE61xx
+Date: Wed,  9 Sep 2026 15:36:40 +0200
+Message-ID: <20260909134234.688413449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,85 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
 
-commit a61c6ae1dae2611082b831b4aaa780878099c012 upstream.
+commit dc3565a4ae538e584e5e63b3b3cd1eaf502593c1 upstream.
 
-MDS session OPEN handling replaces mdsc->s_cap_auths under
-mdsc->mutex, freeing the previous array and its strings.
+ahci_single_level_irq_intr() services the ports first and clears the
+global HOST_IRQ_STAT afterwards, as recommended by AHCI 1.1 section
+10.6.2.  The Marvell 88SE6111/6121/6145 family stops reporting interrupts
+for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits:
+PxIS keeps its content, HOST_IRQ_STAT reads back as 0, the port is never
+looked at again, and the command in flight only ends in a timeout.
 
-ceph_mds_check_access() traverses this array without holding the
-mutex.  A concurrent session reopen can therefore free the array while
-it is being inspected, resulting in a use-after-free like this:
+Measured on a Seagate Blackarmor NAS440 (Marvell 88F6281 Kirkwood,
+88SE6121 rev B2 behind PCIe) by polling the AHCI registers from userspace
+while an IDENTIFY was outstanding:
 
-  Unable to handle kernel paging request at virtual address 003aaad64b2c8bb9
-  [...]
-  Internal error: Oops: 0000000096000004 [#1]  SMP
-  Modules linked in:
-  CPU: 56 UID: 2953037534 PID: 1253231 Comm: php-cgi8.4 Not tainted 6.18.45-i2-ampere #1146 NONE
-  [..]
-  pc : ceph_mds_check_access+0xd4/0x550
-  lr : ceph_mds_check_access+0xc8/0x550
-  [...]
-  Call trace:
-   ceph_mds_check_access+0xd4/0x550 (P)
-   ceph_atomic_open+0x138/0xbe8
-   path_openat+0xa24/0xfa8
-   do_filp_open+0x94/0x158
-   do_sys_openat2+0x88/0xf8
+  t=303.046  irqs 127  PxIS 0x00000000  PxCI 0x00000001
+             IDENTIFY issued
+  t=303.057  irqs 128  PxIS 0x00000020  PxCI 0x00000000
+             CI cleared, DPS set, one interrupt taken
+             ... PxIS stays 0x00000020, HOST_IRQ_STAT stays 0 ...
+  t~308.05   qc timeout after 5000 msecs
 
+The command had completed - PxCI was clear and PxIS had DPS set - so
+ahci_qc_complete() would have completed it.  It never got the chance
+because the handler read HOST_IRQ_STAT as 0 and returned IRQ_NONE.
+
+Marvell's own driver for these chips clears the two registers in the
+opposite order and says so ("clear global before channel"), and
+ahci_xgene handles its broken edge latch the same way.  Since the
+reordering costs at most one spurious interrupt per valid one on
+conforming controllers, do it in a private interrupt handler selected for
+board_ahci_mv instead of changing libahci for everyone.
+
+With this applied, SATA-2 and SATA-3 disks work at 3.0 Gbps on the
+88SE6121 without the drive-side 1.5 Gbps jumper that was needed before.
+Time from link up to a successful IDENTIFY:
+
+  WDC WD5000AADS-00S9B0  port 0    7 ms  (never identified before)
+  WDC WD3202ABYS-01B7A0  port 1   28 ms
+  WDC WD30EFRX-68EUZN0   port 1  200 ms  (3 TB, HPA detection ok)
+
+Only the 88SE6121 was tested; board_ahci_mv also covers the 88SE6145,
+which Marvell's driver treats identically.
+
+Fixes: cd70c26617f4 ("[libata] AHCI: Add support for Marvell AHCI-like chips (initially 6145)")
 Cc: stable@vger.kernel.org
-Fixes: 596afb0b8933 ("ceph: add ceph_mds_check_access() helper")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://lore.kernel.org/linux-ide/db6b48b7-d69a-564b-24f0-75fbd6a9e543@noerenberg.de/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
+Signed-off-by: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Acked-by: Pali Rohar <pali@kernel.org>
+Link: https://lore.kernel.org/r/20260831124303.920391-1-hajo-linux-ide@noerenberg.de
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |    4 ++++
- fs/ceph/mds_client.h |    1 +
- 2 files changed, 5 insertions(+)
+ drivers/ata/ahci.c |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -6593,11 +6593,13 @@ int ceph_mds_check_access(struct ceph_md
- 	doutc(cl, "tpath '%s', mask %d, caller_uid %d, caller_gid %d\n",
- 	      tpath, mask, caller_uid, caller_gid);
- 
-+	mutex_lock(&mdsc->mutex);
- 	for (i = 0; i < mdsc->s_cap_auths_num; i++) {
- 		struct ceph_mds_cap_auth *s = &mdsc->s_cap_auths[i];
- 
- 		err = ceph_mds_auth_match(mdsc, s, cred, tpath);
- 		if (err < 0) {
-+			mutex_unlock(&mdsc->mutex);
- 			put_cred(cred);
- 			return err;
- 		} else if (err > 0) {
-@@ -6619,6 +6621,7 @@ int ceph_mds_check_access(struct ceph_md
- 	doutc(cl, "root_squash_perms %d, rw_perms_s %p\n", root_squash_perms,
- 	      rw_perms_s);
- 	if (root_squash_perms && rw_perms_s == NULL) {
-+		mutex_unlock(&mdsc->mutex);
- 		doutc(cl, "access allowed\n");
- 		return 0;
- 	}
-@@ -6633,6 +6636,7 @@ int ceph_mds_check_access(struct ceph_md
- 		      !!(mask & MAY_READ), !!(mask & MAY_WRITE));
- 	}
- 	doutc(cl, "access denied\n");
-+	mutex_unlock(&mdsc->mutex);
- 	return -EACCES;
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -2614,6 +2614,51 @@ static irqreturn_t ahci_thunderx_irq_han
  }
+ #endif
  
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -604,6 +604,7 @@ struct ceph_mds_client {
- 	struct rw_semaphore     pool_perm_rwsem;
- 	struct rb_root		pool_perm_tree;
++/*
++ * The Marvell 88SE6111/6121/6145 ("Thor") family stops reporting interrupts
++ * for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits: PxIS
++ * keeps its content, HOST_IRQ_STAT reads back as 0, the port is never looked
++ * at again and the command in flight only ends in a timeout.  On a 88SE6121
++ * this makes every SATA-2 or SATA-3 disk fail to IDENTIFY, while SATA-1 disks
++ * happen to win the race often enough to work.
++ *
++ * Clearing the host status before servicing the ports avoids it.  Marvell's
++ * own driver for these chips does the same and says so ("clear global before
++ * channel"), and ahci_xgene handles its broken edge latch the same way.  The
++ * price is at most one spurious interrupt per valid one, which is why this is
++ * not the generic behaviour - see AHCI 1.1 section 10.6.2.
++ *
++ * Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
++ */
++static irqreturn_t ahci_mv_irq_handler(int irq, void *dev_instance)
++{
++	struct ata_host *host = dev_instance;
++	struct ahci_host_priv *hpriv = host->private_data;
++	void __iomem *mmio = hpriv->mmio;
++	unsigned int rc;
++	u32 irq_stat, irq_masked;
++
++	irq_stat = readl(mmio + HOST_IRQ_STAT);
++	if (!irq_stat)
++		return IRQ_NONE;
++
++	irq_masked = irq_stat & hpriv->port_map;
++
++	spin_lock(&host->lock);
++
++	/*
++	 * Use the unmasked value to clear the interrupt, as a spurious pending
++	 * event on a dummy port might cause a screaming IRQ.
++	 */
++	writel(irq_stat, mmio + HOST_IRQ_STAT);
++
++	rc = ahci_handle_port_intr(host, irq_masked);
++
++	spin_unlock(&host->lock);
++
++	return IRQ_RETVAL(rc);
++}
++
+ static void ahci_remap_check(struct pci_dev *pdev, int bar,
+ 		struct ahci_host_priv *hpriv)
+ {
+@@ -2917,6 +2962,10 @@ static int ahci_init_one(struct pci_dev
+ 		return -ENOMEM;
+ 	hpriv->flags |= (unsigned long)pi.private_data;
  
-+	/* protected by mutex */
- 	u32			 s_cap_auths_num;
- 	struct ceph_mds_cap_auth *s_cap_auths;
- 
++	/* the Marvell "Thor" family needs HOST_IRQ_STAT cleared first */
++	if (board_id == board_ahci_mv)
++		hpriv->irq_handler = ahci_mv_irq_handler;
++
+ 	/* MCP65 revision A1 and A2 can't do MSI */
+ 	if (board_id == board_ahci_mcp65 &&
+ 	    (pdev->revision == 0xa1 || pdev->revision == 0xa2))
 
 
