@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500CD55409E;
-	Wed,  9 Sep 2026 14:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3695E57C700;
+	Wed,  9 Sep 2026 14:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963401; cv=none; b=JO09VRW9JZ5IuCtBJ+3WwAapNGdfRHpgQEvhgaEUFN85g/UC929PWJe8ViWIqQ0mvyUuvYDSbYExcTyZOKSpPD151seKabmPFQh7W6ZwFd0j9wMtlBfoVqo3M1SqZtlB+o8MRziiiSG7NnDi/IE5n4NUQQnD6/8eYYmKqoOOWUM=
+	t=1788963404; cv=none; b=qwixhLpqPFXQgog3/O2t44Ewk7r8me3lmS4+N1o3HE8lsqOijssTBsiKqEKsrcUYGVXxq17n+7ReUpGga2IdR98cpsV1Te3JDs7gGdwXuYcyX8lJQ5SXMioDTFcfpwsCDgpIUisxqg7FKtpHh5mawMiebFPe7+vYVPvyEikIBiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963401; c=relaxed/simple;
-	bh=By2NRyCjIdPBORkcm+0nqrdf+voyQHRlFuPTm5hAWNQ=;
+	s=arc-20240116; t=1788963404; c=relaxed/simple;
+	bh=c88ujwx1UEgnncwgCDFrNVLtNPrAk6vA9uMvdyRCLzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVW0NAzt8KHcdFrnTFd4+gDjpvIgvaV6bv3pmkVrhuzd4rseAYfMEL5m5OH/Tavo6zx+1i2JIHbaEcAzcOHJeptQ/72OrRDiltsE0+hPt2v2tohLk/Cu5EDsFv/aoEk7BRSSAlQAP2/gMuzA3J1kHJW1/rWN1lOIGBqZLkhAqZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AhYqMnqc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XPyNNYi1bPJmXyt411QCN/3Pj0Y+Ab7pyMzuW6jSR4T6iZjEm+EhQc4zJ5FjMuIgcdXlYbhVrBSjapGJd+0C+gznDPh4kWZqPyjrsCL+AhUGt0MwXGIZ6TmOtYJZvwYbtYGG4Q/dA5XUQytZDsq+l2pClYqmJOxwV/DZiBJaCCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GASrtS8d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhYqMnqc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C9E1F00A3A;
-	Wed,  9 Sep 2026 14:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GASrtS8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFDB1F00A3A;
+	Wed,  9 Sep 2026 14:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963400;
-	bh=uD8ryqTVdK5MVwqoSWtyBIpesdL+V/WdzoRREety/EQ=;
+	s=korg; t=1788963403;
+	bh=JsaPNvl/GZ5h0Yela9cEEaWXBCM2Gi141lI7D2VRnAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AhYqMnqcMxCrPx9Zs9vktODTd5SHy815pPTQJ4cYylnc5O1uS0yBtjYDfCYZkkf3l
-	 +PY0eRSjh87ppodTQL5vBJVDoaEEN22m3DodkDUe9d3tW6/kNG3fdNt+27fkeS/S3R
-	 ACQdv2qlvgA1a+0FwUtaPfYD5aDB/So2fSYF+6c4=
+	b=GASrtS8dvr8WxlDJGpt1YB/XnQCUOKYV80VNxJ0TbepbP2xnP7CyJSATg0CIfOdy4
+	 5qVlGgcVSmROR982NchBpkXvQbl5x932g+KJpIsH/LV/XlenZFea4fFfI8gfa79eR7
+	 EcN5oYzuDwfHsHRFEtPiI2rywTtzRPRRCEoY8/ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Jie Law <98lawweijie@gmail.com>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 065/583] HID: rmi: fix OOB access with undersized RMI reports
-Date: Wed,  9 Sep 2026 15:35:50 +0200
-Message-ID: <20260909134240.319002536@linuxfoundation.org>
+Subject: [PATCH 6.18 066/583] HID: wacom: validate report length in wacom_intuos_pro2_bt_irq
+Date: Wed,  9 Sep 2026 15:35:51 +0200
+Message-ID: <20260909134240.358032710@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,202 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie Law <98lawweijie@gmail.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit 4956993bb3befdf791d71a4952d8d13bcfd44c7b upstream.
+commit a8e04f3f894ccb52cfcd7e60125a9f35da4a616d upstream.
 
-The hid-rmi driver sizes its writeReport/readReport buffer purely from
-the report descriptor supplied by the device, with no minimum bound:
+wacom_intuos_pro2_bt_irq() receives the wire report length in `len`
+but never consults it before parsing. After the report-id gate it
+unconditionally calls wacom_intuos_pro2_bt_pen() and then, selected by
+features.type, a fixed chain of sub-parsers, none of which receive
+`len`:
 
-	data->input_report_size  = hid_report_len(input_report);
-	data->output_report_size = hid_report_len(output_report);
-	alloc_size = data->output_report_size + data->input_report_size;
-	data->writeReport = devm_kzalloc(&hdev->dev, alloc_size, GFP_KERNEL);
-	data->readReport = data->writeReport + data->output_report_size;
+	wacom_intuos_pro2_bt_pen(wacom);
+	if (type == INTUOSP2_BT || type == INTUOSP2S_BT) {
+		wacom_intuos_pro2_bt_touch(wacom);
+		wacom_intuos_pro2_bt_pad(wacom);
+		wacom_intuos_pro2_bt_battery(wacom);
+	} else {
+		wacom_intuos_gen3_bt_pad(wacom);
+		wacom_intuos_gen3_bt_battery(wacom);
+	}
 
-but then reads and writes fixed offsets into it.  A device declaring a
-1-byte output and a 1-byte input report makes hid_report_len() return 2
-for each, so alloc_size is 4, while rmi_set_page() -- reached
-unconditionally at probe time through rmi_input_configured() -- stores
-writeReport[4] and rmi_hid_read_block() stores writeReport[0..5].  Since
-readReport lives at writeReport + output_report_size, those stores also
-corrupt the window the next reply is parsed out of.
+Each sub-parser dereferences wacom->data at fixed offsets. The furthest
+byte touched on each branch is:
 
-The read path is worse: the copy length comes from readReport[1], which
-the device fills in and can be up to 255, and the copy starts at
-&readReport[2] with no regard for input_report_size, so it runs past the
-end of the allocation into adjacent slab objects.  This does not even
-need a lying device -- rmi_f01_probe() issues a fixed 21-byte register
-read, so any device declaring an input report smaller than 23 bytes
-reads out of bounds even when it answers truthfully.  Those bytes become
-the register values the RMI core acts on: rmi_f01_probe() prints them to
-the kernel log as the product id and exports them through the mode 0444
-sysfs attribute of the same name, and rmi_driver_set_irq_bits() sends
-them back to the device as the interrupt mask, so an undersized report
-descriptor leaks heap contents both to unprivileged userspace and to the
-device itself.
+  INTUOSP2_BT / INTUOSP2S_BT: wacom_intuos_pro2_bt_pad() reads data[285]
+	(the touchring byte), so the report must be at least 286 bytes;
+  INTUOSHT3_BT ("gen3"): wacom_intuos_gen3_bt_battery() reads data[45],
+	so the report must be at least 46 bytes.
 
-The write path has no bound either: rmi_hid_write_block() copies an
-unbounded len to &writeReport[4], and the largest caller a device can
-drive at probe time is rmi_driver_set_irq_bits(), whose length is
-derived from the interrupt source counts the device declares in its Page
-Description Table.
+features.type is selected from the VID/PID id_table entry and
+wacom_setup_device_quirks() force-registers the pen/pad/touch inputs
+for that type independent of the report descriptor, so a malicious or
+malfunctioning paired/spoofed Bluetooth peripheral can advertise that
+VID/PID and send an undersized report that still satisfies the
+data[0] == 0x80/0x81 gate. The driver then reads past the received
+report and forwards the bytes to userspace via evdev (MSC_SERIAL /
+ABS_MISC / ABS_WHEEL on the pen and pad input nodes), an out-of-bounds
+read with a concrete userspace read-back channel, and a true
+out-of-bounds read on transports whose backing buffer is sized to the
+(small) report descriptor rather than a fixed-size staging buffer.
 
-Finally, the read loop cannot terminate on a zero-length reply: such a
-reply copies nothing and advances neither bytes_read nor bytes_needed,
-and because a reply did arrive the one second wait_event_timeout() does
-not fire either, so a device answering 0 forever keeps the loop running
-inside the probe worker with page_mutex held.  khungtaskd does not
-notice, because every reply wakes the task.
+This is the same class of bug commit 2f1763f62909 ("HID: wacom: fix
+out-of-bounds read in wacom_intuos_bt_irq") already hardened in the
+sibling wacom_intuos_bt_irq(), which guards each report id against its
+minimum length before parsing.
 
-Reject reports too small for what the driver builds -- 6 output bytes
-for the write reports and 3 input bytes for the read handshake -- at
-probe time, clamp the write and the read copy to the report sizes the
-device declared, and treat a zero-length reply as an error.  A device
-refused this way is started as an ordinary HID device, like one that
-does not carry the RMI report ids at all.
+Guard wacom_intuos_pro2_bt_irq() the same way: before parsing, reject
+reports shorter than the furthest offset the selected branch actually
+dereferences, warn, and bail out. Because the whole pen/touch/pad/
+battery chain runs unconditionally per branch, a single up-front check
+against the maximum offset (286 bytes for INTUOSP2_BT/INTUOSP2S_BT,
+46 bytes for the gen3 branch) bounds every sub-parser. Returning 0 on
+a short report also skips those calls for the same malformed report,
+which is the safe, conservative behavior.
 
-RMI_DEVICE must not be left set in device_flags on that path, because
-rmi_input_configured() would then run the RMI setup and reach
-rmi_set_page(), which writes the writeReport buffer the refusal just
-skipped allocating.  The bit can arrive set: rmi_probe() copies
-id->driver_data into device_flags before the report checks, and a bind
-through the new_id sysfs attribute can supply driver_data with
-RMI_DEVICE (BIT(0)) set.  Strip the bit where driver_data is copied, so
-RMI_DEVICE keeps meaning exactly "this probe validated the reports"; the
-three jumps to start that predate this patch are covered as well.
-
-The error path also clears RMI_READ_DATA_PENDING on its way out, because
-that flag is what the wait at the top of the loop tests: leaving it set
-would make every later wait_event_timeout() return immediately on the
-stale reply and kill the read path for the rest of the device's life.
-
-Clamping does not regress working hardware: the read loop already
-handles a reply carrying fewer bytes than requested, and a write longer
-than the output report was overrunning the buffer already.
-
-Verified on v6.12.69 and on v6.12.105 built with CONFIG_KASAN=y and
-booted kasan_multi_shot, whose hid-rmi.c is identical to mainline here.
-An emulated RMI4 device driven over /dev/uhid, and the same device again
-over dummy_hcd plus raw-gadget, give identical results:
-
-  BUG: KASAN: slab-out-of-bounds in rmi_hid_read_block+0x409/0x750 [hid_rmi]
-  Read of size 21 at addr ffff88800bf33bba by task kworker/0:3/285
-   __asan_memcpy+0x23/0x60
-   rmi_hid_read_block+0x409/0x750 [hid_rmi]
-   rmi_f01_probe+0x5dd/0x1dc0 [rmi_core]
-
-  BUG: KASAN: slab-out-of-bounds in rmi_hid_write_block+0x1a9/0x350 [hid_rmi]
-  Write of size 35 at addr ffff88810a2b24ac by task kworker/1:10/666
-   __asan_memcpy+0x3c/0x60
-   rmi_hid_write_block+0x1a9/0x350 [hid_rmi]
-   rmi_driver_set_irq_bits+0x1f6/0x4d0 [rmi_core]
-   rmi_driver_probe+0x636/0xbf0 [rmi_core]
-   rmi_input_configured+0x184/0x2e0 [hid_rmi]
-   rmi_probe+0x952/0xcf0 [hid_rmi]
-
-and, for the zero-length reply, a probe worker left in D state in
-rmi_hid_read_block() after 225 replies at 200 ms intervals.
-
-After this change the undersized descriptor is refused at probe with
-"rmi reports too small (out=2 in=2)", the oversized read and write are
-both rejected, the zero-length reply fails the read with -EIO while
-later reads on the same device keep working, and a device declaring
-reports large enough for a 21-byte register read still probes normally
-and reports its real product id.  A device bound through new_id with
-RMI_DEVICE in its driver_data no longer reaches rmi_set_page() with an
-unallocated writeReport either.
-
-Link: https://lore.kernel.org/linux-input/20260822121007.153988-1-98lawweijie@gmail.com/
-Link: https://lore.kernel.org/linux-input/00a489f38b240624dcb5a4bae36a53fcba9cfb47.1787549195.git.98lawweijie@gmail.com/
-Link: https://lore.kernel.org/linux-input/20260824122708.76168-1-98lawweijie@gmail.com/
-Link: https://lore.kernel.org/linux-input/20260825060954.104890-1-98lawweijie@gmail.com/
-Fixes: 9fb6bf02e3ad ("HID: rmi: introduce RMI driver for Synaptics touchpads")
+Fixes: 4922cd26f03c ("HID: wacom: Support 2nd-gen Intuos Pro's Bluetooth classic interface")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Assisted-by: GLM:glm-5.3
-Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Acked-by: Jason Gerecke <jason.gerecke@wacom.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-rmi.c |   46 +++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 43 insertions(+), 3 deletions(-)
+ drivers/hid/wacom_wac.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/hid/hid-rmi.c
-+++ b/drivers/hid/hid-rmi.c
-@@ -235,7 +235,23 @@ static int rmi_hid_read_block(struct rmi
- 				break;
- 			}
- 
--			read_input_count = data->readReport[1];
-+			read_input_count = min_t(int, data->readReport[1],
-+						 data->input_report_size - 2);
-+			if (!read_input_count) {
-+				/*
-+				 * A zero length reply advances neither
-+				 * bytes_read nor bytes_needed, and because a
-+				 * reply did arrive the wait above does not
-+				 * time out either, so a device answering 0
-+				 * forever would spin here indefinitely with
-+				 * page_mutex held.
-+				 */
-+				hid_warn(hdev, "%s: zero-length read reply\n",
-+					 __func__);
-+				clear_bit(RMI_READ_DATA_PENDING, &data->flags);
-+				ret = -EIO;
-+				break;
-+			}
- 			memcpy(buf + bytes_read, &data->readReport[2],
- 				min(read_input_count, bytes_needed));
- 
-@@ -271,6 +287,11 @@ static int rmi_hid_write_block(struct rm
- 			goto exit;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1548,6 +1548,19 @@ static int wacom_intuos_pro2_bt_irq(stru
+ 		return 0;
  	}
  
-+	if (len + 4 > data->output_report_size) {
-+		ret = -EINVAL;
-+		goto exit;
++	if (wacom->features.type == INTUOSP2_BT ||
++	    wacom->features.type == INTUOSP2S_BT) {
++		if (len < 286) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Pro2 BT report too short: %zu bytes\n", len);
++			return 0;
++		}
++	} else if (len < 46) {
++		dev_warn(wacom->pen_input->dev.parent,
++			 "Pro2 BT report too short: %zu bytes\n", len);
++		return 0;
 +	}
 +
- 	data->writeReport[0] = RMI_WRITE_REPORT_ID;
- 	data->writeReport[1] = len;
- 	data->writeReport[2] = addr & 0xFF;
-@@ -666,8 +687,16 @@ static int rmi_probe(struct hid_device *
- 		return ret;
- 	}
- 
--	if (id->driver_data)
--		data->device_flags = id->driver_data;
-+	/*
-+	 * RMI_DEVICE can only mean "this probe validated the RMI reports and
-+	 * allocated writeReport": every bail-out to start below skips that
-+	 * allocation, and device_flags left carrying RMI_DEVICE from
-+	 * driver_data would send rmi_input_configured() into rmi_set_page()
-+	 * with writeReport still NULL.  A bind through the new_id sysfs
-+	 * attribute can supply driver_data with the bit set, so do not let
-+	 * driver_data grant it.
-+	 */
-+	data->device_flags = id->driver_data & ~RMI_DEVICE;
- 
- 	/*
- 	 * Check for the RMI specific report ids. If they are misisng
-@@ -696,6 +725,17 @@ static int rmi_probe(struct hid_device *
- 
- 	data->output_report_size = hid_report_len(output_report);
- 
-+	/*
-+	 * The write reports built by this driver occupy 6 bytes and the read
-+	 * handshake looks at the first 3 bytes of an input report, so refuse
-+	 * to drive a device whose reports cannot hold them.
-+	 */
-+	if (data->output_report_size < 6 || data->input_report_size < 3) {
-+		hid_err(hdev, "rmi reports too small (out=%u in=%u)\n",
-+			data->output_report_size, data->input_report_size);
-+		goto start;
-+	}
-+
- 	data->device_flags |= RMI_DEVICE;
- 	alloc_size = data->output_report_size + data->input_report_size;
- 
+ 	wacom_intuos_pro2_bt_pen(wacom);
+ 	if (wacom->features.type == INTUOSP2_BT ||
+ 	    wacom->features.type == INTUOSP2S_BT) {
 
 
