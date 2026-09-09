@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D922E568FB6;
-	Wed,  9 Sep 2026 14:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87F4566C6C;
+	Wed,  9 Sep 2026 14:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963137; cv=none; b=IVwboVpRxP8LMEz6C1RGRPA7O5sXTGh4iPDqoInIZ4GcIq/xizCZ7OStrY/BjnToNNaEAnd1c1jaqUWkrFALn5cyuTNKTH/zW/qFForl26h9414HbSe9HW32Eyr7ARjKSxq3588EB9DGiMwYHxdVxN57yDbDMj2Bhry6//8nVH4=
+	t=1788963140; cv=none; b=CoUT4MXnhnNXB0327bUrSBAC6r8m0WWwCLdee16JER3z5OEbQjElhUb4Lhfazy9YD0Ih5ZxPsGRTaXvWGYYBvgGultVHKikklDeCTX/aAMEB7NXwAjwk5zUD9TxplporJL8k9nTlW4CEZ20Yagq/r8XZ57eFYxUvbz7NBxDjnpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963137; c=relaxed/simple;
-	bh=W9sNCFr5crBtGdoFoNrXLntP00GRVbfmNeWWROC29lU=;
+	s=arc-20240116; t=1788963140; c=relaxed/simple;
+	bh=zrWCYya9m5F8Vkf8tUCd/IWEefwsaqyTAb90ivyyjgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6rifJLcGktmvxw+toY9qtC4Nf+nHCMkeJDnf6dwyJWmmdDyHOiOr0ZqOKP+mb4npQOXx1tP8m4yFdVTwow0x3H36B7rkywu+o1SJesTysyMXetuF5dhE48srmzsG94xMIUFcWy1Z9na30JuSVdNiXqpNnkbU9cgpJZ8A6waAiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUaP4uCZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AvNT5faREd+VR2l+cDJhLkI4+UE0DxBUNIXITDaYCXrNaQ1ITAOEgJgxAiG71o+Hwt8amC+MzOyJJlgBh4RPqho+ANv3RvBlPhZXvBDyafeVL9eEp/K+ZkkXGm7JwnR4FZqZ344GAuUameHuJ7Ra0yg0RDRWqyntIxHzVgkg/k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkflpslz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUaP4uCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEB71F00A3A;
-	Wed,  9 Sep 2026 14:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkflpslz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133811F00A3A;
+	Wed,  9 Sep 2026 14:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963135;
-	bh=3UI4I7lKmLMZsmylfg9Y3dzWMUUCKzU296Dq5wT3ObQ=;
+	s=korg; t=1788963138;
+	bh=owan9jW5issiRWX04yJF10Y7qOn5Q3l8URncNPDH4TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUaP4uCZmAmo7v7BEoEoBHX/04QH5TcKZ5fQxawZhQHgEcq5eXNG04BcC9q5Kxwdu
-	 dYTiiES80YWpYBGwR9MidiXnfeJhjuQZykXF2LlmdWM/xHtkTpmlVEPP0xogBy+mAK
-	 caT4PAvwWckL3Wdz3+goedWISZ6i/2ppM1e6aBQU=
+	b=mkflpslzFz8q9625nslQc6FKmz+YvjEQOftMCwdbQp8hjaZCYsKK7QJi+PR8HUKfo
+	 rMDu3yfztYQvbJqjnJxwqOCXu187cD0MYIFmrftO9MK2BBkTJdG6RQf7vaWvtuyYc6
+	 jFqS+EBqRqTv1dyFlreuIvftM54PNqY+9ssu7HRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 7.2 533/556] drm/nouveau/uvmm: clear the dirty flag when unwinding an OP_UNMAP_SPARSE
-Date: Wed,  9 Sep 2026 15:43:33 +0200
-Message-ID: <20260909134249.152457111@linuxfoundation.org>
+	Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 7.2 534/556] drm/nouveau/disp: move GSP head-timing ISR and vblank helpers to tu102.c
+Date: Wed,  9 Sep 2026 15:43:34 +0200
+Message-ID: <20260909134249.184012033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,48 +50,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
 
-commit 38a62306c4266bcb3cd89e33c7111ee33096ebb3 upstream.
+commit c6659e0ffc19b4ef0b3273c185cb8409a154eada upstream.
 
-A successful OP_UNMAP_SPARSE marks its region dirty with
-nouveau_uvma_region_dirty() and defers the teardown to
-nouveau_uvmm_bind_job_cleanup(); it does not remove the region from
-uvmm->region_mt.
+The GSP-RM display code in rm/r535/disp.c owns a handful of direct MMIO
+routines: the head-timing (vblank) interrupt handler and the per-head
+vblank enable/disable. They program display registers, not RM, so they
+belong with the rest of the per-chip register code in engine/disp/.
 
-If a later op in the job fails, the unwind path never clears reg->dirty
-(set in one place, cleared nowhere) and sets op->reg = NULL, so cleanup
-skips the teardown. The region is left in the tree with dirty set and its
-completion never signalled. Later binds over that range then fail
-permanently -- -ENOENT or -EINVAL from the dirty checks, or an unkillable
-wait_for_completion() in bind_validate_region() -- for the lifetime of
-the uvmm.
+Move them to tu102.c (Turing is the first GSP-capable generation) as
+tu102_disp_intr() and tu102_head_vblank_get()/put(), exported for
+rm/r535/disp.c, which keeps calling them by name for now. No functional
+change.
 
-Clear reg->dirty when the unwind reverts the sparse unmap, restoring the
-region to the state it was found in.
-
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+Fixes: 6cc6e08d4542 ("drm/nouveau/kms: add support for GB20x")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
+Signed-off-by: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260811-nouveau-uvmm-vmbind-fixes-v2-3-aaee4b395d04@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260825001408.14219-2-mohamedahmedegypt2001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_uvmm.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h        |    3 
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h        |    1 
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c       |   50 ++++++++++++++++
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c |   52 -----------------
+ 4 files changed, 57 insertions(+), 49 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -1475,6 +1475,7 @@ unwind:
- 						    op->va.range);
- 			break;
- 		case OP_UNMAP_SPARSE:
-+			op->reg->dirty = false;
- 			__nouveau_uvma_region_insert(uvmm, op->reg);
- 			nouveau_uvmm_sm_unmap_prepare_unwind(uvmm, &op->new,
- 							     op->ops);
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
+@@ -56,6 +56,9 @@ int gv100_head_new(struct nvkm_disp *, i
+ void gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state);
+ void gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline);
+ 
++void tu102_head_vblank_get(struct nvkm_head *);
++void tu102_head_vblank_put(struct nvkm_head *);
++
+ #define HEAD_MSG(h,l,f,a...) do {                                              \
+ 	struct nvkm_head *_h = (h);                                            \
+ 	nvkm_##l(&_h->disp->engine.subdev, "head-%d: "f"\n", _h->id, ##a);     \
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h
+@@ -72,6 +72,7 @@ int gv100_disp_wndw_cnt(struct nvkm_disp
+ int gv100_disp_caps_new(const struct nvkm_oclass *, void *, u32, struct nvkm_object **);
+ 
+ int tu102_disp_init(struct nvkm_disp *);
++irqreturn_t tu102_disp_intr(struct nvkm_inth *);
+ 
+ void nv50_disp_dptmds_war_2(struct nvkm_disp *, struct dcb_output *);
+ void nv50_disp_dptmds_war_3(struct nvkm_disp *, struct dcb_output *);
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c
+@@ -104,6 +104,56 @@ tu102_sor_new(struct nvkm_disp *disp, in
+ 	return nvkm_ior_new_(&tu102_sor, disp, SOR, id, hda & BIT(id));
+ }
+ 
++/* The GSP-RM display path leaves head-timing (vblank) interrupts and their
++ * enables to us. These program the RM head-timing line (bit 1 of the
++ * per-head enable, not the bit nvkm's own gv100 path uses).
++ */
++void
++tu102_head_vblank_put(struct nvkm_head *head)
++{
++	struct nvkm_device *device = head->disp->engine.subdev.device;
++
++	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000000);
++}
++
++void
++tu102_head_vblank_get(struct nvkm_head *head)
++{
++	struct nvkm_device *device = head->disp->engine.subdev.device;
++
++	nvkm_wr32(device, 0x611800 + (head->id * 4), 0x00000002);
++	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000002);
++}
++
++static void
++tu102_disp_intr_head_timing(struct nvkm_disp *disp, int head)
++{
++	struct nvkm_subdev *subdev = &disp->engine.subdev;
++	struct nvkm_device *device = subdev->device;
++	u32 stat = nvkm_rd32(device, 0x611c00 + (head * 0x04));
++
++	if (stat & 0x00000002) {
++		nvkm_disp_vblank(disp, head);
++
++		nvkm_wr32(device, 0x611800 + (head * 0x04), 0x00000002);
++	}
++}
++
++irqreturn_t
++tu102_disp_intr(struct nvkm_inth *inth)
++{
++	struct nvkm_disp *disp = container_of(inth, typeof(*disp), engine.subdev.inth);
++	struct nvkm_subdev *subdev = &disp->engine.subdev;
++	struct nvkm_device *device = subdev->device;
++	unsigned long mask = nvkm_rd32(device, 0x611ec0) & 0x000000ff;
++	int head;
++
++	for_each_set_bit(head, &mask, 8)
++		tu102_disp_intr_head_timing(disp, head);
++
++	return IRQ_HANDLED;
++}
++
+ int
+ tu102_disp_init(struct nvkm_disp *disp)
+ {
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
+@@ -625,29 +625,12 @@ r535_sor_cnt(struct nvkm_disp *disp, uns
+ 	return 4;
+ }
+ 
+-static void
+-r535_head_vblank_put(struct nvkm_head *head)
+-{
+-	struct nvkm_device *device = head->disp->engine.subdev.device;
+-
+-	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000000);
+-}
+-
+-static void
+-r535_head_vblank_get(struct nvkm_head *head)
+-{
+-	struct nvkm_device *device = head->disp->engine.subdev.device;
+-
+-	nvkm_wr32(device, 0x611800 + (head->id * 4), 0x00000002);
+-	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000002);
+-}
+-
+ static const struct nvkm_head_func
+ r535_head = {
+ 	.state = gv100_head_state,
+ 	.rgpos = gv100_head_rgpos,
+-	.vblank_get = r535_head_vblank_get,
+-	.vblank_put = r535_head_vblank_put,
++	.vblank_get = tu102_head_vblank_get,
++	.vblank_put = tu102_head_vblank_put,
+ };
+ 
+ static struct nvkm_conn *
+@@ -1422,35 +1405,6 @@ r535_disp_event = {
+ };
+ 
+ static void
+-r535_disp_intr_head_timing(struct nvkm_disp *disp, int head)
+-{
+-	struct nvkm_subdev *subdev = &disp->engine.subdev;
+-	struct nvkm_device *device = subdev->device;
+-	u32 stat = nvkm_rd32(device, 0x611c00 + (head * 0x04));
+-
+-	if (stat & 0x00000002) {
+-		nvkm_disp_vblank(disp, head);
+-
+-		nvkm_wr32(device, 0x611800 + (head * 0x04), 0x00000002);
+-	}
+-}
+-
+-static irqreturn_t
+-r535_disp_intr(struct nvkm_inth *inth)
+-{
+-	struct nvkm_disp *disp = container_of(inth, typeof(*disp), engine.subdev.inth);
+-	struct nvkm_subdev *subdev = &disp->engine.subdev;
+-	struct nvkm_device *device = subdev->device;
+-	unsigned long mask = nvkm_rd32(device, 0x611ec0) & 0x000000ff;
+-	int head;
+-
+-	for_each_set_bit(head, &mask, 8)
+-		r535_disp_intr_head_timing(disp, head);
+-
+-	return IRQ_HANDLED;
+-}
+-
+-static void
+ r535_disp_fini(struct nvkm_disp *disp, bool suspend)
+ {
+ 	if (!disp->engine.subdev.use.enabled)
+@@ -1725,7 +1679,7 @@ r535_disp_oneinit(struct nvkm_disp *disp
+ 		return ret;
+ 
+ 	ret = nvkm_inth_add(&device->vfn->intr, ret, NVKM_INTR_PRIO_NORMAL, &disp->engine.subdev,
+-			    r535_disp_intr, &disp->engine.subdev.inth);
++			    tu102_disp_intr, &disp->engine.subdev.inth);
+ 	if (ret)
+ 		return ret;
+ 
 
 
