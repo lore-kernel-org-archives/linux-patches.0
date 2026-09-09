@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0814565117;
-	Wed,  9 Sep 2026 14:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B7D53D0B8;
+	Wed,  9 Sep 2026 14:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963415; cv=none; b=WIFE/d3OZV6NNAh292riaxUBxZzEvw3zz6AlvXEpukZefz9WkfBnr7CjrzXp14xo6YbcErr1BcVozQ3Ap3/6hvP7ScFXgRxzc4QYWLHIfMb7Cj1caGdrep6nL2ukgJX1QeyHwz++ygHqFGfnx6SIs/sm1TyS5IcSae1AnxviLRw=
+	t=1788963418; cv=none; b=pMdUKjwxaA+39GusDiY1KFn7lygx0RtgzVEdHmUYGng6IgD+ATnpsv362Ci4XXbKO8Ur40v5WCsvkIJ8ENTAB7lBOUTEqa+0VghS+CxBlJHFxU0/F+FISYB9hGmCkXQ4htHFl+KE2wQaSRuW7gOM4B4Osux9lQbhdopEJz5a/ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963415; c=relaxed/simple;
-	bh=wdBS76CSpxIpdTh1vzLmLUU5ls1zFt0t93pd0E9nTv4=;
+	s=arc-20240116; t=1788963418; c=relaxed/simple;
+	bh=LNlLmdQK+F52FcMABpJWrPqZjZUD1cBQ8Dtg7QNMLR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r3A5zD/umvs5uy/jO9kcjunhZH/KVGYT9YH10PyAeB5aDxg5bLilkiuu87eE07Hhy6n8k43s+oGJkx5PHzA6TWo+9kaFNJPCvUiori6RS7C+iBsAc1azQ3NFaW8u7CQHPMPtEvkxc6gEieghOlcKgBH3iScXAcnDJvosx77mAUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMZ3BvyJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HUxo8GyVZpgy+pBMojS7JS8Yl2gkpZhERqG9l//JvXoqQPaBT+vbzZxQVNejnMHL+xhrNP+hHWHtJDtMC51ACI1sQGZcwj9NUvworqFUTqrszlE/6wkO5A4WRWPTyrxGyaPJFPaQNroSJHHMzKXepUDlEXvw41YM+YJxBaBdhAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ui69Z9ai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMZ3BvyJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2275F1F00A3A;
-	Wed,  9 Sep 2026 14:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ui69Z9ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEEE1F00A3A;
+	Wed,  9 Sep 2026 14:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963414;
-	bh=xtXIr3RFA5isT7MYBK2rQZcs7DL5utyrGgndomWPIC4=;
+	s=korg; t=1788963417;
+	bh=B49fr4kNdzYIC9d9q7F9nLtfzNRnIv/Ld9VbVbjTv/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wMZ3BvyJDcy2KuArutP1jj/PmH2pVJeIhPw9l+m6XejX1q5DNKOR2HKKLmklS3L2Q
-	 2MpaMX5PGNokbCYgbFRj9bSqq8FywWyrdrGqrFi5nXksiJp9rJJPIAJPGbYCODLpp4
-	 xwHpPA5mexkN0YVMVeECacayVrQYjK36r9zkKcHc=
+	b=Ui69Z9aiqTvk2B95AQfCArYByUCrALS/ooLb142BPs9DxNlFnEAWPYD8512ydii+N
+	 jnvDZ+UmQB5SF1U58jOP0p29ng6gvXxswPJZuNJ9SXhgmKlMrgb87pIRLG0ZE5rm3f
+	 rpulsLpWUFscJKkJ4PVT/HSht0aXytkXn/198RUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Martin Kaiser <martin@kaiser.cx>,
 	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.18 070/583] dmaengine: fsl-edma: tracing: no ptr dereference during log output
-Date: Wed,  9 Sep 2026 15:35:55 +0200
-Message-ID: <20260909134240.505459981@linuxfoundation.org>
+Subject: [PATCH 6.18 071/583] dmaengine: dw-edma: Fix HDMA channel status register access
+Date: Wed,  9 Sep 2026 15:35:56 +0200
+Message-ID: <20260909134240.544112593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,55 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 2ea04dca8e627f722caa7a2037cfbae0257f3501 upstream.
+commit ef1b080e03acc83d5bde841da67036985acd50dc upstream.
 
-The fsl edma events store a pointer to a struct fsl_edma_engine in the
-ringbuffer and dereference it when a log entry is printed. At this time,
-the pointer may no longer be valid.
+GET_CH_32() takes the direction before the channel ID, but
+dw_hdma_v0_core_ch_status() passed them in the opposite order. This can
+make the status callback read another HDMA channel status register.
 
-Event injection can be used to trigger a crash:
+Use the same argument order as the other HDMA register accesses.
 
-$ cd /sys/kernel/tracing
-$ echo 'value = 0' > events/fsl_edma/edma_writeb/inject
-$ cat trace
-
-The log output needs only edma->membase. Add a membase field at the end
-of the event and use the new field for log output. Keep the existing
-fields for backward compatibility.
-
-Fixes: 11102d0c343b ("dmaengine: fsl-edma: add trace event support")
+Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
 Cc: stable@vger.kernel.org
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260718130024.341243-1-martin@kaiser.cx
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260717180639.2643243-2-den@valinux.co.jp
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/fsl-edma-trace.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/dma/fsl-edma-trace.h
-+++ b/drivers/dma/fsl-edma-trace.h
-@@ -19,14 +19,16 @@ DECLARE_EVENT_CLASS(edma_log_io,
- 		__field(struct fsl_edma_engine *, edma)
- 		__field(void __iomem *, addr)
- 		__field(u32, value)
-+		__field(void __iomem *, membase)
- 	),
- 	TP_fast_assign(
- 		__entry->edma = edma;
- 		__entry->addr = addr;
- 		__entry->value = value;
-+		__entry->membase = edma->membase;
- 	),
- 	TP_printk("offset %08x: value %08x",
--		(u32)(__entry->addr - __entry->edma->membase), __entry->value)
-+		(u32)(__entry->addr - __entry->membase), __entry->value)
- );
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -79,7 +79,7 @@ static enum dma_status dw_hdma_v0_core_c
+ 	u32 tmp;
  
- DEFINE_EVENT(edma_log_io, edma_readl,
+ 	tmp = FIELD_GET(HDMA_V0_CH_STATUS_MASK,
+-			GET_CH_32(dw, chan->id, chan->dir, ch_stat));
++			GET_CH_32(dw, chan->dir, chan->id, ch_stat));
+ 
+ 	if (tmp == 1)
+ 		return DMA_IN_PROGRESS;
 
 
