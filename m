@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4528566C5B;
-	Wed,  9 Sep 2026 14:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF42563FBD;
+	Wed,  9 Sep 2026 14:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962405; cv=none; b=IGjDKjLvS5TCNPj7ATBkOPFn4ZSDq98mjftGuuyxLhxKhPKGBwhGSXo7femVhMFupRaMdc23ge9lGF03DSVMjqNrhGGh99WhQDtak/0FhKLKo0QyURiTMtslkc9wr6D9F4mBjT7mn0LEjlTlqA1vcGD8uDJwcL4jJrPU4kjBZl0=
+	t=1788962408; cv=none; b=eHpFdydxPHKYu6cec7uhFWaBfYRWbYSmSc3MFn+GCaMNpPcJ10u1+ohd1zJnAp/q0J6Wbm1ds+Wj+tmxf1Sv3lHnbtipGOtORWxRfqeJB9ww4o+ljI3ipYctPNdyCuQm6/2yOECo4nrPwvFZZm9byTV0ZVFm+9Jm8wndlwxUlj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962405; c=relaxed/simple;
-	bh=gx/aXFoIcSAjRcR7Rs3AY9/ISVHUDlS/5YttNA/Id0s=;
+	s=arc-20240116; t=1788962408; c=relaxed/simple;
+	bh=n9PW5jyuUtGxJlQg/ETsLLQtjGhODibL1Vq1xZFvgtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDg8alkIEdM945ojRc5CDDeMXekHuP0caUIZQcWyti+nQ27am+m6E6f1pHVwjsWGXaL7xhiisfbUctBw1sNPktmOvndERc4L/2Z+pX2V8mly8cc5E44a/cAcmLweqin5X4UIrhKJkC0cTPZ9agZG1zxn4kYt/4UjMiVlplZTPvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxzdMXk3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WxdO3WR4aXcw2hDtzwRiP3MhXwKhLFlbkHmbnToJyI+GtjdvznmdRwXQkj1LlqSQpeKNrP7zcdX9EFSjyh8J+whV9Y2ypdqoYAdXpdHMEfqwSM+Z1y/BEGhJ3OFRx+UGqVfdo1f65CUoNkkOi7ComXyW1oOVWfSKk/LaepFWr/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DftUjg7C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxzdMXk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C701F00A3A;
-	Wed,  9 Sep 2026 14:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DftUjg7C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FA01F00A3A;
+	Wed,  9 Sep 2026 14:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962404;
-	bh=zLnzrBhKq1GiPgFoUa7D42nIN/vXBmBbdserZh9YzBA=;
+	s=korg; t=1788962407;
+	bh=tSbgA39VJaJWvX2OmUJ3wiWAZ1Qy1ONnM0bSzOB7kbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gxzdMXk3Iw09BkZ//JQr46A+hfPOsoyXUjvmPHR81ktz+YXZ2yCpgjTbcbnm17Z3e
-	 CiEThWsf9E+fijNHggtAMwkfjmHlf8Ni9qTyR2y7Ys7Kz8g7R4ehghb0B1ipkrXGWj
-	 Z1prJYKiPzWosDx9INSUy+Yk9IIvaBv5l4qXL3K0=
+	b=DftUjg7CA85BgN8oQttVaFJaFl8SlV2uYQR3Mr3wyEzDXr6Wy8NmsWLG3aMZ6jv74
+	 cS14fpaY8XzkCQqAWnDG0TwEKyF6Wm974wRji6FLiKlonutO1Y+s8ek/nz2pVdptcg
+	 7nktPTahKvROr39mdmZAyKgr2GbrvtpmDUeEQzng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidhu Sarwal <vidhu.linux@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Stable@vger.kernel.org,
+	Rupesh Majhi <zoone.rupert@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 279/556] iio: light: ltrf216a: fix runtime PM reference leak in error path
-Date: Wed,  9 Sep 2026 15:39:19 +0200
-Message-ID: <20260909134240.451579036@linuxfoundation.org>
+Subject: [PATCH 7.2 280/556] iio: pressure: dps310: fix NULL pointer dereference on ACPI probe
+Date: Wed,  9 Sep 2026 15:39:20 +0200
+Message-ID: <20260909134240.498714919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,45 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidhu Sarwal <vidhu.linux@gmail.com>
+From: Rupesh Majhi <zoone.rupert@gmail.com>
 
-commit c132aef0e757a39036b1d40faf0569f2e343b13e upstream.
+commit 26e9213898fc949923188ef0aeea31fc87708836 upstream.
 
-ltrf216a_get_lux() acquires a runtime PM reference by calling
-ltrf216a_set_power_state(data, true). However, if
-ltrf216a_read_data() fails, the function returns immediately without
-dropping the reference.
+When the device is enumerated through its ACPI HID (IFX3100),
+i2c_client_get_device_id() returns NULL: the ACPI-derived client name
+does not match the driver's i2c_device_id table. dps310_probe() then
+dereferences that NULL pointer in "iio->name = id->name" and crashes the
+kernel during probe.
 
-This leaves the runtime PM usage count unbalanced, preventing the device
-from autosuspending after a failed read.
+The IIO device name is always "dps310", so set it directly and drop the
+now-unused device-id lookup.
 
-Fix this by releasing the runtime PM reference before returning from the
-error path.
-
-Fixes: 83f0bcd40d5c ("iio: light: Add support for ltrf216a sensor")
-Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Cc: <Stable@vger.kernel.org>
+Fixes: 72ff282819d0 ("iio: pressure: dps310: Add ACPI HID table")
+Cc: stable@vger.kernel.org
+Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/ltrf216a.c |    3 +--
+ drivers/iio/pressure/dps310.c |    3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/iio/light/ltrf216a.c
-+++ b/drivers/iio/light/ltrf216a.c
-@@ -247,11 +247,10 @@ static int ltrf216a_get_lux(struct ltrf2
- 		return ret;
+--- a/drivers/iio/pressure/dps310.c
++++ b/drivers/iio/pressure/dps310.c
+@@ -845,7 +845,6 @@ static const struct iio_info dps310_info
  
- 	greendata = ltrf216a_read_data(data, LTRF216A_ALS_DATA_0);
-+	ltrf216a_set_power_state(data, false);
- 	if (greendata < 0)
- 		return greendata;
+ static int dps310_probe(struct i2c_client *client)
+ {
+-	const struct i2c_device_id *id = i2c_client_get_device_id(client);
+ 	struct dps310_data *data;
+ 	struct iio_dev *iio;
+ 	int rc;
+@@ -858,7 +857,7 @@ static int dps310_probe(struct i2c_clien
+ 	data->client = client;
+ 	mutex_init(&data->lock);
  
--	ltrf216a_set_power_state(data, false);
--
- 	lux = greendata * data->info->lux_multiplier * LTRF216A_WIN_FAC;
- 
- 	return lux;
+-	iio->name = id->name;
++	iio->name = DPS310_DEV_NAME;
+ 	iio->channels = dps310_channels;
+ 	iio->num_channels = ARRAY_SIZE(dps310_channels);
+ 	iio->info = &dps310_info;
 
 
