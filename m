@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6099556C637;
-	Wed,  9 Sep 2026 14:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987C052ED5E;
+	Wed,  9 Sep 2026 14:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962778; cv=none; b=ifElxSx1Rw30ST4Q1PnrNgLFRbe+Mqr9cfGu790MxgtpuaOI4xTl7by6Xw0T7I2upUAILOeCho4p3UuM1GLWxd34IcujYWvBFiGvEpXc8FNDkJ29dHFNcxLX7GzT98F192KhjNAduvr6yJEYfRka9Iz4912pKISJq7yXjWPETxc=
+	t=1788962781; cv=none; b=uZry45ZMvuwycQXuFx+Odrm1eXeQKU3UqDbnByeCxWRpoG9gPc82ZXxW8Tb4gnqqaa5bFAC0EvBuSmRq9QbL+lRywa4IADwxg2Uv80NG2QZATHUmr/C+fZT4gsRg76GHv8MHXItsklvBwMKYlToqHv2hGXxVf3RwiWHoU8CDwes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962778; c=relaxed/simple;
-	bh=ud45T70d+vYUuHXQKCuaqFSvUZyxDGdEaBTjuT1b65Q=;
+	s=arc-20240116; t=1788962781; c=relaxed/simple;
+	bh=OE1r67RskFLTNBk2sQpmZx/90MbDh93aqfCAQZ24VYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fhniefwy16NYHfYYyiA4VSQGodfN/chsJtTGYgA67cztPn5ud903WRqLTh+CIiX0m9YT5SXTLnHKXb76/lMuNf39fK3z6ACvQzhRA6TMdnKqYUCcBNbVH77EMrFif31KzlUPkqPwspBZcdal8NyB1gIxgiNFY7PTiRaMu6PMuTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kr6xpaa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j0GSbzabPjTvREOBplVyhEY/YTyeVh2RbZxQZHtAd337T1dygWYudJewvPUJkJLKrEu5CQ1GRbd3CitX5+PGDL2FrBvp73UzncZEf/0bIBdPhDS8uI2Q43ygtOTUUxzuN2GNrCqPOQKeRCNu+XFZqZwFENvalCmUdEGG8xkRplo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0OLvLQD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kr6xpaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB84F1F00A3A;
-	Wed,  9 Sep 2026 14:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0OLvLQD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22DA1F00A3A;
+	Wed,  9 Sep 2026 14:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962777;
-	bh=OK4qB7vq3QKf8mNQrbVVnZUOPinS0Ac0KPqNpyT+qL4=;
+	s=korg; t=1788962780;
+	bh=6oDO9eejcrp+dvE8bo66aad8guK01oQtc+BFXaUH8FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0kr6xpaaXyCNlqjFqPZ+bsYzV8dW2p2GGrXFrU/UeHoiMHIiTS3AfiOYxVeDRsvJ4
-	 KKQTPixKwsoOK9w90vyU2h91SDyBXjcMHBOGhiItQH11YMSjJDaW+q7yW5xdYSnoL2
-	 JRocAwH2R5cVpbPgKl/VTujARiRGH18K8xGqDxjE=
+	b=d0OLvLQDXI8amkrRLH2jQF6it7GNvnXcLISmjrbLYyIsPtlMblxbs3USBkwbrefJZ
+	 F+5ylyjZMo3ZlPTvpU71pIwQ4WGTqn8rzCnB6d2LzXVqO6esPb1YYsBOCDX/6g9vs4
+	 S4geCO8IDfuR86iBL6V8PrLVUmsBqInu4YvJ0Qfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-	Wangao Wang <wangao.wang@oss.qualcomm.com>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>
-Subject: [PATCH 7.2 408/556] media: qcom: iris: fix missing hfi_id in gen1 GOP_SIZE cap
-Date: Wed,  9 Sep 2026 15:41:28 +0200
-Message-ID: <20260909134244.978199421@linuxfoundation.org>
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.2 409/556] media: chips-media: wave5: Guard bit depth check with initial_info_obtained
+Date: Wed,  9 Sep 2026 15:41:29 +0200
+Message-ID: <20260909134245.007821415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,86 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wangao Wang <wangao.wang@oss.qualcomm.com>
+From: Jackson Lee <jackson.lee@chipsnmedia.com>
 
-commit 5eebacbc9a38e1019854ea5f86e367a4d5116387 upstream.
+commit 1551386934ad43d934c3bb7317929207e1edcd6a upstream.
 
-Add hfi_id to gen1 encoder GOP_SIZE cap and replace the set function,
-remove the redundant INTRA_PERIOD cap.
+When CAPTURE STREAMON is called before the VPU has completed sequence
+initialization (initial_info_obtained == false), the initial_info fields
+contain uninitialized data. The driver checks
+luma_bitdepth and rejects anything other than 8-bit, so garbage values
+(e.g. 15) cause STREAMON to fail spuriously.
 
-Fixes: d22037f3fd33 ("media: iris: Set platform capabilities to firmware for encoder video device")
+This is reproducible with the following multi-threaded test scenario:
+  1. Allocate 2 CAPTURE buffers.
+  2. Call STREAMON on the CAPTURE queue.
+  3. Call DQBUF, which blocks waiting for a decoded frame.
+  4. A second thread calls STREAMOFF on the CAPTURE queue.
+  5. The blocked DQBUF should be released, allowing graceful termination.
 
-Reviewed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
-Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+At step 2, STREAMON reads uninitialized luma_bitdepth and rejects the
+stream, causing the test to fail.
+
+Fix this by checking initial_info_obtained before accessing the bit
+depth fields, so the validation is only performed when the sequence
+info has actually been parsed by the VPU.
+
+Fixes: 035371c9e509 ("media: chips-media: wave5: Fix timeout while testing 10bit hevc fluster")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_ctrls.c           |    2 +-
- drivers/media/platform/qcom/iris/iris_hfi_gen1.c        |   16 ++++------------
- drivers/media/platform/qcom/iris/iris_platform_common.h |    1 -
- 3 files changed, 5 insertions(+), 14 deletions(-)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/iris/iris_ctrls.c
-+++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
-@@ -1293,7 +1293,7 @@ int iris_set_use_and_mark_ltr(struct iri
- int iris_set_intra_period(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
- {
- 	const struct iris_hfi_session_ops *hfi_ops = inst->hfi_session_ops;
--	u32 gop_size = inst->fw_caps[GOP_SIZE].value;
-+	u32 gop_size = inst->fw_caps[cap_id].value;
- 	u32 b_frame = inst->fw_caps[B_FRAME].value;
- 	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
- 	struct hfi_intra_period intra_period;
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1.c
-@@ -171,7 +171,9 @@ static const struct platform_inst_fw_cap
- 		.max = (1 << 16) - 1,
- 		.step_or_mask = 1,
- 		.value = 30,
--		.set = iris_set_u32
-+		.hfi_id = HFI_PROPERTY_CONFIG_VENC_INTRA_PERIOD,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+		.set = iris_set_intra_period,
- 	},
- 	{
- 		.cap_id = ENTROPY_MODE,
-@@ -240,7 +242,7 @@ static const struct platform_inst_fw_cap
- 		.step_or_mask = 1,
- 		.value = 0,
- 		.hfi_id = HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH,
--		.flags = CAP_FLAG_OUTPUT_PORT,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_DYNAMIC_ALLOWED,
- 		.set = iris_set_ir_period_gen1,
- 	},
- 	{
-@@ -282,16 +284,6 @@ static const struct platform_inst_fw_cap
- 		.flags = CAP_FLAG_OUTPUT_PORT,
- 	},
- 	{
--		.cap_id = INTRA_PERIOD,
--		.min = 0,
--		.max = 1,
--		.step_or_mask = 1,
--		.value = 0,
--		.hfi_id = HFI_PROPERTY_CONFIG_VENC_INTRA_PERIOD,
--		.flags = CAP_FLAG_OUTPUT_PORT,
--		.set = iris_set_intra_period,
--	},
--	{
- 		.cap_id = LAYER_ENABLE,
- 		.min = 0,
- 		.max = 1,
---- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-+++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-@@ -165,7 +165,6 @@ enum platform_inst_fw_cap_type {
- 	USE_LTR,
- 	MARK_LTR,
- 	B_FRAME,
--	INTRA_PERIOD,
- 	LAYER_ENABLE,
- 	LAYER_TYPE_H264,
- 	LAYER_TYPE_HEVC,
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -1403,6 +1403,7 @@ static int wave5_vpu_dec_start_streaming
+ 	} else if (q->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
+ 		struct dec_initial_info *initial_info =
+ 			&inst->codec_info->dec_info.initial_info;
++		struct dec_info *p_dec_info = &inst->codec_info->dec_info;
+ 
+ 		if (inst->state == VPU_INST_STATE_STOP)
+ 			ret = switch_state(inst, VPU_INST_STATE_INIT_SEQ);
+@@ -1410,6 +1411,7 @@ static int wave5_vpu_dec_start_streaming
+ 			goto return_buffers;
+ 
+ 		if (inst->state == VPU_INST_STATE_INIT_SEQ &&
++		    p_dec_info->initial_info_obtained &&
+ 		    inst->dev->product_code == WAVE521C_CODE) {
+ 			if (initial_info->luma_bitdepth != 8) {
+ 				dev_info(inst->dev->dev, "%s: no support for %d bit depth",
+@@ -1418,7 +1420,6 @@ static int wave5_vpu_dec_start_streaming
+ 				goto return_buffers;
+ 			}
+ 		}
+-
+ 	}
+ 	pm_runtime_put_autosuspend(inst->dev->dev);
+ 	return ret;
 
 
