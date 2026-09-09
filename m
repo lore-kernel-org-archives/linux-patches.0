@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14A0492E33;
-	Wed,  9 Sep 2026 13:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949B1477984;
+	Wed,  9 Sep 2026 13:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961754; cv=none; b=cquvBdsYJx3NREqwlk7SQIQ8GA9RHkJzJkuuJuxleTv7Ez1nhH3Nvd6Iowf8SqcZZd02vF14mBoUeF7LQlov4/MMk4yoHGz6/tOBnQXiqjfiryyygwLRVnFimgDi7Zh5h7jaNrOKzheNQ+poUZX4XCUi9wx0JFAt0icPtCyHw/Q=
+	t=1788961757; cv=none; b=o/VK1Cno31WJF716kQvq9SSz9BjP3LsenYkp9S9x7RKSg54PaOZTJQ1vvM33QZ5ZrNWiGVtaZwBZc1bOmYbKJxWneAfiyOyPcXhKAcvvlyEQztbt0BSABQdrR6gl36mkdYSZB4ZdZfGfchBeNjPBU7rBiPDQT/56Btx7F+sWh/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961754; c=relaxed/simple;
-	bh=IwLg6rcU7kgpM231aBuRYoBxrCgM16Xae5QQIkWfYjE=;
+	s=arc-20240116; t=1788961757; c=relaxed/simple;
+	bh=hzdJqHOU63TzP/jBeT7bOJO3ZpvjTZLArK1Z6ZlHDzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oucP41u/AYOREzpImQs3jLHMQY4OV4/fWUYzkLVaWeCq8Xn0Z2VEVuD+0+GQXTsQDW2irilIlflk36CPsfq8s0a/J++mIiK3UqexmhT58Faf1kRZ4pn/QNa7naExt+YnQwgZ9DABimP/t7jIzR48v+++RB9aD/wVUyaCjVVR2Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWmDLe4p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VFullJjwNA2xNQJn8ap4bSa/uffIedyjH+oBF3xz7f6/T61BEtzvp4m6NZmEeOwHnN8VigCZoGqNDfuEwUpE1lKhS6OxWMV0h5jNFZV/OGYZ7oX3XUGo3Dn3IHPgiwnNv2AV4dsFRARPDBH4+VgcnhpeeK3ayb7wPISqMz7xLkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2V1a0qQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWmDLe4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7721F00A3D;
-	Wed,  9 Sep 2026 13:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2V1a0qQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECC71F00A3A;
+	Wed,  9 Sep 2026 13:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961753;
-	bh=3VBDKdmEaV8flrPKR2Cxx/EVCKdiEgJrNj8NGZIbFT4=;
+	s=korg; t=1788961756;
+	bh=/1p1cY5ESO2LcyUtkjlzAICfpWd/dcMproYXdW8GXRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xWmDLe4pu/FtnSm5ONIJ6bT+gMGVFRNcMEM3G6Mli7CCAq9VsVUmqsEUImyhxQFia
-	 DL9MHdgrljqdIRyLdGlYOtAwtXseCYoKCpllCk6AfZO1PRVSfmHERgNbSJu//5bNJ6
-	 Ogdg9og8Y50KzuY7/TawPX39pDcfkAk5/6Vj9ko0=
+	b=m2V1a0qQx4VS0i8v+oj2OushGfb/AhjPZiQV6UbYWxLMKP+bsylphtKbFsjofMmmt
+	 hQSUaR3u6+hqD58ho6TEva3vAGmoQP0cWP3+qZ5zUK83PyvnqcemCG9mhwh89cc/Ut
+	 UcIH9zozAplP9h6CsPRYMxoopiGoN+OHWthSJv9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Aaron Tomlin <atomlin@atomlin.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 056/556] tracing/probes: Fix anon_stack check for unnamed bitfields in btf_find_struct_member
-Date: Wed,  9 Sep 2026 15:35:36 +0200
-Message-ID: <20260909134232.442675917@linuxfoundation.org>
+Subject: [PATCH 7.2 057/556] tracing: Have show_event_filters/triggers files take trace array ref
+Date: Wed,  9 Sep 2026 15:35:37 +0200
+Message-ID: <20260909134232.477505417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,68 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit f36d94a20ca185bcadef3a10b980cd2cfd72d53a upstream.
+commit f4a771cc684c7354b6200147f7252c58d17408ff upstream.
 
-btf_find_struct_member() traverses into nested anonymous structures
-and unions by pushing members with !member->name_off onto anon_stack.
-However, it does not consider the unnamed bitfields (e.g. `int : 5`
-or `unsigned int : 0`) which also have member->name_off == 0.
+The newly added files show_event_filters and show_event_triggers that show
+all filters or triggers that are set within the trace array do not take a
+reference for the trace array it is showing. Without taking a reference,
+the trace_array may be freed via "rmdir" while a task is reading one of
+theses files. Those files iterate all the events within an instance
+(trace_array) and nothing prevents that instance from being freed while
+its data is being read. This causes a use-after-free crash.
 
-If such an unnamed bitfield is pushed to anon_stack, the
-btf_find_struct_member() return an error even if there are other
-valid entries in anon_stack.
+Have the open of both those files take the trace_array reference via the
+trace_array_get() that prevents the trace_array from being freed while the
+files are opened.
 
-To fix this, only push unnamed struct/union members to anon_stack.
-Also move the btf_type_is_struct() check to the entry of this function
-because now it is sure only struct/union are pushed to anon_stack.
-
-Link: https://lore.kernel.org/all/178827249775.123716.7813217688423513612.stgit@devnote2/
-
-Fixes: 302db0f5b3d8 ("tracing/probes: Add a function to search a member of a struct/union")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260830143859.D56991F00A3D@smtp.kernel.org/
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20260828094153.17b95037@gandalf.local.home
+Fixes: 729757b96a662 ("tracing: Add show_event_filters to expose active event filters")
+Fixes: 6a80838814eea ("tracing: Add show_event_triggers to expose active event triggers")
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/all/CA+0ovCjerKZJLwXScM9bF2ga2rLi4_XOpUfK41NDbENpeu98jA@mail.gmail.com/
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_btf.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/trace/trace_events.c |   28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace_btf.c
-+++ b/kernel/trace/trace_btf.c
-@@ -74,24 +74,24 @@ const struct btf_member *btf_find_struct
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -2654,14 +2654,14 @@ static const struct file_operations ftra
+ 	.open = ftrace_event_show_filters_open,
+ 	.read = seq_read,
+ 	.llseek = seq_lseek,
+-	.release = seq_release,
++	.release = ftrace_event_release,
+ };
+ 
+ static const struct file_operations ftrace_show_event_triggers_fops = {
+ 	.open = ftrace_event_show_triggers_open,
+ 	.read = seq_read,
+ 	.llseek = seq_lseek,
+-	.release = seq_release,
++	.release = ftrace_event_release,
+ };
+ 
+ static const struct file_operations ftrace_set_event_pid_fops = {
+@@ -2819,7 +2819,17 @@ ftrace_event_set_open(struct inode *inod
+ static int
+ ftrace_event_show_filters_open(struct inode *inode, struct file *file)
  {
- 	struct btf_anon_stack *anon_stack;
- 	const struct btf_member *member;
-+	const struct btf_type *mtype;
- 	u32 tid, cur_offset = 0;
- 	const char *name;
- 	int i, top = 0;
- 
-+	if (!btf_type_is_struct(type))
-+		return ERR_PTR(-EINVAL);
+-	return ftrace_event_open(inode, file, &show_show_event_filters_seq_ops);
++	struct trace_array *tr = inode->i_private;
++	int ret;
 +
- 	anon_stack = kzalloc_objs(*anon_stack, BTF_ANON_STACK_MAX);
- 	if (!anon_stack)
- 		return ERR_PTR(-ENOMEM);
++	ret = tracing_check_open_get_tr(tr);
++	if (ret)
++		return ret;
++
++	ret = ftrace_event_open(inode, file, &show_show_event_filters_seq_ops);
++	if (ret < 0)
++		trace_array_put(tr);
++	return ret;
+ }
  
- retry:
--	if (!btf_type_is_struct(type)) {
--		member = ERR_PTR(-EINVAL);
--		goto out;
--	}
--
- 	for_each_member(i, type, member) {
- 		if (!member->name_off) {
- 			/* Anonymous union/struct: push it for later use */
--			if (btf_type_skip_modifiers(btf, member->type, &tid) &&
-+			mtype = btf_type_skip_modifiers(btf, member->type, &tid);
-+			if (mtype && btf_type_is_struct(mtype) &&
- 			    top < BTF_ANON_STACK_MAX) {
- 				anon_stack[top].tid = tid;
- 				anon_stack[top++].offset =
+ /**
+@@ -2833,7 +2843,17 @@ ftrace_event_show_filters_open(struct in
+ static int
+ ftrace_event_show_triggers_open(struct inode *inode, struct file *file)
+ {
+-	return ftrace_event_open(inode, file, &show_show_event_triggers_seq_ops);
++	struct trace_array *tr = inode->i_private;
++	int ret;
++
++	ret = tracing_check_open_get_tr(tr);
++	if (ret)
++		return ret;
++
++	ret = ftrace_event_open(inode, file, &show_show_event_triggers_seq_ops);
++	if (ret < 0)
++		trace_array_put(tr);
++	return ret;
+ }
+ 
+ static int
 
 
