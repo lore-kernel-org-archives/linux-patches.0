@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F642238C1A;
-	Wed,  9 Sep 2026 14:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA98251475A;
+	Wed,  9 Sep 2026 14:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962612; cv=none; b=pE/KCPzobAo35If4GS802pYvoYk78FobEqtcAvj1BdpG8JtGBr8CSrs2+whc/RWDeBC2HdfB38mOhnUqvrJpIpUtCggrNb3Pp75Sjv9oE4jqC5nzo9DbnuwrIG8uhwVNTCpPM8WYcwqnaY/QdroiGRqswZqMK/MjG5Snjf1aH0E=
+	t=1788962615; cv=none; b=YcUKg89PdT8py64ENAOsY07rJo3IwWYtCOfzcxLSma+B9MMRJOFNA3vBkA9GoGGBQ5XY5rguXaMb5d+0OQL0TSyvK/UN/9gCsNsbtz5I4gS9S9vZSasVZCwMo/mcqfDy+Dme4Pol/9ta1e5u6Bqib2Uc2nAktjp+sHHc1K58vNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962612; c=relaxed/simple;
-	bh=tKFPQaQRQC/2es3N5Js83PXba8jE/zDWLKD1PXNv244=;
+	s=arc-20240116; t=1788962615; c=relaxed/simple;
+	bh=KSDwuCrTgUO4cmVPKPalJaAfPpHxaOrdXkAeWDivbNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXqaWUaFA192k+zi9RpmLBjNVrJKhKRdYVZEsioU82zbf08fGeWa41V9rl7zUaG+29+UccJHLlkZL8HH6Ty2vwnWles6iLpMC6dXT1XW1VtEqH+0Mx4HrGGw7QMQ9k2w746Zr57aZM8fFT9+V+5LImY9z9FJb95pLGUDPd+wW6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1cPLWAz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=A/A9115ItzQKU4bI7JfWv4rSm5wFwua6d60g8RdaIZUrBmlB4sKmLX9Ubfv2fo6OY9uFDhNlwS6ql8ir40iwUcsNACK3h8/l/pZQ8Sia3D2lc8fDTOFkEjP3fzm/ZWn2vJyTSVn4N4UEZJrNTBy6OfUWEvxMRK2+oI2DlEgFmB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGqhJPNL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1cPLWAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B211F00A3A;
-	Wed,  9 Sep 2026 14:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGqhJPNL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302921F00A3A;
+	Wed,  9 Sep 2026 14:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962610;
-	bh=sppy4hNHBWxtu39Hk5lrk91p7eOEA2nRU4D6mBZJjAA=;
+	s=korg; t=1788962613;
+	bh=PLqYMblsz5rDu6nr0ah6kZv8bXMI1VR6MMgexdMIOZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n1cPLWAzksgCW4T78TGrVZuoZZl72an1vCY6iRCRW+66GBMlRnVVK3v603pFhkXVs
-	 J6XIDRRojqhWB1KPwDgfZzqbOZGwbYMPEd1gLQXimNEfC1ofeZfE6HH9s5jJajPZpb
-	 /8pXxjNuGnic7wuaJxRNZTCu2tb6A2tGHFdZ09uM=
+	b=oGqhJPNL420NLCDd+hfYx04T6ojdjdExZ07/8i1kqz7OvheIwwLqfUCbx+pzP1RPT
+	 LEpuDGF+0PoFB2K5M2mrdI80npFvdyOubTRMBxpd/rtt4/NNomJQoSdkX6ppk+089C
+	 YeLiPwgVQ4KsyrSkME4nTdPxaU6iYnCnspV+324c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.2 296/556] KVM: nVM: Ensure INVVPID is emulated on the correct physical CPU
-Date: Wed,  9 Sep 2026 15:39:36 +0200
-Message-ID: <20260909134241.100471557@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 7.2 344/556] LoongArch: Avoid preempt count underflow without probe
+Date: Wed,  9 Sep 2026 15:40:24 +0200
+Message-ID: <20260909134242.757009355@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -45,77 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 6d00e67326d831e6e610933a3800712f4ffe6ec1 upstream.
+commit 72ce4b24676e8b3b75376c4c559dd81c1ac52d5a upstream.
 
-When emulating INVVPID, KVM executes INVVPID on the physical CPU using
-vpid02 (instead of the L1 assigned VPID), after doing some validations
-on the operands. However, it is possible that the physical CPU KVM
-executes INVVPID on is different from the CPU L2 is running on.
+LoongArch uses break 11 for the breakpoint placed after an instruction
+that Kprobes executes out of line. Since userspace can issue the same
+break instruction, do_bp() can reach kprobe_singlestep_handler() when
+there is no current probe.
 
-For example, in the following scenario:
-- L2 runs on CPU #1 and exits to L1 (vmx->nested.vmcs02.cpu=1)
-- L1 migrates to CPU #2 and executes INVVPID
-- KVM executes INVVPID on CPU #2
-- L1 migrates back to CPU #1 and runs L2 (vmx->nested.vmcs02.cpu=1)
+The handler actually returns false in this case, but it first calls
+preempt_enable_no_resched(). The corresponding preempt_disable() is done
+by kprobe_breakpoint_handler() on a real Kprobe hit, so it has not run
+here. As a result, an ordinary userspace breakpoint (code 11) underflows
+the current task's preempt count.
 
-The TLB entries on CPU #1 are never invalidated, because INVVPID was
-executed on CPU #2, and vmcs02 never ran on a different pCPU (i.e.
-vmx_vcpu_load_vmcs() will *not* request KVM_REQ_TLB_FLUSH).
+This also makes in_interrupt() return true until the task schedules. One
+visible consequence is the socket cgroup attribution: cgroup_sk_alloc()
+treats the allocation as interrupt context and assigns the socket to the
+root cgroup. A socket opened from the SIGTRAP handler can then avoid a
+BPF_CGROUP_INET_SOCK_CREATE policy attached to the task's own cgroup.
 
-Ensure that INVVPID is being executed on the same pCPU that L2 last ran
-on, and if not, fallback to clearing last_vpid=0 to trigger a full VPID
-flush on the next nested VM-Enter (as KVM will detect L1 using a
-different VPID for L2). If L2 ends up running on a different pCPU, KVM
-will flush the TLB anyway through vmx_vcpu_load_vmcs().
+Return as soon as kprobe_running() reports no active probe.
+
+The same check has appeared in [PATCH v10 2/4] of the original LoongArch
+Kprobes series, but was dropped before the feature reached mainline.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20260616214652.2157032-4-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 6d4cc40fb5f5 ("LoongArch: Add kprobes support")
+Link: https://lore.kernel.org/loongarch/1670575981-14389-3-git-send-email-yangtiezhu@loongson.cn/
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/loongarch/kernel/kprobes.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -6079,6 +6079,7 @@ static int handle_invvpid(struct kvm_vcp
- 		u64 gla;
- 	} operand;
- 	int r, gpr_index;
-+	int cpu;
+--- a/arch/loongarch/kernel/kprobes.c
++++ b/arch/loongarch/kernel/kprobes.c
+@@ -275,6 +275,9 @@ bool kprobe_singlestep_handler(struct pt
+ 	struct kprobe_ctlblk *kcb = get_kprobe_ctlblk();
+ 	unsigned long addr = instruction_pointer(regs);
  
- 	if (!(vmx->nested.msrs.secondary_ctls_high &
- 	      SECONDARY_EXEC_ENABLE_VPID) ||
-@@ -6127,11 +6128,19 @@ static int handle_invvpid(struct kvm_vcp
- 	 * and never explicitly flush vpid01.  INVVPID targets a VPID, not a
- 	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
- 	 * irrelevant (and there may not be a loaded vmcs12).
-+	 *
-+	 * If vmcs02 was last loaded on a different pCPU, then defer the flush
-+	 * by invalidating the nested VPID tracking to ensure that KVM performs
-+	 * the invalidation on the correct pCPU.
- 	 */
--	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
-+	cpu = get_cpu();
-+	if (cpu != vmx->nested.vmcs02.cpu)
-+		vmx->nested.last_vpid = 0;
-+	else if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
- 		vpid_sync_vcpu_addr(nested_get_vpid02(vcpu), operand.gla);
- 	else
- 		vpid_sync_context(nested_get_vpid02(vcpu));
-+	put_cpu();
- 
- 	/*
- 	 * Sync the shadow page tables if EPT is disabled, L1 is invalidating
++	if (!cur)
++		return false;
++
+ 	if (cur && (kcb->kprobe_status & (KPROBE_HIT_SS | KPROBE_REENTER)) &&
+ 	    ((unsigned long)&cur->ainsn.insn[1] == addr)) {
+ 		restore_local_irqflag(kcb, regs);
 
 
