@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D33055C329;
-	Wed,  9 Sep 2026 14:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7840D572679;
+	Wed,  9 Sep 2026 14:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962821; cv=none; b=in29qyNepy5GNMflL0zAa8tgXCyyofbrXu/YMr7lWUacVU1Dvzn4qv0NwuO3GeLhzC6l3MKhfNjaTlBtflkBQ7uRs2lNZzLx/9aGyl6e7o9lykkxT9IzAYGa3Dma6un2+lb2usnStWzeZ/AEM9gODLRe8srcKWP+kT9xCKGIE0c=
+	t=1788962824; cv=none; b=omBnNaIbbsBVPDXQvtyMP3Q6wLoTB02Ciimx3z/so1wMDO876WPC1OPd5pShbOtB69ABTuUYDlxkMjbzXaLEx7h8JW0pipl5fP+e5+DoM4QYmMTn1m0pE/W8y4aOeUomUJ+9ffLAlbfNj6w2reTNwsVj9LYehWarrqYFnzHWzhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962821; c=relaxed/simple;
-	bh=E46hOMZ23B3v4u4JSpavrXVBvVf4u/5DFG1XrDGulbI=;
+	s=arc-20240116; t=1788962824; c=relaxed/simple;
+	bh=NpgF5UmfaImzsXvowe9Yan/xHxyndC06wWYH/QaQjck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HWO5htYSJSeJK7W9oJheBlGXHASyWH52WLC4gu2N74cPmy6gi0Lcr5qzBA7XxxtotDlwMzfcD/sLzyt+rAxdKuL5JpcM39LBQ/+jGYgMH+7Bl2aWkCxc1Pe5L65grtizFz1BGS8z8b2cZ5lAMlU7cY+lC71JFKzHFokmJQtuR04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHboVT05; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lgTqTYdUBt6lJJLeSSePrEf7+8r8f2HysDjPP/GOJB6vdN3k4DWxqv9F963DoRPXga+ip/3+OJLRuBNixISZopvLHdlRRLeZcUmmLMoOzZtO8WCkYSM9/H2PBnh76z4F0pufKZe3i3EtQFJlOTRknmEn1P+6da8BrnfLEvC6Uos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZ6z+KlD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHboVT05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005221F00ACA;
-	Wed,  9 Sep 2026 14:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZ6z+KlD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B5B1F00A3D;
+	Wed,  9 Sep 2026 14:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962820;
-	bh=EdnAfaU/NhdLDmK9X1OKkPrCzznlDDEpAhbKooCFzSc=;
+	s=korg; t=1788962823;
+	bh=FEPoYNodn6hwu7Dsp9Rxzxd7RtLmKAfHo12mJX0gX0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VHboVT05p0RxKn8gWE1mwkGOzBHFy6zNn/g7DSrTTDu9dFe63fo3xsQ92fLVwhYz+
-	 kTKoQC5ilUj1Ik1LUgVqk/hXpIeD10+G9UNDtk5Ded3MPT3/eHxhxsf6wT4rQo2Sw4
-	 Ug7w0lqqLxEWERZHaH5tB5B9Le2ncrDmddQW6nQ4=
+	b=AZ6z+KlD3Vm0+GTs8/KGnEUTlROI1T3wFMbd3/20jtz9IsA5goNnqu7FAYgWxXbeQ
+	 R6NHzp3GE5Tq8sBpC0DAfMQwFVuW0TleXCsvsjpkxV7bInGWNxru+d2FCbl874VvnF
+	 0agSe7KBeVKh1v0DD+TPVAaehZLnzhVJxBG3REzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	Hannes Reinecke <hare@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 422/556] scsi: qla2xxx: Initialize NVMe abort_work once at submission
-Date: Wed,  9 Sep 2026 15:41:42 +0200
-Message-ID: <20260909134245.442860689@linuxfoundation.org>
+Subject: [PATCH 7.2 423/556] scsi: qla2xxx: Check entry_status in qla24xx_modify_vp_config()
+Date: Wed,  9 Sep 2026 15:41:43 +0200
+Message-ID: <20260909134245.478114055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,70 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit 7e85f6dbc85616de2172bce8eaf84b387a723cd1 upstream.
+commit 9101c51649f5b6773a97bf5271785c948589ea1d upstream.
 
-qla_nvme_fcp_abort() and qla_nvme_ls_abort() ran INIT_WORK() on
-priv->abort_work immediately before schedule_work(). INIT_WORK()
-reinitializes the work_struct, resetting its list head and clearing the
-pending bit. If an abort is issued more than once for the same command
-(for example, concurrent transport teardown and a timeout-driven abort),
-the second INIT_WORK() reinitializes a work item that is already queued,
-which can corrupt the workqueue list and lead to crashes or a looping
-worker.
+The Modify VP Config completion handler labelled its first error branch
+"error status" but tested vpmod->comp_status instead of
+vpmod->entry_status. Because CS_COMPLETE is 0, the following
+"comp_status != CS_COMPLETE" branch duplicated that test and was dead
+code, and entry_status was never examined at all.
 
-Initialize priv->abort_work once at command submission, next to the
-existing per-command spin_lock_init(&priv->cmd_lock), and leave only
-schedule_work() in the abort paths. schedule_work() already does nothing
-when the work item is still pending, so a repeated abort no longer
-disturbs an in-flight work item. The command is not returned to the
-transport until the final kref_put()/release callback runs after
-abort_work has completed, so the work item is idle before priv is reused
-and the single submission-time INIT_WORK() is safe.
+When firmware rejects the IOCB early it sets entry_status while leaving
+comp_status zero. As the IOCB is allocated with dma_pool_zalloc(), both
+comp_status branches evaluate false and the handler falls through to the
+success path, calling fc_vport_set_state(FC_VPORT_INITIALIZING) for a
+configuration the firmware never accepted. This can leave the virtual
+port enabled on top of an invalid config and surface later as login
+timeouts or follow-on firmware errors.
 
-Fixes: e473b3074104 ("scsi: qla2xxx: Add FC-NVMe abort processing")
+Test entry_status in the first branch, matching qla_ctrlvp_completed()
+and the login/logout/abort/reset IOCB handlers; the comp_status branch
+then becomes the live completion-status check.
+
+Fixes: 2c3dfe3f6ad8 ("[SCSI] qla2xxx: add support for NPIV")
 Cc: stable@vger.kernel.org
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-52-njavali@marvell.com
+Link: https://patch.msgid.link/20260723050413.3897522-50-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |    4 ++--
+ drivers/scsi/qla2xxx/qla_mbx.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -463,7 +463,6 @@ static void qla_nvme_ls_abort(struct nvm
- 	}
- 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
- 
--	INIT_WORK(&priv->abort_work, qla_nvme_abort_work);
- 	schedule_work(&priv->abort_work);
- }
- 
-@@ -501,6 +500,7 @@ static int qla_nvme_ls_req(struct nvme_f
- 	priv->sp = sp;
- 	kref_init(&sp->cmd_kref);
- 	spin_lock_init(&priv->cmd_lock);
-+	INIT_WORK(&priv->abort_work, qla_nvme_abort_work);
- 	nvme = &sp->u.iocb_cmd;
- 	priv->fd = fd;
- 	nvme->u.nvme.desc = fd;
-@@ -545,7 +545,6 @@ static void qla_nvme_fcp_abort(struct nv
- 	}
- 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
- 
--	INIT_WORK(&priv->abort_work, qla_nvme_abort_work);
- 	schedule_work(&priv->abort_work);
- }
- 
-@@ -811,6 +810,7 @@ static int qla_nvme_post_cmd(struct nvme
- 
- 	kref_init(&sp->cmd_kref);
- 	spin_lock_init(&priv->cmd_lock);
-+	INIT_WORK(&priv->abort_work, qla_nvme_abort_work);
- 	sp->priv = priv;
- 	priv->sp = sp;
- 	sp->type = SRB_NVME_CMD;
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -4333,10 +4333,10 @@ qla24xx_modify_vp_config(scsi_qla_host_t
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_dbg(ql_dbg_mbx, vha, 0x10bd,
+ 		    "Failed to issue VP config IOCB (%x).\n", rval);
+-	} else if (vpmod->comp_status != 0) {
++	} else if (vpmod->entry_status != 0) {
+ 		ql_dbg(ql_dbg_mbx, vha, 0x10be,
+ 		    "Failed to complete IOCB -- error status (%x).\n",
+-		    vpmod->comp_status);
++		    vpmod->entry_status);
+ 		rval = QLA_FUNCTION_FAILED;
+ 	} else if (vpmod->comp_status != cpu_to_le16(CS_COMPLETE)) {
+ 		ql_dbg(ql_dbg_mbx, vha, 0x10bf,
 
 
