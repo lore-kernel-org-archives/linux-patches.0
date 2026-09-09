@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D2F568FD3;
-	Wed,  9 Sep 2026 14:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CDD57D235;
+	Wed,  9 Sep 2026 14:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964052; cv=none; b=IdMx6/BMzQ/rpoySsyjb1ZsVHR60NajDaTdwfmlPXx4dugjhofgS9eZ4Me0GY61f1+vuL3weTgIL/6QIxBAdZIC9kRG7EvI9+oR4YBVdTftUW2+Or5JM12BvQLbfystv7JoDshZXB4VWd42dEwlKjuoVr7I8hHo4EcF/oZ5xC9Y=
+	t=1788964055; cv=none; b=OU4vdrOK2A0hSrI3tRkCjHruXEUBiL1+8SQ7O/HeKb2Ot/6q6+E2bxrzj8/l2EIF5YTMvW09chl02ORkNwYx6rN62E//SXco5ELjsnkkBbfJwxbbH2e7f1zOBfuPZKBQwJX8RRTZWFU2pLcsqHaWAhpR7Fnl+jV8y5c4GhQbOTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964052; c=relaxed/simple;
-	bh=hKnSBmJt1nweig/rlc13Q+k5q9L3u4vftdvf9QYNa9g=;
+	s=arc-20240116; t=1788964055; c=relaxed/simple;
+	bh=YUzlO/DWX0QVzaP37cTXJfmYDBDaZv61uaMaDaxCqEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqdvxeCyBF4poNb4CopRrqvKEWOdFugaTmjEVRfT7gV01iA9oP0bzShzKyqY834bygVHcniBO15Iqn/0ol4Ysy4pk3JyorfrODrcF7dV4+QqOkfhuBgx5je8tTicXVnnFlRAPm30P+9MitumNiqsfITuMDo5rcug5mkNUXaSu0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epq/ym6q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aXUt8GT60w/geVkWOtW2UaiWYyjgQRxX+arUP4pwjmLIjRWjLsxNaC9RBQeBPgnsJ6k2VI6Tq6DXjP1ek72WrbrBVyuoTEtQbjeo5l0J2lRqVqV5tFP5KA9as8CzFBYFTju0FYRKV+kZI3N2aYpPdpn4M6RcPg9FfRSRd3bEiAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PO0pZev/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epq/ym6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C811F00A3E;
-	Wed,  9 Sep 2026 14:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PO0pZev/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FDD1F00A3D;
+	Wed,  9 Sep 2026 14:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964051;
-	bh=W9fxWGcyYxjJoXefh84DqYowU1S1y4wlPQCF21AIzHQ=;
+	s=korg; t=1788964053;
+	bh=PWiT9VPZ3F2FzJE9HRuSoQie5iW/q8gHLvul7uWXEKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=epq/ym6qjV/lGxMXif0jCx3WaKmBhdfC1qu/6V/yrYyl7/jY3e6BiP/da/PEQohdm
-	 23HOAedayDklUQIpuOlOktRqxFrAUcm/BMtdHO0NraoXMqfc314CHR1n0kGEwGnU96
-	 JzZSsWeCYwl3AkfVhh4NA991l2bHiQBAq3tabQqQ=
+	b=PO0pZev/OIQxKtdK4pPlAsxTZPWm0PvxbclEo90uyNm/Bkh4XNHLbKTEwvNoWzHOf
+	 ZyyZ3ZG2WSjKHQsSvkJzqdfexFibgwoTBBeyV07h4o+p3a+S6KgOMziTSrI2PG3ZdY
+	 +JmnqpyBwwT568hxgXPUdeN6n29I70ImkCym9LM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Riesch <michael.riesch@collabora.com>,
-	Narasimharao Vadlamudi <ahmisaranrao@gmail.com>,
+	Biren Pandya <birenpandya@gmail.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.18 290/583] media: i2c: imx415: Return test pattern write errors
-Date: Wed,  9 Sep 2026 15:39:35 +0200
-Message-ID: <20260909134248.083460386@linuxfoundation.org>
+Subject: [PATCH 6.18 291/583] media: i2c: ov02a10: fix endpoint parsing use-after-free
+Date: Wed,  9 Sep 2026 15:39:36 +0200
+Message-ID: <20260909134248.121139410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,34 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Narasimharao Vadlamudi <ahmisaranrao@gmail.com>
+From: Biren Pandya <birenpandya@gmail.com>
 
-commit 8cd5735b88d76dda80b089031747b6f18ee0bca2 upstream.
+commit 94971ba0592ca77ec99b292226a4b398763315b8 upstream.
 
-imx415_set_testpattern() accumulates failures from cci_write(), but drops
-the value and always returns success. Return the accumulated error so V4L2
-reports failures to userspace.
+The ov02a10_check_hwcfg() function calls fwnode_handle_put(ep)
+immediately after allocating and parsing the endpoint. However, it
+subsequently calls fwnode_property_read_u32() using the same 'ep'
+handle, leading to a potential use-after-free.
 
-Fixes: d5df1c7f3f83 ("media: i2c: imx415: Convert to new CCI register access helpers")
+Additionally, reading the optional 'ovti,mipi-clock-voltage' property
+used to overwrite the 'ret' variable. If the property was missing,
+'ret' would become negative, and this failure code would be incorrectly
+returned at the end of the function, causing probe to fail entirely.
+
+Fix the use-after-free by moving fwnode_property_read_u32() before
+the endpoint is parsed and freed. Avoid the error leak by not
+assigning the result of fwnode_property_read_u32() to 'ret'.
+
+Fixes: 91807efbe8ec ("media: i2c: add OV02A10 image sensor driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
-Signed-off-by: Narasimharao Vadlamudi <ahmisaranrao@gmail.com>
+Signed-off-by: Biren Pandya <birenpandya@gmail.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx415.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov02a10.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/drivers/media/i2c/imx415.c
-+++ b/drivers/media/i2c/imx415.c
-@@ -686,7 +686,7 @@ static int imx415_set_testpattern(struct
- 		cci_write(sensor->regmap, IMX415_DIG_CLP_MODE, 0x01, &ret);
- 		cci_write(sensor->regmap, IMX415_WRJ_OPEN, 0x01, &ret);
- 	}
--	return 0;
-+	return ret;
- }
+--- a/drivers/media/i2c/ov02a10.c
++++ b/drivers/media/i2c/ov02a10.c
+@@ -820,18 +820,16 @@ static int ov02a10_check_hwcfg(struct de
+ 	if (!ep)
+ 		return -ENXIO;
  
- static int imx415_s_ctrl(struct v4l2_ctrl *ctrl)
++	/* Optional indication of MIPI clock voltage unit */
++	if (!fwnode_property_read_u32(ep, "ovti,mipi-clock-voltage",
++				      &clk_volt))
++		ov02a10->mipi_clock_voltage = clk_volt;
++
+ 	ret = v4l2_fwnode_endpoint_alloc_parse(ep, &bus_cfg);
+ 	fwnode_handle_put(ep);
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Optional indication of MIPI clock voltage unit */
+-	ret = fwnode_property_read_u32(ep, "ovti,mipi-clock-voltage",
+-				       &clk_volt);
+-
+-	if (!ret)
+-		ov02a10->mipi_clock_voltage = clk_volt;
+-
+ 	for (i = 0; i < ARRAY_SIZE(link_freq_menu_items); i++) {
+ 		for (j = 0; j < bus_cfg.nr_of_link_frequencies; j++) {
+ 			if (link_freq_menu_items[i] ==
 
 
