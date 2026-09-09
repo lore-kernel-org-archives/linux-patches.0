@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C93355C329;
-	Wed,  9 Sep 2026 13:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE23550DC3;
+	Wed,  9 Sep 2026 13:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962081; cv=none; b=S87SlYhqMSVBZyJ/8YuUuJcE/ObYHuMqgFm7uJpogR+aA1kjPXwkYcK9N+RmnO5Ul3RcBO9pHJf0Djj6sSYnJ+UU+KoMEI9IIZadY46tVmHz2fxQRfN2BLCGB9X/JGLtIzlfCY9LrhpaqqQ9a3JbRrKXcXNk9a3KYW1TBM+vBC4=
+	t=1788962083; cv=none; b=VHz2jzUG5a9Ma9KF7up+2EiNxfZYjyCryh+X0hx4G9Nfr4Ywp9MbykcCzNQGclwybp0EWLgoAy9CysxOoCAd2L1dxyjAv9RvQWWNGx0Rzw3prkvoRxExOS8qMZmsU8uWIq/kIh2WeY/VbB7gtZpgxDV3x6z71J4tkooMHnUIbq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962081; c=relaxed/simple;
-	bh=YHahZNQMKvHgmkBtFTMEsCk34lBnirey/kpWEqdHZlE=;
+	s=arc-20240116; t=1788962083; c=relaxed/simple;
+	bh=m2lFc+4pXH5AMp5/ItJ+W8KaQsPuoaUGKodAEkFmMfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rz8gclEGKsA9TRiS9jsYjz9670L59qwbEVhfleaN/cyyWBWMm+xNOSl4ltHC8f/mDx6JN5rWBW0EqTNMzuGI6zBwBtiSnoznFWkVwqo4og1qPvJXM89FTGCFVPC4vERTRSdxYaVhiYMgjp5iwGHDmBQRJWQfruSoVxQItUCJ6pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+f68rLV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VNuvdnDZPiiuu6LUt0W4B0Ubp2ccofIYq71AT1NCr/DtZr3KBkaZUNSuVHoRozqH9CMQ6P5m6nLD53/5ttVNUywBxufJA3qYd4Y0X6xzN6463+2t0FcWFZYrHe80jaTvptnYPHR6M5k55DEjFg168S+ietYSMKU6p0ZpycY9Wps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zo8TkiUD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+f68rLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755201F00A3A;
-	Wed,  9 Sep 2026 13:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zo8TkiUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4061F00A3D;
+	Wed,  9 Sep 2026 13:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962079;
-	bh=rq4+StNw3eysXe9R7JiJU5TafZrBVBUK9CCimJx3G3c=;
+	s=korg; t=1788962081;
+	bh=tnzQEyd+cAtPNA658RGMgk4jJURkMMg1Q5vMuKkuPm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+f68rLVyQTayz+ejbG4L+nLpNjjinKebp3P094lCBpDafDc6vUDNxW5h03ZILgNX
-	 0BffPw8Ed1IltmjgB1xDJ4t6s2fG7/75crNjswbClQRiW6ERusfkimsTt/YeqNYitj
-	 V6BllZCl7AtJTS3A5d97AIEeelQCuZn0IfiujOdk=
+	b=Zo8TkiUDdVExFM4VUYXGzqCYXCK++z25DwS8e+rfA7thq1hToE88HUI7R66xWN6Ib
+	 sAe5/pC33RctUEbz/sHg0Yka3V6vhgbJnY7sOoXS6CXCNoXsG+K1GEAwLqOaZD7r0s
+	 ysf2v7oSGlRpYUMjLabaCjgnse+nn8lxXUQWFbHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.2 164/556] pmdomain: airoha: fix unselectable AIROHA_CPU_PM_DOMAIN kconfig
-Date: Wed,  9 Sep 2026 15:37:24 +0200
-Message-ID: <20260909134236.190061783@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+0dbf6d295b3350944f0b@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Zi Yan <ziy@nvidia.com>
+Subject: [PATCH 7.2 126/556] mm/mempolicy: fix sleeping allocation in alloc_pages_bulk_weighted_interleave()
+Date: Wed,  9 Sep 2026 15:36:46 +0200
+Message-ID: <20260909134234.892976060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,46 +60,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 6d94c47a2e3a38170a0a141547e4c52fbe232cc3 upstream.
+commit 540e583b66d6402bf556fde5e53c817a54c1afe5 upstream.
 
-The AIROHA_CPU_PM_DOMAIN config was wrongly guarded under the Mediatek PM
-Domains menu and was unselectable.
+syzbot reported a sleeping function called from invalid context splat in
+bucket_table_alloc().
 
-Move it outside the menu so it's now visible and correctly selectable by
-default on Airoha SoC.
+When rhashtable_insert_slow() rehashes the table under rcu_read_lock(), it
+calls bucket_table_alloc(..., GFP_ATOMIC | __GFP_NOWARN).  If the bucket
+table allocation uses vmalloc, __vmalloc_node_range_noprof() invokes
+vm_area_alloc_pages() -> alloc_pages_bulk_mempolicy_noprof() with the
+passed GFP_ATOMIC flags.
 
-Cc: stable@vger.kernel.org
-Fixes: 82e703dd438b ("pmdomain: airoha: Add Airoha CPU PM Domain support")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+If the current task has an MPOL_WEIGHTED_INTERLEAVE mempolicy,
+alloc_pages_bulk_weighted_interleave() is called and currently hardcodes
+GFP_KERNEL when allocating the temporary weights array, triggering a
+might_alloc() splat in atomic/RCU contexts.
+
+Pass the gfp flags (masked with GFP_RECLAIM_MASK to strip page-allocator
+zone modifiers like __GFP_HIGHMEM) received by
+alloc_pages_bulk_weighted_interleave() to kmalloc() instead of hardcoding
+GFP_KERNEL.  Since the weights buffer is immediately initialized in full,
+kmalloc() is sufficient.
+
+Link: https://lore.kernel.org/20260821170407.3721004-1-edumazet@google.com
+Fixes: fa3bea4e1f82 ("mm/mempolicy: introduce MPOL_WEIGHTED_INTERLEAVE for weighted interleaving")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+0dbf6d295b3350944f0b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/6a88837e.ae6ddae5.3da009.0040.GAE@google.com/T/#u
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/mediatek/Kconfig |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/mempolicy.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/mediatek/Kconfig
-+++ b/drivers/pmdomain/mediatek/Kconfig
-@@ -43,9 +43,12 @@ config MTK_MFG_PM_DOMAIN
- 	  This driver is required for the Mali GPU to work at all on MT8196 and
- 	  MT6991.
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -2676,7 +2676,7 @@ static unsigned long alloc_pages_bulk_we
+ 	prev_node = node;
  
-+endmenu
-+
- config AIROHA_CPU_PM_DOMAIN
- 	tristate "Airoha CPU power domain"
- 	default ARCH_AIROHA
-+	depends on ARCH_AIROHA || COMPILE_TEST
- 	depends on HAVE_ARM_SMCCC
- 	depends on PM
- 	select PM_GENERIC_DOMAINS
-@@ -54,5 +57,3 @@ config AIROHA_CPU_PM_DOMAIN
+ 	/* create a local copy of node weights to operate on outside rcu */
+-	weights = kzalloc(nr_node_ids, GFP_KERNEL);
++	weights = kmalloc(nr_node_ids, gfp & GFP_RECLAIM_MASK);
+ 	if (!weights)
+ 		return total_allocated;
  
- 	  CPU frequency and power is controlled by ATF with SMC command to
- 	  set performance states.
--
--endmenu
 
 
