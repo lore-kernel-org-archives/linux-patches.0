@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68315678E4;
-	Wed,  9 Sep 2026 14:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBC856B843;
+	Wed,  9 Sep 2026 14:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963484; cv=none; b=NVSCKoYUyEGIJJ27D+2xLHmjcjQcPzFW4xyU0OCWuiqNGPoVjQqwKoWggvvNzP5oiUkC60E5t3VxpMm/s3ApxxwbxahzAtablHiOmXFchv5Y4zQ7s+88qdRA1ygLfwyLWUdGaishQnXqzDxJNJez+3sSsnAGMLxYT+wonu1tBWg=
+	t=1788963487; cv=none; b=orB3Uk6f8P1piKktDB66j2Ho8rMKRhoOoitGvTZIYh63VJlFNMNDL1ytS3d/Uj5/QBfP8ubhh0l0ld8ZsqfqYDZdm1KwImLXTnhqVkZ058X2eTRe+VP5W0IZSefBGdQiq7KdBZcRse2E95peDs19zPuyz3LS9MrP1CVeN4usZ80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963484; c=relaxed/simple;
-	bh=TFvVQF5Wk9l4c0S37GZiG4HgL+jH5Qcop4J8RzdEVkI=;
+	s=arc-20240116; t=1788963487; c=relaxed/simple;
+	bh=iY+5NSVc8UX7Oqq2IIRCNJ5MejwauNBPdFwQtZBhTms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kP8avskMV9/qxl/lb1IL1N3Q04BN+hjVelh7jol1kcfJdtcII5c/tJAhaZ2bpNmEqyGMUoO98uwdOAFjY88OZhGPQ3U6twDaxLeptj22rH4aQfNb1v9KOzWFv9fqRLeqxk2+fE92noGSpHs1Xj5mTLu4fv/PeY7tT/sXAlEaAUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOwfrHZH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KstA4ZyMx659EEffA2HCbtvdycb20iW7jlyuE62HPoY323c6LmRotr96ssAk8umQsMzrkdyAgf/spUeoo19db4HkfRf/x9F/Z5p9oniQKUKQyrZDdJCg6sDKydkeLVbSKYKuzGhZAyun896X81UMkVAUdqydfZnscv70YOngqaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ur2d4zR5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOwfrHZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577621F00A3A;
-	Wed,  9 Sep 2026 14:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ur2d4zR5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A2D1F00A3A;
+	Wed,  9 Sep 2026 14:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963482;
-	bh=feDho9wOr/4QgFpEsz7/ed26A79BQsVrwuCbWVzD/pY=;
+	s=korg; t=1788963485;
+	bh=u/0XLZbIS0eui47iB2Ip9QwAU7wGXOuDdmtrxjbwDnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EOwfrHZH+b62mhoGgi6h7jItmCZgTHXXWeMSuKkuk4bj0RwGKVEd31275jLYjAsUU
-	 uO7pHB+0pHU4jbF25+1/DJ4NgI65TyXYlCX91jzJUTIwmLuUzzlr34uKGLbxWx47p/
-	 M3mZAujuE5D3pph9NVUVEfiom4Or8D5M9FfDayKg=
+	b=Ur2d4zR59vTWKRqPYgVP79tLmnnXyYnz/gIpR8lAni7exl4S+M2ZOg6PtmTo5oLjI
+	 uicI6KHUFkgQwvzaWLODrxVA8kL6jcNBN59kDeg6gYx1AI7vtZSy334uuXOrk2GFZX
+	 taKr0hICjkL4tu0LAiq+84jxMndK5dtEO7NHlez4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Subject: [PATCH 6.18 077/583] bpf: Fix infinite loop in pcpu_freelist push with one possible CPU
-Date: Wed,  9 Sep 2026 15:36:02 +0200
-Message-ID: <20260909134240.757439867@linuxfoundation.org>
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.18 095/583] perf trace: Refactor augmented_raw_syscalls using bpf_for
+Date: Wed,  9 Sep 2026 15:36:20 +0200
+Message-ID: <20260909134241.419158811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,146 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Viktor Malik <vmalik@redhat.com>
 
-commit efebf6496685c93150df5bb0794363ae70c5f58a upstream.
+commit ea6992784d65ef2c01f3525217dbf3a44afa9917 upstream.
 
-__pcpu_freelist_push() can loop forever when only one CPU is possible
-and an NMI re-enters pcpu_freelist_push() while the interrupted context
-holds that CPU's freelist lock.
+The loop for processing syscall args in augment_raw_syscalls has a
+history of breaking with Clang updates, see e.g. commit 013eb043f37b
+("perf trace: Fix BPF loading failure (-E2BIG)") from Clang 15 to 16.
 
-After the current-CPU fast path fails, the fallback loop walks
-cpu_possible_mask while skipping the current CPU. With CONFIG_SMP=n, or
-when an SMP kernel is limited to one possible CPU with nr_cpus=1 or
-possible_cpus=1, there are no other possible CPUs to examine. The loop
-therefore makes no lock acquisition attempt and can never make progress.
+Now, a similar thing happened between Clang 21 and 22. While the issue
+is mitigated on the main line by a recent verifier update, it remains
+broken on the 6.12 and 6.18 stable branches:
 
-The following stack was observed on a UP system:
+    [linux-6.18.y]# sudo perf trace true
+    libbpf: prog 'sys_enter': BPF program load failed: -E2BIG
+    libbpf: prog 'sys_enter': -- BEGIN PROG LOAD LOG --
+    [...]
+    BPF program is too large. Processed 1000001 insn
+    processed 1000001 insns (limit 1000000) max_states_per_insn 40 total_states 37941 peak_states 232 mark_read 0
+    -- END PROG LOAD LOG --
+    libbpf: prog 'sys_enter': failed to load: -E2BIG
+    libbpf: failed to load object 'augmented_raw_syscalls_bpf'
+    libbpf: failed to load BPF skeleton 'augmented_raw_syscalls_bpf': -E2BIG
+    Error: failed to get syscall or beauty map fd
+    [...]
 
-  NMI context:
-    pcpu_freelist_push
-    free_htab_elem
-    htab_map_delete_elem
-    [perf-event BPF program]
-    __perf_event_overflow
-    perf_event_nmi_handler
-    exc_nmi
+The reason is that the loop is quite complex and the BPF verifier often
+struggles to prove that it terminates.
 
-  Interrupted context:
-    __pcpu_freelist_push
-    pcpu_freelist_push
-    free_htab_elem
-    htab_map_delete_elem
-    [raw_tp/sys_enter BPF program]
-    __bpf_trace_sys_enter
-    do_syscall_64
+Fix the issue by replacing the standard for loop with the bpf_for macro,
+which uses a numeric BPF iterator. This should prevent future breakages
+of this kind since the verifier has a much easier job proving that the
+loop terminates.
 
-raw_res_spin_lock() detects the same-CPU recursive acquisition and
-returns -EDEADLK, but the subsequent fallback loop has no candidate head
-on a system with one possible CPU.
+Small adjustments were necessary for the loop to make it work.  The main
+problem is that the verifier sometimes has problems with bpf_for loops
+that use a carry-over state, such as the `payload_offset` and `output`
+vars here, since the verifier tries to track their values too precisely
+and cannot prove loop convergence. To resolve the issue, we (1)
+explicitly recompute `payload_offset` in every iteration and (2) use a
+trick with adding a global zero to `output` to help the verifier forget
+its precise state and use a range instead.
 
-Restore the extra fallback head that existed before the rqspinlock
-conversion. Keep the current-CPU fast path, then try the other possible
-CPUs and finally the extra head. The additional head lets a push, which
-cannot fail without losing a preallocated element, make progress when the
-only per-CPU head is held by the interrupted context.
+Finally, to keep backwards compatibility with older kernel versions that
+don't have bpf_for (i.e. numeric iterators), fall back to standard loop.
 
-Also check the extra head from the pop path so that nodes placed there
-can be reused.
-
-Fixes: f2ac0e5d1c4d ("bpf: Convert percpu_freelist.c to rqspinlock")
-Signed-off-by: Hui Su <sh_def@163.com>
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260806175600.1993595-1-sh_def@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Fixes: a68fd6a6cdd3 ("perf trace: Collect augmented data using BPF")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/percpu_freelist.c | 35 +++++++++++++++++++++++++++--------
- kernel/bpf/percpu_freelist.h |  1 +
- 2 files changed, 28 insertions(+), 8 deletions(-)
+ tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c |   47 +++++++++++++-----
+ 1 file changed, 35 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/bpf/percpu_freelist.c b/kernel/bpf/percpu_freelist.c
-index 632762b57299..06ce588d13a3 100644
---- a/kernel/bpf/percpu_freelist.c
-+++ b/kernel/bpf/percpu_freelist.c
-@@ -17,6 +17,8 @@ int pcpu_freelist_init(struct pcpu_freelist *s)
- 		raw_res_spin_lock_init(&head->lock);
- 		head->first = NULL;
- 	}
-+	raw_res_spin_lock_init(&s->extralist.lock);
-+	s->extralist.first = NULL;
- 	return 0;
+--- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
++++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+@@ -429,6 +429,8 @@ static bool pid_filter__has(struct pids_
+ 	return bpf_map_lookup_elem(pids, &pid) != NULL;
  }
  
-@@ -46,22 +48,28 @@ void __pcpu_freelist_push(struct pcpu_freelist *s,
- 			struct pcpu_freelist_node *node)
++u64 ZERO = 0;
++
+ /*
+  * Determine what type of argument and how many bytes to read from user space, using the
+  * value in the beauty_map. This is the relation of parameter type and its corresponding
+@@ -440,9 +442,10 @@ static bool pid_filter__has(struct pids_
+  */
+ static inline int augment_arg(struct syscall_enter_args *args, int i,
+ 			      unsigned int *beauty_map,
+-			      struct augmented_arg *payload_offset)
++			      struct beauty_payload_enter *payload, u64 offset)
  {
- 	struct pcpu_freelist_head *head;
--	int cpu;
-+	int cpu, this_cpu;
+ 	int index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
++	struct augmented_arg *payload_offset;
+ 	s64 aug_size, size;
+ 	bool augmented;
+ 	void *arg;
+@@ -455,6 +458,12 @@ static inline int augment_arg(struct sys
+ 	if (size == 0 || arg == NULL)
+ 		return 0;
  
- 	if (___pcpu_freelist_push(this_cpu_ptr(s->freelist), node))
- 		return;
- 
-+	this_cpu = raw_smp_processor_id();
- 	while (true) {
--		for_each_cpu_wrap(cpu, cpu_possible_mask, raw_smp_processor_id()) {
--			if (cpu == raw_smp_processor_id())
-+		for_each_cpu_wrap(cpu, cpu_possible_mask, this_cpu) {
-+			if (cpu == this_cpu)
- 				continue;
++	/* bounds check for the verifier */
++	if (offset > sizeof(payload->aug_args) - sizeof(payload->aug_args[0]))
++		return -1;
++	barrier_var(offset);
++	payload_offset = (struct augmented_arg *)((void *)&payload->aug_args + offset);
 +
- 			head = per_cpu_ptr(s->freelist, cpu);
--			if (raw_res_spin_lock(&head->lock))
--				continue;
--			pcpu_freelist_push_node(head, node);
--			raw_res_spin_unlock(&head->lock);
--			return;
-+			if (___pcpu_freelist_push(head, node))
-+				return;
+ 	if (size == 1) { /* string */
+ 		aug_size = bpf_probe_read_user_str(payload_offset->value, value_size, arg);
+ 		/* minimum of 0 to pass the verifier */
+@@ -498,11 +507,10 @@ static inline int augment_arg(struct sys
+ static int augment_sys_enter(void *ctx, struct syscall_enter_args *args)
+ {
+ 	bool do_output = false;
+-	int zero = 0, written;
++	int i, zero = 0, written;
+ 	u64 output = 0; /* has to be u64, otherwise it won't pass the verifier */
+ 	unsigned int nr, *beauty_map;
+ 	struct beauty_payload_enter *payload;
+-	void *payload_offset;
+ 
+ 	/* fall back to do predefined tail call */
+ 	if (args == NULL)
+@@ -514,7 +522,6 @@ static int augment_sys_enter(void *ctx,
+ 
+ 	/* set up payload for output */
+ 	payload        = bpf_map_lookup_elem(&beauty_payload_enter_map, &zero);
+-	payload_offset = (void *)&payload->aug_args;
+ 
+ 	if (beauty_map == NULL || payload == NULL)
+ 		return 1;
+@@ -522,14 +529,30 @@ static int augment_sys_enter(void *ctx,
+ 	/* copy the sys_enter header, which has the syscall_nr */
+ 	__builtin_memcpy(&payload->args, args, sizeof(struct syscall_enter_args));
+ 
+-	for (int i = 0; i < 6; i++) {
+-		written = augment_arg(args, i, beauty_map, (struct augmented_arg *)payload_offset);
+-		if (written < 0)
+-			return 1;
+-		if (written > 0) {
+-			output += written;
+-			payload_offset += written;
+-			do_output = true;
++	if (bpf_ksym_exists(bpf_iter_num_new)) {
++		bpf_for(i, 0, 6) {
++			written = augment_arg(args, i, beauty_map, payload, output);
++			if (written < 0)
++				return 1;
++			if (written > 0) {
++				output += written;
++				/*
++				 * guide the verifier to forget range of `output`, which
++				 * helps to prove convergence of the loop
++				 */
++				output += ZERO;
++				do_output = true;
++			}
++		}
++	} else {
++		for (i = 0; i < 6; i++) {
++			written = augment_arg(args, i, beauty_map, payload, output);
++			if (written < 0)
++				return 1;
++			if (written > 0) {
++				output += written;
++				do_output = true;
++			}
  		}
-+
-+		/*
-+		 * Push cannot fail. Use the extra list when none of the
-+		 * per-CPU freelists can accept the node.
-+		 */
-+		if (___pcpu_freelist_push(&s->extralist, node))
-+			return;
  	}
- }
  
-@@ -117,6 +125,17 @@ static struct pcpu_freelist_node *___pcpu_freelist_pop(struct pcpu_freelist *s)
- 		}
- 		raw_res_spin_unlock(&head->lock);
- 	}
-+
-+	/* Per-CPU lists are empty or unavailable, try the extra list. */
-+	head = &s->extralist;
-+	if (!READ_ONCE(head->first))
-+		return NULL;
-+	if (raw_res_spin_lock(&head->lock))
-+		return NULL;
-+	node = head->first;
-+	if (node)
-+		WRITE_ONCE(head->first, node->next);
-+	raw_res_spin_unlock(&head->lock);
- 	return node;
- }
- 
-diff --git a/kernel/bpf/percpu_freelist.h b/kernel/bpf/percpu_freelist.h
-index 914798b74967..980cf2884fd2 100644
---- a/kernel/bpf/percpu_freelist.h
-+++ b/kernel/bpf/percpu_freelist.h
-@@ -14,6 +14,7 @@ struct pcpu_freelist_head {
- 
- struct pcpu_freelist {
- 	struct pcpu_freelist_head __percpu *freelist;
-+	struct pcpu_freelist_head extralist;
- };
- 
- struct pcpu_freelist_node {
--- 
-2.55.0
-
 
 
