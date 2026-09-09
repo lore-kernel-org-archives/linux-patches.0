@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A8258F089;
-	Wed,  9 Sep 2026 14:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33A458598B;
+	Wed,  9 Sep 2026 14:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963541; cv=none; b=uuS9cUQ6xvf6+NqHgacygjSAWCryP0QMRAV99z7IELjg8/8gtjMPi2rqXh5xwlfByL6CcwhjXAVl1YCJXJL4+rlJlQlq2Yd6zoztRAjHyYHXyKBr5M34+5PRhyBU3BO8E22UAj6UgESoG/Gc09eTGTMJxDst2zN0RHmiNfm+UXI=
+	t=1788963545; cv=none; b=Ke2xewW9ktYQ6xlKYpdYn6uwDqW9VqHN1tZvtMIvsUgF8hEzoRj4VkMXg22rI+ur+wFZoixXlIp2xYYkpwOUYaCZ7Sv2s5bFV7Ig8m7LByQs43sVmXhVTcsAQ4vhYEQ5mE4uiOgKbD7sRxunL4OThUbITlcg3RKyh0bDIQpGgfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963541; c=relaxed/simple;
-	bh=b5aAlpTbgwaaVhnBVjZjKoS0608jpHY9At6rd/iPPwI=;
+	s=arc-20240116; t=1788963545; c=relaxed/simple;
+	bh=FcCA6LgSJx+3LywokHN6UI0ZW+rAqFHD4gy6wi3h2a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2a7waRuN8kROS5XguNgcqGRuPWfj9Smkc1HTvCFxx4xMIqGhRmQo1uTXxK2Wj8lxHFCblFip2uKD/J+RrZGRwGEYvzBJDlmPRFCSmCnv5btPKSvCGPupS6nVtEf8vMJo84mGqTR6YNvgqjErLUgu3JizrB5NxHgcyBocYe7X98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPfCC8yP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h+waKh7srDP0vyLp33pZFEnsAI5oFGzB45Qa/sJc1rvPgrpAV8imyUFGxJ3lKBB9y16spPCT+MMLWnw4gC5pH6hbesuKp01YmzOnVjEmIcytagYt34XSx8PXHHytXnGax1Ulr1r0y2BieppfLs/77/D6hductN407pfdBf+mtVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeK0naX6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPfCC8yP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33B61F00A3D;
-	Wed,  9 Sep 2026 14:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeK0naX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E861F00A3D;
+	Wed,  9 Sep 2026 14:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963540;
-	bh=gaqI+NgbV9GcrEd4D2oKbYKEIEV4vM8Foo838fp2y/M=;
+	s=korg; t=1788963543;
+	bh=bzIaWPXCD61Q1T800YLAIWpXHE/IL9iNoK5vFMevKBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iPfCC8yPa4Q4PChHipVmySyNy14VtqVxVN1MYmIQ2R4WMJVQ5AKG+mpgDNT6lQOwV
-	 m6HrB4Um+UOKhBIewYfP98j8U6k38up7XSO+YqeeDfjnalAX1HpznQhTLsWqVK6ui7
-	 C/oHHNvUGEwx+gxta3zmqaasx7WrhsnmsYEqRaJQ=
+	b=LeK0naX64a4uupm5jze/TPMq203kQ5vNODIRVQ7VvcRo1VaBFnWs17+VEJq5dqCcu
+	 kmrtkYvurDwBZljgBFDLFc4BFUmlTHTV6uMHaUmOPWQHCWwytkiVHONLhleELSrXzW
+	 NJv49Q8eL0sIxEpfFoOBAWJEVAsGI5oZXSklF0GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 113/583] pmdomain: airoha: fix unselectable AIROHA_CPU_PM_DOMAIN kconfig
-Date: Wed,  9 Sep 2026 15:36:38 +0200
-Message-ID: <20260909134242.045943772@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	caina <caina@uniontech.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Yipeng Zou <zouyipeng@huawei.com>
+Subject: [PATCH 6.18 114/583] Revert "irqchip/mbigen: Fix mbigen node address layout"
+Date: Wed,  9 Sep 2026 15:36:39 +0200
+Message-ID: <20260909134242.080603488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,46 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: caina <caina@uniontech.com>
 
-commit 6d94c47a2e3a38170a0a141547e4c52fbe232cc3 upstream.
+commit e67091609cf85962f64391c1b0f93d4cbfcd4e22 upstream.
 
-The AIROHA_CPU_PM_DOMAIN config was wrongly guarded under the Mediatek PM
-Domains menu and was unselectable.
+This reverts commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20.
 
-Move it outside the menu so it's now visible and correctly selectable by
-default on Airoha SoC.
+Commit 6be6cba9c437 ("irqchip/mbigen: Fix mbigen node address layout")
+appears to cause a regression on Hi1616.
 
+On-board hns NIC has two ports, enahisic2i0 and enahisic2i1, both
+behind mbigen-v2.  Port 0 works; port 1 cannot pass any traffic.
+
+Their interrupt pins fall on different mbigen nodes:
+
+  enahisic2i0: pins 1152-1198 -> all in node 9
+  enahisic2i1: pins 1200-1246 -> node 9 (1200-1215) + node 10 (1216-1246)
+
+  (nid = (hwirq - 64) / 128 + 1; pin 1215 = node 9, pin 1216 = node 10)
+
+/proc/interrupts shows the break happens exactly at the node boundary:
+
+  enahisic2i1-rx0  pin 1200  count 102   <- node 9
+  enahisic2i1-rx5  pin 1215  count   1   <- node 9, last pin
+  enahisic2i1-tx5  pin 1216  count   0   <- node 10, first pin
+  enahisic2i1-rx6  pin 1218  count   0   <- node 10
+  ...all node 10 pins stay at zero.
+
+Port 0 (entirely node 9) is unaffected.  Reverting the commit restores
+normal operation.
+
+The commit assumes CLEAR occupies a full 4 KB page at [0xa000, 0xb000)
+and collides with node 10, so node 10+ gets shifted by 0x1000.
+
+But get_mbigen_clear_reg() uses flat, chip-wide addressing -- it never
+multiplies by the node ID:
+
+    *addr = (hwirq / 32) * 4 + REG_MBIGEN_CLEAR_OFFSET;  /* 0xa000 */
+
+Over the valid hwirq range [64, 1407], CLEAR only spans 0xa008-0xa0af
+(168 bytes).  Node 10's registers are:
+
+    TYPE: 0xa000-0xa00f  (16 B)   overlaps CLEAR by 8 B (0xa008-0xa00f)
+    VEC:  0xa200-0xa3ff  (512 B)  no overlap with CLEAR
+
+Shifting the whole page moves VEC from 0xa200 to 0xb200.  The hardware
+reads the event ID from the fixed silicon address 0xa200 on interrupt
+firing, but software wrote it to 0xb200 -- so the hardware gets an
+uninitialised value and the interrupt is lost.
+
+The only real overlap is 8 bytes of TYPE.  It can only trigger when a
+single mbigen instance has devices on both node 1 (CLEAR 0xa008) and
+node 10 (TYPE 0xa008).  On Hi1616 those nodes are on separate mbigen
+instances, so it never triggers.
+
+Fixes: 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ("irqchip/mbigen: Fix mbigen node address layout")
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: caina <caina@uniontech.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Yipeng Zou <zouyipeng@huawei.com>
 Cc: stable@vger.kernel.org
-Fixes: 82e703dd438b ("pmdomain: airoha: Add Airoha CPU PM Domain support")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Link: https://patch.msgid.link/20260821091720.16665-1-caina@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/mediatek/Kconfig |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-mbigen.c |   20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
---- a/drivers/pmdomain/mediatek/Kconfig
-+++ b/drivers/pmdomain/mediatek/Kconfig
-@@ -26,9 +26,12 @@ config MTK_SCPSYS_PM_DOMAINS
- 	  Control Processor System (SCPSYS) has several power management related
- 	  tasks in the system.
+--- a/drivers/irqchip/irq-mbigen.c
++++ b/drivers/irqchip/irq-mbigen.c
+@@ -64,20 +64,6 @@ struct mbigen_device {
+ 	void __iomem		*base;
+ };
  
-+endmenu
-+
- config AIROHA_CPU_PM_DOMAIN
- 	tristate "Airoha CPU power domain"
- 	default ARCH_AIROHA
-+	depends on ARCH_AIROHA || COMPILE_TEST
- 	depends on HAVE_ARM_SMCCC
- 	depends on PM
- 	select PM_GENERIC_DOMAINS
-@@ -37,5 +40,3 @@ config AIROHA_CPU_PM_DOMAIN
- 
- 	  CPU frequency and power is controlled by ATF with SMC command to
- 	  set performance states.
+-static inline unsigned int get_mbigen_node_offset(unsigned int nid)
+-{
+-	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
 -
--endmenu
+-	/*
+-	 * To avoid touched clear register in unexpected way, we need to directly
+-	 * skip clear register when access to more than 10 mbigen nodes.
+-	 */
+-	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
+-		offset += MBIGEN_NODE_OFFSET;
+-
+-	return offset;
+-}
+-
+ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ {
+ 	unsigned int nid, pin;
+@@ -86,7 +72,8 @@ static inline unsigned int get_mbigen_ve
+ 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
+ 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
+ 
+-	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
++	return pin * 4 + nid * MBIGEN_NODE_OFFSET
++			+ REG_MBIGEN_VEC_OFFSET;
+ }
+ 
+ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+@@ -101,7 +88,8 @@ static inline void get_mbigen_type_reg(i
+ 	*mask = 1 << (irq_ofst % 32);
+ 	ofst = irq_ofst / 32 * 4;
+ 
+-	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
++	*addr = ofst + nid * MBIGEN_NODE_OFFSET
++		+ REG_MBIGEN_TYPE_OFFSET;
+ }
+ 
+ static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
 
 
