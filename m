@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84F1566C70;
-	Wed,  9 Sep 2026 14:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D857B57F727;
+	Wed,  9 Sep 2026 14:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964567; cv=none; b=tJAiGK/aGLlCqDq1YjsBBpbQtHM1+j4DyDJGAGzQ9KLkUkW4QVeA5/WYlsCV/wMjHauf6WNCxE5uXaK64rc0X11mptpNnBrqdtJ0OhTaVkp4uGIaHInhed8MB3TI5dS8cYt4GdzWqO9GpLKgTbw4cXwWIfOPSZWp1eaaHjyQH5Y=
+	t=1788964570; cv=none; b=QhqEJd8FgUT8DpA5L5Yj6ZH7YQxqJJyPy+ddQoD4M+jGoF1UeDTWWCLZBZm9am2XwkQO0O+ICD1gKv4fzOMSMeg2yIwiCvCBQtOE8Y77HVgRck7xFzCHqmD29+Z0yHJ6Fnj8xBqfVLYQIBlVOnxdNsKQ3uaO/JqLuMlz2mx4Ft0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964567; c=relaxed/simple;
-	bh=GM/TpJ8jsQRn/QnWKcIHguPO81UhlrxQhCXTODKNcX8=;
+	s=arc-20240116; t=1788964570; c=relaxed/simple;
+	bh=Cyp4b1sH9xOWlgusXjR4hkPRmqnevYTzUGltKJeMaoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p74q/RScbNd4L/obxXkaj1q6GbFqvgPL1BfvLzw8m9v6zAFxgJwPCknHlYQKKyqcxLG5TXypVibv53pdlIaDdiRUYvbhHgtfX3bMY+wjwW7yDcpIbZyg3kQvJbO+kuRH5qwXkbyrqKXxsXdLVBHhPF0tgjds1qmryeY16mqfVTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tbw3CvJ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZXcDeNXKg/9ywhAgebPPvaRSOPa0kko/nXeW7kZNCfBR8LJPZx9pSLm7Dpz5pleVv/4qTMttJ1VHmWx9TYdpPl1bFkYGHYYvmX/eEvNGX9efXNbd92oruxhbxHyhb9ct3VIZo/h94JBimzaJABwA4MiqwTrPwAh4/DJpwWudNqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUkVD6ai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tbw3CvJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5091F1F00A3D;
-	Wed,  9 Sep 2026 14:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUkVD6ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C8F1F00A3A;
+	Wed,  9 Sep 2026 14:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964565;
-	bh=s3SLhifb15FDNO8kH64gI9l24d+ne4wBEqoO5Vtb0P4=;
+	s=korg; t=1788964568;
+	bh=KRAuPpmAppZqc+nsIW8x6rIel0daj651k63WJZT/0uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tbw3CvJ6nt3M8gNk5m3KQ8MOBSDeozRzFTGDyo5ACxx/uHqMEhbojl8pWMQQCmX6N
-	 78ExbBcCStX4n6FKoeyhLl8urk5p/KirUW+pzIfInafVhQElPscFce+DpwXpJHPdym
-	 4GS7NL4fiX0yUgl7TfHOL/2mqUtfGLxIuw7AWKD4=
+	b=kUkVD6ai8dhF8Pxwgl84iUP2jzfZLE+VOjyTC1zXO0xzpHOuKqzY1fUftEwNhnz2e
+	 FIKlWTUmAa0K0IFBCVKjcmAVxvww0/0wkfCtoTd/riUySisHl4VcBK1fcrq3pzB5pU
+	 IQ7RHLO9PxHE6d4tPkRQmhwz546a+KFHGYkwVNrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Edwards <CFSworks@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 466/583] ceph: properly decrypt filenames in vmalloc() buffers
-Date: Wed,  9 Sep 2026 15:42:31 +0200
-Message-ID: <20260909134254.038669674@linuxfoundation.org>
+Subject: [PATCH 6.18 467/583] smb: move some definitions from common/smb2pdu.h into common/fscc.h
+Date: Wed,  9 Sep 2026 15:42:32 +0200
+Message-ID: <20260909134254.069091909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,157 +53,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Edwards <cfsworks@gmail.com>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit e939fc6a7bd969a58a150b7f188c1047138403e3 ]
+[ Upstream commit a5e581093b1d9321cbb627dd8c209d0d4e0a988a ]
 
-The fscrypt subsystem uses the scatterlist crypto API, inheriting its
-requirement that any buffers are in the linear mapping region. However,
-the messenger client uses kvmalloc() to create buffers for messages,
-which will occasionally place those buffers in the vmalloc() region when
-physical memory fragmentation doesn't permit a large enough kmalloc().
-The various callers of ceph_fname_to_usr() directly pass (slices of) raw
-messages from the MDS without considering that the messages may be in
-vmalloc() buffers, resulting in oopses especially on non-x86 platforms
-(see 'Closes:' for more details and a reproducer).
+These definitions are specified in MS-FSCC, so move them into fscc.h.
 
-Make ceph_fname_to_usr() explicitly tolerant of vmalloc()-allocated
-fname->ctext, fname->name, and/or oname->name buffers, using `tname`
-(which, when non-null, must be a linear address; when null, is briefly
-allocated as necessary) as a bounce buffer to avoid passing any
-inappropriate addresses to fscrypt_fname_disk_to_usr().
+Only add some documentation references, no other changes.
 
-Additionally change parse_reply_info_readdir() -- the only function to
-supply its own `tname` -- to follow the new "tname must never come from
-vmalloc()" rule by passing NULL when the message is not in the linear
-region. Though this causes a per-dentry kmalloc()+kfree(), this overhead
-exists only when processing the minority of messages that spill into
-vmalloc(). My (crude) testing puts this at only about 1 in 8,000 readdir
-messages. Still, if the overhead proves unreasonable in the future, it
-is easy enough to mitigate: a future change could allocate a bounce
-buffer in parse_reply_info_readdir() and use that as `tname` instead.
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Reviewed-by: Steve French <stfrench@microsoft.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 
-Cc: stable@vger.kernel.org # 888d33b208bd: ceph: pass fscrypt `tname` buffers directly
-Cc: stable@vger.kernel.org
-Fixes: 457117f077c6 ("ceph: add helpers for converting names for userland presentation")
-Closes: https://lore.kernel.org/ceph-devel/20260415034020.11530-1-CFSworks@gmail.com/
-Signed-off-by: Sam Edwards <CFSworks@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ adapted raw tname buffer accesses to the legacy tname->name interface ]
+The original header relocation is not applicable to this stable tree: fscc.h is absent and the relevant definitions are already kept in smb2pdu.h.
+
+For this stable-only dependency adaptation, prepare the existing fallocate paths for EOF-extending ranges and allocation metadata refresh, and align the cifs declarations with the target patch context. This lets the fscache resize locking fix apply without adding its new helper in the dependency.
+
+[ sashal: Reduced backport -- upstream a5e581093b1d9 touches 2 file(s), this
+  backport carries 2. Not backported here:
+  fs/smb/common/fscc.h
+  fs/smb/common/smb2pdu.h
+  This note is generated from the file lists only; see the resolution record
+  for the reasoning. ]
+
+Stable-dep-of: 32a7af68df73 ("cifs: add cifs_resize_file_locked() to guard fscache_resize_cookie() under i_rwsem")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/crypto.c     |   46 +++++++++++++++++++++++++++++++++++++---------
- fs/ceph/mds_client.c |    8 ++++++--
- 2 files changed, 43 insertions(+), 11 deletions(-)
+ fs/smb/client/cifsfs.h  |    5 +-
+ fs/smb/client/smb2ops.c |   89 +++++++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 80 insertions(+), 14 deletions(-)
 
---- a/fs/ceph/crypto.c
-+++ b/fs/ceph/crypto.c
-@@ -351,6 +351,11 @@ out:
-  * Otherwise, base64 decode the string, and then ask fscrypt to format it
-  * for userland presentation.
-  *
-+ * Though the fscrypt/crypto subsystems broadly expect all buffers to be in the
-+ * linear-mapped region, this function slightly relaxes those requirements:
-+ * fname->ctext, fname->name, and oname->name may be vmalloc(), but not
-+ * tname->name.
-+ *
-  * Returns 0 on success or negative error code on error.
-  */
- int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
-@@ -358,11 +363,15 @@ int ceph_fname_to_usr(const struct ceph_
+--- a/fs/smb/client/cifsfs.h
++++ b/fs/smb/client/cifsfs.h
+@@ -133,9 +133,10 @@ extern ssize_t cifs_file_copychunk_range
+ 					struct file *dst_file, loff_t destoff,
+ 					size_t len, unsigned int flags);
+ 
+-extern long cifs_ioctl(struct file *filep, unsigned int cmd, unsigned long arg);
+-extern void cifs_setsize(struct inode *inode, loff_t offset);
++long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg);
++void cifs_setsize(struct inode *inode, loff_t offset);
+ 
++struct fs_context;
+ struct smb3_fs_context;
+ extern struct dentry *cifs_smb3_do_mount(struct file_system_type *fs_type,
+ 					 int flags, struct smb3_fs_context *ctx);
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3544,12 +3544,25 @@ static int smb3_simple_fallocate_range(u
+ 				       loff_t off, loff_t len)
  {
- 	struct inode *dir = fname->dir;
- 	struct fscrypt_str _tname = FSTR_INIT(NULL, 0);
-+	struct fscrypt_str _oname;
- 	struct fscrypt_str iname;
- 	char *name = fname->name;
- 	int name_len = fname->name_len;
- 	int ret;
+ 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
++	struct inode *inode = d_inode(cfile->dentry);
+ 	u32 out_data_len;
+ 	char *buf = NULL;
+ 	u64 range_start, range_len, range_end;
+ 	loff_t l;
+ 	int rc;
  
-+	if (WARN_ON_ONCE(tname && is_vmalloc_addr(tname->name)))
-+		return -EIO;
-+
- 	/* Sanity check that the resulting name will fit in the buffer */
- 	if (fname->name_len > NAME_MAX || fname->ctext_len > NAME_MAX)
- 		return -EIO;
-@@ -403,16 +412,19 @@ int ceph_fname_to_usr(const struct ceph_
- 		goto out_inode;
- 	}
- 
-+	if ((!tname || !tname->name) &&
-+	    (fname->ctext_len == 0 ||
-+	     unlikely(is_vmalloc_addr(fname->ctext)) ||
-+	     unlikely(is_vmalloc_addr(oname->name)))) {
-+		ret = fscrypt_fname_alloc_buffer(NAME_MAX, &_tname);
-+		if (ret)
-+			goto out_inode;
-+		tname = &_tname;
++	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
++	if (buf == NULL) {
++		rc = -ENOMEM;
++		goto out;
 +	}
 +
- 	if (fname->ctext_len == 0) {
- 		int declen;
- 
--		if (!tname) {
--			ret = fscrypt_fname_alloc_buffer(NAME_MAX, &_tname);
--			if (ret)
--				goto out_inode;
--			tname = &_tname;
--		}
--
- 		declen = ceph_base64_decode(name, name_len, tname->name);
- 		if (declen <= 0) {
- 			ret = -EIO;
-@@ -420,13 +432,29 @@ int ceph_fname_to_usr(const struct ceph_
- 		}
- 		iname.name = tname->name;
- 		iname.len = declen;
-+	} else if (unlikely(is_vmalloc_addr(fname->ctext))) {
-+		memcpy(tname->name, fname->ctext, fname->ctext_len);
++	if (off >= i_size_read(inode)) {
++		rc = smb3_simple_fallocate_write_range(xid, tcon, cfile,
++						       off, len, buf);
++		goto out;
++	}
 +
-+		iname.name = tname->name;
-+		iname.len = fname->ctext_len;
- 	} else {
- 		iname.name = fname->ctext;
- 		iname.len = fname->ctext_len;
+ 	in_data.file_offset = cpu_to_le64(off);
+ 	in_data.length = cpu_to_le64(len);
+ 	rc = SMB2_ioctl(xid, tcon, cfile->fid.persistent_fid,
+@@ -3561,12 +3574,6 @@ static int smb3_simple_fallocate_range(u
+ 	if (rc)
+ 		goto out;
+ 
+-	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
+-	if (buf == NULL) {
+-		rc = -ENOMEM;
+-		goto out;
+-	}
+-
+ 	tmp_data = out_data;
+ 	while (len) {
+ 		/*
+@@ -3641,18 +3648,22 @@ static long smb3_simple_falloc(struct fi
+ 	struct cifsFileInfo *cfile = file->private_data;
+ 	long rc = -EOPNOTSUPP;
+ 	unsigned int xid;
+-	loff_t new_eof;
++	loff_t old_eof, new_eof;
++	struct smb2_file_all_info file_inf;
++	u64 asize;
++	int qrc;
+ 
+ 	xid = get_xid();
+ 
+ 	inode = d_inode(cfile->dentry);
+ 	cifsi = CIFS_I(inode);
++	old_eof = i_size_read(inode);
+ 
+ 	trace_smb3_falloc_enter(xid, cfile->fid.persistent_fid, tcon->tid,
+ 				tcon->ses->Suid, off, len);
+ 	/* if file not oplocked can't be sure whether asking to extend size */
+ 	if (!CIFS_CACHE_READ(cifsi))
+-		if (keep_size == false) {
++		if (!keep_size) {
+ 			trace_smb3_falloc_err(xid, cfile->fid.persistent_fid,
+ 				tcon->tid, tcon->ses->Suid, off, len, rc);
+ 			free_xid(xid);
+@@ -3662,21 +3673,75 @@ static long smb3_simple_falloc(struct fi
+ 	/*
+ 	 * Extending the file
+ 	 */
+-	if ((keep_size == false) && i_size_read(inode) < off + len) {
++	if (!keep_size && old_eof < off + len) {
+ 		rc = inode_newsize_ok(inode, off + len);
+ 		if (rc)
+ 			goto out;
+ 
++		/*
++		 * A small range at or beyond EOF can be allocated by writing
++		 * zeroes.  For off > old_eof, this preserves the intervening
++		 * hole instead of allocating from offset 0.
++		 */
++		if (off > old_eof ||
++		    (off == old_eof && old_eof != 0 &&
++		     (cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE))) {
++			if (len > 1024 * 1024) {
++				rc = -EOPNOTSUPP;
++				goto out;
++			}
++
++			rc = smb3_simple_fallocate_range(xid, tcon, cfile,
++							 off, len);
++			if (rc) {
++				spin_lock(&inode->i_lock);
++				cifsi->time = 0;
++				spin_unlock(&inode->i_lock);
++				goto out;
++			}
++
++			new_eof = off + len;
++			netfs_resize_file(&cifsi->netfs, new_eof, true);
++			cifs_setsize(inode, new_eof);
++
++			qrc = SMB2_query_info(xid, tcon,
++					      cfile->fid.persistent_fid,
++					      cfile->fid.volatile_fid, &file_inf);
++			spin_lock(&inode->i_lock);
++			if (qrc == 0) {
++				asize = le64_to_cpu(file_inf.AllocationSize);
++				inode->i_blocks = CIFS_INO_BLOCKS(asize);
++			} else {
++				cifsi->time = 0;
++			}
++			spin_unlock(&inode->i_lock);
++			goto out;
++		}
++
+ 		if (cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE)
+ 			smb2_set_sparse(xid, tcon, cfile, inode, false);
+ 
+ 		new_eof = off + len;
+ 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
+ 				  cfile->fid.volatile_fid, cfile->pid, new_eof);
+-		if (rc == 0) {
+-			netfs_resize_file(&cifsi->netfs, new_eof, true);
+-			cifs_setsize(inode, new_eof);
++		if (rc)
++			goto out;
++
++		netfs_resize_file(&cifsi->netfs, new_eof, true);
++		cifs_setsize(inode, new_eof);
++
++		qrc = SMB2_query_info(xid, tcon,
++				      cfile->fid.persistent_fid,
++				      cfile->fid.volatile_fid, &file_inf);
++		spin_lock(&inode->i_lock);
++		if (qrc == 0) {
++			asize = le64_to_cpu(file_inf.AllocationSize);
++			if (asize >= new_eof)
++				inode->i_blocks = CIFS_INO_BLOCKS(asize);
++		} else {
++			cifsi->time = 0;
+ 		}
++		spin_unlock(&inode->i_lock);
+ 		goto out;
  	}
  
--	ret = fscrypt_fname_disk_to_usr(dir, 0, 0, &iname, oname);
--	if (!ret && (dir != fname->dir)) {
-+	_oname.name = unlikely(is_vmalloc_addr(oname->name)) ?
-+			tname->name : oname->name;
-+	_oname.len = oname->len;
-+
-+	ret = fscrypt_fname_disk_to_usr(dir, 0, 0, &iname, &_oname);
-+	if (ret)
-+		goto out;
-+
-+	if (unlikely(is_vmalloc_addr(oname->name)))
-+		memcpy(oname->name, _oname.name, _oname.len);
-+	oname->len = _oname.len;
-+
-+	if (dir != fname->dir) {
- 		char tmp_buf[CEPH_BASE64_CHARS(NAME_MAX)];
- 
- 		name_len = snprintf(tmp_buf, sizeof(tmp_buf), "_%.*s_%ld",
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -496,9 +496,13 @@ static int parse_reply_info_readdir(void
- 			 * to do the base64_decode in-place. It's
- 			 * safe because the decoded string should
- 			 * always be shorter, which is 3/4 of origin
--			 * string.
-+			 * string. If this message was allocated with
-+			 * vmalloc() (happens, but rarely), leave it
-+			 * NULL and let ceph_fname_to_usr() allocate
-+			 * suitable temporary working space instead.
- 			 */
--			tname.name = _name;
-+			if (likely(!is_vmalloc_addr(_name)))
-+				tname.name = _name;
- 
- 			/*
- 			 * Set oname to _name too, and this will be
 
 
