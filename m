@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180A55867DF;
-	Wed,  9 Sep 2026 14:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E119A5867C0;
+	Wed,  9 Sep 2026 14:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964331; cv=none; b=FmeUohHex7GgDbazz6YlzooXgUdL6U7TvMec6YITIbZadHoZnVRNDq/qQJLnbdiwm1BgUW4/IMG1if+iyidKOshmUxGY+iG0esgRl4A3+9jk60+5v+/nhqeF0fkXjAORwV9cBoa2fLAe5rUx0lNGgM5cAyTTVMNJ7kk0lsNO79s=
+	t=1788964334; cv=none; b=Uez0iqxwvA7iWKghBHXTjAwZ+AZGqgfZqcCkQAPiAHb5nAVBHUlq5m2ZCr6hsOwRi7PQ7NI6E6zKmEteVzDRKdsl5ClPRaeJSvQi+W0ZVpSxHQ4uFyFRDlfe1xSliZtE6BfkPCuMqwAXV9WeV9cKXkTmh6HuIQ7FuMdnr6eb2eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964331; c=relaxed/simple;
-	bh=pgtNT01hu69X+LSUK2ikHpjFPuTXwc6P/oldaMOlKjQ=;
+	s=arc-20240116; t=1788964334; c=relaxed/simple;
+	bh=eRVqVhUyGNeZBTt727vTKWjYdLvlPjj/N2ZfJOkvl+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ueNf3lyLvQWmZwZWyqH48IjPO5SgaYClBWCzuVABzBzUundcyyk5sMLMn7g1ahb35+INYwOL1zwIjRIsIPSbRdgKTq/Rpr0dTz02NWLjHF0AzbcpY4d488qFTqIviHMDxfnJMW4PNcosvItnPuSHKORtlhc1mEIdyCpLrjoSfBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5Z7keNz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sSgDNDL648odXSoQGJnC6iGTaQ0njNcvmlXVQdBDGz6rTolcaDxlQm16BFbeR8KIAr2byTELqxo7RpIk67Y3XYE28a7D+vE7aatJvf16cMf7ZlNav0xAuM4PcDX0Y9tIxNxdsoE+w8iX1/fjgrykg+ceHoIMr9jtQQUckrZeccQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Acu8iHMX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5Z7keNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6148F1F00A3D;
-	Wed,  9 Sep 2026 14:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Acu8iHMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E451F00A3A;
+	Wed,  9 Sep 2026 14:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964329;
-	bh=ks8NcuYOZs53H7FBlXPpoqGSFy4orAfy2IgPulD9RWc=;
+	s=korg; t=1788964332;
+	bh=SLSkdozvd51HIJ5ntMlCfdVL9pMFfppw1OGdRo0IKhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y5Z7keNzEP9/FDAQ6WhjbaNNLx6ikJ/0N5CGz8j8Z3U6cEWbwxNxWO4krDih0/1zC
-	 YQz0wRSIrLW9yTzDMavXszy7ZtRDla5OjIfjO2wMXSBugT2ZpAmQB/BQ52SEtYK4Zf
-	 cfqX9yI1Ky5iL9bSY/tYTxZ3NivUWUODGd+hJLV4=
+	b=Acu8iHMXAY47kxABq0MC7sDBCXpeR36u6yBFDXKXycWu8DJTfatUQhlPtmFSizq7Y
+	 PVu/zqTY913opg7gHusIKsS7/eO4wkIymq6SrNAO3PGOy1K+llBqbRPL6Rj79SERms
+	 IQYav0uH1qLYj02qGkjuOj8CWZmcEYU5G/YbqgqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Guanghui Yang <3497809730@qq.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 359/583] f2fs: fix dentry folio leak in find_in_level
-Date: Wed,  9 Sep 2026 15:40:44 +0200
-Message-ID: <20260909134250.439562375@linuxfoundation.org>
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 386/583] drm/amdgpu/vcn: fix integer overflow in dec_msg buffer count check
+Date: Wed,  9 Sep 2026 15:41:11 +0200
+Message-ID: <20260909134251.365287385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,37 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: David (Ming Qiang) Wu <David.Wu3@amd.com>
 
-commit cca7d3e30bf30333314e31bc70b9a739f1342167 upstream.
+commit 4d7390530853eb7befda9cc786e4c86e8ad7ac9e upstream.
 
-find_in_level() gets a dentry folio with f2fs_find_data_folio() before
-calling find_in_block().  If find_in_block() returns an error, the
-function stores the error in res_folio and breaks out of the loop without
-dropping the dentry folio.
+If the supplied msg[2] (num_buffers) is 0x3FFFFFFF, the expression
+6 + num_buffers * 4 wraps to 2 and the bounds check passes, letting
+the parser loop far past the end of the message BO. Triggering it
+additionally requires a ~4GiB mapping so that msg[1] survives the
+earlier "header does not fit in BO" check.
 
-This leaks the folio reference on the find_in_block() error path.  Drop
-the dentry folio before returning the error to the caller.
+Rewrite the test in division form, which is overflow-free by
+construction. Also update the message to reflect that msg is invalid.
 
-Fixes: 7ad08a58bf67 ("f2fs: Handle casefolding with Encryption")
+Fixes: b193019860d6 ("drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg")
+Fixes: 0a78f2bac142 ("drm/amdgpu/vcn4: Prevent OOB reads when parsing dec msg")
 Cc: stable@vger.kernel.org
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/dir.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |   10 +++++++---
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   10 +++++++---
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/dir.c
-+++ b/fs/f2fs/dir.c
-@@ -313,6 +313,7 @@ start_find_bucket:
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -1963,9 +1963,13 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 	len_dw = msg[1] / 4;
+ 	num_buffers = msg[2];
  
- 		de = find_in_block(dir, dentry_folio, fname, &max_slots, use_hash);
- 		if (IS_ERR(de)) {
-+			f2fs_folio_put(dentry_folio, false);
- 			*res_folio = ERR_CAST(de);
- 			de = NULL;
- 			break;
+-	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
+-	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
+-		DRM_ERROR("VCN message has too many buffers!\n");
++	/* Verify that all indices fit within the claimed length.
++	 * There are 6 dwords in the header before the first buffer.
++	 * Each buffer has 4 dwords. Any trailing dwords after the
++	 * last buffer are ignored.
++	 */
++	if (len_dw < 6 || num_buffers > (len_dw - 6) / 4) {
++		DRM_ERROR("Invalid VCN message!\n");
+ 		r = -EINVAL;
+ 		goto out;
+ 	}
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -1879,9 +1879,13 @@ static int vcn_v4_0_dec_msg(struct amdgp
+ 	len_dw = msg[1] / 4;
+ 	num_buffers = msg[2];
+ 
+-	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
+-	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
+-		DRM_ERROR("VCN message has too many buffers!\n");
++	/* Verify that all indices fit within the claimed length.
++	 * There are 6 dwords in the header before the first buffer.
++	 * Each buffer has 4 dwords. Any trailing dwords after the
++	 * last buffer are ignored.
++	 */
++	if (len_dw < 6 || num_buffers > (len_dw - 6) / 4) {
++		DRM_ERROR("Invalid VCN message!\n");
+ 		r = -EINVAL;
+ 		goto out;
+ 	}
 
 
