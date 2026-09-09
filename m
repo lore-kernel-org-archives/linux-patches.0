@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1563B27280A;
-	Wed,  9 Sep 2026 13:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3024054B1C6;
+	Wed,  9 Sep 2026 13:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961836; cv=none; b=cmCRpzu3Ul2UtGTlUTLL2sN4ryZweWwIwer1mAKIhaHNgLVllsvID4NiCSFLlFkXXHYwZh4h88lvdcTh7KKaxv8BG33taxdF3+trr7jbr9qcbtp453HjzXk2e1LRiYYt9aH5UES3gVmh+/tIu7m5p5A4guqMEVRGAOy78ijxdss=
+	t=1788961839; cv=none; b=pHaAXWjLIWN7gBr7OUKkPmeu9TleuBNMYNsqDJy4ypToi0TjCxfB3l9YT77ubY6nZnnzWP/EDxFpPQtLZgdz7W2gNkNnglY12YxHBRBgWy8siq2B95Z+DMMz19s6QuimxnjJgcLbUs2JeeRBv8k87JepeAJIW81+CURUaSR1UXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961836; c=relaxed/simple;
-	bh=tRNp0kfNJlAf2ybp0GIbzSeBotI8Y6f+WaCe++ttuyg=;
+	s=arc-20240116; t=1788961839; c=relaxed/simple;
+	bh=5ZYvrGSdj5wU5yR8jCZFMWVqmAkbLfK/45Ugw/2r1XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2Bt6A73188c1Wecf2Zzd72ni3YtfqKTy4pdMvDTalH/v11uC195+Myq6KlJk5FvkaZv905pbkit0YR6Y3/H+K5lRsN2R5qGJXgcMZ2PlyPaI+TyWEnRpbGdVI4uXhBISiGdJwF+B/KHN571873jytIW8xFy2/wwDjMZCi9HZ8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbqLZDpS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a3sL7VSonf/psPU4NaZv/RLc9LkBmrom59WejzNOpesaRcCBctWE8Fh0KmS9aXALzcyr/PkXhg45s6BRdneyMkpapPrPqLLL0CqveGJPuzXDbeb3o3f0FAK/G90RXHSfjg+l/wURsQiwI6k/OKXuVXydldkJh0Oe89UmLiMd7bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNioM3tj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbqLZDpS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3479E1F00AC4;
-	Wed,  9 Sep 2026 13:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNioM3tj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0651F00A3A;
+	Wed,  9 Sep 2026 13:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961834;
-	bh=nVovytY8E5e6C8qTj+pII454v8xQi+epkm+mU/lKGMU=;
+	s=korg; t=1788961838;
+	bh=j+k2XSfCW8VN4tgjCYM+WIbHzxF0kmggMPyY/Ra1Vuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tbqLZDpSOs9nq+AAJ+IJ+F6A/TTFcOXSPvrGraiUyFPpl4XGzfXLEp6gYKh1gUOPS
-	 HsqR5xtHZUAtrQUfOahmWrgWSQdJZUduc+TYDYuh155Lwf+uF1fpqdF2ovlv5TfxyV
-	 6sc9dJYO2lfxvzDQlrP1zIinydjMAOyQMHC5pGuI=
+	b=uNioM3tjC00N5I3dCEKMxRpaAht+hJt3tJU5kfgeTANYgxSSPMXo+uW1avZivVaHm
+	 wc2fQSWBd0fg8XudUYPR+JHiqWnGgVDZbD51V56krFrMXzM4kf6UQR7KJwmsA3HNiM
+	 9DZOkLrYW5laUM5wMZ4mHpMfykwEtHXj/l0ZqtJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
+	Sven Peter <sven@kernel.org>,
+	Rafay <ahmedrafay888@gmail.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.2 041/556] usb: typec: tcpm: constrain TCPM_SOURCING_VBUS event handling
-Date: Wed,  9 Sep 2026 15:35:21 +0200
-Message-ID: <20260909134231.935414259@linuxfoundation.org>
+Subject: [PATCH 7.2 042/556] usb: typec: tipd: Fix Thunderbolt altmode VDOs for cd321x
+Date: Wed,  9 Sep 2026 15:35:22 +0200
+Message-ID: <20260909134231.971571162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,120 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Sven Peter <sven@kernel.org>
 
-commit cd3b9cea675bbfebc223f007dc2f4e79524fa54c upstream.
+commit e24e3370356bddb65d667985a332b5f8aeeb5f97 upstream.
 
-When a sink detach occurs while waiting for TX send status, the old
-TCPM_SOURCING_VBUS event along with TCPM_VBUS_EVENT and TCPM_CC_EVENT
-can be queued in port->pd_events. Because TCPM_SOURCING_VBUS is
-evaluated after TCPM_VBUS_EVENT and TCPM_CC_EVENT in
-tcpm_pd_event_handler(), a stale TCPM_SOURCING_VBUS event can override
-the detach handling and incorrectly set port->vbus_source and
-port->vbus_present to true.
+The Intel VID status register is actually 9 bytes long and doesn't
+contain the raw VDOs but only the upper 16bits for device mode and enter
+mode. Shift those two fields into place and reconstruct the cable
+discover mode VDO from the data status register instead since it's not
+directly accessible. With this fixed now the correct VDOs are forwarded
+to the PHY and the to-be-submitted Thunderbolt/USB4 native host interface
+so that the right mode can be negotiated and the link actually comes up.
 
-Add a state guard to check that the port is either operating as a
-Source (tcpm_port_is_source(port)) or in a Fast Role Swap (FRS) state
-up to FR_SWAP_SNK_SRC_SOURCE_VBUS_APPLIED before processing
-TCPM_SOURCING_VBUS. Otherwise, discard and log the event.
-
-Log snippet for error condition before fix:
-[72792.204955] state change SRC_ATTACHED -> SRC_STARTUP [rev3 NONE_AMS]
-[72792.204960] sourcing vbus
-[72792.204962] VBUS on
-[72792.204970] AMS POWER_NEGOTIATION start
-[72792.204974] cc:=4
-[72792.205319] state change SRC_STARTUP -> AMS_START [rev3 POWER_NEGOTIATION]
-[72792.205325] state change AMS_START -> SRC_SEND_CAPABILITIES [rev3 POWER_NEGOTIATION]
-[72792.205332] PD TX, header: 0x11a1
-[72792.216911] PD TX complete, status: 2
-[72792.216957] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES @ 150 ms [rev3 POWER_NEGOTIATION]
-[72792.218005] VBUS off
-[72792.218013] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
-[72792.218020] VBUS VSAFE0V
-[72792.218024] state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED [rev3 POWER_NEGOTIATION]
-[72792.218458] CC1: 2 -> 0, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, disconnected]
-[72792.218467] VBUS on --> VBUS left on
-[72792.218980] disable vbus discharge ret:0
-[72792.235193] Start toggling
-
-After fix:
-[ 1195.291691] state change SRC_ATTACHED -> SRC_STARTUP [rev3 NONE_AMS]
-[ 1195.291698] sourcing vbus
-[ 1195.291700] VBUS on
-[ 1195.291707] AMS POWER_NEGOTIATION start
-[ 1195.291710] cc:=4
-[ 1195.291758] state change SRC_STARTUP -> AMS_START [rev3 POWER_NEGOTIATION]
-[ 1195.291794] state change AMS_START -> SRC_SEND_CAPABILITIES [rev3 POWER_NEGOTIATION]
-[ 1195.291798] PD TX, header: 0x11a1
-[ 1195.297056] PD TX complete, status: 2
-[ 1195.297092] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES @ 150 ms [rev3 POWER_NEGOTIATION]
-[ 1195.297177] VBUS off
-[ 1195.297184] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
-[ 1195.297227] CC1: 2 -> 0, CC2: 0 -> 0 [state SRC_SEND_CAPABILITIES, polarity 0, disconnected]
-[ 1195.307469] cc:=2
-[ 1195.307544] pending state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED @ 650 ms [rev3 POWER_NEGOTIATION]
-[ 1195.307555] Discarding sourcing vbus! Invalid state SRC_SEND_CAPABILITIES
-[ 1195.957636] state change SRC_SEND_CAPABILITIES -> SNK_UNATTACHED [delayed 650 ms]
-[ 1195.957732] disable vbus discharge ret:0
-[ 1195.970196] Start toggling
-[ 1195.970468] VBUS off
-[ 1196.051637] VBUS off
-[ 1196.051642] VBUS VSAFE0V
-
-Fixes: 8dc4bd073663 ("usb: typec: tcpm: Add support for Sink Fast Role SWAP(FRS)")
+Link: https://www.ti.com/lit/ug/slvubh2b/slvubh2b.pdf
+Fixes: 0b31c978935f ("usb: typec: tipd: Read USB4, Thunderbolt and DisplayPort status for cd321x")
+Fixes: 82432bbfb9e8 ("usb: typec: tipd: Handle mode transitions for CD321x")
 Cc: stable <stable@kernel.org>
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Signed-off-by: Sven Peter <sven@kernel.org>
+Tested-by: Rafay <ahmedrafay888@gmail.com>
 Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260827-sourcing-vbus-v1-1-9be1aca991a0@google.com
+Link: https://patch.msgid.link/20260813-b4-tipd-vdo-fix-v1-1-70317f2cd554@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ drivers/usb/typec/tipd/core.c     |   17 +++++++++++++----
+ drivers/usb/typec/tipd/tps6598x.h |    4 ++--
+ 2 files changed, 15 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -6921,16 +6921,32 @@ static void tcpm_pd_event_handler(struct
- 			}
- 		}
- 		if (events & TCPM_SOURCING_VBUS) {
--			tcpm_log(port, "sourcing vbus");
- 			/*
- 			 * In fast role swap case TCPC autonomously sources vbus. Set vbus_source
--			 * true as TCPM wouldn't have called tcpm_set_vbus.
-+			 * true conditionally as TCPM wouldn't have called tcpm_set_vbus.
-+			 * If TCPM calls tcpm_set_vbus to source vbus, vbus_source would already
-+			 * be true.
- 			 *
--			 * When vbus is sourced on the command on TCPM i.e. TCPM called
--			 * tcpm_set_vbus to source vbus, vbus_source would already be true.
-+			 * When TCPM_FRS_EVENT and TCPM_SOURCING_VBUS arrive simultaneously,
-+			 * handling TCPM_FRS_EVENT above transitions the state to AMS_START
-+			 * with upcoming_state FR_SWAP_SEND.
- 			 */
--			port->vbus_source = true;
--			_tcpm_pd_vbus_on(port);
-+
-+			if (tcpm_port_is_source(port) ||
-+			    tcpm_port_is_debug_source(port) ||
-+			    (port->state == AMS_START && port->upcoming_state == FR_SWAP_SEND) ||
-+			    port->state == FR_SWAP_SEND ||
-+			    port->state == FR_SWAP_SEND_TIMEOUT ||
-+			    port->state == FR_SWAP_SNK_SRC_TRANSITION_TO_OFF ||
-+			    port->state == FR_SWAP_SNK_SRC_NEW_SINK_READY ||
-+			    port->state == FR_SWAP_SNK_SRC_SOURCE_VBUS_APPLIED) {
-+				tcpm_log(port, "sourcing vbus");
-+				port->vbus_source = true;
-+				_tcpm_pd_vbus_on(port);
-+			} else {
-+				tcpm_log(port, "Discarding sourcing vbus! Invalid state %s",
-+					 tcpm_states[port->state]);
-+			}
- 		}
- 		if (events & TCPM_PORT_CLEAN) {
- 			tcpm_log(port, "port clean");
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -114,7 +114,6 @@ struct tps6598x_intel_vid_status_reg {
+ 	__le32 attention_vdo;
+ 	__le16 enter_vdo;
+ 	__le16 device_mode;
+-	__le16 cable_mode;
+ } __packed;
+ 
+ /* Standard Task return codes */
+@@ -700,9 +699,19 @@ static void cd321x_typec_update_mode(str
+ 		   cd321x->state.mode == TYPEC_TBT_MODE)
+ 			return;
+ 
+-		tbt_data.cable_mode = le16_to_cpu(st->intel_vid_status.cable_mode);
+-		tbt_data.device_mode = le16_to_cpu(st->intel_vid_status.device_mode);
+-		tbt_data.enter_vdo = le16_to_cpu(st->intel_vid_status.enter_vdo);
++		tbt_data.cable_mode = TBT_MODE |
++			TBT_SET_CABLE_SPEED(TPS_DATA_STATUS_TBT_CABLE_SPEED(st->data_status)) |
++			TBT_SET_CABLE_ROUNDED(TPS_DATA_STATUS_TBT_CABLE_GEN(st->data_status));
++		if (st->data_status & TPS_DATA_STATUS_OPTICAL_CABLE)
++			tbt_data.cable_mode |= TBT_CABLE_OPTICAL;
++		if (st->data_status & TPS_DATA_STATUS_ACTIVE_LINK_TRAIN)
++			tbt_data.cable_mode |= TBT_CABLE_LINK_TRAINING;
++		if (st->data_status & TPS_DATA_STATUS_ACTIVE_CABLE)
++			tbt_data.cable_mode |= TBT_CABLE_ACTIVE_PASSIVE;
++		tbt_data.device_mode = TBT_MODE |
++			(u32)le16_to_cpu(st->intel_vid_status.device_mode) << 16;
++		tbt_data.enter_vdo =
++			(u32)le16_to_cpu(st->intel_vid_status.enter_vdo) << 16;
+ 		cd321x->state.alt = cd321x->port_altmode_tbt;
+ 		cd321x->state.mode = TYPEC_TBT_MODE;
+ 		cd321x->state.data = &tbt_data;
+--- a/drivers/usb/typec/tipd/tps6598x.h
++++ b/drivers/usb/typec/tipd/tps6598x.h
+@@ -206,10 +206,10 @@
+ #define TPS_DATA_STATUS_DP_PIN_ASSIGNMENT(x) \
+ 	TPS_FIELD_GET(TPS_DATA_STATUS_DP_PIN_ASSIGNMENT_MASK, (x))
+ #define TPS_DATA_STATUS_TBT_CABLE_SPEED_MASK   GENMASK(27, 25)
+-#define TPS_DATA_STATUS_TBT_CABLE_SPEED \
++#define TPS_DATA_STATUS_TBT_CABLE_SPEED(x) \
+ 	TPS_FIELD_GET(TPS_DATA_STATUS_TBT_CABLE_SPEED_MASK, (x))
+ #define TPS_DATA_STATUS_TBT_CABLE_GEN_MASK     GENMASK(29, 28)
+-#define TPS_DATA_STATUS_TBT_CABLE_GEN \
++#define TPS_DATA_STATUS_TBT_CABLE_GEN(x) \
+ 	TPS_FIELD_GET(TPS_DATA_STATUS_TBT_CABLE_GEN_MASK, (x))
+ 
+ /* Map data status to DP spec assignments */
 
 
