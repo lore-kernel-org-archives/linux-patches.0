@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7FD563FB7;
-	Wed,  9 Sep 2026 13:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C862563FC5;
+	Wed,  9 Sep 2026 13:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962385; cv=none; b=cVZJGEgVYPmELIcc2YFmyIIdpz3sdzO0n7EOF1Z5m/SQySJbVV7JImSnNnpPZqoxHqLlfGib7raCyRubPZF12gau0L002LtYBcX31dIH+0KarDrjwlqyrauStH4+jmHi0WOordNSGm/obCu6lVgi6KYw2R+eJ4zXjgM0WOm2uQQ=
+	t=1788962388; cv=none; b=iRuZctTljcdrnSdBoFF7FVKldqGdF5PyvOWzXac3NxEkl9OZZAu3wVz8V9vfSguUILmg90vxVzAPT/0FUvAfCkvng+3qb+uROCmjJsUtjfqXMSZr86+pPQPV+anzm8GR7/PpeS2va2V+I3MkLZwtrnfGq57c8UGanDjj53ltOoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962385; c=relaxed/simple;
-	bh=hXGZxI5ptwQRonCvbj38yEUelh4SvpismLAj41FW1M8=;
+	s=arc-20240116; t=1788962388; c=relaxed/simple;
+	bh=U4dtIRJw9TC31D6pWSV8JYM4ozl0gluXg3hfBv5pXPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSZRLPHZ7UgmMe6bhIVRN949n4M2pYBeyQxMJkxN8tnmKjc/JP21opaVRKfPGTnASI6wfe7u3X4FPvPF/SqKrFhW4udPe7spFGyWj/KHb1L8OUuT4FeHLdD8Hqzto2hAXxfaRGToMFINt5+YSM8GC0DFtpnsiP+hgC3QCMMzeCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNXhLQPd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pjmzj8litKVP9PKvV0shl76eoJG7gPcx216akIAHSxNY1IXhHVfjVR4q2odRr8CH5CnBlW2OPPYFgsP4NqbJjV7MAh14P1qvGaM3M/MsZ9uL4jAuL083DSi+Bk1IaeekfTeEoBaChMngKvuMsw8l51blU8JMYAREZG1QUo11+l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0binNVV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNXhLQPd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B040C1F00A3A;
-	Wed,  9 Sep 2026 13:59:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0binNVV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9892A1F00A3A;
+	Wed,  9 Sep 2026 13:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962384;
-	bh=zlCe5cRkE1B638XFcUfhj6gHkHR6uD7vyjcDmKtO110=;
+	s=korg; t=1788962387;
+	bh=IYt6OhMCaJyJJXSeAu0wdCQY3eFVpemXpWfyhZ/Vg8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNXhLQPdizCq168EyESFRMTCtIe5H8PYk+CFtXprTAwgwrR0T7ReDAbAMsEM12fqx
-	 AaP8HTls6ULVjAjszCOEyN+oAv/ZwHuwxAkn87y8a+IMlpKjfciqogyUx8yMEcXEvb
-	 VmLGeLyPPsMXEL6VUbFqq+/qgXfAWoBSY02ZwZtY=
+	b=w0binNVVMwTwcI5r6Th4qJCOmLHIqRF/9rfDnmpirNbVPob4bVXnq66FDZ26RbDjy
+	 nuGKhUvph3zwHmUf2/g2E3pDq4/3pVbi8n7tLamGjvcTpRowOZKjevzesmxTmIr+0n
+	 6zKILtrZIhBywwVZx/64/G27zOe69ZS0b7BEfQVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Erick Henrique <erick.henrique.rodrigues@usp.br>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 272/556] iio: dac: m62332: Fix regulator reference count imbalance
-Date: Wed,  9 Sep 2026 15:39:12 +0200
-Message-ID: <20260909134240.179308161@linuxfoundation.org>
+Subject: [PATCH 7.2 273/556] iio: dac: mcp47feb02: add missing select REGMAP_I2C to Kconfig
+Date: Wed,  9 Sep 2026 15:39:13 +0200
+Message-ID: <20260909134240.217147471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,78 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erick Henrique <erick.henrique.rodrigues@usp.br>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-commit a130404ce0b69ca1438126bd81c1985d3b4d2e6f upstream.
+commit 739aac87638f06fcf851df41ecd52d30ab7b0570 upstream.
 
-m62332_set_value() enables the Vcc regulator on every write of a
-non-zero value and disables it on every write of zero, without tracking
-the channel's current state. Because the regulator is reference counted,
-changing a channel directly from one non-zero value to another enables
-it more than once, while a later write of zero disables it only once.
-The reference count never returns to zero and the regulator is left
-enabled indefinitely.
+The Kconfig entry for the MCP47FEB02 is missing a 'select REGMAP_I2C',
+causing build failures.
 
-Only enable the regulator on the transition from zero to non-zero, and
-only disable it on the transition from non-zero to zero, using the
-previously stored channel value to detect the edge. Balance the
-regulator on the I2C error path so the reference count stays consistent
-if the write fails.
-
-Fixes: b87b0c0f81e8 ("iio: add m62332 DAC driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260418130322.106769-1-erick.henrique.rodrigues%40usp.br
+Fixes: bf394cc80369 ("iio: dac: adding support for Microchip MCP47FEB02")
 Cc: stable@vger.kernel.org
-Signed-off-by: Erick Henrique <erick.henrique.rodrigues@usp.br>
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/m62332.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/iio/dac/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/dac/m62332.c
-+++ b/drivers/iio/dac/m62332.c
-@@ -32,6 +32,7 @@ static int m62332_set_value(struct iio_d
- {
- 	struct m62332_data *data = iio_priv(indio_dev);
- 	struct i2c_client *client = data->client;
-+	bool enabling, disabling;
- 	u8 outbuf[2];
- 	int res;
- 
-@@ -43,7 +44,10 @@ static int m62332_set_value(struct iio_d
- 
- 	mutex_lock(&data->mutex);
- 
--	if (val) {
-+	enabling = val && !data->raw[channel];
-+	disabling = !val && data->raw[channel];
-+
-+	if (enabling) {
- 		res = regulator_enable(data->vcc);
- 		if (res)
- 			goto out;
-@@ -52,14 +56,17 @@ static int m62332_set_value(struct iio_d
- 	res = i2c_master_send(client, outbuf, ARRAY_SIZE(outbuf));
- 	if (res >= 0 && res != ARRAY_SIZE(outbuf))
- 		res = -EIO;
--	if (res < 0)
-+	if (res < 0) {
-+		if (enabling)
-+			regulator_disable(data->vcc);
- 		goto out;
-+	}
- 
--	data->raw[channel] = val;
--
--	if (!val)
-+	if (disabling)
- 		regulator_disable(data->vcc);
- 
-+	data->raw[channel] = val;
-+
- 	mutex_unlock(&data->mutex);
- 
- 	return 0;
+--- a/drivers/iio/dac/Kconfig
++++ b/drivers/iio/dac/Kconfig
+@@ -552,6 +552,7 @@ config MCP4728
+ config MCP47FEB02
+ 	tristate "MCP47F(E/V)B01/02/04/08/11/12/14/18/21/22/24/28 DAC driver"
+ 	depends on I2C
++	select REGMAP_I2C
+ 	help
+ 	  Say yes here if you want to build the driver for the Microchip:
+ 	  - 8-bit DAC:
 
 
