@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D394545D82;
-	Wed,  9 Sep 2026 13:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC90A523781;
+	Wed,  9 Sep 2026 13:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961930; cv=none; b=G8T7nUGpt9e4PasPqwDA2NST8MC00VRx5PJkpjCg1PA9oqOUl42SzKJz2p6ss29zfOudHS33qyo5NpUIf/o8xmrixYMkre+v75pVqzn99VotTn1rGZSphlH335fNSoXKHC5aOaLFY0j9bhR9piBSxi9NaYzBERVI2gziWM5oQnY=
+	t=1788961933; cv=none; b=Yni8/1QFRvaV9zR10Og+vIssEIyvtKW90JIiiBjYAT6aml0gqAhZDekdzwiU75XkEd1yUrQTSCY9/ze/yVzV6XTejyF8D5C63F2gb+Bm06hbhhNyNbjXwwbfC5ZnLqAhTAmFXuViZWB0eEDlNP1FjRvELrBvsg/Jt9HC+63UGfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961930; c=relaxed/simple;
-	bh=DZrrmjeuSAbU5PBbrZNLSIHkMnGhe/cZUzn11bWJR5A=;
+	s=arc-20240116; t=1788961933; c=relaxed/simple;
+	bh=vFl5aYUtPT8z6EMZ+/gzA36fMw+HnFzRpOs4MlD/nJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaXBBd/COHv06d2bLEATUXpUgZFIgDjzQZQ1Ewk5qba6lQUHOdzt4ywwqS8coK1tjiklYV5TQsieZ/hyPLULP7y/uuBSteB8DSjiD4KwqUhnLbHCgLLC3A4FDa35CqTauIfgbBGI+/IExWnAvBI1YJOh8lXXYmnGW68zXeTLwx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IY0Q7+8c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eo3tT/7IM+6nUEHPkacrrx04IOdDy5ifuJPilfc60M/+Ime8q7PNEsu9cs95uCLLgbFi1Wxe6shXs27Cbt+TePxg0IuiVGHfwqeJAp/i/qb3uahtQkU4u1RN/92+Vv5F9RdOO7b6dz6RvcX1m681ipQj+l6L7V3/TPG7fsPABTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcLGiyh4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IY0Q7+8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667D81F00A3A;
-	Wed,  9 Sep 2026 13:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcLGiyh4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFF21F00A3A;
+	Wed,  9 Sep 2026 13:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961928;
-	bh=1/bGFrqv9i6fYC3FMWC9eZwRZil1w7QbO+Ch40u5wzY=;
+	s=korg; t=1788961931;
+	bh=XFkdIlLfJ52zbG0B+RdBOIvuvb+KZWJLjQh9XhIUJa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IY0Q7+8c15x7cj0OEtNR9k0oH7SjqL60JQ0oxA58Vs1Rswh+U2Ip8WHiYgOVEj9/X
-	 W/R3C0/PUPGAvQCjA5NXS4hkJsviJSED5axc7zR+DRN2QH+erTc6InAYJU6zWXhck5
-	 G3AvSI17Pq91tk0rD7eZBNJmeUZaDImlqbTVO4gw=
+	b=mcLGiyh4LKLVNIyvsBWZiafwE2G9HvmD+KnlXgnJHUgiLXVZqTOZHsXqksuEwP/2a
+	 2dN6TByd3BmumNk2dpGmEWJZPURAUZov/+LiPjY6+d6e+xL4ZvjGjtm9GcvqbjQWDQ
+	 79y7fpufqjFYk0Xcbq1TYvXVOqIK+ZwGmjaPVQPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Koichiro Den <den@valinux.co.jp>,
-	Frank Li <Frank.Li@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 7.2 113/556] dmaengine: dw-edma: Mark emulated IRQ as level-triggered
-Date: Wed,  9 Sep 2026 15:36:33 +0200
-Message-ID: <20260909134234.450335680@linuxfoundation.org>
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.2 114/556] cpuidle: dt_idle_genpd: kfree() the original name allocation
+Date: Wed,  9 Sep 2026 15:36:34 +0200
+Message-ID: <20260909134234.484926533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,51 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-commit 0d995da5fb97e8c312834575604d4423eb6225b7 upstream.
+commit 2b0ac85512b7f67479127b2713254490662eb13d upstream.
 
-The interrupt-emulation virtual IRQ uses handle_level_irq(), but the IRQ
-descriptor has not been marked with IRQ_LEVEL.
+dt_idle_pd_alloc() kasprintf()s the full node path, then points
+pd->name at kbasename() of that string. dt_idle_pd_free() kfree()s
+pd->name, which is no longer the start of the allocation.
 
-The interrupt emulation is somewhat unusual: the eDMA interrupt handlers
-dispatch the virtual IRQ for every edma_int[] interrupt because software
-cannot reliably tell an interrupt-emulation event from one caused solely
-by DONE/ABORT status. If an interrupt arrives before the doorbell
-handler is registered for the virtual IRQ, the IRQ core marks it
-pending. When the IRQ is later started, check_irq_resend() treats it as
-non-level and replays the pending interrupt, causing the newly
-registered handler to run for a stale event.
+Copy the basename instead.
 
-Mark the virtual IRQ with IRQ_LEVEL so the stale pending state is
-cleared without being replayed. This was observed in pci_endpoint_test
-as two doorbell handler calls when the DMA-variant test ran before
-DOORBELL_TEST.
-
-Fixes: d9d5e1bdd180 ("dmaengine: dw-edma: Add virtual IRQ for interrupt-emulation doorbells")
+Fixes: 9d976d6721df ("cpuidle: Factor-out power domain related code from PSCI domain driver")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
 Cc: stable@vger.kernel.org
-Reported-by: Niklas Cassel <cassel@kernel.org>
-Closes: https://lore.kernel.org/r/ampndLtU32ODmncX@ryzen
-Tested-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260730160701.3550710-1-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpuidle/dt_idle_genpd.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -763,6 +763,7 @@ static int dw_edma_emul_irq_alloc(struct
- 		return virq;
+--- a/drivers/cpuidle/dt_idle_genpd.c
++++ b/drivers/cpuidle/dt_idle_genpd.c
+@@ -99,7 +99,7 @@ struct generic_pm_domain *dt_idle_pd_all
+ 	if (!pd)
+ 		goto out;
  
- 	irq_set_chip_and_handler(virq, &dw_edma_emul_irqchip, handle_level_irq);
-+	irq_set_status_flags(virq, IRQ_LEVEL);
- 	irq_set_chip_data(virq, dw);
- 	irq_set_noprobe(virq);
+-	pd->name = kasprintf(GFP_KERNEL, "%pOF", np);
++	pd->name = kstrdup(kbasename(of_node_full_name(np)), GFP_KERNEL);
+ 	if (!pd->name)
+ 		goto free_pd;
+ 
+@@ -112,7 +112,6 @@ struct generic_pm_domain *dt_idle_pd_all
+ 		goto free_name;
+ 
+ 	pd->free_states = pd_free_states;
+-	pd->name = kbasename(pd->name);
+ 	pd->states = states;
+ 	pd->state_count = state_count;
  
 
 
