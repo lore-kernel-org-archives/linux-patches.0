@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE9F550DB2;
-	Wed,  9 Sep 2026 14:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAAE566C6B;
+	Wed,  9 Sep 2026 14:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962921; cv=none; b=s22hhKTtgTnREVd/p/MsMyhPVU6+dtrqQvCRDkWgqRrN/V9tToealHqjzcLlp2W0Y32BQviflbBB6i7rrNNs6HFJdki8hXqB4llxaiDDc2Ze0tcU0Ni5PhawNb712WzWaLiR7Z6WoaNJbrVGOYBB9MPs3r0qeByTGAIEiRovDvA=
+	t=1788962924; cv=none; b=UG/w8QwB7UOjlQvegs12OFHVdMQ0DqZ+eXfsPA8TkeVRlRKcq6slemaUx1qPAxTIizikdroTe9uC6Fp0nOXUQW0ihEEpQITCNqotk3jFuGSO4U4TS0C/4ierwIpotc0pgsFtTKaH4+NR5vXgsSqNO0lk1RKSeSeZFYxzxSVUN2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962921; c=relaxed/simple;
-	bh=39jNFOIuIsisqA3CE6eg2kRiO8sWXT+CMgPbyCVyRso=;
+	s=arc-20240116; t=1788962924; c=relaxed/simple;
+	bh=u8dAmjByH6MDZ5+Eu99p4/toFutbTXtHLmtOiQaGMZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWIkpP6AkDAMaR2oUVCvOgvB6QMVfgyHA8PnJDisSnPw1NJtyQ4FBR1EaaMe4mXxs5Xq99XmBOPk6VmhGygVltu2EpoqkEujXlzfhPicSAbr6JC1PE1UQQxzP6i4HYRlu7lTEBUsaeI8fJi0EExAX1HawLQNa853wH0QmIukD2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYrNNg5j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UraXTC45+N6tYszsc9Dkj39p3/+7R1LJA/7G0dLh6cJS196nqZCRoz5sgimECHC6CJApO4TBNlJgbdCkCEFFrSwJjzFYMHzu7k6lCBqZS8mSX8zRAWZPXiW/RT7gxITfNOYmlNzylwyXBV5nOwkFpukZwfgnVk3GeLTU0wkKIJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MenUc9Xu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYrNNg5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778321F00A3A;
-	Wed,  9 Sep 2026 14:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MenUc9Xu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FEC1F00A3A;
+	Wed,  9 Sep 2026 14:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962920;
-	bh=olD6Gfn+Ek3HV7ocdLFyDzpy+ATOkvcIRC/Xxj/4CBY=;
+	s=korg; t=1788962922;
+	bh=ckKjnhXVCvqcpofQarjAIAHplPX4JVCbPs5BwBiaP2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FYrNNg5jXn42N4iPV2n4Za7EPNPJummhX8PnqmqQUR29FEd6mZJE2r8dDRO9YXviH
-	 0/SRhnI5rnrE1AI/wz9SRkN8ueC6q5a9FFIy/1W7IcVe7C5kG0Dxm+GPpNA/Del3zP
-	 LiU/JUnfjyMvPzTUUa4+6gI4EX5JBotAoZOhKa4o=
+	b=MenUc9XuBA0LnRWcXDCcqNdrhxHYlV4nC3yNVfu0WiPPPC3NJbDcYT1256TpTFPpP
+	 B5ebz+MDmKObQ6RTuMgZCWlBPfMTKU3ElCU2jl0aIhDDs/mSJN6acP2S6bT5m80hdz
+	 6snaR/rqeyheYCUIdXjfgsvSEgCTelNmneySKcS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 435/556] scsi: qla2xxx: Fix response queue over-consumption in __qla_consume_iocb()
-Date: Wed,  9 Sep 2026 15:41:55 +0200
-Message-ID: <20260909134245.907840153@linuxfoundation.org>
+Subject: [PATCH 7.2 436/556] scsi: qla2xxx: Quiesce response IRQ before freeing request queue
+Date: Wed,  9 Sep 2026 15:41:56 +0200
+Message-ID: <20260909134245.944097977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,50 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit 3ba019bdd89d931499d9476456b5d9c7ab7fa753 upstream.
+commit 505753ec2594c6af09a601f0dd60be7d840c1d2d upstream.
 
-qla24xx_process_response_queue() advances ring_ptr past the head IOCB
-before dispatching, so by the time __qla_consume_iocb() runs, ring_ptr
-already points at the first continuation IOCB. The function however
-looped purex->entry_count times starting at ring_ptr. As entry_count
-includes the head, this consumed one entry too many: it stamped
-RESPONSE_PROCESSED on the next, unrelated IOCB and advanced the ring
-past it, silently dropping a legitimate firmware response. The head
-IOCB's signature was also never marked.
+qla2xxx_delete_qpair() deletes the request queue before the response
+queue. qla25xx_delete_req_que() frees the request queue memory
+(kfree(req) in qla25xx_free_req_que()), but the response-queue MSI-X is
+only released later, in qla25xx_free_rsp_que(). In that window the
+response interrupt can still fire, qla2xxx_msix_rsp_q() queues
+qpair->q_work, and qla_do_work() -> qla24xx_process_response_queue()
+dereferences the now-freed rsp->req (LOGINOUT/CT/ELS entries and the
+status path), a use-after-free.
 
-Mark the head processed and account for it, then consume only the
-entry_count - 1 continuation IOCBs, matching __qla_copy_purex_to_buffer().
+The cancel_work_sync() added for the qpair teardown lives in the
+response free path, which runs after the request queue is already freed,
+so it does not protect rsp->req.
 
-Fixes: fac2807946c1 ("scsi: qla2xxx: edif: Add extraction of auth_els from the wire")
+Release the response-queue interrupt and flush qpair->q_work before
+deleting the request queue, so no late completion can reach the freed
+request queue. Clearing have_irq makes the subsequent
+qla25xx_free_rsp_que() skip its free_irq(), and the firmware
+queue-delete order (request then response) is preserved; the
+request-delete mailbox completes on the default vector and is unaffected
+by dropping the qpair response interrupt early.
+
+Fixes: d74595278f4a ("scsi: qla2xxx: Add multiple queue pair functionality.")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-14-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-18-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_isr.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/scsi/qla2xxx/qla_init.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -205,6 +205,17 @@ void __qla_consume_iocb(struct scsi_qla_
- 	struct purex_entry_24xx *purex = *pkt;
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -10042,11 +10042,28 @@ int qla2xxx_delete_qpair(struct scsi_qla
+ {
+ 	int ret = QLA_FUNCTION_FAILED;
+ 	struct qla_hw_data *ha = qpair->hw;
++	struct rsp_que *rsp = qpair->rsp;
  
- 	entry_count_remaining = purex->entry_count;
-+
+ 	qpair->delete_in_progress = 1;
+ 
+ 	qla_free_buf_pool(qpair);
+ 
 +	/*
-+	 * The caller already advanced ring_ptr past the head IOCB, so mark
-+	 * the head processed and account for it here, then consume only the
-+	 * continuation IOCBs that follow.
++	 * The response-queue interrupt schedules qla_do_work(), which
++	 * dereferences qpair->rsp->req.  Release the interrupt and flush
++	 * any pending work before the request queue is freed below so a
++	 * late completion cannot touch the freed request queue.  The
++	 * firmware queue-delete order (request then response) is kept.
 +	 */
-+	((response_t *)purex)->signature = RESPONSE_PROCESSED;
-+	/* flush signature */
-+	wmb();
-+	--entry_count_remaining;
++	if (rsp && rsp->msix && rsp->msix->have_irq) {
++		free_irq(rsp->msix->vector, rsp->msix->handle);
++		rsp->msix->have_irq = 0;
++		rsp->msix->in_use = 0;
++		rsp->msix->handle = NULL;
++	}
++	if (rsp && ha->wq)
++		cancel_work_sync(&qpair->q_work);
 +
- 	while (entry_count_remaining > 0) {
- 		new_pkt = rsp_q->ring_ptr;
- 		*pkt = new_pkt;
+ 	ret = qla25xx_delete_req_que(vha, qpair->req);
+ 	if (ret != QLA_SUCCESS)
+ 		goto fail;
 
 
