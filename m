@@ -1,52 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C986A56852B;
-	Wed,  9 Sep 2026 14:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9192D2394;
+	Wed,  9 Sep 2026 14:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964916; cv=none; b=d0ut4SGAclxCw/6EHR8FIiAkDAnc0Q0WbuC8PCO32DdWV2CLGKAp8pQ3uiZA5To1BG/oYRUUtJr6Jt9XJmoMS9miqDSMCNl55Q6PLVKulY4qJ9VrQcl7n60V/r8ngNNnahU9AyJu7D8mgVG76LGNJovcCnRhFrsybCUEgvbpkls=
+	t=1788964918; cv=none; b=oDnK/SYdRxFIJcPj/2maCUyjdzl24sGPQpmjgFKlFDXZTeey3uyXCoGhFnIxYeenNwDJVFxOEL/ErQ4QGLWsJU/h8CRSWrDuVwnLUrFelajYnsLiGppwcGdYGIBP9QqfFQ7gOc7GoqxjrjcsYx2+AGs+7JSz2o8d7IYI3Unm6Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964916; c=relaxed/simple;
-	bh=x8dgZr2lZrEEFm9JCtaZhZX3BMw/MLPbu2xVpTGX0Ns=;
+	s=arc-20240116; t=1788964918; c=relaxed/simple;
+	bh=BiNsU86CL9mAsOSrElf6Ix05lu9nbGmSuf8eKgWXUpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebABOAJtc0q5nqVMZzyTLRFUb2OrxXKJcsY6GqQRC1OYUyZSEgEq0bk1jGxOqM+/H5wrUHZKlP42MIPp2+5oBUNxfGz1Fr8uDnmdPLgieFQp/U4b3qBZFBKzXOkPokvShdNmZVUIJJCiMd62239eBRx++98LUSxlLO9AgOGmXEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLdmbxT1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t4s59bZb6poOlJl6jKlczNqBosuIP5Xvhb0LXOapvuTIHuvF45rdveh7jqxwB1xXtHozN7HPhKZG25yw5DsBd7emgTC9y1iIvc0J4t6axiIsaUR0kTC58z0RYip0X5O6IzpTZupatsuQIlv/TwghlFINnNIc2GQVZ69bl7ZQ4Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGZPG/+H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLdmbxT1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A631F00A3A;
-	Wed,  9 Sep 2026 14:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGZPG/+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAB81F00A3A;
+	Wed,  9 Sep 2026 14:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964914;
-	bh=qFhysndJOG9drmjneZ8ZmUeb3AFBjSxVNAi6mWKDLlM=;
+	s=korg; t=1788964917;
+	bh=klLuZwjYfNjhMtwRXuv4LSsopkvEZbgeSVGpGBKZ+J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLdmbxT1Im6BeaerHW+1IKePLSzaaeSOvdujBQndos+oQtjGzVYeu8NzQ51Sl0SP5
-	 unuN5hqflsxtku0Kl+HTeBmFFe6RvOQoMXotJUU6HoUjljjEN7ku/Z0/ktJnZnybRY
-	 CpEw0HUnBrO5vhQSxRgkblZaEservI4EyRuPO4tI=
+	b=tGZPG/+HvQTbu3ZIAmhAevCfxiv68Y0RXd7DWVNuBT+c0rgePBy7y/rFM9qiXdI33
+	 WtpEr2Fz/pxl0u1yL3plR7IiwD6ODPPdoa1w/XNG+TcwpfH2uNQatbXT35t6Xn08N4
+	 I6qV6JEkC7K0sJVqxK6f2YlP/lvUzHXPAXltTnYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Frank van der Linden <fvdl@google.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Song Hu <husong@kylinos.cn>,
+	SJ Park <sj@kernel.org>,
 	David Hildenbrand <david@kernel.org>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Usama Arif <usama.arif@linux.dev>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 562/583] mm/hugetlb_vmemmap: fix __hugetlb_vmemmap_optimize_folios()
-Date: Wed,  9 Sep 2026 15:44:07 +0200
-Message-ID: <20260909134257.146213820@linuxfoundation.org>
+	Jonathan Corbet <corbet@lwn.net>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 563/583] Docs/ABI/damon: fix typo in intervals_goal sysfs path
+Date: Wed,  9 Sep 2026 15:44:08 +0200
+Message-ID: <20260909134257.177664259@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -65,68 +59,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Song Hu <husong@kylinos.cn>
 
-[ Upstream commit 6e25c6a9c7eff141ecfc966ecdb7801db2a8810e ]
+commit 1b492fc82368399123413c937f13da6ed312ee4d upstream.
 
-__hugetlb_vmemmap_optimize_folios() uses incorrect arguments when handling
-bootmem HugeTLB folios.
+Patch series "Docs/ABI/damon: sysfs ABI document fixes and additions", v2.
 
-The section number passed to register_page_bootmem_memmap() is derived
-from the vmemmap virtual address of folio->page instead of the folio PFN,
-so the bootmem memmap metadata can be registered against the wrong
-section.  The helper is also given HUGETLB_VMEMMAP_RESERVE_SIZE even
-though it expects a page count, not a size in bytes.  In addition, the
-write-protect range is based on pages_per_huge_page(h), which does not
-cover the full HugeTLB vmemmap area and can leave part of the shared tail
-vmemmap mapping writable.
+This series fixes typos and fills in missing entries in the DAMON sysfs
+ABI document (Documentation/ABI/testing/sysfs-kernel-mm-damon).
 
-Fix the section lookup to use folio_pfn(folio), use
-HUGETLB_VMEMMAP_RESERVE_PAGES when registering the reserved memmap pages,
-and use hugetlb_vmemmap_size(h) for the write-protect range.
+Patch 1 fixes a path typo, "intrvals_goal" -> "intervals_goal", in four
+What: entries; the documented path points to a non-existent directory, so
+it is Cc'ed to stable.
 
-Link: https://lore.kernel.org/20260612035903.2468601-3-songmuchun@bytedance.com
-Fixes: 752fe17af693 ("mm/hugetlb: add pre-HVO framework")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Frank van der Linden <fvdl@google.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Patch 2 fixes two further typos ("WDate:", "manimum").
+
+Patches 3 and 4 add ABI entries that exist in the kernel and are already
+described in usage.rst but are missing from the canonical ABI document:
+the 'update_tuned_intervals' state command (patch 3) and the
+'tried_regions/<R>/probes/<P>/hits' file (patch 4).
+
+
+This patch (of 4):
+
+The ABI document spells the DAMON sysfs directory as "intrvals_goal"
+(missing 'e') in four What: entries, but the kernel creates it as
+"intervals_goal" (mm/damon/sysfs.c).  Following the documented path
+therefore yields a non-existent directory.
+
+Link: https://lore.kernel.org/20260714140117.94147-1-sj@kernel.org
+Link: https://lore.kernel.org/20260714140117.94147-2-sj@kernel.org
+Fixes: e2b23dc62369 ("Docs/ABI/damon: document intervals auto-tuning ABI")
+Signed-off-by: Song Hu <husong@kylinos.cn>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Cc: David Hildenbrand <david@kernel.org>
 Cc: Liam R. Howlett <liam@infradead.org>
 Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador (SUSE) <osalvador@kernel.org>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Usama Arif <usama.arif@linux.dev>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb_vmemmap.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/ABI/testing/sysfs-kernel-mm-damon |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/mm/hugetlb_vmemmap.c
-+++ b/mm/hugetlb_vmemmap.c
-@@ -615,12 +615,12 @@ static void __hugetlb_vmemmap_optimize_f
- 			 * mirrored tail page structs RO.
- 			 */
- 			spfn = (unsigned long)&folio->page;
--			epfn = spfn + pages_per_huge_page(h);
-+			epfn = spfn + hugetlb_vmemmap_size(h);
- 			vmemmap_wrprotect_hvo(spfn, epfn, folio_nid(folio),
- 					HUGETLB_VMEMMAP_RESERVE_SIZE);
--			register_page_bootmem_memmap(pfn_to_section_nr(spfn),
-+			register_page_bootmem_memmap(pfn_to_section_nr(folio_pfn(folio)),
- 					&folio->page,
--					HUGETLB_VMEMMAP_RESERVE_SIZE);
-+					HUGETLB_VMEMMAP_RESERVE_PAGES);
- 			continue;
- 		}
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -105,7 +105,7 @@ Description:	Writing a value to this fil
+ 		DAMON context in microseconds as the value.  Reading this file
+ 		returns the value.
  
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/access_bp
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/access_bp
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the monitoring intervals
+@@ -113,7 +113,7 @@ Description:	Writing a value to this fil
+ 		the given time interval (aggrs in same directory), in bp
+ 		(1/10,000).  Reading this file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/aggrs
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/aggrs
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the time interval to achieve
+@@ -121,14 +121,14 @@ Description:	Writing a value to this fil
+ 		access events ratio (access_bp in same directory) within.
+ 		Reading this file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/min_sample_us
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/min_sample_us
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the minimum value of
+ 		auto-tuned sampling interval in microseconds.  Reading this
+ 		file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/max_sample_us
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/max_sample_us
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the maximum value of
 
 
