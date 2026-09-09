@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8208A2D9ECB;
-	Wed,  9 Sep 2026 14:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346CD4A2A7C;
+	Wed,  9 Sep 2026 14:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964624; cv=none; b=eJLOLGbiSDqMMMLJOlcQPHpXMENtnAmMs2S2N2cvT2mG2F46MF7lbLEpXuj2OtN+lO5W/UzD1rysw0LPBonX5oNJt+8n3rkrNGnOgD6uleL3LiY0YkNlLoGW9i2Tjmayt8l+h8f8Cm7jAfTtsv/cIV4AA8x//JCSZcCQvzJTYxQ=
+	t=1788964627; cv=none; b=D/hcycbAJ4m+rE9nOkfB8ar0yexM+ZfrsUTkGk0Sy3OPkUaSBoEaivzM4MiCJFy4jC7JsyPsQYQJk4IDfmJ7lvlRsVUusjH0e0ik7LtMzo7Bi+vTDf4vR0SWY7W9JCD5R9Ui5zCuqHKY2SvaSJpvHag1fRy43KzSxv6oigUV4xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964624; c=relaxed/simple;
-	bh=jZrurN7GwRJmylsiYAcZ++XUnZdphaLnllnYxT9Gr14=;
+	s=arc-20240116; t=1788964627; c=relaxed/simple;
+	bh=HbVxvnLQHpZJve5S775yWXxoRwbtPTAYmFfTc7FxzqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ol1awI58quyngdU/hIVS8ztfmmmMw9t0BSJ6v8odfl5pgmPJxiXPtjFhnUwZyU5AbcbSXkUldYQjIUAl9UfA1JUnqfNGHvD9zKr92ajEq74yOI6BYJfZP+qGDS8WenHCJR6NNaY8uesnOaO75HJ/0I0Bpjk6wDxqxhl69v1iJWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zELj0A0+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hi4Ck5GEB6ZtZl6uSLxgyppws93n8dSgFQfuEXVtufsr4dxat5QNER17trYdTlYiUIyq9JeGa1kITuNAtqyfkX75teZFlr6q8GFff01jGFQTHRCbrEnV7Z5C86XAO69YPk1eYAsH/io2WBU3TDlFT5hcp8uuV6vSbob8ioSN6PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L474n5Pl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zELj0A0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64CE1F00A3A;
-	Wed,  9 Sep 2026 14:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L474n5Pl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA9D1F00A3A;
+	Wed,  9 Sep 2026 14:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964623;
-	bh=BjualQHsTjezOQdTy0BOagQZgOJgwfuopLv37jypyEo=;
+	s=korg; t=1788964626;
+	bh=05dz/Rj67JAkmuau3a9ZBfr6YtkdRoTcop9juQOBZLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zELj0A0+E1WTkCSpr7vBiWI1qwUCL9onC9xbh/Yu8tckMcjLYUhVzrsOE46bXCgnW
-	 iEixFldSbkPxGLFxudc9QM0KoAumcKeP20LzStNTNNPr2sysDVCmagPy22g/p7q6iz
-	 PG7JlqN0MwvvaJicFP2txVXoR0MDdrFqdheXGuR8=
+	b=L474n5Pl9+MKGWBHab5x5uykCZ3vFvI8krXK79An49T/3HDL8MJgDie+hwT5K1M+y
+	 4L0CPKP7MSV14b1NaJVOduwBAuwBqZBqF6EEIomFPXqPFVUMdINhmCH8JxB1xSiwS0
+	 wpHqpg8xQcod4urNzkTRow51a7Yx4y4gK2O66xtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
 	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Tomasz Wolski <tomasz.wolski@fujitsu.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 488/583] dax/cxl, hmem: Initialize hmem early and defer dax_cxl binding
-Date: Wed,  9 Sep 2026 15:42:53 +0200
-Message-ID: <20260909134254.717321916@linuxfoundation.org>
+Subject: [PATCH 6.18 489/583] cxl/region: Add helper to check Soft Reserved containment by CXL regions
+Date: Wed,  9 Sep 2026 15:42:54 +0200
+Message-ID: <20260909134254.748527771@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,90 +53,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
 
-[ Upstream commit 39aa1d4be12bf9f685adaa06aa2d997c1c611b16 ]
+[ Upstream commit 8e65f99b525b3f49b87db0db0d0e0fc1a0c53e40 ]
 
-Move hmem/ earlier in the dax Makefile so that hmem_init() runs before
-dax_cxl.
+Add a helper to determine whether a given Soft Reserved memory range is
+fully contained within the committed CXL region.
 
-In addition, defer registration of the dax_cxl driver to a workqueue
-instead of using module_cxl_driver(). This ensures that dax_hmem has
-an opportunity to initialize and register its deferred callback and make
-ownership decisions before dax_cxl begins probing and claiming Soft
-Reserved ranges.
-
-Mark the dax_cxl driver as PROBE_PREFER_ASYNCHRONOUS so its probe runs
-out of line from other synchronous probing avoiding ordering
-dependencies while coordinating ownership decisions with dax_hmem.
+This helper provides a primitive for policy decisions in subsequent
+patches such as co-ordination with dax_hmem to determine whether CXL has
+fully claimed ownership of Soft Reserved memory ranges.
 
 Signed-off-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Tomasz Wolski <tomasz.wolski@fujitsu.com>
-Link: https://patch.msgid.link/20260322195343.206900-6-Smita.KoralahalliChannabasappa@amd.com
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/20260322195343.206900-8-Smita.KoralahalliChannabasappa@amd.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+
+[ sashal: Reduced backport -- upstream 8e65f99b525b3 touches 2 file(s), this
+  backport carries 2. Not backported here:
+  include/cxl/cxl.h
+  This note is generated from the file lists only; see the resolution record
+  for the reasoning. ]
+
 Stable-dep-of: 775d0f4558f4 ("cxl/mce: Make the MCE notifier per-region")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dax/Makefile |    3 +--
- drivers/dax/cxl.c    |   27 ++++++++++++++++++++++++++-
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ drivers/cxl/core/region.c |   83 ++++++++++++++++++++++++++++++++--------------
+ drivers/cxl/cxl.h         |    5 ++
+ 2 files changed, 63 insertions(+), 25 deletions(-)
 
---- a/drivers/dax/Makefile
-+++ b/drivers/dax/Makefile
-@@ -1,4 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
-+obj-y += hmem/
- obj-$(CONFIG_DAX) += dax.o
- obj-$(CONFIG_DEV_DAX) += device_dax.o
- obj-$(CONFIG_DEV_DAX_KMEM) += kmem.o
-@@ -10,5 +11,3 @@ dax-y += bus.o
- device_dax-y := device.o
- dax_pmem-y := pmem.o
- dax_cxl-y := cxl.o
--
--obj-y += hmem/
---- a/drivers/dax/cxl.c
-+++ b/drivers/dax/cxl.c
-@@ -38,10 +38,35 @@ static struct cxl_driver cxl_dax_region_
- 	.id = CXL_DEVICE_DAX_REGION,
- 	.drv = {
- 		.suppress_bind_attrs = true,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
- 	},
- };
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -3751,6 +3751,61 @@ static int cxl_region_debugfs_poison_cle
+ DEFINE_DEBUGFS_ATTRIBUTE(cxl_poison_clear_fops, NULL,
+ 			 cxl_region_debugfs_poison_clear, "%llx\n");
  
--module_cxl_driver(cxl_dax_region_driver);
-+static void cxl_dax_region_driver_register(struct work_struct *work)
++static int cxl_region_setup_poison(struct cxl_region *cxlr)
 +{
-+	cxl_driver_register(&cxl_dax_region_driver);
++	struct device *dev = &cxlr->dev;
++	struct cxl_region_params *p = &cxlr->params;
++	struct dentry *dentry;
++
++	/* Create poison attributes if all memdevs support the capabilities */
++	for (int i = 0; i < p->nr_targets; i++) {
++		struct cxl_endpoint_decoder *cxled = p->targets[i];
++		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
++
++		if (!cxl_memdev_has_poison_cmd(cxlmd, CXL_POISON_ENABLED_INJECT) ||
++		    !cxl_memdev_has_poison_cmd(cxlmd, CXL_POISON_ENABLED_CLEAR))
++			return 0;
++	}
++
++	dentry = cxl_debugfs_create_dir(dev_name(dev));
++	debugfs_create_file("inject_poison", 0200, dentry, cxlr,
++			    &cxl_poison_inject_fops);
++	debugfs_create_file("clear_poison", 0200, dentry, cxlr,
++			    &cxl_poison_clear_fops);
++
++	return devm_add_action_or_reset(dev, remove_debugfs, dentry);
 +}
 +
-+static DECLARE_WORK(cxl_dax_region_driver_work, cxl_dax_region_driver_register);
-+
-+static int __init cxl_dax_region_init(void)
++static int region_contains_resource(struct device *dev, const void *data)
 +{
-+	/*
-+	 * Need to resolve a race with dax_hmem wanting to drive regions
-+	 * instead of CXL
-+	 */
-+	queue_work(system_long_wq, &cxl_dax_region_driver_work);
-+	return 0;
-+}
-+module_init(cxl_dax_region_init);
++	const struct resource *res = data;
++	struct cxl_region *cxlr;
++	struct cxl_region_params *p;
 +
-+static void __exit cxl_dax_region_exit(void)
++	if (!is_cxl_region(dev))
++		return 0;
++
++	cxlr = to_cxl_region(dev);
++	p = &cxlr->params;
++
++	if (p->state != CXL_CONFIG_COMMIT)
++		return 0;
++
++	if (!p->res)
++		return 0;
++
++	return resource_contains(p->res, res) ? 1 : 0;
++}
++
++bool cxl_region_contains_resource(const struct resource *res)
 +{
-+	flush_work(&cxl_dax_region_driver_work);
-+	cxl_driver_unregister(&cxl_dax_region_driver);
++	guard(rwsem_read)(&cxl_rwsem.region);
++	struct device *dev __free(put_device) = bus_find_device(
++		&cxl_bus_type, NULL, res, region_contains_resource);
++	return !!dev;
 +}
-+module_exit(cxl_dax_region_exit);
++EXPORT_SYMBOL_FOR_MODULES(cxl_region_contains_resource, "dax_hmem");
 +
- MODULE_ALIAS_CXL(CXL_DEVICE_DAX_REGION);
- MODULE_DESCRIPTION("CXL DAX: direct access to CXL regions");
- MODULE_LICENSE("GPL");
+ static int cxl_region_can_probe(struct cxl_region *cxlr)
+ {
+ 	struct cxl_region_params *p = &cxlr->params;
+@@ -3780,7 +3835,6 @@ static int cxl_region_probe(struct devic
+ {
+ 	struct cxl_region *cxlr = to_cxl_region(dev);
+ 	struct cxl_region_params *p = &cxlr->params;
+-	bool poison_supported = true;
+ 	int rc;
+ 
+ 	rc = cxl_region_can_probe(cxlr);
+@@ -3804,30 +3858,9 @@ static int cxl_region_probe(struct devic
+ 	if (rc)
+ 		return rc;
+ 
+-	/* Create poison attributes if all memdevs support the capabilities */
+-	for (int i = 0; i < p->nr_targets; i++) {
+-		struct cxl_endpoint_decoder *cxled = p->targets[i];
+-		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+-
+-		if (!cxl_memdev_has_poison_cmd(cxlmd, CXL_POISON_ENABLED_INJECT) ||
+-		    !cxl_memdev_has_poison_cmd(cxlmd, CXL_POISON_ENABLED_CLEAR)) {
+-			poison_supported = false;
+-			break;
+-		}
+-	}
+-
+-	if (poison_supported) {
+-		struct dentry *dentry;
+-
+-		dentry = cxl_debugfs_create_dir(dev_name(dev));
+-		debugfs_create_file("inject_poison", 0200, dentry, cxlr,
+-				    &cxl_poison_inject_fops);
+-		debugfs_create_file("clear_poison", 0200, dentry, cxlr,
+-				    &cxl_poison_clear_fops);
+-		rc = devm_add_action_or_reset(dev, remove_debugfs, dentry);
+-		if (rc)
+-			return rc;
+-	}
++	rc = cxl_region_setup_poison(cxlr);
++	if (rc)
++		return rc;
+ 
+ 	switch (cxlr->mode) {
+ 	case CXL_PARTMODE_PMEM:
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -887,6 +887,7 @@ struct cxl_pmem_region *to_cxl_pmem_regi
+ int cxl_add_to_region(struct cxl_endpoint_decoder *cxled);
+ struct cxl_dax_region *to_cxl_dax_region(struct device *dev);
+ u64 cxl_port_get_spa_cache_alias(struct cxl_port *endpoint, u64 spa);
++bool cxl_region_contains_resource(const struct resource *res);
+ #else
+ static inline bool is_cxl_pmem_region(struct device *dev)
+ {
+@@ -909,6 +910,10 @@ static inline u64 cxl_port_get_spa_cache
+ {
+ 	return 0;
+ }
++static inline bool cxl_region_contains_resource(const struct resource *res)
++{
++	return false;
++}
+ #endif
+ 
+ void cxl_endpoint_parse_cdat(struct cxl_port *port);
 
 
