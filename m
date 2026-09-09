@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA6E4F55A5;
-	Wed,  9 Sep 2026 13:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F4D563FA3;
+	Wed,  9 Sep 2026 13:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961791; cv=none; b=VSKbzQRWFaS6lEcBzDuzqqjzJErG2JK+TTfgXSuo2sa2uuUrYBfQDjS9o80aMpOuIuVi4OlUdrfNA92pjE29lUjcyBx0BUu/RmdGr63+PYcECwN4IOqEkp3S0GFR/d+maIQaN7DGLwRgC1sn3n/IRSvk2QhgxYU7i0XKJE9khng=
+	t=1788961794; cv=none; b=fuPH/wGktv+grCJSsrke4HrkOxjluIadDuEba9sOMe262EJ09mnIatJI0CDel7rFGjLMX4qqM2sJa7omNzFpCwrmS9wfOLL++y+OgqZIOGX9dzZ9ZRJ5aml/fmgboMkqZd6RRy5ZjPuIp6NLEB8eBSGIgrtjB6h1+eIBmgNlL9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961791; c=relaxed/simple;
-	bh=EOrCpsif1YfPphjNDvZ7rR3+9soQD3uM1Y2K/5uXSds=;
+	s=arc-20240116; t=1788961794; c=relaxed/simple;
+	bh=pCwsPCWMqs7WhvxqMoWyCQFtsiDoDoMKgLx7ISaFkQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ohs+aqQWILCF8fVYtEsWrihgDGMi2aZgz3BWQLEC7VqUlUi8gHSnath0kMG17zMVkr9wHVGLOtTXf+Ko4yM3ESFKlUYaDcCtoSYS1x5LJ6SBzo7VbMcd3VGiTVVhj+K4Cb6ZdQSjtX31Ip0z77YMGv3jZniOQEflr84UcbnVqKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6dNeZt2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WFMvbfAMi7E4sj5w9Y/YWl/TDjftgtTZRZXZItOj3a7XOVo0c8LX0hSMYLp8wgD/sEJqt0qMXxpyLERjTOAyzAVocC1Os/EPBIRssgqi7sNj0r0l6CN44TXbqENpHFaKBJbtRMLuGNWPoG+YbKJGpHLaLULdNYPDpbHi/7Ogs8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UatICo3O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6dNeZt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0A31F00A3A;
-	Wed,  9 Sep 2026 13:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UatICo3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3691F00A3A;
+	Wed,  9 Sep 2026 13:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961790;
-	bh=duJRXaPqkc+7OyA3e+C7Arcq9oWBn57ek4CuP1SmHXA=;
+	s=korg; t=1788961792;
+	bh=v2eLgdlyCZWLXTaVMN4u9loObxf1barCEIPacUl9SGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6dNeZt2B5hz7XeD/+x10WKzUj4FIsAjhxxOAOJU201nEzi0MVAcUhLLyzvg06reH
-	 I+cD1RpGZg8Y9+fK+GV/c3IeqbmQojfHxVNChr4OX22MGAelApRjcYs31j+D3cxGUD
-	 ww196TfMN5w0AcQPzDGHCS5RmMcRPeoQf29qcKXk=
+	b=UatICo3OQW9aWOd8s7oM9tnRFHeqsNLOg8xT4RzZwS6oTYCLfaXzu1iAgXc6Yr9Uo
+	 Js6tYgE3LPB1pQMFWLb9ndVHfFuobFWjGMmqUIHOEbCUvol/agVTM24mhsFoMCYi21
+	 PrM3efG/4/Wcxw1nrFnc4Pgqpkfhkx26iQT8wOQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sujal Tuladhar <sujaltuladhar1231@gmail.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 067/556] scsi: target: iscsi: Reserve a terminator byte for the login payload
-Date: Wed,  9 Sep 2026 15:35:47 +0200
-Message-ID: <20260909134232.818930688@linuxfoundation.org>
+Subject: [PATCH 7.2 068/556] scsi: bsg: Cap io_uring sense copy to max_response_len
+Date: Wed,  9 Sep 2026 15:35:48 +0200
+Message-ID: <20260909134232.855098277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,57 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sujal Tuladhar <sujaltuladhar1231@gmail.com>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-commit f4825922d2fb371e2b969697d792077f1b62b62c upstream.
+commit ece06de726737e887dc0225c8283477624f8ae21 upstream.
 
-iscsi_target_check_login_request() rejects a login PDU whose
-DataSegmentLength exceeds MAX_KEY_VALUE_PAIRS, but the test is '>' and
-login->req_buf is allocated with exactly MAX_KEY_VALUE_PAIRS
-bytes. Since iscsit_get_login_rx() receives payload_length + padding
-bytes, where
+Completion copied scmd->sense_len to the user response buffer without
+honoring max_response_len. After a valid sense, the midlayer sets
+sense_len to the real length (up to SCSI_SENSE_BUFFERSIZE), so a smaller
+user buffer was overrun.
 
-	padding = ((-payload_length) & 3);
-
-any payload_length from 8189 to 8192 fills the whole 8192 byte
-buffer. The write stays in bounds, but no byte is left for a NUL
-terminator.
-
-The buffer is subsequently consumed as a C string. In the CHAP path
-chap_check_algorithm() calls kstrdup(a_str), and extract_param() calls
-strstr(in_buf, pattern) followed by strlen_semi(), none of which take a
-length. convert_null_to_semi() additionally rewrites every embedded NUL
-to ';', so even a payload made of well formed NUL separated key=value
-records is left without a terminator. These walk past the end of the
-object into adjacent slab memory. It is reachable by an unauthenticated
-initiator against a portal configured for CHAP; when authentication is
-not required iscsi_login_zero_tsih_s2() rewrites AuthMethod to None and
-the CHAP path is never entered.
-
-Allocate one extra byte. kzalloc() zeroes it and nothing ever writes to
-it, as every writer copies to offset 0 for at most MAX_KEY_VALUE_PAIRS
-bytes, so the buffer is always terminated.
-
-Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
-Assisted-by: Claude Opus5 (custom harness)
+Fixes: 7b6d3255e7f8 ("scsi: bsg: add io_uring passthrough handler")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sujal Tuladhar <sujaltuladhar1231@gmail.com>
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Link: https://patch.msgid.link/20260817080730.967879-2-yangxiuwei@kylinos.cn
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/iscsi/iscsi_target_login.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_bsg.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/target/iscsi/iscsi_target_login.c
-+++ b/drivers/target/iscsi/iscsi_target_login.c
-@@ -47,7 +47,7 @@ static struct iscsi_login *iscsi_login_i
- 	login->conn = conn;
- 	login->first_request = 1;
+--- a/drivers/scsi/scsi_bsg.c
++++ b/drivers/scsi/scsi_bsg.c
+@@ -18,6 +18,7 @@ struct scsi_bsg_uring_cmd_pdu {
+ 	struct bio *bio;		/* mapped user buffer, unmap in task work */
+ 	struct request *req;		/* block request, freed in task work */
+ 	u64 response_addr;		/* user space response buffer address */
++	u32 max_response_len;		/* user response buffer size */
+ };
+ static_assert(sizeof(struct scsi_bsg_uring_cmd_pdu) <= sizeof_field(struct io_uring_cmd, pdu));
  
--	login->req_buf = kzalloc(MAX_KEY_VALUE_PAIRS, GFP_KERNEL);
-+	login->req_buf = kzalloc(MAX_KEY_VALUE_PAIRS + 1, GFP_KERNEL);
- 	if (!login->req_buf) {
- 		pr_err("Unable to allocate memory for response buffer.\n");
- 		goto out_login;
+@@ -45,8 +46,8 @@ static void scsi_bsg_uring_task_cb(struc
+ 	if (scsi_status_is_check_condition(scmd->result)) {
+ 		driver_status = DRIVER_SENSE;
+ 		if (pdu->response_addr)
+-			sense_len_wr = min_t(u8, scmd->sense_len,
+-					     SCSI_SENSE_BUFFERSIZE);
++			sense_len_wr = min_t(unsigned int, pdu->max_response_len,
++					     scmd->sense_len);
+ 	}
+ 
+ 	if (sense_len_wr) {
+@@ -155,8 +156,7 @@ static int scsi_bsg_uring_cmd(struct req
+ 	}
+ 
+ 	pdu->response_addr = cmd->response;
+-	scmd->sense_len = cmd->max_response_len ?
+-		min(cmd->max_response_len, SCSI_SENSE_BUFFERSIZE) : SCSI_SENSE_BUFFERSIZE;
++	pdu->max_response_len = cmd->max_response_len;
+ 
+ 	if (cmd->dout_xfer_len || cmd->din_xfer_len) {
+ 		ret = scsi_bsg_map_user_buffer(req, ioucmd, issue_flags, gfp_mask);
 
 
