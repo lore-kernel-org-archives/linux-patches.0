@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABD0572691;
-	Wed,  9 Sep 2026 14:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5E358E2B4;
+	Wed,  9 Sep 2026 14:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964373; cv=none; b=A1I/iSQakc/wxeC8jOre5nmfJ+xq2TD8t6eOfOPhEfAcX6/1sctxn+cz+AmuJGpw1FVafZyp0KK4udxluRGluAAKHcEtPDcEKq0T5skkfk+3HlHjAj1zXeLAvkkT90YZOLpmd1j1PvFWLsgmmMkHwkzKk7i3ewhed6U2DHGfmpc=
+	t=1788964376; cv=none; b=rZZeAUgI4EAPwGbroW3cs/55WfBSKp8bbx8OStuIKTU95nzow0mGJtOIZbRFkNJyVTYBfu7QBb4uDYJOUqWCS/xw4rE8n8X8wPnilsn4clhB7w2/ZPa/q8SIff3Jb4z07kuFZlCvv1SStUojCb1It8SHtXo6yzte5vqK9AJIq1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964373; c=relaxed/simple;
-	bh=A8Krdx/JJ+GumD8ppO7AzjyQlik1mtEnr8dj7xNNLQI=;
+	s=arc-20240116; t=1788964376; c=relaxed/simple;
+	bh=RKv4AbXtGZeOg1g6W082ayRl93Ie/zdvBOyFLfQVezM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7GW9qFYJyCv5Wmrhmzb+REURfEixtTEXhAZnc+E79AbvaPcozcrwu3I4yawR9kvYsb7kcrAv/xaWXGOrDgBK52cpcuCHRyyhNfyy6p/6J2EPW9GfSmN+YnVHmxd9qIO20PIxlMNS87XHCy21NN5aZNqUa1i0y5jQd/hZJUWDc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wC7vqAn9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZDfR7KftJrEBOulMIKfiDPqVAmYyawB9KFZYwtfbKOt1dIxm8CzMG+3yghyFvSbAX47/OkubOTtQ5CHFtjE17QdklUOTn3MGSDSrIGJszSAd+X5Z5ZJ0Ypm8gGWZYGB6Ehzh5rg4oRuZH2CjoW9UK+tZo6BX66HqCEaScV6Dw4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lCLgvKH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wC7vqAn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A201F00A3A;
-	Wed,  9 Sep 2026 14:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lCLgvKH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81F01F00A3A;
+	Wed,  9 Sep 2026 14:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964372;
-	bh=fj++CtdW61HEsKSyt00fQyoNKR5N+1PyWDvgxMz0N/w=;
+	s=korg; t=1788964375;
+	bh=1VlQj14QmRIM8ADpjGAf0oXk33zZ1PZ1IsP7ipt9NFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wC7vqAn9sE6F5jFvO/cKD38dGhB9V/KSgcw7fRu4ubSLZXiAh1sYYv37NxUCsVBH6
-	 Pw3au8BpEieo0ozw+rQj9Ca5ExJk0rmUCQwWAhSf2MZoCUoHdCy9ElMZ++SXtDw61M
-	 AyfWp6ojg0jXiJ0EmxoecbEzy3q4bOsD97KyidiM=
+	b=1lCLgvKHMCECbiB6WfqlHtkA07QgJESCsonQw2cfMFa/WlKaJD15W4k6H3Hxctw1Q
+	 7jT2WI3vp/nBwOV1q3SbT5tMWR4NVJ8hvHMDY+KM9HTK3ZPXv/Srmsmlhj9QUtpxIe
+	 hmk/3AbtaR227DdPqfG0onWK6i8jN1eri7C0g/7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Candice Li <candice.li@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 393/583] drm/amdgpu: Disable runtime PM for externally attached dGPUs
-Date: Wed,  9 Sep 2026 15:41:18 +0200
-Message-ID: <20260909134251.605179350@linuxfoundation.org>
+Subject: [PATCH 6.18 402/583] drm/amdkfd: guard against NULL restore_mqd in CRIU queue restore
+Date: Wed,  9 Sep 2026 15:41:27 +0200
+Message-ID: <20260909134251.931575754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -46,56 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>
 
-commit c52feb4365396b6a881b5e8a95540517ffabb3b7 upstream.
+commit 6aa530642f95d5c48aa336416f94a35e7949b647 upstream.
 
-pci_is_thunderbolt_attached() requires an upstream PCI bridge with
-is_thunderbolt set from an Intel Thunderbolt VSEC. This does not cover
-the affected ASM4242 USB4 PCI hierarchy:
+Both create_queue_cpsch() and create_queue_nocpsch() unconditionally
+call mqd_mgr->restore_mqd() when a CRIU restore is in progress
+(qd != NULL), with no NULL guard. On any system where restore_mqd is
+not implemented for the given queue type, a user holding
+CAP_CHECKPOINT_RESTORE can trigger a kernel NULL pointer dereference
+and panic the machine by issuing KFD_IOC_CRIU_OP_RESTORE with a
+crafted queue restore object. Note that checkpoint_mqd is likewise
+unimplemented on GFX12, so no legitimate CRIU image can reach this
+path — only a hand-crafted restore payload.
 
-  00:02.2
-    \- 0f:00.0 [1b21:2421]
-       +- 10:01.0 [1b21:2423] -> 45:00.0 -> 46:00.0
-       |  -> 47:00.0 -> 48:00.0 -> 49:00.0 [1002:7590]
-       \- 10:03.0 -> 76:00.0 [1b21:2425] USB4 Host Router
+Add a NULL guard for restore_mqd immediately after mqd_mgr is
+resolved, unwinding via the existing error labels and returning
+-EOPNOTSUPP if the callback is not implemented. This mirrors the
+existing checkpoint_mqd guard in checkpoint_mqd().
 
-The host router is outside the GPU upstream bridge chain, leaving no
-ancestor with is_thunderbolt set. PCI core propagates DEVICE_REMOVABLE
-below the external-facing PCIe tunnel. Disable Runtime PM when either
-pci_is_thunderbolt_attached() or dev_is_removable() is true.
-
+Fixes: 48f0bdf4e38e ("drm/amdkfd: Added MQD manager files for GFX12.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -468,6 +468,13 @@ void amdgpu_device_detect_runtime_pm_mod
- 	int bamaco_support;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -653,6 +653,11 @@ static int create_queue_nocpsch(struct d
  
- 	adev->pm.rpm_mode = AMDGPU_RUNPM_NONE;
-+	if (pci_is_thunderbolt_attached(adev->pdev) ||
-+	    dev_is_removable(&adev->pdev->dev)) {
-+		dev_info(adev->dev,
-+			 "Runtime PM disabled for externally attached device\n");
-+		return;
+ 	mqd_mgr = dqm->mqd_mgrs[get_mqd_type_from_queue_type(
+ 			q->properties.type)];
++	if (qd && !mqd_mgr->restore_mqd) {
++		pr_debug("restore_mqd not implemented for this GPU\n");
++		retval = -EOPNOTSUPP;
++		goto deallocate_vmid;
 +	}
-+
- 	bamaco_support = amdgpu_device_supports_baco(adev);
+ 	if (q->properties.type == KFD_QUEUE_TYPE_COMPUTE) {
+ 		retval = allocate_hqd(dqm, q);
+ 		if (retval)
+@@ -2002,6 +2007,11 @@ static int create_queue_cpsch(struct dev
  
- 	switch (amdgpu_runtime_pm) {
+ 	mqd_mgr = dqm->mqd_mgrs[get_mqd_type_from_queue_type(
+ 			q->properties.type)];
++	if (qd && !mqd_mgr->restore_mqd) {
++		pr_debug("restore_mqd not implemented for this GPU\n");
++		retval = -EOPNOTSUPP;
++		goto out_deallocate_doorbell;
++	}
+ 
+ 	if (q->properties.type == KFD_QUEUE_TYPE_SDMA ||
+ 		q->properties.type == KFD_QUEUE_TYPE_SDMA_XGMI)
 
 
