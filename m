@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78EB4C6803;
-	Wed,  9 Sep 2026 13:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A771155C1B6;
+	Wed,  9 Sep 2026 13:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961991; cv=none; b=I6XyQ5pwNeHbRaC5QVbn4B86w+yzwn7ywiOp/sD6PN+kCDZOKt4cxwaEEV92AfHHy5Gsw2tavFXZq9Z6CNjWSyAKKPopCwVah6vnpduTG4T63qiAlMFr7JylUuqpDSkRosdVUxB9xtd5goXxs7iaC2yv44uOJonuM6YrRDjgf4E=
+	t=1788961994; cv=none; b=SLHEzH4u++233OVVfQeEC2T+OADoHaoIondiy+8Arr0rjPLJykB0iNiEZSBiZrTjlJFOSG1Hmr+LH+Lp8PQ51vgm10p8PjLqiJ2tp4gmECP+A/wykActEzegEFZimSVQuS/mHoK3mqjG4lDPIQG+K1/KDYPCvUJHZ35U+EK/5Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961991; c=relaxed/simple;
-	bh=gEruQXa1ojRfxI2kqVaWbKNd8ZxI8rhyFpF6dPUIWB4=;
+	s=arc-20240116; t=1788961994; c=relaxed/simple;
+	bh=MZJ4M6B0nfJXRogh7zrGhXSDfJhYb/Dtn/P3t8PNHgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=th+3DyQukrrgLYw8CDTEmTtHa2hR2x4OYh+I8RY5wVW61uEajsCiBrr4DA8C+rPg6reDyoGcISFUP77PwoSP24L7UhjPeqa0FiH2PISPD+H6LxhqKBJTf1+xxOfwgTSAuXKs6QFzlw89P4b5rJwQdT/pjsi64fkMz121n17UOoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATaKALSb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hfZlIAYLWTW/KasiMVoB8iT9OzuZJtjKQQo8DLNFLMjmS6T7bvi8JPMYSd16Rs+K+dMFsGIQTHqfqKF0JE2wLQ4zFRV1D0xnzgWaijGrR0vP92V24hNAsU0kKem9ECiWtUk3PPmwtCvcB79Zp1j3qOBXkH5YVc4DCf23a+15/mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODttaSDq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATaKALSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C691F00A3A;
-	Wed,  9 Sep 2026 13:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODttaSDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A57E1F00A3A;
+	Wed,  9 Sep 2026 13:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961989;
-	bh=kFUgZ8URcGQ9Ez6OAlMByHh90MX/66MofpEgs+USpi8=;
+	s=korg; t=1788961992;
+	bh=GRj1QAtHvfMT6e+NknSALAKegOtFMfFoygyjMil3+9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ATaKALSbt4c6zxnI4BuDtq2M2SJqIduwJ89MaWXOxjArj60x9rbu32UwX+pEkLSaZ
-	 bVmy44CPGZigVKXsf+QCcdBnt9QgXkm2vCSkpjI0FLME8PDPy5RCPzzxRdxBXdtemq
-	 H6CmT/hK4oNa9xs8ot7+UucOpU9O9kt5ORz5UlTQ=
+	b=ODttaSDqxmnT83WsdcQAD1XxnmNZglNDVnK1n4HqfJ2a+KtVcM7Jjm/2CBbW+chxK
+	 hTdlJVlZNGwtRy/9kUxnGLPme8pO3lltou1LgUO0xTbDZD5gWWY1XiqpoBR4CD3mjH
+	 pp0MYhU+DU6k546Aze6IISntFKYtOGOuaYpw3t6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 7.2 136/556] perf trace: Factor out BPF loop body
-Date: Wed,  9 Sep 2026 15:36:56 +0200
-Message-ID: <20260909134235.242991460@linuxfoundation.org>
+Subject: [PATCH 7.2 137/556] perf trace: Refactor augmented_raw_syscalls using bpf_for
+Date: Wed,  9 Sep 2026 15:36:57 +0200
+Message-ID: <20260909134235.278752992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,170 +53,154 @@ Content-Transfer-Encoding: 8bit
 
 From: Viktor Malik <vmalik@redhat.com>
 
-commit acff3e1a9cc29a6a039b76b81a438c56016bc0e3 upstream.
+commit ea6992784d65ef2c01f3525217dbf3a44afa9917 upstream.
 
-The BPF program in augmented_raw_syscalls uses a for loop to iterate all
-syscall arguments. The loop body is quite complex and often poses
-problems for the BPF verifier. As a preparation step for addressing this
-issue, factor out the loop body into a separate function.
+The loop for processing syscall args in augment_raw_syscalls has a
+history of breaking with Clang updates, see e.g. commit 013eb043f37b
+("perf trace: Fix BPF loading failure (-E2BIG)") from Clang 15 to 16.
+
+Now, a similar thing happened between Clang 21 and 22. While the issue
+is mitigated on the main line by a recent verifier update, it remains
+broken on the 6.12 and 6.18 stable branches:
+
+    [linux-6.18.y]# sudo perf trace true
+    libbpf: prog 'sys_enter': BPF program load failed: -E2BIG
+    libbpf: prog 'sys_enter': -- BEGIN PROG LOAD LOG --
+    [...]
+    BPF program is too large. Processed 1000001 insn
+    processed 1000001 insns (limit 1000000) max_states_per_insn 40 total_states 37941 peak_states 232 mark_read 0
+    -- END PROG LOAD LOG --
+    libbpf: prog 'sys_enter': failed to load: -E2BIG
+    libbpf: failed to load object 'augmented_raw_syscalls_bpf'
+    libbpf: failed to load BPF skeleton 'augmented_raw_syscalls_bpf': -E2BIG
+    Error: failed to get syscall or beauty map fd
+    [...]
+
+The reason is that the loop is quite complex and the BPF verifier often
+struggles to prove that it terminates.
+
+Fix the issue by replacing the standard for loop with the bpf_for macro,
+which uses a numeric BPF iterator. This should prevent future breakages
+of this kind since the verifier has a much easier job proving that the
+loop terminates.
+
+Small adjustments were necessary for the loop to make it work.  The main
+problem is that the verifier sometimes has problems with bpf_for loops
+that use a carry-over state, such as the `payload_offset` and `output`
+vars here, since the verifier tries to track their values too precisely
+and cannot prove loop convergence. To resolve the issue, we (1)
+explicitly recompute `payload_offset` in every iteration and (2) use a
+trick with adding a global zero to `output` to help the verifier forget
+its precise state and use a range instead.
+
+Finally, to keep backwards compatibility with older kernel versions that
+don't have bpf_for (i.e. numeric iterators), fall back to standard loop.
 
 Signed-off-by: Viktor Malik <vmalik@redhat.com>
 Cc: stable@vger.kernel.org
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Fixes: a68fd6a6cdd3 ("perf trace: Collect augmented data using BPF")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c |  128 ++++++++++--------
- 1 file changed, 73 insertions(+), 55 deletions(-)
+ tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c |   47 +++++++++++++-----
+ 1 file changed, 35 insertions(+), 12 deletions(-)
 
 --- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
 +++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-@@ -429,15 +429,80 @@ static bool pid_filter__has(struct pids_
+@@ -429,6 +429,8 @@ static bool pid_filter__has(struct pids_
  	return bpf_map_lookup_elem(pids, &pid) != NULL;
  }
  
-+/*
-+ * Determine what type of argument and how many bytes to read from user space, using the
-+ * value in the beauty_map. This is the relation of parameter type and its corresponding
-+ * value in the beauty map, and how many bytes we read eventually:
-+ *
-+ * string: 1			      -> size of string
-+ * struct: size of struct	      -> size of struct
-+ * buffer: -1 * (index of paired len) -> value of paired len (maximum: TRACE_AUG_MAX_BUF)
-+ */
-+static inline int augment_arg(struct syscall_enter_args *args, int i,
-+			      unsigned int *beauty_map,
-+			      struct augmented_arg *payload_offset)
-+{
-+	int index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
-+	s64 aug_size, size;
-+	bool augmented;
-+	void *arg;
++u64 ZERO = 0;
 +
-+	arg = (void *)args->args[i];
-+	augmented = false;
-+	size = beauty_map[i];
-+	aug_size = size; /* size of the augmented data read from user space */
+ /*
+  * Determine what type of argument and how many bytes to read from user space, using the
+  * value in the beauty_map. This is the relation of parameter type and its corresponding
+@@ -440,9 +442,10 @@ static bool pid_filter__has(struct pids_
+  */
+ static inline int augment_arg(struct syscall_enter_args *args, int i,
+ 			      unsigned int *beauty_map,
+-			      struct augmented_arg *payload_offset)
++			      struct beauty_payload_enter *payload, u64 offset)
+ {
+ 	int index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
++	struct augmented_arg *payload_offset;
+ 	s64 aug_size, size;
+ 	bool augmented;
+ 	void *arg;
+@@ -455,6 +458,12 @@ static inline int augment_arg(struct sys
+ 	if (size == 0 || arg == NULL)
+ 		return 0;
+ 
++	/* bounds check for the verifier */
++	if (offset > sizeof(payload->aug_args) - sizeof(payload->aug_args[0]))
++		return -1;
++	barrier_var(offset);
++	payload_offset = (struct augmented_arg *)((void *)&payload->aug_args + offset);
 +
-+	if (size == 0 || arg == NULL)
-+		return 0;
-+
-+	if (size == 1) { /* string */
-+		aug_size = bpf_probe_read_user_str(payload_offset->value, value_size, arg);
-+		/* minimum of 0 to pass the verifier */
-+		if (aug_size < 0)
-+			aug_size = 0;
-+
-+		augmented = true;
-+	} else if (size > 0 && size <= value_size) { /* struct */
-+		if (!bpf_probe_read_user(payload_offset->value, size, arg))
-+			augmented = true;
-+	} else if ((int)size < 0 && size >= -6) { /* buffer */
-+		index = -(size + 1);
-+		barrier_var(index); // Prevent clang (noticed with v18) from removing the &= 7 trick.
-+		index &= 7;	    // Satisfy the bounds checking with the verifier in some kernels.
-+		aug_size = args->args[index] > TRACE_AUG_MAX_BUF ? TRACE_AUG_MAX_BUF : args->args[index];
-+
-+		if (aug_size > 0) {
-+			if (!bpf_probe_read_user(payload_offset->value, aug_size, arg))
-+				augmented = true;
-+		}
-+	}
-+
-+	/* Augmented data size is limited to sizeof(augmented_arg->unnamed union with value field) */
-+	if (aug_size > value_size)
-+		aug_size = value_size;
-+
-+	/* write data to payload */
-+	if (augmented) {
-+		int written = offsetof(struct augmented_arg, value) + aug_size;
-+
-+		if (written < 0 || written > sizeof(struct augmented_arg))
-+			return -1;
-+
-+		payload_offset->size = aug_size;
-+		return written;
-+	}
-+
-+	return 0;
-+}
-+
+ 	if (size == 1) { /* string */
+ 		aug_size = bpf_probe_read_user_str(payload_offset->value, value_size, arg);
+ 		/* minimum of 0 to pass the verifier */
+@@ -498,11 +507,10 @@ static inline int augment_arg(struct sys
  static int augment_sys_enter(void *ctx, struct syscall_enter_args *args)
  {
--	bool augmented, do_output = false;
--	int zero = 0, index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
-+	bool do_output = false;
-+	int zero = 0, written;
+ 	bool do_output = false;
+-	int zero = 0, written;
++	int i, zero = 0, written;
  	u64 output = 0; /* has to be u64, otherwise it won't pass the verifier */
--	s64 aug_size, size;
  	unsigned int nr, *beauty_map;
  	struct beauty_payload_enter *payload;
--	void *arg, *payload_offset;
-+	void *payload_offset;
+-	void *payload_offset;
  
  	/* fall back to do predefined tail call */
  	if (args == NULL)
-@@ -457,58 +522,11 @@ static int augment_sys_enter(void *ctx,
+@@ -514,7 +522,6 @@ static int augment_sys_enter(void *ctx,
+ 
+ 	/* set up payload for output */
+ 	payload        = bpf_map_lookup_elem(&beauty_payload_enter_map, &zero);
+-	payload_offset = (void *)&payload->aug_args;
+ 
+ 	if (beauty_map == NULL || payload == NULL)
+ 		return 1;
+@@ -522,14 +529,30 @@ static int augment_sys_enter(void *ctx,
  	/* copy the sys_enter header, which has the syscall_nr */
  	__builtin_memcpy(&payload->args, args, sizeof(struct syscall_enter_args));
  
--	/*
--	 * Determine what type of argument and how many bytes to read from user space, using the
--	 * value in the beauty_map. This is the relation of parameter type and its corresponding
--	 * value in the beauty map, and how many bytes we read eventually:
--	 *
--	 * string: 1			      -> size of string
--	 * struct: size of struct	      -> size of struct
--	 * buffer: -1 * (index of paired len) -> value of paired len (maximum: TRACE_AUG_MAX_BUF)
--	 */
- 	for (int i = 0; i < 6; i++) {
--		arg = (void *)args->args[i];
--		augmented = false;
--		size = beauty_map[i];
--		aug_size = size; /* size of the augmented data read from user space */
--
--		if (size == 0 || arg == NULL)
--			continue;
--
--		if (size == 1) { /* string */
--			aug_size = bpf_probe_read_user_str(((struct augmented_arg *)payload_offset)->value, value_size, arg);
--			/* minimum of 0 to pass the verifier */
--			if (aug_size < 0)
--				aug_size = 0;
--
--			augmented = true;
--		} else if (size > 0 && size <= value_size) { /* struct */
--			if (!bpf_probe_read_user(((struct augmented_arg *)payload_offset)->value, size, arg))
--				augmented = true;
--		} else if ((int)size < 0 && size >= -6) { /* buffer */
--			index = -(size + 1);
--			barrier_var(index); // Prevent clang (noticed with v18) from removing the &= 7 trick.
--			index &= 7;	    // Satisfy the bounds checking with the verifier in some kernels.
--			aug_size = args->args[index] > TRACE_AUG_MAX_BUF ? TRACE_AUG_MAX_BUF : args->args[index];
--
--			if (aug_size > 0) {
--				if (!bpf_probe_read_user(((struct augmented_arg *)payload_offset)->value, aug_size, arg))
--					augmented = true;
--			}
--		}
--
--		/* Augmented data size is limited to sizeof(augmented_arg->unnamed union with value field) */
--		if (aug_size > value_size)
--			aug_size = value_size;
--
--		/* write data to payload */
--		if (augmented) {
--			int written = offsetof(struct augmented_arg, value) + aug_size;
--
--			if (written < 0 || written > sizeof(struct augmented_arg))
--				return 1;
--
--			((struct augmented_arg *)payload_offset)->size = aug_size;
-+		written = augment_arg(args, i, beauty_map, (struct augmented_arg *)payload_offset);
-+		if (written < 0)
-+			return 1;
-+		if (written > 0) {
- 			output += written;
- 			payload_offset += written;
- 			do_output = true;
+-	for (int i = 0; i < 6; i++) {
+-		written = augment_arg(args, i, beauty_map, (struct augmented_arg *)payload_offset);
+-		if (written < 0)
+-			return 1;
+-		if (written > 0) {
+-			output += written;
+-			payload_offset += written;
+-			do_output = true;
++	if (bpf_ksym_exists(bpf_iter_num_new)) {
++		bpf_for(i, 0, 6) {
++			written = augment_arg(args, i, beauty_map, payload, output);
++			if (written < 0)
++				return 1;
++			if (written > 0) {
++				output += written;
++				/*
++				 * guide the verifier to forget range of `output`, which
++				 * helps to prove convergence of the loop
++				 */
++				output += ZERO;
++				do_output = true;
++			}
++		}
++	} else {
++		for (i = 0; i < 6; i++) {
++			written = augment_arg(args, i, beauty_map, payload, output);
++			if (written < 0)
++				return 1;
++			if (written > 0) {
++				output += written;
++				do_output = true;
++			}
+ 		}
+ 	}
+ 
 
 
