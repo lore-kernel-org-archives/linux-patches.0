@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F6E57D20A;
-	Wed,  9 Sep 2026 14:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4853563FBF;
+	Wed,  9 Sep 2026 14:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964504; cv=none; b=lvMkWtPLkY+Etz47N7j7feHYthAWd0TN4sNgvwN4LgonMTb1p6cji447m8XZVT1eHkHQlSv8zhr2nRGuvN3mpMHbj/DSmc9lRxjCBEZth7qlrcKceiVRuvCovqG8os8zqZvWj2JNdQSJQZwFyrqvnCEydj9xHvDePWejMOiYxlA=
+	t=1788964507; cv=none; b=jquAmbW3Yjy4eniU3lDcWW8DnStmhBPeq5y+JyRocvmJB+4ES6DSxUAUzV8U/EiLylemPiH6j5pViHdmU5Q5xaYP5VEQMvzyK2Rgw7PaPkcNmI4tV6m3fF0IoFn3+IOr4QI6k5EqKPo/tmNZmMxN8/a0TT/C/Bp7tusaM59we68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964504; c=relaxed/simple;
-	bh=inpqEiaM3MPRQikzh0WMc9UN/gdvC6LpvdHaPOp124g=;
+	s=arc-20240116; t=1788964507; c=relaxed/simple;
+	bh=D2dzprBryVZrwq+RknknnozQuoFo1zZpA/BRjtPAg3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zlv1f808wXBVwTLTnctfyMtlgCJWthkPsSiQl4albDByCTTtBjdYzNjmkr6/wq1nA+1BcJWT5Qy042vfhJBiNNHHj81t8mSHtcd+POCbE3ad2MBh461E7vyYPFwcpdorG7Nv9sWLv4lFWziL92PohXO9A6TIr5xkjajA6pK8TuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmYx0iGL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T3eH5YU/5xQGod6mgTYVJ9wiOhCwt0syzr8Vij2YESPdyXYkxDFDWizQ5zs9XBI8PRMwaTYQtKxADDBw8KT1mjgmoLyUXLqQmQNlLr6DQzrtTxykzZJGPu9dVFTaTtjNKV4oiS2uqWXTPdaNI91JdcGdldIpk2SNHhmgV+Z5ALw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Adn5CCG+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmYx0iGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E0B1F00A3A;
-	Wed,  9 Sep 2026 14:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Adn5CCG+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432341F00A3A;
+	Wed,  9 Sep 2026 14:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964502;
-	bh=MT3ZZmV2YhLDS0pU8KSAEV1XHO2XnDVyBgtkJyDwJ/c=;
+	s=korg; t=1788964505;
+	bh=CsSmgp+4F8Bay5a/nNbdXh5LI+WiGaK5lpSi0rYNYH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmYx0iGLeEfQBVqMOGFAIPemTRDozOo4OCiDFJNwxOsMehLDA9WEonLfAzEe9TcpS
-	 S5ssBaUtidqcTl9+Kjolr7QFq+13HjFkQH8WfEhnOqnJd8RReaO0xj07XeDrwIb0+e
-	 me3JcHJWq6qbUhi83fG8ceEg8XvHfGgv4PMU28W0=
+	b=Adn5CCG+RbWB42tGXyR6LoK4HHrqQUns+mSDLorNEbMltFXn2gb7zvDV7s2O8kJk0
+	 u3+PF7ygEsrs7EYQctjupwIYsXrGLuMed8CpR/+HO83yZNe/tXJgi76HXb4GKz5Id2
+	 lT7jHXHVszWbiMS1G1m/9TYhPyd90RiQfnpQblLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 446/583] rust: devres: fix race between concurrent revokers
-Date: Wed,  9 Sep 2026 15:42:11 +0200
-Message-ID: <20260909134253.419084511@linuxfoundation.org>
+Subject: [PATCH 6.18 447/583] rust: bug: prevent dead_code warning from warn_on!s flags constant
+Date: Wed,  9 Sep 2026 15:42:12 +0200
+Message-ID: <20260909134253.450480334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,104 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-[ Upstream commit acc516dfa1972d31836b50abc0115216cd0fccc5 ]
+[ Upstream commit e66cfc29e0d06fec34c06bb40d4d281f595677b1 ]
 
-There is a potential race condition when two paths try to revoke a
-Devres concurrently.
+Fix the following dead_code warning on some configurations in an
+atomic development branch:
 
-The driver core's devres_release_all() calls Revocable::revoke() via the
-release callback, while Devres::drop() calls revoke_nosync() on another
-CPU.
+warning: constant `WARN_ON_FLAGS` is never used
+   --> linux/rust/kernel/bug.rs:126:19
+    |
+126 |               const WARN_ON_FLAGS: u32 = $crate::bug::bugflag_taint($crate::bindings::TAINT_WARN);
+    |                     ^^^^^^^^^^^^^
+    |
+   ::: linux/rust/kernel/sync/srcu.rs:106:12
+    |
+106 |           if crate::warn_on!(
+    |  ____________-
+107 | |             // SAFETY: By the type invariants, `self` contains a valid and pinned `struct srcu_struct`
+108 | |             // and `srcu_readers_active()` only checks the active reader count.
+109 | |             unsafe { bindings::srcu_readers_active(ptr) }
+110 | |         ) {
+    | |_________- in this macro invocation
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+    = note: this warning originates in the macro `crate::warn_on` (in Nightly builds, run with -Z macro-backtrace for more info)
 
-The revoker that does not claim the is_available swap returns
-immediately, but the revoker that did may still be executing
-drop_in_place() on the inner data. This can cause a use-after-free when
-the other revoker's caller proceeds to drop adjacent resources that
-drop_in_place() still references (e.g., Devres<DmaMappedSgt> racing with
-SGTable freeing the backing sg_table and pages).
+The warn_on! macro always defines a WARN_ON_FLAGS constant and hands it
+to warn_flags!. On configurations where warn_flags! does not reference
+its flags argument (the LOONGARCH/ARM variant, which only calls
+WARN_ON(), and the !CONFIG_BUG no-op variant), the constant is left
+unused and triggers a dead_code warning.
 
-Fix this by adding a Completion. The release callback signals the
-Completion after revoke() finishes, and Devres::drop() waits for it when
-it loses the is_available swap. This ensures the wrapped object is fully
-torn down before Devres::drop() returns.
+warn_flags! is the macro that accepts (and here discards) the flags
+argument, so make it responsible for the argument it drops.
 
+Also rename `_COND_STR` to `COND_STR` and consume `$file` for consistency.
+
+Fixes: dff64b072708 ("rust: Add warn_on macro")
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260612202841.2577C1F000E9@smtp.kernel.org/
-Fixes: 05aa6fb1c21d ("rust: scatterlist: Add abstraction for sg_table")
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260628174451.2275679-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20260801024841.786664-1-tomo@flapping.org
+[ Added newlines. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+[ adapted unreachable flag consumption to the older one-argument warn_flags! interface. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/devres.rs |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ rust/kernel/bug.rs |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -19,7 +19,8 @@ use crate::{
-     sync::{
-         aref::ARef,
-         rcu,
--        Arc, //
-+        Arc,
-+        Completion, //
-     },
-     types::ForeignOwnable,
- };
-@@ -28,6 +29,8 @@ use crate::{
- struct Inner<T: Send> {
-     #[pin]
-     data: Revocable<T>,
-+    #[pin]
-+    revocation: Completion,
- }
- 
- /// This abstraction is meant to be used by subsystems to containerize [`Device`] bound resources to
-@@ -44,6 +47,10 @@ struct Inner<T: Send> {
- /// After the [`Devres`] has been unbound it is not possible to access the encapsulated resource
- /// anymore.
- ///
-+/// When a [`Devres`] is dropped, it is guaranteed that `T` has been fully dropped by the time
-+/// [`Devres::drop`] returns, even if a concurrent revocation through the release callback is in
-+/// progress.
-+///
- /// [`Devres`] users should make sure to simply free the corresponding backing resource in `T`'s
- /// [`Drop`] implementation.
- ///
-@@ -133,6 +140,7 @@ impl<T: Send> Devres<T> {
-         let inner = Arc::pin_init(
-             try_pin_init!(Inner {
-                 data <- Revocable::new(data),
-+                revocation <- Completion::new(),
-             }),
-             GFP_KERNEL,
-         )?;
-@@ -171,7 +179,9 @@ impl<T: Send> Devres<T> {
-         // `devm_add_action()`, hence `ptr` must be a valid pointer to `Inner<T>`.
-         let inner = unsafe { Arc::from_raw(ptr.cast::<Inner<T>>()) };
- 
--        inner.data.revoke();
-+        if inner.data.revoke() {
-+            inner.revocation.complete_all();
+--- a/rust/kernel/bug.rs
++++ b/rust/kernel/bug.rs
+@@ -98,6 +98,10 @@ macro_rules! warn_flags {
+ #[cfg(all(CONFIG_BUG, any(CONFIG_LOONGARCH, CONFIG_ARM)))]
+ macro_rules! warn_flags {
+     ($flags:expr) => {
++        if false {
++            _ = $flags;
 +        }
-     }
- 
-     fn remove_action(&self) -> bool {
-@@ -266,6 +276,10 @@ impl<T: Send> Drop for Devres<T> {
-                 // this additional reference count.
-                 drop(unsafe { Arc::from_raw(Arc::as_ptr(&self.inner)) });
-             }
-+        } else {
-+            // The release callback is concurrently revoking; wait for it to finish
-+            // `drop_in_place()` of the wrapped object before returning.
-+            self.inner.revocation.wait_for_completion();
-         }
-     }
++
+         // SAFETY: It is always safe to call `WARN_ON()`.
+         unsafe { $crate::bindings::WARN_ON(true) }
+     };
+@@ -107,7 +111,11 @@ macro_rules! warn_flags {
+ #[doc(hidden)]
+ #[cfg(any(testlib, not(CONFIG_BUG)))]
+ macro_rules! warn_flags {
+-    ($flags:expr) => {};
++    ($flags:expr) => {
++        if false {
++            _ = $flags;
++        }
++    };
  }
+ 
+ #[doc(hidden)]
 
 
