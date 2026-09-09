@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CB8568FB6;
-	Wed,  9 Sep 2026 14:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FA757F759;
+	Wed,  9 Sep 2026 14:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962878; cv=none; b=s1qKXoet6BKVKjCUmkHFt7t0uYH+BszbIrcNCwSHErmGen9ItGyCs8ofFg1ChBk74iRe6SOGDA5Ucdu5sdPyjIMgwJgeK3FNfcJyJWYEzDrC8RHnPMM4zcJXsvxXvEFkD0/eIDazMIN6/ltl0OCo2eQ8KEtcugoWfyOfi/FTQm8=
+	t=1788962881; cv=none; b=W+8oP6x7u0NdJ8tO3HEpVaZdYgi/dFWY6/NAujIMTiO6pkBOJ5adVFRBABm3m2Vm6ZjUC9oN30pHhRPrDZU9OcY8ogZ6qIgWWS7YcRWtErpUmSjt4d6vjI3QFN5AhyHHPA6jGfhE8aLyAAyDQKgmBCDn0KTq/90Y9JG5BPC7q08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962878; c=relaxed/simple;
-	bh=IlrueyZGZdHDvDt9wWDLleTi9W8fRTnFX8zHcPOT/0c=;
+	s=arc-20240116; t=1788962881; c=relaxed/simple;
+	bh=+4vPHcBbM/51RYSeZCiM9GVt+UQSZ+2sQAOKoUE7QiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWnu9ZQFD/WqRR3QD6xEJxSZyqhYT0xlRYDA/pgsY25juzX8D2gfAkTB+VnbqAMPtZcEU9RfU3sgF/td9c2KYHbcDp5rX50hR+WlMHv5XgDKB9xpeb/89ca1B/4HeUXD2StU+GitLkgbbJtm5JX5hlGJOxnzhdkH9iPzppz+4tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLHz3tBU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VXdTvXNLy/lg/d6zzyzzlYqxO9iHxuqqN1FUAAgs9oUL3eIPHmN+UzlZZgkOs/ctG3Talhhm2EXiIs/ON1U9u2swfiG7aD3I9jKQxpnGb7J7+8sfOTFt11W+Wlx+IW6idf8YbKqwvb96vis/DehXdp6q43geuZsfqbg2cGnfJU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CE+anHkQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLHz3tBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339C11F00A3E;
-	Wed,  9 Sep 2026 14:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CE+anHkQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BA41F00A3D;
+	Wed,  9 Sep 2026 14:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962876;
-	bh=+aTIdyUJs8OqGt5XYGUHeGzGrncT3A7utA6dTBOAms0=;
+	s=korg; t=1788962879;
+	bh=FT1G9u81e3ALCJMK1NfIazWVVjd9vGCuTxLck1YdNbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLHz3tBUP258TM02Q5I1LM34VhVyGuN1B7yxNy/sR8d5B4b0yQ0dend7CZ+SlFuWa
-	 YiizczljZlMn09wsYLRSq6lBsHGX7saiHmR4hv9rEUHoGKfTso7MdopMpRffUW1KqQ
-	 03t9Juf/9FBKRrl1IWiXX9nBn/3ABkzxyeR21Qlg=
+	b=CE+anHkQIVcw/t243gE88iCA8O9Fs+RjvAJ+2xh+++usdQ6jYdHxiFIJH2O5sIYuo
+	 mKjX9IbjCbHRtaIdFv3/H3beVcJ1DsZbzi+/q7ZICPocO8k1nONv5D2gshtmEkR4jb
+	 iBBVy7w2extatWFW1XH1yZsyrRrMgmkyO9+yfj1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 443/556] scsi: qla2xxx: Use coherent DMA buffer for D_Port diagnostics
-Date: Wed,  9 Sep 2026 15:42:03 +0200
-Message-ID: <20260909134246.186776540@linuxfoundation.org>
+Subject: [PATCH 7.2 444/556] scsi: qla2xxx: Zero-init bsg stack buffers to avoid info leak
+Date: Wed,  9 Sep 2026 15:42:04 +0200
+Message-ID: <20260909134246.218936985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,73 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit 7c4f3f50d83af4545efaa99b3d0d46fb8d52031e upstream.
+commit b93d3bb3afe1b44489927de1eb4e66e8536a5935 upstream.
 
-qla26xx_dport_diagnostics() streaming-maps the caller's result buffer with
-dma_map_single(). The bsg path passes &dd->buf from the __packed struct
-qla_dport_diag, where buf lands at a 2-byte offset and shares cachelines
-with the surrounding options/unused fields. Mapping such a misaligned
-sub-buffer violates the DMA API requirement that streaming buffers be
-cacheline aligned and not share a cacheline with other data, and can
-corrupt data on non-DMA-coherent architectures.
+Several bsg handlers stage their request/reply in an uninitialized 256-byte
+on-stack buffer (uint8_t bsg[DMA_POOL_SIZE]) and fill it via
+sg_copy_to_buffer(), which only copies as many bytes as the user-supplied
+request payload. When the request is shorter than the structure, the
+remainder of the buffer is left holding stale stack data.
 
-Allocate a dedicated DMA-coherent buffer inside qla26xx_dport_diagnostics()
-for the mailbox command and copy the result back into the caller's buffer.
-This removes the streaming map of the misaligned sub-buffer entirely; the
-caller's buffer is now only a plain CPU buffer, so its packing no longer
-matters.
+qla2x00_read_fru_status() and qla2x00_read_i2c() then copy the full
+structure back to the reply payload with sg_copy_from_buffer(), leaking the
+uninitialized stack bytes to user space. The write/update paths do not copy
+the buffer back, but can feed uninitialized fields to the device.
 
-Fixes: ec89146215d1 ("qla2xxx: Add bsg interface to support D_Port Diagnostics.")
+Zero the stack buffer at declaration in all five handlers, mirroring the
+heap kzalloc() approach, so short requests can no longer expose stale
+memory.
+
+Fixes: 697a4bc69159 ("[SCSI] qla2xxx: Provide method for updating I2C attached VPD.")
+Fixes: 9ebb5d9c69f1 ("[SCSI] qla2xxx: Add I2C BSG interface.")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-29-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-30-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -6499,6 +6499,7 @@ qla26xx_dport_diagnostics(scsi_qla_host_
- 	mbx_cmd_t mc;
- 	mbx_cmd_t *mcp = &mc;
- 	dma_addr_t dd_dma;
-+	void *dd;
- 
- 	if (!IS_QLA83XX(vha->hw) && !IS_QLA27XX(vha->hw) &&
- 	    !IS_QLA28XX(vha->hw))
-@@ -6507,15 +6508,12 @@ qla26xx_dport_diagnostics(scsi_qla_host_
- 	ql_dbg(ql_dbg_mbx + ql_dbg_verbose, vha, 0x119f,
- 	    "Entered %s.\n", __func__);
- 
--	dd_dma = dma_map_single(&vha->hw->pdev->dev,
--	    dd_buf, size, DMA_FROM_DEVICE);
--	if (dma_mapping_error(&vha->hw->pdev->dev, dd_dma)) {
--		ql_log(ql_log_warn, vha, 0x1194, "Failed to map dma buffer.\n");
-+	dd = dma_alloc_coherent(&vha->hw->pdev->dev, size, &dd_dma, GFP_KERNEL);
-+	if (!dd) {
-+		ql_log(ql_log_warn, vha, 0x1194, "Failed to allocate dma buffer.\n");
- 		return QLA_MEMORY_ALLOC_FAILED;
- 	}
- 
--	memset(dd_buf, 0, size);
--
- 	mcp->mb[0] = MBC_DPORT_DIAGNOSTICS;
- 	mcp->mb[1] = options;
- 	mcp->mb[2] = MSW(LSD(dd_dma));
-@@ -6537,8 +6535,9 @@ qla26xx_dport_diagnostics(scsi_qla_host_
- 		    "Done %s.\n", __func__);
- 	}
- 
--	dma_unmap_single(&vha->hw->pdev->dev, dd_dma,
--	    size, DMA_FROM_DEVICE);
-+	memcpy(dd_buf, dd, size);
-+
-+	dma_free_coherent(&vha->hw->pdev->dev, size, dd, dd_dma);
- 
- 	return rval;
- }
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -1562,7 +1562,7 @@ qla2x00_update_fru_versions(struct bsg_j
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_image_version_list *list = (void *)bsg;
+ 	struct qla_image_version *image;
+ 	uint32_t count;
+@@ -1622,7 +1622,7 @@ qla2x00_read_fru_status(struct bsg_job *
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_status_reg *sr = (void *)bsg;
+ 	dma_addr_t sfp_dma;
+ 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+@@ -1673,7 +1673,7 @@ qla2x00_write_fru_status(struct bsg_job
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_status_reg *sr = (void *)bsg;
+ 	dma_addr_t sfp_dma;
+ 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+@@ -1720,7 +1720,7 @@ qla2x00_write_i2c(struct bsg_job *bsg_jo
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_i2c_access *i2c = (void *)bsg;
+ 	dma_addr_t sfp_dma;
+ 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+@@ -1772,7 +1772,7 @@ qla2x00_read_i2c(struct bsg_job *bsg_job
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_i2c_access *i2c = (void *)bsg;
+ 	dma_addr_t sfp_dma;
+ 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
 
 
