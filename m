@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7991A563FBF;
-	Wed,  9 Sep 2026 14:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653B656C643;
+	Wed,  9 Sep 2026 14:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964601; cv=none; b=ZRMGFQQS2Dl+7tFWQuIqUid1hFZTI/+b4gSD9XtoFaFDEIi6XOT5KHif5a6WSXKlyaW2pnNQBr1rTAJ0bHKobKrkkZxhJFhLt/B1cWnIS6RB4zQrOZyyxFJB7R46UHTrYOd+xoqB1w055L6p63sXJkX6tSX6pJeICXksx9J0sqI=
+	t=1788964604; cv=none; b=O7+QXZWCgyfIAYducs60JljrWP9bdey4sPuSwW710Hc2ndzvYvLX1rUEKslWfbogTdgq5K6/L2/0b8JF5wP6wYo2GVe8XSRDaD0C7NtQbglolc0+P9WIxu8UBDy1g1rdc1u6DYdiEkLOF3zurDK5Qfqoz9bWzJGms6zs+lDvcrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964601; c=relaxed/simple;
-	bh=DD8+IZjLQDcaHRjirPyxy53K+p+TpS++td1QAofOvic=;
+	s=arc-20240116; t=1788964604; c=relaxed/simple;
+	bh=25i1dUca0fhMdHGIcGWPUU2RNqv83Q8o2aCV4i8fCfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1f3sDR6HkZczac23VSmd72sj43vY5qyX9VZirew+q9c0/8wnFkNLx9gkSdo8oJgaR62Cn8m/3f6Dvs+uHaaqf0peTukhiS/Nl0WcMSWGRfq+k3uQw783bmkXwhxrB/8gxq2uayOZAo7zXEeQrjzR/oCvJ5m9BNDSYZtL/ygWkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFZFc1ue; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PWJKY6GQOz6u3uLxMDg9XmuKH5zS4QOqwlaOfvXbd03zb4KgFz55yeMDSg12NSIQ9ywI0KVslfB9ONZuu5BtOkNYc/v3njolyK4Arraiz6g2Ss831/xi2tLfPY75WwCAEk4j9TnBDf/Kx9ypvFtxDuu6wHPdBigoFkmXXquwvB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpWp6+CD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFZFc1ue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9731F00A3A;
-	Wed,  9 Sep 2026 14:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpWp6+CD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8361F00A3A;
+	Wed,  9 Sep 2026 14:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964600;
-	bh=vRLi7LxoUtKX+3cC99ZymFi4xHtHlOK11QBbYZ6ewc4=;
+	s=korg; t=1788964603;
+	bh=DEsc54FpnC46AQuJhO/P/U+5z+nHG8CC0TuJLTZn1XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eFZFc1uep+r7ov4evvwT2usVMTCUR+ubQRO030IerWCHH/u5rgZ5hYhY33EpaFAyJ
-	 bfw7Gy9dASaWk+vZxkG3ik7gp5Zdo2hxGCB6l7XEwAASFObAZDL/rwsWfA/fs8iJI8
-	 tHVOxdMgNk6Gcjrg+NydIVdSQPHlN8gfEyiEnMUw=
+	b=vpWp6+CDQb+/PqfRWUfnOrDPXi4g8SZgOwHRZIEsCyBhAmgMUIHUcyU8dLmq3GzUO
+	 vC5s9i/LfiuP3bKBgA3ZHjZmJKXEuptJmTSlw+fOn3o/kwjAvATsb0VlIokQ9imrjV
+	 8qnKxD3ZWU/B2hP8q+yt6UqJyTAezgTvjqomLsOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vivek Parikh <vivek.parikh@breachx.ai>,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 442/583] ovl: fix double end_creating() on the casefold-mismatch path
-Date: Wed,  9 Sep 2026 15:42:07 +0200
-Message-ID: <20260909134253.293241200@linuxfoundation.org>
+Subject: [PATCH 6.18 433/583] fuse: remove fm arg of args->end callback
+Date: Wed,  9 Sep 2026 15:41:58 +0200
+Message-ID: <20260909134252.989323982@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,100 +50,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vivek Parikh <vivek.parikh@breachx.ai>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit 077ab8985ee278c3d8618182d335b0f0cd919e16 ]
+[ Upstream commit a697d95fcdbb3bbe25cdc29db5542ddcebb831c1 ]
 
-ovl_create_real() releases the new dentry twice when the casefold
-consistency check fails.  The S_IFDIR branch calls end_creating() and
-sets err, then falls through to the common out: label which calls
-end_creating() on the same dentry again:
+Only used by FUSE_INIT and CUSE_INIT, these can store the relevant pointer
+in their structs derived from fuse_args.
 
-	case S_IFDIR:
-		newdentry = ovl_do_mkdir(ofs, dir, newdentry, attr->mode);
-		err = PTR_ERR_OR_ZERO(newdentry);
-		if (!err && ofs->casefold != ovl_dentry_casefolded(newdentry)) {
-			pr_warn_ratelimited(...);
-			end_creating(newdentry);	/* first */
-			err = -EINVAL;
-		}
-		break;
-	...
-	if (err)
-		goto out;
-	...
- out:
-	if (err) {
-		end_creating(newdentry);	/* second, same dentry */
-		return ERR_PTR(err);
-	}
-
-end_creating() is end_dirop(), which does inode_unlock() on the parent
-and dput() on the dentry, so the parent directory's i_rwsem is unlocked
-twice and the dentry is put twice.  The second unlock releases a lock
-that is not held, which is what wedges every later creation under that
-parent, and the second dput() drops a reference that was never taken.
-
-The branch was added by commit dfc7da402ccc ("ovl: Check for casefold
-consistency when creating new dentries") as a bare dput(), which already
-released the reference twice; commit fe497f0759e0 ("VFS: change
-vfs_mkdir() to unlock on failure.") converted both sites to
-end_creating(), adding the double unlock.
-
-This is reachable by an unprivileged user.  The casefold consistency of
-the layers is validated at mount time in ovl_parse_layer(), and again on
-every lookup in ovl_lookup_single(), but ofs->workdir is the internal
-"work" subdirectory created inside the user-supplied workdir, and that
-subdirectory is not re-checked.  Marking it casefolded after the mount
-therefore makes every ovl_create_temp() inherit the wrong state - and
-that path reaches ovl_create_real() through ovl_start_creating_temp(),
-which uses start_creating() with a generated name and so never runs the
-lookup-time check.
-
-  unshare -Urm
-  mount -t tmpfs -o casefold=utf8-12.1.0 tmpfs mnt
-  mkdir -p mnt/lower/d mnt/upper mnt/work mnt/merged
-  mount -t overlay ovl -o lowerdir=mnt/lower,\
-        upperdir=mnt/upper,workdir=mnt/work mnt/merged
-  chattr +F mnt/work/work
-  mkdir mnt/merged/d/sub		# directory copy-up
-
-  overlayfs: wrong inherited casefold (work/#5)
-
-and the next copy-up blocks forever on the parent's i_rwsem:
-
-  mkdir           D  start_creating+0x65/0xb0
-                     ovl_start_creating_temp+0xb0/0xe0 [overlay]
-                     ovl_create_temp+0xa3/0x1d0 [overlay]
-                     ovl_copy_up_one+0x1f1c/0x21c0 [overlay]
-                     ovl_copy_up_flags+0xf5/0x140 [overlay]
-                     ovl_create_object+0xb7/0x220 [overlay]
-                     ovl_mkdir+0x23/0x40 [overlay]
-
-Drop the end_creating() from the branch and let out: own the cleanup,
-which is what every other error path in this function already does.
-
-Fixes: dfc7da402ccc ("ovl: Check for casefold consistency when creating new dentries")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vivek Parikh <vivek.parikh@breachx.ai>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ adapted end_creating() cleanup removal to the older dput() API ]
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: ed9c881f3b49 ("fuse: fix race between interrupt and resend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/dir.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/fuse/args.h  |    2 +-
+ fs/fuse/cuse.c  |    7 ++++---
+ fs/fuse/dev.c   |    7 +++----
+ fs/fuse/file.c  |   22 +++++++++-------------
+ fs/fuse/inode.c |   10 ++++++----
+ 5 files changed, 23 insertions(+), 25 deletions(-)
 
---- a/fs/overlayfs/dir.c
-+++ b/fs/overlayfs/dir.c
-@@ -191,7 +191,6 @@ struct dentry *ovl_create_real(struct ov
- 			if (!err && ofs->casefold != ovl_dentry_casefolded(newdentry)) {
- 				pr_warn_ratelimited("wrong inherited casefold (%pd2)\n",
- 						    newdentry);
--				dput(newdentry);
- 				err = -EINVAL;
- 			}
- 			break;
+--- a/fs/fuse/args.h
++++ b/fs/fuse/args.h
+@@ -44,7 +44,7 @@ struct fuse_args {
+ 	bool abort_on_kill:1;
+ 	struct fuse_in_arg in_args[4];
+ 	struct fuse_arg out_args[2];
+-	void (*end)(struct fuse_mount *fm, struct fuse_args *args, int error);
++	void (*end)(struct fuse_args *args, int error);
+ 	/* Used for kvec iter backed by vmalloc address */
+ 	void *vmap_base;
+ };
+--- a/fs/fuse/cuse.c
++++ b/fs/fuse/cuse.c
+@@ -306,6 +306,7 @@ struct cuse_init_args {
+ 	struct cuse_init_out out;
+ 	struct folio *folio;
+ 	struct fuse_folio_desc desc;
++	struct fuse_conn *fc;
+ };
+ 
+ /**
+@@ -319,11 +320,10 @@ struct cuse_init_args {
+  * required data structures for it.  Please read the comment at the
+  * top of this file for high level overview.
+  */
+-static void cuse_process_init_reply(struct fuse_mount *fm,
+-				    struct fuse_args *args, int error)
++static void cuse_process_init_reply(struct fuse_args *args, int error)
+ {
+-	struct fuse_conn *fc = fm->fc;
+ 	struct cuse_init_args *ia = container_of(args, typeof(*ia), ap.args);
++	struct fuse_conn *fc = ia->fc;
+ 	struct fuse_args_pages *ap = &ia->ap;
+ 	struct cuse_conn *cc = fc_to_cc(fc), *pos;
+ 	struct cuse_init_out *arg = &ia->out;
+@@ -468,6 +468,7 @@ static int cuse_send_init(struct cuse_co
+ 	ap->descs = &ia->desc;
+ 	ia->folio = folio;
+ 	ia->desc.length = ap->args.out_args[1].size;
++	ia->fc = &cc->fc;
+ 	ap->args.end = cuse_process_init_reply;
+ 
+ 	rc = fuse_simple_background(fm, &ap->args, GFP_KERNEL);
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -512,7 +512,7 @@ void fuse_request_end(struct fuse_req *r
+ 	}
+ 
+ 	if (test_bit(FR_ASYNC, &req->flags))
+-		req->args->end(fm, req->args, req->out.h.error);
++		req->args->end(req->args, req->out.h.error);
+ put_request:
+ 	fuse_put_request(req);
+ }
+@@ -1860,8 +1860,7 @@ struct fuse_retrieve_args {
+ 	struct fuse_notify_retrieve_in inarg;
+ };
+ 
+-static void fuse_retrieve_end(struct fuse_mount *fm, struct fuse_args *args,
+-			      int error)
++static void fuse_retrieve_end(struct fuse_args *args, int error)
+ {
+ 	struct fuse_retrieve_args *ra =
+ 		container_of(args, typeof(*ra), ap.args);
+@@ -1956,7 +1955,7 @@ static int fuse_retrieve(struct fuse_mou
+ 
+ 	err = fuse_simple_notify_reply(fm, args, outarg->notify_unique);
+ 	if (err)
+-		fuse_retrieve_end(fm, args, err);
++		fuse_retrieve_end(args, err);
+ 
+ 	return err;
+ }
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -91,8 +91,7 @@ static struct fuse_file *fuse_file_get(s
+ 	return ff;
+ }
+ 
+-static void fuse_release_end(struct fuse_mount *fm, struct fuse_args *args,
+-			     int error)
++static void fuse_release_end(struct fuse_args *args, int error)
+ {
+ 	struct fuse_release_args *ra = container_of(args, typeof(*ra), args);
+ 
+@@ -112,15 +111,15 @@ static void fuse_file_put(struct fuse_fi
+ 		if (!args) {
+ 			/* Do nothing when server does not implement 'opendir' */
+ 		} else if (args->opcode == FUSE_RELEASE && ff->fm->fc->no_open) {
+-			fuse_release_end(ff->fm, args, 0);
++			fuse_release_end(args, 0);
+ 		} else if (sync) {
+ 			fuse_simple_request(ff->fm, args);
+-			fuse_release_end(ff->fm, args, 0);
++			fuse_release_end(args, 0);
+ 		} else {
+ 			args->end = fuse_release_end;
+ 			if (fuse_simple_background(ff->fm, args,
+ 						   GFP_KERNEL | __GFP_NOFAIL))
+-				fuse_release_end(ff->fm, args, -ENOTCONN);
++				fuse_release_end(args, -ENOTCONN);
+ 		}
+ 		kfree(ff);
+ 	}
+@@ -709,8 +708,7 @@ static void fuse_io_free(struct fuse_io_
+ 	kfree(ia);
+ }
+ 
+-static void fuse_aio_complete_req(struct fuse_mount *fm, struct fuse_args *args,
+-				  int err)
++static void fuse_aio_complete_req(struct fuse_args *args, int err)
+ {
+ 	struct fuse_io_args *ia = container_of(args, typeof(*ia), ap.args);
+ 	struct fuse_io_priv *io = ia->io;
+@@ -758,7 +756,7 @@ static ssize_t fuse_async_req_send(struc
+ 	ia->ap.args.may_block = io->should_dirty;
+ 	err = fuse_simple_background(fm, &ia->ap.args, GFP_KERNEL);
+ 	if (err)
+-		fuse_aio_complete_req(fm, &ia->ap.args, err);
++		fuse_aio_complete_req(&ia->ap.args, err);
+ 
+ 	return num_bytes;
+ }
+@@ -881,8 +879,7 @@ static int fuse_iomap_read_folio_range(c
+ 	return fuse_do_readfolio(file, folio, off, len);
+ }
+ 
+-static void fuse_readpages_end(struct fuse_mount *fm, struct fuse_args *args,
+-			       int err)
++static void fuse_readpages_end(struct fuse_args *args, int err)
+ {
+ 	int i;
+ 	struct fuse_io_args *ia = container_of(args, typeof(*ia), ap.args);
+@@ -947,7 +944,7 @@ static void fuse_send_readpages(struct f
+ 		res = fuse_simple_request(fm, &ap->args);
+ 		err = res < 0 ? res : 0;
+ 	}
+-	fuse_readpages_end(fm, &ap->args, err);
++	fuse_readpages_end(&ap->args, err);
+ }
+ 
+ static void fuse_readahead(struct readahead_control *rac)
+@@ -1950,8 +1947,7 @@ __acquires(fi->lock)
+ 	}
+ }
+ 
+-static void fuse_writepage_end(struct fuse_mount *fm, struct fuse_args *args,
+-			       int error)
++static void fuse_writepage_end(struct fuse_args *args, int error)
+ {
+ 	struct fuse_writepage_args *wpa =
+ 		container_of(args, typeof(*wpa), ia.ap.args);
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -1311,13 +1311,14 @@ struct fuse_init_args {
+ 	struct fuse_args args;
+ 	struct fuse_init_in in;
+ 	struct fuse_init_out out;
++	struct fuse_mount *fm;
+ };
+ 
+-static void process_init_reply(struct fuse_mount *fm, struct fuse_args *args,
+-			       int error)
++static void process_init_reply(struct fuse_args *args, int error)
+ {
+-	struct fuse_conn *fc = fm->fc;
+ 	struct fuse_init_args *ia = container_of(args, typeof(*ia), args);
++	struct fuse_mount *fm = ia->fm;
++	struct fuse_conn *fc = fm->fc;
+ 	struct fuse_init_out *arg = &ia->out;
+ 	bool ok = true;
+ 
+@@ -1486,6 +1487,7 @@ static struct fuse_init_args *fuse_new_i
+ 
+ 	ia = kzalloc(sizeof(*ia), GFP_KERNEL | __GFP_NOFAIL);
+ 
++	ia->fm = fm;
+ 	ia->in.major = FUSE_KERNEL_VERSION;
+ 	ia->in.minor = FUSE_KERNEL_MINOR_VERSION;
+ 	ia->in.max_readahead = fm->sb->s_bdi->ra_pages * PAGE_SIZE;
+@@ -1559,7 +1561,7 @@ int fuse_send_init(struct fuse_mount *fm
+ 		if (!err)
+ 			return 0;
+ 	}
+-	process_init_reply(fm, &ia->args, err);
++	process_init_reply(&ia->args, err);
+ 	if (fm->fc->conn_error)
+ 		return -ENOTCONN;
+ 	return 0;
 
 
