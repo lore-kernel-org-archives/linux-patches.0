@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0105803A8;
-	Wed,  9 Sep 2026 14:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAE15803B9;
+	Wed,  9 Sep 2026 14:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964262; cv=none; b=nQ9v0M5HlxXO8btbo4BZMNhG1Y12XKYCTEFmoiGKLyCfz+7AyZLmyEMNbj2VyIE4+PgtfvvFwQIZmQwMqjEi1eOInAGjVIvOZXU67NkfUOvzoEgo3YDn3BSJp4v6vRJs4b5BRIxbD57V3Y+fPwcudoPemBOKrb7Dlo5rBEyF9eU=
+	t=1788964265; cv=none; b=V9N+7L+aVaUlxmGIslrD/V5MIZV3EgzzE3eH3MKN5mmp+eFkfXRLX5Hlw8XnLvPLVLzFWfqJl4IGUbWBDtDfJQ1HGOgoVSn08Mc0/Dzrbt/XkxlambNnX00WHfkB0Y0tyo4QYOv0dMJGSgiYzN5fEUCaZqHysW9zsYyEq60yD8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964262; c=relaxed/simple;
-	bh=pS7ZnNKGSqourWrWu/lGcS4wdp+yllt4v/o/lDYgCfo=;
+	s=arc-20240116; t=1788964265; c=relaxed/simple;
+	bh=UptpE069bIeH4IMg1gmXL+c5qAAfWY/6+8aJn6ZFAIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmnZrOO/NmcxtZqP7Gpfa9Gn9aiKUo7BIKyrRapT8/TL6K0G2RPdBUPsaUTbHKxgBv4PcRyy4ByCzWKP3nh3GBvt/1b+Z5QkXO2nh6BpmR0LlXcWym7+8HJ/pFNLYmwpl1SacRGZo/aTAL+8fZ08oiberaKWGwYV+VwUjZrL/bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3NljK8S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CpOOhBq08wnD7CamnMAfWTh13YN+2Vq6D/j5GUxmaM/GFwDFDw6lUs2QXZ+We30zCUOJeTwd7KMmv2gFaydVNZ12MMkcJGC6eDcO3eTi/L9zOsgDk2KrI5vRNDjQzR/ERR/ou42IxAXEY06TnMZgJDRjbNnb4Ixp7Y1cFGRGhpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zhh8jWld; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3NljK8S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E2A1F00A3A;
-	Wed,  9 Sep 2026 14:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zhh8jWld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538341F00A3A;
+	Wed,  9 Sep 2026 14:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964261;
-	bh=4yLcJa4FUpOOeVmAtvjSWsLwp3H+8NPZs47xmU3+G5I=;
+	s=korg; t=1788964263;
+	bh=SmS6apCrqMhE1Q+jzSFU+NTqQKBSM8QfQHQJr2QxSro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H3NljK8SttuE+y7iosTqI9upe4eEd/7IVXaSU6o2XbyUMpD8evlJzSZmLfy4IYa51
-	 3tkNQfhCz33wp8WQpgMlhxWkYTQFttpLhl+Na40c+T+qgGJ42LguElTsnIjpowDLft
-	 lyl+Gt2OO2IK5/gYXrPFgXZ1Eiw36cRbwqyE/qv0=
+	b=Zhh8jWldocZheflpXzwBJNnhTL7me71OHAuU0dgwa9R4TFE/wvo29nZQYGaIXgzkl
+	 UX19aJvfEZEiPw6A+tqzcDmW4/UJd4b7X3gJMRDjg7yNGichqwdZQGoZSlffN4fMkE
+	 P0nvFKP4ljCzNbMI0Y+eDKQHg0ShmiozuxiH+s/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.18 324/583] scsi: qla2xxx: Bound i2c->length in I2C bsg handlers
-Date: Wed,  9 Sep 2026 15:40:09 +0200
-Message-ID: <20260909134249.226424829@linuxfoundation.org>
+	Mohammed EL Kadiri <med08elkadiri@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>
+Subject: [PATCH 6.18 315/583] media: venus: fix payload size calculation in parse_raw_formats()
+Date: Wed,  9 Sep 2026 15:40:00 +0200
+Message-ID: <20260909134248.919547668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,72 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Mohammed EL Kadiri <med08elkadiri@gmail.com>
 
-commit 0918ee2c0eeb4d7f45b82b3dc11e65c2d9b7ad59 upstream.
+commit bd595b745eb770e80347c31ffc25351046935305 upstream.
 
-struct qla_i2c_access carries a 16-bit length field alongside a fixed
-64-byte buffer:
+The consumed size is computed after the loop using the num_planes value
+from the last iteration for all entries. When entries have different
+plane counts, this produces an incorrect total.
 
-	struct qla_i2c_access {
-		uint16_t device, offset, option, length;
-		uint8_t  buffer[0x40];
-	} __packed;
+Accumulate the actual size during the loop instead.
 
-qla2x00_write_i2c() and qla2x00_read_i2c() use the user-supplied
-i2c->length without any bounds check. i2c is overlaid on a 256-byte
-on-stack buffer and sfp is a 256-byte DMA-pool buffer, so a length up to
-65535 overruns both:
-
-  - write: memcpy(sfp, i2c->buffer, i2c->length) over-reads the stack and
-    over-writes the sfp heap buffer, and qla2x00_write_sfp() then DMAs
-    i2c->length bytes out of the 256-byte buffer.
-  - read: qla2x00_read_sfp() DMAs i2c->length bytes into the 256-byte sfp,
-    then memcpy(i2c->buffer, sfp, i2c->length) overflows the 64-byte
-    buffer inside the on-stack array.
-
-A caller holding CAP_SYS_RAWIO can use this to corrupt the heap and the
-kernel stack. Reject requests whose length exceeds the buffer before any
-copy or DMA transfer in both handlers.
-
-Fixes: 9ebb5d9c69f1 ("[SCSI] qla2xxx: Add I2C BSG interface.")
+Fixes: 9edaaa8e3e15 ("media: venus: hfi_parser: refactor hfi packet parsing logic")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-33-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Mohammed EL Kadiri <med08elkadiri@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/media/platform/qcom/venus/hfi_parser.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -1725,6 +1725,12 @@ qla2x00_write_i2c(struct bsg_job *bsg_jo
- 	sg_copy_to_buffer(bsg_job->request_payload.sg_list,
- 	    bsg_job->request_payload.sg_cnt, i2c, sizeof(*i2c));
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -171,7 +171,7 @@ parse_raw_formats(struct venus_core *cor
+ 	u32 entries = fmt->format_entries;
+ 	unsigned int i = 0;
+ 	u32 num_planes = 0;
+-	u32 size;
++	u32 size = 2 * sizeof(u32);
  
-+	if (i2c->length > sizeof(i2c->buffer)) {
-+		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
-+		    EXT_STATUS_INVALID_PARAM;
-+		goto dealloc;
-+	}
-+
- 	memcpy(sfp, i2c->buffer, i2c->length);
- 	rval = qla2x00_write_sfp(vha, sfp_dma, sfp,
- 	    i2c->device, i2c->offset, i2c->length, i2c->option);
-@@ -1771,6 +1777,12 @@ qla2x00_read_i2c(struct bsg_job *bsg_job
- 	sg_copy_to_buffer(bsg_job->request_payload.sg_list,
- 	    bsg_job->request_payload.sg_cnt, i2c, sizeof(*i2c));
+ 	while (entries) {
+ 		num_planes = pinfo->num_planes;
+@@ -186,6 +186,7 @@ parse_raw_formats(struct venus_core *cor
+ 		if (pinfo->num_planes > MAX_PLANES)
+ 			break;
  
-+	if (i2c->length > sizeof(i2c->buffer)) {
-+		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
-+		    EXT_STATUS_INVALID_PARAM;
-+		goto dealloc;
-+	}
-+
- 	rval = qla2x00_read_sfp(vha, sfp_dma, sfp,
- 		i2c->device, i2c->offset, i2c->length, i2c->option);
++		size += sizeof(*constr) * num_planes + 2 * sizeof(u32);
+ 		pinfo = (void *)pinfo + sizeof(*constr) * num_planes +
+ 			2 * sizeof(u32);
+ 		entries--;
+@@ -193,8 +194,6 @@ parse_raw_formats(struct venus_core *cor
  
+ 	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
+ 		       fill_raw_fmts, rawfmts, i);
+-	size = fmt->format_entries * (sizeof(*constr) * num_planes + 2 * sizeof(u32))
+-		+ 2 * sizeof(u32);
+ 
+ 	return size;
+ }
 
 
