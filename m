@@ -1,52 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC08C25783C;
-	Wed,  9 Sep 2026 13:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE97553FD2B;
+	Wed,  9 Sep 2026 13:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961875; cv=none; b=juMSnA/BQXb8/VKhk+1OMHZxgZY3HW/U+bdnNRN2paKOAYxpfsQcihdnkRVBDmE7Wx/AX6PLjmaHu377RvLVd57sIxiqOA+V0S+4RiL1KbxyFfl6N6nXQjnkm34lgF4ZQoOg0SsyHizaH8SLfoHP6KfVLnvHvrJxiOJH5kmpbkA=
+	t=1788961879; cv=none; b=a5iReR8rISIx3MRj5O9LOnaACoPKKdGpKzD2zVWRreReOLCHgQSzjt2DzA3ENPl14stuCoQ1F21UVHt+rGLslqr2J4uCKEWn8N3de2FbhY7u5s1EWjsrLkLSq6JefwuRGw6FSXwuqIkrKeh90zXHuXfsdKXS88fOldhEz8/4Zw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961875; c=relaxed/simple;
-	bh=QMvZhcbol1CNevlrqalf1Cd/+LNhxpTtHQ7vSr8mSlQ=;
+	s=arc-20240116; t=1788961879; c=relaxed/simple;
+	bh=edL5qQDkRcLWrtM9YKtEuuntL/ejuna+Nh59LhOHVEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5R6HnJSELU3oxqNuefsXMAru3WRwp6CBJ9QJHaiSD/zz+kklIEk/9tf0qV1EsU9ZMx/iZpIraX1XCJVzRFQt2pu7GZlpE+fplBuoytYq09hQ6Tz4K3CZVVoFAeRcZwHrM1qNm8+RaurDFaiLSZuH6MG/c3kDDklBCN7KYbO6Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGxzTCPT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=miMI3woqH3OZ7rtHSX69eVLREdpmBgMKdAT7ppHsmvy8+q0+2gGyBMEokHNbB3h2eYe2kBN9oOpO2+C58djT1oxQHonuk2dMObo6kqWukRmzsG95sdqfGWjmHCcCnwRmHD3NCAjM5OUttFvbLYXGWJfCzsAs7R8OvYSkSd+Sm3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXfn96oD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGxzTCPT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DBE1F00A3D;
-	Wed,  9 Sep 2026 13:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXfn96oD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59311F00A3A;
+	Wed,  9 Sep 2026 13:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961873;
-	bh=GjHU4+XUlDehUO5clSB4l1ojV3PqAUEzyrAze7RZQYM=;
+	s=korg; t=1788961877;
+	bh=1h3sP+OqcOjY2EmN+C1DsXbeiPCNoLuROS452FJP4+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HGxzTCPTQp/FpNZkioElPiYrvgNTyGJ0amyBAcEBMUm9JIcQDmjbmUcIdyI4S7GaU
-	 laYFdRC1+3URwy3qBKlLIfZmTmnCgCorKMNRlTfWD4v7EKF7iXlOJdHHQaTU2rMSbm
-	 9134yYqKclIS7au65OVgLsZS3QxqTFHvwAjzuYUI=
+	b=KXfn96oDvCeccWMT9qfezw4zLxPAx8beK+L1t3Lcpitatzn9/gYH1BJC3kj8R69nb
+	 79MXdJJIt6P2BLv+bRThYONi/m9PcS7EV8WzNhUiUxs/eKAmyFM9LP6cE21mWyVIl1
+	 3t3Wvrku/xkFjshYjTcT5NHiJk6bv1Q1O0azz+i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Hagen Paul Pfeifer <hagen@jauu.net>,
-	Jakub Kacinski <kuba@kernel.org>,
-	James Bottomley <james.bottomley@HansenPartnership.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 097/556] mm/secretmem: properly account locked pages
-Date: Wed,  9 Sep 2026 15:36:17 +0200
-Message-ID: <20260909134233.915096442@linuxfoundation.org>
+Subject: [PATCH 7.2 080/556] samples/damon/prcl: stop and free damon ctx when damon_call() fails
+Date: Wed,  9 Sep 2026 15:36:00 +0200
+Message-ID: <20260909134233.316861341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -65,344 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: SJ Park <sj@kernel.org>
 
-commit 97d34aa65c29cca85e3e9050f4c936389b38a054 upstream.
+commit a73fa45d3f0f42c446ae55c5799e3d5ef044cd5d upstream.
 
-secretmem accounts folios by treating memory as if it were mlock()'d and
-thus limited by the RLIMIT_MEMLOCK limit.
+damon_sample_prcl_start() calls damon_call() right after damon_start() is
+succeeded.  The kdamond that has started by the damon_start() could be
+terminated by itself before or in the middle of the damon_call()
+execution.  There could be multiple reasons for such a stop including
+monitoring target process termination and kdamond_fn() internal memory
+allocation failures.  In the case, damon_call() will fail and return an
+error without cleaning up the DAMON context object.  The
+damon_sample_prcl_start() caller assumes it would clean up the object,
+though.  When the user requests to start DAMON again,
+damon_sample_prcl_start() is called again, allocates a new DAMON context
+object and overwrites the pointer for the previous object.  As a result,
+the previous context object is leaked.
 
-However the folios are unevictable and remain so until the inode is
-evicted, eliminating usual mlock() semantics - mapping folios then
-unmapping them does not clear their unevictable state, since it depends on
-AS_UNEVICTABLE, not PG_mlocked.
+Safely stop the kdamond and deallocate the context object when the failure
+is returned.  Note that the kdamond should be stopped first, because
+damon_call() failure means not complete termination of the kdamond but
+only the fact that the termination process has started.
 
-A user can therefore easily work around the RLIMIT_MEMLOCK limit - simply
-map then unmap and VmLck no longer counts the secretmem range.  Worse,
-folios are not accounted in the process's RSS, meaning the OOM killer
-won't know to kill the process.
+The user impact shouldn't be that significant because the race is not easy
+to happen, and only up to one DAMON context object can be leaked per race.
 
-Repeatedly mapping/unmapping (or forking) can then result in the
-consumption of all available system memory with unevictable folios and
-cause system instability.
+The issue was discovered [1] by Sashiko.
 
-A secretmem fd can be passed between processes and over fork so a
-per-process limit simply does not make sense, so follow the precedent set
-by io_uring, perf, skbuff, iommufd and xdp by tracking the number of
-locked pages in user_struct->locked_vm.
-
-Since the scope tracked is actually inode lifetime, the RLIMIT_MEMLOCK
-applies per-user not per-process, so it doesn't make sense to bypass for
-users with CAP_IPC_LOCK, therefore remove this bypass.
-
-There is simply no reason to carry on marking the mapping as mlock()'d
-since it's misleading and the lifecycle is now correctly handled, so
-remove this too.
-
-Note that secretmem does not support any form of truncation (including
-hole punching) and the folios are unreclaimable, so the folios need only
-be accounted on fault and unaccounted on inode destruction.
-
-__secretmem_account_pages() is more or less a duplicate of the code that
-io_uring etc.  use, but since this is a bug fix that needs backporting,
-defer any de-duplication efforts to a follow-up.
-
-test_mlock_limit() asserts mlock_future_ok() on mmap(), however this has
-been removed, so remove the test altogether for the fix.  A new test will
-be sent separately for upstream.
-
-Link: https://lore.kernel.org/20260826-secretmem-accounting-v3-1-94cb04399510@kernel.org
-Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reported-by: Daehyeon Ko <4ncienth@gmail.com>
-Closes: https://lore.kernel.org/linux-mm/20260813225328.2010303-1-4ncienth@gmail.com/
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Tested-by: Daehyeon Ko <4ncienth@gmail.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Hagen Paul Pfeifer <hagen@jauu.net>
-Cc: Jakub Kacinski <kuba@kernel.org>
-Cc: James Bottomley <james.bottomley@HansenPartnership.com>
-Cc: Jesper Dangaard Brouer <hawk@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Stanislav Fomichev <sdf@fomichev.me>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/20260628215447.96166-7-sj@kernel.org
+Link: https://lore.kernel.org/20260610035214.4850-1-sj@kernel.org [1]
+Fixes: a6c33f1054e3 ("samples/damon/prcl: use damon_call() repeat mode instead of damon_callback")
+Signed-off-by: SJ Park <sj@kernel.org>
+Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: <stable@vger.kernel.org> # 6.17.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/user.h                |    3 
- mm/secretmem.c                            |  116 +++++++++++++++++++++++++++---
- tools/testing/selftests/mm/memfd_secret.c |   30 -------
- 3 files changed, 110 insertions(+), 39 deletions(-)
+ samples/damon/prcl.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/include/linux/sched/user.h
-+++ b/include/linux/sched/user.h
-@@ -25,7 +25,8 @@ struct user_struct {
+--- a/samples/damon/prcl.c
++++ b/samples/damon/prcl.c
+@@ -112,7 +112,12 @@ static int damon_sample_prcl_start(void)
+ 	}
  
- #if defined(CONFIG_PERF_EVENTS) || defined(CONFIG_BPF_SYSCALL) || \
- 	defined(CONFIG_NET) || defined(CONFIG_IO_URING) || \
--	defined(CONFIG_VFIO_PCI_ZDEV_KVM) || IS_ENABLED(CONFIG_IOMMUFD)
-+	defined(CONFIG_VFIO_PCI_ZDEV_KVM) || IS_ENABLED(CONFIG_IOMMUFD) || \
-+	defined(CONFIG_SECRETMEM)
- 	atomic_long_t locked_vm;
- #endif
- #ifdef CONFIG_WATCH_QUEUE
---- a/mm/secretmem.c
-+++ b/mm/secretmem.c
-@@ -18,6 +18,8 @@
- #include <linux/secretmem.h>
- #include <linux/set_memory.h>
- #include <linux/sched/signal.h>
-+#include <linux/sched/user.h>
-+#include <linux/cred.h>
- 
- #include <uapi/linux/magic.h>
- 
-@@ -47,10 +49,69 @@ bool secretmem_active(void)
- 	return !!atomic_read(&secretmem_users);
- }
- 
-+struct secretmem_inode_state {
-+	struct user_struct	*user;
-+	atomic_long_t		nr_pages_accounted;
-+};
-+
-+static bool __secretmem_account_pages(struct user_struct *user,
-+		unsigned long nr_pages)
-+{
-+	unsigned long page_limit, cur_pages, new_pages;
-+
-+	if (!nr_pages)
-+		return true;
-+
-+	page_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
-+
-+	cur_pages = atomic_long_read(&user->locked_vm);
-+	do {
-+		new_pages = cur_pages + nr_pages;
-+		if (new_pages > page_limit)
-+			return false;
-+	} while (!atomic_long_try_cmpxchg(&user->locked_vm,
-+					  &cur_pages, new_pages));
-+	return true;
-+}
-+
-+static bool secretmem_account_folio(struct secretmem_inode_state *state,
-+		const struct folio *folio)
-+{
-+	const unsigned long nr_pages = folio_nr_pages(folio);
-+
-+	if (!__secretmem_account_pages(state->user, nr_pages))
-+		return false;
-+
-+	atomic_long_add(nr_pages, &state->nr_pages_accounted);
-+	return true;
-+}
-+
-+static void __secretmem_unaccount_pages(struct secretmem_inode_state *state,
-+		unsigned long nr_pages)
-+{
-+	atomic_long_sub(nr_pages, &state->user->locked_vm);
-+	atomic_long_sub(nr_pages, &state->nr_pages_accounted);
-+}
-+
-+static void secretmem_unaccount_folio(struct secretmem_inode_state *state,
-+		struct folio *folio)
-+{
-+	__secretmem_unaccount_pages(state, folio_nr_pages(folio));
-+}
-+
-+static void secretmem_unaccount_all_folios(struct secretmem_inode_state *state)
-+{
-+	const unsigned long nr_pages_accounted =
-+		atomic_long_read(&state->nr_pages_accounted);
-+
-+	__secretmem_unaccount_pages(state, nr_pages_accounted);
-+}
-+
- static vm_fault_t secretmem_fault(struct vm_fault *vmf)
- {
- 	struct address_space *mapping = vmf->vma->vm_file->f_mapping;
- 	struct inode *inode = file_inode(vmf->vma->vm_file);
-+	struct secretmem_inode_state *state = inode->i_private;
- 	pgoff_t offset = vmf->pgoff;
- 	gfp_t gfp = vmf->gfp_mask;
- 	unsigned long addr;
-@@ -72,8 +133,15 @@ retry:
- 			goto out;
- 		}
- 
-+		if (!secretmem_account_folio(state, folio)) {
-+			folio_put(folio);
-+			ret = VM_FAULT_SIGBUS;
-+			goto out;
-+		}
-+
- 		err = set_direct_map_invalid_noflush(folio_page(folio, 0));
- 		if (err) {
-+			secretmem_unaccount_folio(state, folio);
- 			folio_put(folio);
- 			ret = vmf_error(err);
- 			goto out;
-@@ -82,6 +150,7 @@ retry:
- 		__folio_mark_uptodate(folio);
- 		err = filemap_add_folio(mapping, folio, offset, gfp);
- 		if (unlikely(err)) {
-+			secretmem_unaccount_folio(state, folio);
- 			/*
- 			 * If a split of large page was required, it
- 			 * already happened when we marked the page invalid
-@@ -112,22 +181,30 @@ static const struct vm_operations_struct
- 	.fault = secretmem_fault,
- };
- 
-+static void secretmem_destroy_inode_priv(struct inode *inode)
-+{
-+	struct secretmem_inode_state *state = inode->i_private;
-+
-+	secretmem_unaccount_all_folios(state);
-+	free_uid(state->user);
-+	kfree(state);
-+	inode->i_private = NULL;
-+}
-+
- static int secretmem_release(struct inode *inode, struct file *file)
- {
- 	atomic_dec(&secretmem_users);
-+	secretmem_destroy_inode_priv(inode);
-+
- 	return 0;
- }
- 
- static int secretmem_mmap_prepare(struct vm_area_desc *desc)
- {
--	const unsigned long len = vma_desc_size(desc);
--
- 	if (!vma_desc_test_any(desc, VMA_SHARED_BIT, VMA_MAYSHARE_BIT))
- 		return -EINVAL;
- 
--	vma_desc_set_flags(desc, VMA_LOCKED_BIT, VMA_DONTDUMP_BIT);
--	if (!mlock_future_ok(desc->mm, /*is_vma_locked=*/ true, len))
--		return -EAGAIN;
-+	vma_desc_set_flags(desc, VMA_DONTDUMP_BIT);
- 	desc->vm_ops = &secretmem_vm_ops;
- 
- 	return 0;
-@@ -187,20 +264,40 @@ static const struct inode_operations sec
- 
- static struct vfsmount *secretmem_mnt;
- 
-+static int secretmem_init_inode_priv(struct inode *inode)
-+{
-+	struct secretmem_inode_state *state;
-+
-+	state = kzalloc_obj(*state);
-+	if (!state)
-+		return -ENOMEM;
-+
-+	state->user = get_uid(current_user());
-+	inode->i_private = state;
-+	return 0;
-+}
-+
- static struct file *secretmem_file_create(unsigned long flags)
- {
- 	struct file *file;
- 	struct inode *inode;
- 	const char *anon_name = "[secretmem]";
-+	int err;
- 
- 	inode = anon_inode_make_secure_inode(secretmem_mnt->mnt_sb, anon_name, NULL);
- 	if (IS_ERR(inode))
- 		return ERR_CAST(inode);
- 
-+	err = secretmem_init_inode_priv(inode);
-+	if (err)
-+		goto err_free_inode;
-+
- 	file = alloc_file_pseudo(inode, secretmem_mnt, "secretmem",
- 				 O_RDWR | O_LARGEFILE, &secretmem_fops);
--	if (IS_ERR(file))
--		goto err_free_inode;
-+	if (IS_ERR(file)) {
-+		err = PTR_ERR(file);
-+		goto err_free_priv;
+ 	repeat_call_control.data = ctx;
+-	return damon_call(ctx, &repeat_call_control);
++	err = damon_call(ctx, &repeat_call_control);
++	if (err) {
++		damon_stop(&ctx, 1);
++		damon_destroy_ctx(ctx);
 +	}
- 
- 	mapping_set_gfp_mask(inode->i_mapping, GFP_HIGHUSER);
- 	mapping_set_unevictable(inode->i_mapping);
-@@ -215,10 +312,11 @@ static struct file *secretmem_file_creat
- 	atomic_inc(&secretmem_users);
- 
- 	return file;
--
-+err_free_priv:
-+	secretmem_destroy_inode_priv(inode);
- err_free_inode:
- 	iput(inode);
--	return file;
-+	return ERR_PTR(err);
++	return err;
  }
  
- SYSCALL_DEFINE1(memfd_secret, unsigned int, flags)
---- a/tools/testing/selftests/mm/memfd_secret.c
-+++ b/tools/testing/selftests/mm/memfd_secret.c
-@@ -57,33 +57,6 @@ static void test_file_apis(int fd)
- 		pass("file IO is blocked as expected\n");
- }
- 
--static void test_mlock_limit(int fd)
--{
--	size_t len;
--	char *mem;
--
--	len = mlock_limit_cur;
--	if (len % page_size != 0)
--		len = (len/page_size) * page_size;
--
--	mem = mmap(NULL, len, prot, mode, fd, 0);
--	if (mem == MAP_FAILED) {
--		fail("unable to mmap secret memory\n");
--		return;
--	}
--	munmap(mem, len);
--
--	len = mlock_limit_max * 2;
--	mem = mmap(NULL, len, prot, mode, fd, 0);
--	if (mem != MAP_FAILED) {
--		fail("unexpected mlock limit violation\n");
--		munmap(mem, len);
--		return;
--	}
--
--	pass("mlock limit is respected\n");
--}
--
- static void test_vmsplice(int fd, const char *desc)
- {
- 	ssize_t transferred;
-@@ -297,7 +270,7 @@ static void prepare(void)
- 				   strerror(errno));
- }
- 
--#define NUM_TESTS 6
-+#define NUM_TESTS 5
- 
- int main(int argc, char *argv[])
- {
-@@ -319,7 +292,6 @@ int main(int argc, char *argv[])
- 	if (ftruncate(fd, page_size))
- 		ksft_exit_fail_msg("ftruncate failed: %s\n", strerror(errno));
- 
--	test_mlock_limit(fd);
- 	test_file_apis(fd);
- 	/*
- 	 * We have to run the first vmsplice test before any secretmem page was
+ static void damon_sample_prcl_stop(void)
 
 
