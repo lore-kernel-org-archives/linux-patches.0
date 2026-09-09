@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0504583ABB;
-	Wed,  9 Sep 2026 14:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EB6583ABD;
+	Wed,  9 Sep 2026 14:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964131; cv=none; b=b18qcpz8LnS/FmHcXfzX/u01icYQCePCwSFgXQf9a//Upe0BQ/yT5W4uX/mBhboD6zu+EbGT3H/y++VAj9rUtqagZuPOjMocGmx9ezmv8e2Iw8lqMU50/fQ//XyA8t9m56j+Xv7aIMaRcyPi3g4JSUtFe1YgJ8FPZ14e17phN+c=
+	t=1788964134; cv=none; b=X9nwQGeXrEFKIHb/s3u+RhXWb29wGXZ1VsNlZGAH6mXf+AInQcZ+ZoweWIjLrDT/HcMwMaAzAxzQudGMTANXmUm0L5qJmkkcX9nEROuSSQlFpBQ3xILl7LaL6m2JqOj4MnWdLvcZ7almE+Xzq+J9l1tINsTKQlk8Lb/wzCLwmbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964131; c=relaxed/simple;
-	bh=H+fkDJMJAXNwzCtuP1bu/hfiSISeBs/pJyOeQ+C3YAs=;
+	s=arc-20240116; t=1788964134; c=relaxed/simple;
+	bh=S+7Vg9kBTpdUWh8K4OMxfWDTXa6hQelVqPEf2r6VpQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgSAOSRUfHt9L1iKSHiqDiGWd2Yc8VpVjOc1faKLkbujyIjFk29qcq5XgbNrJkfuJxLqcgP5TwxHUkkyHnv0V6cm5wKuQ8O0oPCkf+LnOTcw0MwmXTEV0Pf30lXjTZUKNrgeCMn7KlpZAcPyhWj1e77Zn4wHdw0rqXrqIb4JKgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nv/n/XaS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KXoXTcI6mA0m8D5gMSIPXYztG+/FyvSsFyv0qykVbTZfGhe7re6rJXScFoDYGmdvaRuDJrPvwtB28049FLxDaRUFrk2oIewuSoBDlPM1CiSUiYqoel1eur/9PRbccVEBVFBZUPr5YfH+wB5mUDo1FN4qxu2BSOLue+sVhaAd7AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AArYsxEd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nv/n/XaS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99D61F00A3A;
-	Wed,  9 Sep 2026 14:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AArYsxEd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7241F00A3D;
+	Wed,  9 Sep 2026 14:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964130;
-	bh=cHJDtoSBCKGA8KNn3floBJH9mNIuU2T1mciZuHRbhyY=;
+	s=korg; t=1788964133;
+	bh=DlHp7YTAwZIyDDK55wJ87nIYYQMsye2FFC12A6btn9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nv/n/XaS0tCPVedc4ftEkXm3rcQWrWbcllerdinHxgF87s76dK+WXFl+rpCMhC4lj
-	 AnN2CFNZXBkNilhQB+z1jvTk7hQubUqGehviIs3oXHakyQAXWdcvXt8Zp/aQd7SYjU
-	 Bw+aZnm5+IV+u0yHjsNEXO+vAYU98CqJu5eTjwCQ=
+	b=AArYsxEdRNrntB5swzkXVx4MVoyqVojHJjRm3lkfrYircX9KDiuNSAfMLj3W25mvy
+	 /sgSL+KI7QEFnMb74BH4jx2fSiSwnlYwTRS5n4DpeBTmFWFNAwi+aJ6Hsjq7+O/ngt
+	 d6fF8zgKwOIo9xG1x+yIy/JymKpXDSGePlqTU/Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Valery Borovsky <vebohr@gmail.com>
-Subject: [PATCH 6.18 274/583] media: airspy: use vb2_video_unregister_device() on disconnect to fix NULL deref
-Date: Wed,  9 Sep 2026 15:39:19 +0200
-Message-ID: <20260909134247.568940752@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 275/583] media: amphion: Remove obsolete frame_count check in venc_start_session
+Date: Wed,  9 Sep 2026 15:39:20 +0200
+Message-ID: <20260909134247.598447578@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,78 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit 2f378dc45e685fc825d2dd08e7864666d6fcc009 upstream.
+commit 2be6ee86385badab95b1bace984735bde6e0fec0 upstream.
 
-airspy_disconnect() clears s->udev under v4l2_lock, but
-airspy_stop_streaming() unconditionally calls airspy_ctrl_msg() and
-airspy_free_stream_bufs() afterwards. If a streaming user closes the
-device after disconnect, stop_streaming() runs and dereferences the
-NULL s->udev:
+The dev_err() log warning about no input when starting was originally
+meaningful when min_queued_buffers was set, as it indicated an abnormal
+condition. However, since commit 5633ec763a2a ("media: amphion: Drop
+min_queued_buffers assignment") removed the min_queued_buffers
+assignment, having frame_count == 0 at start is a normal condition.
 
-  airspy_stop_streaming()
-    airspy_ctrl_msg(s, CMD_RECEIVER_MODE, 0, 0, NULL, 0)
-      usb_sndctrlpipe(s->udev, 0)         /* NULL deref */
-    airspy_free_stream_bufs(s)
-      usb_free_coherent(s->udev, ...)     /* NULL deref */
+Remove this misleading log that no longer serves any purpose.
 
-The airspy driver uses vb2_fop_release() in its file_operations, so
-replace video_unregister_device(&s->vdev) with
-vb2_video_unregister_device(&s->vdev) and move it before clearing
-s->udev. vb2_video_unregister_device() releases the vb2 queue, which
-synchronously runs airspy_stop_streaming() if streaming is active, so
-the URBs, coherent DMA stream buffers and the hardware stop control
-message all execute while s->udev is still valid.
-
-vb2_video_unregister_device() locks vdev->queue->lock (vb_queue_lock)
-internally, and stop_streaming() locks v4l2_lock, so the previous outer
-mutex_lock(&s->vb_queue_lock) / mutex_lock(&s->v4l2_lock) pair around
-the unregister sequence would self-deadlock and has been removed. A
-short v4l2_lock critical section around s->udev = NULL remains so any
-ioctl path that still holds the file descriptor sees coherent state.
-
-Issue identified by automated review of the INV-003 series at
-https://sashiko.dev/
-
-Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
+Fixes: 5633ec763a2a ("media: amphion: Drop min_queued_buffers assignment")
 Cc: stable@vger.kernel.org
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/airspy/airspy.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/media/platform/amphion/venc.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/media/usb/airspy/airspy.c
-+++ b/drivers/media/usb/airspy/airspy.c
-@@ -464,14 +464,21 @@ static void airspy_disconnect(struct usb
+--- a/drivers/media/platform/amphion/venc.c
++++ b/drivers/media/platform/amphion/venc.c
+@@ -977,8 +977,6 @@ static int venc_start_session(struct vpu
+ 	venc->ready_count = 0;
+ 	venc->stopped = false;
+ 	vpu_process_output_buffer(inst);
+-	if (venc->frame_count == 0)
+-		dev_err(inst->dev, "[%d] there is no input when starting\n", inst->id);
  
- 	dev_dbg(s->dev, "\n");
- 
--	mutex_lock(&s->vb_queue_lock);
-+	/*
-+	 * vb2_video_unregister_device() releases the vb2 queue, which
-+	 * triggers airspy_stop_streaming() if streaming is active.
-+	 * stop_streaming() dereferences s->udev via airspy_ctrl_msg() and
-+	 * airspy_free_stream_bufs(), so it must run before s->udev is
-+	 * cleared. vb2_video_unregister_device() locks vb_queue_lock
-+	 * internally and stop_streaming() locks v4l2_lock, so neither may
-+	 * be held by the caller.
-+	 */
-+	v4l2_device_disconnect(&s->v4l2_dev);
-+	vb2_video_unregister_device(&s->vdev);
-+
- 	mutex_lock(&s->v4l2_lock);
--	/* No need to keep the urbs around after disconnection */
- 	s->udev = NULL;
--	v4l2_device_disconnect(&s->v4l2_dev);
--	video_unregister_device(&s->vdev);
- 	mutex_unlock(&s->v4l2_lock);
--	mutex_unlock(&s->vb_queue_lock);
- 
- 	v4l2_device_put(&s->v4l2_dev);
- }
+ 	return 0;
+ error:
 
 
