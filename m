@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F13592210;
-	Wed,  9 Sep 2026 14:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DBD576EC1;
+	Wed,  9 Sep 2026 14:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963559; cv=none; b=ad+TN969kdpd5srMEYtqDE/R0JB2MYiUgKKE6jDsu6BV7H2VwMY+JD3BVwlGId92QIm2vX+ypjtatTPVLOUGOn1vfrkrNy/hj+cEJJXs5bm32igUjxLY/GQLk7FtjhkoTdwqHYVzTFoxPbKH9HGrOj/DcnBb3gDJ1JI9UbxuaoY=
+	t=1788963563; cv=none; b=c+M7wJv0jhA3hl6gvZzGMo4oLpYNHeiBfZmXR9S1IOJfpcDFoZcNHs7UDwSUpA7ScJuSgpAbCZSgCPCYurDG4iyyiaBSpEhhvoTOO5IQL6HBRH3lguyh9as8w80jCzeYaUjn+08vkXSa41h58uXXSekMyRhC/PR4TOe+EHzHGaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963559; c=relaxed/simple;
-	bh=NV8Hk2t1YMWPg8xBTTa3sycEQ62pzfq6sFfYLmlKXJk=;
+	s=arc-20240116; t=1788963563; c=relaxed/simple;
+	bh=UHHhAAzVO6CfBXnyUwPKf1fWhOGR2Oj9vnYS3DmY5io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWZ1C8ZH8hwMLxXzgCTvUM3UFgtGVrpX2b1bMiYIRaLIuY+GsvMeUsQ4xI2OQEXZex9TDPgeA2ZKjaSbkjs7ljKl2RWvcb832JaB5POp5PcQ7KNiZsfARlyBfS1+rpGgZXZs4WWFpzw4XkY+IRgoMj6i5G9iSzR6cSoRss584ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDWyVz/4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zx2Gdm+dKaytSMWT5SwQpqF5iOfinYxHLS8bLWV9u8llutQNBEDd6e8ajcv5HXd9qSscQ6BDvcziM0A1XyVPcBxjtKhxp6TSDZnEi8P2CfZUneRh/V+YD8Q8gdQSGq+xJM5oqbp+WBE7GIlL6FxZHilZ4X9iClg565ci9rA531Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThQ46NAz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDWyVz/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E9F1F00A3D;
-	Wed,  9 Sep 2026 14:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThQ46NAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C491F00A3D;
+	Wed,  9 Sep 2026 14:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963557;
-	bh=9krjdHUV8Nncv/j3Gl7eE7N7U5oWBjlixAEM1zKneU8=;
+	s=korg; t=1788963560;
+	bh=TZ56gjGcWRagZmZ6NoZ1QyymeP9H0brfQIMRyhcwBuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NDWyVz/4RcDMQ1aib+8Ao/ArwejDS+xcWpzdFIwlmkRROl0+S4WmeWdLDNrriB7Vc
-	 ph4QVNk3vzA4gukW7XJGE6vdp3lmJF2/eKUofSvjYkZrHPZbqoggjWNv3O1NnFq1YE
-	 L8JCg9nqL0tj+/L+FB4Y6PhjNB09DjNZAF2A/+nw=
+	b=ThQ46NAzemD/BDjDX/8pwwJmaDQhehiN2Jl/TTApeY7HEDxYVtMROCtzc38oVj+M6
+	 nzqs//iLc+GUJwqDWEMrLP7gwTh0i4Y/V0z8vIXDyQfHthxx/E5HGmXeGiGIvMnYja
+	 AJ0OO5HNkM9sJ6NOW/yySdff+DYk2WqaSl9iUd+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 082/583] kprobes: Protect kprobe_blacklist with RCU
-Date: Wed,  9 Sep 2026 15:36:07 +0200
-Message-ID: <20260909134240.958816947@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+0dbf6d295b3350944f0b@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Zi Yan <ziy@nvidia.com>
+Subject: [PATCH 6.18 083/583] mm/mempolicy: fix sleeping allocation in alloc_pages_bulk_weighted_interleave()
+Date: Wed,  9 Sep 2026 15:36:08 +0200
+Message-ID: <20260909134240.994203292@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,85 +60,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 0c4256196b3a105307e2235fbfd85e768bbcdd0f upstream.
+commit 540e583b66d6402bf556fde5e53c817a54c1afe5 upstream.
 
-__within_kprobe_blacklist() traverses kprobe_blacklist without holding
-kprobe_mutex. When a module is unloaded, kprobe_remove_area_blacklist()
-removes blacklist entries and immediately frees them with kfree().
-A concurrent call to within_kprobe_blacklist() can therefore dereference
-freed memory.
+syzbot reported a sleeping function called from invalid context splat in
+bucket_table_alloc().
 
-Furthermore, within_kprobe_blacklist() can be called in atomic or
-non-preemptible contexts where the sleeping kprobe_mutex cannot be taken.
+When rhashtable_insert_slow() rehashes the table under rcu_read_lock(), it
+calls bucket_table_alloc(..., GFP_ATOMIC | __GFP_NOWARN).  If the bucket
+table allocation uses vmalloc, __vmalloc_node_range_noprof() invokes
+vm_area_alloc_pages() -> alloc_pages_bulk_mempolicy_noprof() with the
+passed GFP_ATOMIC flags.
 
-Protect kprobe_blacklist with RCU. Use guard(rcu)() and
-list_for_each_entry_rcu() for traversal, list_add_tail_rcu() for
-insertions, list_del_rcu() for deletions, and kfree_rcu() to reclaim
-entries safely after a grace period.
+If the current task has an MPOL_WEIGHTED_INTERLEAVE mempolicy,
+alloc_pages_bulk_weighted_interleave() is called and currently hardcodes
+GFP_KERNEL when allocating the temporary weights array, triggering a
+might_alloc() splat in atomic/RCU contexts.
 
-Link: https://lore.kernel.org/all/178810004323.64882.16493230858653316962.stgit@devnote2/
+Pass the gfp flags (masked with GFP_RECLAIM_MASK to strip page-allocator
+zone modifiers like __GFP_HIGHMEM) received by
+alloc_pages_bulk_weighted_interleave() to kmalloc() instead of hardcoding
+GFP_KERNEL.  Since the weights buffer is immediately initialized in full,
+kmalloc() is sufficient.
 
-Fixes: 376e242429bf ("kprobes: Introduce NOKPROBE_SYMBOL() macro to maintain kprobes blacklist")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260807155802.F06041F000E9@smtp.kernel.org/
-Assisted-by: Antigravity:gemini-3.7-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/20260821170407.3721004-1-edumazet@google.com
+Fixes: fa3bea4e1f82 ("mm/mempolicy: introduce MPOL_WEIGHTED_INTERLEAVE for weighted interleaving")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+0dbf6d295b3350944f0b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/6a88837e.ae6ddae5.3da009.0040.GAE@google.com/T/#u
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kprobes.h |    1 +
- kernel/kprobes.c        |   14 ++++++++++----
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ mm/mempolicy.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/kprobes.h
-+++ b/include/linux/kprobes.h
-@@ -181,6 +181,7 @@ struct kprobe_blacklist_entry {
- 	struct list_head list;
- 	unsigned long start_addr;
- 	unsigned long end_addr;
-+	struct rcu_head rcu;
- };
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -2606,7 +2606,7 @@ static unsigned long alloc_pages_bulk_we
+ 	prev_node = node;
  
- #ifdef CONFIG_KPROBES
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1373,8 +1373,14 @@ static bool __within_kprobe_blacklist(un
- 	/*
- 	 * If 'kprobe_blacklist' is defined, check the address and
- 	 * reject any probe registration in the prohibited area.
-+	 * Note: this can return true during transition period where
-+	 * (start_addr, end_addr) in the black list is shrinking
-+	 * but old entry has not been removed yet. This is acceptable
-+	 * because the worst case is that we reject more probes than
-+	 * we should.
- 	 */
--	list_for_each_entry(ent, &kprobe_blacklist, list) {
-+	guard(rcu)();
-+	list_for_each_entry_rcu(ent, &kprobe_blacklist, list) {
- 		if (addr >= ent->start_addr && addr < ent->end_addr)
- 			return true;
- 	}
-@@ -2435,7 +2441,7 @@ int kprobe_add_ksym_blacklist(unsigned l
- 	ent->start_addr = entry;
- 	ent->end_addr = entry + size;
- 	INIT_LIST_HEAD(&ent->list);
--	list_add_tail(&ent->list, &kprobe_blacklist);
-+	list_add_tail_rcu(&ent->list, &kprobe_blacklist);
- 
- 	return (int)size;
- }
-@@ -2529,8 +2535,8 @@ static void kprobe_remove_area_blacklist
- 	list_for_each_entry_safe(ent, n, &kprobe_blacklist, list) {
- 		if (ent->start_addr < start || ent->start_addr >= end)
- 			continue;
--		list_del(&ent->list);
--		kfree(ent);
-+		list_del_rcu(&ent->list);
-+		kfree_rcu(ent, rcu);
- 	}
- }
+ 	/* create a local copy of node weights to operate on outside rcu */
+-	weights = kzalloc(nr_node_ids, GFP_KERNEL);
++	weights = kmalloc(nr_node_ids, gfp & GFP_RECLAIM_MASK);
+ 	if (!weights)
+ 		return total_allocated;
  
 
 
