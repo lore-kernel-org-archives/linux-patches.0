@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39080477984;
-	Wed,  9 Sep 2026 13:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE682D2394;
+	Wed,  9 Sep 2026 13:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961685; cv=none; b=XGe+MoSMyzFDHKb0NaMPTixE+tLhz6t1/5hXip+usWNclnESocke3qRI27B5FhUUyqf7/M++3cYw/5bwAL+JPG3CAdzoSI1/f6zqCAjdiSZbQspjUdukthLsVsc9bwI4cPHzzLSAzBSVkaiRm5ncEdwfugk2deCj2UNf0pgrvsE=
+	t=1788961688; cv=none; b=mGg3mvKhi5+EA3QGHsjcKrdls0BedDo83DG8RO4gVWk+5pt5PORrwyYX/Rnz0dG2p4ZaW7FWMD070q22wppwUtCvD0+anctQYsYlstRh4aLTe3GyRNsbe6r6IhUdI7Pn2e4ks3ONklAKX5ELZy6hdkjuEsMhMMuAbUhzCAkg+Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961685; c=relaxed/simple;
-	bh=eINbZn5Do9JaZb2EDDCIQZ1b3PvQUDNEyaBqFCNH7CU=;
+	s=arc-20240116; t=1788961688; c=relaxed/simple;
+	bh=/YFK/h4ni6W55sOMhdsVnArPOrU+IrE915+nOy/PwpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdVDsM0xsIyFMocwahU2B0XYCubb5zjd+U4HCx9hTO3KHmBUV41iY/jQN73klZFcrpDrlqs4prnFe6/cDuPGARvSPWoqPCxYpsBIFSY4bTnhH1tMj4QKu+5YZ26nYEdcgAb9cmvHa4j7fhKJ3+NcSZ7kP+UX7Jt4xIGbvcncQM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNrgufZ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MKryCtBYBd+Z84c/IT3X4oJg0qSMBT1ZscF1x8xI9Ihxx6SdraiLVHTzNnqlGuM/LV0tte7aBbhB2R7Zx8QpcKOeJuO/kV7/zDalgzpdl+SOqrdlOY57OMnn5SDMjAFgVGPMSZmLQRWa0yy5/EP9+pCQ+0F3ZyfHujhm3UUly/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2UHGrSl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNrgufZ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BC51F00A3A;
-	Wed,  9 Sep 2026 13:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2UHGrSl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CB51F00A3A;
+	Wed,  9 Sep 2026 13:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961684;
-	bh=EN5qnHr+jQYDI52qMYR1RDZBeOgpdP2qZokqCUHqK40=;
+	s=korg; t=1788961686;
+	bh=ObWT9SPLbmwSDeH00A5uJgFu3Qj7LGgkTw6gDXZedPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNrgufZ3lrWvJg48SN1/DKwr+hlYM6dkOkZ2OZbTxNBb41D+dfCSwjdRmRvsXo8Sj
-	 9voZfLWuv2tDSBfxDYrdvZXbf3AsexDKiQPU0Yt0SVGBNwhNM3zZt/rPYvxtwRkh6A
-	 0OaxmikWYdaWXDkyr2l/s8H2jABw4xqEXuaUFTY0=
+	b=y2UHGrSlKLcyo9S78g/9j/FElWcTJKkMbdkyMMfHySzhMYTNbNWezxyC30eyroYrU
+	 AFf8kN2/19C/c+4Nybf/ZIJnSVH23bEdlj6ltWXRNmkOklnqbf5YSv0/iZK4uBnfYB
+	 yd+1d5VpvIpcFtHgt6/b06l1wBJS0JB2+X5v68tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 7.2 032/556] usb: dwc3: google: Initialise probe properties with DWC3_DEFAULT_PROPERTIES
-Date: Wed,  9 Sep 2026 15:35:12 +0200
-Message-ID: <20260909134231.633300552@linuxfoundation.org>
+	Brendan Jackman <jackmanb@google.com>,
+	sashiko-bot@kernel.org,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 004/556] mm/page_alloc: dont spin_trylock() in NMI on UP
+Date: Wed,  9 Sep 2026 15:34:44 +0200
+Message-ID: <20260909134230.607481247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,50 +63,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Brendan Jackman <jackmanb@google.com>
 
-commit 6b2a674fcc953378e5e750d47a888bbe51229de5 upstream.
+[ Upstream commit 3105ae628fb785d48b49256468be4f21a7b3cfc0 ]
 
-dwc3_google_probe() zero initialises struct dwc3_probe_data and never
-assigns its properties member. The unspecified state of gsbuscfg0_reqinfo
-is encoded as DWC3_GSBUSCFG0_REQINFO_UNSPECIFIED (0xffffffff), not as
-zero, so dwc3_get_software_properties() reads the zeroed field as a value
-the glue explicitly requested:
+Patch series "mm/page_alloc: fixes for free_pages_nolock() on RT/UP".
 
-	if (properties->gsbuscfg0_reqinfo !=
-	    DWC3_GSBUSCFG0_REQINFO_UNSPECIFIED) {
-		dwc->gsbuscfg0_reqinfo = properties->gsbuscfg0_reqinfo;
-		return;
-	}
+Pre-existing bugs found by Sashiko during review of this other series:
+https://lore.kernel.org/all/20260703-alloc-trylock-v5-0-c87b714e19d3@google.com/
 
-Two things follow. dwc3_config_soc_bus() programs GSBUSCFG0.REQINFO with
-zero on hardware that never asked for it, and the early return skips the
-walk over the parent devices, so a swnode or device tree supplied
-snps,gsbuscfg0-reqinfo would be ignored.
+I have not reproduced these bugs, and I suspect there is no real-world
+user that is affected by them.
 
-Assign DWC3_DEFAULT_PROPERTIES so the unset fields carry their unspecified
-sentinels and the controller is left alone.
+This patch (of 2):
 
-Fixes: 8995a37371bf ("usb: dwc3: Add Google Tensor SoC DWC3 glue driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260819182158.1351869-1-radhey.shyam.pandey@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As noted in can_spin_trylock(), using this is unsafe in this context.
+commit 620b46ed6ae17 ("mm/page_alloc: return NULL early from
+alloc_frozen_pages_nolock() in NMI on UP") fixed this on the alloc side
+but missed the free side.
+
+Impact: If BPF programs using these features in NMI (probably tracing) are
+present on non-SMP builds this might crash the kernel and is probably
+exploitable by local attackers for privilege escalation.
+
+Link: https://lore.kernel.org/20260715-alloc-nolock-fixes-v1-0-fadc49952dda@google.com
+Link: https://lore.kernel.org/20260715-alloc-nolock-fixes-v1-1-fadc49952dda@google.com
+Fixes: 8c57b687e833 ("mm, bpf: Introduce free_pages_nolock()")
+Signed-off-by: Brendan Jackman <jackmanb@google.com>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260703-alloc-trylock-v5-0-c87b714e19d3%40google.com?part=18
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-google.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/page_alloc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-google.c
-+++ b/drivers/usb/dwc3/dwc3-google.c
-@@ -442,6 +442,7 @@ static int dwc3_google_probe(struct plat
- 	probe_data.dwc = &google->dwc;
- 	probe_data.res = res;
- 	probe_data.ignore_clocks_and_resets = true;
-+	probe_data.properties = DWC3_DEFAULT_PROPERTIES;
- 	ret = dwc3_core_probe(&probe_data);
- 	if (ret)  {
- 		ret = dev_err_probe(dev, ret, "failed to register DWC3 Core\n");
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -2967,8 +2967,10 @@ static void __free_frozen_pages(struct p
+ 		migratetype = MIGRATE_MOVABLE;
+ 	}
+ 
+-	if (unlikely((fpi_flags & FPI_TRYLOCK) && IS_ENABLED(CONFIG_PREEMPT_RT)
+-		     && (in_nmi() || in_hardirq()))) {
++	if (unlikely((fpi_flags & FPI_TRYLOCK) &&
++		     ((IS_ENABLED(CONFIG_PREEMPT_RT) &&
++		       (in_nmi() || in_hardirq())) ||
++		      (!IS_ENABLED(CONFIG_SMP) && in_nmi())))) {
+ 		add_page_to_zone_llist(zone, page, order);
+ 		return;
+ 	}
 
 
