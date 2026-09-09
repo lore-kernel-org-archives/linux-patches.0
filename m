@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83DC577E38;
-	Wed,  9 Sep 2026 14:14:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0825577E2E;
+	Wed,  9 Sep 2026 14:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963283; cv=none; b=PlBs9xgZi2AnIHCWBhdwupsN+mKp1ZR61gCCmFYtJiy2WSRCtexEeU4AIOlVWO+3jcNoFLiwZPYIaGWPOkgPr7S0osCwnwyCO9sOyqWD20kO4f8XxtLlaCpvAbGTeY+5mLR0iQJ6uprz9ZvcWkeL2FT8rvHqtfxyp5UFeNGwKJw=
+	t=1788963285; cv=none; b=sGzforrmt1CdGo5ho0uwec3lCuyyUHThTLay1deOG2prW+vb8xWqHtZA4x9Y5DlmXtCB+WVFuWaQV0lwqAe4pAAeq8JzjappHEUPobxzr1Q0OKaZ2Y+/0XKlOe90h2/QpUTCQL78FEBOFvxQKKuuA+MhA9pVYo/Wd1+DGuENou0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963283; c=relaxed/simple;
-	bh=sdkCgeRpiyeuDdCrf0TF3xHzU9p8aS7M6Z/jvKmUFyA=;
+	s=arc-20240116; t=1788963285; c=relaxed/simple;
+	bh=OeAmkLBaq9LsAdeTVEHPD6Nh/pK/wgpdABG+6MjyfKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIRIG1Es7zU600tnx2Ek3SmDCfIX3MR47fGeT4dCQYoBWY0DjlNxgFTXn7bfqaJXYbQtatu+Uz6YPgQnaxTztaG91mLq9dSmk8SlwzApL/FseRwgfXiCGUi797GJy0T1SX6lonXW5nqYLnHmxUmWtfy0frr9V92pboBtkN9QhYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUJxf+Va; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ghh+rlytOQeTCVUIfKBPylnguM/F/vXTEF9zlVfvrMRxyHxwwYL50aJuDGgf5h7v4qK1H18oAvWeIwX1BwaO7n91fbfKTL8IPlvDUACRCprVondQesJpNEzrpngCSKyHpEwXLArco6WFpIFCOrHbKZjMJq3Swa4jEE/H98MMgeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXLtzC2E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUJxf+Va"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491371F00A3D;
-	Wed,  9 Sep 2026 14:14:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXLtzC2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E92F1F00A3A;
+	Wed,  9 Sep 2026 14:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963281;
-	bh=8TvlXaguOPt/BsKNLLHTA2EUk0ERRPASycA/Vo3ny9w=;
+	s=korg; t=1788963284;
+	bh=I2wbAuKlbOMQLxDkmmsc8LNpB2Kk31djV0cw0722yYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tUJxf+Va/gNsj7qprqLTABTbof2ljpQexOvqsp1YuOv28e6fqgIIeAlIA2XvHQW3P
-	 +icH2/j9squJ1tn/AlrcoGkzkVMKkAdPKWAt6G8mZLa5WAhuSnfba6vvjhVtvsJIHD
-	 4aXctCvNU9/Iv8OLtXJeXXD7Mo0FhG6k7tptjNOg=
+	b=iXLtzC2EudAb+2OWxdec81brsIQT8yXNzglD8Jzqk2AbN4lXL2Hk15QVsMTuVvdwb
+	 e02E/cLtZmOmLGZdbJDps8eT99t8qnZEPU2DNdwCH/wqh8BkKkScQWGrmuZp63eQh5
+	 WvckSRzUPb3el/vKAaTp+TvrFsDRjkxYB0o3eOR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sven Peter <sven@kernel.org>,
-	Rafay <ahmedrafay888@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 025/583] usb: typec: tipd: Fix Thunderbolt altmode VDOs for cd321x
-Date: Wed,  9 Sep 2026 15:35:10 +0200
-Message-ID: <20260909134238.695069234@linuxfoundation.org>
+	Jameson Thies <jthies@google.com>,
+	Benson Leung <bleung@chromium.org>
+Subject: [PATCH 6.18 026/583] usb: typec: ucsi: displayport: Fix OOB altmode array index
+Date: Wed,  9 Sep 2026 15:35:11 +0200
+Message-ID: <20260909134238.729484366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,80 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Jameson Thies <jthies@google.com>
 
-commit e24e3370356bddb65d667985a332b5f8aeeb5f97 upstream.
+commit 04cec690b1fd9d1c4c314b91a10d8c68a3acfe18 upstream.
 
-The Intel VID status register is actually 9 bytes long and doesn't
-contain the raw VDOs but only the upper 16bits for device mode and enter
-mode. Shift those two fields into place and reconstruct the cable
-discover mode VDO from the data status register instead since it's not
-directly accessible. With this fixed now the correct VDOs are forwarded
-to the PHY and the to-be-submitted Thunderbolt/USB4 native host interface
-so that the right mode can be negotiated and the link actually comes up.
+The UCSI displayport driver indexes the connector's port altmode array
+with the GET_CURRENT_CAM response after checking it is not 0xff. The
+port altmode array is UCSI_MAX_ALTMODES elements long. If the PPM
+returns an invalid GET_CURRENT_CAM response above UCSI_MAX_ALTMODES and
+not equal to 0xff, the kernel may crash with an array index OOB error.
 
-Link: https://www.ti.com/lit/ug/slvubh2b/slvubh2b.pdf
-Fixes: 0b31c978935f ("usb: typec: tipd: Read USB4, Thunderbolt and DisplayPort status for cd321x")
-Fixes: 82432bbfb9e8 ("usb: typec: tipd: Handle mode transitions for CD321x")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sven Peter <sven@kernel.org>
-Tested-by: Rafay <ahmedrafay888@gmail.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260813-b4-tipd-vdo-fix-v1-1-70317f2cd554@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Update the UCSI displayport driver to verify the current cam is less
+than UCSI_MAX_ALTMODES before accessing the port altmode array.
+
+Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jameson Thies <jthies@google.com>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://patch.msgid.link/20260825234545.2076049-1-jthies@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c     |   17 +++++++++++++----
- drivers/usb/typec/tipd/tps6598x.h |    4 ++--
- 2 files changed, 15 insertions(+), 6 deletions(-)
+ drivers/usb/typec/ucsi/displayport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -114,7 +114,6 @@ struct tps6598x_intel_vid_status_reg {
- 	__le32 attention_vdo;
- 	__le16 enter_vdo;
- 	__le16 device_mode;
--	__le16 cable_mode;
- } __packed;
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -74,7 +74,7 @@ static int ucsi_displayport_enter(struct
+ 		cur = 0xff;
+ 	}
  
- /* Standard Task return codes */
-@@ -694,9 +693,19 @@ static void cd321x_typec_update_mode(str
- 		   cd321x->state.mode == TYPEC_TBT_MODE)
- 			return;
- 
--		tbt_data.cable_mode = le16_to_cpu(st->intel_vid_status.cable_mode);
--		tbt_data.device_mode = le16_to_cpu(st->intel_vid_status.device_mode);
--		tbt_data.enter_vdo = le16_to_cpu(st->intel_vid_status.enter_vdo);
-+		tbt_data.cable_mode = TBT_MODE |
-+			TBT_SET_CABLE_SPEED(TPS_DATA_STATUS_TBT_CABLE_SPEED(st->data_status)) |
-+			TBT_SET_CABLE_ROUNDED(TPS_DATA_STATUS_TBT_CABLE_GEN(st->data_status));
-+		if (st->data_status & TPS_DATA_STATUS_OPTICAL_CABLE)
-+			tbt_data.cable_mode |= TBT_CABLE_OPTICAL;
-+		if (st->data_status & TPS_DATA_STATUS_ACTIVE_LINK_TRAIN)
-+			tbt_data.cable_mode |= TBT_CABLE_LINK_TRAINING;
-+		if (st->data_status & TPS_DATA_STATUS_ACTIVE_CABLE)
-+			tbt_data.cable_mode |= TBT_CABLE_ACTIVE_PASSIVE;
-+		tbt_data.device_mode = TBT_MODE |
-+			(u32)le16_to_cpu(st->intel_vid_status.device_mode) << 16;
-+		tbt_data.enter_vdo =
-+			(u32)le16_to_cpu(st->intel_vid_status.enter_vdo) << 16;
- 		cd321x->state.alt = cd321x->port_altmode_tbt;
- 		cd321x->state.mode = TYPEC_TBT_MODE;
- 		cd321x->state.data = &tbt_data;
---- a/drivers/usb/typec/tipd/tps6598x.h
-+++ b/drivers/usb/typec/tipd/tps6598x.h
-@@ -206,10 +206,10 @@
- #define TPS_DATA_STATUS_DP_PIN_ASSIGNMENT(x) \
- 	TPS_FIELD_GET(TPS_DATA_STATUS_DP_PIN_ASSIGNMENT_MASK, (x))
- #define TPS_DATA_STATUS_TBT_CABLE_SPEED_MASK   GENMASK(27, 25)
--#define TPS_DATA_STATUS_TBT_CABLE_SPEED \
-+#define TPS_DATA_STATUS_TBT_CABLE_SPEED(x) \
- 	TPS_FIELD_GET(TPS_DATA_STATUS_TBT_CABLE_SPEED_MASK, (x))
- #define TPS_DATA_STATUS_TBT_CABLE_GEN_MASK     GENMASK(29, 28)
--#define TPS_DATA_STATUS_TBT_CABLE_GEN \
-+#define TPS_DATA_STATUS_TBT_CABLE_GEN(x) \
- 	TPS_FIELD_GET(TPS_DATA_STATUS_TBT_CABLE_GEN_MASK, (x))
- 
- /* Map data status to DP spec assignments */
+-	if (cur != 0xff) {
++	if (cur < UCSI_MAX_ALTMODES) {
+ 		ret = dp->con->port_altmode[cur] == alt ? 0 : -EBUSY;
+ 		goto err_unlock;
+ 	}
 
 
