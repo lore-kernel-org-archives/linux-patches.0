@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A622F5592E8;
-	Wed,  9 Sep 2026 14:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84917530DF7;
+	Wed,  9 Sep 2026 14:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964573; cv=none; b=r398K7wnioK7A97CZ/Nrrko3df4LLx7H2Vr6LF3Wjx4/1e3N6OU4ROQJ1ybYyEa3y5fHDuI9ACI8gOLB0pSTRFw9vtIcFYkHTQfHd//jBK4RjnX/gLcP4fE79/81hllm0GyfpBgU//UltMGtVswNonEc25TJaryez+ocavxPQTQ=
+	t=1788964575; cv=none; b=AeBAnyZo8SYl5UM/SEND1nIbiwQC5Pnst7EoV4iU6wIzkf+OSis0AEFkXs8mmTus7t1E+YvQ3+kzeXyXRf5IDNBOzt6EuRCe7DCOhDOGREb/5SouuhBT7H+AqnUlzP9gxtTftqGyr/0bHaDYuqQsThcXikiHv+zODgEZraZn6LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964573; c=relaxed/simple;
-	bh=l+V/FkMc7JYOf7k9VxZU94F42vti7PxwpKKJcRtYUp8=;
+	s=arc-20240116; t=1788964575; c=relaxed/simple;
+	bh=r28rozPhr1Hw0sH7M2V2YNp1+yzZS9ZF3YfFb+FDSWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VU5JNFdpmE2IxwvHc3wCWHDYN1XprW4w60ezbFLyrwzhxIktoL3kaO5FWgZLBM088b8pnjD2guz51lW/cJ1g25vave05ZUnNyrDPGAc5grXYUrKNBDHu+3gKHF1mWz4e1o+hDf01fIh/NuFLBpsUPOKr7dQuD7344AOScEDpsww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srcPmBU5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BBNZHL96J/U0+dSIV/uGeRndMRC5DLPhwyKJRtsXKHe/ZRv5Tf3RzQW3pE8deElVuG64lbopOFN3YB1qZlhHFOfKZpItBCuBGv5RgnA5neY+wq/28olDvBvikQ+903k/+TXtb9O5p8F/jAJP/EecGC88uFC7UV4w9CG11NNjWA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adM1BUzc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srcPmBU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF8F1F00A3A;
-	Wed,  9 Sep 2026 14:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adM1BUzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA201F00A3A;
+	Wed,  9 Sep 2026 14:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964571;
-	bh=LES5jPWntOSonFuqAdziEUC9XE6o7Aho5dVmoQZjj98=;
+	s=korg; t=1788964574;
+	bh=6xZqzp/PI3Qe+mqskpBOkuPoTMGJmoXA/nZFKpCodaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srcPmBU5P/Z3XIPQZa3YPDWcwMFvFbEadZSnQ3yvCzdeY5WyVHCPDedMeSvsAWdnm
-	 xHtLwxmYQetWqd1B+epkgm4YJNEvTCDv1zUj9jNmAkCF6YKgDMhENKWU0AUHQNrJgJ
-	 +e5Bn0mjU9tJRKY9iI3apKlPF4OMmTjNpWK7NHwA=
+	b=adM1BUzcxLCZMfvuTWBzZ3aQDns3hsvzPBy9+g4Zbs++eB41VzWOn4Dgt0SSPiI1E
+	 H4ZtXOc8pWAZuMRFnkbHkGLFg83HfCQ8nRICUo27wP4zOJBr3X71y1KAWoQRQWOqjN
+	 xzQ83FhfdRJ1NV+lQd4ARv8IKC4OY6IMo6JzMfYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 468/583] smb/client: reduce fallocate zero buffer allocation
-Date: Wed,  9 Sep 2026 15:42:33 +0200
-Message-ID: <20260909134254.099578259@linuxfoundation.org>
+Subject: [PATCH 6.18 469/583] smb/client: emulate small EOF-extending mode 0 fallocate ranges
+Date: Wed,  9 Sep 2026 15:42:34 +0200
+Message-ID: <20260909134254.129418716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,19 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 9e4ec3be67af41ab859302d7109b34976efd9258 ]
+[ Upstream commit 7a06d3b816d73448b4e38b83d65049f090b7b201 ]
 
-The fallocate emulation allocates a 1 MiB zero-filled buffer even
-though each SMB2_write request is limited to SMB2_MAX_BUFFER_SIZE,
-which is 64 KiB. A high-order 1 MiB allocation is more likely to
-fail on a fragmented system.
+When a mode 0 fallocate extends EOF from 1G to 2G + 1M, the client
+currently sends SetEOF for 2G + 1M. This can make fallocate return
+success without allocating the requested range, or allocate extra
+space before that range.
 
-Allocate only the smaller of the requested range and SMB2_MAX_BUFFER_SIZE,
-and reuse that zero-filled buffer for every write request. Also reject
-a successful write that makes no progress to avoid looping indefinitely.
+For example, on a fresh file:
 
-This reduces the contiguous allocation required by fallocate emulation
-without changing the written data or range semantics.
+        xfs_io -f \
+          -c "falloc 0 1G" \
+          -c "falloc 2G 1M" \
+          -c "truncate 3G" test
+
+The second fallocate should allocate [2G, 2G + 1M), leaving [1G, 2G)
+as a hole.
+
+Before this change, the result depended on the server allocation policy.
+With Samba "strict allocate = no", SetEOF could return success without
+allocating [2G, 2G + 1M). With "strict allocate = yes":
+
+	# filefrag -v test
+        [0, 1G)             allocated
+        [1G, 2G)            allocated unexpectedly
+        [2G, 2G + 1M)       allocated
+
+SMB cannot allocate that arbitrary range, so write zeroes to small
+EOF-extending ranges instead. Limit this to 1 MiB to bound the
+client-side I/O cost.
+
+With "strict allocate = no", the requested range [2G, 2G + 1M) is
+allocated by the writes. With "strict allocate = yes":
+
+	# filefrag -v test
+        [0, 1G)             allocated
+        [1G, 2G)            hole
+        [2G, 2G + 1M)       allocated
+
+This fixes the small EOF-extending range case exercised by generic/213.
 
 Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
@@ -75,40 +101,19 @@ Stable-dep-of: 32a7af68df73 ("cifs: add cifs_resize_file_locked() to guard fscac
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/smb/client/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/fs/smb/client/smb2ops.c
 +++ b/fs/smb/client/smb2ops.c
-@@ -3508,7 +3508,7 @@ static int smb3_simple_fallocate_write_r
- 					     char *buf)
- {
- 	struct cifs_io_parms io_parms = {0};
--	int nbytes;
-+	unsigned int nbytes;
- 	int rc = 0;
- 	struct kvec iov[2];
- 
-@@ -3529,9 +3529,10 @@ static int smb3_simple_fallocate_write_r
- 		rc = SMB2_write(xid, &io_parms, &nbytes, iov, 1);
- 		if (rc)
- 			break;
-+		if (!nbytes)
-+			return -EIO;
- 		if (nbytes > len)
- 			return -EINVAL;
--		buf += nbytes;
- 		off += nbytes;
- 		len -= nbytes;
- 	}
-@@ -3551,7 +3552,7 @@ static int smb3_simple_fallocate_range(u
- 	loff_t l;
+@@ -3553,7 +3553,7 @@ static int smb3_simple_fallocate_range(u
  	int rc;
  
--	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
-+	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
- 	if (buf == NULL) {
+ 	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
+-	if (buf == NULL) {
++	if (!buf) {
  		rc = -ENOMEM;
  		goto out;
+ 	}
 
 
