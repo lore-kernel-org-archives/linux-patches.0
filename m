@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DAC569F3C;
-	Wed,  9 Sep 2026 14:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D31E566C5B;
+	Wed,  9 Sep 2026 14:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962735; cv=none; b=W3/xK/tmcCfVHlDk7dnvWDsPpAEqBzzMu4B9KQGhpmecdbtx96MV4pNiixnQNBwrR2TmDY+h/mKDhN9OG5X7VnmWr04g2Xj4eEnCYjTdE7N+qtHnrJdU41L+Vfovodbzg9W//s/TJNrMwV1j8+Jv5J6VQqhUqzYGY+3CvBv9u9g=
+	t=1788962738; cv=none; b=pL1u08tVhVqi4gkYJuntFnb8Nf1iBy8Og+6kz1cb0IaKh7rfkSyUmHFNGp4cgMSHIOEJafoTKEry/wans1lw6ajcJxdaLqpRIZiK70kX/jAE91140MHE5N77diX9vAWEGNzJtx3ZI5tWl+H1jxzP7Szz93S+oSm03lOFJast+74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962735; c=relaxed/simple;
-	bh=pI8wdsap9cvX3MkwTx9e+wLMzNUbFHF47vcHNvpHe4U=;
+	s=arc-20240116; t=1788962738; c=relaxed/simple;
+	bh=9vAtxhLfseR31mbBTBMWKZBHOz9OnfGQKPqGEatwBcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMfgIF6odnAYa2OEFxn+dzagTG5rE3kdNvg5I1houDtz+hnm3bcnNCGAaMhy6mKDfHWyz27ACleuSrFpDoqG6/WHYnQx/OihXSC7uFhA2UTQ0v77wIXsCByjyIXkNYoRAVfqOEdH2TZaVk/iSRUVxwMxI3AyuGbXAC9FxrxLnag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhG1lhAz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MYQe/gkckimK0zN5c8xGccihHuhl6H6Hh70+Ye2WZUwX5m9qJKOBL5YuaWh57eAHvwaFJvvdSPNgwGG/VGvAA+tGhm8i3ty1INbvv342LtqEiCSdq/EB/0wr5fbTHA71D5oEh4y1IEDLLXNymin26jsfFi1VXN1Wu9UEM16vJ/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rv+EU1Qi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhG1lhAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34751F00A3A;
-	Wed,  9 Sep 2026 14:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rv+EU1Qi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2421F00A3A;
+	Wed,  9 Sep 2026 14:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962734;
-	bh=4fE/gwOTzmxiGK3VuXS+uLxMpwMLGs5rK9ZMB2x2fwE=;
+	s=korg; t=1788962737;
+	bh=LFzAZ8ZApw136zWVpikq1x9TGu6AZjjZ/lHOqgPYnBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dhG1lhAzqUbGmTk1fL97asbJFsYJEXN8Az44+GRz5A3T5RzQ1k10uB0QLe+iMZmwl
-	 Y4K7AQQuUVlunt6JSIAPUtuwlOX9ZyM2NMxgVFF0+JL8l/DtJSl+Fukl3h5qmiZ7f3
-	 +ThhUGfpQnA4jKA08R6RvF6uPDac3PGIxUdbRPVI=
+	b=Rv+EU1QiihMLTpNJn8IpQJvUz/QSaH/5gnYgyV8rc5MdE2h+XGABMqJVP8YTfgkQZ
+	 qfgkaNrHrUiIfJ2IbwPVT6eBr2kIV4oErL/F9MriBaSi7mvm7Fvh/ulZr9Oa4ZKags
+	 oWfD6HGOI/9s1JKw4RaAtCM3Fpi7TybFx/wqVcdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Ilya Krutskih <devsec@tpz.ru>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 394/556] media: saa7164: fix cleanup on resource allocation failure
-Date: Wed,  9 Sep 2026 15:41:14 +0200
-Message-ID: <20260909134244.513098852@linuxfoundation.org>
+Subject: [PATCH 7.2 395/556] media: tda18250: fix possible integer overflow
+Date: Wed,  9 Sep 2026 15:41:15 +0200
+Message-ID: <20260909134244.547199349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,63 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Ilya Krutskih <devsec@tpz.ru>
 
-commit 28e84c6e2e6753ed238ea097b2842a32a6a6879b upstream.
+commit 6dd8e257f7cafda7fbf10d81b3c55c9bba4825f4 upstream.
 
-saa7164_dev_setup() adds the device to the global saa7164_devlist before
-requesting the PCI BAR memory regions.
+Integer overflow may occur, when variable exp equals to zero. Result
+of shift 1 << (exp - 1) may then leads to undefined behavior.
 
-If get_resources() fails, saa7164_dev_setup() decrements the device count
-and returns an error, but leaves the device on saa7164_devlist. The probe
-error path then frees the device, leaving a dangling entry on the global
-list.
-
-Reuse the existing MMIO mapping error path to remove the device from
-saa7164_devlist and decrement the device count before returning.
-
-Also release BAR0 if it was successfully requested but the BAR2 request
-fails.
-
-Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
+Fixes: 148abd3b5b14 ("media: tda18250: support for new silicon tuner")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Ilya Krutskih <devsec@tpz.ru>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/saa7164/saa7164-core.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/media/tuners/tda18250.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/saa7164/saa7164-core.c
-+++ b/drivers/media/pci/saa7164/saa7164-core.c
-@@ -878,6 +878,9 @@ static int get_resources(struct saa7164_
- 		if (request_mem_region(pci_resource_start(dev->pci, 2),
- 			pci_resource_len(dev->pci, 2), dev->name))
- 			return 0;
-+
-+		release_mem_region(pci_resource_start(dev->pci, 0),
-+				   pci_resource_len(dev->pci, 0));
- 	}
+--- a/drivers/media/tuners/tda18250.c
++++ b/drivers/media/tuners/tda18250.c
+@@ -440,8 +440,8 @@ static int tda18250_pll_calc(struct dvb_
+ 		goto err;
  
- 	printk(KERN_ERR "%s: can't get MMIO memory @ 0x%llx or 0x%llx\n",
-@@ -1000,8 +1003,7 @@ static int saa7164_dev_setup(struct saa7
- 		       dev->name, dev->pci->subsystem_vendor,
- 		       dev->pci->subsystem_device);
- 
--		saa7164_devcount--;
--		return -ENODEV;
-+		goto err_devlist;
- 	}
- 
- 	/* PCI/e allocations */
-@@ -1039,7 +1041,7 @@ err_ioremap_bar2:
- 	iounmap(dev->lmmio);
- err_ioremap_bar0:
- 	release_resources(dev);
--
-+err_devlist:
- 	scoped_guard(mutex, &devlist) {
- 		list_del(&dev->devlist);
- 	}
+ 	exp = (uval & 0x70) >> 4;
+-	if (exp > 5)
+-		exp = 0;
++	if (exp == 0 || exp > 5)
++		exp = 1;
+ 	lopd = 1 << (exp - 1);
+ 	scale = uval & 0x0f;
+ 	fvco = lopd * scale * ((c->frequency / 1000) + dev->if_frequency);
 
 
