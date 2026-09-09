@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C384565112;
-	Wed,  9 Sep 2026 14:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A297F57981A;
+	Wed,  9 Sep 2026 14:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963619; cv=none; b=ZLa7pQro5bmu6UW+RmAJSJWPdct6u3E9607oBWzLuBevrw7acqEtfCCbTGwo0QhyW7ce5Up6SJEOwQhzXBWBdhf9zEnh3SHtPMOoXPCBPYrPn7gx1OKTP6ehegmosmy4zUSH3xF+qpeQaykAvX5lsnTbU3QbDrDr84WhuUZM0l0=
+	t=1788963622; cv=none; b=IwBXOiHGe+PU7jC6iyQHSI7Eo+ysF/81NtkEhXW9onsqzDUjOtNi+MeoUgeXQbjhFZpTl2de8/kkWhFh5LTABnnxRgWZq8vOoZPDOsaonwCZWn7sv6aqT9r4jSIxneipYp2EBNe5oLmtxweHngGfHkrI79vBXgNwGOTk8dRSxkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963619; c=relaxed/simple;
-	bh=qEFupc4ahYOaGU6G2L5ktf0aRc2DAQkWr46L7jwspIk=;
+	s=arc-20240116; t=1788963622; c=relaxed/simple;
+	bh=P+AMsul2e6uyHG3VX4Evok3I2jG6EPpjDnmjKJhn0mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEZyrw1SSnIzPYzQVglu9rPPnNZL9ZHvTBKeqhJpdZXcoj7I8DJhNcP5/ofWv3eY9lZvsOYry4kWDoEJ5RPXueQUxwR3HnyHX5VEPk8yY6YNQ6nCxWD24UMVDcNnlfjyp4J6I7p3E1cWfD/Ez5iACabjXVhByzy6u0VznW29k78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGpERHVw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=chr5cr2Ty7oMiyWG9kPjQWN6+KXMUac5bkxG9SFVSgY4K1zGpIZwjF9yF2iLpCwl5Z3q2Ukz9i7YVB9xzpAshllH/nTv05ZMY66d6wDDXtS1B6PlhPMlo77xs39T3DjuU36dwGzshgwSGnVYWNng6bed/xoERRyAjOXhy7p2uVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQvNk4Sx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGpERHVw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0831F00A3A;
-	Wed,  9 Sep 2026 14:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQvNk4Sx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA65E1F00A3A;
+	Wed,  9 Sep 2026 14:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963618;
-	bh=cH9RCG+YqXvhcIZ94yYlrmPiABwouMb3TgBdP8YNMEg=;
+	s=korg; t=1788963621;
+	bh=PaVCGmM5G3mSRbRZ5H1NUGRgeT3OTNJDbi7lmlrpKm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pGpERHVwfuque/fALIS0wKcXpoXJ+ToUbMNCPo60Es/5eWnqpdKrsWSqQ8JXGTTD3
-	 hZvtXGkXPbmbbSd0/NbAuuLjJjaalCWeUIfs14ZQqnTSdUlPfa/KRUD2TNVaCnKeDP
-	 MHdLo/HvrmaNJHMc2PdLQYo9R17HereHRaGaHaWg=
+	b=IQvNk4SxjioEVHUxgVulizBjE96UN4OPtZHrfYstU1ECxlCnoJWk8c8vlrauiN0Tp
+	 YfkhY1wG9l6ROgyLdiCIFVVqJmJNarPcyQENQ42PHf7fKlmRYR0naI2fQ3imzgIDKI
+	 1NGrt6Hj0I8GAO2DMGJdj4GgvXNigUkFdHCfrHAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 141/583] batman-adv: mcast: ensure unshared skb for multicast packets
-Date: Wed,  9 Sep 2026 15:37:06 +0200
-Message-ID: <20260909134243.037581844@linuxfoundation.org>
+Subject: [PATCH 6.18 142/583] batman-adv: mcast: linearize skbuff for packet generation
+Date: Wed,  9 Sep 2026 15:37:07 +0200
+Message-ID: <20260909134243.078089022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,34 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 82bf207f48ebb7a38157f1d91dac884fc9b8cfd8 upstream.
+commit 6a30a59e2660afd03c975f1b8eae6a2301161197 upstream.
 
-When a packet is transmitted via a batman-adv interface and has already
-enough room for the header then nothing will make sure that the skbuff is
-unshared. But it is not allowed to modify a currently shared skbuff.
+batadv_mcast_forw_packet() and batadv_mcast_forw_scrape() is not only
+called (indirectly) by the unsharing+linearizing batadv_recv_mcast_packet()
+handler. When it is called (indirectly) by batadv_mcast_forw_mcsend() then
+it will be unshared but not linearized. The SKB_LINEAR_ASSERT() can
+therefore cause a fatal BUG().
 
-Always make sure that the pskb_expand_head() is not only called for a too
-small header but also for shared skbuffs.
+The linearization should happen during the expansion of the head because
+the scrape function can be hit already during the initial
+batadv_mcast_forw_mode() selection code:
+
+* batadv_interface_tx
+* batadv_mcast_forw_mode
+* batadv_mcast_forw_mode_by_count()
+* batadv_mcast_forw_push()
+  -> calls batadv_mcast_forw_expand_head() before everything else
+* batadv_mcast_forw_push_tvlvs()
+* batadv_mcast_forw_push_dests()
+* batadv_mcast_forw_push_adjust_padding()
+* batadv_mcast_forw_scrape()
 
 Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Fixes: 90039133221e ("batman-adv: mcast: implement multicast packet generation")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/multicast_forw.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/batman-adv/multicast_forw.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/net/batman-adv/multicast_forw.c
 +++ b/net/batman-adv/multicast_forw.c
-@@ -1100,8 +1100,7 @@ static int batadv_mcast_forw_expand_head
- 		return -EINVAL;
- 	}
- 
--	if (skb_headroom(skb) < hdr_size &&
--	    pskb_expand_head(skb, hdr_size, 0, GFP_ATOMIC) < 0)
-+	if (skb_cow(skb, hdr_size) < 0)
+@@ -1103,6 +1103,10 @@ static int batadv_mcast_forw_expand_head
+ 	if (skb_cow(skb, hdr_size) < 0)
  		return -ENOMEM;
  
++	/* batadv_mcast_forw_scrape() + batadv_mcast_forw_packet() require linearized skb */
++	if (skb_linearize(skb) < 0)
++		return -ENOMEM;
++
  	return 0;
+ }
+ 
 
 
