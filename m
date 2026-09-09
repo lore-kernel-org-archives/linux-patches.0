@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D5C579827;
-	Wed,  9 Sep 2026 14:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E119563FC2;
+	Wed,  9 Sep 2026 14:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963079; cv=none; b=NoKsjP9x+YnZq38xddn9l50/P2mYPiuQIXl4vSD3Ejy753W7mLkbnqQsa1jMnRJ1udDTAIPo+bPK7VvOQ9ObsvxJj76MJSi6r+RMfSzPOuUT/IB1C7OlDjNF+urgbkpAOlS21wav0rqPnemQNJln6TGR4ATua+URR7YdI3ogHZA=
+	t=1788963082; cv=none; b=LnVEFBVvaS2WdwX7Cz7XWTmyRmNfXIRg4vEwZuSLbjD/TUFcf+DrNBD4uPFB4qZoPcncgC/2oyROlrqKjAHRyT4fzyXL76E20UFo83WwTmy18s8oJL4Wj/x3xFvkH5naxiX5NhQ7eU9UupmmPiebU1JX2D8vci7e7Tdz95EeyEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963079; c=relaxed/simple;
-	bh=E6uu1Jkn2us+ENhWdabVL7NJYSluEjJFqssFvD05BCM=;
+	s=arc-20240116; t=1788963082; c=relaxed/simple;
+	bh=+JRmi2jCLUjr3ZSmTVGllB1ifmHUGTT3bVV5u1mj1cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDNi6B36xdHFeIUD8y1maN2FmWi8zgyHqqyU/LnMS6lBWfej14SXMCKlSVKAV/nLdjSfsNWNJj7oJo12mL0y2z+czn3JesOJDRCCw0t/RvnnlbfMHOCBT6exR9LQybfYCmE36uW7YzS3Z2byg032UJrvxHuH3CauBPmgNGMLwCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HL8PQrkh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qtF+q9tb6AutYmmb9wpZLN0gAM7sVw9ley+KeyP/Sqw4q6MIf5peZndCGNQwLnfD3wsRB4K+s/7xd5LVoyDXc/9icsekQ0ZgexY62p21fBAIuSUYFFIo5bwgIUxriexPsqDYdwBXyg/oH0bZV4FDZ8K2jFg391DCktt65yzvwd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaHck8h0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HL8PQrkh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD85F1F00A3A;
-	Wed,  9 Sep 2026 14:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaHck8h0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BE41F00A3A;
+	Wed,  9 Sep 2026 14:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963078;
-	bh=l7PoGYJ/6ovR+PwqzJB1nKbpthrhoOPLj6p6/goZpnM=;
+	s=korg; t=1788963081;
+	bh=/coiL1zXP168Tvpo1UNlqcmbO3prYq3lcoQwPfz0eaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HL8PQrkh7gG0+pHuSqzezR4DJuhFiRbUJe3tZn6Utz8toRJipxFZJdeFoNXqklwwc
-	 AQ9NyX+G+gTEinRhi4eVoa5uBxdevt7eBZUUqyllTu9WTt5RdIqhQmr35I7t1Ry16R
-	 Uq33CTZHx4BAzuP4D1gKChPfSGDsGNWOU8omdd5g=
+	b=gaHck8h0T2TutHJZMrMQwezTcRKwwrc2DbK7ujDFrs71bSiPT86waxF73OzaSd8sS
+	 93YC2YN3oESG14a5jgVk4siHYViJwrkcuhFxGgpqtQWo9tOzGov9o/QM8bnH3voJmg
+	 IPNtwDyhb+W03CchDm0TOfSX8ALgsWJw4zqE29Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sunil Khatri <sunil.khatri@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 511/556] drm/amdgpu: update the fw version for gfx11 userqueues
-Date: Wed,  9 Sep 2026 15:43:11 +0200
-Message-ID: <20260909134248.427127283@linuxfoundation.org>
+Subject: [PATCH 7.2 512/556] drm/amdgpu: update the fw version for gfx12 userqueues
+Date: Wed,  9 Sep 2026 15:43:12 +0200
+Message-ID: <20260909134248.459624922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit c748dd03df33360549ad60cdccee13570e9c0f90 upstream.
+commit 49a74a2388528c1a2e96f01114c4513e635605fe upstream.
 
 Update to the latest stable fw versions where userqueues
 is working as it is expected with major fixes.
@@ -60,23 +60,23 @@ is working as it is expected with major fixes.
 Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
 Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d50201b891604ab97f305d4a20d888ba93305b48)
+(cherry picked from commit 69fa36e3ac92f2544ee7a1b719ec212b8247a2da)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    8 ++++----
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |    8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -1646,10 +1646,10 @@ static int gfx_v11_0_sw_init(struct amdg
- 	case IP_VERSION(11, 0, 2):
- 	case IP_VERSION(11, 0, 3):
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -1434,10 +1434,10 @@ static int gfx_v12_0_sw_init(struct amdg
+ 	case IP_VERSION(12, 0, 0):
+ 	case IP_VERSION(12, 0, 1):
  		if (!adev->gfx.disable_uq &&
--		    adev->gfx.me_fw_version  >= 2420 &&
--		    adev->gfx.pfp_fw_version >= 2580 &&
--		    adev->gfx.mec_fw_version >= 2650 &&
--		    adev->mes.fw_version[0] >= 120) {
+-		    adev->gfx.me_fw_version  >= 2780 &&
+-		    adev->gfx.pfp_fw_version >= 2840 &&
+-		    adev->gfx.mec_fw_version >= 3050 &&
+-		    adev->mes.fw_version[0] >= 123) {
 +		    adev->gfx.me_fw_version  >= 3090 &&
 +		    adev->gfx.pfp_fw_version >= 3190 &&
 +		    adev->gfx.mec_fw_version >= 3450 &&
