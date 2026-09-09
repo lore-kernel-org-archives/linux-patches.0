@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2936A4FDE6C;
-	Wed,  9 Sep 2026 14:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8F15540AE;
+	Wed,  9 Sep 2026 14:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964146; cv=none; b=Fzju6txfoo86PZbcbtxAabjHdAnBAOCwRR4D/Gk2+0lRWlbQnbi+EylqPQzTm53A692oJfvgtxjpFbBrba2ebqOdBHNewlwFR0wxSpcmWZ+N2K4z10Sj2LJoTm2cyCNV7/OceHX998hJwnhF/LzwHC7Wyrk6QZNuRAk2ySXEK8c=
+	t=1788964148; cv=none; b=ZufmBwZR/ujt6LshNrcTWzMUISPAawz6fnAwgJj90abhVsBNbiMGApQJmwqM6xx2FgnCpSuZh/9tIqpcuROuW3sXlcfgUFw0rOCU8tn2x/JJp+way9pv40ncGTRgNJkE1OkxerZkY5bFpAUXvdM9s7r5Z80F33gNXvJxgi3BSY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964146; c=relaxed/simple;
-	bh=LavFtCbHyXmB++LchCGOPMZUfxyywD9HFdVYUKGyFC4=;
+	s=arc-20240116; t=1788964148; c=relaxed/simple;
+	bh=wstWoLLgKrEMDUp0mEickI4dx/KMrMFtehPLBHnXlp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G6XajYVV8T1yrr0O7Pbu6NvPCULWPYlqaZ7pzbyw6g2dc4iOWc9FWmjAM4oVSTa5od61CoPb/PO7ZYoWCynoQC60PklOVHun51SGaiwKjckYjoEBTIfCCEuOYfBSTiOdc74ZvQRpx4aFJIDUWjiWbIEnGrYbAb9Lq3BGsbxRSKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoUhvtHG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fgc6R7D+cz9TubT5KRW6C6iunjLafVgRGo502wp6POenffMxWft+JhKZTSqwNXgOmc7u7TIbEnkfTSOT/lRpgDEMhEGkxn1xPaGk4AH4dfTOymEOe7C+AFuL2yd+2GXupN/nAE0Z3I1aITB+ILxkm6PoGeJmfi23JKPC8wDp6kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lempd+SX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoUhvtHG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434FB1F00A3A;
-	Wed,  9 Sep 2026 14:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lempd+SX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FDB1F00A3A;
+	Wed,  9 Sep 2026 14:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964144;
-	bh=VJFGWmcIc1unf2jnNNHFNX5/7susedSmiNPYq93PlFg=;
+	s=korg; t=1788964147;
+	bh=PlO7qAII7LFrZmArFfkHEUDj0GWyRUzJ+pbF+yIBRIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZoUhvtHGqRP38rRs1LrRVQfVsogLVim+4dg8h8qjSdHiZjL0xpGgk4i+aB1xYMMis
-	 ZHZCqDYOIUVccafr9AVip3IvwLciJhgCghhzWiZEqi+7mF7+NoTwDVcWtnJCUTn5QU
-	 sQQi35Wx2UJXcq3ydXd1AXfpEVFqX8MthFRB+w00=
+	b=lempd+SXXjhzH/QfIptITztYBSIonOdRQHc9VOhm/Ybgeat7EzvqwpMftPiMpWUBd
+	 7fPx2uqwSiGagzzbYRbFyOLZeFG3HoZyvjVM7n1HI9wViW63LMEMvwuzKip6vnlDiF
+	 kTw039B6DK9iTzhnVsG0vqgDfeFI+da/z97AhbJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 269/583] LoongArch: Fix acpi_package_ids[] array overflow
-Date: Wed,  9 Sep 2026 15:39:14 +0200
-Message-ID: <20260909134247.413644044@linuxfoundation.org>
+	Uday Khare <udaykhare77@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 316/583] media: video-i2c: fix kthread error pointer left in kthread_vid_cap on failure
+Date: Wed,  9 Sep 2026 15:40:01 +0200
+Message-ID: <20260909134248.953999606@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,45 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Uday Khare <udaykhare77@gmail.com>
 
-commit 2a2367d46d7a4ee4122b7a86e57125542dbbe963 upstream.
+commit 76e379754ba618989f6215be608d5c04774a611d upstream.
 
-With LoongArch virt machine, a typical setting is one core per socket,
-there will max 256 sockets (packages) on one VM. With PPTT acpi table,
-array acpi_package_ids[] will be overflowed.
+kthread_run() returns an ERR_PTR on failure, not NULL.
+When start_streaming() fails, data->kthread_vid_cap is left holding
+this error pointer instead of being cleared.
 
-Here change the array size of acpi_package_ids[] with the max value of
-MAX_PACKAGES and KVM_MAX_VCPUS.
+This causes two subsequent bugs:
+1. A future call to start_streaming() sees a non-NULL kthread_vid_cap
+   and returns 0 (success) immediately, without actually starting the
+   capture thread.
+2. A call to stop_streaming() checks 'kthread_vid_cap == NULL' which
+   is false for an error pointer, and proceeds to call kthread_stop()
+   on the error pointer, leading to a kernel crash.
 
-Cc: stable@vger.kernel.org # 6.7+
-Fixes: 4e8f58620f67 ("LoongArch: Retrieve CPU package ID from PPTT when available")
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fix this by resetting kthread_vid_cap to NULL on failure before
+jumping to the error path.
+
+Fixes: 5cebaac60974 ("media: video-i2c: add video-i2c driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/acpi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/i2c/video-i2c.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/loongarch/kernel/acpi.c
-+++ b/arch/loongarch/kernel/acpi.c
-@@ -13,6 +13,7 @@
- #include <linux/export.h>
- #include <linux/irq.h>
- #include <linux/irqdomain.h>
-+#include <linux/kvm_host.h>
- #include <linux/memblock.h>
- #include <linux/of_fdt.h>
- #include <linux/serial_core.h>
-@@ -202,7 +203,7 @@ static void __init acpi_process_madt(voi
+--- a/drivers/media/i2c/video-i2c.c
++++ b/drivers/media/i2c/video-i2c.c
+@@ -522,8 +522,12 @@ static int start_streaming(struct vb2_qu
+ 	data->kthread_vid_cap = kthread_run(video_i2c_thread_vid_cap, data,
+ 					    "%s-vid-cap", data->v4l2_dev.name);
+ 	ret = PTR_ERR_OR_ZERO(data->kthread_vid_cap);
+-	if (!ret)
+-		return 0;
++	if (ret) {
++		data->kthread_vid_cap = NULL;
++		goto error_rpm_put;
++	}
++
++	return 0;
  
- int pptt_enabled;
- static int acpi_nr_packages;
--static int acpi_package_ids[MAX_PACKAGES];
-+static int acpi_package_ids[MAX(MAX_PACKAGES, KVM_MAX_VCPUS)];
- 
- int __init parse_acpi_topology(void)
- {
+ error_rpm_put:
+ 	pm_runtime_put_autosuspend(dev);
 
 
