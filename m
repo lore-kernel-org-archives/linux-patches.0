@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDD9476049;
-	Wed,  9 Sep 2026 13:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C2849890A;
+	Wed,  9 Sep 2026 13:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961938; cv=none; b=Wpkly+shDrUR8+/WGuF8E/qJTFoYMIa2G9lojVIayxecB/6Z+bz8M3GMsCnXXdJmPEO4F/RgMROQ3cY8wXSgippksM9d4mjfY/9ZkDhsRSehnEYZQWWaHmtg1HMJV7Xg7wO3ShRajE3rFz4sYOZPOqD9hT2pOqlpM615RiQtAwo=
+	t=1788961941; cv=none; b=QiZFjod2TI0UIpbnq0O3BwgITn5tO5wcO+l64Lw5gOumXPp1E05zMQkVADLgOzIjP/YVIR5JlTQ8o4ZEIgUElCFOe0suciGH1ED301zJ8zGIK97OsgBVclLbl324sFJvgQ8XWWVExiRajB3Zw0BU4oWsEHTq7p1ry74eZaNnNQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961938; c=relaxed/simple;
-	bh=oltDB1xdIeh4KFwwZMJ9CbwbjAdWQUPXzaU0o+zsc54=;
+	s=arc-20240116; t=1788961941; c=relaxed/simple;
+	bh=OZMeem1sgCyEeYCtg+qhmdDrDR1JKnnGcCy24XMEwSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kl6l0KHpMRBuFKaqEiCBW4fcdWtHR9pfKT2cvhwuYDRYycgGC8rHItF6mUQ5/sYxPjS7L4c88D6GPmpHMea76kzh4fkN9wmMaJaeqi3Dvi6BWB4JG15/YQlKtgvQSnEEvSu2mjhTWwgBToiCBUaNzPw0Ru3N1CVsVc1IWgCnNYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8TkMAiS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Q0mLyKyt2DNBcFNN6bGy2zrN5aOlzucH7xqoh0KOuxsMadLC6iYn/IqbsxLoBMWgWlhGYR6sKUbTu9M1HPmUgP+uwWgKFMUUVNHqiLUe8HifB+TUEg12arJf8YjHM42ToXxfqknwbo+6UnfoOpkUHs3BXn8juL7f2g0I/8yQxmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGUJDJ7G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8TkMAiS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A53D1F00A3A;
-	Wed,  9 Sep 2026 13:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGUJDJ7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94D81F00A3A;
+	Wed,  9 Sep 2026 13:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961937;
-	bh=bdIyZJ1q/jUPWMyGvNgHPZbraAuw/IJ9sQEvUetKw1s=;
+	s=korg; t=1788961940;
+	bh=UNU4suvix8pugnsUd01/L13nd0u0KsdbUCY3zMY48Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C8TkMAiSygxZ/txBecyR6R9gYG1ipydAV89clrhNxuqNCXgpF2LzBb7VOqNlb/WFt
-	 LoYyFvaL+rtMsGFkjTHgggUWZZ3lBCUMS5U3w6rQwqQA8axlqUtLffiBAWXPybZ6B6
-	 Gnr3XrnbKWtyxUlKcmEWkreG2bZBaUzL/xKLuKgo=
+	b=FGUJDJ7G3UyeWC3qnSMrsDML3vlH1ZEmH8Dg5rOtru+50XmagMrYNBqHvBNyrYkXt
+	 tTxnWGgkkogpEH07Kb+QsSwi43TgJ2Adla80YfEwhuKKrNPM7wi3S3OzBakEh/1h1T
+	 J4J6JJlIZdU0SUHrth/LytWcFuBvPeE1TFIyTln4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 116/556] block: flag zoned disks with GENHD_FL_NO_PART
-Date: Wed,  9 Sep 2026 15:36:36 +0200
-Message-ID: <20260909134234.551405938@linuxfoundation.org>
+	Chen Pei <cp0613@linux.alibaba.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Subject: [PATCH 7.2 117/556] bpf, riscv: Make arena support depend on ZACAS
+Date: Wed,  9 Sep 2026 15:36:37 +0200
+Message-ID: <20260909134234.585711838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -48,64 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Chen Pei <cp0613@linux.alibaba.com>
 
-commit 3f9c7a108c0e8f14425384912017071b71341e3b upstream.
+commit 536b523b407397c8d3967c020ce7aad70a0ea030 upstream.
 
-Zoned block devices do not support partitions. However, the partition
-table is nevertheless still inspected, and any partition found ignored
-with a warning in add_partition(). While this is generally not a problem,
-and in fact beneficial to the user as it indicates an invalid use of a
-zoned block device, scanning for a partition table on the device may
-result in issuing read operations to offline zones (e.g. after a disk head
-is depopulated for disks that support head management operations).
+The arena range tree allocates its nodes with kmalloc_nolock() since
+commit f8c67d8550ee ("bpf: Use kmalloc_nolock() in range tree").
+kmalloc_nolock() requires slab caches with cmpxchg128 support
+(__CMPXCHG_DOUBLE); on riscv cmpxchg128 is provided by the ZACAS
+extension. On systems without ZACAS every arena map creation fails
+with a misleading -ENOMEM.
 
-Since partitions are ignored anyway, completely disable partition scanning
-for zoned gendisks by setting the flag GENHD_FL_NO_PART in __add_disk().
-The existing check in add_partition() is left as-is to ensure that we
-still get a warning if for whatever reason, despite GENHD_FL_NO_PART, we
-still endup trying to add partitions.
+Report the missing support instead: make bpf_jit_supports_arena()
+return system_has_cmpxchg128() where it is defined, so arena map
+creation fails with -EOPNOTSUPP on systems without ZACAS. The macro
+is only defined when both CONFIG_RISCV_ISA_ZACAS and
+CONFIG_TOOLCHAIN_HAS_ZACAS are enabled, so guard it with #ifdef the
+same way mm/slab.h consumes it, and reject arena otherwise. This
+matches how arena BPF_CMPXCHG instructions are already gated on ZACAS
+in bpf_jit_supports_insn().
 
-Flagging zoned disks with GENHD_FL_NO_PART also has the benefit to expose
-through sysfs the ext_range attribute with the value of 1 instead of the
-default DISK_MAX_PARTS, thus correctly advertizing the fact that zoned
-disks do not support partitions.
-
-Fixes: 5eac3eb30c9a ("block: Remove partition support for zoned block devices")
+Fixes: f8c67d8550ee ("bpf: Use kmalloc_nolock() in range tree")
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+Acked-by: Pu Lehui <pulehui@huawei.com>
+Acked-by: Björn Töpel <bjorn@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://patch.msgid.link/20260831025050.667758-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/bpf/20260902061451.1416-1-cp0613@linux.alibaba.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/riscv/net/bpf_jit_comp64.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -448,6 +448,13 @@ static int __add_disk(struct device *par
- 	}
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -2114,7 +2114,15 @@ bool bpf_jit_supports_ptr_xchg(void)
  
- 	/*
-+	 * We do not support partitions with zoned block devices, so do not try
-+	 * to scan the partitions table.
-+	 */
-+	if (blk_queue_is_zoned(disk->queue))
-+		disk->flags |= GENHD_FL_NO_PART;
-+
+ bool bpf_jit_supports_arena(void)
+ {
+-	return true;
 +	/*
- 	 * If the driver provides an explicit major number it also must provide
- 	 * the number of minors numbers supported, and those will be used to
- 	 * setup the gendisk.
++	 * The arena range tree uses kmalloc_nolock(), which needs
++	 * cmpxchg128, provided by ZACAS on riscv.
++	 */
++#ifdef system_has_cmpxchg128
++	return system_has_cmpxchg128();
++#else
++	return false;
++#endif
+ }
+ 
+ bool bpf_jit_supports_insn(struct bpf_insn *insn, bool in_arena)
 
 
