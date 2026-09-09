@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07A0563FB6;
-	Wed,  9 Sep 2026 13:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA505678C1;
+	Wed,  9 Sep 2026 13:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962282; cv=none; b=nRRprlcuuimCwXXAasp3eDWgBLjU0tBKrYMVnYsQuWOsPhozxmNd1a4RZG3x18Vj1a39fs+EiG2hicc5W22EVEDH4abcWiPyUaBEQj2ix4LU+k2tf+b7uNlhbzcvSJntThbimdcRXOXxq2U1Ko+dkYYGbUkbGs0lnSA8/3e4WOM=
+	t=1788962284; cv=none; b=WTavI+Hll76e/S5iBeF0uOESfECRJqrGOFv0rIJ6CU9sCqSmNkyKyTINnAmrhwi4vBs3Q+Ig8VH4d19pWTP+IK6aygsP3rpcCczKlwVdFSLk6rIZ1pfXqNsQnQcNxLSKOsAxGnLvnMYJFMuc/xldNsYqplVSuSupFBlWjvNYOh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962282; c=relaxed/simple;
-	bh=qw1PHH/ZCkihGp6pg5J5MbSCmUY3ceqiSKObwIvc4pA=;
+	s=arc-20240116; t=1788962284; c=relaxed/simple;
+	bh=DniDYX2Ni4n5OMBH+TyMhV6XvY/J4IdJvbh0jryM0bE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KL+qy2mVwB72MnUyZb/YGMng+YdpKoaLwbqRoXHz5RghNatlaFiV0WQpXr8T5nzi6vZKbUczVnp/gfxEpX8rZJel02mxPWy80aUekiy1Vs3SnO+0u9DLa2OVXs1ANSZyiGgtkFGci8o0GKCuYfo5qMdYQpcNdTCTWHf6dRE65YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kw/MW9ru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ntfj/0TuKubT5J5s3Jjo1vbigjjQ4nfsZhx0Owe4jTjjnjPAQ3j0U9sU5edDQRciYlnvZRtILsdvdfcfplWAauF28FuH79wvfrcdMZKSg/TR89WLpn/GhJxxDVHQMFlJ7LtfchD+qSK/IwUTmYa9/ThypzDv6uFlseteivYhd6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pe9WFp0D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kw/MW9ru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C881F00AC4;
-	Wed,  9 Sep 2026 13:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pe9WFp0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62091F00A3A;
+	Wed,  9 Sep 2026 13:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962280;
-	bh=J78y0hFo6ggbwLiOXbzGPFSnzUKgULTakMHoXeZ+wWw=;
+	s=korg; t=1788962283;
+	bh=SOockEfIaDANHadKm5rnhP4NWkP+LV2jNz1KtuHuR30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kw/MW9rugcp/jn//GixIMIIK7kVgyUhv429PzaFRyiCizvH3JC6gtZbhYFwXx3Ueh
-	 vEL/eSqyhMlRZ8WWASPmaupSphEL1jiVBZ53+Tx6mN9+gsi2++HhjoS/JrmrpumGVo
-	 g6CFOOrJSb/04xrEHPVCnSQ7lhr53O2MaQusZAYU=
+	b=pe9WFp0DrIJLt7Ilx7sveP55Psa887nmLSSh4JvSSgF1rmpVgTKqEkvle50/Tvj2l
+	 2uFYuEdymsVvtjOfHLen+qHIh643Wzgyyrh0QlYemyJMc+Qch7/Z28oQUiE0c2wAl+
+	 ZfMjxJRfvSi0aJkjNiRVfI8V6hA8HKpJd0bG83MA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 236/556] ASoC: rt1318-sdw: sort the register default table
-Date: Wed,  9 Sep 2026 15:38:36 +0200
-Message-ID: <20260909134238.712060711@linuxfoundation.org>
+Subject: [PATCH 7.2 237/556] ASoC: rt1318: sort the register default table
+Date: Wed,  9 Sep 2026 15:38:37 +0200
+Message-ID: <20260909134238.749034478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,43 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 3673b33633a5daf2f52aff03b57f7b25352fe234 upstream.
+commit 2a8e4b7114f6493314348bda7e3d2141d218ef61 upstream.
 
 reg_defaults must be sorted by ascending register address, as
 regcache_lookup_reg() locates entries in it with bsearch().  See commit
 fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-rt1318_reg_defaults[] is not in address order, so the binary search does
-not find 3 of its entries.  regcache_reg_needs_sync() then cannot compare
-those against their default and reports that a sync is needed, so they
-are written to the device on every regcache_sync() even when they were
-never touched.
+The 0xdd93 and 0xdd94 entries are listed after 0xddc8 in rt1318_reg[],
+which leaves them unreachable for the binary search.
+regcache_reg_needs_sync() then cannot compare them against their default
+and reports that a sync is needed, so they are written to the device on
+every regcache_sync() even when they were never touched.
 
 Sort the table by register address.
 
-Fixes: 6ad73a2b42ea ("ASoC: rt1318: Add RT1318 SDCA vendor-specific driver")
+Fixes: fe1ff61487ac ("ASoC: rt1318: Add RT1318 audio amplifier driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805090240.16991-18-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20260805090240.16991-17-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt1318-sdw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/rt1318.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/rt1318-sdw.c
-+++ b/sound/soc/codecs/rt1318-sdw.c
-@@ -235,10 +235,10 @@ static const struct reg_default rt1318_r
- 	{ 0xf805, 0x00 },
- 	{ 0xf806, 0x07 },
- 	{ 0xf807, 0xff },
--	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1318_SDCA_ENT_UDMPU21, RT1318_SDCA_CTL_UDMPU_CLUSTER, 0), 0x00 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1318_SDCA_ENT_FU21, RT1318_SDCA_CTL_FU_MUTE, CH_L), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1318_SDCA_ENT_FU21, RT1318_SDCA_CTL_FU_MUTE, CH_R), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1318_SDCA_ENT_PDE23, RT1318_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1318_SDCA_ENT_UDMPU21, RT1318_SDCA_CTL_UDMPU_CLUSTER, 0), 0x00 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1318_SDCA_ENT_CS21, RT1318_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
- };
- 
+--- a/sound/soc/codecs/rt1318.c
++++ b/sound/soc/codecs/rt1318.c
+@@ -337,6 +337,8 @@ static const struct reg_default rt1318_r
+ 	{ 0xdd08, 0x40 },
+ 	{ 0xdd12, 0x00 },
+ 	{ 0xdd35, 0x00 },
++	{ 0xdd93, 0x00 },
++	{ 0xdd94, 0x64 },
+ 	{ 0xddb5, 0x00 },
+ 	{ 0xddb6, 0x40 },
+ 	{ 0xddb7, 0x00 },
+@@ -345,8 +347,6 @@ static const struct reg_default rt1318_r
+ 	{ 0xddc6, 0x00 },
+ 	{ 0xddc7, 0x00 },
+ 	{ 0xddc8, 0x00 },
+-	{ 0xdd93, 0x00 },
+-	{ 0xdd94, 0x64 },
+ 	{ 0xdf00, 0x00 },
+ 	{ 0xdf5f, 0x00 },
+ 	{ 0xdf60, 0x00 },
 
 
