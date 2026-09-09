@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A23423A85;
-	Wed,  9 Sep 2026 13:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A809D4F55A5;
+	Wed,  9 Sep 2026 13:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962194; cv=none; b=LcusF7AQINmYyy2P0AgVNzNIrTo8JKWyGmTgkPFJVAYE2Q2Xi+taRmjrm81fvQc/LpL0OSqZtNs/9tbDREZTecEa2wyGPzhFbWvk8vy79FRd0UWctsWXYWKJFMDyQnvuGbzu6pfhC2//K9SJPnDjrcniz7LHd+Ag+MSsF2lfUF8=
+	t=1788962196; cv=none; b=mgSsVef52bCAm7+hF4Dsls8/5+uucs4UX/6SBS5FWs8WqUKhZ+71/hCSyykyI2b7mfIUenC4GdAjL+wm6Y0JhyCyHFYjaPAXZvjH1QJy6f92IhS1qErtCXxA+Ehzje1u5dtDmnQJ+7gwZ1uZyZ+ISsZQ7BmLF5QiFLXgoONm5P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962194; c=relaxed/simple;
-	bh=40OcSlearyg1QnGyy2DRQ4++Irw3esH66IfLjP//8G8=;
+	s=arc-20240116; t=1788962196; c=relaxed/simple;
+	bh=jjxf/9sB/C5On4d91VzpySd9oTJyePxZbzAyPdLentg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0Bk3WyhHxuDKXGWStG/lZF35UwNqzj8eW7VB+NVX4/Z+FMQw31IZvdBzVWtRAHjf7LGcZ/hAsVmugbPVVxe8FxjE9mrzeR3GX4UcVvt4mHo+VW1K3M0VC5juU1/j8lt3EKLHAQo9TJRywsBPodtX2F2bBN03Vz9NvFdxejc2Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obBUxcHC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UHPYPeMhceNPtd+dTSYDbjGG0b9vhCF+eMKdDO/Wa3SDFVyPtCC8NJ7tDDw0LSAJEuIVzp8pEHIzkTPniXc/637gX/vFPWzcpAcmN4q4XAH+JLIPSclAvSLgZYWXCcFLlTcUzJ3dQKZo/Cel1ACY10YqMUyV+ed7Z3WyI/KDK2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZCe4VOW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obBUxcHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254B11F00A3A;
-	Wed,  9 Sep 2026 13:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZCe4VOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071DD1F00A3A;
+	Wed,  9 Sep 2026 13:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962192;
-	bh=slJgZeAajCAayeXOkozSU0evczyMo0yiChq0XM9r2/s=;
+	s=korg; t=1788962195;
+	bh=ZmNmqiWPt4vKCjuG2MMYMewUi7WTzLpQ9IOaYn9UQkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obBUxcHCAYfMNvlMTRIfK0BJLWW9DLB2ON9w3CDsGh8DsIL6UN9MU5IogNheS99yU
-	 I5DcQrdl3FD+Hna/xPspV2uxraEU3pU3AX1nx9O9Ee2Z7t7/7lYRonj2LkSGVjaFjA
-	 sJRAODbX910FYRBGQD9peRmAamJDNbV4wtZHWFyI=
+	b=fZCe4VOWyjx+SWUWHb0Yeu/wxt4LUcFu6TUUzEvBFWaFVTBG1Tj/3Eb4XWRJxHN6w
+	 DAwgrKcFUIbHoIYT4LkIEjJmRRLn1UW+S8Mbu+6SBqVmRv9Q7gKI7zqU4GCAdxmgLa
+	 R+lGV2KvyBcpNklNsRx7imjzvl2synIOgbdVHAgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Byungchul Park <byungchul@sk.com>,
-	David Hildenbrand <david@kernel.org>,
-	Gregory Price <gourry@gourry.net>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 169/556] mm/migrate_device: avoid out-of-bounds writes for compound folios
-Date: Wed,  9 Sep 2026 15:37:29 +0200
-Message-ID: <20260909134236.366567264@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 7.2 205/556] batman-adv: bla: fix freeing of claims on meshif deletion
+Date: Wed,  9 Sep 2026 15:38:05 +0200
+Message-ID: <20260909134237.602553246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -60,85 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit dc41e961a269f2ca4196e669d6d8e05480899cd4 upstream.
+commit 8d128c932bced74e3b1625ba3d7c78ef122a88a7 upstream.
 
-migrate_device_range() and migrate_device_pfns() clear the entries
-following a compound folio so that the PFN arrays retain their
-page-granular representation.
+When the mesh interface is getting deleted, then
+batadv_bla_del_backbone_claims() (via batadv_bla_purge_backbone_gw()) could
+make sure that all claims gets removed. But this function is only executed
+when bat_priv->bla.claim_hash is not NULL. And since batadv_bla_free() is
+always setting it to NULL before it is (indirectly) called, it was never
+actually executed.
 
-If a compound folio extends beyond the end of the caller-provided range,
-the loops clear all following folio entries without limiting them to the
-number of slots remaining in the npages-sized array, causing an
-out-of-bounds write.
+But the batadv_bla_purge_claims() -> batadv_handle_unclaim() is at the
+moment too fragile because the BLA code is not handling the rehashing in
+batadv_bla_update_orig_address(). The stored backbone address doesn't have
+to be the one actually used for the hash bucket selection during the
+initial adding of the backbone. The batadv_handle_unclaim() can therefore
+fail to find the respective backbone for the unclaim and then stop the
+deletion.
 
-Do not proceed with a compound folio if its page-granular representation
-does not fit entirely in the remaining PFN array.  If this happens, drop
-any reference and lock acquired for the folio, clear the remaining
-entries, and stop collecting.
+But the actual backbone_gw object is not needed for the unclaim because all
+relevant information is always provided by the caller. And the check for
+the existence of the backbone_gw doesn't provide any additional security
+check for the deletion of a claim.
 
-Observed with a KASAN x86 QEMU kernel using the HMM migrate_anon_huge_zero
-selftest.  Closing /dev/hmm_dmirror0 after migrating an anonymous huge
-page to device memory exercises:
-
-  dmirror_fops_release()
-    -> dmirror_device_evict_chunk()
-      -> migrate_device_range()
-
-Link: https://lore.kernel.org/20260817120758.669807-3-sh_def@163.com
-Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
-Signed-off-by: Hui Su <sh_def@163.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@kernel.org
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate_device.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ net/batman-adv/bridge_loop_avoidance.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
---- a/mm/migrate_device.c
-+++ b/mm/migrate_device.c
-@@ -1413,6 +1413,15 @@ int migrate_device_range(unsigned long *
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -942,26 +942,18 @@ static bool batadv_handle_unclaim(struct
+ 				  const u8 *backbone_addr, const u8 *claim_addr,
+ 				  unsigned short vid)
+ {
+-	struct batadv_bla_backbone_gw *backbone_gw;
+-
+ 	/* unclaim in any case if it is our own */
+ 	if (primary_if && batadv_compare_eth(backbone_addr,
+ 					     primary_if->net_dev->dev_addr))
+ 		batadv_bla_send_claim(bat_priv, claim_addr, vid,
+ 				      BATADV_CLAIM_TYPE_UNCLAIM);
  
- 		src_pfns[i] = migrate_device_pfn_lock(pfn);
- 		nr = folio_nr_pages(folio);
-+		if (nr > npages - i) {
-+			if (src_pfns[i] & MIGRATE_PFN_MIGRATE) {
-+				folio_unlock(folio);
-+				folio_put(folio);
-+			}
-+			memset(&src_pfns[i], 0,
-+			       (npages - i) * sizeof(*src_pfns));
-+			break;
-+		}
- 		if (nr > 1) {
- 			src_pfns[i] |= MIGRATE_PFN_COMPOUND;
- 			for (j = 1; j < nr; j++)
-@@ -1447,6 +1456,15 @@ int migrate_device_pfns(unsigned long *s
+-	backbone_gw = batadv_backbone_hash_find(bat_priv, backbone_addr, vid);
+-
+-	if (!backbone_gw)
+-		return true;
+-
+ 	/* this must be an UNCLAIM frame */
+ 	batadv_dbg(BATADV_DBG_BLA, bat_priv,
+ 		   "%s(): UNCLAIM %pM on vid %d (sent by %pM)...\n", __func__,
+-		   claim_addr, batadv_print_vid(vid), backbone_gw->orig);
++		   claim_addr, batadv_print_vid(vid), backbone_addr);
  
- 		src_pfns[i] = migrate_device_pfn_lock(src_pfns[i]);
- 		nr = folio_nr_pages(folio);
-+		if (nr > npages - i) {
-+			if (src_pfns[i] & MIGRATE_PFN_MIGRATE) {
-+				folio_unlock(folio);
-+				folio_put(folio);
-+			}
-+			memset(&src_pfns[i], 0,
-+			       (npages - i) * sizeof(*src_pfns));
-+			break;
-+		}
- 		if (nr > 1) {
- 			src_pfns[i] |= MIGRATE_PFN_COMPOUND;
- 			for (j = 1; j < nr; j++)
+ 	batadv_bla_del_claim(bat_priv, claim_addr, vid);
+-	batadv_backbone_gw_put(backbone_gw);
+ 	return true;
+ }
+ 
 
 
