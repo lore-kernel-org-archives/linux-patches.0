@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3118955409D;
-	Wed,  9 Sep 2026 14:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054D2566C5B;
+	Wed,  9 Sep 2026 14:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962721; cv=none; b=RwfHaFezr8aLqkcMlhbIdIuGGyVGIHsnVgE3bYIdlRxKpYDIRAUut2ViefFALjZh40U9GOBNUEdT2zdlpVCgGNpsZDpkXVTan0/KOH9JVvx0eT1Rup4MPIeecyfwiUjH+hbY827NMeaxAltaLhDAJvmysJ79pFCkBaO51ot8TLI=
+	t=1788962724; cv=none; b=CFHOH/jfaB2gP6J6OWx5yupzGMIYL5Pn5IMS+mTBT7weIUVarcsv8RQ4o2NDHmFwQIJOxDw2xsOyXSALr3qbLRvmmLSg3X7PkFIn9kXYS7SIpM1M6RjrveF+rXZVis8Zz2TcRBi5hVs5+e36ujfWtC5JbekeQvgq3YXjjM8a2lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962721; c=relaxed/simple;
-	bh=Sv3nsHQaSd0kA9P+STJw8BO6GOt9y24Kc1lSyu7Gr7E=;
+	s=arc-20240116; t=1788962724; c=relaxed/simple;
+	bh=ksF0vM8wVIjPLOpLg4gYZacppoaLykxLl1mdDmerB7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyhAEEe2Bip6y7mPKBfstWUch1gW5ldICtCQk5aDq601L5CLGfo/K58vgYbc6ND8hn4tN/T/UP2IYnfbnCwgzWlDWvJgw3BmObYdd8P5IbD9ZtzmsG0VJSL3l4BU0ixNZXb0sp7h3H8cGnfEmOPkz/z6A5svL105Y2725hqxLvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESjYdKAF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IQsoZ5QJnQSY7NsIpVPsgzH/5CiW9gmezEg/BN6G1AZFb8Kn7EogxRLU9idqKhQ+GLFeGYvOP43oO50fPEH6UeAO1emAWqntRyYW4r0Uh7/CrOhs3rK0jydF0g4ZR/iAug1aSs41TcwQlRAehDVcDrEpKP3ZkjAgZp3A07pM+Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wqw4iw4T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESjYdKAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866221F00A3A;
-	Wed,  9 Sep 2026 14:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wqw4iw4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0881F00A3A;
+	Wed,  9 Sep 2026 14:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962720;
-	bh=USWutun2NJiR2SCM0p4ohwvDt6g9U14hWwNfhZx4fgw=;
+	s=korg; t=1788962722;
+	bh=XV7ir84R3sXDoTxgh0+s+Iussvk8Qh7+QYxd6EZd6eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ESjYdKAFWs2gociv5qk0nUjWIh/LkN43J6HPw59f19WXUOA1b5lSxPU/ZYOLUTfmm
-	 JmqTZgl2uvSzW5ToOrMNSrAiFiYGk4NZ7a0o0iEyHwsvDNyie4suoLPhOBUQ7qiv8Q
-	 fxohpjrgzlzdlNh96j8MkT8hnXskPlKpbnbG6joY=
+	b=Wqw4iw4T3CamgqN/nS/V3gTozu+Z6KkfyOvbm5Ej5Lp8TAOd9qrEdBjW9ODW921eB
+	 nahffHuPZAnlZwxtiMU2KYWtS6enlTak3BiM5Q7g6S4u+DNVLmpwgzCo0pZYxfeat0
+	 via5slp/ZzrNcAlgm1bgcWCEvW2+34DKOuFO8rkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+051024d603432b4ab395@syzkaller.appspotmail.com,
-	Hillf Danton <hdanton@sina.com>,
-	Biren Pandya <birenpandya@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 350/556] media: cec: disable delayed work before freeing an interrupted transmit
-Date: Wed,  9 Sep 2026 15:40:30 +0200
-Message-ID: <20260909134242.971197423@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 7.2 351/556] media: cec: extron-da-hd-4k-plus: add sanity check
+Date: Wed,  9 Sep 2026 15:40:31 +0200
+Message-ID: <20260909134243.006013863@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,45 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-commit 0fbd5c2327020858c45b2d1c65775d64cdeca523 upstream.
+commit abac9820b26b5cfcb01eb79efe2abdd0ac7e07c3 upstream.
 
-cec_transmit_msg_fh() drops adap->lock to wait for a blocking transmit in
-wait_for_completion_killable(). If that wait is interrupted by a signal,
-cancel_delayed_work_sync() can run before the CEC kthread arms the reply
-timeout via schedule_delayed_work(&data->work) in cec_transmit_done_ts().
-The work is then armed after the cancel, and the data is freed with its
-delayed_work still pending:
+Add check to prevent overflowing msg.msg[] in case the incoming data
+is malformed.
 
-  ODEBUG: free active (active state 0) object: ... hint: cec_wait_timeout
-
-Use disable_delayed_work_sync(): it cancels the work and disables it, so
-the later schedule_delayed_work() becomes a no-op and the work cannot be
-re-armed. The data is freed right after, so it need not be re-enabled.
-
-Fixes: 490d84f6d73c ("media: cec: forgot to cancel delayed work")
-Reported-by: syzbot+051024d603432b4ab395@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=051024d603432b4ab395
-Suggested-by: Hillf Danton <hdanton@sina.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Sean Young <sean@mess.org>
+Fixes: 056f2821b631 ("media: cec: extron-da-hd-4k-plus: add the Extron DA HD 4K Plus CEC driver")
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/core/cec-adap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -965,7 +965,7 @@ int cec_transmit_msg_fh(struct cec_adapt
- 	 */
- 	mutex_unlock(&adap->lock);
- 	err = wait_for_completion_killable(&data->c);
--	cancel_delayed_work_sync(&data->work);
-+	disable_delayed_work_sync(&data->work);
- 	mutex_lock(&adap->lock);
+--- a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
++++ b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
+@@ -657,7 +657,8 @@ static void extron_process_received(stru
+ 	if (!port || port->disconnected)
+ 		return;
  
- 	if (err)
+-	if (len < 5 || (len - 2) % 3 || data[len - 2] != '*')
++	if (len < 5 || ((len - 2) / 3 > sizeof(msg.msg)) ||
++	    (len - 2) % 3 || data[len - 2] != '*')
+ 		goto malformed;
+ 
+ 	while (*data != '*') {
 
 
