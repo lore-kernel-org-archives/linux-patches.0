@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375975908B4;
-	Wed,  9 Sep 2026 14:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4875908C3;
+	Wed,  9 Sep 2026 14:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963550; cv=none; b=TQcbIwCf8Rpk1iO9ZUqcKhQnV3QNLwBobycnec2pkHS9NBaqH2iHn6niguBRuZ72akKy7YPhuW/lAjAoHJPQNmt3y/fVNyOS7VUBgRLynDTpvZhI4cNBeWivePaEmiylY1G2RbY2cl9O9HYRePoY5EKkkLLZF2lvlS1Ef/QjdOc=
+	t=1788963553; cv=none; b=QanwlhhNaUQjSQKQx4vKLsGim/rW8+r5rtvK8PJ+1LqFG6wOem46T4PepvjibXIFeBVjaj1pGKS6ylotVV4XSMbKHKRTSfflhskJ5QQHZLFZvmmvcQWHdWsw3aFTo+BJdUCZDvoh4QuACpu2niayf712pkNT1EvGhiuMM0nvZ8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963550; c=relaxed/simple;
-	bh=HkcOrulLuU05XPjzfutFBtHI0o1b2l2BUJilEX+22vI=;
+	s=arc-20240116; t=1788963553; c=relaxed/simple;
+	bh=cEZqzNonyWMLuttcHBXfKzlkmAb7/RWRJvcDU7U6N9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QMo+Ib6FlOzb6AY7K2pCT5RGNQZMjam8HxMODtz9dm/pUZ0RQUfvsLukHLwASbTU/O2BApSGsdHGHue0eIC0o/aHVDJLka+iXu4si/1cxLA9Qfif6oz9ZphnJ5NyZztCcCU2JkKj4fATElZ9skXwV1QhD7YSJVfa1DeIv/+QsOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pt9darEB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rySlv7mfMJ4JxMmpOmgei2+HoOxpoFm4ZQpzMKcRrXeZMpw6i8vGWMQvBsjsRFH0mZD6gw3yJvYBXbP1U3TRhSiZTHY9uQ2Iw8sIm8WB0YpeiIQJcoGwdh0vfytlqJfiakeePyXCtdRzbOJQ5Yq0Y4qIyryezSn0O0aZVnIsN/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xO8KovQi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pt9darEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A041F00A3D;
-	Wed,  9 Sep 2026 14:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xO8KovQi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDF71F00A3D;
+	Wed,  9 Sep 2026 14:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963549;
-	bh=pGqHt0cyC8iFRRo28NAq5YzTbHulEIMi8Te1nadrw48=;
+	s=korg; t=1788963552;
+	bh=CdeX7aSrMkQgFfTqblYf5SwuTVP8g4sGz4FRaR8WGCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pt9darEBNvO8UBf76XmC4GrTdIIOCohTO5aNQjM8blgViFXaBMw4GCYgQKGQOgqMU
-	 hV+9/5i4nRawDlAF4paGrCuC21A8+FcwURMYIwR0+28i1wW9RhGldPfD0jzCC9oIea
-	 qNsI47V8QmxLWvzTC+doVgfSxvbeM/yosWFGxLRI=
+	b=xO8KovQiQyYIAFYQyGeYeCivqVo+PSkeKFZH1sGXbNEJNdxTVai2kPb+IQvBG54ho
+	 K6ovs8hMyPOKBKxrzt3TjBKHoy0Mw6uARTBjWdcq2uN5NNPyYIbTtde97kzDMsHSJL
+	 VXLG2XxDISf9Aamss3H1jvfBaN72zzl7xxSy+i0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 115/583] mm/hugetlb: fix missing migratable flag on same-node hugetlb migration
-Date: Wed,  9 Sep 2026 15:36:40 +0200
-Message-ID: <20260909134242.113152181@linuxfoundation.org>
+	syzbot+5ebeb3089ea6439c37be@syzkaller.appspotmail.com,
+	Bradley Morgan <brads@mainlining.org>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.18 080/583] ima: Check for ERR_PTR from dentry_path() in validate_hash_algo()
+Date: Wed,  9 Sep 2026 15:36:05 +0200
+Message-ID: <20260909134240.887538468@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,90 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wupeng Ma <mawupeng1@huawei.com>
+From: Bradley Morgan <brads@mainlining.org>
 
-commit 8ee1ef0f2f8ce29338f4ab00a3d344c010208058 upstream.
+commit 8861f6d5c0678a7c5089c7b272509fc5931b8437 upstream.
 
-Commit ba23f58de896 ("mm/migrate: don't call
-folio_putback_active_hugetlb() on dst hugetlb folio") moved setting of the
-migratable flag and active-list placement from
-folio_putback_active_hugetlb(dst) into move_hugetlb_state(), so that the
-freshly allocated destination folio is handled where allocation is known
-to have succeeded.
+dentry_path() returns ERR_PTR(-ENAMETOOLONG) when the path exceeds the
+buffer. validate_hash_algo() passes the result straight to
+integrity_audit_msg() without checking. ERR_PTR is not NULL, so
+integrity_audit_message() sees a valid pointer and calls strlen() on
+it, which faults:
 
-Unfortunately, the new code was appended after the existing
-temporary-folio block in move_hugetlb_state(), which contains an early
-return added earlier by commit 5af1ab1d24e08 ("mm/hugetlb: optimize the
-surplus state transfer code in move_hugetlb_state()"):
+    BUG: unable to handle page fault for address: ffffffffffffffdc
+    RIP: 0010:strlen+0x30/0xa0
+    Call Trace:
+     audit_log_untrustedstring+0x19/0x30
+     integrity_audit_message+0x366/0x4f0
+     ima_inode_setxattr+0x512/0x5f0
 
-  if (folio_test_hugetlb_temporary(new_folio)) {
-      ...
-      if (new_nid == old_nid)
-          return;                       <-- skips the new code
-      ...
-  }
+Check for IS_ERR() and use NULL instead, which makes the audit message
+skip the name= field instead of crashing.
 
-  /* added by ba23f58 */
-  folio_set_hugetlb_migratable(new_folio);
-  list_move_tail(&new_folio->lru, ...&h->hugepage_activelist);
-
-When the destination folio is temporary (i.e.  the hugetlb pool was
-exhausted and the migration callback fell back to
-alloc_migrate_hugetlb_folio()) and the migration does not cross a node --
-the common case, and always true on a single-NUMA system --
-move_hugetlb_state() returns before setting the migratable flag or adding
-the new folio to the active list.  The destination folio is then installed
-in the page table but cannot be isolated afterwards, since
-folio_isolate_hugetlb() rejects folios without the migratable flag; a
-subsequent soft-offline, hard-offline or memory-hotplug offline of that
-folio fails with -EBUSY.
-
-This was reproduced on a single-NUMA arm64 VM: a second MADV_SOFT_OFFLINE
-on an already-migrated hugetlb page returned EBUSY and logged "hugepage
-isolation failed".
-
-Keep the surplus adjustment, which is the only part that depends on the
-node crossing, guarded by `if (new_nid != old_nid)', while making the
-migratable flag and active-list placement unconditional.  This preserves
-the cleanup intent of ba23f58 and closes the early-return hole.
-
-Link: https://lore.kernel.org/20260707110254.3147686-1-mawupeng1@huawei.com
-Fixes: ba23f58de896 ("mm/migrate: don't call folio_putback_active_hugetlb() on dst hugetlb folio")
-Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4f2946aa0c45 ("IMA: introduce a new policy option func=SETXATTR_CHECK")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+5ebeb3089ea6439c37be@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/6a8f89e5.1d9ded08.62e62.00bf.GAE@google.com/
+Signed-off-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ security/integrity/ima/ima_appraise.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -7916,14 +7916,14 @@ void move_hugetlb_state(struct folio *ol
- 		 * There is no need to transfer the per-node surplus state
- 		 * when we do not cross the node.
- 		 */
--		if (new_nid == old_nid)
--			return;
--		spin_lock_irq(&hugetlb_lock);
--		if (h->surplus_huge_pages_node[old_nid]) {
--			h->surplus_huge_pages_node[old_nid]--;
--			h->surplus_huge_pages_node[new_nid]++;
-+		if (new_nid != old_nid) {
-+			spin_lock_irq(&hugetlb_lock);
-+			if (h->surplus_huge_pages_node[old_nid]) {
-+				h->surplus_huge_pages_node[old_nid]--;
-+				h->surplus_huge_pages_node[new_nid]++;
-+			}
-+			spin_unlock_irq(&hugetlb_lock);
- 		}
--		spin_unlock_irq(&hugetlb_lock);
- 	}
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -777,6 +777,8 @@ static int validate_hash_algo(struct den
+ 		return -EACCES;
  
- 	/*
+ 	path = dentry_path(dentry, pathbuf, PATH_MAX);
++	if (IS_ERR(path))
++		path = NULL;
+ 
+ 	integrity_audit_msg(AUDIT_INTEGRITY_DATA, d_inode(dentry), path,
+ 			    "set_data", errmsg, -EACCES, 0);
 
 
