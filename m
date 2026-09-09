@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18A0545D95;
-	Wed,  9 Sep 2026 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0476C54A7E7;
+	Wed,  9 Sep 2026 14:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963721; cv=none; b=OGPSHDyA8xn65XCsdeyjo7PVdtJQA9FOE2GKMb0eB50BhpKsJfDxkQCc5RZ5S5you87a6lF+OnjEYznNgN6bo7tKZu3LPCGdYKA0A6QLte25IbxVFLGt8I6SXLcZ+5OnmEH7GqMLRu0A0es/TjWVZArJImscOin6d6jGNLtqmBo=
+	t=1788963724; cv=none; b=q8xeTH6Ex19G7Lm/g8r+3jZmv4VgODMk6ecyw8el+Fyi6cZrruvXtjQ2wRoEK5xMxspTdEO23YUJZDGVjyT829zWHeNowAjze3Vt4sHfa8gMh/9REbHNeEJnDxb12K3IizO8WMKfIT3I/fts/Je6IjGLEBnmMkCAfpCiMGucQtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963721; c=relaxed/simple;
-	bh=PYyd5F08AqdGEWnbj5kQ3Na+DsLjjk58zgryE/+x7LQ=;
+	s=arc-20240116; t=1788963724; c=relaxed/simple;
+	bh=sruFRJCcqepWF/lGumkvfWpRkN8GMsxobEw0ziSqCiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fCGL9KVK4Nvf1jJFGq6oqvvAianddvcG3tevrdCIyRp4wBMyst6YKeezVePhxy/mWKy6psSzTY8qoYvncZwjHF6UGz9ZiDtaEZJSw+KbdYAbyuNTKDpo0IYgzcpEuOYG0eGhWCkZ1z/A0CIlLiQEjcWTNAURgQUGqGJ3nj+TwsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6IxmNgy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iJIoGZ/HzJ2o1rzAbRVUZ6gx11luGJ3TCNfu94Pm8gFo+LuTG+AS/64O4iaB040gx6mKsAZivvwrGnLizMBJgef43zka8dKEbWzw5KWqsuR9VqKVQStcCHDEu8zRNrsnUf3pW6tLcOzvi+NQANTRThhRudONeZ6ZIxP0AnJjMiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z30S/URE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6IxmNgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322CF1F00A3A;
-	Wed,  9 Sep 2026 14:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z30S/URE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A921F00A3A;
+	Wed,  9 Sep 2026 14:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963719;
-	bh=+KXYq7/kEufJ8FrgY3Q9SGcRCks7gX/Yqo1x0nnrzNc=;
+	s=korg; t=1788963722;
+	bh=mp7ncXdU+G/Tci5wo0sHWWgDW8Yujwfy7fCKt0USaxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q6IxmNgyE/rAY1PoG8t6MTIxESj9M09cf6AsGLFxqFBRmCfmYXohFD0XzlXCdHdgG
-	 u2chP+yZn+qtkyuCQG99JrFOz3CSb/PpZBfou38gBhlOxPAxhfyzwSUASm63QzI6zy
-	 Iu6266kn2IvyJ/Q9rb1suwigi7JMDRw/wphSgu68=
+	b=z30S/URE7M9GATtrEFnXdetJe7xkqpoghxSQNp0oReE8WCgWgh3M8yYWOD8ZXo1XZ
+	 0A/XAnhokNoBw+ql6rnkg9llohhw/D0OTyQ3NVOsuT1Nyw5A6lAzYstW2mOs66dDDq
+	 l2zetV/4qrAaXWxIhRf6sW1VXPIVEd2Co1I47ISg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 125/583] powerpc/pseries: Move H_WATCHDOG definitions to a common header
-Date: Wed,  9 Sep 2026 15:36:50 +0200
-Message-ID: <20260909134242.472664808@linuxfoundation.org>
+	Longlong Xia <xialonglong@kylinos.cn>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 116/583] mm/hugetlb: keep max_huge_pages when dissolving surplus folios
+Date: Wed,  9 Sep 2026 15:36:41 +0200
+Message-ID: <20260909134242.147044900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,157 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-commit 516a254918453ec99660201263d01189c082332c upstream.
+commit 267bede12d3b108ca29997ce280e927a570ec97f upstream.
 
-The H_WATCHDOG input and output definitions are currently local to the
-pseries watchdog driver. The next patch in this series also needs these
-definitions to issue H_WATCHDOG hypercalls outside the watchdog driver.
+dissolve_free_hugetlb_folio() can remove a free folio as surplus when its
+node has surplus pages.  In that case remove_hugetlb_folio() decrements
+both nr_huge_pages and surplus_huge_pages, leaving the persistent pool
+size unchanged.
 
-Move the H_WATCHDOG definitions to a new common header,
-asm/papr-watchdog.h, so they can be shared without duplicating the
-PAPR watchdog definitions.
+Updating max_huge_pages as if a persistent folio had been removed can
+therefore corrupt the persistent pool target and underflow it when
+max_huge_pages is zero.  Keep max_huge_pages unchanged for surplus folios,
+including the vmemmap restoration rollback path.
 
-No functional changes.
-
-Cc: stable@vger.kernel.org
-Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260727053416.276317-2-sourabhjain@linux.ibm.com
+Link: https://lore.kernel.org/20260814083027.1419487-1-xialonglong2025@163.com
+Fixes: cb402bbdabca ("mm/hugetlb: fix surplus pages in dissolve_free_huge_page()")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Longlong Xia <xialonglong@kylinos.cn>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/include/asm/papr-watchdog.h |   58 +++++++++++++++++++++++++++++++
- drivers/watchdog/pseries-wdt.c           |   53 ----------------------------
- 2 files changed, 59 insertions(+), 52 deletions(-)
- create mode 100644 arch/powerpc/include/asm/papr-watchdog.h
+ mm/hugetlb.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- /dev/null
-+++ b/arch/powerpc/include/asm/papr-watchdog.h
-@@ -0,0 +1,58 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+#ifndef _ASM_POWERPC_PAPR_WATCHDOG_H
-+#define _ASM_POWERPC_PAPR_WATCHDOG_H
-+
-+/*
-+ * H_WATCHDOG Input
-+ *
-+ * R4: "flags":
-+ *
-+ *         Bits 48-55: "operation"
-+ */
-+#define PSERIES_WDTF_OP_START	0x100UL		/* start timer */
-+#define PSERIES_WDTF_OP_STOP	0x200UL		/* stop timer */
-+#define PSERIES_WDTF_OP_QUERY	0x300UL		/* query timer capabilities */
-+
-+/*
-+ *         Bits 56-63: "timeoutAction" (for "Start Watchdog" only)
-+ */
-+#define PSERIES_WDTF_ACTION_HARD_POWEROFF	0x1UL	/* poweroff */
-+#define PSERIES_WDTF_ACTION_HARD_RESTART	0x2UL	/* restart */
-+#define PSERIES_WDTF_ACTION_DUMP_RESTART	0x3UL	/* dump + restart */
-+
-+/*
-+ * H_WATCHDOG Output
-+ *
-+ * R3: Return code
-+ *
-+ *     H_SUCCESS    The operation completed.
-+ *
-+ *     H_BUSY	    The hypervisor is too busy; retry the operation.
-+ *
-+ *     H_PARAMETER  The given "flags" are somehow invalid.  Either the
-+ *                  "operation" or "timeoutAction" is invalid, or a
-+ *                  reserved bit is set.
-+ *
-+ *     H_P2         The given "watchdogNumber" is zero or exceeds the
-+ *                  supported maximum value.
-+ *
-+ *     H_P3         The given "timeoutInMs" is below the supported
-+ *                  minimum value.
-+ *
-+ *     H_NOOP       The given "watchdogNumber" is already stopped.
-+ *
-+ *     H_HARDWARE   The operation failed for ineffable reasons.
-+ *
-+ *     H_FUNCTION   The H_WATCHDOG hypercall is not supported by this
-+ *                  hypervisor.
-+ *
-+ * R4:
-+ *
-+ * - For the "Query Watchdog Capabilities" operation, a 64-bit
-+ *   structure:
-+ */
-+#define PSERIES_WDTQ_MIN_TIMEOUT(cap)	(((cap) >> 48) & 0xffff)
-+#define PSERIES_WDTQ_MAX_NUMBER(cap)	(((cap) >> 32) & 0xffff)
-+
-+#endif /* _ASM_POWERPC_PAPR_WATCHDOG_H */
---- a/drivers/watchdog/pseries-wdt.c
-+++ b/drivers/watchdog/pseries-wdt.c
-@@ -13,61 +13,10 @@
- #include <linux/platform_device.h>
- #include <linux/time64.h>
- #include <linux/watchdog.h>
-+#include <asm/papr-watchdog.h>
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2140,7 +2140,8 @@ retry:
+ 		if (h->surplus_huge_pages_node[folio_nid(folio)])
+ 			adjust_surplus = true;
+ 		remove_hugetlb_folio(h, folio, adjust_surplus);
+-		h->max_huge_pages--;
++		if (!adjust_surplus)
++			h->max_huge_pages--;
+ 		spin_unlock_irq(&hugetlb_lock);
  
- #define DRV_NAME "pseries-wdt"
- 
--/*
-- * H_WATCHDOG Input
-- *
-- * R4: "flags":
-- *
-- *         Bits 48-55: "operation"
-- */
--#define PSERIES_WDTF_OP_START	0x100UL		/* start timer */
--#define PSERIES_WDTF_OP_STOP	0x200UL		/* stop timer */
--#define PSERIES_WDTF_OP_QUERY	0x300UL		/* query timer capabilities */
--
--/*
-- *         Bits 56-63: "timeoutAction" (for "Start Watchdog" only)
-- */
--#define PSERIES_WDTF_ACTION_HARD_POWEROFF	0x1UL	/* poweroff */
--#define PSERIES_WDTF_ACTION_HARD_RESTART	0x2UL	/* restart */
--#define PSERIES_WDTF_ACTION_DUMP_RESTART	0x3UL	/* dump + restart */
--
--/*
-- * H_WATCHDOG Output
-- *
-- * R3: Return code
-- *
-- *     H_SUCCESS    The operation completed.
-- *
-- *     H_BUSY	    The hypervisor is too busy; retry the operation.
-- *
-- *     H_PARAMETER  The given "flags" are somehow invalid.  Either the
-- *                  "operation" or "timeoutAction" is invalid, or a
-- *                  reserved bit is set.
-- *
-- *     H_P2         The given "watchdogNumber" is zero or exceeds the
-- *                  supported maximum value.
-- *
-- *     H_P3         The given "timeoutInMs" is below the supported
-- *                  minimum value.
-- *
-- *     H_NOOP       The given "watchdogNumber" is already stopped.
-- *
-- *     H_HARDWARE   The operation failed for ineffable reasons.
-- *
-- *     H_FUNCTION   The H_WATCHDOG hypercall is not supported by this
-- *                  hypervisor.
-- *
-- * R4:
-- *
-- * - For the "Query Watchdog Capabilities" operation, a 64-bit
-- *   structure:
-- */
--#define PSERIES_WDTQ_MIN_TIMEOUT(cap)	(((cap) >> 48) & 0xffff)
--#define PSERIES_WDTQ_MAX_NUMBER(cap)	(((cap) >> 32) & 0xffff)
--
- static const unsigned long pseries_wdt_action[] = {
- 	[0] = PSERIES_WDTF_ACTION_HARD_POWEROFF,
- 	[1] = PSERIES_WDTF_ACTION_HARD_RESTART,
+ 		/*
+@@ -2160,7 +2161,8 @@ retry:
+ 			if (rc) {
+ 				spin_lock_irq(&hugetlb_lock);
+ 				add_hugetlb_folio(h, folio, adjust_surplus);
+-				h->max_huge_pages++;
++				if (!adjust_surplus)
++					h->max_huge_pages++;
+ 				goto out;
+ 			}
+ 		} else
 
 
