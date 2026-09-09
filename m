@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA27576EBD;
-	Wed,  9 Sep 2026 14:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E81C380FDE;
+	Wed,  9 Sep 2026 14:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964726; cv=none; b=IbVlXDhFEJax4Ife2FXT9Gogp1TRvUivXTciq8xlBFVUGLeF4J09SzrMynPl5p1Rh1jqVkpxl3Tn4UhMdx9Lvde8n9VdYPTO3Mr1r4HKyeYTA90pfer1anuBcmBTepHAtNx+6NiQMDQHNoUkINuDEEQQKr44iu9gCoMs5sXBcMQ=
+	t=1788964729; cv=none; b=cUze/r/e+VIh3w8gVBq8ClKwvcfHKjosXqQsYZFLXF4TSQyltXlaLndVkPzvOZHRhCOUPLKgLiX9/qL3OXY7vSYWMRApJ4+C3JrJPcbc1ScCqYvGJhSSF+opWtpFvLnu/AV/QnGdwoIhG/hH0CGUHpancMzph3K+Ew0LCiXeU04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964726; c=relaxed/simple;
-	bh=7Na1pzRp9xC4ZSkGLOV9o/VceImZO+CBpptH5+XEzgE=;
+	s=arc-20240116; t=1788964729; c=relaxed/simple;
+	bh=/fInkQ4KLjGpGsuOy+FgDKm0X2LLA5XW7BApHgxI7Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNoL/JEVVyL8jPNomEMeG8TNbUrJRhmM1JaE7g2rwWg0evda4n/1jQnvLPByoFbPg7Qf5XS8M1PHLiQdInY2aW9bbMF7DwxGXi2lb+t40q8/3uIteCJVzG04FDLOhlLpmZ2PaYsemQMQ7KPHoYc957P6Lr0iQpjtS+/9MAtIVVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFKLvhsG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mzgowgUhcQI6g7ui6HiweYXpr2zohByQjt4cJwQ9CyTukkNymd27k3WkcAgzyCdPhZtNMWU5VtquqKLG3t7+q0udGHrQgRkNi+Nm8ZMqlSfM4IpRK9whkJCmnNktF4PQk/T9+OYa3/olGaMQvLhNihIrzKlyYTpDAzc0Ezpmcs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZU1xn/dF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFKLvhsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DEA1F00A3A;
-	Wed,  9 Sep 2026 14:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZU1xn/dF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A941F00A3A;
+	Wed,  9 Sep 2026 14:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964725;
-	bh=qzIQj59olj6NJGyM3/80eqlmPKad8Qh7rlQFDrMoPbA=;
+	s=korg; t=1788964728;
+	bh=R8LOr8aEezYRd5aZZb/hjFtCcOlh6ITaqnRKxf800KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gFKLvhsGgF8gYKcVgnqgXY1D2DqHcrX0+Bh4KMGZIE5tWvq802dczu266dh+phPDF
-	 ll8/uBYRcds0dx0DF+/yAwFMa5BEqRPUV4QgTjExIUYvKG1LSVQv29wkkS5APnmtuo
-	 Eu1DCXbqroRa7PIxeP79Cd6SzASq//yOZuh8pbcc=
+	b=ZU1xn/dFSHGas+z7XpqKJisrNeKWfhPW46SyrkCWl+Ekqehawfz7HQ6yran0GrPkh
+	 hOAhXExJrvt0jJxw24sNham6T1xdbGFpvZYGfSfgtQfcv6YtAx8sqBgeBJm9UfyuUB
+	 Q2Vss+ubr1h1mjViCje1tqJDTaFq8N9yhyzwksNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Schubert <bschubert@ddn.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 515/583] fuse-uring: refactor io-uring header copying to ring
-Date: Wed,  9 Sep 2026 15:43:20 +0200
-Message-ID: <20260909134255.572377533@linuxfoundation.org>
+Subject: [PATCH 6.18 524/583] ipv6: use dst6_mtu() instead of dst_mtu()
+Date: Wed,  9 Sep 2026 15:43:29 +0200
+Message-ID: <20260909134255.853917673@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,94 +52,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6582f8a06698403dccf8a01b7eef176b2c6dd7ff ]
+[ Upstream commit b40f0130a23b6bab8b359e158a40af81f11f14be ]
 
-Move header copying to ring logic into a new copy_header_to_ring()
-function. This makes the copy_to_user() logic more clear and centralizes
-error handling / rate-limited logging.
+When we expect an IPv6 dst, use dst6_mtu() instead of dst_mtu()
+to save some code space.
 
-Reviewed-by: Bernd Schubert <bschubert@ddn.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: fd10f40af314 ("fuse: copy request headers via a stack buffer for io-uring")
+Due to current dst6_mtu() implementation, only convert
+users in IPv6 stack.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260130210303.3888261-7-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 870a9e42ecc6 ("tcp: clamp route advmss to TCP_MIN_MSS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev_uring.c |   39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ net/ipv6/ip6_gre.c       |    2 +-
+ net/ipv6/ip6_output.c    |    6 +++---
+ net/ipv6/ip6_tunnel.c    |    4 ++--
+ net/ipv6/ipv6_sockglue.c |    4 ++--
+ net/ipv6/route.c         |   10 ++++++----
+ net/ipv6/tcp_ipv6.c      |    9 +++++----
+ 6 files changed, 19 insertions(+), 16 deletions(-)
 
---- a/fs/fuse/dev_uring.c
-+++ b/fs/fuse/dev_uring.c
-@@ -581,6 +581,18 @@ err:
- 	return err;
- }
- 
-+static __always_inline int copy_header_to_ring(void __user *ring,
-+					       const void *header,
-+					       size_t header_size)
-+{
-+	if (copy_to_user(ring, header, header_size)) {
-+		pr_info_ratelimited("Copying header to ring failed.\n");
-+		return -EFAULT;
-+	}
-+
-+	return 0;
-+}
-+
- static int fuse_uring_copy_from_ring(struct fuse_ring *ring,
- 				     struct fuse_req *req,
- 				     struct fuse_ring_ent *ent)
-@@ -643,13 +655,11 @@ static int fuse_uring_args_to_ring(struc
- 		 * Some op code have that as zero size.
- 		 */
- 		if (args->in_args[0].size > 0) {
--			err = copy_to_user(&ent->headers->op_in, in_args->value,
--					   in_args->size);
--			if (err) {
--				pr_info_ratelimited(
--					"Copying the header failed.\n");
--				return -EFAULT;
--			}
-+			err = copy_header_to_ring(&ent->headers->op_in,
-+						  in_args->value,
-+						  in_args->size);
-+			if (err)
-+				return err;
- 		}
- 		in_args++;
- 		num_args--;
-@@ -665,9 +675,8 @@ static int fuse_uring_args_to_ring(struc
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1057,7 +1057,7 @@ static netdev_tx_t ip6erspan_tunnel_xmit
+ 	/* TooBig packet may have updated dst->dev's mtu */
+ 	if (!t->parms.collect_md && dst) {
+ 		mtu = READ_ONCE(dst_dev(dst)->mtu);
+-		if (dst_mtu(dst) > mtu)
++		if (dst6_mtu(dst) > mtu)
+ 			dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
  	}
+ 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -355,7 +355,7 @@ int ip6_xmit(const struct sock *sk, stru
+ 	skb->priority = priority;
+ 	skb->mark = mark;
  
- 	ent_in_out.payload_sz = cs.ring.copied_sz;
--	err = copy_to_user(&ent->headers->ring_ent_in_out, &ent_in_out,
--			   sizeof(ent_in_out));
--	return err ? -EFAULT : 0;
-+	return copy_header_to_ring(&ent->headers->ring_ent_in_out, &ent_in_out,
-+				   sizeof(ent_in_out));
- }
+-	mtu = dst_mtu(dst);
++	mtu = dst6_mtu(dst);
+ 	if (likely((skb->len <= mtu) || skb->ignore_df || skb_is_gso(skb))) {
+ 		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTREQUESTS);
  
- static int fuse_uring_copy_to_ring(struct fuse_ring_ent *ent,
-@@ -696,14 +705,8 @@ static int fuse_uring_copy_to_ring(struc
+@@ -1405,10 +1405,10 @@ static int ip6_setup_cork(struct sock *s
+ 	v6_cork->dontfrag = ipc6->dontfrag;
+ 	if (rt->dst.flags & DST_XFRM_TUNNEL)
+ 		mtu = READ_ONCE(np->pmtudisc) >= IPV6_PMTUDISC_PROBE ?
+-		      READ_ONCE(rt->dst.dev->mtu) : dst_mtu(&rt->dst);
++		      READ_ONCE(rt->dst.dev->mtu) : dst6_mtu(&rt->dst);
+ 	else
+ 		mtu = READ_ONCE(np->pmtudisc) >= IPV6_PMTUDISC_PROBE ?
+-			READ_ONCE(rt->dst.dev->mtu) : dst_mtu(xfrm_dst_path(&rt->dst));
++			READ_ONCE(rt->dst.dev->mtu) : dst6_mtu(xfrm_dst_path(&rt->dst));
+ 
+ 	frag_size = READ_ONCE(np->frag_size);
+ 	if (frag_size && frag_size < mtu)
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -643,7 +643,7 @@ ip4ip6_err(struct sk_buff *skb, struct i
+ 
+ 	/* change mtu on this route */
+ 	if (rel_type == ICMP_DEST_UNREACH && rel_code == ICMP_FRAG_NEEDED) {
+-		if (rel_info > dst_mtu(skb_dst(skb2)))
++		if (rel_info > dst6_mtu(skb_dst(skb2)))
+ 			goto out;
+ 
+ 		skb_dst_update_pmtu_no_confirm(skb2, rel_info);
+@@ -1195,7 +1195,7 @@ route_lookup:
+ 				     t->parms.name);
+ 		goto tx_err_dst_release;
  	}
+-	mtu = dst_mtu(dst) - eth_hlen - psh_hlen - t->tun_hlen;
++	mtu = dst6_mtu(dst) - eth_hlen - psh_hlen - t->tun_hlen;
+ 	if (encap_limit >= 0) {
+ 		max_headroom += 8;
+ 		mtu -= 8;
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -1184,7 +1184,7 @@ int do_ipv6_getsockopt(struct sock *sk,
+ 		rcu_read_lock();
+ 		dst = __sk_dst_get(sk);
+ 		if (dst)
+-			val = dst_mtu(dst);
++			val = dst6_mtu(dst);
+ 		rcu_read_unlock();
+ 		if (!val)
+ 			return -ENOTCONN;
+@@ -1283,7 +1283,7 @@ int do_ipv6_getsockopt(struct sock *sk,
+ 		rcu_read_lock();
+ 		dst = __sk_dst_get(sk);
+ 		if (dst)
+-			mtuinfo.ip6m_mtu = dst_mtu(dst);
++			mtuinfo.ip6m_mtu = dst6_mtu(dst);
+ 		rcu_read_unlock();
+ 		if (!mtuinfo.ip6m_mtu)
+ 			return -ENOTCONN;
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -2053,6 +2053,8 @@ unlock:
+ static bool rt6_mtu_change_route_allowed(struct inet6_dev *idev,
+ 					 struct rt6_info *rt, int mtu)
+ {
++	u32 dmtu = dst6_mtu(&rt->dst);
++
+ 	/* If the new MTU is lower than the route PMTU, this new MTU will be the
+ 	 * lowest MTU in the path: always allow updating the route PMTU to
+ 	 * reflect PMTU decreases.
+@@ -2063,10 +2065,10 @@ static bool rt6_mtu_change_route_allowed
+ 	 * handle this.
+ 	 */
  
- 	/* copy fuse_in_header */
--	err = copy_to_user(&ent->headers->in_out, &req->in.h,
--			   sizeof(req->in.h));
--	if (err) {
--		err = -EFAULT;
--		return err;
--	}
--
--	return 0;
-+	return copy_header_to_ring(&ent->headers->in_out, &req->in.h,
-+				   sizeof(req->in.h));
+-	if (dst_mtu(&rt->dst) >= mtu)
++	if (dmtu >= mtu)
+ 		return true;
+ 
+-	if (dst_mtu(&rt->dst) == idev->cnf.mtu6)
++	if (dmtu == idev->cnf.mtu6)
+ 		return true;
+ 
+ 	return false;
+@@ -2936,7 +2938,7 @@ static void __ip6_rt_update_pmtu(struct
+ 
+ 	if (mtu < IPV6_MIN_MTU)
+ 		return;
+-	if (mtu >= dst_mtu(dst))
++	if (mtu >= dst6_mtu(dst))
+ 		return;
+ 
+ 	if (!rt6_cache_allowed_for_pmtu(rt6)) {
+@@ -3252,7 +3254,7 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
+ 
+ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ {
+-	unsigned int mtu = dst_mtu(dst);
++	unsigned int mtu = dst6_mtu(dst);
+ 	struct net *net;
+ 
+ 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -351,7 +351,7 @@ failure:
+ static void tcp_v6_mtu_reduced(struct sock *sk)
+ {
+ 	struct dst_entry *dst;
+-	u32 mtu;
++	u32 mtu, dmtu;
+ 
+ 	if ((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE))
+ 		return;
+@@ -368,8 +368,9 @@ static void tcp_v6_mtu_reduced(struct so
+ 	if (!dst)
+ 		return;
+ 
+-	if (inet_csk(sk)->icsk_pmtu_cookie > dst_mtu(dst)) {
+-		tcp_sync_mss(sk, dst_mtu(dst));
++	dmtu = dst6_mtu(dst);
++	if (inet_csk(sk)->icsk_pmtu_cookie > dmtu) {
++		tcp_sync_mss(sk, dmtu);
+ 		tcp_simple_retransmit(sk);
+ 	}
  }
+@@ -1499,7 +1500,7 @@ static struct sock *tcp_v6_syn_recv_sock
  
- static int fuse_uring_prepare_send(struct fuse_ring_ent *ent,
+ 	tcp_ca_openreq_child(newsk, dst);
+ 
+-	tcp_sync_mss(newsk, dst_mtu(dst));
++	tcp_sync_mss(newsk, dst6_mtu(dst));
+ 	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), dst_metric_advmss(dst));
+ 
+ 	tcp_initialize_rcv_mss(newsk);
 
 
