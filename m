@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FA5468C2C;
-	Wed,  9 Sep 2026 13:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFE94DF4DC;
+	Wed,  9 Sep 2026 13:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961822; cv=none; b=gdofN2PH2DHYZn7RssROr3nc3vYz8uy2ZOOe8hBUn6ub6GSd18TBIXxkohzzhf7utW862lBmYEXM6dD5i+iNGIrGzhI7CaTSVCjzK7I4uZwWJ4OFIzBn5rREqj80hREdmHGJCgxaljsJrPtrtcP57HrTcLJBqZ7WSGA6AkwpXeM=
+	t=1788961824; cv=none; b=WdBdSyy6Hz2dKe4EWdFp2Izv6m5zliFes4Ij94lA4/UgAZQGObGrXv98/qb4rWN+t+xOv5Awp+kcu+00F5EDsnBWUuFXtS9JcDEhBLz3xo7q3oKJ9R4/IpHQsu7XPsAxbSKza1SN9YK+k0/M8MOpd0vqfeobbrGW9+pJibfa0Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961822; c=relaxed/simple;
-	bh=48bU9hnoA6DplFsZLEuW8IFWx0sex0nRtjbkw8LD1GE=;
+	s=arc-20240116; t=1788961824; c=relaxed/simple;
+	bh=5Sd7vj6igEdL9/Sp+mqxr1wLKMvSeqTB3eU5nZGIltk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1TM6uR7JpS/+WbtXq72uCVbQQBJreaw1Dsj6+j+/HBvHTrLjmHyGQI/P0bZTg00Qmw2LTCFcxIuzGY5+DTnhG1h5yiZf7s2yi89bB9C7jEAXdIkTKERYyiJ/+QdP2QGgdQap3KGRhm6UDt7Ekt0dkpHINv7TN5sIduH+Xvwl/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAOPr7ld; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HPmoXVHCUSvNPSKHesp6dXoYQF5UIjFwJZaVlhxZx4WsGlywU5UCc6jPlCmwCTyGe/qrXxcu+n/wt/3JtpEXzSFJJvwgLWhYjOvzFj6SDdXEY7rEEHMT/AG+8+695ZDCWZx+UG3wIO4/0c3ULT8ZC7AK3HYeIke2lzTpWh8u34E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lg61X/Vo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAOPr7ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D116F1F00A3A;
-	Wed,  9 Sep 2026 13:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lg61X/Vo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26C91F00A3A;
+	Wed,  9 Sep 2026 13:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961820;
-	bh=DZBpsvQt5GMoYiSE16jeHw3PtAee6p1rSNRYYtie9cY=;
+	s=korg; t=1788961823;
+	bh=pT1XRzQJAlAPzXbk16qBJbZW8BxJn9xxPBDLODRL2pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fAOPr7ld7f9IEphC0qF3OPVkalUSrvJcbr5OKeVmcAveG4I+GY003jL4wU6cK3ddC
-	 BgwSg0xfshtxTOfRrXK5WoXlpA9SyyOQlF2Z48kDM2Wayes0Ez/Ynp74JYJufwYPSo
-	 RGgLS51RqINMfo1XfS0tS4rsYOqcIN+MgWtgQlmI=
+	b=Lg61X/VoocVMYsbDyoDKKK2MAAeP1KH3r9wF2ax0ChUAdXsHuxjaU+DYQKGDTkMum
+	 K+qt6J7+jKZUNbY0OEJZEGUiu81++loKKP8Psox/RrfFBVv8Moea7FNcCgksTD7d/i
+	 Tww/Bn1H2WRso/t7WTTWumaTyqxm8pS9acNsARfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 076/556] mm/damon/vaddr-kunit: check region count in three_regions test
-Date: Wed,  9 Sep 2026 15:35:56 +0200
-Message-ID: <20260909134233.170787593@linuxfoundation.org>
+Subject: [PATCH 7.2 077/556] samples/damon/mtier: handle damon_start() failure
+Date: Wed,  9 Sep 2026 15:35:57 +0200
+Message-ID: <20260909134233.206640547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,54 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-commit 5fea07e460874c8c7cf00f728efbe22abc62c8d8 upstream.
+commit c7230d08ee79b13127bd2b45a3648d361ac912fc upstream.
 
-damon_do_test_apply_three_regions() iterates regions after
-damon_set_regions() call assuming the function would succeed at setting
-the number of regions the same to the expected one.  It might have failed.
-In this case, __nth_region_of() in the iteration could return NULL and
-NULL dereference can happen in the test.
+damon_sample_mtier_start() callers assume it will clean up resources when
+it fails.  And the function does the cleanup for context buildup failures.
+However, it is not doing the cleanup for damon_start() failure.
 
-The consequent user impact (NULL dereference) is quite bad.  The realistic
-user impact would be limited, though.  It would affect only test run
-setups.
+As a result, when damon_start() fails, it could leak the memory for DAMON
+context.  Also, if damon_start() fails for only the second context, the
+first context will indefinitely run, and avoid starting other DAMON
+contexts since it is running in the exclusive mode.  Stop possibly started
+DAMON context and free the contexts in case of the failure to fix the
+issues.
 
-Fix it by testing if the number of regions was also changed as expected
-and exit early for the failure.
+Note that the issue can reliably be reproduced because the module calls
+damon_start() in the exclusive mode.  For example,
+
+    $ sudo damo start
+    $ echo Y | sudo tee /sys/module/damon_sample_mtier/parameters/enabled
+    $ sudo cat /proc/allocinfo | grep damon_new_ctx
+
+Because the first command is running another DAMON instance, the second
+command fails the damon_start() call because the new DAMON instance cannot
+exclusively run.  And without this fix, by repeating the second and the
+third commands above, we can show the memory consumption is only
+increasing due to the leaks.  It requires the sudo permission though.
 
 The issue was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260718001442.87129-4-sj@kernel.org
-Link: https://lore.kernel.org/20260713144757.39740-1-sj@kernel.org [1]
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Link: https://lore.kernel.org/20260628215447.96166-4-sj@kernel.org
+Link: https://lore.kernel.org/20260608112455.274231F00893@smtp.kernel.org [1]
+Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
 Signed-off-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: <stable@vger.kernel.org> # 5.15.x
+Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: <stable@vger.kernel.org> # 6.16.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/tests/vaddr-kunit.h |    5 +++++
- 1 file changed, 5 insertions(+)
+ samples/damon/mtier.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/mm/damon/tests/vaddr-kunit.h
-+++ b/mm/damon/tests/vaddr-kunit.h
-@@ -158,12 +158,17 @@ static void damon_do_test_apply_three_re
- 		kunit_skip(test, "second damon_set_regions() fail");
- 	}
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -180,6 +180,7 @@ free_out:
+ static int damon_sample_mtier_start(void)
+ {
+ 	struct damon_ctx *ctx;
++	int err;
  
-+	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), nr_expected / 2);
-+	if (damon_nr_regions(t) != nr_expected / 2)
-+		goto out;
+ 	ctx = damon_sample_mtier_build_ctx(true);
+ 	if (!ctx)
+@@ -191,7 +192,15 @@ static int damon_sample_mtier_start(void
+ 		return -ENOMEM;
+ 	}
+ 	ctxs[1] = ctx;
+-	return damon_start(ctxs, 2, true);
++	err = damon_start(ctxs, 2, true);
++	if (!err)
++		return 0;
 +
- 	for (i = 0; i < nr_expected / 2; i++) {
- 		r = __nth_region_of(t, i);
- 		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
- 		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
- 	}
- 
-+out:
- 	damon_destroy_target(t, NULL);
++	if (damon_is_running(ctxs[0]))
++		damon_stop(ctxs, 1);
++	damon_destroy_ctx(ctxs[0]);
++	damon_destroy_ctx(ctxs[1]);
++	return err;
  }
  
+ static void damon_sample_mtier_stop(void)
 
 
