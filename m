@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172F355C329;
-	Wed,  9 Sep 2026 14:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056E8577E3C;
+	Wed,  9 Sep 2026 14:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963585; cv=none; b=Hv+1e6auR+Nu5V8ze9wRDtywiluJNOUOpSULUvzZDq/wRdCt2yRAqpxGK4rOAKNnhkLsVEIvL8TboatB4LliqkvG2NEMhfGuWsCwtftJHHsM/R69hqgmza1cn+HYXg0UgHsrMoKhPP8xg456ggMZCVXngevjAVQQQGXwhYYtSeQ=
+	t=1788963588; cv=none; b=Bt2K2MZy+31yZXjIgGflKw6spvtqJLDIVMjxs6FjdXD4v13mF77+6vNE//bqlnSHQBP9rHV59GaF6ykixRvQVpeIkDVbuiUMUgP/VLcHWVhncixNYBassMD6nYDEgCBuP+C9ZsEOXYcCqv96YBqHpRWUmTVbeHD7nHD6vFIytTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963585; c=relaxed/simple;
-	bh=oW3PnAGXpPbS4esRm7v0nll5cy7sNF/gyFKafMrU8D0=;
+	s=arc-20240116; t=1788963588; c=relaxed/simple;
+	bh=ZeID1KBBSB6x0SzkNRZP6Lb5vqxpmd5h6ethk5lJF0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfP3+dJ4YX+wlRyzLfvqWIqKix7PZ5Ln0oXqtcNPWtFa6YIcUMxWYsHeLGI6fcLMhHDAadV+DlKvLUeeNl+q8QIAogqyZMTQ5kiyAwwEaQHe0WnMVqTEjTG8sArGVj7qELba688zvMlDeD8CwMsukIa/poT781R30hUX8dzRJPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFn7Byop; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e5N+4Mvy09ygcKZBt3WyyEVsP4Ke+mpl0ejI57TlaLyhnib7TBGGUhIxLN4cugNvWXUoMV9h8t1aeHjWZwFAHJGiDZelFkn+qqs/jTZohsc9YuhmPrsahjFRF4mTwZ/ljAWIk3uDq0VYtorFPmL4vVgwc279+JUa8+qYYsF9V4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzpYpxZn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFn7Byop"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB511F00A3A;
-	Wed,  9 Sep 2026 14:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzpYpxZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C391F00A3A;
+	Wed,  9 Sep 2026 14:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963583;
-	bh=I2JnV70/57a6r4vuxBJ1GQq241eWQgdmXHuWlwcqMtc=;
+	s=korg; t=1788963586;
+	bh=BCyWwKCK/KrLjoIxcRp42ao1oesY9DstUq46v3T90KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iFn7ByopSHnvjTxiwL/2JV137kEaVP1K05uv90WCgUpgTShEz08LhUrq1IHsSrV30
-	 sgSTSyELXtJZXKM8Q1O7DL4pMtyVbmpcFSX2OhkNJXnRbkxrlNyobvlUzDtuwm/7hF
-	 E6T+XYi4uWHRJSoE2DH/NxFmc5IpcqNNh5axw1yc=
+	b=HzpYpxZnKbsXOa4+2WX6UOLnxbA874kqUyXZB4/wkSVte+WqW6sQNu3Oc7LTihZOf
+	 OFNQzcnhReTxg03FiEU6pEJAdfEF8ktZDlua72UH/dEOkKh5q7Bqn77ltRX0kNVVny
+	 6vAovWk6G1AApBhoS7w9Hq1sehPildxGqSSKyW4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Anthony Krowiak <akrowiak@linux.ibm.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.18 130/583] s390/vfio-ap: Fix dereference matrix_mdev->kvm without checking for NULL
-Date: Wed,  9 Sep 2026 15:36:55 +0200
-Message-ID: <20260909134242.646160479@linuxfoundation.org>
+Subject: [PATCH 6.18 131/583] s390/vfio-ap: Fix hot-unplug skipped when last AP adapter or domain removed
+Date: Wed,  9 Sep 2026 15:36:56 +0200
+Message-ID: <20260909134242.681248811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,64 +53,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Anthony Krowiak <akrowiak@linux.ibm.com>
 
-commit d50346801b4f144e42b49cd4f1496010498ab114 upstream.
+commit 917f509bfb88048094dbb85c4e9dbc4d6fe4a886 upstream.
 
-The ap_driver structure has two fields which are function pointers to
-callbacks:
+The vfio_ap_mdev_hot_unplug_cfg() function uses the return value of
+bitmap_andnot() to determine whether the guest APCB needs to be updated.
+However, bitmap_andnot() returns false when the resulting destination
+bitmap is empty. This means that if the only adapter, domain or control
+domain assigned to an mdev is removed from the host's AP configuration,
+the bit is correctly cleared from the shadow APCB, but bitmap_andnot()
+returns false because the result is an empty bitmap. Consequently,
+do_hotplug remains 0 and vfio_ap_mdev_update_guest_apcb() is never called,
+leaving the KVM guest with stale hardware access to the unplugged AP
+devices.
 
-* .on_config_changed: called at the start of the AP bus scan function to
-                      notify the device driver that the host AP
-                      configuration has changed and the associated AP
-                      devices will be added or removed accordingly. This
-                      gives the implementor a chance to evaluate the
-                      configuration changes and respond to them before
-                      the associated devices are added or removed.
-
-* .on_scan_complete:  Called at the end of the AP bus scan function to
-                      notify the device driver that the host AP
-                      configuration has changed and the AP devices have
-                      been added or removed accordingly. This gives the
-                      implementor the opportunity to respond to the
-                      changes after the associated devices are added or
-                      removed.
-
-These two callbacks are implemented in the vfio_ap device driver via the
-vfio_ap_on_cfg_changed and vfio_ap_on_scan_complete functions respectively.
-
-Within the call stack of these two callback functions the
-matrix_mdev->kvm->lock mutex is taken without checking whether
-matrix_mdev->kvm is NULL or not. If matrix_mdev->kvm has never been set,
-trying to take the lock will trigger a NULL pointer dereference. This patch
-adds checks for matrix_mdev->kvm == NULL before taking the
-matrix_mdev->kvm->lock mutex.
-
-Note that the matrix_mdev->kvm->lock mutex taken in the
-vfio_ap_mdev_hot_plug_config function is moved to the calling function
-along with the matrix_dev->mdevs_lock which is needed there to access
-the fields of the matrix_mdev. It makes little sense to make the change
-the check for matrix_mdev->kvm there before taking the kvm->lock
-mutex only to have to move it out via another patch, so it is done in
-this patch.
-
-It is important to make note of the following:
-1. The matrix_dev->guests_lock is acquired at the start of both callback
-   functions. This ensures that matrix_mdev will not be removed via the
-   vfio_ap_mdev_remove function because it too takes matrix_dev_guests_lock
-   before removing the object; so, matrix_mdev will be available for the
-   duration of the callback functions.
-
-2. The matrix_dev->mdevs_lock mutex must be taken in order to access
-   fields within the matrix_mdev structure
-
-3. matrix_mdev->kvm->lock mutex must be taken before the
-   matrix_dev->mdevs_lock to prevent a lockdep splat.
-
-4: The kvm->lock must be held while plugging the guest's AP configuration
-   into its SIE state description via the vfio_ap_mdev_update_guest_apcb
-   function.
-
-5. The vfio_ap_mdev_update_guest_apcb checks matrix_mdev->kvm to verify it
-   is not NULL before doing the hot plug of the guest's AP configuration.
+Fix this by replacing the bitmap_andnot() return value check with
+bitmap_intersects() to determine whether the shadow APCB actually
+overlaps with the removal mask. If there is an intersection, call
+bitmap_andnot() solely for its side effect of clearing the bits, then
+unconditionally set do_hotplug to trigger the guest APCB update.
 
 Fixes: eeb386aeb5b7c ("s390/vfio-ap: handle config changed and scan complete notification")
 Cc: stable@vger.kernel.org
@@ -119,93 +79,52 @@ Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |   39 +++++++++++++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c |   30 +++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
 --- a/drivers/s390/crypto/vfio_ap_ops.c
 +++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -2600,8 +2600,20 @@ static void vfio_ap_mdev_cfg_remove(unsi
- 	DECLARE_BITMAP(cdrem, AP_DOMAINS);
- 	int do_remove;
+@@ -2554,24 +2554,28 @@ static void vfio_ap_mdev_hot_unplug_cfg(
+ 					unsigned long *aqrem,
+ 					unsigned long *cdrem)
+ {
+-	int do_hotplug = 0;
++	bool do_hotplug = false;
  
-+	/*
-+	 * It is safe to traverse this list here because the
-+	 * required guard - matrix_dev->guests_lock - is taken in the
-+	 * vfio_ap_on_cfg_changed function prior to this function getting
-+	 * called.
-+	 */
- 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
--		mutex_lock(&matrix_mdev->kvm->lock);
-+		/*
-+		 * The mdevs_lock must be held to access fields within matrix_mdev,
-+		 * and kvm->lock must be taken before mdevs_lock to satisfy the lock
-+		 * ordering requirement and prevent a lockdep splat.
-+		 */
-+		if (matrix_mdev->kvm)
-+			mutex_lock(&matrix_mdev->kvm->lock);
- 		mutex_lock(&matrix_dev->mdevs_lock);
- 
- 		do_remove = bitmap_and(aprem, ap_remove,
-@@ -2619,7 +2631,8 @@ static void vfio_ap_mdev_cfg_remove(unsi
- 						    cdrem);
- 
- 		mutex_unlock(&matrix_dev->mdevs_lock);
--		mutex_unlock(&matrix_mdev->kvm->lock);
-+		if (matrix_mdev->kvm)
-+			mutex_unlock(&matrix_mdev->kvm->lock);
+-	if (!bitmap_empty(aprem, AP_DEVICES)) {
+-		do_hotplug |= bitmap_andnot(matrix_mdev->shadow_apcb.apm,
+-					    matrix_mdev->shadow_apcb.apm,
+-					    aprem, AP_DEVICES);
++	if (bitmap_intersects(matrix_mdev->shadow_apcb.apm, aprem, AP_DEVICES)) {
++		bitmap_andnot(matrix_mdev->shadow_apcb.apm,
++			      matrix_mdev->shadow_apcb.apm,
++			      aprem, AP_DEVICES);
++		do_hotplug = true;
  	}
- }
  
-@@ -2816,9 +2829,6 @@ static void vfio_ap_mdev_hot_plug_cfg(st
- 	DECLARE_BITMAP(apm_filtered, AP_DEVICES);
- 	bool filter_domains, filter_adapters, filter_cdoms, do_hotplug = false;
+-	if (!bitmap_empty(aqrem, AP_DOMAINS)) {
+-		do_hotplug |= bitmap_andnot(matrix_mdev->shadow_apcb.aqm,
+-					    matrix_mdev->shadow_apcb.aqm,
+-					    aqrem, AP_DEVICES);
++	if (bitmap_intersects(matrix_mdev->shadow_apcb.aqm, aqrem, AP_DOMAINS)) {
++		bitmap_andnot(matrix_mdev->shadow_apcb.aqm,
++			      matrix_mdev->shadow_apcb.aqm,
++			      aqrem, AP_DOMAINS);
++		do_hotplug = true;
+ 	}
  
--	mutex_lock(&matrix_mdev->kvm->lock);
--	mutex_lock(&matrix_dev->mdevs_lock);
--
- 	filter_adapters = bitmap_intersects(matrix_mdev->matrix.apm,
- 					    matrix_mdev->apm_add, AP_DEVICES);
- 	filter_domains = bitmap_intersects(matrix_mdev->matrix.aqm,
-@@ -2836,9 +2846,6 @@ static void vfio_ap_mdev_hot_plug_cfg(st
+-	if (!bitmap_empty(cdrem, AP_DOMAINS))
+-		do_hotplug |= bitmap_andnot(matrix_mdev->shadow_apcb.adm,
+-					    matrix_mdev->shadow_apcb.adm,
+-					    cdrem, AP_DOMAINS);
++	if (bitmap_intersects(matrix_mdev->shadow_apcb.adm, cdrem, AP_DOMAINS)) {
++		bitmap_andnot(matrix_mdev->shadow_apcb.adm,
++			      matrix_mdev->shadow_apcb.adm,
++			      cdrem, AP_DOMAINS);
++		do_hotplug = true;
++	}
+ 
+ 	if (do_hotplug)
  		vfio_ap_mdev_update_guest_apcb(matrix_mdev);
- 
- 	reset_queues_for_apids(matrix_mdev, apm_filtered);
--
--	mutex_unlock(&matrix_dev->mdevs_lock);
--	mutex_unlock(&matrix_mdev->kvm->lock);
- }
- 
- void vfio_ap_on_scan_complete(struct ap_config_info *new_config_info,
-@@ -2849,15 +2856,29 @@ void vfio_ap_on_scan_complete(struct ap_
- 	mutex_lock(&matrix_dev->guests_lock);
- 
- 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
-+		/*
-+		 * The mdevs_lock must be held to access fields within matrix_mdev,
-+		 * and kvm->lock must be taken before mdevs_lock to satisfy the lock
-+		 * ordering requirement and prevent a lockdep splat.
-+		 */
-+		if (matrix_mdev->kvm)
-+			mutex_lock(&matrix_mdev->kvm->lock);
-+		mutex_lock(&matrix_dev->mdevs_lock);
-+
- 		if (bitmap_empty(matrix_mdev->apm_add, AP_DEVICES) &&
- 		    bitmap_empty(matrix_mdev->aqm_add, AP_DOMAINS) &&
- 		    bitmap_empty(matrix_mdev->adm_add, AP_DOMAINS))
--			continue;
-+			goto do_unlock;
- 
- 		vfio_ap_mdev_hot_plug_cfg(matrix_mdev);
- 		bitmap_clear(matrix_mdev->apm_add, 0, AP_DEVICES);
- 		bitmap_clear(matrix_mdev->aqm_add, 0, AP_DOMAINS);
- 		bitmap_clear(matrix_mdev->adm_add, 0, AP_DOMAINS);
-+
-+do_unlock:
-+		mutex_unlock(&matrix_dev->mdevs_lock);
-+		if (matrix_mdev->kvm)
-+			mutex_unlock(&matrix_mdev->kvm->lock);
- 	}
- 
- 	mutex_unlock(&matrix_dev->guests_lock);
 
 
