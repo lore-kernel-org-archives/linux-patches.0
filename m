@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C392D9780;
-	Wed,  9 Sep 2026 14:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9A453D0B8;
+	Wed,  9 Sep 2026 14:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962568; cv=none; b=uYq0HSVb2Gei6+gNcP0e0DO6kyGe7tPez6hEFB3yWt+xJce7xn0abEXgc8zd/ztSq/r23AFOyFpbN3g0TklPh4dVuu3UScR/HZUC+bX0K5yJm6Yh1SMKKOqLhWIF+yq4bAzKDkUWUFL24kyL5wqrNRA+wUrJnK34H6YDrniqVJo=
+	t=1788962571; cv=none; b=XHm9e85dRoDa4+NfPKFUP/dFicqFV9i7ma8wmF5fKi6u2UO5o/IavxtPzNmOINLrTvuSFFVwPpJcFrHghroapNigqj8Ya+eV9F2Jj7HcnG3wtpAvEmpdBcQ75cj1lSFJuEkFu1PV++EsHek+EwTYKUtPKh+ISQNk/H+4j55c0z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962568; c=relaxed/simple;
-	bh=VaqWMyM2xkC364gp9Q70TROmdE6fcAvwivdaliqIMuE=;
+	s=arc-20240116; t=1788962571; c=relaxed/simple;
+	bh=wjELHO/5RBqDynFEntWbgBcmeCHfZdMljqnvPeDZoSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N53+4A4U3Uv6n6C08vPoByS3r4Zfb8rEIJMi1H6ttY2O8DA7hHyV2zqbu4hloDufQPRbC7mhqzfz5TTlbAFl6xXElXMvsXdK+D+XQMjM4Kb5VEPmXZJTR/Pk5n6X4ZAKH2H66OcWf2GXlaLE/FJ5Lr6bdahvKUFhs1vvLu/vegA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdJPcPWn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oLdpGOF0iDDT5aFQgxPYzoWe+PIDTfy63Sx7j4mc5vAHTM1fzK6rrxI1jEpJWtAQrYJs/2yjz/pkXMf4HeB+e4k0CQDSFRljOF06nhxH/vhRhA7hKt2IcN35Dc+S+hPiTQNOIA+ug4RhoYRXnMWV3HKlm5U92wkttpt2eCekmU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONpxWF5J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdJPcPWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E781F00A3A;
-	Wed,  9 Sep 2026 14:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONpxWF5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66B81F00A3A;
+	Wed,  9 Sep 2026 14:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962567;
-	bh=ZzvTObVEr5Le6dPKu3u/7WXiQ86ZPwHR5uYj+DB/JK8=;
+	s=korg; t=1788962570;
+	bh=EdGPWSEup/poIEV7abivW0ZBypvdi6PCiAyIhtyP7sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LdJPcPWnZ9LuFjhQdKkdSJBjtsacsfbGO8GaBY1G7RtcYglg23hOeOHq1t6SJXXQh
-	 rG0mvE4q9qjzfpK3RWLLJWnWwbCFEYWEIpgidtXf0xp12lXK6JRbsqXnEvKqnwdYrl
-	 oVpE78vmlk7+9u5QfLwyCMWxutVd6e7kHnikeLwA=
+	b=ONpxWF5JvIdo+/t+WfTADAXXKhAKgvny9Y8XGIHM/XvjkK1IBlv9BDHho3cBA7gkf
+	 vcJ6HyhBV0kUtCv4ii13Ci5L/coBZKKs3AeJ+Bxtak3S0rsCyTLN6xXiCCAXVYNdEc
+	 9BPvQxlRReGullaG26GN9oh85wYlRHh1KSf8Vd4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Bibo Mao <maobibo@loongson.cn>,
-	Zeng Chi <zengchi@kylinos.cn>,
+	Han Gao <gaohan@iscas.ac.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 334/556] LoongArch: KVM: Validate MSI data before routing it to EIOINTC
-Date: Wed,  9 Sep 2026 15:40:14 +0200
-Message-ID: <20260909134242.407170863@linuxfoundation.org>
+Subject: [PATCH 7.2 335/556] LoongArch: Add DIRECT_MAP_PHYSMEM_END definition
+Date: Wed,  9 Sep 2026 15:40:15 +0200
+Message-ID: <20260909134242.444426021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,51 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Chi <zengchi@kylinos.cn>
+From: Han Gao <gaohan@iscas.ac.cn>
 
-commit 501514d6ebd2111c353a1296f25dbe22fbd64657 upstream.
+commit 2677f97a67fdbc62a82ce1faa67791f54451d36f upstream.
 
-pch_msi_set_irq() passes e->msi.data straight into eiointc_set_irq() as
-the irq number. The MSI data comes from userspace, that either via a
-KVM_IRQ_ROUTING_MSI entry set with KVM_SET_GSI_ROUTING (used by irqfd
-and KVM_IRQ_LINE) or directly via KVM_SIGNAL_MSI, and is never checked
-against EIOINTC_IRQS.
+get_free_mem_region() and mhp_get_pluggable_range() bound their search
+to DIRECT_MAP_PHYSMEM_END. LoongArch does not define it, so the fallback
+in include/linux/mm.h applies: under CONFIG_SPARSEMEM_VMEMMAP it is
+(1ULL << MAX_PHYSMEM_BITS) - 1, a compile-time constant that does not
+adapt to the CPU's physical address space bits (cpu_pabits, probed from
+CPUCFG1).
 
-eiointc_set_irq() uses the value with __set_bit()/__clear_bit() on the
-256-bit isr bitmap, eiointc_update_irq() then indexes sw_coremap[] and
-the per-cpu coreisr/sw_coreisr bitmaps with it. Therefore a data value
->= 256 reads and writes memory past the end of those arrays, i.e. any
-process holding a VM fd can corrupt kernel memory beyond the allocation
-of loongarch_eiointc.
+The vmemmap window only covers physical space below 2^(cpu_pabits+1)
+(i.e. VMEMMAP_SIZE), so on CPUs with fewer physical address bits than
+MAX_PHYSMEM_BITS the fallback allows get_free_mem_region() to return
+a ZONE_DEVICE region outside the vmemmap window; vmemmap_populate() then
+wraps the memmap range around and maps it into low memory, silently
+corrupting the page tables. The same search also picked the top-of-
+address-space region that crashed memmap_init_zone_device() with amdkfd
+on Loongson-3C6000 in 6.16 [1]; the commit 2969b42c8f99 ("LoongArch/mm:
+align vmemmap to maximal folio size") keeps that region in bounds on
+current Loongson-3C6000 configs, but CPUs with smaller cpu_pabits (e.g.
+the Loongson-2K series) are still affected.
 
-Reject MSI data that doesn't fit in the EIOINTC irq space. The DMSINTC
-path is unaffected as it decodes the vector from the address and masks
-it.
+Define DIRECT_MAP_PHYSMEM_END as the vmemmap-covered physical range,
+(1ULL << (cpu_pabits + 1)) - 1, capped at (1ULL << MAX_PHYSMEM_BITS) - 1
+under CONFIG_SPARSEMEM, similar to the commit f3336b48cf9d ("riscv: mm:
+Define DIRECT_MAP_PHYSMEM_END").
 
-Cc: stable@vger.kernel.org
-Fixes: 1928254c5ccb ("LoongArch: KVM: Add irqfd support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260531140921.1B1181F00893@smtp.kernel.org/
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
+[1] https://lore.kernel.org/amd-gfx/20250814032153.227285-1-jeffbai@aosc.io/
+
+Cc: stable@vger.kernel.org # v6.13+
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/pch_pic.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/include/asm/pgtable.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/loongarch/kvm/intc/pch_pic.c
-+++ b/arch/loongarch/kvm/intc/pch_pic.c
-@@ -78,6 +78,9 @@ int pch_msi_set_irq(struct kvm *kvm, str
- 		return dmsintc_set_irq(kvm, msg_addr, e->msi.data, level);
- 	}
+--- a/arch/loongarch/include/asm/pgtable.h
++++ b/arch/loongarch/include/asm/pgtable.h
+@@ -125,6 +125,13 @@ struct vm_area_struct;
  
-+	if (e->msi.data >= EIOINTC_IRQS)
-+		return -EINVAL;
+ #endif
+ 
++/* Needed to limit get_free_mem_region() */
++#ifndef CONFIG_SPARSEMEM
++#define DIRECT_MAP_PHYSMEM_END ((1ULL << (cpu_pabits + 1)) - 1)
++#else
++#define DIRECT_MAP_PHYSMEM_END min((1ULL << (cpu_pabits + 1)) - 1, (1ULL << MAX_PHYSMEM_BITS) - 1)
++#endif
 +
- 	eiointc_set_irq(kvm->arch.eiointc, e->msi.data, level);
+ #define ptep_get(ptep) READ_ONCE(*(ptep))
+ #define pmdp_get(pmdp) READ_ONCE(*(pmdp))
  
- 	return 0;
 
 
