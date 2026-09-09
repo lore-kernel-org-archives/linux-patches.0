@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5552F0661;
-	Wed,  9 Sep 2026 14:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFC0563FBD;
+	Wed,  9 Sep 2026 14:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962481; cv=none; b=ULI+nycDOqJZVIIZao55ij52wPEPbTBmYs/L4yrrxEDldB8gSZLAkknXItwpsjor6hxjL3tUhi1b182BiYnpRQuV3c+3f4mQRTrAe9LKADUx+ezcQALGUGnAHG7U2jpn3ZUgZfgXAs7D0s7GvVDszGgAZ6C7dz3YTwhy4D+pLK4=
+	t=1788962483; cv=none; b=Au45poqdin4QDhXajH2OYi6FszSiXhLviMtWABt6OEfZHfDHAHMKzkG/tFFfMdAYvvett8wRiYaj27m6XLcPgpWDgtwesFeJcRaijen68si4jd1+TrwwPmE0JsTCqjsyJgRp39f30VeQ9DP6xRNpHP0M5aHAlyUz+HJo3Dop20s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962481; c=relaxed/simple;
-	bh=0APxJInRJfjzeKAOudv3oIunAr/EROYJwv6lxxx70fU=;
+	s=arc-20240116; t=1788962483; c=relaxed/simple;
+	bh=1h0/ssiDxlu2PxW0Hev0uPg2rhtFzUMTqaCNfSaYtEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEdpF8F134aglIPwHch82z8BQnFFJsbM9B9wvUXC9Ati5UwKoBJ1Jo61eYJdpcYghghG02LUcrnSh+8e9Ij9jY5rNiD5DOQkPcCLEZd+EpQXJN5XK9rPskeoTLZLtPiyP5UZxNnF/3Faa8v2MpMb4Xoa+d159lO9KywJOhU7iv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elgk9TJT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qiucsOHDEw/uHfve0r7YrOOsSLfsGC693mVcAxxkPdHiu1Uuqs+370ehiaVZpH0L+Ar9HQlqvMRK/mwL0ICDmneuExsdiah6hWbZzbd1HWdInzXOGe/wvtQftNmiFlnf8hT/FpeZ2ebTp3fFoGc13WjrLredONM79PltEFjztSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=No8X7ZCi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elgk9TJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFDA1F00A3D;
-	Wed,  9 Sep 2026 14:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="No8X7ZCi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A0B1F00A3A;
+	Wed,  9 Sep 2026 14:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962479;
-	bh=CpxfVeIJrX8SoVmLZGhAK6hz9ROC08eOdjJFnFTn4is=;
+	s=korg; t=1788962482;
+	bh=pbCuifSqT+L5cXvymQsDxhlFBUDftzPSO7TCUQpfeLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=elgk9TJT5Ph9PNKx9PHvCKqZnnatRGK0yJjStQjCX79Qyu1zgSlX1nWcOsBgnExya
-	 CGDwCflC0RAhEBaCAjrbMnfdoeRMrLgFM3iEgA58MY+VDPFoc0ul/XKM/KCtAE0YMZ
-	 2XSH2qAA/aeuEMTCN66ZcaLFzoIXqzfPP8R1f42A=
+	b=No8X7ZCirgjcIU206cX4E7HF6sy2JesoAtRRsowLxyfoL04EfwMcAtXFfsmQwkTEd
+	 jGDIlsH0YXtpRLCs4btDYs52J9hVQv8YEmgVzKsYqGeF8MFTnX53niIjlIBeR7pYka
+	 0X2EGzp9P5WGtRwyxLf38xnaeihxttADN25yEcgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 7.2 306/556] KVM: s390: Free guest debug data on vcpu destroy
-Date: Wed,  9 Sep 2026 15:39:46 +0200
-Message-ID: <20260909134241.441463463@linuxfoundation.org>
+Subject: [PATCH 7.2 307/556] KVM: s390: Take srcu when importing watchpoint data
+Date: Wed,  9 Sep 2026 15:39:47 +0200
+Message-ID: <20260909134241.475366868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,45 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit e7f698b09d4a7c36b299acf680fc50fe868e2bcd upstream.
+commit a4e482def8533ebace517d9f67f1465841b1f982 upstream.
 
-kvm_s390_clear_bp_data() is only called from
-kvm_arch_vcpu_ioctl_set_guest_debug(), i.e. when user space changes or
-disables debugging. A vCPU that is destroyed while hardware breakpoints
-are still armed - the normal case when the VMM just exits or crashes -
-leaks hw_bp_info, hw_wp_info and all old_data buffers, since generic KVM
-frees the vCPU right after kvm_arch_vcpu_destroy().
+__import_wp_info() backs up the original guest memory contents of a
+watchpoint with read_guest_abs(), which is kvm_read_guest() and therefore
+resolves the memslot via __kvm_memslots(). That requires kvm->srcu (or
+kvm->slots_lock) to be held, otherwise a concurrent memslot update can
+free the memslots array under us once its SRCU grace period has elapsed.
 
-That is bounded by MAX_BP_COUNT entries, so roughly 8 KiB per vCPU, but
-it is unbounded over VM lifetimes. The allocations are
-GFP_KERNEL_ACCOUNT, so the charge also outlives the exiting process and
-pins dying memcgs.
-
-Fix by clearing the debug data on vCPU destruction. Calling it
-unconditionally is fine: struct kvm_vcpu is zero allocated, so for a vCPU
-that never enabled debugging the counters are 0 and the pointers NULL.
+As this is not fast path, following lock ordering (mutex first, then
+srcu) take the big hammer and hold the srcu for the full import.
 
 Fixes: 27291e2165b6 ("KVM: s390: hardware support for guest debugging")
 Cc: stable@vger.kernel.org
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
 Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260805110455.7200-8-borntraeger@linux.ibm.com>
+Message-ID: <20260805110455.7200-7-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/kvm-s390.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/kvm/kvm-s390.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/arch/s390/kvm/kvm-s390.c
 +++ b/arch/s390/kvm/kvm-s390.c
-@@ -3410,6 +3410,7 @@ void kvm_arch_vcpu_destroy(struct kvm_vc
- 	trace_kvm_s390_destroy_vcpu(vcpu->vcpu_id);
- 	kvm_s390_clear_local_irqs(vcpu);
- 	kvm_clear_async_pf_completion_queue(vcpu);
-+	kvm_s390_clear_bp_data(vcpu);
- 	if (!kvm_is_ucontrol(vcpu->kvm))
- 		sca_del_vcpu(vcpu);
- 	kvm_s390_update_topology_change_report(vcpu->kvm, 1);
+@@ -4249,8 +4249,10 @@ int kvm_arch_vcpu_ioctl_set_guest_debug(
+ 		/* enforce guest PER */
+ 		kvm_s390_set_cpuflags(vcpu, CPUSTAT_P);
+ 
+-		if (dbg->control & KVM_GUESTDBG_USE_HW_BP)
+-			rc = kvm_s390_import_bp_data(vcpu, dbg);
++		if (dbg->control & KVM_GUESTDBG_USE_HW_BP) {
++			scoped_guard(srcu, &vcpu->kvm->srcu)
++				rc = kvm_s390_import_bp_data(vcpu, dbg);
++		}
+ 	} else {
+ 		kvm_s390_clear_cpuflags(vcpu, CPUSTAT_P);
+ 		vcpu->arch.guestdbg.last_bp = 0;
 
 
