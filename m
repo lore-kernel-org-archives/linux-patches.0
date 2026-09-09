@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4BC530DF7;
-	Wed,  9 Sep 2026 14:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05437577E57;
+	Wed,  9 Sep 2026 14:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963602; cv=none; b=DTRgWnE0rkOWgk3ag0hJMHT9vFfTRTk1Tim1Em3WBpVk50FVAdO/qWyvNmfurtPLarM3S6G9FxD4FhO/VAT7pmPHjEt4Fco2y9JgdVuO3vQ1+axO4QbCnyLPHPjQTUVdFf2TfV0nF9MOG3WFKH9MgjISzeTyBH9XQ9vAPED88lw=
+	t=1788963605; cv=none; b=Yt0Z7FbbVc4p5fzxjkuG0zKWIHUk475L5kcZDR/4OUClSHumwvh9dNjrfz2BdvssD8I2mQTPhTdRkmZ0I+KMcAFgPStVs+Ef3BqcN1bWVjw+GIqdyzx7mLQgmkdYCi0uJS2KTITHCpLUeKvmET6Cw7pM0MkTbVAHwKGr2EbbB94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963602; c=relaxed/simple;
-	bh=GikECVzsNGqIloKykOCqWxSJlmW9yR4mUlcwtG6A/Ho=;
+	s=arc-20240116; t=1788963605; c=relaxed/simple;
+	bh=TBdPkZGI2MGHVGY0raHCxm5//sjlGVtEUvlkA87f/sY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WT04mrKj8QaDqoxPFpVAzxl48mukIvy0sNJwiPFyBC3GghS7BD6dv/jz5hpgB6oCHnt5o5obL0TH3hxVzcHL713OQ7E7W0kCdXwfaPPbQOICidjUCULqqEe3qMCw3tSrkzETaKxdaZtoudSGiuZLeamSSYVGy1IIqZ8szMsPxu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEC9+16T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cpSBiYJp+lsdsBroHcHTlve7uF2HeUYy9kGWg+IV+wfFARyElMD8BjDq10B+06TmdTebtFV5ksMY28ddBvi8S6YRHuLux/1NQtBz/3ezfCFH21mAhbq8dgKD3nWKjQlaX6BekhnDclXvkJ3qRECHqKnE88MXE0/bjH8nxdlkc6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DifM1Wwi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEC9+16T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A960F1F00A3A;
-	Wed,  9 Sep 2026 14:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DifM1Wwi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9B11F00A3A;
+	Wed,  9 Sep 2026 14:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963601;
-	bh=PoabeC/gyklxyvdOcjhHT/u6gwS94wKyx8NGy7/ctHc=;
+	s=korg; t=1788963603;
+	bh=EKSTsUQwB/FN7Gvb20vARoKCVYiegS2wbJ1UN2EDxbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZEC9+16TRpWm77oxcq90qGXtDsUMHaH7Nktdj9rsNQBd0BRGBS7mCLimFqoz9d6+L
-	 De1Y8qFfa9XrrvMFtwqCj9h4o+izhmcEXKxQ232Bdi/FAgbY9NQGIr+h31XehzMXt4
-	 o97+i6t6sVDOFDk54cxbWgJ6/c282mIggEatfOZI=
+	b=DifM1WwixvCsXkm1yQTPGEUe9YsOH8TfBE3/yfteZyXFGyxl43sZKavxjlCTfd92A
+	 kZtcx0AIENKylsgPYARmyv/BihQpgn59hbwgsFQx26Ki9szTeLWVLgr2jmGJpc7ec0
+	 /ALBnJi5Yij7WIwBxdAj3IyRueoYFhY1oUcBYOsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Alison Schofield <alison.schofield@intel.com>
-Subject: [PATCH 6.18 118/583] nvdimm/btt: reject an arena whose nfree is below the lane count
-Date: Wed,  9 Sep 2026 15:36:43 +0200
-Message-ID: <20260909134242.217206128@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.18 136/583] mtd: afs: validate v2 image info bounds
+Date: Wed,  9 Sep 2026 15:37:01 +0200
+Message-ID: <20260909134242.846822804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,51 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 6a1f2e5ed9267ca19187038ac635393c165213ac upstream.
+commit e9290031f736e99ad17c25c00311c92c266843b7 upstream.
 
-The BTT info block's nfree field, the number of reserve free blocks, is
-read from the medium without validation.  btt_freelist_init() and
-btt_rtt_init() size the per-lane freelist[] and rtt[] arrays by nfree,
-but the I/O path indexes them by the lane from nd_region_acquire_lane(),
-which is bounded by nd_region->num_lanes (ND_MAX_LANES), not by nfree.
-A crafted or foreign arena whose nfree is below the lane count makes
-freelist[lane]/rtt[lane] run past the allocation: an out-of-bounds write.
+The AFS v2 parser uses footer[8] to locate the image information block
+inside the current erase block, then uses the image information
+region_count to walk entries from a fixed local array. The footer offset
+and region count come from flash contents and are not checked against the
+erase block or the local image-info array before use.
 
-btt.rst documents the nlanes = min(nfree, num_cpus) invariant, which the
-code does not currently honor: num_lanes is ND_MAX_LANES regardless of
-nfree.  Reject an arena whose nfree is below num_lanes at discovery,
-before the per-lane arrays are allocated, enforcing that invariant.
+Reject v2 entries whose image information offset would underflow the
+erase block calculation, and reject region counts that cannot fit in the
+local image-info array before walking region entries.
 
-Fixes: 5212e11fde4d ("nd_btt: atomic sector updates")
+Fixes: b7cf5e2830bb ("mtd: afs: add v2 partition parsing")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260620-b4-disp-88b2514b-v1-1-3834e707d232@proton.me
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/btt.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mtd/parsers/afs.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/nvdimm/btt.c
-+++ b/drivers/nvdimm/btt.c
-@@ -885,6 +885,14 @@ static int discover_arenas(struct btt *b
- 		arena->external_lba_start = cur_nlba;
- 		parse_arena_meta(arena, super, cur_off);
+--- a/drivers/mtd/parsers/afs.c
++++ b/drivers/mtd/parsers/afs.c
+@@ -235,6 +235,9 @@ static int afs_parse_v2_partition(struct
+ 	pr_debug("Parsing v2 partition @%08x-%08x\n",
+ 		 off, off + mtd->erasesize);
  
-+		if (arena->nfree < btt->nd_region->num_lanes) {
-+			dev_err(to_dev(arena),
-+				"nfree %u smaller than lane count %d\n",
-+				arena->nfree, btt->nd_region->num_lanes);
-+			ret = -ENODEV;
-+			goto out;
-+		}
++	if (mtd->erasesize < sizeof(footer))
++		return -EINVAL;
 +
- 		ret = log_set_indices(arena);
- 		if (ret) {
- 			dev_err(to_dev(arena),
+ 	/* First read the footer */
+ 	ptr = off + mtd->erasesize - sizeof(footer);
+ 	ret = mtd_read(mtd, ptr, sizeof(footer), &sz, (u_char *)footer);
+@@ -245,6 +248,8 @@ static int afs_parse_v2_partition(struct
+ 	}
+ 	name = (char *) &footer[0];
+ 	version = footer[9];
++	if (footer[8] > mtd->erasesize - sizeof(footer))
++		return -EINVAL;
+ 	ptr = off + mtd->erasesize - sizeof(footer) - footer[8];
+ 
+ 	pr_debug("found image \"%s\", version %08x, info @%08x\n",
+@@ -278,6 +283,8 @@ static int afs_parse_v2_partition(struct
+ 	entrypoint = imginfo[pad];
+ 	attributes = imginfo[pad+1];
+ 	region_count = imginfo[pad+2];
++	if (region_count > (ARRAY_SIZE(imginfo) - pad - 3) / 4)
++		return -EINVAL;
+ 	block_start = imginfo[20];
+ 	block_end = imginfo[21];
+ 
 
 
