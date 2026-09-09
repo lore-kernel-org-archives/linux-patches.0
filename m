@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D39566C54;
-	Wed,  9 Sep 2026 13:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73679476049;
+	Wed,  9 Sep 2026 13:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962241; cv=none; b=neqgARJLkx1xOiACEpT3rvKesQnO4Jy3u7mFcIxMuI2X3oKOXOcWs3uZ/82vlum+eZLf9mUGfZ3yGG/x2caxKt4PuOUo3Ho4L+epY1kk5sBh6J8S3Cz2h2fad6k8JIgXlc4gnCAGi7DHTx0YowAwNfRemV64HGzK6eR8JzZaTpE=
+	t=1788962244; cv=none; b=tCWo8wPgfLhgM0K9q4Y3EviGB0oBBVhWHIyOKKJFKfpectiECJIJOy83PcMv5uiNTMz01qbEVKkagM1UGgMljZJ1MWxHng7p8qVhUdy1P0S37HC2ToaoIua6lq5YCkHzXCoqx7Oo5Gvh1nEFURsl9xae2HqhDi75mc0infzILPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962241; c=relaxed/simple;
-	bh=ecB8xQnkmmkYoP+u+ovfMz1pSZucB/YB3EO0fjT+ay4=;
+	s=arc-20240116; t=1788962244; c=relaxed/simple;
+	bh=zHX99ZxiJRExmX3RwmYrNUzhS34S4YIqIOoX4yoo118=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXE1Dq8t1u0EynqULSNU+k0SJBrt/ivtgFNzI/tDjFXSbPp8vMdMkNiDnD/3sX+3DtFcaV2S9COc2g31VzV3yu6yDCP+dVoEYaiPDlVqpbKshn2KvV8RUe1VJsX1UXLoF1eUL0/QErw9QWr6hhLorHOlSJzgPFewJjZIzjnBRJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oo+HjBU7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rTB3+prIXSLTglmxEWwrAM+114nHjWHPq7LEsl40Ez5UREjRycgbPGJeplVgr77zBVWoi18z+n9BjSmI5Y+oa2emCQUOGg2ELQO9qCMZ1TIoPpagnEYxp2n+L5nOKHt+TbP+wlbc34fOSL+0iCWihnlHLSa8OQpXXSYZcfUCHf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxBZWXw4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oo+HjBU7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF021F00A3E;
-	Wed,  9 Sep 2026 13:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxBZWXw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F421F00A3E;
+	Wed,  9 Sep 2026 13:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962240;
-	bh=cOItsr6fvTQ1SxgC9/CbyQRAzWYsqRFiXvMr8VWi7KI=;
+	s=korg; t=1788962243;
+	bh=OAnThsXib58VqgOaQwKcQprsVF0SZjslLRvU5tW8oz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oo+HjBU7eFv4tdM9EgLVk7DINQthHX9yV2yVlxSZFtbUrjg0YyHY3xUL8ULGKLkzT
-	 tcnf4G+R23EnJFzx5BjdfqkWiwe84VrF/N6iO6WtJWWtzpTKnNR/HjyfklFwGRxgIk
-	 jy4V0d88vaSDzns/boxaBiO7hFqBLti8cGSkZcfo=
+	b=IxBZWXw42+58K0YoTRwucqajbCCF+xlyb44OK2acnscffQznK2QB+jWnSBVgHvqlS
+	 r+R/PKA0st+pP5Yhp7FVwH4Fm0NpEE0tj4Mb3/xEfCl1g5+YtPQIvJFSZm5Gyx4PON
+	 cPp3dz5Ou15wO+FWmIUZdIGfGVLlFw6R/sDIcbIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 223/556] ASoC: cx2072x: sort the register default table
-Date: Wed,  9 Sep 2026 15:38:23 +0200
-Message-ID: <20260909134238.246285754@linuxfoundation.org>
+Subject: [PATCH 7.2 224/556] ASoC: fsl: mpc5200-i2s: Free DMA resources on probe failure
+Date: Wed,  9 Sep 2026 15:38:24 +0200
+Message-ID: <20260909134238.285873960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,217 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit b927853f70078262780a4e623631584a25eb7284 upstream.
+commit 3a89ddcf0c3d9a068631e8c24d5c9e81d1e6512a upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+mpc5200_audio_dma_create() creates the DMA resources before registering
+the component. If snd_soc_register_component() fails, the function
+returns directly and leaves the DMA resources allocated.
 
-The table is grouped by function rather than by address: for every node
-the amplifier gain registers (0x41c0, 0x45c0, ...) are listed before the
-power state and stream format registers of the same node (0x4014,
-0x4414, ...).  This leaves 75 of the 132 entries unreachable.
-regcache_reg_needs_sync() then cannot compare them against their default
-and reports that a sync is needed, so they are written to the device on
-every regcache_sync() even when they were never touched.
+Call mpc5200_audio_dma_destroy() before returning from this error path.
 
-Sort the table by register address.
-
-Fixes: a497a4363706 ("ASoC: Add support for Conexant CX2072X CODEC")
+Fixes: f515b67381de ("ASoC: fsl: mpc5200 combine psc_dma platform data")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805122811.13713-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260622094822.926166-1-haoxiang_li2024@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cx2072x.c |  122 ++++++++++++++++++++++-----------------------
- 1 file changed, 61 insertions(+), 61 deletions(-)
+ sound/soc/fsl/mpc5200_psc_i2s.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/cx2072x.c
-+++ b/sound/soc/codecs/cx2072x.c
-@@ -96,51 +96,60 @@ static const struct reg_default cx2072x_
- 	{ CX2072X_GPIO_WAKE, 0x00000000 },
- 	{ CX2072X_GPIO_UM_ENABLE, 0x00000000 },
- 	{ CX2072X_GPIO_STICKY_MASK, 0x00000000 },
--	{ CX2072X_DAC1_CONVERTER_FORMAT, 0x00000031 },
--	{ CX2072X_DAC1_AMP_GAIN_RIGHT, 0x0000004a },
--	{ CX2072X_DAC1_AMP_GAIN_LEFT, 0x0000004a },
- 	{ CX2072X_DAC1_POWER_STATE, 0x00000433 },
- 	{ CX2072X_DAC1_CONVERTER_STREAM_CHANNEL, 0x00000000 },
- 	{ CX2072X_DAC1_EAPD_ENABLE, 0x00000000 },
--	{ CX2072X_DAC2_CONVERTER_FORMAT, 0x00000031 },
--	{ CX2072X_DAC2_AMP_GAIN_RIGHT, 0x0000004a },
--	{ CX2072X_DAC2_AMP_GAIN_LEFT, 0x0000004a },
-+	{ CX2072X_DAC1_AMP_GAIN_RIGHT, 0x0000004a },
-+	{ CX2072X_DAC1_AMP_GAIN_LEFT, 0x0000004a },
-+	{ CX2072X_DAC1_CONVERTER_FORMAT, 0x00000031 },
- 	{ CX2072X_DAC2_POWER_STATE, 0x00000433 },
- 	{ CX2072X_DAC2_CONVERTER_STREAM_CHANNEL, 0x00000000 },
--	{ CX2072X_ADC1_CONVERTER_FORMAT, 0x00000031 },
-+	{ CX2072X_DAC2_AMP_GAIN_RIGHT, 0x0000004a },
-+	{ CX2072X_DAC2_AMP_GAIN_LEFT, 0x0000004a },
-+	{ CX2072X_DAC2_CONVERTER_FORMAT, 0x00000031 },
-+	{ CX2072X_ADC1_CONNECTION_SELECT_CONTROL, 0x00000000 },
-+	{ CX2072X_ADC1_POWER_STATE, 0x00000433 },
-+	{ CX2072X_ADC1_CONVERTER_STREAM_CHANNEL, 0x00000000 },
- 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_0, 0x0000004a },
--	{ CX2072X_ADC1_AMP_GAIN_LEFT_0, 0x0000004a },
- 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_1, 0x0000004a },
--	{ CX2072X_ADC1_AMP_GAIN_LEFT_1, 0x0000004a },
- 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_2, 0x0000004a },
--	{ CX2072X_ADC1_AMP_GAIN_LEFT_2, 0x0000004a },
- 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_3, 0x0000004a },
--	{ CX2072X_ADC1_AMP_GAIN_LEFT_3, 0x0000004a },
- 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_4, 0x0000004a },
--	{ CX2072X_ADC1_AMP_GAIN_LEFT_4, 0x0000004a },
- 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_5, 0x0000004a },
--	{ CX2072X_ADC1_AMP_GAIN_LEFT_5, 0x0000004a },
- 	{ CX2072X_ADC1_AMP_GAIN_RIGHT_6, 0x0000004a },
-+	{ CX2072X_ADC1_AMP_GAIN_LEFT_0, 0x0000004a },
-+	{ CX2072X_ADC1_AMP_GAIN_LEFT_1, 0x0000004a },
-+	{ CX2072X_ADC1_AMP_GAIN_LEFT_2, 0x0000004a },
-+	{ CX2072X_ADC1_AMP_GAIN_LEFT_3, 0x0000004a },
-+	{ CX2072X_ADC1_AMP_GAIN_LEFT_4, 0x0000004a },
-+	{ CX2072X_ADC1_AMP_GAIN_LEFT_5, 0x0000004a },
- 	{ CX2072X_ADC1_AMP_GAIN_LEFT_6, 0x0000004a },
--	{ CX2072X_ADC1_CONNECTION_SELECT_CONTROL, 0x00000000 },
--	{ CX2072X_ADC1_POWER_STATE, 0x00000433 },
--	{ CX2072X_ADC1_CONVERTER_STREAM_CHANNEL, 0x00000000 },
--	{ CX2072X_ADC2_CONVERTER_FORMAT, 0x00000031 },
-+	{ CX2072X_ADC1_CONVERTER_FORMAT, 0x00000031 },
-+	{ CX2072X_ADC2_CONNECTION_SELECT_CONTROL, 0x00000000 },
-+	{ CX2072X_ADC2_POWER_STATE, 0x00000433 },
-+	{ CX2072X_ADC2_CONVERTER_STREAM_CHANNEL, 0x00000000 },
- 	{ CX2072X_ADC2_AMP_GAIN_RIGHT_0, 0x0000004a },
--	{ CX2072X_ADC2_AMP_GAIN_LEFT_0, 0x0000004a },
- 	{ CX2072X_ADC2_AMP_GAIN_RIGHT_1, 0x0000004a },
--	{ CX2072X_ADC2_AMP_GAIN_LEFT_1, 0x0000004a },
- 	{ CX2072X_ADC2_AMP_GAIN_RIGHT_2, 0x0000004a },
-+	{ CX2072X_ADC2_AMP_GAIN_LEFT_0, 0x0000004a },
-+	{ CX2072X_ADC2_AMP_GAIN_LEFT_1, 0x0000004a },
- 	{ CX2072X_ADC2_AMP_GAIN_LEFT_2, 0x0000004a },
--	{ CX2072X_ADC2_CONNECTION_SELECT_CONTROL, 0x00000000 },
--	{ CX2072X_ADC2_POWER_STATE, 0x00000433 },
--	{ CX2072X_ADC2_CONVERTER_STREAM_CHANNEL, 0x00000000 },
-+	{ CX2072X_ADC2_CONVERTER_FORMAT, 0x00000031 },
-+	{ CX2072X_MIXER_POWER_STATE, 0x00000433 },
-+	{ CX2072X_MIXER_GAIN_RIGHT_0, 0x0000004a },
-+	{ CX2072X_MIXER_GAIN_RIGHT_1, 0x0000004a },
-+	{ CX2072X_MIXER_GAIN_LEFT_0, 0x0000004a },
-+	{ CX2072X_MIXER_GAIN_LEFT_1, 0x0000004a },
- 	{ CX2072X_PORTA_CONNECTION_SELECT_CTRL, 0x00000000 },
- 	{ CX2072X_PORTA_POWER_STATE, 0x00000433 },
- 	{ CX2072X_PORTA_PIN_CTRL, 0x000000c0 },
- 	{ CX2072X_PORTA_UNSOLICITED_RESPONSE, 0x00000000 },
- 	{ CX2072X_PORTA_PIN_SENSE, 0x00000000 },
- 	{ CX2072X_PORTA_EAPD_BTL, 0x00000002 },
-+	{ CX2072X_PORTG_CONNECTION_SELECT_CTRL, 0x00000000 },
-+	{ CX2072X_PORTG_POWER_STATE, 0x00000433 },
-+	{ CX2072X_PORTG_PIN_CTRL, 0x00000040 },
-+	{ CX2072X_PORTG_EAPD_BTL, 0x00000002 },
- 	{ CX2072X_PORTB_POWER_STATE, 0x00000433 },
- 	{ CX2072X_PORTB_PIN_CTRL, 0x00000000 },
- 	{ CX2072X_PORTB_UNSOLICITED_RESPONSE, 0x00000000 },
-@@ -148,43 +157,16 @@ static const struct reg_default cx2072x_
- 	{ CX2072X_PORTB_EAPD_BTL, 0x00000002 },
- 	{ CX2072X_PORTB_GAIN_RIGHT, 0x00000000 },
- 	{ CX2072X_PORTB_GAIN_LEFT, 0x00000000 },
--	{ CX2072X_PORTC_POWER_STATE, 0x00000433 },
--	{ CX2072X_PORTC_PIN_CTRL, 0x00000000 },
--	{ CX2072X_PORTC_GAIN_RIGHT, 0x00000000 },
--	{ CX2072X_PORTC_GAIN_LEFT, 0x00000000 },
- 	{ CX2072X_PORTD_POWER_STATE, 0x00000433 },
- 	{ CX2072X_PORTD_PIN_CTRL, 0x00000020 },
- 	{ CX2072X_PORTD_UNSOLICITED_RESPONSE, 0x00000000 },
- 	{ CX2072X_PORTD_PIN_SENSE, 0x00000000 },
- 	{ CX2072X_PORTD_GAIN_RIGHT, 0x00000000 },
- 	{ CX2072X_PORTD_GAIN_LEFT, 0x00000000 },
--	{ CX2072X_PORTE_CONNECTION_SELECT_CTRL, 0x00000000 },
--	{ CX2072X_PORTE_POWER_STATE, 0x00000433 },
--	{ CX2072X_PORTE_PIN_CTRL, 0x00000040 },
--	{ CX2072X_PORTE_UNSOLICITED_RESPONSE, 0x00000000 },
--	{ CX2072X_PORTE_PIN_SENSE, 0x00000000 },
--	{ CX2072X_PORTE_EAPD_BTL, 0x00000002 },
--	{ CX2072X_PORTE_GAIN_RIGHT, 0x00000000 },
--	{ CX2072X_PORTE_GAIN_LEFT, 0x00000000 },
--	{ CX2072X_PORTF_POWER_STATE, 0x00000433 },
--	{ CX2072X_PORTF_PIN_CTRL, 0x00000000 },
--	{ CX2072X_PORTF_UNSOLICITED_RESPONSE, 0x00000000 },
--	{ CX2072X_PORTF_PIN_SENSE, 0x00000000 },
--	{ CX2072X_PORTF_GAIN_RIGHT, 0x00000000 },
--	{ CX2072X_PORTF_GAIN_LEFT, 0x00000000 },
--	{ CX2072X_PORTG_POWER_STATE, 0x00000433 },
--	{ CX2072X_PORTG_PIN_CTRL, 0x00000040 },
--	{ CX2072X_PORTG_CONNECTION_SELECT_CTRL, 0x00000000 },
--	{ CX2072X_PORTG_EAPD_BTL, 0x00000002 },
--	{ CX2072X_PORTM_POWER_STATE, 0x00000433 },
--	{ CX2072X_PORTM_PIN_CTRL, 0x00000000 },
--	{ CX2072X_PORTM_CONNECTION_SELECT_CTRL, 0x00000000 },
--	{ CX2072X_PORTM_EAPD_BTL, 0x00000002 },
--	{ CX2072X_MIXER_POWER_STATE, 0x00000433 },
--	{ CX2072X_MIXER_GAIN_RIGHT_0, 0x0000004a },
--	{ CX2072X_MIXER_GAIN_LEFT_0, 0x0000004a },
--	{ CX2072X_MIXER_GAIN_RIGHT_1, 0x0000004a },
--	{ CX2072X_MIXER_GAIN_LEFT_1, 0x0000004a },
-+	{ CX2072X_PORTC_POWER_STATE, 0x00000433 },
-+	{ CX2072X_PORTC_PIN_CTRL, 0x00000000 },
-+	{ CX2072X_PORTC_GAIN_RIGHT, 0x00000000 },
-+	{ CX2072X_PORTC_GAIN_LEFT, 0x00000000 },
- 	{ CX2072X_SPKR_DRC_ENABLE_STEP, 0x040065a4 },
- 	{ CX2072X_SPKR_DRC_CONTROL, 0x007b0024 },
- 	{ CX2072X_SPKR_DRC_TEST, 0x00000000 },
-@@ -195,12 +177,15 @@ static const struct reg_default cx2072x_
- 	{ CX2072X_I2SPCM_CONTROL3, 0x00000000 },
- 	{ CX2072X_I2SPCM_CONTROL4, 0x00000000 },
- 	{ CX2072X_I2SPCM_CONTROL5, 0x00000000 },
--	{ CX2072X_I2SPCM_CONTROL6, 0x00000000 },
- 	{ CX2072X_UM_INTERRUPT_CRTL_E, 0x00000000 },
-+	{ CX2072X_I2SPCM_CONTROL6, 0x00000000 },
-+	{ CX2072X_DIGITAL_TEST16, 0x00000021 },
-+	{ CX2072X_DIGITAL_TEST17, 0x00000018 },
-+	{ CX2072X_DIGITAL_TEST18, 0x00000024 },
-+	{ CX2072X_DIGITAL_TEST19, 0x00000001 },
-+	{ CX2072X_DIGITAL_TEST20, 0x00000002 },
- 	{ CX2072X_CODEC_TEST2, 0x00000000 },
- 	{ CX2072X_CODEC_TEST9, 0x00000004 },
--	{ CX2072X_CODEC_TEST20, 0x00000600 },
--	{ CX2072X_CODEC_TEST26, 0x00000208 },
- 	{ CX2072X_ANALOG_TEST4, 0x00000000 },
- 	{ CX2072X_ANALOG_TEST5, 0x00000000 },
- 	{ CX2072X_ANALOG_TEST6, 0x0000059a },
-@@ -215,11 +200,26 @@ static const struct reg_default cx2072x_
- 	{ CX2072X_DIGITAL_TEST11, 0x00000000 },
- 	{ CX2072X_DIGITAL_TEST12, 0x00000084 },
- 	{ CX2072X_DIGITAL_TEST15, 0x00000077 },
--	{ CX2072X_DIGITAL_TEST16, 0x00000021 },
--	{ CX2072X_DIGITAL_TEST17, 0x00000018 },
--	{ CX2072X_DIGITAL_TEST18, 0x00000024 },
--	{ CX2072X_DIGITAL_TEST19, 0x00000001 },
--	{ CX2072X_DIGITAL_TEST20, 0x00000002 },
-+	{ CX2072X_CODEC_TEST20, 0x00000600 },
-+	{ CX2072X_CODEC_TEST26, 0x00000208 },
-+	{ CX2072X_PORTE_CONNECTION_SELECT_CTRL, 0x00000000 },
-+	{ CX2072X_PORTE_POWER_STATE, 0x00000433 },
-+	{ CX2072X_PORTE_PIN_CTRL, 0x00000040 },
-+	{ CX2072X_PORTE_UNSOLICITED_RESPONSE, 0x00000000 },
-+	{ CX2072X_PORTE_PIN_SENSE, 0x00000000 },
-+	{ CX2072X_PORTE_EAPD_BTL, 0x00000002 },
-+	{ CX2072X_PORTE_GAIN_RIGHT, 0x00000000 },
-+	{ CX2072X_PORTE_GAIN_LEFT, 0x00000000 },
-+	{ CX2072X_PORTF_POWER_STATE, 0x00000433 },
-+	{ CX2072X_PORTF_PIN_CTRL, 0x00000000 },
-+	{ CX2072X_PORTF_UNSOLICITED_RESPONSE, 0x00000000 },
-+	{ CX2072X_PORTF_PIN_SENSE, 0x00000000 },
-+	{ CX2072X_PORTF_GAIN_RIGHT, 0x00000000 },
-+	{ CX2072X_PORTF_GAIN_LEFT, 0x00000000 },
-+	{ CX2072X_PORTM_CONNECTION_SELECT_CTRL, 0x00000000 },
-+	{ CX2072X_PORTM_POWER_STATE, 0x00000433 },
-+	{ CX2072X_PORTM_PIN_CTRL, 0x00000000 },
-+	{ CX2072X_PORTM_EAPD_BTL, 0x00000002 },
- };
+--- a/sound/soc/fsl/mpc5200_psc_i2s.c
++++ b/sound/soc/fsl/mpc5200_psc_i2s.c
+@@ -170,6 +170,7 @@ static int psc_i2s_of_probe(struct platf
+ 					psc_i2s_dai, ARRAY_SIZE(psc_i2s_dai));
+ 	if (rc != 0) {
+ 		pr_err("Failed to register DAI\n");
++		mpc5200_audio_dma_destroy(op);
+ 		return rc;
+ 	}
  
- /*
 
 
