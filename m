@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4F2572674;
-	Wed,  9 Sep 2026 14:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B54572688;
+	Wed,  9 Sep 2026 14:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962984; cv=none; b=Az5I7HJGlK/T7/n76TJyLk/i2rZMvDUY6m0TgGdzxDbIRtQa6FwbuLBdJViocMggrN+WqEtkr+8XJqEfV7spT5EouJvjWEm3W4Ras2uk0OfJ0LraffNzQR9RkvNdDkELtdQrSVda1N883yt4q6ZjwOn109n0VKVF0xj9LrEF96M=
+	t=1788962987; cv=none; b=O3w+mTpyfqLTNebT9c2vXV3YwrkY/nYu587vqg0oiaA3mbv6RbRbeOoEEwTJzLEeU8pRxSlPwE182bWYg3qflS+HVSlw34jW7aXost6ZZlRHbFCm3FEFBGVTzQv3bosgWy3B1PAgsQxIj6g+hZl7ReFAsBM3FVsx6kTRTVAn8xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962984; c=relaxed/simple;
-	bh=foRNaYw3NvgcI9PpuCz1PbDYq7kbaikBNHbLM3KYbVQ=;
+	s=arc-20240116; t=1788962987; c=relaxed/simple;
+	bh=hGrPgyulE9sIkOucuSjXrqus8+U1laZUcCjhe9vT0iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YjU/+k84kkA1LKcxgSiquBaxnW3QanejClGWgnyc+pSsH6NVw/UWVwm6GmdXv6j2LiNw4KKuGHD6qcUHLBPJx+CqiAntcYWywmKDBoD3n/ANnZKwNrbK3PvOa7VOXrwFy7mAJyHMPWGnc48A7jZccETnCFNNCZ3fbyG7TCwFch0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roiCU4G/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bs3kurMabnHM7uzKTbaYSFJUI6YnIMjXUgjKRpV6utbaJdWrBs0HOy8+kiLCCo/XMZkN8M7wi050KmyrFFJ9KZuBH5YflHLhnUIDUiz1OdpklMJuvws/on7w1ZxLAy9cHjBqmM5Ku+RnKNY9tciYDnmd4ibJLODjDIyTW+w+j4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hylJJr8Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roiCU4G/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E781F00A3A;
-	Wed,  9 Sep 2026 14:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hylJJr8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E92F1F00A3D;
+	Wed,  9 Sep 2026 14:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962983;
-	bh=iiRBHCF35hH/Iq71N7/Pj42+ubJs9q97kRTMXxLXlgY=;
+	s=korg; t=1788962986;
+	bh=EdOjDogcTY4lFmLOzH+UUf+Z3/jnN8X7GIe2lzJI+N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=roiCU4G/6Ry5pQzlnBHuVDW/PaxlWVuOEcXuFDnZvETZU1HGBopaSZFf4d3jHrc/0
-	 PL/sB4Xd6CcWh1fqsPY90V+edMKzcjxoBOpJO93aCJCNPQVIA3EPVctko4qnhp9UG7
-	 jWnrKV7zsmz7IGxPtee2KurZOFTLzSE4DM+9SFPw=
+	b=hylJJr8YMd5bcWlfdDvo/zgwk4v+hQzq3raAFrM3VT6O20At/quqg010gw48xR6l0
+	 JKPosRPJfIJbkx//B/c+q5ir/ufhf2bUcfn3Z38K5DydQilcbboI7PmxXqh1DMmJfM
+	 2SG9kcb8cgJpbwW1ubptNVpx1HFHAwGXoJPVt0dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
 	Chao Yu <chao@kernel.org>,
+	Guanghui Yang <3497809730@qq.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 457/556] f2fs: embed f2fs_gc_kthread in f2fs_sb_info
-Date: Wed,  9 Sep 2026 15:42:17 +0200
-Message-ID: <20260909134246.647655063@linuxfoundation.org>
+Subject: [PATCH 7.2 458/556] f2fs: fix dentry folio leak in find_in_level
+Date: Wed,  9 Sep 2026 15:42:18 +0200
+Message-ID: <20260909134246.681550157@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,332 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Guanghui Yang <3497809730@qq.com>
 
-commit 3d7bca9d583793bb7d0bac0d95a24ddd2e129eed upstream.
+commit cca7d3e30bf30333314e31bc70b9a739f1342167 upstream.
 
-Instead of allocating f2fs_gc_kthread dynamically, embed it in
-f2fs_sb_info. This simplifies lifetime management and prepares for
-fixing race conditions during teardown.
+find_in_level() gets a dentry folio with f2fs_find_data_folio() before
+calling find_in_block().  If find_in_block() returns an error, the
+function stores the error in res_folio and breaks out of the loop without
+dropping the dentry folio.
 
-- __sbi_store			- remount|shutdown
-				 - f2fs_stop_gc_thread
- - access sbi->gc_thread
-				  - sbi->gc_thread = NULL
- - access sbi->gc_thread->f2fs_gc_task
+This leaks the folio reference on the find_in_block() error path.  Drop
+the dentry folio before returning the error to the caller.
 
-Fixes: 52190933c37a ("f2fs: sysfs: introduce critical_task_priority")
-Fixes: 7950e9ac638e ("f2fs: stop gc/discard thread after fs shutdown")
-Cc: stable@kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
+Fixes: 7ad08a58bf67 ("f2fs: Handle casefolding with Encryption")
+Cc: stable@vger.kernel.org
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/debug.c   |    4 ----
- fs/f2fs/f2fs.h    |   29 ++++++++++++++++++++++++++++-
- fs/f2fs/gc.c      |   36 +++++++++++++++---------------------
- fs/f2fs/gc.h      |   29 ++---------------------------
- fs/f2fs/segment.c |    9 ++++-----
- fs/f2fs/super.c   |    4 ++--
- fs/f2fs/sysfs.c   |   22 +++++++++++-----------
- 7 files changed, 62 insertions(+), 71 deletions(-)
+ fs/f2fs/dir.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/f2fs/debug.c
-+++ b/fs/f2fs/debug.c
-@@ -352,10 +352,6 @@ static void update_mem_info(struct f2fs_
- get_cache:
- 	si->cache_mem = 0;
+--- a/fs/f2fs/dir.c
++++ b/fs/f2fs/dir.c
+@@ -320,6 +320,7 @@ start_find_bucket:
  
--	/* build gc */
--	if (sbi->gc_thread)
--		si->cache_mem += sizeof(struct f2fs_gc_kthread);
--
- 	/* build merge flush thread */
- 	if (SM_I(sbi)->fcc_info)
- 		si->cache_mem += sizeof(struct flush_cmd_control);
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1748,6 +1748,33 @@ struct decompress_io_ctx {
- #define MAX_COMPRESS_LOG_SIZE		8
- #define MAX_COMPRESS_WINDOW_SIZE(log_size)	((PAGE_SIZE) << (log_size))
- 
-+struct f2fs_gc_kthread {
-+	struct task_struct *f2fs_gc_task;
-+	wait_queue_head_t gc_wait_queue_head;
-+
-+	/* for gc sleep time */
-+	unsigned int urgent_sleep_time;
-+	unsigned int min_sleep_time;
-+	unsigned int max_sleep_time;
-+	unsigned int no_gc_sleep_time;
-+
-+	/* for changing gc mode */
-+	bool gc_wake;
-+
-+	/* for GC_MERGE mount option */
-+	wait_queue_head_t fggc_wq;		/*
-+						 * caller of f2fs_balance_fs()
-+						 * will wait on this wait queue.
-+						 */
-+
-+	/* for gc control for zoned devices */
-+	unsigned int no_zoned_gc_percent;
-+	unsigned int boost_zoned_gc_percent;
-+	unsigned int valid_thresh_ratio;
-+	unsigned int boost_gc_multiple;
-+	unsigned int boost_gc_greedy;
-+};
-+
- struct f2fs_sb_info {
- 	struct super_block *sb;			/* pointer to VFS super block */
- 	struct proc_dir_entry *s_proc;		/* proc entry */
-@@ -1883,7 +1910,7 @@ struct f2fs_sb_info {
- 						 * semaphore for GC, avoid
- 						 * race between GC and GC or CP
- 						 */
--	struct f2fs_gc_kthread	*gc_thread;	/* GC thread */
-+	struct f2fs_gc_kthread gc_thread;	/* GC thread */
- 	struct atgc_management am;		/* atgc management */
- 	unsigned int cur_victim_sec;		/* current victim section num */
- 	unsigned int gc_mode;			/* current GC state */
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -31,9 +31,9 @@ static unsigned int count_bits(const uns
- static int gc_thread_func(void *data)
- {
- 	struct f2fs_sb_info *sbi = data;
--	struct f2fs_gc_kthread *gc_th = sbi->gc_thread;
--	wait_queue_head_t *wq = &sbi->gc_thread->gc_wait_queue_head;
--	wait_queue_head_t *fggc_wq = &sbi->gc_thread->fggc_wq;
-+	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
-+	wait_queue_head_t *wq = &sbi->gc_thread.gc_wait_queue_head;
-+	wait_queue_head_t *fggc_wq = &sbi->gc_thread.fggc_wq;
- 	unsigned int wait_ms;
- 	struct f2fs_gc_control gc_control = {
- 		.victim_segno = NULL_SEGNO,
-@@ -193,13 +193,9 @@ next:
- 
- int f2fs_start_gc_thread(struct f2fs_sb_info *sbi)
- {
--	struct f2fs_gc_kthread *gc_th;
-+	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
- 	dev_t dev = sbi->sb->s_bdev->bd_dev;
- 
--	gc_th = f2fs_kmalloc(sbi, sizeof(struct f2fs_gc_kthread), GFP_KERNEL);
--	if (!gc_th)
--		return -ENOMEM;
--
- 	gc_th->urgent_sleep_time = DEF_GC_THREAD_URGENT_SLEEP_TIME;
- 	gc_th->valid_thresh_ratio = DEF_GC_THREAD_VALID_THRESH_RATIO;
- 	gc_th->boost_gc_multiple = BOOST_GC_MULTIPLE;
-@@ -221,16 +217,14 @@ int f2fs_start_gc_thread(struct f2fs_sb_
- 
- 	gc_th->gc_wake = false;
- 
--	sbi->gc_thread = gc_th;
--	init_waitqueue_head(&sbi->gc_thread->gc_wait_queue_head);
--	init_waitqueue_head(&sbi->gc_thread->fggc_wq);
--	sbi->gc_thread->f2fs_gc_task = kthread_run(gc_thread_func, sbi,
-+	init_waitqueue_head(&gc_th->gc_wait_queue_head);
-+	init_waitqueue_head(&gc_th->fggc_wq);
-+	gc_th->f2fs_gc_task = kthread_run(gc_thread_func, sbi,
- 			"f2fs_gc-%u:%u", MAJOR(dev), MINOR(dev));
- 	if (IS_ERR(gc_th->f2fs_gc_task)) {
- 		int err = PTR_ERR(gc_th->f2fs_gc_task);
- 
--		kfree(gc_th);
--		sbi->gc_thread = NULL;
-+		gc_th->f2fs_gc_task = NULL;
- 		return err;
- 	}
- 
-@@ -241,14 +235,14 @@ int f2fs_start_gc_thread(struct f2fs_sb_
- 
- void f2fs_stop_gc_thread(struct f2fs_sb_info *sbi)
- {
--	struct f2fs_gc_kthread *gc_th = sbi->gc_thread;
-+	struct f2fs_gc_kthread *gc_th = &sbi->gc_thread;
- 
--	if (!gc_th)
-+	if (!gc_th->f2fs_gc_task)
- 		return;
-+
- 	kthread_stop(gc_th->f2fs_gc_task);
-+	gc_th->f2fs_gc_task = NULL;
- 	wake_up_all(&gc_th->fggc_wq);
--	kfree(gc_th);
--	sbi->gc_thread = NULL;
- }
- 
- static int select_gc_type(struct f2fs_sb_info *sbi, int gc_type)
-@@ -796,7 +790,7 @@ int f2fs_get_victim(struct f2fs_sb_info
- 	if (one_time) {
- 		p.one_time_gc = one_time;
- 		if (has_enough_free_secs(sbi, 0, NR_PERSISTENT_LOG))
--			valid_thresh_ratio = sbi->gc_thread->valid_thresh_ratio;
-+			valid_thresh_ratio = sbi->gc_thread.valid_thresh_ratio;
- 	}
- 
- retry:
-@@ -1807,9 +1801,9 @@ static int do_garbage_collect(struct f2f
- 
- 			if (f2fs_sb_has_blkzoned(sbi) &&
- 					!has_enough_free_blocks(sbi,
--					sbi->gc_thread->boost_zoned_gc_percent))
-+					sbi->gc_thread.boost_zoned_gc_percent))
- 				window_granularity *=
--					sbi->gc_thread->boost_gc_multiple;
-+					sbi->gc_thread.boost_gc_multiple;
- 
- 			end_segno = start_segno + window_granularity;
- 		}
---- a/fs/f2fs/gc.h
-+++ b/fs/f2fs/gc.h
-@@ -45,32 +45,7 @@
- 
- #define NR_GC_CHECKPOINT_SECS (3)	/* data/node/dentry sections */
- 
--struct f2fs_gc_kthread {
--	struct task_struct *f2fs_gc_task;
--	wait_queue_head_t gc_wait_queue_head;
--
--	/* for gc sleep time */
--	unsigned int urgent_sleep_time;
--	unsigned int min_sleep_time;
--	unsigned int max_sleep_time;
--	unsigned int no_gc_sleep_time;
--
--	/* for changing gc mode */
--	bool gc_wake;
--
--	/* for GC_MERGE mount option */
--	wait_queue_head_t fggc_wq;		/*
--						 * caller of f2fs_balance_fs()
--						 * will wait on this wait queue.
--						 */
--
--	/* for gc control for zoned devices */
--	unsigned int no_zoned_gc_percent;
--	unsigned int boost_zoned_gc_percent;
--	unsigned int valid_thresh_ratio;
--	unsigned int boost_gc_multiple;
--	unsigned int boost_gc_greedy;
--};
-+
- 
- struct gc_inode_list {
- 	struct list_head ilist;
-@@ -197,6 +172,6 @@ static inline bool need_to_boost_gc(stru
- {
- 	if (f2fs_sb_has_blkzoned(sbi))
- 		return !has_enough_free_blocks(sbi,
--				sbi->gc_thread->boost_zoned_gc_percent);
-+				sbi->gc_thread.boost_zoned_gc_percent);
- 	return has_enough_invalid_blocks(sbi);
- }
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -452,15 +452,14 @@ void f2fs_balance_fs(struct f2fs_sb_info
- 	f2fs_submit_merged_write(sbi, DATA);
- 	f2fs_submit_all_merged_ipu_writes(sbi);
- 
--	if (test_opt(sbi, GC_MERGE) && sbi->gc_thread &&
--				sbi->gc_thread->f2fs_gc_task) {
-+	if (test_opt(sbi, GC_MERGE) && sbi->gc_thread.f2fs_gc_task) {
- 		DEFINE_WAIT(wait);
- 
--		prepare_to_wait(&sbi->gc_thread->fggc_wq, &wait,
-+		prepare_to_wait(&sbi->gc_thread.fggc_wq, &wait,
- 					TASK_UNINTERRUPTIBLE);
--		wake_up(&sbi->gc_thread->gc_wait_queue_head);
-+		wake_up(&sbi->gc_thread.gc_wait_queue_head);
- 		io_schedule();
--		finish_wait(&sbi->gc_thread->fggc_wq, &wait);
-+		finish_wait(&sbi->gc_thread.fggc_wq, &wait);
- 	} else {
- 		struct f2fs_gc_control gc_control = {
- 			.victim_segno = NULL_SEGNO,
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2943,11 +2943,11 @@ static int __f2fs_remount(struct fs_cont
- 	if ((flags & SB_RDONLY) ||
- 			(F2FS_OPTION(sbi).bggc_mode == BGGC_MODE_OFF &&
- 			!test_opt(sbi, GC_MERGE))) {
--		if (sbi->gc_thread) {
-+		if (sbi->gc_thread.f2fs_gc_task) {
- 			f2fs_stop_gc_thread(sbi);
- 			need_restart_gc = true;
- 		}
--	} else if (!sbi->gc_thread) {
-+	} else if (!sbi->gc_thread.f2fs_gc_task) {
- 		err = f2fs_start_gc_thread(sbi);
- 		if (err)
- 			goto restore_opts;
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -75,7 +75,7 @@ static ssize_t f2fs_sbi_show(struct f2fs
- static unsigned char *__struct_ptr(struct f2fs_sb_info *sbi, int struct_type)
- {
- 	if (struct_type == GC_THREAD)
--		return (unsigned char *)sbi->gc_thread;
-+		return (unsigned char *)&sbi->gc_thread;
- 	else if (struct_type == SM_INFO)
- 		return (unsigned char *)SM_I(sbi);
- 	else if (struct_type == DCC_INFO)
-@@ -664,20 +664,20 @@ out:
- 			sbi->gc_mode = GC_NORMAL;
- 		} else if (t == 1) {
- 			sbi->gc_mode = GC_URGENT_HIGH;
--			if (sbi->gc_thread) {
--				sbi->gc_thread->gc_wake = true;
-+			if (sbi->gc_thread.f2fs_gc_task) {
-+				sbi->gc_thread.gc_wake = true;
- 				wake_up_interruptible_all(
--					&sbi->gc_thread->gc_wait_queue_head);
-+					&sbi->gc_thread.gc_wait_queue_head);
- 				wake_up_discard_thread(sbi, true);
- 			}
- 		} else if (t == 2) {
- 			sbi->gc_mode = GC_URGENT_LOW;
- 		} else if (t == 3) {
- 			sbi->gc_mode = GC_URGENT_MID;
--			if (sbi->gc_thread) {
--				sbi->gc_thread->gc_wake = true;
-+			if (sbi->gc_thread.f2fs_gc_task) {
-+				sbi->gc_thread.gc_wake = true;
- 				wake_up_interruptible_all(
--					&sbi->gc_thread->gc_wait_queue_head);
-+					&sbi->gc_thread.gc_wait_queue_head);
- 			}
- 		} else {
- 			return -EINVAL;
-@@ -934,14 +934,14 @@ out:
- 	if (!strcmp(a->attr.name, "gc_boost_gc_multiple")) {
- 		if (t < 1 || t > SEGS_PER_SEC(sbi))
- 			return -EINVAL;
--		sbi->gc_thread->boost_gc_multiple = (unsigned int)t;
-+		sbi->gc_thread.boost_gc_multiple = (unsigned int)t;
- 		return count;
- 	}
- 
- 	if (!strcmp(a->attr.name, "gc_boost_gc_greedy")) {
- 		if (t > GC_GREEDY)
- 			return -EINVAL;
--		sbi->gc_thread->boost_gc_greedy = (unsigned int)t;
-+		sbi->gc_thread.boost_gc_greedy = (unsigned int)t;
- 		return count;
- 	}
- 
-@@ -989,8 +989,8 @@ out:
- 		if (sbi->cprc_info.f2fs_issue_ckpt)
- 			set_user_nice(sbi->cprc_info.f2fs_issue_ckpt,
- 					PRIO_TO_NICE(sbi->critical_task_priority));
--		if (sbi->gc_thread && sbi->gc_thread->f2fs_gc_task)
--			set_user_nice(sbi->gc_thread->f2fs_gc_task,
-+		if (sbi->gc_thread.f2fs_gc_task)
-+			set_user_nice(sbi->gc_thread.f2fs_gc_task,
- 					PRIO_TO_NICE(sbi->critical_task_priority));
- 		return count;
- 	}
+ 		de = find_in_block(dir, dentry_folio, fname, &max_slots, use_hash);
+ 		if (IS_ERR(de)) {
++			f2fs_folio_put(dentry_folio, false);
+ 			*res_folio = ERR_CAST(de);
+ 			de = NULL;
+ 			break;
 
 
