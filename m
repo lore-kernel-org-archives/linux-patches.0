@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3E257981F;
-	Wed,  9 Sep 2026 14:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7383157981E;
+	Wed,  9 Sep 2026 14:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964466; cv=none; b=Pdael2VYUsneHjKyC9sg88E3Cz+CBUc/UV1qQAkMhqcCeaK0gKvQn2RAAsljeU1xmfYIi3KIP1P9hL1Cue0SYhBrNssc9ijabuWaK1S3pvEHVJkyf9oLOrK8oOOqO3F4a2iohgDYvGxQKbtVPkUvq+5YJcKseoVAIOCcSxSaerg=
+	t=1788964469; cv=none; b=EJBU8bDc0JTQReMPTWbiePObINbvvHl6DNjeA8hXXcYrrCAwpnlmjmAq2xESjkZ9A55I4mEwSo7BP6FrjKQT+Mc2xT33zIkxZaKCQMsxl95ToGGZG0z+fgsrSehIy3w4WC9mwCZ2/uY0c4uIZWx5IX2wpDE4KDsAddd5PP57JyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964466; c=relaxed/simple;
-	bh=0KJkkhcTGk/oRfjus2XQ447GC3ltM2X0eCs+MQoe+0g=;
+	s=arc-20240116; t=1788964469; c=relaxed/simple;
+	bh=wxw/4UfvTKoU+CJVG9KM0+GCyLdXS+7svy5c1D8Yh7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kzD79g4Ep4pHQeXZRZqd4z75S/0SSSP/tCxQ8t6k+SGS9RIfn7nHT/C76lIMlvDGzO0YBLtXfjIT2U61THw2EzpeCFYE0+nHqD5//TYU2D2aVFq5ipj+cnpGB0WPHdKj4aFDEM53NpQvaFcyygE8fQDKSFLZR41VEzjUcYovDJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELMfgjij; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fkjdv3mQ7EMF6G2HLBEs1YtxmVTalhT4x2rBW7FFW6fvk5OASDxya9WhvjPfoiWIpplR87yquiZB3ziuVWYyFVP/c8flKb3bfB0rvAUM7+oGgRHJxGKJ5xmSbszJNiluHpsJnYox6DKztr7OQLEEtTugJtoWCIvvJ+6IjiUKfMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNI7Dz2A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELMfgjij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C651F00A3A;
-	Wed,  9 Sep 2026 14:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNI7Dz2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C547C1F00A3A;
+	Wed,  9 Sep 2026 14:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964465;
-	bh=m6fpw/tKLdWy5SjvsH5lWmng7Hts59Pe3gmaOAwRdNo=;
+	s=korg; t=1788964468;
+	bh=jTEFle6gkI75TBtmKp+p7kpYC0lYlvqs8PME3ebiS2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ELMfgjijVmjC7Q8MfPG4RUJnhMj2otcRSsoxdnzPrZycUeXg3qvmPs37vnD3O27vH
-	 IBBV8jgLHEtYFLofmnz65gBsU4iOxVfsmnBWVPHqFsabx1P81DYVpZGmSRn7xUU+m7
-	 4NDmov6MRdpGgH/rc93tYumIduUQmjDqFUe8Irkw=
+	b=aNI7Dz2AHjE5GfdMdO0nNOjwXR6/HTjiYOTwYUjYhFzzvQ2AbO99Mam8etaRjkmWa
+	 uQoPqhzieAW1rOaIVzP88p1nZqwerpJg5z+75gtvB8U+aAHy8IcjpwvLWkwtBediiF
+	 5j9oaWRxTBxGOcXlrQfW4PSqWxwpqoyWdGv4Hqzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Schubert <bernd@bsbernd.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 431/583] fuse: publish io-uring queues with release semantics
-Date: Wed,  9 Sep 2026 15:41:56 +0200
-Message-ID: <20260909134252.921678646@linuxfoundation.org>
+	Sunil Khatri <sunil.khatri@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 396/583] drm/amdgpu: update the fw version for gfx11 userqueues
+Date: Wed,  9 Sep 2026 15:41:21 +0200
+Message-ID: <20260909134251.715320594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,114 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-[ Upstream commit 42df916e5a5f8fb4b60c8cefb54318d1ec02c580 ]
+commit c748dd03df33360549ad60cdccee13570e9c0f90 upstream.
 
-fuse_uring_create_queue() initializes a fuse_ring_queue and then
-publishes the pointer into ring->queues[qid] with WRITE_ONCE() under the
-fch->lock. There are several readers that may concurrently be fetching
-that pointer locklessly and then deferencing it.
+Update to the latest stable fw versions where userqueues
+is working as it is expected with major fixes.
 
-WRITE_ONCE() doesn't ensure ordering of the queue's field
-initialization before the ring->queues[qid] pointer assignment. The
-queue must be published with smp_store_release() so the field
-initialization is guaranteed to happen before.
-
-Readers in paths where the read may happen concurrently with the store
-need to use READ_ONCE() because any race involving a plain access is
-undefined.
-
-Fixes: 24fe962c86f5 ("fuse: {io-uring} Handle SQEs - register commands")
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d50201b891604ab97f305d4a20d888ba93305b48)
 Cc: stable@vger.kernel.org
-Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ renamed `fch->lock` to `fc->lock` since this tree lacks `struct fuse_chan` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev_uring.c |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/fuse/dev_uring.c
-+++ b/fs/fuse/dev_uring.c
-@@ -194,7 +194,7 @@ void fuse_uring_destruct(struct fuse_con
- 		return;
- 
- 	for (qid = 0; qid < ring->nr_queues; qid++) {
--		struct fuse_ring_queue *queue = ring->queues[qid];
-+		struct fuse_ring_queue *queue = READ_ONCE(ring->queues[qid]);
- 		struct fuse_ring_ent *ent, *next;
- 
- 		if (!queue)
-@@ -213,7 +213,7 @@ void fuse_uring_destruct(struct fuse_con
- 
- 		kfree(queue->fpq.processing);
- 		kfree(queue);
--		ring->queues[qid] = NULL;
-+		WRITE_ONCE(ring->queues[qid], NULL);
- 	}
- 
- 	kfree(ring->queues);
-@@ -307,9 +307,11 @@ static struct fuse_ring_queue *fuse_urin
- 	}
- 
- 	/*
--	 * write_once and lock as the caller mostly doesn't take the lock at all
-+	 * fc->lock serializes concurrent creators for this qid.
-+	 * smp_store_release() are for the lockless readers who must see a
-+	 * fully initialized queue after &ring->queues[qid] is set
- 	 */
--	WRITE_ONCE(ring->queues[qid], queue);
-+	smp_store_release(&ring->queues[qid], queue);
- 	spin_unlock(&fc->lock);
- 
- 	return queue;
-@@ -406,7 +408,7 @@ static void fuse_uring_log_ent_state(str
- 	struct fuse_ring_ent *ent;
- 
- 	for (qid = 0; qid < ring->nr_queues; qid++) {
--		struct fuse_ring_queue *queue = ring->queues[qid];
-+		struct fuse_ring_queue *queue = READ_ONCE(ring->queues[qid]);
- 
- 		if (!queue)
- 			continue;
-@@ -911,7 +913,7 @@ static int fuse_uring_commit_fetch(struc
- 	if (qid >= ring->nr_queues)
- 		return -EINVAL;
- 
--	queue = ring->queues[qid];
-+	queue = READ_ONCE(ring->queues[qid]);
- 	if (!queue)
- 		return err;
- 	fpq = &queue->fpq;
-@@ -980,7 +982,7 @@ static bool is_ring_ready(struct fuse_ri
- 		if (current_qid == qid)
- 			continue;
- 
--		queue = ring->queues[qid];
-+		queue = READ_ONCE(ring->queues[qid]);
- 		if (!queue) {
- 			ready = false;
- 			break;
-@@ -1134,7 +1136,7 @@ static int fuse_uring_register(struct io
- 		return -EINVAL;
- 	}
- 
--	queue = ring->queues[qid];
-+	queue = READ_ONCE(ring->queues[qid]);
- 	if (!queue) {
- 		queue = fuse_uring_create_queue(ring, qid);
- 		if (!queue)
-@@ -1286,7 +1288,7 @@ static struct fuse_ring_queue *fuse_urin
- 		      ring->nr_queues))
- 		qid = 0;
- 
--	queue = ring->queues[qid];
-+	queue = READ_ONCE(ring->queues[qid]);
- 	WARN_ONCE(!queue, "Missing queue for qid %d\n", qid);
- 
- 	return queue;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -1616,10 +1616,10 @@ static int gfx_v11_0_sw_init(struct amdg
+ 	case IP_VERSION(11, 0, 2):
+ 	case IP_VERSION(11, 0, 3):
+ 		if (!adev->gfx.disable_uq &&
+-		    adev->gfx.me_fw_version  >= 2420 &&
+-		    adev->gfx.pfp_fw_version >= 2580 &&
+-		    adev->gfx.mec_fw_version >= 2650 &&
+-		    adev->mes.fw_version[0] >= 120) {
++		    adev->gfx.me_fw_version  >= 3090 &&
++		    adev->gfx.pfp_fw_version >= 3190 &&
++		    adev->gfx.mec_fw_version >= 3450 &&
++		    adev->mes.fw_version[0] >= 147) {
+ 			adev->userq_funcs[AMDGPU_HW_IP_GFX] = &userq_mes_funcs;
+ 			adev->userq_funcs[AMDGPU_HW_IP_COMPUTE] = &userq_mes_funcs;
+ 		}
 
 
