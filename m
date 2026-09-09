@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD08237180;
-	Wed,  9 Sep 2026 14:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64B0572691;
+	Wed,  9 Sep 2026 14:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963260; cv=none; b=kszsLJw3Q5t8Wta42uo+r2uUs7QTYrZXibz3mzMkQXTv7V3BP5Nwe1RmiLTbHkBmid90Bbl1v9zzfAfm2OPR2b3vYCzGbxul5vtVHOkKHElM5XfT8S4PPf9dCJj00RrI/KZvSBWRWDjheOUapOZ5ozB7FGTvdkxsgmXQwbl3Png=
+	t=1788963263; cv=none; b=SJqAw/72ghKO7YsTLTcm/gq0zIpbhGp6p4atQt0nIKNjovGKbWeATgY5jPWzMmQaxjn2ElYQ7mVzcXhfdmjz9r6bCMnvKhBm2jWzC+sXO24s/NSNKfY4It+aLvAYP6cen70hJRkqn9l6VvJl2B4DGS8VTu91ZBQJMbsEjG9jBEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963260; c=relaxed/simple;
-	bh=/Envc1M4TTcnJp5YP+dScfPxFhgwR6Ho7sZR7r2VWe8=;
+	s=arc-20240116; t=1788963263; c=relaxed/simple;
+	bh=RIarHmsOhr4N5i8mlieK4lTBjeJEqVP+0zrN5wwTMJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=timJw2G1jCdSHo+Nc+yzrtTpUPndd9y6WTpkfc20m0+lDiZP3w3hz4+BJxk9lhfdITMVtOuU4UYEfJcYVe+buR+Of8X5R7XIl0MK02lwUVwJVTtKajCzKc1uj07JNtU2QUXGmQa1Ey00L5q3Lc52cVCj9XWU3+6ZyywOUHBBKOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eR5Mk9RN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GiLTm6MplkA/Lsb+11+k+opNJJh9bhO5GMiSeYrm8/3Hhsule3n4CF+BLlaJSsRSXv4xe32vaqLzC0CfvRu4MHI3Egitzntcs2A5o3maUaO/8FI/Pmqu4pA7AD8m98lsB2eBzIILEQkKfd2h+ZZMNMsqeLdWqu0eNhMW7kcTUtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlhCGELi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eR5Mk9RN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9041F00A3A;
-	Wed,  9 Sep 2026 14:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlhCGELi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCB81F00A3A;
+	Wed,  9 Sep 2026 14:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963258;
-	bh=0Aiv8hnS2kKRmh/6azW67nhDMFeoyXwHzCD5i+kbv3U=;
+	s=korg; t=1788963261;
+	bh=Cb6HQcKJZV51rQBzhUuelZAnuo0iBjdSRaoRBpFTPio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eR5Mk9RNSSpzHQhxPygTWxbdXoVq76c4US2Vdq0Yvh9DD+9sqRYLjSvNu0Th8GpEN
-	 anj0DTDDGy0AdIto1PFBEgMQbPg3iKPnT9TtSGZYKyoTf+vtP6jxVgEJ0XSJQwexIo
-	 NMsBUJ1Mt+tflkTKfQjfTr2btyv+BFl2MNpxofu8=
+	b=dlhCGELiEXi/bg499tkPzFmdjhrWQTrWHraNNT3NDaNP7gZynostonfCUhYN92Z9h
+	 Maq9V/kmHDGqs66cYTxcbkfU/SEpIwZLSMI6YStuAhxazGG9z0X/C3JPhUNNbnPiMS
+	 /hbWRhajRc3OAEZmFOhhwjpRgT7wreyI93YGqQiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.18 018/583] usb: f_mass_storage: Bump local buffer size in fsg_common_create_luns()
-Date: Wed,  9 Sep 2026 15:35:03 +0200
-Message-ID: <20260909134238.447057311@linuxfoundation.org>
+	Elson Serrao <elson.serrao@oss.qualcomm.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.18 019/583] usb: dwc3: clear forceRM when issuing EndTransfer
+Date: Wed,  9 Sep 2026 15:35:04 +0200
+Message-ID: <20260909134238.489950965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -45,49 +45,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Elson Serrao <elson.serrao@oss.qualcomm.com>
 
-commit 9f6f095beec82a80daa666a3b2186a5b95841e9a upstream.
+commit b58e6200450d350314db0ecda7d6d1bde3281e80 upstream.
 
-GCC (Debian 14.2.0-19) is not happy about the buffer size:
+The forceRM bit of the DEPCMD register controls the behavior of the
+EndTransfer command used to stop an active transfer. Older DWC3
+programming guide revisions recommended setting forceRM=1 when
+issuing EndTransfer. Newer programming guide revisions recommend
+issuing EndTransfer with forceRM cleared.
 
-drivers/usb/gadget/function/f_mass_storage.c:2970:48: error: ‘%d’ directive output may be truncated writing between 1 and 9 bytes into a region of size 5 [-Werror=format-truncation=]
+With forceRM=1 on DWC_usb31 v2.00a and v2.10a controllers, a transfer
+aborted through the ep_dequeue path was observed to remain active
+after EndTransfer completion. A subsequent StartTransfer issued on the
+same endpoint triggered writes associated with the aborted transfer.
+This resulted in an SMMU fault because the transfer buffer had already
+been unmapped during EndTransfer command-completion cleanup.
 
-Bump the size to get it enough for all possible values.
+Using forceRM=0 eliminates the issue. Although older DWC3 programming
+guide revisions recommended setting forceRM=1, no issues are known
+from using forceRM=0. Clear forceRM when issuing EndTransfer to provide
+consistent EndTransfer behavior and align with newer programming guide
+recommendations.
 
-Note, although cfg->nluns is limited to FSG_MAX_LUNS (16), the compiler
-doesn't realize this and complains about the buffer size.
-
-Also note, the existing comment is wrong as size 8 for the whole buffer
-doesn't cover 100 mil numbers, hence drop it altogether.
-
-Fixes: b27c08c953e9 ("usb: gadget: f_mass_storage: create lun creation helpers for use in fsg_common_init")
+Fixes: 1e43c86d84fb ("usb: dwc3: core: Add DWC31 version 2.00a controller")
 Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260817161239.1448582-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Elson Serrao <elson.serrao@oss.qualcomm.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260813151456.867008-1-elson.serrao@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/ep0.c    |    2 +-
+ drivers/usb/dwc3/gadget.c |   21 +++++++++++++--------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -2961,7 +2961,7 @@ EXPORT_SYMBOL_GPL(fsg_common_create_lun)
+--- a/drivers/usb/dwc3/ep0.c
++++ b/drivers/usb/dwc3/ep0.c
+@@ -304,7 +304,7 @@ void dwc3_ep0_out_start(struct dwc3 *dwc
  
- int fsg_common_create_luns(struct fsg_common *common, struct fsg_config *cfg)
+ 		dwc3_ep->flags &= ~DWC3_EP_DELAY_STOP;
+ 		if (dwc->connected)
+-			dwc3_stop_active_transfer(dwc3_ep, true, true);
++			dwc3_stop_active_transfer(dwc3_ep, false, true);
+ 		else
+ 			dwc3_remove_requests(dwc, dwc3_ep, -ESHUTDOWN);
+ 	}
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1004,7 +1004,7 @@ static int __dwc3_gadget_ep_enable(struc
+ 			 * controller to generate an ERDY to initiate the
+ 			 * stream.
+ 			 */
+-			dwc3_stop_active_transfer(dep, true, true);
++			dwc3_stop_active_transfer(dep, false, true);
+ 
+ 			/*
+ 			 * All stream eps will reinitiate stream on NoStream
+@@ -1032,7 +1032,7 @@ void dwc3_remove_requests(struct dwc3 *d
  {
--	char buf[8]; /* enough for 100000000 different numbers, decimal */
-+	char buf[14];
- 	int i, rc;
+ 	struct dwc3_request		*req;
  
- 	fsg_common_remove_luns(common);
+-	dwc3_stop_active_transfer(dep, true, false);
++	dwc3_stop_active_transfer(dep, false, false);
+ 
+ 	/* If endxfer is delayed, avoid unmapping requests */
+ 	if (dep->flags & DWC3_EP_DELAY_STOP)
+@@ -1720,7 +1720,7 @@ static int __dwc3_gadget_kick_transfer(s
+ 		if (ret == -EAGAIN)
+ 			return ret;
+ 
+-		dwc3_stop_active_transfer(dep, true, true);
++		dwc3_stop_active_transfer(dep, false, true);
+ 
+ 		list_for_each_entry_safe(req, tmp, &dep->started_list, list)
+ 			dwc3_gadget_move_cancelled_request(req, DWC3_REQUEST_STATUS_DEQUEUED);
+@@ -1757,6 +1757,11 @@ static int __dwc3_gadget_get_frame(struc
+  * the controller won't update the TRB progress on command
+  * completion. It also won't clear the HWO bit in the TRB.
+  * The command will also not complete immediately in that case.
++ *
++ * Older programming guide revisions recommended setting ForceRM to 1
++ * when ending a transfer. Newer programming guide revisions now
++ * recommend keeping ForceRM cleared, and TRBs are properly updated
++ * on command completion.
+  */
+ static int __dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force, bool interrupt)
+ {
+@@ -1882,7 +1887,7 @@ static int dwc3_gadget_start_isoc_quirk(
+ 		 * to wait for the next XferNotReady to test the command again
+ 		 */
+ 		if (cmd_status == 0) {
+-			dwc3_stop_active_transfer(dep, true, true);
++			dwc3_stop_active_transfer(dep, false, true);
+ 			return 0;
+ 		}
+ 	}
+@@ -2165,7 +2170,7 @@ static int dwc3_gadget_ep_dequeue(struct
+ 			struct dwc3_request *t;
+ 
+ 			/* wait until it is processed */
+-			dwc3_stop_active_transfer(dep, true, true);
++			dwc3_stop_active_transfer(dep, false, true);
+ 
+ 			/*
+ 			 * Remove any started request if the transfer is
+@@ -2242,7 +2247,7 @@ int __dwc3_gadget_ep_set_halt(struct dwc
+ 			return 0;
+ 		}
+ 
+-		dwc3_stop_active_transfer(dep, true, true);
++		dwc3_stop_active_transfer(dep, false, true);
+ 
+ 		list_for_each_entry_safe(req, tmp, &dep->started_list, list)
+ 			dwc3_gadget_move_cancelled_request(req, DWC3_REQUEST_STATUS_STALLED);
+@@ -3357,7 +3362,7 @@ static void dwc3_nostream_work(struct wo
+ 		dwc3_send_gadget_generic_command(dwc, cmd, dep->number);
+ 	} else {
+ 		dep->flags |= DWC3_EP_DELAY_START;
+-		dwc3_stop_active_transfer(dep, true, true);
++		dwc3_stop_active_transfer(dep, false, true);
+ 		spin_unlock_irqrestore(&dwc->lock, flags);
+ 		return;
+ 	}
+@@ -3715,7 +3720,7 @@ static bool dwc3_gadget_endpoint_trbs_co
+ 	if (usb_endpoint_xfer_isoc(dep->endpoint.desc) &&
+ 		list_empty(&dep->started_list) &&
+ 		(list_empty(&dep->pending_list) || status == -EXDEV))
+-		dwc3_stop_active_transfer(dep, true, true);
++		dwc3_stop_active_transfer(dep, false, true);
+ 	else if (dwc3_gadget_ep_should_continue(dep))
+ 		if (__dwc3_gadget_kick_transfer(dep) == 0)
+ 			no_started_trb = false;
 
 
