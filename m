@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1F4577E41;
-	Wed,  9 Sep 2026 14:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D82558FD23;
+	Wed,  9 Sep 2026 14:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963989; cv=none; b=dWrGOOOt9YZ4aGpRIffPc8z0dPuVvLFfaUjn2VVbyumSpKa3/Cikv50Bf+Ss1xg2HGFM3o4yk+j+9DmcMUB4wy4QvwV1qC30UyWter07zcxmZFSCI1t0j6HTukrogPRmS2LLh5osay/XURgrgKowynvYc6l10eA7Gz9DS3wAO54=
+	t=1788963992; cv=none; b=I/R0kFmk4U+a+HH/ueRRHhXt0M4cdIi6JUz5TkhwKqxCPTYrBDZ6Hjh1GuUpd/vcPNg7RBo+5nnbuW7NS1scfaC5nDAUa5Sd23tkqGzI2/iCIV62vV1fR4GF4LncgFCBO90qdYUAXE7HNLNNc/84rDXUjQ7fw/65i/JjX+sYuWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963989; c=relaxed/simple;
-	bh=ZsWYaM3wMIbeeipyeE2ZnzMTXu+YOLnSFc2qQlBkg+w=;
+	s=arc-20240116; t=1788963992; c=relaxed/simple;
+	bh=0OCDWslRtaB5bGONZZ1LGYIcQRiVsluFJpFD2DbhLVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8ajHCHwqexgiPAlVQ0B7Yts4ZMQAoOz3ozuOJYfMfwNuIDC3VYVo4ltIFlfm4TbRYwT6ljPBKS7LMZtlx23ztOBRcyillaXszhKrQy6nPvM72g1JVWe94bDRQlaMclDQ4PJr8rqFkI5CcCxZ3e0zA6ckZRSQiKytQ+qKHJ0C1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VN+u4HMu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JyoHC19+EtZYrkCmgKHX4AGgF1HHL6D1A5SHxkGmLTzN4oGdZv1iyP5tWXcdHg7pjNGm5hBoYmtVS4WLlmUkQV02X2zyhHBYHiQM9PzNHXDUo7sOnru1JC6ctXAu0c2kYcNqPmEOBP3nkZhfBIaSqC4WZDXqLv8EBGZJdfWdqQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=147uqnd8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VN+u4HMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2320A1F00A3A;
-	Wed,  9 Sep 2026 14:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="147uqnd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000B11F00A3A;
+	Wed,  9 Sep 2026 14:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963987;
-	bh=yFgqZCvO1b25/ZLjyE7Ln/xWcAbuq3vAVtJbU+/0bdI=;
+	s=korg; t=1788963990;
+	bh=462QNAXGyHb+b+txfIb8Yct+FifLWQMz5E04AN413VA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VN+u4HMu9jEjQ+3mogk7acgwg1Ju27pMciRDD4W8yzad6EIZvs5vgUg2Sorn1pvpK
-	 c6vnDLajwhv5tYNRZuxtsj8mfUWMZWRvu/8yx6ZsxmBcNlV7hVegu1WBlFZgW8QUsn
-	 sz3wqqTAzqqB4b8QfVFmsd9KkquohWZ7bB99ImDo=
+	b=147uqnd8lKbRJIQaEhh/yimv/375IEVk0FdGHG+NP+TJTYwatq5FmSAGkR4ZrjJ7u
+	 ZEcOR6aYDOBtCG+ylC9tZ3UhAH56IReu+Bt+qmZpJQOcEPW749wX674e4Aqh+biHWV
+	 O9CMWydp4aeEtSMoGuPxed6hAegPIFOvUVYvJFiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <gaohan@iscas.ac.cn>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 266/583] LoongArch: Add DIRECT_MAP_PHYSMEM_END definition
-Date: Wed,  9 Sep 2026 15:39:11 +0200
-Message-ID: <20260909134247.310203931@linuxfoundation.org>
+Subject: [PATCH 6.18 267/583] LoongArch: BPF: Optimize redundant TCC loads in epilogue
+Date: Wed,  9 Sep 2026 15:39:12 +0200
+Message-ID: <20260909134247.344826841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,59 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Gao <gaohan@iscas.ac.cn>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 2677f97a67fdbc62a82ce1faa67791f54451d36f upstream.
+commit fd3cb1bfeb9d98618bd709bfee9c1133e9f189e6 upstream.
 
-get_free_mem_region() and mhp_get_pluggable_range() bound their search
-to DIRECT_MAP_PHYSMEM_END. LoongArch does not define it, so the fallback
-in include/linux/mm.h applies: under CONFIG_SPARSEMEM_VMEMMAP it is
-(1ULL << MAX_PHYSMEM_BITS) - 1, a compile-time constant that does not
-adapt to the CPU's physical address space bits (cpu_pabits, probed from
-CPUCFG1).
+The legacy epilogue implementation pops the tail call counter (TCC)
+context via a redundant double-load pattern. It first decrements the
+load_offset by 2 slots to fetch 'tcc_ptr', and then immediately bumps
+it back up by 1 slot to load the original 'tcc' value into REG_TCC,
+unnecessarily overwriting the register.
 
-The vmemmap window only covers physical space below 2^(cpu_pabits+1)
-(i.e. VMEMMAP_SIZE), so on CPUs with fewer physical address bits than
-MAX_PHYSMEM_BITS the fallback allows get_free_mem_region() to return
-a ZONE_DEVICE region outside the vmemmap window; vmemmap_populate() then
-wraps the memmap range around and maps it into low memory, silently
-corrupting the page tables. The same search also picked the top-of-
-address-space region that crashed memmap_init_zone_device() with amdkfd
-on Loongson-3C6000 in 6.16 [1]; the commit 2969b42c8f99 ("LoongArch/mm:
-align vmemmap to maximal folio size") keeps that region in bounds on
-current Loongson-3C6000 configs, but CPUs with smaller cpu_pabits (e.g.
-the Loongson-2K series) are still affected.
+Optimize this sequence by adjusting the load_offset by only 1 slot.
+This aligns the offset directly with the higher stack slot containing
+the entry TCC counter (or caller state), allowing us to restore the
+REG_TCC register safely with a single load.
 
-Define DIRECT_MAP_PHYSMEM_END as the vmemmap-covered physical range,
-(1ULL << (cpu_pabits + 1)) - 1, capped at (1ULL << MAX_PHYSMEM_BITS) - 1
-under CONFIG_SPARSEMEM, similar to the commit f3336b48cf9d ("riscv: mm:
-Define DIRECT_MAP_PHYSMEM_END").
+This removes one redundant instruction from the epilogue hot path,
+improves code readability, and ensures the correct TCC register context
+is handed back cleanly upon normal return.
 
-[1] https://lore.kernel.org/amd-gfx/20250814032153.227285-1-jeffbai@aosc.io/
-
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+Cc: stable@vger.kernel.org
+Fixes: c0fcc955ff82 ("LoongArch: BPF: Fix the tailcall hierarchy")
+Fixes: ef54c517a937 ("LoongArch: BPF: Implement PROBE_MEM32 pseudo instructions")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/pgtable.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/loongarch/net/bpf_jit.c |   10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
---- a/arch/loongarch/include/asm/pgtable.h
-+++ b/arch/loongarch/include/asm/pgtable.h
-@@ -106,6 +106,13 @@ extern unsigned long empty_zero_page[PAG
- #define KFENCE_AREA_START	(VMEMMAP_END + 1)
- #define KFENCE_AREA_END		(KFENCE_AREA_START + KFENCE_AREA_SIZE - 1)
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -228,14 +228,8 @@ static void __build_epilogue(struct jit_
+ 	load_offset -= sizeof(long);
+ 	emit_insn(ctx, ldd, LOONGARCH_GPR_S5, LOONGARCH_GPR_SP, load_offset);
  
-+/* Needed to limit get_free_mem_region() */
-+#ifndef CONFIG_SPARSEMEM
-+#define DIRECT_MAP_PHYSMEM_END ((1ULL << (cpu_pabits + 1)) - 1)
-+#else
-+#define DIRECT_MAP_PHYSMEM_END min((1ULL << (cpu_pabits + 1)) - 1, (1ULL << MAX_PHYSMEM_BITS) - 1)
-+#endif
-+
- #define ptep_get(ptep) READ_ONCE(*(ptep))
- #define pmdp_get(pmdp) READ_ONCE(*(pmdp))
+-	/*
+-	 * When push into the stack, follow the order of tcc then tcc_ptr.
+-	 * When pop from the stack, first pop tcc_ptr then followed by tcc.
+-	 */
+-	load_offset -= 2 * sizeof(long);
+-	emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, load_offset);
+-
+-	load_offset += sizeof(long);
++	/* Only restore the TCC state into REG_TCC from the higher slot */
++	load_offset -= sizeof(long);
+ 	emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, load_offset);
  
+ 	emit_insn(ctx, addid, LOONGARCH_GPR_SP, LOONGARCH_GPR_SP, stack_adjust);
 
 
