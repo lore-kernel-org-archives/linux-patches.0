@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8BC595748;
-	Wed,  9 Sep 2026 14:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097F3583AB3;
+	Wed,  9 Sep 2026 14:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964825; cv=none; b=guIGj8K0TWi12X8T3qF+SNECj+rb8COceiJe7USjuv5fkfIemOq9MAnG84Gk1trXaJ8vZPuHVi/rxk70JEDGuGfZaptB5Ka4MXVA190eevkS/T447VZXcw3pEvRbjiNLy8O6K7iJZlEmrYU3oqpLcEaRYN70s5rpEawtxYj/97k=
+	t=1788964828; cv=none; b=r5964KfwawXqpy4zEyeWQc1ad+PwPa3qv8fI7X7tenFY9s4Ps4DYiNkQpDwZKMNtPwduoOtNZ8OEIZ+2hwe9ZGZnKdLEysCtSYSCNZLs5BHGtRUWT0pM7V9i5c6WN9TCcR1FzPdQdNqLTeEeqg1J2Gq7JLjC1Qc11amjebXrbtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964825; c=relaxed/simple;
-	bh=A4bjCSG9IBQrEVm6vadH84nw87TCfcA/6Q/nGIiIkf4=;
+	s=arc-20240116; t=1788964828; c=relaxed/simple;
+	bh=JcbAi3mFLxNeZMlYBbFmlWmWnFLul6pN1TjOYXO1Jmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBvhH1p+Qva/CkNPLtLVmTzhwwKQxttgwr/bbHsf8NQKF7BSf9WjyYdNG3aTtzxoi7nK4fI+nGP9PjG8pF73Xd5M4wA7a/oTRjebf3lRnaaY0Kj9lUGQV41mi3PGsChdIcWEnIR6PnlMrcdgz2+4/05qwQxnt+NjFZbF7Q6ilpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTWoUqPU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kvydIdh1AQPpsY8ZRI1h6psLYR4AZL5xD0RylqnWLA++h96nQGu9TYs1gZkV1kmRp3cjuv+m4dO23IEEY0XV40TtW40Q8WoRapZTHsbNC1gIar7wfIJgjMKS1qVfsdqtoPYcKjYhwNydv/dH2miCL7/m/e4A6xuZ/I4bwrzS6oQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKNTVZt1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTWoUqPU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901D11F00A3A;
-	Wed,  9 Sep 2026 14:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKNTVZt1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6804A1F00A3A;
+	Wed,  9 Sep 2026 14:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964824;
-	bh=/Tr4rlHrG5nhS6eB4Ngqpjubw2mQApb6p02AR8wqdRE=;
+	s=korg; t=1788964826;
+	bh=8LJPWkhk//1HjVrTXL7p3vMSp1krmiLuRetgU89rpYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cTWoUqPUYkqBJ4ZbCVDIivqb9Wy43i3eur7CDW+ee6xEzZg3QWtiL0sRjGKs4afVE
-	 xd84Pjs3OCqCsssjYMgVHCI3h5lzPb1H3dpwRxQSsCM93VEbHEg5VfgfciVb5ZL/VH
-	 PuIg9kQr5TFGJc6cF7MXuS+xeyPM4AAXR1env/jA=
+	b=aKNTVZt1sffQBj6ydvaVozKl8+RUYrDzlju9vrUkNWPah2Is/ucKTjx3eE9hjKXfG
+	 CtGdD/UritMdXm9sEK14dyr1anR1meB1MqU05dvISfMy5yPILM6OiZhhn012g6P+7g
+	 29pBIbRDIt/00Gc78W+qVLcMi/3/hBmMeV28DQfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
 	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
+	Brian Geffon <bgeffon@google.com>,
+	Minchan Kim <minchan@google.com>,
+	Richard Chang <richardycc@google.com>,
+	Yuwen Chen <ywen.chen@foxmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 554/583] zram: fix out-of-bounds access in read_block_state()
-Date: Wed,  9 Sep 2026 15:43:59 +0200
-Message-ID: <20260909134256.898453605@linuxfoundation.org>
+Subject: [PATCH 6.18 555/583] zram: take write lock in wb limit store handlers
+Date: Wed,  9 Sep 2026 15:44:00 +0200
+Message-ID: <20260909134256.929239155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,53 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit 391f057f44a51cc9418da5cba78b014324174264 ]
+[ Upstream commit 7c929664fddfdaaa4afe5ae833d0f3044709d95c ]
 
-read_block_state() calculates nr_pages before taking dev_lock.  If the
-device is reset and reinitialized with a smaller disksize before lock
-acquisition, nr_pages still describes the old table.  The subsequent loop
-can then call slot_lock() past the end of the newly allocated table.
+Write device attrs handlers should take write zram init_lock.  While at
+it, fixup coding styles.
 
-Read disksize after acquiring dev_lock and checking that the device is
-initialized.  The read lock then keeps the table and its bound stable for
-the duration of the scan.
-
-Link: https://lore.kernel.org/20260804065919.3970386-3-xialonglong2025@163.com
-Fixes: c0265342bff4 ("zram: introduce zram memory tracking")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20251122074029.3948921-4-senozhatsky@chromium.org
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Brian Geffon <bgeffon@google.com>
+Cc: Minchan Kim <minchan@google.com>
+Cc: Richard Chang <richardycc@google.com>
+Cc: Yuwen Chen <ywen.chen@foxmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: dde75313eed0 ("zram: set default primary compressor in zram_destroy_comps()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/block/zram/zram_drv.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 --- a/drivers/block/zram/zram_drv.c
 +++ b/drivers/block/zram/zram_drv.c
-@@ -1135,7 +1135,7 @@ static ssize_t read_block_state(struct f
- 	char *kbuf;
- 	ssize_t index, written = 0;
- 	struct zram *zram = file->private_data;
--	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
-+	unsigned long nr_pages;
+@@ -501,7 +501,8 @@ out:
  
- 	kbuf = kvmalloc(count, GFP_KERNEL);
- 	if (!kbuf)
-@@ -1148,6 +1148,8 @@ static ssize_t read_block_state(struct f
- 		return -EINVAL;
- 	}
+ #ifdef CONFIG_ZRAM_WRITEBACK
+ static ssize_t writeback_limit_enable_store(struct device *dev,
+-		struct device_attribute *attr, const char *buf, size_t len)
++					    struct device_attribute *attr,
++					    const char *buf, size_t len)
+ {
+ 	struct zram *zram = dev_to_zram(dev);
+ 	u64 val;
+@@ -510,18 +511,19 @@ static ssize_t writeback_limit_enable_st
+ 	if (kstrtoull(buf, 10, &val))
+ 		return ret;
  
-+	nr_pages = zram->disksize >> PAGE_SHIFT;
-+
- 	for (index = *ppos; index < nr_pages; index++) {
- 		int copied;
- 		struct timespec64 ts;
+-	down_read(&zram->init_lock);
++	down_write(&zram->init_lock);
+ 	spin_lock(&zram->wb_limit_lock);
+ 	zram->wb_limit_enable = val;
+ 	spin_unlock(&zram->wb_limit_lock);
+-	up_read(&zram->init_lock);
++	up_write(&zram->init_lock);
+ 	ret = len;
+ 
+ 	return ret;
+ }
+ 
+ static ssize_t writeback_limit_enable_show(struct device *dev,
+-		struct device_attribute *attr, char *buf)
++					   struct device_attribute *attr,
++					   char *buf)
+ {
+ 	bool val;
+ 	struct zram *zram = dev_to_zram(dev);
+@@ -536,7 +538,8 @@ static ssize_t writeback_limit_enable_sh
+ }
+ 
+ static ssize_t writeback_limit_store(struct device *dev,
+-		struct device_attribute *attr, const char *buf, size_t len)
++				     struct device_attribute *attr,
++				     const char *buf, size_t len)
+ {
+ 	struct zram *zram = dev_to_zram(dev);
+ 	u64 val;
+@@ -545,11 +548,11 @@ static ssize_t writeback_limit_store(str
+ 	if (kstrtoull(buf, 10, &val))
+ 		return ret;
+ 
+-	down_read(&zram->init_lock);
++	down_write(&zram->init_lock);
+ 	spin_lock(&zram->wb_limit_lock);
+ 	zram->bd_wb_limit = val;
+ 	spin_unlock(&zram->wb_limit_lock);
+-	up_read(&zram->init_lock);
++	up_write(&zram->init_lock);
+ 	ret = len;
+ 
+ 	return ret;
 
 
