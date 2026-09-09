@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C9F58E2BC;
-	Wed,  9 Sep 2026 14:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C356D57267E;
+	Wed,  9 Sep 2026 14:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963530; cv=none; b=u7zqXM2+3dI97+fIHyZKOXlIfsQL0aO9M+SkccZaWRVHfsvdpKDeeG8Rd/naOX10/swTtd40Gfl7VKNf+j6WY1qnr22+ZNesBgNCpAgKTSWoLQSdbUnyBzRrysjXp+uOfBQNqTwmj6a8xYk/xtXPDO9s2qtSe+npPpz8/6AGr6o=
+	t=1788963532; cv=none; b=KNCLmlZowzHpUuLH4uSUK/P01zHFj3BO1+qHVmjnRTgs7Zcbj5HCOnkbal9ptjUiKNkD7nVh1Zrmmla4SMlEsCSBMTnG2TVNVmq+UsWuP4vFLDL4YXjwk5P1NsxrqunPGgiA1/Udcr2H7SaXC3WCeEnVWOyyUIK8zd2Pz0FnzVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963530; c=relaxed/simple;
-	bh=KEoVcsF5xR8BjGtKjEsXyCYfRl25eRva7JBN14xdR1I=;
+	s=arc-20240116; t=1788963532; c=relaxed/simple;
+	bh=YFc/dVGMeSauoSaXyJ/Kg2XSIJDR0r1nEIVYcZLgNfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMqbr48cb/gaJW11pRSTUArNeXy4UIgrAenmix8rsCPU1qZJ5nTgVrVbdUZqpfIX4IwYM994BuhVwgSKnIcCs6hGbHo1mqf6RhjNFsTVjjSiZZlPIj5dPkpYIsWmqbcxuEgGlDA0n8bOFjWcBU2n07cTUQ5h4+ms6xRhRox50oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGroUa7O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nziVD9Vsyh1NIp6lckac5LInA1SHyHZHY0JtFBa9hGWT3GEgz7fciehU9QI2HFOE6vrhBJTN6uKyZ1NmFrtb60N0H/9bd1HjGZuU9C+x18EcwbiZVB4S6sh4+YLkxUKkYMB6eXWTLXQVI0TekVB3qSQemZ3VMSyS5BkiDxVji20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WE0mdhl0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGroUa7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EB01F00A3A;
-	Wed,  9 Sep 2026 14:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WE0mdhl0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239441F00A3A;
+	Wed,  9 Sep 2026 14:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963528;
-	bh=Qma4uFQVAOhRtv26tikuatKOLXd9l1uPy+Ma/qgVt3s=;
+	s=korg; t=1788963531;
+	bh=Q9ds0mli6igpRyc+hGpa5op4tsopESbvzuomV0VgfWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vGroUa7O4wotUb1l2hrRI6ysUinV4/p46F106Xzm2mAW7KXNHSixq5KdV8+rABWok
-	 xZgYFh0oYdn96yvMo4n2mJSe4CJ8UiydAP+KFfESTutIgp/C8XINRuXiqVfT/rwrIp
-	 cIYg0sBSAv1gJ0j9O38hhY4TAmmmiUUFPoz8oaTU=
+	b=WE0mdhl0aLdw69YMKpGJPxPCB6HosYWEVqX+W0+WzVDYyoeHFbQAiEhqwfnzP+ccI
+	 dN5a/atDnqMiQUJ20LutIIfQdaf4jnNWP0s8h/muUYtDNpnTn95GQUkGB8o15pQyaB
+	 8VAa23C5bxsgwLk05Kf+uVOLV1y4x8wqSPkjwS1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
+	Kazuki Hanai <hnkz.64@gmail.com>,
 	Sagi Grimberg <sagi@grimberg.me>,
-	John Garry <john.g.garry@oracle.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 109/583] nvme: add missing SRCU grace period in error path
-Date: Wed,  9 Sep 2026 15:36:34 +0200
-Message-ID: <20260909134241.910846630@linuxfoundation.org>
+Subject: [PATCH 6.18 110/583] nvmet-auth: Synchronize timeout work during SQ teardown
+Date: Wed,  9 Sep 2026 15:36:35 +0200
+Message-ID: <20260909134241.944002034@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,44 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Kazuki Hanai <hnkz.64@gmail.com>
 
-commit ef248d5de4469fb6bbaf8dbe0c4c47800080d648 upstream.
+commit eaa948c0e19b1bb2d93262207bca0c3d19cc3406 upstream.
 
-nvme_alloc_ns() error path at out_unlink_ns removes ns from the
-namespace head siblings list with list_del_rcu(&ns->siblings) but
-does not wait for SRCU readers before freeing the namespace struct.
-Multipath code iterates the head->list under srcu_read_lock() in
-nvme_find_path() and nvme_mpath_revalidate_paths(), so a concurrent
-reader can still hold a reference to ns when kfree(ns) runs.
+nvmet_auth_sq_free() cancels auth_expired_work with
+cancel_delayed_work(). If the work has already started, cancellation does
+not wait for the callback. Transport teardown can consequently free or
+reuse the queue containing struct nvmet_sq while
+nvmet_auth_expired_work() still accesses that SQ.
 
-The normal removal path in nvme_ns_remove() correctly calls
-synchronize_srcu(&ns->head->srcu) after list_del_rcu() to wait for
-in-progress readers. Add the same grace period in the error path.
+Add a teardown-specific helper that synchronously drains the delayed work
+before freeing authentication state, and use it from nvmet_sq_destroy().
+Keep the non-synchronous helper for in-band authentication state cleanup,
+where the SQ owner remains alive.
 
-Fixes: ed754e5deeb1 ("nvme: track shared namespaces")
+Fixes: 1a70200f404a ("nvmet-auth: expire authentication sessions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/target/auth.c  |    6 ++++++
+ drivers/nvme/target/core.c  |    2 +-
+ drivers/nvme/target/nvmet.h |    2 ++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4218,6 +4218,9 @@ static void nvme_alloc_ns(struct nvme_ct
- 			last_path = true;
- 	}
- 	mutex_unlock(&ctrl->subsys->lock);
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -250,6 +250,12 @@ void nvmet_auth_sq_free(struct nvmet_sq
+ 	sq->dhchap_skey = NULL;
+ }
+ 
++void nvmet_auth_sq_destroy(struct nvmet_sq *sq)
++{
++	cancel_delayed_work_sync(&sq->auth_expired_work);
++	nvmet_auth_sq_free(sq);
++}
 +
-+	/* guarantee not available in head->list */
-+	synchronize_srcu(&ns->head->srcu);
- 	if (last_path)
- 		nvme_put_ns_head(ns->head);
- 	nvme_put_ns_head(ns->head);
+ void nvmet_destroy_auth(struct nvmet_ctrl *ctrl)
+ {
+ 	ctrl->shash_id = 0;
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -968,7 +968,7 @@ void nvmet_sq_destroy(struct nvmet_sq *s
+ 	wait_for_completion(&sq->confirm_done);
+ 	wait_for_completion(&sq->free_done);
+ 	percpu_ref_exit(&sq->ref);
+-	nvmet_auth_sq_free(sq);
++	nvmet_auth_sq_destroy(sq);
+ 	nvmet_cq_put(sq->cq);
+ 
+ 	/*
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -901,6 +901,7 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *c
+ void nvmet_auth_sq_init(struct nvmet_sq *sq);
+ void nvmet_destroy_auth(struct nvmet_ctrl *ctrl);
+ void nvmet_auth_sq_free(struct nvmet_sq *sq);
++void nvmet_auth_sq_destroy(struct nvmet_sq *sq);
+ int nvmet_setup_dhgroup(struct nvmet_ctrl *ctrl, u8 dhgroup_id);
+ bool nvmet_check_auth_status(struct nvmet_req *req);
+ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+@@ -927,6 +928,7 @@ static inline void nvmet_auth_sq_init(st
+ }
+ static inline void nvmet_destroy_auth(struct nvmet_ctrl *ctrl) {};
+ static inline void nvmet_auth_sq_free(struct nvmet_sq *sq) {};
++static inline void nvmet_auth_sq_destroy(struct nvmet_sq *sq) {};
+ static inline bool nvmet_check_auth_status(struct nvmet_req *req)
+ {
+ 	return true;
 
 
