@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0295867EA;
-	Wed,  9 Sep 2026 14:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D3658B6AA;
+	Wed,  9 Sep 2026 14:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964354; cv=none; b=Jc5rSlk7AazWP3P61IPJNVCJbC7ZTq0pWOH8gfHam6e0VfGY/m5DGtcBhGtjqM08AM4Lc6M1FwxiPcwqUhI+Ha1rTByJ6s+ZnxuMP0EkPKgWwag7hNhoAvBXpmPJgYKGZXIVXr65mz5o0zWBlFUaf+TLoqmV9CFYD0rC5c6Q6kQ=
+	t=1788964357; cv=none; b=Sj3G+vtO5zhXpWwxTX+PP3RfEcoNT+/TPjIkMMOkSqH/ilfRepP7cfDJ+0UMEfkos/KxwWmLH20za3w9a51rrZeil6TmnIUfy9quje4N4tzGEEIG6dm96g5kcPXW/X7qebHjOolaWngBUPmpwS5rlVLNJlouwJ6dDbrCJQ3bolc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964354; c=relaxed/simple;
-	bh=ofpNZmpDXQft2ZC712X1Yu7x7vJXttnirE7Sea6DKYc=;
+	s=arc-20240116; t=1788964357; c=relaxed/simple;
+	bh=N/GlE8UTM/rP0wv0DvEX7ar2ne4G6IGjW6ZyUVx5PeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rzpyRbUGPsGCGp/7LuhLXfBVgYnGDtbA1BIQp8jUVwrBWdJ7RGR5Da77L34AGnIvMukgPxCRFhuVWcGjEWeI5aobj6jd+zXhG1yiRc9Fnw0E4HmOY23ymQJccEzKiKIZfEenCtuFhsOAP44fzMIxy24pmMkMuv1bbs+PzLTcgWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1SITedZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h4x8kXsHZbRBtwjHt8H6SdSDS1nI2DKleRe8AMfcLJNPpHc3GvKKcvVRnhnytqDzt5xGkI4GqqOfJx0P+simtEb+25eluHbsU8DdW1ddVbnkVwTtulBippJ0H17o+rLhbP7rK0oEI7lj999kZOPEmBucFkAt2HSHRPunlBALpRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eynpv9tB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1SITedZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF171F00A3E;
-	Wed,  9 Sep 2026 14:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eynpv9tB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A4A1F00A3A;
+	Wed,  9 Sep 2026 14:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964353;
-	bh=YfqTlZGdDuOvVJDT8vDGEA7ZuTyOdl5++S8DuiNAiJs=;
+	s=korg; t=1788964356;
+	bh=4zApP4gX+MPeQbfomVM+FdQfH1RVhTzVvJwtW+0xVRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J1SITedZIGhtyhLm7B+9KUTIuUzz0ybrXZ8s7/YO2rRfhN2Yyf2WPx4iKK+pSFYN+
-	 JBFwqJGvAbJrD876sQUURZ7Iw2BuohmVQ1iBRwUDhCtHwRjtoUY7FD+MSLYdnVrTQh
-	 CYTvFwEbFMJfMRASVHK6/tdZE9wqDufrrcQqsU0k=
+	b=Eynpv9tBIQhP1/UjZGFUmr1HU6n52yLwX9p122zhtZuCod9y/JM+6X2iuo46yQ/Z5
+	 JX2ZTl6WMmI+nelcszMgeh0rdORo1ZJ2/OWxW9idawrYWbuZaR6lUjLeIYAWD/Q7cs
+	 ZbamNz+GniYGPRfv7UyhSCmHhyk7ichxRxkg9mV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
+	stable@kernel.org,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 361/583] f2fs: fix to migrate all curseg types during free_segment_range
-Date: Wed,  9 Sep 2026 15:40:46 +0200
-Message-ID: <20260909134250.504980332@linuxfoundation.org>
+Subject: [PATCH 6.18 362/583] f2fs: fix to avoid potential deadloop in f2fs_fsync_node_pages()
+Date: Wed,  9 Sep 2026 15:40:47 +0200
+Message-ID: <20260909134250.534393361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,46 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 8ec06f50ddd8d201bd7e55b896ae28ed9d4cb7d1 upstream.
+commit ce366bfa821ec81dd45bde547ee31e659306cc61 upstream.
 
-In free_segment_range(), the curseg evacuation loop only iterates up to
-NR_CURSEG_PERSIST_TYPE (0..5), missing non-persistent in-memory curseg
-types such as CURSEG_COLD_DATA_PINNED and CURSEG_ALL_DATA_ATGC.
+There is potential deadloop in race condition:
 
-Even though these in-memory curseg types are not saved in the on-disk
-checkpoint header, they still occupy active physical segments at runtime.
-If an active in-memory curseg happens to be allocated within the segment
-range being truncated during filesystem shrink, failing to evacuate it
-will cause subsequent writes to the curseg attempting out-of-bounds I/O
-on the truncated storage range.
+Thread A				Thread B
+- fsync
+ - f2fs_do_sync_file
+  - f2fs_fsync_node_pages
+   - last_fsync_dnode
+    - folio_get(last_folio)
+					- f2fs_setattr
+					 - f2fs_truncate
+					  - f2fs_truncate_blocks
+					   - f2fs_do_truncate_blocks
+					    - f2fs_truncate_inode_blocks
+					     - truncate_dnode
+					      - truncate_node
+					       - invalidate_mapping_pages
+					        - folio->mapping = NULL
+   - is_node_folio alwasy return false
+   - atomic && !marked is always true,
+     then goto retry
 
-Fix this by expanding the curseg evacuation loop upper bound to
-NR_CURSEG_TYPE to ensure all active curseg types are safely migrated
-out of the target range.
-
-Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Cc: stable@kernel.org
+Fixes: 608514deba38 ("f2fs: set fsync mark only for the last dnode")
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/node.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2192,7 +2192,7 @@ static int free_segment_range(struct f2f
- 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
- 
- 	/* Move out cursegs from the target range */
--	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_PERSIST_TYPE; type++) {
-+	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++) {
- 		err = f2fs_allocate_segment_for_resize(sbi, type, start, end);
- 		if (err)
- 			goto out;
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1986,6 +1986,11 @@ continue_unlock:
+ 		f2fs_debug(sbi, "Retry to write fsync mark: ino=%u, idx=%lx",
+ 			   ino, last_folio->index);
+ 		folio_lock(last_folio);
++		if (unlikely(!is_node_folio(last_folio))) {
++			f2fs_folio_put(last_folio, true);
++			ret = -EAGAIN;
++			goto out;
++		}
+ 		f2fs_folio_wait_writeback(last_folio, NODE, true, true);
+ 		folio_mark_dirty(last_folio);
+ 		folio_unlock(last_folio);
 
 
