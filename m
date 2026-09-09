@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C8D5650F2;
-	Wed,  9 Sep 2026 14:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2197C4FDE6C;
+	Wed,  9 Sep 2026 14:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962512; cv=none; b=pn7g3XL5bvscQ0CWcgKc9O6wkcUeKd0U96wha3XnD9AtM4kDOJ43TCTEtXEmprXFmSTM+wAtPC1CP/Bp8SvNQjjzwyQZw4vtx2SO3R3/tYv8ZO7xqER0mbYwhWnTQUYPksfVjdHBUZ4T4QRtQyyGDjiMg/FFGF30X0MXEqk81Lw=
+	t=1788962515; cv=none; b=rovU88BmfMuHE5RZKgObuP1Hw6isHwMlUfO434T0jWeehGBvaXJL0lL9a34NAyisdUeIjkHDO6lrMftf5CHhXBk7n7PNdRaWgn8Bh6QPPb6UxfO4PyO2oaSKAvMw4485DyUvYCPDgPWj21iuI3cTCXZ714cePM2VbsN4ao6iD7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962512; c=relaxed/simple;
-	bh=0j6v6Vq5YOXYfS9BD8pIF0/Ej1b06AQaOTicxR6f7CA=;
+	s=arc-20240116; t=1788962515; c=relaxed/simple;
+	bh=8b0UH91YZrRLcNbpA+vELLwmKuJ7gOL4t9gkAcwRECY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WClfhdOQhnJ1Ve+dCzxgAANyOrIvrwOeZzzHbe5By/aIQIHnwFudNmxELycPdp252jYhgXeRWW+yZ4npeAtcgFj1kgzkI5dlmEQm/l9N6jyZDYVE9G0ZfoJByCCqNCq9rQXh49BUdFWPCpUijFbjHQf5JfuwMPgc7Jd/AfZE8BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2gvpZ8p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Am/uAf7KnyshXyQLYeqb57e0CsAchG9adHAfPQPu208XycoFHijJGSoZblxuxDvtNHhojQcVDZClILIf0/JSuQE3HR8IsbfsizR5VRsV2Kqxt3Tbg4BwzQPhu8YtciwCO1378Mz1cKbY4dcCOXkcuUh6WUQqgKERyzOjSuVfJRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ds5YL0s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2gvpZ8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F2B1F00A3A;
-	Wed,  9 Sep 2026 14:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ds5YL0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE781F00A3A;
+	Wed,  9 Sep 2026 14:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962511;
-	bh=E24zzYTnEtC8ZXUDUQxj7yUXejzWVuXZrwv7mZiGF6E=;
+	s=korg; t=1788962514;
+	bh=qjz2fM0XELxB9aPBHSdOjPLSk2sukMmacYJcNjYFel0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h2gvpZ8ptKLSmUg3s916GVlL/Tkx6gxPMnIPmo4M5frzbXD539vChP5F6d2Pi/dLU
-	 Ffx7nuPsvYV+rKrgYBtkLSP3ovN7JvStUC4rpWKBVBFNsAHy6eUxQ2cGhf6YmVJUlP
-	 JHbOkwN5ypyt7qJC9B3Us8DhE392EFO7BkD9fhdo=
+	b=1Ds5YL0ssBb66mpWM1wW9RA9MBSW2MTvhvWfhG+pZM0CDJfQl9hgAuUzon3Aae0c6
+	 t7RUG77+PTSl9BTazt0hqRny+YJ5Bnmse4iSDBcydB26fvnMXQ+/7g25k/BNb7Lv1z
+	 n/insZL0Qr1BuOY2fuTWGAhKtwC4/nu+oEIKREiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Yao <yaoyuan@linux.alibaba.com>,
+	sashiko-bot@kernel.org,
 	Marc Zyngier <maz@kernel.org>,
+	Yuan Yao <yaoyuan@linux.alibaba.com>,
 	Oliver Upton <oupton@kernel.org>
-Subject: [PATCH 7.2 316/556] KVM: arm64: Correctly handle end of VA space TLBI invalidation
-Date: Wed,  9 Sep 2026 15:39:56 +0200
-Message-ID: <20260909134241.780566372@linuxfoundation.org>
+Subject: [PATCH 7.2 317/556] KVM: arm64: Handle VNCR TLB invalidation race with vcpu_put() VNCR unmapping
+Date: Wed,  9 Sep 2026 15:39:57 +0200
+Message-ID: <20260909134241.814060157@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,110 +54,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Zyngier <maz@kernel.org>
 
-commit 34af2c3e31f91a739dc175459fdbd99ed952b457 upstream.
+commit 38640bc32be3fcf9526d477155bc19d3f146231f upstream.
 
-Our TLB invalidation by VA code is based on comparing two ranges,
-one defined by the TLB, and one defined by the TLBI instruction.
+While VNCR TLB invalidation always occurs under the MMU lock,
+vcpu_put() doesn't, while it unmaps the VNCR page.
 
-Each range is defined by a start and a size. However, the way the
-comparison is done doesn't account for address rollover, as it
-compares an address with (base + size). This works nicely until
-this expression represent the last page/block in the TTBR1 VA space,
-as the result is a big fat 0. And a failed TLB invalidation.
+The problem is that the invalidation evaluates vncr_tlb::cpu to
+decide whether an unmapping needs to take place (cpu != -1) before
+performing it. On the other hand, this_cpu_reset_vncr_fixmap()
+unconditionally unmaps if L1_VNCR_MAPPED is set.
 
-Rewrite the comparison in a way that is immune to the address
-rollover (making the end address inclusive instead of exclusive),
-and move this into a common helper that is used by both VA and IPA
-invalidations, as suggested by Hyunwoo Kim (although the IPA version
-didn't suffer from this particular problem, obviously).
+These two obviously can race, with a TOCTOU pattern on the TLBI
+path, and a BUG_ON() on the vcpu_put() path. And the two can end-up
+calling vncr_fixmap(-1), with extra lethal effects.
 
-Fixes: 4ffa72ad8f37e ("KVM: arm64: nv: Add S1 TLB invalidation primitive for VNCR_EL2")
-Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
+Move the reset of vncr_tlb::cpu to -1 to a common function, and make
+this update atomic so that only a single thread can reset the field
+and perform the corresponding unmap. The vcpu_put() still need to
+unconditionally unmap the current VNCR to close another ugly race.
+
+Finally, the assignment of vncr_tlb::cpu is moved to be kept in sync
+with the actual mapping, similar to L1_VNCR_MAPPED being set.
+
+Fixes: 7270cc9157f47 ("KVM: arm64: nv: Handle VNCR_EL2 invalidation from MMU notifiers")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/r/20260801130237.0FD8F1F00ACA@smtp.kernel.org
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260806091026.620700-5-maz@kernel.org
+Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
+Link: https://patch.msgid.link/20260806091026.620700-6-maz@kernel.org
 Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/nested.c |   43 +++++++++++++++++++------------------------
- 1 file changed, 19 insertions(+), 24 deletions(-)
+ arch/arm64/kvm/nested.c |   42 ++++++++++++++++++++++++++++++++----------
+ 1 file changed, 32 insertions(+), 10 deletions(-)
 
 --- a/arch/arm64/kvm/nested.c
 +++ b/arch/arm64/kvm/nested.c
-@@ -1001,6 +1001,20 @@ static void invalidate_vncr(struct vncr_
- 		clear_fixmap(vncr_fixmap(vt->cpu));
+@@ -27,7 +27,7 @@ struct vncr_tlb {
+ 	bool			hpa_writable;
+ 
+ 	/* -1 when not mapped on a CPU */
+-	int			cpu;
++	atomic_t		cpu;
+ 
+ 	/*
+ 	 * true if the TLB is valid. Can only be changed with the
+@@ -895,16 +895,40 @@ void kvm_vcpu_load_hw_mmu(struct kvm_vcp
+ 	}
  }
  
-+static bool vncr_tlb_intersects(struct vncr_tlb *vt, u64 addr,
-+				u64 scope_start, u64 scope_size)
++/*
++ * Unmapping an L1 VNCR can happen concurrently without the mmu lock being
++ * effective (vcpu_put() vs TLBI handling). The atomic_xchg below ensures
++ * that only one CPU sets it to -1 while getting a valid CPU number back.
++ */
++static int unmap_l1_vncr(struct vncr_tlb *vt)
 +{
-+	u64 tlb_size, tlb_start, tlb_end, scope_end;
++	int cpu = atomic_xchg_relaxed(&vt->cpu, -1);
 +
-+	tlb_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift, vt->wr.level));
++	if (cpu != -1)
++		clear_fixmap(vncr_fixmap(cpu));
 +
-+	tlb_start = addr & ~(tlb_size - 1);
-+	tlb_end = tlb_start + tlb_size - 1;
-+	scope_end = scope_start + scope_size - 1;
-+
-+	return !(tlb_end < scope_start || tlb_start > scope_end);
++	return cpu;
 +}
 +
- /*
-  * VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions, and
-  * either can race against a vcpu not being onlined yet (no pseudo-TLB
-@@ -1023,19 +1037,9 @@ static void kvm_invalidate_vncr_ipa(stru
- 	if (!kvm_has_feat(kvm, ID_AA64MMFR4_EL1, NV_frac, NV2_ONLY))
+ static void this_cpu_reset_vncr_fixmap(struct kvm_vcpu *vcpu)
+ {
+ 	if (!host_data_test_flag(L1_VNCR_MAPPED))
  		return;
  
--	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
--		u64 ipa_start, ipa_end, ipa_size;
--
--		ipa_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift,
--							    vt->wr.level));
--		ipa_start = vt->wr.pa & ~(ipa_size - 1);
--		ipa_end = ipa_start + ipa_size;
--
--		if (ipa_end <= start || ipa_start >= end)
--			continue;
--
--		invalidate_vncr(vt);
--	}
-+	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm)
-+		if (vncr_tlb_intersects(vt, vt->wr.pa, start, end - start))
-+			invalidate_vncr(vt);
+-	BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
+ 	BUG_ON(is_hyp_ctxt(vcpu));
+ 
+-	clear_fixmap(vncr_fixmap(vcpu->arch.vncr_tlb->cpu));
+-	vcpu->arch.vncr_tlb->cpu = -1;
++	/*
++	 * Unconditionally unmap the local VNCR if we have lost the race
++	 * against a concurrent TLBI. Otherwise we could end-up running
++	 * another vcpu with VNCR still mapped if the TLBI thread is
++	 * preempted between the exchange and the clear_fixmap().
++	 *
++	 * Note that we do not care about the TLBI nuking the fixmap behind
++	 * the back of an running vcpu. This will only generate a fault and
++	 * possibly a retranslation.
++	 */
++	if (unmap_l1_vncr(vcpu->arch.vncr_tlb) == -1)
++		clear_fixmap(vncr_fixmap(smp_processor_id()));
+ 	host_data_clear_flag(L1_VNCR_MAPPED);
+ 	atomic_dec(&vcpu->kvm->arch.vncr_map_count);
+ }
+@@ -997,8 +1021,7 @@ u16 get_asid_by_regime(struct kvm_vcpu *
+ static void invalidate_vncr(struct vncr_tlb *vt)
+ {
+ 	vt->valid = false;
+-	if (vt->cpu != -1)
+-		clear_fixmap(vncr_fixmap(vt->cpu));
++	unmap_l1_vncr(vt);
  }
  
- struct s1e2_tlbi_scope {
-@@ -1061,28 +1065,19 @@ static void invalidate_vncr_va(struct kv
- 	lockdep_assert_held_write(&kvm->mmu_lock);
+ static bool vncr_tlb_intersects(struct vncr_tlb *vt, u64 addr,
+@@ -1454,7 +1477,7 @@ static int kvm_translate_vncr(struct kvm
+ 		vt->hpa = pfn << PAGE_SHIFT;
+ 		vt->hpa_writable = writable;
+ 		vt->valid = true;
+-		vt->cpu = -1;
++		atomic_set(&vt->cpu, -1);
  
- 	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
--		u64 va_start, va_end, va_size;
+ 		kvm_make_request(KVM_REQ_MAP_L1_VNCR_EL2, vcpu);
+ 		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw && vt->hpa_writable);
+@@ -1585,8 +1608,6 @@ static void kvm_map_l1_vncr(struct kvm_v
+ 	if (vt->wr.nG && get_asid_by_regime(vcpu, TR_EL20) != vt->wr.asid)
+ 		return;
+ 
+-	vt->cpu = smp_processor_id();
 -
--		va_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift,
--							   vt->wr.level));
--		va_start = vt->gva & ~(va_size - 1);
--		va_end = va_start + va_size;
--
- 		switch (scope->type) {
- 		case TLBI_ALL:
- 			break;
- 
- 		case TLBI_VA:
--			if (va_end <= scope->va ||
--			    va_start >= (scope->va + scope->size))
-+			if (!vncr_tlb_intersects(vt, vt->gva, scope->va, scope->size))
- 				continue;
- 			if (vt->wr.nG && vt->wr.asid != scope->asid)
- 				continue;
- 			break;
- 
- 		case TLBI_VAA:
--			if (va_end <= scope->va ||
--			    va_start >= (scope->va + scope->size))
-+			if (!vncr_tlb_intersects(vt, vt->gva, scope->va, scope->size))
- 				continue;
- 			break;
- 
+ 	if (vt->hpa_writable && vt->wr.pw && vt->wr.pr)
+ 		prot = PAGE_KERNEL;
+ 	else if (vt->wr.pr)
+@@ -1601,7 +1622,8 @@ static void kvm_map_l1_vncr(struct kvm_v
+ 	 * FIXME: WO doesn't work at all, need POE support in the kernel.
+ 	 */
+ 	if (pgprot_val(prot) != pgprot_val(PAGE_NONE)) {
+-		__set_fixmap(vncr_fixmap(vt->cpu), vt->hpa, prot);
++		atomic_set(&vt->cpu, smp_processor_id());
++		__set_fixmap(vncr_fixmap(atomic_read(&vt->cpu)), vt->hpa, prot);
+ 		host_data_set_flag(L1_VNCR_MAPPED);
+ 		atomic_inc(&vcpu->kvm->arch.vncr_map_count);
+ 	}
 
 
