@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19705678EE;
-	Wed,  9 Sep 2026 14:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F3353D0B8;
+	Wed,  9 Sep 2026 14:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962454; cv=none; b=HFq7CxzAxlJkkY6mlv+dabO32Qul5aFIH4lWfaE/9JbikKH8DIdZdVTXsQdfMuMmlY634gwH+M1h5/xL+HKsqyGOCd3xJ7KTqOBO0+fIiW648D87jKwu71jGoBSIpyjOtsFKii19Im9Jf2yfqBl51afvoj7ATmqdIToaw26wB5A=
+	t=1788962457; cv=none; b=Wf7S3MUtmsfM3KGK0NTtudLZJJPHvCeqwlWiiAI6aBHyI4aYj2APn6Tr0wN5qKfNF9Dmrh5yHjetVolTY7r+Cl/mXljL5fSq4Js4nQTze6CZ3ZKfY4n58A/EBStQRLD89WkNjXbcr7CjdJZZvX2PDmEkUH4WsHcZ+l5bOhR59aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962454; c=relaxed/simple;
-	bh=EyHy3/FGI3v2hPYxgTb+IpG/hjxET0mTOZDclHyoG18=;
+	s=arc-20240116; t=1788962457; c=relaxed/simple;
+	bh=mheZyn2picHt74my6d8wiE8hXAuP/EnNoIJdYMcVklU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPLkbNNXXQZhZQJevR7lXOsn1HPGhN+U9KQRcoxqgj4UoVVI1/BTP9dwSw0b8+8go0N+a31FC67m1yaHKqn0xFmFkA+riv7Ogc1yklLJU/ZX9KFKbC40wKjgGBa64K5WRhLWe22ZH/++lOS/TtQ98xxF9NJUS/f6wTEFyEXzMn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nf1wk6m6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K3Yc0J4zJm6h/ZBX9gblQOofcGDQ1VeorKvUw0+eZ2J8DYDbGUpRKW3gdz8/enghzev5q8sYveFOI30DUmaI41M//Nu+TF9pkICrP9GeEz7XlYJP9IGt2ig4tdllVzZ1Nvf4yg3LIdcAlIke8adsEn0rUznHOAkLjTgq5JFqv1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBA7ap2+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nf1wk6m6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B9D1F00A3A;
-	Wed,  9 Sep 2026 14:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBA7ap2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E2C1F00A3D;
+	Wed,  9 Sep 2026 14:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962453;
-	bh=24NVmIcUFo3gkbDR8G2FjXl6m5JKTVBUW/nI8qy4BEE=;
+	s=korg; t=1788962456;
+	bh=SdwhQpoLtMiQEAmb6yx5tm623hvi/isGijGvgToVJ1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nf1wk6m6t884F/GxthdMhS/jFPx9tHnZ1CxexSQ07lGzi8BYEVteEHuIHA/yMKydn
-	 EXHptYEZTCCAGJHzbR5gz+ivClTYcTGhQmPfRsR7P8pnL+EGTinysghQIrx0YkIcey
-	 3Ik+7OEu+gJiOdiTUw9Cy0GUUoascfkDvyfOO3Mk=
+	b=bBA7ap2+ZjflAufyJNFP9u6M6EB3/GeFAYUtfsi9ysS0/ALCk/HEwnCyq01ByZDw/
+	 ZjKBViu86FxsVJ6tExxfdlqEwuk/qyBSkWxsQfDtGO1UpUScRvXZGgla1THgDBpp85
+	 0E0eo0U1o3J0XuS8/yV3pH8MP3Ix9JXLBta7IBRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sean Christopherson <seanjc@google.com>,
 	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.2 294/556] KVM: nVMX: Ensure KVM_REQ_GET_NESTED_STATE_PAGES is cleared on VM-Exit
-Date: Wed,  9 Sep 2026 15:39:34 +0200
-Message-ID: <20260909134241.031247110@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>
+Subject: [PATCH 7.2 295/556] KVM: nVMX: Service local TLB flushes on failed nested VM-Enter
+Date: Wed,  9 Sep 2026 15:39:35 +0200
+Message-ID: <20260909134241.063483543@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,50 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 11722439fb206c88e6f31be54173efa9880b4ccb upstream.
+commit 05a0b701d1089fb57beeb8982f23c3bbafe0fa8b upstream.
 
-Always check and clear KVM_REQ_GET_NESTED_STATE_PAGES when emulating a
-nested VM-Exit to ensure the request is cleared, even when KVM was built
-with CONFIG_KVM_HYPERV=n, as KVM subtly relies on the "check" to clear
-the flag and thus avoid double-mapping the vmcs12 pages, e.g. if KVM
-manages to bail from VM-Enter without processing the request, and then
-emulates VMLAUNCH or VMRESUME.
+KVM services local TLB flushes on "full" nested VM-Exits (through
+__nested_vmx_vmexit()), but not if a nested VM-Enter fails (e.g. due to
+failed VMCS checks in nested_vmx_enter_non_root_mode()).
 
-Fixes: b4f69df0f65e ("KVM: x86: Make Hyper-V emulation optional")
+However, it is possible that KVM had queued TLB flushes that need to be
+performed, even if the nested VM-Enter was not successful. For example,
+if VPID is disabled for L2 (via nested_vmx_transition_tlb_flush(), or if
+via the MSR load lists, as the SDM says:
+
+  If any MSR is being loaded in such a way that would architecturally
+  require a TLB flush, the TLBs are updated so that, after VM entry, the
+  logical processor will not use any translations that were cached before
+  the transition.
+
+The SDM is unclear about when the TLB flush should occur, and whether or
+not a failed VM entry would flush the TLB, so it is safer to always
+do the TLB flush in this case.
+
+More concretely, KVM also updates the last VPID L1 used for L2 in
+nested_vmx_transition_tlb_flush() (i.e. last_vpid), even if the VM entry
+ultimately fails. With the current code, KVM could miss a TLB flush if
+L1 changes L2's VPID, then does a failed VM entry followed by a
+successful one, as the failed VM entry would update last_vpid but not
+actually flush the TLB. Servicing local TLB flushes on failed VM entries
+makes sure that the TLB is always flushed when last_vpid is updated.
+
+Fixes: 5c614b3583e7 ("KVM: nVMX: nested VPID emulation")
 Cc: stable@vger.kernel.org
-Reported-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260724004757.131420-2-seanjc@google.com
+Reported-by: Sashiko <sashiko-bot@kernel.org> # Internal review
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260722230128.1587363-1-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/kvm/vmx/nested.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/arch/x86/kvm/vmx/nested.c
 +++ b/arch/x86/kvm/vmx/nested.c
-@@ -5076,8 +5076,9 @@ void __nested_vmx_vmexit(struct kvm_vcpu
- 	/* trying to cancel vmlaunch/vmresume is a bug */
- 	kvm_warn_on_nested_run_pending(vcpu);
+@@ -3763,6 +3763,14 @@ enum nvmx_vmentry_status nested_vmx_ente
+ vmentry_fail_vmexit_guest_mode:
+ 	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING)
+ 		vcpu->arch.tsc_offset -= vmcs12->tsc_offset;
++
++	/*
++	 * Handle any TLB flush requests that were queued for L2 if KVM made it
++	 * far enough along to switch to L2 context.  Note, loading host state
++	 * will generate any flushes for L1 required by VM-Exit.
++	 */
++	kvm_service_local_tlb_flush_requests(vcpu);
++
+ 	leave_guest_mode(vcpu);
  
--#ifdef CONFIG_KVM_HYPERV
-+	/* Note, "checking" the request also clears the request. */
- 	if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
-+#ifdef CONFIG_KVM_HYPERV
- 		/*
- 		 * KVM_REQ_GET_NESTED_STATE_PAGES is also used to map
- 		 * Enlightened VMCS after migration and we still need to
-@@ -5085,8 +5086,8 @@ void __nested_vmx_vmexit(struct kvm_vcpu
- 		 * the first L2 run.
- 		 */
- 		(void)nested_get_evmcs_page(vcpu);
--	}
- #endif
-+	}
- 
- 	/* Service pending TLB flush requests for L2 before switching to L1. */
- 	kvm_service_local_tlb_flush_requests(vcpu);
+ vmentry_fail_vmexit:
 
 
