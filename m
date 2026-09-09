@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A49D29B200;
-	Wed,  9 Sep 2026 14:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F622F0661;
+	Wed,  9 Sep 2026 14:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962411; cv=none; b=ugptlPcZV8jCki7jPDyv9U87R+XvbXysoaN0EC+Dv20SeI9lsnnnPgdRU5m5NrFrY6VfdLy3kNnzYYB7Kuv72wt7wW6YgsO+GXxhr/pL/TX9kr4nGBHls5630OBoSOv9aaxJB69WgBztcwPcoMd2zSB2IoRTI0W3sQA4NV1ujd4=
+	t=1788962414; cv=none; b=o1/Y6Cc9W9LYYJR7yiS/LcHvao4EKvepI+DTkg/aIksSBiGuRXA8Z7Zjq9bIzfFUPA2LCi7fyLVEnQZ3gfYzZyLffFaynUREqAAWPXrhfPzPKxmqALTGs2sqJMlLNoLqb46Mb/xiEA+iZcOmhn/BhbC1H5ZOQXXuW76kC+EcHXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962411; c=relaxed/simple;
-	bh=MC3qwBSY4dV6izZDc2VFTlBoeXl2fvig90VZIA66PIo=;
+	s=arc-20240116; t=1788962414; c=relaxed/simple;
+	bh=eCE5U0La4/YPnMJJCMCLQstoYqFauFivrAsS++wkvsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ai2N1UBSUXAqpN+x34IaHwz/Xsqx/3tRZKV91yuMQQwwA51Im+HiANPihXOF4wB+4ELQHSASM914/cL8OzjJ8roKORdgfUHHSzpg5XhhaF5hRsDsOwCi7pjbiXoFBQr565Pjf0mYljlZKQ+ER00ylq7ixJBj/9lGyyrPe8sBzSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUE2IPVv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gOpRMoo6nN3i6QxRU7KLkctiCXwANYK0KH/nbWx//xhsUUCz2UV0nZ5u68yauJ39rI6Ldppa5v3KU+UJZehrW9fCXSH6+Ug1el5JvoPfGbkfo2X4PRtsDgtT2v1JVPSa2qUP7ikrpE4J4Aa/UTlaTUN9sZWOv7pDQGc8lK4PSQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7XqnILc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUE2IPVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03961F00A3A;
-	Wed,  9 Sep 2026 14:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7XqnILc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00D11F00A3A;
+	Wed,  9 Sep 2026 14:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962410;
-	bh=o/S/tZRbwuFz1n8cWk0Bwu+YQFj4INVQG1nklIJB+RM=;
+	s=korg; t=1788962413;
+	bh=rcQUJ7Ht4HN94krbTiedFNbPHyXwvg4GsenbMO0ph+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUE2IPVv6VjViDHJDcMhf5OYX0hj7EHFtK+W2olAxTn1P22/q5tDIyrihFcaKoWf0
-	 mWgr22h2bnFPKs8v6/AmqYDGyVpdfvu/RCk9MAEGiJpgyNosSg1GYVFJV7d7vYo9H/
-	 0njhvPQobUtYVhpMStZVz3BlEt2XKj8VA/IjOWLc=
+	b=u7XqnILcHlzgccnDuLHJOzU9C7168/M0pujNVjpzlcmht2TD7rGTBRT/IKYKHj8IC
+	 b/c0b+TeAq6cFijaXi3+OpLZiKLEbNesAhn0pEphMdIhzZjJwHRSid6tYEt/0QJvBu
+	 171KUhr3tU2ZI0MvUMNTEThBF0O7ZGZsfm7LxXvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 254/556] ASoC: tas2552: sort the register default table
-Date: Wed,  9 Sep 2026 15:38:54 +0200
-Message-ID: <20260909134239.431626188@linuxfoundation.org>
+	jonathan.cameron@oss.qualcomm.com,
+	Can Peng <pengcan@kylinos.cn>
+Subject: [PATCH 7.2 281/556] iio: pressure: mpl115: Fix runtime PM cleanup
+Date: Wed,  9 Sep 2026 15:39:21 +0200
+Message-ID: <20260909134240.539079620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,68 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-commit 1cc0cb62d306bb7c42e3d4649863df7c279ac850 upstream.
+commit 0b5e142ced4bcf20532da051934bd694d1bbd470 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+mpl115_probe() enables runtime PM when a shutdown GPIO is present and
+then returns the result of devm_iio_device_register(). If registration
+fails, runtime PM remains enabled and autosuspend remains selected.
 
-TAS2552_OUTPUT_DATA (0x07), TAS2552_PDM_CFG (0x11), TAS2552_PGA_GAIN
-(0x12) and TAS2552_BOOST_APT_CTRL (0x14) are listed before
-TAS2552_RESERVED_0D (0x0d), TAS2552_LIMIT_RATE_HYS (0x0e) and
-TAS2552_CFG_2 (0x02), which leaves 7 of the 21 entries unreachable.
-regcache_reg_needs_sync() then cannot compare them against their
-default and reports that a sync is needed, so they are written to the
-device on every regcache_sync() even when they were never touched.
+The same unmanaged runtime PM state is also left behind on driver
+unbind, as the IIO device registration is managed but the runtime PM
+setup is not.
 
-Sort the table by register address.
+Use devm_pm_runtime_enable() so runtime PM is disabled automatically on
+probe failure and driver unbind, and check pm_runtime_set_active() so
+setup errors are reported.
 
-Fixes: 5df7f71d5cdf ("ASoC: tas2552: Support TI TAS2552 Amplifier")
+Set the autosuspend parameters before enabling runtime PM. Once probe
+has completed, the driver core queues an idle request for the device, so
+an explicit pm_runtime_get_noresume()/pm_runtime_put() pair is not
+needed to start autosuspend.
+
+Fixes: 0c3a333524a3 ("iio: pressure: mpl115: Implementing low power mode by shutdown gpio")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805104149.9795-3-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: jonathan.cameron@oss.qualcomm.com
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2552.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/iio/pressure/mpl115.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/sound/soc/codecs/tas2552.c
-+++ b/sound/soc/codecs/tas2552.c
-@@ -31,25 +31,25 @@
+--- a/drivers/iio/pressure/mpl115.c
++++ b/drivers/iio/pressure/mpl115.c
+@@ -203,9 +203,9 @@ int mpl115_probe(struct device *dev, con
  
- static const struct reg_default tas2552_reg_defs[] = {
- 	{TAS2552_CFG_1, 0x22},
-+	{TAS2552_CFG_2, 0xef},
- 	{TAS2552_CFG_3, 0x80},
- 	{TAS2552_DOUT, 0x00},
--	{TAS2552_OUTPUT_DATA, 0xc0},
--	{TAS2552_PDM_CFG, 0x01},
--	{TAS2552_PGA_GAIN, 0x00},
--	{TAS2552_BOOST_APT_CTRL, 0x0f},
--	{TAS2552_RESERVED_0D, 0xbe},
--	{TAS2552_LIMIT_RATE_HYS, 0x08},
--	{TAS2552_CFG_2, 0xef},
- 	{TAS2552_SER_CTRL_1, 0x00},
- 	{TAS2552_SER_CTRL_2, 0x00},
-+	{TAS2552_OUTPUT_DATA, 0xc0},
- 	{TAS2552_PLL_CTRL_1, 0x10},
- 	{TAS2552_PLL_CTRL_2, 0x00},
- 	{TAS2552_PLL_CTRL_3, 0x00},
- 	{TAS2552_BTIP, 0x8f},
- 	{TAS2552_BTS_CTRL, 0x80},
-+	{TAS2552_RESERVED_0D, 0xbe},
-+	{TAS2552_LIMIT_RATE_HYS, 0x08},
- 	{TAS2552_LIMIT_RELEASE, 0x04},
- 	{TAS2552_LIMIT_INT_COUNT, 0x00},
-+	{TAS2552_PDM_CFG, 0x01},
-+	{TAS2552_PGA_GAIN, 0x00},
- 	{TAS2552_EDGE_RATE_CTRL, 0x40},
-+	{TAS2552_BOOST_APT_CTRL, 0x0f},
- 	{TAS2552_VBAT_DATA, 0x00},
- };
+ 	if (data->shutdown) {
+ 		/* Enable runtime PM */
+-		pm_runtime_get_noresume(dev);
+-		pm_runtime_set_active(dev);
+-		pm_runtime_enable(dev);
++		ret = pm_runtime_set_active(dev);
++		if (ret)
++			return ret;
  
+ 		/*
+ 		 * As the device takes 3 ms to come up with a fresh
+@@ -215,7 +215,10 @@ int mpl115_probe(struct device *dev, con
+ 		 */
+ 		pm_runtime_set_autosuspend_delay(dev, 2000);
+ 		pm_runtime_use_autosuspend(dev);
+-		pm_runtime_put(dev);
++
++		ret = devm_pm_runtime_enable(dev);
++		if (ret)
++			return ret;
+ 
+ 		dev_dbg(dev, "low-power mode enabled");
+ 	} else
 
 
