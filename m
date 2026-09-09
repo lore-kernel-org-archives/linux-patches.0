@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E2E2BE7BA;
-	Wed,  9 Sep 2026 13:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75374563299;
+	Wed,  9 Sep 2026 13:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961945; cv=none; b=D0oDY0pulZMaxFONtfwhYUK6oLCELtGzrfZB6k3CZ/cwIyeClmLwqBjAalwb2xrtmmNEJo0tF5hvQqK3ZkSglzA9iUhtXa6q7xgp/QmIvrM9UEBDDd3S6xBDcQ4CdkPlzUcvDY0AbRXMwLi+ppQOwAIOb+Lw3a3I9+xHB6aWniM=
+	t=1788961947; cv=none; b=dXgx+4Ui3KAnvcWvEoyR3sButZdHgGb6AA4m0tvek6VPbZyuxF79Mf59UCnGR9ThGAnM3ueGajJ4nbjYPWplBelN91/hMImIoQj7LF5hUtUHUpBJZ9GFEhLU1d4BwljTNzqbTUMGarHkiO9VScOhvfuUAEKrFl+rWRKPB4gP8y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961945; c=relaxed/simple;
-	bh=S0fv/txc0sgUFYyocYlueBGuCKLGUtK8PRmGd66PsqE=;
+	s=arc-20240116; t=1788961947; c=relaxed/simple;
+	bh=7Owbne78Yu3lwzN5j3QRVutUCW9Pn5U7ldyL68Cyw00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3eyEOVSqjmOg9WEmYIbor38k57qM9+sbae6fKpZRMFOn/DHLlSe+vCaP5OMbziu9qyjgD5zONHU6MzvgAK6NPAzkhzM/0/ZXdtDUD3B4YiTzQc5uo9M8SAuls8milVKihXWCTfReSNh1hBCT9YmdKuQjz4XUDceAso8T0wge3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMKUpPUU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kCeaMAj7Vn/GE+51I1aezJbfutpLG/4dDyYJOOjfP9GRUhL7KW0ju2hQcyZZoPUzEaJ6hE8t8W0Dd51Q9rj1zOGEGvGZ0yqkq6K+F2hK9oOZkCILaNsqZhv9VDnCEsHoXBYzG+iY8m6GEcOCp3KNxJuFbwGb97jiaqFXgR7PC+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uoErHX9i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMKUpPUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CD21F00A3A;
-	Wed,  9 Sep 2026 13:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uoErHX9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE931F00A3A;
+	Wed,  9 Sep 2026 13:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961943;
-	bh=+GTIfO9bN36RldsqsrBdVrMTOLJ15gS3o/zL/bCwE94=;
+	s=korg; t=1788961946;
+	bh=u7W5ShmEsyFlzWxfbsnHeuFgnwDR9KbWnsW1oSKZFoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NMKUpPUU0l0hwmZGxpTVmiLkE8PUjYTR0ACn7brs/ISL/uq+2lA0BTzAzt34QL78r
-	 ByomIekVHFFIvxTUMBQyo+vZpZWP+LOmQhfCWFV8tIQKr8BY8dyNKL4XDr7bwJ9jwr
-	 eTWWChK/YJSVbu1juVRAJ9mbRd/Prmxbw+ovKraU=
+	b=uoErHX9iGEzGTbhvnMhy4e2KX9VGZD17GbNgFGkGAd+0Cf1HLzpAkUPo6Zfm3tXrI
+	 gpVL5k3N0aZ2Y+9c/21R4iZbK+gKXBtcPMV0tzz7sPUAnvLLB7kJW0i964A5TWrOZO
+	 CJicBEKoZZyNTKvg649TK8cRXRKj8miJ6pobqlyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Zenghui Yu <zenghui.yu@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 082/556] samples/damon/wsse: stop and free damon ctx when damon_call() fails
-Date: Wed,  9 Sep 2026 15:36:02 +0200
-Message-ID: <20260909134233.393287961@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Subject: [PATCH 7.2 118/556] bpf: Fix infinite loop in pcpu_freelist push with one possible CPU
+Date: Wed,  9 Sep 2026 15:36:38 +0200
+Message-ID: <20260909134234.619577249@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,60 +50,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Hui Su <sh_def@163.com>
 
-commit a2c6fa6c23ad87c61e1379b05dc05cf5fed4bf8d upstream.
+commit efebf6496685c93150df5bb0794363ae70c5f58a upstream.
 
-damon_sample_wsse_start() calls damon_call() right after damon_start() is
-succeeded.  The kdamond that has started by the damon_start() could be
-terminated by itself before or in the middle of the damon_call()
-execution.  There could be multiple reasons for such a stop including
-monitoring target process termination and kdamond_fn() internal memory
-allocation failures.  In the case, damon_call() will fail and return an
-error without cleaning up the DAMON context object.  The
-damon_sample_wsse_start() caller assumes it would clean up the object,
-though.  When the user requests to start DAMON again,
-damon_sample_wsse_start() is called again, allocates a new DAMON context
-object and overwrites the pointer for the previous object.  As a result,
-the previous context object is leaked.
+__pcpu_freelist_push() can loop forever when only one CPU is possible
+and an NMI re-enters pcpu_freelist_push() while the interrupted context
+holds that CPU's freelist lock.
 
-Safely stop the kdamond and deallocate the context object when the failure
-is returned.  Note that the kdamond should be stopped first, because
-damon_call() failure means not complete termination of the kdamond but
-only the fact that the termination process has started.
+After the current-CPU fast path fails, the fallback loop walks
+cpu_possible_mask while skipping the current CPU. With CONFIG_SMP=n, or
+when an SMP kernel is limited to one possible CPU with nr_cpus=1 or
+possible_cpus=1, there are no other possible CPUs to examine. The loop
+therefore makes no lock acquisition attempt and can never make progress.
 
-The user impact shouldn't be that significant because the race is not easy
-to happen, and only up to one DAMON context object can be leaked per race.
+The following stack was observed on a UP system:
 
-The issue was discovered [1] by Sashiko.
+  NMI context:
+    pcpu_freelist_push
+    free_htab_elem
+    htab_map_delete_elem
+    [perf-event BPF program]
+    __perf_event_overflow
+    perf_event_nmi_handler
+    exc_nmi
 
-Link: https://lore.kernel.org/20260628215447.96166-6-sj@kernel.org
-Link: https://lore.kernel.org/20260610034828.4632-1-sj@kernel.org [1]
-Fixes: cc9c1b8c205b ("samples/damon/wsse: use damon_call() repeat mode instead of damon_callback")
-Signed-off-by: SJ Park <sj@kernel.org>
-Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: <stable@vger.kernel.org> # 6.17.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  Interrupted context:
+    __pcpu_freelist_push
+    pcpu_freelist_push
+    free_htab_elem
+    htab_map_delete_elem
+    [raw_tp/sys_enter BPF program]
+    __bpf_trace_sys_enter
+    do_syscall_64
+
+raw_res_spin_lock() detects the same-CPU recursive acquisition and
+returns -EDEADLK, but the subsequent fallback loop has no candidate head
+on a system with one possible CPU.
+
+Restore the extra fallback head that existed before the rqspinlock
+conversion. Keep the current-CPU fast path, then try the other possible
+CPUs and finally the extra head. The additional head lets a push, which
+cannot fail without losing a preallocated element, make progress when the
+only per-CPU head is held by the interrupted context.
+
+Also check the extra head from the pop path so that nodes placed there
+can be reused.
+
+Fixes: f2ac0e5d1c4d ("bpf: Convert percpu_freelist.c to rqspinlock")
+Signed-off-by: Hui Su <sh_def@163.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/bpf/20260806175600.1993595-1-sh_def@163.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/damon/wsse.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/bpf/percpu_freelist.c |   35 +++++++++++++++++++++++++++--------
+ kernel/bpf/percpu_freelist.h |    1 +
+ 2 files changed, 28 insertions(+), 8 deletions(-)
 
---- a/samples/damon/wsse.c
-+++ b/samples/damon/wsse.c
-@@ -92,7 +92,12 @@ static int damon_sample_wsse_start(void)
- 		return err;
+--- a/kernel/bpf/percpu_freelist.c
++++ b/kernel/bpf/percpu_freelist.c
+@@ -17,6 +17,8 @@ int pcpu_freelist_init(struct pcpu_freel
+ 		raw_res_spin_lock_init(&head->lock);
+ 		head->first = NULL;
  	}
- 	repeat_call_control.data = ctx;
--	return damon_call(ctx, &repeat_call_control);
-+	err = damon_call(ctx, &repeat_call_control);
-+	if (err) {
-+		damon_stop(&ctx, 1);
-+		damon_destroy_ctx(ctx);
-+	}
-+	return err;
++	raw_res_spin_lock_init(&s->extralist.lock);
++	s->extralist.first = NULL;
+ 	return 0;
  }
  
- static void damon_sample_wsse_stop(void)
+@@ -46,22 +48,28 @@ void __pcpu_freelist_push(struct pcpu_fr
+ 			struct pcpu_freelist_node *node)
+ {
+ 	struct pcpu_freelist_head *head;
+-	int cpu;
++	int cpu, this_cpu;
+ 
+ 	if (___pcpu_freelist_push(this_cpu_ptr(s->freelist), node))
+ 		return;
+ 
++	this_cpu = raw_smp_processor_id();
+ 	while (true) {
+-		for_each_cpu_wrap(cpu, cpu_possible_mask, raw_smp_processor_id()) {
+-			if (cpu == raw_smp_processor_id())
++		for_each_cpu_wrap(cpu, cpu_possible_mask, this_cpu) {
++			if (cpu == this_cpu)
+ 				continue;
++
+ 			head = per_cpu_ptr(s->freelist, cpu);
+-			if (raw_res_spin_lock(&head->lock))
+-				continue;
+-			pcpu_freelist_push_node(head, node);
+-			raw_res_spin_unlock(&head->lock);
+-			return;
++			if (___pcpu_freelist_push(head, node))
++				return;
+ 		}
++
++		/*
++		 * Push cannot fail. Use the extra list when none of the
++		 * per-CPU freelists can accept the node.
++		 */
++		if (___pcpu_freelist_push(&s->extralist, node))
++			return;
+ 	}
+ }
+ 
+@@ -117,6 +125,17 @@ static struct pcpu_freelist_node *___pcp
+ 		}
+ 		raw_res_spin_unlock(&head->lock);
+ 	}
++
++	/* Per-CPU lists are empty or unavailable, try the extra list. */
++	head = &s->extralist;
++	if (!READ_ONCE(head->first))
++		return NULL;
++	if (raw_res_spin_lock(&head->lock))
++		return NULL;
++	node = head->first;
++	if (node)
++		WRITE_ONCE(head->first, node->next);
++	raw_res_spin_unlock(&head->lock);
+ 	return node;
+ }
+ 
+--- a/kernel/bpf/percpu_freelist.h
++++ b/kernel/bpf/percpu_freelist.h
+@@ -14,6 +14,7 @@ struct pcpu_freelist_head {
+ 
+ struct pcpu_freelist {
+ 	struct pcpu_freelist_head __percpu *freelist;
++	struct pcpu_freelist_head extralist;
+ };
+ 
+ struct pcpu_freelist_node {
 
 
