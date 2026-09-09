@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5557B569F2A;
-	Wed,  9 Sep 2026 14:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA8582B8D;
+	Wed,  9 Sep 2026 14:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963651; cv=none; b=VD7i/PQtCTApkbupo7erRvdLk2sHjPyE4IEDjqmQ7DVfaFnGlYn+o/ukQ06NFZP751fncCcaCj247lMu3AqShuKE7u5hvt+LD3CXJdr+jRfUsn8glPv5AwqDjMWriYcMu19gDf2DH3tRVy3qRel1K+iSF7s7Da0DML23GIZC2hM=
+	t=1788963654; cv=none; b=sPP6xqyXAuSWrdbln2HCoIukDmQhnMQFsBZg5NaHPbgW6CHmX9GrNSPj1GRvO13IYWBxJrZ62OY/XmL/X2Hnw02JSpMNer0K1S1WzSFXviRFP2x9tFXNe9T+cBYsq8IJ36Kq1fZ87NI6Bn1HhPeAX4hZ72ncDgpYdwwDf5UZtXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963651; c=relaxed/simple;
-	bh=OPWb/N8Ord46KagulyiqPlbyAW6INSL3crXlIkXzsj0=;
+	s=arc-20240116; t=1788963654; c=relaxed/simple;
+	bh=XO4pZvlkel8tKrrawBaAhyIdhqg9Pq3bza2HV1rCCbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKTmCPL8kc/yL+OnFMzfEuA3C9bJKizrsR5mvFwOvU4L7zj+CZRS+12OQLH8vRGtNlH9CLaV/awDYZ25gGJF3qWYj2RaNpzuKOY9yTBFBWMHFdAeWhDHO+Z3QI4P5jnjjl/9kRux/ANyEFYQIAnmPzU/oIey9gPcO4ys3RxUhcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXnh3VmS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gyk1J8EtvD0VNIcxHO1i0TKLV2pWrRrd2ExddWrw4P8EHV04e2T4ao0egEEerOOM4VG5WBhZhPKvkLoRr8wWYteCakJK79LLmpeQaVKg24IUW6lKrDHF3jlegaJ8WyB9Sb1rjy8Icxlc4MUoI6n1zvrKqQ0XfEIKoV/Ii4qPrGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skaRfYLA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXnh3VmS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4B01F00A3A;
-	Wed,  9 Sep 2026 14:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skaRfYLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986771F00A3A;
+	Wed,  9 Sep 2026 14:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963650;
-	bh=57qfR/eKZdnjqkahYbeayOQjFodxOJla6fZUoWhXYvo=;
+	s=korg; t=1788963653;
+	bh=ASTxWF4qsjMfsuGqm6PZ7UPqMs3WZdpAzxFktpt8LQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pXnh3VmSiqHpWfpvFzFAo/f+P18iEqe3Wz0GY8FbV6zvgYf+FeeFhygCtHktelfd2
-	 2lPf7xckkKg6oZt919NRBauBX0ASbeDHUrrA58TwvKskL1QOWTfrOdkwLOW1UEvMpa
-	 zwUvbwtr2QlXU5ZECZMTLqqF0RAagcphY1Vgk1E4=
+	b=skaRfYLABit81DzeF2J7uegCfxwqvI7jIVrwG0uG02OKO0vxu+HG+/uYFo7QGtZy7
+	 aszMX7oWpyVVPwddGsb8Mhfomr2ukdOF2mrXEbSfT26BTBmCvKvIXrOplLC4hfJilO
+	 hkEct5TdHSvBTxp6hlcpasXQlvpDmVJagDFz9IF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko.stuebner@cherry.de>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.18 151/583] clk: rockchip: rk3588: Dont change PLL rates when setting dclk_vop2_src
-Date: Wed,  9 Sep 2026 15:37:16 +0200
-Message-ID: <20260909134243.412608945@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.18 152/583] clk: qcom: gcc-mdm9607: Drop incorrect apss_tcu_clk_src
+Date: Wed,  9 Sep 2026 15:37:17 +0200
+Message-ID: <20260909134243.459317400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,52 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko.stuebner@cherry.de>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-commit 13b10571cc353448275365ede1a5396d20dfe839 upstream.
+commit 38d06956f60675f906dc3f5b70b3b52103b86a7d upstream.
 
-dclk_vop2_src currently has the CLK_SET_RATE_PARENT flag set, which is
-very different from dclk_vop0_src or dclk_vop1_src, which don't have it.
+This clock does not exist on the specified address on MDM9607.
+Reading/writing the registers always results in 0 or crashes. The math in
+the frequency table is also broken. GPLL2 on MDM9607 runs at 480 MHz, so:
 
-With this flag in dclk_vop2_src, actually setting the clock then results
-in a lot of other peripherals breaking, because setting the rate results
-in the PLL source getting changed:
+ - F(155000000, P_GPLL2, 6, 0, 0), // 480 MHz/6 = 80 MHz, not 155 MHz
+ - F(310000000, P_GPLL2, 3, 0, 0), // 480 MHz/3 = 160 MHz, not 310 MHz
 
-[   14.898718] clk_core_set_rate_nolock: setting rate for dclk_vop2 to 152840000
-[   15.155017] clk_change_rate: setting rate for pll_gpll to 1680000000
-[ clk adjusting every gpll user ]
+Presumably, this definition was mistakenly copied as-is from gcc-msm8916
+(which uses 930 MHz for GPLL2). There are no branch consumers of this root
+clock inside gcc-mdm9607 (notably, gcc_apss_tcu_clk has bimc_ddr_clk_src as
+parent instead of this clock), so we can just drop it.
 
-This includes possibly the other vops, i2s, spdif and even the uarts.
-Among other possible things, this breaks the uart console on a board
-I use. Sometimes it recovers later on, but there will be a big block
-of garbled output for a while at least.
+It seems like this clock does exist on this SoC on a different address, but
+since there is no user and reference code for it, it is still better to
+drop it.
 
-Shared PLLs should not be changed by individual users, so drop this flag
-from dclk_vop2_src.
-
-Fixes: f1c506d152ff ("clk: rockchip: add clock controller for the RK3588")
 Cc: stable@vger.kernel.org
-Tested-by: Quentin Schulz <quentin.schulz@cherry.de> # RK3588 Tiger w/ DP
-Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
-Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Tested-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://patch.msgid.link/20260304121426.1184680-2-heiko@sntech.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-6-745565101869@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/rockchip/clk-rk3588.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-mdm9607.c |   35 -----------------------------------
+ 1 file changed, 35 deletions(-)
 
---- a/drivers/clk/rockchip/clk-rk3588.c
-+++ b/drivers/clk/rockchip/clk-rk3588.c
-@@ -2094,7 +2094,7 @@ static struct rockchip_clk_branch rk3588
- 	COMPOSITE(DCLK_VOP1_SRC, "dclk_vop1_src", gpll_cpll_v0pll_aupll_p, 0,
- 			RK3588_CLKSEL_CON(111), 14, 2, MFLAGS, 9, 5, DFLAGS,
- 			RK3588_CLKGATE_CON(52), 11, GFLAGS),
--	COMPOSITE(DCLK_VOP2_SRC, "dclk_vop2_src", gpll_cpll_v0pll_aupll_p, CLK_SET_RATE_PARENT | CLK_SET_RATE_NO_REPARENT,
-+	COMPOSITE(DCLK_VOP2_SRC, "dclk_vop2_src", gpll_cpll_v0pll_aupll_p, CLK_SET_RATE_NO_REPARENT,
- 			RK3588_CLKSEL_CON(112), 5, 2, MFLAGS, 0, 5, DFLAGS,
- 			RK3588_CLKGATE_CON(52), 12, GFLAGS),
- 	COMPOSITE_NODIV(DCLK_VOP0, "dclk_vop0", dclk_vop0_p,
+--- a/drivers/clk/qcom/gcc-mdm9607.c
++++ b/drivers/clk/qcom/gcc-mdm9607.c
+@@ -158,20 +158,6 @@ static const struct clk_parent_data gcc_
+ 	{ .hw = &gpll2.clkr.hw },
+ };
+ 
+-static const struct parent_map gcc_xo_gpll0_gpll1_gpll2_map[] = {
+-	{ P_XO, 0 },
+-	{ P_GPLL0, 1 },
+-	{ P_GPLL1, 2 },
+-	{ P_GPLL2, 3 },
+-};
+-
+-static const struct clk_parent_data gcc_xo_gpll0_gpll1_gpll2[] = {
+-	{ .fw_name = "xo" },
+-	{ .hw = &gpll0.clkr.hw },
+-	{ .hw = &gpll1_vote.hw },
+-	{ .hw = &gpll2.clkr.hw },
+-};
+-
+ static const struct freq_tbl ftbl_apss_ahb_clk[] = {
+ 	F(19200000, P_XO, 1, 0, 0),
+ 	F(50000000, P_GPLL0, 16, 0, 0),
+@@ -674,26 +660,6 @@ static struct clk_rcg2 sdcc2_apps_clk_sr
+ 	},
+ };
+ 
+-static const struct freq_tbl ftbl_gcc_apss_tcu_clk[] = {
+-	F(155000000, P_GPLL2, 6, 0, 0),
+-	F(310000000, P_GPLL2, 3, 0, 0),
+-	F(400000000, P_GPLL0, 2, 0, 0),
+-	{ }
+-};
+-
+-static struct clk_rcg2 apss_tcu_clk_src = {
+-	.cmd_rcgr = 0x1207c,
+-	.hid_width = 5,
+-	.parent_map = gcc_xo_gpll0_gpll1_gpll2_map,
+-	.freq_tbl = ftbl_gcc_apss_tcu_clk,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "apss_tcu_clk_src",
+-		.parent_data = gcc_xo_gpll0_gpll1_gpll2,
+-		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
+-	},
+-};
+-
+ static const struct freq_tbl ftbl_gcc_usb_hs_system_clk[] = {
+ 	F(19200000, P_XO, 1, 0, 0),
+ 	F(57140000, P_GPLL0, 14, 0, 0),
+@@ -1511,7 +1477,6 @@ static struct clk_regmap *gcc_mdm9607_cl
+ 	[PDM2_CLK_SRC] = &pdm2_clk_src.clkr,
+ 	[SDCC1_APPS_CLK_SRC] = &sdcc1_apps_clk_src.clkr,
+ 	[SDCC2_APPS_CLK_SRC] = &sdcc2_apps_clk_src.clkr,
+-	[APSS_TCU_CLK_SRC] = &apss_tcu_clk_src.clkr,
+ 	[USB_HS_SYSTEM_CLK_SRC] = &usb_hs_system_clk_src.clkr,
+ 	[GCC_BLSP1_AHB_CLK] = &gcc_blsp1_ahb_clk.clkr,
+ 	[GCC_BLSP1_SLEEP_CLK] = &gcc_blsp1_sleep_clk.clkr,
 
 
