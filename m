@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C8595748;
-	Wed,  9 Sep 2026 14:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AB8595749;
+	Wed,  9 Sep 2026 14:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963568; cv=none; b=C2xZfaaVPMKZ38mvsqK+TAUR+csibF9v2QixBG7iqyLXlFaGQtW1cL7tw3WR9yoBG97fKyIzdEn4lX3n0x95wMmgDOSGUKk0ReVT1Y5McbQnZpn9Vmet1+Co+34bwerd9oVIcoojjgGg4d8BBHVvaa8Ky5DAiMfx93MT3YVZ2/o=
+	t=1788963570; cv=none; b=cCj656sHGl1CTS4c5w2UvWTFyEijB0u91GSwbzT4GPSPX+0ZodupYts7tmpArFPpmc35F1EAmU4jqJYHRB2EiGXUNV2wZ6A0k5xEOMgV5qeB/XfSI0DKqihX3eoGKjyJ4SUTI2sNH7K2TIncj5N+76xYmU9SCFME8t2IQBotxR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963568; c=relaxed/simple;
-	bh=I5WIa43DNR5T1bpe6j96ZB79HfVqsMgo2gq2bHmw67s=;
+	s=arc-20240116; t=1788963570; c=relaxed/simple;
+	bh=Di/Ebab8eYKvavUAV2WL/esZ+erDeFX2DfkPR6qA9ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cAdPtJ/XwhIZaOWtry6tq2KkaPZzfVGSoris7vWuw03oJkDVN4Ll/h87SO7Bkmt8nHseK9Me/4K8HHr2UTUmlw+Lq0Ciu0xlhNAbllASoL3i/mIUrUtnXD86kj25IyGUVsxDyfFHfy9JLQuZNA5TkHQHXLgWQF8FLtaIeB8gi8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBiHji7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebazvJT4vq5vGm9vRI1PTwx/Cm1VcptHCbkC86HKNG9K2dHAFkzwALsjdF8Q9BmnuEikS4DTB6UTVAkSMmRVF7oA9R7lLKu2MmAbXS0zSIiiBR9krN4XIzCCduFE4pl0J1fDQfythewStoKQq4FipRoSU1IFosOH1YeNvRUgY7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVoyvpaI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBiHji7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10801F00A3A;
-	Wed,  9 Sep 2026 14:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVoyvpaI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5551F00A3A;
+	Wed,  9 Sep 2026 14:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963566;
-	bh=qdc4j7+YAyQmcOEOk51BcgkqBT+Mh+i+IcP2mCSyd0o=;
+	s=korg; t=1788963569;
+	bh=WLp9YcQGHcgO6q8XmKBQ61FTGXb1B2D86xRN9jdq8Dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eBiHji7HIetbrYt76Wl1/KBNJhIPEHWsjSuhcAc+WYkZnhRFZEbRju1wAakB/rQZk
-	 yN3OAKrpI6iQQiRpkCxwMeHi5jEqyrim1u4dnzzppVF+bpdRH63ldrOh4SEsvvNmq3
-	 BGz0ly/b0Ffg5Q9qoYSOCQHvMwhfMdr6x/O9PP8c=
+	b=wVoyvpaIjiXCLLsJDD5VXmg+czr5j07cDUrhNlhN7c/fvlUD9kasFlSk3zjTBPd/i
+	 nRlrHTjo8VHZoe5eeNOJm+QlPaBcYrDJorpLo1GFl0PM8IYlaGaqMMSqx4aEn0AnJj
+	 q72rozaiixItvMrkxlXKkl/qhb/5kVgewcDr6gr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Ulf Hansson <ulf.hansson@oss.qualcomm.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 075/583] cpuidle: psci: Fix support for probe deferral by dropping the faux device
-Date: Wed,  9 Sep 2026 15:36:00 +0200
-Message-ID: <20260909134240.685115374@linuxfoundation.org>
+	Narek Jilavyan <njilav@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 117/583] mm/hugetlb_cgroup: call page_counter_set_max() outside VM_BUG_ON()
+Date: Wed,  9 Sep 2026 15:36:42 +0200
+Message-ID: <20260909134242.182387314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,106 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
+From: Narek Jilavyan <njilav@gmail.com>
 
-commit 0606f2114e2dc88fe293858fd991cda2688b8c3a upstream.
+commit eedc8474d469a2e88f4dc61f8cfe05c147478b43 upstream.
 
-At the conversion to the faux driver/device we broke the support for probe
-deferral. In hindsight, the move to the faux device seems questionable, as
-it simply makes the code more complicated and for no good reason.
+hugetlb_cgroup_css_alloc() rounds the counter limit down to a multiple of
+the huge page size and then applies it inside an assertion:
 
-To fix the support for the probe deferral let's therefore restore the old
-code and drop the faux device.
+	VM_BUG_ON(page_counter_set_max(fault, limit));
+	VM_BUG_ON(page_counter_set_max(rsvd, limit));
 
-Fixes: af5376a77e87 ("cpuidle: psci: Transition to the faux device interface")
-Fixes: 5836ebeb4a2b ("cpuidle: psci: Avoid initializing faux device if no DT idle states are present")
-Fixes: 39cdf87a97fd ("cpuidle: psci: Fix uninitialized variable in dt_idle_state_present()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+With CONFIG_DEBUG_VM=n, VM_BUG_ON(cond) is BUILD_BUG_ON_INVALID(cond),
+i.e.  ((void)(sizeof((__force long)(cond)))), whose operand is never
+evaluated.  page_counter_set_max() is not a predicate - it performs
+xchg(&counter->max, nr_pages) - so on every non-debug kernel the limit is
+never applied and the counters keep page_counter_init()'s
+PAGE_COUNTER_MAX.
+
+That is user-visible, because hugetlb_cgroup_read_u64_max() recomputes the
+same rounded value and uses equality as its "unlimited" sentinel.
+PAGE_COUNTER_MAX is LONG_MAX / PAGE_SIZE = 2251799813685247, which is odd,
+so round_down() really does change it and the two sides disagree.  With
+CONFIG_DEBUG_VM=n:
+
+	$ cat /sys/fs/cgroup/t/hugetlb.2MB.max
+	9223372036854771712
+
+and with this patch:
+
+	$ cat /sys/fs/cgroup/t/hugetlb.2MB.max
+	max
+
+A debug option should not change cgroup output.
+
+Call the function, then assert the result, as v6.12 did.  Use
+VM_WARN_ON_ONCE() rather than restoring VM_BUG_ON(): the two are identical
+under CONFIG_DEBUG_VM=n, and checkpatch asks that new code not use BUG()
+variants.
+
+Link: https://lore.kernel.org/20260817103433.191266-1-njilav@gmail.com
+Fixes: 0e2759afcaf9 ("page_counter: track failcnt only for legacy cgroups")
+Signed-off-by: Narek Jilavyan <njilav@gmail.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-psci.c |   42 +++++++++++++++--------------------------
- 1 file changed, 16 insertions(+), 26 deletions(-)
+ mm/hugetlb_cgroup.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/cpuidle/cpuidle-psci.c
-+++ b/drivers/cpuidle/cpuidle-psci.c
-@@ -16,7 +16,7 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/device/faux.h>
-+#include <linux/platform_device.h>
- #include <linux/psci.h>
- #include <linux/pm_domain.h>
- #include <linux/pm_runtime.h>
-@@ -424,14 +424,14 @@ deinit:
-  * to register cpuidle driver then rollback to cancel all CPUs
-  * registration.
-  */
--static int psci_cpuidle_probe(struct faux_device *fdev)
-+static int psci_cpuidle_probe(struct platform_device *pdev)
- {
- 	int cpu, ret;
- 	struct cpuidle_driver *drv;
- 	struct cpuidle_device *dev;
+--- a/mm/hugetlb_cgroup.c
++++ b/mm/hugetlb_cgroup.c
+@@ -104,6 +104,7 @@ static void hugetlb_cgroup_init(struct h
+ 		struct page_counter *fault, *fault_parent = NULL;
+ 		struct page_counter *rsvd, *rsvd_parent = NULL;
+ 		unsigned long limit;
++		int ret;
  
- 	for_each_present_cpu(cpu) {
--		ret = psci_idle_init_cpu(&fdev->dev, cpu);
-+		ret = psci_idle_init_cpu(&pdev->dev, cpu);
- 		if (ret)
- 			goto out_fail;
+ 		if (parent_h_cgroup) {
+ 			fault_parent = hugetlb_cgroup_counter_from_cgroup(
+@@ -125,8 +126,10 @@ static void hugetlb_cgroup_init(struct h
+ 		limit = round_down(PAGE_COUNTER_MAX,
+ 				   pages_per_huge_page(&hstates[idx]));
+ 
+-		VM_BUG_ON(page_counter_set_max(fault, limit));
+-		VM_BUG_ON(page_counter_set_max(rsvd, limit));
++		ret = page_counter_set_max(fault, limit);
++		VM_WARN_ON_ONCE(ret);
++		ret = page_counter_set_max(rsvd, limit);
++		VM_WARN_ON_ONCE(ret);
  	}
-@@ -451,36 +451,26 @@ out_fail:
- 	return ret;
  }
  
--static struct faux_device_ops psci_cpuidle_ops = {
-+static struct platform_driver psci_cpuidle_driver = {
- 	.probe = psci_cpuidle_probe,
-+	.driver = {
-+		.name = "psci-cpuidle",
-+	},
- };
- 
--static bool __init dt_idle_state_present(void)
--{
--	struct device_node *cpu_node __free(device_node) =
--			of_cpu_device_node_get(cpumask_first(cpu_possible_mask));
--	if (!cpu_node)
--		return false;
--
--	struct device_node *state_node __free(device_node) =
--			of_get_cpu_state_node(cpu_node, 0);
--	if (!state_node)
--		return false;
--
--	return !!of_match_node(psci_idle_state_match, state_node);
--}
--
- static int __init psci_idle_init(void)
- {
--	struct faux_device *fdev;
-+	struct platform_device *pdev;
-+	int ret;
- 
--	if (!dt_idle_state_present())
--		return 0;
-+	ret = platform_driver_register(&psci_cpuidle_driver);
-+	if (ret)
-+		return ret;
- 
--	fdev = faux_device_create("psci-cpuidle", NULL, &psci_cpuidle_ops);
--	if (!fdev) {
--		pr_err("Failed to create psci-cpuidle device\n");
--		return -ENODEV;
-+	pdev = platform_device_register_simple("psci-cpuidle", -1, NULL, 0);
-+	if (IS_ERR(pdev)) {
-+		platform_driver_unregister(&psci_cpuidle_driver);
-+		return PTR_ERR(pdev);
- 	}
- 
- 	return 0;
 
 
