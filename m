@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271D6492E2A;
-	Wed,  9 Sep 2026 14:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3BA492E2A;
+	Wed,  9 Sep 2026 14:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962580; cv=none; b=rfQBEyrXCWXATKUGk1dhU/WbUevLGPEzCkR9TnqP0gpXTUce+6ZP8yfyP8JFifzsyXDlYR7D5OAgD6/N441NqL3NvKM3rvIHqv7u/EJCb2ES4VqSlAG3Dd8bJ1b+TeRnAqQoIVJW5XihmgCfqX4Sp2xpUNZmgwCoIykZ1YFu+tA=
+	t=1788962583; cv=none; b=PZNBUTkh2OJKIoqf4lt4fPc8DCjqNrSY/gRaJXkG/t0SvW45mWivPDWP177j0/23Q4GRD4juzjb410It7ErJTNckP5YU3uZbkJwTHE532BK1f2D3f2MANAhoUHBbFeH69/yBWwgqfqXbOBo7IJ6TkxiCpHhjHa8KDCGj/MGwPOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962580; c=relaxed/simple;
-	bh=4a+aQE+qI8NgzEAl7LONk3naGeL68N1NDY8qWaotkh0=;
+	s=arc-20240116; t=1788962583; c=relaxed/simple;
+	bh=MWnyeBEJGomljyHHuuirQgK87D/b1A8y5iew3cO131s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tq4aMDDd6WBAxJcrrzte88rbRHKQK4YvMzvCcObFhDEN9VM0FmC1jjyyYBNqiG+mYY0vWrfWI3IztPLA0oZZba6N6BzKmWmIcwrCmY4znnPh1XQvZs2f3CB86SrT6UnIF28fHG9AihV4wTIJZnzYQsASdtzWuT6uEeO8UY3LRvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpCngLVs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mPfsVxgz+aJawcyI5piN8wWJlNjeVDPKx1DEjba4obLcfma4RtDwglqkGS2drKhv+tECZg589xoM1paiS0qW40X+FCcHbU76AJNX0C56HUxu9FKLKX/FBx7B//IbPj2HmK1Uy1jaRhZEMFNZ5V3RA/OgpP9fUFjsKxccGn6aBkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+HRqKAY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpCngLVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801F71F00A3A;
-	Wed,  9 Sep 2026 14:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+HRqKAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EA91F00A3A;
+	Wed,  9 Sep 2026 14:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962579;
-	bh=rr+zXHy0vO7Z43L26s+/nPLPSZRJbWox6TUHxtNx2Bs=;
+	s=korg; t=1788962582;
+	bh=9bqYKjUh0P0bMdg+g7RiVaGHIlF92Q0EGtUsGTXRrXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GpCngLVsYEjqzBwTu+3IUJD29i6o3+RKukEkaDQzTRvx54ElztgPQtukeuHgL/hP5
-	 jgVJLPZXe3iSfIp0fUWF9P1qBFtL37p/yKk2RUUbcVqK6vdp+fCuD1qREx5tHILLz6
-	 E0tYSHPXgWJ34o3sXyHAZ3JmvYxCId4GQIYdx1ww=
+	b=0+HRqKAY/rrk369Uv2GqN+h4uE1tvJ7sUi9zixzVCkrfQKrblFsCXt0VmbC7dBSiJ
+	 HZex2CT0rx0/m3CMzf2DNCUzY7/GJWff/cQRABF55QIy+Vw6oszd5YQ3i/Vq77mTNu
+	 ePT4a1J9wgBK/N0VucffNK8m8uTeY/iSoxqrJKdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 337/556] LoongArch: BPF: Refactor jump offset calculation in tail call
-Date: Wed,  9 Sep 2026 15:40:17 +0200
-Message-ID: <20260909134242.516089186@linuxfoundation.org>
+Subject: [PATCH 7.2 338/556] LoongArch: Expand module virtual address space to 2GB
+Date: Wed,  9 Sep 2026 15:40:18 +0200
+Message-ID: <20260909134242.547324724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,86 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 37d545d12f21c4d50612ecaebd7ae1e5bf91b2d8 upstream.
+commit 18210a104bb97e28c26dc31fd9fc7b5c381fec62 upstream.
 
-The old macro-based jmp_offset calculation derives the jump distance
-from a stale prior-pass code stride, which can lead to wrong branch
-offsets and soft lockups under extra JIT passes.
+The current 256MB module virtual address space is easily exhausted when
+loading massive graphics drivers such as amdgpu along with the large
+unstripped symbol tables, resulting in allocation failures of "execmem:
+unable to allocate memory".
 
-Fix this by calculating the offset directly on the absolute target:
-"ctx->offset[insn + 1] - ctx->idx".
+Thus, expand the module virtual address space to 2GB while keeping
+the current normal code model '-mcmodel=normal', rather than using the
+medium code model '-mcmodel=medium'. This approach avoids the extra
+performance overhead and larger binary size of forcing every function
+call into a 2-instruction sequence of 'pcaddu18i + jirl'.
 
-To avoid a false 16-bit range check abort during size estimation, add
-a "ctx->image == NULL" guard to inject a safe dummy offset.
+Given that individual module code segments rarely exceed 128MB, most
+jumps remain fast direct calls by using the bl instruction. For the
+long-distance jumps exceeding the +/-128MB limit, apply_r_larch_b26()
+emits PLT entries, while signed_imm_check() guarantees the run-time
+safety by rejecting any out-of-bound instruction offsets.
+
+There is still a risk that the distance between .init.text and .text of
+the same module exceeds 128MB. So we divide the 2GB virtual space to be
+two sub-regions: the first 256MB is for module text, and the rest is for
+module data.
 
 Cc: stable@vger.kernel.org
-Fixes: cd39d9e6b7e4 ("LoongArch: BPF: Fix jump offset calculation in tailcall")
 Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/loongarch/include/asm/pgtable.h |    2 +-
+ arch/loongarch/mm/init.c             |   17 ++++++++++++++---
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -284,17 +284,13 @@ bool bpf_jit_supports_far_kfunc_call(voi
+--- a/arch/loongarch/include/asm/pgtable.h
++++ b/arch/loongarch/include/asm/pgtable.h
+@@ -96,7 +96,7 @@ struct vm_area_struct;
+ #ifdef CONFIG_64BIT
  
- static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
+ #define MODULES_VADDR	(vm_map_base + PCI_IOSIZE + (2 * PAGE_SIZE))
+-#define MODULES_END	(MODULES_VADDR + SZ_256M)
++#define MODULES_END	(MODULES_VADDR + SZ_2G) /* 256MB for text, rest for data */
+ 
+ #ifdef CONFIG_KFENCE
+ #define KFENCE_AREA_SIZE	(((CONFIG_KFENCE_NUM_OBJECTS + 1) * 2 + 2) * PAGE_SIZE)
+--- a/arch/loongarch/mm/init.c
++++ b/arch/loongarch/mm/init.c
+@@ -237,15 +237,26 @@ pte_t invalid_pte_table[PTRS_PER_PTE] __
+ EXPORT_SYMBOL(invalid_pte_table);
+ 
+ #if defined(CONFIG_EXECMEM) && defined(MODULES_VADDR)
++#define MODULES_TEXT_START (MODULES_VADDR)
++#define MODULES_TEXT_END   (MODULES_VADDR + SZ_256M)
++#define MODULES_DATA_START (MODULES_VADDR + SZ_256M)
++#define MODULES_DATA_END   (MODULES_END)
++
+ static struct execmem_info execmem_info __ro_after_init;
+ 
+ struct execmem_info __init *execmem_arch_setup(void)
  {
--	int off, tc_ninsn = 0;
-+	int off, jmp_offset;
- 	int tcc_ptr_off = BPF_TAIL_CALL_CNT_PTR_STACK_OFF(ctx->stack_size);
- 	u8 a1 = LOONGARCH_GPR_A1;
- 	u8 a2 = LOONGARCH_GPR_A2;
- 	u8 t1 = LOONGARCH_GPR_T1;
- 	u8 t2 = LOONGARCH_GPR_T2;
- 	u8 t3 = LOONGARCH_GPR_T3;
--	const int idx0 = ctx->idx;
--
--#define cur_offset (ctx->idx - idx0)
--#define jmp_offset (tc_ninsn - (cur_offset))
- 
- 	/*
- 	 * a0: &ctx
-@@ -304,12 +300,12 @@ static int emit_bpf_tail_call(struct jit
- 	 * if (index >= array->map.max_entries)
- 	 *	 goto out;
- 	 */
--	tc_ninsn = insn ? ctx->offset[insn+1] - ctx->offset[insn] : ctx->offset[0];
- 	emit_zext_32(ctx, a2, true);
- 
- 	off = offsetof(struct bpf_array, map.max_entries);
- 	emit_insn(ctx, ldwu, t1, a1, off);
- 	/* bgeu $a2, $t1, jmp_offset */
-+	jmp_offset = ctx->image ? (ctx->offset[insn + 1] - ctx->idx) : 0;
- 	if (emit_tailcall_jmp(ctx, BPF_JGE, a2, t1, jmp_offset) < 0)
- 		goto toofar;
- 
-@@ -320,6 +316,7 @@ static int emit_bpf_tail_call(struct jit
- 	emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, tcc_ptr_off);
- 	emit_insn(ctx, ldd, t3, REG_TCC, 0);
- 	emit_insn(ctx, addid, t2, LOONGARCH_GPR_ZERO, MAX_TAIL_CALL_CNT);
-+	jmp_offset = ctx->image ? (ctx->offset[insn + 1] - ctx->idx) : 0;
- 	if (emit_tailcall_jmp(ctx, BPF_JSGE, t3, t2, jmp_offset) < 0)
- 		goto toofar;
- 
-@@ -334,6 +331,7 @@ static int emit_bpf_tail_call(struct jit
- 	off = offsetof(struct bpf_array, ptrs);
- 	emit_insn(ctx, ldd, t2, t2, off);
- 	/* beq $t2, $zero, jmp_offset */
-+	jmp_offset = ctx->image ? (ctx->offset[insn + 1] - ctx->idx) : 0;
- 	if (emit_tailcall_jmp(ctx, BPF_JEQ, t2, LOONGARCH_GPR_ZERO, jmp_offset) < 0)
- 		goto toofar;
- 
-@@ -349,8 +347,6 @@ static int emit_bpf_tail_call(struct jit
- toofar:
- 	pr_info_once("tail_call: jump too far\n");
- 	return -1;
--#undef cur_offset
--#undef jmp_offset
- }
- 
- static void emit_store_stack_imm64(struct jit_ctx *ctx, int reg, int stack_off, u64 imm64)
+ 	execmem_info = (struct execmem_info){
+ 		.ranges = {
+-			[EXECMEM_DEFAULT] = {
+-				.start	= MODULES_VADDR,
+-				.end	= MODULES_END,
++			[EXECMEM_MODULE_TEXT] = {
++				.start	= MODULES_TEXT_START,
++				.end	= MODULES_TEXT_END,
++				.pgprot	= PAGE_KERNEL,
++				.alignment = 1,
++			},
++			[EXECMEM_MODULE_DATA] = {
++				.start	= MODULES_DATA_START,
++				.end	= MODULES_DATA_END,
+ 				.pgprot	= PAGE_KERNEL,
+ 				.alignment = 1,
+ 			},
 
 
