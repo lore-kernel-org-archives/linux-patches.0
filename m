@@ -1,41 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F81563FCF;
-	Wed,  9 Sep 2026 14:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E1D56853A;
+	Wed,  9 Sep 2026 14:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964524; cv=none; b=hxFdwr8YvmPZCX+wZl3PoYCe6dpLMP2EBhTMGYFd9GS26+qhUFXate1dCRz6CyvR0PgBya9QkJEPnzkGlrMIQwzl1AECINJ5FgjkzRnYdS4b0NJ5pIViEizQvbzEzOTlBNhlYUotjKNCyI8tN9fuDDmH+zXhLHWu4X9v3N5afmQ=
+	t=1788964528; cv=none; b=XNy4hLBvQgsR2f62VGvn3BBLz1ws53GRB3iE6lTptdedeq5igB5GMWwm3OQmmWUPfOQktIpEp9k5w75Kz6n1X0jtYFQdmaHZn7hSYq0/bGNP2MGh+9yNRtGv8MaBKKI4qm/lVVQuNpIXoEQv4ZTqMYHbmNi/TGBwcgNxA83yqvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964524; c=relaxed/simple;
-	bh=XzeHpStxQQP9ECbNJ9E5bWhRU3ysXWzWeKrxasrpuoI=;
+	s=arc-20240116; t=1788964528; c=relaxed/simple;
+	bh=j6Ct18iD+BDHePewDp8zHQxLXx8umzhQPbDPl2dFuv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQq8KnKreNutB7kfAmy4iOiChwIWF1WvDVXqHvab7N9zOzD5dKFX2Cmua6iA8l/uwHfrdnY+qPdSKcpMzb5i5Y14shrqjb2udwPf5TrQcF1FGSoiLrKZw+xhAkCu0M7xo31yBmsSdaDDaZVwI2suSYTa/lKyWwNTO0K/2QXUQRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVkYLWKx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KNL/bTmrEc+aNaRAh90bfsvxNvprqnJ+9+/+aF2zzp6NGsmSRYXRh1zp8gbeDBNdTRyhUYwZpHvI12ARDqBMfAbD4JYcwK8gSpt2PBskcKs011TOEkWCxLCknM8Q93HZMrHah3CXyNFqAvnG5H1FeNCqhRJHzBKm42DJjQPfQSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPlTOiG2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVkYLWKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287FC1F00A3A;
-	Wed,  9 Sep 2026 14:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPlTOiG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCCC1F00A3A;
+	Wed,  9 Sep 2026 14:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964522;
-	bh=QBWDhV7GeZW7slDNz1xF/A7scWC3ob9sTW3Ql3u5EWU=;
+	s=korg; t=1788964525;
+	bh=hNpcX+RPzENhxmmIO82a0kp8uBciEf8yk4lvdcTn9Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVkYLWKxztm6UUpwRmjX3OcOV/2x7f3C/FwozuUI7cYi6uRTfxpjiz2fG0clMRVpn
-	 A78qkGzyNwcuZG/7PcmeG5z7gMyy9llX2L98Ft5YooBLnUT4F7tAIzWax8NvTICCLL
-	 p62sKBdRtQ9TeX7KOIksqT4plNdWArSDpsp8CQlU=
+	b=HPlTOiG2vCRASt1Do3zz7h3WB00UzGuiugyUYjaDbRHA2VC7W/qgh6ctlOG6t8RK4
+	 X1HIzw0x3MNAO5AGjrh9w04jQw8HeQ4Y26Gy3FF/HhwWZLtAmNCWv7v7Cd2rdZjB2U
+	 rWJy4D/KNfNGs8pS8/KyG1uU/Ht72HaO5iP9nWm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Kyle Zeng <kylebot@openai.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Gregory Price <gourry@gourry.net>,
+	Harry Yoo <harry@kernel.org>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Jann Horn <jannh@google.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Mel Gorman <mel@csn.ul.ie>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Rik van Riel <riel@surriel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 435/583] net/packet: defer vmalloc TX_RING free until skbs finish
-Date: Wed,  9 Sep 2026 15:42:00 +0200
-Message-ID: <20260909134253.061840817@linuxfoundation.org>
+Subject: [PATCH 6.18 453/583] mm/rmap: use huge_ptep_get() in try_to_migrate_one()
+Date: Wed,  9 Sep 2026 15:42:18 +0200
+Message-ID: <20260909134253.639279139@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,251 +82,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Dev Jain <dev.jain@arm.com>
 
-[ Upstream commit 992cc9f94ca924089a506ba9b327caa9af797529 ]
+[ Upstream commit 9be12ffa78cd087d41086f937a156435d4e588e9 ]
 
-AF_PACKET TX_RING skbs keep a raw pointer to their ring frame. The skb
-page references preserve page-backed ring blocks after pg_vec is freed,
-but they do not preserve a vmalloc mapping.
+try_to_migrate_one() is used by folio migration to replace a present
+mapping with a migration entry. For hugetlb folios, page_vma_mapped_walk()
+returns the pte pointer to the hugetlb folio in pvmw.pte, but the code
+reads the huge pte entry with ptep_get().
 
-tpacket_destruct_skb() currently drops the pending reference before
-writing the timestamp and TP_STATUS_AVAILABLE to the frame. Move the
-decrement after those stores. The smp_wmb() in __packet_set_status()
-orders the frame stores before the decrement.
+On arches which provide their own huge_ptep_get() to dereference a huge
+pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
+etc to misbehave.
 
-Also recheck pending TX frames under pg_vec_lock before non-closing
-ring replacement, so a racing send cannot add a pending skb between
-the initial check and the ring swap.
+It is not clear whether this has a trivially visible effect to userspace.
 
-Ring allocation can produce a mixture of page-backed and vmalloc-backed
-blocks. Allocate deferred-work storage during TX ring setup when the
-first vmalloc-backed block is encountered, and keep its pointer in the
-pg_vec allocation header. If allocation fails, return -ENOMEM from ring
-setup. On socket close, a non-NULL pointer identifies a vmalloc-backed
-vector without a scan. If TX skbs remain, defer the whole vector to
-system_long_wq.
+Use huge_ptep_get() to dereference a huge pte pointer.
 
-After pg_vec is detached, a late destructor can skip the pending
-decrement. Use socket write-memory accounting as the deferred lifetime
-gate instead: an skb remains charged through its final sock_wfree(),
-after all ring-frame accesses. The delayed work retains a socket
-reference and reschedules itself until no TX skbs remain.
+Commit a98a2f0c8ce1 copied the bug from try_to_unmap_one into
+try_to_migrate_one.
 
-Move pending_refcnt release to packet_sock_destruct() so late skb
-destructors and deferred cleanup can safely use it after
-packet_release(). Page-backed teardown remains synchronous, and no lock
-is added to the TX completion hot path.
-
-Fixes: b013840810c2 ("packet: use percpu mmap tx frame pending refcount")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20260721015824.45829-1-kylebot@openai.com/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20260816235646.76500-1-kylebot@openai.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted the kzalloc_objs() allocation context to the older kcalloc() form ]
+[akpm@linux-foundation.org: coding-style cleanups]
+Link: https://lore.kernel.org/20260703114202.365553-4-dev.jain@arm.com
+Fixes: a98a2f0c8ce1 ("mm/rmap: split migration into its own function")
+Signed-off-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@intel.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Mel Gorman <mel@csn.ul.ie>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   96 ++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 87 insertions(+), 9 deletions(-)
+ mm/rmap.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -87,6 +87,7 @@
- #include <linux/errqueue.h>
- #include <linux/net_tstamp.h>
- #include <linux/percpu.h>
-+#include <linux/workqueue.h>
- #ifdef CONFIG_INET
- #include <net/inet_common.h>
- #endif
-@@ -1339,6 +1340,8 @@ static void packet_sock_destruct(struct
- 	WARN_ON(atomic_read(&sk->sk_rmem_alloc));
- 	WARN_ON(refcount_read(&sk->sk_wmem_alloc));
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -2384,20 +2384,23 @@ static bool try_to_migrate_one(struct fo
+ 		/* Unexpected PMD-mapped THP? */
+ 		VM_BUG_ON_FOLIO(!pvmw.pte, folio);
  
-+	packet_free_pending(pkt_sk(sk));
-+
- 	if (!sock_flag(sk, SOCK_DEAD)) {
- 		pr_err("Attempt to release alive packet socket: %p\n", sk);
- 		return;
-@@ -2533,11 +2536,11 @@ static void tpacket_destruct_skb(struct
- 		__u32 ts;
- 
- 		ph = skb_zcopy_get_nouarg(skb);
--		packet_dec_pending(&po->tx_ring);
- 
- 		ts = __packet_set_timestamp(po, ph, skb);
- 		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
- 
-+		packet_dec_pending(&po->tx_ring);
- 		complete(&po->skb_completion);
- 	}
- 
-@@ -3206,7 +3209,6 @@ static int packet_release(struct socket
- 	/* Purge queues */
- 
- 	skb_queue_purge(&sk->sk_receive_queue);
--	packet_free_pending(po);
- 
- 	sock_put(sk);
- 	return 0;
-@@ -4370,11 +4372,26 @@ static const struct vm_operations_struct
- 	.close	=	packet_mm_close,
- };
- 
-+struct packet_pg_vec {
-+	struct packet_pg_vec_free *deferred;
-+	unsigned int order;
-+	unsigned int len;
-+	struct pgv pg_vec[] __counted_by(len);
-+};
-+
-+struct packet_pg_vec_free {
-+	struct delayed_work work;
-+	struct sock *sk;
-+	struct packet_pg_vec *vec;
-+};
-+
- static void free_pg_vec(struct pgv *pg_vec, unsigned int order,
- 			unsigned int len)
- {
-+	struct packet_pg_vec *vec;
- 	int i;
- 
-+	vec = container_of_const(pg_vec, struct packet_pg_vec, pg_vec[0]);
- 	for (i = 0; i < len; i++) {
- 		if (likely(pg_vec[i].buffer)) {
- 			if (is_vmalloc_addr(pg_vec[i].buffer))
-@@ -4385,7 +4402,46 @@ static void free_pg_vec(struct pgv *pg_v
- 			pg_vec[i].buffer = NULL;
- 		}
- 	}
--	kfree(pg_vec);
-+	kfree(vec->deferred);
-+	kfree(vec);
-+}
-+
-+static void packet_free_pg_vec_work(struct work_struct *work)
-+{
-+	struct packet_pg_vec_free *deferred;
-+	struct packet_pg_vec *vec;
-+	struct sock *sk;
-+
-+	deferred = container_of_const(to_delayed_work(work),
-+				      struct packet_pg_vec_free, work);
-+	vec = deferred->vec;
-+	sk = deferred->sk;
-+	if (sk_wmem_alloc_get(sk)) {
-+		queue_delayed_work(system_long_wq, &deferred->work, 1);
-+		return;
-+	}
-+
-+	free_pg_vec(vec->pg_vec, vec->order, vec->len);
-+	sock_put(sk);
-+}
-+
-+static void packet_free_tx_ring(struct sock *sk, struct pgv *pg_vec,
-+				unsigned int order, unsigned int len)
-+{
-+	struct packet_pg_vec_free *deferred;
-+	struct packet_pg_vec *vec;
-+
-+	vec = container_of_const(pg_vec, struct packet_pg_vec, pg_vec[0]);
-+	deferred = vec->deferred;
-+	if (!deferred || !sk_wmem_alloc_get(sk)) {
-+		free_pg_vec(pg_vec, order, len);
-+		return;
-+	}
-+
-+	/* A detached ring's pending count can miss late skb destructors. */
-+	deferred->sk = sk;
-+	sock_hold(sk);
-+	queue_delayed_work(system_long_wq, &deferred->work, 0);
- }
- 
- static char *alloc_one_pg_vec_page(unsigned long order)
-@@ -4413,20 +4469,35 @@ static char *alloc_one_pg_vec_page(unsig
- 	return NULL;
- }
- 
--static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order)
-+static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order, bool tx_ring)
- {
- 	unsigned int block_nr = req->tp_block_nr;
-+	struct packet_pg_vec *vec;
- 	struct pgv *pg_vec;
- 	int i;
- 
--	pg_vec = kcalloc(block_nr, sizeof(struct pgv), GFP_KERNEL | __GFP_NOWARN);
--	if (unlikely(!pg_vec))
--		goto out;
-+	vec = kzalloc_flex(*vec, pg_vec, block_nr, GFP_KERNEL | __GFP_NOWARN);
-+	if (unlikely(!vec))
-+		return NULL;
-+	vec->order = order;
-+	vec->len = block_nr;
-+	pg_vec = vec->pg_vec;
- 
- 	for (i = 0; i < block_nr; i++) {
- 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
- 		if (unlikely(!pg_vec[i].buffer))
- 			goto out_free_pgvec;
-+
-+		if (tx_ring && !vec->deferred &&
-+		    is_vmalloc_addr(pg_vec[i].buffer)) {
-+			vec->deferred = kzalloc_obj(*vec->deferred,
-+						    GFP_KERNEL | __GFP_NOWARN);
-+			if (!vec->deferred)
-+				goto out_free_pgvec;
-+			vec->deferred->vec = vec;
-+			INIT_DELAYED_WORK(&vec->deferred->work,
-+					  packet_free_pg_vec_work);
-+		}
- 	}
- 
- out:
-@@ -4509,7 +4580,7 @@ static int packet_set_ring(struct sock *
- 
- 		err = -ENOMEM;
- 		order = get_order(req->tp_block_size);
--		pg_vec = alloc_pg_vec(req, order);
-+		pg_vec = alloc_pg_vec(req, order, tx_ring);
- 		if (unlikely(!pg_vec))
- 			goto out;
- 		switch (po->tp_version) {
-@@ -4561,6 +4632,9 @@ static int packet_set_ring(struct sock *
- 	err = -EBUSY;
- 	mutex_lock(&po->pg_vec_lock);
- 	if (closing || atomic_long_read(&po->mapped) == 0) {
-+		if (tx_ring && !closing && packet_read_pending(rb))
-+			goto out_unlock;
-+
- 		err = 0;
- 		spin_lock_bh(&rb_queue->lock);
- 		swap(rb->pg_vec, pg_vec);
-@@ -4582,6 +4656,7 @@ static int packet_set_ring(struct sock *
- 			pr_err("packet_mmap: vma is busy: %ld\n",
- 			       atomic_long_read(&po->mapped));
- 	}
-+out_unlock:
- 	mutex_unlock(&po->pg_vec_lock);
- 
- 	spin_lock(&po->bind_lock);
-@@ -4603,7 +4678,10 @@ static int packet_set_ring(struct sock *
- out_free_pg_vec:
- 	if (pg_vec) {
- 		bitmap_free(rx_owner_map);
--		free_pg_vec(pg_vec, order, req->tp_block_nr);
-+		if (tx_ring && closing)
-+			packet_free_tx_ring(sk, pg_vec, order, req->tp_block_nr);
+-		/*
+-		 * Handle PFN swap PTEs, such as device-exclusive ones, that
+-		 * actually map pages.
+-		 */
+-		pteval = ptep_get(pvmw.pte);
++		address = pvmw.address;
++		if (folio_test_hugetlb(folio))
++			pteval = huge_ptep_get(mm, address, pvmw.pte);
 +		else
-+			free_pg_vec(pg_vec, order, req->tp_block_nr);
- 	}
- out:
- 	return err;
++			pteval = ptep_get(pvmw.pte);
+ 		if (likely(pte_present(pteval))) {
+ 			pfn = pte_pfn(pteval);
+ 		} else {
++			/*
++			 * Handle PFN swap PTEs, such as device-exclusive ones,
++			 * that actually map pages.
++			 */
+ 			pfn = swp_offset_pfn(pte_to_swp_entry(pteval));
+ 			VM_WARN_ON_FOLIO(folio_test_hugetlb(folio), folio);
+ 		}
+ 
+ 		subpage = folio_page(folio, pfn - folio_pfn(folio));
+-		address = pvmw.address;
+ 		anon_exclusive = folio_test_anon(folio) &&
+ 				 PageAnonExclusive(subpage);
+ 
 
 
