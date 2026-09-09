@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B744569F04;
-	Wed,  9 Sep 2026 13:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DCA56B85D;
+	Wed,  9 Sep 2026 13:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962359; cv=none; b=HnidRN0KnM0mgV0OjCcOCReQQJUx8906C9sttIFyLiXBgSK1BpfJLJz4xiXJZeZyM5m0XsofAWzIF3w1K3VRV6alUX6w6POp5WrxGXZGspm432bpD5NVE+stimz4702RSrhsYAYo4WuQ546JHyRdBKq+MpbmX6BJzORL+PVV5lw=
+	t=1788962362; cv=none; b=lUgDNgDHgK4g9PyPxp83HyFMSumWwVnzBxQgk7ITB/Y/vAiBxculf2PsbXwZCX1OjVzzhiIWlld/jqtCy4jvmlKNV3UFpdg83PT82iZUL5gbcjMle7Avd68gWbWdtR/rl6revdg6fUbt0KPUPZXmjgmrpSY0ocNiUQC9B01fLXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962359; c=relaxed/simple;
-	bh=viWLrawkEytnixmBSMSFPIIVTAZ94QCEn048T5R0Spc=;
+	s=arc-20240116; t=1788962362; c=relaxed/simple;
+	bh=A0FNWo2eyYBwdQYbbUYCq2YZ3bq0Y9rUQEgA/9xAtQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P8IuRzQFwtNMExP1B9oX0vIXwRx1QGreTsV57jvwUvsTzGt+L2kZUVJZGK0Zg2zj9shU0uA5Sy1tW4EBNz3EpYHdtZLQ1TxpXVRCKe20zcX84SC5ElvivYN4iovZSP3qyljeS3xeVf4+CtIaJJF1tPC3g0kldZAa2uC/42zoxCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OehJB+Wp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lbe7AOn2GOB7l6kp8BpRwy4vRSZq9Cz09fP13yQ1Bqk0DxinMI+B9zuycaIhZ3NkU+p2a7JK/FB/RFJk6Dj/Lt6qP6NiinO5HJjkqoCV+taHO4L2VhwE6iDHrJK0YJf102wYMzIaRhKPJagzNsCYZOlI0vwIsNmjMocLaA847h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYwbFzYM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OehJB+Wp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832201F00A3A;
-	Wed,  9 Sep 2026 13:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYwbFzYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD451F00A3A;
+	Wed,  9 Sep 2026 13:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962358;
-	bh=rHbQphr1QWLaql0u1ZxIl5pF0sGlhK0DyvqdqfxNyyk=;
+	s=korg; t=1788962360;
+	bh=wfIfF4gTEtrNdS3tAEkjFHgtFLfE6EO27QYwX9DpkiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OehJB+Wp8wSQF9lrO8lXTrKp+sN2Y3m1gWaBzGsXYUlfHxyUVK9zpPCYhOchXMy+e
-	 lr1DKXr7rLQkvQWSGkqlcclUrJhtm1bxaIJj0hznf4x4VaRF8VQUAhDA/o+Iz/NqoU
-	 rxOOry9PPa/F94iyJSNT2bCZUqR2KDnSJ4mFVGXk=
+	b=aYwbFzYMQ9MGChNgvoUP80C13dhfGJpxCkShSevuuHYg5Ln7tZhbkzt+szAlZsqYJ
+	 hTbMjIi/jArxTtMHyDmRtGNxKqNB/9yNAoGucnBZSz6Y3LCuZHT9XTtOihurxMIp/t
+	 CyanhEZqdxVrutmz9wdOmMuq6tAt5RIO2AEQQdps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lars-Peter Clausen <lars@metafoo.de>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 264/556] iio: buffer: Fix potential use-after-free in anonymous buffer release
-Date: Wed,  9 Sep 2026 15:39:04 +0200
-Message-ID: <20260909134239.831393098@linuxfoundation.org>
+Subject: [PATCH 7.2 265/556] iio: buffer: Make IIO DMA fence release RCU-safe
+Date: Wed,  9 Sep 2026 15:39:05 +0200
+Message-ID: <20260909134239.867864636@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -54,63 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit 6288b593e76eb10329326f2cd51e32557203b9e5 upstream.
+commit 8662e56c31cf23b61ca3d11b516efb94c35b8026 upstream.
 
-An anonymous buffer handle holds a reference to the underlying IIO device.
-The reference is dropped in the buffer handle's release function. If the
-device has been removed, either through unbind or hot-unplug, the buffer
-handle might hold the last reference.
+The `dma_fence` documentation states that if a custom release
+implementation is provided, the `dma_fence` object must be freed in an
+RCU-safe way. The current `iio_dma_fence` implementation uses `kfree()`,
+which might result in a use-after-free.
 
-The release function takes the mutex for the buffer using a guard, which
-means the unlock happens after all the code in the function, including
-`iio_device_put()`. If the anonymous buffer holds the last reference this
-might free both the IIO device and the buffer, which contains the mutex,
-leading to use-after-free when the mutex is unlocked.
+Remove the custom `release` implementation. This makes the DMA fence core
+fall back to `dma_fence_free()`, which calls `kfree_rcu()` on the fence.
+This requires that the fence be the first member of `struct iio_dma_fence`.
 
-Fix this by using a scoped guard just around the buffer dmabuf list access,
-making sure the mutex is unlocked before releasing the IIO device.
-
-Version 10 of the patch that introduced this issue used this exact scheme
-of first unlocking and then dropping the reference [1]. During review it
-was suggested to use a guard instead, and version 11 made that change [2].
+Using the default release method for extended DMA fence structures is a
+common pattern.
 
 Reported-by: codex:gpt-5.6
 Fixes: 3e26d9f08fbe ("iio: core: Add new DMABUF interface infrastructure")
 Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/linux-iio/20240605110845.86740-4-paul@crapouillou.net #[1]
-Link: https://lore.kernel.org/linux-iio/20240618100302.72886-4-paul@crapouillou.net #[2]
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-buffer.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/iio/industrialio-buffer.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
 --- a/drivers/iio/industrialio-buffer.c
 +++ b/drivers/iio/industrialio-buffer.c
-@@ -1619,12 +1619,16 @@ static int iio_buffer_chrdev_release(str
+@@ -57,6 +57,10 @@ struct iio_dmabuf_priv {
+ };
  
- 	wake_up(&buffer->pollq);
- 
--	guard(mutex)(&buffer->dmabufs_mutex);
--
--	/* Close all attached DMABUFs */
--	list_for_each_entry_safe(priv, tmp, &buffer->dmabufs, entry) {
--		list_del_init(&priv->entry);
--		iio_buffer_dmabuf_put(priv->attach);
+ struct iio_dma_fence {
 +	/*
-+	 * The mutex must be unlocked before iio_device_put(), which might drop the
-+	 * last reference and free the buffer.
++	 * Must remain the first member so the default release callback can pass
++	 * the fence directly to dma_fence_free().
 +	 */
-+	scoped_guard(mutex, &buffer->dmabufs_mutex) {
-+		/* Close all attached DMABUFs */
-+		list_for_each_entry_safe(priv, tmp, &buffer->dmabufs, entry) {
-+			list_del_init(&priv->entry);
-+			iio_buffer_dmabuf_put(priv->attach);
-+		}
- 	}
+ 	struct dma_fence base;
+ 	struct iio_dmabuf_priv *priv;
+ 	struct work_struct work;
+@@ -1831,18 +1835,9 @@ iio_buffer_dma_fence_get_driver_name(str
+ 	return "iio";
+ }
  
- 	kfree(ib);
+-static void iio_buffer_dma_fence_release(struct dma_fence *fence)
+-{
+-	struct iio_dma_fence *iio_fence =
+-		container_of(fence, struct iio_dma_fence, base);
+-
+-	kfree(iio_fence);
+-}
+-
+ static const struct dma_fence_ops iio_buffer_dma_fence_ops = {
+ 	.get_driver_name	= iio_buffer_dma_fence_get_driver_name,
+ 	.get_timeline_name	= iio_buffer_dma_fence_get_driver_name,
+-	.release		= iio_buffer_dma_fence_release,
+ };
+ 
+ static int iio_buffer_enqueue_dmabuf(struct iio_dev_buffer_pair *ib,
 
 
