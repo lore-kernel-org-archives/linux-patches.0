@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB969569F2A;
-	Wed,  9 Sep 2026 14:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998D757ED88;
+	Wed,  9 Sep 2026 14:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963643; cv=none; b=DpHCV75BN2bqPTr/I/rRXPpToO91nV2J2X8RicuueTXzmWr4JBMFseoI0INPpwmJ1tG5wqERYfQidLnq2W+8/BHtZvi0SmZf5423fXWUFOU/cCYoU4ck8n3+MuEWTB5zZyllkwrqD/V6jFJ5GtKv5eRid6XPvSCNl+HNaSEb2K8=
+	t=1788963645; cv=none; b=Iqkc1flV+IACnUSvCfe3/z/HPgDcQpxpiCP3U8CSfCrTvYgx1eHkH8uDujNg1Y7s4jn/r3DLMwzBNai2Bvefo3+X0GanDZYuxAhNfSIStxBHNDNqu3V2ilWEdjL63ZpQnwGFArSssJ+VFCGWxHAOKvqcncylftLPYZbIAbUvwQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963643; c=relaxed/simple;
-	bh=F5WYk//RIaG3oN1SR/zpV09zRjDazU3XvxkO5QEunYk=;
+	s=arc-20240116; t=1788963645; c=relaxed/simple;
+	bh=q5u4AReuszIvr7pymevaZ72E/TZcxSl3T5Ng7bAK8yQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TK69U1tL3cZgCjYNm5U3REevQYHM2KNCPuyoHAuzERD8H0FkS55GJ6pwpz+5FWWrnaRETu4B8hKsOJegyeKcNZ8c3ZANHaOWF7tIkH0LAKuQCh96Nc1rPVPYutb3rw5KZcEjpOwrMTESbnMWsCjQ5sNSmTIV5aQl57VifhBlQLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1BRBVYl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bw8RMS9EzO18xoa2TPw1a6OASGs7KZJWYmA4C/j3bA8YiJhB0sgNBWD5G8pZyRNSJuHli/2h4h3KTgo2cP9KnBIjmfPBcM0FbsKLoJsXDJQkjkF+RfpAc5boh/q6E89N4Q8wGb9P5i48c1RkR6uiByT4JIzr7WirMV3G6lqcQP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsTEguLh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1BRBVYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EADB1F00A3A;
-	Wed,  9 Sep 2026 14:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsTEguLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000021F00A3A;
+	Wed,  9 Sep 2026 14:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963641;
-	bh=Xl7gGLBd+2wTQYBRa1J/ScBX4SsGoOFM7kjCsrg9B0Q=;
+	s=korg; t=1788963644;
+	bh=aeQ7OFC4WvoNO/c89USvH4iMmTTM/UCVqoYqPbQDplE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o1BRBVYlFj6xdBeG8kmTNHftIoD6ISjGMo8ghBaF+EQLwzFmF8ujPBjQh/ZsM8JWc
-	 plzVIjF0xmIJAorFOPNf0NIVVfnIwULAnmecWICPlvt/mDCDXt2v+tWkdk3VbCFdzD
-	 zMo7U1iaFBuyIyKtzq4j3KdvBf7IRa9bb8oU4A3o=
+	b=FsTEguLhrRSLoGctrkhSFZnhF3GIIbbYgOaKQExGXW/rXjDiXexSt4aOnuaEXIVcS
+	 TsnQMdlSpjt68P8jP3q75pYIF5QOEwDdBhmM7D2lYDP8aHq7CN0mGsl546DAqoaYmh
+	 Yadtq3Wn/A2vftbljTBo32MZKV+ABYqYMo/1qFzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>
-Subject: [PATCH 6.18 148/583] clk: meson: align gxbb_32k_clk_sel number of parents with actual count
-Date: Wed,  9 Sep 2026 15:37:13 +0200
-Message-ID: <20260909134243.306350178@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.18 149/583] clk: qcom: gcc-msm8916: Fix enable_reg for gcc_blsp1_sleep_clk
+Date: Wed,  9 Sep 2026 15:37:14 +0200
+Message-ID: <20260909134243.344850816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,87 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 628b6fee9fca292f12d07f0f1bcf1edefa949d81 upstream.
+commit c5339edc6abb601ea10df910ea0b1592fa1016f3 upstream.
 
-The following out-of-bounds read has been observed by Christian on a
-GXBB WeTek Hub:
-==================================================================
-BUG: KASAN: global-out-of-bounds in __clk_register+0x1b70/0x2418
-Read of size 8 at addr ffffd66320cf88e0 by task swapper/0/1
+According to the APQ8016E TRM, the GCC_BLSP1_SLEEP_CBCR register is
+read-only and only has the CLK_OFF bit to check if the clock is running.
+This is a shared vote clock, the correct way to enable it is to vote for
+BLSP1_SLEEP_CLK_ENA (BIT(9)) in GCC_APCS_CLOCK_BRANCH_ENA_VOTE (0x45004).
 
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.0.0-rc5 #1 PREEMPT
-Hardware name: WeTek Hub (DT)
-Call trace:
- show_stack+0x14/0x20 (C)
- dump_stack_lvl+0x74/0x94
- print_report+0x164/0x4b0
- kasan_report+0x98/0xd8
- __asan_report_load8_noabort+0x1c/0x24
- __clk_register+0x1b70/0x2418
- devm_clk_hw_register+0x74/0x15c
- meson_clkc_init+0xd4/0x20c
- meson_clkc_syscon_probe+0x5c/0x94
- platform_probe+0xbc/0x17c
- really_probe+0x184/0x844
- __driver_probe_device+0x154/0x35c
- driver_probe_device+0x60/0x188
- __driver_attach+0x168/0x4a0
- bus_for_each_dev+0xec/0x180
- driver_attach+0x38/0x58
- bus_add_driver+0x238/0x4c0
- driver_register+0x150/0x388
- __platform_driver_register+0x54/0x7c
- gxbb_clkc_driver_init+0x18/0x20
- do_one_initcall+0xb8/0x340
- kernel_init_freeable+0x49c/0x52c
- kernel_init+0x24/0x148
- ret_from_fork+0x10/0x20
-
-The buggy address belongs to the variable:
- gxbb_32k_clk_parents+0x60/0x400
-
-The buggy address belongs to a vmalloc virtual mapping
-The buggy address belongs to the physical page:
-
-Memory state around the buggy address:
- ffffd66320cf8780: 00 00 00 00 f9 f9 f9 f9 00 f9 f9 f9 f9 f9 f9 f9
- ffffd66320cf8800: 00 04 f9 f9 f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9
->ffffd66320cf8880: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-                                                       ^
- ffffd66320cf8900: 00 01 f9 f9 f9 f9 f9 f9 00 06 f9 f9 f9 f9 f9 f9
- ffffd66320cf8980: 00 00 02 f9 f9 f9 f9 f9 00 00 02 f9 f9 f9 f9 f9
-==================================================================
-
-Commit 7915d7d5407c ("clk: amlogic: gxbb: drop non existing 32k clock
-parent") dropped a non-existing clock parent from the gxbb_32k_clk_sel
-mux but didn't adjust the hard-coded num_parents field. Fix the actual
-number of parents of that mux by using ARRAY_SIZE instead (avoiding
-similar problems in future).
-
-Fixes: 7915d7d5407c ("clk: amlogic: gxbb: drop non existing 32k clock parent")
-Reported-by: Christian Hewitt <christianshewitt@gmail.com>
 Cc: stable@vger.kernel.org
-Tested-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20260623201956.1324992-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 3966fab8b6ab ("clk: qcom: Add MSM8916 Global Clock Controller support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-1-745565101869@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/meson/gxbb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-msm8916.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/meson/gxbb.c
-+++ b/drivers/clk/meson/gxbb.c
-@@ -1394,7 +1394,7 @@ static struct clk_regmap gxbb_32k_clk_se
- 		.name = "32k_clk_sel",
- 		.ops = &clk_regmap_mux_ops,
- 		.parent_data = gxbb_32k_clk_parents,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(gxbb_32k_clk_parents),
- 		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
+--- a/drivers/clk/qcom/gcc-msm8916.c
++++ b/drivers/clk/qcom/gcc-msm8916.c
+@@ -1589,9 +1589,10 @@ static struct clk_branch gcc_blsp1_ahb_c
+ 
+ static struct clk_branch gcc_blsp1_sleep_clk = {
+ 	.halt_reg = 0x01004,
++	.halt_check = BRANCH_HALT_VOTED,
+ 	.clkr = {
+-		.enable_reg = 0x01004,
+-		.enable_mask = BIT(0),
++		.enable_reg = 0x45004,
++		.enable_mask = BIT(9),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_blsp1_sleep_clk",
+ 			.parent_data = &(const struct clk_parent_data){
 
 
