@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F7A563FCF;
-	Wed,  9 Sep 2026 14:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6080A566C6B;
+	Wed,  9 Sep 2026 14:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962758; cv=none; b=M/PNU3g+epYZ5v/FuG2rI/tW2zA+bZoMh96MvAs7q2aM24It4JAEoDB8TYnhgaM2zXXrCvqoEEMaqy2snrvVhj3VLiW1fYCCBWswK5t9/TSeEazasrFZ8nH66MJ7WBzit/+ItV61sHOBzzjgXzXRvgP12rViPpkcQP1i7oLs880=
+	t=1788962761; cv=none; b=Xt9SP+BWTz7TTEa/n481ziAiLzxnuz78NHGXY9r4SqckEBvuN9s1aEsOQXljb0jxgMCmkSzZFIYkPwwVp1tutMXzhdANiTXJ8QuHzWoDhnhemMLavHwvS4YOp/bskz40A7plJ+tXXdLWM9eGeClt7GpqZAr2OFl9dPLCfmJKNak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962758; c=relaxed/simple;
-	bh=19OuLhskt1DSlTbsmpAhHj8qtVLn3Oo2KIYe4pO4qA0=;
+	s=arc-20240116; t=1788962761; c=relaxed/simple;
+	bh=q4yW8OAwM9tZWL0zfjmIjDz3J/ZQieYAPfoVE+W2/oM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e61HP53R8BeNiXna7bDbyP7+wm6lAdSlqJCd6B2vmj+vAtGN5zLvZKGsvBZo7RQ7VYdSnUJP236wA7vRLzLVCBUllFPxL4vEyxjLWDfeoMlKDpt0/6a8q/lnBFQ0Q10pO8B40TjmD0p7gJQJbdTyv/Skd6zUIV9aGcOBIJxe2RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXTmFKxq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=swc7jN7WNKdEQ4JngzXgOzTkgcJ8BPF4QPwwQGHX5LXC2LVbby6prVBLqMjG9T969ER8IBrydfzbZbppDBdNXM0Tt9p7OO/S3e2k7bQ8oRq+nYetMiXl13Tws1ISwu7k2GkhgYq4IqNbAOfqjZmv/YhMgF91KJ2OWy1F6vQcFUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYbDr3A6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXTmFKxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE9531F00A3A;
-	Wed,  9 Sep 2026 14:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYbDr3A6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C171F00A3A;
+	Wed,  9 Sep 2026 14:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962757;
-	bh=l72UNkfImDL0fHNx2nJrySECOJpN4NAviGkZfw0Hy/I=;
+	s=korg; t=1788962760;
+	bh=GZnl/HYzAKwCXBrVrgWKGyEGAJq6fo9r0aWEivHjSCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zXTmFKxqybQYvgt8CB4aDai25hAkgK02+bAhyNZqRBrclDaOiNlFFUiL+K9T58hIp
-	 hfIpsub83+0vXa1fvlHnsAZrJ6+d1ONl9EfZntSHLWJEEiDKEmjOhQ6Vm2MyDL8Ug7
-	 2Hlwn1/+j1Rf5b7UdBkfwaOmHwEJ3fMsDrmWOLSI=
+	b=KYbDr3A6k53ylkGCzOLTePItKHfmMItBc1QTANMg7aY3fzb+0jly5rJit8UgN/92O
+	 zfKgDzH8WtR8dlUlZV++Fm2QizoOijCvjfQard0sAaap/vSWUU3SaS4jxoQuBKJ0uC
+	 DWf7kQZJ8N+mTA6b3QZVdYyCjPXBDoYKZW9f2+Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammed EL Kadiri <med08elkadiri@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>
-Subject: [PATCH 7.2 402/556] media: venus: fix payload size calculation in parse_raw_formats()
-Date: Wed,  9 Sep 2026 15:41:22 +0200
-Message-ID: <20260909134244.773224816@linuxfoundation.org>
+	Uday Khare <udaykhare77@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.2 403/556] media: video-i2c: fix kthread error pointer left in kthread_vid_cap on failure
+Date: Wed,  9 Sep 2026 15:41:23 +0200
+Message-ID: <20260909134244.808186106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,53 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohammed EL Kadiri <med08elkadiri@gmail.com>
+From: Uday Khare <udaykhare77@gmail.com>
 
-commit bd595b745eb770e80347c31ffc25351046935305 upstream.
+commit 76e379754ba618989f6215be608d5c04774a611d upstream.
 
-The consumed size is computed after the loop using the num_planes value
-from the last iteration for all entries. When entries have different
-plane counts, this produces an incorrect total.
+kthread_run() returns an ERR_PTR on failure, not NULL.
+When start_streaming() fails, data->kthread_vid_cap is left holding
+this error pointer instead of being cleared.
 
-Accumulate the actual size during the loop instead.
+This causes two subsequent bugs:
+1. A future call to start_streaming() sees a non-NULL kthread_vid_cap
+   and returns 0 (success) immediately, without actually starting the
+   capture thread.
+2. A call to stop_streaming() checks 'kthread_vid_cap == NULL' which
+   is false for an error pointer, and proceeds to call kthread_stop()
+   on the error pointer, leading to a kernel crash.
 
-Fixes: 9edaaa8e3e15 ("media: venus: hfi_parser: refactor hfi packet parsing logic")
+Fix this by resetting kthread_vid_cap to NULL on failure before
+jumping to the error path.
+
+Fixes: 5cebaac60974 ("media: video-i2c: add video-i2c driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mohammed EL Kadiri <med08elkadiri@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_parser.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/i2c/video-i2c.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_parser.c
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -171,7 +171,7 @@ parse_raw_formats(struct venus_core *cor
- 	u32 entries = fmt->format_entries;
- 	unsigned int i = 0;
- 	u32 num_planes = 0;
--	u32 size;
-+	u32 size = 2 * sizeof(u32);
+--- a/drivers/media/i2c/video-i2c.c
++++ b/drivers/media/i2c/video-i2c.c
+@@ -522,8 +522,12 @@ static int start_streaming(struct vb2_qu
+ 	data->kthread_vid_cap = kthread_run(video_i2c_thread_vid_cap, data,
+ 					    "%s-vid-cap", data->v4l2_dev.name);
+ 	ret = PTR_ERR_OR_ZERO(data->kthread_vid_cap);
+-	if (!ret)
+-		return 0;
++	if (ret) {
++		data->kthread_vid_cap = NULL;
++		goto error_rpm_put;
++	}
++
++	return 0;
  
- 	while (entries) {
- 		num_planes = pinfo->num_planes;
-@@ -186,6 +186,7 @@ parse_raw_formats(struct venus_core *cor
- 		if (pinfo->num_planes > MAX_PLANES)
- 			break;
- 
-+		size += sizeof(*constr) * num_planes + 2 * sizeof(u32);
- 		pinfo = (void *)pinfo + sizeof(*constr) * num_planes +
- 			2 * sizeof(u32);
- 		entries--;
-@@ -193,8 +194,6 @@ parse_raw_formats(struct venus_core *cor
- 
- 	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
- 		       fill_raw_fmts, rawfmts, i);
--	size = fmt->format_entries * (sizeof(*constr) * num_planes + 2 * sizeof(u32))
--		+ 2 * sizeof(u32);
- 
- 	return size;
- }
+ error_rpm_put:
+ 	pm_runtime_put_autosuspend(dev);
 
 
