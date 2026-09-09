@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660B3581222;
-	Wed,  9 Sep 2026 14:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AEA492E2A;
+	Wed,  9 Sep 2026 14:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964689; cv=none; b=JsIrpPe1lKbL/kdMP5KB8PDGe8ESj69RnXDFpRO+YeACxuLl0quL8p2Qv2D80iq9vnFS3lrFp61RBKQ/B4JamRDTLd0G5FopLguhznqi/FQ9mX+FAPei1mCdktcvO4QvofI1C1gY5NYzS+0mYy+Or1KFXsJ4kcTR5CQMuyFQ22I=
+	t=1788964692; cv=none; b=c4vxm835kdLgmwz9vmP4HAN9AjsVOQQI5Lo9zIOxlp5qhzkr6/SFSJ7JN1PU9m8AESGaTNRmSqtb9CEHu6wZ4FmsKxbotH24Q1ucYvhwJoQQyYRpJ+6o8anwCXmhJH0Fhzo3vJNIJQW9jz2OqPbcMz2ONDGkOjxwKAkrS/DWOUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964689; c=relaxed/simple;
-	bh=ISs8WIEr+7oxQXuXPkS8ABJOeImtN6ZC7Ra0Pjxfut0=;
+	s=arc-20240116; t=1788964692; c=relaxed/simple;
+	bh=HM4sMHQOulB0/W4TM2JYXvfMsVmTZBCH2sMw3ZXcmHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dTC/o6Df1dXWke9GRj8xc7IHFu4VDadumZ24+v2BT0Nl1/YtIh5f9k2IUJClpnGU8pmev1DTrPYOTTstIQRMTeNlgzsBeGt0y6p3rlPI/IRcq7cXEsgxM7QPyYMjd6IIQrVPFqcg5p8ak6IDJAHw0Dn8SWlZqsYyeJggYNSdcP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBZvcIos; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FQLeZRfv7wutddcL6yTJi+dduaESXBD33CMMuyTUpSkC7Bg+95/FIncvEoHfCWhbHo6IVunmBZ3/8Xl1h3vnu4WtvcKr0hF+SQ1AiPUIlXOm7PKeogEWyrxBV3Aa2kOjruXWyLIdIrVDZaYyJMg9qltmwrOVxNdJYlalEVBUrAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGiXnNlU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBZvcIos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA711F00A3A;
-	Wed,  9 Sep 2026 14:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGiXnNlU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4581F00A3A;
+	Wed,  9 Sep 2026 14:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964688;
-	bh=e9w/058x0qZTRqdo7xdKi2FrsU7wWocUNn7TsNjdt+U=;
+	s=korg; t=1788964691;
+	bh=eXi9r7qyrIoRw9JFB/WOIFrIBUeUNYldGfvUB5LPfaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HBZvcIosm02xJQ7Mk31gESxTIZhyFbg9qEG4U/NO7t952Ew0ECLOWqVRQYON3SC7m
-	 cSX8INLB4XRxN4kbhTJPGRjeMC6juUwPAC2kAyUvDUoGy0/beiKXBMO+qt1+b/zrlE
-	 JDVUQqWh1cmKMjfZUwaekH4aO6mmwmokoQPrRh78=
+	b=pGiXnNlUvor10tvAwapTqOEd1PiC/tNfux89n5ZPSPA4S4WFxQSdOVeaxj/B96Lcm
+	 UihKHORIqpEIlSL83efL47l4rRy0ke2MnSekTlmy4Iridztml2CvZAlCY8KF/n2B+O
+	 6H3l4/vz8KZzZntGbn/vLSo/SqV1SQcbekgX1ark=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 508/583] ring-buffer: Make cpu_buffer::free_page a buffer_data_read_page
-Date: Wed,  9 Sep 2026 15:43:13 +0200
-Message-ID: <20260909134255.351453902@linuxfoundation.org>
+Subject: [PATCH 6.18 509/583] ocfs2: validate dx_root extent list fields during block read
+Date: Wed,  9 Sep 2026 15:43:14 +0200
+Message-ID: <20260909134255.385376303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -45,110 +51,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 7a1fb95de5404134f8758c1295ce88986bdf117c ]
+[ Upstream commit 775c17386a6fd695f999d4cda90e3931386570dd ]
 
-Discarding a cached reader page after a concurrent ring buffer resize
-uses the new global subbuf_order for the free_pages() call. This
-mismatched order may crashes the kernel or leaks memory because the cached
-page was allocated under the old size.
+Patch series "ocfs2: consolidate extent list validation into block read
+callbacks".
 
-Save the actual free_page order alongside the page address to ensure we
-always refer to the correct value and do not rely on the potentially
-stalled cpu_buffer->subbuf_order value. The simplest is to make
-free_page a buffer_data_read_page which already covers exactly what we
-need: a page address and a page order.
+ocfs2 validates extent list fields (l_count, l_next_free_rec) at various
+points during extent tree traversal.  This is fragile because each caller
+must remember to check for corrupted on-disk data before using it.
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813131152.3589632-4-vdonnefort@google.com
-Fixes: 8e7b58c27b3c ("ring-buffer: Just update the subbuffers when changing their allocation order")
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ Changed upstream’s dpage variable to bpage in ring_buffer_free_read_page(). ]
+This series moves those checks into the block read validation callbacks
+(ocfs2_validate_dx_root and ocfs2_validate_extent_block), so corrupted
+fields are caught early at block read time.  Redundant post-read checks
+are then removed.
+
+This patch (of 4):
+
+Move the extent list l_count validation from ocfs2_dx_dir_lookup_rec()
+into ocfs2_validate_dx_root(), so that corrupted on-disk fields are caught
+early at block read time rather than during directory lookups.
+
+Additionally, add a l_next_free_rec <= l_count check to prevent
+out-of-bounds access when iterating over extent records.
+
+Both checks are skipped for inline dx roots (OCFS2_DX_FLAG_INLINE), which
+use dr_entries instead of dr_list.
+
+Link: https://lkml.kernel.org/r/20260403090803.3860971-1-joseph.qi@linux.alibaba.com
+Link: https://lkml.kernel.org/r/20260403090803.3860971-2-joseph.qi@linux.alibaba.com
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: bc70726ddad5 ("ocfs2: validate directory-index entry counts when reading metadata")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fs/ocfs2/dir.c |   26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -531,7 +531,7 @@ struct ring_buffer_per_cpu {
- 	raw_spinlock_t			reader_lock;	/* serialize readers */
- 	arch_spinlock_t			lock;
- 	struct lock_class_key		lock_key;
--	struct buffer_data_page		*free_page;
-+	struct buffer_data_read_page	free_page;
- 	unsigned long			nr_pages;
- 	unsigned int			current_context;
- 	struct list_head		*pages;
-@@ -2514,7 +2514,7 @@ static void rb_free_cpu_buffer(struct ri
- 		free_buffer_page(bpage);
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -580,7 +580,7 @@ static int ocfs2_validate_dx_root(struct
+ 		mlog(ML_ERROR,
+ 		     "Checksum failed for dir index root block %llu\n",
+ 		     (unsigned long long)bh->b_blocknr);
+-		return ret;
++		goto bail;
  	}
  
--	free_pages((unsigned long)cpu_buffer->free_page, cpu_buffer->buffer->subbuf_order);
-+	free_pages((unsigned long)cpu_buffer->free_page.data, cpu_buffer->free_page.order);
+ 	if (!OCFS2_IS_VALID_DX_ROOT(dx_root)) {
+@@ -588,8 +588,32 @@ static int ocfs2_validate_dx_root(struct
+ 				  "Dir Index Root # %llu has bad signature %.*s\n",
+ 				  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
+ 				  7, dx_root->dr_signature);
++		goto bail;
+ 	}
  
- 	kfree(cpu_buffer);
++	if (!(dx_root->dr_flags & OCFS2_DX_FLAG_INLINE)) {
++		struct ocfs2_extent_list *el = &dx_root->dr_list;
++
++		if (le16_to_cpu(el->l_count) != ocfs2_extent_recs_per_dx_root(sb)) {
++			ret = ocfs2_error(sb,
++					  "Dir Index Root # %llu has invalid l_count %u (expected %u)\n",
++					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
++					  le16_to_cpu(el->l_count),
++					  ocfs2_extent_recs_per_dx_root(sb));
++			goto bail;
++		}
++
++		if (le16_to_cpu(el->l_next_free_rec) > le16_to_cpu(el->l_count)) {
++			ret = ocfs2_error(sb,
++					  "Dir Index Root # %llu has invalid l_next_free_rec %u (l_count %u)\n",
++					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
++					  le16_to_cpu(el->l_next_free_rec),
++					  le16_to_cpu(el->l_count));
++			goto bail;
++		}
++	}
++
++bail:
+ 	return ret;
  }
-@@ -6570,9 +6570,9 @@ ring_buffer_alloc_read_page(struct trace
- 	local_irq_save(flags);
- 	arch_spin_lock(&cpu_buffer->lock);
  
--	if (cpu_buffer->free_page) {
--		bpage->data = cpu_buffer->free_page;
--		cpu_buffer->free_page = NULL;
-+	if (cpu_buffer->free_page.data) {
-+		*bpage = cpu_buffer->free_page;
-+		cpu_buffer->free_page.data = NULL;
- 	}
- 
- 	arch_spin_unlock(&cpu_buffer->lock);
-@@ -6624,8 +6624,8 @@ void ring_buffer_free_read_page(struct t
- 	local_irq_save(flags);
- 	arch_spin_lock(&cpu_buffer->lock);
- 
--	if (!cpu_buffer->free_page) {
--		cpu_buffer->free_page = bpage;
-+	if (!cpu_buffer->free_page.data) {
-+		cpu_buffer->free_page = *data_page;
- 		bpage = NULL;
- 	}
- 
-@@ -6978,7 +6978,7 @@ int ring_buffer_subbuf_order_set(struct
- 	}
- 
- 	for_each_buffer_cpu(buffer, cpu) {
--		struct buffer_data_page *old_free_data_page;
-+		struct buffer_data_read_page old_free_data_page;
- 		struct list_head old_pages;
- 		unsigned long flags;
- 
-@@ -7021,7 +7021,7 @@ int ring_buffer_subbuf_order_set(struct
- 
- 		arch_spin_lock(&cpu_buffer->lock);
- 		old_free_data_page = cpu_buffer->free_page;
--		cpu_buffer->free_page = NULL;
-+		cpu_buffer->free_page.data = NULL;
- 		arch_spin_unlock(&cpu_buffer->lock);
- 
- 		rb_head_page_activate(cpu_buffer);
-@@ -7033,7 +7033,7 @@ int ring_buffer_subbuf_order_set(struct
- 			list_del_init(&bpage->list);
- 			free_buffer_page(bpage);
- 		}
--		free_pages((unsigned long)old_free_data_page, old_order);
-+		free_pages((unsigned long)old_free_data_page.data, old_free_data_page.order);
- 
- 		rb_check_pages(cpu_buffer);
- 	}
 
 
