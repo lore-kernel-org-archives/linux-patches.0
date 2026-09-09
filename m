@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9F31C3BFC;
-	Wed,  9 Sep 2026 14:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEB55632B5;
+	Wed,  9 Sep 2026 14:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964006; cv=none; b=L7giaXTAQAW38/g2S/IR3BfM1qCU0rJijygoPrQde/0r+P8YbtVPQx2QrkDVJ1scEWcPUA96jy5ogouYrFauAkcO0LVJUPCQLGV7uwnJFkWJA2EVC72CJMpFNTbHwJvMBh1TpyKRC6onhNhCweePqbe2SRd5GzrGmsa4Ath5vJI=
+	t=1788964009; cv=none; b=qQPWlkCH+2+3aEyAFrleycVjyUSxnP0yj9/pP6g85zVmThwub9aCvpJvG+z/mULXZFrDBAJeaMVIjCQP22NPLBlc8agZfRTQXWbTKg4jP2V96mT+B6D+4UDLia89EbC/J3ngRnF5Xalj+hd2VqUvPXwRNzj1uwG7dfdDO/Uzh/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964006; c=relaxed/simple;
-	bh=n2YI3wOP8AFLo7M6J20I+Hn8GwPCYxqDOuCho1rNtN0=;
+	s=arc-20240116; t=1788964009; c=relaxed/simple;
+	bh=zGGgN8Jl8OdlszSnl3FrKMgQYWM01ix1hItqxAaXJHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3Ye77XYFVhbt3F7BbTJOr+k9z+CgxpxkAFbgFHJZSpg0Te++tdW6/AZYd7fB0KnQaEm8bJGtbKnjw9taCgERd8bi3ejvohIfwB8x4Gh1DMbhjn2uTGJSXHa8bSzbUhLEqUdttyPgVFNTHAfBHJ5kEOXyxEclG+GOgFWU07HkXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+OiCmn7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PSJypjyUy2pyXVDo+eljXd82ZWo6NTqenrw/7Csqi0dE0A/iS2W5o+ak7EAhn3JeP+dNmFscCPFbmbvy4xdNPqqAjXnQDwdKkJK33iYkOYrMXenPaoZOjtw8XZmx0YMROoxIoiFyOcaR1Axt5fuA9QqqKl5E+YNx4Gk4wSABrRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9klHI5Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+OiCmn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D22B1F00A3A;
-	Wed,  9 Sep 2026 14:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9klHI5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423C21F00A3A;
+	Wed,  9 Sep 2026 14:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964004;
-	bh=7MBoLARrai49EGWlKcPBz/UH8RWNdTBx/+4x9NjHe88=;
+	s=korg; t=1788964007;
+	bh=k2lh957+enbEXFiukLX7mz246tp8eN9N/iWZDY8724w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u+OiCmn76HVkabvqtOT2XCkvD6+qnCsWhUv5q/SabMIoLEhsby3WNnSm5MrFepGJ2
-	 szl6qMimfcUUyMPE0pnOYJgsZRLvVadYBWPFQjGKHx091qEOOO3ufFQcdaK5NxPQo7
-	 /3Hex+tEx78UFbhl3Z/45JELcgh+/mGyiOTH/NbM=
+	b=P9klHI5ZWc9VNKtf7qeicMy2NgdO4vWqG6nXdxq0tQctw5QpyzSWJJg+41ZncA1iD
+	 e18Rp87z+PDzVTtqGxZRkpXxcweqaGV3s4rRiUGHP+t03ZzmkaTf4YotTA94idcFoQ
+	 d2gcIeEO8lH/9jH2eMTfCU/4UB7kEkV+acEY8zIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yosry Ahmed <yosry@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 231/583] KVM: nVMX: Decouple INVVPID operand checks from flushing of vpid02
-Date: Wed,  9 Sep 2026 15:38:36 +0200
-Message-ID: <20260909134246.160490864@linuxfoundation.org>
+Subject: [PATCH 6.18 232/583] KVM: nVMX: Ensure KVM_REQ_GET_NESTED_STATE_PAGES is cleared on VM-Exit
+Date: Wed,  9 Sep 2026 15:38:37 +0200
+Message-ID: <20260909134246.192537328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,92 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 32912404b4b1ee98400744941c78f019a63d6e8f upstream.
+commit 11722439fb206c88e6f31be54173efa9880b4ccb upstream.
 
-Separate the INVVPID operand checks from the actual flushing of vpid02 so
-the flushing can be adjusted to do the right thing when vmcs02  was last
-loaded on a different pCPU, without having to duplicate the logic across
-multiple case-statements.
+Always check and clear KVM_REQ_GET_NESTED_STATE_PAGES when emulating a
+nested VM-Exit to ensure the request is cleared, even when KVM was built
+with CONFIG_KVM_HYPERV=n, as KVM subtly relies on the "check" to clear
+the flag and thus avoid double-mapping the vmcs12 pages, e.g. if KVM
+manages to bail from VM-Enter without processing the request, and then
+emulates VMLAUNCH or VMRESUME.
 
-Opportunistically let the VM-Fail paths poke out past 80 chars.
-
-No functional change intended.
-
+Fixes: b4f69df0f65e ("KVM: x86: Make Hyper-V emulation optional")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20260616214652.2157032-3-yosry@kernel.org
+Reported-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260724004757.131420-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   43 +++++++++++++------------------------------
- 1 file changed, 13 insertions(+), 30 deletions(-)
+ arch/x86/kvm/vmx/nested.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/arch/x86/kvm/vmx/nested.c
 +++ b/arch/x86/kvm/vmx/nested.c
-@@ -6151,7 +6151,6 @@ static int handle_invvpid(struct kvm_vcp
- 		u64 vpid;
- 		u64 gla;
- 	} operand;
--	u16 vpid02;
- 	int r, gpr_index;
+@@ -5135,8 +5135,9 @@ void __nested_vmx_vmexit(struct kvm_vcpu
+ 	/* trying to cancel vmlaunch/vmresume is a bug */
+ 	WARN_ON_ONCE(vmx->nested.nested_run_pending);
  
- 	if (!(vmx->nested.msrs.secondary_ctls_high &
-@@ -6186,8 +6185,15 @@ static int handle_invvpid(struct kvm_vcp
- 		return kvm_handle_memory_failure(vcpu, r, &e);
- 
- 	if (operand.vpid >> 16)
--		return nested_vmx_fail(vcpu,
--			VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
-+		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
-+
-+	if (type != VMX_VPID_EXTENT_ALL_CONTEXT && !operand.vpid)
-+		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
-+
-+	/* LAM doesn't apply to addresses that are inputs to TLB invalidation. */
-+	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR &&
-+	    is_noncanonical_invlpg_address(operand.gla, vcpu))
-+		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
- 
- 	/*
- 	 * Always flush the effective vpid02, i.e. never flush the current VPID
-@@ -6195,33 +6201,10 @@ static int handle_invvpid(struct kvm_vcp
- 	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
- 	 * irrelevant (and there may not be a loaded vmcs12).
- 	 */
--	vpid02 = nested_get_vpid02(vcpu);
--	switch (type) {
--	case VMX_VPID_EXTENT_INDIVIDUAL_ADDR:
--		/*
--		 * LAM doesn't apply to addresses that are inputs to TLB
--		 * invalidation.
--		 */
--		if (!operand.vpid ||
--		    is_noncanonical_invlpg_address(operand.gla, vcpu))
--			return nested_vmx_fail(vcpu,
--				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
--		vpid_sync_vcpu_addr(vpid02, operand.gla);
--		break;
--	case VMX_VPID_EXTENT_SINGLE_CONTEXT:
--	case VMX_VPID_EXTENT_SINGLE_NON_GLOBAL:
--		if (!operand.vpid)
--			return nested_vmx_fail(vcpu,
--				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
--		vpid_sync_context(vpid02);
--		break;
--	case VMX_VPID_EXTENT_ALL_CONTEXT:
--		vpid_sync_context(vpid02);
--		break;
--	default:
--		WARN_ON_ONCE(1);
--		return kvm_skip_emulated_instruction(vcpu);
+-#ifdef CONFIG_KVM_HYPERV
++	/* Note, "checking" the request also clears the request. */
+ 	if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
++#ifdef CONFIG_KVM_HYPERV
+ 		/*
+ 		 * KVM_REQ_GET_NESTED_STATE_PAGES is also used to map
+ 		 * Enlightened VMCS after migration and we still need to
+@@ -5144,8 +5145,8 @@ void __nested_vmx_vmexit(struct kvm_vcpu
+ 		 * the first L2 run.
+ 		 */
+ 		(void)nested_get_evmcs_page(vcpu);
 -	}
-+	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
-+		vpid_sync_vcpu_addr(nested_get_vpid02(vcpu), operand.gla);
-+	else
-+		vpid_sync_context(nested_get_vpid02(vcpu));
+ #endif
++	}
  
- 	/*
- 	 * Sync the shadow page tables if EPT is disabled, L1 is invalidating
+ 	/* Service pending TLB flush requests for L2 before switching to L1. */
+ 	kvm_service_local_tlb_flush_requests(vcpu);
 
 
