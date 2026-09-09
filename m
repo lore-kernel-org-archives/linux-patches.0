@@ -1,51 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9578B481A97;
-	Wed,  9 Sep 2026 14:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B75577E4F;
+	Wed,  9 Sep 2026 14:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964888; cv=none; b=YnBvqt4Hshi3pZA0T9Wg0reQuSRUULw8kGgVOaqjP0JD6eCW3G3FxoZFX6w+WQ7P5sIrUTV7tQf/Zv3uXOka1THYf1IYoY5w/fK7idkA1OemTXlCTU8BfiBE8rAV5f2KiyDm4NXK0VYK9uaVjzmqHO4WD6/MavsRRYxsTvLbPwc=
+	t=1788964891; cv=none; b=TjSFz3q3yQv7VNIdVov5X8dRgo96DBRRPjmlpqVe1FFCHlto2MsqzolSlKfgFS5ZR37xwsrmpeXLqDyXntzx57R2AuYZ/cpQ5ECBpF6mnwPkfj/kLQ8+hcRPocHfk7ONsfjglzSlh2Loth9pXhi74Ols8GOMIZLRQQ2quqn7tLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964888; c=relaxed/simple;
-	bh=G3pqo2Re/jGjQZnwBYO1Z6ySmOYe7qaBGcMz6BLcKK4=;
+	s=arc-20240116; t=1788964891; c=relaxed/simple;
+	bh=9kqXgLPgSr6xfDMgiFUBdUuy7oOrx6r203Mr3npQIrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4OujMX6qzY9KCn4pJge08POmDEOAyYKf434cv/7UbCoDNuRnKautXNXmFJzSbD1bGHDflzN4ftEe0qTGKBthco+5gRkBiIeIMdtT2eTjDhOIa9L/f9pfqQGz0z35GlbqFdfoYOup5T5U97DoqI9NJZygCDAW5yMtzb5+E0j2ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGZU6sRO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uHhSE0Cvi6T5lu8m7hLcvAJF69l2sWPqShLgjaIcXFf9PuMdWeo/RBEJsscJO+THnhv8yTxEbSHRidRKlBKTN24s6QVcvRwVF8uULG5VBRb/jWLN+enmSVRleaFMYnS9XglgRYVLQGCdnnqDz9RW5DnTtiHDeUwULThSEC0xVTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIS6tOXv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGZU6sRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C3F1F00A3A;
-	Wed,  9 Sep 2026 14:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIS6tOXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733F81F00A3A;
+	Wed,  9 Sep 2026 14:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964887;
-	bh=2Lcx/9zilOU3dK012D+NVZPcv61N+ymB/7e2LYtEZLM=;
+	s=korg; t=1788964890;
+	bh=Qgn6R6Wd1rGLESldgW9MJmXuWOBP/x+BJpHqhMYv4cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JGZU6sRONKtnQ5PRR91FjIXY9dFbUgLOf5qy/TfKcyy3ub6KEFSLhb/ZlHKK1/4KB
-	 6EHXzjf7wRI6CET2GYrrBlzsO2Q+co9Ul5jUd46HqJAu0Ic5hBrDz3bfoQNFzJ+Hqz
-	 YNCOD84eqN2WLGUudblFXxmt0ExliiARrMzocqCU=
+	b=kIS6tOXvjreU1j7PsAFI9r1X03tmTFXOSJEv38npDaMoOS1378BhOrf3Te5xZDqX5
+	 q1o26TNYfuLNx/H61hwST1BNWrrCg0gdJ/KAODLIPieFfglKTpsuDPzXwJo4u7XTPd
+	 wbTRatX2VaYL7XRIJm9Fw4SVCzdQ5fzunYbuuoRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Gregory Price <gourry@gourry.net>,
+	Jann Horn <jannh@google.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
 	Lance Yang <lance.yang@linux.dev>,
 	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Rik van Riel <riel@surriel.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Ying Huang <ying.huang@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 578/583] mm/huge_memory: replace can_split_folio() with direct refcount calculation
-Date: Wed,  9 Sep 2026 15:44:23 +0200
-Message-ID: <20260909134257.832172718@linuxfoundation.org>
+Subject: [PATCH 6.18 579/583] migrate: replace RMP_ flags with TTU_ flags
+Date: Wed,  9 Sep 2026 15:44:24 +0200
+Message-ID: <20260909134257.863561418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -64,152 +66,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
-[ Upstream commit 5842bcbfc316738cbfcbdb4def5a7592aa03ebf2 ]
+[ Upstream commit 832d95b5314eea558cf4cc9ca40db10122ce8f63 ]
 
-can_split_folio() is just a refcount comparison, making sure only the
-split caller holds an extra pin.  Open code it with
-folio_expected_ref_count() != folio_ref_count() - 1.  For the extra_pins
-used by folio_ref_freeze(), add folio_cache_ref_count() to calculate it.
-Also replace folio_expected_ref_count() with folio_cache_ref_count() used
-by folio_ref_unfreeze(), since they are returning the same values when a
-folio is frozen and folio_cache_ref_count() does not have unnecessary
-folio_mapcount() in its implementation.
+Instead of translating between RMP_ and TTU_ flags, remove the RMP_ flags
+and just use the TTU_ flag space; there's plenty available.
 
-Link: https://lkml.kernel.org/r/20251126210618.1971206-3-ziy@nvidia.com
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Suggested-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Possibly we should rename these to RMAP_ flags, and maybe even pass them
+in through rmap_walk_arg, but that can be done later.
+
+Link: https://lkml.kernel.org/r/20260109041345.3863089-3-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Jann Horn <jannh@google.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
 Cc: Lance Yang <lance.yang@linux.dev>
 Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: c299a2285d9d ("mm/huge_memory: use folio's memcg inside __folio_split()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/huge_mm.h |    1 -
- mm/huge_memory.c        |   35 ++++++++++++-----------------------
- mm/vmscan.c             |    3 ++-
- 3 files changed, 14 insertions(+), 25 deletions(-)
+ include/linux/rmap.h |    9 +++------
+ mm/huge_memory.c     |    6 +++---
+ mm/migrate.c         |   12 ++++++------
+ 3 files changed, 12 insertions(+), 15 deletions(-)
 
---- a/include/linux/huge_mm.h
-+++ b/include/linux/huge_mm.h
-@@ -364,7 +364,6 @@ unsigned long thp_get_unmapped_area_vmfl
- 		unsigned long len, unsigned long pgoff, unsigned long flags,
- 		vm_flags_t vm_flags);
+--- a/include/linux/rmap.h
++++ b/include/linux/rmap.h
+@@ -92,6 +92,7 @@ struct anon_vma_chain {
+ };
  
--bool can_split_folio(struct folio *folio, int caller_pins, int *pextra_pins);
- int split_huge_page_to_list_to_order(struct page *page, struct list_head *list,
- 		unsigned int new_order);
- int min_order_for_split(struct folio *folio);
+ enum ttu_flags {
++	TTU_USE_SHARED_ZEROPAGE	= 0x2,	/* for unused pages of large folios */
+ 	TTU_SPLIT_HUGE_PMD	= 0x4,	/* split huge PMD if any */
+ 	TTU_IGNORE_MLOCK	= 0x8,	/* ignore mlock */
+ 	TTU_SYNC		= 0x10,	/* avoid racy checks with PVMW_SYNC */
+@@ -1000,12 +1001,8 @@ int mapping_wrprotect_range(struct addre
+ int pfn_mkclean_range(unsigned long pfn, unsigned long nr_pages, pgoff_t pgoff,
+ 		      struct vm_area_struct *vma);
+ 
+-enum rmp_flags {
+-	RMP_LOCKED		= 1 << 0,
+-	RMP_USE_SHARED_ZEROPAGE	= 1 << 1,
+-};
+-
+-void remove_migration_ptes(struct folio *src, struct folio *dst, int flags);
++void remove_migration_ptes(struct folio *src, struct folio *dst,
++		enum ttu_flags flags);
+ 
+ /*
+  * rmap_walk_control: To control rmap traversing for specific needs
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -3328,23 +3328,6 @@ static void lru_add_split_folio(struct f
- 	}
- }
- 
--/* Racy check whether the huge page can be split */
--bool can_split_folio(struct folio *folio, int caller_pins, int *pextra_pins)
--{
--	int extra_pins;
--
--	/* Additional pins from page cache */
--	if (folio_test_anon(folio))
--		extra_pins = folio_test_swapcache(folio) ?
--				folio_nr_pages(folio) : 0;
--	else
--		extra_pins = folio_nr_pages(folio);
--	if (pextra_pins)
--		*pextra_pins = extra_pins;
--	return folio_mapcount(folio) == folio_ref_count(folio) - extra_pins -
--					caller_pins;
--}
--
- static bool page_range_has_hwpoisoned(struct page *page, long nr_pages)
- {
- 	for (; nr_pages; page++, nr_pages--)
-@@ -3717,7 +3700,6 @@ static int __folio_split(struct folio *f
- 	struct anon_vma *anon_vma = NULL;
- 	int old_order = folio_order(folio);
+@@ -3298,7 +3298,7 @@ static void remap_page(struct folio *fol
+ 	if (!folio_test_anon(folio))
+ 		return;
+ 	for (;;) {
+-		remove_migration_ptes(folio, folio, RMP_LOCKED | flags);
++		remove_migration_ptes(folio, folio, TTU_RMAP_LOCKED | flags);
+ 		i += folio_nr_pages(folio);
+ 		if (i >= nr)
+ 			break;
+@@ -3702,8 +3702,8 @@ static int __folio_split(struct folio *f
  	struct folio *new_folio, *next;
--	int extra_pins;
  	int nr_shmem_dropped = 0;
  	enum ttu_flags ttu_flags = 0;
- 	pgoff_t end = 0;
-@@ -3805,7 +3787,7 @@ static int __folio_split(struct folio *f
- 	 * Racy check if we can split the page, before unmap_folio() will
- 	 * split PMDs
- 	 */
--	if (!can_split_folio(folio, 1, &extra_pins)) {
-+	if (folio_expected_ref_count(folio) != folio_ref_count(folio) - 1) {
- 		ret = -EAGAIN;
- 		goto out_unlock;
- 	}
-@@ -3829,7 +3811,10 @@ static int __folio_split(struct folio *f
+-	pgoff_t end = 0;
+ 	int ret;
++	pgoff_t end = 0;
  
- 	/* Prevent deferred_split_scan() touching ->_refcount */
- 	ds_queue = folio_split_queue_lock(folio);
--	if (folio_ref_freeze(folio, 1 + extra_pins)) {
-+	if (folio_ref_freeze(folio,
-+			     (folio_test_anon(folio) &&
-+			      !folio_test_swapcache(folio) ?
-+			      0 : folio_nr_pages(folio)) + 1)) {
- 		struct swap_cluster_info *ci = NULL;
- 		struct lruvec *lruvec;
- 		int expected_refs;
-@@ -3898,7 +3883,9 @@ static int __folio_split(struct folio *f
+ 	VM_WARN_ON_ONCE_FOLIO(!folio_test_locked(folio), folio);
+ 	VM_WARN_ON_ONCE_FOLIO(!folio_test_large(folio), folio);
+@@ -3948,7 +3948,7 @@ fail:
+ 		shmem_uncharge(mapping->host, nr_shmem_dropped);
  
- 			next = folio_next(new_folio);
+ 	if (!ret && is_anon)
+-		ttu_flags = (enum ttu_flags)RMP_USE_SHARED_ZEROPAGE;
++		ttu_flags = TTU_USE_SHARED_ZEROPAGE;
+ 	remap_page(folio, 1 << old_order, ttu_flags);
  
--			expected_refs = folio_expected_ref_count(new_folio) + 1;
-+			expected_refs = (folio_test_anon(new_folio) &&
-+					 !folio_test_swapcache(new_folio) ?
-+					 0 : folio_nr_pages(new_folio)) + 1;
- 			folio_ref_unfreeze(new_folio, expected_refs);
+ 	/*
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -451,11 +451,12 @@ static bool remove_migration_pte(struct
+  * Get rid of all migration entries and replace them by
+  * references to the indicated page.
+  */
+-void remove_migration_ptes(struct folio *src, struct folio *dst, int flags)
++void remove_migration_ptes(struct folio *src, struct folio *dst,
++		enum ttu_flags flags)
+ {
+ 	struct rmap_walk_arg rmap_walk_arg = {
+ 		.folio = src,
+-		.map_unused_to_zeropage = flags & RMP_USE_SHARED_ZEROPAGE,
++		.map_unused_to_zeropage = flags & TTU_USE_SHARED_ZEROPAGE,
+ 	};
  
- 			lru_add_split_folio(folio, new_folio, lruvec, list);
-@@ -3938,7 +3925,9 @@ static int __folio_split(struct folio *f
- 		 * Otherwise, a parallel folio_try_get() can grab @folio
- 		 * and its caller can see stale page cache entries.
- 		 */
--		expected_refs = folio_expected_ref_count(folio) + 1;
-+		expected_refs = (folio_test_anon(folio) &&
-+				 !folio_test_swapcache(folio) ?
-+				 0 : folio_nr_pages(folio)) + 1;
- 		folio_ref_unfreeze(folio, expected_refs);
+ 	struct rmap_walk_control rwc = {
+@@ -463,9 +464,9 @@ void remove_migration_ptes(struct folio
+ 		.arg = &rmap_walk_arg,
+ 	};
  
- 		unlock_page_lruvec(lruvec);
-@@ -4467,7 +4456,7 @@ static int split_huge_pages_pid(int pid,
- 		 * can be split or not. So skip the check here.
- 		 */
- 		if (!folio_test_private(folio) &&
--		    !can_split_folio(folio, 0, NULL))
-+		    folio_expected_ref_count(folio) != folio_ref_count(folio))
- 			goto next;
+-	VM_BUG_ON_FOLIO((flags & RMP_USE_SHARED_ZEROPAGE) && (src != dst), src);
++	VM_BUG_ON_FOLIO((flags & TTU_USE_SHARED_ZEROPAGE) && (src != dst), src);
  
- 		if (!folio_trylock(folio))
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1312,7 +1312,8 @@ retry:
- 					goto keep_locked;
- 				if (folio_test_large(folio)) {
- 					/* cannot split folio, skip it */
--					if (!can_split_folio(folio, 1, NULL))
-+					if (folio_expected_ref_count(folio) !=
-+					    folio_ref_count(folio) - 1)
- 						goto activate_locked;
- 					/*
- 					 * Split partially mapped folios right away.
+-	if (flags & RMP_LOCKED)
++	if (flags & TTU_RMAP_LOCKED)
+ 		rmap_walk_locked(dst, &rwc);
+ 	else
+ 		rmap_walk(dst, &rwc);
+@@ -1530,8 +1531,7 @@ static int unmap_and_move_huge_page(new_
+ 		rc = move_to_new_folio(dst, src, mode);
+ 
+ 	if (page_was_mapped)
+-		remove_migration_ptes(src, !rc ? dst : src,
+-				ttu ? RMP_LOCKED : 0);
++		remove_migration_ptes(src, !rc ? dst : src, ttu);
+ 
+ 	if (ttu & TTU_RMAP_LOCKED)
+ 		i_mmap_unlock_write(mapping);
 
 
