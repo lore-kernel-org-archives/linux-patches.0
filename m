@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DB458496F;
-	Wed,  9 Sep 2026 14:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3B6581251;
+	Wed,  9 Sep 2026 14:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964297; cv=none; b=QNvmftmt/6FZC8k2kazHkL/FbYUl3+GbQ1ZPA6b3FuILJOPI4/4xYV4nAJOLOprMRUIRGqkIFUjNWHQe6sxtznCAZHuC3Ijmg3mc0j7OCoy9az+C1yx5uPoEcpQblFDoTgMKAYbLjGJ1gb0ClMjHH9TSjcnjTiKLGuiaSV4d8Jk=
+	t=1788964300; cv=none; b=tdiPHhOL0hG5JtbJ3ZHLdQNhaeVu+dHk+px+2b0/7qjuoNJGoJ6xSFXhbdn7hVvTqalqXIKy6gHEGnrhFYztNMGSui7Kh0Ge0+OrRZGPLJQ+U2W6EtcznBsah/x47hzGps5Tle9DfNU7r+g9NngxGbuSsNvz5NzrPyAtkvR6HZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964297; c=relaxed/simple;
-	bh=Xw85HYicFo/MRyXTetPECrUCoz/s/evomBv7KkjDnsw=;
+	s=arc-20240116; t=1788964300; c=relaxed/simple;
+	bh=JSM906yrOKthxOxIB10ODcGOSaxZXa6ieBeyKA77c70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhGJGr5FE4CW8n8obL+/BKNxLI8Pni+buqRupp+dvHFsBh1vJkCWus5XOVTilMtKPbbodm4tZq2xf2rZracsK9saW4dlWktd2NeyGcaHICGglio4ywr+Q7Tm6W8TxR9NmU2keemw/BSGuEEmyDHTkOG0NHzQ8Ev9OIA4yWFx6XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hY0tAeKD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o5nlxea29uxBNYSXwRKSSt2RgmZmfN5epqEa9Cj4Rm1fbsn8u5O/eO5c51wRn23YhGuwYH4Ebm8rtpvlW6uzFKlBxk92g/3w6fsS2KnwtwfyYtjoRlug26JbcYq3FMlxrxsZ4Qm5ZryoZbZmf+hz0B7Q3halXXx5YgWgkSg96iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R75fmIVp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hY0tAeKD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A101F00A3A;
-	Wed,  9 Sep 2026 14:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R75fmIVp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79291F00A3A;
+	Wed,  9 Sep 2026 14:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964295;
-	bh=4nedcAr0kPeEdatEhAEE4bB/1pWhHNHJ1RYaEGmxfTM=;
+	s=korg; t=1788964298;
+	bh=04GD7kydHJzwJewzpci3jaYJS2UY3voVBsPQUyOqdlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hY0tAeKDrGSNdpi2BeFQjIz3V2wHQPxsWcIxcowj2CIQgTuiCiJoIXi0ZmNjWLmlw
-	 x9ImGVSY0Yo77MXi6oXqckDs0CLEaX552zEZAZ7VIZdgagujZSWaY3Rb49c5w0cZaU
-	 0nyM+5vy4eLGyJArXrjZdOUKHcbgKiV4VF08AfsY=
+	b=R75fmIVpAX4MrkcpgY+YETxv16l/NXbXoEVP2o8MBEPMdJkGgwpw4qckBD5qsmL3E
+	 XI24E+G1dmFb+sqw1QTndplQmOm7FRu/KmBMn6M8OOn/sgOiONO8KVtEzGDkMVsYZf
+	 3Tf++LDPUth9Jov8wqiLYvndx382fQ90qZas29ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Deborah Brouwer <deborah.brouwer@collabora.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 375/583] drm: fix race between partial drm_dev_register() failure and ioctl
-Date: Wed,  9 Sep 2026 15:41:00 +0200
-Message-ID: <20260909134251.019190081@linuxfoundation.org>
+	stable@kernel.org,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.18 358/583] f2fs: fix to avoid potential section-unaligned pinfile
+Date: Wed,  9 Sep 2026 15:40:43 +0200
+Message-ID: <20260909134250.409119955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,98 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-commit eb197f7d60f00d0f5b1b3505dfc86a7e36045a3e upstream.
+commit d0a481fad5c7a3a56ecf54a099651216869f4d0a upstream.
 
-If drm_dev_register() fails after registering a minor (e.g. render minor
-registered, primary minor fails), userspace could have opened the first
-minor and entered a drm_dev_enter() critical section. Since the
-unplugged flag was never set, the ioctl proceeds while the error path
-tears down device resources.
+Blocks of pinfile may not aligned to section size due to wrong use
+on pinfile, result in heavy overhead of GC, let avoid this by
+adding additional check condition in f2fs_setattr().
 
-Fix this by introducing drm_dev_synchronize_unplug(), which sets the
-unplugged flag and waits for the SRCU barrier, ensuring all in-flight
-drm_dev_enter() critical sections complete before cleanup proceeds; call
-it on the error path of drm_dev_register().
+- truncate -s 8mb pinfile
+: random checkpoint may persist filesize w/ inode
+- fallocate -o 0 -l 8mb pinfile
+ - f2fs_fallocate
+  - f2fs_expand_inode_data
+   - f2fs_allocate_pinning_section
+   - f2fs_map_blocks
+    - f2fs_map_lock
+    - __allocate_data_block
+    - file_need_truncate
+    : w/ FADVISE_TRUNC_BIT, we can expect unaligned mapping can be
+      truncated while open() if f2fs is not umount abnormally
+    - f2fs_map_unlock
+    : following f2fs checkpoint and sudden power-cut
 
-Fixes: bee330f3d672 ("drm: Use srcu to protect drm_device.unplugged")
-Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260620190648.2E9F61F000E9@smtp.kernel.org/
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Tested-by: Deborah Brouwer <deborah.brouwer@collabora.com>
-Link: https://patch.msgid.link/20260628145406.2107056-17-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+- mount
+- open pinfile
+ - f2fs_file_open
+  - finish_preallocate_blocks
+   - truncate_setsize
+   : filesize is 8mb
+   - f2fs_truncate
+   : can only truncate block outside filesize, rather than truncating
+     unaligned blocks inside filesize
+
+Fixes: f5a53edcf01e ("f2fs: support aligned pinned file")
+Cc: stable@kernel.org
+Cc: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_drv.c |   34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ fs/f2fs/file.c |   28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -472,6 +472,22 @@ void drm_dev_exit(int idx)
- }
- EXPORT_SYMBOL(drm_dev_exit);
- 
-+/*
-+ * Mark the device as unplugged and wait for any in-flight drm_dev_enter()
-+ * critical sections to complete.
-+ */
-+static void drm_dev_synchronize_unplug(struct drm_device *dev)
-+{
-+	/*
-+	 * After synchronizing any critical read section is guaranteed to see
-+	 * the new value of ->unplugged, and any critical section which might
-+	 * still have seen the old value of ->unplugged is guaranteed to have
-+	 * finished.
-+	 */
-+	dev->unplugged = true;
-+	synchronize_srcu(&drm_unplug_srcu);
-+}
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1094,17 +1094,23 @@ int f2fs_setattr(struct mnt_idmap *idmap
+ 			!IS_ALIGNED(attr->ia_size,
+ 			F2FS_BLK_TO_BYTES(fi->i_cluster_size)))
+ 			return -EINVAL;
+-		/*
+-		 * To prevent scattered pin block generation, we don't allow
+-		 * smaller/equal size unaligned truncation for pinned file.
+-		 * We only support overwrite IO to pinned file, so don't
+-		 * care about larger size truncation.
+-		 */
+-		if (f2fs_is_pinned_file(inode) &&
+-			attr->ia_size <= i_size_read(inode) &&
+-			!IS_ALIGNED(attr->ia_size,
+-			F2FS_BLK_TO_BYTES(CAP_BLKS_PER_SEC(sbi))))
+-			return -EINVAL;
 +
- /**
-  * drm_dev_unplug - unplug a DRM device
-  * @dev: DRM device
-@@ -484,15 +500,7 @@ EXPORT_SYMBOL(drm_dev_exit);
-  */
- void drm_dev_unplug(struct drm_device *dev)
- {
--	/*
--	 * After synchronizing any critical read section is guaranteed to see
--	 * the new value of ->unplugged, and any critical section which might
--	 * still have seen the old value of ->unplugged is guaranteed to have
--	 * finished.
--	 */
--	dev->unplugged = true;
--	synchronize_srcu(&drm_unplug_srcu);
--
-+	drm_dev_synchronize_unplug(dev);
- 	drm_dev_unregister(dev);
++		if (f2fs_is_pinned_file(inode)) {
++			/*
++			 * It may break section-aligned fallocate recovery
++			 * mechanism, so do not allow larger size truncation.
++			 */
++			if (attr->ia_size > i_size_read(inode))
++				return -EINVAL;
++			/*
++			 * To prevent scattered pin block generation, we don't
++			 * allow smaller/equal size unaligned truncation for
++			 * pinned file.
++			 */
++			else if (!IS_ALIGNED(attr->ia_size,
++				F2FS_BLK_TO_BYTES(CAP_BLKS_PER_SEC(sbi))))
++				return -EINVAL;
++		}
+ 	}
  
- 	/* Clear all CPU mappings pointing to this device */
-@@ -1087,6 +1095,7 @@ int drm_dev_register(struct drm_device *
- 		goto err_minors;
- 
- 	dev->registered = true;
-+	dev->unplugged = false;
- 
- 	if (driver->load) {
- 		ret = driver->load(dev, flags);
-@@ -1113,6 +1122,13 @@ err_unload:
- 	if (dev->driver->unload)
- 		dev->driver->unload(dev);
- err_minors:
-+	/*
-+	 * If a minor was registered before the failure, userspace could have
-+	 * opened it and entered a drm_dev_enter() critical section. Ensure all
-+	 * such sections complete before we clean up.
-+	 */
-+	drm_dev_synchronize_unplug(dev);
-+
- 	remove_compat_control_link(dev);
- 	drm_minor_unregister(dev, DRM_MINOR_ACCEL);
- 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
+ 	if (is_quota_modification(idmap, inode, attr)) {
 
 
