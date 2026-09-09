@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566A8530DE5;
-	Wed,  9 Sep 2026 14:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F642238C1A;
+	Wed,  9 Sep 2026 14:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962609; cv=none; b=l71GfWxUAsnfiROyuva055LBlWLpAlCa5xwzMAofZH5IB4c0+yf2Im/1Yg6Ud+wGVLpbs74fU8Pek+V96QiTqHTYuWjZlVYbIA73n4RAE8Xmc6cSieY98yhLedS4+2kaiB4HYoTJx9/E4FOcMw8ZjluiH9Gkm0GWHJSHDqIouBs=
+	t=1788962612; cv=none; b=pE/KCPzobAo35If4GS802pYvoYk78FobEqtcAvj1BdpG8JtGBr8CSrs2+whc/RWDeBC2HdfB38mOhnUqvrJpIpUtCggrNb3Pp75Sjv9oE4jqC5nzo9DbnuwrIG8uhwVNTCpPM8WYcwqnaY/QdroiGRqswZqMK/MjG5Snjf1aH0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962609; c=relaxed/simple;
-	bh=55ywL3Z2yKCcs2PqQcrOC8ow8GVA+gENOwpjzvi8vh8=;
+	s=arc-20240116; t=1788962612; c=relaxed/simple;
+	bh=tKFPQaQRQC/2es3N5Js83PXba8jE/zDWLKD1PXNv244=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kmiw9/jbVmsX7bj6HboVq4Lqk2ElT17JjDOWFZoY9lOKEpHwS6SMZEgG8YedYAEb9L94qSqTpfLDyj9E8XbgOFgMwQjqEx8GnlT/x9S8D7iymIc+jlwAhK09AlEf0R9AfwZkMiyWgVpgoTee4dfPZYWeNa8cc8wcDpVxszJ6EXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdtMKgBw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EXqaWUaFA192k+zi9RpmLBjNVrJKhKRdYVZEsioU82zbf08fGeWa41V9rl7zUaG+29+UccJHLlkZL8HH6Ty2vwnWles6iLpMC6dXT1XW1VtEqH+0Mx4HrGGw7QMQ9k2w746Zr57aZM8fFT9+V+5LImY9z9FJb95pLGUDPd+wW6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1cPLWAz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdtMKgBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702C61F00A3A;
-	Wed,  9 Sep 2026 14:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1cPLWAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B211F00A3A;
+	Wed,  9 Sep 2026 14:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962608;
-	bh=XrHrFTuUviuOkZ1Hi75iPJvGDeHBTthh9yPdj0PK3dU=;
+	s=korg; t=1788962610;
+	bh=sppy4hNHBWxtu39Hk5lrk91p7eOEA2nRU4D6mBZJjAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KdtMKgBwbZOfX+SYD1t2z9IC7OuB2G93HuKbNhPiWi4YfJ0qsJ8+7RH92/TxHHYi5
-	 koz0eYH2wMF1ci62UPJGNk5JptnjaZd6PZl+BialGxp4a9DZUrLfdd7ojyCw5ih7A8
-	 xpbuzvaKRCMyIyOdSfEKFiSMbYIbvBoL5U5OwMJU=
+	b=n1cPLWAzksgCW4T78TGrVZuoZZl72an1vCY6iRCRW+66GBMlRnVVK3v603pFhkXVs
+	 J6XIDRRojqhWB1KPwDgfZzqbOZGwbYMPEd1gLQXimNEfC1ofeZfE6HH9s5jJajPZpb
+	 /8pXxjNuGnic7wuaJxRNZTCu2tb6A2tGHFdZ09uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 7.2 305/556] KVM: s390: Fix old_data leak in guest debug error path
-Date: Wed,  9 Sep 2026 15:39:45 +0200
-Message-ID: <20260909134241.405748236@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.2 296/556] KVM: nVM: Ensure INVVPID is emulated on the correct physical CPU
+Date: Wed,  9 Sep 2026 15:39:36 +0200
+Message-ID: <20260909134241.100471557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,54 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit aa9c8e8baf1e765fa65b93212522c636f25d846f upstream.
+commit 6d00e67326d831e6e610933a3800712f4ffe6ec1 upstream.
 
-__import_wp_info() allocates a per-watchpoint old_data buffer to back up
-the original guest memory contents. If a later watchpoint of the same
-KVM_SET_GUEST_DEBUG request fails to import, kvm_s390_import_bp_data()
-jumps to the error label, which frees the wp_info array but not the
-old_data buffers of the entries that were imported successfully. Up to
-MAX_BP_COUNT - 1 buffers of up to MAX_WP_SIZE bytes are leaked per failed
-request, and the request can be repeated.
+When emulating INVVPID, KVM executes INVVPID on the physical CPU using
+vpid02 (instead of the L1 assigned VPID), after doing some validations
+on the operands. However, it is possible that the physical CPU KVM
+executes INVVPID on is different from the CPU L2 is running on.
 
-Create error handling for cleaning up all created old_data memory
-areas.
+For example, in the following scenario:
+- L2 runs on CPU #1 and exits to L1 (vmx->nested.vmcs02.cpu=1)
+- L1 migrates to CPU #2 and executes INVVPID
+- KVM executes INVVPID on CPU #2
+- L1 migrates back to CPU #1 and runs L2 (vmx->nested.vmcs02.cpu=1)
 
-Fixes: 27291e2165b6 ("KVM: s390: hardware support for guest debugging")
+The TLB entries on CPU #1 are never invalidated, because INVVPID was
+executed on CPU #2, and vmcs02 never ran on a different pCPU (i.e.
+vmx_vcpu_load_vmcs() will *not* request KVM_REQ_TLB_FLUSH).
+
+Ensure that INVVPID is being executed on the same pCPU that L2 last ran
+on, and if not, fallback to clearing last_vpid=0 to trigger a full VPID
+flush on the next nested VM-Enter (as KVM will detect L1 using a
+different VPID for L2). If L2 ends up running on a different pCPU, KVM
+will flush the TLB anyway through vmx_vcpu_load_vmcs().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260805110455.7200-6-borntraeger@linux.ibm.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20260616214652.2157032-4-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/guestdbg.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/arch/s390/kvm/guestdbg.c
-+++ b/arch/s390/kvm/guestdbg.c
-@@ -252,7 +252,7 @@ int kvm_s390_import_bp_data(struct kvm_v
- 			ret = __import_wp_info(vcpu, &bp_data[i],
- 					       &wp_info[nr_wp]);
- 			if (ret)
--				goto error;
-+				goto error_wp;
- 			nr_wp++;
- 			break;
- 		case KVM_HW_BP:
-@@ -269,6 +269,10 @@ int kvm_s390_import_bp_data(struct kvm_v
- 	vcpu->arch.guestdbg.hw_wp_info = wp_info;
- 	kfree(bp_data);
- 	return 0;
-+
-+error_wp:
-+	while (nr_wp--)
-+		kfree(wp_info[nr_wp].old_data);
- error:
- 	kfree(bp_data);
- 	kfree(wp_info);
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -6079,6 +6079,7 @@ static int handle_invvpid(struct kvm_vcp
+ 		u64 gla;
+ 	} operand;
+ 	int r, gpr_index;
++	int cpu;
+ 
+ 	if (!(vmx->nested.msrs.secondary_ctls_high &
+ 	      SECONDARY_EXEC_ENABLE_VPID) ||
+@@ -6127,11 +6128,19 @@ static int handle_invvpid(struct kvm_vcp
+ 	 * and never explicitly flush vpid01.  INVVPID targets a VPID, not a
+ 	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
+ 	 * irrelevant (and there may not be a loaded vmcs12).
++	 *
++	 * If vmcs02 was last loaded on a different pCPU, then defer the flush
++	 * by invalidating the nested VPID tracking to ensure that KVM performs
++	 * the invalidation on the correct pCPU.
+ 	 */
+-	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
++	cpu = get_cpu();
++	if (cpu != vmx->nested.vmcs02.cpu)
++		vmx->nested.last_vpid = 0;
++	else if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
+ 		vpid_sync_vcpu_addr(nested_get_vpid02(vcpu), operand.gla);
+ 	else
+ 		vpid_sync_context(nested_get_vpid02(vcpu));
++	put_cpu();
+ 
+ 	/*
+ 	 * Sync the shadow page tables if EPT is disabled, L1 is invalidating
 
 
