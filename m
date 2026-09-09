@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F2756C621;
-	Wed,  9 Sep 2026 14:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6635456C658;
+	Wed,  9 Sep 2026 14:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964189; cv=none; b=k900tpAEhJeS/sRCkL6FDLQES2XyrFfyXIGTt3R5ssSZFyLVITvwcZq9ZohphToIG8jJIFJDQkzbah/T0XMvqtAvzXrvlYjrgXJXemvF/LS7iIGtmyLXLpNoFHk1fAy34VB40/HnrAXUekKoS/+SAkd2jk9nJim65xuroXR5nr0=
+	t=1788964192; cv=none; b=J7WxhNF1KWiTNc1W5IJpowblfiowqtgjPx9QfJUiK88C7oE8TfSmd6dImeoh+3ZzId4mmv1Cuey7QUAGVFWx3K3E0vnhHRHZq6JhqBlC8HQWAsdD5zfLV2vhBO8kmRwD9m0aUEGijwNQ21iyupIlilU7todoCJkFcerSlA1WH04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964189; c=relaxed/simple;
-	bh=oS4/Ie4rdrFJFPOiNV0Aou0iMLV0HOy74h1PeUFscb0=;
+	s=arc-20240116; t=1788964192; c=relaxed/simple;
+	bh=qtpDz7P2D+wZ7owRAnYPdc9rvP8iC6gLv43QrDYQOrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEcShHf1VTKzcSFIlM/RqqsqyPPrTWje0k9yycHSYgG75OxQulUG5PTx7/rXxFLdIq6YMqJ44ce3r+2/76AkFM2TFuAEd1S+shUz+6qU/bH4qRpcIhwakO2Y+NL2WYbuMZFGeErYB8b+m3YAdF1xdKqKGC4KLTR73HmLCrnmCOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OKkSnhD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UHa1kDO4sHo0IE5R2zmxZwMEks8+soOxHxzsxWoPK5EpaQz90r9CGpE3MN2N30xczC0DmgOUMC/s0afpanGbcWrYweY1Q8a8MLIZ9HMMxIgifejY3TbQ5VDl52digFG9+J/D5bPAjNOBALauFIpA55GW8j5DvAnmEl5LFh7cOWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gh22oRlC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OKkSnhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE7F1F00A3A;
-	Wed,  9 Sep 2026 14:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gh22oRlC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756081F00A3A;
+	Wed,  9 Sep 2026 14:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964188;
-	bh=OYog3aAQ3EaMY5N/inSkfvemlRF4VbKhTbfaOlvvGtA=;
+	s=korg; t=1788964191;
+	bh=A2CqX+68PW2K9uW/O06KV03iSzNaKvnZFkPdaU5MfJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0OKkSnhD1AkIq04Uw1D8suAmT1CsA0moj8buakC2t4k5F49uTqQodHsERrMe5E9C4
-	 hGQrSTp7AuDC/3IWmUxVZHsvgdBssHLwhEOgHyqXEwqx9/dmlH5RnVaLXfqySc1TPe
-	 3b1EW9hqLlGp4J0qYxBNis4QmGRWS/oz0CHKBv9M=
+	b=gh22oRlCSu18Fh0muTmag39JnkygKen6ScBDvZN30IZdo5gh3n0b0aG9eJO7AvaZ5
+	 E/ckTbkaVy7qzYFdmqwSojg9WkGx6VADKqghlUGBV/OKSJ92o97wHzb9Z9n1nsQlZ0
+	 EpLEnb5do/g52bYfil/UbxNStkGRrH+jGvBCi7L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.18 337/583] scsi: qla2xxx: Fix FCE trace enable parsing in debugfs
-Date: Wed,  9 Sep 2026 15:40:22 +0200
-Message-ID: <20260909134249.670721495@linuxfoundation.org>
+Subject: [PATCH 6.18 338/583] scsi: qla2xxx: Dont query firmware state while chip is down
+Date: Wed,  9 Sep 2026 15:40:23 +0200
+Message-ID: <20260909134249.704510919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,39 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit b7368687e3d11f51392d3c4774ec0263d5fbf31f upstream.
+commit e0cebe20dcffbed9c078fe30e2d18cd5046d9eff upstream.
 
-qla2x00_dfs_fce_write() called kstrtoul() with a NULL result pointer,
-so a successful parse would dereference NULL and oops. Worse, the int
-return value (0 on success, negative errno on failure) was assigned to
-the unsigned long enable flag, inverting the intended logic: a valid
-number was treated as "disable" while a parse failure enabled FCE.
+qla2x00_fw_state_show() initializes rval to QLA_FUNCTION_FAILED and jumps
+to the out: label when the chip is down or EEH is busy. The out: block
+then re-issued qla2x00_get_firmware_state() because rval != QLA_SUCCESS,
+defeating the chip-down/EEH-busy guards and issuing a mailbox command
+(outside optrom_mutex) during ISP reset or PCI error recovery, which can
+hang the adapter. It also turned a normal in-lock mailbox failure into a
+second unsynchronized mailbox attempt.
 
-Parse the value into enable and propagate parse errors to userspace.
+Make the out: fallback only mark the firmware state as unknown. The
+mailbox is now issued at most once, inside optrom_mutex, and only when
+the chip is up and not EEH-busy.
 
-Fixes: 841df27d619e ("scsi: qla2xxx: Move FCE Trace buffer allocation to user control")
+Fixes: b6faaaf796d7 ("scsi: qla2xxx: Serialize mailbox request")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-10-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-8-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_dfs.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_attr.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_dfs.c
-+++ b/drivers/scsi/qla2xxx/qla_dfs.c
-@@ -510,7 +510,9 @@ qla2x00_dfs_fce_write(struct file *file,
- 		return PTR_ERR(buf);
- 	}
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -1662,10 +1662,8 @@ qla2x00_fw_state_show(struct device *dev
+ 	rval = qla2x00_get_firmware_state(vha, state);
+ 	mutex_unlock(&vha->hw->optrom_mutex);
+ out:
+-	if (rval != QLA_SUCCESS) {
++	if (rval != QLA_SUCCESS)
+ 		memset(state, -1, sizeof(state));
+-		rval = qla2x00_get_firmware_state(vha, state);
+-	}
  
--	enable = kstrtoul(buf, 0, 0);
-+	rc = kstrtoul(buf, 0, &enable);
-+	if (rc)
-+		goto out_free;
- 	rc = count;
- 
- 	mutex_lock(&ha->fce_mutex);
+ 	return scnprintf(buf, PAGE_SIZE, "0x%x 0x%x 0x%x 0x%x 0x%x 0x%x\n",
+ 	    state[0], state[1], state[2], state[3], state[4], state[5]);
 
 
