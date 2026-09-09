@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681CE53D0B8;
-	Wed,  9 Sep 2026 14:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A93156E043;
+	Wed,  9 Sep 2026 14:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963838; cv=none; b=Yi4DSxQp7OxeLItN0ac7wnhpSNzofjkwDICMM0J+A3T1zF0mVwPcHF4ib5daCWHYxe6OBfbGLPxsvL4Y4XSHem9W43Pph89XOLMzgs29mSJ4+4zMHuf36SgCR4VFAt/t8z89QQCnH07wSGHNkhswAO5cIgP4bDMEzpjVeNh4RAY=
+	t=1788963841; cv=none; b=edDgdc1KP4VccK8dT+PbvXIAn/TdHWqZYue6wNZvVYz4I0hjxnuanPOhjSwo/9AEgrrX0ZKXSigrxXbbSR9vM5qK2Rfqk9TdkMDFN21I64uF46/+P+zKZIzJHMVpkanMCAQAwrQuUvMMTUyaWZq+GSB+ijsKA+QjMoj87xM0r4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963838; c=relaxed/simple;
-	bh=z2LO2TB03e9Ny1kPcebqJoFF6r7EzSY7kVpoHN+nBXQ=;
+	s=arc-20240116; t=1788963841; c=relaxed/simple;
+	bh=hn7VLkXuGRfJLQ3/u6C5E/kEbCR7sMVI8B1gr2LkrMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUSzndF2jFNJnjTaWzKcuxU4ffajtwb0iB8J8PMfdAT07UmBIgLM6pp8gvStrOjhDidaaqcLKVQ34orOAE810kKiOwr3Vks68A7N8vgpa1dMwbUPqOA2lVOSx2A9hHutzwjvlbiwb3xNgmH866UTNv6dutbJ9RDPkatvuAc3KyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SujNNgEK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JjmhF4f0W0O8yladZqClq2U/ugwaSkAsT0qui4g1YurHIpbdIIuTcXhJNn0Q2oPjG6qalFJgJfjm5dWyoE+BlRM9A2zPTu4nTtfJDPugA+mMitUoP3g34Vtck2Moe4tp4+ARCmXFjSEB40d0n8ymFwowZ3XI6Ul4CFCvDtiEYOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKkn+piu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SujNNgEK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C217E1F00A3A;
-	Wed,  9 Sep 2026 14:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKkn+piu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952441F00A3A;
+	Wed,  9 Sep 2026 14:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963837;
-	bh=2+iyJlZRUDz1FkcMBMdGOqU19BSoE4akgAXBQIWPPsE=;
+	s=korg; t=1788963840;
+	bh=4EGx1Gk1ne7NxvoXhlYl/SYhsDuaI+TQUaPSMBEk0CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SujNNgEKiwq9usL0qnUE7h1SQoVW5AtfIpcjWSFUNBhlhdLC5oic9Fr30IU1KgHyR
-	 zHW5XQU5ziIKjwehO2JTD/Isf4er6XJFU/cQNcdpli5+PCb4yynP3nJTwjHTT1LqlZ
-	 WNZ0klbTf51IdGLbnDlV3yoO9WkompP2O8e6g4FM=
+	b=VKkn+piuk54fIF1Us25OsAdCvFRcX9acwnrZGwNoCNeIfbx/i0zy+ZSiHQWNjkEEQ
+	 dPMeSZ2t4G4es5JPYRemvfYnnN2iavx/1G6ackOVFm1r7K8NtfCk8CYJRnmMjQfHXH
+	 8uPTnZsjaK4VcCLrn6Rp0JQDx8eyin5S1QgyEyj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Giorgi Tchankvetadze <giorgi@tchankvetadze.com>,
 	Joshua Crofts <joshua.crofts1@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 214/583] iio: gyro: mpu3050: fix sign of raw angular velocity readings
-Date: Wed,  9 Sep 2026 15:38:19 +0200
-Message-ID: <20260909134245.558302048@linuxfoundation.org>
+Subject: [PATCH 6.18 215/583] iio: light: cm32181: return zero after writing calibscale
+Date: Wed,  9 Sep 2026 15:38:20 +0200
+Message-ID: <20260909134245.592413230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,47 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Giorgi Tchankvetadze <giorgi@tchankvetadze.com>
 
-commit 06fab97602fe400bea843176f485bbac07a668e2 upstream.
+commit 8756acd30919a3e9f547ea4a1d4b7f7895f4d340 upstream.
 
-The MPU-3050 gyroscope output registers hold 16-bit two's complement
-values; the angular velocity channels are declared with .sign = 's'.
-When mpu3050_read_raw() handles IIO_CHAN_INFO_RAW it reads the register
-via a big-endian regmap_bulk_read() and assigns it with:
+The write_raw callback is documented to return 0 on success or a
+negative error code.  However, the IIO_CHAN_INFO_CALIBSCALE case
+returns 'val' (the user-supplied value) instead of 0.
 
-	*val = be16_to_cpu(raw_val);
+Fix it by returning 0 on success, matching the behavior of other
+calibscale implementations in the subsystem.
 
-be16_to_cpu() yields an unsigned 16-bit quantity, so negative rates
-(bit 15 set) are reported to userspace as large positive integers
-(e.g. -1 becomes 65535) instead of the correct negative value.
-
-Cast to s16 before the assignment, matching the temperature channel a
-few lines above which already handles the sign correctly.
-
-Fixes: 3904b28efb2c ("iio: gyro: Add driver for the MPU-3050 gyroscope")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
+Fixes: 971672c0b3cc ("iio: add Capella CM32181 ambient light sensor driver.")
+Signed-off-by: Giorgi Tchankvetadze <giorgi@tchankvetadze.com>
 Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |    2 +-
+ drivers/iio/light/cm32181.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -356,7 +356,7 @@ static int mpu3050_read_raw(struct iio_d
- 				goto out_read_raw_unlock;
- 			}
- 
--			*val = be16_to_cpu(raw_val);
-+			*val = (s16)be16_to_cpu(raw_val);
- 			ret = IIO_VAL_INT;
- 
- 			goto out_read_raw_unlock;
+--- a/drivers/iio/light/cm32181.c
++++ b/drivers/iio/light/cm32181.c
+@@ -369,7 +369,7 @@ static int cm32181_write_raw(struct iio_
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_CALIBSCALE:
+ 		cm32181->calibscale = val;
+-		return val;
++		return 0;
+ 	case IIO_CHAN_INFO_INT_TIME:
+ 		ret = cm32181_write_als_it(cm32181, val2);
+ 		return ret;
 
 
