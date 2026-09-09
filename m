@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F58B53D0B8;
-	Wed,  9 Sep 2026 13:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBBF53FD2B;
+	Wed,  9 Sep 2026 13:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961843; cv=none; b=uW69invEER4QhBR4VUNL8TPSNzog9fQS2JemwbZmPrzkdO6Kwrio+g4JyM/fh+MVayv1xRaaMgU7M9gTaqJ05cr6WR1gBp2SVnmsVqp8pCKu26bO9NbWuhEVb9RQ/LGBRELENR/eWaUyQffrLTCGEKECqLBezXQ46ZHhSq+ERQ8=
+	t=1788961846; cv=none; b=JkibWVx5PwbcvSTn+YW6TY9JtlUhOwIDmINv7XqAVgJQ2y0qPB76nMYWIvlylE8V/YKFYIbOtYkBStLvKtvIgpnxuwuCcmXHZ9DG6nYty041iAMogGGGzC4XNJSabL8DuosV4UPoTR6pBgxWbMD92YYt76MIHUeHoMxfC4iW4CE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961843; c=relaxed/simple;
-	bh=csuct4erImO1BWnOuJpH/Uea+2D24EqEDJakFLVUqJs=;
+	s=arc-20240116; t=1788961846; c=relaxed/simple;
+	bh=oMWQs2fHuJmeR0SlYrmH1Pxf1d3uP2uwBwQHug6O2YY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plvFJvUv3eNwX2zK9uiff74rsMu44q0mmgb5jwl4kZovtRs6L5/lfKiIQTuLoAGwYZkkHAVHHbu1T49dA7L+1nzt2rp7/2Ih6oJUkdT/ew0LAqjylGVUzYJaJNX2DMLkR1x24GkgjMYydrcVpuJZ8DUl7cEGwMEBxdm+4mpCUsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4j+DrvW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LkF88lmD+Klqd90IIhO9arpAIdGqvWXMDEUfEOhmhdDYXybci3aRKjgcOPzqFtYWNzRwSJY/egnAiVnwnxE3S319JT4PMk1PTJsSaYU4dLKQ6d+fBGhOttVR6TLLBmpFtdFcS+phOmK0Ozw2sQgw3SCq93vcUrR0wwejbD7aEm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmigmA5L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4j+DrvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430781F00A3A;
-	Wed,  9 Sep 2026 13:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmigmA5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CD41F00A3A;
+	Wed,  9 Sep 2026 13:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961842;
-	bh=NM5h68FwcaD8SSanfzFz2HpLmowfxJWlCcnwbdtumgY=;
+	s=korg; t=1788961845;
+	bh=fQP1/K0+28nsUDdnK1tkOf/KagAUooS9XLoRy7JTBO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r4j+DrvW3Omgi80KYsrNVRgMKlXHKBE/IFLif/DeCcDyIWzIw+jsdg6/MUZgL1bwV
-	 2zcNEjcl6SE9pvcOxa6aLhkPJlFyFji2qxqN9BYl4r7A6IVOnsW3I5Wst6jlHEop5+
-	 ORuvpZTIA62BAXtnov46JRAQ7QxBfc3GX6yMMnyM=
+	b=BmigmA5Lpjasn5ijXRZYo9jjWjVEg5RIA/KjJAshTI4S8KQnxADQRGGJ+Vlon2hA6
+	 k9O54G/GkF9z3oHaT3amy5Nenn0HlB6s/nVzEpdcEF3nUxYPaoAMbQ4eRpqL0S/DhZ
+	 06dcKDq4LTxfPcVb4iwN+rKYxTH4xyPH4D2Qvao0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Elson Serrao <elson.serrao@oss.qualcomm.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 7.2 033/556] usb: dwc3: clear forceRM when issuing EndTransfer
-Date: Wed,  9 Sep 2026 15:35:13 +0200
-Message-ID: <20260909134231.667790484@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 079/556] samples/damon/prcl: handle damon_start() failure
+Date: Wed,  9 Sep 2026 15:35:59 +0200
+Message-ID: <20260909134233.280414736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,136 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elson Serrao <elson.serrao@oss.qualcomm.com>
+From: SJ Park <sj@kernel.org>
 
-commit b58e6200450d350314db0ecda7d6d1bde3281e80 upstream.
+commit 8b724349229bb6ebbf781178be011ba9bc2cca57 upstream.
 
-The forceRM bit of the DEPCMD register controls the behavior of the
-EndTransfer command used to stop an active transfer. Older DWC3
-programming guide revisions recommended setting forceRM=1 when
-issuing EndTransfer. Newer programming guide revisions recommend
-issuing EndTransfer with forceRM cleared.
+damon_sample_prcl_start() callers assume it will clean up resources when
+it fails.  And the function does the cleanup for context buildup failures.
+However, it is not doing the cleanup for damon_start() failure.  As a
+result, when damon_start() fails, it leaks the memory for DAMON context.
+Free the context in case of the failure to fix the issues.
 
-With forceRM=1 on DWC_usb31 v2.00a and v2.10a controllers, a transfer
-aborted through the ep_dequeue path was observed to remain active
-after EndTransfer completion. A subsequent StartTransfer issued on the
-same endpoint triggered writes associated with the aborted transfer.
-This resulted in an SMMU fault because the transfer buffer had already
-been unmapped during EndTransfer command-completion cleanup.
+Note that the issue can reliably be reproduced because the module calls
+damon_start() in the exclusive mode.  For example,
 
-Using forceRM=0 eliminates the issue. Although older DWC3 programming
-guide revisions recommended setting forceRM=1, no issues are known
-from using forceRM=0. Clear forceRM when issuing EndTransfer to provide
-consistent EndTransfer behavior and align with newer programming guide
-recommendations.
+    $ sudo damo start
+    $ echo $$ | sudo tee /sys/module/damon_sample_prcl/parameters/target_pid
+    $ echo Y | sudo tee /sys/module/damon_sample_prcl/parameters/enabled
+    $ sudo cat /proc/allocinfo | grep damon_new_ctx
 
-Fixes: 1e43c86d84fb ("usb: dwc3: core: Add DWC31 version 2.00a controller")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Elson Serrao <elson.serrao@oss.qualcomm.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260813151456.867008-1-elson.serrao@oss.qualcomm.com
+Because the first command is running another DAMON instance, the third
+command fails the damon_start() call because the new DAMON instance cannot
+exclusively run.  And without this fix, by repeating the third and the
+fourth commands above, we can show the memory consumption is only
+increasing due to the leaks.  It requires the sudo permission though.
+
+The issue was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260628215447.96166-3-sj@kernel.org
+Link: https://lore.kernel.org/20260609145814.70163-1-sj@kernel.org [1]
+Fixes: 2aca254620a8 ("samples/damon: introduce a skeleton of a smaple DAMON module for proactive reclamation")
+Signed-off-by: SJ Park <sj@kernel.org>
+Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: <stable@vger.kernel.org> # 6.14.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/ep0.c    |    2 +-
- drivers/usb/dwc3/gadget.c |   21 +++++++++++++--------
- 2 files changed, 14 insertions(+), 9 deletions(-)
+ samples/damon/prcl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -304,7 +304,7 @@ void dwc3_ep0_out_start(struct dwc3 *dwc
+--- a/samples/damon/prcl.c
++++ b/samples/damon/prcl.c
+@@ -106,8 +106,10 @@ static int damon_sample_prcl_start(void)
+ 	damon_set_schemes(ctx, &scheme, 1);
  
- 		dwc3_ep->flags &= ~DWC3_EP_DELAY_STOP;
- 		if (dwc->connected)
--			dwc3_stop_active_transfer(dwc3_ep, true, true);
-+			dwc3_stop_active_transfer(dwc3_ep, false, true);
- 		else
- 			dwc3_remove_requests(dwc, dwc3_ep, -ESHUTDOWN);
- 	}
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1004,7 +1004,7 @@ static int __dwc3_gadget_ep_enable(struc
- 			 * controller to generate an ERDY to initiate the
- 			 * stream.
- 			 */
--			dwc3_stop_active_transfer(dep, true, true);
-+			dwc3_stop_active_transfer(dep, false, true);
+ 	err = damon_start(&ctx, 1, true);
+-	if (err)
++	if (err) {
++		damon_destroy_ctx(ctx);
+ 		return err;
++	}
  
- 			/*
- 			 * All stream eps will reinitiate stream on NoStream
-@@ -1032,7 +1032,7 @@ void dwc3_remove_requests(struct dwc3 *d
- {
- 	struct dwc3_request		*req;
- 
--	dwc3_stop_active_transfer(dep, true, false);
-+	dwc3_stop_active_transfer(dep, false, false);
- 
- 	/* If endxfer is delayed, avoid unmapping requests */
- 	if (dep->flags & DWC3_EP_DELAY_STOP)
-@@ -1720,7 +1720,7 @@ static int __dwc3_gadget_kick_transfer(s
- 		if (ret == -EAGAIN)
- 			return ret;
- 
--		dwc3_stop_active_transfer(dep, true, true);
-+		dwc3_stop_active_transfer(dep, false, true);
- 
- 		list_for_each_entry_safe(req, tmp, &dep->started_list, list)
- 			dwc3_gadget_move_cancelled_request(req, DWC3_REQUEST_STATUS_DEQUEUED);
-@@ -1757,6 +1757,11 @@ static int __dwc3_gadget_get_frame(struc
-  * the controller won't update the TRB progress on command
-  * completion. It also won't clear the HWO bit in the TRB.
-  * The command will also not complete immediately in that case.
-+ *
-+ * Older programming guide revisions recommended setting ForceRM to 1
-+ * when ending a transfer. Newer programming guide revisions now
-+ * recommend keeping ForceRM cleared, and TRBs are properly updated
-+ * on command completion.
-  */
- static int __dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force, bool interrupt)
- {
-@@ -1882,7 +1887,7 @@ static int dwc3_gadget_start_isoc_quirk(
- 		 * to wait for the next XferNotReady to test the command again
- 		 */
- 		if (cmd_status == 0) {
--			dwc3_stop_active_transfer(dep, true, true);
-+			dwc3_stop_active_transfer(dep, false, true);
- 			return 0;
- 		}
- 	}
-@@ -2165,7 +2170,7 @@ static int dwc3_gadget_ep_dequeue(struct
- 			struct dwc3_request *t;
- 
- 			/* wait until it is processed */
--			dwc3_stop_active_transfer(dep, true, true);
-+			dwc3_stop_active_transfer(dep, false, true);
- 
- 			/*
- 			 * Remove any started request if the transfer is
-@@ -2242,7 +2247,7 @@ int __dwc3_gadget_ep_set_halt(struct dwc
- 			return 0;
- 		}
- 
--		dwc3_stop_active_transfer(dep, true, true);
-+		dwc3_stop_active_transfer(dep, false, true);
- 
- 		list_for_each_entry_safe(req, tmp, &dep->started_list, list)
- 			dwc3_gadget_move_cancelled_request(req, DWC3_REQUEST_STATUS_STALLED);
-@@ -3357,7 +3362,7 @@ static void dwc3_nostream_work(struct wo
- 		dwc3_send_gadget_generic_command(dwc, cmd, dep->number);
- 	} else {
- 		dep->flags |= DWC3_EP_DELAY_START;
--		dwc3_stop_active_transfer(dep, true, true);
-+		dwc3_stop_active_transfer(dep, false, true);
- 		spin_unlock_irqrestore(&dwc->lock, flags);
- 		return;
- 	}
-@@ -3715,7 +3720,7 @@ static bool dwc3_gadget_endpoint_trbs_co
- 	if (usb_endpoint_xfer_isoc(dep->endpoint.desc) &&
- 		list_empty(&dep->started_list) &&
- 		(list_empty(&dep->pending_list) || status == -EXDEV))
--		dwc3_stop_active_transfer(dep, true, true);
-+		dwc3_stop_active_transfer(dep, false, true);
- 	else if (dwc3_gadget_ep_should_continue(dep))
- 		if (__dwc3_gadget_kick_transfer(dep) == 0)
- 			no_started_trb = false;
+ 	repeat_call_control.data = ctx;
+ 	return damon_call(ctx, &repeat_call_control);
 
 
