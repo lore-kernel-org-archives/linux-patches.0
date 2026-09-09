@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B192B56B872;
-	Wed,  9 Sep 2026 14:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC10B579814;
+	Wed,  9 Sep 2026 14:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964703; cv=none; b=OOz5T+Bskq5jtxz3fYRT60TT0NKo/qvm1m6esOMQilmxdZv82/rf4QfPifAHLBNGccUgHwCogsLTjMQgFuZlpp3H1+71rEgt2LVBKOLmJAb9KI0J6Fky09z3QzCGBya48whAheCp2b/2FQXAFzvm2IE2Lmg4VcBsgDq0H+hhbDE=
+	t=1788964707; cv=none; b=djnNwgY44n18K3CG79DS/d78n4a0qAfKx8/vkFBdmsLCVSXk1m9iIYhtiO7uuAzMx7kMlnlO5FArr351nGL66rPOVtyogttg52fXcczIsjGe88W5gX/8US3ec19AN8QP2hDFGV0LQOooXjfl33dIJhxdER7hCwEz4cHS8YQqdUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964703; c=relaxed/simple;
-	bh=mgfOI48HuIYmYSPOXD9tF3P/7mVRUCcGQO41TCuqKEg=;
+	s=arc-20240116; t=1788964707; c=relaxed/simple;
+	bh=uMWy/FNcGGaL/HgYfWs4Yez58y4p5G49R9hI9Z00JJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWTFWlmmNtJHYc/YCeyAgs26/aD9EGMHNZia2JU3OWWmQ/RHhnrArsPhRnW2cPtiebgxfjOV9ay/YwzTQ0YkNNbjTqqFWt2/QskmFurDXBOv9Q1Y0EH7zA54yMEHMKaMyM7mNvFlDFukwTMTEwOq9JY88jwwQWCbJunjPZVf9rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4P+K/wv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D6uivmt2cnirnbx6FrKTX1Eo583fZFFLWMiITJ8ZK/kgcuoAnQ7q5WDCnJcPyeXfqcCEhE8BQ+RCuXHggq2sKZV9txnDB2XIS4FGySaQ+EkUCMfajTjeBZPvK7/bKnTA9tM1UmGFpQZ01l74MbNmtUnTL5NJhVPgpLpe4pHFkhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UukPOpOF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4P+K/wv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A131F00A3A;
-	Wed,  9 Sep 2026 14:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UukPOpOF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70831F00A3A;
+	Wed,  9 Sep 2026 14:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964702;
-	bh=nsEzPHhZgJx1XUePVgzxM+aQLS/FCV2LOQAYHQVc6EU=;
+	s=korg; t=1788964705;
+	bh=3faAgOwU02aX/dHXecjg8+d6gEn99ZvSI7r8f1utX0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g4P+K/wvJ2JREPGF+DDdj7dtkufFnB2iLsSb7WHqSLMhmCiQC1/YzLL389OrtQVLo
-	 6PNZ2rUuDVv+91UScWb+iJMljgAeXnujCRvNNESNWFeT+/JDRGY8oOwWs5y38aUF62
-	 SuLfKPxaONfdEGRZ8ma7oCiaYq46qRvXb2aeuKtI=
+	b=UukPOpOFCqWYKoNlRmGhahfRaPrTPG1MUaXc/1ZVFgeCwlJlGv5sQv5mbPqtSmqYu
+	 U6WzilInORGZ2NI/G1C5Iyvzw0lq58dyqIi7eD+rLNEzRI0GSkOwKxs7gcTZ+YtERa
+	 7r0OcpStKddWLit8uBSvgkWG/hEmYpJaZZGAXxjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.18 477/583] ACPI: x86: cmos_rtc: Create a CMOS RTC platform device
-Date: Wed,  9 Sep 2026 15:42:42 +0200
-Message-ID: <20260909134254.378639313@linuxfoundation.org>
+	Ali Tariq <alitariq45892@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 513/583] PCI: starfive: Fix resource leaks on error paths in host_init()
+Date: Wed,  9 Sep 2026 15:43:18 +0200
+Message-ID: <20260909134255.511327659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,90 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Ali Tariq <alitariq45892@gmail.com>
 
-[ Upstream commit 1ae2f435350ec05224a39995c3a680aa6fdae5a5 ]
+[ Upstream commit 22877a061f81c5d58041e384b3131684bec636b9 ]
 
-Make the CMOS RTC ACPI scan handler create a platform device that will
-be used subsequently by rtc-cmos for driver binding on x86 systems with
-ACPI and update add_rtc_cmos() to skip registering a fallback platform
-device for the CMOS RTC when the above one has been registered.
+starfive_pcie_host_init() acquires the PHY, clocks/resets, and an
+optional regulator in sequence, but does not correctly unwind these
+resources when a later step fails.
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com> # x86
-Link: https://patch.msgid.link/1962427.tdWV9SEqCh@rafael.j.wysocki
-Stable-dep-of: a3df8bbe0a70 ("ACPI: TAD: Add locking around AML evaluations")
+If starfive_pcie_clk_rst_init() fails after the PHY has already been
+successfully enabled, the function returns directly without disabling
+the PHY, leaking it and leaving it powered.
+
+If regulator_enable() fails for the optional vpcie3v3 regulator, the
+failure is only logged; the function falls through and returns
+success, leaving the driver believing the regulator is enabled while
+continuing to configure PCIe hardware that may be unpowered. This
+also leaves the clocks and PHY enabled with nothing to clean them up.
+
+Disable the PHY on the clk/reset failure path, and disable the
+clocks/resets and PHY, then return the error, if the regulator fails
+to enable.
+
+Build-tested and boot-tested on StarFive VisionFive 2 v1.2A
+
+Fixes: 05a75df4182e ("PCI: starfive: Use regulator APIs to control the 3v3 power supply of PCIe slots")
+Fixes: 39b91eb40c6a ("PCI: starfive: Add JH7110 PCIe controller")
+Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260716102053.185276-1-alitariq45892@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/rtc.c       |    4 ++++
- drivers/acpi/x86/cmos_rtc.c |    8 ++++++++
- include/linux/acpi.h        |    4 ++++
- 3 files changed, 16 insertions(+)
+ drivers/pci/controller/plda/pcie-starfive.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/rtc.c
-+++ b/arch/x86/kernel/rtc.c
-@@ -2,6 +2,7 @@
- /*
-  * RTC related functions
-  */
-+#include <linux/acpi.h>
- #include <linux/platform_device.h>
- #include <linux/mc146818rtc.h>
- #include <linux/export.h>
-@@ -146,6 +147,9 @@ static __init int add_rtc_cmos(void)
- 		}
+--- a/drivers/pci/controller/plda/pcie-starfive.c
++++ b/drivers/pci/controller/plda/pcie-starfive.c
+@@ -304,12 +304,14 @@ static int starfive_pcie_host_init(struc
+ 
+ 	ret = starfive_pcie_clk_rst_init(pcie);
+ 	if (ret)
+-		return ret;
++		goto err_disable_phy;
+ 
+ 	if (pcie->vpcie3v3) {
+ 		ret = regulator_enable(pcie->vpcie3v3);
+-		if (ret)
++		if (ret) {
+ 			dev_err_probe(dev, ret, "failed to enable vpcie3v3 regulator\n");
++			goto err_clk_rst;
++		}
  	}
- #endif
-+	if (cmos_rtc_platform_device_present)
-+		return 0;
+ 
+ 	if (pcie->reset_gpio)
+@@ -379,6 +381,13 @@ static int starfive_pcie_host_init(struc
+ 		dev_info(dev, "port link down\n");
+ 
+ 	return 0;
 +
- 	if (!x86_platform.legacy.rtc)
- 		return -ENODEV;
- 
---- a/drivers/acpi/x86/cmos_rtc.c
-+++ b/drivers/acpi/x86/cmos_rtc.c
-@@ -24,6 +24,8 @@ static const struct acpi_device_id acpi_
- 	{}
- };
- 
-+bool cmos_rtc_platform_device_present;
++err_clk_rst:
++	starfive_pcie_clk_rst_deinit(pcie);
++err_disable_phy:
++	starfive_pcie_disable_phy(pcie);
 +
- static bool cmos_rtc_space_handler_present __read_mostly;
- 
- static acpi_status acpi_cmos_rtc_space_handler(u32 function,
-@@ -103,6 +105,12 @@ static int acpi_cmos_rtc_attach(struct a
- 	if (ret < 0)
- 		return ret;
- 
-+	if (IS_ERR_OR_NULL(acpi_create_platform_device(adev, NULL))) {
-+		pr_err("Failed to create CMOS-RTC platform device\n");
-+		return 0;
-+	} else {
-+		cmos_rtc_platform_device_present = true;
-+	}
- 	return 1;
++	return ret;
  }
  
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -779,6 +779,8 @@ const char *acpi_get_subsystem_id(acpi_h
- int acpi_mrrm_max_mem_region(void);
- #endif
- 
-+extern bool cmos_rtc_platform_device_present;
-+
- #else	/* !CONFIG_ACPI */
- 
- #define acpi_disabled 1
-@@ -1104,6 +1106,8 @@ static inline int acpi_mrrm_max_mem_regi
- 	return 1;
- }
- 
-+#define cmos_rtc_platform_device_present	false
-+
- #endif	/* !CONFIG_ACPI */
- 
- #ifdef CONFIG_ACPI_HMAT
+ static const struct plda_pcie_host_ops sf_host_ops = {
 
 
