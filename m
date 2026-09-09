@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEB55632B5;
-	Wed,  9 Sep 2026 14:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC2F579820;
+	Wed,  9 Sep 2026 14:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964009; cv=none; b=qQPWlkCH+2+3aEyAFrleycVjyUSxnP0yj9/pP6g85zVmThwub9aCvpJvG+z/mULXZFrDBAJeaMVIjCQP22NPLBlc8agZfRTQXWbTKg4jP2V96mT+B6D+4UDLia89EbC/J3ngRnF5Xalj+hd2VqUvPXwRNzj1uwG7dfdDO/Uzh/Q=
+	t=1788964011; cv=none; b=FGgU5IuAdf5031LpYhyXmbhHSKCJrvj5bvIMoyvoTh2iEtY3w0nnUJ1WeIjvGEJHI4c9C2/NTaWkBg/9TxACrhdMmdEYZ96AC1BqmJ6C8jTa7Dn4GSwtcdtCOCX4mNfF09gt6rh1S6HWA/On3hATjP8XkyV/qnznX0mUAqavJ/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964009; c=relaxed/simple;
-	bh=zGGgN8Jl8OdlszSnl3FrKMgQYWM01ix1hItqxAaXJHw=;
+	s=arc-20240116; t=1788964011; c=relaxed/simple;
+	bh=ceRgyR4dJDQhfKBlh6VJUhMEVIEEEaRu52oAF15r6T4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSJypjyUy2pyXVDo+eljXd82ZWo6NTqenrw/7Csqi0dE0A/iS2W5o+ak7EAhn3JeP+dNmFscCPFbmbvy4xdNPqqAjXnQDwdKkJK33iYkOYrMXenPaoZOjtw8XZmx0YMROoxIoiFyOcaR1Axt5fuA9QqqKl5E+YNx4Gk4wSABrRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9klHI5Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XkcZpEnFdQti2X+JDpdzYDpkj7XVHsMJoaucGY4XNjEmwS71uCUvD8YSs69s2W6fSG8pR6/FGOXkCEOuRWGwQflwkbXYkbPCZPbHFo8Qnabl1RWNGLgjArRNzO9fmT31fp+ppp4PUjoWZ/8U9yI4WCHUBkm47I54z34egWCi+wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nf31xD7m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9klHI5Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423C21F00A3A;
-	Wed,  9 Sep 2026 14:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nf31xD7m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3214F1F00A3A;
+	Wed,  9 Sep 2026 14:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964007;
-	bh=k2lh957+enbEXFiukLX7mz246tp8eN9N/iWZDY8724w=;
+	s=korg; t=1788964010;
+	bh=pEXsXr/GauObnOMKAVsOarvbNBL+Q/D1Sx9HfqPUF+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P9klHI5ZWc9VNKtf7qeicMy2NgdO4vWqG6nXdxq0tQctw5QpyzSWJJg+41ZncA1iD
-	 e18Rp87z+PDzVTtqGxZRkpXxcweqaGV3s4rRiUGHP+t03ZzmkaTf4YotTA94idcFoQ
-	 d2gcIeEO8lH/9jH2eMTfCU/4UB7kEkV+acEY8zIY=
+	b=Nf31xD7mLYovcDLoufZ5GEaR3TO7w+7zCpaMsPp1XVUrVsvgrLor4LmaSQgt0YVkB
+	 JwwOHV1BTpkGP8I7uBTVdRyTJMI8G44H0rasCEUy9Jz1qTVq82TUr9WQ6jGDnkPLpx
+	 nnhT4IPbaLF0CzJ1A6SCCCUGTv+2OXZGQCJ8QcWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 232/583] KVM: nVMX: Ensure KVM_REQ_GET_NESTED_STATE_PAGES is cleared on VM-Exit
-Date: Wed,  9 Sep 2026 15:38:37 +0200
-Message-ID: <20260909134246.192537328@linuxfoundation.org>
+	Vidhu Sarwal <vidhu.linux@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 223/583] iio: light: opt4060: Reject integration times with a non-zero seconds part
+Date: Wed,  9 Sep 2026 15:38:28 +0200
+Message-ID: <20260909134245.884111925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Vidhu Sarwal <vidhu.linux@gmail.com>
 
-commit 11722439fb206c88e6f31be54173efa9880b4ccb upstream.
+commit b7e6e9af0d723afdec92364d5e7e064eeef44c8e upstream.
 
-Always check and clear KVM_REQ_GET_NESTED_STATE_PAGES when emulating a
-nested VM-Exit to ensure the request is cleared, even when KVM was built
-with CONFIG_KVM_HYPERV=n, as KVM subtly relies on the "check" to clear
-the flag and thus avoid double-mapping the vmcs12 pages, e.g. if KVM
-manages to bail from VM-Enter without processing the request, and then
-emulates VMLAUNCH or VMRESUME.
+When setting the integration time, opt4060_write_raw() only uses
+val2 and ignores val. As a result, a write such as 1.000600 is
+accepted and programmed as 600 us, silently discarding the whole
+seconds part.
 
-Fixes: b4f69df0f65e ("KVM: x86: Make Hyper-V emulation optional")
-Cc: stable@vger.kernel.org
-Reported-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260724004757.131420-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Since all supported integration times are less than one second, any
+non-zero val represents an invalid input. Reject such values instead
+of silently accepting them.
+
+Fixes: 0c6db4506ad0 ("iio: light: Add support for TI OPT4060 color sensor")
+Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iio/light/opt4060.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -5135,8 +5135,9 @@ void __nested_vmx_vmexit(struct kvm_vcpu
- 	/* trying to cancel vmlaunch/vmresume is a bug */
- 	WARN_ON_ONCE(vmx->nested.nested_run_pending);
+--- a/drivers/iio/light/opt4060.c
++++ b/drivers/iio/light/opt4060.c
+@@ -650,6 +650,9 @@ static int opt4060_write_raw(struct iio_
  
--#ifdef CONFIG_KVM_HYPERV
-+	/* Note, "checking" the request also clears the request. */
- 	if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
-+#ifdef CONFIG_KVM_HYPERV
- 		/*
- 		 * KVM_REQ_GET_NESTED_STATE_PAGES is also used to map
- 		 * Enlightened VMCS after migration and we still need to
-@@ -5144,8 +5145,8 @@ void __nested_vmx_vmexit(struct kvm_vcpu
- 		 * the first L2 run.
- 		 */
- 		(void)nested_get_evmcs_page(vcpu);
--	}
- #endif
-+	}
- 
- 	/* Service pending TLB flush requests for L2 before switching to L1. */
- 	kvm_service_local_tlb_flush_requests(vcpu);
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_INT_TIME:
++		if (val)
++			return -EINVAL;
++
+ 		int_time = opt4060_als_time_to_index(val2);
+ 		if (int_time < 0)
+ 			return int_time;
 
 
