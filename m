@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AB8595749;
-	Wed,  9 Sep 2026 14:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D22577E3C;
+	Wed,  9 Sep 2026 14:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963570; cv=none; b=cCj656sHGl1CTS4c5w2UvWTFyEijB0u91GSwbzT4GPSPX+0ZodupYts7tmpArFPpmc35F1EAmU4jqJYHRB2EiGXUNV2wZ6A0k5xEOMgV5qeB/XfSI0DKqihX3eoGKjyJ4SUTI2sNH7K2TIncj5N+76xYmU9SCFME8t2IQBotxR0=
+	t=1788963573; cv=none; b=HlpML/I0kBIgu6ZowGZFHHf7DSGMig67YFnlFb9fVZQigrmgsSVLJnCSnoH0W+f6i6SbzZc9mVJwbvAChIPwyMF4cns0npsVurWIWJuQy/p5UTHD4AWAxZX/KQ/m0u7hMCY3Wx9/dEiyfxZx1XxoV+IPdfU43BwIsloqKw2VEL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963570; c=relaxed/simple;
-	bh=Di/Ebab8eYKvavUAV2WL/esZ+erDeFX2DfkPR6qA9ew=;
+	s=arc-20240116; t=1788963573; c=relaxed/simple;
+	bh=L0dh8j+zQYNQWRijF/ShLoxOhDQQpBDWOxkqzm+zY4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebazvJT4vq5vGm9vRI1PTwx/Cm1VcptHCbkC86HKNG9K2dHAFkzwALsjdF8Q9BmnuEikS4DTB6UTVAkSMmRVF7oA9R7lLKu2MmAbXS0zSIiiBR9krN4XIzCCduFE4pl0J1fDQfythewStoKQq4FipRoSU1IFosOH1YeNvRUgY7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVoyvpaI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JUbAvETW/UqE9uTyC+UtaqR6R/U/GoHKoG/9Wjb3RJ+2WpD/+9th8KY869kewLyv+H1vBjO9PwHVRhvu23IiNbeIt9p5jTuKKN6cOQhdvo1roWQ892nVPqPUjY5IG5SzYM9pJ1gnGvGMwwOedWg5tZSYe9OJde/kquq537qZnxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nz011/S0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVoyvpaI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5551F00A3A;
-	Wed,  9 Sep 2026 14:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nz011/S0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA961F00A3A;
+	Wed,  9 Sep 2026 14:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963569;
-	bh=WLp9YcQGHcgO6q8XmKBQ61FTGXb1B2D86xRN9jdq8Dk=;
+	s=korg; t=1788963572;
+	bh=JdcC9PzkCB6dEVZ89AeXFqWlmxYVqRf9fVUPYqJUwxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wVoyvpaIjiXCLLsJDD5VXmg+czr5j07cDUrhNlhN7c/fvlUD9kasFlSk3zjTBPd/i
-	 nRlrHTjo8VHZoe5eeNOJm+QlPaBcYrDJorpLo1GFl0PM8IYlaGaqMMSqx4aEn0AnJj
-	 q72rozaiixItvMrkxlXKkl/qhb/5kVgewcDr6gr0=
+	b=Nz011/S0tUXLl9Ei+GxUsN3Vo+VoUEKVtbx+962wZtJf5iL9SQmbS66FEmQCDF36x
+	 gAuxHMdS1cNWEaznbgYQ+gyH74gGQMAfiH7k9vKvd8F8TMOCqGW6rv5z0ZpB8FtVa7
+	 JVrKibSzoMqZUAY7pbX2T18VmRe7CJo+HahfpRg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Narek Jilavyan <njilav@gmail.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 117/583] mm/hugetlb_cgroup: call page_counter_set_max() outside VM_BUG_ON()
-Date: Wed,  9 Sep 2026 15:36:42 +0200
-Message-ID: <20260909134242.182387314@linuxfoundation.org>
+	Mahesh Kumar G <mahe657@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 126/583] powerpc/crash: stop watchdogs before booting kdump kernel
+Date: Wed,  9 Sep 2026 15:36:51 +0200
+Message-ID: <20260909134242.506527845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,80 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Narek Jilavyan <njilav@gmail.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-commit eedc8474d469a2e88f4dc61f8cfe05c147478b43 upstream.
+commit fb43ba4256543ce18ca0540fc37022bda438a293 upstream.
 
-hugetlb_cgroup_css_alloc() rounds the counter limit down to a multiple of
-the huge page size and then applies it inside an assertion:
+On pseries LPAR systems, watchdog timers configured from userspace can
+remain active after a kernel panic. When a panic triggers kdump, the
+crashing kernel jumps directly to the kdump kernel without stopping
+active watchdogs. As a result, the watchdogs remain active after the
+kdump kernel starts.
 
-	VM_BUG_ON(page_counter_set_max(fault, limit));
-	VM_BUG_ON(page_counter_set_max(rsvd, limit));
+If dump capture takes longer than the watchdog timeout, PHYP resets the
+LPAR before the dump is fully captured, causing dump capture to fail.
 
-With CONFIG_DEBUG_VM=n, VM_BUG_ON(cond) is BUILD_BUG_ON_INVALID(cond),
-i.e.  ((void)(sizeof((__force long)(cond)))), whose operand is never
-evaluated.  page_counter_set_max() is not a predicate - it performs
-xchg(&counter->max, nr_pages) - so on every non-debug kernel the limit is
-never applied and the counters keep page_counter_init()'s
-PAGE_COUNTER_MAX.
+Fix this by issuing the `H_WATCHDOG` hcall during the crash shutdown
+sequence to stop all active watchdogs before booting the kdump kernel.
 
-That is user-visible, because hugetlb_cgroup_read_u64_max() recomputes the
-same rounded value and uses equality as its "unlimited" sentinel.
-PAGE_COUNTER_MAX is LONG_MAX / PAGE_SIZE = 2251799813685247, which is odd,
-so round_down() really does change it and the two sides disagree.  With
-CONFIG_DEBUG_VM=n:
-
-	$ cat /sys/fs/cgroup/t/hugetlb.2MB.max
-	9223372036854771712
-
-and with this patch:
-
-	$ cat /sys/fs/cgroup/t/hugetlb.2MB.max
-	max
-
-A debug option should not change cgroup output.
-
-Call the function, then assert the result, as v6.12 did.  Use
-VM_WARN_ON_ONCE() rather than restoring VM_BUG_ON(): the two are identical
-under CONFIG_DEBUG_VM=n, and checkpatch asks that new code not use BUG()
-variants.
-
-Link: https://lore.kernel.org/20260817103433.191266-1-njilav@gmail.com
-Fixes: 0e2759afcaf9 ("page_counter: track failcnt only for legacy cgroups")
-Signed-off-by: Narek Jilavyan <njilav@gmail.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 69472ffa6575 ("watchdog/pseries-wdt: initial support for H_WATCHDOG-based watchdog timers")
+Reported-by: Mahesh Kumar G <mahe657@linux.ibm.com>
+Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260727053416.276317-4-sourabhjain@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb_cgroup.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/papr-watchdog.h |    6 ++++++
+ arch/powerpc/platforms/pseries/setup.c   |   14 ++++++++++++++
+ 2 files changed, 20 insertions(+)
 
---- a/mm/hugetlb_cgroup.c
-+++ b/mm/hugetlb_cgroup.c
-@@ -104,6 +104,7 @@ static void hugetlb_cgroup_init(struct h
- 		struct page_counter *fault, *fault_parent = NULL;
- 		struct page_counter *rsvd, *rsvd_parent = NULL;
- 		unsigned long limit;
-+		int ret;
+--- a/arch/powerpc/include/asm/papr-watchdog.h
++++ b/arch/powerpc/include/asm/papr-watchdog.h
+@@ -22,6 +22,12 @@
+ #define PSERIES_WDTF_ACTION_DUMP_RESTART	0x3UL	/* dump + restart */
  
- 		if (parent_h_cgroup) {
- 			fault_parent = hugetlb_cgroup_counter_from_cgroup(
-@@ -125,8 +126,10 @@ static void hugetlb_cgroup_init(struct h
- 		limit = round_down(PAGE_COUNTER_MAX,
- 				   pages_per_huge_page(&hstates[idx]));
+ /*
++ * R5: "watchdogNumber":
++ *       PAPR says use -1 (all ones) to stop all watchdogs.
++ */
++#define PSERIES_WDT_NUM_ALL	((unsigned long)-1)
++
++/*
+  * H_WATCHDOG Output
+  *
+  * R3: Return code
+--- a/arch/powerpc/platforms/pseries/setup.c
++++ b/arch/powerpc/platforms/pseries/setup.c
+@@ -76,6 +76,7 @@
+ #include <asm/dtl.h>
+ #include <asm/hvconsole.h>
+ #include <asm/setup.h>
++#include <asm/papr-watchdog.h>
  
--		VM_BUG_ON(page_counter_set_max(fault, limit));
--		VM_BUG_ON(page_counter_set_max(rsvd, limit));
-+		ret = page_counter_set_max(fault, limit);
-+		VM_WARN_ON_ONCE(ret);
-+		ret = page_counter_set_max(rsvd, limit);
-+		VM_WARN_ON_ONCE(ret);
- 	}
+ #include "pseries.h"
+ 
+@@ -187,6 +188,16 @@ static void __init fwnmi_init(void)
+ #endif
  }
  
++static void pseries_crash_stop_watchdogs(void)
++{
++	long rc;
++
++	rc = plpar_hcall_norets_notrace(H_WATCHDOG, PSERIES_WDTF_OP_STOP,
++					PSERIES_WDT_NUM_ALL);
++	if (rc != H_SUCCESS && rc != H_NOOP)
++		pr_warn("Could not stop watchdogs before kdump rc=%ld\n", rc);
++}
++
+ /*
+  * Affix a device for the first timer to the platform bus if
+  * we have firmware support for the H_WATCHDOG hypercall.
+@@ -205,6 +216,9 @@ static __init int pseries_wdt_init(void)
+ 		return PTR_ERR(pdev);
+ 	}
+ 
++	if (crash_shutdown_register(pseries_crash_stop_watchdogs))
++		pr_warn("Could not register watchdog crash shutdown handler\n");
++
+ 	return 0;
+ }
+ machine_subsys_initcall(pseries, pseries_wdt_init);
 
 
