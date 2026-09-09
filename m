@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C322572696;
-	Wed,  9 Sep 2026 14:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D3957C717;
+	Wed,  9 Sep 2026 14:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964026; cv=none; b=j4S+rhdGl6IgZi7P6f1z+tk+3NC/n1gIA8dLHxzbSLRU+d2bpPv2R12DUMIuoWO91RB5FiFbKm3w/7YSVkKhpAUb1xpuURVU6K6NC1SeOZwqhq72hB8MuNuJ5EjGyE5j28iokxG4gDYLDITQJtcfjPnAzLZtCA1ZkzxI28+MtQA=
+	t=1788964029; cv=none; b=RZH7ctc4WWPsdz5gnr+dBCHIyBL6I1mb/r/54qlv/9CK2kvw0TFGq9/5XKF5rXDrpkx61gr4wKwdleYPTY/kcL2acpoBqT5Ga7N2cXuhmbnD5b469pkY2Dt4L2SWpb/cs/2FZJxDQ2b5PVw2WhNGqiLov7okui8wT6d6MieDaxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964026; c=relaxed/simple;
-	bh=jTdoyh0BSv20XBf2tyV5kTd8IxEIBWE6lyFP97pwC6I=;
+	s=arc-20240116; t=1788964029; c=relaxed/simple;
+	bh=QU1eeSsjXxHg4JbV/xKWBVxxSZMUhPZTW6gwKmqJewI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s6NE0qH28N3ab//IiPX0lskikXNcYnHJRQcCcu+xubsgOh1OxPhsc5UAbyU0hL83QujXgHESgZR87EUnVY5/2QeW27SZPFXWdn5nB2/BPPYcDbQtTZdqbOhhy7THXW0c8iSZMKQCYQ8vZj49N1sKJebNn1ISt6yrCU9NkPu3SQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEOnFCYu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KSrW/0kaPlhFhkdNHuUdZtgbrGvwBzk7/uqNZxZk4BYHioCdnWqmZ5sXHH9gXbPCg0CwToG5Bmyj86V4fZtiC/ZJCeDmGpaCtgfW8uU52iRydqEhQdlNmwWZAzqgkPUmzXGQUZMqGrrDoOt6GX1mZun7tsXQnoLMs50LO5QINYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AuIoVaAC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEOnFCYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4001F00A3A;
-	Wed,  9 Sep 2026 14:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AuIoVaAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C8A1F00A3A;
+	Wed,  9 Sep 2026 14:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964025;
-	bh=aGvlf9cC/HB82tGtJnvZ2Rjwo7QBqKrl4+7qe3FJIlo=;
+	s=korg; t=1788964028;
+	bh=tI4EShd84b7AQIMCTaOv+Q1S85Xzy6Srwjg3kjFaoSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bEOnFCYuZhfOWRIR+fr5fndi2PDeyHfHQLkG9/ucN/i7biuocyeAENyarLoBQsErt
-	 P2WhPvku/yVdmxoC00hoeMA41MfGmormFr8PaDm78RkTnCvZz7rL8JdYq6K8xGjtJZ
-	 jOQsHSFJylISGtYw6CrroNWPVa3MS1vXGd/p0NoU=
+	b=AuIoVaACqMixAf1TRhDwzt36ufqlxOIF/3+msmJUx0ha8pR7n8eiaJhEf5laKfR5p
+	 ofv098LrcY+3TIWmCXn76x5qKQlUdZYY733vCoZRApSE/nrhA3V7WVZtD/C/2qmCri
+	 rX8Ep0/O6qIvZTVcuJDtolX/hhBFIfquQcqYK+HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 282/583] media: cobalt: Avoid freeing ALSA private data twice
-Date: Wed,  9 Sep 2026 15:39:27 +0200
-Message-ID: <20260909134247.820538326@linuxfoundation.org>
+Subject: [PATCH 6.18 283/583] media: cx231xx: reject geometry changes while the VBI queue is busy
+Date: Wed,  9 Sep 2026 15:39:28 +0200
+Message-ID: <20260909134247.850368098@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,41 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 3a7d6b9c4cb5ac18cbd3f1c7f8c7b159c42ba0b1 upstream.
+commit 627a121c15fe05a541f44d86016294b80bada75d upstream.
 
-snd_cobalt_card_create() stores cobsc in sc->private_data and installs
-snd_cobalt_card_private_free() as sc->private_free. From that point,
-snd_card_free(sc) releases cobsc through the ALSA card cleanup path.
+vidioc_s_fmt_vid_cap() and vidioc_s_std() change the device-wide
+dev->width / dev->norm but only refuse the change when the *video* queue
+(dev->vidq) is busy. The VBI queue (dev->vbiq) shares that same geometry:
+cx231xx_init_vbi_isoc() latches dma_q->lines_per_field from dev->norm,
+the VBI videobuf2 plane is sized from dev->width / dev->norm in
+vbi_queue_setup() and vbi_buf_prepare(), and cx231xx_do_vbi_copy() then
+recomputes the destination offset from the *live* dev->width and the
+latched lines_per_field on every URB completion:
 
-If cobalt_alsa_init() fails after snd_cobalt_card_create(), the
-err_exit_free path calls snd_card_free(sc) and then kfree(cobsc). That
-second free releases the same object again.
+	offset = lines_completed * (dev->width << 1) + ...;
+	if (dma_q->current_field == 2)
+		offset += dev->width * 2 * dma_q->lines_per_field;
+	memcpy(plane + offset, p_buffer, lencopy);
 
-Remove the explicit kfree(cobsc) and leave ownership with the ALSA card.
+Because the VBI node shares video_ioctl_ops with the video node, an
+application can size a small VBI plane (REQBUFS/QBUF with a small width,
+or with the NTSC standard), then enlarge dev->width (or switch dev->norm
+to PAL) through the video node while the VBI stream is running -- the
+change is allowed because only dev->vidq is checked -- and let the device
+deliver a field-2 VBI payload. cx231xx_do_vbi_copy() now computes the
+offset with the larger geometry and memcpy()s past the end of the smaller
+plane that was already allocated, a heap out-of-bounds write whose offset
+is attacker-chosen and whose contents come from the device. The
+per-field guard in cx231xx_copy_vbi_line() does not help: it bounds the
+copy against the latched lines_per_field, not the plane's real capacity,
+and vb2 does not re-run buf_prepare() for an already prepared buffer.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+Refuse the format/standard change when the VBI queue is busy as well, so
+the geometry cannot change underneath an allocated VBI buffer.
 
-Fixes: 85756a069c55 ("[media] cobalt: add new driver")
+Fixes: 7c617138b825 ("media: cx231xx: convert to the vb2 framework")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cobalt/cobalt-alsa-main.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/usb/cx231xx/cx231xx-video.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/cobalt/cobalt-alsa-main.c
-+++ b/drivers/media/pci/cobalt/cobalt-alsa-main.c
-@@ -135,7 +135,6 @@ int cobalt_alsa_init(struct cobalt_strea
- err_exit_free:
- 	if (sc != NULL)
- 		snd_card_free(sc);
--	kfree(cobsc);
- err_exit:
- 	return ret;
- }
+--- a/drivers/media/usb/cx231xx/cx231xx-video.c
++++ b/drivers/media/usb/cx231xx/cx231xx-video.c
+@@ -898,7 +898,7 @@ static int vidioc_s_fmt_vid_cap(struct f
+ 	if (rc)
+ 		return rc;
+ 
+-	if (vb2_is_busy(&dev->vidq)) {
++	if (vb2_is_busy(&dev->vidq) || vb2_is_busy(&dev->vbiq)) {
+ 		dev_err(dev->dev, "%s: queue busy\n", __func__);
+ 		return -EBUSY;
+ 	}
+@@ -933,7 +933,7 @@ static int vidioc_s_std(struct file *fil
+ 	if (dev->norm == norm)
+ 		return 0;
+ 
+-	if (vb2_is_busy(&dev->vidq))
++	if (vb2_is_busy(&dev->vidq) || vb2_is_busy(&dev->vbiq))
+ 		return -EBUSY;
+ 
+ 	dev->norm = norm;
 
 
