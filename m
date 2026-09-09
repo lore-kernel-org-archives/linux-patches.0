@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997BA56E076;
-	Wed,  9 Sep 2026 14:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2273D967A;
+	Wed,  9 Sep 2026 14:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963219; cv=none; b=WyVzmm7C7barYzIB3cJNXZE2PGcNz7UyNWj6E+d27apLHMBejP5BVOASwRl3Ed6btOIon9PbjkQR6Vw19BqIma6SUGuryqNoTP/v1yhDCzIEBlXuOWb6sZtUINWxFHXntszW1ZJn8oBgvxNE/oo08Ur8YyQMsacwP+Xg8YLxxAw=
+	t=1788963222; cv=none; b=N5WbSlFhEmbfvxZ78YkCiEP325tOhpp9Y+ZweIFQPeL3PMVpA3IZQYyZH5QLNjwVdQwi9+T7+8t6pN6kFv/Ymm74q0yT7Vollo/EGkb5qwZD2DqH4JbMhypqbemhY3f3LapwHQ6YpvkkjzwssxIc3iClPfFf/RwfvEEePG4SE8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963219; c=relaxed/simple;
-	bh=JtPA608+V5LnmSCmXA+3OfGgFXKicRc7j97W+cBRdZk=;
+	s=arc-20240116; t=1788963222; c=relaxed/simple;
+	bh=CvsHBDmS7eX/LvdYMYeFxxhSZ67arRkU6p0lyP320ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WysPIOixTvL6u2SIjPneRVNPAucnMrF3AbYJ+kxq80qXKTDlbEyhcWMkCg72DUg0ZGYcfg+3waxDzsAV8d12NlkgizY9424rKogtKtZuyAND709jXQJQCGaTkx051pK7/rEasL60MWMYA42j+P3Gp6mvsknzbSFcv4nCY1FQX3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyB9cFUb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjfieHe7aaYq6H2P8wv4PaF8bxm+atD77u1BjS4JBh+u3G6v8uYR3QTIHM3j1B2d3QxG5J9ES+923bh9lgJIn4gSB+4tYa7tU/9o7eaPKC06nB6EFhQvzyR6bPbne2gN1WFjKrTR+F5w7s2fifPPYAr2qCtM8r9r/mTC40aEJEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZicgcqZ4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyB9cFUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D241F00A3E;
-	Wed,  9 Sep 2026 14:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZicgcqZ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D472E1F00A3A;
+	Wed,  9 Sep 2026 14:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963218;
-	bh=WO7texvS+QozYArHHroR92HkP5F9yFy4MzExYXo6NqI=;
+	s=korg; t=1788963221;
+	bh=Y8hO28ZwTThaXGVTrN2EglE1HM0bzND3FUc70PFiqcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fyB9cFUbbVq6Gqt1kae+qLbKmO8cDSd1Lo4L8b5C4uySheLO/GVAAyfbnpEaVRiAb
-	 g4x2tHcEgjBVbtQ0j+/VSPvhFsvr7eeo8dtwScAjDEz7MLXHWHoc3cI2qw7miEiMNP
-	 w3sZ4J+ehH/vwsPWCDTLaioQeDxjCJ34Hn9+5EjQ=
+	b=ZicgcqZ4vb0r1Mc48DV0+njsknDx51QbMCBa/YtxMc4A/R2tm1jU4Pd2W9Rnilme+
+	 4on9qzFQQdEfbIbFcNtAwM9T+AM4EhjfR0kz7ZGBWnsfMlZ91aR3iNA6nlb02wv8PC
+	 8BiDaS6vhCGOlN8Bfh9m564oEtOB/cT+g33TZwSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shixiong Ou <oushixiong@kylinos.cn>,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 7.2 523/556] drm/sysfb: ofdrm: Fix integer overflow in fb_size calculation
-Date: Wed,  9 Sep 2026 15:43:23 +0200
-Message-ID: <20260909134248.821058604@linuxfoundation.org>
+Subject: [PATCH 7.2 524/556] drm/sysfb: ofdrm: Fix is_avivo() constant comparison bug
+Date: Wed,  9 Sep 2026 15:43:24 +0200
+Message-ID: <20260909134248.851634002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,48 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Shixiong Ou <oushixiong@kylinos.cn>
 
-commit c6f48e59ece0123f6a11527ad4d89b21c2d65b87 upstream.
+commit 958f35cbb8955ca3fa439cd9f2092cb42414aa8c upstream.
 
-The framebuffer size calculation `fb_size = linebytes * height` can
-overflow when both values are large (e.g., 46341 * 46341 > INT_MAX).
-Since linebytes and height are both int types, the multiplication is
-performed as int * int, which results in undefined behavior on overflow.
+The is_avivo() function has a logic error where it compares a constant
+to another constant instead of checking the device parameter:
 
-Use check_mul_overflow() to detect and prevent this overflow, consistent
-with the approach used in simpledrm.c and corebootdrm.c.
+  (PCI_VENDOR_ID_ATI_R600 >= 0x9400)
 
 Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: f496834e1674 ("drm/ofdrm: Add per-model device function")
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: c8a17756c425 ("drm/ofdrm: Add ofdrm for Open Firmware framebuffers")
 Cc: <stable@vger.kernel.org> # v6.2+
-Link: https://patch.msgid.link/20260825104134.669676-1-oushixiong1025@163.com
+Link: https://patch.msgid.link/20260731111729.703116-1-oushixiong1025@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sysfb/ofdrm.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/sysfb/ofdrm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/sysfb/ofdrm.c
 +++ b/drivers/gpu/drm/sysfb/ofdrm.c
-@@ -2,6 +2,7 @@
+@@ -239,7 +239,7 @@ static bool is_avivo(u32 vendor, u32 dev
+ 	/* This will match most R5xx */
+ 	return (vendor == PCI_VENDOR_ID_ATI) &&
+ 	       ((device >= PCI_VENDOR_ID_ATI_R520 && device < 0x7800) ||
+-		(PCI_VENDOR_ID_ATI_R600 >= 0x9400));
++		(device >= PCI_VENDOR_ID_ATI_R600));
+ }
  
- #include <linux/aperture.h>
- #include <linux/of_address.h>
-+#include <linux/overflow.h>
- #include <linux/pci.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
-@@ -913,7 +914,10 @@ static struct ofdrm_device *ofdrm_device
- 			return ERR_PTR(-EINVAL);
- 	}
- 
--	fb_size = linebytes * height;
-+	if (check_mul_overflow(linebytes, height, &fb_size)) {
-+		drm_err(dev, "framebuffer size exceeds maximum\n");
-+		return ERR_PTR(-EINVAL);
-+	}
- 
- 	/*
- 	 * Try to figure out the address of the framebuffer. Unfortunately, Open
+ static enum ofdrm_model display_get_model_of(struct drm_device *dev, struct device_node *of_node)
 
 
