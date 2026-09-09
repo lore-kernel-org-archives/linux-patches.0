@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4F658FD1E;
-	Wed,  9 Sep 2026 14:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D7358FD29;
+	Wed,  9 Sep 2026 14:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964808; cv=none; b=Wo7ms5DbBhy4gocxvgA+HhfB6f4D1D0zVY1O+pqCzECcIO+CbbRZy2B/fhMiIGHKK0iJBANL+Lp5+R9KDZ6txGRJVNFJyItHfpphrmy2lYxqB+pyx3xpHzYAZSUGnt/e188r6oCdKFcAsIUiu0j00I0s2mhQWu/szrxqNsYda84=
+	t=1788964811; cv=none; b=gMfxW/EWPzZoZpb+iUdXz4zimf+KcirMyPFgpxGXqJ8gYklCMrhmKdIFZkB25Wji0j10Zl2zi7KPCZxrcZwf40lzv4M7Iue6w+9+BzzCrpIrejho/CER9Vfkb3v3U9YmNvYXwwlJ1QJyLmT+8QxL3Nx3lBht4P4GQL/h+GXlN7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964808; c=relaxed/simple;
-	bh=woRyJ7Awi83NP0MORxgKGPOKK3sooPnradodfOl752k=;
+	s=arc-20240116; t=1788964811; c=relaxed/simple;
+	bh=PuwM71eK3/OMx2Zp4fFPAVHaZdxSQMdKK+Vj8Urp2J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SWC+ewEVXZrRwUfsbc8jAKfgbPY5CDSYMg0a9n+Lr83NyGs0x1BfHU+ICX10YnU5XtcHxlhJFXW9DLWf0cIu7GaQBd3rCsm7jALgZihnWOYrgWhxamvINlP0LzKwzejyR+6P62KtXy1xDDVUg00Xj1Y9sApL6QQ5VZ73I8tAYao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+Dxu/zB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W7qc0czxiM3wOaoRTnAFATR2R4itVC8uvx8tYnIDVoKTf6HcXMuazH3CIC1rBBauWUstkRPllEinzDPF4h7J5A2pH9byESZjvilr1BBMApae6L4ElgIbjUAV75KlN9R649zpT4QC3wusNN0MGh5JbojwrA5zbRR5003yeB7bpGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFmeshRl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+Dxu/zB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3172D1F00A3A;
-	Wed,  9 Sep 2026 14:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFmeshRl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BADA1F00A3E;
+	Wed,  9 Sep 2026 14:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964806;
-	bh=sT0XCr3BmqFEvErwX8KUejkwuuZdVf6wjFx2hU/tiA4=;
+	s=korg; t=1788964809;
+	bh=U/un0CBZlWqd/dY6AzprJDCM4vUkZ4a6UyNHLZhkEvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V+Dxu/zB/75UERvxLFXn2vIfAiv4eJ6nIvvXkqA1gp9g97YdQD2Jr65TJlSDH/Uh6
-	 55SCVVQy2kE1QlTQkRZ/0/O+q0hOqwPhs0Uot7lgm4EPfCANdwJD5OsOVX3Zig4Smp
-	 FVnvL7w+X3ozJZdTXIXNB2cK8yjSBzACcoUuvjxQ=
+	b=aFmeshRlPXlPw1FTfPqtqo/d2NeBJsaVR3udW/2hv7wTIHkAqPFVojjO2a2WzshLN
+	 RsRScstZKavoIWQFGCYo5Pa06yjEcb0g/zkJ4KyY8s9bTiHz2tJj4ppG/7tdy4MOrl
+	 vKEWDkq2l6Ut+4w06TqAlk4aflv8aX8Zi2XKzxvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 549/583] smb: client: reject a tree connect response whose byte count is too small
-Date: Wed,  9 Sep 2026 15:43:54 +0200
-Message-ID: <20260909134256.745760650@linuxfoundation.org>
+Subject: [PATCH 6.18 550/583] NFSD: Consolidate the revocation-path client unpin
+Date: Wed,  9 Sep 2026 15:43:55 +0200
+Message-ID: <20260909134256.776389476@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,75 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 65deb18359341141d37dc86fc7853511be3c87a7 ]
+[ Upstream commit 3308cf3f11ed23c79f9f3f90b34bbbad3e3a6ea9 ]
 
-CIFSTCon() bounds its strnlen() over the byte area with the server's
-ByteCount minus two, which for ByteCount 0 or 1 goes negative as an int
-and converts to a huge size_t.  The later subtraction wraps the __u16
-bytes_left, and that is what bounds cifs_strndup_from_utf16(): a bound of
-up to 65535 against a ~16 KB cifs_req_poolp object runs off the end of the
-slab object, and the bytes reach userspace through tcon->nativeFileSystem
-in /proc/fs/cifs/DebugData.
+The client use-after-free fixes in the state-revocation paths left
+four open-coded copies of one idiom: drop a cl_rpc_users pin without
+renewing the client's lease, waking force_expire_client() when the
+last pin drops on a client it is tearing down.  The accompanying "do
+not renew" rationale was documented at only one of the four sites.
 
-Reject a byte area too small for what the parser consumes.  Two bytes is
-the least it can consume, and no conformant response carries fewer.  The
-new trace point is the 129th smb_eio_trace entry, which __mode(byte)
-cannot represent, so the attribute goes with it.
+put_client_renew_locked() and put_client_renew() already carry the
+same pin-drop logic, but they renew a non-expired client's lease and
+so would resurrect the client whose state is being revoked.  Factor
+the common pin-drop into __put_client_locked(), parameterized by
+whether to renew.  The renew helpers pass true; the new
+put_client_no_renew_locked() and put_client_no_renew() pass false and
+carry the revocation paths, which must not revive the client they are
+tearing down.  No change in behavior.
 
-Fixes: cc20c031bb06 ("cifs: convert CIFSTCon to use new unicode helper functions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260709-cel-v4-6-1d519d9be0cb@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Stable-dep-of: 9026932ac8be ("NFSD: Prevent client use-after-free during blocked-lock reaping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifssmb.c |    6 ++++++
- fs/smb/client/trace.h   |    3 ++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c |   65 ++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 40 insertions(+), 25 deletions(-)
 
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -608,6 +608,11 @@ CIFSTCon(const unsigned int xid, struct
- 		tcon->tid = smb_buffer_response->Tid;
- 		bcc_ptr = pByteArea(smb_buffer_response);
- 		bytes_left = get_bcc(smb_buffer_response);
-+		if (bytes_left < 2) {
-+			rc = smb_EIO2(smb_eio_trace_tcon_bcc_too_small,
-+				      bytes_left, 2);
-+			goto out;
-+		}
- 		length = strnlen(bcc_ptr, bytes_left - 2);
- 		if (smb_buffer->Flags2 & SMBFLG2_UNICODE)
- 			is_unicode = true;
-@@ -663,6 +668,7 @@ CIFSTCon(const unsigned int xid, struct
- 			reset_cifs_unix_caps(xid, tcon, NULL, NULL);
- 		}
- 	}
-+out:
- 	cifs_buf_release(smb_buffer);
- 	return rc;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -200,18 +200,28 @@ renew_client_locked(struct nfs4_client *
+ 	clp->cl_state = NFSD4_ACTIVE;
  }
---- a/fs/smb/client/trace.h
-+++ b/fs/smb/client/trace.h
-@@ -133,6 +133,7 @@
- 	EM(smb_eio_trace_sym_slash,			"sym_slash") \
- 	EM(smb_eio_trace_sym_target_len,		"sym_target_len") \
- 	EM(smb_eio_trace_symlink_file_size,		"symlink_file_size") \
-+	EM(smb_eio_trace_tcon_bcc_too_small,		"tcon_bcc_too_small") \
- 	EM(smb_eio_trace_tdis_in_reconnect,		"tdis_in_reconnect") \
- 	EM(smb_eio_trace_tx_chained_async,		"tx_chained_async") \
- 	EM(smb_eio_trace_tx_compress_failed,		"tx_compress_failed") \
-@@ -214,7 +215,7 @@
- #define EM(a, b) a,
- #define E_(a, b) a
  
--enum smb_eio_trace		{ smb_eio_traces } __mode(byte);
-+enum smb_eio_trace		{ smb_eio_traces };
- enum smb3_rw_credits_trace	{ smb3_rw_credits_traces } __mode(byte);
- enum smb3_tcon_ref_trace	{ smb3_tcon_ref_traces } __mode(byte);
++/*
++ * Finish a cl_rpc_users unpin with the client_lock held. A
++ * revocation walk clears @renew so the client whose state it is
++ * revoking is not revived; every other caller renews the lease of
++ * a still-active client.
++ */
++static void __put_client_locked(struct nfs4_client *clp, bool renew)
++{
++	if (is_client_expired(clp))
++		wake_up_all(&expiry_wq);
++	else if (renew)
++		renew_client_locked(clp);
++}
++
+ static void put_client_renew_locked(struct nfs4_client *clp)
+ {
+ 	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
  
+ 	lockdep_assert_held(&nn->client_lock);
+ 
+-	if (!atomic_dec_and_test(&clp->cl_rpc_users))
+-		return;
+-	if (!is_client_expired(clp))
+-		renew_client_locked(clp);
+-	else
+-		wake_up_all(&expiry_wq);
++	if (atomic_dec_and_test(&clp->cl_rpc_users))
++		__put_client_locked(clp, true);
+ }
+ 
+ static void put_client_renew(struct nfs4_client *clp)
+@@ -220,10 +230,27 @@ static void put_client_renew(struct nfs4
+ 
+ 	if (!atomic_dec_and_lock(&clp->cl_rpc_users, &nn->client_lock))
+ 		return;
+-	if (!is_client_expired(clp))
+-		renew_client_locked(clp);
+-	else
+-		wake_up_all(&expiry_wq);
++	__put_client_locked(clp, true);
++	spin_unlock(&nn->client_lock);
++}
++
++static void put_client_no_renew_locked(struct nfs4_client *clp)
++{
++	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
++
++	lockdep_assert_held(&nn->client_lock);
++
++	if (atomic_dec_and_test(&clp->cl_rpc_users))
++		__put_client_locked(clp, false);
++}
++
++static void put_client_no_renew(struct nfs4_client *clp)
++{
++	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
++
++	if (!atomic_dec_and_lock(&clp->cl_rpc_users, &nn->client_lock))
++		return;
++	__put_client_locked(clp, false);
+ 	spin_unlock(&nn->client_lock);
+ }
+ 
+@@ -1941,9 +1968,7 @@ void nfsd4_revoke_states(struct nfsd_net
+ 					 */
+ 					nn->nfs40_last_revoke =
+ 						ktime_get_boottime_seconds();
+-				if (atomic_dec_and_test(&clp->cl_rpc_users) &&
+-				    is_client_expired(clp))
+-					wake_up_all(&expiry_wq);
++				put_client_no_renew_locked(clp);
+ 				goto retry;
+ 			}
+ 		}
+@@ -7047,9 +7072,7 @@ retry:
+ 				nfsd4_drop_revoked_stid(stid);
+ 				nfs4_put_stid(stid);
+ 				spin_lock(&nn->client_lock);
+-				if (atomic_dec_and_test(&clp->cl_rpc_users) &&
+-				    is_client_expired(clp))
+-					wake_up_all(&expiry_wq);
++				put_client_no_renew_locked(clp);
+ 				goto retry;
+ 			}
+ 		spin_unlock(&clp->cl_lock);
+@@ -7122,15 +7145,7 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 		clp = dp->dl_stid.sc_client;
+ 		list_del_init(&dp->dl_recall_lru);
+ 		revoke_delegation(dp);
+-		/*
+-		 * Unpin without renewing: put_client_renew() would
+-		 * renew the reaped client's lease.
+-		 */
+-		if (atomic_dec_and_lock(&clp->cl_rpc_users, &nn->client_lock)) {
+-			if (is_client_expired(clp))
+-				wake_up_all(&expiry_wq);
+-			spin_unlock(&nn->client_lock);
+-		}
++		put_client_no_renew(clp);
+ 	}
+ 
+ 	spin_lock(&nn->client_lock);
 
 
