@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0526526AA91;
-	Wed,  9 Sep 2026 14:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6B326AA91;
+	Wed,  9 Sep 2026 14:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964619; cv=none; b=IxYVLShaGNPjPYJ2q8Vjn2nh3wToep1Ks4NyfrVFdVxhTDYL6skQA6LjuI6ICCEgE4yEYc13vr1pkbtvoQS4444BmLASXLe2S14cP34vXrS8kzBPIRFFKbcincuG0Eepqu3cq98FOfiZpfiJ++5WtaAxlF8PskGQCFZ2VOrWJh0=
+	t=1788964621; cv=none; b=bvKuALZrqaRaDduDFmZ9dwsIZ7MjXPVz4BT7OqNkNKFE8X0a8rWueKjTIiu3aX6rZ9eS4rsdLL71+Bpr1PQhV158PFXrIaiJ3x9pn1pzTrjidfu+KAqwgmnahdNPkOws0W/QARYssxlEqg+ixiQmThy2xaneIAlANNjK3W9a6rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964619; c=relaxed/simple;
-	bh=78fC2xsjtr8MTT8q/PNOJt6jSS1hJgLf2EPKZecb8ZU=;
+	s=arc-20240116; t=1788964621; c=relaxed/simple;
+	bh=AprkHkWXG5LfuKGQYVTRWJueCHHKg4E+Bg6CISdBmkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skJgty+4UKPc93YLsC4bklqqzITyAyBUsMEgK2tVJlvEfhFzMUFWOMvsV8NwT661xh/eyMKQQQD241rv3B7khQYEbqH9cXboN6ODtU4s7Yy7/qczlYBBmF6sDcTmC3r/PYmmu9yx8ttHnSc4zAAvfeFnMx/navOMMhGXRBHBaJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uT9Wn8VX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WHowtG4CdwlukXYBZzBGOKj7p++0FalsEerVZPAElo7fq2OgJcjKIlXqky/uto8lon6lQRCk6hU3gq8+JtJ8YknRXTWH/VtD9zvfChIm08ybSY8GhLdSbsCqCEq78KiYDwv9Dre5S3sR7+Lm/2ekHHhHKVcmsn3lHmZk0mLM/fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7T5HHlr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uT9Wn8VX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DD81F00A3A;
-	Wed,  9 Sep 2026 14:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7T5HHlr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47D21F00A3A;
+	Wed,  9 Sep 2026 14:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964617;
-	bh=g/4kyKgkRr9hGvSuDKEmlSbdd8HEbpyp3h18HUH5MjQ=;
+	s=korg; t=1788964620;
+	bh=x7KdO/ktk2vEv/tx50BLkWvsJFVmmxoKDmEpZvGVj/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uT9Wn8VXEU6ntSmWvixSVOd/qTo97OWqZJ52hH/gRTvO52nl3ld713cMEj+UKE5Mu
-	 g77YFHlFX9yyyLzNnbBVwqr5R+1w+J7ebKMrd+VMkGM2ylRe59GV9um13cow8T3/mi
-	 wnqyaSISbr7cG6WbMoUV7Hjq66Hnc/JBk58u6ac4=
+	b=L7T5HHlrUtJN5HqQwt4LPKR+M1qfnE02B5/fZLBDAS80HD0PaFHeSlsuXHELIRSHJ
+	 zEqRv9MvC+QzEkuaZxm2m+gBcglmTez1s1iDlNwHwBfapwjrqGD1Hf23kXXEMwk6r/
+	 dJqK9tVV21xTjhoUlJMc+SWiKZ/pW2zr1Oh+Pjds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 486/583] bpf: Disable preemption in bpf_get_stackid
-Date: Wed,  9 Sep 2026 15:42:51 +0200
-Message-ID: <20260909134254.655367318@linuxfoundation.org>
+Subject: [PATCH 6.18 487/583] cxl/ras: Fix cxl_rch_get_aer_severity() wrong severity register
+Date: Wed,  9 Sep 2026 15:42:52 +0200
+Message-ID: <20260909134254.686137433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,66 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Terry Bowman <terry.bowman@amd.com>
 
-[ Upstream commit 15f1bd8574662f1b7b26aaa2e23ebf4066f0117d ]
+[ Upstream commit 9d399526128bae184b153deab42b49f5f3eea2ed ]
 
-The get_perf_callchain call needs disabled preemption plus we need
-it disabled as long as we access its returned trace entries buffer.
+cxl_rch_get_aer_severity() classifies RCH Downstream Port uncorrectable
+errors as fatal or non-fatal by ANDing uncorrectable status with
+PCI_ERR_ROOT_FATAL_RCV. This is wrong because PCI_ERR_ROOT_FATAL_RCV is a
+Root Error Status register bit (bit 6), not a severity bit. ANDing it
+against uncorrectable status tests a reserved bit and produces incorrect
+severity classification.
 
-Note the bpf_get_stackid_pe function is executed already with
-preemption disabled.
+Fix by ANDing the unmasked uncor_status against uncor_severity. Per
+PCIe Base Spec r6.0 Section 7.8.4.4, each bit in the Uncorrectable
+Error Severity register indicates whether the corresponding error is
+fatal (1) or non-fatal (0).
 
-Fixes: d5a3b1f69186 ("bpf: introduce BPF_MAP_TYPE_STACK_TRACE")
-Reported-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Fixes: 6ac07883dbb5 ("cxl/pci: Add RCH downstream port error logging")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260803210149.296496-6-jolsa@kernel.org
-
-Closes: https://lore.kernel.org/bpf/20260206090653.1336687-2-chen.dylane@linux.dev/
-[ adapted get_perf_callchain() to the older six-argument form ]
+Signed-off-by: Terry Bowman <terry.bowman@amd.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260803221810.3685703-3-terry.bowman@amd.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/stackmap.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/cxl/core/ras_rch.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -374,20 +374,22 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
- 		return -EINVAL;
+--- a/drivers/cxl/core/ras_rch.c
++++ b/drivers/cxl/core/ras_rch.c
+@@ -94,11 +94,11 @@ static bool cxl_rch_get_aer_info(void __
+ static bool cxl_rch_get_aer_severity(struct aer_capability_regs *aer_regs,
+ 				     int *severity)
+ {
+-	if (aer_regs->uncor_status & ~aer_regs->uncor_mask) {
+-		if (aer_regs->uncor_status & PCI_ERR_ROOT_FATAL_RCV)
+-			*severity = AER_FATAL;
+-		else
+-			*severity = AER_NONFATAL;
++	u32 uncor_status = aer_regs->uncor_status & ~aer_regs->uncor_mask;
++
++	if (uncor_status) {
++		*severity = (uncor_status & aer_regs->uncor_severity) ?
++			     AER_FATAL : AER_NONFATAL;
+ 		return true;
+ 	}
  
- 	max_depth = stack_map_calculate_max_depth(map->value_size, elem_size, flags);
--	trace = get_perf_callchain(regs, kernel, user, max_depth,
--				   false, false);
- 
--	if (unlikely(!trace))
--		/* couldn't fetch the stack trace */
--		return -EFAULT;
-+	scoped_guard(preempt) {
-+		trace = get_perf_callchain(regs, kernel, user, max_depth,
-+					   false, false);
-+		if (unlikely(!trace))
-+			/* couldn't fetch the stack trace */
-+			return -EFAULT;
- 
--	err = stackid_fastpath(&stackid, map, trace, flags);
--	if (err != -ENOENT)
--		return err;
-+		err = stackid_fastpath(&stackid, map, trace, flags);
-+		if (err != -ENOENT)
-+			return err;
- 
--	new_bucket = stackid_new_bucket(&stackid, map);
--	if (!new_bucket)
--		return -ENOMEM;
-+		new_bucket = stackid_new_bucket(&stackid, map);
-+		if (!new_bucket)
-+			return -ENOMEM;
-+	}
- 
- 	return stackid_install(&stackid, map, new_bucket, flags);
- }
 
 
