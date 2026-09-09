@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3024054B1C6;
-	Wed,  9 Sep 2026 13:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F58B53D0B8;
+	Wed,  9 Sep 2026 13:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961839; cv=none; b=pHaAXWjLIWN7gBr7OUKkPmeu9TleuBNMYNsqDJy4ypToi0TjCxfB3l9YT77ubY6nZnnzWP/EDxFpPQtLZgdz7W2gNkNnglY12YxHBRBgWy8siq2B95Z+DMMz19s6QuimxnjJgcLbUs2JeeRBv8k87JepeAJIW81+CURUaSR1UXk=
+	t=1788961843; cv=none; b=uW69invEER4QhBR4VUNL8TPSNzog9fQS2JemwbZmPrzkdO6Kwrio+g4JyM/fh+MVayv1xRaaMgU7M9gTaqJ05cr6WR1gBp2SVnmsVqp8pCKu26bO9NbWuhEVb9RQ/LGBRELENR/eWaUyQffrLTCGEKECqLBezXQ46ZHhSq+ERQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961839; c=relaxed/simple;
-	bh=5ZYvrGSdj5wU5yR8jCZFMWVqmAkbLfK/45Ugw/2r1XY=;
+	s=arc-20240116; t=1788961843; c=relaxed/simple;
+	bh=csuct4erImO1BWnOuJpH/Uea+2D24EqEDJakFLVUqJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3sL7VSonf/psPU4NaZv/RLc9LkBmrom59WejzNOpesaRcCBctWE8Fh0KmS9aXALzcyr/PkXhg45s6BRdneyMkpapPrPqLLL0CqveGJPuzXDbeb3o3f0FAK/G90RXHSfjg+l/wURsQiwI6k/OKXuVXydldkJh0Oe89UmLiMd7bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNioM3tj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=plvFJvUv3eNwX2zK9uiff74rsMu44q0mmgb5jwl4kZovtRs6L5/lfKiIQTuLoAGwYZkkHAVHHbu1T49dA7L+1nzt2rp7/2Ih6oJUkdT/ew0LAqjylGVUzYJaJNX2DMLkR1x24GkgjMYydrcVpuJZ8DUl7cEGwMEBxdm+4mpCUsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4j+DrvW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNioM3tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0651F00A3A;
-	Wed,  9 Sep 2026 13:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4j+DrvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430781F00A3A;
+	Wed,  9 Sep 2026 13:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961838;
-	bh=j+k2XSfCW8VN4tgjCYM+WIbHzxF0kmggMPyY/Ra1Vuw=;
+	s=korg; t=1788961842;
+	bh=NM5h68FwcaD8SSanfzFz2HpLmowfxJWlCcnwbdtumgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uNioM3tjC00N5I3dCEKMxRpaAht+hJt3tJU5kfgeTANYgxSSPMXo+uW1avZivVaHm
-	 wc2fQSWBd0fg8XudUYPR+JHiqWnGgVDZbD51V56krFrMXzM4kf6UQR7KJwmsA3HNiM
-	 9DZOkLrYW5laUM5wMZ4mHpMfykwEtHXj/l0ZqtJU=
+	b=r4j+DrvW3Omgi80KYsrNVRgMKlXHKBE/IFLif/DeCcDyIWzIw+jsdg6/MUZgL1bwV
+	 2zcNEjcl6SE9pvcOxa6aLhkPJlFyFji2qxqN9BYl4r7A6IVOnsW3I5Wst6jlHEop5+
+	 ORuvpZTIA62BAXtnov46JRAQ7QxBfc3GX6yMMnyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Sven Peter <sven@kernel.org>,
-	Rafay <ahmedrafay888@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.2 042/556] usb: typec: tipd: Fix Thunderbolt altmode VDOs for cd321x
-Date: Wed,  9 Sep 2026 15:35:22 +0200
-Message-ID: <20260909134231.971571162@linuxfoundation.org>
+	Elson Serrao <elson.serrao@oss.qualcomm.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 7.2 033/556] usb: dwc3: clear forceRM when issuing EndTransfer
+Date: Wed,  9 Sep 2026 15:35:13 +0200
+Message-ID: <20260909134231.667790484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,80 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Elson Serrao <elson.serrao@oss.qualcomm.com>
 
-commit e24e3370356bddb65d667985a332b5f8aeeb5f97 upstream.
+commit b58e6200450d350314db0ecda7d6d1bde3281e80 upstream.
 
-The Intel VID status register is actually 9 bytes long and doesn't
-contain the raw VDOs but only the upper 16bits for device mode and enter
-mode. Shift those two fields into place and reconstruct the cable
-discover mode VDO from the data status register instead since it's not
-directly accessible. With this fixed now the correct VDOs are forwarded
-to the PHY and the to-be-submitted Thunderbolt/USB4 native host interface
-so that the right mode can be negotiated and the link actually comes up.
+The forceRM bit of the DEPCMD register controls the behavior of the
+EndTransfer command used to stop an active transfer. Older DWC3
+programming guide revisions recommended setting forceRM=1 when
+issuing EndTransfer. Newer programming guide revisions recommend
+issuing EndTransfer with forceRM cleared.
 
-Link: https://www.ti.com/lit/ug/slvubh2b/slvubh2b.pdf
-Fixes: 0b31c978935f ("usb: typec: tipd: Read USB4, Thunderbolt and DisplayPort status for cd321x")
-Fixes: 82432bbfb9e8 ("usb: typec: tipd: Handle mode transitions for CD321x")
+With forceRM=1 on DWC_usb31 v2.00a and v2.10a controllers, a transfer
+aborted through the ep_dequeue path was observed to remain active
+after EndTransfer completion. A subsequent StartTransfer issued on the
+same endpoint triggered writes associated with the aborted transfer.
+This resulted in an SMMU fault because the transfer buffer had already
+been unmapped during EndTransfer command-completion cleanup.
+
+Using forceRM=0 eliminates the issue. Although older DWC3 programming
+guide revisions recommended setting forceRM=1, no issues are known
+from using forceRM=0. Clear forceRM when issuing EndTransfer to provide
+consistent EndTransfer behavior and align with newer programming guide
+recommendations.
+
+Fixes: 1e43c86d84fb ("usb: dwc3: core: Add DWC31 version 2.00a controller")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Sven Peter <sven@kernel.org>
-Tested-by: Rafay <ahmedrafay888@gmail.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260813-b4-tipd-vdo-fix-v1-1-70317f2cd554@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Elson Serrao <elson.serrao@oss.qualcomm.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260813151456.867008-1-elson.serrao@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c     |   17 +++++++++++++----
- drivers/usb/typec/tipd/tps6598x.h |    4 ++--
- 2 files changed, 15 insertions(+), 6 deletions(-)
+ drivers/usb/dwc3/ep0.c    |    2 +-
+ drivers/usb/dwc3/gadget.c |   21 +++++++++++++--------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -114,7 +114,6 @@ struct tps6598x_intel_vid_status_reg {
- 	__le32 attention_vdo;
- 	__le16 enter_vdo;
- 	__le16 device_mode;
--	__le16 cable_mode;
- } __packed;
+--- a/drivers/usb/dwc3/ep0.c
++++ b/drivers/usb/dwc3/ep0.c
+@@ -304,7 +304,7 @@ void dwc3_ep0_out_start(struct dwc3 *dwc
  
- /* Standard Task return codes */
-@@ -700,9 +699,19 @@ static void cd321x_typec_update_mode(str
- 		   cd321x->state.mode == TYPEC_TBT_MODE)
- 			return;
+ 		dwc3_ep->flags &= ~DWC3_EP_DELAY_STOP;
+ 		if (dwc->connected)
+-			dwc3_stop_active_transfer(dwc3_ep, true, true);
++			dwc3_stop_active_transfer(dwc3_ep, false, true);
+ 		else
+ 			dwc3_remove_requests(dwc, dwc3_ep, -ESHUTDOWN);
+ 	}
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1004,7 +1004,7 @@ static int __dwc3_gadget_ep_enable(struc
+ 			 * controller to generate an ERDY to initiate the
+ 			 * stream.
+ 			 */
+-			dwc3_stop_active_transfer(dep, true, true);
++			dwc3_stop_active_transfer(dep, false, true);
  
--		tbt_data.cable_mode = le16_to_cpu(st->intel_vid_status.cable_mode);
--		tbt_data.device_mode = le16_to_cpu(st->intel_vid_status.device_mode);
--		tbt_data.enter_vdo = le16_to_cpu(st->intel_vid_status.enter_vdo);
-+		tbt_data.cable_mode = TBT_MODE |
-+			TBT_SET_CABLE_SPEED(TPS_DATA_STATUS_TBT_CABLE_SPEED(st->data_status)) |
-+			TBT_SET_CABLE_ROUNDED(TPS_DATA_STATUS_TBT_CABLE_GEN(st->data_status));
-+		if (st->data_status & TPS_DATA_STATUS_OPTICAL_CABLE)
-+			tbt_data.cable_mode |= TBT_CABLE_OPTICAL;
-+		if (st->data_status & TPS_DATA_STATUS_ACTIVE_LINK_TRAIN)
-+			tbt_data.cable_mode |= TBT_CABLE_LINK_TRAINING;
-+		if (st->data_status & TPS_DATA_STATUS_ACTIVE_CABLE)
-+			tbt_data.cable_mode |= TBT_CABLE_ACTIVE_PASSIVE;
-+		tbt_data.device_mode = TBT_MODE |
-+			(u32)le16_to_cpu(st->intel_vid_status.device_mode) << 16;
-+		tbt_data.enter_vdo =
-+			(u32)le16_to_cpu(st->intel_vid_status.enter_vdo) << 16;
- 		cd321x->state.alt = cd321x->port_altmode_tbt;
- 		cd321x->state.mode = TYPEC_TBT_MODE;
- 		cd321x->state.data = &tbt_data;
---- a/drivers/usb/typec/tipd/tps6598x.h
-+++ b/drivers/usb/typec/tipd/tps6598x.h
-@@ -206,10 +206,10 @@
- #define TPS_DATA_STATUS_DP_PIN_ASSIGNMENT(x) \
- 	TPS_FIELD_GET(TPS_DATA_STATUS_DP_PIN_ASSIGNMENT_MASK, (x))
- #define TPS_DATA_STATUS_TBT_CABLE_SPEED_MASK   GENMASK(27, 25)
--#define TPS_DATA_STATUS_TBT_CABLE_SPEED \
-+#define TPS_DATA_STATUS_TBT_CABLE_SPEED(x) \
- 	TPS_FIELD_GET(TPS_DATA_STATUS_TBT_CABLE_SPEED_MASK, (x))
- #define TPS_DATA_STATUS_TBT_CABLE_GEN_MASK     GENMASK(29, 28)
--#define TPS_DATA_STATUS_TBT_CABLE_GEN \
-+#define TPS_DATA_STATUS_TBT_CABLE_GEN(x) \
- 	TPS_FIELD_GET(TPS_DATA_STATUS_TBT_CABLE_GEN_MASK, (x))
+ 			/*
+ 			 * All stream eps will reinitiate stream on NoStream
+@@ -1032,7 +1032,7 @@ void dwc3_remove_requests(struct dwc3 *d
+ {
+ 	struct dwc3_request		*req;
  
- /* Map data status to DP spec assignments */
+-	dwc3_stop_active_transfer(dep, true, false);
++	dwc3_stop_active_transfer(dep, false, false);
+ 
+ 	/* If endxfer is delayed, avoid unmapping requests */
+ 	if (dep->flags & DWC3_EP_DELAY_STOP)
+@@ -1720,7 +1720,7 @@ static int __dwc3_gadget_kick_transfer(s
+ 		if (ret == -EAGAIN)
+ 			return ret;
+ 
+-		dwc3_stop_active_transfer(dep, true, true);
++		dwc3_stop_active_transfer(dep, false, true);
+ 
+ 		list_for_each_entry_safe(req, tmp, &dep->started_list, list)
+ 			dwc3_gadget_move_cancelled_request(req, DWC3_REQUEST_STATUS_DEQUEUED);
+@@ -1757,6 +1757,11 @@ static int __dwc3_gadget_get_frame(struc
+  * the controller won't update the TRB progress on command
+  * completion. It also won't clear the HWO bit in the TRB.
+  * The command will also not complete immediately in that case.
++ *
++ * Older programming guide revisions recommended setting ForceRM to 1
++ * when ending a transfer. Newer programming guide revisions now
++ * recommend keeping ForceRM cleared, and TRBs are properly updated
++ * on command completion.
+  */
+ static int __dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force, bool interrupt)
+ {
+@@ -1882,7 +1887,7 @@ static int dwc3_gadget_start_isoc_quirk(
+ 		 * to wait for the next XferNotReady to test the command again
+ 		 */
+ 		if (cmd_status == 0) {
+-			dwc3_stop_active_transfer(dep, true, true);
++			dwc3_stop_active_transfer(dep, false, true);
+ 			return 0;
+ 		}
+ 	}
+@@ -2165,7 +2170,7 @@ static int dwc3_gadget_ep_dequeue(struct
+ 			struct dwc3_request *t;
+ 
+ 			/* wait until it is processed */
+-			dwc3_stop_active_transfer(dep, true, true);
++			dwc3_stop_active_transfer(dep, false, true);
+ 
+ 			/*
+ 			 * Remove any started request if the transfer is
+@@ -2242,7 +2247,7 @@ int __dwc3_gadget_ep_set_halt(struct dwc
+ 			return 0;
+ 		}
+ 
+-		dwc3_stop_active_transfer(dep, true, true);
++		dwc3_stop_active_transfer(dep, false, true);
+ 
+ 		list_for_each_entry_safe(req, tmp, &dep->started_list, list)
+ 			dwc3_gadget_move_cancelled_request(req, DWC3_REQUEST_STATUS_STALLED);
+@@ -3357,7 +3362,7 @@ static void dwc3_nostream_work(struct wo
+ 		dwc3_send_gadget_generic_command(dwc, cmd, dep->number);
+ 	} else {
+ 		dep->flags |= DWC3_EP_DELAY_START;
+-		dwc3_stop_active_transfer(dep, true, true);
++		dwc3_stop_active_transfer(dep, false, true);
+ 		spin_unlock_irqrestore(&dwc->lock, flags);
+ 		return;
+ 	}
+@@ -3715,7 +3720,7 @@ static bool dwc3_gadget_endpoint_trbs_co
+ 	if (usb_endpoint_xfer_isoc(dep->endpoint.desc) &&
+ 		list_empty(&dep->started_list) &&
+ 		(list_empty(&dep->pending_list) || status == -EXDEV))
+-		dwc3_stop_active_transfer(dep, true, true);
++		dwc3_stop_active_transfer(dep, false, true);
+ 	else if (dwc3_gadget_ep_should_continue(dep))
+ 		if (__dwc3_gadget_kick_transfer(dep) == 0)
+ 			no_started_trb = false;
 
 
