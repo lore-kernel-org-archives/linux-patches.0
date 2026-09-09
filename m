@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366BB57D20A;
-	Wed,  9 Sep 2026 14:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F6E57D20A;
+	Wed,  9 Sep 2026 14:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964501; cv=none; b=sPd7057IroIaXKq1tPVZSnLbACJhGzG+WsmKL7kr6nTpBR/drWVASPU3eUdrV8wWm3DTiVnP7nnrSNSY6rSRJGFw3dvOk+8ksiJSuyE353XkXLp58Cu5AdykNyo3zVE+iIj4UA5Whvzybp1aXHVPFlJ2WEq3cRKuv4gLO8fAg7g=
+	t=1788964504; cv=none; b=lvMkWtPLkY+Etz47N7j7feHYthAWd0TN4sNgvwN4LgonMTb1p6cji447m8XZVT1eHkHQlSv8zhr2nRGuvN3mpMHbj/DSmc9lRxjCBEZth7qlrcKceiVRuvCovqG8os8zqZvWj2JNdQSJQZwFyrqvnCEydj9xHvDePWejMOiYxlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964501; c=relaxed/simple;
-	bh=6R7BRkq5jhjuXDhmRZQjgW5MQCRBTExIetCwjo2K/EU=;
+	s=arc-20240116; t=1788964504; c=relaxed/simple;
+	bh=inpqEiaM3MPRQikzh0WMc9UN/gdvC6LpvdHaPOp124g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bU04Imzx9CXcIYHXAF1R53BBUwaWLPrl0iKPHOxe4rGuonvw6mQgnuHb9BuQDB/L3L3ED/KgJnYRFZes8u2I1m5McQbSug3jtSEdE47Uhr9F3aUYys3JrM138ansAfddyaq4rZJcH2Bz+QPG71a/0KR396iQ9vMkFrh4KjndvIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuVzYfGk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zlv1f808wXBVwTLTnctfyMtlgCJWthkPsSiQl4albDByCTTtBjdYzNjmkr6/wq1nA+1BcJWT5Qy042vfhJBiNNHHj81t8mSHtcd+POCbE3ad2MBh461E7vyYPFwcpdorG7Nv9sWLv4lFWziL92PohXO9A6TIr5xkjajA6pK8TuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmYx0iGL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuVzYfGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7D61F00A3A;
-	Wed,  9 Sep 2026 14:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmYx0iGL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E0B1F00A3A;
+	Wed,  9 Sep 2026 14:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964500;
-	bh=fQ/F3d+qJRJ9HRnEwKchh4LF2lE0H+7qYlVvNwBEOQ8=;
+	s=korg; t=1788964502;
+	bh=MT3ZZmV2YhLDS0pU8KSAEV1XHO2XnDVyBgtkJyDwJ/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uuVzYfGkK5AQjZEJ8u2kzrHRRyUi7r7rh2VRx1aBVdtsXhmdMMUoZChP72RRyXtw4
-	 l6lzPdEyj+6UsI8CO1aa7USUMRNLQMZ30bDG0n5IxEVYDS1ISL4iOD30hYgYcy68QA
-	 SdaKkt09oPBLqavW3+og65B61Ykl6x/tstwHFEYA=
+	b=xmYx0iGLeEfQBVqMOGFAIPemTRDozOo4OCiDFJNwxOsMehLDA9WEonLfAzEe9TcpS
+	 S5ssBaUtidqcTl9+Kjolr7QFq+13HjFkQH8WfEhnOqnJd8RReaO0xj07XeDrwIb0+e
+	 me3JcHJWq6qbUhi83fG8ceEg8XvHfGgv4PMU28W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Markus Probst <markus.probst@posteo.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Gary Guo <gary@garyguo.net>,
 	Alice Ryhl <aliceryhl@google.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 445/583] rust: devres: fix race condition due to nesting
-Date: Wed,  9 Sep 2026 15:42:10 +0200
-Message-ID: <20260909134253.387396612@linuxfoundation.org>
+Subject: [PATCH 6.18 446/583] rust: devres: fix race between concurrent revokers
+Date: Wed,  9 Sep 2026 15:42:11 +0200
+Message-ID: <20260909134253.419084511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -55,308 +55,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit ba268514ea14b44570030e8ed2aef92a38679e85 ]
+[ Upstream commit acc516dfa1972d31836b50abc0115216cd0fccc5 ]
 
-Commit f5d3ef25d238 ("rust: devres: get rid of Devres' inner Arc") did
-attempt to optimize away the internal reference count of Devres.
+There is a potential race condition when two paths try to revoke a
+Devres concurrently.
 
-However, without an internal reference count, we can't support cases
-where Devres is indirectly nested, resulting into a deadlock.
+The driver core's devres_release_all() calls Revocable::revoke() via the
+release callback, while Devres::drop() calls revoke_nosync() on another
+CPU.
 
-Such indirect nesting easily happens in the following way:
+The revoker that does not claim the is_available swap returns
+immediately, but the revoker that did may still be executing
+drop_in_place() on the inner data. This can cause a use-after-free when
+the other revoker's caller proceeds to drop adjacent resources that
+drop_in_place() still references (e.g., Devres<DmaMappedSgt> racing with
+SGTable freeing the backing sg_table and pages).
 
-A registration object (which is guarded by devres) hold a reference
-count of an object that holds a device resource guarded by devres
-itself.
+Fix this by adding a Completion. The release callback signals the
+Completion after revoke() finishes, and Devres::drop() waits for it when
+it loses the is_available swap. This ensures the wrapped object is fully
+torn down before Devres::drop() returns.
 
-For instance a drm::Registration holds a reference of a drm::Device. The
-drm::Device itself holds a device resource in its private data.
-
-When the drm::Registration is dropped by devres, and it happens that it
-did hold the last reference count of the drm::Device, it also drops the
-device resource, which is guarded by devres itself.
-
-Thus, resulting into a deadlock in the Devres destructor of the device
-resource, as in the following backtrace.
-
-	sysrq: Show Blocked State
-	task:rmmod           state:D stack:0     pid:1331  tgid:1331  ppid:1330   task_flags:0x400100 flags:0x00000010
-	Call trace:
-	 __switch_to+0x190/0x294 (T)
-	 __schedule+0x878/0xf10
-	 schedule+0x4c/0xcc
-	 schedule_timeout+0x44/0x118
-	 wait_for_common+0xc0/0x18c
-	 wait_for_completion+0x18/0x24
-	 _RINvNtCs4gKlGRWyJ5S_4core3ptr13drop_in_placeINtNtNtCsgzhNYVB7wSz_6kernel4sync3arc3ArcINtNtBN_6devres6DevresmEEECsRdyc7Hyps3_15rust_driver_pci+0x68/0xe8 [rust_driver_pci]
-	 _RINvNvNtCsgzhNYVB7wSz_6kernel6devres16register_foreign8callbackINtNtCs4gKlGRWyJ5S_4core3pin3PinINtNtNtB6_5alloc4kbox3BoxINtNtNtB6_4sync3arc3ArcINtB4_6DevresmEENtNtB1A_9allocator7KmallocEEECsRdyc7Hyps3_15rust_driver_pci+0x34/0xc8 [rust_driver_pci]
-	 devm_action_release+0x14/0x20
-	 devres_release_all+0xb8/0x118
-	 device_release_driver_internal+0x1c4/0x28c
-	 driver_detach+0x94/0xd4
-	 bus_remove_driver+0xdc/0x11c
-	 driver_unregister+0x34/0x58
-	 pci_unregister_driver+0x20/0x80
-	 __arm64_sys_delete_module+0x1d8/0x254
-	 invoke_syscall+0x40/0xcc
-	 el0_svc_common+0x8c/0xd8
-	 do_el0_svc+0x1c/0x28
-	 el0_svc+0x54/0x1d4
-	 el0t_64_sync_handler+0x84/0x12c
-	 el0t_64_sync+0x198/0x19c
-
-In order to fix this, re-introduce the internal reference count.
-
-Reported-by: Boris Brezillon <boris.brezillon@collabora.com>
-Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/288089-General/topic/.E2.9C.94.20Deadlock.20caused.20by.20nested.20Devres/with/571242651
-Reported-by: Markus Probst <markus.probst@posteo.de>
-Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/288089-General/topic/.E2.9C.94.20Devres.20inside.20Devres.20stuck.20on.20cleanup/with/571239721
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://gitlab.freedesktop.org/panfrost/linux/-/merge_requests/56#note_3282757
-Fixes: f5d3ef25d238 ("rust: devres: get rid of Devres' inner Arc")
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/dri-devel/20260612202841.2577C1F000E9@smtp.kernel.org/
+Fixes: 05aa6fb1c21d ("rust: scatterlist: Add abstraction for sg_table")
+Reviewed-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Tested-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patch.msgid.link/20260205222529.91465-1-dakr@kernel.org
-[ Call clone() prior to devm_add_action(). - Danilo ]
+Link: https://patch.msgid.link/20260628174451.2275679-1-dakr@kernel.org
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Stable-dep-of: acc516dfa197 ("rust: devres: fix race between concurrent revokers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/devres.rs |  157 +++++++++++++++++---------------------------------
- 1 file changed, 55 insertions(+), 102 deletions(-)
+ rust/kernel/devres.rs |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 --- a/rust/kernel/devres.rs
 +++ b/rust/kernel/devres.rs
-@@ -12,24 +12,22 @@ use crate::{
-     error::{to_result, Error, Result},
-     ffi::c_void,
-     prelude::*,
--    revocable::{Revocable, RevocableGuard},
--    sync::{aref::ARef, rcu, Completion},
--    types::{ForeignOwnable, Opaque, ScopeGuard},
-+    revocable::{
-+        Revocable,
-+        RevocableGuard, //
-+    },
-+    sync::{
-+        aref::ARef,
-+        rcu,
-+        Arc, //
-+    },
-+    types::ForeignOwnable,
+@@ -19,7 +19,8 @@ use crate::{
+     sync::{
+         aref::ARef,
+         rcu,
+-        Arc, //
++        Arc,
++        Completion, //
+     },
+     types::ForeignOwnable,
  };
- 
--use pin_init::Wrapper;
--
--/// [`Devres`] inner data accessed from [`Devres::callback`].
- #[pin_data]
+@@ -28,6 +29,8 @@ use crate::{
  struct Inner<T: Send> {
      #[pin]
      data: Revocable<T>,
--    /// Tracks whether [`Devres::callback`] has been completed.
--    #[pin]
--    devm: Completion,
--    /// Tracks whether revoking [`Self::data`] has been completed.
--    #[pin]
--    revoke: Completion,
++    #[pin]
++    revocation: Completion,
  }
  
  /// This abstraction is meant to be used by subsystems to containerize [`Device`] bound resources to
-@@ -105,18 +103,13 @@ struct Inner<T: Send> {
- /// # fn no_run(dev: &Device<Bound>) -> Result<(), Error> {
- /// // SAFETY: Invalid usage for example purposes.
- /// let iomem = unsafe { IoMem::<{ core::mem::size_of::<u32>() }>::new(0xBAAAAAAD)? };
--/// let devres = KBox::pin_init(Devres::new(dev, iomem), GFP_KERNEL)?;
-+/// let devres = Devres::new(dev, iomem)?;
+@@ -44,6 +47,10 @@ struct Inner<T: Send> {
+ /// After the [`Devres`] has been unbound it is not possible to access the encapsulated resource
+ /// anymore.
  ///
- /// let res = devres.try_access().ok_or(ENXIO)?;
- /// res.write8(0x42, 0x0);
- /// # Ok(())
- /// # }
- /// ```
--///
--/// # Invariants
--///
--/// `Self::inner` is guaranteed to be initialized and is always accessed read-only.
--#[pin_data(PinnedDrop)]
- pub struct Devres<T: Send> {
-     dev: ARef<Device>,
-     /// Pointer to [`Self::devres_callback`].
-@@ -124,14 +117,7 @@ pub struct Devres<T: Send> {
-     /// Has to be stored, since Rust does not guarantee to always return the same address for a
-     /// function. However, the C API uses the address as a key.
-     callback: unsafe extern "C" fn(*mut c_void),
--    /// Contains all the fields shared with [`Self::callback`].
--    // TODO: Replace with `UnsafePinned`, once available.
--    //
--    // Subsequently, the `drop_in_place()` in `Devres::drop` and `Devres::new` as well as the
--    // explicit `Send` and `Sync' impls can be removed.
--    #[pin]
--    inner: Opaque<Inner<T>>,
--    _add_action: (),
-+    inner: Arc<Inner<T>>,
- }
++/// When a [`Devres`] is dropped, it is guaranteed that `T` has been fully dropped by the time
++/// [`Devres::drop`] returns, even if a concurrent revocation through the release callback is in
++/// progress.
++///
+ /// [`Devres`] users should make sure to simply free the corresponding backing resource in `T`'s
+ /// [`Drop`] implementation.
+ ///
+@@ -133,6 +140,7 @@ impl<T: Send> Devres<T> {
+         let inner = Arc::pin_init(
+             try_pin_init!(Inner {
+                 data <- Revocable::new(data),
++                revocation <- Completion::new(),
+             }),
+             GFP_KERNEL,
+         )?;
+@@ -171,7 +179,9 @@ impl<T: Send> Devres<T> {
+         // `devm_add_action()`, hence `ptr` must be a valid pointer to `Inner<T>`.
+         let inner = unsafe { Arc::from_raw(ptr.cast::<Inner<T>>()) };
  
- impl<T: Send> Devres<T> {
-@@ -139,74 +125,53 @@ impl<T: Send> Devres<T> {
-     ///
-     /// The `data` encapsulated within the returned `Devres` instance' `data` will be
-     /// (revoked)[`Revocable`] once the device is detached.
--    pub fn new<'a, E>(
--        dev: &'a Device<Bound>,
--        data: impl PinInit<T, E> + 'a,
--    ) -> impl PinInit<Self, Error> + 'a
-+    pub fn new<E>(dev: &Device<Bound>, data: impl PinInit<T, E>) -> Result<Self>
-     where
--        T: 'a,
-         Error: From<E>,
-     {
--        try_pin_init!(&this in Self {
-+        let callback = Self::devres_callback;
-+        let inner = Arc::pin_init(
-+            try_pin_init!(Inner {
-+                data <- Revocable::new(data),
-+            }),
-+            GFP_KERNEL,
-+        )?;
-+        let devres_inner = inner.clone();
-+
-+        // SAFETY:
-+        // - `dev.as_raw()` is a pointer to a valid bound device.
-+        // - `inner` is guaranteed to be valid for the duration of the lifetime of `Self`.
-+        // - `devm_add_action()` is guaranteed not to call `callback` for the entire lifetime of
-+        //   `dev`.
-+        to_result(unsafe {
-+            bindings::devm_add_action(
-+                dev.as_raw(),
-+                Some(callback),
-+                Arc::as_ptr(&inner).cast_mut().cast(),
-+            )
-+        })?;
-+
-+        // `devm_add_action()` was successful and has consumed the reference count.
-+        core::mem::forget(devres_inner);
-+
-+        Ok(Self {
-             dev: dev.into(),
--            callback: Self::devres_callback,
--            // INVARIANT: `inner` is properly initialized.
--            inner <- Opaque::pin_init(try_pin_init!(Inner {
--                    devm <- Completion::new(),
--                    revoke <- Completion::new(),
--                    data <- Revocable::new(data),
--            })),
--            // TODO: Replace with "initializer code blocks" [1] once available.
--            //
--            // [1] https://github.com/Rust-for-Linux/pin-init/pull/69
--            _add_action: {
--                // SAFETY: `this` is a valid pointer to uninitialized memory.
--                let inner = unsafe { &raw mut (*this.as_ptr()).inner };
--
--                // SAFETY:
--                // - `dev.as_raw()` is a pointer to a valid bound device.
--                // - `inner` is guaranteed to be a valid for the duration of the lifetime of `Self`.
--                // - `devm_add_action()` is guaranteed not to call `callback` until `this` has been
--                //    properly initialized, because we require `dev` (i.e. the *bound* device) to
--                //    live at least as long as the returned `impl PinInit<Self, Error>`.
--                to_result(unsafe {
--                    bindings::devm_add_action(dev.as_raw(), Some(*callback), inner.cast())
--                }).inspect_err(|_| {
--                    let inner = Opaque::cast_into(inner);
--
--                    // SAFETY: `inner` is a valid pointer to an `Inner<T>` and valid for both reads
--                    // and writes.
--                    unsafe { core::ptr::drop_in_place(inner) };
--                })?;
--            },
-+            callback,
-+            inner,
-         })
-     }
- 
--    fn inner(&self) -> &Inner<T> {
--        // SAFETY: By the type invairants of `Self`, `inner` is properly initialized and always
--        // accessed read-only.
--        unsafe { &*self.inner.get() }
--    }
--
-     fn data(&self) -> &Revocable<T> {
--        &self.inner().data
-+        &self.inner.data
-     }
- 
-     #[allow(clippy::missing_safety_doc)]
-     unsafe extern "C" fn devres_callback(ptr: *mut kernel::ffi::c_void) {
--        // SAFETY: In `Self::new` we've passed a valid pointer to `Inner` to `devm_add_action()`,
--        // hence `ptr` must be a valid pointer to `Inner`.
--        let inner = unsafe { &*ptr.cast::<Inner<T>>() };
--
--        // Ensure that `inner` can't be used anymore after we signal completion of this callback.
--        let inner = ScopeGuard::new_with_data(inner, |inner| inner.devm.complete_all());
--
--        if !inner.data.revoke() {
--            // If `revoke()` returns false, it means that `Devres::drop` already started revoking
--            // `data` for us. Hence we have to wait until `Devres::drop` signals that it
--            // completed revoking `data`.
--            inner.revoke.wait_for_completion();
--        }
-+        // SAFETY: In `Self::new` we've passed a valid pointer of `Inner<T>` to
-+        // `devm_add_action()`, hence `ptr` must be a valid pointer to `Inner<T>`.
-+        let inner = unsafe { Arc::from_raw(ptr.cast::<Inner<T>>()) };
-+
-+        inner.data.revoke();
+-        inner.data.revoke();
++        if inner.data.revoke() {
++            inner.revocation.complete_all();
++        }
      }
  
      fn remove_action(&self) -> bool {
-@@ -218,7 +183,7 @@ impl<T: Send> Devres<T> {
-             bindings::devm_remove_action_nowarn(
-                 self.dev.as_raw(),
-                 Some(self.callback),
--                core::ptr::from_ref(self.inner()).cast_mut().cast(),
-+                Arc::as_ptr(&self.inner).cast_mut().cast(),
-             )
-         } == 0)
-     }
-@@ -289,31 +254,19 @@ unsafe impl<T: Send> Send for Devres<T>
- // SAFETY: `Devres` can be shared with any task, if `T: Sync`.
- unsafe impl<T: Send + Sync> Sync for Devres<T> {}
- 
--#[pinned_drop]
--impl<T: Send> PinnedDrop for Devres<T> {
--    fn drop(self: Pin<&mut Self>) {
-+impl<T: Send> Drop for Devres<T> {
-+    fn drop(&mut self) {
-         // SAFETY: When `drop` runs, it is guaranteed that nobody is accessing the revocable data
-         // anymore, hence it is safe not to wait for the grace period to finish.
-         if unsafe { self.data().revoke_nosync() } {
-             // We revoked `self.data` before the devres action did, hence try to remove it.
--            if !self.remove_action() {
--                // We could not remove the devres action, which means that it now runs concurrently,
--                // hence signal that `self.data` has been revoked by us successfully.
--                self.inner().revoke.complete_all();
--
--                // Wait for `Self::devres_callback` to be done using this object.
--                self.inner().devm.wait_for_completion();
-+            if self.remove_action() {
-+                // SAFETY: In `Self::new` we have taken an additional reference count of `self.data`
-+                // for `devm_add_action()`. Since `remove_action()` was successful, we have to drop
-+                // this additional reference count.
-+                drop(unsafe { Arc::from_raw(Arc::as_ptr(&self.inner)) });
+@@ -266,6 +276,10 @@ impl<T: Send> Drop for Devres<T> {
+                 // this additional reference count.
+                 drop(unsafe { Arc::from_raw(Arc::as_ptr(&self.inner)) });
              }
--        } else {
--            // `Self::devres_callback` revokes `self.data` for us, hence wait for it to be done
--            // using this object.
--            self.inner().devm.wait_for_completion();
++        } else {
++            // The release callback is concurrently revoking; wait for it to finish
++            // `drop_in_place()` of the wrapped object before returning.
++            self.inner.revocation.wait_for_completion();
          }
--
--        // INVARIANT: At this point it is guaranteed that `inner` can't be accessed any more.
--        //
--        // SAFETY: `inner` is valid for dropping.
--        unsafe { core::ptr::drop_in_place(self.inner.get()) };
      }
  }
- 
 
 
