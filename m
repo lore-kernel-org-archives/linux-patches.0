@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A447576EBA;
-	Wed,  9 Sep 2026 14:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C39582B87;
+	Wed,  9 Sep 2026 14:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964311; cv=none; b=ZNa1m1LnFrMf0I2P95HFZfXy9PUsU1wrQKpISzflwaFwaxbqFrlII+S0OZllog+Aow7Vcl8o72BnZ2JWFFyQzk2Bud8wI0T52YnMMsgQSxr0hPQIqzDqLum03fKYNHPsbnmuT9rjeuVYsBKdE+7HeMHRmn+gHN9u9dPCFm1myuY=
+	t=1788964314; cv=none; b=A7u/dYibjLZ2tynhFUQKF6tZWj0lndb4zE89ImcSTY2lm4mo3cQqHUhLy8KNkK+ugoF8eNTqAiKkIiLvyOyAGlXqWoDFVIW62u8b6QmUfe7y9yZV2x5HIxeITwMAkzmBjCSNuhLin1FzdAHHOsdNGYc7qgU+YfSq27FBseY1CE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964311; c=relaxed/simple;
-	bh=U3cykv88BFoOxTahAvpy5vopxOQTMYjjXIOhZZEKnBw=;
+	s=arc-20240116; t=1788964314; c=relaxed/simple;
+	bh=XErfsG/E3OK+FB922xCG08YyxhGurxFKVShYsmqaxos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KGWljhGb+SZ0C5rSJzqrn0Et8DZAONlyYBGwj8dXeZr+BjTdVTqvbFXvoA4ohzesQmYtyKUj1vJEvZu2siGMbGoGGLqG8VduX2S2umw6t3Td402T8fXqYPCFYhNhjBaicycBzG2ZjAJFLzZSF6iUY/rtZsS9xruzsrcZwSjjdWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cM2YATkq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eJV1RGNiSmtG/4Sw9n4GZrgZjrt6gsMy+bRTvU97fCk9bEh7m6i3VmAlirzsaz3R9dom5Bw5OjiiTMZEpBIupWX2IE/SG1eSnhB/D5TQAD2NYG1XhuzuT2L84bbQcehUZRG2xIBoXa6wCRUs1N+ftQktmBlyrVg1N9/najRndmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRWyZoWu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cM2YATkq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6F21F00A3A;
-	Wed,  9 Sep 2026 14:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRWyZoWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9BB1F00A3E;
+	Wed,  9 Sep 2026 14:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964310;
-	bh=RbSrHfzz7qJivLo7SqzEe67LhzHmAEQ3bN7MtQydRg4=;
+	s=korg; t=1788964312;
+	bh=oQTvofaSma0L9eigtpMSy7o1bjs2ZDZVbgCKKWUnB80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cM2YATkq8t0yzJqhKW6eeAUA1mSsBgykQ3+IhgmDa++cmdKnC9iFA8RRivfdDoDK3
-	 FZyg2lbHlnbR99Jc7KGfzvI6Ccf29690467fumItOP294HhcVfL0calx5oxv11NEgp
-	 mTi7qtW23LgjZvoxGl8g0g8nlPICEV3cvWHXoI2U=
+	b=VRWyZoWuaUpUSNfYx47w5Kgd3JtetP2tSP9FdYffifl50s54Crc+lpTId8Wy4zANx
+	 XAlWTZQimywGix8RMn5go2w3cj0Tj1imgVb/b25Omf6xXqlgrkJ4iiG07LkSLcqxHo
+	 29uvDk9iOlMPaFs+MqNKNOnp2nouwcNby7lUsqqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Barzilai <amit.barzilai22@gmail.com>,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH 6.18 379/583] drm/ssd130x: fix column and row end address in partial updates in ssd133x
-Date: Wed,  9 Sep 2026 15:41:04 +0200
-Message-ID: <20260909134251.147189532@linuxfoundation.org>
+	Ben Skeggs <bskeggs@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	James Jones <jajones@nvidia.com>,
+	Faith Ekstrand <faith.ekstrand@collabora.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Zhang Enpei <zhang.enpei@zte.com.cn>
+Subject: [PATCH 6.18 380/583] drm/nouveau/disp/r535: Add scanline position support + head state support
+Date: Wed,  9 Sep 2026 15:41:05 +0200
+Message-ID: <20260909134251.178846561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,48 +59,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Barzilai <amit.barzilai22@gmail.com>
+From: Lyude Paul <lyude@redhat.com>
 
-commit b7fcb70162acd7f15ed20bc64a14c150db34256f upstream.
+commit 804cb093b245c752f15d17186e0d404f10303593 upstream.
 
-On partial screen updates, SSD133X controllers expect to get the
-rectangle addresses as arguments of the "Set Column Address" and "Set
-Row Address" commands. Each command expects the start address and end
-address of the row/column in absolute format, however the end
-addresses were being sent in a relative format (relative to the start
-address).
+That's right! It looks like this never actually got finished, something
+which I just noticed today when I saw this fun message spamming one of my
+test machine's kernel logs when enabling display debug output for nouveau:
 
-The relative end addresses work only when the start address is 0. In
-those situations, there is no value difference between relative and
-absolute addresses.
+  [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal] crtc 0 : scanoutpos query failed.
 
-Fixes: b4299c936d8fd ("drm/ssd130x: Add support for the SSD133x OLED controller family")
-Cc: stable@vger.kernel.org
-Signed-off-by: Amit Barzilai <amit.barzilai22@gmail.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patch.msgid.link/20260622122604.32500-4-amit.barzilai22@gmail.com
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+So it looks like we've been falling back to DRM's core fallback for a while
+now, whoops.
+
+So, while it seems that we do have the option of doing this through GSP -
+that doesn't seem like a great idea. Mainly because reading this from GSP
+would involve a lot more latency then we should have for vblank handling
+due to the RPC communication. So instead of implementing that, just use
+gv100_head_state and gv100_head_rgpos for implementing .state and .rgpos.
+It seems to work perfectly fine!
+
+Fixes: 9e9944449023 ("drm/nouveau/disp/r535: initial support")
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Timur Tabi <ttabi@nvidia.com>
+Cc: Ben Skeggs <bskeggs@nvidia.com>
+Cc: James Jones <jajones@nvidia.com>
+Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
+Cc: Suraj Kandpal <suraj.kandpal@intel.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Aaron Kling <webgeek1234@gmail.com>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Zhang Enpei <zhang.enpei@zte.com.cn>
+Cc: <stable@vger.kernel.org> # v6.7+
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260429030348.3930866-1-lyude@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/solomon/ssd130x.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c       |    4 ++--
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h        |    2 ++
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c |    8 ++------
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/solomon/ssd130x.c
-+++ b/drivers/gpu/drm/solomon/ssd130x.c
-@@ -915,12 +915,12 @@ static int ssd133x_update_rect(struct ss
- 	 */
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c
+@@ -253,7 +253,7 @@ gv100_head_vblank_get(struct nvkm_head *
+ 	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000004, 0x00000004);
+ }
  
- 	/* Set column start and end */
--	ret = ssd130x_write_cmd(ssd130x, 3, SSD133X_SET_COL_RANGE, x, columns - 1);
-+	ret = ssd130x_write_cmd(ssd130x, 3, SSD133X_SET_COL_RANGE, x, x + columns - 1);
- 	if (ret < 0)
- 		return ret;
+-static void
++void
+ gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline)
+ {
+ 	struct nvkm_device *device = head->disp->engine.subdev.device;
+@@ -263,7 +263,7 @@ gv100_head_rgpos(struct nvkm_head *head,
+ 	*hline = nvkm_rd32(device, 0x616334 + hoff) & 0x0000ffff;
+ }
  
- 	/* Set row start and end */
--	ret = ssd130x_write_cmd(ssd130x, 3, SSD133X_SET_ROW_RANGE, y, rows - 1);
-+	ret = ssd130x_write_cmd(ssd130x, 3, SSD133X_SET_ROW_RANGE, y, y + rows - 1);
- 	if (ret < 0)
- 		return ret;
+-static void
++void
+ gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state)
+ {
+ 	struct nvkm_device *device = head->disp->engine.subdev.device;
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
+@@ -53,6 +53,8 @@ void gf119_head_rgclk(struct nvkm_head *
  
+ int gv100_head_cnt(struct nvkm_disp *, unsigned long *);
+ int gv100_head_new(struct nvkm_disp *, int id);
++void gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state);
++void gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline);
+ 
+ #define HEAD_MSG(h,l,f,a...) do {                                              \
+ 	struct nvkm_head *_h = (h);                                            \
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
+@@ -625,14 +625,10 @@ r535_head_vblank_get(struct nvkm_head *h
+ 	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000002);
+ }
+ 
+-static void
+-r535_head_state(struct nvkm_head *head, struct nvkm_head_state *state)
+-{
+-}
+-
+ static const struct nvkm_head_func
+ r535_head = {
+-	.state = r535_head_state,
++	.state = gv100_head_state,
++	.rgpos = gv100_head_rgpos,
+ 	.vblank_get = r535_head_vblank_get,
+ 	.vblank_put = r535_head_vblank_put,
+ };
 
 
