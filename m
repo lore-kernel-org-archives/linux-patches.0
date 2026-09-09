@@ -1,54 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B58563FA3;
-	Wed,  9 Sep 2026 14:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F81563FCF;
+	Wed,  9 Sep 2026 14:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964521; cv=none; b=s6FxGRddgQ5xnXR/gabqFdpLkFUUE32gXbgaxmQVMgE52Pk5x+SqeRHo3HqEczeN8eWI3RdkIx3jfj1MyZRQi21g16wqddVZFC0ppUZANUFm2B7I5y4LDZvUCWCnTtvwf4Bj2hPlFvXJfp3UXrjze2q4HRP3rX2vjEWaqg0V8+A=
+	t=1788964524; cv=none; b=hxFdwr8YvmPZCX+wZl3PoYCe6dpLMP2EBhTMGYFd9GS26+qhUFXate1dCRz6CyvR0PgBya9QkJEPnzkGlrMIQwzl1AECINJ5FgjkzRnYdS4b0NJ5pIViEizQvbzEzOTlBNhlYUotjKNCyI8tN9fuDDmH+zXhLHWu4X9v3N5afmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964521; c=relaxed/simple;
-	bh=RlmlVtG/E5cYGXAoMwZS+PLjYYGA//ojTT/qBuz4qJM=;
+	s=arc-20240116; t=1788964524; c=relaxed/simple;
+	bh=XzeHpStxQQP9ECbNJ9E5bWhRU3ysXWzWeKrxasrpuoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pdErojkxZXjn+RpjBtTUCvHljlBo6TiyspyIn2JhBR6p/fg4mpX3RRNg3INAWFVBxSK/JdOxMJKDkOSTHCMOfKA6bu6qVxR/KpZwljI7QLxzKO5FGUsLQ+QXj7zyeXmuOtpI+oJAnnqwI5XZwhqi+OREQC9Z1j52uwW71y1Vv0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHENtmLD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FQq8KnKreNutB7kfAmy4iOiChwIWF1WvDVXqHvab7N9zOzD5dKFX2Cmua6iA8l/uwHfrdnY+qPdSKcpMzb5i5Y14shrqjb2udwPf5TrQcF1FGSoiLrKZw+xhAkCu0M7xo31yBmsSdaDDaZVwI2suSYTa/lKyWwNTO0K/2QXUQRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVkYLWKx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHENtmLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B551F00A3A;
-	Wed,  9 Sep 2026 14:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVkYLWKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287FC1F00A3A;
+	Wed,  9 Sep 2026 14:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964519;
-	bh=BPqMsrv8+8+FU0d9QtBoNYcJIvHdjg8ObbrTtdgHmhg=;
+	s=korg; t=1788964522;
+	bh=QBWDhV7GeZW7slDNz1xF/A7scWC3ob9sTW3Ql3u5EWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RHENtmLDQavd3taPGIeyUbNaq9nvU6YBsQAIbrR7CQ0UYFOEkrLLCt/6eaK6aSHxx
-	 MMbiIj4mB97P1776yk3miCfRhtL4nvyUEVEg3FYeydVbuKoG+qs+mNZBuhaPAGRZPe
-	 ntPgXq26zMlTg3mvvHn/LiBkajfbnLX0J06cRKvY=
+	b=mVkYLWKxztm6UUpwRmjX3OcOV/2x7f3C/FwozuUI7cYi6uRTfxpjiz2fG0clMRVpn
+	 A78qkGzyNwcuZG/7PcmeG5z7gMyy9llX2L98Ft5YooBLnUT4F7tAIzWax8NvTICCLL
+	 p62sKBdRtQ9TeX7KOIksqT4plNdWArSDpsp8CQlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Barry Song <baohua@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Steven Barrett <steven@liquorix.net>,
-	Suleiman Souhlal <suleiman@google.com>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 452/583] mm/mglru: fix and remove redundant unevictable folio handling
-Date: Wed,  9 Sep 2026 15:42:17 +0200
-Message-ID: <20260909134253.607660103@linuxfoundation.org>
+Subject: [PATCH 6.18 435/583] net/packet: defer vmalloc TX_RING free until skbs finish
+Date: Wed,  9 Sep 2026 15:42:00 +0200
+Message-ID: <20260909134253.061840817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -67,111 +54,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit f7e698e326b239a91ea15844817551921209e826 ]
+[ Upstream commit 992cc9f94ca924089a506ba9b327caa9af797529 ]
 
-sort_folio() has a shortcut for moving folios that are no longer evictable
-but are still sitting on a generation list.  However, this shortcut is
-buggy.  It does not follow the PG_lru usage convention, and it has a more
-serious issue.
+AF_PACKET TX_RING skbs keep a raw pointer to their ring frame. The skb
+page references preserve page-backed ring blocks after pg_vec is freed,
+but they do not preserve a vmalloc mapping.
 
-Unevictable folios are not threaded on lists[LRU_UNEVICTABLE], so that
-folio->lru can be reused to hold folio->mlock_count (see the comment in
-lruvec_init()).  Hence lruvec_add_folio() skips the list_add() for them,
-and every other place that turns a folio unevictable initialises
-mlock_count explicitly: lru_add() sets it to 0, __mlock_folio() and
-__mlock_new_folio() set it to !!folio_test_mlocked(folio).  sort_folio()
-sets nothing, and the lru_gen_del_folio() right above it may have already
-poisoned folio->lru via list_del(), so mlock_count ends up aliasing
-LIST_POISON2, which reads as 0x122, i.e.  290.  The result is user
-visible.  On munlock, __munlock_folio() decrements that bogus count, finds
-it still non-zero and bails out before clearing PG_mlocked, so the folio
-remains unevictable and the Mlocked accounting stays inflated until the
-folio is freed.
+tpacket_destruct_skb() currently drops the pending reference before
+writing the timestamp and TP_STATUS_AVAILABLE to the frame. Move the
+decrement after those stores. The smp_wmb() in __packet_set_status()
+orders the frame stores before the decrement.
 
-The shortcut also touches the LRU flags in the wrong order.  It calls
-lru_gen_del_folio() while PG_lru is still set, so a concurrent
-folio_test_clear_lru() (e.g.  compaction, folio_isolate_lru()) can succeed
-on a folio that has already been taken off the generation list, which may
-lead to unexpected behavior.
+Also recheck pending TX frames under pg_vec_lock before non-closing
+ring replacement, so a racing send cannot add a pending skb between
+the initial check and the ring swap.
 
-So fix it by isolating them as common folios and letting the generic
-shrink path cull them.  This matches the classical LRU behavior, and there
-should be no visible effect on the generic eviction or isolation behavior.
+Ring allocation can produce a mixture of page-backed and vmalloc-backed
+blocks. Allocate deferred-work storage during TX ring setup when the
+first vmalloc-backed block is encountered, and keep its pointer in the
+pg_vec allocation header. If allocation fails, return -ENOMEM from ring
+setup. On socket close, a non-NULL pointer identifies a vmalloc-backed
+vector without a scan. If TX skbs remain, defer the whole vector to
+system_long_wq.
 
-There is no performance concern either, such a folio goes through this
-once, and then it is off the generation lists for good.
+After pg_vec is detached, a late destructor can skip the pending
+decrement. Use socket write-memory accounting as the deferred lifetime
+gate instead: an skb remains charged through its final sock_wfree(),
+after all ring-frame accesses. The delayed work retains a socket
+reference and reschedules itself until no TX skbs remain.
 
-Link: https://lore.kernel.org/20260812-mglru-mlock-fix-v2-1-a3fec5853c08@tencent.com
-Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Steven Barrett <steven@liquorix.net>
-Cc: Suleiman Souhlal <suleiman@google.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Move pending_refcnt release to packet_sock_destruct() so late skb
+destructors and deferred cleanup can safely use it after
+packet_release(). Page-backed teardown remains synchronous, and no lock
+is added to the TX completion hot path.
+
+Fixes: b013840810c2 ("packet: use percpu mmap tx frame pending refcount")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/netdev/20260721015824.45829-1-kylebot@openai.com/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20260816235646.76500-1-kylebot@openai.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted the kzalloc_objs() allocation context to the older kcalloc() form ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |   19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ net/packet/af_packet.c |   96 ++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 87 insertions(+), 9 deletions(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4468,7 +4468,6 @@ void lru_gen_soft_reclaim(struct mem_cgr
- static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_control *sc,
- 		       int tier_idx)
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -87,6 +87,7 @@
+ #include <linux/errqueue.h>
+ #include <linux/net_tstamp.h>
+ #include <linux/percpu.h>
++#include <linux/workqueue.h>
+ #ifdef CONFIG_INET
+ #include <net/inet_common.h>
+ #endif
+@@ -1339,6 +1340,8 @@ static void packet_sock_destruct(struct
+ 	WARN_ON(atomic_read(&sk->sk_rmem_alloc));
+ 	WARN_ON(refcount_read(&sk->sk_wmem_alloc));
+ 
++	packet_free_pending(pkt_sk(sk));
++
+ 	if (!sock_flag(sk, SOCK_DEAD)) {
+ 		pr_err("Attempt to release alive packet socket: %p\n", sk);
+ 		return;
+@@ -2533,11 +2536,11 @@ static void tpacket_destruct_skb(struct
+ 		__u32 ts;
+ 
+ 		ph = skb_zcopy_get_nouarg(skb);
+-		packet_dec_pending(&po->tx_ring);
+ 
+ 		ts = __packet_set_timestamp(po, ph, skb);
+ 		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
+ 
++		packet_dec_pending(&po->tx_ring);
+ 		complete(&po->skb_completion);
+ 	}
+ 
+@@ -3206,7 +3209,6 @@ static int packet_release(struct socket
+ 	/* Purge queues */
+ 
+ 	skb_queue_purge(&sk->sk_receive_queue);
+-	packet_free_pending(po);
+ 
+ 	sock_put(sk);
+ 	return 0;
+@@ -4370,11 +4372,26 @@ static const struct vm_operations_struct
+ 	.close	=	packet_mm_close,
+ };
+ 
++struct packet_pg_vec {
++	struct packet_pg_vec_free *deferred;
++	unsigned int order;
++	unsigned int len;
++	struct pgv pg_vec[] __counted_by(len);
++};
++
++struct packet_pg_vec_free {
++	struct delayed_work work;
++	struct sock *sk;
++	struct packet_pg_vec *vec;
++};
++
+ static void free_pg_vec(struct pgv *pg_vec, unsigned int order,
+ 			unsigned int len)
  {
--	bool success;
- 	int gen = folio_lru_gen(folio);
- 	int type = folio_is_file_lru(folio);
- 	int zone = folio_zonenum(folio);
-@@ -4480,15 +4479,9 @@ static bool sort_folio(struct lruvec *lr
++	struct packet_pg_vec *vec;
+ 	int i;
  
- 	VM_WARN_ON_ONCE_FOLIO(gen >= MAX_NR_GENS, folio);
++	vec = container_of_const(pg_vec, struct packet_pg_vec, pg_vec[0]);
+ 	for (i = 0; i < len; i++) {
+ 		if (likely(pg_vec[i].buffer)) {
+ 			if (is_vmalloc_addr(pg_vec[i].buffer))
+@@ -4385,7 +4402,46 @@ static void free_pg_vec(struct pgv *pg_v
+ 			pg_vec[i].buffer = NULL;
+ 		}
+ 	}
+-	kfree(pg_vec);
++	kfree(vec->deferred);
++	kfree(vec);
++}
++
++static void packet_free_pg_vec_work(struct work_struct *work)
++{
++	struct packet_pg_vec_free *deferred;
++	struct packet_pg_vec *vec;
++	struct sock *sk;
++
++	deferred = container_of_const(to_delayed_work(work),
++				      struct packet_pg_vec_free, work);
++	vec = deferred->vec;
++	sk = deferred->sk;
++	if (sk_wmem_alloc_get(sk)) {
++		queue_delayed_work(system_long_wq, &deferred->work, 1);
++		return;
++	}
++
++	free_pg_vec(vec->pg_vec, vec->order, vec->len);
++	sock_put(sk);
++}
++
++static void packet_free_tx_ring(struct sock *sk, struct pgv *pg_vec,
++				unsigned int order, unsigned int len)
++{
++	struct packet_pg_vec_free *deferred;
++	struct packet_pg_vec *vec;
++
++	vec = container_of_const(pg_vec, struct packet_pg_vec, pg_vec[0]);
++	deferred = vec->deferred;
++	if (!deferred || !sk_wmem_alloc_get(sk)) {
++		free_pg_vec(pg_vec, order, len);
++		return;
++	}
++
++	/* A detached ring's pending count can miss late skb destructors. */
++	deferred->sk = sk;
++	sock_hold(sk);
++	queue_delayed_work(system_long_wq, &deferred->work, 0);
+ }
  
--	/* unevictable */
--	if (!folio_evictable(folio)) {
--		success = lru_gen_del_folio(lruvec, folio, true);
--		VM_WARN_ON_ONCE_FOLIO(!success, folio);
--		folio_set_unevictable(folio);
--		lruvec_add_folio(lruvec, folio);
--		__count_vm_events(UNEVICTABLE_PGCULLED, delta);
--		return true;
--	}
-+	/* unevictable: let it through and the generic path will cull it */
-+	if (!folio_evictable(folio))
-+		return false;
+ static char *alloc_one_pg_vec_page(unsigned long order)
+@@ -4413,20 +4469,35 @@ static char *alloc_one_pg_vec_page(unsig
+ 	return NULL;
+ }
  
- 	/* promoted */
- 	if (gen != lru_gen_from_seq(lrugen->min_seq[type])) {
-@@ -4738,11 +4731,9 @@ retry:
- 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
- 		DEFINE_MIN_SEQ(lruvec);
+-static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order)
++static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order, bool tx_ring)
+ {
+ 	unsigned int block_nr = req->tp_block_nr;
++	struct packet_pg_vec *vec;
+ 	struct pgv *pg_vec;
+ 	int i;
  
--		if (!folio_evictable(folio)) {
--			list_del(&folio->lru);
--			folio_putback_lru(folio);
-+		/* move_folios_to_lru() culls unevictable folios via folio_putback_lru() */
-+		if (!folio_evictable(folio))
- 			continue;
--		}
+-	pg_vec = kcalloc(block_nr, sizeof(struct pgv), GFP_KERNEL | __GFP_NOWARN);
+-	if (unlikely(!pg_vec))
+-		goto out;
++	vec = kzalloc_flex(*vec, pg_vec, block_nr, GFP_KERNEL | __GFP_NOWARN);
++	if (unlikely(!vec))
++		return NULL;
++	vec->order = order;
++	vec->len = block_nr;
++	pg_vec = vec->pg_vec;
  
- 		/* retry folios that may have missed folio_rotate_reclaimable() */
- 		if (!skip_retry && !folio_test_active(folio) && !folio_mapped(folio) &&
+ 	for (i = 0; i < block_nr; i++) {
+ 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
+ 		if (unlikely(!pg_vec[i].buffer))
+ 			goto out_free_pgvec;
++
++		if (tx_ring && !vec->deferred &&
++		    is_vmalloc_addr(pg_vec[i].buffer)) {
++			vec->deferred = kzalloc_obj(*vec->deferred,
++						    GFP_KERNEL | __GFP_NOWARN);
++			if (!vec->deferred)
++				goto out_free_pgvec;
++			vec->deferred->vec = vec;
++			INIT_DELAYED_WORK(&vec->deferred->work,
++					  packet_free_pg_vec_work);
++		}
+ 	}
+ 
+ out:
+@@ -4509,7 +4580,7 @@ static int packet_set_ring(struct sock *
+ 
+ 		err = -ENOMEM;
+ 		order = get_order(req->tp_block_size);
+-		pg_vec = alloc_pg_vec(req, order);
++		pg_vec = alloc_pg_vec(req, order, tx_ring);
+ 		if (unlikely(!pg_vec))
+ 			goto out;
+ 		switch (po->tp_version) {
+@@ -4561,6 +4632,9 @@ static int packet_set_ring(struct sock *
+ 	err = -EBUSY;
+ 	mutex_lock(&po->pg_vec_lock);
+ 	if (closing || atomic_long_read(&po->mapped) == 0) {
++		if (tx_ring && !closing && packet_read_pending(rb))
++			goto out_unlock;
++
+ 		err = 0;
+ 		spin_lock_bh(&rb_queue->lock);
+ 		swap(rb->pg_vec, pg_vec);
+@@ -4582,6 +4656,7 @@ static int packet_set_ring(struct sock *
+ 			pr_err("packet_mmap: vma is busy: %ld\n",
+ 			       atomic_long_read(&po->mapped));
+ 	}
++out_unlock:
+ 	mutex_unlock(&po->pg_vec_lock);
+ 
+ 	spin_lock(&po->bind_lock);
+@@ -4603,7 +4678,10 @@ static int packet_set_ring(struct sock *
+ out_free_pg_vec:
+ 	if (pg_vec) {
+ 		bitmap_free(rx_owner_map);
+-		free_pg_vec(pg_vec, order, req->tp_block_nr);
++		if (tx_ring && closing)
++			packet_free_tx_ring(sk, pg_vec, order, req->tp_block_nr);
++		else
++			free_pg_vec(pg_vec, order, req->tp_block_nr);
+ 	}
+ out:
+ 	return err;
 
 
