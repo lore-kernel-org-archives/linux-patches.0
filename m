@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3C158038B;
-	Wed,  9 Sep 2026 14:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93273598BF4;
+	Wed,  9 Sep 2026 14:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963774; cv=none; b=Kgmg/GCBA54ecZuKHr84j25UkWJZCb4DcWM0vlexzQiqGQXUDvG02zicifcEwfCB5iLPmpAKqO0j3yVo9g12EcnLdHbZ1Eqc1ApYXdYXQOS2R+IpS4Jnj5Kj9duoOc9b/rZ7x+3FfaJVe/MEehdkzz+G6qO0Guinoma0x0h6S78=
+	t=1788963777; cv=none; b=Ogwi40hha4FoYuqBHukVlVqCK61B3KSa84SnMBnCuYQgIjJkpwgL/uPjcXIAzjLsH1MYXUPBJBbD8vFxq5N1jo0+pMlEuGsJARopRZX6hAQNcS0OnhzDgh0UhGHLO2hMJk4OhuifejOxdhIayxDn2q/Bx0xI2tu8EwF9CKXnOaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963774; c=relaxed/simple;
-	bh=SdWolGlwVE0nwLI74gKOeTA9wb5AhgsNVCZjSlvdqD8=;
+	s=arc-20240116; t=1788963777; c=relaxed/simple;
+	bh=61urAlROt90lmfcFrDpnSNkblbdF6KWrRyubxwSJhMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iADsVHbFhjmVFMZwzr+CYmCqB6gGdPi8PukUKGMr941PoIYV/B7mgXB0PJ2YlsAstBC+xkemiL9krdrj2b/iM15g3rNemztb5BPBL6xWxNQUmBaq18x0MxDjH3IxMvGvhhihUdxAEUzhJTtG9B9Zveio5V8spKfAJvMAiPVxgA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvNtX8cn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eJZP2n/vDKbCzTk3eC/tT549x44JjWkP3hJGnotlqd5kfxke7u/ckPKsDRS2fbZH0ouoW9YJ9/vKDsY5zVmD4YySAK3LnNNpC3Y3ArAKJO+kWyjTZCntA3tNqxrggUaaoYcn7NgHAEwPCYgMvZd2ieM4AAHwPs+tg6cKuzWcv/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBP4u8ss; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvNtX8cn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE0B1F00A3A;
-	Wed,  9 Sep 2026 14:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBP4u8ss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAE51F00A3D;
+	Wed,  9 Sep 2026 14:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963773;
-	bh=fdTAWNk52S7hMBn1PrHvCncWqcDJLB/YELeiMz1gzCQ=;
+	s=korg; t=1788963776;
+	bh=nFjV3MdF0skax4CIZisi8xJ6t9Mx5majXnpomr7KVxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AvNtX8cnneg1L/LFcmOB3YuyD8XsZeElP0ED0IzyEWeV5/zpuQmloLbMRIy+1IVjY
-	 87GmOxKtKMg2FyLcWjHyfqDSLV3tbugKh6BnfQtCEyWr96pB7PSTDAJLSLpwKEwt+w
-	 FIVA0wTJJuhY7aZk4bCoMg91ZURt9Xt5CSiQekVQ=
+	b=hBP4u8ssJwEBPqIPrXU5AJvopcdkneg+2EZ3QPkSvvPX2aKFUL8eL9uAV84kxTh3G
+	 Ce2hqteWZ+2qCkMGy6RCeXV0qNtvau5HrSrRB0Xer7dT+E+SALtp3xY9hzQufMssCG
+	 TdNnFNZT1VZhOiWwtRCExSP/RVNmAKoY9tjWDcRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 194/583] ASoC: tas2780: sort the register default table
-Date: Wed,  9 Sep 2026 15:37:59 +0200
-Message-ID: <20260909134244.885249121@linuxfoundation.org>
+Subject: [PATCH 6.18 195/583] ASoC: tas2783-sdw: drop duplicate reg_default entry
+Date: Wed,  9 Sep 2026 15:38:00 +0200
+Message-ID: <20260909134244.917569852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,45 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit e725093e9e53db9298e38e7332a44dcaac2fd135 upstream.
+commit ceba07ca24fab54e0e38ec96d196fca3e638d671 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+TAS2783_AMP_LEVEL is defined as TASDEV_REG_SDW(0x0, 0x00, 0x03), so
+tas2783_reg_default[] lists that register twice.  Drop the open coded
+second entry.
 
-TAS2780_DVC (0x1a) is listed before TAS2780_CHNL_0 (0x03), which makes
-it unreachable.  regcache_reg_needs_sync() then cannot compare it
-against its default and reports that a sync is needed, so it is written
-to the device on every regcache_sync() even when it was never touched.
-
-Sort the table by register address.
-
-Fixes: eae9f9ce181b ("ASoC: add tas2780 driver")
+Fixes: 4cc9bd8d7b32 ("ASoc: tas2783A: Add soundwire based codec driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805104149.9795-5-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20260805091327.23944-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2780.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/tas2783-sdw.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/sound/soc/codecs/tas2780.c
-+++ b/sound/soc/codecs/tas2780.c
-@@ -530,13 +530,13 @@ static const struct reg_default tas2780_
- 	{ TAS2780_PAGE, 0x00 },
- 	{ TAS2780_SW_RST, 0x00 },
- 	{ TAS2780_PWR_CTRL, 0x1a },
--	{ TAS2780_DVC, 0x00 },
- 	{ TAS2780_CHNL_0, 0x00 },
- 	{ TAS2780_TDM_CFG0, 0x09 },
- 	{ TAS2780_TDM_CFG1, 0x02 },
- 	{ TAS2780_TDM_CFG2, 0x0a },
- 	{ TAS2780_TDM_CFG3, 0x10 },
- 	{ TAS2780_TDM_CFG5, 0x42 },
-+	{ TAS2780_DVC, 0x00 },
- };
+--- a/sound/soc/codecs/tas2783-sdw.c
++++ b/sound/soc/codecs/tas2783-sdw.c
+@@ -87,7 +87,6 @@ struct tas2783_prv {
  
- static const struct regmap_range_cfg tas2780_regmap_ranges[] = {
+ static const struct reg_default tas2783_reg_default[] = {
+ 	{TAS2783_AMP_LEVEL, 0x28},
+-	{TASDEV_REG_SDW(0, 0, 0x03), 0x28},
+ 	{TASDEV_REG_SDW(0, 0, 0x04), 0x21},
+ 	{TASDEV_REG_SDW(0, 0, 0x05), 0x41},
+ 	{TASDEV_REG_SDW(0, 0, 0x06), 0x00},
 
 
