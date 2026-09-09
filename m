@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6821B581249;
-	Wed,  9 Sep 2026 14:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B9258123C;
+	Wed,  9 Sep 2026 14:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964718; cv=none; b=dW6crDR05eLj/+DkUFzOyLl0voy8GNNg2awcYtENzjqUG2X3+rKdgUYtmIYoxaC76L1MEDx9qxadBgUsv/dWzjQDKtZHC3ImLU+zTG6Pnv2aOzWtikpYiJ0QyjAkTKEtjiiCcCeSG0pHSxl+GCvXyvbx/AmMOQyZK7tqDqn8YoI=
+	t=1788964719; cv=none; b=pLYJlMA6kUMrJgO7QwGQJUI+mvP8zZ5jnK2fNWVxNIbJDw7d0xUxQj9z3zKWtlCrdwxX3FzZwCTvUIeGuEm4Wbtg9z/8sJ4GS4GKI1rSCfTqlNGuZUc5skT8ekEYiNjIX0yUbg8uBja7cpbGFvPO3io4HDEGFyqgCdSkpQKO0bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964718; c=relaxed/simple;
-	bh=UoskT5kd24lYgXpodqMRAFKhmJpQrbRZ7fOBeXOhiU0=;
+	s=arc-20240116; t=1788964719; c=relaxed/simple;
+	bh=J8G2xwe4QX04M0c7LWSdAhjoyXFNxF9rqUIC530n9zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElM+UQp3e+kBKrNN8dcnw1s7eyCpD451JcwHKXECQAzp7jCOccUIGFfo6DsNieLUEnuHyXCiqmaif7LuUOFG4yeNW5qM8rpOl+m1yM/XmnF6XW6PwuqSLaiE/dH2/J85YOn9dv+/GrSu+nyrYqzeq+Z62ymqnPiGj+IL0FAsYaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wt2kpet0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jruWTSe95NqwvtYNdXspFGV2exeCHpk7zMPeWS0lD03ayMxOqKelgtRo0tq0PdHNsGr2zaEMrfmIU/F8uYjJP6tholiavuvlskmPUIke6ADZYjZO8Oyg8aOXYKOrRYDlT1azTdGa1n/XKf6rcldvvFoiB2PbpYHF6J1Ub0qvMRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4sB7jNv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wt2kpet0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1771F00A3A;
-	Wed,  9 Sep 2026 14:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4sB7jNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7A81F00A3D;
+	Wed,  9 Sep 2026 14:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964714;
-	bh=ed52fQ4JU1GJ9XTtblnDG3t9n4nuEf2cAzSLmLrZTE8=;
+	s=korg; t=1788964717;
+	bh=XWGTkTTTCipoTRc4MBfuSOUvjpgTERblrov5ctOPkPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wt2kpet0BnRnXUCsMGpBpVHgRuMb2PTytTmw/u1HbIA8yZ2yP/Ch0/g1frufdLYjH
-	 gcS7Wadnj5ceeABMeOdIQBOBZIhoa+fKENTgyblkhxCtNgff0Wa5wzJ2JJIwy1EmPj
-	 bcRFK3i54AunD3WX6J0NRvAuSwqg3BkkcyW8J2DQ=
+	b=h4sB7jNv6Ay6g+Vk65a8rtyPEmwVgEs3k9ebFBSstDqZI3QVMuxQ3PXbg8VE31Ey+
+	 L6XJgzdodUHvpt8QB6D8n7GeKy1APwQmTYneG63Jw6jldV7qborxBAeVf3MfKY5nIb
+	 VASIWU/rLVubBid0uhZAOxUZR8ngkHy7uoFXQRas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 480/583] ACPI: TAD: Add locking around AML evaluations
-Date: Wed,  9 Sep 2026 15:42:45 +0200
-Message-ID: <20260909134254.471101632@linuxfoundation.org>
+Subject: [PATCH 6.18 481/583] cpufreq: apple-soc: Fix OPP table cleanup
+Date: Wed,  9 Sep 2026 15:42:46 +0200
+Message-ID: <20260909134254.500999080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,145 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit a3df8bbe0a704fa5c1609b9666b594f350558fe0 ]
+[ Upstream commit d87cb889dc7ab1f2deecadf2a5e9023184bd7900 ]
 
-In the ACPI TAD driver, there are hidden assumptions that the ACPI
-control methods used by it will not be evaluated concurrently due
-to ACPICA namespace and interpreter locking.
+apple_soc_cpufreq_init() adds OPP tables from firmware, but
+some failure paths do not remove them. The driver also uses
+dev_pm_opp_remove_all_dynamic(), which is not the right cleanup
+helper for OPP tables loaded from firmware.
 
-However, that may not be the case since ACPICA may drop and re-acquire
-the namespace and interpreter locks during the evaluation of a given
-object in a few cases, including the one in which the AML in question
-sleeps causing acpi_ex_system_do_sleep() to be called.  In that case,
-the evaluation of one control method may be started while the
-evaluation of another one is still in progress.
+Use the cpumask OPP helper after the policy CPU mask has been
+populated. Pair it with the matching cpumask remove helper on
+failure paths and in apple_soc_cpufreq_exit(). This also removes
+the separate dev_pm_opp_set_sharing_cpus() call, as the cpumask
+helper loads the DT OPP tables for all CPUs in the policy.
 
-For this reason, add a global lock to the ACPI TAD driver and
-acquire it every time before evaluating an ACPI control method,
-except for the initial evaluation of _GCP in acpi_tad_probe().
-
-Fixes: 95c513ec84f7 ("ACPI: Add Time and Alarm Device (TAD) driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/12951141.O9o76ZdvQC@rafael.j.wysocki
+Fixes: 6286bbb40576 ("cpufreq: apple-soc: Add new driver to control Apple SoC CPU P-states")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+[ retained kzalloc(sizeof(*priv), GFP_KERNEL) instead of upstream kzalloc_obj(*priv) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_tad.c |   48 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 19 deletions(-)
+ drivers/cpufreq/apple-soc-cpufreq.c |   36 ++++++++++++++----------------------
+ 1 file changed, 14 insertions(+), 22 deletions(-)
 
---- a/drivers/acpi/acpi_tad.c
-+++ b/drivers/acpi/acpi_tad.c
-@@ -23,6 +23,7 @@
- #include <linux/acpi.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
- #include <linux/suspend.h>
-@@ -80,6 +81,8 @@ static bool acpi_tad_rt_is_invalid(struc
- 	    rt->daylight > 3;
- }
+--- a/drivers/cpufreq/apple-soc-cpufreq.c
++++ b/drivers/cpufreq/apple-soc-cpufreq.c
+@@ -251,21 +251,19 @@ static int apple_soc_cpufreq_init(struct
+ 		return -ENODEV;
+ 	}
  
-+static DEFINE_MUTEX(acpi_tad_aml_lock);
-+
- static int acpi_tad_set_real_time(struct device *dev, struct acpi_tad_rt *rt)
- {
- 	acpi_handle handle = ACPI_HANDLE(dev);
-@@ -101,6 +104,8 @@ static int acpi_tad_set_real_time(struct
+-	ret = dev_pm_opp_of_add_table(cpu_dev);
+-	if (ret < 0) {
+-		dev_err(cpu_dev, "%s: failed to add OPP table: %d\n", __func__, ret);
+-		return ret;
+-	}
++	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
++	if (!priv)
++		return -ENOMEM;
  
- 	pm_runtime_get_sync(dev);
+ 	ret = apple_soc_cpufreq_find_cluster(policy, &reg_base, &info);
+ 	if (ret) {
+ 		dev_err(cpu_dev, "%s: failed to get cluster info: %d\n", __func__, ret);
+-		return ret;
++		goto out_free_priv;
+ 	}
  
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, "_SRT", &arg_list, &retval);
+-	ret = dev_pm_opp_set_sharing_cpus(cpu_dev, policy->cpus);
+-	if (ret) {
+-		dev_err(cpu_dev, "%s: failed to mark OPPs as shared: %d\n", __func__, ret);
++	ret = dev_pm_opp_of_cpumask_add_table(policy->cpus);
++	if (ret < 0) {
++		dev_err(cpu_dev, "%s: failed to add OPP table: %d\n", __func__, ret);
+ 		goto out_iounmap;
+ 	}
  
- 	pm_runtime_put_sync(dev);
-@@ -115,30 +120,27 @@ static int acpi_tad_evaluate_grt(struct
- {
- 	acpi_handle handle = ACPI_HANDLE(dev);
- 	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER };
--	union acpi_object *out_obj;
--	struct acpi_tad_rt *data;
- 	acpi_status status;
- 	int ret = -EIO;
- 
--	status = acpi_evaluate_object(handle, "_GRT", NULL, &output);
--	if (ACPI_FAILURE(status))
--		goto out_free;
+@@ -273,19 +271,13 @@ static int apple_soc_cpufreq_init(struct
+ 	if (ret <= 0) {
+ 		dev_dbg(cpu_dev, "OPP table is not ready, deferring probe\n");
+ 		ret = -EPROBE_DEFER;
+-		goto out_free_opp;
+-	}
 -
--	out_obj = output.pointer;
--	if (out_obj->type != ACPI_TYPE_BUFFER)
--		goto out_free;
--
--	if (out_obj->buffer.length != sizeof(*rt))
--		goto out_free;
--
--	data = (struct acpi_tad_rt *)(out_obj->buffer.pointer);
--	if (!data->valid)
--		goto out_free;
-+	guard(mutex)(&acpi_tad_aml_lock);
+-	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+-	if (!priv) {
+-		ret = -ENOMEM;
+-		goto out_free_opp;
++		goto out_free_table;
+ 	}
  
--	memcpy(rt, data, sizeof(*rt));
--	ret = 0;
-+	status = acpi_evaluate_object(handle, "_GRT", NULL, &output);
-+	if (ACPI_SUCCESS(status)) {
-+		union acpi_object *out_obj;
+ 	ret = dev_pm_opp_init_cpufreq_table(cpu_dev, &freq_table);
+ 	if (ret) {
+ 		dev_err(cpu_dev, "failed to init cpufreq table: %d\n", ret);
+-		goto out_free_priv;
++		goto out_free_table;
+ 	}
  
--out_free:
-+		out_obj = output.pointer;
-+		if (out_obj->type == ACPI_TYPE_BUFFER &&
-+		    out_obj->buffer.length == sizeof(*rt)) {
-+			struct acpi_tad_rt *data;
-+
-+			data = (struct acpi_tad_rt *)(out_obj->buffer.pointer);
-+			if (data->valid) {
-+				memcpy(rt, data, sizeof(*rt));
-+				ret = 0;
-+			}
-+		}
-+	}
- 	ACPI_FREE(output.pointer);
+ 	/* Get OPP levels (p-state indexes) and stash them in driver_data */
+@@ -320,12 +312,12 @@ static int apple_soc_cpufreq_init(struct
+ 
+ out_free_cpufreq_table:
+ 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
+-out_free_priv:
+-	kfree(priv);
+-out_free_opp:
+-	dev_pm_opp_remove_all_dynamic(cpu_dev);
++out_free_table:
++	dev_pm_opp_of_cpumask_remove_table(policy->cpus);
+ out_iounmap:
+ 	iounmap(reg_base);
++out_free_priv:
++	kfree(priv);
  	return ret;
  }
-@@ -188,6 +190,8 @@ static int __acpi_tad_wake_set(struct de
- 	args[0].integer.value = timer_id;
- 	args[1].integer.value = value;
  
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
- 	if (ACPI_FAILURE(status) || retval)
- 		return -EIO;
-@@ -210,6 +214,8 @@ static int __acpi_tad_wake_read(struct d
+@@ -334,7 +326,7 @@ static void apple_soc_cpufreq_exit(struc
+ 	struct apple_cpu_priv *priv = policy->driver_data;
  
- 	args[0].integer.value = timer_id;
- 
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, method, &arg_list, retval);
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
-@@ -424,6 +430,8 @@ static int acpi_tad_clear_status(struct
- 
- 	pm_runtime_get_sync(dev);
- 
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, "_CWS", &arg_list, &retval);
- 
- 	pm_runtime_put_sync(dev);
-@@ -465,6 +473,8 @@ static ssize_t acpi_tad_status_read(stru
- 
- 	pm_runtime_get_sync(dev);
- 
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, "_GWS", &arg_list, &retval);
- 
- 	pm_runtime_put_sync(dev);
+ 	dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
+-	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
++	dev_pm_opp_of_cpumask_remove_table(policy->cpus);
+ 	iounmap(priv->reg_base);
+ 	kfree(priv);
+ }
 
 
