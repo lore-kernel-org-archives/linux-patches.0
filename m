@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD453576EC1;
-	Wed,  9 Sep 2026 14:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B57576ECB;
+	Wed,  9 Sep 2026 14:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962996; cv=none; b=eQfIS93sdUG+zHbM5GbJtF5XUAFi9OXZ+eDzwszMy1/1x7OJq574p8145qdwdn+KpzSTgLRame/S8s/cc9Q1nP/R134z6ZCig3a+M2sF7JHWzApsruQtml1I1LNzG7mMrbQv1zKQ475jUAZ+CtXFbJD3mgiymyiAXluop2cIevA=
+	t=1788962998; cv=none; b=G/JpQTm3fWt+pAzvIpbXdjBIaHwG1H2r63tKMwtHVxWBRJ4QpA3L4T+9929LSoQlJwgSyzVeflH6HouVV4xaiOmMC4eJJMDxLzPzq9uKtsfo0PFMwuRh9nxI67Ew2KaUk4NAyaU+tLZXRHrRLpngCuvs9QRwrRRF6C0rAqkIRo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962996; c=relaxed/simple;
-	bh=kRZno8XVXxbPbIc4lcOqYraISJG344v/cTnic6L37uQ=;
+	s=arc-20240116; t=1788962998; c=relaxed/simple;
+	bh=O+mZFJwOsoo46Qb3OWZWVDaY/McDUIe2CnJkkCom/eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvmQc9V7VQEhcUx3aF3z0avzAo+zOxlrFXON4faS9vVaIYfpnJO4ykUKtQwab+PJic6/e6D/EnciUYMaS7z8UPn4pKI1cdIPahL678GHkNOsy+1574m9kZo1Rhhjrx74S3dmziYJqcKEI/ikUvQWQO7obGuHRmDllLs4+Z32lQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va4uuhUa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mv0wO+NWd1xqkupTrTRweuFBf2jdfdwm59NCF06mkCvKuQAihCU3dy0+3Bq1GZKwdNIHa7pJqlzxjIUViIT4rcAFcuS0xwU56b2U1nGuNklCsAWk8IoKQ1m9OHa8ghbeY87K/g5AADToR2jAizurUdZqO5GJBBQhi5HYu2TK8TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCfv7OVv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va4uuhUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A771F00A3A;
-	Wed,  9 Sep 2026 14:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCfv7OVv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0797D1F00A3A;
+	Wed,  9 Sep 2026 14:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962994;
-	bh=x+NIsNYK58cuX6R7peSv/eZPPJEamN8KUhR5ESSmPEI=;
+	s=korg; t=1788962997;
+	bh=6N0quSgp8yPXY7ib7zRlZfNaOHq0VskP5fkWkOQ0aq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Va4uuhUaFH5y3/h0ZcUZFI+XrsD5Ci862qRFuaRG8mmchiEAIm8hefYNDybyb8gLL
-	 Aohz9vKdjq5aA+PJ1b+/VpnDXV0Iuzr8+bNBFB7HeQ0Ygsi+mNMAFVAHlKVzgqAudk
-	 Ns0Wrfp+Zrczo1r2Eq64beISBkLRsxU71C9KmnPg=
+	b=HCfv7OVvpBOXur+G9oLCvjeLosJIka44Yr0+kKAgOYYlJG6TM76ocPefcI0QgU1nL
+	 PzDbXulrqGKQbiy8zndaQ60FHp6Ao9O/G+WHerXR1afmwxAIU6HuioY1a2G2HXXOUq
+	 O0lFj8jnlTtaca7YcjLdsq5t6/u3GA7Y+NQJull8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 461/556] f2fs: fix to migrate all curseg types during free_segment_range
-Date: Wed,  9 Sep 2026 15:42:21 +0200
-Message-ID: <20260909134246.781732313@linuxfoundation.org>
+Subject: [PATCH 7.2 452/556] f2fs: use the mount idmap for the owner check in f2fs_xattr_advise_set()
+Date: Wed,  9 Sep 2026 15:42:12 +0200
+Message-ID: <20260909134246.478419431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,46 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 8ec06f50ddd8d201bd7e55b896ae28ed9d4cb7d1 upstream.
+commit a54ffce4637acb0db8e695188a6c7f99f14c3576 upstream.
 
-In free_segment_range(), the curseg evacuation loop only iterates up to
-NR_CURSEG_PERSIST_TYPE (0..5), missing non-persistent in-memory curseg
-types such as CURSEG_COLD_DATA_PINNED and CURSEG_ALL_DATA_ATGC.
+f2fs_xattr_advise_set() calls inode_owner_or_capable() with &nop_mnt_idmap
+before allowing the "system.advise" xattr to be set, instead of the idmap
+that the VFS passes to the ->set() handler.
 
-Even though these in-memory curseg types are not saved in the on-disk
-checkpoint header, they still occupy active physical segments at runtime.
-If an active in-memory curseg happens to be allocated within the segment
-range being truncated during filesystem shrink, failing to evacuate it
-will cause subsequent writes to the curseg attempting out-of-bounds I/O
-on the truncated storage range.
+f2fs supports idmapped mounts, so on such a mount this checks the caller's
+fsuid against the unmapped on-disk owner rather than the mapped owner: the
+actual owner can be wrongly denied with -EPERM and an unrelated caller
+wrongly allowed.  Pass the handler's idmap instead.
 
-Fix this by expanding the curseg evacuation loop upper bound to
-NR_CURSEG_TYPE to ensure all active curseg types are safely migrated
-out of the target range.
-
-Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
+Fixes: 01beba7957a2 ("fs: port inode_owner_or_capable() to mnt_idmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
+Acked-by: Christian Brauner (Amutable) <braurg>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c |    2 +-
+ fs/f2fs/xattr.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2216,7 +2216,7 @@ static int free_segment_range(struct f2f
- 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -119,7 +119,7 @@ static int f2fs_xattr_advise_set(const s
+ 	unsigned char old_advise = F2FS_I(inode)->i_advise;
+ 	unsigned char new_advise;
  
- 	/* Move out cursegs from the target range */
--	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_PERSIST_TYPE; type++) {
-+	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++) {
- 		err = f2fs_allocate_segment_for_resize(sbi, type, start, end);
- 		if (err)
- 			goto out;
+-	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
++	if (!inode_owner_or_capable(idmap, inode))
+ 		return -EPERM;
+ 	if (value == NULL)
+ 		return -EINVAL;
 
 
