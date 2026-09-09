@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D4456E06A;
-	Wed,  9 Sep 2026 14:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181FF57266C;
+	Wed,  9 Sep 2026 14:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963234; cv=none; b=WX7Thi41DyIkOoQSLLSgRg9w5d8XWZKwaiyI10ElORfo5StFyi2wn4P3LSboknyqI2PZ7dTCZc6c5A7NLHBQAxcmRlDPr2xB8mx9i4GSZTdxBzPNT5iJNNIBKKRvHtgQ37InkPQ8TiymxIRQzLQj4Gol0vl4KDA2KOrdIOr3ucE=
+	t=1788963237; cv=none; b=JYtufD1gomdqgxhziSJUCemyaS68K/I3YRCH5ZeIJ2oi8zu3iNLOQSwZwAByVBkYe54Tsh/BsBfLRO4XpQdeVPa02LDsHaXp23H9NIuSHjA3ra+CiM6ZBIYa/HcXV8wwF/xGhPBkefoqc1h9Utjg3pVl568XDTw0SpD7uBYXuwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963234; c=relaxed/simple;
-	bh=+rY2txehJOVRHhXHgC43FvfUwu2YCc/c10ZzVXaGfpw=;
+	s=arc-20240116; t=1788963237; c=relaxed/simple;
+	bh=djd1XYj9I0rdPJSw3eYF03RqKMtBbf+rnQVI/qqjPfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BLMNrl2V5hs9SJROS215M35xfuhBawyM2GViKRxO4BSZT5QkIrVBfVDNt3byxnnUOM9ervaVigGhYuAz3rjZQvkA9pLnsn0Pz/WJ6vg3kRdlBc7W3G4FRkaR24cXZVKpFhbfjE213hxmTP8EZcfCWMLapQWlgjIbAkTu1zM2qvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+D+NW+F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EJ6JGBLxI+wipTkXiO+5GI+SytiWiuTPxAaelFbMCa/b+8cWFgVhibKI25EmzFogAQlLmHhkTe9C+VNpDMDFRuj67Xm2OcTC1H872FCblaNoLF/q9s4OLIVafYtov2cohflaYBXHC/BgV37Fprei2Jm63vWW5x/W2kd4x4h2mys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cu/qKTi/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+D+NW+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541F71F00A3A;
-	Wed,  9 Sep 2026 14:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cu/qKTi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3EC1F00A3A;
+	Wed,  9 Sep 2026 14:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963232;
-	bh=UjM5YnTs6z/HPCsHN75esM0K7ykBEzFyshun8JwQMBo=;
+	s=korg; t=1788963235;
+	bh=MUHeNTNys58COqZiGi9Kedwy+Bu2qQ9hsTNPXbutWxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+D+NW+FkyItAkOJK7RUmDM8J0yKw52Q8/9Bl6Ujnq9IB9f0YdPdDidvsq+Pw4Fn7
-	 YLTZYkvFQ4XynuvTnf/uQk1mhKsRB53X8UjR4RsciqvLazNqCDKXMbQJsOh+K5QfN3
-	 QcJOyU0Khzf/HuKIFbghfFN5yXiyyC+b8H/ob9pE=
+	b=Cu/qKTi/BF874XlyvNKzZAL/pOjzUpQn2GfeYcxoe2QCPAGnIcy/TWtp3gVtD3/1F
+	 loViMmrdfxKqbNWA1KyL++GbAFuAiArkbysyve3zIG/ZFx1gipjiA8UHMVBZfLV+Am
+	 VCBReyR5NObHOoCeLwjclGfAuXqyTYKeIPwO/LjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Norbert Szetei <norbert@doyensec.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/583] net: skbuff: dont skb_tx_error() the source skb in skb_zerocopy()
-Date: Wed,  9 Sep 2026 15:34:46 +0200
-Message-ID: <20260909134237.836563318@linuxfoundation.org>
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.18 010/583] drm/xe: Dont hand out the flat CCS storage as usable VRAM
+Date: Wed,  9 Sep 2026 15:34:55 +0200
+Message-ID: <20260909134238.156010445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,67 +50,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 8ece906150128d5ec2462aabcc978c568433eca4 ]
+commit 818bebeb63dd6bf5f4e07e145f6cdbace520a34c upstream.
 
-skb_zerocopy() copies frags from @from into @to. On an
-skb_orphan_frags() failure it calls skb_tx_error(@from), a destructive
-operation on the source skb the copy helper does not own. That completes
-@from's zerocopy uarg and clears SKBFL_ALL_ZEROCOPY, including the
-SKBFL_SHARED_FRAG page-ownership marker.
+get_flat_ccs_offset() reads the base of the flat CCS storage from the
+hardware, scales it by the number of enabled L3 nodes, and rounds the
+result up to 128K.  Everything below that offset is then handed to the
+VRAM allocator as usable memory.
 
-Both callers already report the failure on their own drop path.
-nfnetlink_queue does it at nla_put_failure, and Open vSwitch does it in
-the flow-miss drop arm of ovs_dp_process_packet(), so nothing is lost by
-dropping it here.
+Rounding a limit that means "usable memory ends here" upwards publishes
+whatever lies between the real base and the rounded one as free memory,
+and that memory belongs to the compression hardware.  The scaled value
+has no reason to be 128K aligned, and on a Battlemage G21 with 16 GiB it
+is not:
 
-On Open vSwitch's OVS_ACTION_ATTR_USERSPACE path the skb is not freed on
-this error: do_execute_actions() ignores output_userspace()'s return
-value and, unless the upcall was the last action, keeps forwarding the
-same skb through the flow's remaining actions. The uarg is completed
-while that skb is still in flight, telling the producer its buffers are
-free, and SKBFL_SHARED_FRAG is cleared on an skb the rest of the stack
-still handles. That flag is what makes esp_input() call skb_cow_data()
-instead of decrypting in place, so a later local ESP delivery can
-decrypt over frags the skb does not own privately.
+	flat CCS base: raw 0x3fafff800, rounded 0x3fb000000
 
-Leave error reporting to the callers.
+so the last 2 KiB of page 0x3fafff000 is CCS storage, in the allocator's
+pool.  Whatever is allocated there gets that tail overwritten by the
+compression hardware, which needs no page-table entry, no buffer object
+and no GPU submission to do it, and does it before userspace exists.
 
-Fixes: 36d5fe6a0007 ("core, nfqueue, openvswitch: Orphan frags in skb_zerocopy and handle errors")
-Cc: stable@vger.kernel.org
-Suggested-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/6E3A780D-FB87-421F-9964-B1D457D7D106@doyensec.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ 7.2 and earlier do not have the put_page() call on the error path ]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+On this machine a Mesa VM's level-3 page table landed on that page on
+every cold boot.  It lost the entry covering the compositor's
+batch-buffer heap, so the compositor's first submission faulted fetching
+its batch and gdm restarted it forever: a black screen on an otherwise
+working machine.  Restarting gdm cleared it because the next VM's page
+tables were allocated somewhere else.
+
+Round down instead, to the page size the allocator works in.  On this
+machine that excludes exactly one page.
+
+Reading the reserved page afterwards shows what had been writing it:
+
+	[369] 0xcccc000000000000
+	[371] 0xcc77000000000000
+	[373] 0xcccc000000000000
+	[375] 0xcc77000000000000
+
+compression metadata, two bytes per sixteen, sitting where the driver
+used to hand out memory.
+
+The assertion that should have caught this compares the offset against
+GSMBASE - ccs_size for equality.  That value is 128K aligned, so it
+agrees with the rounded-up offset precisely when the base is not
+aligned - the check cannot fail in the case it exists to catch, and is
+compiled out unless CONFIG_DRM_XE_DEBUG is set.  Replace it with one
+that can fail: CCS storage must not run into GSM.
+
+[ And this was a debug session from hell, enormously helped by an AI
+  doing much of the grunt-work.
+
+  I'd like to call it my tireless helper, but the AI several times
+  stated flat out that this was impossible and unsolvable and that we
+  should just write a report about it.
+
+  I suspect those things have been trained by people who may not be
+  quite as stubborn as I am.
+
+  But while the AI was ready to give up several times, it did keep
+  adding debug code and analyzing it faithfully when I pushed. So credit
+  where credit is due and I let the AI write the commit message above.
+
+  This is basically a one-liner fixing a bogus "round_up()" to a
+  "round_down()", but there were 24 patches adding more and more debug
+  information to this, and 18 kernel boot to finally narrow it down to
+  this.   - Linus ]
+
+Fixes: 37173392741c ("drm/xe/vram: fix ccs offset calculation")
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_vram.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 31c2c5a97a353..9c97591068228 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3859,10 +3859,9 @@ skb_zerocopy(struct sk_buff *to, struct sk_buff *from, int len, int hlen)
+--- a/drivers/gpu/drm/xe/xe_vram.c
++++ b/drivers/gpu/drm/xe/xe_vram.c
+@@ -206,12 +206,25 @@ static inline u64 get_flat_ccs_offset(st
+ 		offset = offset_hi << 32; /* HW view bits 39:32 */
+ 		offset |= offset_lo << 6; /* HW view bits 31:6 */
+ 		offset *= num_enabled; /* convert to SW view */
+-		offset = round_up(offset, SZ_128K); /* SW must round up to nearest 128K */
  
- 	skb_len_add(to, len + plen);
- 
--	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC))) {
--		skb_tx_error(from);
-+	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC)))
- 		return -ENOMEM;
--	}
+-		/* We don't expect any holes */
+-		xe_assert_msg(xe, offset == (xe_mmio_read64_2x32(&gt_to_tile(gt)->mmio, GSMBASE) -
+-					     ccs_size),
+-			      "Hole between CCS and GSM.\n");
++		/*
++		 * Everything below this offset is handed to the VRAM
++		 * allocator, so it has to be the *first* address the
++		 * compression hardware owns, rounded down.  Rounding it up
++		 * publishes CCS storage as free memory.
++		 */
++		offset = round_down(offset, SZ_4K);
 +
- 	skb_zerocopy_clone(to, from, GFP_ATOMIC);
- 
- 	for (i = 0; i < skb_shinfo(from)->nr_frags; i++) {
--- 
-2.53.0
-
++		/*
++		 * CCS storage must not run into GSM.  The old check compared
++		 * the offset against GSMBASE - ccs_size for equality, which
++		 * could not fail: that value is 128K aligned, so it agreed
++		 * with the rounded-up offset even when the base was not 128K
++		 * aligned - exactly the case this fixes.
++		 */
++		xe_assert_msg(xe, offset + ccs_size <=
++			      xe_mmio_read64_2x32(&gt_to_tile(gt)->mmio, GSMBASE),
++			      "CCS overlaps GSM.\n");
+ 	} else {
+ 		reg = xe_gt_mcr_unicast_read_any(gt, XEHP_FLAT_CCS_BASE_ADDR);
+ 		offset = (u64)REG_FIELD_GET(XEHP_FLAT_CCS_PTR, reg) * SZ_64K;
 
 
