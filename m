@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506F125783C;
-	Wed,  9 Sep 2026 13:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFDA53FD2B;
+	Wed,  9 Sep 2026 13:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961973; cv=none; b=FL8MTjlGjt1MbizQ/uDyFr0+IeifIZ78D+hfZwrsrd5i2/OJ7OyN3c6IBGdm3b6a5emggZthe/NYdURYPw4YNEPqlSWPARFtxXX6tL6qBGgP271C1LxbtUlBM/XvjofywYX59Oy3w/M2YIDjRv6V/kiHRkqMV865+IEuU6jDP+M=
+	t=1788961976; cv=none; b=n2YYJ2O8BscxkfWqFQCL9iJey8zSv0x+gXbDsK7zVhas7aeZ4hPlAJnN9z//ysy+bcIx0hISsRFTLbl9ufOEkjyKFW12rqfrLsPJvcSrmtpc6DeyTz1Wv4cmGkYiIvL50yFlMwYItdoCyTjDizstFdDN6FYqByIX0qlqV+q99f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961973; c=relaxed/simple;
-	bh=hov5DLCg9to6B0OIunATUNjLsduciJEO24rGLLgag+Y=;
+	s=arc-20240116; t=1788961976; c=relaxed/simple;
+	bh=hS03r2q5Yu4DmKrPvllRjjpqUDXQTG5btqgZKKy9p3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sFBdZcsamkwLIgNhCUDzd/17lvaBZOfQXaSZUj46mguOuqYXPsAHtzVm1z/sYFUHFV0D/LvaYNbnFFLCkERqLr13ausGNXds8OMVfXmpqK3F7FLaERzb9P5vebz12gaZsUCvvnQY1wjBC+XfXIn72N8aLvLqOJmSDiGySqmQKHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fv6lLSbu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BHjcF/iAnfORpK/qDIA1kENadScXFL5jsyBVH72bbJUUNfqqBDt9c8btPnnXSIZhfz04PaS3zgyZUF4Kv90/rGUPnM4IkImkl5XNbT7NMdQIg04qETmHOHo7l+DOIBkrFM19SrKiFnEUSouwkB80kqd93kadSy+tpIJLSGXHnJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaitjHUD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fv6lLSbu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA32A1F00A3A;
-	Wed,  9 Sep 2026 13:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaitjHUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943891F00A3A;
+	Wed,  9 Sep 2026 13:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961972;
-	bh=5WZGTx3PJokQV5k6lRSABwYP6Y7G+m0LZ+BevzgFnes=;
+	s=korg; t=1788961975;
+	bh=ZD8Zqk63ajXmCwYEkQXk0oRkfHbSiXODQJ3qXVIjmF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fv6lLSbu+vUJd+jh9/zjKNzRmuVJFedgliV4tmyud6etZDUvH3eJWg6z0UuuWT4Sv
-	 XNIQ8uiQIWpI+zbkB0obxpUvsJ6J/qHvlofZcWrxBipNxFesrR5rRFXZZY87d9vXVZ
-	 /BLfbqlkoJCZfMio2JFZ2+33mHaZIkD/+Cwac0k0=
+	b=WaitjHUD+XVyz1a+J+I6wKp4dQGthtA+Zrs6OfwHQ5U6upvKR5DnemRTzJKhPvSeV
+	 3DukkJdxKPA33NLhuVfvQjLRVmIL2Q6wtvmPr0keEm2wicZkunkWUcHgpCmVE9CvE+
+	 3QSehxKmxQnvui6Tz9eSjRP7eIdiJ4AdSiSSHGRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ju Nan <junan76@163.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Radu Rendec <radu@rendec.net>,
-	Antonio Borneo <antonio.borneo@foss.st.com>
-Subject: [PATCH 7.2 122/556] irqchip/stm32mp-exti: Fix the unit of the hwspinlock timeout
-Date: Wed,  9 Sep 2026 15:36:42 +0200
-Message-ID: <20260909134234.755898499@linuxfoundation.org>
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 7.2 131/556] rtc: rzn1: Fix weekday underflow when alarm crosses month boundary
+Date: Wed,  9 Sep 2026 15:36:51 +0200
+Message-ID: <20260909134235.064612417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,60 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ju Nan <junan76@163.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit d31fbbade43f880b7e59e2b3a72722fe2725d93f upstream.
+commit 022a2839a52006531804a8db55d3228084400b48 upstream.
 
-HWSPNLCK_TIMEOUT is passed to hwspin_lock_timeout_in_atomic(), whose
-timeout argument is in milliseconds, not microseconds:
+rzn1_rtc_set_alarm() calculates the alarm weekday from the difference
+between the alarm day and the current day of the month. When the alarm
+crosses a month boundary, this difference can become negative. Since
+days_ahead is unsigned, it underflows and results in an incorrect
+weekday being programmed into RZN1_RTC_ALW.
 
-  atomic_delay += HWSPINLOCK_RETRY_DELAY_US;
-  if (atomic_delay > to * 1000)
-          return -ETIMEDOUT;
+The RTC core already provides a fully populated struct rtc_time for
+the alarm, including the correct tm_wday. Use tm->tm_wday directly
+instead of recalculating the weekday from the day-of-month.
 
-So stm32mp_exti_set_type() asks for a 1 second timeout where the comment
-next to the macro says it wants 1 millisecond. The semaphore is polled
-with udelay() from a section that holds chip_data->rlock, a
-raw_spinlock_t, so preemption stays disabled for the whole wait on every
-configuration, PREEMPT_RT included.
+This avoids the underflow and ensures alarms scheduled across a month
+boundary use the correct weekday.
 
-The hwspinlock core documents this explicitly:
-
-  If the mode is HWLOCK_IN_ATOMIC (called from an atomic context) the
-  timeout is handled with busy-waiting delays, hence shall not exceed
-  few msecs.
-
-Fixes: 5257169ade8c ("irqchip/stm32-exti: Use the hwspin_lock_timeout_in_atomic() API")
-Signed-off-by: Ju Nan <junan76@163.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Fixes: b5ad1bf00d2c4 ("rtc: rzn1: Add alarm support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260821024756.24927-2-junan76@163.com
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Suggested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://patch.msgid.link/20260821211032.13554-4-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-stm32mp-exti.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-rzn1.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/drivers/irqchip/irq-stm32mp-exti.c
-+++ b/drivers/irqchip/irq-stm32mp-exti.c
-@@ -22,7 +22,7 @@
+--- a/drivers/rtc/rtc-rzn1.c
++++ b/drivers/rtc/rtc-rzn1.c
+@@ -260,7 +260,6 @@ static int rzn1_rtc_set_alarm(struct dev
+ 	struct rzn1_rtc *rtc = dev_get_drvdata(dev);
+ 	struct rtc_time *tm = &alrm->time, tm_now;
+ 	unsigned long alarm, farest;
+-	unsigned int days_ahead, wday;
+ 	int ret;
  
- #define IRQS_PER_BANK			32
+ 	ret = rzn1_rtc_read_time(dev, &tm_now);
+@@ -273,13 +272,9 @@ static int rzn1_rtc_set_alarm(struct dev
+ 	if (time_after(alarm, farest))
+ 		return -ERANGE;
  
--#define HWSPNLCK_TIMEOUT		1000 /* usec */
-+#define HWSPNLCK_TIMEOUT_MS		1
+-	/* Convert alarm day into week day */
+-	days_ahead = tm->tm_mday - tm_now.tm_mday;
+-	wday = (tm_now.tm_wday + days_ahead) % 7;
+-
+ 	writel(bin2bcd(tm->tm_min), rtc->base + RZN1_RTC_ALM);
+ 	writel(bin2bcd(tm->tm_hour), rtc->base + RZN1_RTC_ALH);
+-	writel(BIT(wday), rtc->base + RZN1_RTC_ALW);
++	writel(BIT(tm->tm_wday), rtc->base + RZN1_RTC_ALW);
  
- #define EXTI_EnCIDCFGR(n)		(0x180 + (n) * 4)
- #define EXTI_HWCFGR1			0x3f0
-@@ -376,7 +376,7 @@ static int stm32mp_exti_set_type(struct
- 	raw_spin_lock(&chip_data->rlock);
+ 	rtc->tm_alarm = alrm->time;
  
- 	if (hwlock) {
--		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT);
-+		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			pr_err("%s can't get hwspinlock (%d)\n", __func__, err);
- 			goto unlock;
 
 
