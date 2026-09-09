@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75936233722;
-	Wed,  9 Sep 2026 14:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F1F1C3BFC;
+	Wed,  9 Sep 2026 14:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963593; cv=none; b=ngEwqVfqDFAdravsyWM+JQpciNimA9IOQ+ChbcZWWsjeH5SvnVX0L9wV0oBJ/+gDbm3gXw8meC38qmyqiqD1ZL0SLy6KYzXcgnlP167Jxz2a/p6mJluRmTr/vTHmBorpnpGEPYwznxaCw+ITDolBMvx4szJEBNGMI6Fq1jkkrRY=
+	t=1788963596; cv=none; b=IexhzwBk4dCvGNFa3F68ARiRQtygeqnOBaaFiNW34Yw2OfsDxJ1rPflp6kt2o1KYkw/dm18Wud2pX1IHS2SmvDd1y9EA0PJ3qvyxhjcvv1yxVlDvpcwczfrGsMXsvu2/MWnYG1DL0jPcQ0hHlUaCdb3ONN8EOgS7vZb7TkZ3wh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963593; c=relaxed/simple;
-	bh=M/xmyOD1GEk1HvpAIVzILBucqF8rEzFP/DgTTci688g=;
+	s=arc-20240116; t=1788963596; c=relaxed/simple;
+	bh=0GBosVtaZB62Suq1w/BI8KVPj2bD0ksLMNLo0poAbs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YApSr1sKGUOxRh54kanlXEvWav4h3HoLS+iyENpEdKR5OsZh+09AtdqG91jWAnI2276TcCADdSibP/Aczd9dpeEGiB2hzFcQ2zApuQWtJ9raasbQc3mfKgZxCoWGsHHMixQB4uxt4B92aN1mCc1jmw15TkPusIt0MYUjORdmPjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4WyC/q3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XcfWYbGDbvprww3DZJlSuYwj5ppJ3j5+EpK1zpVa/CJZJP9TbLjqzWoObM4WdmAYO8ZqOVeK9eg48th0hYsU4AjtHxeLgcZtUk+kgDGOlvqEeXds7goP2wASv3AvN5/Fw0FHioabJbZuDlRNSrhCX7fKe8NcyQXJahIXRdqV0bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swsKYk5j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4WyC/q3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAB91F00A3A;
-	Wed,  9 Sep 2026 14:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swsKYk5j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E1C1F00A3A;
+	Wed,  9 Sep 2026 14:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963592;
-	bh=QPKN7QKJtqlH98bG1oTGTxQjji5NiScdP8uARJRxTCo=;
+	s=korg; t=1788963595;
+	bh=OLlYbxhIkBsBgbNU4G6RUsG0HRDiJMmgkaCdtkhbMyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q4WyC/q3K/0/cgjJcSgeSiG+wSRf3p1IlRzTY7SgpNnTVv8OJmAVKG/edHKJjfdRK
-	 qF+k29GArM9OsJ6uE5INCXRq7UkxWHpd8cOqEYvJYn1CwoJD92Udh1dqNWxpj8O2hx
-	 SgrErqKj+/0cPM3HV2Faxe+1KjnzsVBuelSgeQs8=
+	b=swsKYk5jX9RPI9ZFBPb9IkabUMDgOxveAkIew3b+IiBBkZy849rk+rrX88ZyBo5Im
+	 Ysba+LRxd91WSJiXDcqogqLIG7PHrGmE8QNS4ziDN1aMehC1LtXgtwgOY3Wju+ntjb
+	 z6cA/9KLZv4K3l6tGVHrJTI5ELjLOUquQywNqtLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Anthony Krowiak <akrowiak@linux.ibm.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.18 133/583] s390/vfio-ap: Fix NULL deref in status_show() during queue probe
-Date: Wed,  9 Sep 2026 15:36:58 +0200
-Message-ID: <20260909134242.748911957@linuxfoundation.org>
+Subject: [PATCH 6.18 134/583] s390/vfio-ap: fix potential use of uninitialized apm_filtered bitmap
+Date: Wed,  9 Sep 2026 15:36:59 +0200
+Message-ID: <20260909134242.780801697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -45,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -54,116 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Anthony Krowiak <akrowiak@linux.ibm.com>
 
-commit dd6f4ef6f8a37412909ad787c837332fb070159c upstream.
+commit bf09b9d7cd7890bc3a3b7eb63d5ece15f88bfde7 upstream.
 
-When vfio_ap_mdev_probe_queue() creates the sysfs attribute group,
-the queue's driver data has not yet been set. A concurrent read of
-the 'status' attribute can therefore call dev_get_drvdata() and
-get NULL, which is then passed directly to
-vfio_ap_mdev_for_queue() where q->apqn is unconditionally
-dereferenced, causing a NULL pointer dereference.
+The DECLARE_BITMAP(apm_filtered, AP_DEVICES) macro allocates the bitmap
+on the stack without zero-initializing it.
 
-Fix this by acquiring the update locks before calling
-sysfs_create_group(). The status_show() function acquires
-guests_lock before reading the driver data, so any concurrent
-read will block until after dev_set_drvdata() has been called
-and the update locks are released.
+In vfio_ap_mdev_hot_plug_cfg(), the vfio_ap_mdev_filter_matrix() function
+is only called to initialize and populate apm_filtered if either
+filter_adapters or filter_domains is true. If the hot plug configuration
+change only adds control domains (meaning filter_cdoms is true, but
+filter_adapters and filter_domains are both false),
+vfio_ap_mdev_filter_matrix() is bypassed.
 
-As a bonus, the APQN no longer needs to be read from the queue
-struct after allocation — it can be read directly from apdev
-before allocation and stored in a local variable, which is then
-assigned to q->apqn once the allocation succeeds.
+Consequently, apm_filtered is passed to reset_queues_for_apids() with
+uninitialized stack garbage. This can cause reset_queues_for_apids() to
+interpret arbitrary stack garbage bits as valid APIDs to reset, potentially
+performing unintended guest hardware queue resets.
 
-Fixes: 260f3ea141382 ("s390/vfio-ap: move probe and remove callbacks to vfio_ap_ops.c")
+Fix this by zero-initializing the apm_filtered bitmap at the beginning of
+vfio_ap_mdev_hot_plug_cfg() using bitmap_zero().
+
+Fixes: eeb386aeb5b7c ("s390/vfio-ap: handle config changed and scan complete notification")
 Cc: stable@vger.kernel.org
 Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |   33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 --- a/drivers/s390/crypto/vfio_ap_ops.c
 +++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -2321,6 +2321,23 @@ static ssize_t status_show(struct device
- 	mutex_lock(&matrix_dev->guests_lock);
- 	mutex_lock(&matrix_dev->mdevs_lock);
- 	q = dev_get_drvdata(&apdev->device);
-+
-+	/*
-+	 * Make sure the drvdata has been set before proceeding. There is a
-+	 * possibility that the drvdata was not set if the vfio_ap_queue object
-+	 * could not be allocated when the queue device was probed. In that case,
-+	 * the locks used in vfio_ap_mdev_probe_queue() are released prior to
-+	 * removing the sysfs status attribute to avoid a lockdep
-+	 * splat. That opens a very small window where the status attribute is
-+	 * still available without the vfio_ap_queue object having been
-+	 * stored in the device drvdata. In that case, indicate the queue is not
-+	 * assigned.
-+	 */
-+	if (!q) {
-+		nchars = sysfs_emit(buf, "%s\n", AP_QUEUE_UNASSIGNED);
-+		goto done;
-+	}
-+
- 	matrix_mdev = vfio_ap_mdev_for_queue(q);
- 
- 	/* If the queue is assigned to the matrix mediated device, then
-@@ -2345,6 +2362,7 @@ static ssize_t status_show(struct device
- 		nchars = sysfs_emit(buf, "%s\n", AP_QUEUE_UNASSIGNED);
- 	}
- 
-+done:
- 	mutex_unlock(&matrix_dev->mdevs_lock);
- 	mutex_unlock(&matrix_dev->guests_lock);
- 
-@@ -2419,14 +2437,17 @@ void vfio_ap_mdev_unregister(void)
- 
- int vfio_ap_mdev_probe_queue(struct ap_device *apdev)
- {
--	int ret;
-+	int ret, apqn;
- 	struct vfio_ap_queue *q;
+@@ -2877,6 +2877,15 @@ static void vfio_ap_mdev_hot_plug_cfg(st
  	DECLARE_BITMAP(apm_filtered, AP_DEVICES);
- 	struct ap_matrix_mdev *matrix_mdev;
+ 	bool filter_domains, filter_adapters, filter_cdoms, do_hotplug = false;
  
-+	apqn = to_ap_queue(&apdev->device)->qid;
-+	matrix_mdev = get_update_locks_by_apqn(apqn);
++	/*
++	 * Zero out the apm_filtered bitmap in case there are no adapters or
++	 * domains to be added, but only control domains. In that case,
++	 * vfio_ap_mdev_filter_matrix() - which initializes apm_filtered - will
++	 * not get called and the reset_queues_for_apids will crash because it
++	 * will access an uninitialized bitmap.
++	 */
++	bitmap_zero(apm_filtered, AP_DEVICES);
 +
- 	ret = sysfs_create_group(&apdev->device.kobj, &vfio_queue_attr_group);
- 	if (ret)
--		return ret;
-+		goto err_release_locks;
- 
- 	q = kzalloc(sizeof(*q), GFP_KERNEL);
- 	if (!q) {
-@@ -2434,11 +2455,10 @@ int vfio_ap_mdev_probe_queue(struct ap_d
- 		goto err_remove_group;
- 	}
- 
--	q->apqn = to_ap_queue(&apdev->device)->qid;
-+	q->apqn = apqn;
- 	q->saved_isc = VFIO_AP_ISC_INVALID;
- 	memset(&q->reset_status, 0, sizeof(q->reset_status));
- 	INIT_WORK(&q->reset_work, apq_reset_check);
--	matrix_mdev = get_update_locks_by_apqn(q->apqn);
- 
- 	if (matrix_mdev) {
- 		vfio_ap_mdev_link_queue(matrix_mdev, q);
-@@ -2467,8 +2487,13 @@ done:
- 	return ret;
- 
- err_remove_group:
-+	release_update_locks_for_mdev(matrix_mdev);
- 	sysfs_remove_group(&apdev->device.kobj, &vfio_queue_attr_group);
- 	return ret;
-+
-+err_release_locks:
-+	release_update_locks_for_mdev(matrix_mdev);
-+	return ret;
- }
- 
- void vfio_ap_mdev_remove_queue(struct ap_device *apdev)
+ 	filter_adapters = bitmap_intersects(matrix_mdev->matrix.apm,
+ 					    matrix_mdev->apm_add, AP_DEVICES);
+ 	filter_domains = bitmap_intersects(matrix_mdev->matrix.aqm,
 
 
