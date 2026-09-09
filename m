@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C6F58039F;
-	Wed,  9 Sep 2026 14:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8FF5867C9;
+	Wed,  9 Sep 2026 14:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963939; cv=none; b=MFGX2tZag5JRoKlGnpdEYsSqa4Up0CXEFl/1MKa5Pb4LIrA0DxyuoYIOSrhWJJyOPzQeKesDYFbuA/BjlHfCJGqwkQG+L3Jgk9yu17ri559Le/n20oEL+JNg/Idwv57NTx5pdn662dIOQwm9ioHBp110LthJRCa7FW0F6lJIhBA=
+	t=1788963942; cv=none; b=suZrAE4vHYaGaaSY9C7Kr7e8hQET3SByx1kBBLdoecCf5bY4/QC0xIls460I0lgdl1eGweMnaE2amFgFAbPLVBv6A/oYCAyRatb7LeMk2PMLA9FZlC2NQ0scIUfpZCsxrSkoHvbN5yyG+8Vg5G1p8VwKb27vbSrqViHrK2IonCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963939; c=relaxed/simple;
-	bh=EypBsobFWWHFqorLadeXYEIy9qTbMcrtKJopHSrKgvw=;
+	s=arc-20240116; t=1788963942; c=relaxed/simple;
+	bh=osZj7WVK1KoenDFXvIFn1grQgzYcLIOQDZm68a4b5vk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ObaHzErSLVVA651H8bQKIuMDIXiWnfjqCB9sFTeh8QCi02HRsnwHse/ODc8ogCgZh0w/C5Qde2HJVGE7ll/s8sWOL5+x0s+SPkNV+u5X6P1CDn7QGkWw6nqxqX8lVGHKNFS18q/SxmxZ7B9R5r/Upb5XjslevY7ab37kXUabUg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BG4SYAPg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b153gCakakMuaNA9c+jF1Co67qxaDMsboqHXN4amzM24/RRX2Gvux1vjm8C34yUtQS75UXB1rUjVZrTe+7dXDTZlPSbhq552kWvedorZWa5Vtate9iFGtGiO6h1YJJZMrTooQPKkEel9KQsxirHYX4h1V63X0yjrLIA+aABKk3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4rH2gHt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BG4SYAPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064EC1F00A3E;
-	Wed,  9 Sep 2026 14:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4rH2gHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39C31F00A3A;
+	Wed,  9 Sep 2026 14:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963938;
-	bh=7QbSKFvH1vGkF1fBQxrQzSDjXXzqZMheRB/iWSjME78=;
+	s=korg; t=1788963941;
+	bh=+Te5GX1xBxzMiS/PErh6Jo2E2+RPVjO7OtZpmsqn0XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BG4SYAPgumlUP8QgWy/K0/8m24gnIWJTyWx0ruwVnGSJ2oQoMbU75MvCcbv8eGc7J
-	 B9DemjekxD6hYdk+e0kb79mqPF/yS9hzwMtBcWBNzil1NFbSv/3A9L3I2NQIuCVwdV
-	 RFrtEnMFo2UvO4gAQQvFj5Fi5LyIjMKHTgJ8tNQ8=
+	b=c4rH2gHt/OOZmB6/w1WzF7U3M8sdfD2mr4v5Nzdcb9lCwOuDnKbFGn8mx+0vT6lrj
+	 AMRhbrL2gF5ibTSNtAGqtBZltiCtFFgIYxyucIx18CiaiXqnETFb6Tr/y90F5jQOk4
+	 ZT+Wdy0Js6TXaBHAdXPSmF+FJBWfWtotAOgt8Unw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 6.18 251/583] KVM: s390: Restore sigset on error path
-Date: Wed,  9 Sep 2026 15:38:56 +0200
-Message-ID: <20260909134246.812895425@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oupton@kernel.org>
+Subject: [PATCH 6.18 252/583] KVM: arm64: Consider SCTLR_EL2.M when mapping the L1 VNCR page
+Date: Wed,  9 Sep 2026 15:38:57 +0200
+Message-ID: <20260909134246.851905415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,52 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit c44d36d8e6501c4934412d9014e5e02da9efdb8f upstream.
+commit 8c774604b6ecaca495fa3d27c21593269627f48f upstream.
 
-kvm_sigset_activate() installs vcpu->sigset via sigprocmask() and
-stashes the caller's mask in current->real_blocked; only
-kvm_sigset_deactivate() restores it.
+We record a VNCR TLB even when SCTLR_EL2.M is 0 in order to make
+our life easier. But this is not something that the architecture
+anticipate.
 
-For KVM_RUN on a STOPPED vcpu the error path will not restore the
-userspace mask.  Re-arrange the error handling to also restore the
-signal mask.
+As a consequence, a hypervisor is free to set VNCR_EL2 to
+some PA when SCTLR_EL2.M==0, use it to run a guest which indirectly
+accesses the VNCR page, then eventually set SCTLR_EL2.M==1 with
+the same VA. Yes, this is odd, but apparently legal.
 
-Fixes: 6352e4d2dd9a3 ("KVM: s390: implement KVM_(S|G)ET_MP_STATE for user space state control")
+A common trick in HW is to invalidate the TLBs on SCTLR_ELx.M being
+flipped. But doing this is a not a good idea for us (we'd need to
+trap SCTLR accesses), and wouldn't scale as we nest deeper.
+
+Instead, use the fact that the S1 MMU being off at the point of
+translation is cached in our TLB, and if it doesn't match the current
+MMU state, leave the VNCR unmapped.
+
+Fixes: 2a359e072596f ("KVM: arm64: nv: Handle mapping of VNCR_EL2 at EL2")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260811153738.206885-5-borntraeger@linux.ibm.com>
+Link: https://patch.msgid.link/20260806091026.620700-4-maz@kernel.org
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/kvm-s390.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/kvm_nested.h |    7 +++++++
+ arch/arm64/kvm/at.c                 |    2 --
+ arch/arm64/kvm/nested.c             |    4 ++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -5355,7 +5355,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 		pr_err_ratelimited("can't run stopped vcpu %d\n",
- 				   vcpu->vcpu_id);
- 		rc = -EINVAL;
--		goto out;
-+		goto out_sigset;
- 	}
+--- a/arch/arm64/include/asm/kvm_nested.h
++++ b/arch/arm64/include/asm/kvm_nested.h
+@@ -353,6 +353,8 @@ struct s1_walk_result {
+ 	bool	failed;
+ };
  
- 	kernel_fpu_begin(&fpu, KERNEL_FPC | KERNEL_VXR);
-@@ -5384,9 +5384,11 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 	store_regs(vcpu);
- 	kernel_fpu_end(&fpu, KERNEL_FPC | KERNEL_VXR);
- 
-+	vcpu->stat.exit_userspace++;
++#define S1_MMU_DISABLED		(-127)
 +
-+out_sigset:
- 	kvm_sigset_deactivate(vcpu);
+ static inline void fail_s1_walk(struct s1_walk_result *wr, u8 fst, bool s1ptw)
+ {
+ 	wr->fst		= fst;
+@@ -361,6 +363,11 @@ static inline void fail_s1_walk(struct s
+ 	wr->failed	= true;
+ }
  
--	vcpu->stat.exit_userspace++;
- out:
- 	vcpu_put(vcpu);
- 	return rc;
++static inline bool s1_walk_translated(struct s1_walk_result *wr)
++{
++	return wr->level != S1_MMU_DISABLED;
++}
++
+ int __kvm_translate_va(struct kvm_vcpu *vcpu, struct s1_walk_info *wi,
+ 		       struct s1_walk_result *wr, u64 va);
+ int __kvm_find_s1_desc_level(struct kvm_vcpu *vcpu, u64 va, u64 ipa,
+--- a/arch/arm64/kvm/at.c
++++ b/arch/arm64/kvm/at.c
+@@ -10,8 +10,6 @@
+ #include <asm/kvm_hyp.h>
+ #include <asm/kvm_mmu.h>
+ 
+-#define S1_MMU_DISABLED		(-127)
+-
+ static int get_ia_size(struct s1_walk_info *wi)
+ {
+ 	return 64 - wi->txsz;
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -1413,6 +1413,10 @@ static void kvm_map_l1_vncr(struct kvm_v
+ 	if (!vt->valid)
+ 		return;
+ 
++	/* We cache the MMU state in the TLB. Check that it matches. */
++	if (!!(vcpu_read_sys_reg(vcpu, SCTLR_EL2) & SCTLR_ELx_M) != s1_walk_translated(&vt->wr))
++		return;
++
+ 	if (read_vncr_el2(vcpu) != vt->gva)
+ 		return;
+ 
 
 
