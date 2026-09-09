@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18502548549;
-	Wed,  9 Sep 2026 14:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08607563FBD;
+	Wed,  9 Sep 2026 14:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962701; cv=none; b=knTl/C4UNlb8xbdmeeZ4VULVAcLxGHAteLyhllUWxM7rBG2vLtb1u9zKUO70/tiYqz0vV1gTvdss0ZEfsPNVJZHAl7Oy2FAbr6DJI6Sah6tftDXm6JeBPrmD5TYm6HQlQVNzlYOWVdaOHn8NKYnhWUwnAt2VxuCEUn3c2bM7y98=
+	t=1788962704; cv=none; b=bzHZqSR4yU1Dqf9SV2DCqtBQ5niDAFt3QJlHfAnkzhWO4s9Lmz2t01yWdIQTWJ2wp0nREJU+gJgcKK+llQYO41Yt8f6joH3a23h4pms0lpI7BCYjLKdk3C8qTqaNTIikqRiumTFaf3ri4tWqLvK9Qn6QwslXmfykeT/8wgZLqyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962701; c=relaxed/simple;
-	bh=DVYGZOtkqrxxVhzPqlZF6KOcC7gYH5Y4+SYrSmDDT3o=;
+	s=arc-20240116; t=1788962704; c=relaxed/simple;
+	bh=48hr0yBQEjBWCPjg6hSAt+W1balEBvgZv7tBocgft2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOIRjgq2c8uIkwV9ScIwEzwH3n/xTFHaI7nHBfw40Xe4kViXJqGTNWTSjc6ETBqKcyQbt2CuAb86SMoPlGq4NzY4uEhBo7H2YVarm4wVrPDgu3dUFWSCJ9uDx98mDP2NonWLLqtexfAT0gx0dWkFa6yTYGBDOzm04LgPLaCw0ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1sE7LTM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ai2Y2vZvwxuRUCgLYMuAo8IgqHAcT8l8mo/ZW/eF7c9uy6UBfelEqKrFq/B2wtDVWJI1UeJqMjc8IF2INk/kWV/9Cp5cD/oSkEMcq35vdhKd1fRiT9QRAMizbbqFVZUiSAFTm/+Y7yhk9kmxmiYc0k0Fx4zkauoIAzVKsaUpuNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s41r8fAi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1sE7LTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727EE1F00A3A;
-	Wed,  9 Sep 2026 14:04:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s41r8fAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F2E1F00A3A;
+	Wed,  9 Sep 2026 14:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962700;
-	bh=Wc57G2OUTASZddnzezNtUxsBUaK1dJqlmVL0TOlti0c=;
+	s=korg; t=1788962702;
+	bh=eNtq/zAMEidhxjx0ilmShoCxDn1DTh1lvEWaLqZbj3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1sE7LTMZnr67a6k+Ruf9itxZzREnH816F1+O7sgxIunSqXFt7eyoDCDRLInCRhrV
-	 muSA0IHbED4yfYI+7w7k6SgEmTLk4qtqcLclTUQBclGHeMTR8Zc5hq/+GlLw5M8UCn
-	 JQZxFE0YWMqRr734jPJhinoIHXDxFLqIdETsE4Es=
+	b=s41r8fAigV73AqPRZZNMmN38DXU4qGmItFcj/opl6pdNk01qPGphHxRq0GM1oF508
+	 NsR/zWRuns1UHahSXui2JX3Oq3fXBGjgH8pgGMteFyjGBhjQslrGW7AVubfoGeGnMo
+	 CihbIOMeU5XMCM+DCmiiTIv9/zz2blrJv0enLsFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Carlier <devnexen@gmail.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Daniel Scally <dan.scally@ideasonboard.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 380/556] media: mali-c55: fix dropped last AEC histogram zone weight
-Date: Wed,  9 Sep 2026 15:41:00 +0200
-Message-ID: <20260909134244.046516531@linuxfoundation.org>
+Subject: [PATCH 7.2 381/556] media: mali-c55: Fix clock leak on reset deassert failure
+Date: Wed,  9 Sep 2026 15:41:01 +0200
+Message-ID: <20260909134244.080026938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -54,48 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: David Carlier <devnexen@gmail.com>
 
-commit fb9b87145624eedaf3d50edac9b11d707494cb5b upstream.
+commit f499befeb668436b67bdb2b610b34db57732703f upstream.
 
-The 15x15 AEC histogram metering grid has 225 per-zone weights, packed
-by userspace as a u8 array. The driver writes the first 56 registers
-(zones 0 through 223) in a loop, then handles the final register on its
-own to keep static analysers from flagging the array access.
+__mali_c55_power_on() enables the clocks before deasserting the resets,
+but bails out on a deassert failure without disabling them again. Both
+callers treat a failed power-on as already cleaned up, so the clocks are
+left enabled.
 
-That separate path computes the address and value for the 225th weight
-(the bottom-right zone) but never issues the register write, so the zone
-keeps its stale or default weight. Any non-default weight userspace sets
-for the last zone is silently ignored, skewing auto-exposure metering.
-Both the AEXP_HIST_WEIGHTS and AEXP_IHIST_WEIGHTS blocks are affected as
-they share this handler.
+Disable them on the error path.
 
-Issue the missing write, masking the value as the loop does.
-
-Fixes: 01535ea08674 ("media: platform: Add mali-c55 parameters video node")
+Fixes: d5f281f3dd29 ("media: mali-c55: Add Mali-C55 ISP driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/arm/mali-c55/mali-c55-params.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/arm/mali-c55/mali-c55-core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/arm/mali-c55/mali-c55-params.c b/drivers/media/platform/arm/mali-c55/mali-c55-params.c
-index de0e9d898db7..33e2232ec8f5 100644
---- a/drivers/media/platform/arm/mali-c55/mali-c55-params.c
-+++ b/drivers/media/platform/arm/mali-c55/mali-c55-params.c
-@@ -212,6 +212,7 @@ mali_c55_params_aexp_hist_weights(struct mali_c55 *mali_c55,
+--- a/drivers/media/platform/arm/mali-c55/mali-c55-core.c
++++ b/drivers/media/platform/arm/mali-c55/mali-c55-core.c
+@@ -698,6 +698,8 @@ static int __mali_c55_power_on(struct ma
+ 					  mali_c55->resets);
+ 	if (ret) {
+ 		dev_err(mali_c55->dev, "failed to deassert resets\n");
++		clk_bulk_disable_unprepare(ARRAY_SIZE(mali_c55->clks),
++					   mali_c55->clks);
+ 		return ret;
+ 	}
  
- 	val = params->zone_weights[MALI_C55_MAX_ZONES - 1];
- 	addr = base + MALI_C55_AEXP_HIST_ZONE_WEIGHTS_OFFSET + (4 * 56);
-+	mali_c55_ctx_write(mali_c55, addr, val & MALI_C55_AEXP_HIST_ZONE_WEIGHT_MASK);
- }
- 
- static void mali_c55_params_digital_gain(struct mali_c55 *mali_c55,
--- 
-2.55.0
-
 
 
