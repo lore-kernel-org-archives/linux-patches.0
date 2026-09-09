@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5A6580394;
-	Wed,  9 Sep 2026 14:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2ED584972;
+	Wed,  9 Sep 2026 14:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963792; cv=none; b=bUDzCi+Mr9wA5YBQSSQPlX56aIBghHh99X2eCy2AuB8gghFgmsMBUaCK1wR+rD/6comwnDMoXsG7UVhFRbGgspa4djWjOWd9TelC/ItlczPUpMLu8CDcC7oUn2HjIILlRL/jVY4t48MbA/4pynsIYZKxYaUjDSGJurqSypzabLg=
+	t=1788963795; cv=none; b=Cd9yCLvf8Qe0JNElbRRNJHfpVwTlMyC0y48RGjlTKl6tHVYfdaW7q2AAwAn06K2q640iyqVXiswaKvIxgZsB0PbFAiZ/LhrQkdDnPxdjyhxEL2BCn83AC882FuvkW8p5nyUdcNkEsDpOlWL37gpYCfPdq9Rk1MaI/tWu6kUxodc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963792; c=relaxed/simple;
-	bh=Q4kN4a1AQYw/qRzyQbi/qpxGM+S65Dn3Dsau3FX1Yb0=;
+	s=arc-20240116; t=1788963795; c=relaxed/simple;
+	bh=rFTFLq5Hmxx0J76nlJuXrW2FTNhXYXWsfE8GTiNGreE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g96c/ungCayuBP+MVqaSOgr29X07PDNqR4XyQhlXDJ/FYSELU9Odt1bnZ/hS0tKLAHrIip3lvc59LSnjXURpPFDH/BXA7Y80GI/mwulKPI+/nu8+Z8C1PNhJOZP2dViJUpp7J/c3bxVU3Ch2yspSlALxl92RrgOK6ZnqFiEc+bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ly9hXi97; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KFuhPO+eVXoY4SPVz9c6H+CiEe5pgc+SXwkyTzZV1R5BI1Ci18sKyk7WGBi+1LoJFVe+dHxF6wrdcpVE53dButrNCO1zU5dGV8Wq0Bwbadd+L8HujNqinGGJdcMrkNgspjamd9m/YjkkJRKv/Z2Pi8KYyfzy2QatDVqqYHAjNkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=By/fySyz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ly9hXi97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED981F00A3A;
-	Wed,  9 Sep 2026 14:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="By/fySyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DBC1F00A3F;
+	Wed,  9 Sep 2026 14:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963791;
-	bh=tgmjyWUyqsz+Bq3IR9rdrI4/g4yZXrNDJOZNlOL1bG4=;
+	s=korg; t=1788963793;
+	bh=23lkKNdKSLO5dX2nZJ+ujiNDpz5PQu19dyCHH6g6cZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ly9hXi97zy7HJj88i79yXpg1kErNw5o/CflKgAA9I+8aunwCA+GAHnxtNAVm/J3gy
-	 Qzdi988QBTD3QQ3C7rMFDgIGy2Iqn/DtfXq8mI/+SWsROZV0TtABLj2D8v27U5MPpG
-	 5O77c7UhrXrhH3qI/elITcyeXOSY91pkW2AGrtE4=
+	b=By/fySyzdZTC9Oxf9t/CG0LixACpvK/mqUwcvU63MyXk+74+GYJB26FpPxw278nb9
+	 xw6YHN0o5m78EDoiAbie3N3xcjC4v0Kx/PAKJyS5eCQqJEFe40m6Ci3QeqEqq/Az0R
+	 1qzK1i4olYgN3L3AdsmyAUa7npeZ9fyJyQQ/rFAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 173/583] ASoC: rt1316-sdw: sort the register default table
-Date: Wed,  9 Sep 2026 15:37:38 +0200
-Message-ID: <20260909134244.192152164@linuxfoundation.org>
+Subject: [PATCH 6.18 200/583] ASoC: tegra: Fix the MIXER enable default value
+Date: Wed,  9 Sep 2026 15:38:05 +0200
+Message-ID: <20260909134245.081375953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,48 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit 7b48eccfbb9bf15e9b7377a5296bfd01815c62d8 upstream.
+commit 5442b8093a2f94ecd4696b3875194be09e2676c5 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+Commit 4b05ccb17f92 ("regcache: Sort the local copy of an unsorted
+reg_defaults array") exposed an issue in the Tegra MIXER driver where
+the register default for the TEGRA210_MIXER_ENABLE is specified as 1,
+but the hardware default is actually 0. After this commit was added the
+MIXER driver is no longer working and so fix this by correcting the
+default value for this register and explicitly configuring the
+MIXER_ENABLE register when runtime resuming the MIXER device.
 
-rt1316_reg_defaults[] is not in address order, so the binary search does
-not find one of its entries.  regcache_reg_needs_sync() then cannot
-compare it against its default and reports that a sync is needed, so it
-is written to the device on every regcache_sync() even when it was never
-touched.
-
-Sort the table by register address.
-
-Fixes: 2b719fd20f32 ("ASoC: rt1316: Add RT1316 SDCA vendor-specific driver")
+Fixes: 05bb3d5ec64a ("ASoC: tegra: Add Tegra210 based Mixer driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805090240.16991-16-peter.ujfalusi@linux.intel.com
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260821153734.158426-3-jonathanh@nvidia.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt1316-sdw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/tegra/tegra210_mixer.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/sound/soc/codecs/rt1316-sdw.c
-+++ b/sound/soc/codecs/rt1316-sdw.c
-@@ -60,13 +60,13 @@ static const struct reg_default rt1316_r
- 	{ 0xd101, 0x00 },
- 	{ 0xd102, 0x30 },
- 	{ 0xd103, 0x00 },
--	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1316_SDCA_ENT_UDMPU21, RT1316_SDCA_CTL_UDMPU_CLUSTER, 0), 0x00 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1316_SDCA_ENT_FU21, RT1316_SDCA_CTL_FU_MUTE, CH_L), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1316_SDCA_ENT_FU21, RT1316_SDCA_CTL_FU_MUTE, CH_R), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1316_SDCA_ENT_XU24, RT1316_SDCA_CTL_BYPASS, 0), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1316_SDCA_ENT_PDE23, RT1316_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1316_SDCA_ENT_PDE22, RT1316_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1316_SDCA_ENT_PDE24, RT1316_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_SMART_AMP, RT1316_SDCA_ENT_UDMPU21, RT1316_SDCA_CTL_UDMPU_CLUSTER, 0), 0x00 },
- };
+--- a/sound/soc/tegra/tegra210_mixer.c
++++ b/sound/soc/tegra/tegra210_mixer.c
+@@ -57,7 +57,7 @@ static const struct reg_default tegra210
+ 	MIXER_TX_REG_DEFAULTS(3),
+ 	MIXER_TX_REG_DEFAULTS(4),
  
- static const struct reg_sequence rt1316_blind_write[] = {
+-	{ TEGRA210_MIXER_ENABLE, 0x1 },
++	{ TEGRA210_MIXER_ENABLE, 0x0 },
+ 	{ TEGRA210_MIXER_CG, 0x00000001},
+ 	{ TEGRA210_MIXER_GAIN_CFG_RAM_CTRL, 0x00004000},
+ 	{ TEGRA210_MIXER_PEAKM_RAM_CTRL, 0x00004000},
+@@ -86,11 +86,15 @@ static int tegra210_mixer_runtime_suspen
+ static int tegra210_mixer_runtime_resume(struct device *dev)
+ {
+ 	struct tegra210_mixer *mixer = dev_get_drvdata(dev);
++	int err;
+ 
+ 	regcache_cache_only(mixer->regmap, false);
+-	regcache_sync(mixer->regmap);
++	err = regcache_sync(mixer->regmap);
++	if (err)
++		return err;
+ 
+-	return 0;
++	return regmap_write(mixer->regmap, TEGRA210_MIXER_ENABLE,
++			    TEGRA210_MIXER_EN);
+ }
+ 
+ static int tegra210_mixer_write_ram(struct tegra210_mixer *mixer,
 
 
