@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCF656B853;
-	Wed,  9 Sep 2026 14:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA27576EBD;
+	Wed,  9 Sep 2026 14:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964724; cv=none; b=u97wC7JEHKNgwBD3oCB0qiuQHIO/RCrZb4urN4HQCPN0+O7q/0WJVBzo+0DqdARHeKgmYrx+ZtizCyFzGhNvEOPa+XWVHsUvRQxu1hZhDDxBxGuGwBxkabqJDrHmz80YHMNIqNktDwGtIo2+Ne/PxJqAt7fwyHKDWZzMCkC+OsU=
+	t=1788964726; cv=none; b=IbVlXDhFEJax4Ife2FXT9Gogp1TRvUivXTciq8xlBFVUGLeF4J09SzrMynPl5p1Rh1jqVkpxl3Tn4UhMdx9Lvde8n9VdYPTO3Mr1r4HKyeYTA90pfer1anuBcmBTepHAtNx+6NiQMDQHNoUkINuDEEQQKr44iu9gCoMs5sXBcMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964724; c=relaxed/simple;
-	bh=YDlBocotIJCjoknB4Rdz2/Q7ic2ISVGz4VKfloYBvuo=;
+	s=arc-20240116; t=1788964726; c=relaxed/simple;
+	bh=7Na1pzRp9xC4ZSkGLOV9o/VceImZO+CBpptH5+XEzgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PUtUFPD7jsqlo3NLLuVWs7HvTOd2moI8zcZmcxSKdRkkzSTi9hfsro2GcrhUvzC2ODLPdZ6m8Z5/7KpBTGKJsEfrzLLj7Unxtq5JmOhoJ5viz3+gEADEQyqXCNawIyVd39jKYn30xt7/acWDlmL0XwDJUAmr7mESQ2+Sxm68qHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLuKNdaS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oNoL/JEVVyL8jPNomEMeG8TNbUrJRhmM1JaE7g2rwWg0evda4n/1jQnvLPByoFbPg7Qf5XS8M1PHLiQdInY2aW9bbMF7DwxGXi2lb+t40q8/3uIteCJVzG04FDLOhlLpmZ2PaYsemQMQ7KPHoYc957P6Lr0iQpjtS+/9MAtIVVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFKLvhsG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLuKNdaS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0EC1F00A3A;
-	Wed,  9 Sep 2026 14:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFKLvhsG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DEA1F00A3A;
+	Wed,  9 Sep 2026 14:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964722;
-	bh=lnJW/YyJmh962pE0aS4kntBOb9kGpajDqHdlIN08PDI=;
+	s=korg; t=1788964725;
+	bh=qzIQj59olj6NJGyM3/80eqlmPKad8Qh7rlQFDrMoPbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bLuKNdaSMS3++rP6wq9RDSOMyRKpZZnSCBdjzWusQwsTAo/LHs2Tt7Sgx7x13oVrC
-	 ZynChYb2+j+5bD71oYeYqjZHfgEE6NI53MTMFZJU8A/0LOZoaPh+jCbaYMsJ6mjXgh
-	 B8U4mfOVEph6YOvSnMX3GYGxmyhsOqwNsZZFZfQM=
+	b=gFKLvhsGgF8gYKcVgnqgXY1D2DqHcrX0+Bh4KMGZIE5tWvq802dczu266dh+phPDF
+	 ll8/uBYRcds0dx0DF+/yAwFMa5BEqRPUV4QgTjExIUYvKG1LSVQv29wkkS5APnmtuo
+	 Eu1DCXbqroRa7PIxeP79Cd6SzASq//yOZuh8pbcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	Florian Pradines <florian.pradines@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Bernd Schubert <bschubert@ddn.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 473/583] HID: mcp2221: fix OOB write in mcp2221_raw_event()
-Date: Wed,  9 Sep 2026 15:42:38 +0200
-Message-ID: <20260909134254.252733075@linuxfoundation.org>
+Subject: [PATCH 6.18 515/583] fuse-uring: refactor io-uring header copying to ring
+Date: Wed,  9 Sep 2026 15:43:20 +0200
+Message-ID: <20260909134255.572377533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -46,71 +48,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Pradines <florian.pradines@gmail.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit f097d246677b03db814c5862f368cea341b76a00 ]
+[ Upstream commit 6582f8a06698403dccf8a01b7eef176b2c6dd7ff ]
 
-mcp2221_raw_event() copies device-supplied data into mcp->rxbuf at
-offset rxbuf_idx without checking that the copy fits within the
-destination buffer. A device responding with up to 60 bytes to a
-small I2C/SMBus read can overflow the buffer.
+Move header copying to ring logic into a new copy_header_to_ring()
+function. This makes the copy_to_user() logic more clear and centralizes
+error handling / rate-limited logging.
 
-Add a rxbuf_size field to struct mcp2221, set it alongside rxbuf in
-mcp_i2c_smbus_read(), and check rxbuf_idx + data[3] <= rxbuf_size
-before the memcpy.
-
-Reported-by: Benoît Sevens <bsevens@google.com>
-Signed-off-by: Florian Pradines <florian.pradines@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: db2333f88729 ("HID: mcp2221: clear rxbuf after I2C/SMBus transfer completes")
+Reviewed-by: Bernd Schubert <bschubert@ddn.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: fd10f40af314 ("fuse: copy request headers via a stack buffer for io-uring")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/fuse/dev_uring.c |   39 +++++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 18 deletions(-)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -121,6 +121,7 @@ struct mcp2221 {
- 	u8 *rxbuf;
- 	u8 txbuf[64];
- 	int rxbuf_idx;
-+	int rxbuf_size;
- 	int status;
- 	u8 cur_i2c_clk_div;
- 	struct gpio_chip *gc;
-@@ -323,12 +324,14 @@ static int mcp_i2c_smbus_read(struct mcp
- 		mcp->txbuf[3] = (u8)(msg->addr << 1);
- 		total_len = msg->len;
- 		mcp->rxbuf = msg->buf;
-+		mcp->rxbuf_size = msg->len;
- 	} else {
- 		mcp->txbuf[1] = smbus_len;
- 		mcp->txbuf[2] = 0;
- 		mcp->txbuf[3] = (u8)(smbus_addr << 1);
- 		total_len = smbus_len;
- 		mcp->rxbuf = smbus_buf;
-+		mcp->rxbuf_size = smbus_len;
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -581,6 +581,18 @@ err:
+ 	return err;
+ }
+ 
++static __always_inline int copy_header_to_ring(void __user *ring,
++					       const void *header,
++					       size_t header_size)
++{
++	if (copy_to_user(ring, header, header_size)) {
++		pr_info_ratelimited("Copying header to ring failed.\n");
++		return -EFAULT;
++	}
++
++	return 0;
++}
++
+ static int fuse_uring_copy_from_ring(struct fuse_ring *ring,
+ 				     struct fuse_req *req,
+ 				     struct fuse_ring_ent *ent)
+@@ -643,13 +655,11 @@ static int fuse_uring_args_to_ring(struc
+ 		 * Some op code have that as zero size.
+ 		 */
+ 		if (args->in_args[0].size > 0) {
+-			err = copy_to_user(&ent->headers->op_in, in_args->value,
+-					   in_args->size);
+-			if (err) {
+-				pr_info_ratelimited(
+-					"Copying the header failed.\n");
+-				return -EFAULT;
+-			}
++			err = copy_header_to_ring(&ent->headers->op_in,
++						  in_args->value,
++						  in_args->size);
++			if (err)
++				return err;
+ 		}
+ 		in_args++;
+ 		num_args--;
+@@ -665,9 +675,8 @@ static int fuse_uring_args_to_ring(struc
  	}
  
- 	ret = mcp_send_data_req_status(mcp, mcp->txbuf, 4);
-@@ -915,6 +918,10 @@ static int mcp2221_raw_event(struct hid_
- 					mcp->status = -EINVAL;
- 					break;
- 				}
-+				if (mcp->rxbuf_idx + data[3] > mcp->rxbuf_size) {
-+					mcp->status = -EINVAL;
-+					break;
-+				}
- 				if (4 + data[3] > size) {
- 					mcp->status = -EINVAL;
- 					break;
+ 	ent_in_out.payload_sz = cs.ring.copied_sz;
+-	err = copy_to_user(&ent->headers->ring_ent_in_out, &ent_in_out,
+-			   sizeof(ent_in_out));
+-	return err ? -EFAULT : 0;
++	return copy_header_to_ring(&ent->headers->ring_ent_in_out, &ent_in_out,
++				   sizeof(ent_in_out));
+ }
+ 
+ static int fuse_uring_copy_to_ring(struct fuse_ring_ent *ent,
+@@ -696,14 +705,8 @@ static int fuse_uring_copy_to_ring(struc
+ 	}
+ 
+ 	/* copy fuse_in_header */
+-	err = copy_to_user(&ent->headers->in_out, &req->in.h,
+-			   sizeof(req->in.h));
+-	if (err) {
+-		err = -EFAULT;
+-		return err;
+-	}
+-
+-	return 0;
++	return copy_header_to_ring(&ent->headers->in_out, &req->in.h,
++				   sizeof(req->in.h));
+ }
+ 
+ static int fuse_uring_prepare_send(struct fuse_ring_ent *ent,
 
 
