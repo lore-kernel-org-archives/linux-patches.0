@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B585456855D;
-	Wed,  9 Sep 2026 14:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C8D5650F2;
+	Wed,  9 Sep 2026 14:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962510; cv=none; b=lMjOsBCdhh7U6HbPCGPw//ooOPU5jBFjGx3Q31A1R5skZ3w4YntB7GIdYr2SjGCSgzd3zmeacXIe+c1j5e+loZFV5w+FSXBXus8uymSj1Vv8Ui3EOMOTWAFKAGI03k+9VdvRIHbNkv/R5M106gO+sQPusamANBjD6NtM+cBDRGg=
+	t=1788962512; cv=none; b=pn7g3XL5bvscQ0CWcgKc9O6wkcUeKd0U96wha3XnD9AtM4kDOJ43TCTEtXEmprXFmSTM+wAtPC1CP/Bp8SvNQjjzwyQZw4vtx2SO3R3/tYv8ZO7xqER0mbYwhWnTQUYPksfVjdHBUZ4T4QRtQyyGDjiMg/FFGF30X0MXEqk81Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962510; c=relaxed/simple;
-	bh=H92Le78A58r1Mz/ZEuH0oBsOtiyzLJiLsHa20GNS/Ww=;
+	s=arc-20240116; t=1788962512; c=relaxed/simple;
+	bh=0j6v6Vq5YOXYfS9BD8pIF0/Ej1b06AQaOTicxR6f7CA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KdHtkDsozTdky42BCFQ3evDJoKyigh8t1Mnd+uR4U0UiMaEOQv/f+mFP+51Xg0EKGdADX9cMrGjYZ5DOaGpAXozSOIoGm7njWafLAIgIZxVWjzppsxK6zC68mJfb6F7DmeL3Bo8hgzM01MMmPDq3A+P6J5Y2n/Jn0/HiIFzGzkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6maI9Zo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WClfhdOQhnJ1Ve+dCzxgAANyOrIvrwOeZzzHbe5By/aIQIHnwFudNmxELycPdp252jYhgXeRWW+yZ4npeAtcgFj1kgzkI5dlmEQm/l9N6jyZDYVE9G0ZfoJByCCqNCq9rQXh49BUdFWPCpUijFbjHQf5JfuwMPgc7Jd/AfZE8BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2gvpZ8p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6maI9Zo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B521F00A3A;
-	Wed,  9 Sep 2026 14:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2gvpZ8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F2B1F00A3A;
+	Wed,  9 Sep 2026 14:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962508;
-	bh=p9EQ4l0sHw0sHDYGrsqqqGP/fBkkTlReMZDvJ19YLEM=;
+	s=korg; t=1788962511;
+	bh=E24zzYTnEtC8ZXUDUQxj7yUXejzWVuXZrwv7mZiGF6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P6maI9ZowqtyQizd3Bj0J/6bLiRUERN8Llin44xT4ohdkuJPgmp57M3ox6P3yigur
-	 L15LRPE0glcR9E8Ec1j9F4ylts3hfhpZCpsqKVEVngtbcDr8eFNUY0n2sti1I0WEyY
-	 2wn3RArs+o7ynSim24YPRlxMBEEMpgT3/P7gtoh4=
+	b=h2gvpZ8ptKLSmUg3s916GVlL/Tkx6gxPMnIPmo4M5frzbXD539vChP5F6d2Pi/dLU
+	 Ffx7nuPsvYV+rKrgYBtkLSP3ovN7JvStUC4rpWKBVBFNsAHy6eUxQ2cGhf6YmVJUlP
+	 JHbOkwN5ypyt7qJC9B3Us8DhE392EFO7BkD9fhdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Phil Rosenthal <phil@phil.gs>
-Subject: [PATCH 7.2 298/556] KVM: x86/mmu: Consume the locked rmap value in the lockless rmap walk
-Date: Wed,  9 Sep 2026 15:39:38 +0200
-Message-ID: <20260909134241.173253161@linuxfoundation.org>
+	Yuan Yao <yaoyuan@linux.alibaba.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oupton@kernel.org>
+Subject: [PATCH 7.2 316/556] KVM: arm64: Correctly handle end of VA space TLBI invalidation
+Date: Wed,  9 Sep 2026 15:39:56 +0200
+Message-ID: <20260909134241.780566372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,124 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Rosenthal <phil@phil.gs>
+From: Marc Zyngier <maz@kernel.org>
 
-commit e428f9779a43737d830111238816f1928b07aefb upstream.
+commit 34af2c3e31f91a739dc175459fdbd99ed952b457 upstream.
 
-__kvm_rmap_lock() deliberately elides the rmap lock when it observes an
-empty rmap.  In that case kvm_rmap_lock_readonly() also re-enables
-preemption and returns zero, so the caller holds neither the rmap lock
-nor a preemption reference.  The elision documents the invariant it
-relies on:
+Our TLB invalidation by VA code is based on comparing two ranges,
+one defined by the TLB, and one defined by the TLBI instruction.
 
-	 * Elide the lock if the rmap is empty, as lockless walkers (read-only
-	 * mode) don't need to (and can't) walk an empty rmap, nor can they add
-	 * entries to the rmap.  I.e. the only paths that process empty rmaps
-	 * do so while holding mmu_lock for write, and are mutually exclusive.
+Each range is defined by a start and a size. However, the way the
+comparison is done doesn't account for address rollover, as it
+compares an address with (base + size). This works nicely until
+this expression represent the last page/block in the TTBR1 VA space,
+as the result is a big fat 0. And a failed TLB invalidation.
 
-kvm_rmap_age_gfn_range() ignores the returned value and unconditionally
-enters for_each_rmap_spte_lockless().  The iterator started with
-rmap_get_first(), which re-reads rmap_head->val rather than using the
-value returned by the lock.  If a writer populates the rmap between the
-lock's read and the iterator's re-read, the aging path walks the newly
-installed rmap without holding its lock.
+Rewrite the comparison in a way that is immune to the address
+rollover (making the end address inclusive instead of exclusive),
+and move this into a common helper that is used by both VA and IPA
+invalidations, as suggested by Hyunwoo Kim (although the IPA version
+didn't suffer from this particular problem, obviously).
 
-For a KVM_RMAP_MANY rmap this leaves the walker following a
-pte_list_desc chain that it never locked.  A writer holding mmu_lock for
-write may free that chain (e.g. kvm_zap_all_rmap_sptes() on the recycle
-path, or any rmap zap) via kmem_cache_free() while the walk is in
-progress, giving a slab use-after-free.  Nothing serialises the two: the
-aging path runs without mmu_lock when CONFIG_KVM_MMU_LOCKLESS_AGING=y,
-and the rmap lock that would otherwise exclude the writer was elided.
-Because the empty path re-enables preemption, the interval between the
-two reads can span an arbitrary scheduling delay.
-
-Fix the class of bug by having the lockless walk consume the value
-returned by the lock instead of re-reading the rmap.  Split
-rmap_get_first() into __rmap_get_first(), which starts an iterator from
-an already-read rmap value, and make for_each_rmap_spte_lockless() take
-that value and call __rmap_get_first() directly.
-kvm_rmap_age_gfn_range() passes the value returned by
-kvm_rmap_lock_readonly(): when the lock was elided the value is zero,
-__rmap_get_first() returns NULL, and the walk is skipped.  No lockless
-walker re-reads the rmap, so the lock-elision invariant cannot be
-violated, and no lock()-without-paired-unlock() path is added to the
-aging code.
-
-Fixes: af3b6a9eba48 ("KVM: x86/mmu: Walk rmaps (shadow MMU) without holding mmu_lock when aging gfns")
-Suggested-by: Sean Christopherson <seanjc@google.com>
+Fixes: 4ffa72ad8f37e ("KVM: arm64: nv: Add S1 TLB invalidation primitive for VNCR_EL2")
+Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Phil Rosenthal <phil@phil.gs>
-Link: https://patch.msgid.link/20260720-rmap-age-elided-submit-v2-1-668973030d47@phil.gs
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260806091026.620700-5-maz@kernel.org
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   33 +++++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ arch/arm64/kvm/nested.c |   43 +++++++++++++++++++------------------------
+ 1 file changed, 19 insertions(+), 24 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -1245,18 +1245,9 @@ struct rmap_iterator {
- 	int pos;			/* index of the sptep */
- };
- 
--/*
-- * Iteration must be started by this function.  This should also be used after
-- * removing/dropping sptes from the rmap link because in such cases the
-- * information in the iterator may not be valid.
-- *
-- * Returns sptep if found, NULL otherwise.
-- */
--static u64 *rmap_get_first(struct kvm_rmap_head *rmap_head,
--			   struct rmap_iterator *iter)
-+static u64 *__rmap_get_first(unsigned long rmap_val,
-+			     struct rmap_iterator *iter)
- {
--	unsigned long rmap_val = kvm_rmap_get(rmap_head);
--
- 	if (!rmap_val)
- 		return NULL;
- 
-@@ -1271,6 +1262,19 @@ static u64 *rmap_get_first(struct kvm_rm
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -1001,6 +1001,20 @@ static void invalidate_vncr(struct vncr_
+ 		clear_fixmap(vncr_fixmap(vt->cpu));
  }
  
- /*
-+ * Iteration must be started by this function.  This should also be used after
-+ * removing/dropping sptes from the rmap link because in such cases the
-+ * information in the iterator may not be valid.
-+ *
-+ * Returns sptep if found, NULL otherwise.
-+ */
-+static u64 *rmap_get_first(struct kvm_rmap_head *rmap_head,
-+			   struct rmap_iterator *iter)
++static bool vncr_tlb_intersects(struct vncr_tlb *vt, u64 addr,
++				u64 scope_start, u64 scope_size)
 +{
-+	return __rmap_get_first(kvm_rmap_get(rmap_head), iter);
++	u64 tlb_size, tlb_start, tlb_end, scope_end;
++
++	tlb_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift, vt->wr.level));
++
++	tlb_start = addr & ~(tlb_size - 1);
++	tlb_end = tlb_start + tlb_size - 1;
++	scope_end = scope_start + scope_size - 1;
++
++	return !(tlb_end < scope_start || tlb_start > scope_end);
 +}
 +
-+/*
-  * Must be used with a valid iterator: e.g. after rmap_get_first().
-  *
-  * Returns sptep if found, NULL otherwise.
-@@ -1304,8 +1308,9 @@ static u64 *rmap_get_next(struct rmap_it
- 	__for_each_rmap_spte(_rmap_head_, _iter_, _sptep_)			\
- 		if (!WARN_ON_ONCE(!is_shadow_present_pte(*(_sptep_))))	\
+ /*
+  * VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions, and
+  * either can race against a vcpu not being onlined yet (no pseudo-TLB
+@@ -1023,19 +1037,9 @@ static void kvm_invalidate_vncr_ipa(stru
+ 	if (!kvm_has_feat(kvm, ID_AA64MMFR4_EL1, NV_frac, NV2_ONLY))
+ 		return;
  
--#define for_each_rmap_spte_lockless(_rmap_head_, _iter_, _sptep_, _spte_)	\
--	__for_each_rmap_spte(_rmap_head_, _iter_, _sptep_)			\
-+#define for_each_rmap_spte_lockless(_rmap_val_, _iter_, _sptep_, _spte_)	\
-+	for (_sptep_ = __rmap_get_first(_rmap_val_, _iter_);			\
-+	     _sptep_; _sptep_ = rmap_get_next(_iter_))				\
- 		if (is_shadow_present_pte(_spte_ = mmu_spte_get_lockless(sptep)))
+-	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
+-		u64 ipa_start, ipa_end, ipa_size;
+-
+-		ipa_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift,
+-							    vt->wr.level));
+-		ipa_start = vt->wr.pa & ~(ipa_size - 1);
+-		ipa_end = ipa_start + ipa_size;
+-
+-		if (ipa_end <= start || ipa_start >= end)
+-			continue;
+-
+-		invalidate_vncr(vt);
+-	}
++	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm)
++		if (vncr_tlb_intersects(vt, vt->wr.pa, start, end - start))
++			invalidate_vncr(vt);
+ }
  
- static void drop_spte(struct kvm *kvm, u64 *sptep)
-@@ -1743,7 +1748,7 @@ static bool kvm_rmap_age_gfn_range(struc
- 			rmap_head = gfn_to_rmap(gfn, level, range->slot);
- 			rmap_val = kvm_rmap_lock_readonly(rmap_head);
+ struct s1e2_tlbi_scope {
+@@ -1061,28 +1065,19 @@ static void invalidate_vncr_va(struct kv
+ 	lockdep_assert_held_write(&kvm->mmu_lock);
  
--			for_each_rmap_spte_lockless(rmap_head, &iter, sptep, spte) {
-+			for_each_rmap_spte_lockless(rmap_val, &iter, sptep, spte) {
- 				if (!is_accessed_spte(spte))
- 					continue;
+ 	kvm_for_each_vncr_tlb(i, vcpu, vt, kvm) {
+-		u64 va_start, va_end, va_size;
+-
+-		va_size = ttl_to_size(pgshift_level_to_ttl(vt->wi.pgshift,
+-							   vt->wr.level));
+-		va_start = vt->gva & ~(va_size - 1);
+-		va_end = va_start + va_size;
+-
+ 		switch (scope->type) {
+ 		case TLBI_ALL:
+ 			break;
+ 
+ 		case TLBI_VA:
+-			if (va_end <= scope->va ||
+-			    va_start >= (scope->va + scope->size))
++			if (!vncr_tlb_intersects(vt, vt->gva, scope->va, scope->size))
+ 				continue;
+ 			if (vt->wr.nG && vt->wr.asid != scope->asid)
+ 				continue;
+ 			break;
+ 
+ 		case TLBI_VAA:
+-			if (va_end <= scope->va ||
+-			    va_start >= (scope->va + scope->size))
++			if (!vncr_tlb_intersects(vt, vt->gva, scope->va, scope->size))
+ 				continue;
+ 			break;
  
 
 
