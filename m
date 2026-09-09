@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB01E56C65F;
-	Wed,  9 Sep 2026 14:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8FD56C643;
+	Wed,  9 Sep 2026 14:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964596; cv=none; b=r8bKsCOVNyysNWnwKfuI/sN0IiH/J9bmghN1FmkwTyYcwE5EL5e/aJ9Dc44XEgjQxJN08Yl7X9a/iDp1NGBRp6sAajnIUCW/KW9sNE7nN3Ckqgb6jNV98w27hi3UdXXQhVLs9DxfEohnhfxGD1wWSHOFpffR9aWGZbUY19Iob8k=
+	t=1788964598; cv=none; b=bY3d7nDOPLV4/uTAI9/pvtV8iSIa2PWC2+kG/PW+2G8BTT1CV+0LlUyELzpfwoS7XTQpp7+XtEhJxeGaS1OuR+EPhkBrNQKNDhnZUmhEaXqaB43PxzAQlh9lSH/BMrLoGnmpt3dPgjDbDxgRFCJBxN2yZSIeQag6N/CjFfyAEK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964596; c=relaxed/simple;
-	bh=I9G6YcGFW0rwbNOGyyILKpekXSuTl8cA+ylB8HTRmp8=;
+	s=arc-20240116; t=1788964598; c=relaxed/simple;
+	bh=50RI4bZoSTDK/xtpgEYjglSaHsu3EchVhfssJn/2vBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovzueY+hoh3gjIyBovRRvGTDvzxyX7bwTSI2KU6tpZdI5PQ514VWEKL/Hn6aBIFNkhBGf6kZ4HJQfC+xanAsqUOE1qauOinsw+brpxcNFfXoVxZBdxjGELFNb+HP9sbXUAbRvn7h+ntU9WRwXVbI8llL2NaAzeQi7Y9T2+fnn/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2hcnj+A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mHJGopW8LOVK4B5jE6OPPy6j9hFP5VUFmT8+zTN9Dt2130O8Rb26InBWfpVjz02kPlQXeScVynqnc36/Hq9lZYehOPxbzZCB8v8PYNJr2HTn3CmwWmQ4iUgH7QaUwR1//Uy7pTjZfN11Ng65EbchKqpfg+r64YQDWYtUz4gn14M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDOpxJgF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2hcnj+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D791F00A3A;
-	Wed,  9 Sep 2026 14:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDOpxJgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6881F00A3A;
+	Wed,  9 Sep 2026 14:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964594;
-	bh=eq9Od4w5QB8vCCYwxkbxoqmV1xv6NqPdGn6/OJMm7AQ=;
+	s=korg; t=1788964597;
+	bh=ek86lw9w8xQq25+wmiaq3neb8Zv2lW9T4COEa+yIbjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O2hcnj+AFyWenFgIs/vUn7mr3I8r03rc4XDc2ktaRxtpL3a/sOlRgduUl8E4YjXWa
-	 xhLiJpt1dl3e381OTPET7tZYd3OcYCcXDYMU2SdPvrery4uah9sm/6qCHgxiwnbnZ3
-	 HsUS4NgeHuDYw+FcJTJavRHfCEqeUlTIpkJQX2kI=
+	b=IDOpxJgF7S5yyFTqllGaT0SNWOACaqcpGZm65A9iktvEndvm3hlCJphcO7OjzuVwl
+	 ccT9QZg+cMUlDu2XRkU4tZoEwricB4RXm3iyNKjhaka6934l1oY2ASu/ZeoaibxOJD
+	 KKx54daJoGOWLJ4vy7UdysslofG387z2GwoRnep8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thorsten Blum <thorsten.blum@linux.dev>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 440/583] crypto: atmel-ecc - clean up and improve ECDH comments
-Date: Wed,  9 Sep 2026 15:42:05 +0200
-Message-ID: <20260909134253.229788227@linuxfoundation.org>
+Subject: [PATCH 6.18 441/583] crypto: atmel-ecc - avoid stale fallback key after set_secret failure
+Date: Wed,  9 Sep 2026 15:42:06 +0200
+Message-ID: <20260909134253.261803821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,138 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 3e84fb698abada239d3e35ed3d52a24dbfda5f6a ]
+[ Upstream commit f07a0d251db7606e4792d2610788fbcc7b2c0d12 ]
 
-Improve the kerneldoc for struct atmel_ecdh_ctx by removing the stale
-"unsupported curves" wording, since the device only supports a single
-curve (P-256), and move the set_secret() constraint to the description.
+Clear ->do_fallback before decoding a new ECDH secret and enable it only
+after the software fallback accepts a caller-provided private key. This
+avoids using a stale fallback key should crypto_kpp_set_secret() fail.
 
-In atmel_ecdh_set_secret(), clarify that the device generates the
-private key, and drop the redundant "only supports NIST P256" comment.
-
-In atmel_ecdh_done() and atmel_ecdh_generate_public_key(), clarify the
-truncation comments. Also note that a P-256 public key consists of two
-32-byte coordinates in atmel_ecdh_compute_shared_secret(), and remove
-the unnecessary fall-through comment and other redundant comments.
-
+Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
+Cc: stable@vger.kernel.org
 Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: f07a0d251db7 ("crypto: atmel-ecc - avoid stale fallback key after set_secret failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-ecc.c |   38 ++++++++++++++------------------------
- 1 file changed, 14 insertions(+), 24 deletions(-)
+ drivers/crypto/atmel-ecc.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/drivers/crypto/atmel-ecc.c
 +++ b/drivers/crypto/atmel-ecc.c
-@@ -27,15 +27,14 @@ static struct atmel_ecc_driver_data driv
+@@ -84,6 +84,7 @@ static int atmel_ecdh_set_secret(struct
  
- /**
-  * struct atmel_ecdh_ctx - transformation context
-- * @client     : pointer to i2c client device
-- * @fallback   : used for unsupported curves or when user wants to use its own
-- *               private key.
-- * @public_key : generated when calling set_secret(). It's the responsibility
-- *               of the user to not call set_secret() while
-- *               generate_public_key() or compute_shared_secret() are in flight.
-- * @curve_id   : elliptic curve id
-- * @do_fallback: true when the device doesn't support the curve or when the user
-- *               wants to use its own private key.
-+ * @client: I2C client device
-+ * @fallback: ECDH fallback used for caller-provided private keys
-+ * @public_key: cached public key for the device-generated private key
-+ * @curve_id: elliptic curve id
-+ * @do_fallback: true when ECDH operations should use @fallback
-+ *
-+ * The caller must not invoke set_secret() while generate_public_key()
-+ * or compute_shared_secret() are in flight.
-  */
- struct atmel_ecdh_ctx {
- 	struct i2c_client *client;
-@@ -55,7 +54,7 @@ static void atmel_ecdh_done(struct atmel
- 	if (status)
- 		goto free_work_data;
- 
--	/* might want less than we've got */
-+	/* copy only as much as requested, capped at 32 bytes */
- 	n_sz = min(ATMEL_ECC_NIST_P256_N_SIZE, req->dst_len);
- 
- 	/* copy the shared secret */
-@@ -64,15 +63,15 @@ static void atmel_ecdh_done(struct atmel
- 	if (copied != n_sz)
- 		status = -EINVAL;
- 
--	/* fall through */
- free_work_data:
- 	kfree_sensitive(work_data);
- 	kpp_request_complete(req, status);
- }
- 
- /*
-- * A random private key is generated and stored in the device. The device
-- * returns the pair public key.
-+ * If no private key is provided, generate one in the device and cache
-+ * the corresponding public key. The generated private key never leaves
-+ * the device.
-  */
- static int atmel_ecdh_set_secret(struct crypto_kpp *tfm, const void *buf,
- 				 unsigned int len)
-@@ -83,9 +82,7 @@ static int atmel_ecdh_set_secret(struct
- 	struct ecdh params;
- 	int ret = -ENOMEM;
- 
--	/* free the old public key, if any */
  	kfree(ctx->public_key);
--	/* make sure you don't free the old public key twice */
  	ctx->public_key = NULL;
++	ctx->do_fallback = false;
  
  	if (crypto_ecdh_decode_key(buf, len, &params) < 0) {
-@@ -94,7 +91,6 @@ static int atmel_ecdh_set_secret(struct
+ 		dev_err(&ctx->client->dev, "crypto_ecdh_decode_key failed\n");
+@@ -91,8 +92,9 @@ static int atmel_ecdh_set_secret(struct
  	}
  
  	if (params.key_size) {
--		/* fallback to ecdh software implementation */
- 		ctx->do_fallback = true;
- 		return crypto_kpp_set_secret(ctx->fallback, buf, len);
+-		ctx->do_fallback = true;
+-		return crypto_kpp_set_secret(ctx->fallback, buf, len);
++		ret = crypto_kpp_set_secret(ctx->fallback, buf, len);
++		ctx->do_fallback = !ret;
++		return ret;
  	}
-@@ -103,11 +99,6 @@ static int atmel_ecdh_set_secret(struct
- 	if (!cmd)
- 		return -ENOMEM;
  
--	/*
--	 * The device only supports NIST P256 ECC keys. The public key size will
--	 * always be the same. Use a macro for the key size to avoid unnecessary
--	 * computations.
--	 */
- 	public_key = kmalloc(ATMEL_ECC_PUBKEY_SIZE, GFP_KERNEL);
+ 	cmd = kmalloc(sizeof(*cmd), GFP_KERNEL);
+@@ -103,8 +105,6 @@ static int atmel_ecdh_set_secret(struct
  	if (!public_key)
  		goto free_cmd;
-@@ -120,7 +111,6 @@ static int atmel_ecdh_set_secret(struct
- 	if (ret)
- 		goto free_public_key;
  
--	/* save the public key */
- 	memcpy(public_key, &cmd->data[RSP_DATA_IDX], ATMEL_ECC_PUBKEY_SIZE);
- 	ctx->public_key = public_key;
+-	ctx->do_fallback = false;
+-
+ 	atmel_i2c_init_genkey_cmd(cmd, DATA_SLOT_2);
  
-@@ -149,7 +139,7 @@ static int atmel_ecdh_generate_public_ke
- 	if (!ctx->public_key)
- 		return -EINVAL;
- 
--	/* might want less than we've got */
-+	/* copy only as much as requested, capped at 64 bytes */
- 	nbytes = min(ATMEL_ECC_PUBKEY_SIZE, req->dst_len);
- 
- 	/* public key was saved at private key generation */
-@@ -175,7 +165,7 @@ static int atmel_ecdh_compute_shared_sec
- 		return crypto_kpp_compute_shared_secret(req);
- 	}
- 
--	/* must have exactly two points to be on the curve */
-+	/* A P-256 public key must contain two 32-byte coordinates */
- 	if (req->src_len != ATMEL_ECC_PUBKEY_SIZE)
- 		return -EINVAL;
- 
+ 	ret = atmel_i2c_send_receive(ctx->client, cmd);
 
 
