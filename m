@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D34A57D215;
-	Wed,  9 Sep 2026 14:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E2B569F2A;
+	Wed,  9 Sep 2026 14:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963631; cv=none; b=ll6LkXqmooqUrqGBAaf9F9ogWZn4rQlEkS601DK9r62zj4aYJJ50Rp3gM8l8ROQQskazkyoXK9xcr0x7LrGAfxCMgLKUPydMz4AZXxWZ5L61bwj9ffOvfiExm6fjuFtc+iS2aBiwoJE6ejmHPPdtDZPbthvgA7sYE4nPRIfrYZI=
+	t=1788963634; cv=none; b=jC12pM08vW8kAmcEJGDZ9hglExLHuaO5NJG8fzmcfDzheHIfhzSV+Jf7lKcNgixREXTyXMJisD1uX8eFTByHxiRlDOcq0+O35duUEIDeK0nOxoCOuPJtvdo0Aq1iJL4aC6/wLWPkDBGBv+QqdCglc/x63AYENiMEMpGy5/lr2yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963631; c=relaxed/simple;
-	bh=dhofkNOc3gNIynbD4rfYigg8O/B3v6YEZaxG4GVegB4=;
+	s=arc-20240116; t=1788963634; c=relaxed/simple;
+	bh=xBbAWKjGPdCOldwqGDi6UO6iEdl0Us+stY5XFUxvHOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cek2Kzj46RPZ3VIokW8329rRQGEIPsjD5R8TWch5anD+P7ZW4yo2wTFjo6/nMOD8tWWDB6O47fRvBrJiBgBEsSiNQsbZWFZODfv528qSx8+DjPK3KFdf5L5VdaxdZHZNAKT0yWroco462LGtsn/Jagqvrh4IZot7W4PcTj9pri8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKG79uLG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qvCd56A1eL2xeX3MwRICG1C1HgI3xGoJmy0F219to5DnQ6LcU0T2oXgoJgri7zBJ+ElYHztV2cpqXL/w9sNeV5oOqXplHoSpuK/ro/stbMtqbGQvjfeBNHDf5wIy2s6nzVZOmV1oG0gDqCqCv7Jv5KOY3aqjAxiMosrtZi6CGbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eABruJ9n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKG79uLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D851F00A3A;
-	Wed,  9 Sep 2026 14:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eABruJ9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAF51F00A3A;
+	Wed,  9 Sep 2026 14:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963630;
-	bh=qgVprzRlBFEDrWjChN9+y4ImM5vtdGV10PNcpzFT6/s=;
+	s=korg; t=1788963632;
+	bh=L7zpsnE1IhkpB7aX/YI5m402lOHGKvZgkXGKJJic9yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKG79uLGnl2QWHrAtdQdzuRI/RqRV6AzXml6VqyHU/JV3034/QpQz3ZObBeLNoMNx
-	 c5rQzrHj8fud+/janUKNExlG79CATtneljJaV78OysvfXFWn5qylJIIN8iOiLa1ptn
-	 bKWHFwWDLdDE05WWsbcqvqfPDsVv6qjvpCusvm5w=
+	b=eABruJ9nzrUd88Emr9LnS1j1Q5Gyily4ocTtJcCxzz6TmY5Kr2CsS4+aVcy4ZLWck
+	 mrFL6Z/SQCTnEMPq6Uo85LWrPz/sB3eyFvvm/Slm9sH1sF6ZXFvZseoPne8No0P+4y
+	 yAKEaaRCUHkSpwjzEl7oLPp95+f5uBcA0pNu9swA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 145/583] batman-adv: bla: prevent CRC corruptions after claim flush
-Date: Wed,  9 Sep 2026 15:37:10 +0200
-Message-ID: <20260909134243.196529506@linuxfoundation.org>
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 119/583] parisc: eisa: Fix infinite loop when parsing invalid IRQ value
+Date: Wed,  9 Sep 2026 15:36:44 +0200
+Message-ID: <20260909134242.254100346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -49,45 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 89f3502ff6878798be96461b2eebd64ba3c3874c upstream.
+commit 8b585431a16cfb9d8f2955a9fa0787ce3dceb3c2 upstream.
 
-When batadv_bla_del_backbone_claims() tried to remove all claims of a
-backbone, it sets the CRC to 0. It assumes that the it had the last
-reference of the claims because batadv_claim_release() (which runs after
-the last reference was released), is XORing the crc16 of the claim address
-with the backbone CRC.
+When an invalid value is passed via the "eisa_irq_edge=" kernel
+command line parameter (e.g. "eisa_irq_edge=16,5"), eisa_irq_setup()
+prints an error message and continues without advancing the current
+position.  As a result the same invalid value is parsed again and
+again, causing an infinite loop while the kernel boots.
 
-If there would be a parallel holder of any of these references, it could
-happen that the backbone CRC is (0 ^ crc16(delayed_released_claim)). Which
-is the wrong starting point for the new claims it may receive when the
-remote answers the claim request from batadv_bla_send_request().
+Advance to the next comma-separated entry, or stop parsing when there
+is no next entry, before continuing so that the remaining entries are
+processed normally.
 
-This reinitializations can be completely dropped to avoid this problem.
-batadv_claim_release() will take care of fixing the backbone CRC.
-
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Cc: stable@vger.kernel.org
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/parisc/eisa.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -324,11 +324,6 @@ batadv_bla_del_backbone_claims(struct ba
+--- a/drivers/parisc/eisa.c
++++ b/drivers/parisc/eisa.c
+@@ -442,6 +442,11 @@ static int __init eisa_irq_setup(char *s
+ 		val = (int) simple_strtoul(cur, &pe, 0);
+ 		if (val > 15 || val < 0) {
+ 			printk(KERN_ERR "eisa: EISA irq value are 0-15\n");
++			cur = strchr(cur, ',');
++			if (cur)
++				cur++;
++			else
++				break;
+ 			continue;
  		}
- 		spin_unlock_bh(list_lock);
- 	}
--
--	/* all claims gone, initialize CRC */
--	spin_lock_bh(&backbone_gw->crc_lock);
--	backbone_gw->crc = BATADV_BLA_CRC_INIT;
--	spin_unlock_bh(&backbone_gw->crc_lock);
- }
- 
- /**
+ 		if (val == 2) {
 
 
