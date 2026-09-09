@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE06233722;
-	Wed,  9 Sep 2026 14:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFE6565112;
+	Wed,  9 Sep 2026 14:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963608; cv=none; b=SdFAY4uVPWfyyzx8Lyty3y168NLOyOGn5KMpdEnHH2qWl4dPI9iQys4VpFhLjHB3IacevveBI5uiybuud3pW/PcS/Plp3NEnF/ZG9vGxkR0SMqh0fkBoV0JqG+iMqBG5NeKWovTRM6Ep8zULCPzfXQ+Dbr/KDEsHDRRxQttGd2g=
+	t=1788963610; cv=none; b=Xiqx5P8drkF7ucZL3chm0aIcfCvuJdGClrZMUj6gi0YuEFE6i5nyDaMrmzBnYSncbdl+d4nCxS+o+8j8bnGwR5+bKu3JN7cC0Uxa+7l8PDixrmJz4m3aZm8agVSMRRlUW2xeT+fNJldcAHNdNqc1+TW/kdsSG0ffSj82ium7KCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963608; c=relaxed/simple;
-	bh=+fBBwhcjvg/yOzYSvCLEKo9qg/V3u+hD/HWmyxpZJzs=;
+	s=arc-20240116; t=1788963610; c=relaxed/simple;
+	bh=JFoCtDjodkqfnX2b2ubhSPnVX6ambHa8uvr7Grn9dq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gd1evDL9TDFY2TwdHzsVlm6PVzHFc3QvYcKcWorWzp08Jo5Su7pKuPkGWA/uAH2/g2D29Ie+lzr2twYNMtaNx8eZCr4xQ5jHgtWdSQTbm9YaVGReBIrUbFnE49h+lt5fk+eXA69lM74G/dz7gtlayrr/ARdVA8hpA6/vAxcT25M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbSpFXJF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PjAuCQ54yLde56OgwqzQcWa1vhAaNcsYEqU57/5aBTq2gEdWaTCPKNEuvsZunzbMEFPQx8DMf0JAMAvpdcUVHCHQqpLzZb/tZ9qSNm95Z8e/FNb5nUhw4Wuv/sv+Yu+mLHBb1rzCjCINe6F0L8aZJ5s6B4pTsRmnvFuMPemRB98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nS0Okdw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbSpFXJF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5111F00A3A;
-	Wed,  9 Sep 2026 14:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nS0Okdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108421F00A3E;
+	Wed,  9 Sep 2026 14:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963606;
-	bh=hy3o77qqfMWiXbDov6xY7Q3OPp5YKvr1hScbFJMsu/8=;
+	s=korg; t=1788963609;
+	bh=JX5egIxNspdNhOGTPR6SqfNaNT1j0sWlC7K3tib2HH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hbSpFXJFq5SIcgCnM/tXyu7FI8eoEZE25tji9PPZ/cRQklNvdW3HbBxadhPIBgpcP
-	 oPBvYVib01qZoIWkaPEEKT5+CWkaCc0KQ2H0rA8Ju7DfB1a8vcWzZCEWxnAN2YkiQP
-	 F90Ox3uTwP+viHcahq/JwV/JziRmEU60RXQ7Ql6k=
+	b=2nS0Okdwu8T1afUEV+pIFyuasJd142G8wKNJyfT9GbTF9yb8j8aIp9bKIZUF5E3Fc
+	 2viL+g/wiGI5an9RC8tHLabx+WvmPmnorkoEBiWZ8qZW6ROW2goneF+xSJfbujH+OS
+	 AFhurme0X4ZeZbA+kFTdw1PSfE7tOyWl14KZHHAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.18 137/583] mtd: mtdoops: free page bitmap when the backing MTD is removed
-Date: Wed,  9 Sep 2026 15:37:02 +0200
-Message-ID: <20260909134242.892666904@linuxfoundation.org>
+Subject: [PATCH 6.18 138/583] mtd: nand: realtek-ecc: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  9 Sep 2026 15:37:03 +0200
+Message-ID: <20260909134242.930158334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,45 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 956e7da12c114f13c63d126ab1d79c3b6a819060 upstream.
+commit 5b2444b4d575d8117809c57801562ef37ca2d4af upstream.
 
-mtdoops_notify_add() allocates oops_page_used when the configured MTD
-device is registered.  mtdoops_notify_remove() detaches from that device
-but leaves the bitmap allocated.  If the same MTD device is later
-registered again, the add path allocates a new bitmap and overwrites the
-old pointer, leaking one vmalloc allocation per remove/add cycle.
+The Realtek external ECC engine driver has an OF match table wired into
+its platform driver, but the table is not exported with
+MODULE_DEVICE_TABLE().
 
-This is only visible when the backing MTD device can disappear and be
-registered again while mtdoops remains loaded, so the usual static MTD
-case does not expose it.
+When the driver is built as a module, the missing OF module alias
+prevents automatic module loading from the compatible string.
 
-Free the bitmap after unregistering the dumper and flushing the pending
-workers, then clear the pointer and page count before a later attach can
-allocate fresh state.  Clearing the pointer also keeps the module exit
-path from freeing the same bitmap a second time after a remove event.
+Add the missing MODULE_DEVICE_TABLE() entry.
 
-Fixes: be95745f0167 ("mtd: mtdoops: keep track of used/unused pages in an array")
+Fixes: 3148d0e5b1c5 ("mtd: nand: realtek-ecc: Add Realtek external ECC engine support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdoops.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/nand/ecc-realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mtd/mtdoops.c
-+++ b/drivers/mtd/mtdoops.c
-@@ -392,6 +392,9 @@ static void mtdoops_notify_remove(struct
- 	cxt->mtd = NULL;
- 	flush_work(&cxt->work_erase);
- 	flush_work(&cxt->work_write);
-+	vfree(cxt->oops_page_used);
-+	cxt->oops_page_used = NULL;
-+	cxt->oops_pages = 0;
- }
+--- a/drivers/mtd/nand/ecc-realtek.c
++++ b/drivers/mtd/nand/ecc-realtek.c
+@@ -448,6 +448,7 @@ static const struct of_device_id rtl_ecc
+ 	},
+ 	{ /* sentinel */ },
+ };
++MODULE_DEVICE_TABLE(of, rtl_ecc_of_ids);
  
- 
+ static struct platform_driver rtl_ecc_driver = {
+ 	.driver	= {
 
 
