@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CF5550DC3;
-	Wed,  9 Sep 2026 13:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAF8523781;
+	Wed,  9 Sep 2026 13:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962048; cv=none; b=cBqfeCsOdosQseZpgX1DwFb17DE6oRmqw5bXuuaNRcyYkdvyz1GlXtnw+uhQe3kjI8vcriFSh6SIVNwn8AfT4JQ1Xqt2wM0bQLvxCcJwgMrLMxDqQJ8QtaIe6dyddWzhEKTsnoFp7emjsb3vRiAMAfF5UafffG6g5BJ/WT8a0gE=
+	t=1788962051; cv=none; b=fLdAYQCdosjvrfqCBsPzrCqQsEX1D8eA3Y6SIWqKf+5nuOxq8jHfYK/zGLtA1IMrudQV4L/yTlD6I/k6lzPdjO2wjlrSPWvNqXv2lBroVrnfXs5Xh8JJ2TYli7qNbORpNvkBj4ditetFTZbupYk0bcDC6/aq/o0RuRdD7haCTqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962048; c=relaxed/simple;
-	bh=4MhT5uwvuNPYFDVmOm3Szl7BUnVikNLQusLLHYJwhIE=;
+	s=arc-20240116; t=1788962051; c=relaxed/simple;
+	bh=k6BoVdT2NDeGmF0l2kruarvKpfi2X2HJxZ+fejfy/z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8tl22JiOGZJxGtdcPOzUQyhG+ZYfPvTCo7XVMdY8mEl2Z/WBrYFufcp4uHjZopYPDdjDV6yt1WMoNGtZE3LYsproI9UsktwVtOu4HZi034/3TQ5WCHrNyByKBfI1rflGW44k+I0Bc6X+xHJH92KM94hj4vwhO4iKl5bQnvtO+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRb6KcsW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TUml703bKcy08AiFAcdGV/FF2uBxXCZAtb/jIOkwbqJvJy8RMsKsLvweFYjq4UTyA3RHQNb5zepjnrfV7S+3CjIUgeCdkTX/7spPhNbkUHug+1lNTesK3+Nt3oXr4auYM3yzMA3eAh3V4CV0LJ/78NzS8QuSE0vwqoxJPyAzGVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJz8TO3D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRb6KcsW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D943E1F00A3A;
-	Wed,  9 Sep 2026 13:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJz8TO3D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0661F00A3A;
+	Wed,  9 Sep 2026 13:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962047;
-	bh=BinUZIXKwTCmry63fi+3256O+FIduDcVeH516ED50BU=;
+	s=korg; t=1788962050;
+	bh=tRqod7fQS/LPA+sF3flkvPkywEkQfju6spaKxJteAEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pRb6KcsWVQ4N2mEKi8CZAWAKQmcvpE7VMiPUwqZhcc5qcxadiYdqS3f1BB4fImXHU
-	 Ur2qqCU+cMhTSOejOiaxDrrCM98hdDa3wMyI65rf6FhZ5hLNKadSA+sC/ffiVK8dTp
-	 LA3dYQcbKQv/iL/p0skQAyUQU2blMm9iY2lBBsaY=
+	b=YJz8TO3DFz0f/qHKz+a/jZcUCmMyhVs1Tq3PYgPF3p55znMfEwT3RPt8zi0cV/geQ
+	 GPhPKAII85SRl+Ede2x9AFyl8L+K3+Qep6UshA+MQNIPE0JiCfA/WTYu1MIUCJXnQY
+	 oUA0omgTlYBFkgj0sTFh56DvdOwHNEBb6dnGaf/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	GuoHan Zhao <zhaoguohan@kylinos.cn>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 7.2 154/556] accel/ethosu: check MMIO mapping errors in probe
-Date: Wed,  9 Sep 2026 15:37:14 +0200
-Message-ID: <20260909134235.853325167@linuxfoundation.org>
+Subject: [PATCH 7.2 155/556] accel/ethosu: fix job completion fence cleanup
+Date: Wed,  9 Sep 2026 15:37:15 +0200
+Message-ID: <20260909134235.887854280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,37 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-commit 7ab64476a610fe65858fdc37c7a30caa13e334ac upstream.
+commit 2d2a3adc91950f9a18829dadc7317fb5180a15c5 upstream.
 
-devm_platform_ioremap_resource() returns an error pointer when the register
-resource cannot be mapped. ethosu_probe() stores it and continues until
-initialization dereferences it through MMIO accessors.
+ethosu_ioctl_submit_job() allocates done_fence before validating buffer
+handles. Errors after allocation call ethosu_job_err_cleanup(), which frees
+the job but leaks the uninitialized fence.
 
-Return the mapping error before initializing the device.
+A scheduler dependency error also lets ethosu_job_run() return before
+dma_fence_init(). Normal cleanup then passes a zeroed refcount to
+dma_fence_put().
+
+Release done_fence in the common cleanup path and use
+dma_fence_was_initialized() to distinguish initialized fences from raw
+allocations.
 
 Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
 Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260716065219.931088-1-zhaoguohan@kylinos.cn?part=1
 Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Link: https://patch.msgid.link/20260716065219.931088-1-zhaoguohan@kylinos.cn
+Link: https://patch.msgid.link/20260717061145.1478139-6-zhaoguohan@kylinos.cn
+[robh: also fix goto]
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ethosu/ethosu_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/accel/ethosu/ethosu_job.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/ethosu/ethosu_drv.c b/drivers/accel/ethosu/ethosu_drv.c
-index ed9c748a54ad..b2901eb8a7a0 100644
---- a/drivers/accel/ethosu/ethosu_drv.c
-+++ b/drivers/accel/ethosu/ethosu_drv.c
-@@ -342,6 +342,8 @@ static int ethosu_probe(struct platform_device *pdev)
- 	dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(40));
+diff --git a/drivers/accel/ethosu/ethosu_job.c b/drivers/accel/ethosu/ethosu_job.c
+index 1e2465279aae..1e4b65f62933 100644
+--- a/drivers/accel/ethosu/ethosu_job.c
++++ b/drivers/accel/ethosu/ethosu_job.c
+@@ -152,6 +152,13 @@ static void ethosu_job_err_cleanup(struct ethosu_job *job)
  
- 	ethosudev->regs = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(ethosudev->regs))
-+		return PTR_ERR(ethosudev->regs);
+ 	drm_gem_object_put(job->cmd_bo);
  
- 	ethosudev->num_clks = devm_clk_bulk_get_all(&pdev->dev, &ethosudev->clks);
- 	if (ethosudev->num_clks < 0)
++	if (job->done_fence) {
++		if (dma_fence_was_initialized(job->done_fence))
++			dma_fence_put(job->done_fence);
++		else
++			dma_fence_free(job->done_fence);
++	}
++
+ 	kfree(job);
+ }
+ 
+@@ -162,7 +169,6 @@ static void ethosu_job_cleanup(struct kref *ref)
+ 
+ 	pm_runtime_put_autosuspend(job->dev->base.dev);
+ 
+-	dma_fence_put(job->done_fence);
+ 	dma_fence_put(job->inference_done_fence);
+ 
+ 	ethosu_job_err_cleanup(job);
+@@ -393,7 +399,7 @@ static int ethosu_ioctl_submit_job(struct drm_device *dev, struct drm_file *file
+ 	ejob->done_fence = kzalloc_obj(*ejob->done_fence);
+ 	if (!ejob->done_fence) {
+ 		ret = -ENOMEM;
+-		goto out_cleanup_job;
++		goto out_put_job;
+ 	}
+ 
+ 	ret = drm_sched_job_init(&ejob->base,
 -- 
 2.55.0
 
