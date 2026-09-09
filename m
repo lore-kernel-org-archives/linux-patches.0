@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542DD481A97;
-	Wed,  9 Sep 2026 14:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBFE52E054;
+	Wed,  9 Sep 2026 14:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964472; cv=none; b=lt4M/RTFf5j2BOdEVEscj3R0ca3yRyb9UuHqx2uW5Pj7WdGIf97YDDfnV5HGUECFH1Rq2t1SBQMXDU1ZOjUGovKjodW5EUyFcGiYRhSDzapheDrj74yORWPIyp0DwbJC7jvq9MyzNzyqh89ZqW5ZY9RNl124yaNZsCP+/EwRdu4=
+	t=1788964475; cv=none; b=AtBWmhmrgxI3PKf161gQnw88F1kGkuLZX6AynChU4Z4cE/pC4HseWDEdDTUbgsldWhR8AiWwQ2JIn3Tv4LEoiYa2ufN5N6tSL6gQMDOVyHK6nXxH8gqcoAerclHEH6W9C7e70UkOBLmd/9l/vgP1pGo7R6BMREEUNIv+iBSA1r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964472; c=relaxed/simple;
-	bh=a8tAWa0f7T7LzGyf0yzkqaHG8EupyYc+CLPrxz4UfUo=;
+	s=arc-20240116; t=1788964475; c=relaxed/simple;
+	bh=DIjz/OMCF7BJ2oT7+2Vd8HXcjZEggiwUl/J8vvw09Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o69G6zOpYA6XORP04ACKlkskgcfuUvxIY+SDilk8h1fDB/K8mJFHn7GGq1n+xP3czVWFKZ1aPf/fGFddzH1PGLp01UNpVHjUWxiLn7fGawztq0GtFUXpGVxVCAfDRXssyAyXUKbqmxRDJ08W8onyiCNBVW1XeRgfNkDlPLYlZFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9tetiq7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eozoOSTr9MziK5qhuN0qebgqR0T3d9xlligvhZcWPjrS2EqxV4EuTh2vLqk2fzeWv+qepD5BzBNRSmPOBXbPZXEWeemFVE05YBIO9lVGGvpU/owwcMUjpHbM2V+Fg7IAm3P49lKPCIJRtt221xnxuaEs0jqvbPZ9lcRvIDk5TTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZK99fzl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9tetiq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1891F00A3A;
-	Wed,  9 Sep 2026 14:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZK99fzl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D731F00A3A;
+	Wed,  9 Sep 2026 14:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964471;
-	bh=0cjPOYDBzBoMe6PJ+bwMgcpeMzZfC5Q6MN1VpCRTO7Q=;
+	s=korg; t=1788964474;
+	bh=dDhljjFek+M+OQYzKl/Ltk5207Ub4PtYh+FPZ+eAxm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k9tetiq7D81EyrcOYh/mKPbNh9PasI8uEN0ZYzbpYfxqPDcuuMveGhY032LMQUpT2
-	 o9QTjhz5sAkoXghS9ELdNqhJtfiYQuP/jmFdO1C79hoK8Dm3tZTH6ZOrC6FA7gOaKW
-	 m75fk/RxWQgA6h+qU0WzC5+s55uhwsmX6TvKYYcM=
+	b=gZK99fzlPog/n4Plod4As6JB92EhlEljb/10fwaWmZEN82+Y6hjxabSYSh/1FXuIa
+	 ToWfLna/beL4L1o6hr71+pv3mPF/WMMPy7rhomdmh3OBseCNuC1Ti5hvP58DdNXUGh
+	 EV/kK5+UGWIHP287TQT3KqZi2Nmi1CuFo69L3hf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 432/583] fuse: split off fuse_args and related definitions into a separate header
-Date: Wed,  9 Sep 2026 15:41:57 +0200
-Message-ID: <20260909134252.955472818@linuxfoundation.org>
+	Sunil Khatri <sunil.khatri@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 397/583] drm/amdgpu: update the fw version for gfx12 userqueues
+Date: Wed,  9 Sep 2026 15:41:22 +0200
+Message-ID: <20260909134251.751192545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,158 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-[ Upstream commit 229f9b9b66ab5be9e015422cf30b97740cfbdc8d ]
+commit 49a74a2388528c1a2e96f01114c4513e635605fe upstream.
 
-This is going to be used by both layers (transport and filesystem)
+Update to the latest stable fw versions where userqueues
+is working as it is expected with major fixes.
 
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: ed9c881f3b49 ("fuse: fix race between interrupt and resend")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 69fa36e3ac92f2544ee7a1b719ec212b8247a2da)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/args.h   |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- fs/fuse/fuse_i.h |   53 --------------------------------------------
- 2 files changed, 66 insertions(+), 52 deletions(-)
- create mode 100644 fs/fuse/args.h
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- /dev/null
-+++ b/fs/fuse/args.h
-@@ -0,0 +1,65 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+#ifndef _FS_FUSE_ARGS_H
-+#define _FS_FUSE_ARGS_H
-+
-+#include <linux/types.h>
-+
-+struct fuse_mount;
-+
-+/** One input argument of a request */
-+struct fuse_in_arg {
-+	unsigned size;
-+	const void *value;
-+};
-+
-+/** One output argument of a request */
-+struct fuse_arg {
-+	unsigned size;
-+	void *value;
-+};
-+
-+struct fuse_args {
-+	u64 nodeid;
-+	u32 opcode;
-+	u32 uid;
-+	u32 gid;
-+	u32 pid;
-+	u8 in_numargs;
-+	u8 out_numargs;
-+	u8 ext_idx;
-+	bool force:1;
-+	bool noreply:1;
-+	bool nocreds:1;
-+	bool in_pages:1;
-+	bool out_pages:1;
-+	bool user_pages:1;
-+	bool out_argvar:1;
-+	bool page_zeroing:1;
-+	bool page_replace:1;
-+	bool may_block:1;
-+	bool is_ext:1;
-+	bool is_pinned:1;
-+	bool invalidate_vmap:1;
-+	bool abort_on_kill:1;
-+	struct fuse_in_arg in_args[4];
-+	struct fuse_arg out_args[2];
-+	void (*end)(struct fuse_mount *fm, struct fuse_args *args, int error);
-+	/* Used for kvec iter backed by vmalloc address */
-+	void *vmap_base;
-+};
-+
-+/** FUSE folio descriptor */
-+struct fuse_folio_desc {
-+	unsigned int length;
-+	unsigned int offset;
-+};
-+
-+struct fuse_args_pages {
-+	struct fuse_args args;
-+	struct folio **folios;
-+	struct fuse_folio_desc *descs;
-+	unsigned int num_folios;
-+};
-+
-+#endif /* _FS_FUSE_ARGS_H */
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -13,6 +13,7 @@
- # define pr_fmt(fmt) "fuse: " fmt
- #endif
- 
-+#include "args.h"
- #include <linux/fuse.h>
- #include <linux/fs.h>
- #include <linux/mount.h>
-@@ -296,58 +297,6 @@ struct fuse_file {
- 	bool flock:1;
- };
- 
--/** One input argument of a request */
--struct fuse_in_arg {
--	unsigned size;
--	const void *value;
--};
--
--/** One output argument of a request */
--struct fuse_arg {
--	unsigned size;
--	void *value;
--};
--
--/** FUSE folio descriptor */
--struct fuse_folio_desc {
--	unsigned int length;
--	unsigned int offset;
--};
--
--struct fuse_args {
--	uint64_t nodeid;
--	uint32_t opcode;
--	uint8_t in_numargs;
--	uint8_t out_numargs;
--	uint8_t ext_idx;
--	bool force:1;
--	bool noreply:1;
--	bool nocreds:1;
--	bool in_pages:1;
--	bool out_pages:1;
--	bool user_pages:1;
--	bool out_argvar:1;
--	bool page_zeroing:1;
--	bool page_replace:1;
--	bool may_block:1;
--	bool is_ext:1;
--	bool is_pinned:1;
--	bool invalidate_vmap:1;
--	bool abort_on_kill:1;
--	struct fuse_in_arg in_args[4];
--	struct fuse_arg out_args[2];
--	void (*end)(struct fuse_mount *fm, struct fuse_args *args, int error);
--	/* Used for kvec iter backed by vmalloc address */
--	void *vmap_base;
--};
--
--struct fuse_args_pages {
--	struct fuse_args args;
--	struct folio **folios;
--	struct fuse_folio_desc *descs;
--	unsigned int num_folios;
--};
--
- struct fuse_release_args {
- 	struct fuse_args args;
- 	struct fuse_release_in inarg;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -1421,10 +1421,10 @@ static int gfx_v12_0_sw_init(struct amdg
+ 	case IP_VERSION(12, 0, 0):
+ 	case IP_VERSION(12, 0, 1):
+ 		if (!adev->gfx.disable_uq &&
+-		    adev->gfx.me_fw_version  >= 2780 &&
+-		    adev->gfx.pfp_fw_version >= 2840 &&
+-		    adev->gfx.mec_fw_version >= 3050 &&
+-		    adev->mes.fw_version[0] >= 123) {
++		    adev->gfx.me_fw_version  >= 3090 &&
++		    adev->gfx.pfp_fw_version >= 3190 &&
++		    adev->gfx.mec_fw_version >= 3450 &&
++		    adev->mes.fw_version[0] >= 147) {
+ 			adev->userq_funcs[AMDGPU_HW_IP_GFX] = &userq_mes_funcs;
+ 			adev->userq_funcs[AMDGPU_HW_IP_COMPUTE] = &userq_mes_funcs;
+ 		}
 
 
