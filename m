@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B863560AD1;
-	Wed,  9 Sep 2026 14:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDFF5678ED;
+	Wed,  9 Sep 2026 14:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963182; cv=none; b=tzb0pwhLWU+4ThP/974nZ24t/Y7JCF2rRR4NifedCXOP1db4hJZGc8IRkwVnVjUin+TTacd2lo7x90FtE+fyY38RkzohoyD3+uPo2wOlSulUkQpUV4dQhYZsEWE2fIRFEu97QRkcI1+3OVGHGKP7MZXaAi/5Sjh+UlQpZCdqmf4=
+	t=1788963185; cv=none; b=GAL0ValRYRkEh4irwOJQ8AGH8BD+OixD86PZInJF4x7Md4OziukWbBdPmqXEQMgeDQpgiNJZXnksu0tkHaUptb4JEjTfsjKptVgNU2z0MhnCUFgAR91UxA6tjZFDCNpqQAJjtHukxH1/U2gqdk79+YkFnAzHyIlH6XOHw4xdRPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963182; c=relaxed/simple;
-	bh=mHh8sqbET5p5219F+V8ivjhFbH8fdVQzNg5nlWaAdes=;
+	s=arc-20240116; t=1788963185; c=relaxed/simple;
+	bh=rcU5fRCk3dWClJFaEKCSisHvvysRoZIBRib/xQigY3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKbG3Ek/rfFCEJTCLjRQsS546+2oVtWCvL47NWU2qIWg8MonA8pU+lQOpJkckocmMKq+5Ss2lnYgdEek/z9ludLjaZ33Aq+82Ifcwr9d1gbaobznG/Bi/kfrH5yYe2BcyTkHUbuEzEfCSFnd6MU1X+VJojph/F9PrWSGT/53C9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crdjDCT0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Djdy92YPsLrS1nLHiYF1Dqe4ySALiPwMsQ83HQ8x7kOl7NbzMkkNBumIyelxCNmfh0RUCPhcjgegkg81D6OwPFx11/hZ01+/VlDzZ8hWfDVpEL5dvuL/VAqNHqhKdTgOYTc1nw2JHa0tjMnhU/Bg37X3sj/dl1jfbWs/LzYZ1sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrPgbv1o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crdjDCT0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8DD1F00A3A;
-	Wed,  9 Sep 2026 14:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrPgbv1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E02E1F00A3A;
+	Wed,  9 Sep 2026 14:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963181;
-	bh=ElnbKIDBR1QsAnz++/bzfTMyTmNkBXlMES2vWNJiGYQ=;
+	s=korg; t=1788963183;
+	bh=IlRfFGSOdiIY0Se5AvljjSnJZCMUAUXZrWknq0N7vIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=crdjDCT0UU7Plae8zMMUqoHQg0K/vUIBLihvV5it0gj/1cCcL9k3XhrxW/ki0vZSf
-	 oubxhZDP29pTNH6JaFXeLDbPSiJVSNnTvQvwcnRCOLiu2FTFqHL+OK4bVZfC+elbKf
-	 K66eCGlS7nAcA+SABRI24y2dewX6xN6LVH6ohxbY=
+	b=rrPgbv1omxA31/3WRGCPR55lcndLYAUjWoXXTHhBhe7uKOaAnxmPtLBapAR9TsbaU
+	 mA4941Wnh41ld3MnBo7lnHi9UY+inpH61FKx+sHnupfz5q8gcLLa2jJJML9LsBUcvi
+	 WMlrqvGqRhDmL2VXYkdraK3fmMcDCe43E0SYazzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 546/556] bpf: Disable preemption in bpf_get_stackid
-Date: Wed,  9 Sep 2026 15:43:46 +0200
-Message-ID: <20260909134249.597011421@linuxfoundation.org>
+Subject: [PATCH 7.2 547/556] rpcrdma: arm rn_done before publishing the notification
+Date: Wed,  9 Sep 2026 15:43:47 +0200
+Message-ID: <20260909134249.629922242@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,65 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 15f1bd8574662f1b7b26aaa2e23ebf4066f0117d ]
+[ Upstream commit 5b06f706374c37375bdff9d21cc10e61df925a92 ]
 
-The get_perf_callchain call needs disabled preemption plus we need
-it disabled as long as we access its returned trace entries buffer.
+rpcrdma_rn_register() inserts @rn into rd_xa with xa_alloc() before
+storing the caller's callback in rn->rn_done. The xarray makes @rn
+reachable to rpcrdma_remove_one(), which walks rd_xa and invokes
+rn->rn_done(rn) for every registered notification. A device removal
+that races a fresh registration can therefore observe @rn with
+rn_done still NULL, because the notification objects are zero
+allocated by their owners, and call through a NULL function pointer.
 
-Note the bpf_get_stackid_pe function is executed already with
-preemption disabled.
+Store rn->rn_done before xa_alloc() publishes @rn. The xarray's
+store-side and load-side ordering then guarantees that any CPU which
+finds @rn in rd_xa also observes the armed callback.
 
-Fixes: d5a3b1f69186 ("bpf: introduce BPF_MAP_TYPE_STACK_TRACE")
-Reported-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+rpcrdma_rn_unregister() treats a non-NULL rn_done as the sentinel
+for a completed registration, so the early store must not survive a
+failed registration. Clear rn_done again when xa_alloc() fails.
+Were it left set, the failed-accept cleanup path would call
+rpcrdma_rn_unregister() on an @rn that was never inserted, erasing
+an unrelated rd_xa slot and underflowing rd_kref.
+
+Fixes: 7e86845a0346 ("rpcrdma: Implement generic device removal")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260803210149.296496-6-jolsa@kernel.org
-
-Closes: https://lore.kernel.org/bpf/20260206090653.1336687-2-chen.dylane@linux.dev/
+Link: https://patch.msgid.link/20260601201703.46078-1-cel@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/stackmap.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ net/sunrpc/xprtrdma/ib_client.c |   24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -632,20 +632,22 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
- 		return -EINVAL;
+--- a/net/sunrpc/xprtrdma/ib_client.c
++++ b/net/sunrpc/xprtrdma/ib_client.c
+@@ -52,8 +52,8 @@ static struct rpcrdma_device *rpcrdma_ge
+  * is unregistered first.
+  *
+  * On failure, a negative errno is returned. rn->rn_done is left
+- * NULL on every failure path (it is assigned only after xa_alloc
+- * and kref_get have both succeeded), so the @rn may safely be
++ * NULL on every failure path (it is armed before xa_alloc but
++ * cleared again if xa_alloc fails), so the @rn may safely be
+  * passed to rpcrdma_rn_unregister() without a separate
+  * registered/unregistered flag in the caller.
+  */
+@@ -66,10 +66,21 @@ int rpcrdma_rn_register(struct ib_device
+ 	if (!rd || test_bit(RPCRDMA_RD_F_REMOVING, &rd->rd_flags))
+ 		return -ENETUNREACH;
  
- 	max_depth = stack_map_calculate_max_depth(map->value_size, elem_size, flags);
--	trace = get_perf_callchain(regs, kernel, user, max_depth,
--				   false, false, 0);
- 
--	if (unlikely(!trace))
--		/* couldn't fetch the stack trace */
--		return -EFAULT;
-+	scoped_guard(preempt) {
-+		trace = get_perf_callchain(regs, kernel, user, max_depth,
-+					   false, false, 0);
-+		if (unlikely(!trace))
-+			/* couldn't fetch the stack trace */
-+			return -EFAULT;
- 
--	err = stackid_fastpath(&stackid, map, trace, flags);
--	if (err != -ENOENT)
--		return err;
-+		err = stackid_fastpath(&stackid, map, trace, flags);
-+		if (err != -ENOENT)
-+			return err;
- 
--	new_bucket = stackid_new_bucket(&stackid, map);
--	if (!new_bucket)
--		return -ENOMEM;
-+		new_bucket = stackid_new_bucket(&stackid, map);
-+		if (!new_bucket)
-+			return -ENOMEM;
+-	if (xa_alloc(&rd->rd_xa, &rn->rn_index, rn, xa_limit_32b, GFP_KERNEL) < 0)
++	/*
++	 * Arm rn_done before xa_alloc() publishes @rn: once @rn is
++	 * visible in rd_xa, a concurrent rpcrdma_remove_one() can
++	 * call rn->rn_done(), so the pointer must already be set.
++	 *
++	 * Restore NULL if xa_alloc() fails. rn_done doubles as the
++	 * registration sentinel for rpcrdma_rn_unregister(); a stale
++	 * value would unregister an @rn that was never inserted.
++	 */
++	rn->rn_done = done;
++	if (xa_alloc(&rd->rd_xa, &rn->rn_index, rn, xa_limit_32b, GFP_KERNEL) < 0) {
++		rn->rn_done = NULL;
+ 		return -ENOMEM;
 +	}
- 
- 	return stackid_install(&stackid, map, new_bucket, flags);
+ 	kref_get(&rd->rd_kref);
+-	rn->rn_done = done;
+ 	trace_rpcrdma_client_register(device, rn);
+ 	return 0;
  }
+@@ -102,8 +113,9 @@ void rpcrdma_rn_unregister(struct ib_dev
+ 
+ 	/*
+ 	 * rn_done is the registration sentinel: rpcrdma_rn_register
+-	 * assigns it last, after xa_alloc and kref_get have both
+-	 * succeeded. A NULL rn_done means this notification was
++	 * leaves it NULL on every failure path, clearing it again if
++	 * xa_alloc fails, so a non-NULL rn_done marks a completed
++	 * registration. A NULL rn_done means this notification was
+ 	 * never registered (or its registration failed) or has
+ 	 * already been unregistered, and the call is a no-op.
+ 	 * Without this guard, rn_index == 0 from a kzalloc'd
 
 
