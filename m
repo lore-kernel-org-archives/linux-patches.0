@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6573755C329;
-	Wed,  9 Sep 2026 13:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AE0442FD1;
+	Wed,  9 Sep 2026 13:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961979; cv=none; b=iRECNDvhKwbM6+VN2v9fIdvXcTFEW9vvDttJCzRpTv1NvqVoKgJstiZRmY/2R2zoxFeYuh6b4s9qNts3t4U1Id0Fzn3Q8EvouUtCCfZsCxO9sVpSz4JxFFOVs77+oxXRoNWLCTRiGKSx7ojUpaBrWxOiUgmW1s5bPLgiSFTAUCo=
+	t=1788961982; cv=none; b=FrvM9kJ/zwW5ehvD57Puqn+xRD/HYrGgxb4qdVVBMyeSLsCEGR8VQHjA4CTUyCTgh1xn8jtFi/qXDtTEedNXgoO1yBRHwWuHpUYuF5f93pHmYqSanc71WfUIEgQZALCxposljaWUZcXszElHl539ssUwLphznkC1a8+s0uhDXD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961979; c=relaxed/simple;
-	bh=hJ+3m+X9jGwvM0jFxS9ybRpTgQwIo+ZIM7jVvkUILPs=;
+	s=arc-20240116; t=1788961982; c=relaxed/simple;
+	bh=oiAGzEKDLUgjm1kGDiiqsIxfF7PGuN6mvnciKM++P98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tI1EK2HxJ9jSeQU/vj6ziV6u1al+7LDVg76YZ5A8gDotVEuOyX7Oaknuy5QxYkwiKZU2iwlsudr0z+g+AVJwszr+dCH6B6E2AGNNgpwfIqtoLbm6HyajFNO1nYFAtNARctZbt5jKwrChtL4hxKM0bYKfx1s8Ubo9r3klIKwdnSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8J/cYda; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R3kRAcDSgeNMS4Tsof7pfbjWTvU/nA2zWZOA+AvKOIGCGj69ee7hD15RIMr8btQtuEAHhue6uZaiiLivt+VRp8XcwqwI0f7luCTrs6d53eWnS78RjigM+RkK11wqF08inn/6HMdr+Omly8kG8KAeGEv7ZIlmCaD6WypDWoXDvNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hv5ezD0K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8J/cYda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777DF1F00A3A;
-	Wed,  9 Sep 2026 13:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hv5ezD0K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBA91F00A3A;
+	Wed,  9 Sep 2026 13:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961978;
-	bh=yaS1a5t4b6GqyLqTKeEaabvNtfIg6CzJ4laGReFcvXk=;
+	s=korg; t=1788961981;
+	bh=1Ab5U+IfvmgYaG0UxcoJluSphn8agJgkOa1gIeOcV10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q8J/cYdaAcEcTvYEtyCQkW1hTCl1i/sOyaATtYv8uYIOq6W/WdcZl4o9FaXmfnN90
-	 1MGDthZZXNd0WIaObvZh2S83BXQ6I2W0QF9cBfQtOHG/WBkQfc18mxstpt9Eb7fcUz
-	 Cn/K9jh4tldCDq98KH+D4YNhRXr6+fdMOTp1gb2c=
+	b=Hv5ezD0KiSg2Snk3pWroxwRIkv+6M0dm2wYcc6hEd5MbODE+5JikEpL7zahgJ1jQn
+	 PoDWw5CUppNbH6lUUlkOiUNQpUvVP02yG2VqmBAdafWX0kbLilq74UNOWrW9eDrScA
+	 xVsIGqWU6rCHKk5458woXwk1IcveLE/IY+dUIyBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 7.2 132/556] rtc: rzn1: Handle unset alarm weekday in rzn1_rtc_read_alarm
-Date: Wed,  9 Sep 2026 15:36:52 +0200
-Message-ID: <20260909134235.100541358@linuxfoundation.org>
+Subject: [PATCH 7.2 133/556] rtc: rzn1: Disable alarm interrupt before reprogramming alarm registers
+Date: Wed,  9 Sep 2026 15:36:53 +0200
+Message-ID: <20260909134235.136807493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,72 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 457b5dbce31209e65e1184716ed3af59cb1c0372 upstream.
+commit 51458d5b0a1cfb1b6013400abc95aadf16ed2a57 upstream.
 
-RZN1_RTC_ALW is a weekday bitmask where bit N represents weekday N.
-When no alarm has been configured, the register has its power-on-reset
-value of zero.
+rzn1_rtc_set_alarm() updates RZN1_RTC_ALM, RZN1_RTC_ALH and
+RZN1_RTC_ALW using separate MMIO writes without first disabling the
+alarm interrupt. If a previous alarm is still enabled, the interrupt
+can fire while the alarm registers contain a mixture of old and newly
+written values.
 
-rzn1_rtc_read_alarm() uses fls() to convert the weekday bitmask into a
-weekday number. When RZN1_RTC_ALW is zero, fls(0) returns zero and
-fls(wday) - 1 evaluates to -1. This invalid weekday is then used to
-calculate the alarm date and can either leave tm_wday set to -1 or
-produce a fabricated alarm date.
-
-Treat a zero RZN1_RTC_ALW value as an unset alarm weekday and return
-without calculating the alarm date. Move reading RZN1_RTC_CTL1 before
-this check so that alrm->enabled is updated for both configured and
-unconfigured alarms.
+Fix this by disabling the alarm interrupt before reprogramming ALM, ALH
+and ALW with a call to rzn1_rtc_alarm_irq_enable().
 
 Fixes: b5ad1bf00d2c4 ("rtc: rzn1: Add alarm support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://patch.msgid.link/20260821211032.13554-5-prabhakar.mahadev-lad.rj@bp.renesas.com
+Link: https://patch.msgid.link/20260821211032.13554-7-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-rzn1.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/rtc/rtc-rzn1.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/drivers/rtc/rtc-rzn1.c
 +++ b/drivers/rtc/rtc-rzn1.c
-@@ -234,13 +234,24 @@ static int rzn1_rtc_read_alarm(struct de
- 	if (ret)
- 		return ret;
+@@ -280,6 +280,11 @@ static int rzn1_rtc_set_alarm(struct dev
+ 	if (time_after(alarm, farest))
+ 		return -ERANGE;
  
-+	ctl1 = readl(rtc->base + RZN1_RTC_CTL1);
-+	alrm->enabled = !!(ctl1 & (RZN1_RTC_CTL1_ALME | RZN1_RTC_CTL1_1SE));
++	/* Disable alarm interrupts before reprogramming the alarm. */
++	ret = rzn1_rtc_alarm_irq_enable(dev, 0);
++	if (ret)
++		return ret;
 +
- 	min = readl(rtc->base + RZN1_RTC_ALM);
- 	hour = readl(rtc->base + RZN1_RTC_ALH);
--	wday = readl(rtc->base + RZN1_RTC_ALW);
- 
- 	tm->tm_sec = 0;
- 	tm->tm_min = bcd2bin(min);
- 	tm->tm_hour = bcd2bin(hour);
-+
-+	/*
-+	 * If wday is zero, no bit is set in RZN1_RTC_ALW. This is the
-+	 * register's power-on reset value.
-+	 */
-+	wday = readl(rtc->base + RZN1_RTC_ALW);
-+	if (!wday)
-+		return 0;
-+
- 	delta_days = ((fls(wday) - 1) - tm->tm_wday + 7) % 7;
- 	tm->tm_wday = fls(wday) - 1;
- 
-@@ -249,9 +260,6 @@ static int rzn1_rtc_read_alarm(struct de
- 		rtc_time64_to_tm(alarm, tm);
- 	}
- 
--	ctl1 = readl(rtc->base + RZN1_RTC_CTL1);
--	alrm->enabled = !!(ctl1 & (RZN1_RTC_CTL1_ALME | RZN1_RTC_CTL1_1SE));
--
- 	return 0;
- }
- 
+ 	writel(bin2bcd(tm->tm_min), rtc->base + RZN1_RTC_ALM);
+ 	writel(bin2bcd(tm->tm_hour), rtc->base + RZN1_RTC_ALH);
+ 	writel(BIT(tm->tm_wday), rtc->base + RZN1_RTC_ALW);
 
 
