@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2FB58E2B0;
-	Wed,  9 Sep 2026 14:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABD0572691;
+	Wed,  9 Sep 2026 14:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964369; cv=none; b=YVr6r5gS32FvYKJBaqS1T8r6lNs2jvalNlsq+PM64TNabIVDBjRBcbxS/4EYcNnjM6afD27TZhiC2K2zmVSvPU1t+1Buzci2YVwLKt8DdAwSRSXqLmhekn7CRSyHxBcdENQag7o2XoYeAZN/nDKIhCtzF7Uum11reHZvVXr1P/g=
+	t=1788964373; cv=none; b=A1I/iSQakc/wxeC8jOre5nmfJ+xq2TD8t6eOfOPhEfAcX6/1sctxn+cz+AmuJGpw1FVafZyp0KK4udxluRGluAAKHcEtPDcEKq0T5skkfk+3HlHjAj1zXeLAvkkT90YZOLpmd1j1PvFWLsgmmMkHwkzKk7i3ewhed6U2DHGfmpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964369; c=relaxed/simple;
-	bh=QaN3m9bXjyIBZNl/f2hkMOgHelIbBe4PPF5FGZnpuvI=;
+	s=arc-20240116; t=1788964373; c=relaxed/simple;
+	bh=A8Krdx/JJ+GumD8ppO7AzjyQlik1mtEnr8dj7xNNLQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkf+zrZdRu5/tWJK57vZx/X72HSR7kZkWUgrH7LFqCySngYxNXwKBAsfPK+Eqz6LaIDBZnKVEPHBVF1lFxZ1OPSul5i6IvOcf2Gn5zr+XarWbRnwYv/4fycljUBam8rbONPDEZ2af3/gaEyQi6NJNI+juP0p5agBQo80DoSMVlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSbN7PfI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z7GW9qFYJyCv5Wmrhmzb+REURfEixtTEXhAZnc+E79AbvaPcozcrwu3I4yawR9kvYsb7kcrAv/xaWXGOrDgBK52cpcuCHRyyhNfyy6p/6J2EPW9GfSmN+YnVHmxd9qIO20PIxlMNS87XHCy21NN5aZNqUa1i0y5jQd/hZJUWDc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wC7vqAn9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSbN7PfI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBDE1F00A3A;
-	Wed,  9 Sep 2026 14:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wC7vqAn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A201F00A3A;
+	Wed,  9 Sep 2026 14:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964368;
-	bh=su7CXejqQSs9PGEadQ6BKDRgKq9vTwlaqNdseIdVbLw=;
+	s=korg; t=1788964372;
+	bh=fj++CtdW61HEsKSyt00fQyoNKR5N+1PyWDvgxMz0N/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iSbN7PfIfjmcW6e7E/QiQobwySijZRj6Di7q6if/NRQ2RNxLxpsMwwFVgjIItS/MQ
-	 am3hfwoyQsFjlfK9TRv5PxVtSMitlh46udwyqLH/iqOAq3/PijL4ryR1y3BRjIojQQ
-	 T8S+4o6Bw3Yz3oRNwYgEqJ9BtwfBrX7vI/x5hnck=
+	b=wC7vqAn9sE6F5jFvO/cKD38dGhB9V/KSgcw7fRu4ubSLZXiAh1sYYv37NxUCsVBH6
+	 Pw3au8BpEieo0ozw+rQj9Ca5ExJk0rmUCQwWAhSf2MZoCUoHdCy9ElMZ++SXtDw61M
+	 AyfWp6ojg0jXiJ0EmxoecbEzy3q4bOsD97KyidiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 356/583] f2fs: use the mount idmap for the owner check in f2fs_xattr_advise_set()
-Date: Wed,  9 Sep 2026 15:40:41 +0200
-Message-ID: <20260909134250.336476078@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Candice Li <candice.li@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 393/583] drm/amdgpu: Disable runtime PM for externally attached dGPUs
+Date: Wed,  9 Sep 2026 15:41:18 +0200
+Message-ID: <20260909134251.605179350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,40 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit a54ffce4637acb0db8e695188a6c7f99f14c3576 upstream.
+commit c52feb4365396b6a881b5e8a95540517ffabb3b7 upstream.
 
-f2fs_xattr_advise_set() calls inode_owner_or_capable() with &nop_mnt_idmap
-before allowing the "system.advise" xattr to be set, instead of the idmap
-that the VFS passes to the ->set() handler.
+pci_is_thunderbolt_attached() requires an upstream PCI bridge with
+is_thunderbolt set from an Intel Thunderbolt VSEC. This does not cover
+the affected ASM4242 USB4 PCI hierarchy:
 
-f2fs supports idmapped mounts, so on such a mount this checks the caller's
-fsuid against the unmapped on-disk owner rather than the mapped owner: the
-actual owner can be wrongly denied with -EPERM and an unrelated caller
-wrongly allowed.  Pass the handler's idmap instead.
+  00:02.2
+    \- 0f:00.0 [1b21:2421]
+       +- 10:01.0 [1b21:2423] -> 45:00.0 -> 46:00.0
+       |  -> 47:00.0 -> 48:00.0 -> 49:00.0 [1002:7590]
+       \- 10:03.0 -> 76:00.0 [1b21:2425] USB4 Host Router
 
-Fixes: 01beba7957a2 ("fs: port inode_owner_or_capable() to mnt_idmap")
+The host router is outside the GPU upstream bridge chain, leaving no
+ancestor with is_thunderbolt set. PCI core propagates DEVICE_REMOVABLE
+below the external-facing PCIe tunnel. Disable Runtime PM when either
+pci_is_thunderbolt_attached() or dev_is_removable() is true.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Acked-by: Christian Brauner (Amutable) <braurg>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/xattr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -118,7 +118,7 @@ static int f2fs_xattr_advise_set(const s
- 	unsigned char old_advise = F2FS_I(inode)->i_advise;
- 	unsigned char new_advise;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -468,6 +468,13 @@ void amdgpu_device_detect_runtime_pm_mod
+ 	int bamaco_support;
  
--	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
-+	if (!inode_owner_or_capable(idmap, inode))
- 		return -EPERM;
- 	if (value == NULL)
- 		return -EINVAL;
+ 	adev->pm.rpm_mode = AMDGPU_RUNPM_NONE;
++	if (pci_is_thunderbolt_attached(adev->pdev) ||
++	    dev_is_removable(&adev->pdev->dev)) {
++		dev_info(adev->dev,
++			 "Runtime PM disabled for externally attached device\n");
++		return;
++	}
++
+ 	bamaco_support = amdgpu_device_supports_baco(adev);
+ 
+ 	switch (amdgpu_runtime_pm) {
 
 
