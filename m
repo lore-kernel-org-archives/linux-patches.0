@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C7749890A;
-	Wed,  9 Sep 2026 14:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522F256511F;
+	Wed,  9 Sep 2026 14:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962548; cv=none; b=fPmmNZAlniLECNw9LMDXOBEslU4/H9LdyjF5NYW2MtA05rsZ6ASaqs0sg+A5KY8v6QAPiz+MBimdmlaIZW099foUc8JydllTtphSdzEj4rhdSNYLNAif0h8RUavC2jWx3s43SskevyvWlDWIN2p60td+9rdsvjYbtdIqE9ikJik=
+	t=1788962551; cv=none; b=avJ81b20zFav7vvcsHmuZkqf2hmP/BZJ0/hnzsFkh0Rvj/i3IzgFU9FBjJ5wlDH2awHgsqhs4yJ96uPtMsMP7M5XC2kfanasn75ItyQGLYwIzP89JwBAIxaYvjiSoM5DdZzCwymbEnyqogagihA5ie9hogePMY0slnmNqS0/fgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962548; c=relaxed/simple;
-	bh=nu6b9LVYsW56XlqqmN7fk8KZj07bH/CZ63NRtypHCdM=;
+	s=arc-20240116; t=1788962551; c=relaxed/simple;
+	bh=SHQRVAb/HBHaN4wHAJH9YHH4ZL7WPgmPS7oQHVIOTTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gsHBf7Oy2lrbBlnxDRirLOtuRQYAYJG8GiQmkG/k/GVcG4RIdybKs3KqZv9XtKgUrdq9R/O3vUVF9djA5hwd0LV1S8mQ8bMxKneUtJQ00qaX5HimmE1bMTUmIuTbR2NUNvw7ooY6p9tkoVCroHepnACJtjATl+PYMIhBB1mb790=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhwyDbmW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cDvs1df9fZthZAzJN+xlXonHAd2iSkbcEPFMmWBGvwX7brfcl0G3QVjsK3H53btBfrIkUb0asKsbr4QZfD/fU1QY4oQ00/NeJD/PNJWbutWsaQBP7iunMBY2E6nJIuYDahK1/dwAvU93IGVckHApwAWS8XEQzzarp9+Z194L3h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUlI51aW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhwyDbmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB99E1F00A3A;
-	Wed,  9 Sep 2026 14:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUlI51aW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77241F00A3A;
+	Wed,  9 Sep 2026 14:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962547;
-	bh=RcLjM8lIzhnXrnB6gWiTYycyhjHoSrWKW8Ple81dTGo=;
+	s=korg; t=1788962550;
+	bh=P21CIGGRsY56vxOkK9qNHOqdrpypsyjeYqLhuWCxrD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lhwyDbmWh/oIt6Usy/TyMtqDHTRDxu2PIKHdT8mZdeOU+F57IkxYCa4PhzoIw2hAD
-	 ynL/f1YZASeLAvRe71NFM2mHQWPJZ0bhZddQ1Si9/3CLuh5Tzg2q1+aqK5kGPZCCVa
-	 gP5zeet5Mo790edelgNeGzQfPtah5KJUw78QEd/4=
+	b=JUlI51aWFBOX2sRiLjyo52HyDneGiWS+dUaUKi3gOcXnRDtgEjt7prEmEz1iGNhG2
+	 XqqPk0l3yaP7Pczxd3f5MvnDDnWJa5OJWvSMe/xEPp/WuJz1eGkMMMy9XmImuLDvRZ
+	 1ZgejRW3mI5hYH/NwiPMAp/zYR7Zw53PkCrP1KAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bibo Mao <maobibo@loongson.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Zeng Chi <zengchi@kylinos.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 327/556] LoongArch: KVM: Fix uninitialized stack variable issue with dmsintc
-Date: Wed,  9 Sep 2026 15:40:07 +0200
-Message-ID: <20260909134242.160092160@linuxfoundation.org>
+Subject: [PATCH 7.2 328/556] LoongArch: KVM: Fix PC double advance in kernel MMIO read fast path
+Date: Wed,  9 Sep 2026 15:40:08 +0200
+Message-ID: <20260909134242.195923742@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,33 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Zeng Chi <zengchi@kylinos.cn>
 
-commit 81aa3a58b542ed88819115c80a17acd86eacb89d upstream.
+commit fd4021529faa931818186b6e83bd46f5de7517eb upstream.
 
-Variable vector[] is declared on stack in function dmsintc_inject_irq()
-and sometimes it is used without initialized. Here fix this issue.
+In the in-kernel MMIO read fast path of kvm_emu_mmio_read(),
+kvm_complete_mmio_read() already advances the guest PC via update_pc().
+The explicit update_pc() call right after it advances the PC a second
+time, so PC moves forward by 8 bytes instead of 4, and the instruction
+following the MMIO read is silently skipped.
+
+The user space MMIO read completion path in kvm_arch_vcpu_ioctl_run()
+calls kvm_complete_mmio_read() only once, and the MMIO write fast path
+advances the PC exactly once as well.
+
+Here remove the redundant update_pc() so the kernel MMIO read fast path
+advances the PC by a single instruction.
 
 Cc: stable@vger.kernel.org
-Fixes: 03de5eecb0f0 ("LoongArch: KVM: Add DMSINTC inject msi to vCPU")
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Fixes: 80edf90831a2 ("LoongArch: KVM: Add sign extension with kernel MMIO read emulation")
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/dmsintc.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/loongarch/kvm/exit.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/loongarch/kvm/intc/dmsintc.c
-+++ b/arch/loongarch/kvm/intc/dmsintc.c
-@@ -19,8 +19,7 @@ void dmsintc_inject_irq(struct kvm_vcpu
- 
- 	for (i = 0; i < 4; i++) {
- 		old = atomic64_read(&(ds->vector_map[i]));
--		if (old)
--			vector[i] = atomic64_xchg(&(ds->vector_map[i]), 0);
-+		vector[i] = old ? atomic64_xchg(&(ds->vector_map[i]), 0) : 0;
- 	}
- 
- 	if (vector[0]) {
+--- a/arch/loongarch/kvm/exit.c
++++ b/arch/loongarch/kvm/exit.c
+@@ -481,7 +481,6 @@ int kvm_emu_mmio_read(struct kvm_vcpu *v
+ 		srcu_read_unlock(&vcpu->kvm->srcu, idx);
+ 		if (!ret) {
+ 			kvm_complete_mmio_read(vcpu, run);
+-			update_pc(&vcpu->arch);
+ 			vcpu->mmio_needed = 0;
+ 			return EMULATE_DONE;
+ 		}
 
 
