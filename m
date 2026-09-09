@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C052424D48;
-	Wed,  9 Sep 2026 14:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC82B423A85;
+	Wed,  9 Sep 2026 14:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963119; cv=none; b=JxNY1aWWnGfde3SaZQ1AokwTxF4wOJK7VN7zVP/YjOChwaLfyF6e63ErhX0/6oWKf2q3FoBn+Bhgw1KehsJkd39BEnF4sO10606nIxm0ptQWyCkRbkDP6E5dyvWxiIoyfp0L5wO5nCCOz2y/WB0X2CSK8yrKnkgEh6SVLQf5Dqc=
+	t=1788963123; cv=none; b=eZRHdi9jQnMlsHRoFBVRXIpGo15Xyn8y1ZJ2elwSYFloB0bVRwgBCIpHM+FW1brdaj8qqcBGG39mxF/j+qX52/RBQe12Z0mbKHooggh+QaMnQssI0G50CyuCJ0y7vwZ6egwKVpD6gRCzZWQ6djCcH3hfVPLVP+bdBAobwh7+GCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963119; c=relaxed/simple;
-	bh=12aTR8LlPAacc3ZcKsj1Hsp3699aUl4zbIopRGVGaAk=;
+	s=arc-20240116; t=1788963123; c=relaxed/simple;
+	bh=dwpBM11303hVkht8czQo2t9LlqO90/gXMZ4IonKzGIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A27wlipgRNQP4LGUpZQsghkx51PC0bKJaPici9UdOtHeAV9HUbgWj9Jm4mch9CR1qyCJAfTJ5FomVEfu2dCT879nvP6I1XVdSOx+UyCKLcXZvzEIifoR3mJF78YE4DJ7U4JB2GUNJIIpKA4WxJFxINjDh8KI/XE1sokrknhFKm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXLFoG02; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PF+soEifAi01AonwT3gRsZ8ObGzZv5qiZQbttxaVBqrL5U0PoQd4d5AuWfdEcLkaYSNIApIxCMD+PHtYjhXSoIoIWD+TQ+iAh8qhYTT554u01C+MIXIHY8Mz8eEGiEBiGScUZOvhYAL1RfUGKiHi3GeqAKwvPMMON/KuhnxUUhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLt9M0je; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXLFoG02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F42271F00A3A;
-	Wed,  9 Sep 2026 14:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLt9M0je"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77DD1F00A3A;
+	Wed,  9 Sep 2026 14:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963118;
-	bh=sjU/WYsFMVD/gl9torTAit1IUvU8ZWRDD/j0f7Yg+jE=;
+	s=korg; t=1788963121;
+	bh=2YoCkO5tkffV90uS2Wk3sxLeBtw5bzccYz0aOYSubt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZXLFoG02Tr4v5hkKNXFEJ17b8ATdvN4uIxsiTni5oth1daasUp3f2C+6co+O69ii6
-	 J1Fc/Gh/d6JtBSZigxll6nNO0IjPRIVjN7REsxvtKL8Z3/63Yp4OgfpvSTC71/45f1
-	 mxWkc9x8z0won0Rx3Y628CN2hgS9MTzo8lMFCUqE=
+	b=jLt9M0jeQ2U/cehWJjWNYzFCX9bA+ks1zK7PUiKTxdm1ItasrBAaixVOZKoxw6adV
+	 APgudyIWMbsFX402RrcifzSwxJAp1HfUCLR4v8/Nsc7gqaEdqtWALMRYjg8hGXL0qv
+	 kAbp7IUUw2fU6fiPP+GCP3rtyNZGJlN1bLaUyPUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 7.2 527/556] drm/nouveau/dmem: fix mismatched DMA unmap size for large folios
-Date: Wed,  9 Sep 2026 15:43:27 +0200
-Message-ID: <20260909134248.954759479@linuxfoundation.org>
+	Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 7.2 528/556] drm/nouveau/gsp: use per-version DP_CONFIG_STREAM params on r570 firmware
+Date: Wed,  9 Sep 2026 15:43:28 +0200
+Message-ID: <20260909134248.985577086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,54 +50,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
 
-commit caa1bc2a0a6ca19dcb90bbf88208b0fe2decd66f upstream.
+commit 39fd4b742720c68da8695ee1ffa85c5fea4f8e11 upstream.
 
-Device-private THP migration maps migration buffers with page_size()
-and records that length in dma_info->size.  For a compound folio
-page_size() is PAGE_SIZE << order, but two teardown sites still pass a
-literal PAGE_SIZE to dma_unmap_page():
+NVIDIA removed the deprecated actualPclkHz/linkClkFreqHz fields and the
+whole Legacy{activeCnt, activeFrac, activePolarity, mvidWarEnabled,
+MvidWarParams} block from the SST sub-struct of
+NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS between the 535 and 570 releases
+(compared in OpenRM tags 535.113.01 vs 570.144), shrinking the struct.
 
-  - nouveau_dmem_migrate_to_ram() on the success path, and
-  - nouveau_dmem_migrate_copy_one() on the copy-error path.
+Everything nouveau writes sits at identical offsets in both layouts
+except the trailing SST.bEnableAudioOverRightPanel (written as zero), but
+the size is wrong on r570, which means r535_sor_dp_sst() and
+r535_sor_dp_vcpi() are sent with an incorrect size.
 
-For an order > 0 folio this unmaps less than was mapped, leaking the
-remainder of the IOMMU/IOVA mapping.  The other unmap sites, in
-nouveau_dmem_migrate_chunk() and nouveau_dmem_evict_chunk(), already
-use the saved size; use it here too.
+Route the .sst/.vcpi IOR functions through nvkm_rm_api_disp the same way
+bl_ctrl and dp.get_caps/set_indexed_link_rates already are. Keep the
+existing implementation for r535 and add an r570 implementation built
+against the 570.144 layout, which already exists in r570/nvrm/disp.h but
+was unused until now. Also add the NV0073_CTRL_CMD_DP_CONFIG_STREAM
+define that was missing from the layout.
 
-Fixes: c32287471077 ("gpu/drm/nouveau: enable THP support for GPU memory migration")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+Other DP controls sent through shared r535 code did not change layout
+between the tags.
+
+Fixes: 6cc6e08d4542 ("drm/nouveau/kms: add support for GB20x")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
-Link: https://patch.msgid.link/20260811-b4-nouveau-dmem-thp-fixes-v1-1-2cdf9860af2a@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260825001408.14219-7-mohamedahmedegypt2001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_dmem.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c      |   33 ++++--
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/disp.c      |   64 ++++++++++++
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/disp.h |    2 
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h             |    5 
+ 4 files changed, 97 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
-@@ -267,7 +267,7 @@ static vm_fault_t nouveau_dmem_migrate_t
- 	nouveau_fence_new(&fence, dmem->migrate.chan);
- 	migrate_vma_pages(&args);
- 	nouveau_dmem_fence_done(&fence);
--	dma_unmap_page(drm->dev->dev, dma_info.dma_addr, PAGE_SIZE,
-+	dma_unmap_page(drm->dev->dev, dma_info.dma_addr, dma_info.size,
- 				DMA_BIDIRECTIONAL);
- done:
- 	migrate_vma_finalize(&args);
-@@ -786,7 +786,7 @@ static unsigned long nouveau_dmem_migrat
- 	return mpfn;
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
+@@ -400,16 +400,16 @@ r535_sor_dp_audio(struct nvkm_ior *sor,
+ 		r535_sor_dp_audio_mute(sor, false);
+ }
  
- out_dma_unmap:
--	dma_unmap_page(dev, dma_info->dma_addr, PAGE_SIZE, DMA_BIDIRECTIONAL);
-+	dma_unmap_page(dev, dma_info->dma_addr, dma_info->size, DMA_BIDIRECTIONAL);
- out_free_page:
- 	nouveau_dmem_page_free_locked(drm, dpage);
- out:
+-static void
+-r535_sor_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn)
++static int
++r535_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn)
+ {
+ 	struct nvkm_disp *disp = sor->disp;
+ 	struct NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS *ctrl;
+ 
+ 	ctrl = nvkm_gsp_rm_ctrl_get(&disp->rm.objcom,
+ 				    NV0073_CTRL_CMD_DP_CONFIG_STREAM, sizeof(*ctrl));
+-	if (WARN_ON(IS_ERR(ctrl)))
+-		return;
++	if (IS_ERR(ctrl))
++		return PTR_ERR(ctrl);
+ 
+ 	ctrl->subDeviceInstance = 0;
+ 	ctrl->head = head;
+@@ -429,12 +429,20 @@ r535_sor_dp_vcpi(struct nvkm_ior *sor, i
+ 	ctrl->MST.sendACT = 0;
+ 	ctrl->MST.singleHeadMSTPipeline = 0;
+ 	ctrl->MST.bEnableAudioOverRightPanel = 0;
+-	WARN_ON(nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl));
++	return nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl);
++}
++
++static void
++r535_sor_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn)
++{
++	const struct nvkm_rm_api *rmapi = sor->disp->engine.subdev.device->gsp->rm->api;
++
++	WARN_ON(rmapi->disp->dp.vcpi(sor, head, slot, slot_nr, pbn, aligned_pbn));
+ }
+ 
+ static int
+-r535_sor_dp_sst(struct nvkm_ior *sor, int head, bool ef,
+-		u32 watermark, u32 hblanksym, u32 vblanksym)
++r535_dp_sst(struct nvkm_ior *sor, int head, bool ef,
++	    u32 watermark, u32 hblanksym, u32 vblanksym)
+ {
+ 	struct nvkm_disp *disp = sor->disp;
+ 	struct NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS *ctrl;
+@@ -461,6 +469,15 @@ r535_sor_dp_sst(struct nvkm_ior *sor, in
+ 	return nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl);
+ }
+ 
++static int
++r535_sor_dp_sst(struct nvkm_ior *sor, int head, bool ef,
++		u32 watermark, u32 hblanksym, u32 vblanksym)
++{
++	const struct nvkm_rm_api *rmapi = sor->disp->engine.subdev.device->gsp->rm->api;
++
++	return rmapi->disp->dp.sst(sor, head, ef, watermark, hblanksym, vblanksym);
++}
++
+ static const struct nvkm_ior_func_dp
+ r535_sor_dp = {
+ 	.sst = r535_sor_dp_sst,
+@@ -1782,6 +1799,8 @@ r535_disp = {
+ 	.dp = {
+ 		.get_caps = r535_dp_get_caps,
+ 		.set_indexed_link_rates = r535_dp_set_indexed_link_rates,
++		.sst = r535_dp_sst,
++		.vcpi = r535_dp_vcpi,
+ 	},
+ 	.chan = {
+ 		.set_pushbuf = r535_disp_chan_set_pushbuf,
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/disp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/disp.c
+@@ -5,6 +5,7 @@
+ #include <rm/rm.h>
+ 
+ #include <engine/disp.h>
++#include <engine/disp/ior.h>
+ #include <engine/disp/outp.h>
+ 
+ #include "nvhw/drf.h"
+@@ -75,6 +76,67 @@ r570_disp_chan_set_pushbuf(struct nvkm_d
+ }
+ 
+ static int
++r570_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn)
++{
++	struct nvkm_disp *disp = sor->disp;
++	NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS *ctrl;
++
++	ctrl = nvkm_gsp_rm_ctrl_get(&disp->rm.objcom,
++				    NV0073_CTRL_CMD_DP_CONFIG_STREAM, sizeof(*ctrl));
++	if (IS_ERR(ctrl))
++		return PTR_ERR(ctrl);
++
++	ctrl->subDeviceInstance = 0;
++	ctrl->head = head;
++	ctrl->sorIndex = sor->id;
++	ctrl->dpLink = sor->asy.link == 2;
++	ctrl->bEnableOverride = 1;
++	ctrl->bMST = 1;
++	ctrl->hBlankSym = 0;
++	ctrl->vBlankSym = 0;
++	ctrl->colorFormat = 0;
++	ctrl->bEnableTwoHeadOneOr = 0;
++	ctrl->singleHeadMultistreamMode = 0;
++	ctrl->MST.slotStart = slot;
++	ctrl->MST.slotEnd = slot + slot_nr - 1;
++	ctrl->MST.PBN = pbn;
++	ctrl->MST.Timeslice = aligned_pbn;
++	ctrl->MST.sendACT = 0;
++	ctrl->MST.singleHeadMSTPipeline = 0;
++	ctrl->MST.bEnableAudioOverRightPanel = 0;
++	return nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl);
++}
++
++static int
++r570_dp_sst(struct nvkm_ior *sor, int head, bool ef,
++	    u32 watermark, u32 hblanksym, u32 vblanksym)
++{
++	struct nvkm_disp *disp = sor->disp;
++	NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS *ctrl;
++
++	ctrl = nvkm_gsp_rm_ctrl_get(&disp->rm.objcom,
++				    NV0073_CTRL_CMD_DP_CONFIG_STREAM, sizeof(*ctrl));
++	if (IS_ERR(ctrl))
++		return PTR_ERR(ctrl);
++
++	ctrl->subDeviceInstance = 0;
++	ctrl->head = head;
++	ctrl->sorIndex = sor->id;
++	ctrl->dpLink = sor->asy.link == 2;
++	ctrl->bEnableOverride = 1;
++	ctrl->bMST = 0;
++	ctrl->hBlankSym = hblanksym;
++	ctrl->vBlankSym = vblanksym;
++	ctrl->colorFormat = 0;
++	ctrl->bEnableTwoHeadOneOr = 0;
++	ctrl->SST.bEnhancedFraming = ef;
++	ctrl->SST.tuSize = 64;
++	ctrl->SST.waterMark = watermark;
++	ctrl->SST.bEnableAudioOverRightPanel = 0;
++	return nvkm_gsp_rm_ctrl_wr(&disp->rm.objcom, ctrl);
++}
++
++static int
+ r570_dp_set_indexed_link_rates(struct nvkm_outp *outp)
+ {
+ 	NV0073_CTRL_CMD_DP_CONFIG_INDEXED_LINK_RATES_PARAMS *ctrl;
+@@ -255,6 +317,8 @@ r570_disp = {
+ 	.dp = {
+ 		.get_caps = r570_dp_get_caps,
+ 		.set_indexed_link_rates = r570_dp_set_indexed_link_rates,
++		.sst = r570_dp_sst,
++		.vcpi = r570_dp_vcpi,
+ 	},
+ 	.chan = {
+ 		.set_pushbuf = r570_disp_chan_set_pushbuf,
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/disp.h
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/nvrm/disp.h
+@@ -256,6 +256,8 @@ typedef struct NV0073_CTRL_DP_CTRL_PARAM
+     NvU32 eightLaneDpcdBaseAddr;
+ } NV0073_CTRL_DP_CTRL_PARAMS;
+ 
++#define NV0073_CTRL_CMD_DP_CONFIG_STREAM                   (0x731362U) /* finn: Evaluated from "(FINN_NV04_DISPLAY_COMMON_DP_INTERFACE_ID << 8) | NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS_MESSAGE_ID" */
++
+ typedef struct NV0073_CTRL_CMD_DP_CONFIG_STREAM_PARAMS {
+     NvU32  subDeviceInstance;
+     NvU32  head;
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
+@@ -6,6 +6,7 @@
+ #ifndef __NVKM_RM_H__
+ #define __NVKM_RM_H__
+ #include "handles.h"
++struct nvkm_ior;
+ struct nvkm_outp;
+ struct r535_gr;
+ 
+@@ -93,6 +94,10 @@ struct nvkm_rm_api {
+ 		struct {
+ 			int (*get_caps)(struct nvkm_disp *, int *link_bw, bool *mst, bool *wm);
+ 			int (*set_indexed_link_rates)(struct nvkm_outp *);
++			int (*sst)(struct nvkm_ior *, int head, bool ef,
++				   u32 watermark, u32 hblanksym, u32 vblanksym);
++			int (*vcpi)(struct nvkm_ior *, int head,
++				    u8 slot, u8 slot_nr, u16 pbn, u16 aligned_pbn);
+ 		} dp;
+ 
+ 		struct {
 
 
