@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DD6569F04;
-	Wed,  9 Sep 2026 14:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00A055409D;
+	Wed,  9 Sep 2026 14:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962710; cv=none; b=SVdgRPMjB1I8Coq4lE0SxVDtem39++hA4Wye5hACfXuz0Crj+RvV9Rfi+uGhiuDWATnbAMKNoRspejo7XpXVYzV8/dwQ+XXn8iX+UjYO3DnGp3vrXS+RAYb8+gARj0q0Xnfu8p6JeRgUw4ElW6sh8GDBFUAbmqqb799joahLeIk=
+	t=1788962712; cv=none; b=ie4KL4BwCRMEXmU7Dk32UOjn9MW36bnrHlDz7P2d/DGbN0283oYWva7oo6fkoIebr0+BL9tbx5iTYTtM53w6eXrhbPR8/nqn/yGj2GUNolKL7XvZHUiVyFWDB7H0byrrTCRlc3j32RAfoYaY9ZsYwZtpy6S/ybdbazJUFTnt7+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962710; c=relaxed/simple;
-	bh=NoqVJqQtV3MDu3JBiyX/6iWb2Az8EVnFP5eA6YaCSQU=;
+	s=arc-20240116; t=1788962712; c=relaxed/simple;
+	bh=X20hsZvJHTZP6ZtN/a9cxq9MIQ92Qbx+3NJw2qVZrEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kr5csh0kMDDaOOZODC7Z8CwPSsfBkWiEEX7pQqejcghWKvXf/AjRzVxG09viyJg/17nHYZOyKYKP7qAJblg6swrHg7GqqkGHu5hRjSeL3ilQiAlMpkJo8/emvBPX8gjQ8Oc8XASm6fRO/CE/r9l+mSMnAaXwwAOP9502+63a+5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TImDX5K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C7nKyxUztYkiofqYVl2asWLkUuiE91bDyXKe6vALP5oilMhSQPpyseCTIDGmTIf5cLbHA4Uknb5vZX9v0fm7nylwvvNAsK4W+6zYzay56YPWATimxnW1+wWJziPBGSQ6y/09eVOcozr3HzuKVDRIMawtw9J2lzk0vGsA/v5cvbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buuE6CMi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TImDX5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165441F00A3A;
-	Wed,  9 Sep 2026 14:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buuE6CMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2991F00A3A;
+	Wed,  9 Sep 2026 14:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962708;
-	bh=R4leM6+mO21T6yPStyqocwEy43Jupi1UGoSG8Nv10Ec=;
+	s=korg; t=1788962711;
+	bh=2KJcuEAvlvJBh4OyY5onUbb94CW81gxRKQXBi6DPrsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0TImDX5KTYZXi++0Ll+xXWQJS6zu36HUZcBbt45bhnEGnAFV9eVBsEm9VCa6LwBA1
-	 VOa7qnigFOBV2XjiZIfGrsawA19eQg4YNvxmtsXlo8HM0XvPLEP4NYoawKY6mkR3Il
-	 W0lE0fSDhArqkkQTib597DMrNY+DYSemi4TlJit0=
+	b=buuE6CMiadtXn5PDsMvblY002ccFwb7W+otQv2xl8vVfLyvaV1YJbcQOKavk+yebm
+	 qL7XnNa7tdsY5SCWkB5vUovcS5LwMEPv+yUfur+RRyfrkOQ/j5Ere+7h3k7r/APoZ2
+	 IopchWu6VKkkk3iTK00JWdVQ4skTNa8MnsJ0798Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	David Carlier <devnexen@gmail.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 347/556] media: amphion: Remove obsolete frame_count check in venc_start_session
-Date: Wed,  9 Sep 2026 15:40:27 +0200
-Message-ID: <20260909134242.861415931@linuxfoundation.org>
+Subject: [PATCH 7.2 383/556] media: mali-c55: Fix scaler factor overflow for large crop sizes
+Date: Wed,  9 Sep 2026 15:41:03 +0200
+Message-ID: <20260909134244.150669024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,39 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 2be6ee86385badab95b1bace984735bde6e0fec0 upstream.
+commit 2447c768cb5dfb9f52630b82d419e2b24fee27a3 upstream.
 
-The dev_err() log warning about no input when starting was originally
-meaningful when min_queued_buffers was set, as it indicated an abnormal
-condition. However, since commit 5633ec763a2a ("media: amphion: Drop
-min_queued_buffers assignment") removed the min_queued_buffers
-assignment, having frame_count == 0 at start is a normal condition.
+The horizontal and vertical scaling factors multiply the crop dimensions
+by MALI_C55_RSZ_SCALER_FACTOR, a Q4.20 factor of (1 << 20). Both operands
+are 32-bit, so the multiplication wraps before the result is stored in
+the u64 scale variables. For any crop dimension of 4096 or more (the
+maximum is 8192) the value overflows; an 8192 to 4096 downscale yields a
+TINC of zero, so the scaler never advances and the output is corrupted.
 
-Remove this misleading log that no longer serves any purpose.
+Define MALI_C55_RSZ_SCALER_FACTOR as a 64-bit constant so the
+multiplication is performed in 64-bit.
 
-Fixes: 5633ec763a2a ("media: amphion: Drop min_queued_buffers assignment")
+Fixes: d5f281f3dd29 ("media: mali-c55: Add Mali-C55 ISP driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/venc.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/media/platform/arm/mali-c55/mali-c55-resizer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/amphion/venc.c
-+++ b/drivers/media/platform/amphion/venc.c
-@@ -973,8 +973,6 @@ static int venc_start_session(struct vpu
- 	venc->ready_count = 0;
- 	venc->stopped = false;
- 	vpu_process_output_buffer(inst);
--	if (venc->frame_count == 0)
--		dev_err(inst->dev, "[%d] there is no input when starting\n", inst->id);
+diff --git a/drivers/media/platform/arm/mali-c55/mali-c55-resizer.c b/drivers/media/platform/arm/mali-c55/mali-c55-resizer.c
+index c4f46651dcee..6706939b4a90 100644
+--- a/drivers/media/platform/arm/mali-c55/mali-c55-resizer.c
++++ b/drivers/media/platform/arm/mali-c55/mali-c55-resizer.c
+@@ -15,7 +15,7 @@
+ #include "mali-c55-registers.h"
  
- 	return 0;
- error:
+ /* Scaling factor in Q4.20 format. */
+-#define MALI_C55_RSZ_SCALER_FACTOR	(1U << 20)
++#define MALI_C55_RSZ_SCALER_FACTOR	BIT_ULL(20)
+ 
+ #define MALI_C55_RSZ_COEFS_BANKS	8
+ #define MALI_C55_RSZ_COEFS_ENTRIES	64
+-- 
+2.55.0
+
 
 
