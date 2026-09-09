@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3352353A82;
-	Wed,  9 Sep 2026 14:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B40B5678CA;
+	Wed,  9 Sep 2026 14:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963452; cv=none; b=tXMVnwxb8jChdylrewcxnb+nzwxB4H660gWT3jSu97pQi0c8FUdyCv7la+OXwUqoBGZWbJt90f/jbdSyspYlPy37Ca4jP9T8mF5pgNArDij2ll3ZJMZAPiflRkejvCmrK3zN8erJVaPUm40/ympOGNz4GEFGh/tlLk8eXVm/h3c=
+	t=1788963455; cv=none; b=BXnfqfta0PLbmb3C/jEDIeKdSP2s6KJ2B20i0RTiT+SOgJmDDaTdfCupDxaPkbXVTXokCpRQnbmGzqfGqEaNmQVabTqgUWcQ/9VIdwdU8ozyKzgobD85UJjK7wsffeTnROzAGlY9k0pfvh2BR8wTyXb2C37fgrv+0wzd+Sub7Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963452; c=relaxed/simple;
-	bh=Uuy3qIucldebEYTrWDHvPp8mWt/Oyq7FJRCda457to4=;
+	s=arc-20240116; t=1788963455; c=relaxed/simple;
+	bh=Gswn+H65B9fyUcQL8fwV0Sk3kyxCT0etxs35b4WA1Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSE1n0hVAZMg+N/qzAEjputq8VvqUQiXf08D3rRRlDDVxJFVvTHVQLuGC9Hts+b1Ow01lO64b7LkDozfZ8oG71H3qiBg3WXpgd4HjaurDeb3LC55aubRoe4vKw6i67JDOgiIhdi+GMlnYPmhiYfZsIFDSKihU5L/uVzwwUbMTdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtqRBLlz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TPmY6DycQx/+79HMzacEcmekyuoP418FijEfkAZqvbPVS245E7bclZIo5gdfUYXg1vB9yfBMZ+IYme1C/bXBJnEP6tFycgcD9YDuKHh0w8NanzqwFTXpLTU74AMY8f1uk4vGpXpmcAKOnsTZkJOdlCn4qIZxmng8I+vPm0y0F3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hcyz1CB3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtqRBLlz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DE51F00A3A;
-	Wed,  9 Sep 2026 14:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hcyz1CB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A761F00A3A;
+	Wed,  9 Sep 2026 14:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963450;
-	bh=v0xYVnXl22/D1gaRYKRjYPTYDplnFb9wfFg/6nht0jI=;
+	s=korg; t=1788963454;
+	bh=A8LfOzOARjR0rkJf/4nbWyR/8Rn+Mc82dMGI1WCuR04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AtqRBLlzassdRkRY4rWP+VITmlEkNUenfw+M3aDxyOkTPUwopS1gqcAXts27M4w3H
-	 jy9mVO+DWp7Fe0IcraNCm02PCYfMzTPXbMx3/HwQ5BiAI4/eNbg8Drxc57w/p9nH+y
-	 cQqWyYeCi93bybMKIVdpAO0AsRSyLIC6wjF/S3Pg=
+	b=Hcyz1CB3olDNqBBnatdVwUOV/uR9E8UiSGMl8iT/D8fgwrSmh2R/kJ+lYkQ/B7z4q
+	 Ae6goLjm/kMujIVpl8Ma4vSsM38W13PRSMLQ8qTxqVzbq5rPtNLsLBMca/ZSTeRPlh
+	 myrGcoOtAGuQ59HPAXfFVU9GEsPu+xNk+gxt32NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 076/583] block: flag zoned disks with GENHD_FL_NO_PART
-Date: Wed,  9 Sep 2026 15:36:01 +0200
-Message-ID: <20260909134240.719573249@linuxfoundation.org>
+	=?UTF-8?q?HE=20WEI=EF=BC=88=E3=82=AE=E3=82=AB=E3=82=AF=EF=BC=89?= <skyexpoc@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 085/583] fs/ntfs3: fix slab-out-of-bounds write in ni_create_attr_list()
+Date: Wed,  9 Sep 2026 15:36:10 +0200
+Message-ID: <20260909134241.069595773@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -48,64 +45,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: HE WEI（ギカク） <skyexpoc@gmail.com>
 
-commit 3f9c7a108c0e8f14425384912017071b71341e3b upstream.
+[ Upstream commit 7c4841e2a62794a3bab7c1ff0540580f387e377f ]
 
-Zoned block devices do not support partitions. However, the partition
-table is nevertheless still inspected, and any partition found ignored
-with a warning in add_partition(). While this is generally not a problem,
-and in fact beneficial to the user as it indicates an invalid use of a
-zoned block device, scanning for a partition table on the device may
-result in issuing read operations to offline zones (e.g. after a disk head
-is depopulated for disks that support head management operations).
+ni_create_attr_list() allocates a fixed buffer of al_aligned(record_size)
+(== record_size) bytes and then walks every attribute of the primary MFT
+record, writing one ATTR_LIST_ENTRY per attribute and advancing the cursor
+by le_size(name_len), with no check against the end of the buffer; the
+total size is only computed after the loop.
 
-Since partitions are ignored anyway, completely disable partition scanning
-for zoned gendisks by setting the flag GENHD_FL_NO_PART in __add_disk().
-The existing check in add_partition() is left as-is to ensure that we
-still get a warning if for whatever reason, despite GENHD_FL_NO_PART, we
-still endup trying to add partitions.
+A minimum-size resident attribute occupies SIZEOF_RESIDENT (0x18 = 24)
+bytes on disk, but an unnamed attribute expands to le_size(0) (0x20 = 32)
+bytes in the list.  Because the number of attributes in a record is not
+bounded (mi_enum_attr() accepts arbitrarily many equal-type, nameless
+minimum-size attributes), a crafted record packed with such attributes
+produces a list larger than record_size and overflows the heap buffer.
 
-Flagging zoned disks with GENHD_FL_NO_PART also has the benefit to expose
-through sysfs the ext_range attribute with the value of 1 instead of the
-default DISK_MAX_PARTS, thus correctly advertizing the fact that zoned
-disks do not support partitions.
+This is reachable from a crafted, loop-mounted NTFS image: opening the file
+and adding an attribute (e.g. via setxattr) drives ntfs_set_ea() ->
+ni_insert_resident() -> ni_insert_attr() -> ni_ins_attr_ext() ->
+ni_create_attr_list().
 
-Fixes: 5eac3eb30c9a ("block: Remove partition support for zoned block devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://patch.msgid.link/20260831025050.667758-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  BUG: KASAN: slab-out-of-bounds in ni_create_attr_list+0xc48/0x1058
+  Write of size 4 at addr ffff000008984c00 by task setfattr/345
+   ni_create_attr_list+0xc48/0x1058
+   ni_ins_attr_ext+0x510/0x7c0
+   ni_insert_attr+0x3f8/0x70c
+   ni_insert_resident+0xc8/0x3b0
+   ntfs_set_ea+0x66c/0xd28
+   ntfs_setxattr+0x4d8/0x5b0
+   __arm64_sys_setxattr+0xa4/0x124
+  Allocated by task 345:
+   ni_create_attr_list+0x188/0x1058
+  The buggy address belongs to the cache kmalloc-1k of size 1024
+  (the write lands at object+1024).
+
+Size the buffer from the actual attributes instead of assuming a single
+record_size is always enough.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: HE WEI（ギカク） <skyexpoc@gmail.com>
+Signed-off-by: HE WEI（ギカク） <skyexpoc@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ntfs3/frecord.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -448,6 +448,13 @@ static int __add_disk(struct device *par
- 	}
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index b24035c351925..7aa37cf01df5a 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -766,10 +766,23 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	rs = sbi->record_size;
  
  	/*
-+	 * We do not support partitions with zoned block devices, so do not try
-+	 * to scan the partitions table.
-+	 */
-+	if (blk_queue_is_zoned(disk->queue))
-+		disk->flags |= GENHD_FL_NO_PART;
+-	 * Skip estimating exact memory requirement.
+-	 * Looks like one record_size is always enough.
++	 * Compute the exact size of the attribute list.  Each attribute in the
++	 * record yields one ATTR_LIST_ENTRY of le_size(name_len) bytes.  The
++	 * minimum on-disk attribute is SIZEOF_RESIDENT (0x18) bytes, but an
++	 * unnamed one expands to le_size(0) (0x20) here, so a record crafted
++	 * with many such attributes needs more than a single record_size; the
++	 * previous fixed kzalloc(record_size) could therefore be overflowed by
++	 * an attacker-controlled record.
+ 	 */
+-	le = kzalloc(al_aligned(rs), GFP_NOFS);
++	lsize = 0;
++	attr = NULL;
++	while ((attr = mi_enum_attr(ni, &ni->mi, attr)))
++		lsize += le_size(attr->name_len);
 +
-+	/*
- 	 * If the driver provides an explicit major number it also must provide
- 	 * the number of minors numbers supported, and those will be used to
- 	 * setup the gendisk.
++	if (!lsize)
++		return -EINVAL;
++
++	le = kzalloc(al_aligned(lsize), GFP_NOFS);
+ 	if (!le)
+ 		return -ENOMEM;
+ 
+@@ -779,7 +792,6 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	attr = NULL;
+ 	nb = 0;
+ 	free_b = 0;
+-	attr = NULL;
+ 
+ 	for (; (attr = mi_enum_attr(ni, &ni->mi, attr)); le = Add2Ptr(le, sz)) {
+ 		sz = le_size(attr->name_len);
+-- 
+2.53.0
+
 
 
