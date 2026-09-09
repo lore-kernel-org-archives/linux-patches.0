@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EA4580390;
-	Wed,  9 Sep 2026 14:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA81568FAC;
+	Wed,  9 Sep 2026 14:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962889; cv=none; b=jDg0SZWy3BX+T6GEKgGUWLKEtyFRmrdWllRcNTfRcy2Tzq8AzPAp/LS2FNncA1yGocDDIV0ewXIFj4BGuVk8+YD73d/0vIVahdKU0DxLv1f2gGep2qJ2HuQQtxbb0JzMnQf9Pe+JEMJPaCXN3wH7RS4tif4vVusFpaN81UmPzdg=
+	t=1788962892; cv=none; b=M3q0JPo9l2AQLerlFvL5crgcw5VsWJShBUZYvHqCpMtn5d4GUjH9Tk7YkrG6ChAdl4pB0NW8iDQiospzlezCK7V12xcoQWz8YXvy3/uLmt6g68hIMf8/r4UyKC9mVzTVdbZgSNxRY3BfqhPULhXzgnIWvgtDb2/fGtjeD/j6bng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962889; c=relaxed/simple;
-	bh=loYAhMlQL68dUK78qR1eI7ZY3gS6A7/p4ubXnMy86Sg=;
+	s=arc-20240116; t=1788962892; c=relaxed/simple;
+	bh=By3f66MXU7vvmaYP0Fr33KHRrfNb1skVUlWna9cNdOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNrTOYYWsk34AgPd/KFAknkspAElaMhOF7e956+zbWrfFWw7suV3SstqAPoiRdMq3FA249jMzLY47cCttIvQw9IlJ4c+EoHeg0kiQsPhpo5OLI9LRVuDyhPClUjaHZKY/OAvrnllf436AS4apZPjNTyliZEybvfQ6ux8HkOXO8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzh1eHxq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PonN7EzaK5TNLg1S4XfBeG0Vv0xO89Y+QBRZWACByR3qwMwp7aP5ibag1PVC3GIMblkG8HO7eEtLCrw6MPwEYxH2ybFzeRnbCPojHJsXPkmunBNFougX3Ifo6nUtlZgUeD7WJp3D0V8G8khBF6u8gjntRU2kp+kggeM/yJtYCoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iU4MP/0D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzh1eHxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92971F00A3A;
-	Wed,  9 Sep 2026 14:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iU4MP/0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C330B1F00A3A;
+	Wed,  9 Sep 2026 14:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962888;
-	bh=hlvAxNmvozXdE0xA9NAzeTzxHNcDRtjEucmpK588UbQ=;
+	s=korg; t=1788962891;
+	bh=iOI3z8/ydvtP+mDpvwP6eDkcyNJLe8+MTDrjszIiRBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jzh1eHxqPoHJNZUaDMjIY++s+2ij626LciKloZ7u8rcEJoFcR0WMj5XV1Z/7QeJ2r
-	 UtmgO2ADyUX46f+qEbu+gJwRgd5ASAYEOuiid0i4ZCP+dh7PlggFlnbu9XPgR8nQO6
-	 SPjLKfxPXm2WtiL32nH3N2oqV1G5xkq3kg7bbAJU=
+	b=iU4MP/0DLW3pU7C9W45/Yuik0zqaBTDyovksjMnQc6tyEaAhtZ9TUELfl095aooEe
+	 Ly5O2GMnu01RLUr0zuyGYb2YI0s/PUq7HuUlNqXi87kmaEjE7rYJpG0q3yO3c8+lKt
+	 tZVYn1+bY38/57flz58wVGJuccPUadZIc5SV7Mg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 429/556] scsi: qla2xxx: Fix cs84xx use-after-free on host teardown
-Date: Wed,  9 Sep 2026 15:41:49 +0200
-Message-ID: <20260909134245.694301539@linuxfoundation.org>
+	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 7.2 447/556] f2fs: reject overlapping move range after len expansion
+Date: Wed,  9 Sep 2026 15:42:07 +0200
+Message-ID: <20260909134246.317106665@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,71 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit 33d102102d925357c5fd172dd6672a27d74b3215 upstream.
+commit 28c1ef094e7c86977d9bf570dc0362fc54e36437 upstream.
 
-qla84xx_put_chip() drops the last reference to ha->cs84xx and frees it via
-__qla84xx_chip_release() without clearing ha->cs84xx. During teardown it ran
-before scsi_remove_host(), which is what removes the 84xx_fw_version host
-sysfs attribute. A concurrent read of that attribute in the window between
-the two calls executes qla24xx_84xx_fw_version_show(), which dereferences
-the freed ha->cs84xx, resulting in a use-after-free.
+F2FS_IOC_MOVE_RANGE treats a zero length as a request to move data
+from pos_in to EOF. However, the same-file overlap check runs before
+that expansion, so a request with len == 0 bypasses the overlap
+rejection added for same-file moves.
 
-Move qla84xx_put_chip() to after scsi_remove_host() in both
-qla2x00_remove_one() and qla2x00_disable_board_on_pci_error(). Once
-scsi_remove_host() returns, the sysfs attribute is gone and kernfs has
-drained any in-flight show(), so no reader can touch cs84xx; the put still
-runs before the host and ha are freed.
+For example, with a four-block file, moving from block 0 to block 1
+with len == 0 is accepted by the old check because pos_in + len is
+still pos_in at that point. The code then expands len to cover the
+rest of the file and calls __exchange_data_block() on overlapping
+source and destination ranges in the same inode, which is the
+data-corruption case the overlap check was meant to reject.
 
-Fixes: fe1b806f4f71 ("[SCSI] qla2xxx: Refactor shutdown code so some functionality can be reused.")
+Move the overlap check after the source range has been validated and
+len == 0 has been expanded, so it sees the effective length. This is a
+no-op for non-zero len (the value is unchanged there) and keeps the
+existing early return for identical positions.
+
+Fixes: d95fd91c1ac1 ("f2fs: exclude special cases for f2fs_move_file_range")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-7-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/f2fs/file.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -3933,8 +3933,6 @@ qla2x00_remove_one(struct pci_dev *pdev)
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3144,8 +3144,6 @@ static int f2fs_move_file_range(struct f
+ 	if (src == dst) {
+ 		if (pos_in == pos_out)
+ 			return 0;
+-		if (pos_out > pos_in && pos_out < pos_in + len)
+-			return -EINVAL;
+ 	}
  
- 	qla2x00_dfs_remove(base_vha);
- 
--	qla84xx_put_chip(base_vha);
--
- 	/* Disable timer */
- 	if (base_vha->timer_active)
- 		qla2x00_stop_timer(base_vha);
-@@ -3959,6 +3957,8 @@ qla2x00_remove_one(struct pci_dev *pdev)
- 
- 	scsi_remove_host(base_vha->host);
- 
-+	qla84xx_put_chip(base_vha);
-+
- 	qla2x00_free_device(base_vha);
- 
- 	qla2x00_clear_drv_active(ha);
-@@ -6828,8 +6828,6 @@ qla2x00_disable_board_on_pci_error(struc
- 
- 	qla2x00_dfs_remove(base_vha);
- 
--	qla84xx_put_chip(base_vha);
--
- 	if (base_vha->timer_active)
- 		qla2x00_stop_timer(base_vha);
- 
-@@ -6847,6 +6845,8 @@ qla2x00_disable_board_on_pci_error(struc
- 
- 	scsi_remove_host(base_vha->host);
- 
-+	qla84xx_put_chip(base_vha);
-+
- 	base_vha->flags.init_done = 0;
- 	qla25xx_delete_queues(base_vha);
- 	qla2x00_free_fcports(base_vha);
+ 	inode_lock(src);
+@@ -3171,6 +3169,8 @@ static int f2fs_move_file_range(struct f
+ 		goto out_unlock;
+ 	if (len == 0)
+ 		olen = len = src->i_size - pos_in;
++	if (src == dst && pos_out > pos_in && pos_out < pos_in + len)
++		goto out_unlock;
+ 	if (pos_in + len == src->i_size)
+ 		len = ALIGN(src->i_size, F2FS_BLKSIZE) - pos_in;
+ 	if (len == 0) {
 
 
