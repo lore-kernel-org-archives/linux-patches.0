@@ -1,162 +1,302 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011045.outbound.protection.outlook.com [40.93.194.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B10136351
-	for <patches@lists.linux.dev>; Wed,  9 Sep 2026 15:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788969136; cv=none; b=b7J0UVq2MN7Nep3AhClgAVo7BIMMGKvoG/dfWLtttI4TP+9JHEF21A204oEb1FwoVHgcoth9vUvxAOQboEDrld40EXyc9JqOfgwHCejsZdKkaL/EXWA+xUhZd2moGIpZaaJaSXq5juWX4E+XziiSlYNsuePu08tVQEfEFY1Lyoo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788969136; c=relaxed/simple;
-	bh=SSebE+ST6hsckt7BsoZWaCrfWED87E2Ve65oZGO3YSg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XT7thc3IqPPNQ5VEHmvJ2DWlx4kJgSnHmW45jpQfPT79prPnIXxTVRTCfKzfO00FgYGiijDmJjQG5qRsT2UTiuZJ7ujMEWOxcs9ZoM6xe6AuDLFoPK5oWvjgs4WPN4/fC2QunQCj5hQaSP1icsYGPM4iag31ZNV5XjKGPQNpSuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=ZCJfA6QM; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFEA3CFF49;
+	Wed,  9 Sep 2026 15:57:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788969450; cv=fail; b=VjNe6qH26xaEw8dysU6G8wYdtmzA2r2IXgsU2hrUST1dpa6KaCQPdp5SSnpoeSSMhgSpgHNeP3M4L4RGQQt8g5mlP5zgpDCjWY/ur9iStFCev5awjjOBf179vBE5DYNfSRTniOhIKd5yAYABWVPXfhLqqgDn3JpXwaYFtzBWZgY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788969450; c=relaxed/simple;
+	bh=PrHpJLQM4U2dov87fOQGGzpCDySkQ7j2PIW1v2jh8Ts=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=XScwpQu10jwGAEnpVXNT8emEaobXjMbzChyBOme/bbL2mQGzaOS6TbfnuegVWFA/uEJd7mpvzfStuuFMYJbuQ8kTvH6esbDJqCEzQPEG/cMVvpk/AAWPOWnoNUDbbeouljdikXDKN0+JeUhSjCjLdKJAkP+bPGvOKtiSS46tC+o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=PDydhBNR; arc=fail smtp.client-ip=40.93.194.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="ZCJfA6QM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1788969120; x=1789573920; i=rwarsow@gmx.de;
-	bh=SSebE+ST6hsckt7BsoZWaCrfWED87E2Ve65oZGO3YSg=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=ZCJfA6QMO/uxLPYoMc3J/jPyu/ecO007BVbArew0SxSP5g8Nxgta4Ac19lxMJ5Yt
-	 V0u8HGdAiXyKBrdBzQ86S9i15RFJD4W1AvvETLtSiL/6/zyJGNnTHXojKM02/ykU+
-	 97HPNwWdLiOWRnUFgr6uiMLnygLTHSJw3F9jFZUeXGVLH4fQkwyDng3pzQgPhKYpv
-	 0D0+KXPXubMDEYQjuAJkQLSxMOp/SUYpkqtjEKvjpavU53IuA0q7W6Ri5dbyxXuBQ
-	 oTURnQOIFrHAwecV3ztty85POO5z778FByl2B5EhtlxjjIbbTrRGbmN4psZr//kEO
-	 XeVRoUV8nD/f+uJYbg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVeI8-1xEL2B2qm4-00Y3G8; Wed, 09
- Sep 2026 17:51:59 +0200
-Message-ID: <510dc2b8-175a-4606-a36b-df46ae4fd6e4@gmx.de>
-Date: Wed, 9 Sep 2026 17:51:57 +0200
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="PDydhBNR"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Z6Lell5Xt6HpI2EzVrx3ZSM3HuybqUcR1eABzmhg5yYbH0aryVgRFb9du+czia6PzKTkNXZ24hiRI4Xic7/21RFThagHr6haF+pxbWSPZ1W1DSlZSDNOWoiDQEQylDaA9VLuUEGjIen+MtBpaDfid0qVRC1BImilECBHbYhdmjlO9CTtRbXmuNtw0btHI2l9UZ8bNkN5WrAH9W9Hyh1b8g3noe9IahO2FK6wfAnWaVX3Q+hyUF1XpFILpomM+v9e50qP1EoS21Sop7ILta9FSgQsV7zTs1ag6/Cj57lJ8uuLJROkHeUdp0a8VSjjYrrH7+RRkzmhMPQ/E7iy1OaQBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EdD+6dJeH67SQb2ed6lp7JQXFigAhkuROddzTONiDuI=;
+ b=XdZQEPk3C8sSqJ/16QtUHQ6QryjidqulD0Ov2ZbI02lYduKhpm1N1X2mdxCy9zmlzcebTcHP16aiJjowDkirHpKb21EC+50eJczHJmgGNiL1U2026esE0yRxC3i50TzwdGuOwPYsW+GnfCplHReMNnPY8d6vugl4Gw2YY5uO9S8uwSi2HjWewD8q4PPL359+VVos06Vqwye7AeIJmPvXp2h6KQsG53GV8CMdfzheIlXYI3hHCtXNBPXeENkpmUgxXXUFhTnDVGZKHV3fIGGLRf21tFCDsAISMw8pOfbxB5SNLWjBbg2Ub5lWb6U15/Xua/r+xdwl3Oq9m+9p42A+RA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EdD+6dJeH67SQb2ed6lp7JQXFigAhkuROddzTONiDuI=;
+ b=PDydhBNRJhwIBkUQ1GOi42d0BOYoPtdGZ8s3ieySd3U1a6l14vi1CogUDHKMYjb8TcW8gt2YofSg6vi7gPdhfIr88ZhlICBVUmFfwvyTzmJeDhp3XIG1baKXFicXCN20J0Ma0rU/Kn5h16WXWICNkOUG5uDFixKrYFHgmJYFaxWgyK6scUusKuKEUQeu8g0xIfRxDy/++KP0w4aYCWtEOlZZ18hswGbjWeg8NGsMSomUu6W1l56F7GmgYeec2D4C1KbjYw/EIYTWAexOv69/muAnzSa0rak8EvGtRp4PWbCPaxgjjvTwdcg3w6p6S2eXXL9HuWBGdDYOBSNH6nY1HA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SN7PR12MB6887.namprd12.prod.outlook.com (2603:10b6:806:261::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.8; Wed, 9 Sep 2026
+ 15:57:22 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0406.007; Wed, 9 Sep 2026
+ 15:57:22 +0000
+Date: Wed, 9 Sep 2026 12:57:21 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Mostafa Saleh <smostafa@google.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Jean-Philippe Brucker <jpb@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Will Deacon <will@kernel.org>, David Matlack <dmatlack@google.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Pranjal Shrivastava <praan@google.com>,
+	Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org,
+	Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+Subject: Re: [PATCH v5 8/9] iommu/arm-smmu-v3: Change how the tlbi describes
+ the invalidation
+Message-ID: <20260909155721.GA4121847@nvidia.com>
+References: <0-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
+ <8-v5-b810cf379bfc+13d738-smmu_tlbi_jgg@nvidia.com>
+ <ap7NcebXzWC38VVo@google.com>
+ <20260907153429.GB4157646@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260907153429.GB4157646@nvidia.com>
+X-ClientProxiedBy: YT4P288CA0024.CANP288.PROD.OUTLOOK.COM
+ (2603:10b6:b01:d4::25) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.2 000/556] 7.2.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260909134230.441546314@linuxfoundation.org>
-From: Ronald Warsow <rwarsow@gmx.de>
-Content-Language: de-DE, en-US
-In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:ubfoJgG5xRkXvMIXBAmulopwWI84MGSDrGxSdG6/y1GrvtpE/F0
- chcT6bLULSHlFQ8WezCsSjtY9Mb6SlyW1lNYqwYcqGIWdrVgVa0RVawxok7n0a8h+xKYhVz
- fnCsfApfq72eKFbX6InxBJXBGljMgQqpc1uixHB78QhUXc9NKriM56Z0YNkS59yiMzr8skf
- Zn82xeGnPSRJ2SMNQxfAA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:AUr6VetZ5FQ=;bWFfuvahG9lD4Jbh+088CsddyOW
- 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
- LqAkYvnNzsWtGCR3EqY=
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SN7PR12MB6887:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6f51f949-862f-4d25-b469-08df0e8b08c8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|23010399003|1800799024|7416014|376014|22082099003|18002099003|11063799006|4143699003|56012099006|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	sgl8Fu3ZqbgQ/9MQj3/70MenLlY2h3g3cpbqOCVCGvoO5HQykaawsvu6ArFXqUhVLSk2yVSs0BXIOcvqczAzw0qpZ+FEfUuHWVoT7MVOeTaFQjJf2B81PNwvxIKdhgC00l3aG79jXWOZmW8VI3aNXGDg0seTUzavu54cRMw7e3GsYD/jFhT/6FBTWdXlcz/SG92mkhDAma5NNvBABar2VEw+vB+WBBrmut9Ts8RSyaoFHGmZqRcDkTHtazeXcPHQiUgE8kShpSc6XjbYDDM1SmzItLk5UQ4Bgu8+mgGROztv2SRBQIKxCobbqZYkhwnijp4GLywFrmNC451NEwW3vW+YOkFzcCvK0W+6S+uiun7D6VDMLoXZl194Grie4sBlkp0mpfbj6jrXEhrpEcXINC1xU2grDilL/ArrNsnqVQcAGc+N7Tn1HAbRH6oqhiJaHGaDfj49S1mlsC/m7gPQb82ZX3q7MgZBxGvlZjsdXd3hcRRUMsbNuz+qc1JWffPqyoKGQNky+9Ey8GtLhNRYRkX0fEdZCcaWJkMukfs6hGgD94zSAo4VC+agnlMAn8qWLLbm7usiLAw3D0fYUROTgzfx1tE7uitkgBgyfM8HCvHq4opwkfKN1zfWDZY+Fpu7bkqW10vi0/qXB+NTVnHjuAOHK9zrG7nlxyNTOB0M4ew=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(7416014)(376014)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?6khMfdo8zAiU4AnimlRp1Y3YUjuV70vrbUeSlMlE/72yEualIPFJbAhsiFuK?=
+ =?us-ascii?Q?BrSbeYmGMvf647qdc4YBLxP7VduAVdWJRGeyWHE9bx2WbwYT2a8RN7op1+bl?=
+ =?us-ascii?Q?BPG2kTBHnTTXs+0+aGM5czo/CrKXVlRbTIwtwHYaVcEcAnrQfZbqg+k/iUJ3?=
+ =?us-ascii?Q?m5YMs/DowXZbpIZAUTYgv8GC+EvScHA5cvRjzRHZ9apDKZ75zSRIvxp5B6qg?=
+ =?us-ascii?Q?VxJ1il3CJ3hNbMf7GvBJmwhCm3qtQkYOAat5x0o0Ts9gVOLG2TcTyLImDQjs?=
+ =?us-ascii?Q?Zm0hACtCNFxF6LCVlCVWARZ5deU0Z8Bf7xbtqo36h920BEm2ThVJoKwN6Nup?=
+ =?us-ascii?Q?eqn/oA2Qk+vDsvfl2TdpSQ0IaU+tyrQNHhQ8LvgomPlOF5if8X3p+S7CARAr?=
+ =?us-ascii?Q?whkwTwgDaHOw/qR/7sYUNYHeRUUIB3pfZbtQmLtSLeL7Q25roXCDiNJq/21U?=
+ =?us-ascii?Q?/tFncoM6zli7fmEA8xZOOiaHXXXkCLENthHYwKPvTSIPGC0qF+F1iao20M1M?=
+ =?us-ascii?Q?xhSHsyL8fZGssTR2im96Bm2Xdt2LrtAv/OIw6Oxtt/zUFvwdTfTqTWzqHNMy?=
+ =?us-ascii?Q?EWRoFKnM6a+72lln7Sgkse5WLcbZ/opN+c0GNqo9aUSONflOhSlQkMvEiYO9?=
+ =?us-ascii?Q?HAqXNpJx7iyejEz05YrAT0FVulFw6T+gSa9HkSfujW6dvbiEk2mjZk1GKEuP?=
+ =?us-ascii?Q?zc7tILKXTejzNZdRdy4MTF4u5pip/Go7lI6CVc9X1GnoruApCqXbaw8SyQVh?=
+ =?us-ascii?Q?A/Xw8E9yPOH5oePGpJvJSky4UlEFH7ZXBl5p7usOH1Fzuj4QUVqZZv7mEy30?=
+ =?us-ascii?Q?mhavRgR5j+JOoxMRTXol08+NbQqsYKBMhJv2Qu0WYd51uJ717ZBvyEfxo8/P?=
+ =?us-ascii?Q?DFHTnc2fE4A4/IXv9ftThnBZYTsn4ZDBKNXSnGj915zLX9/YqN+W/+cclEgu?=
+ =?us-ascii?Q?7dilbR+fkh129dqBVcxjhzBFgLCaPjs8uIrdY/h4SwYAPiy+EDHQsSLXbSN0?=
+ =?us-ascii?Q?9QyjqCNuOYTmrglJuqlm7xSrNp3hIJQqvpbkiNg+4By9qY8x/7fQ1rqiTWVS?=
+ =?us-ascii?Q?hDV4N2tnTRsBzPI/lS5xANfxajVpfbvsoZGqmniDHrowNb8Ccb4FQiAaYXwK?=
+ =?us-ascii?Q?jtnR91ZJzEZmLYCnx9cN2xwBiwbOm7ZG12Nvb1H9X0xXqCYuvwuaK1rUdWtK?=
+ =?us-ascii?Q?tNMRuy/b56coUiorXuhHazLXnIFSGj4gLF+QI4yV9TxccRrcbrc2UengHKT/?=
+ =?us-ascii?Q?nadpv/d58T9j+Wl3OXBatnI0+GvC6EZxqaLrg58YBhHiRYbG+PEroz36ncOc?=
+ =?us-ascii?Q?yRwWiHwVnthf06hsZY2yHzZKeIw3Oo2w34ExfysDJg2CpmNaHAYyGn87K4EH?=
+ =?us-ascii?Q?54CFdmLOM9qKe/Zl0tFz5QLnwfbEIjTTMvK7+0en2tIWcpq66Xyki+TcV1NX?=
+ =?us-ascii?Q?K8LteGhNKDDljsz7nQB/BaYNe9D1tyPOD6pOC2GhN9uLnCdIERKs6mg9a1zD?=
+ =?us-ascii?Q?QTrQkG743cnRHh7G1OuftBnPjUsvR5Gnj4BcaR+x5+pgypc6hG9xoGiMAu/P?=
+ =?us-ascii?Q?Kj7FueDR9jdbEerDkiIFvOVT1cdHzVToLebyL9A7bXrQz2RL7mehctxN5BSW?=
+ =?us-ascii?Q?t6y14ONxm0Frr50OFyvYufNoWSz6oPe1h0M/6JM7gqUz68DDHqD8Rz4x1sAg?=
+ =?us-ascii?Q?gB/xei4vdfDXAMU/kGm1XqVrVLbmyI67xoKrtcbNowRIcn/w?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f51f949-862f-4d25-b469-08df0e8b08c8
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2026 15:57:22.2889
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lsrYmzQw1aap4HgHGHU263uDysNLi6JGa6sT/S+UTISBRu6bQjWnf7+Bmp2eJMdc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6887
 
-Hi
+On Mon, Sep 07, 2026 at 12:34:29PM -0300, Jason Gunthorpe wrote:
 
-kernel build / boot test on x86_64 (Intel).
+> > > +	tlbi.leaf_levels_bitmap = BIT((ilog2(gather->pgsize) - tg) / (tg - 3));
+> > 
+> > Having some page table macros would be helpful (and in other places in
+> > this patch)
+> 
+> At least this one gets deleted in the next series, so I left it like
+> this deliberately. Was there something else you saw that had
+> duplication?
 
-No regressions here.
+I ended up with this:
 
-Thanks
-
-Tested-by: Ronald Warsow <rwarsow@gmx.de>
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+index 07ba4e7910ab84..fc9622cdbac808 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+@@ -155,7 +155,7 @@ static void arm_smmu_mm_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
+ 		 */
+ 		.table_levels_bitmap = 0xfe,
+ 	};
+-	u8 pmd_lg2sz = (tgsz_lg2 - 3) * 1 + tgsz_lg2;
++	u8 pmd_lg2sz = arm_smmu_pt_level_to_lg2sz(tgsz_lg2, 1);
+ 
+ 	/*
+ 	 * If the size is small then we can infer the invalidation is PTE only
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 2a159be751891e..8dd5d30c569771 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2485,7 +2485,7 @@ static void arm_smmu_tlb_inv_context(void *cookie)
+ static bool arm_smmu_ttl_addr_aligned(u64 address, unsigned int tg,
+ 				      unsigned int ttl)
+ {
+-	unsigned int pgsz_lg2 = (tg - 3) * (3 - ttl) + tg;
++	unsigned int pgsz_lg2 = arm_smmu_pt_level_to_lg2sz(tg, 3 - ttl);
+ 
+ 	return !(address & GENMASK_U64(pgsz_lg2 - 1, 0));
+ }
+@@ -2497,6 +2497,16 @@ struct arm_smmu_ril_range {
+ 	unsigned int scale;
+ };
+ 
++static unsigned int arm_smmu_ril_calc_scale(u64 num_tg)
++{
++	return fls64((num_tg - 1) / (CMDQ_TLBI_RANGE_NUM_MAX + 1));
++}
++
++static u64 arm_smmu_ril_calc_num(u64 num_tg, unsigned int scale)
++{
++	return DIV_ROUND_UP_ULL(num_tg, 1ULL << scale);
++}
++
+ /*
+  * Initialize the smallest RIL covering num_tg and ending at last_tg.
+  */
+@@ -2507,8 +2517,8 @@ static struct arm_smmu_ril_range arm_smmu_ril_init_end(u64 last_tg, u64 num_tg)
+ 	if (!num_tg)
+ 		return ril;
+ 
+-	ril.scale = fls64((num_tg - 1) / 32);
+-	ril.num = DIV_ROUND_UP_ULL(num_tg, 1ULL << ril.scale);
++	ril.scale = arm_smmu_ril_calc_scale(num_tg);
++	ril.num = arm_smmu_ril_calc_num(num_tg, ril.scale);
+ 	ril.start_tg = last_tg - ((ril.num << ril.scale) - 1);
+ 	return ril;
+ }
+@@ -2654,7 +2664,7 @@ static void arm_smmu_tlbi_calc_range(struct arm_smmu_tlbi *tlbi,
+ 	 * Unlike other IOMMUs the spec has no alignment requirement on the
+ 	 * address beyond alignment to tg (so long as TTL=0).
+ 	 */
+-	first.scale = fls64((num_tg - 1) / 32);
++	first.scale = arm_smmu_ril_calc_scale(num_tg);
+ 	if (first.scale > scale_max) {
+ 		/* Range too large for a single command do full invalidation */
+ 		tlbi->range.use_full_inv = true;
+@@ -2666,7 +2676,7 @@ static void arm_smmu_tlbi_calc_range(struct arm_smmu_tlbi *tlbi,
+ 		 * Produce a single invalidation by rounding up and disabling
+ 		 * the trailer.
+ 		 */
+-		first.num = DIV_ROUND_UP_ULL(num_tg, 1ULL << first.scale);
++		first.num = arm_smmu_ril_calc_num(num_tg, first.scale);
+ 		trail.num = 0;
+ 	} else {
+ 		/*
+@@ -2694,11 +2704,10 @@ static void arm_smmu_tlbi_calc_range(struct arm_smmu_tlbi *tlbi,
+ static u8 arm_smmu_tlbi_calc_stride(struct arm_smmu_tlbi *tlbi)
+ {
+ 	u8 combined = tlbi->table_levels_bitmap | tlbi->leaf_levels_bitmap;
+-	u8 tg_szlg2 = tlbi->tgsz_lg2;
+ 
+ 	if (WARN_ON(!combined))
+ 		return U8_MAX;
+-	return (tg_szlg2 - 3) * __ffs(combined) + tg_szlg2;
++	return arm_smmu_pt_level_to_lg2sz(tlbi->tgsz_lg2, __ffs(combined));
+ }
+ 
+ /*
+@@ -2972,7 +2981,8 @@ static void arm_smmu_tlb_inv_walk(unsigned long iova, size_t size,
+ 		.start = iova,
+ 		.last = iova + size - 1,
+ 	};
+-	u8 table_levels = BIT((ilog2(size) - tgsz_lg2) / (tgsz_lg2 - 3));
++	u8 table_levels =
++		BIT(arm_smmu_pt_lg2sz_to_level(tgsz_lg2, ilog2(size)));
+ 
+ 	tlbi.table_levels_bitmap = table_levels;
+ 	tlbi.leaf_levels_bitmap = table_levels - 1;
+@@ -4247,10 +4257,12 @@ static void arm_smmu_flush_iotlb_all(struct iommu_domain *domain)
+ }
+ 
+ /*
+- * Called by io-pgtable-arm.c for each run of same pgsize leaf only
+- * invalidation. If it has to change to a different leaf level then it flushes
+- * the gather and starts a fresh one. Thus this always targets only a single
+- * leaf level.
++ * io-pgtable-arm.c calls this function either under
++ * arm_smmu_tlb_inv_page_nosync() or via the normal iommu code to flush the
++ * gather. Due to how iommu_iotlb_gather_add_page() works the gather will end up
++ * with a single uniform pgsize leaf. If it has to change to a different leaf
++ * level then it flushes the gather and starts a fresh one. Thus this always
++ * targets only a single leaf level.
+  */
+ static void arm_smmu_iotlb_sync(struct iommu_domain *domain,
+ 				struct iommu_iotlb_gather *gather)
+@@ -4266,7 +4278,8 @@ static void arm_smmu_iotlb_sync(struct iommu_domain *domain,
+ 	if (WARN_ON(gather->pgsize < BIT(tg)))
+ 		return;
+ 
+-	tlbi.leaf_levels_bitmap = BIT((ilog2(gather->pgsize) - tg) / (tg - 3));
++	tlbi.leaf_levels_bitmap =
++		BIT(arm_smmu_pt_lg2sz_to_level(tg, ilog2(gather->pgsize)));
+ 
+ 	arm_smmu_domain_tlbi(&tlbi, smmu_domain);
+ }
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+index 8b251a188810c9..70d732a96be27f 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -810,12 +810,24 @@ static inline struct arm_smmu_invs *arm_smmu_invs_alloc(size_t num_invs)
+ 	return new_invs;
+ }
+ 
++/* Generic page-table level 0 is the leaf-only level. */
++static inline unsigned int arm_smmu_pt_level_to_lg2sz(unsigned int tgsz_lg2,
++						      unsigned int level)
++{
++	return tgsz_lg2 + (tgsz_lg2 - ilog2(sizeof(u64))) * level;
++}
++
++static inline unsigned int arm_smmu_pt_lg2sz_to_level(unsigned int tgsz_lg2,
++						      unsigned int lg2sz)
++{
++	return (lg2sz - tgsz_lg2) / (tgsz_lg2 - ilog2(sizeof(u64)));
++}
++
+ struct arm_smmu_tlbi {
+ 	unsigned long start;
+ 	unsigned long last;
+ 	/* Base Translation Granule of the page table */
+ 	u8 tgsz_lg2;
+-	bool leaf_only;
+ 	/*
+ 	 * Level bitmaps use iommupt numbering: bit 0 is the leaf-only level
+ 	 * (ARM level 3), bit 1 is the next level up (ARM level 2), etc. These
