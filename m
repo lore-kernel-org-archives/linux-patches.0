@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097F3583AB3;
-	Wed,  9 Sep 2026 14:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07845947ED;
+	Wed,  9 Sep 2026 14:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964828; cv=none; b=r5964KfwawXqpy4zEyeWQc1ad+PwPa3qv8fI7X7tenFY9s4Ps4DYiNkQpDwZKMNtPwduoOtNZ8OEIZ+2hwe9ZGZnKdLEysCtSYSCNZLs5BHGtRUWT0pM7V9i5c6WN9TCcR1FzPdQdNqLTeEeqg1J2Gq7JLjC1Qc11amjebXrbtw=
+	t=1788964831; cv=none; b=HfxgSo01Lnbt9LSbsde4W6SVjcMSGOSKSz/Pg5rfPsCwQKQKypiBHhmnW0bfcuf+LhWmqxCijVekD3dFnLgN98yCVVUdYMpLeF+It8OaL4WyvN+BSqlIBkvsrJwnTzmO2XkKS+sSYEgC6Zk4qMyLg9jsyReUt6eDqTbUczB6fYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964828; c=relaxed/simple;
-	bh=JcbAi3mFLxNeZMlYBbFmlWmWnFLul6pN1TjOYXO1Jmo=;
+	s=arc-20240116; t=1788964831; c=relaxed/simple;
+	bh=ue6hqsurkuotiqpL4vNykiPkYPH38HNdGOYu9jGtkzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvydIdh1AQPpsY8ZRI1h6psLYR4AZL5xD0RylqnWLA++h96nQGu9TYs1gZkV1kmRp3cjuv+m4dO23IEEY0XV40TtW40Q8WoRapZTHsbNC1gIar7wfIJgjMKS1qVfsdqtoPYcKjYhwNydv/dH2miCL7/m/e4A6xuZ/I4bwrzS6oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKNTVZt1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XniA6x1PxCBIVnvREGDBgouNHRhsotHKEY5gnEjQpMKEAVJ5QKGfnJCpEoO5LzUQiiqMwxHwxLdnuxY3TG8eUD6Ifr6Eo7X8slKBtMApEN/TYH+jh37TyfPFiXCNS3cV5VgRzGgCYpD3VULv6taAL6ITEQkR4fzOsiGI71u1cFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXYhkGhV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKNTVZt1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6804A1F00A3A;
-	Wed,  9 Sep 2026 14:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXYhkGhV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E881F00A3A;
+	Wed,  9 Sep 2026 14:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964826;
-	bh=8LJPWkhk//1HjVrTXL7p3vMSp1krmiLuRetgU89rpYs=;
+	s=korg; t=1788964829;
+	bh=HZ4CcS0Pm/TT8eUf4GvDyDNLU+odWagfVq5iHcaHGRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aKNTVZt1sffQBj6ydvaVozKl8+RUYrDzlju9vrUkNWPah2Is/ucKTjx3eE9hjKXfG
-	 CtGdD/UritMdXm9sEK14dyr1anR1meB1MqU05dvISfMy5yPILM6OiZhhn012g6P+7g
-	 29pBIbRDIt/00Gc78W+qVLcMi/3/hBmMeV28DQfE=
+	b=BXYhkGhVQH1ZmbvlIgVQ1mOP4bn6cKLYP446ydb9BVKBYsN9+koyXHrFYBOPsta4j
+	 zy9KFBP5e1Qk0s9mrQ7qk/Vr6pyNQs2h/f6iN1EZgel+3HW/TqaBmmbgyZFnz+oJ1S
+	 B2x0dVrumEBhqJxX4BB1v/aNxBZg1QjVo/pZS/DA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Brian Geffon <bgeffon@google.com>,
-	Minchan Kim <minchan@google.com>,
-	Richard Chang <richardycc@google.com>,
-	Yuwen Chen <ywen.chen@foxmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Bernd Schubert <bernd@bsbernd.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 555/583] zram: take write lock in wb limit store handlers
-Date: Wed,  9 Sep 2026 15:44:00 +0200
-Message-ID: <20260909134256.929239155@linuxfoundation.org>
+Subject: [PATCH 6.18 519/583] fuse-uring: use named constants for io-uring iovec indices
+Date: Wed,  9 Sep 2026 15:43:24 +0200
+Message-ID: <20260909134255.697978634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -55,85 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 7c929664fddfdaaa4afe5ae833d0f3044709d95c ]
+[ Upstream commit 8bbb2ad1f687633a991839bd3efae04ccfb29e19 ]
 
-Write device attrs handlers should take write zram init_lock.  While at
-it, fixup coding styles.
+Replace magic indices 0 and 1 for the iovec array with named constants
+FUSE_URING_IOV_HEADERS and FUSE_URING_IOV_PAYLOAD. This makes the usages
+self-documenting and prepares for buffer ring support which will also
+reference these iovec slots by index.
 
-Link: https://lkml.kernel.org/r/20251122074029.3948921-4-senozhatsky@chromium.org
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Brian Geffon <bgeffon@google.com>
-Cc: Minchan Kim <minchan@google.com>
-Cc: Richard Chang <richardycc@google.com>
-Cc: Yuwen Chen <ywen.chen@foxmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: dde75313eed0 ("zram: set default primary compressor in zram_destroy_comps()")
+Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: fd10f40af314 ("fuse: copy request headers via a stack buffer for io-uring")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ fs/fuse/dev_uring.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -501,7 +501,8 @@ out:
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -18,7 +18,8 @@ MODULE_PARM_DESC(enable_uring,
+ 		 "Enable userspace communication through io-uring");
  
- #ifdef CONFIG_ZRAM_WRITEBACK
- static ssize_t writeback_limit_enable_store(struct device *dev,
--		struct device_attribute *attr, const char *buf, size_t len)
-+					    struct device_attribute *attr,
-+					    const char *buf, size_t len)
+ #define FUSE_URING_IOV_SEGS 2 /* header and payload */
+-
++#define FUSE_URING_IOV_HEADERS 0
++#define FUSE_URING_IOV_PAYLOAD 1
+ 
+ bool fuse_uring_enabled(void)
  {
- 	struct zram *zram = dev_to_zram(dev);
- 	u64 val;
-@@ -510,18 +511,19 @@ static ssize_t writeback_limit_enable_st
- 	if (kstrtoull(buf, 10, &val))
- 		return ret;
- 
--	down_read(&zram->init_lock);
-+	down_write(&zram->init_lock);
- 	spin_lock(&zram->wb_limit_lock);
- 	zram->wb_limit_enable = val;
- 	spin_unlock(&zram->wb_limit_lock);
--	up_read(&zram->init_lock);
-+	up_write(&zram->init_lock);
- 	ret = len;
- 
- 	return ret;
+@@ -1105,8 +1106,8 @@ static int fuse_uring_do_register(struct
  }
  
- static ssize_t writeback_limit_enable_show(struct device *dev,
--		struct device_attribute *attr, char *buf)
-+					   struct device_attribute *attr,
-+					   char *buf)
+ /*
+- * sqe->addr is a ptr to an iovec array, iov[0] has the headers, iov[1]
+- * the payload
++ * sqe->addr is a ptr to an iovec array, iov[FUSE_URING_IOV_HEADERS] has the
++ * headers, iov[FUSE_URING_IOV_PAYLOAD] the payload
+  */
+ static int fuse_uring_get_iovec_from_sqe(const struct io_uring_sqe *sqe,
+ 					 struct iovec iov[FUSE_URING_IOV_SEGS])
+@@ -1136,8 +1137,8 @@ fuse_uring_create_ring_ent(struct io_uri
  {
- 	bool val;
- 	struct zram *zram = dev_to_zram(dev);
-@@ -536,7 +538,8 @@ static ssize_t writeback_limit_enable_sh
- }
+ 	struct fuse_ring *ring = queue->ring;
+ 	struct fuse_ring_ent *ent;
+-	size_t payload_size;
+ 	struct iovec iov[FUSE_URING_IOV_SEGS];
++	struct iovec *headers, *payload;
+ 	int err;
  
- static ssize_t writeback_limit_store(struct device *dev,
--		struct device_attribute *attr, const char *buf, size_t len)
-+				     struct device_attribute *attr,
-+				     const char *buf, size_t len)
- {
- 	struct zram *zram = dev_to_zram(dev);
- 	u64 val;
-@@ -545,11 +548,11 @@ static ssize_t writeback_limit_store(str
- 	if (kstrtoull(buf, 10, &val))
- 		return ret;
+ 	err = fuse_uring_get_iovec_from_sqe(cmd->sqe, iov);
+@@ -1148,15 +1149,16 @@ fuse_uring_create_ring_ent(struct io_uri
+ 	}
  
--	down_read(&zram->init_lock);
-+	down_write(&zram->init_lock);
- 	spin_lock(&zram->wb_limit_lock);
- 	zram->bd_wb_limit = val;
- 	spin_unlock(&zram->wb_limit_lock);
--	up_read(&zram->init_lock);
-+	up_write(&zram->init_lock);
- 	ret = len;
+ 	err = -EINVAL;
+-	if (iov[0].iov_len < sizeof(struct fuse_uring_req_header)) {
+-		pr_info_ratelimited("Invalid header len %zu\n", iov[0].iov_len);
++	headers = &iov[FUSE_URING_IOV_HEADERS];
++	if (headers->iov_len < sizeof(struct fuse_uring_req_header)) {
++		pr_info_ratelimited("Invalid header len %zu\n", headers->iov_len);
+ 		return ERR_PTR(err);
+ 	}
  
- 	return ret;
+-	payload_size = iov[1].iov_len;
+-	if (payload_size < ring->max_payload_sz) {
++	payload = &iov[FUSE_URING_IOV_PAYLOAD];
++	if (payload->iov_len < ring->max_payload_sz) {
+ 		pr_info_ratelimited("Invalid req payload len %zu\n",
+-				    payload_size);
++				    payload->iov_len);
+ 		return ERR_PTR(err);
+ 	}
+ 
+@@ -1168,8 +1170,8 @@ fuse_uring_create_ring_ent(struct io_uri
+ 	INIT_LIST_HEAD(&ent->list);
+ 
+ 	ent->queue = queue;
+-	ent->headers = iov[0].iov_base;
+-	ent->payload = iov[1].iov_base;
++	ent->headers = headers->iov_base;
++	ent->payload = payload->iov_base;
+ 
+ 	atomic_inc(&ring->queue_refs);
+ 	return ent;
 
 
