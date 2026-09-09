@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960FC572673;
-	Wed,  9 Sep 2026 14:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3CB57268D;
+	Wed,  9 Sep 2026 14:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962976; cv=none; b=nQTfIiCjrQ+n+dvU+SRBXmRMldot/mtyY9qVn3LfCKVCrC26fsZW4K9eZXOLtr6mfmDWTX20mj86hzgCTSqubvr6SQ72kA0dRs/rMo8QCjAJaugFkseJHuVvMIybgpofyBNITDdm2f652Lgog4h6dVQguaTsJYxn9Oz6dinuoZ8=
+	t=1788962978; cv=none; b=gOBFsMeqM+vuEwMN6bV/X5tEV0sPpOG/cnRL3Z3h7yYo45Uu95xq8q1vdzRY/juKFMbQCyg/Md69EjckJz5CQ2bEQ8GHto7Fm/toYPfSiulnSV7Itww0Xhcv6+u1eDEiPvVtnJP4buP2SeohQT7FxG8JAOCMOb0Yy4B7TCys//o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962976; c=relaxed/simple;
-	bh=NSjaFj3Pkfa10t3FIXXW6m02pN1J1htdItZVWcU6dvs=;
+	s=arc-20240116; t=1788962978; c=relaxed/simple;
+	bh=adFzMhdUPeFaN/S9+iehWLmqtGHRAhIHexXAicu/IgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oh1V1Vgf1fz4rL7zzRlBXa1Ldcq7kGhL0EZ0+vfCYT5jf7RSAxwbsvaQIMIsPAJ6jjjJipwZ9FEfNefEB645ckrE9eQ5KFWmkqcozsjRRq8BQtsM3Ue6lkw63IkOwfZjz7JfkGej8dBpwSy7yEhdG6GNH03kt2uIwbC87my+ahM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfz26m9s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hnf5IefHH+hCEXwdBPHO8KNGwqiUavO/BMm0KcsLhow3Yohre6riA3OFyDSrWrwUMiJWFjru0fPH7JiVwq5bcodb6t1yPkX/N5mCbibFN1RsdPjNSfvRlYsXTxFeNf4WHSc1g9t/w+40Q7wsBjo1h3C8ToNHa8jmw0maBf28zT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQs+G+Ia; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfz26m9s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDFD1F00A3A;
-	Wed,  9 Sep 2026 14:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQs+G+Ia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35FF1F00A3A;
+	Wed,  9 Sep 2026 14:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962974;
-	bh=to0wvWexPSOCMdcXINqK1czgph64KMp/8QjVwOPDHhk=;
+	s=korg; t=1788962977;
+	bh=on5GJW9CYEH9wIqxTW+TK4Gb4O1EtHDTvI3SApsiaU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kfz26m9sodxUKIMdW/kmM22ZzATxi3P6x3LgUlp69LTpKMDBB0b0kdRVcWRk+Ad9E
-	 zjXGGcBipV0lkMsFuJYknZk12oHG0xv1PY4pdEafGtjPOIGImI2IRH9uaXffhDJ5eT
-	 Sn7DPAtN0tw37ar1FNmH5wyzuEM+wfJ7O9ujnU0U=
+	b=iQs+G+IaPnBnQJW4pE+/r9V4yKCBgQ6d4yRn8XCq4qAyyCYgFl39nkYv8iwLw27Bd
+	 /5WXT5HdrWPIOVX684taJrh2NQ0+G0zHjF+CM7pVtj2231o8la/P0syQTOKDY9g/kF
+	 NADx6i4E8knjOWL/CqhUIpzKOBZvbFicexHMTMQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>
-Subject: [PATCH 7.2 476/556] drm/panthor: fix firmware control interface bounds checks
-Date: Wed,  9 Sep 2026 15:42:36 +0200
-Message-ID: <20260909134247.286432961@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 7.2 455/556] f2fs: dont drop the top folio order in the f2fs_iostat tracepoint
+Date: Wed,  9 Sep 2026 15:42:15 +0200
+Message-ID: <20260909134246.577800159@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,85 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 6a47f9fd2d970674ed9dedc52fc7ab76fd015785 upstream.
+commit 575f6f8ef2abe8552af96e42c65d70964db53563 upstream.
 
-panthor_init_cs_iface() and panthor_init_csg_iface() validate firmware
-control interface offsets with 32-bit arithmetic and the size of the host
-wrapper structures. The offsets are derived from firmware-provided strides,
-so the arithmetic can wrap before the bounds check, and the host wrapper
-size is not the size of the firmware control interface being mapped.
+The f2fs_iostat tracepoint stores the per-order read folio counts in a
+fixed-size array and prints a fixed number of buckets, both hardcoded to
+11. The sysfs iostat accounting array is instead sized by NR_PAGE_ORDERS
+(= MAX_PAGE_ORDER + 1), which is not always 11:
 
-Use 64-bit arithmetic for the computed offsets and validate against the
-actual firmware control interface structure sizes with subtraction-based
-bounds checks. Also validate that the shared section is large enough for
-the global control interface before using it.
+	arm64 16K pages -> MAX_PAGE_ORDER 11 -> NR_PAGE_ORDERS 12
+	arm64 64K pages -> MAX_PAGE_ORDER 13 -> NR_PAGE_ORDERS 14
 
-Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
+f2fs enables large folios for immutable, non-compressed files, and the
+read folio order is bounded by MAX_PAGECACHE_ORDER, i.e.
+min(MAX_XAS_ORDER, PREFERRED_MAX_PAGECACHE_ORDER). With THP enabled this
+reaches order 11 on 16K/64K base-page kernels (MAX_XAS_ORDER caps it at
+11). So an order-11 read folio is possible there and is accounted into
+index 11 of the array.
+
+On those configurations the sysfs file reports the order-11 count
+correctly, but the tracepoint silently drops it: the memcpy is capped at
+min(NR_PAGE_ORDERS, 11), so index 11 is never copied and the trace
+disagrees with sysfs. There is no memory-safety issue, only the order-11
+bucket missing from the trace; 4K-page kernels (NR_PAGE_ORDERS == 11,
+max order <= 9) are unaffected.
+
+Size the array and the printed buckets by a ceiling that covers the
+largest possible NR_PAGE_ORDERS (14) with headroom, and add a
+BUILD_BUG_ON() so any future growth of NR_PAGE_ORDERS fails the build
+loudly instead of silently truncating again. The human-readable
+"order=count" output is preserved.
+
+Fixes: cb8ff3ead9a3 ("f2fs: add page-order information for large folio reads in iostat")
 Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260720134435.13377-1-osama.abdelkader@gmail.com
-Signed-off-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ fs/f2fs/iostat.c            |  6 ++++++
+ include/trace/events/f2fs.h | 20 ++++++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -895,14 +895,15 @@ static int panthor_init_cs_iface(struct
- 	struct panthor_fw_csg_iface *csg_iface = panthor_fw_get_csg_iface(ptdev, csg_idx);
- 	struct panthor_fw_cs_iface *cs_iface = &ptdev->fw->iface.streams[csg_idx][cs_idx];
- 	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
--	u32 iface_offset = CSF_GROUP_CONTROL_OFFSET +
--			   (csg_idx * glb_iface->control->group_stride) +
-+	u64 iface_offset = CSF_GROUP_CONTROL_OFFSET +
-+			   ((u64)csg_idx * glb_iface->control->group_stride) +
- 			   CSF_STREAM_CONTROL_OFFSET +
--			   (cs_idx * csg_iface->control->stream_stride);
-+			   ((u64)cs_idx * csg_iface->control->stream_stride);
- 	struct panthor_fw_cs_iface *first_cs_iface =
- 		panthor_fw_get_cs_iface(ptdev, 0, 0);
+diff --git a/fs/f2fs/iostat.c b/fs/f2fs/iostat.c
+index ae265e3e9b2c..12d4e18a6a50 100644
+--- a/fs/f2fs/iostat.c
++++ b/fs/f2fs/iostat.c
+@@ -332,6 +332,12 @@ void f2fs_destroy_iostat_processing(void)
  
--	if (iface_offset + sizeof(*cs_iface) >= shared_section_sz)
-+	if (iface_offset > shared_section_sz ||
-+	    sizeof(*cs_iface->control) > shared_section_sz - iface_offset)
- 		return -EINVAL;
- 
- 	spin_lock_init(&cs_iface->lock);
-@@ -952,10 +953,12 @@ static int panthor_init_csg_iface(struct
- 	struct panthor_fw_global_iface *glb_iface = panthor_fw_get_glb_iface(ptdev);
- 	struct panthor_fw_csg_iface *csg_iface = &ptdev->fw->iface.groups[csg_idx];
- 	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
--	u32 iface_offset = CSF_GROUP_CONTROL_OFFSET + (csg_idx * glb_iface->control->group_stride);
-+	u64 iface_offset = CSF_GROUP_CONTROL_OFFSET +
-+			   ((u64)csg_idx * glb_iface->control->group_stride);
- 	unsigned int i;
- 
--	if (iface_offset + sizeof(*csg_iface) >= shared_section_sz)
-+	if (iface_offset > shared_section_sz ||
-+	    sizeof(*csg_iface->control) > shared_section_sz - iface_offset)
- 		return -EINVAL;
- 
- 	spin_lock_init(&csg_iface->lock);
-@@ -1007,11 +1010,15 @@ static u32 panthor_get_instr_features(st
- static int panthor_fw_init_ifaces(struct panthor_device *ptdev)
+ int f2fs_init_iostat(struct f2fs_sb_info *sbi)
  {
- 	struct panthor_fw_global_iface *glb_iface = &ptdev->fw->iface.global;
-+	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
- 	unsigned int i;
- 
- 	if (!ptdev->fw->shared_section->mem->kmap)
- 		return -EINVAL;
- 
-+	if (sizeof(*glb_iface->control) > shared_section_sz)
-+		return -EINVAL;
++	/*
++	 * The f2fs_iostat tracepoint emits a fixed number of read folio order
++	 * buckets; make sure every order fits so none is silently dropped.
++	 */
++	BUILD_BUG_ON(NR_PAGE_ORDERS > F2FS_IOSTAT_RD_FOLIO_ORDERS);
 +
- 	spin_lock_init(&glb_iface->lock);
- 	glb_iface->control = ptdev->fw->shared_section->mem->kmap;
+ 	/* init iostat info */
+ 	spin_lock_init(&sbi->iostat_lock);
+ 	spin_lock_init(&sbi->iostat_lat_lock);
+diff --git a/include/trace/events/f2fs.h b/include/trace/events/f2fs.h
+index 270c1a2c24c4..1dd9fc5afc46 100644
+--- a/include/trace/events/f2fs.h
++++ b/include/trace/events/f2fs.h
+@@ -2114,6 +2114,14 @@ DEFINE_EVENT(f2fs_zip_end, f2fs_decompress_pages_end,
+ );
  
+ #ifdef CONFIG_F2FS_IOSTAT
++/*
++ * Number of read folio order buckets emitted by the f2fs_iostat tracepoint.
++ * TP_printk() cannot loop, so the field count is fixed here and must be >=
++ * the largest possible NR_PAGE_ORDERS (14 on arm64 with 64K pages). The
++ * BUILD_BUG_ON() in f2fs_update_read_folio_count() enforces this.
++ */
++#define F2FS_IOSTAT_RD_FOLIO_ORDERS	16
++
+ TRACE_EVENT(f2fs_iostat,
+ 
+ 	TP_PROTO(struct f2fs_sb_info *sbi, unsigned long long *iostat,
+@@ -2151,7 +2159,7 @@ TRACE_EVENT(f2fs_iostat,
+ 		__field(unsigned long long,	fs_mrio)
+ 		__field(unsigned long long,	fs_discard)
+ 		__field(unsigned long long,	fs_reset_zone)
+-		__array(unsigned long long,	read_folio_count, 11)
++		__array(unsigned long long,	read_folio_count, F2FS_IOSTAT_RD_FOLIO_ORDERS)
+ 	),
+ 
+ 	TP_fast_assign(
+@@ -2186,7 +2194,8 @@ TRACE_EVENT(f2fs_iostat,
+ 		__entry->fs_reset_zone	= iostat[FS_ZONE_RESET_IO];
+ 		memset(__entry->read_folio_count, 0, sizeof(__entry->read_folio_count));
+ 		memcpy(__entry->read_folio_count, read_folio_count,
+-				sizeof(unsigned long long) * min_t(int, NR_PAGE_ORDERS, 11));
++				sizeof(unsigned long long) *
++				min_t(int, NR_PAGE_ORDERS, F2FS_IOSTAT_RD_FOLIO_ORDERS));
+ 	),
+ 
+ 	TP_printk("dev = (%d,%d), "
+@@ -2201,7 +2210,8 @@ TRACE_EVENT(f2fs_iostat,
+ 		"fs [data=%llu, (gc_data=%llu, cdata=%llu), "
+ 		"node=%llu, meta=%llu], "
+ 		"read_folio_count [0=%llu, 1=%llu, 2=%llu, 3=%llu, 4=%llu, "
+-		"5=%llu, 6=%llu, 7=%llu, 8=%llu, 9=%llu, 10=%llu]",
++		"5=%llu, 6=%llu, 7=%llu, 8=%llu, 9=%llu, 10=%llu, 11=%llu, "
++		"12=%llu, 13=%llu, 14=%llu, 15=%llu]",
+ 		show_dev(__entry->dev), __entry->app_wio, __entry->app_dio,
+ 		__entry->app_bio, __entry->app_mio, __entry->app_bcdio,
+ 		__entry->app_mcdio, __entry->fs_dio, __entry->fs_cdio,
+@@ -2218,7 +2228,9 @@ TRACE_EVENT(f2fs_iostat,
+ 		__entry->read_folio_count[4], __entry->read_folio_count[5],
+ 		__entry->read_folio_count[6], __entry->read_folio_count[7],
+ 		__entry->read_folio_count[8], __entry->read_folio_count[9],
+-		__entry->read_folio_count[10])
++		__entry->read_folio_count[10], __entry->read_folio_count[11],
++		__entry->read_folio_count[12], __entry->read_folio_count[13],
++		__entry->read_folio_count[14], __entry->read_folio_count[15])
+ );
+ 
+ #ifndef __F2FS_IOSTAT_LATENCY_TYPE
+-- 
+2.55.0
+
 
 
