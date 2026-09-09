@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E085437CC;
-	Wed,  9 Sep 2026 13:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEBB423A85;
+	Wed,  9 Sep 2026 13:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961680; cv=none; b=X2RjRbdkV3h1D+W7/s5D1CkQe+yDHR0a7tzBHV0/375Akym8833J7vXI25AivgAnGe2bkOk1/O60wAOIr5u2wC856jT/BD+fgwGDY5U1iaio+8bLsX1OndTJRTTICTkInLUk5A3JO/9e1U0cA4wXGE4qjzFSeOqIfsuTK9sWTEE=
+	t=1788961682; cv=none; b=oFbprzr+AWJP1VFIIaq0n8/rAcDdhrKWP1xCQVUtd72Ik1Sp4MFHda7Dmj39H9vd0AolieGb9dwsyHd/UEpxTpairEf8fJ/ynNPZvClQpiH5Dnur2Mbk/o/hdQMCUG4AbtUSvVbtMFwjpYm+RUabKtKMhDxA8YPeBG0eX+0KLZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961680; c=relaxed/simple;
-	bh=LQGs3zHPCUndRU6G8NhJ58xwkFaVvZat4gZKe5Ui6H4=;
+	s=arc-20240116; t=1788961682; c=relaxed/simple;
+	bh=5QGTaF0btTt+rQoKXwfr3jKeREOJd5lG+QFLHfQGFOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rELNa5xvK+Fa00LkEndvKNLyxr+JlP2zF3YZWB5CrRLEGz0BYajelmB2suMSfT0VK7Gd6p87VONattV+Ln/8NSLndpheoYfm00cBmC5L6xAuwj/Yz5YAAsV2lH7TlmMZWux43n+0mxSVmRw2sN9PUa9rhPba5wrh8KbWW9K56G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYPrto0A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PPUWvySqu1XIROEmnC6snhnAr9L6M60EanL8kPWWNyQLIYZ1CHFZEanx0MDwbEgRyHD5mVBsRvUFiQdDmYoN0t3OhHh3Ou9wIH2A1BGWDtW5kB5ZpAiX+kG0mzl0jeNYWP6k+oeWmbVyd8LrVara6RYZazMys0S5KwOOqONwG0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glqouSIW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYPrto0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB4D1F00A3A;
-	Wed,  9 Sep 2026 13:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glqouSIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55C01F00A3A;
+	Wed,  9 Sep 2026 13:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961678;
-	bh=Gscn8lgQK2UG4+Xor4n/dPWnEHi3+yXEBS3AVXl2/RQ=;
+	s=korg; t=1788961681;
+	bh=29VpfKbWMsHHBaJaMw47bXOdL7iBwblysZzTHi8dZdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AYPrto0ACReJ6Vb1TrVwAxhVYt7y1Y3WXKBPV/XAqUi7XpkKsKSoT+dME8uf8omAj
-	 /zaeU+J6dpjlXcRgG0xCdfDjhMkh5SM7x9pO67SrjF5Q5UXiGVYfmkFggaOEbQwuxF
-	 5tezYw0zuxOQ2a3S0kZ0SuxGqz/qd135VsIRFixE=
+	b=glqouSIWwi/UO+UspSzBba2Qau41mzxMrZ+6TPkXXTF/FPAuuQNc+lsJUgV67oYd5
+	 iWk4GovRcU+X69Oaa2a6hdXpXej2b2qWsm9KtJv//qQPZAICecNJj6nSHme/ILThT4
+	 lbXaYCPWdkPEE6lFa7uTojMswlu5JCVcPU4AssOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 7.2 030/556] usb: cdnsp: fix wakeup from S3 after controller context loss
-Date: Wed,  9 Sep 2026 15:35:10 +0200
-Message-ID: <20260909134231.565560232@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 7.2 031/556] usb: f_mass_storage: Bump local buffer size in fsg_common_create_luns()
+Date: Wed,  9 Sep 2026 15:35:11 +0200
+Message-ID: <20260909134231.598831992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -45,406 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit eae6460f617382044c5afe5ef202f4d8b2c099b5 upstream.
+commit 9f6f095beec82a80daa666a3b2186a5b95841e9a upstream.
 
-CDNSP controller may lose its runtime register programming across S3
-suspend/resume, depending on SoC power domain configuration. After
-resume the operational and interrupter registers may contain reset
-values, which prevents the gadget side from recovering correctly and
-breaks wakeup from S3.
+GCC (Debian 14.2.0-19) is not happy about the buffer size:
 
-Fix this by detecting whether the controller lost its register context
-after resume and handling both cases:
-- If context was lost (CFG_3XPORT_U1_PIPE_CLK_GATE_EN set or power
-  lost): reset the controller and reprogram the state required for
-  normal operation, including the command ring, DCBAA pointer, doorbell
-  base, event ring, ERST base/size and event ring dequeue pointer.
-- If context was retained: restart the controller directly without
-  reprogramming registers. Issue a wakeup if the link was in U3 before
-  suspend.
+drivers/usb/gadget/function/f_mass_storage.c:2970:48: error: ‘%d’ directive output may be truncated writing between 1 and 9 bytes into a region of size 5 [-Werror=format-truncation=]
 
-Move the basic controller register programming out of the one-time memory
-initialization path and make it reusable from the resume path. Also
-separate ring allocation from ring initialization so that rings can be
-reinitialized without reallocating DMA memory.
+Bump the size to get it enough for all possible values.
 
-Always perform the full suspend sequence regardless of the current link
-state. Previously, if the device was already in U3, the suspend callback
-returned early without stopping the controller, which could lead to
-commands being issued on a disabled slot during resume.
+Note, although cfg->nluns is limited to FSG_MAX_LUNS (16), the compiler
+doesn't realize this and complains about the buffer size.
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Also note, the existing comment is wrong as size 8 for the whole buffer
+doesn't cover 100 mil numbers, hence drop it altogether.
+
+Fixes: b27c08c953e9 ("usb: gadget: f_mass_storage: create lun creation helpers for use in fsg_common_init")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260820-suspend_resume_fix-v3-1-5a713098b977@cadence.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260817161239.1448582-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.c |  111 +++++++++++++++++++++++++++++++++++++--
- drivers/usb/cdns3/cdnsp-gadget.h |    1 
- drivers/usb/cdns3/cdnsp-mem.c    |   98 ++++++++++++----------------------
- 3 files changed, 142 insertions(+), 68 deletions(-)
+ drivers/usb/gadget/function/f_mass_storage.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-gadget.c
-+++ b/drivers/usb/cdns3/cdnsp-gadget.c
-@@ -1338,7 +1338,6 @@ static int cdnsp_run(struct cdnsp_device
+--- a/drivers/usb/gadget/function/f_mass_storage.c
++++ b/drivers/usb/gadget/function/f_mass_storage.c
+@@ -2961,7 +2961,7 @@ EXPORT_SYMBOL_GPL(fsg_common_create_lun)
  
- 	cdnsp_gadget_ep0_desc.wMaxPacketSize = cpu_to_le16(512);
- 
--
- 	ret = cdnsp_start(pdev);
- 	if (ret) {
- 		ret = -ENODEV;
-@@ -1837,6 +1836,82 @@ static void cdnsp_get_rev_cap(struct cdn
- 		 readl(&pdev->rev_cap->tx_buff_size));
- }
- 
-+static void cdnsp_set_event_deq(struct cdnsp_device *pdev)
-+{
-+	dma_addr_t deq;
-+	u64 temp;
-+
-+	deq = cdnsp_trb_virt_to_dma(pdev->event_ring->deq_seg,
-+				    pdev->event_ring->dequeue);
-+
-+	/* Update controller event ring dequeue pointer */
-+	temp = cdnsp_read_64(&pdev->ir_set->erst_dequeue);
-+	temp &= ERST_PTR_MASK;
-+
-+	/*
-+	 * Don't clear the EHB bit (which is RW1C) because
-+	 * there might be more events to service.
-+	 */
-+	temp &= ~ERST_EHB;
-+
-+	cdnsp_write_64(((u64)deq & (u64)~ERST_PTR_MASK) | temp,
-+		       &pdev->ir_set->erst_dequeue);
-+}
-+
-+static void cdnsp_add_interrupter(struct cdnsp_device *pdev)
-+{
-+	u64 erst_base;
-+	u32 erst_size;
-+
-+	/* Set ERST count with the number of entries in the segment table. */
-+	erst_size = readl(&pdev->ir_set->erst_size);
-+	erst_size &= ERST_SIZE_MASK;
-+	erst_size |= ERST_NUM_SEGS;
-+	writel(erst_size, &pdev->ir_set->erst_size);
-+
-+	/* Set the segment table base address. */
-+	erst_base = cdnsp_read_64(&pdev->ir_set->erst_base);
-+	erst_base &= ERST_PTR_MASK;
-+	erst_base |= (pdev->erst.erst_dma_addr & (u64)~ERST_PTR_MASK);
-+	cdnsp_write_64(erst_base, &pdev->ir_set->erst_base);
-+
-+	/* Set the event ring dequeue address. */
-+	cdnsp_set_event_deq(pdev);
-+}
-+
-+/* Set up basic CDNSP registers */
-+static void cdnsp_init(struct cdnsp_device *pdev)
-+{
-+	unsigned int val;
-+	u64 val_64;
-+
-+	val = readl(&pdev->op_regs->config_reg);
-+	val |= ((val & ~MAX_DEVS) | CDNSP_DEV_MAX_SLOTS) | CONFIG_U3E;
-+	writel(val, &pdev->op_regs->config_reg);
-+
-+	/* Initialize the Command ring */
-+	cdnsp_ring_init(pdev, pdev->cmd_ring);
-+
-+	/* Set the address in the Command Ring Control register */
-+	val_64 = cdnsp_read_64(&pdev->op_regs->cmd_ring);
-+	val_64 = (val_64 & (u64)CMD_RING_RSVD_BITS) |
-+		 (pdev->cmd_ring->first_seg->dma & (u64)~CMD_RING_RSVD_BITS) |
-+		 pdev->cmd_ring->cycle_state;
-+	cdnsp_write_64(val_64, &pdev->op_regs->cmd_ring);
-+
-+	/* Set Device Context Base Address Array pointer */
-+	cdnsp_write_64(pdev->dcbaa->dma, &pdev->op_regs->dcbaa_ptr);
-+
-+	/* Set Doorbell array pointer */
-+	val = readl(&pdev->cap_regs->db_off);
-+	val &= DBOFF_MASK;
-+	pdev->dba = (void __iomem *)pdev->cap_regs + val;
-+
-+	/* Initialize the Primary interrupter */
-+	cdnsp_ring_init(pdev, pdev->event_ring);
-+	cdnsp_add_interrupter(pdev);
-+}
-+
- static int cdnsp_gen_setup(struct cdnsp_device *pdev)
+ int fsg_common_create_luns(struct fsg_common *common, struct fsg_config *cfg)
  {
- 	int ret;
-@@ -1902,6 +1977,8 @@ static int cdnsp_gen_setup(struct cdnsp_
- 	if (ret)
- 		return ret;
+-	char buf[8]; /* enough for 100000000 different numbers, decimal */
++	char buf[14];
+ 	int i, rc;
  
-+	cdnsp_init(pdev);
-+
- 	/*
- 	 * Software workaround for U1: after transition
- 	 * to U1 the controller starts gating clock, and in some cases,
-@@ -2031,9 +2108,6 @@ static int cdnsp_gadget_suspend(struct c
- 	struct cdnsp_device *pdev = cdns->gadget_dev;
- 	unsigned long flags;
- 
--	if (pdev->link_state == XDEV_U3)
--		return 0;
--
- 	spin_lock_irqsave(&pdev->lock, flags);
- 	cdnsp_disconnect_gadget(pdev);
- 	cdnsp_stop(pdev);
-@@ -2047,12 +2121,38 @@ static int cdnsp_gadget_resume(struct cd
- 	struct cdnsp_device *pdev = cdns->gadget_dev;
- 	enum usb_device_speed max_speed;
- 	unsigned long flags;
-+	bool context_lost;
-+	u32 val;
- 	int ret;
- 
- 	if (!pdev->gadget_driver)
- 		return 0;
- 
- 	spin_lock_irqsave(&pdev->lock, flags);
-+	val = readl(&pdev->port3x_regs->mode_2);
-+	context_lost = !!(val & CFG_3XPORT_U1_PIPE_CLK_GATE_EN) || lost_power;
-+
-+	if (context_lost) {
-+		cdnsp_halt(pdev);
-+		cdnsp_set_apb_timeout_value(pdev);
-+
-+		/* Reset the internal controller memory state and registers. */
-+		ret = cdnsp_reset(pdev);
-+		if (ret)
-+			goto unlock;
-+
-+		val = readl(&pdev->port3x_regs->mode_2);
-+		val &= ~CFG_3XPORT_U1_PIPE_CLK_GATE_EN;
-+		writel(val, &pdev->port3x_regs->mode_2);
-+
-+		cdnsp_clear_cmd_ring(pdev);
-+
-+		memset(pdev->event_ring->first_seg->trbs, 0,
-+		       sizeof(union cdnsp_trb) * (TRBS_PER_SEGMENT));
-+
-+		cdnsp_init(pdev);
-+	}
-+
- 	max_speed = pdev->gadget_driver->max_speed;
- 
- 	/* Limit speed if necessary. */
-@@ -2060,9 +2160,10 @@ static int cdnsp_gadget_resume(struct cd
- 
- 	ret = cdnsp_run(pdev, max_speed);
- 
--	if (pdev->link_state == XDEV_U3)
-+	if (!context_lost && pdev->link_state == XDEV_U3)
- 		__cdnsp_gadget_wakeup(pdev);
- 
-+unlock:
- 	spin_unlock_irqrestore(&pdev->lock, flags);
- 
- 	return ret;
---- a/drivers/usb/cdns3/cdnsp-gadget.h
-+++ b/drivers/usb/cdns3/cdnsp-gadget.h
-@@ -1510,6 +1510,7 @@ int cdnsp_endpoint_init(struct cdnsp_dev
- int cdnsp_ring_expansion(struct cdnsp_device *pdev,
- 			 struct cdnsp_ring *ring,
- 			 unsigned int num_trbs, gfp_t flags);
-+void cdnsp_ring_init(struct cdnsp_device *pdev, struct cdnsp_ring *ring);
- struct cdnsp_ring *cdnsp_dma_to_transfer_ring(struct cdnsp_ep *ep, u64 address);
- int cdnsp_alloc_stream_info(struct cdnsp_device *pdev,
- 			    struct cdnsp_ep *pep,
---- a/drivers/usb/cdns3/cdnsp-mem.c
-+++ b/drivers/usb/cdns3/cdnsp-mem.c
-@@ -394,13 +394,6 @@ static struct cdnsp_ring *cdnsp_ring_all
- 	if (ret)
- 		goto fail;
- 
--	/* Only event ring does not use link TRB. */
--	if (type != TYPE_EVENT)
--		ring->last_seg->trbs[TRBS_PER_SEGMENT - 1].link.control |=
--			cpu_to_le32(LINK_TOGGLE);
--
--	cdnsp_initialize_ring_info(ring);
--	trace_cdnsp_ring_alloc(ring);
- 	return ring;
- fail:
- 	kfree(ring);
-@@ -603,6 +596,7 @@ int cdnsp_alloc_stream_info(struct cdnsp
- 		if (!cur_ring)
- 			goto cleanup_rings;
- 
-+		cdnsp_ring_init(pdev, cur_ring);
- 		cur_ring->stream_id = cur_stream;
- 		cur_ring->trb_address_map = &stream_info->trb_address_map;
- 
-@@ -698,6 +692,8 @@ static int cdnsp_alloc_priv_device(struc
- 	if (!pdev->eps[0].ring)
- 		goto fail;
- 
-+	cdnsp_ring_init(pdev, pdev->eps[0].ring);
-+
- 	/* Point to output device context in dcbaa. */
- 	pdev->dcbaa->dev_context_ptrs[1] = cpu_to_le64(pdev->out_ctx.dma);
- 	pdev->cmd.in_ctx = &pdev->in_ctx;
-@@ -991,6 +987,8 @@ int cdnsp_endpoint_init(struct cdnsp_dev
- 	if (!pep->ring)
- 		return -ENOMEM;
- 
-+	cdnsp_ring_init(pdev, pep->ring);
-+
- 	pep->skip = false;
- 
- 	/* Fill the endpoint context */
-@@ -1096,28 +1094,6 @@ void cdnsp_mem_cleanup(struct cdnsp_devi
- 	pdev->active_port = NULL;
- }
- 
--static void cdnsp_set_event_deq(struct cdnsp_device *pdev)
--{
--	dma_addr_t deq;
--	u64 temp;
--
--	deq = cdnsp_trb_virt_to_dma(pdev->event_ring->deq_seg,
--				    pdev->event_ring->dequeue);
--
--	/* Update controller event ring dequeue pointer */
--	temp = cdnsp_read_64(&pdev->ir_set->erst_dequeue);
--	temp &= ERST_PTR_MASK;
--
--	/*
--	 * Don't clear the EHB bit (which is RW1C) because
--	 * there might be more events to service.
--	 */
--	temp &= ~ERST_EHB;
--
--	cdnsp_write_64(((u64)deq & (u64)~ERST_PTR_MASK) | temp,
--		       &pdev->ir_set->erst_dequeue);
--}
--
- static void cdnsp_add_in_port(struct cdnsp_device *pdev,
- 			      struct cdnsp_port *port,
- 			      __le32 __iomem *addr)
-@@ -1226,6 +1202,36 @@ static int cdnsp_setup_port_arrays(struc
- 	return 0;
- }
- 
-+static void cdnsp_initialize_ring_segments(struct cdnsp_device *pdev, struct cdnsp_ring *ring)
-+{
-+	struct cdnsp_segment *seg;
-+
-+	/* Only event ring does not use link TRB. */
-+	if (ring->type == TYPE_EVENT)
-+		return;
-+
-+	seg = ring->first_seg;
-+
-+	while (seg) {
-+		struct cdnsp_segment *next = seg->next;
-+
-+		cdnsp_link_segments(pdev, seg, next, ring->type);
-+		if (next == ring->first_seg)
-+			break;
-+
-+		seg = next;
-+	}
-+
-+	ring->last_seg->trbs[TRBS_PER_SEGMENT - 1].link.control |= cpu_to_le32(LINK_TOGGLE);
-+}
-+
-+void cdnsp_ring_init(struct cdnsp_device *pdev, struct cdnsp_ring *ring)
-+{
-+	cdnsp_initialize_ring_segments(pdev, ring);
-+	cdnsp_initialize_ring_info(ring);
-+	trace_cdnsp_ring_alloc(ring);
-+}
-+
- /*
-  * Initialize memory for CDNSP (one-time init).
-  *
-@@ -1237,10 +1243,8 @@ int cdnsp_mem_init(struct cdnsp_device *
- {
- 	struct device *dev = pdev->dev;
- 	int ret = -ENOMEM;
--	unsigned int val;
- 	dma_addr_t dma;
- 	u32 page_size;
--	u64 val_64;
- 
- 	/*
- 	 * Use 4K pages, since that's common and the minimum the
-@@ -1248,10 +1252,6 @@ int cdnsp_mem_init(struct cdnsp_device *
- 	 */
- 	page_size = 1 << 12;
- 
--	val = readl(&pdev->op_regs->config_reg);
--	val |= ((val & ~MAX_DEVS) | CDNSP_DEV_MAX_SLOTS) | CONFIG_U3E;
--	writel(val, &pdev->op_regs->config_reg);
--
- 	/*
- 	 * Doorbell array must be physically contiguous
- 	 * and 64-byte (cache line) aligned.
-@@ -1263,8 +1263,6 @@ int cdnsp_mem_init(struct cdnsp_device *
- 
- 	pdev->dcbaa->dma = dma;
- 
--	cdnsp_write_64(dma, &pdev->op_regs->dcbaa_ptr);
--
- 	/*
- 	 * Initialize the ring segment pool.  The ring must be a contiguous
- 	 * structure comprised of TRBs. The TRBs must be 16 byte aligned,
-@@ -1290,17 +1288,6 @@ int cdnsp_mem_init(struct cdnsp_device *
- 	if (!pdev->cmd_ring)
- 		goto destroy_device_pool;
- 
--	/* Set the address in the Command Ring Control register */
--	val_64 = cdnsp_read_64(&pdev->op_regs->cmd_ring);
--	val_64 = (val_64 & (u64)CMD_RING_RSVD_BITS) |
--		 (pdev->cmd_ring->first_seg->dma & (u64)~CMD_RING_RSVD_BITS) |
--		 pdev->cmd_ring->cycle_state;
--	cdnsp_write_64(val_64, &pdev->op_regs->cmd_ring);
--
--	val = readl(&pdev->cap_regs->db_off);
--	val &= DBOFF_MASK;
--	pdev->dba = (void __iomem *)pdev->cap_regs + val;
--
- 	/* Set ir_set to interrupt register set 0 */
- 	pdev->ir_set = &pdev->run_regs->ir_set[0];
- 
-@@ -1317,21 +1304,6 @@ int cdnsp_mem_init(struct cdnsp_device *
- 	if (ret)
- 		goto free_event_ring;
- 
--	/* Set ERST count with the number of entries in the segment table. */
--	val = readl(&pdev->ir_set->erst_size);
--	val &= ERST_SIZE_MASK;
--	val |= ERST_NUM_SEGS;
--	writel(val, &pdev->ir_set->erst_size);
--
--	/* Set the segment table base address. */
--	val_64 = cdnsp_read_64(&pdev->ir_set->erst_base);
--	val_64 &= ERST_PTR_MASK;
--	val_64 |= (pdev->erst.erst_dma_addr & (u64)~ERST_PTR_MASK);
--	cdnsp_write_64(val_64, &pdev->ir_set->erst_base);
--
--	/* Set the event ring dequeue address. */
--	cdnsp_set_event_deq(pdev);
--
- 	ret = cdnsp_setup_port_arrays(pdev);
- 	if (ret)
- 		goto free_erst;
+ 	fsg_common_remove_luns(common);
 
 
