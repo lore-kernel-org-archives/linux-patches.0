@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203A85867D8;
-	Wed,  9 Sep 2026 14:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180A55867DF;
+	Wed,  9 Sep 2026 14:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964328; cv=none; b=lavHFsix1a7Lqw2lFvIIGcRmPqn24Hvl0ehbHfRmcRaeieu4QucYbEOxm/ArMNZV6FKCJAMeVGe2wdwtYscz4HbbXiO1mLZIxQNfjJvs2JkahV+HT8/5zu6VWHdXdJvd8HIHqn0uEnFwf11ou7ehZT70JPGaHpfFTXQkBIBVHxc=
+	t=1788964331; cv=none; b=FmeUohHex7GgDbazz6YlzooXgUdL6U7TvMec6YITIbZadHoZnVRNDq/qQJLnbdiwm1BgUW4/IMG1if+iyidKOshmUxGY+iG0esgRl4A3+9jk60+5v+/nhqeF0fkXjAORwV9cBoa2fLAe5rUx0lNGgM5cAyTTVMNJ7kk0lsNO79s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964328; c=relaxed/simple;
-	bh=SO41a/Pbja8oS/CkZrhd1QcTp6/bsOAgiaBVobHSdQ8=;
+	s=arc-20240116; t=1788964331; c=relaxed/simple;
+	bh=pgtNT01hu69X+LSUK2ikHpjFPuTXwc6P/oldaMOlKjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVnR5Se/XBoScyJ3XbZvHhoggrU+C2PKOhVDfhuUP5OQKNC4+N0TMXh3tCA2K2egzkvNx6itVGmzs3GdLV5Ih67B3F1ZvFir2fYYwWeNQoA9a/SLmXjCHXheGYGc6ZnhZ3oQraByi466RFvMgBItg801+SYpqnpdxRIWVo9/uHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOzJDjdG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ueNf3lyLvQWmZwZWyqH48IjPO5SgaYClBWCzuVABzBzUundcyyk5sMLMn7g1ahb35+INYwOL1zwIjRIsIPSbRdgKTq/Rpr0dTz02NWLjHF0AzbcpY4d488qFTqIviHMDxfnJMW4PNcosvItnPuSHKORtlhc1mEIdyCpLrjoSfBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5Z7keNz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOzJDjdG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E491F00A3A;
-	Wed,  9 Sep 2026 14:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5Z7keNz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6148F1F00A3D;
+	Wed,  9 Sep 2026 14:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964327;
-	bh=N2uJi/zaR+iMx187isZUJb5F721HYaMEfMnegZXSwUM=;
+	s=korg; t=1788964329;
+	bh=ks8NcuYOZs53H7FBlXPpoqGSFy4orAfy2IgPulD9RWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QOzJDjdGecMAGTZbnXbTmWybcRr7pOAVnIaDXDsmUVLYqYPBmh38HCyxnrTY921Yi
-	 VOrgIzcAqmkB+N5vUjIXWd0GVa3/5K9wOt+9y1U4K7fmVM6uhBfnKLCOVbLxjs91H0
-	 PEa3h8gMyvRXPXCVJdIHdRDcwp0ohOfBMwFNTIhI=
+	b=y5Z7keNzEP9/FDAQ6WhjbaNNLx6ikJ/0N5CGz8j8Z3U6cEWbwxNxWO4krDih0/1zC
+	 YQz0wRSIrLW9yTzDMavXszy7ZtRDla5OjIfjO2wMXSBugT2ZpAmQB/BQ52SEtYK4Zf
+	 cfqX9yI1Ky5iL9bSY/tYTxZ3NivUWUODGd+hJLV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 385/583] drm/amd/display: validate plane degamma LUT size for private color prop
-Date: Wed,  9 Sep 2026 15:41:10 +0200
-Message-ID: <20260909134251.332364691@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Guanghui Yang <3497809730@qq.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.18 359/583] f2fs: fix dentry folio leak in find_in_level
+Date: Wed,  9 Sep 2026 15:40:44 +0200
+Message-ID: <20260909134250.439562375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,52 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Guanghui Yang <3497809730@qq.com>
 
-commit e4c3ab59021e7c146a84b6671f0d530972bd58b4 upstream.
+commit cca7d3e30bf30333314e31bc70b9a739f1342167 upstream.
 
-Unlike the CRTC degamma path, which is guarded by
-amdgpu_dm_verify_lut_sizes(), the per-plane degamma LUT size was never
-validated before use. __set_dm_plane_degamma() passed the user-supplied
-size straight into __is_lut_linear() and, for a non-linear LUT, into
-__set_input_tf() -> __drm_lut_to_dc_gamma(), the latter always iterating
-MAX_COLOR_LUT_ENTRIES entries regardless of the actual LUT size.
+find_in_level() gets a dentry folio with f2fs_find_data_folio() before
+calling find_in_block().  If find_in_block() returns an error, the
+function stores the error in res_folio and breaks out of the loop without
+dropping the dentry folio.
 
-A malformed AMD_PLANE_DEGAMMA_LUT blob (e.g. a single entry) could thus
-trigger a divide-by-zero in __is_lut_linear() or an out-of-bounds read in
-__drm_lut_to_dc_gamma(). Reject any plane degamma LUT whose size does not
-match MAX_COLOR_LUT_ENTRIES, mirroring the invariant the code already
-asserts a few lines below (and which the CRTC path enforces).
+This leaks the folio reference on the find_in_block() error path.  Drop
+the dentry folio before returning the error to the caller.
 
-The AMD_PLANE_DEGAMMA_LUT property is only exposed on builds with
-AMD_PRIVATE_COLOR defined.
-
-Fixes: 980f8710075a ("drm/amd/display: add plane degamma TF and LUT support")
+Fixes: 7ad08a58bf67 ("f2fs: Handle casefolding with Encryption")
 Cc: stable@vger.kernel.org
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/f2fs/dir.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-@@ -1149,6 +1149,13 @@ __set_dm_plane_degamma(struct drm_plane_
- 	degamma_lut = __extract_blob_lut(dm_plane_state->degamma_lut,
- 					 &degamma_size);
+--- a/fs/f2fs/dir.c
++++ b/fs/f2fs/dir.c
+@@ -313,6 +313,7 @@ start_find_bucket:
  
-+	if (degamma_lut && degamma_size != MAX_COLOR_LUT_ENTRIES) {
-+		drm_dbg(plane_state->state->dev,
-+			"Invalid Plane Degamma LUT size. Should be %u but got %u.\n",
-+			MAX_COLOR_LUT_ENTRIES, degamma_size);
-+		return -EINVAL;
-+	}
-+
- 	has_degamma_lut = degamma_lut &&
- 			  !__is_lut_linear(degamma_lut, degamma_size);
- 
+ 		de = find_in_block(dir, dentry_folio, fname, &max_slots, use_hash);
+ 		if (IS_ERR(de)) {
++			f2fs_folio_put(dentry_folio, false);
+ 			*res_folio = ERR_CAST(de);
+ 			de = NULL;
+ 			break;
 
 
