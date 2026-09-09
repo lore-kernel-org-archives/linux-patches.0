@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4314D58B6C2;
-	Wed,  9 Sep 2026 14:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D53572696;
+	Wed,  9 Sep 2026 14:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964784; cv=none; b=Een5Zhw7aVJ+4trolkb0OgHFHHt+9AW0MLOi3YN572KeI5clOJGaUF8sjUKhL8qRguQ0nsqvsxl9I9v1LNB90IcI3jiOlHfJ3nIh/e9+eODcbBsXFYIBqaQzdQbhQsQap2KTH6g12/X8clcnYACMtFuDZJMj/Zy0rvJWjZ5JYx4=
+	t=1788964787; cv=none; b=ZKxlw8A2GL2ifJAG978ggHHoVx/OQFafPzkkk4NAIoLJqHfz/3sggYjwz/MXUN/pKCjNNDAncufIOdtcrvO9pKaSLe4PXV9VMPeJEjaizCXeW0BBdkYX625FRTY8UENU8ooUES/Ktzy7sS/qUMYJWX1C1L+MRqkS01CUnBKTh8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964784; c=relaxed/simple;
-	bh=DBOax9d5m0LJHJbgae226On7zUUwVw6RscU65ZCiB6o=;
+	s=arc-20240116; t=1788964787; c=relaxed/simple;
+	bh=09yjYf3AjUKhfp/aCd1m0X7g/91pMkOPFlC9O3bFUh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NclI8KgaLCzBI8pBRXn9CWGsY5XQKfvXnBu/OXu+FYMpZ4VzKrhIwdjSTmwjMa1aPlqqtfeHYDE6IgP/EOvxiLRUGpSoVfJy5k6LU/HNrO+J9FiRTMUyNR5XDtoIuIsSlIKezbPv43EOUEh16gRmQuuBdE2nbAHsQf05sGMJvhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdmbfkgP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A3usE6gEayimQvMzH7GuUbHUBK91UVlMAMH0f1L/ZrhBmV89L1no27324YV2/mlDXk1HpFFJjeF4lidwTKeAJkix/4pFAeMHmqddAqNhd1M5MglpAAXZvdchbVNJro2knFc0QkHW126WHKYRLMWiIWSN1f2unmposfRU/ZzsvWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gq9dxT4V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdmbfkgP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998AA1F00A3E;
-	Wed,  9 Sep 2026 14:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gq9dxT4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DD21F00A3A;
+	Wed,  9 Sep 2026 14:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964783;
-	bh=sOwU0V4ypqYpNqChz1QY7y5EHzQo9EsQl/CmaCIgSEA=;
+	s=korg; t=1788964786;
+	bh=WpkjuQVlGW+MyK7UsjCKALNyb2dkFqyKGSfAMLigb2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tdmbfkgPbI3//uDr/oObou2FS7qY/ajlM7C0vxqKdTopcexS1pmXhkd5T7mPe1jtY
-	 dxHuyvaZWayH0TBSmRMby5efLbUcnh5NF6UUdoeYsLqARQ/4NqosV7btVcJpU6hzhb
-	 pbhk8sIoJP3Xw+XnHHbK54Cm1fWJNzHrWA45mOHg=
+	b=Gq9dxT4VmBOcpKxtGmW38VTg0T1JYizG/YXZwiLBC0ulHf9yci6k238Fb8xEVwjFe
+	 qQp73gKoXCVjTB8Hb7SvspVcm9/YWHznHzMffoLv4R6HEUMqINm6ZO+wmk2CoK+ISY
+	 RCr36LFrGwYh3WeIi53pZxUWVtAH9Zy0L03QJXT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	linux-cifs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 542/583] smb: client: clear setuid/setgid bit on write with cifsacl/modefromsid/posix extensions
-Date: Wed,  9 Sep 2026 15:43:47 +0200
-Message-ID: <20260909134256.533106576@linuxfoundation.org>
+Subject: [PATCH 6.18 543/583] cifs: Remove dead function prototypes
+Date: Wed,  9 Sep 2026 15:43:48 +0200
+Message-ID: <20260909134256.561952075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,104 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b8e5dc4f95e5484159b343903f302eb6d783f2e6 ]
+[ Upstream commit 9146c7e53fa8e5024e0f61d67129afd45a179a3b ]
 
-When a file has the setuid or setgid bit set and is written to, the VFS
-strips those bits and issues a setattr with ATTR_KILL_SUID/ATTR_KILL_SGID
-together with an ATTR_MODE carrying the already-cleared mode.
+Remove a bunch of dead function prototypes.
 
-Both cifs_setattr_unix() and cifs_setattr_nounix() unconditionally dropped
-ATTR_MODE in that case:
-
-	/* skip mode change if it's just for clearing setuid/setgid */
-	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
-		attrs->ia_valid &= ~ATTR_MODE;
-
-This is fine for the default mount, where the mode is only emulated via
-the DOS read-only attribute and cannot represent the setuid/setgid bits
-anyway.  However, with the "cifsacl" or "modefromsid" mount options the
-mode is stored on the server through an ACL (id_mode_to_cifs_acl()), with
-the SMB3.1.1 POSIX extensions the mode is sent to the server directly,
-and with the SMB1 Unix extensions (cifs_setattr_unix) the mode is sent
-via CIFSSMBUnixSetPathInfo().  In all those cases dropping ATTR_MODE means
-the cleared mode is never pushed to the server, so the setuid/setgid bit
-survives the write.
-
-This is a security issue: on local filesystems the setuid bit is stripped
-when a file is written, but over these cifs.ko mounts the bit persists on
-the server, potentially allowing an unexpected privilege escalation on
-subsequent execution.
-
-Fix this in two places:
-
-  1. cifs_setattr_nounix(): only take the "skip mode change" shortcut
-     when the mode is emulated via the DOS read-only attribute (i.e.
-     neither cifsacl/modefromsid nor the SMB3.1.1 POSIX extensions are
-     in effect), so that the cleared mode is propagated to the server
-     in the ACL / POSIX cases.
-
-  2. cifs_setattr_unix(): this function is only called when Unix
-     extensions are in effect, so the mode is always stored on the
-     server.  Remove the shortcut entirely so that the cleared mode is
-     always pushed.
-
-Fixes: d32c4f2626ac ("CIFS: ignore mode change if it's just for clearing setuid/setgid bits")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: linux-cifs@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 730d0bb19507 ("smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |   29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ fs/smb/client/cifsproto.h |    6 ------
+ fs/smb/client/smb2proto.h |   12 ------------
+ 2 files changed, 18 deletions(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3198,9 +3198,13 @@ cifs_setattr_unix(struct dentry *direntr
- 		attrs->ia_valid &= ~(ATTR_CTIME | ATTR_MTIME);
- 	}
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -82,7 +82,6 @@ extern char *cifs_build_path_to_root(str
+ 				     struct cifs_sb_info *cifs_sb,
+ 				     struct cifs_tcon *tcon,
+ 				     int add_treename);
+-extern char *build_wildcard_path_from_dentry(struct dentry *direntry);
+ char *cifs_build_devname(char *nodename, const char *prepath);
+ extern void delete_mid(struct mid_q_entry *mid);
+ void __release_mid(struct kref *refcount);
+@@ -166,8 +165,6 @@ extern bool is_valid_oplock_break(char *
+ extern bool backup_cred(struct cifs_sb_info *);
+ extern bool is_size_safe_to_change(struct cifsInodeInfo *cifsInode, __u64 eof,
+ 				   bool from_readdir);
+-extern void cifs_update_eof(struct cifsInodeInfo *cifsi, loff_t offset,
+-			    unsigned int bytes_written);
+ void cifs_write_subrequest_terminated(struct cifs_io_subrequest *wdata, ssize_t result);
+ extern struct cifsFileInfo *find_writable_file(struct cifsInodeInfo *, int);
+ extern int cifs_get_writable_file(struct cifsInodeInfo *cifs_inode,
+@@ -194,8 +191,6 @@ extern void header_assemble(struct smb_h
+ extern int small_smb_init_no_tc(const int smb_cmd, const int wct,
+ 				struct cifs_ses *ses,
+ 				void **request_buf);
+-extern enum securityEnum select_sectype(struct TCP_Server_Info *server,
+-				enum securityEnum requested);
+ extern int CIFS_SessSetup(const unsigned int xid, struct cifs_ses *ses,
+ 			  struct TCP_Server_Info *server,
+ 			  const struct nls_table *nls_cp);
+@@ -651,7 +646,6 @@ void cifs_free_hash(struct shash_desc **
  
--	/* skip mode change if it's just for clearing setuid/setgid */
--	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
--		attrs->ia_valid &= ~ATTR_MODE;
-+	/*
-+	 * This function is only called when Unix extensions are in effect,
-+	 * so the mode is always sent to and stored on the server.  Do not
-+	 * skip the mode change when clearing setuid/setgid bits: dropping
-+	 * ATTR_MODE here would leave those bits set on the server after a
-+	 * write, which is a security issue.
-+	 */
+ int cifs_try_adding_channels(struct cifs_ses *ses);
+ bool is_ses_using_iface(struct cifs_ses *ses, struct cifs_server_iface *iface);
+-void cifs_ses_mark_for_reconnect(struct cifs_ses *ses);
  
- 	args = kmalloc_obj(*args);
- 	if (args == NULL) {
-@@ -3399,8 +3403,23 @@ cifs_setattr_nounix(struct dentry *diren
- 		attrs->ia_valid &= ~(ATTR_UID | ATTR_GID);
- 	}
- 
--	/* skip mode change if it's just for clearing setuid/setgid */
--	if (attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
-+	/*
-+	 * Skip the mode change if it is only being done to clear the
-+	 * setuid/setgid bits *and* the mode is emulated via the DOS
-+	 * read-only attribute (the default, non-ACL case), which cannot
-+	 * represent the setuid/setgid bits anyway.
-+	 *
-+	 * When the mode is instead stored on the server - i.e. with the
-+	 * cifsacl or modefromsid mount options (via an ACL) or with the
-+	 * SMB3.1.1 POSIX extensions - the cleared mode must be pushed to
-+	 * the server.  Dropping ATTR_MODE here would leave the setuid/
-+	 * setgid bit set on the server after a write, which is a security
-+	 * issue (the bits are not stripped as they are on local
-+	 * filesystems).
-+	 */
-+	if ((attrs->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID)) &&
-+	    !((sbflags & (CIFS_MOUNT_CIFS_ACL | CIFS_MOUNT_MODE_FROM_SID)) ||
-+	      cifs_sb_master_tcon(cifs_sb)->posix_extensions))
- 		attrs->ia_valid &= ~ATTR_MODE;
- 
- 	if (attrs->ia_valid & ATTR_MODE) {
+ int
+ cifs_ses_get_chan_index(struct cifs_ses *ses,
+--- a/fs/smb/client/smb2proto.h
++++ b/fs/smb/client/smb2proto.h
+@@ -39,15 +39,11 @@ extern struct mid_q_entry *smb2_setup_as
+ 			struct TCP_Server_Info *server, struct smb_rqst *rqst);
+ extern struct cifs_tcon *smb2_find_smb_tcon(struct TCP_Server_Info *server,
+ 						__u64 ses_id, __u32  tid);
+-extern void smb2_echo_request(struct work_struct *work);
+ extern __le32 smb2_get_lease_state(struct cifsInodeInfo *cinode);
+ extern bool smb2_is_valid_oplock_break(char *buffer,
+ 				       struct TCP_Server_Info *srv);
+ extern int smb3_handle_read_data(struct TCP_Server_Info *server,
+ 				 struct mid_q_entry *mid);
+-extern int smb2_query_reparse_tag(const unsigned int xid, struct cifs_tcon *tcon,
+-				struct cifs_sb_info *cifs_sb, const char *path,
+-				__u32 *reparse_tag);
+ struct inode *smb2_create_reparse_inode(struct cifs_open_info_data *data,
+ 				     struct super_block *sb,
+ 				     const unsigned int xid,
+@@ -300,17 +296,9 @@ extern int smb2_query_info_compound(cons
+ 				    struct kvec *rsp, int *buftype,
+ 				    struct cifs_sb_info *cifs_sb);
+ /* query path info from the server using SMB311 POSIX extensions*/
+-int smb311_posix_query_path_info(const unsigned int xid,
+-				 struct cifs_tcon *tcon,
+-				 struct cifs_sb_info *cifs_sb,
+-				 const char *full_path,
+-				 struct cifs_open_info_data *data);
+ int posix_info_parse(const void *beg, const void *end,
+ 		     struct smb2_posix_info_parsed *out);
+ int posix_info_sid_size(const void *beg, const void *end);
+-int smb2_make_nfs_node(unsigned int xid, struct inode *inode,
+-		       struct dentry *dentry, struct cifs_tcon *tcon,
+-		       const char *full_path, umode_t mode, dev_t dev);
+ int smb2_rename_pending_delete(const char *full_path,
+ 			       struct dentry *dentry,
+ 			       const unsigned int xid);
 
 
