@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC8457982C;
-	Wed,  9 Sep 2026 14:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A73549364;
+	Wed,  9 Sep 2026 14:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962681; cv=none; b=MBC+SfhCtX8Kk3G+/5Gkp4sy5U66+amOTHPxDAICmLknR2aByteX61VEVY5FPwyTkvgKVhuPhoQ+7bNXxmK0txhF2BwbRIaSGX3lF4ppZ9p/v4M6LMuR1OBNl2OyKxeWf7h/OxoBpm8fJ8zm4Q1eQz0h+MafYjAQOkusVKZDRzc=
+	t=1788962684; cv=none; b=bl9mlZOcucQb9qR5BZS/b6Sk/CRC3+0Al8W4BkW5SD83ClVW8RNdCARV4h2lU0ulFiIQHlutROFsv0A10OlpkTO/b9zuL0N4tYJS/vdw5tBQmHPYjgdAHkH3OgoF++2NX/BuBCzhpHXDYFBKPRHzI9/F1bsaLmMLNCiYIRdzmL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962681; c=relaxed/simple;
-	bh=3/ks60NE7AdUBd7+a4eYdcgufzLhnE4sWk+vwR5aH8Q=;
+	s=arc-20240116; t=1788962684; c=relaxed/simple;
+	bh=jp87VH1HD7Jpy/5q5ANqbnkXAtWjTl019UznN19/gvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toFp5zC5XSd2ae/gQj/409BEJc3NaeJ7lPfn+Hl11jzZpsJtOoQLiQXbt82NZzmz6CHv4mEZEV22iWrhM/oztXc86WUw1IAVsALVZMtHJ1dTxMPiwDjhr/DF0ZpKT/Prr2x9HUfOSJDClMFR1RWtXjipeJCrPVr16HOuR3dextY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfusISdP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WtV4KE7UrJfWJWthESAKvPnnKAGDl5xH8jzgZJZ7auKznqd1XVcILIRDf57b449eBG7OJ9DXIlmJcr8SSUjtGISyEcuY1Th3oYEvqdcrKzNWfK7tjU2XR/FyBaj3+RE+jDHDbbF1rbAUNlCDSb+hHFGZVyA6L0xDtjdTAShhhPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY0tvwXp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfusISdP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B501F00A3F;
-	Wed,  9 Sep 2026 14:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY0tvwXp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D9C1F00A3A;
+	Wed,  9 Sep 2026 14:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962679;
-	bh=/fIox7tAtpH1WO8u32aQ3/kKy74WSHmThWv5n9EcyHU=;
+	s=korg; t=1788962682;
+	bh=/im/iZFwecJMHZxRG5P8dPSn1wFVROB9CW0Og8C1Ga4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZfusISdPFCULamP3lohnDi36Qx9A7ElH5d0A4FMRLteDDo/u/WhZVnQz5R0yTF7JP
-	 8C7fboPrqNwqGGAM1y6OTIRlaGVVfWXLJsGqmCqh5RlKTKgBWsJL07GHx4OTEkO9Cg
-	 ++qXqEFqYiyRIJjnyVRQYL/Oi6Pa6RS561ILETQU=
+	b=QY0tvwXp4czvQNjgX4McmBjyao27FNPI9e1GiaKlXfNhG2s6LQindk9QryBU2K9At
+	 28/uC6/J0HsFSlLvG3JgsLptmmnwuYxQlZrD3QBZJ1znNSc6d3kX5ANf5VCNLVvt7r
+	 ndK/T10AqAt4UtZfSirxiLB289ar106LVx9n8mv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>
-Subject: [PATCH 7.2 373/556] media: iris: Enumerate cap->bus_info to differentiate between encoder and decoder
-Date: Wed,  9 Sep 2026 15:40:53 +0200
-Message-ID: <20260909134243.814763519@linuxfoundation.org>
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.2 374/556] media: meson: vdec: fix NULL pointer deref in vdec_try_fmt_common
+Date: Wed,  9 Sep 2026 15:40:54 +0200
+Message-ID: <20260909134243.849555026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,63 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-commit 94ef75095d5e76df848a2e5508d71a4532a6ce23 upstream.
+commit 20aa934ace6917262ff579a73ec018d06a7bad1c upstream.
 
-commit 66c744e28b69 ("media: venus: assign unique bus_info strings for
-encoder and decoder") introduced the naming convention
-plat:node-addr:video-codec{enc|dec}. Right now Iris does not replicate this
-naming convention.
+When VIDIOC_TRY_FMT is called with an unsupported pixel format on the
+OUTPUT queue, vdec_try_fmt_common() falls back to V4L2_PIX_FMT_MPEG2.
+However, if a distro has locally patched MPEG2 support out (as it has
+been broken for some time) the platform format table does not contain
+MPEG2 so find_format() returns NULL and the subsequent dereference of
+fmt_out->max_width triggers a NULL pointer dereference.
 
-When we do v4l2-ctrl --list -devices we see:
-Iris Decoder (platform:aa00000.video-codec):
-	/dev/video0
-	/dev/video1
+Fix this by falling back to the first format in the platform's format
+array instead of hardcoding V4L2_PIX_FMT_MPEG2. This is always valid
+since every platform defines at least one format.
 
-Enumerate the bus_info field of the capabilities structure for namespace
-parity and appropriate differentiation:
-Iris Decoder (plat:aa00000.video-codec:dec):
-	/dev/video0
-
-Iris Encoder (plat:aa00000.video-codec:enc):
-	/dev/video1
-
-Fixes: 5ad964ad5656 ("media: iris: Initialize and deinitialize encoder instance structure")
+Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_vidc.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/staging/media/meson/vdec/vdec.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/qcom/iris/iris_vidc.c
-+++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-@@ -449,14 +449,21 @@ static int iris_enum_frameintervals(stru
- 
- static int iris_querycap(struct file *filp, void *fh, struct v4l2_capability *cap)
- {
-+	struct iris_core *core = video_drvdata(filp);
- 	struct iris_inst *inst = iris_get_inst(filp);
-+	char *info;
- 
- 	strscpy(cap->driver, IRIS_DRV_NAME, sizeof(cap->driver));
- 
--	if (inst->domain == DECODER)
-+	if (inst->domain == DECODER) {
- 		strscpy(cap->card, "Iris Decoder", sizeof(cap->card));
--	else
-+		info = "dec";
-+	} else {
- 		strscpy(cap->card, "Iris Encoder", sizeof(cap->card));
-+		info = "enc";
-+	}
-+	snprintf(cap->bus_info, sizeof(cap->bus_info),
-+		 "plat:%s:%s", dev_name(core->dev), info);
- 
- 	return 0;
- }
+--- a/drivers/staging/media/meson/vdec/vdec.c
++++ b/drivers/staging/media/meson/vdec/vdec.c
+@@ -504,8 +504,8 @@ vdec_try_fmt_common(struct amvdec_sessio
+ 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+ 		fmt_out = find_format(fmts, size, pixmp->pixelformat);
+ 		if (!fmt_out) {
+-			pixmp->pixelformat = V4L2_PIX_FMT_MPEG2;
+-			fmt_out = find_format(fmts, size, pixmp->pixelformat);
++			pixmp->pixelformat = fmts[0].pixfmt;
++			fmt_out = &fmts[0];
+ 		}
+ 		break;
+ 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 
 
