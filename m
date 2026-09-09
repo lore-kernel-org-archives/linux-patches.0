@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B19E563299;
-	Wed,  9 Sep 2026 14:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD453576EC1;
+	Wed,  9 Sep 2026 14:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962993; cv=none; b=A7j6+rrEeXue0TQbYc0G/g9DAkgCw8SpbLtp7jqDRWGbzbRYHyu4hlBHpm6rUfPVZQL56EKHl/7zCLFmUNg/w+3O+1R25UEhHPvaomc4A9i0SQVDk3hEN1iJNAKCywEqv/4y4qoz/cGfSvtPsxMOwhYUJs5N0jKdaUlIcTfL7YY=
+	t=1788962996; cv=none; b=eQfIS93sdUG+zHbM5GbJtF5XUAFi9OXZ+eDzwszMy1/1x7OJq574p8145qdwdn+KpzSTgLRame/S8s/cc9Q1nP/R134z6ZCig3a+M2sF7JHWzApsruQtml1I1LNzG7mMrbQv1zKQ475jUAZ+CtXFbJD3mgiymyiAXluop2cIevA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962993; c=relaxed/simple;
-	bh=SarZZcEPhG/OMJ2+O54Qod9+7oTloYJVvzNlDonsAgI=;
+	s=arc-20240116; t=1788962996; c=relaxed/simple;
+	bh=kRZno8XVXxbPbIc4lcOqYraISJG344v/cTnic6L37uQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=juJ+9DOu81l2p0rSDKUriRZmrSU6gdqO5VnDhy1uKn9o2TjE+qLK42wlTFkIcxuapGGBnhp8tAMD5dSFZvpbPok6DT+JApozCWKSuNnU8BbwUrSS75cGgO+krQiI7lUhN9kbsqYgyC2rsL6gXXh5y0sariToZZ8CGL17agT5SDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rO5Tg6TF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jvmQc9V7VQEhcUx3aF3z0avzAo+zOxlrFXON4faS9vVaIYfpnJO4ykUKtQwab+PJic6/e6D/EnciUYMaS7z8UPn4pKI1cdIPahL678GHkNOsy+1574m9kZo1Rhhjrx74S3dmziYJqcKEI/ikUvQWQO7obGuHRmDllLs4+Z32lQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va4uuhUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rO5Tg6TF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB9D1F00A3A;
-	Wed,  9 Sep 2026 14:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va4uuhUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A771F00A3A;
+	Wed,  9 Sep 2026 14:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962991;
-	bh=zj4+mI3QGGPGOQAANvGe/c3HCQot6sVUywSqtq+3sKU=;
+	s=korg; t=1788962994;
+	bh=x+NIsNYK58cuX6R7peSv/eZPPJEamN8KUhR5ESSmPEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rO5Tg6TFU4FIex8a/zG9ZzvEWbFotK8mUAOl+ePibBgRC7CgVVzaK4ytuE1jpmo7F
-	 G/JQn+9gTqSjwUaf+kMBCEIvo0s8jssrc9GeoJyMJAS54Zh8Jwq4eJr2jnL8KOblkn
-	 Yc9mqmTvsKnTZKU+BP0sldP/lffujWVX7QZmlpBA=
+	b=Va4uuhUaFH5y3/h0ZcUZFI+XrsD5Ci862qRFuaRG8mmchiEAIm8hefYNDybyb8gLL
+	 Aohz9vKdjq5aA+PJ1b+/VpnDXV0Iuzr8+bNBFB7HeQ0Ygsi+mNMAFVAHlKVzgqAudk
+	 Ns0Wrfp+Zrczo1r2Eq64beISBkLRsxU71C9KmnPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 460/556] f2fs: avoid NULL checkpoint thread access in sysfs
-Date: Wed,  9 Sep 2026 15:42:20 +0200
-Message-ID: <20260909134246.750456407@linuxfoundation.org>
+Subject: [PATCH 7.2 461/556] f2fs: fix to migrate all curseg types during free_segment_range
+Date: Wed,  9 Sep 2026 15:42:21 +0200
+Message-ID: <20260909134246.781732313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,61 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-commit 5cb33b00c8fbb6e8f1fa3d281c3036d5f7c7c41f upstream.
+commit 8ec06f50ddd8d201bd7e55b896ae28ed9d4cb7d1 upstream.
 
-checkpoint_merge can be enabled even when no checkpoint merge thread is
-running. A read-only mount is one case: f2fs does not start
-f2fs_issue_ckpt there, but ckpt_thread_ioprio is still writable through
-sysfs.
+In free_segment_range(), the curseg evacuation loop only iterates up to
+NR_CURSEG_PERSIST_TYPE (0..5), missing non-persistent in-memory curseg
+types such as CURSEG_COLD_DATA_PINNED and CURSEG_ALL_DATA_ATGC.
 
-The ckpt_thread_ioprio store path updates the saved ioprio value and,
-when checkpoint_merge is enabled, calls set_task_ioprio() for the
-checkpoint thread. If cprc->f2fs_issue_ckpt is NULL, that dereferences a
-NULL task pointer.
+Even though these in-memory curseg types are not saved in the on-disk
+checkpoint header, they still occupy active physical segments at runtime.
+If an active in-memory curseg happens to be allocated within the segment
+range being truncated during filesystem shrink, failing to evacuate it
+will cause subsequent writes to the curseg attempting out-of-bounds I/O
+on the truncated storage range.
 
-Protect ckpt_thread_ioprio sysfs writes with s_umount as well, so the
-checkpoint thread cannot disappear under the store path while updating
-its ioprio.
+Fix this by expanding the curseg evacuation loop upper bound to
+NR_CURSEG_TYPE to ensure all active curseg types are safely migrated
+out of the target range.
 
-Fixes: e65920661708 ("f2fs: add ckpt_thread_ioprio sysfs node")
-Cc: stable@kernel.org
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/sysfs.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/f2fs/gc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -557,7 +557,7 @@ out:
- 			return -EINVAL;
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2216,7 +2216,7 @@ static int free_segment_range(struct f2f
+ 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
  
- 		cprc->ckpt_thread_ioprio = IOPRIO_PRIO_VALUE(class, level);
--		if (test_opt(sbi, MERGE_CHECKPOINT)) {
-+		if (cprc->f2fs_issue_ckpt) {
- 			ret = set_task_ioprio(cprc->f2fs_issue_ckpt,
- 					cprc->ckpt_thread_ioprio);
- 			if (ret)
-@@ -1007,13 +1007,14 @@ static ssize_t f2fs_sbi_store(struct f2f
- 	ssize_t ret;
- 	bool gc_entry = (!strcmp(a->attr.name, "gc_urgent") ||
- 					a->struct_type == GC_THREAD);
-+	bool thread_entry = !strcmp(a->attr.name, "ckpt_thread_ioprio");
- 
--	if (gc_entry) {
-+	if (gc_entry || thread_entry) {
- 		if (!down_read_trylock(&sbi->sb->s_umount))
- 			return -EAGAIN;
- 	}
- 	ret = __sbi_store(a, sbi, buf, count);
--	if (gc_entry)
-+	if (gc_entry || thread_entry)
- 		up_read(&sbi->sb->s_umount);
- 
- 	return ret;
+ 	/* Move out cursegs from the target range */
+-	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_PERSIST_TYPE; type++) {
++	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++) {
+ 		err = f2fs_allocate_segment_for_resize(sbi, type, start, end);
+ 		if (err)
+ 			goto out;
 
 
