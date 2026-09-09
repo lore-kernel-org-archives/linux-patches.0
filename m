@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA505678C1;
-	Wed,  9 Sep 2026 13:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8E65678FC;
+	Wed,  9 Sep 2026 13:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962284; cv=none; b=WTavI+Hll76e/S5iBeF0uOESfECRJqrGOFv0rIJ6CU9sCqSmNkyKyTINnAmrhwi4vBs3Q+Ig8VH4d19pWTP+IK6aygsP3rpcCczKlwVdFSLk6rIZ1pfXqNsQnQcNxLSKOsAxGnLvnMYJFMuc/xldNsYqplVSuSupFBlWjvNYOh8=
+	t=1788962287; cv=none; b=Lmb+XNvgRznxCkk++q9Ncd+ZjXRfma410An33omKiC/AOw5Iv7yobMEsmkBSJBOY4ms+Ihn7dHkM/x5X951CXMWVNsKaLXN8mfdMnHGiiyq+6whsAtbMS2nB3b7XGnLpL4dUOnroPrgmY0ZfsCKIHQ8gO362XOgvQ056GqK8ru4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962284; c=relaxed/simple;
-	bh=DniDYX2Ni4n5OMBH+TyMhV6XvY/J4IdJvbh0jryM0bE=;
+	s=arc-20240116; t=1788962287; c=relaxed/simple;
+	bh=LYkxGR6lVocT0UZVP93Gfw0DcM2GlqCrHduAp2b2EpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ntfj/0TuKubT5J5s3Jjo1vbigjjQ4nfsZhx0Owe4jTjjnjPAQ3j0U9sU5edDQRciYlnvZRtILsdvdfcfplWAauF28FuH79wvfrcdMZKSg/TR89WLpn/GhJxxDVHQMFlJ7LtfchD+qSK/IwUTmYa9/ThypzDv6uFlseteivYhd6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pe9WFp0D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=acf6YFxdjFlf1I3w/FdR7ADTKjU91HIUGdq03TmYzYUpE2Y16hAjxzymzmOsYUv9BVRip1zeKBo63ir2XSdgcPG/vc5yIjCxRUlI7UlCny++eyfM7IW2wfs5+/Ovhy2SLycjNnzzXzDRz4B+D/Zwyf9CemMDCrBCYJoAkeTEbx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuuML0lU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pe9WFp0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62091F00A3A;
-	Wed,  9 Sep 2026 13:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuuML0lU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41791F00A3A;
+	Wed,  9 Sep 2026 13:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962283;
-	bh=SOockEfIaDANHadKm5rnhP4NWkP+LV2jNz1KtuHuR30=;
+	s=korg; t=1788962286;
+	bh=bSX4xJrntHqaNIQxAjjpqxJW+WoJn4NOfLlb8dbTTAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pe9WFp0DrIJLt7Ilx7sveP55Psa887nmLSSh4JvSSgF1rmpVgTKqEkvle50/Tvj2l
-	 2uFYuEdymsVvtjOfHLen+qHIh643Wzgyyrh0QlYemyJMc+Qch7/Z28oQUiE0c2wAl+
-	 ZfMjxJRfvSi0aJkjNiRVfI8V6hA8HKpJd0bG83MA=
+	b=uuuML0lUut57VSiPPfiIDW2Bh6tLS7VY9OwGqD8v9MJ7p3+KGdausHtn2eh8ZgxHu
+	 ORbHt+b0EUapG6ZO33DIzXG26EcXvVdowvyMbWaqg+Gr7+i0Rjfj2jy4e+rp1pLRSM
+	 iiBlMUuAI2yYstENhT4KxecckQOgsXpVlnUzry84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 237/556] ASoC: rt1318: sort the register default table
-Date: Wed,  9 Sep 2026 15:38:37 +0200
-Message-ID: <20260909134238.749034478@linuxfoundation.org>
+Subject: [PATCH 7.2 238/556] ASoC: rt274: sort the register default table
+Date: Wed,  9 Sep 2026 15:38:38 +0200
+Message-ID: <20260909134238.783163470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,49 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 2a8e4b7114f6493314348bda7e3d2141d218ef61 upstream.
+commit 6a147d177819b0d831831d19fbb9c23f08a03734 upstream.
 
 reg_defaults must be sorted by ascending register address, as
 regcache_lookup_reg() locates entries in it with bsearch().  See commit
 fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-The 0xdd93 and 0xdd94 entries are listed after 0xddc8 in rt1318_reg[],
-which leaves them unreachable for the binary search.
-regcache_reg_needs_sync() then cannot compare them against their default
-and reports that a sync is needed, so they are written to the device on
-every regcache_sync() even when they were never touched.
+Four entries were appended to the end of rt274_reg[] instead of being
+inserted at their sorted position, which leaves 7 of the 33 entries
+unreachable for the binary search.  regcache_reg_needs_sync() then cannot
+compare them against their default and reports that a sync is needed, so
+they are written to the device on every regcache_sync() even when they were
+never touched.
 
 Sort the table by register address.
 
-Fixes: fe1ff61487ac ("ASoC: rt1318: Add RT1318 audio amplifier driver")
+Fixes: c7e79b2b2d2d ("ASoC: rt274: add rt274 codec driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805090240.16991-17-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20260805090240.16991-2-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt1318.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/rt274.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/soc/codecs/rt1318.c
-+++ b/sound/soc/codecs/rt1318.c
-@@ -337,6 +337,8 @@ static const struct reg_default rt1318_r
- 	{ 0xdd08, 0x40 },
- 	{ 0xdd12, 0x00 },
- 	{ 0xdd35, 0x00 },
-+	{ 0xdd93, 0x00 },
-+	{ 0xdd94, 0x64 },
- 	{ 0xddb5, 0x00 },
- 	{ 0xddb6, 0x40 },
- 	{ 0xddb7, 0x00 },
-@@ -345,8 +347,6 @@ static const struct reg_default rt1318_r
- 	{ 0xddc6, 0x00 },
- 	{ 0xddc7, 0x00 },
- 	{ 0xddc8, 0x00 },
--	{ 0xdd93, 0x00 },
--	{ 0xdd94, 0x64 },
- 	{ 0xdf00, 0x00 },
- 	{ 0xdf5f, 0x00 },
- 	{ 0xdf60, 0x00 },
+--- a/sound/soc/codecs/rt274.c
++++ b/sound/soc/codecs/rt274.c
+@@ -184,8 +184,10 @@ static const struct reg_default rt274_re
+ 	{ 0x0023a000, 0x00000057 },
+ 	{ 0x00270500, 0x00000400 },
+ 	{ 0x00370500, 0x00000400 },
++	{ 0x00830000, 0x00000097 },
+ 	{ 0x00870500, 0x00000400 },
+ 	{ 0x00920000, 0x00000031 },
++	{ 0x00930000, 0x00000097 },
+ 	{ 0x00935000, 0x00000097 },
+ 	{ 0x00936000, 0x00000097 },
+ 	{ 0x00970500, 0x00000400 },
+@@ -195,10 +197,12 @@ static const struct reg_default rt274_re
+ 	{ 0x00c37000, 0x00000400 },
+ 	{ 0x00c37100, 0x00000400 },
+ 	{ 0x01270500, 0x00000400 },
++	{ 0x01270700, 0x00000000 },
+ 	{ 0x01370500, 0x00000400 },
+ 	{ 0x01371f00, 0x411111f0 },
+ 	{ 0x01937000, 0x00000000 },
+ 	{ 0x01970500, 0x00000400 },
++	{ 0x01970700, 0x00000020 },
+ 	{ 0x02050000, 0x0000001b },
+ 	{ 0x02139000, 0x00000080 },
+ 	{ 0x0213a000, 0x00000080 },
+@@ -207,10 +211,6 @@ static const struct reg_default rt274_re
+ 	{ 0x02170700, 0x00000000 },
+ 	{ 0x02270100, 0x00000000 },
+ 	{ 0x02370100, 0x00000000 },
+-	{ 0x01970700, 0x00000020 },
+-	{ 0x00830000, 0x00000097 },
+-	{ 0x00930000, 0x00000097 },
+-	{ 0x01270700, 0x00000000 },
+ };
+ 
+ static bool rt274_volatile_register(struct device *dev, unsigned int reg)
 
 
