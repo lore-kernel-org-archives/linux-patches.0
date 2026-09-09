@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00A055409D;
-	Wed,  9 Sep 2026 14:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D22F569F26;
+	Wed,  9 Sep 2026 14:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962712; cv=none; b=ie4KL4BwCRMEXmU7Dk32UOjn9MW36bnrHlDz7P2d/DGbN0283oYWva7oo6fkoIebr0+BL9tbx5iTYTtM53w6eXrhbPR8/nqn/yGj2GUNolKL7XvZHUiVyFWDB7H0byrrTCRlc3j32RAfoYaY9ZsYwZtpy6S/ybdbazJUFTnt7+A=
+	t=1788962715; cv=none; b=jHt/ikYKMALVlxLWOUm4/cYGrpU7O+ySzRh/E+RTY50nUwjGbd9as7F/uxLmVqASuuTC5DLUZkC0Gpxlv+HGObBOWycJfWRLZ/wFPe2Gq+jxUJLOorMnr+qvi+48T3wP2sbe8IO+Zdlvfb5mmcZUuyIgAeo1+w7hDdXOo0OS+T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962712; c=relaxed/simple;
-	bh=X20hsZvJHTZP6ZtN/a9cxq9MIQ92Qbx+3NJw2qVZrEk=;
+	s=arc-20240116; t=1788962715; c=relaxed/simple;
+	bh=P4YWrvhg7H5pAPF4Ofq9QEyGgCzZJJzQwcYPWp6kM8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7nKyxUztYkiofqYVl2asWLkUuiE91bDyXKe6vALP5oilMhSQPpyseCTIDGmTIf5cLbHA4Uknb5vZX9v0fm7nylwvvNAsK4W+6zYzay56YPWATimxnW1+wWJziPBGSQ6y/09eVOcozr3HzuKVDRIMawtw9J2lzk0vGsA/v5cvbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buuE6CMi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jzNSYFkYeCBWEo+0fsMwQJfFDaN4AUqIrT+TyAwdzMq7LuKwc2tv26QNaKdRlfuL7lk02KtXgaKC6N7+mRbASbhUtDR08UX5QKgADkVuDIlBT/mQdo2Bt47CcTY5Izc7awPvgcZn+OJyAsgFDJWcKcjscM0K9to/n0tM3rDnr7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MH6uDS+U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buuE6CMi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2991F00A3A;
-	Wed,  9 Sep 2026 14:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MH6uDS+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47791F00A3D;
+	Wed,  9 Sep 2026 14:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962711;
-	bh=2KJcuEAvlvJBh4OyY5onUbb94CW81gxRKQXBi6DPrsE=;
+	s=korg; t=1788962714;
+	bh=1+N6+wqJ6IkjuL2zi9SEgpFHjfDWLIP/tVL5Kb/05bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=buuE6CMiadtXn5PDsMvblY002ccFwb7W+otQv2xl8vVfLyvaV1YJbcQOKavk+yebm
-	 qL7XnNa7tdsY5SCWkB5vUovcS5LwMEPv+yUfur+RRyfrkOQ/j5Ere+7h3k7r/APoZ2
-	 IopchWu6VKkkk3iTK00JWdVQ4skTNa8MnsJ0798Y=
+	b=MH6uDS+Ubg6zbfouWHbUAehhsoMpoZMQEhEXm7H7gy8a7ogPJl+PoCv+GFqN80X5k
+	 q0IDHJNCqjKaUbP3TRU+jHVs2pQKl6a2dWL2IraXZ/Bg1YaPDdT+XFUv3UvRnpMI3r
+	 ybOpxrrRe8Uqb5B93uvG+8ESW9zks2CCKiJeFw9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 383/556] media: mali-c55: Fix scaler factor overflow for large crop sizes
-Date: Wed,  9 Sep 2026 15:41:03 +0200
-Message-ID: <20260909134244.150669024@linuxfoundation.org>
+	Eugen Hristev <ehristev@kernel.org>,
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 7.2 348/556] media: bcm2835-unicam: Fix pipeline wrong validation for unpacked formats
+Date: Wed,  9 Sep 2026 15:40:28 +0200
+Message-ID: <20260909134242.901441064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,46 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Eugen Hristev <ehristev@kernel.org>
 
-commit 2447c768cb5dfb9f52630b82d419e2b24fee27a3 upstream.
+commit 4f26c8345dbfa92f19078c788be1b9bfd425ed60 upstream.
 
-The horizontal and vertical scaling factors multiply the crop dimensions
-by MALI_C55_RSZ_SCALER_FACTOR, a Q4.20 factor of (1 << 20). Both operands
-are 32-bit, so the multiplication wraps before the result is stored in
-the u64 scale variables. For any crop dimension of 4096 or more (the
-maximum is 8192) the value overflows; an 8192 to 4096 downscale yields a
-TINC of zero, so the scaler never advances and the output is corrupted.
+The commit
+08f9794d9b79 ("media: bcm2835-unicam: Fix RGB format / mbus code association")
+introduced a check to see whether the format requested is the same as the
+fourcc in the format list.
 
-Define MALI_C55_RSZ_SCALER_FACTOR as a 64-bit constant so the
-multiplication is performed in 64-bit.
+However, this breaks the case when userspace requested an unpacked fourcc,
+e.g. RG10.
 
-Fixes: d5f281f3dd29 ("media: mali-c55: Add Mali-C55 ISP driver")
+Unicam can work with or without unpacking pixels, e.g. pRAA or RG10, depending
+on what userspace requests.
+In the unpacking case, a dedicated register is being set.
+
+If the userspace requests pRAA, this works, because the check validates the
+pipeline:
+
+v4l2-ctl -d /dev/video0 --set-fmt-video=width=3280,height=2464,pixelformat=pRAA \
+ --stream-mmap --stream-count=1 --stream-to=frame.raw
+
+but, with
+v4l2-ctl -d /dev/video0 --set-fmt-video=width=3280,height=2464,pixelformat=RG10 \
+--stream-mmap --stream-count=1 --stream-to=frame.raw
+
+unicam complains at validation level:
+
+image: format mismatch: 0x300f <=> RG10 little-endian (0x30314752)
+
+This should work, because MEDIA_BUS_FMT_SRGGB10_1X10 can be packed into either
+RG10 or pRAA depending on the packing register.
+
+To fix this, modified the condition check to also allow in the case when
+requested format (fmt->pixelformat) is equal to fmtinfo->unpacked_fourcc.
+
+Fixes: 08f9794d9b79 ("media: bcm2835-unicam: Fix RGB format / mbus code association")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Eugen Hristev <ehristev@kernel.org>
+Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+[Sakari Ailus: Added Cc: stable.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/arm/mali-c55/mali-c55-resizer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/broadcom/bcm2835-unicam.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/arm/mali-c55/mali-c55-resizer.c b/drivers/media/platform/arm/mali-c55/mali-c55-resizer.c
-index c4f46651dcee..6706939b4a90 100644
---- a/drivers/media/platform/arm/mali-c55/mali-c55-resizer.c
-+++ b/drivers/media/platform/arm/mali-c55/mali-c55-resizer.c
-@@ -15,7 +15,7 @@
- #include "mali-c55-registers.h"
- 
- /* Scaling factor in Q4.20 format. */
--#define MALI_C55_RSZ_SCALER_FACTOR	(1U << 20)
-+#define MALI_C55_RSZ_SCALER_FACTOR	BIT_ULL(20)
- 
- #define MALI_C55_RSZ_COEFS_BANKS	8
- #define MALI_C55_RSZ_COEFS_ENTRIES	64
--- 
-2.55.0
-
+--- a/drivers/media/platform/broadcom/bcm2835-unicam.c
++++ b/drivers/media/platform/broadcom/bcm2835-unicam.c
+@@ -2158,7 +2158,8 @@ static int unicam_video_link_validate(st
+ 		 * In order to allow the applications using the old behaviour to
+ 		 * run, let's accept the old combination, but warn about it.
+ 		 */
+-		if (fmtinfo->fourcc != fmt->pixelformat) {
++		if (fmt->pixelformat != fmtinfo->fourcc &&
++		    fmt->pixelformat != fmtinfo->unpacked_fourcc) {
+ 			if ((fmt->pixelformat == V4L2_PIX_FMT_BGR24 &&
+ 			     format->code == MEDIA_BUS_FMT_BGR888_1X24) ||
+ 			    (fmt->pixelformat == V4L2_PIX_FMT_RGB24 &&
 
 
