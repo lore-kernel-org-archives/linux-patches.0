@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB9A57ED91;
-	Wed,  9 Sep 2026 14:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4422257ED85;
+	Wed,  9 Sep 2026 14:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964559; cv=none; b=VYX1ErRnNkEoS8HE0X9hIAILbTEw0Hx5jGQfGJ6vGlx837UA4YSexj68ib52LYI9JaK+f3VjqHfDJE+SCFdQIuYRs5vy06mo7Z37nOyuv6e5lWuCEqdw0prqgMBNavSeRp8NxWQV5Ne4dfZYYhFaQahdM2iw1lputSE+cemw+Sg=
+	t=1788964561; cv=none; b=kbv/oLCyNtStdMpTfCgLwZKjvrxkfWkB+nvepBXfKslMGf38EeEVEfJM9h6scg1wuKNpCdws2KKqFMf2PmsW5cnVpscZcXZcpThVNR1hfV6yaqJwfJ6XHD8vRsuVq6ay3S0ufVwNmoBIBDEUBoMCSwil+yFTgvq2LRklquPjDuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964559; c=relaxed/simple;
-	bh=XBn4lliG1RnIBmwu0QIk0Vu/hXwnhqCqKsjtIjZw/GI=;
+	s=arc-20240116; t=1788964561; c=relaxed/simple;
+	bh=WC8ng813vtnGP/2v2si24KlLN70hEeqSn7Qa9lTRvtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/ABLTT6C5HEgaWq2BNPY0nGpUDb0yzTI+x+81ctRcYe5V/ehEYRLatWJUVtHikO406LGqrHwo6gVU9vU7XsmgzbHwpbSnlY7Dnqi07XaW9UfREDEcvTlQ+TJ5gXzfRinx/0MNY2fJKTwjgJYsQ8c2r0Yh4RlICJCJG50EEiEGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYf0Rx5X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nyIz5j/sSlucuRuj4YIW3wURKv/0AMZJBYOHITI0mU5mRzyUyHyRkz+pwjd2+Z+daASJ5najFi4L0GqlO9MBs6ZJvPaqbgYsnlmpyKDlUYL00brASuxRoXyBzHcV/FJVh6sKcRnPq71eKIWbVXyZUZ8kGBjzYGC/b9L26YhAgWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qldsHrhH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYf0Rx5X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EEC1F00A3A;
-	Wed,  9 Sep 2026 14:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qldsHrhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8241F00A3A;
+	Wed,  9 Sep 2026 14:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964557;
-	bh=oYF7IolF86OvWWbCAhDQJwS4X1hRXoR21SZddPkwfi4=;
+	s=korg; t=1788964560;
+	bh=Dxk6/iVRvW0KfGOjlg6EF5BliyY+GQEnwBnTMmarejM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HYf0Rx5Xoe1Vr0QwNtwCJjTjZs6CPtEJnECjhsi3aEtRa4AAUjIJBLAfbCeHjHdGw
-	 jk9J/+XJ7AwnV5tP7++9p+UZXQ0lLDu5F9GPTevIo1JJB3dW8AUksqdb9TTfmB62mb
-	 unvK7kYYQRO33Zfh6Sgc7srzB3UGnmefWPOHDg9A=
+	b=qldsHrhHUpqpsuFhuiAewhJVFcTfPm08ZxuteaO0iA5ZOvBFvoXJihnqpu0ufTD6+
+	 6+GcCzjiYNmfx/bHmWnaakftyO608FK0Sr+mXXPPFe+zKFHPenOAYXV48EWfcFjMZO
+	 iQcvOwfPyaGmoD1zVNTnMu8S1oZC05zLjhBUfTzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 463/583] ceph: cap delegated inode count in ceph_parse_deleg_inos()
-Date: Wed,  9 Sep 2026 15:42:28 +0200
-Message-ID: <20260909134253.945174402@linuxfoundation.org>
+Subject: [PATCH 6.18 464/583] ceph: force a cap message when a deferred revoke cant be acked immediately
+Date: Wed,  9 Sep 2026 15:42:29 +0200
+Message-ID: <20260909134253.975901774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,208 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 4bd3158bd62466d57ed72a3f7bc5f205fedd6919 ]
+[ Upstream commit 8fdf946445732c2bcd685abc8bd0e509d2ebc158 ]
 
-ceph_parse_deleg_inos() decodes interval sets of delegated inode numbers
-from an MDS create-with-delegation reply. For each set it reads a 64-bit
-start and a 64-bit len with ceph_decode_64_safe(), which only validates
-that the eight bytes are present in the message, not the value, and then
-loops over len while inserting entries into s_delegated_inos.
+When the MDS revokes capabilities, handle_cap_grant() normally
+guarantees a response by setting `CHECK_CAPS_FLUSH_FORCE` (see
+commit 31634d7597d8 ("ceph: force sending a cap update msg back to MDS
+for revoke op")), so ceph_check_caps() sends a cap message even if the
+client would otherwise decide it has nothing to do.  That guarantee is
+skipped whenever the revoke has to be deferred (via revoke_wait):
+revoking Fb while dirty data is still buffered (writeback is queued
+first) or revoking Fc while pages are cached (async invalidation is
+queued first).
 
-len is fully attacker controlled. A malicious or compromised MDS can send
-one huge interval, many intervals in one reply, duplicate intervals, or
-repeated replies that accumulate delegated inodes on the same session.
-The original code bounded none of these and could spin the insert loop or
-grow the xarray without limit.
+In those cases, the ack is left to the deferred completion
+(ceph_put_wrbuffer_cap_refs() after writeback, or the invalidate
+worker after invalidation); both of which call ceph_check_caps(ci,0)
+i.e.  without `CHECK_CAPS_FLUSH_FORCE`.  Nothing gets sent under one
+of the following conditions:
 
-Bound both dimensions with a single enforcement point. Track the number
-of delegated inodes held by each MDS session in an atomic counter and
-grow it only in ceph_insert_deleg_ino(), which uses atomic_add_unless()
-to refuse to push the count past CEPH_MAX_DELEG_INOS. Because that helper
-is the only place the counter grows, the per-session population can never
-exceed the cap, so no separate per-session pre-check is needed. The
-counter is decremented when async create consumes a delegated inode or
-when an insert fails, incremented when a delegated inode is restored,
-initialized with the session xarray, and reset when reconnect destroys
-the xarray.
+- the inode is retaining caps because the file was used recently
+  (file_wanted != 0; retain |= CEPH_CAP_ANY)
 
-A per-session cap alone still lets one reply spin the insert loop on
-duplicate ranges without growing the counter, so also cap the aggregate
-interval length accepted from a single reply. Together these bound both
-the loop trip count per reply and the xarray population across replies.
+- the revoked cap is still used because the page was re-cached (e.g. a
+  file being re-read)
 
-The cap is a fixed, client-chosen constant rather than a value derived
-from the MDS. mds_client_prealloc_inos is a userspace MDS configuration
-option; it is never sent to the kernel client on the wire, and a
-server-supplied bound could not be trusted for a defensive limit in any
-case. The constant is set well above that option's documented default of
-1000 (a generous multiple), so legitimate refill behavior is unaffected
-while the CPU and xarray memory a malformed delegation stream can consume
-stays bounded.
+- the MDS has meanwhile re-granted, so `issued==implemented` and the
+  client sees nothing being revoked
 
-Impact: a malicious or compromised Ceph MDS can no longer make a client
-spin through an unbounded delegated-inode interval or grow one session's
-delegated-inode xarray without limit.
+The client then never emits the cap message which the MDS is waiting
+for.  The MDS blocks on the revoke indefinitely and logs, for minutes
+or hours:
+
+  client.NNN isn't responding to mclientcaps(revoke), ino 0x... pending
+  pAsxLsXsxFsxcrwb issued pAsxLsXsxFsxcrwb, sent 964.899182 seconds ago
+
+The client-side state at that point shows the full cap set still
+issued, nothing in the revoking/flushing sets.  Thus nothing gets
+sent.
+
+This patch fixes it by remembering that a forced response is expected.
+When a revoke is deferred, set `CEPH_I_FLUSH_FORCE` on the inode.
+ceph_check_caps() replays it as `CHECK_CAPS_FLUSH_FORCE`, so whichever
+path re-checks the inode next (the writeback/invalidate completion,
+the delayed worker, or any other caller) is guaranteed to send a cap
+message to the MDS.  __prep_cap() clears the flag once a message is
+actually built.
+
+This is the deferred-path counterpart of the existing
+`CHECK_CAPS_FLUSH_FORCE` handling; a normal (non-deferred) revoke
+still forces the response inline as before.
 
 Cc: stable@vger.kernel.org
-Fixes: d48464878708 ("ceph: decode interval_sets for delegated inos")
-Suggested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Fixes: 31634d7597d8 ("ceph: force sending a cap update msg back to MDS for revoke op")
+Fixes: 257e6172ab36 ("ceph: don't let check_caps skip sending responses for revoke msgs")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ adapted counter reset placement to the older reconnect control flow ]
+[ adapted named atomic Ceph inode flag operations to lock-protected mask operations ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |   59 +++++++++++++++++++++++++++++++++++++++++++++------
- fs/ceph/mds_client.h |    1 
- fs/ceph/super.h      |    9 +++++++
- 3 files changed, 63 insertions(+), 6 deletions(-)
+ fs/ceph/caps.c  |   63 +++++++++++++++++++++++++++++++++++++++++++++++++-------
+ fs/ceph/super.h |    4 +++
+ 2 files changed, 60 insertions(+), 7 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -570,10 +570,36 @@ bad:
- 
- #define DELEGATED_INO_AVAILABLE		xa_mk_value(1)
- 
-+static int ceph_insert_deleg_ino(struct ceph_mds_session *s, u64 ino)
-+{
-+	struct ceph_client *cl = s->s_mdsc->fsc->client;
-+	int err;
-+
-+	/*
-+	 * Cap how many delegated inodes a single session may hold. This is
-+	 * the only place that grows the count, so atomic_add_unless() bounds
-+	 * it at exactly CEPH_MAX_DELEG_INOS; s_num_deleg_inos can never exceed
-+	 * that.
-+	 */
-+	if (!atomic_add_unless(&s->s_num_deleg_inos, 1, CEPH_MAX_DELEG_INOS)) {
-+		pr_warn_ratelimited_client(cl,
-+			"MDS session already holds %d delegated inodes\n",
-+			CEPH_MAX_DELEG_INOS);
-+		return -EOVERFLOW;
-+	}
-+
-+	err = xa_insert(&s->s_delegated_inos, ino, DELEGATED_INO_AVAILABLE,
-+			GFP_KERNEL);
-+	if (err)
-+		atomic_dec(&s->s_num_deleg_inos);
-+	return err;
-+}
-+
- static int ceph_parse_deleg_inos(void **p, void *end,
- 				 struct ceph_mds_session *s)
- {
- 	struct ceph_client *cl = s->s_mdsc->fsc->client;
-+	u64 msg_deleg_inos = 0;
- 	u32 sets;
- 
- 	ceph_decode_32_safe(p, end, sets, bad);
-@@ -591,16 +617,34 @@ static int ceph_parse_deleg_inos(void **
- 				start, len);
- 			continue;
- 		}
-+
-+		/*
-+		 * Bound the number of inodes one reply may delegate.
-+		 * ceph_insert_deleg_ino() separately caps the per-session
-+		 * population, so this only has to stop one reply from spinning
-+		 * the insert loop under an attacker-controlled len.
-+		 */
-+		if (len > (u64)CEPH_MAX_DELEG_INOS ||
-+		    msg_deleg_inos > (u64)CEPH_MAX_DELEG_INOS - len) {
-+			pr_warn_ratelimited_client(cl,
-+				"MDS reply delegates too many inodes (have %llu, +%llu, max %d)\n",
-+				msg_deleg_inos, len, CEPH_MAX_DELEG_INOS);
-+			return -EIO;
-+		}
-+		msg_deleg_inos += len;
-+
- 		while (len--) {
--			int err = xa_insert(&s->s_delegated_inos, start++,
--					    DELEGATED_INO_AVAILABLE,
--					    GFP_KERNEL);
-+			int err = ceph_insert_deleg_ino(s, start++);
-+
- 			if (!err) {
- 				doutc(cl, "added delegated inode 0x%llx\n", start - 1);
- 			} else if (err == -EBUSY) {
- 				pr_warn_client(cl,
- 					"MDS delegated inode 0x%llx more than once.\n",
- 					start - 1);
-+			} else if (err == -EOVERFLOW) {
-+				/* ceph_insert_deleg_ino() already warned. */
-+				return -EIO;
- 			} else {
- 				return err;
- 			}
-@@ -618,16 +662,17 @@ u64 ceph_get_deleg_ino(struct ceph_mds_s
- 
- 	xa_for_each(&s->s_delegated_inos, ino, val) {
- 		val = xa_erase(&s->s_delegated_inos, ino);
--		if (val == DELEGATED_INO_AVAILABLE)
-+		if (val == DELEGATED_INO_AVAILABLE) {
-+			atomic_dec(&s->s_num_deleg_inos);
- 			return ino;
-+		}
- 	}
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -978,6 +978,27 @@ int __ceph_caps_revoking_other(struct ce
  	return 0;
  }
  
- int ceph_restore_deleg_ino(struct ceph_mds_session *s, u64 ino)
++/*
++ * Return true if any cap of this inode holds caps which the MDS has
++ * revoked, but which we have not released yet.
++ */
++static bool __ceph_is_any_revoking(const struct ceph_inode_info *ci)
++{
++	const struct rb_node *p;
++
++	lockdep_assert_held(&ci->i_ceph_lock);
++
++	for (p = rb_first(&ci->i_caps); p; p = rb_next(p)) {
++		const struct ceph_cap *cap =
++			rb_entry(p, struct ceph_cap, ci_node);
++
++		if (cap->implemented & ~cap->issued)
++			return true;
++	}
++
++	return false;
++}
++
+ int __ceph_caps_used(struct ceph_inode_info *ci)
  {
--	return xa_insert(&s->s_delegated_inos, ino, DELEGATED_INO_AVAILABLE,
--			 GFP_KERNEL);
-+	return ceph_insert_deleg_ino(s, ino);
- }
- #else /* BITS_PER_LONG == 64 */
- /*
-@@ -1012,6 +1057,7 @@ static struct ceph_mds_session *register
- 	INIT_LIST_HEAD(&s->s_waiting);
- 	INIT_LIST_HEAD(&s->s_unsafe);
- 	xa_init(&s->s_delegated_inos);
-+	atomic_set(&s->s_num_deleg_inos, 0);
- 	INIT_LIST_HEAD(&s->s_cap_releases);
- 	INIT_WORK(&s->s_cap_release_work, ceph_cap_release_work);
+ 	int used = 0;
+@@ -1420,6 +1441,9 @@ static void __prep_cap(struct cap_msg_ar
+ 	cap->implemented &= cap->issued | used;
+ 	cap->mds_wanted = want;
  
-@@ -4913,6 +4959,7 @@ static void send_mds_reconnect(struct ce
- 		goto fail_nomsg;
++	if ((ci->i_ceph_flags & CEPH_I_FLUSH_FORCE) != 0 && !__ceph_is_any_revoking(ci))
++		ci->i_ceph_flags &= ~CEPH_I_FLUSH_FORCE;
++
+ 	arg->session = cap->session;
+ 	arg->ino = ceph_vino(inode).ino;
+ 	arg->cid = cap->cap_id;
+@@ -2034,6 +2058,14 @@ void ceph_check_caps(struct ceph_inode_i
  
- 	xa_destroy(&session->s_delegated_inos);
-+	atomic_set(&session->s_num_deleg_inos, 0);
+ 	if (ci->i_ceph_flags & CEPH_I_FLUSH)
+ 		flags |= CHECK_CAPS_FLUSH;
++	/*
++	 * A revoke whose response was deferred (see handle_cap_grant()) must
++	 * still be acknowledged.  Replay the forced flush here so that even a
++	 * check triggered by writeback/invalidation completion sends a cap
++	 * message to the MDS.
++	 */
++	if (ci->i_ceph_flags & CEPH_I_FLUSH_FORCE)
++		flags |= CHECK_CAPS_FLUSH_FORCE;
+ retry:
+ 	/* Caps wanted by virtue of active open files. */
+ 	file_wanted = __ceph_caps_file_wanted(ci);
+@@ -3760,13 +3792,30 @@ static void handle_cap_grant(struct inod
+ 	BUG_ON(cap->issued & ~cap->implemented);
  
- 	mutex_lock(&session->s_mutex);
- 	session->s_state = CEPH_MDS_SESSION_RECONNECTING;
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -252,6 +252,7 @@ struct ceph_mds_session {
- 	struct list_head  s_waiting;  /* waiting requests */
- 	struct list_head  s_unsafe;   /* unsafe requests */
- 	struct xarray	  s_delegated_inos;
-+	atomic_t	  s_num_deleg_inos;
- };
+ 	/* don't let check_caps skip sending a response to MDS for revoke msgs */
+-	if (!revoke_wait && le32_to_cpu(grant->op) == CEPH_CAP_OP_REVOKE) {
+-		cap->mds_wanted = 0;
+-		flags |= CHECK_CAPS_FLUSH_FORCE;
+-		if (cap == ci->i_auth_cap)
+-			check_caps = 1; /* check auth cap only */
+-		else
+-			check_caps = 2; /* check all caps */
++	if (le32_to_cpu(grant->op) == CEPH_CAP_OP_REVOKE) {
++		if (revoke_wait) {
++			/*
++			 * We can't ack the revoke yet: the response is deferred
++			 * until the writeback or cache invalidation queued above
++			 * completes.  Set the CEPH_I_FLUSH_FORCE flag to remember
++			 * that a forced cap message is owed so that deferred
++			 * completion (ceph_put_wrbuffer_cap_refs() or the
++			 * invalidate worker, both of which call ceph_check_caps())
++			 * actually sends one, even if by then the revoked caps look
++			 * unused, the inode is retaining caps, or the MDS has
++			 * re-granted them.  Without this, the cap message is never
++			 * sent and the MDS hangs ("isn't responding to
++			 * mclientcaps(revoke)").
++			 */
++			ci->i_ceph_flags |= CEPH_I_FLUSH_FORCE;
++		} else {
++			cap->mds_wanted = 0;
++			flags |= CHECK_CAPS_FLUSH_FORCE;
++			if (cap == ci->i_auth_cap)
++				check_caps = 1; /* check auth cap only */
++			else
++				check_caps = 2; /* check all caps */
++		}
+ 	}
  
- /*
+ 	if (extra_info->inline_version > 0 &&
 --- a/fs/ceph/super.h
 +++ b/fs/ceph/super.h
-@@ -624,6 +624,15 @@ static inline int ceph_ino_compare(struc
- #define CEPH_MDS_INO_LOG_OFFSET		(2 * CEPH_MAX_MDS)
- #define CEPH_INO_SYSTEM_BASE		((6*CEPH_MAX_MDS) + (CEPH_MAX_MDS * CEPH_NUM_STRAY))
+@@ -681,6 +681,10 @@ static inline struct inode *ceph_find_in
+ #define CEPH_I_SHUTDOWN		(1 << 13) /* inode is no longer usable */
+ #define CEPH_I_ASYNC_CHECK_CAPS	(1 << 14) /* check caps immediately after async
+ 					     creating finishes */
++#define CEPH_I_FLUSH_FORCE	(1 << 15) /* a revoke's response was deferred;
++					   * force a cap message to the MDS once
++					   * the deferred work completes
++					   */
  
-+/*
-+ * Upper bound on the number of delegated inodes a single MDS session may
-+ * hold. The MDS normally hands out a small preallocation window (the
-+ * userspace mds_client_prealloc_inos option defaults to 1000) and refills
-+ * it as the client consumes entries. This leaves generous headroom while
-+ * bounding the CPU and memory a malformed delegation interval can consume.
-+ */
-+#define CEPH_MAX_DELEG_INOS		8192
-+
- static inline bool ceph_vino_is_reserved(const struct ceph_vino vino)
- {
- 	if (vino.ino >= CEPH_INO_SYSTEM_BASE ||
+ /*
+  * Masks of ceph inode work.
 
 
