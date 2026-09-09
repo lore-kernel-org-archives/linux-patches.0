@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD74458F075;
-	Wed,  9 Sep 2026 14:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAED55947F1;
+	Wed,  9 Sep 2026 14:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964834; cv=none; b=KqGSVMnjBBcvCjsxBVWipcmk0kHP3ib1NR848j4LQ+SUYKxDE30Bqfextb5vvGQ5puNsYG9Vl7dOYN58B9Q61jcGQ0bSMUoxn3z0lNfDbj14MWmFFMmh0rhYQk+KjodiGBgNTE/g364vRqu7CdDfNQRHMCPOlw4YLkwbjgYPcPI=
+	t=1788964837; cv=none; b=YsPof6uSJctuoCSYYzAhcwv8BvC7z6QIj19j/1FTQ9N9i/9KS9zi04cVXAtOHujK9hQxvNRjMbEyoX3AtFL3rhA4QOgNkcEJji5Ky7qyQnTsg6rokza59bqwdXtn6W2qTAEIGjGeZsKG731KRNVKq5lrV+jiuzZC91ZKQThpK1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964834; c=relaxed/simple;
-	bh=8j1o1Y1Wh1as5HwXhp5lK9Dw7wr9TKOCNLFg0cOX8HM=;
+	s=arc-20240116; t=1788964837; c=relaxed/simple;
+	bh=GjATW9A62uggI56oqkSUkAsmCNN4kpKkIVbTZXF5cRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/D5h3TBqGxZKitpo8qe/fDz58WT9DjbP9ZphxmZvR2+ttlwU6Cbzo82j0Ck3CAQnTtGwiNpja7GzLCYGKU6VEyrN8fpSzzdZQCbjcivf4onf9RrWmcnDcgyQ9HRQgtL0vjvwBim1SxyNQNr2dh2kEny4Z9VKJoqZue9iq4ysmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvxzr4vj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hkR7kVi7Ly2DPqcd90M9UBmlD0XEf/p76CsEcREK3E8M4Ge+fwxeNxDlUKjVIbkaicl86tAZFqWlYKxoLqx+YeGDvN+BLHlOorh5qi/OGpndtOCEXbY5R9xQ5lFqfiVkUjdf8S3RjKROFf8evDx7BmEWckZ1VdwwbB4BPyW+Eg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rodrJVn4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvxzr4vj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281471F00A3D;
-	Wed,  9 Sep 2026 14:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rodrJVn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070221F00A3A;
+	Wed,  9 Sep 2026 14:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964832;
-	bh=1dCQRBZDjXO5vsjQFPrrmRNY24FANo9nTRqEcfN6PF8=;
+	s=korg; t=1788964835;
+	bh=BWgHYs0lifpQwZq8vH2BUT5ZpGREQ46sVSGLLS8Vhr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tvxzr4vjhLpya2QWlJISDQqZUuDYmEH+IaxT0QRdkYlkm5Aog8a14tBh01bKIlBRU
-	 aQsyuNSEFONiz7I+JVgeNeP58fmGypOLzEBMtiNl/DvsNEe5wnr5F718U3NY7EO3q7
-	 i302iHpUHWTl0NaHZFSF8mm8ulM+J4fKbTZqDC8k=
+	b=rodrJVn4Z1xSKZpACFVKQbVP/nPHu6HFCq29GYm9xertrZ7FgDXU22nQ/H++lotFX
+	 2x+U1FmpVFgwRZK6VEr9UmSazzq1InHLXp6r2lKWKNogLQfuE8eCYb7Ixz1CgeyxeS
+	 fId5AjUSQrw3Puo439c+Bla/uRScAK1VxO+Qbjiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Bernd Schubert <bernd@bsbernd.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 520/583] fuse: copy request headers via a stack buffer for io-uring
-Date: Wed,  9 Sep 2026 15:43:25 +0200
-Message-ID: <20260909134255.731062800@linuxfoundation.org>
+Subject: [PATCH 6.18 521/583] ipv6: pass proto by value to ipv6_push_nfrag_opts() and ipv6_push_frag_opts()
+Date: Wed,  9 Sep 2026 15:43:26 +0200
+Message-ID: <20260909134255.762287652@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,90 +52,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fd10f40af314f07b6d6e028b1ca25c8b49903aab ]
+[ Upstream commit 1bc46dd209667346c5aa56c351995e7c260696d0 ]
 
-The fuse-io-uring transport copies req->in.h out to the ring in
-fuse_uring_copy_to_ring() and req->out.h back in fuse_uring_commit().
-Both headers live inside the fuse_request slab object, whose cache
-(fuse_req_cachep) is created without a usercopy whitelist, so copying
-them directly to/from userspace trips CONFIG_HARDENED_USERCOPY and
-panics:
+With CONFIG_STACKPROTECTOR_STRONG=y, it is better to avoid passing
+a pointer to an automatic variable.
 
-  usercopy: Kernel memory exposure attempt detected from SLUB object
-  'fuse_request' (offset 56, size 40)!
-  kernel BUG at mm/usercopy.c:102!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:usercopy_abort (mm/usercopy.c:90)
-  Call Trace:
-   __check_heap_object (mm/slub.c:8268)
-   __check_object_size (mm/usercopy.c:197 mm/usercopy.c:258 mm/usercopy.c:223)
-   copy_header_to_ring (fs/fuse/dev_uring.c:618)
-   fuse_uring_prepare_send (fs/fuse/dev_uring.c:776 fs/fuse/dev_uring.c:785)
-   fuse_uring_send_in_task (fs/fuse/dev_uring.c:1306)
-   tctx_task_work_run (io_uring/tw.c:96)
-   task_work_run (kernel/task_work.c:233)
-   io_run_task_work (io_uring/tw.h:84)
-   io_cqring_wait (io_uring/wait.c:278)
-   __do_sys_io_uring_enter (io_uring/io_uring.c:2685)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Change these exported functions to return 'u8 proto'
+instead of void.
 
-Bounce both headers through an on-stack copy so the usercopy touches
-stack memory, not the slab object.
+- ipv6_push_nfrag_opts()
+- ipv6_push_frag_opts()
 
-Fixes: c090c8abae4b ("fuse: Add io-uring sqe commit and fetch support")
-Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ merged declaration of `in_header`/`out_header` alongside pre-existing `ring`/`fc` locals introduced by prior refactors ]
+For instance, replace
+	ipv6_push_frag_opts(skb, opt, &proto);
+with:
+	proto = ipv6_push_frag_opts(skb, opt, proto);
+
+Note that even after this change, ip6_xmit() has to use a stack canary
+because of @first_hop variable.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260130210303.3888261-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 870a9e42ecc6 ("tcp: clamp route advmss to TCP_MIN_MSS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev_uring.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/net/ipv6.h    |   10 ++++-----
+ net/ipv6/exthdrs.c    |   55 ++++++++++++++++++++++++++------------------------
+ net/ipv6/ip6_output.c |   19 ++++++++++-------
+ net/ipv6/ip6_tunnel.c |    2 -
+ 4 files changed, 46 insertions(+), 40 deletions(-)
 
---- a/fs/fuse/dev_uring.c
-+++ b/fs/fuse/dev_uring.c
-@@ -747,6 +747,7 @@ static int fuse_uring_copy_to_ring(struc
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -1147,11 +1147,11 @@ int ip6_local_out(struct net *net, struc
+  *	Extension header (options) processing
+  */
+ 
+-void ipv6_push_nfrag_opts(struct sk_buff *skb, struct ipv6_txoptions *opt,
+-			  u8 *proto, struct in6_addr **daddr_p,
+-			  struct in6_addr *saddr);
+-void ipv6_push_frag_opts(struct sk_buff *skb, struct ipv6_txoptions *opt,
+-			 u8 *proto);
++u8 ipv6_push_nfrag_opts(struct sk_buff *skb, struct ipv6_txoptions *opt,
++			u8 proto, struct in6_addr **daddr_p,
++			struct in6_addr *saddr);
++u8 ipv6_push_frag_opts(struct sk_buff *skb, struct ipv6_txoptions *opt,
++		       u8 proto);
+ 
+ int ipv6_skip_exthdr(const struct sk_buff *, int start, u8 *nexthdrp,
+ 		     __be16 *frag_offp);
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -1099,9 +1099,9 @@ fail_and_free:
+  *	for headers.
+  */
+ 
+-static void ipv6_push_rthdr0(struct sk_buff *skb, u8 *proto,
+-			     struct ipv6_rt_hdr *opt,
+-			     struct in6_addr **addr_p, struct in6_addr *saddr)
++static u8 ipv6_push_rthdr0(struct sk_buff *skb, u8 proto,
++			   struct ipv6_rt_hdr *opt,
++			   struct in6_addr **addr_p, struct in6_addr *saddr)
  {
- 	struct fuse_ring_queue *queue = ent->queue;
- 	struct fuse_ring *ring = queue->ring;
-+	struct fuse_in_header in_header;
- 	int err;
+ 	struct rt0_hdr *phdr, *ihdr;
+ 	int hops;
+@@ -1120,13 +1120,13 @@ static void ipv6_push_rthdr0(struct sk_b
+ 	phdr->addr[hops - 1] = **addr_p;
+ 	*addr_p = ihdr->addr;
  
- 	err = -EIO;
-@@ -768,8 +769,9 @@ static int fuse_uring_copy_to_ring(struc
- 	}
- 
- 	/* copy fuse_in_header */
--	return copy_header_to_ring(ent, FUSE_URING_HEADER_IN_OUT, &req->in.h,
--				   sizeof(req->in.h));
-+	in_header = req->in.h;
-+	return copy_header_to_ring(ent, FUSE_URING_HEADER_IN_OUT, &in_header,
-+				   sizeof(in_header));
+-	phdr->rt_hdr.nexthdr = *proto;
+-	*proto = NEXTHDR_ROUTING;
++	phdr->rt_hdr.nexthdr = proto;
++	return NEXTHDR_ROUTING;
  }
  
- static int fuse_uring_prepare_send(struct fuse_ring_ent *ent,
-@@ -903,11 +905,13 @@ static void fuse_uring_commit(struct fus
+-static void ipv6_push_rthdr4(struct sk_buff *skb, u8 *proto,
+-			     struct ipv6_rt_hdr *opt,
+-			     struct in6_addr **addr_p, struct in6_addr *saddr)
++static u8 ipv6_push_rthdr4(struct sk_buff *skb, u8 proto,
++			   struct ipv6_rt_hdr *opt,
++			   struct in6_addr **addr_p, struct in6_addr *saddr)
  {
- 	struct fuse_ring *ring = ent->queue->ring;
- 	struct fuse_conn *fc = ring->fc;
-+	struct fuse_out_header out_header;
- 	ssize_t err = -EFAULT;
+ 	struct ipv6_sr_hdr *sr_phdr, *sr_ihdr;
+ 	int plen, hops;
+@@ -1169,58 +1169,61 @@ static void ipv6_push_rthdr4(struct sk_b
+ 	}
+ #endif
  
--	if (copy_header_from_ring(ent, FUSE_URING_HEADER_IN_OUT, &req->out.h,
--				  sizeof(req->out.h)))
-+	if (copy_header_from_ring(ent, FUSE_URING_HEADER_IN_OUT, &out_header,
-+				  sizeof(out_header)))
- 		goto out;
-+	req->out.h = out_header;
+-	sr_phdr->nexthdr = *proto;
+-	*proto = NEXTHDR_ROUTING;
++	sr_phdr->nexthdr = proto;
++	return NEXTHDR_ROUTING;
+ }
  
- 	err = fuse_uring_out_header_has_err(&req->out.h, req, fc);
- 	if (err) {
+-static void ipv6_push_rthdr(struct sk_buff *skb, u8 *proto,
+-			    struct ipv6_rt_hdr *opt,
+-			    struct in6_addr **addr_p, struct in6_addr *saddr)
++static u8 ipv6_push_rthdr(struct sk_buff *skb, u8 proto,
++			  struct ipv6_rt_hdr *opt,
++			  struct in6_addr **addr_p, struct in6_addr *saddr)
+ {
+ 	switch (opt->type) {
+ 	case IPV6_SRCRT_TYPE_0:
+ 	case IPV6_SRCRT_STRICT:
+ 	case IPV6_SRCRT_TYPE_2:
+-		ipv6_push_rthdr0(skb, proto, opt, addr_p, saddr);
++		proto = ipv6_push_rthdr0(skb, proto, opt, addr_p, saddr);
+ 		break;
+ 	case IPV6_SRCRT_TYPE_4:
+-		ipv6_push_rthdr4(skb, proto, opt, addr_p, saddr);
++		proto = ipv6_push_rthdr4(skb, proto, opt, addr_p, saddr);
+ 		break;
+ 	default:
+ 		break;
+ 	}
++	return proto;
+ }
+ 
+-static void ipv6_push_exthdr(struct sk_buff *skb, u8 *proto, u8 type, struct ipv6_opt_hdr *opt)
++static u8 ipv6_push_exthdr(struct sk_buff *skb, u8 proto, u8 type, struct ipv6_opt_hdr *opt)
+ {
+ 	struct ipv6_opt_hdr *h = skb_push(skb, ipv6_optlen(opt));
+ 
+ 	memcpy(h, opt, ipv6_optlen(opt));
+-	h->nexthdr = *proto;
+-	*proto = type;
++	h->nexthdr = proto;
++	return type;
+ }
+ 
+-void ipv6_push_nfrag_opts(struct sk_buff *skb, struct ipv6_txoptions *opt,
+-			  u8 *proto,
+-			  struct in6_addr **daddr, struct in6_addr *saddr)
++u8 ipv6_push_nfrag_opts(struct sk_buff *skb, struct ipv6_txoptions *opt,
++			u8 proto,
++			struct in6_addr **daddr, struct in6_addr *saddr)
+ {
+ 	if (opt->srcrt) {
+-		ipv6_push_rthdr(skb, proto, opt->srcrt, daddr, saddr);
++		proto = ipv6_push_rthdr(skb, proto, opt->srcrt, daddr, saddr);
+ 		/*
+ 		 * IPV6_RTHDRDSTOPTS is ignored
+ 		 * unless IPV6_RTHDR is set (RFC3542).
+ 		 */
+ 		if (opt->dst0opt)
+-			ipv6_push_exthdr(skb, proto, NEXTHDR_DEST, opt->dst0opt);
++			proto = ipv6_push_exthdr(skb, proto, NEXTHDR_DEST, opt->dst0opt);
+ 	}
+ 	if (opt->hopopt)
+-		ipv6_push_exthdr(skb, proto, NEXTHDR_HOP, opt->hopopt);
++		proto = ipv6_push_exthdr(skb, proto, NEXTHDR_HOP, opt->hopopt);
++	return proto;
+ }
+ 
+-void ipv6_push_frag_opts(struct sk_buff *skb, struct ipv6_txoptions *opt, u8 *proto)
++u8 ipv6_push_frag_opts(struct sk_buff *skb, struct ipv6_txoptions *opt, u8 proto)
+ {
+ 	if (opt->dst1opt)
+-		ipv6_push_exthdr(skb, proto, NEXTHDR_DEST, opt->dst1opt);
++		proto = ipv6_push_exthdr(skb, proto, NEXTHDR_DEST, opt->dst1opt);
++	return proto;
+ }
+ EXPORT_SYMBOL(ipv6_push_frag_opts);
+ 
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -307,11 +307,12 @@ int ip6_xmit(const struct sock *sk, stru
+ 		seg_len += opt->opt_nflen + opt->opt_flen;
+ 
+ 		if (opt->opt_flen)
+-			ipv6_push_frag_opts(skb, opt, &proto);
++			proto = ipv6_push_frag_opts(skb, opt, proto);
+ 
+ 		if (opt->opt_nflen)
+-			ipv6_push_nfrag_opts(skb, opt, &proto, &first_hop,
+-					     &fl6->saddr);
++			proto = ipv6_push_nfrag_opts(skb, opt, proto,
++						     &first_hop,
++						     &fl6->saddr);
+ 	}
+ 
+ 	if (unlikely(seg_len > IPV6_MAXPLEN)) {
+@@ -1941,11 +1942,13 @@ struct sk_buff *__ip6_make_skb(struct so
+ 	__skb_pull(skb, skb_network_header_len(skb));
+ 
+ 	final_dst = &fl6->daddr;
+-	if (opt && opt->opt_flen)
+-		ipv6_push_frag_opts(skb, opt, &proto);
+-	if (opt && opt->opt_nflen)
+-		ipv6_push_nfrag_opts(skb, opt, &proto, &final_dst, &fl6->saddr);
+-
++	if (opt) {
++		if (opt->opt_flen)
++			proto = ipv6_push_frag_opts(skb, opt, proto);
++		if (opt->opt_nflen)
++			proto = ipv6_push_nfrag_opts(skb, opt, proto,
++						     &final_dst, &fl6->saddr);
++	}
+ 	skb_push(skb, sizeof(struct ipv6hdr));
+ 	skb_reset_network_header(skb);
+ 	hdr = ipv6_hdr(skb);
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1262,7 +1262,7 @@ route_lookup:
+ 
+ 	if (encap_limit >= 0) {
+ 		init_tel_txopt(&opt, encap_limit);
+-		ipv6_push_frag_opts(skb, &opt.ops, &proto);
++		proto = ipv6_push_frag_opts(skb, &opt.ops, proto);
+ 	}
+ 
+ 	skb_push(skb, sizeof(struct ipv6hdr));
 
 
