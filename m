@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C56577E42;
-	Wed,  9 Sep 2026 14:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFCD572694;
+	Wed,  9 Sep 2026 14:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962672; cv=none; b=ZcQFmk4pgFUMHTV282W2wW2GAflTWrptGmJ3S2Nj74LhLGfnJvBfZCCYf7zh25153vqECuWoWhBtF3fa+lNKcE7Rboj6HFyIkgaR3SpT5v+w+mFp3juw/bEJ8bnGF7gr9EjM4VKK0uA6tNq8fYCFJV5MD47Ic+vfeyu6Aisrm0w=
+	t=1788962675; cv=none; b=HyZoQoMyx3L9u5t3jRlhxOizIMy/hfG1U1cAS+HMSrqh+m0yaiVDw/Hmm6kEOkVeaAHtsq3CbPzv9kSdXkRd8DUGam116hKWSxXUWsdXht7sKJ1DoyeLbhAtEGq0Vypy66ZzZg069BRW7lMZaFKJRVFfyz19CssYH8bKumHLSXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962672; c=relaxed/simple;
-	bh=3w54mKGW/ZozEG0+OQh6+N0corBJ3BLXhbFVj1klb2k=;
+	s=arc-20240116; t=1788962675; c=relaxed/simple;
+	bh=jpG7NzloZIj7t9OmFpz9gZkD012Ua6jihqrsZLAzRx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yxv5GjwbyCPzZWHRviMNEV1ottYzeWvLpo+japMgYh6Ji6Ljiw3jIglEku+NPAe9eSdpU3tSkeC9kCykUWkqfMlwDZcQP4SVbXrEfD5sdqqMH4Gr2CxgpmaGsfBL2tIUxmX/th+hdT5ss97QPXzlFVP2IOvdESMtuWB1fOKueJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iihs2338; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WpOWC50TiVBrvKwHWjb/wcOoigNkWD/lpZpPBeBIG0FkBov/C4WHZITOwEZN4CyQ3aoDvHpob7r/Aza5azpgPDCB2vwXfc6xMLDZXtjiOIzxzxF7Qk444uJ8kULHtJMsvhHbtLbXgHf4HqIeK2KAVZYsV4iJ+acqim6ro3dYT2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTtUIthA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iihs2338"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32291F00A3D;
-	Wed,  9 Sep 2026 14:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTtUIthA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5C91F00A3D;
+	Wed,  9 Sep 2026 14:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962671;
-	bh=Hsc1ILJipGGube1Hx79S2dUmDNDdq5DblEgOd5zvTBU=;
+	s=korg; t=1788962674;
+	bh=5+GsmyajfbHVsDaaIwco3WNxEHVj3Qro4AvH2ZUOjbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iihs2338eVsjJEMGPbmKk9B5wfZIYVg/gqa/wvAqo5DNwJ4U8fckFhJCM1Z0fckJj
-	 osr7RV9qiIR5S1+sgjW/4omSI/HxzWDpJP+Ax3zYzvGv5NoPzt2NjMk8zxVI72qDwb
-	 8TgqISCoc8675f8DARZNcGVa7dYH4TD+SgQrExEU=
+	b=uTtUIthA5Te+1pTxDMulzGP1a3pyua3TWmEA3EJ6elrpwkY7pd0xgC9Im0L4VJQyO
+	 qC94mVINXUDSXHOkpa4Y0hRxZw4l3zOu4fpM0X3pYlaDRp1tG1iA8+cA5GsCFPC5CD
+	 wjk6FddLDIprf+0qJLCkHb4VGOAFXZMM8jUbhrKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
+	=?UTF-8?q?Jos=C3=A9=20Mar=C3=ADa=20Mart=C3=ADn?= <jmmartinf@hotmail.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 7.2 371/556] media: intel/ipu6: fix async notifier cleanup leak on parse error
-Date: Wed,  9 Sep 2026 15:40:51 +0200
-Message-ID: <20260909134243.738875934@linuxfoundation.org>
+Subject: [PATCH 7.2 372/556] media: ipu-bridge: check all DMI entries when overriding sensor rotation
+Date: Wed,  9 Sep 2026 15:40:52 +0200
+Message-ID: <20260909134243.780349575@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -44,47 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: José María Martín <jmmartinf@hotmail.com>
 
-commit abb1f808ceab5a3275f8a6b4e37cff17f9f781c1 upstream.
+commit 4900cad020c0580dfb1be27776ff10a4ef110cfa upstream.
 
-isys_notifier_init() calls v4l2_async_nf_init() and then adds fwnode
-remote subdevs in a loop with v4l2_async_nf_add_fwnode_remote(). If an
-endpoint parse or add fails partway through the loop, it jumps to
-err_parse and returns without calling v4l2_async_nf_cleanup(), leaking
-every v4l2_async_connection already added to the notifier's waiting
-list.
+A machine can have more than one sensor whose rotation needs to be
+overridden, which takes one upside_down_sensor_dmi_ids[] entry per
+sensor, all sharing the same DMI match but with different ACPI HIDs in
+driver_data.
 
-The register-failure path just below already cleans up correctly, and
-the caller only tears the notifier down (isys_notifier_cleanup()) once
-isys_notifier_init() has returned success. Clean up the notifier on the
-parse error path too.
+ipu_bridge_parse_rotation() uses dmi_first_match(), which always stops
+at the first entry matching the running machine, so any further entry
+for the same machine is unreachable and only one sensor per machine can
+ever be corrected.
 
-Fixes: f50c4ca0a820 ("media: intel/ipu6: add the main input system driver")
+Walk the whole table and match every entry for the running machine
+against the sensor's ACPI HID instead.
+
+Fixes: b75710155a82 ("media: ipu-bridge: Add DMI quirk for Dell XPS laptops with upside down sensors")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Signed-off-by: José María Martín <jmmartinf@hotmail.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/intel/ipu6/ipu6-isys.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/pci/intel/ipu-bridge.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/media/pci/intel/ipu6/ipu6-isys.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6-isys.c
-@@ -761,6 +761,7 @@ static int isys_notifier_init(struct ipu
+--- a/drivers/media/pci/intel/ipu-bridge.c
++++ b/drivers/media/pci/intel/ipu-bridge.c
+@@ -298,9 +298,11 @@ static u32 ipu_bridge_parse_rotation(str
+ {
+ 	const struct dmi_system_id *dmi_id;
  
- err_parse:
- 		fwnode_handle_put(ep);
-+		v4l2_async_nf_cleanup(&isys->notifier);
- 		return ret;
- 	}
+-	dmi_id = dmi_first_match(upside_down_sensor_dmi_ids);
+-	if (dmi_id && acpi_dev_hid_match(adev, dmi_id->driver_data))
+-		return 180;
++	/* A machine may have one entry per sensor, so check all matches. */
++	for (dmi_id = dmi_first_match(upside_down_sensor_dmi_ids); dmi_id;
++	     dmi_id = dmi_first_match(dmi_id + 1))
++		if (acpi_dev_hid_match(adev, dmi_id->driver_data))
++			return 180;
  
+ 	switch (ssdb->degree) {
+ 	case IPU_SENSOR_ROTATION_NORMAL:
 
 
