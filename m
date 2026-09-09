@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF42563FBD;
-	Wed,  9 Sep 2026 14:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A49D29B200;
+	Wed,  9 Sep 2026 14:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962408; cv=none; b=eHpFdydxPHKYu6cec7uhFWaBfYRWbYSmSc3MFn+GCaMNpPcJ10u1+ohd1zJnAp/q0J6Wbm1ds+Wj+tmxf1Sv3lHnbtipGOtORWxRfqeJB9ww4o+ljI3ipYctPNdyCuQm6/2yOECo4nrPwvFZZm9byTV0ZVFm+9Jm8wndlwxUlj4=
+	t=1788962411; cv=none; b=ugptlPcZV8jCki7jPDyv9U87R+XvbXysoaN0EC+Dv20SeI9lsnnnPgdRU5m5NrFrY6VfdLy3kNnzYYB7Kuv72wt7wW6YgsO+GXxhr/pL/TX9kr4nGBHls5630OBoSOv9aaxJB69WgBztcwPcoMd2zSB2IoRTI0W3sQA4NV1ujd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962408; c=relaxed/simple;
-	bh=n9PW5jyuUtGxJlQg/ETsLLQtjGhODibL1Vq1xZFvgtQ=;
+	s=arc-20240116; t=1788962411; c=relaxed/simple;
+	bh=MC3qwBSY4dV6izZDc2VFTlBoeXl2fvig90VZIA66PIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WxdO3WR4aXcw2hDtzwRiP3MhXwKhLFlbkHmbnToJyI+GtjdvznmdRwXQkj1LlqSQpeKNrP7zcdX9EFSjyh8J+whV9Y2ypdqoYAdXpdHMEfqwSM+Z1y/BEGhJ3OFRx+UGqVfdo1f65CUoNkkOi7ComXyW1oOVWfSKk/LaepFWr/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DftUjg7C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ai2N1UBSUXAqpN+x34IaHwz/Xsqx/3tRZKV91yuMQQwwA51Im+HiANPihXOF4wB+4ELQHSASM914/cL8OzjJ8roKORdgfUHHSzpg5XhhaF5hRsDsOwCi7pjbiXoFBQr565Pjf0mYljlZKQ+ER00ylq7ixJBj/9lGyyrPe8sBzSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUE2IPVv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DftUjg7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FA01F00A3A;
-	Wed,  9 Sep 2026 14:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUE2IPVv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03961F00A3A;
+	Wed,  9 Sep 2026 14:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962407;
-	bh=tSbgA39VJaJWvX2OmUJ3wiWAZ1Qy1ONnM0bSzOB7kbA=;
+	s=korg; t=1788962410;
+	bh=o/S/tZRbwuFz1n8cWk0Bwu+YQFj4INVQG1nklIJB+RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DftUjg7CA85BgN8oQttVaFJaFl8SlV2uYQR3Mr3wyEzDXr6Wy8NmsWLG3aMZ6jv74
-	 cS14fpaY8XzkCQqAWnDG0TwEKyF6Wm974wRji6FLiKlonutO1Y+s8ek/nz2pVdptcg
-	 7nktPTahKvROr39mdmZAyKgr2GbrvtpmDUeEQzng=
+	b=lUE2IPVv6VjViDHJDcMhf5OYX0hj7EHFtK+W2olAxTn1P22/q5tDIyrihFcaKoWf0
+	 mWgr22h2bnFPKs8v6/AmqYDGyVpdfvu/RCk9MAEGiJpgyNosSg1GYVFJV7d7vYo9H/
+	 0njhvPQobUtYVhpMStZVz3BlEt2XKj8VA/IjOWLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rupesh Majhi <zoone.rupert@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.2 280/556] iio: pressure: dps310: fix NULL pointer dereference on ACPI probe
-Date: Wed,  9 Sep 2026 15:39:20 +0200
-Message-ID: <20260909134240.498714919@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.2 254/556] ASoC: tas2552: sort the register default table
+Date: Wed,  9 Sep 2026 15:38:54 +0200
+Message-ID: <20260909134239.431626188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,46 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rupesh Majhi <zoone.rupert@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 26e9213898fc949923188ef0aeea31fc87708836 upstream.
+commit 1cc0cb62d306bb7c42e3d4649863df7c279ac850 upstream.
 
-When the device is enumerated through its ACPI HID (IFX3100),
-i2c_client_get_device_id() returns NULL: the ACPI-derived client name
-does not match the driver's i2c_device_id table. dps310_probe() then
-dereferences that NULL pointer in "iio->name = id->name" and crashes the
-kernel during probe.
+reg_defaults must be sorted by ascending register address, as
+regcache_lookup_reg() locates entries in it with bsearch().  See commit
+fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-The IIO device name is always "dps310", so set it directly and drop the
-now-unused device-id lookup.
+TAS2552_OUTPUT_DATA (0x07), TAS2552_PDM_CFG (0x11), TAS2552_PGA_GAIN
+(0x12) and TAS2552_BOOST_APT_CTRL (0x14) are listed before
+TAS2552_RESERVED_0D (0x0d), TAS2552_LIMIT_RATE_HYS (0x0e) and
+TAS2552_CFG_2 (0x02), which leaves 7 of the 21 entries unreachable.
+regcache_reg_needs_sync() then cannot compare them against their
+default and reports that a sync is needed, so they are written to the
+device on every regcache_sync() even when they were never touched.
 
-Fixes: 72ff282819d0 ("iio: pressure: dps310: Add ACPI HID table")
+Sort the table by register address.
+
+Fixes: 5df7f71d5cdf ("ASoC: tas2552: Support TI TAS2552 Amplifier")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20260805104149.9795-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/dps310.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/codecs/tas2552.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/pressure/dps310.c
-+++ b/drivers/iio/pressure/dps310.c
-@@ -845,7 +845,6 @@ static const struct iio_info dps310_info
+--- a/sound/soc/codecs/tas2552.c
++++ b/sound/soc/codecs/tas2552.c
+@@ -31,25 +31,25 @@
  
- static int dps310_probe(struct i2c_client *client)
- {
--	const struct i2c_device_id *id = i2c_client_get_device_id(client);
- 	struct dps310_data *data;
- 	struct iio_dev *iio;
- 	int rc;
-@@ -858,7 +857,7 @@ static int dps310_probe(struct i2c_clien
- 	data->client = client;
- 	mutex_init(&data->lock);
+ static const struct reg_default tas2552_reg_defs[] = {
+ 	{TAS2552_CFG_1, 0x22},
++	{TAS2552_CFG_2, 0xef},
+ 	{TAS2552_CFG_3, 0x80},
+ 	{TAS2552_DOUT, 0x00},
+-	{TAS2552_OUTPUT_DATA, 0xc0},
+-	{TAS2552_PDM_CFG, 0x01},
+-	{TAS2552_PGA_GAIN, 0x00},
+-	{TAS2552_BOOST_APT_CTRL, 0x0f},
+-	{TAS2552_RESERVED_0D, 0xbe},
+-	{TAS2552_LIMIT_RATE_HYS, 0x08},
+-	{TAS2552_CFG_2, 0xef},
+ 	{TAS2552_SER_CTRL_1, 0x00},
+ 	{TAS2552_SER_CTRL_2, 0x00},
++	{TAS2552_OUTPUT_DATA, 0xc0},
+ 	{TAS2552_PLL_CTRL_1, 0x10},
+ 	{TAS2552_PLL_CTRL_2, 0x00},
+ 	{TAS2552_PLL_CTRL_3, 0x00},
+ 	{TAS2552_BTIP, 0x8f},
+ 	{TAS2552_BTS_CTRL, 0x80},
++	{TAS2552_RESERVED_0D, 0xbe},
++	{TAS2552_LIMIT_RATE_HYS, 0x08},
+ 	{TAS2552_LIMIT_RELEASE, 0x04},
+ 	{TAS2552_LIMIT_INT_COUNT, 0x00},
++	{TAS2552_PDM_CFG, 0x01},
++	{TAS2552_PGA_GAIN, 0x00},
+ 	{TAS2552_EDGE_RATE_CTRL, 0x40},
++	{TAS2552_BOOST_APT_CTRL, 0x0f},
+ 	{TAS2552_VBAT_DATA, 0x00},
+ };
  
--	iio->name = id->name;
-+	iio->name = DPS310_DEV_NAME;
- 	iio->channels = dps310_channels;
- 	iio->num_channels = ARRAY_SIZE(dps310_channels);
- 	iio->info = &dps310_info;
 
 
