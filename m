@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3BA492E2A;
-	Wed,  9 Sep 2026 14:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49406238C1A;
+	Wed,  9 Sep 2026 14:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962583; cv=none; b=PZNBUTkh2OJKIoqf4lt4fPc8DCjqNrSY/gRaJXkG/t0SvW45mWivPDWP177j0/23Q4GRD4juzjb410It7ErJTNckP5YU3uZbkJwTHE532BK1f2D3f2MANAhoUHBbFeH69/yBWwgqfqXbOBo7IJ6TkxiCpHhjHa8KDCGj/MGwPOQ=
+	t=1788962586; cv=none; b=JlkxQDNS3MhouF5lITzn0C/qmhMPlTWTxG08/Dg7PmPtgS8/TG00x7RmHQ0lfYKb3mbtkLll2OIqbQdjO3KsL9OduKbgKxN6c6/1sOM50y++nKFQcrywA50kuKPPhlyWpkxWGo5E8mi6XcnLnB1b2tRkryI8+1KPq9Bj+n0Hu00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962583; c=relaxed/simple;
-	bh=MWnyeBEJGomljyHHuuirQgK87D/b1A8y5iew3cO131s=;
+	s=arc-20240116; t=1788962586; c=relaxed/simple;
+	bh=lQxX1bHDQRlp2MST3ly9sZey1BvyuadBzzvNQMK43Oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mPfsVxgz+aJawcyI5piN8wWJlNjeVDPKx1DEjba4obLcfma4RtDwglqkGS2drKhv+tECZg589xoM1paiS0qW40X+FCcHbU76AJNX0C56HUxu9FKLKX/FBx7B//IbPj2HmK1Uy1jaRhZEMFNZ5V3RA/OgpP9fUFjsKxccGn6aBkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+HRqKAY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gpwrZQFIKfz42RDSQqNc9jz6z5yfn2rFHaU5S8kInEcv4mcQYe2ny3IqmUN84ynz2to8ezt/K8t3o5W/oy/cUp0f5sA6bYHOqtnzaZ4xw2rGUrBc/I3y+rKW+S4ArJd7C2fgCE4DgJflcK1Wc1u48msl87cqC5CKFXbY8qlIuc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fp80bUlw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+HRqKAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EA91F00A3A;
-	Wed,  9 Sep 2026 14:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fp80bUlw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498AF1F00A3A;
+	Wed,  9 Sep 2026 14:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962582;
-	bh=9bqYKjUh0P0bMdg+g7RiVaGHIlF92Q0EGtUsGTXRrXc=;
+	s=korg; t=1788962584;
+	bh=kko5ME2QRxmvyNbVSfWw80BSEqpX50vKaS41e40QkJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0+HRqKAY/rrk369Uv2GqN+h4uE1tvJ7sUi9zixzVCkrfQKrblFsCXt0VmbC7dBSiJ
-	 HZex2CT0rx0/m3CMzf2DNCUzY7/GJWff/cQRABF55QIy+Vw6oszd5YQ3i/Vq77mTNu
-	 ePT4a1J9wgBK/N0VucffNK8m8uTeY/iSoxqrJKdc=
+	b=Fp80bUlw7S1znf70moyS48y2HRal/YufvBWIVsZEQQBuGFoKQ12s0trio7uQVHAJe
+	 wd4niI6pmtm1lSNxVB2vnGRiN/bOXjmEBs/2pzmaY2RV5grZzU+/X5CbAvPLP5lcWY
+	 EB+UPdcDJPPsCqgnd7lyQ7Zp7V1Kj5lNJmrieGdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 338/556] LoongArch: Expand module virtual address space to 2GB
-Date: Wed,  9 Sep 2026 15:40:18 +0200
-Message-ID: <20260909134242.547324724@linuxfoundation.org>
+Subject: [PATCH 7.2 339/556] LoongArch: BPF: Move arena register slot below TCC context
+Date: Wed,  9 Sep 2026 15:40:19 +0200
+Message-ID: <20260909134242.580520496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,81 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 18210a104bb97e28c26dc31fd9fc7b5c381fec62 upstream.
+commit cd7e356b07a27e91394838cf3fb655862b519294 upstream.
 
-The current 256MB module virtual address space is easily exhausted when
-loading massive graphics drivers such as amdgpu along with the large
-unstripped symbol tables, resulting in allocation failures of "execmem:
-unable to allocate memory".
+Currently, the stack layout places the optional arena register slot
+above the tail call counter context. When arena_vm_start is dynamically
+enabled, it shifts the relative offset of the tcc_ptr slot within the
+stack frame, causing hardcoded tracking macros to mismatch and leading
+to memory misalignment or corruption potentially.
 
-Thus, expand the module virtual address space to 2GB while keeping
-the current normal code model '-mcmodel=normal', rather than using the
-medium code model '-mcmodel=medium'. This approach avoids the extra
-performance overhead and larger binary size of forcing every function
-call into a 2-instruction sequence of 'pcaddu18i + jirl'.
+To fix this, move the arena register save and restore sequences below
+the tail call counter context slots in both build_prologue() and the
+epilogue.
 
-Given that individual module code segments rarely exceed 128MB, most
-jumps remain fast direct calls by using the bl instruction. For the
-long-distance jumps exceeding the +/-128MB limit, apply_r_larch_b26()
-emits PLT entries, while signed_imm_check() guarantees the run-time
-safety by rejecting any out-of-bound instruction offsets.
+Update __build_epilogue() to insert a proper offset decrement to safely
+skip the unneeded tcc_ptr reading block while accurately aligning with
+the relocated arena slot at the very bottom.
 
-There is still a risk that the distance between .init.text and .text of
-the same module exceeds 128MB. So we divide the 2GB virtual space to be
-two sub-regions: the first 256MB is for module text, and the rest is for
-module data.
+With this patch, the tcc_ptr slot is always positioned at a fixed
+distance directly underneath the base callee-saved registers that is
+independent of whether the arena features are on.
 
 Cc: stable@vger.kernel.org
+Fixes: ef54c517a937 ("LoongArch: BPF: Implement PROBE_MEM32 pseudo instructions")
 Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/pgtable.h |    2 +-
- arch/loongarch/mm/init.c             |   17 ++++++++++++++---
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ arch/loongarch/net/bpf_jit.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/arch/loongarch/include/asm/pgtable.h
-+++ b/arch/loongarch/include/asm/pgtable.h
-@@ -96,7 +96,7 @@ struct vm_area_struct;
- #ifdef CONFIG_64BIT
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index b0c39d45d6a6..fd5f8c4e5360 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -124,6 +124,9 @@ static void prepare_bpf_tail_call_cnt(struct jit_ctx *ctx, int *store_offset)
+  *                            |           tcc           |
+  *                            +-------------------------+
+  *                            |           tcc_ptr       |
++ *                            +-------------------------+
++ *                            |           arena         |
++ *                            |         (optional)      |
+  *                            +-------------------------+ <--BPF_REG_FP
+  *                            |  prog->aux->stack_depth |
+  *                            |        (optional)       |
+@@ -145,7 +148,7 @@ static void build_prologue(struct jit_ctx *ctx)
+ 	stack_adjust += sizeof(long) * 2;
  
- #define MODULES_VADDR	(vm_map_base + PCI_IOSIZE + (2 * PAGE_SIZE))
--#define MODULES_END	(MODULES_VADDR + SZ_256M)
-+#define MODULES_END	(MODULES_VADDR + SZ_2G) /* 256MB for text, rest for data */
+ 	if (ctx->arena_vm_start)
+-		stack_adjust += 8;
++		stack_adjust += sizeof(long);
  
- #ifdef CONFIG_KFENCE
- #define KFENCE_AREA_SIZE	(((CONFIG_KFENCE_NUM_OBJECTS + 1) * 2 + 2) * PAGE_SIZE)
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -237,15 +237,26 @@ pte_t invalid_pte_table[PTRS_PER_PTE] __
- EXPORT_SYMBOL(invalid_pte_table);
+ 	stack_adjust = round_up(stack_adjust, 16);
+ 	stack_adjust += bpf_stack_adjust;
+@@ -194,13 +197,13 @@ static void build_prologue(struct jit_ctx *ctx)
+ 	store_offset -= sizeof(long);
+ 	emit_insn(ctx, std, LOONGARCH_GPR_S5, LOONGARCH_GPR_SP, store_offset);
  
- #if defined(CONFIG_EXECMEM) && defined(MODULES_VADDR)
-+#define MODULES_TEXT_START (MODULES_VADDR)
-+#define MODULES_TEXT_END   (MODULES_VADDR + SZ_256M)
-+#define MODULES_DATA_START (MODULES_VADDR + SZ_256M)
-+#define MODULES_DATA_END   (MODULES_END)
++	prepare_bpf_tail_call_cnt(ctx, &store_offset);
 +
- static struct execmem_info execmem_info __ro_after_init;
+ 	if (ctx->arena_vm_start) {
+ 		store_offset -= sizeof(long);
+ 		emit_insn(ctx, std, REG_ARENA, LOONGARCH_GPR_SP, store_offset);
+ 	}
  
- struct execmem_info __init *execmem_arch_setup(void)
- {
- 	execmem_info = (struct execmem_info){
- 		.ranges = {
--			[EXECMEM_DEFAULT] = {
--				.start	= MODULES_VADDR,
--				.end	= MODULES_END,
-+			[EXECMEM_MODULE_TEXT] = {
-+				.start	= MODULES_TEXT_START,
-+				.end	= MODULES_TEXT_END,
-+				.pgprot	= PAGE_KERNEL,
-+				.alignment = 1,
-+			},
-+			[EXECMEM_MODULE_DATA] = {
-+				.start	= MODULES_DATA_START,
-+				.end	= MODULES_DATA_END,
- 				.pgprot	= PAGE_KERNEL,
- 				.alignment = 1,
- 			},
+-	prepare_bpf_tail_call_cnt(ctx, &store_offset);
+-
+ 	emit_insn(ctx, addid, LOONGARCH_GPR_FP, LOONGARCH_GPR_SP, stack_adjust);
+ 
+ 	if (bpf_stack_adjust)
+@@ -241,15 +244,18 @@ static void __build_epilogue(struct jit_ctx *ctx, bool is_tail_call)
+ 	load_offset -= sizeof(long);
+ 	emit_insn(ctx, ldd, LOONGARCH_GPR_S5, LOONGARCH_GPR_SP, load_offset);
+ 
++	/* Only restore the TCC state into REG_TCC from the higher slot */
++	load_offset -= sizeof(long);
++	emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, load_offset);
++
++	/* Skip the unused local 'tcc_ptr' slot to align with arena */
++	load_offset -= sizeof(long);
++
+ 	if (ctx->arena_vm_start) {
+ 		load_offset -= sizeof(long);
+ 		emit_insn(ctx, ldd, REG_ARENA, LOONGARCH_GPR_SP, load_offset);
+ 	}
+ 
+-	/* Only restore the TCC state into REG_TCC from the higher slot */
+-	load_offset -= sizeof(long);
+-	emit_insn(ctx, ldd, REG_TCC, LOONGARCH_GPR_SP, load_offset);
+-
+ 	emit_insn(ctx, addid, LOONGARCH_GPR_SP, LOONGARCH_GPR_SP, stack_adjust);
+ 
+ 	if (!is_tail_call) {
+-- 
+2.55.0
+
 
 
