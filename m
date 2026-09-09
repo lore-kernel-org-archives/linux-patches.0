@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE1E57F75C;
-	Wed,  9 Sep 2026 14:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CC6583AAF;
+	Wed,  9 Sep 2026 14:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964644; cv=none; b=Qn0wN2qwT9VzznJMnWTu6lhNadAQlYzb9jwepOOx39zpxrjrRwMcG1H8mmUmW0NoNjOnoTwSzhMfsAxr3Ds+S4SsDVYt3+jzrySyCC9Un6Dt3MyDgAkcIGZXmEzRnY90BwM2OKDzQVtafkW137WVDiFR/IIRVvcoNMCCzojnZo0=
+	t=1788964647; cv=none; b=SKouFpH+ekkDbzNmQ3n2yx26PeHCw0G7Y4/fvO5b4m8tK5kqIJycMSpHZYw3a0Z3i3A9z3RxSDuLT/MnKm36PRhElmzY7XP7USR10qXvtE74Fc3fhOZOWz73en9Oy5L+NaJisJfBKeRWzJ/eJFUC4JwOlXIS5kPmhCSklZ60GaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964644; c=relaxed/simple;
-	bh=3xmb+nSmop0rTejJ2bomPGzv3PVasploJsuK0N7XgxY=;
+	s=arc-20240116; t=1788964647; c=relaxed/simple;
+	bh=fdkzugWVTlBrdWwrCRHNJCevuU955i7eP3Iz5BtmWik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3lAnuc9HYSwY0t8Tq8NhunI8f2d5PCWdcvtZSgJvztD2678nxCOhMA+lfpY4oHskRJ7Piwzx38Sftn7myg0v5GbE9f63eKj/rHrD/CLDNzisPwEAz9V8txGq3FT2E3zsTDcUpknkb804AanIRl9hqfcVmbglpHxNt4fOxUqMX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8rJXO9V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bcCjQHIgNgjMBVa1tyiUvU3lCxHzfgv2jPtistltZqU3TFGS2HXyuDSmdaiTXcdubAmLG+TweKuAWGFgq/wmQR+utdXlOAid1D5IBcAJNmEuiF93j2Uf+TfVFZGpiF27OgF+ipw62LNj0WlqrrgbbgrOJs6wuzhOLOaKUVuI3hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEAdq50Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8rJXO9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D771F00A3A;
-	Wed,  9 Sep 2026 14:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEAdq50Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D481F00A3A;
+	Wed,  9 Sep 2026 14:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964643;
-	bh=4JywH0cuE857L4Ao6ZgOZYxmuifdTTW9QHrBcLrdyvE=;
+	s=korg; t=1788964646;
+	bh=Lx80koGvUg9n/8KXMLVE/IO1KV3A6KxCENeK//QgtWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S8rJXO9V8e3OEsPWwyJh5kCHNNO221c6W80d9vtYOKEaztZCuRgKOQk5Si438GgJd
-	 cy3wmJ1cwDYdLFSxOlKtqsz6ieO2wsVHAm3+Tm+lzGxyj/UNxYbngtKzq42zKR43P6
-	 E8byb6/cGuZLv5LDDWtEkRvRrTTxB68KSrG9052M=
+	b=YEAdq50Z86R4Dp9+4VGeP9nXfZBfitZgBgd3zz7tN3MiXudfv7rjK5/4vjcmqH2xX
+	 H9HLg8Dioe9g8UUQSu3TbB57FspddO/wK1HjzaJb0mhg5n4fPI6m6Zuji4qUQNYUwJ
+	 AEbzjcLwLGvRfTyw0BPrrrgaXnwYI0rRxpkw7WgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 494/583] rpcrdma: arm rn_done before publishing the notification
-Date: Wed,  9 Sep 2026 15:42:59 +0200
-Message-ID: <20260909134254.904676962@linuxfoundation.org>
+Subject: [PATCH 6.18 495/583] svcrdma: Reject oversized Read segments at decode time
+Date: Wed,  9 Sep 2026 15:43:00 +0200
+Message-ID: <20260909134254.934779813@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,85 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5b06f706374c37375bdff9d21cc10e61df925a92 ]
+[ Upstream commit af6f0e06bed818ee7fc8b869915964410020a1c5 ]
 
-rpcrdma_rn_register() inserts @rn into rd_xa with xa_alloc() before
-storing the caller's callback in rn->rn_done. The xarray makes @rn
-reachable to rpcrdma_remove_one(), which walks rd_xa and invokes
-rn->rn_done(rn) for every registered notification. A device removal
-that races a fresh registration can therefore observe @rn with
-rn_done still NULL, because the notification objects are zero
-allocated by their owners, and call through a NULL function pointer.
+The RPC/RDMA Read list decoder stores wire-supplied segment
+lengths without validation. xdr_count_read_segments() checks
+4-byte alignment for non-zero position values but does not
+cap the segment length.
 
-Store rn->rn_done before xa_alloc() publishes @rn. The xarray's
-store-side and load-side ordering then guarantees that any CPU which
-finds @rn in rd_xa also observes the armed callback.
+An oversized rs_length reaches svc_rdma_build_read_segment(),
+which derives nr_bvec from it and can drive a large dynamic
+bvec allocation before verifying that enough rq_pages remain.
+If the post-allocation page-overrun guard fires, the freshly
+acquired rw context is not returned, leaking the resource.
 
-rpcrdma_rn_unregister() treats a non-NULL rn_done as the sentinel
-for a completed registration, so the early store must not survive a
-failed registration. Clear rn_done again when xa_alloc() fails.
-Were it left set, the failed-accept cleanup path would call
-rpcrdma_rn_unregister() on an @rn that was never inserted, erasing
-an unrelated rd_xa slot and underflowing rd_kref.
+Reject any segment whose length exceeds the receive context's
+page budget during Read list decoding, consistent with how
+xdr_check_write_chunk() bounds Write segment counts against
+rc_maxpages. Also return the rw context on the existing
+post-allocation overrun path in svc_rdma_build_read_segment(),
+keeping that defensive guard balanced.
 
-Fixes: 7e86845a0346 ("rpcrdma: Implement generic device removal")
+Fixes: 5ee62b4a9113 ("svcrdma: use bvec-based RDMA read/write API")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260601201703.46078-1-cel@kernel.org
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-3-e251306ccca9@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 0ca487abb3bd ("svcrdma: Reject Read lists that exceed the page budget")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/ib_client.c |   24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c |    2 ++
+ net/sunrpc/xprtrdma/svc_rdma_rw.c       |    5 +++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/xprtrdma/ib_client.c
-+++ b/net/sunrpc/xprtrdma/ib_client.c
-@@ -52,8 +52,8 @@ static struct rpcrdma_device *rpcrdma_ge
-  * is unregistered first.
-  *
-  * On failure, a negative errno is returned. rn->rn_done is left
-- * NULL on every failure path (it is assigned only after xa_alloc
-- * and kref_get have both succeeded), so the @rn may safely be
-+ * NULL on every failure path (it is armed before xa_alloc but
-+ * cleared again if xa_alloc fails), so the @rn may safely be
-  * passed to rpcrdma_rn_unregister() without a separate
-  * registered/unregistered flag in the caller.
-  */
-@@ -66,10 +66,21 @@ int rpcrdma_rn_register(struct ib_device
- 	if (!rd || test_bit(RPCRDMA_RD_F_REMOVING, &rd->rd_flags))
- 		return -ENETUNREACH;
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -448,6 +448,8 @@ static bool xdr_count_read_segments(stru
  
--	if (xa_alloc(&rd->rd_xa, &rn->rn_index, rn, xa_limit_32b, GFP_KERNEL) < 0)
-+	/*
-+	 * Arm rn_done before xa_alloc() publishes @rn: once @rn is
-+	 * visible in rd_xa, a concurrent rpcrdma_remove_one() can
-+	 * call rn->rn_done(), so the pointer must already be set.
-+	 *
-+	 * Restore NULL if xa_alloc() fails. rn_done doubles as the
-+	 * registration sentinel for rpcrdma_rn_unregister(); a stale
-+	 * value would unregister an @rn that was never inserted.
-+	 */
-+	rn->rn_done = done;
-+	if (xa_alloc(&rd->rd_xa, &rn->rn_index, rn, xa_limit_32b, GFP_KERNEL) < 0) {
-+		rn->rn_done = NULL;
- 		return -ENOMEM;
-+	}
- 	kref_get(&rd->rd_kref);
--	rn->rn_done = done;
- 	trace_rpcrdma_client_register(device, rn);
+ 		xdr_decode_read_segment(p, &position, &handle,
+ 					    &length, &offset);
++		if (length > rctxt->rc_maxpages << PAGE_SHIFT)
++			return false;
+ 		if (position) {
+ 			if (position & 3)
+ 				return false;
+--- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
+@@ -766,7 +766,7 @@ static int svc_rdma_build_read_segment(s
+ 		len -= seg_len;
+ 
+ 		if (len && ((head->rc_curpage + 1) > rqstp->rq_maxpages))
+-			goto out_overrun;
++			goto out_put;
+ 	}
+ 
+ 	ret = svc_rdma_rw_ctx_init(rdma, ctxt, segment->rs_offset,
+@@ -779,7 +779,8 @@ static int svc_rdma_build_read_segment(s
+ 	cc->cc_sqecount += ret;
  	return 0;
- }
-@@ -102,8 +113,9 @@ void rpcrdma_rn_unregister(struct ib_dev
  
- 	/*
- 	 * rn_done is the registration sentinel: rpcrdma_rn_register
--	 * assigns it last, after xa_alloc and kref_get have both
--	 * succeeded. A NULL rn_done means this notification was
-+	 * leaves it NULL on every failure path, clearing it again if
-+	 * xa_alloc fails, so a non-NULL rn_done marks a completed
-+	 * registration. A NULL rn_done means this notification was
- 	 * never registered (or its registration failed) or has
- 	 * already been unregistered, and the call is a no-op.
- 	 * Without this guard, rn_index == 0 from a kzalloc'd
+-out_overrun:
++out_put:
++	svc_rdma_put_rw_ctxt(rdma, ctxt);
+ 	trace_svcrdma_page_overrun_err(&cc->cc_cid, head->rc_curpage);
+ 	return -EINVAL;
+ }
 
 
