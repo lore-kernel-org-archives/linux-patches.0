@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91FF582B80;
-	Wed,  9 Sep 2026 14:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943F957267E;
+	Wed,  9 Sep 2026 14:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963878; cv=none; b=Wffck+BNIafiZA0quh+ToMvCM+4q4yfeRI+C11PPgHYLP2mYhSrPmSpd18L0TbSART3j2OQXnvB3ClBMF6aCyrVuzbZdlmEXOy6joIPf2pL2e5NE7UnBIs62C1C2hUHxkTWbvOdtPjbUVO10CccGzC9b8WZPE5lmxqGp83PwpMI=
+	t=1788963881; cv=none; b=XcQ1AeLix+Z+vnNVb2V/bOj34HxqU84QxenCfs+HCNraQum+R8EaOeor20PoDoLVK2QhkjAH32Vha2OGco3c0/tguoT7tCzVx6N8VOcEDGlfOf+80QwFShbzljSby55WdJI5i/E7Uo/cNq4LJulUrd0nL9u8LRmmxuSllVmcYOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963878; c=relaxed/simple;
-	bh=FYK/l7iJQeQl0sNjkx8nVXI518b5Dn1PbISZnQeez+I=;
+	s=arc-20240116; t=1788963881; c=relaxed/simple;
+	bh=KY2XNoVxy9eh7IVKnidkNfR3gEijm3sHmnE+1pbxA8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kOJAKhX+BMRcOade567PvZCKedAoFQbprqIgA5w1eGu281NAhfuBuVcoU1oznDWzGSVcFH3FQlH1hYGEluoGSNwshdnK/gK4CCGA0Du3PEZhAVLJtRfmDZANi8OVT8XabgOPc2HiDOLQY+oJyiZJWDPr59IGzBKr7ja2DC/K3Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Wmcam7i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=adpcUab5HS9QuY5Ggs5KPs2sZCulZ2yOwC/TbnM4yqCXhmLlE242UkTo9ZuVG6LJqh7kY/9avR/d0RmatfklsgiFVyWAzRnfbcXkEeojBm9XNzYf5yWRgmnCCFyPWtkHM2Jy3lrqurF58TAb1UWLDdn9+iosEp8PrKTUFdnCSLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jrn7QYZL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Wmcam7i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3671F00A3A;
-	Wed,  9 Sep 2026 14:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jrn7QYZL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2351F00A3A;
+	Wed,  9 Sep 2026 14:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963877;
-	bh=x6Bk9Pa0qFk2NaDx42Xez1j/8sFlZqX5qlUng0chJuA=;
+	s=korg; t=1788963880;
+	bh=8Hbu8v/9o39tMtylBGDzfBfcM9YwM8lvI9CqdFl67YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Wmcam7ibvnzCOwENGCqq+Nonv3ze+a92A66We8xVMfNaGRlXhWxWbVVrJiDV5gu6
-	 oPQrGB+x2fxCnA0TVRzUtNkRcdCtO+vwcKn1gK4yXSGtyfCzn+8QWf5pKlQchiFdjZ
-	 M9RnnzOKi/VqA8lVy2CL/VKG9e02u0w4TP73gf4k=
+	b=Jrn7QYZLx4e2LlVDWRwtNy1aEc2hfEqOpTALV5Fa60Q7XBdYpuHIQQcdg8dtC2GLM
+	 xeYmSlh3F1VAlLT+zLufyh3tw7ya+pPJDSP4CxdCmZqGLBSHmHAjufMhuo62w1FFTu
+	 /p9eRctO/WcXvDTXfouG2OuwlWQ+QtjUQEglguE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 170/583] ASoC: pcm512x: sort the register default table
-Date: Wed,  9 Sep 2026 15:37:35 +0200
-Message-ID: <20260909134244.093499252@linuxfoundation.org>
+	Vidhu Sarwal <vidhu.linux@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 224/583] iio: light: opt4060: Fix incorrect register name in threshold read error message
+Date: Wed,  9 Sep 2026 15:38:29 +0200
+Message-ID: <20260909134245.920456422@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,95 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Vidhu Sarwal <vidhu.linux@gmail.com>
 
-commit 767d9ae714e3e9b0ae86237c410fbfca7056570a upstream.
+commit ad367638212a9f2495ecfa59c886f0cfb7934e9c upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+opt4060_get_thresholds() correctly reads OPT4060_THRESHOLD_HIGH, but
+logs "Failed to read THRESHOLD_LOW." if the read fails. This is a
+copy-and-paste mistake, as the preceding low-threshold read already uses
+the correct error message.
 
-PCM512x_AUTO_MUTE (page 0, register 59) is listed before
-PCM512x_ERROR_DETECT (page 0, register 37) and PCM512x_VCOM_CTRL_2
-(page 1, register 9) is listed before the page 0 clocking block, so the
-bsearch() descends into the wrong half of the table.  24 of the 45
-entries are unreachable, among them every PLL coefficient and clock
-divider default.  regcache_reg_needs_sync() then cannot compare them
-against their default and reports that a sync is needed, so they are
-written to the device on every regcache_sync() even when they were
-never touched.
+Update the error message to reference OPT4060_THRESHOLD_HIGH.
 
-Sort the table by register address.
-
-Fixes: 5a3af1293194 ("ASoC: pcm512x: Add PCM512x driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805104149.9795-2-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0c6db4506ad0 ("iio: light: Add support for TI OPT4060 color sensor")
+Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/pcm512x.c |   40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ drivers/iio/light/opt4060.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/pcm512x.c
-+++ b/sound/soc/codecs/pcm512x.c
-@@ -78,28 +78,10 @@ static const struct reg_default pcm512x_
- 	{ PCM512x_POWER,             0x00 },
- 	{ PCM512x_MUTE,              0x00 },
- 	{ PCM512x_DSP,               0x00 },
--	{ PCM512x_PLL_REF,           0x00 },
--	{ PCM512x_DAC_REF,           0x00 },
--	{ PCM512x_DAC_ROUTING,       0x11 },
--	{ PCM512x_DSP_PROGRAM,       0x01 },
--	{ PCM512x_CLKDET,            0x00 },
--	{ PCM512x_AUTO_MUTE,         0x00 },
--	{ PCM512x_ERROR_DETECT,      0x00 },
--	{ PCM512x_DIGITAL_VOLUME_1,  0x00 },
--	{ PCM512x_DIGITAL_VOLUME_2,  0x30 },
--	{ PCM512x_DIGITAL_VOLUME_3,  0x30 },
--	{ PCM512x_DIGITAL_MUTE_1,    0x22 },
--	{ PCM512x_DIGITAL_MUTE_2,    0x00 },
--	{ PCM512x_DIGITAL_MUTE_3,    0x07 },
--	{ PCM512x_OUTPUT_AMPLITUDE,  0x00 },
--	{ PCM512x_ANALOG_GAIN_CTRL,  0x00 },
--	{ PCM512x_UNDERVOLTAGE_PROT, 0x00 },
--	{ PCM512x_ANALOG_MUTE_CTRL,  0x00 },
--	{ PCM512x_ANALOG_GAIN_BOOST, 0x00 },
--	{ PCM512x_VCOM_CTRL_1,       0x00 },
--	{ PCM512x_VCOM_CTRL_2,       0x01 },
- 	{ PCM512x_BCLK_LRCLK_CFG,    0x00 },
- 	{ PCM512x_MASTER_MODE,       0x7c },
-+	{ PCM512x_PLL_REF,           0x00 },
-+	{ PCM512x_DAC_REF,           0x00 },
- 	{ PCM512x_GPIO_DACIN,        0x00 },
- 	{ PCM512x_GPIO_PLLIN,        0x00 },
- 	{ PCM512x_SYNCHRONIZE,       0x10 },
-@@ -117,8 +99,26 @@ static const struct reg_default pcm512x_
- 	{ PCM512x_FS_SPEED_MODE,     0x00 },
- 	{ PCM512x_IDAC_1,            0x01 },
- 	{ PCM512x_IDAC_2,            0x00 },
-+	{ PCM512x_ERROR_DETECT,      0x00 },
- 	{ PCM512x_I2S_1,             0x02 },
- 	{ PCM512x_I2S_2,             0x00 },
-+	{ PCM512x_DAC_ROUTING,       0x11 },
-+	{ PCM512x_DSP_PROGRAM,       0x01 },
-+	{ PCM512x_CLKDET,            0x00 },
-+	{ PCM512x_AUTO_MUTE,         0x00 },
-+	{ PCM512x_DIGITAL_VOLUME_1,  0x00 },
-+	{ PCM512x_DIGITAL_VOLUME_2,  0x30 },
-+	{ PCM512x_DIGITAL_VOLUME_3,  0x30 },
-+	{ PCM512x_DIGITAL_MUTE_1,    0x22 },
-+	{ PCM512x_DIGITAL_MUTE_2,    0x00 },
-+	{ PCM512x_DIGITAL_MUTE_3,    0x07 },
-+	{ PCM512x_OUTPUT_AMPLITUDE,  0x00 },
-+	{ PCM512x_ANALOG_GAIN_CTRL,  0x00 },
-+	{ PCM512x_UNDERVOLTAGE_PROT, 0x00 },
-+	{ PCM512x_ANALOG_MUTE_CTRL,  0x00 },
-+	{ PCM512x_ANALOG_GAIN_BOOST, 0x00 },
-+	{ PCM512x_VCOM_CTRL_1,       0x00 },
-+	{ PCM512x_VCOM_CTRL_2,       0x01 },
- };
+--- a/drivers/iio/light/opt4060.c
++++ b/drivers/iio/light/opt4060.c
+@@ -826,7 +826,7 @@ static int opt4060_get_thresholds(struct
  
- static bool pcm512x_readable(struct device *dev, unsigned int reg)
+ 	ret = regmap_read(chip->regmap, OPT4060_THRESHOLD_HIGH, &regval);
+ 	if (ret) {
+-		dev_err(chip->dev, "Failed to read THRESHOLD_LOW.\n");
++		dev_err(chip->dev, "Failed to read THRESHOLD_HIGH.\n");
+ 		return ret;
+ 	}
+ 	*th_hi = opt4060_calc_val_from_th_reg(regval);
 
 
