@@ -1,52 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD1256E07D;
-	Wed,  9 Sep 2026 14:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E64563FA3;
+	Wed,  9 Sep 2026 14:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964515; cv=none; b=TccAeT5LXNOAj+1AS1OUZZ5ZaRrYTwwLwLOOAtaSF3xbit3XhcoCjxktAwOdXHVDB2C3gqO6sjLjkPshPo5lNnPWc11zg0VTWGQEqiuipcPsdSIqAKdczrktqsTyoXZH/4P9zkuZ63RGrMbfjmLxm/siM7/5T3VmXID8nYvTx9o=
+	t=1788964518; cv=none; b=mHyAfSSEUW9SMqX/u+AwNTFmMPUreM80ralzpHBdU8wdkKbHsAgDB3p0wPixulO3Uhmoziizz+U18RZc3x6LT6JAZBxSehUngMolESxbejdQEoHY25I0En/4d+Vm/muFnHvEtt0c2xqoVyIRWNsr0cOx3eK4BctwqDc6bQD7JCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964515; c=relaxed/simple;
-	bh=rnSu8Ld+QLtdi8mPqAbq5ES9SNn+DLUv8M8/yoEQDnw=;
+	s=arc-20240116; t=1788964518; c=relaxed/simple;
+	bh=S+qlQ4K82uGZjyJQ3JFlGWTam3YdSiTgAeDF6193Yms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lO7xRlDTDioIHDN/tKx+lzbPwnJlIL9Jm6TORJ6R9bB1kUCnpsApvyQMr/3yl49zTkGs8XmDQ8lndPLANtQ4B4E7idF7YHN1/7y8ImZV/Haf5Z9OrtnORfzSB3HZ/qhx+ydhUxlsnFcyjt86xeKq9SwAACT04wRAl2piqb7eeuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1pl3FoR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rdrgPFWcf+/TE+339w9OANOWbLu/8atRxC3+YXYMVns/d25iflU6Zjz3Qhw/22kSDRn5fWpaazhaN1FGykgPvDn2z8eoOg8eLZsKvamubBNyLfijKVqLNoPCMKPUFPmLqCqSpNz08ZC3S4xBeESx/lCXp4Zp/0NGpzr6rag3iBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7tSQZLr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1pl3FoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739DF1F00A3D;
-	Wed,  9 Sep 2026 14:35:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7tSQZLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF4D1F00A3A;
+	Wed,  9 Sep 2026 14:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964514;
-	bh=JJyyK0ZHAQM6fgw1ir1yZSADfqmrvbJw8mER29VIFhA=;
+	s=korg; t=1788964517;
+	bh=2qLev9zIHRSLCSsfCfFoM0goIOlfFe4SjIDUux450/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c1pl3FoRgrdNcQztVbob5ckNol6kWHOXD8ok/S/ALE/H9/SOzrPTcNDMKdURaTOU9
-	 jjzJR03ogYxkPeNhmYRKWyeFDW8+6ZV21O/pR1wXb/b0wer46AQtCs0CHsVxyRG0gm
-	 VTyumUuJb+EGRdTV4xX/XK30MWwXClXLPOSx2MKo=
+	b=m7tSQZLrYpAUs8pGFYEkYYMHuGTpwgvAcwVNCXedAaV7foWML163kqA612vHuz0uP
+	 Id3QUzqDWHh9P4mjIZL/z7bNq8bzf/StY2b7aMQGIjrIaQY1EMbh8uZK+AWEqVzEA2
+	 CeqCObfy4uZJPydI27d4R1kWpojtTUw6hqCSHVT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Kairui Song <kasong@tencent.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Barry Song <baohua@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chen Ridong <chenridong@huaweicloud.com>,
+	Chris Li <chrisl@kernel.org>,
 	David Hildenbrand <david@kernel.org>,
-	Frank van der Linden <fvdl@google.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
+	David Stevens <stevensd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kalesh Singh <kaleshsingh@google.com>,
+	Leno Hou <lenohou@gmail.com>,
 	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Usama Arif <usama.arif@linux.dev>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vernon Yang <vernon2gm@gmail.com>,
+	Wei Xu <weixugc@google.com>,
+	Yafang <laoar.shao@gmail.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 450/583] mm/hugetlb: initialize gigantic bootmem hugepage struct pages earlier
-Date: Wed,  9 Sep 2026 15:42:15 +0200
-Message-ID: <20260909134253.545064362@linuxfoundation.org>
+Subject: [PATCH 6.18 451/583] mm/mglru: use the common routine for dirty/writeback reactivation
+Date: Wed,  9 Sep 2026 15:42:16 +0200
+Message-ID: <20260909134253.575899778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -65,114 +70,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Kairui Song <kasong@tencent.com>
 
-[ Upstream commit b1b7c045e808c761b1cc8c19b3040fadedda3fef ]
+[ Upstream commit 75d4c3f5fb980de1b620adede47e43dff4d6a5f3 ]
 
-Gigantic bootmem HugeTLB pages are currently initialized from
-hugetlb_init(), but page_alloc_init_late() runs earlier and walks
-pageblocks to determine zone contiguity.
+Currently MGLRU will move the dirty writeback folios to the second oldest
+gen instead of reactivate them like the classical LRU.  This might help to
+reduce the LRU contention as it skipped the isolation.  But as a result we
+will see these folios at the LRU tail more frequently leading to
+inefficient reclaim.
 
-If a bootmem HugeTLB region is marked noinit, set_zone_contiguous() can
-observe still-uninitialized struct pages through
-__pageblock_pfn_to_page().  This may not trigger an immediate failure, but
-it can make set_zone_contiguous() compute the wrong zone contiguity state.
-If extra poisoned-page checks are added in this path, such as
-PF_POISONED_CHECK() in page_zone_id(), it can also trigger an early boot
-panic.
+Besides, the dirty / writeback check after isolation in shrink_folio_list
+is more accurate and covers more cases.  So instead, just drop the special
+handling for dirty writeback, use the common routine and re-activate it
+like the classical LRU.
 
-Initialize gigantic bootmem HugeTLB struct pages from
-page_alloc_init_late(), before zone contiguity is evaluated, so later page
-allocator setup only sees valid struct page state.  This also makes the
-initialization order more natural, as struct pages should be initialized
-before later code inspects them.
+This should in theory improve the scan efficiency.  These folios will be
+rotated back to LRU tail once writeback is done so there is no risk of
+hotness inversion.  And now each reclaim loop will have a higher success
+rate.  This also prepares for unifying the writeback and throttling
+mechanism with classical LRU, we keep these folios far from tail so
+detecting the tail batch will have a similar pattern with classical LRU.
 
-Link: https://lore.kernel.org/20260612035903.2468601-5-songmuchun@bytedance.com
-Fixes: fde1c4ecf916 ("mm: hugetlb: skip initialization of gigantic tail struct pages if freed by HVO")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+The micro optimization that avoids LRU contention by skipping the
+isolation is gone, which should be fine.  Compared to IO and writeback
+cost, the isolation overhead is trivial.
+
+And using the common routine also keeps the folio's referenced bits (tier
+bits), which could improve metrics in the long term.  Also no more need to
+clean reclaim bit as the common routine will make use of it.
+
+Note the common routine updates a few throttling and writeback counters,
+which are not used, and never have been for the MGLRU case.  We will start
+making use of these in later commits.
+
+Link: https://lore.kernel.org/20260428-mglru-reclaim-v7-10-02fabb92dc43@tencent.com
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reviewed-by: Axel Rasmussen <axelrasmussen@google.com>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Chen Ridong <chenridong@huaweicloud.com>
+Cc: Chris Li <chrisl@kernel.org>
 Cc: David Hildenbrand <david@kernel.org>
-Cc: Frank van der Linden <fvdl@google.com>
-Cc: Liam R. Howlett <liam@infradead.org>
+Cc: David Stevens <stevensd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kalesh Singh <kaleshsingh@google.com>
+Cc: Leno Hou <lenohou@gmail.com>
 Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador (SUSE) <osalvador@kernel.org>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Usama Arif <usama.arif@linux.dev>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vernon Yang <vernon2gm@gmail.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yafang <laoar.shao@gmail.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ adapted the header context and omitted a comment update for an absent HVO helper. ]
+Stable-dep-of: f7e698e326b2 ("mm/mglru: fix and remove redundant unevictable folio handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hugetlb.h |    5 +++++
- mm/hugetlb.c            |    5 ++---
- mm/mm_init.c            |    1 +
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ mm/vmscan.c |   19 -------------------
+ 1 file changed, 19 deletions(-)
 
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -173,6 +173,7 @@ struct address_space *hugetlb_folio_mapp
- extern int sysctl_hugetlb_shm_group;
- extern struct list_head huge_boot_pages[MAX_NUMNODES];
- 
-+void hugetlb_bootmem_struct_page_init(void);
- void hugetlb_bootmem_alloc(void);
- bool hugetlb_bootmem_allocated(void);
- extern nodemask_t hugetlb_bootmem_nodes;
-@@ -1316,6 +1317,10 @@ static inline bool hugetlb_bootmem_alloc
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4469,7 +4469,6 @@ static bool sort_folio(struct lruvec *lr
+ 		       int tier_idx)
  {
+ 	bool success;
+-	bool dirty, writeback;
+ 	int gen = folio_lru_gen(folio);
+ 	int type = folio_is_file_lru(folio);
+ 	int zone = folio_zonenum(folio);
+@@ -4519,21 +4518,6 @@ static bool sort_folio(struct lruvec *lr
+ 		return true;
+ 	}
+ 
+-	dirty = folio_test_dirty(folio);
+-	writeback = folio_test_writeback(folio);
+-	if (type == LRU_GEN_FILE && dirty) {
+-		sc->nr.file_taken += delta;
+-		if (!writeback)
+-			sc->nr.unqueued_dirty += delta;
+-	}
+-
+-	/* waiting for writeback */
+-	if (writeback || (type == LRU_GEN_FILE && dirty)) {
+-		gen = folio_inc_gen(lruvec, folio, true);
+-		list_move(&folio->lru, &lrugen->folios[gen][type][zone]);
+-		return true;
+-	}
+-
  	return false;
  }
-+
-+static inline void hugetlb_bootmem_struct_page_init(void)
-+{
-+}
- #endif	/* CONFIG_HUGETLB_PAGE */
  
- static inline spinlock_t *huge_pte_lock(struct hstate *h,
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -3453,7 +3453,7 @@ static void __init gather_bootmem_preall
- 		gather_bootmem_prealloc_node(nid);
- }
+@@ -4561,9 +4545,6 @@ static bool isolate_folio(struct lruvec
+ 	if (!folio_test_referenced(folio))
+ 		set_mask_bits(&folio->flags.f, LRU_REFS_MASK, 0);
  
--static void __init gather_bootmem_prealloc(void)
-+void __init hugetlb_bootmem_struct_page_init(void)
- {
- 	struct padata_mt_job job = {
- 		.thread_fn	= gather_bootmem_prealloc_parallel,
-@@ -3650,7 +3650,7 @@ static unsigned long __init hugetlb_page
-  * - For gigantic pages, this is called early in the boot process and
-  *   pages are allocated from memblock allocated or something similar.
-  *   Gigantic pages are actually added to pools later with the routine
-- *   gather_bootmem_prealloc.
-+ *   hugetlb_bootmem_struct_page_init.
-  * - For non-gigantic pages, this is called later in the boot process after
-  *   all of mm is up and functional.  Pages are allocated from buddy and
-  *   then added to hugetlb pools.
-@@ -4717,7 +4717,6 @@ static int __init hugetlb_init(void)
+-	/* for shrink_folio_list() */
+-	folio_clear_reclaim(folio);
+-
+ 	success = lru_gen_del_folio(lruvec, folio, true);
+ 	VM_WARN_ON_ONCE_FOLIO(!success, folio);
  
- 	hugetlb_cma_check();
- 	hugetlb_init_hstates();
--	gather_bootmem_prealloc();
- 	report_hugepages();
- 
- 	hugetlb_sysfs_init();
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -2357,6 +2357,7 @@ void __init page_alloc_init_late(void)
- 	/* Reinit limits that are based on free pages after the kernel is up */
- 	files_maxfiles_init();
- #endif
-+	hugetlb_bootmem_struct_page_init();
- 
- 	/* Accounting of total+free memory is stable at this point. */
- 	mem_init_print_info();
 
 
