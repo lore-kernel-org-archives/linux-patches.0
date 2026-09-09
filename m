@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC93C2DA775;
-	Wed,  9 Sep 2026 14:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90174FDE6C;
+	Wed,  9 Sep 2026 14:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962563; cv=none; b=WwlDD049jZm3+BttdyUjT9a9uDjrHFwT6ETGSskUEh92H9zNmA+Kuct84GQzYFC1MgEOJQc09k5bLlCD9rHXJ3iAtkYObl0Xo8xXIFwvd2Hl2pkdbgoF5oR6tPhQXJTenLShogd3UMSrYduYVqFb85efBN6Q29OTll7wF/PGUnk=
+	t=1788962566; cv=none; b=MTFt63au3itKNEY1YTv68nPHEarIjdL493zrIeuHUdM09Sv7mQeu0fIdcDuabch0wgZZrJPi6wrtu+6MzeNnD6PfgemsVV0J9HN1dMlUopha2QA7bOydGtHLBbbBO9wo+hFYe7uTLg+exdtMBgBqELYAhxcsD52gOd1uRokLqxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962563; c=relaxed/simple;
-	bh=U2ZSTUXkcaiS6yW1JX8vSfC+XS2c4DnutllQpSioDFo=;
+	s=arc-20240116; t=1788962566; c=relaxed/simple;
+	bh=ON//yZgacdQPqunU3Z0+gd/+HerCg5e0DXb/nBlUjyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ja9977kiAgnEqPLC7eRBRp2lDgZDlC5MSQsE/ECxsOxpud0ojWY2sVVK87G25hy/rYSB3N2bgESEmu86acPXdvN2MgqMOoafk45RYaV13c+ItpANvrVyJvQ3LmlTsbSFrFi3rhL3tFTAO9HhBYceD5e9qnBE9MdGYSYWFVohjqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKj8VUX6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sdkvXhdc9DjTvp9hzZ5Gu7e1edS9fTP7vKkwszWYaiDJAFhlJxlu+PramRpJTnMwo7ImjQhcvBQkCGTXmYF0OPAD9lljhJoUD3Ah3Yu9hPZ92HK5lqYMOOml22gnhEg9M6ik31/77WFKAFUAbwk5oBXv53S7x2inJhYuArZBjDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEFbbjDn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKj8VUX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FD41F00A3A;
-	Wed,  9 Sep 2026 14:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEFbbjDn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8DC1F00A3A;
+	Wed,  9 Sep 2026 14:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962561;
-	bh=m/f85qKIgcimnXH7ftHbeIT5ud6wI3SMaJ8YeBei0ro=;
+	s=korg; t=1788962564;
+	bh=nWreKZzsOYdBOJJk5jxjFD8JXk+GrL/sa5EhFVtpfls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKj8VUX6q1nGo4DRlJzx6wfxblVIqP2WGD51vwd9FVkFcN3utrMka35gsv0+GNdTB
-	 MU0rJKPsPBT9B3EauDgJNShnx8bOHVK9VgrJ78IxqK1gLJ0QaWmSlX9QehvsQ9BAUR
-	 Afq/DC3jPI2Y4TOX54+Z2EFaXwKe7JBoXhtZ+ayw=
+	b=MEFbbjDnIc5Bq4vJCd0mAGHjlAKP7efjiOw3AFnqFTj2+KXkBYHD4sW03qkBiG7Xb
+	 pjllAsQqRNXifbKxZL9EWc+qi/OU8LLdlXeNEH+7yYt7lKg55CkuClQPYw1zQiKOB9
+	 qeRf46DpeCCgpd8Wu4ZnrwcX3e9tsxuhnGFK71Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tao Cui <cuitao@kylinos.cn>,
 	Bibo Mao <maobibo@loongson.cn>,
-	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
+	Zeng Chi <zengchi@kylinos.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 332/556] LoongArch: KVM: Free init resources if kvm_init() fails
-Date: Wed,  9 Sep 2026 15:40:12 +0200
-Message-ID: <20260909134242.332115576@linuxfoundation.org>
+Subject: [PATCH 7.2 333/556] LoongArch: KVM: Preserve memslot arch flags on KVM_MR_FLAGS_ONLY
+Date: Wed,  9 Sep 2026 15:40:13 +0200
+Message-ID: <20260909134242.367238340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,44 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+From: Zeng Chi <zengchi@kylinos.cn>
 
-commit f7a1064cce3b100b54780c68529176232d8eb01e upstream.
+commit 27a9bfee3bbcb3cabb77797354f07e0e44e49831 upstream.
 
-kvm_loongarch_init() calls kvm_loongarch_env_init() to allocate the
-per-CPU kvm_context (vmcs) and kvm_loongarch_ops and to register the
-perf callbacks, and then calls kvm_init(). If kvm_init() fails its
-result is returned directly, but since module_init() does not run the
-module_exit() stuff on failure, so kvm_loongarch_env_exit() is never
-called and those resources are leaked.
+kvm_arch_prepare_memory_region() computes new->arch.flags, i.e. whether
+a memslot is KVM_MEM_HUGEPAGE_CAPABLE or KVM_MEM_HUGEPAGE_INCAPABLE,
+only for KVM_MR_CREATE and KVM_MR_MOVE, and returns early for every
+other change. But the generic code allocates a zeroed memslot for every
+change and never copies old->arch, so after a KVM_MR_FLAGS_ONLY update,
+e.g. toggling KVM_MEM_LOG_DIRTY_PAGES for live migration, the active
+memslot has arch.flags == 0.
 
-So call kvm_loongarch_env_exit() when kvm_init() fails, matching the
-teardown-on-failure pattern used by riscv_kvm_init().
+With both flags clear, fault_supports_huge_mapping() falls through to
+the alignment check on the HVA range alone, which no longer verifies
+that the GPA and HVA have the same offset within a PMD. A memslot that
+was marked KVM_MEM_HUGEPAGE_INCAPABLE because of a GPA/HVA offset
+mismatch can then be mapped with PMD entries on read faults, and since
+kvm_map_page() aligns the gfn and the pfn independently, the guest ends
+up accessing the wrong host pages, exactly the "d -> f, e -> g" case
+described in the comment above the check.
+
+Carry the arch flags over from the old memslot for KVM_MR_FLAGS_ONLY,
+as the GPA, HVA and size are guaranteed to be unchanged for that case.
 
 Cc: stable@vger.kernel.org
-Fixes: 2bd6ac687261 ("LoongArch: KVM: Implement kvm module related interface")
+Fixes: 7ab6fb505b2a ("LoongArch: KVM: Optimization for memslot hugepage checking")
+Tested-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/main.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/loongarch/kvm/mmu.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/arch/loongarch/kvm/main.c
-+++ b/arch/loongarch/kvm/main.c
-@@ -453,7 +453,11 @@ static int kvm_loongarch_init(void)
- 	if (r)
- 		return r;
+--- a/arch/loongarch/kvm/mmu.c
++++ b/arch/loongarch/kvm/mmu.c
+@@ -383,6 +383,16 @@ int kvm_arch_prepare_memory_region(struc
+ 	hva_t hva_start;
+ 	size_t size, gpa_offset, hva_offset;
  
--	return kvm_init(sizeof(struct kvm_vcpu), 0, THIS_MODULE);
-+	r = kvm_init(sizeof(struct kvm_vcpu), 0, THIS_MODULE);
-+	if (r)
-+		kvm_loongarch_env_exit();
++	/*
++	 * The generic code allocates a fresh, zeroed memslot for every change,
++	 * so the arch flags computed below must be carried over when only the
++	 * userspace flags change, e.g. when dirty logging is toggled.
++	 */
++	if (change == KVM_MR_FLAGS_ONLY) {
++		new->arch = old->arch;
++		return 0;
++	}
 +
-+	return r;
- }
- 
- static void kvm_loongarch_exit(void)
+ 	if ((change != KVM_MR_MOVE) && (change != KVM_MR_CREATE))
+ 		return 0;
+ 	/*
 
 
