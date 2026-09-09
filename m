@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF30D57F75E;
-	Wed,  9 Sep 2026 14:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF27A568FD3;
+	Wed,  9 Sep 2026 14:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962883; cv=none; b=PBLayO6ugQcRQGDZjRoTMnj3fOzMLGXk551icCvnHIUD95aROsMtp3hwzBsN77RI3ENCwV+y88M3pE8z9yZuIXRhKhLg1Xv6/aXUtVSArXOhOYX5Kh96AISQeRkzeodUUH8T+FGRUerIaUvoQazYAjmcnbbqGIl0F19gjmgfubI=
+	t=1788962887; cv=none; b=RuPbJ7ZSTsOW/FVXDrwfoeWlBeLr6hmbipGALd595Qna87q37g+PHnAt/Sgt5AzE/JYY+MzWrwJPsuLED+v7TDCKhlvZUQhY//N2wotxIeT2rFDZICYsmDdETzVwlGke54btLeKY4q4b89mxQoJhTFpN7NI+86qKDzWsGkWFtX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962883; c=relaxed/simple;
-	bh=tDlj1JwenSppoRfyZUOC42EsTOpJkJ4JkH9sBOjrBfE=;
+	s=arc-20240116; t=1788962887; c=relaxed/simple;
+	bh=qM+mKRsifOP00S3WsifTxfwQTSPrEXp1Te0CcZPW02k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Im2MG1W/QwGb+4vfiwUZnoMKwNZGRYOD/QvnLS93D0atgYrTvE2RwzR+UfSL2xGH/Kve9ONAamEwsdv6hs2PyqMundjouymxqA/N123VgmOdEM8+MkRXpe2hPk0JkuVAFDxGS8eQ9FZgelBh39hPE4NTdN31W6AKajlY3VzLmI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9IKe9oF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ptUO2qwhY0ToKtm+7p3Oj2hxs2BGehHbBZvdpEeNsWxvTZ8QF1QMe0JvG/o3xrtD9AB0OflrS+V1V64yOcn0T0YeP82YgWPhgbvbUvomMYpNw73AQYjneTEAm68GfCnSitCuPux3THwBTofFk7g+P1/PoEviMs4J1t44Qn6HSMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwTvqXbJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9IKe9oF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9F01F00A3D;
-	Wed,  9 Sep 2026 14:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwTvqXbJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23111F00A3D;
+	Wed,  9 Sep 2026 14:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962882;
-	bh=nsho+1JWtkuvZnN3sfKE9eRbT8Y5rGRatDuN37gBdyk=;
+	s=korg; t=1788962885;
+	bh=/kYSODNmddnEumyUeVPkMH9ffn2ns5VFtRy2Tti/c+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9IKe9oFN4IUNi/sMutYAV2T+YkBwhjzynS2f5udglPRngGEbZAuJGbD7YknMFFHP
-	 ZEaQmDNRJY++bqOr8teiYulqvW2bXVkkACpLy+R6AhKawb66fVxoUt68UrdjCuwQru
-	 Z7NS8FrhE79ndJH3y6tNdF4sQzvL5muPb9BnSrbA=
+	b=PwTvqXbJk4/yDamGT0KN3CPmcSUXkjx2ZS7p8kTn+9bKLrOhhxv5awqheFuKvX3XY
+	 gGIv46cgtONBtqxEhYJ8pa6v/Q4yf+/qfMKX1FaLhihCKRpgkOD4E8wfwUZU3B4Q2w
+	 +ivGQkABhHoqs0iQ1VmSIilRAUsa7/84oqSN6YKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 445/556] scsi: qla2xxx: Skip NVMe LS reject IOCB when FW not started
-Date: Wed,  9 Sep 2026 15:42:05 +0200
-Message-ID: <20260909134246.253502904@linuxfoundation.org>
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 7.2 446/556] f2fs: return symlink writeback errors
+Date: Wed,  9 Sep 2026 15:42:06 +0200
+Message-ID: <20260909134246.286023102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,69 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit f7e46ebffc5781aab3f1f5a5d4350addbb5833f4 upstream.
+commit a2c73a7a677afdaa8b16d775188f9ef5cfbfd8b2 upstream.
 
-qla_nvme_xmt_ls_rsp() bails out to the out: label when firmware is not
-started (!ha->flags.fw_started), but the out: path unconditionally calls
-qla_nvme_ls_reject_iocb(), which ends in qla2x00_start_iocbs() and an
-unconditional doorbell write to the request queue in-pointer register.
-This rings the firmware doorbell and queues an IOCB that stopped or
-resetting firmware cannot consume, and touches MMIO during the reset/EEH
-window where fw_started is also clear.
+F2FS writes long symlink data with page_symlink() and then flushes the
+symlink mapping to reduce the chance of exposing a broken symlink.
 
-Only emit the LS reject IOCB (and ring the doorbell) when fw_started is
-set; otherwise just clean up and return. The post-allocation failure
-cases (SRB alloc / qla2x00_start_sp() failure) run with firmware started
-and still send the reject. Apply the same guard to the reject emission
-in qla2xxx_process_purls_pkt().
+That flush result is currently ignored. If the writeback fails, symlink()
+still returns success even though the symlink is not durable and the same
+operation can already surface -EIO through syncfs().
 
-Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-26-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Return the writeback error to userspace and skip the dirsync flush once the
+symlink data flush has failed.
+
+Fixes: d0cae97cb600 ("f2fs: flush symlink path to avoid broken symlink after POR")
+Cc: stable@kernel.org
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ fs/f2fs/namei.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -441,9 +441,11 @@ out:
- 	a.vp_idx = vha->vp_idx;
- 	a.nport_handle = uctx->nport_handle;
- 	a.xchg_address = uctx->exchange_address;
--	spin_lock_irqsave(ha->base_qpair->qp_lock_ptr, flags);
--	qla_nvme_ls_reject_iocb(vha, ha->base_qpair, &a, true);
--	spin_unlock_irqrestore(ha->base_qpair->qp_lock_ptr, flags);
-+	if (ha->flags.fw_started) {
-+		spin_lock_irqsave(ha->base_qpair->qp_lock_ptr, flags);
-+		qla_nvme_ls_reject_iocb(vha, ha->base_qpair, &a, true);
-+		spin_unlock_irqrestore(ha->base_qpair->qp_lock_ptr, flags);
-+	}
- 	kfree(uctx);
- 	return rval;
- }
-@@ -1205,9 +1207,14 @@ qla2xxx_process_purls_pkt(struct scsi_ql
- 		a.vp_idx = vha->vp_idx;
- 		a.nport_handle = uctx->nport_handle;
- 		a.xchg_address = uctx->exchange_address;
--		spin_lock_irqsave(vha->hw->base_qpair->qp_lock_ptr, flags);
--		qla_nvme_ls_reject_iocb(vha, vha->hw->base_qpair, &a, true);
--		spin_unlock_irqrestore(vha->hw->base_qpair->qp_lock_ptr, flags);
-+		if (vha->hw->flags.fw_started) {
-+			spin_lock_irqsave(vha->hw->base_qpair->qp_lock_ptr,
-+					  flags);
-+			qla_nvme_ls_reject_iocb(vha, vha->hw->base_qpair, &a,
-+						true);
-+			spin_unlock_irqrestore(vha->hw->base_qpair->qp_lock_ptr,
-+					       flags);
-+		}
- 		list_del(&uctx->elem);
- 		kfree(uctx);
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -707,15 +707,16 @@ err_out:
+ 	 * performance regression.
+ 	 */
+ 	if (!err) {
+-		filemap_write_and_wait_range(inode->i_mapping, 0,
+-							disk_link.len - 1);
++		err = filemap_write_and_wait_range(inode->i_mapping, 0,
++						   disk_link.len - 1);
+ 
+-		if (IS_DIRSYNC(dir))
++		if (!err && IS_DIRSYNC(dir))
+ 			f2fs_sync_fs(sbi->sb, 1);
+-	} else {
+-		f2fs_unlink(dir, dentry);
  	}
+ 
++	if (err)
++		f2fs_unlink(dir, dentry);
++
+ 	f2fs_balance_fs(sbi, true);
+ 	goto out_free_encrypted_link;
+ 
 
 
