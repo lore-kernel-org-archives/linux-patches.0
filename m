@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAF8523781;
-	Wed,  9 Sep 2026 13:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3273B53FD2B;
+	Wed,  9 Sep 2026 13:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962051; cv=none; b=fLdAYQCdosjvrfqCBsPzrCqQsEX1D8eA3Y6SIWqKf+5nuOxq8jHfYK/zGLtA1IMrudQV4L/yTlD6I/k6lzPdjO2wjlrSPWvNqXv2lBroVrnfXs5Xh8JJ2TYli7qNbORpNvkBj4ditetFTZbupYk0bcDC6/aq/o0RuRdD7haCTqk=
+	t=1788962054; cv=none; b=eMORorPpxiRnKt0T36y1ejCtzL5dGc4vUUJm5NUkY2DxPqbguI0pSoP2EJqMopYKi105WYgZ9vfaRdWlbDtM+vyAPIJicJcM0mxhVE/atumQHaRSf5KS9V/ny86P9E9AVE8Fj38mVrr/N5kKnsOiryVGRDU1N9xMvdqx8MLYsLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962051; c=relaxed/simple;
-	bh=k6BoVdT2NDeGmF0l2kruarvKpfi2X2HJxZ+fejfy/z0=;
+	s=arc-20240116; t=1788962054; c=relaxed/simple;
+	bh=nPVLTsSyOX4OMGiLDY1tzeJfX/ixngMNz5UYvcvHqjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUml703bKcy08AiFAcdGV/FF2uBxXCZAtb/jIOkwbqJvJy8RMsKsLvweFYjq4UTyA3RHQNb5zepjnrfV7S+3CjIUgeCdkTX/7spPhNbkUHug+1lNTesK3+Nt3oXr4auYM3yzMA3eAh3V4CV0LJ/78NzS8QuSE0vwqoxJPyAzGVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJz8TO3D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TX+wbJPAxZwUtebYiaBB1nv/FcW5gORpmWrXn6/rthL0Ww79VR4KFIty4nnbGdVh4JjLClgObfgdaWXOAaErQxRwKx+jG4BPTYpaAzkZmVFk26ESruIR6NLGlkdwWcCTBV+s4KOVQWl5ocL2SjDtSdZCOpElzEnVJdIuW0RnDx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg2yKsp4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJz8TO3D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0661F00A3A;
-	Wed,  9 Sep 2026 13:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg2yKsp4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0521F00A3A;
+	Wed,  9 Sep 2026 13:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962050;
-	bh=tRqod7fQS/LPA+sF3flkvPkywEkQfju6spaKxJteAEc=;
+	s=korg; t=1788962053;
+	bh=LkbNmpAKEHnXTgGVXEJJ/tTubFPC364SSKQXotJX1Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YJz8TO3DFz0f/qHKz+a/jZcUCmMyhVs1Tq3PYgPF3p55znMfEwT3RPt8zi0cV/geQ
-	 GPhPKAII85SRl+Ede2x9AFyl8L+K3+Qep6UshA+MQNIPE0JiCfA/WTYu1MIUCJXnQY
-	 oUA0omgTlYBFkgj0sTFh56DvdOwHNEBb6dnGaf/k=
+	b=sg2yKsp4HhSSxnTAKL2lucsRozfwwcJoIezXg+KQdPr6BykwX+ZQpmIb+BpNMJBP1
+	 Ua2gs/qnZWafrzP/SIYndR1+s1NHap42AaP6r5fJPSMm09sSx6vxN4UmYckXIV7A65
+	 SQasjyK0wi0ahpByMYLYrxa3TEcZu2SpZI8gF6tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	GuoHan Zhao <zhaoguohan@kylinos.cn>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 7.2 155/556] accel/ethosu: fix job completion fence cleanup
-Date: Wed,  9 Sep 2026 15:37:15 +0200
-Message-ID: <20260909134235.887854280@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Xu Rao <raoxu@uniontech.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.2 156/556] nvme-fabrics: fix DHCHAP secret leak on parse failure
+Date: Wed,  9 Sep 2026 15:37:16 +0200
+Message-ID: <20260909134235.918328756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,72 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 2d2a3adc91950f9a18829dadc7317fb5180a15c5 upstream.
+commit afdee49a1b88ed9bb44e2b30e855297c169bcc53 upstream.
 
-ethosu_ioctl_submit_job() allocates done_fence before validating buffer
-handles. Errors after allocation call ethosu_job_err_cleanup(), which frees
-the job but leaks the uninitialized fence.
+nvmf_parse_options() duplicates dhchap_secret and dhchap_ctrl_secret
+with match_strdup() before validating the DHHC-1: representation.
 
-A scheduler dependency error also lets ethosu_job_run() return before
-dma_fence_init(). Normal cleanup then passes a zeroed refcount to
-dma_fence_put().
+If validation fails, the parser returns -EINVAL before the temporary
+string in p is assigned to opts->dhchap_secret or
+opts->dhchap_ctrl_secret. nvmf_create_ctrl() subsequently frees opts,
+but nvmf_free_options() cannot release the unassigned temporary string.
+Each rejected option therefore leaks one allocation.
 
-Release done_fence in the common cleanup path and use
-dma_fence_was_initialized() to distinguish initialized fences from raw
-allocations.
+This is easy to miss because valid secrets transfer ownership to opts
+and are freed normally, while the malformed-secret path still returns
+the expected -EINVAL to userspace.
 
-Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
+With CONFIG_NVME_HOST_AUTH enabled, the leak is reachable before the
+required-option checks and transport lookup. No NVMe-oF target or
+working transport connection is required; for example, repeatedly
+writing
+
+	dhchap_secret=BAD
+
+or
+
+	dhchap_ctrl_secret=BAD
+
+to /dev/nvme-fabrics deterministically takes the leaking parse path.
+
+Free the temporary string before leaving both validation error paths.
+Use kfree_sensitive() because the copied option may contain secret
+material even when its representation is rejected, matching the
+sensitive cleanup used for stored DHCHAP secrets.
+
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260716065219.931088-1-zhaoguohan@kylinos.cn?part=1
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Link: https://patch.msgid.link/20260717061145.1478139-6-zhaoguohan@kylinos.cn
-[robh: also fix goto]
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ethosu/ethosu_job.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/nvme/host/fabrics.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/accel/ethosu/ethosu_job.c b/drivers/accel/ethosu/ethosu_job.c
-index 1e2465279aae..1e4b65f62933 100644
---- a/drivers/accel/ethosu/ethosu_job.c
-+++ b/drivers/accel/ethosu/ethosu_job.c
-@@ -152,6 +152,13 @@ static void ethosu_job_err_cleanup(struct ethosu_job *job)
- 
- 	drm_gem_object_put(job->cmd_bo);
- 
-+	if (job->done_fence) {
-+		if (dma_fence_was_initialized(job->done_fence))
-+			dma_fence_put(job->done_fence);
-+		else
-+			dma_fence_free(job->done_fence);
-+	}
-+
- 	kfree(job);
- }
- 
-@@ -162,7 +169,6 @@ static void ethosu_job_cleanup(struct kref *ref)
- 
- 	pm_runtime_put_autosuspend(job->dev->base.dev);
- 
--	dma_fence_put(job->done_fence);
- 	dma_fence_put(job->inference_done_fence);
- 
- 	ethosu_job_err_cleanup(job);
-@@ -393,7 +399,7 @@ static int ethosu_ioctl_submit_job(struct drm_device *dev, struct drm_file *file
- 	ejob->done_fence = kzalloc_obj(*ejob->done_fence);
- 	if (!ejob->done_fence) {
- 		ret = -ENOMEM;
--		goto out_cleanup_job;
-+		goto out_put_job;
- 	}
- 
- 	ret = drm_sched_job_init(&ejob->base,
--- 
-2.55.0
-
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -1028,6 +1028,7 @@ static int nvmf_parse_options(struct nvm
+ 			}
+ 			if (strlen(p) < 11 || strncmp(p, "DHHC-1:", 7)) {
+ 				pr_err("Invalid DH-CHAP secret %s\n", p);
++				kfree_sensitive(p);
+ 				ret = -EINVAL;
+ 				goto out;
+ 			}
+@@ -1042,6 +1043,7 @@ static int nvmf_parse_options(struct nvm
+ 			}
+ 			if (strlen(p) < 11 || strncmp(p, "DHHC-1:", 7)) {
+ 				pr_err("Invalid DH-CHAP secret %s\n", p);
++				kfree_sensitive(p);
+ 				ret = -EINVAL;
+ 				goto out;
+ 			}
 
 
