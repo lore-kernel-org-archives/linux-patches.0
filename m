@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF576563299;
-	Wed,  9 Sep 2026 14:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985C32931DF;
+	Wed,  9 Sep 2026 14:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962539; cv=none; b=l9W8nJQrpj1SzC0c9LHn9esZ74FCHZza9rvK3W8xZOufqvyLvmuJJFuE9Tx3RCKrxyQ+LXBHSkwhreOQriOyYNnpbhBjjHjZr5w5HKFglpTjiFeJT29vXFWzfea+s1bvWbuLhdiB8rMqmLGjwPmEr13fBmCUAPfROGFbomTsBfs=
+	t=1788962543; cv=none; b=gDJyigkiYPzKimqofap8sF4BaQeZ0OlsVs13XL0szskOVyakvvsgQY9q8j/iPhf0pnPDswmYg/QM5viBPhoqTzV3qadFDOPxO/ouI5IqtvPqk3VgSzuDVqOfM4Y6cO+816tGaTpjKC7PsIx+YQjOrRZxvjbChXG361ElM3VygKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962539; c=relaxed/simple;
-	bh=63QKgVhEww6CZItcHgELrrxsnIwhtMPn7R290Be75MY=;
+	s=arc-20240116; t=1788962543; c=relaxed/simple;
+	bh=X/dYRliWQ1GHLbpFXSJ/42EmyM31WsyIwzW8Lmq37vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ck70mNeC+JqaXJ7RtebCMFNSV5285CIQ9EOAbCs4IhHpmNJJ8Y813zTggM01GWNs4aVCk12jn8NHLn/gBOiT/JCvMOdoh89SwW2pAL30EprTD8VYkECmaTY+IAotQuQ8Kv213VHAMZDSmrXa1fft3yFWAJcaE26Oq1NVpplsxX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIYpE+zg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YL4fpzq/O5MdltSoDPG1ZFQHwdq9w8pb8xSeJq3BnuuJSr0UfwPh5n++DMwNu6Tuk/6uxVhhbWkn/HW2le3KTp3wDwPWEPvgXRKdGdnOoeygjO4Jm8r3zhGUUU0cBLDe8GhklllcS5hy/HwJGrLUB2WV5vS0gJFAg8ncMYp9Xkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lB0WQsw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIYpE+zg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13ECC1F00A3A;
-	Wed,  9 Sep 2026 14:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lB0WQsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11051F00A3A;
+	Wed,  9 Sep 2026 14:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962538;
-	bh=fDnppIaRadioCsppsok5NJa0zT5mIjTCm94HFr16zaE=;
+	s=korg; t=1788962541;
+	bh=zfpTGh4B99mADLRf5gdpEtaHRJ/iJqXgnT4YvRwnJRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIYpE+zgpa1+c4LkFF4mJz3T1lzqVnoDwisQL6MAnins+Fgr0QXR2GwmsiWcDbDql
-	 tC+c+l0yuv1FK6nSGVSMGv303olTJjSqRPtdRsP5ucu8qHv2C6+wRaPLsXEF5/zg9o
-	 Jj4CR5tE+cx0bg6YHVrmqMUkUowdRX0vl/g9Ah9A=
+	b=1lB0WQswN2F18PJ9B5l/hYIlq8SIO6BcXNz/gdRFdz/f+S4ZBqKK18i7ewjGchAca
+	 9f8YQYGCoY7JAydrhom3xSfLnpvcvM3undH57+qAS20RL4lJMoEf5XuDMhI9s8h2fG
+	 uv1M+MnDTz4M5/W7PnUop3WEWJxineVJtEOc8Z3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei-Lin Chang <weilin.chang@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oupton@kernel.org>
-Subject: [PATCH 7.2 325/556] KVM: arm64: Correctly cap TLBI Range to the architural limit
-Date: Wed,  9 Sep 2026 15:40:05 +0200
-Message-ID: <20260909134242.091850798@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	syzbot+3d5461510f8dc4adfe30@syzkaller.appspotmail.com,
+	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.2 299/556] KVM: x86: hyper-v: Clamp stimer deadline to avoid livelock
+Date: Wed,  9 Sep 2026 15:39:39 +0200
+Message-ID: <20260909134241.203623155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -45,52 +46,182 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Carlos López <clopez@suse.de>
 
-commit 69a598288195947a1662b53de702eb6976af96b7 upstream.
+commit 0ca49fbd2883cd53d32d85b50feef17fa04d0fbf upstream.
 
-TLB Invalidation by Range has a fairly powerful way of encoding pretty
-large ranges in a small number of bits. This range can be based on an
-arbitrary VA, which means it is pretty easy for a guest to generate an
-overflow should the hypervisor be naive enough to add the range to the
-base...
+Fix an issue where userspace or the guest can program an Hyper-V
+synthetic timer to have a deadline in the past via integer overflow,
+preventing the CPU from making progress and triggering an RCU stall.
 
-Make sure the range is capped to the limit dictated by the address bit
-that determines the VA range. For an IPA invalidation, this is further
-corrected down the line to ignore the upper range.
+Hyper-V's SynIC exposes 4 per-vCPU synthetic timers to the
+guest, which are emulated by KVM. Each is programmed through the
+HV_X64_MSR_STIMERi_CONFIG and HV_X64_MSR_STIMERi_COUNT MSRs. Depending
+on CONFIG, COUNT represents either the absolute expiration time or the
+period of a periodic timer, both expressed in 100ns ticks. These timers
+may be set both by the guest (WRMSR) and the host (KVM_SET_MSRS).
 
-Fixes: 4ffa72ad8f37e ("KVM: arm64: nv: Add S1 TLB invalidation primitive for VNCR_EL2")
-Reported-by: Wei-Lin Chang <weilin.chang@arm.com>
-Link: https://lore.kernel.org/r/yifz3wn5gk5sr6mapi32trgk5m5kp33bquctsjmkifebnsnndt@fix6u4rthx4g
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+When the timer is enabled, stimer_start() translates COUNT to an
+absolute monotonic deadline and arms an hrtimer. If COUNT is set to a
+value close to U64_MAX, the deadline calculation can overflow.
+
+    ktime_add_ns(ktime_now, 100 * (stimer->exp_time - time_now))
+
+This can result in a CPU livelock. stimer_start() arms the timer
+via hrtimer_start() with a deadline in the past, which causes it to
+immediately fire. The stimer callback then raises KVM_RQ_HV_STIMER, with
+the intention of causing KVM to deliver a synthetic interrupt on the
+next vCPU guest enter.
+
+Then, once userspace issues KVM_RUN, vcpu_enter_guest() consumes the
+request, calling kvm_hv_process_stimers(). This would normally disable
+the timer via stimer_expiration() once the deadline is in the past.
+However, the deadline comparison is done between the KVM reference
+counter and stime->exp_time, which is a big value close to U64_MAX, so
+this never happens for a few thousand years.
+
+kvm_hv_process_timers() then re-arms the timer via stimer_start(), since
+it was not disabled, which again fires immediately. Before entering
+the guest, kvm_vcpu_exit_request() checks kvm_request_pending(),
+which returns true due to the newly raised KVM_REQ_HV_STIMER. Then
+vcpu_enter_guest() aborts the guest entry, returning early into
+vcpu_run(), which loops back again into vcpu_enter_guest(), restarting
+the cycle.
+
+Since there are no manual yields in this loop, a task with SCHED_FIFO
+may starve RCU grace-period kthreads, which exposes the stalls found
+by syzcaller:
+
+    rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+    rcu:    (detected by 1, t=10502 jiffies, g=14269, q=1142 ncpus=2)
+    rcu: All QSes seen, last rcu_preempt kthread activity 10500 (4294965239-4294954739), jiffies_till_next_fqs=1, root ->qsmask 0x0
+    rcu: rcu_preempt kthread starved for 10500 jiffies! g14269 f0x2 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=0
+    rcu:    Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+        ( ... )
+    Call Trace:
+     <IRQ>
+     __run_hrtimer kernel/time/hrtimer.c:1773 [inline]
+     __hrtimer_run_queues+0x408/0xc30 kernel/time/hrtimer.c:1841
+     hrtimer_interrupt+0x45b/0xaa0 kernel/time/hrtimer.c:1903
+     local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1045 [inline]
+     __sysvec_apic_timer_interrupt+0x102/0x3e0 arch/x86/kernel/apic/apic.c:1062
+     instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1056 [inline]
+     sysvec_apic_timer_interrupt+0xa1/0xc0 arch/x86/kernel/apic/apic.c:1056
+     </IRQ>
+     <TASK>
+     asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:697
+    RIP: 0010:__raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:152 [inline]
+    RIP: 0010:_raw_spin_unlock_irqrestore+0xa8/0x110 kernel/locking/spinlock.c:194
+    Code: 74 05 e8 0b f4 5f f6 48 c7 44 24 20 00 00 00 00 9c 8f 44 24 20 f6 44 24 21 02 75 4f f7 c3 00 02 00 00 74 01 fb bf 01 00 00 00 <e8> 23 6b 27 f6 65 8b 05 7c 60 5a 07 85 c0 74 40 48 c7 04 24 0e 36
+    RSP: 0018:ffffc900040a7320 EFLAGS: 00000206
+    RAX: 5de15cb931505900 RBX: 0000000000000a06 RCX: 5de15cb931505900
+    RDX: 0000000000000007 RSI: ffffffff8daa9dc3 RDI: 0000000000000001
+    RBP: ffffc900040a73b0 R08: ffffffff8fc3d077 R09: 1ffffffff1f87a0e
+    R10: dffffc0000000000 R11: fffffbfff1f87a0f R12: dffffc0000000000
+    R13: 0000000000000000 R14: ffff8880b8628240 R15: 1ffff92000814e64
+     hrtimer_start include/linux/hrtimer.h:259 [inline]
+     stimer_start arch/x86/kvm/hyperv.c:682 [inline]
+     kvm_hv_process_stimers+0xd0a/0x16a0 arch/x86/kvm/hyperv.c:893
+     vcpu_enter_guest arch/x86/kvm/x86.c:11193 [inline]
+     vcpu_run+0x2240/0x76b0 arch/x86/kvm/x86.c:11639
+     kvm_arch_vcpu_ioctl_run+0x1148/0x1c90 arch/x86/kvm/x86.c:11984
+     kvm_vcpu_ioctl+0x99a/0xed0 virt/kvm/kvm_main.c:4492
+     vfs_ioctl fs/ioctl.c:51 [inline]
+     __do_sys_ioctl fs/ioctl.c:597 [inline]
+     __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+     do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+     do_syscall_64+0xfa/0xf80 arch/x86/entry/syscall_64.c:94
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f635278f749
+    Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+    RSP: 002b:00007f635365c038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+    RAX: ffffffffffffffda RBX: 00007f63529e5fa0 RCX: 00007f635278f749
+    RDX: 0000000000000000 RSI: 000000000000ae80 RDI: 0000000000000005
+    RBP: 00007f6352813f91 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+    R13: 00007f63529e6038 R14: 00007f63529e5fa0 R15: 00007ffd5b219358
+     </TASK>
+
+Fix this by clamping the deadline computation to KTIME_MAX, which
+preserves the intent of arming a timer very far in the future.
+ktime_add_safe() already does this type of clamping, so use it after
+checking that that multiplying by the 100ns time tick also does not
+overflow.
+
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Reported-by: syzbot+3d5461510f8dc4adfe30@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3d5461510f8dc4adfe30
+Fixes: 1f4b34f825e8 ("kvm/x86: Hyper-V SynIC timers")
 Cc: stable@vger.kernel.org
-Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
-Link: https://patch.msgid.link/20260810170616.746100-1-maz@kernel.org
-Signed-off-by: Oliver Upton <oupton@kernel.org>
+Signed-off-by: Carlos López <clopez@suse.de>
+Link: https://patch.msgid.link/20260714133212.3916611-3-clopez@suse.de
+[sean: tag for stable]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_nested.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kvm/hyperv.c |   25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_nested.h
-+++ b/arch/arm64/include/asm/kvm_nested.h
-@@ -305,6 +305,12 @@ static inline u64 decode_range_tlbi(u64
- 	num	= FIELD_GET(GENMASK(43, 39), val);
- 	*range	= __TLBI_RANGE_PAGES(num, scale) << shift;
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -627,6 +627,18 @@ static enum hrtimer_restart stimer_timer
+ }
  
-+	/* Cap the range to the correct half of the address space */
-+	if (!(base & BIT(48)))
-+		*range = min(*range, (BIT(48) - base));
-+	else
-+		*range = min(*range, ~base + 1);
+ /*
++ * Translate a stimer expiry given in 100ns reference ticks into an
++ * an absolute deadline. Saturates on overflow.
++ */
++static ktime_t stimer_add_delta(ktime_t now, u64 delta_100ns)
++{
++	if (delta_100ns >= KTIME_MAX / 100)
++		return KTIME_MAX;
 +
- 	return base;
++	return ktime_add_safe(now, 100 * delta_100ns);
++}
++
++/*
+  * stimer_start() assumptions:
+  * a) stimer->count is not equal to 0
+  * b) stimer->config has HV_STIMER_ENABLE flag
+@@ -635,6 +647,7 @@ static int stimer_start(struct kvm_vcpu_
+ {
+ 	u64 time_now;
+ 	ktime_t ktime_now;
++	ktime_t deadline;
+ 
+ 	time_now = get_time_ref_counter(hv_stimer_to_vcpu(stimer)->kvm);
+ 	ktime_now = ktime_get();
+@@ -657,10 +670,8 @@ static int stimer_start(struct kvm_vcpu_
+ 					stimer->index,
+ 					time_now, stimer->exp_time);
+ 
+-		hrtimer_start(&stimer->timer,
+-			      ktime_add_ns(ktime_now,
+-					   100 * (stimer->exp_time - time_now)),
+-			      HRTIMER_MODE_ABS);
++		deadline = stimer_add_delta(ktime_now, stimer->exp_time - time_now);
++		hrtimer_start(&stimer->timer, deadline, HRTIMER_MODE_ABS);
+ 		return 0;
+ 	}
+ 	stimer->exp_time = stimer->count;
+@@ -679,9 +690,9 @@ static int stimer_start(struct kvm_vcpu_
+ 					   stimer->index,
+ 					   time_now, stimer->count);
+ 
+-	hrtimer_start(&stimer->timer,
+-		      ktime_add_ns(ktime_now, 100 * (stimer->count - time_now)),
+-		      HRTIMER_MODE_ABS);
++	deadline = stimer_add_delta(ktime_now, stimer->count - time_now);
++	hrtimer_start(&stimer->timer, deadline, HRTIMER_MODE_ABS);
++
+ 	return 0;
  }
  
 
