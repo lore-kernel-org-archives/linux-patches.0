@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F9D58FD37;
-	Wed,  9 Sep 2026 14:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAC158F097;
+	Wed,  9 Sep 2026 14:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963977; cv=none; b=nyat32UpSAOYHNMyo1fGWzi0MG3BNFyDcteEvp2OXs5W1VM6cuV1/L9feGy5D1QgcES7iLFk8FUMcNZdSAbelINWTrP6lnEvl3pJtYjYIct3+OHUVQAaWI7A+bppARXSp4jYstxHZU8DYOakEBVNtgGRlEivHfGkxC77b35p4bw=
+	t=1788963980; cv=none; b=WOYMbeFonCj4uPMpSGgolDIHhNtzxojy3PwUwRVl0VVkOMvD99xQtz3ezTQyAryySFa3L+OQxguKfZyVMsEtXKABRTcuolhXz1SBJota3flhOMHUwN9BLhdE6IlinyUke3BjewpM/V2+Ho48xK15/miu8UgPE6LMCOq615JST00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963977; c=relaxed/simple;
-	bh=vxRpuvpQcOx+vTi9biYeyyhbF+WrL6QVZCM0wsCqwtg=;
+	s=arc-20240116; t=1788963980; c=relaxed/simple;
+	bh=gRiPWBpyB8w4Fq9xSw9cYOl2TMc8CI05XNL2uejhfsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZ1tgpP2osIIrI5Hreje5CpyTYp0E3Ozf0/jhEJdWy7Tc+iqrjyl7R6XXoizwtIvVedzM7CaurYA6DaeFAzRM/bfHmvsVRo7qzOqHOgm7OrsEtqwSXP4zTfGcJI69D+4S8tMSML7YTh6HmG/cWNvVhyZsciyvYiJz2+Aig1k97M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiQGVWdR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jw4RgtTR+d/D8asw2hSr6pgbXbZxp3cRvQ6TFmSxs+WEQHyMZJebEYOzTFWOrMrB3eXyf65RJP4bvhSBGRfLAhoQWZZiyycYs5E0wmAyz699IVpqU6JHsgXZynz/A6Fg0GnEqd7M4736keN1VXTXpr8lzztEuE3Vs3c9g0Ynzlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXVBUtxY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiQGVWdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8577F1F00A3A;
-	Wed,  9 Sep 2026 14:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXVBUtxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B1B1F00A3A;
+	Wed,  9 Sep 2026 14:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963976;
-	bh=0LINfbDWGWaQkpr1EznbidFcBFMHACtxIOSEaDTTrzw=;
+	s=korg; t=1788963978;
+	bh=2AHpq0IQZpxQowthKOY2Q5WM4OB7S67NodV4qh6JzRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RiQGVWdReMbOjktMhLEq65el72nvzI1Rys8FKTF/TCkoUqTDQ5KXcCbjrz+FMojtr
-	 3ZEhfUaKBm73GNXytah9bl9budEM9e5f77sdIDx6DSC257FJKI6IZizCGIklyFtLjv
-	 mmKUhO6GS7WCRQ9w6y1wbPk2iPlmTr1lkmM3wirc=
+	b=LXVBUtxYTiTVFiUg2x19xxkVt4UU46Pf3ZxrFmLqB3y4r/Mx2sBoPNGuGqMGaZh9Y
+	 NznkmzjkinDM20V92+D/aXX652/f+45SoOaligN/1a7rV63JpwjPaXaj3ITM39I9rY
+	 tyOKnhGDAO29rc/UmwF0ODJvC+kLur1/S6ECHwfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikhil Gautam <nikhilgtr@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 227/583] iio: light: opt4001: Reject integration times with a non-zero seconds part
-Date: Wed,  9 Sep 2026 15:38:32 +0200
-Message-ID: <20260909134246.024978167@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 263/583] LoongArch: KVM: Fix TOCTOU race on pv_features
+Date: Wed,  9 Sep 2026 15:39:08 +0200
+Message-ID: <20260909134247.209676270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,35 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil Gautam <nikhilgtr@gmail.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit d0f21621f8b2b46661ea066d20705dbf7253db87 upstream.
+commit 9296375902579f9b0e456bbb76e5cf179e5a4e0b upstream.
 
-opt4001_write_raw() only looks at val2 when setting the integration
-time, so a write such as 1.000600 is silently accepted as 600 us.
-Return -EINVAL if val is non-zero.
+In kvm_loongarch_cpucfg_set_attr() the check-then-set on
+kvm->arch.pv_features is lockless, so two vCPUs can race past the
+validation and set different values. Add a spinlock to protect it.
 
-Fixes: 9a9608418292 ("iio: light: Add support for TI OPT4001 light sensor")
-Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/opt4001.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/include/asm/kvm_host.h |    1 +
+ arch/loongarch/kvm/vcpu.c             |    6 +++++-
+ arch/loongarch/kvm/vm.c               |    1 +
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/light/opt4001.c
-+++ b/drivers/iio/light/opt4001.c
-@@ -269,6 +269,9 @@ static int opt4001_write_raw(struct iio_
+--- a/arch/loongarch/include/asm/kvm_host.h
++++ b/arch/loongarch/include/asm/kvm_host.h
+@@ -122,6 +122,7 @@ struct kvm_arch {
+ 	unsigned int  pte_shifts[MAX_PGTABLE_LEVELS];
+ 	unsigned int  root_level;
+ 	spinlock_t    phyid_map_lock;
++	spinlock_t    pv_setting_lock;
+ 	struct kvm_phyid_map  *phyid_map;
+ 	/* Enabled PV features */
+ 	unsigned long pv_features;
+--- a/arch/loongarch/kvm/vcpu.c
++++ b/arch/loongarch/kvm/vcpu.c
+@@ -1120,10 +1120,14 @@ static int kvm_loongarch_cpucfg_set_attr
+ 			return -EINVAL;
  
- 	switch (mask) {
- 	case IIO_CHAN_INFO_INT_TIME:
-+		if (val)
-+			return -EINVAL;
-+
- 		int_time = opt4001_als_time_to_index(val2);
- 		if (int_time < 0)
- 			return int_time;
+ 		/* All vCPUs need set the same PV features */
++		spin_lock(&kvm->arch.pv_setting_lock);
+ 		if ((kvm->arch.pv_features & LOONGARCH_PV_FEAT_UPDATED)
+-				&& ((kvm->arch.pv_features & valid) != val))
++				&& ((kvm->arch.pv_features & valid) != val)) {
++			spin_unlock(&kvm->arch.pv_setting_lock);
+ 			return -EINVAL;
++		}
+ 		kvm->arch.pv_features = val | LOONGARCH_PV_FEAT_UPDATED;
++		spin_unlock(&kvm->arch.pv_setting_lock);
+ 		return 0;
+ 	default:
+ 		return -ENXIO;
+--- a/arch/loongarch/kvm/vm.c
++++ b/arch/loongarch/kvm/vm.c
+@@ -40,6 +40,7 @@ int kvm_arch_init_vm(struct kvm *kvm, un
+ 		return -ENOMEM;
+ 	}
+ 	spin_lock_init(&kvm->arch.phyid_map_lock);
++	spin_lock_init(&kvm->arch.pv_setting_lock);
+ 
+ 	kvm_init_vmcs(kvm);
+ 
 
 
