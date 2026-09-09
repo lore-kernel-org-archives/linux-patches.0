@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAA127280A;
-	Wed,  9 Sep 2026 13:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCA125783C;
+	Wed,  9 Sep 2026 13:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961863; cv=none; b=MKKOK9thoIc5Ry1rjt/GQ/l4b5MefjHYEuTGsmS5b7VjCNN/M9EVYsIZ7/Xkp9/SfysHVhFwJ/nfmTXqFc267tPcDD8sLI7shiXtYS2zszsQlBuXCWQD9mQ4KUrZ8550uW1GymKTCEoaaCCfof7XGRpw298YMiuneokpLAxACXw=
+	t=1788961866; cv=none; b=TO3OVZyNJHpSaQe41k+NYX2AGDZEJp3bR6/ZQnmattNIjzZFFvbFp7L1eLWw3bAS12/5ls6JsQF2D39ASIdIgHO3BOS4g/SnArkU5LybTlO0hDZ5RZlkbzjxIQS9+JDbE8W6uCIxZc6gPAPeLibxWiwVmmmy7aWIeEP6il8wkEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961863; c=relaxed/simple;
-	bh=ERJb107Pbk0vjij+vDrMu1vOidEQiUxPnhBfqulIqQA=;
+	s=arc-20240116; t=1788961866; c=relaxed/simple;
+	bh=qszVLXw3Op9VOdFPmT1PgdgoiARzL6CsLC5cvQn6UEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vh/HZIIPKNnjGpOt7Ap3K2BCyC9t+LbQBkqqnhp71OjQsKq0EI59I1iMA89AeVMIbaL/+meMxSFCowuAGirq8I642JV3VlZvClHL3C7PjCmDNaTzGbhkFj3X1+xz3A4sqjJaiPgZcwcn0xM1RBlqZeMFWbv/4ouRD2GbT/vPMsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfQMzIN4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=skDdJYp1E7XyJaiFCbWVvBrvzW390CcxJDNRp97/oFO3Ex7KmvLNpDGjFZ58+IBsCO+PTElpR468MhdMFxzwnAlm6HshIvixbdzMbNWF7KasjKcDyT7SFoIAL1EABZrTGjT5IDmzSLJyubhI730WBiY4Zv8a6ZALohv+cE7krOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7WXUkOP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfQMzIN4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88141F00A3A;
-	Wed,  9 Sep 2026 13:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7WXUkOP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FED41F00A3D;
+	Wed,  9 Sep 2026 13:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961862;
-	bh=WKbJ1jWaF7NuQTsxx6bOi5GFkoyopWgtLv9K+ybkgNo=;
+	s=korg; t=1788961865;
+	bh=1k/xDBCUDu1SApwG4fYR/EOWvrVLhETTsvETcs7Dkx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JfQMzIN40mHbSBGhjD5dJMQNq6QtJ5BLcqFVkrhou8CMnKiV6gG2Pgn3hTSbu/5vz
-	 Kl1EihkASZJbWevZk2XxdVc2SVSK17ZotRAzPGjrFj9b8r7x09bzF7CR/cGeL8wHG3
-	 3F+gQVC3glSafBtWSRrfRUcRrh1a6ffFlq9rMNR4=
+	b=l7WXUkOPqfFnT3Qo6b2xmHiB+OhC7bSHhShTBSpMrlOuutJnLWn4xyWN5aUC/6wnL
+	 zeI2DvMxBp3ZaiufpSjE+9HVjHk9JEc5n0txwrAiBIrrpsVJ6reiZujK5cYVL2pFgE
+	 Khbo/imutGbxkQDJj0BI1t9LGr+wRC1N6F3RSwx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	SJ Park <sj@kernel.org>,
 	Brendan Higgins <brendan.higgins@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 093/556] mm/damon/core-kunit: skip wrong quota goal walk in commit_quota_goals()
-Date: Wed,  9 Sep 2026 15:36:13 +0200
-Message-ID: <20260909134233.772836308@linuxfoundation.org>
+Subject: [PATCH 7.2 094/556] mm/damon/core-kunit: skip wrong region walk in commit_target_regions()
+Date: Wed,  9 Sep 2026 15:36:14 +0200
+Message-ID: <20260909134233.807041287@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,59 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-commit 867bbe6dbd5a68eb58e79cc7f068a6cf184c40d8 upstream.
+commit 488cf81c49955f83b7682dda880e9920c173e617 upstream.
 
-damos_test_commit_quota_goals_for() traverses damos quota goals after
-damos_commit_quota_goals() call.  It assumes damos_commit_quota_goals()
-made expected numbers of goals.  It might not.  Because the traversal is
-made based on destination struct length, it could do out of bounds access
-for source expectation value array.
+damon_test_commit_target_regions_for() traverses expected values array
+after damon_commit_target_regions() call.  It assumes
+damon_commit_target_regions() made expected number of regions.  It might
+not.  Because the traversal is made based on the region count, it could do
+out of bounds access to the expectation value array.
 
-The consequent user impact (out-of-bound access ) is quite bad.  The
-realistic user impact would be limited though.  It would affect only test
+The consequent user impact (out-of-bound access) is quite bad.  The
+realistic user impact would be limited, though.  It would affect only test
 run setups.
 
-Fix it by testing if the number of goals was also changed as expected and
-exit early for the failure.
+Fix it by testing if the number of regions was also changed as expected
+and exit early for the failure.
 
 The issue was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260718001442.87129-7-sj@kernel.org
+Link: https://lore.kernel.org/20260718001442.87129-8-sj@kernel.org
 Link: https://lore.kernel.org/20260713144757.39740-1-sj@kernel.org [1]
-Fixes: d9adfb8a28e7 ("mm/damon/tests/core-kunit: add damos_commit_quota_goals() test")
+Fixes: 603f67eb91e0 ("mm/damon/tests/core-kunit: add damon_commit_target_regions() test")
 Signed-off-by: SJ Park <sj@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>
 Cc: <stable@vger.kernel.org> # 6.19.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/tests/core-kunit.h |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/damon/tests/core-kunit.h |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 --- a/mm/damon/tests/core-kunit.h
 +++ b/mm/damon/tests/core-kunit.h
-@@ -733,6 +733,7 @@ static void damos_test_commit_quota_goal
- 	struct damos_quota_goal *goal, *next;
- 	bool skip = true;
- 	int i;
-+	int nr_dst = 0, nr_src = 0;
- 
- 	INIT_LIST_HEAD(&dst.goals);
- 	INIT_LIST_HEAD(&src.goals);
-@@ -755,6 +756,14 @@ static void damos_test_commit_quota_goal
- 
- 	damos_commit_quota_goals(&dst, &src);
- 
-+	damos_for_each_quota_goal(goal, &dst)
-+		nr_dst++;
-+	damos_for_each_quota_goal(goal, &src)
-+		nr_src++;
-+	KUNIT_EXPECT_EQ(test, nr_dst, nr_src);
-+	if (nr_dst != nr_src)
+@@ -1171,14 +1171,19 @@ static void damon_test_commit_target_reg
+ 		kunit_skip(test, "src target setup fail");
+ 	}
+ 	damon_commit_target_regions(dst_target, src_target, 1);
++
++	KUNIT_EXPECT_EQ(test, damon_nr_regions(dst_target), nr_expect_regions);
++	if (damon_nr_regions(dst_target) != nr_expect_regions)
 +		goto out;
 +
  	i = 0;
- 	damos_for_each_quota_goal(goal, (&dst)) {
- 		KUNIT_EXPECT_EQ(test, goal->metric, src_goals[i].metric);
+ 	damon_for_each_region(r, dst_target) {
+ 		KUNIT_EXPECT_EQ(test, r->ar.start, expect_start_end[i][0]);
+ 		KUNIT_EXPECT_EQ(test, r->ar.end, expect_start_end[i][1]);
+ 		i++;
+ 	}
+-	KUNIT_EXPECT_EQ(test, damon_nr_regions(dst_target), nr_expect_regions);
+-	KUNIT_EXPECT_EQ(test, i, nr_expect_regions);
++
++out:
+ 	damon_free_target(dst_target);
+ 	damon_free_target(src_target);
+ }
 
 
