@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DF025783C;
-	Wed,  9 Sep 2026 13:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532D247C0F8;
+	Wed,  9 Sep 2026 13:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961737; cv=none; b=Y6OjxlkCckrTAXmsQuBhWxJD9ligTHibiT+09R6CZh8wbN4IcnuGk+nHdQXX+N6+bD8ayLi8JIapN7w1KwVLgFRQjibn+TSrhR2ncXGDTAyg0D72UD38hy2QgK5S8tnoLmDchseGjiWNkFqSdbm+c/QVDPhzPXGikGvNc9eU3wg=
+	t=1788961740; cv=none; b=cbOUU6y9kAZz/4EzVKGfhagu8GyZeDf2ks9ZFHgDPjsUL9EcESjAvCFyUj8rPnml54SbKeysow7NGd799wbhqW0mTmsV0KmISS6uFbh8jgFdn4lVGgD6NfrLe7c0EZxrYiuJrSEdf2ficHB7JGsA2lRPl9YB3UIGSB+exr6QZ9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961737; c=relaxed/simple;
-	bh=mBkwu+POydyjfUigZVNkYIqsqP2IQGzO7eDzwhyOICs=;
+	s=arc-20240116; t=1788961740; c=relaxed/simple;
+	bh=iUL3aI7wTr0wnD6JV6fRMiOsMfypnIdh6XqvXP/pAwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ij2gLO4/NVdSroOX372rnP8x2zkj4wFjJAHiPibrq/PD2+Hq6BKH8DzXa9aUSUg5Trx6JbdXsvtUh1U0MzRUMvONtmOOnwVnDmRLX4ez7QWLTwgEzuKjpSXpcNOMhyVOqMWWawaHeHQ/+gHGC6arQfSmhnr+HYmx62M4qJb+ik8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWmLGjSH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gDFECfapOh8+QjnvPvx6Ce9aJmCBDt3XFhoIaiKHmRrLaB6rU6OSf3vW4Fs/kC6hM93Jf+V7GeSLssULi6NZgJEYXQ6nltS4KqMgZPNA76Sl6isyu/YYCK00tKn7wBWOzw+kYRnDHwCs1KMLRwtslsv0yM/ReAoGid8nw/o3WjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaB+HzI8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWmLGjSH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BF01F00A3A;
-	Wed,  9 Sep 2026 13:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaB+HzI8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94071F00A3A;
+	Wed,  9 Sep 2026 13:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961736;
-	bh=s0l5GShoAyISmFDGy+gqS5r+LX4ooNxID0LEW6pMGwg=;
+	s=korg; t=1788961739;
+	bh=n++kCYkakQ9FCcnterS3HBlEP6Ow+dCV+aJwDuDGi60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aWmLGjSHwy+XmcQHhn9hQvDQG51aMWVwNQV6dYP35MvDpza23YuKprOV5/vapjYYi
-	 P8jDFVW28vvOC/eLBjdR3aAI254oYY8AgonxBX/g6ia3uw4csxD9mET+zKLxnP9b4a
-	 fSZcuyx/vMVXbrYFATTyc86JqgEPmy+uIz2QFYNg=
+	b=HaB+HzI8l1gyxj1FLvwCi1Y2yy/s2ogTNQa/bYOyUvN4g/JfV/6Bn6CFlx4OKiJCh
+	 h/R0FkdRw5cr7hN7xqfDSPobKr88i+hxLpKrY94J/Fsjz1kNzlMUalu+fihhmiJ+RS
+	 WNbV9YVf1aADgZgPDha34ks0Rx9QVQVTkzhabMII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>
-Subject: [PATCH 7.2 051/556] staging: rtl8723bs: fix OOB read in rtw_action_frame_parse()
-Date: Wed,  9 Sep 2026 15:35:31 +0200
-Message-ID: <20260909134232.272965364@linuxfoundation.org>
+Subject: [PATCH 7.2 052/556] staging: rtl8723bs: fix OOB read in rtw_restruct_wmm_ie()
+Date: Wed,  9 Sep 2026 15:35:32 +0200
+Message-ID: <20260909134232.305368019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,49 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit ff917923f4fb9c83717ba135ee47d7e4c1567bb7 upstream.
+commit 28a289beaf226b30b1e6e7d7b1a2946fe2d6e852 upstream.
 
-rtw_action_frame_parse() takes a frame_len parameter but never
-actually checks it before indexing into the frame body:
+rtw_restruct_wmm_ie() scans in_ie for a WMM IE with:
 
-	const u8 *frame_body = frame + sizeof(struct ieee80211_hdr_3addr);
-	...
-	c = frame_body[0];
-	...
-	a = frame_body[1];
+	while (i < in_len) {
+		...
+		if (i + 5 < in_len && in_ie[i] == 0xDD && ...) {
+			...
+			break;
+		}
+		i += (in_ie[i + 1] + 2); /* to the next IE element */
+	}
 
-frame_body already points 24 bytes (sizeof(struct
-ieee80211_hdr_3addr)) into frame, so reading frame_body[0] and
-frame_body[1] requires frame_len >= 26. A management action frame
-shorter than that (e.g. exactly 24 bytes, the minimum a malicious
-peer can send) causes a 1-2 byte out-of-bounds read.
+When the "i + 5 < in_len" match check fails simply because i is
+within 5 bytes of the end of the buffer (i.e. no WMM IE was found
+near the tail of in_ie), execution falls through to
+"i += (in_ie[i + 1] + 2)", which reads in_ie[i + 1]. If i == in_len
+- 1 at that point, this is a 1-byte out-of-bounds read of an
+attacker-influenced IE buffer built from association/scan data.
 
-This is reachable from rtw_cfg80211_monitor_if_xmit_entry() and
-cfg80211_rtw_mgmt_tx() in ioctl_cfg80211.c, both of which pass
-attacker/user-influenced frame buffers and lengths straight through.
+Commit a75281626fc8f ("staging: rtl8723bs: fix potential
+out-of-bounds read in rtw_restruct_wmm_ie") added the "i + 5 <
+in_len" guard to the match condition itself, but did not add an
+equivalent guard before the fallthrough advance, so the same class
+of OOB read remained reachable through the non-matching path.
 
-Add the missing length check before frame_body is dereferenced.
+Add an explicit bounds check before advancing to the next IE.
 
 Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260728125456.32359-3-meatuni001@gmail.com
+Link: https://patch.msgid.link/20260728125456.32359-4-meatuni001@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    3 +++
+ drivers/staging/rtl8723bs/core/rtw_mlme.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -1149,6 +1149,9 @@ int rtw_action_frame_parse(const u8 *fra
- 	u8 c;
- 	u8 a = ACT_PUBLIC_MAX;
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -1980,6 +1980,9 @@ int rtw_restruct_wmm_ie(struct adapter *
+ 			break;
+ 		}
  
-+	if (frame_len < sizeof(struct ieee80211_hdr_3addr) + 2)
-+		return false;
++		if (i + 1 >= in_len)
++			break;
 +
- 	fc = le16_to_cpu(((struct ieee80211_hdr_3addr *)frame)->frame_control);
+ 		i += (in_ie[i + 1] + 2); /*  to the next IE element */
+ 	}
  
- 	if ((fc & (IEEE80211_FCTL_FTYPE | IEEE80211_FCTL_STYPE)) !=
 
 
