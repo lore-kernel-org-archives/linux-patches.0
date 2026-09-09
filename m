@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA81568FAC;
-	Wed,  9 Sep 2026 14:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EF2353A82;
+	Wed,  9 Sep 2026 14:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962892; cv=none; b=M3q0JPo9l2AQLerlFvL5crgcw5VsWJShBUZYvHqCpMtn5d4GUjH9Tk7YkrG6ChAdl4pB0NW8iDQiospzlezCK7V12xcoQWz8YXvy3/uLmt6g68hIMf8/r4UyKC9mVzTVdbZgSNxRY3BfqhPULhXzgnIWvgtDb2/fGtjeD/j6bng=
+	t=1788962895; cv=none; b=ZhYQeLVTF8ZuHbfTzivr7WNwfzOMwiczRvza1Dd42zdAJL6hgdN/rdkzM7y4XNc892WXV2bGDQ7MSwtYlXlHnVeJhNnEy/QQB6jaFN3+Rxts2nOY9F1pwWqI2zdHfYjwdA4HRP7PPbIBnimpmUATE9u2fcR9WWa0bKsvgB3tDmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962892; c=relaxed/simple;
-	bh=By3f66MXU7vvmaYP0Fr33KHRrfNb1skVUlWna9cNdOE=;
+	s=arc-20240116; t=1788962895; c=relaxed/simple;
+	bh=gGJ2njGOfsxGWynjmu/f0pKG26N7W9cTrx+13OWgYlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PonN7EzaK5TNLg1S4XfBeG0Vv0xO89Y+QBRZWACByR3qwMwp7aP5ibag1PVC3GIMblkG8HO7eEtLCrw6MPwEYxH2ybFzeRnbCPojHJsXPkmunBNFougX3Ifo6nUtlZgUeD7WJp3D0V8G8khBF6u8gjntRU2kp+kggeM/yJtYCoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iU4MP/0D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cRCezVemK//SNDO9OLQKN9rlyo1SHYXyeVSG230VNF60qmA3dtGsswWEpjRkN2LE9lKVt6kmx7liaojpKl3KMp2hjZm8xwlUU3+bBFnzJYK7g+giByKmh0UlEOjVrB4Qiqou9uAWpbUBTsBdtQxKvt0ACRjcQuLcI/pF9uRgXjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUDm6al+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iU4MP/0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C330B1F00A3A;
-	Wed,  9 Sep 2026 14:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUDm6al+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94F51F00A3A;
+	Wed,  9 Sep 2026 14:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962891;
-	bh=iOI3z8/ydvtP+mDpvwP6eDkcyNJLe8+MTDrjszIiRBo=;
+	s=korg; t=1788962894;
+	bh=MG4cPxMZPp7yvPWOb2hgcy1bdCB/K6RYaa0q/twHz7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iU4MP/0DLW3pU7C9W45/Yuik0zqaBTDyovksjMnQc6tyEaAhtZ9TUELfl095aooEe
-	 Ly5O2GMnu01RLUr0zuyGYb2YI0s/PUq7HuUlNqXi87kmaEjE7rYJpG0q3yO3c8+lKt
-	 tZVYn1+bY38/57flz58wVGJuccPUadZIc5SV7Mg0=
+	b=LUDm6al+fLss3C5db8B3JumpcK+9mswT1/gREL4ruPqVqPwexw2wL8CPzIS8Ek2MQ
+	 jcCPveZY0w5u+iWw4OnfCAq0IMEgKNYk1agLg8eGIIW+X5zK9adj/38GBAL0B9KNw/
+	 NfHpJ72QwpD6LEDSamV1D0U3iY3eDLEQgsYQeFig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 447/556] f2fs: reject overlapping move range after len expansion
-Date: Wed,  9 Sep 2026 15:42:07 +0200
-Message-ID: <20260909134246.317106665@linuxfoundation.org>
+Subject: [PATCH 7.2 448/556] f2fs: only redirty pinned folios in redirty_blocks
+Date: Wed,  9 Sep 2026 15:42:08 +0200
+Message-ID: <20260909134246.350258507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,31 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao-Qun Huang <alvinhuang0603@gmail.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit 28c1ef094e7c86977d9bf570dc0362fc54e36437 upstream.
+commit 85171332742e741ccd6f401c69b6e0d698119e72 upstream.
 
-F2FS_IOC_MOVE_RANGE treats a zero length as a request to move data
-from pos_in to EOF. However, the same-file overlap check runs before
-that expansion, so a request with len == 0 bypasses the overlap
-rejection added for same-file moves.
+redirty_blocks() pins folios with read_cache_folio() and then walks the
+same range again with filemap_lock_folio() to redirty them and drop the
+references it took.
 
-For example, with a four-block file, moving from block 0 to block 1
-with len == 0 is accepted by the old check because pos_in + len is
-still pos_in at that point. The code then expands len to cover the
-rest of the file and calls __exchange_data_block() on overlapping
-source and destination ranges in the same inode, which is the
-data-corruption case the overlap check was meant to reject.
+Commit 5951fee46bef ("f2fs: Use a folio in redirty_blocks()") changed
+the second pass to a do/while loop. If read_cache_folio() fails before
+anything is pinned, page_idx does not advance but the cleanup loop still
+runs once.
 
-Move the overlap check after the source range has been validated and
-len == 0 has been expanded, so it sees the effective length. This is a
-no-op for non-zero len (the value is unchanged there) and keeps the
-existing early return for identical positions.
+If readahead has already populated the failed folio in page cache, that
+extra iteration finds it and folio_put_refs(folio, 2) drops one
+reference too many. Later drop_caches or reclaim can then report
+"BUG: Bad page state".
 
-Fixes: d95fd91c1ac1 ("f2fs: exclude special cases for f2fs_move_file_range")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Only redirty the range that was pinned successfully.
+
+Fixes: 5951fee46bef ("f2fs: Use a folio in redirty_blocks()")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -85,23 +85,23 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -3144,8 +3144,6 @@ static int f2fs_move_file_range(struct f
- 	if (src == dst) {
- 		if (pos_in == pos_out)
- 			return 0;
--		if (pos_out > pos_in && pos_out < pos_in + len)
--			return -EINVAL;
- 	}
+@@ -4473,7 +4473,7 @@ static int redirty_blocks(struct inode *
+ 		page_idx = folio_next_index(folio);
+ 	} while (page_len < len);
  
- 	inode_lock(src);
-@@ -3171,6 +3169,8 @@ static int f2fs_move_file_range(struct f
- 		goto out_unlock;
- 	if (len == 0)
- 		olen = len = src->i_size - pos_in;
-+	if (src == dst && pos_out > pos_in && pos_out < pos_in + len)
-+		goto out_unlock;
- 	if (pos_in + len == src->i_size)
- 		len = ALIGN(src->i_size, F2FS_BLKSIZE) - pos_in;
- 	if (len == 0) {
+-	do {
++	while (redirty_idx < page_idx) {
+ 		folio = filemap_lock_folio(mapping, redirty_idx);
+ 
+ 		/* It will never fail, when folio has pinned above */
+@@ -4486,7 +4486,7 @@ static int redirty_blocks(struct inode *
+ 		redirty_idx = folio_next_index(folio);
+ 		folio_unlock(folio);
+ 		folio_put_refs(folio, 2);
+-	} while (redirty_idx < page_idx);
++	}
+ 
+ 	return ret;
+ }
 
 
