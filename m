@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF27A568FD3;
-	Wed,  9 Sep 2026 14:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EA4580390;
+	Wed,  9 Sep 2026 14:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962887; cv=none; b=RuPbJ7ZSTsOW/FVXDrwfoeWlBeLr6hmbipGALd595Qna87q37g+PHnAt/Sgt5AzE/JYY+MzWrwJPsuLED+v7TDCKhlvZUQhY//N2wotxIeT2rFDZICYsmDdETzVwlGke54btLeKY4q4b89mxQoJhTFpN7NI+86qKDzWsGkWFtX4=
+	t=1788962889; cv=none; b=jDg0SZWy3BX+T6GEKgGUWLKEtyFRmrdWllRcNTfRcy2Tzq8AzPAp/LS2FNncA1yGocDDIV0ewXIFj4BGuVk8+YD73d/0vIVahdKU0DxLv1f2gGep2qJ2HuQQtxbb0JzMnQf9Pe+JEMJPaCXN3wH7RS4tif4vVusFpaN81UmPzdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962887; c=relaxed/simple;
-	bh=qM+mKRsifOP00S3WsifTxfwQTSPrEXp1Te0CcZPW02k=;
+	s=arc-20240116; t=1788962889; c=relaxed/simple;
+	bh=loYAhMlQL68dUK78qR1eI7ZY3gS6A7/p4ubXnMy86Sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptUO2qwhY0ToKtm+7p3Oj2hxs2BGehHbBZvdpEeNsWxvTZ8QF1QMe0JvG/o3xrtD9AB0OflrS+V1V64yOcn0T0YeP82YgWPhgbvbUvomMYpNw73AQYjneTEAm68GfCnSitCuPux3THwBTofFk7g+P1/PoEviMs4J1t44Qn6HSMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwTvqXbJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FNrTOYYWsk34AgPd/KFAknkspAElaMhOF7e956+zbWrfFWw7suV3SstqAPoiRdMq3FA249jMzLY47cCttIvQw9IlJ4c+EoHeg0kiQsPhpo5OLI9LRVuDyhPClUjaHZKY/OAvrnllf436AS4apZPjNTyliZEybvfQ6ux8HkOXO8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzh1eHxq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwTvqXbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23111F00A3D;
-	Wed,  9 Sep 2026 14:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzh1eHxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92971F00A3A;
+	Wed,  9 Sep 2026 14:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962885;
-	bh=/kYSODNmddnEumyUeVPkMH9ffn2ns5VFtRy2Tti/c+4=;
+	s=korg; t=1788962888;
+	bh=hlvAxNmvozXdE0xA9NAzeTzxHNcDRtjEucmpK588UbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PwTvqXbJk4/yDamGT0KN3CPmcSUXkjx2ZS7p8kTn+9bKLrOhhxv5awqheFuKvX3XY
-	 gGIv46cgtONBtqxEhYJ8pa6v/Q4yf+/qfMKX1FaLhihCKRpgkOD4E8wfwUZU3B4Q2w
-	 +ivGQkABhHoqs0iQ1VmSIilRAUsa7/84oqSN6YKo=
+	b=jzh1eHxqPoHJNZUaDMjIY++s+2ij626LciKloZ7u8rcEJoFcR0WMj5XV1Z/7QeJ2r
+	 UtmgO2ADyUX46f+qEbu+gJwRgd5ASAYEOuiid0i4ZCP+dh7PlggFlnbu9XPgR8nQO6
+	 SPjLKfxPXm2WtiL32nH3N2oqV1G5xkq3kg7bbAJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 446/556] f2fs: return symlink writeback errors
-Date: Wed,  9 Sep 2026 15:42:06 +0200
-Message-ID: <20260909134246.286023102@linuxfoundation.org>
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 7.2 429/556] scsi: qla2xxx: Fix cs84xx use-after-free on host teardown
+Date: Wed,  9 Sep 2026 15:41:49 +0200
+Message-ID: <20260909134245.694301539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,53 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit a2c73a7a677afdaa8b16d775188f9ef5cfbfd8b2 upstream.
+commit 33d102102d925357c5fd172dd6672a27d74b3215 upstream.
 
-F2FS writes long symlink data with page_symlink() and then flushes the
-symlink mapping to reduce the chance of exposing a broken symlink.
+qla84xx_put_chip() drops the last reference to ha->cs84xx and frees it via
+__qla84xx_chip_release() without clearing ha->cs84xx. During teardown it ran
+before scsi_remove_host(), which is what removes the 84xx_fw_version host
+sysfs attribute. A concurrent read of that attribute in the window between
+the two calls executes qla24xx_84xx_fw_version_show(), which dereferences
+the freed ha->cs84xx, resulting in a use-after-free.
 
-That flush result is currently ignored. If the writeback fails, symlink()
-still returns success even though the symlink is not durable and the same
-operation can already surface -EIO through syncfs().
+Move qla84xx_put_chip() to after scsi_remove_host() in both
+qla2x00_remove_one() and qla2x00_disable_board_on_pci_error(). Once
+scsi_remove_host() returns, the sysfs attribute is gone and kernfs has
+drained any in-flight show(), so no reader can touch cs84xx; the put still
+runs before the host and ha are freed.
 
-Return the writeback error to userspace and skip the dirsync flush once the
-symlink data flush has failed.
-
-Fixes: d0cae97cb600 ("f2fs: flush symlink path to avoid broken symlink after POR")
-Cc: stable@kernel.org
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: fe1b806f4f71 ("[SCSI] qla2xxx: Refactor shutdown code so some functionality can be reused.")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-7-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -707,15 +707,16 @@ err_out:
- 	 * performance regression.
- 	 */
- 	if (!err) {
--		filemap_write_and_wait_range(inode->i_mapping, 0,
--							disk_link.len - 1);
-+		err = filemap_write_and_wait_range(inode->i_mapping, 0,
-+						   disk_link.len - 1);
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -3933,8 +3933,6 @@ qla2x00_remove_one(struct pci_dev *pdev)
  
--		if (IS_DIRSYNC(dir))
-+		if (!err && IS_DIRSYNC(dir))
- 			f2fs_sync_fs(sbi->sb, 1);
--	} else {
--		f2fs_unlink(dir, dentry);
- 	}
+ 	qla2x00_dfs_remove(base_vha);
  
-+	if (err)
-+		f2fs_unlink(dir, dentry);
+-	qla84xx_put_chip(base_vha);
+-
+ 	/* Disable timer */
+ 	if (base_vha->timer_active)
+ 		qla2x00_stop_timer(base_vha);
+@@ -3959,6 +3957,8 @@ qla2x00_remove_one(struct pci_dev *pdev)
+ 
+ 	scsi_remove_host(base_vha->host);
+ 
++	qla84xx_put_chip(base_vha);
 +
- 	f2fs_balance_fs(sbi, true);
- 	goto out_free_encrypted_link;
+ 	qla2x00_free_device(base_vha);
  
+ 	qla2x00_clear_drv_active(ha);
+@@ -6828,8 +6828,6 @@ qla2x00_disable_board_on_pci_error(struc
+ 
+ 	qla2x00_dfs_remove(base_vha);
+ 
+-	qla84xx_put_chip(base_vha);
+-
+ 	if (base_vha->timer_active)
+ 		qla2x00_stop_timer(base_vha);
+ 
+@@ -6847,6 +6845,8 @@ qla2x00_disable_board_on_pci_error(struc
+ 
+ 	scsi_remove_host(base_vha->host);
+ 
++	qla84xx_put_chip(base_vha);
++
+ 	base_vha->flags.init_done = 0;
+ 	qla25xx_delete_queues(base_vha);
+ 	qla2x00_free_fcports(base_vha);
 
 
