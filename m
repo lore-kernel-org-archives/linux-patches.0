@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E341B56E070;
-	Wed,  9 Sep 2026 14:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EEE57268C;
+	Wed,  9 Sep 2026 14:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962967; cv=none; b=awaeUDm8FV/nWWPgV5ZNzWLNW9AYfilpRwv0zF7wmDRM30V1bwBnATXIFsNPKKfJwG9JClSJzvuMvll5Clw7CE5Um/SzUSOXPnCN1bWYPMnSCPuixFodog7ZnsJAJ7gllIUGTkRgikYOE2C4MD31FpAme5cQCCvQJRLso6sZdFQ=
+	t=1788962970; cv=none; b=EBxhVXoHBobjMq19gYMhG0P1Qux/qAUiJu8DF2M6iRQefhsZTt9Suzu9G1lo6RKk3EWYwrl1LeS0/4AB6j/RPl5r6SimzDyioFchv2PA66yjX0/8y+6Hhh5v/v9fs7sfQTLU8MhHtMyEFG8YNlnXQezkDuUWdK88Q203gciwfwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962967; c=relaxed/simple;
-	bh=OPjLeecXYJoeqERrbc/GMgKDRjkecUqq0ET7xvCLAnA=;
+	s=arc-20240116; t=1788962970; c=relaxed/simple;
+	bh=FfZVS42tDnedwB/HkrDqODzTiIHXmWGymnsg6lvVet4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q26S2gJJdPJQhfWobIKfm6tMJv9kO03amLDQ6GjvQz6QRN0g1Ga9yQH0Tva9H0ISfZg/lrZvRAk/gCh0Epg8DPSn4QzCFbJ4zRMYQ7+2bXUAxgIF832NWv96DJhYqAaJzZ93Tl5oSEco37f/3XLCRUWwnpZ9cY6tgT/uXYSOYX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvN4V6Rk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VxsMobcNpkMOD/9RA5oCJ92PNjNj+Y5Z80M3yDWvaFjFLH22qJCaGekOhFyv/G5G3ey+1ZlHblpu8Be66xv9UsVg1dSAbZYNdk5JDy+FeYC7HYxFPRMIRDMVmqBFoPTITd+3/dbusg1VXeEocwAL9Us6AdMtDIgTs2M2DGL4c1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiS40j32; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvN4V6Rk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FF31F00A3A;
-	Wed,  9 Sep 2026 14:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiS40j32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316501F00A3D;
+	Wed,  9 Sep 2026 14:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962965;
-	bh=BbYqoB5olXEfa5Z3h2KWA4U/fLlNA1WuFCCJ6WNoSYQ=;
+	s=korg; t=1788962968;
+	bh=DMfa7pHF3p3FcvTo9kn43BOm7WEVtsohbs4Ek/hpFEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EvN4V6RkPCr/X8p8LJmFXV/nBqZXpJ6nP372YYcQbHW5i8cNC+gPlsxirFducQnqd
-	 zx3wHzbhtjG13jYpwfaFwPQr4PIGG3YelTHLOMLvCHV2u+7CTPIvL5ltx8U80vCsHv
-	 7aivyKZEio0mdYMHTsCbSugoRFlWIUb1aoFc6iZI=
+	b=qiS40j32v9YnOpU/Ct+bTl05szCAnkR+qOJa9RToUKcxb0d/H7VLZgcKeevenOKh1
+	 jOHbqkHGXUBAB2PA+mnzqpLqPpPC3zE474KRdYBmvNZEIVIZeeJedtbfjf5wQRqtJF
+	 t3fS0o0njlkonOiwJgcc24wp8DXpbBb2UPrFjF+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bobzhou2@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	Frank Min <Frank.Min@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 473/556] drm/amdgpu: avoid force-completing uninitialized UVD rings
-Date: Wed,  9 Sep 2026 15:42:33 +0200
-Message-ID: <20260909134247.189011282@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	stable@kernel.org
+Subject: [PATCH 7.2 474/556] drm/xe/vram: report FLAT_CCS base misalignment
+Date: Wed,  9 Sep 2026 15:42:34 +0200
+Message-ID: <20260909134247.219974927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -46,44 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bob Zhou <bobzhou2@amd.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit 6760f5cb12d2366ddd58a2d8637f7583d73f596b upstream.
+commit 0e68c74e44da81a4599c52437ee1f63a2c234470 upstream.
 
-uvd_v7_0_sw_init() does not initialize the UVD decode ring for an
-SR-IOV VF. However, amdgpu_uvd_resume() unconditionally force-completes
-the decode ring when restoring its fence sequence.
+So we can easily check if a machine had the CCS bug, when looking back
+over bug reports where we have the same machine with newer kernel.
 
-Skip fence completion when the fence driver is not initialized.
+Example print for a machine with the CCS bug:
 
-Fixes: 0a33b11d26c6 ("drm/amdgpu: mark force completed fences with -ECANCELED")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bob Zhou <bobzhou2@amd.com>
-Acked-by: Leo Liu <leo.liu@amd.com>
-Acked-by: Frank Min <Frank.Min@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+  FLAT_CCS base:27bbff800, aligned:no
+
+v2 (Matt B):
+  - Unconditionally print the base + alignment
+
+Fixes: 37173392741c ("drm/xe/vram: fix ccs offset calculation")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: stable@kernel.org
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260902124117.918018-9-matthew.auld@intel.com
+(cherry picked from commit d00b7f4f03bbeb2efad872f1686130e18c2b4141)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_vram.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -517,7 +517,8 @@ int amdgpu_uvd_resume(struct amdgpu_devi
- 			}
- 			memset_io(ptr, 0, size);
- 			/* to restore uvd fence seq */
--			amdgpu_fence_driver_force_completion(&adev->uvd.inst[i].ring, NULL);
-+			if (adev->uvd.inst[i].ring.fence_drv.initialized)
-+				amdgpu_fence_driver_force_completion(&adev->uvd.inst[i].ring, NULL);
- 		}
- 	}
- 	return 0;
+--- a/drivers/gpu/drm/xe/xe_vram.c
++++ b/drivers/gpu/drm/xe/xe_vram.c
+@@ -90,6 +90,9 @@ static int get_flat_ccs_offset(struct xe
+ 		offset |= offset_lo << 6; /* HW view bits 31:6 */
+ 		offset *= num_enabled; /* convert to SW view */
+ 
++		drm_info(&xe->drm, "FLAT_CCS base:%llx, aligned:%s\n", offset,
++			 str_yes_no(IS_ALIGNED(offset, SZ_128K)));
++
+ 		/*
+ 		 * Everything below this offset is handed to the VRAM
+ 		 * allocator, so it has to be the *first* address the
 
 
