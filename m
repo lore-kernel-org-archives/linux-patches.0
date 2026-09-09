@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7824F55A5;
-	Wed,  9 Sep 2026 13:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738845540A7;
+	Wed,  9 Sep 2026 13:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962019; cv=none; b=RAk2u8e53HRTqWSkdk+xVCy7SI8duzQYU/L0mDFcgZgz5tsw1PVEhI66qftehFyexfK/6zPvXR+XEGw7SLAV/R8SIKG1dkk/p1WpbrkSBt/597HSElPgGOzB3UvNjXpa/MiPKACX2iCl9sif8TVBbsJ63Nf7+KhPELFYPTjYZq4=
+	t=1788962022; cv=none; b=W6uKusmfRNW1Cb1NuQf63j2OfgsZVZhhEZE52R51XCTqWF8VRIPIQ8sWudwY97VySgzSAbMKk+abtjh85CFzowUvyPAKO6JL1sv8kwZ8NsdkQlFdqy2mjPSvGrRq1wxYn4vnIU8jgnqLWHSsHIoFvK8JcKGaY5hzxOiLMGjG1jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962019; c=relaxed/simple;
-	bh=LfbGzd8tdU+UHl1xANQwm7nHKBswgPSlDgz0L6OAVRg=;
+	s=arc-20240116; t=1788962022; c=relaxed/simple;
+	bh=rkXkKjWr5EUzVc1hlsVl/H6h58KAHKTxCsI103Y8pAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPsU2W10FmsVdNCKEL/9dCxpSiRQaIhq9j+dk5MfzcUPlwjRP5ZOboVRe0i4nZWWX2XsofdeY/3Vhp7ePUqQneiq8p6WVZzCsWpYZUybXAWiV8dZsKdU2EMe/n5iXRus2fMPnK4Hya2VogTmAwuL9hBTgwIxB7I1ZSf8CxI1894=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrcLhmAF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WmAdsxwdass/+7Vv1kUgps0rhsFVodYbdyzzS8e76OegkIO3uFz3+e//OdPFObF2lQpLM7DlU80kb0pVCzgyqwMFMnH878i6iBCIyw5Xu7dHZ2wZ+3JuSmu9TfSc0OJr5IUUU7aO3SkHb3X30IT5uWh1ndvsn2Bf6smCNljnSq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pv20VZPR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrcLhmAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFED1F00A3A;
-	Wed,  9 Sep 2026 13:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pv20VZPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6561F00A3A;
+	Wed,  9 Sep 2026 13:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962018;
-	bh=Mpn3bWLtSsu83R08/k+T24Uc71yafR46XH13x19n92U=;
+	s=korg; t=1788962021;
+	bh=bAZGa2uYUSf9X3rH9BZuI105zE7//FyKk3Ofn1pRSOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lrcLhmAFO1qIL4wv6azlrrCGnMbwW4EkvET5P7NWCqB0JQCKAEgk0O9aZRfqBh8A4
-	 MbEZGCdUyAsJT7diC+Lf/L84CoReI9FUwjnzg78tjgpI+ErcahnvrqKRobQxqQwhrH
-	 KASvi6JXOJ/BGNx74hrD5lYmVh8seUaapcvlZ+5Y=
+	b=Pv20VZPRmY6JoSqvpnckSirviDTGcq+gpYd/Gg8xKl7MI3NunLc5Km3Kzoz3oQRsY
+	 gJi46p0/XUfu3etXGuyHSE/8ZExUMOrt5eW9MJm6KzSK9h9Xz5TD8wt9QJSBBrfYqJ
+	 +m7S8YNSVjTWKk1eK9k5RqJ3P/7vos62RuZtl6Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.2 145/556] i2c: qcom-cci: fix autosuspend cleanup
-Date: Wed,  9 Sep 2026 15:37:05 +0200
-Message-ID: <20260909134235.547203129@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.2 146/556] arm64: mm: Fix the lockless page-table walk in show_pte()
+Date: Wed,  9 Sep 2026 15:37:06 +0200
+Message-ID: <20260909134235.579960787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,73 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit f98d4986482151a835b521a734722fe8dc5ca37d upstream.
+commit a77644d009dece1104b6fcc6e322b0e4503db0d6 upstream.
 
-cci_probe() calls pm_runtime_use_autosuspend(), but the remove path
-does not call the matching pm_runtime_dont_use_autosuspend() before
-disabling runtime PM.
+show_pte() walks page tables locklessly and can run with interrupts
+enabled. A concurrent teardown can free a table page while it is being
+walked. It can also clear a parent entry after show_pte() checked it; the
+regular pXd_offset() helpers then reread the cleared entry and can derive a
+bogus lower-level pointer and fault again.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without undoing the autosuspend setting during
-teardown, this reference is not dropped and usage_count remains
-unbalanced.
+Use the lockless offset helpers with the saved parent entries, as
+gup_fast() does, and pass the saved PMD to pte_offset_map().
 
-Use devm_pm_runtime_set_active_enabled() to manage the runtime PM
-state. Its managed cleanup disables autosuspend and runtime PM and
-restores the suspended state on probe failure and driver removal.
-Remove the now redundant manual runtime PM cleanup.
+For task page tables, arm64 selects MMU_GATHER_RCU_TABLE_FREE. Disable
+local interrupts around the walk to hold off RCU-deferred table frees and
+block the tlb_remove_table_sync_one() IPI until the walk is finished.
 
-This issue was found by manual code inspection.
+Place the IRQ guard after the header print. This does not make the output a
+consistent snapshot, but prevents the task page-table walk from
+dereferencing a released table page or deriving a pointer from a different
+parent value.
 
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260812094425.3515179-1-lgs201920130244@gmail.com
+Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ arch/arm64/mm/fault.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -595,9 +595,11 @@ static int cci_probe(struct platform_dev
- 		goto disable_clocks;
- 
- 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
-+	ret = devm_pm_runtime_set_active_enabled(dev);
-+	if (ret)
-+		goto disable_clocks;
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -16,6 +16,7 @@
+ #include <linux/mm.h>
+ #include <linux/hardirq.h>
+ #include <linux/init.h>
++#include <linux/irqflags.h>
+ #include <linux/kasan.h>
+ #include <linux/kprobes.h>
+ #include <linux/uaccess.h>
+@@ -154,6 +155,9 @@ static void show_pte(unsigned long addr)
+ 	pr_alert("%s pgtable: %luk pages, %llu-bit VAs, pgdp=%016lx\n",
+ 		 mm == &init_mm ? "swapper" : "user", PAGE_SIZE / SZ_1K,
+ 		 vabits_actual, mm_to_pgd_phys(mm));
 +
- 	pm_runtime_use_autosuspend(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
++	guard(irqsave)();
++
+ 	pgdp = pgd_offset(mm, addr);
+ 	pgd = READ_ONCE(*pgdp);
+ 	pr_alert("[%016lx] pgd=%016llx", addr, pgd_val(pgd));
+@@ -167,25 +171,25 @@ static void show_pte(unsigned long addr)
+ 		if (pgd_none(pgd) || pgd_bad(pgd))
+ 			break;
  
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (!cci->master[i].cci)
-@@ -613,8 +615,6 @@ static int cci_probe(struct platform_dev
- 	return 0;
+-		p4dp = p4d_offset(pgdp, addr);
++		p4dp = p4d_offset_lockless(pgdp, pgd, addr);
+ 		p4d = READ_ONCE(*p4dp);
+ 		pr_cont(", p4d=%016llx", p4d_val(p4d));
+ 		if (p4d_none(p4d) || p4d_bad(p4d))
+ 			break;
  
- error_i2c:
--	pm_runtime_disable(dev);
--	pm_runtime_dont_use_autosuspend(dev);
+-		pudp = pud_offset(p4dp, addr);
++		pudp = pud_offset_lockless(p4dp, p4d, addr);
+ 		pud = READ_ONCE(*pudp);
+ 		pr_cont(", pud=%016llx", pud_val(pud));
+ 		if (pud_none(pud) || pud_bad(pud))
+ 			break;
  
- 	for (--i ; i >= 0; i--) {
- 		if (cci->master[i].cci) {
-@@ -640,9 +640,6 @@ static void cci_remove(struct platform_d
- 			cci_halt(cci, i);
- 		}
- 	}
--
--	pm_runtime_disable(&pdev->dev);
--	pm_runtime_set_suspended(&pdev->dev);
- }
+-		pmdp = pmd_offset(pudp, addr);
++		pmdp = pmd_offset_lockless(pudp, pud, addr);
+ 		pmd = READ_ONCE(*pmdp);
+ 		pr_cont(", pmd=%016llx", pmd_val(pmd));
+ 		if (pmd_none(pmd) || pmd_bad(pmd))
+ 			break;
  
- static const struct cci_data cci_v1_data = {
+-		ptep = pte_offset_map(pmdp, addr);
++		ptep = pte_offset_map(&pmd, addr);
+ 		if (!ptep)
+ 			break;
+ 
 
 
