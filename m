@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D980B52ED5E;
-	Wed,  9 Sep 2026 14:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33AE563FC2;
+	Wed,  9 Sep 2026 14:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962790; cv=none; b=t0Q0yK43o/LQRKUEr8uC9R2JhiHDtlPT5HiZEJ22+ojm3EiJg9/hFygib5oOpbhHf9v9RKg6YA9+6FWsSY6vmieEVvckq3twSCxyMKeUJCdeunUibY2gASY1JUGhoa7Ez90sLtCNq/HeP2SdH+zUS70ACmzueOP8dAfnXBZvnbE=
+	t=1788962793; cv=none; b=QEZAopacMrmeadKe2gOdsgfncIuomlogNkQrxTRuy0I+9UdLCeuzOE1m5Jy6avAFrimbc1GfsvZyYcJA6Xo4zYEpA7Wo8W3zR2CpgcBRCTRu5LxadjisugntiIBV2JaRnGar+xQw6Hg0Fxhe7dv3O924SyIkK+SHopXQ7nxBmsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962790; c=relaxed/simple;
-	bh=S8QR0hPGEcCxJQyAosEKxOx3MsTHj0fEps5/gbt7k1Q=;
+	s=arc-20240116; t=1788962793; c=relaxed/simple;
+	bh=VmxQ3Ds0YNy17BOA9CngGkBPvtndvhQpl6EAGhkL5NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elz5lWDje+t2hwUZBOv/HB+B7WVDHq3F6tgaJKDDh6pFI1LX1NRuEIfy4bwSVO7LA6nethQ/J0qvt+B+/vqmjnm7GpZK3IkmVyneckuzDTELDsnj6zW56LW3afXYwnD92T65dHr2qivaV1FPiNOlU9E8rjVjzOLkqrWmxV+jc1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWAxrZ4y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LRYw1JXoWe/8KBx0bEZLvoUhgPoPDTx96AZN4Dwk+yIQphtSE/6cCU9x2LMLCTuzzS1mSLi3QmuMXN9tUhC85LlrB3Ef1iPwS1EKyrcgYKU+91FwQQJqYbHBhu7bdYIuWUpO5TJ4dK+egVzjrkSFRI843b3CtGviZrbNkHk50jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8Xmo+kg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWAxrZ4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3F51F00A3A;
-	Wed,  9 Sep 2026 14:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8Xmo+kg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273CD1F00A3A;
+	Wed,  9 Sep 2026 14:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962788;
-	bh=hXhmECwJLBAQFFi1HuNdHDdXA3HnLPi1eSd3LsyR6TY=;
+	s=korg; t=1788962791;
+	bh=BfzGwsAuMjqUDM/8YkBi1S78YKu5PUp403wkWFmW+fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zWAxrZ4yLKpZKM+pBuAp0ai7e+3MLtiAdIrI8lwWb7dXDuEe1fj7i09y8VAJBYSm9
-	 s4nkIOZe1HTrEEMyiRnHQ+PDrsxfBXoIspbUSAhlON+LbSGEM46eAPovvWyvW/4uBP
-	 M+24D/HxgJjjJH/rJBNtPAff37GnId0j8d2lNudM=
+	b=E8Xmo+kgvW+nmYwm3Jpk/m6Gpbu0XgtzSaPYwVbOXkrBWZ1SE7oq4PWi61ROKkWea
+	 9JOxU+gFz49t4yBVQu3ubbwa00wXx9CCanU1TfDRJCEaOmFsjGYQvEAqfAkUW4MfYQ
+	 IEtfhpCLduygFufCQ9wkByLoGMvgj+cMe8OW1k+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nas Chung <nas.chung@chipsnmedia.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 412/556] media: chips-media: wave5: Add timeout while stop_streaming
-Date: Wed,  9 Sep 2026 15:41:32 +0200
-Message-ID: <20260909134245.106006530@linuxfoundation.org>
+Subject: [PATCH 7.2 413/556] media: chips-media: wave5: Defer job_finish() only when a DEC_PIC was queued
+Date: Wed,  9 Sep 2026 15:41:33 +0200
+Message-ID: <20260909134245.140855026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -54,14 +54,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Jackson Lee <jackson.lee@chipsnmedia.com>
 
-commit 2ae7faed2e60d6d07d9efdd962d20dcb15330ced upstream.
+commit b694ba0a5526a69f78a6924982b1553154ccfd73 upstream.
 
-When stop_streaming is called, an infinite loop may occur in some cases.
-Add a bounded poll of the queue status: loop until the queues drain,
-sleeping briefly between polls, and bail out once VPU_DEC_STOP_TIMEOUT
-elapses.
+Decoder instances sharing a VPU also share one v4l2_m2m job slot, released
+when the running context calls v4l2_m2m_job_finish(). While draining,
+device_run() defers job_finish() once EOS is sent (sent_eos), expecting a
+later finish_decode() (from a DEC_PIC completion IRQ) to release the slot.
 
-Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
+But the m2m core checks job_ready() only when a job is queued, not when it
+is dispatched. A job queued while draining can run after finish_decode()
+has already moved the instance to STOP and sent EOS. device_run() then runs
+in STOP, issues no DEC_PIC, yet still skips job_finish() - so no IRQ, no
+finish_decode(), and the shared slot is leaked, stalling every instance.
+With several v4l2h264dec instances in parallel, GStreamer hangs at EOS.
+
+Track whether the run actually queued a DEC_PIC (cmd_issued) and defer
+job_finish() only then. Otherwise finish the job immediately
+
+Fixes: a176ac5e701f ("media: chips-media: wave5: Improve performance of decoder")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
 Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
@@ -70,63 +80,49 @@ Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c   |   15 +++++++------
- drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h |    2 -
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ .../media/platform/chips-media/wave5/wave5-vpu-dec.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+index 93f7b724d86c..f33c00cb801b 100644
 --- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
 +++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -5,6 +5,7 @@
-  * Copyright (C) 2021-2023 CHIPS&MEDIA INC
-  */
+@@ -1655,6 +1655,7 @@ static void wave5_vpu_dec_device_run(void *priv)
+ 	struct queue_status_info q_status;
+ 	u32 fail_res = 0;
+ 	int ret = 0;
++	bool cmd_issued = false;
  
-+#include <linux/delay.h>
- #include <linux/pm_runtime.h>
- #include "wave5-helper.h"
- 
-@@ -1537,15 +1538,15 @@ static void wave5_vpu_dec_stop_streaming
- {
- 	struct vpu_instance *inst = vb2_get_drv_priv(q);
- 	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
--
--	bool check_cmd = TRUE;
-+	unsigned long timeout;
- 
- 	dev_dbg(inst->dev->dev, "%s: type: %u\n", __func__, q->type);
+ 	dev_dbg(inst->dev->dev, "%s: Fill the ring buffer with new bitstream data", __func__);
  	pm_runtime_resume_and_get(inst->dev->dev);
- 	inst->empty_queue = true;
--	while (check_cmd) {
-+
-+	timeout = jiffies + msecs_to_jiffies(VPU_DEC_STOP_TIMEOUT);
-+	while (true) {
- 		struct queue_status_info q_status;
--		struct dec_output_info dec_output_info;
+@@ -1752,6 +1753,7 @@ static void wave5_vpu_dec_device_run(void *priv)
+ 			inst->retry = false;
+ 			if (!inst->eos)
+ 				inst->queuing_num--;
++			cmd_issued = true;
+ 		}
+ 		break;
+ 	default:
+@@ -1769,8 +1771,16 @@ static void wave5_vpu_dec_device_run(void *priv)
+ 	 * in power and CPU time.
+ 	 * If EOS is passed, device_run will not call job_finish no more, it is called
+ 	 * only if HW is idle status in order to reduce overhead.
++	 *
++	 * Deferring job_finish() is only safe when this run actually queued a
++	 * DEC_PIC command (cmd_issued): that guarantees a completion IRQ, and
++	 * thus a later finish_decode(), will release the shared job slot. When
++	 * device_run() is entered with no command to issue (e.g. a job that was
++	 * queued while draining but reached the STOP state by the time it ran),
++	 * no IRQ follows, so finish the job here to avoid leaking the slot and
++	 * stalling every instance sharing the VPU.
+ 	 */
+-	if (!inst->sent_eos)
++	if (!inst->sent_eos || !cmd_issued)
+ 		v4l2_m2m_job_finish(inst->v4l2_m2m_dev, m2m_ctx);
+ }
  
- 		wave5_vpu_dec_give_command(inst, DEC_GET_QUEUE_STATUS, &q_status);
- 		if ((inst->state == VPU_INST_STATE_STOP ||
-@@ -1554,8 +1555,10 @@ static void wave5_vpu_dec_stop_streaming
- 			q_status.report_queue_count == 0)
- 			break;
- 
--		if (wave5_vpu_dec_get_output_info(inst, &dec_output_info))
--			dev_dbg(inst->dev->dev, "there is no output info\n");
-+		if (time_after(jiffies, timeout))
-+			break;
-+
-+		usleep_range(1000, 2000);
- 	}
- 
- 	v4l2_m2m_update_stop_streaming_state(m2m_ctx, q);
---- a/drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h
-@@ -59,7 +59,7 @@
- //  application specific configuration
- #define VPU_ENC_TIMEOUT                 60000
- #define VPU_DEC_TIMEOUT                 60000
--#define VPU_DEC_STOP_TIMEOUT            10
-+#define VPU_DEC_STOP_TIMEOUT            300
- 
- // for WAVE encoder
- #define USE_SRC_PRP_AXI         0
+-- 
+2.55.0
+
 
 
