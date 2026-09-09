@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13B4559CB4;
-	Wed,  9 Sep 2026 13:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C556F54B1C6;
+	Wed,  9 Sep 2026 13:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961797; cv=none; b=EbfmfEC/kN/EWeQIzaKiLXje8SeAGL5sr/wBp7OlEMyxlFCXQv0QdSji4FnVEqL3WeUzobK6OZMdxnn4AXfgNEntuRd6cWn4rwE5HCttpXVZiH6hAJnFQsSsMmB4Hg0Ty0d+ju472KopD5ui4an6tRbgM53+1f/b4MfoZC7L1x8=
+	t=1788961800; cv=none; b=RiuxJONoI8Frfpn93HQ6EJ1DtsZ2rurNQJNvaLbB2gLqLNnFhDTZvBBDUb3tzQl1tJoHxNjW9SaAYrcj2WsHxVMAmIzob5TnY84paEruRcWrXJQpqnc7jgmhkUGWW1HjOTQ9w0dAU8Je/ophMxGzrwhYVnFI2YmXLMG2UToQhv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961797; c=relaxed/simple;
-	bh=yOqw5030D7LlpzR6yQCUOMwSjXrnejlTaZn9XP1b9Yo=;
+	s=arc-20240116; t=1788961800; c=relaxed/simple;
+	bh=M8LMG+NpI1OpnJmO6kc1N5q17uup8MCKZ3vIPPYQHJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXR1FYshLuOQwMqMjgw6tQex5edoao9GOV82eF9htG0QGbSBhAP/6mNleljToRSd3oZFshZiQKu5WR9jv1I244cYoQCxWRCte3NB1hzKSQ1/yOlVQsmrqVK/PUhbSaroQrDPLCXPXcprBYzCKBIAeF2zx8PusyoCk3UjUPFw7CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwwCNLHM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQ0+qtM1rhr/ugtk72HWlIwrVHaAeXjeZAx+7Fp0JmrwDnbBmVrtZtmj3d6lcjH2vv8qrn9GqRPIJmoB2XkaWdB3CG/rprcd8URIN+OD+EWbDVtn6AL/HED7+vE9HkuwOCLcpuN/PYuJvxFz9PJjEvMfevCbqHKMChOwbbcUxQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTJfngdp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwwCNLHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385071F00A3A;
-	Wed,  9 Sep 2026 13:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTJfngdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C4C1F00A3A;
+	Wed,  9 Sep 2026 13:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961795;
-	bh=68DaZmEusISBmOq4SOLBq5X9FYOIJVsFCE5haXDRo1k=;
+	s=korg; t=1788961798;
+	bh=vxE1ZhCeDoIG8esN+8D4qOWoAk6CXSdzdsWDN40dXKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wwwCNLHMfzLD0qADn268h0fE4IlQPiqmpKyltQUniY0T/ltwoS9QhwKXxTSpm/T1j
-	 WPwqAEOpD8aec87NjXz3Sg583k08qTSUsbPDmUgr5W/9isEEAEQe5pi5Uwld3avBdG
-	 K+Sq/+AIPQbBh5PG57GYx1yawiztgtuu/Sqd0o2s=
+	b=XTJfngdpXqluqClgZ7HxMaCokFkyRToDC69rgbb5ChWkP7deah1NglBvfYKTOedx2
+	 W9wwRy1i4E1sTvUD9S/2Xh8X7mDlbjVHg3y+J0IvFy+Qp08unPQ5ZX+P1kuR65cxI2
+	 i4NXtuOnakLLrfv/WGpiiE38i+nXiloBvpoaFres=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Chandelkar <rc@rexion.ai>,
-	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	Lukasz Magiera <me@magik.net>,
+	Mira Limbeck <m.limbeck@proxmox.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Thomas Lamprecht <t.lamprecht@proxmox.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 069/556] scsi: bsg: Fix TOCTOU in io_uring passthrough command setup
-Date: Wed,  9 Sep 2026 15:35:49 +0200
-Message-ID: <20260909134232.889182152@linuxfoundation.org>
+Subject: [PATCH 7.2 070/556] scsi: megaraid_sas: Limit NVMe request size to the PRP chain frame
+Date: Wed,  9 Sep 2026 15:35:50 +0200
+Message-ID: <20260909134232.926311455@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,126 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Chandelkar <rc@rexion.ai>
+From: Thomas Lamprecht <t.lamprecht@proxmox.com>
 
-commit 4b3c5965fca99f62d31c963294bd5b23cc488e97 upstream.
+commit af8c27375733fb6a6df9fa484cda77cc3dd0cb80 upstream.
 
-scsi_bsg_uring_cmd() reads bsg_uring_cmd from the shared mmap'd SQE.
-Userspace can change a field after we check it and before we use it.
-request_len is the sharp case: it can grow past sizeof(scmd->cmnd) after
-the bound check and overflow scmd->cmnd in copy_from_user().
+megasas_make_prp_nvme() builds a command's PRP list in cmd->sg_frame, a
+DMA pool buffer of instance->max_chain_frame_sz bytes, spending one
+entry per NVMe page of the transfer plus one per page of the buffer for
+the chain pointer. The loop runs until the transfer is described and
+never checks the buffer bound.
 
-READ_ONCE() the SQE fields we check or use into locals before use.
+max_hw_sectors comes straight from the MDTS the firmware reports for the
+drive. On drives with a large MDTS the only thing keeping the list
+inside the buffer was the block layer default of 1280 KiB, which needs
+320 entries, which fit into a 4 KiB frame as that holds 512. But since
+commit 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP") that
+default is 4 MiB, and such a transfer needs 1025 entries, so the list
+runs a full page past the end of the frame:
 
-Fixes: 7b6d3255e7f8 ("scsi: bsg: add io_uring passthrough handler")
+  sd 1:0:1:0: [sdb] tag#630 page boundary ptr_sgl: 0x00000000ba62d13f
+  BUG: unable to handle page fault for address: ff663bcb81e7c000
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  RIP: 0010:megasas_build_and_issue_cmd_fusion+0xeaa/0x1870 [megaraid_sas]
+
+If the page after the frame happens to be mapped, the overrun does not
+fault but silently corrupts the neighbouring pool entry, which is
+another in-flight command's PRP list.
+
+Cap max_hw_sectors at what the chain frame can describe, less one page
+for transfers that do not start on a page boundary and so need one entry
+more. This is the megaraid_sas counterpart of commit 04631f55afc5
+("scsi: mpt3sas: Limit NVMe request size to 2 MiB"), but derives the
+limit from max_chain_frame_sz rather than hardcoding it.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20260527105931.3950913-1-rc@rexion.ai
-Signed-off-by: Rahul Chandelkar <rc@rexion.ai>
-Co-developed-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Link: https://patch.msgid.link/20260817080730.967879-3-yangxiuwei@kylinos.cn
+Fixes: 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP")
+Reported-by: Lukasz Magiera <me@magik.net>
+Closes: https://lore.kernel.org/all/GPhsSM0vkgyIrs0DIZ62qeUZX7X4RxwQXVKiuvMx-lHQVSPDxpztUyQOGS0xikqvJ-Z94hMV-dW_5KN_0CX2hsfV7kTf_t0MTf6vdAAaSEc=@magik.net/
+Reported-by: Mira Limbeck <m.limbeck@proxmox.com>
+Closes: https://lore.kernel.org/all/d171cc76-bf25-48ce-b482-d344669dfc24@proxmox.com/
+Suggested-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/all/yq17bmzd5jr.fsf@ca-mkp.ca.oracle.com/
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Closes: https://lore.kernel.org/linux-scsi/20260827182106.535D61F000E9@smtp.kernel.org
+Link: https://patch.msgid.link/20260827175743.734593-1-t.lamprecht@proxmox.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_bsg.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ drivers/scsi/megaraid/megaraid_sas_base.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_bsg.c b/drivers/scsi/scsi_bsg.c
-index b3c4b1063d6f..5eec248a77a6 100644
---- a/drivers/scsi/scsi_bsg.c
-+++ b/drivers/scsi/scsi_bsg.c
-@@ -77,12 +77,10 @@ static enum rq_end_io_ret scsi_bsg_uring_cmd_done(struct request *req,
- 
- static int scsi_bsg_map_user_buffer(struct request *req,
- 				    struct io_uring_cmd *ioucmd,
--				    unsigned int issue_flags, gfp_t gfp_mask)
-+				    unsigned int issue_flags, gfp_t gfp_mask,
-+				    bool is_write, u64 buf_addr,
-+				    unsigned long buf_len)
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -1973,12 +1973,23 @@ megasas_set_nvme_device_properties(struc
  {
--	const struct bsg_uring_cmd *cmd = io_uring_sqe128_cmd(ioucmd->sqe, struct bsg_uring_cmd);
--	bool is_write = cmd->dout_xfer_len > 0;
--	u64 buf_addr = is_write ? cmd->dout_xferp : cmd->din_xferp;
--	unsigned long buf_len = is_write ? cmd->dout_xfer_len : cmd->din_xfer_len;
- 	struct iov_iter iter;
- 	int ret;
+ 	struct megasas_instance *instance;
+ 	u32 mr_nvme_pg_size;
++	u64 max_prp_io;
  
-@@ -105,21 +103,28 @@ static int scsi_bsg_uring_cmd(struct request_queue *q, struct io_uring_cmd *iouc
- 			       unsigned int issue_flags, bool open_for_write)
- {
- 	struct scsi_bsg_uring_cmd_pdu *pdu = scsi_bsg_uring_cmd_pdu(ioucmd);
--	const struct bsg_uring_cmd *cmd = io_uring_sqe128_cmd(ioucmd->sqe, struct bsg_uring_cmd);
-+	const struct bsg_uring_cmd *cmd =
-+		io_uring_sqe128_cmd(ioucmd->sqe, struct bsg_uring_cmd);
- 	struct scsi_cmnd *scmd;
- 	struct request *req;
- 	blk_mq_req_flags_t blk_flags = 0;
- 	gfp_t gfp_mask = GFP_KERNEL;
-+	u64 request = READ_ONCE(cmd->request);
-+	u32 request_len = READ_ONCE(cmd->request_len);
-+	u64 dout_xferp = READ_ONCE(cmd->dout_xferp);
-+	u32 dout_xfer_len = READ_ONCE(cmd->dout_xfer_len);
-+	u64 din_xferp = READ_ONCE(cmd->din_xferp);
-+	u32 din_xfer_len = READ_ONCE(cmd->din_xfer_len);
- 	int ret;
+ 	instance = (struct megasas_instance *)sdev->host->hostdata;
+ 	mr_nvme_pg_size = max_t(u32, instance->nvme_page_size,
+ 				MR_DEFAULT_NVME_PAGE_SIZE);
  
- 	if (cmd->protocol != BSG_PROTOCOL_SCSI ||
- 	    cmd->subprotocol != BSG_SUB_PROTOCOL_SCSI_CMD)
- 		return -EINVAL;
- 
--	if (!cmd->request || cmd->request_len == 0)
-+	if (!request || request_len == 0)
- 		return -EINVAL;
- 
--	if (cmd->dout_xfer_len && cmd->din_xfer_len) {
-+	if (dout_xfer_len && din_xfer_len) {
- 		pr_warn_once("BIDI support in bsg has been removed.\n");
- 		return -EOPNOTSUPP;
- 	}
-@@ -132,20 +137,20 @@ static int scsi_bsg_uring_cmd(struct request_queue *q, struct io_uring_cmd *iouc
- 		gfp_mask = GFP_NOWAIT;
- 	}
- 
--	req = scsi_alloc_request(q, cmd->dout_xfer_len ?
-+	req = scsi_alloc_request(q, dout_xfer_len ?
- 				 REQ_OP_DRV_OUT : REQ_OP_DRV_IN, blk_flags);
- 	if (IS_ERR(req))
- 		return PTR_ERR(req);
- 
- 	scmd = blk_mq_rq_to_pdu(req);
--	if (cmd->request_len > sizeof(scmd->cmnd)) {
-+	if (request_len > sizeof(scmd->cmnd)) {
- 		ret = -EINVAL;
- 		goto out_free_req;
- 	}
--	scmd->cmd_len = cmd->request_len;
-+	scmd->cmd_len = request_len;
- 	scmd->allowed = SG_DEFAULT_RETRIES;
- 
--	if (copy_from_user(scmd->cmnd, uptr64(cmd->request), cmd->request_len)) {
-+	if (copy_from_user(scmd->cmnd, uptr64(request), request_len)) {
- 		ret = -EFAULT;
- 		goto out_free_req;
- 	}
-@@ -158,8 +163,14 @@ static int scsi_bsg_uring_cmd(struct request_queue *q, struct io_uring_cmd *iouc
- 	pdu->response_addr = cmd->response;
- 	pdu->max_response_len = cmd->max_response_len;
- 
--	if (cmd->dout_xfer_len || cmd->din_xfer_len) {
--		ret = scsi_bsg_map_user_buffer(req, ioucmd, issue_flags, gfp_mask);
-+	if (dout_xfer_len || din_xfer_len) {
-+		bool is_write = dout_xfer_len > 0;
-+		u64 buf_addr = is_write ? dout_xferp : din_xferp;
-+		unsigned long buf_len = is_write ? dout_xfer_len : din_xfer_len;
+-	lim->max_hw_sectors = max_io_size / 512;
++	/*
++	 * megasas_make_prp_nvme() builds the PRP list in cmd->sg_frame without
++	 * bounding it against that buffer, and spends one entry per page of
++	 * it on the chain pointer. Cap the transfer at what the buffer holds,
++	 * less one page for lists that start off a page boundary.
++	 */
++	max_prp_io = (u64)((instance->max_chain_frame_sz / sizeof(u64)) -
++			   (instance->max_chain_frame_sz / mr_nvme_pg_size) - 1) *
++		     mr_nvme_pg_size;
 +
-+		ret = scsi_bsg_map_user_buffer(req, ioucmd, issue_flags,
-+					       gfp_mask, is_write, buf_addr,
-+					       buf_len);
- 		if (ret)
- 			goto out_free_req;
- 		pdu->bio = req->bio;
--- 
-2.55.0
-
++	lim->max_hw_sectors = min_t(u64, max_io_size, max_prp_io) >> SECTOR_SHIFT;
+ 	lim->virt_boundary_mask = mr_nvme_pg_size - 1;
+ }
+ 
 
 
