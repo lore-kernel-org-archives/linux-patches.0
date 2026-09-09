@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D6E57F736;
-	Wed,  9 Sep 2026 14:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4763556854A;
+	Wed,  9 Sep 2026 14:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963105; cv=none; b=iQF7sp86yZz7BpXWQXyup3yT0gi91bafmnh46eO2NJbpiThxfxAJBzbYbS/fUkcKOfFKUATf33CmgxNFh+l0SbMGlUsrA8YwGSwMTnNWJZ3jow1UqxY732Hr+K1Iyg16L8rNoFQ/lJgvmRT4jFv9TAtrZ1iT4+i1iFTtq5szKkE=
+	t=1788963108; cv=none; b=L6ObuGBgUkR8gTQNOo3Aqb6CjLDG/6b4EeL5nW9YCjS7FOVKC7Zhicqf9xgMSwuKfPf4Xq2NTiihochH8vbO+GlEeBsw5amD4KykmvGby9DGaJuqk8bs+e+vp8qH2z7BgNO+iYwubgjr4AmWWJkiDj61IY0h0yZpZv4In8F/iUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963105; c=relaxed/simple;
-	bh=oMXxwmIjDElCHBDsOeWHFIfxTm+7MPk3f0KOTRvlHP4=;
+	s=arc-20240116; t=1788963108; c=relaxed/simple;
+	bh=GxgmBQBNTaNxfOKfSpQZ7mVMK3f+j80f/INs6vcIaqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mvqrn62lHMTFD6nzBGNQQvoBxX94TZEmUZ1PS6F0I2GG4ttaEKebLpPU82A8IBEwea63eanaHaO7jkOtXGPcpTZD8C+WOKM4P0TCcToSwWXKVf7xgj4S5QqbRHwaE/FV+iHZRUF23jf1DzDiF+DEa4nRBhkmvxS1s6qoUOet440=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15M5YhUW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bB8RKRvK9EpeFAwvMcv2bW4islykJBtxiu/uAuYC4hubwO90+6hm/2QQ7z5FpWe1EOlkq/027367kPIbN4/MmuVDVBodC6LnosSi88mqTssr17sug3Cpa/y+fNWCz6dW54ZcqqD3LHk8c5IqLIaz0GzidNpyi9RWrLj1jBtMQ4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7VElGtA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15M5YhUW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DE11F00A3A;
-	Wed,  9 Sep 2026 14:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7VElGtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA011F00A3A;
+	Wed,  9 Sep 2026 14:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963104;
-	bh=QCgHgc38ZIREc/dKwCKhd4vouzcKOeOKIKDYj26eXio=;
+	s=korg; t=1788963106;
+	bh=K//2Qfb/RhVd9ekjvwg+QUExo7PUJbhBnj4nGHD42Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=15M5YhUWQirxtiuq0JchtBsY/eVCBsg6rm9YRubUvoAPNg1txQyoDcHwXq5F2MmfV
-	 bfZhdw2pRHNBZZsjzrnWSe9xNoLoW0shWLzUHeCM3CyMXo5ReaWGGpCS1ewpiWehSB
-	 MbesUtIPC95eTIyTq2SAuP09tePCqyvzV65oAKkQ=
+	b=l7VElGtANovShrLzeLooqj7ieA9DePMrKJFyPiF8mshyZhBM9hOt8mrAenfOyCwDJ
+	 UrtXzM+ELtosm6djmoWxf6nIbsg55o5Fd6sIjB4Rdg07BQgvH3XRCVKHeudFQHsOsv
+	 /PafmunXLjnXqOOfSxDT4GwbWXHkjtiQBoKdaXJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Timur Tabi <ttabi@nvidia.com>,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	James Jones <jajones@nvidia.com>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Zhang Enpei <zhang.enpei@zte.com.cn>
-Subject: [PATCH 7.2 485/556] drm/nouveau/disp/r535: Add scanline position support + head state support
-Date: Wed,  9 Sep 2026 15:42:45 +0200
-Message-ID: <20260909134247.568550130@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Yongbang Shi <shiyongbang@huawei.com>,
+	Rongrong Zou <zourongrong@gmail.com>,
+	Sean Paul <seanpaul@chromium.org>,
+	Xinliang Liu <xinliang.liu@linaro.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Baihan Li <libaihan@huawei.com>
+Subject: [PATCH 7.2 486/556] drm/hibmc: Fix list of formats on the primary plane
+Date: Wed,  9 Sep 2026 15:42:46 +0200
+Message-ID: <20260909134247.599601635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -59,98 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 804cb093b245c752f15d17186e0d404f10303593 upstream.
+commit 0e682e136c466ae37c62f18099f591c096260ee0 upstream.
 
-That's right! It looks like this never actually got finished, something
-which I just noticed today when I saw this fun message spamming one of my
-test machine's kernel logs when enabling display debug output for nouveau:
+Remove all formats from the primary plane that are unsupported for
+various reasons.
 
-  [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal] crtc 0 : scanoutpos query failed.
+* Formats with alpha channel: planes should not announce alpha channels
+unless they support transparency. There's no transparency support in
+the primary plane's implementation.
 
-So it looks like we've been falling back to DRM's core fallback for a while
-now, whoops.
+* Formats with BGR order. The common format is in RGB channel order.
+There's no BGR support in the primary plane's implementation.
 
-So, while it seems that we do have the option of doing this through GSP -
-that doesn't seem like a great idea. Mainly because reading this from GSP
-would involve a lot more latency then we should have for vblank handling
-due to the RPC communication. So instead of implementing that, just use
-gv100_head_state and gv100_head_rgpos for implementing .state and .rgpos.
-It seems to work perfectly fine!
+* RGB888: atomic_update programs the format from cpp[0] * 8 / 16. For
+RGB888's cpp value of 3 this returns 1.5; rounded to 1. Programming
+the value of 1 to HIBMC_CRT_DISP_CTL_FORMAT sets up RGB565. Hence, the
+output is distorted. This can be tested by booting with video=1024x768-24.
 
-Fixes: 9e9944449023 ("drm/nouveau/disp/r535: initial support")
-Cc: Ben Skeggs <bskeggs@redhat.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Timur Tabi <ttabi@nvidia.com>
-Cc: Ben Skeggs <bskeggs@nvidia.com>
-Cc: James Jones <jajones@nvidia.com>
-Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Aaron Kling <webgeek1234@gmail.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Zhang Enpei <zhang.enpei@zte.com.cn>
-Cc: <stable@vger.kernel.org> # v6.7+
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260429030348.3930866-1-lyude@redhat.com
+Removing all unsupported formats leaves XRGB8888 and RGB565. Both of
+which are supported and work correctly.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
+Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
+Cc: Rongrong Zou <zourongrong@gmail.com>
+Cc: Sean Paul <seanpaul@chromium.org>
+Cc: Xinliang Liu <xinliang.liu@linaro.org>
+Cc: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Yongbang Shi <shiyongbang@huawei.com>
+Cc: Baihan Li <libaihan@huawei.com>
+Cc: <stable@vger.kernel.org> # v4.10+
+Link: https://patch.msgid.link/20260618123142.92298-3-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c       |    4 ++--
- drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h        |    2 ++
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c |    8 ++------
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/gv100.c
-@@ -253,7 +253,7 @@ gv100_head_vblank_get(struct nvkm_head *
- 	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000004, 0x00000004);
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+@@ -153,10 +153,8 @@ static void hibmc_plane_atomic_update(st
  }
  
--static void
-+void
- gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline)
- {
- 	struct nvkm_device *device = head->disp->engine.subdev.device;
-@@ -263,7 +263,7 @@ gv100_head_rgpos(struct nvkm_head *head,
- 	*hline = nvkm_rd32(device, 0x616334 + hoff) & 0x0000ffff;
- }
- 
--static void
-+void
- gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state)
- {
- 	struct nvkm_device *device = head->disp->engine.subdev.device;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
-@@ -53,6 +53,8 @@ void gf119_head_rgclk(struct nvkm_head *
- 
- int gv100_head_cnt(struct nvkm_disp *, unsigned long *);
- int gv100_head_new(struct nvkm_disp *, int id);
-+void gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state);
-+void gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline);
- 
- #define HEAD_MSG(h,l,f,a...) do {                                              \
- 	struct nvkm_head *_h = (h);                                            \
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
-@@ -625,14 +625,10 @@ r535_head_vblank_get(struct nvkm_head *h
- 	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000002);
- }
- 
--static void
--r535_head_state(struct nvkm_head *head, struct nvkm_head_state *state)
--{
--}
--
- static const struct nvkm_head_func
- r535_head = {
--	.state = r535_head_state,
-+	.state = gv100_head_state,
-+	.rgpos = gv100_head_rgpos,
- 	.vblank_get = r535_head_vblank_get,
- 	.vblank_put = r535_head_vblank_put,
+ static const u32 channel_formats1[] = {
+-	DRM_FORMAT_RGB565, DRM_FORMAT_BGR565, DRM_FORMAT_RGB888,
+-	DRM_FORMAT_BGR888, DRM_FORMAT_XRGB8888, DRM_FORMAT_XBGR8888,
+-	DRM_FORMAT_RGBA8888, DRM_FORMAT_BGRA8888, DRM_FORMAT_ARGB8888,
+-	DRM_FORMAT_ABGR8888
++	DRM_FORMAT_XRGB8888,
++	DRM_FORMAT_RGB565,
  };
+ 
+ static const struct drm_plane_funcs hibmc_plane_funcs = {
 
 
