@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9AC57D20D;
-	Wed,  9 Sep 2026 14:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4624756C639;
+	Wed,  9 Sep 2026 14:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963349; cv=none; b=YSetkTsB7l3JkOETv+X7GuOis373MQH/mQpEUsQ7vdnl9wZEr9bQbGRu8hSBLkQzlDaJYVs9+McmBk91Bw3UBtEGwBfuK+QLzuyR3NY9/N8uDOIVnLGq5BC10FMpXaFh5NFrlDC6y6HV6TaK4LZqLTjoHkbrBDGq6zoT0btwl74=
+	t=1788963352; cv=none; b=Cg5WuLHR654oYWyPQEc+La2OsDbJu0JrKHt96hw1phLJ9YC4mjoxK79EjpDZW7Kq1bo8yhllRizCnx+LZPkiFBeHgKg9957I+TaiY/D5nxq9biSiRjE8mm2EKJWNDCa5YpcZ8/cJqo0N3CNphf4S7EnWLFvyCgIfCzj9tACzx/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963349; c=relaxed/simple;
-	bh=YSNCWl/x2WGo//M+1cn0Xh9mRlF/8veDBnnkn6/9MRA=;
+	s=arc-20240116; t=1788963352; c=relaxed/simple;
+	bh=g9uL3ZLTCJ5GthZ2DCkDOFpHAVF4HwbyddtXtOzGEjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aztyPteJBzbfcQNQ0O12QG7Asw1S+6m8iA+jlCKBnux8XSeWnWOX3/xMxh74zdQUEu6sdmCf/ssa0a3uwQutjpjpXwd1tb80T4cXAW2sO0YPBvXvlGfKTv5IY/KeHaVbNiKXz1zoRwG5cApZN2CNM2GUkerOBgVnELaAEMpZVJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQ6XpRSU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FVRkrpA1NQt8Y23uq233HaJmsHeUQlLlDRBmS/v1hG7t1rUT9OvffF7Xw1S35kbKVBn+mR3gd3AoWfD6b89lF5yNraUnPm9htFLxhMyJLvxOeIq0Y+RoE8ic5UZLfnuXZt/YB/VSf6JSFm5ZK/rvjNkq2lE06ReVquyUkdntkbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcIUP7LU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQ6XpRSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B641F00A3A;
-	Wed,  9 Sep 2026 14:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcIUP7LU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE1A1F00A3A;
+	Wed,  9 Sep 2026 14:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963348;
-	bh=z237ihOQ5kD1HEuE38CSHsZ/mi+P30+4bGnboPEPiW4=;
+	s=korg; t=1788963351;
+	bh=OgQJyGBULoV43YbODd11YHDE+VD5MOs/yUwAR4OnrUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pQ6XpRSUoH6cZRB/AG3LzIF2IlDH0kh5mhGYxVeuiy4F/KCYM+iGgmBqOwNd7ukXd
-	 v+IGLwkq9VRkBaXjHWHEOHglDGRiHAyfrf3tqGJ+LiP2IZjc7ChVunGzCdsvVNdi07
-	 P+fzzuVFrEGqDhZzGtf6vSReM4/SnFJOzZevJX9A=
+	b=gcIUP7LUY6vmPPzZRW5s9eiiIXKSd6Xfr/ZHU62MGmgIK1ShiM2efT79Lckzu2n/j
+	 o0jKuRk432TGgsq1Gp08g73aNc8xPvcVtmSrp7a1v9F+Uhe+orP3i7+tIKyQAlOitR
+	 4kq9g94FmbrLiEM62eY5fL6DhVtNuv+R3HLnQvaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	SJ Park <sj@kernel.org>,
 	Zenghui Yu <zenghui.yu@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 049/583] samples/damon/mtier: handle damon_stop() failure
-Date: Wed,  9 Sep 2026 15:35:34 +0200
-Message-ID: <20260909134239.663388698@linuxfoundation.org>
+Subject: [PATCH 6.18 050/583] samples/damon/prcl: handle damon_start() failure
+Date: Wed,  9 Sep 2026 15:35:35 +0200
+Message-ID: <20260909134239.696498985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,54 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-commit 9dc5b6d66fd51b103eff21ed0df3e292f489ebc0 upstream.
+commit 8b724349229bb6ebbf781178be011ba9bc2cca57 upstream.
 
-damon_sample_mtier_stop() assumes its damon_stop() call will always
-successfully stops the two DAMON contexts.  Hence it deallocates the two
-DAMON contexts after the damon_stop() call.  However, if a given context
-is already stopped, damon_stop() fails and returns an error while letting
-the DAMON contexts that have not yet stopped keep running.  This kind of
-unexpected early DAMON context stops could happen due to memory allocation
-failures in kdamond_fn().  Because damon_sample_mtier_stop() just
-deallocates all DAMON contexts with damon_target and damon_region objects
-that are linked to the contexts, the execution of the unstopped DAMON
-context (kdamond) ends up using the memory that freed (use-after-free).
-Fix the issue by separating the damon_stop() to be invoked per context.
+damon_sample_prcl_start() callers assume it will clean up resources when
+it fails.  And the function does the cleanup for context buildup failures.
+However, it is not doing the cleanup for damon_start() failure.  As a
+result, when damon_start() fails, it leaks the memory for DAMON context.
+Free the context in case of the failure to fix the issues.
 
-Note that DAMON_SYSFS also allows multiple DAMON contexts execution.  But,
-it calls damon_stop() for each context one by one.  Hence this issue is
-only in mtier.
+Note that the issue can reliably be reproduced because the module calls
+damon_start() in the exclusive mode.  For example,
 
-For the long term, it would be better to refactor damon_stop() to always
-ensure stopping all contexts regardless of the failures in the middle.
-Make this fix in the current way, though, to keep it simple and easy to
-backport.  I will do the refactoring later.
+    $ sudo damo start
+    $ echo $$ | sudo tee /sys/module/damon_sample_prcl/parameters/target_pid
+    $ echo Y | sudo tee /sys/module/damon_sample_prcl/parameters/enabled
+    $ sudo cat /proc/allocinfo | grep damon_new_ctx
+
+Because the first command is running another DAMON instance, the third
+command fails the damon_start() call because the new DAMON instance cannot
+exclusively run.  And without this fix, by repeating the third and the
+fourth commands above, we can show the memory consumption is only
+increasing due to the leaks.  It requires the sudo permission though.
 
 The issue was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260628215447.96166-5-sj@kernel.org
-Link: https://lore.kernel.org/20260609014219.3013-1-sj@kernel.org [1]
-Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
+Link: https://lore.kernel.org/20260628215447.96166-3-sj@kernel.org
+Link: https://lore.kernel.org/20260609145814.70163-1-sj@kernel.org [1]
+Fixes: 2aca254620a8 ("samples/damon: introduce a skeleton of a smaple DAMON module for proactive reclamation")
 Signed-off-by: SJ Park <sj@kernel.org>
 Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: <stable@vger.kernel.org> # 6.16.x
+Cc: <stable@vger.kernel.org> # 6.14.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/damon/mtier.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ samples/damon/prcl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -202,7 +202,8 @@ static int damon_sample_mtier_start(void
+--- a/samples/damon/prcl.c
++++ b/samples/damon/prcl.c
+@@ -106,8 +106,10 @@ static int damon_sample_prcl_start(void)
+ 	damon_set_schemes(ctx, &scheme, 1);
  
- static void damon_sample_mtier_stop(void)
- {
--	damon_stop(ctxs, 2);
-+	damon_stop(ctxs, 1);
-+	damon_stop(&ctxs[1], 1);
- 	damon_destroy_ctx(ctxs[0]);
- 	damon_destroy_ctx(ctxs[1]);
- }
+ 	err = damon_start(&ctx, 1, true);
+-	if (err)
++	if (err) {
++		damon_destroy_ctx(ctx);
+ 		return err;
++	}
+ 
+ 	repeat_call_control.data = ctx;
+ 	return damon_call(ctx, &repeat_call_control);
 
 
