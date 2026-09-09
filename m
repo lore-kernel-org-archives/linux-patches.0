@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9367C580394;
-	Wed,  9 Sep 2026 14:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7327256E07C;
+	Wed,  9 Sep 2026 14:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963242; cv=none; b=XQ3PY+aQPJXk9HBwSoZjROsWfmaBLMRqrQA6Sg0q0lfyo/gtKMCZ16q58LqfB3F13dsUrxTCLm2+tdKd3VJcQqkY/QOxsjxdX5Rj2NxWdQE5Pv1Ujwe8CEh5erit/gHyi1sYnX43VzhWkIDUrTdJK8wwwPEkD4aTe1em3UPq2p0=
+	t=1788963245; cv=none; b=rhG/5JUg2kbkPIReeqJP41oUGbmbyJSxAmOem/v7T94gpro3UPIDoARRSZsYVrZDyJA7fe9lu9wf1e1a5mLgje2j6zs0/cVcQSwOfizINWBBFKfF5v/DkmiZu7qXlEZna2U35aEVEvGXf6HSw0WcrAD7F45LDPs7HnvrYRGnMao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963242; c=relaxed/simple;
-	bh=UwPdZds5jkXAmkuySswx98xDQExDR3Uo8ecydy4+3iQ=;
+	s=arc-20240116; t=1788963245; c=relaxed/simple;
+	bh=Kx5BN2dMlj783q+Fur28v7x0c+RmNWQyvHpEvJP2HsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCBmjeF8bYXftKqt+tyj/oe+C3YojQzzG8GcDfLlZyEdx3ui2za5XRiIzHItgFkJkGd+pRNGVI02g0eOlzf3YGj9YHULlfYoWF0unbld2Nv45QWUcuHmUergLJEOQ+ZzjdJBQn/kD9/c03trsiC5eqLQtOPo7kblGyxC8U7J87E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sq2ShG7j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oRxaTZWtUI3VLplaouu2MCU1aA78LVNMq4/oofXDbrqa3YbOKKDqyIvJ/4oAOJvtiXDMdU2LMOChcNO2sgz9aPqHBqChsoD6C1OKuOFpuYfpiSgxJZn1pnbJ7242CUiqCAq19IhtsQV8v2+J2u2ykIaoCzeJSFIlQIa6d8eW6W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFtS3E/Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sq2ShG7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA84D1F00A3D;
-	Wed,  9 Sep 2026 14:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFtS3E/Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7EC1F00A3A;
+	Wed,  9 Sep 2026 14:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963241;
-	bh=lOgWfaxSZaXXPtvlC0nO/96piRx6n3c+N8ro98Mb2sI=;
+	s=korg; t=1788963244;
+	bh=Hd1tGTofGsR5jfgHYcCMLeRWxDfARJFxwNqLwxXvnuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sq2ShG7jsPeCudSyBkW6/fz9CO1Rpr5R+F+nHFUA50Zd8vstq1xoDWLOkjv+NDBeW
-	 26hvJZNocoAAKvxe4cZyfC3SPjEgcxg0G7NRyuIhiXhDa+Nqklc/icnMB1EKZPVA5K
-	 VmvdZPw5rIZKgHljL6mYl956VaIxXNNbjMZi9SKo=
+	b=AFtS3E/Qiy3W1aYteqZN+DLBrz63Gvc8pKOjqRiu/Quo2xycTFn+99W1sZZI6Q6Uk
+	 JATshGBoD9A0tAsNpxXXW/i0ZLqQlIGlJC8n9LsR4KT2eg5WyFdoEzJTTgpn75EzL7
+	 yD8fG5NoG9l6ClZXVATpPHwTEQKCH3TguTcIFuTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Hari Mishal <harimishal1@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 012/583] drm/amd/display: fix division by zero in get_estimated_bw()
-Date: Wed,  9 Sep 2026 15:34:57 +0200
-Message-ID: <20260909134238.224186505@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 6.18 013/583] usb: image: mdc800: change kmalloc() to kzalloc()
+Date: Wed,  9 Sep 2026 15:34:58 +0200
+Message-ID: <20260909134238.261308685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,50 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit f63de9054da858d57054474c32464106f8375e0d upstream.
+commit 2430eb81e44111b30eeb5273bbcf8b24ca517ef9 upstream.
 
-get_estimated_bw() divides by link->dpia_bw_alloc_config.bw_granularity,
-which is zeroed by reset_bw_alloc_struct() and only populated once
-DP_TUNNELING_BW_ALLOC_CAP_CHANGED has been handled.
+Change the kmalloc() calls in usb_mdc800_init() for irq_urb_buffer and
+download_urb_buffer to kzalloc(), avoiding potential stack leaks if a
+shorter message is received in mdc800_usb_irq() and
+mdc800_usb_download_notify()
 
-link_dp_dpia_handle_bw_alloc_status(), the DPCD interrupt handler,
-calls get_estimated_bw() whenever DP_TUNNELING_ESTIMATED_BW_CHANGED
-is set, independently of whether DP_TUNNELING_BW_ALLOC_CAP_CHANGED
-has ever fired for that link. A connected USB4/DPIA tunneling device
-that reports an estimated-bandwidth change before ever reporting a
-capability change drives a division by zero in this IRQ path.
-
-link_dpia_send_bw_alloc_request() already guards the same
-bw_granularity division; add the identical guard here rather than
-introducing a new pattern.
-
-Fixes: 8e5cfe547bf3 ("drm/amd/display: upstream link_dp_dpia_bw.c")
-Reviewed-by: Alex Hung <alex.hung@amd.com>
 Assisted-by: gkh_clanker_t1000
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f2a961457c33dc34223aad5c9e8971de34a4eed3)
-Cc: stable@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Link: https://patch.msgid.link/20260819-usb_misc_random-v1-1-43a0dcee3a32@kroah.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/image/mdc800.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-@@ -103,6 +103,11 @@ static int get_estimated_bw(struct dc_li
- {
- 	uint8_t bw_estimated_bw = 0;
+--- a/drivers/usb/image/mdc800.c
++++ b/drivers/usb/image/mdc800.c
+@@ -1000,13 +1000,13 @@ static int __init usb_mdc800_init (void)
+ 	mdc800->downloaded = 0;
+ 	mdc800->written = 0;
  
-+	if (link->dpia_bw_alloc_config.bw_granularity == 0) {
-+		DC_LOG_ERROR("%s: BW granularity is zero!\n", __func__);
-+		return 0;
-+	}
-+
- 	core_link_read_dpcd(
- 			link,
- 			ESTIMATED_BW,
+-	mdc800->irq_urb_buffer=kmalloc (8, GFP_KERNEL);
++	mdc800->irq_urb_buffer=kzalloc (8, GFP_KERNEL);
+ 	if (!mdc800->irq_urb_buffer)
+ 		goto cleanup_on_fail;
+ 	mdc800->write_urb_buffer=kmalloc (8, GFP_KERNEL);
+ 	if (!mdc800->write_urb_buffer)
+ 		goto cleanup_on_fail;
+-	mdc800->download_urb_buffer=kmalloc (64, GFP_KERNEL);
++	mdc800->download_urb_buffer=kzalloc (64, GFP_KERNEL);
+ 	if (!mdc800->download_urb_buffer)
+ 		goto cleanup_on_fail;
+ 
 
 
