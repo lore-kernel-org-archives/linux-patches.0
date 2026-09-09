@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44317563FBF;
-	Wed,  9 Sep 2026 14:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2DE57D20E;
+	Wed,  9 Sep 2026 14:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963358; cv=none; b=u1dfoTZ9xMQBij+H6KwC9kyEUqajSVAmoAf8UpkkQUzBqtUHPjCyFWI/5W4aO3TEOu+axNoDtMavylfTv4BxvLG5cP66V3/hlNKUabhnaSMQLqTzo1oFVPg1X7jRTfq40a4vPwL3etnl+wHvZlVNfj91E0EzxIJeXU2xyeaLhnE=
+	t=1788963361; cv=none; b=nNEdfAwWP7inf8UzFhCJneepXzv9fOskAppyrR8fPJn5fwX5ExGkdmuWDmpi/YTRk0oPcpuo6P9QFeP4nyU6f4ScuwMeBhbqwQ+7Xt3DeifWUgRQgFuTUj46V6q+b84fgL5zvJMBzt1AWJVB8uwo/fob4g6k4rlyzMwlCIUB02c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963358; c=relaxed/simple;
-	bh=GwvaexlLVlMmbcRT2qHEg92mqVl5N7q6lwv0Y6WNy94=;
+	s=arc-20240116; t=1788963361; c=relaxed/simple;
+	bh=AMeuxiZ999+fSYOtKCMEwpiIxZ/TIyLPIYAIuAyd2kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2nExrtdj7MSKzl0vvE0unViJ1O/CCC4JdwSYkBgBquyJd8eoJq4zw2rWZ6AZj0+TD+45Cl/M2VuIETMSz31zsEm9yGZA51Fz9V1rG8hJiD0Xt9iKTWudE4K2pccC4AaUBG6nbbBr9rLOsukKJw/ry5L5H1jJ6qNS9Ql0XMOCf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtqdnzE6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f5OdbvL5txEWmYKaPWhXrftEJimhYY/qlyuHo6wQlDsCJOYroe5r2u+2ey2YxcTAh013Thv9mi5kaIKUCYsEQHbJxj6QvtvLZUypIsAj+BAlUrX4CHbEZGald+S268uhhKJVZZrnjUuQe2HuY5OdxHMS3zyLym2sd2tjWpPrVU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IbzRWYIN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtqdnzE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605A21F00A3A;
-	Wed,  9 Sep 2026 14:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IbzRWYIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA871F00A3A;
+	Wed,  9 Sep 2026 14:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963356;
-	bh=bWMKPkDvdQND+RmNWNDerTP1TKHY98qPmjTyPjOuxgg=;
+	s=korg; t=1788963359;
+	bh=fZL7+hAw4H4kOpmS6HGj1TV/xPJsT+c7+6dH2cjDvy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FtqdnzE6fYOCH36j2zhonBzbwC735Y03qm15wrmtK7Z02p4WZNT4r9K8psPyj4q2u
-	 nVMUTs3f0sBL/NixMXocVgfuXNyDoAzHZmaBmDZlo/Oo4F2CVB2tzluhCA0U227ZzO
-	 ryS2Olt3Abm3LtJkPOyfpFRdebl4AvGJJa0wpWZc=
+	b=IbzRWYINwjne/hE7q3pZbsHuFfl5uYUsdMxd5dv4mPFEuwCu1hjDZONbjXqXDeula
+	 MDCZMrvPp+RCSea4W/YCL+hRB5rDqSwjdanW9d3DwBEXSjOa/SYESi7S/aMBEErA8l
+	 65O+ITZ7FRRYgRySfU+ahEQX3cwZx+f8RyDqUXnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Zenghui Yu <zenghui.yu@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 052/583] samples/damon/wsse: handle damon_start() failure
-Date: Wed,  9 Sep 2026 15:35:37 +0200
-Message-ID: <20260909134239.776271422@linuxfoundation.org>
+	Can Peng <pengcan@kylinos.cn>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.18 035/583] thermal/drivers/imx: Disable clock on runtime resume failure
+Date: Wed,  9 Sep 2026 15:35:20 +0200
+Message-ID: <20260909134239.062773057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,77 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Can Peng <pengcan@kylinos.cn>
 
-commit e4742be45ea45bf554399ce89a09f71e525d7981 upstream.
+commit bcc6d886e5006a4656901d2d7fb6a215c96068a0 upstream.
 
-Patch series "samples/damon: handle damon_{start,stop}() failures".
+imx_thermal_runtime_resume() enables the thermal clock before
+powering up the sensor and enabling measurements.
 
-All DAMON sample modules are not correctly handling failures from
-damon_start().  Among those, mtier also has an additional problem for
-handling of damon_stop() failures.  wsse and prcl also have a problem in
-their damon_call() failure handling.  As a result, memory leaks, next
-DAMON operation disruptions, and use-after-free can happen.  Fix those.
+If either regmap_write() fails, the function returns with the clock
+still enabled. This leaves the clock enable count unbalanced after a
+failed runtime resume.
 
-Note that only the damon_start() failure caused issues can reliably be
-reproduced.  Reproducing those issues require the admin permission,
-though.
+Disable the clock on those failure paths before returning the error.
 
-
-This patch (of 6):
-
-damon_sample_wsse_start() callers assume it will clean up resources when
-it fails.  And the function does the cleanup for context buildup failures.
-However, it is not doing the cleanup for damon_start() failure.  As a
-result, when damon_start() fails, it leaks the memory for DAMON context.
-Free the context in case of the failure to fix the issues.
-
-Note that the issue can reliably be reproduced because the module calls
-damon_start() in the exclusive mode.  For example,
-
-    $ sudo damo start
-    $ echo $$ | sudo tee /sys/module/damon_sample_wsse/parameters/target_pid
-    $ echo Y | sudo tee /sys/module/damon_sample_wsse/parameters/enabled
-    $ sudo cat /proc/allocinfo | grep damon_new_ctx
-
-Because the first command is running another DAMON instance, the third
-command fails the damon_start() call because the new DAMON instance cannot
-exclusively run.  And without this fix, by repeating the third and the
-fourth commands above, we can show the memory consumption is only
-increasing due to the leaks.  It requires the sudo permission though.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260628215447.96166-2-sj@kernel.org
-Link: https://lore.kernel.org/20260609145814.70163-1-sj@kernel.org [1]
-Fixes: b757c6cfc696 ("samples/damon/wsse: start and stop DAMON as the user requests")
-Signed-off-by: SJ Park <sj@kernel.org>
-Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: <stable@vger.kernel.org> # 6.14.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4cf2ddf16e17 ("thermal/drivers/imx: Implement runtime PM support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260722084909.463437-1-pengcan@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/damon/wsse.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/thermal/imx_thermal.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
-index 799ad4443943..bbd9392ab5b3 100644
---- a/samples/damon/wsse.c
-+++ b/samples/damon/wsse.c
-@@ -87,8 +87,10 @@ static int damon_sample_wsse_start(void)
- 	target->pid = target_pidp;
+--- a/drivers/thermal/imx_thermal.c
++++ b/drivers/thermal/imx_thermal.c
+@@ -832,12 +832,12 @@ static int imx_thermal_runtime_resume(st
+ 	ret = regmap_write(map, socdata->sensor_ctrl + REG_CLR,
+ 			   socdata->power_down_mask);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
  
- 	err = damon_start(&ctx, 1, true);
--	if (err)
-+	if (err) {
-+		damon_destroy_ctx(ctx);
- 		return err;
-+	}
- 	repeat_call_control.data = ctx;
- 	return damon_call(ctx, &repeat_call_control);
+ 	ret = regmap_write(map, socdata->sensor_ctrl + REG_SET,
+ 			   socdata->measure_temp_mask);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	/*
+ 	 * According to the temp sensor designers, it may require up to ~17us
+@@ -846,6 +846,11 @@ static int imx_thermal_runtime_resume(st
+ 	usleep_range(20, 50);
+ 
+ 	return 0;
++
++disable_clk:
++	clk_disable_unprepare(data->thermal_clk);
++
++	return ret;
  }
--- 
-2.55.0
-
+ 
+ static const struct dev_pm_ops imx_thermal_pm_ops = {
 
 
