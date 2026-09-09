@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16889577E32;
-	Wed,  9 Sep 2026 14:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F325955C1D6;
+	Wed,  9 Sep 2026 14:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964071; cv=none; b=ksfGWA7W181HFLeX9Gu6E74Kg4aufqRvQhyGa3gNkUsLG2e/nKacowhy8WpBfD8BiA1VYWHIpauAMdqXmcnHkoJH5HMUhzYXoN7TC/sdI7Ba86PRaPc7VImuhJ+mLyiN3az4vVPGZ2Ilkcns7S6z99pSoShaMzfUO/5grVFHhoU=
+	t=1788964074; cv=none; b=SgHyRnIvEObNzR8LQ9bwYO53rDR65+f4ak3Rn4AZBqPmNfAYI9HAHJT7AA9qY9GsECmElJgXseIzWhA5mZ/+2+IIZM1UYlGXXT4hS16cGV2ujZyf23zGD+6Bsoy5ddqDcYFuDwDqhBjiDeIdeB7RoUEdv6QT9ArfSgtJbw+In3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964071; c=relaxed/simple;
-	bh=QJUkKn4bgWk1zFpSC+XH5rFNdOIbq3W+TlkwvLBl5LA=;
+	s=arc-20240116; t=1788964074; c=relaxed/simple;
+	bh=Trs5fqiJOkRACGFTzqBwcTJEOTW40fHxqU5uWCCKjHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKTCBWQFxo9xgjSGLNDK/zlI/hTEkFoJLFbDBiixuBfjxQtjsGN6JYBQj/EfS7/FLuLbgtOkVv47zNlMCs+6hA2fb6HQ8sIde6JO5WsY788h9RAJf5hEFp+NjHL0USl7XlTj+ufUyDosS+PvuJjejEp9qHoQbIc5IwwEBH45ccQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etWhfb+r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UnBQB5ZyxUlL7AwtqmbZWfSpPLrsEm+1pnLfEIWDy6aTQD9PHQvYv+jghnZxL1nmQdgvKW5QxwGtR4EFc+0ea5T6iua8lNwGs0GSirpXeBiRL7ssOBWrquI46vVToIcTgWGzy7W8+EXwsdk8ljyJJ8M7thZNfmvL0JrqcGKNUhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTQWY4WZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etWhfb+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0831F00A3D;
-	Wed,  9 Sep 2026 14:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTQWY4WZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502551F00A3A;
+	Wed,  9 Sep 2026 14:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964070;
-	bh=ENhk59FaI5I/WDB7Lh+H+TgKxZLhCi4R9E/YMJSPMt8=;
+	s=korg; t=1788964072;
+	bh=P7UxP5/bj5BdxCdvyvhw9EYy6D5Ve8brSqjJsLzEoLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=etWhfb+rjqxDu205YurF5GN2kyTyvyX4UrvdX+1/chUft1VRkO1sepzF86bimoGVz
-	 bx59E67Xo7ehAaaOi/z2OUgZVVlMjSnnaZes/BcEDW+LKslIRF987fW/BAAEb0c8nV
-	 UlvuMyUsjM/P0yKbHyrULDSkq2+y4WkBtFJqRHQg=
+	b=oTQWY4WZvKAPsGcPCfHaDdRIjcbyhXlcZYLGzkBpnx6luzLFHvuJqFOYdhRCWcp+z
+	 Hl2OOBA9VZfGrhE5oBuCSkS8k0RqL5Tdnh7MWWeIS2qQw6vcs+LY4ZsUpAIXa/QTE8
+	 aK51rIq/6+B8n/yXcmN/E61SjPUZ0JwHu1kvNeNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 296/583] media: meson: vdec: fix NULL pointer deref in vdec_try_fmt_common
-Date: Wed,  9 Sep 2026 15:39:41 +0200
-Message-ID: <20260909134248.287612191@linuxfoundation.org>
+Subject: [PATCH 6.18 297/583] media: platform: mtk-mdp3: Fix SCP device refcounting
+Date: Wed,  9 Sep 2026 15:39:42 +0200
+Message-ID: <20260909134248.317814776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,44 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 20aa934ace6917262ff579a73ec018d06a7bad1c upstream.
+commit 55793e4665b7f15151e6f5ab51ca980e73abed5d upstream.
 
-When VIDIOC_TRY_FMT is called with an unsupported pixel format on the
-OUTPUT queue, vdec_try_fmt_common() falls back to V4L2_PIX_FMT_MPEG2.
-However, if a distro has locally patched MPEG2 support out (as it has
-been broken for some time) the platform format table does not contain
-MPEG2 so find_format() returns NULL and the subsequent dereference of
-fmt_out->max_width triggers a NULL pointer dereference.
+mdp_probe() first tries to get the SCP handle with scp_get(). When that
+fails, it falls back to looking up the SCP platform device with
+__get_pdev_by_id() and then reads its driver data.
 
-Fix this by falling back to the first format in the platform's format
-array instead of hardcoding V4L2_PIX_FMT_MPEG2. This is always valid
-since every platform defines at least one format.
+The fallback lookup returns the platform device with a reference, just
+like scp_get() does. However, the fallback path currently drops that
+reference immediately after platform_get_drvdata(). The driver later
+still calls scp_put(mdp->scp) unconditionally from the probe error path
+and from mdp_video_device_release(), which drops the SCP device
+reference again.
 
-Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
+Keep the fallback reference until the existing scp_put() call, so that
+the fallback path follows the same ownership rules as the scp_get()
+path.
+
+Fixes: 8f6f3aa21517 ("media: platform: mtk-mdp3: fix device leaks at probe")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/meson/vdec/vdec.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/staging/media/meson/vdec/vdec.c
-+++ b/drivers/staging/media/meson/vdec/vdec.c
-@@ -504,8 +504,8 @@ vdec_try_fmt_common(struct amvdec_sessio
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
- 		fmt_out = find_format(fmts, size, pixmp->pixelformat);
- 		if (!fmt_out) {
--			pixmp->pixelformat = V4L2_PIX_FMT_MPEG2;
--			fmt_out = find_format(fmts, size, pixmp->pixelformat);
-+			pixmp->pixelformat = fmts[0].pixfmt;
-+			fmt_out = &fmts[0];
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
+@@ -292,7 +292,6 @@ static int mdp_probe(struct platform_dev
+ 			goto err_destroy_clock_wq;
  		}
- 		break;
- 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+ 		mdp->scp = platform_get_drvdata(mm_pdev);
+-		put_device(&mm_pdev->dev);
+ 	}
+ 
+ 	mdp->rproc_handle = scp_get_rproc(mdp->scp);
 
 
