@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CCC57267D;
-	Wed,  9 Sep 2026 14:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F69F56E064;
+	Wed,  9 Sep 2026 14:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963251; cv=none; b=GKCqGwvtfGfPrAJ8F11OOUmLLB4JPNQ6Df6eHBP92LV9Ht/AYdclO3sH+c4ZLSym7nLdsJxZXHkTYSZhvu94qmZUwFpdpm8PuEpv24of4pcDqPqpi+dMLebQjmdI1O+JmG9XCXtVSto92K/Wa9upWU+bTP+2SIA/K8YMUQTEOic=
+	t=1788963254; cv=none; b=Dkm9Cv7tOA87JFq6mLlb2s/ciGq3C93jhvBuSL3N95VDYCdYrLl1hn5wuhGLVrxnOvpIgBakmV7UK5Nsufl0ScpRmuK0Ujcm0ArIcu5iQipVnSLst+rTCxBdEnP7dvbd+NH8NKp045wP6kKSp7T6O2mLYxTlisLL1XdrugNBVTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963251; c=relaxed/simple;
-	bh=qgRycAy+/tNfo+EMg0/8PKBp8Pd7U/Aqb0JqkNCyIjU=;
+	s=arc-20240116; t=1788963254; c=relaxed/simple;
+	bh=xSitbtCnNM9UghVaP/NEbq1eD/mMnu+x78jf2nxuCuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fgOaBhUfxcbY3TpC/H7DPGluz816nS4+dqR64fai/RTNZmOZCaFGVwzQIoxgD4ibtt0qAtGxaFK5Tg4uSJ37nkG1JOBMVVUjlk978YjCnjiYqZGgqoKE1gVLbQX/koh7KZlGPfnMQtqH+j7QatgKrmUhSHOHXHlV/dSnO/gZ/VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0ONFTCh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eoPdJqt9FcXFIbPWFDKIQ9TLX4p+RdmakUXAoGqqMOIwUyWIwnjd1UOrusZxTZPYN9DM0lh8XqDBbvSaWsLqcrD0ScKqjyHIKdV6ZAvDZuvIsbS76LVkECVvPkDaN3JF8oGHgJBQQwJqEv6ttGS5U/kNwTkhpu8zvIGKP+2S+GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDiKgm7k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0ONFTCh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B691F00A3A;
-	Wed,  9 Sep 2026 14:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDiKgm7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A501F00A3A;
+	Wed,  9 Sep 2026 14:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963250;
-	bh=/Y+7kiTK2Kn7QC5hgSb9tL4wWEJHmFfEEv5qCjquiqQ=;
+	s=korg; t=1788963253;
+	bh=oJt7PQeKDWC2rjL5M2dt3vUml1QtLygkwS5BqZsMesw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b0ONFTChpyeRFDxavnLK6Jenarox0ktOybhREERJ0dGCow0BNRxBq50k8RgQ6XI4l
-	 nW+qSAJp6iHyHYmrdjSOW7kzm8qyxefUoUia7jiXlCRwswjvdADshVlRIdAivudTX+
-	 FVmVGK5iYId7K07Kig+5+i5aDxCCj+oTVaOBtVMc=
+	b=gDiKgm7kC4x+sxuqTOfDXLt+YvCPMsvLiy5BVGXxvlyymz5O+oKYM0HPgwEcfT3zc
+	 L2dLr1NadY6fYXKta3CuD/NmaKmPEXfFCiGM45F5rdDVoa87GdF+451dmIsnwkGgV0
+	 3s3sciJMdlSQv6GL7l5QL8zPZJD1U76tW+ll4MP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.18 015/583] clk: qcom: gcc-mdm9607: Increase delay for USB PHY reset
-Date: Wed,  9 Sep 2026 15:35:00 +0200
-Message-ID: <20260909134238.337128594@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 016/583] media: usbtv: keep device alive while ALSA card exists
+Date: Wed,  9 Sep 2026 15:35:01 +0200
+Message-ID: <20260909134238.366527375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,36 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit c99bc8e83848358bd4a0436e4bdae5b7919babb2 upstream.
+commit fc530fe168bb2b745a93f553ad21fc25fd9cba3d upstream.
 
-To conform to the specifications of the USB PHY, the reset signal should be
-asserted for at least 10us. Guarantee that by increasing the delay for the
-USB2_HS_PHY_ONLY_BCR reset control similar to commit dcc6c9fb7128 ("clk:
-qcom: gcc-msm8909: Increase delay for USB PHY reset").
+The ALSA PCM callbacks store the driver state in pcm->private_data. An
+open PCM file can outlive USB disconnect because usbtv_audio_free() uses
+snd_card_free_when_closed(). The disconnect path can then drop the V4L2
+device reference and free struct usbtv before ALSA releases the substream,
+so a later close dereferences freed memory in snd_usbtv_pcm_close().
 
+Take a V4L2 device reference for the ALSA card and drop it from the card
+private_free callback. This keeps struct usbtv valid until ALSA has closed
+the remaining files and freed the card.
+
+Closes: https://lore.kernel.org/r/178144969601.60470.4852887710381872458@gmail.com
+Fixes: 63ddf68de52e ("[media] usbtv: add audio support")
 Cc: stable@vger.kernel.org
-Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-5-745565101869@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-mdm9607.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/usbtv/usbtv-audio.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/clk/qcom/gcc-mdm9607.c
-+++ b/drivers/clk/qcom/gcc-mdm9607.c
-@@ -1567,7 +1567,7 @@ static const struct qcom_reset_map gcc_m
- 	[USB_HS_HSIC_BCR] = { 0x3d05c },
- 	[GCC_MSS_RESTART] = { 0x3e000 },
- 	[USB_HS_BCR] = { 0x41000 },
--	[USB2_HS_PHY_ONLY_BCR] = { 0x41034 },
-+	[USB2_HS_PHY_ONLY_BCR] = { .reg = 0x41034, .udelay = 15 },
- 	[QUSB2_PHY_BCR] = { 0x4103c },
+--- a/drivers/media/usb/usbtv/usbtv-audio.c
++++ b/drivers/media/usb/usbtv/usbtv-audio.c
+@@ -317,6 +317,13 @@ static const struct snd_pcm_ops snd_usbt
+ 	.pointer = snd_usbtv_pointer,
  };
  
++static void usbtv_audio_card_free(struct snd_card *card)
++{
++	struct usbtv *usbtv = card->private_data;
++
++	v4l2_device_put(&usbtv->v4l2_dev);
++}
++
+ int usbtv_audio_init(struct usbtv *usbtv)
+ {
+ 	int rv;
+@@ -331,6 +338,10 @@ int usbtv_audio_init(struct usbtv *usbtv
+ 	if (rv < 0)
+ 		return rv;
+ 
++	v4l2_device_get(&usbtv->v4l2_dev);
++	card->private_data = usbtv;
++	card->private_free = usbtv_audio_card_free;
++
+ 	strscpy(card->driver, usbtv->dev->driver->name, sizeof(card->driver));
+ 	strscpy(card->shortname, "usbtv", sizeof(card->shortname));
+ 	snprintf(card->longname, sizeof(card->longname),
 
 
