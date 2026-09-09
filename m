@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163E057ED89;
-	Wed,  9 Sep 2026 14:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4B4424D48;
+	Wed,  9 Sep 2026 14:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963062; cv=none; b=lW6sQQgBGg5UyXRg34zZtwaFJ5JsK87cvwNqupNwr00WShC/La92nuINd293iAhYroMd1b6ilDk4xV0RVQcQlym68z1HQPo4C4CbBtNcLC+l67vHywPZ9MKq7T1/3OyVmxnGlnJicCuP7jwmQCNqqXKhGsombUK4gzY7YEVLdlk=
+	t=1788963065; cv=none; b=AvZ1jiSlfGGiTUQotWTyWpQVywEO62nzyZKfywQw5Q12idIa9HzOKzVhFB4L2uZX62Df1MHPNq7iy4EQsrT2YIAxkpweGuCuPNo4IcHaK+I3IX77p7VaMLYU+rcg9qssehAgaVLumCNurVYcvxLli+SBm53L6bj3qmqLWRN0jb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963062; c=relaxed/simple;
-	bh=Er/dy8im9Jt+/u1f+/r29+xgDv+xACvX09pHYvxTJSM=;
+	s=arc-20240116; t=1788963065; c=relaxed/simple;
+	bh=ZlGJcgWHG045bzYq0zCoAQR4+GXs2QYLIUXiU/JpUn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bie5PoNaRyXIa4k56nFFMJgN8SyRhatiCV+LNCLWfsz2dE+gKPbQ4JjNBxhTKfT6B48+GM1bhXMO6bE3jVWa7P4Qp0ZcC7dFotaOwCpI0WSlNpYo7kbqYPKiqZ3LbVaQS0I/tvVfQL9pWPOtuSxytEpVTUZnybp7WHeueTcctIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iki1v2In; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dmKCN5Z0i9WWTo2Ypbt3NywUeb3k4yVy1hE/NDECgdLdQrANS/k2JJjs18+wLS8pRx3W0SeHtHnsP8kHs5eaQkjCVbI37fWZRE5e/9FzA+tO/45yivaz+efvK3C6zQWx6CYJcQg3h1Ehco0R7bNhnVl6g3/E43kwhY2XV2POyyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToSjGno7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iki1v2In"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5971F00A3A;
-	Wed,  9 Sep 2026 14:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToSjGno7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EE51F00A3A;
+	Wed,  9 Sep 2026 14:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963061;
-	bh=Fhp1NwMIfk8ABg3kBu5y9JbiiREdhQUeEtDFlXVrVDI=;
+	s=korg; t=1788963063;
+	bh=/SQLhPnPKlI13qOWTMbO5es7wAXz/pHTVFw67Xp9kDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iki1v2In3MB9gUZJjqMwA0qfMpdgG7zGx7rSOy9CirGLmwe40WhMxMf3S3Fil21Qo
-	 MrcHHpFi7ox16GnQMpccjVSXOy2NFH8JNv2Chmbrisyk3xY6uzvd4u4HOSwRI2g9g9
-	 R3hEupVrhWeHQY5Caz/Zuei6ZwOUaejLzv97rWkg=
+	b=ToSjGno7tXtBX5nmpdhPTJ9kyeKCTBASBOCFnwq/5kj46X6ScQrySpH+BSgFvtdUR
+	 BCxIxxMk2ZcpEnH2rYEtbAeH7I4HgwDR99Abedlq4A3cOPG+HiI5O8f7fn1leZw9Z6
+	 I3lNVM/RRmubCqJwir7EDdz9SXvaKF5CTb+q3BTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil Khatri <sunil.khatri@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 506/556] drm/amdgpu: fix byte/dword unit mismatch in coredump IB dump
-Date: Wed,  9 Sep 2026 15:43:06 +0200
-Message-ID: <20260909134248.262156439@linuxfoundation.org>
+	Nemesa Garg <nemesa.garg@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 7.2 480/556] drm/i915/display: Clear SEL_FETCH_PLANE_CTL on plane disable
+Date: Wed,  9 Sep 2026 15:42:40 +0200
+Message-ID: <20260909134247.417551454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,45 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunil Khatri <sunil.khatri@amd.com>
+From: Nemesa Garg <nemesa.garg@intel.com>
 
-commit 3b5c4f4a479d0e58a7500cbd2b09d62f719f48b8 upstream.
+commit 7f1172a2ac0d7e50850785e2e65789c8aac8411a upstream.
 
-In amdgpu_devcoredump_print_ibs(), the NO_CPU_ACCESS VRAM path passed
-cursor.start/4 and cursor.size/4 to amdgpu_device_mm_access(), but that
-function's pos/size parameters are byte offsets/lengths (confirmed by
-amdgpu_ttm_vram_mm_access() and leading to wrong size calculation.
+icl_plane_disable_sel_fetch_arm() wrote SEL_FETCH_PLANE_CTL = 0 only when
+crtc_state->enable_psr2_sel_fetch was set. If a plane was disabled after
+selective fetch had been turned off, the guard fired early and left the
+register's enable bit set in hardware.
 
-Similarly with that change the off index needs to be calculated
-based on dword since that is a u32 type.
+The bit is harmless until selective fetch is re-enabled.  When it is, the
+hardware resumes fetching for the now-disabled plane and keeps its old DDB
+range reserved.
 
-Fixes: 7b15fc2d1f1a ("drm/amdgpu: dump job ibs in the devcoredump")
-Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1bd613b0ed98a23575b18674c94b8b3392614681)
+i9xx_cursor_disable_sel_fetch_arm() has the same guard on SEL_FETCH_CUR_CTL
+and is fixed the same way.
+
+v2: Add same check for cursor also. [sashiko]
+
 Cc: stable@vger.kernel.org
+Fixes: b1f5279b5981 ("drm/i915/psr: Move plane sel fetch configuration into plane source files")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8739
+Assisted-by: GitHub-Copilot:claude-opus-4.6
+Signed-off-by: Nemesa Garg <nemesa.garg@intel.com>
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Link: https://patch.msgid.link/20260818095149.2172935-1-nemesa.garg@intel.com
+(cherry picked from commit 600a7c9d40e5e0c5544f42d1c9592c8d15224dc0)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_cursor.c        |   15 ++++++++++-----
+ drivers/gpu/drm/i915/display/skl_universal_plane.c |   15 ++++++++++-----
+ 2 files changed, 20 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-@@ -298,10 +298,10 @@ amdgpu_devcoredump_print_ibs(struct drm_
- 			amdgpu_res_first(abo->tbo.resource, offset,
- 					 coredump->ibs[i].ib_size_dw * 4, &cursor);
- 			while (cursor.remaining) {
--				amdgpu_device_mm_access(adev, cursor.start / 4,
--							&ib_content[off], cursor.size / 4,
-+				amdgpu_device_mm_access(adev, cursor.start,
-+							&ib_content[off], cursor.size,
- 							false);
--				off += cursor.size;
-+				off += cursor.size / 4;
- 				amdgpu_res_next(&cursor, cursor.size);
- 			}
- 			emit_content = true;
+--- a/drivers/gpu/drm/i915/display/intel_cursor.c
++++ b/drivers/gpu/drm/i915/display/intel_cursor.c
+@@ -530,13 +530,18 @@ static int i9xx_check_cursor(struct inte
+ }
+ 
+ static void i9xx_cursor_disable_sel_fetch_arm(struct intel_dsb *dsb,
+-					      struct intel_plane *plane,
+-					      const struct intel_crtc_state *crtc_state)
++					      struct intel_plane *plane)
+ {
+ 	struct intel_display *display = to_intel_display(plane);
+ 	enum pipe pipe = plane->pipe;
+ 
+-	if (!crtc_state->enable_psr2_sel_fetch)
++	/*
++	 * Clear this whenever the hardware has selective fetch, not just when
++	 * the current state uses it. The cursor may have been enabled with
++	 * selective fetch earlier and had its enable bit orphaned when the
++	 * feature was switched off.
++	 */
++	if (!HAS_PSR2_SEL_FETCH(display))
+ 		return;
+ 
+ 	intel_de_write_dsb(display, dsb, SEL_FETCH_CUR_CTL(pipe), 0);
+@@ -586,7 +591,7 @@ static void i9xx_cursor_update_sel_fetch
+ 		if (crtc_state->enable_psr2_su_region_et)
+ 			wa_16021440873(dsb, plane, crtc_state, plane_state);
+ 		else
+-			i9xx_cursor_disable_sel_fetch_arm(dsb, plane, crtc_state);
++			i9xx_cursor_disable_sel_fetch_arm(dsb, plane);
+ 	}
+ }
+ 
+@@ -695,7 +700,7 @@ static void i9xx_cursor_update_arm(struc
+ 	if (plane_state)
+ 		i9xx_cursor_update_sel_fetch_arm(dsb, plane, crtc_state, plane_state);
+ 	else
+-		i9xx_cursor_disable_sel_fetch_arm(dsb, plane, crtc_state);
++		i9xx_cursor_disable_sel_fetch_arm(dsb, plane);
+ 
+ 	if (plane->cursor.base != base ||
+ 	    plane->cursor.size != fbc_ctl ||
+--- a/drivers/gpu/drm/i915/display/skl_universal_plane.c
++++ b/drivers/gpu/drm/i915/display/skl_universal_plane.c
+@@ -879,13 +879,18 @@ skl_plane_disable_arm(struct intel_dsb *
+ }
+ 
+ static void icl_plane_disable_sel_fetch_arm(struct intel_dsb *dsb,
+-					    struct intel_plane *plane,
+-					    const struct intel_crtc_state *crtc_state)
++					    struct intel_plane *plane)
+ {
+ 	struct intel_display *display = to_intel_display(plane);
+ 	enum pipe pipe = plane->pipe;
+ 
+-	if (!crtc_state->enable_psr2_sel_fetch)
++	/*
++	 * Clear this whenever the hardware has selective fetch, not just when
++	 * the current state uses it. The plane may have been enabled with
++	 * selective fetch earlier and had its enable bit orphaned when the
++	 * feature was switched off.
++	 */
++	if (!HAS_PSR2_SEL_FETCH(display))
+ 		return;
+ 
+ 	intel_de_write_dsb(display, dsb, SEL_FETCH_PLANE_CTL(pipe, plane->id), 0);
+@@ -921,7 +926,7 @@ icl_plane_disable_arm(struct intel_dsb *
+ 
+ 	skl_write_plane_wm(dsb, plane, crtc_state);
+ 
+-	icl_plane_disable_sel_fetch_arm(dsb, plane, crtc_state);
++	icl_plane_disable_sel_fetch_arm(dsb, plane);
+ 
+ 	if (plane_has_normalizer(plane))
+ 		intel_de_write_dsb(display, dsb,
+@@ -1641,7 +1646,7 @@ static void icl_plane_update_sel_fetch_a
+ 		intel_de_write_dsb(display, dsb, SEL_FETCH_PLANE_CTL(pipe, plane->id),
+ 				   SEL_FETCH_PLANE_CTL_ENABLE);
+ 	else
+-		icl_plane_disable_sel_fetch_arm(dsb, plane, crtc_state);
++		icl_plane_disable_sel_fetch_arm(dsb, plane);
+ }
+ 
+ static void
 
 
