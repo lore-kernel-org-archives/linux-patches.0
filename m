@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929022EEE7E;
-	Wed,  9 Sep 2026 13:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71392523781;
+	Wed,  9 Sep 2026 13:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961617; cv=none; b=EamWyHVrK7a2bSDFwllNCeaak/WitCpqpmIL3gQO/addvnTFV2mcRPMNpasGh0eoKGhVxRw4cF53DoripvWkXbmeFG1lbroQUag+nsfy+7ovs8O8LItSng6bSyC98dMC0kL9iZFvGVoGAoDwY+LT9cMOVVp5locXuhSvm4jCvXY=
+	t=1788961620; cv=none; b=I25vdnf2IA4aNZmX5N5lBsVg6UgtXHSAdBHOYbyskFLRQJYejEMFXMBGKQVZKSZtj3OZ36KVktKDEvJJKjeptKOePLYydIcnCpkcQ+9KqAq4l91U9jlKz6I2yasKZOk2weZno1oe9bgU0U470X8snxKWz6GYxyCyryOkd6CtWq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961617; c=relaxed/simple;
-	bh=bQJQa7/JqL0eBStLUsFDyy6+p4Ls90gODMm1ludB8S4=;
+	s=arc-20240116; t=1788961620; c=relaxed/simple;
+	bh=1zvxXTdwq8xtUDbGM2F8Llt8al4BQS6FHhYpRjCQwzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ESLdSVjaA7wVQ65vax06kJhwdbnv/z7ooOWUrYb7bgqG5tArxy+F+gGOfj7HmplncWMEzDK+rKtL8a8sqzeKjfSuhKX7QBIJgBpDVMNup2Gr6BoIh7jt3puCRnKJzFeR2YwuPxw609zDrCw6Q/iSig0/gNfaAYhaKzMqMfbh09M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alf21dSl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DyR5lGMdY4xVPJUqqD/Bhh6OAddDFfoKITfbhcxDJQZoA+8yAb3MpF0O68SDE2g2yD3Tp+G0ajIPld1Zy1GGVhAdzf51y55oVc/P846rLB1S0U83msa37J1bGrfGM2nQPJPnfaGrOCfL9kaXEQ+NB/a3hZPUv/oAVW75WmaEuYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiR0hf+U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alf21dSl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45031F00A3A;
-	Wed,  9 Sep 2026 13:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiR0hf+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CE11F00A3A;
+	Wed,  9 Sep 2026 13:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961616;
-	bh=FrghawLbZzTee47mxrQBh8em9XPg58DpPWDsYiCLLiY=;
+	s=korg; t=1788961619;
+	bh=2VHZSUwRW55zf4Be6vqu9mreFjp3oCYMWNW0cqchWTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=alf21dSl5IQ9lqUF/1ip3y3+mD5Seu94+bdPRoPb73dizcaemIX/QigvTkClH1VsB
-	 ET2y2GXGzVXdqwOSEET5CsZl7QoTiw2cTZSd7775fqIFyLjxZkgdOtyNOKNvoWeCd4
-	 k1L33Bt4aO6Ph7n6hNvnaHjSagDczhFiBf+rWNz8=
+	b=ZiR0hf+UwsysGtE8juG6LhthelyhurzjzX8/qCQ/GsWZiwfZS8BvQpXtShcai+8Up
+	 IaCUfeHDAdPFDLNH8ZXL+hsKVAbfa5lpOoGR8ec79KrIfunnf0JTjSFfY2vd4iiRdc
+	 yEeFYgjZf82yBVkNBpWBrcjxh5zE3z3CrldoV8lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jiri Kosina <jkosina@suse.com>,
+	Avraham Hollander <anhollander516@gmail.com>,
+	Rong Zhang <i@rong.moe>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 011/556] HID: sony: clean up device list on probe failure
-Date: Wed,  9 Sep 2026 15:34:51 +0200
-Message-ID: <20260909134230.869700424@linuxfoundation.org>
+Subject: [PATCH 7.2 012/556] ACPI: battery: Use kstrtoul() over sscanf("%lu\n")
+Date: Wed,  9 Sep 2026 15:34:52 +0200
+Message-ID: <20260909134230.903751054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,122 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit 7c65699a3a311198a07659a614fe64d45924839e ]
+[ Upstream commit 57346c4d78d38b357dbe9ef16d3f63bf4610c039 ]
 
-sony_input_configured() adds some controllers to sony_device_list before
-HID core registers their input devices. input_register_device() can fail
-after the callback returns successfully. sony_probe() then observes that
-HID_CLAIMED_INPUT is clear and unwinds, but only stops the HID hardware.
-The devres-managed sony_sc is freed while its list node remains linked, so
-the next matching controller traverses freed memory.
+It is more preferred to use kstrto*() to parse a single number. The
+function family properly returns an errno on error and is the correct
+mechanism to parse data from sysfs.
 
-Initialize the list node and device ID to inactive states. Make list
-removal idempotent and run the driver-private cleanup on every probe
-failure path. This also makes a second cleanup safe when
-sony_input_configured() already unwound a partial initialization before
-sony_probe() handles the missing input claim.
+The number base is set to 10 in order not to break the ABI.
 
-Found by 0sec (https://0sec.ai) using automated source analysis;
-verified against the HID input registration and probe unwind paths.
-
-Fixes: 4f967f6d7374 ("HID: sony: Fix memory issue when connecting device using both Bluetooth and USB")
-Cc: stable@vger.kernel.org
-Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://lore.kernel.org/linux-input/20260724143925.007D61F00A3A@smtp.kernel.org/
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Tested-by: Avraham Hollander <anhollander516@gmail.com>
+Signed-off-by: Rong Zhang <i@rong.moe>
+Link: https://patch.msgid.link/20260718-b4-acpi-battery-notification-v4-2-599c8ed1072f@rong.moe
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 9e409f1dff78 ("ACPI: battery: Protect all properties with a separated mutex")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sony.c |   33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ drivers/acpi/battery.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-sony.c
-+++ b/drivers/hid/hid-sony.c
-@@ -1984,11 +1984,10 @@ out:
- 
- static void sony_remove_dev_list(struct sony_sc *sc)
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -668,9 +668,13 @@ static ssize_t acpi_battery_alarm_store(
  {
--	if (sc->list_node.next) {
--		scoped_guard(spinlock_irqsave, &sony_dev_list_lock) {
--			list_del(&(sc->list_node));
--		}
--	}
-+	guard(spinlock_irqsave)(&sony_dev_list_lock);
+ 	unsigned long x;
+ 	struct acpi_battery *battery = to_acpi_battery(dev_get_drvdata(dev));
++	int err;
+ 
+-	if (sscanf(buf, "%lu\n", &x) == 1)
+-		battery->alarm = x/1000;
++	err = kstrtoul(buf, 10, &x);
++	if (err)
++		return err;
 +
-+	if (!list_empty(&sc->list_node))
-+		list_del_init(&sc->list_node);
- }
- 
- static int sony_get_bt_devaddr(struct sony_sc *sc)
-@@ -2123,6 +2122,13 @@ static inline void sony_cancel_work_sync
- 	}
- }
- 
-+static void sony_cleanup(struct sony_sc *sc)
-+{
-+	sony_cancel_work_sync(sc);
-+	sony_remove_dev_list(sc);
-+	sony_release_device_id(sc);
-+}
-+
- static int sony_input_configured(struct hid_device *hdev,
- 					struct hid_input *hidinput)
- {
-@@ -2296,9 +2302,7 @@ static int sony_input_configured(struct
- err_close:
- 	hid_hw_close(hdev);
- err_stop:
--	sony_cancel_work_sync(sc);
--	sony_remove_dev_list(sc);
--	sony_release_device_id(sc);
-+	sony_cleanup(sc);
- 	return ret;
- }
- 
-@@ -2322,6 +2326,8 @@ static int sony_probe(struct hid_device
- 		return -ENOMEM;
- 
- 	spin_lock_init(&sc->lock);
-+	INIT_LIST_HEAD(&sc->list_node);
-+	sc->device_id = -1;
- 
- 	sc->quirks = quirks;
- 	hid_set_drvdata(hdev, sc);
-@@ -2350,6 +2356,7 @@ static int sony_probe(struct hid_device
- 	ret = hid_hw_start(hdev, connect_mask);
- 	if (ret) {
- 		hid_err(hdev, "hw start failed\n");
-+		sony_cleanup(sc);
- 		return ret;
- 	}
- 
-@@ -2404,7 +2411,7 @@ static int sony_probe(struct hid_device
- 
- err:
- 	usb_free_urb(sc->ghl_urb);
--
-+	sony_cleanup(sc);
- 	hid_hw_stop(hdev);
- 	return ret;
- }
-@@ -2421,13 +2428,7 @@ static void sony_remove(struct hid_devic
- 	}
- 
- 	hid_hw_close(hdev);
--
--	sony_cancel_work_sync(sc);
--
--	sony_remove_dev_list(sc);
--
--	sony_release_device_id(sc);
--
-+	sony_cleanup(sc);
- 	hid_hw_stop(hdev);
- }
- 
++	battery->alarm = x / 1000;
+ 	if (acpi_battery_present(battery))
+ 		acpi_battery_set_alarm(battery);
+ 	return count;
 
 
