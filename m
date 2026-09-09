@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB442550DB2;
-	Wed,  9 Sep 2026 14:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5EF54B1C6;
+	Wed,  9 Sep 2026 14:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963461; cv=none; b=Mi4pjCMiUB69p5qhU8+YJOuiWt3fPmcgYVBokIy3gan67+D+oa833eb8HBL7/QY3tuhdni0mBcCYDHzvX3jUmHdq6mBQRVUn4IH0o9H9Jc5/QggLeG+ag9XXMHbhcJfQL1SK5JoJffV9ajhUtlxop8NRf3DRBgLobH6D/ZYzkCY=
+	t=1788963464; cv=none; b=VnLLhpr2zHwsO7syPGGOjielAFKDkFW3PDg3x4jD5CjTeOO+CE6lO4rzRTdA7beXeu5wVmFHfqHubopX2saATustzLsp3dhbjF3WCEwDUpI1Z1yYOJ9Iq2VWiocEzKIiZFh72JeMh1oAzzXRHOgd8A5iQL1U+KiUNbBkkDwwalM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963461; c=relaxed/simple;
-	bh=xH0GLXR23muTVRQmcX7JmoW4a8TDK+MoFyhtzwOYF5I=;
+	s=arc-20240116; t=1788963464; c=relaxed/simple;
+	bh=ggc+blhNJ+2k/bs2A6ZzmUSfH0zrlyJ77CzLSpFOlgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GmjToKaSO5y8gU74++Y8kIoj9uyJP2BBN/DAuhjZM2vibq3JNjmt14Kuindcw9GIFpFCH8HDbVVWOFS34LtoweZfhRbwCxnHC9cyiDNGYR9NUMA+578gvzHVm/5ZYn16opX0xP5mw5A8zTRUhqCcMcPAwHrMLYZBplLakjcCqmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qK4YM9q7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iY83/2SnDMSbNH+ovUJkxoaS/EukuXpEsGncg7yiqw3buO1rZI6HrsN9B6EC1E+gWsyOW6wlrGHv0J7GyyFCbNp60/TXAb8n054fiwUIlWV9IQF+wOe4w23mIOsFNdle9mUwpgaHsa0Z1HNIJTtb3bSQ5w2LI/KSOCqOQ2J7IA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRsj63LO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qK4YM9q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392FA1F00A3A;
-	Wed,  9 Sep 2026 14:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRsj63LO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF08A1F00A3A;
+	Wed,  9 Sep 2026 14:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963459;
-	bh=x/pm86xDAYb+9VygfXiicJoDusFFztQgsuA8wRYy0XI=;
+	s=korg; t=1788963462;
+	bh=wX9APIycX0hpfUK7QT7YjoTppO8Nsnbs3iizTiTavfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qK4YM9q7wRdPOQqZkB11RGDGyT/TG3+/YWUWbyn0UYZAkbsBRbUWSXCaMqd4lgNrF
-	 u+TupGOzaUcsizDr/Olf4SZePAkKPGu78/gKMWrEitO4fZcjCFw8lLlLJ3f8mUq9Ch
-	 utMWYIiBBDOlmSMoF74NTRuf54gpPH1laiSHxF6k=
+	b=qRsj63LOXdArkpSL3WAUvu+e/VePyNPVy2UtNIyWCFNxT+zldY4HdZAnKyxUIXznG
+	 OK2eG0ijwZq0iBHmbxEjg3xo8P6pXQbc0zllBvajqmlWDw4fDf5wZ93h12sAw5ftqo
+	 fa60bFUN0gdfc3trBA8PRKmhO9AdS1sA2IY9RsEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shakeel Butt <shakeel.butt@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	syzbot+12ee2725d5fde63a9c96@syzkaller.appspotmail.com,
 	Michal Hocko <mhocko@suse.com>,
-	David Rientjes <rientjes@google.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kairui Song <kasong@tencent.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 087/583] memcg: bypass the reclaim and oom killer for dying tasks once oom_reaper is done
-Date: Wed,  9 Sep 2026 15:36:12 +0200
-Message-ID: <20260909134241.139049369@linuxfoundation.org>
+Subject: [PATCH 6.18 088/583] memcg: make the v1 soft limit knob inert
+Date: Wed,  9 Sep 2026 15:36:13 +0200
+Message-ID: <20260909134241.174940317@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -60,124 +62,203 @@ Content-Transfer-Encoding: 8bit
 
 From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit 6b0d1083364fc8e7cc2f7d1f93ee3ee78f4d52f7 upstream.
+commit a3417097fb107cea3358b19bcbb4eb655fd67f8c upstream.
 
-At Meta, we are seeing instances where an OOM killed job is stuck in the
-exit path for several hours.  In one particular case, the job was stuck
-for more than 8 hours and I had to manually remove the memory.max limits
-to allow the process to exit.
+The v1 soft limit has been deprecated since v6.12 and nobody has reported
+depending on it.  Start the removal by decoupling the interface from the
+implementation: keep memory.soft_limit_in_bytes, but ignore writes to it
+and always report the maximum value on read similar to what
+memory.kmem.limit_in_bytes already does.
 
-The job was a single process job and had ~55 GiB memory.max and zswap
-enabled.  It had almost 0 anon in memory and ~111 GiB in zswap compressed
-to ~51 GiB zswap pool (i.e.  almost all of memory.current was zswap).
-Nothing was left on the LRUs to reclaim.
+Writes are still parsed, so malformed input keeps returning -EINVAL.  The
+knob now also behaves the same everywhere: it used to return -EOPNOTSUPP
+on PREEMPT_RT, where soft limit reclaim has always been disabled.
 
-On further inspection, I observed ~20k threads of that process stuck with
-the following stack:
+This also fixes the syzbot report linked below.  Soft limit reclaim is the
+only caller that runs shrink_lruvec() from kswapd against a specific
+memcg, so it is the only way to reach lru_gen_shrink_lruvec() and in turn
+set_mm_walk(), which warns when called from kswapd.
 
-[<0>] mem_cgroup_out_of_memory+0x4e/0xa0
-[<0>] charge_memcg+0x8bf/0x990
-[<0>] mem_cgroup_swapin_charge_folio+0x4e/0x80
-[<0>] __read_swap_cache_async+0x10c/0x260
-[<0>] swapin_readahead+0x116/0x3f0
-[<0>] do_swap_page+0x13c/0x1ce0
-[<0>] handle_mm_fault+0x61d/0x11f0
-[<0>] do_user_addr_fault+0x3e7/0x6d0
-[<0>] exc_page_fault+0x8f/0x110
-[<0>] asm_exc_page_fault+0x22/0x30
-[<0>] __get_user_8+0x14/0x20
-[<0>] futex_cleanup+0x27/0x1c0
-[<0>] futex_exit_release+0x47/0x60
-[<0>] do_exit+0x107/0x940
-[<0>] do_group_exit+0x81/0xa0
-[<0>] get_signal+0x2b1/0x6e0
-[<0>] arch_do_signal_or_restart+0x1a/0x1c0
-[<0>] exit_to_user_mode_loop+0xa8/0x1c0
-[<0>] do_syscall_64+0x152/0x250
-[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-In addition the dmesg was filled with "Out of memory and no killable
-processes..." messages.
-
-I have no idea why oom reaper was not able to reap/unmap the process.  My
-guess is that since oom reaper tries to acquire mmap_lock in read mode
-limited number of times and then gives up, there might be a thread of that
-process which had mmap_lock in write mode at that time.
-
-My initial suspicion was the futex_cleanup and kernel page fault causing
-infinite fault and charge retries but that was put to rest in previous
-discussions happened on similar problem [1].
-
-My current theory is that it is just a simple slow serialization behind
-the oom_lock.  Unlike page allocator, memcg charge code takes the oom_lock
-without the "try".  Though memcg oom code uses mutex_lock_killable(), note
-that in the call stack get_signal() consumes SIGKILL (or
-sigdelset(SIGKILL)) before calling do_group_exit().  So this
-mutex_lock_killable() is just a mutex_lock() here.  Therefore 10s of
-thousands of threads are waiting on oom_lock and one by one they get
--EFAULT from get_user() in the futex cleanup code and bails out.
-
-Discussion from [1] led to commit a75ffa26122b ("memcg, oom: do not bypass
-oom killer for dying tasks") which routes dying tasks into the OOM path
-precisely so the oom_reaper can reap their mm and free the memory
-asynchronously.  But the reaper is best-effort and one-shot: if it cannot
-take mmap_lock for read (e.g.  a sibling thread holds it for write) it
-sets MMF_OOM_SKIP and never retries, leaving only the glacial
-oom_lock-serialized synchronous drain.
-
-Once MMF_OOM_SKIP is set there is no more asynchronous reclaim coming for
-the mm, so a dying task charging against it has nothing left to wait for:
-it frees its memory only once it finishes exiting.  Running reclaim and
-the (no-victim) OOM killer for it is then pointless, and doing it for 10s
-of thousands of exiting threads is what serializes them behind oom_lock.
-So before reclaim, if current is an OOM victim whose reaper is done, fail
-the charge.
-
-Reproduced with 20k threads, each parking a robust futex head on its own
-zswapped page, OOM-group-killed while a sibling holds mmap_lock for write
-so the reaper gives up and sets MMF_OOM_SKIP.  Tested on next-20260728 and
-baseline show ~90 seconds exit time while with the patch the exit time
-reduced to ~3 seconds.
-
-Link: https://lore.kernel.org/20260729024612.3369005-1-shakeel.butt@linux.dev
-Link: https://lore.kernel.org/7a4e5591f45df455e6a485fc5400989569d3d22d.camel@surriel.com/ [1]
+Link: https://lore.kernel.org/20260811203203.3456029-2-shakeel.butt@linux.dev
 Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reported-by: syzbot+12ee2725d5fde63a9c96@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a7a6929.b50370da.49fe0.005e.GAE@google.com/
 Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: David Rientjes <rientjes@google.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
 Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ Documentation/admin-guide/cgroup-v1/memory.rst |   49 +++----------------------
+ mm/memcontrol-v1.c                             |   43 +++++++++++++--------
+ 2 files changed, 32 insertions(+), 60 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2352,6 +2352,19 @@ retry:
- 	if (!gfpflags_allow_blocking(gfp_mask))
- 		goto nomem;
+--- a/Documentation/admin-guide/cgroup-v1/memory.rst
++++ b/Documentation/admin-guide/cgroup-v1/memory.rst
+@@ -47,7 +47,6 @@ Features:
+  - pages are linked to per-memcg LRU exclusively, and there is no global LRU.
+  - optionally, memory+swap usage can be accounted and limited.
+  - hierarchical accounting
+- - soft limit
+  - moving (recharging) account at moving a task is selectable.
+  - usage threshold notifier
+  - memory pressure notifier
+@@ -76,10 +75,9 @@ Brief summary of control files.
+  memory.memsw.failcnt		     show the number of memory+Swap hits limits
+  memory.max_usage_in_bytes	     show max memory usage recorded
+  memory.memsw.max_usage_in_bytes     show max memory+Swap usage recorded
+- memory.soft_limit_in_bytes	     set/show soft limit of memory usage
+-				     This knob is not available on CONFIG_PREEMPT_RT systems.
+-                                     This knob is deprecated and shouldn't be
+-                                     used.
++ memory.soft_limit_in_bytes	     This knob is deprecated and has no effect.
++                                     Writes are ignored and reads always
++                                     return the maximum value.
+  memory.stat			     show various statistics
+  memory.use_hierarchy		     set/show hierarchical account enabled
+                                      This knob is deprecated and shouldn't be
+@@ -341,9 +339,6 @@ memory.kmem.usage_in_bytes, or in a sepa
+ The main "kmem" counter is fed into the main counter, so kmem charges will
+ also be visible from the user counter.
  
-+	/*
-+	 * OOM victim still needs to charge memory to exit. OOM reaper should
-+	 * help but it might fail on mmap_lock contention. If the victim is a
-+	 * large thread group then all exiting threads might compete on oom_lock
-+	 * just to learn that there is nothing really killable anymore. Bail
-+	 * out early and fail the charge to expedite their exit. They are
-+	 * considered fully reclaimed by the oom reaper and they shouldn't
-+	 * contribute further charges.
-+	 */
-+	if (tsk_is_oom_victim(current) &&
-+	    mm_flags_test(MMF_OOM_SKIP, current->signal->oom_mm))
-+		goto nomem;
+-Currently no soft limit is implemented for kernel memory. It is future work
+-to trigger slab reclaim when those limits are reached.
+-
+ 2.7.1 Current Kernel Memory resources accounted
+ -----------------------------------------------
+ 
+@@ -711,42 +706,10 @@ For compatibility reasons writing 1 to m
+ 
+ THIS IS DEPRECATED!
+ 
+-Soft limits allow for greater sharing of memory. The idea behind soft limits
+-is to allow control groups to use as much of the memory as needed, provided
+-
+-a. There is no memory contention
+-b. They do not exceed their hard limit
+-
+-When the system detects memory contention or low memory, control groups
+-are pushed back to their soft limits. If the soft limit of each control
+-group is very high, they are pushed back as much as possible to make
+-sure that one control group does not starve the others of memory.
+-
+-Please note that soft limits is a best-effort feature; it comes with
+-no guarantees, but it does its best to make sure that when memory is
+-heavily contended for, memory is allocated based on the soft limit
+-hints/setup. Currently soft limit based reclaim is set up such that
+-it gets invoked from balance_pgdat (kswapd).
+-
+-7.1 Interface
+--------------
++Writing to memory.soft_limit_in_bytes has no effect and reading it will
++always return the maximum value.
+ 
+-Soft limits can be setup by using the following commands (in this example we
+-assume a soft limit of 256 MiB)::
+-
+-	# echo 256M > memory.soft_limit_in_bytes
+-
+-If we want to change this to 1G, we can at any time use::
+-
+-	# echo 1G > memory.soft_limit_in_bytes
+-
+-.. note::
+-       Soft limits take effect over a long period of time, since they involve
+-       reclaiming memory for balancing between memory cgroups
+-
+-.. note::
+-       It is recommended to set the soft limit always below the hard limit,
+-       otherwise the hard limit will take precedence.
++Use memory.low and memory.min in cgroup v2 instead.
+ 
+ .. _cgroup-v1-memory-move-charges:
+ 
+--- a/mm/memcontrol-v1.c
++++ b/mm/memcontrol-v1.c
+@@ -95,7 +95,6 @@ enum {
+ 	RES_LIMIT,
+ 	RES_MAX_USAGE,
+ 	RES_FAILCNT,
+-	RES_SOFT_LIMIT,
+ };
+ 
+ #ifdef CONFIG_LOCKDEP
+@@ -1547,6 +1546,30 @@ static int mem_cgroup_hierarchy_write(st
+ 	return -EINVAL;
+ }
+ 
++static u64 mem_cgroup_soft_limit_read(struct cgroup_subsys_state *css,
++				      struct cftype *cft)
++{
++	return (u64)PAGE_COUNTER_MAX * PAGE_SIZE;
++}
 +
- 	__memcg_memory_event(mem_over_limit, MEMCG_MAX, allow_spinning);
- 	raised_max_event = true;
- 
++static ssize_t mem_cgroup_soft_limit_write(struct kernfs_open_file *of,
++					   char *buf, size_t nbytes, loff_t off)
++{
++	unsigned long nr_pages;
++	int ret;
++
++	ret = page_counter_memparse(strstrip(buf), "-1", &nr_pages);
++	if (ret)
++		return ret;
++
++	pr_warn_once("soft_limit_in_bytes is deprecated and will be removed. "
++		     "Writing any value to this file has no effect. "
++		     "Please report your usecase to linux-mm@kvack.org if you "
++		     "depend on this functionality.\n");
++
++	return nbytes;
++}
++
+ static u64 mem_cgroup_read_u64(struct cgroup_subsys_state *css,
+ 			       struct cftype *cft)
+ {
+@@ -1583,8 +1606,6 @@ static u64 mem_cgroup_read_u64(struct cg
+ 		return (u64)counter->watermark * PAGE_SIZE;
+ 	case RES_FAILCNT:
+ 		return counter->failcnt;
+-	case RES_SOFT_LIMIT:
+-		return (u64)READ_ONCE(memcg->soft_limit) * PAGE_SIZE;
+ 	default:
+ 		BUG();
+ 	}
+@@ -1679,17 +1700,6 @@ static ssize_t mem_cgroup_write(struct k
+ 			break;
+ 		}
+ 		break;
+-	case RES_SOFT_LIMIT:
+-		if (IS_ENABLED(CONFIG_PREEMPT_RT)) {
+-			ret = -EOPNOTSUPP;
+-		} else {
+-			pr_warn_once("soft_limit_in_bytes is deprecated and will be removed. "
+-				     "Please report your usecase to linux-mm@kvack.org if you "
+-				     "depend on this functionality.\n");
+-			WRITE_ONCE(memcg->soft_limit, nr_pages);
+-			ret = 0;
+-		}
+-		break;
+ 	}
+ 	return ret ?: nbytes;
+ }
+@@ -2027,9 +2037,8 @@ struct cftype mem_cgroup_legacy_files[]
+ 	},
+ 	{
+ 		.name = "soft_limit_in_bytes",
+-		.private = MEMFILE_PRIVATE(_MEM, RES_SOFT_LIMIT),
+-		.write = mem_cgroup_write,
+-		.read_u64 = mem_cgroup_read_u64,
++		.write = mem_cgroup_soft_limit_write,
++		.read_u64 = mem_cgroup_soft_limit_read,
+ 	},
+ 	{
+ 		.name = "failcnt",
 
 
