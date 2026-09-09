@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61EC52B1FF;
-	Wed,  9 Sep 2026 14:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3E7568528;
+	Wed,  9 Sep 2026 14:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963073; cv=none; b=lBPsegIqK6zSposvksI7LYxFKVBGcdU+++2VOMkM1qfTrcyZLAw6jDuDjVjuSHZD3ujYPnnQOS+gkHnynhh62kTqwp+4ovD4m7iduGJ29mNv1n0AOsYklaJ8C21htwmXznQUXG+erT0UC3npywywEdHSGb7zLlXkLjHiDHwVTz0=
+	t=1788963076; cv=none; b=ibllyyZ7VxWajfM3uduqm4btBlcG5NcVe7jCcgp/CmNqBi+BTg5jimpj/go9XkwkiP8J/bQH35fBL6f0NKSVy3KB9w0Suxq0GQi1RDUXWEs5a9taiJtKt5Gvfxm93/HE4yeiH3MAgF/l1DZEImFtVsQicQVp2Cb7IptRnFvpn7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963073; c=relaxed/simple;
-	bh=sOOlAzchRt7AJuv2ehuhowFnT8rw22weQeeGkANcxtA=;
+	s=arc-20240116; t=1788963076; c=relaxed/simple;
+	bh=uBDDC2Kp1aHP0RHpf8xd10ZLegd7jhhBg7gHUGNrlFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBlWd1D0+J9xMYlcKye5WFGjKzHzMuhV0l6jnxP+yt2R+ROz3WO5UTvoYHHbBcE4VLXm1Ijsn2bK4CW2jx76rCWUy5v0SLBbBgwo9zB+RTtvuKPiGJJgZ2KsZCrRFYB/cc5TEGQ4TsqqJNzedowFhTf22K4pZ2zB+HHZeR7KNtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xCImIvX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bIk5j/kys18cADuPdh8UVn0ltjdCHQTA/aty9diwnwGzvzspU76F8OwGAVctWrL/wh5Ffmscgl9ChYfxVz7JOLQOS98Gb93bouksI8NnXWHfx187cbI/5AIXIPn7sol0B20gVJaOs5Bm94VpK6K37WxFaFZhLhal2ok7fbRwJmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6m4jiPJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xCImIvX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D81D1F00A3A;
-	Wed,  9 Sep 2026 14:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6m4jiPJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E429C1F00A3D;
+	Wed,  9 Sep 2026 14:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963072;
-	bh=cKx16oCCSsTtbtaBat9irdXc6eUcdZrGq3zxS3HzHCM=;
+	s=korg; t=1788963075;
+	bh=6qZ0DWzey2mB9TSWqcAqZscpBGtpVtMph0KuCZgIksU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1xCImIvX0iajUb/TiMKwq4V2xs9NGwD+dW+8YQaKgyUFgmXyS+4VHN0dS/lxZJ4CR
-	 oDFuD403HMZbP9lGKNyBgRyoY8dQYLHeRNVSzDTL0dfZabrcB7OW/xey/8tUG9TmXi
-	 mVkCbekLmYrsONE87sKajMhqZ/953FS9Aw6Pjq28=
+	b=X6m4jiPJOJRzvIk1g/uK9a7WBkjATOoXpX0xva/EYnn85jlIFOFifxmkXjGPidfPC
+	 Mj/u/kMMdUjkTN7JO8iTxb7v6Xr6N56Xnmvo2iH85Pr0c1CsIFfwqVLKOh7eoym/rm
+	 e6L1IgvYKtR5P3h6CQW7B7nhR5gs0/AcHuZjhGEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 509/556] drm/amdgpu: force complete the MES ring fences on reset
-Date: Wed,  9 Sep 2026 15:43:09 +0200
-Message-ID: <20260909134248.363552018@linuxfoundation.org>
+Subject: [PATCH 7.2 510/556] drm/amdgpu: Skip accessing psp rum time db for APUs
+Date: Wed,  9 Sep 2026 15:43:10 +0200
+Message-ID: <20260909134248.394747187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,60 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
 
-commit 48dc279c3010ac8f91b1845b2abb3a1e9943a0f5 upstream.
+commit a26301203a196a991527f7b1ab884d4dd0e7c95e upstream.
 
-The MES scheduler ring has no drm scheduler (no_scheduler = true), so it is
-skipped by the force-completion loop in amdgpu_device_pre_asic_reset(). It uses
-a polling fence whose hw value lives in wb (GTT) memory and survives a MODE1
-reset, while fence_drv.sync_seq keeps advancing for every packet.
+Psp runtime DB is for dGPUs only.
 
-When the reset is triggered because MES itself stopped responding, the
-timed-out packets advance sync_seq past the last hw fence value MES wrote.
-After resume the first MES submission polls forever on a seq that is never
-written back, failing the resume and wedging the box on a second reset:
-
-  amdgpu: MES ring buffer is full.
-  amdgpu: *ERROR* ring gfx_0.0.0 test failed (-110)
-  amdgpu: resume of IP block <gfx_v11_0> failed -110
-  amdgpu: GPU reset end with ret = -110
-
-Force complete the MES scheduler ring fences together with the scheduler rings
-so their hw fence is realigned to sync_seq.
-
-v2: cover all XCCs (one scheduler ring each), not just mes.ring[0].
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit dce8195027f146467c9378efb2bb1b0859cb735e)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5231,6 +5231,19 @@ int amdgpu_device_pre_asic_reset(struct
- 			amdgpu_fence_driver_force_completion(kiq_ring, fence);
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -396,6 +396,12 @@ static bool psp_get_runtime_db_entry(str
+ 	bool ret = false;
+ 	int i;
  
 +	/*
-+	 * MES scheduler rings have no drm scheduler, so they are missed by the
-+	 * loop above. Realign their polling fence too (one per XCC), otherwise the
-+	 * first post-reset submission polls forever on a stale seq. sched.ready is
-+	 * only set while the driver owns the ring.
++	 * Runtime DB is for dGPUs only.
 +	 */
-+	for (i = 0; i < AMDGPU_MAX_MES_INST_PIPES; i++) {
-+		struct amdgpu_ring *mes_ring = &adev->mes.ring[i];
++	if (adev->flags & AMD_IS_APU)
++		return false;
 +
-+		if (mes_ring->fence_drv.initialized && mes_ring->sched.ready)
-+			amdgpu_fence_driver_force_completion(mes_ring, fence);
-+	}
-+
- 	amdgpu_fence_driver_isr_toggle(adev, false);
- 
- 	r = amdgpu_reset_prepare_hwcontext(adev, reset_context);
+ 	if (amdgpu_ip_version(adev, MP0_HWIP, 0) == IP_VERSION(13, 0, 6) ||
+ 	    amdgpu_ip_version(adev, MP0_HWIP, 0) == IP_VERSION(13, 0, 12) ||
+ 	    amdgpu_ip_version(adev, MP0_HWIP, 0) == IP_VERSION(13, 0, 14) ||
 
 
