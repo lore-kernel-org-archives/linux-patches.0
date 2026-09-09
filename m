@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE4A550DCA;
-	Wed,  9 Sep 2026 14:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA13E581231;
+	Wed,  9 Sep 2026 14:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964291; cv=none; b=hzsB29MKyPv051dnsuYrLsZuTEewuyyMnQSdRwPkHjgsVe+u8Cf6fLnLRY0+e+C7iZHwyRIAk2OVMgIlH0ki7coIuz4T+gbOnxb0yYi2gDf1qL2h7kqhtOInrpT9baduxtKqMn659eealknlyY/rcKXWVipAUKpb2yMnsESkJCk=
+	t=1788964293; cv=none; b=cV3v9aTVe4C5Z9Y10Om7J8KmDRtmJwhaqi4QhKRpToPy0PyVTwei2wZ4pQE6G5X12Todb+8gtSjeuw2gPUNgyp0GZHXymJpukCLSTSSYppCC7ZP0tz44xzHq+HM2oaqKEN+QHpG9RfgEoJWhEcSXg0WyvZbCoNTbZZsYsVaF1O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964291; c=relaxed/simple;
-	bh=vNrXJ68sBc/JA5HRcgB5NaBmLIeXLvNVstBn5rMXYIE=;
+	s=arc-20240116; t=1788964293; c=relaxed/simple;
+	bh=Fq0JdcKR4tS4A6HsB2Kg0a7d247/BMyLbd62wR7yXKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBfm0vrUt6VPIeevGW3D9wHoaRAMj47EqsR6f0/o5RAijXGtUIsNJ6sfPxm6M9bZuk67O3lzoSk2G/B5YPu4OZFGSE/bkNyD9UYIngAw2A2UpL5+osk4NHysM1rt1QlftLmhAJ6ys89w8UWvFGRd0Ixg+2x7pGwnntMSZRQiH0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXS96OtH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X+9nwhHyoT7K7BwHO3SRTTC9vndimQEIS8PhiDjmZJ/vtfJ4bG47/D8UMPyq/5/G1QSsx4wkrrPFd3/b9GbFpKJvT+vjOIIQ4X/mBFgMq2EiLM00gSR/Gq1s0y7gulz8q80Rx8xe0olL2NtMNC6RXbgTAl9QjeqOck1EPuXndY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTGb9zv4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXS96OtH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5681F00A3A;
-	Wed,  9 Sep 2026 14:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTGb9zv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2088F1F00A3A;
+	Wed,  9 Sep 2026 14:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964289;
-	bh=5grpkthjspGhWz0/osDo2XK39IUHc387MJ+TBENUpMA=;
+	s=korg; t=1788964292;
+	bh=1rP4x8iMxsblPQtyKLDVaToRyulTl6o4H9l6zHjOeWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JXS96OtHNzBLt5uhLYHly/iy/0diK9aBLip6+ruzft4TzmzMr7YD31qYHJFBapaQ1
-	 yZwq6RWQ7cYHvaoQB58/pzoFMqU6hb+Brr7/EfkfzpIOHRnqpn8gDE8zE745xpSN8F
-	 8VxZaRgOmi/pOt/erfRRI73UfuxPKfkP/hG/BL9Y=
+	b=fTGb9zv4cQbuvwxgY771dmvktDSq/1LEFlhV1g7TxSSE15yNpIF1A+mV0f/jbsayk
+	 CNk94ZaaiRdN/kqM5Ur0Ao9OUtF6Zp64hfFTQBebkpcWbdHqVCdOyN0Et5XcGLNeZM
+	 EZb1WE1kiA8qp46wQfmkDNsgXhEpzMR52GNs4+vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Subject: [PATCH 6.18 373/583] drm/bridge: dw-hdmi: fix i2c adapter leak on probe failure
-Date: Wed,  9 Sep 2026 15:40:58 +0200
-Message-ID: <20260909134250.955225380@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 374/583] drm/panel-edp: fix i2c adapter leak on probe failure
+Date: Wed,  9 Sep 2026 15:40:59 +0200
+Message-ID: <20260909134250.985723603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,35 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 09b195a7bb23df56269cd2a95d01ba3a5533af13 upstream.
+commit e2a9e291275a74e309a21cbb1def6296a72d6aed upstream.
 
-Make sure to drop the i2c adapter device and module references before
-returning when detecting a malformed devicetree during probe.
+Make sure to drop the i2c adapter reference on probe failure (e.g.
+probe deferral) and on driver unbind also if a devicetree redundantly
+uses the 'ddc-i2c-bus' property to point to the aux ddc bus.
 
-Fixes: 80e2f97968b5 ("drm: bridge: dw-hdmi: Switch to regmap for register access")
-Cc: stable@vger.kernel.org	# 4.12
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: cc5a3fc041f0 ("drm/panel: panel-simple: Stash DP AUX bus; allow using it for DDC")
+Cc: stable@vger.kernel.org	# 5.15
+Reported-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/CAD=FV=VZPhzHU+Pet2m3L+Pqc7mOPfZC-f5p0OuNL79wNZPxRg@mail.gmail.com
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://patch.msgid.link/20260717090819.1630965-1-johan@kernel.org
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260717143119.1815106-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/synopsys/dw-hdmi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-edp.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-@@ -3385,7 +3385,8 @@ struct dw_hdmi *dw_hdmi_probe(struct pla
- 			break;
- 		default:
- 			dev_err(dev, "reg-io-width must be 1 or 4\n");
--			return ERR_PTR(-EINVAL);
-+			ret = -EINVAL;
-+			goto err_res;
- 		}
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -831,6 +831,13 @@ exit:
+ 	return 0;
+ }
  
- 		iores = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++static void panel_edp_put_adapter(void *_adap)
++{
++	struct i2c_adapter *adap = _adap;
++
++	put_device(&adap->dev);
++}
++
+ static int panel_edp_probe(struct device *dev, const struct panel_desc *desc,
+ 			   struct drm_dp_aux *aux)
+ {
+@@ -878,6 +885,11 @@ static int panel_edp_probe(struct device
+ 
+ 		if (!panel->ddc)
+ 			return -EPROBE_DEFER;
++
++		err = devm_add_action_or_reset(dev, panel_edp_put_adapter,
++					       panel->ddc);
++		if (err)
++			return err;
+ 	} else if (aux) {
+ 		panel->ddc = &aux->ddc;
+ 	}
+@@ -889,7 +901,7 @@ static int panel_edp_probe(struct device
+ 
+ 	err = drm_panel_of_backlight(&panel->base);
+ 	if (err)
+-		goto err_finished_ddc_init;
++		return err;
+ 
+ 	/*
+ 	 * We use runtime PM for prepare / unprepare since those power the panel
+@@ -936,9 +948,6 @@ static int panel_edp_probe(struct device
+ err_finished_pm_runtime:
+ 	pm_runtime_dont_use_autosuspend(dev);
+ 	pm_runtime_disable(dev);
+-err_finished_ddc_init:
+-	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
+-		put_device(&panel->ddc->dev);
+ 
+ 	return err;
+ }
+@@ -982,8 +991,6 @@ static void panel_edp_remove(struct devi
+ 
+ 	pm_runtime_dont_use_autosuspend(dev);
+ 	pm_runtime_disable(dev);
+-	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
+-		put_device(&panel->ddc->dev);
+ 
+ 	drm_edid_free(panel->drm_edid);
+ 	panel->drm_edid = NULL;
 
 
