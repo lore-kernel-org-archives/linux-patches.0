@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF24577E4D;
-	Wed,  9 Sep 2026 14:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2D1577E4D;
+	Wed,  9 Sep 2026 14:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964925; cv=none; b=FA6tGrx4AvmEJGLOu3o8LymU2HfwF7QGDYJeYdOMyWnAAZeia8jbro7FFUSBXo0ZR68rfK4/oLSO2d9khkUPRJ4aeNIQ/TV3S5mqlNV5m7OPAo0YsOpWLJL4ASArlU2iniKHr9yN5AFOxFN+5hplFMZh80TohJsyDbwHXR2kEQs=
+	t=1788964927; cv=none; b=A4mSxo3ypkM9NYYqeEyQpenBEjO5eOihvr8Cw3qEKHndcl2CRQgaK4z2GRpdLD+8YnwfLH3+rHSCrbdsQjPtSZBFuXBZiroE+egVQwEHIsQycM40lyxY/NobuVI70SSESnmjE6U0idAFyazex+KJ+WS1OERnKEopKh8zAEfPGLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964925; c=relaxed/simple;
-	bh=PvpbatSGac8i5ZRUpuh8RVPnP9nsseSGCSzM8ZeIEXA=;
+	s=arc-20240116; t=1788964927; c=relaxed/simple;
+	bh=Kz+IlSivsTxnMJ9tBZX8wCZO6m9fqThUOsJounmNTWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+2TM+U3RBuqHExeLgsyoHGCGiWuZH9XmTdFMZUIMM2W+oDseAZBill7XGW9XOQI/cf0w0XVhTA3wsZfZOXCqXmKiSabQz3kbu2dDWx2Z4U1PonNROqu5tSsit391hjm+4kx79ufXETpPykHHAcAycc88OVrw/ArgPQ3QICQBCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TWxkzpJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=peV+C1qnaV5KkVfI0hoDfxLpwcc7FZ87JO8cdylJahiptiEWlvo9lK6Dca5qZoLdUUDzPqRoxfPvx2yH1FZjS6xUF7hDVWfMsML1zU5uawx+KyyW6XCuF7X5LkCRqoprZzqY5CSdV77HGmQ9sBtS3u55KZMtaQpBauMWuOt3NhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvjfnC/S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TWxkzpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17471F00A3A;
-	Wed,  9 Sep 2026 14:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvjfnC/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8491F00A3A;
+	Wed,  9 Sep 2026 14:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964923;
-	bh=JyeR98TtUGFEDc8kGK3ux55PjulkulaVomGHIBBywyY=;
+	s=korg; t=1788964926;
+	bh=Ir4x5RfeMqxOUhmiG1Wtv5fK9/G5rseOGNtVL3pvTGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0TWxkzpJZN4d2pSXH8nqjM4Zhh6l05OLWSYB84xatJvnm5o9+2C4bClsmLagIPdw/
-	 Hk38uzrmH/vEIUeFUY4TQOTTLTGPd4so0fb7194y5VDDwhSae0o6exWYxgNyIIgz4w
-	 2x8XYEq+UR2mUQQwncFjV3t/RrdrMipqPngclG/0=
+	b=ZvjfnC/Sd9WOtznz84rKFrpg77gGOF0XuYDjq/jzx2N+ODv+8eKtkcGb+nwJkXEXe
+	 n52eaM14K0U008GBG6E/YWwW4A2BMXTu32bEJ7owUzTJxvk1rFbIhTEG7qK+dtV7R7
+	 MneuR0ddrX0DKJPLKjz/o8M0XxUgBwm562xU0RYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Brian Geffon <bgeffon@google.com>,
+	Minchan Kim <minchan@google.com>,
+	Richard Chang <richardycc@google.com>,
+	Yuwen Chen <ywen.chen@foxmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 565/583] power: supply: ab8500_fg: fix use-after-free on remove
-Date: Wed,  9 Sep 2026 15:44:10 +0200
-Message-ID: <20260909134257.240255251@linuxfoundation.org>
+Subject: [PATCH 6.18 556/583] zram: drop wb_limit_lock
+Date: Wed,  9 Sep 2026 15:44:01 +0200
+Message-ID: <20260909134256.960069822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,119 +55,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit 75b1e88d34254f4fb7753345e21bfee47abddd7f ]
+[ Upstream commit a4f506c569e1320c2db4a32955e47961fcf02b05 ]
 
-ab8500_fg_remove() destroys the driver workqueue while the threaded
-interrupt handlers are still armed; they are devm-managed and freed
-only after ->remove() returns, so a handler that fires in that
-window queues work on the freed workqueue.
+We don't need wb_limit_lock.  Writeback limit setters take an exclusive
+write zram init_lock, while wb_limit modifications happen only from a
+single task and under zram read init_lock.  No concurrent wb_limit
+modifications are possible (we permit only one post-processing task at a
+time).  Add lockdep assertions to wb_limit mutators.
 
-Tear the workqueue down through devm instead, registering its cleanup
-after the power supply and before the interrupt requests.  devm then
-frees the interrupts first, so the handlers can no longer queue work,
-before disabling the delayed and plain work items and destroying the
-workqueue.  Disabling the items, rather than cancelling them, keeps
-them disabled so no producer (including the power-supply
-external_power_changed callback) can requeue them.
+While at it, fixup coding styles.
 
-Found by an in-house static analysis tool.
-
-Fixes: 13151631b5bd ("ab8500-fg: A8500 fuel gauge driver")
-Cc: stable@vger.kernel.org # v6.10+
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260802020316.417757-1-fanwu01@zju.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lkml.kernel.org/r/20251122074029.3948921-5-senozhatsky@chromium.org
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Brian Geffon <bgeffon@google.com>
+Cc: Minchan Kim <minchan@google.com>
+Cc: Richard Chang <richardycc@google.com>
+Cc: Yuwen Chen <ywen.chen@foxmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: dde75313eed0 ("zram: set default primary compressor in zram_destroy_comps()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/ab8500_fg.c |   30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ drivers/block/zram/zram_drv.c |   23 ++++-------------------
+ drivers/block/zram/zram_drv.h |    1 -
+ 2 files changed, 4 insertions(+), 20 deletions(-)
 
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -3054,6 +3054,20 @@ static void ab8500_fg_unbind(struct devi
- 	flush_workqueue(di->fg_wq);
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -512,9 +512,7 @@ static ssize_t writeback_limit_enable_st
+ 		return ret;
+ 
+ 	down_write(&zram->init_lock);
+-	spin_lock(&zram->wb_limit_lock);
+ 	zram->wb_limit_enable = val;
+-	spin_unlock(&zram->wb_limit_lock);
+ 	up_write(&zram->init_lock);
+ 	ret = len;
+ 
+@@ -529,9 +527,7 @@ static ssize_t writeback_limit_enable_sh
+ 	struct zram *zram = dev_to_zram(dev);
+ 
+ 	down_read(&zram->init_lock);
+-	spin_lock(&zram->wb_limit_lock);
+ 	val = zram->wb_limit_enable;
+-	spin_unlock(&zram->wb_limit_lock);
+ 	up_read(&zram->init_lock);
+ 
+ 	return sysfs_emit(buf, "%d\n", val);
+@@ -549,9 +545,7 @@ static ssize_t writeback_limit_store(str
+ 		return ret;
+ 
+ 	down_write(&zram->init_lock);
+-	spin_lock(&zram->wb_limit_lock);
+ 	zram->bd_wb_limit = val;
+-	spin_unlock(&zram->wb_limit_lock);
+ 	up_write(&zram->init_lock);
+ 	ret = len;
+ 
+@@ -559,15 +553,13 @@ static ssize_t writeback_limit_store(str
  }
  
-+/* Disable, not cancel: works stay disabled so nothing can re-arm them. */
-+static void ab8500_fg_destroy_workqueue(void *data)
-+{
-+	struct ab8500_fg *di = data;
-+
-+	disable_work_sync(&di->fg_acc_cur_work);
-+	disable_work_sync(&di->fg_work);
-+	disable_delayed_work_sync(&di->fg_reinit_work);
-+	disable_delayed_work_sync(&di->fg_low_bat_work);
-+	disable_delayed_work_sync(&di->fg_check_hw_failure_work);
-+	disable_delayed_work_sync(&di->fg_periodic_work);
-+	destroy_workqueue(di->fg_wq);
-+}
-+
- static const struct component_ops ab8500_fg_component_ops = {
- 	.bind = ab8500_fg_bind,
- 	.unbind = ab8500_fg_unbind,
-@@ -3155,6 +3169,11 @@ static int ab8500_fg_probe(struct platfo
- 		return PTR_ERR(di->fg_psy);
- 	}
- 
-+	/* Registered after fg_psy, before the IRQs: devm frees IRQ -> workqueue -> fg_psy. */
-+	ret = devm_add_action_or_reset(dev, ab8500_fg_destroy_workqueue, di);
-+	if (ret)
-+		return ret;
-+
- 	di->fg_samples = SEC_TO_SAMPLE(di->bm->fg_params->init_timer);
- 
- 	/*
-@@ -3167,20 +3186,16 @@ static int ab8500_fg_probe(struct platfo
- 	/* Register primary interrupt handlers */
- 	for (i = 0; i < ARRAY_SIZE(ab8500_fg_irq); i++) {
- 		irq = platform_get_irq_byname(pdev, ab8500_fg_irq[i].name);
--		if (irq < 0) {
--			destroy_workqueue(di->fg_wq);
-+		if (irq < 0)
- 			return irq;
--		}
- 
- 		ret = devm_request_threaded_irq(dev, irq, NULL,
- 				  ab8500_fg_irq[i].isr,
- 				  IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
- 				  ab8500_fg_irq[i].name, di);
- 
--		if (ret != 0) {
--			destroy_workqueue(di->fg_wq);
-+		if (ret != 0)
- 			return ret;
--		}
- 		dev_dbg(dev, "Requested %s IRQ %d: %d\n",
- 			ab8500_fg_irq[i].name, irq, ret);
- 	}
-@@ -3194,7 +3209,6 @@ static int ab8500_fg_probe(struct platfo
- 	ret = ab8500_fg_sysfs_init(di);
- 	if (ret) {
- 		dev_err(dev, "failed to create sysfs entry\n");
--		destroy_workqueue(di->fg_wq);
- 		return ret;
- 	}
- 
-@@ -3202,7 +3216,6 @@ static int ab8500_fg_probe(struct platfo
- 	if (ret) {
- 		dev_err(dev, "failed to create FG psy\n");
- 		ab8500_fg_sysfs_exit(di);
--		destroy_workqueue(di->fg_wq);
- 		return ret;
- 	}
- 
-@@ -3222,7 +3235,6 @@ static void ab8500_fg_remove(struct plat
+ static ssize_t writeback_limit_show(struct device *dev,
+-		struct device_attribute *attr, char *buf)
++				    struct device_attribute *attr, char *buf)
  {
- 	struct ab8500_fg *di = platform_get_drvdata(pdev);
+ 	u64 val;
+ 	struct zram *zram = dev_to_zram(dev);
  
--	destroy_workqueue(di->fg_wq);
- 	component_del(&pdev->dev, &ab8500_fg_component_ops);
- 	list_del(&di->node);
- 	ab8500_fg_sysfs_exit(di);
+ 	down_read(&zram->init_lock);
+-	spin_lock(&zram->wb_limit_lock);
+ 	val = zram->bd_wb_limit;
+-	spin_unlock(&zram->wb_limit_lock);
+ 	up_read(&zram->init_lock);
+ 
+ 	return sysfs_emit(buf, "%llu\n", val);
+@@ -747,18 +739,17 @@ static int zram_writeback_slots(struct z
+ 	int ret = 0, err;
+ 	u32 index;
+ 
++	lockdep_assert_held_read(&zram->init_lock);
++
+ 	page = alloc_page(GFP_KERNEL);
+ 	if (!page)
+ 		return -ENOMEM;
+ 
+ 	while ((pps = select_pp_slot(ctl))) {
+-		spin_lock(&zram->wb_limit_lock);
+ 		if (zram->wb_limit_enable && !zram->bd_wb_limit) {
+-			spin_unlock(&zram->wb_limit_lock);
+ 			ret = -EIO;
+ 			break;
+ 		}
+-		spin_unlock(&zram->wb_limit_lock);
+ 
+ 		if (!blk_idx) {
+ 			blk_idx = alloc_block_bdev(zram);
+@@ -824,10 +815,8 @@ static int zram_writeback_slots(struct z
+ 		zram_set_handle(zram, index, blk_idx);
+ 		blk_idx = 0;
+ 		atomic64_inc(&zram->stats.pages_stored);
+-		spin_lock(&zram->wb_limit_lock);
+ 		if (zram->wb_limit_enable && zram->bd_wb_limit > 0)
+ 			zram->bd_wb_limit -=  1UL << (PAGE_SHIFT - 12);
+-		spin_unlock(&zram->wb_limit_lock);
+ next:
+ 		zram_slot_unlock(zram, index);
+ 		release_pp_slot(zram, pps);
+@@ -2469,7 +2458,7 @@ static void zram_destroy_comps(struct zr
+ 
+ static void zram_reset_device(struct zram *zram)
+ {
+-	down_write(&zram->init_lock);
++	guard(rwsem_write)(&zram->init_lock);
+ 
+ 	zram->limit_pages = 0;
+ 
+@@ -2485,7 +2474,6 @@ static void zram_reset_device(struct zra
+ 	reset_bdev(zram);
+ 
+ 	comp_algorithm_set(zram, ZRAM_PRIMARY_COMP, default_compressor);
+-	up_write(&zram->init_lock);
+ }
+ 
+ static ssize_t disksize_store(struct device *dev,
+@@ -2697,9 +2685,6 @@ static int zram_add(void)
+ 	device_id = ret;
+ 
+ 	init_rwsem(&zram->init_lock);
+-#ifdef CONFIG_ZRAM_WRITEBACK
+-	spin_lock_init(&zram->wb_limit_lock);
+-#endif
+ 
+ 	/* gendisk structure */
+ 	zram->disk = blk_alloc_disk(&lim, NUMA_NO_NODE);
+--- a/drivers/block/zram/zram_drv.h
++++ b/drivers/block/zram/zram_drv.h
+@@ -127,7 +127,6 @@ struct zram {
+ 	bool claim; /* Protected by disk->open_mutex */
+ #ifdef CONFIG_ZRAM_WRITEBACK
+ 	struct file *backing_dev;
+-	spinlock_t wb_limit_lock;
+ 	bool wb_limit_enable;
+ 	u64 bd_wb_limit;
+ 	struct block_device *bdev;
 
 
