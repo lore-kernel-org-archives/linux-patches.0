@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1518568FB2;
-	Wed,  9 Sep 2026 14:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC5D57981E;
+	Wed,  9 Sep 2026 14:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963614; cv=none; b=Kc/9wa0Yb+6s7jFDjv4egnhZ732KS7RA0MLKTppgetgwEAHtQ94aQ3SkJ27zCB8T3eiJWDyVP6F9OyB7xYRdHQH8rb7D0askJcVeaAJgYD7Ums9tNL144j/h8Xz9La5ZqJmTyKlZLlSI6qQB4WaKHPw5psxK2yJ80XHrbIi2+hM=
+	t=1788963616; cv=none; b=s9Sh6t0J/kJ8EBv7/zqcTJ8ed//Rx9wPl3PNke64fd9ibnXPwVSqEOwmWtfnv/zbf88cYJ5TLIAjf7/o+/N7GJOJurlFoWbF/lfM84x3w0+0oAtZmozMgqQRhmIDHz8oectExyvLj3KJtnZaxtHDwSXap1yg4F/2jmzkJtu9nK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963614; c=relaxed/simple;
-	bh=G0nV9YNSA1jGSfaYWENq06R9QhtJBjnMFhcMfVs3Ous=;
+	s=arc-20240116; t=1788963616; c=relaxed/simple;
+	bh=K8a4EWeoqZIoA/oOLOPcTzZ4CdKRzmrntO2QC9rs7Mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YYE4TUvKkgRmVkhklbAKZKQu0P6ida51K+skVeii76G4yRzeuR+DZH/gpxGq5+bArIWLZzgVzloSWKL14jxkxNgjTKs3xD9dvI4HgF2O8mbCLSWvMOwsaC+ZUwo8mnCu7AoRDwM/K5s0LSyTqTp4HSvdHsCm01Ny5MNThzSq5tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSrSautj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jMaEhKYgB963skj31ujBpY402B/ABF6WwAWDL5MNUXpTeEJXBioJjYo75wH+LfE7FnkzCprLI6w9EbTSXs85Op+V+PF9bpJslCfY+oswBiCXV+mVHEiEbVtPJmaSl2ppuYXu2a88oeROShBiCAnmlKQiAl3aRv3P8PCHaYTzHMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsQXdBB7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSrSautj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67641F00A3A;
-	Wed,  9 Sep 2026 14:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsQXdBB7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97A91F00A3A;
+	Wed,  9 Sep 2026 14:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963612;
-	bh=rsT3sFpqJ4H4+a3/vmNXIp4Q3gKF0MB5qSltjYd5JTM=;
+	s=korg; t=1788963615;
+	bh=cQhYfDONgqYekuXCPRjZIVQf3FjNwQrqmYEcDBLxcSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sSrSautjEXdY/2QAYNJejPEN/dlogv7nmIwlm3E9ZkhlhcE9LEpNxOboYk/SclcRw
-	 2ATl+YgjdXxgTGijurs8pxQHZXFzaC7l1ZYjAlTp6GtaDKNU3di9p2MVO54gm+tp4g
-	 P6UVXSrRNS37Uf3NuIMeWr2XZI6keT6IJUYMmf+0=
+	b=dsQXdBB7ebkoxowVTqKj0pRigd0aYMkpfWI9IcLjpA+QSmNZTbj80So72v1g2Qvr6
+	 uHf3JRtADF49hFIJPtAzRCryR+i2RcgGOoxlWgxj3luSTBlob4Lrfvbg93eBNRnCaw
+	 2bEIMOsblbWyCVwiy/m/vLZohv/A5s8xRrjQ1zAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.18 139/583] mtd: rawnand: validate ONFI extended parameter page sections
-Date: Wed,  9 Sep 2026 15:37:04 +0200
-Message-ID: <20260909134242.965661035@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.18 140/583] batman-adv: fix stale receive device on merged fragments
+Date: Wed,  9 Sep 2026 15:37:05 +0200
+Message-ID: <20260909134243.001777570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,85 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit e5e415262330bd70f983e091d8919d9dcd99e475 upstream.
+commit ad46c907d7d9975a285c1e89a4adde652eaa93f5 upstream.
 
-nand_flash_detect_ext_param_page() allocates the length declared by the
-ONFI parameter page, then treats the data as a fixed header followed by
-variable-length sections. It reads that header and advances over sections
-without first proving that the fixed page and each current section fit in
-the allocation.
+Fragment reassembly reuses the skb from the highest-numbered buffered
+fragment as the merged packet. When that fragment was received on a hard
+interface which is deleted before the chain completes, the merged skb can
+re-enter the receive path with a stale skb->dev and skb_iif.
 
-Reject pages shorter than the fixed header, track the remaining variable
-area while walking sections, and require the ECC section to contain every
-field read from struct onfi_ext_ecc_info. Use device-scoped diagnostics
-that identify the malformed ONFI section.
+batadv_batman_skb_recv() passes such merged packets through the normal
+receive handlers again. DAT and bridge loop avoidance both derive the ARP
+header length from skb->dev, so they can dereference the freed net_device
+before the packet reaches the local mesh interface.
 
-Fixes: 6dcbe0cdd83f ("mtd: get the ECC info from the Extended Parameter Page")
+Refresh the receive device metadata from the current receive device before
+running the packet handlers. This keeps internally reinjected merged
+fragments consistent with the normal receive path after hard interface
+teardown.
+
+Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/nand_onfi.c |   27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ net/batman-adv/main.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mtd/nand/raw/nand_onfi.c
-+++ b/drivers/mtd/nand/raw/nand_onfi.c
-@@ -35,16 +35,21 @@ static int nand_flash_detect_ext_param_p
- 					    struct nand_onfi_params *p)
- {
- 	struct nand_device *base = &chip->base;
-+	struct mtd_info *mtd = nand_to_mtd(chip);
- 	struct nand_ecc_props requirements;
- 	struct onfi_ext_param_page *ep;
- 	struct onfi_ext_section *s;
- 	struct onfi_ext_ecc_info *ecc;
-+	size_t remaining, section_len;
- 	uint8_t *cursor;
- 	int ret;
- 	int len;
- 	int i;
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -436,6 +436,10 @@ int batadv_batman_skb_recv(struct sk_buf
+ 	if (!skb)
+ 		goto err_put;
  
- 	len = le16_to_cpu(p->ext_param_page_length) * 16;
-+	if (len < sizeof(*ep))
-+		return -EINVAL;
++	/* Merged fragments re-enter here with reused skb metadata. */
++	skb->dev = dev;
++	skb->skb_iif = dev->ifindex;
 +
- 	ep = kmalloc(len, GFP_KERNEL);
- 	if (!ep)
- 		return -ENOMEM;
-@@ -77,11 +82,29 @@ static int nand_flash_detect_ext_param_p
- 
- 	/* find the ECC section. */
- 	cursor = (uint8_t *)(ep + 1);
-+	remaining = len - sizeof(*ep);
- 	for (i = 0; i < ONFI_EXT_SECTION_MAX; i++) {
- 		s = ep->sections + i;
--		if (s->type == ONFI_SECTION_TYPE_2)
-+		section_len = s->length * 16;
-+		if (section_len > remaining) {
-+			dev_dbg(&mtd->dev,
-+				"ONFI extended parameter section %d exceeds page\n",
-+				i);
-+			goto ext_out;
-+		}
-+
-+		if (s->type == ONFI_SECTION_TYPE_2) {
-+			if (section_len < sizeof(*ecc)) {
-+				dev_dbg(&mtd->dev,
-+					"ONFI extended parameter ECC section %d is too short\n",
-+					i);
-+				goto ext_out;
-+			}
- 			break;
--		cursor += s->length * 16;
-+		}
-+
-+		cursor += section_len;
-+		remaining -= section_len;
- 	}
- 	if (i == ONFI_EXT_SECTION_MAX) {
- 		pr_debug("We can not find the ECC section.\n");
+ 	/* packet should hold at least type and version */
+ 	if (unlikely(!pskb_may_pull(skb, 2)))
+ 		goto err_free;
 
 
