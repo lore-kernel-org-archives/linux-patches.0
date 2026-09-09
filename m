@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C2B577E4F;
-	Wed,  9 Sep 2026 14:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D78455409E;
+	Wed,  9 Sep 2026 14:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964894; cv=none; b=DXUyOEdshuum8vA4qyvnrNlyoZb4FdPFwRbWHkV3aVt9plIOexPqqIAt8Jm3DpIlLd3jCz3/DX9zsj0Stap0Uo6FIuRSAvsFMk1ayfV5VNpfyxmMtMzkaaYY4DhLO3NAgt23XALZmi6VOBx5w2/p79sq30zz+4w5IyBSTVDTE60=
+	t=1788964901; cv=none; b=r9n139KcyTnpJ1o24PE8Y9d+nqx/pgrENcgRhoYYSgjPx4y+nChfj3mJk/p/g28CBF1WNQDjJpt9zMgKryof15ydlOt3y/foLqXhvMh51jRyRHbhPLwI31+ztcKgvSGAggexQaYuimc+Q8ZNJDqxiz/3pkmRr2HfVkVvpiq3EYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964894; c=relaxed/simple;
-	bh=6fDMKJWIw6R8tTPySuIg9+rcH9XGkYuzoe/d7lc7lSQ=;
+	s=arc-20240116; t=1788964901; c=relaxed/simple;
+	bh=gSyochdDwXdOoDvOkzg/DV9JmwFoqv6mS+TOIn+yq44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVJqWEQ/eVCyYz1mAPOy0zkaCVXUmTt6L4uEmvuauHqx/44oNF+OD4wRMOud8ieBfbXB92/l2JnwwUClgZuN0AoxnB+Xi2J7vV0re6ZduiGvXOiOEkKdXkL+gx+/S7DcVE5NS7ADv9YITQM9FGcgPPtcdhLscPp+1cW3059Fxwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cA25f84f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tUqiGaTirkRLJ7DkToa7epXZG/Dsp3R9HtFz68zf0mkxo8IzNjCmQyeKSSbEGi3ILBxCHk6q/Mh0yu5q8on+WVrX48qBz9uzCpSFUL9lUXwOHI7ZLXzCof2G6nKmZRA76xf5nqdiO0covU/JBU46R2NnivOEuzL+AEuj5/PR41M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnSxV/Vl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cA25f84f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E061F00A3A;
-	Wed,  9 Sep 2026 14:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnSxV/Vl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0388D1F00A3D;
+	Wed,  9 Sep 2026 14:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964893;
-	bh=SMu1e2Dqc37Wzzo3fHCm7+aIU1cxftMfOYyHk5faoP0=;
+	s=korg; t=1788964900;
+	bh=S4BzLA9cyye+P2igOk+nn/IBZ/ZNHd++D2TzbwKwu2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cA25f84fdheQWlUcbrSg5LulBsARelspg28wUbcG/l6roi1dgZS4hYA1ds5koLDYd
-	 WNNRjEXvEVZe3eqNVtFvHN632EQTbq4lh9jCUdxSSGjQHMfYhVv4ZQxFu8Un4jIvqB
-	 +8CFYxJIiRnrq4DQhxCwiGOHy3kPLqTKhOJ5dGx0=
+	b=UnSxV/VlwvucZHfDmaqqEopBQNGIG5wYSTll1HoI+t8wlkHLpZXsSAHBj9FodlFE5
+	 avPf0QySNx0KJ6Ez8u73lq6saxSNim90LcsgMAbsaG/3Rz+ESyLyqFN9vt8B8ZeYvz
+	 W9YGPVNWhSfZNQ9A7e8txivR7jgius+SK3PnQLB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
 	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	William Kucharski <william.kucharski@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 580/583] mm/huge_memory: use folios memcg inside __folio_split()
-Date: Wed,  9 Sep 2026 15:44:25 +0200
-Message-ID: <20260909134257.894246047@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 582/583] mm/hugetlb_vmemmap: fix incorrect vmemmap restore in rollback
+Date: Wed,  9 Sep 2026 15:44:27 +0200
+Message-ID: <20260909134257.954622721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -62,119 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit c299a2285d9d8bda4da024455de65e3d00de6f17 ]
+commit c7bde43f6daf70e05a64fbca7efdf6fa93e057dc upstream.
 
-Patch series "Honor XA_FLAGS_ACCOUNT in xas_split_alloc() and charge to
-folio's memcg", v3.
+vmemmap_restore_pte() rebuilds restored vmemmap pages from a tail-page
+template derived from compound_head().  This is wrong when the current PTE
+already maps a page whose contents are not tail-page metadata.
 
-__GFP_ACCOUNT is needed for xarray node allocation accounting when
-XA_FLAGS_ACCOUNT is set. Commit 7b785645e8f13 ("mm: fix page cache
-convergence regression") fixed a workingset regression with it.
-xas_split_alloc() does not have it and needs to be fixed.
+In the rollback path of vmemmap_remap_free(), the first restored PTE is
+backed by vmemmap_head and contains head-page metadata.  Reconstructing
+that page from a tail-page template overwrites the head-page state and
+corrupts the restored vmemmap page.
 
-In addition, based on Sashiko's review[1] and Johannes' confirmation[2], to
-charge the right memcg, folio's memcg needs to be active during folio
-split. Add that before adding __GFP_ACCOUNT.
+Fix this by copying the full page from the page currently mapped by the
+PTE.  Also pass vmemmap_tail to the rollback walk so only PTEs backed by
+the shared tail page are restored, while the head PTE remains mapped to
+vmemmap_head.  Add VM_WARN_ON_ONCE() checks for unexpected cases.
 
-There is no workingset convergence regression related to missing
-__GFP_ACCOUNT in xas_split_alloc() and the impact to userspace should be
-minor.
-
-This patch (of 2):
-
-During a pagecache folio split, an xarray node allocation can happen and
-needs to charge at folio's memcg instead of folio split invoker's memcg,
-because for example folio split can happen during reclaim and reclaim's
-active memcg might not be folio's memcg.  Switch to folio's memcg at the
-beginning and switch back afterwards.
-
-Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-0-38cb3ff325c5@nvidia.com
-Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-1-38cb3ff325c5@nvidia.com
-Link: https://sashiko.dev/#/patchset/20260727-add-gfp_account-to-xas_split_alloc-v1-1-9fae6bf64838%40nvidia.com?part=1 [1]
-Link: https://lore.kernel.org/all/amtcBZ-_QVRgCd6b@cmpxchg.org/ [2]
-Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Barry Song <baohua@kernel.org>
+Link: https://lore.kernel.org/20260525025213.2229628-1-songmuchun@bytedance.com
+Fixes: c0b495b91a47 ("mm/hugetlb: refactor code around vmemmap_walk")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Kiryl Shutsemau <kas@kernel.org>
+Acked-by: Oscar Salvador (SUSE) <osalvador@kernel.org>
 Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: William Kucharski <william.kucharski@oracle.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ mm/hugetlb_vmemmap.c |   36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3696,34 +3696,42 @@ static int __folio_split(struct folio *f
- 	XA_STATE(xas, &folio->mapping->i_pages, folio->index);
- 	struct folio *end_folio = folio_next(folio);
- 	bool is_anon = folio_test_anon(folio);
-+	struct mem_cgroup *memcg, *old_memcg;
- 	struct address_space *mapping = NULL;
- 	struct anon_vma *anon_vma = NULL;
- 	int old_order = folio_order(folio);
- 	struct folio *new_folio, *next;
- 	int nr_shmem_dropped = 0;
- 	enum ttu_flags ttu_flags = 0;
--	int ret;
- 	pgoff_t end = 0;
-+	int ret;
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -205,6 +205,8 @@ static void vmemmap_remap_pte(pte_t *pte
  
- 	VM_WARN_ON_ONCE_FOLIO(!folio_test_locked(folio), folio);
- 	VM_WARN_ON_ONCE_FOLIO(!folio_test_large(folio), folio);
- 
- 	if (folio != page_folio(split_at) || folio != page_folio(lock_at)) {
- 		ret = -EINVAL;
--		goto out;
-+		goto out_no_memcg;
- 	}
- 
- 	if (new_order >= old_order) {
- 		ret = -EINVAL;
--		goto out;
-+		goto out_no_memcg;
- 	}
- 
- 	ret = folio_check_splittable(folio, new_order, uniform_split);
- 	if (ret) {
- 		VM_WARN_ONCE(ret == -EINVAL, "Tried to split an unsplittable folio");
--		goto out;
-+		goto out_no_memcg;
- 	}
- 
-+	/*
-+	 * switch to folio's memcg as xarray node allocation can happen and
-+	 * needs to charge to it.
-+	 */
-+	memcg = get_mem_cgroup_from_folio(folio);
-+	old_memcg = set_active_memcg(memcg);
+ 	/* Remapping the head page requires r/w */
+ 	if (unlikely(walk->nr_walked == 0 && walk->vmemmap_head)) {
++		VM_WARN_ON_ONCE(!PageHead((const struct page *)addr));
 +
- 	if (is_anon) {
+ 		list_del(&walk->vmemmap_head->lru);
+ 
  		/*
- 		 * The caller does not necessarily hold an mmap_lock that would
-@@ -3991,6 +3999,10 @@ out_unlock:
- 	if (mapping)
- 		i_mmap_unlock_read(mapping);
- out:
-+	/* restore to caller's old_memcg */
-+	set_active_memcg(old_memcg);
-+	mem_cgroup_put(memcg);
-+out_no_memcg:
- 	xas_destroy(&xas);
- 	if (old_order == HPAGE_PMD_ORDER)
- 		count_vm_event(!ret ? THP_SPLIT_PAGE : THP_SPLIT_PAGE_FAILED);
+@@ -216,6 +218,8 @@ static void vmemmap_remap_pte(pte_t *pte
+ 
+ 		entry = mk_pte(walk->vmemmap_head, PAGE_KERNEL);
+ 	} else {
++		VM_WARN_ON_ONCE(!PageTail((const struct page *)addr));
++
+ 		/*
+ 		 * Remap the tail pages as read-only to catch illegal write
+ 		 * operation to the tail pages.
+@@ -230,33 +234,28 @@ static void vmemmap_remap_pte(pte_t *pte
+ static void vmemmap_restore_pte(pte_t *pte, unsigned long addr,
+ 				struct vmemmap_remap_walk *walk)
+ {
+-	struct page *page;
+-	struct page *from, *to;
+-
+-	page = list_first_entry(walk->vmemmap_pages, struct page, lru);
+-	list_del(&page->lru);
++	struct page *src = pte_page(ptep_get(pte)), *dst;
+ 
+ 	/*
+-	 * Initialize tail pages in the newly allocated vmemmap page.
+-	 *
+-	 * There is folio-scope metadata that is encoded in the first few
+-	 * tail pages.
+-	 *
+-	 * Use the value last tail page in the page with the head page
+-	 * to initialize the rest of tail pages.
++	 * When rolling back vmemmap_remap_free(), keep the copied head page
++	 * mapping and restore only PTEs currently pointing at the shared tail
++	 * page.
+ 	 */
+-	from = compound_head((struct page *)addr) +
+-		PAGE_SIZE / sizeof(struct page) - 1;
+-	to = page_to_virt(page);
+-	for (int i = 0; i < PAGE_SIZE / sizeof(struct page); i++, to++)
+-		*to = *from;
++	if (walk->vmemmap_tail && walk->vmemmap_tail != src)
++		return;
++
++	VM_WARN_ON_ONCE(PageHead((const struct page *)addr));
++
++	dst = list_first_entry(walk->vmemmap_pages, struct page, lru);
++	list_del(&dst->lru);
++	copy_page(page_to_virt(dst), page_to_virt(src));
+ 
+ 	/*
+ 	 * Makes sure that preceding stores to the page contents become visible
+ 	 * before the set_pte_at() write.
+ 	 */
+ 	smp_wmb();
+-	set_pte_at(&init_mm, addr, pte, mk_pte(page, PAGE_KERNEL));
++	set_pte_at(&init_mm, addr, pte, mk_pte(dst, PAGE_KERNEL));
+ }
+ 
+ /**
+@@ -322,6 +321,7 @@ static int vmemmap_remap_free(unsigned l
+ 	 */
+ 	walk = (struct vmemmap_remap_walk) {
+ 		.remap_pte	= vmemmap_restore_pte,
++		.vmemmap_tail	= vmemmap_tail,
+ 		.vmemmap_pages	= vmemmap_pages,
+ 		.flags		= 0,
+ 	};
 
 
