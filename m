@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F91581248;
-	Wed,  9 Sep 2026 14:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB5C58124E;
+	Wed,  9 Sep 2026 14:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962961; cv=none; b=VefQldkxivpH1s83WZC6Gnahm2qJjYWjk/PdRAG+AhJ/xH7er/MdnmUKaEtKlvlO8tdjEvp/mCZcMuUzl7zzNlSH0nnnaJeLiOPaXDJE3ivPl0mW3emuwXVqiQ0DXb01IDhOdKWcf/b0yJMybW3erps8ZDEYWTEFWcSfaSy0Gv8=
+	t=1788962964; cv=none; b=maW7C2J/wOINcgR7K2/f9YsN/X40UUcnEBiAAMPpkp6t1nHCa1bwSNBtC8bRhj7Mps57c1l2F9G1xBhB8SDoo4cHf35tgeYKpjkGj0iY2BxTA04osp9dwItfP8S9VKJBLi1eDg2cklnIeoJp4JzVffiAVdMuZrIuz/XlQ96/S2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962961; c=relaxed/simple;
-	bh=WJRLgP6NaCvdrL5BnpKln1hy57XwiXbccmzmbGhw5zI=;
+	s=arc-20240116; t=1788962964; c=relaxed/simple;
+	bh=lGtlYXLwrf+OtHM/ednR8l5vDTUlZ4vakHdPRVG6L44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbutTZQnWUIemjBy2VRYQyB62sZywpMmkdvvrQNSIYDTUcy+WW/d0rTtfmZ/prhonBfDghXcClU5AD7gDSS8ibkB9zC+X++mSvF33pKeIwbQwRcfML8R//YhNl5XCTUP7/nwKUBVtw763PjVJihsI6Eze7zmQkmnKOhJEn0AuT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmL4FeEH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IXUOUKdAsI1qmhJXbeKkLFBDsj7tcYC7W2SwNuVStoT9FKNZL61ajUGTmUEYmNSIeidIYoo9CMA0iZF6JEHft1pPGgBqjjIlNgKfNjDZHWrhlqhum25yCMMPRlL0i/IU49Bx1i/Gf5icCuxiORcb7xFd2/FFDHe22WKb9dsZ/XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPo1T9LK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmL4FeEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0561F00A3A;
-	Wed,  9 Sep 2026 14:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPo1T9LK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6161F00A3E;
+	Wed,  9 Sep 2026 14:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962960;
-	bh=6KsColVgaC9M/WfBgDGB22Bce4AawRXmvNIipP3njds=;
+	s=korg; t=1788962962;
+	bh=LPNavIGiOI41vR8QsQ+KszY4MXrZZ+8Q7Z8N00qqej0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EmL4FeEH+/sWrN7n75GIlPrOO2qJ8n+4jIPnKwLlIG4VaBUUAHHR/4tNXXBLjvGqv
-	 Jh8PM43stc2REVIXViXb+m2ffUpOFGd1xk9dhah3bntrrhkIdFxkq06V8lQBDbahKq
-	 FqPs5UeBhPaOhQo7mnUSczpA3evuEzBZHbeMUD+I=
+	b=fPo1T9LKDrUtavdzTEJ/WXWlYLu+Rzxj3YPAKribo2PkL7HDUxHHNWpze5CJs78jl
+	 XBXAMJICKQvlibGdQ/H4mD1/STwtp26ZyEgaiWR0W28hOGGDapdhh/6RkcjgDhdnHz
+	 V8ghTHI3r5vS3eib9cYaVRceGY0lSEhFQtiOPgXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 454/556] f2fs: limit recovery filename logging to stored length
-Date: Wed,  9 Sep 2026 15:42:14 +0200
-Message-ID: <20260909134246.545999466@linuxfoundation.org>
+	Sashiko-bot <sashiko-bot@kernel.org>,
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	Maarten Lankhorst <dev@lankhorst.se>,
+	Tejun Heo <tj@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 7.2 472/556] drm/amdgpu: Fix init ordering in amdgpu_vram_mgr_init()
+Date: Wed,  9 Sep 2026 15:42:32 +0200
+Message-ID: <20260909134247.153553699@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -46,114 +55,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 01027b2fcb74dade59fb833b51023f6593b6a9a2 upstream.
+commit e773798e14ac0aea54ca9676083b91f445e5bc59 upstream.
 
-F2FS stores recovery filenames as a length plus a fixed-size i_name
-buffer.  The buffer is not NUL-terminated, but recover_inode() and
-recover_dentry() print it with %s.
+drmm_cgroup_register_region() is called before INIT_LIST_HEAD() and
+gpu_buddy_init() in amdgpu_vram_mgr_init(). If it fails, the function
+returns early and bypasses those initializations.
 
-For a 255-byte filename, recovery logging can read past i_name into the
-following raw inode fields.
+Since adev->mman.initialized is set to true before amdgpu_vram_mgr_init()
+is called, a failure triggers amdgpu_ttm_fini(), which calls
+amdgpu_vram_mgr_fini(), which then:
 
-Print the name with a precision bounded by i_namelen and F2FS_NAME_LEN.
+ - Calls list_for_each_entry_safe() on reservations_pending and
+   reserved_pages, whose list_head::next pointers are zero-initialized
+   (NULL). The loop does not recognize them as empty and dereferences NULL.
 
-Fixes: f356fe0cba0e ("f2fs: add debug msgs in the recovery routine")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+ - Calls gpu_buddy_fini(), which iterates free_trees[] unconditionally
+   via for_each_free_tree(). Since mm->free_trees is NULL
+   (never allocated), this dereferences NULL.
+
+Both result in a kernel panic on the module load error path.
+
+Fix by moving drmm_cgroup_register_region() to after the list and buddy
+allocator are fully initialized, so the teardown path is safe to run.
+
+Reported-by: Sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260428073116.15687-1-thomas.hellstrom@linux.intel.com?part=4
+Fixes: 2b624a2c1865 ("drm/ttm: Handle cgroup based eviction in TTM")
+Cc: Friedrich Vock <friedrich.vock@gmx.de>
+Cc: Maarten Lankhorst <dev@lankhorst.se>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: stable@vger.kernel.org # v6.14+
+Assisted-by: GitHub_Copilot:claude-sonnet-4.6
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Reviewed-By: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Tested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20260725100036.2372-2-thomas.hellstrom@linux.intel.com
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/recovery.c |   41 +++++++++++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -158,6 +158,22 @@ static int init_recovered_filename(const
- 	return 0;
- }
- 
-+static const char *recover_printable_name(struct inode *inode,
-+					  struct f2fs_inode *raw,
-+					  int *name_len)
-+{
-+	static const char encrypted_name[] = "<encrypted>";
-+
-+	if (file_enc_name(inode)) {
-+		*name_len = sizeof(encrypted_name) - 1;
-+		return encrypted_name;
-+	}
-+
-+	*name_len = min_t(unsigned int, le32_to_cpu(raw->i_namelen),
-+			  F2FS_NAME_LEN);
-+	return raw->i_name;
-+}
-+
- static int recover_dentry(struct inode *inode, struct folio *ifolio,
- 						struct list_head *dir_list)
- {
-@@ -170,7 +186,8 @@ static int recover_dentry(struct inode *
- 	struct inode *dir, *einode;
- 	struct fsync_inode_entry *entry;
- 	int err = 0;
--	char *name;
-+	const char *name;
-+	int name_len;
- 
- 	entry = get_fsync_inode(dir_list, pino);
- 	if (!entry) {
-@@ -229,12 +246,9 @@ retry:
- out_put:
- 	f2fs_folio_put(folio, false);
- out:
--	if (file_enc_name(inode))
--		name = "<encrypted>";
--	else
--		name = raw_inode->i_name;
--	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %s, dir = %llu, err = %d",
--		    __func__, ino_of_node(ifolio), name,
-+	name = recover_printable_name(inode, raw_inode, &name_len);
-+	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %.*s, dir = %llu, err = %d",
-+		    __func__, ino_of_node(ifolio), name_len, name,
- 		    IS_ERR(dir) ? 0 : dir->i_ino, err);
- 	return err;
- }
-@@ -282,7 +296,8 @@ static int recover_inode(struct inode *i
- {
- 	struct f2fs_inode *raw = F2FS_INODE(folio);
- 	struct f2fs_inode_info *fi = F2FS_I(inode);
--	char *name;
-+	const char *name;
-+	int name_len;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+@@ -918,9 +918,6 @@ int amdgpu_vram_mgr_init(struct amdgpu_d
+ 	struct ttm_resource_manager *man = &mgr->manager;
  	int err;
  
- 	inode->i_mode = le16_to_cpu(raw->i_mode);
-@@ -331,13 +346,11 @@ static int recover_inode(struct inode *i
+-	man->cg = drmm_cgroup_register_region(adev_to_drm(adev), "vram", adev->gmc.real_vram_size);
+-	if (IS_ERR(man->cg))
+-		return PTR_ERR(man->cg);
+ 	ttm_resource_manager_init(man, &adev->mman.bdev,
+ 				  adev->gmc.real_vram_size);
  
- 	f2fs_mark_inode_dirty_sync(inode, true);
+@@ -935,6 +932,10 @@ int amdgpu_vram_mgr_init(struct amdgpu_d
+ 	if (err)
+ 		return err;
  
--	if (file_enc_name(inode))
--		name = "<encrypted>";
--	else
--		name = F2FS_INODE(folio)->i_name;
-+	name = recover_printable_name(inode, raw, &name_len);
- 
--	f2fs_notice(F2FS_I_SB(inode), "recover_inode: ino = %x, name = %s, inline = %x",
--		    ino_of_node(folio), name, raw->i_inline);
-+	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %.*s, inline = %x",
-+		    __func__, ino_of_node(folio), name_len, name,
-+		    raw->i_inline);
++	man->cg = drmm_cgroup_register_region(adev_to_drm(adev), "vram", adev->gmc.real_vram_size);
++	if (IS_ERR(man->cg))
++		return PTR_ERR(man->cg);
++
+ 	ttm_set_driver_manager(&adev->mman.bdev, TTM_PL_VRAM, &mgr->manager);
+ 	ttm_resource_manager_set_used(man, true);
  	return 0;
- }
- 
 
 
