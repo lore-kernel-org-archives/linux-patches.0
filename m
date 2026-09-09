@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F971583ABA;
-	Wed,  9 Sep 2026 14:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D2F583ACA;
+	Wed,  9 Sep 2026 14:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963387; cv=none; b=XgNxfy0H43WKRb5JcDtpzGIMHjSG5Qf15+wJbOPTgMNank1ZIr4qoo9dMw1ZoOEkQjzQV0Piu05utxTCLmBLNYZanHBaXXhZVfljAvvxqhfXn2HZ7LcwV1oyfH1G09PhCx/srM2hiVnmFM8EYSxTMgZkr2bATt8K9t+qLRwpTfM=
+	t=1788963389; cv=none; b=DPnsbRYAW4wB0f1VpAh28ul8VTGEIsBZvPsdhUDA3ixVNtmMwdiQpqgd8O2OHXWCOS1kxrnYLgtL4JaS5Yp5KQ8U8cdEWmAXfHr7PEhNplUZEonWbkq/jcPmQ3Lt1NRMif1TYsWfF7SuIcwisJlW/FfX6pio9qnBrbaWtAbnEv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963387; c=relaxed/simple;
-	bh=/8X2tFpDG7cglO96aJU5eTNTwD2Z/7syA+BtmPSSqX0=;
+	s=arc-20240116; t=1788963389; c=relaxed/simple;
+	bh=B+dzeZgVe2jPyTO9eKw2xbN8o1UniJTNg0troJpTlsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qupBRVaGaHzP8Cr81at2ivMA60JT5AcZBREQwFyx679t5ezev93v2Yv0QvbJwXJHXqpMpyKLDhfpZ8mwG7jQGHm0o857Go9pxF6GcjoOOIIbaN7eV8CjTR2H69/eYHSBM25HfZrIrGPn+r1TJDTemuSFXiEUbPlyJhc5I4pwutk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnUaf+RY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SIOXt0QbB9tlSdW+IzdPqVQafYaGvdvprMqibDMasp2GnqdBjQpH/6EKuKhnZ3dp4QooJAMaKcNPbgCsdey3b7WQANz3sY+iKw4J7jMbUvoVoK51DKo21jDpNKrEq6xraTSnfY9MGGa95gl1J/WJ+UIYVf/7yiu1UWM/8thtn0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7f0rfJi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnUaf+RY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6FC1F00A3A;
-	Wed,  9 Sep 2026 14:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7f0rfJi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177EC1F00A3A;
+	Wed,  9 Sep 2026 14:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963385;
-	bh=47qIOlh3ZnINidaXdjRu49GpUzfskvMus07YZ7uZdrw=;
+	s=korg; t=1788963388;
+	bh=xyn2+AuEw9Yjp+PAjMlt0uA6bmbmeUKMsqIfEddpkDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gnUaf+RYe9lrS2S8DhltCOuBMszl1ioDZ3OAmonTT7l2KZnCIStPgXSEgxANoDt7n
-	 HPMzZqE9nREUZDjNdjI9re+W6532DJ7LJ8q8WA1TUscAbBt28sGtgc4JRfIwcEnSug
-	 Ipm51X/HEZWw/j4I3/kd0P2Cj4/tKYUYQlI4YeQg=
+	b=Y7f0rfJizEDGts6G68kI/EDRatiuK0gHXXGI7NomXUf8M6ijNt4TS7mYQ6tM3P2Ar
+	 Lx/dSA96t1eSejxP87dx8jFOuzRk811kjMskYQAXJKZ972aPd3SjEiIRM3rY3X1KIN
+	 zQxZ0s7XepBZiZ7FD4iCb/3uR2El0e3BHtI8c/4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 061/583] mm/damon/core-kunit: check region count before testing in split_at()
-Date: Wed,  9 Sep 2026 15:35:46 +0200
-Message-ID: <20260909134240.157704017@linuxfoundation.org>
+	Yao Kai <yaokai34@huawei.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.18 062/583] futex: Prevent rcuwait use-after-free during requeue PI
+Date: Wed,  9 Sep 2026 15:35:47 +0200
+Message-ID: <20260909134240.200896871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,59 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Yao Kai <yaokai34@huawei.com>
 
-commit 9b18ef3c3aa1ce24176e340061caf15fa2742564 upstream.
+commit a3b8d46fe401cba3a5c46dea610e6eb3dc15370e upstream.
 
-damon_test_split_at() test next region that is assumed to be created by
-damon_split_region_at() invocation.  But the split might fail.  In this
-case, the succeeding test may dereference invalid pointers returned by
-damon_next_region().
+On PREEMPT_RT, FUTEX_CMP_REQUEUE_PI can trigger a KASAN report
+(slab-out-of-bounds) in futex_requeue_pi_complete() invocation of
+rcuwait_wake_up().
 
-The invalid pointer may not cause a really bad user impact, because of the
-implementation detail.  It would only read wrong contents in the belonging
-damon_target struct.  Depending on the future change of the offset from
-the link header to the accessing field, this could also be really
-dangerous, though.  Still, the realistic user impact would be limited.  It
-would affect only test run setups.
+The futex_q used by futex_wait_requeue_pi() is allocated on the waiter's
+stack. An early wakeup can race with a PI requeue as follows:
 
-Fix it by testing if the number of regions was also changed as expected
-and exit early for the failure.
+        waiter                          requeue task
+        ------                          ------------
+futex_wait_requeue_pi()
+  futex_do_wait()
+    schedule()
+                                       futex_requeue
+                                         futex_proxy_trylock_atomic()
+                                           futex_requeue_pi_prepare()
+                                            Q_REQUEUE_PI_NONE -> Q_REQUEUE_PI_IN_PROGRESS
+* timeout/ signal wakes waiter *
+  futex_requeue_pi_wakeup_sync()
+   Q_REQUEUE_PI_IN_PROGRESS -> Q_REQUEUE_PI_WAIT
+                                           requeue_pi_wake_futex
+                                             futex_requeue_pi_complete()
+                                               cmpxchg Q_REQUEUE_PI_WAIT -> Q_REQUEUE_PI_LOCKED
+    rcuwait_wait_event()
+      if (atomic_read(&q->requeue_state) != Q_REQUEUE_PI_WAIT)
+       break /* no schedule() */
 
-The issue was discovered [1] by Sashiko.
+ /* q.pi_state->owner == current */
+ futex_private_hash_put()
+ /* return from syscall */
+                                              rcuwait_wake_up(&q->requeue_wait)
+                                                /* q is gone */
 
-Link: https://lore.kernel.org/20260718001442.87129-3-sj@kernel.org
-Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org [1]
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+futex_requeue_pi_complete() publishes Q_REQUEUE_PI_LOCKED before
+calling rcuwait_wake_up(). The waiter observes this state in
+rcuwait_wait_event() before invoking schedule() in rcuwait_wait_event().
+Here, the waiter is free leave the syscall before requeue task can
+complete the wake.
+
+To address this race skip rcuwait_wake_up() in the Q_REQUEUE_PI_LOCKED
+case.
+This state is only published by requeue_pi_wake_futex(), which saves
+q->task before futex_requeue_pi_complete() and wakes the waiter via
+wake_up_state().
+
+This wake is intended to wake the waiter from its futex_do_wait() sleep.
+If the waiter is still sleeping there, it can not get into the
+Q_REQUEUE_PI_WAIT state (and require this removed wake).
+Should the waiter be woken up from futex_do_wait() by other means (as in
+this example) and sleep in futex_requeue_pi_wakeup_sync() then the
+wake_up_state() from requeue_pi_wake_futex() will wake it, too.
+Should the waiter task terminate before wake_up_state() had a chance to
+wake the task then the task pointer does not become invalid because the
+futex_hash_bucket::lock is held and the task pointer is RCU protected.
+
+[bigeasy: Updated comment and commit message]
+
+Fixes: 07d91ef510fb1 ("futex: Prevent requeue_pi() lock nesting issue on RT")
+Signed-off-by: Yao Kai <yaokai34@huawei.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260901135453.3121948-3-bigeasy@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/tests/core-kunit.h |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/futex/requeue.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -166,6 +166,10 @@ static void damon_test_split_at(struct k
- 	r->last_nr_accesses = 15;
- 	damon_add_region(r, t);
- 	damon_split_region_at(t, r, 25);
-+	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-+	if (damon_nr_regions(t) != 2)
-+		goto out;
-+
- 	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, 25ul);
+--- a/kernel/futex/requeue.c
++++ b/kernel/futex/requeue.c
+@@ -154,8 +154,16 @@ static inline void futex_requeue_pi_comp
+ 	} while (!atomic_try_cmpxchg(&q->requeue_state, &old, new));
  
-@@ -177,6 +181,7 @@ static void damon_test_split_at(struct k
- 	KUNIT_EXPECT_EQ(test, r->nr_accesses, r_new->nr_accesses);
- 	KUNIT_EXPECT_EQ(test, r->last_nr_accesses, r_new->last_nr_accesses);
- 
-+out:
- 	damon_free_target(t);
- 	damon_destroy_ctx(c);
+ #ifdef CONFIG_PREEMPT_RT
+-	/* If the waiter interleaved with the requeue let it know */
+-	if (unlikely(old == Q_REQUEUE_PI_WAIT))
++	/*
++	 * The waiter in futex_requeue_pi_wakeup_sync() can interleave with the
++	 * wake below: It will assign Q_REQUEUE_PI_IN_PROGRESS and here it will
++	 * be updated to Q_REQUEUE_PI_LOCKED (locked = 1). The rcuwait_wait_event()
++	 * will already read Q_REQUEUE_PI_LOCKED and skip the schedule() invocation,
++	 * leading to an access of futex_q::requeue_wait after the waiter returned.
++	 * In this case only we skip the wake here and rely on following wake in
++	 * requeue_pi_wake_futex() to perform the wake if needed.
++	 */
++	if (unlikely(old == Q_REQUEUE_PI_WAIT) && new != Q_REQUEUE_PI_LOCKED)
+ 		rcuwait_wake_up(&q->requeue_wait);
+ #endif
  }
 
 
