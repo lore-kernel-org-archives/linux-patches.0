@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3A75678D0;
-	Wed,  9 Sep 2026 13:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D0155C1D4;
+	Wed,  9 Sep 2026 13:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962319; cv=none; b=AzmUz/yzldVJo8md6SO4felx2tJpXqwcTNFAYP0WrfyArD/Q6tF1qFJ5bsETuuzRerGUXKOzRAcMTNuIq5j30hQkVm5vW7vJQc0Vb5TDbKM1r2ftcWRKaYV/nkvf94UXSGny5TL/siq57imDYYbGrsHHKzSU1aj0NSXHmXG8y6o=
+	t=1788962322; cv=none; b=oIV4IPdeowVKhn7KS3vLfDZt8WzP3vf4uwS7DDFz0a7qSOdVoPg7t7pRFBXaMBYXWXBGRbiGa+Bb2cFQe0kHulnA9Dncmr/JDRNfKHiyi9Y6XXc04EVq51Pz8iyUTTl8nnnx8jts2wJUhTRYAcpaKEvfqaPcUR78sfrJl1AzgJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962319; c=relaxed/simple;
-	bh=wnsLuziEc6fN+CT+iwOPMyZEvkVEe4KuclbQtrKWbfE=;
+	s=arc-20240116; t=1788962322; c=relaxed/simple;
+	bh=S7tF8OJ5hGXYqGla/PF97NpUzwPMWU73fbf8FAsxUVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBy1jxP7BqPa+soCiUj3fvwms7bMHP0rg7mIoWFW1c5Qa7GIfPlxCFsrnv88qejrzfnsdJEc2sA34lT6He7fCQPVjrKz/dZd/1w9XtxcUUrO+ETfZNadyUWP5agkXQIvEHUf7mRqAm4GieD4eXYPhgzoCoXzFasFTSty5vPkpuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSNbRQwQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IJpAVMnOpoBxexL9fhHTy9irgWwyGRIb0WkvJCFAkefqItBigS+jLdVl0JF74zXkVbFF7zHRj/HflSbp4Y6IJQzX74oPzi+wSPokoxn++A3AZ77WT6YZVrknZZ9jjUlffT2+c6kXnxjKTaZq4qQknZDkCFoDcNhkFLGH2xcR63w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HC7OsCf9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSNbRQwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5931F00A3A;
-	Wed,  9 Sep 2026 13:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HC7OsCf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCAE1F00A3A;
+	Wed,  9 Sep 2026 13:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962317;
-	bh=xUwd4hmCWWAz6qKoYtNspnCucsv8IIZbtKXu8EN+Ivk=;
+	s=korg; t=1788962320;
+	bh=Bc177pmbfkeSjiEPMvMJqsHdTVNEeTV4sUlNbs+P26M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HSNbRQwQ0aPqnHKBGPYpg232vUpnW1hj3J5KxRqJWnih8YYLCH+6q6yhV8O57zgt6
-	 5e6t0m1S6ERgM+dhZyFXlQtwTIlWw9EVZarAnOfhBOuTxKA9QVFZSMvnD194C0oZRF
-	 kGaa5PMdtHs3Y+QHxMNlg3wJqyL2odOLqm4OaEPs=
+	b=HC7OsCf9U0fwPE6oVOTEwBl1xttjHPi0ymda/IGhdeKykH7+Fq8DFvpuDvLpgMGkn
+	 gLJrHJ8gbWLgycgUYZnb00nIuNeCbTxq2pIW2dGNwU4jHVVXAHIscmq0eiG18nuVK+
+	 PwQjx3YG0M85LPrOjxpLwsUOovQrgbIWyPqHSWVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 248/556] ASoC: rt715-sdca: sort the register default tables
-Date: Wed,  9 Sep 2026 15:38:48 +0200
-Message-ID: <20260909134239.204642569@linuxfoundation.org>
+	Heiko Stuebner <heiko.stuebner@cherry.de>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 7.2 213/556] clk: rockchip: rk3588: Dont change PLL rates when setting dclk_vop2_src
+Date: Wed,  9 Sep 2026 15:38:13 +0200
+Message-ID: <20260909134237.891845280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,72 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Heiko Stuebner <heiko.stuebner@cherry.de>
 
-commit 61a0321e4bc2ff9ecb38cda7d5a32ffacef71a75 upstream.
+commit 13b10571cc353448275365ede1a5396d20dfe839 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+dclk_vop2_src currently has the CLK_SET_RATE_PARENT flag set, which is
+very different from dclk_vop0_src or dclk_vop1_src, which don't have it.
 
-Both tables group the entries by SDCA entity instead: in
-rt715_reg_defaults_sdca[] the CX_CLK_SEL control is listed before the
-ADC8_9, ADC10_11 and ADC7_27 mute controls (7 of 78 entries unreachable),
-and in rt715_mbq_reg_defaults_sdca[] the AMIC_GAIN_EN CH_08 entry is listed
-before the DMIC_GAIN_EN entries (1 of 32 entries unreachable).
-regcache_reg_needs_sync() then cannot compare those against their default
-and reports that a sync is needed, so they are written to the device on
-every regcache_sync() even when they were never touched.
+With this flag in dclk_vop2_src, actually setting the clock then results
+in a lot of other peripherals breaking, because setting the rate results
+in the PLL source getting changed:
 
-Sort both tables by register address.
+[   14.898718] clk_core_set_rate_nolock: setting rate for dclk_vop2 to 152840000
+[   15.155017] clk_change_rate: setting rate for pll_gpll to 1680000000
+[ clk adjusting every gpll user ]
 
-Fixes: 20d17057f0a8 ("ASoC: rt715-sdca: Add RT715 sdca vendor-specific driver")
+This includes possibly the other vops, i2s, spdif and even the uarts.
+Among other possible things, this breaks the uart console on a board
+I use. Sometimes it recovers later on, but there will be a big block
+of garbled output for a while at least.
+
+Shared PLLs should not be changed by individual users, so drop this flag
+from dclk_vop2_src.
+
+Fixes: f1c506d152ff ("clk: rockchip: add clock controller for the RK3588")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805090240.16991-13-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Tested-by: Quentin Schulz <quentin.schulz@cherry.de> # RK3588 Tiger w/ DP
+Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
+Tested-by: Chris Morgan <macromorgan@hotmail.com>
+Link: https://patch.msgid.link/20260304121426.1184680-2-heiko@sntech.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt715-sdca-sdw.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/rockchip/clk-rk3588.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/rt715-sdca-sdw.h
-+++ b/sound/soc/codecs/rt715-sdca-sdw.h
-@@ -76,8 +76,6 @@ static const struct reg_default rt715_re
- 	{ 0x2f52, 0x01 },
- 	{ 0x2f5a, 0x02 },
- 	{ 0x2f5b, 0x05 },
--	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_CX_CLK_SEL_EN,
--		RT715_SDCA_CX_CLK_SEL_CTRL, CH_00), 0x1 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_ADC8_9_VOL,
- 		RT715_SDCA_FU_MUTE_CTRL, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_ADC8_9_VOL,
-@@ -98,6 +96,8 @@ static const struct reg_default rt715_re
- 		RT715_SDCA_FU_MUTE_CTRL, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_ADC7_27_VOL,
- 		RT715_SDCA_FU_MUTE_CTRL, CH_02), 0x01 },
-+	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_CX_CLK_SEL_EN,
-+		RT715_SDCA_CX_CLK_SEL_CTRL, CH_00), 0x1 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_SMPU_TRIG_ST_EN,
- 		RT715_SDCA_SMPU_TRIG_EN_CTRL, CH_00), 0x02 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_SMPU_TRIG_ST_EN,
-@@ -145,8 +145,6 @@ static const struct reg_default rt715_mb
- 		RT715_SDCA_FU_DMIC_GAIN_CTRL, CH_06), 0x00 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_AMIC_GAIN_EN,
- 		RT715_SDCA_FU_DMIC_GAIN_CTRL, CH_07), 0x00 },
--	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_AMIC_GAIN_EN,
--		RT715_SDCA_FU_DMIC_GAIN_CTRL, CH_08), 0x00 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_DMIC_GAIN_EN,
- 		RT715_SDCA_FU_DMIC_GAIN_CTRL, CH_01), 0x00 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_DMIC_GAIN_EN,
-@@ -161,6 +159,8 @@ static const struct reg_default rt715_mb
- 		RT715_SDCA_FU_DMIC_GAIN_CTRL, CH_06), 0x00 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_DMIC_GAIN_EN,
- 		RT715_SDCA_FU_DMIC_GAIN_CTRL, CH_07), 0x00 },
-+	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_AMIC_GAIN_EN,
-+		RT715_SDCA_FU_DMIC_GAIN_CTRL, CH_08), 0x00 },
- 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_DMIC_GAIN_EN,
- 		RT715_SDCA_FU_DMIC_GAIN_CTRL, CH_08), 0x00 },
- };
+--- a/drivers/clk/rockchip/clk-rk3588.c
++++ b/drivers/clk/rockchip/clk-rk3588.c
+@@ -2102,7 +2102,7 @@ static struct rockchip_clk_branch rk3588
+ 	COMPOSITE(DCLK_VOP1_SRC, "dclk_vop1_src", gpll_cpll_v0pll_aupll_p, 0,
+ 			RK3588_CLKSEL_CON(111), 14, 2, MFLAGS, 9, 5, DFLAGS,
+ 			RK3588_CLKGATE_CON(52), 11, GFLAGS),
+-	COMPOSITE(DCLK_VOP2_SRC, "dclk_vop2_src", gpll_cpll_v0pll_aupll_p, CLK_SET_RATE_PARENT | CLK_SET_RATE_NO_REPARENT,
++	COMPOSITE(DCLK_VOP2_SRC, "dclk_vop2_src", gpll_cpll_v0pll_aupll_p, CLK_SET_RATE_NO_REPARENT,
+ 			RK3588_CLKSEL_CON(112), 5, 2, MFLAGS, 0, 5, DFLAGS,
+ 			RK3588_CLKGATE_CON(52), 12, GFLAGS),
+ 	COMPOSITE_NODIV(DCLK_VOP0, "dclk_vop0", dclk_vop0_p,
 
 
