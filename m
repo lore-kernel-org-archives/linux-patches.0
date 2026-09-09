@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6815632A0;
-	Wed,  9 Sep 2026 13:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C391D5519A9;
+	Wed,  9 Sep 2026 13:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962037; cv=none; b=AKnZ5otB+8u+N24fV4j735XW2KXNLA4TsixXWNTk1jIFcW95ruGuk5C/ahvx1iP/KR1nAOW+czwKzmst+w6o97M3gvwXh+iME9BpUp0qOWTxhAoLxT0aaN+WjIQnayJaMYg99HQmul7CidSvLeYH1RTpFw/vKX9/DkAELGJPcKg=
+	t=1788962040; cv=none; b=lughPt0URCeI7RwZOuRGICovUoBpg4cqq/D0NjFn1RguBov8x6JVSsox7M5c4QdbikNALe17EzsQgF2EUCQuNc8mcoyRB3PtMx1TCgHXYZT6UDG6N18sizD8zJqN9NqY6fayvjdVprQbdu0Bz++n0MAZBLwTfenXRSZBVe0uU+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962037; c=relaxed/simple;
-	bh=aziBpxfavHT5QF16c0zdZQXsDjT77I6vOy69dL40ul0=;
+	s=arc-20240116; t=1788962040; c=relaxed/simple;
+	bh=JNMqyCmQ0AU3o3Z6s4NqAMZt2UgxYqaN+ChpFUWzD1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZkdDloncefyo4gCLFI7NhuEsocEqPm//IDguhabgGHQMclKNjx+MPJhKQ/IDYBC4NZWwo3+ZiQvqKb6cqaakwCL/XHlslH/CA7TV+lrDF1DL3hSOTG6vjwJzhqlA3dbtK/Uq6vM6ZF4k6zaQ9DP1IY+fcU8iL0JZIq47hlmof7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzHhLQzi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nfWhAkjjWSzR/sxbGldXIbfvBko1579iJa/+z9mPyBthiYO5VWiQs/NRcCeAR+kruquW/56x/ecDuPBDQTW/Y5A0x4ZX8HrWwZaEW5h+P07a19VMCIaTtQnmNDUCHSoA9ec+1WFdpRas6yCZmQQqWVTRk69m6uAIJoPFR87sEPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N67oLhtD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzHhLQzi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4390B1F00A3A;
-	Wed,  9 Sep 2026 13:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N67oLhtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2790D1F00A3A;
+	Wed,  9 Sep 2026 13:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962035;
-	bh=cXLCHh8kmxd8l/39L/5tux18h14J4e6t18USnASa16g=;
+	s=korg; t=1788962038;
+	bh=VSwuP1wuXGmjSqky6aCtxEMOGkRdWTm3jjyu6Kma+0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dzHhLQzi5n7ZgsnSOdEsf9ZDUoxmdbk4FXF3enJm6+ixLFEQ8biByZpyB4krUDnMn
-	 BsMtUSgwTKtG1wpkEG1NoYALeqUzfrNORmayKhuEQ7Yh3YlKmVaXTU1VTC7xtG9Zb8
-	 lzkNcU+QZO+ZXDY6uyqvVaiCHfHw4bk6OYyGgJ1c=
+	b=N67oLhtDXDgdBjCEO/sGFTreIdf8BOht9NDZXdzKn1LBdx0kQhdgt/VLO2T0x8xc0
+	 vxGwQuRutNrYAcbJh6gHr4OdmBTGJ/FhKKgC6azG5xe6p9QFO0ZqjpqoNs55W+AKk/
+	 7GUT9mw2WTM2UXZYUxhdSZA4ereYEW+nCSowJqws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Baineng Shou <shoubaineng@gmail.com>
-Subject: [PATCH 7.2 124/556] misc: fastrpc: dont publish fd before copy_to_user() succeeds
-Date: Wed,  9 Sep 2026 15:36:44 +0200
-Message-ID: <20260909134234.823061790@linuxfoundation.org>
+	syzbot+225231fce6755d40d078@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 151/556] ALSA: pcm: Fix race between non-atomic ops and trigger-start
+Date: Wed,  9 Sep 2026 15:37:11 +0200
+Message-ID: <20260909134235.750025156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -45,77 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baineng Shou <shoubaineng@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit a4a1a2bfcb29785292d634d7787edc6fb550714d upstream.
+commit acac7b5e07349a9d10d78873afb4b93cd1dc721f upstream.
 
-fastrpc_ioctl_alloc_dmabuf() calls dma_buf_fd() which installs the fd
-into the caller's fd table before copy_to_user() copies the fd number
-back to userspace.  If copy_to_user() fails, the fd is already visible
-to other threads in the same process but the ioctl returns -EFAULT.
-The existing comment in the code even acknowledges the problem:
+We protect the races of the concurrent state transitions between
+atomic PCM ops, but the checks between the non-atomic ops (hw_params,
+hw_free and prepare) and the atomic ops aren't perfect; there is a
+check of the conflicting PCM state at the beginning of hw_params & co,
+but the atomic PCM ops can be still issued during the non-atomic PCM
+operations.  An example such scenario is that a thread A re-issues the
+PREPARE or HW_PARAMS for the already prepared stream, while another
+thread B triggers the PCM start in the middle of the prepare
+operation.  Although this usually doesn't lead to much serious issues,
+it can give some inconsistency as reported by syzkaller (such as
+ODEBUG warning).
 
-  "The usercopy failed, but we can't do much about it, as dma_buf_fd()
-   already called fd_install()..."
+There are various atomic PCM ops, and basically the only problem is
+the PCM start as it operates from the PREPARED state.  Other trigger
+commands (stop, etc) are for the running or the other special state,
+hence they are filtered as pre-condition.
 
-Now that dma_buf_fd_install() is available (introduced to fix the same
-issue in dma-heap), apply the same pattern here: reserve the fd with
-get_unused_fd_flags(), attempt copy_to_user(), and only on success call
-dma_buf_fd_install() to publish it atomically with the tracepoint.  On
-copy_to_user() failure, put_unused_fd() and dma_buf_put() cleanly
-unwind without any user-visible side effects.
+This patch is for preventing the PCM trigger-start during the non-
+atomic operations in order to address the problems above.
+Fortunately, the hw_params, hw_free and prepare operations call
+snd_pcm_buffer_access_lock(), and this can be used for checking the
+concurrent operations at the PCM trigger -- which sets the
+runtime->buffer_accessing to a negative (if possible), so the PCM
+trigger just needs to check the runtime->buffer_accessing value; if
+it's negative, it means the concurrent non-atomic PCM ops is running.
 
-Fixes: 6cffd79504ce ("misc: fastrpc: Add support for dmabuf exporter")
-Cc: stable@vger.kernel.org
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
-Link: https://lore.kernel.org/r/20260817050457.1005285-3-shoubaineng@gmail.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Reported-by: syzbot+225231fce6755d40d078@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/6a8f0de8.1d9ded08.62e62.00b5.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260828115542.3999-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ sound/core/pcm_native.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1712,24 +1712,20 @@ static int fastrpc_dmabuf_alloc(struct f
- 		return err;
- 	}
- 
--	bp.fd = dma_buf_fd(buf->dmabuf, O_ACCMODE);
-+	bp.fd = get_unused_fd_flags(O_ACCMODE);
- 	if (bp.fd < 0) {
- 		dma_buf_put(buf->dmabuf);
--		return -EINVAL;
-+		return bp.fd;
- 	}
- 
- 	if (copy_to_user(argp, &bp, sizeof(bp))) {
--		/*
--		 * The usercopy failed, but we can't do much about it, as
--		 * dma_buf_fd() already called fd_install() and made the
--		 * file descriptor accessible for the current process. It
--		 * might already be closed and dmabuf no longer valid when
--		 * we reach this point. Therefore "leak" the fd and rely on
--		 * the process exit path to do any required cleanup.
--		 */
-+		put_unused_fd(bp.fd);
-+		dma_buf_put(buf->dmabuf);
- 		return -EFAULT;
- 	}
- 
-+	dma_buf_fd_install(buf->dmabuf, bp.fd);
-+
- 	return 0;
- }
- 
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -1468,6 +1468,8 @@ static int snd_pcm_pre_start(struct snd_
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	if (runtime->state != SNDRV_PCM_STATE_PREPARED)
+ 		return -EBADFD;
++	if (atomic_read(&runtime->buffer_accessing) < 0)
++		return -EBADFD; /* during hw_params, hw_free or prepare */
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
+ 	    !snd_pcm_playback_data(substream))
+ 		return -EPIPE;
 
 
