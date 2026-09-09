@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3614E468C2C;
-	Wed,  9 Sep 2026 13:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2AF275AFD;
+	Wed,  9 Sep 2026 13:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961743; cv=none; b=szj3DUHhSbNu/YaDCvDov9tbfD5Pim8OyVo9U8uh35bQV+wk1IhSnfLbSRNz0cloraHzQsfAquYNk2H90ZBVFoZrCeeST0PPNPv/hXn1WKCkV/2P9WEQ6lI6cvmJNFovucBr6e9P6egdICHdWQZeLatjJE1onbNqb7m4JPGjBJk=
+	t=1788961746; cv=none; b=KNqqvifQ5oQqW+tTWU1JBMJ1zQ8bRMDSxU9ORrQDaM37bodWmizhsyyzdWM9NB5RuUmfZKjEFlCMXf+prkDfp2O3X+UxmU+ASw7U6z7yr7/y221Hv5CBVPtF7jnIQlniWCBuIh/8ClJVWm72rDwyK5hGiTw4sQ0If9UC8/BWZzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961743; c=relaxed/simple;
-	bh=yfsmms+bWa1G8C70vrUQOAGi8EBvVmQsuBbt+TcNlBM=;
+	s=arc-20240116; t=1788961746; c=relaxed/simple;
+	bh=TpmbmA9hfySsIZ1BSOiCSyAiJsiOOT8GXl8xjeYzb0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXgjfNKdmUYVxrmWBsXxVGSAEuymDFX3ZJ705ntyr6+y3H0CduHBAB3XcRNEl6lnNmS0V+0Mhw+9HZW2yiivkzJWPOVwCr0P51IZvaWaDWOD4CKU7/w/SdHbSDz6i8SQv77CmAekWFY9Fxn8ERTZiimXEgkhdUoychEdAY34Tdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAo6eoPG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TvZaYBBXnaVtR0567U4viQZ+j8ybg66ScDIYVBJ/0KbQPU8orS0st2A+McrwVBCRSqrABrwF0MPO9fVM5ZRkYhBWFkHrWTAiClWfwJZDFyj08T4fZGerxLLbbmaQNQ0UIKg9mxpiQSOeY5+KvN7ZA+Tm2yi3P11Ixf1BTGusyVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxqsYeob; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAo6eoPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7431F00A3A;
-	Wed,  9 Sep 2026 13:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxqsYeob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D0A1F00A3A;
+	Wed,  9 Sep 2026 13:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961742;
-	bh=YXO2zFbudacd+M2EuszzlYfVvuEwrMYya5d306YEp1E=;
+	s=korg; t=1788961745;
+	bh=31t7m+KhA2XRm0bFSkEXdS8kmyhI0E5jDXHQ/sHVWT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xAo6eoPG1r+ZU/4OBuYEBo67gYdKvoOhIXH6iTGIcvkb2sAl60KYKVPkgz/34QUmo
-	 OmdStMf/0Rq5yLlZ854EVyB3ScKWqLRlWosbRXlkst4is9uVrghnAWRMhH0bZPSXHw
-	 E3IsUx5Szm/Mu3xYMlJxSNSWSZDtB+yXWgeOkoEs=
+	b=BxqsYeobKHqhVYR0QZrLrzVK4damlj4AMn2LUyjXWHjwKhaHWZd76MWv0YYL/NmTO
+	 wCt4Yd69+AoGiK2k7rXtwWM2zljV5Ca47o7526Ac5IkrnmlOohWYSyA2C+cFP27Uqm
+	 oc8OzhK73m1F6LEe1amouTihClO5uNLCV8hx6RTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Chang Wu <kunjinkao.jp@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Jan Remmet <j.remmet@phytec.de>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Subject: [PATCH 7.2 035/556] usb: typec: hd3ss3220: track VBUS enable state per consumer
-Date: Wed,  9 Sep 2026 15:35:15 +0200
-Message-ID: <20260909134231.733908950@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Arthur Gautier <baloo@superbaloo.net>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 7.2 053/556] xhci: fix lost bounce buffers on TDs spanning several ring segments
+Date: Wed,  9 Sep 2026 15:35:33 +0200
+Message-ID: <20260909134232.338726452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,71 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chang Wu <kunjinkao.jp@gmail.com>
+From: Arthur Gautier <baloo@superbaloo.net>
 
-commit c9a48db776d7184981630ecc01a3ad30a8f7dc24 upstream.
+commit ff44dfb03a293bf30e31f98772a1dd316a6071d1 upstream.
 
-regulator_is_enabled() reports the aggregate regulator state, not
-whether this consumer holds an enable reference. If another consumer
-enables VBUS first, the driver can skip its own regulator_enable() call
-and later attempt to drop a reference it never acquired, triggering an
-unbalanced regulator disable warning.
+When a TD reaches a link TRB with data that is not aligned to the
+endpoint's wMaxPacketSize, xhci_align_td() stages the unalignable tail
+through the bounce buffer of the ring segment holding that link TRB.
+xhci_unmap_td_bounce_buffer() later unmaps it and, for IN transfers,
+copies the data back into the URB's buffer.
 
-Track successful enable and disable calls locally. Keep the state
-unchanged when an operation fails so a later role or ID notification
-retries the operation while this consumer keeps balanced references.
+The enqueue path records the segment that was bounced in td->bounce_seg,
+under the assumption that a TD never spans more than two ring segments.
+That assumption does not hold: a TD large enough to span three or more
+segments crosses several link TRBs and can be bounced at each of them.
+Only the last one survives in td->bounce_seg, so every earlier bounce
+buffer is neither copied back nor DMA unmapped.
 
-Fixes: b3f9d6e491fd ("usb: typec: hd3ss3220: Check if regulator needs to be switched")
-Cc: stable <stable@kernel.org>
-Link: https://github.com/qualcomm-linux/kernel/issues/472
-Signed-off-by: Chang Wu <kunjinkao.jp@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Jan Remmet <j.remmet@phytec.de>
-Reviewed-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260819152027.90994-1-kunjinkao.jp@gmail.com
+The URB still completes with actual_length equal to the requested length
+and no error, so the transfer looks successful while a wMaxPacketSize
+sized hole in the destination buffer silently keeps its previous
+contents. It also leaks a DMA mapping per dropped bounce.
+
+Any sufficiently large and fragmented bulk transfer can hit this. It was
+found with a USB mass storage device behind xHCI backing a dm-verity
+target with 512 byte hash blocks, where the stale data is detected rather
+than silently consumed. The device enumerates as SuperSpeed, so
+wMaxPacketSize is 1024, while dm-bufio issues one 512 byte bio per hash
+block. verity_prefetch_io() makes the block layer merge hundreds of them
+into a single request of up to 512 scatterlist entries of 512 bytes each.
+At 256 TRBs per ring segment such a TD spans three segments, and every
+segment boundary falls on an odd multiple of 512, i.e. unaligned to
+wMaxPacketSize. dm-bufio then caches a hash block holding stale data and
+dm-verity declares the metadata block corrupted:
+
+  device-mapper: verity: 8:2: metadata block 10850 is corrupted
+
+A reproducer running this under qemu is available at
+https://github.com/baloo/xhci-verity
+
+The bounce state (bounce_buf, bounce_dma, bounce_len, bounce_offs)
+already lives on the ring segment, so there is nothing extra to track.
+Keep recording the last bounced segment in td->bounce_seg and, on
+completion, walk the segments from td->start_seg up to it, unmapping
+every segment that still has a pending bounce.
+
+Stopping at td->bounce_seg rather than td->end_seg matters: a bounce
+implies the TD continues past that segment's link TRB, so bounce_seg is
+always strictly before end_seg, and a later TD may already have started
+in end_seg and been bounced there. Walking that far would copy a foreign
+bounce buffer into this URB and unmap it twice. It also keeps the walk
+correct if a TD ever wraps the whole ring so that end_seg == start_seg.
+
+[mn: Add ring->num_segs check to prevent unlikely infinite for loop.]
+
+Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
+Cc: stable@vger.kernel.org
+Suggested-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Arthur Gautier <baloo@superbaloo.net>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260831090448.95644-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/hd3ss3220.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-ring.c |   32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/typec/hd3ss3220.c b/drivers/usb/typec/hd3ss3220.c
-index d0de5a2488f9..4eec90c82bae 100644
---- a/drivers/usb/typec/hd3ss3220.c
-+++ b/drivers/usb/typec/hd3ss3220.c
-@@ -62,6 +62,7 @@ struct hd3ss3220 {
- 	int id_irq;
- 
- 	struct regulator *vbus;
-+	bool vbus_enabled;
- };
- 
- static int hd3ss3220_set_power_opmode(struct hd3ss3220 *hd3ss3220, int power_opmode)
-@@ -208,7 +209,7 @@ static void hd3ss3220_regulator_control(struct hd3ss3220 *hd3ss3220, bool on)
- {
- 	int ret;
- 
--	if (regulator_is_enabled(hd3ss3220->vbus) == on)
-+	if (hd3ss3220->vbus_enabled == on)
- 		return;
- 
- 	if (on)
-@@ -216,9 +217,13 @@ static void hd3ss3220_regulator_control(struct hd3ss3220 *hd3ss3220, bool on)
- 	else
- 		ret = regulator_disable(hd3ss3220->vbus);
- 
--	if (ret)
-+	if (ret) {
- 		dev_err(hd3ss3220->dev,
- 			"vbus regulator %s failed: %d\n", on ? "enable" : "disable", ret);
-+		return;
-+	}
-+
-+	hd3ss3220->vbus_enabled = on;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -842,21 +842,18 @@ static void xhci_giveback_urb_in_irq(str
+ 	usb_hcd_giveback_urb(hcd, urb, status);
  }
  
- static void hd3ss3220_set_role(struct hd3ss3220 *hd3ss3220)
--- 
-2.55.0
-
+-static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
+-		struct xhci_ring *ring, struct xhci_td *td)
++static void xhci_unmap_one_bounce_buffer(struct xhci_hcd *xhci,
++		struct xhci_ring *ring, struct xhci_td *td,
++		struct xhci_segment *seg)
+ {
+ 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+-	struct xhci_segment *seg = td->bounce_seg;
+ 	struct urb *urb = td->urb;
+ 	size_t len;
+ 
+-	if (!ring || !seg || !urb)
+-		return;
+-
+ 	if (usb_urb_dir_out(urb)) {
+ 		dma_unmap_single(dev, seg->bounce_dma, ring->bounce_buf_len,
+ 				 DMA_TO_DEVICE);
+-		return;
++		goto done;
+ 	}
+ 
+ 	dma_unmap_single(dev, seg->bounce_dma, ring->bounce_buf_len,
+@@ -872,10 +869,29 @@ static void xhci_unmap_td_bounce_buffer(
+ 		memcpy(urb->transfer_buffer + seg->bounce_offs, seg->bounce_buf,
+ 		       seg->bounce_len);
+ 	}
++done:
+ 	seg->bounce_len = 0;
+ 	seg->bounce_offs = 0;
+ }
+ 
++static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
++		struct xhci_ring *ring, struct xhci_td *td)
++{
++	struct xhci_segment *seg;
++	int i = 0;
++
++	if (!td->bounce_seg || !ring || !td->urb)
++		return;
++
++	/* td->bounce_seg is the last one bounced, unmap them all */
++	for (seg = td->start_seg; i++ < ring->num_segs; seg = seg->next) {
++		if (seg->bounce_len)
++			xhci_unmap_one_bounce_buffer(xhci, ring, td, seg);
++		if (seg == td->bounce_seg)
++			break;
++	}
++}
++
+ static void xhci_td_cleanup(struct xhci_hcd *xhci, struct xhci_td *td,
+ 			    struct xhci_ring *ep_ring, int status)
+ {
+@@ -3688,7 +3704,7 @@ int xhci_queue_bulk_tx(struct xhci_hcd *
+ 						  &trb_buff_len,
+ 						  ring->enq_seg)) {
+ 					send_addr = ring->enq_seg->bounce_dma;
+-					/* assuming TD won't span 2 segs */
++					/* TD bounced at least, and last on this seg */
+ 					td->bounce_seg = ring->enq_seg;
+ 				}
+ 			}
 
 
