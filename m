@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D328B499F0C;
-	Wed,  9 Sep 2026 14:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CA256B872;
+	Wed,  9 Sep 2026 14:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963902; cv=none; b=faV0mdlAKUWcG6keFuHC6pQat9Mmc8LeqfzNnm1ziz5y7B0yS2znNN66dSBrqz9JbO8IQBWi06EcMkC2wp1DWd9gcbx3h3JVM4RIF3IUyhUaFqXVHEiYe1oexa1XSxgA4qRa9x9ZJgxlqwRKb+KcfGoE5NcYWlKQc82queDVgyU=
+	t=1788963905; cv=none; b=iAzJQ37z5xhKBdGIEbFnzs3vbS8Scr89raBgPebSfQYalY5/Xa2QxpHwvdqCwXkY4oLoQsINoSCCyJFv3+ake3DqdhLatSAGz65ae2X1O+NNfmOj7u5OggTzSdm/me2R7cbYvJxOZf8xsUckU8Udt9/PN6I58eieI4NDf/aUOyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963902; c=relaxed/simple;
-	bh=ULpncWDJMgomUF68aAY/PeSV4wBrO68j1eZMZMsP9ms=;
+	s=arc-20240116; t=1788963905; c=relaxed/simple;
+	bh=dB9yl9X4zJ2H3Dbp1HDVEJfLz3H9tlr4MbUryBJSU14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DOs3gxkmwXQkjAQHpRxtNq0g+rp4B8qt/rweVD5Zs5MPwSSRjBZOoZKauxo4M2fxk3HqrBLa03CPu39QADDf/nW4fIxhk7uKlSSIVG7wizvIG80JrE91EcUWGe+SyRopUHIpOdhQsHW83pL8aFzO1/N/VBoUBZsozsjBJ0y6EIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k139WFNa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dOEMqcVtzDJxahxaHOK9yVNv73Qnd0h98DKHN9dafToCTqNxFEvfnbo/uXgUqNLp5iQxVUk+eLF1b3KcOExUCpD2J6T5tw5Dyh3CxkLA+IhKXl+geBujBlOXaWyptNGsRn4s9NMpJNeul/bQRK71gAKkONd6oSkwcqTg04Pwc7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irpaQbbU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k139WFNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E9D1F00A3A;
-	Wed,  9 Sep 2026 14:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irpaQbbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C411F00A3A;
+	Wed,  9 Sep 2026 14:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963900;
-	bh=ltU/gqfcoFvcP7yHRVS2ZylT5segreVKUm5AdAvSOeY=;
+	s=korg; t=1788963903;
+	bh=Nyq7ElMoolhJLYdejipqeVyG4DTPZlk8IJT7P35iRas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k139WFNaVZv0qiigoK6ESfLSiUIndXLxpvUt2aInhHhh1I/fJGZG21Go++XtU1RLr
-	 I8QG5qHkXt/LJb8OvTohDUbepDPxpjqDV2+6GHO/fp5JMeEg0OfiSqMVnIOn2SKh0V
-	 IAnYbH6eE5Rdds5wJKOE1v8rzq3xdWBz+tPBQzME=
+	b=irpaQbbU11YrAATWttzjRAbWw+NpOL6l88zC4h73MNKgqIIvO4QBKZ5Fjc09dmWx4
+	 iSyz9RwrXUwuuPGpUB8qfV70oulkZAUr940+JMypo5Wncs8RfYr6dYGr3jBh7AGRed
+	 GNXPlLJSlCNRNXiU0i0KPYrjlYKQx0+TIjAugAUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Phil Rosenthal <phil@phil.gs>
-Subject: [PATCH 6.18 239/583] KVM: x86/mmu: Consume the locked rmap value in the lockless rmap walk
-Date: Wed,  9 Sep 2026 15:38:44 +0200
-Message-ID: <20260909134246.429442043@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	syzbot+3d5461510f8dc4adfe30@syzkaller.appspotmail.com,
+	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 240/583] KVM: x86: hyper-v: Clamp stimer deadline to avoid livelock
+Date: Wed,  9 Sep 2026 15:38:45 +0200
+Message-ID: <20260909134246.459778792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -44,130 +46,183 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phil Rosenthal <phil@phil.gs>
+From: Carlos López <clopez@suse.de>
 
-commit e428f9779a43737d830111238816f1928b07aefb upstream.
+commit 0ca49fbd2883cd53d32d85b50feef17fa04d0fbf upstream.
 
-__kvm_rmap_lock() deliberately elides the rmap lock when it observes an
-empty rmap.  In that case kvm_rmap_lock_readonly() also re-enables
-preemption and returns zero, so the caller holds neither the rmap lock
-nor a preemption reference.  The elision documents the invariant it
-relies on:
+Fix an issue where userspace or the guest can program an Hyper-V
+synthetic timer to have a deadline in the past via integer overflow,
+preventing the CPU from making progress and triggering an RCU stall.
 
-	 * Elide the lock if the rmap is empty, as lockless walkers (read-only
-	 * mode) don't need to (and can't) walk an empty rmap, nor can they add
-	 * entries to the rmap.  I.e. the only paths that process empty rmaps
-	 * do so while holding mmu_lock for write, and are mutually exclusive.
+Hyper-V's SynIC exposes 4 per-vCPU synthetic timers to the
+guest, which are emulated by KVM. Each is programmed through the
+HV_X64_MSR_STIMERi_CONFIG and HV_X64_MSR_STIMERi_COUNT MSRs. Depending
+on CONFIG, COUNT represents either the absolute expiration time or the
+period of a periodic timer, both expressed in 100ns ticks. These timers
+may be set both by the guest (WRMSR) and the host (KVM_SET_MSRS).
 
-kvm_rmap_age_gfn_range() ignores the returned value and unconditionally
-enters for_each_rmap_spte_lockless().  The iterator started with
-rmap_get_first(), which re-reads rmap_head->val rather than using the
-value returned by the lock.  If a writer populates the rmap between the
-lock's read and the iterator's re-read, the aging path walks the newly
-installed rmap without holding its lock.
+When the timer is enabled, stimer_start() translates COUNT to an
+absolute monotonic deadline and arms an hrtimer. If COUNT is set to a
+value close to U64_MAX, the deadline calculation can overflow.
 
-For a KVM_RMAP_MANY rmap this leaves the walker following a
-pte_list_desc chain that it never locked.  A writer holding mmu_lock for
-write may free that chain (e.g. kvm_zap_all_rmap_sptes() on the recycle
-path, or any rmap zap) via kmem_cache_free() while the walk is in
-progress, giving a slab use-after-free.  Nothing serialises the two: the
-aging path runs without mmu_lock when CONFIG_KVM_MMU_LOCKLESS_AGING=y,
-and the rmap lock that would otherwise exclude the writer was elided.
-Because the empty path re-enables preemption, the interval between the
-two reads can span an arbitrary scheduling delay.
+    ktime_add_ns(ktime_now, 100 * (stimer->exp_time - time_now))
 
-Fix the class of bug by having the lockless walk consume the value
-returned by the lock instead of re-reading the rmap.  Split
-rmap_get_first() into __rmap_get_first(), which starts an iterator from
-an already-read rmap value, and make for_each_rmap_spte_lockless() take
-that value and call __rmap_get_first() directly.
-kvm_rmap_age_gfn_range() passes the value returned by
-kvm_rmap_lock_readonly(): when the lock was elided the value is zero,
-__rmap_get_first() returns NULL, and the walk is skipped.  No lockless
-walker re-reads the rmap, so the lock-elision invariant cannot be
-violated, and no lock()-without-paired-unlock() path is added to the
-aging code.
+This can result in a CPU livelock. stimer_start() arms the timer
+via hrtimer_start() with a deadline in the past, which causes it to
+immediately fire. The stimer callback then raises KVM_RQ_HV_STIMER, with
+the intention of causing KVM to deliver a synthetic interrupt on the
+next vCPU guest enter.
 
-Fixes: af3b6a9eba48 ("KVM: x86/mmu: Walk rmaps (shadow MMU) without holding mmu_lock when aging gfns")
-Suggested-by: Sean Christopherson <seanjc@google.com>
+Then, once userspace issues KVM_RUN, vcpu_enter_guest() consumes the
+request, calling kvm_hv_process_stimers(). This would normally disable
+the timer via stimer_expiration() once the deadline is in the past.
+However, the deadline comparison is done between the KVM reference
+counter and stime->exp_time, which is a big value close to U64_MAX, so
+this never happens for a few thousand years.
+
+kvm_hv_process_timers() then re-arms the timer via stimer_start(), since
+it was not disabled, which again fires immediately. Before entering
+the guest, kvm_vcpu_exit_request() checks kvm_request_pending(),
+which returns true due to the newly raised KVM_REQ_HV_STIMER. Then
+vcpu_enter_guest() aborts the guest entry, returning early into
+vcpu_run(), which loops back again into vcpu_enter_guest(), restarting
+the cycle.
+
+Since there are no manual yields in this loop, a task with SCHED_FIFO
+may starve RCU grace-period kthreads, which exposes the stalls found
+by syzcaller:
+
+    rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+    rcu:    (detected by 1, t=10502 jiffies, g=14269, q=1142 ncpus=2)
+    rcu: All QSes seen, last rcu_preempt kthread activity 10500 (4294965239-4294954739), jiffies_till_next_fqs=1, root ->qsmask 0x0
+    rcu: rcu_preempt kthread starved for 10500 jiffies! g14269 f0x2 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=0
+    rcu:    Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+        ( ... )
+    Call Trace:
+     <IRQ>
+     __run_hrtimer kernel/time/hrtimer.c:1773 [inline]
+     __hrtimer_run_queues+0x408/0xc30 kernel/time/hrtimer.c:1841
+     hrtimer_interrupt+0x45b/0xaa0 kernel/time/hrtimer.c:1903
+     local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1045 [inline]
+     __sysvec_apic_timer_interrupt+0x102/0x3e0 arch/x86/kernel/apic/apic.c:1062
+     instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1056 [inline]
+     sysvec_apic_timer_interrupt+0xa1/0xc0 arch/x86/kernel/apic/apic.c:1056
+     </IRQ>
+     <TASK>
+     asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:697
+    RIP: 0010:__raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:152 [inline]
+    RIP: 0010:_raw_spin_unlock_irqrestore+0xa8/0x110 kernel/locking/spinlock.c:194
+    Code: 74 05 e8 0b f4 5f f6 48 c7 44 24 20 00 00 00 00 9c 8f 44 24 20 f6 44 24 21 02 75 4f f7 c3 00 02 00 00 74 01 fb bf 01 00 00 00 <e8> 23 6b 27 f6 65 8b 05 7c 60 5a 07 85 c0 74 40 48 c7 04 24 0e 36
+    RSP: 0018:ffffc900040a7320 EFLAGS: 00000206
+    RAX: 5de15cb931505900 RBX: 0000000000000a06 RCX: 5de15cb931505900
+    RDX: 0000000000000007 RSI: ffffffff8daa9dc3 RDI: 0000000000000001
+    RBP: ffffc900040a73b0 R08: ffffffff8fc3d077 R09: 1ffffffff1f87a0e
+    R10: dffffc0000000000 R11: fffffbfff1f87a0f R12: dffffc0000000000
+    R13: 0000000000000000 R14: ffff8880b8628240 R15: 1ffff92000814e64
+     hrtimer_start include/linux/hrtimer.h:259 [inline]
+     stimer_start arch/x86/kvm/hyperv.c:682 [inline]
+     kvm_hv_process_stimers+0xd0a/0x16a0 arch/x86/kvm/hyperv.c:893
+     vcpu_enter_guest arch/x86/kvm/x86.c:11193 [inline]
+     vcpu_run+0x2240/0x76b0 arch/x86/kvm/x86.c:11639
+     kvm_arch_vcpu_ioctl_run+0x1148/0x1c90 arch/x86/kvm/x86.c:11984
+     kvm_vcpu_ioctl+0x99a/0xed0 virt/kvm/kvm_main.c:4492
+     vfs_ioctl fs/ioctl.c:51 [inline]
+     __do_sys_ioctl fs/ioctl.c:597 [inline]
+     __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+     do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+     do_syscall_64+0xfa/0xf80 arch/x86/entry/syscall_64.c:94
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f635278f749
+    Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+    RSP: 002b:00007f635365c038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+    RAX: ffffffffffffffda RBX: 00007f63529e5fa0 RCX: 00007f635278f749
+    RDX: 0000000000000000 RSI: 000000000000ae80 RDI: 0000000000000005
+    RBP: 00007f6352813f91 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+    R13: 00007f63529e6038 R14: 00007f63529e5fa0 R15: 00007ffd5b219358
+     </TASK>
+
+Fix this by clamping the deadline computation to KTIME_MAX, which
+preserves the intent of arming a timer very far in the future.
+ktime_add_safe() already does this type of clamping, so use it after
+checking that that multiplying by the 100ns time tick also does not
+overflow.
+
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Reported-by: syzbot+3d5461510f8dc4adfe30@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3d5461510f8dc4adfe30
+Fixes: 1f4b34f825e8 ("kvm/x86: Hyper-V SynIC timers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Phil Rosenthal <phil@phil.gs>
-Link: https://patch.msgid.link/20260720-rmap-age-elided-submit-v2-1-668973030d47@phil.gs
+Signed-off-by: Carlos López <clopez@suse.de>
+Link: https://patch.msgid.link/20260714133212.3916611-3-clopez@suse.de
+[sean: tag for stable]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   33 +++++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ arch/x86/kvm/hyperv.c |   25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -1218,18 +1218,9 @@ struct rmap_iterator {
- 	int pos;			/* index of the sptep */
- };
- 
--/*
-- * Iteration must be started by this function.  This should also be used after
-- * removing/dropping sptes from the rmap link because in such cases the
-- * information in the iterator may not be valid.
-- *
-- * Returns sptep if found, NULL otherwise.
-- */
--static u64 *rmap_get_first(struct kvm_rmap_head *rmap_head,
--			   struct rmap_iterator *iter)
-+static u64 *__rmap_get_first(unsigned long rmap_val,
-+			     struct rmap_iterator *iter)
- {
--	unsigned long rmap_val = kvm_rmap_get(rmap_head);
--
- 	if (!rmap_val)
- 		return NULL;
- 
-@@ -1244,6 +1235,19 @@ static u64 *rmap_get_first(struct kvm_rm
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -627,6 +627,18 @@ static enum hrtimer_restart stimer_timer
  }
  
  /*
-+ * Iteration must be started by this function.  This should also be used after
-+ * removing/dropping sptes from the rmap link because in such cases the
-+ * information in the iterator may not be valid.
-+ *
-+ * Returns sptep if found, NULL otherwise.
++ * Translate a stimer expiry given in 100ns reference ticks into an
++ * an absolute deadline. Saturates on overflow.
 + */
-+static u64 *rmap_get_first(struct kvm_rmap_head *rmap_head,
-+			   struct rmap_iterator *iter)
++static ktime_t stimer_add_delta(ktime_t now, u64 delta_100ns)
 +{
-+	return __rmap_get_first(kvm_rmap_get(rmap_head), iter);
++	if (delta_100ns >= KTIME_MAX / 100)
++		return KTIME_MAX;
++
++	return ktime_add_safe(now, 100 * delta_100ns);
 +}
 +
 +/*
-  * Must be used with a valid iterator: e.g. after rmap_get_first().
-  *
-  * Returns sptep if found, NULL otherwise.
-@@ -1277,8 +1281,9 @@ static u64 *rmap_get_next(struct rmap_it
- 	__for_each_rmap_spte(_rmap_head_, _iter_, _sptep_)			\
- 		if (!WARN_ON_ONCE(!is_shadow_present_pte(*(_sptep_))))	\
+  * stimer_start() assumptions:
+  * a) stimer->count is not equal to 0
+  * b) stimer->config has HV_STIMER_ENABLE flag
+@@ -635,6 +647,7 @@ static int stimer_start(struct kvm_vcpu_
+ {
+ 	u64 time_now;
+ 	ktime_t ktime_now;
++	ktime_t deadline;
  
--#define for_each_rmap_spte_lockless(_rmap_head_, _iter_, _sptep_, _spte_)	\
--	__for_each_rmap_spte(_rmap_head_, _iter_, _sptep_)			\
-+#define for_each_rmap_spte_lockless(_rmap_val_, _iter_, _sptep_, _spte_)	\
-+	for (_sptep_ = __rmap_get_first(_rmap_val_, _iter_);			\
-+	     _sptep_; _sptep_ = rmap_get_next(_iter_))				\
- 		if (is_shadow_present_pte(_spte_ = mmu_spte_get_lockless(sptep)))
+ 	time_now = get_time_ref_counter(hv_stimer_to_vcpu(stimer)->kvm);
+ 	ktime_now = ktime_get();
+@@ -657,10 +670,8 @@ static int stimer_start(struct kvm_vcpu_
+ 					stimer->index,
+ 					time_now, stimer->exp_time);
  
- static void drop_spte(struct kvm *kvm, u64 *sptep)
-@@ -1716,7 +1721,7 @@ static bool kvm_rmap_age_gfn_range(struc
- 			rmap_head = gfn_to_rmap(gfn, level, range->slot);
- 			rmap_val = kvm_rmap_lock_readonly(rmap_head);
+-		hrtimer_start(&stimer->timer,
+-			      ktime_add_ns(ktime_now,
+-					   100 * (stimer->exp_time - time_now)),
+-			      HRTIMER_MODE_ABS);
++		deadline = stimer_add_delta(ktime_now, stimer->exp_time - time_now);
++		hrtimer_start(&stimer->timer, deadline, HRTIMER_MODE_ABS);
+ 		return 0;
+ 	}
+ 	stimer->exp_time = stimer->count;
+@@ -679,9 +690,9 @@ static int stimer_start(struct kvm_vcpu_
+ 					   stimer->index,
+ 					   time_now, stimer->count);
  
--			for_each_rmap_spte_lockless(rmap_head, &iter, sptep, spte) {
-+			for_each_rmap_spte_lockless(rmap_val, &iter, sptep, spte) {
- 				if (!is_accessed_spte(spte))
- 					continue;
+-	hrtimer_start(&stimer->timer,
+-		      ktime_add_ns(ktime_now, 100 * (stimer->count - time_now)),
+-		      HRTIMER_MODE_ABS);
++	deadline = stimer_add_delta(ktime_now, stimer->count - time_now);
++	hrtimer_start(&stimer->timer, deadline, HRTIMER_MODE_ABS);
++
+ 	return 0;
+ }
  
 
 
