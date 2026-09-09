@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFACB57981A;
-	Wed,  9 Sep 2026 14:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D570857981F;
+	Wed,  9 Sep 2026 14:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964484; cv=none; b=aeKhAHb9OmgOOEaHCkMQKE2g0UuRA/ytrQYlygOP16XCDxWTCksld6XQIgPcq4CXNSJk616OgU81SI+nnbDSKOIkwFk6Zrir4DwclM6/ANx8tfaG131z8DKNYh63Cuh7cqNnXnJAZ4Psmj9RBL1qoRfc3EUWGrTqFGvqgXOmuRI=
+	t=1788964487; cv=none; b=hNwrs9yI1eGPlDeYoh/twXuICklIcmJ5eBxdPIoHWpMZh/jI/6ksA8ZHWooGaKQI7X3dvPJIbqX+uBAQnJOOYAUjENvXNxNWg2kbQ4gLFpAMoeXzxMJyiuFZJSFjKus232fFEgMiQzh+q2tYnonJvxRX81BNozrBwnnX5dCK9Mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964484; c=relaxed/simple;
-	bh=95GGm/M7C/9eNxVAy18SWyAbJxrwm2ch64IWDLab7vc=;
+	s=arc-20240116; t=1788964487; c=relaxed/simple;
+	bh=w0NCivkSP17NI+0lm6F8DjpjZ8bbKLbQfWSg9U9QqOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DzeU2pVT5NUkv6xu0avkoPoD3SyerylRt6kvnkgosu3VlVIECEJkxhwbLsdVyS8K2JyyMRnDfetTLnTDdXmEbDZOU4v+I5xi6b4MbuJQvT6UwDNHF8urOXMeMH8xyvPVY9GX2Do//GXH+2J4BwbiDUZWdKA8pyFQ6enwjbQvnQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8UYmFEH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KZa8Ws5YV9myYsbL35XmCL+Dn11nmzXn6ag8gmhDgq3p/Dzn4PK9NqH06MO8TzJ4YQJG3QOAMj4cYebslcQl73sWNAE60f5utCkwalwk1pd8rnED6eukbOik3PX0KxpeHEmPLUk6/i/FJ1MCcIZkj2QmNFNoggtETnJoaZ8fvmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRtXzMWo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8UYmFEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BBE1F00A3A;
-	Wed,  9 Sep 2026 14:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRtXzMWo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE771F00A3A;
+	Wed,  9 Sep 2026 14:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964482;
-	bh=CQ0MAxILPiwRJ3a721/4TxgysVtECviRTiYd8dpVaJs=;
+	s=korg; t=1788964485;
+	bh=i1ZlVZ5gHVuUBugqIGAS6GKoP7fWLDk+DCFhj/fGPH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x8UYmFEH2roKswnFFftX2oNOY62g2LLkuBir6Pu/ngcduM/5QcLtqbdaezvUuiMco
-	 XmNvB3YzbaR6cwVZ1AC8FJIWsOSVDuOxngLgFGhX9kwyauEhwI8FEBVidLjKHPmoSn
-	 ZPTB6oTVj4QBzvET6FczUskOAPsj7yRt+M62i82w=
+	b=jRtXzMWo75B/z7BIwJFuDI95+P9cFYUMmss/MPBrv9WYbVQ27y/poUUDf1/BDIzT2
+	 9T6iZF5kctMYWc7h3W+36w92MqEDmrEo7d2m8/Ydmf8BvuWqPOAEDWp0383ugnYEj5
+	 ITIJfxy7DIzOZhI+u05CoUwsmYwI6PBJzGaSCQY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xiaogang Chen <xiaogang.chen@amd.com>,
 	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 400/583] drm/amdkfd: Fix error path at svm_migrate_copy_to_ram
-Date: Wed,  9 Sep 2026 15:41:25 +0200
-Message-ID: <20260909134251.861750532@linuxfoundation.org>
+Subject: [PATCH 6.18 401/583] drm/amdkfd: Fix the case that vm range is hole at svm_migrate_copy_to_vram
+Date: Wed,  9 Sep 2026 15:41:26 +0200
+Message-ID: <20260909134251.900821074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,16 +53,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiaogang Chen <xiaogang.chen@amd.com>
 
-commit 960c4a8069bfd352c48cc88592618f1ebe24c69e upstream.
+commit 520e345ffe05aabef1db82beda4288afb1757ff2 upstream.
 
-If page migration from device to sys ram fails for some reasons driver needs
-release and unlock allocated system pages. To do that driver should use page
-physical address, or pfn, then get struct page*. Current driver uses dma
-address(for adev) that is not correct with IOMMU enabled, or even in general.
+When migration vm range is hole at cpu side(MIGRATE_PFN_MIGRATE set +
+MIGRATE_PFN_VALID unset) driver still allocates device pages. There is no
+dma map of src pages and migration. j is 0 and svm_migrate_copy_memory_gart()
+will return an uninitialized r. That can trigger out_free_vram_pages to drop
+all VRAM just set up.
 
-The patch releases and unlocks allocated system pages based on where migration
-failed by struct page* of sys ram pages. Also dma_unmap correspodent system
-ram pages at error path.
+Initialize r and only call the last svm_migrate_copy_memory_gart if j > 0.
+
+Current code postponed the last page to the final copy. This patch flushes on
+the last page when reach to the end of current drm_buddy_block; avoids another
+svm_migrate_copy_memory_gart.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Xiaogang Chen <xiaogang.chen@amd.com>
@@ -70,91 +73,56 @@ Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_migrate.c |   45 ++++++++++++++++++++-----------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_migrate.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
-@@ -252,15 +252,6 @@ svm_migrate_get_sys_page(struct vm_area_
- 	return page;
- }
+@@ -132,7 +132,7 @@ svm_migrate_copy_memory_gart(struct amdg
+ 	u64 gart_s, gart_d;
+ 	struct dma_fence *next;
+ 	u64 size;
+-	int r;
++	int r = 0;
  
--static void svm_migrate_put_sys_page(unsigned long addr)
--{
--	struct page *page;
--
--	page = pfn_to_page(addr >> PAGE_SHIFT);
--	unlock_page(page);
--	put_page(page);
--}
--
- static unsigned long svm_migrate_successful_pages(struct migrate_vma *migrate)
- {
- 	unsigned long mpages = 0;
-@@ -584,9 +575,10 @@ svm_migrate_copy_to_ram(struct amdgpu_de
- 			dma_addr_t *scratch, u64 npages)
- {
- 	struct device *dev = adev->dev;
--	u64 *src;
-+	struct page *dpage = NULL;
- 	dma_addr_t *dst;
--	struct page *dpage;
-+	u64 *src;
-+
- 	u64 i = 0, j;
- 	u64 addr;
- 	int r = 0;
-@@ -640,6 +632,7 @@ svm_migrate_copy_to_ram(struct amdgpu_de
- 		r = dma_mapping_error(dev, dst[i]);
- 		if (r) {
- 			dev_err(adev->dev, "%s: fail %d dma_map_page\n", __func__, r);
-+			dst[i] = 0;
- 			goto out_oom;
+ 	mutex_lock(&adev->mman.gtt_window_lock);
+ 
+@@ -278,7 +278,7 @@ svm_migrate_copy_to_vram(struct kfd_node
+ 	dma_addr_t *src;
+ 	u64 *dst;
+ 	u64 i, j;
+-	int r;
++	int r = 0;
+ 
+ 	pr_debug("svms 0x%p [0x%lx 0x%lx 0x%llx]\n", prange->svms, prange->start,
+ 		 prange->last, ttm_res_offset);
+@@ -304,6 +304,7 @@ svm_migrate_copy_to_vram(struct kfd_node
+ 					      DMA_BIDIRECTIONAL);
+ 			r = dma_mapping_error(dev, src[i]);
+ 			if (r) {
++				src[i] = 0;
+ 				dev_err(dev, "%s: fail %d dma_map_page\n",
+ 					__func__, r);
+ 				goto out_free_vram_pages;
+@@ -328,7 +329,8 @@ svm_migrate_copy_to_vram(struct kfd_node
+ 		pr_debug_ratelimited("dma mapping src to 0x%llx, pfn 0x%lx\n",
+ 				     src[i] >> PAGE_SHIFT, page_to_pfn(spage));
+ 
+-		if (j >= (cursor.size >> PAGE_SHIFT) - 1 && i < npages - 1) {
++		/* accumulated j + 1 pages reach end of current drm_buddy_block */
++		if (j + 1 >= (cursor.size >> PAGE_SHIFT)) {
+ 			r = svm_migrate_copy_memory_gart(adev, src + i - j,
+ 							 dst + i - j, j + 1,
+ 							 FROM_RAM_TO_VRAM,
+@@ -342,7 +344,8 @@ svm_migrate_copy_to_vram(struct kfd_node
  		}
- 
-@@ -647,17 +640,39 @@ svm_migrate_copy_to_ram(struct amdgpu_de
- 				     dst[i] >> PAGE_SHIFT, page_to_pfn(dpage));
- 
- 		migrate->dst[i] = migrate_pfn(page_to_pfn(dpage));
-+
-+		dpage = NULL;
- 		j++;
  	}
  
--	r = svm_migrate_copy_memory_gart(adev, dst + i - j, src + i - j, j,
--					 FROM_VRAM_TO_RAM, mfence);
--
+-	r = svm_migrate_copy_memory_gart(adev, src + i - j, dst + i - j, j,
 +	if (j > 0)
-+		r = svm_migrate_copy_memory_gart(adev, dst + i - j, src + i - j, j,
-+						 FROM_VRAM_TO_RAM, mfence);
- out_oom:
- 	if (r) {
- 		pr_debug("failed %d copy to ram\n", r);
-+
-+		/* first release current dpage when dma_map_page fail */
-+		if (dpage) {
-+			unlock_page(dpage);
-+			put_page(dpage);
-+		}
-+
-+		/* release previous allocated sys pages and unmap dma address */
- 		while (i--) {
--			svm_migrate_put_sys_page(dst[i]);
-+
-+			if (dst[i]) {
-+				dma_unmap_page(dev, dst[i], PAGE_SIZE,
-+					       DMA_BIDIRECTIONAL);
-+				dst[i] = 0;
-+			}
-+
-+			dpage = migrate_pfn_to_page(migrate->dst[i]);
-+			if (!dpage)
-+				continue;
-+
-+			unlock_page(dpage);
-+			put_page(dpage);
- 			migrate->dst[i] = 0;
- 		}
- 	}
++		r = svm_migrate_copy_memory_gart(adev, src + i - j, dst + i - j, j,
+ 					 FROM_RAM_TO_VRAM, mfence);
+ 
+ out_free_vram_pages:
 
 
