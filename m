@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D2057D208;
-	Wed,  9 Sep 2026 14:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03523565117;
+	Wed,  9 Sep 2026 14:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963407; cv=none; b=A6Qwxjg21PI3aQxRhw+BnvydsWqcn73PlXRG1XKYJq+BIRCLc7DtEZBg8zxHwNQahlfvnxzLE34Ennt8tckDVoGNARLRA/PttF5p4mB0eJYlMWd+CW8s6e44x2z/n1PmJY5oeBrAUK4K3JfAIYdRUQWPs1pfq63mm9orPQgFp4k=
+	t=1788963410; cv=none; b=n67v0RmnNm4jp9EpljxmxMg43jFfX9tI6YSMyi5i1aJ04e2skfue18+v28v99h53ScrX0mhrupH1VrlNGB1XVmTHcBQ2aQtwCBaycg8tDrXRlMRvCEZemDFWdbKboqERTrLLlKxNCbmvK7651eVSio4NlvXee4k0ahH+lPhHyuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963407; c=relaxed/simple;
-	bh=OQ3lnaYkeHEF/hBBvvNMutMK05oxAJ6ChNS3UJ1WdTQ=;
+	s=arc-20240116; t=1788963410; c=relaxed/simple;
+	bh=+13HupA9XkFiBys2Y6XvNOSKu0FYECr+PjUjOSnpqQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OppkOUDttu/OECIXDUCnhDclAmTY5KdOfYnpsGf2zsWs7ftMatehSBVGJAwkYatA2xdhxbYXNc1spRZxQKkV15GycrcCoWK65ppDqPCkVlmdRSVJ6E6gnaxap3Btpsd5ZJ+yJil3mbClRBZq0tyGCsYRWHBxOgTf1m2Dpt+4T1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfqvBEc6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dnlg8byBe8XryBEWcUGeV7jaUnuDYOD67wNpQLd1tqoBlR5BapDI6nh1+awXoLGK4BoQupWc1QA6z405T8pUYxMzYBXg1hWBfOSk8/1CHIOUsUCIgJjgOAg686hCikxnfyiVEJfrcz/RK3YARRBhFiYFnY4LuBjz3MaceuIID9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFZKaePW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfqvBEc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C841F00A3A;
-	Wed,  9 Sep 2026 14:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFZKaePW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B56C1F00A3A;
+	Wed,  9 Sep 2026 14:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963406;
-	bh=0u8rRy/CigAZPuASzbFO5aOrIEw9JQqbchDMHNjh7yw=;
+	s=korg; t=1788963408;
+	bh=FyaEp6cy9Edc/qsRMoWs88paREj5NdL44T0ojxJsOfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jfqvBEc66Pfp9cdxOK2Grp5/ERPCgzJuQoCO6czbIR4ozQSG9KMbaTqdtjtntVvBO
-	 budiX9fAP017GYXSJOxZVyMYbC9RoGRLpoXw8KKd3scVaEDawKIRTBUY34XbPH4H/m
-	 +h0K7+ct+W5Bah8+Pz46hDa+JZ4QhQCDab4v3Uf8=
+	b=HFZKaePWgR/SAiz55tQQX9L3iMB763pQzXun7vJYkHYVdhkGvI9N4cNyD2YD2o6Qi
+	 s+VBb1J0WywddVhciLjMbIGldrRMF/ru0CC2XGsRF/+nnaSwslo9XmSpLCvILXJPy0
+	 U0isiGXSGvrQ4aViZxJJv2jbPrnUAwQa3Sdaj//o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 067/583] dm: fix race when loading and unloading a table
-Date: Wed,  9 Sep 2026 15:35:52 +0200
-Message-ID: <20260909134240.390700133@linuxfoundation.org>
+Subject: [PATCH 6.18 068/583] dm: fix resume-vs-remove race
+Date: Wed,  9 Sep 2026 15:35:53 +0200
+Message-ID: <20260909134240.426208769@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,61 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 5380c7f6335cc6d77eb77d065105e81155c4d9d3 upstream.
+commit 44b43ec132f1cf3275ecc182d0c82f50c3c4c3d5 upstream.
 
-If the userspace calls two concurrent table load ioctls and one of them
-succeeds and the other fails, there is a race condition because
-dm_setup_md_queue walks &md->table_devices without any lock. If the walk
-races with dm_table_destroy -> free_devices -> dm_put_table_device, there
-is access to invalid memory.
+If the user issues the resume ioctl and the remove ioctl at the same
+time, it may be possible that the device is resumed after it is suspended
+in __dm_destroy. The result is that the table is destroyed without
+calling the postsuspend method.
 
-Fix this race by extending the lock over the list walk.
+Dm targets expect that they may be removed only after the postsuspend
+method method was called. If we break this expectation, it can cause
+misbehavior in various targets. For example - in the dm-integrity target,
+the reboot notifier is not unregistered, leading to use-after-free.
+
+Fix this bug by refusing to resume if the device is being destroyed.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/md/dm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/md/dm.c
 +++ b/drivers/md/dm.c
-@@ -2615,9 +2615,10 @@ int dm_setup_md_queue(struct mapped_devi
- 	 */
- 	mutex_lock(&md->table_devices_lock);
- 	r = add_disk(md->disk);
--	mutex_unlock(&md->table_devices_lock);
--	if (r)
-+	if (r) {
-+		mutex_unlock(&md->table_devices_lock);
- 		return r;
-+	}
+@@ -3119,7 +3119,7 @@ retry:
+ 	r = -EINVAL;
+ 	mutex_lock_nested(&md->suspend_lock, SINGLE_DEPTH_NESTING);
  
- 	/*
- 	 * Register the holder relationship for devices added before the disk
-@@ -2628,18 +2629,21 @@ int dm_setup_md_queue(struct mapped_devi
- 		if (r)
- 			goto out_undo_holders;
- 	}
-+	mutex_unlock(&md->table_devices_lock);
+-	if (!dm_suspended_md(md))
++	if (!dm_suspended_md(md) || test_bit(DMF_FREEING, &md->flags))
+ 		goto out;
  
- 	r = dm_sysfs_init(md);
- 	if (r)
--		goto out_undo_holders;
-+		goto lock_out_undo_holders;
- 
- 	md->type = type;
-+
- 	return 0;
- 
-+lock_out_undo_holders:
-+	mutex_lock(&md->table_devices_lock);
- out_undo_holders:
- 	list_for_each_entry_continue_reverse(td, &md->table_devices, list)
- 		bd_unlink_disk_holder(td->dm_dev.bdev, md->disk);
--	mutex_lock(&md->table_devices_lock);
- 	del_gendisk(md->disk);
- 	mutex_unlock(&md->table_devices_lock);
- 	return r;
+ 	if (dm_suspended_internally_md(md)) {
 
 
