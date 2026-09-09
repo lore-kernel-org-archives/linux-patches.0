@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C556F54B1C6;
-	Wed,  9 Sep 2026 13:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0BB492E33;
+	Wed,  9 Sep 2026 13:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961800; cv=none; b=RiuxJONoI8Frfpn93HQ6EJ1DtsZ2rurNQJNvaLbB2gLqLNnFhDTZvBBDUb3tzQl1tJoHxNjW9SaAYrcj2WsHxVMAmIzob5TnY84paEruRcWrXJQpqnc7jgmhkUGWW1HjOTQ9w0dAU8Je/ophMxGzrwhYVnFI2YmXLMG2UToQhv4=
+	t=1788961804; cv=none; b=aV29rHRPDH1qzp1faaYwM9vW6pSk+rX3XcPU8ASKeWO3y67IPuKqYp9F1mrZl1Mvj438u6Nk1fLDd6d6WqSjx6KO/+Og4gPP0UPVU+WySCtsvHJGytb/G0AottFWKKX/cJsltsQNzBhJCa203C3gLiUPdMWHaHakYHCcu2QRU4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961800; c=relaxed/simple;
-	bh=M8LMG+NpI1OpnJmO6kc1N5q17uup8MCKZ3vIPPYQHJc=;
+	s=arc-20240116; t=1788961804; c=relaxed/simple;
+	bh=tnBOjoA1OhgKzbZs4+NDRZZoaC0A1CnwM/UN4cotvPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQ0+qtM1rhr/ugtk72HWlIwrVHaAeXjeZAx+7Fp0JmrwDnbBmVrtZtmj3d6lcjH2vv8qrn9GqRPIJmoB2XkaWdB3CG/rprcd8URIN+OD+EWbDVtn6AL/HED7+vE9HkuwOCLcpuN/PYuJvxFz9PJjEvMfevCbqHKMChOwbbcUxQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTJfngdp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JPmyc/SxQmF1liu1esISKBYbZ++6W9vUbKnCoYVubnm7Gu2ZOZj0ouEiMQ24zccizhOAgijicHPuk/KUk4Le/eUltdoVdhK3E67meqyGoHjTdabcAHO1mq3PrFZulmvLL1spqzf3SbOiL4fWwWs60QOUOfcq6iNgCIpkr3o+K1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tj2QR/2c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTJfngdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C4C1F00A3A;
-	Wed,  9 Sep 2026 13:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tj2QR/2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E49F1F00A3A;
+	Wed,  9 Sep 2026 13:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961798;
-	bh=vxE1ZhCeDoIG8esN+8D4qOWoAk6CXSdzdsWDN40dXKo=;
+	s=korg; t=1788961802;
+	bh=0J7VHP9vuAdWeZLSlgha8r1LxwxJDq0EGEzlErmxRTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XTJfngdpXqluqClgZ7HxMaCokFkyRToDC69rgbb5ChWkP7deah1NglBvfYKTOedx2
-	 W9wwRy1i4E1sTvUD9S/2Xh8X7mDlbjVHg3y+J0IvFy+Qp08unPQ5ZX+P1kuR65cxI2
-	 i4NXtuOnakLLrfv/WGpiiE38i+nXiloBvpoaFres=
+	b=tj2QR/2cHxk12I4IS024xrFzdKc7YkYmVIjqGSm3OZZ6edLrBg6a7IUZ8544LAqPu
+	 79fGuz4jj+xmFQKovMusL1eDy9LKyC8z1ehBk8BrL9goDbw2lfcBmvgAZ7zsNdIiNW
+	 QMDMqpl5rxpWq/K9uqdKMkLe+4ik39WcR8IU6OBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Magiera <me@magik.net>,
-	Mira Limbeck <m.limbeck@proxmox.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Thomas Lamprecht <t.lamprecht@proxmox.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 070/556] scsi: megaraid_sas: Limit NVMe request size to the PRP chain frame
-Date: Wed,  9 Sep 2026 15:35:50 +0200
-Message-ID: <20260909134232.926311455@linuxfoundation.org>
+Subject: [PATCH 7.2 071/556] scsi: pm8001: Use rollback index when freeing MSI-X vectors
+Date: Wed,  9 Sep 2026 15:35:51 +0200
+Message-ID: <20260909134232.960297971@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,83 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit af8c27375733fb6a6df9fa484cda77cc3dd0cb80 upstream.
+commit 3f92a64545165bdbb36dee8fa35626b295463313 upstream.
 
-megasas_make_prp_nvme() builds a command's PRP list in cmd->sg_frame, a
-DMA pool buffer of instance->max_chain_frame_sz bytes, spending one
-entry per NVMe page of the transfer plus one per page of the buffer for
-the chain pointer. The loop runs until the transfer is described and
-never checks the buffer bound.
+pm8001_request_msix() unwinds previously registered handlers with
+free_irq() when request_irq() fails. The rollback loop uses the failing
+index i for every iteration instead of the already registered vector
+index j.
 
-max_hw_sectors comes straight from the MDTS the firmware reports for the
-drive. On drives with a large MDTS the only thing keeping the list
-inside the buffer was the block layer default of 1280 KiB, which needs
-320 entries, which fit into a 4 KiB frame as that holds 512. But since
-commit 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP") that
-default is 4 MiB, and such a transfer needs 1025 entries, so the list
-runs a full page past the end of the frame:
+That passes the wrong IRQ/dev_id pair to free_irq() and leaves the
+earlier handlers installed. Use j for both pci_irq_vector() and the
+matching irq_vector entry in the rollback loop.
 
-  sd 1:0:1:0: [sdb] tag#630 page boundary ptr_sgl: 0x00000000ba62d13f
-  BUG: unable to handle page fault for address: ff663bcb81e7c000
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  RIP: 0010:megasas_build_and_issue_cmd_fusion+0xeaa/0x1870 [megaraid_sas]
-
-If the page after the frame happens to be mapped, the overrun does not
-fault but silently corrupts the neighbouring pool entry, which is
-another in-flight command's PRP list.
-
-Cap max_hw_sectors at what the chain frame can describe, less one page
-for transfers that do not start on a page boundary and so need one entry
-more. This is the megaraid_sas counterpart of commit 04631f55afc5
-("scsi: mpt3sas: Limit NVMe request size to 2 MiB"), but derives the
-limit from max_chain_frame_sz rather than hardcoding it.
-
+Fixes: a76037ff3479 ("scsi: pm8001: switch to pci_irq_alloc_vectors")
 Cc: stable@vger.kernel.org
-Fixes: 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP")
-Reported-by: Lukasz Magiera <me@magik.net>
-Closes: https://lore.kernel.org/all/GPhsSM0vkgyIrs0DIZ62qeUZX7X4RxwQXVKiuvMx-lHQVSPDxpztUyQOGS0xikqvJ-Z94hMV-dW_5KN_0CX2hsfV7kTf_t0MTf6vdAAaSEc=@magik.net/
-Reported-by: Mira Limbeck <m.limbeck@proxmox.com>
-Closes: https://lore.kernel.org/all/d171cc76-bf25-48ce-b482-d344669dfc24@proxmox.com/
-Suggested-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/all/yq17bmzd5jr.fsf@ca-mkp.ca.oracle.com/
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-Closes: https://lore.kernel.org/linux-scsi/20260827182106.535D61F000E9@smtp.kernel.org
-Link: https://patch.msgid.link/20260827175743.734593-1-t.lamprecht@proxmox.com
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Link: https://patch.msgid.link/20260824113618.2239100-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_base.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/scsi/pm8001/pm8001_init.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -1973,12 +1973,23 @@ megasas_set_nvme_device_properties(struc
- {
- 	struct megasas_instance *instance;
- 	u32 mr_nvme_pg_size;
-+	u64 max_prp_io;
- 
- 	instance = (struct megasas_instance *)sdev->host->hostdata;
- 	mr_nvme_pg_size = max_t(u32, instance->nvme_page_size,
- 				MR_DEFAULT_NVME_PAGE_SIZE);
- 
--	lim->max_hw_sectors = max_io_size / 512;
-+	/*
-+	 * megasas_make_prp_nvme() builds the PRP list in cmd->sg_frame without
-+	 * bounding it against that buffer, and spends one entry per page of
-+	 * it on the chain pointer. Cap the transfer at what the buffer holds,
-+	 * less one page for lists that start off a page boundary.
-+	 */
-+	max_prp_io = (u64)((instance->max_chain_frame_sz / sizeof(u64)) -
-+			   (instance->max_chain_frame_sz / mr_nvme_pg_size) - 1) *
-+		     mr_nvme_pg_size;
-+
-+	lim->max_hw_sectors = min_t(u64, max_io_size, max_prp_io) >> SECTOR_SHIFT;
- 	lim->virt_boundary_mask = mr_nvme_pg_size - 1;
- }
- 
+--- a/drivers/scsi/pm8001/pm8001_init.c
++++ b/drivers/scsi/pm8001/pm8001_init.c
+@@ -1029,8 +1029,8 @@ static u32 pm8001_request_msix(struct pm
+ 			&(pm8001_ha->irq_vector[i]));
+ 		if (rc) {
+ 			for (j = 0; j < i; j++) {
+-				free_irq(pci_irq_vector(pm8001_ha->pdev, i),
+-					&(pm8001_ha->irq_vector[i]));
++				free_irq(pci_irq_vector(pm8001_ha->pdev, j),
++					 &pm8001_ha->irq_vector[j]);
+ 			}
+ 			pci_free_irq_vectors(pm8001_ha->pdev);
+ 			break;
 
 
