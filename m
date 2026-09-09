@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB52853FD2B;
-	Wed,  9 Sep 2026 13:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEFF4C6803;
+	Wed,  9 Sep 2026 13:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961915; cv=none; b=pWK0VXv1InMJTyts0zWSB7zYMqnjWxyx6UljzhyrZWcPW+ccODTGpjSNKDhDrbD/QIBT21I0eW92IcFfmdFY+DswI8g1S57TAqTEO4F7+vRa+5Rrjg2XQSsT0B7MoiXqbblKZ4y22BVXFJO19BQs81V8Km7nBmmplbflWyQJwmY=
+	t=1788961919; cv=none; b=bov3Es89MKJDW56n7Ha+tOX8YmJ+E1hW3Urs5/4rmU/v4jm5i0hRehCnhvQ0x2kRIOUgMpDAEsHgpvAVZLWaWkrxeybjJsc2rexNVMv09ueRWfsEwnpaVpAsuuw/eJKrZyAMlVmuyF19JIsaqA+jCUiFSUsYuc4WLScN9iSkhns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961915; c=relaxed/simple;
-	bh=7TIwNMvTxhsxsI9oQvEpb4Z7PqWsX7JFiOrBbZXjeys=;
+	s=arc-20240116; t=1788961919; c=relaxed/simple;
+	bh=c6R3Vx/LCwkHX3hY13ACGsDzD0IEz9Of7WMWi8dUExU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JW9bjAEriHzzZkFColnRmohPV37i/SD1oEIn9fZ5q8GbPmG6lIbSgWHu/Sbmvic/wXQR9s6yw6vgDv2h1hru8hfk4L/v6oXzILTTY9Ad6Mssdx/WIW5dmmUmBBi/PD5SGFQZn4jza/8M0oeA6+8uVL5sjkumoyVedxBbN00ZrRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4nP1k5y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LhWlt7u0xhG1J6utUAXheCy1DJAl+XR3OFrjM1+WLgQi9OZZH6OQUS2bdsV6+GTJQRhTmh7OQVTQkxqH3BnWU61w8TCbwgMVzzXuFUJ5YzJaf+ZoKa4tAVpv5sRAsoqjSzRd0bSEXsF780GdUwNEtKJf4fV3lrczhbQtOYHGibM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiMPzdZM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4nP1k5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6261F00A3A;
-	Wed,  9 Sep 2026 13:51:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiMPzdZM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE48B1F00A3A;
+	Wed,  9 Sep 2026 13:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961913;
-	bh=hasGUroiLHJ/misU6pN3OB1J+/b3hI/22abYbS+mUKU=;
+	s=korg; t=1788961917;
+	bh=Ggm1i8w6eALbYx8T96OOKNzQEGDq81zuA742e+M1PWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T4nP1k5ySAvAzbMQBrVyGHDiWcLOfH2M9orjzdDMfDzKIHyRl2+Gds+V88thW5hMg
-	 pj1URXxJqjG9IkOsaSPlLgJulyoCDkPPracDfTQPAuk07DWaJuC0d3O33IwSfRZDqg
-	 4maG6Xt/7MNIDszOuklhM7k/LIBsjK2q72/KK7XU=
+	b=yiMPzdZMR4OZnPsfBsmZV9KqCFzERBWTKqpKTLf3U9WQnS0MY0KojAhaZT/xEympN
+	 m+BtPQmXfVpCjFIpXoxvMdWSbQ3hf8Kk6hinH88zUQm/krm01nKQFRdgpn6YxEPxvJ
+	 mnG9vvE4RmrYFkwzQRUTpiCCXhrQqqGQac4TrLRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 7.2 108/556] dma-direct: return struct page from dma_direct_alloc_from_pool()
-Date: Wed,  9 Sep 2026 15:36:28 +0200
-Message-ID: <20260909134234.284450614@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 7.2 109/556] dmaengine: fsl-edma: tracing: no ptr dereference during log output
+Date: Wed,  9 Sep 2026 15:36:29 +0200
+Message-ID: <20260909134234.315067567@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,84 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+From: Martin Kaiser <martin@kaiser.cx>
 
-commit 94a04ad732c9f8b9554270fc4038a06737de5c22 upstream.
+commit 2ea04dca8e627f722caa7a2037cfbae0257f3501 upstream.
 
-Commit 5b138c534fda ("dma-direct: factor out a dma_direct_alloc_from_pool
-helper") changed dma_direct_alloc_from_pool() to return the CPU address
-from dma_alloc_from_pool(). That fits dma_direct_alloc(), but
-dma_direct_alloc_pages() also uses the helper and expects a struct page *.
+The fsl edma events store a pointer to a struct fsl_edma_engine in the
+ringbuffer and dereference it when a log entry is printed. At this time,
+the pointer may no longer be valid.
 
-Fix this by making dma_direct_alloc_from_pool() return the struct page *
-again, and pass the CPU address back through an out-parameter for the
-dma_direct_alloc() caller.
+Event injection can be used to trigger a crash:
 
-Fixes: 5b138c534fda ("dma-direct: factor out a dma_direct_alloc_from_pool helper")
+$ cd /sys/kernel/tracing
+$ echo 'value = 0' > events/fsl_edma/edma_writeb/inject
+$ cat trace
+
+The log output needs only edma->membase. Add a membase field at the end
+of the event and use the new field for log output. Keep the existing
+fields for backward compatibility.
+
+Fixes: 11102d0c343b ("dmaengine: fsl-edma: add trace event support")
 Cc: stable@vger.kernel.org
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Link: https://lore.kernel.org/r/20260717180442.110954-2-aneesh.kumar@kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260718130024.341243-1-martin@kaiser.cx
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/direct.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/dma/fsl-edma-trace.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/dma/direct.c
-+++ b/kernel/dma/direct.c
-@@ -164,22 +164,21 @@ static bool dma_direct_use_pool(struct d
- 	return !gfpflags_allow_blocking(gfp) && !is_swiotlb_for_alloc(dev);
- }
+--- a/drivers/dma/fsl-edma-trace.h
++++ b/drivers/dma/fsl-edma-trace.h
+@@ -19,14 +19,16 @@ DECLARE_EVENT_CLASS(edma_log_io,
+ 		__field(struct fsl_edma_engine *, edma)
+ 		__field(void __iomem *, addr)
+ 		__field(u32, value)
++		__field(void __iomem *, membase)
+ 	),
+ 	TP_fast_assign(
+ 		__entry->edma = edma;
+ 		__entry->addr = addr;
+ 		__entry->value = value;
++		__entry->membase = edma->membase;
+ 	),
+ 	TP_printk("offset %08x: value %08x",
+-		(u32)(__entry->addr - __entry->edma->membase), __entry->value)
++		(u32)(__entry->addr - __entry->membase), __entry->value)
+ );
  
--static void *dma_direct_alloc_from_pool(struct device *dev, size_t size,
--		dma_addr_t *dma_handle, gfp_t gfp)
-+static struct page *dma_direct_alloc_from_pool(struct device *dev, size_t size,
-+		dma_addr_t *dma_handle, void **cpu_addr, gfp_t gfp)
- {
- 	struct page *page;
- 	u64 phys_limit;
--	void *ret;
- 
- 	if (WARN_ON_ONCE(!IS_ENABLED(CONFIG_DMA_COHERENT_POOL)))
- 		return NULL;
- 
- 	gfp |= dma_direct_optimal_gfp_mask(dev, &phys_limit);
--	page = dma_alloc_from_pool(dev, size, &ret, gfp, dma_coherent_ok);
-+	page = dma_alloc_from_pool(dev, size, cpu_addr, gfp, dma_coherent_ok);
- 	if (!page)
- 		return NULL;
- 	*dma_handle = phys_to_dma_direct(dev, page_to_phys(page));
--	return ret;
-+	return page;
- }
- 
- static void *dma_direct_alloc_no_mapping(struct device *dev, size_t size,
-@@ -247,8 +246,11 @@ void *dma_direct_alloc(struct device *de
- 	 * the atomic pools instead if we aren't allowed block.
- 	 */
- 	if ((remap || force_dma_unencrypted(dev)) &&
--	    dma_direct_use_pool(dev, gfp))
--		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
-+	    dma_direct_use_pool(dev, gfp)) {
-+		page = dma_direct_alloc_from_pool(dev, size, dma_handle,
-+						  &ret, gfp);
-+		return page ? ret : NULL;
-+	}
- 
- 	/* we always manually zero the memory once we are done */
- 	page = __dma_direct_alloc_pages(dev, size, gfp & ~__GFP_ZERO, true);
-@@ -357,7 +359,7 @@ struct page *dma_direct_alloc_pages(stru
- 	void *ret;
- 
- 	if (force_dma_unencrypted(dev) && dma_direct_use_pool(dev, gfp))
--		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
-+		return dma_direct_alloc_from_pool(dev, size, dma_handle, &ret, gfp);
- 
- 	page = __dma_direct_alloc_pages(dev, size, gfp, false);
- 	if (!page)
+ DEFINE_EVENT(edma_log_io, edma_readl,
 
 
