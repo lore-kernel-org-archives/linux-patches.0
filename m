@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCD656C658;
-	Wed,  9 Sep 2026 14:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14752545D95;
+	Wed,  9 Sep 2026 14:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962941; cv=none; b=EfBsfguJIcGz9PoPLwL0Xx7JPhMKobiZShNXnLiL8lUIUE86E1P9Y26ekr4WKf3yMPjWkQs9t4/i1kFZwNAPIAah06zq8BMALjwrpBVNT7z+eVceqfTDLjjEIhNUh2M/9ekwWi8azoJBqZDFwg1QxWHX5ileM2hllRvLIO93zZg=
+	t=1788962944; cv=none; b=LTX2kxdJc3DIKsqLbNyUXjJaPaNUpqd9BWlSwq+7jdb9NLLMv+D7okC2bMpGlMQAclFB/l5GLkotdI9VIaFVcYOO2sWdrkouIq/27Jat13xolaml1EQkVmlKdZPshoHcSJseJBdAoGDuXWGu6/s5u2W1dSYmPhn05Uwqob6C5wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962941; c=relaxed/simple;
-	bh=Vkm1U6BNxtGYXkWXmO5E5BdErsnwka4FYjezf9x9Kl4=;
+	s=arc-20240116; t=1788962944; c=relaxed/simple;
+	bh=ZpnSK3AEPItrZ/VvFTUevXdy8g4J/WlJyPAEHzMBlss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SoJJGbkhdSKSDxcp8JeIBao236hGN8EKVsEcj71MVtPg2vbVysdrVFaYmSeQR1o9vxRzhGmj/1NH+ps+azkGasC9Jw5ivD7Q/X5ET/73Loaa7gqQc+L9n7JPSxnT6bMAwtFmUX7OZYBJVAOZubecOCZxVXdyBpsxKx97NHLGGoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCTMH1/z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QtKCkfKIY2MTDTdHSub2t1l/Os6525FfQnDex28JSWyI8sCcKNpvZWwWT2/7Vfwz5TD28oPP3Wo2nXOWLAA7ZdCwFGbjdd9sGo5SZ8xdL3QXstCU4UpvU5UlbAdwhCFlf2OAOPU1OBoLijijPLpANnx01HH6t+lnh2+t0Cr3fuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vT9BEIvm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCTMH1/z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5711F00A3A;
-	Wed,  9 Sep 2026 14:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vT9BEIvm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6651F00A3A;
+	Wed,  9 Sep 2026 14:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962940;
-	bh=DBwLzP9pEEstRCfuXMockAVBsSDow8C431uqkKoneKs=;
+	s=korg; t=1788962943;
+	bh=/4xJW2I+hAQDIMhnIKDvxasgeWROakvfcddAKbMst74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nCTMH1/z4klkO9jVwYvuNZyzL/9FMLdNtK4Vr081fOZQagjN7DAISi7GHCjigSSp8
-	 MqyCps0JFzr1Ox4wQ2EeTeIjTN5ng+5SjsmlgKbRHFr00pdKAh+jboFHF5lil7IOhL
-	 QS332TCDJiAIeR4C+aMKY6isadx+Xg8/quqr9fm4=
+	b=vT9BEIvm9crybcXJJKITsEof8SJz7RWddD+vMC1OuRVcjMqDCVakaMzlAXI+0YGXm
+	 GpwtHZlXi+rBhUbQi9qtvRGsTVmwZYzH5Ljmsh0FDu9uyszjachxHfpfkqmf04DGO9
+	 iFalp3MxALV5PiK+cUZ/L6C7aDyonflJTlJ7lbLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 465/556] f2fs: fix to off-by-one issue in f2fs_zero_post_eof_page()
-Date: Wed,  9 Sep 2026 15:42:25 +0200
-Message-ID: <20260909134246.916124197@linuxfoundation.org>
+Subject: [PATCH 7.2 466/556] f2fs: fix to clear dirty flag on folio in error path
+Date: Wed,  9 Sep 2026 15:42:26 +0200
+Message-ID: <20260909134246.949520624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,30 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-commit b2205d3cfd6c76fd5c5443ee9fdb498cfb0e1c66 upstream.
+commit 5b86eab84ac8e9289b5afc52ef88ab18ba5bacab upstream.
 
-Otherwise, it will drop one more page after new_size which is not
-necessary.
+If node block is corrupted due to chksum mismatch or inconsistent
+footer info, it needs to drop clear flag of node folio, in order
+to persist inconsistent node data to storage.
 
 Cc: stable@kernel.org
-Fixes: ba8dac350faf ("f2fs: fix to zero post-eof page")
+Fixes: b42b179bda9f ("f2fs: fix to do checksum even if inode page is uptodate")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    2 +-
+ fs/f2fs/node.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -50,7 +50,7 @@ static void f2fs_zero_post_eof_page(stru
- 	if (lock)
- 		filemap_invalidate_lock(inode->i_mapping);
- 	/* zero or drop pages only in range of [old_size, new_size] */
--	truncate_inode_pages_range(inode->i_mapping, old_size, new_size);
-+	truncate_inode_pages_range(inode->i_mapping, old_size, new_size - 1);
- 	if (lock)
- 		filemap_invalidate_unlock(inode->i_mapping);
- }
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1618,7 +1618,7 @@ page_hit:
+ 	if (!err)
+ 		return folio;
+ out_err:
+-	folio_clear_uptodate(folio);
++	clear_node_folio_dirty(folio);
+ out_put_err:
+ 	/* ENOENT comes from read_node_folio which is not an error. */
+ 	if (err != -ENOENT)
 
 
