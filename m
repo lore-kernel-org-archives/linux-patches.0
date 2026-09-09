@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E22753FD37;
-	Wed,  9 Sep 2026 14:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210252DEA7B;
+	Wed,  9 Sep 2026 14:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964607; cv=none; b=Co0ThunNyP8gg4qxXupTB5jys1Tv6AR5ZH/qKQ4UDcE+ztrYipRjJyj06oFaFNJarrp5vO5qnQdfzf/5Q2o/xcQBSCMrxj8z79q9cUeAGtNfIAKjm8c8ZfxED7sTUCBrz0vzQWTQnFJseojiflbAc6OIglE2HRnjomekt2NwF+0=
+	t=1788964610; cv=none; b=Vp0I6W/0eJ1t4RH8Vw6ShxhXCP47CQimJU1CY3plwJTRsuXqpH3kZJaMKNeiLDaHza0hZd6BANW+Cmj7qw8Yiz8qGUQL0/PHVxmdRfrtAS5HNJlDcFssTXDitse80NtVyzDELi0dJT4f6LkLTHsl39h0m1nrZPHgGAuz5Os4CaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964607; c=relaxed/simple;
-	bh=8hndO4oHZdg1cLhQQ0Psvg1Kx08ALDOuuxP3oaD/7jE=;
+	s=arc-20240116; t=1788964610; c=relaxed/simple;
+	bh=ri/2HoIi8Lx0ooq3sdEeHTHbUv+Nny7CeHImRqgT6Fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vBbWeJrKAEcHhiGENBLWm9Jeks70NlrrTBGE19SNJA1aJiwkRdAYvxafgPdOL49ywXT09CKoa3+XKCUpES4IP8dvF1lo0b/MgVf5wAnDHZ4pVL1daxEyXfROjQJpGRjz6W9ysOddxkRAIeK/6/GkQvY0KmDV+5HgctmdTp/x/3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUvFurmE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YlSQUlrhfPyQyL+4lFxCo0xXfnvxfUEFYj5WF+aTUE6eKMOWLf8Qh0pMl7hNvis4QBKQnFp+CoVl3ioQOcphCCwz0nH4rIkO1Xp884vd8lOQxbwpYm1KYmRGDK5XY1wXzT8PZVeySX+tNra5hoeixgHVwioBTY0Hii1VHYi61+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfY54o+K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUvFurmE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A1D1F00A3A;
-	Wed,  9 Sep 2026 14:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfY54o+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735A61F00A3A;
+	Wed,  9 Sep 2026 14:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964606;
-	bh=vLY8iozEPt/u+Qm4bef3U7oNMYvlSN5fFWE1qGpJUSA=;
+	s=korg; t=1788964609;
+	bh=S6MWA/3kOZnvo4c9DXi3uWXcp4E1kRzG11klAzrKGkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bUvFurmEWniyUPC1k3VREATLxiYdTj9MMWh4FdOkjh8ripeEJ+iOFMrKHyvLLphCC
-	 LMzaGMZs/tHXQcd6qKjmIrBtOOJuBf+j24tgCKFrtKh67TyTngC4dr9N/Zcyaffv9K
-	 V8bkQL0hOe4hWdspq16onRWo12mRZ6m55nXbvMtY=
+	b=EfY54o+K1U0zhImZCT8a6krmqNUs3hVsc9i8n3Y8/bM978MM+jLpzYXR4hrKuYLvI
+	 TS+KK94cY3NndnIjVnqn+11QpJLNnOupKYWiDv4CKtxaxdrOVZKFg/SRz2RlA6v2tu
+	 Q11ePBYNfYM0l3DYUKsiRuXIjO2QWWgDxmDPFqpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 474/583] HID: mcp2221: clear rxbuf after I2C/SMBus transfer completes
-Date: Wed,  9 Sep 2026 15:42:39 +0200
-Message-ID: <20260909134254.286035704@linuxfoundation.org>
+Subject: [PATCH 6.18 483/583] bpf: Factor stackid_fastpath function from __bpf_get_stackid
+Date: Wed,  9 Sep 2026 15:42:48 +0200
+Message-ID: <20260909134254.563517647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,63 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit db2333f88729c8aae062cb171ed058725ff5c901 ]
+[ Upstream commit 0ca56befcffec3a6c9d1842eae06c74e1cf41f11 ]
 
-mcp_i2c_smbus_read() stores the caller-supplied buffer pointer in
-mcp->rxbuf for the duration of a transfer but never clears it when the
-transfer finishes or times out. Once the caller frees or reuses the
-buffer, mcp->rxbuf becomes a dangling pointer. A delayed or spurious
-MCP2221_I2C_GET_DATA report can then drive mcp2221_raw_event() to
-memcpy device data into the freed memory, causing a write
-use-after-free.
+The new stackid_fastpath does the fast stack hash and trace check, that
+does not need new bucket allocation. It covers both just-ip and buildid
+code paths.
 
-Route all return paths through a single exit point that clears
-mcp->rxbuf and mcp->rxbuf_size, so that the existing !mcp->rxbuf guard
-in the raw_event handler can reject any report arriving after the
-transfer has ended.
-
-Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-3-jolsa@kernel.org
+Stable-dep-of: 15f1bd857466 ("bpf: Disable preemption in bpf_get_stackid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/bpf/stackmap.c |   43 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 28 insertions(+), 15 deletions(-)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -336,7 +336,7 @@ static int mcp_i2c_smbus_read(struct mcp
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -253,6 +253,7 @@ struct stackid {
+ 	u32  len;
+ 	u32  hash;
+ 	u32  id;
++	bool hash_matches;
+ };
  
- 	ret = mcp_send_data_req_status(mcp, mcp->txbuf, 4);
- 	if (ret)
--		return ret;
-+		goto out;
- 
- 	mcp->rxbuf_idx = 0;
- 
-@@ -358,7 +358,7 @@ static int mcp_i2c_smbus_read(struct mcp
- 			} else {
- 				usleep_range(980, 1000);
- 				mcp_cancel_last_cmd(mcp);
--				return ret;
-+				goto out;
- 			}
- 		} else {
- 			retries = 0;
-@@ -368,6 +368,10 @@ static int mcp_i2c_smbus_read(struct mcp
- 	usleep_range(980, 1000);
- 	ret = mcp_chk_last_cmd_status_free_bus(mcp);
- 
-+out:
-+	mcp->rxbuf = NULL;
-+	mcp->rxbuf_size = 0;
-+
- 	return ret;
+ static int stackid_init(struct stackid *stackid, struct bpf_map *map,
+@@ -273,28 +274,46 @@ static int stackid_init(struct stackid *
+ 	stackid->hash = jhash2((u32 *)stackid->ips, stackid->len / sizeof(u32), 0);
+ 	stackid->id = stackid->hash & (smap->n_buckets - 1);
+ 	stackid->bucket = READ_ONCE(smap->buckets[stackid->id]);
++	stackid->hash_matches = stackid->bucket && stackid->bucket->hash == stackid->hash;
+ 	return 0;
  }
  
++static int stackid_fastpath(struct stackid *stackid, struct bpf_map *map,
++			    struct perf_callchain_entry *trace, u64 flags)
++{
++	int err;
++
++	err = stackid_init(stackid, map, trace, flags);
++	if (err)
++		return err;
++
++	/* fast cmp */
++	if (stackid->hash_matches && flags & BPF_F_FAST_STACK_CMP)
++		return stackid->id;
++
++	if (stack_map_use_build_id(map))
++		return -ENOENT;
++	if (stackid->hash_matches && stackid->bucket->nr == stackid->nr &&
++	    memcmp(stackid->bucket->data, stackid->ips, stackid->len) == 0)
++		return stackid->id;
++	if (stackid->bucket && !(flags & BPF_F_REUSE_STACKID))
++		return -EEXIST;
++	return -ENOENT;
++}
++
+ static long __bpf_get_stackid(struct stackid *stackid, struct bpf_map *map,
+ 			      struct perf_callchain_entry *trace, u64 flags)
+ {
+ 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
+ 	struct stack_map_bucket *new_bucket, *old_bucket;
+ 	bool user = flags & BPF_F_USER_STACK;
+-	bool hash_matches;
+ 	u32 trace_len, i;
+ 	int err;
+ 
+-	err = stackid_init(stackid, map, trace, flags);
+-	if (err)
++	err = stackid_fastpath(stackid, map, trace, flags);
++	if (err != -ENOENT)
+ 		return err;
+ 
+-	hash_matches = stackid->bucket && stackid->bucket->hash == stackid->hash;
+-	/* fast cmp */
+-	if (hash_matches && flags & BPF_F_FAST_STACK_CMP)
+-		return stackid->id;
+-
+ 	if (stack_map_use_build_id(map)) {
+ 		struct bpf_stack_build_id *id_offs;
+ 
+@@ -309,7 +328,7 @@ static long __bpf_get_stackid(struct sta
+ 			id_offs[i].ip = stackid->ips[i];
+ 		stack_map_get_build_id_offset(id_offs, stackid->nr, user, false /* !may_fault */);
+ 		trace_len = stackid->nr * sizeof(struct bpf_stack_build_id);
+-		if (hash_matches && stackid->bucket->nr == stackid->nr &&
++		if (stackid->hash_matches && stackid->bucket->nr == stackid->nr &&
+ 		    memcmp(stackid->bucket->data, new_bucket->data, trace_len) == 0) {
+ 			pcpu_freelist_push(&smap->freelist, &new_bucket->fnode);
+ 			return stackid->id;
+@@ -319,12 +338,6 @@ static long __bpf_get_stackid(struct sta
+ 			return -EEXIST;
+ 		}
+ 	} else {
+-		if (hash_matches && stackid->bucket->nr == stackid->nr &&
+-		    memcmp(stackid->bucket->data, stackid->ips, stackid->len) == 0)
+-			return stackid->id;
+-		if (stackid->bucket && !(flags & BPF_F_REUSE_STACKID))
+-			return -EEXIST;
+-
+ 		new_bucket = (struct stack_map_bucket *)
+ 			pcpu_freelist_pop(&smap->freelist);
+ 		if (unlikely(!new_bucket))
 
 
