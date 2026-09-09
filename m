@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFE94DF4DC;
-	Wed,  9 Sep 2026 13:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D692440626;
+	Wed,  9 Sep 2026 13:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961824; cv=none; b=WdBdSyy6Hz2dKe4EWdFp2Izv6m5zliFes4Ij94lA4/UgAZQGObGrXv98/qb4rWN+t+xOv5Awp+kcu+00F5EDsnBWUuFXtS9JcDEhBLz3xo7q3oKJ9R4/IpHQsu7XPsAxbSKza1SN9YK+k0/M8MOpd0vqfeobbrGW9+pJibfa0Os=
+	t=1788961828; cv=none; b=jDSjaJL8+910EZnzZ7J/5ztuGqYqlXF41bLmpFqFC+zKLWQ5xm7DcdwbGLz7vxSO4AgXYWiqD/NmI/usDxGrZcpbaosFI4srsKt8VqfM43Sy5q8LWbiE/E6sePy9uHqrNtaLNHxjYuQ3DvyZ3jdMA9MG7PHQRI/Yc2z4BdBhaq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961824; c=relaxed/simple;
-	bh=5Sd7vj6igEdL9/Sp+mqxr1wLKMvSeqTB3eU5nZGIltk=;
+	s=arc-20240116; t=1788961828; c=relaxed/simple;
+	bh=eIyvwW6BDK/xAC5QchiSIPIKhSbhsx2c9bOXUo4bbAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPmoXVHCUSvNPSKHesp6dXoYQF5UIjFwJZaVlhxZx4WsGlywU5UCc6jPlCmwCTyGe/qrXxcu+n/wt/3JtpEXzSFJJvwgLWhYjOvzFj6SDdXEY7rEEHMT/AG+8+695ZDCWZx+UG3wIO4/0c3ULT8ZC7AK3HYeIke2lzTpWh8u34E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lg61X/Vo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T6COC4ncBQVw9Kt8iMXvKPSL7uxBNE+SvwlAtOYskyFbdwx5iwMJrX1LlBsU3Y4lJ3d7ZcYXn+i4BwVG0iw+CxeImSJY5SLTWX9wvw/uEY5zcspdouS0xm9+qS4yxcbDFOvl6bX+MXwdpyKNQ+dS76//u3ZX7atZRa7I2Diou6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9dSOIUh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lg61X/Vo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26C91F00A3A;
-	Wed,  9 Sep 2026 13:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9dSOIUh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C531F00A3A;
+	Wed,  9 Sep 2026 13:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961823;
-	bh=pT1XRzQJAlAPzXbk16qBJbZW8BxJn9xxPBDLODRL2pY=;
+	s=korg; t=1788961826;
+	bh=51tsDCxsfA59wOD3CaYeWWwAGACb6zbNFZSnAHyiaX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lg61X/VoocVMYsbDyoDKKK2MAAeP1KH3r9wF2ax0ChUAdXsHuxjaU+DYQKGDTkMum
-	 K+qt6J7+jKZUNbY0OEJZEGUiu81++loKKP8Psox/RrfFBVv8Moea7FNcCgksTD7d/i
-	 Tww/Bn1H2WRso/t7WTTWumaTyqxm8pS9acNsARfM=
+	b=H9dSOIUhaUMJwXS574JjLDHNrmghlqAMo7I/KDGT38UMq2QJOz/sXw58k8ZdnHMEQ
+	 +uT7q3bXtBldTce6zP2Y5bwYqGZQL4UgAJlnrI9ipXZZwOO1wwN8p4Z5u5xxzupPCx
+	 BQQawq8GeGV1meDvx3zuaB+cLwB5cSr+Meu0V9dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Zenghui Yu <zenghui.yu@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 077/556] samples/damon/mtier: handle damon_start() failure
-Date: Wed,  9 Sep 2026 15:35:57 +0200
-Message-ID: <20260909134233.206640547@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 7.2 038/556] usb: typec: qcom-pmic-typec: disable cc_debounce_dwork on stop
+Date: Wed,  9 Sep 2026 15:35:18 +0200
+Message-ID: <20260909134231.833842960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,74 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit c7230d08ee79b13127bd2b45a3648d361ac912fc upstream.
+commit 263f7d61a4201cde16849b2d016251806e7418be upstream.
 
-damon_sample_mtier_start() callers assume it will clean up resources when
-it fails.  And the function does the cleanup for context buildup failures.
-However, it is not doing the cleanup for damon_start() failure.
+cc_debounce_dwork is queued from the set_cc() and start_toggling()
+callbacks, which run from TCPM's kthread worker.  port_stop() returns
+before tcpm_unregister_port() destroys that worker.  Flushing the worker
+during unregister may therefore run a callback which queues the delayed
+work after port_stop() has returned.
 
-As a result, when damon_start() fails, it could leak the memory for DAMON
-context.  Also, if damon_start() fails for only the second context, the
-first context will indefinitely run, and avoid starting other DAMON
-contexts since it is running in the exclusive mode.  Stop possibly started
-DAMON context and free the contexts in case of the failure to fix the
-issues.
+The delayed work can then run after devres has freed pmic_typec_port.
 
-Note that the issue can reliably be reproduced because the module calls
-damon_start() in the exclusive mode.  For example,
+Use disable_delayed_work_sync() in port_stop() to cancel a pending
+instance and prevent the TCPM callbacks from queueing another one.
 
-    $ sudo damo start
-    $ echo Y | sudo tee /sys/module/damon_sample_mtier/parameters/enabled
-    $ sudo cat /proc/allocinfo | grep damon_new_ctx
+This issue was found by an in-house static analysis tool.
 
-Because the first command is running another DAMON instance, the second
-command fails the damon_start() call because the new DAMON instance cannot
-exclusively run.  And without this fix, by repeating the second and the
-third commands above, we can show the memory consumption is only
-increasing due to the leaks.  It requires the sudo permission though.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260628215447.96166-4-sj@kernel.org
-Link: https://lore.kernel.org/20260608112455.274231F00893@smtp.kernel.org [1]
-Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
-Signed-off-by: SJ Park <sj@kernel.org>
-Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: <stable@vger.kernel.org> # 6.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+Cc: stable <stable@kernel.org>  # v6.10+
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260820135307.153773-2-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/damon/mtier.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -180,6 +180,7 @@ free_out:
- static int damon_sample_mtier_start(void)
- {
- 	struct damon_ctx *ctx;
-+	int err;
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+@@ -693,6 +693,8 @@ static void qcom_pmic_typec_port_stop(st
  
- 	ctx = damon_sample_mtier_build_ctx(true);
- 	if (!ctx)
-@@ -191,7 +192,15 @@ static int damon_sample_mtier_start(void
- 		return -ENOMEM;
- 	}
- 	ctxs[1] = ctx;
--	return damon_start(ctxs, 2, true);
-+	err = damon_start(ctxs, 2, true);
-+	if (!err)
-+		return 0;
+ 	for (i = 0; i < pmic_typec_port->nr_irqs; i++)
+ 		disable_irq(pmic_typec_port->irq_data[i].irq);
 +
-+	if (damon_is_running(ctxs[0]))
-+		damon_stop(ctxs, 1);
-+	damon_destroy_ctx(ctxs[0]);
-+	damon_destroy_ctx(ctxs[1]);
-+	return err;
++	disable_delayed_work_sync(&pmic_typec_port->cc_debounce_dwork);
  }
  
- static void damon_sample_mtier_stop(void)
+ int qcom_pmic_typec_port_probe(struct platform_device *pdev,
 
 
