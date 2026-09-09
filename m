@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFC5572699;
-	Wed,  9 Sep 2026 14:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E702C57268F;
+	Wed,  9 Sep 2026 14:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963855; cv=none; b=lFEEwJ4y8rzNn8cX0DikTMO2vQoWjLVrd19PJVeDdVm556rf1t06Vui5y2xQ7xufxqW04pnL9ApyLMAViUOM3dt+diMXo3ccH8f6jieNtJ/zvpGOBSUAMaP9RMBQHKCMAfQG8EbGR8DuAi+fmGQY2I98XoLe41JCStzbpyCuvhA=
+	t=1788963859; cv=none; b=PZ7dcT4JBdFwrUlRFB64NqFjiwOuXnuhIFDlZLPxYRLrNOAmAFWbiGVo1DF9dhvlw/HJm/WsVb3sjwerhaQeNWYTKegoZ9KNs8a0pnGmri8972bJBVmvOBP5m+xXWoA3B0d8pk9sqxXa7tMB4X2m9hLRUGX0rYcwlBNUZxzpyek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963855; c=relaxed/simple;
-	bh=3qpgulQtCaR6fi/+ms1mnwmL6a3gb45ci7l1YdghEXA=;
+	s=arc-20240116; t=1788963859; c=relaxed/simple;
+	bh=gu7xhN69uINKd/LNCl+wGklZEK2Owaet473pzWwmwcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNY/haRvAeSydI7MkUzgyU/4pyd5DBhlNjUK/8OPnoNLj/20wroRzp1NZ1feGhtQPj5u2jSI/n/gAs2cZnbYFdnMV54UxK4yXsigM/Edwhm08h77QU2DP+RxkqKcoTIXfuPPP6zqzl3GHXQPG4NY+RQrc2Rk1oPydYErm4zZjwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sdCJLgO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tARnV8w5mBGqdrd+HPMVlmE1ACzEfDEV9RqfupXNgAo7DYJboZi93s9+OMKVq9VpCNCyKjImTn0TDndzgU+GOq4VbZQ443/rh+KPLkNEq2LLqUyIyFSmCacHkhDemsvEFIufocaaQpk3hploteVI4Bt4kgAbM20VTvQd816nov4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqJpPIib; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sdCJLgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213EC1F00A3A;
-	Wed,  9 Sep 2026 14:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqJpPIib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A541F00A3A;
+	Wed,  9 Sep 2026 14:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963854;
-	bh=xqAQKLmOqoa76NzGrfHwVi+pSYKcnwjuOZ2+1eB3xyQ=;
+	s=korg; t=1788963857;
+	bh=mbYeuG4P8+a8Do+pQ+Vp/SuenLbmWX4IUZ3q18YHJKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1sdCJLgOk5y8gWW8508tUhYNI3pHcpCxTlSoNCrURzaH5+R/7wJ2GXn+PT0vLsZYQ
-	 jux5PIS6pi8mcf4CmLNnYqekToCKkj/GkOucnZQpvCcm5K42QlthBQbcgLfcld2dg3
-	 s8A9/YHA4R58DRewY6VJ6IisNqjjQuCc+2YTJHtE=
+	b=UqJpPIibjRWzXBLOLH9GLY0oMaYXNIwnQe+6S4INiVtON+zUoL5BSc/dkACvve63C
+	 W8m3DxWPsWeWi+96pFH5YATkU0aRoFC+p6b1GrHUf1+RC6gftPk1XDVLMjdC1Zt9h8
+	 wo01PG3N7U/5MHcxZCzNJkeQx5ZRqR/C5mvBbNOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 175/583] ASoC: rt1318: sort the register default table
-Date: Wed,  9 Sep 2026 15:37:40 +0200
-Message-ID: <20260909134244.255980324@linuxfoundation.org>
+	Cong Nguyen <congnt264@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 220/583] iio: srf04: fix pm_runtime handling on probe error path
+Date: Wed,  9 Sep 2026 15:38:25 +0200
+Message-ID: <20260909134245.775026192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,51 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit 2a8e4b7114f6493314348bda7e3d2141d218ef61 upstream.
+commit a40b2e7a17f26e38ab054363c9c7cde149588357 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+When pm_runtime_set_active() fails during probe, the driver logs the
+error and unregisters the IIO device, but then falls through and still
+calls pm_runtime_enable() before returning the error.
 
-The 0xdd93 and 0xdd94 entries are listed after 0xddc8 in rt1318_reg[],
-which leaves them unreachable for the binary search.
-regcache_reg_needs_sync() then cannot compare them against their default
-and reports that a sync is needed, so they are written to the device on
-every regcache_sync() even when they were never touched.
+Since probe returns an error, srf04_remove() is never called, so
+runtime PM is left enabled without a matching pm_runtime_disable().
+This leaks the enable and triggers an "Unbalanced pm_runtime_enable!"
+warning on a subsequent bind of the device.
 
-Sort the table by register address.
+Return the error right after unregistering the IIO device so that
+runtime PM is not enabled on the failure path.
 
-Fixes: fe1ff61487ac ("ASoC: rt1318: Add RT1318 audio amplifier driver")
+Fixes: 2251157b335b ("iio: srf04: add power management feature")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805090240.16991-17-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt1318.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/proximity/srf04.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/rt1318.c
-+++ b/sound/soc/codecs/rt1318.c
-@@ -338,6 +338,8 @@ static const struct reg_default rt1318_r
- 	{ 0xdd08, 0x40 },
- 	{ 0xdd12, 0x00 },
- 	{ 0xdd35, 0x00 },
-+	{ 0xdd93, 0x00 },
-+	{ 0xdd94, 0x64 },
- 	{ 0xddb5, 0x00 },
- 	{ 0xddb6, 0x40 },
- 	{ 0xddb7, 0x00 },
-@@ -346,8 +348,6 @@ static const struct reg_default rt1318_r
- 	{ 0xddc6, 0x00 },
- 	{ 0xddc7, 0x00 },
- 	{ 0xddc8, 0x00 },
--	{ 0xdd93, 0x00 },
--	{ 0xdd94, 0x64 },
- 	{ 0xdf00, 0x00 },
- 	{ 0xdf5f, 0x00 },
- 	{ 0xdf60, 0x00 },
+--- a/drivers/iio/proximity/srf04.c
++++ b/drivers/iio/proximity/srf04.c
+@@ -331,6 +331,7 @@ static int srf04_probe(struct platform_d
+ 		if (ret) {
+ 			dev_err(data->dev, "pm_runtime_set_active: %d\n", ret);
+ 			iio_device_unregister(indio_dev);
++			return ret;
+ 		}
+ 
+ 		pm_runtime_enable(data->dev);
 
 
