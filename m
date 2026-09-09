@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0476C54A7E7;
-	Wed,  9 Sep 2026 14:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89A15678C1;
+	Wed,  9 Sep 2026 14:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963724; cv=none; b=q8xeTH6Ex19G7Lm/g8r+3jZmv4VgODMk6ecyw8el+Fyi6cZrruvXtjQ2wRoEK5xMxspTdEO23YUJZDGVjyT829zWHeNowAjze3Vt4sHfa8gMh/9REbHNeEJnDxb12K3IizO8WMKfIT3I/fts/Je6IjGLEBnmMkCAfpCiMGucQtA=
+	t=1788963726; cv=none; b=csZcLZTaScOJqjsVxwtQZdHDW0bYx8kITHimkpbTP76gdRoajMgF5jlOZyJWs1tnw+d+q1Meik5GT2vjp3ff31MhwrnpF8zn6d0onLIw1LPE3l1nTWLbRdiQrtMBX7uei0rIadJUxZ+jIvniMg7+CwbqLKfY10mteU6r85Oop/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963724; c=relaxed/simple;
-	bh=sruFRJCcqepWF/lGumkvfWpRkN8GMsxobEw0ziSqCiM=;
+	s=arc-20240116; t=1788963726; c=relaxed/simple;
+	bh=awG+cwhIyCwR2e5QNqJrtE+GN4fKZYhp+QsYG4GZ4xI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJIoGZ/HzJ2o1rzAbRVUZ6gx11luGJ3TCNfu94Pm8gFo+LuTG+AS/64O4iaB040gx6mKsAZivvwrGnLizMBJgef43zka8dKEbWzw5KWqsuR9VqKVQStcCHDEu8zRNrsnUf3pW6tLcOzvi+NQANTRThhRudONeZ6ZIxP0AnJjMiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z30S/URE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jh0NIsc/fmMUE37seuoAnYAeUhq/gGPWaFmpIg29tI29l+68hlyPUj4zOR4HKDuQwBD8pqUzRVcJPxRyTD+GrDiaM2Tp29wRh+O+1SOvpKUduEFwsrgOBQZMCToYr184RzLDwIZhjgV+EuV+MFcNYL28tGSW1pn8ibLHHBK7E60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypr3eyK/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z30S/URE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A921F00A3A;
-	Wed,  9 Sep 2026 14:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypr3eyK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8AC1F00A3A;
+	Wed,  9 Sep 2026 14:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963722;
-	bh=mp7ncXdU+G/Tci5wo0sHWWgDW8Yujwfy7fCKt0USaxY=;
+	s=korg; t=1788963725;
+	bh=cSqF3ii7yNPH8YWrM4dMF+aysYtmv3Qu1H+JJxOT0bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z30S/URE7M9GATtrEFnXdetJe7xkqpoghxSQNp0oReE8WCgWgh3M8yYWOD8ZXo1XZ
-	 0A/XAnhokNoBw+ql6rnkg9llohhw/D0OTyQ3NVOsuT1Nyw5A6lAzYstW2mOs66dDDq
-	 l2zetV/4qrAaXWxIhRf6sW1VXPIVEd2Co1I47ISg=
+	b=ypr3eyK/JoJyQtaVVHmsKCcjKEQxUMcJenCtCVPJwkOhk1K0uUa8RYGy9t6js1mm0
+	 ya86f19YmGvPq0E1Du8O8RjMFHEpv6qZWgx1qkUSMBdpGEArf0O8ddxzW8Rr/z3wnt
+	 Spp4xkXAkYrDmZ7FmGJGJpKBINfwnb8o73Z4uzt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 116/583] mm/hugetlb: keep max_huge_pages when dissolving surplus folios
-Date: Wed,  9 Sep 2026 15:36:41 +0200
-Message-ID: <20260909134242.147044900@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 171/583] ASoC: pm4125-sdw: sort the register default table
+Date: Wed,  9 Sep 2026 15:37:36 +0200
+Message-ID: <20260909134244.125112352@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,57 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 267bede12d3b108ca29997ce280e927a570ec97f upstream.
+commit 8dd18d9956bfd74531bfd7088e59586e3e115789 upstream.
 
-dissolve_free_hugetlb_folio() can remove a free folio as surplus when its
-node has surplus pages.  In that case remove_hugetlb_folio() decrements
-both nr_huge_pages and surplus_huge_pages, leaving the persistent pool
-size unchanged.
+reg_defaults must be sorted by ascending register address, as
+regcache_lookup_reg() locates entries in it with bsearch().  See commit
+fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-Updating max_huge_pages as if a persistent folio had been removed can
-therefore corrupt the persistent pool target and underflow it when
-max_huge_pages is zero.  Keep max_huge_pages unchanged for surplus folios,
-including the vmemmap restoration rollback path.
+PM4125_SWR_HPHPA_HD2 (0x3090) is listed before
+PM4125_ANA_HPHPA_SPARE_CTL (0x308e), which makes the latter unreachable.
+regcache_reg_needs_sync() then cannot compare it against its default and
+reports that a sync is needed, so it is written to the device on every
+regcache_sync() even when it was never touched.
 
-Link: https://lore.kernel.org/20260814083027.1419487-1-xialonglong2025@163.com
-Fixes: cb402bbdabca ("mm/hugetlb: fix surplus pages in dissolve_free_huge_page()")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jinjiang Tu <tujinjiang@huawei.com>
-Cc: Longlong Xia <xialonglong@kylinos.cn>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Sort the table by register address.
+
+Fixes: 8ad529484937 ("ASoC: codecs: add new pm4125 audio codec driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20260805113911.21723-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/codecs/pm4125-sdw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2140,7 +2140,8 @@ retry:
- 		if (h->surplus_huge_pages_node[folio_nid(folio)])
- 			adjust_surplus = true;
- 		remove_hugetlb_folio(h, folio, adjust_surplus);
--		h->max_huge_pages--;
-+		if (!adjust_surplus)
-+			h->max_huge_pages--;
- 		spin_unlock_irq(&hugetlb_lock);
- 
- 		/*
-@@ -2160,7 +2161,8 @@ retry:
- 			if (rc) {
- 				spin_lock_irq(&hugetlb_lock);
- 				add_hugetlb_folio(h, folio, adjust_surplus);
--				h->max_huge_pages++;
-+				if (!adjust_surplus)
-+					h->max_huge_pages++;
- 				goto out;
- 			}
- 		} else
+--- a/sound/soc/codecs/pm4125-sdw.c
++++ b/sound/soc/codecs/pm4125-sdw.c
+@@ -154,8 +154,8 @@ static const struct reg_default pm4125_d
+ 	{ PM4125_ANA_HPHPA_FSM_CLK,              0x12 },
+ 	{ PM4125_ANA_HPHPA_L_GAIN,               0x00 },
+ 	{ PM4125_ANA_HPHPA_R_GAIN,               0x00 },
+-	{ PM4125_SWR_HPHPA_HD2,                  0x1B },
+ 	{ PM4125_ANA_HPHPA_SPARE_CTL,            0x02 },
++	{ PM4125_SWR_HPHPA_HD2,                  0x1B },
+ 	{ PM4125_ANA_SURGE_EN,                   0x38 },
+ 	{ PM4125_ANA_COMBOPA_CTL,                0x35 },
+ 	{ PM4125_ANA_COMBOPA_CTL_4,              0x84 },
 
 
