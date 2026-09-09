@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D284FDE6C;
-	Wed,  9 Sep 2026 14:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2ED52ED5E;
+	Wed,  9 Sep 2026 14:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962589; cv=none; b=pwzPFvNpu7OK5uq6eaF7WpMS7GPNDwUcgzaAum6KLjdIQaDVL1BLx1kGoMHSATapPPflEBE3cXM7YRVtLKpONBFbQJusORQuD8IBkZttD77aS3HzY78Z9HVW5LORNl4d/+d9PZAbJFWJnpe3BB2WV6/vbkqnAQ8EkEM25pYlDeU=
+	t=1788962591; cv=none; b=LNTst0IhnjEias+UV+AKfLN8H9qkekZvFTuU+4CovMmZ4K1M8UI4loCnx3ViJQi2lgCQwDMD8q3np5pB+VdYMdYGArkUmFr4APxyQA2jY3uVwmTuDW2OG6lVkOhnS/EVIQqfj71gqi5VdtgjitzJfu2QYHQWV5JNDJR77gqSztA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962589; c=relaxed/simple;
-	bh=IqzBocDLNx4iuhjxz59Qc8rmMtAZCgxCGlc9xjuABqQ=;
+	s=arc-20240116; t=1788962591; c=relaxed/simple;
+	bh=8/j/Ja+Dci1LEhXKDk7X2tTD4VU2JxW42fyvmHqYOwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNOIYgs7x0fDAlu/smKnTu+sgDXk/d9Mz+xd5HPe5mmkFtL6wcdcOOvQ40wiBNLYzFIbBlqa5426wLXyFMoWIkyKNnY+DosDfcExg92koEgzCKLPAhHM9gh+vPiUns5ZjHYjEahXEv4H8BY/ha07wVC7/FTicYv0AF/fxvr39TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Do7Fuvzl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NC0sRj47BONMWr1hn9IZVI1hkx6XL1PBuTfG8yeSKN+PelIBLShfUUueCEU2ouf65ijLM88CckxPbz6eeAONoTovJ3OpkrA9d+C4bk24w1nO5XKEa54md1rr7+d9U33AnLOZlWVkDgkOUqOOCjXXZVm79RMm5F4Sg7k1wlysx78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uw1yyYLE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do7Fuvzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BA51F00A3A;
-	Wed,  9 Sep 2026 14:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uw1yyYLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F50E1F00A3A;
+	Wed,  9 Sep 2026 14:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962587;
-	bh=7+OaFE1zg+5f/b8CAKqHo2w1LICO0aRX/Ebrg7Ou6CU=;
+	s=korg; t=1788962590;
+	bh=BHXHv18RHpWXTW8BN0x7FY6xoRGpo5/D2QZqJTcg2jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Do7FuvzlCq9Msk9CbYqMQdUAe7I99Z6+2e7fOxC1y4l+jZ79sWLdYQHX9Vpuvc6Ww
-	 x4xhhFwOU8RsWREpZTS6Ey7FJDU5TQl+mcNwCpDQ14HFi09YP3E0hAliWAUObkHUWc
-	 xBphZoFlA8oFye6zTrKvahXH7q2i6mwWDa5kL3YI=
+	b=Uw1yyYLEF0RneVjoDg+6oTaOJQyvuhXI0gawD4kweQGov2EO6nai98N54hK4hGeYX
+	 EJrJ33oLSgVRhdY+2+UhrxpjHLAUzChe72VLRZfTMz6mkvpEXnqDmRaIwa/FoLDPjJ
+	 /JnSZnxfehZeHrFPCe/+anME2mbkhEaMM079VSWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.2 340/556] LoongArch: BPF: Fix off-by-one error for insn_is_cast_user()
-Date: Wed,  9 Sep 2026 15:40:20 +0200
-Message-ID: <20260909134242.616108682@linuxfoundation.org>
+Subject: [PATCH 7.2 341/556] LoongArch: Fix acpi_package_ids[] array overflow
+Date: Wed,  9 Sep 2026 15:40:21 +0200
+Message-ID: <20260909134242.651896335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,44 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit 30419a0aa128135a81be917eaa3bd2f1a10c9ca3 upstream.
+commit 2a2367d46d7a4ee4122b7a86e57125542dbbe963 upstream.
 
-In the LoongArch BPF JIT code, the branch offset represents the number
-of instructions. An offset of 1 means the target of the "beq" is the
-current PC plus 1 instruction (PC + 4 bytes). This matches the exact
-same path as the sequential non-branch execution, the "or" instruction
-is always executed for the cast_user JIT arm in build_insn().
+With LoongArch virt machine, a typical setting is one core per socket,
+there will max 256 sockets (packages) on one VM. With PPTT acpi table,
+array acpi_package_ids[] will be overflowed.
 
-If the pointer is not NULL, there is no side effect. But if the pointer
-is NULL, it is incorrectly combined with the base address and turns into
-a non-zero address, meaning a zero arena offset no longer casts to NULL.
+Here change the array size of acpi_package_ids[] with the max value of
+MAX_PACKAGES and KVM_MAX_VCPUS.
 
-Fix this by changing the branch offset from 1 to 2, which properly skips
-the "or" instruction and jumps directly to the "move_reg" instruction if
-the pointer is NULL, ensuring the destination register is safely cleared
-to 0.
-
-Cc: stable@vger.kernel.org
-Fixes: 4fdb5dd8aeba ("LoongArch: BPF: Implement bpf_addr_space_cast instruction")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Cc: stable@vger.kernel.org # 6.7+
+Fixes: 4e8f58620f67 ("LoongArch: Retrieve CPU package ID from PPTT when available")
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/net/bpf_jit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/acpi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -734,7 +734,7 @@ static int build_insn(const struct bpf_i
- 			move_reg(ctx, t1, src);
- 			emit_zext_32(ctx, t1, true);
- 			move_imm(ctx, dst, (ctx->user_vm_start >> 32) << 32, false);
--			emit_insn(ctx, beq, t1, LOONGARCH_GPR_ZERO, 1);
-+			emit_insn(ctx, beq, t1, LOONGARCH_GPR_ZERO, 2);
- 			emit_insn(ctx, or, t1, dst, t1);
- 			move_reg(ctx, dst, t1);
- 			break;
+--- a/arch/loongarch/kernel/acpi.c
++++ b/arch/loongarch/kernel/acpi.c
+@@ -13,6 +13,7 @@
+ #include <linux/export.h>
+ #include <linux/irq.h>
+ #include <linux/irqdomain.h>
++#include <linux/kvm_host.h>
+ #include <linux/memblock.h>
+ #include <linux/of_fdt.h>
+ #include <linux/serial_core.h>
+@@ -202,7 +203,7 @@ static void __init acpi_process_madt(voi
+ 
+ int pptt_enabled;
+ static int acpi_nr_packages;
+-static int acpi_package_ids[MAX_PACKAGES];
++static int acpi_package_ids[MAX(MAX_PACKAGES, KVM_MAX_VCPUS)];
+ 
+ int __init parse_acpi_topology(void)
+ {
 
 
