@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7525803BB;
-	Wed,  9 Sep 2026 14:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE8156E079;
+	Wed,  9 Sep 2026 14:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963809; cv=none; b=ErpXFmGhKtT/yJbW99ffPOjGnqsODDaTvYBT5vpUBnnuQ9xSB2pF1dyMFyNDqD5FqXh1S2F/+PImMwezSkbP1CthJZD0Q4KpqSe2ntWDWgrkr8ZKejd2/m3Ff7aScQcHsY4i+5Jjzj546DfPQXdXk96Asy+rAumuJ1scYNC1p6I=
+	t=1788963812; cv=none; b=EGPW8FjD6UCESADSYaC/KU8p2ss4bggj4DNVkTKW9Jr0/FiNaQwu+tXqalKfP+qEGeWO5nO8N/LnfLbMiRlu7lktl3cF3QogkkoU7feefw7NOCU6vlvjonjSkd78+xl6GlwsZZgNnDkCqQGdVanr4RG5aT0LG2r/bjDxughs2bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963809; c=relaxed/simple;
-	bh=YboomoBvyK0hNkQQsWuhi2XFQecmPqTsAzpEPZvhteQ=;
+	s=arc-20240116; t=1788963812; c=relaxed/simple;
+	bh=1dqClWwQtFQu8wXdVOPkptoypHzp3AqvtCaasphp0OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSyTh6SlDs+eEgocyBsI2sfYsQ7mNWd9yRUs+HombfDi80XJqVnWGQYBgq3XHddQ9JHg9xL/fxI4chYwCCme8hBrFHaWKa+KKUE7SO+sQZga6JN18Py4HZ4aiHbQfyEsdV9IVFPS+iFOxFB6RL9XBKhQ5TXpYcMC49CT6+9akdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ8UVPdk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EAOksb841VWzbiaiV3ZcdWMHUUg2oUU87NW6wOmHlpgEbjKK9OIBKl8ahKQMvVlyxwkUWV41WcXmH2DxOtWeAnuZt5deYGSRbbxIrcCKVjM90MMq12SmP9ewxmnqYjCXcw/rfjnHN8iuil3lXGduc/p2EOCcUlC28nkmJGbrOtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yygLQVCw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ8UVPdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C247F1F00A3A;
-	Wed,  9 Sep 2026 14:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yygLQVCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA391F00A3A;
+	Wed,  9 Sep 2026 14:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963808;
-	bh=ETC2urYqMuSQo/DOUkAfvEksWa2+BnCYDTh6rJ/co9w=;
+	s=korg; t=1788963811;
+	bh=TQZdYbOI2GoyVuFn+egMbV8XUKVZU20wFlBWCxFQ+RQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZ8UVPdk2fcWJrMQhd9CxnrTGwCbewel7UnXoX1hx5+hywxcL4f7XIAtDFXQeJlSj
-	 6ZkQbMX8gjP0OEBVcMzno0ekeJO4nDsVv5Q7bp4VNQTzh/coZ73JG4ogH7EOhouvHn
-	 yLL4FA7mq285rgLzoSdpPWkXSY9p5oJIGj/kQk6M=
+	b=yygLQVCwWtCnxRJL8KHz146D919OX3qma+sASr8B1nLpU23kw+CGIBZ0A2MhZt2sL
+	 IhACD1q0y54sbplrh4d3mWFVg0B5veD1QpYocOyyLKTrfqIKCxIyF5xu43js/ckSjo
+	 OkSgFqZfUUZbm/Do89rkEYHaaOfWwoB56Z8MysDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Matteo Martelli <matteomartelli3@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 205/583] iio: adc: pac1921: fix wrong channel used in trigger handler read
-Date: Wed,  9 Sep 2026 15:38:10 +0200
-Message-ID: <20260909134245.247018809@linuxfoundation.org>
+Subject: [PATCH 6.18 206/583] iio: buffer: Fix potential use-after-free in anonymous buffer release
+Date: Wed,  9 Sep 2026 15:38:11 +0200
+Message-ID: <20260909134245.279863140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,53 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit 3364c56b20c1c496bdb8c8df32f96a9947dbf98e upstream.
+commit 6288b593e76eb10329326f2cd51e32557203b9e5 upstream.
 
-pac1921_trigger_handler() walks the enabled channels with
-iio_for_each_active_channel(), which yields the scan index (bit) of each
-active channel, while ch is a separate counter used to pack the samples
-contiguously into the scan buffer.
+An anonymous buffer handle holds a reference to the underlying IIO device.
+The reference is dropped in the buffer handle's release function. If the
+device has been removed, either through unbind or hot-unplug, the buffer
+handle might hold the last reference.
 
-The register to read was looked up with the packing counter instead of
-the scan index:
+The release function takes the mutex for the buffer using a guard, which
+means the unlock happens after all the code in the function, including
+`iio_device_put()`. If the anonymous buffer holds the last reference this
+might free both the IIO device and the buffer, which contains the mutex,
+leading to use-after-free when the mutex is unlocked.
 
-	ret = pac1921_read_res(priv, idev->channels[ch].address, &val);
+Fix this by using a scoped guard just around the buffer dmabuf list access,
+making sure the mutex is unlocked before releasing the IIO device.
 
-pac1921_channels[] is ordered by scan index, so channels[bit] is the
-channel that is actually enabled, whereas channels[ch] is merely the
-ch-th array entry. These coincide only when the enabled channels form a
-contiguous prefix (e.g. all channels enabled). With a sparse scan mask -
-for example when only the power channel (scan index 3) is enabled - the
-handler reads the wrong register (VBUS instead of VPOWER) and pushes it
-to userspace as the enabled channel's data.
+Version 10 of the patch that introduced this issue used this exact scheme
+of first unlocking and then dropping the reference [1]. During review it
+was suggested to use a guard instead, and version 11 made that change [2].
 
-Index the channel array by the scan index (bit) to read the correct
-register, keeping ch only for contiguous packing into the scan buffer.
-
-Fixes: 371f778b83cd ("iio: adc: add support for pac1921")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Acked-by: Matteo Martelli <matteomartelli3@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
+Reported-by: codex:gpt-5.6
+Fixes: 3e26d9f08fbe ("iio: core: Add new DMABUF interface infrastructure")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/linux-iio/20240605110845.86740-4-paul@crapouillou.net #[1]
+Link: https://lore.kernel.org/linux-iio/20240618100302.72886-4-paul@crapouillou.net #[2]
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/pac1921.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/industrialio-buffer.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/drivers/iio/adc/pac1921.c
-+++ b/drivers/iio/adc/pac1921.c
-@@ -1037,7 +1037,7 @@ static irqreturn_t pac1921_trigger_handl
- 	iio_for_each_active_channel(idev, bit) {
- 		u16 val;
+--- a/drivers/iio/industrialio-buffer.c
++++ b/drivers/iio/industrialio-buffer.c
+@@ -1599,12 +1599,16 @@ static int iio_buffer_chrdev_release(str
  
--		ret = pac1921_read_res(priv, idev->channels[ch].address, &val);
-+		ret = pac1921_read_res(priv, idev->channels[bit].address, &val);
- 		if (ret)
- 			goto done;
+ 	wake_up(&buffer->pollq);
  
+-	guard(mutex)(&buffer->dmabufs_mutex);
+-
+-	/* Close all attached DMABUFs */
+-	list_for_each_entry_safe(priv, tmp, &buffer->dmabufs, entry) {
+-		list_del_init(&priv->entry);
+-		iio_buffer_dmabuf_put(priv->attach);
++	/*
++	 * The mutex must be unlocked before iio_device_put(), which might drop the
++	 * last reference and free the buffer.
++	 */
++	scoped_guard(mutex, &buffer->dmabufs_mutex) {
++		/* Close all attached DMABUFs */
++		list_for_each_entry_safe(priv, tmp, &buffer->dmabufs, entry) {
++			list_del_init(&priv->entry);
++			iio_buffer_dmabuf_put(priv->attach);
++		}
+ 	}
+ 
+ 	kfree(ib);
 
 
