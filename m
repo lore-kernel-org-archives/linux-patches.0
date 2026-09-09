@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1645908AE;
-	Wed,  9 Sep 2026 14:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706275616C7;
+	Wed,  9 Sep 2026 14:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964817; cv=none; b=U5i+NqDsqXJayJaNqAvB59Ntbb5nS+Vy/GDRfR4xmW2PvpHkAsMTRhGGOrcktQtXTsuaPBAywWnhN4/TIyyLOsGWxMD0uD4sWpbrvFBi4q6/n7G97z4FDpxtl6xlq8M7GSTSjRQpCHDsvlLwGf5n9oET/5wbRr3gGfkpmdVSzVk=
+	t=1788964821; cv=none; b=uJgJ+xqlvrM2LeD5zIJ+N5e5ZuUwEZ6UV1nM3/bn79lpGCgT5d4xetc1EtB3wq/75OfVa2vZ7gUKPRbg1SHNh51xiOmUKs6fV+gK9FxMxje5vk6ZF/cnJ1gZ1L7JBLMjgo6N17ew4sbCzMS7FiR+D7qKsqOKKhD4J+iL/M235wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964817; c=relaxed/simple;
-	bh=M6eRZQvO0+9b8J0gPzu9BJr/7MDVlt3ON+FhnMoUgXc=;
+	s=arc-20240116; t=1788964821; c=relaxed/simple;
+	bh=gXKyC7q7XVfmVyZ4JDtRRv7I5SMvyYSI/lml2/Eyh6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuFsxMmCHGuNZzHFNQ3/31Y5UOBkuBt87laoGjrbRLlox5Puldqt1vRKGWR7sMlcr9Gv7lKPGOZ90Vvkrib9HuydPESF7tqyCneKe17dSbVfxnBtrdjDmjy6YSK3lGzA8YzXEGjbQkalRve7MwBxxMTVec+91grJZijJ8ED+s6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO2kAWNe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QwOcXoupH2BVxt/Pds+9wridPE4B864eeJoPDvJ27eLI6lN8SNVYh4E1OFkResNxGFalcUB5vjawMYbNA2TNxQrTYhN9YEj3HOzTyQFJdF/c2CkDkV2iITvnooGmoWB2yD+6Ml7dqZbdENqkojve7DcoO3TWHWZLj0je/deoA6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrGB02hE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO2kAWNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E514C1F00A3A;
-	Wed,  9 Sep 2026 14:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrGB02hE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D271E1F00A3A;
+	Wed,  9 Sep 2026 14:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964815;
-	bh=8LqlmpImJE38yegtWIyoLznUtx5pMkTmMLREplsWomw=;
+	s=korg; t=1788964818;
+	bh=nXKdDDPjlhB6R1KSSRd/ybO7E07pZVa6P9RMS/f13jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YO2kAWNeY8D+1rWLtiuJQl8mqd5FoNpvUqqzh6oD/1ao66Bdv4JjAQ8DUTCRQGGDa
-	 BWb8ImJFXVBOw02m9NwBsWHET4xGOGeKmTKAI4tiemhDQlrdf+P/eR9ey0E11xHsQl
-	 /oIDVfz9bsC39bS+UpC+C8zji7rmL1IWncPkul/I=
+	b=DrGB02hEvppiJ1Xthgi9PDSGDIEf4qJSrPMS5yrxbCCxRUxbfkRNGgzqB3UCa+UGP
+	 Sp0gpG1vYjNtUT7e5W9oddoyGeJJeA6zS4WIf7L1MySDrnq5AzhVjzPkDEjy7ATyHu
+	 QLPobe1YQt01m1EeTt7NtMLTB2Yr6M1phQBpTCTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Chris Mason <clm@meta.com>,
+	Brian Geffon <bgeffon@google.com>,
+	David Stevens <stevensd@google.com>,
+	Minchan Kim <minchan@google.com>,
+	Richard Chang <richardycc@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 552/583] NFSD: Prevent client use-after-free during close_lru reaping
-Date: Wed,  9 Sep 2026 15:43:57 +0200
-Message-ID: <20260909134256.837279064@linuxfoundation.org>
+Subject: [PATCH 6.18 553/583] zram: fixup read_block_state()
+Date: Wed,  9 Sep 2026 15:43:58 +0200
+Message-ID: <20260909134256.868151287@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,53 +56,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit 2330b788d732f43668b965b3105b37ceb276dfea ]
+[ Upstream commit 8b05d2d8af817c6a1e23032df51e7ad83030d543 ]
 
-An nfs4_openowner left on nn->close_lru after its final CLOSE keeps
-its last closed stateid in oo_last_closed_stid, holding only a raw
-pointer to its nfs4_client. The laundromat reaps timed-out entries,
-drops nn->client_lock, and calls nfs4_put_stid(), which dereferences
-the client through cl_lock. Nothing pins the client across that
-window, so a concurrent force_expire_client() can free it and
-nfs4_put_stid() reads freed memory. __destroy_client() hits the same
-race, walking clp->cl_openowners without cl_lock.
+ac_time is now in seconds, do not use ktime_to_timespec64()
 
-Pin the client with cl_rpc_users before dropping client_lock, and
-skip clients already expiring. __destroy_client() then cleans up its
-own close_lru entries through release_last_closed_stateid(), so
-teardown no longer races the laundromat.
+[akpm@linux-foundation.org: remove now-unused local `ts']
+[akpm@linux-foundation.org: fix build]
+Link: https://lkml.kernel.org/r/20260115033031.3818977-1-senozhatsky@chromium.org
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reported-by: Chris Mason <clm@meta.com>
+Closes: https://lkml.kernel.org/r/20260114124522.1326519-1-clm@meta.com
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: David Stevens <stevensd@google.com>
+Cc: Minchan Kim <minchan@google.com>
+Cc: Richard Chang <richardycc@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 
-Fixes: 217526e7ecc9 ("nfsd: protect the close_lru list and oo_last_closed_stid with client_lock")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260709-cel-v4-8-1d519d9be0cb@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+[ Stable tree note: The ac_time conversion described above is not present
+  here, so retain the ktime_t conversion and microsecond output.  Move the
+  timespec64 temporary into the scan loop instead, allowing the follow-up
+  bounds fix to move nr_pages initialization under init_lock cleanly. ]
+
+Stable-dep-of: 391f057f44a5 ("zram: fix out-of-bounds access in read_block_state()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/block/zram/zram_drv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7165,11 +7165,16 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		if (!state_expired(&lt, oo->oo_time))
- 			break;
- 		list_del_init(&oo->oo_close_lru);
-+		clp = oo->oo_owner.so_client;
-+		if (is_client_expired(clp))
-+			continue;
- 		stp = oo->oo_last_closed_stid;
- 		oo->oo_last_closed_stid = NULL;
-+		atomic_inc(&clp->cl_rpc_users);
- 		spin_unlock(&nn->client_lock);
- 		nfs4_put_stid(&stp->st_stid);
- 		spin_lock(&nn->client_lock);
-+		put_client_no_renew_locked(clp);
- 	}
- 	spin_unlock(&nn->client_lock);
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -1136,7 +1136,6 @@ static ssize_t read_block_state(struct f
+ 	ssize_t index, written = 0;
+ 	struct zram *zram = file->private_data;
+ 	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
+-	struct timespec64 ts;
  
+ 	kbuf = kvmalloc(count, GFP_KERNEL);
+ 	if (!kbuf)
+@@ -1151,6 +1150,7 @@ static ssize_t read_block_state(struct f
+ 
+ 	for (index = *ppos; index < nr_pages; index++) {
+ 		int copied;
++		struct timespec64 ts;
+ 
+ 		zram_slot_lock(zram, index);
+ 		if (!zram_allocated(zram, index))
 
 
