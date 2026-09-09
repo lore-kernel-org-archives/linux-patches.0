@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE0A56B850;
-	Wed,  9 Sep 2026 14:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B863560AD1;
+	Wed,  9 Sep 2026 14:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963179; cv=none; b=TirmhEKaUthYkTwdziSl2o4mku5Is5Gyu2SQEMRDs+zO2rHZ+WCeG/dweyyQSn0kCc90NlnntBghtYnsrK56NLxAs3OIRffzTaqoMntwH38NBXJTJ+Sr+dtDANzwX0QZ/AJh/51B1EY9k5Q9uPnmNWqTgxNJW8ORxjTEQGA7i3E=
+	t=1788963182; cv=none; b=tzb0pwhLWU+4ThP/974nZ24t/Y7JCF2rRR4NifedCXOP1db4hJZGc8IRkwVnVjUin+TTacd2lo7x90FtE+fyY38RkzohoyD3+uPo2wOlSulUkQpUV4dQhYZsEWE2fIRFEu97QRkcI1+3OVGHGKP7MZXaAi/5Sjh+UlQpZCdqmf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963179; c=relaxed/simple;
-	bh=9UQ27gDBGwO80/PtfeiJrLSlDJTXAgY1PRWtLpE93nw=;
+	s=arc-20240116; t=1788963182; c=relaxed/simple;
+	bh=mHh8sqbET5p5219F+V8ivjhFbH8fdVQzNg5nlWaAdes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbB4Kb4LqKmpJ1ZyRKuD2BwHn08+phAdPBuSwxwpTxy41M+MntTitNimyDNZE43KvF4uZTtSPTDUZYkou4Up33AReVxStdMojLjvtXjCJzSKtvJNQkMyxfKJVq38o1UXOvalUTwuFmdbYddL36mEJHBQYDDuUCu3gR361pdGv/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOMuJxRE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KKbG3Ek/rfFCEJTCLjRQsS546+2oVtWCvL47NWU2qIWg8MonA8pU+lQOpJkckocmMKq+5Ss2lnYgdEek/z9ludLjaZ33Aq+82Ifcwr9d1gbaobznG/Bi/kfrH5yYe2BcyTkHUbuEzEfCSFnd6MU1X+VJojph/F9PrWSGT/53C9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crdjDCT0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOMuJxRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45CB1F00A3A;
-	Wed,  9 Sep 2026 14:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crdjDCT0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8DD1F00A3A;
+	Wed,  9 Sep 2026 14:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963178;
-	bh=Ymv1smFveDhOi+NYoTNh5eTCi7D0oFdRqiQxijwWyW0=;
+	s=korg; t=1788963181;
+	bh=ElnbKIDBR1QsAnz++/bzfTMyTmNkBXlMES2vWNJiGYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tOMuJxREgfH0TKR2rEQlngHNg7pdP7IqC3UlKUphYfRhuZ8vO17xyc0RpxPrepu+r
-	 UbV2kyx54duz5HnuLgnFpryDb0VcL4mLGaJTkHgmiRtmxi6rl/kOO/a62fUntYd3NZ
-	 1blw1qnmzvoJ7lnBzC85TGTMz2Z2Th2omggtDaOc=
+	b=crdjDCT0UU7Plae8zMMUqoHQg0K/vUIBLihvV5it0gj/1cCcL9k3XhrxW/ki0vZSf
+	 oubxhZDP29pTNH6JaFXeLDbPSiJVSNnTvQvwcnRCOLiu2FTFqHL+OK4bVZfC+elbKf
+	 K66eCGlS7nAcA+SABRI24y2dewX6xN6LVH6ohxbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunday Clement <Sunday.Clement@amd.com>,
-	Alex Deucher <Alexander.Deucher@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 519/556] drm/amdkfd: Reject zero-sized AQL queue allocations after size halving
-Date: Wed,  9 Sep 2026 15:43:19 +0200
-Message-ID: <20260909134248.685287075@linuxfoundation.org>
+	Tao Chen <chen.dylane@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 546/556] bpf: Disable preemption in bpf_get_stackid
+Date: Wed,  9 Sep 2026 15:43:46 +0200
+Message-ID: <20260909134249.597011421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,67 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunday Clement <Sunday.Clement@amd.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 40ba09e11188d1b7f79d51fc28aca5ea45e0c138 upstream.
+[ Upstream commit 15f1bd8574662f1b7b26aaa2e23ebf4066f0117d ]
 
-KFD_IOC_ALLOC_MEMORY_OF_GPU with flag
-KFD_IOC_ALLOC_MEM_FLAGS_AQL_QUEUE_MEM and size=1 triggers the AQL
-wraparound workaround (size >>= 1), reducing size to 0. The resulting
-zero passes through PAGE_ALIGN(0) = 0 without validation, bypassing the
-per-process VRAM quota check in reserve_mem_limit()
-(vram_used + 0 > vram_available is always false).
+The get_perf_callchain call needs disabled preemption plus we need
+it disabled as long as we access its returned trace entries buffer.
 
-The fix adds post-halving zero-size validation in the primary
-allocation path (amdgpu_amdkfd_gpuvm.c). The check happens after size
-halving but before reserve_mem_limit(), and uses err_alignment_size
-error path to properly clean up the allocated kgd_mem structure and
-mutex.
+Note the bpf_get_stackid_pe function is executed already with
+preemption disabled.
 
+Fixes: d5a3b1f69186 ("bpf: introduce BPF_MAP_TYPE_STACK_TRACE")
+Reported-by: Tao Chen <chen.dylane@linux.dev>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sunday Clement <Sunday.Clement@amd.com>
-Reviewed-by: Alex Deucher <Alexander.Deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-6-jolsa@kernel.org
+
+Closes: https://lore.kernel.org/bpf/20260206090653.1336687-2-chen.dylane@linux.dev/
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    7 +++++++
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c         |    3 ++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ kernel/bpf/stackmap.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -1795,6 +1795,12 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_
- 		size >>= 1;
- 	aligned_size = PAGE_ALIGN(size);
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -632,20 +632,22 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
+ 		return -EINVAL;
  
-+	/* reject AQL queue with size < 2 */
-+	if (!aligned_size) {
-+		ret = -EINVAL;
-+		goto err_alignment_size;
+ 	max_depth = stack_map_calculate_max_depth(map->value_size, elem_size, flags);
+-	trace = get_perf_callchain(regs, kernel, user, max_depth,
+-				   false, false, 0);
+ 
+-	if (unlikely(!trace))
+-		/* couldn't fetch the stack trace */
+-		return -EFAULT;
++	scoped_guard(preempt) {
++		trace = get_perf_callchain(regs, kernel, user, max_depth,
++					   false, false, 0);
++		if (unlikely(!trace))
++			/* couldn't fetch the stack trace */
++			return -EFAULT;
+ 
+-	err = stackid_fastpath(&stackid, map, trace, flags);
+-	if (err != -ENOENT)
+-		return err;
++		err = stackid_fastpath(&stackid, map, trace, flags);
++		if (err != -ENOENT)
++			return err;
+ 
+-	new_bucket = stackid_new_bucket(&stackid, map);
+-	if (!new_bucket)
+-		return -ENOMEM;
++		new_bucket = stackid_new_bucket(&stackid, map);
++		if (!new_bucket)
++			return -ENOMEM;
 +	}
-+
- 	(*mem)->alloc_flags = flags;
  
- 	amdgpu_sync_create(&(*mem)->sync);
-@@ -1886,6 +1892,7 @@ err_bo_create:
- 	amdgpu_amdkfd_unreserve_mem_limit(adev, aligned_size, flags, xcp_id);
- err_reserve_limit:
- 	amdgpu_sync_free(&(*mem)->sync);
-+err_alignment_size:
- 	mutex_destroy(&(*mem)->lock);
- 	if (gobj)
- 		drm_gem_object_put(gobj);
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1200,7 +1200,8 @@ static int kfd_ioctl_alloc_memory_of_gpu
- 
- 		if (flags & KFD_IOC_ALLOC_MEM_FLAGS_AQL_QUEUE_MEM)
- 			size >>= 1;
--		atomic64_add(PAGE_ALIGN(size), &pdd->vram_usage);
-+		size = PAGE_ALIGN(size);
-+		atomic64_add(size, &pdd->vram_usage);
- 	}
- 
- 	mutex_unlock(&p->mutex);
+ 	return stackid_install(&stackid, map, new_bucket, flags);
+ }
 
 
