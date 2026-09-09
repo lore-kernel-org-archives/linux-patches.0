@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C770577E59;
-	Wed,  9 Sep 2026 14:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE8A57F72E;
+	Wed,  9 Sep 2026 14:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963674; cv=none; b=o8erXv0O1BCWGfynxVT/Fcx3aDz56VFaRFQy1ZA24MuwnhUqjDGTtrwk9rsWzcRlhrXZsCWjhB5WTnU8JayDI7ZmEg1RXh4tJveIVf5aQmpdZtAYq+NK7bnJcbP8rPasZc/WvPQLgswdqJN57HCDltXN+1kgEq8RTowz27KKDh8=
+	t=1788963678; cv=none; b=O9og0ZyBXwwfpEdWSWdcrzr9jQ4lNAnGAc3+762wxR1LimqesNrmKX2pxUfLvvsiIK0o3dDY4Yf/Ev/xkwEGY0CQ8wzZb13r6z0S5PqPuTEXYdDzJCyGrw6P+c6NdTh8D4KoBxtwOOdjTfE7g5i4kv4CkOFI5dBGBYttIhbIs1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963674; c=relaxed/simple;
-	bh=KKuH0aubR1hDKWkJruVbyRmHwRnlhJ1hMBlgG4ZEtmw=;
+	s=arc-20240116; t=1788963678; c=relaxed/simple;
+	bh=7qewbNps2Jrb65v6go4783ZjEvF6lboPUMXNuYMvO4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SpsmiZPw9ee7UiNcG9fhTnt8i+3vd9z7fXtsrv0dm7e7tKAu7tj306vi/4TJpJQtGirZw5EpK1Z1MOPdCXQEfuo0Rl9Q4adwvgnVkTY7h9G0Ip4yNEu8uwf+esgIE610+rQwzzhBV8troSYs8GulVlRG/mrBdBiap4Gmhw3jykU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgQJvJMn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sk7IiNhMkOjk0Kg700N3OhfITxXKc/+PHDgkL7oqoPUbkEztEi6styfU6fJ7Yo+Zcm/UalvSfFmB6988xGYCJIy2m1Hf0r61zm0OgvR8o4Qoq4K6ssJPFCgqwGalm4ISU/Z92bepIcLH2HT3vVBuJVmJfPWyPfHRBAexKhk8zLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iN8FR5NW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgQJvJMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44F71F00A3A;
-	Wed,  9 Sep 2026 14:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iN8FR5NW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E291F00A3A;
+	Wed,  9 Sep 2026 14:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963673;
-	bh=E4jnPJdY4FfBdKWHflL13zTTWI4VR96wRYH5aYEGtN4=;
+	s=korg; t=1788963676;
+	bh=05Us7oMAAynOsHRjGcWeqAMT7nwF+36lrMWZeOpwFk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tgQJvJMn3d16E6uxw9sW6RbpH5BCYJblOtAwsMe0wE5GbPRBuOUpMT1JbolbeN4jt
-	 d2rT7kbt8Ezt7VxELNF3agjMlW5HZQKaFZAMX6xJCMeneAIQtqJVV0JhmVIfHmzXUn
-	 nK/aTxd3C7HM4nF2QwQLivv307r9Ol2TgO92capA=
+	b=iN8FR5NWJkZLrTrrgN+WUn6juNSZwAmgbgp+hNRR9ZSK/R6Vj9h5dn/po3OhO8LRv
+	 yxN16aUauMdkOwq58fvZO0+NnFXhLIB2q0XkbCeIebeQano1dvWOZ20tDXzLdUJ9GQ
+	 Y5cqf6NPexZAdxP9xlpDEiwgmN5ldWdWO6VDSpEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 158/583] ASoC: adau1761: sort the register default table
-Date: Wed,  9 Sep 2026 15:37:23 +0200
-Message-ID: <20260909134243.681098263@linuxfoundation.org>
+Subject: [PATCH 6.18 159/583] ASoC: cs35l33: drain threaded IRQ before runtime suspend
+Date: Wed,  9 Sep 2026 15:37:24 +0200
+Message-ID: <20260909134243.717908183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -45,118 +44,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit cc606b6c2328b4864885db6afcad7e78c0ac7a73 upstream.
+commit e074c12c428c633e079154301207a6079a208583 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+cs35l33_runtime_suspend() currently switches the codec into
+regcache_cache_only(true) and powers it down without first quiescing the
+threaded IRQ registered by devm_request_threaded_irq(). That leaves a
+window where cs35l33_irq_thread() can still run after suspend has closed
+off live register access.
 
-The table lists the ADAU1761 specific registers (0x4008 and up) before
-the block shared with the ADAU1381/ADAU1781, which starts at
-ADAU17X1_CLOCK_CONTROL (0x4000), so bsearch() descends into the wrong
-half and 28 of the 52 entries are unreachable.
-regcache_reg_needs_sync() then cannot compare them against their default
-and reports that a sync is needed, so they are written to the device on
-every regcache_sync() even when they were never touched.
+A running system can reach this during runtime PM while the driver still
+has critical fault IRQs unmasked. If the threaded handler runs in that
+window, it reads volatile INT_STATUS_1/2 after cache_only has been
+enabled, ignores the regmap_read() failures, and can still drive the
+AMP_SHORT_RLS, CAL_ERR_RLS, OTE_RLS, and OTW_RLS release paths.
 
-Sort the table by register address.
+Use disable_irq() before entering cache_only/power-off so any in-flight
+threaded handler is drained and no new IRQ thread can run during the
+suspended state. Re-enable the IRQ only after runtime_resume() has
+restored live register access with regcache_sync(). Since probe only
+warns if devm_request_threaded_irq() fails, track whether the IRQ was
+actually installed before disabling or re-enabling it.
 
-Fixes: dab464b60b24 ("ASoC: Add ADAU1361/ADAU1761 audio CODEC support")
+Fixes: 3333cb7187b9 ("ASoC: cs35l33: Initial commit of the cs35l33 CODEC driver.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260805122713.11376-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260611161553.3378721-2-runyu.xiao@seu.edu.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/adau1761.c |   34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ sound/soc/codecs/cs35l33.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/adau1761.c
-+++ b/sound/soc/codecs/adau1761.c
-@@ -68,23 +68,33 @@
- #define ADAU1761_FIRMWARE "adau1761.bin"
+--- a/sound/soc/codecs/cs35l33.c
++++ b/sound/soc/codecs/cs35l33.c
+@@ -40,6 +40,7 @@ struct cs35l33_private {
+ 	struct regmap *regmap;
+ 	struct gpio_desc *reset_gpio;
+ 	bool amp_cal;
++	bool irq_requested;
+ 	int mclk_int;
+ 	struct regulator_bulk_data core_supplies[2];
+ 	int num_core_supplies;
+@@ -881,6 +882,9 @@ static int cs35l33_runtime_resume(struct
+ 		goto err;
+ 	}
  
- static const struct reg_default adau1761_reg_defaults[] = {
--	{ ADAU1761_DEJITTER,			0x03 },
-+	{ ADAU17X1_CLOCK_CONTROL,		0x00 },
-+	{ ADAU17X1_PLL_CONTROL,			0x00 },
- 	{ ADAU1761_DIGMIC_JACKDETECT,		0x00 },
-+	{ ADAU17X1_REC_POWER_MGMT,		0x00 },
- 	{ ADAU1761_REC_MIXER_LEFT0,		0x00 },
- 	{ ADAU1761_REC_MIXER_LEFT1,		0x00 },
- 	{ ADAU1761_REC_MIXER_RIGHT0,		0x00 },
- 	{ ADAU1761_REC_MIXER_RIGHT1,		0x00 },
- 	{ ADAU1761_LEFT_DIFF_INPUT_VOL,		0x00 },
-+	{ ADAU1761_RIGHT_DIFF_INPUT_VOL,	0x00 },
-+	{ ADAU17X1_MICBIAS,			0x00 },
- 	{ ADAU1761_ALC_CTRL0,			0x00 },
- 	{ ADAU1761_ALC_CTRL1,			0x00 },
- 	{ ADAU1761_ALC_CTRL2,			0x00 },
- 	{ ADAU1761_ALC_CTRL3,			0x00 },
--	{ ADAU1761_RIGHT_DIFF_INPUT_VOL,	0x00 },
--	{ ADAU1761_PLAY_LR_MIXER_LEFT,		0x00 },
-+	{ ADAU17X1_SERIAL_PORT0,		0x00 },
-+	{ ADAU17X1_SERIAL_PORT1,		0x00 },
-+	{ ADAU17X1_CONVERTER0,			0x00 },
-+	{ ADAU17X1_CONVERTER1,			0x00 },
-+	{ ADAU17X1_ADC_CONTROL,			0x00 },
-+	{ ADAU17X1_LEFT_INPUT_DIGITAL_VOL,	0x00 },
-+	{ ADAU17X1_RIGHT_INPUT_DIGITAL_VOL,	0x00 },
- 	{ ADAU1761_PLAY_MIXER_LEFT0,		0x00 },
- 	{ ADAU1761_PLAY_MIXER_LEFT1,		0x00 },
- 	{ ADAU1761_PLAY_MIXER_RIGHT0,		0x00 },
- 	{ ADAU1761_PLAY_MIXER_RIGHT1,		0x00 },
-+	{ ADAU1761_PLAY_LR_MIXER_LEFT,		0x00 },
- 	{ ADAU1761_PLAY_LR_MIXER_RIGHT,		0x00 },
- 	{ ADAU1761_PLAY_MIXER_MONO,		0x00 },
- 	{ ADAU1761_PLAY_HP_LEFT_VOL,		0x00 },
-@@ -93,20 +103,6 @@ static const struct reg_default adau1761
- 	{ ADAU1761_PLAY_LINE_RIGHT_VOL,		0x00 },
- 	{ ADAU1761_PLAY_MONO_OUTPUT_VOL,	0x00 },
- 	{ ADAU1761_POP_CLICK_SUPPRESS,		0x00 },
--	{ ADAU1761_JACK_DETECT_PIN,		0x00 },
--	{ ADAU1761_CLK_ENABLE0,			0x00 },
--	{ ADAU1761_CLK_ENABLE1,			0x00 },
--	{ ADAU17X1_CLOCK_CONTROL,		0x00 },
--	{ ADAU17X1_PLL_CONTROL,			0x00 },
--	{ ADAU17X1_REC_POWER_MGMT,		0x00 },
--	{ ADAU17X1_MICBIAS,			0x00 },
--	{ ADAU17X1_SERIAL_PORT0,		0x00 },
--	{ ADAU17X1_SERIAL_PORT1,		0x00 },
--	{ ADAU17X1_CONVERTER0,			0x00 },
--	{ ADAU17X1_CONVERTER1,			0x00 },
--	{ ADAU17X1_LEFT_INPUT_DIGITAL_VOL,	0x00 },
--	{ ADAU17X1_RIGHT_INPUT_DIGITAL_VOL,	0x00 },
--	{ ADAU17X1_ADC_CONTROL,			0x00 },
- 	{ ADAU17X1_PLAY_POWER_MGMT,		0x00 },
- 	{ ADAU17X1_DAC_CONTROL0,		0x00 },
- 	{ ADAU17X1_DAC_CONTROL1,		0x00 },
-@@ -114,12 +110,16 @@ static const struct reg_default adau1761
- 	{ ADAU17X1_SERIAL_PORT_PAD,		0xaa },
- 	{ ADAU17X1_CONTROL_PORT_PAD0,		0xaa },
- 	{ ADAU17X1_CONTROL_PORT_PAD1,		0x00 },
-+	{ ADAU1761_JACK_DETECT_PIN,		0x00 },
-+	{ ADAU1761_DEJITTER,			0x03 },
- 	{ ADAU17X1_DSP_SAMPLING_RATE,		0x01 },
- 	{ ADAU17X1_SERIAL_INPUT_ROUTE,		0x00 },
- 	{ ADAU17X1_SERIAL_OUTPUT_ROUTE,		0x00 },
- 	{ ADAU17X1_DSP_ENABLE,			0x00 },
- 	{ ADAU17X1_DSP_RUN,			0x00 },
- 	{ ADAU17X1_SERIAL_SAMPLING_RATE,	0x00 },
-+	{ ADAU1761_CLK_ENABLE0,			0x00 },
-+	{ ADAU1761_CLK_ENABLE1,			0x00 },
- };
++	if (cs35l33->irq_requested)
++		enable_irq(to_i2c_client(dev)->irq);
++
+ 	return 0;
  
- static const DECLARE_TLV_DB_SCALE(adau1761_sing_in_tlv, -1500, 300, 1);
+ err:
+@@ -900,6 +904,10 @@ static int cs35l33_runtime_suspend(struc
+ 	/* redo the calibration in next power up */
+ 	cs35l33->amp_cal = false;
+ 
++	/* Drain and block the threaded IRQ before cache_only/power-off. */
++	if (cs35l33->irq_requested)
++		disable_irq(to_i2c_client(dev)->irq);
++
+ 	regcache_cache_only(cs35l33->regmap, true);
+ 	regcache_mark_dirty(cs35l33->regmap);
+ 	regulator_bulk_disable(cs35l33->num_core_supplies,
+@@ -1154,10 +1162,12 @@ static int cs35l33_i2c_probe(struct i2c_
+ 	}
+ 
+ 	ret = devm_request_threaded_irq(&i2c_client->dev, i2c_client->irq, NULL,
+-			cs35l33_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
+-			"cs35l33", cs35l33);
++				cs35l33_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
++				"cs35l33", cs35l33);
+ 	if (ret != 0)
+ 		dev_warn(&i2c_client->dev, "Failed to request IRQ: %d\n", ret);
++	else
++		cs35l33->irq_requested = true;
+ 
+ 	/* We could issue !RST or skip it based on AMP topology */
+ 	cs35l33->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
 
 
