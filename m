@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D022353D0B8;
-	Wed,  9 Sep 2026 14:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB40353D0B8;
+	Wed,  9 Sep 2026 14:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963827; cv=none; b=hh/vnNWtE1apWLETuQ08ihUGpHudzE8GkEHBPQ7OaUsCHxp6se9S+duYpsaky3/sYaieliEmEQ0X+OgXIOH2dHdh3/WROZHND/NoX1aJt7uGbu9NGFoF3Ix43UzLQssFCZCqwX9y7+uacBCs0M8aUH+ZzKQ0JgJA/1U6cKVuXbk=
+	t=1788963829; cv=none; b=cuIxNZYO28Jc+Psq5SYw6zLuVOpkHm8t6yr3qu+966yYkCmBkcITOKpPoeCfVlvVZKIFAD/Z5EuV3C3jSzvUN9uA3JcVh6/fqJw6E/K3OCPsd3EpTbQULySAChICYu6J6RDMWc9/R8m6RBZfg4PtJ1Ni1mc6gj33CBNklxLD/G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963827; c=relaxed/simple;
-	bh=b9hUUa3ICF5Afxbp7MV/lNIwi9M3SAlxzqE9I+H6TaY=;
+	s=arc-20240116; t=1788963829; c=relaxed/simple;
+	bh=yBxM1+5SpBd4oFT527W9Bm9B+zgYc35J9MveJQVG9M0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKM3RA8zvU5CCeGGH91FgdQkAqYqP/p/euJe0t5dj+kIbsJRAScTasgdmbJBwynL2t9aOFu/KZ2lrKu+cevx4UsgMysf8eIxMgcSDX1+Tgh1+XackqAx2FrRVm+Osi7I4VsPLDEafZNCLClMI+ZGkjvc2sLq7T1M2mtQ4E8KRn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXMfEaBu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MihefJcukjSOiaMTgyK9Etr64tg1rN0GpowpALV+r9Hq5Y8/LywzQZ4EP2O1WRIoYzOKV7vzzCIUStBBrXNi577apYlz5j1ZYm9qlQe2kohgU4QZZs13MVhIhNF7GRDdXKqbge1B1gHhImI/i4FLZPWEqMaW1oKA7M70SqShicY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VND5B8OS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXMfEaBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B051F00A3A;
-	Wed,  9 Sep 2026 14:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VND5B8OS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E85C1F00A3A;
+	Wed,  9 Sep 2026 14:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963825;
-	bh=XzJxQ9QNli5t1NzrlCx4G5IXHIPKvtQFIMQ4oxJCoKI=;
+	s=korg; t=1788963828;
+	bh=u6uSRG6XlqNsgRtyYT6Q7mJ5keEpi9D4jV67FWqITac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tXMfEaBuDMhlYYbB7QwBaNQVm2bo+pe6tquwhIpiTQ/1wE0vKI4EFkOn5BJmS4oT9
-	 Tory7il3XLlE4xj4erxyKOjVDWOjt7ykDKdIUyBrRUhmkqNqHoVmElF8m7acYUdKKk
-	 5yEIeiFk7Wy2RBImwGLgjW4NQ8cFu8dI5XFDBiXc=
+	b=VND5B8OS140VI6LjQPNwmodRc1px9hgb2TL5h4Uqg22zPF9VgTULytC2UsFYJ6Rti
+	 8QBjvhBd+idld4DHkTHJbp4Q+nv+Z5byo05cbpapz0Ob449cjxe94IYdC3uF3qKXBU
+	 ioW9WPGBwJGi9FEVjoRjM6spyh3k8dfJEzPLPOn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 210/583] iio: chemical: atlas-sensor: use iio_trigger_poll_nested() to fix remove UAF
-Date: Wed,  9 Sep 2026 15:38:15 +0200
-Message-ID: <20260909134245.417298080@linuxfoundation.org>
+Subject: [PATCH 6.18 211/583] iio: chemical: sgp30: Handle IAQ thread creation failure
+Date: Wed,  9 Sep 2026 15:38:16 +0200
+Message-ID: <20260909134245.453767243@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,87 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit be61c8c6252671ecf1fee0ad90f87669e0be1e20 upstream.
+commit 1135d6875d2dbda3f6ec718f3421a6ce4378bd63 upstream.
 
-The atlas driver requests its hardware data-ready IRQ with
-devm_request_threaded_irq(); its threaded handler queues an irq_work,
-atlas_work_handler(), that calls iio_trigger_poll(data->trig).
+kthread_run() can fail and return an error pointer, but sgp_probe() stores
+it and returns success, so the device is registered without its IAQ thread
+and sgp_remove() later passes the error pointer to kthread_stop(). Return
+the error from probe instead.
 
-The IRQ is devm-managed, so free_irq() runs from the devres unwind after
-atlas_remove() returns without flushing that irq_work.  Once a buffer is
-enabled, conversion-complete IRQs keep firing and queueing it; a pending
-irq_work can therefore run after the unwind has freed atlas_data/indio_dev
-and the trigger, when atlas_work_handler() derives the atlas_data pointer
-via container_of() and dereferences data->trig, a use-after-free.
-
-Call iio_trigger_poll_nested() directly from the threaded handler instead
-of bouncing through irq_work.  free_irq() then drains the threaded handler,
-closing the window; other iio drivers with a threaded data-ready IRQ do the
-same (e.g. bmi270).
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 7103b99b031c ("iio: chemical: atlas-ph-sensor: reorg driver to allow multiple chips")
-Cc: stable@vger.kernel.org # v6.4+
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Fixes: ce514124161a ("iio: chemical: sgp30: Support Sensirion SGP30/SGPC3 sensors")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/atlas-sensor.c |   13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ drivers/iio/chemical/sgp30.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/chemical/atlas-sensor.c
-+++ b/drivers/iio/chemical/atlas-sensor.c
-@@ -13,7 +13,6 @@
- #include <linux/mutex.h>
- #include <linux/err.h>
- #include <linux/irq.h>
--#include <linux/irq_work.h>
- #include <linux/i2c.h>
- #include <linux/mod_devicetable.h>
- #include <linux/regmap.h>
-@@ -88,7 +87,6 @@ struct atlas_data {
- 	struct iio_trigger *trig;
- 	const struct atlas_device *chip;
- 	struct regmap *regmap;
--	struct irq_work work;
- 	unsigned int interrupt_enabled;
- 	/* 96-bit data + 32-bit pad + 64-bit timestamp */
- 	__be32 buffer[6] __aligned(8);
-@@ -441,13 +439,6 @@ static const struct iio_buffer_setup_ops
- 	.predisable = atlas_buffer_predisable,
- };
+--- a/drivers/iio/chemical/sgp30.c
++++ b/drivers/iio/chemical/sgp30.c
+@@ -548,6 +548,9 @@ static int sgp_probe(struct i2c_client *
  
--static void atlas_work_handler(struct irq_work *work)
--{
--	struct atlas_data *data = container_of(work, struct atlas_data, work);
--
--	iio_trigger_poll(data->trig);
--}
--
- static irqreturn_t atlas_trigger_handler(int irq, void *private)
- {
- 	struct iio_poll_func *pf = private;
-@@ -474,7 +465,7 @@ static irqreturn_t atlas_interrupt_handl
- 	struct iio_dev *indio_dev = private;
- 	struct atlas_data *data = iio_priv(indio_dev);
+ 	data->iaq_thread = kthread_run(sgp_iaq_threadfn, data,
+ 				       "%s-iaq", data->client->name);
++	if (IS_ERR(data->iaq_thread))
++		return dev_err_probe(dev, PTR_ERR(data->iaq_thread),
++				     "failed to start IAQ thread\n");
  
--	irq_work_queue(&data->work);
-+	iio_trigger_poll_nested(data->trig);
- 
- 	return IRQ_HANDLED;
+ 	return 0;
  }
-@@ -670,8 +661,6 @@ static int atlas_probe(struct i2c_client
- 		goto unregister_trigger;
- 	}
- 
--	init_irq_work(&data->work, atlas_work_handler);
--
- 	if (client->irq > 0) {
- 		/* interrupt pin toggles on new conversion */
- 		ret = devm_request_threaded_irq(&client->dev, client->irq,
 
 
