@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D803D967A;
-	Wed,  9 Sep 2026 14:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1593566C42;
+	Wed,  9 Sep 2026 14:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962947; cv=none; b=MW0NL5xwNSJXoW09/EC1dUSAdKGOPBZEEsNjSTg31yFKAtiCfrRQ8ugUM8VUbD/ZZaBCK8WOJ75Cqdv+uqoT7K6amkwBE6iLt1ytydNzon+9CeHN+0hJ8kA2JBW95bhjMkfAuJoaBSPEF6dClMMUoYdHqoMAlmOv8XUNVdjdp8k=
+	t=1788962950; cv=none; b=NsTj6C+ZlLNN3sPiO5U0DvNodG+AcbbBQsBavo8RLfYgnQ9/CqxivSPqGyMYKfjUJ2ydUqX7YcCE83UnljSviDph88Ej6iE2vvj9/7YdhLctqrBDWXXPiPwuQv8bjNkBESLJFR4445zrr0crAXC9Lvln3pGkZ3dMHNuE15lZfrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962947; c=relaxed/simple;
-	bh=/LJu5+k4/wl1YIp+T2V0JYDbUkIHGKiJlvacvfFspbY=;
+	s=arc-20240116; t=1788962950; c=relaxed/simple;
+	bh=acXMjoBLsXtjrA1nDU8er7R48yie9Fq2QIDpHsUeQv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBPUspOU8uXriTLFHdalkei/8S141jhNZnJhE9PtI3R7zbrp7XYvTxfMBxdd/DbGQs6n1gukJDRSwk1R6BqIuZ88/9VEz1KxxBfRT01pt6O6Qp3J6IxiP9oaRzZPCpXXjreJmD6cc3FJxYISZwa7ohnS0hIu5ZugvFvetF43VhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1PwFbqO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E3g7xHBEFDSYnF8U0ULGh964I3HmVdurgE2s5VcrE4Rwhnm3a42WDDbg9uFrNJuepj2zK000TIf+miz4yYqHPkBiRxXOBztCbObRdhS+ZVXVwNuUKh6txhg6OdqU7eLde0oDYZJ8tOsmLnYaHs95sC/I3NFTw6UhRHYUH8+khgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1UisgL4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1PwFbqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551971F00A3A;
-	Wed,  9 Sep 2026 14:09:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1UisgL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D391F00A3A;
+	Wed,  9 Sep 2026 14:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962945;
-	bh=HL58pN22iVsiAYbZJ/cYj2/R/ddtb9YihAAUQoOuRWY=;
+	s=korg; t=1788962948;
+	bh=nXC+v6RKSUGSpoddOfRkIKapBeBJXXMOc+VrbVhMipc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t1PwFbqOwl0rfohJgeUpVA6W6in80FnnCQLXWtkTeYfJDb/IM2r0zW5Pm8OuPgStO
-	 yGc5c9xbvopa8ZtOuB98GI2EbYxfqdgMLfzF7FcAcNyGuIUiRo+mI5ObnIL/249fEG
-	 PmVFXC3C/1/JzqxMmuZdRSLxKolWhRFyQVLsGbq8=
+	b=e1UisgL4Kqw/pQlqEDcA9hYyvAHy801ADe9v8zLIaGAuFUCkz8W/wq9ZxOtIiWUa8
+	 QmlRVGddTMj3FSYvoiJDylLbj/zYzTp91dQkAVjGldRv8qfGOMOweyJsghB3I6olMD
+	 1xnxnI4pcJFKhlutvbGMnqXGsATenWyU2pLJz1ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 467/556] f2fs: protect critical_task_priority updates with s_umount
-Date: Wed,  9 Sep 2026 15:42:27 +0200
-Message-ID: <20260909134246.987302944@linuxfoundation.org>
+Subject: [PATCH 7.2 468/556] f2fs: fix valid block count leak on data block allocation failure
+Date: Wed,  9 Sep 2026 15:42:28 +0200
+Message-ID: <20260909134247.021690767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,40 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-commit 8e4692c6c165e81b2cbb847d8da4b45a53483b33 upstream.
+commit 0f9af07ecc1ab486038373db6ae0436c5d674b19 upstream.
 
-The sysfs store path already takes s_umount for GC thread control
-entries, and ckpt_thread_ioprio is covered as well.
+In __allocate_data_block(), when allocating a new data block
+(dn->data_blkaddr == NULL_ADDR), inc_valid_block_count() is
+called first to increment total_valid_block_count and i_blocks.
+If the subsequent f2fs_allocate_data_block() fails, the function
+returns the error directly without rolling back the
+already-incremented block counts, causing a permanent leak.
 
-critical_task_priority also updates checkpoint or GC kthread scheduling
-state, but it is not covered by that serialization. It can race with
-remount or teardown paths that are stopping those threads.
+Fix this by calling dec_valid_block_count() to undo the
+increment before returning the error. The condition
+old_blkaddr == NULL_ADDR precisely identifies the case where
+inc_valid_block_count() was called.
 
-Protect critical_task_priority sysfs writes with s_umount too.
-
-Fixes: 52190933c37a ("f2fs: sysfs: introduce critical_task_priority")
-Cc: stable@kernel.org
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Fixes: 7d009e048d7c ("f2fs: fix to handle segment allocation failure correctly")
+Cc: <stable@vger.kernel.org>
 Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/sysfs.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/data.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -1007,7 +1007,8 @@ static ssize_t f2fs_sbi_store(struct f2f
- 	ssize_t ret;
- 	bool gc_entry = (!strcmp(a->attr.name, "gc_urgent") ||
- 					a->struct_type == GC_THREAD);
--	bool thread_entry = !strcmp(a->attr.name, "ckpt_thread_ioprio");
-+	bool thread_entry = !strcmp(a->attr.name, "ckpt_thread_ioprio") ||
-+			!strcmp(a->attr.name, "critical_task_priority");
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1533,8 +1533,11 @@ static int __allocate_data_block(struct
+ 	old_blkaddr = dn->data_blkaddr;
+ 	err = f2fs_allocate_data_block(sbi, NULL, old_blkaddr,
+ 				&dn->data_blkaddr, &sum, seg_type, NULL);
+-	if (err)
++	if (err) {
++		if (old_blkaddr == NULL_ADDR)
++			dec_valid_block_count(sbi, dn->inode, count);
+ 		return err;
++	}
  
- 	if (gc_entry || thread_entry) {
- 		if (!down_read_trylock(&sbi->sb->s_umount))
+ 	if (GET_SEGNO(sbi, old_blkaddr) != NULL_SEGNO)
+ 		f2fs_invalidate_internal_cache(sbi, old_blkaddr, 1);
 
 
