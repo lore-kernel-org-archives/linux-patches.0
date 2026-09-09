@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FAD57ED89;
-	Wed,  9 Sep 2026 14:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB9A57ED91;
+	Wed,  9 Sep 2026 14:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964556; cv=none; b=L593aboMUp9rYxqoK9WleaOEXvpw9WDN5znCm5VgGWT8PGYUA4JRUafxfZyii0YB9K4SgwXlNHeknAD8jyzmjUNVaSk36wl3NayDqL+PvXedInWiUu80HEvCRKr8Jbbwv54UAjGEiegUfTiWzmclKWp1jN7k98cENtRldTxOI3o=
+	t=1788964559; cv=none; b=VYX1ErRnNkEoS8HE0X9hIAILbTEw0Hx5jGQfGJ6vGlx837UA4YSexj68ib52LYI9JaK+f3VjqHfDJE+SCFdQIuYRs5vy06mo7Z37nOyuv6e5lWuCEqdw0prqgMBNavSeRp8NxWQV5Ne4dfZYYhFaQahdM2iw1lputSE+cemw+Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964556; c=relaxed/simple;
-	bh=Wpvv09Oj4E7PhxItzAS/Wi2VetdB3AuDkPyKs8J578A=;
+	s=arc-20240116; t=1788964559; c=relaxed/simple;
+	bh=XBn4lliG1RnIBmwu0QIk0Vu/hXwnhqCqKsjtIjZw/GI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJDUcNpP5U7+yC4W6Dz6fHPpQWNIqKKgh1F0hAUhr39ovv7NAyBApB8icQSiOxstUsy+PC+mpddzd+SJ5e3qMf3NboD5zRRExgS/x0IXn3T8C7ZXvCizFkdmfIMkZi7FGh62VDeTZyfD77cw/Dn8esi6dxdqRpLjZl1+8fKiD2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Foxx2MLl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K/ABLTT6C5HEgaWq2BNPY0nGpUDb0yzTI+x+81ctRcYe5V/ehEYRLatWJUVtHikO406LGqrHwo6gVU9vU7XsmgzbHwpbSnlY7Dnqi07XaW9UfREDEcvTlQ+TJ5gXzfRinx/0MNY2fJKTwjgJYsQ8c2r0Yh4RlICJCJG50EEiEGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYf0Rx5X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Foxx2MLl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A2C1F00A3D;
-	Wed,  9 Sep 2026 14:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYf0Rx5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EEC1F00A3A;
+	Wed,  9 Sep 2026 14:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964554;
-	bh=Gw6b5aN7k7HTjgZvrtMSAqqDTQTsn208aed5TXAV1pQ=;
+	s=korg; t=1788964557;
+	bh=oYF7IolF86OvWWbCAhDQJwS4X1hRXoR21SZddPkwfi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Foxx2MLlr2+8Bi5Bp6+ng/gzgW8gAx8+4pPUMDvnPo/OVjWwiwzR8YavN2t4BeJup
-	 TYkng1NfH5ly3J342VS3eDEjcoYhvhtDdx4Zzx7eB0w46ae6+D7vPDaSEnpwde9uPT
-	 /ejTCoIiCe4McC8KDq+KPmmgxAsddgIhjL3l4GVY=
+	b=HYf0Rx5Xoe1Vr0QwNtwCJjTjZs6CPtEJnECjhsi3aEtRa4AAUjIJBLAfbCeHjHdGw
+	 jk9J/+XJ7AwnV5tP7++9p+UZXQ0lLDu5F9GPTevIo1JJB3dW8AUksqdb9TTfmB62mb
+	 unvK7kYYQRO33Zfh6Sgc7srzB3UGnmefWPOHDg9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangxin Xie <xietangxin@h-partners.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 436/583] vlan: fix skb_under_panic and races when toggling HW VLAN offload
-Date: Wed,  9 Sep 2026 15:42:01 +0200
-Message-ID: <20260909134253.096334311@linuxfoundation.org>
+Subject: [PATCH 6.18 463/583] ceph: cap delegated inode count in ceph_parse_deleg_inos()
+Date: Wed,  9 Sep 2026 15:42:28 +0200
+Message-ID: <20260909134253.945174402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,123 +52,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 447cbe95ebb95392b5d8f6a01c0556826919ce23 ]
+[ Upstream commit 4bd3158bd62466d57ed72a3f7bc5f205fedd6919 ]
 
-Toggling hardware VLAN TX offload (NETIF_F_HW_VLAN_CTAG_TX or
-NETIF_F_HW_VLAN_STAG_TX) on a lower device invokes vlan_transfer_features(),
-which dynamically changed vlandev->hard_header_len.
+ceph_parse_deleg_inos() decodes interval sets of delegated inode numbers
+from an MDS create-with-delegation reply. For each set it reads a 64-bit
+start and a 64-bit len with ceph_decode_64_safe(), which only validates
+that the eight bytes are present in the message, not the value, and then
+loops over len while inserting entries into s_delegated_inos.
 
-This causes two issues:
-1. Lockless TX paths (e.g. packet_snd in af_packet.c, ip6_finish_output2)
-   read dev->hard_header_len without holding RTNL lock. Mutating
-   hard_header_len dynamically under RTNL creates a data race where upper
-   layers reserve insufficient headroom based on a stale hard_header_len,
-   resulting in skb_under_panic when vlan_dev_hard_header() is called.
-2. In addition, vlan_transfer_features() updated hard_header_len without
-   updating header_ops, causing a mismatch between allocated headroom
-   and header creation.
+len is fully attacker controlled. A malicious or compromised MDS can send
+one huge interval, many intervals in one reply, duplicate intervals, or
+repeated replies that accumulate delegated inodes on the same session.
+The original code bounded none of these and could spin the insert loop or
+grow the xarray without limit.
 
-Always setting dev->hard_header_len = real_dev->hard_header_len and
-dev->needed_headroom = real_dev->needed_headroom + VLAN_HLEN unconditionally
-ensures:
-- dev->hard_header_len remains 100% static and immutable at real_dev->hard_header_len,
-  eliminating all dynamic runtime updates and data races on hard_header_len.
-- Upper layers allocating skbs via LL_RESERVED_SPACE() will always reserve
-  sufficient headroom for software VLAN tag insertion (real_dev->hard_header_len +
-  real_dev->needed_headroom + VLAN_HLEN).
-- vlandev inherits real_dev->needed_tailroom so underlying trailer/padding/ICV
-  requirements are honored.
-- AF_PACKET SOCK_RAW network header offsets remain correctly aligned at
-  real_dev->hard_header_len.
-- vlan_header_ops is used unconditionally.
+Bound both dimensions with a single enforcement point. Track the number
+of delegated inodes held by each MDS session in an atomic counter and
+grow it only in ceph_insert_deleg_ino(), which uses atomic_add_unless()
+to refuse to push the count past CEPH_MAX_DELEG_INOS. Because that helper
+is the only place the counter grows, the per-session population can never
+exceed the cap, so no separate per-session pre-check is needed. The
+counter is decremented when async create consumes a delegated inode or
+when an insert fails, incremented when a delegated inode is restored,
+initialized with the session xarray, and reset when reconnect destroys
+the xarray.
 
-Note to stable teams: Make sure to backport these commits:
+A per-session cap alone still lets one reply spin the insert loop on
+duplicate ranges without growing the counter, so also cap the aggregate
+interval length accepted from a single reply. Together these bound both
+the loop trip count per reply and the xarray population across replies.
 
-e16e960d55a4 ("ipvlan: inherit needed_headroom and needed_tailroom from phy_dev")
-cef51860becd ("macvlan: inherit needed_headroom and needed_tailroom from lowerdev")
+The cap is a fixed, client-chosen constant rather than a value derived
+from the MDS. mds_client_prealloc_inos is a userspace MDS configuration
+option; it is never sent to the kernel client on the wire, and a
+server-supplied bound could not be trusted for a defensive limit in any
+case. The constant is set well above that option's documented default of
+1000 (a generous multiple), so legitimate refill behavior is unaffected
+while the CPU and xarray memory a malformed delegation stream can consume
+stays bounded.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Tangxin Xie <xietangxin@h-partners.com>
-Closes: https://lore.kernel.org/netdev/99d678ae-c7b2-4b44-b534-b8320679deb3@h-partners.com/
-Cc: <stable@vger.kernel.org> # 3.19: e16e960d55a4: ipvlan: inherit needed_headroom and needed_tailroom from phy_dev
-Cc: <stable@vger.kernel.org> # 3.19: cef51860becd: macvlan: inherit needed_headroom and needed_tailroom from lowerdev
-Cc: <stable@vger.kernel.org> # 3.19
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260811085246.2267779-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ moved the vlan_transfer_features() hunk to its pre-refactor location in vlan.c ]
+Impact: a malicious or compromised Ceph MDS can no longer make a client
+spin through an unbounded delegated-inode interval or grow one session's
+delegated-inode xarray without limit.
+
+Cc: stable@vger.kernel.org
+Fixes: d48464878708 ("ceph: decode interval_sets for delegated inos")
+Suggested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ adapted counter reset placement to the older reconnect control flow ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/8021q/vlan.c     |    7 +++----
- net/8021q/vlan_dev.c |   32 ++++----------------------------
- 2 files changed, 7 insertions(+), 32 deletions(-)
+ fs/ceph/mds_client.c |   59 +++++++++++++++++++++++++++++++++++++++++++++------
+ fs/ceph/mds_client.h |    1 
+ fs/ceph/super.h      |    9 +++++++
+ 3 files changed, 63 insertions(+), 6 deletions(-)
 
---- a/net/8021q/vlan.c
-+++ b/net/8021q/vlan.c
-@@ -323,10 +323,9 @@ static void vlan_transfer_features(struc
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -570,10 +570,36 @@ bad:
  
- 	netif_inherit_tso_max(vlandev, dev);
+ #define DELEGATED_INO_AVAILABLE		xa_mk_value(1)
  
--	if (vlan_hw_offload_capable(dev->features, vlan->vlan_proto))
--		vlandev->hard_header_len = dev->hard_header_len;
--	else
--		vlandev->hard_header_len = dev->hard_header_len + VLAN_HLEN;
-+	vlandev->needed_headroom = dev->needed_headroom + VLAN_HLEN;
-+	vlandev->needed_tailroom = dev->needed_tailroom;
-+	vlandev->hard_header_len = dev->hard_header_len;
++static int ceph_insert_deleg_ino(struct ceph_mds_session *s, u64 ino)
++{
++	struct ceph_client *cl = s->s_mdsc->fsc->client;
++	int err;
++
++	/*
++	 * Cap how many delegated inodes a single session may hold. This is
++	 * the only place that grows the count, so atomic_add_unless() bounds
++	 * it at exactly CEPH_MAX_DELEG_INOS; s_num_deleg_inos can never exceed
++	 * that.
++	 */
++	if (!atomic_add_unless(&s->s_num_deleg_inos, 1, CEPH_MAX_DELEG_INOS)) {
++		pr_warn_ratelimited_client(cl,
++			"MDS session already holds %d delegated inodes\n",
++			CEPH_MAX_DELEG_INOS);
++		return -EOVERFLOW;
++	}
++
++	err = xa_insert(&s->s_delegated_inos, ino, DELEGATED_INO_AVAILABLE,
++			GFP_KERNEL);
++	if (err)
++		atomic_dec(&s->s_num_deleg_inos);
++	return err;
++}
++
+ static int ceph_parse_deleg_inos(void **p, void *end,
+ 				 struct ceph_mds_session *s)
+ {
+ 	struct ceph_client *cl = s->s_mdsc->fsc->client;
++	u64 msg_deleg_inos = 0;
+ 	u32 sets;
  
- #if IS_ENABLED(CONFIG_FCOE)
- 	vlandev->fcoe_ddp_xid = dev->fcoe_ddp_xid;
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -493,26 +493,6 @@ static const struct header_ops vlan_head
- 	.parse_protocol = vlan_parse_protocol,
+ 	ceph_decode_32_safe(p, end, sets, bad);
+@@ -591,16 +617,34 @@ static int ceph_parse_deleg_inos(void **
+ 				start, len);
+ 			continue;
+ 		}
++
++		/*
++		 * Bound the number of inodes one reply may delegate.
++		 * ceph_insert_deleg_ino() separately caps the per-session
++		 * population, so this only has to stop one reply from spinning
++		 * the insert loop under an attacker-controlled len.
++		 */
++		if (len > (u64)CEPH_MAX_DELEG_INOS ||
++		    msg_deleg_inos > (u64)CEPH_MAX_DELEG_INOS - len) {
++			pr_warn_ratelimited_client(cl,
++				"MDS reply delegates too many inodes (have %llu, +%llu, max %d)\n",
++				msg_deleg_inos, len, CEPH_MAX_DELEG_INOS);
++			return -EIO;
++		}
++		msg_deleg_inos += len;
++
+ 		while (len--) {
+-			int err = xa_insert(&s->s_delegated_inos, start++,
+-					    DELEGATED_INO_AVAILABLE,
+-					    GFP_KERNEL);
++			int err = ceph_insert_deleg_ino(s, start++);
++
+ 			if (!err) {
+ 				doutc(cl, "added delegated inode 0x%llx\n", start - 1);
+ 			} else if (err == -EBUSY) {
+ 				pr_warn_client(cl,
+ 					"MDS delegated inode 0x%llx more than once.\n",
+ 					start - 1);
++			} else if (err == -EOVERFLOW) {
++				/* ceph_insert_deleg_ino() already warned. */
++				return -EIO;
+ 			} else {
+ 				return err;
+ 			}
+@@ -618,16 +662,17 @@ u64 ceph_get_deleg_ino(struct ceph_mds_s
+ 
+ 	xa_for_each(&s->s_delegated_inos, ino, val) {
+ 		val = xa_erase(&s->s_delegated_inos, ino);
+-		if (val == DELEGATED_INO_AVAILABLE)
++		if (val == DELEGATED_INO_AVAILABLE) {
++			atomic_dec(&s->s_num_deleg_inos);
+ 			return ino;
++		}
+ 	}
+ 	return 0;
+ }
+ 
+ int ceph_restore_deleg_ino(struct ceph_mds_session *s, u64 ino)
+ {
+-	return xa_insert(&s->s_delegated_inos, ino, DELEGATED_INO_AVAILABLE,
+-			 GFP_KERNEL);
++	return ceph_insert_deleg_ino(s, ino);
+ }
+ #else /* BITS_PER_LONG == 64 */
+ /*
+@@ -1012,6 +1057,7 @@ static struct ceph_mds_session *register
+ 	INIT_LIST_HEAD(&s->s_waiting);
+ 	INIT_LIST_HEAD(&s->s_unsafe);
+ 	xa_init(&s->s_delegated_inos);
++	atomic_set(&s->s_num_deleg_inos, 0);
+ 	INIT_LIST_HEAD(&s->s_cap_releases);
+ 	INIT_WORK(&s->s_cap_release_work, ceph_cap_release_work);
+ 
+@@ -4913,6 +4959,7 @@ static void send_mds_reconnect(struct ce
+ 		goto fail_nomsg;
+ 
+ 	xa_destroy(&session->s_delegated_inos);
++	atomic_set(&session->s_num_deleg_inos, 0);
+ 
+ 	mutex_lock(&session->s_mutex);
+ 	session->s_state = CEPH_MDS_SESSION_RECONNECTING;
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -252,6 +252,7 @@ struct ceph_mds_session {
+ 	struct list_head  s_waiting;  /* waiting requests */
+ 	struct list_head  s_unsafe;   /* unsafe requests */
+ 	struct xarray	  s_delegated_inos;
++	atomic_t	  s_num_deleg_inos;
  };
  
--static int vlan_passthru_hard_header(struct sk_buff *skb, struct net_device *dev,
--				     unsigned short type,
--				     const void *daddr, const void *saddr,
--				     unsigned int len)
--{
--	struct vlan_dev_priv *vlan = vlan_dev_priv(dev);
--	struct net_device *real_dev = vlan->real_dev;
--
--	if (saddr == NULL)
--		saddr = dev->dev_addr;
--
--	return dev_hard_header(skb, real_dev, type, daddr, saddr, len);
--}
--
--static const struct header_ops vlan_passthru_header_ops = {
--	.create	 = vlan_passthru_hard_header,
--	.parse	 = eth_header_parse,
--	.parse_protocol = vlan_parse_protocol,
--};
--
- static const struct device_type vlan_type = {
- 	.name	= "vlan",
- };
-@@ -571,14 +551,10 @@ static int vlan_dev_init(struct net_devi
- 	dev->fcoe_ddp_xid = real_dev->fcoe_ddp_xid;
- #endif
+ /*
+--- a/fs/ceph/super.h
++++ b/fs/ceph/super.h
+@@ -624,6 +624,15 @@ static inline int ceph_ino_compare(struc
+ #define CEPH_MDS_INO_LOG_OFFSET		(2 * CEPH_MAX_MDS)
+ #define CEPH_INO_SYSTEM_BASE		((6*CEPH_MAX_MDS) + (CEPH_MAX_MDS * CEPH_NUM_STRAY))
  
--	dev->needed_headroom = real_dev->needed_headroom;
--	if (vlan_hw_offload_capable(real_dev->features, vlan->vlan_proto)) {
--		dev->header_ops      = &vlan_passthru_header_ops;
--		dev->hard_header_len = real_dev->hard_header_len;
--	} else {
--		dev->header_ops      = &vlan_header_ops;
--		dev->hard_header_len = real_dev->hard_header_len + VLAN_HLEN;
--	}
-+	dev->needed_headroom = real_dev->needed_headroom + VLAN_HLEN;
-+	dev->needed_tailroom = real_dev->needed_tailroom;
-+	dev->header_ops      = &vlan_header_ops;
-+	dev->hard_header_len = real_dev->hard_header_len;
- 
- 	dev->netdev_ops = &vlan_netdev_ops;
- 
++/*
++ * Upper bound on the number of delegated inodes a single MDS session may
++ * hold. The MDS normally hands out a small preallocation window (the
++ * userspace mds_client_prealloc_inos option defaults to 1000) and refills
++ * it as the client consumes entries. This leaves generous headroom while
++ * bounding the CPU and memory a malformed delegation interval can consume.
++ */
++#define CEPH_MAX_DELEG_INOS		8192
++
+ static inline bool ceph_vino_is_reserved(const struct ceph_vino vino)
+ {
+ 	if (vino.ino >= CEPH_INO_SYSTEM_BASE ||
 
 
