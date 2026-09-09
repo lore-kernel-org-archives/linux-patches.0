@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536ED54B1C1;
-	Wed,  9 Sep 2026 13:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3065756329B;
+	Wed,  9 Sep 2026 13:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961721; cv=none; b=vFR7esGxCDCAnqgiBX8jLQui0EttR+uon+gWenEXGOw0fd0i9XhC8C2d4QZZiWQoKs/CMzyIhbQQ11h7GZqwByy+3iYIdp//LaI8H5d/72i7bLq0M72Dppuk8NC4mWyRpcmzpQ6teEjr8arvS8v7z4iUtyG2SxlKfzRJuxeHQxU=
+	t=1788961724; cv=none; b=Zv+vTuDqPWuCPeYpG6yXFN7vHgt6XIWDsRxum1M35qo0iXWjKX6tj+34dO5g3NYwk+1Z8RDA6jwpMhZeMrYAYnyQThoaYNU1vGDOPDgqmcOI3h6pUVLl+0AF3VbWZMUPJo/EV72QsHXedH03i12GclN/UN/obmscyDxJo4a7yEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961721; c=relaxed/simple;
-	bh=MRhyWKtA20GrY8Z7p6YjT5QEJTcbFcN0/UgArz2Ggus=;
+	s=arc-20240116; t=1788961724; c=relaxed/simple;
+	bh=Q8QKfWXFRDJZuuDDVwF4NrPRaojLs/GC+M5rrZ5Mhd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EkUQKrFUDLep55kW9TRBI5cEi6qJ8feT/bJTOUP4ljHqIgdOPGen9NTW1l5AXJOlo4CS0ccvo1hW3uvtK0jKnS4GGIg85BObHM/vn6voNlB1NslVhfJvV7gAEdtYBMsyymKx7UWNaAVzOfNuboBK1gW13a5EtsVTavrS63NTvEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5Zb/ArF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IYZrrRmaTnziB8UI/BPUUF2bUoVJQzSKhggTovq22poRXUcDA6kPV/5WVOjLJRCTMvtjQFrnUZcZiGO3JklVwlj3PJHGvSq0r/J0cCNdxuKK004zja4LfjGqPlTANrDL6pDnWW7//khWxRob35EyTf97dIHZua34DPBqRS6iTho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BF1YXjjR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5Zb/ArF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43431F00A3A;
-	Wed,  9 Sep 2026 13:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BF1YXjjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880941F00A3A;
+	Wed,  9 Sep 2026 13:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961720;
-	bh=CCeKPCNhrUtLnkLp/qF3yygscMDYq37JFLNCERu8k8U=;
+	s=korg; t=1788961723;
+	bh=loJGGT/LtQFHmSKf8bfeF92/xLN2yLw/F0qoZpFGmP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w5Zb/ArFChrazEvtDyaUwcNQ1RjXsu/jkGmK58nEQeUQHkx8/PZaUHhyqEtJnWUt0
-	 EgHTi1WHV1BA1j3qHWjL+R70Ui3esB95bf9XFxmJmOPK8xoee42lMCdY/d0bAoqlp0
-	 Mh8JKGd49gQ/Z0T2FZadOcAQieAg3qkKRRZ3+K14=
+	b=BF1YXjjRlU4GQVHHVrW29VGKHotiVlopUF27AscKWnUiJ2CUfILI8DBw9oSVnXKr1
+	 qramcb0tQCshXKx23KFuVqBbU0+YnJxCoixs9eN1X23goZ2iJl+LauprL2HeLqSC2H
+	 Z5RpadFdMeDlKFrlRSw1FbGOrJerA7swUeZf7hXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2280f1cca5e6b0c353e4@syzkaller.appspotmail.com,
+	syzbot+d5fa3d224505c8610702@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Ivy Lopez <skunkolee@gmail.com>,
+	Jeffin Philip <jeffinphilip14@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 046/556] usb: gadget: f_midi2: fix use-after-free in string attribute show path
-Date: Wed,  9 Sep 2026 15:35:26 +0200
-Message-ID: <20260909134232.105144996@linuxfoundation.org>
+Subject: [PATCH 7.2 047/556] usb: gadget: f_midi: initialize work in f_midi_alloc()
+Date: Wed,  9 Sep 2026 15:35:27 +0200
+Message-ID: <20260909134232.140701125@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,78 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivy Lopez <skunkolee@gmail.com>
+From: Jeffin Philip <jeffinphilip14@gmail.com>
 
-commit fed0aa7c6eaedc6c0d4e362fc91724aa47be4a7b upstream.
+commit 7e07d3e4c389217d7d7171d80edf2e23ac70f1ea upstream.
 
-f_midi2_opts_str_show() takes the string lock internally, but its
-callers dereference the opts->info.<field> pointer before calling it,
-outside the lock. This races with f_midi2_opts_str_store(), which
-frees the old string under opts->lock when the attribute is written
-concurrently, the show path can read a pointer that gets freed
-before the lock inside str_show() is even taken.
+f_midi_alloc initializes free_ref to 1 and it can only be incremented
+when a sound card is registered via f_midi_register_card().
+f_midi_register_card() is only called in f_midi_bind() which actually
+performs INIT_WORK. If f_midi_bind() is never run, work is not
+initialized and the if condition in f_midi_free becomes true,
+this results in a warning later in __flush_work as work->func = 0.
+Fix this by moving INIT_WORK from f_midi_bind() to f_midi_alloc().
 
-Change f_midi2_opts_str_show() to take a pointer to the string field,
-matching the existing pattern in f_midi2_opts_str_store(), and
-dereference it only after the lock is held. Update all three callers
-(iface_name, block name, and the EP string option macro) accordingly.
-
-Reported-by: syzbot+2280f1cca5e6b0c353e4@syzkaller.appspotmail.com
+Reported-by: syzbot+d5fa3d224505c8610702@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d5fa3d224505c8610702
+Fixes: 8653d71ce376 ("usb/gadget: f_midi: Replace tasklet with work")
 Cc: stable <stable@kernel.org>
-Closes: https://syzkaller.appspot.com/bug?extid=2280f1cca5e6b0c353e4
-Signed-off-by: Ivy Lopez <skunkolee@gmail.com>
+Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
 Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260816005434.34018-1-skunkolee@gmail.com
+Link: https://patch.msgid.link/20260815054006.102325-1-jeffinphilip14@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi2.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/f_midi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_midi2.c
-+++ b/drivers/usb/gadget/function/f_midi2.c
-@@ -2177,13 +2177,13 @@ end:
+--- a/drivers/usb/gadget/function/f_midi.c
++++ b/drivers/usb/gadget/function/f_midi.c
+@@ -879,7 +879,6 @@ static int f_midi_bind(struct usb_config
+ 	int status, n, jack = 1, i = 0, endpoint_descriptor_index = 0;
  
- /* generic show/store for string */
- static ssize_t f_midi2_opts_str_show(struct f_midi2_opts *opts,
--				     const char *str, char *page)
-+				     const char **strp, char *page)
- {
- 	int result = 0;
- 
- 	mutex_lock(&opts->lock);
--	if (str)
--		result = scnprintf(page, PAGE_SIZE, "%s\n", str);
-+	if (*strp)
-+		result = scnprintf(page, PAGE_SIZE, "%s\n", *strp);
- 	mutex_unlock(&opts->lock);
- 	return result;
- }
-@@ -2277,7 +2277,7 @@ static ssize_t f_midi2_block_opts_name_s
- {
- 	struct f_midi2_block_opts *opts = to_f_midi2_block_opts(item);
- 
--	return f_midi2_opts_str_show(opts->ep->opts, opts->info.name, page);
-+	return f_midi2_opts_str_show(opts->ep->opts, &opts->info.name, page);
- }
- 
- static ssize_t f_midi2_block_opts_name_store(struct config_item *item,
-@@ -2434,7 +2434,7 @@ static ssize_t f_midi2_ep_opts_##name##_
- 					     char *page)		\
- {									\
- 	struct f_midi2_ep_opts *opts = to_f_midi2_ep_opts(item);	\
--	return f_midi2_opts_str_show(opts->opts, opts->info.name, page);\
-+	return f_midi2_opts_str_show(opts->opts, &opts->info.name, page);\
- }									\
- 									\
- static ssize_t f_midi2_ep_opts_##name##_store(struct config_item *item,	\
-@@ -2589,7 +2589,7 @@ static ssize_t f_midi2_opts_iface_name_s
- {
- 	struct f_midi2_opts *opts = to_f_midi2_opts(item);
- 
--	return f_midi2_opts_str_show(opts, opts->info.iface_name, page);
-+	return f_midi2_opts_str_show(opts, &opts->info.iface_name, page);
- }
- 
- static ssize_t f_midi2_opts_iface_name_store(struct config_item *item,
+ 	midi->gadget = cdev->gadget;
+-	INIT_WORK(&midi->work, f_midi_in_work);
+ 	status = f_midi_register_card(midi);
+ 	if (status < 0)
+ 		goto fail_register;
+@@ -1377,6 +1376,7 @@ static struct usb_function *f_midi_alloc
+ 		status = -ENOMEM;
+ 		goto midi_free;
+ 	}
++	INIT_WORK(&midi->work, f_midi_in_work);
+ 	midi->out_ports = opts->out_ports;
+ 	midi->index = opts->index;
+ 	midi->buflen = opts->buflen;
 
 
