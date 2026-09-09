@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDE958E2CE;
-	Wed,  9 Sep 2026 14:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46685678ED;
+	Wed,  9 Sep 2026 14:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964798; cv=none; b=FIOsJBPZ0MNOEjJCXkTnhN6Blqx4FitWEfjWSymbSPy7maVuJBkgMjYtxFcoZZkMr6GYcMG5gaea7SRYXX34gFNDOX6QcgP2F3Yoh7zNqMoLuMh4X09SuAWR6MzshLRKeP5bXuAGdF3TrV+Kwg5NO1wC7iN9LO0hi4xM/1+J4/k=
+	t=1788964802; cv=none; b=G2Xe2kuIAIzdX8wRt3DQPMUVDot1lXUWkNXQzSU3HSaVX8ajGPgqSxj9bNfZm+65iW/ME73GeTzAplD75+tjd9WuJCtuxR1dBBx3YacXvFBQPjvURguZBnkbxZMIapgmcBws0B93j3J1egePR24/7OvsUWvAFsUDLxB18gnej7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964798; c=relaxed/simple;
-	bh=wnCK6ZBejtEuvAoraAJYZHMHEJpnf5eY1Gg4RUCsLW8=;
+	s=arc-20240116; t=1788964802; c=relaxed/simple;
+	bh=Ips4RxfwwSiaehYb8ZOq/kYPQuSKwzYb9dLMRh7rfl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEzgSp2MHZvLHtum+TrOUOIwUyiLHfwhd2HqUh04L+U9PCB2ZWGe6XHTLHdp46vFXbpJVEPuzaFq+4A5QoLiawuMo4VlrMwAOuyci4rTtet5ZzbBG+59GMq8TFl2jh/Le+o4cCP7ZsZkNdZWo0u9Hqw+AFZxsvX3d7I5z/t+0Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gq7AV4mr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=spweRAyMGikEF6Tw3Bjk3qu/m5PvRYKdgPcmoxh7zeDhJQ6UX99uSrkIJVT86rpcQQ9mCtsCue5R6SwkvuedP0rREE+sfHDSg4uAfKtHZFY6CX8cJ/JwKU/q6jzXhpblWNUCmbrfrgtMp459r+umHyIjCVeMMGteq+pPWfHMzLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dajS67re; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gq7AV4mr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AEA1F00A3A;
-	Wed,  9 Sep 2026 14:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dajS67re"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006851F00A3A;
+	Wed,  9 Sep 2026 14:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964797;
-	bh=OBlzEaMpfKuUXHwXX97+Bein7SSZEZdgpdn9Ohm8wdY=;
+	s=korg; t=1788964800;
+	bh=AIqXkdRe3y7ifICgWEU8oyCqlchR0HX8s1wjhdEOYPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gq7AV4mrWxGc+flSAxYAMZmN8C5IP0mCoB5bihWFXtOrz+TGBVQGX1tHp1JQtCXHY
-	 baOXhoBgNfms8mE0Yq9ARu0o1aJD45sFDHQP3yzA79KRP74nKLy8d6TZgjp6qEjnqz
-	 5ddpcua1pVrQMJnwAuF9nuLs557zk2tzwvbhDkBM=
+	b=dajS67reLE3zVhSWUQYrtSlEBe1y5HCXOYgmjt4CrZ2+UERutDSj34QMXSk7/pXkJ
+	 fn/niq8BhM+LbkcJLzZzeY/nQkiaHo6MbUBYJ75SGTrM9k0Jtc+6vpHnVpsQsgh10k
+	 9RFa29VMAwytuerlue22Ez7y/wAFempVzCjymOl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shen Yongchao <grayhat@foxmail.com>,
 	Frank Sorenson <sorenson@redhat.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 546/583] smb: client: fix UAF and buffer leak in cifs_check_trans2() for malformed secondary T2
-Date: Wed,  9 Sep 2026 15:43:51 +0200
-Message-ID: <20260909134256.653337511@linuxfoundation.org>
+Subject: [PATCH 6.18 547/583] smb: client: fix OOB read/write from unvalidated DataOffset in coalesce_t2()
+Date: Wed,  9 Sep 2026 15:43:52 +0200
+Message-ID: <20260909134256.684587296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -54,58 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 730d0bb19507b9e19c2fe5343109ac618e2fbce5 ]
+[ Upstream commit 6343c1da561962688f203362d80d6a3bfa39fa1b ]
 
-When a valid primary TRANSACT2 response has been received (mid->resp_buf
-set, mid->multiRsp true) and a subsequent secondary response causes
-cifs_check_trans2() to return false -- either because the SMB header is
-invalid (malformed != 0) or because check2ndT2() rejects the PDU --
-handle_mid() overwrites mid->resp_buf with the new buffer (leaking the
-primary buffer) and, because mid->multiRsp is set, skips the
-server->smallbuf/bigbuf NULL-out.  When the user thread frees
-mid->resp_buf, server->smallbuf or server->bigbuf is left dangling; the
-demux thread reuses it for the next packet, resulting in a use-after-free.
+coalesce_t2() computes data pointers directly from server-supplied
+DataOffset fields with no validation against buffer bounds:
 
-Combine both early-exit conditions and, when mid->multiRsp is already
-set, abort the pending transaction inline: set multiEnd, call
-dequeue_mid() with malformed=true, and return true so handle_mid() exits
-without touching mid->resp_buf or the server buffer pointers.
+  data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
+                     get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
+  data_area_of_src = (char *)&pSMBs->hdr.Protocol +
+                     get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+  data_area_of_tgt += total_in_tgt;
+  ...
+  memcpy(data_area_of_tgt, data_area_of_src, total_in_src);
 
-Fixes: 316cf94a910f ("CIFS: Move trans2 processing to ops struct")
-Cc: stable@vger.kernel.org # cifs_check_trans2() is in smb1ops.c on kernels < 7.0
+A small DataOffset can push a pointer below the actual byte area,
+overwriting header fields; a large one can push it past the buffer
+end, causing out-of-bounds heap reads (source) or writes (target).
+The BCC overflow guard does not prevent this: BCC reflects how much
+data is present, while DataOffset controls where in the buffer it
+starts.
+
+The "validate target area" comment present since the function was
+first written in 2005 was a placeholder that was never implemented.
+
+Add lower- and upper-bound checks for both data pointers before the
+memcpy, and before any target header fields are modified.
+
+Fixes: e4eb295d38b5 ("[PATCH] cifs: Handle multiple response transact2 part 1 of 2")
+Cc: stable@vger.kernel.org
+Reported-by: Shen Yongchao <grayhat@foxmail.com>
 Signed-off-by: Frank Sorenson <sorenson@redhat.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ changed dequeue_mid(server, mid, true) to the older dequeue_mid(mid, true) API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb1transport.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ fs/smb/client/smb1transport.c |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
 --- a/fs/smb/client/smb1transport.c
 +++ b/fs/smb/client/smb1transport.c
-@@ -708,10 +708,18 @@ bool
- cifs_check_trans2(struct mid_q_entry *mid, struct TCP_Server_Info *server,
- 		  char *buf, int malformed)
- {
--	if (malformed)
--		return false;
--	if (check2ndT2(buf) <= 0)
-+	if (malformed || check2ndT2(buf) <= 0) {
-+		/* mid->multiRsp blocks the server buf detach in handle_mid();
-+		 * returning false here would leak resp_buf and leave a dangling
-+		 * server->smallbuf/bigbuf after the user thread frees resp_buf.
-+		 */
-+		if (mid->multiRsp) {
-+			mid->multiEnd = true;
-+			dequeue_mid(mid, true);
-+			return true;
-+		}
- 		return false;
+@@ -655,12 +655,31 @@ coalesce_t2(char *second_buf, struct smb
+ 	data_area_of_tgt = (char *)&pSMBt->hdr.Protocol +
+ 				get_unaligned_le16(&pSMBt->t2_rsp.DataOffset);
+ 
+-	/* validate target area */
+ 	data_area_of_src = (char *)&pSMBs->hdr.Protocol +
+ 				get_unaligned_le16(&pSMBs->t2_rsp.DataOffset);
+ 
+ 	data_area_of_tgt += total_in_tgt;
+ 
++	/*
++	 * DataOffset fields are server-supplied and not validated against
++	 * buffer bounds; check both data pointers before mutating the
++	 * target header.
++	 */
++	if (data_area_of_tgt < (char *)target_hdr +
++				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
++	    data_area_of_tgt + total_in_src >
++	    (char *)target_hdr + CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
++		cifs_dbg(VFS, "%s: target data area out of bounds\n", __func__);
++		return -EPROTO;
 +	}
- 	mid->multiRsp = true;
- 	if (mid->resp_buf) {
- 		/* merge response - fix up 1st*/
++	if (data_area_of_src < second_buf +
++				sizeof(struct smb_t2_rsp) + sizeof(__le16) ||
++	    data_area_of_src + total_in_src >
++	    second_buf + smbCalcSize((struct smb_hdr *)second_buf)) {
++		cifs_dbg(VFS, "%s: secondary data area out of bounds\n", __func__);
++		return -EPROTO;
++	}
++
+ 	total_in_tgt += total_in_src;
+ 	/* is the result too big for the field? */
+ 	if (total_in_tgt > USHRT_MAX) {
 
 
