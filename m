@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DE457D22B;
-	Wed,  9 Sep 2026 14:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FAD57ED89;
+	Wed,  9 Sep 2026 14:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964552; cv=none; b=iwv5Ua5g4X9APdfbhsJ/20zr2A6O6z/GM7fAo1uMFmuSNrpqyIBYiuHeq4/2eVbX9/KAlt9rYU/9cC4Ym998WgUu5iumegfoi9aBkfZEz+X7CJRepKyteq6dADdZLGpOSECW0xTeZa3xF3Huc+1hM6R7A8hz+lx/dmhCaZjTa/s=
+	t=1788964556; cv=none; b=L593aboMUp9rYxqoK9WleaOEXvpw9WDN5znCm5VgGWT8PGYUA4JRUafxfZyii0YB9K4SgwXlNHeknAD8jyzmjUNVaSk36wl3NayDqL+PvXedInWiUu80HEvCRKr8Jbbwv54UAjGEiegUfTiWzmclKWp1jN7k98cENtRldTxOI3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964552; c=relaxed/simple;
-	bh=wlwJ/u+iTFfWaFl8wIr59OByychL7rnDJpRP9/FDxGA=;
+	s=arc-20240116; t=1788964556; c=relaxed/simple;
+	bh=Wpvv09Oj4E7PhxItzAS/Wi2VetdB3AuDkPyKs8J578A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A8/d8ObUNYqY47s1ogoiUf+dsUNc1bRYFnsUgDOMy5NNVJ4Plwxqwe+YKvoXW24BpAZsadVaofItNsOORdyHoZ/vSiBxjbNsPuErKilH69hadxVi8JkEvUNI8khPwd5g1vY/X/LSN2UTnXmmMKloO+nOEzgEBO/kFlrA+8EK3L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWmcsi9+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aJDUcNpP5U7+yC4W6Dz6fHPpQWNIqKKgh1F0hAUhr39ovv7NAyBApB8icQSiOxstUsy+PC+mpddzd+SJ5e3qMf3NboD5zRRExgS/x0IXn3T8C7ZXvCizFkdmfIMkZi7FGh62VDeTZyfD77cw/Dn8esi6dxdqRpLjZl1+8fKiD2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Foxx2MLl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWmcsi9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C2D1F00A3A;
-	Wed,  9 Sep 2026 14:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Foxx2MLl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A2C1F00A3D;
+	Wed,  9 Sep 2026 14:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964551;
-	bh=cARFXFRPvP581whQA6imm2CxhiuuNBkAXjcYiPsibSk=;
+	s=korg; t=1788964554;
+	bh=Gw6b5aN7k7HTjgZvrtMSAqqDTQTsn208aed5TXAV1pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HWmcsi9+ienwRtzDpxCTWMRZ54n4jFMzlcgUJSotJFlNfx+G3ROje0j7Ws2FYRqeg
-	 /u6yBGPsYBeJQ0B2ePDQqh9sgSVzJuNjZqJmrCx98EzUwMzi8EGZHPfYIVQ88RkOeU
-	 EGGIEd2fS7LYnvONXaGiUhqLzhWpJyP9N3DmaSlM=
+	b=Foxx2MLlr2+8Bi5Bp6+ng/gzgW8gAx8+4pPUMDvnPo/OVjWwiwzR8YavN2t4BeJup
+	 TYkng1NfH5ly3J342VS3eDEjcoYhvhtDdx4Zzx7eB0w46ae6+D7vPDaSEnpwde9uPT
+	 /ejTCoIiCe4McC8KDq+KPmmgxAsddgIhjL3l4GVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko@linuxfoundation.org>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Tangxin Xie <xietangxin@h-partners.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 462/583] cxl/ras: Fix cxl_rch_get_aer_info() out-of-bounds AER register read
-Date: Wed,  9 Sep 2026 15:42:27 +0200
-Message-ID: <20260909134253.915617709@linuxfoundation.org>
+Subject: [PATCH 6.18 436/583] vlan: fix skb_under_panic and races when toggling HW VLAN offload
+Date: Wed,  9 Sep 2026 15:42:01 +0200
+Message-ID: <20260909134253.096334311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,74 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Bowman <terry.bowman@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 29458e62d0829cbc99435f3e44fd560f9bbf1da7 ]
+[ Upstream commit 447cbe95ebb95392b5d8f6a01c0556826919ce23 ]
 
-cxl_rch_get_aer_info() copies the RCH Downstream Port AER capability from
-the RCRB MMIO block using a readl() loop bounded by sizeof(struct
-aer_capability_regs). This struct is a software layout and its embedded
-struct pcie_tlp_log is larger than the on-wire AER capability. As a
-result the loop reads past the mapped AER register block.
+Toggling hardware VLAN TX offload (NETIF_F_HW_VLAN_CTAG_TX or
+NETIF_F_HW_VLAN_STAG_TX) on a lower device invokes vlan_transfer_features(),
+which dynamically changed vlandev->hard_header_len.
 
-The over-read also populates the software-only tail fields including
-header_log.header_len. An out-of-range header_len passed to
-pcie_print_tlp_log() can then loop past the header log buffer and cause
-a second out-of-bounds read.
+This causes two issues:
+1. Lockless TX paths (e.g. packet_snd in af_packet.c, ip6_finish_output2)
+   read dev->hard_header_len without holding RTNL lock. Mutating
+   hard_header_len dynamically under RTNL creates a data race where upper
+   layers reserve insufficient headroom based on a stale hard_header_len,
+   resulting in skb_under_panic when vlan_dev_hard_header() is called.
+2. In addition, vlan_transfer_features() updated hard_header_len without
+   updating header_ops, causing a mismatch between allocated headroom
+   and header creation.
 
-The read was correct when introduced, but struct pcie_tlp_log has since
-grown (Header Log and TLP Prefix Log sizes, header_len and flit fields),
-so sizeof(struct aer_capability_regs) no longer matches the physical AER
-capability.
+Always setting dev->hard_header_len = real_dev->hard_header_len and
+dev->needed_headroom = real_dev->needed_headroom + VLAN_HLEN unconditionally
+ensures:
+- dev->hard_header_len remains 100% static and immutable at real_dev->hard_header_len,
+  eliminating all dynamic runtime updates and data races on hard_header_len.
+- Upper layers allocating skbs via LL_RESERVED_SPACE() will always reserve
+  sufficient headroom for software VLAN tag insertion (real_dev->hard_header_len +
+  real_dev->needed_headroom + VLAN_HLEN).
+- vlandev inherits real_dev->needed_tailroom so underlying trailer/padding/ICV
+  requirements are honored.
+- AF_PACKET SOCK_RAW network header offsets remain correctly aligned at
+  real_dev->hard_header_len.
+- vlan_header_ops is used unconditionally.
 
-Bound the read to the physical AER registers, header through the 16 byte
-Header Log. Zero the destination first so the software-only fields are
-deterministic.
+Note to stable teams: Make sure to backport these commits:
 
-Fixes: 6ac07883dbb5 ("cxl/pci: Add RCH downstream port error logging")
-Reported-by: Sashiko <sashiko@linuxfoundation.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Terry Bowman <terry.bowman@amd.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260803221810.3685703-2-terry.bowman@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+e16e960d55a4 ("ipvlan: inherit needed_headroom and needed_tailroom from phy_dev")
+cef51860becd ("macvlan: inherit needed_headroom and needed_tailroom from lowerdev")
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Tangxin Xie <xietangxin@h-partners.com>
+Closes: https://lore.kernel.org/netdev/99d678ae-c7b2-4b44-b534-b8320679deb3@h-partners.com/
+Cc: <stable@vger.kernel.org> # 3.19: e16e960d55a4: ipvlan: inherit needed_headroom and needed_tailroom from phy_dev
+Cc: <stable@vger.kernel.org> # 3.19: cef51860becd: macvlan: inherit needed_headroom and needed_tailroom from lowerdev
+Cc: <stable@vger.kernel.org> # 3.19
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260811085246.2267779-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ moved the vlan_transfer_features() hunk to its pre-refactor location in vlan.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/ras_rch.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ net/8021q/vlan.c     |    7 +++----
+ net/8021q/vlan_dev.c |   32 ++++----------------------------
+ 2 files changed, 7 insertions(+), 32 deletions(-)
 
---- a/drivers/cxl/core/ras_rch.c
-+++ b/drivers/cxl/core/ras_rch.c
-@@ -58,13 +58,28 @@ void cxl_disable_rch_root_ints(struct cx
- static bool cxl_rch_get_aer_info(void __iomem *aer_base,
- 				 struct aer_capability_regs *aer_regs)
- {
--	int read_cnt = sizeof(struct aer_capability_regs) / sizeof(u32);
-+	/*
-+	 * Bound the copy to the physically-defined AER registers (header
-+	 * through the 16-byte Header Log). struct aer_capability_regs is a
-+	 * software layout whose embedded struct pcie_tlp_log is larger than
-+	 * the on-wire AER capability; copying sizeof(*aer_regs) would
-+	 * over-read the RCRB-mapped MMIO block.
-+	 */
-+	int read_cnt = (PCI_ERR_HEADER_LOG + 16) / sizeof(u32);
- 	u32 *aer_regs_buf = (u32 *)aer_regs;
- 	int n;
+--- a/net/8021q/vlan.c
++++ b/net/8021q/vlan.c
+@@ -323,10 +323,9 @@ static void vlan_transfer_features(struc
  
- 	if (!aer_base)
- 		return false;
+ 	netif_inherit_tso_max(vlandev, dev);
  
-+	/*
-+	 * Zero the destination so the software-only tail fields
-+	 * (e.g. header_log.header_len) are deterministic rather than
-+	 * left as uninitialized stack, which could drive a bogus loop
-+	 * length in pcie_print_tlp_log().
-+	 */
-+	memset(aer_regs, 0, sizeof(*aer_regs));
-+
- 	/* Use readl() to guarantee 32-bit accesses */
- 	for (n = 0; n < read_cnt; n++)
- 		aer_regs_buf[n] = readl(aer_base + n * sizeof(u32));
+-	if (vlan_hw_offload_capable(dev->features, vlan->vlan_proto))
+-		vlandev->hard_header_len = dev->hard_header_len;
+-	else
+-		vlandev->hard_header_len = dev->hard_header_len + VLAN_HLEN;
++	vlandev->needed_headroom = dev->needed_headroom + VLAN_HLEN;
++	vlandev->needed_tailroom = dev->needed_tailroom;
++	vlandev->hard_header_len = dev->hard_header_len;
+ 
+ #if IS_ENABLED(CONFIG_FCOE)
+ 	vlandev->fcoe_ddp_xid = dev->fcoe_ddp_xid;
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -493,26 +493,6 @@ static const struct header_ops vlan_head
+ 	.parse_protocol = vlan_parse_protocol,
+ };
+ 
+-static int vlan_passthru_hard_header(struct sk_buff *skb, struct net_device *dev,
+-				     unsigned short type,
+-				     const void *daddr, const void *saddr,
+-				     unsigned int len)
+-{
+-	struct vlan_dev_priv *vlan = vlan_dev_priv(dev);
+-	struct net_device *real_dev = vlan->real_dev;
+-
+-	if (saddr == NULL)
+-		saddr = dev->dev_addr;
+-
+-	return dev_hard_header(skb, real_dev, type, daddr, saddr, len);
+-}
+-
+-static const struct header_ops vlan_passthru_header_ops = {
+-	.create	 = vlan_passthru_hard_header,
+-	.parse	 = eth_header_parse,
+-	.parse_protocol = vlan_parse_protocol,
+-};
+-
+ static const struct device_type vlan_type = {
+ 	.name	= "vlan",
+ };
+@@ -571,14 +551,10 @@ static int vlan_dev_init(struct net_devi
+ 	dev->fcoe_ddp_xid = real_dev->fcoe_ddp_xid;
+ #endif
+ 
+-	dev->needed_headroom = real_dev->needed_headroom;
+-	if (vlan_hw_offload_capable(real_dev->features, vlan->vlan_proto)) {
+-		dev->header_ops      = &vlan_passthru_header_ops;
+-		dev->hard_header_len = real_dev->hard_header_len;
+-	} else {
+-		dev->header_ops      = &vlan_header_ops;
+-		dev->hard_header_len = real_dev->hard_header_len + VLAN_HLEN;
+-	}
++	dev->needed_headroom = real_dev->needed_headroom + VLAN_HLEN;
++	dev->needed_tailroom = real_dev->needed_tailroom;
++	dev->header_ops      = &vlan_header_ops;
++	dev->hard_header_len = real_dev->hard_header_len;
+ 
+ 	dev->netdev_ops = &vlan_netdev_ops;
+ 
 
 
