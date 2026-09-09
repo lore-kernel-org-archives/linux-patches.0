@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B9258123C;
-	Wed,  9 Sep 2026 14:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B3658124C;
+	Wed,  9 Sep 2026 14:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964719; cv=none; b=pLYJlMA6kUMrJgO7QwGQJUI+mvP8zZ5jnK2fNWVxNIbJDw7d0xUxQj9z3zKWtlCrdwxX3FzZwCTvUIeGuEm4Wbtg9z/8sJ4GS4GKI1rSCfTqlNGuZUc5skT8ekEYiNjIX0yUbg8uBja7cpbGFvPO3io4HDEGFyqgCdSkpQKO0bw=
+	t=1788964721; cv=none; b=Rom25uzqUI1yaTHuqE/5krllFUp8FN2GZxPfua8Prcq9AY3SISPIk+Nk+h+nHKcH08/7RKKlq6pMSxBIMYP9QCnF8Dd2rGnRLImg4GC2Sm1SHHQnLpO8ZM24rQdnXBdnLUvO5zFOByHRhoVZCu5yx3cg5EjE2YwV+aad5fgMkVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964719; c=relaxed/simple;
-	bh=J8G2xwe4QX04M0c7LWSdAhjoyXFNxF9rqUIC530n9zM=;
+	s=arc-20240116; t=1788964721; c=relaxed/simple;
+	bh=fCFhDMUUEF653f1JrTLQPFS82JjAjk7PBVQTZbyBfOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jruWTSe95NqwvtYNdXspFGV2exeCHpk7zMPeWS0lD03ayMxOqKelgtRo0tq0PdHNsGr2zaEMrfmIU/F8uYjJP6tholiavuvlskmPUIke6ADZYjZO8Oyg8aOXYKOrRYDlT1azTdGa1n/XKf6rcldvvFoiB2PbpYHF6J1Ub0qvMRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4sB7jNv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d4n0tAXA6wjHFtO5lqJz/pPgI4UgntfJhz2PmysQFZl/EF50bF0uUCkL10uS91094d4+PxxExSgbj3BHWenYtd90+idw96iTImVr7/zsj2sTISG+wn7CO7Qpt2b2nI4E+eLVY0SVTw0kfup3l6nG4KaUhZetmdQPgPWopnNzquc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjxV3vvc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4sB7jNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7A81F00A3D;
-	Wed,  9 Sep 2026 14:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjxV3vvc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5355F1F00A3A;
+	Wed,  9 Sep 2026 14:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964717;
-	bh=XWGTkTTTCipoTRc4MBfuSOUvjpgTERblrov5ctOPkPs=;
+	s=korg; t=1788964719;
+	bh=DLi0Oe92kAMBeQRogA66+UtsqwT7gatfMaHnUUjF9IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h4sB7jNv6Ay6g+Vk65a8rtyPEmwVgEs3k9ebFBSstDqZI3QVMuxQ3PXbg8VE31Ey+
-	 L6XJgzdodUHvpt8QB6D8n7GeKy1APwQmTYneG63Jw6jldV7qborxBAeVf3MfKY5nIb
-	 VASIWU/rLVubBid0uhZAOxUZR8ngkHy7uoFXQRas=
+	b=gjxV3vvciNepv4NF1McTW9rTgfLb5vYrZ/tmGE5FhZC5P9k+giQcnX9/X65H/iKmz
+	 G2Jxt+Hupbz/3HmEomRPIQ3w8+FCZJn6yBmC0XNhLTPpl3LSnntXU6JEyQ7X97jrX4
+	 oCB+1eniHM09JrWMbITr+Zqe+DNW3gDDylhqEorc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 481/583] cpufreq: apple-soc: Fix OPP table cleanup
-Date: Wed,  9 Sep 2026 15:42:46 +0200
-Message-ID: <20260909134254.500999080@linuxfoundation.org>
+Subject: [PATCH 6.18 482/583] bpf: Factor stackid_init function from __bpf_get_stackid
+Date: Wed,  9 Sep 2026 15:42:47 +0200
+Message-ID: <20260909134254.532213246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,110 +51,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit d87cb889dc7ab1f2deecadf2a5e9023184bd7900 ]
+[ Upstream commit 15b837759a97237d647962f9943afe0d55af615a ]
 
-apple_soc_cpufreq_init() adds OPP tables from firmware, but
-some failure paths do not remove them. The driver also uses
-dev_pm_opp_remove_all_dynamic(), which is not the right cleanup
-helper for OPP tables loaded from firmware.
+The new stackid_init function stores all the necessary bits for stackid
+trace and it will be used by other functions in following changes.
 
-Use the cpumask OPP helper after the policy CPU mask has been
-populated. Pair it with the matching cpumask remove helper on
-failure paths and in apple_soc_cpufreq_exit(). This also removes
-the separate dev_pm_opp_set_sharing_cpus() call, as the cpumask
-helper loads the DT OPP tables for all CPUs in the policy.
-
-Fixes: 6286bbb40576 ("cpufreq: apple-soc: Add new driver to control Apple SoC CPU P-states")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-[ retained kzalloc(sizeof(*priv), GFP_KERNEL) instead of upstream kzalloc_obj(*priv) ]
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-2-jolsa@kernel.org
+Stable-dep-of: 15f1bd857466 ("bpf: Disable preemption in bpf_get_stackid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/apple-soc-cpufreq.c |   36 ++++++++++++++----------------------
- 1 file changed, 14 insertions(+), 22 deletions(-)
+ kernel/bpf/stackmap.c |   95 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 59 insertions(+), 36 deletions(-)
 
---- a/drivers/cpufreq/apple-soc-cpufreq.c
-+++ b/drivers/cpufreq/apple-soc-cpufreq.c
-@@ -251,21 +251,19 @@ static int apple_soc_cpufreq_init(struct
- 		return -ENODEV;
- 	}
- 
--	ret = dev_pm_opp_of_add_table(cpu_dev);
--	if (ret < 0) {
--		dev_err(cpu_dev, "%s: failed to add OPP table: %d\n", __func__, ret);
--		return ret;
--	}
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
- 
- 	ret = apple_soc_cpufreq_find_cluster(policy, &reg_base, &info);
- 	if (ret) {
- 		dev_err(cpu_dev, "%s: failed to get cluster info: %d\n", __func__, ret);
--		return ret;
-+		goto out_free_priv;
- 	}
- 
--	ret = dev_pm_opp_set_sharing_cpus(cpu_dev, policy->cpus);
--	if (ret) {
--		dev_err(cpu_dev, "%s: failed to mark OPPs as shared: %d\n", __func__, ret);
-+	ret = dev_pm_opp_of_cpumask_add_table(policy->cpus);
-+	if (ret < 0) {
-+		dev_err(cpu_dev, "%s: failed to add OPP table: %d\n", __func__, ret);
- 		goto out_iounmap;
- 	}
- 
-@@ -273,19 +271,13 @@ static int apple_soc_cpufreq_init(struct
- 	if (ret <= 0) {
- 		dev_dbg(cpu_dev, "OPP table is not ready, deferring probe\n");
- 		ret = -EPROBE_DEFER;
--		goto out_free_opp;
--	}
--
--	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv) {
--		ret = -ENOMEM;
--		goto out_free_opp;
-+		goto out_free_table;
- 	}
- 
- 	ret = dev_pm_opp_init_cpufreq_table(cpu_dev, &freq_table);
- 	if (ret) {
- 		dev_err(cpu_dev, "failed to init cpufreq table: %d\n", ret);
--		goto out_free_priv;
-+		goto out_free_table;
- 	}
- 
- 	/* Get OPP levels (p-state indexes) and stash them in driver_data */
-@@ -320,12 +312,12 @@ static int apple_soc_cpufreq_init(struct
- 
- out_free_cpufreq_table:
- 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
--out_free_priv:
--	kfree(priv);
--out_free_opp:
--	dev_pm_opp_remove_all_dynamic(cpu_dev);
-+out_free_table:
-+	dev_pm_opp_of_cpumask_remove_table(policy->cpus);
- out_iounmap:
- 	iounmap(reg_base);
-+out_free_priv:
-+	kfree(priv);
- 	return ret;
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -246,33 +246,54 @@ get_callchain_entry_for_task(struct task
+ #endif
  }
  
-@@ -334,7 +326,7 @@ static void apple_soc_cpufreq_exit(struc
- 	struct apple_cpu_priv *priv = policy->driver_data;
+-static long __bpf_get_stackid(struct bpf_map *map,
+-			      struct perf_callchain_entry *trace, u64 flags)
++struct stackid {
++	struct stack_map_bucket *bucket;
++	u64 *ips;
++	u32  nr;
++	u32  len;
++	u32  hash;
++	u32  id;
++};
++
++static int stackid_init(struct stackid *stackid, struct bpf_map *map,
++			struct perf_callchain_entry *trace, u64 flags)
+ {
+ 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
+-	struct stack_map_bucket *bucket, *new_bucket, *old_bucket;
+-	u32 hash, id, trace_nr, trace_len, i, max_depth;
+ 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+-	bool user = flags & BPF_F_USER_STACK;
+-	u64 *ips;
+-	bool hash_matches;
++	u32 max_depth;
  
- 	dev_pm_opp_free_cpufreq_table(priv->cpu_dev, &policy->freq_table);
--	dev_pm_opp_remove_all_dynamic(priv->cpu_dev);
-+	dev_pm_opp_of_cpumask_remove_table(policy->cpus);
- 	iounmap(priv->reg_base);
- 	kfree(priv);
+ 	if (trace->nr <= skip)
+ 		/* skipping more than usable stack trace */
+ 		return -EFAULT;
+ 
+ 	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
+-	trace_nr = min_t(u32, trace->nr - skip, max_depth - skip);
+-	trace_len = trace_nr * sizeof(u64);
+-	ips = trace->ip + skip;
+-	hash = jhash2((u32 *)ips, trace_len / sizeof(u32), 0);
+-	id = hash & (smap->n_buckets - 1);
+-	bucket = READ_ONCE(smap->buckets[id]);
++	stackid->nr = min_t(u32, trace->nr - skip, max_depth - skip);
++	stackid->len = stackid->nr * sizeof(u64);
++	stackid->ips = trace->ip + skip;
++	stackid->hash = jhash2((u32 *)stackid->ips, stackid->len / sizeof(u32), 0);
++	stackid->id = stackid->hash & (smap->n_buckets - 1);
++	stackid->bucket = READ_ONCE(smap->buckets[stackid->id]);
++	return 0;
++}
++
++static long __bpf_get_stackid(struct stackid *stackid, struct bpf_map *map,
++			      struct perf_callchain_entry *trace, u64 flags)
++{
++	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
++	struct stack_map_bucket *new_bucket, *old_bucket;
++	bool user = flags & BPF_F_USER_STACK;
++	bool hash_matches;
++	u32 trace_len, i;
++	int err;
++
++	err = stackid_init(stackid, map, trace, flags);
++	if (err)
++		return err;
+ 
+-	hash_matches = bucket && bucket->hash == hash;
++	hash_matches = stackid->bucket && stackid->bucket->hash == stackid->hash;
+ 	/* fast cmp */
+ 	if (hash_matches && flags & BPF_F_FAST_STACK_CMP)
+-		return id;
++		return stackid->id;
+ 
+ 	if (stack_map_use_build_id(map)) {
+ 		struct bpf_stack_build_id *id_offs;
+@@ -282,42 +303,42 @@ static long __bpf_get_stackid(struct bpf
+ 			pcpu_freelist_pop(&smap->freelist);
+ 		if (unlikely(!new_bucket))
+ 			return -ENOMEM;
+-		new_bucket->nr = trace_nr;
++		new_bucket->nr = stackid->nr;
+ 		id_offs = (struct bpf_stack_build_id *)new_bucket->data;
+-		for (i = 0; i < trace_nr; i++)
+-			id_offs[i].ip = ips[i];
+-		stack_map_get_build_id_offset(id_offs, trace_nr, user, false /* !may_fault */);
+-		trace_len = trace_nr * sizeof(struct bpf_stack_build_id);
+-		if (hash_matches && bucket->nr == trace_nr &&
+-		    memcmp(bucket->data, new_bucket->data, trace_len) == 0) {
++		for (i = 0; i < stackid->nr; i++)
++			id_offs[i].ip = stackid->ips[i];
++		stack_map_get_build_id_offset(id_offs, stackid->nr, user, false /* !may_fault */);
++		trace_len = stackid->nr * sizeof(struct bpf_stack_build_id);
++		if (hash_matches && stackid->bucket->nr == stackid->nr &&
++		    memcmp(stackid->bucket->data, new_bucket->data, trace_len) == 0) {
+ 			pcpu_freelist_push(&smap->freelist, &new_bucket->fnode);
+-			return id;
++			return stackid->id;
+ 		}
+-		if (bucket && !(flags & BPF_F_REUSE_STACKID)) {
++		if (stackid->bucket && !(flags & BPF_F_REUSE_STACKID)) {
+ 			pcpu_freelist_push(&smap->freelist, &new_bucket->fnode);
+ 			return -EEXIST;
+ 		}
+ 	} else {
+-		if (hash_matches && bucket->nr == trace_nr &&
+-		    memcmp(bucket->data, ips, trace_len) == 0)
+-			return id;
+-		if (bucket && !(flags & BPF_F_REUSE_STACKID))
++		if (hash_matches && stackid->bucket->nr == stackid->nr &&
++		    memcmp(stackid->bucket->data, stackid->ips, stackid->len) == 0)
++			return stackid->id;
++		if (stackid->bucket && !(flags & BPF_F_REUSE_STACKID))
+ 			return -EEXIST;
+ 
+ 		new_bucket = (struct stack_map_bucket *)
+ 			pcpu_freelist_pop(&smap->freelist);
+ 		if (unlikely(!new_bucket))
+ 			return -ENOMEM;
+-		memcpy(new_bucket->data, ips, trace_len);
++		memcpy(new_bucket->data, stackid->ips, stackid->len);
+ 	}
+ 
+-	new_bucket->hash = hash;
+-	new_bucket->nr = trace_nr;
++	new_bucket->hash = stackid->hash;
++	new_bucket->nr = stackid->nr;
+ 
+-	old_bucket = xchg(&smap->buckets[id], new_bucket);
++	old_bucket = xchg(&smap->buckets[stackid->id], new_bucket);
+ 	if (old_bucket)
+ 		pcpu_freelist_push(&smap->freelist, &old_bucket->fnode);
+-	return id;
++	return stackid->id;
  }
+ 
+ BPF_CALL_3(bpf_get_stackid, struct pt_regs *, regs, struct bpf_map *, map,
+@@ -326,6 +347,7 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
+ 	u32 elem_size = stack_map_data_size(map);
+ 	bool user = flags & BPF_F_USER_STACK;
+ 	struct perf_callchain_entry *trace;
++	struct stackid stackid;
+ 	bool kernel = !user;
+ 	u32 max_depth;
+ 
+@@ -341,7 +363,7 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
+ 		/* couldn't fetch the stack trace */
+ 		return -EFAULT;
+ 
+-	return __bpf_get_stackid(map, trace, flags);
++	return __bpf_get_stackid(&stackid, map, trace, flags);
+ }
+ 
+ const struct bpf_func_proto bpf_get_stackid_proto = {
+@@ -370,6 +392,7 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
+ {
+ 	struct perf_event *event = ctx->event;
+ 	struct perf_callchain_entry *trace;
++	struct stackid stackid;
+ 	bool kernel, user;
+ 	__u64 nr_kernel;
+ 	int ret;
+@@ -395,7 +418,7 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
+ 
+ 	if (kernel) {
+ 		trace->nr = nr_kernel;
+-		ret = __bpf_get_stackid(map, trace, flags);
++		ret = __bpf_get_stackid(&stackid, map, trace, flags);
+ 	} else { /* user */
+ 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
+ 
+@@ -404,7 +427,7 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
+ 			return -EFAULT;
+ 
+ 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
+-		ret = __bpf_get_stackid(map, trace, flags);
++		ret = __bpf_get_stackid(&stackid, map, trace, flags);
+ 	}
+ 
+ 	/* restore nr */
 
 
