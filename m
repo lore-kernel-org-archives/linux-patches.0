@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4291753FD2B;
-	Wed,  9 Sep 2026 13:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2DB4C6803;
+	Wed,  9 Sep 2026 13:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962028; cv=none; b=SwibrP5DFqewOIfkxj1xrfTWGdfoQtqryFMEEKLt3k3UM2J6te+pZGuR0KAp6I6rSrg9NKyZLm41RholK1YbWzheX1Y2JoIUAMfQxR5EJX83L/gs/5z1OtXiwUM8eP3GTLVjGQ9fCodSTfCY83LIsi9m1aNL79nJupCK7scEO0o=
+	t=1788962031; cv=none; b=USMwP0NZqE0Tr/Ubt+cPxBhC0Nbcf1XIrlRQaMoUnyEQImz6AFM3QMeV67LZQR+b/nRcvq2qYtgmEXIbnMa3wGEJzJYSGW9e2ozgNI+YS8htbnKGpdw86r8t/SOpl8XITDU+8kfhO+RccrVn/JBwgbeOtNNrpk2Zc7/zXQVMF7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962028; c=relaxed/simple;
-	bh=N14ki/8JHH9qxbKaYxIvWm1FaOdYC7wVZ84UzVtO8Rk=;
+	s=arc-20240116; t=1788962031; c=relaxed/simple;
+	bh=CHaBiJuZ1Z5xYTy+Qth8onLtZoM8CPmGzYo6pZbE+6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=buycbM2m1jWyNGn2q93KuO4dO6OeD6rk3wHaDFgBI72JwgbbEf0Kov/MG2GHSSF8MHprn8rkp9QeSOQrS+Ehh4iCdaZn7CCnNPbCVE2D2xF5b06jE3uULiAVOTy5UMDhoB+WUc5hZaE6QulM3x4lqJtX3X0AvhvCrx1RwV/THu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Si8fNJS6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KNnrNeWXANZ+D1EnijMoLI3bGPEnO1nDD5dL72OL2KCyaLQEsiZ1UAbqCD1ZTG2pB+GLOibTU7Fj2jMhRzq/aIaoyEBslyLnJ8BJQkEPJNjQX/+x2apq8Jk6QTy6YbAjMyFyMUo9AHJb7EUWS+dp8JYe3qXnEWWxj9abFR2cuDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3zsn4wi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Si8fNJS6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A14E1F00A3A;
-	Wed,  9 Sep 2026 13:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3zsn4wi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEBB1F00A3A;
+	Wed,  9 Sep 2026 13:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962027;
-	bh=y5SBQGw9MoEQMCOqhWXm/PK1uuCGoaKCEwPZasEB3tQ=;
+	s=korg; t=1788962030;
+	bh=GpaVttf5/EpfejmN5u9Uyoq2FqM5jbvK+E+S0a42t28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Si8fNJS6xEtXYdk9t8ibD+g0sv3pOzs4kzsjxDzo5bJZ/xYVLYO4vO99tIFnc4NxG
-	 jXHD4T9f1k1Dg/ECh9bKo2K4UrQhjHMLgXC23Hk4sKlJjx18jvqGvxvKB8dPZhjkhO
-	 2SteoJ4qX0g+SWN4hXv1p8MIzU2KVwF4IJFqbFag=
+	b=Z3zsn4wi0UqSaHbXKdyabHr5Au3ph9NV81t5PfTYU03Y0q+Y9zoCTweE/PcdWeGp6
+	 FcSncj1iXDjpDv09qZY63FtfhPvGTwQm2X+Mj6TwATRo4Y1hu4wyorYNSVs2/QjguR
+	 5N9laXkymnQc8SsPj7lSCbpNC8GD/uYE9JSfHmPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khushit Shah <khushit.shah@nutanix.com>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
-	Shameer Kolothum <skolothumtho@nvidia.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.2 148/556] arm64: errata: pass REVIDR when matching target implementation CPUs
-Date: Wed,  9 Sep 2026 15:37:08 +0200
-Message-ID: <20260909134235.646643222@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 149/556] ALSA: rawmidi: Return the error from snd_rawmidi_input_params()
+Date: Wed,  9 Sep 2026 15:37:09 +0200
+Message-ID: <20260909134235.681776671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,38 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Khushit Shah <khushit.shah@nutanix.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 5541432e09dc2031978188f3e8a00b9fc78cf097 upstream.
+commit f4a23e17d84fd2a152d9e12369761934e1af0ee8 upstream.
 
-When target implementation CPUs are provided, is_affected_midr_range()
-accidentally passed the MIDR as both arguments to __is_affected_midr_range(),
-so the REVIDR mask check operated on the wrong register.
+The snd_rawmidi_input_params() computes err for the three invalid mode
+combinations and for resize_runtime_buffer(), applies the new framing
+and clock type only when err is zero, and then returns 0 anyway.  A
+caller that asked for parameters the kernel rejected is told the change
+succeeded, and the substream keeps its old buffer.
 
-Pass REVIDR as intended.
+The open_mutex conversion turned the early returns into assignments.
+It handled the output sibling correctly, which still returns err, and
+left this one behind.
 
-Fixes: 86edf6bdcf05 ("smccc/kvm_guest: Enable errata based on implementation CPUs")
+Fixes: 94b98194b62e ("ALSA: rawmidi: Take open_mutex around parameter changes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260902125058.19499-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/cpu_errata.c |    2 +-
+ sound/core/rawmidi.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -82,7 +82,7 @@ is_affected_midr_range(const struct arm6
- 
- 	for (i = 0; i < target_impl_cpu_num; i++) {
- 		if (__is_affected_midr_range(entry, target_impl_cpus[i].midr,
--					     target_impl_cpus[i].midr))
-+					     target_impl_cpus[i].revidr))
- 			return true;
+--- a/sound/core/rawmidi.c
++++ b/sound/core/rawmidi.c
+@@ -782,7 +782,7 @@ int snd_rawmidi_input_params(struct snd_
+ 		substream->framing = framing;
+ 		substream->clock_type = clock_type;
  	}
- 	return false;
+-	return 0;
++	return err;
+ }
+ EXPORT_SYMBOL(snd_rawmidi_input_params);
+ 
 
 
