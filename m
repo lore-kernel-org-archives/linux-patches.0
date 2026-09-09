@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640A05650EF;
-	Wed,  9 Sep 2026 14:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BECB3D967A;
+	Wed,  9 Sep 2026 14:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963202; cv=none; b=qOID4RiiZl6itSQkYkMgWdfVR7O8BtI9AcF5wGHxzdGrHfBXqiFM42/QUOdn8SIdbfSu+F3MPoIQCsXUnfANdv8Zbn0Hzsrs73hA14KuFLUtMx28AgfwE53Xa9PGa69skTBHvwj3Y+Z7Z9Ge/QT3SgTfWY54kJSBWvcv8ttBVo4=
+	t=1788963205; cv=none; b=Y5qs4KcptPkrUcZvFpCWVj4T2oxNuXtn/HJfxLwVa3wnwuJQUhIoQUWtivYVEi60o8lor8kjAoc6w0noOedl/be7zOWVc0N5ZVTTfPJG8gRcHapsxyaxeOOkcuCy+HKBQb20TSL0gQbuu3kTT+QyKgmf4LKqYwuk1MmI1m6oTwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963202; c=relaxed/simple;
-	bh=/XptKsRhWMlkUpQi21ClNIbjkOTVtfSf8FPhZNWphQc=;
+	s=arc-20240116; t=1788963205; c=relaxed/simple;
+	bh=w85qVZqHhGmCJH30iWmp1KotnDht3pIrLuCnVFz9rho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pptl49WJxlVCvwRW62/Y15o5CNz48zEHgGROkabfuvUM+RUIcCGg51ElScrl0/33V0FeReKrtT9YPsx/N7Ua7tb65EYEENOiGek6Trws4x9Fz/K3Gw+WffAxzwKPfkN6T3tIMh9baphPbAlhRbJURR9vaR5LE9TqLR0vae2y5Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxguB2d2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U3Dc3maJOGDYyGeknqXNWQDfym5LNQiiO9S9+3s73Qbr6529cCMw+CdlzEXezzTNQlW8r4b0qQURSZNGO9VSJol8cYqsrFmf1N1wkWnp9PoNP95VfFgolCpwP7fkC99AQFOwEbuwef1CpSQU33VGBrTf51v0KPg+6Kyf8pWiohk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmbYLXYF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxguB2d2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65771F00A3A;
-	Wed,  9 Sep 2026 14:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmbYLXYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971361F00A3E;
+	Wed,  9 Sep 2026 14:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963201;
-	bh=/p/mv7pYWZ8NoX4FUKwdUuzj0tpWtJhyROSQpwc8JTE=;
+	s=korg; t=1788963204;
+	bh=7mWzNEdcSl9M75u9dHogURLUcpMKq+iDgnic8JPu4po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WxguB2d2QMfDSf8gleENoEyt4NmMOSDu+9Qn91+1zgfByThxDCWOjX/NklPW+FsEo
-	 Q+44S/9uKhQKWVuQUKM/itxYW1thZOgsheXPv4YPVGng8o59u3NNHxWTfHsUDEjmmo
-	 rEPUM36zPrJmmeOTTr8RKPc3wOmDkBocLPnCyYZQ=
+	b=MmbYLXYF8eXNXdn0rfTpFzXnvwwFgSkXh56rXo4YCPojvIiUSsyZorA7tkKCJ3T4K
+	 x0SeRchSkHKDy0sD+rlchlU2qb9uQfpXk/dfopf7njMS2PWBkHMoGocLmunl/9BRU+
+	 A2VnoKhI0f867cur6aXUVT3VgbFUhKdq5WpRrYsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 553/556] mm/damon/paddr: drop last same folio access check reuse optimization
-Date: Wed,  9 Sep 2026 15:43:53 +0200
-Message-ID: <20260909134249.836536511@linuxfoundation.org>
+Subject: [PATCH 7.2 554/556] mm/damon/vaddr: drop last same folio access check optimization
+Date: Wed,  9 Sep 2026 15:43:54 +0200
+Message-ID: <20260909134249.870882779@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,77 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-commit f23f0aa62b2f32c2b12f95959fc4603ef81678b2 upstream.
+commit 831846078caa14b7d00b2ccca8b8fe522afe3204 upstream.
 
-It can race when multiple kdamonds are being used.  The problem from the
-race is doubtful, but the gain from the optimization is also doubtful.
-Simply drop the optimization in favor of code simplicity.
+The optimization can race when multiple kdamonds are running.  Meanwhile,
+the impact of the optimization is quite doubtful.  Just remove it.
 
-The user impact is doubtfully trivial.  After all, this kind of
-interference can happen only by intentional user setup.  Even if it
-happens, it will be rare, and the consequence is degradation of the
-best-effort monitoring results.  No critical consequences like kernel
-panic or memory corruption happen.
+The user impact of the issue should be quite trivial.  After all, the race
+can happen only when the user intentionally setup DAMON in the way.  Even
+if it happens, it would be rare and only degrade the best-effort
+monitoring results.  No critical consequences like kernel panic or memory
+corruption happen.
 
-The race was discovered [1] by Sashiko.
+The race possibility was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260715031002.108504-5-sj@kernel.org
+Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
 Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
-Fixes: a28397beb55b ("mm/damon: implement primitives for physical address space monitoring")
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
 Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
+Cc: <stable@vger.kernel.org> # 5.15.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/paddr.c |   20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ mm/damon/vaddr.c |   34 ++++++----------------------------
+ 1 file changed, 6 insertions(+), 28 deletions(-)
 
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -65,7 +65,7 @@ static void damon_pa_prepare_access_chec
- 	}
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -382,8 +382,6 @@ static void damon_va_prepare_access_chec
  }
  
--static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
-+static bool damon_pa_young(phys_addr_t paddr)
- {
- 	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
- 	bool accessed;
-@@ -74,7 +74,6 @@ static bool damon_pa_young(phys_addr_t p
- 		return false;
+ struct damon_young_walk_private {
+-	/* size of the folio for the access checked virtual memory address */
+-	unsigned long *folio_sz;
+ 	bool young;
+ };
  
- 	accessed = damon_folio_young(folio);
--	*folio_sz = folio_size(folio);
+@@ -410,7 +408,6 @@ static int damon_young_pmd_entry(pmd_t *
+ 					mmu_notifier_test_young(walk->mm,
+ 						addr))
+ 			priv->young = true;
+-		*priv->folio_sz = HPAGE_PMD_SIZE;
+ huge_out:
+ 		spin_unlock(ptl);
+ 		return 0;
+@@ -429,7 +426,6 @@ huge_out:
+ 	if (pte_young(ptent) || !folio_test_idle(folio) ||
+ 			mmu_notifier_test_young(walk->mm, addr))
+ 		priv->young = true;
+-	*priv->folio_sz = folio_size(folio);
+ out:
+ 	pte_unmap_unlock(pte, ptl);
+ 	return 0;
+@@ -457,7 +453,6 @@ static int damon_young_hugetlb_entry(pte
+ 	if (pte_young(entry) || !folio_test_idle(folio) ||
+ 	    mmu_notifier_test_young(walk->mm, addr))
+ 		priv->young = true;
+-	*priv->folio_sz = huge_page_size(h);
+ 
  	folio_put(folio);
- 	return accessed;
- }
-@@ -82,23 +81,12 @@ static bool damon_pa_young(phys_addr_t p
- static void __damon_pa_check_access(struct damon_region *r,
- 		struct damon_attrs *attrs, unsigned long addr_unit)
+ 
+@@ -469,11 +464,9 @@ out:
+ #define damon_young_hugetlb_entry NULL
+ #endif /* CONFIG_HUGETLB_PAGE */
+ 
+-static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+-		unsigned long *folio_sz)
++static bool damon_va_young(struct mm_struct *mm, unsigned long addr)
  {
--	static phys_addr_t last_addr;
+ 	struct damon_young_walk_private arg = {
+-		.folio_sz = folio_sz,
+ 		.young = false,
+ 	};
+ 
+@@ -493,29 +486,18 @@ static bool damon_va_young(struct mm_str
+  * r	the region to be checked
+  */
+ static void __damon_va_check_access(struct mm_struct *mm,
+-				struct damon_region *r, bool same_target,
++				struct damon_region *r,
+ 				struct damon_attrs *attrs)
+ {
+-	static unsigned long last_addr;
 -	static unsigned long last_folio_sz = PAGE_SIZE;
 -	static bool last_accessed;
 +	bool accessed;
- 	phys_addr_t sampling_addr = damon_pa_phys_addr(
- 			r->sampling_addr, addr_unit);
+ 
+ 	if (!mm) {
+ 		damon_update_region_access_rate(r, false, attrs);
+ 		return;
+ 	}
  
 -	/* If the region is in the last checked page, reuse the result */
--	if (ALIGN_DOWN(last_addr, last_folio_sz) ==
--				ALIGN_DOWN(sampling_addr, last_folio_sz)) {
+-	if (same_target && (ALIGN_DOWN(last_addr, last_folio_sz) ==
+-				ALIGN_DOWN(r->sampling_addr, last_folio_sz))) {
 -		damon_update_region_access_rate(r, last_accessed, attrs);
 -		return;
 -	}
 -
--	last_accessed = damon_pa_young(sampling_addr, &last_folio_sz);
+-	last_accessed = damon_va_young(mm, r->sampling_addr, &last_folio_sz);
 -	damon_update_region_access_rate(r, last_accessed, attrs);
 -
--	last_addr = sampling_addr;
-+	accessed = damon_pa_young(sampling_addr);
+-	last_addr = r->sampling_addr;
++	accessed = damon_va_young(mm, r->sampling_addr);
 +	damon_update_region_access_rate(r, accessed, attrs);
  }
  
- static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
+ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+@@ -524,16 +506,12 @@ static unsigned int damon_va_check_acces
+ 	struct mm_struct *mm;
+ 	struct damon_region *r;
+ 	unsigned int max_nr_accesses = 0;
+-	bool same_target;
+ 
+ 	damon_for_each_target(t, ctx) {
+ 		mm = damon_get_mm(t);
+-		same_target = false;
+ 		damon_for_each_region(r, t) {
+-			__damon_va_check_access(mm, r, same_target,
+-					&ctx->attrs);
++			__damon_va_check_access(mm, r, &ctx->attrs);
+ 			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
+-			same_target = true;
+ 		}
+ 		if (mm)
+ 			mmput(mm);
 
 
