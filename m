@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A91953FD37;
-	Wed,  9 Sep 2026 14:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B949551475A;
+	Wed,  9 Sep 2026 14:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963165; cv=none; b=BXYPbJVu0gRE6G1LvYEnyGTFMM5hKYYVBgIWAuF3xiR7TEA4tlZLlE72HIz+E1zipEM9byEnaNU7nWhwAsHcT6TJbQWsItLZWThXXCZj79t0xK/ioZV2ZyRToZUylrGuGLVoKDs9b1f5sFlFryAdJtcg8AHUA7kzXIZZgqNSQbI=
+	t=1788963168; cv=none; b=pGwTChK+iqcHnSNg+6IYEI+4cX9qjo7Hs/7VZOAJARF5FoDcSlbyGIRuoNI0dzyviceSbWYOow7JkiMBjpMStREW+mMzacrSTKrp859dU2R9MTDE/4VFWwov49429wTFHW07PpkZWE9m/FySWhZknKireIY1iDA1nupOa5n8dag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963165; c=relaxed/simple;
-	bh=te7R2qnem7NCD9yEZCCBTU7O1CZwLF06To+6Jqu/3m0=;
+	s=arc-20240116; t=1788963168; c=relaxed/simple;
+	bh=JEgnm84ZRgfmNiBtcEA+ennqHsaNrJH2NzG0CBo4plE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0JaHjd5Ei6IchDSzEzOjbUh7XcLfND8dedzOeVtAyri6/BELVykllGrE/KHK3VrPi6JktujphcajoHJiwCOPQsbxuoEv95PF8Xt6um/W4sS3oVE2hmBgqreEHzyGS7YSJQEQKcnZYzCReu7Quy2lFJvknfyT/JW22lG/1SjbEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaY/nKAn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lULCIiKho4gUM69Br9+IM7dcSmSSbtBn5xjLsgq4LvMqvfoMI/nEBOSYvqTnDFmB9+O4pmwIYVA/fzOe+Qo6vqToSO8KMhNlz2OAxOh0BG0LgV+NfDQ/TFNsVCbWGUer8l7+Acgr2L+wdNkScDQMGBT837al6iwFwLIny27KdSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bm1yxFY3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaY/nKAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1431F00A3A;
-	Wed,  9 Sep 2026 14:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bm1yxFY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54841F00A3A;
+	Wed,  9 Sep 2026 14:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963163;
-	bh=74Hn80970cMcs8/fZt4QfDAOtUrkmK/kz1GHC7IbFD8=;
+	s=korg; t=1788963166;
+	bh=OYy9ZhMn6S/J6bBUbXpQGWwbC7bTfNJ8jJoVxXYTwEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yaY/nKAndu8Scc4uWck+Fa5Fe3x5j3Ij7avjwGFJ+bmg2CryQkleBiJmwrX+i+vvx
-	 t5FEkNayu294zZhek0sKPLLj+K5WQAbTN6R2jv3QLYnj0PJuMWKLHjyNUS5o1KlCG3
-	 Kyi8uJv2zTwnRtkxs78wbV7PafFgjlDgH17xiZXk=
+	b=Bm1yxFY3kFIDfsdzpLVJWxM3JHQ4rfFOfvMh9ZwIxuflX8JRL2IuScd4XK1ClPEO3
+	 0VqJgacHSdIlBTSF7AuR8HW6zDcLQciC9LRiG5OzZpp+Zj+nl9yIskXMIh4sjH6KGd
+	 HzT+qjzBbresgGU+ul4ysQmIl9F3Vsy5kw0bvf0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.2 541/556] ksmbd: fix use-after-free in oplock break notification
-Date: Wed,  9 Sep 2026 15:43:41 +0200
-Message-ID: <20260909134249.421563826@linuxfoundation.org>
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 542/556] bpf: Factor stackid_init function from __bpf_get_stackid
+Date: Wed,  9 Sep 2026 15:43:42 +0200
+Message-ID: <20260909134249.453876246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,222 +51,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdifatah Suruur <suruurism@gmail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 0e753899627b5e28a9fea8bca98262a6f65a2452 upstream.
+[ Upstream commit 15b837759a97237d647962f9943afe0d55af615a ]
 
-smb2_oplock_break_noti() reads opinfo->conn without any lock and
-dereferences it after two allocations which may sleep.  When the
-durable handle owning the oplock is disconnected, session_fd_check()
-clears opinfo->conn and drops its conn reference under ci->m_lock, and
-the last ksmbd_conn_put() frees the connection.  A break triggered by
-another connection that races with the teardown can then resurrect the
-freed connection: ksmbd_conn_get() is a plain atomic_inc, and the
-queued break work later dereferences the stale conn via
-ksmbd_conn_write(), a use-after-free reachable by any authenticated
-client holding a durable batch oplock.
+The new stackid_init function stores all the necessary bits for stackid
+trace and it will be used by other functions in following changes.
 
-Thread the caller's inode into the notification path instead of taking
-a new reference on it.  Every caller of oplock_break() already holds a
-live ksmbd_file (or an explicit ksmbd_inode_lookup_lock() reference,
-in the parent lease break paths) on the inode that owns the break
-target's oplock list, so ci cannot be freed during the call, and its
-lock can be taken without dereferencing opinfo->o_fp, which a
-concurrent close may free.  Select and pin the connection under
-ci->m_lock, the same lock session_fd_check() and
-ksmbd_reopen_durable_fd() use to update opinfo->conn, so a concurrent
-detach either loses the race to the clear or keeps the connection
-alive until the notification work releases it.  Transfer the reference
-to the work item and release it on allocation failures.
-
-Fixes: b003086d7696 ("ksmbd: fix NULL-deref of opinfo->conn in oplock/lease break notifiers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-2-jolsa@kernel.org
+Stable-dep-of: 15f1bd857466 ("bpf: Disable preemption in bpf_get_stackid")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |   79 ++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 59 insertions(+), 20 deletions(-)
+ kernel/bpf/stackmap.c |   95 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 59 insertions(+), 36 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -878,31 +878,69 @@ out:
- 	ksmbd_conn_put(conn);
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -504,33 +504,54 @@ get_callchain_entry_for_task(struct task
+ #endif
  }
  
-+/*
-+ * Select and pin the connection used for an oplock break before doing any
-+ * allocations which may sleep.  The caller of oplock_break() holds a live
-+ * reference on ci (a file being opened, a file being operated on, or an
-+ * explicit ksmbd_inode_lookup_lock() reference in the parent lease break
-+ * paths), so the inode cannot be freed during the call and its lock is
-+ * reachable without dereferencing opinfo->o_fp, which is not pinned by
-+ * the oplock reference and may be freed by a concurrent close.
-+ *
-+ * opinfo->conn is cleared under ci->m_lock by session_fd_check() when the
-+ * durable handle owning the oplock is disconnected, reassigned by
-+ * ksmbd_reopen_durable_fd() under the same lock, and the last
-+ * ksmbd_conn_put() of the old connection frees it.  Holding the read lock
-+ * excludes both writers, so the connection cannot be freed while it is
-+ * selected.
-+ */
-+static struct ksmbd_conn *smb2_oplock_break_conn_get(struct oplock_info *opinfo,
-+						     struct ksmbd_inode *ci)
-+{
-+	struct ksmbd_conn *conn;
+-static long __bpf_get_stackid(struct bpf_map *map,
+-			      struct perf_callchain_entry *trace, u64 flags)
++struct stackid {
++	struct stack_map_bucket *bucket;
++	u64 *ips;
++	u32  nr;
++	u32  len;
++	u32  hash;
++	u32  id;
++};
 +
-+	down_read(&ci->m_lock);
-+	conn = READ_ONCE(opinfo->conn);
-+	if (conn && !ksmbd_conn_releasing(conn))
-+		conn = ksmbd_conn_get(conn);
-+	else
-+		conn = NULL;
-+	up_read(&ci->m_lock);
-+
-+	return conn;
++static int stackid_init(struct stackid *stackid, struct bpf_map *map,
++			struct perf_callchain_entry *trace, u64 flags)
+ {
+ 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
+-	struct stack_map_bucket *bucket, *new_bucket, *old_bucket;
+-	u32 hash, id, trace_nr, trace_len, i, max_depth;
+ 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+-	bool user = flags & BPF_F_USER_STACK;
+-	u64 *ips;
+-	bool hash_matches;
++	u32 max_depth;
+ 
+ 	if (trace->nr <= skip)
+ 		/* skipping more than usable stack trace */
+ 		return -EFAULT;
+ 
+ 	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
+-	trace_nr = min_t(u32, trace->nr - skip, max_depth - skip);
+-	trace_len = trace_nr * sizeof(u64);
+-	ips = trace->ip + skip;
+-	hash = jhash2((u32 *)ips, trace_len / sizeof(u32), 0);
+-	id = hash & (smap->n_buckets - 1);
+-	bucket = READ_ONCE(smap->buckets[id]);
++	stackid->nr = min_t(u32, trace->nr - skip, max_depth - skip);
++	stackid->len = stackid->nr * sizeof(u64);
++	stackid->ips = trace->ip + skip;
++	stackid->hash = jhash2((u32 *)stackid->ips, stackid->len / sizeof(u32), 0);
++	stackid->id = stackid->hash & (smap->n_buckets - 1);
++	stackid->bucket = READ_ONCE(smap->buckets[stackid->id]);
++	return 0;
 +}
 +
- /**
-  * smb2_oplock_break_noti() - send smb2 exclusive/batch to level2 oplock
-  *		break command from server to client
-  * @opinfo:		oplock info object
-+ * @ci:		inode owning the break target's oplock list, pinned by
-+ *		the caller
-  *
-  * Return:      0 on success, otherwise error
-  */
--static int smb2_oplock_break_noti(struct oplock_info *opinfo)
-+static int smb2_oplock_break_noti(struct oplock_info *opinfo,
-+				  struct ksmbd_inode *ci)
- {
- 	struct ksmbd_conn *conn;
- 	struct oplock_break_info *br_info;
- 	int ret = 0;
- 	struct ksmbd_work *work;
++static long __bpf_get_stackid(struct stackid *stackid, struct bpf_map *map,
++			      struct perf_callchain_entry *trace, u64 flags)
++{
++	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
++	struct stack_map_bucket *new_bucket, *old_bucket;
++	bool user = flags & BPF_F_USER_STACK;
++	bool hash_matches;
++	u32 trace_len, i;
++	int err;
++
++	err = stackid_init(stackid, map, trace, flags);
++	if (err)
++		return err;
  
--	conn = READ_ONCE(opinfo->conn);
-+	conn = smb2_oplock_break_conn_get(opinfo, ci);
- 	if (!conn)
- 		return ksmbd_invalidate_durable_fd(opinfo->fid);
+-	hash_matches = bucket && bucket->hash == hash;
++	hash_matches = stackid->bucket && stackid->bucket->hash == stackid->hash;
+ 	/* fast cmp */
+ 	if (hash_matches && flags & BPF_F_FAST_STACK_CMP)
+-		return id;
++		return stackid->id;
  
- 	work = ksmbd_alloc_work_struct();
--	if (!work)
-+	if (!work) {
-+		ksmbd_conn_put(conn);
- 		return -ENOMEM;
-+	}
- 
- 	br_info = kmalloc_obj(struct oplock_break_info, KSMBD_DEFAULT_GFP);
- 	if (!br_info) {
- 		ksmbd_free_work_struct(work);
-+		ksmbd_conn_put(conn);
- 		return -ENOMEM;
- 	}
- 
-@@ -911,7 +949,8 @@ static int smb2_oplock_break_noti(struct
- 	br_info->open_trunc = opinfo->open_trunc;
- 
- 	work->request_buf = (char *)br_info;
--	work->conn = ksmbd_conn_get(conn);
-+	/* Transfer the reference acquired by smb2_oplock_break_conn_get(). */
-+	work->conn = conn;
- 	work->sess = opinfo->sess;
- 
- 	ksmbd_conn_r_count_inc(conn);
-@@ -1074,9 +1113,9 @@ static void wait_lease_breaking(struct o
- 	}
- }
- 
--static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level,
--			struct ksmbd_work *in_work, bool share_break)
--{
-+static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
-+			int req_op_level, struct ksmbd_work *in_work,
-+			bool share_break, bool sync_lease_break){
- 	int err = 0;
- 	bool sent_interim = false;
- 
-@@ -1196,7 +1235,7 @@ again:
- 			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
- 	}
- 
--	err = smb2_oplock_break_noti(brk_opinfo);
-+	err = smb2_oplock_break_noti(brk_opinfo, ci);
- 
- 	ksmbd_debug(OPLOCK, "oplock granted = %d\n", brk_opinfo->level);
- 	if (brk_opinfo->op_state == OPLOCK_CLOSING)
-@@ -1224,13 +1263,14 @@ static int oplock_break_add(struct list_
- 	return 0;
- }
- 
--static void oplock_break_drain_none(struct list_head *head)
-+static void oplock_break_drain_none(struct list_head *head,
-+				    struct ksmbd_inode *ci)
- {
- 	struct oplock_break_entry *ent, *tmp;
- 
- 	list_for_each_entry_safe(ent, tmp, head, list) {
--		oplock_break(ent->opinfo, SMB2_OPLOCK_LEVEL_NONE, NULL, false);
--		list_del(&ent->list);
-+		oplock_break(ent->opinfo, ci, SMB2_OPLOCK_LEVEL_NONE, NULL,
-+			     false, false);		list_del(&ent->list);
- 		opinfo_put(ent->opinfo);
- 		kfree(ent);
- 	}
-@@ -1377,7 +1417,7 @@ void smb_send_parent_lease_break_noti(st
- 	}
- 	up_read(&p_ci->m_lock);
- 
--	oplock_break_drain_none(&brk_list);
-+	oplock_break_drain_none(&brk_list, p_ci);
- 
- 	ksmbd_inode_put(p_ci);
- }
-@@ -1421,7 +1461,7 @@ void smb_lazy_parent_lease_break_close(s
- 	}
- 	up_read(&p_ci->m_lock);
- 
--	oplock_break_drain_none(&brk_list);
-+	oplock_break_drain_none(&brk_list, p_ci);
- 
- 	ksmbd_inode_put(p_ci);
- }
-@@ -1541,9 +1581,8 @@ int smb_grant_oplock(struct ksmbd_work *
- 	prev_durable_detached = prev_op_snapshot.durable_detached;
- 	prev_fid = prev_op_snapshot.fid;
- 
--	err = oplock_break(prev_opinfo, break_level, work,
--			   share_ret < 0 && prev_opinfo->is_lease);
--	if (prev_durable_detached || (prev_durable_open && err == -ENOENT))
-+	err = oplock_break(prev_opinfo, ci, break_level, work,
-+			   share_ret < 0 && prev_opinfo->is_lease, false);	if (prev_durable_detached || (prev_durable_open && err == -ENOENT))
- 		ksmbd_invalidate_durable_fd(prev_fid);
- 	opinfo_put(prev_opinfo);
- 	if (err == -EAGAIN) {
-@@ -1640,8 +1679,8 @@ static bool smb_break_all_write_oplock(s
- 	}
- 
- 	brk_opinfo->open_trunc = is_trunc;
--	oplock_break(brk_opinfo, SMB2_OPLOCK_LEVEL_II, work, false);
--	sent_break = true;
-+	oplock_break(brk_opinfo, fp->f_ci, SMB2_OPLOCK_LEVEL_II, work, false,
-+		     false);	sent_break = true;
- 	opinfo_put(brk_opinfo);
- 
- 	return sent_break;
-@@ -1727,11 +1766,11 @@ next:
- 			brk_op->level = SMB2_OPLOCK_LEVEL_NONE;
- 			brk_op->op_state = OPLOCK_STATE_NONE;
- 		} else {
--			oplock_break(brk_op,
-+			oplock_break(brk_op, ci,
- 				     brk_op->is_lease && !is_trunc ?
- 				     SMB2_OPLOCK_LEVEL_II : SMB2_OPLOCK_LEVEL_NONE,
- 				     send_interim && !sent_interim ? work : NULL,
--				     false);
-+				     false, false);
+ 	if (stack_map_use_build_id(map)) {
+ 		struct bpf_stack_build_id *id_offs;
+@@ -540,42 +561,42 @@ static long __bpf_get_stackid(struct bpf
+ 			pcpu_freelist_pop(&smap->freelist);
+ 		if (unlikely(!new_bucket))
+ 			return -ENOMEM;
+-		new_bucket->nr = trace_nr;
++		new_bucket->nr = stackid->nr;
+ 		id_offs = (struct bpf_stack_build_id *)new_bucket->data;
+-		for (i = 0; i < trace_nr; i++)
+-			id_offs[i].ip = ips[i];
+-		stack_map_get_build_id_offset(id_offs, trace_nr, user, false /* !may_fault */);
+-		trace_len = trace_nr * sizeof(struct bpf_stack_build_id);
+-		if (hash_matches && bucket->nr == trace_nr &&
+-		    memcmp(bucket->data, new_bucket->data, trace_len) == 0) {
++		for (i = 0; i < stackid->nr; i++)
++			id_offs[i].ip = stackid->ips[i];
++		stack_map_get_build_id_offset(id_offs, stackid->nr, user, false /* !may_fault */);
++		trace_len = stackid->nr * sizeof(struct bpf_stack_build_id);
++		if (hash_matches && stackid->bucket->nr == stackid->nr &&
++		    memcmp(stackid->bucket->data, new_bucket->data, trace_len) == 0) {
+ 			pcpu_freelist_push(&smap->freelist, &new_bucket->fnode);
+-			return id;
++			return stackid->id;
  		}
- 		sent_interim = true;
- 		list_del(&ent->list);
+-		if (bucket && !(flags & BPF_F_REUSE_STACKID)) {
++		if (stackid->bucket && !(flags & BPF_F_REUSE_STACKID)) {
+ 			pcpu_freelist_push(&smap->freelist, &new_bucket->fnode);
+ 			return -EEXIST;
+ 		}
+ 	} else {
+-		if (hash_matches && bucket->nr == trace_nr &&
+-		    memcmp(bucket->data, ips, trace_len) == 0)
+-			return id;
+-		if (bucket && !(flags & BPF_F_REUSE_STACKID))
++		if (hash_matches && stackid->bucket->nr == stackid->nr &&
++		    memcmp(stackid->bucket->data, stackid->ips, stackid->len) == 0)
++			return stackid->id;
++		if (stackid->bucket && !(flags & BPF_F_REUSE_STACKID))
+ 			return -EEXIST;
+ 
+ 		new_bucket = (struct stack_map_bucket *)
+ 			pcpu_freelist_pop(&smap->freelist);
+ 		if (unlikely(!new_bucket))
+ 			return -ENOMEM;
+-		memcpy(new_bucket->data, ips, trace_len);
++		memcpy(new_bucket->data, stackid->ips, stackid->len);
+ 	}
+ 
+-	new_bucket->hash = hash;
+-	new_bucket->nr = trace_nr;
++	new_bucket->hash = stackid->hash;
++	new_bucket->nr = stackid->nr;
+ 
+-	old_bucket = xchg(&smap->buckets[id], new_bucket);
++	old_bucket = xchg(&smap->buckets[stackid->id], new_bucket);
+ 	if (old_bucket)
+ 		pcpu_freelist_push(&smap->freelist, &old_bucket->fnode);
+-	return id;
++	return stackid->id;
+ }
+ 
+ BPF_CALL_3(bpf_get_stackid, struct pt_regs *, regs, struct bpf_map *, map,
+@@ -584,6 +605,7 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
+ 	u32 elem_size = stack_map_data_size(map);
+ 	bool user = flags & BPF_F_USER_STACK;
+ 	struct perf_callchain_entry *trace;
++	struct stackid stackid;
+ 	bool kernel = !user;
+ 	u32 max_depth;
+ 
+@@ -599,7 +621,7 @@ BPF_CALL_3(bpf_get_stackid, struct pt_re
+ 		/* couldn't fetch the stack trace */
+ 		return -EFAULT;
+ 
+-	return __bpf_get_stackid(map, trace, flags);
++	return __bpf_get_stackid(&stackid, map, trace, flags);
+ }
+ 
+ const struct bpf_func_proto bpf_get_stackid_proto = {
+@@ -628,6 +650,7 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
+ {
+ 	struct perf_event *event = ctx->event;
+ 	struct perf_callchain_entry *trace;
++	struct stackid stackid;
+ 	bool kernel, user;
+ 	__u64 nr_kernel;
+ 	int ret;
+@@ -653,7 +676,7 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
+ 
+ 	if (kernel) {
+ 		trace->nr = nr_kernel;
+-		ret = __bpf_get_stackid(map, trace, flags);
++		ret = __bpf_get_stackid(&stackid, map, trace, flags);
+ 	} else { /* user */
+ 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
+ 
+@@ -662,7 +685,7 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bp
+ 			return -EFAULT;
+ 
+ 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
+-		ret = __bpf_get_stackid(map, trace, flags);
++		ret = __bpf_get_stackid(&stackid, map, trace, flags);
+ 	}
+ 
+ 	/* restore nr */
 
 
