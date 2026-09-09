@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B6E569F1A;
-	Wed,  9 Sep 2026 14:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F7A563FCF;
+	Wed,  9 Sep 2026 14:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962755; cv=none; b=QBsadePgYUAyKpylEXXYzhLoo1oyCPKMDjqlqCHybGkrvorp54v8nCm3NnNfiU71KFMSJxuZaUrZ5I9Q3g2KGS5jVj10r2k/XL7XsgTNb/rFSg11W4V583Dn7t2RHjFJXmtGVzwXglfS8xNWe/4QuVqAIM04hZalZ9aS6lNtKJw=
+	t=1788962758; cv=none; b=M/PNU3g+epYZ5v/FuG2rI/tW2zA+bZoMh96MvAs7q2aM24It4JAEoDB8TYnhgaM2zXXrCvqoEEMaqy2snrvVhj3VLiW1fYCCBWswK5t9/TSeEazasrFZ8nH66MJ7WBzit/+ItV61sHOBzzjgXzXRvgP12rViPpkcQP1i7oLs880=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962755; c=relaxed/simple;
-	bh=xKbeW8ctw359ZOvFks8iTzGIjz/BgfXflYUxaJd2MaQ=;
+	s=arc-20240116; t=1788962758; c=relaxed/simple;
+	bh=19OuLhskt1DSlTbsmpAhHj8qtVLn3Oo2KIYe4pO4qA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lu8yzleZc6/u8RYon0bFevy0f93Uitf93EbN5Ajc7mubqgVCLkF4k+Q3iSKaoSTfLiqn5b6pWjWaOIVHnD9/6+ytwpubuckwydtdVl8EOs1XWkDhwnF1bDN4Esd+MtcODVmN1YxzKw9i0y852bqZ2KbFiCFpNRcTw3uXk4Teq5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGavF3AO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e61HP53R8BeNiXna7bDbyP7+wm6lAdSlqJCd6B2vmj+vAtGN5zLvZKGsvBZo7RQ7VYdSnUJP236wA7vRLzLVCBUllFPxL4vEyxjLWDfeoMlKDpt0/6a8q/lnBFQ0Q10pO8B40TjmD0p7gJQJbdTyv/Skd6zUIV9aGcOBIJxe2RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXTmFKxq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGavF3AO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8DD1F00A3A;
-	Wed,  9 Sep 2026 14:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXTmFKxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE9531F00A3A;
+	Wed,  9 Sep 2026 14:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962754;
-	bh=pCclrtC0z1eY+7kf717lfn5T/AX7Cye7mKWAHI34g7U=;
+	s=korg; t=1788962757;
+	bh=l72UNkfImDL0fHNx2nJrySECOJpN4NAviGkZfw0Hy/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LGavF3AOITwz6uHKEXBKpRIdVPKqcRioAIXWCndP9nVjrZHb4MXcVbkbTE7q+9u9o
-	 wS7g0ois0paI5VvtG+ILPszof5zLTECSVUC+zYt6r3vI707oafsmL8MJ8s7jaQZEoT
-	 6qWASztRpvyJtwWg0yFfp6MS0r5+czduifnjY+ls=
+	b=zXTmFKxqybQYvgt8CB4aDai25hAkgK02+bAhyNZqRBrclDaOiNlFFUiL+K9T58hIp
+	 hfIpsub83+0vXa1fvlHnsAZrJ6+d1ONl9EfZntSHLWJEEiDKEmjOhQ6Vm2MyDL8Ug7
+	 2Hlwn1/+j1Rf5b7UdBkfwaOmHwEJ3fMsDrmWOLSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mohammed EL Kadiri <med08elkadiri@gmail.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bryan ODonoghue <bod@kernel.org>
-Subject: [PATCH 7.2 401/556] media: venus: fix payload size returned by parse_caps() and parse_alloc_mode()
-Date: Wed,  9 Sep 2026 15:41:21 +0200
-Message-ID: <20260909134244.741253152@linuxfoundation.org>
+Subject: [PATCH 7.2 402/556] media: venus: fix payload size calculation in parse_raw_formats()
+Date: Wed,  9 Sep 2026 15:41:22 +0200
+Message-ID: <20260909134244.773224816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,15 +53,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Mohammed EL Kadiri <med08elkadiri@gmail.com>
 
-commit a51cea23e409278f6e2ea072280aba93cc1dd75e upstream.
+commit bd595b745eb770e80347c31ffc25351046935305 upstream.
 
-parse_caps() and parse_alloc_mode() return only the size of their fixed
-header fields, excluding the flexible array payload. hfi_parser() uses
-this return value to advance through the firmware response buffer, so
-underreporting causes parser desynchronization.
+The consumed size is computed after the loop using the num_planes value
+from the last iteration for all entries. When entries have different
+plane counts, this produces an incorrect total.
 
-Return the full consumed size (header + entries), matching the correct
-pattern used by parse_profile_level().
+Accumulate the actual size during the loop instead.
 
 Fixes: 9edaaa8e3e15 ("media: venus: hfi_parser: refactor hfi packet parsing logic")
 Cc: stable@vger.kernel.org
@@ -70,28 +68,36 @@ Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_parser.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_parser.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 --- a/drivers/media/platform/qcom/venus/hfi_parser.c
 +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -85,7 +85,7 @@ parse_alloc_mode(struct venus_core *core
- 		type++;
- 	}
+@@ -171,7 +171,7 @@ parse_raw_formats(struct venus_core *cor
+ 	u32 entries = fmt->format_entries;
+ 	unsigned int i = 0;
+ 	u32 num_planes = 0;
+-	u32 size;
++	u32 size = 2 * sizeof(u32);
  
--	return sizeof(*mode);
-+	return mode->num_entries * sizeof(u32) + sizeof(*mode);
- }
+ 	while (entries) {
+ 		num_planes = pinfo->num_planes;
+@@ -186,6 +186,7 @@ parse_raw_formats(struct venus_core *cor
+ 		if (pinfo->num_planes > MAX_PLANES)
+ 			break;
  
- static void fill_profile_level(struct hfi_plat_caps *cap, const void *data,
-@@ -146,7 +146,7 @@ parse_caps(struct venus_core *core, u32
++		size += sizeof(*constr) * num_planes + 2 * sizeof(u32);
+ 		pinfo = (void *)pinfo + sizeof(*constr) * num_planes +
+ 			2 * sizeof(u32);
+ 		entries--;
+@@ -193,8 +194,6 @@ parse_raw_formats(struct venus_core *cor
+ 
  	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
- 		       fill_caps, caps_arr, num_caps);
+ 		       fill_raw_fmts, rawfmts, i);
+-	size = fmt->format_entries * (sizeof(*constr) * num_planes + 2 * sizeof(u32))
+-		+ 2 * sizeof(u32);
  
--	return sizeof(*caps);
-+	return num_caps * sizeof(*cap) + sizeof(u32);
+ 	return size;
  }
- 
- static void fill_raw_fmts(struct hfi_plat_caps *cap, const void *fmts,
 
 
