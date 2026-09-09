@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F57357268D;
-	Wed,  9 Sep 2026 14:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519495803BB;
+	Wed,  9 Sep 2026 14:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964667; cv=none; b=NGOrgQ/usDod+I6Q6V4XHWOunlA9fHP4+FHdYIFG5XibvyGNhYkWslRc7EKX+dXYzTiHSVRwDv8WtMUKTs5kIXz7Cl5qYFM2rttUGh4PBh2I7E8c0qwH1mUeyBnm+Z6h47yDHs9r5iFcwY6RXH2kjUI4lFIR1Ca9yY/EOvuIPX0=
+	t=1788964670; cv=none; b=ENuLtK39XYys/aRm2ieda2nBwv7fG57135+q/38kQrQhUvnrvteEXUDz1UbPaq4/cf6QQ3oF/q6v60rUzqJfZFtPCWvB4eOmxrQ6Q57aSD9R7MhWz1WgsD8pVRGb0LSzdK9yTK13qZJGiJ2TJnrXl5sLwZIVBr2Goon1ST9wAlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964667; c=relaxed/simple;
-	bh=E9Hg8089oGw+lsoov04W3b4Mh1ILrUrreKkrUuFovwY=;
+	s=arc-20240116; t=1788964670; c=relaxed/simple;
+	bh=iNc9zi8TxsrdtinetAA9x5/R9VubyHOYLmC6Wzklcbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozHrhDQcnLsau/5SKvdvD7HWEWa0leS5HNJmCJuEuvd9NiwMpMO06j1wIcC9VsyHDuOnHbMwOeRf5j4Kirxr1xL7NOpxOxzjTNpgHOnrMkp3BQlEoE+SrxSxtX+6SD2xYq7sBdHmvdSH03gjffW+5OGImPwgHbK1fVUQIPJE4jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tS6uOgIK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MNVnIYz7Fe9gPtWs4gZN5DKtbDeNTllTkk510t9OYBRBRNBdL4SlSkktx2Hm+WsyNDtRvPUFhqshhe66QtTsrSnR6vMorXs43/VLeaHsdgTtLE+eCb7MiMxw2DknpEUHC7pfTNYkEdAcXLjXy3zGlAXLavC/PnL0aUU2U8dGnrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxGcQarr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tS6uOgIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B544B1F00A3A;
-	Wed,  9 Sep 2026 14:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxGcQarr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A791F00A3A;
+	Wed,  9 Sep 2026 14:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964666;
-	bh=BAtsIBx3UKOrFgKPvZG9JW25hFoPw63oay4ZqC6q2+g=;
+	s=korg; t=1788964669;
+	bh=Yre+eW3GegnpbYTC3JwzZ49X+rx4g2gW0JBrIsb2y9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tS6uOgIKmfylD+RNmK4XGQniiVh//yYoxhYuuw43C/PtC9pztyGbfGga6OisYFQBy
-	 ElB9JSIlz2VfE57vTbH1NqTQllERv7yJzSLhfNOL0RV6ZZpbAErmZO8qxxDURyu6LT
-	 QfdADYg6sulxOtyLa2HejLKRjRRNrtPzcZDlx7SU=
+	b=VxGcQarr8kWhsTMDPeY5VM89E2B5GsRAyOBYKHSXCNxemkXYuX5GgMwgrzHkBi/5f
+	 Iymkzkec+BF4Yv7oUEkAEJ2kslr+4A2m6/7npypcF23v6t9zujx29/+kUYX1v86f3Y
+	 qg1ux4sO/13eoAgEcFXjVplVa/51RG8PBXsic448=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 502/583] sched: Rework prev_balance() to avoid stale prev references
-Date: Wed,  9 Sep 2026 15:43:07 +0200
-Message-ID: <20260909134255.156966734@linuxfoundation.org>
+Subject: [PATCH 6.18 476/583] ACPI: CPPC: Reject desired_perf reads on _CPC revision 4+
+Date: Wed,  9 Sep 2026 15:42:41 +0200
+Message-ID: <20260909134254.347350347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,323 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 7a3a6bfbd62a2ba3e0ef1e92d6b71abb66890825 ]
+[ Upstream commit df5a1d4a8cdfda20eb2581a85e81c7d436866534 ]
 
-Historically, the prev value from __schedule() was the rq->curr.
-This prev value is passed down through numerous functions, and
-used in the class scheduler implementations. The fact that
-prev was on_cpu until the end of __schedule(), meant it was
-stable across the rq lock drops that the class->balance()
-implementations often do.
+When CPPC feedback counters cannot provide a usable sample, cppc-cpufreq
+calls cppc_get_desired_perf() because some platforms repurpose Desired
+Performance to report actual delivered performance.
 
-However, with proxy-exec, the prev passed to functions called
-by __schedule() is rq->donor, which may not be the same as
-rq->curr and may not be on_cpu, this makes the prev value
-potentially unstable across rq lock drops.
+ACPI 6.5 defines _CPC revision 3 and lists Read/Write as the Optional
+Attribute of Desired Performance. ACPI 6.6 advances _CPC to revision 4 and
+lists only Write, so invoking that workaround for revision 4 or later would
+require a register read that the interface no longer specifies.
 
-A recently found issue with proxy-exec, is when we begin doing
-return migration from try_to_wake_up(), its possible we may be
-waking up the rq->donor.  When we do this, we proxy_resched_idle()
-to put_prev_set_next() setting the rq->donor to rq->idle, allowing
-the rq->donor to be return migrated and allowed to run.
+Make cppc_get_desired_perf() return -EOPNOTSUPP for _CPC revision 4 or
+later. Use the revision retained in the per-CPU CPC descriptor rather than
+the platform-wide FADT revision.
 
-This however runs into trouble, as on another cpu we might be in
-the middle of calling __schedule(). Conceptually the rq lock is
-held for the majority of the time, but in calling prev_balance()
-its possible the class->balance() handler call may briefly drop the rq lock.
-This opens a window for try_to_wake_up() to wake and return migrate the
-rq->donor before the class logic reacquires the rq lock.
+The _CPC revision may still not accurately describe the implemented
+register semantics. If a nominally revision 3 platform implements a
+non-readable Desired Performance register, a read may return zero and make
+cppc_cpufreq_get_rate() report 0 kHz. Treat a zero read as unusable and
+fall back to the cached OSPM request, just as for a failed read.
 
-Unfortunately prev_balance() pass in a prev argument, to which we pass
-rq->donor. However this prev value can now become stale and incorrect across a
-rq lock drop.
-
-So, to correct this, rework the prev_balance() call so that it does not take a
-"prev" argument.
-
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260512025635.2840817-2-jstultz@google.com
-
-Backport adaptation for 6.18:
-Keep the existing sched_class::pick_next_task callbacks, pick_task
-interfaces, SCX balancing setup and proxy-execution flow. The later
-upstream scheduler refactors and lock annotations are not prerequisites
-for this dependency.
-
-Convert all six balance callbacks, including the fair and SCX callbacks
-still present here, to the new signature. Read rq->donor at the existing
-selection and balance call sites, and refresh prev after new-idle
-balancing in pick_next_task_fair() because that path still drops the rq
-lock inside the stable pick_next_task implementation.
-
-This preserves the existing functions and supplies the selection context
-needed for f3629c63a4af (sched/core: Make core-sched flips wait for
-in-flight selections) to apply without changes.
-
-Stable-dep-of: f3629c63a4af ("sched/core: Make core-sched flips wait for in-flight selections")
+Fixes: c47195631960 ("cppc_cpufreq: Use desired perf if feedback ctrs are 0 or unchanged")
+Cc: stable@vger.kernel.org
+Suggested-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260803203531.1268651-2-christian.loehle@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ preserved the raw firmware revision while limiting parsing to the v3-sized register prefix ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c      |   37 ++++++++++++++++++-------------------
- kernel/sched/deadline.c  |    8 +++++++-
- kernel/sched/ext.c       |    5 ++---
- kernel/sched/fair.c      |    4 +++-
- kernel/sched/idle.c      |    2 +-
- kernel/sched/rt.c        |    8 +++++++-
- kernel/sched/sched.h     |    2 +-
- kernel/sched/stop_task.c |    2 +-
- 8 files changed, 40 insertions(+), 28 deletions(-)
+ drivers/acpi/cppc_acpi.c       |   13 +++++++++++--
+ drivers/cpufreq/cppc_cpufreq.c |    2 +-
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5923,10 +5923,9 @@ static inline void schedule_debug(struct
- 	schedstat_inc(this_rq()->sched_count);
- }
- 
--static void prev_balance(struct rq *rq, struct task_struct *prev,
--			 struct rq_flags *rf)
-+static void prev_balance(struct rq *rq, struct rq_flags *rf)
- {
--	const struct sched_class *start_class = prev->sched_class;
-+	const struct sched_class *start_class = rq->donor->sched_class;
- 	const struct sched_class *class;
- 
- #ifdef CONFIG_SCHED_CLASS_EXT
-@@ -5951,7 +5950,7 @@ static void prev_balance(struct rq *rq,
- 	 * a runnable task of @class priority or higher.
- 	 */
- 	for_active_class_range(class, start_class, &idle_sched_class) {
--		if (class->balance && class->balance(rq, prev, rf))
-+		if (class->balance && class->balance(rq, rf))
- 			break;
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -768,7 +768,6 @@ int acpi_cppc_processor_probe(struct acp
  	}
- }
-@@ -5960,7 +5959,7 @@ static void prev_balance(struct rq *rq,
-  * Pick up the highest-prio task:
+ 	if (cpc_rev > CPPC_V3_REV) {
+ 		num_ent = CPPC_V3_NUM_ENT;
+-		cpc_rev = CPPC_V3_REV;
+ 	}
+ 
+ 	cpc_ptr->num_entries = num_ent;
+@@ -1289,10 +1288,20 @@ static int cppc_set_reg_val(int cpu, enu
+  * @cpunum: CPU from which to get desired performance.
+  * @desired_perf: Return address.
+  *
+- * Return: 0 for success, -EIO otherwise.
++ * Return: 0 for success, -EOPNOTSUPP for _CPC revision 4 or later, and a
++ * negative errno otherwise.
   */
- static inline struct task_struct *
--__pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
-+__pick_next_task(struct rq *rq, struct rq_flags *rf)
+ int cppc_get_desired_perf(int cpunum, u64 *desired_perf)
  {
- 	const struct sched_class *class;
- 	struct task_struct *p;
-@@ -5976,34 +5975,34 @@ __pick_next_task(struct rq *rq, struct t
- 	 * higher scheduling class, because otherwise those lose the
- 	 * opportunity to pull in more work from other CPUs.
++	struct cpc_desc *cpc_desc = per_cpu(cpc_desc_ptr, cpunum);
++
++	if (!cpc_desc)
++		return -ENODEV;
++
++	/* _CPC revision 4 no longer specifies Desired Performance as readable. */
++	if (cpc_desc->version > CPPC_V3_REV)
++		return -EOPNOTSUPP;
++
+ 	return cppc_get_reg_val(cpunum, DESIRED_PERF, desired_perf);
+ }
+ EXPORT_SYMBOL_GPL(cppc_get_desired_perf);
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -766,7 +766,7 @@ out_invalid_counters:
+ 	 * value first as some platforms may update the actual delivered perf
+ 	 * there; if failed, resort to the cached desired perf.
  	 */
--	if (likely(!sched_class_above(prev->sched_class, &fair_sched_class) &&
-+	if (likely(!sched_class_above(rq->donor->sched_class, &fair_sched_class) &&
- 		   rq->nr_running == rq->cfs.h_nr_queued)) {
+-	if (cppc_get_desired_perf(cpu, &delivered_perf))
++	if (cppc_get_desired_perf(cpu, &delivered_perf) || !delivered_perf)
+ 		delivered_perf = cpu_data->perf_ctrls.desired_perf;
  
--		p = pick_next_task_fair(rq, prev, rf);
-+		p = pick_next_task_fair(rq, rq->donor, rf);
- 		if (unlikely(p == RETRY_TASK))
- 			goto restart;
- 
- 		/* Assume the next prioritized class is idle_sched_class */
- 		if (!p) {
- 			p = pick_task_idle(rq);
--			put_prev_set_next_task(rq, prev, p);
-+			put_prev_set_next_task(rq, rq->donor, p);
- 		}
- 
- 		return p;
- 	}
- 
- restart:
--	prev_balance(rq, prev, rf);
-+	prev_balance(rq, rf);
- 
- 	for_each_active_class(class) {
- 		if (class->pick_next_task) {
--			p = class->pick_next_task(rq, prev);
-+			p = class->pick_next_task(rq, rq->donor);
- 			if (p)
- 				return p;
- 		} else {
- 			p = class->pick_task(rq);
- 			if (p) {
--				put_prev_set_next_task(rq, prev, p);
-+				put_prev_set_next_task(rq, rq->donor, p);
- 				return p;
- 			}
- 		}
-@@ -6052,7 +6051,7 @@ extern void task_vruntime_update(struct
- static void queue_core_balance(struct rq *rq);
- 
- static struct task_struct *
--pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
-+pick_next_task(struct rq *rq, struct rq_flags *rf)
- {
- 	struct task_struct *next, *p, *max = NULL;
- 	const struct cpumask *smt_mask;
-@@ -6064,7 +6063,7 @@ pick_next_task(struct rq *rq, struct tas
- 	bool need_sync;
- 
- 	if (!sched_core_enabled(rq))
--		return __pick_next_task(rq, prev, rf);
-+		return __pick_next_task(rq, rf);
- 
- 	cpu = cpu_of(rq);
- 
-@@ -6077,7 +6076,7 @@ pick_next_task(struct rq *rq, struct tas
- 		 */
- 		rq->core_pick = NULL;
- 		rq->core_dl_server = NULL;
--		return __pick_next_task(rq, prev, rf);
-+		return __pick_next_task(rq, rf);
- 	}
- 
- 	/*
-@@ -6101,7 +6100,7 @@ pick_next_task(struct rq *rq, struct tas
- 		goto out_set_next;
- 	}
- 
--	prev_balance(rq, prev, rf);
-+	prev_balance(rq, rf);
- 
- 	smt_mask = cpu_smt_mask(cpu);
- 	need_sync = !!rq->core->core_cookie;
-@@ -6274,7 +6273,7 @@ pick_next_task(struct rq *rq, struct tas
- 	}
- 
- out_set_next:
--	put_prev_set_next_task(rq, prev, next);
-+	put_prev_set_next_task(rq, rq->donor, next);
- 	if (rq->core->core_forceidle_count && next == rq->idle)
- 		queue_core_balance(rq);
- 
-@@ -6496,9 +6495,9 @@ static inline void sched_core_cpu_deacti
- static inline void sched_core_cpu_dying(unsigned int cpu) {}
- 
- static struct task_struct *
--pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
-+pick_next_task(struct rq *rq, struct rq_flags *rf)
- {
--	return __pick_next_task(rq, prev, rf);
-+	return __pick_next_task(rq, rf);
- }
- 
- #endif /* !CONFIG_SCHED_CORE */
-@@ -6881,7 +6880,7 @@ static void __sched notrace __schedule(i
- 
- pick_again:
- 	assert_balance_callbacks_empty(rq);
--	next = pick_next_task(rq, rq->donor, &rf);
-+	next = pick_next_task(rq, &rf);
- 	rq_set_donor(rq, next);
- 	if (unlikely(task_is_blocked(next))) {
- 		next = find_proxy_task(rq, next, &rf);
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2474,8 +2474,14 @@ static void check_preempt_equal_dl(struc
- 	resched_curr(rq);
- }
- 
--static int balance_dl(struct rq *rq, struct task_struct *p, struct rq_flags *rf)
-+static int balance_dl(struct rq *rq, struct rq_flags *rf)
- {
-+	/*
-+	 * Note, rq->donor may change during rq lock drops,
-+	 * so don't re-use p across lock drops
-+	 */
-+	struct task_struct *p = rq->donor;
-+
- 	if (!on_dl_rq(&p->dl) && need_pull_dl_task(rq, p)) {
- 		/*
- 		 * This is OK, because current is on_cpu, which avoids it being
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2200,14 +2200,13 @@ has_tasks:
- 	return true;
- }
- 
--static int balance_scx(struct rq *rq, struct task_struct *prev,
--		       struct rq_flags *rf)
-+static int balance_scx(struct rq *rq, struct rq_flags *rf)
- {
- 	int ret;
- 
- 	rq_unpin_lock(rq, rf);
- 
--	ret = balance_one(rq, prev);
-+	ret = balance_one(rq, rq->donor);
- 
- #ifdef CONFIG_SCHED_SMT
- 	/*
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8879,7 +8879,7 @@ static void set_cpus_allowed_fair(struct
- }
- 
- static int
--balance_fair(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
-+balance_fair(struct rq *rq, struct rq_flags *rf)
- {
- 	if (sched_fair_runnable(rq))
- 		return 1;
-@@ -9200,6 +9200,8 @@ simple:
- idle:
- 	if (rf) {
- 		new_tasks = sched_balance_newidle(rq, rf);
-+		/* The donor may have changed while the rq lock was dropped. */
-+		prev = rq->donor;
- 
- 		/*
- 		 * Because sched_balance_newidle() releases (and re-acquires)
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -460,7 +460,7 @@ select_task_rq_idle(struct task_struct *
- }
- 
- static int
--balance_idle(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
-+balance_idle(struct rq *rq, struct rq_flags *rf)
- {
- 	return WARN_ON_ONCE(1);
- }
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1591,8 +1591,14 @@ static void check_preempt_equal_prio(str
- 	resched_curr(rq);
- }
- 
--static int balance_rt(struct rq *rq, struct task_struct *p, struct rq_flags *rf)
-+static int balance_rt(struct rq *rq, struct rq_flags *rf)
- {
-+	/*
-+	 * Note, rq->donor may change during rq lock drops,
-+	 * so don't re-use p across lock drops
-+	 */
-+	struct task_struct *p = rq->donor;
-+
- 	if (!on_rt_rq(&p->rt) && need_pull_rt_task(rq, p)) {
- 		/*
- 		 * This is OK, because current is on_cpu, which avoids it being
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2422,7 +2422,7 @@ struct sched_class {
- 
- 	void (*wakeup_preempt)(struct rq *rq, struct task_struct *p, int flags);
- 
--	int (*balance)(struct rq *rq, struct task_struct *prev, struct rq_flags *rf);
-+	int (*balance)(struct rq *rq, struct rq_flags *rf);
- 	struct task_struct *(*pick_task)(struct rq *rq);
- 	/*
- 	 * Optional! When implemented pick_next_task() should be equivalent to:
---- a/kernel/sched/stop_task.c
-+++ b/kernel/sched/stop_task.c
-@@ -16,7 +16,7 @@ select_task_rq_stop(struct task_struct *
- }
- 
- static int
--balance_stop(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
-+balance_stop(struct rq *rq, struct rq_flags *rf)
- {
- 	return sched_stop_runnable(rq);
- }
+ 	return cppc_perf_to_khz(&cpu_data->perf_caps, delivered_perf);
 
 
