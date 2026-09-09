@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAC158F097;
-	Wed,  9 Sep 2026 14:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA530576EB5;
+	Wed,  9 Sep 2026 14:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963980; cv=none; b=WOYMbeFonCj4uPMpSGgolDIHhNtzxojy3PwUwRVl0VVkOMvD99xQtz3ezTQyAryySFa3L+OQxguKfZyVMsEtXKABRTcuolhXz1SBJota3flhOMHUwN9BLhdE6IlinyUke3BjewpM/V2+Ho48xK15/miu8UgPE6LMCOq615JST00=
+	t=1788963983; cv=none; b=Xx3WWZZ9o0N8Gx9qv+KIsmkR/5S7RssKhrsSceA8kL+cfbyGmsBoFriBZmOPBA3yUH7QJfQNNMVQp4iGTMw7ehmab+GTYhrp2Si7cWVdwocyxRxO2J6vwgYBt12K3xGIoSKNeDToQOAVqjGco1uhsSKndLhHwUgGE/uDipzwyKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963980; c=relaxed/simple;
-	bh=gRiPWBpyB8w4Fq9xSw9cYOl2TMc8CI05XNL2uejhfsw=;
+	s=arc-20240116; t=1788963983; c=relaxed/simple;
+	bh=ca+bfCjq9B+SdGF47Xesivz1scwWFO9UujybMzs89GU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jw4RgtTR+d/D8asw2hSr6pgbXbZxp3cRvQ6TFmSxs+WEQHyMZJebEYOzTFWOrMrB3eXyf65RJP4bvhSBGRfLAhoQWZZiyycYs5E0wmAyz699IVpqU6JHsgXZynz/A6Fg0GnEqd7M4736keN1VXTXpr8lzztEuE3Vs3c9g0Ynzlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXVBUtxY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S73lIfTyZc+95yAp1MET8DRjgJOHyJQW7RyMyuKh4r9GLfIYinTlD098L/jkwM/+cNEUZY1qVF0fS23vNJANXc5bmAszIrhZ9DA05iTIUfS3QkzstOqUfv0D/p61e/QcBBNB9pAn/FllvajkUnTiac6VPfwXm9PLmnsvxnAe36o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHY/6HsQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXVBUtxY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B1B1F00A3A;
-	Wed,  9 Sep 2026 14:26:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHY/6HsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3431F00A3D;
+	Wed,  9 Sep 2026 14:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963978;
-	bh=2AHpq0IQZpxQowthKOY2Q5WM4OB7S67NodV4qh6JzRo=;
+	s=korg; t=1788963981;
+	bh=KOgToXIvjlXKbiKUDFzw2CzIqB66SPhJP4s7XuhCiAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LXVBUtxYTiTVFiUg2x19xxkVt4UU46Pf3ZxrFmLqB3y4r/Mx2sBoPNGuGqMGaZh9Y
-	 NznkmzjkinDM20V92+D/aXX652/f+45SoOaligN/1a7rV63JpwjPaXaj3ITM39I9rY
-	 tyOKnhGDAO29rc/UmwF0ODJvC+kLur1/S6ECHwfk=
+	b=VHY/6HsQfc701jnDu6HvmLgk1ILhxIHm6GB5dsYJegw7zy52Dblrn/S2Myktre9dQ
+	 Wv3wrQcAkPniQVpZ2M9Fd01+eJijrPmYKD39PsBDyKYwTBBX+1ezkQ7j3FHDU8QHfO
+	 wiJ7Auqij64Ibe5Bh+wnTdwQv7FV4gU5mWSZs3nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bibo Mao <maobibo@loongson.cn>,
-	Tao Cui <cuitao@kylinos.cn>,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 263/583] LoongArch: KVM: Fix TOCTOU race on pv_features
-Date: Wed,  9 Sep 2026 15:39:08 +0200
-Message-ID: <20260909134247.209676270@linuxfoundation.org>
+Subject: [PATCH 6.18 264/583] LoongArch: KVM: Free init resources if kvm_init() fails
+Date: Wed,  9 Sep 2026 15:39:09 +0200
+Message-ID: <20260909134247.243273351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,62 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-commit 9296375902579f9b0e456bbb76e5cf179e5a4e0b upstream.
+commit f7a1064cce3b100b54780c68529176232d8eb01e upstream.
 
-In kvm_loongarch_cpucfg_set_attr() the check-then-set on
-kvm->arch.pv_features is lockless, so two vCPUs can race past the
-validation and set different values. Add a spinlock to protect it.
+kvm_loongarch_init() calls kvm_loongarch_env_init() to allocate the
+per-CPU kvm_context (vmcs) and kvm_loongarch_ops and to register the
+perf callbacks, and then calls kvm_init(). If kvm_init() fails its
+result is returned directly, but since module_init() does not run the
+module_exit() stuff on failure, so kvm_loongarch_env_exit() is never
+called and those resources are leaked.
+
+So call kvm_loongarch_env_exit() when kvm_init() fails, matching the
+teardown-on-failure pattern used by riscv_kvm_init().
 
 Cc: stable@vger.kernel.org
+Fixes: 2bd6ac687261 ("LoongArch: KVM: Implement kvm module related interface")
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/kvm_host.h |    1 +
- arch/loongarch/kvm/vcpu.c             |    6 +++++-
- arch/loongarch/kvm/vm.c               |    1 +
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ arch/loongarch/kvm/main.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/include/asm/kvm_host.h
-+++ b/arch/loongarch/include/asm/kvm_host.h
-@@ -122,6 +122,7 @@ struct kvm_arch {
- 	unsigned int  pte_shifts[MAX_PGTABLE_LEVELS];
- 	unsigned int  root_level;
- 	spinlock_t    phyid_map_lock;
-+	spinlock_t    pv_setting_lock;
- 	struct kvm_phyid_map  *phyid_map;
- 	/* Enabled PV features */
- 	unsigned long pv_features;
---- a/arch/loongarch/kvm/vcpu.c
-+++ b/arch/loongarch/kvm/vcpu.c
-@@ -1120,10 +1120,14 @@ static int kvm_loongarch_cpucfg_set_attr
- 			return -EINVAL;
+--- a/arch/loongarch/kvm/main.c
++++ b/arch/loongarch/kvm/main.c
+@@ -413,7 +413,11 @@ static int kvm_loongarch_init(void)
+ 	if (r)
+ 		return r;
  
- 		/* All vCPUs need set the same PV features */
-+		spin_lock(&kvm->arch.pv_setting_lock);
- 		if ((kvm->arch.pv_features & LOONGARCH_PV_FEAT_UPDATED)
--				&& ((kvm->arch.pv_features & valid) != val))
-+				&& ((kvm->arch.pv_features & valid) != val)) {
-+			spin_unlock(&kvm->arch.pv_setting_lock);
- 			return -EINVAL;
-+		}
- 		kvm->arch.pv_features = val | LOONGARCH_PV_FEAT_UPDATED;
-+		spin_unlock(&kvm->arch.pv_setting_lock);
- 		return 0;
- 	default:
- 		return -ENXIO;
---- a/arch/loongarch/kvm/vm.c
-+++ b/arch/loongarch/kvm/vm.c
-@@ -40,6 +40,7 @@ int kvm_arch_init_vm(struct kvm *kvm, un
- 		return -ENOMEM;
- 	}
- 	spin_lock_init(&kvm->arch.phyid_map_lock);
-+	spin_lock_init(&kvm->arch.pv_setting_lock);
+-	return kvm_init(sizeof(struct kvm_vcpu), 0, THIS_MODULE);
++	r = kvm_init(sizeof(struct kvm_vcpu), 0, THIS_MODULE);
++	if (r)
++		kvm_loongarch_env_exit();
++
++	return r;
+ }
  
- 	kvm_init_vmcs(kvm);
- 
+ static void kvm_loongarch_exit(void)
 
 
