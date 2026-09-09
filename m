@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D3C353A82;
-	Wed,  9 Sep 2026 13:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348FB353A82;
+	Wed,  9 Sep 2026 13:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961763; cv=none; b=LoJR6fb0xCNJUy84oYpTOC1vdqpHQ23Ocf4Hy4Iy587PQg13fSeY15mgwCDTd/RIctCZ845sM/3sKfhCQg1wCn8fe7EjF4u5MPSMOO7fs6XJKotmKUQhEQgasU1yHtJblISDQcJ78Ox0d185K4npZTNpzxexbB86TNrkI630TGQ=
+	t=1788961767; cv=none; b=Pm0pPH5FnFGYUA7c9ZsNika056Qshll0Z18jj59kXB+15Cn6WNBi+ERuIU8dsV0Ica2WYhTbjRXs+2yAKGXOtzyfWND9HMQ2blPF2bAfnmyhN6aiIJis6/fNNLqb3PgT47G/6UfO2B5gTCe13n0iopwjGITmVuJNS5X58e1AIQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961763; c=relaxed/simple;
-	bh=W02acB3Ut+HNhkp1fklgksCD3A1tbcDdaJ4SYdE5Y5A=;
+	s=arc-20240116; t=1788961767; c=relaxed/simple;
+	bh=+S/MjG/UwStx3Yy6ovJFklcUTtSR5Dc1RuSCGZG/CX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTWvURnXQz6kQ4nMVjA3MTVuJbw+7cwymQNEK10GbDyCMzqRmp360GnYeb6vnzjAc6eNIwdjZ4ub/0mF7wVgLLNZ9EoH5w1p4hQd+r/yNrcck/4Z4v/e9oJnCxWXtxZshFyhWhgWEXAxMKValyjbnqYbKvBpTWwN/LBe8nxGIsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGza2mBc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gc79qGT/F4I/UOMU7IZb0Ognp1BlAT3tI2/buX5i7kZRtL2a8zVgpXgsSOpgyHjJgc1wPWXQleGTuEMAgPlxCOkGjLvafhaDOGONCScQ2CyOnkBUv5fbRz2MCSpU0DfxVpQAK9MWK6tMoUF5B4ah78pfc0wybKBXYFHqvdaITkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY2zqyiw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGza2mBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA8E1F00A3A;
-	Wed,  9 Sep 2026 13:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY2zqyiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285A21F00A3A;
+	Wed,  9 Sep 2026 13:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961762;
-	bh=yrnN/UNQesVorgONvQDU2sj7AAOtWl2dowj1xTNg4w4=;
+	s=korg; t=1788961765;
+	bh=RjX+Kk2jFB1l9vxpz5R0Rrx2bl1Ish6NRXQTWEHimV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BGza2mBcv0OFgFhUmoZoPvh2EI7y9wc2qS8AqhQdSHeksox8bJ/Q5UBkiKRZH5u5M
-	 g+rOhFfhnN6osj8c0UMNgfnrtBAz0+FDA1RxXiWcLrw5o+Asyle4lBwgKB6cM0cp8S
-	 g9P71cF0UV6oe/QWSpln6TtranG7V7OwC8KZFM4M=
+	b=QY2zqyiwiymUK6afNFrlBsYMXXEglCdVXILUkjvaJVr9jGxLhGROG3nGx7ZacBP3J
+	 4eOzO8Ad3w/rOITLq3ziv675uycZ/ovlNUjO+ZRrrJ7Wyk5fb5l1a3FzTyysIXbQq6
+	 FRsYoI5jvmFhVmIMxAAn4t3darC4L9GfWPZdWUzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan Lim <foxieflakey@gmail.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 059/556] userfaultfd: reset err to be 0 when move_pages_ptes succeeded
-Date: Wed,  9 Sep 2026 15:35:39 +0200
-Message-ID: <20260909134232.544945350@linuxfoundation.org>
+	Kanishka De Silva <kpskanna1915@gmail.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 060/556] ublk: clear VM_MAYWRITE on read-only ublk char device mmap
+Date: Wed,  9 Sep 2026 15:35:40 +0200
+Message-ID: <20260909134232.579621688@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,44 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan Lim <foxieflakey@gmail.com>
+From: Kanishka De Silva <kpskanna1915@gmail.com>
 
-commit f025ca73decda1f895a4b80b961d3bc88825298a upstream.
+commit 6e2b571b0a54755b06e092501913e1dfefe75d6c upstream.
 
-During move_pages() operation, when move_pages_ptes() returns EAGAIN, the
-error code is not cleared even after we processed it.  This leads to a
-successful retry but then the same pages are retried again due to the
-stale error code.  This time move fails because pages are already moved,
-loop is terminated and move_pages() reports a failure.  Clear the error
-code once we processes EAGAIN.
+ublk_ch_mmap() rejects mmap requests with VM_WRITE set, but never
+clears VM_MAYWRITE on the resulting read-only mapping. This allows
+a userspace daemon to mmap the per-queue command buffer PROT_READ,
+then upgrade it to PROT_WRITE via mprotect(), since VM_MAYWRITE was
+never cleared.
 
-Link: https://lore.kernel.org/e1e0b5f8-c3c6-0537-670b-4397f822f980@gmail.com
-Fixes: 50944692052b ("userfaultfd: opportunistic TLB-flush batching for present pages in MOVE")
-Assisted-by: ChatGPT:GPT-5.6-Luna
-Signed-off-by: Bryan Lim <foxieflakey@gmail.com>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The command buffer holds struct ublksrv_io_desc entries that are
+kernel-written ABI; a writable mapping lets an unprivileged daemon
+process corrupt fields such as addr, op_flags, nr_sectors, and
+start_sector.
+
+Same bug class as the drm/panthor and drm/vc4 VM_MAYWRITE fixes, and
+the 2026-08-13 ptp/vmclock fix (a5edadbae57e).
+
+Verified via mprotect() PoC: before the fix, a PROT_READ mapping can
+be upgraded to PROT_READ|PROT_WRITE and a write into the command
+buffer corrupts io_desc fields (confirmed under KASAN). After the
+fix, mprotect() returns -EACCES.
+
+Fixes: 3fee8d7599e1 ("ublk_drv: add io_uring based userspace block driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kanishka De Silva <kpskanna1915@gmail.com>
+Reviewed-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20260830070133.559-1-kpskanna1915@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/userfaultfd.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/block/ublk_drv.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -2085,8 +2085,10 @@ static ssize_t move_pages(struct userfau
- 		}
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2651,6 +2651,12 @@ static int ublk_ch_mmap(struct file *fil
+ 	if (vma->vm_flags & VM_WRITE)
+ 		return -EPERM;
  
- 		if (err) {
--			if (err == -EAGAIN)
-+			if (err == -EAGAIN) {
-+				err = 0;
- 				continue;
-+			}
- 			break;
- 		}
- 
++	/*
++	 * The per-queue command buffer is kernel-written ABI; prevent
++	 * the daemon from upgrading to writable via mprotect().
++	 */
++	vm_flags_clear(vma, VM_MAYWRITE);
++
+ 	end = UBLKSRV_CMD_BUF_OFFSET + ub->dev_info.nr_hw_queues * max_sz;
+ 	if (phys_off < UBLKSRV_CMD_BUF_OFFSET || phys_off >= end)
+ 		return -EINVAL;
 
 
