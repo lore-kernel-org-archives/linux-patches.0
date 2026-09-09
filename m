@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37BF5650F4;
-	Wed,  9 Sep 2026 14:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDA758497E;
+	Wed,  9 Sep 2026 14:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963784; cv=none; b=VgbE2PXXCvl4Nw0vWcIgxliChE/PRY0TUSEU0fFPIWUymNv1ktiNIVCFd5P91T1DUBSv62JJ/Y8UBpu1R10yKdzeBIPMRPGTP+piA/knARFruKwFucEfwuUzf2JQ6Zsz361bAwJGAhItU4P4j3KOLyVNXKxrNzrARdTZvN1Ri/M=
+	t=1788963787; cv=none; b=O/VA/n71GrVea/HrREe9gcfFqXf12iD6SmKXmPEjqu+JNQl3EiIWLPEiRJlysIPeAwQetSlShPnVcVCkKYV1REqR4M3NyCeKPGZe4WlFT2DOX1rDYlReWT5lN+xPNMEL7tz2E38TzaYYiKeNXOrDiKbw9aSmIq7JrwDScKYx40A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963784; c=relaxed/simple;
-	bh=8/rPcsbSRvnjp6TLNe1GZzVmjekIwXC2JX38nyRtJX8=;
+	s=arc-20240116; t=1788963787; c=relaxed/simple;
+	bh=P79TRu9ZRr08lIFcDkzCqNnY9t7VEUAeSZ7JPREGass=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDAUMR5eOlqVyRDyPNjYphqQLmWe5bkZNdK+bnBL5j4J+KPoBPSHb4ecN9Bi/JVhhhXaR9Dq624xo5wccSB3fzbLLu4YM9v+i3w8njmuYx3zXVIE7arUntkGqH4SAd8RGTQQJbRqvJcBOy0CYWvWLrpyzVULE2ePv3WZRYjrh/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7skBllM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mhDCikBOsUKWuY9TFyhE+T5xj0LprA1D/Ujepypyv/ipMb2v2qhowZfX3Ve85PaFN1sbsO5IA/WbYgY7qkD36VVByq6QQYWi77LBr/AdAsy6uag9tJT5jt7W9bqLwQCu3DNLj2oCCyCa21IpsBsS2MF+qk1VioFKhpy8oQ46V4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k++T+YEo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7skBllM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DDC1F00A3A;
-	Wed,  9 Sep 2026 14:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k++T+YEo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41581F00A3A;
+	Wed,  9 Sep 2026 14:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963782;
-	bh=LllvlKxcGHkRcut+UwoSdHN2ENeL5ZYAqQFAf76rxVk=;
+	s=korg; t=1788963785;
+	bh=9wne6NypmVGdY44H9imdVsyS17a7iwS5zOsVFoPN230=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B7skBllM6+MwFJ1aGbQU2asvkW9q9QNmduHt5j5dNNF10qj2aXtPPLYvcrztYNhOc
-	 y2OsIEjm1Oh/SV2cUl+TSDXKgCt3OGcnPVeS2q8kVVxrZrygGT/1Svp5KVzuda78oj
-	 TvCLE9T5e/Aw9f0swJ8xJTwEA88Yw1UtK0kI90UY=
+	b=k++T+YEop13QaXlCbxojWUxLYxFKaQuDdyzHMBWJiBQBLJrmSIZ5MAX/yKy4R3Bvt
+	 Tw/gzdjnwE8ikv1AUuuJVe8LSlxsQfssAAGjK0W0HHvO4REFp0V1XfHvs3bPWVHgYp
+	 GYHLEhmau0VI9M1X96VKI0pfpXGRqopchZzraogg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 197/583] ASoC: tegra210_mixer: sort the register default table
-Date: Wed,  9 Sep 2026 15:38:02 +0200
-Message-ID: <20260909134244.983230019@linuxfoundation.org>
+Subject: [PATCH 6.18 198/583] ASoC: tegra: Sort MBDRC register defaults
+Date: Wed,  9 Sep 2026 15:38:03 +0200
+Message-ID: <20260909134245.017464681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,45 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit f70bc276fc7f712ff5c8e995d5050558a3198df2 upstream.
+commit abb5bed6f48d54d3b82724a430fd462579ecd876 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+Commit 4b05ccb17f92 ("regcache: Sort the local copy of an unsorted
+reg_defaults array") exposed an issue with the Tegra MBDRC driver and
+now the following warning is observed:
 
-TEGRA210_MIXER_ENABLE (0x400) is the last entry of the table, after
-TEGRA210_MIXER_PEAKM_RAM_CTRL (0x434), which makes it unreachable.
-regcache_reg_needs_sync() then cannot compare it against its default and
-reports that a sync is needed, so it is written to the device on every
-regcache_sync() even when it was never touched.
+ tegra210-ope 2908000.processing-engine: Driver needs fixing: Unsorted
+  reg_defaults, sorting the copy
 
-Sort the table by register address.
+This warning occurs because register defaults in the structure
+tegra210_mbdrc_reg_defaults are not specified in ascending order which
+is required by regmap. Fix this by sorting the register defaults
+according to their address. Note that in order to do this it is
+necessary to replace the macro MBDRC_FILTER_REG_DEFAULTS with a per
+register macro MBDRC_FILTER_PARAM_REG_DEFAULTS.
 
-Fixes: 05bb3d5ec64a ("ASoC: tegra: Add Tegra210 based Mixer driver")
+Fixes: 7358a803c778 ("ASoC: tegra: Add Tegra210 based OPE driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805122748.13090-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260821153734.158426-5-jonathanh@nvidia.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/tegra/tegra210_mixer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/tegra/tegra210_mbdrc.c |   42 +++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
---- a/sound/soc/tegra/tegra210_mixer.c
-+++ b/sound/soc/tegra/tegra210_mixer.c
-@@ -57,10 +57,10 @@ static const struct reg_default tegra210
- 	MIXER_TX_REG_DEFAULTS(3),
- 	MIXER_TX_REG_DEFAULTS(4),
+--- a/sound/soc/tegra/tegra210_mbdrc.c
++++ b/sound/soc/tegra/tegra210_mbdrc.c
+@@ -20,33 +20,33 @@
+ #define MBDRC_FILTER_REG(reg, id)					    \
+ 	((reg) + ((id) * TEGRA210_MBDRC_FILTER_PARAM_STRIDE))
  
-+	{ TEGRA210_MIXER_ENABLE, 0x1 },
- 	{ TEGRA210_MIXER_CG, 0x00000001},
- 	{ TEGRA210_MIXER_GAIN_CFG_RAM_CTRL, 0x00004000},
- 	{ TEGRA210_MIXER_PEAKM_RAM_CTRL, 0x00004000},
--	{ TEGRA210_MIXER_ENABLE, 0x1 },
+-#define MBDRC_FILTER_REG_DEFAULTS(id)					    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_IIR_CFG, id), 0x00000005},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_IN_ATTACK, id), 0x3e48590c},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_IN_RELEASE, id), 0x08414e9f},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_FAST_ATTACK, id), 0x7fffffff},    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_IN_THRESHOLD, id), 0x06145082},   \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_OUT_THRESHOLD, id), 0x060d379b},  \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_RATIO_1ST, id), 0x0000a000},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_RATIO_2ND, id), 0x00002000},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_RATIO_3RD, id), 0x00000b33},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_RATIO_4TH, id), 0x00000800},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_RATIO_5TH, id), 0x0000019a},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_MAKEUP_GAIN, id), 0x00000002},    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_INIT_GAIN, id), 0x00066666},	    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_GAIN_ATTACK, id), 0x00d9ba0e},    \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_GAIN_RELEASE, id), 0x3e48590c},   \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_FAST_RELEASE, id), 0x7ffff26a},   \
+-	{ MBDRC_FILTER_REG(TEGRA210_MBDRC_CFG_RAM_CTRL, id), 0x4000}
++#define MBDRC_FILTER_PARAM_REG_DEFAULTS(reg, val)			    \
++	{ MBDRC_FILTER_REG(reg, 0), val},				    \
++	{ MBDRC_FILTER_REG(reg, 1), val},				    \
++	{ MBDRC_FILTER_REG(reg, 2), val}
+ 
+ static const struct reg_default tegra210_mbdrc_reg_defaults[] = {
+ 	{ TEGRA210_MBDRC_CFG, 0x0030de51},
+ 	{ TEGRA210_MBDRC_CHANNEL_MASK, 0x00000003},
+ 	{ TEGRA210_MBDRC_FAST_FACTOR, 0x30000800},
+ 
+-	MBDRC_FILTER_REG_DEFAULTS(0),
+-	MBDRC_FILTER_REG_DEFAULTS(1),
+-	MBDRC_FILTER_REG_DEFAULTS(2),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_IIR_CFG, 0x00000005),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_IN_ATTACK, 0x3e48590c),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_IN_RELEASE, 0x08414e9f),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_FAST_ATTACK, 0x7fffffff),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_IN_THRESHOLD, 0x06145082),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_OUT_THRESHOLD, 0x060d379b),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_RATIO_1ST, 0x0000a000),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_RATIO_2ND, 0x00002000),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_RATIO_3RD, 0x00000b33),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_RATIO_4TH, 0x00000800),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_RATIO_5TH, 0x0000019a),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_MAKEUP_GAIN, 0x00000002),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_INIT_GAIN, 0x00066666),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_GAIN_ATTACK, 0x00d9ba0e),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_GAIN_RELEASE, 0x3e48590c),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_FAST_RELEASE, 0x7ffff26a),
++	MBDRC_FILTER_PARAM_REG_DEFAULTS(TEGRA210_MBDRC_CFG_RAM_CTRL, 0x4000),
  };
  
- /* Default gain parameters */
+ /* Default MBDRC parameters */
 
 
