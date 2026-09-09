@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E171548549;
-	Wed,  9 Sep 2026 13:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5AD4F55A5;
+	Wed,  9 Sep 2026 13:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962188; cv=none; b=qxo3LZB768M+PHTkPa0IeUFOkGoIq2xQfHUYDt1F4/65U3zcaA2azXFvVMD0j85uN0t/hALLBaQ/zlNarXiGfCsQldk8LceqL2mqU4wMYekyIhHqYp76uGAMjsdA1MvHdNrnTVpvFebxC3223KpluFKn3w0SWch1d066ZXmjPcA=
+	t=1788962191; cv=none; b=raC2XErZR5E+Hpq5kHwdYTmFSAKOKxnPB8MlNFWZwP2K89uWFOab3KPxY/MmH5YZrWEEJnu6zx49NqHyroEV1GcDsKJPV8o44idUWYVj/yRNKmdyHXHfKvkFPxdz8WPV5f8ErlFOBfqaC9d1LRHnpy3UWXFxFQ3LRSbzXV8VPfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962188; c=relaxed/simple;
-	bh=+S+ASFUY4TM4aCQotZJJsBX+WA6nsHOA8/5TJJX+Uak=;
+	s=arc-20240116; t=1788962191; c=relaxed/simple;
+	bh=r7Zw8pinyYWfojEWaxz/MvFJ9jEeEgj5/CRyOP1RTbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKxqeeqZzG65FaG0bu6ZF/7CJro3vVD/ZLsZb5RdCDrEWQU2pO7tGCpdmgLKk//efBP+BY8IsXaWc/n9p9ryjwNRMpe1t6hm+crFfO6xpap30dVUeic1mcTS0sZD+zksdsnh07XudJLq7T/D0CAXiqss+9atRZdxaqf+5wQ4ITk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+QFgGZE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sToVjDo4N1Zifjarwi4k0tatB5/MirXwfWz/VlncDkl/QO//polPlfJz9TLI5bFKeOzx+mfo5nc59MssedSErccWZbIEMeE69RTsz28dcO2SxF5Av+uXVBJ17Z7+6dNSmu4hlkrGkJZHpNlMAcgUROy4kXZnDReQ7Gi5Fd4q5tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTXwtq6Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+QFgGZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9837F1F00A3A;
-	Wed,  9 Sep 2026 13:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTXwtq6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737381F00A3A;
+	Wed,  9 Sep 2026 13:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962187;
-	bh=3k2T4pxHv7/UBnnmlOtFCCV3gjI65DluLZknhAFr+8w=;
+	s=korg; t=1788962190;
+	bh=hEJKcf7TwMjBNOp/RseOtLUs0E9pLAZ7PnnJ3vYkB38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t+QFgGZEXGijE2j6jkBQUsWYwoqofkU+gcLulZmcH7etuA2X4pxCTnewF3QH9GqTh
-	 pm040PL0lq2omvUFfo/3hoqLC+5F+0VfMeH47YTijOKP0YYWndn5ymXj1qAVh+H5iV
-	 G9E4QYf3aAGoo6uAi48OGeG8ab20cbczCgQp41bc=
+	b=XTXwtq6ZBt/Mq4bEL9qvOn86Il2odQcyYDt0j01LVHzidSCx+rXMlx5KalfsA4Y7G
+	 E45+TTvNF68S5kMJqpUWBZklw0od+k70gPZnhiqrrpyhwZPU3pZKTkApsS/a2HUpBC
+	 vFSogrYFwNLSlak3HZ6zH3r76zpIJIyU7qp24xpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.2 203/556] batman-adv: mcast: linearize skbuff for packet generation
-Date: Wed,  9 Sep 2026 15:38:03 +0200
-Message-ID: <20260909134237.532776704@linuxfoundation.org>
+Subject: [PATCH 7.2 204/556] batman-adv: dat: avoid unaligned fault in IP extraction
+Date: Wed,  9 Sep 2026 15:38:04 +0200
+Message-ID: <20260909134237.566976934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,49 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 6a30a59e2660afd03c975f1b8eae6a2301161197 upstream.
+commit 0121afa52cdb88cfb4d5d7bd126a23a9100121d8 upstream.
 
-batadv_mcast_forw_packet() and batadv_mcast_forw_scrape() is not only
-called (indirectly) by the unsharing+linearizing batadv_recv_mcast_packet()
-handler. When it is called (indirectly) by batadv_mcast_forw_mcsend() then
-it will be unshared but not linearized. The SKB_LINEAR_ASSERT() can
-therefore cause a fatal BUG().
+Independent of the alignment of the ARP packet in the SKB, either the
+batadv_arp_ip_src or the batadv_arp_ip_dst will have an unaligned access
+(on HW without native unaligned read support).
 
-The linearization should happen during the expansion of the head because
-the scrape function can be hit already during the initial
-batadv_mcast_forw_mode() selection code:
-
-* batadv_interface_tx
-* batadv_mcast_forw_mode
-* batadv_mcast_forw_mode_by_count()
-* batadv_mcast_forw_push()
-  -> calls batadv_mcast_forw_expand_head() before everything else
-* batadv_mcast_forw_push_tvlvs()
-* batadv_mcast_forw_push_dests()
-* batadv_mcast_forw_push_adjust_padding()
-* batadv_mcast_forw_scrape()
+Use get_unaligned() to handle this properly on all architectures.
 
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 90039133221e ("batman-adv: mcast: implement multicast packet generation")
+Fixes: 5c3a0e553593 ("batman-adv: Distributed ARP Table - add ARP parsing functions")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/multicast_forw.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/batman-adv/distributed-arp-table.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/multicast_forw.c
-+++ b/net/batman-adv/multicast_forw.c
-@@ -1103,6 +1103,10 @@ static int batadv_mcast_forw_expand_head
- 	if (skb_cow(skb, hdr_size) < 0)
- 		return -ENOMEM;
- 
-+	/* batadv_mcast_forw_scrape() + batadv_mcast_forw_packet() require linearized skb */
-+	if (skb_linearize(skb) < 0)
-+		return -ENOMEM;
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -250,7 +250,10 @@ static u8 *batadv_arp_hw_src(struct sk_b
+  */
+ static __be32 batadv_arp_ip_src(struct sk_buff *skb, int hdr_size)
+ {
+-	return *(__force __be32 *)(batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN);
++	u8 *src = batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN;
++	__be32 *ip = (__force __be32 *)src;
 +
- 	return 0;
++	return get_unaligned(ip);
  }
  
+ /**
+@@ -275,8 +278,9 @@ static u8 *batadv_arp_hw_dst(struct sk_b
+ static __be32 batadv_arp_ip_dst(struct sk_buff *skb, int hdr_size)
+ {
+ 	u8 *dst = batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN * 2 + 4;
++	__be32 *ip = (__force __be32 *)dst;
+ 
+-	return *(__force __be32 *)dst;
++	return get_unaligned(ip);
+ }
+ 
+ /**
 
 
