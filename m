@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77E854B1C6;
-	Wed,  9 Sep 2026 14:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A91953FD37;
+	Wed,  9 Sep 2026 14:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963162; cv=none; b=HjBs/MhmPkCTRUzxP++yhUdJYSIE2eUpoSaVqIMsS+yb9clj1HGtaGlVAt04el4hzB3cd7ARFqdWvzfBZmsqQjQU6GvHkkXrCedB1jtd9o7qnCfikwj++JTAMQaNfsf09H07W5g2shWB6iuTLbZY0YqFRvDpzhsbAE9mPD9TRnM=
+	t=1788963165; cv=none; b=BXYPbJVu0gRE6G1LvYEnyGTFMM5hKYYVBgIWAuF3xiR7TEA4tlZLlE72HIz+E1zipEM9byEnaNU7nWhwAsHcT6TJbQWsItLZWThXXCZj79t0xK/ioZV2ZyRToZUylrGuGLVoKDs9b1f5sFlFryAdJtcg8AHUA7kzXIZZgqNSQbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963162; c=relaxed/simple;
-	bh=uiMT1ufeSAHmU8v2OiPM4ekJ8DHOCzooE0DmB85pE38=;
+	s=arc-20240116; t=1788963165; c=relaxed/simple;
+	bh=te7R2qnem7NCD9yEZCCBTU7O1CZwLF06To+6Jqu/3m0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3XQzKVkxK+jXvLNyLlIcYKPlD2HUKBAlEjsXw0l3J0J72jqxmxElOSH3u5jdbhL8BXLHAamKYKUS9s3sQY3A0m5Ot7+qYROi4RgovLd+6kMLe/4imaXppSSp1T/watJZgYSQqAgI82T1bLDxBFoSrbZHLeipb8qYw964hOst6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZk7cEHb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l0JaHjd5Ei6IchDSzEzOjbUh7XcLfND8dedzOeVtAyri6/BELVykllGrE/KHK3VrPi6JktujphcajoHJiwCOPQsbxuoEv95PF8Xt6um/W4sS3oVE2hmBgqreEHzyGS7YSJQEQKcnZYzCReu7Quy2lFJvknfyT/JW22lG/1SjbEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaY/nKAn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZk7cEHb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DACE1F00A3A;
-	Wed,  9 Sep 2026 14:12:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaY/nKAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1431F00A3A;
+	Wed,  9 Sep 2026 14:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963160;
-	bh=9u4H/IGkJMhRZV1lEV8YAF7Ntuk8rCl5wTKOFbhipoI=;
+	s=korg; t=1788963163;
+	bh=74Hn80970cMcs8/fZt4QfDAOtUrkmK/kz1GHC7IbFD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZk7cEHbPnisMFDuGnthfYkczOxII6mvYv+ko9/cLr7dSmZ+28159N1ftKUPfTmy+
-	 zP5CbJfQhilqEwDaYWQ8+tIJYOSYy3BCazAkJ4QfoR44VshslML+pbJ2G5IHmpEoKf
-	 P5OaPpqjS49zT/4PYN+speH8+VyxU/uPBp4xBL3k=
+	b=yaY/nKAndu8Scc4uWck+Fa5Fe3x5j3Ij7avjwGFJ+bmg2CryQkleBiJmwrX+i+vvx
+	 t5FEkNayu294zZhek0sKPLLj+K5WQAbTN6R2jv3QLYnj0PJuMWKLHjyNUS5o1KlCG3
+	 Kyi8uJv2zTwnRtkxs78wbV7PafFgjlDgH17xiZXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 7.2 540/556] drm/nouveau/gsp: fix vblank interrupts on GB20x
-Date: Wed,  9 Sep 2026 15:43:40 +0200
-Message-ID: <20260909134249.392181667@linuxfoundation.org>
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.2 541/556] ksmbd: fix use-after-free in oplock break notification
+Date: Wed,  9 Sep 2026 15:43:41 +0200
+Message-ID: <20260909134249.421563826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,201 +50,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-commit 5bb489b333237c1bf63a891a4362986253a0060a upstream.
+commit 0e753899627b5e28a9fea8bca98262a6f65a2452 upstream.
 
-The GSP path programs per-head timing (vblank) interrupts the same way on
-every generation. NVD5.0 (GB20x) reworked the FE interrupt frontend
-around four message-based kernel vectors (high latency, low latency, PMU,
-and GSP) and moved RM head-timing interrupts to the dedicated low-latency
-vector:
+smb2_oplock_break_noti() reads opinfo->conn without any lock and
+dereferences it after two allocations which may sleep.  When the
+durable handle owning the oplock is disconnected, session_fd_check()
+clears opinfo->conn and drops its conn reference under ci->m_lock, and
+the last ksmbd_conn_put() frees the connection.  A break triggered by
+another connection that races with the teardown can then resurrect the
+freed connection: ksmbd_conn_get() is a plain atomic_inc, and the
+queued break work later dereferences the stale conn via
+ksmbd_conn_write(), a use-after-free reachable by any authenticated
+client holding a durable batch oplock.
 
- - The enable is NV_PDISP_FE_RM_INTR_EN1_HEAD_TIMING, 0x611ef0 +
-   head*4 (570.144 kernel_head_0501.c, renamed kernel_head_0502.c from
-   575.51.02 on, and v05_01 dev_disp.h).
+Thread the caller's inode into the notification path instead of taking
+a new reference on it.  Every caller of oplock_break() already holds a
+live ksmbd_file (or an explicit ksmbd_inode_lookup_lock() reference,
+in the parent lease break paths) on the inode that owns the break
+target's oplock list, so ci cannot be freed during the call, and its
+lock can be taken without dereferencing opinfo->o_fp, which a
+concurrent close may free.  Select and pin the connection under
+ci->m_lock, the same lock session_fd_check() and
+ksmbd_reopen_durable_fd() use to update opinfo->conn, so a concurrent
+detach either loses the race to the clear or keeps the connection
+alive until the notification work releases it.  Transfer the reference
+to the work item and release it on allocation failures.
 
- - The vector is reported as a separate interrupt table entry,
-   MC_ENGINE_IDX_DISP_LOW (intr_gb202.c, intrCacheDispIntrVectors).
-
- - The vector must be re-armed through NV_PDISP_FE_INTR_RETRIGGER(1)
-   at 0x611f34 after servicing (kdispServiceInterrupt ->
-   kdispIntrRetrigger_v05_01).
-
-The event latch (0x611800), per-head status (0x611c00), and dispatch
-summary (0x611ec0) the interrupt handler uses are unchanged on GB20x
-(kheadReadPendingVblank_v03_00 and kheadResetPendingLastData_v03_00
-remain for DISPv0502+).
-
-On GB20x the old code enables head timing onto the legacy vector, leaves
-its handler there, and never re-arms the message-based vectors. Page
-flips still complete (nv50 sends those events from the commit path), so
-the desktop looks fine while DRM vblank waits and vblank sequence queries
-are affected.
-
-Supply GB20x vblank enables and an interrupt handler that re-arms the
-vector after servicing through gb202_gsp_disp, translate the low-latency
-interrupt table entry as a second NVKM_ENGINE_DISP instance, and add a
-gsp.intr_low_latency flag so r535_disp_oneinit() attaches the handler to
-that instance. GB20x was the last cross-file user of the TU1xx vblank
-enables, so make those static and drop their head.h prototypes.
-
-Fixes: 6cc6e08d4542 ("drm/nouveau/kms: add support for GB20x")
+Fixes: b003086d7696 ("ksmbd: fix NULL-deref of opinfo->conn in oplock/lease break notifiers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260825001408.14219-9-mohamedahmedegypt2001@gmail.com
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/disp/gb202.c       |   42 +++++++++++++++--
- drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h        |    2 
- drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h        |    2 
- drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c       |    4 -
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c |   10 +++-
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c  |    9 +++
- 6 files changed, 61 insertions(+), 8 deletions(-)
+ fs/smb/server/oplock.c |   79 ++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 59 insertions(+), 20 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/gb202.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/gb202.c
-@@ -124,12 +124,46 @@ gb202_head_state(struct nvkm_head *head,
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -878,31 +878,69 @@ out:
+ 	ksmbd_conn_put(conn);
+ }
+ 
++/*
++ * Select and pin the connection used for an oplock break before doing any
++ * allocations which may sleep.  The caller of oplock_break() holds a live
++ * reference on ci (a file being opened, a file being operated on, or an
++ * explicit ksmbd_inode_lookup_lock() reference in the parent lease break
++ * paths), so the inode cannot be freed during the call and its lock is
++ * reachable without dereferencing opinfo->o_fp, which is not pinned by
++ * the oplock reference and may be freed by a concurrent close.
++ *
++ * opinfo->conn is cleared under ci->m_lock by session_fd_check() when the
++ * durable handle owning the oplock is disconnected, reassigned by
++ * ksmbd_reopen_durable_fd() under the same lock, and the last
++ * ksmbd_conn_put() of the old connection frees it.  Holding the read lock
++ * excludes both writers, so the connection cannot be freed while it is
++ * selected.
++ */
++static struct ksmbd_conn *smb2_oplock_break_conn_get(struct oplock_info *opinfo,
++						     struct ksmbd_inode *ci)
++{
++	struct ksmbd_conn *conn;
++
++	down_read(&ci->m_lock);
++	conn = READ_ONCE(opinfo->conn);
++	if (conn && !ksmbd_conn_releasing(conn))
++		conn = ksmbd_conn_get(conn);
++	else
++		conn = NULL;
++	up_read(&ci->m_lock);
++
++	return conn;
++}
++
+ /**
+  * smb2_oplock_break_noti() - send smb2 exclusive/batch to level2 oplock
+  *		break command from server to client
+  * @opinfo:		oplock info object
++ * @ci:		inode owning the break target's oplock list, pinned by
++ *		the caller
+  *
+  * Return:      0 on success, otherwise error
+  */
+-static int smb2_oplock_break_noti(struct oplock_info *opinfo)
++static int smb2_oplock_break_noti(struct oplock_info *opinfo,
++				  struct ksmbd_inode *ci)
+ {
+ 	struct ksmbd_conn *conn;
+ 	struct oplock_break_info *br_info;
+ 	int ret = 0;
+ 	struct ksmbd_work *work;
+ 
+-	conn = READ_ONCE(opinfo->conn);
++	conn = smb2_oplock_break_conn_get(opinfo, ci);
+ 	if (!conn)
+ 		return ksmbd_invalidate_durable_fd(opinfo->fid);
+ 
+ 	work = ksmbd_alloc_work_struct();
+-	if (!work)
++	if (!work) {
++		ksmbd_conn_put(conn);
+ 		return -ENOMEM;
++	}
+ 
+ 	br_info = kmalloc_obj(struct oplock_break_info, KSMBD_DEFAULT_GFP);
+ 	if (!br_info) {
+ 		ksmbd_free_work_struct(work);
++		ksmbd_conn_put(conn);
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -911,7 +949,8 @@ static int smb2_oplock_break_noti(struct
+ 	br_info->open_trunc = opinfo->open_trunc;
+ 
+ 	work->request_buf = (char *)br_info;
+-	work->conn = ksmbd_conn_get(conn);
++	/* Transfer the reference acquired by smb2_oplock_break_conn_get(). */
++	work->conn = conn;
+ 	work->sess = opinfo->sess;
+ 
+ 	ksmbd_conn_r_count_inc(conn);
+@@ -1074,9 +1113,9 @@ static void wait_lease_breaking(struct o
  	}
  }
  
-+/* NVD5.0 (GB20x and later) moved the RM head-timing interrupt enable to
-+ * the low-latency vector's EN1 block. The event latch is unchanged.
-+ */
-+static void
-+gb202_head_vblank_put(struct nvkm_head *head)
-+{
-+	struct nvkm_device *device = head->disp->engine.subdev.device;
-+
-+	nvkm_mask(device, 0x611ef0 + (head->id * 4), 0x00000002, 0x00000000);
-+}
-+
-+static void
-+gb202_head_vblank_get(struct nvkm_head *head)
-+{
-+	struct nvkm_device *device = head->disp->engine.subdev.device;
-+
-+	nvkm_wr32(device, 0x611800 + (head->id * 4), 0x00000002);
-+	nvkm_mask(device, 0x611ef0 + (head->id * 4), 0x00000002, 0x00000002);
-+}
-+
-+static irqreturn_t
-+gb202_disp_intr(struct nvkm_inth *inth)
-+{
-+	struct nvkm_disp *disp = container_of(inth, typeof(*disp), engine.subdev.inth);
-+	irqreturn_t ret = tu102_disp_intr(inth);
-+
-+	/* The FE interrupt vectors are message-based on NVD5.0. Re-arm the
-+	 * low-latency vector so it fires again for any event that latched
-+	 * while we were servicing.
-+	 */
-+	nvkm_wr32(disp->engine.subdev.device, 0x611f34, 0x00000001);
-+	return ret;
-+}
-+
- static const struct nvkm_head_func
- gb202_gsp_head = {
- 	.state = gb202_head_state,
- 	.rgpos = gv100_head_rgpos,
--	.vblank_get = tu102_head_vblank_get,
--	.vblank_put = tu102_head_vblank_put,
-+	.vblank_get = gb202_head_vblank_get,
-+	.vblank_put = gb202_head_vblank_put,
- };
+-static int oplock_break(struct oplock_info *brk_opinfo, int req_op_level,
+-			struct ksmbd_work *in_work, bool share_break)
+-{
++static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
++			int req_op_level, struct ksmbd_work *in_work,
++			bool share_break, bool sync_lease_break){
+ 	int err = 0;
+ 	bool sent_interim = false;
  
- /* GB20x is GSP-only. This table supplies the register programming the
-@@ -139,7 +173,9 @@ static const struct nvkm_disp_func
- gb202_gsp_disp = {
- 	.uevent = &gv100_disp_chan_uevent,
- 	.ramht_size = 0x2000,
--	.gsp.intr = tu102_disp_intr,
-+	/* Head timing arrives on the dedicated low-latency vector. */
-+	.gsp.intr = gb202_disp_intr,
-+	.gsp.intr_low_latency = true,
- 	.gsp.head = &gb202_gsp_head,
- 	.gsp.hdmi_gcp = gb202_sor_hdmi_gcp,
- 	/* The legacy AVI unit is unchanged on GB20x. */
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
-@@ -56,8 +56,6 @@ int gv100_head_new(struct nvkm_disp *, i
- void gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state);
- void gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline);
+@@ -1196,7 +1235,7 @@ again:
+ 			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
+ 	}
  
--void tu102_head_vblank_get(struct nvkm_head *);
--void tu102_head_vblank_put(struct nvkm_head *);
- extern const struct nvkm_head_func tu102_gsp_head;
+-	err = smb2_oplock_break_noti(brk_opinfo);
++	err = smb2_oplock_break_noti(brk_opinfo, ci);
  
- #define HEAD_MSG(h,l,f,a...) do {                                              \
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h
-@@ -42,6 +42,8 @@ struct nvkm_disp_func {
- 	 */
- 	struct {
- 		irqreturn_t (*intr)(struct nvkm_inth *);
-+		/* Head-timing interrupts arrive on a second DISP vector. */
-+		bool intr_low_latency;
- 		const struct nvkm_head_func *head;
- 		void (*hdmi_gcp)(struct nvkm_ior *, int head, bool enable);
- 		void (*hdmi_infoframe_avi)(struct nvkm_ior *, int head, void *data, u32 size);
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c
-@@ -123,7 +123,7 @@ tu102_sor_new(struct nvkm_disp *disp, in
-  * enables to us. These program the RM head-timing line (bit 1 of the
-  * per-head enable, not the bit nvkm's own gv100 path uses).
-  */
--void
-+static void
- tu102_head_vblank_put(struct nvkm_head *head)
- {
- 	struct nvkm_device *device = head->disp->engine.subdev.device;
-@@ -131,7 +131,7 @@ tu102_head_vblank_put(struct nvkm_head *
- 	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000000);
+ 	ksmbd_debug(OPLOCK, "oplock granted = %d\n", brk_opinfo->level);
+ 	if (brk_opinfo->op_state == OPLOCK_CLOSING)
+@@ -1224,13 +1263,14 @@ static int oplock_break_add(struct list_
+ 	return 0;
  }
  
--void
-+static void
- tu102_head_vblank_get(struct nvkm_head *head)
+-static void oplock_break_drain_none(struct list_head *head)
++static void oplock_break_drain_none(struct list_head *head,
++				    struct ksmbd_inode *ci)
  {
- 	struct nvkm_device *device = head->disp->engine.subdev.device;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
-@@ -1671,7 +1671,15 @@ r535_disp_oneinit(struct nvkm_disp *disp
- 	if (ret)
- 		return ret;
+ 	struct oplock_break_entry *ent, *tmp;
  
--	ret = nvkm_gsp_intr_stall(gsp, disp->engine.subdev.type, disp->engine.subdev.inst);
-+	/* Chips that raise head-timing interrupts on a separate low-latency
-+	 * vector report it as a second DISP interrupt table entry, exposed
-+	 * as instance 1 by the RM engine-index translation (see
-+	 * r570_gsp_xlat_mc_engine_idx()). Their high-latency vector
-+	 * (instance 0) is left unhandled as no event nouveau enables is
-+	 * routed to it, and without a handler it stays masked.
-+	 */
-+	ret = nvkm_gsp_intr_stall(gsp, disp->engine.subdev.type,
-+				  disp->func->gsp.intr_low_latency ? 1 : disp->engine.subdev.inst);
- 	if (ret < 0)
- 		return ret;
+ 	list_for_each_entry_safe(ent, tmp, head, list) {
+-		oplock_break(ent->opinfo, SMB2_OPLOCK_LEVEL_NONE, NULL, false);
+-		list_del(&ent->list);
++		oplock_break(ent->opinfo, ci, SMB2_OPLOCK_LEVEL_NONE, NULL,
++			     false, false);		list_del(&ent->list);
+ 		opinfo_put(ent->opinfo);
+ 		kfree(ent);
+ 	}
+@@ -1377,7 +1417,7 @@ void smb_send_parent_lease_break_noti(st
+ 	}
+ 	up_read(&p_ci->m_lock);
  
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c
-@@ -44,6 +44,15 @@ r570_gsp_xlat_mc_engine_idx(u32 mc_engin
- 		*ptype = NVKM_ENGINE_DISP;
- 		*pinst = 0;
- 		return true;
-+	case MC_ENGINE_IDX_DISP_LOW:
-+		/* GB20x+ report a separate low-latency display vector, used
-+		 * for head-timing interrupts. Expose it as a second DISP
-+		 * interrupt instance. r535_disp_oneinit() attaches the
-+		 * handler to it when the chip's gsp.intr_low_latency is set.
-+		 */
-+		*ptype = NVKM_ENGINE_DISP;
-+		*pinst = 1;
-+		return true;
- 	case MC_ENGINE_IDX_CE0 ... MC_ENGINE_IDX_CE19:
- 		*ptype = NVKM_ENGINE_CE;
- 		*pinst = mc_engine_idx - MC_ENGINE_IDX_CE0;
+-	oplock_break_drain_none(&brk_list);
++	oplock_break_drain_none(&brk_list, p_ci);
+ 
+ 	ksmbd_inode_put(p_ci);
+ }
+@@ -1421,7 +1461,7 @@ void smb_lazy_parent_lease_break_close(s
+ 	}
+ 	up_read(&p_ci->m_lock);
+ 
+-	oplock_break_drain_none(&brk_list);
++	oplock_break_drain_none(&brk_list, p_ci);
+ 
+ 	ksmbd_inode_put(p_ci);
+ }
+@@ -1541,9 +1581,8 @@ int smb_grant_oplock(struct ksmbd_work *
+ 	prev_durable_detached = prev_op_snapshot.durable_detached;
+ 	prev_fid = prev_op_snapshot.fid;
+ 
+-	err = oplock_break(prev_opinfo, break_level, work,
+-			   share_ret < 0 && prev_opinfo->is_lease);
+-	if (prev_durable_detached || (prev_durable_open && err == -ENOENT))
++	err = oplock_break(prev_opinfo, ci, break_level, work,
++			   share_ret < 0 && prev_opinfo->is_lease, false);	if (prev_durable_detached || (prev_durable_open && err == -ENOENT))
+ 		ksmbd_invalidate_durable_fd(prev_fid);
+ 	opinfo_put(prev_opinfo);
+ 	if (err == -EAGAIN) {
+@@ -1640,8 +1679,8 @@ static bool smb_break_all_write_oplock(s
+ 	}
+ 
+ 	brk_opinfo->open_trunc = is_trunc;
+-	oplock_break(brk_opinfo, SMB2_OPLOCK_LEVEL_II, work, false);
+-	sent_break = true;
++	oplock_break(brk_opinfo, fp->f_ci, SMB2_OPLOCK_LEVEL_II, work, false,
++		     false);	sent_break = true;
+ 	opinfo_put(brk_opinfo);
+ 
+ 	return sent_break;
+@@ -1727,11 +1766,11 @@ next:
+ 			brk_op->level = SMB2_OPLOCK_LEVEL_NONE;
+ 			brk_op->op_state = OPLOCK_STATE_NONE;
+ 		} else {
+-			oplock_break(brk_op,
++			oplock_break(brk_op, ci,
+ 				     brk_op->is_lease && !is_trunc ?
+ 				     SMB2_OPLOCK_LEVEL_II : SMB2_OPLOCK_LEVEL_NONE,
+ 				     send_interim && !sent_interim ? work : NULL,
+-				     false);
++				     false, false);
+ 		}
+ 		sent_interim = true;
+ 		list_del(&ent->list);
 
 
