@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BBC57D21B;
-	Wed,  9 Sep 2026 14:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A065867C7;
+	Wed,  9 Sep 2026 14:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963314; cv=none; b=MgA7v1PyUpYTrcJO0ALFDnnN2QuC20lhO1Q6Exz7h1ZSygkl/eLuXOWVpVgFQXPDo4qmsE/i3AMytEkRdwiPV2dmu7VQSWeWKRoHXZB1VETMAR3iexPlYfWH9L7ipM59peZD9JhHfEDH17/d9UomwzPkZGEMERhMMhmgS1xXnWg=
+	t=1788963317; cv=none; b=SSj+dONV7c4Z+xbMFlxa3aQ7hzUlTyQnik6hM2AqZUOb6kTqb/ir2L4Dsoyjq6BYOYVlMuFAF/ZsD+Cm3wkdDOiXM1PvXaQQdNAXDaqwYk4yyr7d9bcH0ed5tOJG+FeMeVTghgTV+9aCbgpZcAinqOGZQplzYI3M99PNEsqGRw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963314; c=relaxed/simple;
-	bh=doLA5CjZfEm4JwpymGeciTUh59UTGgd7p+fsI83ZPPw=;
+	s=arc-20240116; t=1788963317; c=relaxed/simple;
+	bh=kCbeAk1Zoa4Z9g3moz6ZYPP33Xx2R4R1/kj4VYikd+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atHn3QV9PQ6O8Td/MefG0EAGDk5e6b2gLcKCaN4tli0HX7lWheIb5x7YWEcqd7KPQig4r/By9c1ccaHJKTif2PESieDAwLcJpgjyivSj3O638L44YbnL6hRgqCwvo8Zw0IfHOWPlGVElBMuL2hFkGAj5G4pPEWS/XNBU3Z9P29U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrCccZJE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oxMd3XVsGHXKFHPHT5D50ClU/JfoG66rnkdRcbTkNdYEcHtfI5g3wm4TaPhsddUE8sI30yUEfW8diy/ls60x0cR34J2+rPMtZFzHCb3jfB0uTWfSmKwVJS03o4kVrdjHUSFVxQCQiaLA0TCrhSEH9Bjp78xeLUqjuTEKtGRjrhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrkzAkiL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrCccZJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3641F00A3A;
-	Wed,  9 Sep 2026 14:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrkzAkiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62BA1F00A3A;
+	Wed,  9 Sep 2026 14:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963313;
-	bh=yq69ju8xERyaPo3AGOCIRCME6O7MMxi8ctommpUlzRo=;
+	s=korg; t=1788963316;
+	bh=xLALAbvJBxurBcpTRAONzdtj+r2Vrcn2NJO0JBdTR4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NrCccZJEkIx8/ZV37YaQHwLYscB05l6OV7R6eOO5WAKLA5mDcDlpLkKDHnWUzPLwQ
-	 ZsmCtZYfjxnpGretvL9ap58Qm2U+3LIWKzKBwVJJEsiNSTTKRa2re/rjSNZ2H/BZrR
-	 QE1E9OSUUiHBDc80+Xd6NgmL79NqT+/22fyAOjAQ=
+	b=KrkzAkiLFX6IlcFmcL6re0WehXHz8PQb5DT/IG78neb1vWrdUT5JvtZ9C9XDwswVj
+	 yq1+i/AeKOmJWJWlyxRImGhedVswIm1I2tn9gW4SuZMB8+NH1vvzH4Z0fiWkTAEZDY
+	 zvK9gzVM0CKS+6OOt20bZKYscaukzMhRg06aijRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 006/583] objtool/rust: add one more `noreturn` Rust function
-Date: Wed,  9 Sep 2026 15:34:51 +0200
-Message-ID: <20260909134238.014282222@linuxfoundation.org>
+Subject: [PATCH 6.18 007/583] mfd: qnap-mcu: keep the reply buffer alive past a command timeout
+Date: Wed,  9 Sep 2026 15:34:52 +0200
+Message-ID: <20260909134238.051017342@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -46,55 +46,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: FUJITA Tomonori <fujita.tomonori@gmail.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit c18f35e4904920db4c51620ba634e4d175b24741 ]
+commit 47504742cea7878ebd1bf1491bbed923df6b90b1 upstream.
 
-Fix the following warning:
+qnap_mcu_exec() publishes an on-stack buffer to the receive path:
 
-rust/kernel.o: warning: objtool: _RNvXNtNtCs1ewLyjEZ7Le_6kernel3str9parse_intaNtNtB2_7private12FromStrRadix14from_str_radix()
-falls through to next function _RNvXNtNtCs1ewLyjEZ7Le_6kernel3str9parse_intaNtNtB2_7private12FromStrRadix16from_u64_negated()
+	unsigned char rx[QNAP_MCU_RX_BUFFER_SIZE];
+	...
+	reply->data = rx;
+	reply->length = length;
 
-The commit 51d9ee90ea90 ("rust: str: add radix prefixed integer
-parsing functions") introduces u64::from_str_radix(), whose
-implementation contains a panic path for out-of-range radix values.
-The panic helper is core::num::from_ascii_radix_panic().
+and qnap_mcu_receive_buf() writes into it from the serdev receive path,
+which runs out of flush_to_ldisc() and is not serialized against
+qnap_mcu_exec() at all. bus_lock cannot cover it, because qnap_mcu_exec()
+holds that mutex across wait_for_completion_timeout().
 
-Note that radix is derived from strip_radix() here and is always
-within the valid range, so kernel never panics.
+On a timeout qnap_mcu_exec() returns with reply->data still pointing at
+its own frame. A reply that arrives late, or an unsolicited message from
+the MCU, is then written into a stack frame that has been left, corrupting
+whatever runs next on that stack. The same applies when qnap_mcu_write()
+fails, since that path returns without touching the reply state either.
 
-Fixes: 51d9ee90ea90 ("rust: str: add radix prefixed integer parsing functions")
-Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Tested-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20251223113538.1016078-1-fujita.tomonori@gmail.com
-[ Reworded typo. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Move the receive buffer into struct qnap_mcu. It is 37 bytes and the
+structure is devm_kzalloc()ed, so it lives as long as the driver, and a
+late write lands in memory that is still valid and is reinitialized by the
+next command. bus_lock keeps commands from sharing it.
+
+This deliberately does not clear reply->data or reply->length on the
+timeout path. Doing so races with qnap_mcu_receive_buf(), which reads both
+after its
+
+	if (!reply->length)
+		return size;
+
+check: clearing reply->data gives a NULL dereference, and clearing
+reply->length alone removes the reply->received == reply->length exit
+condition, so the copy loop runs until the uart chunk is consumed and
+overruns the buffer. Leaving both set keeps the write bounded by
+reply->length, which qnap_mcu_exec() has already checked against
+sizeof(mcu->rx).
+
+Fixes: 998f70d1806b ("mfd: Add base driver for qnap-mcu devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://lore.kernel.org/all/20260802132012.537B81F000E9@smtp.kernel.org/
+Link: https://patch.msgid.link/20260802135307.31380-1-ali@iusegentoo.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+(cherry picked from commit 47504742cea7878ebd1bf1491bbed923df6b90b1)
+[ 6.18 lacks qnap_mcu_verify_checksum() and
+  qnap_mcu_reply_is_any_error(), so the checksum check there still
+  open-codes qnap_mcu_csum(); only its rx references were moved to
+  mcu->rx.  The fix itself is unchanged. ]
+Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mfd/qnap-mcu.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index c7d64ab2ea4c4..141ff11f70a4b 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -216,7 +216,8 @@ static bool is_rust_noreturn(const struct symbol *func)
- 	 * as well as changes to the source code itself between versions (since
- 	 * these come from the Rust standard library).
- 	 */
--	return str_ends_with(func->name, "_4core5sliceSp15copy_from_slice17len_mismatch_fail")		||
-+	return str_ends_with(func->name, "_4core3num22from_ascii_radix_panic")				||
-+	       str_ends_with(func->name, "_4core5sliceSp15copy_from_slice17len_mismatch_fail")		||
- 	       str_ends_with(func->name, "_4core6option13expect_failed")				||
- 	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
- 	       str_ends_with(func->name, "_4core6result13unwrap_failed")				||
+diff --git a/drivers/mfd/qnap-mcu.c b/drivers/mfd/qnap-mcu.c
+index 4ec1f4cf902f6..22a7a77fdeaf9 100644
+--- a/drivers/mfd/qnap-mcu.c
++++ b/drivers/mfd/qnap-mcu.c
+@@ -55,6 +55,7 @@ struct qnap_mcu_reply {
+  * @reply:	Reply data structure
+  * @variant:	Device variant specific information
+  * @version:	MCU firmware version
++ * @rx:		Receive buffer the reply is assembled in
+  */
+ struct qnap_mcu {
+ 	struct serdev_device *serdev;
+@@ -62,6 +63,7 @@ struct qnap_mcu {
+ 	struct qnap_mcu_reply reply;
+ 	const struct qnap_mcu_variant *variant;
+ 	u8 version[QNAP_MCU_VERSION_LEN];
++	u8 rx[QNAP_MCU_RX_BUFFER_SIZE];
+ };
+ 
+ /*
+@@ -146,20 +148,19 @@ int qnap_mcu_exec(struct qnap_mcu *mcu,
+ 		  const u8 *cmd_data, size_t cmd_data_size,
+ 		  u8 *reply_data, size_t reply_data_size)
+ {
+-	unsigned char rx[QNAP_MCU_RX_BUFFER_SIZE];
+ 	size_t length = reply_data_size + QNAP_MCU_CHECKSUM_SIZE;
+ 	struct qnap_mcu_reply *reply = &mcu->reply;
+ 	int ret = 0;
+ 	u8 crc;
+ 
+-	if (length > sizeof(rx)) {
++	if (length > sizeof(mcu->rx)) {
+ 		dev_err(&mcu->serdev->dev, "expected data too big for receive buffer");
+ 		return -EINVAL;
+ 	}
+ 
+ 	guard(mutex)(&mcu->bus_lock);
+ 
+-	reply->data = rx;
++	reply->data = mcu->rx;
+ 	reply->length = length;
+ 	reply->received = 0;
+ 	reinit_completion(&reply->done);
+@@ -175,13 +176,13 @@ int qnap_mcu_exec(struct qnap_mcu *mcu,
+ 		return -ETIMEDOUT;
+ 	}
+ 
+-	crc = qnap_mcu_csum(rx, reply_data_size);
+-	if (crc != rx[reply_data_size]) {
++	crc = qnap_mcu_csum(mcu->rx, reply_data_size);
++	if (crc != mcu->rx[reply_data_size]) {
+ 		dev_err(&mcu->serdev->dev, "Invalid Checksum received\n");
+ 		return -EIO;
+ 	}
+ 
+-	memcpy(reply_data, rx, reply_data_size);
++	memcpy(reply_data, mcu->rx, reply_data_size);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
