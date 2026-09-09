@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6E55625ED;
-	Wed,  9 Sep 2026 13:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E124F55A5;
+	Wed,  9 Sep 2026 13:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961732; cv=none; b=MD7qzQIlq+f0s6wfytzFKHP9E8ir0TGioNUdcHFkXvv877JEcljLY0XkBEkyaSTIQr4HcHcG5RtrTkoM8vB7A3jTGz5TXL6R93QQDWsfbnCH8KBQ7lWCu1YbHKBuLx9IGY/a1kIvrkJ3f2mQ4NyGYA+USXRLkg6VX10yDGn7Nxs=
+	t=1788961734; cv=none; b=eklHCjd9kqDearvTTHvr49Gu2918uPo4Dmg05w00m5x4bmfqJ4ikSdmtXf3ixGpypQicL7DUOlFM/ZVMlBj0R4i3rOyWikH6J5YJgtVA5mAXKWX4s7ShUXMNbN4cHH+CDKs+eBtpuBLPSkn5RsdcBFkiiIXxMFaQQOiI2uAdfGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961732; c=relaxed/simple;
-	bh=syAyRczKg7/iGeYsbLaAAv42N0iIv8uoOhg9CwulwIc=;
+	s=arc-20240116; t=1788961734; c=relaxed/simple;
+	bh=BacD3PNHngXu41RDDyEyoAg04ylkciJMVIIQMr6aEC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chsaqAkRZFzIYtITQnbr/dUstSIDudLiyJqCJxjY5Xd6QyvPxHSWmqmvALeFOqZKXzgRoJuREFEPejJux3+TiDMUaB4sm+NsdHUK6INQL1j8TdTfjvK/XNOM7d20/uLIQ+89qf3mOOgMX2kjRTw6PfRmGzs/TRxRn+L/yxbE9PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppxzU7+E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pcoqEq8CIV1IvOsdIpubUTOp3ns+YBjTOy0lQfLncsSGrlUBPBrGe04Xy1/w2Bs2Lf6/q4GdsFcNP+L5UFwWZB1kXc+JI72/2xlKsBs37IB/5UISTXDye7Hn9mQqxCruqrCuzJ+UBXs2wCbphrF/CziPlbZ7WnraCz9nSpy49to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxxnJful; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppxzU7+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2558F1F00A3A;
-	Wed,  9 Sep 2026 13:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxxnJful"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6791F00A3D;
+	Wed,  9 Sep 2026 13:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961729;
-	bh=XKB6p1gHNZnutlZReiZ49qKoTuXIvYnSjVeDrL9Os+A=;
+	s=korg; t=1788961733;
+	bh=7tFfL2Qi+qizVc6aatPmp6Q7e3cJ8dS6AGdYSbqff48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ppxzU7+EbxeLFIo79gCQ714c4eqt62iKns97aYTxJR1y1vBHercqmw6g7OEnvYOov
-	 /Qipvsyc/ohzFqbmuMKJB+46Af8CYGb4EjrMpyXTnJ+QttNLJNf0pjxl9aEZmWIWj/
-	 k5knsnQ2vXNLYhaWbKg6aBJciSdnRzO2IegKL0dM=
+	b=bxxnJfulV1o98YDMB0gB1X0qFtD5NqLLa9rBil+wbd7tJCn2cpt4Lf3jcJ2IKvOG4
+	 MLfwU6m64FZIkxo35oAB2wmYgd8VFu8zqoKswoEK7Zfef1UqFQ4A07i+gwYuCvKz61
+	 tVS2Bp89B7sx9upZ7nF/QQVRKOUj3/g0NSnAXlmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fd6ef980cf1c722be639@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Jeffin Philip <jeffinphilip14@gmail.com>
-Subject: [PATCH 7.2 049/556] usb: gadget: fix null pointer dereference in usb_put_function_instance()
-Date: Wed,  9 Sep 2026 15:35:29 +0200
-Message-ID: <20260909134232.205341400@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>
+Subject: [PATCH 7.2 050/556] staging: rtl8723bs: fix OOB read / stack overflow in rtw_get_wps_attr()
+Date: Wed,  9 Sep 2026 15:35:30 +0200
+Message-ID: <20260909134232.238926607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,37 +49,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 6e74ac5c596fd246e37eadfc354567179ccbe9aa upstream.
+commit 99aa998dec83ba180822f70e6d48a514fc81c20d upstream.
 
-usb_put_function_instance() attempts to dereference fd inside fi struct
-to get mod in uvc_alloc_inst() error path. However, fd is not allocated
-until later in try_get_usb_function_instance() after allocating fi in
-uvc_alloc_inst() and thus guranteed to be null in error path. Fix this
-by adding a null check for fi->fd that returns if fd is null.
+rtw_get_wps_attr() walks WPS attributes inside a WPS IE taken from
+a wireless management frame. For each candidate attribute it only
+checks that the fixed 4-byte attribute header (2-byte ID + 2-byte
+length) fits inside the IE:
 
-Reported-by: syzbot+fd6ef980cf1c722be639@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fd6ef980cf1c722be639
-Fixes: 0062f6e56f70 ("usb: gadget: add a forward pointer from usb_function to its "instance"")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
-Link: https://patch.msgid.link/20260816061712.15547-1-jeffinphilip14@gmail.com
+	if (attr_ptr + 4 > wps_ie + wps_ielen)
+		break;
+	u16 attr_id = get_unaligned_be16(attr_ptr);
+	u16 attr_data_len = get_unaligned_be16(attr_ptr + 2);
+	u16 attr_len = attr_data_len + 4;
+
+attr_data_len (and therefore attr_len) is read directly from the
+wire and is never checked against the remaining bytes in the IE
+before being used as the size of:
+
+	memcpy(buf_attr, attr_ptr, attr_len);
+
+Since attr_len is fully attacker controlled (0 to 65535+4), this is
+both a heap OOB read of wps_ie, and, more seriously, a stack buffer
+overflow at several call sites where buf_attr is a single-byte
+stack variable, e.g. rtw_get_wps_attr_content()'s callers passing
+WPS_ATTR_SELECTED_REGISTRAR into a stack "u8 sr"/"u8
+selected_registrar" (drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c,
+drivers/staging/rtl8723bs/core/rtw_mlme_ext.c). A crafted WPS IE in a
+beacon or probe response processed during scanning can therefore
+smash the stack of the parsing thread.
+
+rtw_get_wps_attr_content() itself has no independent length check
+and simply trusts the attr_len it gets back from rtw_get_wps_attr(),
+so fixing the bound here also fixes that caller.
+
+The "attr_ptr + 4 > wps_ie + wps_ielen" header check above was added
+by commit 1463ca3ec6601 ("staging: rtl8723bs: fix OOB reads in
+rtw_get_sec_ie(), rtw_get_wapi_ie(), and rtw_get_wps_attr()"), which
+bounded the fixed header but never extended the check to cover the
+variable-length attribute data that follows it. Add that missing
+check before attr_len is used as a memcpy() length or accepted as a
+match.
+
+Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260728125456.32359-2-meatuni001@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/functions.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/functions.c
-+++ b/drivers/usb/gadget/functions.c
-@@ -70,7 +70,7 @@ void usb_put_function_instance(struct us
- {
- 	struct module *mod;
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -737,6 +737,10 @@ u8 *rtw_get_wps_attr(u8 *wps_ie, uint wp
+ 		u16 attr_data_len = get_unaligned_be16(attr_ptr + 2);
+ 		u16 attr_len = attr_data_len + 4;
  
--	if (!fi)
-+	if (!fi || !fi->fd)
- 		return;
++		/* Reject attributes whose claimed length runs past the IE */
++		if (attr_ptr + attr_len > wps_ie + wps_ielen)
++			break;
++
+ 		if (attr_id == target_attr_id) {
+ 			target_attr_ptr = attr_ptr;
  
- 	mod = fi->fd->mod;
 
 
