@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D67568FB2;
-	Wed,  9 Sep 2026 14:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3E257981F;
+	Wed,  9 Sep 2026 14:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964464; cv=none; b=t9qYLEiMoiEcV/Gzv5lAEU9sONbhf0/G7tCGYIMG8CpsExQWH5G3iv++OSQqvLP4SEMTsNHVXXVOqRKeKgIPpuF4ZNsZKAiPAaN9E+fzeYdJFldJLthT6e6u/fWIK1nsblpSW3HFVzVPMLsrhk+NOwHThtRyuo0wE9eYJErIXRM=
+	t=1788964466; cv=none; b=Pdael2VYUsneHjKyC9sg88E3Cz+CBUc/UV1qQAkMhqcCeaK0gKvQn2RAAsljeU1xmfYIi3KIP1P9hL1Cue0SYhBrNssc9ijabuWaK1S3pvEHVJkyf9oLOrK8oOOqO3F4a2iohgDYvGxQKbtVPkUvq+5YJcKseoVAIOCcSxSaerg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964464; c=relaxed/simple;
-	bh=+eH8FGosxd77T8Ko/vZzdsmVxvbZpB9kRU9zwrQd37U=;
+	s=arc-20240116; t=1788964466; c=relaxed/simple;
+	bh=0KJkkhcTGk/oRfjus2XQ447GC3ltM2X0eCs+MQoe+0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qi1YdiKrC3K0wD+5Ab9qFjUWCewLLEzTrhWGmT4IAzrKs4BBpXyEnA3J/5lT1aTtzVhj/YxPcZKkjq2Q70urAQTkKyWYcgA534Q+NarW2H9tnBDGh+66YBqLhbn81C/lhgD44FjzgAzSfjno7z5cL7JdXpLZhebOb25TxzhmiMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2K0Pkw6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kzD79g4Ep4pHQeXZRZqd4z75S/0SSSP/tCxQ8t6k+SGS9RIfn7nHT/C76lIMlvDGzO0YBLtXfjIT2U61THw2EzpeCFYE0+nHqD5//TYU2D2aVFq5ipj+cnpGB0WPHdKj4aFDEM53NpQvaFcyygE8fQDKSFLZR41VEzjUcYovDJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELMfgjij; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2K0Pkw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0EA1F00A3E;
-	Wed,  9 Sep 2026 14:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELMfgjij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C651F00A3A;
+	Wed,  9 Sep 2026 14:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964462;
-	bh=1g9J2Gya13eH69ZIkKF0iYzRywuR7xoegUp8H/oSDec=;
+	s=korg; t=1788964465;
+	bh=m6fpw/tKLdWy5SjvsH5lWmng7Hts59Pe3gmaOAwRdNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a2K0Pkw6QGyqcIETvjdTIzKv8OogdmP2GqjJ5dcEZ02A/OX9Venz29A/lGzRblDS/
-	 l4txOfVIdCveJwkWYc8Mib88sg0w3BrMoFUFFnE2iSzjKLn0B3MtQgX7kgpvDAPKt1
-	 RRzGUjZIhYCBSEESUCdvmfC96l54IQkmARiMs4Jg=
+	b=ELMfgjijVmjC7Q8MfPG4RUJnhMj2otcRSsoxdnzPrZycUeXg3qvmPs37vnD3O27vH
+	 IBBV8jgLHEtYFLofmnz65gBsU4iOxVfsmnBWVPHqFsabx1P81DYVpZGmSRn7xUU+m7
+	 4NDmov6MRdpGgH/rc93tYumIduUQmjDqFUe8Irkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Bernd Schubert <bernd@bsbernd.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 430/583] usb: xhci: bail out of setup if the controller is inaccessible
-Date: Wed,  9 Sep 2026 15:41:55 +0200
-Message-ID: <20260909134252.888286968@linuxfoundation.org>
+Subject: [PATCH 6.18 431/583] fuse: publish io-uring queues with release semantics
+Date: Wed,  9 Sep 2026 15:41:56 +0200
+Message-ID: <20260909134252.921678646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -51,95 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 78203d5b54a40f0e36196ebf31c9c7a380fc8811 ]
+[ Upstream commit 42df916e5a5f8fb4b60c8cefb54318d1ec02c580 ]
 
-xhci_gen_setup() locates the operational registers using the capability
-length read from the very first register:
+fuse_uring_create_queue() initializes a fuse_ring_queue and then
+publishes the pointer into ring->queues[qid] with WRITE_ONCE() under the
+fch->lock. There are several readers that may concurrently be fetching
+that pointer locklessly and then deferencing it.
 
-	xhci->op_regs = hcd->regs +
-		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
+WRITE_ONCE() doesn't ensure ordering of the queue's field
+initialization before the ring->queues[qid] pointer assignment. The
+queue must be published with smp_store_release() so the field
+initialization is guaranteed to happen before.
 
-If the controller is dead or has dropped off the bus, that read returns
-~0, HC_LENGTH() truncates it to 0xff, and op_regs ends up 0xff bytes
-past the page-aligned MMIO base, i.e. unaligned. The first access
-through it, xhci_halt() -> xhci_handshake() reading op_regs->status, is
-then an unaligned readl() on device memory. arm64 faults on unaligned
-device accesses, so instead of xhci_handshake() catching the all-ones
-value and returning -ENODEV, setup oopses:
+Readers in paths where the read may happen concurrently with the store
+need to use READ_ONCE() because any race involving a plain access is
+undefined.
 
-  xhci-pci-renesas 0005:08:00.0: Unable to change power state from D3cold to D0, device inaccessible
-  xhci-pci-renesas 0005:08:00.0: xHCI Host Controller
-  xhci-pci-renesas 0005:08:00.0: new USB bus registered, assigned bus number 1
-  Unable to handle kernel paging request at virtual address ffff80030a770103
-    ESR = 0x0000000096000021
-    FSC = 0x21: alignment fault
-  Internal error: Oops: 0000000096000021 [#1]  SMP
-  pc : xhci_halt [xhci_hcd]
-  Call trace:
-   xhci_halt
-   xhci_gen_setup
-   xhci_pci_setup
-   usb_add_hcd
-   usb_hcd_pci_probe
-   xhci_pci_common_probe
-   xhci_pci_renesas_probe
-
-This was hit with a Renesas uPD720201 that failed to power up ("Unable
-to change power state from D3cold to D0, device inaccessible") yet still
-reached the HCD probe path.
-
-Read the capability register once, and if it reads back the all-ones
-value (as xhci_handshake() and xhci_reset() already test for), abort
-setup with -ENODEV before op_regs is derived from it. Reading it once
-also avoids re-reading a register that may change under a concurrent
-hot-removal.
-
-Fixes: 66d4eadd8d06 ("USB: xhci: BIOS handoff and HW initialization.")
+Fixes: 24fe962c86f5 ("fuse: {io-uring} Handle SQEs - register commands")
 Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260806142113.2436238-11-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[ renamed `fch->lock` to `fc->lock` since this tree lacks `struct fuse_chan` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/fuse/dev_uring.c |   20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -5435,6 +5435,7 @@ int xhci_gen_setup(struct usb_hcd *hcd,
- 	struct device		*dev = hcd->self.sysdev;
- 	int			retval;
- 	u32			hcs_params1;
-+	u32			hc_capbase;
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -194,7 +194,7 @@ void fuse_uring_destruct(struct fuse_con
+ 		return;
  
- 	/* Accept arbitrarily long scatter-gather lists */
- 	hcd->self.sg_tablesize = ~0;
-@@ -5455,15 +5456,19 @@ int xhci_gen_setup(struct usb_hcd *hcd,
- 	mutex_init(&xhci->mutex);
- 	xhci->main_hcd = hcd;
- 	xhci->cap_regs = hcd->regs;
--	xhci->op_regs = hcd->regs +
--		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
-+	hc_capbase = readl(&xhci->cap_regs->hc_capbase);
-+	if (hc_capbase == U32_MAX) {
-+		xhci_warn(xhci, "Host controller not accessible, removed?\n");
-+		return -ENODEV;
-+	}
-+	xhci->op_regs = hcd->regs + HC_LENGTH(hc_capbase);
- 	xhci->run_regs = hcd->regs +
- 		(readl(&xhci->cap_regs->run_regs_off) & RTSOFF_MASK);
- 	/* Cache read-only capability registers */
- 	hcs_params1 = readl(&xhci->cap_regs->hcs_params1);
- 	xhci->hcs_params2 = readl(&xhci->cap_regs->hcs_params2);
- 	xhci->hcs_params3 = readl(&xhci->cap_regs->hcs_params3);
--	xhci->hci_version = HC_VERSION(readl(&xhci->cap_regs->hc_capbase));
-+	xhci->hci_version = HC_VERSION(hc_capbase);
- 	xhci->hcc_params = readl(&xhci->cap_regs->hcc_params);
- 	if (xhci->hci_version > 0x100)
- 		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
+ 	for (qid = 0; qid < ring->nr_queues; qid++) {
+-		struct fuse_ring_queue *queue = ring->queues[qid];
++		struct fuse_ring_queue *queue = READ_ONCE(ring->queues[qid]);
+ 		struct fuse_ring_ent *ent, *next;
+ 
+ 		if (!queue)
+@@ -213,7 +213,7 @@ void fuse_uring_destruct(struct fuse_con
+ 
+ 		kfree(queue->fpq.processing);
+ 		kfree(queue);
+-		ring->queues[qid] = NULL;
++		WRITE_ONCE(ring->queues[qid], NULL);
+ 	}
+ 
+ 	kfree(ring->queues);
+@@ -307,9 +307,11 @@ static struct fuse_ring_queue *fuse_urin
+ 	}
+ 
+ 	/*
+-	 * write_once and lock as the caller mostly doesn't take the lock at all
++	 * fc->lock serializes concurrent creators for this qid.
++	 * smp_store_release() are for the lockless readers who must see a
++	 * fully initialized queue after &ring->queues[qid] is set
+ 	 */
+-	WRITE_ONCE(ring->queues[qid], queue);
++	smp_store_release(&ring->queues[qid], queue);
+ 	spin_unlock(&fc->lock);
+ 
+ 	return queue;
+@@ -406,7 +408,7 @@ static void fuse_uring_log_ent_state(str
+ 	struct fuse_ring_ent *ent;
+ 
+ 	for (qid = 0; qid < ring->nr_queues; qid++) {
+-		struct fuse_ring_queue *queue = ring->queues[qid];
++		struct fuse_ring_queue *queue = READ_ONCE(ring->queues[qid]);
+ 
+ 		if (!queue)
+ 			continue;
+@@ -911,7 +913,7 @@ static int fuse_uring_commit_fetch(struc
+ 	if (qid >= ring->nr_queues)
+ 		return -EINVAL;
+ 
+-	queue = ring->queues[qid];
++	queue = READ_ONCE(ring->queues[qid]);
+ 	if (!queue)
+ 		return err;
+ 	fpq = &queue->fpq;
+@@ -980,7 +982,7 @@ static bool is_ring_ready(struct fuse_ri
+ 		if (current_qid == qid)
+ 			continue;
+ 
+-		queue = ring->queues[qid];
++		queue = READ_ONCE(ring->queues[qid]);
+ 		if (!queue) {
+ 			ready = false;
+ 			break;
+@@ -1134,7 +1136,7 @@ static int fuse_uring_register(struct io
+ 		return -EINVAL;
+ 	}
+ 
+-	queue = ring->queues[qid];
++	queue = READ_ONCE(ring->queues[qid]);
+ 	if (!queue) {
+ 		queue = fuse_uring_create_queue(ring, qid);
+ 		if (!queue)
+@@ -1286,7 +1288,7 @@ static struct fuse_ring_queue *fuse_urin
+ 		      ring->nr_queues))
+ 		qid = 0;
+ 
+-	queue = ring->queues[qid];
++	queue = READ_ONCE(ring->queues[qid]);
+ 	WARN_ONCE(!queue, "Missing queue for qid %d\n", qid);
+ 
+ 	return queue;
 
 
