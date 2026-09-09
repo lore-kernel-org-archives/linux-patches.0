@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0288566C6E;
-	Wed,  9 Sep 2026 14:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B911B2D9780;
+	Wed,  9 Sep 2026 14:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962449; cv=none; b=lThP5GtNJz6cQvhYjcQx4ZLwa5k6ZH0yUl3BiEuRbmAXOxGGHdJRe/YUqjw3cgP2/UAIcxM3bJnSItavCMtrSCylyetPcuSbeIr84LjVxSRoiqeoDaV4cIOEaToGXB1PscAxONSRimchVIXWoWuqnx3V4nKjBZME+jMn1NbWJ9w=
+	t=1788962451; cv=none; b=eh7/WhqJc3nOihWMJ6IblhxVWVKHi7A4jGDiaR9mEB6eMspDObdRo2ChDxldOqUvuIZA7JnYgeXSL7SxtZptb6ikTSHp6bGLtUs2e+z+iZIqMDfXWSFkKZj9Dpaw5jW+i71NIgrl+7BIhYWtP1vSt18MFiY3Uhp34Hra2gobL0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962449; c=relaxed/simple;
-	bh=SganwFeFU7GcAO0kf04YfxaaxZNXJs0gw7bWWTo+weA=;
+	s=arc-20240116; t=1788962451; c=relaxed/simple;
+	bh=V3iagFdrwufK5UYjEvkIDaVi/EVzwP+H6HuI5i8kJkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PeRwB60mQiMTRCWR3IfD2G/uD05Wge2DJ4f7PpNu2+osbGj20IWDFhgJXL3D0ERaDJjFXf7YvJQMF9YBo8pZbHbh5lRl9rTt11Bzquf6gh751JpIEc8U4i2zcLwcY2W4UKTg9kU2hLHKqF1SN6rxtfvh2TM9jkXmVjsNfJBCxI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S96jDHEa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pJ7dOcRgpSqCgE5Gue3cO2QlrgSYbpujMzeOLB+PPjSoshpa5BnCCLu2JOQoMsJ9Id8j0ddEb7HrBhlu3htTuQPiO43oNt5qARYu8j31fpYjbPJGvckm9+AWEID0aFhKECBllyDe11MU9yW6HgqB36WWhduhiHOvZtG6+uPbKiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iL+/gKrU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S96jDHEa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362181F00A3A;
-	Wed,  9 Sep 2026 14:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iL+/gKrU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8E81F00A3D;
+	Wed,  9 Sep 2026 14:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962447;
-	bh=AIOaxbfdYXVRqeFR8MjDI9QSKc9umztCrYbhjy9PIrM=;
+	s=korg; t=1788962450;
+	bh=XicztfAbzpo6dGtN47HgOB+aBjemK0bUsbni7ts/2fI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S96jDHEaiAtTKjdS2Axpiqm7X+PVRgmIXrtWcCABgik5oqaWt8n0+4W5X+Tda8SK3
-	 DNo52ZTZ4c4R/TUSSG/WHEW5keR+arXgSrfNsYabWwIxvFjqFWlxq4TsYwAFVhCSyj
-	 8vWz18gPVyvOXNUpQoJmbyT3fUqeIsIyrYk87u1E=
+	b=iL+/gKrUMqy2UoEFf/Ur8XKXHa30oNzNiU/08I9E1ha+XJAAJYy9ZycznJLrBx7vc
+	 eTCxM1w5/bYHK0dhO1Rmhhdeo8uHAuC+7N7sIQHW6U3lHTi1VIItQJCmFElnzg+efJ
+	 +sUzxdrK/ONKLDrN4vNYLyPEvudHcHZD2tiVSgW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yosry Ahmed <yosry@kernel.org>,
 	Kai Huang <kai.huang@intel.com>,
-	Jim Mattson <jmattson@google.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.2 292/556] KVM: nVMX: Always flush vpid02 on first use
-Date: Wed,  9 Sep 2026 15:39:32 +0200
-Message-ID: <20260909134240.960979024@linuxfoundation.org>
+Subject: [PATCH 7.2 293/556] KVM: nVMX: Decouple INVVPID operand checks from flushing of vpid02
+Date: Wed,  9 Sep 2026 15:39:33 +0200
+Message-ID: <20260909134240.993765178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,60 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f0772389413dce9657c7d6950abf3edbbd511356 upstream.
+commit 32912404b4b1ee98400744941c78f019a63d6e8f upstream.
 
-Make sure vpid02 is always flushed on first use by setting last_vpid=0
-when allocating vpid02.  nested_vmx_transition_tlb_flush() will always
-detect a VPID change on first VM-Enter after VMXON, because VPID=0 in
-vmcs12 is not allowed if L1 enables VPID.
+Separate the INVVPID operand checks from the actual flushing of vpid02 so
+the flushing can be adjusted to do the right thing when vmcs02  was last
+loaded on a different pCPU, without having to duplicate the logic across
+multiple case-statements.
 
-This avoids using stale TLB entries from a previous lifetime of the
-VPID, that might have been associated with a different vCPU (or a
-completely different VM).
+Opportunistically let the VM-Fail paths poke out past 80 chars.
 
-Note that last_vpid is already being initialized as 0 when the vCPU is
-created, but it is not reset when vpid02 is freed on VMXOFF. Hence, the
-problem can only occur if L1 does VMXOFF -> VMXON, runs an L2, and KVM
-happens to reuse a VPID that has TLB entries on the physical CPU.
+No functional change intended.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
 Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260616214652.2157032-2-yosry@kernel.org
+Link: https://patch.msgid.link/20260616214652.2157032-3-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kvm/vmx/nested.c |   43 +++++++++++++------------------------------
+ 1 file changed, 13 insertions(+), 30 deletions(-)
 
 --- a/arch/x86/kvm/vmx/nested.c
 +++ b/arch/x86/kvm/vmx/nested.c
-@@ -1326,6 +1326,9 @@ static void nested_vmx_transition_tlb_fl
- 	 * is the VPID incorporated into the MMU context.  I.e. KVM must assume
- 	 * that the new vpid12 has never been used and thus represents a new
- 	 * guest ASID that cannot have entries in the TLB.
-+	 *
-+	 * Note, last_vpid is initialized as 0, so the first nested VM-Enter
-+	 * after VMXON will always flush the TLB to avoid using stale entries.
- 	 */
- 	if (is_vmenter && vmcs12->virtual_processor_id != vmx->nested.last_vpid) {
- 		vmx->nested.last_vpid = vmcs12->virtual_processor_id;
-@@ -5432,6 +5435,13 @@ static int enter_vmx_operation(struct kv
+@@ -6069,7 +6069,6 @@ static int handle_invvpid(struct kvm_vcp
+ 		u64 vpid;
+ 		u64 gla;
+ 	} operand;
+-	u16 vpid02;
+ 	int r, gpr_index;
  
- 	vmx->nested.vpid02 = allocate_vpid();
+ 	if (!(vmx->nested.msrs.secondary_ctls_high &
+@@ -6104,8 +6103,15 @@ static int handle_invvpid(struct kvm_vcp
+ 		return kvm_handle_memory_failure(vcpu, r, &e);
  
-+	/*
-+	 * Clear last_vpid to ensure that the VPID is flushed on the first
-+	 * nested VM-Enter. Otherwise, stale TLB entries from a previous life of
-+	 * the VPID (e.g. different vCPU or even different VM) could be used.
-+	 */
-+	vmx->nested.last_vpid = 0;
+ 	if (operand.vpid >> 16)
+-		return nested_vmx_fail(vcpu,
+-			VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
++		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
 +
- 	vmx->nested.vmcs02_initialized = false;
- 	vmx->nested.vmxon = true;
++	if (type != VMX_VPID_EXTENT_ALL_CONTEXT && !operand.vpid)
++		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
++
++	/* LAM doesn't apply to addresses that are inputs to TLB invalidation. */
++	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR &&
++	    is_noncanonical_invlpg_address(operand.gla, vcpu))
++		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
  
+ 	/*
+ 	 * Always flush the effective vpid02, i.e. never flush the current VPID
+@@ -6113,33 +6119,10 @@ static int handle_invvpid(struct kvm_vcp
+ 	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
+ 	 * irrelevant (and there may not be a loaded vmcs12).
+ 	 */
+-	vpid02 = nested_get_vpid02(vcpu);
+-	switch (type) {
+-	case VMX_VPID_EXTENT_INDIVIDUAL_ADDR:
+-		/*
+-		 * LAM doesn't apply to addresses that are inputs to TLB
+-		 * invalidation.
+-		 */
+-		if (!operand.vpid ||
+-		    is_noncanonical_invlpg_address(operand.gla, vcpu))
+-			return nested_vmx_fail(vcpu,
+-				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
+-		vpid_sync_vcpu_addr(vpid02, operand.gla);
+-		break;
+-	case VMX_VPID_EXTENT_SINGLE_CONTEXT:
+-	case VMX_VPID_EXTENT_SINGLE_NON_GLOBAL:
+-		if (!operand.vpid)
+-			return nested_vmx_fail(vcpu,
+-				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
+-		vpid_sync_context(vpid02);
+-		break;
+-	case VMX_VPID_EXTENT_ALL_CONTEXT:
+-		vpid_sync_context(vpid02);
+-		break;
+-	default:
+-		WARN_ON_ONCE(1);
+-		return kvm_skip_emulated_instruction(vcpu);
+-	}
++	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
++		vpid_sync_vcpu_addr(nested_get_vpid02(vcpu), operand.gla);
++	else
++		vpid_sync_context(nested_get_vpid02(vcpu));
+ 
+ 	/*
+ 	 * Sync the shadow page tables if EPT is disabled, L1 is invalidating
 
 
