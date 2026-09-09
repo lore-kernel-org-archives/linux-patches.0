@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87F4566C6C;
-	Wed,  9 Sep 2026 14:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19540569F19;
+	Wed,  9 Sep 2026 14:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963140; cv=none; b=CoUT4MXnhnNXB0327bUrSBAC6r8m0WWwCLdee16JER3z5OEbQjElhUb4Lhfazy9YD0Ih5ZxPsGRTaXvWGYYBvgGultVHKikklDeCTX/aAMEB7NXwAjwk5zUD9TxplporJL8k9nTlW4CEZ20Yagq/r8XZ57eFYxUvbz7NBxDjnpQ=
+	t=1788963144; cv=none; b=dnOflT4yCaAtIcsTPAvcJSEqaDXFsr8SJ5s9aNmxTokSMtj7J82nhXexnZl7/JIB6gwplUyVryXw+bYnGrRO+XeU6Wv+eut3lLQeb1DnrBknr9haOnL0N2qOP40RH333oxsitDkmmGnsMJtrQj2VzbG4HCECALh4wdPnPhhUr0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963140; c=relaxed/simple;
-	bh=zrWCYya9m5F8Vkf8tUCd/IWEefwsaqyTAb90ivyyjgI=;
+	s=arc-20240116; t=1788963144; c=relaxed/simple;
+	bh=/+rVsyOYuJivh8cig9rPz8v8u/tUoRyvfl8isfaB0qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvNT5faREd+VR2l+cDJhLkI4+UE0DxBUNIXITDaYCXrNaQ1ITAOEgJgxAiG71o+Hwt8amC+MzOyJJlgBh4RPqho+ANv3RvBlPhZXvBDyafeVL9eEp/K+ZkkXGm7JwnR4FZqZ344GAuUameHuJ7Ra0yg0RDRWqyntIxHzVgkg/k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkflpslz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FhPMbIn63v9ExeHiBexgGvQYhtoEQtJM+Ur5+X8pJS1lU5ON05ok5JJA2zXBLWmm4+Y/jkesA5vQDpv6Q88gxHEbz6MMWKmwLumafbKuH43Wnqp87q+Uvtrj+0kIdyaW2//caq7mQ2cRQzLuYbg2OT8o1VcDvZ2unwl9x1IYDHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmD93dsh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkflpslz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133811F00A3A;
-	Wed,  9 Sep 2026 14:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmD93dsh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047101F00A3A;
+	Wed,  9 Sep 2026 14:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963138;
-	bh=owan9jW5issiRWX04yJF10Y7qOn5Q3l8URncNPDH4TA=;
+	s=korg; t=1788963142;
+	bh=c2pfqNa7Oul64rH4xWOrzeRbQat5pC9VImhOBPr0wlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mkflpslzFz8q9625nslQc6FKmz+YvjEQOftMCwdbQp8hjaZCYsKK7QJi+PR8HUKfo
-	 rMDu3yfztYQvbJqjnJxwqOCXu187cD0MYIFmrftO9MK2BBkTJdG6RQf7vaWvtuyYc6
-	 jFqS+EBqRqTv1dyFlreuIvftM54PNqY+9ssu7HRI=
+	b=EmD93dsh0EG+kW0x2UPabRi2D1JBdnjtBWLYo/cL5pESYKsL9KteJxTRzEynxWbKA
+	 GeIUeZyalRBS9ss3AKVmo2S1MCLQ+jHhQZ1srIJwQD8h7tRG3sLGfYX33oRqLUVFG1
+	 3xdPn6KvWZzI2DFzWotWd6p5iVCzd+55bAkAz9kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>,
 	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 7.2 534/556] drm/nouveau/disp: move GSP head-timing ISR and vblank helpers to tu102.c
-Date: Wed,  9 Sep 2026 15:43:34 +0200
-Message-ID: <20260909134249.184012033@linuxfoundation.org>
+Subject: [PATCH 7.2 535/556] drm/nouveau/disp: move the GSP HDMI GCP AVMute write to engine/disp
+Date: Wed,  9 Sep 2026 15:43:35 +0200
+Message-ID: <20260909134249.218376110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,191 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
 
-commit c6659e0ffc19b4ef0b3273c185cb8409a154eada upstream.
+commit eb1ffc3dc72d379a41e367a44b99fb61a15bf8ba upstream.
 
-The GSP-RM display code in rm/r535/disp.c owns a handful of direct MMIO
-routines: the head-timing (vblank) interrupt handler and the per-head
-vblank enable/disable. They program display registers, not RM, so they
-belong with the rest of the per-chip register code in engine/disp/.
-
-Move them to tu102.c (Turing is the first GSP-capable generation) as
-tu102_disp_intr() and tu102_head_vblank_get()/put(), exported for
-rm/r535/disp.c, which keeps calling them by name for now. No functional
-change.
+r535_sor_hdmi_audio() pairs two RM controls (a SET_OD_PACKET carrying
+the same General Control Packet, and the audio mute-stream toggle)
+with a direct write of the GCP AVMute bit through the SF GCP unit.
+The controls are RM and stay, but the direct write is register
+programming and moves next to the other per-chip display code as
+tu102_sor_hdmi_gcp(). No functional change.
 
 Fixes: 6cc6e08d4542 ("drm/nouveau/kms: add support for GB20x")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260825001408.14219-2-mohamedahmedegypt2001@gmail.com
+Link: https://patch.msgid.link/20260825001408.14219-3-mohamedahmedegypt2001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h        |    3 
- drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h        |    1 
- drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c       |   50 ++++++++++++++++
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c |   52 -----------------
- 4 files changed, 57 insertions(+), 49 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/ior.h         |    1 +
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c       |   15 +++++++++++++++
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c |    9 +--------
+ 3 files changed, 17 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/head.h
-@@ -56,6 +56,9 @@ int gv100_head_new(struct nvkm_disp *, i
- void gv100_head_state(struct nvkm_head *head, struct nvkm_head_state *state);
- void gv100_head_rgpos(struct nvkm_head *head, u16 *hline, u16 *vline);
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/ior.h
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/ior.h
+@@ -194,6 +194,7 @@ void gv100_sor_dp_audio_sym(struct nvkm_
+ void gv100_sor_dp_watermark(struct nvkm_ior *, int, u8);
+ extern const struct nvkm_ior_func_hda gv100_sor_hda;
  
-+void tu102_head_vblank_get(struct nvkm_head *);
-+void tu102_head_vblank_put(struct nvkm_head *);
-+
- #define HEAD_MSG(h,l,f,a...) do {                                              \
- 	struct nvkm_head *_h = (h);                                            \
- 	nvkm_##l(&_h->disp->engine.subdev, "head-%d: "f"\n", _h->id, ##a);     \
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/priv.h
-@@ -72,6 +72,7 @@ int gv100_disp_wndw_cnt(struct nvkm_disp
- int gv100_disp_caps_new(const struct nvkm_oclass *, void *, u32, struct nvkm_object **);
++void tu102_sor_hdmi_gcp(struct nvkm_ior *, int, bool);
+ void tu102_sor_dp_vcpi(struct nvkm_ior *, int, u8, u8, u16, u16);
  
- int tu102_disp_init(struct nvkm_disp *);
-+irqreturn_t tu102_disp_intr(struct nvkm_inth *);
- 
- void nv50_disp_dptmds_war_2(struct nvkm_disp *, struct dcb_output *);
- void nv50_disp_dptmds_war_3(struct nvkm_disp *, struct dcb_output *);
+ int nv50_pior_cnt(struct nvkm_disp *, unsigned long *);
 --- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c
 +++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/tu102.c
-@@ -104,6 +104,56 @@ tu102_sor_new(struct nvkm_disp *disp, in
- 	return nvkm_ior_new_(&tu102_sor, disp, SOR, id, hda & BIT(id));
- }
+@@ -30,6 +30,21 @@
  
-+/* The GSP-RM display path leaves head-timing (vblank) interrupts and their
-+ * enables to us. These program the RM head-timing line (bit 1 of the
-+ * per-head enable, not the bit nvkm's own gv100 path uses).
+ #include <nvif/class.h>
+ 
++/* General Control Packet: bracket an audio enable/disable with AVMute
++ * through the legacy GCP SF unit. Used by the GSP-RM path, which sends the
++ * equivalent packet via RM as well but keeps the direct write in sync.
 + */
 +void
-+tu102_head_vblank_put(struct nvkm_head *head)
++tu102_sor_hdmi_gcp(struct nvkm_ior *sor, int head, bool enable)
 +{
-+	struct nvkm_device *device = head->disp->engine.subdev.device;
++	struct nvkm_device *device = sor->disp->engine.subdev.device;
++	const u32 hdmi = head * 0x400;
 +
-+	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000000);
++	nvkm_mask(device, 0x6f00c0 + hdmi, 0x00000001, 0x00000000);
++	nvkm_wr32(device, 0x6f00cc + hdmi, !enable ? 0x00000001 : 0x00000010);
++	nvkm_mask(device, 0x6f00c0 + hdmi, 0x00000001, 0x00000001);
 +}
 +
-+void
-+tu102_head_vblank_get(struct nvkm_head *head)
-+{
-+	struct nvkm_device *device = head->disp->engine.subdev.device;
-+
-+	nvkm_wr32(device, 0x611800 + (head->id * 4), 0x00000002);
-+	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000002);
-+}
-+
-+static void
-+tu102_disp_intr_head_timing(struct nvkm_disp *disp, int head)
-+{
-+	struct nvkm_subdev *subdev = &disp->engine.subdev;
-+	struct nvkm_device *device = subdev->device;
-+	u32 stat = nvkm_rd32(device, 0x611c00 + (head * 0x04));
-+
-+	if (stat & 0x00000002) {
-+		nvkm_disp_vblank(disp, head);
-+
-+		nvkm_wr32(device, 0x611800 + (head * 0x04), 0x00000002);
-+	}
-+}
-+
-+irqreturn_t
-+tu102_disp_intr(struct nvkm_inth *inth)
-+{
-+	struct nvkm_disp *disp = container_of(inth, typeof(*disp), engine.subdev.inth);
-+	struct nvkm_subdev *subdev = &disp->engine.subdev;
-+	struct nvkm_device *device = subdev->device;
-+	unsigned long mask = nvkm_rd32(device, 0x611ec0) & 0x000000ff;
-+	int head;
-+
-+	for_each_set_bit(head, &mask, 8)
-+		tu102_disp_intr_head_timing(disp, head);
-+
-+	return IRQ_HANDLED;
-+}
-+
- int
- tu102_disp_init(struct nvkm_disp *disp)
+ void
+ tu102_sor_dp_vcpi(struct nvkm_ior *sor, int head, u8 slot, u8 slot_nr, u16 pbn, u16 aligned)
  {
 --- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
 +++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/disp.c
-@@ -625,29 +625,12 @@ r535_sor_cnt(struct nvkm_disp *disp, uns
- 	return 4;
+@@ -562,16 +562,9 @@ r535_sor_hdmi_ctrl_audio(struct nvkm_out
+ static void
+ r535_sor_hdmi_audio(struct nvkm_ior *sor, int head, bool enable)
+ {
+-	struct nvkm_device *device = sor->disp->engine.subdev.device;
+-	const u32 hdmi = head * 0x400;
+-
+ 	r535_sor_hdmi_ctrl_audio(sor->asy.outp, enable);
+ 	r535_sor_hdmi_ctrl_audio_mute(sor->asy.outp, !enable);
+-
+-	/* General Control (GCP). */
+-	nvkm_mask(device, 0x6f00c0 + hdmi, 0x00000001, 0x00000000);
+-	nvkm_wr32(device, 0x6f00cc + hdmi, !enable ? 0x00000001 : 0x00000010);
+-	nvkm_mask(device, 0x6f00c0 + hdmi, 0x00000001, 0x00000001);
++	tu102_sor_hdmi_gcp(sor, head, enable);
  }
  
--static void
--r535_head_vblank_put(struct nvkm_head *head)
--{
--	struct nvkm_device *device = head->disp->engine.subdev.device;
--
--	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000000);
--}
--
--static void
--r535_head_vblank_get(struct nvkm_head *head)
--{
--	struct nvkm_device *device = head->disp->engine.subdev.device;
--
--	nvkm_wr32(device, 0x611800 + (head->id * 4), 0x00000002);
--	nvkm_mask(device, 0x611d80 + (head->id * 4), 0x00000002, 0x00000002);
--}
--
- static const struct nvkm_head_func
- r535_head = {
- 	.state = gv100_head_state,
- 	.rgpos = gv100_head_rgpos,
--	.vblank_get = r535_head_vblank_get,
--	.vblank_put = r535_head_vblank_put,
-+	.vblank_get = tu102_head_vblank_get,
-+	.vblank_put = tu102_head_vblank_put,
- };
- 
- static struct nvkm_conn *
-@@ -1422,35 +1405,6 @@ r535_disp_event = {
- };
- 
  static void
--r535_disp_intr_head_timing(struct nvkm_disp *disp, int head)
--{
--	struct nvkm_subdev *subdev = &disp->engine.subdev;
--	struct nvkm_device *device = subdev->device;
--	u32 stat = nvkm_rd32(device, 0x611c00 + (head * 0x04));
--
--	if (stat & 0x00000002) {
--		nvkm_disp_vblank(disp, head);
--
--		nvkm_wr32(device, 0x611800 + (head * 0x04), 0x00000002);
--	}
--}
--
--static irqreturn_t
--r535_disp_intr(struct nvkm_inth *inth)
--{
--	struct nvkm_disp *disp = container_of(inth, typeof(*disp), engine.subdev.inth);
--	struct nvkm_subdev *subdev = &disp->engine.subdev;
--	struct nvkm_device *device = subdev->device;
--	unsigned long mask = nvkm_rd32(device, 0x611ec0) & 0x000000ff;
--	int head;
--
--	for_each_set_bit(head, &mask, 8)
--		r535_disp_intr_head_timing(disp, head);
--
--	return IRQ_HANDLED;
--}
--
--static void
- r535_disp_fini(struct nvkm_disp *disp, bool suspend)
- {
- 	if (!disp->engine.subdev.use.enabled)
-@@ -1725,7 +1679,7 @@ r535_disp_oneinit(struct nvkm_disp *disp
- 		return ret;
- 
- 	ret = nvkm_inth_add(&device->vfn->intr, ret, NVKM_INTR_PRIO_NORMAL, &disp->engine.subdev,
--			    r535_disp_intr, &disp->engine.subdev.inth);
-+			    tu102_disp_intr, &disp->engine.subdev.inth);
- 	if (ret)
- 		return ret;
- 
 
 
