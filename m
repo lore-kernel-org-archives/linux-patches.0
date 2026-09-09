@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97BA25783C;
-	Wed,  9 Sep 2026 13:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04148477984;
+	Wed,  9 Sep 2026 13:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961774; cv=none; b=OJ5xI3wYoukymsvNSP64HWf41/gVlS6DCOUtYunZdAgHGaQRw4jGOORxOe2cAOfTqBR/7DnRigFjxxSj0SJhq5F7pdTeOn+CNa8efg30qUDQvuj5nrFgwB6Zu6wHwdZZ3+wUdBiYzLvaYdFqpWyESRRXnbDAqc7dUqU985hfxik=
+	t=1788961777; cv=none; b=UhqygJjjSW818YJIYyYTYs+n4c7ubCU80y2KwrwSj5eQNXPNPNO7pZUjLrxGaru0XeTv5xSu/SwtK6K6ZBUieb5UPdNfaixe5/CZgDAL5Q2VoT+4iGtZTpEUr0iG3e8gF7cnzxB9cSl18TyW6J1yttn/vZp5o9VFX2IJSZm+uT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961774; c=relaxed/simple;
-	bh=g1C8rtLI2NO0yVDkCSRNmltqpd3CTDPahmfa8G2wUok=;
+	s=arc-20240116; t=1788961777; c=relaxed/simple;
+	bh=CyypMdQh5uMIpzBpYUR0ly+Q9wT1zNEjnQ9PhWBul6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEQ6TjZuZrKZLMk3wG7djok9oHf4ZoYZjr0sWFvVnYlerurT3G3e/5AshgzGBP/4cmaxlL7AAByjBV1/I8v32wGhLMquDpkeR24IAS+dKBwoD0McBTOu4JTv4gxrE0qNsEpQ+U2OxUMf8msOjnqEUTTAiQaKmp6qDc0CxdISK1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMW7a9MM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xixsg/0+B1sdI/K1+7eTKZh3K1kUjHeV6DbzjM98AgRbQojDHk+2Oa0Q+B0AKBL0lYXwQo04W+DGZ7fSNV5kGDyymkETH9Tb/zx2GOcDXY4uLhuULL2/m26icO0oA8q/Yn5lbjFnb8ZZjyrLWZMhnGRRu1yfNjG6xD6+/w2l9sU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeC7WDjl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMW7a9MM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D301F00A3A;
-	Wed,  9 Sep 2026 13:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeC7WDjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF521F00A3A;
+	Wed,  9 Sep 2026 13:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961772;
-	bh=7BboH/bWnRuDoCq5Ni/y6MKYglNhvW+ATAWjwDClpRQ=;
+	s=korg; t=1788961775;
+	bh=UwiwyNhybn9mYciYaPsi0IRNvqZI0PWlJywwA9grdCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMW7a9MM3rchbiO2rUWoapY7fbXFBs5tQYMlu46i6RfMf75PBTVIeZUOkLr7npK2h
-	 k9lVmhkk7fbWWNDFfkWe9UJf3eqln2o1RWz/zWyWnl0ZCtloRXZvBJE4fyH+h/Jbh9
-	 4E39PF+b4Y/bI/qkd4QaXDtAX1ZcyfwMCZrkZ06Q=
+	b=BeC7WDjlOStfpWqp59tBYKS09Cou+bQ3nCZQJUFBj9GSB1yEMjjUwVPUA+Bi8b5Fx
+	 vr6HpBBi0K4hRIpdO2EulKigDbosnMNWA1cce8qqnAwTtH+dzmyerzotB/iYR1reIz
+	 C8o8vBVqFwxv+k04bq51IoaT8r3/SVqxQ0UBYoAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 7.2 062/556] soc: qcom: geni-se: Use HW PROG_RAM_DEPTH to validate firmware size
-Date: Wed,  9 Sep 2026 15:35:42 +0200
-Message-ID: <20260909134232.647855925@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Marek Vasut <marex@nabladev.com>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 7.2 036/556] usb: typec: mux: avoid duplicated mux switches
+Date: Wed,  9 Sep 2026 15:35:16 +0200
+Message-ID: <20260909134231.768984221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,118 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Marek Vasut <marex@nabladev.com>
 
-commit 522bfb4f33c0930b3d14d5c5ee80bc93a883b544 upstream.
+commit d50b6442bef66abbe4694f918f8ad013f81d75cf upstream.
 
-The hardcoded MAX_GENI_CFG_RAMn_CNT limit is not accurate for all SoCs:
-some targets have less CFG RAM than the constant implies, while others
-like QCS615 need more entries than the old limit of 455 allowed, causing
-valid firmware to be rejected at load time.
+Some devices use combo PHYs (i.e. USB3 + DisplayPort), which also
+handle the lane muxing. These PHYs are referenced twice from
+the USB-C connector (USB super-speed lines and SBU/AUX lines)
+resulting in the mux being configured twice. Avoid this by
+dropping duplicates.
 
-Rather than hardcoding a constant, read PROG_RAM_DEPTH from SE_HW_PARAM_2
-at runtime to get the actual CFG RAM depth of the hardware instance and
-use that as the upper bound for firmware size validation.
+This is a re-application of b145c3f29d62 ("usb: typec: mux: avoid
+duplicated mux switches"), with fix derived from usb: typec: mux:
+Fix typec_switch_match() .
 
-Fixes: d4bf06592ad6 ("soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem")
-Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260702-qup-se-increase-ram-cnt-v3-1-80b363373a5b@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: f576c75f95a5 ("Revert "usb: typec: mux: avoid duplicated mux switches"")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Co-developed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260822072556.490594-1-marex@nabladev.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/qcom-geni-se.c  |   24 +++++++++++++-----------
- include/linux/soc/qcom/geni-se.h |    4 ++++
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ drivers/usb/typec/mux.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -154,8 +154,6 @@ struct se_fw_hdr {
- /*Magic numbers*/
- #define SE_MAGIC_NUM			0x57464553
+--- a/drivers/usb/typec/mux.c
++++ b/drivers/usb/typec/mux.c
+@@ -275,7 +275,9 @@ static int mux_fwnode_match(struct devic
+ static void *typec_mux_match(const struct fwnode_handle *fwnode,
+ 			     const char *id, void *data)
+ {
++	struct typec_mux_dev **mux_devs = data;
+ 	struct device *dev;
++	int i;
  
--#define MAX_GENI_CFG_RAMn_CNT		455
--
- #define MI_PBT_NON_PAGED_SEGMENT	0x0
- #define MI_PBT_HASH_SEGMENT		0x2
- #define MI_PBT_NOTUSED_SEGMENT		0x3
-@@ -1224,24 +1222,27 @@ EXPORT_SYMBOL_GPL(geni_se_resources_init
+ 	/*
+ 	 * Device graph (OF graph) does not give any means to identify the
+@@ -290,8 +292,18 @@ static void *typec_mux_match(const struc
+ 
+ 	dev = class_find_device(&typec_mux_class, NULL, fwnode,
+ 				mux_fwnode_match);
++	if (!dev)
++		return ERR_PTR(-EPROBE_DEFER);
++
++	/* Skip duplicates */
++	for (i = 0; i < TYPEC_MUX_MAX_DEVS; i++)
++		if (to_typec_mux_dev(dev) == mux_devs[i]) {
++			put_device(dev);
++			return NULL;
++		}
+ 
+-	return dev ? to_typec_mux_dev(dev) : ERR_PTR(-EPROBE_DEFER);
++
++	return to_typec_mux_dev(dev);
+ }
  
  /**
-  * geni_find_protocol_fw() - Locate and validate SE firmware for a protocol.
-- * @dev: Pointer to the device structure.
-+ * @se: Pointer to the serial engine structure.
-  * @fw: Pointer to the firmware image.
-  * @protocol: Expected serial engine protocol type.
-  *
-  * Identifies the appropriate firmware image or configuration required for a
-- * specific communication protocol instance running on a  Qualcomm GENI
-- * controller.
-+ * specific communication protocol instance running on a Qualcomm GENI
-+ * controller. Validates the firmware size against the hardware PROG_RAM_DEPTH
-+ * read from SE_HW_PARAM_2.
-  *
-  * Return: pointer to a valid 'struct se_fw_hdr' if found, or NULL otherwise.
-  */
--static struct se_fw_hdr *geni_find_protocol_fw(struct device *dev, const struct firmware *fw,
-+static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct firmware *fw,
- 					       enum geni_se_protocol_type protocol)
- {
-+	struct device *dev = se->dev;
- 	const struct elf32_hdr *ehdr;
- 	const struct elf32_phdr *phdrs;
- 	const struct elf32_phdr	*phdr;
- 	struct se_fw_hdr *sefw;
- 	u32 fw_end, cfg_idx_end, cfg_val_end;
-+	u32 prog_ram_depth;
- 	u16 fw_size;
- 	int i;
+@@ -316,7 +328,8 @@ struct typec_mux *fwnode_typec_mux_get(s
+ 		return ERR_PTR(-ENOMEM);
  
-@@ -1300,10 +1301,11 @@ static struct se_fw_hdr *geni_find_proto
- 			sefw->fw_size_in_items = cpu_to_le16(fw_size);
- 		}
- 
--		if (fw_size >= MAX_GENI_CFG_RAMn_CNT) {
--			dev_err(dev,
--				"Firmware size (%u) exceeds max allowed RAMn count (%u)\n",
--				fw_size, MAX_GENI_CFG_RAMn_CNT);
-+		prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
-+					   readl_relaxed(se->base + SE_HW_PARAM_2));
-+		if (fw_size >= prog_ram_depth) {
-+			dev_err(dev, "Firmware size (%u) exceeds RAM size (%u)\n",
-+				fw_size, prog_ram_depth);
- 			continue;
- 		}
- 
-@@ -1427,7 +1429,7 @@ static int geni_load_se_fw(struct geni_s
- 	int ret;
- 	struct se_fw_hdr *hdr;
- 
--	hdr = geni_find_protocol_fw(se->dev, fw, protocol);
-+	hdr = geni_find_protocol_fw(se, fw, protocol);
- 	if (!hdr)
- 		return -EINVAL;
- 
---- a/include/linux/soc/qcom/geni-se.h
-+++ b/include/linux/soc/qcom/geni-se.h
-@@ -124,6 +124,7 @@ struct geni_se {
- #define SE_DMA_RX_FSM_RST		0xd58
- #define SE_HW_PARAM_0			0xe24
- #define SE_HW_PARAM_1			0xe28
-+#define SE_HW_PARAM_2			0xe2c
- 
- /* GENI_FORCE_DEFAULT_REG fields */
- #define FORCE_DEFAULT	BIT(0)
-@@ -291,6 +292,9 @@ struct geni_se {
- #define RX_FIFO_DEPTH_MSK		GENMASK(21, 16)
- #define RX_FIFO_DEPTH_SHFT		16
- 
-+/* SE_HW_PARAM_2 fields */
-+#define PROG_RAM_DEPTH_MSK		GENMASK(10, 0)
-+
- #define HW_VER_MAJOR_MASK		GENMASK(31, 28)
- #define HW_VER_MAJOR_SHFT		28
- #define HW_VER_MINOR_MASK		GENMASK(27, 16)
+ 	count = fwnode_connection_find_matches(fwnode, "mode-switch",
+-					       NULL, typec_mux_match,
++					       (void **)mux_devs,
++					       typec_mux_match,
+ 					       (void **)mux_devs,
+ 					       ARRAY_SIZE(mux_devs));
+ 	if (count <= 0) {
 
 
