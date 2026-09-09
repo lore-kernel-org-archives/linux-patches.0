@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E60D57D221;
-	Wed,  9 Sep 2026 14:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C770577E59;
+	Wed,  9 Sep 2026 14:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963671; cv=none; b=XiTSGAgpz3r8ge9thkUHl+Xce3guwm/5RS5i0BbVauRqCQRJqbKjqEgfpsdxAmaVqTknZz+q5rw7bHUnNCAM3SOFlxCxwTdGjpWgZ2eBO35tYC4c92OG5Ge/Ipt4JoSv/Nol69CZbxys6B4ufb30XTBwzYrJhLAydL10KgGV9S4=
+	t=1788963674; cv=none; b=o8erXv0O1BCWGfynxVT/Fcx3aDz56VFaRFQy1ZA24MuwnhUqjDGTtrwk9rsWzcRlhrXZsCWjhB5WTnU8JayDI7ZmEg1RXh4tJveIVf5aQmpdZtAYq+NK7bnJcbP8rPasZc/WvPQLgswdqJN57HCDltXN+1kgEq8RTowz27KKDh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963671; c=relaxed/simple;
-	bh=lb8wrXHOgN+Yw7CSsQj9ZJJsTwSl1fn/3LDKGNg+mXM=;
+	s=arc-20240116; t=1788963674; c=relaxed/simple;
+	bh=KKuH0aubR1hDKWkJruVbyRmHwRnlhJ1hMBlgG4ZEtmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCgojZA4gy/WWEFyRdtz2wpJUZxnb1+hIq90MFbOBJTCVmBWEk9vO3F9tpcRiR11Le4uM/TyfoE2A+2HsDG0804STqf7vCkyzyvuF4NAhuF3+lJHeRgPCWO1nVUMmgaJmT8oMWtL1DV6I05lxGy0Z3SL5XfRs+M9nGVOck1Ig5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Re6SYBZj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SpsmiZPw9ee7UiNcG9fhTnt8i+3vd9z7fXtsrv0dm7e7tKAu7tj306vi/4TJpJQtGirZw5EpK1Z1MOPdCXQEfuo0Rl9Q4adwvgnVkTY7h9G0Ip4yNEu8uwf+esgIE610+rQwzzhBV8troSYs8GulVlRG/mrBdBiap4Gmhw3jykU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgQJvJMn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Re6SYBZj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044C41F00A3A;
-	Wed,  9 Sep 2026 14:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgQJvJMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44F71F00A3A;
+	Wed,  9 Sep 2026 14:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963670;
-	bh=6Jo92dWjwbwu7u0SvT2Hby1jVqKHfQGRW1ATPUrjg8U=;
+	s=korg; t=1788963673;
+	bh=E4jnPJdY4FfBdKWHflL13zTTWI4VR96wRYH5aYEGtN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Re6SYBZj7xQWvq5HNYE2AHkNm3czVdSmlyM+qgY2HQCE+dLojggvBJHne4WYf2pXY
-	 LS9BbKf0Vbk3ZOD/IduGy8LdHJd/ZmjVv4+U9diYXX5qFL/BgVpkC4ljl40i2LdQFr
-	 WR6bjK07CBFZBX1x2EkXOGboUbJP3MzkRkFKSkwQ=
+	b=tgQJvJMn3d16E6uxw9sW6RbpH5BCYJblOtAwsMe0wE5GbPRBuOUpMT1JbolbeN4jt
+	 d2rT7kbt8Ezt7VxELNF3agjMlW5HZQKaFZAMX6xJCMeneAIQtqJVV0JhmVIfHmzXUn
+	 nK/aTxd3C7HM4nF2QwQLivv307r9Ol2TgO92capA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 157/583] i2c: mux: demux-pinctrl: fix OF node leak on kstrdup failure
-Date: Wed,  9 Sep 2026 15:37:22 +0200
-Message-ID: <20260909134243.643650763@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 158/583] ASoC: adau1761: sort the register default table
+Date: Wed,  9 Sep 2026 15:37:23 +0200
+Message-ID: <20260909134243.681098263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -44,41 +45,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 62edb8ca0aa44517cc23cfa26cd8a51f15ea92fe upstream.
+commit cc606b6c2328b4864885db6afcad7e78c0ac7a73 upstream.
 
-of_parse_phandle() takes a reference on the parent node. If a later
-devm_kstrdup() fails, err_rollback only releases nodes for indices
-0..i-1, so the current node is leaked.
+reg_defaults must be sorted by ascending register address, as
+regcache_lookup_reg() locates entries in it with bsearch().  See commit
+fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-of_node_put() the current parent before rolling back.
+The table lists the ADAU1761 specific registers (0x4008 and up) before
+the block shared with the ADAU1381/ADAU1781, which starts at
+ADAU17X1_CLOCK_CONTROL (0x4000), so bsearch() descends into the wrong
+half and 28 of the 52 entries are unreachable.
+regcache_reg_needs_sync() then cannot compare them against their default
+and reports that a sync is needed, so they are written to the device on
+every regcache_sync() even when they were never touched.
 
-Fixes: 7c0195fa9a9e ("i2c: mux: demux-pinctrl: check the return value of devm_kstrdup()")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Cc: <stable@vger.kernel.org> # v6.6+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260813095617.2246320-1-gonglinkai@kylinos.cn
+Sort the table by register address.
+
+Fixes: dab464b60b24 ("ASoC: Add ADAU1361/ADAU1761 audio CODEC support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20260805122713.11376-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/muxes/i2c-demux-pinctrl.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/adau1761.c |   34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
---- a/drivers/i2c/muxes/i2c-demux-pinctrl.c
-+++ b/drivers/i2c/muxes/i2c-demux-pinctrl.c
-@@ -247,6 +247,7 @@ static int i2c_demux_pinctrl_probe(struc
- 		props[i].value = devm_kstrdup(&pdev->dev, "ok", GFP_KERNEL);
- 		if (!props[i].name || !props[i].value) {
- 			err = -ENOMEM;
-+			of_node_put(adap_np);
- 			goto err_rollback;
- 		}
- 		props[i].length = 3;
+--- a/sound/soc/codecs/adau1761.c
++++ b/sound/soc/codecs/adau1761.c
+@@ -68,23 +68,33 @@
+ #define ADAU1761_FIRMWARE "adau1761.bin"
+ 
+ static const struct reg_default adau1761_reg_defaults[] = {
+-	{ ADAU1761_DEJITTER,			0x03 },
++	{ ADAU17X1_CLOCK_CONTROL,		0x00 },
++	{ ADAU17X1_PLL_CONTROL,			0x00 },
+ 	{ ADAU1761_DIGMIC_JACKDETECT,		0x00 },
++	{ ADAU17X1_REC_POWER_MGMT,		0x00 },
+ 	{ ADAU1761_REC_MIXER_LEFT0,		0x00 },
+ 	{ ADAU1761_REC_MIXER_LEFT1,		0x00 },
+ 	{ ADAU1761_REC_MIXER_RIGHT0,		0x00 },
+ 	{ ADAU1761_REC_MIXER_RIGHT1,		0x00 },
+ 	{ ADAU1761_LEFT_DIFF_INPUT_VOL,		0x00 },
++	{ ADAU1761_RIGHT_DIFF_INPUT_VOL,	0x00 },
++	{ ADAU17X1_MICBIAS,			0x00 },
+ 	{ ADAU1761_ALC_CTRL0,			0x00 },
+ 	{ ADAU1761_ALC_CTRL1,			0x00 },
+ 	{ ADAU1761_ALC_CTRL2,			0x00 },
+ 	{ ADAU1761_ALC_CTRL3,			0x00 },
+-	{ ADAU1761_RIGHT_DIFF_INPUT_VOL,	0x00 },
+-	{ ADAU1761_PLAY_LR_MIXER_LEFT,		0x00 },
++	{ ADAU17X1_SERIAL_PORT0,		0x00 },
++	{ ADAU17X1_SERIAL_PORT1,		0x00 },
++	{ ADAU17X1_CONVERTER0,			0x00 },
++	{ ADAU17X1_CONVERTER1,			0x00 },
++	{ ADAU17X1_ADC_CONTROL,			0x00 },
++	{ ADAU17X1_LEFT_INPUT_DIGITAL_VOL,	0x00 },
++	{ ADAU17X1_RIGHT_INPUT_DIGITAL_VOL,	0x00 },
+ 	{ ADAU1761_PLAY_MIXER_LEFT0,		0x00 },
+ 	{ ADAU1761_PLAY_MIXER_LEFT1,		0x00 },
+ 	{ ADAU1761_PLAY_MIXER_RIGHT0,		0x00 },
+ 	{ ADAU1761_PLAY_MIXER_RIGHT1,		0x00 },
++	{ ADAU1761_PLAY_LR_MIXER_LEFT,		0x00 },
+ 	{ ADAU1761_PLAY_LR_MIXER_RIGHT,		0x00 },
+ 	{ ADAU1761_PLAY_MIXER_MONO,		0x00 },
+ 	{ ADAU1761_PLAY_HP_LEFT_VOL,		0x00 },
+@@ -93,20 +103,6 @@ static const struct reg_default adau1761
+ 	{ ADAU1761_PLAY_LINE_RIGHT_VOL,		0x00 },
+ 	{ ADAU1761_PLAY_MONO_OUTPUT_VOL,	0x00 },
+ 	{ ADAU1761_POP_CLICK_SUPPRESS,		0x00 },
+-	{ ADAU1761_JACK_DETECT_PIN,		0x00 },
+-	{ ADAU1761_CLK_ENABLE0,			0x00 },
+-	{ ADAU1761_CLK_ENABLE1,			0x00 },
+-	{ ADAU17X1_CLOCK_CONTROL,		0x00 },
+-	{ ADAU17X1_PLL_CONTROL,			0x00 },
+-	{ ADAU17X1_REC_POWER_MGMT,		0x00 },
+-	{ ADAU17X1_MICBIAS,			0x00 },
+-	{ ADAU17X1_SERIAL_PORT0,		0x00 },
+-	{ ADAU17X1_SERIAL_PORT1,		0x00 },
+-	{ ADAU17X1_CONVERTER0,			0x00 },
+-	{ ADAU17X1_CONVERTER1,			0x00 },
+-	{ ADAU17X1_LEFT_INPUT_DIGITAL_VOL,	0x00 },
+-	{ ADAU17X1_RIGHT_INPUT_DIGITAL_VOL,	0x00 },
+-	{ ADAU17X1_ADC_CONTROL,			0x00 },
+ 	{ ADAU17X1_PLAY_POWER_MGMT,		0x00 },
+ 	{ ADAU17X1_DAC_CONTROL0,		0x00 },
+ 	{ ADAU17X1_DAC_CONTROL1,		0x00 },
+@@ -114,12 +110,16 @@ static const struct reg_default adau1761
+ 	{ ADAU17X1_SERIAL_PORT_PAD,		0xaa },
+ 	{ ADAU17X1_CONTROL_PORT_PAD0,		0xaa },
+ 	{ ADAU17X1_CONTROL_PORT_PAD1,		0x00 },
++	{ ADAU1761_JACK_DETECT_PIN,		0x00 },
++	{ ADAU1761_DEJITTER,			0x03 },
+ 	{ ADAU17X1_DSP_SAMPLING_RATE,		0x01 },
+ 	{ ADAU17X1_SERIAL_INPUT_ROUTE,		0x00 },
+ 	{ ADAU17X1_SERIAL_OUTPUT_ROUTE,		0x00 },
+ 	{ ADAU17X1_DSP_ENABLE,			0x00 },
+ 	{ ADAU17X1_DSP_RUN,			0x00 },
+ 	{ ADAU17X1_SERIAL_SAMPLING_RATE,	0x00 },
++	{ ADAU1761_CLK_ENABLE0,			0x00 },
++	{ ADAU1761_CLK_ENABLE1,			0x00 },
+ };
+ 
+ static const DECLARE_TLV_DB_SCALE(adau1761_sing_in_tlv, -1500, 300, 1);
 
 
