@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28FB523781;
-	Wed,  9 Sep 2026 14:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997BA56E076;
+	Wed,  9 Sep 2026 14:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963216; cv=none; b=t+NQ+JXyGS35QMtdKetUkmD8WAvYD4MNmBzjpmyGRBBiOjRkUYu2ztQYu/D58hwuUaL9914u4qHgTQPjpWeCz3XqrBaFyOltRerHzEgFyQiOfI2fKazeMWbCDNZ/RdHSvCrqdSLXvDFeM2NgBrGYO987h3umaB2f6xEnd+VhdtU=
+	t=1788963219; cv=none; b=WyVzmm7C7barYzIB3cJNXZE2PGcNz7UyNWj6E+d27apLHMBejP5BVOASwRl3Ed6btOIon9PbjkQR6Vw19BqIma6SUGuryqNoTP/v1yhDCzIEBlXuOWb6sZtUINWxFHXntszW1ZJn8oBgvxNE/oo08Ur8YyQMsacwP+Xg8YLxxAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963216; c=relaxed/simple;
-	bh=tR9BiWfEhYXupykpml3sblB6DlQbuKepDCA94QJUXcU=;
+	s=arc-20240116; t=1788963219; c=relaxed/simple;
+	bh=JtPA608+V5LnmSCmXA+3OfGgFXKicRc7j97W+cBRdZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rH60sv821QuESi1Zk/0TtSOAWI6ZvYQPVw950UpevNjLfOJ5nc5Bl0Hm70wg9r5SFap4IfFPSa5CkchO4sR9LMHzDzcMSOpVe697AvwnnvD2ayDQD1cDEb72lxNSe8kt5S5B5VdUEsQ7BZnMCwdfWSvnFsfmUuLAeh8yeS2TFeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuML/GG6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WysPIOixTvL6u2SIjPneRVNPAucnMrF3AbYJ+kxq80qXKTDlbEyhcWMkCg72DUg0ZGYcfg+3waxDzsAV8d12NlkgizY9424rKogtKtZuyAND709jXQJQCGaTkx051pK7/rEasL60MWMYA42j+P3Gp6mvsknzbSFcv4nCY1FQX3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyB9cFUb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuML/GG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178BF1F00A3A;
-	Wed,  9 Sep 2026 14:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyB9cFUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D241F00A3E;
+	Wed,  9 Sep 2026 14:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963215;
-	bh=nOazrmp1Xc+EA3ACIG7kZ3WJbu5ADpkhMUy1aUf298s=;
+	s=korg; t=1788963218;
+	bh=WO7texvS+QozYArHHroR92HkP5F9yFy4MzExYXo6NqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tuML/GG61TTzhJiImuOfUIrYGoL6f7iv/OR3EB+GzlriMhQjNcN2MIU/rbEFtTjSi
-	 opI2Wu6IsR7SLbPBiEA5BAECwpsf/Wbbwho7c9apNNT/LDLJrdLt8Yi9HePtS8qnjm
-	 xXqazwEcWc8RW3aXdvT+YsZVUO8mPH3foKCOG04M=
+	b=fyB9cFUbbVq6Gqt1kae+qLbKmO8cDSd1Lo4L8b5C4uySheLO/GVAAyfbnpEaVRiAb
+	 g4x2tHcEgjBVbtQ0j+/VSPvhFsvr7eeo8dtwScAjDEz7MLXHWHoc3cI2qw7miEiMNP
+	 w3sZ4J+ehH/vwsPWCDTLaioQeDxjCJ34Hn9+5EjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Thierry Reding <treding@nvidia.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH 7.2 522/556] drm/sysfb: simpledrm: Improve stride validation
-Date: Wed,  9 Sep 2026 15:43:22 +0200
-Message-ID: <20260909134248.786916552@linuxfoundation.org>
+	Shixiong Ou <oushixiong@kylinos.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 7.2 523/556] drm/sysfb: ofdrm: Fix integer overflow in fb_size calculation
+Date: Wed,  9 Sep 2026 15:43:23 +0200
+Message-ID: <20260909134248.821058604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,43 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Shixiong Ou <oushixiong@kylinos.cn>
 
-commit df6533f11688aa30be3bb883c7637f4ffdbb7cbd upstream.
+commit c6f48e59ece0123f6a11527ad4d89b21c2d65b87 upstream.
 
-Validate the computed stride against the maximum value INT_MAX.
+The framebuffer size calculation `fb_size = linebytes * height` can
+overflow when both values are large (e.g., 46341 * 46341 > INT_MAX).
+Since linebytes and height are both int types, the multiplication is
+performed as int * int, which results in undefined behavior on overflow.
 
+Use check_mul_overflow() to detect and prevent this overflow, consistent
+with the approach used in simpledrm.c and corebootdrm.c.
+
+Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Thierry Reding <treding@nvidia.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Fixes: 7bfa5c7b28d6 ("drm/simpledrm: Compute linestride with drm_format_info_min_pitch()")
-Cc: <stable@vger.kernel.org> # v6.1+
-Link: https://patch.msgid.link/20260625094509.157581-5-tzimmermann@suse.de
+Fixes: c8a17756c425 ("drm/ofdrm: Add ofdrm for Open Firmware framebuffers")
+Cc: <stable@vger.kernel.org> # v6.2+
+Link: https://patch.msgid.link/20260825104134.669676-1-oushixiong1025@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sysfb/simpledrm.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/sysfb/ofdrm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/sysfb/simpledrm.c
-+++ b/drivers/gpu/drm/sysfb/simpledrm.c
-@@ -710,9 +710,15 @@ static struct simpledrm_device *simpledr
- 		return ERR_PTR(-ENODEV);
- 	}
- 	if (!stride) {
--		stride = drm_format_info_min_pitch(format, 0, width);
--		if (drm_WARN_ON(dev, !stride))
-+		u64 pitch = drm_format_info_min_pitch(format, 0, width);
-+
-+		if (drm_WARN_ON(dev, !pitch)) {
-+			return ERR_PTR(-EINVAL); /* driver bug */
-+		} else if (pitch > INT_MAX) {
-+			drm_warn(dev, "stride of %llu exceeds maximum\n", pitch);
+--- a/drivers/gpu/drm/sysfb/ofdrm.c
++++ b/drivers/gpu/drm/sysfb/ofdrm.c
+@@ -2,6 +2,7 @@
+ 
+ #include <linux/aperture.h>
+ #include <linux/of_address.h>
++#include <linux/overflow.h>
+ #include <linux/pci.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
+@@ -913,7 +914,10 @@ static struct ofdrm_device *ofdrm_device
  			return ERR_PTR(-EINVAL);
-+		}
-+		stride = pitch;
  	}
  
- 	sysfb->fb_mode = drm_sysfb_mode(width, height, width_mm, height_mm);
+-	fb_size = linebytes * height;
++	if (check_mul_overflow(linebytes, height, &fb_size)) {
++		drm_err(dev, "framebuffer size exceeds maximum\n");
++		return ERR_PTR(-EINVAL);
++	}
+ 
+ 	/*
+ 	 * Try to figure out the address of the framebuffer. Unfortunately, Open
 
 
