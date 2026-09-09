@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D532569F31;
-	Wed,  9 Sep 2026 14:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68315678E4;
+	Wed,  9 Sep 2026 14:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963481; cv=none; b=o0q/y1nSmGWgO6PS4JAcM7DSJNtazA/w5T7sutChSwE/y06KARsU1U2Ia3HFw3D4mmMt8hjJS8O8SQHuWhJUPB3v8ea4JCV4/aaiFkKM1smxJF2nu7FIRlflfFVw2nCfjUWgYvfvfgW7xgYQ0pe50dhOvHVOvR0Td9n9jHzA5L8=
+	t=1788963484; cv=none; b=NVSCKoYUyEGIJJ27D+2xLHmjcjQcPzFW4xyU0OCWuiqNGPoVjQqwKoWggvvNzP5oiUkC60E5t3VxpMm/s3ApxxwbxahzAtablHiOmXFchv5Y4zQ7s+88qdRA1ygLfwyLWUdGaishQnXqzDxJNJez+3sSsnAGMLxYT+wonu1tBWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963481; c=relaxed/simple;
-	bh=VuOI306E5nGnRF/TbCFzdBiLpnlbzcyTUVDrig9Xnrw=;
+	s=arc-20240116; t=1788963484; c=relaxed/simple;
+	bh=TFvVQF5Wk9l4c0S37GZiG4HgL+jH5Qcop4J8RzdEVkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IbIg50+GvUC0N7thZgvmoYwnRzOJST6wF6KhwG1KX+Ax8tFakqvaJTeSNDd26QWMWwSUGboHJcWttOeSZ1J1CJHOY4dJ6xdVLGhADg3rO0oF8QpP2tHbWTNXU+wwY208cCfCVYqIQCp9q5B3sSAGtCfGdm3GKNNcDFgcB+VDsVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+Sz2Ai5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kP8avskMV9/qxl/lb1IL1N3Q04BN+hjVelh7jol1kcfJdtcII5c/tJAhaZ2bpNmEqyGMUoO98uwdOAFjY88OZhGPQ3U6twDaxLeptj22rH4aQfNb1v9KOzWFv9fqRLeqxk2+fE92noGSpHs1Xj5mTLu4fv/PeY7tT/sXAlEaAUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOwfrHZH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+Sz2Ai5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623321F00A3A;
-	Wed,  9 Sep 2026 14:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOwfrHZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577621F00A3A;
+	Wed,  9 Sep 2026 14:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963479;
-	bh=X0WD74Mip6JwbdYOiCSD3ArADo/N+AEt87ALfvyYpfc=;
+	s=korg; t=1788963482;
+	bh=feDho9wOr/4QgFpEsz7/ed26A79BQsVrwuCbWVzD/pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+Sz2Ai50E1l3N3NFI3FUvi5mKMKvhEoKiEmKs7jnnAINQaNy/PSK2xpVlrvCsUwF
-	 YN65Ij79BOMCT89vno0aeiDIelDVv0ZDpkJlp+2NsoIqU2+f9dVqQkkHSkO1Psaa60
-	 Wbnk5a3xVGRE/0baOJur/kNJxDo4ww38fliCWNPg=
+	b=EOwfrHZH+b62mhoGgi6h7jItmCZgTHXXWeMSuKkuk4bj0RwGKVEd31275jLYjAsUU
+	 uO7pHB+0pHU4jbF25+1/DJ4NgI65TyXYlCX91jzJUTIwmLuUzzlr34uKGLbxWx47p/
+	 M3mZAujuE5D3pph9NVUVEfiom4Or8D5M9FfDayKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viktor Malik <vmalik@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.18 094/583] perf trace: Factor out BPF loop body
-Date: Wed,  9 Sep 2026 15:36:19 +0200
-Message-ID: <20260909134241.383487514@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Subject: [PATCH 6.18 077/583] bpf: Fix infinite loop in pcpu_freelist push with one possible CPU
+Date: Wed,  9 Sep 2026 15:36:02 +0200
+Message-ID: <20260909134240.757439867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,172 +50,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viktor Malik <vmalik@redhat.com>
+From: Hui Su <sh_def@163.com>
 
-commit acff3e1a9cc29a6a039b76b81a438c56016bc0e3 upstream.
+commit efebf6496685c93150df5bb0794363ae70c5f58a upstream.
 
-The BPF program in augmented_raw_syscalls uses a for loop to iterate all
-syscall arguments. The loop body is quite complex and often poses
-problems for the BPF verifier. As a preparation step for addressing this
-issue, factor out the loop body into a separate function.
+__pcpu_freelist_push() can loop forever when only one CPU is possible
+and an NMI re-enters pcpu_freelist_push() while the interrupted context
+holds that CPU's freelist lock.
 
-Signed-off-by: Viktor Malik <vmalik@redhat.com>
+After the current-CPU fast path fails, the fallback loop walks
+cpu_possible_mask while skipping the current CPU. With CONFIG_SMP=n, or
+when an SMP kernel is limited to one possible CPU with nr_cpus=1 or
+possible_cpus=1, there are no other possible CPUs to examine. The loop
+therefore makes no lock acquisition attempt and can never make progress.
+
+The following stack was observed on a UP system:
+
+  NMI context:
+    pcpu_freelist_push
+    free_htab_elem
+    htab_map_delete_elem
+    [perf-event BPF program]
+    __perf_event_overflow
+    perf_event_nmi_handler
+    exc_nmi
+
+  Interrupted context:
+    __pcpu_freelist_push
+    pcpu_freelist_push
+    free_htab_elem
+    htab_map_delete_elem
+    [raw_tp/sys_enter BPF program]
+    __bpf_trace_sys_enter
+    do_syscall_64
+
+raw_res_spin_lock() detects the same-CPU recursive acquisition and
+returns -EDEADLK, but the subsequent fallback loop has no candidate head
+on a system with one possible CPU.
+
+Restore the extra fallback head that existed before the rqspinlock
+conversion. Keep the current-CPU fast path, then try the other possible
+CPUs and finally the extra head. The additional head lets a push, which
+cannot fail without losing a preallocated element, make progress when the
+only per-CPU head is held by the interrupted context.
+
+Also check the extra head from the pop path so that nodes placed there
+can be reused.
+
+Fixes: f2ac0e5d1c4d ("bpf: Convert percpu_freelist.c to rqspinlock")
+Signed-off-by: Hui Su <sh_def@163.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/bpf/20260806175600.1993595-1-sh_def@163.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c |  128 ++++++++++--------
- 1 file changed, 73 insertions(+), 55 deletions(-)
+ kernel/bpf/percpu_freelist.c | 35 +++++++++++++++++++++++++++--------
+ kernel/bpf/percpu_freelist.h |  1 +
+ 2 files changed, 28 insertions(+), 8 deletions(-)
 
---- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-+++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-@@ -429,15 +429,80 @@ static bool pid_filter__has(struct pids_
- 	return bpf_map_lookup_elem(pids, &pid) != NULL;
+diff --git a/kernel/bpf/percpu_freelist.c b/kernel/bpf/percpu_freelist.c
+index 632762b57299..06ce588d13a3 100644
+--- a/kernel/bpf/percpu_freelist.c
++++ b/kernel/bpf/percpu_freelist.c
+@@ -17,6 +17,8 @@ int pcpu_freelist_init(struct pcpu_freelist *s)
+ 		raw_res_spin_lock_init(&head->lock);
+ 		head->first = NULL;
+ 	}
++	raw_res_spin_lock_init(&s->extralist.lock);
++	s->extralist.first = NULL;
+ 	return 0;
  }
  
-+/*
-+ * Determine what type of argument and how many bytes to read from user space, using the
-+ * value in the beauty_map. This is the relation of parameter type and its corresponding
-+ * value in the beauty map, and how many bytes we read eventually:
-+ *
-+ * string: 1			      -> size of string
-+ * struct: size of struct	      -> size of struct
-+ * buffer: -1 * (index of paired len) -> value of paired len (maximum: TRACE_AUG_MAX_BUF)
-+ */
-+static inline int augment_arg(struct syscall_enter_args *args, int i,
-+			      unsigned int *beauty_map,
-+			      struct augmented_arg *payload_offset)
-+{
-+	int index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
-+	s64 aug_size, size;
-+	bool augmented;
-+	void *arg;
-+
-+	arg = (void *)args->args[i];
-+	augmented = false;
-+	size = beauty_map[i];
-+	aug_size = size; /* size of the augmented data read from user space */
-+
-+	if (size == 0 || arg == NULL)
-+		return 0;
-+
-+	if (size == 1) { /* string */
-+		aug_size = bpf_probe_read_user_str(payload_offset->value, value_size, arg);
-+		/* minimum of 0 to pass the verifier */
-+		if (aug_size < 0)
-+			aug_size = 0;
-+
-+		augmented = true;
-+	} else if (size > 0 && size <= value_size) { /* struct */
-+		if (!bpf_probe_read_user(payload_offset->value, size, arg))
-+			augmented = true;
-+	} else if ((int)size < 0 && size >= -6) { /* buffer */
-+		index = -(size + 1);
-+		barrier_var(index); // Prevent clang (noticed with v18) from removing the &= 7 trick.
-+		index &= 7;	    // Satisfy the bounds checking with the verifier in some kernels.
-+		aug_size = args->args[index] > TRACE_AUG_MAX_BUF ? TRACE_AUG_MAX_BUF : args->args[index];
-+
-+		if (aug_size > 0) {
-+			if (!bpf_probe_read_user(payload_offset->value, aug_size, arg))
-+				augmented = true;
-+		}
-+	}
-+
-+	/* Augmented data size is limited to sizeof(augmented_arg->unnamed union with value field) */
-+	if (aug_size > value_size)
-+		aug_size = value_size;
-+
-+	/* write data to payload */
-+	if (augmented) {
-+		int written = offsetof(struct augmented_arg, value) + aug_size;
-+
-+		if (written < 0 || written > sizeof(struct augmented_arg))
-+			return -1;
-+
-+		payload_offset->size = aug_size;
-+		return written;
-+	}
-+
-+	return 0;
-+}
-+
- static int augment_sys_enter(void *ctx, struct syscall_enter_args *args)
+@@ -46,22 +48,28 @@ void __pcpu_freelist_push(struct pcpu_freelist *s,
+ 			struct pcpu_freelist_node *node)
  {
--	bool augmented, do_output = false;
--	int zero = 0, index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
-+	bool do_output = false;
-+	int zero = 0, written;
- 	u64 output = 0; /* has to be u64, otherwise it won't pass the verifier */
--	s64 aug_size, size;
- 	unsigned int nr, *beauty_map;
- 	struct beauty_payload_enter *payload;
--	void *arg, *payload_offset;
-+	void *payload_offset;
+ 	struct pcpu_freelist_head *head;
+-	int cpu;
++	int cpu, this_cpu;
  
- 	/* fall back to do predefined tail call */
- 	if (args == NULL)
-@@ -457,58 +522,11 @@ static int augment_sys_enter(void *ctx,
- 	/* copy the sys_enter header, which has the syscall_nr */
- 	__builtin_memcpy(&payload->args, args, sizeof(struct syscall_enter_args));
+ 	if (___pcpu_freelist_push(this_cpu_ptr(s->freelist), node))
+ 		return;
  
--	/*
--	 * Determine what type of argument and how many bytes to read from user space, using the
--	 * value in the beauty_map. This is the relation of parameter type and its corresponding
--	 * value in the beauty map, and how many bytes we read eventually:
--	 *
--	 * string: 1			      -> size of string
--	 * struct: size of struct	      -> size of struct
--	 * buffer: -1 * (index of paired len) -> value of paired len (maximum: TRACE_AUG_MAX_BUF)
--	 */
- 	for (int i = 0; i < 6; i++) {
--		arg = (void *)args->args[i];
--		augmented = false;
--		size = beauty_map[i];
--		aug_size = size; /* size of the augmented data read from user space */
--
--		if (size == 0 || arg == NULL)
--			continue;
--
--		if (size == 1) { /* string */
--			aug_size = bpf_probe_read_user_str(((struct augmented_arg *)payload_offset)->value, value_size, arg);
--			/* minimum of 0 to pass the verifier */
--			if (aug_size < 0)
--				aug_size = 0;
--
--			augmented = true;
--		} else if (size > 0 && size <= value_size) { /* struct */
--			if (!bpf_probe_read_user(((struct augmented_arg *)payload_offset)->value, size, arg))
--				augmented = true;
--		} else if ((int)size < 0 && size >= -6) { /* buffer */
--			index = -(size + 1);
--			barrier_var(index); // Prevent clang (noticed with v18) from removing the &= 7 trick.
--			index &= 7;	    // Satisfy the bounds checking with the verifier in some kernels.
--			aug_size = args->args[index] > TRACE_AUG_MAX_BUF ? TRACE_AUG_MAX_BUF : args->args[index];
--
--			if (aug_size > 0) {
--				if (!bpf_probe_read_user(((struct augmented_arg *)payload_offset)->value, aug_size, arg))
--					augmented = true;
--			}
--		}
--
--		/* Augmented data size is limited to sizeof(augmented_arg->unnamed union with value field) */
--		if (aug_size > value_size)
--			aug_size = value_size;
--
--		/* write data to payload */
--		if (augmented) {
--			int written = offsetof(struct augmented_arg, value) + aug_size;
--
--			if (written < 0 || written > sizeof(struct augmented_arg))
--				return 1;
--
--			((struct augmented_arg *)payload_offset)->size = aug_size;
-+		written = augment_arg(args, i, beauty_map, (struct augmented_arg *)payload_offset);
-+		if (written < 0)
-+			return 1;
-+		if (written > 0) {
- 			output += written;
- 			payload_offset += written;
- 			do_output = true;
++	this_cpu = raw_smp_processor_id();
+ 	while (true) {
+-		for_each_cpu_wrap(cpu, cpu_possible_mask, raw_smp_processor_id()) {
+-			if (cpu == raw_smp_processor_id())
++		for_each_cpu_wrap(cpu, cpu_possible_mask, this_cpu) {
++			if (cpu == this_cpu)
+ 				continue;
++
+ 			head = per_cpu_ptr(s->freelist, cpu);
+-			if (raw_res_spin_lock(&head->lock))
+-				continue;
+-			pcpu_freelist_push_node(head, node);
+-			raw_res_spin_unlock(&head->lock);
+-			return;
++			if (___pcpu_freelist_push(head, node))
++				return;
+ 		}
++
++		/*
++		 * Push cannot fail. Use the extra list when none of the
++		 * per-CPU freelists can accept the node.
++		 */
++		if (___pcpu_freelist_push(&s->extralist, node))
++			return;
+ 	}
+ }
+ 
+@@ -117,6 +125,17 @@ static struct pcpu_freelist_node *___pcpu_freelist_pop(struct pcpu_freelist *s)
+ 		}
+ 		raw_res_spin_unlock(&head->lock);
+ 	}
++
++	/* Per-CPU lists are empty or unavailable, try the extra list. */
++	head = &s->extralist;
++	if (!READ_ONCE(head->first))
++		return NULL;
++	if (raw_res_spin_lock(&head->lock))
++		return NULL;
++	node = head->first;
++	if (node)
++		WRITE_ONCE(head->first, node->next);
++	raw_res_spin_unlock(&head->lock);
+ 	return node;
+ }
+ 
+diff --git a/kernel/bpf/percpu_freelist.h b/kernel/bpf/percpu_freelist.h
+index 914798b74967..980cf2884fd2 100644
+--- a/kernel/bpf/percpu_freelist.h
++++ b/kernel/bpf/percpu_freelist.h
+@@ -14,6 +14,7 @@ struct pcpu_freelist_head {
+ 
+ struct pcpu_freelist {
+ 	struct pcpu_freelist_head __percpu *freelist;
++	struct pcpu_freelist_head extralist;
+ };
+ 
+ struct pcpu_freelist_node {
+-- 
+2.55.0
+
 
 
