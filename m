@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E49355409D;
-	Wed,  9 Sep 2026 14:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76685678FD;
+	Wed,  9 Sep 2026 14:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963010; cv=none; b=c+X7aNnOr8NdAr2cUfHlCIEkARJAnbphLGPW/d50MrSXIZCCrAPjn2j6LHpkcuKi0umLD1k57P2YcG2EMZTEV31LXwG0IUJdLGv2Exc/LT9g16QqUIliTU6S/I8VupHkgFB1HfvDj6S9mWBx7NVAuq5Ff9TfL0eWSIMcJ7xCpgI=
+	t=1788963013; cv=none; b=Weiaf59NordCofzQmMgd1H/c/bprHG6O5RQoLoqOEEawSc6yW0Nv+s+v0fYuYkL+SF6KKmw//j+qptJFAUwdiLEnGZbZcvY/8YLENqTQC6/hN9sStCuzSMDqbcFCNHNebZiEefArV8WSeoAtDN/JqI9x/etcvkVg1eC19s2QAkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963010; c=relaxed/simple;
-	bh=sEWxzeDkNWwYJti3HFhmeEcJQrLTkOLJrhjrSvZUEB4=;
+	s=arc-20240116; t=1788963013; c=relaxed/simple;
+	bh=vWQTApPGi4kRILHDgdAqzQVikjcQj9YwlmF78mygaqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2Ow10gxSM7UAQWFtc6AoI6VgCthl8Zl15Bh1wkdsDYKGW3/xa5qFFHDvIu1WRq0MrHjRePcE7rxOCKo/vQpKJv81NMFboWbdpVaYccLSCUseKFM2yAAip3M05MB1hveq/w4EMgXJK28rP4HAW9WEJPSvRvWFmJ6xVNMUhiu+K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3/QBa5+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MW95gODxjzz1wIJqf4JFfANDOSleqlH8CDOPmyIUzIjuoAQ6a9wzEFP1S5MBE7Ud9a4WJGu4gGleC10AZDvTZUd2pTEgZlVtvCmePY5vUnzpoUITyijGxvEgVe2qUB2gINGCUnkCWc3d/BjrR/CR1jdYF4BMsA2c4MgEomrAwzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+7WnPY7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3/QBa5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0001F00A3D;
-	Wed,  9 Sep 2026 14:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+7WnPY7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5187D1F00A3D;
+	Wed,  9 Sep 2026 14:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963009;
-	bh=j4OnQunVhKqw0k9c/R6BhPjG/NHUbdxUpQx4ziqP8XQ=;
+	s=korg; t=1788963011;
+	bh=8n4pkxiYF5pjT9HUmhqVtYqqqLtO2/L0yXoHeja9YdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v3/QBa5+bneouU6hMv2RRKssO6Gj9NbjxvV5tXDw6Wd4CSxW0bCI3MfIlBFfg6GE1
-	 f2ppsbjxDH7LbACrromYJ5NnMJKkEtowGS5rlLhwbJEODxI/I/H7tWXaIHvqUqr24q
-	 l8G0VuwLSjvMy3eLReCPeJs3UHLIF7RIDaglzwTE=
+	b=Z+7WnPY7/T9cIih88zM4dR1/1OGFNk+qoSGpO+3YzP+roxgw4hiSececBYFIT8h6W
+	 XtB+olcOZ7DzNaOdIcTtyVYdxTRLqqezQFqs1SUn8jAMIhHJ0saxAZh+dzUwGpdX0n
+	 eBr8NohUWB+a0z4acpoJ8iqArfcnHRwgl+KX079Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
+	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 489/556] drm/amd/display: fix dc_lock leak on GPU reset error paths
-Date: Wed,  9 Sep 2026 15:42:49 +0200
-Message-ID: <20260909134247.698131067@linuxfoundation.org>
+Subject: [PATCH 7.2 490/556] drm/amd/display: Fix HPD consideration for VGA/LVDS connectors on DCE
+Date: Wed,  9 Sep 2026 15:42:50 +0200
+Message-ID: <20260909134247.728680344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -45,56 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 92a9eebd2a1f892fe482154d83f9f1626bc73d3b upstream.
+commit 52536ce677a3470c0e5323b940791efb33975450 upstream.
 
-On GPU reset, dm_suspend() takes dc_lock and leaves it for dm_resume()
-to drop. If amdgpu_dm_commit_zero_streams() or dm_dmub_hw_init() fails,
-the function returns with the lock still held. The matching resume path
-is then skipped, so every later dc_lock take hangs.
+After a refactor that landed in Linux 7.0,
+DC now crashes when it is initialized on GPUs
+that have a VGA or LVDS connector. This is because
+these connectors have no HPD so the hpd_gpio is NULL
+and therefore DC takes the code path meant for
+DCN 4.2+ which sets irq_source_hpd = 255 that
+causes the subsequent code to try to register
+the HPD interrupt, which fails, and causes
+a crash.
 
-Release the cached DC state and unlock before returning the error.
+This commit should be backported to Linux 7.0 and newer.
 
-Fixes: 3cf7a0bc87f0 ("drm/amd/display: Catch failures for amdgpu_dm_commit_zero_streams()")
-Fixes: 2b6943df5413 ("drm/amd/display: Pass up errors for reset GPU that fails to init HW")
 Cc: stable@vger.kernel.org
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5490
+Fixes: def3488eb0fd ("drm/amd/display: refactor HPD to increase flexibility")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260821215059.312868-1-timur.kristof@gmail.com
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/display/dc/link/link_factory.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3511,6 +3511,9 @@ static int dm_suspend(struct amdgpu_ip_b
- 		res = amdgpu_dm_commit_zero_streams(dm->dc);
- 		if (res != DC_OK) {
- 			drm_err(adev_to_drm(adev), "Failed to commit zero streams: %d\n", res);
-+			dc_state_release(dm->cached_dc_state);
-+			dm->cached_dc_state = NULL;
-+			mutex_unlock(&dm->dc_lock);
- 			return -EINVAL;
- 		}
+--- a/drivers/gpu/drm/amd/display/dc/link/link_factory.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+@@ -632,7 +632,7 @@ static bool construct_phy(struct dc_link
  
-@@ -3824,6 +3827,9 @@ static int dm_resume(struct amdgpu_ip_bl
- 		r = dm_dmub_hw_init(adev);
- 		if (r) {
- 			drm_err(adev_to_drm(adev), "DMUB interface failed to initialize: status=%d\n", r);
-+			dc_state_release(dm->cached_dc_state);
-+			dm->cached_dc_state = NULL;
-+			mutex_unlock(&dm->dc_lock);
- 			return r;
- 		}
+ 		DC_LOG_DC("BIOS object table - hpd_gpio id: %d", enc_init_data.hpd_gpio->id);
+ 		DC_LOG_DC("BIOS object table - hpd_gpio en: %d", enc_init_data.hpd_gpio->en);
+-	} else {
++	} else if (link->ctx->dce_version > DCN_VERSION_4_01) {
+ 		struct graphics_object_hpd_info hpd_info;
  
+ 		if (link->ctx->dc_bios->funcs->get_hpd_info(link->ctx->dc_bios, link->link_id, &hpd_info) == BP_RESULT_OK) {
 
 
