@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75374563299;
-	Wed,  9 Sep 2026 13:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466DF563FB6;
+	Wed,  9 Sep 2026 13:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961947; cv=none; b=dXgx+4Ui3KAnvcWvEoyR3sButZdHgGb6AA4m0tvek6VPbZyuxF79Mf59UCnGR9ThGAnM3ueGajJ4nbjYPWplBelN91/hMImIoQj7LF5hUtUHUpBJZ9GFEhLU1d4BwljTNzqbTUMGarHkiO9VScOhvfuUAEKrFl+rWRKPB4gP8y4=
+	t=1788961950; cv=none; b=UQYWhqoXDLMLFiW1HjzvdwgOy4e1rWTwMAmA5QksfYaD+Ui8iJiEe/01f/r/36BWlonpHR/6aixZ+8OU99DnIpQ9culyM0OY7ZvM/0btTq+0kKZDjJlZhFBr1jXCltO1VzFiv67uRFGbttKvorx1h4BblbnMx5k5F8+lv2OVSuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961947; c=relaxed/simple;
-	bh=7Owbne78Yu3lwzN5j3QRVutUCW9Pn5U7ldyL68Cyw00=;
+	s=arc-20240116; t=1788961950; c=relaxed/simple;
+	bh=SZC6b5gozHTg+ahgiiBosabUySfOrBo+FJ5b1BF0lFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kCeaMAj7Vn/GE+51I1aezJbfutpLG/4dDyYJOOjfP9GRUhL7KW0ju2hQcyZZoPUzEaJ6hE8t8W0Dd51Q9rj1zOGEGvGZ0yqkq6K+F2hK9oOZkCILaNsqZhv9VDnCEsHoXBYzG+iY8m6GEcOCp3KNxJuFbwGb97jiaqFXgR7PC+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uoErHX9i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K2ZxC+66RoMbQT70lacQJ/QTTaxDRKSFIx9WkUTCby55CLZtrbuPeUae81P3QwuQtXWhN6N5DmTiD8eHLEpohANpMhEqM6ljlR6wjRQNnU3yTd4PVzzsFBB2a3mfErxuxwEtmHqyb6m1phkmAcWS3ylY4Y7YhceFXTio8NE92dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5FRQ6V8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uoErHX9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE931F00A3A;
-	Wed,  9 Sep 2026 13:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5FRQ6V8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B75D1F00A3D;
+	Wed,  9 Sep 2026 13:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961946;
-	bh=u7W5ShmEsyFlzWxfbsnHeuFgnwDR9KbWnsW1oSKZFoQ=;
+	s=korg; t=1788961949;
+	bh=Ai2i0wJYXqpeLrMLkW3E/gR8GPsNjuk7aTRHUw+NpAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uoErHX9iGEzGTbhvnMhy4e2KX9VGZD17GbNgFGkGAd+0Cf1HLzpAkUPo6Zfm3tXrI
-	 gpVL5k3N0aZ2Y+9c/21R4iZbK+gKXBtcPMV0tzz7sPUAnvLLB7kJW0i964A5TWrOZO
-	 CJicBEKoZZyNTKvg649TK8cRXRKj8miJ6pobqlyE=
+	b=h5FRQ6V8Dr/rQcIckmuPb5TiiQDi2aBhyijzJ2sQenp4IldhnNMLTHqgmAWXNfS/b
+	 ndn2kd2YPCDLDzk3vgQ9kpEB+ghSAxlgWChSe5TlZsxE8egJhBjZbflEJgdlUJFBny
+	 qTN6vGsgYZ9CKKlX7K/QyNuantExpIb6F5n/9JNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Subject: [PATCH 7.2 118/556] bpf: Fix infinite loop in pcpu_freelist push with one possible CPU
-Date: Wed,  9 Sep 2026 15:36:38 +0200
-Message-ID: <20260909134234.619577249@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 7.2 119/556] ceph: lock mutex in ceph_mds_check_access()
+Date: Wed,  9 Sep 2026 15:36:39 +0200
+Message-ID: <20260909134234.654244089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,139 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit efebf6496685c93150df5bb0794363ae70c5f58a upstream.
+commit a61c6ae1dae2611082b831b4aaa780878099c012 upstream.
 
-__pcpu_freelist_push() can loop forever when only one CPU is possible
-and an NMI re-enters pcpu_freelist_push() while the interrupted context
-holds that CPU's freelist lock.
+MDS session OPEN handling replaces mdsc->s_cap_auths under
+mdsc->mutex, freeing the previous array and its strings.
 
-After the current-CPU fast path fails, the fallback loop walks
-cpu_possible_mask while skipping the current CPU. With CONFIG_SMP=n, or
-when an SMP kernel is limited to one possible CPU with nr_cpus=1 or
-possible_cpus=1, there are no other possible CPUs to examine. The loop
-therefore makes no lock acquisition attempt and can never make progress.
+ceph_mds_check_access() traverses this array without holding the
+mutex.  A concurrent session reopen can therefore free the array while
+it is being inspected, resulting in a use-after-free like this:
 
-The following stack was observed on a UP system:
+  Unable to handle kernel paging request at virtual address 003aaad64b2c8bb9
+  [...]
+  Internal error: Oops: 0000000096000004 [#1]  SMP
+  Modules linked in:
+  CPU: 56 UID: 2953037534 PID: 1253231 Comm: php-cgi8.4 Not tainted 6.18.45-i2-ampere #1146 NONE
+  [..]
+  pc : ceph_mds_check_access+0xd4/0x550
+  lr : ceph_mds_check_access+0xc8/0x550
+  [...]
+  Call trace:
+   ceph_mds_check_access+0xd4/0x550 (P)
+   ceph_atomic_open+0x138/0xbe8
+   path_openat+0xa24/0xfa8
+   do_filp_open+0x94/0x158
+   do_sys_openat2+0x88/0xf8
 
-  NMI context:
-    pcpu_freelist_push
-    free_htab_elem
-    htab_map_delete_elem
-    [perf-event BPF program]
-    __perf_event_overflow
-    perf_event_nmi_handler
-    exc_nmi
-
-  Interrupted context:
-    __pcpu_freelist_push
-    pcpu_freelist_push
-    free_htab_elem
-    htab_map_delete_elem
-    [raw_tp/sys_enter BPF program]
-    __bpf_trace_sys_enter
-    do_syscall_64
-
-raw_res_spin_lock() detects the same-CPU recursive acquisition and
-returns -EDEADLK, but the subsequent fallback loop has no candidate head
-on a system with one possible CPU.
-
-Restore the extra fallback head that existed before the rqspinlock
-conversion. Keep the current-CPU fast path, then try the other possible
-CPUs and finally the extra head. The additional head lets a push, which
-cannot fail without losing a preallocated element, make progress when the
-only per-CPU head is held by the interrupted context.
-
-Also check the extra head from the pop path so that nodes placed there
-can be reused.
-
-Fixes: f2ac0e5d1c4d ("bpf: Convert percpu_freelist.c to rqspinlock")
-Signed-off-by: Hui Su <sh_def@163.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260806175600.1993595-1-sh_def@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 596afb0b8933 ("ceph: add ceph_mds_check_access() helper")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/percpu_freelist.c |   35 +++++++++++++++++++++++++++--------
- kernel/bpf/percpu_freelist.h |    1 +
- 2 files changed, 28 insertions(+), 8 deletions(-)
+ fs/ceph/mds_client.c |    4 ++++
+ fs/ceph/mds_client.h |    1 +
+ 2 files changed, 5 insertions(+)
 
---- a/kernel/bpf/percpu_freelist.c
-+++ b/kernel/bpf/percpu_freelist.c
-@@ -17,6 +17,8 @@ int pcpu_freelist_init(struct pcpu_freel
- 		raw_res_spin_lock_init(&head->lock);
- 		head->first = NULL;
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -6593,11 +6593,13 @@ int ceph_mds_check_access(struct ceph_md
+ 	doutc(cl, "tpath '%s', mask %d, caller_uid %d, caller_gid %d\n",
+ 	      tpath, mask, caller_uid, caller_gid);
+ 
++	mutex_lock(&mdsc->mutex);
+ 	for (i = 0; i < mdsc->s_cap_auths_num; i++) {
+ 		struct ceph_mds_cap_auth *s = &mdsc->s_cap_auths[i];
+ 
+ 		err = ceph_mds_auth_match(mdsc, s, cred, tpath);
+ 		if (err < 0) {
++			mutex_unlock(&mdsc->mutex);
+ 			put_cred(cred);
+ 			return err;
+ 		} else if (err > 0) {
+@@ -6619,6 +6621,7 @@ int ceph_mds_check_access(struct ceph_md
+ 	doutc(cl, "root_squash_perms %d, rw_perms_s %p\n", root_squash_perms,
+ 	      rw_perms_s);
+ 	if (root_squash_perms && rw_perms_s == NULL) {
++		mutex_unlock(&mdsc->mutex);
+ 		doutc(cl, "access allowed\n");
+ 		return 0;
  	}
-+	raw_res_spin_lock_init(&s->extralist.lock);
-+	s->extralist.first = NULL;
- 	return 0;
+@@ -6633,6 +6636,7 @@ int ceph_mds_check_access(struct ceph_md
+ 		      !!(mask & MAY_READ), !!(mask & MAY_WRITE));
+ 	}
+ 	doutc(cl, "access denied\n");
++	mutex_unlock(&mdsc->mutex);
+ 	return -EACCES;
  }
  
-@@ -46,22 +48,28 @@ void __pcpu_freelist_push(struct pcpu_fr
- 			struct pcpu_freelist_node *node)
- {
- 	struct pcpu_freelist_head *head;
--	int cpu;
-+	int cpu, this_cpu;
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -604,6 +604,7 @@ struct ceph_mds_client {
+ 	struct rw_semaphore     pool_perm_rwsem;
+ 	struct rb_root		pool_perm_tree;
  
- 	if (___pcpu_freelist_push(this_cpu_ptr(s->freelist), node))
- 		return;
++	/* protected by mutex */
+ 	u32			 s_cap_auths_num;
+ 	struct ceph_mds_cap_auth *s_cap_auths;
  
-+	this_cpu = raw_smp_processor_id();
- 	while (true) {
--		for_each_cpu_wrap(cpu, cpu_possible_mask, raw_smp_processor_id()) {
--			if (cpu == raw_smp_processor_id())
-+		for_each_cpu_wrap(cpu, cpu_possible_mask, this_cpu) {
-+			if (cpu == this_cpu)
- 				continue;
-+
- 			head = per_cpu_ptr(s->freelist, cpu);
--			if (raw_res_spin_lock(&head->lock))
--				continue;
--			pcpu_freelist_push_node(head, node);
--			raw_res_spin_unlock(&head->lock);
--			return;
-+			if (___pcpu_freelist_push(head, node))
-+				return;
- 		}
-+
-+		/*
-+		 * Push cannot fail. Use the extra list when none of the
-+		 * per-CPU freelists can accept the node.
-+		 */
-+		if (___pcpu_freelist_push(&s->extralist, node))
-+			return;
- 	}
- }
- 
-@@ -117,6 +125,17 @@ static struct pcpu_freelist_node *___pcp
- 		}
- 		raw_res_spin_unlock(&head->lock);
- 	}
-+
-+	/* Per-CPU lists are empty or unavailable, try the extra list. */
-+	head = &s->extralist;
-+	if (!READ_ONCE(head->first))
-+		return NULL;
-+	if (raw_res_spin_lock(&head->lock))
-+		return NULL;
-+	node = head->first;
-+	if (node)
-+		WRITE_ONCE(head->first, node->next);
-+	raw_res_spin_unlock(&head->lock);
- 	return node;
- }
- 
---- a/kernel/bpf/percpu_freelist.h
-+++ b/kernel/bpf/percpu_freelist.h
-@@ -14,6 +14,7 @@ struct pcpu_freelist_head {
- 
- struct pcpu_freelist {
- 	struct pcpu_freelist_head __percpu *freelist;
-+	struct pcpu_freelist_head extralist;
- };
- 
- struct pcpu_freelist_node {
 
 
