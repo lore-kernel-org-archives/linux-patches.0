@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EA2579803;
-	Wed,  9 Sep 2026 14:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70075678FC;
+	Wed,  9 Sep 2026 14:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964452; cv=none; b=kYHC8lxM3ehGiy3goYHfjAiPQOunwig9wNw7w/PeGgQRKivieOOepygbBxJrqOmPx2oNBQn7J9ecqYNqDOG1aLO0RugciGHK4lmH1sN7Js3WVk4MGUB8ju6iP+a+6TyuH4EjXBAQSwBMMUwZpeadEl4+UC6RmzlJ7Zh4mwBCPaY=
+	t=1788964455; cv=none; b=rgMX667s4eZ0Nb3SEQGVWx6z5kxzFIf9HSUZb+LL3qeHsoGJwQgjgdkbPvDSXeeBRRPzyJxOIbx6d0Uzrm7jgP+GVHA251R+jclD92Ne6EaEPvejo1Gtls0vXpDBzInPbi10k9fYJdo7YYZNx6ROJINrXVRb1JJWC+8XR+cNRqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964452; c=relaxed/simple;
-	bh=aawegJOs+aALn7QM8hV6hQROUZ/Yre0KtZIivDEDVbs=;
+	s=arc-20240116; t=1788964455; c=relaxed/simple;
+	bh=Xga0fQbnkMz/f3k1Aj1CCOVPh3VtV4OARQQx4q1D4ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfvVAemrcQ3EVaVGqZ2WeqYlktFhVwvQmZvd2gVS4VqrLJ7Mn01sS9TkvZkEhbPrMiBEF64/tq/siZIemh7ccwzI7UAX5q1xQjpSmsQIj3MUa8Flr71qsr5W+Ilh5dgtm7tat2d4lFUMvdsJ5rrFHrvtXy9Z6fxV6AB9PIeCdfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzKopmga; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q7SzLYfyqfwz5ZyeMe7mMsFSsR/rZkFl9z2flVHN5SXsSIXgPmMmqJDd2dQyImG/RpCrHyMRI/8W6juLPkh8X1i6O6NLHF7Bj4l+lpiZBAZR/WH8Oq6R0jPCOIcgN9W/YgYRdWGOzIRvrzQ6BRGty32ZzW+kpFShYChq6MHPLyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4XxcXls; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzKopmga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744EC1F00A3E;
-	Wed,  9 Sep 2026 14:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4XxcXls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9F51F00A3D;
+	Wed,  9 Sep 2026 14:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788964451;
-	bh=YCfAZ5bRafV6gEwkbPuuKsXL8lwzxNNzrRgD7N9n0+o=;
+	s=korg; t=1788964453;
+	bh=IjIAy5BUOgnpYsU72InJ2JLCObVIAI1jcYkroC1SSR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nzKopmgaxTXE3KaSuIosSYmcHCQp+ICiWuaSOwSkAQxgJLyFleK//tz9aJDaYuCqA
-	 4apnLCADmmd7TuRUo5xvBU3+aR7qXE8gM6QX9r/lar6YnDnJqbVpfc2oDo8+wJNEnV
-	 4KN4q0Uy0mZh43TjY0v2C1j8YdDlBgON/iMTsTEU=
+	b=C4XxcXlsROOFMi+e5tkE7SykBSNBxauylkm1wZE/+0pbghKgXVZwL+1LBRU+Ak14K
+	 LZkAMxx9JPYXcfNob6pKo2XdLr21+zPUOzTuO4KspEv7jz5ysqiDcGnmcYmOeLIz5a
+	 SFZRcRGLDfe7y14jSJaM4/YLax8EnTaK4sba8aDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Niklas Neronin <niklas.neronin@linux.intel.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 426/583] usb: xhci: add USB Port Register Set struct
-Date: Wed,  9 Sep 2026 15:41:51 +0200
-Message-ID: <20260909134252.745487799@linuxfoundation.org>
+Subject: [PATCH 6.18 427/583] usb: xhci: implement USB Port Register Set struct
+Date: Wed,  9 Sep 2026 15:41:52 +0200
+Message-ID: <20260909134252.781764620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -53,121 +53,213 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-[ Upstream commit 377a91594e008848363641d07f51d2e48f4bdde5 ]
+[ Upstream commit f2469d89a70cc6eb3d8141770995a3b251afa6ff ]
 
-Introduce a new struct for the Host Controller USB Port Register Set to
-enhance readability and maintainability.
+Previously, each port's 'addr' field pointed to the base of the Host
+Controller USB Port Register Set, and specific registers were accessed
+using macros such as (port->addr + PORTPMSC).
 
-The Host Controller Operational Registers (struct 'xhci_op_regs') span from
-offset 0x0 to 0x3FF and consist of fixed fields. Following these fixed
-fields are the Host Controller USB Port Register Sets, which are dynamic
-and repeat from 1 to MaxPorts, as defined by HCSPARAMS1.
+This patch replaces the raw '__le32 __iomem *addr' pointer with a typed
+'struct xhci_port_regs __iomem *port_reg' pointer. With this change,
+individual registers can be accessed directly through the structure
+fields:
 
-Currently, the struct 'xhci_op_regs' includes:
- __le32 port_status_base;		The first PORTSC
- __le32 port_power_base;		The first PORTPMSC
- __le32 port_link_base;			The first PORTLI
- __le32 reserved5;			The first PORTHLPMC, not reserved
- __le32 reserved6[NUM_PORT_REGS*254];	Port registers 2 to MaxPorts
+Before:
+  port->addr
+  port->addr + PORTPMSC
+  port->addr + PORTLI
+  port->addr + PORTHLPMC
 
-Replace this with the simpler:
- struct xhci_port_regs port_regs[];	Port registers 1 to MaxPorts
+After:
+  port->port_reg->portsc
+  port->port_reg->portpmsc
+  port->port_reg->portli
+  port->port_reg->porthlpmc
 
-Host Controller USB Port Register Set:
-| Offset	| Mnemonic	| Register Name
---------------------------------------------------------------------------
-| 0x0		| PORTSC	| Port Status and Control
-| 0x4		| PORTPMSC	| Port Power Management Status and Control
-| 0x8		| PORTLI	| Port Link Info
-| 0xC		| PORTHLPMC	| Port Hardware LPM Control
+This improves code readability and makes register access more intuitive
+by using named struct members instead of pointer arithmetic and macros.
 
 Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20251119142417.2820519-8-mathias.nyman@linux.intel.com
+Link: https://patch.msgid.link/20251119142417.2820519-9-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 78203d5b54a4 ("usb: xhci: bail out of setup if the controller is inaccessible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c |    3 +--
- drivers/usb/host/xhci.h     |   36 ++++++++++++++++--------------------
- 2 files changed, 17 insertions(+), 22 deletions(-)
+ drivers/usb/host/xhci-hub.c |   16 ++++++++--------
+ drivers/usb/host/xhci-mem.c |    2 +-
+ drivers/usb/host/xhci.c     |   29 ++++++++++++++---------------
+ drivers/usb/host/xhci.h     |    7 +------
+ 4 files changed, 24 insertions(+), 30 deletions(-)
 
+--- a/drivers/usb/host/xhci-hub.c
++++ b/drivers/usb/host/xhci-hub.c
+@@ -683,9 +683,9 @@ static void xhci_port_set_test_mode(stru
+ 
+ 	/* xhci only supports test mode for usb2 ports */
+ 	port = xhci->usb2_rhub.ports[wIndex];
+-	temp = readl(port->addr + PORTPMSC);
++	temp = readl(&port->port_reg->portpmsc);
+ 	temp |= test_mode << PORT_TEST_MODE_SHIFT;
+-	writel(temp, port->addr + PORTPMSC);
++	writel(temp, &port->port_reg->portpmsc);
+ 	xhci->test_mode = test_mode;
+ 	if (test_mode == USB_TEST_FORCE_ENABLE)
+ 		xhci_start(xhci);
+@@ -1288,7 +1288,7 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 				retval = -EINVAL;
+ 				break;
+ 			}
+-			port_li = readl(port->addr + PORTLI);
++			port_li = readl(&port->port_reg->portli);
+ 			status = xhci_get_ext_port_status(temp, port_li);
+ 			put_unaligned_le32(status, &buf[4]);
+ 		}
+@@ -1520,18 +1520,18 @@ int xhci_hub_control(struct usb_hcd *hcd
+ 		case USB_PORT_FEAT_U1_TIMEOUT:
+ 			if (hcd->speed < HCD_USB3)
+ 				goto error;
+-			temp = readl(port->addr + PORTPMSC);
++			temp = readl(&port->port_reg->portpmsc);
+ 			temp &= ~PORT_U1_TIMEOUT_MASK;
+ 			temp |= PORT_U1_TIMEOUT(timeout);
+-			writel(temp, port->addr + PORTPMSC);
++			writel(temp, &port->port_reg->portpmsc);
+ 			break;
+ 		case USB_PORT_FEAT_U2_TIMEOUT:
+ 			if (hcd->speed < HCD_USB3)
+ 				goto error;
+-			temp = readl(port->addr + PORTPMSC);
++			temp = readl(&port->port_reg->portpmsc);
+ 			temp &= ~PORT_U2_TIMEOUT_MASK;
+ 			temp |= PORT_U2_TIMEOUT(timeout);
+-			writel(temp, port->addr + PORTPMSC);
++			writel(temp, &port->port_reg->portpmsc);
+ 			break;
+ 		case USB_PORT_FEAT_TEST:
+ 			/* 4.19.6 Port Test Modes (USB2 Test Mode) */
+@@ -1962,7 +1962,7 @@ int xhci_bus_resume(struct usb_hcd *hcd)
+ 
+ 	/* poll for U0 link state complete, both USB2 and USB3 */
+ 	for_each_set_bit(port_index, &bus_state->bus_suspended, BITS_PER_LONG) {
+-		sret = xhci_handshake(ports[port_index]->addr, PORT_PLC,
++		sret = xhci_handshake(&ports[port_index]->port_reg->portsc, PORT_PLC,
+ 				      PORT_PLC, 10 * 1000);
+ 		if (sret) {
+ 			xhci_warn(xhci, "port %d-%d resume PLC timeout\n",
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
-@@ -2201,8 +2201,7 @@ static int xhci_setup_port_arrays(struct
+@@ -2201,7 +2201,7 @@ static int xhci_setup_port_arrays(struct
  		return -ENOMEM;
  
  	for (i = 0; i < num_ports; i++) {
--		xhci->hw_ports[i].addr = &xhci->op_regs->port_status_base +
--			NUM_PORT_REGS * i;
-+		xhci->hw_ports[i].addr = &xhci->op_regs->port_regs[i].portsc;
+-		xhci->hw_ports[i].addr = &xhci->op_regs->port_regs[i].portsc;
++		xhci->hw_ports[i].port_reg = &xhci->op_regs->port_regs[i];
  		xhci->hw_ports[i].hw_portnum = i;
  
  		init_completion(&xhci->hw_ports[i].rexit_done);
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -44,13 +44,13 @@ MODULE_PARM_DESC(quirks, "Bit flags for
+ void xhci_portsc_writel(struct xhci_port *port, u32 val)
+ {
+ 	trace_xhci_portsc_writel(port, val);
+-	writel(val, port->addr);
++	writel(val, &port->port_reg->portsc);
+ }
+ EXPORT_SYMBOL_GPL(xhci_portsc_writel);
+ 
+ u32 xhci_portsc_readl(struct xhci_port *port)
+ {
+-	return readl(port->addr);
++	return readl(&port->port_reg->portsc);
+ }
+ EXPORT_SYMBOL_GPL(xhci_portsc_readl);
+ 
+@@ -4667,7 +4667,7 @@ static int xhci_set_usb2_hardware_lpm(st
+ {
+ 	struct xhci_hcd	*xhci = hcd_to_xhci(hcd);
+ 	struct xhci_port **ports;
+-	__le32 __iomem	*pm_addr, *hlpm_addr;
++	struct xhci_port_regs __iomem *port_reg;
+ 	u32		pm_val, hlpm_val, field;
+ 	unsigned int	port_num;
+ 	unsigned long	flags;
+@@ -4692,9 +4692,8 @@ static int xhci_set_usb2_hardware_lpm(st
+ 
+ 	ports = xhci->usb2_rhub.ports;
+ 	port_num = udev->portnum - 1;
+-	pm_addr = ports[port_num]->addr + PORTPMSC;
+-	pm_val = readl(pm_addr);
+-	hlpm_addr = ports[port_num]->addr + PORTHLPMC;
++	port_reg = ports[port_num]->port_reg;
++	pm_val = readl(&port_reg->portpmsc);
+ 
+ 	xhci_dbg(xhci, "%s port %d USB2 hardware LPM\n",
+ 		 str_enable_disable(enable), port_num + 1);
+@@ -4723,30 +4722,30 @@ static int xhci_set_usb2_hardware_lpm(st
+ 			spin_lock_irqsave(&xhci->lock, flags);
+ 
+ 			hlpm_val = xhci_calculate_usb2_hw_lpm_params(udev);
+-			writel(hlpm_val, hlpm_addr);
++			writel(hlpm_val, &port_reg->porthlmpc);
+ 			/* flush write */
+-			readl(hlpm_addr);
++			readl(&port_reg->porthlmpc);
+ 		} else {
+ 			hird = xhci_calculate_hird_besl(xhci, udev);
+ 		}
+ 
+ 		pm_val &= ~PORT_HIRD_MASK;
+ 		pm_val |= PORT_HIRD(hird) | PORT_RWE | PORT_L1DS(udev->slot_id);
+-		writel(pm_val, pm_addr);
+-		pm_val = readl(pm_addr);
++		writel(pm_val, &port_reg->portpmsc);
++		pm_val = readl(&port_reg->portpmsc);
+ 		pm_val |= PORT_HLE;
+-		writel(pm_val, pm_addr);
++		writel(pm_val, &port_reg->portpmsc);
+ 		/* flush write */
+-		readl(pm_addr);
++		readl(&port_reg->portpmsc);
+ 	} else {
+ 		pm_val &= ~(PORT_HLE | PORT_RWE | PORT_HIRD_MASK | PORT_L1DS_MASK);
+-		writel(pm_val, pm_addr);
++		writel(pm_val, &port_reg->portpmsc);
+ 		/* flush write */
+-		readl(pm_addr);
++		readl(&port_reg->portpmsc);
+ 		if (udev->usb2_hw_lpm_besl_capable) {
+ 			spin_unlock_irqrestore(&xhci->lock, flags);
+ 			xhci_change_max_exit_latency(xhci, udev, 0);
+-			readl_poll_timeout(ports[port_num]->addr, pm_val,
++			readl_poll_timeout(&ports[port_num]->port_reg->portsc, pm_val,
+ 					   (pm_val & PORT_PLS_MASK) == XDEV_U0,
+ 					   100, 10000);
+ 			return 0;
 --- a/drivers/usb/host/xhci.h
 +++ b/drivers/usb/host/xhci.h
-@@ -66,14 +66,25 @@ struct xhci_cap_regs {
+@@ -66,11 +66,6 @@ struct xhci_cap_regs {
  	/* Reserved up to (CAPLENGTH - 0x1C) */
  };
  
--/* Number of registers per port */
--#define	NUM_PORT_REGS	4
+-#define PORTSC		0
+-#define PORTPMSC	1
+-#define PORTLI		2
+-#define PORTHLPMC	3
 -
- #define PORTSC		0
- #define PORTPMSC	1
- #define PORTLI		2
- #define PORTHLPMC	3
- 
-+/*
-+ * struct xhci_port_regs - Host Controller USB Port Register Set. xHCI spec 5.4.8
-+ * @portsc:	Port Status and Control
-+ * @portpmsc:	Port Power Management Status and Control
-+ * @portli:	Port Link Info
-+ * @porthlmpc:	Port Hardware LPM Control
-+ */
-+struct xhci_port_regs {
-+	__le32	portsc;
-+	__le32	portpmsc;
-+	__le32	portli;
-+	__le32	porthlmpc;
-+};
-+
- /**
-  * struct xhci_op_regs - xHCI Host Controller Operational Registers.
-  * @command:		USBCMD - xHC command register
-@@ -85,16 +96,7 @@ struct xhci_cap_regs {
-  * @cmd_ring:		CRP - 64-bit Command Ring Pointer
-  * @dcbaa_ptr:		DCBAAP - 64-bit Device Context Base Address Array Pointer
-  * @config_reg:		CONFIG - Configure Register
-- * @port_status_base:	PORTSCn - base address for Port Status and Control
-- * 			Each port has a Port Status and Control register,
-- * 			followed by a Port Power Management Status and Control
-- * 			register, a Port Link Info register, and a reserved
-- * 			register.
-- * @port_power_base:	PORTPMSCn - base address for
-- * 			Port Power Management Status and Control
-- * @port_link_base:	PORTLIn - base address for Port Link Info (current
-- * 			Link PM state and control) for USB 2.1 and USB 3.0
-- * 			devices.
-+ * @port_regs:		Port Register Sets, from 1 to MaxPorts (defined by HCSPARAMS1).
-  */
- struct xhci_op_regs {
- 	__le32	command;
-@@ -110,13 +112,7 @@ struct xhci_op_regs {
- 	__le32	config_reg;
- 	/* rsvd: offset 0x3C-3FF */
- 	__le32	reserved4[241];
--	/* port 1 registers, which serve as a base address for other ports */
--	__le32	port_status_base;
--	__le32	port_power_base;
--	__le32	port_link_base;
--	__le32	reserved5;
--	/* registers for ports 2-255 */
--	__le32	reserved6[NUM_PORT_REGS*254];
-+	struct xhci_port_regs port_regs[];
+ /*
+  * struct xhci_port_regs - Host Controller USB Port Register Set. xHCI spec 5.4.8
+  * @portsc:	Port Status and Control
+@@ -1470,7 +1465,7 @@ struct xhci_port_cap {
  };
  
- /* USBCMD - USB command - command bitmasks */
+ struct xhci_port {
+-	__le32 __iomem		*addr;
++	struct xhci_port_regs __iomem	*port_reg;
+ 	int			hw_portnum;
+ 	int			hcd_portnum;
+ 	struct xhci_hub		*rhub;
 
 
