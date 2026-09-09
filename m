@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04148477984;
-	Wed,  9 Sep 2026 13:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4424B04B2;
+	Wed,  9 Sep 2026 13:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788961777; cv=none; b=UhqygJjjSW818YJIYyYTYs+n4c7ubCU80y2KwrwSj5eQNXPNPNO7pZUjLrxGaru0XeTv5xSu/SwtK6K6ZBUieb5UPdNfaixe5/CZgDAL5Q2VoT+4iGtZTpEUr0iG3e8gF7cnzxB9cSl18TyW6J1yttn/vZp5o9VFX2IJSZm+uT4=
+	t=1788961779; cv=none; b=EXxYzzI8Uk5oVnUm0e5jEjkwVLa0x9vB2LsseYwvqpY+6/4IYIT2D5OZTcxmBK500hy8QEoBertlSQU6pclm5350/e05vt88OnBTCsIWsAQRmZ/KJFJj7FZr3KIjkFvosbKs2eSVT7SrkipjRiHDMJHib7gVqiHzKSy/f4EH9Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788961777; c=relaxed/simple;
-	bh=CyypMdQh5uMIpzBpYUR0ly+Q9wT1zNEjnQ9PhWBul6g=;
+	s=arc-20240116; t=1788961779; c=relaxed/simple;
+	bh=kNUvu02HbIqi61rzvk34hQqC0kom8zCH/LaK8gEDYS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xixsg/0+B1sdI/K1+7eTKZh3K1kUjHeV6DbzjM98AgRbQojDHk+2Oa0Q+B0AKBL0lYXwQo04W+DGZ7fSNV5kGDyymkETH9Tb/zx2GOcDXY4uLhuULL2/m26icO0oA8q/Yn5lbjFnb8ZZjyrLWZMhnGRRu1yfNjG6xD6+/w2l9sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeC7WDjl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IF4iLUIYdebwAvOh0XVI/cTremXII1pwriv4gqVRfsZ7H6Xdy0N2B9MbYlroQGBTwiYcNVMJlUqdxIM/eap55opK/PFa9qMXio6V8EqDHuF/dKnGLf4JeXlPiQHhSbrnfQEZRYSX1GmQiiq9DGaUTP8me8YKG04Wi4f2666L2NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AzlmSf9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeC7WDjl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF521F00A3A;
-	Wed,  9 Sep 2026 13:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AzlmSf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE23B1F00A3A;
+	Wed,  9 Sep 2026 13:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788961775;
-	bh=UwiwyNhybn9mYciYaPsi0IRNvqZI0PWlJywwA9grdCQ=;
+	s=korg; t=1788961778;
+	bh=wZdAeBJstCzofrdSmHxR9hqFFsmhN8lJC7QcddIUMJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BeC7WDjlOStfpWqp59tBYKS09Cou+bQ3nCZQJUFBj9GSB1yEMjjUwVPUA+Bi8b5Fx
-	 vr6HpBBi0K4hRIpdO2EulKigDbosnMNWA1cce8qqnAwTtH+dzmyerzotB/iYR1reIz
-	 C8o8vBVqFwxv+k04bq51IoaT8r3/SVqxQ0UBYoAQ=
+	b=0AzlmSf91FeEgqZzAs0VkgmfkBaQ1L/0/41KlziKgIKqLSeQRUMCaF6sDXeaQAifO
+	 KsVylU9b0eIYxsSl9RPYD+Zg+vJ57KQVDG3z2+O1yx8Bi+MOfi37Q34Aq0g0Hbp0oW
+	 V+wdc5rhg9qFCbSb1WoYsHw7i+iT2pp2lXjktXPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Marek Vasut <marex@nabladev.com>,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.2 036/556] usb: typec: mux: avoid duplicated mux switches
-Date: Wed,  9 Sep 2026 15:35:16 +0200
-Message-ID: <20260909134231.768984221@linuxfoundation.org>
+	Can Peng <pengcan@kylinos.cn>,
+	Kursad Oney <kursad.oney@broadcom.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.2 063/556] spi: bcm63xx-hsspi: disable clocks on resume failure
+Date: Wed,  9 Sep 2026 15:35:43 +0200
+Message-ID: <20260909134232.683108105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -53,74 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-commit d50b6442bef66abbe4694f918f8ad013f81d75cf upstream.
+commit 3b0cee02664041aea7e4f787c66cb86c82eb4e97 upstream.
 
-Some devices use combo PHYs (i.e. USB3 + DisplayPort), which also
-handle the lane muxing. These PHYs are referenced twice from
-the USB-C connector (USB super-speed lines and SBU/AUX lines)
-resulting in the mux being configured twice. Avoid this by
-dropping duplicates.
+bcm63xx_hsspi_resume() enables the HSSPI clock, and optionally the PLL
+clock, before restarting the SPI controller queue.
 
-This is a re-application of b145c3f29d62 ("usb: typec: mux: avoid
-duplicated mux switches"), with fix derived from usb: typec: mux:
-Fix typec_switch_match() .
+If spi_controller_resume() fails, the function currently reports success
+and leaves those clocks enabled. Propagate the error and disable the
+clocks before returning.
 
-Fixes: f576c75f95a5 ("Revert "usb: typec: mux: avoid duplicated mux switches"")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Co-developed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260822072556.490594-1-marex@nabladev.com
+Fixes: 142168eba9dc ("spi: bcm63xx-hsspi: add bcm63xx HSSPI driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Reviewed-by: Kursad Oney <kursad.oney@broadcom.com>
+Link: https://patch.msgid.link/20260804072017.860974-1-pengcan@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/mux.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/spi/spi-bcm63xx-hsspi.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/mux.c
-+++ b/drivers/usb/typec/mux.c
-@@ -275,7 +275,9 @@ static int mux_fwnode_match(struct devic
- static void *typec_mux_match(const struct fwnode_handle *fwnode,
- 			     const char *id, void *data)
- {
-+	struct typec_mux_dev **mux_devs = data;
- 	struct device *dev;
-+	int i;
+--- a/drivers/spi/spi-bcm63xx-hsspi.c
++++ b/drivers/spi/spi-bcm63xx-hsspi.c
+@@ -915,7 +915,13 @@ static int bcm63xx_hsspi_resume(struct d
+ 		}
+ 	}
  
- 	/*
- 	 * Device graph (OF graph) does not give any means to identify the
-@@ -290,8 +292,18 @@ static void *typec_mux_match(const struc
+-	spi_controller_resume(host);
++	ret = spi_controller_resume(host);
++	if (ret) {
++		if (bs->pll_clk)
++			clk_disable_unprepare(bs->pll_clk);
++		clk_disable_unprepare(bs->clk);
++		return ret;
++	}
  
- 	dev = class_find_device(&typec_mux_class, NULL, fwnode,
- 				mux_fwnode_match);
-+	if (!dev)
-+		return ERR_PTR(-EPROBE_DEFER);
-+
-+	/* Skip duplicates */
-+	for (i = 0; i < TYPEC_MUX_MAX_DEVS; i++)
-+		if (to_typec_mux_dev(dev) == mux_devs[i]) {
-+			put_device(dev);
-+			return NULL;
-+		}
- 
--	return dev ? to_typec_mux_dev(dev) : ERR_PTR(-EPROBE_DEFER);
-+
-+	return to_typec_mux_dev(dev);
+ 	return 0;
  }
- 
- /**
-@@ -316,7 +328,8 @@ struct typec_mux *fwnode_typec_mux_get(s
- 		return ERR_PTR(-ENOMEM);
- 
- 	count = fwnode_connection_find_matches(fwnode, "mode-switch",
--					       NULL, typec_mux_match,
-+					       (void **)mux_devs,
-+					       typec_mux_match,
- 					       (void **)mux_devs,
- 					       ARRAY_SIZE(mux_devs));
- 	if (count <= 0) {
 
 
