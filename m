@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EEE57268C;
-	Wed,  9 Sep 2026 14:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B920357266D;
+	Wed,  9 Sep 2026 14:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962970; cv=none; b=EBxhVXoHBobjMq19gYMhG0P1Qux/qAUiJu8DF2M6iRQefhsZTt9Suzu9G1lo6RKk3EWYwrl1LeS0/4AB6j/RPl5r6SimzDyioFchv2PA66yjX0/8y+6Hhh5v/v9fs7sfQTLU8MhHtMyEFG8YNlnXQezkDuUWdK88Q203gciwfwk=
+	t=1788962972; cv=none; b=EyKuvRCPyTSApmuSQ6TVFB/eee90FGj672U33j53i7zFxARa8BAQ0wcHiIFGrGUm8H9FzGclchbkF+8HwhaxsUhOEiolHk8v8P5lWC9vFH4paiz8AHyo3uXh5DPV3EIFbiybhejCiiFXFUtPuLozmO3WpP3DlBrQt4jVFEO9Q7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962970; c=relaxed/simple;
-	bh=FfZVS42tDnedwB/HkrDqODzTiIHXmWGymnsg6lvVet4=;
+	s=arc-20240116; t=1788962972; c=relaxed/simple;
+	bh=xRxmvAleZAIBP/q/mPTuOgSvgtO65AE8LKgT0iZUO1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VxsMobcNpkMOD/9RA5oCJ92PNjNj+Y5Z80M3yDWvaFjFLH22qJCaGekOhFyv/G5G3ey+1ZlHblpu8Be66xv9UsVg1dSAbZYNdk5JDy+FeYC7HYxFPRMIRDMVmqBFoPTITd+3/dbusg1VXeEocwAL9Us6AdMtDIgTs2M2DGL4c1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiS40j32; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PWYoUSLXgXyon9KQIZUybequFQLL9juspAQwynZ1cPoeOOYfomzJW1igW4aPHZa2aAhcEGyxB/lkxdp5U3Yur/fyDjjAAEpTbVea8QpFkNMNidlbhmf5fNFg4YJ1TLG0KmrWxOP9W4WyRcuY5PwbrpGKGDXqyYYamzma8938Krg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbFKolt9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiS40j32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316501F00A3D;
-	Wed,  9 Sep 2026 14:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbFKolt9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146341F00A3A;
+	Wed,  9 Sep 2026 14:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962968;
-	bh=DMfa7pHF3p3FcvTo9kn43BOm7WEVtsohbs4Ek/hpFEc=;
+	s=korg; t=1788962971;
+	bh=+gqm/0F0NxVpip0pYoZJMuiP6lnJuGxOptphphOGw6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qiS40j32v9YnOpU/Ct+bTl05szCAnkR+qOJa9RToUKcxb0d/H7VLZgcKeevenOKh1
-	 jOHbqkHGXUBAB2PA+mnzqpLqPpPC3zE474KRdYBmvNZEIVIZeeJedtbfjf5wQRqtJF
-	 t3fS0o0njlkonOiwJgcc24wp8DXpbBb2UPrFjF+4=
+	b=YbFKolt9Akr86EI+fBBfZ+2fTGSccDoNyS3ZI/BxuPF6X2WRNrzC35R9/qoLFb5Od
+	 onkkDIV9AXifyHTqgQfTOotYk9aPx9RnV4ncBSkKp72RMHFw3jwKOuLZeGm9lLWNTS
+	 nqdtiWDfv0YW1xpwrNJW3i5E+mT7+CKIOxcN1z50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 7.2 474/556] drm/xe/vram: report FLAT_CCS base misalignment
-Date: Wed,  9 Sep 2026 15:42:34 +0200
-Message-ID: <20260909134247.219974927@linuxfoundation.org>
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Steven Price <steven.price@arm.com>
+Subject: [PATCH 7.2 475/556] drm/panthor: harden firmware build-info bounds checks
+Date: Wed,  9 Sep 2026 15:42:35 +0200
+Message-ID: <20260909134247.254320007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -47,53 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit 0e68c74e44da81a4599c52437ee1f63a2c234470 upstream.
+commit 8321b093fa6c297b80586460ce6914d9655df170 upstream.
 
-So we can easily check if a machine had the CCS bug, when looking back
-over bug reports where we have the same machine with newer kernel.
+panthor_fw_read_build_info() checks whether the metadata range fits in the
+firmware image with hdr.meta_start + hdr.meta_size. Both fields are u32, so
+the addition can wrap and let an out-of-bounds range pass validation.
 
-Example print for a machine with the CCS bug:
+The function also reads the "git_sha: " prefix without first checking that
+the metadata is long enough, and meta_size == 0 can underflow the NULL
+terminator index.
 
-  FLAT_CCS base:27bbff800, aligned:no
+Use subtraction-based bounds checking and reject metadata that is too short
+to contain the expected prefix and trailing NULL byte.
 
-v2 (Matt B):
-  - Unconditionally print the base + alignment
-
-Fixes: 37173392741c ("drm/xe/vram: fix ccs offset calculation")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: stable@kernel.org
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260902124117.918018-9-matthew.auld@intel.com
-(cherry picked from commit d00b7f4f03bbeb2efad872f1686130e18c2b4141)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
+Cc: stable@vger.kernel.org
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20260720113212.11981-1-osama.abdelkader@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_vram.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/panthor/panthor_fw.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_vram.c
-+++ b/drivers/gpu/drm/xe/xe_vram.c
-@@ -90,6 +90,9 @@ static int get_flat_ccs_offset(struct xe
- 		offset |= offset_lo << 6; /* HW view bits 31:6 */
- 		offset *= num_enabled; /* convert to SW view */
+--- a/drivers/gpu/drm/panthor/panthor_fw.c
++++ b/drivers/gpu/drm/panthor/panthor_fw.c
+@@ -707,7 +707,8 @@ static int panthor_fw_read_build_info(st
+ 		return ret;
  
-+		drm_info(&xe->drm, "FLAT_CCS base:%llx, aligned:%s\n", offset,
-+			 str_yes_no(IS_ALIGNED(offset, SZ_128K)));
-+
- 		/*
- 		 * Everything below this offset is handed to the VRAM
- 		 * allocator, so it has to be the *first* address the
+ 	if (hdr.meta_start > fw->size ||
+-	    hdr.meta_start + hdr.meta_size > fw->size) {
++	    hdr.meta_size > fw->size - hdr.meta_start ||
++	    hdr.meta_size <= header_len) {
+ 		drm_err(&ptdev->base, "Firmware build info corrupt\n");
+ 		/* We don't need the build info, so continue */
+ 		return 0;
 
 
