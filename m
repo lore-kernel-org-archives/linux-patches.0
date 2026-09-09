@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A64156B86A;
-	Wed,  9 Sep 2026 14:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D2F56E05E;
+	Wed,  9 Sep 2026 14:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963752; cv=none; b=lGa/jHo3CfY1YNYEfKNKXYkcBfkW+3l956iuV8zN97SkdGXivhPlt2Sqqaf1/shdoOmFE4h16vSazDwaIFRE9MsIDAee3pE/BWkzgBgn8pT0qtT9DZy4s3FvKE88RXuIFiZDBVt3XiD0QewCqFsuG2FNcpZee0CFwP5XQIsl+k0=
+	t=1788963756; cv=none; b=QDsEvzSByYVJzhLzmlK+1+9xSfOIyhjTtL78Bjb83KPlr0o5xl6RzrnDDWV7Q+zjytG0mOLdWwomgAACsd6bM9RlrjglMvwjnHAoGoeHCwBOTporikR93KKta/owLORz2gnsqQX0eY+/9G+ZusaTsqIXQXg5i0kSZiHziRakB30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963752; c=relaxed/simple;
-	bh=P7nzaQrHZvLdae9t95eY56fjNKQC7le8MB8aUcjL6Z8=;
+	s=arc-20240116; t=1788963756; c=relaxed/simple;
+	bh=2/s4aFGg/n3cOx0YMr/fJfNd+3FEbvXXyEOkEJCrlsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j05N163Jr59JYLD0l3XKZ/tIX96oJX5hL6BZrR6JGJVNOeF2jBqnHSETYn3HbBU2p2a5odhojOFY8hZjMU7aZjs27OhNb8NnY6DsaG7mI6c8iyBlwZOqpr20s9w+vGNFopa8XnaoQAzTsD0NvixtaoTNVzqK2YcKOxJ+0zhjtjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4htw9MN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BYCljCtjFqSo72FAuJ0JA9GoGET99wTowhqAXmO4ZqzPYY4cSuJVhZJ0u77Zp7qpFZrK+RFs+nt/c+ZWbiNpGDxCyuB5kE0KylxFE0ahm8P+boxfZIBtwdHoLrDugYuqbSsnj4MXKnGfW4IO6Fzv+JWg3Ohe563owtDckseFbRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kV4Hcgb6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4htw9MN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D291F00A3D;
-	Wed,  9 Sep 2026 14:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kV4Hcgb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825391F00A3A;
+	Wed,  9 Sep 2026 14:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963751;
-	bh=Ow8ayq9bWV1L6ETWNZKJlibOOJr31IQaOKdBsYyOMTs=;
+	s=korg; t=1788963755;
+	bh=xyepi2C0hjFVBA9GkSSz5d5B3l83AZxlsgsBmnnx5vU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4htw9MNK+1NDFfIQDRPBvghqp50MP8BVYFwOImt/FIvjHdXXw1mPlY3G2da8X2IE
-	 6y5eAewBlDcejSU+hXhjjEcF9tQExwMqicl3ZYyd/IualDRF2UWJ8C7F0MjIF0pLQC
-	 ppMVGcvN9bPRA/G9DE991ucjjEv37/GbAxLzcurU=
+	b=kV4Hcgb6GNCEN1qcAcC1HwlxhNLxfrRIUay1Fs8Yu3UR03WOHAbPDgprG3Yn9fSUI
+	 TFEjCrxdk8TgOo95LcZ+0ixZESiktajhkLAceg5oD9s0lQ4K6GVLhAK1D/1/4xI3iV
+	 OnYQ10D1zeCYDS7/g/r62Hrg145quOkV4GXKopV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	WenTao Liang <vulab@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 188/583] ASoC: rt721-sdca-sdw: sort the register default table
-Date: Wed,  9 Sep 2026 15:37:53 +0200
-Message-ID: <20260909134244.688918073@linuxfoundation.org>
+Subject: [PATCH 6.18 189/583] ASoC: samsung: aries_audio_probe: double of_node_put due to direct assignment without of_node_get
+Date: Wed,  9 Sep 2026 15:37:54 +0200
+Message-ID: <20260909134244.723778443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -50,100 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit 70e0481c196e4822e683bca384e6bda89d944839 upstream.
+commit fb5d1b1c5f8a920ee697545fa6dee16825085717 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+In aries_audio_probe(), aries_dai[0].platforms->of_node is assigned the
+same pointer as aries_dai[0].cpus->of_node (from of_parse_phandle)
+without calling of_node_get(). When the sound card is deregistered, the
+ASoC framework calls of_node_put() on both cpus->of_node and
+platforms->of_node, causing a double put on the same node and a refcount
+underflow.
 
-rt721_sdca_reg_defaults[] is grouped by SDCA function instead, so the
-binary search does not find 12 of its entries.  regcache_reg_needs_sync()
-then cannot compare those against their default and reports that a sync
-is needed, so they are written to the device on every regcache_sync()
-even when they were never touched.
+Add of_node_get(aries_dai[0].cpus->of_node) before the assignment.
 
-Sort the table by register address.
-
-Fixes: 86ce355c1f9a ("ASoC: rt721-sdca: Add RT721 SDCA driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805090240.16991-14-peter.ujfalusi@linux.intel.com
+Fixes: 7a3a7671fa6c ("ASoC: samsung: Add driver for Aries boards")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260627035251.60172-1-vulab@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt721-sdca-sdw.h |   28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ sound/soc/samsung/aries_wm8994.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/rt721-sdca-sdw.h
-+++ b/sound/soc/codecs/rt721-sdca-sdw.h
-@@ -29,14 +29,6 @@ static const struct reg_default rt721_sd
- 	{ 0x2f5b, 0x07 },
- 	{ 0x2f5c, 0x27 },
- 	{ 0x2f5d, 0x07 },
--	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_CS01,
--		RT721_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
--	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_CS11,
--		RT721_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
--	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_PDE12,
--		RT721_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
--	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_PDE40,
--		RT721_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_USER_FU05,
- 		RT721_SDCA_CTL_FU_MUTE, CH_L), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_USER_FU05,
-@@ -45,6 +37,14 @@ static const struct reg_default rt721_sd
- 		RT721_SDCA_CTL_FU_MUTE, CH_L), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_USER_FU0F,
- 		RT721_SDCA_CTL_FU_MUTE, CH_R), 0x01 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_PDE12,
-+		RT721_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_CS01,
-+		RT721_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_CS11,
-+		RT721_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT721_SDCA_ENT_PDE40,
-+		RT721_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT721_SDCA_ENT_USER_FU1E,
- 		RT721_SDCA_CTL_FU_MUTE, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT721_SDCA_ENT_USER_FU1E,
-@@ -53,30 +53,30 @@ static const struct reg_default rt721_sd
- 		RT721_SDCA_CTL_FU_MUTE, CH_03), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT721_SDCA_ENT_USER_FU1E,
- 		RT721_SDCA_CTL_FU_MUTE, CH_04), 0x01 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT721_SDCA_ENT_PDE2A,
-+		RT721_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT721_SDCA_ENT_CS1F,
- 		RT721_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT721_SDCA_ENT_IT26,
- 		RT721_SDCA_CTL_VENDOR_DEF, 0), 0x00 },
--	{ SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT721_SDCA_ENT_PDE2A,
--		RT721_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
--	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_CS31,
--		RT721_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_USER_FU06,
- 		RT721_SDCA_CTL_FU_MUTE, CH_L), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_USER_FU06,
- 		RT721_SDCA_CTL_FU_MUTE, CH_R), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_PDE23,
- 		RT721_SDCA_CTL_REQ_POWER_STATE, 0), 0x03 },
--	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_OT23,
--		RT721_SDCA_CTL_VENDOR_DEF, 0), 0x00 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_PDE23,
- 		RT721_SDCA_CTL_FU_MUTE, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_PDE23,
- 		RT721_SDCA_CTL_FU_MUTE, CH_02), 0x01 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_CS31,
-+		RT721_SDCA_CTL_SAMPLE_FREQ_INDEX, 0), 0x09 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_FU55,
- 		RT721_SDCA_CTL_FU_MUTE, CH_01), 0x01 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_FU55,
- 		RT721_SDCA_CTL_FU_MUTE, CH_02), 0x01 },
-+	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT721_SDCA_ENT_OT23,
-+		RT721_SDCA_CTL_VENDOR_DEF, 0), 0x00 },
- };
+--- a/sound/soc/samsung/aries_wm8994.c
++++ b/sound/soc/samsung/aries_wm8994.c
+@@ -658,6 +658,7 @@ static int aries_audio_probe(struct plat
+ 		goto out;
+ 	}
  
- static const struct reg_default rt721_sdca_mbq_defaults[] = {
++	of_node_get(aries_dai[0].cpus->of_node);
+ 	aries_dai[0].platforms->of_node = aries_dai[0].cpus->of_node;
+ 
+ 	/* Set CPU of_node for BT DAI */
 
 
