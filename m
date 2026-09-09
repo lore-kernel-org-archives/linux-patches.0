@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D29566C53;
-	Wed,  9 Sep 2026 13:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C372B5678E0;
+	Wed,  9 Sep 2026 13:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962253; cv=none; b=T7cQO1EFH0lhWrUoGxySm3ufNtwgM4lgjiT51zYMSKhELzWYx0YYsSL/GG2BtJ5DWHwELO71VL32kFwQR7zw1vZ/puuwnggU1907U5KRk5KEj7OiNfn2+ZB6CZUfuc+Y3cJJBV/5/FZkjWDbkl2brkoutFvoWp4ciykL/beiU+E=
+	t=1788962256; cv=none; b=pmtmgcfVjIPAkQQ3LBokt4oNQCwKA72/wPR1TJgeRKebfl3N0OykcyNpdRDtdbQgHD68XAq6fnuu7S8lSIifIwWopcunSPAOVuT44EnH1fKDMHhDg3tGfA413dd4b6e1qyNM2zb8YcxBSBRHfFOMbgQ9M4EOqht2oex+EhX8Bkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962253; c=relaxed/simple;
-	bh=GvhGiveRqELE8kaCefx5SHOuIA/qudXjjU6Ok6JDmtk=;
+	s=arc-20240116; t=1788962256; c=relaxed/simple;
+	bh=lrA4MsJjyjHLXfBdOknT9br914Ke1JKBXwZA6TysuY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKyRbGdF7sTDK6RWDzQLvuysMhFYU2HmiGZYW3e1y93+BOXiqcM6e4hmENkHyZ3dHrdFD/k3eIXXTHtPvjOXFwjykMXLeG3JuBXXUqD6XNdpDa51NO15KcOw/89VpuW87oNaHJeXtpn2XeF2fXJjUiI9APz97pc33l6Vg8tYSdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2ZZ061B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TW7TUDm/+u0pP67LImj8oxMaTYudIKoLAL+ipjpvuq8QgxG4GGAkMX6qS6d8uja9XJS3GA+yucmJf5BfqVEW7QAVwKFklNW9BTSHaI0TzCjgGZhrnaiZQYX8S+wBmqWIKxhMNQUghzeD1M7ffgdcdMixG1p4l2UUJOhzTURjECI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyoSPAdA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2ZZ061B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432F81F00A3A;
-	Wed,  9 Sep 2026 13:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyoSPAdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F3D1F00A3A;
+	Wed,  9 Sep 2026 13:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962251;
-	bh=6rn4Zkk18NtC9+ZqkP/0Dk04NR/i9T4Q7J6YbYyqqx4=;
+	s=korg; t=1788962254;
+	bh=5CG1xklYLUxMMJkv/4FsCT7/K4EfZ+fBc6FtbEbjypM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m2ZZ061Bn6akhGIPfE+CVJ+JpHaaWhuUXCjWh8gdwbJszTQ7+LPmoheqd1vXjQePO
-	 mx2wxJ43+0BbkzGVecMeVffyAjKxxjm7V4feqCEfMAp3BwoMIuBd4wAMoctRlAzFjv
-	 5VdVmiUkfypEbD5qO7mdHS9Lvuf5vuKzPshGXMhk=
+	b=wyoSPAdAnel/2nAQWimhf68GVNk0e983QA1wEKp60g8fWLiZKKbJpytii488YVjzN
+	 EbAI3WT7Fwp8yR28fo//ON6cugHWzxkuC/37elxEquI8ufdG1cevQCmEYxpsKtRvZv
+	 bCufJ0j+TL0FLfqKaM3nfLhrywdnvWjZJDA8YUNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Haoxiang Li <haoxiang_li2024@163.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 227/556] ASoC: hdac_hda: Fix hlink refcount leak on component registration failure
-Date: Wed,  9 Sep 2026 15:38:27 +0200
-Message-ID: <20260909134238.395007185@linuxfoundation.org>
+Subject: [PATCH 7.2 228/556] AsoC: intel: sst: fix PCI device reference leak on probe failure
+Date: Wed,  9 Sep 2026 15:38:28 +0200
+Message-ID: <20260909134238.431192584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -52,38 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 6ad4892c4f5cb437a928a02f5b7d37d496aa9268 upstream.
+commit 016f29997ebd29d6ab59c8162ce0e7f73bd1e517 upstream.
 
-hdac_hda_dev_probe() gets the HDA link with snd_hdac_ext_bus_link_get()
-before registering the ASoC component. If component registration fails,
-the function returns without dropping the link reference.
+intel_sst_probe() takes a reference to the PCI device with pci_dev_get().
+If sst_platform_get_resources() fails afterwards, the probe error path
+cleans up the driver context but does not drop the PCI device reference.
 
-Always call snd_hdac_ext_bus_link_put() after the registration attempt so
-the reference taken during probe is balanced on both success and failure.
+Add a pci_dev_put() error path for failures after pci_dev_get().
 
-Fixes: 6bae5ea94989 ("ASoC: hdac_hda: add asoc extension for legacy HDA codec drivers")
+Fixes: f533a035e4da ("ASoC: Intel: mrfld - create separate module for pci part")
 Cc: stable@vger.kernel.org
 Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622145645.1184986-1-haoxiang_li2024@163.com
+Link: https://patch.msgid.link/20260622091620.897478-1-haoxiang_li2024@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/hdac_hda.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/intel/atom/sst/sst_pci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -642,10 +642,8 @@ static int hdac_hda_dev_probe(struct hda
- 						&hdac_hda_codec, hdac_hda_dais,
- 						ARRAY_SIZE(hdac_hda_dais));
+--- a/sound/soc/intel/atom/sst/sst_pci.c
++++ b/sound/soc/intel/atom/sst/sst_pci.c
+@@ -130,13 +130,15 @@ static int intel_sst_probe(struct pci_de
+ 	sst_drv_ctx->pci = pci_dev_get(pci);
+ 	ret = sst_platform_get_resources(sst_drv_ctx);
+ 	if (ret < 0)
+-		goto do_free_drv_ctx;
++		goto do_put_pci;
  
--	if (ret < 0) {
-+	if (ret < 0)
- 		dev_err(&hdev->dev, "%s: failed to register HDA codec %d\n", __func__, ret);
--		return ret;
--	}
+ 	pci_set_drvdata(pci, sst_drv_ctx);
+ 	sst_configure_runtime_pm(sst_drv_ctx);
  
- 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 	return ret;
  
++do_put_pci:
++	pci_dev_put(sst_drv_ctx->pci);
+ do_free_drv_ctx:
+ 	sst_context_cleanup(sst_drv_ctx);
+ 	dev_err(sst_drv_ctx->dev, "Probe failed with %d\n", ret);
 
 
