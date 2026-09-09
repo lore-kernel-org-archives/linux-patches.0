@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5983F569F26;
-	Wed,  9 Sep 2026 14:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3118955409D;
+	Wed,  9 Sep 2026 14:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962718; cv=none; b=bUXB1W0Gplb1b4HQ4yaTQA90RwpBZ0v7zeFT2RKYuR7bdeXczEBpQQTSGUcAsSdFgtrrXepBjYJ0UsZRceLNvcYplapJNPQ1goCkHH+HWW5RUkBkxVr5HIAzr7rqN5NRp6NrU9XcGoiUMpZyb5jsghmOxQ5pEK6xiejx/mQWKUA=
+	t=1788962721; cv=none; b=RwfHaFezr8aLqkcMlhbIdIuGGyVGIHsnVgE3bYIdlRxKpYDIRAUut2ViefFALjZh40U9GOBNUEdT2zdlpVCgGNpsZDpkXVTan0/KOH9JVvx0eT1Rup4MPIeecyfwiUjH+hbY827NMeaxAltaLhDAJvmysJ79pFCkBaO51ot8TLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962718; c=relaxed/simple;
-	bh=qFyC3VMPDTHscr9S99XXnGpu03nfErvXNNIoqftbBMM=;
+	s=arc-20240116; t=1788962721; c=relaxed/simple;
+	bh=Sv3nsHQaSd0kA9P+STJw8BO6GOt9y24Kc1lSyu7Gr7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjHUFOtDsMmkDo966qV4gnWcS/tb9nJ5YMjCKmNnYSvBs1JK4AZ4pyz6a4UsOKQl3NFiSnP8N4X1E1ZW0UESvdaeJ1R4tq0iyCuaxRdMvfP35U23pW6w+ZxQXJ+06asEx9DTunyJ4e/G2qchjdJuD9YuZwbU+1to2TRjQI2ALHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+HxEjBb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dyhAEEe2Bip6y7mPKBfstWUch1gW5ldICtCQk5aDq601L5CLGfo/K58vgYbc6ND8hn4tN/T/UP2IYnfbnCwgzWlDWvJgw3BmObYdd8P5IbD9ZtzmsG0VJSL3l4BU0ixNZXb0sp7h3H8cGnfEmOPkz/z6A5svL105Y2725hqxLvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESjYdKAF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+HxEjBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1151F00A3A;
-	Wed,  9 Sep 2026 14:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESjYdKAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866221F00A3A;
+	Wed,  9 Sep 2026 14:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962717;
-	bh=ScXJ9nL8UWEXoHrGCSX6P53dWCdnOQT4ds5B71YD8F4=;
+	s=korg; t=1788962720;
+	bh=USWutun2NJiR2SCM0p4ohwvDt6g9U14hWwNfhZx4fgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G+HxEjBbMLLUknjq/Qzjb5+W5vhPXS6/GVizLOPHZARckICavJXQoHUuc4SEfND8m
-	 tADY4j8jAqqaZA905drRmgEgDKit6Hyjd9sBntui/HNAt7a710g38PgUwtD0Z2mQK8
-	 0z9+F9hHWoCVrY42Op2C9YRLQk/ph1OdiTtMYbsQ=
+	b=ESjYdKAFWs2gociv5qk0nUjWIh/LkN43J6HPw59f19WXUOA1b5lSxPU/ZYOLUTfmm
+	 JmqTZgl2uvSzW5ToOrMNSrAiFiYGk4NZ7a0o0iEyHwsvDNyie4suoLPhOBUQ7qiv8Q
+	 fxohpjrgzlzdlNh96j8MkT8hnXskPlKpbnbG6joY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
+	syzbot+051024d603432b4ab395@syzkaller.appspotmail.com,
+	Hillf Danton <hdanton@sina.com>,
+	Biren Pandya <birenpandya@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 349/556] media: cec: core: Fix kmemleak due to missed rc_free_device() call
-Date: Wed,  9 Sep 2026 15:40:29 +0200
-Message-ID: <20260909134242.936377422@linuxfoundation.org>
+Subject: [PATCH 7.2 350/556] media: cec: disable delayed work before freeing an interrupted transmit
+Date: Wed,  9 Sep 2026 15:40:30 +0200
+Message-ID: <20260909134242.971197423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -50,65 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Biren Pandya <birenpandya@gmail.com>
 
-commit a24ba0653f7154e671dc8d2bf64682ab2d042792 upstream.
+commit 0fbd5c2327020858c45b2d1c65775d64cdeca523 upstream.
 
-The commit dccc0c3ddf8f ("media: rc: fix race between unregister and
-urb/irq callbacks") removed the implicit call to rc_free_device() from
-rc_unregister_device(). However, the commit missed to remove the NULL
-assignment of adap->rc that is now causing rc_free_device() to never be
-called on an allocated rc device.
+cec_transmit_msg_fh() drops adap->lock to wait for a blocking transmit in
+wait_for_completion_killable(). If that wait is interrupted by a signal,
+cancel_delayed_work_sync() can run before the CEC kthread arms the reply
+timeout via schedule_delayed_work(&data->work) in cec_transmit_done_ts().
+The work is then armed after the cancel, and the data is freed with its
+delayed_work still pending:
 
-kmemleak reports following after e.g. dw-hdmi unbind:
+  ODEBUG: free active (active state 0) object: ... hint: cec_wait_timeout
 
-unreferenced object 0xffff00010ac10000 (size 4096):
-  comm "kworker/u16:1", pid 39, jiffies 4294897739
-  hex dump (first 32 bytes):
-    20 23 4b 0a 01 00 ff ff 08 00 c1 0a 01 00 ff ff   #K.............
-    08 00 c1 0a 01 00 ff ff 00 00 00 00 00 00 00 00  ................
-  backtrace (crc e11baccc):
-    kmemleak_alloc+0x38/0x44
-    __kmalloc_cache_noprof+0x4a8/0x5e0
-    rc_allocate_device+0x48/0x2a0
-    cec_allocate_adapter+0x3ac/0x800
-    dw_hdmi_cec_probe+0x264/0x634
-    platform_probe+0xc0/0x188
-    really_probe+0x4a4/0x8e0
-    __driver_probe_device+0x2f8/0x440
-    driver_probe_device+0x60/0x160
-    __device_attach_driver+0x1a0/0x2a0
-    bus_for_each_drv+0x100/0x1a0
-    __device_attach+0x174/0x350
-    device_initial_probe+0x90/0xb0
-    bus_probe_device+0x4c/0x120
-    device_add+0xdec/0x116c
-    platform_device_add+0x354/0x598
+Use disable_delayed_work_sync(): it cancels the work and disables it, so
+the later schedule_delayed_work() becomes a no-op and the work cannot be
+re-armed. The data is freed right after, so it need not be re-enabled.
 
-Remove the assignment of adap->rc to NULL to let cec_delete_adapter()
-free the allocated rc device after last user of the cec device exits to
-fix the kmemleak.
-
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Fixes: 490d84f6d73c ("media: cec: forgot to cancel delayed work")
+Reported-by: syzbot+051024d603432b4ab395@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=051024d603432b4ab395
+Suggested-by: Hillf Danton <hdanton@sina.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Signed-off-by: Biren Pandya <birenpandya@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/core/cec-core.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/media/cec/core/cec-adap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/cec/core/cec-core.c
-+++ b/drivers/media/cec/core/cec-core.c
-@@ -371,9 +371,7 @@ void cec_unregister_adapter(struct cec_a
- 		return;
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -965,7 +965,7 @@ int cec_transmit_msg_fh(struct cec_adapt
+ 	 */
+ 	mutex_unlock(&adap->lock);
+ 	err = wait_for_completion_killable(&data->c);
+-	cancel_delayed_work_sync(&data->work);
++	disable_delayed_work_sync(&data->work);
+ 	mutex_lock(&adap->lock);
  
- #ifdef CONFIG_MEDIA_CEC_RC
--	/* Note: rc_unregister also calls rc_free */
- 	rc_unregister_device(adap->rc);
--	adap->rc = NULL;
- #endif
- 	debugfs_remove_recursive(adap->cec_dir);
- #ifdef CONFIG_CEC_NOTIFIER
+ 	if (err)
 
 
