@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A38A58FD13;
-	Wed,  9 Sep 2026 14:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F9D58FD37;
+	Wed,  9 Sep 2026 14:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788963974; cv=none; b=DeEBnDJM+F7K68PtHMymKtsg44qHdDLjYLzEeRXotz5lMqU5UE5vtIuOCuUvlJYv2at8Dh6K7Y1v+usnpPLX+CuCnUpSa8lHKH6nRYwwAT0x1XQMHY5x1MOBh2v9EQfYZO/K/wwd4ypcAbGOgWtiuWyZf1W4Pclz1CdE/rjD8hI=
+	t=1788963977; cv=none; b=nyat32UpSAOYHNMyo1fGWzi0MG3BNFyDcteEvp2OXs5W1VM6cuV1/L9feGy5D1QgcES7iLFk8FUMcNZdSAbelINWTrP6lnEvl3pJtYjYIct3+OHUVQAaWI7A+bppARXSp4jYstxHZU8DYOakEBVNtgGRlEivHfGkxC77b35p4bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788963974; c=relaxed/simple;
-	bh=HFlAvYT+A8c1qv3uhXZlxHzOxMYBA3KnCqscqBr1GGE=;
+	s=arc-20240116; t=1788963977; c=relaxed/simple;
+	bh=vxRpuvpQcOx+vTi9biYeyyhbF+WrL6QVZCM0wsCqwtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4M8Bh58HsblkXGu90321aP096MNJXZzSdiDdwVR2/qIpeGOja1xdDYfLgx5fZnwN2/BboQEVZXYuQz4ErK2adFTao+mrwn/NV+Y6I7KeG8juRyVTwZ4LJ/TIaXbL0I9d7SgmFEb+1K2Ca2VSna4FcvGRvqUByEjI15sBRoXiso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1FUNuh7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZ1tgpP2osIIrI5Hreje5CpyTYp0E3Ozf0/jhEJdWy7Tc+iqrjyl7R6XXoizwtIvVedzM7CaurYA6DaeFAzRM/bfHmvsVRo7qzOqHOgm7OrsEtqwSXP4zTfGcJI69D+4S8tMSML7YTh6HmG/cWNvVhyZsciyvYiJz2+Aig1k97M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiQGVWdR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1FUNuh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30E81F00A3A;
-	Wed,  9 Sep 2026 14:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiQGVWdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8577F1F00A3A;
+	Wed,  9 Sep 2026 14:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788963973;
-	bh=LvjcxPx0k1P8zDG88iagbL0oBDiMNZcrHQv9BZYXuys=;
+	s=korg; t=1788963976;
+	bh=0LINfbDWGWaQkpr1EznbidFcBFMHACtxIOSEaDTTrzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t1FUNuh7CexSQBAGhuSjYF9PZT+B3kttoW3Nb68AnOR7ZzDiPFIwAruRuRstxXhFk
-	 eodPeciFmoedRsd5bqT7jQfugLh4lZjW8PGUbjqln9FEvz+gN4eb2lbKJtQQ7d/VHE
-	 ZV2hDngi6BksVUXo4v3HQ9jqkVdzdF0L1ZTUAKhE=
+	b=RiQGVWdReMbOjktMhLEq65el72nvzI1Rys8FKTF/TCkoUqTDQ5KXcCbjrz+FMojtr
+	 3ZEhfUaKBm73GNXytah9bl9budEM9e5f77sdIDx6DSC257FJKI6IZizCGIklyFtLjv
+	 mmKUhO6GS7WCRQ9w6y1wbPk2iPlmTr1lkmM3wirc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Zeng Chi <zengchi@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 262/583] LoongArch: KVM: Fix PC double advance in kernel MMIO read fast path
-Date: Wed,  9 Sep 2026 15:39:07 +0200
-Message-ID: <20260909134247.175571025@linuxfoundation.org>
+	Nikhil Gautam <nikhilgtr@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 227/583] iio: light: opt4001: Reject integration times with a non-zero seconds part
+Date: Wed,  9 Sep 2026 15:38:32 +0200
+Message-ID: <20260909134246.024978167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
 References: <20260909134237.773280130@linuxfoundation.org>
@@ -52,48 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Chi <zengchi@kylinos.cn>
+From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-commit fd4021529faa931818186b6e83bd46f5de7517eb upstream.
+commit d0f21621f8b2b46661ea066d20705dbf7253db87 upstream.
 
-In the in-kernel MMIO read fast path of kvm_emu_mmio_read(),
-kvm_complete_mmio_read() already advances the guest PC via update_pc().
-The explicit update_pc() call right after it advances the PC a second
-time, so PC moves forward by 8 bytes instead of 4, and the instruction
-following the MMIO read is silently skipped.
+opt4001_write_raw() only looks at val2 when setting the integration
+time, so a write such as 1.000600 is silently accepted as 600 us.
+Return -EINVAL if val is non-zero.
 
-The user space MMIO read completion path in kvm_arch_vcpu_ioctl_run()
-calls kvm_complete_mmio_read() only once, and the MMIO write fast path
-advances the PC exactly once as well.
-
-Here remove the redundant update_pc() so the kernel MMIO read fast path
-advances the PC by a single instruction.
-
-Cc: stable@vger.kernel.org
-Fixes: 80edf90831a2 ("LoongArch: KVM: Add sign extension with kernel MMIO read emulation")
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 9a9608418292 ("iio: light: Add support for TI OPT4001 light sensor")
+Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/exit.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/iio/light/opt4001.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/loongarch/kvm/exit.c b/arch/loongarch/kvm/exit.c
-index 8572b63478bb..482ba17bcd3d 100644
---- a/arch/loongarch/kvm/exit.c
-+++ b/arch/loongarch/kvm/exit.c
-@@ -481,7 +481,6 @@ int kvm_emu_mmio_read(struct kvm_vcpu *vcpu, larch_inst inst)
- 		srcu_read_unlock(&vcpu->kvm->srcu, idx);
- 		if (!ret) {
- 			kvm_complete_mmio_read(vcpu, run);
--			update_pc(&vcpu->arch);
- 			vcpu->mmio_needed = 0;
- 			return EMULATE_DONE;
- 		}
--- 
-2.55.0
-
+--- a/drivers/iio/light/opt4001.c
++++ b/drivers/iio/light/opt4001.c
+@@ -269,6 +269,9 @@ static int opt4001_write_raw(struct iio_
+ 
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_INT_TIME:
++		if (val)
++			return -EINVAL;
++
+ 		int_time = opt4001_als_time_to_index(val2);
+ 		if (int_time < 0)
+ 			return int_time;
 
 
