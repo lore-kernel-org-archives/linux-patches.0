@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7543F581227;
-	Wed,  9 Sep 2026 14:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F91581248;
+	Wed,  9 Sep 2026 14:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962959; cv=none; b=WiNYfrJ8Bt0Qh3sZ9VTBRYdy5yoHGjNlHXL5uTm9gMafmHGpKt3f8qSHLog8xJcim21MNKcDtEI3Jow+UFNBC4Kmj+H/FiP8ortJS+Kh6mz9D/UWhorBt5ui+w+59e9NaL2qVbCoWAjfQslplygQe/TrZ6XytZaOmIfPxXidQgA=
+	t=1788962961; cv=none; b=VefQldkxivpH1s83WZC6Gnahm2qJjYWjk/PdRAG+AhJ/xH7er/MdnmUKaEtKlvlO8tdjEvp/mCZcMuUzl7zzNlSH0nnnaJeLiOPaXDJE3ivPl0mW3emuwXVqiQ0DXb01IDhOdKWcf/b0yJMybW3erps8ZDEYWTEFWcSfaSy0Gv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962959; c=relaxed/simple;
-	bh=0U0Qw1haFmDz6IQNQYiZpT5Yf0fGhDopTr3LUX3E/Vw=;
+	s=arc-20240116; t=1788962961; c=relaxed/simple;
+	bh=WJRLgP6NaCvdrL5BnpKln1hy57XwiXbccmzmbGhw5zI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hme4db6Zp1a9oCQv140orof3fvJLY7iJ72QXtBh2+rbSB3a6rttzTdH5QO8Dd/veOIXD5FC31WQstlMCKlGA52O3U4s7zVB3gj53y17rjxJa4bTICir1slJCuvnBbZhwJqCvYvAhBQdQGpIbJVVJMTYZrE9U4GjUHuDT+goWWFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0etyoVMS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DbutTZQnWUIemjBy2VRYQyB62sZywpMmkdvvrQNSIYDTUcy+WW/d0rTtfmZ/prhonBfDghXcClU5AD7gDSS8ibkB9zC+X++mSvF33pKeIwbQwRcfML8R//YhNl5XCTUP7/nwKUBVtw763PjVJihsI6Eze7zmQkmnKOhJEn0AuT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmL4FeEH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0etyoVMS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98F51F00A3A;
-	Wed,  9 Sep 2026 14:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmL4FeEH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0561F00A3A;
+	Wed,  9 Sep 2026 14:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788962957;
-	bh=h11bb80/TWdVooCFwk5DU2mxnOsLgTAjYIWn+zznvjQ=;
+	s=korg; t=1788962960;
+	bh=6KsColVgaC9M/WfBgDGB22Bce4AawRXmvNIipP3njds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0etyoVMSgO86RLFmHpdMOgdTjm/rBL0kp0coouC0IMTqGYM/y4jtbOXH4edc0X7R+
-	 N+eAy5lAEFM2StNJvk6QoUVEKgQ06kHO2aRddBhnEUQJ23igc4267jiFNcCk4KD1dk
-	 ujKfXyDEnaPqnu1FVWXNkzgFuTttAIyGbP7PDIqI=
+	b=EmL4FeEH+/sWrN7n75GIlPrOO2qJ8n+4jIPnKwLlIG4VaBUUAHHR/4tNXXBLjvGqv
+	 Jh8PM43stc2REVIXViXb+m2ffUpOFGd1xk9dhah3bntrrhkIdFxkq06V8lQBDbahKq
+	 FqPs5UeBhPaOhQo7mnUSczpA3evuEzBZHbeMUD+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.2 471/556] f2fs: fix to zero post-EOF data when extending file size
-Date: Wed,  9 Sep 2026 15:42:31 +0200
-Message-ID: <20260909134247.121381380@linuxfoundation.org>
+Subject: [PATCH 7.2 454/556] f2fs: limit recovery filename logging to stored length
+Date: Wed,  9 Sep 2026 15:42:14 +0200
+Message-ID: <20260909134246.545999466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
 References: <20260909134230.441546314@linuxfoundation.org>
@@ -51,264 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit 5eced87b7d19dbc76ebdddaf322046f9ac582fcb upstream.
+commit 01027b2fcb74dade59fb833b51023f6593b6a9a2 upstream.
 
-generic/794  4s ... - output mismatch (see /share/git/fstests/results//generic/794.out.bad)
-#    --- tests/generic/794.out   2026-06-12 08:46:32.766426241 +0800
-#    +++ /share/git/fstests/results//generic/794.out.bad 2026-07-05 18:32:55.000000000 +0800
-#    @@ -1,4 +1,16 @@
-#     QA output created by 794
-#     append_write
-#    +FAIL: non-zero data in gap [4080,4096) after shutdown+remount
-#    +000000 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a  >ZZZZZZZZZZZZZZZZ<
-#    +*
-#    +001000
-#     truncate_up
-#    ...
-#    (Run 'diff -u /share/git/fstests/tests/generic/794.out /share/git/fstests/results//generic/794.out.bad'  to see the entire diff)
-Ran: generic/794
-Failures: generic/794
-Failed 1 of 1 tests
+F2FS stores recovery filenames as a length plus a fixed-size i_name
+buffer.  The buffer is not NUL-terminated, but recover_inode() and
+recover_dentry() print it with %s.
 
-Steps of generic/794:
-1. write 4096 bytes to file w/ 0x5a
-2. use fiemap to get PBA of first block in file
-3. truncate file to 4080
-4. umount; write 4096 bytes to file w/ 0x5a directly via PBA; mount
-5. extend filesize via
-   a) append 4096 from offset 4096, or
-   b) truncate 8192, or
-   c) fallocate 4096 from offset 4096
-6. verify the gap is zeroed in memory [4080,4096)
-7. sync range 4096 from offset 4096; shutdown -f (flush meta before shutdown)
-8. umount; mount; verify [4080,4096) is zeroed or not.
+For a 255-byte filename, recovery logging can read past i_name into the
+following raw inode fields.
 
-When extending file size (e.g. via truncate, fallocate, or write) across an
-unaligned EOF boundary, we need to ensure that post-EOF data in the partial
-page is zeroed out in pagecache and marked dirty, then writeback the cache to
-persist zeroed data before committing inode w/ updated i_size.
+Print the name with a precision bounded by i_namelen and F2FS_NAME_LEN.
 
-This help to prevent stale disk data beyond the previous EOF from being exposed
-after remounting or crash recovery.
-
-Since f2fs is a LFS filesystem, we only support direct write via PBA in pinfile,
-and pinfile has section-aligned filesize, so in Android, there should no problem,
-but for other usage in different environment, let's fix this w/ fsync_mode=strict
-mount option.
-
+Fixes: f356fe0cba0e ("f2fs: add debug msgs in the recovery routine")
 Cc: stable@kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |  100 +++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 84 insertions(+), 16 deletions(-)
+ fs/f2fs/recovery.c |   41 +++++++++++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 14 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -36,16 +36,52 @@
- #include <trace/events/f2fs.h>
- #include <uapi/linux/f2fs.h>
- 
--static void f2fs_zero_post_eof_page(struct inode *inode,
--					loff_t new_size, bool lock)
-+static int fill_zero(struct inode *inode, pgoff_t index,
-+					loff_t start, loff_t len);
-+
-+static int do_zero_post_eof_page(struct inode *inode, loff_t new_size)
-+{
-+	loff_t old_size = i_size_read(inode);
-+	unsigned int offset, len;
-+	pgoff_t index;
-+	int err;
-+
-+	offset = old_size & (PAGE_SIZE - 1);
-+
-+	if (!offset)
-+		return 0;
-+
-+	len = min_t(loff_t, PAGE_SIZE - offset, new_size - old_size);
-+	index = old_size >> PAGE_SHIFT;
-+
-+	if (f2fs_has_inline_data(inode)) {
-+		/* data post eof should be always zero */
-+		if (new_size <= MAX_INLINE_DATA(inode))
-+			return 0;
-+		err = f2fs_convert_inline_inode(inode);
-+		if (err)
-+			return err;
-+	}
-+
-+	err = fill_zero(inode, index, offset, len);
-+	if (err)
-+		return err;
-+	return filemap_write_and_wait_range(inode->i_mapping,
-+				old_size, old_size + len - 1);
-+}
-+
-+static int f2fs_zero_post_eof_page(struct inode *inode,
-+					loff_t new_size, bool lock, bool writeback)
- {
- 	loff_t old_size = i_size_read(inode);
-+	bool strict =
-+		F2FS_OPTION(F2FS_I_SB(inode)).fsync_mode == FSYNC_MODE_STRICT;
- 
- 	if (old_size >= new_size)
--		return;
-+		return 0;
- 
--	if (mapping_empty(inode->i_mapping))
--		return;
-+	if (!strict && mapping_empty(inode->i_mapping))
-+		return 0;
- 
- 	if (lock)
- 		filemap_invalidate_lock(inode->i_mapping);
-@@ -53,6 +89,16 @@ static void f2fs_zero_post_eof_page(stru
- 	truncate_inode_pages_range(inode->i_mapping, old_size, new_size - 1);
- 	if (lock)
- 		filemap_invalidate_unlock(inode->i_mapping);
-+
-+	if (!writeback || !strict)
-+		return 0;
-+	/*
-+	 * In fsync_mode=strict, when we expand an unaligned EOF size, we
-+	 * should zero post EOF data and writeback the data immediately,
-+	 * so that it can avoid exposing stale data after metadata flush
-+	 * and POR.
-+	 */
-+	return do_zero_post_eof_page(inode, new_size);
+--- a/fs/f2fs/recovery.c
++++ b/fs/f2fs/recovery.c
+@@ -158,6 +158,22 @@ static int init_recovered_filename(const
+ 	return 0;
  }
  
- static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
-@@ -132,7 +178,10 @@ static vm_fault_t f2fs_vm_page_mkwrite(s
++static const char *recover_printable_name(struct inode *inode,
++					  struct f2fs_inode *raw,
++					  int *name_len)
++{
++	static const char encrypted_name[] = "<encrypted>";
++
++	if (file_enc_name(inode)) {
++		*name_len = sizeof(encrypted_name) - 1;
++		return encrypted_name;
++	}
++
++	*name_len = min_t(unsigned int, le32_to_cpu(raw->i_namelen),
++			  F2FS_NAME_LEN);
++	return raw->i_name;
++}
++
+ static int recover_dentry(struct inode *inode, struct folio *ifolio,
+ 						struct list_head *dir_list)
+ {
+@@ -170,7 +186,8 @@ static int recover_dentry(struct inode *
+ 	struct inode *dir, *einode;
+ 	struct fsync_inode_entry *entry;
+ 	int err = 0;
+-	char *name;
++	const char *name;
++	int name_len;
  
- 	f2fs_bug_on(sbi, f2fs_has_inline_data(inode));
- 
--	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT, true);
-+	err = f2fs_zero_post_eof_page(inode,
-+		(folio->index + 1) << PAGE_SHIFT, true, false);
-+	if (err)
-+		goto out_pagefault;
- 
- 	file_update_time(vmf->vma->vm_file);
- 	filemap_invalidate_lock_shared(inode->i_mapping);
-@@ -189,7 +238,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(s
- 
- out_sem:
- 	filemap_invalidate_unlock_shared(inode->i_mapping);
--
-+out_pagefault:
- 	sb_end_pagefault(inode->i_sb);
+ 	entry = get_fsync_inode(dir_list, pino);
+ 	if (!entry) {
+@@ -229,12 +246,9 @@ retry:
+ out_put:
+ 	f2fs_folio_put(folio, false);
  out:
- 	ret = vmf_fs_error(err);
-@@ -1175,8 +1224,12 @@ int f2fs_setattr(struct mnt_idmap *idmap
- 		f2fs_down_write(&fi->i_gc_rwsem[WRITE]);
- 		filemap_invalidate_lock(inode->i_mapping);
+-	if (file_enc_name(inode))
+-		name = "<encrypted>";
+-	else
+-		name = raw_inode->i_name;
+-	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %s, dir = %llu, err = %d",
+-		    __func__, ino_of_node(ifolio), name,
++	name = recover_printable_name(inode, raw_inode, &name_len);
++	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %.*s, dir = %llu, err = %d",
++		    __func__, ino_of_node(ifolio), name_len, name,
+ 		    IS_ERR(dir) ? 0 : dir->i_ino, err);
+ 	return err;
+ }
+@@ -282,7 +296,8 @@ static int recover_inode(struct inode *i
+ {
+ 	struct f2fs_inode *raw = F2FS_INODE(folio);
+ 	struct f2fs_inode_info *fi = F2FS_I(inode);
+-	char *name;
++	const char *name;
++	int name_len;
+ 	int err;
  
--		if (attr->ia_size > old_size)
--			f2fs_zero_post_eof_page(inode, attr->ia_size, false);
-+		if (attr->ia_size > old_size) {
-+			err = f2fs_zero_post_eof_page(inode,
-+				attr->ia_size, false, true);
-+			if (err)
-+				goto err_out;
-+		}
- 		truncate_setsize(inode, attr->ia_size);
+ 	inode->i_mode = le16_to_cpu(raw->i_mode);
+@@ -331,13 +346,11 @@ static int recover_inode(struct inode *i
  
- 		if (attr->ia_size <= old_size)
-@@ -1185,6 +1238,7 @@ int f2fs_setattr(struct mnt_idmap *idmap
- 		 * do not trim all blocks after i_size if target size is
- 		 * larger than i_size.
- 		 */
-+err_out:
- 		filemap_invalidate_unlock(inode->i_mapping);
- 		f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
- 		if (err)
-@@ -1296,7 +1350,9 @@ static int f2fs_punch_hole(struct inode
- 	if (ret)
- 		return ret;
+ 	f2fs_mark_inode_dirty_sync(inode, true);
  
--	f2fs_zero_post_eof_page(inode, offset + len, true);
-+	ret = f2fs_zero_post_eof_page(inode, offset + len, true, false);
-+	if (ret)
-+		return ret;
+-	if (file_enc_name(inode))
+-		name = "<encrypted>";
+-	else
+-		name = F2FS_INODE(folio)->i_name;
++	name = recover_printable_name(inode, raw, &name_len);
  
- 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
- 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
-@@ -1583,7 +1639,9 @@ static int f2fs_do_collapse(struct inode
- 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	filemap_invalidate_lock(inode->i_mapping);
- 
--	f2fs_zero_post_eof_page(inode, offset + len, false);
-+	ret = f2fs_zero_post_eof_page(inode, offset + len, false, false);
-+	if (ret)
-+		goto out_unlock;
- 
- 	f2fs_lock_op(sbi, &lc);
- 	f2fs_drop_extent_tree(inode);
-@@ -1591,6 +1649,7 @@ static int f2fs_do_collapse(struct inode
- 	ret = __exchange_data_block(inode, inode, end, start, nrpages - end, true);
- 	f2fs_unlock_op(sbi, &lc);
- 
-+out_unlock:
- 	filemap_invalidate_unlock(inode->i_mapping);
- 	f2fs_up_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	return ret;
-@@ -1712,7 +1771,9 @@ static int f2fs_zero_range(struct inode
- 	if (ret)
- 		return ret;
- 
--	f2fs_zero_post_eof_page(inode, offset + len, true);
-+	ret = f2fs_zero_post_eof_page(inode, offset + len, true, false);
-+	if (ret)
-+		return ret;
- 
- 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
- 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
-@@ -1847,7 +1908,9 @@ static int f2fs_insert_range(struct inod
- 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	filemap_invalidate_lock(mapping);
- 
--	f2fs_zero_post_eof_page(inode, offset + len, false);
-+	ret = f2fs_zero_post_eof_page(inode, offset + len, false, false);
-+	if (ret)
-+		goto out_unlock;
- 	truncate_pagecache(inode, offset);
- 
- 	while (!ret && idx > pg_start) {
-@@ -1865,6 +1928,7 @@ static int f2fs_insert_range(struct inod
- 					idx + delta, nr, false);
- 		f2fs_unlock_op(sbi, &lc);
- 	}
-+out_unlock:
- 	filemap_invalidate_unlock(mapping);
- 	f2fs_up_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	if (ret)
-@@ -1907,7 +1971,9 @@ static int f2fs_expand_inode_data(struct
- 	if (err)
- 		return err;
- 
--	f2fs_zero_post_eof_page(inode, offset + len, true);
-+	err = f2fs_zero_post_eof_page(inode, offset + len, true, true);
-+	if (err)
-+		return err;
- 
- 	f2fs_balance_fs(sbi, true);
- 
-@@ -5024,8 +5090,10 @@ static ssize_t f2fs_write_checks(struct
- 	if (err)
- 		return err;
- 
--	f2fs_zero_post_eof_page(inode,
--		iocb->ki_pos + iov_iter_count(from), true);
-+	err = f2fs_zero_post_eof_page(inode,
-+		iocb->ki_pos + iov_iter_count(from), true, true);
-+	if (err)
-+		return err;
- 	return count;
+-	f2fs_notice(F2FS_I_SB(inode), "recover_inode: ino = %x, name = %s, inline = %x",
+-		    ino_of_node(folio), name, raw->i_inline);
++	f2fs_notice(F2FS_I_SB(inode), "%s: ino = %x, name = %.*s, inline = %x",
++		    __func__, ino_of_node(folio), name_len, name,
++		    raw->i_inline);
+ 	return 0;
  }
  
 
