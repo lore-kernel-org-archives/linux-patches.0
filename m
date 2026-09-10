@@ -1,104 +1,69 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010070.outbound.protection.outlook.com [52.101.46.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107B33A1696
-	for <patches@lists.linux.dev>; Thu, 10 Sep 2026 04:10:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105B724676D
+	for <patches@lists.linux.dev>; Thu, 10 Sep 2026 05:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789013446; cv=fail; b=b7Oqwz8n92Yob7YXKY6Kf0ihIH0D+3XLtl+RFBxeS+BoWzLfiClqwpsjLgf3nnNCP4+fOYvQ96/wp3Rh4iXG04gj6UVPNn60/W2Jxxkoc+GIykC3Wnj46PZOwX6u2fX+HHKY++UKqOA6QrN7Uh6iKhcoYnTyRXUyn7NXnrC5LE0=
+	t=1789017495; cv=fail; b=fDZ38kDb0/2A3dL0OGNX7NBw2tMHaAJM/09zcI10nUV0Cv6eyG6NPO779LdaugFqCKVh6xLywRUqVQiCR9w5OWYFhnvhMF1/7b7qJ5Z9osrWG8twXxXQ6HTGR+IP3vLrp5YwqoudTAd/tCSpA/RtnURbakyOuUJDs3lnnd8OORo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789013446; c=relaxed/simple;
-	bh=Kn1yveJn4HKfW9VQQrWI9iP/juj2KqJhhhNlFidF0o8=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=WqhL1H6SYp6V2WRGHRDwXcKuN7RSwxXR8bVgzFBvRmfYtIWgSHTOv+uWPctzhdDK+raNkqqAX0UHqak4o3THgOKJ4J4QlpQu/RtYerrvMAcnlUrn6bwe6nwn40viTHFBkeb0jNwNFywIBjDBqWcPMP38CudFTb8HXYIbFNzF31Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Sc4VzUM5; arc=fail smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1789017495; c=relaxed/simple;
+	bh=iffgQzbp3IXR54Z9Y3YTReMM+sxS+uD2E2KBI1RK+jI=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=aus3iIlrvLk5QA7M0Qs0y3tLeJYRyOatuJj0lZg6Lfudw7Z27ID+vD7JDD+qoZy+QWefkXjOtadLVOewzwISNI2ddMAI2zbcCbxzgo9CukFTvSiNcHoEH3pd9sZP08eo+E2+tKuk984oGXzsCnCgFvteCVyT/wkde9Jme+WVFnA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ntFyGQo9; arc=fail smtp.client-ip=52.101.46.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Sc4VzUM5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789013445; x=1820549445;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=Kn1yveJn4HKfW9VQQrWI9iP/juj2KqJhhhNlFidF0o8=;
-  b=Sc4VzUM5pOo6DroEcnwQ2F5HgxjczWt7Ig/iAkwm5To/qHq15UQLdMZN
-   QZ5Fk62FnQbGGkH7vCRcCLIacrsCnlbdptL+7cKJfvnXzSCg1QHgdo62h
-   ap0Jro0FsCz7ZmhOe2DnjW9FXEs98tbTbKy7hp4C6FrM4ImpjFCDo/ur/
-   Z/jJi4+S605TvCwF8CL33prnVx5iYhNeEiSU50HlFGdumX+ZpdYoD6+jz
-   FSg9ku/LteU3yUm6uudSOF2DCPvevtEjRQaVa3CnkWCLT8VWjkmOgVsUU
-   M99EII9EAkIYT+mNKlj1u1vGy/dAC2SMwr4D9RpPcSt64xyhkflIwBXe6
-   A==;
-X-CSE-ConnectionGUID: LfiBy9sMRx+NPxUqkLr3BQ==
-X-CSE-MsgGUID: ADza9NMnQ2qLlc2C/EuTsw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="89485675"
-X-IronPort-AV: E=Sophos;i="6.25,271,1779174000"; 
-   d="scan'208";a="89485675"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 21:10:45 -0700
-X-CSE-ConnectionGUID: YwLnkV5bT72e77jQ+hrHcQ==
-X-CSE-MsgGUID: MEZ15c4MSXuU6Hzmk6SbsQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,271,1779174000"; 
-   d="scan'208";a="267224268"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 21:10:44 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 9 Sep 2026 21:10:43 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Wed, 9 Sep 2026 21:10:43 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.40) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 9 Sep 2026 21:10:43 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ntFyGQo9"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IhJYDxOp1rfhd41O3FPccEP5vV4y0V4aphJdffexWv8kMll76yl5qFztcm60dJf+rBG/sjkekh2kaulcgZnHeEy46WtKKA2vUH+raWu99046+NsdaSpeWscp83nd7v4q82J4WwaBs5Y3D3QujCxbLYAP2vr9Rvao2td9QslbtJfE3Uhg86U+QDq46sbzpZtxJlePlSVypRMdN0m7384t+q6tP3Z8Nb8C2QCqPl0u7fp0r4Hno9rTOy7n1Z0EUPYTJYOYQ8ORQlIkjYQb0oyFamClZghMojODo86NS1j5xIP6GNor710pJJIuZFz4bOcsDBTkMjeoluHw79qdGbFCsA==
+ b=WcXZlGQbV60moEsMXSsAkUvaKgjL22zAK2mlHdV34vXSWoUwXWfHUrdAe5IQ9NQsZqhtniWtG7zC2s5d3uIcapwSTSQfWpb83j32vQIkCWGXNpZjDz3AjTE7KdjBkaFwnw7lbWOTwJFF7hUWjVXbT/593AlaJj5PHR54qNKKFR3eq9VLOPfuK/zrgSvcZ9d34FdAwLOcASlA5cCWQZBEFi8z0maCm34xbAnW5xB8zoky5D9GFKEetAzwTIWhrfkhpX80C/yEng5ay9+OsHxHLrYlCXRWWpzBZ+dUEKZxxRu+EnH5Stx/eaPAQCRK9/XhR0NGqBKW+JX53LzoaZNyPw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xihXZCa+EqV3ZVCM9U8nB3BVxHP3MecXjbUa3BnnMfQ=;
- b=bPqPf64UqsFGnjeuF9qUaf8w/v3AlZ3wCSABr+jhznCrCExdP+r9vAj122Of0RwOBaAJWSIxzUfco5CekaiTiPGlRn9Io74MHfv4GJIlRzIGJu8SCXQUi/broH6YKgoUlZq2OOW7CR3FdBvD6XN+c2On4uThgRl0WnofaCYAa3kl5C0S7PhyXsHtiVB4ToXb21VcVizyhm3YhJwRk5ylYwpamciGgr+45HLmesqO7T71WVzOTr2I3LRFH56LnpvwjRw/2XHK1cRKL7zBbWelckNKJrmakhOO896rei6aYvJXO4PPdfWep2OWjXyY2c6aMNwuZlttFBcwvh0yVsPhzA==
+ bh=cJxFsWcYXbDlsBBry2EFqqOMA28+N7eLbJ8KtrkFez0=;
+ b=K5q0nJ2+Uckn2YSyG9uLkhyEzWNECOigxcGyPhBoFSNyJ+Gg1d3Gaah8pmI8oqbwQCKWSjVwkUt2Ciyd6XD0wHm7CRf60Y0gqBRkO2QPk5WJlrdrBJUd7k2wMlzsvMYw7eMNLs56CLXeSgD7fHdg4SkJ/9c47LztWECjKvIZEvzh1Xqq0XLSF/jwjxror+bT7S3fq79FLaskv1dCHE4OdapNKoXdJ/9lhfwNgX3EHflpnpOZlFte2fB7CR0OpKgGSb6T2r8WYphzQXGeskXsqyZYKs59L6GmaoEr/HhOcWV51CIsWF95TR9qtb8oNIbk3WPJR5jKPGKnhAQdXnY4dw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cJxFsWcYXbDlsBBry2EFqqOMA28+N7eLbJ8KtrkFez0=;
+ b=ntFyGQo9HgVAkm28C1V6gVOINAi0NCH+5DZ5dDif87V5his2EvgNCilpLn3guzRLfk5fQJrZfAeWqtyffqnDNjupIPWRRj3HyFfQ7t9K68x+ROj8+AmWw/VZ97n7x0L3lCSIws0ydPQ/pNziSOrVJsmziZXd14izXuleFaDp+HUGMKMDnLdzwb8vipUB+lk83CaK5f+r/68X/ALtOLb/tdXqgiKRSoXEJBJxLgGDnZOoQSesWUg0RAVdp0QQH1pbMKIzqfVYL8i3ZzcgMiwhwbSG1eEUQSXmpmSIGGaxZfW22xghTP/ghAt9/S2icf/Z3AGirCAosrLVZ6gh2zqxTg==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com (2603:10b6:a03:540::20)
- by DSWPR11MB9583.namprd11.prod.outlook.com (2603:10b6:8:36e::15) with
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from SJ1PR12MB6051.namprd12.prod.outlook.com (2603:10b6:a03:48a::18)
+ by SN7PR12MB6861.namprd12.prod.outlook.com (2603:10b6:806:266::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Thu, 10 Sep
- 2026 04:10:36 +0000
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc]) by SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc%5]) with mapi id 15.21.0406.005; Thu, 10 Sep 2026
- 04:10:36 +0000
-Message-ID: <8abdca6e-a3d1-4d43-9ede-a11e17860519@intel.com>
-Date: Wed, 9 Sep 2026 21:10:34 -0700
+ 2026 05:18:09 +0000
+Received: from SJ1PR12MB6051.namprd12.prod.outlook.com
+ ([fe80::96e1:b300:7b78:d3a9]) by SJ1PR12MB6051.namprd12.prod.outlook.com
+ ([fe80::96e1:b300:7b78:d3a9%6]) with mapi id 15.21.0382.014; Thu, 10 Sep 2026
+ 05:18:09 +0000
+Message-ID: <e976263f-5382-4e32-a3a6-5639c4d56abf@nvidia.com>
+Date: Thu, 10 Sep 2026 06:18:02 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 23/23] x86/resctrl: Document telemetry mount timing
- caveat
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
- Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
-	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
-	<babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>, Dave Martin
-	<Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>, David E Box
-	<david.e.box@intel.com>, <x86@kernel.org>
-CC: Christoph Hellwig <hch@infradead.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20260831174421.13921-1-tony.luck@intel.com>
- <20260831174421.13921-24-tony.luck@intel.com>
-From: Reinette Chatre <reinette.chatre@intel.com>
+Subject: Re: [PATCH 6.18 000/583] 6.18.51-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260909134237.773280130@linuxfoundation.org>
 Content-Language: en-US
-In-Reply-To: <20260831174421.13921-24-tony.luck@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Jon Hunter <jonathanh@nvidia.com>
+In-Reply-To: <20260909134237.773280130@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0043.namprd04.prod.outlook.com
- (2603:10b6:303:6a::18) To SJ2PR11MB8370.namprd11.prod.outlook.com
- (2603:10b6:a03:540::20)
+X-ClientProxiedBy: AS4PR09CA0011.eurprd09.prod.outlook.com
+ (2603:10a6:20b:5e0::13) To SJ1PR12MB6051.namprd12.prod.outlook.com
+ (2603:10b6:a03:48a::18)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -106,95 +71,247 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB8370:EE_|DSWPR11MB9583:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3e0bc553-fa46-48e8-1577-08df0ef17755
+X-MS-TrafficTypeDiagnostic: SJ1PR12MB6051:EE_|SN7PR12MB6861:EE_
+X-MS-Office365-Filtering-Correlation-Id: e530c852-9b62-45c1-2405-08df0efae746
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|376014|7416014|1800799024|4143699003|10067099003|3023799007|6133799003|22082099003|11063799006|56012099006|18002099003|921020;
-X-Microsoft-Antispam-Message-Info: UD73czGE9Hy9Mra4CO6Dc/KN7yBvUcodpyUabH99NYUOjGOEprL9/XdWGkeK8GRIQH3tm+6lkmEmhc3IGBnFch56ORzE1BEIhvz1Ydp2O3gV08yokXk8ojZGgSo17lfX4TXd9weV/2W0z0w2LXtpyJDcAhvAkGbBgVWhVGDSdg6E/jm4UuAy+/52MtRwlUfr5v58O1Tyz4c6y2tZV8gyujKZ0bjpmhqvNdR7b37Gcq2+RscvIamrmzIUPUioCAX2KdeaeHVviuKeAwHMk6mR/7oDWTf5sb4x+dib4/Qs7QvrtpPqwhT5cb3NXG9bUizJGldiJwW6L9xIYxR8LJ+SiZ4cbZd5vHxbwGZj+RqgvfWu3lnfFgM5rhD55JqgxQiKlJ6Y7DtDECYm9/x1exqCm3EnCeQKxdK/urBH1Ou54bH/6VRMgPuVhmEHgSVhlYmGbhY66sAD9YyaSOE/SpRp1ntg+EfDbTMcgX8hgspZiQQceQa00ZRaGeO7P9K1MX40WKDt+A+u5300geEeqFu3yDChflaF+5mKql0UpOvUkcU6EB0bioSbKRq9hqSRgd9J1Hn0UjWCeKrFFpHRfjKtqPUvAy6XCY9tJy+tXpWUunNPuaIbab7NOpE7cGF5eUoOkioTLaSCLEyhMAjZCrBy1QQLVticPC1P+U62bh+aibqTy74b1fD2WN68y3TzQ+rjBQ88VaNlUiatUwAODqzh1w==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8370.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(7416014)(1800799024)(4143699003)(10067099003)(3023799007)(6133799003)(22082099003)(11063799006)(56012099006)(18002099003)(921020);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RmVFS05pTWRlblZOVVJVZXhwVWFRSy9BSE1TTkxhaE1UeVo2OXlSV0NBOGtp?=
- =?utf-8?B?UFFMZEQyOWY2VEVxWVBmS3cyWU8rMHh4WFBTenY1RU4vNnlrVWxHcUtYVHd3?=
- =?utf-8?B?bXYzOEF5VFJpdmpzYnc4ZmdqdFpMeGRsd2dEVDk5dHhQOFRnWldUMlBpWS95?=
- =?utf-8?B?VjFDYkpxTDBuQkhPZGtPUFcxVG13cmpMWkd5L3ZOUHBFeXZkd2w2cXV4TkZT?=
- =?utf-8?B?V3Y2UjZONXhpZHR6bUJLUExOQUUxRk9LUitvc1pwL3BOaGRUaWZ0Zlo5cWIw?=
- =?utf-8?B?Ujl6ald5Ry9wbFJmS05hZmFXdWtZT09VdUFTVWp4TnRtV294Ym1aVXlLQnQ4?=
- =?utf-8?B?enZLV29wa1d1RFJ6KzBsZzR2TUkzeDFEcStsV09PKzRtaUJlWlhKemZUck5N?=
- =?utf-8?B?TDdOUGZqN2IxTmF6UExldnZiWmpOZGRvclNlT1AwN2ZJM3MzMEFCWUdyM2g0?=
- =?utf-8?B?WGw4L2R6Skt2OGNNcUgzSjlVTVcvUTdXb0tjQi9ObEpRckl1TUcwNmt0Skx4?=
- =?utf-8?B?VExmeTUrczlWYk9FWCtyUWZNakFSV2Zldm9JaDRhMzN0cDBrcG1tRTdyeStO?=
- =?utf-8?B?dFU4MG1RU0FCWDJqS2N4ai91SzRybXp6bU90RXNxVnN1bmJwVHpKdk8xTW5O?=
- =?utf-8?B?NUlnUS9VY3FPd3k1Y3VXMmVlU1pGdXh6Z0pGR05VYTBZQnJSbDlPOWJ6U0Uy?=
- =?utf-8?B?YjNVNlpvZCtqUHBiQ3MyZzFlVFluVU5zcVY5WVpiOElmQXpWd0ZrVVRoSHJO?=
- =?utf-8?B?eG1XVVJ4Z1RySFJqTFY5Sm51QXJZNWFlNSsyM1NRRE1COWpVL3ZqSGZPeE9w?=
- =?utf-8?B?K2Z0ckI2NU5yVW9FalhmS1hBVk5NQ3JYallmRlc1aEp0MVVnQi9vbGRROWkw?=
- =?utf-8?B?a0lkS1lpRHVSQy9WaVQvV3Y3VzJ1MHEyLzVub0ZiM0k3bnhuNmF5UXZVY0VH?=
- =?utf-8?B?dGtqRHJJM2VxRk1OTnE1MnpnMjkyNXVEbDJqODEzYTJIaldDdXdpMVJRRjQ2?=
- =?utf-8?B?SEhSZHQwT2t2SnB1UTNiMUtRdHdqUWJYQ1ZTRUxHblZuRHBKZjJleEIwUDlw?=
- =?utf-8?B?cHc1TXB2STE1NVZpalRJNmg3NnRRNWZEOWZRNVA1U1hnNWZMMEt1WnZjazZr?=
- =?utf-8?B?MWhLUWxkdlVXN0VSS1k0bk5FdS8yV3RNR0VJcXk0L3M4QjFQY2NTK1RCbHVM?=
- =?utf-8?B?NjBaVWltR3VJR0NncDZjWEZ2OG9YQmVPWmxLUXZXRVRxVGlSM1RSU0ZQL0Nt?=
- =?utf-8?B?bWxtQ3lCRkg5WXpuUTVYQnRCSFg0eElqcU8zTVRKRWJhTzQ5WmhxSkxtaHh4?=
- =?utf-8?B?a3JscDQxcU5UYWxEWU02c0h2SnVYbjBvUFY1Sm5QYWlUeVI0N0sxSzVDS3FD?=
- =?utf-8?B?eGI3YnZIelZiUUR3aktkdzNwMzZGcHE1T3h1NFpwOEpCd0Z4blV4eE9QSDE2?=
- =?utf-8?B?QTllaEp4dnNRRnA1cENJTlJSdkhUVUgxcko0VjdkallzUXlFMndVSUl2eFZm?=
- =?utf-8?B?bjF6eW1lRFdmVXJxbkRVcWp0TXg2UE12NC9VaytOLzM4N2hIdVV0Qm04d2Jy?=
- =?utf-8?B?WEtoNG5NK3U5ZWRpa3FNUnFJZjE2WS9BdXJQakFHUWpiaXQ3VkFmT05OSU9a?=
- =?utf-8?B?bVZNSldyVklYUUZXQnZCS3k5MFZJVTRxYXFCRE5xT3J4VWtlSm5kVEdjU2t4?=
- =?utf-8?B?RHBuREVJbHg2cndQbmVENTVISXRnM0R1dVVnb3RPaUJZSUN5bnpBeUtVRFdj?=
- =?utf-8?B?dlhJSHR2N3VtU3NkL1hzTW51SnNjVXptNFpCUWVveFFacGpPZnpqV1ZmSTdm?=
- =?utf-8?B?ZVE4b2JCR3pveC9XWTV5RGhnTTBocGlLbFpMNTFMUlRwUVJCRmhNeHprMFg3?=
- =?utf-8?B?VzY3RVMxVDN0czVTT3hSaiszNFQ1Q2hwdy9MSTBwdnBCRUYxWHlWOGloNWhi?=
- =?utf-8?B?Z1N5dHY1RUY4ZG9SRTd0Vll0TThONWZJNUFPOU9oZFd2b0F3cEFoSHIxVmNK?=
- =?utf-8?B?VXZ4Mjgvem5JRnBoNTZjemhSTW1sb01RNzd3K20yWTFtUWJtQnpVakwyWTRy?=
- =?utf-8?B?a3A0eVpoOHUvZGVJYmRmZG0xZWJqMm5GU3BxUVhzNzVabHo3bEFrZXBnWWFz?=
- =?utf-8?B?R245VzFoZ09uK0hhNnVZVWNaNERBUjFBKzlRalRjV3FOOGtzZU5JcGNSbjFt?=
- =?utf-8?B?WC9kSm5reFcwc2ZyMGtLZzVLaEJZVCtWVU9GaE82aTh3SFlReTFMZlVJNlY3?=
- =?utf-8?B?MndHamhpejJqWWlPL2xaa01DSVhLUlFEL0trSzFMK3IrVHZTSmg3U0x4ei96?=
- =?utf-8?B?QUpnYjJZanp1YkZSem5VeThQR3dpdkY1MEI3T3l1cGg2aXZuUDFrVHBuVWRs?=
- =?utf-8?Q?NOz4WUf45x3wVq8k=3D?=
-X-Exchange-RoutingPolicyChecked: Q2Ms6kRoZQL4d2Kv99W34zpzFvf8TsPuu0VAbXUhKx4hSBIvtG8TWx97cUAw/1bdZHof7C0x5WjvazTfuQWKTzoMngqL3o2W9MLWYvBGlab7MQBTkekw9ULaLAzfyk1QXtiX+q4guJb5kjsd19uM9hzNbQY1slEAm8WhxO4JVlCRssN6+Vh0BWo45xZz0yBF4M2JQQk3UYvrf3u34zVzOyXoDMTMdLL9OrQ5jTJa1GU3fIagIh/5QRY6TAHh3MY173bi57zgAb3rXEH1A9gQyqQ0amG0KcYu5UO2C+uhfOLHKcGk3eLrlLuCaJaUirwhlLNPuaO42JBe+y3+6PBshg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3e0bc553-fa46-48e8-1577-08df0ef17755
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8370.namprd11.prod.outlook.com
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|1800799024|7416014|376014|23010399003|366016|56012099006|11063799006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	evReHaQNXhcYcJeIQGUnOzySaSdGcSYykP9HGJkHPQ+BXPyBjndKImn7il7luSh4ngYjrRw93h3aOI5MhiJYeRIMd6Gv9Tu4yrIBHXfmxEVvMuUSyHS0UdwkZBCwYfUNlf3xEDR8LmS7/44Tg1hJaJkCZ8dOCf8HrcnQ2hUQUm52/BwduvkOnyWPDGXx2nJe9H/NzmQskPZrZFx5BRG1MeE5tA6klv8dHp3LTf4suqhrsJp4rdUXqlFEDs6xuSdI706sKwlkmUwABMkHX6M/lfQbMI2NKJq/dYbPCyKDADpH/LX6RGqa8cHxEakQck1/ebiubuUpgWRPjF0xc25lvOkNZi3E2Qh/ljME3fsEF4Ia1K/CpPHVEKZ1OpbTDqQCpMFdI4bYvC3HeyvsLFKFEiIo7CC/DwfQbAx2AdZEndIp2XQ1edRSgesgaVdmn5jeJ6UdPc+yRQDgBNfV7q0Kk+3PBlbdM4djvrma+hd4jgvz1TsRW4L45zku0sokFUBjQTRM+fX2hWvkft8haRbM8tcylAnkdphvuLfJDO2OwNptawT2yATrxkis5pCJWR29TXEvzjxEOn48b+LqeIxcBffCy88nQUPcMIl3JdXsQRzmWPcjbqvprh7XtuCGUJgUnI/uzP78WmNuG5l3ilIZ4s0SoDSyD3a5DBrqhVpGLNw=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR12MB6051.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(7416014)(376014)(23010399003)(366016)(56012099006)(11063799006)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?eEtFaFVSWEE3ZllJTVRNUWpqaXZzVHlBREg2OHkwYVprTHNyUVkzWFVlLzJI?=
+ =?utf-8?B?K2RpazVEbWw1eDBnTzdUQmRPUzM3Z3ZHOVhpNzM1Y2ZLUjNaVTdadUxjck5m?=
+ =?utf-8?B?YnRMallIWVJzT01rbVBEOENOYjduT00xVGNZVThCblVQM29VNnVXakVJMEpj?=
+ =?utf-8?B?OGVnVnFJSVcwYVl3d2k0REQvSzJIc1kwS3JOandITVhXTzd1WEZBN0l0eEFn?=
+ =?utf-8?B?L0tuS3RRQ2RHWkZrc2JRNng4cTlvVmgvNjdZYmN1NnF6Z1VidjNHeXc3Q0RV?=
+ =?utf-8?B?ckFURkxsRG9VTjcydDFKRXBBRWRaSFZ6a2FVODBnNGtaR2VYSTVjRnBzTFJJ?=
+ =?utf-8?B?MmF6UlJ3Y1g4ekJkV2RQQ0ZoNlZqV25LbC9uZnUvbWpJbk9iUTh1Q1AxS0lB?=
+ =?utf-8?B?cTdKNmxjUytaeTE4cEFsSFpCU01ZVmZWMGMzNzg3ZFNnUVBXeVFsZ3U5K3pz?=
+ =?utf-8?B?V2tKa0xNaXUwYjJpUHZZbDNJRmhsMGpSbkhQRzNHelQ0blIrRWZyLytvTmlX?=
+ =?utf-8?B?a2Z2Tm1meDVGTVR0RHBXZ0RQUEJZY0toWjJqSmRxSk4vL1FDVVVQdmE5L3JU?=
+ =?utf-8?B?NEY2T3JRQmJtMUlTcTB5TlRYbjRoazQ3OW9ndExjdjZlK2VIS3JOcWNUcmo5?=
+ =?utf-8?B?SmpXZ24vVlBxYTRXeWpYWGpvNEhLQ0ZId0Q4Vm1ZaXd3Rkx6anhYZFhwUUdi?=
+ =?utf-8?B?T0p0NGs2emJ3aHNQYnkxOThtZVd5eVJvSDhGc2hEQlJiWmtMMkdGdGZFUC8y?=
+ =?utf-8?B?QTN5NzRXZU50cGFwRExCUkVnTHpZK1VxSUZUTzdvWVRxTlNzcS94QVFmMmVj?=
+ =?utf-8?B?ejRidG9UdXJxcWllUlVQMHRyVEVKeG1yK2dod3BLQndHbGlBQ1JmMC9HRmlx?=
+ =?utf-8?B?YUlNcDQrdEhJVHhDOFNUMmhtTnlJbDk1WkVNQ0F3dll3bzk2NXQxZFlXWmtK?=
+ =?utf-8?B?VVVvZXJZcGVyREZkR2RIaXgxZWFkUGYwWGtGQlZsaFZnUmxscVF1SEgwVSsr?=
+ =?utf-8?B?b1pFNjgzNSsyaUJvdXpJWlMxS3ZCN1hCdjhoRWxXTW9MZzdZeXZmeUFkZGFL?=
+ =?utf-8?B?Tjlsc3JwWnhid2dkQ1h6MklLRTliVXZPRGdzOU1pb1h5T1BQa1F4UUZFNVlM?=
+ =?utf-8?B?VS9hUFZOY2RXWm90WXNCV3hXMXhqZEdjUnUzMitQSVZDOTF4d0p2UTBnK2tk?=
+ =?utf-8?B?OGIraHJ3a2hTRjJ3bUQxajlxeGdMNGVHYndvMXFMamlsMDBrNjR5ZEdXWWor?=
+ =?utf-8?B?WjBPSm5EYWhSUGxwTGk0TFV3d1J3SzdTRk5EWFNwb2puaHMvZ2hxYUhQL1pn?=
+ =?utf-8?B?Z1JZNHVzZmVUcFhldFJUNnR3cjA2OEp0SG9OS2lqTHBKTVI0Q1lETDQ1bHJm?=
+ =?utf-8?B?WHRsdzdTM2drd3ZHei9FVDlEbzIwM0lDL3J3RElwNzhqVjRnSHZHa1U1L1I1?=
+ =?utf-8?B?VGVGcmtzZUR4TUNzRVVOZGMrS2MzS2FXNlo3VHFDWmxVVUNpenllVGd3NWpL?=
+ =?utf-8?B?RDJ2SkZNcm44Und1d0VnMk1GNkxESDc3dWwyWjg2UnRtbTR3ckhGcll2WWxG?=
+ =?utf-8?B?azUxdUIzVHhoVzZ6MjhIK0ZWYVNPKzgrVzRXejIyTjZkV2ZDRjRpRjNENFlr?=
+ =?utf-8?B?L3BNRzR0K0xoQkN4YUJVUHRvazRIaUNjcjZydnkyTGxwOXU1OU83TEY4YXJL?=
+ =?utf-8?B?TytEVjBvMFE1VHVWOUtyN1pDYU1hempLN2dzOXcxNWRLYUorTlh1UGU3Znkz?=
+ =?utf-8?B?QzZrcjBoNmJySGREN2daU1ZjczVZazVoUVlGRTVLYktBRjhlSHNsbS9lNGh0?=
+ =?utf-8?B?QzJsTlFCS1NSN2kvdjVBblZKYUxZbE5MSllDMGdnMTJNS1RySWptdURIcGRW?=
+ =?utf-8?B?dEVVVlBTKzBtdWFndVZjSVcxeXNmck9XRmhLTStLR2ZpUkRGUW5xMTFUaGFk?=
+ =?utf-8?B?WXE2dnhGZEE2TUhlMjhpSVlGYmNzMlZ5VEVQS2N6d3FGNTgvNXcrbnUzVU1v?=
+ =?utf-8?B?Y3RJRzBaeU15cFdRaU5IUFMzaGNLb3NQUVZOZUhIZHpRb0xXSGdkZ1ZWa01F?=
+ =?utf-8?B?VUtyQkN1TGtvVDlVaHlORGlsbWZkeVFyc1h1MDREYU1BMTFxWHdjcGt2V0RP?=
+ =?utf-8?B?bFIyNXNJSGVpaXIzdHdjT2I4MGIwd2x6RFhvUzcvNEkweENKdzhISmplQ0ow?=
+ =?utf-8?B?Mjg4ZVpSZUJuWU5tU3ZZV3pabHNTMm5HZHVvVXZvVERnZzJPcUhWdHE3OTRX?=
+ =?utf-8?B?Y0IySEh5MUFNaU1KS21ZU3grMk9zM20ydm5lbkdaTG1hUDZtT1B1cm5RTmxG?=
+ =?utf-8?B?UCtBN084QUd6UEdaVTUxc3hBMHJudXRmei8raGxsVVJiL3lmdG9idEkxajFm?=
+ =?utf-8?Q?/jxb8LPf+SEwv6Dfmug1JoZSCUIepijXXZs5J2C9guB32?=
+X-MS-Exchange-AntiSpam-MessageData-1: 6j/8R5su7klYqw==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e530c852-9b62-45c1-2405-08df0efae746
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR12MB6051.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2026 04:10:36.3039
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2026 05:18:09.5867
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fCcHdtQ4OqNH4gSspP5XkoEyMgHQk11/6RWoOi1Ph1PYOlCpguld4/e50clo4nbPpLFgVbsRMsTRJb51jhaj9q7R3gA99mt/r3Mth263QxI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DSWPR11MB9583
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: PSwPdVUUfLAfmh5OOuwh55Nq19mxtq7Bkkw0/CMnEXp9oaACk6lzE/prge9Qr4Ko9al3caFUKLANEMH7Jm3yaQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6861
 
-Hi Tony,
+Hi Greg,
 
-On 8/31/26 10:44 AM, Tony Luck wrote:
-> @@ -1898,6 +1902,60 @@ m. Unmount the resctrl filesystem.
->  
->    # umount /sys/fs/resctrl/
->  
-> +Mounting resctrl with telemetry
-> +===============================
-> +
-> +Telemetry features (e.g. the ``mon_PERF_PKG_YY`` events) are enumerated
-> +asynchronously by the PMT driver. If resctrl is mounted before that
-> +enumeration completes - for example, when mounted automatically from
-> +``/etc/fstab`` early in boot - the telemetry features will not be available
-> +at mount time and will therefore not be enabled in the mounted instance.
-> +
-> +To avoid this race, defer the mount until after the ``pmt_telemetry`` module
-> +has loaded. One way to do this is with a udev rule that triggers a systemd
-> +service when the module appears. A tmpfs mount onto ``/sys/fs/resctrl`` is
-> +needed to prevent daemon tasks from obtaining references to the resctrl
-> +file system in the other namespaces that systemd uses during startup.
-> +
+On 09/09/2026 14:34, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.51 release.
+> There are 583 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 11 Sep 2026 13:40:31 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.51-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+> -------------
+> Pseudo-Shortlog of commits:
 
-Getting the example right seems to be a challenge. I will not be able to support
-anybody responding with issues when trying out these instructions and
-I would prefer to leave such details to the experts. Could the text starting
-with "One way to do this ..." be removed instead and just rely on the high level
-guidance that resctrl should be mounted after pmt_telemetry module is loaded? 
+...
+  
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: tegra210_i2s: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: tegra210_i2s: sort the Tegra264 register default table
+> 
+> Jon Hunter <jonathanh@nvidia.com>
+>      ASoC: tegra: Fix the MIXER enable default value
+> 
+> Jon Hunter <jonathanh@nvidia.com>
+>      ASoC: tegra: Sort ADMAIF register defaults
+> 
+> Jon Hunter <jonathanh@nvidia.com>
+>      ASoC: tegra: Sort MBDRC register defaults
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: tegra210_mixer: sort the register default table
 
-Reinette
+
+These are causing some audio regressions for Tegra ...
+
+Test results for next:
+     builds:	11 pass, 0 fail
+     boots:	26 pass, 0 fail, aborted 1
+     tests:	139 pass, 15 fail, aborted 1
+
+Linux version:	6.18.51-rc1-g4cfd5b1359b0
+Boards tested:	tegra20-ventana
+                 tegra30-cardhu-a04
+                 tegra124-jetson-tk1
+                 tegra210-p2371-2180
+                 tegra210-p3450-0000
+                 tegra186-p2771-0000
+                 tegra186-p3509-0000+p3636-0001
+                 tegra194-p2972-0000
+                 tegra194-p3509-0000+p3668-0000
+                 tegra234-p3737-0000+p3701-0000
+                 tegra234-p3768-0000+p3767-0005
+
+Test failures:	tegra186-p2771-0000: tegra-audio-loopback-testsuite.sh
+                 tegra186-p2771-0000: tegra-audio-mixer-testsuite.sh
+                 tegra194-p2972-0000: tegra-audio-loopback-testsuite.sh
+                 tegra194-p2972-0000: tegra-audio-loopback-testsuite.sh (rt565x loopback)
+                 tegra194-p2972-0000: tegra-audio-mixer-testsuite.sh
+                 tegra194-p3509-0000+p3668-0000: tegra-audio-loopback-testsuite.sh
+                 tegra194-p3509-0000+p3668-0000: tegra-audio-mixer-testsuite.sh
+                 tegra210-p2371-2180: tegra-audio-loopback-testsuite.sh
+                 tegra210-p2371-2180: tegra-audio-mixer-testsuite.sh
+                 tegra210-p3450-0000: tegra-audio-loopback-testsuite.sh
+                 tegra210-p3450-0000: tegra-audio-mixer-testsuite.sh
+
+This tells me that there is some other dependency missing.
+My intention was to only backport these for v7.2 because
+audio is broken in that release for Tegra. Sorry if I screwed
+up an fixes tags here.
+
+I see this is pulling in a bunch of other related patches, but
+I am not sure if these should be pulled in either. Adding Peter
+if he has any comments.
+
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: tas2783-sdw: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: tas2783-sdw: drop duplicate reg_default entry
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: tas2780: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: tas2764: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: tas2552: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: sti-sas: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: sgtl5000: sort the register default table
+> 
+> WenTao Liang <vulab@iscas.ac.cn>
+>      ASoC: samsung: aries_audio_probe: double of_node_put due to direct assignment without of_node_get
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt721-sdca-sdw: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt715: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt715-sdca: sort the register default tables
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt715-sdca: drop duplicate reg_default entries
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt712-sdca-sdw: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt712-sdca-dmic: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt711: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt711-sdca: sort the register default tables
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt700: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt700: drop duplicate reg_default entry
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt298: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt286: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt274: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt1318: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt1318-sdw: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt1316-sdw: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: rt1017-sdca-sdw: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: pm4125-sdw: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: pcm512x: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: ml26124: sort the register default table
+> 
+> Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+>      ASoC: max9860: sort the register default table
+
+
+Jon
+
+-- 
+nvpublic
 
