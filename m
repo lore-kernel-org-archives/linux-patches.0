@@ -1,33 +1,50 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFF3C3EC81A
-	for <patches@lists.linux.dev>; Fri, 11 Sep 2026 08:56:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B58141612A
+	for <patches@lists.linux.dev>; Fri, 11 Sep 2026 13:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789116971; cv=none; b=HWuc8dcAJFBmlrMDeHaHsRh2m/GEMfCLHl52sH6/aGmJZ7M44a4+P4EKl12Sy20kh2Sh9deRy2+TWGfglxROlEDo+VZpXQfjQ9l97Oq/DFylcxW7m4s4fjRifbsOxtZn1TDdeepTVWNbopXsCgyNFkKMACuadaebwQ9xDsJ8qvw=
+	t=1789133962; cv=none; b=sasUmfV3nttt2ab8HX3YTObKyksymvmjGGRcAJwP06CzcRCq8iRdx5WVb3MJejPmD4T+lcNbwrxzCZDU4SPAweXqraeEHbHyL0Cd8fAac32VljNjrlgSJ0fxtJKeE4QBnE/+VVjQw7Bmq/w3RUX45X6vyoqRnCPk7NHlgLRxLgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789116971; c=relaxed/simple;
-	bh=mPcxAHu3KYHI6pGhTtcvzaAlBrH1n1Q4zJ/2mJJUMPE=;
+	s=arc-20240116; t=1789133962; c=relaxed/simple;
+	bh=HEa7y2dg0Q5/324DIBpIKPkDzSkkBUrm51tW/kKBdS8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sNzu+YmadDk3f1vRxA6BeV97Q4y24PpLeNT7VaVNwxbiePtgJro5CjeOJqVUJKXWDnaMtUyJQyJ2H9+F5SIeSfH/2kO+vyGCWvRFhelffcXkfKdUsdSTZl6eWX4N+JtQ0y6IBm6T3DVA5CFy9U6JDTDE0pikA0ehDxYWUnPKm/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=P7mkOT24; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 In-Reply-To:Content-Type; b=LUJzB1RDcV6CRYr92OSgCOE+qVa4TEaTHWanWRMz+5r5DUXl+GitYl9q8heIL4uTvOwV8qZx/LvfWOnuO8cU0JTGGqeimwBywVJjRM7RTlGmEM6JnwBm7RuyxuTvNhkTn2+bE7a/wQLa2P4TBp0lSZgxyEKAddeDx6VrItxTcH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AHT766EZ; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="P7mkOT24"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6FE7A16A3;
-	Fri, 11 Sep 2026 01:56:05 -0700 (PDT)
-Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F1CED3F7B4;
-	Fri, 11 Sep 2026 01:56:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1789116969; bh=mPcxAHu3KYHI6pGhTtcvzaAlBrH1n1Q4zJ/2mJJUMPE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=P7mkOT24uSdxWqA8jPAny9fmmKdRuCez9zivlFL3QbNQuVEdreVcChQMiV3DvwIzk
-	 rrdc/6RxTi0bFuJWvqtTr1h74BQ3yd2b6Qe2Uefghl43RYD90MA01Q6fr+KpC97tBX
-	 N9jg0PAiqjM977hyHX0WRd+g6MSB4bijquUUJsPk=
-Message-ID: <d403b92c-aae8-499f-8c73-933a2d757fba@arm.com>
-Date: Fri, 11 Sep 2026 09:56:06 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AHT766EZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789133961; x=1820669961;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=HEa7y2dg0Q5/324DIBpIKPkDzSkkBUrm51tW/kKBdS8=;
+  b=AHT766EZg4HYtGkVe6CNqZXy45wy0uabCXVFwDa6fVQjPRm7WwarYr+x
+   sb/vwaGiaT6KhztVyD2tmtAB762PMSA1gujpGoDXIEjXVxBilN5z08N9L
+   JhenAOLDMO7mj2FRtxvnkzOxPloupOQL7u0lG1iDprChZmNwZ0iony2bQ
+   EmEeec9D/wVyZgeRZfMx7naUu9zVvG1jVYGM8d0YJfgH4Kb7LZlq6iXue
+   wrifaJXCli+L/MT2Wx1lRlMZh+kS2fuCaUyY3jwALR1Nsqm1PDWuSar0B
+   BtJEo+3SRgdm0N9aqa87Y25RB/AFNN26RMHd/L398ObcSiZWtp8mbQ/ja
+   Q==;
+X-CSE-ConnectionGUID: KvFYu++JRK+4QS+RvvlojA==
+X-CSE-MsgGUID: oUyE4QOaQWixy2InA0XOog==
+X-IronPort-AV: E=McAfee;i="6800,10657,11901"; a="100192176"
+X-IronPort-AV: E=Sophos;i="6.27,97,1787036400"; 
+   d="scan'208";a="100192176"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2026 06:39:21 -0700
+X-CSE-ConnectionGUID: KFXQRo5PSOCleIcv8it7OA==
+X-CSE-MsgGUID: OwqQLQInR7e2wChAb07d7w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,97,1787036400"; 
+   d="scan'208";a="275446796"
+Received: from smithj1-mobl2.amr.corp.intel.com (HELO [10.125.108.26]) ([10.125.108.26])
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2026 06:39:20 -0700
+Message-ID: <d6b8e4f3-93e3-454d-acb4-7ba1f49044d8@intel.com>
+Date: Fri, 11 Sep 2026 06:39:19 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,163 +52,75 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] arm_mpam: resctrl: Separate MPAM domains
-To: Reinette Chatre <reinette.chatre@intel.com>, james.morse@arm.com,
- Dave.Martin@arm.com, fenghuay@nvidia.com
-Cc: tony.luck@intel.com, babu.moger@amd.com, yu.c.chen@intel.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <85ca29e89eacf12cfa7071249419e7cadb8f0691.1788220029.git.reinette.chatre@intel.com>
- <0b0eef2d-ce3b-48c8-af08-5889e7396e4f@arm.com>
- <a492ffb3-c12e-4986-8f36-c907382c67e5@intel.com>
- <96eda554-64a1-4f1e-9608-98cd106b00da@arm.com>
- <a3cf9362-007d-4c6c-8f6f-1c9b8b41b1b9@intel.com>
- <ad1f8ed5-266a-4d79-91ef-ad8ab3febfb8@arm.com>
- <26e294a0-76a6-4ec0-9df8-021a76bf8ed9@intel.com>
- <86603611-b20d-4a0a-a247-8cebb11b3432@arm.com>
- <071d3dc6-6c18-4287-af26-719b89304058@intel.com>
+Subject: Re: [PATCH AUTOSEL 6.18-6.12] btrfs: derive f_fsid from on-disk fsid
+ and dev_t
+To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
+ stable@vger.kernel.org
+Cc: Anand Jain <asj@kernel.org>, David Sterba <dsterba@suse.com>, clm@fb.com,
+ linux-btrfs@vger.kernel.org, linux-kernel@vger.kernel.org,
+ David Woodhouse <dwmw2@infradead.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
+ <20260831133314.4125787-164-sashal@kernel.org>
 Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <071d3dc6-6c18-4287-af26-719b89304058@intel.com>
+From: Dave Hansen <dave.hansen@intel.com>
+Autocrypt: addr=dave.hansen@intel.com; keydata=
+ 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
+In-Reply-To: <20260831133314.4125787-164-sashal@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi Reinette,
-
-On 10/09/2026 19:10, Reinette Chatre wrote:
-> Hi Ben,
+On 8/31/26 06:23, Sasha Levin wrote:
+> To prevent f_fsid collisions between original and cloned filesystems,
+> this implementation hashes the dev_t for single-device btrfs filesystems
+> to ensure uniqueness. This is limited to single-device filesystems as
+> cloned mounts are currently only supported for that configuration. Note
+> that f_fsid will change if the device is replaced.
 > 
-> On 9/10/26 9:28 AM, Ben Horgan wrote:
->> Hi Reinette,
->>
->> On 10/09/2026 16:37, Reinette Chatre wrote:
->>> Hi Ben,
->>>
->>> On 9/10/26 4:11 AM, Ben Horgan wrote:
->>>> On 08/09/2026 22:12, Reinette Chatre wrote:
->>>>> On 9/7/26 10:01 AM, Ben Horgan wrote:
->>>>>> On 03/09/2026 16:29, Reinette Chatre wrote:
->>>>>>> On 9/2/26 9:10 AM, Ben Horgan wrote:
->>>>>>>> On 01/09/2026 00:54, Reinette Chatre wrote:
->>>
->>> ...
->>>
->>>>>>> It is not clear to me if a mon_comp of NULL is able to handle all scenarios since it looks
->>>>>>> like mpam_resctrl_get_mon_domain_from_cpu() and mpam_resctrl_online_domain_hdr() does not
->>>>>>> consider the component at all. Would that not cause monitoring features to depend on which
->>>>>>> CPU of a domain comes online first?
->>>>>>>
->>>>>>> Could mon_comp perhaps be required to be !NULL here as a replacement for the earlier
->>>>>>> "ctrl_comp" check to ensure there is a component with the CPU in its affinity mask?
->>>>>>
->>>>>> Doesn't the !any_mon_comp check provide this?
->>>>>
->>>>> This is the part that I do not understand since any_mon_comp seems to support the scenario
->>>>> where a mon_comp may be NULL which is a scenario that I do not think resctrl can support.
->>>>
->>>> Ah, I see what you are getting at. As the monitor components are only considered when there topology
->>>> matches the l3 cache (same cpu affinity for each instance) then the find_component() call will never
->>>> fail and so mon_comp can't be NULL at this point.
->>>>
->>>>>
->>>>> At a high level there seems to be three affinity masks used by the monitoring code:
->>>>> the CPU affinity of the component belonging to the control resource class, the CPU affinity
->>>>> of each component supporting each monitoring event, while these are three separate masks with
->>>>> code sometimes treating them as though they can be different they are actually required to be the same?
->>>>
->>>> Monitor component CPU affinity is enforced by topology_matches_l3() to be the same as the L3.
->>>> Additionally, traffic_matches_l3() adds extra conditions that mean that there can be considered an
->>>> uninterrupted link between l3 and memory and so an MSC at either end is effectively the same. Namely
->>>> the same restrictions I've mentioned before, only a single l3 cache, a single NUMA node and no
->>>> intermediate caches.
->>>>
->>>> You list two rather than three here? Possibly you are also thinking the MSC cpu affinity which can
->>>
->>> I did mention three masks. Thank you for clarifying how the one mask (the "ctrl_comp" one) is associated with
->>> either that of the control class or the same as the class associated with the first event. 
->>
->> Ah yes, I misunderstood.
->>
->>>
->>> Regarding the other two masks: it seems to me as though the CPU masks associated with the two supported events
->>> are managed separately. This means that theoretically the class associated with QOS_L3_OCCUP_EVENT_ID could have
->>> components with different affinity from the components of the class associated with QOS_L3_MBM_TOTAL_EVENT_ID. A CPU
->>> being onlined could thus be associated with QOS_L3_OCCUP_EVENT_ID (resulting in mon_comp being
->>> initialized for this CPU) but not with QOS_L3_MBM_TOTAL_EVENT_ID (mon_comp is NULL for the same CPU). In
->>> this scenario, "any_mon_comp" will be true and the domain created and onlined while it does not
->>> actually support both events?
->>
->> Hmm, it depends what you mean by "theoretically". In mpam_resctrl_pick_counters() the class to back
->> each event is chosen. For QOS_L3_OCCUP_EVENT_ID it will always be the class at the L3. For
->> QOS_L3_MBM_TOTAL_EVENT_ID the topology_matches_l3() call will check the cpu mask matches the L3.
->> Does that answer query or am I missing something else?
-> I mean "theoretically" because it seems that the CPU online code (specifically domain creation) supports
-> the scenario where these CPU masks of the two events are different (mon_comp can be set for one event but
-> not the other) while the rest of the driver seems to make an effort to keep these CPU masks identical (as
-> you highlight) and there is not actually support for them being different.
-> 
-> The planned changes discussed here are for the domain creation and will touch the code handling this
-> scenario. I was hoping to just change the data structures while maintaining the current flows as closely
-> as possible. I currently struggle with maintaining this flow that can never, and more importantly should
-> never, be encountered.
+> Additionally, since the kernel cannot distinguish between the original
+> and the cloned filesystem, this new f_fsid derivation is applied to
+> both.
 
-I see, makes sense.
-
-> 
-> Do (admittedly crude) guardrails like below capture the existing driver requirements?
-> 
-> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-> index 9d223057953a..dbd06371890c 100644
-> --- a/drivers/resctrl/mpam_resctrl.c
-> +++ b/drivers/resctrl/mpam_resctrl.c
-> @@ -1681,11 +1681,18 @@ mpam_resctrl_alloc_domain(unsigned int cpu, struct mpam_resctrl_res *res)
->  				continue;       // dummy resource
->  
->  			mon_comp = find_component(mon->class, cpu);
-> +			if (!mon_comp) {
-> +				WARN_ON_ONCE(0);
-> +				err = -EFAULT;
-> +				goto offline_ctrl_domain;
-> +			}
->  			dom->mon_comp[eventid] = mon_comp;
-> -			if (mon_comp)
-> -				any_mon_comp = mon_comp;
-> +			any_mon_comp = mon_comp;
-
-This first part which ensures that if there is a class for the monitor then a component can always
-be found for the given CPU.
-
->  		}
-> -		if (!any_mon_comp) {
-
-The any_mon_comp check could still be useful to confirm that if r->mon_capable then there is a
-component for at least one of the events.
-
-> +
-> +		/* hack */
-> +		if (!cpumask_equal(&dom->mon_comp[QOS_L3_OCCUP_EVENT_ID]->affinity,
-> +				   &dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID]->affinity)) {
-
-There doesn't necessary need to be a monitoring class associated with any particular event. If there
-are classes and so components for each of the two supported events then this check looks correct.
-You could ensure that by checking existence:
-
-if (dom->mon_comp[QOS_L3_OCCUP_EVENT_ID] && dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID] &&
-    !cpumask_equal(&dom->mon_comp[QOS_L3_OCCUP_EVENT_ID]->affinity,
-	           &dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID]->affinity))
-
-
-Thanks,
-
-Ben
-
-
->  			WARN_ON_ONCE(0);
->  			err = -EFAULT;
->  			goto offline_ctrl_domain;
-> 
-> 
-> Reinette
-> 
-> 
-
+This commit is causing some real pain to end users that use the FSID to
+encrypt VPN keys. Could we keep it out of the stable kernels for the
+moment, please?
