@@ -1,109 +1,197 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC6C44F566
-	for <patches@lists.linux.dev>; Fri, 11 Sep 2026 08:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFF3C3EC81A
+	for <patches@lists.linux.dev>; Fri, 11 Sep 2026 08:56:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789115074; cv=none; b=u2mwfNBtz3lWgA5MT/J69gkzOwSaGAYvFWgxFTOm0Bi4z4e0ASYnoErzL4kGn3cIeMsrCPiD4HqPj/EcOZp0sJItBzjSEjoHQ+06kSkTSFWRyClzsCz5Uqw2RtUqm2uGknhVhfR1DQJlAhkGxRphMdBIUxUZtq4OiAXwZX09bls=
+	t=1789116971; cv=none; b=HWuc8dcAJFBmlrMDeHaHsRh2m/GEMfCLHl52sH6/aGmJZ7M44a4+P4EKl12Sy20kh2Sh9deRy2+TWGfglxROlEDo+VZpXQfjQ9l97Oq/DFylcxW7m4s4fjRifbsOxtZn1TDdeepTVWNbopXsCgyNFkKMACuadaebwQ9xDsJ8qvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789115074; c=relaxed/simple;
-	bh=Iq+fpSyK4ILX+urSkwlTvDb34gQ3oxCb6Di9PgY+GDw=;
+	s=arc-20240116; t=1789116971; c=relaxed/simple;
+	bh=mPcxAHu3KYHI6pGhTtcvzaAlBrH1n1Q4zJ/2mJJUMPE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bDuZDKlGVm+44DxlCZQWR5nB/1ZxMuU0I7AEso6fsm/C2/wVGfyaXONw/lEu93EVTD+uUDd0TqPXGnVg/IBYfYb/BGkyNkn0+Q1NVl8zLIBgMkLFoVM2VZ2/i6AMYhQIT19ZwnZL6l5/NyvhqkWyClfal5JBVO8uqf0sGPBBNRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=kvAvNzl/; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=sNzu+YmadDk3f1vRxA6BeV97Q4y24PpLeNT7VaVNwxbiePtgJro5CjeOJqVUJKXWDnaMtUyJQyJ2H9+F5SIeSfH/2kO+vyGCWvRFhelffcXkfKdUsdSTZl6eWX4N+JtQ0y6IBm6T3DVA5CFy9U6JDTDE0pikA0ehDxYWUnPKm/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=P7mkOT24; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="kvAvNzl/"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49b965570d7so7813895e9.0
-        for <patches@lists.linux.dev>; Fri, 11 Sep 2026 01:24:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1789115071; x=1789719871; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2WWeljkn3dRICBmDHnyIQXWg+zBlpnH6+buSyxyqyJI=;
-        b=kvAvNzl/6aEBTouQtVwU5vOpp69NDBn13Pa7Wtb/cuZtUMT4gwVyO+7ri//IklWNWw
-         ygO7hTsNP+P2sGsXfVFe5QPUaw4D2O23j5mXslhNMgT2ORjQOt19ihl6Zes1YfOcShKN
-         NxozVfYkZla5J20pDJm0A4WQ/QqogY9fa6r57LwLdgyL6LkUAuWsNt0uKzL5AHB990H7
-         qLESmRxEjucRr8SsAK8Y5F6UzCJ1CSISPAgCnPIq+f3WRPf00KWcR0fY44qVCJkrgKe6
-         6DaOf96YyEZO6/KUU3HW1Tb8Yonb/2iS+zS9jAxfTXd1+78UaRaGn8xgMV+Ttez8tyW3
-         lGdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789115071; x=1789719871;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=2WWeljkn3dRICBmDHnyIQXWg+zBlpnH6+buSyxyqyJI=;
-        b=Y2HiOv0DDEL9uyInIBc2rCRtGFdT2D/REy0O79CUU2WPsAtowSjQvs/ReDIGgkeVvm
-         fCUf2lagJgrLww08f03ZVSqZ4xJQ2eQ0+cE9SyhUNbWPWyZpnP3YpvpTEgjNLwAh94DG
-         8yR5S49gU8b7VdX9pk22ufcWXKbPv6UiU2fl7OGL+M0apj6Ov3LPNNGR/DNi8hbqMqbj
-         kvSZN6O3MeDSjJuocOr344KUAUJ1voPrMn7y7VVrHa2MF1AEz2LjyQdfmycCkUYs5vse
-         SRj/JN+7cHcWOa4cD7yPL8QnDYAfB6R2y68/f5T7pk4ZrTtWFln5XnGaOCS1HQZc2ILb
-         C+eg==
-X-Gm-Message-State: AFuF++k6E4thEfFhfL6Hjma8KJmG95nyet6yzC4fc+69mYzE22kBMALo
-	of+k3BlQHct4m+El4mNOpSYBjBg1LOSFRs5HXvFC4rc8u9ImvYtAtd8=
-X-Gm-Gg: AYBFou0lvOZleAFe/CApit/XR2Ce97yb/p05IFQzkvHn5pkK++pq+p+/GnNuue8sZqK
-	W3qJwdy+OmobsdYqNaRnfXty83kTK/85dsSmTMGpWaafGpVIDzHYSWtJwkmy1N90JtOm0MlcK3V
-	HIqua7dqWsY0/NzGhlV3BCL9DK3P1WoytkOXhW2OFoGvHooawt0VJMSEueOmHI1I/PbvynN9FvA
-	VhxxtPrkUUdAeq7t7C7fmJP5+6r5oQCKuO0b4aSvR0WDZrPhJFvjkP+7tKJDEht2dZa5FdCa6d1
-	pnuauq7lNFjxNM7mpYOT9g0h31Y/31H6GB1x6wP5KqSZNwGWJlsDVuhs9WOI1AMNOEhi8TCvpiA
-	G/bShjPKXbh0+JEm0ioE6z039Unesek44SJgp2WxfHF9ldPeb10o2JVddGSeXUno4Gga5yULvEI
-	+UPn/lcHohmIoVwtNlEyYvS7YvhPfLa+tRdoQE5g6Wgtj2DpmDdvinvhnq0+NPqiElHN73oB97W
-	KCEQ0Y8ZojJWiLNA9+t8bAD6stGQUEvNLG/Mx7hZi4EjKSsye4=
-X-Received: by 2002:a05:600d:4453:20b0:49c:fed6:cd3f with SMTP id 5b1f17b1804b1-49e619c4d59mr22948105e9.23.1789115070582;
-        Fri, 11 Sep 2026 01:24:30 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ace69.dip0.t-ipconnect.de. [91.42.206.105])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49e5765152asm88890415e9.11.2026.09.11.01.24.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Sep 2026 01:24:30 -0700 (PDT)
-Message-ID: <4a5a443d-28b3-4da5-8749-447ea5b009f2@googlemail.com>
-Date: Fri, 11 Sep 2026 10:24:29 +0200
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="P7mkOT24"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6FE7A16A3;
+	Fri, 11 Sep 2026 01:56:05 -0700 (PDT)
+Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F1CED3F7B4;
+	Fri, 11 Sep 2026 01:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789116969; bh=mPcxAHu3KYHI6pGhTtcvzaAlBrH1n1Q4zJ/2mJJUMPE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=P7mkOT24uSdxWqA8jPAny9fmmKdRuCez9zivlFL3QbNQuVEdreVcChQMiV3DvwIzk
+	 rrdc/6RxTi0bFuJWvqtTr1h74BQ3yd2b6Qe2Uefghl43RYD90MA01Q6fr+KpC97tBX
+	 N9jg0PAiqjM977hyHX0WRd+g6MSB4bijquUUJsPk=
+Message-ID: <d403b92c-aae8-499f-8c73-933a2d757fba@arm.com>
+Date: Fri, 11 Sep 2026 09:56:06 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 7.2 000/556] 7.2.5-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260909134230.441546314@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260909134230.441546314@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] arm_mpam: resctrl: Separate MPAM domains
+To: Reinette Chatre <reinette.chatre@intel.com>, james.morse@arm.com,
+ Dave.Martin@arm.com, fenghuay@nvidia.com
+Cc: tony.luck@intel.com, babu.moger@amd.com, yu.c.chen@intel.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <85ca29e89eacf12cfa7071249419e7cadb8f0691.1788220029.git.reinette.chatre@intel.com>
+ <0b0eef2d-ce3b-48c8-af08-5889e7396e4f@arm.com>
+ <a492ffb3-c12e-4986-8f36-c907382c67e5@intel.com>
+ <96eda554-64a1-4f1e-9608-98cd106b00da@arm.com>
+ <a3cf9362-007d-4c6c-8f6f-1c9b8b41b1b9@intel.com>
+ <ad1f8ed5-266a-4d79-91ef-ad8ab3febfb8@arm.com>
+ <26e294a0-76a6-4ec0-9df8-021a76bf8ed9@intel.com>
+ <86603611-b20d-4a0a-a247-8cebb11b3432@arm.com>
+ <071d3dc6-6c18-4287-af26-719b89304058@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <071d3dc6-6c18-4287-af26-719b89304058@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Am 09.09.2026 um 15:34 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 7.2.5 release.
-> There are 556 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Reinette,
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
+On 10/09/2026 19:10, Reinette Chatre wrote:
+> Hi Ben,
+> 
+> On 9/10/26 9:28 AM, Ben Horgan wrote:
+>> Hi Reinette,
+>>
+>> On 10/09/2026 16:37, Reinette Chatre wrote:
+>>> Hi Ben,
+>>>
+>>> On 9/10/26 4:11 AM, Ben Horgan wrote:
+>>>> On 08/09/2026 22:12, Reinette Chatre wrote:
+>>>>> On 9/7/26 10:01 AM, Ben Horgan wrote:
+>>>>>> On 03/09/2026 16:29, Reinette Chatre wrote:
+>>>>>>> On 9/2/26 9:10 AM, Ben Horgan wrote:
+>>>>>>>> On 01/09/2026 00:54, Reinette Chatre wrote:
+>>>
+>>> ...
+>>>
+>>>>>>> It is not clear to me if a mon_comp of NULL is able to handle all scenarios since it looks
+>>>>>>> like mpam_resctrl_get_mon_domain_from_cpu() and mpam_resctrl_online_domain_hdr() does not
+>>>>>>> consider the component at all. Would that not cause monitoring features to depend on which
+>>>>>>> CPU of a domain comes online first?
+>>>>>>>
+>>>>>>> Could mon_comp perhaps be required to be !NULL here as a replacement for the earlier
+>>>>>>> "ctrl_comp" check to ensure there is a component with the CPU in its affinity mask?
+>>>>>>
+>>>>>> Doesn't the !any_mon_comp check provide this?
+>>>>>
+>>>>> This is the part that I do not understand since any_mon_comp seems to support the scenario
+>>>>> where a mon_comp may be NULL which is a scenario that I do not think resctrl can support.
+>>>>
+>>>> Ah, I see what you are getting at. As the monitor components are only considered when there topology
+>>>> matches the l3 cache (same cpu affinity for each instance) then the find_component() call will never
+>>>> fail and so mon_comp can't be NULL at this point.
+>>>>
+>>>>>
+>>>>> At a high level there seems to be three affinity masks used by the monitoring code:
+>>>>> the CPU affinity of the component belonging to the control resource class, the CPU affinity
+>>>>> of each component supporting each monitoring event, while these are three separate masks with
+>>>>> code sometimes treating them as though they can be different they are actually required to be the same?
+>>>>
+>>>> Monitor component CPU affinity is enforced by topology_matches_l3() to be the same as the L3.
+>>>> Additionally, traffic_matches_l3() adds extra conditions that mean that there can be considered an
+>>>> uninterrupted link between l3 and memory and so an MSC at either end is effectively the same. Namely
+>>>> the same restrictions I've mentioned before, only a single l3 cache, a single NUMA node and no
+>>>> intermediate caches.
+>>>>
+>>>> You list two rather than three here? Possibly you are also thinking the MSC cpu affinity which can
+>>>
+>>> I did mention three masks. Thank you for clarifying how the one mask (the "ctrl_comp" one) is associated with
+>>> either that of the control class or the same as the class associated with the first event. 
+>>
+>> Ah yes, I misunderstood.
+>>
+>>>
+>>> Regarding the other two masks: it seems to me as though the CPU masks associated with the two supported events
+>>> are managed separately. This means that theoretically the class associated with QOS_L3_OCCUP_EVENT_ID could have
+>>> components with different affinity from the components of the class associated with QOS_L3_MBM_TOTAL_EVENT_ID. A CPU
+>>> being onlined could thus be associated with QOS_L3_OCCUP_EVENT_ID (resulting in mon_comp being
+>>> initialized for this CPU) but not with QOS_L3_MBM_TOTAL_EVENT_ID (mon_comp is NULL for the same CPU). In
+>>> this scenario, "any_mon_comp" will be true and the domain created and onlined while it does not
+>>> actually support both events?
+>>
+>> Hmm, it depends what you mean by "theoretically". In mpam_resctrl_pick_counters() the class to back
+>> each event is chosen. For QOS_L3_OCCUP_EVENT_ID it will always be the class at the L3. For
+>> QOS_L3_MBM_TOTAL_EVENT_ID the topology_matches_l3() call will check the cpu mask matches the L3.
+>> Does that answer query or am I missing something else?
+> I mean "theoretically" because it seems that the CPU online code (specifically domain creation) supports
+> the scenario where these CPU masks of the two events are different (mon_comp can be set for one event but
+> not the other) while the rest of the driver seems to make an effort to keep these CPU masks identical (as
+> you highlight) and there is not actually support for them being different.
+> 
+> The planned changes discussed here are for the domain creation and will touch the code handling this
+> scenario. I was hoping to just change the data structures while maintaining the current flows as closely
+> as possible. I currently struggle with maintaining this flow that can never, and more importantly should
+> never, be encountered.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+I see, makes sense.
+
+> 
+> Do (admittedly crude) guardrails like below capture the existing driver requirements?
+> 
+> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
+> index 9d223057953a..dbd06371890c 100644
+> --- a/drivers/resctrl/mpam_resctrl.c
+> +++ b/drivers/resctrl/mpam_resctrl.c
+> @@ -1681,11 +1681,18 @@ mpam_resctrl_alloc_domain(unsigned int cpu, struct mpam_resctrl_res *res)
+>  				continue;       // dummy resource
+>  
+>  			mon_comp = find_component(mon->class, cpu);
+> +			if (!mon_comp) {
+> +				WARN_ON_ONCE(0);
+> +				err = -EFAULT;
+> +				goto offline_ctrl_domain;
+> +			}
+>  			dom->mon_comp[eventid] = mon_comp;
+> -			if (mon_comp)
+> -				any_mon_comp = mon_comp;
+> +			any_mon_comp = mon_comp;
+
+This first part which ensures that if there is a class for the monitor then a component can always
+be found for the given CPU.
+
+>  		}
+> -		if (!any_mon_comp) {
+
+The any_mon_comp check could still be useful to confirm that if r->mon_capable then there is a
+component for at least one of the events.
+
+> +
+> +		/* hack */
+> +		if (!cpumask_equal(&dom->mon_comp[QOS_L3_OCCUP_EVENT_ID]->affinity,
+> +				   &dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID]->affinity)) {
+
+There doesn't necessary need to be a monitoring class associated with any particular event. If there
+are classes and so components for each of the two supported events then this check looks correct.
+You could ensure that by checking existence:
+
+if (dom->mon_comp[QOS_L3_OCCUP_EVENT_ID] && dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID] &&
+    !cpumask_equal(&dom->mon_comp[QOS_L3_OCCUP_EVENT_ID]->affinity,
+	           &dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID]->affinity))
 
 
-Beste Grüße,
-Peter Schneider
+Thanks,
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+Ben
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+
+>  			WARN_ON_ONCE(0);
+>  			err = -EFAULT;
+>  			goto offline_ctrl_domain;
+> 
+> 
+> Reinette
+> 
+> 
+
