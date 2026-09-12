@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244321A6813;
-	Sat, 12 Sep 2026 07:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F812BDC0E;
+	Sat, 12 Sep 2026 07:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197659; cv=none; b=DxJoUK1qUofc+NI55tK/DgYiMXbrCMEQ+YIw7C9pdMBl46aw7FAcQGMaR8qxnLvR+zPK9gDGo9M2uK1eTPE9Iw/b4OIZDGzmV/TfMGyfkhJBaJ93upag8RWpxqE7Wl+JiT+vxOZERB/mh7UwfYJAKQu333cb8DoTEQzNzp1a+I0=
+	t=1789197664; cv=none; b=SlgBnsJ3Mv3xPg6xU57CuTPqIkB2mdAynYTCx7Q19oNuIFS8635D0hgEJuWst0T+ZDZ0LVWFu5raJx1OB6aMRXIDxXW/ZLIgXbP8NrVvv7EOJIXDYQxDQGaHyac+GQ/n7H9K03T6+h4aBTA0VWTXMjsTCy5RlCrexCZBvD4MkzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197659; c=relaxed/simple;
-	bh=McaSw+mTLq9KLXJ02Br2VIyoh5l9+kBlLMEKKRo0Ax4=;
+	s=arc-20240116; t=1789197664; c=relaxed/simple;
+	bh=oGcX/WHtC9+x/Xg9jyrPojCHCsIIo2EPMqy7GiifyDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8Fwi2LaxJ/bLfGKqF3PBh83cpH0zN2U3OZ/qroX56g3iOjrk2Ynxg40ERqnTaAoTH66pu7I2UpxbwA5Up40Yz2VTRcFRU40vginG2LK2O9VpGDkj1z2Mcw0J6ZFay1sBkaRkZUfl5H+kZofy7hkEVoY91QzD7FZ2ockW6Lqc1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuQtOJDb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sytgUqCeALu93CiIeqzlVsIqudx+geuUFtAmNFrg4JwLO2gfJXbCP+gR/xHfcbux+K2/vmLk7guMwokon7JPd0W+a4NItD7XEPCgJAITQbEtUUv8vkrBnrQVnSUOJWC4WT/kE15+hLTmjzfF3+wKxfwVhsdiGybv7ghy1f4MEbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taifl1x8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuQtOJDb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D019D1F000FF;
-	Sat, 12 Sep 2026 07:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taifl1x8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7059F1F000FF;
+	Sat, 12 Sep 2026 07:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197657;
-	bh=J63Pe2JT5HCRP44f6R51LU9OX014vIK4VftNT9SyuPY=;
+	s=korg; t=1789197662;
+	bh=+0lONlo++ttuCbb+CdlWEx6ESTlnQZVXebdXoANIxjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vuQtOJDb6K3X7M1JZr7+IcXV55SQD6EfokOnNcYY/7YcW8lNoZHHzGGWT38l4+z96
-	 cIPhUSDoJGgfHZ5IvI0uOvyr6w9qs6i4kWElLQ4a8129oSzYHihsf6LAuHQ64zSOsy
-	 RxCmAtdnPzSRyMXrBaCsdqH7keKWKA4ZO/aMYtVE=
+	b=taifl1x8YXZeV2l+HqgRTTEsEQZH684dtyp/LWBCnde0VMWrMJWieGdLaiD0jDQze
+	 eMi88SkRMwKKGo2noTyIFug1NbZ7ECYobVP8V9aQoxFZJYU8TtXpFVQRA7EK+KvgK/
+	 KFl9WZ/sYQL5j0D7nRK5SkmLYF5H3YDpAVbUmhww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0219/1815] arm64: dts: qcom: glymur: Fix gcc clock specifier for usb_mp_qmpphy nodes
-Date: Sat, 12 Sep 2026 08:32:49 +0200
-Message-ID: <20260912065654.134027070@linuxfoundation.org>
+Subject: [PATCH 7.2 0184/1815] perf test amd ibs: avoid using executable heap
+Date: Sat, 12 Sep 2026 08:32:14 +0200
+Message-ID: <20260912065653.323450743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,45 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit eca50d95b60cdcabb82a8e1b727fad2547e52f1d ]
+[ Upstream commit e34006e7435fdd2c8d15e89d2137a4bf22c16401 ]
 
-usb_mp_qmpphy0 and usb_mp_qmpphy1 have #clock-cells set to 0 so they take
-no specifier. Drop the erroneous QMP_USB43DP_USB3_PIPE_CLK argument.
+Making [parts of] the heap executable is dangerous and is blocked by
+SELinux on Fedora/RHEL even for an unconfined user. Replace the malloc()
++ mprotect() combo with just mmap(), creating a private anonymous rwx
+mapping, which only requires the more commonly allowed "execmem"
+permission under SELinux (things like JIT or regex compilation need it
+as well). mmap() with MAP_ANONYMOUS will give us a zeroed mapping that
+begins on a page boundary, so the result is equivalent to the original
+code even without a memset() or the page-alignment dance.
 
-This fixes the following dtbs_check warning:
-clock-controller@100000 (qcom,glymur-gcc): clocks: [[59, 0], ..... [0]]
-is too long
-from schema $id: http://devicetree.org/schemas/clock/qcom,glymur-gcc.yaml
+Verified that the test still passes on a machine with an AMD CPU that
+has the "ibs" CPU flag.
 
-Fixes: 4eee57dd4df9f ("arm64: dts: qcom: glymur: Add USB related nodes")
-Signed-off-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602-glymur-fix-usb-mp-qmpphy-clock-specifier-v1-1-19c6f44d5655@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 35db59fa8ea2 ("perf test amd ibs: Add sample period unit test")
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/glymur.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/arch/x86/tests/amd-ibs-period.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
-index 5997078575206..02bd6dcd99579 100644
---- a/arch/arm64/boot/dts/qcom/glymur.dtsi
-+++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-@@ -786,8 +786,8 @@ gcc: clock-controller@100000 {
- 				 <&usb_0_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
- 				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
- 				 <&usb_2_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
--				 <&usb_mp_qmpphy0 QMP_USB43DP_USB3_PIPE_CLK>,
--				 <&usb_mp_qmpphy1 QMP_USB43DP_USB3_PIPE_CLK>,
-+				 <&usb_mp_qmpphy0>,		/* USB3 UNI PHY pipe 0 */
-+				 <&usb_mp_qmpphy1>,		/* USB3 UNI PHY pipe 1 */
- 				 <0>,				/* USB4 PHY 0 pcie pipe */
- 				 <0>,				/* USB4 PHY 0 Max pipe */
- 				 <0>,				/* USB4 PHY 1 pcie pipe */
+diff --git a/tools/perf/arch/x86/tests/amd-ibs-period.c b/tools/perf/arch/x86/tests/amd-ibs-period.c
+index 6a92b3a23ed7a..32713f8fcd5c8 100644
+--- a/tools/perf/arch/x86/tests/amd-ibs-period.c
++++ b/tools/perf/arch/x86/tests/amd-ibs-period.c
+@@ -46,7 +46,6 @@ static int dummy_workload_1(unsigned long count)
+ {
+ 	int (*func)(void);
+ 	int ret = 0;
+-	char *p;
+ 	char insn1[] = {
+ 		0xb8, 0x01, 0x00, 0x00, 0x00, /* mov 1,%eax */
+ 		0xc3, /* ret */
+@@ -59,18 +58,11 @@ static int dummy_workload_1(unsigned long count)
+ 		0xcc, /* int 3 */
+ 	};
+ 
+-	p = calloc(2, page_size);
+-	if (!p) {
+-		printf("malloc() failed. %m");
+-		return 1;
+-	}
+-
+-	func = (void *)((unsigned long)(p + page_size - 1) & ~(page_size - 1));
+-
+-	ret = mprotect(func, page_size, PROT_READ | PROT_WRITE | PROT_EXEC);
+-	if (ret) {
+-		printf("mprotect() failed. %m");
+-		goto out;
++	func = mmap(NULL, page_size, PROT_READ | PROT_WRITE | PROT_EXEC,
++		    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++	if (func == MAP_FAILED) {
++		pr_debug("mmap() failed. %m\n");
++		return -1;
+ 	}
+ 
+ 	if (count < 100000)
+@@ -93,7 +85,7 @@ static int dummy_workload_1(unsigned long count)
+ 	}
+ 
+ out:
+-	free(p);
++	munmap(func, page_size);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
