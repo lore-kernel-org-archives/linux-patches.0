@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393EA2F531B;
-	Sat, 12 Sep 2026 12:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBA133E35C;
+	Sat, 12 Sep 2026 12:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215518; cv=none; b=Rpz+GnLSR+YIp+SQtiawKPArkdw7zIdcMLnih/jIu9pOBmnjBt8v14EZCtWgIevsRNijYTZniQzoThWtiCmeVTrgrnomLaPBhOjZdmO4Qd0q8F2NdWjDEfppNc2eZYxvlAFrULTVA2w52Dh8wS4i6xMXlWSavwzNfhTHZr9wfIo=
+	t=1789215523; cv=none; b=hwVIACxiXU9kC1DNwCXTdJwimn8x99p9NVOpGmKr35OtEyFLxBigZGCR9KrDXlaH7US2R8o2qUBKBD62TSUvNON6GgB+OLJdNA0hKs42vHul0c2vYOD+PFvS4o9InHs05sf3MY2L0YSKCC0f8xkvSYjLD6Lzbk0SSwkjGF8TOOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215518; c=relaxed/simple;
-	bh=S8tddhRcUojRWs5NEuZ29vQX7W1BkcdURZZBQD7phDo=;
+	s=arc-20240116; t=1789215523; c=relaxed/simple;
+	bh=CMkRLa2J/LO3op+2KU2nebt0cMB3X0JDAIPiv6l14p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2Rw3/NkYQjEHpDvDRLGkbEslmp9Y7FPZfjfA9WlgKp81B62f0onTu8SgOSAN5O9wvI8BhivVU1t1+rdHBVAe6JT5JrzJF5EODobdr45SlPyFTkmTDv5aVVPA3Kb1h+pIGVt+B7V5Zx7S7KLR9T6EJumULtOv1tswS8oC5fSbh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYo3qVuD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OQcetT6+cf/+8Eq6oV0fcqM3lfR51tzkranCMO4Kv+ntGRYZyQkK/gsoep9KeFhCx0hcUtT+v4txHWQrb2bzvlNW/s0Q1q8AOchYNRrt6oLJ3dA5BO2zAq+TdFTTmaCAJaSc3uF/Z2rN/LnCB1F6lgZr3KgZegfs3o80Z9Nfw1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NThKik2f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYo3qVuD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072571F000FF;
-	Sat, 12 Sep 2026 12:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NThKik2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B1F1F000FF;
+	Sat, 12 Sep 2026 12:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215516;
-	bh=jx+ti9xavQZ+8SayEU9qPMc+k0XwdVxfjvTfI0c/2e0=;
+	s=korg; t=1789215521;
+	bh=sM3pEG6vtJcZapCg/BAouU+NapaqjZsKYw7NH4kbEFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EYo3qVuDTedsdzghS9E/hOVNKKrqgexHBgOkNdgWLyjUGukuy7DvtZj/F0rpMGl9q
-	 efZwY2qFM1f+XxdhTF36GVn6FBLI2HKe0zBtIMHe2XJwynue14SGxSYvxqcNqipufg
-	 YL7rk5ou95osTGiHc6EHqFJ/UaMeUyGieYnq/p6U=
+	b=NThKik2f3vw09J1HxnPToH8bD0SapLbPCkUMIH98bRqcDhX7dhjyHORnNeZSJbY0w
+	 2jH94MDctHYM+mjNw0SAPTQTDkFAAHbk/1X2Vxf4XndtB5EKF7Z26chygDKqWI52El
+	 aOJnhInrPZLbnBrAEzfv7bhEShYH0pDViY8ISq7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0547/1376] cpufreq: spear: Fix an IS_ERR() vs NULL bug in spear1340_set_cpu_rate()
-Date: Sat, 12 Sep 2026 08:49:33 +0200
-Message-ID: <20260912065619.730418007@linuxfoundation.org>
+Subject: [PATCH 6.12 0548/1376] PCI: xgene: Drop XGENE_PCIE_IP_VER_UNKN
+Date: Sat, 12 Sep 2026 08:49:34 +0200
+Message-ID: <20260912065619.752548595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,38 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 6a9e0e0f7592313ace66303cf5eca68e04c10f30 ]
+[ Upstream commit fddf72ed7b52c91da37fe5f1d4faed11251b714f ]
 
-The clk_get_parent() function doesn't return error pointers, it returns
-NULL on error.  Update the error checking to match.
+XGENE_PCIE_IP_VER_UNKN is only refered to when probing for the
+original XGene PCIe implementation, and get immediately overridden
+if the device has the "apm,xgene-pcie" compatible string.
 
-Fixes: 420993221175 ("cpufreq: SPEAr: Add CPUFreq driver")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Given that the only way to get there is by finding this very string in
+the DT, it is obvious that we will always overwrite the version with
+XGENE_PCIE_IP_VER_1.
+
+Drop the whole thing.
+
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20250708173404.1278635-5-maz@kernel.org
+Stable-dep-of: 4869db344e76 ("PCI: xgene: Drop unnecessary OF node reference")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/spear-cpufreq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-xgene.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/cpufreq/spear-cpufreq.c b/drivers/cpufreq/spear-cpufreq.c
-index c032dd5d12d3c..ae038eec35bc1 100644
---- a/drivers/cpufreq/spear-cpufreq.c
-+++ b/drivers/cpufreq/spear-cpufreq.c
-@@ -79,9 +79,9 @@ static int spear1340_set_cpu_rate(struct clk *sys_pclk, unsigned long newfreq)
- 	int ret = 0;
+diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
+index 1e2ebbfa36d19..16d4fd2364e35 100644
+--- a/drivers/pci/controller/pci-xgene.c
++++ b/drivers/pci/controller/pci-xgene.c
+@@ -53,7 +53,6 @@
+ #define XGENE_V1_PCI_EXP_CAP		0x40
  
- 	sys_clk = clk_get_parent(spear_cpufreq.clk);
--	if (IS_ERR(sys_clk)) {
-+	if (!sys_clk) {
- 		pr_err("failed to get cpu's parent (sys) clock\n");
--		return PTR_ERR(sys_clk);
-+		return -EINVAL;
- 	}
+ /* PCIe IP version */
+-#define XGENE_PCIE_IP_VER_UNKN		0
+ #define XGENE_PCIE_IP_VER_1		1
+ #define XGENE_PCIE_IP_VER_2		2
  
- 	/* Set the rate of the source clock before changing the parent */
+@@ -610,10 +609,7 @@ static int xgene_pcie_probe(struct platform_device *pdev)
+ 
+ 	port->node = of_node_get(dn);
+ 	port->dev = dev;
+-
+-	port->version = XGENE_PCIE_IP_VER_UNKN;
+-	if (of_device_is_compatible(port->node, "apm,xgene-pcie"))
+-		port->version = XGENE_PCIE_IP_VER_1;
++	port->version = XGENE_PCIE_IP_VER_1;
+ 
+ 	ret = xgene_pcie_map_reg(port, pdev);
+ 	if (ret)
 -- 
 2.53.0
 
