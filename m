@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB7A2594BD;
-	Sat, 12 Sep 2026 16:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34702594BD;
+	Sat, 12 Sep 2026 16:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229513; cv=none; b=m2j67VxozlfNDx08ZkgNWy3GPC9Pwv32wpZWkZo2hqJFr/DHcnNeZPia62+/EPxKG6B3bk6ByoeKY8L/VLWo6RrRDSrCo1lCPKOiUJKVaZfT3R2DXn+9286ahpzqXU3Cv787q5sIy3+fiF49YiNZ1A3yviJu4Pt/Gvo4+ISMvc8=
+	t=1789229518; cv=none; b=DgfI6zQA6e8CyG5vhvDs882yxxOARu1VGlYiCpFmd5gut12dyDuOSQUM3T7VSCHp767EYC2lRrUFObMJ72adE0WDsFJmqxR8wBOOYjEXx/0VzA2vFV6JUYVslqimE3fCu8vi/cUbDjaHE7qZ6qgrMLRtekEI8W9Gm0JisINVHOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229513; c=relaxed/simple;
-	bh=2ceIQsFyhCtkWET+YuPfk8Yo7Xkx8NmiYhJ0CFKkv48=;
+	s=arc-20240116; t=1789229518; c=relaxed/simple;
+	bh=ate9emjdQ5f7yJO/+HjI4SV47zh/g4hZOi+qRLBlzpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LiuT6Ef4NlaVLaAbnuCvA1+wKOCVG36cuyn1Kq8/Yoi4fqfTNqKKWhEcH1p+714kWfnE65janJgeKWfS74+D7uiLZk5JtVsS3foT/aummHsO/QwOPD4zEMNwp0Swb3oqNOwRfEUWbHldMlhLq9GDfR0nAXNLYld47fahHnDgXic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hh3SSQ36; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jSdC6mO8+Ht6crel6KUvacrJUXZFQxW+l+JiHeFTW9VC4OBM+rgfIMLDa8VbTZNeT4QSYAX110ZI6CpPmqeFZfn4ICd8zmn3ixieCZffqxD911GaOQByR9Uxk8LbqK6YtzyDDFj3LygkS0zbTIonPS9FBNEwVVFd+/52gtgUifU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dq5YnOqF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hh3SSQ36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358BD1F000FF;
-	Sat, 12 Sep 2026 16:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dq5YnOqF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537E71F00893;
+	Sat, 12 Sep 2026 16:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229512;
-	bh=C0dBW+KWiHhkExTKwc3295RxRdHTv7hfdmfj6jMqz5I=;
+	s=korg; t=1789229517;
+	bh=UJ/8aPoBMYpj8gI9sUOntNlbb+rgLqGTjkXktc9RVog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hh3SSQ36cedNGeH5SeyL9n17h+QUm6eKWxkH4vPOVIA9R/s7ErctZY1CTLPk7XH0b
-	 kzmgr8uHgM8ERH6QzYEHt+/5ENqP9epb+7gM5h0zdn5PgTSzGp1iROpZmsjNAxjKIi
-	 ehYf0dMsade04PEM+kDYsFwMb2BtyFWq2/M2BuAk=
+	b=dq5YnOqF4VVHAYvA0kPX2HmYB0e18uQTxC9XJL2XhvoT9I5cHo8QIQqx+sI8ATWAu
+	 nRpmUxjnbxx23/UaWi71zEncpe9A/oz7rLe8deQYz6zrAl0lmsYJyBISotx4pT9zfJ
+	 DXXHxcxSONvzN93SfvKIsDLCqGfMa5I8AAj6Rsco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0553/1191] clk: qcom: gdsc: propagate gdsc_enable() failure for ALWAYS_ON domains
-Date: Sat, 12 Sep 2026 08:54:41 +0200
-Message-ID: <20260912065600.664251837@linuxfoundation.org>
+Subject: [PATCH 6.1 0599/1191] xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full
+Date: Sat, 12 Sep 2026 08:55:27 +0200
+Message-ID: <20260912065601.701685724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,61 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit eea55fc694e132aacbe2cf4be7f345115e3d1801 ]
+[ Upstream commit 5d9e3bf34fec9a5d237e4b7cef4a707bc2e091bc ]
 
-GENPD_FLAG_ALWAYS_ON requires the underlying domain to be on at
-genpd_init() time -- the framework will refuse to register the domain
-otherwise. When the cold readback in gdsc_init() finds an ALWAYS_ON
-GDSC powered down, the driver tries to bring it back up:
+The depth check in xfrm6_input_addr() is off by one:
 
-	} else if (sc->flags & ALWAYS_ON) {
-		/* If ALWAYS_ON GDSCs are not ON, turn them ON */
-		gdsc_enable(&sc->pd);
-		on = true;
-	}
+  if (1 + sp->len == XFRM_MAX_DEPTH)
+          goto drop;
+  ...
+  sp->xvec[sp->len++] = x;
 
-but discards the return value: if gdsc_enable() fails (regmap write
-error, the long-form sequence's status poll times out, or the
-HW_CTRL hand-off errors) the code still sets on=true and falls
-through to pm_genpd_init(..., !on) -- which then registers the
-domain in the ON state and sets GENPD_FLAG_ALWAYS_ON, even though
-the silicon is actually off. Subsequent consumer probes will see
-genpd report "on" while accessing dead registers and hang or read
-garbage.
+xfrm_input() can leave sp->len == XFRM_MAX_DEPTH, and the transport-mode
+receive path re-enters IPv6 input via xfrm_trans_reinject() with that
+secpath preserved. If the inner packet carries a destination-options HAO
+option or a type-2 routing header, xfrm6_input_addr() is called with
+sp->len == XFRM_MAX_DEPTH; the check (1 + 6 == 6) is false, so
+sp->xvec[sp->len++] writes one slot past the 6-element xvec[]. The write
+stays within the sec_path allocation (invisible to KASAN); UBSAN_BOUNDS
+flags it and panics under panic_on_warn.
 
-Catch the failure and surface it: returning the error from
-gdsc_init() makes the provider probe fail with the underlying errno,
-which propagates to consumers as -EPROBE_DEFER (or fatal if the
-hardware really is broken) rather than silently lying about the
-rail state.
+Use "sp->len >= XFRM_MAX_DEPTH", matching xfrm_input(). This also
+restores one chain level the old check rejected at sp->len == 5.
 
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: fb55bea1fe43 ("clk: qcom: gdsc: Add support for ALWAYS_ON gdscs")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-3-github.com@herrie.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  UBSAN: array-index-out-of-bounds in net/ipv6/xfrm6_input.c:309:10
+  index 6 is out of range for type 'xfrm_state *[6]'
+
+Fixes: 9473e1f631de ("[XFRM] MIPv6: Fix to input RO state correctly.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv6/xfrm6_input.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index bad3343e30bb6..ecc7c67207e0a 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -442,7 +442,9 @@ static int gdsc_init(struct gdsc *sc)
- 
- 	} else if (sc->flags & ALWAYS_ON) {
- 		/* If ALWAYS_ON GDSCs are not ON, turn them ON */
--		gdsc_enable(&sc->pd);
-+		ret = gdsc_enable(&sc->pd);
-+		if (ret)
-+			return ret;
- 		on = true;
+diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
+index 8432b50d9ce4c..00d2a1b8b679e 100644
+--- a/net/ipv6/xfrm6_input.c
++++ b/net/ipv6/xfrm6_input.c
+@@ -193,7 +193,7 @@ int xfrm6_input_addr(struct sk_buff *skb, xfrm_address_t *daddr,
+ 		goto drop;
  	}
  
+-	if (1 + sp->len == XFRM_MAX_DEPTH) {
++	if (sp->len >= XFRM_MAX_DEPTH) {
+ 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINBUFFERERROR);
+ 		goto drop;
+ 	}
 -- 
 2.53.0
 
