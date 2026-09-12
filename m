@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C38415B7B;
-	Sat, 12 Sep 2026 09:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E724541A4EE;
+	Sat, 12 Sep 2026 09:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205427; cv=none; b=uNZMkntJVAff5chgQvgwEGJEWw3xk1+ETnQhknUfqHtPbNByiieqXsDGTcL+tWR5RkHU7cBLkGOrX6OcQYc7z1o2h/TBvWoqRk/3KmWSsXmsDiBNGipyKZVWVmjC6iV0Oabah2nDThCaGhK3dp1te6aS4k9QgsInJcxomKAjRfo=
+	t=1789205432; cv=none; b=JnCiK8ci0pz0S7dO5GhoFPRvcJihwqJaZwx+qwwsY2erZ1/riHL0IwjHo06VD/0Wc5jPhinZL9rD/AcQtExZQZ31c1wC/0ZJtYF+xdDKfrlhDtkCb57S2rnBkl31zBiN5vLIgJtOrH+CpJxupl27CSx/2QytYhkT8U7SiAYRqkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205427; c=relaxed/simple;
-	bh=cyM2iUAVxgZZwX9c53ne0OaJj72RhiEA9R94lBYRg5w=;
+	s=arc-20240116; t=1789205432; c=relaxed/simple;
+	bh=skRhKl8KPWYDSmuOIzg2EgBetFpgb/Ps4AXefP4uPL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZH10IpVm+sEV3rO+MS0C8/8U6gK4mjrdpg5XZRtVkNU5Xi6/It9G+FEuxl3lTF3OUYYyrEJvEXGTtbDL3K6Gc29WJgxOksVaUAa2z1L2YKYzLnQtCM8A6GFzlmEzfDQfOyW+dEs7G6/I6LIb1yUojy7jekgCq4sNRj6deMsjRFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqDRoh+1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cUX54iUjIPew4ZmlwP8g5IxLzUdPRh7LpygI9M1iojIZiNRIatYUWzZzcSLNoT06aSC9p+qDvgofyDEzXifnjnue9jbg25onGh8lHKjjjmfQF7Z25JeqcUHZIrMtS1ak6epq30mKY+VUrT1WQs8AHyUIqwzByRwbXF2qvAHaYFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9RufC98; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqDRoh+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81CE1F000FF;
-	Sat, 12 Sep 2026 09:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9RufC98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3671F000FF;
+	Sat, 12 Sep 2026 09:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205425;
-	bh=0+xpW+5GFTIeymlM9P7fH4zlPMMIWukS5dxKabUUzZE=;
+	s=korg; t=1789205430;
+	bh=FcU6ovqeYMONEu+QCih5flfw7u6asHokucy2o4N39uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aqDRoh+18rhsH0cq+z5M5HZKa3U6FITTw3S6vUfpmWM+f+lM+V+mrY3dfP+U91/tj
-	 VCGIKZxuX8ay7GFC0vsLuVoAT1lq8yaBVbTA8Bxgy6quH8HcFHfOmBZ4hPt4HesNSN
-	 avdIAdCMnlgxpruJGwhsXNI78UsmAZEu4oKmD/Kc=
+	b=a9RufC98+3Cz6gAPWw/QXlQlzirgHY48+IoEPsWT1rtFXlZbbPQcqR5V7Yh9T5ITG
+	 MJ1rRNMdnp9XvFk0pU/iQlenyPRIQ2QD596xnxWlk4Md/SBl5NddyPcaVyCP5ybH9S
+	 coinlokshiApHZnHTxkY7z+0xurJ2U2wfBPLgzrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vega <vega@nebusec.ai>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1814/1815] tcp: reject non zerocopy devmem tx
-Date: Sat, 12 Sep 2026 08:59:24 +0200
-Message-ID: <20260912065731.628554985@linuxfoundation.org>
+Subject: [PATCH 7.2 1815/1815] net/sched: fq: clamp quantum and initial_quantum in change path
+Date: Sat, 12 Sep 2026 08:59:25 +0200
+Message-ID: <20260912065731.651767977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,55 +48,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 125755776bc6d4dd53eaf551c87e3d460625d638 ]
+[ Upstream commit 094cc07f98dfe70a34e2a1923af17fd29b8cf622 ]
 
-Devmem tcp tx doesn't work without zero-copy, however it's not currently
-enforced if NETIF_F_SG isn't present. In this case, tcp_sendmsg_locked()
-will try the copy path and try to copy data from an iovec which consists
-of offsets into the dma-buf and would normally fail. Moreover,
-d9c56501c72fd ("net: tcp: block mixing readable and unreadable frags")
-relies on that and assumes that the devmem binding is present IFF we're
-using the zero-copy path, which can be used to mix net-iov and pages in
-a single skb, and break invariants. Let's reject devmem tx without
-zero-copy.
+The fq change path accepts TCA_FQ_QUANTUM in [1, INT_MAX] and
+TCA_FQ_INITIAL_QUANTUM up to INT_MAX, while fq_init() already clamps to
+[1, 1<<20]. A user can override the init clamp via tc qdisc change,
+restoring the small-quantum deficit spin that the init clamp prevents.
 
-Note, the parameter check the patch is modifying is too loose, we can
-create an io_uring request with dmabuf_id and all ZC flags, but which
-won't have the binding. We replace it with stricter validation.
+Narrow iq_range.max to 1<<20 so TCA_FQ_INITIAL_QUANTUM is rejected at
+parse time. Clamp TCA_FQ_QUANTUM to [256, 1<<20] in fq_change() and
+fq_init() quantum to [256, 1<<20] for tiny-MTU devices.
 
-Fixes: bd61848900bff ("net: devmem: Implement TX path")
-Fixes: d9c56501c72fd ("net: tcp: block mixing readable and unreadable frags")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/fdc2478d8f21268d7078556409887d8e6ba0ad32.1788529053.git.asml.silence@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Conditions to recreate the bug:
+  CONFIG_NET_SCH_FQ=y. Requires CAP_NET_ADMIN (namespace-local via
+  unshare -Urn suffices).
+
+  tc qdisc add dev dummy0 root fq
+  tc qdisc change dev dummy0 root fq quantum 1 stab data 32768 size_log 15 cell_log 0
+
+Fixes: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.2
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/sched/sch_fq.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index b4237d0e994d6..10f58281be17b 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1169,8 +1169,7 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
- 			zc = MSG_SPLICE_PAGES;
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index 6144b5686f13f..35f940b2205df 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -980,7 +980,7 @@ static int fq_resize(struct Qdisc *sch, u32 log)
+ }
+ 
+ static const struct netlink_range_validation iq_range = {
+-	.max = INT_MAX,
++	.max = 1 << 20,
+ };
+ 
+ static const struct nla_policy fq_policy[TCA_FQ_MAX + 1] = {
+@@ -1106,14 +1106,10 @@ static int fq_change(struct Qdisc *sch, struct nlattr *opt,
+ 			   nla_get_u32(tb[TCA_FQ_FLOW_PLIMIT]));
+ 
+ 	if (tb[TCA_FQ_QUANTUM]) {
+-		u32 quantum = nla_get_u32(tb[TCA_FQ_QUANTUM]);
++		u32 quantum = clamp_t(u32, nla_get_u32(tb[TCA_FQ_QUANTUM]),
++				     256, 1 << 20);
+ 
+-		if (quantum > 0 && quantum <= (1 << 20)) {
+-			WRITE_ONCE(q->quantum, quantum);
+-		} else {
+-			NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
+-			err = -EINVAL;
+-		}
++		WRITE_ONCE(q->quantum, quantum);
  	}
  
--	if (!sockc_err && sockc.dmabuf_id &&
--	    (!(flags & MSG_ZEROCOPY) || !sock_flag(sk, SOCK_ZEROCOPY))) {
-+	if (!sockc_err && sockc.dmabuf_id && (zc != MSG_ZEROCOPY || !binding)) {
- 		err = -EINVAL;
- 		goto out_err;
- 	}
+ 	if (tb[TCA_FQ_INITIAL_QUANTUM])
+@@ -1232,7 +1228,7 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
+ 	sch->limit		= 10000;
+ 	q->flow_plimit		= 100;
+ 	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
+-	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
++	q->quantum		= clamp_t(u32, 2 * mtu, 256, 1 << 20);
+ 	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
+ 	q->flow_refill_delay	= msecs_to_jiffies(40);
+ 	q->flow_max_rate	= ~0UL;
 -- 
 2.53.0
 
