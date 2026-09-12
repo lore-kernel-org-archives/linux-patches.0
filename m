@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F791490C0E;
-	Sat, 12 Sep 2026 18:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6513ACEFB;
+	Sat, 12 Sep 2026 18:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237481; cv=none; b=i856P9Ovi/PHtvgi2w66bzaf3OIQioe2Xya2Wx5yu0rw6y7t82EzotBK/tYYIqLvpgvdLL05DURKI8HTdwCmFSKcqWBM5XX+kJLNOFyCTG8zcU1oSg6T9tZXbIT051/XUFbkpugfdjJYyB2+Q/PT60kVN/lu3gW61Eggxd63xcU=
+	t=1789237486; cv=none; b=Bql0YuJo7XcKkA5wNkDIWUXvEQxH48MDrAd8FPll0cpOrtQcCbmVSEGb1MIVwv5llZpYHf+Fcyas6JoUIpyUxE5w6rxvZ16uSX+fCMRXik3aN9wE4lgS5BAwfUxrNDOwR1ItdAqEEwERoq0AnBqumNCZvCcY5xBwCsNZyXBNNbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237481; c=relaxed/simple;
-	bh=znEhIbbMMHjFG/FCelhSxeJHBTxVWagt5WiWi240bq0=;
+	s=arc-20240116; t=1789237486; c=relaxed/simple;
+	bh=yTOHDSDeBR4a5mp62dfiBW6JeUuNsZqWL3IxadLXBv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nb5zSB8yE7yf/jhzXhvbRgqthlqPg5ypDrofYqNrYo7AKUWzrY7vnzFB3XQgfMZYeDH76ABvekQvVHfPbM2VLkhDKEpq/FojxiVqnSYMBLNRv7LPc+5hTAUQjedwahRMCnTSqeLe/+0eb6oQriIGdzL9c1pnzCdRXuJDcO9M6mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKEAjuLU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Eqn+iuNUGAIzZJc9hzH24ve21CvRK2EMWEho0KO9NrqugtvpYrwRUJuwVqNw2lLrhnESh/OaN/1opYDH1CU4p3zlAk0TpKyUVt/8owJ2v9uS/97IXMwkKD2yENYkF28uh3wtsrb7/O/MGBDwWgVj25dD6OHmtreNkTRvKXiNJ60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inuK3UkN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKEAjuLU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41E21F000FF;
-	Sat, 12 Sep 2026 18:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inuK3UkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062DD1F000FF;
+	Sat, 12 Sep 2026 18:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237480;
-	bh=tyKe/6lQ5hWDVD5TYaHveaxJOp63n4mQSYSGzGo4fmQ=;
+	s=korg; t=1789237484;
+	bh=gaGeBGAx0h97pboAg4gij8x/2NMluMTFiBgGYJqJoJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pKEAjuLU5cjFsWcFF1GUZs/REUBPTTfK13Hml+yExJJl3ijJuhXpbPy6Q8T3cPLpE
-	 CKTZx8qtn2lndrx321NlW0pNE/jIobK6QnIxlbB64ynAG4EYZV50lzTb40WxjXtQsT
-	 5UI8ZBTJFEVNPDUi2MlraxkVhErXtf/zFBk9+xVE=
+	b=inuK3UkN4ftdM99slMjJKDjNtXtBLirM2b31nGGafo6UTo/WSn2N30rFs0O8PZFUz
+	 v+aKdDHJXEOyqKUaWwBCtORwqIR5dlyuz7hat/H05K4myUzJYesIskvSXKNktgCnje
+	 zjeYFqsLEx/Peh011a9HnPtCi2FuEJurtc2Jca3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Alison Schofield <alison.schofield@intel.com>
-Subject: [PATCH 5.15 268/935] nvdimm/btt: reject an arena whose nfree is below the lane count
-Date: Sat, 12 Sep 2026 08:54:58 +0200
-Message-ID: <20260912065532.970597974@linuxfoundation.org>
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 269/935] parisc: eisa: Fix infinite loop when parsing invalid IRQ value
+Date: Sat, 12 Sep 2026 08:54:59 +0200
+Message-ID: <20260912065532.991208161@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,51 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 6a1f2e5ed9267ca19187038ac635393c165213ac upstream.
+commit 8b585431a16cfb9d8f2955a9fa0787ce3dceb3c2 upstream.
 
-The BTT info block's nfree field, the number of reserve free blocks, is
-read from the medium without validation.  btt_freelist_init() and
-btt_rtt_init() size the per-lane freelist[] and rtt[] arrays by nfree,
-but the I/O path indexes them by the lane from nd_region_acquire_lane(),
-which is bounded by nd_region->num_lanes (ND_MAX_LANES), not by nfree.
-A crafted or foreign arena whose nfree is below the lane count makes
-freelist[lane]/rtt[lane] run past the allocation: an out-of-bounds write.
+When an invalid value is passed via the "eisa_irq_edge=" kernel
+command line parameter (e.g. "eisa_irq_edge=16,5"), eisa_irq_setup()
+prints an error message and continues without advancing the current
+position.  As a result the same invalid value is parsed again and
+again, causing an infinite loop while the kernel boots.
 
-btt.rst documents the nlanes = min(nfree, num_cpus) invariant, which the
-code does not currently honor: num_lanes is ND_MAX_LANES regardless of
-nfree.  Reject an arena whose nfree is below num_lanes at discovery,
-before the per-lane arrays are allocated, enforcing that invariant.
+Advance to the next comma-separated entry, or stop parsing when there
+is no next entry, before continuing so that the remaining entries are
+processed normally.
 
-Fixes: 5212e11fde4d ("nd_btt: atomic sector updates")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260620-b4-disp-88b2514b-v1-1-3834e707d232@proton.me
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/btt.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/parisc/eisa.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/nvdimm/btt.c
-+++ b/drivers/nvdimm/btt.c
-@@ -887,6 +887,14 @@ static int discover_arenas(struct btt *b
- 		arena->external_lba_start = cur_nlba;
- 		parse_arena_meta(arena, super, cur_off);
- 
-+		if (arena->nfree < btt->nd_region->num_lanes) {
-+			dev_err(to_dev(arena),
-+				"nfree %u smaller than lane count %d\n",
-+				arena->nfree, btt->nd_region->num_lanes);
-+			ret = -ENODEV;
-+			goto out;
-+		}
-+
- 		ret = log_set_indices(arena);
- 		if (ret) {
- 			dev_err(to_dev(arena),
+--- a/drivers/parisc/eisa.c
++++ b/drivers/parisc/eisa.c
+@@ -441,6 +441,11 @@ static int __init eisa_irq_setup(char *s
+ 		val = (int) simple_strtoul(cur, &pe, 0);
+ 		if (val > 15 || val < 0) {
+ 			printk(KERN_ERR "eisa: EISA irq value are 0-15\n");
++			cur = strchr(cur, ',');
++			if (cur)
++				cur++;
++			else
++				break;
+ 			continue;
+ 		}
+ 		if (val == 2) {
 
 
