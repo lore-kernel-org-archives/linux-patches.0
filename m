@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECF847DD57;
-	Sat, 12 Sep 2026 16:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810492F617C;
+	Sat, 12 Sep 2026 16:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229552; cv=none; b=lU8ADGE/zF7noYULSxPvp23Ukgz17+l8JSjdCGY7Sm4K6FGr1261OT5MCmdVUq/SVmJqLwK+bMyfle5rZRmFcFfkiuEil+I6xOuY34ZfeVGrk4x6Wu0nG4RQBGx3w9ercyWDVwFeuAv5+zY7GgDhWxuWXpw/MCWdWoqFCfbtIa4=
+	t=1789229556; cv=none; b=WQyUkg2m0rq+CmGBvTXTGRU/5H3E6rbngEt6rtXoWWn379VupgndvnvsfySNBKJ0bSflgcmz5ow6e0h3HNH5h+qFQx8mxrWealxSi7JMPloJ8kGTot0KEuK3Q9NtVAKqTiA19QsOwY0Z8LkAUKhcmxgB5lx5HsrtcYn6evJXvQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229552; c=relaxed/simple;
-	bh=IPsgRQ2QMHHR6BfOBznop8XvSJ7uNV5AJOwQ09FRFaI=;
+	s=arc-20240116; t=1789229556; c=relaxed/simple;
+	bh=2y/HXKA6sGugAEvrY8qMZXThubopYINoo7mi9N2i/bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oa6xqhHzy7AAR3M820/q12eqGXUuoo9JyvKXnI2zOZh+ortfQnDrj394OPn4wZP7Qs2YsoZ6h4yjN7qUCznO8vS4vD3UL1ZIQK+nWP4g7GVpxyKWE1QTumA1SbdUlN4JvDcezW1iXQzSaS41mDTOJeCbJYNTQy9BPR5xX2IFwVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHKQ7tEo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=krpAUK0jokalqeYK6QJLHqeiv0D08dNXJZpBiAQHrBb0kuUMIaxhS/Wd1UsXzVu+rAqAggNBBkl8XPnwAYMt5JBEm0BTNPvlamKY1TAqA5mriDaWzl2XzpTHYSEv6gLRmohMg49GwLRs9HC1t3xZpY97hqbHQjmctUJOV92Vndo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j715d8cP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHKQ7tEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5BB1F000FF;
-	Sat, 12 Sep 2026 16:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j715d8cP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F6E1F000FF;
+	Sat, 12 Sep 2026 16:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229550;
-	bh=BAv44DoQjv/6KPBcmDf3Oz04ElkGlq8L+N90oHgQb4k=;
+	s=korg; t=1789229555;
+	bh=LCprIP4LgVvNdL7k4Bih55kXH2D7Ma4CH/OOzWZsxVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tHKQ7tEot5ZIqAZVd13xvCTN9UJaViZxhj1n5b172sCgk7kuQd1tw8dB5srQED73K
-	 XDt1v3H195MWd5+PZ5+LbeIhVU+oyMGaAhtvApQzYqQrV4xH9SqU+pfQ6V9zGcwjIZ
-	 ymbZRbwhYoEye0ZwfxvK3HefVGaOplwP/trPjXEg=
+	b=j715d8cPO92iCDHob5kBCtypmSLWxAFJEOOKtPz48u8kPqSFHo2wpKd9nIYIAUW6a
+	 XQ3KzIVVTiyKw9B9l4znZlF30aFU/drqHoQ0gFE9/5kIFu4596Iqw+1ZlC++f+yIN1
+	 8KKfzDcmpNZnZpNz/krjAOG/4gIXSxLlnipSIzeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0614/1191] wifi: ath11k: cap out-of-range rx MCS instead of leaving bogus rate
-Date: Sat, 12 Sep 2026 08:55:42 +0200
-Message-ID: <20260912065602.042047722@linuxfoundation.org>
+Subject: [PATCH 6.1 0615/1191] libnvdimm/labels: Bound the on-media label size before the shift
+Date: Sat, 12 Sep 2026 08:55:43 +0200
+Message-ID: <20260912065602.065366864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,103 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 12b09e478aa7459b7893a695ef77682202f2da83 ]
+[ Upstream commit 18f9124248ed7a9da1c31973b629dceef76a9b0c ]
 
-ath11k can receive HT/VHT/HE frames whose reported MCS is above the
-maximum that can be expressed in the corresponding mac80211 rate space
-(e.g. an HE frame reported with MCS 12, while HE tops out at MCS 11).
+For a v1.2+ index, __nd_label_validate() computes the label size as
+1 << (7 + nsindex[i]->labelsize), where labelsize is a u8 read from
+the label storage medium.  A value of 25 or more makes the shift count
+reach or exceed the width of int -- undefined behavior -- and 24 already
+shifts into the sign bit.  Only 0 (128-byte) and 1 (256-byte) are valid.
 
-The frame itself is valid and decodes correctly, but for such a frame
-ath11k_dp_rx_h_rate() leaves rx_status->rate_idx set to the out-of-range
-value and never assigns rx_status->encoding, so it stays RX_ENC_LEGACY
-from the ath11k_dp_rx_h_ppdu() initialization. Once that frame reaches
-mac80211 it trips the rate sanity check and the frame is dropped with a
-splat:
+Reject a labelsize above 1 before the shift.  The result was rejected by
+the following size comparison anyway, so this only removes the undefined
+shift on a crafted or corrupted medium; conforming labels are unaffected.
 
-  ath11k_pci 0000:03:00.0: Received with invalid mcs in HE mode 12
-  WARNING: CPU: 0 PID: 0 at net/mac80211/rx.c:5433 ieee80211_rx_list+0xb0a/0xe90 [mac80211]
-
-Dropping the frame would discard otherwise valid data, so instead cap the
-reported MCS to the maximum the rate space can express and deliver the
-frame. Set rx_status->encoding before the range check and assign rate_idx
-from the capped value, so a frame with an out-of-range MCS no longer
-leaves partial or bogus rate metadata behind. Also downgrade the logging
-level since they are not treated as invalid frames now. The only loss is
-that such a frame is reported as the capped MCS in the rx rate statistics.
-
-Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260701-ath11k-invalid-he-mcs-v1-1-7d963080c079@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label definitions")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260624-b4-disp-d8279485-v3-2-cdb6cab28b41@proton.me
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 30 ++++++++++++-------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/nvdimm/label.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 8064e505aad5e..e6ae900006074 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2344,10 +2344,10 @@ static void ath11k_dp_rx_h_rate(struct ath11k *ar, struct hal_rx_desc *rx_desc,
- 	case RX_MSDU_START_PKT_TYPE_11N:
- 		rx_status->encoding = RX_ENC_HT;
- 		if (rate_mcs > ATH11K_HT_MCS_MAX) {
--			ath11k_warn(ar->ab,
--				    "Received with invalid mcs in HT mode %d\n",
--				     rate_mcs);
--			break;
-+			ath11k_dbg(ar->ab, ATH11K_DBG_DP_RX,
-+				   "Received HT frame with out-of-range mcs %d, capping to %d\n",
-+				   rate_mcs, ATH11K_HT_MCS_MAX);
-+			rate_mcs = ATH11K_HT_MCS_MAX;
- 		}
- 		rx_status->rate_idx = rate_mcs + (8 * (nss - 1));
- 		if (sgi)
-@@ -2356,13 +2356,13 @@ static void ath11k_dp_rx_h_rate(struct ath11k *ar, struct hal_rx_desc *rx_desc,
- 		break;
- 	case RX_MSDU_START_PKT_TYPE_11AC:
- 		rx_status->encoding = RX_ENC_VHT;
--		rx_status->rate_idx = rate_mcs;
- 		if (rate_mcs > ATH11K_VHT_MCS_MAX) {
--			ath11k_warn(ar->ab,
--				    "Received with invalid mcs in VHT mode %d\n",
--				     rate_mcs);
--			break;
-+			ath11k_dbg(ar->ab, ATH11K_DBG_DP_RX,
-+				   "Received VHT frame with out-of-range mcs %d, capping to %d\n",
-+				   rate_mcs, ATH11K_VHT_MCS_MAX);
-+			rate_mcs = ATH11K_VHT_MCS_MAX;
- 		}
-+		rx_status->rate_idx = rate_mcs;
- 		rx_status->nss = nss;
- 		if (sgi)
- 			rx_status->enc_flags |= RX_ENC_FLAG_SHORT_GI;
-@@ -2372,14 +2372,14 @@ static void ath11k_dp_rx_h_rate(struct ath11k *ar, struct hal_rx_desc *rx_desc,
- 			rx_status->enc_flags |= RX_ENC_FLAG_LDPC;
- 		break;
- 	case RX_MSDU_START_PKT_TYPE_11AX:
--		rx_status->rate_idx = rate_mcs;
-+		rx_status->encoding = RX_ENC_HE;
- 		if (rate_mcs > ATH11K_HE_MCS_MAX) {
--			ath11k_warn(ar->ab,
--				    "Received with invalid mcs in HE mode %d\n",
--				    rate_mcs);
--			break;
-+			ath11k_dbg(ar->ab, ATH11K_DBG_DP_RX,
-+				   "Received HE frame with out-of-range mcs %d, capping to %d\n",
-+				   rate_mcs, ATH11K_HE_MCS_MAX);
-+			rate_mcs = ATH11K_HE_MCS_MAX;
- 		}
--		rx_status->encoding = RX_ENC_HE;
-+		rx_status->rate_idx = rate_mcs;
- 		rx_status->nss = nss;
- 		rx_status->he_gi = ath11k_mac_he_gi_to_nl80211_he_gi(sgi);
- 		rx_status->bw = ath11k_mac_bw_to_mac80211_bw(bw);
+diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
+index 584a9c27ce4bf..93ff219d91fc5 100644
+--- a/drivers/nvdimm/label.c
++++ b/drivers/nvdimm/label.c
+@@ -145,10 +145,21 @@ static int __nd_label_validate(struct nvdimm_drvdata *ndd)
+ 		/* label sizes larger than 128 arrived with v1.2 */
+ 		version = __le16_to_cpu(nsindex[i]->major) * 100
+ 			+ __le16_to_cpu(nsindex[i]->minor);
+-		if (version >= 102)
++		if (version >= 102) {
++			/*
++			 * labelsize feeds the shift below; only 0 (128-byte)
++			 * and 1 (256-byte) are valid -- a larger value would
++			 * overflow or exceed the width of int.
++			 */
++			if (nsindex[i]->labelsize > 1) {
++				dev_dbg(dev, "nsindex%d labelsize: %d invalid\n",
++					i, nsindex[i]->labelsize);
++				continue;
++			}
+ 			labelsize = 1 << (7 + nsindex[i]->labelsize);
+-		else
++		} else {
+ 			labelsize = 128;
++		}
+ 
+ 		if (labelsize != sizeof_namespace_label(ndd)) {
+ 			dev_dbg(dev, "nsindex%d labelsize %d invalid\n",
 -- 
 2.53.0
 
