@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E991299920;
-	Sat, 12 Sep 2026 10:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903D7313E2B;
+	Sat, 12 Sep 2026 10:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210478; cv=none; b=sg9QadFrUtiY6Pdrm/xZ6CKMrlWrn9+kCtdn+zEOSTzBhR+2a1raEdeh+DsqXnse0rTfrhtDyVqgpZXojDJbAEjmL3Sgq4zRkD88eYWneSuxLVzSh5UBWyMandnYuQ1mTqwfs3Z8WpbO7ET9GJQ5ybupeaP3uI7JD7zZZAE2buU=
+	t=1789210483; cv=none; b=GDTd6NcbDgc3vfGCshQTe5OqHCR2EvqUVTVdBjQdGZyevyF6ThRFENfEeMg1Wd6slBmrd37ceNZ4lk1p7lCOj1oo4g6LYYcD/8fR57ePQSu7pxZDQXwEPyKZ1qTDowY2eYk9FWzJL9eDQrCcbj20fwMV6hykj/t3kt/sOZg0278=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210478; c=relaxed/simple;
-	bh=4YvlwfVCoq9gUOnh5tsfKlzRzIceNk10p60+tT3x0rA=;
+	s=arc-20240116; t=1789210483; c=relaxed/simple;
+	bh=FpibXqDLlEqgSHREplQdCZnWtZwyF4BsNmqtpUr61F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uV2jyayVgHHRaqXG+hbFCEGyrxRh3mmS/NuAogFzjeAl+jRvHpUjCsMPDAtQGK9WbVHWOlEoyRYOM0EpnyKqgCi5GQDq1PEOfIx0fvBLzWBmO2Zwen9ISMgdC5GaPQYyNy1q/nUwIcWumvocLl2kU7A7IDiY60Gkpjbg1TjYwjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnvFBggv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XjyHG0vOLKeUW/Zj1Dz0d0jqd48oTEp6AVO8unu1hdMYFGbo1YBQ5NZ3cfV0irZuWZxeM9AU3Q/YLNENFtrOMfsGSZSCUXkncb+yOZntyz59Oo5XiO0U+I4p137Gq9TOeibb99QfRfFbNmYBM2GCfkft1HmGpfbqOVykWjiCo9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BU4RjP2f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnvFBggv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7291F000FF;
-	Sat, 12 Sep 2026 10:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BU4RjP2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3FC1F00893;
+	Sat, 12 Sep 2026 10:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210477;
-	bh=Fx7fffHXUSdBsUgBMNswaY6zpRHESE16qcjrZOhIAnA=;
+	s=korg; t=1789210482;
+	bh=uW8U5ZCbDOrG38ld9nNcJfzw6etIFpDNkguFAeFROoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wnvFBggvFatwriEjny5lYAJG3wWV05VCLFggITSTgIu7o5wJtbI8i3z8sCppfh9SQ
-	 j9RwnEZYVxTWKltfTK10uprqgN0JqBtk4nsJJ3T8IPK6E+Tc+HttHZdD49XOB2W7J1
-	 oSxbRQyA3zHPG6DSR6GisnWP6f0yOplAM2wBPB4Y=
+	b=BU4RjP2f7fw131OyUYwjyip8sR1BGKfk4DP8mk3pjHSW+rXZdWYAKY3qxovXJ65x8
+	 k2b2t4Il2rI6IO+fXIc4ZSTc4KXB8taq3pveCUNAwIQlHjjaOHTk+WqYCclV6IJWhn
+	 DJjsa19OnyZDFeONmp8x/zCCyT23xmBBu+7GofjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Amery Hung <ameryhung@gmail.com>,
-	Leon Hwang <leon.hwang@linux.dev>,
+	Vidhu Sarwal <vidhu.linux@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1034/1518] bpf, cgroup: Fix storage null-ptr-deref after replacing prog
-Date: Sat, 12 Sep 2026 08:53:23 +0200
-Message-ID: <20260912065646.842014046@linuxfoundation.org>
+Subject: [PATCH 6.18 1035/1518] iio: light: opt4060: Fix pointer type passed to div_u64_rem()
+Date: Sat, 12 Sep 2026 08:53:24 +0200
+Message-ID: <20260912065646.865385136@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,73 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Vidhu Sarwal <vidhu.linux@gmail.com>
 
-[ Upstream commit 3f562c537e9ecf4bc5e206cfffc2cc047f1b7e94 ]
+[ Upstream commit 0ba0ed0d42ebd3144f0050c48374817f5f3f07d6 ]
 
-Syzkaller reported a storage null-ptr-deref issue after replacing prog.
-This occurs in the following scenario:
-1. prog A, an empty prog, is attached to a cgrp.
-2. prog B uses BPF_MAP_TYPE_PERCPU_CGROUP_STORAGE and calls the
-   bpf_get_local_storage helper.
-3. link_update is called to replace prog A with prog B.
+div_u64_rem() expects a u32 * for the remainder, but
+opt4060_read_ev_period() passes val2, which is declared as an
+int *. While this has no functional impact, it triggers a pointer type
+mismatch.
 
-The reason is that __cgroup_bpf_replace fails to alloc and assign the
-required cgrp storage for the incoming replacement prog. Consequently,
-the new prog inherits an uninit storage, leading to null-ptr-deref panic
-when kick the new prog.
+There is no behavioural change because int and u32 have the same
+size and representation on all supported architectures, and the
+remainder is always less than MICRO, so it fits within the positive
+range of int.
 
-Fix this by rejecting a link update if new_prog's cgroup storage is
-incompatible with link->prog.
+Use a local u32 to receive the remainder before assigning it to
+*val2.
 
-Fixes: 0c991ebc8c69 ("bpf: Implement bpf_prog replacement for an active bpf_cgroup_link")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260728132336.2857800-1-pulehui@huaweicloud.com [0]
-Link: https://lore.kernel.org/bpf/f87b53c0-8f00-45a6-82db-8242fa9b143f@huaweicloud.com [1]
-Link: https://lore.kernel.org/bpf/20260807104403.1013064-1-pulehui@huaweicloud.com
+Fixes: 0c6db4506ad0 ("iio: light: Add support for TI OPT4060 color sensor")
+Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/iio/light/opt4060.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index e5fa91515c563..0f456765a09ed 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1026,6 +1026,20 @@ static void replace_effective_prog(struct cgroup *cgrp,
+diff --git a/drivers/iio/light/opt4060.c b/drivers/iio/light/opt4060.c
+index 0f8716d72cf64..9be752535d750 100644
+--- a/drivers/iio/light/opt4060.c
++++ b/drivers/iio/light/opt4060.c
+@@ -731,6 +731,7 @@ static ssize_t opt4060_read_ev_period(struct opt4060_chip *chip, int *val,
+ {
+ 	int ret, pers, fault_count, int_time;
+ 	u64 uval;
++	u32 rem;
+ 
+ 	int_time = opt4060_int_time_reg[chip->int_time][0];
+ 
+@@ -756,7 +757,8 @@ static ssize_t opt4060_read_ev_period(struct opt4060_chip *chip, int *val,
  	}
+ 
+ 	uval = mul_u32_u32(int_time, pers);
+-	*val = div_u64_rem(uval, MICRO, val2);
++	*val = div_u64_rem(uval, MICRO, &rem);
++	*val2 = rem;
+ 
+ 	return IIO_VAL_INT_PLUS_MICRO;
  }
- 
-+static bool cgroup_bpf_storages_compatible(struct bpf_prog *old_prog,
-+					   struct bpf_prog *new_prog)
-+{
-+	enum bpf_cgroup_storage_type stype;
-+
-+	for_each_cgroup_storage_type(stype) {
-+		if (old_prog->aux->cgroup_storage[stype] !=
-+		    new_prog->aux->cgroup_storage[stype])
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
- /**
-  * __cgroup_bpf_replace() - Replace link's program and propagate the change
-  *                          to descendants
-@@ -1064,6 +1078,9 @@ static int __cgroup_bpf_replace(struct cgroup *cgrp,
- 	if (!found)
- 		return -ENOENT;
- 
-+	if (!cgroup_bpf_storages_compatible(link->link.prog, new_prog))
-+		return -EINVAL;
-+
- 	cgrp->bpf.revisions[atype] += 1;
- 	old_prog = xchg(&link->link.prog, new_prog);
- 	replace_effective_prog(cgrp, atype, pl);
 -- 
 2.53.0
 
