@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1A547ACE4;
-	Sat, 12 Sep 2026 12:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0041E3AEF51;
+	Sat, 12 Sep 2026 12:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215228; cv=none; b=Z+zUvW4FWeSp/HouF7rEC0cOxHYU4/z5Qea0MTGrRwGiVT9ZvnTYgzDJcnfUUyI4at6CH7O3m9fLIKnIbMf3MycA1RwrxioK6WSl6cR90O25X1kEVT5VfaN7DUqGhc5cUsDTCNx0S97hzG64TsRKY5QxZ5xaVQjR87sxTFssEFY=
+	t=1789215232; cv=none; b=JfLzyZ7ChWRZeDRbakDXI5YEJ/ZmTfn+I4v8X3xZF+BjIY39LFtsQmoMEHdGyDuCdlOIspY5uf3kjJdIxZWcgAKpUDuZHRqZPVP49g1ZTU1IkdTbsNGuCKPu9/kDtuZQBGprjGi9K9TayJ0EFprO8noJj09f5Fllm8GSQIjsLpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215228; c=relaxed/simple;
-	bh=8W9aowCK9sb93e0L+whKwrEK6Y5wXAlD+Hu6IdE2i1I=;
+	s=arc-20240116; t=1789215232; c=relaxed/simple;
+	bh=oBu+p/9u4qPn+rLoNcC1DY3Xb2puYBnqAaIOSi05fBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evhHG/NIQlj5db0ZO8H03FK/KpVR6CWX7rWDIpRpMQUq7ZdiSrgEWIB8b+shP9atJ4w1JpifWa/yfA0q+wKgyvQ/AwbvEWmE/5q0TdDo9A7yGdJhdcQi2Ak32gifjfmxMqQcQU0YRBMG9djn6SnIIl93++zBqS/K/Y/soCx0sAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/EskN/6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NtLdbFgFgSf6DCIW5b29/S0WS/URmRfFJ3zO/I/qT+8oAcJFljO1UgRGp7jkxnl9whKX4D2DslZjnJnOKZhbN/YAYz+DGHv0alz6Ajmj0/rfH0XjyQm6E8O3ONUbG1fwuA8OMI1Z5XyMrBgFhGHxQ04/aUgOnuTMZ6+rvm94GCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGnvA26m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/EskN/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD6B1F00893;
-	Sat, 12 Sep 2026 12:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGnvA26m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD431F000FF;
+	Sat, 12 Sep 2026 12:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215226;
-	bh=oTmz3var/SOeoXsnstA/NKMpKiPZbhBLvRwvw1MPkXM=;
+	s=korg; t=1789215230;
+	bh=v+Vtyu/ft6dnx6JxItCeYoCP27aQsbE1RGJLOInYfk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U/EskN/6f+Kkw78hK/ifx0GcNpNwvzV1+hEaqQvuBNs/VmvYUdAT/dN0q1nGXyNUs
-	 5fMsYLsUNvOTgmtNIxv7jfuEKvwButT0R2cBdH4AX9Pn3F7OVDSfvK8TbHkAWytLY5
-	 iH6o25mKL0MNCwKCmCrvBUYJvI1mYr3cMPfKMPXk=
+	b=YGnvA26my2ICMgMaKV2//nP4in3LELFHcfb/QHG1btPxadj2IhxkqR0rcq7yc5Kzr
+	 H03RqYyJcojuR6ggTda0YgUvHQ/VdyMzDC+afdwMU5fV4dg9nHLw3eI8kw+vK2gmnN
+	 Vhayave+dCic5JAHetvvwz/RlA2cfbHoeOqJ0f84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Rob Herring <robh@kernel.org>,
 	Alan Stern <stern@rowland.harvard.edu>,
 	Grant Grundler <grundler@chromium.org>,
-	Oliver Neukum <oneukum@suse.com>,
 	Yajun Deng <yajun.deng@linux.dev>,
+	Oliver Neukum <oneukum@suse.com>,
 	Douglas Anderson <dianders@chromium.org>,
 	linux-usb@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0488/1376] USB: make single lock for all usb dynamic id lists
-Date: Sat, 12 Sep 2026 08:48:34 +0200
-Message-ID: <20260912065618.414639873@linuxfoundation.org>
+Subject: [PATCH 6.12 0489/1376] USB: make to_usb_driver() use container_of_const()
+Date: Sat, 12 Sep 2026 08:48:35 +0200
+Message-ID: <20260912065618.436377812@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -60,188 +58,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 0b3144da31f855fce652303f588416a60991bdef ]
+[ Upstream commit 2f3aab7aecb827ba93c6222646eb0faa8228d590 ]
 
-There are a number of places where we accidentally pass in a constant
-structure to later cast it off to a dynamic one, and then attempt to
-grab a lock on it, which is not a good idea.  To help resolve this, move
-the dynamic id lock out of the dynamic id structure for the driver and
-into one single lock for all USB dynamic ids.  As this lock should never
-have any real contention (it's only every accessed when a device is
-added or removed, which is always serialized) there should not be any
-difference except for some memory savings.
+Turns out that we have some const pointers being passed to
+to_usb_driver() but were not catching this.  Change the macro to
+properly propagate the const-ness of the pointer so that we will notice
+when we try to write to memory that we shouldn't be writing to.
 
-Note, this just converts the existing use of the dynamic id lock to the
-new static lock, there is one place that is accessing the dynamic id
-list without grabbing the lock, that will be fixed up in a follow-on
-change.
+This requires fixing up the usb_match_dynamic_id() function as well,
+because it can handle a const * to struct usb_driver.
 
 Cc: Johan Hovold <johan@kernel.org>
-Cc: Herve Codina <herve.codina@bootlin.com>
-Cc: Rob Herring <robh@kernel.org>
 Cc: Alan Stern <stern@rowland.harvard.edu>
 Cc: Grant Grundler <grundler@chromium.org>
-Cc: Oliver Neukum <oneukum@suse.com>
 Cc: Yajun Deng <yajun.deng@linux.dev>
+Cc: Oliver Neukum <oneukum@suse.com>
 Cc: Douglas Anderson <dianders@chromium.org>
 Cc: linux-usb@vger.kernel.org
-Link: https://lore.kernel.org/r/2024111322-kindly-finalist-d247@gregkh
+Link: https://lore.kernel.org/r/2024111339-shaky-goldsmith-b233@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: ef8154d8b52d ("usb: fix UAF when probe runs concurrent to dyn ID removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/common/common.c     |  3 +++
- drivers/usb/core/driver.c       | 15 +++++----------
- drivers/usb/serial/bus.c        |  4 +---
- drivers/usb/serial/usb-serial.c |  4 +---
- include/linux/usb.h             |  2 +-
- 5 files changed, 11 insertions(+), 17 deletions(-)
+ drivers/usb/core/driver.c | 4 ++--
+ include/linux/usb.h       | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/common/common.c b/drivers/usb/common/common.c
-index b7bea1015d7c1..871cf199b6bf1 100644
---- a/drivers/usb/common/common.c
-+++ b/drivers/usb/common/common.c
-@@ -415,6 +415,9 @@ EXPORT_SYMBOL_GPL(usb_of_get_companion_dev);
- struct dentry *usb_debug_root;
- EXPORT_SYMBOL_GPL(usb_debug_root);
- 
-+DEFINE_MUTEX(usb_dynids_lock);
-+EXPORT_SYMBOL_GPL(usb_dynids_lock);
-+
- static int __init usb_common_init(void)
- {
- 	usb_debug_root = debugfs_create_dir("usb", NULL);
 diff --git a/drivers/usb/core/driver.c b/drivers/usb/core/driver.c
-index 0c3f12daac79e..bc3c00580238d 100644
+index bc3c00580238d..f0f13554709e0 100644
 --- a/drivers/usb/core/driver.c
 +++ b/drivers/usb/core/driver.c
-@@ -95,9 +95,9 @@ ssize_t usb_store_new_id(struct usb_dynids *dynids,
- 		}
- 	}
- 
--	spin_lock(&dynids->lock);
-+	mutex_lock(&usb_dynids_lock);
- 	list_add_tail(&dynid->node, &dynids->list);
--	spin_unlock(&dynids->lock);
-+	mutex_unlock(&usb_dynids_lock);
- 
- 	retval = driver_attach(driver);
- 
-@@ -160,7 +160,7 @@ static ssize_t remove_id_store(struct device_driver *driver, const char *buf,
- 	if (fields < 2)
- 		return -EINVAL;
- 
--	spin_lock(&usb_driver->dynids.lock);
-+	guard(mutex)(&usb_dynids_lock);
- 	list_for_each_entry_safe(dynid, n, &usb_driver->dynids.list, node) {
- 		struct usb_device_id *id = &dynid->id;
- 
-@@ -171,7 +171,6 @@ static ssize_t remove_id_store(struct device_driver *driver, const char *buf,
- 			break;
- 		}
- 	}
--	spin_unlock(&usb_driver->dynids.lock);
- 	return count;
- }
- 
-@@ -220,12 +219,11 @@ static void usb_free_dynids(struct usb_driver *usb_drv)
- {
- 	struct usb_dynid *dynid, *n;
- 
--	spin_lock(&usb_drv->dynids.lock);
-+	guard(mutex)(&usb_dynids_lock);
- 	list_for_each_entry_safe(dynid, n, &usb_drv->dynids.list, node) {
- 		list_del(&dynid->node);
- 		kfree(dynid);
- 	}
--	spin_unlock(&usb_drv->dynids.lock);
+@@ -227,7 +227,7 @@ static void usb_free_dynids(struct usb_driver *usb_drv)
  }
  
  static const struct usb_device_id *usb_match_dynamic_id(struct usb_interface *intf,
-@@ -233,14 +231,12 @@ static const struct usb_device_id *usb_match_dynamic_id(struct usb_interface *in
+-							struct usb_driver *drv)
++							const struct usb_driver *drv)
  {
  	struct usb_dynid *dynid;
  
--	spin_lock(&drv->dynids.lock);
-+	guard(mutex)(&usb_dynids_lock);
- 	list_for_each_entry(dynid, &drv->dynids.list, node) {
- 		if (usb_match_one_id(intf, &dynid->id)) {
--			spin_unlock(&drv->dynids.lock);
- 			return &dynid->id;
- 		}
- 	}
--	spin_unlock(&drv->dynids.lock);
- 	return NULL;
- }
+@@ -889,7 +889,7 @@ static int usb_device_match(struct device *dev, const struct device_driver *drv)
  
-@@ -1076,7 +1072,6 @@ int usb_register_driver(struct usb_driver *new_driver, struct module *owner,
- 	new_driver->driver.owner = owner;
- 	new_driver->driver.mod_name = mod_name;
- 	new_driver->driver.dev_groups = new_driver->dev_groups;
--	spin_lock_init(&new_driver->dynids.lock);
- 	INIT_LIST_HEAD(&new_driver->dynids.list);
+ 	} else if (is_usb_interface(dev)) {
+ 		struct usb_interface *intf;
+-		struct usb_driver *usb_drv;
++		const struct usb_driver *usb_drv;
+ 		const struct usb_device_id *id;
  
- 	retval = driver_register(&new_driver->driver);
-diff --git a/drivers/usb/serial/bus.c b/drivers/usb/serial/bus.c
-index d200e2c29a8ff..2fea1b1db4a26 100644
---- a/drivers/usb/serial/bus.c
-+++ b/drivers/usb/serial/bus.c
-@@ -136,12 +136,11 @@ static void free_dynids(struct usb_serial_driver *drv)
- {
- 	struct usb_dynid *dynid, *n;
- 
--	spin_lock(&drv->dynids.lock);
-+	guard(mutex)(&usb_dynids_lock);
- 	list_for_each_entry_safe(dynid, n, &drv->dynids.list, node) {
- 		list_del(&dynid->node);
- 		kfree(dynid);
- 	}
--	spin_unlock(&drv->dynids.lock);
- }
- 
- const struct bus_type usb_serial_bus_type = {
-@@ -157,7 +156,6 @@ int usb_serial_bus_register(struct usb_serial_driver *driver)
- 	int retval;
- 
- 	driver->driver.bus = &usb_serial_bus_type;
--	spin_lock_init(&driver->dynids.lock);
- 	INIT_LIST_HEAD(&driver->dynids.list);
- 
- 	retval = driver_register(&driver->driver);
-diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
-index 2ee0b64b8be0a..c78ff40b1e5f8 100644
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -706,14 +706,12 @@ static const struct usb_device_id *match_dynamic_id(struct usb_interface *intf,
- {
- 	struct usb_dynid *dynid;
- 
--	spin_lock(&drv->dynids.lock);
-+	guard(mutex)(&usb_dynids_lock);
- 	list_for_each_entry(dynid, &drv->dynids.list, node) {
- 		if (usb_match_one_id(intf, &dynid->id)) {
--			spin_unlock(&drv->dynids.lock);
- 			return &dynid->id;
- 		}
- 	}
--	spin_unlock(&drv->dynids.lock);
- 	return NULL;
- }
- 
+ 		/* device drivers never match interfaces */
 diff --git a/include/linux/usb.h b/include/linux/usb.h
-index 049b012638bea..06eb0a62895d3 100644
+index 06eb0a62895d3..2004a2db81ced 100644
 --- a/include/linux/usb.h
 +++ b/include/linux/usb.h
-@@ -1132,8 +1132,8 @@ static inline int usb_make_path(struct usb_device *dev, char *buf, size_t size)
- /* ----------------------------------------------------------------------- */
- 
- /* Stuff for dynamic usb ids */
-+extern struct mutex usb_dynids_lock;
- struct usb_dynids {
--	spinlock_t lock;
- 	struct list_head list;
+@@ -1246,7 +1246,7 @@ struct usb_driver {
+ 	unsigned int disable_hub_initiated_lpm:1;
+ 	unsigned int soft_unbind:1;
  };
+-#define	to_usb_driver(d) container_of(d, struct usb_driver, driver)
++#define	to_usb_driver(d) container_of_const(d, struct usb_driver, driver)
  
+ /**
+  * struct usb_device_driver - identifies USB device driver to usbcore
 -- 
 2.53.0
 
