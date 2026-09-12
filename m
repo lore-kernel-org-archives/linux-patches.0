@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2153B47D5;
-	Sat, 12 Sep 2026 09:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB30208D0;
+	Sat, 12 Sep 2026 09:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205743; cv=none; b=VqCK8vxPI89y7KcFwZKITbgktUn1sGDeeU3QVgiDvBLryBPalDIE7ssx2ajymr0+nAEZQM+Vu0+7ZNt5clxmXjDhwis5zvpPQs46O9yK9490oIeEurrJUibIQAsqN63Sms5q2L9PaWO0YsqmZysbkROkxkcaCsNe6rzNziZk698=
+	t=1789205747; cv=none; b=lc1tfgWjyqUZzL84nq3q/jkKCOe3yI9DKQ3alNVyMFt4Hu4OxigRVvLGFkzZkxSNbGSKQyDCMKkQKp0wtlbZgu6QDIQByCoEr2GULVV73PSCjixWBxJtGJd3wbyaoR8gPBGtFzGDSnYg+XWiDDsnf7ZmopJqnX/ZnoNIDFnYeA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205743; c=relaxed/simple;
-	bh=F7FEYw4CTD3tnW1swQtYRK1JqFgLA97pwVq21NuWkD8=;
+	s=arc-20240116; t=1789205747; c=relaxed/simple;
+	bh=nIGVxWg+fPQu72uL27B7QlmVclUnYqBPd/OtmR1OgjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHayJgt8luDy+Nrd/KmuJ48cCCWTtChnfza/UQIw1dHq8qtlCmVhQCZFQWsNU5Nv8pztTcev9kaJw3c99QdHhB51LDnppXkjOHPA5RozWVAqzPrtF7OeV1UG7/NhBzhqQ6VTBq+OqWYieIFd6Kb/v1C+2y7c43RbUGPCtfxaNaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pt+flJ1n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZdTBiUWwqyRJBl2G8Wgf2upwejfHewXWdeisCWKPFt0u6Q4F6gNCT7DZprmtql2HzvtLpMIsVQ+z7l+QuPeOtRi/7+oc7/P2cRqhMuM2eOdwiMBtrvdDTGvorVaRmx6o0UwRtbwVz5pOmFcei3WtBB2pL/A+iUlE1iXV21ZQy9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXnUUJyu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pt+flJ1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE4D1F000FF;
-	Sat, 12 Sep 2026 09:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXnUUJyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40381F000FF;
+	Sat, 12 Sep 2026 09:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205741;
-	bh=4Nfo/nfcEurMmL1jOgnQqueqcJUjS5RrCNWq45CMnew=;
+	s=korg; t=1789205745;
+	bh=94a7nxHa95gB7pWzMzJa0C7VHg/hBBVJIlaOzdkCvwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pt+flJ1nx5q42MIo//nUK04Cfxokzgxumfqn6mTmUtCn/fD162rrmVR8qX2qrrT65
-	 /CwxCjWirQbFoWwd7V1xRBs+P7rq3LFvRKeQnqpEX8k7omSSE8x2QojwEzQsROoNMM
-	 jFrCpfB9cdqqdGqlfy2mTJNiQPKkTrUFJcp37B3U=
+	b=cXnUUJyuucRd/6Pr9j5ZrTzf/h//PpnNP6U/QsUGyk86piYrrbvNO9GfTKUT0anwB
+	 TaxNv8+SZHNT9tFeX6SCgqxQwysfrM+PklUw4uQvBWMQUwfQ3MjfdqyeWCG7pMwpNo
+	 AOJcDWS88JZHOU5nK+f3SIxLAUncN6veh2n92toI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0046/1518] futex: Optimize futex hash bucket access patterns
-Date: Sat, 12 Sep 2026 08:36:55 +0200
-Message-ID: <20260912065624.478844865@linuxfoundation.org>
+Subject: [PATCH 6.18 0064/1518] ftrace: Take trace_array reference before accessing its ftrace_ops
+Date: Sat, 12 Sep 2026 08:37:13 +0200
+Message-ID: <20260912065624.902076744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,542 +51,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit a734d9fca84e1d4fa0cb442ef5f84c88f8212d32 ]
+[ Upstream commit 9100191e5acb2e5ea2313f436667bb5fce129f47 ]
 
-Breno reported significant c2c HITM in a futex hash heavy workload.
+The trace instance files set_ftrace_filter and set_ftrace_notrace was
+updated to work with specific trace instances (trace_arrays). The issue is
+that when these files are opened, there is a small race window where it
+will use the ftrace_ops from the inode->private pointer to get a reference
+to the trace_array and then take its reference. The problem is that the
+ftrace_ops itself could be freed. If the rmdir on the instance happens at
+the same time the set_ftrace_filter file is opened, the rmdir could have
+also freed the ftrace_ops and referencing it will cause a use-after-free
+bug and crash the kernel.
 
-It turns out that the hash bucket to private hash table reverse pointer
-(futex_hash_bucket::priv) was to blame. Notably when the hash buckets are
-heavily contended, the: 'fph = bh->priv;' load in futex_hash() will typically
-miss and consequently become quite expensive.
+Instead, pass in the trace_array as the file private data (NULL for the
+top level instance), and then pass both the trace_array and the ftrace_ops
+to the ftrace_regex_open() function. If the trace_array is NULL, then it
+just uses the ftrace_ops without the need to take its reference (like
+normal). If the ftrace_ops is NULL, that is only the case for the top
+level instance and the global_ops can be used.
 
-Since this load in particular is quite superfluous, removing it is fairly
-straight forward. However, removing it does not in fact achieve anything much.
-The pain moves to the next user, notably: futex_hash_put().
+This allows the trace_array to have its reference incremented before
+touching the ftrace_ops that could also be freed when the instance is.
 
-Therefore rework the whole private hash refcounting to avoid needing this back
-pointer (and removing it). Instead of passing around 'struct futex_hash_bucket
-*hb', pass around a new structure that contains it and the related 'struct
-futex_private_hash *fph' pointer in tandem.
-
-Funnily this turns out to remove more code than it adds and significantly
-improves futex hash performance (as measured by 'perf bench futex hash'):
-
-SKL dual socket 112 threads:
-
-		  Baseline        Patched
-  shared (16k)    1571857         1641435         + 4.4%
-  autosize (512)   646390          903371         +39.7%
-  -b 256           464395          587014         +26.4%
-  -b 512           715687          995943         +39.2%
-  -b 1024          995085         1396328         +40.3%
-  -b 2048         1293114         1668395         +29.0%
-  -b 4096         2124438         2240228         + 5.5%
-
-Zen3 dual socket 256 threads:
-
-                  Baseline        Patched
-  shared  (16k)   1275840         1381279         + 8.2%
-  autosize (512)  1252745         1482179         +18.3%
-  -b 256           856274          955455         +11.5%
-  -b 512          1267490         1544010         +21.8%
-  -b 1024         1424013         1625424         +14.1%
-  -b 2048         1505181         1669342         +10.9%
-  -b 4096         1465993         1688932         +15.2%
-
-AMD EPYC 9D64 (Zen4, single socket) 176 threads:
-
-                       Baseline       Patched      Delta
-  shared (16k)         1,230,599      1,368,655    +11.2%
-  autosize (1024)      1,285,440      1,556,946    +21.1%
-  -b 256               1,341,471      1,520,303    +13.3%
-  -b 512               1,438,330      1,599,319    +11.2%
-  -b 1024              1,443,772      1,622,493    +12.4%
-  -b 2048              1,472,108      1,643,975    +11.7%
-  -b 4096              1,333,098      1,570,897    +17.8%
-
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260828223901.29e26edb@robin
+Fixes: 591dffdade9f0 ("ftrace: Allow for function tracing instance to filter functions")
 Reported-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Tested-by: Breno Leitao <leitao@debian.org>
-Tested-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260610135510.GB1430057@noisy.programming.kicks-ass.net
-
-[ Stable adaptation: use mm->futex_phash in __futex_hash(), since this
-  branch does not contain the mm_struct futex field consolidation.
-  Preserve the final-put use-after-free fix by saving fph->mm before
-  futex_ref_put(), and restore the NULL guard needed by the direct
-  private-hash put callers. futex_key_is_private() is already in futex.h;
-  no new functions are introduced. Keep the bucket-reference conversion
-  so 912edebe8501 applies without changes. ]
-
-Stable-dep-of: 912edebe8501 ("futex: Provide rt_mutex_.*_schedule() equivalents for futex scheduling")
+Closes: https://lore.kernel.org/all/apGORjltZgAiAYHT@gmail.com/
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ retained kzalloc(sizeof(*iter), GFP_KERNEL) instead of kzalloc_obj(*iter). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/futex/core.c     |  103 +++++++++++++++---------------------------------
- kernel/futex/futex.h    |   28 ++++++-------
- kernel/futex/pi.c       |   21 +++++----
- kernel/futex/requeue.c  |   20 ++++-----
- kernel/futex/waitwake.c |   17 +++++--
- 5 files changed, 80 insertions(+), 109 deletions(-)
+ include/linux/ftrace.h         |    5 ++-
+ kernel/trace/ftrace.c          |   57 ++++++++++++++++++++++++++---------------
+ kernel/trace/trace.h           |    4 +-
+ kernel/trace/trace_functions.c |    2 -
+ kernel/trace/trace_stack.c     |    2 -
+ 5 files changed, 44 insertions(+), 26 deletions(-)
 
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -125,7 +125,7 @@ late_initcall(fail_futex_debugfs);
- #endif /* CONFIG_FAIL_FUTEX */
+--- a/include/linux/ftrace.h
++++ b/include/linux/ftrace.h
+@@ -797,8 +797,9 @@ unsigned long ftrace_get_addr_new(struct
+ unsigned long ftrace_get_addr_curr(struct dyn_ftrace *rec);
  
- static struct futex_hash_bucket *
--__futex_hash(union futex_key *key, struct futex_private_hash *fph);
-+__futex_hash(union futex_key *key, struct futex_private_hash *fph, struct futex_private_hash **fph_p);
+ extern ftrace_func_t ftrace_trace_function;
++struct trace_array;
  
- #ifdef CONFIG_FUTEX_PRIVATE_HASH
- static bool futex_ref_get(struct futex_private_hash *fph);
-@@ -141,35 +141,14 @@ static bool futex_private_hash_get(struc
- 
- void futex_private_hash_put(struct futex_private_hash *fph)
- {
--	struct mm_struct *mm = fph->mm;
--
--	if (futex_ref_put(fph))
--		wake_up_var(mm);
--}
--
--/**
-- * futex_hash_get - Get an additional reference for the local hash.
-- * @hb:                    ptr to the private local hash.
-- *
-- * Obtain an additional reference for the already obtained hash bucket. The
-- * caller must already own an reference.
-- */
--void futex_hash_get(struct futex_hash_bucket *hb)
--{
--	struct futex_private_hash *fph = hb->priv;
-+	struct mm_struct *mm;
- 
- 	if (!fph)
- 		return;
--	WARN_ON_ONCE(!futex_private_hash_get(fph));
--}
- 
--void futex_hash_put(struct futex_hash_bucket *hb)
--{
--	struct futex_private_hash *fph = hb->priv;
--
--	if (!fph)
--		return;
--	futex_private_hash_put(fph);
-+	mm = fph->mm;
-+	if (futex_ref_put(fph))
-+		wake_up_var(mm);
- }
- 
- static struct futex_hash_bucket *
-@@ -177,14 +156,6 @@ __futex_hash_private(union futex_key *ke
- {
- 	u32 hash;
- 
--	if (!futex_key_is_private(key))
--		return NULL;
--
--	if (!fph)
--		fph = rcu_dereference(key->private.mm->futex_phash);
--	if (!fph || !fph->hash_mask)
--		return NULL;
--
- 	hash = jhash2((void *)&key->private.address,
- 		      sizeof(key->private.address) / 4,
- 		      key->both.offset);
-@@ -205,13 +176,12 @@ static void futex_rehash_private(struct
- 
- 		spin_lock(&hb_old->lock);
- 		plist_for_each_entry_safe(this, tmp, &hb_old->chain, list) {
--
- 			plist_del(&this->list, &hb_old->chain);
- 			futex_hb_waiters_dec(hb_old);
- 
- 			WARN_ON_ONCE(this->lock_ptr != &hb_old->lock);
- 
--			hb_new = __futex_hash(&this->key, new);
-+			hb_new = __futex_hash(&this->key, new, NULL);
- 			futex_hb_waiters_inc(hb_new);
- 			/*
- 			 * The new pointer isn't published yet but an already
-@@ -265,9 +235,8 @@ static void futex_pivot_hash(struct mm_s
- 	}
- }
- 
--struct futex_private_hash *futex_private_hash(void)
-+struct futex_private_hash *futex_private_hash(struct mm_struct *mm)
- {
--	struct mm_struct *mm = current->mm;
- 	/*
- 	 * Ideally we don't loop. If there is a replacement in progress
- 	 * then a new private hash is already prepared and a reference can't be
-@@ -293,18 +262,17 @@ again:
- 	goto again;
- }
- 
--struct futex_hash_bucket *futex_hash(union futex_key *key)
-+struct futex_bucket_ref futex_hash(union futex_key *key)
- {
--	struct futex_private_hash *fph;
--	struct futex_hash_bucket *hb;
--
- again:
- 	scoped_guard(rcu) {
--		hb = __futex_hash(key, NULL);
--		fph = hb->priv;
-+		struct futex_private_hash *fph = NULL;
-+		struct futex_hash_bucket *hb;
-+
-+		hb = __futex_hash(key, NULL, &fph);
- 
- 		if (!fph || futex_private_hash_get(fph))
--			return hb;
-+			return (struct futex_bucket_ref){ .hb = hb, .fph = fph };
- 	}
- 	futex_pivot_hash(key->private.mm);
- 	goto again;
-@@ -312,15 +280,9 @@ again:
- 
- #else /* !CONFIG_FUTEX_PRIVATE_HASH */
- 
--static struct futex_hash_bucket *
--__futex_hash_private(union futex_key *key, struct futex_private_hash *fph)
--{
--	return NULL;
--}
--
--struct futex_hash_bucket *futex_hash(union futex_key *key)
-+struct futex_bucket_ref futex_hash(union futex_key *key)
- {
--	return __futex_hash(key, NULL);
-+	return (struct futex_bucket_ref){ .hb = __futex_hash(key, NULL, NULL), .fph = NULL };
- }
- 
- #endif /* CONFIG_FUTEX_PRIVATE_HASH */
-@@ -398,6 +360,8 @@ static int futex_mpol(struct mm_struct *
-  * __futex_hash - Return the hash bucket
-  * @key:	Pointer to the futex key for which the hash is calculated
-  * @fph:	Pointer to private hash if known
-+ * @fph_p:	Pointer to a private hash pointer; output for the private hash
-+ *              used when set.
-  *
-  * We hash on the keys returned from get_futex_key (see below) and return the
-  * corresponding hash bucket.
-@@ -406,18 +370,22 @@ static int futex_mpol(struct mm_struct *
-  * global hash is returned.
+-int ftrace_regex_open(struct ftrace_ops *ops, int flag,
++int ftrace_regex_open(struct trace_array *tr, struct ftrace_ops *ops, int flag,
+ 		  struct inode *inode, struct file *file);
+ ssize_t ftrace_filter_write(struct file *file, const char __user *ubuf,
+ 			    size_t cnt, loff_t *ppos);
+@@ -1008,7 +1009,7 @@ static inline unsigned long ftrace_locat
+  * have them defined when ftrace is not enabled, but these
+  * functions may still be called. Use a macro instead of inline.
   */
- static struct futex_hash_bucket *
--__futex_hash(union futex_key *key, struct futex_private_hash *fph)
-+__futex_hash(union futex_key *key, struct futex_private_hash *fph, struct futex_private_hash **fph_p)
- {
- 	int node = key->both.node;
- 	u32 hash;
- 
--	if (node == FUTEX_NO_NODE) {
--		struct futex_hash_bucket *hb;
--
--		hb = __futex_hash_private(key, fph);
--		if (hb)
--			return hb;
-+#ifdef CONFIG_FUTEX_PRIVATE_HASH
-+	if (node == FUTEX_NO_NODE && futex_key_is_private(key)) {
-+		if (!fph)
-+			fph = rcu_dereference(key->private.mm->futex_phash);
-+		if (fph && fph->hash_mask) {
-+			if (fph_p)
-+				*fph_p = fph;
-+			return __futex_hash_private(key, fph);
-+		}
- 	}
-+#endif
- 
- 	hash = jhash2((u32 *)key,
- 		      offsetof(typeof(*key), both.offset) / sizeof(u32),
-@@ -1362,7 +1330,7 @@ static void exit_pi_state_list(struct ta
- 	 * on the mutex.
- 	 */
- 	WARN_ON(curr != current);
--	guard(private_hash)();
-+	guard(private_hash)(current->mm);
- 	/*
- 	 * We are a ZOMBIE and nobody can enqueue itself on
- 	 * pi_state_list anymore, but we have to be careful
-@@ -1374,7 +1342,8 @@ static void exit_pi_state_list(struct ta
- 		pi_state = list_entry(next, struct futex_pi_state, list);
- 		key = pi_state->key;
- 		if (1) {
--			CLASS(hb, hb)(&key);
-+			CLASS(hbr, hbr)(&key);
-+			auto hb = hbr.hb;
- 
- 			/*
- 			 * We can race against put_pi_state() removing itself from the
-@@ -1556,12 +1525,8 @@ void futex_exec_done(struct task_struct
- 	tsk->futex_state = FUTEX_STATE_OK;
- }
- 
--static void futex_hash_bucket_init(struct futex_hash_bucket *fhb,
--				   struct futex_private_hash *fph)
-+static void futex_hash_bucket_init(struct futex_hash_bucket *fhb)
- {
--#ifdef CONFIG_FUTEX_PRIVATE_HASH
--	fhb->priv = fph;
--#endif
- 	atomic_set(&fhb->waiters, 0);
- 	plist_head_init(&fhb->chain);
- 	spin_lock_init(&fhb->lock);
-@@ -1866,7 +1831,7 @@ static int futex_hash_allocate(unsigned
- 	fph->mm = mm;
- 
- 	for (i = 0; i < hash_slots; i++)
--		futex_hash_bucket_init(&fph->queues[i], fph);
-+		futex_hash_bucket_init(&fph->queues[i]);
- 
- 	if (custom) {
- 		struct wait_bit_queue_entry __wbq_entry;
-@@ -2069,7 +2034,7 @@ static int __init futex_init(void)
- 		BUG_ON(!table);
- 
- 		for (i = 0; i < hashsize; i++)
--			futex_hash_bucket_init(&table[i], NULL);
-+			futex_hash_bucket_init(&table[i]);
- 
- 		futex_queues[n] = table;
- 	}
---- a/kernel/futex/futex.h
-+++ b/kernel/futex/futex.h
-@@ -144,7 +144,6 @@ struct futex_hash_bucket {
- 	atomic_t waiters;
- 	spinlock_t lock;
- 	struct plist_head chain;
--	struct futex_private_hash *priv;
- } ____cacheline_aligned_in_smp;
- 
- /*
-@@ -184,7 +183,7 @@ typedef void (futex_wake_fn)(struct wake
-  * @requeue_pi_key:	the requeue_pi target futex key
-  * @bitset:		bitset for the optional bitmasked wakeup
-  * @requeue_state:	State field for futex_requeue_pi()
-- * @drop_hb_ref:	Waiter should drop the extra hash bucket reference if true
-+ * @drop_fph:		Waiter should drop the extra private hash reference when set
-  * @requeue_wait:	RCU wait for futex_requeue_pi() (RT only)
-  *
-  * We use this hashed waitqueue, instead of a normal wait_queue_entry_t, so
-@@ -211,7 +210,7 @@ struct futex_q {
- 	union futex_key *requeue_pi_key;
- 	u32 bitset;
- 	atomic_t requeue_state;
--	bool drop_hb_ref;
-+	struct futex_private_hash *drop_fph;
- #ifdef CONFIG_PREEMPT_RT
- 	struct rcuwait requeue_wait;
- #endif
-@@ -231,28 +230,29 @@ extern struct hrtimer_sleeper *
- futex_setup_timer(ktime_t *time, struct hrtimer_sleeper *timeout,
- 		  int flags, u64 range_ns);
- 
--extern struct futex_hash_bucket *futex_hash(union futex_key *key);
--#ifdef CONFIG_FUTEX_PRIVATE_HASH
--extern void futex_hash_get(struct futex_hash_bucket *hb);
--extern void futex_hash_put(struct futex_hash_bucket *hb);
-+struct futex_bucket_ref {
-+	struct futex_hash_bucket *hb;
-+	struct futex_private_hash *fph;
-+};
- 
--extern struct futex_private_hash *futex_private_hash(void);
-+#ifdef CONFIG_FUTEX_PRIVATE_HASH
-+extern struct futex_private_hash *futex_private_hash(struct mm_struct *mm);
- extern void futex_private_hash_put(struct futex_private_hash *fph);
- 
- #else /* !CONFIG_FUTEX_PRIVATE_HASH */
--static inline void futex_hash_get(struct futex_hash_bucket *hb) { }
--static inline void futex_hash_put(struct futex_hash_bucket *hb) { }
--static inline struct futex_private_hash *futex_private_hash(void) { return NULL; }
-+static inline struct futex_private_hash *futex_private_hash(struct mm_struct *mm) { return NULL; }
- static inline void futex_private_hash_put(struct futex_private_hash *fph) { }
- #endif
- 
--DEFINE_CLASS(hb, struct futex_hash_bucket *,
--	     if (_T) futex_hash_put(_T),
-+extern struct futex_bucket_ref futex_hash(union futex_key *key);
-+
-+DEFINE_CLASS(hbr, struct futex_bucket_ref,
-+	     if (_T.fph) futex_private_hash_put(_T.fph),
- 	     futex_hash(key), union futex_key *key);
- 
- DEFINE_CLASS(private_hash, struct futex_private_hash *,
- 	     if (_T) futex_private_hash_put(_T),
--	     futex_private_hash(), void);
-+	     futex_private_hash(mm), struct mm_struct *mm);
+-#define ftrace_regex_open(ops, flag, inod, file) ({ -ENODEV; })
++#define ftrace_regex_open(tr, ops, flag, inode, file) ({ -ENODEV; })
+ #define ftrace_set_early_filter(ops, buf, enable) do { } while (0)
+ #define ftrace_set_filter_ip(ops, ip, remove, reset) ({ -ENODEV; })
+ #define ftrace_set_filter_ips(ops, ips, cnt, remove, reset) ({ -ENODEV; })
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -4627,7 +4627,8 @@ ftrace_avail_addrs_open(struct inode *in
  
  /**
-  * futex_match - Check whether two futex keys are equal
---- a/kernel/futex/pi.c
-+++ b/kernel/futex/pi.c
-@@ -1005,7 +1005,8 @@ retry:
+  * ftrace_regex_open - initialize function tracer filter files
+- * @ops: The ftrace_ops that hold the hash filters
++ * @tr: The trace_array that holds the ftrace_ops [optional]
++ * @ops: The ftrace_ops that hold the hash filters [optional]
+  * @flag: The type of filter to process
+  * @inode: The inode, usually passed in to your open routine
+  * @file: The file, usually passed in to your open routine
+@@ -4641,26 +4642,45 @@ ftrace_avail_addrs_open(struct inode *in
+  * tracing_lseek() should be used as the lseek routine, and
+  * release must call ftrace_regex_release().
+  *
++ * Note, If @tr is not NULL, its reference has to be taken before
++ *       @ops may be referenced.
++ *       If @ops is NULL and @tr is not, then @tr->ops is used.
++ *       If @tr is NULL and @ops is not then @ops->private is uesd for @tr.
++ *       If both @tr and @ops are NULL, then the &global_ops is
++ *         to be used, and @tr will be the global_ops.private pointer.
++ *
+  * Returns: 0 on success or a negative errno value on failure
+  */
+ int
+-ftrace_regex_open(struct ftrace_ops *ops, int flag,
++ftrace_regex_open(struct trace_array *tr, struct ftrace_ops *ops, int flag,
+ 		  struct inode *inode, struct file *file)
+ {
+-	struct ftrace_iterator *iter;
++	struct ftrace_iterator *iter = NULL;
+ 	struct ftrace_hash *hash;
+ 	struct list_head *mod_head;
+-	struct trace_array *tr = ops->private;
+-	int ret = -ENOMEM;
+-
+-	ftrace_ops_init(ops);
++	int ret = -ENODEV;
  
- retry_private:
- 	if (1) {
--		CLASS(hb, hb)(&q.key);
-+		CLASS(hbr, hbr)(&q.key);
-+		auto hb = hbr.hb;
+ 	if (unlikely(ftrace_disabled))
+ 		return -ENODEV;
  
- 		futex_q_lock(&q, hb);
- 
-@@ -1068,7 +1069,7 @@ retry_private:
- 		 * the thread, performing resize, will block on hb->lock during
- 		 * the requeue.
- 		 */
--		futex_hash_put(no_free_ptr(hb));
-+		futex_private_hash_put(no_free_ptr(hbr.fph));
- 		/*
- 		 * Must be done before we enqueue the waiter, here is unfortunately
- 		 * under the hb lock, but that *should* work because it does nothing.
-@@ -1158,11 +1159,9 @@ no_block:
- 
- 		futex_unqueue_pi(&q);
- 		spin_unlock(q.lock_ptr);
--		if (q.drop_hb_ref) {
--			CLASS(hb, hb)(&q.key);
--			/* Additional reference from futex_unlock_pi() */
--			futex_hash_put(hb);
--		}
++	if (!tr) {
++		if (!ops)
++			ops = &global_ops;
++		tr = ops->private;
++	}
 +
-+		/* Additional reference from futex_unlock_pi() */
-+		futex_private_hash_put(q.drop_fph);
+ 	if (tracing_check_open_get_tr(tr))
+ 		return -ENODEV;
+ 
++	if (!ops)
++		ops = tr->ops;
++
++	if (WARN_ON_ONCE(!ops))
++		goto out;
++
++	ftrace_ops_init(ops);
++
++	ret = -ENOMEM;
+ 	iter = kzalloc(sizeof(*iter), GFP_KERNEL);
+ 	if (!iter)
  		goto out;
+@@ -4738,21 +4758,19 @@ ftrace_regex_open(struct ftrace_ops *ops
+ static int
+ ftrace_filter_open(struct inode *inode, struct file *file)
+ {
+-	struct ftrace_ops *ops = inode->i_private;
++	struct trace_array *tr = inode->i_private;
  
- out_unlock_put_key:
-@@ -1218,7 +1217,8 @@ retry:
- 	if (ret)
+-	/* Checks for tracefs lockdown */
+-	return ftrace_regex_open(ops,
+-			FTRACE_ITER_FILTER | FTRACE_ITER_DO_PROBES,
+-			inode, file);
++	return ftrace_regex_open(tr, NULL,
++				 FTRACE_ITER_FILTER | FTRACE_ITER_DO_PROBES,
++				 inode, file);
+ }
+ 
+ static int
+ ftrace_notrace_open(struct inode *inode, struct file *file)
+ {
+-	struct ftrace_ops *ops = inode->i_private;
++	struct trace_array *tr = inode->i_private;
+ 
+-	/* Checks for tracefs lockdown */
+-	return ftrace_regex_open(ops, FTRACE_ITER_NOTRACE,
++	return ftrace_regex_open(tr, NULL, FTRACE_ITER_NOTRACE,
+ 				 inode, file);
+ }
+ 
+@@ -7060,15 +7078,15 @@ static const struct file_operations ftra
+ };
+ #endif /* CONFIG_FUNCTION_GRAPH_TRACER */
+ 
+-void ftrace_create_filter_files(struct ftrace_ops *ops,
++void ftrace_create_filter_files(struct trace_array *tr,
+ 				struct dentry *parent)
+ {
+ 
+ 	trace_create_file("set_ftrace_filter", TRACE_MODE_WRITE, parent,
+-			  ops, &ftrace_filter_fops);
++			  tr, &ftrace_filter_fops);
+ 
+ 	trace_create_file("set_ftrace_notrace", TRACE_MODE_WRITE, parent,
+-			  ops, &ftrace_notrace_fops);
++			  tr, &ftrace_notrace_fops);
+ }
+ 
+ /*
+@@ -7093,7 +7111,6 @@ void ftrace_destroy_filter_files(struct
+ 
+ static __init int ftrace_init_dyn_tracefs(struct dentry *d_tracer)
+ {
+-
+ 	trace_create_file("available_filter_functions", TRACE_MODE_READ,
+ 			d_tracer, NULL, &ftrace_avail_fops);
+ 
+@@ -7106,7 +7123,7 @@ static __init int ftrace_init_dyn_tracef
+ 	trace_create_file("touched_functions", TRACE_MODE_READ,
+ 			d_tracer, NULL, &ftrace_touched_fops);
+ 
+-	ftrace_create_filter_files(&global_ops, d_tracer);
++	ftrace_create_filter_files(NULL, d_tracer);
+ 
+ #ifdef CONFIG_FUNCTION_GRAPH_TRACER
+ 	trace_create_file("set_graph_function", TRACE_MODE_WRITE, d_tracer,
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -1255,7 +1255,7 @@ extern void clear_ftrace_function_probes
+ int register_ftrace_command(struct ftrace_func_command *cmd);
+ int unregister_ftrace_command(struct ftrace_func_command *cmd);
+ 
+-void ftrace_create_filter_files(struct ftrace_ops *ops,
++void ftrace_create_filter_files(struct trace_array *tr,
+ 				struct dentry *parent);
+ void ftrace_destroy_filter_files(struct ftrace_ops *ops);
+ 
+@@ -1278,11 +1278,11 @@ static inline void clear_ftrace_function
+ {
+ }
+ 
++#define ftrace_create_filter_files(tr, parent) do { } while (0)
+ /*
+  * The ops parameter passed in is usually undefined.
+  * This must be a macro.
+  */
+-#define ftrace_create_filter_files(ops, parent) do { } while (0)
+ #define ftrace_destroy_filter_files(ops) do { } while (0)
+ #endif /* CONFIG_FUNCTION_TRACER && CONFIG_DYNAMIC_FTRACE */
+ 
+--- a/kernel/trace/trace_functions.c
++++ b/kernel/trace/trace_functions.c
+@@ -101,7 +101,7 @@ int ftrace_create_function_files(struct
  		return ret;
- 
--	CLASS(hb, hb)(&key);
-+	CLASS(hbr, hbr)(&key);
-+	auto hb = hbr.hb;
- 	spin_lock(&hb->lock);
- retry_hb:
- 
-@@ -1275,8 +1275,9 @@ retry_hb:
- 			 * Acquire a reference for the leaving waiter to ensure
- 			 * valid futex_q::lock_ptr.
- 			 */
--			futex_hash_get(hb);
--			top_waiter->drop_hb_ref = true;
-+			if (futex_key_is_private(&key))
-+				top_waiter->drop_fph = futex_private_hash(key.private.mm);
-+
- 			__futex_unqueue(top_waiter);
- 			raw_spin_unlock_irq(&pi_state->pi_mutex.wait_lock);
- 			goto retry_hb;
---- a/kernel/futex/requeue.c
-+++ b/kernel/futex/requeue.c
-@@ -249,8 +249,8 @@ void requeue_pi_wake_futex(struct futex_
- 	 * Acquire a reference for the waiter to ensure valid
- 	 * futex_q::lock_ptr.
- 	 */
--	futex_hash_get(hb);
--	q->drop_hb_ref = true;
-+	if (futex_key_is_private(key))
-+		q->drop_fph = futex_private_hash(key->private.mm);
- 	q->lock_ptr = &hb->lock;
- 	task = READ_ONCE(q->task);
- 
-@@ -467,8 +467,10 @@ retry:
- 
- retry_private:
- 	if (1) {
--		CLASS(hb, hb1)(&key1);
--		CLASS(hb, hb2)(&key2);
-+		CLASS(hbr, hbr1)(&key1);
-+		CLASS(hbr, hbr2)(&key2);
-+		auto hb1 = hbr1.hb;
-+		auto hb2 = hbr2.hb;
- 
- 		futex_hb_waiters_inc(hb2);
- 		double_lock_hb(hb1, hb2);
-@@ -840,7 +842,8 @@ int futex_wait_requeue_pi(u32 __user *ua
- 	switch (futex_requeue_pi_wakeup_sync(&q)) {
- 	case Q_REQUEUE_PI_IGNORE:
- 		{
--			CLASS(hb, hb)(&q.key);
-+			CLASS(hbr, hbr)(&q.key);
-+			auto hb = hbr.hb;
- 			/* The waiter is still on uaddr1 */
- 			spin_lock(&hb->lock);
- 			ret = handle_early_requeue_pi_wakeup(hb, &q, to);
-@@ -910,11 +913,8 @@ int futex_wait_requeue_pi(u32 __user *ua
- 	default:
- 		BUG();
  	}
--	if (q.drop_hb_ref) {
--		CLASS(hb, hb)(&q.key);
--		/* Additional reference from requeue_pi_wake_futex() */
--		futex_hash_put(hb);
--	}
-+	/* Additional reference from requeue_pi_wake_futex() */
-+	futex_private_hash_put(q.drop_fph);
  
- out:
- 	if (to) {
---- a/kernel/futex/waitwake.c
-+++ b/kernel/futex/waitwake.c
-@@ -169,7 +169,8 @@ int futex_wake(u32 __user *uaddr, unsign
- 	if ((flags & FLAGS_STRICT) && !nr_wake)
- 		return 0;
+-	ftrace_create_filter_files(tr->ops, parent);
++	ftrace_create_filter_files(tr, parent);
  
--	CLASS(hb, hb)(&key);
-+	CLASS(hbr, hbr)(&key);
-+	auto hb = hbr.hb;
+ 	return 0;
+ }
+--- a/kernel/trace/trace_stack.c
++++ b/kernel/trace/trace_stack.c
+@@ -499,7 +499,7 @@ stack_trace_filter_open(struct inode *in
+ 	struct ftrace_ops *ops = inode->i_private;
  
- 	/* Make sure we really have tasks to wakeup */
- 	if (!futex_hb_waiters_pending(hb))
-@@ -266,8 +267,10 @@ retry:
- 
- retry_private:
- 	if (1) {
--		CLASS(hb, hb1)(&key1);
--		CLASS(hb, hb2)(&key2);
-+		CLASS(hbr, hbr1)(&key1);
-+		CLASS(hbr, hbr2)(&key2);
-+		auto hb1 = hbr1.hb;
-+		auto hb2 = hbr2.hb;
- 
- 		double_lock_hb(hb1, hb2);
- 		op_ret = futex_atomic_op_inuser(op, uaddr2);
-@@ -409,7 +412,7 @@ int futex_wait_multiple_setup(struct fut
- 	 * Make sure to have a reference on the private_hash such that we
- 	 * don't block on rehash after changing the task state below.
- 	 */
--	guard(private_hash)();
-+	guard(private_hash)(current->mm);
- 
- 	/*
- 	 * Enqueuing multiple futexes is tricky, because we need to enqueue
-@@ -446,7 +449,8 @@ retry:
- 		u32 val = vs[i].w.val;
- 
- 		if (1) {
--			CLASS(hb, hb)(&q->key);
-+			CLASS(hbr, hbr)(&q->key);
-+			auto hb = hbr.hb;
- 
- 			futex_q_lock(q, hb);
- 			ret = futex_get_value_locked(&uval, uaddr);
-@@ -620,7 +624,8 @@ retry:
- 
- retry_private:
- 	if (1) {
--		CLASS(hb, hb)(&q->key);
-+		CLASS(hbr, hbr)(&q->key);
-+		auto hb = hbr.hb;
- 
- 		futex_q_lock(q, hb);
+ 	/* Checks for tracefs lockdown */
+-	return ftrace_regex_open(ops, FTRACE_ITER_FILTER,
++	return ftrace_regex_open(NULL, ops, FTRACE_ITER_FILTER,
+ 				 inode, file);
+ }
  
 
 
