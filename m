@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A0147ACF6;
-	Sat, 12 Sep 2026 17:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A73345EA7;
+	Sat, 12 Sep 2026 17:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232782; cv=none; b=Z6ReuuxhlSwcUnXgtru/BCsTuUWF0vyeVm2t4tVArYWODNRD3i/aTSRcOLjMrJWHLVGZlT8RPdAg2EKbolhIwEWfNhWi+ETtoiVuX/PjXjNkZZmR98aK0oqTvzv+0dzNTN8jAUIabF5yRZa8EIYKxVD6jp+bukSCqjn0xsthnWI=
+	t=1789232787; cv=none; b=iHXhcR0ZTNMVx+hIR8CG1gTjs56BZ1j2Jd5t2g3bQa2q7bOmoZjTralMxv60H09Sa8V2JaeIVQMWpB0lPzhtrW9Ne9P+ebna29r6vLuA0TrBDhWs4cCCg27qsiMxDZRcgDPWsKBzwUUPyF/y8RkPjSGMyXjgHIRvaBvAoEthCJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232782; c=relaxed/simple;
-	bh=hYLDX18V+gVEBIKwSa4XylsQPYUtVXSd2UCRO+by3u0=;
+	s=arc-20240116; t=1789232787; c=relaxed/simple;
+	bh=QUl95VaREmkBx6d0DURYLCz0Glh6DvirUGZiok/Azts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r7KHMQkHLJbfg6MD24+4TWL0vkqM3+Z3JGAL+rk9m9sP5GC9Hn5K9yVhfkXkO/U6lPimMbg92XI5p0AJG3cB/a4WvWm519zAeHA3k32i+7LDxgxj7MS3hvJaPuAGVmX9Uy9JWh0KAZhSRBQ1qxUt9c2X+i8jc0eq/ch+NkhTAr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybGcpiUx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R3dHJ0kmvHevg19QH1jm/1oCF6iVmEA8tqqjOSPc2NYgEF+zQxXFBOiSXLFC3VazS+UDGGt+4ACAdU7Zd0zw5TufJXNgL+ZSVZd8TelzN3RG/wedUMoK87oXufbfrVQ8NHVUB7bHdQmHCDe2K+rNGikufsWJQCPlBlwN64UcvDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmYCtobu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybGcpiUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5F31F000FF;
-	Sat, 12 Sep 2026 17:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmYCtobu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1381F000FF;
+	Sat, 12 Sep 2026 17:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232780;
-	bh=5d4CNrRKo9G21TgIBAzOMrGLfJFG8axn3O1sDKvxUJw=;
+	s=korg; t=1789232785;
+	bh=GLC3JY1WfRq6B0sjNxEtih4LCsYrxUOfzH4IiT3MDXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ybGcpiUxH4bigBn6StxBgqXaHWJff4gfSQFU5S3RcDC+yA2/F1AD3xQOwYMN3pp/Y
-	 423QAs6VQY/G+u6eFUd/M+FRtVetFqWYe/bPyJmPw4W0U9bt21TjDnoHyZIUCA5r5x
-	 hzgpxPmPIFI3GZ5s4rlDkYNK9X6E24AbSKfIlJ0A=
+	b=VmYCtobuqSO13t1qdcYBGHmzVxhek0HrNqP9RgRAdMX/fDTUoRbXTmfOh67PvqkT8
+	 j/Hxq1+zHtjESgX/4NTZ0UN2c3WEcDMbBw/dOT4uBrsFfJIi2TzK9dm3IIy1sompiJ
+	 iuXGVWY3vjqUtlM7QzAuvCqcoGJjC+kNRR3wWd38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.15 037/935] nfsd: return NFS4ERR_NOTSUPP for unsupported netloc4 types
-Date: Sat, 12 Sep 2026 08:51:07 +0200
-Message-ID: <20260912065527.690876565@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 038/935] nfsd: sample writeback error cursor before async COPY loop
+Date: Sat, 12 Sep 2026 08:51:08 +0200
+Message-ID: <20260912065527.713800664@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,56 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 45b06a75086f331f52cbb81223a59421d43f8809 upstream.
+commit 20a67a7d18221af736f124770c2c5e859b479046 upstream.
 
-nfsd4_decode_nl4_server() handled only NL4_NETADDR and returned
-nfserr_bad_xdr for NL4_NAME and NL4_URL. Those forms are well-formed XDR,
-so BADXDR is misleading -- the request is unsupported, not malformed.
+_nfsd_copy_file_range() samples dst->f_wb_err into "since"
+after the copy loop, then uses it to detect writeback errors
+via filemap_check_wb_err() once vfs_fsync_range() returns.
+Because the nfsd_file cache reuses a single struct file
+across requests targeting the same inode, a concurrent
+COMMIT or stable WRITE on dst advances dst->f_wb_err to the
+current mapping->wb_err via file_check_and_advance_wb_err()
+during its own vfs_fsync_range(). If that advancement lands
+between the writeback error appearing in mapping->wb_err
+and the COPY worker sampling "since", the worker captures
+the already-advanced cursor, errseq_check() sees cur ==
+since and returns zero, and NFSD4_COPY_F_COMMITTED is set
+even though writeback failed. CB_OFFLOAD then encodes
+wr_stable_how = FILE_SYNC4, the client treats the copied
+data as durable, and the failure becomes silent data loss.
 
-Decode and discard the utf8str_cis for NL4_NAME and NL4_URL to keep the
-stream consistent, and return nfserr_notsupp. nfsd4_proc_compound() honors
-a decode-time op->status, so the op fails without executing.
+Sample since once at the start of the function. The cursor
+then reflects state in effect before this COPY issues any
+writes, and filemap_check_wb_err() detects any error that
+occurs during the copy regardless of which thread first
+observes it. This matches the pattern used by
+nfsd_vfs_write() and nfsd4_clone_file_range().
 
-Fixes: 84e1b21d5ec4 ("NFSD add ca_source_server<> to COPY")
+Closes: https://sashiko.dev/#/patchset/20260522194441.436065-1-cel@kernel.org?part=1
+Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260710-nfsd-testing-v3-7-a0ff7db6aa3e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260522214558.460859-1-cel@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/nfsd/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -1918,6 +1918,7 @@ static __be32 nfsd4_decode_nl4_server(st
- {
- 	struct nfs42_netaddr *naddr;
- 	__be32 *p;
-+	u32 str_len;
- 
- 	if (xdr_stream_decode_u32(argp->xdr, &ns->nl4_type) < 0)
- 		return nfserr_bad_xdr;
-@@ -1947,6 +1948,18 @@ static __be32 nfsd4_decode_nl4_server(st
- 			return nfserr_bad_xdr;
- 		memcpy(naddr->addr, p, naddr->addr_len);
- 		break;
-+	case NL4_NAME:
-+	case NL4_URL:
-+		/*
-+		 * Well-formed XDR, but only NL4_NETADDR is supported. Consume
-+		 * the utf8str_cis to keep the stream aligned, then return
-+		 * NFS4ERR_NOTSUPP rather than the misleading NFS4ERR_BADXDR.
-+		 */
-+		if (xdr_stream_decode_u32(argp->xdr, &str_len) < 0)
-+			return nfserr_bad_xdr;
-+		if (!xdr_inline_decode(argp->xdr, str_len))
-+			return nfserr_bad_xdr;
-+		return nfserr_notsupp;
- 	default:
- 		return nfserr_bad_xdr;
- 	}
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1607,6 +1607,7 @@ static ssize_t _nfsd_copy_file_range(str
+ 	/* See RFC 7862 p.67: */
+ 	if (bytes_total == 0)
+ 		bytes_total = ULLONG_MAX;
++	since = READ_ONCE(dst->f_wb_err);
+ 	do {
+ 		if (kthread_should_stop())
+ 			break;
+@@ -1621,7 +1622,6 @@ static ssize_t _nfsd_copy_file_range(str
+ 	} while (bytes_total > 0 && nfsd4_copy_is_async(copy));
+ 	/* for a non-zero asynchronous copy do a commit of data */
+ 	if (nfsd4_copy_is_async(copy) && copy->cp_res.wr_bytes_written > 0) {
+-		since = READ_ONCE(dst->f_wb_err);
+ 		end = copy->cp_dst_pos + copy->cp_res.wr_bytes_written - 1;
+ 		status = vfs_fsync_range(dst, copy->cp_dst_pos, end, 0);
+ 		if (!status)
 
 
