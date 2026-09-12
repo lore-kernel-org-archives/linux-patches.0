@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEAB2BDC0E;
-	Sat, 12 Sep 2026 11:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00568427F91;
+	Sat, 12 Sep 2026 11:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212299; cv=none; b=a31iT8bFdKhJmf1ELgLWs3p5l4YHKkTgkmhkp8kTXu/ELx0BbJt3kdghOKgkwechvGADOj+gNTEc3odS0FVjaJZl1d9Ld/sglBmjqSudmQlzcunPldoLTzq4dYyPd7Dr9CYxWNXhI+9HcqGncWhOVeG5Pm2F2QC8zS0xetPnXB0=
+	t=1789212304; cv=none; b=H87E6S9gUR5lZesT+Fh73jDVfaEWgdJ5w+t4dM5IIyGTIe+bwKiJaMctkgbgPvuOvng8QU9HPwgZeDs/xiAeetimq6mpvxi7XdVrj5TJ8aq5LkfxUWii7MpOSuYah/cIdLq9j16bAiDVLzLko4fY1+n6CK/YmYZcGwedH84O494=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212299; c=relaxed/simple;
-	bh=wPQhqm80PsIgXZFCwylPOVgs/MhoFEsVAah0rSTDnNQ=;
+	s=arc-20240116; t=1789212304; c=relaxed/simple;
+	bh=p4/lcChOvF10J6Jdq0g6PjsVFvpgmNFgU8JsRfg9oro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFFcon/WnA+R+wycs9942HRo8b6GrYUny8I/8+Nrl44lQ7YUG4PnTwTjiH1nBC0QlfwXiOtvnLgyeYLiudV7oO3PXd9CTciuYdKKTGA1icblM3p1pwRxKve5MG4MzI32SSrnEMNra8RhfzmPFCTQnndftgn5FNcGwqnUsHVVVsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/Rm9Zbw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PE2ERX6Wmk01Iu0seHVE7pp4OhDxTaL/5fSyW/RlolF2s4AjGkiBrriidjqghYV8xZqbQOtuet0S9gTdq2i3RbLcDDu3hDu48Xqc1DOaAc30DEklbK34XMdUtcqeKWaAHKrKszDGcIIuUdfHMUM00lYkP/1Nt52KAFO2B+IQmvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsU1cX3K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/Rm9Zbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20631F000FF;
-	Sat, 12 Sep 2026 11:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsU1cX3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE621F000FF;
+	Sat, 12 Sep 2026 11:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212297;
-	bh=ogSS3L6f0/fE98DTHu8pArrh5gNwqDRORhTPQikO2ws=;
+	s=korg; t=1789212302;
+	bh=/BUyoXAsx6hB2zUovWsOWeg1kmYG9k0wIihVcne7EVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/Rm9ZbwpT6E1FZAk42Dg1c2vYPEtCUqnozJzEMWve2nRqNT695DicZb/pPh8KsEA
-	 F9BrqqPBZmWf+oZ72Uoe5rP43Ziyo+bysSL6984R0khAEIyU6vqLhgznfKvTYNksBj
-	 JnWA4qQgSDNaJq43aZsqygncyWqd0hc8vQ5MnrH4=
+	b=dsU1cX3KhfEMjQcVorfn2LXgFkskdb+X7/GHpeV7Osf5WgpBXJjiJ2FTXlql1iv1n
+	 QrF0APKfc450JMBJ6QkQG8SPtKJwpNrJL5FPD7McA/S/pAqcFIDeloU+qsruhVNupT
+	 M9Lww0jUs2ypTLOSPH44TIXmc3E19g6JqwvbjMTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	Allison Henderson <achender@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1407/1518] net/sched: act_ife: Only operate on Ethernet frames
-Date: Sat, 12 Sep 2026 08:59:36 +0200
-Message-ID: <20260912065655.376748419@linuxfoundation.org>
+Subject: [PATCH 6.18 1408/1518] net/rds: use wq_has_sleeper() in rds_cong_map_updated()
+Date: Sat, 12 Sep 2026 08:59:37 +0200
+Message-ID: <20260912065655.399090084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,196 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 5b483f7791b079bb97d411f1066652ff659207ff ]
+[ Upstream commit d4f484661961636eb90d287050959e613795f73a ]
 
-act_ife encapsulates/decapsulates the original Ethernet header and uses
-skb->dev->hard_header_len as the length of that header. That is only
-correct for Ethernet devices: on a device where hard_header_len does not
-match the L2 header that was actually pulled (PPP reports PPP_HDRLEN
-while nothing is stripped on ingress), the ingress skb_push()/skb_pull()
-use the wrong length and can hit skb_under_panic when headroom is tight.
+rds_cong_map_updated() runs after a peer's congestion map has been
+rewritten (by rds_tcp_cong_recv() and rds_ib_cong_recv(), or the
+clear-all in the loopback and IB send-completion paths).  It bumps
+rds_cong_generation and then checks waitqueue_active() on
+map->m_waitq and on rds_poll_waitq to decide whether anyone needs
+waking.  atomic_inc() carries no ordering and waitqueue_active() is a
+plain load, so nothing orders the map and generation stores before
+the wait queue reads.  The waiters do the mirror image: rds_cong_wait()
+adds itself to m_waitq and then tests the port bit, and rds_poll()
+registers on rds_poll_waitq and then reads the generation.  That is
+the store-buffering pattern described above waitqueue_active() in
+include/linux/wait.h - the updater can observe an empty wait queue
+while the waiter still observes the port as congested, and no wake-up
+is issued.
 
-IFE is Ethernet-only by design - it builds an outer ethhdr, rewrites
-h_source/h_dest/h_proto, and calls eth_type_trans() on decode - so
-instead of trying to make the offsets work for arbitrary link types,
-simply drop packets that do not carry an Ethernet header.
+rds_cong_wait() is an interruptible sleep with no timeout, so a
+sender blocked on a congested port stays blocked until the next
+congestion update from that peer arrives or a signal is delivered.
+A poll() waiter misses the map-updated notification the same way.
 
-Checking skb->dev->type alone is not enough. We have to cater for a
-corner case where mirred can redirect an skb from a non-Ethernet device
-to an Ethernet one, and skb->dev then says nothing about the framing the
-skb actually has: an skb redirected from ppp0 reaches the target's ingress
-hook with mac_len 0 and no Ethernet header at all. So at ingress also
-require mac_len to be ETH_HLEN. On egress mac_len is not maintained, so
-the device type is all we have; a bogus redirect there yields a malformed
-frame rather than an out-of-bounds push, and it would be malformed with or
-without IFE.
+Use wq_has_sleeper(), which is waitqueue_active() preceded by the
+required full barrier, as rds_tcp_state_change() already does for
+the same pattern.
 
-That corner case is not theoretical - redirecting from ppp0 into a veth
-that has an ife encode action on its ingress hook panics without this
-patch:
-
-  skbuff: skb_under_panic: len:98 put:14 head:ffff88800e410000
-          data:ffff88800e40fff5 tail:0x57 end:0x640 dev:veth3
-  kernel BUG at net/core/skbuff.c:214!
-  Call Trace:
-   skb_push (net/core/skbuff.c:224 net/core/skbuff.c:2657)
-   tcf_ife_act (net/sched/act_ife.c:829 net/sched/act_ife.c:874)
-   tc_run (net/core/dev.c:4463)
-   netif_receive_skb (net/core/dev.c:6463 net/core/dev.c:6522)
-   tcf_mirred_to_dev (net/sched/act_mirred.c:248 net/sched/act_mirred.c:328)
-   tcf_mirred_act (net/sched/act_mirred.c:489)
-   tc_run (net/core/dev.c:4463)
-   process_backlog (net/core/dev.c:6728)
-
-With Ethernet framing guaranteed, use ETH_HLEN instead of
-hard_header_len.
-
-Fixes: 295a6e06d21e ("net/sched: act_ife: Change to use ife module")
-Reported-by: vega@nebusec.ai
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260821164031.32824-1-victor@mojatatu.com
+Fixes: 922cb17a5c81 ("RDS: Congestion-handling code")
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260822052647.88318-1-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ife/ife.c       | 14 +++++++-------
- net/sched/act_ife.c | 32 ++++++++++++++++++++++++++++----
- 2 files changed, 35 insertions(+), 11 deletions(-)
+ net/rds/cong.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ife/ife.c b/net/ife/ife.c
-index 7a75947a31e31..2ddf725d3389e 100644
---- a/net/ife/ife.c
-+++ b/net/ife/ife.c
-@@ -37,7 +37,7 @@ void *ife_encode(struct sk_buff *skb, u16 metalen)
- 	 * where ORIGDATA = original ethernet header ...
- 	 */
- 	int hdrm = metalen + IFE_METAHDRLEN;
--	int total_push = hdrm + skb->dev->hard_header_len;
-+	int total_push = hdrm + ETH_HLEN;
- 	struct ifeheadr *ifehdr;
- 	struct ethhdr *iethh;	/* inner ether header */
- 	int skboff = 0;
-@@ -50,9 +50,9 @@ void *ife_encode(struct sk_buff *skb, u16 metalen)
- 	iethh = (struct ethhdr *) skb->data;
+diff --git a/net/rds/cong.c b/net/rds/cong.c
+index 8b689ebbd5b52..c85af56e42e73 100644
+--- a/net/rds/cong.c
++++ b/net/rds/cong.c
+@@ -256,9 +256,9 @@ void rds_cong_map_updated(struct rds_cong_map *map, uint64_t portmask)
+ 	  map, &map->m_addr);
+ 	rds_stats_inc(s_cong_update_received);
+ 	atomic_inc(&rds_cong_generation);
+-	if (waitqueue_active(&map->m_waitq))
++	if (wq_has_sleeper(&map->m_waitq))
+ 		wake_up(&map->m_waitq);
+-	if (waitqueue_active(&rds_poll_waitq))
++	if (wq_has_sleeper(&rds_poll_waitq))
+ 		wake_up_all(&rds_poll_waitq);
  
- 	__skb_push(skb, total_push);
--	memcpy(skb->data, iethh, skb->dev->hard_header_len);
-+	memcpy(skb->data, iethh, ETH_HLEN);
- 	skb_reset_mac_header(skb);
--	skboff += skb->dev->hard_header_len;
-+	skboff += ETH_HLEN;
- 
- 	/* total metadata length */
- 	ifehdr = (struct ifeheadr *) (skb->data + skboff);
-@@ -69,12 +69,12 @@ void *ife_decode(struct sk_buff *skb, u16 *metalen)
- 	int total_pull;
- 	u16 ifehdrln;
- 
--	if (!pskb_may_pull(skb, skb->dev->hard_header_len + IFE_METAHDRLEN))
-+	if (!pskb_may_pull(skb, ETH_HLEN + IFE_METAHDRLEN))
- 		return NULL;
- 
--	ifehdr = (struct ifeheadr *) (skb->data + skb->dev->hard_header_len);
-+	ifehdr = (struct ifeheadr *)(skb->data + ETH_HLEN);
- 	ifehdrln = ntohs(ifehdr->metalen);
--	total_pull = skb->dev->hard_header_len + ifehdrln;
-+	total_pull = ETH_HLEN + ifehdrln;
- 
- 	if (unlikely(ifehdrln < 2))
- 		return NULL;
-@@ -82,7 +82,7 @@ void *ife_decode(struct sk_buff *skb, u16 *metalen)
- 	if (unlikely(!pskb_may_pull(skb, total_pull + ETH_HLEN)))
- 		return NULL;
- 
--	ifehdr = (struct ifeheadr *)(skb->data + skb->dev->hard_header_len);
-+	ifehdr = (struct ifeheadr *)(skb->data + ETH_HLEN);
- 	skb_set_mac_header(skb, total_pull);
- 	__skb_pull(skb, total_pull);
- 	*metalen = ifehdrln - IFE_METAHDRLEN;
-diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
-index 3333714b68650..b0d66ba80baad 100644
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -28,6 +28,7 @@
- #include <uapi/linux/tc_act/tc_ife.h>
- #include <net/tc_act/tc_ife.h>
- #include <linux/etherdevice.h>
-+#include <linux/if_arp.h>
- #include <net/ife.h>
- #include <net/tc_wrapper.h>
- 
-@@ -723,7 +724,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
- 	tcf_lastuse_update(&ife->tcf_tm);
- 
- 	if (skb_at_tc_ingress(skb))
--		skb_push(skb, skb->dev->hard_header_len);
-+		skb_push(skb, ETH_HLEN);
- 
- 	tlv_data = ife_decode(skb, &metalen);
- 	if (unlikely(!tlv_data)) {
-@@ -795,7 +796,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
- 	   where ORIGDATA = original ethernet header ...
- 	 */
- 	u16 metalen = ife_get_sz(skb, p);
--	int hdrm = metalen + skb->dev->hard_header_len + IFE_METAHDRLEN;
-+	int hdrm = metalen + ETH_HLEN + IFE_METAHDRLEN;
- 	unsigned int skboff = 0;
- 	int new_len = skb->len + hdrm;
- 	bool exceed_mtu = false;
-@@ -826,7 +827,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
- 	}
- 
- 	if (skb_at_tc_ingress(skb))
--		skb_push(skb, skb->dev->hard_header_len);
-+		skb_push(skb, ETH_HLEN);
- 
- 	ife_meta = ife_encode(skb, metalen);
- 	if (!ife_meta)
-@@ -856,11 +857,27 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
- 	oethh->h_proto = htons(p->eth_type);
- 
- 	if (skb_at_tc_ingress(skb))
--		skb_pull(skb, skb->dev->hard_header_len);
-+		skb_pull(skb, ETH_HLEN);
- 
- 	return action;
- }
- 
-+/* IFE encapsulates the original Ethernet header and, on decode, expects to
-+ * find one, so it can only ever work on skbs that carry one. Loopback carries
-+ * Ethernet header as well, so it qualifies here.
-+ * At ingress, also verify that the L2 header about to be pushed back really
-+ * is an Ethernet header because the skb could've been redirected with mirred
-+ * from a non-Ethernet device.
-+ */
-+static bool tcf_ife_is_eth_skb(const struct sk_buff *skb)
-+{
-+	if (skb->dev->type != ARPHRD_ETHER &&
-+	    skb->dev->type != ARPHRD_LOOPBACK)
-+		return false;
-+
-+	return !skb_at_tc_ingress(skb) || skb->mac_len == ETH_HLEN;
-+}
-+
- TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
- 				  const struct tc_action *a,
- 				  struct tcf_result *res)
-@@ -869,6 +886,13 @@ TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
- 	struct tcf_ife_params *p;
- 	int ret;
- 
-+	if (unlikely(!tcf_ife_is_eth_skb(skb))) {
-+		bstats_update(this_cpu_ptr(ife->common.cpu_bstats), skb);
-+		tcf_lastuse_update(&ife->tcf_tm);
-+		qstats_cpu_drop_inc(ife->common.cpu_qstats);
-+		return TC_ACT_SHOT;
-+	}
-+
- 	p = rcu_dereference_bh(ife->params);
- 	if (p->flags & IFE_ENCODE) {
- 		ret = tcf_ife_encode(skb, a, res, p);
+ 	if (portmask && !list_empty(&rds_cong_monitor)) {
 -- 
 2.53.0
 
