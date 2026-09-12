@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A93D3AFD15;
-	Sat, 12 Sep 2026 09:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEFC299920;
+	Sat, 12 Sep 2026 09:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203758; cv=none; b=Ds2FN/gZ4x1qj8dy0JhCXS4CMKcR8JhnFKTZzFVC8C1vPgT3nim1Spa7fQa71mJZMT3knN0T7r3tonhLCfNY8nsb3tJW6AsWbCpYDW8jzlBRDD32lQ+h3vBHSKFhCLE2oSrQqO96GtvXrfVRNew2+5Z50IV8O4TEC+llcoX09us=
+	t=1789203763; cv=none; b=ORjNA2lyCO+JhEHtsh2KPonAJXfOIRck4ATQLWZIOtbQmEAxrKVv4hB8VB/AAS7AoMbxe1/Qw79f7BHNqKL/QkHsgQpqs/K3VQ48BoOhuWXGMOeZ8Cd6Zs3j4I5lNS1HRS3xlk3k5kWV3eOoLbKqvLtsGrxtbpESxxMlIx3+9oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203758; c=relaxed/simple;
-	bh=o7O9IorgzD7uAFQrGUfaZCKyqopS8nRpUl2/o7ZqoKk=;
+	s=arc-20240116; t=1789203763; c=relaxed/simple;
+	bh=He7/4KJvBpYs1gRyCXH20QZxxXg5g5U14JBvsr58QKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zn3f9aanIdBQfDoUjS5zkrRFB+ojjKpuZb0HHr/B+tM9JPnBG7J/sWr6q2Wag65NmaP2Ue2d0Ax6E3b9G0Q444irtsZnBQ10GYL5nCkW/EeGODEH9q0Y8gWpJoV0ufk9RrO4dv7cgwR5ODgsmBALeyKA4V7xXORte9NO5m6aNmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukLAItxF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uWfFFH4RrIOatSwx9X0fBjDmQ07aJyD+TjONyuBb5vD/kUkTNJx8LRHxxLyz66zVqSc4y959DUZfMKRQrLyaW1g0vZ/SHpgeQm0q5fYDxAlymtgbltTHuWFrZVBAMuqWcKDOE/yvziMAPYI+9jDU5nsEOFHsY26XS+9D3j0B97s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxyRbH+u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukLAItxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537C81F000FF;
-	Sat, 12 Sep 2026 09:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxyRbH+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8821F000FF;
+	Sat, 12 Sep 2026 09:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203757;
-	bh=5I39VWYSWqSupmZrOuJrhreDzu+f/6TeskLfZZ2aZlM=;
+	s=korg; t=1789203762;
+	bh=HBne8Py8nA9Jg+MK+szQNTdS+5rQYcymKtBh+HSdhIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ukLAItxF6GCJe0ahF0MUdOp0VKgZMj8AzQ9XmcRaWmfbowXseUEH6c8amx1z3CSuq
-	 gEiEvIODBBEdPZCEP/iFl6jNjrxL8mG7QySZne9AmzfQRPTgd0t4thMGBrkojGXxO3
-	 3OTE828mD4acBov0QCpnB0qOBGAr0OEa+EbLIX10=
+	b=vxyRbH+unPONu0YgNTZXXe70YDIF8afiWN6aE35fk1gfW8Zd3x3oDWnHXBpztIkw/
+	 Ko3fnPJgboG2CnP6IEyeX7SoZkAxvXwM+r5p2bgl3sbNfYKoVvHwCCeZhVq7bbDxYT
+	 hhlQuoBE8UCbA4WBMFwz3W/X8WbxKS6ifffGVWRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
 	Ian Rogers <irogers@google.com>,
+	Song Liu <song@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1474/1815] perf dso: Guard against cache underflow on short reads in dso_cache__memcpy()
-Date: Sat, 12 Sep 2026 08:53:44 +0200
-Message-ID: <20260912065723.612865973@linuxfoundation.org>
+Subject: [PATCH 7.2 1475/1815] perf dso: Replace assert with runtime check in dso__read_symbol()
+Date: Sat, 12 Sep 2026 08:53:45 +0200
+Message-ID: <20260912065723.635280828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,7 +48,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
@@ -56,65 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 390a9461cd73bdd13acc0f6d763618ae1ff8fa17 ]
+[ Upstream commit 62972e5644e48255dcc715e6ec4401882f8b37d1 ]
 
-dso_cache__memcpy() computes cache_offset = offset - cache->offset,
-then cache_size = min(cache->size - cache_offset, size).  The RB tree
-lookup in __dso_cache__find() matches using the full
-DSO__DATA_CACHE_SIZE window, but cache->size reflects the actual pread
-return value from dso_cache__populate().
+dso__read_symbol() asserts that len <= jited_prog_len, where len comes
+from sym->end - sym->start (parsed from PERF_RECORD_KSYMBOL in
+perf.data).  Both values originate from untrusted file input.
 
-A short pread (e.g. near end-of-file) makes cache->size smaller than
-DSO__DATA_CACHE_SIZE.  If a subsequent access targets an offset past
-cache->offset + cache->size but within the DSO__DATA_CACHE_SIZE
-window, the cache entry is found but cache_offset exceeds cache->size.
-Since both are u64, the subtraction cache->size - cache_offset wraps
-to a large value, min() selects the caller's size, and memcpy reads
-out of bounds.
+With NDEBUG (production builds), the assert is compiled out, allowing
+an out-of-bounds heap read when the BPF program buffer is accessed.
+Without NDEBUG, a crafted perf.data crashes perf with an assertion
+failure.
 
-Return 0 for an offset past the valid cached data.  For a regular
-file a short pread only happens at end-of-file, so 0 is what a direct
-pread() at that offset would return: cached_io() stops its read loop
-as on EOF.  Re-reading from the backing file would not help — a
-second pread at the same offset returns the same short count.
+Replace the assert with a runtime bounds check that returns NULL with
+an appropriate error code, matching the existing error handling
+pattern in this function.
 
-Fixes: 366df72657e0 ("perf dso: Refactor dso_cache__read()")
+Fixes: aa04707f507e ("perf dso: Support BPF programs in dso__read_symbol()")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Song Liu <song@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ tools/perf/util/dso.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 60aa77f797851..4dd64069c4348 100644
+index 4dd64069c4348..42bfe30a3b518 100644
 --- a/tools/perf/util/dso.c
 +++ b/tools/perf/util/dso.c
-@@ -1014,7 +1014,20 @@ static ssize_t dso_cache__memcpy(struct dso_cache *cache, u64 offset, u8 *data,
- 				 u64 size, bool out)
- {
- 	u64 cache_offset = offset - cache->offset;
--	u64 cache_size   = min(cache->size - cache_offset, size);
-+	u64 cache_size;
-+
-+	/*
-+	 * The RB tree matches using DSO__DATA_CACHE_SIZE, but a short
-+	 * pread may leave cache->size smaller.  For a regular file a
-+	 * short pread only happens at end-of-file, so an offset past
-+	 * the valid data is EOF: return 0, matching what a direct
-+	 * pread() at that offset would return, and cached_io() then
-+	 * stops its read loop.
-+	 */
-+	if (cache_offset >= cache->size)
-+		return 0;
-+
-+	cache_size = min(cache->size - cache_offset, size);
- 
- 	if (out)
- 		memcpy(data, cache->data + cache_offset, cache_size);
+@@ -2038,7 +2038,12 @@ const u8 *dso__read_symbol(struct dso *dso, const char *symfs_filename,
+ 			errno = SYMBOL_ANNOTATE_ERRNO__BPF_MISSING_BTF;
+ 			return NULL;
+ 		}
+-		assert(len <= info_linear->info.jited_prog_len);
++		if (len > info_linear->info.jited_prog_len) {
++			pr_debug("BPF symbol length %zu exceeds jited_prog_len %u\n",
++				 len, info_linear->info.jited_prog_len);
++			errno = SYMBOL_ANNOTATE_ERRNO__BPF_MISSING_BTF;
++			return NULL;
++		}
+ 		*out_buf_len = len;
+ 		return (const u8 *)(uintptr_t)(info_linear->info.jited_prog_insns);
+ #else
 -- 
 2.53.0
 
