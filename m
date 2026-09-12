@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7FD24CEEA;
-	Sat, 12 Sep 2026 11:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE6C221F26;
+	Sat, 12 Sep 2026 11:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211015; cv=none; b=Ujtc/HmchIrC913J4nF9hK/oXrYmd4oXIjb6pkHkGfOznxSCwrWLNVC+1zn1MMiRuQX3c68lGSubhgJe9S0h+v4hQlxM67qRwhQohLiMKSSfXH/xFNwUNbBsw23iSv+222fWkf6MMD/hJcS88/CB0zp82ITK1AHQiiy60gMduQo=
+	t=1789211020; cv=none; b=AP2ArfDLroQk2boajmCSPyIL80h+5fXaa2t7Bd3mSqe6tdjiApQVY1oBZRRumQ5MSZR9pLzLp6gyOO5I5SVDO5pZ3vEgr/KvAzz45kdBnCEdGsNQgJNDPwzg/TU8UR9hsFDPJJ6s4vG2felp+iz9ZW9FuOzImIXfppE137US2E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211015; c=relaxed/simple;
-	bh=kxfUNLfbyxN3WoPe1x0h9ujt2an+INThWUYTfeMDCUI=;
+	s=arc-20240116; t=1789211020; c=relaxed/simple;
+	bh=UnFgcr5nEXDaq9NOhBENdUvhdgvrYttazc4D8DW52vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqPr7GcfWVKKEzIskb+YuJ0uzuuRkfwYjlpAd4rljayfr3U+9FYr4PRZdurhSZS2GO5aDsST1CWesDIsK5KsHH5L8mLVGUfud8RrtQfzMlMlSu4mFJy2WPWMBek65gHqjDQ3EHt5+piyh0ufl15uRm0/MNDh22dzHPHWYq34CiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrxtR+IU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aFHhTall97iRuKQDbZRZeIv3MWWUxd8y+KxBvWzLTnvAOFq51sD1ncetydkkOBg5RZvzHuByVL94LqTpQ7gXxDBqjNwqQkiURUsTRkLEBLEuPIStVBs4RMA2/pUOZIEDwumdIzAGxmOvU9WeOWT3x7v2V1qwtDidXXF6nH6x/yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/ijF/7k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrxtR+IU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89AF1F000FF;
-	Sat, 12 Sep 2026 11:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/ijF/7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93271F000FF;
+	Sat, 12 Sep 2026 11:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211013;
-	bh=IrWePbdG9TzZptM63v/9O0whMc0DPzCD5/oAsMeI2q0=;
+	s=korg; t=1789211018;
+	bh=g6Ek2/hwBaRgKzXWnrhpWj4yo/sANF/nIcWs1+SwlcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CrxtR+IUQg1ZAZD+nPo2G663w5olPyef1QpK/0CVBMcHBGaC0QQY12O4v2ARmligb
-	 utwGHs1E/Dd3NGnqewpV680EBBU1lqLLJgmSmWr0eXIzSovnk9uXInZd0FZ0b7dqfw
-	 bas/KT5FsICOOp9g1fYLPbNuKTaeQlJnOe57P7OU=
+	b=q/ijF/7kTayID/aeldV6rU27mod2Px7tJzUzvtccLZDBZZOzUsIIOFtBbRyHj0Lrt
+	 4xhfDNETBajlIrVN9m3NmMKSJPQa3zg8sJCwSTqHb3JCKuLae9ngIEK+nNFb+weZy6
+	 oZwTpJdAy4q10bBG4BiPjJ+KBSnbBEMFb1jf2YE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LiangCheng Wang <zaq14760@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1142/1518] ASoC: fsl-asoc-card: defer probe when the CPU DAI device is not ready
-Date: Sat, 12 Sep 2026 08:55:11 +0200
-Message-ID: <20260912065649.292626981@linuxfoundation.org>
+Subject: [PATCH 6.18 1143/1518] UBI: Preserve torture flag when rescheduling failed erasures
+Date: Sat, 12 Sep 2026 08:55:12 +0200
+Message-ID: <20260912065649.315284299@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,45 +51,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LiangCheng Wang <zaq14760@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 0286324da660875dc504fd65b3be87e9c8b9a547 ]
+[ Upstream commit 420477a84f1e52babfe60a43dbdd0988ed956845 ]
 
-fsl_asoc_card_probe() hard-fails with -EINVAL when the CPU DAI (SAI)
-platform device is not found. Like the codec, the CPU DAI may just be
-probed later than the machine driver; the order is not guaranteed and
-varies across kernel versions, so a permanent -EINVAL leaves the card
-unregistered with no analog playback or capture.
+In __erase_worker(), when ubi_sync_erase() returns -EINTR, -ENOMEM,
+-EAGAIN, or -EBUSY, the physical eraseblock is rescheduled for erasure
+via schedule_erase() with the torture flag hardcoded to 0. This
+unconditionally drops the torture request.
 
-Defer probe instead, mirroring commit e396dec46c56 ("ASoC:
-fsl-asoc-card: Defer probe when fail to find codec device").
+If the error occurred before torture_peb() completed (e.g., -ENOMEM
+from the ec_hdr allocation in ubi_sync_erase(), errors from
+self_check_not_bad()/nor_erase_prepare() in ubi_io_sync_erase(), or
+torture_peb() failing mid-test because its internal do_sync_erase()/
+ubi_io_read()/ubi_io_write() returned one of the above error codes),
+the torture test was never finished. Such a PEB may reach the free
+pool without being tortured, defeating the purpose of the torture
+test for detecting marginally-bad eraseblocks.
 
-Tested on i.MX8MP with an ALC5672 on SAI3: the card that failed to
-register on v6.18 now comes up during boot.
+If the error occurred after torture_peb() succeeded (the final
+do_sync_erase() in ubi_io_sync_erase() or ubi_io_write_ec_hdr() in
+ubi_sync_erase() failed), the torture has already been done and need
+not be repeated.
 
-Fixes: 708b4351f08c ("ASoC: fsl: Add Freescale Generic ASoC Sound Card with ASRC support")
-Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
-Link: https://patch.msgid.link/20260805-fsl-asoc-defer-cpu-dai-v1-1-43f7f538e384@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Pass the torture flag by pointer to ubi_sync_erase() and
+ubi_io_sync_erase(), and clear it to zero once torture_peb() has
+completed successfully. __erase_worker() then forwards the updated
+wl_wrk->torture to schedule_erase(): torture already done is dropped,
+torture not completed is preserved across the reschedule.
+
+Fixes: 784c145444e7 ("UBI: fix error handling in erase worker")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/ubi/attach.c  |  4 ++--
+ drivers/mtd/ubi/fastmap.c |  6 +++---
+ drivers/mtd/ubi/io.c      | 11 +++++++----
+ drivers/mtd/ubi/ubi.h     |  4 ++--
+ drivers/mtd/ubi/wl.c      | 15 +++++++++------
+ 5 files changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 71113886e494b..f660eeb8e5451 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -651,8 +651,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+diff --git a/drivers/mtd/ubi/attach.c b/drivers/mtd/ubi/attach.c
+index 884171871d0e5..2b1629fdb41bb 100644
+--- a/drivers/mtd/ubi/attach.c
++++ b/drivers/mtd/ubi/attach.c
+@@ -771,7 +771,7 @@ void ubi_remove_av(struct ubi_attach_info *ai, struct ubi_ainf_volume *av)
+ static int early_erase_peb(struct ubi_device *ubi,
+ 			   const struct ubi_attach_info *ai, int pnum, int ec)
+ {
+-	int err;
++	int err, torture = 0;
+ 	struct ubi_ec_hdr *ec_hdr;
  
- 	cpu_pdev = of_find_device_by_node(cpu_np);
- 	if (!cpu_pdev) {
--		dev_err(&pdev->dev, "failed to find CPU DAI device\n");
--		ret = -EINVAL;
-+		ret = dev_err_probe(&pdev->dev, -EPROBE_DEFER,
-+				    "failed to find CPU DAI device\n");
- 		goto fail;
+ 	if ((long long)ec >= UBI_MAX_ERASECOUNTER) {
+@@ -790,7 +790,7 @@ static int early_erase_peb(struct ubi_device *ubi,
+ 
+ 	ec_hdr->ec = cpu_to_be64(ec);
+ 
+-	err = ubi_io_sync_erase(ubi, pnum, 0);
++	err = ubi_io_sync_erase(ubi, pnum, &torture);
+ 	if (err < 0)
+ 		goto out_free;
+ 
+diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
+index 9a4940874be5b..465ea97463e6d 100644
+--- a/drivers/mtd/ubi/fastmap.c
++++ b/drivers/mtd/ubi/fastmap.c
+@@ -1488,7 +1488,7 @@ static void return_fm_pebs(struct ubi_device *ubi,
+  */
+ int ubi_update_fastmap(struct ubi_device *ubi)
+ {
+-	int ret, i, j;
++	int ret, i, j, torture = 0;
+ 	struct ubi_fastmap_layout *new_fm, *old_fm;
+ 	struct ubi_wl_entry *tmp_e;
+ 
+@@ -1526,7 +1526,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
+ 
+ 		if (!tmp_e) {
+ 			if (old_fm && old_fm->e[i]) {
+-				ret = ubi_sync_erase(ubi, old_fm->e[i], 0);
++				ret = ubi_sync_erase(ubi, old_fm->e[i], &torture);
+ 				if (ret < 0) {
+ 					ubi_err(ubi, "could not erase old fastmap PEB");
+ 
+@@ -1578,7 +1578,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
+ 	if (old_fm) {
+ 		/* no fresh anchor PEB was found, reuse the old one */
+ 		if (!tmp_e) {
+-			ret = ubi_sync_erase(ubi, old_fm->e[0], 0);
++			ret = ubi_sync_erase(ubi, old_fm->e[0], &torture);
+ 			if (ret < 0) {
+ 				ubi_err(ubi, "could not erase old anchor PEB");
+ 
+diff --git a/drivers/mtd/ubi/io.c b/drivers/mtd/ubi/io.c
+index 915eb64cb0011..d70d1313ad4e8 100644
+--- a/drivers/mtd/ubi/io.c
++++ b/drivers/mtd/ubi/io.c
+@@ -519,8 +519,10 @@ static int nor_erase_prepare(struct ubi_device *ubi, int pnum)
+ /**
+  * ubi_io_sync_erase - synchronously erase a physical eraseblock.
+  * @ubi: UBI device description object
+- * @pnum: physical eraseblock number to erase
+- * @torture: if this physical eraseblock has to be tortured
++ * @pnum: the physical eraseblock number to erase
++ * @torture: if this physical eraseblock has to be tortured; cleared to zero
++ *           once the torture test has completed successfully so that a retry
++ *           of the erase does not torture the physical eraseblock again
+  *
+  * This function synchronously erases physical eraseblock @pnum. If @torture
+  * flag is not zero, the physical eraseblock is checked by means of writing
+@@ -532,7 +534,7 @@ static int nor_erase_prepare(struct ubi_device *ubi, int pnum)
+  * codes in case of other errors. Note, %-EIO means that the physical
+  * eraseblock is bad.
+  */
+-int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int torture)
++int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int *torture)
+ {
+ 	int err, ret = 0;
+ 
+@@ -560,10 +562,11 @@ int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int torture)
+ 			return err;
  	}
+ 
+-	if (torture) {
++	if (*torture) {
+ 		ret = torture_peb(ubi, pnum);
+ 		if (ret < 0)
+ 			return ret;
++		*torture = 0;
+ 	}
+ 
+ 	err = do_sync_erase(ubi, pnum);
+diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
+index 44803d3329f42..edc68c1603e5c 100644
+--- a/drivers/mtd/ubi/ubi.h
++++ b/drivers/mtd/ubi/ubi.h
+@@ -901,7 +901,7 @@ int self_check_eba(struct ubi_device *ubi, struct ubi_attach_info *ai_fastmap,
+ 		   struct ubi_attach_info *ai_scan);
+ 
+ /* wl.c */
+-int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int torture);
++int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int *torture);
+ int ubi_wl_get_peb(struct ubi_device *ubi);
+ int ubi_wl_put_peb(struct ubi_device *ubi, int vol_id, int lnum,
+ 		   int pnum, int torture);
+@@ -923,7 +923,7 @@ int ubi_io_read(const struct ubi_device *ubi, void *buf, int pnum, int offset,
+ 		int len);
+ int ubi_io_write(struct ubi_device *ubi, const void *buf, int pnum, int offset,
+ 		 int len);
+-int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int torture);
++int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int *torture);
+ int ubi_io_is_bad(const struct ubi_device *ubi, int pnum);
+ int ubi_io_mark_bad(const struct ubi_device *ubi, int pnum);
+ int ubi_io_read_ec_hdr(struct ubi_device *ubi, int pnum,
+diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
+index fbd399cf65033..fefcbaf250024 100644
+--- a/drivers/mtd/ubi/wl.c
++++ b/drivers/mtd/ubi/wl.c
+@@ -443,12 +443,14 @@ static int prot_queue_del(struct ubi_device *ubi, int pnum)
+  * ubi_sync_erase - synchronously erase a physical eraseblock.
+  * @ubi: UBI device description object
+  * @e: the physical eraseblock to erase
+- * @torture: if the physical eraseblock has to be tortured
++ * @torture: if the physical eraseblock has to be tortured; cleared to zero
++ *           once the torture test has completed successfully so that a retry
++ *           of the erase does not torture the physical eraseblock again
+  *
+  * This function returns zero in case of success and a negative error code in
+  * case of failure.
+  */
+-int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int torture)
++int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int *torture)
+ {
+ 	int err;
+ 	struct ubi_ec_hdr *ec_hdr;
+@@ -1113,7 +1115,7 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
+ 	dbg_wl("erase PEB %d EC %d LEB %d:%d",
+ 	       pnum, e->ec, wl_wrk->vol_id, wl_wrk->lnum);
+ 
+-	err = ubi_sync_erase(ubi, e, wl_wrk->torture);
++	err = ubi_sync_erase(ubi, e, &wl_wrk->torture);
+ 	if (!err) {
+ 		spin_lock(&ubi->wl_lock);
+ 
+@@ -1150,7 +1152,8 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
+ 		int err1;
+ 
+ 		/* Re-schedule the LEB for erasure */
+-		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, true);
++		err1 = schedule_erase(ubi, e, vol_id, lnum, wl_wrk->torture,
++				      true);
+ 		if (err1) {
+ 			spin_lock(&ubi->wl_lock);
+ 			wl_entry_destroy(ubi, e);
+@@ -1757,7 +1760,7 @@ static void shutdown_work(struct ubi_device *ubi)
+ static int erase_aeb(struct ubi_device *ubi, struct ubi_ainf_peb *aeb, bool sync)
+ {
+ 	struct ubi_wl_entry *e;
+-	int err;
++	int err, torture = 0;
+ 
+ 	e = kmem_cache_alloc(ubi_wl_entry_slab, GFP_KERNEL);
+ 	if (!e)
+@@ -1768,7 +1771,7 @@ static int erase_aeb(struct ubi_device *ubi, struct ubi_ainf_peb *aeb, bool sync
+ 	ubi->lookuptbl[e->pnum] = e;
+ 
+ 	if (sync) {
+-		err = ubi_sync_erase(ubi, e, false);
++		err = ubi_sync_erase(ubi, e, &torture);
+ 		if (err)
+ 			goto out_free;
  
 -- 
 2.53.0
