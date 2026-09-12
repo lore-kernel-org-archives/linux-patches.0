@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4212E3BE643;
-	Sat, 12 Sep 2026 12:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777322D0C75;
+	Sat, 12 Sep 2026 12:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215819; cv=none; b=tdYf+OmGYQJ9genfQeDKihudv0ydn5YssNLNwGexW7gK2enQFOutPyx04HfxTGfiV038z49Sh7JD9JhToxsNOfg2Bna7ECBru1I811qGMRZQELc2d4EoTVRLraKyeqH/ZIM4J7Kz4SebHlrWFOSr+D0E5eXfHVTyFq3FAfYEvJg=
+	t=1789215824; cv=none; b=vA1wzI3ZhlXJ8ZaPLqltRCphXRSfiFK3uE2tzzlBWwMNQgyXmotn66Ir5MygRyEW5nyIm1AL7OJ/w1cE3zF4d8oWt0leESUlm90r4LNGChpgvrXjL4wm8sB7tCJ/C1hDWn7CquvO+FM1T+3Z7Kj8Vu7/6qnZwsGdUyrhyluSHmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215819; c=relaxed/simple;
-	bh=tv2EtYBDeeW2xRwWZEm83RKyAwDpbVFTAhaUH98GyGE=;
+	s=arc-20240116; t=1789215824; c=relaxed/simple;
+	bh=JOpptYUwb+PEFDOIa0tUh8rb6X4wITM+WiNu5M9ZVL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/rHk7lE/F0PaYmImB1fcj11GSB75zCrhd7WUk4FiHfFGo2fInnE05134vALgWW9Fm//tWMlEYec9oSvd+PSgNPGYdRzmNmsruiIArtBDzAEHdKHIdqUeMW2Z3/KmjaBj0e3AEG/A1Cz0nph4ebt1pntkqdtjGC5hE/7/YOARe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+pePH+q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NUVSfeOXCqY8UFqELuDzmcFcMITbm4tMwpdAHN3jnxFj84VxfeQzukj2EqMLD+MPAVT/RAqdP/7JyqSXuwgkxqL/sHIOPJ9sw7jfdGKpn6AJ1NHXTbl+0GBhGNmK7SS9wddWs7QsHGqP/OaWE4ko/pKYJbKmzCgHVn3EjYxgbVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFyqGsnA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+pePH+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154A81F000FF;
-	Sat, 12 Sep 2026 12:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFyqGsnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9529B1F000FF;
+	Sat, 12 Sep 2026 12:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215818;
-	bh=1fCE2Lwu+ud4cKVL03tWc1sW2oNikCqBrzgqkxR/jO4=;
+	s=korg; t=1789215823;
+	bh=4kf8Dxl0dl7Y5XXZoMQFtvoRgs9NC2Nsp+IJbZI5k4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+pePH+quFGXjUX+oS7upCj+0VHOofRlgiVRp7VW+I6ruFZpb4iW8IVPhddPpyq9M
-	 KQkhmUbRiWHrc2D4LmQe+pslzHkfttRIFnmHUVVH9BmBjhEX87wkS4qYLNWLdoOkV3
-	 WtyznNBSzSNnTMgkfy1TIUAy8j/sUJ8sK4EMh7lI=
+	b=UFyqGsnAfpuzQUQ2mwxPaLVpOhrlLwedCGXt7kc6iiVX/Vs1ETABcg4UvDx9qzsIk
+	 26WMHCsrOvMXm2h1D+63L/f5cXdo+H0eQkqWUOfnT2jeou/A9A99uYN+mlie4KNKzl
+	 8jRLVbx2Gli4eAjlWmezqDa0O5WYGrN6DWpab25s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0567/1376] wifi: iwlwifi: guard against division by zero in iwl_dbg_tlv_alloc_fragments
-Date: Sat, 12 Sep 2026 08:49:53 +0200
-Message-ID: <20260912065620.168907430@linuxfoundation.org>
+Subject: [PATCH 6.12 0558/1376] drm/bridge: tc358767: clamp the reported AUX read size to the request
+Date: Sat, 12 Sep 2026 08:49:44 +0200
+Message-ID: <20260912065619.972359992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,56 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 9318bc0c41b24705690cf80d1596cf6b711e7027 ]
+[ Upstream commit ec6444a00c49e6c2b5e9a507272a28126677f9ee ]
 
-Make sure we don't end-up with a num_frags = 0 situation.
-For that, check that the required size is not 0 and put a checker on
-num_frags as well.
+tc_aux_transfer() clamps an AUX read to the payload limit:
 
-Fixes: 14124b25780d ("iwlwifi: dbg_ini: implement monitor allocation flow")
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715220243.60121deecf2c.Iebc891c95a7bd1b2a093b0bb88532db446a758ee@changeid
+	size_t size = min_t(size_t, DP_AUX_MAX_PAYLOAD_BYTES - 1, msg->size);
+
+After the transfer it replaces size with the byte count the controller
+reports in AUX_BYTES:
+
+	if (size)
+		size = FIELD_GET(AUX_BYTES, auxstatus);
+
+AUX_BYTES is GENMASK(15, 8), so it can be up to 255. Nothing clamps it
+back to the request. tc_aux_read_data() reads that many bytes into the
+16-byte auxrdata stack buffer, then copies them into the caller buffer. A
+reported count of 255 makes the read run to 256 bytes and overruns both.
+
+The controller should never report more than it was asked to transfer, so
+this is defense in depth rather than a live hole. The reported count is
+only lightly trusted, and the check is cheap. Clamp it back to the request,
+the same way ti-sn65dsi86 does in commit aca58eac52b8 ("drm/bridge:
+ti-sn65dsi86: Never store more than msg->size bytes in AUX xfer").
+
+Fixes: 12dfe7c4d9c5 ("drm/bridge: tc358767: Use reported AUX transfer size")
+Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260701064440.1541418-1-maoyixie.tju@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/tc358767.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-index ce787326aa69d..47d5488c95043 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2018-2025 Intel Corporation
-+ * Copyright (C) 2018-2026 Intel Corporation
-  */
- #include <linux/firmware.h>
- #include "iwl-drv.h"
-@@ -602,6 +602,9 @@ static int iwl_dbg_tlv_alloc_fragments(struct iwl_fw_runtime *fwrt,
- 	    cpu_to_le32(IWL_FW_INI_LOCATION_DRAM_PATH))
- 		return 0;
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 47189587643a1..47c9b2d4369ea 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -519,7 +519,7 @@ static ssize_t tc_aux_transfer(struct drm_dp_aux *aux,
+ 	 * address-only transfer
+ 	 */
+ 	if (size)
+-		size = FIELD_GET(AUX_BYTES, auxstatus);
++		size = min_t(size_t, size, FIELD_GET(AUX_BYTES, auxstatus));
+ 	msg->reply = FIELD_GET(AUX_STATUS, auxstatus);
  
-+	if (!fw_mon_cfg->req_size)
-+		return -EIO;
-+
- 	num_frags = le32_to_cpu(fw_mon_cfg->max_frags_num);
- 	if (fwrt->trans->trans_cfg->device_family < IWL_DEVICE_FAMILY_AX210) {
- 		if (alloc_id != IWL_FW_INI_ALLOCATION_ID_DBGC1)
-@@ -612,6 +615,9 @@ static int iwl_dbg_tlv_alloc_fragments(struct iwl_fw_runtime *fwrt,
- 		return -EIO;
- 	}
- 
-+	if (!num_frags)
-+		return -EIO;
-+
- 	remain_pages = DIV_ROUND_UP(le32_to_cpu(fw_mon_cfg->req_size),
- 				    PAGE_SIZE);
- 	num_frags = min_t(u32, num_frags, BUF_ALLOC_MAX_NUM_FRAGS);
+ 	switch (request) {
 -- 
 2.53.0
 
