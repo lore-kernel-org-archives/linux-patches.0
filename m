@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749D2466B0C;
-	Sat, 12 Sep 2026 10:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4034F468C10;
+	Sat, 12 Sep 2026 10:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210131; cv=none; b=BNmrAKGua8GRkrCHQeaH1aTW9nMTUTP0Za/p5f5n+5dYJAxqkGR5OcKDI4ylnFxZJ4SfaP1wATsRatm+nzgtitjsU9QiAqRWWI5kZ27CXsOiIUea/hItDpCJw6/w9UusFPRjRH5zXqd7zhYU68I1+T/WnbQo89EYGz4xzmsoS0Y=
+	t=1789210137; cv=none; b=YV+thCnQJN57WeVbtfTQiMyYDEVsp+0z/a7eTQS9VsmkfP+beVlQ2IasudRrrk6Z33UeW02d8NF4oXiQgg35eRBgUeM7Ex4rk58e0BJw8fEBjZeDQLUSyVAmf0OqdA0h4ys0FUSfLfGt76PFpuOT6vxN53SmZHn9vVWxDXPIzdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210131; c=relaxed/simple;
-	bh=RdqAhbmOKMHAWeJAMKYddZiGya8EdE/pUlVA5B1E5u4=;
+	s=arc-20240116; t=1789210137; c=relaxed/simple;
+	bh=GpY6RWCQ8Q+LlbYSG9Ar2ixKBzk5CsW1m9CVnBk/RO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9JMny5Ipi8RDBxbJ9Zug1gOjqqZk07asWotHZiQMeDiWDPzG106A/b9Kw7XXQw1AgbWwKz+kPKdFbLjmfqkXC/QGvTcvdQbY7R9bb8IBptxu9SUCbYu9ye8g+yRpvtloc+/By1AhkpWgDheGz4CRbLVr8iWcOPkY2uir7+MOvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrtIPdqh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PfWctvhm/Fs4Pw+oDvbiM/lnvPkLsAe9y7A42nCw1kxjLNZk/CgHHugIZGffNOMl9EAXqZKmE1fxvYsmEqCMAwAA9yGO3qKgx7P78+OlOCCfqvp1UY6jRi4/hUYNU85Re0bmkqQBG8oeEnrAHgZfJOFNHqTfQ+TjKFbCqtbMpRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3a0Rw2i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrtIPdqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB8A1F0089C;
-	Sat, 12 Sep 2026 10:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3a0Rw2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B941F000FF;
+	Sat, 12 Sep 2026 10:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210128;
-	bh=kbP9OgAezlhrbNkU2obb0Sa3e1rV39U/6DHm3ZF1hCg=;
+	s=korg; t=1789210133;
+	bh=R1Y4SaiJgHUNSMm+6LK04SqFDYTYH05ImfJo/Qd4tLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xrtIPdqh6/TjDpatBpRwvL0xyLhsDD5Hr42OWtETtXhVYiy0Z949fZkwnrUpTDrBM
-	 bALUpTrvPtysGmBbeesjvNPlwvE/NhBZc4nhN9SO4Ck2d0OqIpGnqQ7Wc7LGPHbOab
-	 MZ9L2+WjB+kdk24PYuR5UMpJcx6fwRDEMWiQksdo=
+	b=j3a0Rw2imZEcYsiScOPKHeD0BVLGKXhUoWXL9dabdfR2GEOozNHZgG9PscqdLVaHK
+	 7hfJoVjS6vGaCJbtiMXpDoMzzwbz9Aicaofoa8MQJerdG5doa3Kf7KNQ2tMVJSEvsN
+	 IgYA4+JFeW+2SkYzGs+H05W7MXad/hQDutbmoMUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esteban Urrutia <esteuwu@proton.me>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Mykola Marzhan <mykola@meshstor.io>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0961/1518] phy: qcom: qmp-pcie: Add pcs_lane1 offset to V5 offsets
-Date: Sat, 12 Sep 2026 08:52:10 +0200
-Message-ID: <20260912065645.199685608@linuxfoundation.org>
+Subject: [PATCH 6.18 0962/1518] md/raid5: round bitmap stripes with sector division
+Date: Sat, 12 Sep 2026 08:52:11 +0200
+Message-ID: <20260912065645.222932341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,36 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esteban Urrutia <esteuwu@proton.me>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit f8b4493d5e7e19682abcf538a9faad012b5ef69e ]
+[ Upstream commit 17ea021ae74987d6064c8195c4922fa025753892 ]
 
-Some SoCs such as SM8475 write data to registers using this offset,
-specifically SW_CTRL2 and MX_CTRL2.
-Add pcs_lane1 offset to V5 offsets to support this.
+raid5_bitmap_sector_map() aligns the array range to full RAID5 stripe
+widths before converting it to component sectors. That width is
+chunk_sectors multiplied by the number of data disks, and it is not
+always a power of two.
 
-Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
-Fixes: 0fd0b31965b0 ("phy: qualcomm: qmp-pcie: add support for SAR2130P")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260715-sm8475-bup-pcie-v2-2-48bd91a19abf@proton.me
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reproduce with a 4-disk RAID5, 1024-sector chunks, and three data disks.
+The full-stripe width is 3072 sectors. For a one-sector write at array
+sector 3072, correct rounding gives array range [3072, 6144), which maps
+to component range [1024, 2048). The old round_down()/round_up() logic
+instead gives [1024, 4096), which maps to [0, 1024).
+
+Use sector_div() based arithmetic so the rounded range is aligned to the
+actual RAID5 stripe width.
+
+The deterministic mapper test now reports the fixed component range as
+[1024, 2048), while the old mask-based range was [0, 1024).
+
+Fixes: 9c89f604476c ("md/raid5: implement pers->bitmap_sector()")
+Reported-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://lore.kernel.org/all/20260726185916.2223460-1-mykola@meshstor.io/
+Tested-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://patch.msgid.link/20260802195038.164272-6-yukuai@kernel.org
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid5.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 62b1c845b6275..456cdb6e7213c 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -3288,6 +3288,7 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v5 = {
- 	.pcs_misc	= 0x0600,
- 	.tx		= 0x0e00,
- 	.rx		= 0x1000,
-+	.pcs_lane1	= 0x1400,
- 	.tx2		= 0x1600,
- 	.rx2		= 0x1800,
- };
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 0a0e241e3979b..8ff8cce3da7bf 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5922,8 +5922,11 @@ static void raid5_bitmap_sector(struct mddev *mddev, sector_t *offset,
+ 
+ 	sectors_per_chunk = conf->chunk_sectors *
+ 		(conf->raid_disks - conf->max_degraded);
+-	start = round_down(start, sectors_per_chunk);
+-	end = round_up(end, sectors_per_chunk);
++	sector_div(start, sectors_per_chunk);
++	start *= sectors_per_chunk;
++	if (sector_div(end, sectors_per_chunk))
++		end++;
++	end *= sectors_per_chunk;
+ 
+ 	start = raid5_compute_sector(conf, start, 0, &dd_idx, NULL);
+ 	end = raid5_compute_sector(conf, end, 0, &dd_idx, NULL);
+@@ -5941,8 +5944,10 @@ static void raid5_bitmap_sector(struct mddev *mddev, sector_t *offset,
+ 
+ 	sectors_per_chunk = conf->prev_chunk_sectors *
+ 		(conf->previous_raid_disks - conf->max_degraded);
+-	prev_start = round_down(prev_start, sectors_per_chunk);
+-	prev_end = round_down(prev_end, sectors_per_chunk);
++	sector_div(prev_start, sectors_per_chunk);
++	prev_start *= sectors_per_chunk;
++	sector_div(prev_end, sectors_per_chunk);
++	prev_end *= sectors_per_chunk;
+ 
+ 	prev_start = raid5_compute_sector(conf, prev_start, 1, &dd_idx, NULL);
+ 	prev_end = raid5_compute_sector(conf, prev_end, 1, &dd_idx, NULL);
 -- 
 2.53.0
 
