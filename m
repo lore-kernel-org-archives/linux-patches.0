@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1D026ED46;
-	Sat, 12 Sep 2026 19:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF08F26ED46;
+	Sat, 12 Sep 2026 19:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242460; cv=none; b=lsIGCwXZHJBltoelEUJhU9k7IF6pnpleAsmxlQJk5Y/umYgL/3e9YM6P+ruZ6G0b1Ykf7eB7mbORb1WJzOiGdkja8c90BSy8QPWGODM05WvITHB+UCaTcN5FZfphlC8L7nzN2FdDVhmHGg2OAfgqNsjT7VvhQnJo/FgU40YdcvQ=
+	t=1789242463; cv=none; b=JZmMPtu5EOT1EZ41y0fL+P8DOujxOUgbwU3cbfr8lYGhMH7lGwd/fekEX28215U4Ojoywm0cmV82Wn7MTMGBWbpzISgsnR4qGJpxWorikhiQtoS4w21qB4GRg1LRJgdXAJKMvyMac4Co8v4wycx+S4VPzmW13QMOfxTBS+X5UIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242460; c=relaxed/simple;
-	bh=1XtkVye4z4PcKrY/cCwWu3ju/ya39ETuUyYMfIbkPA0=;
+	s=arc-20240116; t=1789242463; c=relaxed/simple;
+	bh=c0Qx4r0dvu0IYWGF8BWnxPVMipiNtzUWPRNGAPZitcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dl5V1AaxhnHH1BEVbpnFOpPO9RxNBxihhuQZ7wT8C/yz4FaZpC3lvMtS2bXbR5ZStliprWQFY53xAUqz/T6P6GKcaxv6lMPzCHz0PNBPgi06JM6KE2ymmwH7o3zJNn3trUAP9kwbAZvogWhjvvgmnHKttN6YyM+l5Vp3HnlF+2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iusy+PKd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b5o5DmqZSqk4GXY/R+C1FjVSk1i2HOvvISNh87EMbL9QmqmmObUJW3JBBec87dvPpEFt7kz6YXCl8H2ulQNa8cOekXqwQVUBuXQ4wP779gX3jUMAxmPjKjeC+IleQYudmZLWUbHvCO6zvvpELKC+iPSpRPdOkeWjNeX+9ec9PMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa4FqzDJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iusy+PKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B221F000FF;
-	Sat, 12 Sep 2026 19:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa4FqzDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382B11F000FF;
+	Sat, 12 Sep 2026 19:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242458;
-	bh=nS64hq5aoSwSRFGpRIVY0Go9+SdE6NIah0/1QdcNajg=;
+	s=korg; t=1789242461;
+	bh=WM2NAPHfBpivRk9P2qPIU4303c+E0dEYxzG0YzjkaeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iusy+PKd5zG/Y0XAyvDNo0JrSZYWJHNNeSjXoAqi6eig5l4sgbeKFGXjzDZMWNgLv
-	 364azX/ybDIdxe3J8i95x5W0ubOlU5rIndrkl5pUudamYl0N8c7eHkTR/cu74uJiqN
-	 hAnZTFv8xhRHsR+zXgBNJJpcErZ66TVfKUG+xNys=
+	b=Qa4FqzDJsJXyhWB2PP73nBN31fLvxwjc+ajHMvQFtuO+A5vFvVhYKWGppq3l50U5c
+	 Qm6PowKjCHxKp70pSFmP7qWcOHzOefjYTGSTvEeOuLkXUeH3+gkk0EZef5AHwBAq0E
+	 PLVoV5bEW8RCW1zk3sD+hpDWtv0n4DLzCgqAzm/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmo Chou <chou.cosmo@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 410/798] leds: pca9532: Fix inverted GPIO output polarity
-Date: Sat, 12 Sep 2026 09:00:38 +0200
-Message-ID: <20260912065526.545159595@linuxfoundation.org>
+Subject: [PATCH 5.10 411/798] hwspinlock: propagate errno when registering single lock
+Date: Sat, 12 Sep 2026 09:00:39 +0200
+Message-ID: <20260912065526.572187382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,58 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmo Chou <chou.cosmo@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 65a38a28a0b04af19a5e1fbf3869051412eeac96 ]
+[ Upstream commit e088ffa9a00eaaaf90da74763e774ca160969c26 ]
 
-The pca9532_gpio_set_value() function incorrectly mapped the requested
-value to PCA9532_ON and PCA9532_OFF, inverting the GPIO output polarity.
-A requested logical high (val=1) incorrectly enabled the LED output
-driver, which on this open-drain device pulls the pin low, while a
-requested logical low (val=0) released the pin.
+hwspin_lock_register_single() always returns 0 despite checking the
+result from radix_tree_insert(). Propagate the errno to make sanity
+checks in callers of this function actually meaningful.
 
-Correct the mapping so that val=1 yields PCA9532_OFF (pin released /
-high-impedance) and val=0 yields PCA9532_ON (pin driven low).
-
-pca9532_gpio_direction_input() is also updated to pass val=1 to
-pca9532_gpio_set_value() to align with the corrected polarity mapping,
-ensuring the pin remains not driven when configured as an input.
-
-Fixes: 3c1ab50d0a31 ("drivers/leds/leds-pca9532.c: add gpio capability")
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260703014201.69829-1-chou.cosmo@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 300bab9770e2 ("hwspinlock/core: register a bank of hwspinlocks in a single API call")
+Link: https://sashiko.dev/#/patchset/20260319105947.6237-1-wsa%2Brenesas%40sang-engineering.com # review of patch 14
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20260512084856.30497-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwspinlock/hwspinlock_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index 27d0271654725..ae5e5dfaab3cd 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -285,9 +285,9 @@ static void pca9532_gpio_set_value(struct gpio_chip *gc, unsigned offset, int va
- 	struct pca9532_led *led = &data->leds[offset];
+diff --git a/drivers/hwspinlock/hwspinlock_core.c b/drivers/hwspinlock/hwspinlock_core.c
+index 425597151dd3e..ed02ba245d460 100644
+--- a/drivers/hwspinlock/hwspinlock_core.c
++++ b/drivers/hwspinlock/hwspinlock_core.c
+@@ -468,7 +468,7 @@ static int hwspin_lock_register_single(struct hwspinlock *hwlock, int id)
  
- 	if (val)
--		led->state = PCA9532_ON;
--	else
- 		led->state = PCA9532_OFF;
-+	else
-+		led->state = PCA9532_ON;
- 
- 	pca9532_setled(led);
+ out:
+ 	mutex_unlock(&hwspinlock_tree_lock);
+-	return 0;
++	return ret;
  }
-@@ -305,7 +305,7 @@ static int pca9532_gpio_get_value(struct gpio_chip *gc, unsigned offset)
- static int pca9532_gpio_direction_input(struct gpio_chip *gc, unsigned offset)
- {
- 	/* To use as input ensure pin is not driven */
--	pca9532_gpio_set_value(gc, offset, 0);
-+	pca9532_gpio_set_value(gc, offset, 1);
  
- 	return 0;
- }
+ static struct hwspinlock *hwspin_lock_unregister_single(unsigned int id)
 -- 
 2.53.0
 
