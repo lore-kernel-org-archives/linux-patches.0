@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9218F309EF2;
-	Sat, 12 Sep 2026 16:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB98F305680;
+	Sat, 12 Sep 2026 16:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229685; cv=none; b=EYrOEhIFFo1kPKbmPRmK1aMZ+y8D5is7CT7cLQBTL48/6+WY6LxmM/xgZgyrxlJKMMLIhnK9dtYrL3a7isxje8QToxnso9GcJoRd7idyE36b71GJqB8P7fBPhwkNYxjrA9zEFY5hAYwRpoqqySzoXuhci1nmCXjjAdmgKPwr58E=
+	t=1789229690; cv=none; b=IkmTjo7zxwk/E6FrC/66HgKU0OIXD1S8LFep6HlGvMj81/BybNV8CvAqdcInQnzgEH6AIGzA1dKTd7jLEhsnJC5iPJvtEieTU1CtB0TPwTqmdqCom6MXs3jHfwwjj4qN8UsenyHLYydEsVDbdNfhIZoRyY9LwdE8dksw5SiNRAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229685; c=relaxed/simple;
-	bh=CGKeIUjlxyhvON2oUvAdycnZ2PPcHnums94aom2ZU6w=;
+	s=arc-20240116; t=1789229690; c=relaxed/simple;
+	bh=NvrWih7bQgqon0DKcOB/ZCyuKfDU06NexfzoIdFSui0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wv3L8NGdxt2J5srrSq4IuMMWjes9AtIxpYNUwQATr6wiE0+vd1FvnB442j6rPMGgCIByQ43vAFaUcd6E/YdfkstQKWELmiUzzbAiI90jqmVrcWZcb4/4nsHbuYRaz7pR6SRC8qmsgKHPupsFtQePH0gLtCPF4xcVoYL/xY60fo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZP2Qbaju; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6M+ztDYXCT/IBFpcKGUAgJjE9zBmgZNp4s6RQ8H3NESUm90jbAgAwDd2vJaPNOL+RMu3TFh8PgKCZ4h/qW/4wdQjPY0PTGd/Tzi9frfBUz0DUErVXYq51QxJxARC0bZvgd+ayGCe133r8i0Lif9Rq377x1998cid+J4Z6exOU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9g4hLHC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZP2Qbaju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249751F000FF;
-	Sat, 12 Sep 2026 16:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9g4hLHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A40E1F000FF;
+	Sat, 12 Sep 2026 16:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229684;
-	bh=1gEGSGRC6Uygf0cvJD3YrorIjLKK0OmKWdSNQdaV58M=;
+	s=korg; t=1789229689;
+	bh=DKjQmICCBugXo3RJj7IC7h4HacPgpV68vxQLYojcAJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZP2QbajuK447SWBJajjQW0upCT/oMpabriDS5gJHETQK83hFJ/4A6W1RhbWWtVEZq
-	 O8Tn3exk8+IFayJcCXknvFqlAGlXEapOQ57n/l5cqHYyZLjiD0PdfPdl0xEeYOM3Rk
-	 T7hcblVKU8nhyu+VFDTJKSvg42yOJPCUxtMrHNuc=
+	b=T9g4hLHC+qCLNYXxVeYItc+agkTQbiCKbWOcc4SUDfbdxSSYttbqAH34usfcyr+Nf
+	 PuHxxSRG9e4/3RbRnO7OvJzDiPtmmvg+N7j5t7ToCMxTHAbOuHn+5yf0dsUXv2HhfZ
+	 2NfCXbGZlTVd3JnWkiIctI3SPJvw7xIhAosI7DEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0638/1191] uio: Fix stale info pointer in failed registration path
-Date: Sat, 12 Sep 2026 08:56:06 +0200
-Message-ID: <20260912065602.584438674@linuxfoundation.org>
+Subject: [PATCH 6.1 0639/1191] accessibility: speakup: Fix incorrect string length computation in report_char_chartab_status()
+Date: Sat, 12 Sep 2026 08:56:07 +0200
+Message-ID: <20260912065602.607110244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,51 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 67b6fc084b034a91c3ec7907a3fed89a2450f30b ]
+[ Upstream commit bce0e640623372520d9d90c42f33ddbfb576ce69 ]
 
-After device_add(), the UIO device is visible to userspace and /dev/uioX
-can be opened. If a later setup step fails, __uio_register_device()
-unwinds the device but leaves idev->info pointing at the caller-owned
-struct uio_info.
+snprintf() returns the "number of characters which *would* be generated for
+the given input", not the size *really* generated.
 
-That is unsafe when an opener races with the failed registration path.
-The open file keeps a reference to the uio_device, while the caller sees
-registration failure and may free its struct uio_info. Later file
-operations can then follow idev->info and dereference freed memory.
+In order to avoid too large values for 'len' (and potential negative
+values for "sizeof(buf) - (len - 1)") use scnprintf() instead of
+snprintf().
 
-Handle post-device_add() failures like unregister: remove UIO attributes
-while the info pointer is still valid, then clear idev->info under
-info_lock and wake existing waiters/async users before removing the
-device and minor. This makes already-open file descriptors observe the
-same "device gone" state as normal uio_unregister_device().
-
-Fixes: a93e7b331568 ("uio: Prevent device destruction while fds are open")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260630192714.1867170-1-dbgh9129@gmail.com
+Fixes: c6e3fd22cd53 ("Staging: add speakup to the staging directory")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20260531230804.254962-5-samuel.thibault@ens-lyon.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/accessibility/speakup/kobjects.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/uio/uio.c b/drivers/uio/uio.c
-index e55e8cef8defc..a71ac0242e400 100644
---- a/drivers/uio/uio.c
-+++ b/drivers/uio/uio.c
-@@ -990,6 +990,11 @@ int __uio_register_device(struct module *owner,
- err_request_irq:
- 	uio_dev_del_attributes(idev);
- err_uio_dev_add_attributes:
-+	mutex_lock(&idev->info_lock);
-+	idev->info = NULL;
-+	mutex_unlock(&idev->info_lock);
-+	wake_up_interruptible(&idev->wait);
-+	kill_fasync(&idev->async_queue, SIGIO, POLL_HUP);
- 	device_del(&idev->dev);
- err_device_create:
- 	uio_free_minor(idev->minor);
+diff --git a/drivers/accessibility/speakup/kobjects.c b/drivers/accessibility/speakup/kobjects.c
+index 41ae24ab5d086..917cdbf671842 100644
+--- a/drivers/accessibility/speakup/kobjects.c
++++ b/drivers/accessibility/speakup/kobjects.c
+@@ -92,9 +92,9 @@ static void report_char_chartab_status(int reset, int received, int used,
+ 	if (reset) {
+ 		pr_info("%s reset to defaults\n", object_type[do_characters]);
+ 	} else if (received) {
+-		len = snprintf(buf, sizeof(buf),
+-			       " updated %d of %d %s\n",
+-			       used, received, object_type[do_characters]);
++		len = scnprintf(buf, sizeof(buf),
++				" updated %d of %d %s\n",
++				used, received, object_type[do_characters]);
+ 		if (rejected)
+ 			snprintf(buf + (len - 1), sizeof(buf) - (len - 1),
+ 				 " with %d reject%s\n",
 -- 
 2.53.0
 
