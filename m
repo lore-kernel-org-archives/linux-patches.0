@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F8236B90A;
-	Sat, 12 Sep 2026 17:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8195136167B;
+	Sat, 12 Sep 2026 17:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232483; cv=none; b=kjhb12ooipQSj1kg2MsW6B0r0R13Pv8FWFhlt5yz+no/U+G41HRlzsRDN+I6QLEwpf6eSKYlNBB8ge66KAwPBbrAS4J/C4WKKfEh9VzrzLq9AG9KjuDusNw3fujUNlSyMsuXIx9svE4BFvsFCR2/tfbKsQUbWtvxXjctkpLFfd0=
+	t=1789232487; cv=none; b=Y6Kp9FOc/3cTPlWDNEMxC8mbqfc9nh0YlhtOopQnh0jMr6tSWePTqEPDA4njdA4v7UNEf3xJzukbBHr01eSPYFtjGKDWpctFIjEwajum/LY+G48Q8s8fT1erMnfRZOHjmZe0Pwg7uRMduVQvEFK6vsiydMN05QSxS/wQUZWqqDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232483; c=relaxed/simple;
-	bh=sc6LtDyau6KrIonNoJtET3qMmCW790VjRCX2hFS94MY=;
+	s=arc-20240116; t=1789232487; c=relaxed/simple;
+	bh=nWKFMaldIyiIc1zEHd+EbvyBIpRuXso5ik9z1xLyVXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/ME0GDkWUg7uAviBTj3W5o3sFCyEWZDpHRJHL/GbdXZwUcdVB0Jl6M6KhQdBPH9aBks9q+83DtiEV8ZaLrZ827o8T1OcRzGbjhWKjctnf5kIHhhaiAo86uN9yqIoEJPFN+rtZxX+bsRo0+tt0HkscmZtDviDhI23vk6NhU2Y6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmHdnOot; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cg9q82TkYFbwG+iF0hUxIDAXK0Va+b90iNAwDB/hXSFmBLccTdtU3V7LJTuZoGqxawYjqReFh0WdBrEVHkhHs8YDDxrWyy6Vbgd5JVnPk+fFHuySZP2KpRETELwzupvJpuD4byj95PI6ybnY0WYzvrIwcoMUd6Nsa2OzkQ6UVT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFAOdS/Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmHdnOot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B661F000FF;
-	Sat, 12 Sep 2026 17:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFAOdS/Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2312E1F000FF;
+	Sat, 12 Sep 2026 17:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232481;
-	bh=K3jkfZu38bI5JBNAex2fOP5dc+ka/h49YJVO2YszyXQ=;
+	s=korg; t=1789232486;
+	bh=L2Q197iAVxhGfyaEpMmJQxuRbcOxcSv/oSWuvvkxqFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmHdnOotNulsJf53M65F9f9aCI7LxeJlvOB2IakN/x3yU1fhwMSHPqgsBI4JSOLDI
-	 8BCHsIgQDWoF+KuV6ByUnJCrf0ix+OLa6tHM4plWXpzKnihtIzz22pwxFg8pt+x2B7
-	 As9o34gRBPOsM24OowMRaHm93/WuszpcM01pADck=
+	b=gFAOdS/YqoBUEnh/xYdZEijrgSgJsAdy02YqBjtI3Oz23QjJfzgr68E/+vrPSjYe6
+	 Kjh+iV9V4je7KHS5T+skOAwYfb7tTWkx8mb30o6/D82ELFv63yke8+8PcaMVM7bAvI
+	 qMYoxSYQrhfHfpQYvXTf6ZuzALVD98GyhsTUMgJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>
-Subject: [PATCH 5.15 002/935] alpha: fix ieee_swcr_to_fpcr setting FPCR_DNOD unconditionally
-Date: Sat, 12 Sep 2026 08:50:32 +0200
-Message-ID: <20260912065526.895150002@linuxfoundation.org>
+	syzbot+c9f9d646b08f3b6032fe@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>
+Subject: [PATCH 5.15 020/935] usb: gadget: f_tcm: fix deadlock in usbg_make_tpg()
+Date: Sat, 12 Sep 2026 08:50:50 +0200
+Message-ID: <20260912065527.302148982@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,83 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-commit 49672d026cc4773608e1222b69b29fd70f41336b upstream.
+commit 9dbf74f4022f80f7669d2b3c22c5deb46c1b5674 upstream.
 
-ieee_swcr_to_fpcr() converts the software IEEE trap-enable and status
-bits kept in thread_info.ieee_state into the hardware FPCR format.  It
-contained:
+usbg_make_tpg() held dep_lock while calling
+configfs_depend_item_unlocked(), which acquires the configfs root
+inode lock when operating across subsystems. This creates a circular
+lock dependency with configfs_rmdir():
 
-	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
+  dep_lock -> configfs root inode lock -> su_mutex -> dep_lock
 
-FPCR_DNOD (bit 47) disables denormal operand traps: with it set the
-hardware handles a denormal operand itself, treating it as zero, instead
-of trapping for software completion.  The intent was to set DNOD when the
-user has not asked for SIGFPE on denormal operands, but
-IEEE_TRAP_ENABLE_DNO is clear by default, so ieee_swcr_to_fpcr(0) always
-set DNOD.
+In usbg_make_tpg(), dep_lock only serialized the read of opts->ready,
+which is a monotonic flag that transitions from false to true exactly
+once (in tcm_set_name()) and never reverts. Remove dep_lock from
+usbg_make_tpg() entirely and use READ_ONCE/WRITE_ONCE to access
+opts->ready locklessly instead.
 
-Instructions built with the software completion suffix therefore never
-trapped on a denormal operand.  The hardware silently substituted zero
-and produced wrong results, affecting every program compiled with -mieee
-and default FPU settings, glibc included.
-
-Set FPCR_DNOD only when IEEE_MAP_DMZ is requested, which is exactly the
-case where flushing denormal inputs to zero is what the user asked for.
-DNOD then encodes MAP_DMZ, which ieee_fpcr_to_swcr() already recovers
-from FPCR_DNZ, so drop its attempt to recover IEEE_TRAP_ENABLE_DNO from
-DNOD; the DNO trap enable lives solely in ieee_state.
-
-Both functions are in a uapi header, so the encoding change is visible to
-userspace, but nothing outside the kernel is known to depend on DNOD
-carrying the DNO trap enable, and the kernel is the only writer of the
-FPCR.
-
-This must not be backported on its own.  Re-enabling denormal operand
-traps exposes a second bug, fixed in the following patch: those traps
-usually find an exact result, and for an exact result the emulator did
-not write the FPCR back, leaving hardware-fabricated exception bits
-visible to user space.  Taken alone this change would make spurious
-exception flags more common.
-
-The bug predates the git history, so there is no commit to reference in a
-Fixes tag.
-
-Cc: stable@vger.kernel.org # 5.15+
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-1-c99d75608e60@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Reported-by: syzbot+c9f9d646b08f3b6032fe@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c9f9d646b08f3b6032fe
+Fixes: 4bb8548df632 ("usb: gadget: f_tcm: add configfs support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260731081151.285599-1-yun.zhou@windriver.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/uapi/asm/fpu.h |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/arch/alpha/include/uapi/asm/fpu.h
-+++ b/arch/alpha/include/uapi/asm/fpu.h
-@@ -101,7 +101,12 @@ ieee_swcr_to_fpcr(unsigned long sw)
- 		      | IEEE_TRAP_ENABLE_OVF)) << 48;
- 	fp |= (~sw & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE)) << 57;
- 	fp |= (sw & IEEE_MAP_UMZ ? FPCR_UNDZ | FPCR_UNFD : 0);
--	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
-+	/*
-+	 * Disable denormal operand traps only when denormal inputs are to be
-+	 * flushed to zero.  Otherwise they must keep trapping, so that /S
-+	 * instructions reach the kernel emulation handler.
-+	 */
-+	fp |= (sw & IEEE_MAP_DMZ ? FPCR_DNOD : 0);
- 	return fp;
- }
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1340,19 +1340,25 @@ static struct se_portal_group *usbg_make
  
-@@ -116,7 +121,6 @@ ieee_fpcr_to_swcr(unsigned long fp)
- 			     | IEEE_TRAP_ENABLE_OVF);
- 	sw |= (~fp >> 57) & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE);
- 	sw |= (fp >> 47) & IEEE_MAP_UMZ;
--	sw |= (~fp >> 41) & IEEE_TRAP_ENABLE_DNO;
- 	return sw;
- }
+ 	opts = container_of(tpg_instances[i].func_inst, struct f_tcm_opts,
+ 		func_inst);
+-	mutex_lock(&opts->dep_lock);
+-	if (!opts->ready)
+-		goto unlock_dep;
++	if (!READ_ONCE(opts->ready))
++		goto unlock_inst;
  
+ 	if (opts->has_dep) {
+ 		if (!try_module_get(opts->dependent))
+-			goto unlock_dep;
++			goto unlock_inst;
+ 	} else {
++		/*
++		 * configfs_depend_item_unlocked() may acquire the configfs
++		 * root inode lock when the target belongs to a different
++		 * subsystem. Calling it under dep_lock would create a
++		 * circular dependency:
++		 *   dep_lock -> configfs inode lock -> su_mutex -> dep_lock
++		 */
+ 		ret = configfs_depend_item_unlocked(
+ 			wwn->wwn_group.cg_subsys,
+ 			&opts->func_inst.group.cg_item);
+ 		if (ret)
+-			goto unlock_dep;
++			goto unlock_inst;
+ 	}
+ 
+ 	tpg = kzalloc(sizeof(struct usbg_tpg), GFP_KERNEL);
+@@ -1378,7 +1384,6 @@ static struct se_portal_group *usbg_make
+ 
+ 	tpg_instances[i].tpg = tpg;
+ 	tpg->fi = tpg_instances[i].func_inst;
+-	mutex_unlock(&opts->dep_lock);
+ 	mutex_unlock(&tpg_instances_lock);
+ 	return &tpg->se_tpg;
+ 
+@@ -1391,8 +1396,6 @@ unref_dep:
+ 		module_put(opts->dependent);
+ 	else
+ 		configfs_undepend_item_unlocked(&opts->func_inst.group.cg_item);
+-unlock_dep:
+-	mutex_unlock(&opts->dep_lock);
+ unlock_inst:
+ 	mutex_unlock(&tpg_instances_lock);
+ 
+@@ -2350,9 +2353,7 @@ static int tcm_set_name(struct usb_funct
+ 
+ 	pr_debug("tcm: Activating %s\n", name);
+ 
+-	mutex_lock(&opts->dep_lock);
+-	opts->ready = true;
+-	mutex_unlock(&opts->dep_lock);
++	WRITE_ONCE(opts->ready, true);
+ 
+ 	return 0;
+ }
 
 
