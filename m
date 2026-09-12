@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B455540B6E2;
-	Sat, 12 Sep 2026 13:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8B637FF60;
+	Sat, 12 Sep 2026 13:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219377; cv=none; b=hONDFssQXKHGoTtqxFxNBEzNvUffyuBTmOjsxfmZDvbTDKRXIXCq6pxjwfPygfWTQy7qGOiX8bZkpOiiQsEdUrvQL+NNonIKYi/x2j6c7UBAtOEh3vZB9o4HDdi4btcYsHuC/eAlQW0DY9FU3fKu/MjmJOB3EnxpTEjzIN+V0gg=
+	t=1789219383; cv=none; b=rmbaFKHXzbcHc+DmSR/W9leKbwuYv6k6RiqJfeBH9/IuYXuZpGg/jH2PFCf033WYpz0gRN26IeLA+5+PyefMFdxJznCmXHX2DAk0qRteyp77Z40j+yMwGLDVuyeqWBLd3zYgsKFZeIb62To8b8/jF+51MGAISMvxsuIR+DqJ/IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219377; c=relaxed/simple;
-	bh=WuigprByOpM/X0ZNadbP+SGhfk1HRgobte3vZG+iQvk=;
+	s=arc-20240116; t=1789219383; c=relaxed/simple;
+	bh=fOSobms1oM9eqTnrp3dIi8GApXmSAuxkBAuK6UojsCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9HDLH1NavYsbHleqnei0kobRVS7hYN+g6vt2DDESSGdSI2BGiKCdNXkbe3SkVANutzUojeDwfWEA6T/w7O/FMu0q7KGaONdbw3+68Z5nZeDWgLrSNCu82/5Ur+OWqqDxPUBGoZVg/2GQ6hS1eXZfcoUOwRZrcJPGs4SLMLEFbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwZSDKPt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VoKgvQFhPuKbQs+m0GSoZZ5auLGJIvcGpBP+6kywuKUtdDSYcuGqMS7JskyWMZWLTxduJYSUnzXe05xpZ7YvTXVVsNQrNRyh+BhT+BKpasokLq53AXipOZLj3r1Y1+RvlzuRH63OED3C9RGHDqF2RgbO19QV7i+ujkXMJHSY46M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMUEJJQ3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwZSDKPt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6261C1F000FF;
-	Sat, 12 Sep 2026 13:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMUEJJQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DD11F000FF;
+	Sat, 12 Sep 2026 13:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219376;
-	bh=RKcIF1ZPuB9vuxPaYLGejHqePJwTpYP5qujLQl/3QNg=;
+	s=korg; t=1789219381;
+	bh=wuWNs79bcQf/8XRjHAUOyhZKx0UHZALalqTxwh3CUhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LwZSDKPtiWUf2gU1pJbzI3on2Rk4sZLTq7ZGTlf/3Mjt24EVp6RzXZVlml3l9myhE
-	 wFcwRrm+7j59iaSqm2X4+cTiRaEnJUEQqDYpRwCQCt6S1D3L/PKmFzlhL1aqqrJcXG
-	 +vEf8I/Icp8AZMODEbMVdtGv+fX5cRTVoECvlL5k=
+	b=xMUEJJQ3orr4N2USx8UosU81uKc60/WRhkksQaTIet4aGI4ye26dg/U3B8RGqqx/X
+	 PjM2s+wn+l+x05Ug/qmBq5I2fd2QIU5G859mZvUiceFLYfnE9H05pZkiO2ZjJGkfYW
+	 vElfIDLeNIiYjmlrUWj98u8CsAp6yVztQFbX5jVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Vega <vega@nebusec.ai>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1336/1376] tcp: fix corruption of urgent data on multi-segment retransmit
-Date: Sat, 12 Sep 2026 09:02:42 +0200
-Message-ID: <20260912065637.307777195@linuxfoundation.org>
+Subject: [PATCH 6.12 1337/1376] net/sched: sch_htb: limit htb_classify inner-class filter hops
+Date: Sat, 12 Sep 2026 09:02:43 +0200
+Message-ID: <20260912065637.329260952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -46,71 +48,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit ce2b807f42ed5e55567b8864ab72963f90779270 ]
+[ Upstream commit 729c4896ab829169f95915d65edd530325910b37 ]
 
-On the normal xmit path, while in urgent mode we refuse to build a
-multi-segment TSO packet, so every segment gets its own urg_ptr:
+htb_classify() follows each filter-selected inner class by switching
+to cl->filter_list, but never bounds the number of hops. A filter on
+an inner class can point back to itself or to another inner class that
+points back, creating an infinite loop in the packet classification
+path with the qdisc lock held and BH disabled — a soft lockup / panic
+from a single packet.
 
-	/* tcp_write_xmit() */
-	limit = mss_now;
-	if (tso_segs > 1 && !tcp_urg_mode(tp))
-		limit = tcp_mss_split_point(...);
+Bound the traversal with a hop counter and drop the packet with a
+rate-limited warning once the bound is exceeded. The counter is
+incremented at the point the inner filter chain is picked up, after the
+TC_ACT_* switch has consumed the classifier verdict, so a terminal
+TC_ACT_QUEUED/STOLEN/TRAP on the last permitted chain still sets *qerr
+to __NET_XMIT_STOLEN and the packet is not charged as a drop by this
+qdisc or its parent.
 
-The retransmit path has no such guard. __tcp_retransmit_skb() builds a
-segs > 1 skb and hands it to the GSO layer, which only advances th->seq
-per segment and copies urg_ptr verbatim:
+The bound is TC_HTB_MAXDEPTH, taken from HTB's own parameters rather than
+from the qdisc hierarchy depth limit. Class levels run from 0 to
+TC_HTB_MAXDEPTH - 1, so a traversal that strictly descends in level can
+take at most TC_HTB_MAXDEPTH hops. That descent is what a sane
+configuration does, but it is assumed here rather than enforced:
+htb_find() resolves a classid against every class in the qdisc, so a
+filter may equally select a sibling or an ancestor. The normal
+root -> inner -> leaf path takes a single hop, so the bound does not
+affect legitimate classification.
 
-	/* __tcp_retransmit_skb() */
-	len = cur_mss * segs;		/* segs > 1, no urg_mode check */
-	...
-	/* tcp_gso_segment(): bumps seq only, urg_ptr is copied */
+htb_classify() can now return NULL irrespective of CONFIG_NET_CLS_ACT,
+whereas previously every NULL return sat inside that ifdef. The NULL
+handler in htb_enqueue() therefore cannot stay conditional either, so
+drop the ifdef around it. This matches hfsc_enqueue(), which has always
+handled a NULL class unconditionally. Without it, a kernel built
+without actions would dereference a NULL class instead of dropping.
 
-urg_ptr is an offset from the segment's own seq, so a copied value points
-at a different place on each segment. The receiver rebuilds the absolute
-urgent seq as seg.seq + urg_ptr, so it walks a moving urgent point instead
-of the one OOB byte:
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED, CONFIG_NET_SCH_HTB, CONFIG_NET_CLS_U32,
+  CONFIG_LOCKUP_DETECTOR.
+- Create an HTB qdisc on a device (e.g. lo), add an inner class
+  1:1 with a leaf child 1:10, install a root u32 filter selecting
+  1:1, and an inner-class u32 filter on 1:1 also selecting 1:1.
+- Send one packet (ping). On the unfixed kernel the classify loop
+  spins with the qdisc lock held; with softlockup_panic=1 it panics.
+- Reachable from unprivileged user via unshare -Urn (CAP_NET_ADMIN).
 
-	seg1  seq 1     urg_ptr 5001 -> urgent @ 5001   (ok)
-	seg2  seq 1001  urg_ptr 5001 -> urgent @ 6001   (wrong, +MSS)
-	seg3  seq 2001  urg_ptr 5001 -> urgent @ 7001   (wrong, +2*MSS)
-
-The real OOB byte is never pointed at, so the receiver stops splicing it
-out and delivers it as normal in-band data, corrupting the stream.
-
-Guard the retransmit length like the xmit path: keep segs = 1 while in
-urgent mode.
-
-Fixes: 10d3be569243 ("tcp-tso: do not split TSO packets at retransmit time")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Vega <vega@nebusec.ai>
+Co-developed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260826141145.67823-1-jiayuan.chen@linux.dev
+Link: https://patch.msgid.link/20260826143339.271935-1-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_htb.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 296102ed4a96a..d08b50b858756 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3381,7 +3381,7 @@ int __tcp_retransmit_skb(struct sock *sk, struct sk_buff *skb, int segs)
- 		avail_wnd = cur_mss;
- 	}
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index 49f4599be14b6..36cc9a343b546 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -223,6 +223,7 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
+ 	struct htb_class *cl;
+ 	struct tcf_result res;
+ 	struct tcf_proto *tcf;
++	unsigned int hops = 0;
+ 	int result;
  
--	len = cur_mss * segs;
-+	len = cur_mss * (tcp_urg_mode(tp) ? 1 : segs);
- 	if (len > avail_wnd) {
- 		len = rounddown(avail_wnd, cur_mss);
- 		if (!len)
+ 	/* allow to select class by setting skb->priority to valid classid;
+@@ -265,6 +266,10 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
+ 		if (!cl->level)
+ 			return cl;	/* we hit leaf; return it */
+ 
++		if (++hops > TC_HTB_MAXDEPTH) {
++			pr_warn_ratelimited("htb: classify loop detected, dropping packet\n");
++			return NULL;
++		}
+ 		/* we have got inner class; apply inner filter chain */
+ 		tcf = rcu_dereference_bh(cl->filter_list);
+ 	}
+@@ -632,13 +637,11 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		} else {
+ 			return qdisc_drop(skb, sch, to_free);
+ 		}
+-#ifdef CONFIG_NET_CLS_ACT
+ 	} else if (!cl) {
+ 		if (ret & __NET_XMIT_BYPASS)
+ 			qdisc_qstats_drop(sch);
+ 		__qdisc_drop(skb, to_free);
+ 		return ret;
+-#endif
+ 	} else if ((ret = qdisc_enqueue(skb, cl->leaf.q,
+ 					to_free)) != NET_XMIT_SUCCESS) {
+ 		if (net_xmit_drop_count(ret)) {
 -- 
 2.53.0
 
