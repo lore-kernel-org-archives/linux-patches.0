@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1633A4267;
-	Sat, 12 Sep 2026 20:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA8B3A2E12;
+	Sat, 12 Sep 2026 20:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243420; cv=none; b=ViuRHajyVTX+Bqaqev+hhhod3w5/Qx1f/+Uk0A85wSLKCMg+R9tf5tzO6qfP7Fg0V0NH52egMyOrrnVdeWnitmN/sMO60pixmcsxLjkHv978pA//V/5imGS6QwP70/HEay9dCIHY7y1hipqs/PzRwKqT70DVmZjYqZZdHP+l/Xc=
+	t=1789243423; cv=none; b=h3Q7irv/Kh0y1eD7ErKOljiL80D4g07BrtPhcUjIWD09gKSyafbeZvO6RfY6YDTecJIcWrBi+ktjBipyXBCxqOlgKNcO967YnlevXaSLZCXjb5UJKGoeFEkG8z+vQpXX5maj+3swu+8+sCKhIr4udLkyFSfKmREYlFS09JdQ3tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243420; c=relaxed/simple;
-	bh=nFYihuXsNwROkbjZtgXnuqaMyQwOs54N1aOprHTCYx0=;
+	s=arc-20240116; t=1789243423; c=relaxed/simple;
+	bh=NvRQugPdt9XoPz39U3rmqIyBtaSmsp3Ub48fJohVm2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZRLVi6+KEqvD4VjpBpwZLeuRqRoE1j4yFR+Q4OgAS4LZtcoa09wMbpUhj76CCc3mYaL2Ntxp7sVwhTr/69+lBmoHO3fQklC9zokhBT4IlpMHmfCOhUtHoY1+Q85lwrJpGGNaAr/sE1FeLkcIoUoQA6w0ri1oTehw8A5tbHWK0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtoQGklR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aVdErvEcIt3iwxi3Et7J6HwuShNzZ21e/6/Nu2Eqxe18Z36653YI2Z0E4EvDz8OdJfw6HaXpbjszBovtrmaykGLq9QAQOTURrQcGsj6iWaTIuQI4W0N48jt4dQtWpuVWjCVTgahb1SBhNmmJCFVgiVk63jTYConhQ8oK6qWZQxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxZu06yn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtoQGklR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EB11F000FF;
-	Sat, 12 Sep 2026 20:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxZu06yn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211DE1F000FF;
+	Sat, 12 Sep 2026 20:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243418;
-	bh=7mDUa67XJPyQO+gWr8JEd/2NMaXDWz052HTCua+GXMU=;
+	s=korg; t=1789243421;
+	bh=nPIUfufwo5xKkvZWu6LCPg+DslhHv43VVd4J4xAJpDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtoQGklR3GcoOhsvM5SmbQsxiFMVx3yKeYewijRMaamVBpVQbDZDTq5QRqtwfRTnt
-	 xy2Kw5OIMV8KBliU3WhWuV//zsi7+EdXXC1Op4KjfQ4qYbxhsIni2Dx1IchVn34Vcr
-	 GIb4jN01uDR8bfyGgRcaNyQGfr4N7Lc4ipe1xZD0=
+	b=bxZu06ynTHG1ddRWgP6lOUa6RvXYY8IMC4CRM+XpQ+3GVSoUQ1ivGgTMuNsMXbFoH
+	 Th5fytlvfqzlbEtEiY4GgiQcikGke0exC+VV5P4DzVNf55cyPdb0m8EKuCOaoN5fXE
+	 ewu0JjX75wN/YPj+M30wk2QfHqi2uHNvqOB7CvO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Chris Lu <chris.lu@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 750/798] Bluetooth: 6lowpan: fix cyclic locking warning on netdev unregister
-Date: Sat, 12 Sep 2026 09:06:18 +0200
-Message-ID: <20260912065534.261262665@linuxfoundation.org>
+Subject: [PATCH 5.10 751/798] Bluetooth: btmtksdio: Take exclusive ownership of the SKB before TX
+Date: Sat, 12 Sep 2026 09:06:19 +0200
+Message-ID: <20260912065534.282291850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,100 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 9707a015fe8f3ba8ec7c270f3b2b8efb38823d6b ]
+[ Upstream commit 155e3003d1e614f85566b636973df7118e1b4851 ]
 
-6lowpan.c has theoretically conflicting lock orderings, which lockdep
-complains about:
+btmtksdio_tx_packet() prepends the MediaTek SDIO header with skb_push()
+and writes into that space after only checking the headroom size. On a
+cloned SKB that headroom belongs to a buffer shared with the other owner,
+which the driver has no right to write to.
 
-    a) rtnl_lock > hdev->workqueue
+Cloned SKBs do reach this path: hci_send_cmd_sync() keeps a clone of every
+HCI command in hdev->sent_cmd before handing the SKB to the driver, and
+l2cap_ertm_send() clones SKBs for retransmission.
 
-    from 6lowpan.c:delete_netdev -> rtnl_lock -> device_del
-    -> put_device(parent) -> hci_release_dev -> destroy_workqueue
+Replace the open-coded headroom check with skb_cow_head(), which both
+guarantees the headroom and reallocates a private buffer when the SKB is
+cloned. The cost is one reallocation and copy per cloned packet, the usual
+price of this pattern in network drivers.
 
-    b) hdev->workqueue > l2cap_conn->lock > chan->lock > rtnl_lock
+This has no observable effect on its own, as the driver only writes in
+front of skb->data where no other owner looks. It is a prerequisite for
+"Bluetooth: btmtksdio: Fix out-of-bounds DMA read in the TX path", which
+writes padding behind skb->tail, and carries the same Fixes: tag so that
+both are backported together.
 
-    from hci_rx_work -> 6lowpan.c:chan_ready_cb
-    -> lowpan_register_netdev, ifup -> rtnl_lock
-
-Actual deadlock appears not possible, as hci_rx_work is disabled and
-l2cap_conn flushed already on hdev unregister. Hence, do minimal thing
-to make lockdep happy by breaking chain a) by holding hdev refcount
-until after netdev put in 6lowpan.c.
-
-Fixes the lockdep complaint:
-WARNING: possible circular locking dependency detected.
-kworker/0:1/11 is trying to acquire lock:
-ffff8880023b3940 ((wq_completion)hci0#2){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x8b/0x130
-but task is already holding lock:
-ffffffff95e4f9c0 (rtnl_mutex){+.+.}-{4:4}, at: lowpan_unregister_netdev+0xd/0x30
-Workqueue: events delete_netdev
-
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: 9aebfd4a2200 ("Bluetooth: mediatek: add support for MediaTek MT7663S and MT7668S SDIO devices")
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Assisted-by: Claude:claude-opus-5
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: d4bfa78fd679 ("Bluetooth: L2CAP: reject accept queue add unless BT_LISTEN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btmtksdio.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index a71855268d33f..9a9b1c13ca91f 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -787,13 +787,33 @@ static inline struct l2cap_chan *chan_new_conn_cb(struct l2cap_chan *pchan)
- 	return chan;
- }
+diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+index c41560be39fb6..971e9f6c36bbe 100644
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -263,13 +263,12 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
+ 	struct mtkbtsdio_hdr *sdio_hdr;
+ 	int err;
  
-+static void unregister_dev(struct lowpan_btle_dev *dev)
-+{
-+	struct hci_dev *hdev = READ_ONCE(dev->hdev);
-+
-+	/* If netdev holds last reference to hci_dev (its parent device), this
-+	 * leads to theoretical cyclic locking on lowpan_unregister_netdev:
-+	 *
-+	 * rtnl_lock -> put_device(parent) -> hci_release_dev ->
-+	 * destroy_workqueue -> hci_rx_work -> l2cap_recv_acldata ->
-+	 * chan_ready_cb -> ifup -> rtnl_lock
-+	 *
-+	 * However, hci_rx_work is disabled in hci_unregister_dev, so this
-+	 * should not occur. Make lockdep happy by postponing hdev release after
-+	 * netdev put.
+-	/* Make sure that there are enough rooms for SDIO header */
+-	if (unlikely(skb_headroom(skb) < sizeof(*sdio_hdr))) {
+-		err = pskb_expand_head(skb, sizeof(*sdio_hdr), 0,
+-				       GFP_ATOMIC);
+-		if (err < 0)
+-			return err;
+-	}
++	/* Make sure that the data buffer is not shared with anyone else and
++	 * that there is enough room for the SDIO header
 +	 */
-+	hci_dev_hold(hdev);
-+	lowpan_unregister_netdev(dev->netdev);
-+	hci_dev_put(hdev);
-+}
-+
- static void delete_netdev(struct work_struct *work)
- {
- 	struct lowpan_btle_dev *entry = container_of(work,
- 						     struct lowpan_btle_dev,
- 						     delete_netdev);
++	err = skb_cow_head(skb, sizeof(*sdio_hdr));
++	if (err < 0)
++		return err;
  
--	lowpan_unregister_netdev(entry->netdev);
-+	unregister_dev(entry);
- 
- 	/* The entry pointer is deleted by the netdev destructor. */
- }
-@@ -1271,6 +1291,7 @@ static void disconnect_devices(void)
- 			break;
- 
- 		new_dev->netdev = entry->netdev;
-+		new_dev->hdev = entry->hdev;
- 		INIT_LIST_HEAD(&new_dev->list);
- 
- 		list_add_rcu(&new_dev->list, &devices);
-@@ -1282,7 +1303,7 @@ static void disconnect_devices(void)
- 		ifdown(entry->netdev);
- 		BT_DBG("Unregistering netdev %s %p",
- 		       entry->netdev->name, entry->netdev);
--		lowpan_unregister_netdev(entry->netdev);
-+		unregister_dev(entry);
- 		kfree(entry);
- 	}
- }
+ 	/* Prepend MediaTek SDIO Specific Header */
+ 	skb_push(skb, sizeof(*sdio_hdr));
 -- 
 2.53.0
 
