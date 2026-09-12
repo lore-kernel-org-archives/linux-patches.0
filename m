@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C124274B39;
-	Sat, 12 Sep 2026 10:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017CA352003;
+	Sat, 12 Sep 2026 10:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208675; cv=none; b=YM1Z3SJup1Ca/sTduNHQYEhvV7DVZKcnFcyK8HTGfT8WOOLcbNDWxaO3Txi7TYZmZXNuPz0VVSsTkUYAgszGi5VSPD6HvnVS8ynzhbys4/XWscFPXOGsLp8EqyP7ohul3rBaHoIGZN/v4yU2e0+PJnnX37+dIoZkRmOjUD7p0sQ=
+	t=1789208680; cv=none; b=aiTogN92zV8Xr2nq/tEPA4Z/fUnxnd9EzDv56CHU7J1QzhIdpc2np6ETUNro1bS74qBxwa/M36PKhbkqETgEbHiYvHXNndoBDe3vMM66wZ1ROiM5IBbfAJixOBh0VzdSOUJ98Dq4FJR7MnYNXFXw5OmUaH5OPgRqRiOqzGGeA14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208675; c=relaxed/simple;
-	bh=0OLCa7BAECOhQ1xvhqc8C0P3T1rho4F1SnZrzwlHcz0=;
+	s=arc-20240116; t=1789208680; c=relaxed/simple;
+	bh=U4ATd2YwZ8zig0ONE+DXYtyWk3fGG5wOF1TEC2PrMpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ni6/9ZkWLfPGD3+2SCR4ySpl9M3kg5kybtBEZihYzPQ8eVpQV32iho+yP1kIEEzLxFK9XdBrQ8Wer88Uzmr/KHurq0Mw2ogJCPgZuU34sYAFPDoXQPMhIBHNKV2/nhxZqgGhrTPvJ7/QAQnbMArmBs5DITqkME+01+gIElQKRuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tibMItss; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YUS8bzFDl0sPe+kk6j+HX7tr9/ohskYY7TFr7m4WO0ouwXN2tECzI08xqr071DXdlMWKUDWuB2LnZBPY/KB3LZQoNZTXKHZ3xgACoNHF845C1orrTKj/4Vo6jiAxcgJtHuXX+BmrDBYRlEqDOxyWQsDj6Mi+E0zDFGXy6hFYt5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06DOGa5G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tibMItss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BE21F000FF;
-	Sat, 12 Sep 2026 10:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06DOGa5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B072A1F000FF;
+	Sat, 12 Sep 2026 10:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208673;
-	bh=RT+CG5WQKFEqdcNnF6jcMSU8NCwSY9KSe7d5hsYT1kw=;
+	s=korg; t=1789208678;
+	bh=mDbSjAIenuXN6y6nYJ0ZhLq0GvyNxzx6rJH4CSgT6XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tibMItssxnBEVDRx7arp/VFJnxIIR+RenFuJV4b7Q/n5NP0J4ErSHcKvv7GHnjaut
-	 ekQNe0V1AiaZU0AWpPxkoXk5deha38pLZbqdRqztpbiiTPpuUkXPQQ2ltRzGJdDxVQ
-	 YqyB9b11fCdqboVSF9ihedO89A9ypP2ovy7/Sh6Y=
+	b=06DOGa5GyvA7vt1VeX5qKuPUT6efBsS2efB8zImjGIZzB0eXLbocXlJiZ5fRPD3Xs
+	 2yCk5thN8Uf1hmQeRUdXMSi1Q1xdxarKu9udyYjj/5D4CjMY/OGj1bmGJsFYGMZCdp
+	 sbwzEsFG4108oiQEMydN4N518IvOaqoddCwmnmK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0665/1518] arm64: dts: qcom: qcs404: Fix DTBS Check errors in usb controller nodes
-Date: Sat, 12 Sep 2026 08:47:14 +0200
-Message-ID: <20260912065638.477351684@linuxfoundation.org>
+Subject: [PATCH 6.18 0666/1518] clk: qcom: gcc-qcm2290: dont park QUP RCGs upon registration
+Date: Sat, 12 Sep 2026 08:47:15 +0200
+Message-ID: <20260912065638.500066018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,78 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 9812d0a3077489f67afaca84dcc7e01a440ee106 ]
+[ Upstream commit 9c4cee964e0ccc155e4ab8fa6cec88fffc262c63 ]
 
-The following errors pop up when DTBS check is done for qcs404 based
-platforms:
+The gcc_qupv3_wrap0_s[0-5]_clk_src RCGs feed the QUP serial engines
+(UART/I2C/SPI). Since shared RCGs are parked to XO at registration time,
+binding the gcc-qcm2290 driver reprograms these clocks away from the
+rate configured by the bootloader. For the UART used as the boot console
+this drops early console output until the serial driver later
+reconfigures the clock.
 
-arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb: usb@79b8800 (qcom,qcs404-
-dwc3): interrupt-names:1: 'qusb2_phy' was expected
-from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+Switch the QUP wrap0 clock sources over to
+clk_rcg2_shared_no_init_park_ops so their frequency is left unchanged at
+registration time, keeping the bootloader-configured console working
+across the gcc driver probe.
 
-arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb: usb@79b8800 (qcom,qcs404-
-dwc3): interrupt-names:2: 'hs_phy_irq' was expected
-from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
-
-arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb: usb@7678800 (qcom,qcs404-
-dwc3): interrupt-names:2: 'hs_phy_irq' was expected
-from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
-
-arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb: usb@7678800 (qcom,qcs404-
-dwc3): interrupt-names:1: 'qusb2_phy' was expected
-from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
-
-Modify ordering of hs_phy and qusb2_phy interrupts to fix the errors.
-
-Fixes: 927173bf8a0e ("arm64: dts: qcom: Add missing interrupts for qcs404/ipq5332")
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260723-qcs404_dtbs_fix-v1-1-c9ca0dd69f23@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260722-agatti-no-park-v1-1-31ae3a4774e5@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/clk/qcom/gcc-qcm2290.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 4328c1dda898c..736accfc34f90 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -677,11 +677,11 @@ usb3: usb@7678800 {
- 			assigned-clock-rates = <19200000>, <200000000>;
+diff --git a/drivers/clk/qcom/gcc-qcm2290.c b/drivers/clk/qcom/gcc-qcm2290.c
+index 690f23793af6b..77cff0e9af93b 100644
+--- a/drivers/clk/qcom/gcc-qcm2290.c
++++ b/drivers/clk/qcom/gcc-qcm2290.c
+@@ -1082,7 +1082,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s0_clk_src",
+ 	.parent_data = gcc_parents_1,
+ 	.num_parents = ARRAY_SIZE(gcc_parents_1),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
  
- 			interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>;
-+				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "pwr_event",
--					  "hs_phy_irq",
--					  "qusb2_phy";
-+					  "qusb2_phy",
-+					  "hs_phy_irq";
+ static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
+@@ -1098,7 +1098,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s1_clk_src",
+ 	.parent_data = gcc_parents_1,
+ 	.num_parents = ARRAY_SIZE(gcc_parents_1),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
  
- 			status = "disabled";
+ static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
+@@ -1114,7 +1114,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s2_clk_src",
+ 	.parent_data = gcc_parents_1,
+ 	.num_parents = ARRAY_SIZE(gcc_parents_1),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
  
-@@ -716,11 +716,11 @@ usb2: usb@79b8800 {
- 			assigned-clock-rates = <19200000>, <133333333>;
+ static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
+@@ -1130,7 +1130,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s3_clk_src",
+ 	.parent_data = gcc_parents_1,
+ 	.num_parents = ARRAY_SIZE(gcc_parents_1),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
  
- 			interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>;
-+				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "pwr_event",
--					  "hs_phy_irq",
--					  "qusb2_phy";
-+					  "qusb2_phy",
-+					  "hs_phy_irq";
+ static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
+@@ -1146,7 +1146,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s4_clk_src",
+ 	.parent_data = gcc_parents_1,
+ 	.num_parents = ARRAY_SIZE(gcc_parents_1),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
  
- 			status = "disabled";
+ static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
+@@ -1162,7 +1162,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s5_clk_src",
+ 	.parent_data = gcc_parents_1,
+ 	.num_parents = ARRAY_SIZE(gcc_parents_1),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
  
+ static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
 -- 
 2.53.0
 
