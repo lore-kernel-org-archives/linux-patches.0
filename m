@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821AA38398F;
-	Sat, 12 Sep 2026 16:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9AD377A9F;
+	Sat, 12 Sep 2026 16:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231425; cv=none; b=lkJnXDnuqOIyOwNDVQYcXb4nzXT3VVnMqUIqVatyaCouAmUNz+TBn4mvtZ40pU7o2wZRgfsmqz/Wv4uQ2hfihMA09b2u9dSUrtItg1VYux9VpdaD6ZZIHGFHTPH5FJbd3dEW2xJeQPum1a+OSTGJTZE/h4+pbaSu9qDy+++2KnI=
+	t=1789231430; cv=none; b=bx09ZNhj+NdaYwD2eRzI0nXZ84mOehcs2FL0BNFyi+Wu6sjKQYsAYfti1sz3ipQcWZPdknQGiYuxJTZoMkHsJV2fTXtAuC8PGOFqOxbS4W7iQ71EIv3TLXgOpVRa41fIF9Bs7NYcLaCBK5lwNn9PJHBq6KeBWv6l1RmzmEX+E0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231425; c=relaxed/simple;
-	bh=gO3u9lpHQmjrnmF4C2+oGwD4KNIIb5WEUNC1JBLz4c0=;
+	s=arc-20240116; t=1789231430; c=relaxed/simple;
+	bh=pceAvj8lZRSkAKPIdkt9f2FhsfG7HCDYICoY4Te/IFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S47MeN6ICaCDKsOj4aXQyh5XM50t65KglPQjyvrdQwU33aGccD0++z19GQeb4LpaQE2B+0mRr2NfL9urKRafghOWaBgpGV3OUrT5oouzgiS2wLDi++a5biDk8aDBefgFy8q7nhdAfEcIIt2H0iUCo+oN73Iz3MyrMOAWYSORFZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaRoaNzp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YlAAO20r1Zou8ODXQH4w3XOmJWwwKQDuv0p0Hx1P3fBvc09abZtB4Oa8N9sCkYgS13B9+6n15DxkBkovHKRPVwWzlnhANXvPn/GB11jcJBCgV0A0a1TSL1RtFcEUS0DQWYXqwtJwShuVbCVLtnITM3F0qsb1W/Scm5rcC3XnD3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpxQH/73; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaRoaNzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E6E1F000FF;
-	Sat, 12 Sep 2026 16:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpxQH/73"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710421F000FF;
+	Sat, 12 Sep 2026 16:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231424;
-	bh=odi20FgdujVsojmA140cJMy/7CpGDT2AcK8iWvtnaFE=;
+	s=korg; t=1789231429;
+	bh=Oue1xI19ZhNQCHwyZ3HLJbi1+hi0u+MMYXkBTe/BKS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yaRoaNzpvqMuh8vCuPRqmebQR2nTZIDCRyyxC6xIok2DU0hE7/hsqbi3JpeSJ921X
-	 eZieGguq0OfpagsEQSj2br6X4mvGbZ5pURFFbs3sbxq8Rerq4d+sFvwsoBXNMyUUIx
-	 qv2eRh0wJrjH5yZRYHMnJ7MZYZG4MVRpsfZBln4E=
+	b=ZpxQH/73aj3gTSlmlKo/92wmTDPr2xLJxJYBVxBp/JCNDuMw1/cJozuLQcPae6Fmb
+	 RNjeB69f271uujW+u9sU6lMb7I9WRJxWW1hJIKCQsxvEJ/WKNiU6+C1m706lGA7A5W
+	 /sq0mQ3YXcUAprnULawnPpXMUq+O9uDTQvIykVJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Henrik Grimler <henrik.grimler@axis.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0995/1191] power: supply: bq27xxx: bq28z610: fix invalid AverageEnergy address
-Date: Sat, 12 Sep 2026 09:02:03 +0200
-Message-ID: <20260912065610.550122070@linuxfoundation.org>
+Subject: [PATCH 6.1 0996/1191] power: supply: bq27xxx: bq27z561: fix invalid AverageEnergy address
+Date: Sat, 12 Sep 2026 09:02:04 +0200
+Message-ID: <20260912065610.571127340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,17 +53,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Henrik Grimler <henrik.grimler@axis.com>
 
-[ Upstream commit e9387e9ab5121f330d313afb90430c02200f9782 ]
+[ Upstream commit 2da28b059e0ddcd2e1956eeae383246207965573 ]
 
-bq28z610 currently uses the AveragePower reg, 0x22, for reading both
+bq27z561 currently uses the AveragePower reg, 0x22, for reading both
 AveragePower and AvailableEnergy. The technical reference manual does
 not mention AvailableEnergy, and it does not make sense to read a
 cumulative, always positive, property like AvailableEnergy from a rate
 property like AveragePower. Set REG_AE as invalid to fix it.
 
-Fixes: 707d678a5c7c ("power: supply: bq27xxx_battery: Add the BQ28z610 Battery monitor")
+Fixes: 6f24ff97e323 ("power: supply: bq27xxx_battery: Add the BQ27Z561 Battery monitor")
 Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
-Link: https://patch.msgid.link/20260811-bq27z746-v1-4-3a4fa38205cc@axis.com
+Link: https://patch.msgid.link/20260811-bq27z746-v1-5-3a4fa38205cc@axis.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -71,10 +71,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index c0e28c841293e..6b1c07c9cd4cc 100644
+index 6b1c07c9cd4cc..a818b002af21d 100644
 --- a/drivers/power/supply/bq27xxx_battery.c
 +++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -510,7 +510,7 @@ static u8
+@@ -489,7 +489,7 @@ static u8
  		[BQ27XXX_REG_RC] = 0x10,
  		[BQ27XXX_REG_FCC] = 0x12,
  		[BQ27XXX_REG_CYCT] = 0x2a,
