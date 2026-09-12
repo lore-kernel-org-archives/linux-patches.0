@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2C0340298;
-	Sat, 12 Sep 2026 18:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F3932D7F8;
+	Sat, 12 Sep 2026 18:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236972; cv=none; b=GqV+wzp7eCQec6UNvOwmnzGcWPXq+JvlkNkehEQ7cuX+9pKKSIHP9zQPu6EZhtBqf+ufl6n/XARXhkhxy4VI7em9COUWjH/qikZC3z0VaNZY61+Y+yHekMpIBpZ1aO58uiDVxudUc/3hZ2CjkvRlZ34oc9+STu9q/JaGmdyY/0c=
+	t=1789236976; cv=none; b=t/ONlVPrrO15jmZ5Dr5DCSuB4oV7i1M8M3Wr0nVv/v/1bZWSt35JHI+lEHbUF58YnHMnamvqguOdIFodTQtVOHnaRD+Ujz5beAstJ56bKmhyDx8+O9kG3vhofRJ0UhlPlTF2J4q07+YajeKIwq3gj6umbPoxk/mViZCkmSg82Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236972; c=relaxed/simple;
-	bh=l5wxk0Oi1bVtLCandMHAqYSDvBsTnq9Jm+5fn+ljdFY=;
+	s=arc-20240116; t=1789236976; c=relaxed/simple;
+	bh=qXqFej2TkbgMaP7qxqesbojVyVEyeB92ilqdQezCBu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5ZTnJ17hWoxGOuDnj6Cr4RQtY0aB6E3wC+OIpVADYlMwAZa/5NiiWDs+GZC/wH42Rmapz6QCjHq7XncQJzcSyMHzSY5n0ZL7PpInHWgPC+MA49Cf7pBVFWCMh0LFyav90psxeZqyn/eajDKdEA2h98dGL9mO6bhSy18/eJFCKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/4BDvY3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=l3WPzyjkjtJNyM/1LKROAHFJTFbgP1H8NmXyxIBs2qfFlNUMFIk4DbPf3oF3LAGqOuwtNEbDZZ8VK3TioMkWoNpG1BgZPTmJgKpZq7x1k0y34A3FDIOXjyZnImLh2/P74W5HLZGqt5r21GhIJdyuuWl/fZsqs+oJPrBcRcB+2Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZmEmAWc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/4BDvY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712811F000FF;
-	Sat, 12 Sep 2026 18:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZmEmAWc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C40C1F000FF;
+	Sat, 12 Sep 2026 18:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789236970;
-	bh=wzzdpm75uRFCk2KLyCZsZ+bNG2kquXLXEMWkRohTZdo=;
+	s=korg; t=1789236975;
+	bh=b1T8m26NbgnyryCHFEhOvVfALDFrGiAXMdMUIN9fEXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j/4BDvY3EsQ1RgVTy+mBbCMRR2qKqzq2lVIk5OBQIvjgH1GfeLuaqkr1LB5i9YLcO
-	 9YXDbGE7ZCYIiQW217jZIrTJ/4/PDUChYBdlza1japIEuLncZ+TpNvf+maNu3aEknw
-	 WXVdSHVUG44ZCBhWuk0Q3r9ibmjaCSRM09sKqjyc=
+	b=qZmEmAWc51bPvHEUiHYAd+Bpace7fK3scshQ65vCIaFAZTKS5UrigQFA944V2vHB7
+	 UmDm5sAtpwwTlcpiPSRZwgKZsBr9OOoWkuBq6K+nUFzCb/W3oG+Q/1v1JHnHOIGEIV
+	 bx6HqEgPYWIAb8L+NeG0IMFR7TNWJvr6km/Uov5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronald Claveau <linux-kernel-dev@aliel.fr>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.15 162/935] PCI: meson: Fix GPIO state while requesting PERST#
-Date: Sat, 12 Sep 2026 08:53:12 +0200
-Message-ID: <20260912065530.535697116@linuxfoundation.org>
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.15 163/935] PCI/sysfs: Avoid spurious runtime PM wakeup on config space accesses
+Date: Sat, 12 Sep 2026 08:53:13 +0200
+Message-ID: <20260912065530.558183728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -46,67 +44,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit 40fb390cbcc11797c44c16dabdf763ec87643671 upstream.
+commit b14b2bab88d7099ab4447560cbe4b40945e5c069 upstream.
 
-Meson devicetree defines the PERST# GPIO as 'reset' GPIO.  Commit
-4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
-inverted the PERST# assertion logic to use proper GPIO descriptor semantics
-and moved the polarity configuration to the device tree as GPIO_ACTIVE_LOW.
-However, the initial PERST# GPIO state "GPIOD_OUT_LOW" was not updated
-accordingly.
+Currently, the boundary checks in pci_read_config() and pci_write_config()
+reject only offsets beyond the effective configuration space size.
 
-This results in the enumeration failure of the endpoint devices as
-PERST# would get deasserted while requesting the GPIO even before
-power and REFCLK becomes stable.
+An access at an offset exactly equal to that size passes the check, has its
+length clamped to zero, and then invokes pci_config_pm_runtime_get() and
+pci_config_pm_runtime_put() around transfer blocks that do nothing.
 
-Without this fix:
+This is a problem because pci_config_pm_runtime_get() synchronously resumes
+the upstream bridge through pm_runtime_get_sync() and resumes the device
+itself through pm_runtime_resume() when it is in D3cold, only for the
+handler to return zero immediately afterwards.  Such a spurious wakeup
+wastes power and adds needless resume latency.
 
-  ahci 0000:01:00.0: enabling device (0000 -> 0002)
-  ahci 0000:01:00.0: SSS flag set, parallel bus scan disabled
-  ahci 0000:01:00.0: Controller reset failed (0xffffffff)
-  ahci 0000:01:00.0: probe with driver ahci failed with error -5
+The sysfs core already clamps accesses against the attribute size set
+through the bin_size() callback, which reports either 256 or 4096 bytes.
+As such, the affected accesses are reads at offset 64 (or 128 for CardBus
+devices) through files opened without CAP_SYS_ADMIN, and reads and writes
+at the exact configuration space size on devices where a quirk sets a
+non-standard size.
 
-With this fix:
+Reject accesses at the boundary offset as well, so they return early before
+any runtime PM involvement, matching the procfs implementations in
+proc_bus_pci_read() and proc_bus_pci_write().
 
-  ahci 0000:01:00.0: enabling device (0000 -> 0002)
-  ahci 0000:01:00.0: AHCI vers 0001.0300, 32 command slots, 6 Gbps, SATA mode
-  ahci 0000:01:00.0: 1/1 ports implemented (port mask 0x1)
-  ahci 0000:01:00.0: flags: 64bit ncq led clo only pio ccc
+The value returned to userspace at these offsets remains zero, so the
+change is not visible to userspace.
 
-Change the GPIO request flag from GPIOD_OUT_LOW to GPIOD_OUT_HIGH to get
-the right behaviour.
-
-Fixes: 4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
-Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
-[mani: CCed stable and commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: tweak commit log, order tags]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616-fix-meson-pcie-reset-gpio-v1-1-fca404b4c8be@aliel.fr
+Link: https://patch.msgid.link/20260720204356.1501749-1-kwilczynski@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-meson.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci-sysfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-meson.c
-+++ b/drivers/pci/controller/dwc/pci-meson.c
-@@ -415,7 +415,7 @@ static int meson_pcie_probe(struct platf
- 		return PTR_ERR(mp->phy);
- 	}
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -727,7 +727,7 @@ static ssize_t pci_read_config(struct fi
+ 	else if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS)
+ 		size = 128;
  
--	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(mp->reset_gpio)) {
- 		dev_err(dev, "get reset gpio failed\n");
- 		return PTR_ERR(mp->reset_gpio);
+-	if (off > size)
++	if (off >= size)
+ 		return 0;
+ 	if (off + count > size) {
+ 		size -= off;
+@@ -803,7 +803,7 @@ static ssize_t pci_write_config(struct f
+ 	if (ret)
+ 		return ret;
+ 
+-	if (off > dev->cfg_size)
++	if (off >= dev->cfg_size)
+ 		return 0;
+ 	if (off + count > dev->cfg_size) {
+ 		size = dev->cfg_size - off;
 
 
