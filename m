@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A113BFACE;
-	Sat, 12 Sep 2026 08:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2E4386C0D;
+	Sat, 12 Sep 2026 08:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203285; cv=none; b=oISbM7sDUJ+08947l4oe6ST84F4Oz6jTHwYVHWp8jH5d77/JeHsu1NVRA7EtgbwgHhNN6fyMYBL/lwKNp4FtpV0lUlauk9Z6SCY4VrboLqLFYoULn1VZvis2k+y2HIgTm6osjHSwoBKY4aaeSkjGZbhbKvzXvIh0xg59KkLFHzI=
+	t=1789203291; cv=none; b=Zxx0j827kTMG0S71MlhuPEVPyHmXwFjxxk3+xDz8PkfJqVRJvFf4RuhTIRuC1e2XQjWQ2KkzM4Bwp0kjz7dkWDtr3FenOntLEIn9pQ2p0llx8pk6u43G5FTBBj6VPM8qvgZxkydjTrEpzIYWo9XcVkxaJ1a2PRjQEp2J9GJ1KzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203285; c=relaxed/simple;
-	bh=sawnNNgNLt4AVOVe+aXIDJmwyOU08/bB/drnD1CZ94Q=;
+	s=arc-20240116; t=1789203291; c=relaxed/simple;
+	bh=NWzHGq2ouPybMajRSgSa5YKUTt89HcXUZdHty+O4vYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQDX66DxhEXC4HDDAAmgP3ogoOA0cd6LgvcWISlvjs4YVqGAa5xqCRvo3gBxyJp7+0XSdobMjCPlfmDfvn6Gg9u+vJDqPg6x4QO0L/rMTPmhlHQZZOq/j0CMs+ey2upak1Lf82w3QLv2xR2ULTsmfxyY47EKzp0Lx8sp5i1oevg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1EK6BbN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uTnJamiW+b1PMkrLd8sfe3fQMzfDeE++nX7jXads/6UscO049aVUjCFw/bVmv1240iXTDUxSwDO8UR1CQ7q7DMHFsMdDuvnJrJz4FHXFIVi6BVDAFF92GhgzrqEQUQb0JgV3b7WS48DLjzTXHrb+Zsp6v+iGDByi2ctRZBLiVGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsGaOC7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1EK6BbN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889FE1F000FF;
-	Sat, 12 Sep 2026 08:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsGaOC7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6CF1F00899;
+	Sat, 12 Sep 2026 08:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203284;
-	bh=k6si9MkGX9V4206ptpDdB3y5u26GcFP9nBTKaO6rejI=;
+	s=korg; t=1789203289;
+	bh=bVaDp3a/HbMKiybqpPI33IbDUe8NvvQfo4Hqv/cZMsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c1EK6BbNZc5HPOd1ktF0rjoImeNTlTH83wi3ywKXHvqMWFRc/ZLRsl0Hj06p1P921
-	 Cq3R4HkQbPoxDNFiNvbPqYqv3fQ/DUAxCAQ3U8M98U0ovoZ3RLPFt2hpXlU/6ZNOmm
-	 VnVoFHPQl9+aL70rBtmCYViz3+6hssWHh15OvpFA=
+	b=gsGaOC7X/I3ehRHUpVkF7RVEmUWsaqogybVd1DKH7S2ntdLn+fuRnhs+JVkLlqdPE
+	 82TGgDWxxHXewVeL8ndQB1h7Q7l7nZWPzPVBYMIn2RVi8BUPFnBmCmvfeAUbDJ21b7
+	 ValJDja1SCyLoJDXcash9c3qm4gog2ifcxONYZOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Glass <sjg@chromium.org>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Linus Walleij <linusw@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1324/1815] pinctrl: rockchip: Decode drive strength in the get function
-Date: Sat, 12 Sep 2026 08:51:14 +0200
-Message-ID: <20260912065720.106372091@linuxfoundation.org>
+Subject: [PATCH 7.2 1371/1815] idpf: add missing cpu_to_le32 in idpf_tx_splitq_build_flow_desc
+Date: Sat, 12 Sep 2026 08:52:01 +0200
+Message-ID: <20260912065721.215061690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,85 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Glass <sjg@chromium.org>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 8aa25c6e8893ed911b0cad37a5562fda9bc98438 ]
+[ Upstream commit b802a8c1ca16f9490fa0cb3110c00c10d52b392d ]
 
-The decoding of the 2-bit and 8-bit level drive-strength values sits in
-rockchip_set_drive_perpin(), where it is unreachable: the SoCs whose
-banks declare these drive types (RK3506 and RV1103B) take the early
-ctrl->type branch in the set path, and the read-and-decode logic in a
-set function has no purpose. Meanwhile rockchip_get_drive_perpin()
-lacks the decoding, so pin_config_get() and the debugfs output report
--EINVAL for these SoCs.
+idpf_tx_splitq_build_flow_desc performs a 32-bit store to &cmd_dtype
+to set the 8-bit cmd_dtype and zero the adjacent 3-byte timestamp
+field in a single operation.
 
-Move the two cases to rockchip_get_drive_perpin(), where they belong.
+Descriptors are in little endian. Add missing cpu_to_le32 and cast to
+__le32 to ensure the fields are written correctly also on big endian
+platforms.
 
-Fixes: dbd2317d7b9f ("pinctrl: rockchip: Add rk3506 pinctrl support")
-Signed-off-by: Simon Glass <sjg@chromium.org>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 1a49cf814fe1 ("idpf: add Tx timestamp flows")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 38 +++++++++++++++---------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index 08084ed2cf1bc..7f7ea3b3638d9 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -3267,6 +3267,25 @@ static int rockchip_get_drive_perpin(struct rockchip_pin_bank *bank,
- 	case DRV_TYPE_IO_1V8_ONLY:
- 		rmask_bits = RK3288_DRV_BITS_PER_PIN;
- 		break;
-+	case DRV_TYPE_IO_LEVEL_2_BIT:
-+		ret = regmap_read(regmap, reg, &data);
-+		if (ret)
-+			return ret;
-+		data >>= bit;
-+
-+		return data & 0x3;
-+	case DRV_TYPE_IO_LEVEL_8_BIT:
-+		ret = regmap_read(regmap, reg, &data);
-+		if (ret)
-+			return ret;
-+		data >>= bit;
-+		data &= (1 << 8) - 1;
-+
-+		ret = hweight8(data);
-+		if (ret > 0)
-+			return ret - 1;
-+		else
-+			return -EINVAL;
- 	default:
- 		dev_err(dev, "unsupported pinctrl drive type: %d\n", drv_type);
- 		return -EINVAL;
-@@ -3390,25 +3409,6 @@ static int rockchip_set_drive_perpin(struct rockchip_pin_bank *bank,
- 	case DRV_TYPE_IO_1V8_ONLY:
- 		rmask_bits = RK3288_DRV_BITS_PER_PIN;
- 		break;
--	case DRV_TYPE_IO_LEVEL_2_BIT:
--		ret = regmap_read(regmap, reg, &data);
--		if (ret)
--			return ret;
--		data >>= bit;
--
--		return data & 0x3;
--	case DRV_TYPE_IO_LEVEL_8_BIT:
--		ret = regmap_read(regmap, reg, &data);
--		if (ret)
--			return ret;
--		data >>= bit;
--		data &= (1 << 8) - 1;
--
--		ret = hweight8(data);
--		if (ret > 0)
--			return ret - 1;
--		else
--			return -EINVAL;
- 	default:
- 		dev_err(dev, "unsupported pinctrl drive type: %d\n", drv_type);
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+index c724d429a7aa9..91ca75e454630 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -2408,7 +2408,7 @@ void idpf_tx_splitq_build_flow_desc(union idpf_tx_flex_desc *desc,
+ 				    struct idpf_tx_splitq_params *params,
+ 				    u16 td_cmd, u16 size)
+ {
+-	*(u32 *)&desc->flow.qw1.cmd_dtype = (u8)(params->dtype | td_cmd);
++	*(__le32 *)&desc->flow.qw1.cmd_dtype = cpu_to_le32((u8)(params->dtype | td_cmd));
+ 	desc->flow.qw1.rxr_bufsize = cpu_to_le16((u16)size);
+ 	desc->flow.qw1.compl_tag = cpu_to_le16(params->compl_tag);
+ }
 -- 
 2.53.0
 
