@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF7F38837C;
-	Sat, 12 Sep 2026 15:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9C2471249;
+	Sat, 12 Sep 2026 15:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228039; cv=none; b=Q0mNAX8qqwEJqGKnTHXpI5zs2cGueMlg0dR3rusMrd/G9LEEUwYmDbv8vaCy9Dk5kqiG9D6l8ZfKrgqc0NrOwj8NlWjQFuO73NlyXeQ3gHaiFV3YzfiPdLkjQFSfO4I2Io4Lnn59KU8jAlToQec8zWjdxPBrfT45HNLFAjfL13c=
+	t=1789228044; cv=none; b=MjdbC47M41wKgD1GYtn9qeKrWoVSyw3vPuqAgumthp83FEBZyRUoCfFfuj8iwmW5AXQmXUArrBCGcbTR7TSLBZ+aT111QGjGep8GO1hEXLBw/DywmlTFIXbIESk/PYALhrGv1WxzO/sx544DXXbeFEL5kxjbEKgLfeSO58KAEFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228039; c=relaxed/simple;
-	bh=tSDiLCBNR4sn44w5n0sxkf2cW+JD8pJtpI9wzxfaEfo=;
+	s=arc-20240116; t=1789228044; c=relaxed/simple;
+	bh=d8rhm3rSDvibE8F+AC+C99NGfjpl8/IsvtCtk1tK0UE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZc+HAWzqkoqy54mSrOk5ZiH+8lMv33ksotudL/z98Kzu2zYmv3fesTnIHKQflQMnm5D2+rWmUs489O8AD7vIOZpK07xz2r22wSqlFQmHb4CZZ6A0YXWeNA7lP6Be7ejsYoyiYfGzLb7Uk17S+NUhweMJB5hXtR69z8fHD15Wrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knmdvt9k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjfybBVHGEBB9NoDK44cq5ocA1Ss5jGrBFo8VJuKvWfInoR1vhfW9uV8cZsr1/oEQpHW1Lxk+VTdEFM95uw7xpCvoONJycHz5ypfoMLbmPAGOzUIXz2Kz1ZYY1zPZGFmdLl67NGH7NCQY3se0pSOe2LPXWZyr2eGu+44AX28r88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnWYj1Fg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knmdvt9k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04FF1F00893;
-	Sat, 12 Sep 2026 15:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnWYj1Fg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7521F000FF;
+	Sat, 12 Sep 2026 15:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228037;
-	bh=tLaarvQGs/0ugtjxA6VN+ZMNqV6MsQAN6qzuWN17/s8=;
+	s=korg; t=1789228042;
+	bh=mRguxVS3OwUxBKmq6Hu7zeh/5bHd7bk3XfB8QAWfS5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=knmdvt9ktzXH0wMqItmSABZgO+r4PK/HD+ypp52yDuj0/fgt62kfghHl6Zftv0edV
-	 k3S0+6SkW9V/ECVPf+xWKdYrS7exIf4v+pGq7K4vs7tVT2NWBPiuUQ2AUyHY7u97cd
-	 6f77MNQa16OaMmKk1XSDBQwqfD0XxLIUuOBd9OU8=
+	b=AnWYj1FgyH1rUlmQ3Q6zDYpIScCaZyEGYTgxk6zBFEg5ctUoIH2RVDFA5DS3qD8rD
+	 bbZwFhW/7BLSePeATIXxPWgAHYvPt9kM+z3cCalWjOplcoAseonnse4ceYIpOtuWdQ
+	 qeshl+Nx0R7eCIIKWUTx9CmDPpVNcNIlAo+yDvRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Byagowi <ahmadexp@gmail.com>,
-	Peter Rosin <peda@lysator.liu.se>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 0304/1191] i2c: mux: Fix channel node leak on adapter add failure
-Date: Sat, 12 Sep 2026 08:50:32 +0200
-Message-ID: <20260912065555.062839146@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 0305/1191] ALSA: harmony: initialize locks before requesting IRQ
+Date: Sat, 12 Sep 2026 08:50:33 +0200
+Message-ID: <20260912065555.085739559@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,36 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Byagowi <ahmadexp@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 385c7af4e3b95d0769fd211831674e83b16a2ebf upstream.
+commit 33abb7491e89285a41565670945293dda841afc4 upstream.
 
-i2c_mux_add_adapter() takes a reference to the Device Tree channel node
-before registering the new adapter. If adapter registration fails, the
-error path frees the private data without dropping that reference.
+snd_harmony_create() registers the IRQ before initializing h->lock and
+h->mixer_lock. A pending interrupt can invoke the handler while these
+locks are uninitialized.
 
-Release the channel node before freeing the private data.
+Initialize both locks before requesting the IRQ so the handler always
+sees valid lock state.
 
-Fixes: bc45449b1444 ("i2c/of: Automatically populate i2c mux busses from device tree data.")
-Signed-off-by: Ahmad Byagowi <ahmadexp@gmail.com>
-Cc: <stable@vger.kernel.org> # v3.5+
-Acked-by: Peter Rosin <peda@lysator.liu.se>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/b3e46bbee781b3cb4029aca9a71316cc5e36dc17.1787502619.git.ahmadexp@gmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260830063411.2215691-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-mux.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/parisc/harmony.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/i2c/i2c-mux.c
-+++ b/drivers/i2c/i2c-mux.c
-@@ -433,6 +433,7 @@ int i2c_mux_add_adapter(struct i2c_mux_c
- 	return 0;
+--- a/sound/parisc/harmony.c
++++ b/sound/parisc/harmony.c
+@@ -889,6 +889,9 @@ snd_harmony_create(struct snd_card *card
+ 		goto free_and_ret;
+ 	}
+ 		
++	spin_lock_init(&h->mixer_lock);
++	spin_lock_init(&h->lock);
++
+ 	err = request_irq(padev->irq, snd_harmony_interrupt, 0,
+ 			  "harmony", h);
+ 	if (err) {
+@@ -898,9 +901,6 @@ snd_harmony_create(struct snd_card *card
+ 	}
+ 	h->irq = padev->irq;
  
- err_free_priv:
-+	of_node_put(priv->adap.dev.of_node);
- 	kfree(priv);
- 	return ret;
- }
+-	spin_lock_init(&h->mixer_lock);
+-	spin_lock_init(&h->lock);
+-
+ 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, h, &ops);
+ 	if (err < 0)
+ 		goto free_and_ret;
 
 
