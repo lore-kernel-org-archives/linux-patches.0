@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64A23803CF;
-	Sat, 12 Sep 2026 07:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0463A9017;
+	Sat, 12 Sep 2026 07:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199962; cv=none; b=bg4wy6YXMDEjmxXU5fm/H17R7knpimn6uD1yO7SaqLWw6IP4+hf8dFcNe8dkqWZPVugtHaTT4tcinDvssf3IgrCydQsWhm9lObJbrpRm8hHoKHtHWNiXwiISPc78Pb5VlTHTVBJkHxZfzDVf6qifNaO3qyeEP0gP3dFLpNZ8lAU=
+	t=1789199966; cv=none; b=KKMkdO1zvSY0hu5vA4jDJ8JRXPTE0UgeFe5h42TxATbgwmgUCnSJKIn3tAx3VCg/QWuoF8q0cCqz01C8k8mYap/GQmCb8k2vdLtbHWLnvUr1nBgQWQnIj7T0NDZ+wClctZmn4ggbsgdQGI03woSqeIFFUpfjUG6Ag0Q4IE7besY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199962; c=relaxed/simple;
-	bh=pCrCYmi0xj+HeKfn0JOuHmI1c5tbE1oskRB5+1dM8ZA=;
+	s=arc-20240116; t=1789199966; c=relaxed/simple;
+	bh=lHIAb/H+KKMadkWT0rTaKDvQKHdiGlvnYT31NA2/znY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvrrFX7qIeB6uWBJPAv62gA91qg197UkjIksTXIPLQel7v2cJzsJohFGUg77p7r2TVACctd/lzomTtiM5bBSPbGMMi0IrW09BQ7RSSrskW1UF+Bb/Yk7/TFcRq0LZ2G2S11TubcNb5a9Nud0Ssr7Z0NbvegNTKcODRx7XZvssuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bL14RwG3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WB5ibqNWIVieh72010aa8kJVaI+Lu+oTR/cNMpYuiac8gp9/jpV7bEtWvybnYvthlDD3Ev2x9dXrEhBdmqqgzYUHXQrK1Du28tGk5asVZFxE2SCPj66W8611uvi+WdHmp/bw0aAm2EBgw/B4anbb/py9Yu70GhTWmAmgCCzq5D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YA/O7vET; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bL14RwG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD511F00898;
-	Sat, 12 Sep 2026 07:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YA/O7vET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3231F000FF;
+	Sat, 12 Sep 2026 07:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199960;
-	bh=gSK/FwyKq8rAzXd2siA5KrR1ITBrE+TSv8zJtQ5k+gI=;
+	s=korg; t=1789199965;
+	bh=EpAps48o/RgnME4Wo7WoMx1GtT7cLyuHM8Y/eCK0ehQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bL14RwG3/p1hpvzpXExeGDov6QPXDWUQwlJjq8G6WWPZgTsQgG/0u3dpFA8su55+m
-	 WRUr0cJoXOYMmtfD/S2tXZqIXL+HKLAWOP/nOVQ6A791Sqh2rQ4JfPs5D9pF3r4OI4
-	 7seampOEk3YVwB4YGT2tL9A1tJ2kf1MJkKqfXdG0=
+	b=YA/O7vETuPHAO7H+ELvuiYdMCd7oXRNhJs4Cx1ryJeKP2DoQP217ZCMU0m+OUfrqz
+	 pIJ+eiXoKXijT04XFbwx/vggsySuvlo5AnQTBFDgn9Qr19LcGmM8hkrb0BtvCQzq91
+	 NhWUprqcbjkrBM+9lgowziU96J+JZijwaIWrpWwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0693/1815] cpufreq/amd-pstate: Set min_limit_freq based on bios_min_perf
-Date: Sat, 12 Sep 2026 08:40:43 +0200
-Message-ID: <20260912065705.158635550@linuxfoundation.org>
+Subject: [PATCH 7.2 0694/1815] remoteproc: Allow shutdown of crashed processors
+Date: Sat, 12 Sep 2026 08:40:44 +0200
+Message-ID: <20260912065705.182237446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,73 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 5c3ecf36d2918facff40548ee6ae28eef0865266 ]
+[ Upstream commit 2482ca875ef5993df8daee563033d70e2523a25f ]
 
-amd_pstate_update_min_max_limit() sets the min_limit_perf to the
-nominal_perf to avoid frequency throttling when the system is idling.
+rproc_shutdown() rejects a remoteproc in RPROC_CRASHED state, and
+rproc_del() ignores that error. The result of these two decisions is
+that a user cannot stop a remoteproc that with recovery disabled that
+has entered a crash state, and removal of an associated remoteproc
+driver will release resources without first stopping the remoteproc.
 
-This was found to be an ideal default but is suboptimal for users who
-have profiled their workload at different operating frequencies and have
-configured the optimal idling frequency via bios_min_perf.
+Allow rproc_shutdown() to stop crashed processors. Propagate the crash
+state to subdevice teardown, to allow subdevices to dismantle things
+appropriately.
 
-Use the bios_min_perf (if configured) as the min_limit_perf when running
-with performance governor. In absence of bios_min_perf, continue using
-nominal_perf as the default min_limit_perf to avoid throttling.
-
-Fixes: 608a76b65288 ("cpufreq/amd-pstate: Add support for the "Requested CPU Min frequency" BIOS option")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Link: https://lore.kernel.org/r/20260727072056.1248-2-kprateek.nayak@amd.com
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Assisted-by: OpenCode:GPT-5.5
+Fixes: 5e6a0e05270e ("remoteproc: core: Move state checking to remoteproc_core")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260723-rproc-rmmod-not-crashing-v1-1-546dfd5de0e6@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 31b320f329290..80d99ba1902c9 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -699,9 +699,12 @@ static void amd_pstate_update_min_max_limit(struct cpufreq_policy *policy)
- 	WRITE_ONCE(cpudata->max_limit_freq, policy->max);
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index f003be006b1bf..aaef4f310a2d5 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1979,6 +1979,7 @@ EXPORT_SYMBOL(rproc_boot);
+ int rproc_shutdown(struct rproc *rproc)
+ {
+ 	struct device *dev = &rproc->dev;
++	bool crashed;
+ 	int ret;
  
- 	if (cpudata->policy == CPUFREQ_POLICY_PERFORMANCE) {
-+		u8 min_limit_perf = perf.bios_min_perf ?: perf.nominal_perf;
-+		u32 min_limit_freq;
-+
- 		/*
--		 * For performance policy, set MinPerf to nominal_perf rather than
--		 * highest_perf or lowest_nonlinear_perf.
-+		 * For performance policy, set MinPerf to nominal_perf / bios_min_perf
-+		 * rather than highest_perf or lowest_nonlinear_perf.
- 		 *
- 		 * Per commit 0c411b39e4f4c, using highest_perf was observed
- 		 * to cause frequency throttling on power-limited platforms, leading to
-@@ -709,11 +712,18 @@ static void amd_pstate_update_min_max_limit(struct cpufreq_policy *policy)
- 		 * performance too much for HPC workloads requiring high frequency
- 		 * operation and minimal wakeup latency from idle states.
- 		 *
--		 * nominal_perf therefore provides a balance by avoiding throttling
--		 * while still maintaining enough performance for HPC workloads.
-+		 * nominal_perf therefore provides a balanced default by avoiding
-+		 * throttling while still maintaining enough performance for HPC
-+		 * workloads when bios_min_perf is not available.
-+		 *
-+		 * When bios_min_perf is available, users have profiled their workloads
-+		 * to understand the best idling frequency. Use that instead.
- 		 */
--		perf.min_limit_perf = min(perf.nominal_perf, perf.max_limit_perf);
--		WRITE_ONCE(cpudata->min_limit_freq, min(cpudata->nominal_freq, cpudata->max_limit_freq));
-+		min_limit_perf = min(min_limit_perf, perf.max_limit_perf);
-+		min_limit_freq = perf_to_freq(perf, cpudata->nominal_freq, min_limit_perf);
-+		perf.min_limit_perf = min_limit_perf;
-+
-+		WRITE_ONCE(cpudata->min_limit_freq, min(min_limit_freq, cpudata->max_limit_freq));
- 	} else {
- 		perf.min_limit_perf = freq_to_perf(perf, cpudata->nominal_freq, policy->min);
- 		WRITE_ONCE(cpudata->min_limit_freq, policy->min);
+ 	ret = mutex_lock_interruptible(&rproc->lock);
+@@ -1988,16 +1989,18 @@ int rproc_shutdown(struct rproc *rproc)
+ 	}
+ 
+ 	if (rproc->state != RPROC_RUNNING &&
+-	    rproc->state != RPROC_ATTACHED) {
++	    rproc->state != RPROC_ATTACHED &&
++	    rproc->state != RPROC_CRASHED) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
++	crashed = rproc->state == RPROC_CRASHED;
+ 
+ 	/* if the remote proc is still needed, bail out */
+ 	if (!atomic_dec_and_test(&rproc->power))
+ 		goto out;
+ 
+-	ret = rproc_stop(rproc, false);
++	ret = rproc_stop(rproc, crashed);
+ 	if (ret) {
+ 		atomic_inc(&rproc->power);
+ 		goto out;
 -- 
 2.53.0
 
