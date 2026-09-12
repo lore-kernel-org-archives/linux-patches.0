@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E951DB13A;
-	Sat, 12 Sep 2026 14:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC95475F;
+	Sat, 12 Sep 2026 14:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224145; cv=none; b=Pr2qagqTj9UxLJIFiFqc7ibwCnrJXBgIrhjWLgoFn2+0WQKJxhAiYa6qk+RLrMmcvvPgpLhNU1VVKw1HPrSUjiLXZoxCZxZyXLyQ28257bQp8nabwsdcXgxdSUQxBVxJPYBXmP4HnYJPowPiT3clgDitejqVeSGf1I1BCbCJ/TI=
+	t=1789224150; cv=none; b=BkjSfD8IiTMiEV5HyStr7QIwIg1R4kzJOhfWzCL8rf/lSLIbvOHWPFIvBzZRRB5tIQWAqiYkejsEyXeE/ZDoUjYY02tXCkoQEVmcWhaWxMwr/RiwJ6cW0uxTtW2+3pkTMsWZCplgNqgghcKCpxKGZWc2ce6ObMjUk4SZ445ZcpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224145; c=relaxed/simple;
-	bh=lbU7JdyKkbP3MyG3CkD1dD+BRWW8plbTeX6wwAbrgZg=;
+	s=arc-20240116; t=1789224150; c=relaxed/simple;
+	bh=dkitCAqJUX5QJcyDoc+p5t64SEqTxzApjJiYr1BoCm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q30ZhA0wkxoDVNx7o8yR5KWBGk/XfkvXvnu+BD+QEgjQoZr3WFcgpn8Qxq9Ytw2uXr7QWmm+Ih7xeP4iZlCRuF37BctxvkFuBT8otUxy34vKMojU2KwloDuHewARPhtFGgEuGye3urO7uSmX+6LAsivuikA1lzbgjAn8aJJd7Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UL8D7h0j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RuwvFpOi4/B6fRDmz10X04S9u3iRpsDe6m0Xar4Z3LeJ7aVRIp+Cec7F3Zhwbl4sUxgq6ECNj4S5hJUjXO2gNSLZgeBerbJIuY6/5IKz2QJrJGtGUU7lLzFuy/IOgut0G2EZe1zLpJA8BuQHpxCmm8M8EEk9mhDP7SUje/Kf4Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssK6r0oF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UL8D7h0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56881F000FF;
-	Sat, 12 Sep 2026 14:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssK6r0oF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38CC1F000FF;
+	Sat, 12 Sep 2026 14:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224143;
-	bh=QcL8eHbKWB2xFt9ACJylcfXiisBicM0az9gHASn016Y=;
+	s=korg; t=1789224148;
+	bh=1kCjMV8DNUz3aXVFhR5Qu6cDNxLt1rcNd9QsWaAQ1rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UL8D7h0jR5WfM88ISRvfW5QGYHv6wkZOdwY/65KcrL/XBbXVdUeE7+xc+/wyqeMrU
-	 P3dvkjPOSsJrDnA21DKXpC0g4/A4r1joFpabnFC5m9t5YS9orpAAPFPm0y0eamvlWs
-	 Z3GS3v16EDEb9+/3zfEE1ru+l9JNWsbC/w56SlKg=
+	b=ssK6r0oF1ouf9MBTuGCuYuFTkLXpnqhIBSXUzvciPsQWqi1YS2QM3Sm1JKSNURk+x
+	 RZa8xj2OrS2F5s9Y9CE+nVKBAxQi4d8oMRWjDncblqOQm+MK8ogvCOinUdTUc3ISd1
+	 9H9RvuKvWgYTjBioImjPWigNkOiHy/Esx58WRItY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Sajal Gupta <sajal2005gupta@gmail.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0933/1424] md/raid5: protect bitmap batch counters aka seq_flush/seq_write consistency
-Date: Sat, 12 Sep 2026 08:56:05 +0200
-Message-ID: <20260912065628.216535778@linuxfoundation.org>
+Subject: [PATCH 6.6 0934/1424] md/raid5-ppl: fix use-after-free in ppl_do_flush()
+Date: Sat, 12 Sep 2026 08:56:06 +0200
+Message-ID: <20260912065628.238598625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,109 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Sajal Gupta <sajal2005gupta@gmail.com>
 
-[ Upstream commit f565925810cb8bc799421485770e15d922ef766a ]
+[ Upstream commit 371f7a1b392edc8b7cf449cc7713179b588f2d0e ]
 
-kcsan detect race :
-- raid5d() closes the current bitmap batch by updating
-	conf->seq_flush under conf->device_lock.
-- __add_stripe_bio() read conf->seq_flush without that
-	lock when assigning sh->bm_seq.
+The loop in ppl_do_flush() continues iterating after calling
+ppl_io_unit_finished(), touching io->pending_flushes and leading to a
+use-after-free.
 
-so, protect seq_flush/seq_write consistency for multiple CPUs by
-READ_ONCE()/WRITE_ONCE() under the path without held device_lock.
+Add a break statement to stop the loop once io is freed.
 
-re-explain the stripe batch sequence number update flow:
-1. sh->bm_seq declare which batch number the stripe belongs to
-   when perform bitmap-related write.
-	==> bm_seq = seq_flush+1
-
-2. stripe be handled,
-	* if sh->bm_seq - conf->seq_write > 0, means the
-	  batch stripes **newer than** the last written
-	  batch, it cannot proceed yet, queued on bitmap_list.
-	* otherwise , has already proceed.
-
-3. raid5d() `++seq_flush` to closes the current batch, means
-	* no more stripes join that old batch
-	* just-closed batch ready to write-out to disk
-
-4. raid5d() calls bitmap hooks unplug() or writeout, then,
-   `++seq_write` to the same as bm_seq.
-
-- seq_flush - for producer, to close batches.
-- seq_write - for consumer, the checkpoint number.
-
-the report:
-====================================
-BUG: KCSAN: data-race in __add_stripe_bio / raid5d
-
-write to 0xffff88ba5625d470 of 4 bytes by task 82401 on cpu 0:
- raid5d+0x1d9/0xba0
- [.....]
-
-read to 0xffff88ba5625d470 of 4 bytes by task 82421 on cpu 8:
- __add_stripe_bio+0x332/0x400
- raid5_make_request+0x6ac/0x2930
- md_handle_request+0x4a2/0xa40
- md_submit_bio+0x109/0x1a0
- __submit_bio+0x2ec/0x390
- [.....]
-
-Fixes: 7c13edc87510 ("md: incorporate new plugging into raid5.")
-
-v1 -> v2:
-- remove WRITE_ONCE(conf->seq_write) in held device_lock path.
-- remove READ_ONCE(conf->seq_flush) in held device_lock path.
-
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Fixes: 1532d9e87e8b ("raid5-ppl: PPL support for disks with write-back cache enabled")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/all/ajJF2wKYWRk4GGCK@stanley.mountain/
+Signed-off-by: Sajal Gupta <sajal2005gupta@gmail.com>
 Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260622124649.1780233-1-chencheng@fnnas.com
+Link: https://patch.msgid.link/20260622142146.56637-1-sajal2005gupta@gmail.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/md/raid5-ppl.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 6eb94e466f904..583b9784c2256 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -3587,7 +3587,7 @@ static void __add_stripe_bio(struct stripe_head *sh, struct bio *bi,
- 		 sh->dev[dd_idx].sector);
+diff --git a/drivers/md/raid5-ppl.c b/drivers/md/raid5-ppl.c
+index eaea57aee602c..caea1c5ffee6c 100644
+--- a/drivers/md/raid5-ppl.c
++++ b/drivers/md/raid5-ppl.c
+@@ -645,8 +645,10 @@ static void ppl_do_flush(struct ppl_io_unit *io)
+ 	log->disk_flush_bitmap = 0;
  
- 	if (conf->mddev->bitmap && firstwrite && !sh->batch_head) {
--		sh->bm_seq = conf->seq_flush+1;
-+		sh->bm_seq = READ_ONCE(conf->seq_flush) + 1;
- 		set_bit(STRIPE_BIT_DELAY, &sh->state);
+ 	for (i = flushed_disks ; i < raid_disks; i++) {
+-		if (atomic_dec_and_test(&io->pending_flushes))
++		if (atomic_dec_and_test(&io->pending_flushes)) {
+ 			ppl_io_unit_finished(io);
++			break;
++		}
  	}
  }
-@@ -5807,7 +5807,7 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
- 		}
- 		spin_unlock_irq(&sh->stripe_lock);
- 		if (conf->mddev->bitmap) {
--			sh->bm_seq = conf->seq_flush + 1;
-+			sh->bm_seq = READ_ONCE(conf->seq_flush) + 1;
- 			set_bit(STRIPE_BIT_DELAY, &sh->state);
- 		}
  
-@@ -6847,11 +6847,13 @@ static void raid5d(struct md_thread *thread)
- 		if (
- 		    !list_empty(&conf->bitmap_list)) {
- 			/* Now is a good time to flush some bitmap updates */
--			conf->seq_flush++;
-+			int seq = conf->seq_flush + 1;
-+
-+			WRITE_ONCE(conf->seq_flush, seq);
- 			spin_unlock_irq(&conf->device_lock);
- 			md_bitmap_unplug(mddev->bitmap);
- 			spin_lock_irq(&conf->device_lock);
--			conf->seq_write = conf->seq_flush;
-+			conf->seq_write = seq;
- 			activate_bit_delay(conf, conf->temp_inactive_list);
- 		}
- 		raid5_activate_delayed(conf);
 -- 
 2.53.0
 
