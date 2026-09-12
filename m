@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEFB2F617C;
-	Sat, 12 Sep 2026 16:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEF531F9B1;
+	Sat, 12 Sep 2026 16:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229566; cv=none; b=dHs+5GET0orK2U8Fp5X3cmdcjfpwcSK8slSaQ1VGo0QlVCLHCTPAScvkGD+TB7KdXdWkyyEgCPdklhsPVU/zqgMczLPg+ac11x75NHSCNmCoGu8ke8GsSvdrepjHUgi2SFTCNADzHtpJPaTcgjgf3686ow4mghoNXtD7VAcCQ8A=
+	t=1789229571; cv=none; b=Fu27Gsv4780/COn7KJ2nD2MWBVNAw1nan8X8Rb00b5sBOVdTx2jX0e9oBlNUr8Gwh4bDrvaU3o4dfDv37Y8GMKSDCDHFiT95rC6vtw1H9Z10wHNrMZGSa1TtcqFNeXByzzH0Xyy7CfykCl7RB0dGyM5MSHdpGAS8m0GA31OUXoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229566; c=relaxed/simple;
-	bh=u/dxGZfrLfG3Brdnd40GWNBurT84kx62746MZ1jEqOY=;
+	s=arc-20240116; t=1789229571; c=relaxed/simple;
+	bh=oeoBe/LiiaYLiP6QTQEzci/7l2TZgXrwZClQSeYSCj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J98kdMKO564F7VLrq/h3csDPQhq/jRrBJPAPc7uQhs5D5i2i1P3q4+uGUW45Mna0oKxZn7RLDJbQdcO5CGC6tAdk+zlK2WalXbHYpFFMOLwvtTess1ai+BwuQOm8jJ7ou/n7jiQK+u6PzoTmDwJL8hYmV0vsznjY+rxH0ToHrU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mW0wiYVW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qmt1vqnnFpQr/iqkEPxfmrfVgDg4ey77uwdLhjL4zVqIYXa4dI5hfIZCdHLhCcnvrua/R4M/SNJ3Ru3eONh4sLlLaUOSjroFCZG+O6ODBdi1bnNb6PU2eW1AT6pcAC2DVHt0avadEuBj+71xOtIVcj4WceFUctgdi/qkuA15dqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYpCPJOb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mW0wiYVW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9EC1F000FF;
-	Sat, 12 Sep 2026 16:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYpCPJOb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4638A1F000FF;
+	Sat, 12 Sep 2026 16:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229565;
-	bh=oal+gx9px1MRYmHiJP7ltayFv3dYTDl5yLBou7RDoy4=;
+	s=korg; t=1789229570;
+	bh=vcgjWs69noy2CNx/Z2ylrUzStV7yqfLXcJM/aufE9SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mW0wiYVW/585B/E+s4tsbdR6vPrRasD3+MXefvgCXIBc80DUWqnjLagsWJsVK8hZj
-	 Pg2Vx9X18OVvbBubsOhWs9zxbA+JThKDHeo8vmbVgdYryqfTAv23bFIi0+1DLsvpsK
-	 hgbuYNHaui3iIu83dyefMmlSXqy2q0mv0RABRAlU=
+	b=cYpCPJObfT9Mb6H1WflEhlp84GfBSb7JXp9H0InFCe4vEopreFY9JZucgzOAxfir7
+	 KBr7vE4XBn4llCvKze4RgDQaHYtgdOzoPo4mtSYtckNe+TVOHzJYvAEFZyqujGmZtK
+	 Ol/yLG0oPCyc2UhdcLDSp1EzxSmaEHzEFcSvqmEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Evgenii Burenchev <evg28bur@yandex.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0617/1191] cpufreq: spear: Fix an IS_ERR() vs NULL bug in spear1340_set_cpu_rate()
-Date: Sat, 12 Sep 2026 08:55:45 +0200
-Message-ID: <20260912065602.111481801@linuxfoundation.org>
+Subject: [PATCH 6.1 0600/1191] ALSA: hpi: Check transport errors during HPI6000 adapter initialization
+Date: Sat, 12 Sep 2026 08:55:28 +0200
+Message-ID: <20260912065601.724272166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,38 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Evgenii Burenchev <evg28bur@yandex.ru>
 
-[ Upstream commit 6a9e0e0f7592313ace66303cf5eca68e04c10f30 ]
+[ Upstream commit cc15c329663e3ef1aeed0b68e49a5d5ce4ae0d5c ]
 
-The clk_get_parent() function doesn't return error pointers, it returns
-NULL on error.  Update the error checking to match.
+create_adapter_obj() retrieves adapter information by calling
+hpi6000_message_response_sequence(). This function reports transport-level
+errors through its return value and DSP-reported errors via hr0.error.
 
-Fixes: 420993221175 ("cpufreq: SPEAr: Add CPUFreq driver")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+The current code only checks hr0.error, causing transport-level errors to
+be ignored. As a result, adapter initialization may continue with an
+invalid response.
+
+Check the return value of hpi6000_message_response_sequence() before
+examining hr0.error.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 719f82d3987a ("ALSA: Add support of AudioScience ASI boards")
+Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
+Link: https://patch.msgid.link/20260708141147.18253-1-evg28bur@yandex.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/spear-cpufreq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/asihpi/hpi6000.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/cpufreq/spear-cpufreq.c b/drivers/cpufreq/spear-cpufreq.c
-index 7d0d62a06bf3f..79b3d69d1764e 100644
---- a/drivers/cpufreq/spear-cpufreq.c
-+++ b/drivers/cpufreq/spear-cpufreq.c
-@@ -79,9 +79,9 @@ static int spear1340_set_cpu_rate(struct clk *sys_pclk, unsigned long newfreq)
- 	int ret = 0;
+diff --git a/sound/pci/asihpi/hpi6000.c b/sound/pci/asihpi/hpi6000.c
+index 88d902997b749..3457d80a2ad9f 100644
+--- a/sound/pci/asihpi/hpi6000.c
++++ b/sound/pci/asihpi/hpi6000.c
+@@ -537,6 +537,11 @@ static short create_adapter_obj(struct hpi_adapter_obj *pao,
+ 		hr1.size = sizeof(hr1);
  
- 	sys_clk = clk_get_parent(spear_cpufreq.clk);
--	if (IS_ERR(sys_clk)) {
-+	if (!sys_clk) {
- 		pr_err("failed to get cpu's parent (sys) clock\n");
--		return PTR_ERR(sys_clk);
-+		return -EINVAL;
- 	}
- 
- 	/* Set the rate of the source clock before changing the parent */
+ 		error = hpi6000_message_response_sequence(pao, 0, &hm, &hr0);
++		if (error) {
++			HPI_DEBUG_LOG(ERROR, "message transport error %d\n",
++						  error);
++			return error;
++		}
+ 		if (hr0.error) {
+ 			HPI_DEBUG_LOG(DEBUG, "message error %d\n", hr0.error);
+ 			return hr0.error;
 -- 
 2.53.0
 
