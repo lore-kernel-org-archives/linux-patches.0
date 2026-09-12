@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870C242586B;
-	Sat, 12 Sep 2026 13:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31104195A6;
+	Sat, 12 Sep 2026 13:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220476; cv=none; b=JmssNvGLDQrOqmbOnApZpkZRCSzrbtr20Shq9zS1qvkwUnWtJp3CB6UVqez0602LZOoXWMI6tSd7N5lzU3Ed3CMbRVvmj4VBkdAkMogBwTCaVhyRye5Hmf5e4bivdY4q14hJosZFrk7HAVq3Fo2j/+kmrzukurvvSFk6p6+Edzk=
+	t=1789220481; cv=none; b=RkPTVJ15BtHlBW3allkyDo9IO0WWcPeH5nCcCeMxECCx0AzlsJJFYKIMEVzq4yWUpNNWauMCXpBTRBCHetP27pM8hxckBy81EA2Qx+P2mAICIM1M+t4j1wwWU4otftMFkiDdbZ7bSuiL7dEgHsj4pLz2POhXPCAC0teEYzZLk6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220476; c=relaxed/simple;
-	bh=EY4TEsd/hY/RNn2gL6a0tT37R6VJAfppwiRBnkmTPUI=;
+	s=arc-20240116; t=1789220481; c=relaxed/simple;
+	bh=dHMNFlyIeB8pKEU4d5v8WWekoY17tUdLyE3HDbmyT1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPqXyQbZedaXUw7dwF+Wzl68x1K77FNi7XuZ6TyvJuZRB5rQ4Qr17z5H/eYkSg9GNupxUj1kqj6XffEDegPLl831LEdvXf2rgkpCmpHq+wAfg6dCr+evNFSalEGwHTeWf6WvYgfBPXTWWA8wJNUFKtzQQDmaVX2vC/fUcH9+EC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbbLGT+K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gt8N+Tq8aBD3YFBGWWXjpnEiL+fV6pha5Sq+mOI/OBWrKWWuAKMFOclVCM8ycmV1pIAQoMPrYYJWkA4KEesHerWe6dCx5Lh8nzKf1tYw+OdHS6A0E6Pt5lw6vWaQDj1rz77nHkkvgaHTnhHfIshmSlDGscqbX8lDpfo8+qsORms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGWwDuRt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbbLGT+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0511F000FF;
-	Sat, 12 Sep 2026 13:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGWwDuRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BC71F000FF;
+	Sat, 12 Sep 2026 13:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220475;
-	bh=N1SrQexP1lUQvEIvOCkqkhcttBsRHzDlC5l1C/y7fC0=;
+	s=korg; t=1789220479;
+	bh=oJWQ+nuAxk95bxcXi9g2wvAEfkNnHNMYdq0wCC7lhCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dbbLGT+KYrLA4KH71DbMu/Z/T+xexHOADXqxlEl5Iw6VeBpDLOjKUzTkR2ncXSzPj
-	 St2IMo3C1D00fDIAc0wO3vyIcKMvfwhk2bO2NTS7JSVlkhTpX5cPd9SMN5FjLW+6Gh
-	 qt4cI4G9DIyax+w/l4mxVEMYaoUoLFDg9RnVm2uw=
+	b=IGWwDuRtcGLbPWKnDg6G+uq8dEouTXKKE37Lu+u10tjvLXAhScwyWmGORzDipR07U
+	 GdIBEkXtfiBvo+H+br4iid9K3XmAp2CW0APks9zAv8bCtO152UCR6KUj5zcpwBPZYh
+	 3BJHzfY1Pb0tP4YD2Ryoj6KKeqEMNbR/AIjotOZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
@@ -34,10 +35,16 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Changwei Ge <gechangwei@live.cn>,
 	Jun Piao <piaojun@huawei.com>,
 	Heming Zhao <heming.zhao@suse.com>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Ted Tso <tytso@mit.edu>,
+	"zhangyi (F)" <yi.zhang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0185/1424] ocfs2: cluster: fix o2hb_dependent_users leak on pin failure
-Date: Sat, 12 Sep 2026 08:43:37 +0200
-Message-ID: <20260912065611.432607780@linuxfoundation.org>
+Subject: [PATCH 6.6 0186/1424] ocfs2: fix readdir position truncation on 32-bit kernels
+Date: Sat, 12 Sep 2026 08:43:38 +0200
+Message-ID: <20260912065611.454197446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -56,54 +63,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 12c2ab42dbe227956c765e2674364bfca5de0533 upstream.
+commit a63308ab426f3a3c7e33b02c150ea59054620261 upstream.
 
-In o2hb_region_inc_user(), o2hb_dependent_users is incremented
-unconditionally before calling o2hb_region_pin().  If the pin fails, the
-counter is never decremented and any partially-pinned regions are never
-unpinned, since the caller does not call o2hb_region_dec_user() on error.
+In ocfs2_dir_foreach_blk_el(), the directory cookie position is
+rebuilt with
 
-The leaked counter causes subsequent o2hb_region_inc_user() calls to skip
-pinning entirely (the > 1 check), leaving heartbeat regions unprotected.
+	ctx->pos = (ctx->pos & ~(sb->s_blocksize - 1)) | offset;
 
-Fix by rolling back on failure: call o2hb_region_unpin(NULL) to release
-any partially-pinned regions and decrement o2hb_dependent_users to restore
-the pre-increment state.
+`ctx->pos` is loff_t (signed 64-bit), while `sb->s_blocksize` is
+unsigned long.  On 32-bit kernels unsigned long is 32-bit, so the mask
 
-Link: https://lore.kernel.org/20260722124933.430554-4-joseph.qi@linux.alibaba.com
-Fixes: 58a3158a5d17 ("ocfs2/cluster: Pin/unpin o2hb regions")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+	~(sb->s_blocksize - 1)
+
+is computed as a 32-bit unsigned value (e.g. 0xfffff000 for a 4 KiB
+block size).  In the AND expression with the 64-bit `ctx->pos`, that
+unsigned operand is zero-extended to 64 bits per the usual arithmetic
+conversions, yielding 0x00000000fffff000.  The high 32 bits of
+`ctx->pos` are silently cleared, even though directory size is
+allowed to exceed 4 GiB.
+
+When readdir() crosses the 4 GiB boundary on a 32-bit kernel the
+position is reset back into the first 4 GiB block, making the
+re-validation path re-enumerate already-returned dirents indefinitely.
+
+This is ocfs2_dir_foreach_blk_el(), the extent-list readdir path taken
+for all non-inline directories, so a directory large enough to cross
+4 GiB reaches it.
+
+This is the same class of bug that commit 3dce5bb82c97 ("exfat: Fix
+bitwise operation having different size") fixed in exfat, and the
+fix mirrors the equivalent ext4 fix in this series.  Cast the operand
+to loff_t so the mask is 64-bit before the AND:
+
+	ctx->pos = (ctx->pos & ~((loff_t)sb->s_blocksize - 1)) | offset;
+
+64-bit kernels are unaffected.
+
+Link: https://lore.kernel.org/20260806022044.167962-3-zhanxusheng@xiaomi.com
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Jun Piao <piaojun@huawei.com>
 Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Ted Ts'o <tytso@mit.edu>
+Cc: "zhangyi (F)" <yi.zhang@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/cluster/heartbeat.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ocfs2/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -2433,8 +2433,13 @@ static int o2hb_region_inc_user(const ch
- 		goto unlock;
- 
- 	if (bitmap_weight(o2hb_quorum_region_bitmap,
--			   O2NM_MAX_REGIONS) <= O2HB_PIN_CUT_OFF)
-+			  O2NM_MAX_REGIONS) <= O2HB_PIN_CUT_OFF) {
- 		ret = o2hb_region_pin(NULL, false);
-+		if (ret) {
-+			o2hb_region_unpin(NULL);
-+			o2hb_dependent_users--;
-+		}
-+	}
- 
- unlock:
- 	spin_unlock(&o2hb_live_lock);
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -1883,7 +1883,7 @@ static int ocfs2_dir_foreach_blk_el(stru
+ 				i += le16_to_cpu(de->rec_len);
+ 			}
+ 			offset = i;
+-			ctx->pos = (ctx->pos & ~(sb->s_blocksize - 1))
++			ctx->pos = (ctx->pos & ~((loff_t)sb->s_blocksize - 1))
+ 				| offset;
+ 			*f_version = inode_query_iversion(inode);
+ 		}
 
 
