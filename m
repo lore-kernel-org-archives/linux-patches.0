@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F034542586B;
-	Sat, 12 Sep 2026 13:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BAE42586B;
+	Sat, 12 Sep 2026 13:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220448; cv=none; b=TmUngwLXvhAIKeHAgodLK9lWuFZk5XQtZvR+pX9H+PUeq6iFgQG11JU0I70KgEVvDa5CrxnQauRy0XRXGqfzoqJtqxt266KJ853wRgPvmvRrEJrdD4ZFw1bTWu/r2QRFmi4btF5WYT3KNPqzwsntYRTNm1STEwmMSwbN3DSYvog=
+	t=1789220453; cv=none; b=KpMy0nD2JIqcTcQT0HVgq4pYLwWJuoX81XTvev683iX183ZLJlLLbnQmTjIWrRuomm2+BiCkOVvCQyP3IFvTgt/EeyUZbvgEDtkPJqzDCjE5Xu/bv62Rb3REOtXmskbfTrrvj3JlTyQtAjSR3W0gX0rsbBB7BRUy5gObLScR8Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220448; c=relaxed/simple;
-	bh=VvFMyMfTuTSQ24N6WucTZkkau23HrnBXVVtFJXy05T4=;
+	s=arc-20240116; t=1789220453; c=relaxed/simple;
+	bh=oK1m4HEB5g/hL+HK9zWplxbDryMhq+lkuQgnTHqJQnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mh2hnm6Wvmm7OTvEm9tiVA4ZQ3enTOA4T7xnKLPCxfPY+8AjbgCsRiOQHaDYTnr4O3iiL9OF1nvx9/O4OiQnnXS7SrZU1CQ241BuvAq/yDdHyOfhBOPIIcQJmMfqw9Pre5pGHoWcn/2nc3FFG7aRmveZxIJ3U+3riTGDttBMM+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pV6zC2S2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OUmJ/kP8g3fVNG2x0NhswaOFC86zrlegJEEw+tBSesJzC+4v29lkU/VjBsF8Ce11sUlxddC2noTITTIJJ0WZy+fjCRtA8SfCDdVThz7uAQTTs06SuwtcpbWyDoSEGkQeRd2rtMbEjVIo2/TWgiQSQpGYT3ygusWt65wNTNi6wkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emV3y/YN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pV6zC2S2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4AA1F000FF;
-	Sat, 12 Sep 2026 13:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emV3y/YN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EDB1F000FF;
+	Sat, 12 Sep 2026 13:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220446;
-	bh=B+0NZNjzK9lbDORMe9C4myPjW63wz4fbGZmkq+uTAO4=;
+	s=korg; t=1789220451;
+	bh=w0eql4V26cvUsu43ueYQCtPct6T2WO+Aio1SzGYku+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pV6zC2S2lQHGeZD/WTdF0DQoOax5xI1NP67D/amxOO09lwA+ta28zbKayh3bokd0y
-	 7FktME2c8NG0Gtp01InyWSNlvfVnRnRzpMao5t7D9xni6pVxfoPC6fYT1bFgpsbvUJ
-	 AbamSFa8K/RUbJNYib4dgiCFp8ISDH1SzCrLIVVs=
+	b=emV3y/YN86Tvs1mvIdGghd2d8xFOeflV+WxEksXOsjjQ7JED2CQGNkCxQUWvtPXf+
+	 ts+965l8XyyqSuUxZ8RYeoL91AT9Ob2nqpDPx1/86iYWG83ggwR9b+ELLxCCgi+LhO
+	 prRlGrQE7/lop1rw8FVsVR9x8INmlCC9Mn9Hqn2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 0162/1424] svcrdma: Fix pcl_for_each_segment for empty chunks
-Date: Sat, 12 Sep 2026 08:43:14 +0200
-Message-ID: <20260912065610.922974031@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0180/1424] ocfs2: bound namelen in dlm_migrate_request_handler
+Date: Sat, 12 Sep 2026 08:43:32 +0200
+Message-ID: <20260912065611.322973929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,70 +57,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit b7713a784c59515d0aba558c8f5df6a0164dd3a9 upstream.
+commit ea5b5609305a8437bc955a0834a530c12246d78f upstream.
 
-When a parsed chunk list contains a chunk whose ch_segcount is zero,
-pcl_for_each_segment computes its inclusive upper bound as
-&chunk->ch_segments[ch_segcount - 1]. ch_segcount is u32, so the
-subtraction wraps to 0xFFFFFFFF and the bound lands far past the
-ch_segments flex array. The loop body then walks unrelated memory at
-sizeof(struct svc_rdma_segment) stride until it faults.
+Patch series "ocfs2/dlm: bound peer-controlled lengths in the o2dlm".
 
-A zero-segcount chunk is reachable from the wire:
-xdr_check_write_chunk() only rejects segcount values greater than
-rc_maxpages, and pcl_alloc_write() links a freshly allocated chunk
-onto rc_write_pcl/rc_reply_pcl before its segment-fill loop runs,
-so a Write or Reply chunk advertising zero segments leaves
-ch_segcount == 0 on the list. When the transport has negotiated
-Send-With-Invalidate, svc_rdma_get_inv_rkey() iterates all four
-PCLs with pcl_for_each_segment and dereferences segment->rs_handle
-on each iteration, turning the underflow into an out-of-bounds read
-and a general protection fault.
+The o2dlm receive handlers trust u8 length and count fields from the wire
+without bounding them, so a node in a DLM domain can corrupt or panic any
+other node with a malformed message.  Three defects:
 
-    xdr_check_write_list / xdr_check_reply_chunk
-      pcl_alloc_write()
-        chunk = pcl_alloc_chunk(...)  /* ch_segcount = 0 */
-        list_add_tail(&chunk->ch_list, &pcl->cl_chunks)
-        /* fill loop iterates zero times for wire segcount 0 */
+  - dlm_migrate_request_handler() passes migrate->namelen unchecked to
+    dlm_init_mle(), which memcpy()s it into the 32-byte mname[] of an
+    o2dlm_mle slab object: a heap out-of-bounds write of up to ~215
+    attacker-controlled bytes.
 
-    svc_rdma_get_inv_rkey()
-      pcl_for_each_chunk(rc_write_pcl)
-        pcl_for_each_segment(segment, chunk)
-          pos <= &ch_segments[0u - 1u]  /* 0xFFFFFFFF */
-          segment->rs_handle            /* OOB read -> GPF */
+  - dlm_mig_lockres_handler() passes mres->lockname_len unchecked to
+    dlm_init_lockres(), which memcpy()s it into the 32-byte o2dlm_lockname
+    slab object: a heap out-of-bounds write of up to ~223 bytes.
 
-Fix by switching the macro to a half-open upper bound that uses
-ch_segcount directly. For ch_segcount == 0 the loop start equals the
-loop end and the body is skipped; for ch_segcount > 0 the iteration
-range is unchanged. All six existing call sites in
-net/sunrpc/xprtrdma/svc_rdma_recvfrom.c and
-net/sunrpc/xprtrdma/svc_rdma_rw.c remain correct under the new bound,
-so no caller changes are needed.
+  - the same handler trusts mres->num_locks without checking that the
+    message is large enough to hold that many entries, so
+    dlm_process_recovery_data() walks mres->ml[] past the kmalloc(data_len)
+    copy and trips a BUG_ON (an out-of-bounds read ending in a panic).
 
-Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
-Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-4-e251306ccca9@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+The other o2dlm receive handlers already reject an oversized name; the
+migration and recovery handlers have omitted it since the DLM was added
+(see the Fixes tags).  Patch 1 bounds namelen; patch 2 validates
+lockname_len, num_locks, and the payload size.  Conforming recovery and
+migration traffic is unaffected.
+
+o2net authenticates peers only by the DLM domain key, so any node that has
+joined the domain -- including a compromised or malicious member -- can
+send these messages.  There is no local trigger; the attacker must already
+be a member of the cluster.
+
+Each sink was confirmed under KASAN with an out-of-tree module mirroring
+it exactly -- a kmem_cache/kmalloc of the real destination size, then the
+same unclamped memcpy/loop: slab-out-of-bounds Write for the two writes,
+Read for the recovery walk, and a panic.  A userspace AddressSanitizer
+build faults identically under -m32 and -m64.  Scrubbed logs are available
+on request.
+
+I reported this privately to security@kernel.org and the ocfs2 maintainers
+on 2026-06-20; with no response after the standard embargo period I am
+posting the fix publicly.  I have no embargo requirement.
+
+
+This patch (of 2):
+
+A node receiving a DLM_MIGRATE_REQUEST message trusts the peer-supplied
+name length (migrate->namelen) without bounding it.  dlm_init_mle() then
+copies that many bytes into the fixed DLM_LOCKID_NAME_MAX-byte mname[]
+array of an o2dlm_mle slab object, so a malformed message from a cluster
+peer overflows the slab object by up to ~215 bytes: a heap out-of-bounds
+write of attacker-controlled data, reachable by any node in the domain.
+
+Reject an oversized name, the way dlm_master_request_handler() and the
+other o2dlm receive handlers already do; the migration handler omits the
+check entirely.  Conforming messages are unaffected.
+
+Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-0-6953bcc0421f@proton.me
+Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-1-6953bcc0421f@proton.me
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sunrpc/svc_rdma_pcl.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/dlm/dlmmaster.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/include/linux/sunrpc/svc_rdma_pcl.h
-+++ b/include/linux/sunrpc/svc_rdma_pcl.h
-@@ -97,7 +97,7 @@ pcl_next_chunk(const struct svc_rdma_pcl
-  */
- #define pcl_for_each_segment(pos, chunk) \
- 	for (pos = &(chunk)->ch_segments[0]; \
--	     pos <= &(chunk)->ch_segments[(chunk)->ch_segcount - 1]; \
-+	     pos < &(chunk)->ch_segments[(chunk)->ch_segcount]; \
- 	     pos++)
+--- a/fs/ocfs2/dlm/dlmmaster.c
++++ b/fs/ocfs2/dlm/dlmmaster.c
+@@ -3112,6 +3112,12 @@ int dlm_migrate_request_handler(struct o
  
- /**
+ 	name = migrate->name;
+ 	namelen = migrate->namelen;
++	if (namelen > DLM_LOCKID_NAME_MAX) {
++		mlog(ML_ERROR, "%s: invalid name length %u in migrate request\n",
++		     dlm->name, namelen);
++		ret = -EINVAL;
++		goto leave;
++	}
+ 	hash = dlm_lockid_hash(name, namelen);
+ 
+ 	/* preallocate.. if this fails, abort */
 
 
