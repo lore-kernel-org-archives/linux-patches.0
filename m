@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BDE2F12AC;
-	Sat, 12 Sep 2026 19:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A0D349CE2;
+	Sat, 12 Sep 2026 19:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242338; cv=none; b=BHI+R05mF7cADvJ4z3p2fo6XLVR/MnzGTF352WsQlhb/T5qPYDZu001CMM+s3eBqSK+9NLsyjAPgJllj4+pxpnY5q190hkgGU3BLWPpTh2NeR+6uhr9b+4vd739C5mmODAJ7fTa+JanNBVxv+/FuiNFoiO59HSr1e2gtlk7yGuA=
+	t=1789242341; cv=none; b=OC9IdD6l49TwsHFr/YVQgzZ2DPklucbP2+SLWnXieZoH58IOkBj+8r7wkPxWWL8eS87BSXZppXNVZZtHUNYkq9gmC/MiOBkHLKCs2r7yxrDN6wwrW2OpWW3WHONpXn7JozuseOlBBNFL77vQwkE7Lcf87uONf/ve37F9rnUCAPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242338; c=relaxed/simple;
-	bh=oBCdniXE9FZvwIR81qVPb5c1vaxIqnd3iYf/6xhG8rw=;
+	s=arc-20240116; t=1789242341; c=relaxed/simple;
+	bh=f4RgW9xAN5ICTyw5CkT23A8gDkg16CqjbP9qDh8eZV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWqH77wsklRbrWimXUwKuoUoyNU9XawU8ZbTYWOjvU1m8tapaKFk43J0Tl/Mwxvx0IZW0e9VzZbqRUGdLwPicagz0I0NX06a+zUUO06zjHvHGDu20R+Vb92nOlO6bMcBFrAO7L5jXw0KR4hRq/aKGYtam0EE7zk3tTpwi2KV/RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlARE6ML; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z3RyuCD6ZJux8TCZoAMILDlfkzprdLqQNuJZ6VY9LP/6VDqplbMyTXCNpvQ6B7F/afx3PtQWvqlAzofft+t/Mo0x2BK+z1haAmDpuck0MIDUaDwzbpkd7gN/rsHqFJTU8tMCvoBJGtzyhmZVLFyi3oPcl6/0AF8GI51pH4Snmms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7tVjbiu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlARE6ML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70901F000FF;
-	Sat, 12 Sep 2026 19:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7tVjbiu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09761F000FF;
+	Sat, 12 Sep 2026 19:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242337;
-	bh=+hfd9jty7enal0/ZuAkQ3HNzmVpxHxFOe1ediUrudpM=;
+	s=korg; t=1789242340;
+	bh=Mqb/I0ki9Yg9tXdr/dcycPZcHjFXHZq7yFvxKuZLaws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OlARE6MLnThL1GpNB4wYjLDYixfASiyKfWZi1Ne32nwMCPuE3m2+INit7MDiRm0po
-	 hAg/oxUDgViSJbhs0OiBX4RTTjMTCH36kQDae7senz1H6iwXV9FjR1OTJPm055mMVz
-	 mRyQzUxY9zaGfz4V6/5LYl6fWAfFFfCgzJN1HdxI=
+	b=N7tVjbiuX7QwH/ADjNQWy8vLWLyzI8dCvx/w2JF4vxvTU2TmqPecIKwzXFlIzhmFN
+	 AnbnTkGN/Z7k9PogfYMr9/1ijugGrd5FarT77wdlZvOHEKp7p90jm8Waj5TP0/cjJw
+	 5wxdUHUEo7y2YhoOJ0ozm220JYyOEOXyH3/QK43I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hisam Mehboob <hisamshar@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 367/798] selftests/rseq: Replace glibc-specific __GNUC_PREREQ with portable check
-Date: Sat, 12 Sep 2026 08:59:55 +0200
-Message-ID: <20260912065525.568109307@linuxfoundation.org>
+Subject: [PATCH 5.10 368/798] platform/chrome: sensorhub: Fix memory overread in ring handler
+Date: Sat, 12 Sep 2026 08:59:56 +0200
+Message-ID: <20260912065525.591783642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,51 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hisam Mehboob <hisamshar@gmail.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit d7b2769f8dba3e5f40d2a8a11988812d51160b17 ]
+[ Upstream commit d1ceb2b2324717fa30b44d56ef0c52813e239569 ]
 
-Building the rseq selftests against musl libc fails because musl's
-<features.h> does not provide the glibc-specific __GNUC_PREREQ macro:
+`max_response` and `sensor_num` are read from different EC commands:
 
-  error: missing binary operator before token '('
+- `max_response` is from cros_ec_get_proto_info().
+    ec_dev->max_response = info->max_response_packet_size -
+                                    sizeof(struct ec_host_response);
 
-Replace __GNUC_PREREQ(11, 1) with an equivalent check using __GNUC__
-and __GNUC_MINOR__ directly.  This pattern is portable across all C
-library implementations and is already used elsewhere in the tools/
-tree (e.g., tools/include/linux/string.h).
+- `sensor_num` is from cros_ec_get_sensor_count().
+    sensor_num = cros_ec_get_sensor_count(ec);
 
-This also allows removing the #include <features.h>, which was only
-needed for __GNUC_PREREQ.
+With a malfunctioning EC firmware, it is possible that the `msg->insize`
+(i.e., `fifo_info_length` in the context) could be clamped in
+cros_ec_cmd_xfer() because `msg->insize` is greater than `max_response`.
 
-Fixes: 886ddfba933f ("selftests/rseq: Introduce thread pointer getters")
-Signed-off-by: Hisam Mehboob <hisamshar@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260618193724.589113-2-hisamshar@gmail.com
+    int fifo_info_length =
+            sizeof(struct ec_response_motion_sense_fifo_info) +
+            sizeof(u16) * sensorhub->sensor_num;
+
+This means the number of read bytes could be less than expected.  As a
+result, the subsequent memcpy() in cros_ec_sensorhub_ring_handler()
+overreads the `resp->fifo_info` buffer.
+
+Check the return value of cros_ec_cmd_xfer_status() and abort if the
+number of bytes read does not match the expected length.
+
+Fixes: 145d59baff59 ("platform/chrome: cros_ec_sensorhub: Add FIFO support")
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Link: https://lore.kernel.org/r/20260702082745.1014968-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/rseq/rseq-x86-thread-pointer.h | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/platform/chrome/cros_ec_sensorhub_ring.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h b/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
-index d3133587d9968..5a29d6bec51f4 100644
---- a/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
-+++ b/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
-@@ -8,13 +8,11 @@
- #ifndef _RSEQ_X86_THREAD_POINTER
- #define _RSEQ_X86_THREAD_POINTER
+diff --git a/drivers/platform/chrome/cros_ec_sensorhub_ring.c b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+index 60a466d45a2a0..5bdeb9860a5b3 100644
+--- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+@@ -797,8 +797,15 @@ static void cros_ec_sensorhub_ring_handler(struct cros_ec_sensorhub *sensorhub)
+ 		sensorhub->msg->outsize = 1;
+ 		sensorhub->msg->insize = fifo_info_length;
  
--#include <features.h>
--
- #ifdef __cplusplus
- extern "C" {
- #endif
+-		if (cros_ec_cmd_xfer_status(ec->ec_dev, sensorhub->msg) < 0)
++		ret = cros_ec_cmd_xfer_status(ec->ec_dev, sensorhub->msg);
++		if (ret < 0)
++			goto error;
++		if (ret != fifo_info_length) {
++			dev_warn_ratelimited(sensorhub->dev,
++					     "Mismatch read length: size %d - expected %d\n",
++					     ret, fifo_info_length);
+ 			goto error;
++		}
  
--#if __GNUC_PREREQ (11, 1)
-+#if __GNUC__ > 11 || (__GNUC__ == 11 && __GNUC_MINOR__ >= 1)
- static inline void *rseq_thread_pointer(void)
- {
- 	return __builtin_thread_pointer();
+ 		memcpy(fifo_info, &sensorhub->resp->fifo_info,
+ 		       fifo_info_length);
 -- 
 2.53.0
 
