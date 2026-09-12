@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A954630D3F6;
-	Sat, 12 Sep 2026 14:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0B74BEE55;
+	Sat, 12 Sep 2026 14:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223524; cv=none; b=A9qR+KcQX9m4dN1UTTcDH0ASVUQAc7JXkU7SQhJ01SVbT4AOQC4rekw6UbIAHRElCrMqd/SptsUs48BmuW7AOGMS5luSy5cBTo1+9jFmRfWT0upnn5ANhvTcYWqfBSIzyWIsQhhuIUYLk89ACNL937HbhgM8tErSyoXB4FuoHkA=
+	t=1789223529; cv=none; b=g078JkVHf6y/aOa3rmZTSC1QGRoh75Lo5Wuux2nZAnispNTBN4ELWiD0WrPk8ChBu2c4e+vDHrUE6PpZ5gMGy5pDG+7oWL9y0FjIcK5VAwSGcUTI5pc+jJMi/crC8JCOrlyp6cKK24nM4FlqsR3DJGH4BCYPIIgrYn+Fvyu1nLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223524; c=relaxed/simple;
-	bh=Lz60YwFUfHjgxs7ccHyKqT/BioK4TuSusqaPq2+qNbc=;
+	s=arc-20240116; t=1789223529; c=relaxed/simple;
+	bh=aChHWDIKZtGcHJLHfGh4FbMpi4lcrmkIL4g6DWCNln4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJr7Jm6bYkn8dg5yVAJGd64Vg5TEg8HiEyjKkQlHZABwT+4aqdRdQjv1E5wVaWfZ9vqQh5uXQQM+o7W3NMOsVbzrIwPB+jysibnVJBBIKPABvSoYZG2aX6BYrVejIBCM5qoWRWY8yadTIyx2VrGx7QRt2pMPWmtPDc0bpRE4sjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sElyJCXx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jZVgOUPaFKKxL7d1mCoOabmkC8g4uVDOSohJDb3RZuxyEJE0TgOHlzgOFmqaYl+bI6DNkgnqOT0BMBi7i7HeoOs+W/UE3hbtBBXXyl9tEVGQsE4di2adAe4rLxPj9aNn4L7txDhUXp7n3fCgI2kKXq3yyaWWA6tIQThyR+eDM38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtQG2/ng; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sElyJCXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6399C1F000FF;
-	Sat, 12 Sep 2026 14:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtQG2/ng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985F31F000FF;
+	Sat, 12 Sep 2026 14:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223522;
-	bh=PWRkV7rmIgGq3xF7u3Y3eYk1Sn3rph5LrPfS75fh1uA=;
+	s=korg; t=1789223527;
+	bh=ZSC5dAJ8rP7OppBjU8N3RVn3gg7k4Q3rOkZGN3GgjAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sElyJCXx5431xs1UUjsM3xaQCijnuhn8fRDAyZuM/tlvPuF2NCbUJjBZxkmwV71OP
-	 o5fE1ex94PHJjTbXpYymnbsoayoyTAvKwGaFLylNBKNhxMBo2z3QI9gLEp/TrXmIei
-	 XLM3lXGaNRBJICP+tEA1KH712LnOiZlrzqfAs/WU=
+	b=BtQG2/ngoIMuUYQ8D3xzOyyPbxgtNt/Adv63FxexozG48nlgY8L8pSuIFPElNy/HH
+	 DgQfRUqg1argLFBG8Ykn/rceugb7YEMUT/hS8vfz0/jM3kF+cCHLXy+eBwS35iPNZb
+	 zCUf+h7a1miL35tIC4ATSpjgyuA4xJWhBsnaRHmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0770/1424] cpufreq: intel_pstate: Fix setting minimum P-state at init time
-Date: Sat, 12 Sep 2026 08:53:22 +0200
-Message-ID: <20260912065624.540306561@linuxfoundation.org>
+Subject: [PATCH 6.6 0806/1424] soc: ti: knav_qmss: Remove debugfs file on teardown
+Date: Sat, 12 Sep 2026 08:53:58 +0200
+Message-ID: <20260912065625.343463655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,99 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit db53c573d31d07d5d782c5312d37cb33be788eba ]
+[ Upstream commit 3c817862759913097f11467ed4ed2bbf974dabaf ]
 
-If HWP is enabled, writes to MSR_IA32_PERF_CTL have no effect,
-so intel_pstate_get_cpu_pstates() should not attempt to call
-intel_pstate_set_min_pstate() to set the minimum P-state for the
-given CPU in that case.
+knav_queue_probe() creates the global qmss debugfs file whose show
+callback reads the global knav_qdev state. knav_queue_remove() tears
+down the queue manager resources but leaves the debugfs file published.
 
-Accordingly, remove the intel_pstate_set_min_pstate()
-call from intel_pstate_get_cpu_pstates() and make both
-intel_pstate_cpu_init() and intel_cpufreq_cpu_init() call
-that function in their non-HWP code paths.
+Save the debugfs dentry in struct knav_device and remove it during
+teardown before the resources used by the show callback are released.
+While touching the debugfs_create_file() call, spell the unchanged read-
+only file mode as 0444.
 
-The HWP code path in intel_pstate_cpu_init() does not need to update
-the current P-state of the CPU directly at all because it is taken
-care of the processor automatically, but the HWP code path of
-intel_cpufreq_cpu_init() should update it in principle to
-initialize the DESIRED_PERF field in MSR_HWP_REQUEST.  For this
-purpose, make it call intel_cpufreq_hwp_update() and pass
-the minimum P-state limit to it as the current target value along
-with the current minimum and maximum limits.
-
-Fixes: f6ebbcf08f37 ("cpufreq: intel_pstate: Implement passive mode with HWP enabled")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5090465.GXAFRqVoOG@rafael.j.wysocki
+Fixes: 41f93af900a2 ("soc: ti: add Keystone Navigator QMSS driver")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260706144706.96313-1-pengpeng@iscas.ac.cn
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/soc/ti/knav_qmss.h       | 1 +
+ drivers/soc/ti/knav_qmss_queue.c | 7 +++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 048e2579e4fcf..df865612158ab 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2047,8 +2047,6 @@ static void intel_pstate_get_cpu_pstates(struct cpudata *cpu)
+diff --git a/drivers/soc/ti/knav_qmss.h b/drivers/soc/ti/knav_qmss.h
+index a01eda720bf6c..44d6976bbafc3 100644
+--- a/drivers/soc/ti/knav_qmss.h
++++ b/drivers/soc/ti/knav_qmss.h
+@@ -304,6 +304,7 @@ struct knav_device {
+ 	struct list_head			pools;
+ 	struct list_head			pdsps;
+ 	struct list_head			qmgrs;
++	struct dentry				*debugfs_file;
+ 	enum qmss_version			version;
+ };
  
- 	if (pstate_funcs.get_vid)
- 		pstate_funcs.get_vid(cpu);
--
--	intel_pstate_set_min_pstate(cpu);
- }
- 
- /*
-@@ -2746,6 +2744,7 @@ static int __intel_pstate_cpu_init(struct cpufreq_policy *policy)
- static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
- {
- 	int ret = __intel_pstate_cpu_init(policy);
-+	struct cpudata *cpu;
- 
- 	if (ret)
- 		return ret;
-@@ -2756,11 +2755,11 @@ static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
- 	 */
- 	policy->policy = CPUFREQ_POLICY_POWERSAVE;
- 
--	if (hwp_active) {
--		struct cpudata *cpu = all_cpu_data[policy->cpu];
--
-+	cpu = all_cpu_data[policy->cpu];
-+	if (hwp_active)
- 		cpu->epp_cached = intel_pstate_get_epp(cpu, 0);
--	}
-+	else
-+		intel_pstate_set_min_pstate(cpu);
- 
- 	return 0;
- }
-@@ -2983,8 +2982,6 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
- 		return ret;
- 
- 	policy->cpuinfo.transition_latency = INTEL_CPUFREQ_TRANSITION_LATENCY;
--	/* This reflects the intel_pstate_get_cpu_pstates() setting. */
--	policy->cur = policy->cpuinfo.min_freq;
- 
- 	req = kcalloc(2, sizeof(*req), GFP_KERNEL);
- 	if (!req) {
-@@ -3005,9 +3002,15 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
- 		WRITE_ONCE(cpu->hwp_req_cached, value);
- 
- 		cpu->epp_cached = intel_pstate_get_epp(cpu, value);
-+
-+		intel_cpufreq_hwp_update(cpu, cpu->pstate.min_pstate,
-+					 cpu->pstate.max_pstate,
-+					 cpu->pstate.min_pstate, false);
- 	} else {
- 		policy->transition_delay_us = INTEL_CPUFREQ_TRANSITION_DELAY;
-+		intel_pstate_set_min_pstate(cpu);
+diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
+index 66a2d5690cf2a..bcf39834d0219 100644
+--- a/drivers/soc/ti/knav_qmss_queue.c
++++ b/drivers/soc/ti/knav_qmss_queue.c
+@@ -1870,8 +1870,9 @@ static int knav_queue_probe(struct platform_device *pdev)
+ 		goto err;
  	}
-+	policy->cur = policy->cpuinfo.min_freq;
  
- 	freq = DIV_ROUND_UP(cpu->pstate.turbo_freq * global.min_perf_pct, 100);
+-	debugfs_create_file("qmss", S_IFREG | S_IRUGO, NULL, NULL,
+-			    &knav_queue_debug_fops);
++	knav_qdev->debugfs_file =
++		debugfs_create_file("qmss", 0444, NULL, NULL,
++				    &knav_queue_debug_fops);
+ 	device_ready = true;
+ 	return 0;
  
+@@ -1889,6 +1890,8 @@ static int knav_queue_remove(struct platform_device *pdev)
+ 	struct knav_device *kdev = platform_get_drvdata(pdev);
+ 
+ 	device_ready = false;
++	debugfs_remove(kdev->debugfs_file);
++	kdev->debugfs_file = NULL;
+ 	knav_queue_stop_pdsps(kdev);
+ 	knav_queue_free_regions(kdev);
+ 	knav_free_queue_ranges(kdev);
 -- 
 2.53.0
 
