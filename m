@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA5D78C9C;
-	Sat, 12 Sep 2026 19:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1162F260C;
+	Sat, 12 Sep 2026 19:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241235; cv=none; b=Fgoemd+mS9tgs9waGWuzKi40ZzU1jGIB2J3qoBFMmqBMveZ7rmioDkbtQQ00aHcgFiyEmfHpal0xyMpZo1sUn6zq5ww/LscYGTd9dm6BNuWRBgU4J532Zbk6Uu/RGLBLMhSa76yrRBBf7T50HkkWYd5Gjd1D1LvwtMX92BLyuCU=
+	t=1789241240; cv=none; b=h5VcVgCGrOsDOWMCQffYh1Keg2JUZvAKe8TmfpO9c0FcyDnOyPozhbGR0pW14lltixNSOcPEDS+UTY2dmz4trnSRyfbXtrRpM8Pn4QqtaAp9nN+qUkM4VXgvaOKgEoanfjjxq0/w3ZNwkSxa/Ezz0Q8OPDJYzVf8BcZmTAbFT9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241235; c=relaxed/simple;
-	bh=169oLMvOwhMywK8NrY2fcU8GkIeASUbzS3lBGcpJ6WI=;
+	s=arc-20240116; t=1789241240; c=relaxed/simple;
+	bh=lrT0U3RCycp/1o1WnY+wTsGFvMBLLKyovoTPBixR+yE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l16tdcznPt7ZtYYnBRR8/Gnt7JK0Bc/fcrr5J2u3teOd5fqRjiKz2eopaAUlNX/6JiPunRIUMGl5aohgLRBvwRraOyV3pSExlC3eKQjBdblrNBoVt0EfxrjdVdXFuuDOgzr/rgn/sX2wAuj0LCdKq+RKLWosoYR3WuG7jN+cANw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AG4WSwkC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hCyeG3KUZZ9Fcp4s/8rLx6bb6hs8m7K+/RTZTzgaliphVhIPnwa6/ZHy0rvA+r6xEHyWpbIN5DRs2ZOcDTfjgSfS1xwB3APVq/+CXfJxfo4VQBnEiHyAkemVYGs3b5tHnCEvCjLW5/qGV2paNS0h8wP+Xscr0R4AW0FSxnr3f/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nmy5pZYR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AG4WSwkC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5101F000FF;
-	Sat, 12 Sep 2026 19:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nmy5pZYR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AD81F000FF;
+	Sat, 12 Sep 2026 19:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241234;
-	bh=MaeO3p3Zbdc0Y2mrzrM0e6D2GCyBF+e1wrHzZZjb5CU=;
+	s=korg; t=1789241239;
+	bh=5MhC/llfWrSve4xMZmuktJbp7Xdd9JNXNQgZ9MhmUZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AG4WSwkCr40AeT375zNO4DV5P4fjZPDvLb+d62hCg+8UNxGC92/VLRmrmbx+inpw7
-	 pgIQ0N6tQjUYi+Blp+jC/83l8161PvwOJYV0YuW0VqMO880UW1iwZbPBROurytSNF5
-	 lj7tf1n2C363G8/2ZHJy5q2zKTobM7WBct1GNpCE=
+	b=Nmy5pZYR44WlByHMzoa99bNNhym2GGEiueokwIsFSVTgkrL4v5nLyllg6+ruDo59w
+	 xrNoU0oHRHrrr5FSdbH8+LrSODMPkRtwWAm9dox+xNsFDcQtgTLCMyEYzzoExb/6jv
+	 e8mEKSv/PfwuxEcUuPPatpE53/f4G6yyraiGEju8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 093/798] mpls: reload header after pskb_may_pull()
-Date: Sat, 12 Sep 2026 08:55:21 +0200
-Message-ID: <20260912065519.087948715@linuxfoundation.org>
+	Harshit Varu <harshitvaru666@gmail.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 094/798] mptcp: fix uninitialized local_id in syncookie MP_JOIN reconstruction
+Date: Sat, 12 Sep 2026 08:55:22 +0200
+Message-ID: <20260912065519.110812443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,76 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: Harshit Varu <harshitvaru666@gmail.com>
 
-commit 29e63b8d9fc150cc191b1c6eb7e16e1247e1b650 upstream.
+commit b878dfdd12d7a5b8722a78d35e313506140ca3d9 upstream.
 
-mpls_select_multipath() calls mpls_multipath_hash() to choose a nexthop
-when an MPLS route has multiple nexthops.  While walking the MPLS label
-stack, the hash routine caches hdr for the current label.  After finding
-the bottom-of-stack label, it calls pskb_may_pull() before reading the
-inner IP header.
+mptcp_token_join_cookie_init_state() restores remote_nonce, local_nonce,
+backup, join_id, token and msk from the saved cookie entry when rebuilding
+the request socket for a MP_JOIN 4th-ACK handled under SYN cookies, but it
+does not restore local_id, even though the SYN path saved it.
+subflow_ulp_clone() then reads that uninitialized field and stores it as
+the joined subflow's address-ID. Because the request-sock slab is
+SLAB_TYPESAFE_BY_RCU and not zeroed on allocation, the value is the stale
+byte of a previously freed request socket, which an off-path peer can
+influence by sending concurrent MP_JOIN SYNs. This corrupts the path
+manager's id-based subflow bookkeeping for the connection.
 
-If an skb is constructed with the inner IP header in nonlinear data and
-insufficient tailroom in the linear head, pskb_may_pull() calls
-pskb_expand_head() to replace the skb head and free the old one.  This
-leaves hdr pointing to freed memory.  The IPv6 path can invalidate hdr
-again when it performs a second pull for the larger header.
+Restore subflow_req->local_id from the cookie entry, as done for the other
+fields.
 
-The issue was found through static analysis.  A reproducer sending a legal
-Geneve packet through a bareudp/MPLS multipath setup triggered the same
-KASAN report in 2 of 2 unpatched runs:
-
-  BUG: KASAN: slab-use-after-free in mpls_select_multipath
-  Read of size 1 at addr ffff88800ecc6e20 by task ksoftirqd/1/23
-
-  Call Trace:
-   mpls_select_multipath
-   mpls_forward
-   __netif_receive_skb_list_core
-   netif_receive_skb_list_internal
-   napi_complete_done
-   gro_cell_poll
-   __napi_poll
-   net_rx_action
-
-  Freed by task 23:
-   kfree
-   pskb_expand_head
-   __pskb_pull_tail
-   mpls_select_multipath
-
-Reload hdr from the current skb head after each successful pull before
-deriving the inner IPv4 or IPv6 header pointer.
-
-Fixes: 9f427a0e474a ("net: mpls: Fix multipath selection for LSR use case")
+Fixes: 9466a1ccebbe ("mptcp: enable JOIN requests even if cookies are in use")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260814095404.7205-1-a0yami@mailbox.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Harshit Varu <harshitvaru666@gmail.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260815115205.197151-1-harshitvaru666@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mpls/af_mpls.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/syncookies.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -197,6 +197,7 @@ static u32 mpls_multipath_hash(struct mp
- 		if (pskb_may_pull(skb, mpls_hdr_len + sizeof(struct iphdr))) {
- 			const struct iphdr *v4hdr;
- 
-+			hdr = mpls_hdr(skb) + label_index;
- 			v4hdr = (const struct iphdr *)(hdr + 1);
- 			if (v4hdr->version == 4) {
- 				hash = jhash_3words(ntohl(v4hdr->saddr),
-@@ -207,6 +208,7 @@ static u32 mpls_multipath_hash(struct mp
- 						 sizeof(struct ipv6hdr))) {
- 				const struct ipv6hdr *v6hdr;
- 
-+				hdr = mpls_hdr(skb) + label_index;
- 				v6hdr = (const struct ipv6hdr *)(hdr + 1);
- 				hash = __ipv6_addr_jhash(&v6hdr->saddr, hash);
- 				hash = __ipv6_addr_jhash(&v6hdr->daddr, hash);
+--- a/net/mptcp/syncookies.c
++++ b/net/mptcp/syncookies.c
+@@ -118,6 +118,7 @@ bool mptcp_token_join_cookie_init_state(
+ 	subflow_req->local_nonce = e->local_nonce;
+ 	subflow_req->backup = e->backup;
+ 	subflow_req->remote_id = e->join_id;
++	subflow_req->local_id = e->local_id;
+ 	subflow_req->token = e->token;
+ 	subflow_req->msk = msk;
+ 	spin_unlock_bh(&join_entry_locks[i]);
 
 
