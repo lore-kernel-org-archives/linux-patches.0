@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9E03603D5;
-	Sat, 12 Sep 2026 16:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06467377ABA;
+	Sat, 12 Sep 2026 16:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231773; cv=none; b=WhlVHlaY7+mGjtkjq7nLKF/JIevUoa5vziID/b0tNi2bpLRBidDjju3zTlRxx+e0PknDFZw/0ZczwkbCvOq5ImSZAD9lUtH3Pq1ykO7UoRMYhQUesSry2aCsZKY7/NCM8GKbB8xKFFsw80uK82pkFu8TbqH47PCXa2ksSgkjyPU=
+	t=1789231778; cv=none; b=s0Tn53dmpDRJxrUQM9rCshEz6PCyLFny2YecNGkEwkDNyRtkxWUno4oEz6gB8yS0q1TZJk09MykED4IKvy9Sr/Y3AzbPl6OeY+sFQoI201eEmqBck+o9VtreHFlc04PY8xmE3bM3u9mVDXXxjwvJyRapzxgQHSY6eGrMonxr6WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231773; c=relaxed/simple;
-	bh=TpVcavaOP7n9pY1hjIyZD1naMhfMshwcGlqXHixjpQc=;
+	s=arc-20240116; t=1789231778; c=relaxed/simple;
+	bh=KeuHIRQjDqZiMPUZBKROOzP0kIiSdyF+eFlFxRJ9VaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FmZxFaxVwh67JI+gDB/UH6X2c9dwPPbeWDlCQlXj1oKtayaazaXP6rfKmu72HYxpKzXWBv+YF2DBfUqz+sHq6kLFZ1+oqMghgf1363fjYl5MJZTtLed/8b/zxxIOcyqjVe5W6bpLzvZyL9p5ObJs3d61XGWxAwwLwwV452yyJOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sayXt/fX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XArzLLspumZDuZk13/gj+ICjANekMV5x57n5cmpDQatiDy9uXbp1XodrMa2Fq453fTOSO3Bav1Q9SNG/FqdVIUg9QUG7GD1xvPcjUrSDCs3pxvomi+wp4zYL1rupzQtX0oAW9EPJGuy/XnNDCFqOvMsAfWd2s8MyN35m4FRkZcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xg7cZIB1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sayXt/fX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446541F000FF;
-	Sat, 12 Sep 2026 16:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xg7cZIB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949D21F000FF;
+	Sat, 12 Sep 2026 16:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231771;
-	bh=qj08cbEz1Ds7AkatIb2xAtS5rHHpc3UHBqOKbpqznjQ=;
+	s=korg; t=1789231776;
+	bh=1yQM1y1CjlvA7SKci5h8ZT1/AUQenG0wu0r0ASgIYPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sayXt/fXGpnzmVLeBncWydQM4QSPpajKkNWiPnr8OP/va5hpsEodY1WTmWli52LDa
-	 OhkZLXF6A0KF2Ids4f6xTcIXaJFhhpxhgu26BiDI0JoNFeFLhurWJTezZa9jsQ7Aix
-	 PNQ0bDSNzYmHITPWOUuF64z9ijW+x0qtwVBQHZRM=
+	b=Xg7cZIB17RFojEASuj1Qu2z81q59DxaBFwXYySTj52V+MvGLXRDgVBIjjRQ7iE390
+	 w3hnllgI8bVCNiloLg2DLFmG8FDrBOaU67NcosXP0m0PzfbWfethdQtiCdnMm5Td2+
+	 Sc9OvwSpAx34KMIwkPpqpuDFOceEeyUcUvaXOsI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Yen <Patrick_Yen@asmedia.com.tw>,
-	Jian-Ming Liao <Jm_Liao@asmedia.com.tw>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1068/1191] i3c: mipi-i3c-hci: Fix missing STAT_IBI_STATUS_THLD in PIO mode
-Date: Sat, 12 Sep 2026 09:03:16 +0200
-Message-ID: <20260912065612.162416481@linuxfoundation.org>
+Subject: [PATCH 6.1 1069/1191] virtio_balloon: disable indirect descriptors
+Date: Sat, 12 Sep 2026 09:03:17 +0200
+Message-ID: <20260912065612.183814840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,49 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian-Ming Liao <Jm_Liao@asmedia.com.tw>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 308ecb824db329a8e22dd0b10f2a3411a6fbbde3 ]
+[ Upstream commit 281eb4732aae5473141b84e106fe906c69b2ff3d ]
 
-In PIO mode initialization, STAT_IBI_STATUS_THLD was missing from
-pio->enabled_irqs. As a result, the host controller interrupt signal for
-IBI threshold was never enabled when transfer starts, preventing IBI
-status descriptors from being properly processed in PIO mode.
+The page reporting callback submits an sg list to the reporting
+virtqueue.  With VIRTIO_RING_F_INDIRECT_DESC negotiated and
+total_sg > 1 (which it typically is), virtqueue_add reports it to the
+host by allocating an indirect descriptor via kmalloc(GFP_KERNEL).
 
-Include STAT_IBI_STATUS_THLD in pio->enabled_irqs so that the IBI
-threshold interrupt is activated alongside error interrupts upon the first
-transfer.
+This is not pretty: the reporting worker isolates potentially hundreds
+of MB of free pages from the buddy allocator (reported pages are at
+least pageblock_order, and the sg can contain up to
+PAGE_REPORTING_CAPACITY entries of varying orders).  As the result,
+very theoretically, the kmalloc might trigger OOM when we have in fact a
+ton of free memory.
 
-Fixes: 9ad9a52cce28 ("i3c/master: introduce the mipi-i3c-hci driver")
-Co-developed-by: Patrick Yen <Patrick_Yen@asmedia.com.tw>
-Signed-off-by: Patrick Yen <Patrick_Yen@asmedia.com.tw>
-Signed-off-by: Jian-Ming Liao <Jm_Liao@asmedia.com.tw>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260818104106.763772-2-Jm_Liao@asmedia.com.tw
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Clear VIRTIO_RING_F_INDIRECT_DESC, to avoid using indirect descriptors.
+
+Fixes: b0c504f15471 ("virtio-balloon: add support for providing free page reports to host")
+Assisted-by: Claude:claude-opus-4-6
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <73fac8a629fd9aca7bb3265ac243a769c28af25d.1783232420.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/pio.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/virtio/virtio_balloon.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
-index da28934a63286..d8ef51cea6e2b 100644
---- a/drivers/i3c/master/mipi-i3c-hci/pio.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
-@@ -187,8 +187,11 @@ static void __hci_pio_init(struct i3c_hci *hci, u32 *size_val_ptr)
- 	pio_reg_write(INTR_SIGNAL_ENABLE, 0x0);
- 	pio_reg_write(INTR_STATUS_ENABLE, 0xffffffff);
+diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
+index 41fa694d82577..e9abd958f69e3 100644
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -7,6 +7,7 @@
+  */
  
--	/* Always accept error interrupts (will be activated on first xfer) */
--	pio->enabled_irqs = STAT_ALL_ERRORS;
+ #include <linux/virtio.h>
++#include <uapi/linux/virtio_ring.h>
+ #include <linux/virtio_balloon.h>
+ #include <linux/swap.h>
+ #include <linux/workqueue.h>
+@@ -1095,6 +1096,11 @@ static int virtballoon_validate(struct virtio_device *vdev)
+ 	else if (!virtio_has_feature(vdev, VIRTIO_BALLOON_F_PAGE_POISON))
+ 		__virtio_clear_bit(vdev, VIRTIO_BALLOON_F_REPORTING);
+ 
 +	/*
-+	 * Always accept error interrupts and IBI threshold interrupt
-+	 * (will be activated on first xfer).
++	 * Disable indirect descriptors to avoid memory allocation in
++	 * virtqueue_add during page reporting.
 +	 */
-+	pio->enabled_irqs = STAT_ALL_ERRORS | STAT_IBI_STATUS_THLD;
++	__virtio_clear_bit(vdev, VIRTIO_RING_F_INDIRECT_DESC);
+ 	__virtio_clear_bit(vdev, VIRTIO_F_ACCESS_PLATFORM);
+ 	return 0;
  }
- 
- static int hci_pio_init(struct i3c_hci *hci)
 -- 
 2.53.0
 
