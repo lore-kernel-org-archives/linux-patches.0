@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B2936A37E;
-	Sat, 12 Sep 2026 10:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED752246BCD;
+	Sat, 12 Sep 2026 10:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208021; cv=none; b=QR/0XrtGfZnO/Uq6S5yG1DHHtaUnoU/kKt5sJ3wNcq84FDs9zzmbYMT+3Mmmxy1hdEhRCnXEbd1Wz+LUBaQSVIzYl+ipLQcXHajVc6dk3Hq1bsiadZRstuElM5pPJKtPjeysop/ZNuy+f3DRNOrJh8q6LUS+trHyzcAVO38LcFU=
+	t=1789208026; cv=none; b=fnJq9J9QsHYKFM8o6gqFhqlY7ATqwNldD1mHgTOWNFV/HF2HUNOOVEswVUmcyi2Wu5wxxfjXg6tgl/mgy7ha6n9G4YX9aSttXWqdRACd5kaaHlqjLLdyvinQ+KseEWRFAfgm6e71K1/EGPTDvHgLPKOgciIghY/KQORbxGZyX3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208021; c=relaxed/simple;
-	bh=P/4vB1xTi3Jqnn4SA4xvAdoCe/IrtoA7tTz51dLVTOM=;
+	s=arc-20240116; t=1789208026; c=relaxed/simple;
+	bh=3DHJcbA1IRSbSSdk8TVljB9Jn7/g/hsgdHzwOMVzG/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NsjelAaGTXzO05gzRyEIa7i1q7ceRf+2R2jexvy1rO6m0kkPmjkg+qkMk0mo14+ASsr7j1zzvnWZjuR4QdmCJsGskCQ68fnKdArwPyPDhb4I1mfPLuQ8df1HhIQIlkZ70tU8R+I4uL/xpoh8zC99mCe6JZw3WwM8kWSyZuf1Ieg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSS6WhX9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kkUEsEaPP0I2aq8y5rXWKlKsLFKT1DxMDP1be6fQqJtPbKNGYbEc6lb4h1bFh7Od0s5m3a9dZWTN9GyBxY53rKxbfKF7j0rtxBXhbEupO7WBPW/0/1ij47rCa59s2Uo8fkvF7rmSHRSD6vchCc6I62xuNymrtXrZeabykbdkArs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wr5TfUiw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSS6WhX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC1E1F000FF;
-	Sat, 12 Sep 2026 10:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wr5TfUiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C6B1F000FF;
+	Sat, 12 Sep 2026 10:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208019;
-	bh=GIllzURTH3JMfkq8Pjexv8+jkQYEBhauI8jFxq1tu90=;
+	s=korg; t=1789208024;
+	bh=CIvID3JvaNE5MDtbD/Bn7ygxzx6o0m3NUU4op0D1+rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SSS6WhX9enfzw3NOAmaMdDtb+yTgS4jusrpLqsbTq0a8deaVtr/bYsezVvYSr5uPF
-	 P13Xtp74miLd3EiG1FO/UmuMWvEgDMEHjKoWYhrFeTLzyM2hHfyXZywrjcN6iLfclD
-	 0COgtxq/1C1iC4TqH+2dmD1SPgMJzC/LcVQXFQXY=
+	b=wr5TfUiwCDsUyBpvZ6rPBWxxzrVlgIVwTc4T2Ntg4Z+6FHk90eO9h5opeBF0wtx16
+	 Uoh0aaOkfCYOHK77+nRaXoSyAzIIch4iReOQdncK4CFnTIiEyRxNw+BBRTe9q/9FEp
+	 GyhOtMaDLbsT63LbWAQ42cMIwGKF3Sl7PS2/bEos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0532/1518] wifi: ath6kl: avoid buffer overreads in WMI event handlers
-Date: Sat, 12 Sep 2026 08:45:01 +0200
-Message-ID: <20260912065635.478759432@linuxfoundation.org>
+Subject: [PATCH 6.18 0533/1518] wifi: ath12k: switch to name-based reserved memory lookup
+Date: Sat, 12 Sep 2026 08:45:02 +0200
+Message-ID: <20260912065635.501810651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,71 +53,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 
-[ Upstream commit f57314aade9d74d30f3360ec5ef85a83654748be ]
+[ Upstream commit 3fe59edd1901c040e5b8e9d2428bf9ec6b4ce630 ]
 
-The following WMI event handlers currently read from the event buffer
-without first verifying that the message was large enough to hold the
-expected event:
-ath6kl_wmi_scan_complete_rx()
-ath6kl_wmi_addba_req_event_rx()
-ath6kl_wmi_delba_req_event_rx()
+The driver currently retrieves reserved memory regions using index-based
+lookup, which depends on the ordering of reserved-memory nodes in the
+device tree. Since different platforms define these regions in varying
+orders and combinations, this approach is not compatible and can result
+in incorrect memory region access.
 
-Add length checks to prevent overread.
+Switch to looking up memory regions by name instead of index so it does
+not depend on node order.
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
-Assisted-by: Claude:claude-sonnet-4-6
+Use names already defined in qcom,ipq5332-wifi.yaml, so there are no
+backward compatibility issues.
+
+Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.6-01275-QCAHKSWPL_SILICONZ-1
+
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260711-ath6kl_wmi_scan_complete_rx-v2-1-22dc0f7f45e7@oss.qualcomm.com
+Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260630062048.1615178-2-aaradhana.sahu@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Stable-dep-of: 42399be44b13 ("wifi: ath12k: allocate HOST_DDR and BDF regions after Q6 RO region")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/wmi.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/ahb.c  | 18 ++++++------
+ drivers/net/wireless/ath/ath12k/core.c | 25 -----------------
+ drivers/net/wireless/ath/ath12k/core.h |  2 --
+ drivers/net/wireless/ath/ath12k/qmi.c  | 38 +++++++++++++-------------
+ 4 files changed, 29 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/wmi.c b/drivers/net/wireless/ath/ath6kl/wmi.c
-index 0cdcbc3c77966..2353b6d18c6c4 100644
---- a/drivers/net/wireless/ath/ath6kl/wmi.c
-+++ b/drivers/net/wireless/ath/ath6kl/wmi.c
-@@ -1296,6 +1296,9 @@ static int ath6kl_wmi_scan_complete_rx(struct wmi *wmi, u8 *datap, int len,
+diff --git a/drivers/net/wireless/ath/ath12k/ahb.c b/drivers/net/wireless/ath/ath12k/ahb.c
+index b30527c402f6c..af68d5cd6a9d7 100644
+--- a/drivers/net/wireless/ath/ath12k/ahb.c
++++ b/drivers/net/wireless/ath/ath12k/ahb.c
+@@ -12,6 +12,7 @@
+ #include <linux/remoteproc.h>
+ #include <linux/soc/qcom/mdt_loader.h>
+ #include <linux/soc/qcom/smem_state.h>
++#include <linux/of_reserved_mem.h>
+ #include "ahb.h"
+ #include "debug.h"
+ #include "hif.h"
+@@ -345,24 +346,25 @@ static int ath12k_ahb_power_up(struct ath12k_base *ab)
+ 	char fw2_name[ATH12K_USERPD_FW_NAME_LEN];
+ 	struct device *dev = ab->dev;
+ 	const struct firmware *fw, *fw2;
+-	struct reserved_mem *rmem = NULL;
+ 	unsigned long time_left;
+ 	phys_addr_t mem_phys;
++	struct resource res;
+ 	void *mem_region;
+ 	size_t mem_size;
+ 	u32 pasid;
+ 	int ret;
+ 
+-	rmem = ath12k_core_get_reserved_mem(ab, 0);
+-	if (!rmem)
+-		return -ENODEV;
++	ret = of_reserved_mem_region_to_resource_byname(dev->of_node, "q6-region",
++							&res);
++	if (ret)
++		return ret;
+ 
+-	mem_phys = rmem->base;
+-	mem_size = rmem->size;
++	mem_phys = res.start;
++	mem_size = resource_size(&res);
+ 	mem_region = devm_memremap(dev, mem_phys, mem_size, MEMREMAP_WC);
+ 	if (IS_ERR(mem_region)) {
+-		ath12k_err(ab, "unable to map memory region: %pa+%pa\n",
+-			   &rmem->base, &rmem->size);
++		ath12k_err(ab, "unable to map memory region: %pa+%zx\n",
++			   &res.start, mem_size);
+ 		return PTR_ERR(mem_region);
+ 	}
+ 
+diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
+index 5fed8d1bcadb3..a02db6fd23549 100644
+--- a/drivers/net/wireless/ath/ath12k/core.c
++++ b/drivers/net/wireless/ath/ath12k/core.c
+@@ -633,31 +633,6 @@ u32 ath12k_core_get_max_peers_per_radio(struct ath12k_base *ab)
+ 	return ath12k_core_get_max_station_per_radio(ab) + TARGET_NUM_VDEVS(ab);
+ }
+ 
+-struct reserved_mem *ath12k_core_get_reserved_mem(struct ath12k_base *ab,
+-						  int index)
+-{
+-	struct device *dev = ab->dev;
+-	struct reserved_mem *rmem;
+-	struct device_node *node;
+-
+-	node = of_parse_phandle(dev->of_node, "memory-region", index);
+-	if (!node) {
+-		ath12k_dbg(ab, ATH12K_DBG_BOOT,
+-			   "failed to parse memory-region for index %d\n", index);
+-		return NULL;
+-	}
+-
+-	rmem = of_reserved_mem_lookup(node);
+-	of_node_put(node);
+-	if (!rmem) {
+-		ath12k_dbg(ab, ATH12K_DBG_BOOT,
+-			   "unable to get memory-region for index %d\n", index);
+-		return NULL;
+-	}
+-
+-	return rmem;
+-}
+-
+ static inline
+ void ath12k_core_to_group_ref_get(struct ath12k_base *ab)
  {
- 	struct wmi_scan_complete_event *ev;
+diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
+index d7688b383f62c..93cdfcaf95bd2 100644
+--- a/drivers/net/wireless/ath/ath12k/core.h
++++ b/drivers/net/wireless/ath/ath12k/core.h
+@@ -1369,8 +1369,6 @@ void ath12k_fw_stats_init(struct ath12k *ar);
+ void ath12k_fw_stats_bcn_free(struct list_head *head);
+ void ath12k_fw_stats_free(struct ath12k_fw_stats *stats);
+ void ath12k_fw_stats_reset(struct ath12k *ar);
+-struct reserved_mem *ath12k_core_get_reserved_mem(struct ath12k_base *ab,
+-						  int index);
+ enum ath12k_qmi_mem_mode ath12k_core_get_memory_mode(struct ath12k_base *ab);
  
-+	if (len < sizeof(*ev))
-+		return -EINVAL;
-+
- 	ev = (struct wmi_scan_complete_event *) datap;
+ static inline const char *ath12k_scan_state_str(enum ath12k_scan_state state)
+diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
+index 8de9aee2498ec..bb90b7c360cf8 100644
+--- a/drivers/net/wireless/ath/ath12k/qmi.c
++++ b/drivers/net/wireless/ath/ath12k/qmi.c
+@@ -13,6 +13,7 @@
+ #include <linux/firmware.h>
+ #include <linux/of_address.h>
+ #include <linux/ioport.h>
++#include <linux/of_reserved_mem.h>
  
- 	ath6kl_scan_complete_evt(vif, a_sle32_to_cpu(ev->status));
-@@ -3372,7 +3375,12 @@ static int ath6kl_wmi_get_pmkid_list_event_rx(struct wmi *wmi, u8 *datap,
- static int ath6kl_wmi_addba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
- 					 struct ath6kl_vif *vif)
+ #define SLEEP_CLOCK_SELECT_INTERNAL_BIT	0x02
+ #define HOST_CSTATE_BIT			0x04
+@@ -2685,20 +2686,20 @@ static int ath12k_qmi_alloc_target_mem_chunk(struct ath12k_base *ab)
+ 
+ static int ath12k_qmi_assign_target_mem_chunk(struct ath12k_base *ab)
  {
--	struct wmi_addba_req_event *cmd = (struct wmi_addba_req_event *) datap;
-+	struct wmi_addba_req_event *cmd;
-+
-+	if (len < sizeof(*cmd))
-+		return -EINVAL;
-+
-+	cmd = (struct wmi_addba_req_event *)datap;
+-	struct reserved_mem *rmem;
++	struct device_node *np = ab->dev->of_node;
+ 	size_t avail_rmem_size;
++	struct resource res;
+ 	int i, idx, ret;
  
- 	aggr_recv_addba_req_evt(vif, cmd->tid,
- 				le16_to_cpu(cmd->st_seq_no), cmd->win_sz);
-@@ -3383,7 +3391,12 @@ static int ath6kl_wmi_addba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
- static int ath6kl_wmi_delba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
- 					 struct ath6kl_vif *vif)
- {
--	struct wmi_delba_event *cmd = (struct wmi_delba_event *) datap;
-+	struct wmi_delba_event *cmd;
-+
-+	if (len < sizeof(*cmd))
-+		return -EINVAL;
-+
-+	cmd = (struct wmi_delba_event *)datap;
+ 	for (i = 0, idx = 0; i < ab->qmi.mem_seg_count; i++) {
+ 		switch (ab->qmi.target_mem[i].type) {
+ 		case HOST_DDR_REGION_TYPE:
+-			rmem = ath12k_core_get_reserved_mem(ab, 0);
+-			if (!rmem) {
+-				ret = -ENODEV;
++			ret = of_reserved_mem_region_to_resource_byname(np, "q6-region",
++									&res);
++			if (ret)
+ 				goto out;
+-			}
  
- 	aggr_recv_delba_req_evt(vif, cmd->tid);
+-			avail_rmem_size = rmem->size;
++			avail_rmem_size = resource_size(&res);
+ 			if (avail_rmem_size < ab->qmi.target_mem[i].size) {
+ 				ath12k_dbg(ab, ATH12K_DBG_QMI,
+ 					   "failed to assign mem type %u req size %u avail size %zu\n",
+@@ -2709,7 +2710,7 @@ static int ath12k_qmi_assign_target_mem_chunk(struct ath12k_base *ab)
+ 				goto out;
+ 			}
  
+-			ab->qmi.target_mem[idx].paddr = rmem->base;
++			ab->qmi.target_mem[idx].paddr = res.start;
+ 			ab->qmi.target_mem[idx].v.ioaddr =
+ 				ioremap(ab->qmi.target_mem[idx].paddr,
+ 					ab->qmi.target_mem[i].size);
+@@ -2722,13 +2723,13 @@ static int ath12k_qmi_assign_target_mem_chunk(struct ath12k_base *ab)
+ 			idx++;
+ 			break;
+ 		case BDF_MEM_REGION_TYPE:
+-			rmem = ath12k_core_get_reserved_mem(ab, 0);
+-			if (!rmem) {
+-				ret = -ENODEV;
++			ret = of_reserved_mem_region_to_resource_byname(np, "q6-region",
++									&res);
++			if (ret)
+ 				goto out;
+-			}
+ 
+-			avail_rmem_size = rmem->size - ab->hw_params->bdf_addr_offset;
++			avail_rmem_size = resource_size(&res) -
++					  ab->hw_params->bdf_addr_offset;
+ 			if (avail_rmem_size < ab->qmi.target_mem[i].size) {
+ 				ath12k_dbg(ab, ATH12K_DBG_QMI,
+ 					   "failed to assign mem type %u req size %u avail size %zu\n",
+@@ -2739,7 +2740,7 @@ static int ath12k_qmi_assign_target_mem_chunk(struct ath12k_base *ab)
+ 				goto out;
+ 			}
+ 			ab->qmi.target_mem[idx].paddr =
+-				rmem->base + ab->hw_params->bdf_addr_offset;
++				res.start + ab->hw_params->bdf_addr_offset;
+ 			ab->qmi.target_mem[idx].v.ioaddr =
+ 				ioremap(ab->qmi.target_mem[idx].paddr,
+ 					ab->qmi.target_mem[i].size);
+@@ -2764,13 +2765,12 @@ static int ath12k_qmi_assign_target_mem_chunk(struct ath12k_base *ab)
+ 			idx++;
+ 			break;
+ 		case M3_DUMP_REGION_TYPE:
+-			rmem = ath12k_core_get_reserved_mem(ab, 1);
+-			if (!rmem) {
+-				ret = -EINVAL;
++			ret = of_reserved_mem_region_to_resource_byname(np, "m3-dump",
++									&res);
++			if (ret)
+ 				goto out;
+-			}
+ 
+-			avail_rmem_size = rmem->size;
++			avail_rmem_size = resource_size(&res);
+ 			if (avail_rmem_size < ab->qmi.target_mem[i].size) {
+ 				ath12k_dbg(ab, ATH12K_DBG_QMI,
+ 					   "failed to assign mem type %u req size %u avail size %zu\n",
+@@ -2781,7 +2781,7 @@ static int ath12k_qmi_assign_target_mem_chunk(struct ath12k_base *ab)
+ 				goto out;
+ 			}
+ 
+-			ab->qmi.target_mem[idx].paddr = rmem->base;
++			ab->qmi.target_mem[idx].paddr = res.start;
+ 			ab->qmi.target_mem[idx].v.ioaddr =
+ 				ioremap(ab->qmi.target_mem[idx].paddr,
+ 					ab->qmi.target_mem[i].size);
 -- 
 2.53.0
 
