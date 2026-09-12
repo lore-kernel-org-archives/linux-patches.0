@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F095635F602;
-	Sat, 12 Sep 2026 09:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41837C916;
+	Sat, 12 Sep 2026 09:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203910; cv=none; b=qThsHLd8B+oZzpdDJaTxz01XHZwUdvUYj/escXjvScy0e9iL/Pgm3CW32EnDlh+r5Zz7PToA5MGDCLCuE6jWVyHIrtTCiPVfIU/EbJPqvzzGZAje57l0slFjQlDtCl/b2346aVKG3Yyf+jh+Kg/p7f+1waA08U3hiqj0ZzVINEc=
+	t=1789203915; cv=none; b=UL2iDX+UApt7khi4VW4flbXwhDPntYlDygeZ6UwyOgujx/NxAx/j8Q8gNQewKkOxwonNkjuOscng3koFi2F5dMaMrfOT2DdUGqMKlu+F43U0ApixuqoAsMNCHEq7xbP6qZVbZ/2+0BGGqtkSPgywsMdWtNXwvhiRmxG+zzvuAIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203910; c=relaxed/simple;
-	bh=vtZFISKE+ythvNa9wQUPUGHPZfejWXqPPFfXffv0avI=;
+	s=arc-20240116; t=1789203915; c=relaxed/simple;
+	bh=ogyBj8yPVz89mgUSn8TKvhmGbBq+eDbcwsLw71ezoJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YUyuZLdamjW38wPs9b7AHmm1EjSwHMm9sR8ikEfRyHF0nHAEpZfoW64EJS18vm0ntTkNwOzt993lAE5ipPws+pgWYeAv+E2JhNj3JeevbD/a6Z3tO/jjJ7lIZa4ht2DpOUKYPRDs6wgjxwmxkvE9JLk6r/9kCnfQFzGs8wN27q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZpcbP7/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iE5G7FpAF9NKFL2WdYS851XLg+6+h9WkFGbggOkP9z4gwOO3/AgQ9o8q6tlqdGs8iWknbORxhQu9enfAmKvIrMO0lRUZLj51IxbBpYznTWIwxmgPlRoaDYfcM8dUaBDYZcgE8//yx+PGgZwIJthY4EOExvWu2cmn3VvPAV8jBJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M82g3RS/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZpcbP7/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21661F000FF;
-	Sat, 12 Sep 2026 09:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M82g3RS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AF01F000FF;
+	Sat, 12 Sep 2026 09:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203908;
-	bh=04aqjoZE/KGVQqZyXhgzirdGoRCG1SgxBPLocZ5bydc=;
+	s=korg; t=1789203914;
+	bh=EtigN6JXKfnb1tprmzZzj6N3JjnSVKb5NU4NCIXgraI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZpcbP7/AdnHCNjoJSgqOZdgqQJzJGoqFTP69NTjyhKyO6wmikDrQycLaHN2JE+Du
-	 WMLomHjGEv2luIfJ4ZtIoI9c5EgqD56qQLYIe7yzBimeGVKv0oeiWIFvredH4QB42H
-	 WmW4hvCdVgSzupop92SVezwo4vWzA0jsSWm5a7u0=
+	b=M82g3RS/yy3U9575PfYnvB0roJufzCjYMTZ73sSqIW1PVrosP7lrpOiq7xejhsj92
+	 5q3/+CzWK7dXKpTUohG5ZjnZ4liO0p4EEGKxy+35JD87OC9tXHSXKwdC0AOq3hZMiH
+	 x75824cbppBmgIBbNDwwCamtqKuSRfEDrm6QcCPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefan Metzmacher <metze@samba.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1502/1815] smb: smbdirect: destroy QP before mem pools on accept failure
-Date: Sat, 12 Sep 2026 08:54:12 +0200
-Message-ID: <20260912065724.259748710@linuxfoundation.org>
+Subject: [PATCH 7.2 1503/1815] smb: smbdirect: avoid recursive listen.lock during cleanup
+Date: Sat, 12 Sep 2026 08:54:13 +0200
+Message-ID: <20260912065724.282612999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,203 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Yunseong Kim <yunseong.kim@est.tech>
 
-[ Upstream commit 383a9480f5f40bc46454cce27ccfad532cedad9c ]
+[ Upstream commit 76fa42c004eb95a983bed8fd0e6e0e8428c751a5 ]
 
-On the rdma_accept_failed error path of
-smbdirect_accept_connect_request(), the receive io posted just above is
-owned by the QP (recv_io is set to NULL after a successful post).  The
-error path fell through to smbdirect_connection_destroy_mem_pools()
-before smbdirect_connection_destroy_qp(), so the mem pools and the
-recv_io slab cache were destroyed while that recv_io was still
-outstanding on the QP.
+__smbdirect_socket_schedule_cleanup() and smbdirect_socket_cleanup_work()
+take sc->listen.lock and walk the listener's pending list, recursing
+into smbdirect_socket_schedule_cleanup() for each child, and every
+child takes its own listen.lock inside that walk.
 
-The drain in smbdirect_connection_destroy_qp() (ib_drain_qp()) is what
-runs the recv completion that returns the recv_io to the free list, so
-destroying the pools first leaves the object outstanding at
-kmem_cache_destroy() time ("Slab cache still has objects") and later
-frees it into an already-destroyed mempool (mempool_free_bulk
-NULL-pointer dereference).
+This cannot deadlock for real: the nesting is strictly listener into
+child, a child never listens, so the outer and the inner lock are
+always different instances.  lockdep only tracks lock classes, though;
+it sees the same class acquired twice and reports a possible recursive
+locking deadlock.  This change therefore works around a lockdep
+limitation rather than fixing a real hang, but the report is still
+worth avoiding: lockdep disables itself after the first splat and then
+hides real locking bugs for the rest of the run.
 
-Give rdma_accept_failed its own teardown that drains the QP first, then
-destroys the mem pools, and returns.  The remaining labels
-(post_recv_io_failed onward) run before the recv_io was ever posted, so
-they keep the mem-pools-then-qp order.
+Only a socket that was a listener owns a populated listen.ready/pending
+list; a child has empty lists and nothing to do in these blocks.  Guard
+both of them with sc->listen.backlog != -1, the "was a listener" marker
+that smbdirect_socket_destroy() already uses: listen.backlog leaves its
+initial -1 exactly once, when smbdirect_socket_listen() succeeds.  The
+alternative !sc->accept.listener test reads as "not a listener" while
+meaning the opposite, and it is also true for an accepted child, whose
+accept.listener has been cleared on hand-over.  With the guard the walk
+only runs for a listener and never nests a child's listen.lock under
+it; a pending child stays on its listener's list for the free path
+(smbdirect_socket_destroy) to reap.
 
-The outstanding recv_io at kmem_cache_destroy() time:
+[  741.705044] WARNING: possible recursive locking detected
+[  741.705403] 7.1.0-next-20260623+ #75 Not tainted
+[  741.705695] --------------------------------------------
+[  741.706022] ksmbd.control/18502 is trying to acquire lock:
+[  741.706379] ffff888108d612f8 (&sc->listen.lock){....}-{3:3}, at: __smbdirect_socket_schedule_cleanup+0x719/0xd70
+[  741.707008]
+[  741.707008] but task is already holding lock:
+[  741.707396] ffff8881087642f8 (&sc->listen.lock){....}-{3:3}, at: __smbdirect_socket_schedule_cleanup+0x719/0xd70
+[  741.708025]
+[  741.708025] other info that might help us debug this:
+[  741.708448]  Possible unsafe locking scenario:
+[  741.708448]
+[  741.708845]        CPU0
+[  741.709016]        ----
+[  741.709186]   lock(&sc->listen.lock);
+[  741.709453]   lock(&sc->listen.lock);
+[  741.709705]
+[  741.709705]  *** DEADLOCK ***
+[  741.709705]
+[  741.710095]  May be due to missing lock nesting notation
+[  741.710095]
+[  741.710663] 6 locks held by ksmbd.control/18502:
+[  741.710975]  #0: ffff888109e51420 (sb_writers#7){.+.+}-{0:0}, at: vfs_write+0x1e7/0xc70
+[  741.711561]  #1: ffff888126ec3880 (&of->mutex){+.+.}-{4:4}, at: kernfs_fop_write_iter+0x1be/0x4d0
+[  741.712147]  #2: ffff888102af17b0 (kn->active#45){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x205/0x4d0
+[  741.712803]  #3: ffffffff85ad1e00 (ctrl_lock){+.+.}-{4:4}, at: kill_server_store+0x1e0/0x2b0
+[  741.713381]  #4: ffffffff85ad41a0 (init_lock){+.+.}-{4:4}, at: ksmbd_conn_transport_destroy+0x5b/0x3c0
+[  741.713995]  #5: ffff8881087642f8 (&sc->listen.lock){....}-{3:3}, at: __smbdirect_socket_schedule_cleanup+0x719/0xd70
+[  741.714736]
+[  741.714736] stack backtrace:
+[  741.715038] CPU: 4 UID: 0 PID: 18502 Comm: ksmbd.control Not tainted 7.1.0-next-20260623+ #75 PREEMPT(lazy)
+[  741.715043] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+[  741.715046] Call Trace:
+[  741.715049]  <TASK>
+[  741.715052]  dump_stack_lvl+0x77/0xa0
+[  741.715058]  print_deadlock_bug+0x279/0x290
+[  741.715065]  __lock_acquire+0x272a/0x2e30
+[  741.715070]  ? stack_trace_save+0xae/0x100
+[  741.715075]  ? smb_direct_logging_vaprintf+0x1a0/0x230
+[  741.715079]  ? __pfx_smb_direct_logging_vaprintf+0x10/0x10
+[  741.715082]  ? __timer_delete+0x58/0x320
+[  741.715087]  lock_acquire+0xd3/0x270
+[  741.715091]  ? __smbdirect_socket_schedule_cleanup+0x719/0xd70
+[  741.715095]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[  741.715099]  _raw_spin_lock_irqsave+0x42/0x60
+[  741.715105]  ? __smbdirect_socket_schedule_cleanup+0x719/0xd70
 
-[ 3487.344647] =============================================================================
-[ 3487.349942] BUG smbdirect_recv_io_cache_ffff88811ba99000 (Not tainted): Objects remaining on __kmem_cache_shutdown()
-[ 3487.356078] -----------------------------------------------------------------------------
-[ 3487.356078]
-[ 3487.356738] Object 0xffff8881511c3440 @offset=13376
-[ 3487.358464] Allocated in mempool_alloc_noprof+0x18c/0x290 age=1194 cpu=6 pid=22254
-[ 3487.361197]  mempool_alloc_noprof+0x18c/0x290
-[ 3487.361542]  smbdirect_connection_create_mem_pools+0x405/0x780
-[ 3487.361972]  smbdirect_accept_connect_request+0x5a8/0x1b80
-[ 3487.362359]  smbdirect_listen_rdma_event_handler+0x1579/0x1b90
-[ 3487.362779]  cma_cm_event_handler+0x9c/0x230
-[ 3487.363096]  cma_ib_req_handler+0x2682/0x45d0
-[ 3487.363414]  cm_process_work+0x56/0x3d0
-[ 3487.363676]  cm_work_handler+0x8a0e/0xd000
-[ 3487.367496]  process_scheduled_works+0xa07/0x13a0
-[ 3487.367859]  worker_thread+0x7c9/0xc80
-[ 3487.368148]  kthread+0x341/0x430
-[ 3487.368407]  ret_from_fork+0x3a8/0x7a0
-[ 3487.368704]  ret_from_fork_asm+0x1a/0x30
-[ 3487.370307] Slab 0xffffea0005447000 objects=19 used=1 fp=0xffff8881511c0040 flags=0x100000000000240(workingset|head|node=0|zone=2)
-[ 3487.372840] ------------[ cut here ]------------
-[ 3487.373195] WARNING: mm/slub.c:1244 at __slab_err+0x1a/0x30, CPU#6: kworker/6:84/22254
-[ 3487.373759] Modules linked in:
-[ 3487.373993] CPU: 6 UID: 0 PID: 22254 Comm: kworker/6:84 Tainted: G    B               7.1.0-next-20260623+ #88 PREEMPT(lazy)
-[ 3487.374778] Tainted: [B]=BAD_PAGE
-[ 3487.377830] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-[ 3487.378515] Workqueue: ib_cm cm_work_handler
-[ 3487.378820] RIP: 0010:__slab_err+0x1a/0x30
-[ 3487.379129] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 e8 36 00 00 00 bf 05 00 00 00 be 01 00 00 00 e8 f7 75 45 00 90 <0f> 0b 90 c3 cc cc cc cc cc 66 66 66 66 2e 0f 1f 84 00 00 00 00 00
-[ 3487.383255] RSP: 0018:ffff888220fc7050 EFLAGS: 00010093
-[ 3487.383643] RAX: ffffffff8168e60a RBX: ffff88810955e640 RCX: ffff88821c381d80
-[ 3487.384158] RDX: 0000000000000000 RSI: 0000000000000008 RDI: ffffffff870fa080
-[ 3487.384662] RBP: ffff888220fc7068 R08: ffffffff870fa087 R09: 1ffffffff0e1f410
-[ 3487.385192] R10: dffffc0000000000 R11: fffffbfff0e1f411 R12: ffffea0005447210
-[ 3487.385674] R13: ffffea0005447000 R14: ffff888220fc7068 R15: ffff88812a8ab300
-[ 3487.388932] FS:  0000000000000000(0000) GS:ffff888427e76000(0000) knlGS:0000000000000000
-[ 3487.389529] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 3487.389934] CR2: 00007ffcf2d84fd8 CR3: 0000000111d64006 CR4: 0000000000f72ef0
-[ 3487.390440] PKRU: 55555554
-[ 3487.390641] Call Trace:
-[ 3487.390826]  <TASK>
-[ 3487.391209]  __kmem_cache_shutdown+0x1aa/0x2b0
-[ 3487.392062]  ? smbdirect_connection_destroy_mem_pools+0x239/0x300
-[ 3487.393565]  kmem_cache_destroy+0x9d/0x180
-[ 3487.398663]  smbdirect_connection_destroy_mem_pools+0x239/0x300
-[ 3487.403534]  ? __pfx_smb_direct_logging_needed+0x10/0x10
-[ 3487.407562]  smbdirect_accept_connect_request+0x95c/0x1b80
-[ 3487.412391]  ? __pfx_smbdirect_accept_connect_request+0x10/0x10
-[ 3487.416753]  ? do_raw_spin_lock+0x130/0x300
-[ 3487.420623]  ? smbdirect_socket_set_initial_parameters+0x28b/0x6a0
-[ 3487.424322]  ? lock_acquire+0x4c/0x270
-[ 3487.424409] ksmbd: can't change a file to a directory
-[ 3487.426321]  ? trace_irq_enable+0x36/0x120
-[ 3487.429144]  smbdirect_listen_rdma_event_handler+0x1579/0x1b90
-[ 3487.432606]  ? __pfx_smbdirect_listen_rdma_event_handler+0x10/0x10
-[ 3487.433595]  ? trace_cm_event_handler+0x51/0x170
-[ 3487.435183]  ? __pfx_smbdirect_listen_rdma_event_handler+0x10/0x10
-[ 3487.435646]  ? cma_listen_handler+0xf6/0x150
-[ 3487.435975]  cma_cm_event_handler+0x9c/0x230
-[ 3487.436288]  cma_ib_req_handler+0x2682/0x45d0
-[ 3487.439039]  ? __pfx_cma_ib_req_handler+0x10/0x10
-[ 3487.439540]  ? __pfx_roce_resolve_route_from_path+0x10/0x10
-[ 3487.439972]  ? stack_depot_save_flags+0x34/0x840
-[ 3487.440374]  ? __xas_nomem+0xa9/0x410
-[ 3487.443356]  ? xas_clear_mark+0x26c/0x4a0
-[ 3487.443673]  cm_process_work+0x56/0x3d0
-[ 3487.443969]  ? _raw_spin_unlock_irq+0x28/0x50
-[ 3487.444317]  cm_work_handler+0x8a0e/0xd000
-[ 3487.444624]  ? __pfx_cm_work_handler+0x10/0x10
-[ 3487.444971]  ? pwq_dec_nr_in_flight+0xa73/0xdf0
-[ 3487.445344]  ? __pfx_pwq_dec_nr_in_flight+0x10/0x10
-[ 3487.445737]  ? lock_acquire+0x4c/0x270
-[ 3487.448833]  ? process_scheduled_works+0x995/0x13a0
-[ 3487.449230]  ? process_scheduled_works+0x995/0x13a0
-[ 3487.449588]  process_scheduled_works+0xa07/0x13a0
-[ 3487.449938]  ? __pfx_process_scheduled_works+0x10/0x10
-[ 3487.450334]  ? do_raw_spin_lock+0x130/0x300
-[ 3487.450639]  ? assign_work+0x3bb/0x5c0
-[ 3487.450916]  worker_thread+0x7c9/0xc80
-[ 3487.451211]  kthread+0x341/0x430
-[ 3487.451453]  ? __pfx_worker_thread+0x10/0x10
-[ 3487.451756]  ? __pfx_kthread+0x10/0x10
-[ 3487.454814]  ret_from_fork+0x3a8/0x7a0
-[ 3487.455114]  ? __pfx_ret_from_fork+0x10/0x10
-[ 3487.455450]  ? __switch_to+0xb76/0x1110
-[ 3487.455772]  ? __pfx_kthread+0x10/0x10
-[ 3487.456081]  ret_from_fork_asm+0x1a/0x30
-[ 3487.456384]  </TASK>
-[ 3487.456549] irq event stamp: 0
-[ 3487.456767] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-[ 3487.460124] hardirqs last disabled at (0): [<ffffffff81684648>] copy_process+0xa08/0x3a10
-[ 3487.460726] softirqs last  enabled at (0): [<ffffffff81684648>] copy_process+0xa08/0x3a10
-[ 3487.461328] softirqs last disabled at (0): [<0000000000000000>] 0x0
-[ 3487.461778] ---[ end trace 0000000000000000 ]---
-[ 3487.543875] ksmbd: can't change a file to a directory
-[ 3487.599675] ksmbd: can't change a file to a directory
-[ 3487.626694] ksmbd: can't change a file to a directory
-[ 3487.824687] ksmbd: can't change a file to a directory
-[ 3487.871840] ksmbd: can't change a file to a directory
-[ 3487.986207] ------------[ cut here ]------------
-[ 3487.987157] kmem_cache_destroy smbdirect_recv_io_cache_ffff88811ba99000: Slab cache still has objects when called from smbdirect_connection_destroy_mem_pools+0x239/0x300
-[ 3487.987183] WARNING: mm/slab_common.c:572 at kmem_cache_destroy+0x15c/0x180, CPU#6: kworker/6:84/22254
-[ 3487.999821] Modules linked in:
-[ 3488.001902] CPU: 6 UID: 0 PID: 22254 Comm: kworker/6:84 Tainted: G    B   W           7.1.0-next-20260623+ #88 PREEMPT(lazy)
-[ 3488.008289] Tainted: [B]=BAD_PAGE, [W]=WARN
-[ 3488.010459] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-[ 3488.014502] Workqueue: ib_cm cm_work_handler
-[ 3488.017790] RIP: 0010:kmem_cache_destroy+0x16a/0x180
-[ 3488.020662] Code: fd ff 48 8b 3d 2f c0 9c 06 48 89 de 5b 41 5e 5d e9 5b a3 0e 00 48 8d 3d a4 07 12 04 48 8b 53 58 48 c7 c6 91 9d 3e 85 4c 89 f1 <67> 48 0f b9 3a e9 33 ff ff ff 66 66 66 2e 0f 1f 84 00 00 00 00 00
-[ 3488.028077] RSP: 0018:ffff888220fc70b8 EFLAGS: 00010202
-[ 3488.032038] RAX: 0000000000000001 RBX: ffff88810955e640 RCX: ffffffff822bc079
-[ 3488.035742] RDX: ffff88812404ec40 RSI: ffffffff853e9d91 RDI: ffffffff85f7ac50
-[ 3488.037830] RBP: 0000000000000001 R08: ffff8883aef3e843 R09: 1ffff11075de7d08
-[ 3488.041076] R10: dffffc0000000000 R11: ffffed1075de7d09 R12: 1ffff11024fa6c3c
-[ 3488.045376] R13: ffff888127d361e8 R14: ffffffff822bc079 R15: ffff88811ba99538
-[ 3488.049073] FS:  0000000000000000(0000) GS:ffff888427e76000(0000) knlGS:0000000000000000
-[ 3488.052515] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 3488.054934] CR2: 00007ffcf2d84fd8 CR3: 0000000111d64006 CR4: 0000000000f72ef0
-[ 3488.058529] PKRU: 55555554
-[ 3488.060542] Call Trace:
-[ 3488.061595]  <TASK>
-[ 3488.062006]  smbdirect_connection_destroy_mem_pools+0x239/0x300
-[ 3488.066041]  ? __pfx_smb_direct_logging_needed+0x10/0x10
-[ 3488.068620]  smbdirect_accept_connect_request+0x95c/0x1b80
-[ 3488.071594]  ? __pfx_smbdirect_accept_connect_request+0x10/0x10
-[ 3488.073218] ksmbd: not allow base filename in rename
-[ 3488.074751]  ? do_raw_spin_lock+0x130/0x300
-[ 3488.076792] ksmbd: can't change a file to a directory
-[ 3488.077942]  ? smbdirect_socket_set_initial_parameters+0x28b/0x6a0
-[ 3488.080143]  ? lock_acquire+0x4c/0x270
-[ 3488.080747]  ? trace_irq_enable+0x36/0x120
-[ 3488.081400]  smbdirect_listen_rdma_event_handler+0x1579/0x1b90
-[ 3488.085089]  ? __pfx_smbdirect_listen_rdma_event_handler+0x10/0x10
-[ 3488.089333]  ? trace_cm_event_handler+0x51/0x170
-[ 3488.092637]  ? __pfx_smbdirect_listen_rdma_event_handler+0x10/0x10
-[ 3488.095741]  ? cma_listen_handler+0xf6/0x150
-[ 3488.099638]  cma_cm_event_handler+0x9c/0x230
-[ 3488.101552]  cma_ib_req_handler+0x2682/0x45d0
-[ 3488.104571]  ? __pfx_cma_ib_req_handler+0x10/0x10
-[ 3488.106790]  ? __pfx_roce_resolve_route_from_path+0x10/0x10
-[ 3488.109799]  ? stack_depot_save_flags+0x34/0x840
-[ 3488.112174]  ? __xas_nomem+0xa9/0x410
-[ 3488.114217]  ? xas_clear_mark+0x26c/0x4a0
-[ 3488.116854]  cm_process_work+0x56/0x3d0
-[ 3488.118179]  ? _raw_spin_unlock_irq+0x28/0x50
-[ 3488.120034]  cm_work_handler+0x8a0e/0xd000
-[ 3488.121677]  ? __pfx_cm_work_handler+0x10/0x10
-[ 3488.123682]  ? pwq_dec_nr_in_flight+0xa73/0xdf0
-[ 3488.126928]  ? __pfx_pwq_dec_nr_in_flight+0x10/0x10
-[ 3488.129390]  ? lock_acquire+0x4c/0x270
-[ 3488.131432]  ? process_scheduled_works+0x995/0x13a0
-[ 3488.132694] ksmbd: can't change a file to a directory
-[ 3488.136702]  ? process_scheduled_works+0x995/0x13a0
-[ 3488.140060]  process_scheduled_works+0xa07/0x13a0
-[ 3488.143379]  ? __pfx_process_scheduled_works+0x10/0x10
-[ 3488.147221]  ? do_raw_spin_lock+0x130/0x300
-[ 3488.150790]  ? assign_work+0x3bb/0x5c0
-[ 3488.154259]  worker_thread+0x7c9/0xc80
-[ 3488.155730]  kthread+0x341/0x430
-[ 3488.158309]  ? __pfx_worker_thread+0x10/0x10
-[ 3488.160865]  ? __pfx_kthread+0x10/0x10
-[ 3488.164384]  ret_from_fork+0x3a8/0x7a0
-[ 3488.167020]  ? __pfx_ret_from_fork+0x10/0x10
-[ 3488.170050]  ? __switch_to+0xb76/0x1110
-[ 3488.171809]  ? __pfx_kthread+0x10/0x10
-[ 3488.174955]  ret_from_fork_asm+0x1a/0x30
-[ 3488.175605]  </TASK>
-[ 3488.176206] irq event stamp: 0
-[ 3488.179360] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-[ 3488.186521] hardirqs last disabled at (0): [<ffffffff81684648>] copy_process+0xa08/0x3a10
-[ 3488.191889] softirqs last  enabled at (0): [<ffffffff81684648>] copy_process+0xa08/0x3a10
-[ 3488.196853] softirqs last disabled at (0): [<0000000000000000>] 0x0
-[ 3488.200870] ---[ end trace 0000000000000000 ]---
+Note the two addresses above: ffff888108d612f8 is the child's lock,
+ffff8881087642f8 the listener's, always distinct objects.
 
 Found with ksmbdzzer [2], a KSMBD fuzzer that drives libFuzzer with a
 kcov-dataflow [1] coverage vector: it folds each instrumented
@@ -262,44 +142,77 @@ site counts as new coverage.
 [1] https://lwn.net/Articles/1077606/
 [2] https://github.com/yskzalloc/kcov-dataflow
 
-Fixes: eb3ed1e9048c ("smb: smbdirect: introduce smbdirect_accept_connect_request()")
+Fixes: dc691b91ad16 ("smb: smbdirect: introduce smbdirect_socket_{listen,accept}()")
 Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
-Acked-by: Stefan Metzmacher <metze@samba.org>
+Reviewed-by: Stefan Metzmacher <metze@samba.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/smbdirect/accept.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ fs/smb/smbdirect/socket.c | 42 +++++++++++++++++++++++++++++----------
+ 1 file changed, 32 insertions(+), 10 deletions(-)
 
-diff --git a/fs/smb/smbdirect/accept.c b/fs/smb/smbdirect/accept.c
-index 5297400058385..039c9bfbd8acd 100644
---- a/fs/smb/smbdirect/accept.c
-+++ b/fs/smb/smbdirect/accept.c
-@@ -145,11 +145,21 @@ int smbdirect_accept_connect_request(struct smbdirect_socket *sc,
- 
- rdma_accept_failed:
- 	/*
--	 * smbdirect_connection_destroy_qp() calls ib_drain_qp(),
--	 * so that smbdirect_accept_negotiate_recv_done() will
--	 * call smbdirect_connection_put_recv_io()
-+	 * The recv_io posted above is now owned by the QP (recv_io was set to
-+	 * NULL after a successful post).  smbdirect_connection_destroy_qp()
-+	 * calls ib_drain_qp(), whose completion
-+	 * (smbdirect_accept_negotiate_recv_done) returns the recv_io to the
-+	 * free list via smbdirect_connection_put_recv_io().  It therefore MUST
-+	 * run BEFORE smbdirect_connection_destroy_mem_pools(): otherwise the
-+	 * posted recv_io is still outstanding when kmem_cache_destroy() runs
-+	 * ("Slab cache still has objects") and is later freed into an
-+	 * already-destroyed mempool (mempool_free_bulk NULL-ptr-deref).
+diff --git a/fs/smb/smbdirect/socket.c b/fs/smb/smbdirect/socket.c
+index 39cca7219c4df..8dec47a6603cb 100644
+--- a/fs/smb/smbdirect/socket.c
++++ b/fs/smb/smbdirect/socket.c
+@@ -305,12 +305,26 @@ void __smbdirect_socket_schedule_cleanup(struct smbdirect_socket *sc,
+ 	 * disconnect all pending and ready sockets
+ 	 *
+ 	 * First we move ready sockets to pending again.
++	 *
++	 * Only a socket that was a listener (listen.backlog != -1) owns a
++	 * populated listen.ready/pending list.  Guarding on that also keeps
++	 * lockdep quiet: without it, the listener holds sc->listen.lock while
++	 * the loop recurses into each child psc, which takes psc->listen.lock.
++	 * Those are always different instances of the same lock class -- a
++	 * child never listens, so the nesting is strictly listener -> child
++	 * and cannot really deadlock -- but lockdep only sees the class and
++	 * reports "possible recursive locking".  A child has empty listen
++	 * lists and nothing to do here, so skipping it loses nothing, and a
++	 * pending child stays on its listener's list for the free path
++	 * (smbdirect_socket_destroy) to reap.
  	 */
-+	smbdirect_connection_destroy_qp(sc);
-+	smbdirect_connection_destroy_mem_pools(sc);
-+	return ret;
- post_recv_io_failed:
-+	/* post failed: recv_io was not accepted by the QP, still in hand */
- 	if (recv_io)
- 		smbdirect_connection_put_recv_io(recv_io);
- get_recv_io_failed:
+-	spin_lock_irqsave(&sc->listen.lock, flags);
+-	list_splice_init(&sc->listen.ready, &sc->listen.pending);
+-	list_for_each_entry_safe(psc, tsc, &sc->listen.pending, accept.list)
+-		smbdirect_socket_schedule_cleanup(psc, sc->first_error);
+-	spin_unlock_irqrestore(&sc->listen.lock, flags);
++	if (sc->listen.backlog != -1) { /* was a listener */
++		spin_lock_irqsave(&sc->listen.lock, flags);
++		list_splice_init(&sc->listen.ready, &sc->listen.pending);
++		list_for_each_entry_safe(psc, tsc, &sc->listen.pending, accept.list)
++			smbdirect_socket_schedule_cleanup(psc, sc->first_error);
++		spin_unlock_irqrestore(&sc->listen.lock, flags);
++	}
+ 
+ 	switch (sc->status) {
+ 	case SMBDIRECT_SOCKET_RESOLVE_ADDR_FAILED:
+@@ -405,12 +419,20 @@ static void smbdirect_socket_cleanup_work(struct work_struct *work)
+ 	 * disconnect all pending and ready sockets
+ 	 *
+ 	 * First we move ready sockets to pending again.
++	 *
++	 * Guarded on listen.backlog != -1 for the same reason as in
++	 * __smbdirect_socket_schedule_cleanup(): only a listener owns a
++	 * populated listen list, and skipping the block for a child avoids
++	 * nesting psc->listen.lock under a listener's listen.lock (different
++	 * instances of one class -- harmless, but lockdep cannot tell).
+ 	 */
+-	spin_lock_irqsave(&sc->listen.lock, flags);
+-	list_splice_init(&sc->listen.ready, &sc->listen.pending);
+-	list_for_each_entry_safe(psc, tsc, &sc->listen.pending, accept.list)
+-		smbdirect_socket_schedule_cleanup(psc, sc->first_error);
+-	spin_unlock_irqrestore(&sc->listen.lock, flags);
++	if (sc->listen.backlog != -1) { /* was a listener */
++		spin_lock_irqsave(&sc->listen.lock, flags);
++		list_splice_init(&sc->listen.ready, &sc->listen.pending);
++		list_for_each_entry_safe(psc, tsc, &sc->listen.pending, accept.list)
++			smbdirect_socket_schedule_cleanup(psc, sc->first_error);
++		spin_unlock_irqrestore(&sc->listen.lock, flags);
++	}
+ 
+ 	switch (sc->status) {
+ 	case SMBDIRECT_SOCKET_NEGOTIATE_NEEDED:
 -- 
 2.53.0
 
