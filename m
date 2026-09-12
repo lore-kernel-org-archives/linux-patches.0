@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC01EB5FD;
-	Sat, 12 Sep 2026 07:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389DC1A6813;
+	Sat, 12 Sep 2026 07:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197582; cv=none; b=hn6EPSDvB6vEgWSqIHHC7HcyO9td72nOsoe7UA3II8dvZXfaBoMvt6ud7ACRT3ub2Gw6I1fRD9WGoX1mgZYjYTBfOoH0uEiimaMFNsmRmtPYEhPrtrND7hHj+5t9uCu+4Qp9VwAEviaEZqKiEInk9+FpJ0RWKR/EUv/3Mn1oyOE=
+	t=1789197587; cv=none; b=AZK8lhS0LN88gVvJ0ezuEAMQIm6IbGpZNSI2h40UKrBJ+PCun++AhP6UGPNurWq9RdKyW3sjT6p59JQnAEYd3Q7LSysgkplQSdVQVxGloEbhSYc9C1cKJdLwpYhJ1JLn5/+9vHEcpotApY6z0DOSmaL4p7/aaqzbEQOB27xdzr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197582; c=relaxed/simple;
-	bh=yexz8F+5HydFw7jw6U/3aW29KJExjg/UfWWF7vxWxGA=;
+	s=arc-20240116; t=1789197587; c=relaxed/simple;
+	bh=f7Xy5PZntNLLAfmWTftWTgrPVuUacpTWBL3hrGURJpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s17q4IkROZYsTNJ3xxnp66bqSJMIkEfaRhi5xxBOQnDn5BlFi0+YmBt77pDdCHph/6W7zOUTlEd24q1nGogQIBReIucL6lb2zbfKoG7l60SEJk6wZtnY8g9hYAl+iUFJbEIq/vC8Nct2ecvchUhuSqR1IO5yuGJ6Kj/oqaSgC7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oduuIeBD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cHoREUI4poTXk7gE8ucBMd1IxM3RQW2ZAwiKoeW/ulSUN5tncnjwOD1iZl/kq6WSoU15pRMkK49bSEjmg9ayqZ8+uTpvGLKXjiL3OTt6vH9dCaV3z6uvsS7oCuM90En+425WJ6v8YARRZwpPYZHJMtHjYeRQe+NdjHIoXwjvHFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeKwYT1Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oduuIeBD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE521F000FF;
-	Sat, 12 Sep 2026 07:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeKwYT1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D446D1F000FF;
+	Sat, 12 Sep 2026 07:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197580;
-	bh=lXI8SKypSUswtOyP0vHKaGwJrgrEI7f/FSZIE0QIFZU=;
+	s=korg; t=1789197585;
+	bh=a4w57ycJW9MjZLAMgBMjJSEgaZKNdbC/Cm3LBPjFfIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oduuIeBD8uhOYHxGcsV7NFDWI+LaqWI2uRg8Bav2oGl8lnPFExmtny9t7o06dEija
-	 hI74g2WMl2Nbw8ymNOqBZjIoBd/5ivWwArj2Nl6Eq7051KDPkDqJ5qWhtGehBQPtKV
-	 CCaJ1xMR7ILVddhSMhs96Z86NcRT90VFrkHiQ3Sg=
+	b=WeKwYT1YIPvH7jSHN6lzfwVESQEQcPmNx9QN4V3dLqA+TWWL6byRNZgAxn2gTxcaS
+	 gdEN5ywbwAaqnaBZYOaNCoP1nwW8YCc7IRDZFFDjG6RCnY9bQQbswaqLSNa8c6mDR9
+	 AHkfh8SSr/aDwNnOWF3tdFY1plIlzvT4j9l18vKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0204/1815] fuse: move "epoch" from dentry.d_time to fuse_dentry.epoch
-Date: Sat, 12 Sep 2026 08:32:34 +0200
-Message-ID: <20260912065653.790898650@linuxfoundation.org>
+Subject: [PATCH 7.2 0205/1815] nvme-apple: Use acquire/release for queue enabled state
+Date: Sat, 12 Sep 2026 08:32:35 +0200
+Message-ID: <20260912065653.814100646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,130 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 6648f54f3459c5d069b7ce294170d721ce9bac2f ]
+[ Upstream commit f61c934aa084b7440fec681be3f4b481eb5a8609 ]
 
-...in hope of removing d_time one day.
+apple_nvme_init_queue() initializes queue state and then marks the queue
+enabled. The interrupt and request paths check enabled before using that
+queue state.
 
-Fixes: 2396356a945b ("fuse: add more control over cache invalidation behaviour")
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+The old wmb() after WRITE_ONCE(enabled, true) does not publish the
+earlier initialization before enabled becomes visible. Use a release store
+when enabling the queue and acquire loads when testing it.
+
+Although the shutdown-side enabled accesses are not used for publishing
+queue initialization, use helpers for them as well for consistency.
+
+Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dir.c     | 23 ++++++++++++++++-------
- fs/fuse/fuse_i.h  |  2 ++
- fs/fuse/readdir.c |  2 +-
- 3 files changed, 19 insertions(+), 8 deletions(-)
+ drivers/nvme/host/apple.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index 48763bc192f3c..4466db3e38274 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -96,6 +96,7 @@ static void fuse_advise_use_readdirplus(struct inode *dir)
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index be3b91b43ea5a..2723bc1a7d8a7 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -151,6 +151,23 @@ struct apple_nvme_queue {
+ 	bool enabled;
+ };
  
- struct fuse_dentry {
- 	u64 time;
-+	u64 epoch;
- 	union {
- 		struct rcu_head rcu;
- 		struct rb_node node;
-@@ -236,6 +237,13 @@ void fuse_dentry_tree_cleanup(void)
- 		WARN_ON_ONCE(!RB_EMPTY_ROOT(&dentry_hash[i].tree));
- }
- 
-+void fuse_dentry_set_epoch(struct dentry *dentry, u64 epoch)
++static inline bool apple_nvme_queue_enabled(struct apple_nvme_queue *q)
 +{
-+	struct fuse_dentry *fd = dentry->d_fsdata;
-+
-+	fd->epoch = epoch;
++	/* Pair with apple_nvme_enable_queue(). */
++	return smp_load_acquire(&q->enabled);
 +}
 +
- static inline void __fuse_dentry_settime(struct dentry *dentry, u64 time)
- {
- 	((struct fuse_dentry *) dentry->d_fsdata)->time = time;
-@@ -387,10 +395,11 @@ static int fuse_dentry_revalidate(struct inode *dir, const struct qstr *name,
- 	struct fuse_mount *fm;
- 	struct fuse_conn *fc;
- 	struct fuse_inode *fi;
-+	struct fuse_dentry *fd = entry->d_fsdata;
- 	int ret;
- 
- 	fc = get_fuse_conn_super(dir->i_sb);
--	if (entry->d_time < atomic_read(&fc->epoch))
-+	if (fd->epoch < atomic_read(&fc->epoch))
- 		goto invalid;
- 
- 	inode = d_inode_rcu(entry);
-@@ -480,10 +489,10 @@ static int fuse_dentry_init(struct dentry *dentry)
- 	RB_CLEAR_NODE(&fd->node);
- 	dentry->d_fsdata = fd;
- 	/*
--	 * Initialising d_time (epoch) to '0' ensures the dentry is invalid
-+	 * Initialising epoch to '0' ensures the dentry is invalid
- 	 * if compared to fc->epoch, which is initialized to '1'.
- 	 */
--	dentry->d_time = 0;
-+	fuse_dentry_set_epoch(dentry, 0);
- 
- 	return 0;
- }
-@@ -641,7 +650,7 @@ static struct dentry *fuse_lookup(struct inode *dir, struct dentry *entry,
- 		goto out_err;
- 
- 	entry = newent ? newent : entry;
--	entry->d_time = epoch;
-+	fuse_dentry_set_epoch(entry, epoch);
- 	if (outarg_valid)
- 		fuse_change_entry_timeout(entry, &outarg);
- 	else
-@@ -898,7 +907,7 @@ static int fuse_create_open(struct mnt_idmap *idmap, struct inode *dir,
- 	}
- 	kfree(forget);
- 	d_instantiate(entry, inode);
--	entry->d_time = epoch;
-+	fuse_dentry_set_epoch(entry, epoch);
- 	fuse_change_entry_timeout(entry, &outentry);
- 	fuse_dir_changed(dir);
- 	err = generic_file_open(inode, file);
-@@ -1028,10 +1037,10 @@ static struct dentry *create_new_entry(struct mnt_idmap *idmap, struct fuse_moun
- 		return d;
- 
- 	if (d) {
--		d->d_time = epoch;
-+		fuse_dentry_set_epoch(d, epoch);
- 		fuse_change_entry_timeout(d, &outarg);
- 	} else {
--		entry->d_time = epoch;
-+		fuse_dentry_set_epoch(entry, epoch);
- 		fuse_change_entry_timeout(entry, &outarg);
- 	}
- 	fuse_dir_changed(dir);
-diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
-index 85f738c531225..c8d4c5f3af7e8 100644
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -1054,6 +1054,8 @@ u64 fuse_time_to_jiffies(u64 sec, u32 nsec);
- 
- void fuse_change_entry_timeout(struct dentry *entry, struct fuse_entry_out *o);
- 
-+void fuse_dentry_set_epoch(struct dentry *dentry, u64 epoch);
++static inline void apple_nvme_enable_queue(struct apple_nvme_queue *q)
++{
++	/* Publish queue initialization before setting q->enabled. */
++	smp_store_release(&q->enabled, true);
++}
++
++static inline void apple_nvme_disable_queue(struct apple_nvme_queue *q)
++{
++	WRITE_ONCE(q->enabled, false);
++}
 +
  /*
-  * Initialize fuse_conn
-  */
-diff --git a/fs/fuse/readdir.c b/fs/fuse/readdir.c
-index 0e13214917473..5ca87151d70d9 100644
---- a/fs/fuse/readdir.c
-+++ b/fs/fuse/readdir.c
-@@ -260,7 +260,7 @@ static int fuse_direntplus_link(struct file *file,
- 	}
- 	if (fc->readdirplus_auto)
- 		set_bit(FUSE_I_INIT_RDPLUS, &get_fuse_inode(inode)->state);
--	dentry->d_time = epoch;
-+	fuse_dentry_set_epoch(dentry, epoch);
- 	fuse_change_entry_timeout(dentry, o);
+  * The apple_nvme_iod describes the data in an I/O.
+  *
+@@ -677,7 +694,7 @@ static bool apple_nvme_handle_cq(struct apple_nvme_queue *q, bool force)
+ 	bool found;
+ 	DEFINE_IO_COMP_BATCH(iob);
  
- 	dput(dentry);
+-	if (!READ_ONCE(q->enabled) && !force)
++	if (!apple_nvme_queue_enabled(q) && !force)
+ 		return false;
+ 
+ 	found = apple_nvme_poll_cq(q, &iob);
+@@ -780,7 +797,7 @@ static blk_status_t apple_nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	 * We should not need to do this, but we're still using this to
+ 	 * ensure we can drain requests on a dying queue.
+ 	 */
+-	if (unlikely(!READ_ONCE(q->enabled)))
++	if (unlikely(!apple_nvme_queue_enabled(q)))
+ 		return BLK_STS_IOERR;
+ 
+ 	if (!nvme_check_ready(&anv->ctrl, req, true))
+@@ -863,7 +880,7 @@ static void apple_nvme_disable(struct apple_nvme *anv, bool shutdown)
+ 	nvme_quiesce_io_queues(&anv->ctrl);
+ 
+ 	if (!dead) {
+-		if (READ_ONCE(anv->ioq.enabled)) {
++		if (apple_nvme_queue_enabled(&anv->ioq)) {
+ 			apple_nvme_remove_sq(anv);
+ 			apple_nvme_remove_cq(anv);
+ 		}
+@@ -887,8 +904,8 @@ static void apple_nvme_disable(struct apple_nvme *anv, bool shutdown)
+ 		nvme_disable_ctrl(&anv->ctrl, false);
+ 	}
+ 
+-	WRITE_ONCE(anv->ioq.enabled, false);
+-	WRITE_ONCE(anv->adminq.enabled, false);
++	apple_nvme_disable_queue(&anv->ioq);
++	apple_nvme_disable_queue(&anv->adminq);
+ 	mb(); /* ensure that nvme_queue_rq() sees that enabled is cleared */
+ 	nvme_quiesce_admin_queue(&anv->ctrl);
+ 
+@@ -1016,8 +1033,7 @@ static void apple_nvme_init_queue(struct apple_nvme_queue *q)
+ 		memset(q->tcbs, 0, anv->hw->max_queue_depth
+ 			* sizeof(struct apple_nvmmu_tcb));
+ 	memset(q->cqes, 0, depth * sizeof(struct nvme_completion));
+-	WRITE_ONCE(q->enabled, true);
+-	wmb(); /* ensure the first interrupt sees the initialization */
++	apple_nvme_enable_queue(q);
+ }
+ 
+ static void apple_nvme_reset_work(struct work_struct *work)
 -- 
 2.53.0
 
