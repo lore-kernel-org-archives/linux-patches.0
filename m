@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D031838AC92;
-	Sat, 12 Sep 2026 08:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121533803E3;
+	Sat, 12 Sep 2026 08:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202793; cv=none; b=SHqeMbacpqbjz7sPYczW/MowWy8ZmZFWf89ouYccy9JlICLdpMFeH7FqKB7QAwQ3V5JwypjqAJzv1MXGAARFQTKr/rRT45ed14UogMDUvoGGvnhHimzOvGsmg21/FoOtkgz/E+6iJUDbIjh9+5sIgUjGuLXZWAFIfF2O/BBYZbk=
+	t=1789202801; cv=none; b=NcOjxEr+Dal2C1ZtopVAPmWdU2cSVtNI0Uq7qslUltWhq2QuVYYHqW+lfji1h4PLWJdX9i7ndOgmZUmzl4kbaFr7GtkNmc9Hb7r/v34vx1qbou+IdMl56+hF7U7XscIjjvw4X8SsAtMrOBZj0XQJ4n9BjSQC+VMTfsmV7T9mVYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202793; c=relaxed/simple;
-	bh=kxImsfQIEpWNrG3M4wD8uAcleIMEc4o7pcIPVrjfm0s=;
+	s=arc-20240116; t=1789202801; c=relaxed/simple;
+	bh=1T6IrT3hJHCx4m3gtRn1ijV5OuP8tEMh8qjPtgTMir0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFX1mj2LTg0CpAsHgPVJll38gV/k9OOtYx6aRfL3FcHNH80lU3GGshH4AyqJit6Fb8TtmTcc63vDbjIGs3uSVNkAY0GJblagsHThFlhz0T1fH5+IravhsS34AHsxFR12eDpE0cuzLjrnlD2ncK1RZMqcUqiOBwVojmvKHeM+4j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KnP7o9cM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rGOLyKpuYgIap1W8DP1oTp2/q8UkFxB7Dfz1MAZtEQLheDzGOXF76vxuwj2tFkKHUqD8JWwYdnEC+Pze5KM6NkuOC742XNDaBaUbLXrIX7Tix+GoZACOtK0Qg+5Um2mHmlBMTMvSDt6keLqaAtcQ52ynwGcLSIzSMCeIkh7qXm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skXgXH3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KnP7o9cM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B88B1F000FF;
-	Sat, 12 Sep 2026 08:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skXgXH3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DC61F000FF;
+	Sat, 12 Sep 2026 08:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202791;
-	bh=fmuieqObRkU5KUccqZPkD+//AmUUlZvWyteERLvil3g=;
+	s=korg; t=1789202796;
+	bh=qzY4F63EAgEQ+5fV9JkfIaboeqKd76KRpGavU0qzEpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KnP7o9cMi2qA1M+dDtQj2tHn4D3y6EbLQg2E8rGXG8MspocgsSQg+olDQ4CAsTtf7
-	 h/y+CLaxUJivw04J9soeXuBJwrzDLPnPmoZgis1C8z2HzKNy4tPJyDd1k8l8J6i6sp
-	 W5e0badNhccJkhLekkET0SwX6u+S8LDg43Q1LBwY=
+	b=skXgXH3XHWqwkfbmmPVejglhSkkH9USsMg5CyTLFPR0nHLRkljFZvt6TWrwOtIVfx
+	 GFYhy31I1qGKrEAtIYxCM/+xifsmz0lxRBi+6BpqFugv/WXtSnxWfKjnrMdg6Reg5/
+	 vGn0qfInbsY/zbG1okq8Zxe/u0vB/jZePxpPpHus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1274/1815] perf tools: Fix sb_evlist leaks in top and record
-Date: Sat, 12 Sep 2026 08:50:24 +0200
-Message-ID: <20260912065718.925371747@linuxfoundation.org>
+Subject: [PATCH 7.2 1275/1815] perf python: Fix memory leak in pyrf_evlist__get_pollfd
+Date: Sat, 12 Sep 2026 08:50:25 +0200
+Message-ID: <20260912065718.948382145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,53 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 08e96e3c737bf63d917c6c4e0bb67450ad53f1d8 ]
+[ Upstream commit 38d778acbee3ee96c14e33863b747e674d975eae ]
 
-Fix a memory leak in cmd_top() where top.sb_evlist was not freed if
-evlist__add_bpf_sb_event() fails. Note that evlist__start_sb_thread() and
-evlist__stop_sb_thread() take ownership of the evlist and free it, so
-we must only free it if we fail before starting the thread. Also set
-top.sb_evlist to NULL to prevent use-after-free bugs.
-
-Apply the same fix to builtin-record.c to avoid leaking rec->sb_evlist
-and calling pthread_join on uninitialized threads in the error path.
+Fix a Python list object leak in pyrf_evlist__get_pollfd() by adding
+a missing Py_DECREF on the error exit path.
 
 Assisted-by: Antigravity:gemini-3.1-pro
-Fixes: b38d85ef49cf ("perf bpf: Decouple creating the evlist from adding the SB event")
+Fixes: 877108e42b1b ("perf tools: Initial python binding")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-record.c | 2 ++
- tools/perf/builtin-top.c    | 2 ++
- 2 files changed, 4 insertions(+)
+ tools/perf/util/python.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index f58d7e3c7879e..a57987851cf03 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -2258,6 +2258,8 @@ static int record__setup_sb_evlist(struct record *rec)
+diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+index f020f541b47e7..43359fd2a891e 100644
+--- a/tools/perf/util/python.c
++++ b/tools/perf/util/python.c
+@@ -1781,6 +1781,8 @@ static PyObject *pyrf_evlist__get_pollfd(struct pyrf_evlist *pevlist,
  
- 		if (evlist__add_bpf_sb_event(rec->sb_evlist, perf_session__env(rec->session))) {
- 			pr_err("Couldn't ask for PERF_RECORD_BPF_EVENT side band events.\n.");
-+			evlist__put(rec->sb_evlist);
-+			rec->sb_evlist = NULL;
- 			return -1;
- 		}
- 	}
-diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
-index 5933c46ee137e..570410599f1b3 100644
---- a/tools/perf/builtin-top.c
-+++ b/tools/perf/builtin-top.c
-@@ -1881,6 +1881,8 @@ int cmd_top(int argc, const char **argv)
- 		if (evlist__add_bpf_sb_event(top.sb_evlist, &host_env)) {
- 			pr_err("Couldn't ask for PERF_RECORD_BPF_EVENT side band events.\n.");
- 			status = -EINVAL;
-+			evlist__put(top.sb_evlist);
-+			top.sb_evlist = NULL;
- 			goto out_put_evlist;
- 		}
- 	}
+ 	evlist = pevlist->evlist;
+ 	list = PyList_New(0);
++	if (!list)
++		return NULL;
+ 
+ 	for (i = 0; i < evlist__core(evlist)->pollfd.nr; ++i) {
+ 		PyObject *file;
+@@ -1799,6 +1801,7 @@ static PyObject *pyrf_evlist__get_pollfd(struct pyrf_evlist *pevlist,
+ 
+ 	return list;
+ free_list:
++	Py_XDECREF(list);
+ 	return PyErr_NoMemory();
+ }
+ 
 -- 
 2.53.0
 
