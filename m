@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D09D78C9C;
-	Sat, 12 Sep 2026 19:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D44739150A;
+	Sat, 12 Sep 2026 19:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243107; cv=none; b=Ir+mTApN3TpQ7+b2NclJ7KMNnTGa/w464psG1Yz7LbeRDPvkfHlPz+itckSb2ItaOnjOMkQYbPZD8Bf88sz5hxyvHQ9HJ40n3x3PhhBequ7JfXTpZj6J9Bg6V3cGW8by54MtBIuarJexGwRkdIfvqo+p0+tB89cnGu3u+Uw3Plo=
+	t=1789243110; cv=none; b=bGZSwhTdQL05Ea/Ba+hWixFZlaTiPYTEGGqvETxERFrywGHqkFK8ieWMOybvzABqRxp5dyxbI5kqd+50p1jAwc/IrYOOQJszVFcRbDdo46ED//pCWEzc/HTJSToZg22eHZp/55EfZPHsHHNhK0eeBxcsw1anTEXClv/HECMGe8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243107; c=relaxed/simple;
-	bh=lWdDWtvym8bl3Ok1LeMWnSuO1CWULGxEuJ369aNnBtc=;
+	s=arc-20240116; t=1789243110; c=relaxed/simple;
+	bh=SFJl84tBxnezVBJNAGMsqmdQvhLDONl8M8Vxr4QuqIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fgk/PaR+DX1suAMfcrGNeqWZp9DwfL+d7Lh+8PIjJpnqOf3SFmdh/gqlEUQvBeUALExrFL+uUD84PLD7S7aW2E0N85BKRTISOxHa89YsZlGgRS3J6opoBl5wxCguptZEufSP6nKuScGIZpI68oDC/sLZgwZ1isYhz/BT7OkPDPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0KU7bfJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NXkm0FLMUX4TX75ln2RIilrVIgLz60P+mG5t+jcgW1GTSNqSNvXEzugU87dQ0kcxBjq0W5r4VAHihY5Ja8aUjwaV/dFUKZN6Lo4ACcRH/1XQ+zSGLfwgF5DOpn07G4sLXQYav5YStVnXsbzQxXNuTGI6fVqH2fcPkn10Vw97MNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3JnJawK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0KU7bfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A021F00893;
-	Sat, 12 Sep 2026 19:58:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3JnJawK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57961F000FF;
+	Sat, 12 Sep 2026 19:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243106;
-	bh=VHPm0TxJUoEtDBiSUG7qqkzYRaW1xU4jB/tDl6wuwz4=;
+	s=korg; t=1789243109;
+	bh=1hqOGk/pQu9FUgpap+K2z8TuJa6Ij26McPv/FDHOzsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V0KU7bfJF6mh3PmmKoO5HrOXeTkmJChQM7A6cOG5kWZE2aLqS/WSgh0wtndThybYe
-	 WkpkqtAV3JL8ihvpaPeYY9ayGZ7jLbvDA8+3YZ1cEKNj6sTN3pHx1W1KMHR9Oicgnw
-	 yDkyD6VOJucWRD3zcLm6yn5U2KFaJFBV2OdxMPTA=
+	b=L3JnJawKzGA4QWDhqqRuprv94csACJVd+STt61BURb151UOV5UJ6Q24i6a1sE9Lve
+	 j5ajS7HrxRBDzFR4uJW1sGxAv1XOBr+u5fn4GSzB/t+UsCqvjrPootSTo8hpvd6/YJ
+	 Ln/1SodqVWn0F6uErnVgLG1fVaWXB4xKhoOrkEOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 638/798] drm/amdgpu/gfx6: Fixup emitting SWITCH_BUFFER packets
-Date: Sat, 12 Sep 2026 09:04:26 +0200
-Message-ID: <20260912065531.743363103@linuxfoundation.org>
+Subject: [PATCH 5.10 639/798] drm/amdgpu/gfx6: Use PFP on the compute queues too
+Date: Sat, 12 Sep 2026 09:04:27 +0200
+Message-ID: <20260912065531.765204547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -54,125 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 7aac4242a11991d530eee3e141d6e445d5f11c22 ]
+[ Upstream commit 60f20946cd318518ddc2c0da12103c666b2b9564 ]
 
-Implement the emit_switch_buffer() function instead of emitting
-them duing emit_ib, emit_pipeline_sync and emit_vm_flush.
+On GFX6, the compute rings use the same CP path as
+the graphics ring. The only difference is that they
+don't support draw commands. (As opposed to GFX7 and
+newer which have a separate command parser that is
+called MEC for compute queues.)
 
-Note that it isn't necessary to emit these in both
-emit_pipeline_sync() and emit_vm_flush() because
-amdgpu_vm_flush() already calls these when calling
-either of those functions.
+This means that we have to take into consideration
+that the PFP also exists on compute queues on GFX6:
+
+Use PFP for register writes on both graphics and
+compute queues.
+
+In the pipeline sync, use the PFP to wait for the
+previous fence (and not the ME) to prevent the PFP
+from starting to execute the next submission while
+the ME is still in the previous submission.
+
+After a VM flush, emit PFP_SYNC_ME on compute
+queues as well.
 
 Fixes: 2cd46ad22383 ("drm/amdgpu: add graphic pipeline implementation for si v8")
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 38 ++++++++++-----------------
- 1 file changed, 14 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-index 2fa9c45376639..df24fb8afe704 100644
+index df24fb8afe704..37592cc9f2c50 100644
 --- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
 +++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-@@ -1935,12 +1935,6 @@ static void gfx_v6_0_ring_emit_ib(struct amdgpu_ring *ring,
- 	unsigned vmid = AMDGPU_JOB_GET_VMID(job);
- 	u32 header, control = 0;
+@@ -2363,7 +2363,7 @@ static int gfx_v6_0_cp_resume(struct amdgpu_device *adev)
  
--	/* insert SWITCH_BUFFER packet before first IB in the ring frame */
--	if (flags & AMDGPU_HAVE_CTX_SWITCH) {
--		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
--		amdgpu_ring_write(ring, 0);
--	}
--
- 	if (ib->flags & AMDGPU_IB_FLAG_CE)
- 		header = PACKET3(PACKET3_INDIRECT_BUFFER_CONST, 2);
- 	else
-@@ -2382,14 +2376,6 @@ static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
- 	amdgpu_ring_write(ring, seq);
- 	amdgpu_ring_write(ring, 0xffffffff);
- 	amdgpu_ring_write(ring, 4); /* poll interval */
--
--	if (usepfp) {
--		/* synce CE with ME to prevent CE fetch CEIB before context switch done */
--		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
--		amdgpu_ring_write(ring, 0);
--		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
--		amdgpu_ring_write(ring, 0);
--	}
- }
- 
- static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
-@@ -2413,12 +2399,6 @@ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
- 		/* sync PFP to ME, otherwise we might get invalid PFP reads */
- 		amdgpu_ring_write(ring, PACKET3(PACKET3_PFP_SYNC_ME, 0));
- 		amdgpu_ring_write(ring, 0x0);
--
--		/* synce CE with ME to prevent CE fetch CEIB before context switch done */
--		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
--		amdgpu_ring_write(ring, 0);
--		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
--		amdgpu_ring_write(ring, 0);
- 	}
- }
- 
-@@ -3035,6 +3015,12 @@ static uint64_t gfx_v6_0_get_gpu_clock_counter(struct amdgpu_device *adev)
- 	return clock;
- }
- 
-+static void gfx_v6_0_ring_emit_sb(struct amdgpu_ring *ring)
-+{
-+	amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
-+	amdgpu_ring_write(ring, 0);
-+}
-+
- static void gfx_v6_ring_emit_cntxcntl(struct amdgpu_ring *ring, uint32_t flags)
+ static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
  {
- 	u32 dw2 = 0x80000000; /* set load_enable otherwise this package is just NOPs */
-@@ -3583,11 +3569,12 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_gfx = {
+-	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
++	int usepfp = 1;
+ 	uint32_t seq = ring->fence_drv.sync_seq;
+ 	uint64_t addr = ring->fence_drv.gpu_addr;
+ 
+@@ -2381,7 +2381,7 @@ static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
+ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
+ 					unsigned vmid, uint64_t pd_addr)
+ {
+-	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
++	int usepfp = 1;
+ 
+ 	amdgpu_gmc_emit_flush_gpu_tlb(ring, vmid, pd_addr);
+ 
+@@ -2405,7 +2405,7 @@ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
+ static void gfx_v6_0_ring_emit_wreg(struct amdgpu_ring *ring,
+ 				    uint32_t reg, uint32_t val)
+ {
+-	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
++	int usepfp = 1;
+ 
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
+ 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(usepfp) |
+@@ -3598,7 +3598,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
  	.emit_frame_size =
  		5 + 5 + /* hdp flush / invalidate */
- 		14 + 14 + 14 + /* gfx_v6_0_ring_emit_fence x3 for user fence, vm fence */
--		7 + 4 + /* gfx_v6_0_ring_emit_pipeline_sync */
--		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 6 + /* gfx_v6_0_ring_emit_vm_flush */
-+		7 + /* gfx_v6_0_ring_emit_pipeline_sync */
-+		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 2 + /* gfx_v6_0_ring_emit_vm_flush */
-+		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
- 		3 + 2 + 2 + /* gfx_v6_ring_emit_cntxcntl including VGT flush */
- 		5, /* SURFACE_SYNC */
--	.emit_ib_size = 6, /* gfx_v6_0_ring_emit_ib */
-+	.emit_ib_size = 4, /* gfx_v6_0_ring_emit_ib */
- 	.emit_ib = gfx_v6_0_ring_emit_ib,
- 	.emit_fence = gfx_v6_0_ring_emit_fence,
- 	.emit_pipeline_sync = gfx_v6_0_ring_emit_pipeline_sync,
-@@ -3595,6 +3582,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_gfx = {
- 	.test_ring = gfx_v6_0_ring_test_ring,
- 	.test_ib = gfx_v6_0_ring_test_ib,
- 	.insert_nop = amdgpu_ring_insert_nop,
-+	.emit_switch_buffer = gfx_v6_0_ring_emit_sb,
- 	.emit_cntxcntl = gfx_v6_ring_emit_cntxcntl,
- 	.emit_wreg = gfx_v6_0_ring_emit_wreg,
- 	.emit_mem_sync = gfx_v6_0_emit_mem_sync,
-@@ -3612,8 +3600,9 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
  		7 + /* gfx_v6_0_ring_emit_pipeline_sync */
- 		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + /* gfx_v6_0_ring_emit_vm_flush */
+-		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + /* gfx_v6_0_ring_emit_vm_flush */
++		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 2 + /* gfx_v6_0_ring_emit_vm_flush */
  		14 + 14 + 14 + /* gfx_v6_0_ring_emit_fence x3 for user fence, vm fence */
-+		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
+ 		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
  		5, /* SURFACE_SYNC */
--	.emit_ib_size = 6, /* gfx_v6_0_ring_emit_ib */
-+	.emit_ib_size = 4, /* gfx_v6_0_ring_emit_ib */
- 	.emit_ib = gfx_v6_0_ring_emit_ib,
- 	.emit_fence = gfx_v6_0_ring_emit_fence,
- 	.emit_pipeline_sync = gfx_v6_0_ring_emit_pipeline_sync,
-@@ -3621,6 +3610,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
- 	.test_ring = gfx_v6_0_ring_test_ring,
- 	.test_ib = gfx_v6_0_ring_test_ib,
- 	.insert_nop = amdgpu_ring_insert_nop,
-+	.emit_switch_buffer = gfx_v6_0_ring_emit_sb,
- 	.emit_wreg = gfx_v6_0_ring_emit_wreg,
- 	.emit_mem_sync = gfx_v6_0_emit_mem_sync,
- };
 -- 
 2.53.0
 
