@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F272F0673;
-	Sat, 12 Sep 2026 19:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6A82594BD;
+	Sat, 12 Sep 2026 19:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240181; cv=none; b=GNMep9ZK5m85VeQkd7PI0T4eYlIXsuSZn9QeYkmTugZ0VrDDG7UcWLf4qaFHsPSl47stS/NvM/fKCv7MUBz3lkFg4e8+3OLl9brxThPAxE7EWRx2raz4sprBR+OAGpFbhZni6+gnTIGGOFjZEYa1t+ttKEDtZjQFgctsZF3inm8=
+	t=1789240186; cv=none; b=XI+Yg39qXdDfvr+AvGNyvyjp7Yq21XQfoHTGVT7Mrug3doOA/bNwDG0dlToPXusYUyS92oJenIiFKo1CoLPKuZIEezGu/oEvJ0qicaNFgm/0bbalovEJCVInhWJesOLN7uqNQ8TumAMDDVmsjGnfVafJ/lPQeHUiYBvUo3hSpMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240181; c=relaxed/simple;
-	bh=onX8zjTtaQwfCKvJ0kNiwo9b9P1FiT1EoeUVQMTIESg=;
+	s=arc-20240116; t=1789240186; c=relaxed/simple;
+	bh=mhrS9oRwvKdKf3eAi3IdVDQ6cBHBBxGqmq9UrvMNYeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vAuXzLOlvrPJskpXpurd3cBzcHUpqrKQeSb7YcyIDXhMruMvJXdTz05awHbzDoO+P6eYROVKBHhqRE2kROtUnpUNZVtoImCMEAnmxjBEeHndooy+3V/ZVAxNv4Aj4n3J7rtPceBgbnRytJVg9Yy3E7qhqoehx56gIISIShiyfoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+0SvaOs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PemWg/oHfPHHRbV398/knZg692b+wW4oNvGSU0h9RZqE/893PAzQCTEc1Mm5hS7E1WU25jPumzvIctIm5hH22ir75nNaZsuykYp125ImmOSRoXAwQnwt5uLFUpL/bAFn2nsNQ4x+RHJIq/2QDFWGJbNBeEzsbepvj5weW+dhqAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+lwHpek; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+0SvaOs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4C01F000FF;
-	Sat, 12 Sep 2026 19:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+lwHpek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503DA1F000FF;
+	Sat, 12 Sep 2026 19:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240180;
-	bh=qeMQ3SLr/gAV3zlX1DS6RZXVobIGF89Rqs08w7AfLgk=;
+	s=korg; t=1789240185;
+	bh=M8VaZ13mSpvA8/MExV+fJGftTzoBp4XWKUGM08HedCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M+0SvaOsvjzGIhr9ytqhAEIdFF5I5MQc0VcVpNXJPtYIVRwEfW5GUccjqfgQIpZN9
-	 ISZfIJmxrPKc/QhAdthLs425BROLVwnw2/IzS3GrFd2FiXimrwBUvrsgGMph7g/NJ9
-	 2fY5Dgw6GyLBXetlmXQZ9PtVbgwwbyeUg37cit6A=
+	b=Q+lwHpekLXKZXa7/HHcVOb9/3Zz1OqwEL+wwbSBCrogmDHtQI1EG9NSx7MRnSQGtv
+	 l9FKfUANDJVlHOXUvWxKN/0kPNOFQJBn5o1QjjK/KrcotJVXh3AGgFcRgWwLjgN2iH
+	 5SxkxKiaTxZ9VdhPcbW0w6J5kfJ1E0wngY31rXSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 772/935] nvmet: fix NULL pointer dereference in nvmet_execute_identify_ns_zns()
-Date: Sat, 12 Sep 2026 09:03:22 +0200
-Message-ID: <20260912065544.536294492@linuxfoundation.org>
+Subject: [PATCH 5.15 773/935] nfc: llcp: avoid userspace overflow on invalid optlen
+Date: Sat, 12 Sep 2026 09:03:23 +0200
+Message-ID: <20260912065544.558400012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,47 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f594863967d87b7fcbff6e724d51135fd701a13d ]
+[ Upstream commit 99985bfa8336fadcc69190ba2dcbd5386af3d661 ]
 
-When a host issues an Identify command with CNS 05h (I/O Command Set
-specific Identify Namespace) and CSI 02h (ZNS) targeting a file-backed
-namespace, nvmet_execute_identify_ns_zns() calls bdev_is_zoned() on
-req->ns->bdev. A file-backed namespace has no block device, so
-req->ns->bdev is NULL and bdev_is_zoned() dereferences it, oopsing.
+nfc_llcp_getsockopt() casts optval to (u32 __user *) for put_user(), so
+the kernel always stores 4 bytes regardless of the caller-supplied
+optlen. The existing min_t(u32, len, sizeof(u32)) only clamps the length
+reported back to userspace; it does not constrain the store. A call with
+optlen < 4 therefore writes past the user buffer, violating the
+getsockopt(2) contract for all five supported optnames.
 
-The I/O command set is selected by the host-supplied CSI field and the
-command is routed here whenever CONFIG_BLK_DEV_ZONED is enabled,
-independent of the namespace backing type, so any file-backed namespace
-is exposed.
+Reject any call with optlen < sizeof(u32) up front. 'len' is int, so a
+plain size comparison would promote a negative optlen to size_t and slip
+past the check; an explicit 'len < 0' test is added first to catch
+negative values before the size compare.
 
-Reject the command with Invalid Field when the namespace is not backed
-by a block device.
-
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 26fd76cab2e6 ("NFC: llcp: Implement socket options")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260521-fix_llc-v2-1-ab44cc09179c@debian.org
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/zns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/nfc/llcp_sock.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
-index 6b9b22cc8adb0..70f1d106b7065 100644
---- a/drivers/nvme/target/zns.c
-+++ b/drivers/nvme/target/zns.c
-@@ -124,7 +124,7 @@ void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
- 		mutex_unlock(&req->ns->subsys->lock);
- 	}
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index 57dea580c0291..0ba5ffe0ce6d1 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -314,6 +314,12 @@ static int nfc_llcp_getsockopt(struct socket *sock, int level, int optname,
+ 	if (get_user(len, optlen))
+ 		return -EFAULT;
  
--	if (!bdev_is_zoned(req->ns->bdev)) {
-+	if (!req->ns->bdev || !bdev_is_zoned(req->ns->bdev)) {
- 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 		req->error_loc = offsetof(struct nvme_identify, nsid);
- 		goto out;
++	if (len < 0)
++		return -EINVAL;
++
++	if (len < sizeof(u32))
++		return -EINVAL;
++
+ 	local = llcp_sock->local;
+ 	if (!local)
+ 		return -ENODEV;
 -- 
 2.53.0
 
