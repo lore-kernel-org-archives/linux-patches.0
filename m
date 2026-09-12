@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6DA2F617C;
-	Sat, 12 Sep 2026 16:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA70F27FB37;
+	Sat, 12 Sep 2026 16:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229606; cv=none; b=NsRxkhyvVHcvJj3rCZJa+GhiDNCb22AL9DOISuvxkve5OOG9lS2uUPSUbgziwQ3eD9/KtJOq/F5JG8l4ldigk6tNEnYdfV2Q7cfptP8o2kz65rvMPXcjYcshBqfPqZnW5luU3IOEHd0Z6Uy6tTeecIklXXnUReTTuxoQpt79wBM=
+	t=1789229610; cv=none; b=WL5OfHZMbR818OEp8ihc8ralZvU8EWxuUQwe1CDFM1JxsPy8GcpULHSxjlaSsKFHa1g5NwTcp69L9kA6sxTYPqjmIOGnaNnuIOwV/FCc+QGEhOKySI1b/fQ62yJxwuqrNKmILvzVFLsAN2JFDgFpsrOr6BX3wUGThzie/MWYfhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229606; c=relaxed/simple;
-	bh=w7AdSOpoBQKDQnRFPK71eN1GgdTRB1ddDHzMN5bVa60=;
+	s=arc-20240116; t=1789229610; c=relaxed/simple;
+	bh=OhE214boqK3ifOTf4Db6cgBytDfxI0V35sEEE+ONe68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wj13iDI8FoMMVSqYnvxFup043U9dreP9PQWu3QRgsiP/V9u/XVuuEa9QGpnzrdHT6GAhNxpFcAHIFGHed4isnROi3MQzFFGFU/WmTwPiDcydg5rA6o2n0KsDLpEyjhWweBcw5bS7TG6lD7xh8aHcgVeevla80uXNCsEaS0R864Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xa5PVQrP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OhEviRIeu7WURfV9Lx4cC/XtLn/pwBlLMwAZvW7ZDxUcIZ4ttdx68QshhsqcN6+HL2zmZ3FzHo5snIx+8+A4aQ+GA8YKG38ct2C1pXrxXJXkzULH8nSmzwm0xT00L7zekXkwhWClYugEIyDZSSIikIGNXQMNYhKUE7cxvnDhaCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQyCnzcD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xa5PVQrP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23C91F000FF;
-	Sat, 12 Sep 2026 16:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQyCnzcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9330D1F000FF;
+	Sat, 12 Sep 2026 16:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229604;
-	bh=Ovm7clhimw+dNUlVUkXRkuI5fVPA8xRb1roXl2AUb+A=;
+	s=korg; t=1789229609;
+	bh=3vAunRxSyGolB9z/gnGsLW/EKG4G330JdpXQqbBcAms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xa5PVQrP4mm9+GyDw+K2/4wyPm2xv212tAwdiWjNmrYnMy8i86qvk9Ss+J/Xi2dlb
-	 42lnMvWmTtfDuChQSwRE2jgxgGNo7AHob/qlWGx3MAzDBE9i8UBx6Nscb81YsD0G5R
-	 8TJ0Xu4jbApr8Kwb3mno8l5yXV772mMSRXNtjzw8=
+	b=pQyCnzcDPfR+ryZOpVvp1uzxVPm4j5rWwbk57jSDyuqzi39arQKmX48MpxcuwirkP
+	 xXx68LFQVQNyMtI/y0pyOpMrQNxSY0A3VBmotEhgmfhDf7aO4AFpB1yI7CGM6U+7Iy
+	 wKXTu1hdY7wEcVrajfIYz1xQSeKSg5u3suUhLXLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0624/1191] arm64: dts: qcom: msm8996-xiaomi-gemini: Fix up ti,drv2604 enable GPIO
-Date: Sat, 12 Sep 2026 08:55:52 +0200
-Message-ID: <20260912065602.268029107@linuxfoundation.org>
+Subject: [PATCH 6.1 0625/1191] wifi: iwlwifi: mvm: fix off-by-one in TXF key sanitiser
+Date: Sat, 12 Sep 2026 08:55:53 +0200
+Message-ID: <20260912065602.291296311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,37 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 569413a98a1761782a0770aa85d20a2c78893279 ]
+[ Upstream commit f6a6c01cbc046f68e6916a7e047a1bc881c8c9ab ]
 
-Update the 'enable-gpio' property name to 'enable-gpios' to conform to
-the bindings for the TI DRV2604 haptics module. While at it, use the
-GPIO_ACTIVE_HIGH define instead of the raw literal.
+iwl_mvm_frob_txf_key_iter() tracks the last matched byte position
+in loop variable 'i'. When a full key match is found (match ==
+keylen), 'i' points at the last byte of the matched key. The
+memset start offset should therefore be i + 1 - keylen, not
+i - keylen; the current code zeroes one byte before the match
+and leaves the final key byte un-sanitised.
 
-Fixes: 4ac46b3682c5 ("arm64: dts: qcom: msm8996: xiaomi-gemini: Add support for Xiaomi Mi 5")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260625-topic-ti_drv2604_dtwarn-v1-1-76e91fcafbe8@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 12d60c1efc29 ("iwlwifi: mvm: scrub key material in firmware dumps")
+Assisted-by: GitHubCopilot:gpt-5.3-codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715220243.355998ec4fbe.I40f3427657b897e911bdf4ebf8e494745508d126@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts | 2 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-index 543282fe2abbd..47fdd93ca8b33 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-@@ -40,7 +40,7 @@ &blsp2_i2c3 {
- 	haptics: drv2604@5a {
- 		compatible = "ti,drv2604";
- 		reg = <0x5a>;
--		enable-gpio = <&tlmm 93 0x00>;
-+		enable-gpios = <&tlmm 93 GPIO_ACTIVE_HIGH>;
- 		mode = <DRV260X_LRA_MODE>;
- 		library-sel = <DRV260X_LIB_LRA>;
- 		pinctrl-names = "default","sleep";
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+index 64cc1e1bbb479..591c073bf0a98 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+@@ -826,7 +826,7 @@ static void iwl_mvm_frob_txf_key_iter(struct ieee80211_hw *hw,
+ 		}
+ 		match++;
+ 		if (match == keylen) {
+-			memset(txf->buf + i - keylen, 0xAA, keylen);
++			memset(txf->buf + i + 1 - keylen, 0xAA, keylen);
+ 			match = 0;
+ 		}
+ 	}
 -- 
 2.53.0
 
