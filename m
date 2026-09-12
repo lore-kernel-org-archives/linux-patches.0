@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211BD17A30A;
-	Sat, 12 Sep 2026 13:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4DF17A30A;
+	Sat, 12 Sep 2026 13:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221018; cv=none; b=emx9nmdnQ+R/+y95iB4MZ9swfOBrnGJg50ur2fBpNUwOzx8NqEuqA9AN/2tEe5tuwaR8rTz9YzE8oLFByI+Nt2DU0EUMtTsUUhIdeerRV05TXh3JkFxfHziYd0RMSTGiL0/UsW8OW19CqqNOXzg5UdcoWxhYXfuPg5L5e9tlfu8=
+	t=1789221022; cv=none; b=opeIJ/C3p1xyAvPuhiYStqKJlfbmml7h0jgF/GUsPzIgI29R9OHxEIZMzgNxH8/dM6to6Rq76QyP7j7garUvGl/KECf7ivyX7WW8g8O9qNcTUCMZP/aOEUQpdAcFVu0aJSYe6QeI2PpocOsVpJNg7wfP1QfDnnRMpLP/vPfYJiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221018; c=relaxed/simple;
-	bh=ftJTkyU8iHAJGhOT9AzzOb/AHPNHia4XKyBBxCUCWWg=;
+	s=arc-20240116; t=1789221022; c=relaxed/simple;
+	bh=DB8iF+CPeO2PS9uuWpkamQNwS1afX5kF3BoLPnaS//Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mukUIozVWe9SvL7LxMScJEkPj+JreWry1bsJdVh7CMDWDb+oocKfyWkEP5zBazVKS3MnaImTnsqJQx8q1XNE2S1RhZ4rCeb/RaDmGIXf3TZvLrTCM5bebNxNw6KIwRf5idlUqH9HoGxej/LNqS0u6JpOP+7qoUI9XNYJMXkbo4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auk8iIcb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zo2se717iWAI1T3LD5xE/xD/kUUNZUiiAkx139nVLJjBbPR87Qvz2wF8JoYtBdX7ZlIx5KxF2ITh8uSyk3/vkZ6NzFJQuUoGfsCRaK65GFcmjeaLZ0XS5yCS8Z/itJxJug0fY00M1e6YRCbPyhdT/KemKNmZ75AfT11ElqeXCRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHX98W0M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auk8iIcb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D224E1F000FF;
-	Sat, 12 Sep 2026 13:50:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHX98W0M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2881F000FF;
+	Sat, 12 Sep 2026 13:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221016;
-	bh=mV6fxPAt0remQCWkvxNqF8hDgpn+IeIwy844Hd87oNQ=;
+	s=korg; t=1789221021;
+	bh=bKrcdT3VdAE8YRDARgRvx8+m/w/B2sxIv12ZMOMwPro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=auk8iIcbxY7OBry1QJUwDFTCL0bfk9SO346ip1pdn/NQRQv6QzioSVYnKeuV14rAH
-	 p2PTUhfZ7sDGdCszcEGgyxqysZjVVyVE+gjZQWDY8LuZyX/VVo7Y0qKxBo+olv7Jiw
-	 tHcjMCsqYiGc3GzG6nbpyHtE4d69YU4jKhJlYEgw=
+	b=kHX98W0MRGP+aHQJfPCPK1e6oQVJGA2LAr9paG8NswPr0Dw36RMwRS3qZ8nHo2+OY
+	 nWvXpNkpLJcK9Wy7C2IfYfKYaERIgtGJg1jfC3vAeBncqp6DqPRyoCKKfuKMfiScG3
+	 Y4isGsrpcnoe6sFPKiDh8f2AyPwv98mElqyMrs24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	stable@kernel.org
-Subject: [PATCH 6.6 0295/1424] wifi: rtl818x: initialize eeprom_93cx6 struct to zero
-Date: Sat, 12 Sep 2026 08:45:27 +0200
-Message-ID: <20260912065613.891157885@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.6 0296/1424] wifi: rtw88: Fix potential memory leak in rtw_txq_push_skb()
+Date: Sat, 12 Sep 2026 08:45:28 +0200
+Message-ID: <20260912065613.913973961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,53 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 799b5f45cb8194ebd06c9c89e0afdad5bedd2cc5 upstream.
+commit 9f2948010764d708bda27369d09ce6f194abe8e3 upstream.
 
-Commit 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra
-read clock cycle") added extra 'quirk' field to struct eeprom_93cx6.
+The skb passed to the rtw_hci_tx_write() is expected to be freed when
+the function fails, but the error path in rtw_txq_push_skb() does not
+free the skb before returning. This can lead to a memory leak in
+rtw_txq_push() where a dequeued skb is passed to rtw_txq_push_skb().
 
-Many existing users of eeprom_93cx6, including rtl818x drivers, allocate
-the structure on the stack without initializing all fields. As a result,
-the added quirk field has an undefined value and can randomly cause
-reading wrong data from the EEPROM.
-
-Fix by initializing the structures with {}.
-
-Fixes: 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle")
-Cc: stable@kernel.org # v6.13+
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Fixes: aaab5d0e6737 ("rtw88: kick off TX packets once for higher efficiency")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260723110640.8588-1-stf_xl@wp.pl
+Link: https://patch.msgid.link/20260727064223.61836-1-nihaal@cse.iitm.ac.in
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c |    2 +-
- drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/tx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-+++ b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-@@ -1648,7 +1648,7 @@ static void rtl8180_eeprom_register_writ
- 
- static void rtl8180_eeprom_read(struct rtl8180_priv *priv)
- {
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	int eeprom_cck_table_adr;
- 	u16 eeprom_val;
- 	int i;
---- a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-+++ b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-@@ -1441,7 +1441,7 @@ static int rtl8187_probe(struct usb_inte
- 	struct usb_device *udev = interface_to_usbdev(intf);
- 	struct ieee80211_hw *dev;
- 	struct rtl8187_priv *priv;
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	struct ieee80211_channel *channel;
- 	const char *chip_name;
- 	u16 txpwr, reg;
+--- a/drivers/net/wireless/realtek/rtw88/tx.c
++++ b/drivers/net/wireless/realtek/rtw88/tx.c
+@@ -609,6 +609,7 @@ static int rtw_txq_push_skb(struct rtw_d
+ 	ret = rtw_hci_tx_write(rtwdev, &pkt_info, skb);
+ 	if (ret) {
+ 		rtw_err(rtwdev, "failed to write TX skb to HCI\n");
++		ieee80211_free_txskb(rtwdev->hw, skb);
+ 		return ret;
+ 	}
+ 	return 0;
 
 
