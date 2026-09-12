@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AC447CC8A;
-	Sat, 12 Sep 2026 13:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159A5347FEC;
+	Sat, 12 Sep 2026 13:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218016; cv=none; b=GIAiVJ+zuu1QbGN3A7+eZdYDGKC/2W5s4bY5MH8aDDE9HoWUp76695ecXwmIz64QvG36TsRrE7m6GVC6OC/mlph2itGxPTalqBgi/vqqWwQncA9W7kuldYzJ4ZOCkb+ERCVADnSI4OyCiCAyUTWTdCf148fq3pw1vjjAHTnwe/U=
+	t=1789218021; cv=none; b=r0Y1bUxnbId8DcqIFH8K2pFdTTduYKLfygQPUKTdTBZz2Zh+TnPkZR3o5UNUY0IWYR0KzXwjqGYk9AZAHUlEzTfF9rPKxxVJeq9ou/4efGITlhoZffdWEa2ylcnkiOi8Tq3rfOUCKiui4VOoJOXyqsfu8CxvhQgI7lcrMoSFMj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218016; c=relaxed/simple;
-	bh=fcYRk9Ua+5NoHHxCl2KhV9nv/pwDxnV09pSM1AxvakM=;
+	s=arc-20240116; t=1789218021; c=relaxed/simple;
+	bh=50SWZPif3Q3Vc1y0kwBB6wvZzQjkTUXbN5jjLxyr7G4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5JED9kUkE8Dt471UC3UuR0NK/Bj82k84fvzWmnY0AhYmsgHcS5nHnF/rDnKzxQoZrBSZF/LnTC3Xeo66QhWKed2IE85MNPGBrpmUIN2rxIyZ4P3u/tVOol3N6byWZVpEBmTKlx8PSvKQ1Wmv09c2odlp0jvuOSFqR6X5E4hwDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9anxdeV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BzAS70b1gftB+BSkb31wl9gFqpfi6J/kcM9jEabukw8m8/g8Ifb2krtKy1GtujCFTRsJ7XsMGNcXKaIqffxS9Nc31IpXcUfV/D1XEQEQkD4V8rpu8TpKWmqrJV2ZSNpW3xqFUMyXGiWpNu8TW2UUHMofAxW9CtKzL6XE+ldAlvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QucdkbEU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9anxdeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86581F000FF;
-	Sat, 12 Sep 2026 13:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QucdkbEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0116C1F000FF;
+	Sat, 12 Sep 2026 13:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218015;
-	bh=+WNdqq5NjUz/KomAejhQljznF+1nNUyYAzqmxTOVSok=;
+	s=korg; t=1789218020;
+	bh=MvDCPJZEtQXM2Pol4ViFp8QRoxxZUQ5pykrxNZ3IkJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z9anxdeVyZKkzE2p/wfc+L1KlzUd+ZxJYsNd4lJLR8XMWWBRJydBgZ0iOwKSK1z37
-	 3X/vuuakZ8StPwiT0OmxZkNXiGNvo7qW+pbMrUXoWEsIFnGkktL/rgGfJsZkBSVv+B
-	 PEDyhupKFegY/nYynC6CzsdTy8I0ROKoKRi+sTZ4=
+	b=QucdkbEUeYqKn6vmT9VQtjnxrOXsKnHu3wXkdT9rnTRdl8MDEXibfAkHu9qjxQ7Br
+	 ZqSl9JQbP8+DG8dkqVyP6mhYrt2up9xcz/w/ochHgTkEqov4rDoZloZ8JGSqlFDyh1
+	 sz5AYHqzcwGIRFwtu0YeqE5FAeLAgVk3/wgwJjVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Joshua Peisach <jpeisach@ubuntu.com>,
+	Janne Grunau <j@jannau.net>,
+	Nick Chan <towinchenmi@gmail.com>,
+	Sven Peter <sven@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1021/1376] perf synthetic-events: Fix divide by zero in perf_event__synthesize_threads
-Date: Sat, 12 Sep 2026 08:57:27 +0200
-Message-ID: <20260912065630.318253070@linuxfoundation.org>
+Subject: [PATCH 6.12 1057/1376] nvme-apple: Destroy the admin queue on removal
+Date: Sat, 12 Sep 2026 08:58:03 +0200
+Message-ID: <20260912065631.117705234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,38 +53,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Sven Peter <sven@kernel.org>
 
-[ Upstream commit 16a12a54e9a1151a37aab74914a51b86f7f58d0e ]
+[ Upstream commit 87d5b9864c8118d26f54de4b66d2bddf2c659272 ]
 
-If scandir() finds no matching tasks in /proc, n is 0. If thread_nr is > 1,
-we bypass the single-thread fast path and then clamp thread_nr to n, making
-it 0. This results in a divide by zero when calculating num_per_thread.
+The admin queue is allocated with blk_mq_alloc_queue() but never
+destroyed. nvme_free_ctrl() only drops the last reference and
+blk_mq_exit_queue() and blk_sync_queue() never run: the hctx is never
+moved to q->unused_hctx_list and the timeout timer and work stay armed on
+a queue that is about to be freed which will eventually oops inside
+blk_mq_timeout_work().
 
-Handle n <= 1 early to use the single-thread fast path and prevent the
-crash.
+This can only be triggered when the controller fails to come up and is
+then immediately torn down again which is why no one ever ran into this
+before.
 
-Fixes: 340b47f510bb ("perf top: Implement multithreading for perf_event__synthesize_threads")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Let's just copy what the pcie driver does: unquiesce and destroy the admin
+queue before nvme_uninit_ctrl().
+
+With this the following WARN followed by a panic no longer happens:
+
+  WARNING: block/blk-mq.c:4390 at blk_mq_release+0x194/0x238, CPU#4: kworker/u34:4/119
+  CPU: 4 UID: 0 PID: 119 Comm: kworker/u34:4 Not tainted 7.2.0-rc1-dirty #248 PREEMPT
+  Hardware name: Apple Mac mini (M1, 2020) (DT)
+  Workqueue: nvme-wq apple_nvme_remove_dead_ctrl_work
+  pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : blk_mq_release+0x194/0x238
+  lr : blk_mq_release+0x58/0x238
+  sp : ffffc000833a3b50
+  x29: ffffc000833a3b50 x28: ffff80001d0450f8 x27: ffff800020c95200
+  x26: 0000000000000088 x25: 0000000000000000 x24: ffff800020f36805
+  x23: 0000000000000000 x22: ffffc00081a86878 x21: ffff800020be9c60
+  x20: 0000000000000000 x19: ffff800022501698 x18: 000000000000000a
+  x17: 7365757165722066 x16: 666f7265776f7020 x15: 0000000000000000
+  x14: 0000000000000028 x13: 0000000000004def x12: 0000000000000003
+  x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc000805b4fc8
+  x8 : ffffc00081915820 x7 : ffffc00081c4f3c8 x6 : 0000000000000001
+  x5 : 0000000000000004 x4 : ffff800022498d80 x3 : ffffc000833a3b14
+  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff800022501698
+  Call trace:
+   blk_mq_release+0x194/0x238 (P)
+   blk_put_queue+0x8c/0xf0
+   nvme_free_ctrl+0x4c/0x260
+   device_release+0x44/0x128
+   kobject_put+0xa0/0x120
+   put_device+0x1c/0x40
+   nvme_uninit_ctrl+0x48/0x60
+   apple_nvme_remove+0x54/0xb0
+   platform_remove+0x28/0x40
+   device_remove+0x54/0x98
+   device_release_driver_internal+
+   device_release_driver+0x20/0x38
+   apple_nvme_remove_dead_ctrl_wor
+   process_one_work+0x1f4/0x770
+   worker_thread+0x1b8/0x360
+   kthread+0x140/0x160
+   ret_from_fork+0x10/0x20
+  irq event stamp: 448
+  hardirqs last  enabled at (447):in_unlock_irqrestore+0x74/0x80
+  hardirqs last disabled at (448): [<ffffc000811cf5c0>] el1_brk64+0x20/0x60
+  softirqs last  enabled at (0): [ess+0xb28/0x2698
+  softirqs last disabled at (0): [<0000000000000000>] 0x0
+  ---[ end trace 0000000000000000
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  Mem abort info:
+    ESR = 0x0000000096000005
+    EC = 0x25: DABT (current EL),
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+    FSC = 0x05: level 1 translation fault
+  Data abort info:
+    ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+    CM = 0, WnR = 0, TnD = 0, TagA
+    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+  [0000000000000000] user address
+  Internal error: Oops: 0000000096000005 [#1]  SMP
+  CPU: 7 UID: 0 PID: 54 Comm: kwor          7.2.0-rc1-dirty #248PREEMPT
+  Tainted: [W]=WARN
+  Hardware name: Apple Mac mini (M1, 2020) (DT)
+  Workqueue: kblockd blk_mq_timeou
+  pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : percpu_ref_tryget_many.cons
+  lr : percpu_ref_tryget_many.constprop.0+0xc0/0x168
+  sp : ffffc000829cbce0
+  x29: ffffc000829cbce0 x28: ffff800020be9f48 x27: ffff800013e503c0
+  x26: 0000000000000108 x25: 000009c05
+  x23: 0000000000000000 x22: ffffc000819f5000 x21: ffff800020be9f48
+  x20: ffff8001deda4808 x19: ffff8000a
+  x17: 00000000580e1fac x16: ffffc00082bbbb7c x15: 0000000000000000
+  x14: 0000000000000028 x13: 000000001
+  x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc000829cbc20
+  x8 : ffffc00081915820 x7 : ffffc0001
+  x5 : ffff80001ca77d08 x4 : 0000000000000000 x3 : ffff80001ca77cb8
+  x2 : 0000000000000000 x1 : 000000007
+  Call trace:
+   percpu_ref_tryget_many.constpro
+   blk_mq_timeout_work+0x48/0x298
+   process_one_work+0x1f4/0x770
+   worker_thread+0x1b8/0x360
+   kthread+0x140/0x160
+   ret_from_fork+0x10/0x20
+  Code: 91282000 97ed44b2 17ffffd2
+  ---[ end trace 0000000000000000 ]---
+
+Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
+Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
+Tested-by: Janne Grunau <j@jannau.net>
+Tested-by: Nick Chan <towinchenmi@gmail.com>
+Signed-off-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/synthetic-events.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/apple.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
-index d972587cf5270..660689968b795 100644
---- a/tools/perf/util/synthetic-events.c
-+++ b/tools/perf/util/synthetic-events.c
-@@ -1045,7 +1045,7 @@ int perf_event__synthesize_threads(const struct perf_tool *tool,
- 	else
- 		thread_nr = nr_threads_synthesize;
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index a83721ec22993..4f69170631d3a 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1578,6 +1578,15 @@ static void apple_nvme_remove(struct platform_device *pdev)
+ 	nvme_stop_ctrl(&anv->ctrl);
+ 	nvme_remove_namespaces(&anv->ctrl);
+ 	apple_nvme_disable(anv, true);
++	if (anv->ctrl.admin_q && !blk_queue_dying(anv->ctrl.admin_q)) {
++		/*
++		 * If the controller was reset during removal, it's possible
++		 * user requests may be waiting on a stopped queue. Start the
++		 * queue to flush these to completion.
++		 */
++		nvme_unquiesce_admin_queue(&anv->ctrl);
++		blk_mq_destroy_queue(anv->ctrl.admin_q);
++	}
+ 	nvme_uninit_ctrl(&anv->ctrl);
  
--	if (thread_nr <= 1) {
-+	if (thread_nr <= 1 || n <= 1) {
- 		err = __perf_event__synthesize_threads(tool, process,
- 						       machine,
- 						       needs_mmap, mmap_data,
+ 	if (apple_rtkit_is_running(anv->rtk))
 -- 
 2.53.0
 
