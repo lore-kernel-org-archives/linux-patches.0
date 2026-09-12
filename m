@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01E21DA62E;
-	Sat, 12 Sep 2026 10:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E711DA62E;
+	Sat, 12 Sep 2026 10:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208986; cv=none; b=hcp0vAdozodWcxT1dRu5JaxfY1mAGKUqKnQ/ZiE03HzLVmT6MJRVYm8oFXIYGlG5idnl97EcJLMxdYZFtZJyy22Tabogi82bOe5sC6xqTbXFkTTSL1hDJVtxAodolaqxlvShKlzA+/UaUaXjhzBCARUNLJDzoOuybe93N8MlUHQ=
+	t=1789208991; cv=none; b=Soj4azSNSeBPWjlCpNXYwnq+pf3+Zp7l7GDjpC7uUktvrvGE1VDvgNMNc0dcFyejJOpz9XT3D7xv7RNgOm/uAu5Ii0vtnWbyBV4/Nj0NrNq/ps+T7glKr1OCeCYm3oG62gVzjtmxKms73Y4mNklwHxolDipgZAyEmHjZb3qni7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208986; c=relaxed/simple;
-	bh=D8lThoFVqE9pXW50+oDB7pXx3y5cRyjiqIdYRGTz89k=;
+	s=arc-20240116; t=1789208991; c=relaxed/simple;
+	bh=8zmHBxIjLFUsSS9jSNKXvBqsaJYTQnFZzEJhtONWvic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KiSDbAeMH4lHRdTHIfUN2Ebm1HmoKxE5HUv0i1cD7Lj8Gka3EMgX5MvDtZUCPynWLHBW1obbP1auY8VS358glxfY+w8zBVBXJyjwBRR7Yljv0LpPUOBNYnyYkJAEi0roDV8a3bbB15nYygBRGXoDEVVekYXQGu6/hVGRuUtQJu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0Roso1V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r/WdjTAW5R/+eFxUTDm0iaB84qlb14OnKzXZAAmlXJtO7Rcp3evVLDnsQMoXLqr9Dk450J35OKtO0iIZtRS1FJvKFjI49lk+H3Qi7iDZZT5aUlqQwu4c0J0xSvRJhepil25HKdH4zt8UhflAqUuyif4AJ0f/WVheNC5MMB0MpkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUD79g4z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0Roso1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F421E1F00893;
-	Sat, 12 Sep 2026 10:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUD79g4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB281F000FF;
+	Sat, 12 Sep 2026 10:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208984;
-	bh=aIryWvIi5iEDOjECLrSlgaEaatxMp9oAJVssRYotL2A=;
+	s=korg; t=1789208989;
+	bh=As1pQ8+IPVX9NXYybgxT8Hj99bbBuVv5s+1zhjtPcjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a0Roso1VIPuLDKM3TvO3ZcVBQsqoY1tn7OKU2ZolTX1W+c5DXIZSBmPBNfNLO1AAR
-	 09I9C1gTRV9hlFRlrzEtvCHXjYY9i/VAcDz5IhzmrP76fZUFn9xDAwv3FNoLo/yR1s
-	 ju1Wtnqn/09diAHibdX69+AnMH/idQxNeOBYWaL8=
+	b=EUD79g4zvK3JswLDdGx3p6y09snfj4wCAOS28CQKceV66LU5ExGA7WB8oKCYTfz7X
+	 oRN8a52Z2e/QsDdRvcLKYn/+w5YfFZnhrpb+ousugkZrJ/hPGA/ea5hpySpNnekiE7
+	 Z1YgcwOGbcRP6rHsDMEyPc6AM5BvuldcKCrWphtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Benjamin Larsson <benjamin.larsson@genexis.eu>,
+	Zhi-Jun You <hujy652@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0692/1518] arm64: dts: qcom: sm8750: Fix the PCIe iommu-map entries
-Date: Sat, 12 Sep 2026 08:47:41 +0200
-Message-ID: <20260912065639.092672841@linuxfoundation.org>
+Subject: [PATCH 6.18 0728/1518] wifi: mt76: mt7915: fix net_fill_forward_path for non-DBDC mt7986
+Date: Sat, 12 Sep 2026 08:48:17 +0200
+Message-ID: <20260912065639.902745642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,45 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Zhi-Jun You <hujy652@gmail.com>
 
-[ Upstream commit 366a540432a38c1c1533a319bc07b333f53752b6 ]
+[ Upstream commit bade0d238b60c29dafcc7da17501fa489495d6ae ]
 
-The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
-iommu-map entries specify only one cell for the SID, omitting the SID
-mask. This went unnoticed until the OF core started warning with commit
-ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
+Current implementation assumes that the hardware supports DBDC or single
+band and binds to band0.
 
-  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
+This causes net_fill_forward_path to select the wrong queue for non-DBDC
+mt7986 because it binds to band1 and getting the following in dmesg:
 
-So fix the entries to match the provider's '#iommu-cells' property.
+ieee80211 phy2: WA: --> drop by reaseon:1, msdu id = 0xc002 but failed!
+mtk_wed1: error status=00000002
+ieee80211 phy2: WA: txblk
+10324e00
+len = 128
+DW0 : 10 00 00 00
+DW1 : 00 00 00 00
+DW2 : 00 00 00 00
+DW3 : 72 0f 94 68
+DW4 : 00 00 00 00
+DW5 : ff 03 00 00
+DW6 : 00 00 3c 40
+DW7 : 00 17 dd 14
+DW8 : 79 6f 00 00
+DW9 : 02 c0 00 00
+DW10 : 58 c5 34 10
+DW11 : 00 00 00 00
+DW12 : 00 06 3e 00
+DW13 : 00 00 00 80
+DW14 : 10 8c 00 00
+DW15 : 00 00 00 00
+DW16 : 00 00 00 00
+DW17 : 00 00 00 00
+DW18 : 00 00 00 00
+DW19 : 00 00 00 00
+DW20 : 00 00 00 00
+DW21 : 00 00 00 00
+DW22 : 00 00 00 00
+DW23 : 00 00 00 00
+DW24 : 00 00 00 00
+DW25 : 00 00 00 00
+DW26 : 00 00 00 00
+DW27 : 00 00 00 00
+DW28 : 00 00 00 00
+DW29 : 00 00 00 00
+DW30 : 00 00 00 00
+DW31 : 00 00 00 00
 
-Fixes: 19f1395333f8 ("arm64: dts: qcom: sm8750: Add PCIe PHY and controller node")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-12-83405d37ba41@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix it by using phy->mt76->band_idx for queue which works for both
+non-DBDC and DBDC devices.
+
+Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
+Suggested-by: Benjamin Larsson <benjamin.larsson@genexis.eu>
+Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
+Link: https://patch.msgid.link/20260715152113.553-2-hujy652@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8750.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-index b714207e4c158..c6f4a43ff133e 100644
---- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-@@ -3393,8 +3393,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 			interconnect-names = "pcie-mem",
- 					     "cpu-pcie";
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index 6f594677474b0..8e69df105c5ae 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -1738,7 +1738,7 @@ mt7915_net_fill_forward_path(struct ieee80211_hw *hw,
+ 	path->mtk_wdma.wdma_idx = wed->wdma_idx;
+ 	path->mtk_wdma.bss = mvif->mt76.idx;
+ 	path->mtk_wdma.wcid = is_mt7915(&dev->mt76) ? msta->wcid.idx : 0x3ff;
+-	path->mtk_wdma.queue = phy != &dev->phy;
++	path->mtk_wdma.queue = phy->mt76->band_idx;
  
--			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
--				    <0x100 &apps_smmu 0x1401 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1400 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x1401 0x0 0x1>;
+ 	ctx->dev = NULL;
  
- 			resets = <&gcc GCC_PCIE_0_BCR>;
- 			reset-names = "pci";
 -- 
 2.53.0
 
