@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5627357D10;
-	Sat, 12 Sep 2026 18:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD15357D10;
+	Sat, 12 Sep 2026 18:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238947; cv=none; b=oX0tZ6sIleFFUP7cHPKlCePKqjZMX+nN4kb2H9kp5LAacjF8r4NXO/PkAhfAqI7+/cD887et/giv/3HBL3vK6vUvzUgJhbaq6pKVI7wP/4+ZgtO5Hch83imXDiDM7BuRfjMsrf3Dxhb4M+DK20pFoQiNrY82zYUsH1scZPD21lM=
+	t=1789238953; cv=none; b=KOpkMl8J3P56DHasQ/7shHifT5ZX97KMIm8OlS0EEuvDx9/NWBlGBnCNwWBXHBw3rLDM4KsyL/VQB3LfefFbXGyuv4OGW6htaez6eQe06oe3PLkKUTElOsox6OjNCZGlzZfgMRDI58TWg1yFhq7D6occGukHWwzubmyxekachuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238947; c=relaxed/simple;
-	bh=7jqihxzi3z4doTBRSOPcjmD8sZ1b3rPz5v4/tmdZhUs=;
+	s=arc-20240116; t=1789238953; c=relaxed/simple;
+	bh=K2y2KzXAFKjcyX7L1OvX1B5Cc/Pnm/g+pk7wlHkMTYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXUb6e528RE/drol/ADe44OGknMajsghLa2wVMTiLojUZCOFrjba+lbJSVqRlxroflF/Rts8DLM4/f9fE6Nm3YGpBmXOf6lmKY5tMihxVVChnpQwQUM54+W9lDT55WYk06H8MVOnm4XroFc/FtN8WFd5vOr2WoqMOMcdKLctTRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qt7DTK2m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AtdPNb67WorbUbQMOt15NfogPL6YErHcZl7DPQEdYiiIfBUaZau0NYD4nsTymn058eRunJ9SZULXSlqo89JX5eJHHLY5FKFdjNZeWdI5P4/X2juU+vXVw5nlwSFfyajVS4WoAlO52Ffgok0WoMfzJxWXGIqRYqa8pTDj/cktIfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQxMH9I9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qt7DTK2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7DB1F000FF;
-	Sat, 12 Sep 2026 18:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQxMH9I9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB061F000FF;
+	Sat, 12 Sep 2026 18:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238946;
-	bh=I+Rcy54dtu+EnC17awCua6hrIzitzn4ee+inzhAuX9o=;
+	s=korg; t=1789238951;
+	bh=6UfX7oabl0z3mFF5rRV9DPdMIhgr2ew/gkZYarZiUwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qt7DTK2mFjczBod+OzA42k7FRQJjJw83P4soxj3T65EpRw+LL8lUKDGzv6FNmrCdD
-	 9+UjLn4JhJUZcKDehIXom3eq8GYD84NAmIhEYjb/Xkt91rf0mgPQ5X64UP5zHZlVJR
-	 oRvbGFa4i7bVEUaty9D2JiqvSNz01kDnj+QjlHgk=
+	b=qQxMH9I9pdLeudId0BSY0gnIUSqafgAurDMWoLSK0oIhSaHnTUIRZfbfglYMx3AqH
+	 cStlsH9KxrV8Cu/r5zQBWW1QcEyRHJXNkHqq6LjjlXGaNUevSlqws4a67Ry1kvX2DE
+	 KPuVV9400w/SzERq/nDwbYgIoLa9ub9ghpNweOi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Huisong Li <lihuisong@huawei.com>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 538/935] ACPI: processor: idle: Expand _LPI package sanity checks
-Date: Sat, 12 Sep 2026 08:59:28 +0200
-Message-ID: <20260912065539.161277257@linuxfoundation.org>
+Subject: [PATCH 5.15 565/935] RDMA/hfi1: Propagate sdma_txinit_ahg() errors
+Date: Sat, 12 Sep 2026 08:59:55 +0200
+Message-ID: <20260912065539.794298444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,84 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit d5c13047a132162d2649be876906ead691d12948 ]
+[ Upstream commit 091c6162c022cbdfb64219708a71728cfd1d4600 ]
 
-The _LPI package sanity checks in acpi_processor_evaluate_lpi() miss
-a couple of things, so expand them by adding a buffer size check
-before retrieving a struct acpi_power_register from it (and skip the
-given state if the buffer is not large enough to hold a register
-structure) and making the function avoid copying the state description
-from the ACPI table if there are too few elements in the package
-supposed to hold it.
+set_txreq_header_ahg() ignores the return value of sdma_txinit_ahg().
 
-While at it, relocate and rephrase a comment about skipping _LPI state
-package elements [7-8].
+If sdma_txinit_ahg() fails, it returns before initializing tx->txreq.
+However, set_txreq_header_ahg() ignores the error and returns the AHG
+change count, causing the caller to continue processing the request as
+though initialization had succeeded.
 
-Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Acked-by: Huisong Li <lihuisong@huawei.com>
-Link: https://patch.msgid.link/5084143.GXAFRqVoOG@rafael.j.wysocki
+Propagate sdma_txinit_ahg() failures to the caller and abort request
+processing when initialization fails.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e3304b7cc4f1 ("IB/hfi1: Optimize cachelines for user SDMA request structure")
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Link: https://patch.msgid.link/20260708162252.936634-1-listdansp@mail.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/hfi1/user_sdma.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index bbdca25542666..ce364d317feef 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -945,6 +945,13 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
- 		if (obj->type == ACPI_TYPE_BUFFER) {
- 			struct acpi_power_register *reg;
+diff --git a/drivers/infiniband/hw/hfi1/user_sdma.c b/drivers/infiniband/hw/hfi1/user_sdma.c
+index 02bd62b857b75..b04e079490b76 100644
+--- a/drivers/infiniband/hw/hfi1/user_sdma.c
++++ b/drivers/infiniband/hw/hfi1/user_sdma.c
+@@ -1059,6 +1059,7 @@ static int set_txreq_header_ahg(struct user_sdma_request *req,
+ 				struct user_sdma_txreq *tx, u32 datalen)
+ {
+ 	u32 ahg[AHG_KDETH_ARRAY_SIZE];
++	int ret;
+ 	int idx = 0;
+ 	u8 omfactor; /* KDETH.OM */
+ 	struct hfi1_user_sdma_pkt_q *pq = req->pq;
+@@ -1163,11 +1164,13 @@ static int set_txreq_header_ahg(struct user_sdma_request *req,
+ 	trace_hfi1_sdma_user_header_ahg(pq->dd, pq->ctxt, pq->subctxt,
+ 					req->info.comp_idx, req->sde->this_idx,
+ 					req->ahg_idx, ahg, idx, tidval);
+-	sdma_txinit_ahg(&tx->txreq,
+-			SDMA_TXREQ_F_USE_AHG,
+-			datalen, req->ahg_idx, idx,
+-			ahg, sizeof(req->hdr),
+-			user_sdma_txreq_cb);
++	ret = sdma_txinit_ahg(&tx->txreq,
++				SDMA_TXREQ_F_USE_AHG,
++				datalen, req->ahg_idx, idx,
++				ahg, sizeof(req->hdr),
++				user_sdma_txreq_cb);
++	if (ret)
++		return ret;
  
-+			if (obj->buffer.length < sizeof(*reg)) {
-+				acpi_handle_debug(handle,
-+					"Invalid register data for _LPI state %d\n",
-+					state_idx);
-+				continue;
-+			}
-+
- 			reg = (struct acpi_power_register *)obj->buffer.pointer;
- 			if (reg->space_id != ACPI_ADR_SPACE_SYSTEM_IO &&
- 			    reg->space_id != ACPI_ADR_SPACE_FIXED_HARDWARE)
-@@ -961,13 +968,6 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
- 			continue;
- 		}
- 
--		/* elements[7,8] skipped for now i.e. Residency/Usage counter*/
--
--		obj = pkg_elem + 9;
--		if (obj->type == ACPI_TYPE_STRING)
--			strscpy(lpi_state->desc, obj->string.pointer,
--				ACPI_CX_DESC_LEN);
--
- 		lpi_state->index = state_idx;
- 		if (obj_get_integer(pkg_elem + 0, &lpi_state->min_residency)) {
- 			pr_debug("No min. residency found, assuming 10 us\n");
-@@ -990,6 +990,20 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
- 
- 		if (obj_get_integer(pkg_elem + 5, &lpi_state->enable_parent_state))
- 			lpi_state->enable_parent_state = 0;
-+
-+		/* Skip elements [7-8] i.e. Residency/Usage counters. */
-+
-+		/*
-+		 * Avoid out-of-bounds access if the size of the package is less
-+		 * than expected.
-+		 */
-+		if (element->package.count < 10)
-+			continue;
-+
-+		obj = pkg_elem + 9;
-+		if (obj->type == ACPI_TYPE_STRING)
-+			strscpy(lpi_state->desc, obj->string.pointer,
-+				ACPI_CX_DESC_LEN);
- 	}
- 
- 	acpi_handle_debug(handle, "Found %d power states\n", state_idx);
+ 	return idx;
+ }
 -- 
 2.53.0
 
