@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4238A33F59A;
-	Sat, 12 Sep 2026 12:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F983AEF51;
+	Sat, 12 Sep 2026 12:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215218; cv=none; b=uZ0I8fi0XI/yJOiAb31Nh1hgr8ahW1QwRm3ThTuzv7LsZJGOy2It2SUR0vn4N8ieZ1zbmP3DAA6rAqe456PpCX7bPFUry/eE7uOEc+sWBX8f+bugPnnEIsKs0WbdFWnJerPzISxVL/eD5hO8aO4wl6rQCNNcIyLxA7Mv/dd7lus=
+	t=1789215225; cv=none; b=aXiLJxf4Ep993+WCBhho4emLy/qzZKVgz+k8jZw+JxSuY028exUJPX1sJ9HPBwHsGOWlEGE3tItaq1xBW+5jHa77SpDCqquFZ2imArvnWNOGxEQzDxzw7ZKOvOVRKdSjZP0TfdcikIZzv2mAab14+XnNBvWweBbjlfvO0ygxmsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215218; c=relaxed/simple;
-	bh=1sF3D4f1nba+V76fOgvsJHcODRFDbYdw3aAK1DG1iKk=;
+	s=arc-20240116; t=1789215225; c=relaxed/simple;
+	bh=l4GmOOrpheDtfjS/h04DjlXk0+NVMhj1hqOLl1G/hHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qYRHivd9pbD92E7SA30RU0gROBrzq+0NY9sw0Dp2FMr62nvJairZ36hpmbA3+O3EwrqrOwIBM7L5YDJdxrwJbvneByzOjbOyimcSTydg5AS5KNNwK+xBuY4XuI0iKDzmdTsW2GZOGkUk4zuv3J/FTOvRhHGSVuMpnp4e/imwJ4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iy7BcH3h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k+BH0s5mlRWdZPf+FSk0y4ysZ+vu9VBWKnwDGfJdh1lC/da61OdSP7t3HhWnXot9M00aKJnGmB5JTfrO98fgrYL4k2TeNX6ihm4Qz6UhCVVTZIfQO17XLpzrYRXt2LOPQmxNbkwCFtcaZ1oE7fSDANphNKNVbjvgvdZqvqI29gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odGs7+FW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iy7BcH3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A76D1F000FF;
-	Sat, 12 Sep 2026 12:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odGs7+FW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBDF1F000FF;
+	Sat, 12 Sep 2026 12:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215216;
-	bh=xly/8K+JXee5hocIZthOR2swurhRgeRHcciuAlOoNbs=;
+	s=korg; t=1789215221;
+	bh=ej0HNcRyZnBxdtJm7duudU694fNoYHMOvrJE/xj3/mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iy7BcH3hduR5JSvXHIBnRWr9vRCtt7L82TLEfdLLsiSlrkBneEOdvCVJUL+bkInTF
-	 5aAG5eYfNLnyvboUUjYlfLMmwsLZwjQpacZsPzEqd++2wKAXz8VALMJfta1VloIMpt
-	 CnbENbKKgVaAnz9yhVQUxCcQatZ2SiEnAn4IuMY4=
+	b=odGs7+FWMWC55xg5a7jXjgmKT2+80uNEpfOfhfwO5SEPycBgKslv6bvtrvyPmCRhb
+	 OWKCVuZiqy31kBBkuvDHuGKO3dBdJ9n/B1urj10Uc16G2dirySGHxO5YncaVqgGqVI
+	 1SKkQoraRDM3+PtNfzVUMtQAZZhmiD7px5Z/gejo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0486/1376] usb: ljca: bound bank_num in ljca_enumerate_gpio()
-Date: Sat, 12 Sep 2026 08:48:32 +0200
-Message-ID: <20260912065618.369268731@linuxfoundation.org>
+Subject: [PATCH 6.12 0487/1376] usb: gadget: aspeed_udc: check endpoint DMA allocation
+Date: Sat, 12 Sep 2026 08:48:33 +0200
+Message-ID: <20260912065618.391793932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,51 +51,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit dd9483726d0f16c1a56879c3edb65128259a4e2b ]
+[ Upstream commit 97cee53a94be3bd4fd8fbed6071bd2f32dad1ab1 ]
 
-ljca_enumerate_gpio() reads desc->bank_num from the device and loops
-valid_pin[i] = get_unaligned_le32(...) for i < bank_num. valid_pin[]
-holds only LJCA_MAX_GPIO_NUM / 32 = 2 entries.
+ast_udc_probe() allocates a coherent DMA buffer used as the backing store
+for endpoint buffers. ast_udc_init_ep() derives per-endpoint buffer
+pointers from udc->ep0_buf, so a failed allocation is dereferenced during
+probe.
 
-Two checks run before the loop. The reply length must match
-struct_size(desc, bank_desc, bank_num). The product
-pins_per_bank * bank_num must not exceed LJCA_MAX_GPIO_NUM. Neither one
-bounds bank_num against the size of valid_pin[]. The reply is capped at
-LJCA_MAX_PAYLOAD_SIZE (60) bytes, so the struct_size check limits
-bank_num to 9. A device that reports bank_num 9 with pins_per_bank 7
-still passes both checks. gpio_num is 63 and the reply is 56 bytes. The
-loop then writes nine u32 into the two entry array and overruns
-valid_pin[] on the stack.
+Check the allocation before endpoint setup. The existing probe error path
+called ast_udc_remove(), which unregisters the gadget unconditionally and
+is not safe before usb_add_gadget_udc() succeeds. Add a local cleanup
+helper for probe failures so pre-registration failures only unwind the
+resources that were actually initialized.
 
-A broken or malicious LJCA device can therefore overflow the stack.
-Reject a bank_num that does not fit valid_pin[].
+This was found by a local static analysis checker for unchecked allocator
+returns while scanning Linux 6.16. The change was checked by applying it
+to current mainline and by running checkpatch. I do not have access to
+Aspeed UDC hardware, so no runtime testing was performed.
 
-Fixes: acd6199f195d ("usb: Add support for Intel LJCA device")
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/178176358875.3352358.6059116660356914900@maoyixie.com
+Fixes: 055276c13205 ("usb: gadget: add Aspeed ast2600 udc driver")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Link: https://patch.msgid.link/20260610121022.3-1-ruoyuw560@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/usb-ljca.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/gadget/udc/aspeed_udc.c | 50 ++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/usb/misc/usb-ljca.c b/drivers/usb/misc/usb-ljca.c
-index d9c21f7830557..e6e3888451fa2 100644
---- a/drivers/usb/misc/usb-ljca.c
-+++ b/drivers/usb/misc/usb-ljca.c
-@@ -585,6 +585,9 @@ static int ljca_enumerate_gpio(struct ljca_adapter *adap)
- 	if (gpio_num > LJCA_MAX_GPIO_NUM)
- 		return -EINVAL;
+diff --git a/drivers/usb/gadget/udc/aspeed_udc.c b/drivers/usb/gadget/udc/aspeed_udc.c
+index f4781e611aaa2..efcceb886bb40 100644
+--- a/drivers/usb/gadget/udc/aspeed_udc.c
++++ b/drivers/usb/gadget/udc/aspeed_udc.c
+@@ -1434,25 +1434,12 @@ static void ast_udc_init_hw(struct ast_udc_dev *udc)
+ 	ast_udc_write(udc, 0, AST_UDC_EP0_CTRL);
+ }
  
-+	if (desc->bank_num > ARRAY_SIZE(valid_pin))
-+		return -EINVAL;
+-static void ast_udc_remove(struct platform_device *pdev)
++static void ast_udc_cleanup(struct platform_device *pdev)
+ {
+ 	struct ast_udc_dev *udc = platform_get_drvdata(pdev);
+ 	unsigned long flags;
+ 	u32 ctrl;
+ 
+-	usb_del_gadget_udc(&udc->gadget);
+-	if (udc->driver) {
+-		/*
+-		 * This is broken as only some cleanup is skipped, *udev is
+-		 * freed and the register mapping goes away. Any further usage
+-		 * probably crashes. Also the device is unbound, so the skipped
+-		 * cleanup is never catched up later.
+-		 */
+-		dev_alert(&pdev->dev,
+-			  "Driver is busy and still going away. Fasten your seat belts!\n");
+-		return;
+-	}
+-
+ 	spin_lock_irqsave(&udc->lock, flags);
+ 
+ 	/* Disable upstream port connection */
+@@ -1472,6 +1459,26 @@ static void ast_udc_remove(struct platform_device *pdev)
+ 	udc->ep0_buf = NULL;
+ }
+ 
++static void ast_udc_remove(struct platform_device *pdev)
++{
++	struct ast_udc_dev *udc = platform_get_drvdata(pdev);
 +
- 	/* construct platform data */
- 	gpio_info = kzalloc(sizeof *gpio_info, GFP_KERNEL);
- 	if (!gpio_info)
++	usb_del_gadget_udc(&udc->gadget);
++	if (udc->driver) {
++		/*
++		 * This is broken as only some cleanup is skipped, *udev is
++		 * freed and the register mapping goes away. Any further usage
++		 * probably crashes. Also the device is unbound, so the skipped
++		 * cleanup is never catched up later.
++		 */
++		dev_alert(&pdev->dev,
++			  "Driver is busy and still going away. Fasten your seat belts!\n");
++		return;
++	}
++
++	ast_udc_cleanup(pdev);
++}
++
+ static int ast_udc_probe(struct platform_device *pdev)
+ {
+ 	enum usb_device_speed max_speed;
+@@ -1524,6 +1531,12 @@ static int ast_udc_probe(struct platform_device *pdev)
+ 					  AST_UDC_NUM_ENDPOINTS,
+ 					  &udc->ep0_buf_dma, GFP_KERNEL);
+ 
++	if (!udc->ep0_buf) {
++		clk_disable_unprepare(udc->clk);
++		rc = -ENOMEM;
++		goto err;
++	}
++
+ 	udc->gadget.speed = USB_SPEED_UNKNOWN;
+ 	udc->gadget.max_speed = USB_SPEED_HIGH;
+ 	udc->creq = udc->reg + AST_UDC_SETUP0;
+@@ -1553,20 +1566,20 @@ static int ast_udc_probe(struct platform_device *pdev)
+ 	udc->irq = platform_get_irq(pdev, 0);
+ 	if (udc->irq < 0) {
+ 		rc = udc->irq;
+-		goto err;
++		goto err_cleanup;
+ 	}
+ 
+ 	rc = devm_request_irq(&pdev->dev, udc->irq, ast_udc_isr, 0,
+ 			      KBUILD_MODNAME, udc);
+ 	if (rc) {
+ 		dev_err(&pdev->dev, "Failed to request interrupt\n");
+-		goto err;
++		goto err_cleanup;
+ 	}
+ 
+ 	rc = usb_add_gadget_udc(&pdev->dev, &udc->gadget);
+ 	if (rc) {
+ 		dev_err(&pdev->dev, "Failed to add gadget udc\n");
+-		goto err;
++		goto err_cleanup;
+ 	}
+ 
+ 	dev_info(&pdev->dev, "Initialized udc in USB%s mode\n",
+@@ -1574,9 +1587,10 @@ static int ast_udc_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
++err_cleanup:
++	ast_udc_cleanup(pdev);
+ err:
+ 	dev_err(&pdev->dev, "Failed to udc probe, rc:0x%x\n", rc);
+-	ast_udc_remove(pdev);
+ 
+ 	return rc;
+ }
 -- 
 2.53.0
 
