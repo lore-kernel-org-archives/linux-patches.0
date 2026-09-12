@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9461E5B9F;
-	Sat, 12 Sep 2026 07:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C6C165F16;
+	Sat, 12 Sep 2026 07:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199548; cv=none; b=WCz2Gr5BO5laxxsjNzS8E6jrx8VMJRtfaNtI8MPxs0nDSZVtDrj0YRPmyx6z7zhjd1YgY64L2BGDtXtYYI6ccFpu9wYMZtZLhtshBE3vCxy430f524NOQb87yjw+hPATgdrUTwODE9hIgx1f4AjaRhsyWILJbyLuwFLw2fjAuWo=
+	t=1789199553; cv=none; b=uCpy8kmXGb4+ugUwT+98h6l42s7R/KV9wpOnTUk/B6WzAQznHLovSnL5XPuvskE4J35sMpOm1zzmyE89mkXbPjjs8hQLgFJByAtbxFei58uo5zf3VZP5BNqUMdEstoWATy8yt1YDz0LRzVpvYIMoq0G7zqowXb+r086g3ungqCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199548; c=relaxed/simple;
-	bh=OJ2LycICui4oUkooqpEEqgpJl4Si/6kiH37XHeDyPxo=;
+	s=arc-20240116; t=1789199553; c=relaxed/simple;
+	bh=34YTYt4WO3QHlkzIIQb8orX8Dqied/nbM9AvKcTjAPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6i8gFgiJT1RpJkCEPINtVsvsXv7xjpdEX8hlimWvRJeZ/e8C/Lc7fsmrpkJF6nzBPnCcITdJ7mL2w5oGy6tQiE5j4nhfxQ0bZMlKXPzn5YutPGHNi+Y/ExqaUCbN2LC/z+xdf3ISSPQ1z5p/GB3ne/pvPRvPGNWu7FqLMrjlMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfXyJhge; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oIw+NmQf8KwS8FZ8b+5/muJLwxkg2CwnVf6ISofvArFoya0IdZQAPSQz6sVH+1NvX/SPiz39kPL8b8DhVVrH9GSQ8HxjlIFTex+bx2PXb9R0caqgXQR/W+2JQxEsRujHvvI33MUVAbw+GgamfIHfGZgCngSzGlqYtczvkmTnWMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBmnMmTr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfXyJhge"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235B51F000FF;
-	Sat, 12 Sep 2026 07:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBmnMmTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F891F000FF;
+	Sat, 12 Sep 2026 07:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199547;
-	bh=6bIyOKUxsoXLrU0muS2Scmb1KS6Kckd1q/3h45ICfr0=;
+	s=korg; t=1789199551;
+	bh=t9043ty37NCbh9GATMUVcvrHeltCyfcHixubjqZUnzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JfXyJhgex/KeIyJPPm7sesp7lcDWFsoxJcfpLnSIuMHmkrvb6NUL3Vm4+wQrjk1q/
-	 XsGYVt7dyjB6OLKcW23B5B2EqpC7DAlUI0g9WtN1o2ZrAISw16E+Fxg0lEpPZR4EkR
-	 Bl0nCmdC1zUVtz3xhq4Hro2rjFfXdZliYWbEYh50=
+	b=QBmnMmTrtBnHrlhRibqppqvQsYmfdCulsxM1FJ7eP5hmXVz57nBCDU6pz6YzFx1Eh
+	 L1xWaKV/Q7xmijTx6C3mMos5mUgHP4fDzCZbVLBg+vt3eF+DXUX3OYsTaD1Hwy7euN
+	 12Jr2wPHs2dIafg0yOvwLOlgpvLeJSL1lXUvgoq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Leach <matthew.leach@collabora.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0608/1815] wifi: ath12k: fix survey indexing across bands
-Date: Sat, 12 Sep 2026 08:39:18 +0200
-Message-ID: <20260912065703.155134717@linuxfoundation.org>
+Subject: [PATCH 7.2 0609/1815] wifi: ath12k: Avoid buffer overread in ath12k_wmi_op_rx()
+Date: Sat, 12 Sep 2026 08:39:19 +0200
+Message-ID: <20260912065703.179127580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,299 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Leach <matthew.leach@collabora.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit c42b27336eeffd7926a77604cdefcc8918bed926 ]
+[ Upstream commit 7698656a2f7b045af5a6859766238cefea1b1945 ]
 
-When running 'iw dev wlan0 survey dump' the values for the channel busy
-time have the same sequence across bands. This is caused by indexing
-into the ath12k survey array using a band-local index rather than the
-global index passed by mac80211. This results in surveys for 5 GHz and 6
-GHz channels returning values from 2.4 GHz slots, making the survey
-unusable on those bands. Further, there are redundant survey slots for
-multi-radio/single-phy instances.
+Currently, in ath12k_wmi_op_rx(), the firmware buffer is read without
+first verifying that the buffer has enough data to hold a header. This
+could result in a buffer overread.
 
-Fix by moving the survey data into ath12k_hw so multiple radios under a
-single wiphy share one table, and index into it using the global
-mac80211 index. A new spinlock in ath12k_hw serialises access to the
-survey array, which is now shared across all radios under a single hw.
+Update the logic to verify the buffer contains at least enough data to
+hold a wmi_cmd_hdr before reading from the buffer.
 
-Band busy-times Before this fix:
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
 
-2.4 GHz: 9, 2, 2, 2, 4, 2, 10, 16, 4, 12, 5
-5 GHz:   9, 2, 2, 2, 4, 2, 10, 16, 4, 12, 5
-6 GHz:   9, 2, 2, 2, 4, 2, 10, 16, 4, 12, 5
-
-After this fix, times are independent:
-
-2.4 GHz: 23, 5,  5,  12, 2,   12,  26,  5,   3,  1,  27
-5 GHz:   30, 40, 29, 27, 118, 118, 112, 120, 11, 11, 11
-6 GHz:   1,  0,  0,  0,  0,   0,   0,   0,   0,  0,  1
-
-Tested-on: wcn7850 hw2.0 PCI WLAN.IOE_HMT.1.1-00018-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
-
-Fixes: 4f242b1d6996 ("wifi: ath12k: support get_survey mac op for single wiphy")
-Signed-off-by: Matthew Leach <matthew.leach@collabora.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Assisted-by: Claude:claude-sonnet-4-6
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260703-ath12-survey-band-fix-v3-1-2fb050c2505a@collabora.com
-[fixed ath12k-check issues]
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260716-ath12k_wmi_op_rx-overread-v1-1-327a4b1c2372@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.h |  8 ++-
- drivers/net/wireless/ath/ath12k/mac.c  | 33 +++++++------
- drivers/net/wireless/ath/ath12k/wmi.c  | 68 ++++++++++++++------------
- 3 files changed, 62 insertions(+), 47 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
-index df9956579785d..f28d2e90b67b2 100644
---- a/drivers/net/wireless/ath/ath12k/core.h
-+++ b/drivers/net/wireless/ath/ath12k/core.h
-@@ -666,7 +666,7 @@ struct ath12k {
- 
- 	/* protects the radio specific data like debug stats, ppdu_stats_info stats,
- 	 * vdev_stop_status info, scan data, ath12k_sta info, ath12k_link_vif info,
--	 * channel context data, survey info, test mode data, regd_channel_update_queue,
-+	 * channel context data, test mode data, regd_channel_update_queue,
- 	 * peer_delete_waits.
- 	 */
- 	spinlock_t data_lock;
-@@ -723,7 +723,6 @@ struct ath12k {
- 	 * avoid reporting garbage data.
- 	 */
- 	bool ch_info_can_report_survey;
--	struct survey_info survey[ATH12K_NUM_CHANS];
- 	struct completion bss_survey_done;
- 
- 	struct work_struct regd_update_work;
-@@ -793,6 +792,11 @@ struct ath12k_hw {
- 	 */
- 	struct mutex hw_mutex;
- 	enum ath12k_hw_state state;
-+
-+	/* protects survey[] shared across radios of this hw. */
-+	spinlock_t survey_lock;
-+	struct survey_info survey[ATH12K_NUM_CHANS];
-+
- 	bool regd_updated;
- 	bool use_6ghz_regd;
- 	bool host_alloc_ml_id;
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 2303e0be21332..b24f97786c590 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -13626,52 +13626,54 @@ ath12k_mac_update_bss_chan_survey(struct ath12k *ar,
- int ath12k_mac_op_get_survey(struct ieee80211_hw *hw, int idx,
- 			     struct survey_info *survey)
- {
-+	struct ath12k_hw *ah = hw->priv;
- 	struct ath12k *ar;
- 	struct ieee80211_supported_band *sband;
--	struct survey_info *ar_survey;
-+	struct survey_info *ah_survey;
-+	int sband_idx = idx;
- 
- 	lockdep_assert_wiphy(hw->wiphy);
- 
--	if (idx >= ATH12K_NUM_CHANS)
-+	if (sband_idx >= ATH12K_NUM_CHANS)
- 		return -ENOENT;
- 
- 	sband = hw->wiphy->bands[NL80211_BAND_2GHZ];
--	if (sband && idx >= sband->n_channels) {
--		idx -= sband->n_channels;
-+	if (sband && sband_idx >= sband->n_channels) {
-+		sband_idx -= sband->n_channels;
- 		sband = NULL;
- 	}
- 
- 	if (!sband)
- 		sband = hw->wiphy->bands[NL80211_BAND_5GHZ];
--	if (sband && idx >= sband->n_channels) {
--		idx -= sband->n_channels;
-+	if (sband && sband_idx >= sband->n_channels) {
-+		sband_idx -= sband->n_channels;
- 		sband = NULL;
- 	}
- 
- 	if (!sband)
- 		sband = hw->wiphy->bands[NL80211_BAND_6GHZ];
- 
--	if (!sband || idx >= sband->n_channels)
-+	if (!sband || sband_idx >= sband->n_channels)
- 		return -ENOENT;
- 
--	ar = ath12k_mac_get_ar_by_chan(hw, &sband->channels[idx]);
-+	ar = ath12k_mac_get_ar_by_chan(hw, &sband->channels[sband_idx]);
- 	if (!ar) {
--		if (sband->channels[idx].flags & IEEE80211_CHAN_DISABLED) {
-+		if (sband->channels[sband_idx].flags & IEEE80211_CHAN_DISABLED) {
- 			memset(survey, 0, sizeof(*survey));
- 			return 0;
- 		}
- 		return -ENOENT;
- 	}
- 
--	ar_survey = &ar->survey[idx];
-+	ah_survey = &ah->survey[idx];
- 
--	ath12k_mac_update_bss_chan_survey(ar, &sband->channels[idx]);
-+	ath12k_mac_update_bss_chan_survey(ar, &sband->channels[sband_idx]);
- 
--	spin_lock_bh(&ar->data_lock);
--	memcpy(survey, ar_survey, sizeof(*survey));
--	spin_unlock_bh(&ar->data_lock);
-+	scoped_guard(spinlock_bh, &ah->survey_lock) {
-+		memcpy(survey, ah_survey, sizeof(*survey));
-+	}
- 
--	survey->channel = &sband->channels[idx];
-+	survey->channel = &sband->channels[sband_idx];
- 
- 	if (ar->rx_channel == survey->channel)
- 		survey->filled |= SURVEY_INFO_IN_USE;
-@@ -15353,6 +15355,7 @@ static struct ath12k_hw *ath12k_mac_hw_allocate(struct ath12k_hw_group *ag,
- 	mutex_init(&ah->hw_mutex);
- 	init_completion(&ah->peer_ml_id_done);
- 
-+	spin_lock_init(&ah->survey_lock);
- 	spin_lock_init(&ah->dp_hw.peer_lock);
- 	INIT_LIST_HEAD(&ah->dp_hw.dp_peers_list);
- 
 diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 6ceba5caa8d66..ee9e50aef03fc 100644
+index ee9e50aef03fc..9840dd950ac9f 100644
 --- a/drivers/net/wireless/ath/ath12k/wmi.c
 +++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -6723,16 +6723,12 @@ static int ath12k_pull_roam_ev(struct ath12k_base *ab, struct sk_buff *skb,
- 	return 0;
- }
+@@ -10279,12 +10279,12 @@ static void ath12k_wmi_op_rx(struct ath12k_base *ab, struct sk_buff *skb)
+ 	struct wmi_cmd_hdr *cmd_hdr;
+ 	enum wmi_tlv_event_id id;
  
--static int freq_to_idx(struct ath12k *ar, int freq)
-+static int freq_to_idx(struct ieee80211_hw *hw, int freq)
- {
- 	struct ieee80211_supported_band *sband;
--	struct ieee80211_hw *hw = ath12k_ar_to_hw(ar);
- 	int band, ch, idx = 0;
- 
- 	for (band = NL80211_BAND_2GHZ; band < NUM_NL80211_BANDS; band++) {
--		if (!ar->mac.sbands[band].channels)
--			continue;
+-	cmd_hdr = (struct wmi_cmd_hdr *)skb->data;
+-	id = le32_get_bits(cmd_hdr->cmd_id, WMI_CMD_HDR_CMD_ID);
 -
- 		sband = hw->wiphy->bands[band];
- 		if (!sband)
- 			continue;
-@@ -7643,6 +7639,7 @@ static void ath12k_chan_info_event(struct ath12k_base *ab, struct sk_buff *skb)
- {
- 	struct wmi_chan_info_event ch_info_ev = {};
- 	struct ath12k *ar;
-+	struct ath12k_hw *ah;
- 	struct survey_info *survey;
- 	int idx;
- 	/* HW channel counters frequency value in hertz */
-@@ -7674,6 +7671,7 @@ static void ath12k_chan_info_event(struct ath12k_base *ab, struct sk_buff *skb)
- 		return;
- 	}
- 	spin_lock_bh(&ar->data_lock);
-+	ah = ath12k_ar_to_ah(ar);
+-	if (!skb_pull(skb, sizeof(struct wmi_cmd_hdr)))
++	cmd_hdr = skb_pull_data(skb, sizeof(*cmd_hdr));
++	if (!cmd_hdr)
+ 		goto out;
  
- 	switch (ar->scan.state) {
- 	case ATH12K_SCAN_IDLE:
-@@ -7685,8 +7683,8 @@ static void ath12k_chan_info_event(struct ath12k_base *ab, struct sk_buff *skb)
- 		break;
- 	}
- 
--	idx = freq_to_idx(ar, le32_to_cpu(ch_info_ev.freq));
--	if (idx >= ARRAY_SIZE(ar->survey)) {
-+	idx = freq_to_idx(ath12k_ar_to_hw(ar), le32_to_cpu(ch_info_ev.freq));
-+	if (idx >= ARRAY_SIZE(ah->survey)) {
- 		ath12k_warn(ab, "chan info: invalid frequency %d (idx %d out of bounds)\n",
- 			    ch_info_ev.freq, idx);
- 		goto exit;
-@@ -7699,14 +7697,20 @@ static void ath12k_chan_info_event(struct ath12k_base *ab, struct sk_buff *skb)
- 		cc_freq_hz = (le32_to_cpu(ch_info_ev.mac_clk_mhz) * 1000);
- 
- 	if (ch_info_ev.cmd_flags == WMI_CHAN_INFO_START_RESP) {
--		survey = &ar->survey[idx];
--		memset(survey, 0, sizeof(*survey));
--		survey->noise = le32_to_cpu(ch_info_ev.noise_floor);
--		survey->filled = SURVEY_INFO_NOISE_DBM | SURVEY_INFO_TIME |
--				 SURVEY_INFO_TIME_BUSY;
--		survey->time = div_u64(le32_to_cpu(ch_info_ev.cycle_count), cc_freq_hz);
--		survey->time_busy = div_u64(le32_to_cpu(ch_info_ev.rx_clear_count),
--					    cc_freq_hz);
-+		scoped_guard(spinlock_bh, &ah->survey_lock) {
-+			survey = &ah->survey[idx];
-+			memset(survey, 0, sizeof(*survey));
-+			survey->noise = le32_to_cpu(ch_info_ev.noise_floor);
-+			survey->time =
-+				div_u64(le32_to_cpu(ch_info_ev.cycle_count),
-+					cc_freq_hz);
-+			survey->time_busy =
-+				div_u64(le32_to_cpu(ch_info_ev.rx_clear_count),
-+					cc_freq_hz);
-+			survey->filled = SURVEY_INFO_NOISE_DBM |
-+					 SURVEY_INFO_TIME |
-+					 SURVEY_INFO_TIME_BUSY;
-+		}
- 	}
- exit:
- 	spin_unlock_bh(&ar->data_lock);
-@@ -7719,6 +7723,7 @@ ath12k_pdev_bss_chan_info_event(struct ath12k_base *ab, struct sk_buff *skb)
- 	struct wmi_pdev_bss_chan_info_event bss_ch_info_ev = {};
- 	struct survey_info *survey;
- 	struct ath12k *ar;
-+	struct ath12k_hw *ah;
- 	u32 cc_freq_hz = ab->cc_freq_hz;
- 	u64 busy, total, tx, rx, rx_bss;
- 	int idx;
-@@ -7759,28 +7764,31 @@ ath12k_pdev_bss_chan_info_event(struct ath12k_base *ab, struct sk_buff *skb)
- 		return;
- 	}
- 
--	spin_lock_bh(&ar->data_lock);
--	idx = freq_to_idx(ar, le32_to_cpu(bss_ch_info_ev.freq));
--	if (idx >= ARRAY_SIZE(ar->survey)) {
-+	ah = ath12k_ar_to_ah(ar);
++	id = le32_get_bits(cmd_hdr->cmd_id, WMI_CMD_HDR_CMD_ID);
 +
-+	idx = freq_to_idx(ath12k_ar_to_hw(ar), le32_to_cpu(bss_ch_info_ev.freq));
-+	if (idx >= ARRAY_SIZE(ah->survey)) {
- 		ath12k_warn(ab, "bss chan info: invalid frequency %d (idx %d out of bounds)\n",
- 			    bss_ch_info_ev.freq, idx);
- 		goto exit;
- 	}
- 
--	survey = &ar->survey[idx];
-+	scoped_guard(spinlock_bh, &ah->survey_lock) {
-+		survey = &ah->survey[idx];
-+
-+		survey->noise = le32_to_cpu(bss_ch_info_ev.noise_floor);
-+		survey->time = div_u64(total, cc_freq_hz);
-+		survey->time_busy = div_u64(busy, cc_freq_hz);
-+		survey->time_rx = div_u64(rx_bss, cc_freq_hz);
-+		survey->time_tx = div_u64(tx, cc_freq_hz);
-+		survey->filled |= (SURVEY_INFO_NOISE_DBM |
-+				   SURVEY_INFO_TIME |
-+				   SURVEY_INFO_TIME_BUSY |
-+				   SURVEY_INFO_TIME_RX |
-+				   SURVEY_INFO_TIME_TX);
-+	}
- 
--	survey->noise     = le32_to_cpu(bss_ch_info_ev.noise_floor);
--	survey->time      = div_u64(total, cc_freq_hz);
--	survey->time_busy = div_u64(busy, cc_freq_hz);
--	survey->time_rx   = div_u64(rx_bss, cc_freq_hz);
--	survey->time_tx   = div_u64(tx, cc_freq_hz);
--	survey->filled   |= (SURVEY_INFO_NOISE_DBM |
--			     SURVEY_INFO_TIME |
--			     SURVEY_INFO_TIME_BUSY |
--			     SURVEY_INFO_TIME_RX |
--			     SURVEY_INFO_TIME_TX);
- exit:
--	spin_unlock_bh(&ar->data_lock);
- 	complete(&ar->bss_survey_done);
- 
- 	rcu_read_unlock();
+ 	switch (id) {
+ 		/* Process all the WMI events here */
+ 	case WMI_SERVICE_READY_EVENTID:
 -- 
 2.53.0
 
