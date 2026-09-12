@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB37B41F344;
-	Sat, 12 Sep 2026 08:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699EA41D212;
+	Sat, 12 Sep 2026 08:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202577; cv=none; b=szEGLLUHlF8hphw1lE2jfv/UkTzFGCKqSKiGl7x0r7/XhzOHwHmtuyvZu/cROq4k5ww++st5DfrBHU6lAcBZAHvRIKi8mY4ErmRRQdOykq5Gmj7+j6DGgly4ELeHujsCBWi4QMlfgWdV6iAawGF2aM6QVsxw4CTthnI3jaDBvj0=
+	t=1789202581; cv=none; b=EpoNlF6SrrPEnkmJCKGaFad53/pNxI7HKXvJBgmiEWUQhEvziV9w++EIkmbReoYE9vpXq2QvKvNta+1THS1GfdEHn4R/tywfMtb8YAtgkgeoxBbrWu0cqlJIlRi1PA/Z1Ft10z5KPFnlRbS6uxkIEW5HTGbGcB6FwGPcmjAMkqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202577; c=relaxed/simple;
-	bh=od995VhGdkbuQs/e+d++3P6Soijxv3PYGnCUV063w0w=;
+	s=arc-20240116; t=1789202581; c=relaxed/simple;
+	bh=CTtRjt1zHMvMI2kYer/WzloQ5hcqica6g+vh4ktxqQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALQ9KXK82oGjloaQCGwrBYbe3M/FKc6SCSTb+3zhgaiFCziPy4urkhF26QV26ov/5+dh87zCzo74UFqUqChgQ494e4KxYpQV7wYU229j+4mv97v44ltp7lVhWaUqSIzYgzJN2YEWUpHgLvVDqxCor/CHWbRfTwmdXPoop2MOhkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+/tojWn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j/DcmzzV10M0knh7wvM41alu2n9L9CR+647C87qNu8JPUrOGl/G0/+Io8HBIWkxjRih4Jx57fURdG0sYgXbvBNtxgofaGeqMmkv1psDwcr1nTy3SZK76TWmbN1jqCyqScJUEL80md4Lagdv1+2D5Z4wEbpGanvcNuoiTg5fyrpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SleUrBi9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+/tojWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7751F00893;
-	Sat, 12 Sep 2026 08:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SleUrBi9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB8E1F000FF;
+	Sat, 12 Sep 2026 08:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202575;
-	bh=xysmy91Gr/+tAUt3TJzV2YzQC1SlyY72Tpu5KmPUytU=;
+	s=korg; t=1789202580;
+	bh=4k5++y6T1GWFgVGr3CyANbGlSAW4sHmnci0syZ+J7NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+/tojWnMOzjsFXMswlejIWpDEyl6daUdi/dByrONuFwwDprBEjQT6jFf4NktxtiH
-	 Z8YcmovWMDa4eMT1CDO1JnxFvw495ZFpp8KCSKfUPOPOOfONwWAWRHY5bYXsOp0Hsn
-	 at4g+QVafVPBCUBPtMCCa9RirGBJXxKTuBKXoAXc=
+	b=SleUrBi9gLww6XKt/Tj9tP1ge1xeN7ATpCT5UwjZf4vKGcDyiMWKywqTjswv4hx9s
+	 JxeW5HXQChkCi488P5vcddC6sHHHPBzp8NdUJtu5UjMTaOulwabtajIiUgNr+cLqIB
+	 NpSU1qwCyGymOIJ2kMuuu+79x3n2XRTw8netbWXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Chengfeng Lin <lin2530632123@gmail.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Sun YangKai <sunk67188@gmail.com>,
-	Leo Martins <loemra.dev@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Yichong Chen <chenyichong@uniontech.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1229/1815] btrfs: replace writeback inhibition xarray with a fixed inline buffer
-Date: Sat, 12 Sep 2026 08:49:39 +0200
-Message-ID: <20260912065717.865254504@linuxfoundation.org>
+Subject: [PATCH 7.2 1230/1815] btrfs: retry verity reads for not-uptodate Merkle folios
+Date: Sat, 12 Sep 2026 08:49:40 +0200
+Message-ID: <20260912065717.889145904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,294 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Martins <loemra.dev@gmail.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 67bd829a14b7d71ffea28147b98dadf9ee684568 ]
+[ Upstream commit 8cc569696dac51fc62bb39b3b8f530582b916d29 ]
 
-Commit f9a48549a15a ("btrfs: inhibit extent buffer writeback to prevent
-COW amplification") tracks the extent buffers a transaction handle has
-inhibited in a per-handle xarray. Keying the tracking to the transaction
-handle is correct, but using an xarray for it causes two problems in
-production.
+btrfs_read_merkle_tree_page() can find a folio in the mapping that is not
+uptodate.  After taking the folio lock, the current code treats that state
+as a read error and returns -EIO.
 
-First, a write_iops regression. Every COW calls
-btrfs_inhibit_eb_writeback() from btrfs_force_cow_block() and
-should_cow_block(), which does an xa_store() keyed by eb->start. The
-kernel test robot reported a 22.6% fio.write_iops regression on a
-single-task 4k randwrite workload (ftruncate ioengine, buffered IO) on
-btrfs. The cost is the per-COW xarray store done on every COW'd block.
-Replacing it with a non-allocating fixed buffer recovers the lost
-throughput, and that buffer does more per-COW bookkeeping yet still
-recovers, so the cost is the xarray operation itself rather than the
-extra tracking work.
+That can make a previous transient read failure sticky.  If the failed read
+left a not-uptodate folio in the mapping, later callers find that folio and
+fail instead of retrying the read.
 
-Second, an unbounded cleanup walk. btrfs_uninhibit_all_eb_writeback()
-iterates every eb the handle inhibited with xa_for_each(). A single
-handle that COWs a very large number of blocks (inode eviction, or
-truncate of a file with many extents, where btrfs_truncate_inode_items()
-loops over many search_again descents under one handle) makes that walk
-arbitrarily long. It runs in __btrfs_end_transaction() before
-num_writers is dropped, so it blocks the committing thread; this shows up
-as multi-second stalls and RCU stall reports.
+Keep the existing page-cache insertion and locking order, but retry the
+Merkle item read when a not-uptodate folio is found in the mapping.  Also
+unlock the folio when read_key_bytes() fails so that a later caller can
+lock it and retry the read.
 
-Replace the xarray with a fixed inline array on btrfs_trans_handle,
-managed with a CLOCK (second-chance) eviction policy. Inhibiting a buffer
-becomes an array append with no allocation and no tree walk, and the
-end-of-handle cleanup is bounded by the array size.
-
-The set that actually needs protection is the working set the handle
-revisits across search_again descents, the search path frontier, which is
-on the order of the tree height. It is not every block the handle ever
-COWs. should_cow_block() re-inhibiting an already tracked buffer marks it
-referenced, so revisited buffers survive eviction while write-once buffers
-are reclaimed first. A small fixed buffer is therefore enough where a
-non-evicting array would either overflow or have to grow without bound.
-BTRFS_INHIBITED_EBS_SLOTS is 8 and the reference bits pack into a u32.
-
-The CLOCK eviction is what justifies the extra complexity over a plain
-non-evicting array. The test workload stresses amplification: it removes
-16 heavily fragmented 64 MiB files in one transaction while background
-writeback keeps writing out in-use metadata. A re-COW event is a buffer
-already COWed in the running transaction that was written back and then
-COWed again; the figure below is the ratio of re-COW events to first-COW
-events summed across the eviction (n=5, lower is better):
-
-  tracking                           re-COW per first-COW
-  no inhibition                      6.1
-  non-evicting array, 32 slots       3.8
-  CLOCK array, 8 slots (this patch)  1.6
-  unbounded xarray (reverted)        1.4
-
-The non-evicting array fills with write-once buffers and stops covering
-the buffers the handle keeps revisiting, so even at four times the slots
-it leaves most of the amplification. CLOCK evicts the cold buffers and
-keeps the revisited ones, recovering almost all of the unbounded benefit.
-The eviction policy, not the buffer size, is what closes the gap.
-
-eb->writeback_inhibitors and the WB_SYNC_ALL bypass in
-lock_extent_buffer_for_io() are unchanged, so fsync and commit behavior
-are unaffected. A reference is taken on each tracked buffer so it cannot
-be freed while the array points at it; eviction drops that reference and
-the inhibitor count.
-
-There's another testing report, showing 20% latency improvement on
-reflink and deduplication synthetic benchmark. Full detailed report at
-https://github.com/lcf0399/linux-regression-evidence/tree/main/btrfs-remap-writeback-inhibition-v2 .
-
-Link: https://lore.kernel.org/all/CANGjgd=fQkHht2PdDi-+EAdzWH7UtxxWhhJ7b80Rr17PbpgxOw@mail.gmail.com/
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Fixes: f9a48549a15a ("btrfs: inhibit extent buffer writeback to prevent COW amplification")
-Closes: https://lore.kernel.org/oe-lkp/202603112240.f7605968-lkp@intel.com
-Tested-by: Chengfeng Lin <lin2530632123@gmail.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: Sun YangKai <sunk67188@gmail.com>
-Signed-off-by: Leo Martins <loemra.dev@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+Fixes: 06ed09351b67 ("btrfs: convert btrfs_read_merkle_tree_page() to use a folio")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c   | 87 ++++++++++++++++++++++++++----------------
- fs/btrfs/transaction.c |  2 -
- fs/btrfs/transaction.h | 25 ++++++++++--
- 3 files changed, 77 insertions(+), 37 deletions(-)
+ fs/btrfs/verity.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 78f73f91d5775..7c71935e20b72 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -3129,47 +3129,71 @@ static inline void btrfs_release_extent_buffer(struct extent_buffer *eb)
- 	kmem_cache_free(extent_buffer_cache, eb);
- }
+diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
+index 983365a735416..1133a56c0568b 100644
+--- a/fs/btrfs/verity.c
++++ b/fs/btrfs/verity.c
+@@ -720,14 +720,18 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 			goto out;
  
-+/*
-+ * Claim a slot to track an extent buffer in, evicting the coldest tracked buffer
-+ * when the array is full.
-+ *
-+ * Slots fill in order until the array is full. After that a CLOCK (second
-+ * chance) scan advances the hand, clearing one reference bit per step, until
-+ * it lands on an unreferenced slot whose buffer is evicted. Clearing a bit per
-+ * step bounds the scan to BTRFS_INHIBITED_EBS_SLOTS iterations.
-+ */
-+static int btrfs_inhibit_claim_slot(struct btrfs_trans_handle *trans)
-+{
-+	int slot;
-+
-+	if (trans->nr_inhibited_ebs < BTRFS_INHIBITED_EBS_SLOTS)
-+		return trans->nr_inhibited_ebs++;
-+
-+	while (trans->inhibited_ebs_referenced & (1U << trans->inhibited_ebs_hand)) {
-+		trans->inhibited_ebs_referenced &= ~(1U << trans->inhibited_ebs_hand);
-+		trans->inhibited_ebs_hand =
-+			(trans->inhibited_ebs_hand + 1) % BTRFS_INHIBITED_EBS_SLOTS;
-+	}
-+	slot = trans->inhibited_ebs_hand;
-+	trans->inhibited_ebs_hand = (trans->inhibited_ebs_hand + 1) % BTRFS_INHIBITED_EBS_SLOTS;
-+
-+	atomic_dec(&trans->inhibited_ebs[slot]->writeback_inhibitors);
-+	free_extent_buffer(trans->inhibited_ebs[slot]);
-+
-+	return slot;
-+}
-+
- /*
-  * Inhibit writeback on buffer during transaction.
-  *
-  * @trans:  transaction handle that will own the inhibitor
-  * @eb:      extent buffer to inhibit writeback on
-  *
-- * Attempt to track this extent buffer in the transaction's inhibited set.  If
-- * memory allocation fails, the buffer is simply not tracked. It may be written
-- * back and need re-COW, which is the original behavior.  This is acceptable
-- * since inhibiting writeback is an optimization.
-+ * Attempt to track this extent buffer in the transaction's inhibited set.  When
-+ * the set is full the coldest tracked buffer is evicted instead.  An untracked
-+ * buffer may be written back and need re-COW, which is the original behavior.
-+ * This is acceptable since inhibiting writeback is an optimization.
-  */
- void btrfs_inhibit_eb_writeback(struct btrfs_trans_handle *trans, struct extent_buffer *eb)
- {
--	unsigned long index = eb->start >> trans->fs_info->nodesize_bits;
--	void *old;
-+	int slot;
- 
- 	lockdep_assert_held(&eb->lock);
--	/* Check if already inhibited by this handle. */
--	old = xa_load(&trans->writeback_inhibited_ebs, index);
--	if (old == eb)
--		return;
--
--	/* Take reference for the xarray entry. */
--	refcount_inc(&eb->refs);
- 
--	old = xa_store(&trans->writeback_inhibited_ebs, index, eb, GFP_NOFS);
--	if (xa_is_err(old)) {
--		/* Allocation failed, just skip inhibiting this buffer. */
--		free_extent_buffer(eb);
--		return;
-+	/* Already tracked: set its reference bit (second chance) and return. */
-+	for (int i = 0; i < trans->nr_inhibited_ebs; i++) {
-+		if (trans->inhibited_ebs[i] == eb) {
-+			trans->inhibited_ebs_referenced |= 1U << i;
-+			return;
+ 		folio_lock(folio);
+-		/* If it's not uptodate after we have the lock, we got a read error. */
+-		if (!folio_test_uptodate(folio)) {
++		/* Folio was truncated from mapping. */
++		if (!folio->mapping) {
+ 			folio_unlock(folio);
+ 			folio_put(folio);
+-			return ERR_PTR(-EIO);
++			goto again;
+ 		}
+-		folio_unlock(folio);
+-		goto out;
++		/* Another reader may have filled the folio while we waited. */
++		if (folio_test_uptodate(folio)) {
++			folio_unlock(folio);
++			goto out;
 +		}
++		goto read_folio;
  	}
  
--	/* Handle replacement of different eb at same index. */
--	if (old && old != eb) {
--		struct extent_buffer *old_eb = old;
--
--		atomic_dec(&old_eb->writeback_inhibitors);
--		free_extent_buffer(old_eb);
--	}
-+	slot = btrfs_inhibit_claim_slot(trans);
- 
-+	/*
-+	 * Pin the eb while the array holds a raw pointer to it; the counter is
-+	 * what lock_extent_buffer_for_io() checks.
-+	 */
-+	refcount_inc(&eb->refs);
- 	atomic_inc(&eb->writeback_inhibitors);
-+	trans->inhibited_ebs[slot] = eb;
-+	trans->inhibited_ebs_referenced |= 1U << slot;
- }
- 
- /*
-@@ -3177,14 +3201,13 @@ void btrfs_inhibit_eb_writeback(struct btrfs_trans_handle *trans, struct extent_
-  */
- void btrfs_uninhibit_all_eb_writeback(struct btrfs_trans_handle *trans)
- {
--	struct extent_buffer *eb;
--	unsigned long index;
--
--	xa_for_each(&trans->writeback_inhibited_ebs, index, eb) {
--		atomic_dec(&eb->writeback_inhibitors);
--		free_extent_buffer(eb);
-+	for (int i = 0; i < trans->nr_inhibited_ebs; i++) {
-+		atomic_dec(&trans->inhibited_ebs[i]->writeback_inhibitors);
-+		free_extent_buffer(trans->inhibited_ebs[i]);
- 	}
--	xa_destroy(&trans->writeback_inhibited_ebs);
-+	trans->nr_inhibited_ebs = 0;
-+	trans->inhibited_ebs_referenced = 0;
-+	trans->inhibited_ebs_hand = 0;
- }
- 
- static struct extent_buffer *__alloc_extent_buffer(struct btrfs_fs_info *fs_info,
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 5376cd5505454..80919590175fc 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -698,8 +698,6 @@ start_transaction(struct btrfs_root *root, unsigned int num_items,
- 		goto alloc_fail;
+ 	folio = filemap_alloc_folio(mapping_gfp_constraint(inode->i_mapping, ~__GFP_FS),
+@@ -744,6 +748,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 		return ERR_PTR(ret);
  	}
  
--	xa_init(&h->writeback_inhibited_ebs);
--
++read_folio:
  	/*
- 	 * If we are JOIN_NOLOCK we're already committing a transaction and
- 	 * waiting on this guy, so we don't need to do the sb_start_intwrite
-diff --git a/fs/btrfs/transaction.h b/fs/btrfs/transaction.h
-index 5e4b1106fd905..3a57f227b5ed2 100644
---- a/fs/btrfs/transaction.h
-+++ b/fs/btrfs/transaction.h
-@@ -7,12 +7,12 @@
- #define BTRFS_TRANSACTION_H
- 
- #include <linux/atomic.h>
-+#include <linux/build_bug.h>
- #include <linux/refcount.h>
- #include <linux/list.h>
- #include <linux/time64.h>
- #include <linux/mutex.h>
- #include <linux/wait.h>
--#include <linux/xarray.h>
- #include "btrfs_inode.h"
- #include "delayed-ref.h"
- 
-@@ -23,6 +23,7 @@ struct btrfs_fs_info;
- struct btrfs_root_item;
- struct btrfs_root;
- struct btrfs_path;
-+struct extent_buffer;
- 
- /*
-  * Signal that a direct IO write is in progress, to avoid deadlock for sync
-@@ -136,6 +137,18 @@ enum {
- 
- #define TRANS_EXTWRITERS	(__TRANS_START | __TRANS_ATTACH)
- 
-+/*
-+ * Number of extent buffers a transaction handle tracks for writeback
-+ * inhibition. The CLOCK reference bits pack into a u32 so this must not exceed
-+ * 32, and keeping it a power of two lets the compiler reduce the CLOCK hand
-+ * modulo to a mask.
-+ */
-+#define BTRFS_INHIBITED_EBS_SLOTS				8
-+
-+static_assert(BTRFS_INHIBITED_EBS_SLOTS <= 32);
-+static_assert(BTRFS_INHIBITED_EBS_SLOTS != 0 &&
-+	      (BTRFS_INHIBITED_EBS_SLOTS & (BTRFS_INHIBITED_EBS_SLOTS - 1)) == 0);
-+
- struct btrfs_trans_handle {
- 	u64 transid;
- 	u64 bytes_reserved;
-@@ -163,8 +176,14 @@ struct btrfs_trans_handle {
- 	struct btrfs_fs_info *fs_info;
- 	struct list_head new_bgs;
- 	struct btrfs_block_rsv delayed_rsv;
--	/* Extent buffers with writeback inhibited by this handle. */
--	struct xarray writeback_inhibited_ebs;
-+
-+	/* Extent buffers this handle has inhibited writeback on. */
-+	struct extent_buffer *inhibited_ebs[BTRFS_INHIBITED_EBS_SLOTS];
-+	/* CLOCK reference bit per slot. */
-+	u32 inhibited_ebs_referenced;
-+	u32 nr_inhibited_ebs;
-+	/* CLOCK hand. */
-+	u32 inhibited_ebs_hand;
- };
- 
- /*
+ 	 * Merkle item keys are indexed from byte 0 in the merkle tree.
+ 	 * They have the form:
+@@ -753,6 +758,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 	ret = read_key_bytes(BTRFS_I(inode), BTRFS_VERITY_MERKLE_ITEM_KEY, off,
+ 			     folio_address(folio), PAGE_SIZE, folio);
+ 	if (ret < 0) {
++		folio_unlock(folio);
+ 		folio_put(folio);
+ 		return ERR_PTR(ret);
+ 	}
 -- 
 2.53.0
 
