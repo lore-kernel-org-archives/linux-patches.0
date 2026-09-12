@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2E1386C21;
-	Sat, 12 Sep 2026 09:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD40835F602;
+	Sat, 12 Sep 2026 09:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204863; cv=none; b=HnLjFSt0dc6/LIjYRW5DagWGI+TZv6VNsgR2XR6M2Ie8+6xKYhOeB5GwyfoC+tttZbmL97oJoofkvYRgmBwrMf73N20wpBHz3yriTZQGedtmxl9Wli/MRfnZTklqLUp/vuWmq8HeczkWxAcKy1BgEOhO9uWLin3Lpiq67BEILQM=
+	t=1789204867; cv=none; b=eDqyhFZqjZXdvwp5nATzd6GYQzEeCnUfE4o0ZfwamU8Nomckstpd2y8KvzfMhQJkXsq4FmaQ87tDSFjy2z6nzmGgQasVMvBzlpB/fhUvRz+QVH1V6VUHsqRm+CInqIrGVFes2attdpaSYSag1ySWODk7BN96j6PwBKyxI4yQIp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204863; c=relaxed/simple;
-	bh=LwjBrDC1uo0Do/CcYSIrwNgqiow6GVc+LYV3kKbttXk=;
+	s=arc-20240116; t=1789204867; c=relaxed/simple;
+	bh=ibdF8jSlBr7XbT3vwv6c+6YrYzVT6br9KHiutKDnUxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s97gAp6aCNCHLbDAGIhryrAYWJGrewQtFmU2naVDeEcgYB4EcilUUGdlqdBxOT5lfANxFMhDSFBJQi3uj1h/B7uYKegfnsDhe9206ABqN+Cf2+ZtaoTmzMJdVI0z+ebiV3WjYO4VwI9tXK52LHTg7wD2HcQ0/174ZU+XyAbYi04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4xFcWcK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sJ6cxuFldigR/xN0ZMYb+Hw9V6GG5sEZLhNXlf/e0Jq+ay2abYRut06qSsOyGb7sqp1jyoBQla3876r8NTuQX6OoZ6Op0E7PKnkLNeblXSRyhtkhlOjMnn9slqsixlJB7BZTQsoIEiS6GyrAV4/pSsxybyLx1PkDJDFdixFKJHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogKu7isI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4xFcWcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B55E1F000FF;
-	Sat, 12 Sep 2026 09:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogKu7isI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DA61F000FF;
+	Sat, 12 Sep 2026 09:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204860;
-	bh=jDSLEPEq0LQMXzRmK2TmtzgwoxAmVHe8zJfdF2zpL/k=;
+	s=korg; t=1789204865;
+	bh=DM0E3WwfZJX2BV4O1Ytvi7vzaEtNpoEYaMrFRcHi4qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p4xFcWcKccdcmZdNC/DSjgnjAx/pGSRyJdr4bTaDTdagXJ6Bm/PU5m0Wbl59A8v4f
-	 JKZpxTZPsfpNd8bqtYPwsW48wGhL1g5WsuStfq8tU2uKzaJ3LT6ogRb7uBU+6QIPaG
-	 pVchu3sVI+sWOACBPPvGmnGCn3bxtVSKJf06BZUk=
+	b=ogKu7isIW6elc9raj6GWRzqZcK8R0hMl+njuwQ1O9jF17IyOW3m3ndOcmr0LNafX/
+	 TuTGVaAFY6qb1B98h5bxqISRmduHHc1W2wWKZbLs+wFFRk0RhLKQUbSjMdlol6sZys
+	 kzPcT8E+gxrSURmADiN6qzd5wJT/g+JOSptGwTV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Rong Zhang <i@rong.moe>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1701/1815] net: libwx: fix concurrent bitmap overwrite in PTP setup
-Date: Sat, 12 Sep 2026 08:57:31 +0200
-Message-ID: <20260912065728.912990769@linuxfoundation.org>
+Subject: [PATCH 7.2 1702/1815] net: page_pool: Remove zone/policy GFP flags when allocating XArray entries
+Date: Sat, 12 Sep 2026 08:57:32 +0200
+Message-ID: <20260912065728.935187706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,105 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit f05516dd7b865666ea7d67e90d0edb588ae9ad18 ]
+[ Upstream commit 039f248a6cc1f4dec895c001de2c600842022e58 ]
 
-In wx_ptp_set_timestamp_mode(), the driver copies the global `wx->flags`
-bitmap to a local variable, modifies the PTP-related bits, and then writes
-the entire bitmap back using memcpy().
+Net drivers request GFP flags according to both the current context and
+the device constraints, but the XArray entry itself is by no mean used
+by the device. Passing though device constraints to XArray allocation is
+a bug and will be warned and fixed up by slab, e.g.:
 
-This Read-Copy-Update pattern is unsafe and introduces a critical race
-condition. Other asynchronous contexts (such as Tx timeout routines or
-GPIO IRQ handlers) update individual bits in `wx->flags` concurrently
-using atomic bitops like set_bit() or clear_bit(). The memcpy() write-back
-can silently overwrite and drop these concurrent changes, potentially
-causing the driver to miss critical module reset or PCIe recovery requests.
+    Unexpected gfp: 0x4 (GFP_DMA32). Fixing up to gfp: 0x82820 (GFP_ATOMIC|__GFP_NOWARN|__GFP_NOMEMALLOC). Fix your code!
+    CPU: 2 UID: 0 PID: 1071629 Comm: kworker/u80:1 Not tainted 7.2.0-rc7+ #1 PREEMPT(lazy)
+    Hardware name: LENOVO 21Q4/LNVNB161216, BIOS PXCN27WW 10/20/2025
+    Workqueue: mt76 mt792x_pm_wake_work [mt792x_lib]
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x6e/0x90
+     kmalloc_fix_flags+0x4d/0x6a
+     refill_objects+0x10a/0x330
+     __pcs_replace_empty_main+0x292/0x5c0
+     kmem_cache_alloc_lru_noprof+0x4c2/0x680
+     ? __xas_nomem+0x3a/0x120
+     __xas_nomem+0x3a/0x120
+     __xa_alloc+0xd4/0x190
+     page_pool_dma_map+0xef/0x400
+     __page_pool_alloc_netmems_slow+0xed/0x480
+     ? lock_release+0x280/0x490
+     page_pool_alloc_frag_netmem+0xe0/0x3a0
+     page_pool_alloc_frag+0xe/0x20
+     mt76_dma_rx_fill_buf+0x1f6/0x580 [mt76]
+     mt76_dma_rx_reset+0x1cf/0x230 [mt76]
+     mt792x_wpdma_reset+0x183/0x1b0 [mt792x_lib]
+     mt792x_wpdma_reinit_cond+0x5e/0xa0 [mt792x_lib]
+     mt792xe_mcu_drv_pmctrl+0x28/0x60 [mt792x_lib]
+     mt792x_mcu_drv_pmctrl+0x3e/0x90 [mt792x_lib]
+     mt792x_pm_wake_work+0x2d/0x1d0 [mt792x_lib]
+     ? process_one_work+0x20e/0x600
+     process_one_work+0x230/0x600
+     ? process_one_work+0x256/0x600
+     worker_thread+0x1ec/0x3c0
+     ? rescuer_thread+0x610/0x610
+     kthread+0xf2/0x130
+     ? kthread_affine_node+0x140/0x140
+     ret_from_fork+0x2a5/0x380
+     ? kthread_affine_node+0x140/0x140
+     ret_from_fork_asm+0x11/0x20
+     </TASK>
 
-Fix this by removing the local bitmap copy. Instead, evaluate the intended
-PTP flag states locally and apply them directly to `wx->flags` using
-atomic set_bit() and clear_bit() operations only after the hardware is
-successfully configured.
+Currently mt76 and stmmac may allocate page pool pages with GFP_DMA32.
 
-Fixes: 06e75161b9d4 ("net: wangxun: Add support for PTP clock")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/6C7EC12D69217315+20260818074721.45536-1-jiawenwu@trustnetic.com
+Fix it by removing zone/policy GFP flags when allocating XArray entries.
+This is inspired by commit 96d578088085 ("iommu/dma: Use the gfp
+parameter in __iommu_dma_alloc_noncontiguous()").
+
+Fixes: ee62ce7a1d90 ("page_pool: Track DMA-mapped pages and unmap them when destroying the pool")
+Signed-off-by: Rong Zhang <i@rong.moe>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20260821-page-pool-xa-drop-dma32-v1-1-6eab295c3478@rong.moe
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_ptp.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ net/core/page_pool.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_ptp.c b/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
-index 44f3e65052468..1165518d55225 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
-@@ -555,13 +555,11 @@ static int wx_ptp_set_timestamp_mode(struct wx *wx,
- {
- 	u32 tsync_tx_ctl = WX_TSC_1588_CTL_ENABLED;
- 	u32 tsync_rx_ctl = WX_PSR_1588_CTL_ENABLED;
--	DECLARE_BITMAP(flags, WX_PF_FLAGS_NBITS);
- 	u32 tsync_rx_mtrl = PTP_EV_PORT << 16;
-+	bool rx_tstamp = false;
- 	bool is_l2 = false;
- 	u32 regval;
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 50ee550fef73a..8f8956fb061be 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -484,6 +484,13 @@ static int page_pool_register_dma_index(struct page_pool *pool,
+ 	if (unlikely(!PP_DMA_INDEX_BITS))
+ 		goto out;
  
--	memcpy(flags, wx->flags, sizeof(wx->flags));
--
- 	switch (config->tx_type) {
- 	case HWTSTAMP_TX_OFF:
- 		tsync_tx_ctl = 0;
-@@ -576,20 +574,16 @@ static int wx_ptp_set_timestamp_mode(struct wx *wx,
- 	case HWTSTAMP_FILTER_NONE:
- 		tsync_rx_ctl = 0;
- 		tsync_rx_mtrl = 0;
--		clear_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, flags);
--		clear_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, flags);
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_SYNC:
- 		tsync_rx_ctl |= WX_PSR_1588_CTL_TYPE_L4_V1;
- 		tsync_rx_mtrl |= WX_PSR_1588_MSG_V1_SYNC;
--		set_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, flags);
--		set_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, flags);
-+		rx_tstamp = true;
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ:
- 		tsync_rx_ctl |= WX_PSR_1588_CTL_TYPE_L4_V1;
- 		tsync_rx_mtrl |= WX_PSR_1588_MSG_V1_DELAY_REQ;
--		set_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, flags);
--		set_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, flags);
-+		rx_tstamp = true;
- 		break;
- 	case HWTSTAMP_FILTER_PTP_V2_EVENT:
- 	case HWTSTAMP_FILTER_PTP_V2_L2_EVENT:
-@@ -602,9 +596,8 @@ static int wx_ptp_set_timestamp_mode(struct wx *wx,
- 	case HWTSTAMP_FILTER_PTP_V2_L4_DELAY_REQ:
- 		tsync_rx_ctl |= WX_PSR_1588_CTL_TYPE_EVENT_V2;
- 		is_l2 = true;
-+		rx_tstamp = true;
- 		config->rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
--		set_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, flags);
--		set_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, flags);
- 		break;
- 	default:
- 		/* register PSR_1588_MSG must be set in order to do V1 packets,
-@@ -643,7 +636,8 @@ static int wx_ptp_set_timestamp_mode(struct wx *wx,
- 	WX_WRITE_FLUSH(wx);
- 
- 	/* configure adapter flags only when HW is actually configured */
--	memcpy(wx->flags, flags, sizeof(wx->flags));
-+	assign_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, wx->flags, rx_tstamp);
-+	assign_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, wx->flags, rx_tstamp);
- 
- 	/* clear TX/RX timestamp state, just to be sure */
- 	wx_ptp_clear_tx_timestamp(wx);
++	/*
++	 * Drivers request GFP flags according to both the current context and
++	 * the device constraints, but the XArray entry itself is by no mean
++	 * used by the device, so remove zone/policy flags.
++	 */
++	gfp &= ~(__GFP_DMA | __GFP_DMA32 | __GFP_HIGHMEM | __GFP_COMP);
++
+ 	if (in_softirq())
+ 		err = xa_alloc(&pool->dma_mapped, &id, netmem_to_page(netmem),
+ 			       PP_DMA_INDEX_LIMIT, gfp);
 -- 
 2.53.0
 
