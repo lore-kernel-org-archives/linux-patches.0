@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27928F4F1;
-	Sat, 12 Sep 2026 16:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7801BF4F1;
+	Sat, 12 Sep 2026 16:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231930; cv=none; b=hfe8wwqZKb8FRSMl/BiQJ5jx/n39PTL9ZBjhU3MNvmQO6Py0y2xsiKW2ypYg4JyYssJPY8mH3Zcr9n8y3x2MHfTVoOwO6PxWYwYJhfxfes7I0Qop4is0ZDoMGgsPc18TYddu14hyIWHfwGJh3kYJTxjf24lOP0Aah7rSjj8X1GI=
+	t=1789231935; cv=none; b=AosW16z6fPyGjw2LW0LIjvq6x6FwxbB60J9ffyV/EuXGQjevCqKELCn+7WscsGknXmtc334n+hv2C2LVeurCwVLr7vUAakdBXZDg87nv+i0aPVJTMKrJAskh0XJKO2VC8mnxbLLEl4V5LS8Kd6euou9KIwDa9H3GtjBfkEvA+78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231930; c=relaxed/simple;
-	bh=o4lRnE16KG7R0Kex9I+ncUJ9YRxyhRlQIe49sibxVQU=;
+	s=arc-20240116; t=1789231935; c=relaxed/simple;
+	bh=Vz/N8oCHxVBOPSrUplPjcUo818vjv8/JmsbACcKhPa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPP1kH28v0wqakImtAdjcX+QKVxhBqtA+XKi8lDwlbuzbA/+qPb/MEe+QxgRkuDRYZgxc1J5VMJv2mTPLdk6QTZkMelwZE1CXCG/VkSddi0lv6Umd22N1b4kYcEzedFYr0vS8YrF7WWFIfOg+YNr2mjfPFXpqZ0slBG5n5vQyJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOy5t/Hv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EIolHbqkSSoYh1C8bYYSET/KaG3MvDD+kloVqUIIjoQISJpw7RLO3J4WU63Dqq7lPE6/dfDDCI+Z24wTmRxHUybx1Gi/XtF5FwNOFMEshIY0p4gDoUUiI+CPrXxr9cYUzNLULLFgEVUFy1jN8YXIDmfaDS/JtPDMqyMcvtVMbnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkkJP4RV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOy5t/Hv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7E01F000FF;
-	Sat, 12 Sep 2026 16:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkkJP4RV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F4C1F000FF;
+	Sat, 12 Sep 2026 16:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231929;
-	bh=4cZp9qYeOjvAYstFRcBCmVON4BxqjykMlw4IAzvYe2I=;
+	s=korg; t=1789231934;
+	bh=+NkR54eMsHZB/AABlvQizFUZM4cvFkb8td+C41ymBOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EOy5t/Hv2YBBspPil0PjgJrfxcUDkDiBAd5oYq86NwZgYXpTF5muedfhagfTwkIK6
-	 4ftAqadpHVf78jfvdVc4BkntlfEk0USEUb84Mq2jEFAlTh+40f+RcxX1BrF+UlfAfd
-	 aZdobl7r1ipysNjEJnH4slLjqRqa51wTvc6c0HJI=
+	b=AkkJP4RV1KzRJjhLGL77sAeDwKNJFVycz2jbzzbQTEFcSg/i8ArICMb8mUur900+A
+	 VQhwPXYoegZg6WaoSxps8RcLsv1rhUUMjQr+DgRHtf5OeQT0dJuYhEqXxux6BX0F3h
+	 HzxWGi4embGRM4T/OMusfFOcp/IVuUrUnOT5dG0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1097/1191] Bluetooth: RFCOMM: Validate MTU in rfcomm_apply_pn() to prevent infinite loop
-Date: Sat, 12 Sep 2026 09:03:45 +0200
-Message-ID: <20260912065612.799503228@linuxfoundation.org>
+Subject: [PATCH 6.1 1098/1191] gtp: add synchronize_net() in gtp_newlink() error path to prevent use-after-free
+Date: Sat, 12 Sep 2026 09:03:46 +0200
+Message-ID: <20260912065612.820730771@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,45 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 44c98fd082eafd49d55a8a4077ff488175b2fe24 ]
+[ Upstream commit d989e22ae9802c52c56ad4284d0caf26696cf6ae ]
 
-rfcomm_apply_pn() accepts the MTU value from a remote PN (Parameter
-Negotiation) frame without checking for zero. When the remote peer
-sends an MTU of zero, d->mtu is set to 0. This causes the sendmsg
-path to enter an infinite loop when fragmenting data, as each fragment
-has size == min_t(size_t, len, 0) == 0, so the remaining length never
-decreases. The infinite allocation of zero-length skbs exhausts all
-system memory.
+gtp_newlink()'s error path frees tid_hash and addr_hash without
+waiting for an RCU grace period after clearing sk_user_data. A
+concurrent gtp_encap_recv() in softirq may still hold the gtp_dev
+pointer obtained via rcu_dereference_sk_user_data() and access the
+freed memory.
 
-Fix by clamping d->mtu to RFCOMM_DEFAULT_MTU when the negotiated
-value is zero, consistent with the initial value assigned in
-rfcomm_dlc_alloc().
+  BUG: KASAN: slab-use-after-free in gtp0_pdp_find+0x1f6/0x200 (gtp.c:152)
+  Call Trace:
+   <IRQ>
+   gtp0_pdp_find+0x1f6/0x200
+   gtp_encap_recv+0x527/0x24b0
+   udp_queue_rcv_one_skb+0x75f/0xc10
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Add synchronize_net() before the kfree calls in out_hashtable, which
+covers all error paths from both gtp_encap_enable() and
+gtp_create_sockets().
+
+Fixes: 459aa660eb1d8ce6 ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reported-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Link: https://patch.msgid.link/20260820020735.59474-1-blbllhy@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/gtp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index 349f62a18190e..2914ac1c50024 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1454,6 +1454,10 @@ static int rfcomm_apply_pn(struct rfcomm_dlc *d, int cr, struct rfcomm_pn *pn)
- 
- 	d->mtu = __le16_to_cpu(pn->mtu);
- 
-+	/* MTU 0 causes an infinite loop when fragmenting in sendmsg */
-+	if (!d->mtu)
-+		d->mtu = RFCOMM_DEFAULT_MTU;
-+
- 	if (cr && d->mtu > s->mtu)
- 		d->mtu = s->mtu;
- 
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 59c9bd459b2fb..0817ff58b8dab 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1106,6 +1106,8 @@ static int gtp_newlink(struct net *src_net, struct net_device *dev,
+ out_encap:
+ 	gtp_encap_disable(gtp);
+ out_hashtable:
++	/* Wait for RCU readers that may still reference this gtp_dev. */
++	synchronize_net();
+ 	kfree(gtp->addr_hash);
+ 	kfree(gtp->tid_hash);
+ 	return err;
 -- 
 2.53.0
 
