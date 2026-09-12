@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBBF352022;
-	Sat, 12 Sep 2026 15:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C32345EB9;
+	Sat, 12 Sep 2026 15:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227489; cv=none; b=SZLVSaIbN/Im2Sch7Oz49odDoKAWTqveOJmiKE8EORmtcMKHt+xIboZ9klKy1Dr/BgjU9nAc5OyFIVOGi9xhkucUV41UjhvSmTlPwW7TKsNzwoGdfLnouRGxmbx2B/r4G/x1Pupl3c/L6WzfnMmzapQBkoodTvEh57MXokHYfTY=
+	t=1789227494; cv=none; b=JHyxeZPNbNckneUNudVbB/6+6nROW0Vxxd80+vnlk/j42wKcl/12po1s1MLrLPeLZWwPnxpP5Z3Ad3/Lv5glTW3696TNxl0/8nZACIBraNaSMw3BgdQ3ufSw9+d7O5hRTlK5k5SDPYrdr56G/3AhpBMnzJLpUJYz0XVT3C8XEmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227489; c=relaxed/simple;
-	bh=YwW3/pZifYvuBvzkx+RMvapk1qUTYRPUqQKXuL1IhSY=;
+	s=arc-20240116; t=1789227494; c=relaxed/simple;
+	bh=P9ZlnC3wRRthquFHF761uUrBwEeKqz+6GA+EWjiC+NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uxw2xRe0bywr4GcO/ABBPRvElERpUSqCJIoe6w6ccscLMM/Drnplnrj6qr0Eg8FDnwmnjGNWNLD9KL4vVXBENv7QV9AwNEt0ZPouvgAqQK6BAnSrJQgRnULFNSkAdfAB3oFu0NEH4VJZ2COVTV4DcxvVfXiU4OooEGAOzt+GAto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wehVIx5i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=J4euYm4UxsiUhtn3Mt5ETCsazFaebR6gKWc8tDFx4nno+loFWe9uPipzdVPvOyjGu3A5loVEGW/bGN9asPx6tBTuaissslZUQ+VaReouHm8Thh/dzhu9Wksdo4isYr2ZCzXjslxkOPI1Xe4zvBPl7mq8QMd36LwJMxKIZSKB7uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gj2/6VcT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wehVIx5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D1F1F000FF;
-	Sat, 12 Sep 2026 15:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gj2/6VcT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB5E1F000FF;
+	Sat, 12 Sep 2026 15:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227487;
-	bh=IS6S80p80D4iW6+LT3TXwUpVLQ3SF2cpwIJd+PGaYX4=;
+	s=korg; t=1789227493;
+	bh=YWfcxoTNWTONwMXhDHN+WEXPhgX3Jros+NpHozI+phs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wehVIx5iKXwW3Ha21dq3ZAnIwVAgJjIjQVsfe7iZCfBSh1jbDOpvacWL4hN+GWdCU
-	 31ggrRUskZOtVKUyPe5tFfAwB/zn5GEWNnhNipas5xZJnXnIKbtXAERR/7iM7fBC2x
-	 UxqR3w3uLxxTC+YB0+UEMo0cR5CfXRPkTAcNPZyc=
+	b=Gj2/6VcThgsFZceq+VNmcTxadAJaH8faNjGw9qGD8HQDzmrVc28fjceXrPjV/hfOB
+	 z5VUnpFKFd3yqRfZVUf+jOovGRf4a3sL7SB1x0j1aIwYBDi+UJeTQuWgqgZIdI/a9l
+	 Jf7OaD7/zl8p+yLssgY4X0Wq6Br3qT46zaZVZJe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Niklas Schnelle <schnelle@linux.ibm.com>
-Subject: [PATCH 6.1 0189/1191] PCI/MSI: Enable memory decoding before restoring MSI-X messages
-Date: Sat, 12 Sep 2026 08:48:37 +0200
-Message-ID: <20260912065552.458553398@linuxfoundation.org>
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.1 0190/1191] PCI/proc: Avoid spurious runtime PM wakeup on config space accesses
+Date: Sat, 12 Sep 2026 08:48:38 +0200
+Message-ID: <20260912065552.482784999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -46,69 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit 231c7a57d19304beb0931e6cbe3a4929daf49747 upstream.
+commit 4ff664a81d729b37f2eb65de80a670abfb61c9a0 upstream.
 
-The current MSI-X restoration path assumes the Command register Memory bit
-is enabled when writing MSI-X messages. But it's possible the last saved
-and restored state of a device may not have the Memory bit enabled, even if
-a device driver later enables Memory bit and MSI-X. Attempting to access
-Memory space without Memory bit enabled can lead to Unsupported Request
-(UR) from the device. Fix this by enabling Memory bit and restore it
-afterwards.
+Currently, proc_bus_pci_read() and proc_bus_pci_write() do not return early
+for zero-length configuration space accesses at valid offsets.
 
-Fixes: 41017f0cac92 ("[PATCH] PCI: MSI(X) save/restore for suspend/resume")
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-[bhelgaas: comment]
+Such an access invokes pci_config_pm_runtime_get() and
+pci_config_pm_runtime_put() around transfer blocks that do nothing.
+
+This is a problem because pci_config_pm_runtime_get() synchronously resumes
+the upstream bridge through pm_runtime_get_sync(), and resumes the device
+itself through pm_runtime_resume() when it is in D3cold, only for the
+handler to return zero immediately afterwards.  Such a spurious wakeup
+wastes power and adds needless resume latency.
+
+The sysfs core already returns early for in-range zero-length binary
+attribute accesses before pci_read_config() or pci_write_config() is
+invoked.  In contrast, the VFS forwards zero-length requests to the procfs
+callbacks, where they continue into runtime PM handling.
+
+Return early from proc_bus_pci_read() and proc_bus_pci_write() when nbytes
+is zero, before any runtime PM involvement.
+
+The value returned to userspace at these offsets remains zero,
+so the change is not visible to userspace.
+
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: order tags]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260805165518.794-6-alifm@linux.ibm.com
+Link: https://patch.msgid.link/20260729075909.1219906-1-kwilczynski@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/msi/msi.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/pci/proc.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -294,6 +294,7 @@ static void __pci_restore_msix_state(str
- {
- 	struct msi_desc *entry;
- 	bool write_msg;
-+	u16 cmd;
+--- a/drivers/pci/proc.c
++++ b/drivers/pci/proc.c
+@@ -45,6 +45,9 @@ static ssize_t proc_bus_pci_read(struct
+ 	else
+ 		size = 64;
  
- 	if (!dev->msix_enabled)
- 		return;
-@@ -303,6 +304,14 @@ static void __pci_restore_msix_state(str
- 	pci_msix_clear_and_set_ctrl(dev, 0,
- 				PCI_MSIX_FLAGS_ENABLE | PCI_MSIX_FLAGS_MASKALL);
- 
-+	/*
-+	 * The restored device state may not have Memory Space enabled.
-+	 * Since the MSI-X Table and PBA are in Memory Space, enable it
-+	 * while restoring them.
-+	 */
-+	pci_read_config_word(dev, PCI_COMMAND, &cmd);
-+	pci_write_config_word(dev, PCI_COMMAND, cmd | PCI_COMMAND_MEMORY);
++	if (!nbytes)
++		return 0;
 +
- 	write_msg = arch_restore_msi_irqs(dev);
+ 	if (pos >= size)
+ 		return 0;
+ 	if (nbytes >= size)
+@@ -121,6 +124,9 @@ static ssize_t proc_bus_pci_write(struct
+ 	if (ret)
+ 		return ret;
  
- 	msi_lock_descs(&dev->dev);
-@@ -313,6 +322,7 @@ static void __pci_restore_msix_state(str
- 	}
- 	msi_unlock_descs(&dev->dev);
- 
-+	pci_write_config_word(dev, PCI_COMMAND, cmd);
- 	pci_msix_clear_and_set_ctrl(dev, PCI_MSIX_FLAGS_MASKALL, 0);
- }
- 
++	if (!nbytes)
++		return 0;
++
+ 	if (pos >= size)
+ 		return 0;
+ 	if (nbytes >= size)
 
 
