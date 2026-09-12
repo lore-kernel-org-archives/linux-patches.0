@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D855D47A0B6;
-	Sat, 12 Sep 2026 12:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10C8418A5B;
+	Sat, 12 Sep 2026 12:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216131; cv=none; b=S3J6ROwT6YQ4311x7z+sI0x6Igx+QOBTa2d+D963Nrvdjkds2WZbQXfnbhAR0tKWPHcUObYLfgd7SVe3JCIBMan7F4S4uADZ8/N9cCEClcYwYxryMp8li2ZDHfr5Na61a2MuD7ishypcoLXhmUNOip04ymLMJHDsnRgNVJjUybM=
+	t=1789216136; cv=none; b=I3HvGPbz+hP0mCKpRvDMTpfStq7zwhkttN6bEtXyzqQJ5OwfU1qKr0u+gJxJhjGn7j92pKhKv1zwaMyoELQaTSJ6er0Bp/r5ZZrhhf4o1+atFVKyZ1e7LZr6ai027pMHMIz27CzBMgL6ug9K/LXn51UV9kMI8Pck8cJD5ANntlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216131; c=relaxed/simple;
-	bh=hMYFSoxS40olg5+3r5fyeGd1NbN7RaMAp4f9qE+41KA=;
+	s=arc-20240116; t=1789216136; c=relaxed/simple;
+	bh=U/6x1bv/p5RlbWFAqDgXBD+V60fSQ50/MlcsMrPkmmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZZMqCINeVh4KAWCAoZ+LGltkQONR6fc8G2MVzQRiUZAZA++PacI9AC4DHR4O1Fe2RLpAeUdpXPFWGZtKm220iMZ2006zTv8W/7+y9StLxaa7Qo0mYGzCvNgFoI/+fQZMhy7xH0ahE4huOe4TBMkjaF4DGQiknznjgQbOFHQ7L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3Z+Akma; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QzYNnVZXXz/0rWG/8erVzaV7bbquGRDExMdrRrgSTKOBvbdFbv/f3/Rqm0qY4q4qUGzdSdbdkWn5cSU9LwS07VjvxBh7iTc6dd+VEV8FHwZPP5IBQX1vPWCdNUlE/GD12qjM7adST1JEuUIc3IO+gebulMIRcAEivFcSnCQ1lRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cr6cVbq0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3Z+Akma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB581F000FF;
-	Sat, 12 Sep 2026 12:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cr6cVbq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69171F000FF;
+	Sat, 12 Sep 2026 12:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216129;
-	bh=P96FZhOegHWjKnmT7Fu2n5DD4HpJF3Xg4XInmSQPoog=;
+	s=korg; t=1789216134;
+	bh=jaBL7CmDD9XdAAA2wB+y+QwrIEa3c/50QCb8Ht/SPYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F3Z+AkmalQ9Chhy8ZZ+oAcUsVuicyMevPY/M+Ra1spxURg0dENqf9hrgcJnmUA8hQ
-	 JZNJzGk+c3XahO8BnBhZeVg1I837jIHu4WnpDmp+BVpRKeLCzUGQAMFwVZIAh1CsJX
-	 B19BQkPSwQOsLcqtowqMOXFYPkVECrIdwq/7mJMs=
+	b=cr6cVbq0yh+vIW+TK0HGSFAEfIjlo7gsCVMTgtFoYB1kvNpq6FwKFOr0SnmP4ioip
+	 Jg1GKh+v40qwBqTeLGVYahkW3lzVRWc9cwzPvzlPqbei9EBIhIRcmamE3bg0kU6qlw
+	 /KKOOvBHq25em3i2lyj9zUTWO8YPtYFj79jgTd9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Cheng Xu <chengyou@linux.alibaba.com>,
-	Boshi Yu <boshiyu@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0674/1376] RDMA/erdma: Support non-sleeping erdma_post_cmd_wait()
-Date: Sat, 12 Sep 2026 08:51:40 +0200
-Message-ID: <20260912065622.568504744@linuxfoundation.org>
+Subject: [PATCH 6.12 0675/1376] RDMA/erdma: complete object teardown when the destroy command fails
+Date: Sat, 12 Sep 2026 08:51:41 +0200
+Message-ID: <20260912065622.590834361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,393 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boshi Yu <boshiyu@linux.alibaba.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 26981e688ca896e9310e1918d104a79cb140ce85 ]
+[ Upstream commit 652befcba956ef357f480525ccbe25c59bc81d4d ]
 
-Several scenarios require posting commands to the cmdq in a non-sleepable
-context. For example, the cm_alloc_msg() might call erdma_create_ah()
-while still holding a spinlock. So we add support for non-sleeping
-erdma_post_cmd_wait().
+erdma_destroy_qp(), erdma_destroy_cq(), erdma_dereg_mr(), and
+erdma_destroy_ah() returned early when erdma_post_cmd_wait() failed,
+leaking the queue buffers, MTTs, doorbells and the STAG, QPN, CQN and AHN
+identifiers. A command timeout clears ERDMA_CMDQ_STATE_OK_BIT and
+permanently disables the command queue, so no retry can succeed; the RDMA
+core keeps the object after a failed destructor and forced uverbs cleanup
+then nulls the pointers, making the resources unreachable.
 
-Reviewed-by: Cheng Xu <chengyou@linux.alibaba.com>
-Signed-off-by: Boshi Yu <boshiyu@linux.alibaba.com>
-Link: https://patch.msgid.link/20241226084141.74823-4-boshiyu@linux.alibaba.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 652befcba956 ("RDMA/erdma: complete object teardown when the destroy command fails")
+Warn on failure but release every software-owned resource and return
+success, since during terminal destruction the hardware command result is
+only diagnostic.
+
+Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
+Link: https://patch.msgid.link/20260722-b4-qp-and-cq-memory-are-leaked-if-the-d-v1-1-97e223dc1c96@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Acked-by: Cheng Xu <chengyou@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma.h       |  4 +--
- drivers/infiniband/hw/erdma/erdma_cmdq.c  | 26 +++++++-------
- drivers/infiniband/hw/erdma/erdma_eq.c    |  6 ++--
- drivers/infiniband/hw/erdma/erdma_main.c  |  7 ++--
- drivers/infiniband/hw/erdma/erdma_qp.c    |  8 +++--
- drivers/infiniband/hw/erdma/erdma_verbs.c | 44 ++++++++++++++---------
- 6 files changed, 54 insertions(+), 41 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma.h b/drivers/infiniband/hw/erdma/erdma.h
-index 4f840d8e3bebb..f7ed1e4cff993 100644
---- a/drivers/infiniband/hw/erdma/erdma.h
-+++ b/drivers/infiniband/hw/erdma/erdma.h
-@@ -101,8 +101,6 @@ struct erdma_cmdq {
- 	struct erdma_comp_wait *wait_pool;
- 	spinlock_t lock;
- 
--	bool use_event;
--
- 	struct erdma_cmdq_sq sq;
- 	struct erdma_cmdq_cq cq;
- 	struct erdma_eq eq;
-@@ -269,7 +267,7 @@ void erdma_cmdq_destroy(struct erdma_dev *dev);
- 
- void erdma_cmdq_build_reqhdr(u64 *hdr, u32 mod, u32 op);
- int erdma_post_cmd_wait(struct erdma_cmdq *cmdq, void *req, u32 req_size,
--			u64 *resp0, u64 *resp1);
-+			u64 *resp0, u64 *resp1, bool sleepable);
- void erdma_cmdq_completion_handler(struct erdma_cmdq *cmdq);
- 
- int erdma_ceqs_init(struct erdma_dev *dev);
-diff --git a/drivers/infiniband/hw/erdma/erdma_cmdq.c b/drivers/infiniband/hw/erdma/erdma_cmdq.c
-index a3d8922d1ad10..b867aefe83b2f 100644
---- a/drivers/infiniband/hw/erdma/erdma_cmdq.c
-+++ b/drivers/infiniband/hw/erdma/erdma_cmdq.c
-@@ -182,7 +182,6 @@ int erdma_cmdq_init(struct erdma_dev *dev)
- 	int err;
- 
- 	cmdq->max_outstandings = ERDMA_CMDQ_MAX_OUTSTANDING;
--	cmdq->use_event = false;
- 
- 	sema_init(&cmdq->credits, cmdq->max_outstandings);
- 
-@@ -223,8 +222,6 @@ int erdma_cmdq_init(struct erdma_dev *dev)
- 
- void erdma_finish_cmdq_init(struct erdma_dev *dev)
- {
--	/* after device init successfully, change cmdq to event mode. */
--	dev->cmdq.use_event = true;
- 	arm_cmdq_cq(&dev->cmdq);
- }
- 
-@@ -312,8 +309,7 @@ static int erdma_poll_single_cmd_completion(struct erdma_cmdq *cmdq)
- 	/* Copy 16B comp data after cqe hdr to outer */
- 	be32_to_cpu_array(comp_wait->comp_data, cqe + 2, 4);
- 
--	if (cmdq->use_event)
--		complete(&comp_wait->wait_event);
-+	complete(&comp_wait->wait_event);
- 
- 	return 0;
- }
-@@ -332,9 +328,6 @@ static void erdma_polling_cmd_completions(struct erdma_cmdq *cmdq)
- 		if (erdma_poll_single_cmd_completion(cmdq))
- 			break;
- 
--	if (comp_num && cmdq->use_event)
--		arm_cmdq_cq(cmdq);
--
- 	spin_unlock_irqrestore(&cmdq->cq.lock, flags);
- }
- 
-@@ -342,8 +335,7 @@ void erdma_cmdq_completion_handler(struct erdma_cmdq *cmdq)
- {
- 	int got_event = 0;
- 
--	if (!test_bit(ERDMA_CMDQ_STATE_OK_BIT, &cmdq->state) ||
--	    !cmdq->use_event)
-+	if (!test_bit(ERDMA_CMDQ_STATE_OK_BIT, &cmdq->state))
- 		return;
- 
- 	while (get_next_valid_eqe(&cmdq->eq)) {
-@@ -354,6 +346,7 @@ void erdma_cmdq_completion_handler(struct erdma_cmdq *cmdq)
- 	if (got_event) {
- 		cmdq->cq.cmdsn++;
- 		erdma_polling_cmd_completions(cmdq);
-+		arm_cmdq_cq(cmdq);
- 	}
- 
- 	notify_eq(&cmdq->eq);
-@@ -372,7 +365,7 @@ static int erdma_poll_cmd_completion(struct erdma_comp_wait *comp_ctx,
- 		if (time_is_before_jiffies(comp_timeout))
- 			return -ETIME;
- 
--		msleep(20);
-+		udelay(20);
- 	}
- 
- 	return 0;
-@@ -403,7 +396,7 @@ void erdma_cmdq_build_reqhdr(u64 *hdr, u32 mod, u32 op)
- }
- 
- int erdma_post_cmd_wait(struct erdma_cmdq *cmdq, void *req, u32 req_size,
--			u64 *resp0, u64 *resp1)
-+			u64 *resp0, u64 *resp1, bool sleepable)
- {
- 	struct erdma_comp_wait *comp_wait;
- 	int ret;
-@@ -411,7 +404,12 @@ int erdma_post_cmd_wait(struct erdma_cmdq *cmdq, void *req, u32 req_size,
- 	if (!test_bit(ERDMA_CMDQ_STATE_OK_BIT, &cmdq->state))
- 		return -ENODEV;
- 
--	down(&cmdq->credits);
-+	if (!sleepable) {
-+		while (down_trylock(&cmdq->credits))
-+			;
-+	} else {
-+		down(&cmdq->credits);
-+	}
- 
- 	comp_wait = get_comp_wait(cmdq);
- 	if (IS_ERR(comp_wait)) {
-@@ -425,7 +423,7 @@ int erdma_post_cmd_wait(struct erdma_cmdq *cmdq, void *req, u32 req_size,
- 	push_cmdq_sqe(cmdq, req, req_size, comp_wait);
- 	spin_unlock(&cmdq->sq.lock);
- 
--	if (cmdq->use_event)
-+	if (sleepable)
- 		ret = erdma_wait_cmd_completion(comp_wait, cmdq,
- 						ERDMA_CMDQ_TIMEOUT_MS);
- 	else
-diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
-index a238626c40d12..5610e7f4c6bf7 100644
---- a/drivers/infiniband/hw/erdma/erdma_eq.c
-+++ b/drivers/infiniband/hw/erdma/erdma_eq.c
-@@ -237,7 +237,8 @@ static int create_eq_cmd(struct erdma_dev *dev, u32 eqn, struct erdma_eq *eq)
- 	req.db_dma_addr_l = lower_32_bits(eq->dbrec_dma);
- 	req.db_dma_addr_h = upper_32_bits(eq->dbrec_dma);
- 
--	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				   false);
- }
- 
- static int erdma_ceq_init_one(struct erdma_dev *dev, u16 ceqn)
-@@ -279,7 +280,8 @@ static void erdma_ceq_uninit_one(struct erdma_dev *dev, u16 ceqn)
- 	req.qtype = ERDMA_EQ_TYPE_CEQ;
- 	req.vector_idx = ceqn + 1;
- 
--	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  false);
- 	if (err)
- 		return;
- 
-diff --git a/drivers/infiniband/hw/erdma/erdma_main.c b/drivers/infiniband/hw/erdma/erdma_main.c
-index 51cc8b17b9e9a..37723054f0645 100644
---- a/drivers/infiniband/hw/erdma/erdma_main.c
-+++ b/drivers/infiniband/hw/erdma/erdma_main.c
-@@ -392,7 +392,7 @@ static int erdma_dev_attrs_init(struct erdma_dev *dev)
- 				CMDQ_OPCODE_QUERY_DEVICE);
- 
- 	err = erdma_post_cmd_wait(&dev->cmdq, &req_hdr, sizeof(req_hdr), &cap0,
--				  &cap1);
-+				  &cap1, true);
- 	if (err)
- 		return err;
- 
-@@ -425,7 +425,7 @@ static int erdma_dev_attrs_init(struct erdma_dev *dev)
- 				CMDQ_OPCODE_QUERY_FW_INFO);
- 
- 	err = erdma_post_cmd_wait(&dev->cmdq, &req_hdr, sizeof(req_hdr), &cap0,
--				  &cap1);
-+				  &cap1, true);
- 	if (!err)
- 		dev->attrs.fw_version =
- 			FIELD_GET(ERDMA_CMD_INFO0_FW_VER_MASK, cap0);
-@@ -446,7 +446,8 @@ static int erdma_device_config(struct erdma_dev *dev)
- 	req.cfg = FIELD_PREP(ERDMA_CMD_CONFIG_DEVICE_PGSHIFT_MASK, PAGE_SHIFT) |
- 		  FIELD_PREP(ERDMA_CMD_CONFIG_DEVICE_PS_EN_MASK, 1);
- 
--	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				   true);
- }
- 
- static int erdma_res_cb_init(struct erdma_dev *dev)
-diff --git a/drivers/infiniband/hw/erdma/erdma_qp.c b/drivers/infiniband/hw/erdma/erdma_qp.c
-index e6856e3ca9709..b1bba54d87352 100644
---- a/drivers/infiniband/hw/erdma/erdma_qp.c
-+++ b/drivers/infiniband/hw/erdma/erdma_qp.c
-@@ -98,7 +98,8 @@ erdma_modify_qp_state_to_rts(struct erdma_qp *qp,
- 		req.send_nxt += MPA_DEFAULT_HDR_LEN + params->pd_len;
- 	req.recv_nxt = tp->rcv_nxt;
- 
--	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
- 	if (ret)
- 		return ret;
- 
-@@ -131,7 +132,8 @@ erdma_modify_qp_state_to_stop(struct erdma_qp *qp,
- 	req.cfg = FIELD_PREP(ERDMA_CMD_MODIFY_QP_STATE_MASK, params->state) |
- 		  FIELD_PREP(ERDMA_CMD_MODIFY_QP_QPN_MASK, QP_ID(qp));
- 
--	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
- 	if (ret)
- 		return ret;
- 
-@@ -246,7 +248,7 @@ static int modify_qp_cmd_rocev2(struct erdma_qp *qp,
- 	req.attr_mask = attr_mask;
- 
- 	return erdma_post_cmd_wait(&qp->dev->cmdq, &req, sizeof(req), NULL,
--				   NULL);
-+				   NULL, true);
- }
- 
- static void erdma_reset_qp(struct erdma_qp *qp)
 diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 2e5d6e721952b..41cb806da54a6 100644
+index 41cb806da54a6..3a65cbe5839ad 100644
 --- a/drivers/infiniband/hw/erdma/erdma_verbs.c
 +++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -119,8 +119,8 @@ static int create_qp_cmd(struct erdma_ucontext *uctx, struct erdma_qp *qp)
- 		}
- 	}
+@@ -1254,8 +1254,15 @@ int erdma_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
  
--	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), &resp0,
--				  &resp1);
-+	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), &resp0, &resp1,
-+				  true);
- 	if (!err && erdma_device_iwarp(dev))
- 		qp->attrs.iwarp.cookie =
- 			FIELD_GET(ERDMA_CMDQ_CREATE_QP_RESP_COOKIE_MASK, resp0);
-@@ -178,7 +178,8 @@ static int regmr_cmd(struct erdma_dev *dev, struct erdma_mr *mr)
- 	}
- 
- post_cmd:
--	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				   true);
- }
- 
- static int create_cq_cmd(struct erdma_ucontext *uctx, struct erdma_cq *cq)
-@@ -240,7 +241,8 @@ static int create_cq_cmd(struct erdma_ucontext *uctx, struct erdma_cq *cq)
- 		}
- 	}
- 
--	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				   true);
- }
- 
- static int erdma_alloc_idx(struct erdma_resource_cb *res_cb)
-@@ -460,7 +462,8 @@ static void erdma_flush_worker(struct work_struct *work)
- 	req.qpn = QP_ID(qp);
- 	req.sq_pi = qp->kern_qp.sq_pi;
- 	req.rq_pi = qp->kern_qp.rq_pi;
--	erdma_post_cmd_wait(&qp->dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	erdma_post_cmd_wait(&qp->dev->cmdq, &req, sizeof(req), NULL, NULL,
-+			    true);
- }
- 
- static int erdma_qp_validate_cap(struct erdma_dev *dev,
-@@ -1249,7 +1252,8 @@ int erdma_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
- 	req.cfg = FIELD_PREP(ERDMA_CMD_MR_MPT_IDX_MASK, ibmr->lkey >> 8) |
- 		  FIELD_PREP(ERDMA_CMD_MR_KEY_MASK, ibmr->lkey & 0xFF);
- 
--	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
+ 	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
+ 				  true);
++	/*
++	 * A timeout disables the command queue, so retry cannot succeed.  Treat
++	 * terminal command failures as diagnostic; propagating them can make
++	 * forced uverbs cleanup discard the last software resource pointers.
++	 */
  	if (ret)
- 		return ret;
+-		return ret;
++		ibdev_warn_ratelimited(&dev->ibdev,
++				       "failed to deregister MR 0x%x: %d\n",
++				       ibmr->lkey, ret);
  
-@@ -1274,7 +1278,8 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 				CMDQ_OPCODE_DESTROY_CQ);
- 	req.cqn = cq->cqn;
+ 	erdma_free_idx(&dev->res_cb[ERDMA_RES_TYPE_STAG_IDX], ibmr->lkey >> 8);
  
--	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
+@@ -1281,7 +1288,9 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
+ 	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
+ 				  true);
  	if (err)
- 		return err;
+-		return err;
++		ibdev_warn_ratelimited(&dev->ibdev,
++				       "failed to destroy CQ %u: %d\n",
++				       cq->cqn, err);
  
-@@ -1321,7 +1326,8 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- 				CMDQ_OPCODE_DESTROY_QP);
- 	req.qpn = QP_ID(qp);
- 
--	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
+ 	if (rdma_is_kernel_res(&cq->ibcq.res)) {
+ 		dma_free_coherent(&dev->pdev->dev, cq->depth << CQE_SHIFT,
+@@ -1329,7 +1338,9 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
+ 				  true);
  	if (err)
- 		return err;
+-		return err;
++		ibdev_warn_ratelimited(&dev->ibdev,
++				       "failed to destroy QP %u: %d\n",
++				       QP_ID(qp), err);
  
-@@ -1419,7 +1425,8 @@ static int alloc_db_resources(struct erdma_dev *dev, struct erdma_ucontext *ctx,
- 		  FIELD_PREP(ERDMA_CMD_EXT_DB_RQ_EN_MASK, 1) |
- 		  FIELD_PREP(ERDMA_CMD_EXT_DB_SQ_EN_MASK, 1);
- 
--	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), &val0, &val1);
-+	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), &val0, &val1,
-+				  true);
+ 	erdma_qp_put(qp);
+ 	wait_for_completion(&qp->safe_free);
+@@ -2233,7 +2244,9 @@ int erdma_destroy_ah(struct ib_ah *ibah, u32 flags)
+ 	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
+ 				  true);
  	if (ret)
- 		return ret;
+-		return ret;
++		ibdev_warn_ratelimited(&dev->ibdev,
++				       "failed to destroy AH %u: %d\n",
++				       ah->ahn, ret);
  
-@@ -1454,7 +1461,8 @@ static void free_db_resources(struct erdma_dev *dev, struct erdma_ucontext *ctx)
- 	req.rdb_off = ctx->ext_db.rdb_off;
- 	req.cdb_off = ctx->ext_db.cdb_off;
- 
--	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
- 	if (ret)
- 		ibdev_err_ratelimited(&dev->ibdev,
- 				      "free db resources failed %d", ret);
-@@ -1818,7 +1826,7 @@ int erdma_query_qp(struct ib_qp *ibqp, struct ib_qp_attr *qp_attr,
- 		req.qpn = QP_ID(qp);
- 
- 		ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), &resp0,
--					  &resp1);
-+					  &resp1, true);
- 		if (ret)
- 			return ret;
- 
-@@ -1981,7 +1989,7 @@ void erdma_set_mtu(struct erdma_dev *dev, u32 mtu)
- 				CMDQ_OPCODE_CONF_MTU);
- 	req.mtu = mtu;
- 
--	erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL, true);
- }
- 
- void erdma_port_event(struct erdma_dev *dev, enum ib_event_type reason)
-@@ -2051,7 +2059,8 @@ static int erdma_query_hw_stats(struct erdma_dev *dev,
- 	req.target_addr = dma_addr;
- 	req.target_length = ERDMA_HW_RESP_SIZE;
- 
--	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
- 	if (err)
- 		goto out;
- 
-@@ -2112,7 +2121,8 @@ static int erdma_set_gid(struct erdma_dev *dev, u8 op, u32 idx,
- 
- 	erdma_cmdq_build_reqhdr(&req.hdr, CMDQ_SUBMOD_RDMA,
- 				CMDQ_OPCODE_SET_GID);
--	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				   true);
- }
- 
- int erdma_add_gid(const struct ib_gid_attr *attr, void **context)
-@@ -2196,7 +2206,8 @@ int erdma_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
- 	req.ahn = ah->ahn;
- 	erdma_set_av_cfg(&req.av_cfg, &ah->av);
- 
--	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
- 	if (ret) {
- 		erdma_free_idx(&dev->res_cb[ERDMA_RES_TYPE_AH], ah->ahn);
- 		return ret;
-@@ -2219,7 +2230,8 @@ int erdma_destroy_ah(struct ib_ah *ibah, u32 flags)
- 	req.pdn = pd->pdn;
- 	req.ahn = ah->ahn;
- 
--	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
-+	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
-+				  true);
- 	if (ret)
- 		return ret;
+ 	erdma_free_idx(&dev->res_cb[ERDMA_RES_TYPE_AH], ah->ahn);
  
 -- 
 2.53.0
