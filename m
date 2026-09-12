@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905992C08D0;
-	Sat, 12 Sep 2026 18:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC96372ED0;
+	Sat, 12 Sep 2026 18:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239584; cv=none; b=nYEqrE+d0XXpWeZAYBxK72C1Se8P1kB+DxIMntSmMHgeOy3G8hVDeCOY4Yh4NZcgfh+kSib95Q2eR2XjNv4wv9HF+dy6+ICUL/FlkCsy67zbtQa7tE3aRSCOqnChK9xbgDKU6AatK0PLG6gt8+xD8eU0YYUaBc1vuIEdpCGEO7U=
+	t=1789239590; cv=none; b=jLDz9ddqDrIFEpUFgNHj0nCpN9IHPx4F47lTs0RpMoVNxmcMvRw64sVQ3Tbcwpj0UDqlcQl7LHocfIy5C3e+d9pprvjI/R6XapOQjAr9lsEiihgfT0WyTcaoUOfu6caMiGSLzffdx9INHMdjiBuKv80M11sot7SUPQrtQM6G3u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239584; c=relaxed/simple;
-	bh=EMaQ6oJbysEVz0MDpRJM5D366OG80KQWV0G7aCqromE=;
+	s=arc-20240116; t=1789239590; c=relaxed/simple;
+	bh=O0HYHdhDggfbY542hvIvwD9zGC8gaOHuU5hMjvWGElI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LH/xxxqSYrz+EX7yizkE4eXhnn+L7ZGfG5LrSJs6Qw4jitUFSeCG7YrXbbrZYjgKOUl4ZZF3noVorZoAXND1myVoufXYW49kpW5h4C0lIbeJOX1xz9vFSZyN3K9WhVzVZ4FNCMo0MPGXhis6nXwaZDxP8Kl8it3umgJZVl89qDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5oITELL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mzjWP9zSdFXT0eVByRUTrXomHsTg2SjUUZP141kAK2TNP2Uqk9lLz5eo8i2OiWEkHXOqii2ybA+54QBySB8qaPu4pRg9tpwLsufPXLojYY3idz7BFOdyTTG64XThAdLnA+IJiOqSJM3HZkM7DsJVu6vZzI+JsEoElW43VkB0v2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lrp7bgSB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5oITELL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E72B1F000FF;
-	Sat, 12 Sep 2026 18:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lrp7bgSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512261F000FF;
+	Sat, 12 Sep 2026 18:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239583;
-	bh=5dc2paXUF5kBb3va/PS3ReUcCaMeqoDNiVeTTtuANkI=;
+	s=korg; t=1789239588;
+	bh=Z5RwYfskQofetWfB6tkIqHyj8wNUlsv5w1G9WA/q17k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w5oITELLhwb8AlLY01w4J1ftl5TwAOkPEHhzUOUcO5ehVZUVQTJTZR853jP1fgdzA
-	 yfS0gL/JQBb0AOb3g1iJHTZEdKE2yw28KQ3vS3AhHYmHsTIEl+RiPJAIvvcoCpNGOy
-	 S5gXuoeqpHSmEjYfBkR3eHETH9IV+KEEoYltiB0Y=
+	b=Lrp7bgSBnIUKoUz+OfWw9rq6WjIQABjU24GdYFSVydNmnZC26GfR8fsrp506s7A3/
+	 kwsccl2t7OANrOToG+Q9sB2IltFUdaTbEZp8pJU/wYzOjWcT/29MOZO80ItPnb8Sk1
+	 GScWgCDn15pLijY33vF+vk89woAB/J3j79rMfqys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Yang yingliang <yangyingliang@huawei.com>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
+	Christian Brauner <brauner@kernel.org>,
+	Amit Sahrawat <a.sahrawat@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Ravishankar N <ravi.n1@samsung.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 694/935] rapidio: clear mport->net when rio_add_net() fails
-Date: Sat, 12 Sep 2026 09:02:04 +0200
-Message-ID: <20260912065542.757857628@linuxfoundation.org>
+Subject: [PATCH 5.15 695/935] fat: release buffer head after rebuilding parent
+Date: Sat, 12 Sep 2026 09:02:05 +0200
+Message-ID: <20260912065542.781060044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -54,47 +56,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit b74030fbf187b43c1f85b66a7082e9946511cb5d ]
+[ Upstream commit 83e98dbf19ab64e8528e101e20f8d50e1aaa68a8 ]
 
-rio_alloc_net() stores the newly allocated rio_net in mport->net before
-rio_scan_alloc_net() registers the device.
+fat_scan_logstart() leaves the matching directory entry's buffer head in
+sinfo.bh for the caller to release, just like fat_scan().
 
-If rio_add_net() fails, rio_scan_alloc_net() drops the device reference
-with put_device(), which releases the rio_net through the device release
-callback.  However, mport->net is left pointing at the freed object.
+fat_rebuild_parent() uses the directory entry to rebuild the parent inode
+for the nostale_ro NFS export path, but does not release sinfo.bh after a
+successful scan.  Release it once fat_build_inode() has consumed the
+directory entry data.
 
-A later mport unregister path can then dereference the dangling mport->net
-pointer and may try to free the same rio_net again.
-
-Clear mport->net in the rio_add_net() failure path, matching the cleanup
-done for the destID table allocation failure path.
-
-Link: https://lore.kernel.org/20260708070628.721010-1-lgs201920130244@gmail.com
-Fixes: e842f9a1edf3 ("rapidio: add check for rio_add_net() in rio_scan_alloc_net()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: Yang yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/20260715020957.1096309-1-chenyichong@uniontech.com
+Fixes: f1e6fb0ab451 ("fat (exportfs): rebuild directory-inode if fat_dget()")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Amit Sahrawat <a.sahrawat@samsung.com>
+Cc: chenyichong <chenyichong@uniontech.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Cc: Ravishankar N <ravi.n1@samsung.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/rio-scan.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/fat/nfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rapidio/rio-scan.c b/drivers/rapidio/rio-scan.c
-index dcd6619a4b027..3cc25d0534513 100644
---- a/drivers/rapidio/rio-scan.c
-+++ b/drivers/rapidio/rio-scan.c
-@@ -874,6 +874,7 @@ static struct rio_net *rio_scan_alloc_net(struct rio_mport *mport,
- 		net->dev.release = rio_scan_release_dev;
- 		if (rio_add_net(net)) {
- 			put_device(&net->dev);
-+			mport->net = NULL;
- 			net = NULL;
- 		}
+diff --git a/fs/fat/nfs.c b/fs/fat/nfs.c
+index bab63eeaf9cbc..bb5f056a639a2 100644
+--- a/fs/fat/nfs.c
++++ b/fs/fat/nfs.c
+@@ -250,8 +250,10 @@ struct inode *fat_rebuild_parent(struct super_block *sb, int parent_logstart)
+ 		MSDOS_I(dummy_grand_parent)->i_pos = -1;
  	}
+ 
+-	if (!fat_scan_logstart(dummy_grand_parent, clus_to_match, &sinfo))
++	if (!fat_scan_logstart(dummy_grand_parent, clus_to_match, &sinfo)) {
+ 		parent = fat_build_inode(sb, sinfo.de, sinfo.i_pos);
++		brelse(sinfo.bh);
++	}
+ 
+ 	brelse(parent_bh);
+ 	iput(dummy_grand_parent);
 -- 
 2.53.0
 
