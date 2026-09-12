@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADEA3A0B36;
-	Sat, 12 Sep 2026 12:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D5A455162;
+	Sat, 12 Sep 2026 12:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214891; cv=none; b=Xq/1rwmkXlDrKewJhQ5W2wfMDExV3NEuvu5DfjYEo3RFLv0CfYVhGN+NrxgtATw2iVA5+LR5lela+CcOkcQ1VoTUi9jKeeqZFkwF5senSnp6yLpEgfyre/9sW7iV8JXWlXthPeu2knTh5qKRVcFblFpz/2vgXJa3cJcSxxIWx3s=
+	t=1789214896; cv=none; b=Qpa8d4MqMAlmcCvcXCdnAbR1U7sAP5H8w0VbU2M12Mf/465VSDScZiPs8Am2andMU2zLRwgMTE8OqTuTimHnEmL3PB1sk5vifIFJPC2uYOWHiDkqOngkTkpHOiaHi8NsnYfn7h0FXw0UeA5lpxTqCEyt4t0RPGtcjDEOAP2ft7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214891; c=relaxed/simple;
-	bh=r4xHEDyciu9uMWOmsSjXMy+ZF+hYO4bTPx39Oi4cvGk=;
+	s=arc-20240116; t=1789214896; c=relaxed/simple;
+	bh=3APvmJJX5CyWx37U/1EM/cFZ7jnuD2j2f5295ux7O9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tf1BAOGSnn+PRD7Th3ODIUyYP9Vb1JZvQ59GkaGF+8zPqTG+sy41rsDDqdSzB9QWvuFIbVcWLpCQR3rYyRQnAydbRB/83YjhfMJEHSEmADSwOhI9O+myQN4zhrRuncWgy6bnScOlZU4jQbMDZMeNgWLt/ikUuHOFePbb8qVDB+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZN6g7Ds; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i41oiwGOs1lpvTUIWR+kkHQpJq+ea1/92Oitxc/R61n1OmmRBpfYj2trfF8OTQRF8KBXTQzgP7uyiuqyZDdzVA3v6qTvDPWiEaduZuwXt3yzYDckINEeWXltljev36feZ/X8rNgaQBspmJj216VPY1Zt+/UUIzcXcj6FGFl5nKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j09lneBn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZN6g7Ds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE001F000FF;
-	Sat, 12 Sep 2026 12:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j09lneBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB3E1F000FF;
+	Sat, 12 Sep 2026 12:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214890;
-	bh=2zjdLIe1GFl1hjM3Ggv8svSeh7QCnzs8hqjzhT6sx60=;
+	s=korg; t=1789214895;
+	bh=ntTgI15ZPac+oZWtYMSIbnwhSqAsqVXpoLztqPC8O10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CZN6g7DsUQwSTf6j5U0vA0K5Gpv6EurjMJYwrtrrEsZhEavw7WM4KvaEdOqPWSDMI
-	 DZq0/EsZ0NTdItmyoAePXxVkrIfFwLBZS1Pi/IuO5Nfy65mGjbL9fN6sDvPHuTDgqe
-	 tNLroAD3ms/mHjaRhEwH+Xiyj5Oxq81e91bPWxQI=
+	b=j09lneBnELZ7+rwn8I3vo8RZg2iMAG9y9bdcfPBSKwNjXKy9yh4XyzUn5hk6FeAcK
+	 PZ+2B0Yw1H7L8ySy94CIoT3TltEkAekAVyIBcrcEa/fo4yh9bHWGlbGMMVdmKPxs0f
+	 /QhoMY8cmekmMvQV73rC056CeXTdT9IYOJ13zOCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0417/1376] bus: qcom-ebi2: Simplify with scoped for each OF child loop
-Date: Sat, 12 Sep 2026 08:47:23 +0200
-Message-ID: <20260912065616.834847483@linuxfoundation.org>
+Subject: [PATCH 6.12 0418/1376] bus: qcom-ebi2: Fix clock leak on probe failure
+Date: Sat, 12 Sep 2026 08:47:24 +0200
+Message-ID: <20260912065616.855927775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,53 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 9c252f3c8f390fae4ca09de36c9262a35ae88ace ]
+[ Upstream commit 64774dea58969194ea5c27fa639954e551a87024 ]
 
-Use scoped for-each loop when iterating over device nodes to make code a
-bit simpler.
+qcom_ebi2_probe() enables the EBI2X and EBI2 clocks before it walks
+child nodes and populates child devices. If reading a child node's reg
+property fails, or if of_platform_default_populate() fails, probe returns
+without disabling either clock.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260102125030.65186-3-krzysztof.kozlowski@oss.qualcomm.com
+Route those failure paths through the existing clock cleanup labels so a
+failed probe does not leave the clocks prepared and enabled.
+
+Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://lore.kernel.org/r/20260620080406.1970447-1-ruoyuw560@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 64774dea5896 ("bus: qcom-ebi2: Fix clock leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/qcom-ebi2.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/bus/qcom-ebi2.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
-index c1fef1b4bd89b..be8166565e7cc 100644
+index be8166565e7cc..ab00c75b9e953 100644
 --- a/drivers/bus/qcom-ebi2.c
 +++ b/drivers/bus/qcom-ebi2.c
-@@ -292,7 +292,6 @@ static void qcom_ebi2_setup_chipselect(struct device_node *np,
- static int qcom_ebi2_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
--	struct device_node *child;
- 	struct device *dev = &pdev->dev;
- 	struct resource *res;
- 	void __iomem *ebi2_base;
-@@ -348,15 +347,13 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 	writel(val, ebi2_base);
- 
- 	/* Walk over the child nodes and see what chipselects we use */
--	for_each_available_child_of_node(np, child) {
-+	for_each_available_child_of_node_scoped(np, child) {
- 		u32 csindex;
- 
+@@ -353,7 +353,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
  		/* Figure out the chipselect */
  		ret = of_property_read_u32(child, "reg", &csindex);
--		if (ret) {
--			of_node_put(child);
-+		if (ret)
- 			return ret;
--		}
+ 		if (ret)
+-			return ret;
++			goto err_disable_clk;
  
  		if (csindex > 5) {
  			dev_err(dev,
+@@ -372,8 +372,12 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+ 		have_children = true;
+ 	}
+ 
+-	if (have_children)
+-		return of_platform_default_populate(np, NULL, dev);
++	if (have_children) {
++		ret = of_platform_default_populate(np, NULL, dev);
++		if (ret)
++			goto err_disable_clk;
++	}
++
+ 	return 0;
+ 
+ err_disable_clk:
 -- 
 2.53.0
 
