@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175E9364038;
-	Sat, 12 Sep 2026 09:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358F74BEE54;
+	Sat, 12 Sep 2026 09:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205571; cv=none; b=UtcczoHKF3KBQAVa1Mr6FG01FrLa6Ss5r9LvB29EvLf3NqqdSLNaWXD81L5UCY0jXu6t9MqWrAJK5FUpGZbkLKYvf9BfMNn+wcgoTumJWvxNplrgDq05xXMJLQDlbLJAp4f+RE2PtpbLM3isR5bPPsfHm76X30mAPoG/CJ8Z/RQ=
+	t=1789205576; cv=none; b=DIeZU3ZbQuA/luSVHuk2ZN3eJmbBZ1hxYIXwJviq6sD5nS+AmCAieOBHWX5u3ApFdRUsLmTxkOxWd9uaiolqC2jA+FX7QwDLNZmzo9qgdLesbwPf+e1Rhnv1UOMNaxBHHmKn3FkbQj3pMhwZaRccHY5S0ySMo0aUTJdD0wGvUfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205571; c=relaxed/simple;
-	bh=QvY+NGHqOAuaYC5AC3uIKOvhVDBROPK+GX0DPKnX87E=;
+	s=arc-20240116; t=1789205576; c=relaxed/simple;
+	bh=A0gS9mGqU55f9+gbx6FOQwZlWCUz2ZDX0+Y2kqJIMHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YjzKYAOFwVfss+Nz3WAfZak2xryr7R5ihDVrMv4elCvAzA26c9AxKT+bLj3gMc4ZrBuSwowcpt2ykfXAoimdIEKzvsTyNoTHnMzyC/cWATV2RmvRqWFybVYL0+Aaj5Z72Sk4GJ+yxo/sM48Vp/7Qv4yvUItiU6+GL+YZHHVTsxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocIjCSod; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R32FgLISgeT903cCWss1j09hdC4Nzg3jIxhsdrdteUMNijHWIwU//ChSA31CAcu75aZDfnLGLLdQ6iDj+R9doDxHglwqLdREXOZZHN2DB17TmneBRx7gjbTngWPdmcGPL381xk1iuvIUE8uUXFpSOrPHrxmzLJbWkEYP5R9PjCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeHTiF5J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocIjCSod"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE981F000FF;
-	Sat, 12 Sep 2026 09:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeHTiF5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F361F000FF;
+	Sat, 12 Sep 2026 09:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205569;
-	bh=G+DP/GP8mY/sZ0T6Xaibk3Q9Sn6bm+27hbmODyCBXhg=;
+	s=korg; t=1789205574;
+	bh=btUDV6vPXdApt17WVftQChJ29VBx0wWxIgnl0Z61wVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ocIjCSodAfjUmUSdIVSFgdrzkZ6sSyDmO3D+BjMakcRPb/TsaCcXm0F0FMiJ3qVSJ
-	 em9jfLYg61o24pETavpnBV/Cci8uvfr7V2KBJQpMVvwqWSoeWR2Jfa4czaNCUAF7ef
-	 vzBny3gQ5VaRS94HkDmHm4jSm4t2dnWnRzqOsHq8=
+	b=qeHTiF5J01Q9w/9t8TOit5nXY4wnanamDl/1t9blkeDu/2tm1AWKJ3qoaBipp9Kt9
+	 ZBXCDxEQTD8Tj4FRntrhJUeyjazEYzP80Ouy1rcga7mBY1zoF5H6h+D5iLDm+Nvwzn
+	 K7dqmoD2iZc+2bJeCb7IWXnGy2RwT0Q7ZrIADyME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
-	Li Chen <me@linux.beauty>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Akhmed Zhitaev <zhitaevakh@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0029/1518] nvdimm: preserve flush callback -ENOMEM
-Date: Sat, 12 Sep 2026 08:36:38 +0200
-Message-ID: <20260912065624.082976307@linuxfoundation.org>
+Subject: [PATCH 6.18 0003/1518] drm/amd/display: Scale custom brightness curve from full range
+Date: Sat, 12 Sep 2026 08:36:12 +0200
+Message-ID: <20260912065623.483973636@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,46 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Akhmed Zhitaev <zhitaevakh@gmail.com>
 
-[ Upstream commit 6b7108712a4b1c37cac69815aede1dde202b3187 ]
+[ Upstream commit 6fd83a1c2cdea48c396f600795217fbdfb8124f6 ]
 
-nvdimm_flush() maps provider flush failures to -EIO. Keep that default
-because provider callbacks can report host-side or backend failures that
-should remain generic I/O errors to the guest.
+Custom brightness curves use an 8-bit input signal.  After exporting the
+full PWM range to userspace, the curve normalizer still divides requests
+by the physical PWM span.  On panels with a nonzero minimum PWM level,
+this can produce a curve input greater than 255 and send an invalid
+backlight level to DC.
 
-Guest-side allocation failures should not be reported as I/O errors. In the
-virtio-pmem path, the flush request allocation can fail with -ENOMEM before
-any request is submitted to the host. Mapping that to -EIO makes resource
-pressure look like media failure.
+Scale the userspace [0..max] range to the curve's [0..255] range
+instead.  This retains the full advertised range and keeps the reverse
+readback conversion unchanged.
 
-Preserve -ENOMEM from provider callbacks and continue to map other non-zero
-provider failures to -EIO. The generic flush path still returns 0, and
-pmem_submit_bio() already converts errno values to block status for bio
-completion.
+[ Backport note: In 6.18.y the brightness helpers still live in
+  amdgpu_dm.c, while upstream changes the later amdgpu_dm_backlight.c.
+  Apply the same semantic change at the old location; the logic is
+  otherwise unchanged. ]
 
-Suggested-by: Pankaj Gupta <pankaj.gupta.linux@gmail.com>
-Signed-off-by: Li Chen <me@linux.beauty>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630092338.2094628-2-me@linux.beauty>
-Stable-dep-of: e57140944b5a ("nvdimm: virtio_pmem: refcount requests for token lifetime")
+Fixes: 8dbd72cb7900 ("drm/amd/display: Export full brightness range to userspace")
+Cc: stable@vger.kernel.org
+Signed-off-by: Akhmed Zhitaev <zhitaevakh@gmail.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+(Move to amdgpu_dm_backlight.c)
+Link: https://patch.msgid.link/20260813170959.22073-1-zhitaevakh@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/region_devs.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/nvdimm/region_devs.c
-+++ b/drivers/nvdimm/region_devs.c
-@@ -1094,7 +1094,8 @@ int nvdimm_flush(struct nd_region *nd_re
- 	if (!nd_region->flush)
- 		rc = generic_nvdimm_flush(nd_region);
- 	else {
--		if (nd_region->flush(nd_region, bio))
-+		rc = nd_region->flush(nd_region, bio);
-+		if (rc && rc != -ENOMEM)
- 			rc = -EIO;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index c71d34186dfed..9bce65ca29b02 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4958,10 +4958,10 @@ static int get_brightness_range(const struct amdgpu_dm_backlight_caps *caps,
+ 	return 1;
+ }
  
+-/* Rescale from [min..max] to [0..AMDGPU_MAX_BL_LEVEL] */
+-static inline u32 scale_input_to_fw(int min, int max, u64 input)
++/* Rescale userspace [0..max] to the firmware curve's [0..255]. */
++static inline u32 scale_input_to_fw(int max, u64 input)
+ {
+-	return DIV_ROUND_CLOSEST_ULL(input * AMDGPU_MAX_BL_LEVEL, max - min);
++	return DIV_ROUND_CLOSEST_ULL(input * AMDGPU_MAX_BL_LEVEL, max);
+ }
+ 
+ /* Rescale from [0..AMDGPU_MAX_BL_LEVEL] to [min..max] */
+@@ -4974,7 +4974,7 @@ static void convert_custom_brightness(const struct amdgpu_dm_backlight_caps *cap
+ 				      unsigned int min, unsigned int max,
+ 				      uint32_t *user_brightness)
+ {
+-	u32 brightness = scale_input_to_fw(min, max, *user_brightness);
++	u32 brightness = scale_input_to_fw(max, *user_brightness);
+ 	u8 lower_signal, upper_signal, upper_lum, lower_lum, lum;
+ 	int left, right;
+ 
+-- 
+2.53.0
+
 
 
