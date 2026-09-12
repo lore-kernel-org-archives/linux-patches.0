@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE46478E49;
-	Sat, 12 Sep 2026 13:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05A047CA85;
+	Sat, 12 Sep 2026 13:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219590; cv=none; b=UzWkr4dVwEMhDezaorWYgMxfgAnXEO9rHXb+oPt8wqsy/BeTXO/d8pqfztudp/LX8IqY+zratijmFoi96PM7uZjpaTpUKss6laBwegetaddMkY4JsLtXP/YjKJqfHbMvlifNE1YlHctFLLyjxr+WHMjC/ckliwESTKOlOVNrkOw=
+	t=1789219595; cv=none; b=jkrKG27GxsozYV047vBckJXgxgiSqRnhUoJ0ma9OgTEG6g2/wapjiwT9ITGIOpw4h8+xUCe+QSHeRT9L6lvDJnvWbVqnqPv1a+xoCb3EsQVFnOAQmQFLpBjS1WJENi+xYBSEQ29WPMUbByNiQMV8qSr0fg6Ly6hHBaA9Ft8OzHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219590; c=relaxed/simple;
-	bh=ZlXCxF/J5U4o1fqzPuMJt75PBGXWUOc0gurYFSykwgc=;
+	s=arc-20240116; t=1789219595; c=relaxed/simple;
+	bh=buvghg01/5wjcVplsyxb/JDcSagipAZd+nxtpWVfPGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZnbsKTNyvegQVOadkfYevIz8n3V3TKco+m0ZAfBTHHRS8ShO4pSs6iUrfGYYfGMuITQwT14Xv9ho5BePVY2oypSlqR0qH9CizOgtCO/9jxHJUmJAwzdwXza+Gly6b0x5CviaTIWcJWXavVhpS3PLY7CLIbyXbpV+FzvMsSffUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSC3BEBb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RosnuWu2i6WptL11a9QseCou/oxlZ7CAH393WVD9CtzreXp2XIc8dgbezSJTpSP3dVTdfst3tKmK2F296/cTTGYeQr8Z0rLeSEUrsmn8OwVfYtIqdhP/wI8oM2heXtbVOdXIi0i7khkNCOA/sFWSo0TgM4Ps0lWRCsvDlKn1UmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouCu+hAc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSC3BEBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B061F000FF;
-	Sat, 12 Sep 2026 13:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouCu+hAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC94D1F000FF;
+	Sat, 12 Sep 2026 13:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219588;
-	bh=YeOL1Vh7p2yosiC3d8qF4XSnxHxpuW4HfqU1Z5Yh6eg=;
+	s=korg; t=1789219593;
+	bh=T1h6IBQ1UkdinToRybOCjlS6/2rXRxETUBVXU7CltsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wSC3BEBbX1EAlnz+M1cWrxVFR0+cf9igFbjDcdwSZo63TYt20UgQn0B3SJZmMAYPR
-	 HW8hfWD3Ej40HRxiIJC6hzipNnA1tOdE8PduiCIcD110woYUF+wiacIJln86B9guR6
-	 SGTD37vJBj2fF++YLVI86/lRAydf6qsFLbdMwmDo=
+	b=ouCu+hAcN/QcH2ZAe05hmzJYzf/23ExPQ38nbMdQ04oRVhghD5s5Li9mh6TYQBTPW
+	 QxzJhB1Ypyfp7Uc6nE/IzBE4W4kdKEEiP7pSe5yJOUg+OzNnqWIXHW5dkEeclhOfbn
+	 71uNTh5GLytcdw5LseMyTIU0XYLSWa610la8FDd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Eric Biggers <ebiggers@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1346/1376] fscrypt: fix left shift underflow when inode->i_blkbits > PAGE_SHIFT
-Date: Sat, 12 Sep 2026 09:02:52 +0200
-Message-ID: <20260912065637.531994423@linuxfoundation.org>
+Subject: [PATCH 6.12 1347/1376] block: reject bs > ps block devices when THP is disabled
+Date: Sat, 12 Sep 2026 09:02:53 +0200
+Message-ID: <20260912065637.553758521@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,99 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Pankaj Raghav <p.raghav@samsung.com>
 
-[ Upstream commit 1e39da974ce621ed874c6d3aaf65ad14848c9f0d ]
+[ Upstream commit 4cdf1bdd45ac78a088773722f009883af30ad318 ]
 
-When simulating an nvme device on qemu with both logical_block_size and
-physical_block_size set to 8 KiB, an error trace appears during
-partition table reading at boot time. The issue is caused by
-inode->i_blkbits being larger than PAGE_SHIFT, which leads to a left
-shift of -1 and triggering a UBSAN warning.
+If THP is disabled and when a block device with logical block size >
+page size is present, the following null ptr deref panic happens during
+boot:
 
-[    2.697306] ------------[ cut here ]------------
-[    2.697309] UBSAN: shift-out-of-bounds in fs/crypto/inline_crypt.c:336:37
-[    2.697311] shift exponent -1 is negative
-[    2.697315] CPU: 3 UID: 0 PID: 274 Comm: (udev-worker) Not tainted 6.18.0-rc2+ #34 PREEMPT(voluntary)
-[    2.697317] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[    2.697320] Call Trace:
-[    2.697324]  <TASK>
-[    2.697325]  dump_stack_lvl+0x76/0xa0
-[    2.697340]  dump_stack+0x10/0x20
-[    2.697342]  __ubsan_handle_shift_out_of_bounds+0x1e3/0x390
-[    2.697351]  bh_get_inode_and_lblk_num.cold+0x12/0x94
-[    2.697359]  fscrypt_set_bio_crypt_ctx_bh+0x44/0x90
-[    2.697365]  submit_bh_wbc+0xb6/0x190
-[    2.697370]  block_read_full_folio+0x194/0x270
-[    2.697371]  ? __pfx_blkdev_get_block+0x10/0x10
-[    2.697375]  ? __pfx_blkdev_read_folio+0x10/0x10
-[    2.697377]  blkdev_read_folio+0x18/0x30
-[    2.697379]  filemap_read_folio+0x40/0xe0
-[    2.697382]  filemap_get_pages+0x5ef/0x7a0
-[    2.697385]  ? mmap_region+0x63/0xd0
-[    2.697389]  filemap_read+0x11d/0x520
-[    2.697392]  blkdev_read_iter+0x7c/0x180
-[    2.697393]  vfs_read+0x261/0x390
-[    2.697397]  ksys_read+0x71/0xf0
-[    2.697398]  __x64_sys_read+0x19/0x30
-[    2.697399]  x64_sys_call+0x1e88/0x26a0
-[    2.697405]  do_syscall_64+0x80/0x670
-[    2.697410]  ? __x64_sys_newfstat+0x15/0x20
-[    2.697414]  ? x64_sys_call+0x204a/0x26a0
-[    2.697415]  ? do_syscall_64+0xb8/0x670
-[    2.697417]  ? irqentry_exit_to_user_mode+0x2e/0x2a0
-[    2.697420]  ? irqentry_exit+0x43/0x50
-[    2.697421]  ? exc_page_fault+0x90/0x1b0
-[    2.697422]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[    2.697425] RIP: 0033:0x75054cba4a06
-[    2.697426] Code: 5d e8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 75 19 83 e2 39 83 fa 08 75 11 e8 26 ff ff ff 66 0f 1f 44 00 00 48 8b 45 10 0f 05 <48> 8b 5d f8 c9 c3 0f 1f 40 00 f3 0f 1e fa 55 48 89 e5 48 83 ec 08
-[    2.697427] RSP: 002b:00007fff973723a0 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
-[    2.697430] RAX: ffffffffffffffda RBX: 00005ea9a2c02760 RCX: 000075054cba4a06
-[    2.697432] RDX: 0000000000002000 RSI: 000075054c190000 RDI: 000000000000001b
-[    2.697433] RBP: 00007fff973723c0 R08: 0000000000000000 R09: 0000000000000000
-[    2.697434] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
-[    2.697434] R13: 00005ea9a2c027c0 R14: 00005ea9a2be5608 R15: 00005ea9a2be55f0
-[    2.697436]  </TASK>
-[    2.697436] ---[ end trace ]---
+[   [13.2 mK  AOSAN: null-ptr-deref in range [0x0000000000000000-0x0000000000K0 0 0[07]
+[   13.017749] RIP: 0010:create_empty_buffers+0x3b/0x380
+<snip>
+[   13.025448] Call Trace:
+[   13.025692]  <TASK>
+[   13.025895]  block_read_full_folio+0x610/0x780
+[   13.026379]  ? __pfx_blkdev_get_block+0x10/0x10
+[   13.027008]  ? __folio_batch_add_and_move+0x1fa/0x2b0
+[   13.027548]  ? __pfx_blkdev_read_folio+0x10/0x10
+[   13.028080]  filemap_read_folio+0x9b/0x200
+[   13.028526]  ? __pfx_filemap_read_folio+0x10/0x10
+[   13.029030]  ? __filemap_get_folio+0x43/0x620
+[   13.029497]  do_read_cache_folio+0x155/0x3b0
+[   13.029962]  ? __pfx_blkdev_read_folio+0x10/0x10
+[   13.030381]  read_part_sector+0xb7/0x2a0
+[   13.030805]  read_lba+0x174/0x2c0
+<snip>
+[   13.045348]  nvme_scan_ns+0x684/0x850 [nvme_core]
+[   13.045858]  ? __pfx_nvme_scan_ns+0x10/0x10 [nvme_core]
+[   13.046414]  ? _raw_spin_unlock+0x15/0x40
+[   13.046843]  ? __switch_to+0x523/0x10a0
+[   13.047253]  ? kvm_clock_get_cycles+0x14/0x30
+[   13.047742]  ? __pfx_nvme_scan_ns_async+0x10/0x10 [nvme_core]
+[   13.048353]  async_run_entry_fn+0x96/0x4f0
+[   13.048787]  process_one_work+0x667/0x10a0
+[   13.049219]  worker_thread+0x63c/0xf60
 
-This situation can happen for block devices because when
-CONFIG_TRANSPARENT_HUGEPAGE is enabled, the maximum logical_block_size
-is 64 KiB. set_init_blocksize() then sets the block device
-inode->i_blkbits to 13, which is within this limit.
+As large folio support depends on THP, only allow bs > ps block devices
+if THP is enabled.
 
-File I/O does not trigger this problem because for filesystems that do
-not support the FS_LBS feature, sb_set_blocksize() prevents
-sb->s_blocksize_bits from being larger than PAGE_SHIFT. During inode
-allocation, alloc_inode()->inode_init_always() assigns inode->i_blkbits
-from sb->s_blocksize_bits. Currently, only xfs_fs_type has the FS_LBS
-flag, and since xfs I/O paths do not reach submit_bh_wbc(), it does not
-hit the left-shift underflow issue.
-
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
 Fixes: 47dd67532303 ("block/bdev: lift block size restrictions to 64k")
-Cc: stable@vger.kernel.org
-[EB: use folio_pos() and consolidate the two shifts by i_blkbits]
-Link: https://lore.kernel.org/r/20251105003642.42796-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20250704092134.289491-1-p.raghav@samsung.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/crypto/inline_crypt.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/blkdev.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/crypto/inline_crypt.c b/fs/crypto/inline_crypt.c
-index 0a216d20e6950..60d15d5e02ca6 100644
---- a/fs/crypto/inline_crypt.c
-+++ b/fs/crypto/inline_crypt.c
-@@ -275,8 +275,7 @@ static bool bh_get_inode_and_lblk_num(const struct buffer_head *bh,
- 	inode = mapping->host;
- 
- 	*inode_ret = inode;
--	*lblk_num_ret = ((u64)folio->index << (PAGE_SHIFT - inode->i_blkbits)) +
--			(bh_offset(bh) >> inode->i_blkbits);
-+	*lblk_num_ret = (folio_pos(folio) + bh_offset(bh)) >> inode->i_blkbits;
- 	return true;
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 5a90245fbd8ec..4cc28da8b9710 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -268,11 +268,16 @@ static inline dev_t disk_devt(struct gendisk *disk)
+ 	return MKDEV(disk->major, disk->first_minor);
  }
  
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ /*
+  * We should strive for 1 << (PAGE_SHIFT + MAX_PAGECACHE_ORDER)
+  * however we constrain this to what we can validate and test.
+  */
+ #define BLK_MAX_BLOCK_SIZE      SZ_64K
++#else
++#define BLK_MAX_BLOCK_SIZE      PAGE_SIZE
++#endif
++
+ 
+ /* blk_validate_limits() validates bsize, so drivers don't usually need to */
+ static inline int blk_validate_block_size(unsigned long bsize)
 -- 
 2.53.0
 
