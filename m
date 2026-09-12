@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E432242D65;
-	Sat, 12 Sep 2026 11:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFAF242D65;
+	Sat, 12 Sep 2026 11:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212230; cv=none; b=khSEXTY2/MNJDK5sDcsYJ+aSTEnXPEwFOvnaiELZGvXfiTjuALMBnZAaIlZqqSKGJ7+b5dEEdXR/KQz5NJDghS0uHi42BLRl/Ou6r0MIL8j4HR3DjFwFED5bQSD7ZG2qt6FKPk+yUnRB3mL+7Bbfy5k8ajNYo1QC2ijuTguuM0g=
+	t=1789212235; cv=none; b=WBWh6ox8HvlfXwmeWuA6Zrd7YsiuL/G2FKR28HWL3u4FcbXcVHs9zrJKbTtlf1Hd6ixp6M05zUg0yXUHoDQMl9QSP8VavwhLShzE/xkzVSZCSW1740R+ISu6E6y0/R6qDdWKr8ZTQ7EqCCbMZI5QoXmKZR1F8lr4wF5qRKWT24c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212230; c=relaxed/simple;
-	bh=se2PjAM6zniF7zCeNFWvIaQgQ/cx2H4FT/+7sd+kJgY=;
+	s=arc-20240116; t=1789212235; c=relaxed/simple;
+	bh=g4a8y5TdVw34dD+aM7RwEx5NVjD1GcE5Eix/gbCTy+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mrl55foWYfwuLNoZiKKAfgeIsKxJ/el7O0r+rzA2wF+d4h38Mk/+KKFP4eTGE68p6QkZshCUGe8nZfg5s09czqVTT04inMFNaplR/6rGoTWQJMKXNC7aIqAszMyFUZNEqkac59/Y8ICiRYI5w2GPMyWZjmW6AQ+REhpVBgNiscI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTd4xqKg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=plxg2E/b8Uglugvik91rYZN7A3buT3ybpXQwTmXQVk32fnnPlMK8KDGpzQzMj+iQdCtPxYVKUM7Oo6NPLPydEVUFsKkTfkeaeSGSFboUOP5M6SWos9csA0YqJNFFE62Tk967aEZEsgwIZ/D6bRDM0l4j0SYT+DRfFLHsTgmTBsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMe0FmFU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTd4xqKg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A223B1F000FF;
-	Sat, 12 Sep 2026 11:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMe0FmFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAA21F000FF;
+	Sat, 12 Sep 2026 11:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212229;
-	bh=ByK+5qtn6Dh2i+QwbK9GvpJmaK1scCgy+qnn82Fk4vk=;
+	s=korg; t=1789212234;
+	bh=U/06wKbXde0ZFWJGzyMHF2r70iPIf+Er0zaeXrJNpFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XTd4xqKg5yqEIOopHUKkl5WT3RD9ecVjedQ7RDLKh9N2/PRO++i0BKES2HjoZwGqv
-	 b220BWKyLf/rOrm5OiSJu2aNkNJ4Y7ba5rFWMCgLknYqUadSWmlmGgPkONY9tKvnvy
-	 uSHp/HnkhkHnBW+4RalMUbzfWX0y9jf/k1kEl/wU=
+	b=ZMe0FmFUZ2VH1J5OL0ZGlVx21Ru5uKrlUhRkha23/SCJjZNx4AR4Rk5oLBLjLDtJH
+	 wEIpJEWj6iANoidkVupvI60cDZ2Q6dlqQg2sOboOXLmVJs4FgZZ2bb1KSysOiEb/i2
+	 tjkH71wnOhIN5FMRVz1k6mVjIsCAaOBZjZ69eFuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1395/1518] Bluetooth: btmtksdio: Fix out-of-bounds DMA read in the TX path
-Date: Sat, 12 Sep 2026 08:59:24 +0200
-Message-ID: <20260912065655.105540049@linuxfoundation.org>
+Subject: [PATCH 6.18 1378/1518] net: libwx: fix concurrent bitmap overwrite in PTP setup
+Date: Sat, 12 Sep 2026 08:59:07 +0200
+Message-ID: <20260912065654.716617022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,99 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit fa0ad2d277c7adead61d1c22411c55cea6990c2a ]
+[ Upstream commit f05516dd7b865666ea7d67e90d0edb588ae9ad18 ]
 
-btmtksdio_tx_packet() rounds the transfer size up to the SDIO block size
-of 256 bytes, but hands the host controller the SKB buffer as is:
+In wx_ptp_set_timestamp_mode(), the driver copies the global `wx->flags`
+bitmap to a local variable, modifies the PTP-related bits, and then writes
+the entire bitmap back using memcpy().
 
-	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data,
-			   round_up(skb->len, MTK_SDIO_BLOCK_SIZE));
+This Read-Copy-Update pattern is unsafe and introduces a critical race
+condition. Other asynchronous contexts (such as Tx timeout routines or
+GPIO IRQ handlers) update individual bits in `wx->flags` concurrently
+using atomic bitops like set_bit() or clear_bit(). The memcpy() write-back
+can silently overwrite and drop these concurrent changes, potentially
+causing the driver to miss critical module reset or PCIe recovery requests.
 
-Only skb->len bytes hold packet data, so the controller reads up to 255
-bytes of uninitialised memory and sends it to the device over the SDIO
-bus. Depending on how much tailroom slack the SKB allocation happens to
-carry, that read can also extend past the end of the buffer.
+Fix this by removing the local bitmap copy. Instead, evaluate the intended
+PTP flag states locally and apply them directly to `wx->flags` using
+atomic set_bit() and clear_bit() operations only after the hardware is
+successfully configured.
 
-Compute the padded length up front, ensure the SKB has tailroom for it,
-and zero-fill the padding with skb_put_zero(). skb->len then covers the
-padding, so sdio_writesb() no longer needs to round up. byte_tx keeps
-counting the header and the payload only, and the error path restores the
-SKB so that the caller can requeue it.
-
-Writing behind skb->tail is only safe because the driver owns the buffer,
-which "Bluetooth: btmtksdio: Take exclusive ownership of the SKB before
-TX" ensures.
-
-Fixes: 9aebfd4a2200 ("Bluetooth: mediatek: add support for MediaTek MT7663S and MT7668S SDIO devices")
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 06e75161b9d4 ("net: wangxun: Add support for PTP clock")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/6C7EC12D69217315+20260818074721.45536-1-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtksdio.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_ptp.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index 516e086fc5c01..f7dcabc11b859 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -272,6 +272,7 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 			       struct sk_buff *skb)
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_ptp.c b/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
+index 44f3e65052468..1165518d55225 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
+@@ -555,13 +555,11 @@ static int wx_ptp_set_timestamp_mode(struct wx *wx,
  {
- 	struct mtkbtsdio_hdr *sdio_hdr;
-+	unsigned int len, pad_len;
- 	int err;
+ 	u32 tsync_tx_ctl = WX_TSC_1588_CTL_ENABLED;
+ 	u32 tsync_rx_ctl = WX_PSR_1588_CTL_ENABLED;
+-	DECLARE_BITMAP(flags, WX_PF_FLAGS_NBITS);
+ 	u32 tsync_rx_mtrl = PTP_EV_PORT << 16;
++	bool rx_tstamp = false;
+ 	bool is_l2 = false;
+ 	u32 regval;
  
- 	/* Make sure that the data buffer is not shared with anyone else and
-@@ -281,6 +282,18 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 	if (err < 0)
- 		return err;
+-	memcpy(flags, wx->flags, sizeof(wx->flags));
+-
+ 	switch (config->tx_type) {
+ 	case HWTSTAMP_TX_OFF:
+ 		tsync_tx_ctl = 0;
+@@ -576,20 +574,16 @@ static int wx_ptp_set_timestamp_mode(struct wx *wx,
+ 	case HWTSTAMP_FILTER_NONE:
+ 		tsync_rx_ctl = 0;
+ 		tsync_rx_mtrl = 0;
+-		clear_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, flags);
+-		clear_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, flags);
+ 		break;
+ 	case HWTSTAMP_FILTER_PTP_V1_L4_SYNC:
+ 		tsync_rx_ctl |= WX_PSR_1588_CTL_TYPE_L4_V1;
+ 		tsync_rx_mtrl |= WX_PSR_1588_MSG_V1_SYNC;
+-		set_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, flags);
+-		set_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, flags);
++		rx_tstamp = true;
+ 		break;
+ 	case HWTSTAMP_FILTER_PTP_V1_L4_DELAY_REQ:
+ 		tsync_rx_ctl |= WX_PSR_1588_CTL_TYPE_L4_V1;
+ 		tsync_rx_mtrl |= WX_PSR_1588_MSG_V1_DELAY_REQ;
+-		set_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, flags);
+-		set_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, flags);
++		rx_tstamp = true;
+ 		break;
+ 	case HWTSTAMP_FILTER_PTP_V2_EVENT:
+ 	case HWTSTAMP_FILTER_PTP_V2_L2_EVENT:
+@@ -602,9 +596,8 @@ static int wx_ptp_set_timestamp_mode(struct wx *wx,
+ 	case HWTSTAMP_FILTER_PTP_V2_L4_DELAY_REQ:
+ 		tsync_rx_ctl |= WX_PSR_1588_CTL_TYPE_EVENT_V2;
+ 		is_l2 = true;
++		rx_tstamp = true;
+ 		config->rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
+-		set_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, flags);
+-		set_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, flags);
+ 		break;
+ 	default:
+ 		/* register PSR_1588_MSG must be set in order to do V1 packets,
+@@ -643,7 +636,8 @@ static int wx_ptp_set_timestamp_mode(struct wx *wx,
+ 	WX_WRITE_FLUSH(wx);
  
-+	/* The transfer is rounded up to the SDIO block size, so the buffer
-+	 * has to provide tailroom for the padding as well
-+	 */
-+	len = skb->len + sizeof(*sdio_hdr);
-+	pad_len = round_up(len, MTK_SDIO_BLOCK_SIZE) - len;
-+
-+	if (unlikely(skb_tailroom(skb) < pad_len)) {
-+		err = pskb_expand_head(skb, 0, pad_len, GFP_ATOMIC);
-+		if (err < 0)
-+			return err;
-+	}
-+
- 	/* Prepend MediaTek SDIO Specific Header */
- 	skb_push(skb, sizeof(*sdio_hdr));
+ 	/* configure adapter flags only when HW is actually configured */
+-	memcpy(wx->flags, flags, sizeof(wx->flags));
++	assign_bit(WX_FLAG_RX_HWTSTAMP_ENABLED, wx->flags, rx_tstamp);
++	assign_bit(WX_FLAG_RX_HWTSTAMP_IN_REGISTER, wx->flags, rx_tstamp);
  
-@@ -289,19 +302,22 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 	sdio_hdr->reserved = cpu_to_le16(0);
- 	sdio_hdr->bt_type = hci_skb_pkt_type(skb);
- 
-+	/* Zero the padding so that no uninitialised memory is sent out */
-+	skb_put_zero(skb, pad_len);
-+
- 	clear_bit(BTMTKSDIO_HW_TX_READY, &bdev->tx_state);
--	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data,
--			   round_up(skb->len, MTK_SDIO_BLOCK_SIZE));
-+	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data, skb->len);
- 	if (err < 0)
--		goto err_skb_pull;
-+		goto err_skb_restore;
- 
--	bdev->hdev->stat.byte_tx += skb->len;
-+	bdev->hdev->stat.byte_tx += len;
- 
- 	kfree_skb(skb);
- 
- 	return 0;
- 
--err_skb_pull:
-+err_skb_restore:
-+	skb_trim(skb, len);
- 	skb_pull(skb, sizeof(*sdio_hdr));
- 
- 	return err;
+ 	/* clear TX/RX timestamp state, just to be sure */
+ 	wx_ptp_clear_tx_timestamp(wx);
 -- 
 2.53.0
 
