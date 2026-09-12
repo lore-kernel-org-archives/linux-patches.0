@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E9F37FF6D;
-	Sat, 12 Sep 2026 08:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320ED37E304;
+	Sat, 12 Sep 2026 08:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200822; cv=none; b=RmHxRFZYum/m1TjajWvC8/Ku4F10iIDzr/59HNT6zQ/r77KHGc7YIYSemG9n9pHfCFjd2KjcnufIINfuSu9x1y0CNCfC6zAdmlHIoU8UsNuLSC1UMSEihkIPSllCeVX9t9Ad0SWIEvaVwtY5o1r1YgA0LUE6+bdkHHnK5XitjGc=
+	t=1789200827; cv=none; b=hJOcmPIMM4MmCkWEMVtQjCfc38aR3PrSDhWkuQiawUeH3n0Hr1F+QE00bkuL1UrjaBNv+f2hq7wupOtdAgLijjfR7ae1q8WLTEPOrtYjaa3Im6ZED6W33dJHwdjFsKWKr7Xof+llvJrdxvGYzmr+lMtKa3TDG7k5fdn8CyDlwWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200822; c=relaxed/simple;
-	bh=005N4xr5kKmNHd3c2xguYszByk4HCOBWZVU5KXeyYlw=;
+	s=arc-20240116; t=1789200827; c=relaxed/simple;
+	bh=0pkxmp1Xv6JQmDa3Qk4LzXnctTiVOEoBxik0tk37l88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YWXnmh+umOLsHsa8Blq9ig808F2wHFyHNHpbVj+zFcinASYbBzFGPS5bxhSDAiKaWWTjg/422ebuDibkGeaARU4Y2qCZ3w+rt7LbPAQ2dJBpX5lhPj//kQaUrLuyKX+2K08eAClpUABinXak9LtydOca8g/2tpxPK3/JEx2obcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hgfu0Ryc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l9zuPUqPL8cdAtcGpTXOri93HTNKkHXCUf6kxwyWTh3sWrLhs19RSPaeufjIyX9I6R5VCVqTXhGv+cMgkG1RmMTxnwbTi+U11DpQTG19TJG6prDQDtsODnf51nNeRcDgk33o2kycpd33ACMUQzbj1Jd5phzpqF+eHtinzhKxz+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dODmfMSu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hgfu0Ryc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB561F000FF;
-	Sat, 12 Sep 2026 08:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dODmfMSu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B341F000FF;
+	Sat, 12 Sep 2026 08:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200821;
-	bh=qYaGY0XxfhSJExs5hizm8s/0gYu0WNxrVwOSxIKpCnc=;
+	s=korg; t=1789200826;
+	bh=iNR9v3bT3nV9HzMCUP7CDgjnueWAEGR1MOwGAF97I+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hgfu0Ryci0Rg2Y/w8vxPWWZ9HEFI1XIRVQey6+sc/MwibWtSt3f05zNcs4S2PUTsi
-	 bcEu6epkpWcG3Oj5VS3V4GhVsSGBXb7ephQhP3gc/9bWe1D+FLppoBNldlaQ5JspNN
-	 Ttht215qxfmxaafMEYZTOQ4TU6DNsAjUgvSyA0sY=
+	b=dODmfMSuoVXluBaXQ2uFUXAM7hx/C3oC979vSFfuUYDw8NjQYaH6oPa2zlORFMQ65
+	 RjSP56iv1NF+4+HRXr7dN0MYs8zpJu38komplC7MSkIBrJocYNSlaPh9z4DjzCln+S
+	 nqLGOkBfxic1FdFTHFV/Gc85nJtF3BJjxgOxCJGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0826/1815] clk: qcom: negcc-nord: use clk_regmap_phy_mux for USB3 pipe clock srcs
-Date: Sat, 12 Sep 2026 08:42:56 +0200
-Message-ID: <20260912065708.303393701@linuxfoundation.org>
+Subject: [PATCH 7.2 0827/1815] clk: qcom: gcc-nord: mark PCIe link clocks as critical
+Date: Sat, 12 Sep 2026 08:42:57 +0200
+Message-ID: <20260912065708.327202808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,123 +55,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit a5c2859ffe9c8e033e2df1ef62357fa5692008f1 ]
+[ Upstream commit 6c3a4d971503b04b00d75a37882becb3c2f57f30 ]
 
-ne_gcc_usb3_prim_phy_pipe_clk_src and ne_gcc_usb3_sec_phy_pipe_clk_src
-are 2-bit muxes selecting between a PHY-sourced USB3 pipe clock and
-BI_TCXO, implemented with clk_regmap_mux_closest_ops. This requires
-manual parent switching and does not park the mux on the reference
-clock when the clock is disabled.
+The PCIe link AHB and XO clocks must remain enabled for proper
+operation. Representing them as clk_branch instances allows them
+to be gated, which is undesirable.
 
-Convert both to clk_regmap_phy_mux with clk_regmap_phy_mux_ops, which
-automatically parks the mux on the XO/ref source on disable and
-restores the PHY parent on enable, matching the existing UFS symbol
-clock conversions in this driver.
+Remove their clk_branch definitions and register their CBCRs as
+critical clocks instead so they remain enabled.
+
+This matches the handling of similar always-on clocks in other
+Qualcomm clock drivers.
 
 Fixes: a4f780cd5c7a ("clk: qcom: gcc: Add multiple global clock controller driver for Nord SoC")
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Tested-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260716-b4-nord-pipe-clk-fixes-v1-2-e4f583633356@oss.qualcomm.com
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260724-nords_mm_v1-v3-1-32b45232217f@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/negcc-nord.c | 49 +++++++++--------------------------
- 1 file changed, 12 insertions(+), 37 deletions(-)
+ drivers/clk/qcom/gcc-nord.c | 37 +++++++------------------------------
+ 1 file changed, 7 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/clk/qcom/negcc-nord.c b/drivers/clk/qcom/negcc-nord.c
-index 3427a0375373c..57b90f11bc068 100644
---- a/drivers/clk/qcom/negcc-nord.c
-+++ b/drivers/clk/qcom/negcc-nord.c
-@@ -16,7 +16,6 @@
- #include "clk-rcg.h"
- #include "clk-regmap.h"
- #include "clk-regmap-divider.h"
--#include "clk-regmap-mux.h"
- #include "clk-regmap-phy-mux.h"
- #include "common.h"
- #include "gdsc.h"
-@@ -41,8 +40,6 @@ enum {
- 	P_UFS_PHY_RX_SYMBOL_0_CLK,
- 	P_UFS_PHY_RX_SYMBOL_1_CLK,
- 	P_UFS_PHY_TX_SYMBOL_0_CLK,
--	P_USB3_PHY_SEC_WRAPPER_NE_GCC_USB31_PIPE_CLK,
--	P_USB3_PHY_WRAPPER_NE_GCC_USB31_PIPE_CLK,
- };
- 
- static struct clk_alpha_pll ne_gcc_gpll0 = {
-@@ -165,26 +162,6 @@ static const struct clk_parent_data ne_gcc_parent_data_5[] = {
- 	{ .index = DT_BI_TCXO },
- };
- 
--static const struct parent_map ne_gcc_parent_map_6[] = {
--	{ P_USB3_PHY_WRAPPER_NE_GCC_USB31_PIPE_CLK, 0 },
--	{ P_BI_TCXO, 2 },
--};
--
--static const struct clk_parent_data ne_gcc_parent_data_6[] = {
--	{ .index = DT_USB3_PHY_WRAPPER_NE_GCC_USB31_PIPE_CLK },
--	{ .index = DT_BI_TCXO },
--};
--
--static const struct parent_map ne_gcc_parent_map_7[] = {
--	{ P_USB3_PHY_SEC_WRAPPER_NE_GCC_USB31_PIPE_CLK, 0 },
--	{ P_BI_TCXO, 2 },
--};
--
--static const struct clk_parent_data ne_gcc_parent_data_7[] = {
--	{ .index = DT_USB3_PHY_SEC_WRAPPER_NE_GCC_USB31_PIPE_CLK },
--	{ .index = DT_BI_TCXO },
--};
--
- static struct clk_regmap_phy_mux ne_gcc_ufs_phy_rx_symbol_0_clk_src = {
- 	.reg = 0x33068,
- 	.clkr = {
-@@ -227,32 +204,30 @@ static struct clk_regmap_phy_mux ne_gcc_ufs_phy_tx_symbol_0_clk_src = {
+diff --git a/drivers/clk/qcom/gcc-nord.c b/drivers/clk/qcom/gcc-nord.c
+index 970a3e1a5864a..5c9d25f53a6d2 100644
+--- a/drivers/clk/qcom/gcc-nord.c
++++ b/drivers/clk/qcom/gcc-nord.c
+@@ -1184,34 +1184,6 @@ static struct clk_branch gcc_pcie_d_slv_q2a_axi_clk = {
  	},
  };
  
--static struct clk_regmap_mux ne_gcc_usb3_prim_phy_pipe_clk_src = {
-+static struct clk_regmap_phy_mux ne_gcc_usb3_prim_phy_pipe_clk_src = {
- 	.reg = 0x2a078,
--	.shift = 0,
--	.width = 2,
--	.parent_map = ne_gcc_parent_map_6,
- 	.clkr = {
- 		.hw.init = &(const struct clk_init_data) {
- 			.name = "ne_gcc_usb3_prim_phy_pipe_clk_src",
--			.parent_data = ne_gcc_parent_data_6,
--			.num_parents = ARRAY_SIZE(ne_gcc_parent_data_6),
--			.ops = &clk_regmap_mux_closest_ops,
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_USB3_PHY_WRAPPER_NE_GCC_USB31_PIPE_CLK,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_regmap_phy_mux_ops,
- 		},
- 	},
+-static struct clk_branch gcc_pcie_link_ahb_clk = {
+-	.halt_reg = 0x52464,
+-	.halt_check = BRANCH_HALT,
+-	.clkr = {
+-		.enable_reg = 0x52464,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(const struct clk_init_data) {
+-			.name = "gcc_pcie_link_ahb_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch gcc_pcie_link_xo_clk = {
+-	.halt_reg = 0x52468,
+-	.halt_check = BRANCH_HALT_VOTED,
+-	.hwcg_reg = 0x52468,
+-	.hwcg_bit = 1,
+-	.clkr = {
+-		.enable_reg = 0x52468,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(const struct clk_init_data) {
+-			.name = "gcc_pcie_link_xo_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_pcie_noc_async_bridge_clk = {
+ 	.halt_reg = 0x52048,
+ 	.halt_check = BRANCH_HALT_SKIP,
+@@ -1757,8 +1729,6 @@ static struct clk_regmap *gcc_nord_clocks[] = {
+ 	[GCC_PCIE_D_PIPE_CLK_SRC] = &gcc_pcie_d_pipe_clk_src.clkr,
+ 	[GCC_PCIE_D_SLV_AXI_CLK] = &gcc_pcie_d_slv_axi_clk.clkr,
+ 	[GCC_PCIE_D_SLV_Q2A_AXI_CLK] = &gcc_pcie_d_slv_q2a_axi_clk.clkr,
+-	[GCC_PCIE_LINK_AHB_CLK] = &gcc_pcie_link_ahb_clk.clkr,
+-	[GCC_PCIE_LINK_XO_CLK] = &gcc_pcie_link_xo_clk.clkr,
+ 	[GCC_PCIE_NOC_ASYNC_BRIDGE_CLK] = &gcc_pcie_noc_async_bridge_clk.clkr,
+ 	[GCC_PCIE_NOC_CNOC_SF_QX_CLK] = &gcc_pcie_noc_cnoc_sf_qx_clk.clkr,
+ 	[GCC_PCIE_NOC_M_CFG_CLK] = &gcc_pcie_noc_m_cfg_clk.clkr,
+@@ -1849,9 +1819,16 @@ static const struct regmap_config gcc_nord_regmap_config = {
+ 	.fast_io = true,
  };
  
--static struct clk_regmap_mux ne_gcc_usb3_sec_phy_pipe_clk_src = {
-+static struct clk_regmap_phy_mux ne_gcc_usb3_sec_phy_pipe_clk_src = {
- 	.reg = 0x2c078,
--	.shift = 0,
--	.width = 2,
--	.parent_map = ne_gcc_parent_map_7,
- 	.clkr = {
- 		.hw.init = &(const struct clk_init_data) {
- 			.name = "ne_gcc_usb3_sec_phy_pipe_clk_src",
--			.parent_data = ne_gcc_parent_data_7,
--			.num_parents = ARRAY_SIZE(ne_gcc_parent_data_7),
--			.ops = &clk_regmap_mux_closest_ops,
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_USB3_PHY_SEC_WRAPPER_NE_GCC_USB31_PIPE_CLK,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_regmap_phy_mux_ops,
- 		},
- 	},
++static const u32 gcc_nord_critical_cbcrs[] = {
++	0x52464, /* GCC_PCIE_LINK_AHB_CLK */
++	0x52468, /* GCC_PCIE_LINK_XO_CLK */
++};
++
+ static const struct qcom_cc_driver_data gcc_nord_driver_data = {
+ 	.dfs_rcgs = gcc_nord_dfs_clocks,
+ 	.num_dfs_rcgs = ARRAY_SIZE(gcc_nord_dfs_clocks),
++	.clk_cbcrs = gcc_nord_critical_cbcrs,
++	.num_clk_cbcrs = ARRAY_SIZE(gcc_nord_critical_cbcrs),
  };
+ 
+ static const struct qcom_cc_desc gcc_nord_desc = {
 -- 
 2.53.0
 
