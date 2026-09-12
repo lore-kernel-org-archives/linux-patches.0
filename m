@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59782320CD3;
-	Sat, 12 Sep 2026 15:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FDC3630AC;
+	Sat, 12 Sep 2026 15:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226925; cv=none; b=dx5GZKuXItiPniwsOKS9DhVKmJrYVOus93h2ywc9i4BLlzIfDKdJlO0H5SdotzxBm/kwqP/0mAX0Spw2TgXziui1SJN+1CMD35ez/yvL+G91N34+HhyEEJhvEyhSMlLFRK3g1ZmtkJT/EdME/S+h7tNJXO2uCSHP8O2x8V5IIQ8=
+	t=1789226930; cv=none; b=t93T6pcSfZDRGZNut2xkw7xXwRqBsVDso5IddfTvo/jpnsydVC+0c48Kz8zHjUBWUhFLe4ty+LBPcgDVfD7J8Dy8jIAsTG7qunfKVjK3jvAn6tqM8XrAPD5z7rNfIcjUs+w27W568EtuNYf76y1GdXJfCAUdJ0vrVTfFRvLIbLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226925; c=relaxed/simple;
-	bh=YJN7ad3ODLHsVC9h2V5vkibcoZtGuH89DSlecqeaVN4=;
+	s=arc-20240116; t=1789226930; c=relaxed/simple;
+	bh=DrkDfNioRJgfdRssOKfeIQyqXel2HMZrxXxZYMb7mwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ggaee4/dKRhDcwh3GUFDOLJZm7Uxy5jiZrod3cXDI0Stu3DDEC6OCK9vcFRhCd7OpDtMcX4mzi4RRKILiKDxNYty9rC7HH/6ee+60GHYR7cEXeu20Wf98hufOGaMvhIyPXg8lvyYSyff70tYoo2bAO0xzEF7ietD75q2j0SsjH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCS4C13v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eOqqYcHXuwffU1cCIfh3VCwWoqCY7LYuQMRYfIXZgbeARRhtc4StfF+e90CxRcHaDZch6StGKyWPPtPEtQS7WBJ7lCFovs1hO5KiEyhw0l4hTPzhznxv1dUyEazzjov0EhBZbhKr8XrSQkdWsHGkrvJlYsuQK8BrKwPjOFLT6oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqk0dPIw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCS4C13v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19931F000FF;
-	Sat, 12 Sep 2026 15:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqk0dPIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2FD1F000FF;
+	Sat, 12 Sep 2026 15:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226923;
-	bh=95vYejLiBlT25Wlq8GC4CCepJripGTPnZ65pjL+QeOg=;
+	s=korg; t=1789226928;
+	bh=/VXcLf+7Tgisrg6C7oqK/rSNAs7eJk+Z7GJ7mMtWJ1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TCS4C13vcHskvpTAJ2n+RIOo4njisS8wSUEjlCnPW78WOFVqS/AtTxJgUEu2yijAE
-	 XTrLBnI1AUZ+3Fuq6W3ohPYh6xmvckthFE1SV79hAi2O527oeDBhejixyBQ+bN8u7o
-	 YtTADGksYX2hJV0Dmxw8g/Gzv955H9xhWocP70eg=
+	b=tqk0dPIwDz0bR2fAXQYqbZ238pV8gGN2UH3Bf1b/qKcivslToMyOatglXzce8KqGr
+	 uzVOgEIkDsfBXbhm4qvrvGGIXvfDF3BCiYLwI7lpimUeUnYIUW8IYVHRGU/I90NiWL
+	 fxhpHLdXB2AlLCdBt2sez8Y2fg4VZmaUADTynZCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 0076/1191] fs/ntfs3: bound page_lcns[] index by the log record
-Date: Sat, 12 Sep 2026 08:46:44 +0200
-Message-ID: <20260912065549.872850555@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Tyler Hicks <code@tyhicks.com>
+Subject: [PATCH 6.1 0077/1191] eCryptfs: bound the packet-length peek to the user buffer
+Date: Sat, 12 Sep 2026 08:46:45 +0200
+Message-ID: <20260912065549.894836195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,65 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 6f7b9dbdc1b7520206abce0049bdd143eb536e75 upstream.
+commit 95540462e630edbc8504e9537d16453d6942d143 upstream.
 
-The copy_lcns loop and the redo shorten loop index page_lcns[] at j + i,
-where i runs up to the log record's lcns_follow. That count is checked only
-against the record's own length, not the target entry, so check_dp_table()
-(which validates the entry's lcns_follow) does not cover it: the copy_lcns
-entry may even be freshly allocated after that check, and find_dp() bounds j
-but not i. A crafted record thus overflows page_lcns[] of an otherwise valid
-entry.
+ecryptfs_miscdev_write() accepts the minimum one-byte packet-length
+encoding, but always copies the maximum two-byte encoding from userspace
+before parsing it. A six-byte message therefore reads one byte beyond the
+submitted user buffer.
 
-Add dp_range_ok() and reject, before each loop, any record whose run does
-not fit the entry. These are the only two page_lcns[] accesses indexed by
-the record rather than the entry, so together with the entry validation
-every access is now bounded.
+Zero-initialize the peek buffer and copy only the packet-length bytes
+present. The existing exact packet-size check still rejects truncated
+two-byte encodings after the parser determines their encoded length.
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-[almaz.alexandrovich@paragon-software.com: original patch contained changes to the problem already handled, applied partly]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 8bf2debd5f7b ("eCryptfs: introduce device handle for userspace daemon communications")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/ecryptfs/miscdev.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -648,6 +648,14 @@ static inline void *enum_rstbl(struct RE
- }
+--- a/fs/ecryptfs/miscdev.c
++++ b/fs/ecryptfs/miscdev.c
+@@ -357,7 +357,7 @@ ecryptfs_miscdev_write(struct file *file
+ 	u32 seq;
+ 	size_t packet_size, packet_size_length;
+ 	char *data;
+-	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE];
++	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE] = { };
+ 	ssize_t rc;
  
- /*
-+ * dp_range_ok - true if [j, j + count) fits in a page_lcns[cap] array.
-+ */
-+static inline bool dp_range_ok(size_t j, u32 count, u32 cap)
-+{
-+	return j < cap && count <= cap - j;
-+}
-+
-+/*
-  * find_dp - Search for a @vcn in Dirty Page Table.
-  */
- static inline struct DIR_PAGE_ENTRY *find_dp(struct RESTART_TABLE *dptbl,
-@@ -5078,6 +5086,13 @@ find_dirty_page:
- 	/* Shorten length by any Lcns which were deleted. */
- 	saved_len = dlen;
+ 	if (count == 0) {
+@@ -373,7 +373,8 @@ ecryptfs_miscdev_write(struct file *file
+ 	}
  
-+	if (!dp_range_ok(le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn),
-+			 le16_to_cpu(lrh->lcns_follow),
-+			 le32_to_cpu(dp->lcns_follow))) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+
- 	for (i = le16_to_cpu(lrh->lcns_follow); i; i--) {
- 		size_t j;
- 		u32 alen, voff;
+ 	if (copy_from_user(packet_size_peek, &buf[PKT_LEN_OFFSET],
+-			   sizeof(packet_size_peek))) {
++			   min_t(size_t, count - PKT_LEN_OFFSET,
++				 sizeof(packet_size_peek)))) {
+ 		printk(KERN_WARNING "%s: Error while inspecting packet size\n",
+ 		       __func__);
+ 		return -EFAULT;
 
 
