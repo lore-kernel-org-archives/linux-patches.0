@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8849C42882B;
-	Sat, 12 Sep 2026 13:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717A0373BF2;
+	Sat, 12 Sep 2026 13:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219579; cv=none; b=jcpXM/IUpW8xxDOo/cBvBcUTW5XKmTtDz0+SZVltvcgTpbiDleZvU2ChMulFpivXiXlqkg63ewIT4/SW5qqwgwk5DNrVsUDPzIEzJeQWUV98RHTVOKyyFF7IawpQJtY/SBZ6KqzMq2o+O9Sbb9MpCcnqOUtanqb3G9YYnEyoq64=
+	t=1789219584; cv=none; b=FcG7wb8rn5k4oNHWpef+E1t/LYrkkONL0YmiH1ALRvn1py3Ax2vPrzyEvVEkP5TGqnsNvcYHE1Qjafn6pEWHkFLMPzW89e2XIkEwt05Ere+5dmmKbQgJ4SYlYOSvXLJs2Awch/XJFvM7lvpH2ljlxTVWdJZawUgZQ2i6jrpaJF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219579; c=relaxed/simple;
-	bh=jJ4mGNDBLfkemjouNR+GDIQsRsB1V48Ma05r1Zf0pAc=;
+	s=arc-20240116; t=1789219584; c=relaxed/simple;
+	bh=UEdWCemjB04QJRKkyPWs7GPR74BLiyNR8VPCq8VQCzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mzp/WspFY7E/BExvf8VTVwZQ90fYF1nQmE2Z5MImf0DgfzHTc2gCCOuiEwyf4ovtJVvPQ/wO+78ITs4JhkWb43NQWgYqaYxpHHkgRgKQe2jGlmvNEO4Jk73+hHhfW/ND+tl1yjwWgQOV97tuQc61fQ2Tp0eqAe6F+fpBFyRdUoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEtnLnHQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oyr1a0+dzov9V6tODb90gUlCqqiaiSfs42Q6VP/P7KsPeE4pt0W+AXhGhEHi0f5lka6DgvDaRu4QBZztCti5we6ywvU1fT0PPtSrjHTmZ5gVLz41wstChhFq3TnYKod8UyJp/6sAtJmvDiQRsPBxs75ASbDp5aknkZ1G0cSK8xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlziwxVz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEtnLnHQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3953D1F000FF;
-	Sat, 12 Sep 2026 13:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlziwxVz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA781F000FF;
+	Sat, 12 Sep 2026 13:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219578;
-	bh=+uO+Qh+s75O0gJ/gmRYRCv/h9fBnsczZnyAlR4UP5M0=;
+	s=korg; t=1789219583;
+	bh=tHV1N9ZpMPwo6H6phJQ2aT+YY5PyfEOzsdi0XO9Ggjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SEtnLnHQrvKxIrh3m+X8SZ262Excolsk9sfT6RqgujYB5Cs/RbYf70Fawr2+4NFhj
-	 DimQlk/yJ0sOqEssOe25NXSWjX3giLE7LS4BVs6RhA7qD34yrBXIgKhUQQPxi32OQ0
-	 MW/7PUgIFy3fB1kdlYaJQpq/EvYHjF6ZB7I3F2fM=
+	b=MlziwxVzsxNItT/XVLoQWWIUTCuCs1wS+JCXdgAkkUSbDEDwKQCoRcx84xTAJ7NCL
+	 WMgF51pmuRe+IEE1+inziZ5MHSwGFQtn9wiehaUA2mgnLyljXyie4UWJJNDEwFu+D1
+	 MVjKaJ3fcOFUsyk/HFR86U79x5ddEpPJVvg/cm7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a6f4d69b9b23404bbabf@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1344/1376] slub: Dont call lockdep_unregister_key() for immature kmem_cache.
-Date: Sat, 12 Sep 2026 09:02:50 +0200
-Message-ID: <20260912065637.487144223@linuxfoundation.org>
+Subject: [PATCH 6.12 1345/1376] ACPI: processor: Update cpuidle driver check in __acpi_processor_start()
+Date: Sat, 12 Sep 2026 09:02:51 +0200
+Message-ID: <20260912065637.509721532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,101 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit f7dfa0f31b13ee5f2ba598cdfcab9a831ed8a6b8 ]
+[ Upstream commit 0089ce1c056aee547115bdc25c223f8f88c08498 ]
 
-syzbot reported the lockdep splat below in __kmem_cache_release(). [0]
+Commit 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle
+driver registration") moved the ACPI idle driver registration to
+acpi_processor_driver_init() and acpi_processor_power_init() does
+not register an idle driver any more.
 
-The problem is that __kmem_cache_release() could be called from
-do_kmem_cache_create() before init_kmem_cache_cpus() registers
-the lockdep key.
+Accordingly, the cpuidle driver check in __acpi_processor_start() needs
+to be updated to avoid calling acpi_processor_power_init() without a
+cpuidle driver, in which case the registration of the cpuidle device
+in that function would lead to a NULL pointer dereference in
+__cpuidle_register_device().
 
-Let's perform lockdep_unregister_key() only when init_kmem_cache_cpus()
-has been done, which we can determine by checking s->cpu_slab
-
-[0]:
-WARNING: CPU: 1 PID: 6128 at kernel/locking/lockdep.c:6606 lockdep_unregister_key+0x2ca/0x310 kernel/locking/lockdep.c:6606
-Modules linked in:
-CPU: 1 UID: 0 PID: 6128 Comm: syz.4.21 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/18/2025
-RIP: 0010:lockdep_unregister_key+0x2ca/0x310 kernel/locking/lockdep.c:6606
-Code: 50 e4 0f 48 3b 44 24 10 0f 84 26 fe ff ff e8 bd cd 17 09 e8 e8 ce 17 09 41 f7 c7 00 02 00 00 74 bd fb 40 84 ed 75 bc eb cd 90 <0f> 0b 90 e9 19 ff ff ff 90 0f 0b 90 e9 2a ff ff ff 48 c7 c7 d0 ac
-RSP: 0018:ffffc90003e870d0 EFLAGS: 00010002
-RAX: eb1525397f5bdf00 RBX: ffff88803c121148 RCX: 1ffff920007d0dfc
-RDX: 0000000000000000 RSI: ffffffff8acb1500 RDI: ffffffff8b1dd0e0
-RBP: 00000000ffffffea R08: ffffffff8eb5aa37 R09: 1ffffffff1d6b546
-R10: dffffc0000000000 R11: fffffbfff1d6b547 R12: 0000000000000000
-R13: ffff88814d1b8900 R14: 0000000000000000 R15: 0000000000000203
-FS:  00007f773f75e6c0(0000) GS:ffff88812712f000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffdaea3af52 CR3: 000000003a5ca000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __kmem_cache_release+0xe3/0x1e0 mm/slub.c:7696
- do_kmem_cache_create+0x74e/0x790 mm/slub.c:8575
- create_cache mm/slab_common.c:242 [inline]
- __kmem_cache_create_args+0x1ce/0x330 mm/slab_common.c:340
- nfsd_file_cache_init+0x1d6/0x530 fs/nfsd/filecache.c:816
- nfsd_startup_generic fs/nfsd/nfssvc.c:282 [inline]
- nfsd_startup_net fs/nfsd/nfssvc.c:377 [inline]
- nfsd_svc+0x393/0x900 fs/nfsd/nfssvc.c:786
- nfsd_nl_threads_set_doit+0x84a/0x960 fs/nfsd/nfsctl.c:1639
- genl_family_rcv_msg_doit+0x212/0x300 net/netlink/genetlink.c:1115
- genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
- genl_rcv_msg+0x60e/0x790 net/netlink/genetlink.c:1210
- netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2552
- genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
- netlink_unicast_kernel net/netlink/af_netlink.c:1320 [inline]
- netlink_unicast+0x846/0xa10 net/netlink/af_netlink.c:1346
- netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1896
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:742
- ____sys_sendmsg+0x508/0x820 net/socket.c:2630
- ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2684
- __sys_sendmsg net/socket.c:2716 [inline]
- __do_sys_sendmsg net/socket.c:2721 [inline]
- __se_sys_sendmsg net/socket.c:2719 [inline]
- __x64_sys_sendmsg+0x1a1/0x260 net/socket.c:2719
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f77400eeec9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f773f75e038 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00007f7740345fa0 RCX: 00007f77400eeec9
-RDX: 0000000000008004 RSI: 0000200000000180 RDI: 0000000000000006
-RBP: 00007f7740171f91 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f7740346038 R14: 00007f7740345fa0 R15: 00007ffce616f8d8
- </TASK>
-
-[alexei.starovoitov@gmail.com: simplify the fix]
-Link: https://lore.kernel.org/all/20251007052534.2776661-1-kuniyu@google.com/
-Fixes: 83382af9ddc3 ("slab: Make slub local_(try)lock more precise for LOCKDEP")
-Reported-by: syzbot+a6f4d69b9b23404bbabf@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68e4a3d1.a00a0220.298cc0.0471.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle driver registration")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20251223100914.2407069-4-lihuisong@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/processor_driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 620e31869c624..e2634fe919f67 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -5322,7 +5322,8 @@ void __kmem_cache_release(struct kmem_cache *s)
- 	cache_random_seq_destroy(s);
- #ifndef CONFIG_SLUB_TINY
- #ifdef CONFIG_PREEMPT_RT
--	lockdep_unregister_key(&s->lock_key);
-+	if (s->cpu_slab)
-+		lockdep_unregister_key(&s->lock_key);
- #endif
- 	free_percpu(s->cpu_slab);
- #endif
+diff --git a/drivers/acpi/processor_driver.c b/drivers/acpi/processor_driver.c
+index d6d9c57dd555f..2f5bfd00bfce8 100644
+--- a/drivers/acpi/processor_driver.c
++++ b/drivers/acpi/processor_driver.c
+@@ -166,7 +166,7 @@ static int __acpi_processor_start(struct acpi_device *device)
+ 	if (result && !IS_ENABLED(CONFIG_ACPI_CPU_FREQ_PSS))
+ 		dev_dbg(&device->dev, "CPPC data invalid or not present\n");
+ 
+-	if (!cpuidle_get_driver() || cpuidle_get_driver() == &acpi_idle_driver)
++	if (cpuidle_get_driver() == &acpi_idle_driver)
+ 		acpi_processor_power_init(pr);
+ 
+ 	acpi_pss_perf_init(pr);
 -- 
 2.53.0
 
