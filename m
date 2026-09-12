@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FC4214A84;
-	Sat, 12 Sep 2026 12:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28716214A84;
+	Sat, 12 Sep 2026 12:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216412; cv=none; b=b+o/8WzsOCzjT8tqWcvImw6JGL0YHhSskspES50/EPFuqj6z1JU0WQ9z5JRgzXHGW4XntazKI1Vi49MMhLcv1FJW7HUJR75x+AOZ+EVFLx9FEZoMr2kjEPZDYsgpS0740lGkoEM7bOTTEwzWx3qXeb8O+zt9dletgD1/jL6FRwI=
+	t=1789216417; cv=none; b=dHhy4lne+X2TCtPVK4KxmMlhcpXIfOy7pvXupcRAAhanlgijYroUPdRXBRdf+1rXySFqy8CtdewVddsiOloaasLD2BgT/xbd9guSKKXxgH2xuSboQNXlWuQbZljKYQxJQOgfOVy5FIGqbUMEAFEsXR9ML0CoI2enp6SYbDaG+9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216412; c=relaxed/simple;
-	bh=pTTSJUZbxJITMlXcuc27Rvi/jP1AlfsNw4se4U4Njlo=;
+	s=arc-20240116; t=1789216417; c=relaxed/simple;
+	bh=sqrVQ/UnySYS7jxUi4zyGrpmSq33Lkh4I02/n+jiRWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsQMaxWuglmzK/Fhb1xjZvsCDCsehsGqHHhHJIOHt+PvWmY6Jp8uNcWEvVbLKKOZNkH76z4xMzvzA3AYpKju7mDAs77LuQBTcuRUlBRHz1SMwajATEehNK9fl36i7z9m/hsismh7pl7fJbuYhIVO1nYbvs7maSxeIun31Jsp+wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gffamk68; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KZ+CqlIBuQRuq+GNPv4jZD7HVoqcqrKvM8IEJJQ/k5vYYnW+JWsvKpQGHKLxwb45fulX7/lphgse9PEF5hdIfdoVYaomb1yAb4rcdfhW68nWkHk6y4nF0brbcYPY9BzRIh+pmUuUhFUoANpJsCD9rAd88cOFL7yiwymvvcTk0BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFF+254Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gffamk68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0801F00893;
-	Sat, 12 Sep 2026 12:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFF+254Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EBF1F000FF;
+	Sat, 12 Sep 2026 12:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216410;
-	bh=KAfbKj6C7h+cKU6Z2LJ8O6FjNqBGCXd7FY21+vOGGP4=;
+	s=korg; t=1789216415;
+	bh=y3GfPDkEDIDXze1A9jSUNVNs2ENwe0SrYS8UhFnttRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gffamk68/dFjFLtqI78cHTtPueQpJ40h7yq9ORe/TNziEO45Q1ZEnrnOPWWGWfPcx
-	 7BrdElrPmT6BryLfkG94bGgh3yii3ItV6xZYW7yRXnbE3YvaZYtjsQaxds9uVs4iUn
-	 TdPoLc7MK2FesppHnVRE3+U+7LbivCRQZXDlP1oY=
+	b=nFF+254ZVDahJOUUWQ/5ZUrplUl5Qc2SAPQPKuZ8I6zhQEa0jhRBflnvOpwz5V7wN
+	 eehRpAqgnsXgRhmQpm8ZS1GxmsU1lQACkN+Al75FMNvljuh4G1hG0OWJNd+8hCF8be
+	 8Scyfhft3Hr5yEWjGfNLL4VibxT12ztQvvsie4G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Ali Tariq <alitariq45892@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0730/1376] wifi: ath11k: fix overreads in ath11k_wmi_process_csa_switch_count_event()
-Date: Sat, 12 Sep 2026 08:52:36 +0200
-Message-ID: <20260912065623.817209441@linuxfoundation.org>
+Subject: [PATCH 6.12 0731/1376] PCI: starfive: Fix Runtime PM handling and teardown ordering
+Date: Sat, 12 Sep 2026 08:52:37 +0200
+Message-ID: <20260912065623.838546799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,90 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Ali Tariq <alitariq45892@gmail.com>
 
-[ Upstream commit 208d7fdb85976a737a715b81d54efaff6703880c ]
+[ Upstream commit fb9f7973473fc30d62e0f5f90d59df8ef5223777 ]
 
-There is no policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT, so
-the parse infrastructure does not enforce a minimum length for the event
-struct. Additionally, the num_vdevs field is taken directly from firmware
-and used as a loop bound over the vdev_ids array without checking that it
-fits within the TLV payload. Either condition can cause an out-of-bounds
-read.
+The starfive_pcie_remove() path incorrectly disabled runtime PM
+before executing plda_pcie_host_deinit(), which can cause unmanaged
+hardware register access in plda_pcie_host_deinit() while power domains or
+clocks are disabled.
 
-Add a TLV policy entry for WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT so
-the parse infrastructure enforces a minimum length for the fixed-size event
-struct. Add a helper ath11k_wmi_tlv_data_len() to recover the payload
-length of a parsed TLV from the header preceding its data pointer. Use it
-in ath11k_wmi_process_csa_switch_count_event() to bound num_vdevs before
-the loop.
+Fix this by restructuring starfive_pcie_remove() to deinitialize the host
+controller first while runtime PM is active, followed by a synchronous
+pm_runtime_put_sync() and pm_runtime_disable().
 
-Compile tested only.
+This bug was found in automated AI review by sashiko-bot.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260724-ath12k_wmi_process_csa_switch_count_event-cleanup-v2-2-02a45d7246c0@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 39b91eb40c6a ("PCI: starfive: Add JH7110 PCIe controller")
+Closes: https://lore.kernel.org/linux-pci/20260712180440.423421F000E9@smtp.kernel.org/
+Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260718133825.445041-1-alitariq45892@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/pci/controller/plda/pcie-starfive.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 570c5e051b8c9..d0dbc1871ee7f 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -159,6 +159,8 @@ static const struct wmi_tlv_policy wmi_tlv_policies[] = {
- 		.min_len = sizeof(struct ath11k_wmi_p2p_noa_info) },
- 	[WMI_TAG_P2P_NOA_EVENT] = {
- 		.min_len = sizeof(struct wmi_p2p_noa_event) },
-+	[WMI_TAG_PDEV_CSA_SWITCH_COUNT_STATUS_EVENT] = {
-+		.min_len = sizeof(struct wmi_pdev_csa_switch_ev) },
- };
+diff --git a/drivers/pci/controller/plda/pcie-starfive.c b/drivers/pci/controller/plda/pcie-starfive.c
+index 0a0b5a7d84d7e..d859c14eb1e23 100644
+--- a/drivers/pci/controller/plda/pcie-starfive.c
++++ b/drivers/pci/controller/plda/pcie-starfive.c
+@@ -431,9 +431,9 @@ static void starfive_pcie_remove(struct platform_device *pdev)
+ {
+ 	struct starfive_jh7110_pcie *pcie = platform_get_drvdata(pdev);
  
- #define PRIMAP(_hw_mode_) \
-@@ -262,6 +264,13 @@ const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab,
- 	return tb;
+-	pm_runtime_put(&pdev->dev);
+-	pm_runtime_disable(&pdev->dev);
+ 	plda_pcie_host_deinit(&pcie->plda);
++	pm_runtime_put_sync(&pdev->dev);
++	pm_runtime_disable(&pdev->dev);
+ 	platform_set_drvdata(pdev, NULL);
  }
  
-+static u32 ath11k_wmi_tlv_data_len(const void *data)
-+{
-+	const struct wmi_tlv *tlv = (const struct wmi_tlv *)data - 1;
-+
-+	return FIELD_GET(WMI_TLV_LEN, tlv->header);
-+}
-+
- static int ath11k_wmi_cmd_send_nowait(struct ath11k_pdev_wmi *wmi, struct sk_buff *skb,
- 				      u32 cmd_id)
- {
-@@ -8302,15 +8311,23 @@ ath11k_wmi_process_csa_switch_count_event(struct ath11k_base *ab,
- 					  const struct wmi_pdev_csa_switch_ev *ev,
- 					  const u32 *vdev_ids)
- {
--	int i;
-+	u32 vdev_ids_len = ath11k_wmi_tlv_data_len(vdev_ids);
-+	u32 num_vdevs = ev->num_vdevs;
- 	struct ath11k_vif *arvif;
-+	int i;
- 
- 	/* Finish CSA once the switch count becomes NULL */
- 	if (ev->current_switch_count)
- 		return;
- 
-+	if (num_vdevs > vdev_ids_len / sizeof(*vdev_ids)) {
-+		ath11k_warn(ab, "csa switch count num_vdevs %u exceeds tlv array length %u\n",
-+			    num_vdevs, vdev_ids_len);
-+		return;
-+	}
-+
- 	rcu_read_lock();
--	for (i = 0; i < ev->num_vdevs; i++) {
-+	for (i = 0; i < num_vdevs; i++) {
- 		arvif = ath11k_mac_get_arvif_by_vdev_id(ab, vdev_ids[i]);
- 
- 		if (!arvif) {
 -- 
 2.53.0
 
