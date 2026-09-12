@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282FE3264D4;
-	Sat, 12 Sep 2026 13:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B343328FC;
+	Sat, 12 Sep 2026 13:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221481; cv=none; b=ZngeUYcmsgDbPR5MdU/deGlhH0XVkkPcErNZE28acRlECGEZ4kdfy0Stq/klkC0gaMJ+Pcjhb/tQCaV24Ps3Zo/3V8rymoaAo9aX+jyLJWN0Ux51NIvHlDrtETsvVXps4Rv1oWI/84XgCg+69iO1zQMvTp3u5v18bAaYr8WmbtI=
+	t=1789221486; cv=none; b=tiaBeHgT1gdU+OgtoQChTMzWY2mV7igEW7lH6fAMUi1ZHOBP+xE0LWONIHFbHDatTpdIPltl2zGjJreedOc0JG7F3JiAhaGHkX8bZROJDlhmHyCqbMGZhOV5KJ2lKb7S2FZBZ72rSDVHugwMhtiwLIG3LSQooHkSVshAJxs3rsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221481; c=relaxed/simple;
-	bh=c/8St5PS3O+FRXevt7YWObJhGM6RUmBthBaCp36dWLM=;
+	s=arc-20240116; t=1789221486; c=relaxed/simple;
+	bh=hlblET5YEFUhxoAqs4w8Ikg8o6HZ0uJYVO5Voef2ozc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p1X1Q++LiieJ/VzNats5TF+lu7RmYCujxYu1kfsbdb5QSUqiRC335v2/taQLxZIZCd/Q+SVZH9ILtKnjoT9kc70nK0gvCWcxQ5TnphBbMYiIv+6bLUuUcGXLdYMA4PU7jyeknbioib9YUvWjuSkXkLUsjWkAWna3UGuYBQ+RMR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVHFpnzw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B5WEL7xsoPEfvzenlnfrSV/9nU35un/iZ06I9ucCrYT/Itmq32H4bASPDG6ezLjF4UpZ5jfqS7QPRd4PvXKWACNEa8IMBJNRtWSWZ/+0b/KDaRx3Qhfj3EGbFKpVg8IRnSHDlztQ+Ur/yOdNbCjH8zEBnQYqYxgfVfBsS5XPP9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEMy8vHu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVHFpnzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD751F000FF;
-	Sat, 12 Sep 2026 13:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEMy8vHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F177B1F000FF;
+	Sat, 12 Sep 2026 13:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221480;
-	bh=nl0ij++fOz/M2TbBIAwboqEYyplkF/xlS2UMwvMJ5VQ=;
+	s=korg; t=1789221484;
+	bh=h6XJgOMDE2ZjmoQpTlE8J7qnSlorP1Wz3WdU2x0809o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVHFpnzwjLFlpJhbSJJ86yBQKo6exvF13WmV7VSVBz8QFLzdEFo4TWtRN8U/g8/TS
-	 EYq2qoUeMgyUB2PggwxWJAVao1iHB8vW3pRAHAJub/YQI0WXiDo63B0OHCoNoZ3GKR
-	 SzNSCNMytiB9HZ5/PFQ+EPvPqF8Ex1d3yX5TIhyQ=
+	b=gEMy8vHuYrZIpaTvHtRt3YfE8MkgVXjlW4MrH7+r5ROGVxCz6bFnegPlOfO0/Ojlr
+	 RtYdVd4qLHG90ZweEy4p/VaDmWagBmRWPl0rnJUjl8FQo71x9x8nt6Ejgc5O1OWPM3
+	 uVKVxqIcbpARK/uKpJ1JxGJsu5Rz2qf8DxtCTrN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Krowiak <akrowiak@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.6 0389/1424] s390/vfio-ap: Fix NULL deref in status_show() during queue probe
-Date: Sat, 12 Sep 2026 08:47:01 +0200
-Message-ID: <20260912065616.003593850@linuxfoundation.org>
+	Yao Kai <yaokai34@huawei.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.6 0349/1424] futex: Prevent rcuwait use-after-free during requeue PI
+Date: Sat, 12 Sep 2026 08:46:21 +0200
+Message-ID: <20260912065615.105336464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,125 +45,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
+From: Yao Kai <yaokai34@huawei.com>
 
-commit dd6f4ef6f8a37412909ad787c837332fb070159c upstream.
+commit a3b8d46fe401cba3a5c46dea610e6eb3dc15370e upstream.
 
-When vfio_ap_mdev_probe_queue() creates the sysfs attribute group,
-the queue's driver data has not yet been set. A concurrent read of
-the 'status' attribute can therefore call dev_get_drvdata() and
-get NULL, which is then passed directly to
-vfio_ap_mdev_for_queue() where q->apqn is unconditionally
-dereferenced, causing a NULL pointer dereference.
+On PREEMPT_RT, FUTEX_CMP_REQUEUE_PI can trigger a KASAN report
+(slab-out-of-bounds) in futex_requeue_pi_complete() invocation of
+rcuwait_wake_up().
 
-Fix this by acquiring the update locks before calling
-sysfs_create_group(). The status_show() function acquires
-guests_lock before reading the driver data, so any concurrent
-read will block until after dev_set_drvdata() has been called
-and the update locks are released.
+The futex_q used by futex_wait_requeue_pi() is allocated on the waiter's
+stack. An early wakeup can race with a PI requeue as follows:
 
-As a bonus, the APQN no longer needs to be read from the queue
-struct after allocation — it can be read directly from apdev
-before allocation and stored in a local variable, which is then
-assigned to q->apqn once the allocation succeeds.
+        waiter                          requeue task
+        ------                          ------------
+futex_wait_requeue_pi()
+  futex_do_wait()
+    schedule()
+                                       futex_requeue
+                                         futex_proxy_trylock_atomic()
+                                           futex_requeue_pi_prepare()
+                                            Q_REQUEUE_PI_NONE -> Q_REQUEUE_PI_IN_PROGRESS
+* timeout/ signal wakes waiter *
+  futex_requeue_pi_wakeup_sync()
+   Q_REQUEUE_PI_IN_PROGRESS -> Q_REQUEUE_PI_WAIT
+                                           requeue_pi_wake_futex
+                                             futex_requeue_pi_complete()
+                                               cmpxchg Q_REQUEUE_PI_WAIT -> Q_REQUEUE_PI_LOCKED
+    rcuwait_wait_event()
+      if (atomic_read(&q->requeue_state) != Q_REQUEUE_PI_WAIT)
+       break /* no schedule() */
 
-Fixes: 260f3ea141382 ("s390/vfio-ap: move probe and remove callbacks to vfio_ap_ops.c")
+ /* q.pi_state->owner == current */
+ futex_private_hash_put()
+ /* return from syscall */
+                                              rcuwait_wake_up(&q->requeue_wait)
+                                                /* q is gone */
+
+futex_requeue_pi_complete() publishes Q_REQUEUE_PI_LOCKED before
+calling rcuwait_wake_up(). The waiter observes this state in
+rcuwait_wait_event() before invoking schedule() in rcuwait_wait_event().
+Here, the waiter is free leave the syscall before requeue task can
+complete the wake.
+
+To address this race skip rcuwait_wake_up() in the Q_REQUEUE_PI_LOCKED
+case.
+This state is only published by requeue_pi_wake_futex(), which saves
+q->task before futex_requeue_pi_complete() and wakes the waiter via
+wake_up_state().
+
+This wake is intended to wake the waiter from its futex_do_wait() sleep.
+If the waiter is still sleeping there, it can not get into the
+Q_REQUEUE_PI_WAIT state (and require this removed wake).
+Should the waiter be woken up from futex_do_wait() by other means (as in
+this example) and sleep in futex_requeue_pi_wakeup_sync() then the
+wake_up_state() from requeue_pi_wake_futex() will wake it, too.
+Should the waiter task terminate before wake_up_state() had a chance to
+wake the task then the task pointer does not become invalid because the
+futex_hash_bucket::lock is held and the task pointer is RCU protected.
+
+[bigeasy: Updated comment and commit message]
+
+Fixes: 07d91ef510fb1 ("futex: Prevent requeue_pi() lock nesting issue on RT")
+Signed-off-by: Yao Kai <yaokai34@huawei.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Link: https://patch.msgid.link/20260901135453.3121948-3-bigeasy@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |   33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ kernel/futex/requeue.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -2065,6 +2065,23 @@ static ssize_t status_show(struct device
+--- a/kernel/futex/requeue.c
++++ b/kernel/futex/requeue.c
+@@ -147,8 +147,16 @@ static inline void futex_requeue_pi_comp
+ 	} while (!atomic_try_cmpxchg(&q->requeue_state, &old, new));
  
- 	mutex_lock(&matrix_dev->mdevs_lock);
- 	q = dev_get_drvdata(&apdev->device);
-+
+ #ifdef CONFIG_PREEMPT_RT
+-	/* If the waiter interleaved with the requeue let it know */
+-	if (unlikely(old == Q_REQUEUE_PI_WAIT))
 +	/*
-+	 * Make sure the drvdata has been set before proceeding. There is a
-+	 * possibility that the drvdata was not set if the vfio_ap_queue object
-+	 * could not be allocated when the queue device was probed. In that case,
-+	 * the locks used in vfio_ap_mdev_probe_queue() are released prior to
-+	 * removing the sysfs status attribute to avoid a lockdep
-+	 * splat. That opens a very small window where the status attribute is
-+	 * still available without the vfio_ap_queue object having been
-+	 * stored in the device drvdata. In that case, indicate the queue is not
-+	 * assigned.
++	 * The waiter in futex_requeue_pi_wakeup_sync() can interleave with the
++	 * wake below: It will assign Q_REQUEUE_PI_IN_PROGRESS and here it will
++	 * be updated to Q_REQUEUE_PI_LOCKED (locked = 1). The rcuwait_wait_event()
++	 * will already read Q_REQUEUE_PI_LOCKED and skip the schedule() invocation,
++	 * leading to an access of futex_q::requeue_wait after the waiter returned.
++	 * In this case only we skip the wake here and rely on following wake in
++	 * requeue_pi_wake_futex() to perform the wake if needed.
 +	 */
-+	if (!q) {
-+		nchars = sysfs_emit(buf, "%s\n", AP_QUEUE_UNASSIGNED);
-+		goto done;
-+	}
-+
- 	matrix_mdev = vfio_ap_mdev_for_queue(q);
- 
- 	/* If the queue is assigned to the matrix mediated device, then
-@@ -2092,6 +2109,7 @@ static ssize_t status_show(struct device
- 				   AP_QUEUE_UNASSIGNED);
- 	}
- 
-+done:
- 	mutex_unlock(&matrix_dev->mdevs_lock);
- 
- 	return nchars;
-@@ -2165,14 +2183,17 @@ void vfio_ap_mdev_unregister(void)
- 
- int vfio_ap_mdev_probe_queue(struct ap_device *apdev)
- {
--	int ret;
-+	int ret, apqn;
- 	struct vfio_ap_queue *q;
- 	DECLARE_BITMAP(apm_filtered, AP_DEVICES);
- 	struct ap_matrix_mdev *matrix_mdev;
- 
-+	apqn = to_ap_queue(&apdev->device)->qid;
-+	matrix_mdev = get_update_locks_by_apqn(apqn);
-+
- 	ret = sysfs_create_group(&apdev->device.kobj, &vfio_queue_attr_group);
- 	if (ret)
--		return ret;
-+		goto err_release_locks;
- 
- 	q = kzalloc(sizeof(*q), GFP_KERNEL);
- 	if (!q) {
-@@ -2180,11 +2201,10 @@ int vfio_ap_mdev_probe_queue(struct ap_d
- 		goto err_remove_group;
- 	}
- 
--	q->apqn = to_ap_queue(&apdev->device)->qid;
-+	q->apqn = apqn;
- 	q->saved_isc = VFIO_AP_ISC_INVALID;
- 	memset(&q->reset_status, 0, sizeof(q->reset_status));
- 	INIT_WORK(&q->reset_work, apq_reset_check);
--	matrix_mdev = get_update_locks_by_apqn(q->apqn);
- 
- 	if (matrix_mdev) {
- 		vfio_ap_mdev_link_queue(matrix_mdev, q);
-@@ -2213,8 +2233,13 @@ done:
- 	return ret;
- 
- err_remove_group:
-+	release_update_locks_for_mdev(matrix_mdev);
- 	sysfs_remove_group(&apdev->device.kobj, &vfio_queue_attr_group);
- 	return ret;
-+
-+err_release_locks:
-+	release_update_locks_for_mdev(matrix_mdev);
-+	return ret;
++	if (unlikely(old == Q_REQUEUE_PI_WAIT) && new != Q_REQUEUE_PI_LOCKED)
+ 		rcuwait_wake_up(&q->requeue_wait);
+ #endif
  }
- 
- void vfio_ap_mdev_remove_queue(struct ap_device *apdev)
 
 
