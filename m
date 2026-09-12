@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B393F9F3C;
-	Sat, 12 Sep 2026 09:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F9C208D0;
+	Sat, 12 Sep 2026 09:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204465; cv=none; b=aNP0oWEUyY7M0tExDzVJypV+7awaDpxlQROnTUPlxg7yKTVcZ7R6mfn9TBMCU38LqTRL07QqJ1Vyevljkx8LEjL50NTBBjxL2CTbhuh6D+QRiDOzSNerCAh6huvqW/K/Rbf4wEGXmtT5aXQcHzuk+MRHWAEZUfZGN9ydbhc2tXQ=
+	t=1789204470; cv=none; b=XwGH1fkWBOfey5e6bno0BGRAF7v0SYD45sKbdC7qmMLxiBatH0og/dHqrBwCaqPo2CeUEuwbl8xGoD+bM9Z920MZLHx6TQuSjHrLSc5BqEL2IfTbG4p7NEFqJiKJ5+arSNQB575iDLrsyIOHnOVF+jmVnKdzJSai6+PqSD9Ogao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204465; c=relaxed/simple;
-	bh=6V2CTTNMmsbP7yRkPzLPnnr7A0HNlbpfV0W2X/zQ2is=;
+	s=arc-20240116; t=1789204470; c=relaxed/simple;
+	bh=UEN/iCX2VUYMevzHxMqMjJz/tujMFJ73OfAiTQAJpgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQ4H2IVudrZ1o+CQwgPpT4moTmULoZcw8CyRy9geCxAmdw+wkdFFYwPN486VnNHdTptg6mEXwrHeRPrUoHFWGaz9Gs/lFWq08Rv+Qg2q2iJjWIDNR7ZIHQQ2KKZ4RxLPf06yhDaB11LWU3YSJqX3Fc6Gj4lziM77YUUv41SEgGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjmASvmU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZJ351QDarJwvl8E924g+yGtqYmhO91XbDqovvlc+pI0kKTb7P29wqmNRbaRKTHxCdv9Z7Yf9h0EO12mu91WVmW+nO5egP597WwiXR9EZiRVklun8H8jCoZFkIYT+pMNeEbtbI74BEtmQntEeowjXYVlin0xFh6v9S0GtPJGDxPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ov/SolFl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjmASvmU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C0C1F000FF;
-	Sat, 12 Sep 2026 09:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ov/SolFl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAFA1F0089A;
+	Sat, 12 Sep 2026 09:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204463;
-	bh=5SpWqvTrCCKvKboOApOOf3THauG5bkI0YZWH9oo+oPM=;
+	s=korg; t=1789204468;
+	bh=5i0+nTidJF/IuN36bcvbpCUcgRAAvdE3yFGKv6L+J5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PjmASvmUyQ09vli0MGSbwkYX6msKbgvRDk8GJjgyMfxUj8LSJrqcG3mVs1nt+wpk6
-	 VJHO7fCQl15t5QQRyj5Rmv72vLxWh1pSSq7HBGfQBWyr9Oua/9nhj1lPF2jdfJayRX
-	 eJW4UjHw/POUg6lWdmuVq4dAgiu0iQXvpQP5qXSk=
+	b=Ov/SolFlktLP1lWpNcS4+hyWHsAtjda0vAbLOJBoqfTH8XK+urfHoZuR9GTZz4uSp
+	 fXH+0FbWm4werKtRsMnxQl5+L3Jkvn69JI17QYZ9QnNq+1WUn4ZwbwVbyuLt0gvnn1
+	 XCkdt18QnEpH4FNFIhMoq25a8NC53SBYc62YiG3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1601/1815] ntfs: validate final EA attribute size
-Date: Sat, 12 Sep 2026 08:55:51 +0200
-Message-ID: <20260912065726.575043564@linuxfoundation.org>
+Subject: [PATCH 7.2 1619/1815] virtio_balloon: disable indirect descriptors
+Date: Sat, 12 Sep 2026 08:56:09 +0200
+Message-ID: <20260912065726.997375462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,66 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 650a2751c9ae179fe0d8e5b5194a2b1c0d09412c ]
+[ Upstream commit 281eb4732aae5473141b84e106fe906c69b2ff3d ]
 
-A replacement first removes the existing EA record, then adds the
-replacement.  Check the size of that final $EA stream before mutating
-the current stream.
+The page reporting callback submits an sg list to the reporting
+virtqueue.  With VIRTIO_RING_F_INDIRECT_DESC negotiated and
+total_sg > 1 (which it typically is), virtqueue_add reports it to the
+host by allocating an indirect descriptor via kmalloc(GFP_KERNEL).
 
-This avoids committing the shortened $EA stream or $EA_INFORMATION before
-discovering that the replacement exceeds the AttrDef size limit.
+This is not pretty: the reporting worker isolates potentially hundreds
+of MB of free pages from the buddy allocator (reported pages are at
+least pageblock_order, and the sg can contain up to
+PAGE_REPORTING_CAPACITY entries of varying orders).  As the result,
+very theoretically, the kmalloc might trigger OOM when we have in fact a
+ton of free memory.
 
-Fixes: fc053f05ca28 ("ntfs: add reparse and ea operations")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Clear VIRTIO_RING_F_INDIRECT_DESC, to avoid using indirect descriptors.
+
+Fixes: b0c504f15471 ("virtio-balloon: add support for providing free page reports to host")
+Assisted-by: Claude:claude-opus-4-6
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <73fac8a629fd9aca7bb3265ac243a769c28af25d.1783232420.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/ea.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/virtio/virtio_balloon.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/ntfs/ea.c b/fs/ntfs/ea.c
-index 0cd192752b7cd..0eba3f41c7bb9 100644
---- a/fs/ntfs/ea.c
-+++ b/fs/ntfs/ea.c
-@@ -250,6 +250,14 @@ static int ntfs_set_ea(struct inode *inode, const char *name, size_t name_len,
- 			goto out;
- 		}
+diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
+index 581ac799d9749..69160da9cd5d9 100644
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -7,6 +7,7 @@
+  */
  
-+		/* Check the final $EA size before removing the old entry. */
-+		if (val_size &&
-+		    ntfs_attr_size_bounds_check(ni->vol, AT_EA,
-+					ea_info_qsize - ea_size + new_ea_size)) {
-+			err = -EFBIG;
-+			goto out;
-+		}
-+
- 		p_ea = (struct ea_attr *)(ea_buf + ea_off);
+ #include <linux/virtio.h>
++#include <uapi/linux/virtio_ring.h>
+ #include <linux/virtio_balloon.h>
+ #include <linux/swap.h>
+ #include <linux/workqueue.h>
+@@ -1165,6 +1166,11 @@ static int virtballoon_validate(struct virtio_device *vdev)
+ 	else if (!virtio_has_feature(vdev, VIRTIO_BALLOON_F_PAGE_POISON))
+ 		__virtio_clear_bit(vdev, VIRTIO_BALLOON_F_REPORTING);
  
- 		if (val_size &&
-@@ -285,6 +293,12 @@ static int ntfs_set_ea(struct inode *inode, const char *name, size_t name_len,
- 			err = -ENODATA;
- 			goto out;
- 		}
-+
-+		if (ntfs_attr_size_bounds_check(ni->vol, AT_EA,
-+					ea_info_qsize + new_ea_size)) {
-+			err = -EFBIG;
-+			goto out;
-+		}
- 	}
- 	kvfree(ea_buf);
- 
-@@ -312,8 +326,7 @@ static int ntfs_set_ea(struct inode *inode, const char *name, size_t name_len,
- 	p_ea_info->ea_length = cpu_to_le16(ea_packed);
- 	p_ea_info->ea_query_length = cpu_to_le32(ea_info_qsize + new_ea_size);
- 
--	if (ea_packed > 0xffff ||
--	    ntfs_attr_size_bounds_check(ni->vol, AT_EA, new_ea_size)) {
-+	if (ea_packed > 0xffff) {
- 		err = -EFBIG;
- 		goto out;
- 	}
++	/*
++	 * Disable indirect descriptors to avoid memory allocation in
++	 * virtqueue_add during page reporting.
++	 */
++	__virtio_clear_bit(vdev, VIRTIO_RING_F_INDIRECT_DESC);
+ 	__virtio_clear_bit(vdev, VIRTIO_F_ACCESS_PLATFORM);
+ 	return 0;
+ }
 -- 
 2.53.0
 
