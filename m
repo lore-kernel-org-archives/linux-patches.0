@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14451373BE6;
-	Sat, 12 Sep 2026 08:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495CD39A066;
+	Sat, 12 Sep 2026 08:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201888; cv=none; b=lJqEoNZhd3/etsjayUOEdwIIXEDdwopp56t25IzE+q8ZFExcbM4coC8VOJkR4XvLONOJgqX/jKi5uxfhhD2mhFTTBq49hWLSc4DerTsdgMhNK1j86OnML6GskQ94sp7xNsUJLS6No75qEkHg+bXxcEpRm0ANXgW6qMchlq1UFao=
+	t=1789201893; cv=none; b=Py3Vkz9lwkZ3XPagGAFSzy5axGZnqgrYBg3S2ckD79NwzBDMqLd112wpPMDwgX/qKfGqu71dVfWhXzZ6te0pObuIjsZdkjZQgSfd6e1SaFRO8M6u5yJVdE2MCuwpyaMTPCRAoyoXbGTCTJJtafSextIPAlafSVOCcXnIj+f4fyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201888; c=relaxed/simple;
-	bh=XBFHYJvNg2X4Iez4pgNEHvI7LXoOSWGB4vaUxqUAa8w=;
+	s=arc-20240116; t=1789201893; c=relaxed/simple;
+	bh=b6cDdKlJUOY0RAMbyMUrXsvlZe/Zz1o6GyClD2INRv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDdwB7JKz0ug8WqFgVE09OB1iI42hkujDBhgxuv9i51o+Epw35Yro7CFWRtjB0WrO8raNKcyHnC0ruFO+QE7SpjMlDYG9C7l90t7G6oR++f+9NHh9ZvkJu61gW7xJxbw8v8lbHScsewTl74uVVlMbBAHDE2i7MQRUtm1xtqyFYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epIDdoNq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ouFdyFp29lAMFZR7WDxSW1TgMkFTMBINp/Ql7MexFQicGkJAKy2+X8eq6wSFOJEGbdz3UOMOosd2irUt5lgCZIpjzg08Iul6l8H2ClIFBcPecmHUxMqdMD1EUUlqGP0XZv6n8LTzZWGCDmFNU0qIWPqOUbPqCUTFJx4wWuV5Y5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQUJiEKm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epIDdoNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C308F1F000FF;
-	Sat, 12 Sep 2026 08:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQUJiEKm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E011C1F000FF;
+	Sat, 12 Sep 2026 08:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201887;
-	bh=DjlG6fduqDUPQYDKEyr18VEmvPJ4qNzrXB/3KZjVoHE=;
+	s=korg; t=1789201892;
+	bh=YQcn0udVhTN+4zTfDtUGSCypAHNlyD6kxvWezYW62fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=epIDdoNqzwd0rwNeHXaeIi94r0AwRy8FZ0oLkXQxJaW1jL7aYS4idSLu+Ek7eBhjp
-	 BCzxDwLwOP+f/G5DqdIcuiwkllNnWUjd/YAhU23TWnNfoux1kHoD7Nq/3Gil6pwP46
-	 fjdlr6TNKpmoZUWXWm5u4aNxpkDorD9uQ5KonVtg=
+	b=IQUJiEKm9CI8Na5kt2nVFE+12H9B6INxuY+RIPFqMsuhSsUb1sTthxUKDpnFSrLg+
+	 i9U5qQapHcug/arFPWe/zcO6zH7vdMNs/+HN0vaP0smNTp+EWDGYIpvHd+phEyj36Z
+	 Txy0tU5Dn6pPWV18e76SA0AKmJ1MTnTPnvLYhsBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1052/1815] block: lift BIP_CHECK_FLAGS to include/linux/bio-integrity.h
-Date: Sat, 12 Sep 2026 08:46:42 +0200
-Message-ID: <20260912065713.714554942@linuxfoundation.org>
+Subject: [PATCH 7.2 1088/1815] arm64: dts: qcom: eliza-mtp: Fix swapped USB QMP PHY vdda-phy/vdda-pll supplies
+Date: Sat, 12 Sep 2026 08:47:18 +0200
+Message-ID: <20260912065714.563520683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,52 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 738f01912a1ad68c81a6aed06cac94e09b5f609d ]
+[ Upstream commit 6b1195eeb204b455973fb05e10563a63bdd71c57 ]
 
-To allow for users outside of bio-integrity-auto.c.  Also add a little
-comment explaining it.
+The QMP PHY expects the vdda-phy supply to be the lower voltage (~0.8V)
+and the vdda-pll supply to be the higher voltage (~1.2V), as used by the
+UFS QMP PHY on this SoC. But these two supplies are swapped for the USB
+QMP PHY on this board, feeding 1.15V to vdda-phy and 0.72V to vdda-pll.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Link: https://patch.msgid.link/20260804123928.736596-3-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 3bf9a21e7bcc ("block: handle nogenerate/noverify properly in fs-integrity")
+Fix it by swapping the two supplies back.
+
+Fixes: 49dab7311f57 ("arm64: dts: qcom: eliza-mtp: Enable USB and ADSP support")
+Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Assisted-by: Claude:opus-4-8
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260803-phy-supply-fix-v1-26-5880630cde3e@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio-integrity-auto.c    | 2 --
- include/linux/bio-integrity.h | 3 +++
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/eliza-mtp.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/bio-integrity-auto.c b/block/bio-integrity-auto.c
-index 43ac9f338183f..9456dcffd17a6 100644
---- a/block/bio-integrity-auto.c
-+++ b/block/bio-integrity-auto.c
-@@ -44,8 +44,6 @@ static void bio_integrity_verify_fn(struct work_struct *work)
- 	bio_endio(bio);
- }
- 
--#define BIP_CHECK_FLAGS (BIP_CHECK_GUARD | BIP_CHECK_REFTAG | BIP_CHECK_APPTAG)
--
- /**
-  * __bio_integrity_endio - Integrity I/O completion function
-  * @bio:	Protected bio
-diff --git a/include/linux/bio-integrity.h b/include/linux/bio-integrity.h
-index c3dda32fd8030..0ea2a8bf7efb7 100644
---- a/include/linux/bio-integrity.h
-+++ b/include/linux/bio-integrity.h
-@@ -17,6 +17,9 @@ enum bip_flags {
- 	BIP_MEMPOOL		= 1 << 15, /* buffer backed by mempool */
+diff --git a/arch/arm64/boot/dts/qcom/eliza-mtp.dts b/arch/arm64/boot/dts/qcom/eliza-mtp.dts
+index 1374afd9d14e3..9d58ef20213a0 100644
+--- a/arch/arm64/boot/dts/qcom/eliza-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/eliza-mtp.dts
+@@ -535,8 +535,8 @@ &usb {
  };
  
-+/* flags that require generate/verify action. */
-+#define BIP_CHECK_FLAGS (BIP_CHECK_GUARD | BIP_CHECK_REFTAG | BIP_CHECK_APPTAG)
-+
- struct bio_integrity_payload {
- 	struct bvec_iter	bip_iter;
+ &usb_dp_qmpphy {
+-	vdda-phy-supply = <&vreg_l3g>;
+-	vdda-pll-supply = <&vreg_l7k>;
++	vdda-phy-supply = <&vreg_l7k>;
++	vdda-pll-supply = <&vreg_l3g>;
  
+ 	status = "okay";
+ };
 -- 
 2.53.0
 
