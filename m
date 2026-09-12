@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62212DC321;
-	Sat, 12 Sep 2026 14:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F99A242D65;
+	Sat, 12 Sep 2026 14:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223010; cv=none; b=FnDqAAytN1KtCy4vRp8AUrUg2AvO2XF8HhljCFMFUUmf1guWN2JKK2TItDqqJPebUNz1QvXONHDoBb6fe2f3h542H2EqHjmtevRfSEziig6YvcRI1ZYe3Nr1Jrmw0MAkEwiw9szpLZJkSrhBONQarZQbpdJKwXa2oTtRulb16lo=
+	t=1789223014; cv=none; b=VtZKLTQtoCDIFHOsjndkXrq8Poq3x6cc5ZWqMkRkv+DfxaowP3BB/SlzHunZJaEorpGNfrAfzXMpHP+tSrzuk5tytzgWuqrm9aECA7Pz28q1iAwMXS1LjGkOEYlcBFnr3Ki0xUNRFi0ejqjJNXN1jLhBLT7i2NM4aepImYEcu8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223010; c=relaxed/simple;
-	bh=wrF5p0sXRvDgP1+7mxS53edxEXZXirSk9gy5UHayyv8=;
+	s=arc-20240116; t=1789223014; c=relaxed/simple;
+	bh=33zSpP3r82Pn2uNAN2oFq4dBeXCqjmvLUXi2oO8eZE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7bLAXAvCeKoOTVCcqYtZGyl2sr/FQ+UB/HzmwbzEqFdKP1HY/t1kestMCAlMM5vHfWBpH4/7qs7bj9JcuojQwtZbxonW6x5tOZ6xn1VEcLp6gWangG09X1GsWKrLE2vy1KyjJGd38/ZEAq3PHfqHkcwJeMPdtGgBwrjgNolJQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAv1qbjF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nj8onhXsEiuzPHGp0oXm0G++DQBLZpRDLK06C3pBXwm9q6ee1+K6PZfYmtTpWSmMUNyc6g8BatEAfz89F9V/q54XkIGd+74N/+hwziysvlMEarhZmYsnh+1dxNxA3qjuPdteL9RxLnP5XBho+osVTn8u5qugFd9SSVKvL4LNdCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JofOJ4aB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAv1qbjF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E661F000FF;
-	Sat, 12 Sep 2026 14:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JofOJ4aB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41EF1F000FF;
+	Sat, 12 Sep 2026 14:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223008;
-	bh=VutXDD758evjmFn/nea2U8GSYXK9gySAShs1Gj9caWs=;
+	s=korg; t=1789223013;
+	bh=rjbJ4uq9avZ86ri9TecpiGKwdAg/ek0Q7DfqLwBdVCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AAv1qbjFj/izf61HV9fb0cCJgCLkbhSL0wpenwAPEqyu2oowF11privCqs5bCRFye
-	 AFtZNuZltvyjlzKeC8a8Zs6d8GUBKlWrbkrMNxNm5UbK+K8YYU8rL+esylE+pErtwY
-	 pELDr+xOSkK3zlSKgXSUeC2ox0lJrhbwcVbl+mTk=
+	b=JofOJ4aB8Qsabgj9dL6Wp6kOBmMhT9lLx+Qr8KwDtXhtb4mfNmeLX75ArMYCVyuJ/
+	 GXCiF0gGQ0G8TuyuicFazaNuH2IH1cJERmMo1x8PLzZ7VwKlxcuOjN0ApHnmp0DrQ2
+	 OXE2uzXFURcz1GVKmhYVOrjD9usXRQRdRVJ8d3Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0702/1424] usb: gadget: configfs: fix out-of-bounds read of qw_sign
-Date: Sat, 12 Sep 2026 08:52:14 +0200
-Message-ID: <20260912065623.019004840@linuxfoundation.org>
+Subject: [PATCH 6.6 0703/1424] usb: gadget: aspeed_udc: Convert to platform remove callback returning void
+Date: Sat, 12 Sep 2026 08:52:15 +0200
+Message-ID: <20260912065623.040989519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -44,61 +44,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit f63edb54d8f738f9c21e2068c777ae1c097df6b7 ]
+[ Upstream commit 3d56e5aa6727f5055d1ad879342ad1a8acec2134 ]
 
-os_desc_qw_sign_show() passes OS_STRING_QW_SIGN_LEN as the input
-length to utf16s_to_utf8s(), but that argument counts UTF-16 code
-units while OS_STRING_QW_SIGN_LEN (14) is the byte size of qw_sign[].
-The array holds only OS_STRING_QW_SIGN_LEN / 2 (7) code units, so the
-conversion reads up to 7 units (14 bytes) past the end of qw_sign[]
-into the following members of struct gadget_info when the stored
-signature fills the array without a NUL terminator, exposing those
-bytes through the configfs attribute.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-The store path halves the count for its input bound but passes the
-full byte count as the utf8s_to_utf16s() output limit; use the
-destination code-unit count in both directions.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Fixes: 76180d716f91 ("usb: gadget: configfs: make qw_sign attribute symmetric")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260618005043.1581707-1-michael.bommarito@gmail.com
+ast_udc_remove() is one of these functions that return an error code
+after doing only a partial cleanup. Replace the core's error message by
+a more drastic one and still convert the driver to .remove_new().
+Note the only semantic change here is the changed error message.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231026221701.2521483-2-u.kleine-koenig@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 97cee53a94be ("usb: gadget: aspeed_udc: check endpoint DMA allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/configfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/aspeed_udc.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-index 9e8af571448bf..75392bf7bd34c 100644
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -1174,7 +1174,7 @@ static ssize_t os_desc_qw_sign_show(struct config_item *item, char *page)
- 	struct gadget_info *gi = os_desc_item_to_gadget_info(item);
- 	int res;
+diff --git a/drivers/usb/gadget/udc/aspeed_udc.c b/drivers/usb/gadget/udc/aspeed_udc.c
+index 4868286574a1c..f4781e611aaa2 100644
+--- a/drivers/usb/gadget/udc/aspeed_udc.c
++++ b/drivers/usb/gadget/udc/aspeed_udc.c
+@@ -1434,15 +1434,24 @@ static void ast_udc_init_hw(struct ast_udc_dev *udc)
+ 	ast_udc_write(udc, 0, AST_UDC_EP0_CTRL);
+ }
  
--	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN,
-+	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN / 2,
- 			      UTF16_LITTLE_ENDIAN, page, PAGE_SIZE - 1);
- 	page[res++] = '\n';
+-static int ast_udc_remove(struct platform_device *pdev)
++static void ast_udc_remove(struct platform_device *pdev)
+ {
+ 	struct ast_udc_dev *udc = platform_get_drvdata(pdev);
+ 	unsigned long flags;
+ 	u32 ctrl;
  
-@@ -1196,7 +1196,7 @@ static ssize_t os_desc_qw_sign_store(struct config_item *item, const char *page,
- 	mutex_lock(&gi->lock);
- 	res = utf8s_to_utf16s(page, l,
- 			      UTF16_LITTLE_ENDIAN, (wchar_t *) gi->qw_sign,
--			      OS_STRING_QW_SIGN_LEN);
-+			      OS_STRING_QW_SIGN_LEN / 2);
- 	if (res > 0)
- 		res = len;
- 	mutex_unlock(&gi->lock);
+ 	usb_del_gadget_udc(&udc->gadget);
+-	if (udc->driver)
+-		return -EBUSY;
++	if (udc->driver) {
++		/*
++		 * This is broken as only some cleanup is skipped, *udev is
++		 * freed and the register mapping goes away. Any further usage
++		 * probably crashes. Also the device is unbound, so the skipped
++		 * cleanup is never catched up later.
++		 */
++		dev_alert(&pdev->dev,
++			  "Driver is busy and still going away. Fasten your seat belts!\n");
++		return;
++	}
+ 
+ 	spin_lock_irqsave(&udc->lock, flags);
+ 
+@@ -1461,8 +1470,6 @@ static int ast_udc_remove(struct platform_device *pdev)
+ 				  udc->ep0_buf_dma);
+ 
+ 	udc->ep0_buf = NULL;
+-
+-	return 0;
+ }
+ 
+ static int ast_udc_probe(struct platform_device *pdev)
+@@ -1583,7 +1590,7 @@ MODULE_DEVICE_TABLE(of, ast_udc_of_dt_ids);
+ 
+ static struct platform_driver ast_udc_driver = {
+ 	.probe			= ast_udc_probe,
+-	.remove			= ast_udc_remove,
++	.remove_new		= ast_udc_remove,
+ 	.driver			= {
+ 		.name			= KBUILD_MODNAME,
+ 		.of_match_table		= ast_udc_of_dt_ids,
 -- 
 2.53.0
 
