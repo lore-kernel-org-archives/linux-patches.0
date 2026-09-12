@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D5447A893;
-	Sat, 12 Sep 2026 11:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B16147A0C0;
+	Sat, 12 Sep 2026 11:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213907; cv=none; b=cAHy4uiC1Zp5A4zQrioljl1ydIM/2muHO8+rE7lXUWdt6Li/Et88l/Suxi+UTYYhRGwHINXdq+fHrz201ghqIDSzW+f5nOzItxTJH6A2U2Ak64Y0ncuYcEqD14Lp3NCM/uk6FOCRSO70m/J14hxRfDo1kI30RZQScwBIagpp1+Y=
+	t=1789213910; cv=none; b=akBhawzBU2qDfIJ8D4mGqkQ0FRJ4ZDq+ACcNbn/I03LsgOEoJRp8fdTcvkldtwp1vhZWTEaXDzVr9hY9doj6DjAmVd8VLl5+s53pvPHhfcPh0ue6IOmk+RFG78ibngJV1pR20OmB+F4J9vSZr7m1JM1jcEp7Fdd+4kjpctQUeX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213907; c=relaxed/simple;
-	bh=1nl9xRN9SJgv/Z+EhBxa8jmHt6vK5iN7TOM/OSbwM0k=;
+	s=arc-20240116; t=1789213910; c=relaxed/simple;
+	bh=pKEgB5Nu6QBtBxHT89xXj7qldCZQvpnSNSC6zl8pHGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8xvZkwEjDEUFyLEVFxSt4WtjsBbGKbYmFxoBw47m/SsxMbLpx92ypcyLcFXXgErEk+259fnm+6eGCXiCO0jOaF4M9sPTQB4ZQ/JZWxhpnqfA0h0pjyxfJRATkC+hrTUI8wY5cJWWJlPQHFZ6Uy3oTfozk4OOhJESpqazIFxFac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtOGll7E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XGm30+WrtvPIxytXVzqirggWX9uo+6u4WswLwgsFVqIuk29zq+sJGNbaBuU9UJ9AJXiLakl6HAx/hQNBXllB3fWadhe6/NIVumPxp0tI0bHjVbQscbcJIQ58TSYC9Y6F/5t6JOvtlZGb41OmmJlCG40s1asRod2kEobqxFECvGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pldj+X00; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtOGll7E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3610A1F00893;
-	Sat, 12 Sep 2026 11:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pldj+X00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2561F000FF;
+	Sat, 12 Sep 2026 11:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213904;
-	bh=OeklzJGb1DorUokukRxIat4IBEmKYZw8+AvbEI3dD9s=;
+	s=korg; t=1789213909;
+	bh=PMkAek3e+BgBbvdorhD01fDXcGS8K6fGLfqWfN0og4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XtOGll7EJ3Z4vOoRrZ4qKBw+LSLtY5ZUTlzNaazo5LKlDmY5+TwcJghb4R+WCpvU+
-	 fJ+M9p7eIFhF8uy1fT80a1XLOT0F4K4SupxrKCHqn8zGvXggujx3jQJCsk7XisQcvk
-	 I1fTQ7u3DcLBXhRiIDUiR318QfSqM3WlqiUyvw8M=
+	b=pldj+X00NFNFGvkfS4h6c7C7vSDC1ND8vCYmLfsz1185w/wBmOO09PEuimRlFnaAj
+	 ot2tKCyBdePH5cWmhyKz525tAAUCSBo659ZyGU/6kqid6A3hMqi/sQLgTdDfxdmM62
+	 noBbjok9GLNwSXDopcHXiMLV0SOWiz22HnyeQfvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
+	Arash Golgol <arash.golgol@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0216/1376] media: video-i2c: fix kthread error pointer left in kthread_vid_cap on failure
-Date: Sat, 12 Sep 2026 08:44:02 +0200
-Message-ID: <20260912065612.363477722@linuxfoundation.org>
+Subject: [PATCH 6.12 0217/1376] media: vimc: fix pixel format lookup in enum_framesizes
+Date: Sat, 12 Sep 2026 08:44:03 +0200
+Message-ID: <20260912065612.385123432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,50 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Arash Golgol <arash.golgol@gmail.com>
 
-commit 76e379754ba618989f6215be608d5c04774a611d upstream.
+commit ad4c65fa30cfb00e2e06adae9a8eb407086eaa66 upstream.
 
-kthread_run() returns an ERR_PTR on failure, not NULL.
-When start_streaming() fails, data->kthread_vid_cap is left holding
-this error pointer instead of being cleared.
+vimc_capture_enum_framesizes() looks up the requested format using
+vimc_pix_map_by_code(), which searches the pix map table by media
+bus code (MEDIA_BUS_FMT_*).
 
-This causes two subsequent bugs:
-1. A future call to start_streaming() sees a non-NULL kthread_vid_cap
-   and returns 0 (success) immediately, without actually starting the
-   capture thread.
-2. A call to stop_streaming() checks 'kthread_vid_cap == NULL' which
-   is false for an error pointer, and proceeds to call kthread_stop()
-   on the error pointer, leading to a kernel crash.
+However, v4l2_frmsizeenum::pixel_format holds a V4L2 pixel format
+(V4L2_PIX_FMT_*), not a media bus code, so valid pixel formats end
+up being rejected with -EINVAL.
 
-Fix this by resetting kthread_vid_cap to NULL on failure before
-jumping to the error path.
+Fix this by using vimc_pix_map_by_pixelformat() instead, which
+performs the lookup by pixel format as the ioctl expects.
 
-Fixes: 5cebaac60974 ("media: video-i2c: add video-i2c driver")
+Fixes: 09c41a23a2e2 ("media: Revert "media: vimc: propagate pixel format in the stream"")
 Cc: stable@vger.kernel.org
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/video-i2c.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/test-drivers/vimc/vimc-capture.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/video-i2c.c
-+++ b/drivers/media/i2c/video-i2c.c
-@@ -533,8 +533,12 @@ static int start_streaming(struct vb2_qu
- 	data->kthread_vid_cap = kthread_run(video_i2c_thread_vid_cap, data,
- 					    "%s-vid-cap", data->v4l2_dev.name);
- 	ret = PTR_ERR_OR_ZERO(data->kthread_vid_cap);
--	if (!ret)
--		return 0;
-+	if (ret) {
-+		data->kthread_vid_cap = NULL;
-+		goto error_rpm_put;
-+	}
-+
-+	return 0;
+--- a/drivers/media/test-drivers/vimc/vimc-capture.c
++++ b/drivers/media/test-drivers/vimc/vimc-capture.c
+@@ -177,8 +177,8 @@ static int vimc_capture_enum_framesizes(
+ 	if (fsize->index)
+ 		return -EINVAL;
  
- error_rpm_put:
- 	pm_runtime_mark_last_busy(dev);
+-	/* Only accept code in the pix map table */
+-	vpix = vimc_pix_map_by_code(fsize->pixel_format);
++	/* Only accept pixel_format in the pix map table */
++	vpix = vimc_pix_map_by_pixelformat(fsize->pixel_format);
+ 	if (!vpix)
+ 		return -EINVAL;
+ 
 
 
