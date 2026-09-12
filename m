@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06374415B8E;
-	Sat, 12 Sep 2026 09:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A57120ED;
+	Sat, 12 Sep 2026 09:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207128; cv=none; b=CemRQcmPfjlPZVTu29TBt3h7PHrlgq0W6eOnXSRg5AXyoP2QnDcocnEK9A2FKW52Rh40q1IxNkn2F3fq5nNFOfHa7kLmQ07t1LA8YOPTjXPkk106uOq+gei70yXnWbMd+i24nKBPNeHnpsxcjEeDm/sLHJQogeNJNY8AV/+NqYs=
+	t=1789207132; cv=none; b=lq1AWngQHMROEtMh2WXU0EDmNrAN9/b5GxMhYjO1X7Guc1G/yA4LjwDuSqxCstd+aF/NFj50+1t8ZvP9VbJN0de5UFlmQRAbxzSxOocp0pIXQgXG/ebjGewi+xAWiD3Di/QD9TguHapD24QI6V2HEdkVb0rc0xAQo/nM0g3fjLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207128; c=relaxed/simple;
-	bh=nElRMPd5fMxdyidYi/L/UPGBpDmCfmLHDufx/Qj8TiU=;
+	s=arc-20240116; t=1789207132; c=relaxed/simple;
+	bh=MolMm/qpst51bqhj3pE4subC548E6CzDyZvoO9AnjiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulZu13k+M+nqkSMIomm/hRT68n0ew/1Ki0s2yhpQJS038cAzl0QDW7uBvmhS+siZ11rvTRDueFEbn04YWTyMSt7eyrqh3tlbNfCKiRHyDHAo9EZhZYzIHoz2wtmfXgENZrHIiN4255avVFpT5kHJ4EvSGjKbusYVBae4lubE+ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERS9Tsdx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XQlXearwJkAZOcOHzlK7mAh1wZ4rSoL/XyQeh1RtLTIvGqbcDUcPJn34QjYYnno67ZRBluyuZvyXr6NUTxMi3Gz3I/SooNGsbbJ9c8f1KRfPrLtPbV+Ks6NGrSUDiQrP08Ap670iIvbJ7cX0a2mBIgW6UaGYS35pdQ0WMFD/ANE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihOKpmsd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERS9Tsdx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C511F000FF;
-	Sat, 12 Sep 2026 09:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihOKpmsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAE51F000FF;
+	Sat, 12 Sep 2026 09:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207126;
-	bh=T7pVgt3bOXRx+UhfXB4IOz4TBatdmQNG7YPFtVxVL74=;
+	s=korg; t=1789207131;
+	bh=+IgLMeHrsKzALArrwLq5cflIeOo/EYHZmXuE1ub1qmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ERS9Tsdx3QHgESdx29saNVifezBovkuGQWYRhoI5QorMcsPMvdo6MTnyOuLRzNsuY
-	 uRw9DreXjuRywRJoG1lF7Q+yKRbMWVW8TgCRhD+IYZUbDEOgiI0/86slGuI6bZ70EM
-	 6q7ADILk6iNsGziyCiGNuMiucrQ9bDg6zPrJwxXg=
+	b=ihOKpmsdF7pX0IuE1Gk2FIqmofBXtrIuT139XzxTJY0hO+rdlH2yEZ/Pw3jg+Eek2
+	 32i/CFxn2g51qYd1vBbOBzqS/LGGGIqMb1ridSqrY73wTPjehgIWeBhk7a8WavVJYb
+	 14vgS+GnAEcSgcproEqsGgw+pG+5yR/XrQKhRYCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0349/1518] xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full
-Date: Sat, 12 Sep 2026 08:41:58 +0200
-Message-ID: <20260912065631.368209647@linuxfoundation.org>
+Subject: [PATCH 6.18 0323/1518] usb: renesas_usbhs: Fix power-off ordering on unbind
+Date: Sat, 12 Sep 2026 08:41:32 +0200
+Message-ID: <20260912065630.783029017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,55 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 5d9e3bf34fec9a5d237e4b7cef4a707bc2e091bc ]
+[ Upstream commit 589b9e6f96be6bd8dd0d45fda8e948c31dc2fe94 ]
 
-The depth check in xfrm6_input_addr() is off by one:
+Move the usbhsc_power_ctrl() call to before hardware_exit() and
+reset_control_assert() in usbhs_remove(), so the PHY is powered off
+while priv->phy is still valid, rather than after hardware_exit()
+has already cleared it.
 
-  if (1 + sp->len == XFRM_MAX_DEPTH)
-          goto drop;
-  ...
-  sp->xvec[sp->len++] = x;
-
-xfrm_input() can leave sp->len == XFRM_MAX_DEPTH, and the transport-mode
-receive path re-enters IPv6 input via xfrm_trans_reinject() with that
-secpath preserved. If the inner packet carries a destination-options HAO
-option or a type-2 routing header, xfrm6_input_addr() is called with
-sp->len == XFRM_MAX_DEPTH; the check (1 + 6 == 6) is false, so
-sp->xvec[sp->len++] writes one slot past the 6-element xvec[]. The write
-stays within the sec_path allocation (invisible to KASAN); UBSAN_BOUNDS
-flags it and panics under panic_on_warn.
-
-Use "sp->len >= XFRM_MAX_DEPTH", matching xfrm_input(). This also
-restores one chain level the old check rejected at sp->len == 5.
-
-  UBSAN: array-index-out-of-bounds in net/ipv6/xfrm6_input.c:309:10
-  index 6 is out of range for type 'xfrm_state *[6]'
-
-Fixes: 9473e1f631de ("[XFRM] MIPv6: Fix to input RO state correctly.")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: eb9ac779830b ("usb: renesas_usbhs: Fix synchronous external abort on unbind")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://patch.msgid.link/20260702073832.175047-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/renesas_usbhs/common.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 699a001ac1662..c9e208c57a6b5 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -249,7 +249,7 @@ int xfrm6_input_addr(struct sk_buff *skb, xfrm_address_t *daddr,
- 		goto drop;
- 	}
+diff --git a/drivers/usb/renesas_usbhs/common.c b/drivers/usb/renesas_usbhs/common.c
+index 8a79548e1569b..fddb57b8d8472 100644
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -813,9 +813,6 @@ static void usbhs_remove(struct platform_device *pdev)
  
--	if (1 + sp->len == XFRM_MAX_DEPTH) {
-+	if (sp->len >= XFRM_MAX_DEPTH) {
- 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINBUFFERERROR);
- 		goto drop;
- 	}
+ 	flush_delayed_work(&priv->notify_hotplug_work);
+ 
+-	usbhs_platform_call(priv, hardware_exit, pdev);
+-	reset_control_assert(priv->rsts);
+-
+ 	/*
+ 	 * Explicitly free the IRQ to ensure the interrupt handler is
+ 	 * disabled and synchronized before freeing resources.
+@@ -832,6 +829,9 @@ static void usbhs_remove(struct platform_device *pdev)
+ 	if (!usbhs_get_dparam(priv, runtime_pwctrl))
+ 		usbhsc_power_ctrl(priv, 0);
+ 
++	usbhs_platform_call(priv, hardware_exit, pdev);
++	reset_control_assert(priv->rsts);
++
+ 	usbhsc_clk_put(priv);
+ 	pm_runtime_disable(&pdev->dev);
+ }
 -- 
 2.53.0
 
