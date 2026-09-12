@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA49B372EF0;
-	Sat, 12 Sep 2026 11:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FAE372EF0;
+	Sat, 12 Sep 2026 11:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214140; cv=none; b=KxS3DyOajxNy5kkWJbokHcpI5DSwVaSsZCZ1+4X1BNahyyDCBhZUB5qiNG5XEPsoCOwXLHf2OqBeaxFkGZZqNUotCSLj6x6s0ZBqOGZbjzIs/SkYfbsh6JhYNuPu5ZnaMniOt07Le5rKxSl4bBeOjjQt9tzTzz7kPx7TkBdBv1g=
+	t=1789214145; cv=none; b=sp/a9QHx5pCH4GqPI7hb0An0cJU7UmyVepsXYISmarx/oD5IKXrON8f7wguA7X/DP9EtcZeIs7axL/7nvTT5zTYaHNA9bC7GMfTL6c1w9NQH6S9TDsOVQRwrw4q3Q9sBP73uV95ZtBiDN0y7kKDgPFLRCYO4/x0RouG0mO5V7Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214140; c=relaxed/simple;
-	bh=DEd6eoYb2P2QR0CeL4RfocrRbNmfFXFtcET1pKpA/38=;
+	s=arc-20240116; t=1789214145; c=relaxed/simple;
+	bh=cbpTXfSgCxqlJiu9sos5519Oy8AVHQLDphvMdW59C7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pEJgVsaK22Uo+UyyPd82bb9pXCpORChqR9iB7/H2Ogb8Av4WDSGFyfwooquKoI5z83uvk8MOHPGDE0Z24Mb4uzDjFItz5TRxqKboWRzJNgR20P1A0gWuh7BKx2EncndgYQ31r9YurNWhr1gpjfKvVmPGdAvK/42vIej1mYcVYBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrunYZMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E51I6wp5PSRqw99ZSr/9K0luPtzOciQ3Eyz3ESupSqS92ep1miFiN8Eh8dgDfAU7e936aCfFKCMRchcdveNphMbKw/zRDXa8NUHYOwBf8aBNmHUisEvFw3/dyEz6Px4kdUug7MQprWhIekp5OMP1P1WRvja3ufYoxO5JFf9MqQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PR2PQb1p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrunYZMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF20E1F000FF;
-	Sat, 12 Sep 2026 11:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PR2PQb1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECFB1F000FF;
+	Sat, 12 Sep 2026 11:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214139;
-	bh=lnTsZpXvWrVx/81gr4rUfPrALryzJOU2gsf6Hpv0Re4=;
+	s=korg; t=1789214144;
+	bh=mLmE5m8spYk0EnXs8YU3aR96MyEYJG3MFi0wkDRB4zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TrunYZMhHTtyGUXUh81ceyMbnHPs8ND7QM9umNRAgzXMInRQHtW8fgT5F5JOj25Sc
-	 bl/cYkkJOgaeV9rg2bl/ERYqFhLm22k8j9yyaqIKOUZ2D5UJga7xyveL42mMZNyJoI
-	 CGkBRcr7bsqpGVF5TkAhBR0PpYYRlNFUzCa+E9y8=
+	b=PR2PQb1pVVjdKsI075pbtt+dJIk5YhRMfinnsDuQpnpG4HkcL3qMj567OL/wcfX61
+	 cLQ/+Tew0RswbtdcxKkpCcY3Hve6rxBYXNd+faT6U+xpS7KOFUevfP6AVPFFmlZQkG
+	 DJW41ArWf+YBESGwSzwqZTt6VSxqE52b9H3cWARw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xinliang Liu <xinliang.liu@linaro.org>,
 	Dmitry Baryshkov <lumag@kernel.org>,
 	Baihan Li <libaihan@huawei.com>
-Subject: [PATCH 6.12 0266/1376] drm/hibmc: Fix list of formats on the primary plane
-Date: Sat, 12 Sep 2026 08:44:52 +0200
-Message-ID: <20260912065613.470115582@linuxfoundation.org>
+Subject: [PATCH 6.12 0267/1376] drm/hibmc: Use drm_atomic_helper_check_plane_state()
+Date: Sat, 12 Sep 2026 08:44:53 +0200
+Message-ID: <20260912065613.492305839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -57,25 +57,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 0e682e136c466ae37c62f18099f591c096260ee0 upstream.
+commit 715c5db68bdbd4a524b79ebf20fb61e880fffea0 upstream.
 
-Remove all formats from the primary plane that are unsupported for
-various reasons.
+Call drm_atomic_helper_check_plane_state() from the primary plane's
+atomic-check helper and replace the custom implementation.
 
-* Formats with alpha channel: planes should not announce alpha channels
-unless they support transparency. There's no transparency support in
-the primary plane's implementation.
+All plane's implementations of atomic_check should call the shared
+_check_plane_state() helper first. It adjusts the plane state for
+correct positioning, rotation and scaling of the plane. Do this
+even if the plane's CRTC has been disabled by setting the parameter
+can_update_disabled. The original code returned early in this case,
+but it's safe to so and cleaner to have all plane state initialized.
 
-* Formats with BGR order. The common format is in RGB channel order.
-There's no BGR support in the primary plane's implementation.
+As we don't set can_position, drm_atomic_helper_check_plane_state()'s
+visibility check tests if the plane covers all of the CRTC. This is
+a small change from the original code, which tested if the plane is
+exactly the size of the CRTC. With the new test, the plane still has
+to cover all of the CRTC, but can be larger than the CRTC's size. A
+later patch can fully implement this feature in hibmc.
 
-* RGB888: atomic_update programs the format from cpp[0] * 8 / 16. For
-RGB888's cpp value of 3 this returns 1.5; rounded to 1. Programming
-the value of 1 to HIBMC_CRT_DISP_CTL_FORMAT sets up RGB565. Hence, the
-output is distorted. This can be tested by booting with video=1024x768-24.
+If the plane is disabled, the helper clears the visibility flag in the
+plane state. On errors or if the plane is not visible, the atomic-check
+helper can return early. Implement all this in hibmc and drop the custom
+code that does some of it.
 
-Removing all unsupported formats leaves XRGB8888 and RGB565. Both of
-which are supported and work correctly.
+v2:
+- extend the commit description (Yongbang)
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
@@ -84,29 +91,79 @@ Cc: Rongrong Zou <zourongrong@gmail.com>
 Cc: Sean Paul <seanpaul@chromium.org>
 Cc: Xinliang Liu <xinliang.liu@linaro.org>
 Cc: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Yongbang Shi <shiyongbang@huawei.com>
 Cc: Baihan Li <libaihan@huawei.com>
+Cc: Yongbang Shi <shiyongbang@huawei.com>
 Cc: <stable@vger.kernel.org> # v4.10+
-Link: https://patch.msgid.link/20260618123142.92298-3-tzimmermann@suse.de
+Link: https://patch.msgid.link/20260618123142.92298-2-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c |   50 ++++++++-----------------
+ 1 file changed, 16 insertions(+), 34 deletions(-)
 
 --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
 +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-@@ -153,10 +153,8 @@ static void hibmc_plane_atomic_update(st
+@@ -72,46 +72,28 @@ static int hibmc_get_best_clock_idx(cons
+ static int hibmc_plane_atomic_check(struct drm_plane *plane,
+ 				    struct drm_atomic_state *state)
+ {
+-	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+-										 plane);
+-	struct drm_framebuffer *fb = new_plane_state->fb;
+-	struct drm_crtc *crtc = new_plane_state->crtc;
+-	struct drm_crtc_state *crtc_state;
+-	u32 src_w = new_plane_state->src_w >> 16;
+-	u32 src_h = new_plane_state->src_h >> 16;
+-
+-	if (!crtc || !fb)
+-		return 0;
+-
+-	crtc_state = drm_atomic_get_crtc_state(state, crtc);
+-	if (IS_ERR(crtc_state))
+-		return PTR_ERR(crtc_state);
+-
+-	if (src_w != new_plane_state->crtc_w || src_h != new_plane_state->crtc_h) {
+-		drm_dbg_atomic(plane->dev, "scale not support\n");
+-		return -EINVAL;
+-	}
+-
+-	if (new_plane_state->crtc_x < 0 || new_plane_state->crtc_y < 0) {
+-		drm_dbg_atomic(plane->dev, "crtc_x/y of drm_plane state is invalid\n");
+-		return -EINVAL;
+-	}
+-
+-	if (!crtc_state->enable)
++	struct drm_plane_state *new_plane_state =
++		drm_atomic_get_new_plane_state(state, plane);
++	struct drm_crtc_state *new_crtc_state = NULL;
++	int ret;
++
++	if (new_plane_state->crtc)
++		new_crtc_state = drm_atomic_get_new_crtc_state(state, new_plane_state->crtc);
++
++	ret = drm_atomic_helper_check_plane_state(new_plane_state, new_crtc_state,
++						  DRM_PLANE_NO_SCALING,
++						  DRM_PLANE_NO_SCALING,
++						  false, true);
++	if (ret)
++		return ret;
++	else if (!new_plane_state->visible)
+ 		return 0;
+ 
+-	if (new_plane_state->crtc_x + new_plane_state->crtc_w >
+-	    crtc_state->adjusted_mode.hdisplay ||
+-	    new_plane_state->crtc_y + new_plane_state->crtc_h >
+-	    crtc_state->adjusted_mode.vdisplay) {
+-		drm_dbg_atomic(plane->dev, "visible portion of plane is invalid\n");
+-		return -EINVAL;
+-	}
+-
+ 	if (new_plane_state->fb->pitches[0] % 128 != 0) {
+ 		drm_dbg_atomic(plane->dev, "wrong stride with 128-byte aligned\n");
+ 		return -EINVAL;
+ 	}
++
+ 	return 0;
  }
  
- static const u32 channel_formats1[] = {
--	DRM_FORMAT_RGB565, DRM_FORMAT_BGR565, DRM_FORMAT_RGB888,
--	DRM_FORMAT_BGR888, DRM_FORMAT_XRGB8888, DRM_FORMAT_XBGR8888,
--	DRM_FORMAT_RGBA8888, DRM_FORMAT_BGRA8888, DRM_FORMAT_ARGB8888,
--	DRM_FORMAT_ABGR8888
-+	DRM_FORMAT_XRGB8888,
-+	DRM_FORMAT_RGB565,
- };
- 
- static const struct drm_plane_funcs hibmc_plane_funcs = {
 
 
