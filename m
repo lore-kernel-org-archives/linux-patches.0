@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432E938736C;
-	Sat, 12 Sep 2026 16:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD85C455162;
+	Sat, 12 Sep 2026 16:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228936; cv=none; b=lq+gDJKEu6xVxtLAaLVwqhwqKvmrN9itIi4I/dBUUW50GdHeGZbW8j9c8t8pd7k4Wai+ZvyAH4e6qGflEAq/W1tC6kmtY30+OMySW2KCf3bddJuPMGrfVELt5YfpZUF0l7UMTx3GHyRsXGCVFQxnStC6uueNq1wAT2O4Bios7Fw=
+	t=1789228942; cv=none; b=mAX2xG78ogOJi3y559C2LfBaS+zvlajXdfJhAS/4jDtVYsglVmJfsjoXCO9wcU5giUms9h5rncgcbiqw6NGh5WpOTEmlvxxG8fmtdR9ZBE9+jb1JggETuwj/UYLQuFg8WsBjRSXYJH3fNviZPMROP9EeMwCJvVSQMAiI6Qii+GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228936; c=relaxed/simple;
-	bh=IfViT3PpbH/Q2ZTCdtVRxK+Z4AU6UGzJsMvWtgoUrac=;
+	s=arc-20240116; t=1789228942; c=relaxed/simple;
+	bh=oPPeoNdrF8vNMi0P9lyRG9WEi1nRyfC9wUrYcDFaFT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MyrdIU505sJ5u4hnl0FhxGk0VEyykng/1SqFwX+8aUwhoHslLmRSlKdBh0E1wxkYi921o+4Pz7YQ1tv2Bkvp1KREJJrVPP7cBoNcFTD3HVQZKGEayfIYf7hTk2DzqsRv/XMiZhu+TRQu26yJhZpaeokXRhQ1LQRB3gupplvLwyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnLFi2ZW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cf0qfzJ4x3fwTwNIXi1qc/Jl4Y1dWuEUUDT+aGSEcsOyH5ZIwvexNl4QbnKodDmbX4XVzhzYUGLnDhOlvbXv8YQ7kicl9EfAAUaD6VIoFhMWClZxP3HjFGoNqh3IefCDCXQHgtgSINgnLR4yvITvefLD5f9/ux529bmfdQP8to4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBCUt68C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnLFi2ZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477231F000FF;
-	Sat, 12 Sep 2026 16:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBCUt68C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD581F000FF;
+	Sat, 12 Sep 2026 16:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228935;
-	bh=6ACzPzc9SgPXyaBxEz5Crx90KC6MNYKn/65EXShPmS8=;
+	s=korg; t=1789228940;
+	bh=sUGqLlI/1R5jDXGYNCiRXONpwy2riNcxTmr41eVuUYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnLFi2ZW3TwIiIM0m0hokb/6evroO597GfYDqPM3dvbjNF9VI4zo6pG2xT88T4vM+
-	 297EFO17EVltFymp9SxnPzPnRkkT9B4DYmBDlSOHaCAu+7Fp9/rwFoLe9OmHKG3zo8
-	 cQux5IxzrsYeMedGP6NAxRuYGiB2jdBkzuyqgN2E=
+	b=aBCUt68C6JhQRVZpgZI3ciB4kBpJeugm2RQleb73q/GP+Mf1wPq5K1DtPW4gE9gfn
+	 fG+1B7yqEYej2+SK38as8+36+JWza0abf5AeYrjuYFWlonpe2/jztfhUYs3HcZmzfd
+	 BY0EAv6jB8quE/XkAeA09uPyXALeqWN+fAkiu2lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrik Grimler <henrik.grimler@axis.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0487/1191] drm/lima: call drm_mm_init() with a valid allocation range
-Date: Sat, 12 Sep 2026 08:53:35 +0200
-Message-ID: <20260912065559.169604061@linuxfoundation.org>
+Subject: [PATCH 6.1 0488/1191] sched/fair: Fix overflow in update_tg_cfs_runnable()
+Date: Sat, 12 Sep 2026 08:53:36 +0200
+Message-ID: <20260912065559.192307178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,69 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Grimler <henrik.grimler@axis.com>
+From: Chen, Yu C <yu.c.chen@intel.com>
 
-[ Upstream commit 3b3bce4a692ac60d9f4a341e6b597dd1fd0a28f9 ]
+[ Upstream commit 4f166adb5cb0525d9e32d45729fd8f28c80acbee ]
 
-lima_vm_create() is currently run before va_start and va_end are set up,
-meaning they are both 0. lima_vm_create() runs drm_mm_init() with them
-as arguments for the allocator, and if DRM_DEBUG_MM is enabled the
-DRM_MM_BUG_ON check in drm_mm_init then fires, as seen here on
-exynos4412-odroid-u2:
+A divide-by-zero crash is observed when running hackbench:
 
-[    1.736297] ------------[ cut here ]------------
-[    1.740370] kernel BUG at drivers/gpu/drm/drm_mm.c:931!
-[    1.745574] Internal error: Oops - BUG: 0 [#1] SMP ARM
-[    1.750697] Modules linked in:
-[    1.753734] CPU: 0 UID: 0 PID: 41 Comm: kworker/u16:1 Not tainted 7.0.10-postmarketos-exynos4 #11 PREEMPT
-[    1.763372] Hardware name: Samsung Exynos (Flattened Device Tree)
-[    1.769446] Workqueue: events_unbound deferred_probe_work_func
-[    1.775261] PC is at drm_mm_init+0x9c/0xa4
-[    1.779339] LR is at lima_vm_create+0x144/0x17c
-[ ... ]
+   [14697.488452] CPU: 112 UID: 0 PID: 124791 Comm: hackbench Not tainted 7.1.0-rc2+
+   [14697.492627] RIP: 0010:propagate_entity_load_avg+0x35f/0x3e0
+   [14697.506799]  <TASK>
+   [14697.507411]  __dequeue_task+0x2b4/0xc70
+   [14697.508677]  dequeue_task_fair+0x36/0x370
+   [14697.509047]  dequeue_task+0x101/0x2f0
+   [14697.509426]  __schedule+0x1b1/0x1a00
+   [14697.510868]  anon_pipe_read+0x3da/0x450
+   [14697.511400]  vfs_read+0x361/0x390
+   [14697.512053]  __x64_sys_read+0x19/0x30
 
-Fix the issue by moving the lima_vm_create() call after va_start and
-va_end are set up.
+The divide-by-zero happens here:
 
-Fixes: a1d2a6339961 ("drm/lima: driver for ARM Mali4xx GPUs")
-Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patch.msgid.link/20260601-lima-alloc-fix-v1-1-16d3f3b7b780@axis.com
+  if (scale_load_down(gcfs_rq->load.weight)) {
+           load_sum = div_u64(gcfs_rq->avg.load_sum,
+                              scale_load_down(gcfs_rq->load.weight));
+  }
+
+gcfs_rq->load.weight is an insane large value and is truncated
+to the lower 32 bits by div_u64, which happen to be 0.
+
+Using AI for investigation, the cause is a u32 overflow in
+update_tg_cfs_runnable(), and flat pickup became a victim when using
+tg_tasks():
+
+   u32 new_sum, divider;
+   ...
+   new_sum = se->avg.runnable_avg * divider; <-- boom
+
+The following sequence shows how this triggers the crash:
+
+   propagate_entity_load_avg()
+     update_tg_cfs_runnable()     # u32 overflow corrupts runnable_sum
+
+   __update_load_avg_cfs_rq()
+     ___update_load_avg()         # computes insane runnable_avg
+   update_tg_load_avg()           # propagates to tg->runnable_avg
+
+   update_cfs_group()
+     calc_concur_shares()
+       tg_tasks()                 # long-to-int truncation, negative nr
+     reweight_entity()            # corrupted se->load.weight
+       update_load_add()          # corrupted cfs_rq->load.weight
+
+   propagate_entity_load_avg()
+     update_tg_cfs_load()
+       div_u64()                  # divide-by-zero
+
+Fix by widening new_sum from u32 to u64 (no need to force tg_tasks()
+to return unsigned long after this fix)
+
+Fixes: 95246d1ec80b ("sched/pelt: Relax the sync of runnable_sum with runnable_avg")
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/a22eea2b-4c4a-4623-9a44-d7b18c0c91c8@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_device.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/sched/fair.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/lima/lima_device.c b/drivers/gpu/drm/lima/lima_device.c
-index 02cef0cea6572..3843797d376b3 100644
---- a/drivers/gpu/drm/lima/lima_device.c
-+++ b/drivers/gpu/drm/lima/lima_device.c
-@@ -368,12 +368,6 @@ int lima_device_init(struct lima_device *ldev)
- 	if (err)
- 		goto err_out0;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 2397266526465..196a1b9cb7b32 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3744,7 +3744,8 @@ static inline void
+ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cfs_rq *gcfs_rq)
+ {
+ 	long delta_sum, delta_avg = gcfs_rq->avg.runnable_avg - se->avg.runnable_avg;
+-	u32 new_sum, divider;
++	u64 new_sum;
++	u32 divider;
  
--	ldev->empty_vm = lima_vm_create(ldev);
--	if (!ldev->empty_vm) {
--		err = -ENOMEM;
--		goto err_out1;
--	}
--
- 	ldev->va_start = 0;
- 	if (ldev->id == lima_gpu_mali450) {
- 		ldev->va_end = LIMA_VA_RESERVE_START;
-@@ -387,6 +381,12 @@ int lima_device_init(struct lima_device *ldev)
- 	} else
- 		ldev->va_end = LIMA_VA_RESERVE_END;
+ 	/* Nothing to update */
+ 	if (!delta_avg)
+@@ -3758,7 +3759,7 @@ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cf
  
-+	ldev->empty_vm = lima_vm_create(ldev);
-+	if (!ldev->empty_vm) {
-+		err = -ENOMEM;
-+		goto err_out1;
-+	}
-+
- 	ldev->iomem = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(ldev->iomem)) {
- 		dev_err(ldev->dev, "fail to ioremap iomem\n");
+ 	/* Set new sched_entity's runnable */
+ 	se->avg.runnable_avg = gcfs_rq->avg.runnable_avg;
+-	new_sum = se->avg.runnable_avg * divider;
++	new_sum = (u64)se->avg.runnable_avg * divider;
+ 	delta_sum = (long)new_sum - (long)se->avg.runnable_sum;
+ 	se->avg.runnable_sum = new_sum;
+ 
 -- 
 2.53.0
 
