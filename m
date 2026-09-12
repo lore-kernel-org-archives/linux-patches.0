@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E2C37FF60;
-	Sat, 12 Sep 2026 09:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B3435F602;
+	Sat, 12 Sep 2026 09:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204125; cv=none; b=pqxjqBU6DsJ42FMjnqUB/QFw/mKter8UscRW1O8UqWoFBICUnKmarTJnOyAUqck/hnpHcD8PK3nQzwen4oIa2rPOwpYAnoCazQFzz4M0n5z1OUfpWRLfk1yqMIE/P/tTOfKBOoww70ZwA1eEbUgOUZVmC4WIPjKGg9CfbPbzDN4=
+	t=1789204130; cv=none; b=NJzP3tV+6xkg1/r8yfJ1WUcAI7fcRX1psqWYFKjKTThljN0tAwZlghKwLN2ct1TASBv0+F2HmefnDxIBO3fpoMfYP9tMBmrxBoDiwuMSY2D6eYbCDdqc1hs5wiSOg5FjnJ7tQhnwVTymXTdSLSjlghw6FEeB4qrub7bN2Gg5VGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204125; c=relaxed/simple;
-	bh=MC8o2/nYeuuehm9fO2Z2PgBlqhaGEOX1KYSswGE7wso=;
+	s=arc-20240116; t=1789204130; c=relaxed/simple;
+	bh=xnpjcyf/TbImbWhnzURodei2+7ICw3u3u9/MomW6afk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iz+Z/CVTI1k5SHAGAWZ9c9SBrx+v+HbbGnFmWoU3BvH+9RI7ep+/OwR1BrE/uEWBdd5G/xMw1ta/SUrd0g8N5Ibnp3S41cvbvX3ijeBP0Erocdqt5zvjichGFA3FZszq7wNH6DWzib/yVEfTmxTtMCKEV106JuPYbqvVwMxP8aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4ntoCH+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FxoLbyc0lnN+UvRw0hCw615UESumZxd/L6AWgUWfsyOlqvZSB3VmBNXSAnb1Rfjs8fn7lu/mSF1Rrd/4cGNLwaCM3qdunyjQr1WHaDqzfGcTKt4984WSy0loz/Ennwiqo0YWLJg+4c7jesFpj3ui+xq7sWRnawjdeTZzeptdq1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSQPq1pF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4ntoCH+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AAD1F000FF;
-	Sat, 12 Sep 2026 09:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSQPq1pF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85131F000FF;
+	Sat, 12 Sep 2026 09:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204123;
-	bh=Z7ECeTrOJR/acRWEenHUOQLmEB4HxSwhz0dmepFj32k=;
+	s=korg; t=1789204128;
+	bh=MJZ/pjx6EdYc1rkf3Bu2KC54HTh/dLsGf6Y3Xny70J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4ntoCH+yRPh5XTy2Y+2MjE24b3P2aJAB15YzdnAX1vbdGTTWKlJSBJwmB+/jrVsG
-	 X0zhWwaE/h29xXDSl4D/tfjzBrg4uYYcoYyllowBaSwLhL8hBty4cvVuf7wzocouRE
-	 8ZjPcL5iw/7c7TurROvT6R+qb0TFUungmD1/f1OM=
+	b=HSQPq1pFV4d86GTXgMhZL4tKfroLWzawnvRvIDoZm+/h78tjZM51WH/Pkzrx3BHei
+	 sWvQPlG3JcfuTF1vGB3TcZUcqp0WUB93HoEbaFDNXYfUw4/Ye5npwBD5zWH/zt4EsM
+	 Rg8ILGLoL/lXrdHpOfHthoJarpGOqo5+ffUPYXtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gael Blivet <gael.blivet@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Agatha Isabelle Moreira <code@agatha.dev>,
+	Arnaud Bonnet <abo@medichon.fr>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1511/1815] ksmbd: defer CHANGE_NOTIFY completion instead of STATUS_NOT_IMPLEMENTED
-Date: Sat, 12 Sep 2026 08:54:21 +0200
-Message-ID: <20260912065724.470530988@linuxfoundation.org>
+Subject: [PATCH 7.2 1547/1815] nfs: refactor pNFS functions using clear_and_wake_up_bit
+Date: Sat, 12 Sep 2026 08:54:57 +0200
+Message-ID: <20260912065725.319041146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,414 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gael Blivet <gael.blivet@gmail.com>
+From: Arnaud Bonnet <abo@medichon.fr>
 
-[ Upstream commit 152036e875e8cfe41dc70328f7e499ccc5142d6c ]
+[ Upstream commit 187bfc974eefa9e5d88a0b4ee9d08ae8fe485df4 ]
 
-smb2_notify() currently returns STATUS_NOT_IMPLEMENTED synchronously
-for every CHANGE_NOTIFY request. Genuine SMB2 servers never complete a
-CHANGE_NOTIFY spontaneously -- it's satisfied only by a real directory
-change or with STATUS_NOTIFY_CLEANUP when the watched handle is
-closed. macOS smbfs.kext depends on this deferred-completion contract:
-receiving STATUS_NOT_IMPLEMENTED instead makes it hard-freeze on
-unmount, since it never sees the cleanup it's waiting for.
+Commit 8236b0ae31c83 ("bdi: wake up concurrent wb_shutdown() callers.")
+introduces the clear_and_wake_up_bit() helper as a wrapper for the
+common clear -> barrier -> wake up bitops sequence.
 
-Add a notify_pendings list on struct ksmbd_file (protected by the
-existing f_lock) and a notify_entry list_head on struct ksmbd_work to
-link onto it. smb2_notify() now replies STATUS_PENDING immediately and
-queues a deferred STATUS_NOTIFY_CLEANUP response on the watched
-handle; __ksmbd_close_fd() drains and sends any pending notifications
-when the handle is actually closed. The drain splices the list out
-under fp->f_lock first, then processes the detached copy without the
-lock -- smb2_notify() on another connection can be adding to the same
-list at the same time a close happens on this one, and
-ksmbd_conn_write() can sleep (it takes the connection's write mutex),
-so it must not be called while the spinlock is held.
+The file pnfs.c has several helpers with identical contents. Thus they
+are replaced with the more recent clean_and_wake_up_bit() global helper
+which describes accurately its effects at the call and still specifies
+the cleared bit. This also homogenizes the code with other subsystems.
 
-Also handle the FileId=FFFF...FFFF share-root sentinel that macOS
-backupd sends to watch for changes without holding an open handle --
-without an immediate STATUS_PENDING/STATUS_NOTIFY_CLEANUP reply here,
-backupd aborts Time Machine setup with STATUS_FILE_CLOSED.
+Since the helpers are no longer used after this, they can be safely
+removed.
 
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Stable-dep-of: b0148dc5625d ("ksmbd: serialize oplock close with pending break ownership")
+Suggested-by: Agatha Isabelle Moreira <code@agatha.dev>
+Link: https://kernelnewbies.org/Beginner%20Cleanup%20and%20Refactor%20Tasks%20by%20Agatha%20Isabelle%20Moreira#task_007
+Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Signed-off-by: Arnaud Bonnet <abo@medichon.fr>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/ksmbd_work.c |   1 +
- fs/smb/server/ksmbd_work.h |   2 +
- fs/smb/server/smb2pdu.c    | 226 ++++++++++++++++++++++++++++++++++++-
- fs/smb/server/vfs_cache.c  |  48 ++++++++
- fs/smb/server/vfs_cache.h  |   6 +
- 5 files changed, 280 insertions(+), 3 deletions(-)
+ fs/nfs/pnfs.c | 35 ++++++++++-------------------------
+ 1 file changed, 10 insertions(+), 25 deletions(-)
 
-diff --git a/fs/smb/server/ksmbd_work.c b/fs/smb/server/ksmbd_work.c
-index e2c2f45264bea..97502273a49c0 100644
---- a/fs/smb/server/ksmbd_work.c
-+++ b/fs/smb/server/ksmbd_work.c
-@@ -56,6 +56,7 @@ struct ksmbd_work *ksmbd_alloc_work_struct(void)
- 		INIT_LIST_HEAD(&work->request_entry);
- 		INIT_LIST_HEAD(&work->async_request_entry);
- 		INIT_LIST_HEAD(&work->fp_entry);
-+		INIT_LIST_HEAD(&work->notify_entry);
- 		INIT_LIST_HEAD(&work->aux_read_list);
- 		work->iov_alloc_cnt = ARRAY_SIZE(work->iov_inline);
- 		work->iov = work->iov_inline;
-diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
-index 88104f0cf3636..50c4aa779647d 100644
---- a/fs/smb/server/ksmbd_work.h
-+++ b/fs/smb/server/ksmbd_work.h
-@@ -104,6 +104,8 @@ struct ksmbd_work {
- 	/* List head at conn->async_requests */
- 	struct list_head                async_request_entry;
- 	struct list_head                fp_entry;
-+	/* List head at ksmbd_file->notify_pendings */
-+	struct list_head                notify_entry;
- };
- 
- /**
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 92607d6d18355..14ba8ed098ffa 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -9646,6 +9646,88 @@ int smb2_oplock_break(struct ksmbd_work *work)
- 	return 0;
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index b1a30a16287f3..fe5af86f9c486 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2100,15 +2100,6 @@ static bool pnfs_is_first_layoutget(struct pnfs_layout_hdr *lo)
+ 	return test_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
  }
  
-+/*
-+ * Cancel handler for a deferred CHANGE_NOTIFY. Races against
-+ * __ksmbd_close_fd()'s notify_pendings drain (vfs_cache.c), which can run
-+ * concurrently on a different connection closing the same handle -- only
-+ * one of the two may claim and free in_work, so both sides check
-+ * list_empty() under fp->f_lock before touching it (list_del_init()
-+ * leaves a node empty, so whichever side removes it first is the owner;
-+ * the loser must not touch in_work again, since the winner may already be
-+ * freeing it).
-+ *
-+ * smb2_cancel() holds conn->request_lock (a spinlock) for the entire
-+ * time it walks conn->async_requests and calls this function -- so this
-+ * runs with preemption disabled and must not sleep or re-acquire that
-+ * same lock. release_async_work() does both (it takes conn->request_lock
-+ * itself, and frees things that can involve sleeping paths), so calling
-+ * it from here would self-deadlock the very thread processing the
-+ * client's CANCEL command. ksmbd_conn_write() can also sleep (it takes
-+ * conn's write mutex). So: do only the non-sleeping, no-relock cleanup
-+ * inline here (the async_requests removal itself is safe without
-+ * re-locking, since the caller already holds that lock), and defer the
-+ * actual response send + work-struct free to a workqueue, matching the
-+ * minimal, non-blocking style of the existing smb2_remove_blocked_lock()
-+ * cancel_fn (which only wakes a waiter, never sends network data itself).
-+ */
-+struct notify_cancel_ctx {
-+	struct work_struct	work;
-+	struct ksmbd_work	*in_work;
-+};
-+
-+static void smb2_notify_cancel_deferred(struct work_struct *w)
-+{
-+	struct notify_cancel_ctx *ctx =
-+		container_of(w, struct notify_cancel_ctx, work);
-+	struct ksmbd_work *in_work = ctx->in_work;
-+	struct smb2_hdr *in_hdr;
-+
-+	in_hdr = smb_get_msg(in_work->response_buf);
-+	in_hdr->Status = STATUS_CANCELLED;
-+	ksmbd_conn_write(in_work);
-+	ksmbd_free_work_struct(in_work);
-+	kfree(ctx);
-+}
-+
-+static void smb2_notify_cancel_fn(void **argv)
-+{
-+	struct ksmbd_work *in_work = (struct ksmbd_work *)argv[0];
-+	struct ksmbd_file *fp = (struct ksmbd_file *)argv[1];
-+	struct ksmbd_conn *conn = in_work->conn;
-+	struct notify_cancel_ctx *ctx;
-+	bool claimed;
-+
-+	spin_lock(&fp->f_lock);
-+	claimed = !list_empty(&in_work->notify_entry);
-+	if (claimed)
-+		list_del_init(&in_work->notify_entry);
-+	spin_unlock(&fp->f_lock);
-+
-+	if (!claimed)
-+		return;
-+
-+	/* conn->request_lock is already held by the caller (smb2_cancel()). */
-+	list_del_init(&in_work->async_request_entry);
-+	in_work->asynchronous = false;
-+	in_work->cancel_fn = NULL;
-+	kfree(in_work->cancel_argv);
-+	in_work->cancel_argv = NULL;
-+	if (in_work->async_id) {
-+		ksmbd_release_id(&conn->async_ida, in_work->async_id);
-+		in_work->async_id = 0;
-+	}
-+
-+	ctx = kmalloc(sizeof(*ctx), GFP_ATOMIC);
-+	if (!ctx) {
-+		/* Can't defer the response -- free without sending one. */
-+		ksmbd_free_work_struct(in_work);
-+		return;
-+	}
-+	ctx->in_work = in_work;
-+	INIT_WORK(&ctx->work, smb2_notify_cancel_deferred);
-+	schedule_work(&ctx->work);
-+}
-+
- /**
-  * smb2_notify() - handler for smb2 notify request
-  * @work:   smb work containing notify command buffer
-@@ -9656,6 +9738,9 @@ int smb2_notify(struct ksmbd_work *work)
+-static void pnfs_clear_first_layoutget(struct pnfs_layout_hdr *lo)
+-{
+-	unsigned long *bitlock = &lo->plh_flags;
+-
+-	clear_bit_unlock(NFS_LAYOUT_FIRST_LAYOUTGET, bitlock);
+-	smp_mb__after_atomic();
+-	wake_up_bit(bitlock, NFS_LAYOUT_FIRST_LAYOUTGET);
+-}
+-
+ static void _add_to_server_list(struct pnfs_layout_hdr *lo,
+ 				struct nfs_server *server)
  {
- 	struct smb2_change_notify_req *req;
- 	struct smb2_change_notify_rsp *rsp;
-+	struct ksmbd_work *in_work;
-+	struct smb2_hdr *in_hdr;
-+	struct ksmbd_file *fp;
+@@ -2284,7 +2275,8 @@ pnfs_update_layout(struct inode *ino,
+ 					iomode, lo, lseg,
+ 					PNFS_UPDATE_LAYOUT_INVALID_OPEN);
+ 			nfs4_schedule_stateid_recovery(server, ctx->state);
+-			pnfs_clear_first_layoutget(lo);
++			clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
++				&lo->plh_flags);
+ 			pnfs_put_layout_hdr(lo);
+ 			goto lookup_again;
+ 		}
+@@ -2353,7 +2345,8 @@ pnfs_update_layout(struct inode *ino,
+ 			if (!exception.retry)
+ 				goto out_put_layout_hdr;
+ 			if (first)
+-				pnfs_clear_first_layoutget(lo);
++				clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
++					&lo->plh_flags);
+ 			trace_pnfs_update_layout(ino, pos, count,
+ 				iomode, lo, lseg, PNFS_UPDATE_LAYOUT_RETRY);
+ 			pnfs_put_layout_hdr(lo);
+@@ -2365,7 +2358,7 @@ pnfs_update_layout(struct inode *ino,
  
- 	ksmbd_debug(SMB, "Received smb2 notify\n");
+ out_put_layout_hdr:
+ 	if (first)
+-		pnfs_clear_first_layoutget(lo);
++		clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
+ 	trace_pnfs_update_layout(ino, pos, count, iomode, lo, lseg,
+ 				 PNFS_UPDATE_LAYOUT_EXIT);
+ 	pnfs_put_layout_hdr(lo);
+@@ -2457,7 +2450,7 @@ static void _lgopen_prepare_attached(struct nfs4_opendata *data,
+ 	lgp = pnfs_alloc_init_layoutget_args(ino, ctx, &current_stateid, &rng,
+ 					     nfs_io_gfp_mask());
+ 	if (!lgp) {
+-		pnfs_clear_first_layoutget(lo);
++		clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
+ 		nfs_layoutget_end(lo);
+ 		pnfs_put_layout_hdr(lo);
+ 		return;
+@@ -2561,7 +2554,8 @@ void nfs4_lgopen_release(struct nfs4_layoutget *lgp)
+ {
+ 	if (lgp != NULL) {
+ 		if (lgp->lo) {
+-			pnfs_clear_first_layoutget(lgp->lo);
++			clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
++				&lgp->lo->plh_flags);
+ 			nfs_layoutget_end(lgp->lo);
+ 		}
+ 		pnfs_layoutget_free(lgp);
+@@ -3274,15 +3268,6 @@ pnfs_generic_pg_readpages(struct nfs_pageio_descriptor *desc)
+ }
+ EXPORT_SYMBOL_GPL(pnfs_generic_pg_readpages);
  
-@@ -9670,9 +9755,144 @@ int smb2_notify(struct ksmbd_work *work)
- 		return -EIO;
+-static void pnfs_clear_layoutcommitting(struct inode *inode)
+-{
+-	unsigned long *bitlock = &NFS_I(inode)->flags;
+-
+-	clear_bit_unlock(NFS_INO_LAYOUTCOMMITTING, bitlock);
+-	smp_mb__after_atomic();
+-	wake_up_bit(bitlock, NFS_INO_LAYOUTCOMMITTING);
+-}
+-
+ /*
+  * There can be multiple RW segments.
+  */
+@@ -3307,7 +3292,7 @@ static void pnfs_list_write_lseg_done(struct inode *inode, struct list_head *lis
+ 		pnfs_put_lseg(lseg);
  	}
  
--	smb2_set_err_rsp(work);
--	rsp->hdr.Status = STATUS_NOT_IMPLEMENTED;
--	return -EOPNOTSUPP;
-+	/*
-+	 * macOS backupd sends CHANGE_NOTIFY with FileId=FFFF...FFFF (share-root
-+	 * sentinel) to watch for changes on the share root without holding an
-+	 * open handle. Respond STATUS_PENDING + STATUS_NOTIFY_CLEANUP immediately;
-+	 * without this, backupd aborts Time Machine setup on STATUS_FILE_CLOSED.
-+	 */
-+	if (req->VolatileFileId == SMB2_NO_FID &&
-+	    req->PersistentFileId == SMB2_NO_FID) {
-+		in_work = ksmbd_alloc_work_struct();
-+		if (!in_work || allocate_interim_rsp_buf(in_work)) {
-+			if (in_work)
-+				ksmbd_free_work_struct(in_work);
-+			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
-+			smb2_set_err_rsp(work);
-+			return 0;
-+		}
-+		if (setup_async_work(work, NULL, NULL)) {
-+			ksmbd_free_work_struct(in_work);
-+			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
-+			smb2_set_err_rsp(work);
-+			return 0;
-+		}
-+		smb2_send_interim_resp(work, STATUS_PENDING);
-+		in_work->conn = work->conn;
-+		in_hdr = smb_get_msg(in_work->response_buf);
-+		memcpy(in_hdr, ksmbd_resp_buf_next(work),
-+		       __SMB2_HEADER_STRUCTURE_SIZE);
-+		in_hdr->Flags |= SMB2_FLAGS_ASYNC_COMMAND;
-+		in_hdr->Id.AsyncId = cpu_to_le64(work->async_id);
-+		smb2_set_err_rsp(in_work);
-+		in_hdr->Status = STATUS_NOTIFY_CLEANUP;
-+		in_work->async_id = work->async_id;
-+		work->async_id = 0;
-+		release_async_work(work);
-+		ksmbd_conn_write(in_work);
-+		ksmbd_free_work_struct(in_work);
-+		work->send_no_response = 1;
-+		return 0;
-+	}
-+
-+	/*
-+	 * KSMBD does not implement a real change-notification backend.
-+	 * Genuine SMB2 servers (and macOS smbfs) never complete a
-+	 * CHANGE_NOTIFY spontaneously: it is satisfied only by a real
-+	 * directory change, or with STATUS_NOTIFY_CLEANUP when the watched
-+	 * handle is closed. Completing it early (e.g. on a timer) makes
-+	 * Finder treat the cleanup as "directory changed" and re-enumerate
-+	 * the directory forever, leaving items unopenable. Returning
-+	 * STATUS_NOT_IMPLEMENTED here (like stock ksmbd) makes macOS smbfs
-+	 * hard-freeze on unmount, so this must stay deferred.
-+	 */
-+	fp = ksmbd_lookup_fd_slow(work, req->VolatileFileId, req->PersistentFileId);
-+	if (!fp) {
-+		rsp->hdr.Status = STATUS_FILE_CLOSED;
-+		smb2_set_err_rsp(work);
-+		return 0;
-+	}
-+
-+	in_work = ksmbd_alloc_work_struct();
-+	if (!in_work || allocate_interim_rsp_buf(in_work)) {
-+		if (in_work)
-+			ksmbd_free_work_struct(in_work);
-+		ksmbd_fd_put(work, fp);
-+		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
-+		smb2_set_err_rsp(work);
-+		return 0;
-+	}
-+	/*
-+	 * in_work is synthetic (not from the normal request-receiving
-+	 * pipeline), so it has no request_buf of its own. It gets registered
-+	 * into conn->async_requests below, and smb2_cancel() unconditionally
-+	 * computes smb_get_msg(iter->request_buf) for every entry in that
-+	 * list while searching for a match -- give it its own small buffer
-+	 * (not an alias of response_buf: ksmbd_free_work_struct() kvfree()s
-+	 * both separately, so aliasing them would double-free) so that stays
-+	 * a harmless read instead of a near-NULL dereference.
-+	 */
-+	in_work->request_buf = kzalloc(MAX_CIFS_SMALL_BUFFER_SIZE, KSMBD_DEFAULT_GFP);
-+	if (!in_work->request_buf) {
-+		ksmbd_free_work_struct(in_work);
-+		ksmbd_fd_put(work, fp);
-+		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
-+		smb2_set_err_rsp(work);
-+		return 0;
-+	}
-+
-+	if (setup_async_work(work, NULL, NULL)) {
-+		ksmbd_free_work_struct(in_work);
-+		ksmbd_fd_put(work, fp);
-+		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
-+		smb2_set_err_rsp(work);
-+		return 0;
-+	}
-+
-+	smb2_send_interim_resp(work, STATUS_PENDING);
-+
-+	in_work->conn = work->conn;
-+	in_hdr = smb_get_msg(in_work->response_buf);
-+	memcpy(in_hdr, ksmbd_resp_buf_next(work), __SMB2_HEADER_STRUCTURE_SIZE);
-+	in_hdr->Flags |= SMB2_FLAGS_ASYNC_COMMAND;
-+	in_hdr->Id.AsyncId = cpu_to_le64(work->async_id);
-+	smb2_set_err_rsp(in_work);
-+	in_hdr->Status = STATUS_NOTIFY_CLEANUP;
-+
-+	/*
-+	 * Transfer ownership of the async id to in_work; it stays reserved
-+	 * until in_work is freed after the deferred response is sent on
-+	 * close, so it can't be reused for an unrelated async response.
-+	 */
-+	in_work->async_id = work->async_id;
-+	work->async_id = 0;
-+	release_async_work(work);
-+
-+	/*
-+	 * work itself is about to be recycled by the normal request-processing
-+	 * pipeline, so it can't stay the target of a future CANCEL -- register
-+	 * in_work instead, reusing the same async_id, so a client-sent CANCEL
-+	 * for this notify actually finds something to cancel instead of
-+	 * silently doing nothing until the handle eventually closes.
-+	 */
-+	in_work->asynchronous = true;
-+	in_work->cancel_argv = kmalloc_array(2, sizeof(void *), KSMBD_DEFAULT_GFP);
-+	if (in_work->cancel_argv) {
-+		in_work->cancel_argv[0] = in_work;
-+		in_work->cancel_argv[1] = fp;
-+		in_work->cancel_fn = smb2_notify_cancel_fn;
-+	}
-+	spin_lock(&work->conn->request_lock);
-+	list_add_tail(&in_work->async_request_entry, &work->conn->async_requests);
-+	spin_unlock(&work->conn->request_lock);
-+
-+	spin_lock(&fp->f_lock);
-+	list_add_tail(&in_work->notify_entry, &fp->notify_pendings);
-+	spin_unlock(&fp->f_lock);
-+
-+	ksmbd_fd_put(work, fp);
-+	work->send_no_response = 1;
-+	return 0;
+-	pnfs_clear_layoutcommitting(inode);
++	clear_and_wake_up_bit(NFS_INO_LAYOUTCOMMITTING, &NFS_I(inode)->flags);
  }
  
- /**
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 9bd8dce660afa..66f73825be93e 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -497,6 +497,7 @@ static void __ksmbd_close_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
- {
- 	struct file *filp;
- 	struct ksmbd_lock *smb_lock, *tmp_lock;
-+	struct ksmbd_work *cn_work;
- 
- 	fd_limit_close();
- 	ksmbd_remove_durable_fd(fp);
-@@ -529,6 +530,52 @@ static void __ksmbd_close_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
- 		kfree(smb_lock);
- 	}
- 
-+	/*
-+	 * Complete any CHANGE_NOTIFY left pending on this handle now that
-+	 * it is closed. KSMBD never completes CHANGE_NOTIFY spontaneously
-+	 * (no real change-notification backend), only on close -- matching
-+	 * genuine SMB2/macOS smbfs semantics and avoiding the Finder
-+	 * "directory changed, re-enumerate everything" loop.
-+	 *
-+	 * smb2_notify() on another connection can be adding to
-+	 * notify_pendings under fp->f_lock at the same time this handle is
-+	 * closed, and a client-sent CANCEL can concurrently be racing to
-+	 * claim the same entry via smb2_notify_cancel_fn() (smb2pdu.c).
-+	 * Pop one entry at a time under the lock via list_del_init() rather
-+	 * than a bulk list_splice_init(): list_del_init() leaves the node
-+	 * self-linked ("empty"), which is what the cancel path checks under
-+	 * the same lock to tell whether it lost the race -- a bulk splice
-+	 * would instead relink every entry into a shared local list, so an
-+	 * entry claimed here would still read as "not empty" to a racing
-+	 * cancel_fn, and both sides could end up freeing the same work.
-+	 * ksmbd_conn_write() can sleep (it takes conn's write mutex), so it
-+	 * must not be called while fp->f_lock is held -- release the lock
-+	 * before processing each popped entry, then reacquire it for the
-+	 * next.
-+	 */
-+	for (;;) {
-+		spin_lock(&fp->f_lock);
-+		if (list_empty(&fp->notify_pendings)) {
-+			spin_unlock(&fp->f_lock);
-+			break;
-+		}
-+		cn_work = list_first_entry(&fp->notify_pendings,
-+					   struct ksmbd_work, notify_entry);
-+		list_del_init(&cn_work->notify_entry);
-+		spin_unlock(&fp->f_lock);
-+
-+		ksmbd_conn_write(cn_work);
-+		/*
-+		 * release_async_work() removes cn_work from
-+		 * conn->async_requests, frees cancel_argv, and releases+zeroes
-+		 * async_id -- all needed before ksmbd_free_work_struct(), which
-+		 * only releases async_id itself if still nonzero (i.e. if this
-+		 * hadn't already been done).
-+		 */
-+		release_async_work(cn_work);
-+		ksmbd_free_work_struct(cn_work);
-+	}
-+
- 	/*
- 	 * Drop fp's strong reference on conn (taken in ksmbd_open_fd() /
- 	 * ksmbd_reopen_durable_fd()).  Durable fps that reached the
-@@ -1050,6 +1097,7 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
- 	INIT_LIST_HEAD(&fp->blocked_works);
- 	INIT_LIST_HEAD(&fp->node);
- 	INIT_LIST_HEAD(&fp->lock_list);
-+	INIT_LIST_HEAD(&fp->notify_pendings);
- 	spin_lock_init(&fp->f_lock);
- 	mutex_init(&fp->readdir_lock);
- 	atomic_set(&fp->refcount, 1);
-diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
-index b9e27307a26c1..b5788b40df4b1 100644
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -135,6 +135,12 @@ struct ksmbd_file {
- 
- 	bool                            is_posix_ctxt;
- 	struct durable_owner		owner;
-+
-+	/*
-+	 * Pending CHANGE_NOTIFY completions for this handle, sent with
-+	 * STATUS_NOTIFY_CLEANUP when the handle is closed.
-+	 */
-+	struct list_head		notify_pendings;
- };
- 
- static inline void set_ctx_actor(struct dir_context *ctx,
+ void pnfs_set_lo_fail(struct pnfs_layout_segment *lseg)
+@@ -3447,7 +3432,7 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
+ 	spin_unlock(&inode->i_lock);
+ 	kfree(data);
+ clear_layoutcommitting:
+-	pnfs_clear_layoutcommitting(inode);
++	clear_and_wake_up_bit(NFS_INO_LAYOUTCOMMITTING, &NFS_I(inode)->flags);
+ 	goto out;
+ }
+ EXPORT_SYMBOL_GPL(pnfs_layoutcommit_inode);
 -- 
 2.53.0
 
