@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F7F343893;
-	Sat, 12 Sep 2026 12:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4FB343893;
+	Sat, 12 Sep 2026 12:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214785; cv=none; b=VJQetFYH8pPWGTy8Y2Suulca3QkpcojnJi/2eyLG0ROMe+9WPKWFmRlZrDtGX746TPcNN8Fm8GKsH2+nbhjZw9toRDiYDRJelQDO0S6vpHqLGew8nwet7rlIFssd6G961cuJPMfLLI+HMuVscuoq38reKtE5L8ouCXPUK/fOF0k=
+	t=1789214790; cv=none; b=NNFruxlJpa3w07dcOeqKStMOjaAJH2o6w5JfzlX6NQqhyiFe0a8LBcx19iUT9k57Ld4fWkie1kbuebezwyaSzj7+sqAagR1b5nnpoa3q7mr1GvFACfGxlAQCY5iAejdXMWmux7C0A4ivuBy3BAW0EIGuULjYubNwRxX4pdWMrMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214785; c=relaxed/simple;
-	bh=vvU/qjnw4Kl/ppNZs2U+1wDalQXRv2jcAUS/HZZd5tU=;
+	s=arc-20240116; t=1789214790; c=relaxed/simple;
+	bh=OIaxdGirB57ZVsyHE3mwF2jb+fC4QbtTHVTpnaNromo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGWfh9GsIELjjtsjfybiNfPDL4DIubuG2ytDtqz5ooKZF2TsOVs+WRrKWfzf4MIPRJFn0GGcg4gO23aK0xKIarWrQFK9Mh6FzOL4BVMTdlGC25nnL5ggcsiiIDs1KUQmXia1HG8rjk9Xsgsrr6lJP/clIpWnzFZ6JhQqDJXJpjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkP1aYAP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sXcxVA3z1kPXyvmRHaV6soG3GnAi6ap1CO2n7qzu95eQkICKDnFR15TdaxNfv8FERel5MC22aYv/wnfdOuBThgUQb1/BvH5dEbPiSigA6iagq6FKSwsIvJCYTHItB5qmFGM3YG/GVoihVwZcjzrxjl88NpKGj9VxtZ0RYp9DdD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkQhCEp2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkP1aYAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55ACE1F000FF;
-	Sat, 12 Sep 2026 12:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkQhCEp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E961F000FF;
+	Sat, 12 Sep 2026 12:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214784;
-	bh=QYsTSSQxoDapUQrwsBKgKEkuFqhoI3OYwN5nEzaYRZc=;
+	s=korg; t=1789214789;
+	bh=eY3nCRKE9bYTeMKlOVIUs3grB21E8cOqpaMwIzEwaTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zkP1aYAPQH7Kh4sm4k/RqkKn8uVtPFowU7jg+mN6xDAQuM0ikXso81dKZ5JY/Aa0c
-	 +MIOHW5svJdZBiYgI3n3ZFp/OP9aDW+RH9d01cQmIF85AsjVDWGXRp4IT6Fm9P9+MI
-	 KOev5i0LiiY5ru/0KHJrM7N4pZTXwWbyHhfSjjvs=
+	b=AkQhCEp208g8xzvyA0ertFM3LJ0+nib4Ymo85UGCvQIzoTrselksHMWfcC7v8/kI4
+	 QxS6FpUVtOj7WjdQ5hFyIztCHnLX/36sRnYIPTDolAd5fJt4nG8SJX6icm4cPXZkVy
+	 WwYA/LZFZKjh1H3TRHgaLs7hRVK0MwN3L8qWP5Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sandipan Das <sandipan.das@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0397/1376] perf/x86/amd/uncore: Add group validation
-Date: Sat, 12 Sep 2026 08:47:03 +0200
-Message-ID: <20260912065616.392744678@linuxfoundation.org>
+Subject: [PATCH 6.12 0398/1376] perf vendor events amd: Update Zen 5 core events
+Date: Sat, 12 Sep 2026 08:47:04 +0200
+Message-ID: <20260912065616.414159963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,79 +53,322 @@ Content-Transfer-Encoding: 8bit
 
 From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit edda9051e267b7390c7ce24b1b71434414ad156e ]
+[ Upstream commit 047979af3bf6a118066c81099162d518de63abb1 ]
 
-The amd_uncore driver currently does not validate event groups and
-allows creation of groups with more events than the number of available
-hardware counters. Because of this, pmu->event_init() succeeds but
-counter assignment fails later in pmu->add() which returns -EBUSY once
-all counters are exhausted.
+Update definitions for the following events.
+  * PMCx00A - Add missing unit masks
+  * PMCx00B - Add missing unit masks and fix descriptions
+  * PMCx00C - Add missing unit masks
+  * PMCx00D - Add missing unit masks
+  * PMCx025 - Add missing unit masks and fix descriptions
 
-Address this by introducing group validation in the pmu->event_init()
-path. Since the uncore PMUs have no per-event constraints and all
-counters of a PMU are interchangeable, validation is reduced to just
-counting the group members that target a PMU and ensuring that they fit
-within the available set of counters.
-
-Fixes: c43ca5091a37 ("perf/x86/amd: Add support for AMD NB and L2I "uncore" counters")
+Fixes: 45c072f2537a ("perf vendor events amd: Add Zen 5 core events")
 Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/750877d66e208603c3047f13eed6399625d43969.1782884387.git.sandipan.das@amd.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ .../arch/x86/amdzen5/floating-point.json      | 130 +++++++++++++++---
+ .../arch/x86/amdzen5/load-store.json          |   8 +-
+ 2 files changed, 120 insertions(+), 18 deletions(-)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index cad240e88b4ff..06c5e485fd6e0 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -206,6 +206,29 @@ static void amd_uncore_del(struct perf_event *event, int flags)
- 	hwc->idx = -1;
- }
- 
-+static bool amd_uncore_group_valid(struct perf_event *event)
-+{
-+	struct amd_uncore_pmu *pmu = event_to_amd_uncore_pmu(event);
-+	struct perf_event *leader = event->group_leader;
-+	struct perf_event *sibling;
-+	int counters = 0;
-+
-+	if (leader->pmu == event->pmu)
-+		counters++;
-+
-+	for_each_sibling_event(sibling, leader) {
-+		if (sibling->pmu == event->pmu &&
-+		    sibling->state > PERF_EVENT_STATE_OFF)
-+			counters++;
-+	}
-+
-+	/*
-+	 * When pmu->event_init() is called, the event is yet to be linked to
-+	 * its leader's sibling list, so it is counted separately
-+	 */
-+	return (counters + 1) <= pmu->num_counters;
-+}
-+
- static int amd_uncore_event_init(struct perf_event *event)
- {
- 	struct amd_uncore_pmu *pmu;
-@@ -223,6 +246,14 @@ static int amd_uncore_event_init(struct perf_event *event)
- 	if (!ctx)
- 		return -ENODEV;
- 
-+	/*
-+	 * Ensure that all events in a group can be scheduled together so that
-+	 * a failure can be reported at perf_event_open() time rather than
-+	 * silently at pmu->add() time when no free counter is found
-+	 */
-+	if (event->group_leader != event && !amd_uncore_group_valid(event))
-+		return -EINVAL;
-+
- 	/*
- 	 * NB and Last level cache counters (MSRs) are shared across all cores
- 	 * that share the same NB / Last level cache.  On family 16h and below,
+diff --git a/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json b/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
+index 9204bfb1d69e0..569975b53cc33 100644
+--- a/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
++++ b/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
+@@ -179,6 +179,30 @@
+     "BriefDescription": "Retired scalar floating-point blend ops.",
+     "UMask": "0x09"
+   },
++  {
++    "EventName": "fp_ops_retired_by_type.scalar_mov",
++    "EventCode": "0x0a",
++    "BriefDescription": "Retired scalar floating-point MOV ops.",
++    "UMask": "0x0a"
++  },
++  {
++    "EventName": "fp_ops_retired_by_type.scalar_shuffle",
++    "EventCode": "0x0a",
++    "BriefDescription": "Retired scalar floating-point shuffle ops (may include instructions not necessarily thought of as including shuffles e.g. horizontal add, dot product, and certain MOV instructions).",
++    "UMask": "0x0b"
++  },
++  {
++    "EventName": "fp_ops_retired_by_type.scalar_bfloat",
++    "EventCode": "0x0a",
++    "BriefDescription": "Retired scalar floating-point bfloat ops.",
++    "UMask": "0x0c"
++  },
++  {
++    "EventName": "fp_ops_retired_by_type.scalar_logical",
++    "EventCode": "0x0a",
++    "BriefDescription": "Retired scalar floating-point logical ops.",
++    "UMask": "0x0d"
++  },
+   {
+     "EventName": "fp_ops_retired_by_type.scalar_other",
+     "EventCode": "0x0a",
+@@ -245,12 +269,24 @@
+     "BriefDescription": "Retired vector floating-point blend ops.",
+     "UMask": "0x90"
+   },
++  {
++    "EventName": "fp_ops_retired_by_type.vector_mov",
++    "EventCode": "0x0a",
++    "BriefDescription": "Retired vector floating-point MOV ops.",
++    "UMask": "0xa0"
++  },
+   {
+     "EventName": "fp_ops_retired_by_type.vector_shuffle",
+     "EventCode": "0x0a",
+     "BriefDescription": "Retired vector floating-point shuffle ops (may include instructions not necessarily thought of as including shuffles e.g. horizontal add, dot product, and certain MOV instructions).",
+     "UMask": "0xb0"
+   },
++  {
++    "EventName": "fp_ops_retired_by_type.vector_bfloat",
++    "EventCode": "0x0a",
++    "BriefDescription": "Retired vector floating-point bfloat ops.",
++    "UMask": "0xc0"
++  },
+   {
+     "EventName": "fp_ops_retired_by_type.vector_logical",
+     "EventCode": "0x0a",
+@@ -278,7 +314,7 @@
+   {
+     "EventName": "sse_avx_ops_retired.mmx_add",
+     "EventCode": "0x0b",
+-    "BriefDescription": "Retired MMX integer add.",
++    "BriefDescription": "Retired MMX integer add ops.",
+     "UMask": "0x01"
+   },
+   {
+@@ -299,16 +335,34 @@
+     "BriefDescription": "Retired MMX integer multiply-accumulate ops.",
+     "UMask": "0x04"
+   },
++  {
++    "EventName": "sse_avx_ops_retired.mmx_aes",
++    "EventCode": "0x0b",
++    "BriefDescription": "Retired MMX integer AES ops.",
++    "UMask": "0x05"
++  },
++  {
++    "EventName": "sse_avx_ops_retired.mmx_sha",
++    "EventCode": "0x0b",
++    "BriefDescription": "Retired MMX integer SHA ops.",
++    "UMask": "0x06"
++  },
+   {
+     "EventName": "sse_avx_ops_retired.mmx_cmp",
+     "EventCode": "0x0b",
+     "BriefDescription": "Retired MMX integer compare ops.",
+     "UMask": "0x07"
+   },
++  {
++    "EventName": "sse_avx_ops_retired.mmx_cvt",
++    "EventCode": "0x0b",
++    "BriefDescription": "Retired MMX integer convert or pack ops.",
++    "UMask": "0x08"
++  },
+   {
+     "EventName": "sse_avx_ops_retired.mmx_shift",
+     "EventCode": "0x0b",
+-    "BriefDescription": "Retired MMX integer shift ops.",
++    "BriefDescription": "Retired MMX integer shift or rotate ops.",
+     "UMask": "0x09"
+   },
+   {
+@@ -324,9 +378,9 @@
+     "UMask": "0x0b"
+   },
+   {
+-    "EventName": "sse_avx_ops_retired.mmx_pack",
++    "EventName": "sse_avx_ops_retired.mmx_vnni",
+     "EventCode": "0x0b",
+-    "BriefDescription": "Retired MMX integer pack ops.",
++    "BriefDescription": "Retired MMX integer VNNI ops.",
+     "UMask": "0x0c"
+   },
+   {
+@@ -390,15 +444,15 @@
+     "UMask": "0x70"
+   },
+   {
+-    "EventName": "sse_avx_ops_retired.sse_avx_clm",
++    "EventName": "sse_avx_ops_retired.sse_avx_cvt",
+     "EventCode": "0x0b",
+-    "BriefDescription": "Retired SSE and AVX integer CLM ops.",
++    "BriefDescription": "Retired SSE and AVX integer convert or pack ops.",
+     "UMask": "0x80"
+   },
+   {
+     "EventName": "sse_avx_ops_retired.sse_avx_shift",
+     "EventCode": "0x0b",
+-    "BriefDescription": "Retired SSE and AVX integer shift ops.",
++    "BriefDescription": "Retired SSE and AVX integer shift or rotate ops.",
+     "UMask": "0x90"
+   },
+   {
+@@ -414,9 +468,9 @@
+     "UMask": "0xb0"
+   },
+   {
+-    "EventName": "sse_avx_ops_retired.sse_avx_pack",
++    "EventName": "sse_avx_ops_retired.sse_avx_vnni",
+     "EventCode": "0x0b",
+-    "BriefDescription": "Retired SSE and AVX integer pack ops.",
++    "BriefDescription": "Retired SSE and AVX integer VNNI ops.",
+     "UMask": "0xc0"
+   },
+   {
+@@ -497,12 +551,24 @@
+     "BriefDescription": "Retired 128-bit packed floating-point blend ops.",
+     "UMask": "0x09"
+   },
++  {
++    "EventName": "fp_pack_ops_retired.fp128_mov",
++    "EventCode": "0x0c",
++    "BriefDescription": "Retired 128-bit packed floating-point MOV ops.",
++    "UMask": "0x0a"
++  },
+   {
+     "EventName": "fp_pack_ops_retired.fp128_shuffle",
+     "EventCode": "0x0c",
+     "BriefDescription": "Retired 128-bit packed floating-point shuffle ops (may include instructions not necessarily thought of as including shuffles e.g. horizontal add, dot product, and certain MOV instructions).",
+     "UMask": "0x0b"
+   },
++  {
++    "EventName": "fp_pack_ops_retired.fp128_bfloat",
++    "EventCode": "0x0c",
++    "BriefDescription": "Retired 128-bit packed floating-point bfloat ops.",
++    "UMask": "0x0c"
++  },
+   {
+     "EventName": "fp_pack_ops_retired.fp128_logical",
+     "EventCode": "0x0c",
+@@ -575,12 +641,24 @@
+     "BriefDescription": "Retired 256-bit packed floating-point blend ops.",
+     "UMask": "0x90"
+   },
++  {
++    "EventName": "fp_pack_ops_retired.fp256_mov",
++    "EventCode": "0x0c",
++    "BriefDescription": "Retired 256-bit packed floating-point MOV ops.",
++    "UMask": "0xa0"
++  },
+   {
+     "EventName": "fp_pack_ops_retired.fp256_shuffle",
+     "EventCode": "0x0c",
+     "BriefDescription": "Retired 256-bit packed floating-point shuffle ops (may include instructions not necessarily thought of as including shuffles e.g. horizontal add, dot product, and certain MOV instructions).",
+     "UMask": "0xb0"
+   },
++  {
++    "EventName": "fp_pack_ops_retired.fp256_bfloat",
++    "EventCode": "0x0c",
++    "BriefDescription": "Retired 256-bit packed floating-point bfloat ops.",
++    "UMask": "0xc0"
++  },
+   {
+     "EventName": "fp_pack_ops_retired.fp256_logical",
+     "EventCode": "0x0c",
+@@ -648,15 +726,15 @@
+     "UMask": "0x07"
+   },
+   {
+-    "EventName": "packed_int_op_type.int128_clm",
++    "EventName": "packed_int_op_type.int128_cvt",
+     "EventCode": "0x0d",
+-    "BriefDescription": "Retired 128-bit packed integer CLM ops.",
++    "BriefDescription": "Retired 128-bit packed integer convert or pack ops.",
+     "UMask": "0x08"
+   },
+   {
+     "EventName": "packed_int_op_type.int128_shift",
+     "EventCode": "0x0d",
+-    "BriefDescription": "Retired 128-bit packed integer shift ops.",
++    "BriefDescription": "Retired 128-bit packed integer shift or rotate ops.",
+     "UMask": "0x09"
+   },
+   {
+@@ -672,9 +750,9 @@
+     "UMask": "0x0b"
+   },
+   {
+-    "EventName": "packed_int_op_type.int128_pack",
++    "EventName": "packed_int_op_type.int128_vnni",
+     "EventCode": "0x0d",
+-    "BriefDescription": "Retired 128-bit packed integer pack ops.",
++    "BriefDescription": "Retired 128-bit packed integer VNNI ops.",
+     "UMask": "0x0c"
+   },
+   {
+@@ -719,16 +797,34 @@
+     "BriefDescription": "Retired 256-bit packed integer multiply-accumulate ops.",
+     "UMask": "0x40"
+   },
++  {
++    "EventName": "packed_int_op_type.int256_aes",
++    "EventCode": "0x0d",
++    "BriefDescription": "Retired 256-bit packed integer AES ops.",
++    "UMask": "0x50"
++  },
++  {
++    "EventName": "packed_int_op_type.int256_sha",
++    "EventCode": "0x0d",
++    "BriefDescription": "Retired 256-bit packed integer SHA ops.",
++    "UMask": "0x60"
++  },
+   {
+     "EventName": "packed_int_op_type.int256_cmp",
+     "EventCode": "0x0d",
+     "BriefDescription": "Retired 256-bit packed integer compare ops.",
+     "UMask": "0x70"
+   },
++  {
++    "EventName": "packed_int_op_type.int256_cvt",
++    "EventCode": "0x0d",
++    "BriefDescription": "Retired 256-bit packed integer convert or pack ops.",
++    "UMask": "0x80"
++  },
+   {
+     "EventName": "packed_int_op_type.int256_shift",
+     "EventCode": "0x0d",
+-    "BriefDescription": "Retired 256-bit packed integer shift ops.",
++    "BriefDescription": "Retired 256-bit packed integer shift or rotate ops.",
+     "UMask": "0x90"
+   },
+   {
+@@ -744,9 +840,9 @@
+     "UMask": "0xb0"
+   },
+   {
+-    "EventName": "packed_int_op_type.int256_pack",
++    "EventName": "packed_int_op_type.int256_vnni",
+     "EventCode": "0x0d",
+-    "BriefDescription": "Retired 256-bit packed integer pack ops.",
++    "BriefDescription": "Retired 256-bit packed integer VNNI ops.",
+     "UMask": "0xc0"
+   },
+   {
+diff --git a/tools/perf/pmu-events/arch/x86/amdzen5/load-store.json b/tools/perf/pmu-events/arch/x86/amdzen5/load-store.json
+index 917f9d68f85a6..d1ac7ff52a4d7 100644
+--- a/tools/perf/pmu-events/arch/x86/amdzen5/load-store.json
++++ b/tools/perf/pmu-events/arch/x86/amdzen5/load-store.json
+@@ -8,9 +8,15 @@
+   {
+     "EventName": "ls_locks.bus_lock",
+     "EventCode": "0x25",
+-    "BriefDescription": "Retired Lock instructions which caused a bus lock.",
++    "BriefDescription": "Retired lock instructions which caused a bus lock.",
+     "UMask": "0x01"
+   },
++  {
++    "EventName": "ls_locks.all",
++    "EventCode": "0x25",
++    "BriefDescription": "Retired lock instructions of all types.",
++    "UMask": "0x1f"
++  },
+   {
+     "EventName": "ls_ret_cl_flush",
+     "EventCode": "0x26",
 -- 
 2.53.0
 
