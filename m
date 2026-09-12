@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6316F35F61E;
-	Sat, 12 Sep 2026 07:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC9C3B813A;
+	Sat, 12 Sep 2026 07:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196949; cv=none; b=dTA1pxqUpTjWjSva/TAfIpMcg9Z21UJ+6Jlbf745sUiF7GdwNFGjaocV0VS+iXUm/dHpVGKlWjlMeTH1+M1HRQIXQ8i+FdcWxQIvdd7qSIZFV7YnR82tBAmH8TiZuhlwh8MUnl75iIyHiSAWdXislTkBFz01Wq2aTtTcq4oh+JQ=
+	t=1789196954; cv=none; b=kBWJY2+f0/9YCZh1bp6eOfhGbBowWOxqgwkkYt4k9o+h6ovDZU5FANeh5NjQwAorjw8p93GSRpmrCRjZ5l3Rzbmf1vQDbJqOida2eliNkY8BBGXhw5MSi5S7vZV91lxYI4iJ3AQtbIwtEUGxkCIddtl2yWzm4wnMLNP4lyrGx2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196949; c=relaxed/simple;
-	bh=8J2QM3YrCP1/cb1sNzHFPIzAMMiAxdNk6oVoLsL4OFo=;
+	s=arc-20240116; t=1789196954; c=relaxed/simple;
+	bh=HNUYGwvvsm24uYqyoNdMTaH+XL8wjDMUMTT4qycC4FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqgRYsbyaZfoQJN8aWFj4Kv/51sJCW2f/cyS5iMP70yovSryPjPyVC7yHv3b71ONMhlxnEEtoEwxhPqdb3hXsUvLxZPvXlu2XMONqw8xjUnnokoI+4IbNMA/D6J2VuPJZmu36V/OxSH4An3DntaGk4UqacMZPxWJwylJEs+ZnR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvSFbitV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gJPsDp1Vq3ByXZuSKz9fDKEUSjd2XDWh3z+8NK/RUin2lNzgt0dFT5Z/kq0MFJaqZTnlpBKLBjqpVL2PU31NU3u/j5Jjo4jTNfMFqm3b63yycy0Bt0ncLMGwCyyHZCv0Ptu2RLGa2s+vlViHiOyg3cEiqzrOX5SuUW0wfwkYJZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMHomBlt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvSFbitV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF461F000FF;
-	Sat, 12 Sep 2026 07:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMHomBlt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511B91F00899;
+	Sat, 12 Sep 2026 07:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196948;
-	bh=MfBUrtrj1yxrSa81+CssKXXo0ZIReYLh5VhzZbu2PZA=;
+	s=korg; t=1789196953;
+	bh=+ttAzx9iqc8fcS1pe8slcDTEqTWk0XGyjGhIHoePkXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WvSFbitVxrN7llTrdA4s/rudASn2YpZJyKrjVgEVf+0kNXBsCRGjehXyQ7USUIGfv
-	 IfgkZXf79Oaxs+yislvO4CBgtB6f7BpS5GgTQwHNqdqM8xldIuubKNoYkd5vPZ2eEh
-	 MS0alwCxSfqFn804FblWV1grU3AgukFJoOfaVFY0=
+	b=hMHomBltUTcUSxtDdjhc9SQtZXZ1fi6FnF/sIg6jYVON5wAwSwRLDhfnboearaCW+
+	 IvasrcCBiaxGINTSTbC/UJEfUU+05smf7WkBaOA36jPi/uNG2UdbALS/gVRGmbfDy5
+	 XAR6H+PJvP79slcrkCcfnLSluM2Y+W0ZdJoNIFxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	"Miquel Raynal (DAVE)" <miquel.raynal@bootlin.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0070/1815] media: cec-pin: Fix event FIFO ordering
-Date: Sat, 12 Sep 2026 08:30:20 +0200
-Message-ID: <20260912065650.659077301@linuxfoundation.org>
+Subject: [PATCH 7.2 0071/1815] mtd: rawnand: pl353: Fix debug prints
+Date: Sat, 12 Sep 2026 08:30:21 +0200
+Message-ID: <20260912065650.682901290@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,70 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
 
-[ Upstream commit a1d83d1b810665bd53ce8a7b7867e054d68676c7 ]
+[ Upstream commit 2b7baaddf1bc3e39206a0354449fdc349945b86b ]
 
-cec_pin_update() fills work_pin_events[] and work_pin_ts[], then
-increments work_pin_num_events. cec_pin_thread_func() uses that counter
-to decide when to read the FIFO entries.
+They are partially incorrect since "software" engine does not mean
+hamming, the "none" cae is also falling into this print, and on-die
+means there is some kind of hardware support; we prefer to use the
+wording on-host vs. on-die.
 
-Do not let the counter update be observed without the event update. Also
-do not let a freed slot be reused before the thread has finished reading
-it. Use release operations when publishing an entry and releasing a slot,
-and acquire operations when consuming those counter updates.
+Fix all those prints.
 
-Leave the other work_pin_num_events users as they do not participate in
-this FIFO publication path.
-
-Fixes: ea5c8ef29668 ("media: cec-pin: add low-level pin hardware support")
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 1e06dbfdfb85 ("mtd: rawnand: pl353: Add message about ECC mode")
+Signed-off-by: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-pin.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mtd/nand/raw/pl35x-nand-controller.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/cec/core/cec-pin.c b/drivers/media/cec/core/cec-pin.c
-index 6e1c391028322..085fc12067afa 100644
---- a/drivers/media/cec/core/cec-pin.c
-+++ b/drivers/media/cec/core/cec-pin.c
-@@ -115,7 +115,7 @@ static void cec_pin_update(struct cec_pin *pin, bool v, bool force)
- 		return;
+diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+index 7d43506b1654d..12b9e0936c8f1 100644
+--- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
++++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+@@ -972,17 +972,19 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
  
- 	pin->adap->cec_pin_is_high = v;
--	if (atomic_read(&pin->work_pin_num_events) < CEC_NUM_PIN_EVENTS) {
-+	if (atomic_read_acquire(&pin->work_pin_num_events) < CEC_NUM_PIN_EVENTS) {
- 		u8 ev = v;
- 
- 		if (pin->work_pin_events_dropped) {
-@@ -126,7 +126,7 @@ static void cec_pin_update(struct cec_pin *pin, bool v, bool force)
- 		pin->work_pin_ts[pin->work_pin_events_wr] = ktime_get();
- 		pin->work_pin_events_wr =
- 			(pin->work_pin_events_wr + 1) % CEC_NUM_PIN_EVENTS;
--		atomic_inc(&pin->work_pin_num_events);
-+		atomic_inc_return_release(&pin->work_pin_num_events);
- 	} else {
- 		pin->work_pin_events_dropped = true;
- 		pin->work_pin_events_dropped_cnt++;
-@@ -1101,7 +1101,7 @@ static int cec_pin_thread_func(void *_adap)
- 						     pin->work_tx_ts);
- 		}
- 
--		while (atomic_read(&pin->work_pin_num_events)) {
-+		while (atomic_read_acquire(&pin->work_pin_num_events)) {
- 			unsigned int idx = pin->work_pin_events_rd;
- 			u8 v = pin->work_pin_events[idx];
- 
-@@ -1110,7 +1110,7 @@ static int cec_pin_thread_func(void *_adap)
- 						v & CEC_PIN_EVENT_FL_DROPPED,
- 						pin->work_pin_ts[idx]);
- 			pin->work_pin_events_rd = (idx + 1) % CEC_NUM_PIN_EVENTS;
--			atomic_dec(&pin->work_pin_num_events);
-+			atomic_dec_return_release(&pin->work_pin_num_events);
- 		}
- 
- 		switch (atomic_xchg(&pin->work_irq_change,
+ 	switch (chip->ecc.engine_type) {
+ 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
+-		dev_dbg(nfc->dev, "Using on-die ECC\n");
++		dev_dbg(nfc->dev, "Using on-die hardware ECC\n");
+ 		/* Keep these legacy BBT descriptors for ON_DIE situations */
+ 		chip->bbt_td = &bbt_main_descr;
+ 		chip->bbt_md = &bbt_mirror_descr;
+ 		fallthrough;
+ 	case NAND_ECC_ENGINE_TYPE_NONE:
++		dev_dbg(nfc->dev, "Using no ECC engine\n");
++		break;
+ 	case NAND_ECC_ENGINE_TYPE_SOFT:
+-		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
++		dev_dbg(nfc->dev, "Using software ECC\n");
+ 		break;
+ 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
+-		dev_dbg(nfc->dev, "Using hardware ECC\n");
++		dev_dbg(nfc->dev, "Using on-host hardware ECC\n");
+ 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
