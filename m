@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9951E3A7F47;
-	Sat, 12 Sep 2026 18:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F19C38656D;
+	Sat, 12 Sep 2026 18:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239312; cv=none; b=MiJuSpX5/wy2g9L1EncIMKyh7x8Lhux01Pj8a++dq4MHE6CeXkUDkWBVo/j1SrpWq8rM5Ak3jlerWhdDXK63fGD15XrIOrQNiQgjzanXJDavKK0ZTXhkUgskwTJ9E8+QhFE7p+wcg9fUSdsXPmGGcE5ujiXGbj2rqzVw7FPV5M0=
+	t=1789239318; cv=none; b=nw8zCEcUgzE9rPMbaclQrQ8liLRQupoMZIS6NG75yRwiPpXaS4RPQkVgMZvgv4zbotsXAiGmkwbrKzM8YfmjstVKwA9hnX/ViRelY/LpVsRRBiPOCpRJDT6uSD+27NeLGufK2g281t5HuAH+5rOiPMsKWVzMGH2uQsS5ln90yK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239312; c=relaxed/simple;
-	bh=erEc4dNI0eJx5P/Ubp1hYzQAySGh7tPMpArSjVxUpFU=;
+	s=arc-20240116; t=1789239318; c=relaxed/simple;
+	bh=Lxh457NPu/m7SThH2lQP3xY1Gt9W3OrWHWoosLbUrxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQJ4BK+a5jQoKA0vrR/mreqyVlNVGYUTJshNqfCvJh1Wj/7EaWcJToob/7uspTtGG39eeIb/egDKge3mQLxjF5c8vPe/mVMcoDUs2AwKfhE3rTUO20b74+hXAH80dWs+fKo4KWC34KGSiUpPD3stQun3sYWIUz6eucBHUAFRQyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwVdJnBz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mim3SGfcRySFDSznwuo5WXFzsfrf3eks2+i4o69PJ4UEM2Aafv2f0smiccInzhy0rnxc/bWjeOkuFdpQC9JtOf7ni7XkSQ4p94phKmQkO3AIcbSnrv7/AYmca+ecsHP2GTyz77GtkPqMaKR+JyNVRoJs7+L+cAZjPf1+5rIh/2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DP91D++4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwVdJnBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F86B1F000FF;
-	Sat, 12 Sep 2026 18:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DP91D++4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A36D1F000FF;
+	Sat, 12 Sep 2026 18:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239311;
-	bh=SplgfeUP4sYvHEM8Iz3InkyOXumX9oqRnotywbbhktQ=;
+	s=korg; t=1789239316;
+	bh=IeyaNkCqbU7ytOfrcrky8OZejQXDNf+bBlswfgrOgRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LwVdJnBzLKi2Lk4cVuId3VmiZxUC/1kKeILfFCdgZWJQm5pNcUiq4OivQxIHLi1J3
-	 jAM5imIT/dMDAErGSOd9I0ibChzJH5Y6cKtzQ+bswPA0g8ilzgcox2SY5eMV94UsJi
-	 cV7gYGnm3ABFMkttUrPowCO/pswBYhc+0p31Fq+E=
+	b=DP91D++4X91ws34QO4fONi+heAI2/+ppEDV4UDly5OkwPILb3j/WB/sQxnSd+4Iie
+	 UhhkU5Gta476t1sAnjxpQ64qADgmQWvWBvUmVcyqDLDRY5mEYAwXoNmv+m+qO9dQMZ
+	 uTGXK/vKnvtWMsdCSGbr+kWpCEZW4nByKfhJjrVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Petr Tesarik <ptesarik@suse.com>,
-	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 640/935] iommu/dma: Check atomic pool allocation result directly
-Date: Sat, 12 Sep 2026 09:01:10 +0200
-Message-ID: <20260912065541.521009602@linuxfoundation.org>
+Subject: [PATCH 5.15 641/935] i3c: dw: avoid shift-out-of-bounds when DAA assigns no devices
+Date: Sat, 12 Sep 2026 09:01:11 +0200
+Message-ID: <20260912065541.544075914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -55,55 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit af95a0ebc0a0db0762be75f51eadf770bad01aaa ]
+[ Upstream commit 038cf48b3170af26a70bf2dee4f8c3ac910f5176 ]
 
-The non-blocking, non-coherent allocation path uses dma_alloc_from_pool(),
-which returns the allocated page and fills cpu_addr only on success.
+On an empty bus ENTDAA assigns nothing, so cmd->rx_len (the count
+of addresses left unassigned) equals master->maxdevs.
 
-Do not rely on cpu_addr to detect allocation failure in this path. Check
-the returned page directly before using it for the IOMMU mapping.
+The GENMASK() index master->maxdevs - cmd->rx_len - 1 then becomes -1,
+which trips up UBSAN. This happens every time on boot on a Gigabyte/AMD
+server:
 
-Fixes: 9420139f516d ("dma-pool: fix coherent pool allocations for IOMMU mappings")
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Petr Tesarik <ptesarik@suse.com>
-Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
-Link: https://lore.kernel.org/r/20260717180442.110954-4-aneesh.kumar@kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+    UBSAN: shift-out-of-bounds in drivers/i3c/master/dw-i3c-master.c:905:12
+    shift exponent 64 is too large for 64-bit type 'long unsigned int'
+    CPU: 7 UID: 0 PID: 963 Comm: (udev-worker) Not tainted 7.0.11-200.fc44.x86_64 #1 PREEMPT(lazy)
+    Hardware name: Giga Computing E163-Z34-AAH1-000/MZ33-DC1-000, BIOS R32_F45 04/01/2026
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x5d/0x80
+     ubsan_epilogue+0x5/0x2b
+     __ubsan_handle_shift_out_of_bounds.cold+0xd7/0x1ab
+     dw_i3c_master_daa.cold+0x1b/0x96 [dw_i3c_master]
+     i3c_master_do_daa_ext.part.0+0x3e/0xf0 [i3c]
+
+Skip the mask when no new device was assigned.
+
+Fixes: 1dd728f5d4d4 ("i3c: master: Add driver for Synopsys DesignWare IP")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260630172904.2662160-1-kuba@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/dma-iommu.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/i3c/master/dw-i3c-master.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index aa47d955de6ba..dfef5d7f5885a 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -1208,13 +1208,16 @@ static void *iommu_dma_alloc(struct device *dev, size_t size,
- 	}
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index 51a8608203de7..11b1cec6398f3 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -810,7 +810,15 @@ static int dw_i3c_master_daa(struct i3c_master_controller *m)
+ 	if (!wait_for_completion_timeout(&xfer->comp, XFER_TIMEOUT))
+ 		dw_i3c_master_dequeue_xfer(master, xfer);
  
- 	if (IS_ENABLED(CONFIG_DMA_DIRECT_REMAP) &&
--	    !gfpflags_allow_blocking(gfp) && !coherent)
-+	    !gfpflags_allow_blocking(gfp) && !coherent) {
- 		page = dma_alloc_from_pool(dev, PAGE_ALIGN(size), &cpu_addr,
--					       gfp, NULL);
--	else
-+					   gfp, NULL);
-+		if (!page)
-+			return NULL;
-+	} else {
- 		cpu_addr = iommu_dma_alloc_pages(dev, size, &page, gfp, attrs);
--	if (!cpu_addr)
--		return NULL;
-+		if (!cpu_addr)
-+			return NULL;
-+	}
+-	newdevs = GENMASK(master->maxdevs - cmd->rx_len - 1, 0);
++	/*
++	 * cmd->rx_len holds the number of addresses ENTDAA left unassigned.
++	 * On an empty bus rx_len == maxdevs, so avoid GENMASK(-1, 0).
++	 */
++	if (cmd->rx_len >= master->maxdevs)
++		newdevs = 0;
++	else
++		newdevs = GENMASK(master->maxdevs - cmd->rx_len - 1, 0);
++
+ 	newdevs &= ~olddevs;
  
- 	*handle = __iommu_dma_map(dev, page_to_phys(page), size, ioprot,
- 			dev->coherent_dma_mask);
+ 	for (pos = 0; pos < master->maxdevs; pos++) {
 -- 
 2.53.0
 
