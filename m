@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC1E331EC0;
-	Sat, 12 Sep 2026 14:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582DC331EC0;
+	Sat, 12 Sep 2026 14:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223343; cv=none; b=scnKYF8oVsc+9hImANWbxWE2lKR4Dy2N1egTa2vuWyZZksgHW/NNlhua7lWa2gucJyWkmBQy/DrC7lswMOjdrn066m7jLjevlnxq2IamX7iVxbLvQoqb5d1P5udHF4hjr2c8apM0YNlvOogDhJp1nQBY352i35PJuzmAt5pm3iU=
+	t=1789223347; cv=none; b=gQfkTMrCE/Nj+FD05BlC6puaCAHaavdi1lJZ6Oz1PygLg0f8krQsJkmrVmhJqqJnkWX0skSTJzwOU5qNcgViSc0R3tFb+4H+uFU0Fy9auXsK3HnrP7pB9tAQDsGvPlMWGIPFpCT17JDUlJrrpDnkiCUWN90ADGcAP5+aa7HyvlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223343; c=relaxed/simple;
-	bh=zhKnM1n+kdTWZsYrQEC/88DjQcIHGvZu5lPpBbR7ZZc=;
+	s=arc-20240116; t=1789223347; c=relaxed/simple;
+	bh=kOLa0xtu+RmWWCuv8Ow8QD05H7hKUAz1OiSaG1kkWfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GfRUttpYAKlCk5GCM6e0qrNpFBGqzLUo5Ik2G0rLcPAEs4wykEd5j0JxDrp4iGRAd4geng4UPk7v/Zscq88EjH4YH6FstSbzLYerhtSk1nglT91K8+BfgvWmA7U9dOyyQ8f2AQjIiF9ww3pDFhoGk+0thnaDkDlGUC0/NJ8Qx7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGH62khr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o+sghL4TMWemJ4grTwxCAfGZXHyrldylgKKkpFjMc/9X1LxAbvEhJWz57Y6Wr/5u/HAj0Vny085Jierx3Kw0dgaiuRqeR9dMODn3cTgmjUgrnib40w1lb2V5GdBdPkLSvXyR+FLZupDSINFgJaNKObkk61K4IYXNU767xI5vZz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0nIx8Lv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGH62khr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B99F1F000FF;
-	Sat, 12 Sep 2026 14:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0nIx8Lv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A861F000FF;
+	Sat, 12 Sep 2026 14:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223341;
-	bh=OchazKVp55FW9qOZ4TFfoi8R6BkETvunPK+P6Ia4UnI=;
+	s=korg; t=1789223346;
+	bh=hIqCUAbYlenODax+68iqrwI4G8n4RPK7mQ1Skp/ifHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UGH62khrhhI/6zJt3k8/lHP20328phEYurxdX0cvEw1ruOGvtu3Z2XQU3NATKKmPT
-	 zJ2dDkZcAC2NziMWlqML9TWGcBP8Uq2XQJyYZS5tZF332lzKD71Sm/fMT6EjI4/Zsi
-	 npjyXz5B4jkfo3Fp11AU7TRCZrfDqObfkoENsVbI=
+	b=f0nIx8LvPjCrAXkTROnKD4UvfRtBUKa/g+MXaDPC7jIKN98PrTEInnmFcKVWo7iDb
+	 Oia/u6IyMkA5a+76N3gX4SAVaVBgREkdlHVaPAtWn2HkG78MUh3q2NZ6a1ezgLfVxp
+	 4LQmaMTax/eEpwb+mnDA3oQ754T7lw8cYrdk/shI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Rhodes <sean@starlabs.systems>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0727/1424] misc: rtsx_usb: avoid USB I/O in runtime autosuspend
-Date: Sat, 12 Sep 2026 08:52:39 +0200
-Message-ID: <20260912065623.570307694@linuxfoundation.org>
+Subject: [PATCH 6.6 0728/1424] RDMA/hfi1: Preserve unit 0 on allocation failure
+Date: Sat, 12 Sep 2026 08:52:40 +0200
+Message-ID: <20260912065623.593434607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,113 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Rhodes <sean@starlabs.systems>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 483c948324a3823871c004560a92545759d3253c ]
+[ Upstream commit 2e3809ad8911f5d5581b3f046bd628417bface76 ]
 
-The runtime autosuspend callback currently queries card status and
-clears OCP by issuing USB register accesses. This can run from the
-USB runtime-PM path itself, which is the wrong place to start more
-device I/O.
+hfi1_free_devdata() assumes that the device was inserted into the unit
+table and unconditionally erases dd->unit. If xa_alloc_irq() fails, the
+zero-initialized unit remains zero, so full cleanup can remove an
+unrelated device from index 0.
 
-Keep a cached copy of the card-status bits from normal status reads
-instead. During runtime autosuspend, use that cached value only to
-preserve the existing Memory Stick autosuspend deferral.
+Release only the rdmavt allocation and return immediately while the unit
+table has not acquired the device.
 
-Do not treat raw SD_CD as an autosuspend blocker, because tray-based
-SD readers can assert SD_CD with an empty tray. A real SD card is
-protected by the SD/MMC child runtime-PM usage once powered.
-
-Also stop clearing OCP from the runtime autosuspend callback, so the
-callback does not issue USB commands.
-
-Fixes: bb400d2120bd ("mfd: rtsx_usb: Defer autosuspend while card exists")
-Signed-off-by: Sean Rhodes <sean@starlabs.systems>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: 03b92789e5cf ("hfi1: Convert hfi1_unit_table to XArray")
+Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-2-b9e9641268a5@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/cardreader/rtsx_usb.c | 23 ++++++++++++++++++++---
- include/linux/rtsx_usb.h           |  3 +++
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hfi1/init.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/cardreader/rtsx_usb.c b/drivers/misc/cardreader/rtsx_usb.c
-index f546b050cb495..0a585be7f0860 100644
---- a/drivers/misc/cardreader/rtsx_usb.c
-+++ b/drivers/misc/cardreader/rtsx_usb.c
-@@ -312,6 +312,9 @@ int rtsx_usb_get_card_status(struct rtsx_ucr *ucr, u16 *status)
- 	if (ret < 0)
- 		return ret;
- 
-+	ucr->card_status_cache = *status;
-+	ucr->card_status_valid = true;
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(rtsx_usb_get_card_status);
-@@ -619,6 +622,7 @@ static int rtsx_usb_probe(struct usb_interface *intf,
- {
- 	struct usb_device *usb_dev = interface_to_usbdev(intf);
- 	struct rtsx_ucr *ucr;
-+	u16 status;
- 	int ret;
- 
- 	dev_dbg(&intf->dev,
-@@ -655,6 +659,9 @@ static int rtsx_usb_probe(struct usb_interface *intf,
- 	if (ret)
- 		goto out_init_fail;
- 
-+	/* Prime cached status for runtime autosuspend decisions. */
-+	rtsx_usb_get_card_status(ucr, &status);
-+
- 	/* initialize USB SG transfer timer */
- 	timer_setup(&ucr->sg_timer, rtsx_usb_sg_timed_out, 0);
- 
-@@ -709,17 +716,27 @@ static int rtsx_usb_suspend(struct usb_interface *intf, pm_message_t message)
- 	struct rtsx_ucr *ucr =
- 		(struct rtsx_ucr *)usb_get_intfdata(intf);
- 	u16 val = 0;
-+	bool valid = false;
- 
- 	dev_dbg(&intf->dev, "%s called with pm message 0x%04x\n",
- 			__func__, message.event);
- 
- 	if (PMSG_IS_AUTO(message)) {
- 		if (mutex_trylock(&ucr->dev_mutex)) {
--			rtsx_usb_get_card_status(ucr, &val);
-+			valid = ucr->card_status_valid;
-+			if (valid)
-+				val = ucr->card_status_cache;
- 			mutex_unlock(&ucr->dev_mutex);
- 
--			/* Defer the autosuspend if card exists */
--			if (val & (SD_CD | MS_CD)) {
-+			/*
-+			 * Do not issue USB commands from runtime autosuspend.
-+			 * Raw SD_CD is not authoritative on tray-based readers,
-+			 * while a real SD card is protected by the SD/MMC child
-+			 * runtime-PM reference once the card is powered. Keep
-+			 * the historical Memory Stick autosuspend deferral when
-+			 * the cached status says MS media is present.
-+			 */
-+			if (valid && (val & MS_CD)) {
- 				device_for_each_child(&intf->dev, NULL, rtsx_usb_resume_child);
- 				return -EAGAIN;
- 			}
-diff --git a/include/linux/rtsx_usb.h b/include/linux/rtsx_usb.h
-index 3247ed8e9ff0f..5933751cf7219 100644
---- a/include/linux/rtsx_usb.h
-+++ b/include/linux/rtsx_usb.h
-@@ -57,6 +57,9 @@ struct rtsx_ucr {
- 
- 	struct timer_list	sg_timer;
- 	struct mutex		dev_mutex;
-+
-+	u16			card_status_cache;
-+	bool			card_status_valid;
- };
- 
- /* buffer size */
+diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
+index 6de37c5d7d273..070e5d6c78f43 100644
+--- a/drivers/infiniband/hw/hfi1/init.c
++++ b/drivers/infiniband/hw/hfi1/init.c
+@@ -1228,8 +1228,9 @@ static struct hfi1_devdata *hfi1_alloc_devdata(struct pci_dev *pdev,
+ 			GFP_KERNEL);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev,
+-			"Could not allocate unit ID: error %d\n", -ret);
+-		goto bail;
++			"Could not allocate unit ID: error %pe\n", ERR_PTR(ret));
++		rvt_dealloc_device(&dd->verbs_dev.rdi);
++		return ERR_PTR(ret);
+ 	}
+ 	rvt_set_ibdev_name(&dd->verbs_dev.rdi, "%s_%d", class_name(), dd->unit);
+ 	/*
 -- 
 2.53.0
 
