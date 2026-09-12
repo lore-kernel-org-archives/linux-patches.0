@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3CB430CD8;
-	Sat, 12 Sep 2026 15:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FAE2C237E;
+	Sat, 12 Sep 2026 15:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227242; cv=none; b=LsCGFtmvcuFx8rs7Mpv40fx7UALFU7A9BP8JrTqkbrnUdMQRBPvlxdwgO4ip7uPVo0q5BdXgQmS3RxMggz6XgVuw2taaJUqIGDUmep0dccuXm1OQwOWRc/YUb/Cr0bJtQIKdzrXvgQ0UmQtxvP8Ae/ni3OuJnssE0KTBqLfnc7o=
+	t=1789227246; cv=none; b=YnYqzzhGJ5Q3FvYESTLpQO6C1tgU3AfR4mzyY5H0ozx3av8WZ05+MgePQxehdHka1iBV9ulJZrUVUD8NBY1Y+lF+IvgtlGqzHnhdQ+0c4JA6qs12GWOpFbzST31fx3k1yAjmEN1nTLdhYpNHMj1H5kkhkrf3AEi7c0vKLpJH1Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227242; c=relaxed/simple;
-	bh=q5ECn7ftThjcs+0x5QC9U3fHmZ2LK0SlIw1R19Ect+s=;
+	s=arc-20240116; t=1789227246; c=relaxed/simple;
+	bh=q0yKaMrPt1uq2EVRLlqTK5P3jQItv8NAS2MZ2C3xqDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PyXItUuw6ZqdogeVSEnv4yOLS/Xd8i24FJikENsKJFzMv1/dcQg48cEGfYGOy0gStvu9CU1D2XwVmEAsXJb34f/z20q7uvPi62tAoN2kzSZxEogJC7vpHx7xsyZkEYlJMaoP/V2CyBNV6J9oI8v7i9YoR4LS4O5FDhKT99rjbX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhKQP8+N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TJcCecZpAkqpszrnE4duFbOkpgKiGRPctwxMdTkJrfm1RmumgpmV/FHOhxpygAnyRBnQEuCkgi4HEqVjgFGecM2vGgbEhdA2+r0u+yDQx8x04Z/SLimPuhxibATJ/n5RLzcYDCrSscUoIv6qUHEGrKwFOaTTmGVKb4LurTsddm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZ77fsBB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhKQP8+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08E41F000FF;
-	Sat, 12 Sep 2026 15:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZ77fsBB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FCD1F000FF;
+	Sat, 12 Sep 2026 15:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227240;
-	bh=epWSp4JRM+IZo6ZcgxJoNKSMGBcz1gi7/XLFuEgrz3k=;
+	s=korg; t=1789227245;
+	bh=dGNzFCpJ7jsAZuu+iUF26PS+i+9Pi50bLx4f/GL80iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dhKQP8+NdbcYcnaKeJQ7Uya4v0liPYdq5CX0LhYSEvdYj0sSOCJKRlcreXu77Kkb8
-	 fI1VShO9oEhm2ScIM/BDB6Kz85hn1xH3Bb4fTCZ0KDhr0RV307XoIfnYwnrhIWHBZE
-	 Zyx63+i2PWG0Hyy91N2ap2syVxiZY8BBKBgwrzM0=
+	b=VZ77fsBBfsZq48PCz4DvCToAUnzUyL4q8WauLzowZZYQRvhTNtCbdNg/+ZxU+gXRb
+	 o+ozBHdCDK+DDIXpzRIjnWCcX79XrUc9iJ1kU7GdHS7k9cf246BEnKujuE7QMFmrpr
+	 ME4rTkPnxBT3UAN/5S6CwKBhmDvQsOH+czv0Di4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunkai Deng <chunkai.deng@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 0139/1191] rpmsg: glink: smem: order FIFO read after availability check
-Date: Sat, 12 Sep 2026 08:47:47 +0200
-Message-ID: <20260912065551.320282902@linuxfoundation.org>
+	Fabio Estevam <festevam@nabladev.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.1 0140/1191] arm64: dts: rockchip: Fix rk3399-roc-pc-plus analog audio
+Date: Sat, 12 Sep 2026 08:47:48 +0200
+Message-ID: <20260912065551.341810054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,48 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+From: Fabio Estevam <festevam@nabladev.com>
 
-commit 786439ad58763e04b91bc2ec5f590e463939f197 upstream.
+commit 4f7259ebe1eba4778768a4f5a0bbbe439d10f3f3 upstream.
 
-glink_smem_rx_peek() reads the RX FIFO payload after the caller has
-determined data is available via glink_smem_rx_avail(), which reads the
-remote-updated head index. A control dependency between the head read
-and the subsequent payload read does not order the two loads, so the
-CPU may speculatively read the FIFO before observing the head update
-and consume stale data the remote has not yet published.
+The ES8388 sound card on the rk3399-roc-pc-plus fails to probe because
+i2s1 cannot claim its MCLK pin:
 
-Add rmb() in glink_smem_rx_peek() before the memcpy_fromio() so the
-availability (head) read is ordered ahead of the FIFO payload read,
-matching the consumer pattern in
-Documentation/core-api/circular-buffers.rst.
+pinctrl: pin gpio4-0 already requested by ff880000.i2s; cannot claim for ff890000.i2s
+pinctrl: error -EINVAL: pin-128 (ff890000.i2s)
+pinctrl: error -EINVAL: could not request pin 128 (gpio4-0) from group i2s-8ch-mclk-pin
+on device rockchip-pinctrl
 
-Fixes: caf989c350e8 ("rpmsg: glink: Introduce glink smem based transport")
+GPIO4_A0 is routed as SCLK_I2S_8CH_OUT and is used by i2s1 as the
+external MCLK for the ES8388 codec. The board dts already removes
+GPIO4_A0 from the i2s0_8ch_bus pin group, but i2s0 still claims the
+same pin through its bclk_off state.
+
+Since the i2s driver requests both states, this blocks i2s1 pinctrl
+setup and leaves the simple-audio-card deferred with a parse error.
+
+Override i2s0_8ch_bus_bclk_off as well, matching the existing
+i2s0_8ch_bus override, so GPIO4_A0 is left for i2s1/ES8388 audio.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260618-rpmsg-glink-smem-mb-v1-1-68a026453a69@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 6d9a7bd6a13c ("arm64: dts: rockchip: add support for Firefly ROC-RK3399-PC-PLUS")
+Signed-off-by: Fabio Estevam <festevam@nabladev.com>
+Link: https://patch.msgid.link/20260717010736.578419-1-festevam@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_smem.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -88,6 +88,13 @@ static void glink_smem_rx_peak(struct qc
- 	if (tail >= pipe->native.length)
- 		tail -= pipe->native.length;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
+@@ -133,6 +133,18 @@
+ 		<3 RK_PD7 1 &pcfg_pull_none>;
+ };
  
-+	/*
-+	 * Order the availability (head) read in glink_smem_rx_avail()
-+	 * against the FIFO payload read below, so APPS never consumes
-+	 * stale data the remote has not yet published.
-+	 */
-+	rmb();
++&i2s0_8ch_bus_bclk_off {
++	rockchip,pins =
++		<3 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>,
++		<3 RK_PD1 1 &pcfg_pull_none>,
++		<3 RK_PD2 1 &pcfg_pull_none>,
++		<3 RK_PD3 1 &pcfg_pull_none>,
++		<3 RK_PD4 1 &pcfg_pull_none>,
++		<3 RK_PD5 1 &pcfg_pull_none>,
++		<3 RK_PD6 1 &pcfg_pull_none>,
++		<3 RK_PD7 1 &pcfg_pull_none>;
++};
 +
- 	len = min_t(size_t, count, pipe->native.length - tail);
- 	if (len)
- 		memcpy_fromio(data, pipe->fifo + tail, len);
+ &i2s1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2s_8ch_mclk_pin>, <&i2s1_2ch_bus>;
 
 
