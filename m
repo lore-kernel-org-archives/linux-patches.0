@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5E9372EF0;
-	Sat, 12 Sep 2026 11:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7423F788A;
+	Sat, 12 Sep 2026 11:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214121; cv=none; b=jID4CHMZv80W8h2UNXVo7w1CEP/fAM+p7Ti+QI0h7jXXJIPVJyErHf0LNGmPy/rbO2V96gTNB8LpHyC7y7LxgX0rB2BsQIP+LGnlzmLkGWJC1igzcfM1h2GwdYJEQoerH58SO1H5sdmuXrX9p4HRvwsKa+16LWqC5MbZZBZQczM=
+	t=1789214126; cv=none; b=Z4XMp4ON1JOQ+KMfML2B1PHcZFIzGakz0reH8zzYB8CXnxI+qChIL6F98Xzob4AVOZZV0dZoPcpD9l6h6cJj+OLPAt/UN1KdqO4cCGegZbFJUx86TTUf0O8sUe5R23WDbmOmjh0aJ+MfAsFXi5SBCBM/6NdGFCiKOJcoUZzbQJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214121; c=relaxed/simple;
-	bh=SF5XOsOMMUlPGBfYojewkNcxXtIjy3sFQxdmsGqT/Ys=;
+	s=arc-20240116; t=1789214126; c=relaxed/simple;
+	bh=6M/j3j/ryD1KNcecUUpDeopVekg2LqivgJNlImbUuU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZWmHnBpbBKh8hQxumvcMFjTktoNXlXGr4tEFn05UobXVP+OpWfB7FZYupqotKAb2oQI6gZX5zlEbNwVOvBqP+E5HeiafXq1u2FjeEnbD0k08uehKj1O5o6UpvXX+mjzqKi/G80/AQZK2+Nti72G7mkZlQYV04vhnXshMOCQD38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZX4aDt+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TaWGWnR2PN0IyfdtgC1MUAdGitYvjMHIscBE6O1f33f5A4w/CDeDWhWXGCawVKZU7nSu7xKPhZuB0o/zMBeG4Q8G0B8Tiylx7r4WHza8T5up4mq/LW1Y/qu1jxuL3REy7iT9Gscbv6OcH1CYtNqPidotoNnJFfKmiMX6nMzERvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaqEjofg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZX4aDt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C285D1F000FF;
-	Sat, 12 Sep 2026 11:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaqEjofg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AC61F000FF;
+	Sat, 12 Sep 2026 11:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214120;
-	bh=5rwsSv4/sQ+Q6mUCFwvfC+lVmupswklX4iwnP4Qwnw8=;
+	s=korg; t=1789214125;
+	bh=5NmZKZYuescfHh9eZUCW2YN3QP66u5NA7eqLMJi0HE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZX4aDt+u7OmDO1jfYxJtQDOQK57bkkUaGCGj8FkY0jhaPDayNANULTezuHFDqS33
-	 ytR9XhkVGmmk1SkFRynhb/ignHmyq5FuTJE4BoEBFQxKwpmD/Rk5zSlp4rs2pl0Ek9
-	 J/tlj7ktxPG3vwAWr0sEAc/7xc552NPHZL3LBXDw=
+	b=UaqEjofgMc3KQosQEmtaeeaVSeKIdpEhyuE+PnNhCTZQ8jVNc2RjfWxNrNObiPQZr
+	 BBfgJAmEcIC8blTpDTXZkpU9w4EAEGjBDUPXOm7snjec1uSTFKFJhlsJJWDWavC+Is
+	 TXxBzxx83TPim+9yLZeyLVaDBfnhfTPlaBiY9Pq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+db96c5ff032f4292a8dc@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.12 0262/1376] drm/i915: Guard against NULL driver_data in i915_pci_probe()
-Date: Sat, 12 Sep 2026 08:44:48 +0200
-Message-ID: <20260912065613.379943194@linuxfoundation.org>
+	Amit Barzilai <amit.barzilai22@gmail.com>,
+	Javier Martinez Canillas <javierm@redhat.com>
+Subject: [PATCH 6.12 0263/1376] drm/ssd130x: fix column and row end address in partial updates for ssd132x
+Date: Sat, 12 Sep 2026 08:44:49 +0200
+Message-ID: <20260912065613.402339030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,41 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Amit Barzilai <amit.barzilai22@gmail.com>
 
-commit 3785d40831ba5601296283e0197e10e089392757 upstream.
+commit 99e9c09358195454ecd200b9c6aba6b7d209fad4 upstream.
 
-pci_match_device() can return the dummy pci_device_id_any entry
-when a device is force-bound via sysfs driver_override, in which
-case ->driver_data is unset (NULL). i915_pci_probe() casts it to
-struct intel_device_info * unconditionally and dereferences
-intel_info->require_force_probe, causing a NULL-ptr-deref.
+On partial screen updates, SSD132X controllers expect to get the
+rectangle addresses as arguments of the "Set Column Address" and "Set
+Row Address" commands. Each command expects the start address and end
+address of the row/column in absolute format, however the end
+addresses were being sent in a relative format (relative to the start
+address).
 
-Reported-by: syzbot+db96c5ff032f4292a8dc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=db96c5ff032f4292a8dc
-Tested-by: syzbot+db96c5ff032f4292a8dc@syzkaller.appspotmail.com
+The relative end addresses work only when the start address is 0. In
+those situations, there is no value difference between relative and
+absolute addresses.
+
+Fixes: fdd591e00a9c9 ("drm/ssd130x: Add support for the SSD132x OLED controller family")
 Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260813064902.367504-1-kartikey406@gmail.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 2727922084672cc274ecea726ea00363c2893731)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Amit Barzilai <amit.barzilai22@gmail.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20260622122604.32500-2-amit.barzilai22@gmail.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_pci.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/solomon/ssd130x.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/i915_pci.c
-+++ b/drivers/gpu/drm/i915/i915_pci.c
-@@ -961,6 +961,9 @@ static int i915_pci_probe(struct pci_dev
- 		(struct intel_device_info *) ent->driver_data;
- 	int err;
+--- a/drivers/gpu/drm/solomon/ssd130x.c
++++ b/drivers/gpu/drm/solomon/ssd130x.c
+@@ -863,12 +863,13 @@ static int ssd132x_update_rect(struct ss
+ 	 */
  
-+	if (!intel_info)
-+		return -ENODEV;
-+
- 	if (intel_info->require_force_probe && !id_forced(pdev->device)) {
- 		dev_info(&pdev->dev,
- 			 "Your graphics device %04x is not properly supported by i915 in this\n"
+ 	/* Set column start and end */
+-	ret = ssd130x_write_cmd(ssd130x, 3, SSD132X_SET_COL_RANGE, x / segment_width, columns - 1);
++	ret = ssd130x_write_cmd(ssd130x, 3, SSD132X_SET_COL_RANGE, x / segment_width,
++				x / segment_width + columns - 1);
+ 	if (ret < 0)
+ 		return ret;
+ 
+ 	/* Set row start and end */
+-	ret = ssd130x_write_cmd(ssd130x, 3, SSD132X_SET_ROW_RANGE, y, rows - 1);
++	ret = ssd130x_write_cmd(ssd130x, 3, SSD132X_SET_ROW_RANGE, y, y + rows - 1);
+ 	if (ret < 0)
+ 		return ret;
+ 
 
 
