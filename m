@@ -1,78 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCCA288505;
-	Sat, 12 Sep 2026 16:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153094BEE38;
+	Sat, 12 Sep 2026 16:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229945; cv=none; b=usFK3Besws3Zcvmf5Te+W6kXVa3UwkeD+AYwMK7m+dQ5yuBT3M63tyhwYOHFmUexCTPb2jeak9ZjcaRDiYwkLD280cxmTgZJgrwmycvLm6oJ/uY5YrxXtURZNsLi3yoPShUk0eSh8jJa0qdH05+C5MuN9A07c09SNCF7zdj4eiM=
+	t=1789229949; cv=none; b=QjA6voJb44kOhcawj7WqmPhhfkyo3WKhF08WPZKOHlcegB/m2jOK95vu64mewP7l4xdzCK/i6TjjK5s+qwnfFwXIrbf7N2Mwjry+75GSHG7lPJN6E5OOdYwAxIPctZz0rwdh8hUjA3GhXnTwekkIYw3jWMX54Y6LXZxu7mTNjw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229945; c=relaxed/simple;
-	bh=EUV3nFwcfVV02/c7aHUWtLj+LxPPybU3FRcVWdGTuHM=;
+	s=arc-20240116; t=1789229949; c=relaxed/simple;
+	bh=OLMDyLOvTbcCgemz45Kwh17GLFh6NJxpKZp55ywKB9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXRFlxktxc4N6hffzyqI/N7+ShCI2acyLVAg+LOTgNcLjMmvJwJxhqNtqc94E93Q6ehBKa8i51WBB3LrivWVm+W8Vs678yWBTtgOeyBb6cCoI5CwUr2c+FN9uldKPj7FY1qybZ1nHX7wmshIEDF6Ba8oHL24BmYwU77Y//vrPug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMpCJjLO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LvjTsVm3uvrsjRc3kIqiL1AAQbCStl0Z9yR8t0f5Rk3Nn+Sm9iHRfXQmxLojSWoO3C7UGGViftqMW2GylCzbaFjekNEmfUmYnhUevbYlOrYrUyP8prC7RxwUXaLWzzbExncwP7KuD2vCt8+qj+cE0blrreAikIg+XkVQYC2V9GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVnyDF7j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMpCJjLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4261F000FF;
-	Sat, 12 Sep 2026 16:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVnyDF7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB141F000FF;
+	Sat, 12 Sep 2026 16:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229943;
-	bh=3EcFgmQBaIixFhYSjlKWR7OJ38CVvyZD880FAvhJ4HE=;
+	s=korg; t=1789229948;
+	bh=K10b8LiyALd/vj8dwelta7/3L5c1nhnRCIvdUwsjNQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OMpCJjLOoslrwbHdoUndIGgJhRkMREt/6eTLXxQlNqINrL3ztVvXxCi9DOe9UmiX7
-	 hIpDrdqDOVwwzIu52kBrhuUO4GJNqveBhHAwNgRHwOfqkVhAjOjjFl+6iR6xYERL/m
-	 kRxbHR36N0Yfif0Jn4+YqmDAVyD2jvFyOTOcENnQ=
+	b=wVnyDF7j9R+Te0Ld3F2zJa52V3/bJ2SZf9uqX3C+6yPJPzat36WSyocF66kygp+sv
+	 aXtgz0pr8G902cBsK3keEz3lvjxg5kfY6f2ltjQLWgEK6M31jZuDMmhLBArK/F67Va
+	 gLVfoEuIRA22PBZMT9pxhcPpix7WM6F/n5PtQEKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Richard Henderson <richard.henderson@linaro.org>,
-	Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
-	Matt Turner <mattst88@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Chris Zankel <chris@zankel.net>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
 	Vaibhav Gupta <vaibhavgupta40@gmail.com>,
 	Jens Taprogge <jens.taprogge@taprogge.org>,
-	Karsten Keil <isdn@linux-pingi.de>,
-	Scott Branden <scott.branden@broadcom.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	David Lin <dtwlin@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Alex Elder <elder@kernel.org>,
-	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-	Jiri Kosina <jikos@kernel.org>,
-	David Sterba <dsterba@suse.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-	Oliver Neukum <oneukum@suse.com>,
-	Mathias Nyman <mathias.nyman@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	industrypack-devel@lists.sourceforge.net,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0650/1191] tty: propagate u8 data to tty_operations::write()
-Date: Sat, 12 Sep 2026 08:56:18 +0200
-Message-ID: <20260912065602.855042738@linuxfoundation.org>
+Subject: [PATCH 6.1 0651/1191] tty: ipoctal: convert to u8 and size_t
+Date: Sat, 12 Sep 2026 08:56:19 +0200
+Message-ID: <20260912065602.878475820@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -93,780 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 69851e4ab8feeb369119a44ddca430c0ee15f0d8 ]
+[ Upstream commit 2f982313279baa066f03f4816f3fa3521a4d41cb ]
 
-Data are now typed as u8. Propagate this change to
-tty_operations::write().
+Switch character types to u8 and sizes to size_t. To conform to
+characters/sizes in the rest of the tty layer.
 
 Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Ivan Kokshaysky <ink@jurassic.park.msu.ru>
-Cc: Matt Turner <mattst88@gmail.com>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Chris Zankel <chris@zankel.net>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
 Cc: Vaibhav Gupta <vaibhavgupta40@gmail.com>
 Cc: Jens Taprogge <jens.taprogge@taprogge.org>
-Cc: Karsten Keil <isdn@linux-pingi.de>
-Cc: Scott Branden <scott.branden@broadcom.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: David Lin <dtwlin@gmail.com>
-Cc: Johan Hovold <johan@kernel.org>
-Cc: Alex Elder <elder@kernel.org>
-Cc: Laurentiu Tudor <laurentiu.tudor@nxp.com>
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: David Sterba <dsterba@suse.com>
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: NXP Linux Team <linux-imx@nxp.com>
-Cc: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Cc: Oliver Neukum <oneukum@suse.com>
-Cc: Mathias Nyman <mathias.nyman@intel.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: Johan Hedberg <johan.hedberg@gmail.com>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Link: https://lore.kernel.org/r/20230810091510.13006-28-jirislaby@kernel.org
+Cc: industrypack-devel@lists.sourceforge.net
+Link: https://lore.kernel.org/r/20231206073712.17776-14-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: b6b5d64cb161 ("ipack: ipoctal: fix UAF, null-ptr-deref, and use-after-free in cleanup on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/srmcons.c            | 3 +--
- arch/m68k/emu/nfcon.c                  | 3 +--
- arch/um/drivers/line.c                 | 2 +-
- arch/um/drivers/line.h                 | 3 +--
- arch/xtensa/platforms/iss/console.c    | 3 +--
- drivers/char/ttyprintk.c               | 5 ++---
- drivers/ipack/devices/ipoctal.c        | 6 ++----
- drivers/isdn/capi/capi.c               | 3 +--
- drivers/misc/bcm-vk/bcm_vk_tty.c       | 4 +---
- drivers/mmc/core/sdio_uart.c           | 3 +--
- drivers/net/usb/hso.c                  | 3 +--
- drivers/s390/char/con3215.c            | 3 +--
- drivers/s390/char/sclp_tty.c           | 2 +-
- drivers/s390/char/sclp_vt220.c         | 2 +-
- drivers/s390/char/tty3270.c            | 3 +--
- drivers/staging/gdm724x/gdm_tty.c      | 3 +--
- drivers/staging/greybus/uart.c         | 3 +--
- drivers/tty/amiserial.c                | 2 +-
- drivers/tty/ehv_bytechan.c             | 3 +--
- drivers/tty/goldfish.c                 | 6 ++----
- drivers/tty/hvc/hvc_console.c          | 2 +-
- drivers/tty/hvc/hvcs.c                 | 3 +--
- drivers/tty/hvc/hvsi.c                 | 3 +--
- drivers/tty/ipwireless/hardware.c      | 2 +-
- drivers/tty/ipwireless/tty.c           | 3 +--
- drivers/tty/mips_ejtag_fdc.c           | 4 ++--
- drivers/tty/moxa.c                     | 8 +++-----
- drivers/tty/mxser.c                    | 2 +-
- drivers/tty/n_gsm.c                    | 3 +--
- drivers/tty/nozomi.c                   | 5 ++---
- drivers/tty/pty.c                      | 2 +-
- drivers/tty/serial/kgdb_nmi.c          | 2 +-
- drivers/tty/serial/serial_core.c       | 3 +--
- drivers/tty/synclink_gt.c              | 7 +++----
- drivers/tty/ttynull.c                  | 3 +--
- drivers/tty/vcc.c                      | 3 +--
- drivers/tty/vt/vt.c                    | 4 ++--
- drivers/usb/class/cdc-acm.c            | 3 +--
- drivers/usb/gadget/function/u_serial.c | 2 +-
- drivers/usb/host/xhci-dbgtty.c         | 4 +---
- drivers/usb/serial/usb-serial.c        | 3 +--
- include/linux/tty_driver.h             | 3 +--
- net/bluetooth/rfcomm/tty.c             | 2 +-
- 43 files changed, 53 insertions(+), 88 deletions(-)
+ drivers/ipack/devices/ipoctal.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/arch/alpha/kernel/srmcons.c b/arch/alpha/kernel/srmcons.c
-index 6dc952b0df4a9..dea39008d93ee 100644
---- a/arch/alpha/kernel/srmcons.c
-+++ b/arch/alpha/kernel/srmcons.c
-@@ -130,8 +130,7 @@ srmcons_do_write(struct tty_port *port, const char *buf, int count)
- }
- 
- static int
--srmcons_write(struct tty_struct *tty,
--	      const unsigned char *buf, int count)
-+srmcons_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	unsigned long flags;
- 
-diff --git a/arch/m68k/emu/nfcon.c b/arch/m68k/emu/nfcon.c
-index 557d60867f984..feed41f510730 100644
---- a/arch/m68k/emu/nfcon.c
-+++ b/arch/m68k/emu/nfcon.c
-@@ -70,8 +70,7 @@ static void nfcon_tty_close(struct tty_struct *tty, struct file *filp)
- {
- }
- 
--static int nfcon_tty_write(struct tty_struct *tty, const unsigned char *buf,
--			   int count)
-+static int nfcon_tty_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	nfputs(buf, count);
- 	return count;
-diff --git a/arch/um/drivers/line.c b/arch/um/drivers/line.c
-index 6b4faca401ea1..45badc2c126b7 100644
---- a/arch/um/drivers/line.c
-+++ b/arch/um/drivers/line.c
-@@ -184,7 +184,7 @@ void line_flush_chars(struct tty_struct *tty)
- 	line_flush_buffer(tty);
- }
- 
--int line_write(struct tty_struct *tty, const unsigned char *buf, int len)
-+int line_write(struct tty_struct *tty, const u8 *buf, int len)
- {
- 	struct line *line = tty->driver_data;
- 	unsigned long flags;
-diff --git a/arch/um/drivers/line.h b/arch/um/drivers/line.h
-index f15be75a3bf3b..8354024b6b354 100644
---- a/arch/um/drivers/line.h
-+++ b/arch/um/drivers/line.h
-@@ -64,8 +64,7 @@ extern void line_cleanup(struct tty_struct *tty);
- extern void line_hangup(struct tty_struct *tty);
- extern int line_setup(char **conf, unsigned nlines, char **def,
- 		      char *init, char *name);
--extern int line_write(struct tty_struct *tty, const unsigned char *buf,
--		      int len);
-+extern int line_write(struct tty_struct *tty, const u8 *buf, int len);
- extern unsigned int line_chars_in_buffer(struct tty_struct *tty);
- extern void line_flush_buffer(struct tty_struct *tty);
- extern void line_flush_chars(struct tty_struct *tty);
-diff --git a/arch/xtensa/platforms/iss/console.c b/arch/xtensa/platforms/iss/console.c
-index 10b79d3c74e07..4465c6165198f 100644
---- a/arch/xtensa/platforms/iss/console.c
-+++ b/arch/xtensa/platforms/iss/console.c
-@@ -52,8 +52,7 @@ static void rs_close(struct tty_struct *tty, struct file * filp)
- }
- 
- 
--static int rs_write(struct tty_struct * tty,
--		    const unsigned char *buf, int count)
-+static int rs_write(struct tty_struct * tty, const u8 *buf, int count)
- {
- 	/* see drivers/char/serialX.c to reference original version */
- 
-diff --git a/drivers/char/ttyprintk.c b/drivers/char/ttyprintk.c
-index ed45d04905c25..4f3dd93f1fd82 100644
---- a/drivers/char/ttyprintk.c
-+++ b/drivers/char/ttyprintk.c
-@@ -51,7 +51,7 @@ static void tpk_flush(void)
- 	}
- }
- 
--static int tpk_printk(const unsigned char *buf, int count)
-+static int tpk_printk(const u8 *buf, int count)
- {
- 	int i;
- 
-@@ -103,8 +103,7 @@ static void tpk_close(struct tty_struct *tty, struct file *filp)
- /*
-  * TTY operations write function.
-  */
--static int tpk_write(struct tty_struct *tty,
--		const unsigned char *buf, int count)
-+static int tpk_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct ttyprintk_port *tpkp = tty->driver_data;
- 	unsigned long flags;
 diff --git a/drivers/ipack/devices/ipoctal.c b/drivers/ipack/devices/ipoctal.c
-index fc00274070b6b..b350ee8324d41 100644
+index b350ee8324d41..62811a70eec46 100644
 --- a/drivers/ipack/devices/ipoctal.c
 +++ b/drivers/ipack/devices/ipoctal.c
-@@ -437,8 +437,7 @@ static int ipoctal_inst_slot(struct ipoctal *ipoctal, unsigned int bus_nr,
+@@ -158,9 +158,7 @@ static int ipoctal_get_icount(struct tty_struct *tty,
+ static void ipoctal_irq_rx(struct ipoctal_channel *channel, u8 sr)
+ {
+ 	struct tty_port *port = &channel->tty_port;
+-	unsigned char value;
+-	unsigned char flag;
+-	u8 isr;
++	u8 isr, value, flag;
+ 
+ 	do {
+ 		value = ioread8(&channel->regs->r.rhr);
+@@ -202,8 +200,8 @@ static void ipoctal_irq_rx(struct ipoctal_channel *channel, u8 sr)
+ 
+ static void ipoctal_irq_tx(struct ipoctal_channel *channel)
+ {
+-	unsigned char value;
+ 	unsigned int *pointer_write = &channel->pointer_write;
++	u8 value;
+ 
+ 	if (channel->nb_bytes == 0)
+ 		return;
+@@ -436,11 +434,11 @@ static int ipoctal_inst_slot(struct ipoctal *ipoctal, unsigned int bus_nr,
+ 	return res;
  }
  
- static inline int ipoctal_copy_write_buffer(struct ipoctal_channel *channel,
--					    const unsigned char *buf,
--					    int count)
-+					    const u8 *buf, int count)
+-static inline int ipoctal_copy_write_buffer(struct ipoctal_channel *channel,
+-					    const u8 *buf, int count)
++static inline size_t ipoctal_copy_write_buffer(struct ipoctal_channel *channel,
++					       const u8 *buf, size_t count)
  {
  	unsigned long flags;
- 	int i;
-@@ -459,8 +458,7 @@ static inline int ipoctal_copy_write_buffer(struct ipoctal_channel *channel,
- 	return i;
- }
+-	int i;
++	size_t i;
+ 	unsigned int *pointer_read = &channel->pointer_read;
  
--static int ipoctal_write_tty(struct tty_struct *tty,
--			     const unsigned char *buf, int count)
-+static int ipoctal_write_tty(struct tty_struct *tty, const u8 *buf, int count)
+ 	/* Copy the bytes from the user buffer to the internal one */
+@@ -461,7 +459,7 @@ static inline int ipoctal_copy_write_buffer(struct ipoctal_channel *channel,
+ static int ipoctal_write_tty(struct tty_struct *tty, const u8 *buf, int count)
  {
  	struct ipoctal_channel *channel = tty->driver_data;
- 	unsigned int char_copied;
-diff --git a/drivers/isdn/capi/capi.c b/drivers/isdn/capi/capi.c
-index 973092543eb7a..bfc2e351f1364 100644
---- a/drivers/isdn/capi/capi.c
-+++ b/drivers/isdn/capi/capi.c
-@@ -1071,8 +1071,7 @@ static void capinc_tty_close(struct tty_struct *tty, struct file *filp)
- 	tty_port_close(&mp->port, tty, filp);
- }
+-	unsigned int char_copied;
++	size_t char_copied;
  
--static int capinc_tty_write(struct tty_struct *tty,
--			    const unsigned char *buf, int count)
-+static int capinc_tty_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct capiminor *mp = tty->driver_data;
- 	struct sk_buff *skb;
-diff --git a/drivers/misc/bcm-vk/bcm_vk_tty.c b/drivers/misc/bcm-vk/bcm_vk_tty.c
-index 6669625ba4c8d..44851b607cce5 100644
---- a/drivers/misc/bcm-vk/bcm_vk_tty.c
-+++ b/drivers/misc/bcm-vk/bcm_vk_tty.c
-@@ -186,9 +186,7 @@ static void bcm_vk_tty_doorbell(struct bcm_vk *vk, u32 db_val)
- 		  VK_BAR0_REGSEG_DB_BASE + VK_BAR0_REGSEG_TTY_DB_OFFSET);
- }
+ 	char_copied = ipoctal_copy_write_buffer(channel, buf, count);
  
--static int bcm_vk_tty_write(struct tty_struct *tty,
--			    const unsigned char *buffer,
--			    int count)
-+static int bcm_vk_tty_write(struct tty_struct *tty, const u8 *buffer, int count)
- {
- 	int index;
- 	struct bcm_vk *vk;
-diff --git a/drivers/mmc/core/sdio_uart.c b/drivers/mmc/core/sdio_uart.c
-index ae7ef2e038be1..4dc161c4fbd2b 100644
---- a/drivers/mmc/core/sdio_uart.c
-+++ b/drivers/mmc/core/sdio_uart.c
-@@ -761,8 +761,7 @@ static void sdio_uart_hangup(struct tty_struct *tty)
- 	tty_port_hangup(&port->port);
- }
- 
--static int sdio_uart_write(struct tty_struct *tty, const unsigned char *buf,
--			   int count)
-+static int sdio_uart_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct sdio_uart_port *port = tty->driver_data;
- 	int ret;
-diff --git a/drivers/net/usb/hso.c b/drivers/net/usb/hso.c
-index ce1f6081d582f..014a9d29bab55 100644
---- a/drivers/net/usb/hso.c
-+++ b/drivers/net/usb/hso.c
-@@ -1322,8 +1322,7 @@ static void hso_serial_close(struct tty_struct *tty, struct file *filp)
- }
- 
- /* close the requested serial port */
--static int hso_serial_write(struct tty_struct *tty, const unsigned char *buf,
--			    int count)
-+static int hso_serial_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct hso_serial *serial = tty->driver_data;
- 	int space, tx_bytes;
-diff --git a/drivers/s390/char/con3215.c b/drivers/s390/char/con3215.c
-index b66fe5aac5671..033eb2ba21f09 100644
---- a/drivers/s390/char/con3215.c
-+++ b/drivers/s390/char/con3215.c
-@@ -939,8 +939,7 @@ static unsigned int tty3215_write_room(struct tty_struct *tty)
- /*
-  * String write routine for 3215 ttys
-  */
--static int tty3215_write(struct tty_struct *tty,
--			 const unsigned char *buf, int count)
-+static int tty3215_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct raw3215_info *raw = tty->driver_data;
- 	int i, written;
-diff --git a/drivers/s390/char/sclp_tty.c b/drivers/s390/char/sclp_tty.c
-index 432dad2a22664..af4e2402ee782 100644
---- a/drivers/s390/char/sclp_tty.c
-+++ b/drivers/s390/char/sclp_tty.c
-@@ -230,7 +230,7 @@ static int sclp_tty_write_string(const unsigned char *str, int count, int may_fa
-  * routine will return the number of characters actually accepted for writing.
-  */
- static int
--sclp_tty_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+sclp_tty_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	if (sclp_tty_chars_count > 0) {
- 		sclp_tty_write_string(sclp_tty_chars, sclp_tty_chars_count, 0);
-diff --git a/drivers/s390/char/sclp_vt220.c b/drivers/s390/char/sclp_vt220.c
-index b057deb8c3b39..2ef8e5fa1cff5 100644
---- a/drivers/s390/char/sclp_vt220.c
-+++ b/drivers/s390/char/sclp_vt220.c
-@@ -463,7 +463,7 @@ __sclp_vt220_write(const unsigned char *buf, int count, int do_schedule,
-  * number of characters actually accepted for writing.
-  */
- static int
--sclp_vt220_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+sclp_vt220_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	return __sclp_vt220_write(buf, count, 1, 0, 1);
- }
-diff --git a/drivers/s390/char/tty3270.c b/drivers/s390/char/tty3270.c
-index 2ccfe14765e6f..eee2030b86b3a 100644
---- a/drivers/s390/char/tty3270.c
-+++ b/drivers/s390/char/tty3270.c
-@@ -1669,8 +1669,7 @@ static void tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
- /*
-  * String write routine for 3270 ttys
-  */
--static int tty3270_write(struct tty_struct *tty,
--			 const unsigned char *buf, int count)
-+static int tty3270_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct tty3270 *tp;
- 
-diff --git a/drivers/staging/gdm724x/gdm_tty.c b/drivers/staging/gdm724x/gdm_tty.c
-index cc6d80554c982..f52b03520242a 100644
---- a/drivers/staging/gdm724x/gdm_tty.c
-+++ b/drivers/staging/gdm724x/gdm_tty.c
-@@ -146,8 +146,7 @@ static void gdm_tty_send_complete(void *arg)
- 	tty_port_tty_wakeup(&gdm->port);
- }
- 
--static int gdm_tty_write(struct tty_struct *tty, const unsigned char *buf,
--			 int len)
-+static int gdm_tty_write(struct tty_struct *tty, const u8 *buf, int len)
- {
- 	struct gdm *gdm = tty->driver_data;
- 	int remain = len;
-diff --git a/drivers/staging/greybus/uart.c b/drivers/staging/greybus/uart.c
-index 70505bcfb981d..074c02f123e20 100644
---- a/drivers/staging/greybus/uart.c
-+++ b/drivers/staging/greybus/uart.c
-@@ -427,8 +427,7 @@ static void gb_tty_hangup(struct tty_struct *tty)
- 	tty_port_hangup(&gb_tty->port);
- }
- 
--static int gb_tty_write(struct tty_struct *tty, const unsigned char *buf,
--			int count)
-+static int gb_tty_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct gb_tty *gb_tty = tty->driver_data;
- 
-diff --git a/drivers/tty/amiserial.c b/drivers/tty/amiserial.c
-index f52266766df99..50a8c6d987d54 100644
---- a/drivers/tty/amiserial.c
-+++ b/drivers/tty/amiserial.c
-@@ -741,7 +741,7 @@ static void rs_flush_chars(struct tty_struct *tty)
- 	local_irq_restore(flags);
- }
- 
--static int rs_write(struct tty_struct * tty, const unsigned char *buf, int count)
-+static int rs_write(struct tty_struct * tty, const u8 *buf, int count)
- {
- 	int	c, ret = 0;
- 	struct serial_state *info = tty->driver_data;
-diff --git a/drivers/tty/ehv_bytechan.c b/drivers/tty/ehv_bytechan.c
-index 19d32cb6af84e..68ad0fda2fa03 100644
---- a/drivers/tty/ehv_bytechan.c
-+++ b/drivers/tty/ehv_bytechan.c
-@@ -466,8 +466,7 @@ static irqreturn_t ehv_bc_tty_tx_isr(int irq, void *data)
-  * ehv_bc_tty_write_room() will never lie, so the tty layer will never send us
-  * too much data.
-  */
--static int ehv_bc_tty_write(struct tty_struct *ttys, const unsigned char *s,
--			    int count)
-+static int ehv_bc_tty_write(struct tty_struct *ttys, const u8 *s, int count)
- {
- 	struct ehv_bc_data *bc = ttys->driver_data;
- 	unsigned long flags;
-diff --git a/drivers/tty/goldfish.c b/drivers/tty/goldfish.c
-index d02de3f0326fb..faa597ffbaf91 100644
---- a/drivers/tty/goldfish.c
-+++ b/drivers/tty/goldfish.c
-@@ -125,8 +125,7 @@ static void goldfish_tty_rw(struct goldfish_tty *qtty,
- 	}
- }
- 
--static void goldfish_tty_do_write(int line, const char *buf,
--				  unsigned int count)
-+static void goldfish_tty_do_write(int line, const u8 *buf, unsigned int count)
- {
- 	struct goldfish_tty *qtty = &goldfish_ttys[line];
- 	unsigned long address = (unsigned long)(void *)buf;
-@@ -186,8 +185,7 @@ static void goldfish_tty_hangup(struct tty_struct *tty)
- 	tty_port_hangup(tty->port);
- }
- 
--static int goldfish_tty_write(struct tty_struct *tty, const unsigned char *buf,
--								int count)
-+static int goldfish_tty_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	goldfish_tty_do_write(tty->index, buf, count);
- 	return count;
-diff --git a/drivers/tty/hvc/hvc_console.c b/drivers/tty/hvc/hvc_console.c
-index 3a8aa6490f2fc..2a4fdcc902097 100644
---- a/drivers/tty/hvc/hvc_console.c
-+++ b/drivers/tty/hvc/hvc_console.c
-@@ -496,7 +496,7 @@ static int hvc_push(struct hvc_struct *hp)
- 	return n;
- }
- 
--static int hvc_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+static int hvc_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct hvc_struct *hp = tty->driver_data;
- 	unsigned long flags;
-diff --git a/drivers/tty/hvc/hvcs.c b/drivers/tty/hvc/hvcs.c
-index 4ba24963685e2..b0eb397dd29a6 100644
---- a/drivers/tty/hvc/hvcs.c
-+++ b/drivers/tty/hvc/hvcs.c
-@@ -1271,8 +1271,7 @@ static void hvcs_hangup(struct tty_struct * tty)
-  * tty_hangup will allow hvcs_write time to complete execution before it
-  * terminates our device.
-  */
--static int hvcs_write(struct tty_struct *tty,
--		const unsigned char *buf, int count)
-+static int hvcs_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct hvcs_struct *hvcsd = tty->driver_data;
- 	unsigned int unit_address;
-diff --git a/drivers/tty/hvc/hvsi.c b/drivers/tty/hvc/hvsi.c
-index c1b8a4fd8b1ee..46dd62df24421 100644
---- a/drivers/tty/hvc/hvsi.c
-+++ b/drivers/tty/hvc/hvsi.c
-@@ -904,8 +904,7 @@ static unsigned int hvsi_chars_in_buffer(struct tty_struct *tty)
- 	return hp->n_outbuf;
- }
- 
--static int hvsi_write(struct tty_struct *tty,
--		     const unsigned char *source, int count)
-+static int hvsi_write(struct tty_struct *tty, const u8 *source, int count)
- {
- 	struct hvsi_struct *hp = tty->driver_data;
- 	unsigned long flags;
-diff --git a/drivers/tty/ipwireless/hardware.c b/drivers/tty/ipwireless/hardware.c
-index f5d3e68f57507..001ec318a9188 100644
---- a/drivers/tty/ipwireless/hardware.c
-+++ b/drivers/tty/ipwireless/hardware.c
-@@ -1292,7 +1292,7 @@ static void *alloc_ctrl_packet(int header_size,
- }
- 
- int ipwireless_send_packet(struct ipw_hardware *hw, unsigned int channel_idx,
--			    const unsigned char *data, unsigned int length,
-+			    const u8 *data, unsigned int length,
- 			    void (*callback) (void *cb, unsigned int length),
- 			    void *callback_data)
- {
-diff --git a/drivers/tty/ipwireless/tty.c b/drivers/tty/ipwireless/tty.c
-index 9edd5ae175803..cd43208c523ca 100644
---- a/drivers/tty/ipwireless/tty.c
-+++ b/drivers/tty/ipwireless/tty.c
-@@ -186,8 +186,7 @@ static void ipw_write_packet_sent_callback(void *callback_data,
- 	tty->tx_bytes_queued -= packet_length;
- }
- 
--static int ipw_write(struct tty_struct *linux_tty,
--		     const unsigned char *buf, int count)
-+static int ipw_write(struct tty_struct *linux_tty, const u8 *buf, int count)
- {
- 	struct ipw_tty *tty = linux_tty->driver_data;
- 	int room, ret;
-diff --git a/drivers/tty/mips_ejtag_fdc.c b/drivers/tty/mips_ejtag_fdc.c
-index e81701a664295..cf4ef0c386244 100644
---- a/drivers/tty/mips_ejtag_fdc.c
-+++ b/drivers/tty/mips_ejtag_fdc.c
-@@ -796,8 +796,8 @@ static void mips_ejtag_fdc_tty_hangup(struct tty_struct *tty)
- 	tty_port_hangup(tty->port);
- }
- 
--static int mips_ejtag_fdc_tty_write(struct tty_struct *tty,
--				    const unsigned char *buf, int total)
-+static int mips_ejtag_fdc_tty_write(struct tty_struct *tty, const u8 *buf,
-+				    int total)
- {
- 	int count, block;
- 	struct mips_ejtag_fdc_tty_port *dport = tty->driver_data;
-diff --git a/drivers/tty/moxa.c b/drivers/tty/moxa.c
-index 35b6fddf0341b..319e4b234c489 100644
---- a/drivers/tty/moxa.c
-+++ b/drivers/tty/moxa.c
-@@ -487,7 +487,7 @@ module_param(ttymajor, int, 0);
-  */
- static int moxa_open(struct tty_struct *, struct file *);
- static void moxa_close(struct tty_struct *, struct file *);
--static int moxa_write(struct tty_struct *, const unsigned char *, int);
-+static int moxa_write(struct tty_struct *, const u8 *, int);
- static unsigned int moxa_write_room(struct tty_struct *);
- static void moxa_flush_buffer(struct tty_struct *);
- static unsigned int moxa_chars_in_buffer(struct tty_struct *);
-@@ -1499,8 +1499,7 @@ static void moxa_close(struct tty_struct *tty, struct file *filp)
- 	tty_port_close(&ch->port, tty, filp);
- }
- 
--static int moxa_write(struct tty_struct *tty,
--		      const unsigned char *buf, int count)
-+static int moxa_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct moxa_port *ch = tty->driver_data;
- 	unsigned long flags;
-@@ -2162,8 +2161,7 @@ static int MoxaPortLineStatus(struct moxa_port *port)
- 	return val;
- }
- 
--static int MoxaPortWriteData(struct tty_struct *tty,
--		const unsigned char *buffer, int len)
-+static int MoxaPortWriteData(struct tty_struct *tty, const u8 *buffer, int len)
- {
- 	struct moxa_port *port = tty->driver_data;
- 	void __iomem *baseAddr, *ofsAddr, *ofs;
-diff --git a/drivers/tty/mxser.c b/drivers/tty/mxser.c
-index 2436e0b10f9a5..0044b6abd657b 100644
---- a/drivers/tty/mxser.c
-+++ b/drivers/tty/mxser.c
-@@ -900,7 +900,7 @@ static void mxser_close(struct tty_struct *tty, struct file *filp)
- 	tty_port_close(tty->port, tty, filp);
- }
- 
--static int mxser_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+static int mxser_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct mxser_port *info = tty->driver_data;
- 	unsigned long flags;
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index 0f988bd514fb5..fc52a7a38df32 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -3628,8 +3628,7 @@ static void gsmtty_hangup(struct tty_struct *tty)
- 	gsm_dlci_begin_close(dlci);
- }
- 
--static int gsmtty_write(struct tty_struct *tty, const unsigned char *buf,
--								    int len)
-+static int gsmtty_write(struct tty_struct *tty, const u8 *buf, int len)
- {
- 	int sent;
- 	struct gsm_dlci *dlci = tty->driver_data;
-diff --git a/drivers/tty/nozomi.c b/drivers/tty/nozomi.c
-index 0454c78deee69..b3756402f5d9f 100644
---- a/drivers/tty/nozomi.c
-+++ b/drivers/tty/nozomi.c
-@@ -1599,8 +1599,7 @@ static void ntty_hangup(struct tty_struct *tty)
-  * called when the userspace process writes to the tty (/dev/noz*).
-  * Data is inserted into a fifo, which is then read and transferred to the modem.
-  */
--static int ntty_write(struct tty_struct *tty, const unsigned char *buffer,
--		      int count)
-+static int ntty_write(struct tty_struct *tty, const u8 *buffer, int count)
- {
- 	int rval = -EINVAL;
- 	struct nozomi *dc = get_dc_by_tty(tty);
-@@ -1610,7 +1609,7 @@ static int ntty_write(struct tty_struct *tty, const unsigned char *buffer,
- 	if (!dc || !port)
- 		return -ENODEV;
- 
--	rval = kfifo_in(&port->fifo_ul, (unsigned char *)buffer, count);
-+	rval = kfifo_in(&port->fifo_ul, buffer, count);
- 
- 	spin_lock_irqsave(&dc->spin_mutex, flags);
- 	/* CTS is only valid on the modem channel */
-diff --git a/drivers/tty/pty.c b/drivers/tty/pty.c
-index 07394fdaf5225..c658cacdb9334 100644
---- a/drivers/tty/pty.c
-+++ b/drivers/tty/pty.c
-@@ -108,7 +108,7 @@ static void pty_unthrottle(struct tty_struct *tty)
-  *	the other side of the pty/tty pair.
-  */
- 
--static int pty_write(struct tty_struct *tty, const unsigned char *buf, int c)
-+static int pty_write(struct tty_struct *tty, const u8 *buf, int c)
- {
- 	struct tty_struct *to = tty->link;
- 
-diff --git a/drivers/tty/serial/kgdb_nmi.c b/drivers/tty/serial/kgdb_nmi.c
-index 55c3c9db7462d..2a04d19d5ec08 100644
---- a/drivers/tty/serial/kgdb_nmi.c
-+++ b/drivers/tty/serial/kgdb_nmi.c
-@@ -304,7 +304,7 @@ static unsigned int kgdb_nmi_tty_write_room(struct tty_struct *tty)
- 	return 2048;
- }
- 
--static int kgdb_nmi_tty_write(struct tty_struct *tty, const unchar *buf, int c)
-+static int kgdb_nmi_tty_write(struct tty_struct *tty, const u8 *buf, int c)
- {
- 	int i;
- 
-diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index c215a240db7a6..2704eb8af5880 100644
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -560,8 +560,7 @@ static void uart_flush_chars(struct tty_struct *tty)
- 	uart_start(tty);
- }
- 
--static int uart_write(struct tty_struct *tty,
--					const unsigned char *buf, int count)
-+static int uart_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct uart_state *state = tty->driver_data;
- 	struct uart_port *port;
-diff --git a/drivers/tty/synclink_gt.c b/drivers/tty/synclink_gt.c
-index 25e9befdda3a8..c69bdd72f8318 100644
---- a/drivers/tty/synclink_gt.c
-+++ b/drivers/tty/synclink_gt.c
-@@ -433,7 +433,7 @@ static void tx_set_idle(struct slgt_info *info);
- static unsigned int tbuf_bytes(struct slgt_info *info);
- static void reset_tbufs(struct slgt_info *info);
- static void tdma_reset(struct slgt_info *info);
--static bool tx_load(struct slgt_info *info, const char *buf, unsigned int count);
-+static bool tx_load(struct slgt_info *info, const u8 *buf, unsigned int count);
- 
- static void get_gtsignals(struct slgt_info *info);
- static void set_gtsignals(struct slgt_info *info);
-@@ -747,8 +747,7 @@ static void update_tx_timer(struct slgt_info *info)
- 	}
- }
- 
--static int write(struct tty_struct *tty,
--		 const unsigned char *buf, int count)
-+static int write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	int ret = 0;
- 	struct slgt_info *info = tty->driver_data;
-@@ -4783,7 +4782,7 @@ static unsigned int tbuf_bytes(struct slgt_info *info)
-  * load data into transmit DMA buffer ring and start transmitter if needed
-  * return true if data accepted, otherwise false (buffers full)
-  */
--static bool tx_load(struct slgt_info *info, const char *buf, unsigned int size)
-+static bool tx_load(struct slgt_info *info, const u8 *buf, unsigned int size)
- {
- 	unsigned short count;
- 	unsigned int i;
-diff --git a/drivers/tty/ttynull.c b/drivers/tty/ttynull.c
-index 1d4438472442a..6b74ebaa0f2d1 100644
---- a/drivers/tty/ttynull.c
-+++ b/drivers/tty/ttynull.c
-@@ -29,8 +29,7 @@ static void ttynull_hangup(struct tty_struct *tty)
- 	tty_port_hangup(&ttynull_port);
- }
- 
--static int ttynull_write(struct tty_struct *tty, const unsigned char *buf,
--			 int count)
-+static int ttynull_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	return count;
- }
-diff --git a/drivers/tty/vcc.c b/drivers/tty/vcc.c
-index b8b832c75b856..cac23f67d2f11 100644
---- a/drivers/tty/vcc.c
-+++ b/drivers/tty/vcc.c
-@@ -814,8 +814,7 @@ static void vcc_hangup(struct tty_struct *tty)
- 	tty_port_hangup(tty->port);
- }
- 
--static int vcc_write(struct tty_struct *tty, const unsigned char *buf,
--		     int count)
-+static int vcc_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct vcc_port *port;
- 	struct vio_vcc *pkt;
-diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-index f6457263354ba..9dd527f521c87 100644
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -2891,7 +2891,7 @@ static int vc_con_write_normal(struct vc_data *vc, int tc, int c,
- }
- 
- /* acquires console_lock */
--static int do_con_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+static int do_con_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct vc_draw_region draw = {
- 		.x = -1,
-@@ -3288,7 +3288,7 @@ int tioclinux(struct tty_struct *tty, unsigned long arg)
-  * /dev/ttyN handling
-  */
- 
--static int con_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+static int con_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	int	retval;
- 
-diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
-index fa858f95a330d..d1c8f620596d8 100644
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -810,8 +810,7 @@ static void acm_tty_close(struct tty_struct *tty, struct file *filp)
- 	tty_port_close(&acm->port, tty, filp);
- }
- 
--static int acm_tty_write(struct tty_struct *tty,
--					const unsigned char *buf, int count)
-+static int acm_tty_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct acm *acm = tty->driver_data;
- 	int stat;
-diff --git a/drivers/usb/gadget/function/u_serial.c b/drivers/usb/gadget/function/u_serial.c
-index 5ca703d45d8c4..a7dccc48ec345 100644
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -732,7 +732,7 @@ static void gs_close(struct tty_struct *tty, struct file *file)
- 	spin_unlock_irq(&port->port_lock);
- }
- 
--static int gs_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+static int gs_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct gs_port	*port = tty->driver_data;
- 	unsigned long	flags;
-diff --git a/drivers/usb/host/xhci-dbgtty.c b/drivers/usb/host/xhci-dbgtty.c
-index e19f8bd3b4d69..eac847efab2ea 100644
---- a/drivers/usb/host/xhci-dbgtty.c
-+++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -233,9 +233,7 @@ static void dbc_tty_close(struct tty_struct *tty, struct file *file)
- 	tty_port_close(&port->port, tty, file);
- }
- 
--static int dbc_tty_write(struct tty_struct *tty,
--			 const unsigned char *buf,
--			 int count)
-+static int dbc_tty_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct dbc_port		*port = tty->driver_data;
- 	unsigned long		flags;
-diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
-index fa01320aaf143..cf5db67ead730 100644
---- a/drivers/usb/serial/usb-serial.c
-+++ b/drivers/usb/serial/usb-serial.c
-@@ -361,8 +361,7 @@ static void serial_cleanup(struct tty_struct *tty)
- 	module_put(owner);
- }
- 
--static int serial_write(struct tty_struct *tty, const unsigned char *buf,
--								int count)
-+static int serial_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct usb_serial_port *port = tty->driver_data;
- 	int retval = -ENODEV;
-diff --git a/include/linux/tty_driver.h b/include/linux/tty_driver.h
-index 1df868130adce..ff5791373cf96 100644
---- a/include/linux/tty_driver.h
-+++ b/include/linux/tty_driver.h
-@@ -363,8 +363,7 @@ struct tty_operations {
- 	void (*close)(struct tty_struct * tty, struct file * filp);
- 	void (*shutdown)(struct tty_struct *tty);
- 	void (*cleanup)(struct tty_struct *tty);
--	int  (*write)(struct tty_struct * tty,
--		      const unsigned char *buf, int count);
-+	int  (*write)(struct tty_struct *tty, const u8 *buf, int count);
- 	int  (*put_char)(struct tty_struct *tty, unsigned char ch);
- 	void (*flush_chars)(struct tty_struct *tty);
- 	unsigned int (*write_room)(struct tty_struct *tty);
-diff --git a/net/bluetooth/rfcomm/tty.c b/net/bluetooth/rfcomm/tty.c
-index 4edd2b1709db5..852137838d746 100644
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -774,7 +774,7 @@ static void rfcomm_tty_close(struct tty_struct *tty, struct file *filp)
- 	tty_port_close(&dev->port, tty, filp);
- }
- 
--static int rfcomm_tty_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+static int rfcomm_tty_write(struct tty_struct *tty, const u8 *buf, int count)
- {
- 	struct rfcomm_dev *dev = (struct rfcomm_dev *) tty->driver_data;
- 	struct rfcomm_dlc *dlc = dev->dlc;
 -- 
 2.53.0
 
