@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD58370AE5;
-	Sat, 12 Sep 2026 13:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7EA2D8DA8;
+	Sat, 12 Sep 2026 13:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221392; cv=none; b=bljuWiuB1daPQzMhUsQYJmarAQeTao8YGDQMNqbUeRosVjlteyR4j/O5UCuMQ1KFC/H5kX+6W5e4aoi9brm2vIAiMVWHNlKQenwN1MOsacZRiATlGS1CLu+polMq08NbTVWM3daJ1eMqEOHwxOQD9MiTpYMKl1krpzfRCFc5u6A=
+	t=1789221398; cv=none; b=iC2HEW0I6ECw5iG7U5uctkV3NyXhQeQueqVDP9hJ/WZJcXBZaBmZOVWv2uSSkKx/H8YLW2pXQaCV1Ct26Fe63CtC7UHTtIdmPfyhwExgbZhKhds4wOXr9SF3O3fdevIbjQFhGqD428cNTPlElY10fVUGnbnZLVvJwIdomFwtWlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221392; c=relaxed/simple;
-	bh=xqjjJLM8ugQ+cKSpyvRrXgB8PXBkf2Yf2SlTtm+OpmQ=;
+	s=arc-20240116; t=1789221398; c=relaxed/simple;
+	bh=OLIQiDKHHkZEattZqMsFKQDyfeoPs+9XRBgRapkipTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTs5gYMjAiSLLSkv4p+V4gbHYyMmB8BP0ZEqOSGmsVrK7mfPoFg6q8kxoS70lHCkaSWDQyDu9JAINnnjHLuH32g23AFkVgBeQ/jzQRNVYcvmBycDl9792QC6OrhTDjVXy6usB+DnPXs15QHz6y2FLOKvgG4jMkD2WO0uJL1uUwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTsl5E3U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dhhP8CU0wi7Q1j6aeaR/BmrNZVUqN62mdCeP8EyJciRbI6xy1m3Ox30aZKAoyhyWsF2VT5/m/4IfvxX+R9ecuJmz2k4cVjQnVpOzMHBGRgVxproGxb0xVh+V1w5HOEDx8iyAYZmjQS8P36xwHIoAmlqEi2+k3+H+hBmKX3RMntE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzQoNflW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTsl5E3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA70E1F000FF;
-	Sat, 12 Sep 2026 13:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzQoNflW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74BE1F000FF;
+	Sat, 12 Sep 2026 13:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221391;
-	bh=lOVC7ppqnqGksnrvg/y4pcpMo6Dj6QPEY72hD2E4avs=;
+	s=korg; t=1789221396;
+	bh=ht+vGhY+W28DwxGloiXOcW+HAhG4eKWOQOQrKNf0yxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LTsl5E3UxyHL+TsiHaai8e52lyDxxORy/BuYNG253lA6pQ7cOLsPHZzq4sSRyZcpH
-	 LxC6cpunpZ4cXiW1qpYLpvdv0mY+oPe91sGmpYiol3/tiyNmQe7nObv4gX+m4VtZyJ
-	 ctm3RMjoJFXFGrzIRFxFAbEln7Jhxj0fpgV8XHRk=
+	b=DzQoNflWDaSDWSeCsxEqGt74TzMTJNqEvH03thboqnieyFli/lNv83RyLobMH1vN4
+	 5oE7fVE5M5Fhh+SCIL3dBnG2O4lafGzcr30+XXdnWmtFvQopG4AjMT3i6ns2+ycbhf
+	 Q/Ls5un5DqgloEgZH3o+ojz9Rw6qSrF5GlAxwWO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivam Kumar <kumar.shivam43666@gmail.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.6 0373/1424] nvmet-tcp: fix out-of-bounds write when receiving an over-long PDU
-Date: Sat, 12 Sep 2026 08:46:45 +0200
-Message-ID: <20260912065615.646176880@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0347/1424] mm/damon/sysfs: kobject_del() region and target (error) dirs
+Date: Sat, 12 Sep 2026 08:46:19 +0200
+Message-ID: <20260912065615.060421467@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,52 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivam Kumar <kumar.shivam43666@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-commit 14cc5a7e77731497d5bea70f3bb05df7eda982e4 upstream.
+commit 2603ef6f6ec3d3f7de2d6a07e7c9a683cebac419 upstream.
 
-nvmet_tcp_try_recv_pdu() reads a PDU header into the fixed 128-byte
-queue->pdu union, then computes the remaining payload length as
+On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
+could cause directories creation failures due to the name conflicts.  Fix
+those issues for the normal creation path of region directories and the
+error path of target directories, by adding kobject_del() calls.
 
-	queue->left = hdr->hlen - queue->offset + hdgst;
-
-and reads that many more bytes into &queue->pdu + queue->offset, without
-ever bounding the result against sizeof(queue->pdu).
-
-A struct nvme_tcp_icreq_pdu is itself 128 bytes, exactly the size of the
-union. Once a header digest has been negotiated (hdgst = 4), a second
-ICReq passes the hlen == nvmet_tcp_pdu_size() check but yields
-queue->left = 128 - 8 + 4 = 124, so bytes 8..132 are written into the
-128-byte buffer -- 4 bytes past its end, over queue->hdr_digest and
-queue->data_digest. Those bytes are attacker-controlled (an ICReq
-carries no digest), and the duplicate ICReq is only rejected later,
-after the overflow. A remote unauthenticated host can thus corrupt
-kernel memory adjacent to the receive buffer.
-
-Reject any PDU whose declared length would read past the end of
-queue->pdu before the second recv.
-
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://lore.kernel.org/20260628220121.97360-3-sj@kernel.org
+Fixes: 2031b14ea757 ("mm/damon/sysfs: support the physical address space monitoring")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.18.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/damon/sysfs.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -1231,6 +1231,8 @@ recv:
- 		}
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -107,8 +107,10 @@ static void damon_sysfs_regions_rm_dirs(
+ 	struct damon_sysfs_region **regions_arr = regions->regions_arr;
+ 	int i;
  
- 		queue->left = hdr->hlen - queue->offset + hdgst;
-+		if (queue->left > sizeof(queue->pdu) - queue->offset)
-+			return -EPROTO;
- 		goto recv;
+-	for (i = 0; i < regions->nr; i++)
++	for (i = 0; i < regions->nr; i++) {
++		kobject_del(&regions_arr[i]->kobj);
+ 		kobject_put(&regions_arr[i]->kobj);
++	}
+ 	regions->nr = 0;
+ 	kfree(regions_arr);
+ 	regions->regions_arr = NULL;
+@@ -343,13 +345,15 @@ static int damon_sysfs_targets_add_dirs(
+ 
+ 		err = damon_sysfs_target_add_dirs(target);
+ 		if (err)
+-			goto out;
++			goto del_out;
+ 
+ 		targets_arr[i] = target;
+ 		targets->nr++;
  	}
+ 	return 0;
  
++del_out:
++	kobject_del(&target->kobj);
+ out:
+ 	damon_sysfs_targets_rm_dirs(targets);
+ 	kobject_put(&target->kobj);
 
 
