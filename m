@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5703815F8;
-	Sat, 12 Sep 2026 19:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E350229D288;
+	Sat, 12 Sep 2026 19:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242863; cv=none; b=k2PQMYcaPj+f0rHC7Co+Jq7NWGIyvGrR5BixjlqPbJwetehVTHsQcMniAggeQPLBwOLY0Axm2w2hR65Bq8IvvStWa1+9KfjO3CNxrF73k4+WIVrCEGzGdpMCrbuzOokhJX9tQULzxNwElBB7H+P4f3u4vu9CP7zHXg7iNkRiUHU=
+	t=1789242866; cv=none; b=vBX5SyATcLdrklnBEt79Z7OjWfKqdSF/Z/9P3hMne6XvKyFBQ+g6CwuObE/mTz3w16vb8iXX1cBoW1i32t5HivNNk2pqkzjaDwAOecy3cUE073LeXfLwpbQcQE1Lv5nj++nsZ7PGUPu+ufQEOQ0dRiZgkYuHmzMKQm4NJxovZfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242863; c=relaxed/simple;
-	bh=oVd1bbUVTEaDUMYZ88GTLVAhpRB59uNRPUuF+wN1XTk=;
+	s=arc-20240116; t=1789242866; c=relaxed/simple;
+	bh=7WvdhJ1W+vu0oecNV34IzoqAlCu+UbSy6VOt8+h7l0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CgDBaGdC4ZfDXvXEchBcTkghBcF/22EP/K64cUct52+zOUKLLEqvvoIam6YAPrjEEhpj31F2j06NADmm3b7M4Vfwh31J6TCpSwUymWqUaSlIORp8Fly6JB6JmkkhrYd53ewpkRmv/A4Wjwr2NckckJTod86kxuDFqHrHj5Kjs1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qu5HzMJl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p0gidXglsIuxN3+QNBkwIABY834t6GGe2LpmZt3zT2Rib7XdwvsGCV72yj6DFcrJEEDWzD9jSpUrLQyBUOM0swYsV3ei8eMSXbHeJ9vNr5+PL+urboI4un/deVFtvOrXJo/U4D/AMzN8DhhQOqcpQQZpSwrqzP6Zz08S5evvJjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hK/21N6G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qu5HzMJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650F01F000FF;
-	Sat, 12 Sep 2026 19:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hK/21N6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3001F000FF;
+	Sat, 12 Sep 2026 19:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242861;
-	bh=UBVTZkJkgUjYrjCXOu5fvMu4UqxD145GigEYSZJFQIk=;
+	s=korg; t=1789242864;
+	bh=U4rs5dWLePvuyiPaDHcusJd/tLXpxqSSHb8bCGhBgSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qu5HzMJlYv60anR6p1VdTUGDpXGFkeM4QM6zjyHXPYSH6chDuXxRSk/ETolhUfozt
-	 WrBqQPv8HE+uqI6yCTpbxzaGZqj80xoSP2PChnZOWD//NAaoYyCq1KBLo5YqR1fc14
-	 mHVNgHPGQCANEPrj7O+xPiQWMZ5v7bootO5RGiAk=
+	b=hK/21N6GknX2E9ZSLB5QWdCAYMT4z0RPuBUlw9JhfVr9hWjsJXHYzN/bFibmLFDF9
+	 36VPu9qdHP1Cq0KIHgWQGaDLib0G8kAg87yG2UfzwyRw9J0rG6ktggTokBsFdL+NZb
+	 c7CQlzgu4P65JgtM8524Feqc/BPZvQ/EEzld6uAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Waiman Long <longman@redhat.com>,
-	Dmitry Ilvokhin <d@ilvokhin.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 552/798] locking/lockdep: Fix NULL pointer dereference in __lock_set_class()
-Date: Sat, 12 Sep 2026 09:03:00 +0200
-Message-ID: <20260912065529.781370024@linuxfoundation.org>
+Subject: [PATCH 5.10 553/798] misc: vmc_vmci: Fix potential memory leak in vmci_event_subscribe()
+Date: Sat, 12 Sep 2026 09:03:01 +0200
+Message-ID: <20260912065529.804669887@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 7577e00b9ab506202b9f1a33de3cc8cc6413a4db ]
+[ Upstream commit 210854a96ef18b09b45a2a59ff14ca06dfe5ad4d ]
 
-register_lock_class() can return NULL when the lock class pool is
-exhausted, graph_lock() fails, or key validation fails. However,
-__lock_set_class() uses the return value directly in pointer arithmetic
-without a NULL check:
+The memory allocated for struct vmci_subscription (sub) is not freed
+in the error path when have_new_id is false. Fix that by adding a
+kfree() call, and moving the read of sub->id to a point before freeing.
 
-  class = register_lock_class(lock, subclass, 0);
-  hlock->class_idx = class - lock_classes;
-
-If class is NULL, this computes a wild offset that corrupts
-hlock->class_idx. The subsequent reacquire_held_locks() call will
-invoke hlock_class() with this corrupted index, leading to a NULL or
-out-of-bounds pointer dereference.
-
-Add the missing NULL check, consistent with how __lock_acquire() already
-handles this case at the same call site.
-
-Fixes: 64aa348edc61 ("lockdep: lock_set_subclass - reset a held lock's subclass")
-Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Dmitry Ilvokhin <d@ilvokhin.com>
-Link: https://patch.msgid.link/h2kfw43n4527x6mgi2lwpz2rieqnfzgictpv4wr5nyfjkc47co@2r5vz4uz44db
+Fixes: 1d990201f9bb ("VMCI: event handling implementation.")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Acked-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Link: https://patch.msgid.link/20260722101215.76680-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/lockdep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/misc/vmw_vmci/vmci_event.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index 47d939a0373d5..dad39321e8123 100644
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -5145,6 +5145,8 @@ __lock_set_class(struct lockdep_map *lock, const char *name,
- 			      lock->wait_type_outer,
- 			      lock->lock_type);
- 	class = register_lock_class(lock, subclass, 0);
-+	if (!class)
-+		return 0;
- 	hlock->class_idx = class - lock_classes;
+diff --git a/drivers/misc/vmw_vmci/vmci_event.c b/drivers/misc/vmw_vmci/vmci_event.c
+index 5b7ef47f4c118..a9456c552c2f8 100644
+--- a/drivers/misc/vmw_vmci/vmci_event.c
++++ b/drivers/misc/vmw_vmci/vmci_event.c
+@@ -179,16 +179,16 @@ int vmci_event_subscribe(u32 event,
+ 		}
+ 	}
  
- 	curr->lockdep_depth = i;
++	*new_subscription_id = sub->id;
+ 	if (have_new_id) {
+ 		list_add_rcu(&sub->node, &subscriber_array[event]);
+ 		retval = VMCI_SUCCESS;
+ 	} else {
++		kfree(sub);
+ 		retval = VMCI_ERROR_NO_RESOURCES;
+ 	}
+ 
+ 	mutex_unlock(&subscriber_mutex);
+-
+-	*new_subscription_id = sub->id;
+ 	return retval;
+ }
+ EXPORT_SYMBOL_GPL(vmci_event_subscribe);
 -- 
 2.53.0
 
