@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D284F282F1B;
-	Sat, 12 Sep 2026 07:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8159C282F1B;
+	Sat, 12 Sep 2026 07:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199030; cv=none; b=E2LWRwJ4xO8kBbZ7BopdWGljC5plgTMBQwMTbp8/jH18TDGxxVq153QHvYO5zl+L59hc8tocxSqZROADB7Nmr5XMULPcczHHmRtZLBsHJdpzze/NStaIzHNf1zfIs77+0p2nQ+66+vaIcOeTzTJAp4bTSVU9Ecu0fttJ6JlLkZU=
+	t=1789199034; cv=none; b=MwV6Finsd+sjtJWAQ+EnsFze1Ssz7glkdiB6Vs4QFOqBsMe7ItlVdsAqtnAK7+cWqy/wtdS8odUC9Sirf5o7AXOqRc4tTCTOQOO2YU6zoaI4BkuNexbSt/gTvrW9L4FfZjHiyjMIj/8fpA9LHwAEzcq2VcnOc69dLPRTonrTW1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199030; c=relaxed/simple;
-	bh=cCKLJXso7cdTCrhU41KLRoWTGhmITLJIM56GFLpBsZA=;
+	s=arc-20240116; t=1789199034; c=relaxed/simple;
+	bh=gC5oAW8gOTYMW8PzAsNT7Yq4PsAYvbzV5b8JgKL0ih8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5IdeVVO6fXv8UXXoyurFtjdb8MvRujVZZQRkL+i5NZ/D/fYntbLK0Ww050avhNp3Y92Uua+d95slaWyvPu5WQsuizlhOvaavLjbImhw1IQHZ6FhVow5pAThXcJdL+21LLXAHDbLPWaEt8rPEufC+RA7RW+2Omq0vJVk+Bv4PT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uzzh1DI9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZCaIyIck/AhrsfrBZmxy7AhbXhe5/isO3/lviXhoU/Xj9CFe9sPxbUW3nqJc/3ATHP6uHH55sC9JEsgk5WWve5e72KlcJXZoLYH6TyqBTSOVELXMSiyU2UQIN9kNWpQmzUuN56/F4YuzNOlhmiiGSxJ5YAPa84fBhpKWQw0264Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGcpt/p5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uzzh1DI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6491F000FF;
-	Sat, 12 Sep 2026 07:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGcpt/p5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6631F000FF;
+	Sat, 12 Sep 2026 07:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199028;
-	bh=xYjXTt6bZO1Ird30fs+hETuAVXfUdLPm5QuV6bGtgBU=;
+	s=korg; t=1789199033;
+	bh=i14WseWpTCC29WBk2HtmJCl5HsggNrWwbIwAo4EW7kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uzzh1DI9jwr1jBbvr0C/laPeBHjqZa+G3bjxICqlm7P3QelciyDperteGgSQvnsH6
-	 W2pAAiUmr0chc/JV2+Vb8RGecZcsQQEpnIbrcGUPTNi1/j8NIKLZzydjq3baEBKeHa
-	 0EOP1lZH4Mkptrjkt49KaZoOLKtw+S4UVj1IiQq8=
+	b=wGcpt/p5wF2x446pckEtLQ0jExh8agmYCnpbQQ3i/QPug/6T7ZZtgj8XE4qynDcN1
+	 LWfJx1e/BsM+G1ofy7k3ASh0HXF2EsJdOD2JLFbIp+eYGBPQrbov/XAiFuWgrWftr1
+	 uqu8T5fK4WiDVt09H4n1xQBAzAu3j6Odi0sO501k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gleb Markov <markov.gi@npc-ksb.ru>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0499/1815] misc: rtsx: add missing write register handling
-Date: Sat, 12 Sep 2026 08:37:29 +0200
-Message-ID: <20260912065700.606748299@linuxfoundation.org>
+Subject: [PATCH 7.2 0459/1815] clk: qcom: gcc-glymur: Enable runtime PM
+Date: Sat, 12 Sep 2026 08:36:49 +0200
+Message-ID: <20260912065659.663513853@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,44 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gleb Markov <markov.gi@npc-ksb.ru>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 655faba1ccf195e22a7a83146ef6015e3271233c ]
+[ Upstream commit 8d4f342369d0d77f32a0211692442d3b6d455872 ]
 
-If an error occurs at the stage of working with registers in conjunction
-with MCU_Block, it will not be processed.
+Enable runtime PM for the controller so the common GCC probe path resumes
+the attached domain while registering clocks, resets and GDSCs.
 
-The occurrence of errors at this stage may signal an impact on writes to
-the device's PCI registers and is a more global problem than a
-driver-level security problem, but adding a handler would be a good
-practice.
+This lets GDSC consumers propagate their votes through the GCC provider to
+the CX parent domain.
 
-Add a missing error handling.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: c0e5f4e73a71 ("misc: rtsx: Add support for RTS5261")
-Signed-off-by: Gleb Markov <markov.gi@npc-ksb.ru>
-Link: https://patch.msgid.link/20260629130920.1260-1-markov.gi@npc-ksb.ru
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260715-glymur-fix-gcc-cx-scaling-v3-2-72eb5adad156@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/cardreader/rtsx_pcr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/gcc-glymur.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/misc/cardreader/rtsx_pcr.c b/drivers/misc/cardreader/rtsx_pcr.c
-index c4d54ca2fa804..c6e602523538e 100644
---- a/drivers/misc/cardreader/rtsx_pcr.c
-+++ b/drivers/misc/cardreader/rtsx_pcr.c
-@@ -1196,6 +1196,8 @@ static int rtsx_pci_init_hw(struct rtsx_pcr *pcr)
- 		/* Gating real mcu clock */
- 		err = rtsx_pci_write_register(pcr, RTS5261_FW_CFG1,
- 			RTS5261_MCU_CLOCK_GATING, 0);
-+		if (err < 0)
-+			return err;
- 		err = rtsx_pci_write_register(pcr, RTS5261_REG_FPDCTL,
- 			SSC_POWER_DOWN, 0);
- 	} else {
+diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
+index 6925c6865089c..2ee4820b6fdfb 100644
+--- a/drivers/clk/qcom/gcc-glymur.c
++++ b/drivers/clk/qcom/gcc-glymur.c
+@@ -8548,6 +8548,7 @@ static const struct qcom_cc_desc gcc_glymur_desc = {
+ 	.num_resets = ARRAY_SIZE(gcc_glymur_resets),
+ 	.gdscs = gcc_glymur_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(gcc_glymur_gdscs),
++	.use_rpm = true,
+ 	.driver_data = &gcc_glymur_driver_data,
+ };
+ 
 -- 
 2.53.0
 
