@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5283806C6;
-	Sat, 12 Sep 2026 07:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B11335F61E;
+	Sat, 12 Sep 2026 07:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197259; cv=none; b=T/0KgzTz4WZQ6+tOMIqLEVWaEaURUwKcMOkf/tcOxF2YquPd7yi6vUTDbIBDiOLb0E1ZfVrDqjS0NzfP5NwnTRnjgXBWlaVzsexR9BUKkgmcdm0zoIBT1+6T9mrs5dieuz5N8aZieu9DIGSd6oJtwGjonvk4Abtu5qGhK1I5qyU=
+	t=1789197261; cv=none; b=Zx+Wu6TcHLkza9DAlwzyH/umKz8Z3s397aK4tkuaEeiqJ80Ql1qU3aWjL9DF4CIs9C7SUIduZJDI54//9HH056TCDPOTTwc5H9LAlb4ikAuxQdtb7TLLUv7gBJ9dibpksrJikZXI9YjPFSEcLmOPEarJYSgK7YD1Nbrsv6yq2OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197259; c=relaxed/simple;
-	bh=E3NPcbw3IWHlWHf+BJTs9Q2bksx1UX+FbmW1cYPDCcM=;
+	s=arc-20240116; t=1789197261; c=relaxed/simple;
+	bh=2XlIx8qguAhd2RK5jplO5RloZwJl+krqRZJs6OOniKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PcM8S0MLlXmQl1xzzpJQV4XvfeY01UBRopAPjnlY/DtIzKoUICkJZIMS3GJhl8Fr7jY9S88+IHhGyk0Y/WeX0AySZKpOk0woY1uyblWobKJsqx0R6nEmGjhESxgaKy39VZrEQCabmH9136NMorWj7j6e45xplMLH8asko3RQvQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dENJmJwU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c+uk0VuNvDweiIniYmYZUaUzyzGNU6WDrutkXd/m52LbsC3hytYUgvlHDNe+sTXCFQOpJiQTtxnnqbpc3LQ3kQuMbhQ3tmFMkxOhrknP2t/YIPvSp8bth6uMVnY4cyq/CIh758eoXjDuRWuww7RvXTCVfY5gseAnw6aM5U/biTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saJDHelp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dENJmJwU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D7A1F000FF;
-	Sat, 12 Sep 2026 07:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saJDHelp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40A91F000FF;
+	Sat, 12 Sep 2026 07:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197257;
-	bh=gTheaOAY8PVcEmGRC+9kJvOkLUOMvKH6LIDeIuzYJH8=;
+	s=korg; t=1789197260;
+	bh=3v7ZCaBQPbLQhWVcC523OE8b549ui3hQZCcF9Gjko/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dENJmJwUbcmT4otkDbbJLmw1b8Dkb9cEtGF/fSSycyWvHKv3T7GG9O6qWV/n9LM1x
-	 BQxhrwnpJItYnmYhgzuEInI/YEWvB+Nx123ycTd5BhyKrkR/oWwr9J2HPza7RPxypa
-	 xOJGisuZS3U3q6PYYjHPE7Xv/F2xKUWC0Re5Xsw8=
+	b=saJDHelpSi+3JUcL87lgmsdkC8wtHUYD3uX/9yRXxFzdUEr/k4E1/3aiwtN8gi9mS
+	 8pRZN9ZGxC7NBCuydUtgXudkhOPY/rH9IaDkBl4wUJM6EiJS8KWKMw3ZqxGTgJwZLA
+	 Hf557eivglMiaCngGa6LjDyserVvFqDt/gNCx5HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0133/1815] perf tests: Skip metrics validation if system-wide recording lacks permission
-Date: Sat, 12 Sep 2026 08:31:23 +0200
-Message-ID: <20260912065652.140809517@linuxfoundation.org>
+Subject: [PATCH 7.2 0094/1815] arm64: dts: imx93-kontron: set memory node to 0x80000000/1GiB
+Date: Sat, 12 Sep 2026 08:30:44 +0200
+Message-ID: <20260912065651.214197594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,186 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit 8953bfd8820b6525032023fda3a420098c1823ae ]
+[ Upstream commit 9c269fe7eae8cb60d8d6c326dd8955818722fae9 ]
 
-The metrics value validation test requires system-wide recording (`-a`),
-which can fail on systems without root permissions or where paranoid
-levels restrict tracing. Add a check to skip the test if `-a` is not
-supported.
+The start address of the DRAM area is 0x80000000. The minimal size of the
+DDR on the SoM is 1 GiB.
 
-Also fix false negatives during validation by updating parse error string
-patterns and resolving issues in metric list generation.
-
-Fixes: 3ad7092f5145 ("perf test: Add metric value validation test")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 2b52fd6035b7 ("arm64: dts: Add support for Kontron i.MX93 OSM-S SoM and BL carrier board")
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../tests/shell/lib/perf_metric_validation.py | 11 ++-
- tools/perf/tests/shell/stat_all_metrics.sh    | 75 ++++++++++++-------
- tools/perf/tests/shell/stat_metrics_values.sh |  7 ++
- 3 files changed, 60 insertions(+), 33 deletions(-)
+ arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/tests/shell/lib/perf_metric_validation.py b/tools/perf/tests/shell/lib/perf_metric_validation.py
-index dea8ef1977bf6..3d52f94f22b91 100644
---- a/tools/perf/tests/shell/lib/perf_metric_validation.py
-+++ b/tools/perf/tests/shell/lib/perf_metric_validation.py
-@@ -383,10 +383,13 @@ class Validator:
-         wl = workload.split()
-         command.extend(wl)
-         print(" ".join(command))
--        cmd = subprocess.run(command, stderr=subprocess.PIPE, encoding='utf-8')
--        data = [x+'}' for x in cmd.stderr.split('}\n') if x]
--        if data[0][0] != '{':
--            data[0] = data[0][data[0].find('{'):]
-+        cmd = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8')
-+        lines = cmd.stderr.splitlines() + cmd.stdout.splitlines()
-+        data = []
-+        for line in lines:
-+            line = line.strip()
-+            if line.startswith('{') and line.endswith('}'):
-+                data.append(line)
-         return data
+diff --git a/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi b/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
+index c79b1df339db1..f881912cde460 100644
+--- a/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
+@@ -15,9 +15,9 @@ aliases {
+ 		rtc1 = &bbnsm_rtc;
+ 	};
  
-     def collect_perf(self, workload: str):
-diff --git a/tools/perf/tests/shell/stat_all_metrics.sh b/tools/perf/tests/shell/stat_all_metrics.sh
-index b582d23f28c9e..feeb34c6fa6df 100755
---- a/tools/perf/tests/shell/stat_all_metrics.sh
-+++ b/tools/perf/tests/shell/stat_all_metrics.sh
-@@ -12,38 +12,65 @@ system_wide_flag="-a"
- if ParanoidAndNotRoot 0
- then
-   system_wide_flag=""
--  test_prog="perf test -w noploop"
-+  test_prog="perf test -w noploop 0.01"
- fi
+-	memory@40000000 {
++	memory@80000000 {
+ 		device_type = "memory";
+-		reg = <0x0 0x40000000 0 0x80000000>;
++		reg = <0x0 0x80000000 0 0x40000000>;
+ 	};
  
-+check_metric() {
-+  local output="$1"
-+  local status="$2"
-+  local metric="$3"
-+
-+  if [[ $status -ne 0 || ! "$output" =~ ${metric:0:50} ]]; then
-+    return 1
-+  fi
-+
-+  if [[ "$output" =~ "<not counted>" || "$output" =~ "<not supported>" ]]; then
-+    return 1
-+  fi
-+
-+  return 0
-+}
-+
- skip=0
- err=3
- for m in $(perf list --raw-dump metrics); do
-   echo "Testing $m"
-   result=$(perf stat -M "$m" $system_wide_flag -- $test_prog 2>&1)
-   result_err=$?
--  if [[ $result_err -eq 0 && "$result" =~ ${m:0:50} ]]
--  then
--    # No error result and metric shown.
-+
-+  if check_metric "$result" $result_err "$m"; then
-     if [[ "$err" -ne 1 ]]
-     then
-       err=0
-     fi
-     continue
-   fi
--  if [[ "$result" =~ "Cannot resolve IDs for" || "$result" =~ "No supported events found" ]]
-+
-+  if [[ "$result" =~ "Access to performance monitoring and observability operations is limited" || \
-+        "$result" =~ "in per-thread mode, enable system wide" || \
-+        "$result" =~ "<not supported>" || \
-+        "$result" =~ "Cannot resolve IDs for" || \
-+        "$result" =~ "No supported events found" || \
-+        "$result" =~ "FP_ARITH" || \
-+        "$result" =~ "AMX" || \
-+        "$result" =~ "PMM" ]]
-   then
--    if [[ $(perf list --raw-dump $m) == "Default"* ]]
--    then
--      echo "[Ignored $m] failed but as a Default metric this can be expected"
--      echo $result
-+    true
-+  else
-+    result=$(perf stat -M "$m" $system_wide_flag -- perf test -w noploop 0.1 2>&1)
-+    result_err=$?
-+
-+    if check_metric "$result" $result_err "$m"; then
-+      if [[ "$err" -ne 1 ]]
-+      then
-+        err=0
-+      fi
-       continue
-     fi
--    echo "[Failed $m] Metric contains missing events"
--    echo $result
--    err=1 # Fail
--    continue
--  elif [[ "$result" =~ \
--        "Access to performance monitoring and observability operations is limited" ]]
-+  fi
-+
-+  # If retry also failed, determine if we skip, ignore, or fail
-+  if [[ "$result" =~ "Access to performance monitoring and observability operations is limited" ]]
-   then
-     echo "[Skipped $m] Permission failure"
-     echo $result
-@@ -61,7 +88,9 @@ for m in $(perf list --raw-dump metrics); do
-       skip=1
-     fi
-     continue
--  elif [[ "$result" =~ "<not supported>" ]]
-+  elif [[ "$result" =~ "<not supported>" || \
-+          "$result" =~ "Cannot resolve IDs for" || \
-+          "$result" =~ "No supported events found" ]]
-   then
-     if [[ $(perf list --raw-dump $m) == "Default"* ]]
-     then
-@@ -105,19 +134,7 @@ for m in $(perf list --raw-dump metrics); do
-     continue
-   fi
- 
--  # Failed, possibly the workload was too small so retry with something longer.
--  result=$(perf stat -M "$m" $system_wide_flag -- perf bench internals synthesize 2>&1)
--  result_err=$?
--  if [[ $result_err -eq 0 && "$result" =~ ${m:0:50} ]]
--  then
--    # No error result and metric shown.
--    if [[ "$err" -ne 1 ]]
--    then
--      err=0
--    fi
--    continue
--  fi
--  echo "[Failed $m] has non-zero error '$result_err' or not printed in:"
-+  echo "[Failed $m] has non-zero error '$result_err' or not printed/counted in:"
-   echo "$result"
-   err=1
- done
-diff --git a/tools/perf/tests/shell/stat_metrics_values.sh b/tools/perf/tests/shell/stat_metrics_values.sh
-index 30566f0b54279..76f1e99d1273f 100755
---- a/tools/perf/tests/shell/stat_metrics_values.sh
-+++ b/tools/perf/tests/shell/stat_metrics_values.sh
-@@ -8,6 +8,13 @@ shelldir=$(dirname "$0")
- 
- grep -q GenuineIntel /proc/cpuinfo || { echo Skipping non-Intel; exit 2; }
- 
-+# Skip if no permission to record system-wide events
-+if ! perf stat -a -e instructions sleep 0.01 >/dev/null 2>&1; then
-+  echo "Skipping: no permission to record system-wide events (-a)"
-+  exit 2
-+fi
-+
-+
- pythonvalidator=$(dirname $0)/lib/perf_metric_validation.py
- rulefile=$(dirname $0)/lib/perf_metric_validation_rules.json
- tmpdir=$(mktemp -d /tmp/__perf_test.program.XXXXX)
+ 	chosen {
 -- 
 2.53.0
 
