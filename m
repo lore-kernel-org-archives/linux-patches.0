@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9263624BC;
-	Sat, 12 Sep 2026 09:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEFD2576E;
+	Sat, 12 Sep 2026 09:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203675; cv=none; b=QGT/s/FURFTP3SmkYfC1DqBCc+QpuLfL5LpZZC2DsXsTam66BYPBmeS8HJU5BYtbxY64QmmBoAJxWqz9s7Dem98/DmWgbV783iLjgKo0ogMsREL2/EPXgprr3blZXJ43QD6EqY0fJexs8NN7IUo9783hQmxPyY0yW69WyjRoZGY=
+	t=1789203680; cv=none; b=ZutHMTZd0+ulk7Tjz8psA4VPHu48A2JjOPTiZB8fVsg7pI5Gr4hDPsNybpk4iDj2qkjhR5DMOXgYWXmBkr4qAE03HB6Imi4vN+P5dk/ylDimhI9RbKbgiaf49Hbr80XN2hCiIuXXMuELVCvGMYlyP+rX9zn8kledqx5kjXOKR5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203675; c=relaxed/simple;
-	bh=thixGP73uKkyzSISBf8XO2X7JBjSxc93mdCM3rcW4Z8=;
+	s=arc-20240116; t=1789203680; c=relaxed/simple;
+	bh=5EIcKBhFgU8TZdoYyTgMiNSdxrfO8MrrIAfS1sREFqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sIjP4Ragk3/olEhjVbEJcVDEb3+vry+HtO8LoYyjlMCCdJBbkdeCOZCOtKCb6verYHvd8P0g9UKd0mKxWRaYfeetDOgR0PIGRJptb4srGkydI/EqIXHSTYdwcqEpBsI3PJ7W86x0ExAX9DKPQ3hIQDyHKIQa6+tc0w5KSwrjdlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/08nZfj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CJ7KlGkvVE4/E7C36Yf7K/pwCIsFFkieeoHNvNQ3KGTZfrTqwu+Y4wuzzGyLsV9CksDNT4T8t12t8Tbi0yTsIOGLWXg910sJCyFr9Y10ucSVzTnDVnJ2qWWDLKZVH7py5WlXRNl+u1vuNTuc8aOleVPIbzEXLsFNWasRfKorMkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xji+Tp5Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/08nZfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F137F1F000FF;
-	Sat, 12 Sep 2026 09:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xji+Tp5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015C41F000FF;
+	Sat, 12 Sep 2026 09:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203674;
-	bh=09rtjVmgAmrq6Gv+aJCwFEvf9QKZJFRB1y11LCVThIQ=;
+	s=korg; t=1789203679;
+	bh=geUzBsZzCtfaEqbyqWC2mlyPQeQe2E/SOY7dx6MwfJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/08nZfjUnXhdmJhIhBUkAQBnwiSwt2LXBo35pL/oxSjLccFGL2UEplw63ggUNu4/
-	 l6B6pG2CQoMgKv1pjh05ODAP0Y+ozURgl2CZiAyWzTBeuv0RUrkoGkCMrAAr9WcARU
-	 RG2dxcSoVmdHflfbWJydiY60WFj3NiClKMiMtqXw=
+	b=Xji+Tp5Z7TIw2Rq4j0FVgLy+mZTPlj5L88E373NZOGfaE59kB5sNPh02A1aqGKs93
+	 pyRd+e63qguqj3y0PoEZeoXAa/aU6fvnu5zwG//EdkWaYkmci6lqwX1yz0fygz6CaN
+	 wJhji6UzK91L5RAE6b2kUJCVBfjpbmNnSgZZqW98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Kalle Niemi <kaleposti@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1419/1815] power: supply: bd99954: Drop bad register fields
-Date: Sat, 12 Sep 2026 08:52:49 +0200
-Message-ID: <20260912065722.332115159@linuxfoundation.org>
+Subject: [PATCH 7.2 1455/1815] selftests/bpf: Use ping_command() for IPv6 pings in lwt_ip_encap
+Date: Sat, 12 Sep 2026 08:53:25 +0200
+Message-ID: <20260912065723.171447495@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,83 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 177299384a224377b4152242d875e752e5958c02 ]
+[ Upstream commit 073574da7a8e6055b1687c256bea070ab4b4ebea ]
 
-The bd99954 driver creates regmap fields for all the registers. All the
-fields for VBUS_UCD_FCTRL_SET (extended command 0x33) are accidentally
-created for VCC_UCD_FCTRL_SET (extended command 0x2b), causing all
-reads/writes for the fields to access wrong register. Luckily the fields
-for VBUS_UCD_FCTRL_SET are unused.
+lwt_ip_encap hardcodes the ping6 binary for its IPv6 pings. iputils
+merged ping6 into ping long ago and distros have started dropping the
+compat symlink -- Arch's iputils 20250605 ships only arping, clockdiff,
+ping and tracepath. There, every lwt_ip_encap subtest fails:
 
-Taking a look at the data-sheet all the fields in the VBUS_UCD_FCTRL_SET
-are marked as: "In normal operation, please don’t set these registers"
-with not much of additional documentation. As the fields are wrong and
-because there seems to be no users of the fields - it is better to just
-drop them. This will also decrease the memory footprint.
+  check_ping_ok:FAIL:ip netns exec ns-lwt-ip-encap-1-0101330 ping6 -c 1 \
+    -W1 -I veth1 fb04::1 > /dev/null unexpected error: 256 (errno 2)
+  #217/1   lwt_ip_encap_ipv4/egress:FAIL
 
-Drop incorrect VBUS_UCD_FCTRL_SET fields.
+The IPv4 subtests fail too, because check_ping_ok() pings both families.
+SYS() runs the command through system(), so a missing binary is
+indistinguishable from an unreachable peer.
 
-Datasheet: https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/battery_management/bd99954xxx-e.pdf
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 0902f8366491 ("power: supply: Support ROHM bd99954 charger")
-Tested-by: Kalle Niemi <kaleposti@gmail.com>
-Link: https://patch.msgid.link/758fd430d02286a6f18603a8aecfe443f5ddeb8e.1786356145.git.mazziesaccount@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+network_helpers.c has had ping_command() for exactly this since commit
+372642ea83ff ("selftests/bpf: Move netcnt test under test_progs"): it
+falls back to "ping -6" when ping6 is not present. lwt_ip_encap.c is the
+last hardcoded ping6 user. Fix that.
+
+Fixes: f5e288943e2c ("selftests/bpf: Move test_lwt_ip_encap to test_progs")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/bpf/20260813213558.3103179-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bd99954-charger.h | 23 +----------------------
- 1 file changed, 1 insertion(+), 22 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/bd99954-charger.h b/drivers/power/supply/bd99954-charger.h
-index f588979253830..d053ac901274c 100644
---- a/drivers/power/supply/bd99954-charger.h
-+++ b/drivers/power/supply/bd99954-charger.h
-@@ -279,17 +279,7 @@ enum bd9995x_fields {
- 	F_VBUS_EXTID,
- 	F_VBUS_IDRDET,
- 	F_VBUS_INDO,
--	F_VBUS_UCDSWEN,
--	F_VBUS_RREF_EN,
--	F_VBUS_DPPU_EN,
--	F_VBUS_DPREF_EN,
--	F_VBUS_DMREF_EN,
--	F_VBUS_DPDET_EN,
--	F_VBUS_DMDET_EN,
--	F_VBUS_DPSINK_EN,
--	F_VBUS_DMSINK_EN,
--	F_VBUS_DP_BUFF_EN,
--	F_VBUS_DM_BUFF_EN,
-+
- 	F_VBUS_EXTCLKENBL,
- 	F_VBUS_PLSTESTEN,
- 	F_VBUS_UCDSWEN_TSTENB,
-@@ -626,17 +616,6 @@ static const struct reg_field bd9995x_reg_fields[] = {
- 	    [F_VBUS_EXTID] = REG_FIELD(VBUS_IDD_STATUS, 5, 5),
- 	    [F_VBUS_IDRDET] = REG_FIELD(VBUS_IDD_STATUS, 4, 4),
- 	    [F_VBUS_INDO] = REG_FIELD(VBUS_IDD_STATUS, 0, 3),
--	    [F_VBUS_UCDSWEN] = REG_FIELD(VCC_UCD_FCTRL_SET, 10, 10),
--	    [F_VBUS_RREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 9, 9),
--	    [F_VBUS_DPPU_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 8, 8),
--	    [F_VBUS_DPREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 7, 7),
--	    [F_VBUS_DMREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 6, 6),
--	    [F_VBUS_DPDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 5, 5),
--	    [F_VBUS_DMDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 4, 4),
--	    [F_VBUS_DPSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 3, 3),
--	    [F_VBUS_DMSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 2, 2),
--	    [F_VBUS_DP_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 1, 1),
--	    [F_VBUS_DM_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 0, 0),
+diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
+index 6606f0ed9a9a9..39e8a3b8b6afb 100644
+--- a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
++++ b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
+@@ -410,7 +410,8 @@ static int test_gso_fix(const char *ns1, const char *ns3, int family)
+ static int check_ping_ok(const char *ns1)
+ {
+ 	SYS(fail, "ip netns exec %s ping -c 1 -W1 -I veth1 %s > /dev/null", ns1, IP4_ADDR_DST);
+-	SYS(fail, "ip netns exec %s ping6 -c 1 -W1 -I veth1 %s > /dev/null", ns1, IP6_ADDR_DST);
++	SYS(fail, "ip netns exec %s %s -c 1 -W1 -I veth1 %s > /dev/null", ns1,
++	    ping_command(AF_INET6), IP6_ADDR_DST);
+ 	return 0;
+ fail:
+ 	return -1;
+@@ -424,7 +425,8 @@ static int check_ping_fails(const char *ns1)
+ 	if (!ret)
+ 		return -1;
  
- 	    [F_VBUS_EXTCLKENBL] = REG_FIELD(VBUS_UCD_FCTRL_EN, 15, 15),
- 	    [F_VBUS_PLSTESTEN] = REG_FIELD(VBUS_UCD_FCTRL_EN, 14, 14),
+-	ret = SYS_NOFAIL("ip netns exec %s ping6 -c 1 -W1 -I veth1 %s", ns1, IP6_ADDR_DST);
++	ret = SYS_NOFAIL("ip netns exec %s %s -c 1 -W1 -I veth1 %s", ns1,
++			 ping_command(AF_INET6), IP6_ADDR_DST);
+ 	if (!ret)
+ 		return -1;
+ 
+@@ -657,9 +659,10 @@ static void lwt_ip_encap_vxlan(bool ipv4_encap)
+ 	skel->bss->fexit_triggered = false;
+ 
+ 	if (ipv4_encap)
+-		SYS(out, "ip netns exec %s ping  -c 1 -W1 %s", ns1, IP4_ADDR_DST);
++		SYS(out, "ip netns exec %s ping -c 1 -W1 %s", ns1, IP4_ADDR_DST);
+ 	else
+-		SYS(out, "ip netns exec %s ping6 -c 1 -W1 %s", ns1, IP6_ADDR_DST);
++		SYS(out, "ip netns exec %s %s -c 1 -W1 %s", ns1,
++		    ping_command(AF_INET6), IP6_ADDR_DST);
+ 
+ 	if (!ASSERT_TRUE(skel->bss->fexit_triggered, "fexit_triggered"))
+ 		goto out;
 -- 
 2.53.0
 
