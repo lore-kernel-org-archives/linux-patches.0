@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08DF3254B8;
-	Sat, 12 Sep 2026 13:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DDF315785;
+	Sat, 12 Sep 2026 13:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221412; cv=none; b=cPJ7ApzMDLTcPTpj9bVAwslBM3uwIwtpQu/oDfhB5z57Q/dOwfEquCFkL5/AP+aQfnTM8tw8QDnuXscMWXYiRVCOj6HZMJj6CDbvb/4JcehQ+RsxFXwLKzPZEpsO+sSQGvDxSuBqnBO60oYqvc9xgO7k86Q11KwkjTz44CicSDM=
+	t=1789221418; cv=none; b=uKt0U7Do9JMxDDSCXXvCaHRIxnGJTXyKyg38iXhmbS4syPn3RT00IC2wV/rdnhEq5K0vvFmW4dUQcQQMOKy8QKcs1ykVdRDgxxmKgtYvk1U4D0xM0UrZA1eVbHgC+hdpw9/Oc8TElw0ZE7yzX1N2MyhDUlrbHLffZTTS7e4Ffq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221412; c=relaxed/simple;
-	bh=lXXWXW7+wJB9aHUX0GnH855qBeGPecdrCZK6TdfmsuM=;
+	s=arc-20240116; t=1789221418; c=relaxed/simple;
+	bh=sSAjFf1AxwNtvaVEvSEabGKZB7W+rjN0BeXsQ4L8EYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqpfQOpkmOEAhmHgMaZaZjSd/qp9d18U0pXnG6V/VVBpBJ57oySURmQSscS/K47Wi8UrmdnfyIaNaTNqI1fOFZBigXQwjq3GOf0RuVU33J2V9mGASaj4qpkbOtVdQatXzSB/Nul6zJ1JmroxiLEdHSZXeduiUVA9r0tok8bNAQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zr8jPgwh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SCdyv3yIcAOHMkqP9XagQtNh5RcBvXLUbS9fd6C4tJNA7QKi0feSrBzKien4EI9hO7X2FndP3rhOMbu5wLPz2aRRd16hR1x+VbvAFq8lJbFVvC+ANL6+VAEJ7hSYF/Hg88FTawq5ImfXNp0bYpCQUg8oL7PsqMxW+JRq2FiAH6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT/Y61gn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zr8jPgwh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194D91F000FF;
-	Sat, 12 Sep 2026 13:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT/Y61gn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966261F000FF;
+	Sat, 12 Sep 2026 13:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221410;
-	bh=mZ0xf9HrG/r+mX3bJ2jFoEwnC2/JqFoZlJ64GQl+dC0=;
+	s=korg; t=1789221415;
+	bh=k0hoRdYYwssoDPfXOwPv9gM3hFDd5M8XuxwO8PHsjbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zr8jPgwhY1mcX9kAFeLMg+lRtmCxp0wznDAX3oepuqmtXstnPrD2nq/Knft0PN/kv
-	 0V1VxNZIffQc7N8m/yAPYNbyoK35jdGSh5bfvsBif9ZuJ7OkVt0Vxsr6TR9/Om3lnA
-	 5d4prinR2cLhbP4ut6VI/1602FLaLPpgvZg2v8ck=
+	b=WT/Y61gnF+9r64aIGEjV6Lr0hT/M/Q+dz/P+pidk9J9CCRZk8C5qJZClmMr8TpOeP
+	 9Lm7OBqEcHb6Z2gGzN8pMvzRaVuymQhl6K32YYT+AV7rmayoyoAAHMD9UmriM1p9vt
+	 2MehDjacM3Dm1s0USDMiVpzalGGLbhJ85fndo+Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0376/1424] mm/hugetlb: fix missing migratable flag on same-node hugetlb migration
-Date: Sat, 12 Sep 2026 08:46:48 +0200
-Message-ID: <20260912065615.712577337@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alison Schofield <alison.schofield@intel.com>
+Subject: [PATCH 6.6 0377/1424] nvdimm/btt: reject an arena whose nfree is below the lane count
+Date: Sat, 12 Sep 2026 08:46:49 +0200
+Message-ID: <20260912065615.734467494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,90 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wupeng Ma <mawupeng1@huawei.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 8ee1ef0f2f8ce29338f4ab00a3d344c010208058 upstream.
+commit 6a1f2e5ed9267ca19187038ac635393c165213ac upstream.
 
-Commit ba23f58de896 ("mm/migrate: don't call
-folio_putback_active_hugetlb() on dst hugetlb folio") moved setting of the
-migratable flag and active-list placement from
-folio_putback_active_hugetlb(dst) into move_hugetlb_state(), so that the
-freshly allocated destination folio is handled where allocation is known
-to have succeeded.
+The BTT info block's nfree field, the number of reserve free blocks, is
+read from the medium without validation.  btt_freelist_init() and
+btt_rtt_init() size the per-lane freelist[] and rtt[] arrays by nfree,
+but the I/O path indexes them by the lane from nd_region_acquire_lane(),
+which is bounded by nd_region->num_lanes (ND_MAX_LANES), not by nfree.
+A crafted or foreign arena whose nfree is below the lane count makes
+freelist[lane]/rtt[lane] run past the allocation: an out-of-bounds write.
 
-Unfortunately, the new code was appended after the existing
-temporary-folio block in move_hugetlb_state(), which contains an early
-return added earlier by commit 5af1ab1d24e08 ("mm/hugetlb: optimize the
-surplus state transfer code in move_hugetlb_state()"):
+btt.rst documents the nlanes = min(nfree, num_cpus) invariant, which the
+code does not currently honor: num_lanes is ND_MAX_LANES regardless of
+nfree.  Reject an arena whose nfree is below num_lanes at discovery,
+before the per-lane arrays are allocated, enforcing that invariant.
 
-  if (folio_test_hugetlb_temporary(new_folio)) {
-      ...
-      if (new_nid == old_nid)
-          return;                       <-- skips the new code
-      ...
-  }
-
-  /* added by ba23f58 */
-  folio_set_hugetlb_migratable(new_folio);
-  list_move_tail(&new_folio->lru, ...&h->hugepage_activelist);
-
-When the destination folio is temporary (i.e.  the hugetlb pool was
-exhausted and the migration callback fell back to
-alloc_migrate_hugetlb_folio()) and the migration does not cross a node --
-the common case, and always true on a single-NUMA system --
-move_hugetlb_state() returns before setting the migratable flag or adding
-the new folio to the active list.  The destination folio is then installed
-in the page table but cannot be isolated afterwards, since
-folio_isolate_hugetlb() rejects folios without the migratable flag; a
-subsequent soft-offline, hard-offline or memory-hotplug offline of that
-folio fails with -EBUSY.
-
-This was reproduced on a single-NUMA arm64 VM: a second MADV_SOFT_OFFLINE
-on an already-migrated hugetlb page returned EBUSY and logged "hugepage
-isolation failed".
-
-Keep the surplus adjustment, which is the only part that depends on the
-node crossing, guarded by `if (new_nid != old_nid)', while making the
-migratable flag and active-list placement unconditional.  This preserves
-the cleanup intent of ba23f58 and closes the early-return hole.
-
-Link: https://lore.kernel.org/20260707110254.3147686-1-mawupeng1@huawei.com
-Fixes: ba23f58de896 ("mm/migrate: don't call folio_putback_active_hugetlb() on dst hugetlb folio")
-Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5212e11fde4d ("nd_btt: atomic sector updates")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260620-b4-disp-88b2514b-v1-1-3834e707d232@proton.me
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/nvdimm/btt.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -7353,14 +7353,14 @@ void move_hugetlb_state(struct folio *ol
- 		 * There is no need to transfer the per-node surplus state
- 		 * when we do not cross the node.
- 		 */
--		if (new_nid == old_nid)
--			return;
--		spin_lock_irq(&hugetlb_lock);
--		if (h->surplus_huge_pages_node[old_nid]) {
--			h->surplus_huge_pages_node[old_nid]--;
--			h->surplus_huge_pages_node[new_nid]++;
-+		if (new_nid != old_nid) {
-+			spin_lock_irq(&hugetlb_lock);
-+			if (h->surplus_huge_pages_node[old_nid]) {
-+				h->surplus_huge_pages_node[old_nid]--;
-+				h->surplus_huge_pages_node[new_nid]++;
-+			}
-+			spin_unlock_irq(&hugetlb_lock);
- 		}
--		spin_unlock_irq(&hugetlb_lock);
- 	}
+--- a/drivers/nvdimm/btt.c
++++ b/drivers/nvdimm/btt.c
+@@ -886,6 +886,14 @@ static int discover_arenas(struct btt *b
+ 		arena->external_lba_start = cur_nlba;
+ 		parse_arena_meta(arena, super, cur_off);
  
- 	/*
++		if (arena->nfree < btt->nd_region->num_lanes) {
++			dev_err(to_dev(arena),
++				"nfree %u smaller than lane count %d\n",
++				arena->nfree, btt->nd_region->num_lanes);
++			ret = -ENODEV;
++			goto out;
++		}
++
+ 		ret = log_set_indices(arena);
+ 		if (ret) {
+ 			dev_err(to_dev(arena),
 
 
