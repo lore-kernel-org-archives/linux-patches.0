@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3772541A57D;
-	Sat, 12 Sep 2026 13:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208E447D931;
+	Sat, 12 Sep 2026 13:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219144; cv=none; b=qs9gmt1laKq2fwqKs5UzA9hwqmT1hkFioXdVH1z12V6DGl3+pqBKNWYC35aQig/UTt/RaMERRAhxcm+YkDqWGNSgzI2kZKKv3AvgsTltOs/6PWofar1ydXfOxn0ejn1yQ+RtPbh0ytZMUgX35NJl0WvpZ17aJ4JMFTEvQwd9LPI=
+	t=1789219149; cv=none; b=qh0QB+6NHOzqJ2DAqxX2rm7xihnUP+2gRmUvG9Zzu3Tm6t/orUxhTJH7Yw5niG/koQBjm1mnGeW7vB4389K2DuuSYk0weM2Ev3CpuFPuJ7wljMNFxN//UOBxdSb1Rqp2HHR9WGhFqLthovq/Kgzl0+nIv2FiHHMxOgK5XteA0bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219144; c=relaxed/simple;
-	bh=9lCtyMYVooRETpM9Zz/8GRBJ2SIe1KUBMQyezn/cryc=;
+	s=arc-20240116; t=1789219149; c=relaxed/simple;
+	bh=0g1Spdu4pAwJhPZAauIadNpEC2CaP5h7Zy349nxknxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9XpJkC6BKuOhkdyrdBuH19a9I/cRj6xY60QqHCB0hbGDhLQqCLEWhKLXpPvcW09BdHDyuaqRn2ua0hCTC+I7px6gisCwoqGwteyEHD53MH7eck4npKo+elQMpyTUcajr016hBVOnMFytuwLKRMjWwgC/NBSNeKkHhmFEuZNpwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz/Pyonz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dbTvaWQIkg3DeCk1Xd6XHNAc6X7PW3lqYQ7QI3tnrG3Y+qPAEWjJ3RvkJ3ECaueTzp9GFg2e8iL5ilR+yQItXv9+oV9XIylyvqQ8qLnMaDzElRjR/0Do4cktgZnNg+nG9cZnA3TVfzYRihJeYQmTt4rya+re+nSJDFK6JPLAOig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLeFuULM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz/Pyonz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0DA1F000FF;
-	Sat, 12 Sep 2026 13:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLeFuULM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBB71F00893;
+	Sat, 12 Sep 2026 13:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219143;
-	bh=kLaAW3BeFSv/g+WBouRA12t9CsBb+VkBZTMIPYBrfAI=;
+	s=korg; t=1789219148;
+	bh=dSPdrizsHt6vqtOB/+tlErdJQnUnqWg25eGDXWw0t58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vz/Pyonz34qzt84QhKskXdFFg6Bp5uw0VZANvxta1+ZEvNjgHItmY7rxNiyLeSpC7
-	 FcNad0aJNCymx4B2KKH88fmxc6o+NG61bV2AVBHPplg6DjzHwL6KYR/0cNxGTSD81P
-	 ZcLItZqNfICr6mvbf3U41c+dHHhWPxAxCkrTgnX4=
+	b=fLeFuULMVNcWzr18bLClgwQvLrR0mhHNkMD6RfQPtrdNrGwVA3okkPjqeUtD87vH3
+	 ng317J70ZUUiHsBy6PBqpDDhr46AFmbnEa2l/arU+tN+pvM8I2WFp7yYuTbMXpsUAP
+	 /RGRyuaVTUDdlcmGrTbuMF/zucHiwC3n2uRRbeVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Hao Ge <gehao@kylinos.cn>,
+	SeongJae Park <sj@kernel.org>,
+	"Shuah Khan (Samsung OSG)" <shuah@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1289/1376] cifs: fix clearing stats for fastest execution of each smb2 command
-Date: Sat, 12 Sep 2026 09:01:55 +0200
-Message-ID: <20260912065636.265077217@linuxfoundation.org>
+Subject: [PATCH 6.12 1290/1376] selftests/mm/cow: modify the incorrect checking parameters
+Date: Sat, 12 Sep 2026 09:01:56 +0200
+Message-ID: <20260912065636.286839021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,36 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Hao Ge <gehao@kylinos.cn>
 
-[ Upstream commit 48cab1fd5720508148673f59d8ed52c7c7fffca2 ]
+[ Upstream commit bf069012df19cf80b460a03c92bfe6320dc268b0 ]
 
-The code to clear the 'fastest_cmd' statistics has a typo that
-repeatedly clears the stat for cmd 0, rather than iterating
-through each cmd.  Fix the typo (0->i).
+In run_with_memfd_hugetlb(), some error handle have passed incorrect
+parameters.  It should be "smem", but it was mistakenly written as "mem".
 
-Fixes: 433b8dd7672be ("SMB3: Track total time spent on roundtrips for each SMB3 command")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Let's fix it.
+
+[gehao@kylinos.cn: fix other errant sites, per Anshuman]
+  Link: https://lkml.kernel.org/r/20250113050908.93638-1-hao.ge@linux.dev
+Link: https://lkml.kernel.org/r/20250113032858.63670-1-hao.ge@linux.dev
+Fixes: f8664f3c4a08 ("selftests/vm: cow: basic COW tests for non-anonymous pages")
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Shuah Khan (Samsung OSG) <shuah@kernel.org>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 4004c130c358 ("selftests/mm: skip COW tmpfile cases when fallocate() is unsupported")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifs_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/mm/cow.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/cifs_debug.c b/fs/smb/client/cifs_debug.c
-index 9092051776fc1..185a618f5cf1e 100644
---- a/fs/smb/client/cifs_debug.c
-+++ b/fs/smb/client/cifs_debug.c
-@@ -682,7 +682,7 @@ static ssize_t cifs_stats_proc_write(struct file *file,
- 				atomic_set(&server->smb2slowcmd[i], 0);
- 				server->time_per_cmd[i] = 0;
- 				server->slowest_cmd[i] = 0;
--				server->fastest_cmd[0] = 0;
-+				server->fastest_cmd[i] = 0;
- 			}
- #endif /* CONFIG_CIFS_STATS2 */
- 			list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
+diff --git a/tools/testing/selftests/mm/cow.c b/tools/testing/selftests/mm/cow.c
+index d87c5b1763ff1..f0cb14ea86084 100644
+--- a/tools/testing/selftests/mm/cow.c
++++ b/tools/testing/selftests/mm/cow.c
+@@ -1482,7 +1482,7 @@ static void run_with_zeropage(non_anon_test_fn fn, const char *desc)
+ 	}
+ 
+ 	smem = mmap(NULL, pagesize, PROT_READ, MAP_PRIVATE | MAP_ANON, -1, 0);
+-	if (mem == MAP_FAILED) {
++	if (smem == MAP_FAILED) {
+ 		ksft_test_result_fail("mmap() failed\n");
+ 		goto munmap;
+ 	}
+@@ -1583,7 +1583,7 @@ static void run_with_memfd(non_anon_test_fn fn, const char *desc)
+ 		goto close;
+ 	}
+ 	smem = mmap(NULL, pagesize, PROT_READ, MAP_SHARED, fd, 0);
+-	if (mem == MAP_FAILED) {
++	if (smem == MAP_FAILED) {
+ 		ksft_test_result_fail("mmap() failed\n");
+ 		goto munmap;
+ 	}
+@@ -1634,7 +1634,7 @@ static void run_with_tmpfile(non_anon_test_fn fn, const char *desc)
+ 		goto close;
+ 	}
+ 	smem = mmap(NULL, pagesize, PROT_READ, MAP_SHARED, fd, 0);
+-	if (mem == MAP_FAILED) {
++	if (smem == MAP_FAILED) {
+ 		ksft_test_result_fail("mmap() failed\n");
+ 		goto munmap;
+ 	}
+@@ -1684,7 +1684,7 @@ static void run_with_memfd_hugetlb(non_anon_test_fn fn, const char *desc,
+ 		goto close;
+ 	}
+ 	smem = mmap(NULL, hugetlbsize, PROT_READ, MAP_SHARED, fd, 0);
+-	if (mem == MAP_FAILED) {
++	if (smem == MAP_FAILED) {
+ 		ksft_test_result_fail("mmap() failed\n");
+ 		goto munmap;
+ 	}
+@@ -1696,7 +1696,7 @@ static void run_with_memfd_hugetlb(non_anon_test_fn fn, const char *desc,
+ 	fn(mem, smem, hugetlbsize);
+ munmap:
+ 	munmap(mem, hugetlbsize);
+-	if (mem != MAP_FAILED)
++	if (smem != MAP_FAILED)
+ 		munmap(smem, hugetlbsize);
+ close:
+ 	close(fd);
 -- 
 2.53.0
 
