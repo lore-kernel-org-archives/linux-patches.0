@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49DE364059;
-	Sat, 12 Sep 2026 08:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A11779DA;
+	Sat, 12 Sep 2026 08:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201726; cv=none; b=uoMYywDaJbY3fKL8zi+JO7Cwur2kKMMZ5jyAag5aEfDRWZXY1bIZ4QqlcWD+0RknKy2K2AdkqjbXhKB/utYfBuztOMMHiEctZLFPCITuY2Et6LUfn9X80GUFGeGeajfh8oDqft3n/02TPPrTQsyxVB8yW4+T1ElVnPFF/ktr2oc=
+	t=1789201731; cv=none; b=f5+YRmp0xXc6msdGQU2pY88SHC2o7zci0eSfpBiPxIVvhRzmFpytszfjTTwSw0MYYrNPWirzPxjeQI0lK14TGUhU8enfOsB4z6les0u/3t6uPvPxoY+6EhMHcTB65sOq+cmShUaAbrYMbAo1JBIyopAtTJ7YEKyH5b7Z/oRHnDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201726; c=relaxed/simple;
-	bh=Je12Cx58+lI/3tD1qD4/gs5a2yRI9swrtXj/dJHFCfI=;
+	s=arc-20240116; t=1789201731; c=relaxed/simple;
+	bh=KBJBIFaXArkMoTlGF7/eWOg8PXc4AgeNKKcFTZ5GBXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUUAXUNtPBn5OKbgumumEAxvhAWy5uh/6Lyqv+nVtYqGwXdNmIW9+Tm3mQH3LqCeyy7RoHymd0aFcdrUVF/Ll4dz0jl2RhMujEE1mJ1FeXGKAh4xHReHx+Fp5mRm8sltc2tgSpeM56g2cyMp2Di9lXvcuqwlxbi4QI94ndYYev0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YunEwMbW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WsLLyhEUPNF7Lg7JpMRwH0Fg8TWHcRsQIzBxLk/pWv76ZiLtW2SwWWJf+pyXYfPyr3/Eteem9ZwT/cmbuJNZvlfvas6YGWxH61i2zm7pkLLuoGK/23z9CJqdd+6lLS38GVVoRXAxKIrrSE2fIByYJYFRC8bqjwPEOyyvLx6IKT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Dm9fMOU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YunEwMbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7BA1F000FF;
-	Sat, 12 Sep 2026 08:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Dm9fMOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69ADF1F000FF;
+	Sat, 12 Sep 2026 08:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201725;
-	bh=6b6dZQP5j90SN8pw9RhAIBglZbW93Q1I27rsVfikHr0=;
+	s=korg; t=1789201730;
+	bh=iEEDfDYmUvYu1+jGutPHX/i+MZE5k8UvO/Ox79iKYHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YunEwMbWeoxky6QqpNg0A4FP/6mLs+rsClMendwHFwsKhMExZJSGJG3Z5iZbdHXGO
-	 BbO1+XWN12pgeb/LYQO4cbtV7Xvnf8lMpi/qmk0PDJqIyfkY6br1ozvrbUunMMGpAf
-	 bAA0TU9ddqU1VLwepjFTGN8tyTkSS2fLnVMl9KIY=
+	b=0Dm9fMOUvZ1QsOaRe75MUEHEt5MPfAIk3BBhUjG7IeqTUouR/6CjdsBrz9aawEayb
+	 bvchiP23CbqqABuZZnFZ+tiAni/aDkJ8QKmwn3V0TNt5z0jS5GB74pk931ZrZxmULd
+	 ZACAWtf5OnPf8W4V/xdjRaKdUpWkm85yyt5zYRFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1003/1815] PCI: dwc: ep: Fix unmap potentially unmapping the wrong iATU
-Date: Sat, 12 Sep 2026 08:45:53 +0200
-Message-ID: <20260912065712.553408640@linuxfoundation.org>
+Subject: [PATCH 7.2 1049/1815] drm/omap: dsi: Do not copy isr table
+Date: Sat, 12 Sep 2026 08:46:39 +0200
+Message-ID: <20260912065713.642982555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,72 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit 9de09b807a1942d179ac5dbcb4982b5301dcc8fd ]
+[ Upstream commit 97c03b32b28a9f7f13f768f2b06e1eaafe850e66 ]
 
-The MSI path in dw_pcie_ep_raise_msi_irq() keeps its outbound iATU window
-mapped across writes as a cache. The MSI-X path in
-dw_pcie_ep_raise_msix_irq() maps and unmaps a window around every write.
-Both use the same local aperture, ep->msi_mem_phys, as the CPU side address
-that the iATU translates to the host's MSI or MSI-X target.
+To be able to unregister stuff from isrs, the corresponding table was
+copied.  Nobody seems to unregister stuff that way, so it does not help.
+But there are stack-allocated objects passed to these isrs giving chances
+of UAF of these objects if irqs are unregistered while they are handled,
+so better do not copy that table.
 
-If dw_pcie_ep_raise_msi_irq() has cached its mapping and
-dw_pcie_ep_raise_msix_irq() is then called, dw_pcie_ep_map_addr() allocates
-a fresh outbound window for the MSI-X target. It does not notice that
-ep->msi_mem_phys is already mapped by the MSI window, because
-dw_pcie_ep_outbound_atu() only looks for a free window and does not
-deduplicate by address. The controller now has two iATU windows whose
-outbound_addr[] entry equals ep->msi_mem_phys.
-
-When dw_pcie_ep_raise_msix_irq() later calls dw_pcie_ep_unmap_addr() to
-tear down its own window, the lookup in dw_pcie_find_index() walks
-ob_window_map in ascending index order and returns the first match. That is
-the MSI window, since it was mapped first. The MSI window is torn down, the
-MSI-X window is left in place, and ep->msi_iatu_mapped is never cleared.
-The next MSI writel() therefore takes the cached fast path, writes into an
-aperture whose iATU has been disabled, and the interrupt is silently lost.
-
-To fix this issue, unmap the cached MSI iATU in dw_pcie_ep_raise_msix_irq()
-before the MSI-X map, and clear ep->msi_iatu_mapped so that the next MSI
-writel() reprograms the window. This guarantees that at most one iATU
-window maps ep->msi_mem_phys at any time, so the subsequent
-dw_pcie_find_index() call unambiguously returns the MSI-X window.
-
-Fixes: 8719c64e76bf ("PCI: dwc: ep: Cache MSI outbound iATU mapping")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://lore.kernel.org/linux-pci/20260729051542.DC2741F000E9@smtp.kernel.org/
-Link: https://patch.msgid.link/20260730133123.1420413-6-cassel@kernel.org
+Fixes: 4ae2ddddf44cd ("OMAP: DSS2: DSI: Add ISR support")
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260702-dsi-uaf-v2-1-dbb4aa0f0b8e@kemnade.info
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/omapdrm/dss/dsi.c | 7 +------
+ drivers/gpu/drm/omapdrm/dss/dsi.h | 2 --
+ 2 files changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 9e50c589b308f..0b915824963af 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -1127,6 +1127,17 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
- 		return -EPERM;
- 	}
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
+index 27fe7bca9e2cf..70cfb779d6ae5 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.c
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
+@@ -455,15 +455,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
+ 		timer_delete(&dsi->te_timer);
+ #endif
  
-+	/*
-+	 * ep->msi_iatu_mapped means that an MSI target address is cached,
-+	 * unmap it first so that we can reuse ep->msi_mem_phys for MSI-X.
-+	 */
-+	if (ep->msi_iatu_mapped) {
-+		/* flush posted write before unmap */
-+		readl(ep->msi_mem + ep->msi_iatu_mapped_offset);
-+		dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
-+		ep->msi_iatu_mapped = false;
-+	}
-+
- 	msg_addr = dw_pcie_ep_align_addr(epc, msg_addr, &map_size, &offset);
- 	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
- 				  map_size);
+-	/* make a copy and unlock, so that isrs can unregister
+-	 * themselves */
+-	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
+-		sizeof(dsi->isr_tables));
++	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
+ 
+ 	spin_unlock(&dsi->irq_lock);
+ 
+-	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
+-
+ 	dsi_handle_irq_errors(dsi, irqstatus, vcstatus, ciostatus);
+ 
+ 	dsi_collect_irq_stats(dsi, irqstatus, vcstatus, ciostatus);
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.h b/drivers/gpu/drm/omapdrm/dss/dsi.h
+index 601707c0ecc4e..2b25247ea8935 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.h
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.h
+@@ -379,8 +379,6 @@ struct dsi_data {
+ 
+ 	spinlock_t irq_lock;
+ 	struct dsi_isr_tables isr_tables;
+-	/* space for a copy used by the interrupt handler */
+-	struct dsi_isr_tables isr_tables_copy;
+ 
+ 	int update_vc;
+ #ifdef DSI_PERF_MEASURE
 -- 
 2.53.0
 
