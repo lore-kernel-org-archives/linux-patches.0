@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9620D344DB5;
-	Sat, 12 Sep 2026 08:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB80208D0;
+	Sat, 12 Sep 2026 08:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203359; cv=none; b=WIkWgdDSMDTH+DpPWKKxoHO2RbTT/HqeKznHduI9KfUdxnOeylRPtxaPxPxLl8USg0hJhWsxqw7A4sH2xd5J/x4cK+y1cH1V/1csLRYfwoM2AcBS8FZRZ5uDGJH2t3pUgVpzOTsKy5hIZrgaLsWhd0Lo6nTvIizVdpsWhgxiPik=
+	t=1789203364; cv=none; b=CwuSwkfejKgsccPfTNIZBbg+v0H9Hx+mWBNFVtZHeZtPKKBGrUUrqs5KViLheVJrI66BQSOQvzHebXhaUrsxsDfsM54HLALXNNGkGaX3KFs6faoXJbUjBLrKBntQfyqsTcuLHp3fXR7ZIoimj26pTQawcum3B59Sn/ZYCZr//bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203359; c=relaxed/simple;
-	bh=6EuUNGmmYSnj+VTwtAjL8yF18S2zPeQRA3RnalSMlYw=;
+	s=arc-20240116; t=1789203364; c=relaxed/simple;
+	bh=1EIxNZirMqWU4Or0e5Syzeo4zL1kWSrzLEI+rvmM0EM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PqcsG0V3vi3ByLo33HuUYU20gRwMHmcYf6rG/+XYdch+WqE9ADpCxTSLvWKODo+aTiEG8ZW0imVRhTfNid5tY36FHSSDJD3W/fdy1DQb50UJdfZZ43Lq5zhI0ZHrhSsKkLlfToch2QQEt5JwKsXMtQP+hHP3vN16vH/NUesLWrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7GXv5te; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=krYHz8vgpOHJvDetfvpC+XoFyGBcCyayCEtox/Q+mdvqtObkLup3ba0XHAuZhm2RUs1JtDx6TN++YteHa9l6EqJNDooPNlhrstQybD9/eufvwfIB2rknW6ITjqqS/NLML5OZVbjJfomf2rkdKIWgPvygXE76E0qRDETTrYVQvNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scOVIakB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7GXv5te"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E401F000FF;
-	Sat, 12 Sep 2026 08:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scOVIakB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D1D1F000FF;
+	Sat, 12 Sep 2026 08:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203358;
-	bh=EI6ZC5XeNWKE/HYdG1m714hHoZYXhHjO8jA12nzl6z0=;
+	s=korg; t=1789203363;
+	bh=1VdJnQ9ooILE1KN/dCHi1GonJUFE1M4Ze5LgFMBuINI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l7GXv5tezFS0FmyeO1mRtB0uJ/ShOcr9NhEGoMsn3qrB6PTJsa5rQnyoyNMmZ9iQZ
-	 6GCeijf/WTTkpbBOX4Mu6AOhCRFJZdVMXQHJbMBVg+asMGx9rBJgzGoCBdoBzQApQN
-	 Vr0HndUSldo5ipb1Jr1GbNjZIFt9w9aBonQM07Lo=
+	b=scOVIakBDhXaIWGskJj4py6lBOQpuTi8r7xDFQH5KaN56Ch10khDidVZmLeWW9cOJ
+	 xG2scF4H5Uw1S9gT6jrtxZHRFYJVlY7LDVATh/L2s3koQHFLV3korYdrGfGI3nl7PE
+	 gSu7bugBqamgF1vv25ajnTSpj+efhQGKKMoOa9+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	Song Liu <song@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1392/1815] objtool/klp: Fix relocations for EXPORT_SYMBOL_FOR_MODULES() symbols
-Date: Sat, 12 Sep 2026 08:52:22 +0200
-Message-ID: <20260912065721.703248506@linuxfoundation.org>
+Subject: [PATCH 7.2 1393/1815] PCI/ASPM: Use pcie_capability_clear_and_set_word() for ASPM disable/restore
+Date: Sat, 12 Sep 2026 08:52:23 +0200
+Message-ID: <20260912065721.726763972@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,115 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-[ Upstream commit 4cd3cfb8b54feca89a682720434092a87bfa4967 ]
+[ Upstream commit 75a3b50ad9dc99ce9693a0086b968c6d3501db21 ]
 
-EXPORT_SYMBOL_FOR_MODULES() puts a symbol in a "module:<names>"
-namespace, which the module loader grants access to by matching the
-importing module's name against that list.
+pcie_aspm_cap_init() disables ASPM L0s/L1 on both ends of the Link
+before touching L1SS config, then later restores the LNKCTL state
+that was in effect beforehand. Both steps use raw
+pcie_capability_write_word() calls: the disable step computes the
+new value by hand from a snapshot taken earlier in the function, and
+the restore step writes that same snapshot straight back.
 
-klp_reloc_needed() only creates a klp reloc for module-owned exports; a
-vmlinux export gets a normal reloc.  For a vmlinux symbol exported with
-EXPORT_SYMBOL_FOR_MODULES(), using a normal reloc results in a modpost
-failure in klp-build:
+Switch both steps to pcie_capability_clear_and_set_word(), masked to
+PCI_EXP_LNKCTL_ASPMC, matching the accessor pcie_config_aspm_dev()
+already uses elsewhere in this file for the exact same register. This
+does a live read-modify-write of just the ASPM Control bits instead of
+relying on a stale snapshot for the rest of the word, and is
+consistent with how the rest of the file already touches this
+register. No functional change.
 
-  ERROR: modpost: module livepatch-foo uses symbol mpol_shared_policy_lookup from namespace module:kvm, but does not import it.
-
-And the modpost error is correct: even with that error removed, the
-patch module would fail to load:
-
-  livepatch_foo: module uses symbol (mpol_shared_policy_lookup) from namespace module:kvm, but does not import it.
-  livepatch_foo: Unknown symbol mpol_shared_policy_lookup (err -22)
-
-Treat it like an unexported symbol by using a klp reloc.
-
-Note this only affects "module:" namespaces.  Ordinary namespaced
-exports continue to work with normal relocs thanks to copy_import_ns(),
-which propagates the patched object's import_ns tags to the patch
-module.
-
-Fixes: dd590d4d57eb ("objtool/klp: Introduce klp diff subcommand for diffing object files")
-Reported-by: Joe Lawrence <joe.lawrence@redhat.com>
-Link: https://lore.kernel.org/6a6608f4-0a05-4d75-8b7f-edddfac9c5d4@redhat.com
-Acked-by: Joe Lawrence <joe.lawrence@redhat.com>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://patch.msgid.link/fe5a00818e06ec613344d41d5944de054fcd8832.1786138493.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: 7447990137bf ("PCI/ASPM: Disable L1 before disabling L1 PM Substates")
+Closes: https://lore.kernel.org/all/20260721143945.86E7D1F000E9@smtp.kernel.org/
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260727-aspm-v6-1-2ebb3ee7ef71@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/klp-diff.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ drivers/pci/pcie/aspm.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
-index a7cdba08b1deb..ffa83dd88d0b0 100644
---- a/tools/objtool/klp-diff.c
-+++ b/tools/objtool/klp-diff.c
-@@ -30,7 +30,9 @@ struct elfs {
- 
- struct export {
- 	struct hlist_node hash;
--	char *mod, *sym;
-+	char *mod;
-+	char *sym;
-+	bool mod_ns;
- };
- 
- bool debug, debug_correlate, debug_clone;
-@@ -135,7 +137,7 @@ static int read_exports(void)
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 172783e7f519a..50ff78a62e8a4 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -894,10 +894,10 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+ 	/* Disable L0s/L1 before updating L1SS config */
+ 	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
+ 	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
+-		pcie_capability_write_word(child, PCI_EXP_LNKCTL,
+-					   child_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
+-		pcie_capability_write_word(parent, PCI_EXP_LNKCTL,
+-					   parent_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
++		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
++					PCI_EXP_LNKCTL_ASPMC, 0);
++		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
++						PCI_EXP_LNKCTL_ASPMC, 0);
  	}
  
- 	while (fgets(line, 1024, file)) {
--		char *sym, *mod, *type;
-+		char *sym, *mod, *type, *namespace;
- 		struct export *export;
- 
- 		sym = strchr(line, '\t');
-@@ -162,6 +164,14 @@ static int read_exports(void)
- 
- 		*type++ = '\0';
- 
-+		namespace = strchr(type, '\t');
-+		if (!namespace) {
-+			ERROR("malformed Module.symvers (namespace) at line %d", line_num);
-+			return -1;
-+		}
-+
-+		*namespace++ = '\0';
-+
- 		if (*sym == '\0' || *mod == '\0') {
- 			ERROR("malformed Module.symvers at line %d", line_num);
- 			return -1;
-@@ -188,6 +198,9 @@ static int read_exports(void)
- 			return -1;
- 		}
- 
-+		/* EXPORT_SYMBOL_FOR_MODULES() */
-+		export->mod_ns = strstarts(namespace, "module:");
-+
- 		hash_add(exports, &export->hash, str_hash(sym));
+ 	/*
+@@ -927,8 +927,12 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+ 	/* Restore L0s/L1 if they were enabled */
+ 	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
+ 	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
+-		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_lnkctl);
+-		pcie_capability_write_word(child, PCI_EXP_LNKCTL, child_lnkctl);
++		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
++					PCI_EXP_LNKCTL_ASPMC,
++					parent_lnkctl & PCI_EXP_LNKCTL_ASPMC);
++		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
++					PCI_EXP_LNKCTL_ASPMC,
++					child_lnkctl & PCI_EXP_LNKCTL_ASPMC);
  	}
  
-@@ -1175,11 +1188,16 @@ static bool klp_reloc_needed(struct reloc *patched_reloc)
- 	 * clusterfunk that is late module patching, the patch module is
- 	 * allowed to be loaded before any modules it depends on.
- 	 *
--	 * If exported by vmlinux, a normal reloc will do.
-+	 * If exported by vmlinux to all modules, a normal reloc will do.
- 	 */
- 	export = find_export(patched_sym);
--	if (export)
--		return strcmp(export->mod, "vmlinux");
-+	if (export) {
-+		if (strcmp(export->mod, "vmlinux"))
-+			return true;
-+
-+		/* EXPORT_SYMBOL_FOR_MODULES() gets a klp reloc */
-+		return export->mod_ns;
-+	}
- 
- 	if (!patched_sym->twin) {
- 		/*
+ 	/* Save default state */
 -- 
 2.53.0
 
