@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7053B3F077C;
-	Sat, 12 Sep 2026 07:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26DF2EBDE9;
+	Sat, 12 Sep 2026 07:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197510; cv=none; b=uYDV1bIiyCk8TVNjhuf1F42NAmxYuN/hrMJJgvgeiKvfNVZYrkp2pWORXs+ws4DThxH3Ka5kgIoBrchYJ1WUt2J6iJZ2atTJmsVbnK63CGQe5FsojxJdLJlDeRX6jGLkn4vdj81+XyL8XaPh7aYRjy7OiihzEJdkuUEseh2Yl9U=
+	t=1789197516; cv=none; b=e9WLYZACI7bkXQDxVJ1KpMDsp0oGGV0cKtnjnc+X9WZktJ2nlQsu7xv2W8igYzFnt+r1tKShAtbKJ8bY8nc+QYteFwB52yiHl+HTcaxsRaHWomQzUfhm59DOb+Mn8G22EQWDbuEytgwI/RRn82P4X2KeGpJ5mDJe4dPk+g+i3UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197510; c=relaxed/simple;
-	bh=SH7ZMMqjGOswP4ocz+4/EhGQWwnuwtMLTnETwi1jZY8=;
+	s=arc-20240116; t=1789197516; c=relaxed/simple;
+	bh=PYS/BJIu+IRURISKxTh5tLHFibvcnCcveyeGrZJjkqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlVCPP06rO4ms4EYORJJv6OhhUaT5WTHNdu5kmUbFvNvAwSdempUG+WlisCX0F86b3gQBtubaE1GhuzaIEt0ACNfXYDeeLjmcWU3+cI6m3ek8hNZA2B9E8Wkln/FW5gbCzMcNVoLzoGOHpGSRwoA9dlBmR2e3Nrsw5iZS7qKXAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xS7j4EA+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z8FIa+IJQ0t7ClY1pqovc8ZdtDsfqLLJOOP0LzJ8HBkdrg44icS+x38vyIjv7txIPWOOtJWiA6CYPQKkgQbYQZ6j/u9LAokkjTJKYZUGmS3ZtYXjoFRqIsN/m13Bh0uGF7+CtpGLPusFLDK/6kqitcpjUsUZ5htoSABIy1vQr98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdt6P6+s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xS7j4EA+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC3B1F000FF;
-	Sat, 12 Sep 2026 07:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdt6P6+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461A31F000FF;
+	Sat, 12 Sep 2026 07:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197509;
-	bh=hfazDdXwSfz+5qnG6gPF+0QhiOKOOtCZK+1v+6MBbNk=;
+	s=korg; t=1789197514;
+	bh=W7sC9sPkmDDWBNQiW7hWF242jvCovshEsHq60PvceQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xS7j4EA+eOSujx8U6hXFRn5JAznwSh91hq0FANmfuVJG2oqWniU40CznamjQp4vxr
-	 Nosluzeua50+sGry0RHqY5xSICEnztBmgHUTXbH/OTut1LBa0YePRrOkeUHeN3Qu+v
-	 FerlEQ46Rs2EUTF9XDtjzoiFQ4eRRlWWfi2KhggM=
+	b=zdt6P6+sOWyzMYv++OHWiaTHk2hToPTAeJ8tE/faDrAVGyQxZwPpSkaFZeqkh9MWK
+	 TmdVZxxqWkLZWB3uLtSUHStHxOnJ5iZ09jhkz4Kos9UR+1r/S6OGOkbIF3PBb57dFL
+	 3PfnQdAsOqk5W0tBaKRTbPMmXndZThEBGMWLK+6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lothar Rubusch <l.rubusch@gmail.com>,
 	Thorsten Blum <thorsten.blum@linux.dev>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0190/1815] crypto: atmel-ecc - reject hardware ECDH without a public key
-Date: Sat, 12 Sep 2026 08:32:20 +0200
-Message-ID: <20260912065653.463071410@linuxfoundation.org>
+Subject: [PATCH 7.2 0191/1815] crypto: atmel-sha204a - fix heap info leak on I2C transfer failure
+Date: Sat, 12 Sep 2026 08:32:21 +0200
+Message-ID: <20260912065653.484971182@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,42 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Lothar Rubusch <l.rubusch@gmail.com>
 
-[ Upstream commit f240f9b588f4e2de89822adebf560a96b5d263ed ]
+[ Upstream commit 72bbf11ba14bd7d5fbf31a1ec42fff608b657f74 ]
 
-The hardware ECDH path in atmel_ecdh_compute_shared_secret() uses the
-private key stored in the device. However, the public key is cached only
-after atmel_ecdh_set_secret() successfully generated that private key
-for the current tfm.
+The nonblocking RNG path allocates a work_data structure to track the
+state of an in-flight asynchronous I2C request. This pointer is stored
+in rng->priv and later consumed by the read path once the transaction
+completes.
 
-atmel_ecdh_generate_public_key() already rejects requests when no public
-key is cached. Add the same check to atmel_ecdh_compute_shared_secret()
-to prevent the device from using a private key that was not generated
-for the current tfm.
+If the underlying I2C transfer fails, the completion callback is invoked
+with a non-zero status. In this case, the allocated work_data is not
+usable for producing RNG output and must not remain associated with the
+hwrng state.
 
-Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Previously, the failure path only logged a warning but left the pointer
+state uncleared, which can result in subsequent read attempts observing
+stale state and interpreting it as valid completion data.
+
+Fix this by freeing the pending work_data. The I2C transaction reports
+an error. This ensures that failed requests do not leave residual state
+behind that could be interpreted as valid RNG data on later reads.
+Clearing rng->priv is done at the subsequent call to nonblocking read.
+
+Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
+Signed-off-by: Lothar Rubusch <l.rubusch@gmail.com>
+Assisted-by: Gemini:1.5 Pro [google]
+Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-ecc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/crypto/atmel-sha204a.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/atmel-ecc.c b/drivers/crypto/atmel-ecc.c
-index 4dc34c5bc0f6c..bd1664ad5c0ea 100644
---- a/drivers/crypto/atmel-ecc.c
-+++ b/drivers/crypto/atmel-ecc.c
-@@ -165,6 +165,9 @@ static int atmel_ecdh_compute_shared_secret(struct kpp_request *req)
- 		return crypto_kpp_compute_shared_secret(req);
- 	}
+diff --git a/drivers/crypto/atmel-sha204a.c b/drivers/crypto/atmel-sha204a.c
+index 4c9af737b33aa..5eb76245347d8 100644
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -31,10 +31,14 @@ static void atmel_sha204a_rng_done(struct atmel_i2c_work_data *work_data,
+ 	struct atmel_i2c_client_priv *i2c_priv = work_data->ctx;
+ 	struct hwrng *rng = areq;
  
-+	if (!ctx->public_key)
-+		return -EINVAL;
-+
- 	/* A P-256 public key must contain two 32-byte coordinates */
- 	if (req->src_len != ATMEL_ECC_PUBKEY_SIZE)
- 		return -EINVAL;
+-	if (status)
++	if (status) {
+ 		dev_warn_ratelimited(&i2c_priv->client->dev,
+ 				     "i2c transaction failed (%d)\n",
+ 				     status);
++		kfree(work_data);
++		atomic_dec(&i2c_priv->tfm_count);
++		return;
++	}
+ 
+ 	rng->priv = (unsigned long)work_data;
+ 	atomic_dec(&i2c_priv->tfm_count);
 -- 
 2.53.0
 
