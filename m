@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05702369224;
-	Sat, 12 Sep 2026 08:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45C820ED;
+	Sat, 12 Sep 2026 08:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203306; cv=none; b=AkhufSNHZ7vOTAQdLt+iEHI6WOHHcskZm5e7NEfccugACnpHkuYPYbElgzYOtiDOj7QbBpBJR0q571bWFnN6Uzde1GtlfFotMvPaho353yYkgXp78cQ2qNawiP1aRS5ZnqRzIAyAHgH/o8Z7YIkSVZo86DDL0APPR4wYwne8aFY=
+	t=1789203310; cv=none; b=SNqoHhZXMbTvNTrjTHfMEkT7d2jNgS87DWvda/GNJr8EhVxkVonVC94hnUtRNk3vo5uOrKIFRLcUwWp/WUcWlvFWAXFGR3fs/AtsvfMhy9obM3WAXQHDVWenEraXKebv+vy5BhvAJYFov87uVEo3ZbAoNZJsNnMeDO06BUSRwK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203306; c=relaxed/simple;
-	bh=6sDGocV3PaRH+C+4YWFNAFB1xrEKRpKjTWity8HlURo=;
+	s=arc-20240116; t=1789203310; c=relaxed/simple;
+	bh=JIkDav7OUwJohmfEqpR0swpbmhEJ8phFIibxk98G59s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b29/FQUTuqT4QIPeFMGlIwDijQOxU+dWtj9hCAQU5Qed9WFi5M1iINFh1ncCBLoGc9ZZ1nD9UFTcdEFyYzagVa+hNeYJXfF5Wb1AoSApkVBoD7htPdcNWjHgMqhLe1jTDNFz0TkZg72CKsORJv9mTK2lmCdLaH8VVoBzwjhVRdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwGRI4Tw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ASbUZPGeMFSvDruIaGqrYgOtIAiW0xUtwuX7kxAdv0MzxEXPITZIyml1rqAfmbJ6w1csU/d7RR7znWKD7wfpH33jCU0VnHpZuA18lPi2sDbrsZ9qW0GyTBsUurYn43y3hxR3KzMo4VkTLZU1UPLyq/fRRT4TPNz7UnbsvgfBB58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWReCAKG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwGRI4Tw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA6D1F000FF;
-	Sat, 12 Sep 2026 08:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWReCAKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF061F000FF;
+	Sat, 12 Sep 2026 08:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203304;
-	bh=LQDNpaiJA117ddJI8TVSNy9DoLODd7aw9r1A2jML2zs=;
+	s=korg; t=1789203309;
+	bh=kzMG85W5LnVzmytNWZqD/GmHcgyfnvr4Wn2zCgMKtU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cwGRI4Twc9MarvW/cj1C0zD+bUJ8hFxZ68bazACv3v+GsqSFOVIL8p0NnjYWe9i+2
-	 RVp3mRMZ9NGszlgK48lFrc6LHNcDLxb9NzfJuVavoRSBw5DklCiRhb/Knkk2hse6gt
-	 vSV+AmVBwf8pCZphzyOP6gakRnkYirSyalxBtMGY=
+	b=YWReCAKGDBxPUkidsumm3oKi3BBUulZnctxw8jvDyFafYtc+dMNUsIAJD21ChSsaE
+	 0eNkLlUlj9wpKV6nyq9cOyYZI1vBDlVMU6XMyt2Nl7uoe35BDyFp/qyYKfLDI2X2Ru
+	 VGM7YbTXD88ZNpqbXscWdIlatJSF8ioxyn+WyaF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ran Hongyun <ranhongyun1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1382/1815] ASoC: xilinx: formatter_pcm: fix stream_data leak on open error
-Date: Sat, 12 Sep 2026 08:52:12 +0200
-Message-ID: <20260912065721.471342491@linuxfoundation.org>
+Subject: [PATCH 7.2 1383/1815] UBI: fix two issues in the ubi.mtd MODULE_PARM_DESC
+Date: Sat, 12 Sep 2026 08:52:13 +0200
+Message-ID: <20260912065721.494876925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,78 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Ran Hongyun <ranhongyun1@huawei.com>
 
-[ Upstream commit b992511180e126150c6ad3580a6fd568c385f4c6 ]
+[ Upstream commit ff7937d14f5333ec7e6fb50d00a152d7974f4105 ]
 
-In xlnx_formatter_pcm_open(), stream_data is allocated and
-adata->play_stream or adata->capture_stream is assigned early.  If a
-later step, such as snd_pcm_hw_constraint_step() or
-snd_pcm_hw_constraint_integer(), fails, the function returns the error
-immediately.  ALSA does not call the close callback when open fails, so
-stream_data is leaked and the stream pointer is left dangling, pointing
-to a substream that ALSA frees.  A later interrupt would then call
-snd_pcm_period_elapsed() on the freed substream.
+Fix two issues introduced before:
 
-Free stream_data and clear the stream pointer on the error paths.
+ - The parameter format string was missing the enable_fm and
+    need_resv_pool tokens introduced in an earlier commit.
 
-Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
-Assisted-by: opencode:deepseek-v4-flash-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260811185140.27149-1-rosenp@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ - The bad-block reservation note was misplaced after Example 5
+    instead of after Example 3. It was misplaced due to an earlier patch.
+
+Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
+Signed-off-by: Ran Hongyun <ranhongyun1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/xilinx/xlnx_formatter_pcm.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/mtd/ubi/build.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
-index f15336197ed31..798f17a6960ac 100644
---- a/sound/soc/xilinx/xlnx_formatter_pcm.c
-+++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
-@@ -384,7 +384,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on period bytes\n");
--		return err;
-+		goto error;
- 	}
- 
- 	/* Resize the buffer bytes as divisible by 64 */
-@@ -394,7 +394,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on buffer bytes\n");
--		return err;
-+		goto error;
- 	}
- 
- 	/* Set periods as integer multiple */
-@@ -403,7 +403,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err < 0) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on periods to be integer\n");
--		return err;
-+		goto error;
- 	}
- 
- 	/* enable DMA IOC irq */
-@@ -412,6 +412,14 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	writel(val, stream_data->mmio + XLNX_AUD_CTRL);
- 
- 	return 0;
-+
-+error:
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		adata->play_stream = NULL;
-+	else
-+		adata->capture_stream = NULL;
-+	kfree(stream_data);
-+	return err;
+diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
+index 1997bb70b702f..456090a12f52b 100644
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -1575,7 +1575,7 @@ static int ubi_mtd_param_parse(const char *val, const struct kernel_param *kp)
  }
  
- static int xlnx_formatter_pcm_close(struct snd_soc_component *component,
+ module_param_call(mtd, ubi_mtd_param_parse, NULL, NULL, 0400);
+-MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num]]].\n"
++MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num[,enable_fm[,need_resv_pool]]]]].\n"
+ 		      "Multiple \"mtd\" parameters may be specified.\n"
+ 		      "MTD devices may be specified by their number, name, or path to the MTD character device node.\n"
+ 		      "Optional \"vid_hdr_offs\" parameter specifies UBI VID header position to be used by UBI. (default value if 0)\n"
+@@ -1588,9 +1588,9 @@ MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|pa
+ 		      "Example 1: mtd=/dev/mtd0 - attach MTD device /dev/mtd0.\n"
+ 		      "Example 2: mtd=content,1984 mtd=4 - attach MTD device with name \"content\" using VID header offset 1984, and MTD device number 4 with default VID header offset.\n"
+ 		      "Example 3: mtd=/dev/mtd1,0,25 - attach MTD device /dev/mtd1 using default VID header offset and reserve 25*nand_size_in_blocks/1024 erase blocks for bad block handling.\n"
++		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).\n"
+ 		      "Example 4: mtd=/dev/mtd1,0,0,5 - attach MTD device /dev/mtd1 to UBI 5 and using default values for the other fields.\n"
+-		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n"
+-		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).");
++		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n");
+ #ifdef CONFIG_MTD_UBI_FASTMAP
+ module_param(fm_autoconvert, bool, 0644);
+ MODULE_PARM_DESC(fm_autoconvert, "Set this parameter to enable fastmap automatically on images without a fastmap.");
 -- 
 2.53.0
 
