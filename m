@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43905235358;
-	Sat, 12 Sep 2026 07:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E3134389C;
+	Sat, 12 Sep 2026 07:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198481; cv=none; b=GqpkadVk4npr8Mkx+Pftj7ywj0Ed5j/suS3eQJCB1J3hURlhLdF76pdLNkfj/3KcdoHOpns4reqpCmrqcUTMAIbGwQqrqUbZgC8WZ3bHglhb0+TpC76d7BmWjJ9hGMi7qoDX8agJ/KhjaJlqC3lhzTZg3HN0ei8c1x7OVyOqT50=
+	t=1789198486; cv=none; b=fi/s+YuPMMabAT4vB18+WAXi1P8lwqtRWRExJiiBlR+b/N6zBREQEUCHowqv5ycRAFYjyC4TZEUhEuMDguf6TstBggCSKWTX3Y4f5f88JgvRwT+u6gm3uFxd5dVVAsnzsR9zoHxolLOwFW/ccYjZCxdJSl/7Cfi+UllHTpAOJQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198481; c=relaxed/simple;
-	bh=DSRxgKI8ox+Ubw2xVdNVH3/0IeWgEYdpJCHRc1gHvTY=;
+	s=arc-20240116; t=1789198486; c=relaxed/simple;
+	bh=VoKidhigC7J1iOBkm5n3ZUQfNyjT5tfI18G4FCJpBbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9YJZTQ/SqW2MPmpqr7u47fNAkK27Vwiz9U3+74R3P8nZUXRN/Vrr9Xf6QHpUzgT2wyAZvgONyJedfeV5sJcO24r9lkYuD0WTcZdQtbXbLC8iZ+nygFg47YisG+WGFxdeq+1HReoroz4hG1OxKueI6XhfUiHF0wxdYFTPJddiSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxOqnKUx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RyJqV9GMr/w47Tys3jGYRxJemys+/PlTKarwTWE6lwfkAkcpxXC4Nm0f6XgTUdjndpgjnE7wgDZPuPRMpyivdz3sL2k6doYKyOll/W9jtJ8PKW/Oh38KybuUAwgbdjfIVfw7zVZzWxsBKH2AYfDJ100SMzDH3DhiCwmLdBEyUNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYgUKqOm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxOqnKUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19E71F000FF;
-	Sat, 12 Sep 2026 07:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYgUKqOm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820851F000FF;
+	Sat, 12 Sep 2026 07:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198480;
-	bh=DOb7Q+mOPeA6tvNFz0qLZlf1of69oRlro/1hiMQ7604=;
+	s=korg; t=1789198484;
+	bh=tz9qlJOjYSDWBKOa4ifkmTGSg7cDITfjskqR6FwnW0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DxOqnKUxLCj0me89kHaQPVXWJtoaie49RltGFJxkDEQZUcuPtTRIGrP6bK5If0XpV
-	 D69OhC7exjRx7ATyjuSJGjmwgZlCfCI9vAvRI761LJ9des+AG/qLzVNb8jkNJyc4J3
-	 4+mNzu5hJaTMAjiugHrL3RGtSfB9EQ3POuTZP8ks=
+	b=VYgUKqOm4m6fSscYGO3uKOY2yiEncRu70dhJd+oVNek8Ema5QN+mWYxk/dWlAkQH+
+	 PisKfwbL61M69IdHPmfApJYnzaW9ykgjoNlzop6wdbSNPJaNAOMpKMsBUFaXjull6n
+	 uYvfxgGbgcHoXbVk0HGd9b4oJRTq9TEAkWO99cK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Wei Zhang <wei.zhang@oss.qualcomm.com>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0389/1815] wifi: ath12k: fix MLO peer delete race
-Date: Sat, 12 Sep 2026 08:35:39 +0200
-Message-ID: <20260912065658.024546950@linuxfoundation.org>
+Subject: [PATCH 7.2 0390/1815] wifi: ath12k: fix rx_mpdu_start layout for QCC2072
+Date: Sat, 12 Sep 2026 08:35:40 +0200
+Message-ID: <20260912065658.047420522@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,418 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Wei Zhang <wei.zhang@oss.qualcomm.com>
 
-[ Upstream commit 01cc0f59aac3574b6a7b02493a76bc8ed0aa758f ]
+[ Upstream commit 9eb29fd47595e8128775f8ac57ca671238cb798a ]
 
-ath12k_peer_mlo_link_peers_delete() sends WMI peer_delete for every
-link before waiting for any peer_unmap / peer_delete_resp event. The
-shared per-radio completion ar->peer_delete_done could not
-disambiguate which peer a response was for: every call to
-ath12k_peer_delete_send() did
-reinit_completion(&ar->peer_delete_done), so when an event for the
-first link arrived between two sends it raised the count to 1 and
-the second send promptly cleared it; the wait for the second link
-then timed out with
+QCC2072's rx_mpdu_start TLV has a different field layout from QCN9274.
+Reusing struct rx_mpdu_start_qcn9274 in hal_rx_desc_qcc2072 causes the
+RX datapath to read the wrong offsets for info2, info4, pn[] and
+phy_ppdu_id, producing corrupted sequence number, PN, ppdu_id and
+mpdu-info flags (encrypted, fragment, addr2/addr4 valid).
 
-    Timeout in receiving peer delete response
+Add a dedicated struct rx_mpdu_start_qcc2072 that matches the actual
+hardware descriptor layout, and use it in hal_rx_desc_qcc2072.
 
-Replace the shared completion with a per-radio waiter list, with
-each pending ath12k_peer_delete() caller queueing an
-ath12k_peer_delete_wait carrying its (vdev_id, addr) and a private
-struct completion. ath12k_peer_delete_resp_event() matches the
-response against the list under ar->data_lock and signals the
-matching waiter.
+Tested-on: QCC2072 hw1.0 PCI WLAN.COL.1.0.c2-00188-QCACOLSWPL_V1_TO_SILICONZ-1
 
-Also correct the endian conversion in ath12k_peer_delete_resp_event()
-logging, and add the missing \n in some logging.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
-
-Fixes: 8e6f8bc28603 ("wifi: ath12k: Add MLO station state change handling")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Fixes: 28badc78142e ("wifi: ath12k: add HAL descriptor and ops for QCC2072")
+Signed-off-by: Wei Zhang <wei.zhang@oss.qualcomm.com>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260629-ath12k-mlo-peer-delete-race-v2-2-362b25590d19@oss.qualcomm.com
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260629061529.1993932-1-wei.zhang@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.c |   2 +-
- drivers/net/wireless/ath/ath12k/core.h |   5 +-
- drivers/net/wireless/ath/ath12k/mac.c  |   2 +-
- drivers/net/wireless/ath/ath12k/peer.c | 130 ++++++++++++++++++++-----
- drivers/net/wireless/ath/ath12k/peer.h |  14 ++-
- drivers/net/wireless/ath/ath12k/wmi.c  |  16 +--
- 6 files changed, 131 insertions(+), 38 deletions(-)
+ .../wireless/ath/ath12k/wifi7/hal_rx_desc.h   | 34 ++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index 42eb3f46f5e23..276126c22f33f 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -1524,7 +1524,7 @@ static void ath12k_core_pre_reconfigure_recovery(struct ath12k_base *ab)
- 			complete_all(&ar->scan.completed);
- 			complete(&ar->scan.on_channel);
- 			complete(&ar->peer_assoc_done);
--			complete(&ar->peer_delete_done);
-+			ath12k_peer_delete_wait_flush(ar);
- 			complete(&ar->install_key_done);
- 			complete(&ar->vdev_setup_done);
- 			complete(&ar->vdev_delete_done);
-diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
-index 30726e580833e..09231406e3087 100644
---- a/drivers/net/wireless/ath/ath12k/core.h
-+++ b/drivers/net/wireless/ath/ath12k/core.h
-@@ -666,7 +666,8 @@ struct ath12k {
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/hal_rx_desc.h b/drivers/net/wireless/ath/ath12k/wifi7/hal_rx_desc.h
+index 0d19a9cbb68ce..6d69851e529d8 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/hal_rx_desc.h
++++ b/drivers/net/wireless/ath/ath12k/wifi7/hal_rx_desc.h
+@@ -140,6 +140,38 @@ struct rx_mpdu_start_qcn9274 {
+ 	__le32 res1;
+ } __packed;
  
- 	/* protects the radio specific data like debug stats, ppdu_stats_info stats,
- 	 * vdev_stop_status info, scan data, ath12k_sta info, ath12k_link_vif info,
--	 * channel context data, survey info, test mode data, regd_channel_update_queue.
-+	 * channel context data, survey info, test mode data, regd_channel_update_queue,
-+	 * peer_delete_waits.
- 	 */
- 	spinlock_t data_lock;
- 
-@@ -688,7 +689,7 @@ struct ath12k {
- 	u8 radio_idx;
- 
- 	struct completion peer_assoc_done;
--	struct completion peer_delete_done;
-+	struct list_head peer_delete_waits;
- 
- 	int install_key_status;
- 	struct completion install_key_done;
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index d024f768d7363..f06656f8f2688 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -15092,11 +15092,11 @@ static void ath12k_mac_setup(struct ath12k *ar)
- 	spin_lock_init(&ar->dp.ppdu_list_lock);
- 	INIT_LIST_HEAD(&ar->arvifs);
- 	INIT_LIST_HEAD(&ar->dp.ppdu_stats_info);
-+	INIT_LIST_HEAD(&ar->peer_delete_waits);
- 
- 	init_completion(&ar->vdev_setup_done);
- 	init_completion(&ar->vdev_delete_done);
- 	init_completion(&ar->peer_assoc_done);
--	init_completion(&ar->peer_delete_done);
- 	init_completion(&ar->install_key_done);
- 	init_completion(&ar->bss_survey_done);
- 	init_completion(&ar->scan.started);
-diff --git a/drivers/net/wireless/ath/ath12k/peer.c b/drivers/net/wireless/ath/ath12k/peer.c
-index ed0524ddff803..80edebf0e364b 100644
---- a/drivers/net/wireless/ath/ath12k/peer.c
-+++ b/drivers/net/wireless/ath/ath12k/peer.c
-@@ -9,6 +9,55 @@
- #include "debug.h"
- #include "debugfs.h"
- 
-+static void ath12k_peer_delete_wait_register(struct ath12k *ar,
-+					     struct ath12k_peer_delete_wait *wait,
-+					     u32 vdev_id, const u8 *addr)
-+{
-+	wait->vdev_id = vdev_id;
-+	ether_addr_copy(wait->addr, addr);
-+	init_completion(&wait->done);
++struct rx_mpdu_start_qcc2072 {
++	__le32 info0;
++	__le32 info2;
++	__le32 reo_queue_desc_lo;
++	__le32 info1;
++	__le32 pn[4];
++	__le32 info4;
++	__le32 peer_meta_data;
++	__le16 ast_index;
++	__le16 sw_peer_id;
++	__le16 info3;
++	__le16 phy_ppdu_id;
++	__le32 info5;
++	__le32 info6;
++	__le16 frame_ctrl;
++	__le16 duration;
++	u8 addr1[ETH_ALEN];
++	u8 addr2[ETH_ALEN];
++	u8 addr3[ETH_ALEN];
++	__le16 seq_ctrl;
++	u8 addr4[ETH_ALEN];
++	__le16 qos_ctrl;
++	__le32 ht_ctrl;
++	__le32 info7;
++	__le32 res0;
++	__le32 res1;
++	__le32 res2;
++	__le32 info8;
++	__le32 res3;
++	__le32 res4;
++} __packed;
 +
-+	spin_lock_bh(&ar->data_lock);
-+	list_add(&wait->list, &ar->peer_delete_waits);
-+	spin_unlock_bh(&ar->data_lock);
-+}
-+
-+static void ath12k_peer_delete_wait_unregister(struct ath12k *ar,
-+					       struct ath12k_peer_delete_wait *wait)
-+{
-+	spin_lock_bh(&ar->data_lock);
-+	list_del(&wait->list);
-+	spin_unlock_bh(&ar->data_lock);
-+}
-+
-+void ath12k_peer_delete_resp_signal(struct ath12k *ar, u32 vdev_id, const u8 *addr)
-+{
-+	struct ath12k_peer_delete_wait *wait;
-+
-+	guard(spinlock_bh)(&ar->data_lock);
-+
-+	list_for_each_entry(wait, &ar->peer_delete_waits, list) {
-+		if (wait->vdev_id == vdev_id &&
-+		    ether_addr_equal(wait->addr, addr)) {
-+			complete(&wait->done);
-+			return;
-+		}
-+	}
-+
-+	ath12k_warn(ar->ab, "failed to find link peer with vdev id %u addr %pM\n",
-+		    vdev_id, addr);
-+}
-+
-+void ath12k_peer_delete_wait_flush(struct ath12k *ar)
-+{
-+	struct ath12k_peer_delete_wait *wait;
-+
-+	spin_lock_bh(&ar->data_lock);
-+	list_for_each_entry(wait, &ar->peer_delete_waits, list)
-+		complete(&wait->done);
-+	spin_unlock_bh(&ar->data_lock);
-+}
-+
- static int ath12k_wait_for_dp_link_peer_common(struct ath12k_base *ab, int vdev_id,
- 					       const u8 *addr, bool expect_mapped)
- {
-@@ -62,20 +111,19 @@ static int ath12k_wait_for_peer_deleted(struct ath12k *ar, int vdev_id, const u8
- 	return ath12k_wait_for_dp_link_peer_common(ar->ab, vdev_id, addr, false);
- }
- 
--int ath12k_wait_for_peer_delete_done(struct ath12k *ar, u32 vdev_id,
--				     const u8 *addr)
-+int ath12k_wait_for_peer_delete_done(struct ath12k *ar,
-+				     struct ath12k_peer_delete_wait *wait)
- {
--	int ret;
- 	unsigned long time_left;
-+	int ret;
- 
--	ret = ath12k_wait_for_peer_deleted(ar, vdev_id, addr);
-+	ret = ath12k_wait_for_peer_deleted(ar, wait->vdev_id, wait->addr);
- 	if (ret) {
--		ath12k_warn(ar->ab, "failed wait for peer deleted");
-+		ath12k_warn(ar->ab, "failed wait for peer deleted\n");
- 		return ret;
- 	}
- 
--	time_left = wait_for_completion_timeout(&ar->peer_delete_done,
--						3 * HZ);
-+	time_left = wait_for_completion_timeout(&wait->done, 3 * HZ);
- 	if (time_left == 0) {
- 		ath12k_warn(ar->ab, "Timeout in receiving peer delete response\n");
- 		return -ETIMEDOUT;
-@@ -91,8 +139,6 @@ static int ath12k_peer_delete_send(struct ath12k *ar, u32 vdev_id, const u8 *add
- 
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
- 
--	reinit_completion(&ar->peer_delete_done);
--
- 	ret = ath12k_wmi_send_peer_delete_cmd(ar, addr, vdev_id);
- 	if (ret) {
- 		ath12k_warn(ab,
-@@ -106,6 +152,7 @@ static int ath12k_peer_delete_send(struct ath12k *ar, u32 vdev_id, const u8 *add
- 
- int ath12k_peer_delete(struct ath12k *ar, u32 vdev_id, u8 *addr)
- {
-+	struct ath12k_peer_delete_wait wait;
- 	int ret;
- 
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
-@@ -114,17 +161,25 @@ int ath12k_peer_delete(struct ath12k *ar, u32 vdev_id, u8 *addr)
- 				     &(ath12k_ar_to_ah(ar)->dp_hw), vdev_id,
- 				     addr, ar->hw_link_id);
- 
-+	/*
-+	 * Register the stack waiter before sending so the resp_event for
-+	 * this peer cannot arrive while no waiter is queued.
-+	 */
-+	ath12k_peer_delete_wait_register(ar, &wait, vdev_id, addr);
-+
- 	ret = ath12k_peer_delete_send(ar, vdev_id, addr);
- 	if (ret)
--		return ret;
-+		goto out;
- 
--	ret = ath12k_wait_for_peer_delete_done(ar, vdev_id, addr);
-+	ret = ath12k_wait_for_peer_delete_done(ar, &wait);
- 	if (ret)
--		return ret;
-+		goto out;
- 
- 	ar->num_peers--;
- 
--	return 0;
-+out:
-+	ath12k_peer_delete_wait_unregister(ar, &wait);
-+	return ret;
- }
- 
- static int ath12k_wait_for_peer_created(struct ath12k *ar, int vdev_id, const u8 *addr)
-@@ -184,22 +239,26 @@ int ath12k_peer_create(struct ath12k *ar, struct ath12k_link_vif *arvif,
- 	peer = ath12k_dp_link_peer_find_by_vdev_and_addr(dp, arg->vdev_id,
- 							 arg->peer_addr);
- 	if (!peer) {
-+		struct ath12k_peer_delete_wait wait;
-+
- 		spin_unlock_bh(&dp->dp_lock);
- 		ath12k_warn(ar->ab, "failed to find peer %pM on vdev %i after creation\n",
- 			    arg->peer_addr, arg->vdev_id);
- 
--		reinit_completion(&ar->peer_delete_done);
-+		ath12k_peer_delete_wait_register(ar, &wait, arg->vdev_id,
-+						 arg->peer_addr);
- 
- 		ret = ath12k_wmi_send_peer_delete_cmd(ar, arg->peer_addr,
- 						      arg->vdev_id);
- 		if (ret) {
- 			ath12k_warn(ar->ab, "failed to delete peer vdev_id %d addr %pM\n",
- 				    arg->vdev_id, arg->peer_addr);
-+			ath12k_peer_delete_wait_unregister(ar, &wait);
- 			return ret;
- 		}
- 
--		ret = ath12k_wait_for_peer_delete_done(ar, arg->vdev_id,
--						       arg->peer_addr);
-+		ret = ath12k_wait_for_peer_delete_done(ar, &wait);
-+		ath12k_peer_delete_wait_unregister(ar, &wait);
- 		if (ret)
- 			return ret;
- 
-@@ -308,13 +367,14 @@ void ath12k_peer_ml_free(struct ath12k_hw *ah, struct ath12k_sta *ahsta)
- 
- int ath12k_peer_mlo_link_peers_delete(struct ath12k_vif *ahvif, struct ath12k_sta *ahsta)
- {
-+	DECLARE_BITMAP(registered, IEEE80211_MLD_MAX_NUM_LINKS);
- 	struct ieee80211_sta *sta = ath12k_ahsta_to_sta(ahsta);
- 	struct ath12k_hw *ah = ahvif->ah;
- 	struct ath12k_link_vif *arvif;
- 	struct ath12k_link_sta *arsta;
-+	int ret, err_ret = 0;
- 	unsigned long links;
- 	struct ath12k *ar;
--	int ret, err_ret = 0;
- 	u8 link_id;
- 
- 	lockdep_assert_wiphy(ah->hw->wiphy);
-@@ -322,8 +382,19 @@ int ath12k_peer_mlo_link_peers_delete(struct ath12k_vif *ahvif, struct ath12k_st
- 	if (!sta->mlo)
- 		return -EINVAL;
- 
--	/* FW expects delete of all link peers at once before waiting for reception
--	 * of peer unmap or delete responses
-+	struct ath12k_peer_delete_wait *waits __free(kfree) =
-+				kzalloc_objs(*waits, IEEE80211_MLD_MAX_NUM_LINKS);
-+	if (!waits)
-+		return -ENOMEM;
-+
-+	bitmap_zero(registered, IEEE80211_MLD_MAX_NUM_LINKS);
-+
-+	/*
-+	 * Firmware expects delete of all link peers at once before waiting
-+	 * for reception of peer unmap or delete responses. Phase 1 registers
-+	 * a per-link stack waiter and sends WMI peer delete for every
-+	 * link; the resp_event handler matches each response to its
-+	 * (vdev_id, addr) waiter on ar->peer_delete_waits.
- 	 */
- 	links = ahsta->links_map;
- 	for_each_set_bit(link_id, &links, IEEE80211_MLD_MAX_NUM_LINKS) {
-@@ -343,29 +414,36 @@ int ath12k_peer_mlo_link_peers_delete(struct ath12k_vif *ahvif, struct ath12k_st
- 					     arvif->vdev_id, arsta->addr,
- 					     ar->hw_link_id);
- 
-+		ath12k_peer_delete_wait_register(ar, &waits[link_id],
-+						 arvif->vdev_id, arsta->addr);
-+
- 		ret = ath12k_peer_delete_send(ar, arvif->vdev_id, arsta->addr);
- 		if (ret) {
- 			ath12k_warn(ar->ab,
- 				    "failed to delete peer vdev_id %d addr %pM ret %d\n",
- 				    arvif->vdev_id, arsta->addr, ret);
- 			err_ret = ret;
-+			ath12k_peer_delete_wait_unregister(ar, &waits[link_id]);
- 			continue;
- 		}
-+
-+		set_bit(link_id, registered);
- 	}
- 
--	/* Ensure all link peers are deleted and unmapped */
-+	/*
-+	 * Phase 2: wait for unmap + delete_resp on each registered link
-+	 * and tear down the waiter.
-+	 */
- 	links = ahsta->links_map;
- 	for_each_set_bit(link_id, &links, IEEE80211_MLD_MAX_NUM_LINKS) {
--		arvif = wiphy_dereference(ah->hw->wiphy, ahvif->link[link_id]);
--		arsta = wiphy_dereference(ah->hw->wiphy, ahsta->link[link_id]);
--		if (!arvif || !arsta)
-+		if (!test_bit(link_id, registered))
- 			continue;
- 
-+		arvif = wiphy_dereference(ah->hw->wiphy, ahvif->link[link_id]);
- 		ar = arvif->ar;
--		if (!ar)
--			continue;
- 
--		ret = ath12k_wait_for_peer_delete_done(ar, arvif->vdev_id, arsta->addr);
-+		ret = ath12k_wait_for_peer_delete_done(ar, &waits[link_id]);
-+		ath12k_peer_delete_wait_unregister(ar, &waits[link_id]);
- 		if (ret) {
- 			err_ret = ret;
- 			continue;
-diff --git a/drivers/net/wireless/ath/ath12k/peer.h b/drivers/net/wireless/ath/ath12k/peer.h
-index 0f7f25b8e89c0..3f4ac17b9aa65 100644
---- a/drivers/net/wireless/ath/ath12k/peer.h
-+++ b/drivers/net/wireless/ath/ath12k/peer.h
-@@ -9,13 +9,23 @@
- 
- #include "dp_peer.h"
- 
-+struct ath12k_peer_delete_wait {
-+	struct list_head list;
-+	u32 vdev_id;
-+	u8 addr[ETH_ALEN];
-+	struct completion done;
-+};
-+
-+void ath12k_peer_delete_resp_signal(struct ath12k *ar, u32 vdev_id, const u8 *addr);
-+void ath12k_peer_delete_wait_flush(struct ath12k *ar);
-+
- void ath12k_peer_cleanup(struct ath12k *ar, u32 vdev_id);
- int ath12k_peer_delete(struct ath12k *ar, u32 vdev_id, u8 *addr);
- int ath12k_peer_create(struct ath12k *ar, struct ath12k_link_vif *arvif,
- 		       struct ieee80211_sta *sta,
- 		       struct ath12k_wmi_peer_create_arg *arg);
--int ath12k_wait_for_peer_delete_done(struct ath12k *ar, u32 vdev_id,
--				     const u8 *addr);
-+int ath12k_wait_for_peer_delete_done(struct ath12k *ar,
-+				     struct ath12k_peer_delete_wait *wait);
- int ath12k_peer_mlo_link_peers_delete(struct ath12k_vif *ahvif, struct ath12k_sta *ahsta);
- struct ath12k_ml_peer *ath12k_peer_ml_find(struct ath12k_hw *ah,
- 					   const u8 *addr);
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 84a31b953db81..6066ca8d9fc4f 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -7072,25 +7072,29 @@ static void ath12k_peer_delete_resp_event(struct ath12k_base *ab, struct sk_buff
- {
- 	struct wmi_peer_delete_resp_event peer_del_resp;
- 	struct ath12k *ar;
-+	u32 vdev_id;
- 
- 	if (ath12k_pull_peer_del_resp_ev(ab, skb, &peer_del_resp) != 0) {
--		ath12k_warn(ab, "failed to extract peer delete resp");
-+		ath12k_warn(ab, "failed to extract peer delete resp\n");
- 		return;
- 	}
- 
-+	vdev_id = le32_to_cpu(peer_del_resp.vdev_id);
-+
- 	rcu_read_lock();
--	ar = ath12k_mac_get_ar_by_vdev_id(ab, le32_to_cpu(peer_del_resp.vdev_id));
-+	ar = ath12k_mac_get_ar_by_vdev_id(ab, vdev_id);
- 	if (!ar) {
--		ath12k_warn(ab, "invalid vdev id in peer delete resp ev %d",
--			    peer_del_resp.vdev_id);
-+		ath12k_warn(ab, "invalid vdev id in peer delete resp ev %d\n",
-+			    vdev_id);
- 		rcu_read_unlock();
- 		return;
- 	}
- 
--	complete(&ar->peer_delete_done);
-+	ath12k_peer_delete_resp_signal(ar, vdev_id,
-+				       peer_del_resp.peer_macaddr.addr);
- 	rcu_read_unlock();
- 	ath12k_dbg(ab, ATH12K_DBG_WMI, "peer delete resp for vdev id %d addr %pM\n",
--		   peer_del_resp.vdev_id, peer_del_resp.peer_macaddr.addr);
-+		   vdev_id, peer_del_resp.peer_macaddr.addr);
- }
- 
- static void ath12k_vdev_delete_resp_event(struct ath12k_base *ab,
+ #define QCN9274_MPDU_START_SELECT_MPDU_START_TAG			BIT(0)
+ #define QCN9274_MPDU_START_SELECT_INFO0_REO_QUEUE_DESC_LO		BIT(1)
+ #define QCN9274_MPDU_START_SELECT_INFO1_PN_31_0				BIT(2)
+@@ -1492,7 +1524,7 @@ struct hal_rx_desc_qcc2072 {
+ 	struct rx_msdu_end_qcn9274 msdu_end;
+ 	u8 rx_padding0[RX_BE_PADDING0_BYTES];
+ 	__le32 mpdu_start_tag;
+-	struct rx_mpdu_start_qcn9274 mpdu_start;
++	struct rx_mpdu_start_qcc2072 mpdu_start;
+ 	struct rx_pkt_hdr_tlv_qcc2072 pkt_hdr_tlv;
+ 	u8 msdu_payload[];
+ };
 -- 
 2.53.0
 
