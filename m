@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B34938E8CE;
-	Sat, 12 Sep 2026 07:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7736F3B5310;
+	Sat, 12 Sep 2026 07:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196796; cv=none; b=R4r6Jcxrn/OCTISWERRR257EP+/A41/xFIllsBSEbk0vTnkCkW67XrFjLVFO+4rGaABvzg5glZcyIvgr3XDF/dSwRNUjByP3iUk8a3AidPuFJ3F7jD0rN4NvcTnioDpdEkhpBY580A3jxKnZRQv/E6lX7/tnQ1Z0a34r4O0881g=
+	t=1789196801; cv=none; b=CRmln5kXwiAjvyl5PpZ8a8BaDjUNzFIM6CGsOaagngSDyZtMPVaPTdm5/ffKxUct7eCywVlzryHyGmcyZynBuyrETkyND0jDeUHi8KPYYr3ZgINkSp2H77RfFPLMvi3MBKvW8jByiz0qhm0rNcTXo5+G1afY9D3AcACu/j7j/so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196796; c=relaxed/simple;
-	bh=jKYQtAhul82ab/M4kBdO729D9NWidhhUlPpqaThfMY4=;
+	s=arc-20240116; t=1789196801; c=relaxed/simple;
+	bh=Qqekp4Fd3YkBd0PyWkCQSon1wV2XRaOUBIehI5+iVCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eqe6nYsXmIgmVyrTngdls5qZwL/n7mU/w+D0C9rEo1H3XHl+ZwYn5JGmbrrI/lZg6Nyo+metVEUynF35Ftvm6GO+vEvnKHioKFJMDCTtDSQwt6lOTPzol1XdNz9CndZiaZJQf7xDVPPlCJzpfbcqXPcDSgqCM++xSLxHulFKvY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3lxJUOt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U7KjyTYX1samcC3qh+GECbKNAZjCNPs+vEObD7Dvo/qLybq6/zQfkrVuLzmpAhAMR+OFJXpAf70y5otfAXyNwJCTOQ59W0Bpvz8OS8C5ILliX1OLihrtuZM2gbPOd1JHU2wJevzD9cbBWMn5dTLph/x/5VuodYNWKZboHlV1SXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GanaVfoK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3lxJUOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51331F000FF;
-	Sat, 12 Sep 2026 07:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GanaVfoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904951F00893;
+	Sat, 12 Sep 2026 07:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196792;
-	bh=IlwbcexT/Zzu+M/Qmatd4ju/UG9io1elUabmOJTLnEs=;
+	s=korg; t=1789196797;
+	bh=D8fqUtgt+IcmzZt4+oql/r0Vb0GLKJTV/qTa5/Ajx84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y3lxJUOtvO4lQQ6M6CgGi1kImkgEqhSZ5qI/BDqIDnOCaiNb3tyQWIb6rB2ZYuJPI
-	 Hq0QZPl6gSlBetS4O017iO/mdprPenHh+40wZI1YDNbddKhZZwAGKZYZyv7V5mgpM4
-	 IXusXT4pPGFL4MfmY4wR6sIj3L17Apl/14/Q5H70=
+	b=GanaVfoKXc8HVxDVEdSPZ4xvdaS1nyvuE7QPC5LC/gEPHpOVkx6j2a9LK59ph1lY2
+	 bAjRCgOapzkrijzsXxg6y1ljOS1CS1au74POEHylqH9gmV78MkWbjgC1W9v2mI1Wiq
+	 0Qp911u45KJsB0VK5cQVZMzk1GCXaKp6+nDoxDz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Liu Ying <victor.liu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0037/1815] drm/tegra: dsi: Re-add clear enable register if DSI was powered by bootloader
-Date: Sat, 12 Sep 2026 08:29:47 +0200
-Message-ID: <20260912065649.891833728@linuxfoundation.org>
+Subject: [PATCH 7.2 0038/1815] drm: lcdif: Wait for vblank before disabling DMA
+Date: Sat, 12 Sep 2026 08:29:48 +0200
+Message-ID: <20260912065649.914906029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,62 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Paul Kocialkowski <paulk@sys-base.io>
 
-[ Upstream commit 27a58cc1a9c7bbe92a43fb5045bd17e148c8a022 ]
+[ Upstream commit 351af554edd994898db12217c3be39979e168d35 ]
 
-Original commit b22fd0b9639e ("drm/tegra: dsi: Clear enable register if
-powered by bootloader") was added to address the issue of DSI being in an
-unknown state after the bootloader, ensuring correct panel configuration.
-This worked fairly well under the assumption that the bootloader had set
-up DSI; however, in cases where it did not, the device would hang because
-a DSI read was called before the DSI hardware was ready.
+It is necessary to wait for the full frame to finish streaming
+through the DMA engine before we can safely disable it by removing
+the DISP_PARA_DISP_ON bit. Disabling it in-flight can leave the
+hardware confused and unable to resume streaming for the next frame.
 
-Removing this workaround results in the issue described in the original
-fix: the panel initialization sequence fails and the panel gets stuck in
-an undefined state. This is especially noticeable with command mode panels
+This causes the FIFO underrun and empty status bits to be set and
+a single solid color to be shown on the display, coming from one of
+the pixels of the previous frame. The issue occurs sporadically when
+a new mode is set, which triggers the crtc disable and enable paths.
 
-In order to properly address this issue, the original workaround is
-restored and placed after the DSI hardware is prepared for R/W operations.
-This fixes behavior for both cases: where DSI is set by the bootloader and
-where DSI is untouched.
+Setting the shadow load bit and waiting for it to be cleared by the
+DMA engine allows waiting for completion.
 
-I have tested this change on Tegra20 (Motorola Atrix 4G),
-Tegra114 (NVIDIA Tegra Note 7 and ASUS Transformer Pad TF701T), and
-Tegra124 (Xiaomi Mi Pad) with U-Boot, using both bootloader-initialized
-DSI and untouched DSI.
+The NXP BSP driver addresses this issue with a hardcoded 25 ms sleep.
 
-Fixes: b22fd0b9639e ("drm/tegra: dsi: Clear enable register if powered by bootloader")
-Fixes: 660b299bed2a ("Revert "drm/tegra: dsi: Clear enable register if powered by bootloader"")
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260511074538.24563-3-clamor95@gmail.com
+Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
+Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
+Co-developed-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Acked-by: Liu Ying <victor.liu@nxp.com>
+Link: https://patch.msgid.link/20260402183351.3281123-3-paulk@sys-base.io
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/dsi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/mxsfb/lcdif_kms.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/dsi.c b/drivers/gpu/drm/tegra/dsi.c
-index 7f25c50621c94..690e4488de3f6 100644
---- a/drivers/gpu/drm/tegra/dsi.c
-+++ b/drivers/gpu/drm/tegra/dsi.c
-@@ -922,6 +922,15 @@ static void tegra_dsi_encoder_enable(struct drm_encoder *encoder)
- 		return;
- 	}
+diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+index ade76c3f4e4e9..68b1eb7a8ff13 100644
+--- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
++++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+@@ -374,14 +374,23 @@ static void lcdif_disable_controller(struct lcdif_drm_private *lcdif)
+ 	int ret;
  
-+	/* If the bootloader enabled DSI it needs to be disabled
-+	 * in order for the panel initialization commands to be
-+	 * properly sent.
+ 	reg = readl(lcdif->base + LCDC_V8_CTRLDESCL0_5);
++	/* Disable the layer for DMA. */
+ 	reg &= ~CTRLDESCL0_5_EN;
++	/*
++	 * It is necessary to wait for the full frame to finish streaming
++	 * through the DMA engine before we can safely disable it by removing
++	 * the DISP_PARA_DISP_ON bit. Disabling it in-flight can leave the
++	 * hardware confused and unable to resume streaming for the next frame.
 +	 */
-+	value = tegra_dsi_readl(dsi, DSI_POWER_CONTROL);
-+
-+	if (value & DSI_POWER_CONTROL_ENABLE)
-+		tegra_dsi_disable(dsi);
-+
- 	state = tegra_dsi_get_state(dsi);
++	reg |= CTRLDESCL0_5_SHADOW_LOAD_EN;
+ 	writel(reg, lcdif->base + LCDC_V8_CTRLDESCL0_5);
  
- 	tegra_dsi_set_timeout(dsi, state->bclk, state->vrefresh);
++	/* Wait for the frame to finish or timeout after 50 ms. */
+ 	ret = readl_poll_timeout(lcdif->base + LCDC_V8_CTRLDESCL0_5,
+-				 reg, !(reg & CTRLDESCL0_5_EN),
+-				 0, 36000);	/* Wait ~2 frame times max */
++				 reg, !(reg & CTRLDESCL0_5_SHADOW_LOAD_EN),
++				 200, 50000);
+ 	if (ret)
+-		drm_err(lcdif->drm, "Failed to disable controller!\n");
++		drm_err(lcdif->drm, "Timed out waiting for final vblank!\n");
+ 
+ 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
+ 	reg &= ~DISP_PARA_DISP_ON;
 -- 
 2.53.0
 
