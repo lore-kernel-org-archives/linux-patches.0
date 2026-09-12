@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1423AFB19;
-	Sat, 12 Sep 2026 18:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00B13B38A2;
+	Sat, 12 Sep 2026 18:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238216; cv=none; b=CWy3Zz9h79Cgb/mffWZZ2kwkU3K2IxxyiBBEcT/5HRYlv7zqJOxlN3xiOilaA8UV/6EZCXo/91Yt5fQqFjC/kOECUyA7HB6AAA8he5mVXsWju/v5Jz1U/7hzG25fESXXL/ZZyuichtRut/M4HF4G4330aFfhPToi4oVgJVxk6kk=
+	t=1789238221; cv=none; b=texffJYaIoooNi7w2nwh/QTTA8zr/fc6G6rwM9o9kWm5orALzYuCxALfiIcXIOpJwcglmJXQxvH0IVJBT3KOlK0jLIwz7txVEMDUpCeT7I30Rpeo7C5F4hMel5hzAW56+3eBcRqyh2ooz/wjZoQJ0HVQn6LxsKuJ48PM++W1Sx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238216; c=relaxed/simple;
-	bh=pFp4C6f4r1VzWDSt3Zu6HPxcxeFMqzLqVWud4pCByGU=;
+	s=arc-20240116; t=1789238221; c=relaxed/simple;
+	bh=mhhk9vPunMczjMH8F/i4IsbFOWXnWYnocHBZ48u7uR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uULe9kQHBLmC/LuSlf8m9hY9b+azSkiRku1m4VnNj3Z4Lo7pi7wQGw1RKA5c6OTkuNe4s2Gn3p6aHsU2ZfLcKHdXQaFsHohDay/KwRo9YonBC+/qq2V40cvXj3j7at0YWleBX8WHmV1BJJ/7qnaYJVIu743vXLvFt29IYzUM8Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATtxUpk3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LheHtVLb9G8LDtLCUI6GpzQaMuPzl598JV9/qGto/3Baov1v+BXoiacNRJCZ+vnlcgEZflp4pOMY+WI86C2cXnVyO9UR581FzlDVGP7LYTobXgR2QJoJY8ZDlgZODI/mh7iNvIzrbnXEdVVxU+R9LVpnU9RdJywARI5EHfpFvjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFr1foj6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATtxUpk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C263A1F000FF;
-	Sat, 12 Sep 2026 18:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFr1foj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF371F000FF;
+	Sat, 12 Sep 2026 18:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238213;
-	bh=eegktZFIOHD97ANmVd9CsM0gDLTw6+hy78RXsj7Q83g=;
+	s=korg; t=1789238217;
+	bh=Qz+/0hfORYCUel9nM+knQRB9xHnVzRA4DIeIasd4SrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ATtxUpk3B9Qv4+82d+cLo5qPo78juBlHQYcs0/0leYBhG3GxkUfavzVyX7IYXhWw9
-	 vUhxS2MWI4gT4RIAoy46wKebhFMN1+WJ/Ke4U+XUQ+f/pbOsclNvViOUCa7bZCrmUg
-	 5B736yEDtajebP1rKvEw4rI10CkiUn7q6W32UIjg=
+	b=EFr1foj6c5T/Ib+sMUfCykkHcHEBxQZaNrtIpFSytLuBfj09afPR+dLxQLofz1cpX
+	 PU329KMn2Syi10QXR5QIMR1xXVqBRg0NNN5XsE47iSzLvQX7lI5rToXSi6iz9d1Tz8
+	 8A4s2NmjlzbDZUTcLcZHTHJklGw6eW3Y2qIN8ZIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
-	Philipp Weber <kernel@phwe.de>,
-	Jiri Kosina <jkosina@suse.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Song Liu <song@kernel.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 399/935] HID: core: quiesce input in hid_hw_stop() to prevent use-after-free
-Date: Sat, 12 Sep 2026 08:57:09 +0200
-Message-ID: <20260912065535.974542328@linuxfoundation.org>
+Subject: [PATCH 5.15 417/935] perf test bpf-counters: Add test for BPF event modifier
+Date: Sat, 12 Sep 2026 08:57:27 +0200
+Message-ID: <20260912065536.385670064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,77 +63,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Weber <kernel@phwe.de>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit a4bc41504690b7d7064931909874f5b98cd148b6 ]
+[ Upstream commit d9bd1d4264baddf7ab8baae86e91674d369f22de ]
 
-A driver's probe calls hid_device_io_start() to enable input delivery,
-then fails at a later initialization step and unwinds via hid_hw_stop().
-The unwind frees struct hidraw via hidraw_disconnect() while in-flight
-HID reports may still be running on another CPU, dereferencing the
-freed object through hidraw_report_event(). syzbot reports the
-resulting use-after-free for the corsair-psu HID driver.
+Refactor test to better enable sharing of logic, to give an idea of
+progress and introduce test functions. Add test of measuring both
+cycles and cycles:b simultaneously.
 
-Edward Adam Davis posted a per-driver fix for corsair-psu that adds
-an explicit hid_device_io_stop() before hid_hw_stop() in the probe
-error path ("hwmon: prevent packets from going to driver for probe",
-2026-04-28). Auditing the tree shows 15 drivers call
-hid_device_io_start(); 7 also call hid_device_io_stop() and 8 do not:
-
-  drivers calling hid_device_io_start() without a matching
-  hid_device_io_stop() before hid_hw_stop():
-    drivers/hwmon/corsair-psu.c       (fix posted by Edward)
-    drivers/hwmon/corsair-cpro.c
-    drivers/hwmon/nzxt-kraken3.c
-    drivers/hwmon/nzxt-smart2.c
-    drivers/hwmon/gigabyte_waterforce.c
-    drivers/hid/hid-logitech-dj.c
-    drivers/hid/hid-nintendo.c
-    drivers/hid/hid-mcp2221.c
-
-Roughly half of all callers of the API are exposed. Centralize the
-quiesce in hid_hw_stop() so callers do not have to remember the
-matching stop: if a driver has left hdev->io_started true on entry,
-call hid_device_io_stop() before hid_disconnect().
-
-For the 7 drivers that already call hid_device_io_stop() correctly,
-hdev->io_started is false on entry, the guard short-circuits, and
-behavior is unchanged.
-
-No Fixes: tag because the affected drivers gained their
-hid_device_io_start() calls independently over years; the bug is a
-class-wide API misuse rather than a regression from one commit.
-
-Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
-Signed-off-by: Philipp Weber <kernel@phwe.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Song Liu <song@kernel.org>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240416170014.985191-2-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: b02027776ac5 ("perf tests: Fix flakiness in BPF counters test on hybrid systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 75 ++++++++++++++-------
+ 1 file changed, 52 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 7144bd2c1153f..962c3ebc46bd6 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2141,9 +2141,16 @@ EXPORT_SYMBOL_GPL(hid_hw_start);
-  *
-  * This is usually called from remove function or from probe when something
-  * failed and hid_hw_start was called already.
-+ *
-+ * If the caller enabled HID input via hid_device_io_start() and is unwinding
-+ * without an explicit hid_device_io_stop(), quiesce input first so that
-+ * in-flight reports cannot reach handlers (e.g. hidraw_report_event) whose
-+ * backing objects hid_disconnect() is about to free.
-  */
- void hid_hw_stop(struct hid_device *hdev)
+diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
+index 2d92098747746..61f8149d854e1 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters.sh
+@@ -4,21 +4,59 @@
+ 
+ set -e
+ 
++workload="perf bench sched messaging -g 1 -l 100 -t"
++
+ # check whether $2 is within +/- 20% of $1
+ compare_number()
  {
-+	if (hdev->io_started)
-+		hid_device_io_stop(hdev);
- 	hid_disconnect(hdev);
- 	hdev->ll_driver->stop(hdev);
+-       first_num=$1
+-       second_num=$2
+-
+-       # upper bound is first_num * 120%
+-       upper=$(expr $first_num + $first_num / 5 )
+-       # lower bound is first_num * 80%
+-       lower=$(expr $first_num - $first_num / 5 )
+-
+-       if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
+-               echo "The difference between $first_num and $second_num are greater than 20%."
+-               exit 1
+-       fi
++	first_num=$1
++	second_num=$2
++
++	# upper bound is first_num * 120%
++	upper=$(expr $first_num + $first_num / 5 )
++	# lower bound is first_num * 80%
++	lower=$(expr $first_num - $first_num / 5 )
++
++	if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
++		echo "The difference between $first_num and $second_num are greater than 20%."
++		exit 1
++	fi
++}
++
++check_counts()
++{
++	base_cycles=$1
++	bpf_cycles=$2
++
++	if [ "$base_cycles" = "<not" ]; then
++		echo "Skipping: cycles event not counted"
++		exit 2
++	fi
++	if [ "$bpf_cycles" = "<not" ]; then
++		echo "Failed: cycles not counted with --bpf-counters"
++		exit 1
++	fi
++}
++
++test_bpf_counters()
++{
++	printf "Testing --bpf-counters "
++	base_cycles=$(perf stat --no-big-num -e cycles -- $workload 2>&1 | awk '/cycles/ {print $1}')
++	bpf_cycles=$(perf stat --no-big-num --bpf-counters -e cycles -- $workload  2>&1 | awk '/cycles/ {print $1}')
++	check_counts $base_cycles $bpf_cycles
++	compare_number $base_cycles $bpf_cycles
++	echo "[Success]"
++}
++
++test_bpf_modifier()
++{
++	printf "Testing bpf event modifier "
++	stat_output=$(perf stat --no-big-num -e cycles/name=base_cycles/,cycles/name=bpf_cycles/b -- $workload 2>&1)
++	base_cycles=$(echo "$stat_output"| awk '/base_cycles/ {print $1}')
++	bpf_cycles=$(echo "$stat_output"| awk '/bpf_cycles/ {print $1}')
++	check_counts $base_cycles $bpf_cycles
++	compare_number $base_cycles $bpf_cycles
++	echo "[Success]"
  }
+ 
+ # skip if --bpf-counters is not supported
+@@ -30,16 +68,7 @@ if ! perf stat -e cycles --bpf-counters true > /dev/null 2>&1; then
+ 	exit 2
+ fi
+ 
+-base_cycles=$(perf stat --no-big-num -e cycles -- perf bench sched messaging -g 1 -l 100 -t 2>&1 | awk '/cycles/ {print $1}')
+-if [ "$base_cycles" = "<not" ]; then
+-	echo "Skipping: cycles event not counted"
+-	exit 2
+-fi
+-bpf_cycles=$(perf stat --no-big-num --bpf-counters -e cycles -- perf bench sched messaging -g 1 -l 100 -t 2>&1 | awk '/cycles/ {print $1}')
+-if [ "$bpf_cycles" = "<not" ]; then
+-	echo "Failed: cycles not counted with --bpf-counters"
+-	exit 1
+-fi
++test_bpf_counters
++test_bpf_modifier
+ 
+-compare_number $base_cycles $bpf_cycles
+ exit 0
 -- 
 2.53.0
 
