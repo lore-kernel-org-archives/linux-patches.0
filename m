@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304C41DA62E;
-	Sat, 12 Sep 2026 07:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C8736404D;
+	Sat, 12 Sep 2026 07:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198900; cv=none; b=dzPC7cKvT/m5CoAdZfeS9uTtdRR+9LmzqiBcnR6KD/2i3VJriC2gvc6v6fRJYC0x/n11+N2b8yZMiPQgWsJGh4vauH2eKRQ6/k8txRhA4PamJp681vJMxYa4R0/LFU0gJXGUNzhlq5tfb9D7d/+woA75Xwhix8vg0sqJLZM7XtY=
+	t=1789198907; cv=none; b=lFdBoQSlr1XT5mu8H3kYEJ+3Bqa8TU4GYcGcLYdtMiMPy+qC7Xvn1LYc35txh/42OXTDiL+hXs2DzOGsqzkPZ2uGJa4JfBnRVrOx6ARX+8nB4qoPVHF0hz6q4lmLA5iS9OUxqhml0G59+Eklkh4rpaX86Nv2leScziWNHEiFGMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198900; c=relaxed/simple;
-	bh=SrLllE6okvx7wuQTDHRbmpRb48E6hf326PaeMpFRHxo=;
+	s=arc-20240116; t=1789198907; c=relaxed/simple;
+	bh=dT9vvxK0Zi6upKfGbFmO4Bd16l63gpEn0/rQIMlNl9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5HF/77yHOfQP7fLaPfkU904sYQeBuH6NseYM7dm+rOTllPSuuDSrutLMbOD+nPL2IiTQH7bPjfEmspG0Gnz3nRXoSSlSqh9Wqv/zpoPQhuNnO4sWKHqwAUz/QMWIuPtlpYEA2OTejy5lMoMJxJ9WinVrpK9MM0TZMOnYjC2isU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdoYagti; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ChSp/tb22GwhSzAhkl5FoA8RNXHgSCjjKx6qwlea00msAYyKVlZJ4hy6DLJKaE/IiRzQvEtKOJlNONPR3kEXMuGp1AHKFy77/Cp6RPlVLOeHqFREG9xOc6ecuOc3fFzAVOEBkTnNDJjHEEr9/S0EWrBqd/Ekpu2NREIX1ltQ174=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkIza5Zt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdoYagti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74BF1F000FF;
-	Sat, 12 Sep 2026 07:41:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkIza5Zt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF691F000FF;
+	Sat, 12 Sep 2026 07:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198899;
-	bh=LZuZoIZqIr52s74pOs/iNCR9sJIIEW2tYNwfOS8GXK0=;
+	s=korg; t=1789198904;
+	bh=N/UdOqR0/pZrn+bJWSDvEoNoojX0LV19N8YklMHKi3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TdoYagtiZuBv17T9z29PXV4ER6yIv+8/rzE0gf2Vxay4qhUOQeTbXWAiAY8RdLZ+z
-	 MeNAIt0lhzduLlPiXGxuQuDLYUPPpV2+TUuGb8BYbRPcEofky/j5oodH9Nk/RCOPfw
-	 loehcDD2ip60lIIXJs5Gw7vD2zzbhcQhB5uiphfY=
+	b=lkIza5ZtYFB/r0StIhTRvp5GqfLWtC92GdQE0wCNxcCtMF6e8jgIMQHWfSNmFbsKF
+	 lpQH9Vw+nj0qXVkA1rXIigiwnfTV0RIIivgt9AmEg8tXJ6VNQdSj6HigSsGVqApUdD
+	 gpyzYJVZgcMcYJb7PVOEn3yfiGj+f8o8ZqPm1sqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0475/1815] drm/msm/a6xx: Fix A663 GPUCC register list for state capture
-Date: Sat, 12 Sep 2026 08:37:05 +0200
-Message-ID: <20260912065700.037381939@linuxfoundation.org>
+Subject: [PATCH 7.2 0476/1815] drm/msm/a6xx: Fix A621 GPUCC register list for state capture
+Date: Sat, 12 Sep 2026 08:37:06 +0200
+Message-ID: <20260912065700.063012749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,40 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Jie Zhang <jie.zhang@oss.qualcomm.com>
 
-[ Upstream commit fc7ccbc6174b79ffab5be5dca5b6e253df22f030 ]
+[ Upstream commit d052d0358fb89b59718b9c24871d72006d4b89b0 ]
 
-The GPUCC register list for A663 is incorrect, which can cause
-out-of-bounds register access during GPU state capture.
+A621 uses an incorrect GPUCC register list during state capture.
 
-Update it to use the correct register ranges.
+The existing list matches A623/A663. Rename it accordingly and add a
+dedicated A621 GPUCC register list.
 
-Fixes: 5773cce8615c ("drm/msm/a6xx: Add support for A663")
+Fixes: 11cdb81b3c1b ("drm/msm/a6xx: Fix gpucc register block for A621")
 Signed-off-by: Jie Zhang <jie.zhang@oss.qualcomm.com>
 Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/730656/
-Message-ID: <20260605-assorted-fixes-june-v1-3-2caa04f7287c@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/730659/
+Message-ID: <20260605-assorted-fixes-june-v1-4-2caa04f7287c@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  7 ++++---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 12 ++++++++++++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 166365359fa6d..2a62a22077f92 100644
+index 2a62a22077f92..3ea8ff8c74044 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -1244,7 +1244,9 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+@@ -1244,11 +1244,12 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
  	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[1],
  		&a6xx_state->gmu_registers[1], true);
  
--	if (adreno_is_a621(adreno_gpu) || adreno_is_a623(adreno_gpu))
-+	if (adreno_is_a621(adreno_gpu) ||
-+	    adreno_is_a623(adreno_gpu) ||
-+	    adreno_is_a663(adreno_gpu))
+-	if (adreno_is_a621(adreno_gpu) ||
+-	    adreno_is_a623(adreno_gpu) ||
+-	    adreno_is_a663(adreno_gpu))
++	if (adreno_is_a621(adreno_gpu))
  		_a6xx_get_gmu_registers(gpu, a6xx_state, &a621_gpucc_reg,
  			&a6xx_state->gmu_registers[2], false);
++	else if (adreno_is_a623(adreno_gpu) || adreno_is_a663(adreno_gpu))
++		_a6xx_get_gmu_registers(gpu, a6xx_state, &a623_gpucc_reg,
++			&a6xx_state->gmu_registers[2], false);
  	else
+ 		_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gpucc_reg,
+ 			&a6xx_state->gmu_registers[2], false);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+index b49d8427b59e6..0a13a65f89ac8 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+@@ -377,6 +377,17 @@ static const u32 a6xx_gmu_gpucc_registers[] = {
+ };
+ 
+ static const u32 a621_gmu_gpucc_registers[] = {
++	/* GPU CC */
++	0x24000, 0x2400e, 0x24400, 0x2440e, 0x24800, 0x24805, 0x24c00, 0x24cff,
++	0x25800, 0x25804, 0x25c00, 0x25c04, 0x26000, 0x26004, 0x26400, 0x26405,
++	0x26414, 0x2641d, 0x2642a, 0x26430, 0x26432, 0x26432, 0x26441, 0x26455,
++	0x26466, 0x26468, 0x26478, 0x2647a, 0x26489, 0x2648a, 0x2649c, 0x2649e,
++	0x264a0, 0x264a3, 0x264b3, 0x264b5, 0x264c5, 0x264c7, 0x264d6, 0x264d8,
++	0x264e8, 0x264e9, 0x264f9, 0x264fc, 0x2650b, 0x2650c, 0x2651c, 0x2651e,
++	0x26540, 0x26570, 0x26600, 0x26616, 0x26620, 0x2662d,
++};
++
++static const u32 a623_gmu_gpucc_registers[] = {
+ 	/* GPU CC */
+ 	0x24000, 0x2400e, 0x24400, 0x2440e, 0x25800, 0x25804, 0x25c00, 0x25c04,
+ 	0x26000, 0x26004, 0x26400, 0x26405, 0x26414, 0x2641d, 0x2642a, 0x26430,
+@@ -402,6 +413,7 @@ static const struct a6xx_registers a6xx_gmu_reglist[] = {
+ 
+ static const struct a6xx_registers a6xx_gpucc_reg = REGS(a6xx_gmu_gpucc_registers, 0, 0);
+ static const struct a6xx_registers a621_gpucc_reg = REGS(a621_gmu_gpucc_registers, 0, 0);
++static const struct a6xx_registers a623_gpucc_reg = REGS(a623_gmu_gpucc_registers, 0, 0);
+ 
+ static u32 a6xx_get_cp_roq_size(struct msm_gpu *gpu);
+ static u32 a7xx_get_cp_roq_size(struct msm_gpu *gpu);
 -- 
 2.53.0
 
