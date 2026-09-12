@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E972F531B;
-	Sat, 12 Sep 2026 15:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632D130ACF6;
+	Sat, 12 Sep 2026 15:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225890; cv=none; b=KFIklEZLiUGC9Nmq1tzyPGrzY2gR5aqzn8ozSNBzbOqaH5ECjJVaXlCiXRiysQXYq1GlKDgBKe692tonglBmdnaV6VF8oOqV966t5wDxH0O+7SFUZjgSZonXXgg9Hf29c8R/y8vxq0l3vgNLLi//Z4GYIh4xG4ezXAiXzQ52AEs=
+	t=1789225895; cv=none; b=qDpClHZem5yly4YWwbEBqS5dVAXVB/QMkT6fKnA95mt3pbLgqGYWizH/sPs4z2PwLL6X1GOAY1b66/lVnLbRgGcToBgVqSCrgmUEW96ffVmK8SE3Xq4RBC28EEUMVLzbtuWyxsGJPtozcNrbVUgWkrUhpDDFL8REk/O3lLPT+TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225890; c=relaxed/simple;
-	bh=X9Cia2OmsjEEBeAaqCWg2CB8j0DEdLCAPve1dS9XD88=;
+	s=arc-20240116; t=1789225895; c=relaxed/simple;
+	bh=TQ1c34uje1p0SLN8xLAy4DILGwfg3w6AmAO1VU9wfK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2wF6j2MyM9wclV7s2zOpAy3BG+/gW85szcjtEL0npejrxE7evSlcOP4EWSzsAvvocTudZ6itHbU268CZGzkDvCJxgTq+qLeR0hJWCJphL5JA/iC05Xl4WEUFTBcQBmUIyELqZ2SCp3GqV0dEN+Jd3EIxNgA74dwMqLYDI2zrKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3kFN7f2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kYkKF4m+D7goL0dsubMW7RsQ+qWNJOYM7VzHRIhvZvobwZCFpr4DSBJBK1z6QDHa5WD52xddzE/qQHCRjuoh0jxMjVXkrM37f2D8JfbDpvDDfwlvBjtK/l8XNTR/IIZ9h8qa2GglHAlkqJ18VopZ54Juk5FikKJzsHldZvXOfzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNBVcAOy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3kFN7f2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BA61F000FF;
-	Sat, 12 Sep 2026 15:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNBVcAOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34851F000FF;
+	Sat, 12 Sep 2026 15:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225889;
-	bh=08CoOlwTO+JImXi+kdBHvLswfZOMeZhBBn8pDAuq7BI=;
+	s=korg; t=1789225894;
+	bh=V0rWuhjJLraZf/cml2x1j06LZfJTQWVx7oOoGTxV7q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l3kFN7f28za5eRH9NizqIuWIKewJl3nqh2bVW24JWZAaEhuSLY2qjpUT12mi+j0ps
-	 Tlj0xO/WYQYGWOaJE3n0wQn8BazQfMbY21/sAZtO+xKncCOtxA8vzczqt1miDcke9C
-	 HLUdQ/xCjBO4pnO7bBBpJFHTagDYsQ6jCQbrWzUI=
+	b=xNBVcAOyUsEk9GKgKvZA3Hm/S7VdPwfQZlvk4/M46GFoOHSIMGL1ZIB8EgcbqTdBG
+	 E4HYLnG/hUEP1RZ3CbPsoeifR5tVcaACXdxb+hMgqCdhkrlqN1r5Y8vTOFiWNNDnWh
+	 FMN7XVaa+1n5X5u1hvZLFilK9UFs+t/s5LhdecZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1291/1424] net: Add MDB bulk deletion device operation
-Date: Sat, 12 Sep 2026 09:02:03 +0200
-Message-ID: <20260912065636.182016741@linuxfoundation.org>
+Subject: [PATCH 6.6 1274/1424] net: bridge: vlan: fix inverted default vlan notification
+Date: Sat, 12 Sep 2026 09:01:46 +0200
+Message-ID: <20260912065635.807944118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,49 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 1a36e0f50f963465e9b2b980d250ab38b8fcd7a3 ]
+[ Upstream commit 21040c7f931502070dcc66bb0f1aeed07dec032b ]
 
-Add MDB net device operation that will be invoked by rtnetlink code in
-response to received 'RTM_DELMDB' messages with the 'NLM_F_BULK' flag
-set. Subsequent patches will implement the operation in the bridge and
-VXLAN drivers.
+A notification should be emitted only when the vlan delete was successful
+and not otherwise. The proper check is if br/nbp_vlan_delete returned 0.
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: bc2dc66a6693 ("vxlan: mdb: Fix use-after-free in vxlan_mdb_flush()")
+Fixes: f545923b4a6b ("net: bridge: vlan: notify on vlan add/delete/change flags")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260814141640.64958-1-razor@blackwall.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/bridge/br_vlan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 2b4094ac2e3bc..b6e63bcfff30a 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -1307,6 +1307,9 @@ struct netdev_net_notifier {
-  * int (*ndo_mdb_del)(struct net_device *dev, struct nlattr *tb[],
-  *		      struct netlink_ext_ack *extack);
-  *	Deletes the MDB entry from dev.
-+ * int (*ndo_mdb_del_bulk)(struct net_device *dev, struct nlattr *tb[],
-+ *			   struct netlink_ext_ack *extack);
-+ *	Bulk deletes MDB entries from dev.
-  * int (*ndo_mdb_dump)(struct net_device *dev, struct sk_buff *skb,
-  *		       struct netlink_callback *cb);
-  *	Dumps MDB entries from dev. The first argument (marker) in the netlink
-@@ -1591,6 +1594,9 @@ struct net_device_ops {
- 	int			(*ndo_mdb_del)(struct net_device *dev,
- 					       struct nlattr *tb[],
- 					       struct netlink_ext_ack *extack);
-+	int			(*ndo_mdb_del_bulk)(struct net_device *dev,
-+						    struct nlattr *tb[],
-+						    struct netlink_ext_ack *extack);
- 	int			(*ndo_mdb_dump)(struct net_device *dev,
- 						struct sk_buff *skb,
- 						struct netlink_callback *cb);
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 171d1dddb26a8..67db91022207a 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -1129,7 +1129,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
+ 		if (err)
+ 			goto out;
+ 
+-		if (br_vlan_delete(br, old_pvid))
++		if (!br_vlan_delete(br, old_pvid))
+ 			br_vlan_notify(br, NULL, old_pvid, 0, RTM_DELVLAN);
+ 		br_vlan_notify(br, NULL, pvid, 0, RTM_NEWVLAN);
+ 		__set_bit(0, changed);
+@@ -1151,7 +1151,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
+ 				   &vlchange, extack);
+ 		if (err)
+ 			goto err_port;
+-		if (nbp_vlan_delete(p, old_pvid))
++		if (!nbp_vlan_delete(p, old_pvid))
+ 			br_vlan_notify(br, p, old_pvid, 0, RTM_DELVLAN);
+ 		br_vlan_notify(p->br, p, pvid, 0, RTM_NEWVLAN);
+ 		__set_bit(p->port_no, changed);
 -- 
 2.53.0
 
