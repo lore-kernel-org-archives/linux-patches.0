@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7AC41612A;
-	Sat, 12 Sep 2026 08:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF7929B799;
+	Sat, 12 Sep 2026 08:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202299; cv=none; b=K6Zb98TCRTxrlXli25yHdkq+0FGS1RswYqao9RBT+SJdrlvQfeUhvDHkdX6I4+lYGd46OOtcpzsxA5LinwzYf1+arUeZ3s+b9rxAVOvLuJIzfI2FQClUWtVG3mZu12yYXwlLECPvt8LfHW59kWPX2sHKvFfkpXrNEmswLhxD8Ss=
+	t=1789202303; cv=none; b=Usy13QMk1AOZg5zNjtrOHBQ87JapKczX07MFXuC5OYWROj+52RZ7PKaa23T979CA4tEGKBplksuEY2i5AuF0vHQzCUnXD0RLMTQwTwYPii1sCDlP2UA++cXNGp3BcpFakvfMSBqMFieDYU/vPHZb7KxTL7X6QIOs+gCMVE6dnKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202299; c=relaxed/simple;
-	bh=U4joJ/j8FE3uIIAtZgo2w+9OPVzba4e9yKwiAoV+f0E=;
+	s=arc-20240116; t=1789202303; c=relaxed/simple;
+	bh=OL6AoHpB+nYaetPo3W9+Cx+RQlroQVUo/UZrIIm92gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNU8N8WD7ACb7BP9w3m5Ej+4cRPnHS6KUW6MVR8EHZc+3smcCBpjJafgGDJhA7GQHLSVlISPayiUdO5ZgV0mG7t8yt7A70KPp4pg/O8b0ZkAidKsZ1CD44Mu0Hxo/2cI+2w+CLR6z6uKuo+3I9EBuGL8Accq5ELfmpjJDJL98gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iO3E75vy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nzwCgLhj3amKNWTcaLXcVq2s/kI1rsbJNfXD0054rZQYVMSbqqdCEI0S0UCD3LN49cwZ3zyTZIDjaWoxEUv71ENgq4p1fjwqzDvI6QPLY8tZ7MgPDm+JYqxNcRUKjzaEgE5Qq7lKpYAJmJVUE3tespSTBVTanwH2j6jSo+NtNp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hz71sIgk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iO3E75vy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5991F000FF;
-	Sat, 12 Sep 2026 08:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hz71sIgk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510DF1F000FF;
+	Sat, 12 Sep 2026 08:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202297;
-	bh=LUM1qu9xwaQtqHIhXVm6znbzz3xR9pVdDJgviww2dJ8=;
+	s=korg; t=1789202302;
+	bh=W8VR8cbHo3+vhZTAJFLTTVuZJiRG7L9p7bgwjdTlprs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iO3E75vy93OR1rT6iOENZfUhvPlm3BhOIW9+uqIHTcCi7qMW0B8izAJgB6y1V9Qr1
-	 QIUHBBsrMSoutiDeAdZptKrt4ZL+Cly5NcBFf8JFOGo7VkyDStP3YBKahbawuCfcWU
-	 kBcwvLqj80tGVd9FgFcFaMM37cdOLwrOtnKPXd/0=
+	b=hz71sIgko6/7iFMZHdAUdjmWJfMI9t76xSLtrHykwJEbaPCIB7FwIbOE1lODVm6Xr
+	 /DFldEaCK2KaTbWfzJ6VXPMWYFKNPmbPtMosfF+ANTMdsScb/K/ffCAgfHwfZbcNc1
+	 MvesCngzSo2kCcbphtvQIj506Z4QlyzbbVY4nKps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Rangankar <mrangankar@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1173/1815] scsi: qla2xxx: Remove redundant VPD flash read in sysfs read path
-Date: Sat, 12 Sep 2026 08:48:43 +0200
-Message-ID: <20260912065716.553814469@linuxfoundation.org>
+Subject: [PATCH 7.2 1174/1815] firmware_loader: do not queue completed sysfs fallback requests
+Date: Sat, 12 Sep 2026 08:48:44 +0200
+Message-ID: <20260912065716.576440600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,38 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Rangankar <mrangankar@marvell.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 5cbc49d5c4cd20c18041e86958103045216d2190 ]
+[ Upstream commit b48373c901951fad1a26bd7c33ad91172b3945b5 ]
 
-qla2x00_sysfs_read_vpd() called ha->isp_ops->read_optrom() a second time
-after releasing optrom_mutex. The repeated read is redundant and, unlike
-the first, runs without optrom_mutex held, exposing flash access to
-concurrent optrom operations. Drop the duplicate call.
+fw_load_sysfs_fallback() calls device_add() before adding the fw_priv to
+pending_fw_head. device_add() publishes the fallback loading interface, so
+a userspace helper which discovers the device by scanning sysfs can write 0
+to the loading attribute and complete the request before it is queued as
+pending.
 
-Fixes: 5fa8774c7f38 ("scsi: qla2xxx: Add 28xx flash primary/secondary status/image mechanism")
-Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-7-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+In that interleaving firmware_loading_store() calls fw_state_done() while
+pending_list still points to itself, so it cannot remove an entry from
+pending_fw_head. The subsequent unconditional list_add() then queues an
+already-completed fw_priv. Once the request is released, pending_fw_head
+can retain a pointer to freed memory and the next fallback request can
+fault while validating the list.
+
+Only in-flight fallback requests need suspend or reboot abort handling. If
+the request is already DONE after device_add(), return success from the
+fallback path without sending another uevent, waiting again, or queueing it
+as pending. This preserves the invariant that pending_fw_head contains only
+active fallback requests.
+
+Fixes: 75d95e2e39b2 ("firmware_loader: fix use-after-free in firmware_fallback_sysfs")
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260716081601.1674470-1-mukesh.ojha@oss.qualcomm.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/base/firmware_loader/fallback.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_attr.c b/drivers/scsi/qla2xxx/qla_attr.c
-index 14c3efd0e2109..b3b7cdf0cfa90 100644
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -580,7 +580,6 @@ qla2x00_sysfs_read_vpd(struct file *filp, struct kobject *kobj,
- 	ha->isp_ops->read_optrom(vha, ha->vpd, faddr, ha->vpd_size);
- 	mutex_unlock(&ha->optrom_mutex);
+diff --git a/drivers/base/firmware_loader/fallback.c b/drivers/base/firmware_loader/fallback.c
+index 3ef0b312ae719..00d6b6e594616 100644
+--- a/drivers/base/firmware_loader/fallback.c
++++ b/drivers/base/firmware_loader/fallback.c
+@@ -95,6 +95,16 @@ static int fw_load_sysfs_fallback(struct fw_sysfs *fw_sysfs, long timeout)
+ 		retval = -EINTR;
+ 		goto out;
+ 	}
++
++	/*
++	 * device_add() exposes the loading interface before pending_list is
++	 * linked into pending_fw_head, so fw_state_done() may run first.
++	 */
++	if (fw_state_is_done(fw_priv)) {
++		mutex_unlock(&fw_lock);
++		goto out;
++	}
++
+ 	list_add(&fw_priv->pending_list, &pending_fw_head);
+ 	mutex_unlock(&fw_lock);
  
--	ha->isp_ops->read_optrom(vha, ha->vpd, faddr, ha->vpd_size);
- skip:
- 	return memory_read_from_buffer(buf, count, &off, ha->vpd, ha->vpd_size);
- }
 -- 
 2.53.0
 
