@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96F0428475;
-	Sat, 12 Sep 2026 10:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBC6371889;
+	Sat, 12 Sep 2026 10:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209825; cv=none; b=Pkf6i3G4b9nT2duIbYMAUgsIbJgh9QyHZsuFoVclIVLWV0n+CLT+2WcGzOl2AfzdGCxr4od4PLpOYuWwUle4b2Z/6D+EWw1su6aRszNndR5iQ+++KJvuoVDTPPBRKrIYKlkMIZO2tKokGYuYvnczbJAbLq+SMbHoW/S5kPgfO2s=
+	t=1789209829; cv=none; b=njAxnprNL/rxyxSLDYJsnqaZaIfZLYjWUvtPeQ4SXM55PWCZxrFl9ejK8YvDnQpztzUwLvrDKMi059boTQbmr6OzevDrbpIHjI8ycBwB2L6bEAdEf9g0k8m+JzhzhRrHMymoOkk6HJNOklS5QzD6WasOop8jq+WM2YNrtNxO1+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209825; c=relaxed/simple;
-	bh=XQx/TyGFE+hDsLl4dz7XJalaLXD7hET8Xi8+wg8gPeI=;
+	s=arc-20240116; t=1789209829; c=relaxed/simple;
+	bh=Tdfigm3KlAwReg07s/Vk0k7GgYsF3QyDRO1RQNcjSgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0Mz00RrfueUnAqsxttoGH9WxF5ia+CPQSXKZKWvbwHp1o8cf2U3TpBIdEOyRW1W3ctRW56kEf70EDsmOuF29zGoiReeFxE7bEBEFqy6XQu1SYV0Z42Bu09Ss2naEDa2H+BNJT+czPnLk5FreC1PyFTzK71Y9RNkNpB9ZC947P0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NV5H0/ue; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jJWKU+4wivKkDFXeH+wbzMh3bX9u4EtMEHP5i0Y25dGcf+ArKPuCmI6qAf1ReajrUhKyS4EI65udJx+mJVqHMkAkgFs2Gbhv5zWJB72z09iQqtwDJJC/iRbaKYcmmo6PTJdShUHph9dMIULq3sAAUGlMxYzR7qPUh2QkB8+lfgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMANpCEp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NV5H0/ue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F291F000FF;
-	Sat, 12 Sep 2026 10:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMANpCEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E6B1F000FF;
+	Sat, 12 Sep 2026 10:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209823;
-	bh=WRof4aPltQLtOpLAXhpqRpLwVRk89z4ptrwVP/8WgZE=;
+	s=korg; t=1789209828;
+	bh=fOnbilOdg9ttZ7oOHHDxZGP8vrMfULnJd5cRU5IQack=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NV5H0/uenPXCv1/qssKowt9FUpQuFdolm2MbCp4+STmH2qmVj/7WajJSbbJGf8dZk
-	 nhlevR5IzwcOCLniIygODMvy0PIgt7jQ+7QHO59By4hKRbK35ye6LN4fFdZYzXs/nf
-	 4WxL+w/+n90lezdqmzWha2Z7JtImF6slTKqCbmBU=
+	b=mMANpCEpwrI3ZeLHgS+g7hJbCOg2ecK4NNJ8XhOcI+CZXrAcC2LjRw0bhIEYn3MeF
+	 sXxaTcgOi2SZBUPXOsaN78hirzU9Mdx1C8gdYkJlKes9hHKkaXjKske5POGGusgxfv
+	 CtFZiMOQP8EXv203xDDT6bRD8S5QN5SsiAIJN1S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0900/1518] perf libbfd: Validate BPF prog info arrays before pointer cast
-Date: Sat, 12 Sep 2026 08:51:09 +0200
-Message-ID: <20260912065643.813118642@linuxfoundation.org>
+Subject: [PATCH 6.18 0901/1518] perf bpf: Add PROG_TAGS to required arrays in __bpf_event__print_bpf_prog_info()
+Date: Sat, 12 Sep 2026 08:51:10 +0200
+Message-ID: <20260912065643.835544183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -56,19 +56,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 01765b456f850aed7475b37111f1c50bf76aaf51 ]
+[ Upstream commit 38ba525335c4399b15c9be0f81de304e94ccb462 ]
 
-symbol__disassemble_bpf_libbfd() casts info_linear->info.jited_prog_insns
-and info_linear->info.jited_ksyms to pointers without checking whether
-bpil_offs_to_addr() actually converted the file offsets.  A crafted
-perf.data with PERF_BPIL_* bits unset but non-zero counts causes raw
-file offsets to be dereferenced as pointers.
+synthesize_bpf_prog_name() unconditionally dereferences prog_tags[sub_id]
+(line: u8 (*prog_tags)[BPF_TAG_SIZE] = (void *)(uintptr_t)(info->prog_tags))
+but __bpf_event__print_bpf_prog_info() only requires JITED_KSYMS and
+JITED_FUNC_LENS in its required_arrays bitmask.
 
-Add bitmask checks for PERF_BPIL_JITED_INSNS and PERF_BPIL_JITED_KSYMS
-before the casts, matching the validation added to bpf-event.c call
-sites.
+If a crafted perf.data has the PROG_TAGS bit cleared (or the array was
+invalidated by bpil_offs_to_addr() bounds checking), info->prog_tags
+contains either zero or a raw file offset.  Dereferencing it causes a
+NULL pointer dereference or an arbitrary memory read.
 
-Fixes: 6987561c9e86 ("perf annotate: Enable annotation of BPF programs")
+Add PERF_BPIL_PROG_TAGS to required_arrays so the function returns early
+when prog_tags was not present or failed validation.
+
+Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Cc: Song Liu <songliubraving@fb.com>
 Reviewed-by: Ian Rogers <irogers@google.com>
@@ -77,38 +80,23 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/libbfd.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/perf/util/bpf-event.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index 63ea3fb53e77d..cbd4adb8a1c43 100644
---- a/tools/perf/util/libbfd.c
-+++ b/tools/perf/util/libbfd.c
-@@ -552,6 +552,11 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
- 	info_linear = info_node->info_linear;
- 	sub_id = dso__bpf_prog(dso)->sub_id;
- 
-+	/* jited_prog_insns is only valid if bpil_offs_to_addr() converted it */
-+	if (!(info_linear->arrays & (1UL << PERF_BPIL_JITED_INSNS))) {
-+		ret = SYMBOL_ANNOTATE_ERRNO__BPF_MISSING_BTF;
-+		goto out;
-+	}
- 	info.buffer = (void *)(uintptr_t)(info_linear->info.jited_prog_insns);
- 	info.buffer_length = info_linear->info.jited_prog_len;
- 
-@@ -581,6 +586,12 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
- 	if (disassemble == NULL)
- 		abort();
- 
-+	/* jited_ksyms is only valid if bpil_offs_to_addr() converted it */
-+	if (!(info_linear->arrays & (1UL << PERF_BPIL_JITED_KSYMS))) {
-+		ret = SYMBOL_ANNOTATE_ERRNO__BPF_MISSING_BTF;
-+		goto out;
-+	}
-+
- 	fflush(s);
- 	do {
- 		const struct bpf_line_info *linfo = NULL;
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index 2294336f6e60b..195516356f62b 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -969,7 +969,8 @@ void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear,
+ {
+ 	struct bpf_prog_info *info = &info_linear->info;
+ 	__u64 required_arrays = (1UL << PERF_BPIL_JITED_KSYMS) |
+-				(1UL << PERF_BPIL_JITED_FUNC_LENS);
++				(1UL << PERF_BPIL_JITED_FUNC_LENS) |
++				(1UL << PERF_BPIL_PROG_TAGS);
+ 	__u32 *prog_lens;
+ 	__u64 *prog_addrs;
+ 	char name[KSYM_NAME_LEN];
 -- 
 2.53.0
 
