@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD84345EA7;
-	Sat, 12 Sep 2026 14:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0132623BD06;
+	Sat, 12 Sep 2026 14:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224409; cv=none; b=Gc1x1zLGSOKhPpROOxRulEa61AVpYl7uVN1GGHk4qjpkfazhwONFuHH+iDQl0znAnIYqXasePn24+HhXh+n+LtLAroDCKJKYuyys6S0BpCIsAYlFxRxDCMFJOJJMnkrCFi/5UeJs6bjAEWfyeSY1J5eaXsa5oHeaTSyftthJeK0=
+	t=1789224414; cv=none; b=uaZrRwFuTrhOH2wBp/Fw7FItHLF4g2blZ0ySfdx7ILJ6nlRy3BQKleSgTDSM/R1IMCUsvOvnGjcza/vt3AzU69AZRv1vzMwar2P5uUwC+AFQrmsbmoUV+yDfhr/kjxrfkV4wj5gxqoA713+6oWxHZpByLgYNDm8cqGI74mzlYE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224409; c=relaxed/simple;
-	bh=NjB8A3b0w1fajbgnmhVuGgmB5rLOePR/Rz4Hl280x80=;
+	s=arc-20240116; t=1789224414; c=relaxed/simple;
+	bh=1eisufTeOvDt/Ik5J1h71iMzya7PSDzPRwQUpAqgPwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jn4YVw8FMzEwkiSFVOQesfdz2RmlLWMXSP5v3claoZj8ByPeJm7fwfPrQ4fDHp5MpBSEJhbHeM3oUit6oNknZGyzCfkHjDeuz2cf18h2LGFa8suG1eE8NcvDot4xbNwvN2Ib8W08H+VeCN31ydCa0je2k+s1QhC/yGTF8ACaWSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ku/IXMat; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SPpsunBERZAatqjctEqtYpndlP/2hLGEBojD+1BIKFEHcJ2kE/h8KN4UIcxqi03ZdXV0iyumk+9l9hNmNNA1BYnZ2NDrWbm7x80jWSfnR5MyTCvUvVgMRvhIkstJ2GXehVVp5uIdmm8JLsuXEDg5bsZ1kd8/tW0dvqgGSiKdYQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbyaH4pG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ku/IXMat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93C71F000FF;
-	Sat, 12 Sep 2026 14:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbyaH4pG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFACC1F000FF;
+	Sat, 12 Sep 2026 14:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224408;
-	bh=0NoVq181oFMvUdXyzSvlFclu8aitI3E1BHo9qmGCuCc=;
+	s=korg; t=1789224412;
+	bh=epPdnBvaJBbpmk62BbI3cQjGtOJPZS2MCmwTxQQYpaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ku/IXMatv7XHioNYuoqklCJvHqb0ENQoCc3b7wTzGdqNaoIqcMo6KHkivTRbogkjb
-	 hI0vRze/Luf+cTaN5kvgF59SYmBSOsw7u72gARkG5L6uhuaEYxMwyAC5Xxu/I1vhyd
-	 6MqNGwCHq6r06OYKeG2Odh4bAMVxpHQV2bFg7JK4=
+	b=TbyaH4pGgiCfa9F87TUpI0JugdWQNwI8raujI8GuzjhSvM5UdklzGaSd1JSWSybMl
+	 uRSglgQp7SQs4xn82xmJRPHL0i3R+y+9fsasnqrrgskNpmVXeIdFcYTylerqN3edOX
+	 k7YTNgj5SyGbf7TYo411YJXQRgm+aCkYqryo3VRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Zou <joy.zou@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0986/1424] regulator: core: use system_freezable_wq for init complete work
-Date: Sat, 12 Sep 2026 08:56:58 +0200
-Message-ID: <20260912065629.396956303@linuxfoundation.org>
+Subject: [PATCH 6.6 0987/1424] perf machine: Fix NULL parent dereference in fork event processing
+Date: Sat, 12 Sep 2026 08:56:59 +0200
+Message-ID: <20260912065629.420129134@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,65 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy Zou <joy.zou@oss.nxp.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 03eab318cedd6ae34ecd34533cd986edf5237164 ]
+[ Upstream commit 73ac546bd6ba8ed4dc8d7a90fcb9bb8236de1568 ]
 
-schedule_delayed_work() uses system_wq, which is non-freezable, allowing
-regulator_init_complete_work to run concurrently with system suspend. This
-work fires ~30s after boot to disable unused regulators via I2C. When it
-races with PM suspend, the I2C adapter may already be suspended, triggering
-a -ESHUTDOWN warning in __i2c_transfer():
+machine__process_fork_event() calls machine__findnew_thread() for the
+parent thread, which can return NULL on allocation failure.  The code
+then dereferences parent via thread__pid(parent) without a NULL check
+when validating whether the parent PID matches.  The later NULL check
+at thread__fork() does not prevent this earlier dereference.
 
-  WARNING: ... at __i2c_transfer+0x36c/0x3c8
-  Call trace:
-   __i2c_transfer
-   i2c_transfer
-   regmap_i2c_write
-   _regmap_update_bits
-   regulator_disable_regmap
-   _regulator_do_disable
-   regulator_late_cleanup
-   regulator_init_complete_work_function
-   process_one_work
+Add a NULL guard before accessing the parent thread.
 
-Switch to system_freezable_wq so the work is frozen before any device
-is suspended, eliminating the race.
-
-Fixes: 55576cf18537 ("regulator: Defer init completion for a while after late_initcall")
-Signed-off-by: Joy Zou <joy.zou@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260731-b4-regulator-pf01-v2-1-a406c8737fdb@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5cb73340d92a ("perf tools: Make fork event processing more resilient")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/perf/util/machine.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 3f352d1c64b7d..35729234c375d 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -26,6 +26,7 @@
- #include <linux/regulator/driver.h>
- #include <linux/regulator/machine.h>
- #include <linux/module.h>
-+#include <linux/workqueue.h>
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/regulator.h>
-@@ -6327,8 +6328,9 @@ static int __init regulator_init_complete(void)
- 	 * we'd only do this on systems that need it, and a kernel
- 	 * command line option might be useful.
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index e2a6facd1c4e2..7da4de13951c9 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -2103,7 +2103,8 @@ int machine__process_fork_event(struct machine *machine, union perf_event *event
+ 	 * (fork) event that would have removed the thread was lost. Assume the
+ 	 * latter case and continue on as best we can.
  	 */
--	schedule_delayed_work(&regulator_init_complete_work,
--			      msecs_to_jiffies(30000));
-+	queue_delayed_work(system_freezable_wq,
-+			   &regulator_init_complete_work,
-+			   msecs_to_jiffies(30000));
- 
- 	return 0;
- }
+-	if (thread__pid(parent) != (pid_t)event->fork.ppid) {
++	if (parent != NULL &&
++	    thread__pid(parent) != (pid_t)event->fork.ppid) {
+ 		dump_printf("removing erroneous parent thread %d/%d\n",
+ 			    thread__pid(parent), thread__tid(parent));
+ 		machine__remove_thread(machine, parent);
 -- 
 2.53.0
 
