@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27195412269;
-	Sat, 12 Sep 2026 11:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C76337FF60;
+	Sat, 12 Sep 2026 11:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213818; cv=none; b=LvAbxWY1nUaZR0+RC98hWpUUJ4umb9Kvpu4lxy82Q+nPidWMua1/Zx/QrcGmm1YgK5l4ECFj3wCB410OjGO5UaunM2m41ltQttSu6UqtUmjSkkEFiy2AqO7bw2Zx6zIMDZn8Nxy0muQKNx2AmiZgQy8uIITzBlcya5MN12DRx1U=
+	t=1789213823; cv=none; b=M4VyQxTj1gS18i+fnn44g5yocZxVIeZi2LDcQ3qPP4FP6IaLvTfFORO2QCGqabvwMQM1fPTh3VRbW3T1lFlonGjea3y0nlU84UptK3W3DJSz1LHKpvI3HiVMFDz3Q2Gz7egzdw5ZbvG1kx/cEnzeHuxRvujl2RfzXVakiUVZw5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213818; c=relaxed/simple;
-	bh=CQzvKcliKzjeFNN/V5lwQmjPmsrd/DKWsEROgMzJ6mA=;
+	s=arc-20240116; t=1789213823; c=relaxed/simple;
+	bh=EUXOGlwfok5jM6dlqIlsH1fj0JM/XoriNNKSCYe8Mbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvZQ9tAdSjZbv01C55gZYb4zD75VPL2095Z/9y93kbqhVauYG4yiTFZlpO673ahZkcqZidffsmayHRzzp2qCAULGn270zIg6N7/V9713g3aO2mVhG28AmpBhi74ClescDPaOcvhG/h3kmelEPFz7EiviIAK/K9EPXESaf874Vtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1xx8eGk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S6QXNdc4AlFhDnVKTh5Bl0zD/AZ0nlwPhCk0U1xYhPNMzqOUi71wnsRTNnAmjhfHA/Iq5orq/31sr/n+BOu6KmTIdHeJzAsJonFcX10M9BsjU0eFZ9+bR4kV/zFaPjC0lxpf018f9jcHLSVCOCOl0mvoobipanHXv4ZbSEfkpW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSMP+E0D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1xx8eGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED94A1F000FF;
-	Sat, 12 Sep 2026 11:50:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSMP+E0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39BF1F000FF;
+	Sat, 12 Sep 2026 11:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213817;
-	bh=emKW0NPVskgBFxq0cgLrktEqbxMxl9KtdTWLUmvO7AY=;
+	s=korg; t=1789213822;
+	bh=kEsbtss0Rt7aByrB7dHgMMpAAMfrTskVVE4sGntxIYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k1xx8eGkmvW8zg/G5qhXa35zuOnR2dkzptkIzADmDjO4eejkZ8WopWzOHtYlk4gSm
-	 u/W97WvLDAKlKe7DpcvGiLw/OP2uHRD3lLnwryu9Hz5o3prk5WQYVnosIi9LGhuCS8
-	 DaVw0kxT2BCIAL12poTlH4NkRy8dpReglJNmnl0k=
+	b=VSMP+E0DkoVrajXU2jggQFjhwM4JszWhyPnWOxRXZqEfOnfcF1FoCIRib0pu/jDQ8
+	 L4RakATjkl80NlZwocrkHvUB9Po16j/qKLwpwmiVDLLTD6cI4PibLft6S6RgQvre4s
+	 ZR0UtHSo7bYQbEvCqSCSUtKjeTyDtO/Ms0RfQ2m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moudy Ho <moudy.ho@mediatek.com>,
-	Johan Hovold <johan@kernel.org>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Guoniu Zhou <guoniu.zhou@oss.nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0200/1376] media: platform: mtk-mdp3: fix NULL deref on failed SCP lookup
-Date: Sat, 12 Sep 2026 08:43:46 +0200
-Message-ID: <20260912065612.007365830@linuxfoundation.org>
+Subject: [PATCH 6.12 0201/1376] media: nxp: imx8-isi: Fix stream ID validation bypass in crossbar routing
+Date: Sat, 12 Sep 2026 08:43:47 +0200
+Message-ID: <20260912065612.029935617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,37 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
 
-commit 90368323fb244da0504e3da37a182f8e89bcc3b9 upstream.
+commit 795bd2863591f2fee33fab8f10cf9c383c94342e upstream.
 
-Add the missing sanity check after looking up the SCP to avoid
-dereferencing a NULL-pointer in case its driver has not yet been bound.
+The crossbar routing validation has a critical bug where it validates
+the wrong routing table, allowing userspace to bypass validation entirely.
 
-Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Cc: stable@vger.kernel.org	# 6.1
-Cc: Moudy Ho <moudy.ho@mediatek.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+The __mxc_isi_crossbar_set_routing() function is called to validate and
+apply a new routing table from userspace. However, the validation loop
+iterates over state->routing (the currently active routing table) instead
+of the routing parameter (the new table being validated):
+
+    for_each_active_route(&state->routing, route) {
+
+This means userspace can submit any invalid routing configuration and it
+will pass validation as long as the currently active routing is valid.
+This is a security issue as it allows userspace to configure routes that
+violate hardware constraints, potentially causing undefined hardware
+behavior.
+
+Fix by validating the routing table that will actually be applied.
+
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260720-isi-v2-1-45845bc5d4fa@oss.nxp.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-+++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
-@@ -313,6 +313,11 @@ static int mdp_probe(struct platform_dev
- 		mdp->scp = platform_get_drvdata(mm_pdev);
- 	}
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
+@@ -107,7 +107,7 @@ static int __mxc_isi_crossbar_set_routin
+ 		return ret;
  
-+	if (!mdp->scp) {
-+		ret = -EPROBE_DEFER;
-+		goto err_destroy_clock_wq;
-+	}
-+
- 	mdp->rproc_handle = scp_get_rproc(mdp->scp);
- 	dev_dbg(&pdev->dev, "MDP rproc_handle: %pK", mdp->rproc_handle);
- 
+ 	/* The memory input can be routed to the first pipeline only. */
+-	for_each_active_route(&state->routing, route) {
++	for_each_active_route(routing, route) {
+ 		if (route->sink_pad == xbar->num_sinks - 1 &&
+ 		    route->source_pad != xbar->num_sinks) {
+ 			dev_dbg(xbar->isi->dev,
 
 
