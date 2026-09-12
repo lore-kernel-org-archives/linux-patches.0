@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2D947044B;
-	Sat, 12 Sep 2026 10:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A3F432BD6;
+	Sat, 12 Sep 2026 10:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210791; cv=none; b=SgwHHlIsxC7c4wPktCjULB9K97E/80gQapWUtqhC6l5QJZ88YkLX7HzZ1ww013drXakRa135zj3jJr7tApG2XfwzixL+GkyMf/Jcta1Uea+NqRG2dm64d40nOXiOqP0R2eQmXuN3dXknWdrSEebRMyDJ56OHPbVvS6tsOpFUxCY=
+	t=1789210792; cv=none; b=epun2iHklFJcJqLfKMYjVd+nkS0vyPAv70lmXVu4W+OiO8WR6YEyvWQRZFdLL1nU8nwRdmr8OyVqBmdCTbGIKNisNertaXzXo3ZJKTdx1jXt9DRo1t0j7npUuDk+1XfWt/vfSMx/aRzmJv8+KaVVSyRrMDL/Gd0mAwpWIF46JdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210791; c=relaxed/simple;
-	bh=2W7ESZqc/GIZR91oy2yA7aymS7j1TIsrRSDm9Daz+wA=;
+	s=arc-20240116; t=1789210792; c=relaxed/simple;
+	bh=vHakuZANudJ7XBHKpxti9S2J2vmbWOpL2PC0FMZ+JWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1HxhM+8/A/v59kfLJVm01Onr6J0l6oauDGcTS27nJmckgM1y6sAyPzWuOw6QKSrs6I4zDjG1TvcxWb1VgiHRlvrQRc0BMHgRTmqUTKTK2E1gDp6alR03a7dX3+dcSvANjU+GxM3AqZbXlTcUP7syT2G/jfXiMuz2AitQTccndA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V19p7oFW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y4b2GM+iHQYOwJbPBjUpJWCe2Fe58HUlLb29jxeXxi8CZDLt/yTPPtg2Q8KyeXjTBooL4C7KNWIifYtC9Y+E81kDuddRVTth88nCKzo+wR+htvecriEVxdg59yTHTHMFNrC9DD3fcSgLq+8gDnvpWZHDPgblrdbhVq8C6wW8u0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/UC9nst; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V19p7oFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE2F1F000FF;
-	Sat, 12 Sep 2026 10:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/UC9nst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BAC1F00893;
+	Sat, 12 Sep 2026 10:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210784;
-	bh=mub6Em2TQF5Lar2G5+4lfOrwBnXxRxTNIrchTzbesbo=;
+	s=korg; t=1789210789;
+	bh=F0lTHIj/4HuuDNDqDpl6T3O1lkl4+eALj18qNEnfu2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V19p7oFW0wJ246VqmmHcPD6xp3J96RDLH7dF77lyPVqg2fd7t5ULbJ8ftFrhOe3vS
-	 AqRR1h13JlI6n5MBLvHQukXJcULo06aKNIZ+PFhco2pg8o1JXUrlUfG46bdJm5BUnQ
-	 PTdu5wqHTF/hSM861Cse/aa1Erct15lLoJqG3k44=
+	b=t/UC9nstrPfxuvm75n+a9fNWgRSlRXSL9mAckwlZPUoomuIYX0wRRbukiPQdzZkso
+	 dfmPpcfuXG7ng/9udgda7GMBKHwcsR5QFzlm0+CQFISiHvaxWKbE8tQuzpc75cThC1
+	 +jcpYUO4ZMf7x7+lzdBjU1dE5kI98ysjgeOclOFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Ankit Soni <Ankit.Soni@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1095/1518] apparmor: fix unconfined user namespace restriction forced stack
-Date: Sat, 12 Sep 2026 08:54:24 +0200
-Message-ID: <20260912065648.222908861@linuxfoundation.org>
+Subject: [PATCH 6.18 1096/1518] iommu/amd: Fix incorrect device ID in invalid PASID error message
+Date: Sat, 12 Sep 2026 08:54:25 +0200
+Message-ID: <20260912065648.245762263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,145 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 08c2f7c8d4b1434cfae006f3daf4d1bce330b57b ]
+[ Upstream commit 5322e19fc5acf013784207bc38191cd418a8bb48 ]
 
-If a task is already confined by a stack the unprivileged transition
-restriction on unconfined is not correctly, applied. This results in
-an escape if two transitions through an unconfined profile can be
-executed.
+The IO page fault notifier handler logs pdev->dev.id when reporting an
+invalid PASID, but pdev->dev.id is the kernel-internal device ID and
+not the IOMMU device ID (BDF). Use dev_data->devid instead, which
+reflects actual devid.
 
-Fix this by pushing the check into the per profile label build. The
-check will always be done against unconfined and result in a stack of
-just the unconfined component when necessary.
-
-Fixes: 2d9da9b188b8 ("apparmor: allow restricting unprivileged change_profile")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: 978d626b8f1a ("iommu/amd: Add IO page fault notifier handler")
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/domain.c | 80 +++++++++++++++++++++++++-------------
- 1 file changed, 54 insertions(+), 26 deletions(-)
+ drivers/iommu/amd/ppr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
-index aed9f9fd47d0e..d8f3aba9b358e 100644
---- a/security/apparmor/domain.c
-+++ b/security/apparmor/domain.c
-@@ -874,6 +874,52 @@ static struct aa_label *label_merge_wrap(struct aa_label *a, struct aa_label *b,
- 	return label;
- }
- 
-+static bool is_profile_priv_restricted_to_stack(const struct cred *subj_cred,
-+						struct aa_profile *profile)
-+{
-+	if (profile_unconfined(profile) && profile == profile->ns->unconfined &&
-+	    aa_unprivileged_unconfined_restricted &&
-+	    /* cap_capable returns false (0) if true, hence true here means
-+	     * doesn't have capability and the stack will be restricted
-+	     */
-+	    cap_capable(current_cred(), &init_user_ns, CAP_MAC_OVERRIDE,
-+			CAP_OPT_NOAUDIT))
-+		return true;
-+	return false;
-+}
-+
-+static const char *stack_msg = "change_profile unprivileged unconfined converted to stacking";
-+
-+static struct aa_label *priv_restricted_transition(const struct cred *subj_cred,
-+						   struct aa_profile *profile,
-+						   const char *op, u32 request,
-+						   const char *name,
-+						   struct aa_label *transition,
-+						   gfp_t gfp)
-+{
-+	if (!is_profile_priv_restricted_to_stack(subj_cred, profile))
-+		return aa_get_newest_label(transition);
-+
-+	/* transition allowed but only via stack */
-+	struct aa_label *target = label_merge_wrap(&profile->label,
-+						      transition, gfp);
-+	if (IS_ERR_OR_NULL(target))
-+		return target;
-+
-+	/* doing this here is less than optimal but good enough until the
-+	 * fs mediation rework lands
-+	 */
-+	struct aa_perms perms = {
-+		.allow = request,
-+		.audit = request,
-+	};
-+	aa_audit_file(subj_cred, profile, &perms, op,
-+		      request, name, NULL, target,
-+		      subj_cred->euid, stack_msg, 0);
-+
-+	return target;
-+}
-+
- static struct aa_label *handle_onexec(const struct cred *subj_cred,
- 				      struct aa_label *label,
- 				      struct aa_label *onexec, bool stack,
-@@ -902,7 +948,10 @@ static struct aa_label *handle_onexec(const struct cred *subj_cred,
- 	new = fn_label_build_in_scope(label, profile, GFP_KERNEL,
- 			stack ? label_merge_wrap(&profile->label, onexec,
- 						 GFP_KERNEL)
--			      : aa_get_newest_label(onexec),
-+			      : priv_restricted_transition(subj_cred, profile,
-+						OP_CHANGE_ONEXEC, AA_MAY_ONEXEC,
-+						bprm->filename, onexec,
-+						GFP_KERNEL),
- 			profile_transition(subj_cred, profile, bprm,
- 					   buffer, cond, unsafe));
- 	AA_BUG(!new);
-@@ -1406,8 +1455,6 @@ static int change_profile_perms_wrapper(const char *op, const char *name,
- 	return error;
- }
- 
--static const char *stack_msg = "change_profile unprivileged unconfined converted to stacking";
--
- /**
-  * aa_change_profile - perform a one-way profile transition
-  * @fqname: name of profile may include namespace (NOT NULL)
-@@ -1467,28 +1514,6 @@ int aa_change_profile(const char *fqname, int flags)
- 			op = OP_CHANGE_PROFILE;
+diff --git a/drivers/iommu/amd/ppr.c b/drivers/iommu/amd/ppr.c
+index 80369ca1e316e..1dde19a79e80f 100644
+--- a/drivers/iommu/amd/ppr.c
++++ b/drivers/iommu/amd/ppr.c
+@@ -140,7 +140,7 @@ static void iommu_call_iopf_notifier(struct amd_iommu *iommu, u64 *raw)
+ 	if (event.fault.prm.pasid == 0 ||
+ 	    event.fault.prm.pasid >= dev_data->max_pasids) {
+ 		pr_info_ratelimited("Invalid PASID : 0x%x, device : 0x%x\n",
+-				    event.fault.prm.pasid, pdev->dev.id);
++				    event.fault.prm.pasid, dev_data->devid);
+ 		goto out;
  	}
  
--	/* This should move to a per profile test. Requires pushing build
--	 * into callback
--	 */
--	if (!stack && unconfined(label) &&
--	    label == &labels_ns(label)->unconfined->label &&
--	    aa_unprivileged_unconfined_restricted &&
--	    /* TODO: refactor so this check is a fn */
--	    cap_capable(current_cred(), &init_user_ns, CAP_MAC_OVERRIDE,
--			CAP_OPT_NOAUDIT)) {
--		/* regardless of the request in this case apparmor
--		 * stacks against unconfined so admin set policy can't be
--		 * by-passed
--		 */
--		stack = true;
--		perms.audit = request;
--		(void) fn_for_each_in_scope(label, profile,
--				aa_audit_file(subj_cred, profile, &perms, op,
--					      request, auditname, NULL, target,
--					      GLOBAL_ROOT_UID, stack_msg, 0));
--		perms.audit = 0;
--	}
--
- 	if (*fqname == '&') {
- 		stack = true;
- 		/* don't have label_parse() do stacking */
-@@ -1559,7 +1584,10 @@ int aa_change_profile(const char *fqname, int flags)
- 	/* stacking is always a subset, so only check the nonstack case */
- 	if (!stack) {
- 		new = fn_label_build_in_scope(label, profile, GFP_KERNEL,
--					   aa_get_label(target),
-+				priv_restricted_transition(subj_cred, profile,
-+							   op, request,
-+							   auditname, target,
-+							   GFP_KERNEL),
- 					   aa_get_label(&profile->label));
- 		AA_BUG(!new);
- 		if (IS_ERR(new))
 -- 
 2.53.0
 
