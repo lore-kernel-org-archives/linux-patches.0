@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FC923BD03;
-	Sat, 12 Sep 2026 14:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5803F2E7622;
+	Sat, 12 Sep 2026 14:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224494; cv=none; b=p5rFHJcWtWdsVxdbrOriyE3NEZFcxGbD4svR0cOpV54uNgybyuKsOq7OkulErzEoknJ+kfQtPcK2AWMdrxorMGT2cemi+N5BqzReEzQi4UHNkQYBBDaAAkUrRKLPbkk/LMlcKcV65Orfcfa8FieiB0aA18+iEzgsn+VU2+UyGHs=
+	t=1789224499; cv=none; b=KGMFStTxJ40gmHnv8WawOEbahlB8IUaOYGkMoBTEJ7xa8QNh1c18JwgnGs3v9SKQ+fYYRtllFtpQsEVkfnKzR1f26hx7fSEagjWUo4UHyetrkBCLPnd2uzcRqgeBomwups91bRKdV50m2cTprdjVr7FNn4JiBY6KWIAxqn9LTIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224494; c=relaxed/simple;
-	bh=2mOWIrs7zcvI7pGRFpWXd1D+BiTDonsKD252/mcYSTA=;
+	s=arc-20240116; t=1789224499; c=relaxed/simple;
+	bh=V5ltBBerVq4JUxjRcu4JkfzGmYbJRInur5Fo0Mpk6tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLhQtNNQ8MBCK7QS5ut3ScmMQaCFzmatHdi9Q+Votc+PthQXashBsgewUUfW/XkR32aRQqtZAUrcP7GHi+pPMuxTUKyS3LS+puYGnqrHOOMfaVgxM1+y6ROxRgbIWRKyrpe0WPwoBZ62x1B4HM7DSunTE+JID+wmiqYDqlvIdJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTWck/lY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gApttqR0aSVIw18BSv1yiR2egV0+g4aKw9RacFQRdggrX2WdtCLHj6+67UM4zqbeFGxJVTHi+yzlKXaHMrKtbpHcG9O4bo28l7+BKHZ2Ex6vhA/gvBR3cAav2Y5w1pALPP9jsirb9eGyFUmJq2caw4CrCsO6DUyszwKcIxhCQwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s84p1g2p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTWck/lY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103BC1F00893;
-	Sat, 12 Sep 2026 14:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s84p1g2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B7A1F000FF;
+	Sat, 12 Sep 2026 14:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224493;
-	bh=Tix8R7gblyDRyKuuEuY/qoDoQIwR/vmBP9S/4I0Kpqw=;
+	s=korg; t=1789224498;
+	bh=n/j/tfGTYuNeTRvA02Kf5L1CJQ/6ZnlG57FMduV5Hsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DTWck/lYw619i/ugoN7BHDTtQwNedbdM3iDQgg4s0lSxo7AMDjN8elfNY6Lrfl/uW
-	 L06O8CRV9uFD8aArCVKsIEtYI0g8MIR3wdn/cE9KDHDH6CQn5IEsVkV2xslhrpWt+I
-	 89rBIwcxlvmSPFcH2bHTcJXZYwr4Lh1ID7NUMnY8=
+	b=s84p1g2pjTt98/Lg49YqmpybFOuO5SP72geXPuXm043jdoMgWYI/CXjGC6Ke/Hmq/
+	 pjwJahXPwJoy1pOAMyRrWF2K9GFfL95o97A1Kd1x3PLeIJ1217Kq9K2NzbNavFv/E4
+	 0Ls3kIVvvG8fc41WNS1fMNYG8JjTCR1F/VbBhiRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0950/1424] arm64: dts: qcom: sm8350: Fix the PCIe iommu-map entries
-Date: Sat, 12 Sep 2026 08:56:22 +0200
-Message-ID: <20260912065628.592971547@linuxfoundation.org>
+Subject: [PATCH 6.6 0998/1424] wifi: mt76: mt7915: release hif2 reference on probe IRQ failure
+Date: Sat, 12 Sep 2026 08:57:10 +0200
+Message-ID: <20260912065629.665905253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,56 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 80337ea3a154230621c0b4e3c831f5d81712ba18 ]
+[ Upstream commit 8370aebd26a9dfa2e0de665e3ab504c0e97ee730 ]
 
-The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
-iommu-map entries specify only one cell for the SID, omitting the SID
-mask. This went unnoticed until the OF core started warning with commit
-ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
+The hif2 reference obtained by mt7915_pci_init_hif2() is only released on
+error paths that key off dev->hif2, which is not assigned until after the
+IRQ setup. If pci_alloc_irq_vectors() or the primary devm_request_irq()
+fails, the reference leaks. Drop it explicitly on those paths via
+mt7915_put_hif2().
 
-  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
-
-So fix the entries to match the provider's '#iommu-cells' property.
-
-Fixes: 6daee40678a0 ("arm64: dts: qcom: sm8350: add PCIe devices")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-8-83405d37ba41@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
+Link: https://patch.msgid.link/20260727150434.1778520-4-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 215782b1970df..8ce8e1c1f72d1 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1552,8 +1552,8 @@ pcie0: pci@1c00000 {
- 				      "aggre1",
- 				      "aggre0";
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+index 5a0c9eeb2c4e2..c24f1b12f064f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+@@ -144,16 +144,20 @@ static int mt7915_pci_probe(struct pci_dev *pdev,
+ 		hif2 = mt7915_pci_init_hif2(pdev);
  
--			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
--				    <0x100 &apps_smmu 0x1c01 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1c00 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x1c01 0x0 0x1>;
+ 		ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
+-		if (ret < 0)
++		if (ret < 0) {
++			mt7915_put_hif2(hif2);
+ 			goto free_device;
++		}
  
- 			resets = <&gcc GCC_PCIE_0_BCR>;
- 			reset-names = "pci";
-@@ -1635,8 +1635,8 @@ pcie1: pci@1c08000 {
- 				      "ddrss_sf_tbu",
- 				      "aggre1";
+ 		irq = pdev->irq;
+ 	}
  
--			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
--				    <0x100 &apps_smmu 0x1c81 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1c80 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x1c81 0x0 0x1>;
+ 	ret = devm_request_irq(mdev->dev, irq, mt7915_irq_handler,
+ 			       IRQF_SHARED, KBUILD_MODNAME, dev);
+-	if (ret)
++	if (ret) {
++		mt7915_put_hif2(hif2);
+ 		goto free_wed_or_irq_vector;
++	}
  
- 			resets = <&gcc GCC_PCIE_1_BCR>;
- 			reset-names = "pci";
+ 	/* master switch of PCIe tnterrupt enable */
+ 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0xff);
 -- 
 2.53.0
 
