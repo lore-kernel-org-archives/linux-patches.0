@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D22347884A;
-	Sat, 12 Sep 2026 12:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACC3433BCE;
+	Sat, 12 Sep 2026 12:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214604; cv=none; b=DcIkJeUozxgJEBBiXUzHDuMf02X8JvAxWE2/dwdKTsDqQjqTvUEuUCkisCJPp3/gcjFjDRDunS9xuYa6KbXd6eEjV/ojRL57uTLMBOHGwRnPIomwaQp3m19KlSY6eEmddSIjwpBbGqsrDnt/qy/SeRCJ8YP2WzhxBZDMzYC6Kn8=
+	t=1789214609; cv=none; b=n5qe/QUzwmbD1Ul5YHg8Kpin+pboGO6ANeMiigPUIyXJ5EV7htYHv1MUqvNBYC9l9EBQjtFJ1q2I++OgqpAgLxtAjjrQ5+sqee5YmhIJ+8tnElIkYQYvCSWciNpfncY9Z16wt+Ht06u1c1O6TiPUjMRxD2fgw4+ozr0Yx/TWek0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214604; c=relaxed/simple;
-	bh=8W/p+2vmXsxH+9SSWmkNo5WXfYyqlQMD0JtSOryVlpk=;
+	s=arc-20240116; t=1789214609; c=relaxed/simple;
+	bh=80xgtLIupSz2GQciXaL3PJ7S0LHA8OCYTR/exzfFnR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+pf21x2UMMeT+U6aiOM/NudjghFa8fFH34ANqX/XCq6kX7nsmL7DLrZzabTAKV9widdMUdE8a/I7KnYyZcxpb/ex54jlXnWSIAX085MScbPlHNsd+EBWEzAKtQJNM7x5wwnSz9cvgJ9V1L8iD4T+LBFr5f2ARMsyhgjWrLnw08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=No4aT/Ns; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LoCR8dyxnkTzHBQOVc3etjqhTF7uc3AOsPyJXGit9Dkw7SbUn8gmt9dUumjaI6S8m/SL5VqKJfEha12T+N+Ps7qY756lyMQfTxzeJEHeJFnRmksRylbzV7/8lgpO/E17SgyF4bLJpxkdfxBjNf5fYLx+iHd0s1XrRe1Ap5jX52M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=042FCFvG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="No4aT/Ns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E191F000FF;
-	Sat, 12 Sep 2026 12:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="042FCFvG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9546B1F000FF;
+	Sat, 12 Sep 2026 12:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214602;
-	bh=g4JsrA/21yqRMF7CESc5rutZxgVG8Nm0EyMnz+dJLmA=;
+	s=korg; t=1789214607;
+	bh=TlJoM0uZfAA74rH8GKSbd5clvXziybeXQGBF2MaJ2Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=No4aT/Nsod185bNeGVYaZxaSkNJdshva8ULMEDT3uVebMVwzOrDySkOzZGdtBLs2j
-	 pe+l+14MR3qgfvLvqFRuMwCDEN3MhQ9wZHVfzeXeaNzILDoT7GRmazsCC0Y+NrIWJQ
-	 w+WZ1SM5KzChzOr1ymIZyEZRugca5ga3wxu5SaQg=
+	b=042FCFvGeA9KObf7/hULtZ81+Wi7b9d5ZdPTQI9MeR0hblxJ1UuFpqYMwM3NhbIkS
+	 o8hztmL935a5NQiheI5/tXDJRg4t83LwR8ccE6e1ifJOOc6N5Tz9CThW32/S1+nuOT
+	 lnKnzL0BcktGf4mbTkaphhALIxoYo5Q5pCXDwgNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0333/1376] clk: nuvoton: ma35d1-pll: convert from round_rate() to determine_rate()
-Date: Sat, 12 Sep 2026 08:45:59 +0200
-Message-ID: <20260912065614.969651793@linuxfoundation.org>
+Subject: [PATCH 6.12 0360/1376] perf tests: Fix flakiness in BPF counters test on hybrid systems
+Date: Sat, 12 Sep 2026 08:46:26 +0200
+Message-ID: <20260912065615.574776230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,92 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit cd9e9bbfd93be277e316ee854614e2c4cd502fa8 ]
+[ Upstream commit b02027776ac5bf737f1b76f3759f405e376097e5 ]
 
-The round_rate() clk ops is deprecated, so migrate this driver from
-round_rate() to determine_rate() using the Coccinelle semantic patch
-on the cover letter of this series.
+The `perf stat --bpf-counters test` fails intermittently on hybrid
+architectures or systems with dynamic frequency scaling (DVFS). This
+happens because the test workload (`sqrtloop`) runs for a fixed 1-second
+duration, and the CPU frequency can scale dynamically between idle and
+maximum frequency. As the first run runs on a cold CPU and the second run
+runs on a warmed-up CPU (or vice versa), the number of instructions
+executed in 1 second differs by up to 2.2x, violating the comparison
+tolerance.
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Stable-dep-of: e1311954cb60 ("clk: nuvoton: ma35d1: fix ma35d1_clk_pll_determine_rate logic")
+Also, when running as root, BPF tracepoints and scheduling programs
+trigger frequently. Since standard `perf stat -e instructions` measures
+both user and kernel space instructions, it counts BPF helper and program
+execution overheads, whereas the BPF counters themselves do not self-
+measure. This introduces a large kernel-space instruction count
+discrepancy between standard and BPF counters.
+
+Fix these issues by:
+1. Switching the workload to a strictly deterministic, iteration-based
+   workload: `awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }'`. We pin
+the
+   workload to a single random allowed CPU using `taskset -c $CPU` via a
+bash array.
+2. Restricting the counted event to user-space only (`instructions:u` or
+`/u`).
+3. Tightening the comparison tolerance from 20% to 15%.
+
+These modifications isolate the measurements to user-space instructions of
+the deterministic loop, which executes a virtually identical number of
+instructions on both runs (with less than 0.001% variation), eliminating
+Dynamic Frequency Scaling (DVFS), kernel scheduling noise, and BPF helper
+self-measurement overheads.
+
+Fixes: 2c0cb9f56020 ("perf test: Add a shell test for 'perf stat --bpf-counters' new option")
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nuvoton/clk-ma35d1-pll.c | 28 ++++++++++++++++++----------
+ tools/perf/tests/shell/stat_bpf_counters.sh | 28 +++++++++++++--------
  1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/clk/nuvoton/clk-ma35d1-pll.c b/drivers/clk/nuvoton/clk-ma35d1-pll.c
-index 64f473fd770bc..eb9d69d2077b1 100644
---- a/drivers/clk/nuvoton/clk-ma35d1-pll.c
-+++ b/drivers/clk/nuvoton/clk-ma35d1-pll.c
-@@ -244,35 +244,43 @@ static unsigned long ma35d1_clk_pll_recalc_rate(struct clk_hw *hw, unsigned long
- 	return 0;
- }
+diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
+index b776ee2e445a6..76d4a7f15a43d 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters.sh
+@@ -4,21 +4,26 @@
  
--static long ma35d1_clk_pll_round_rate(struct clk_hw *hw, unsigned long rate,
--				      unsigned long *parent_rate)
-+static int ma35d1_clk_pll_determine_rate(struct clk_hw *hw,
-+					 struct clk_rate_request *req)
+ set -e
+ 
+-workload="perf test -w sqrtloop"
++# Get the first allowed CPU
++CPU=$(taskset -c -p $$ | awk -F': ' '{print $2}' | awk -F'[,-]' '{print $1}')
++if [ -z "$CPU" ]; then
++	CPU=0
++fi
++workload=(taskset -c "$CPU" awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }')
+ 
+-# check whether $2 is within +/- 20% of $1
++# check whether $2 is within +/- 15% of $1
+ compare_number()
  {
- 	struct ma35d1_clk_pll *pll = to_ma35d1_clk_pll(hw);
- 	u32 reg_ctl[3] = { 0 };
- 	unsigned long pll_freq;
- 	long ret;
+ 	first_num=$1
+ 	second_num=$2
  
--	if (*parent_rate < PLL_FREF_MIN_FREQ || *parent_rate > PLL_FREF_MAX_FREQ)
-+	if (req->best_parent_rate < PLL_FREF_MIN_FREQ || req->best_parent_rate > PLL_FREF_MAX_FREQ)
- 		return -EINVAL;
+-	# upper bound is first_num * 120%
+-	upper=$(expr $first_num + $first_num / 5 )
+-	# lower bound is first_num * 80%
+-	lower=$(expr $first_num - $first_num / 5 )
++	# upper bound is first_num * 115%
++	upper=$(expr $first_num + $first_num / 20 \* 3 )
++	# lower bound is first_num * 85%
++	lower=$(expr $first_num - $first_num / 20 \* 3 )
  
--	ret = ma35d1_pll_find_closest(pll, rate, *parent_rate, reg_ctl, &pll_freq);
-+	ret = ma35d1_pll_find_closest(pll, req->rate, req->best_parent_rate,
-+				      reg_ctl, &pll_freq);
- 	if (ret < 0)
- 		return ret;
- 
- 	switch (pll->id) {
- 	case CAPLL:
- 		reg_ctl[0] = readl_relaxed(pll->ctl0_base);
--		pll_freq = ma35d1_calc_smic_pll_freq(reg_ctl[0], *parent_rate);
--		return pll_freq;
-+		pll_freq = ma35d1_calc_smic_pll_freq(reg_ctl[0], req->best_parent_rate);
-+		req->rate = pll_freq;
-+
-+		return 0;
- 	case DDRPLL:
- 	case APLL:
- 	case EPLL:
- 	case VPLL:
- 		reg_ctl[0] = readl_relaxed(pll->ctl0_base);
- 		reg_ctl[1] = readl_relaxed(pll->ctl1_base);
--		pll_freq = ma35d1_calc_pll_freq(pll->mode, reg_ctl, *parent_rate);
--		return pll_freq;
-+		pll_freq = ma35d1_calc_pll_freq(pll->mode, reg_ctl, req->best_parent_rate);
-+		req->rate = pll_freq;
-+
-+		return 0;
- 	}
-+
-+	req->rate = 0;
-+
- 	return 0;
+ 	if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
+-		echo "The difference between $first_num and $second_num are greater than 20%."
++		echo "The difference between $first_num and $second_num are greater than 15%."
+ 		exit 1
+ 	fi
  }
- 
-@@ -311,12 +319,12 @@ static const struct clk_ops ma35d1_clk_pll_ops = {
- 	.unprepare = ma35d1_clk_pll_unprepare,
- 	.set_rate = ma35d1_clk_pll_set_rate,
- 	.recalc_rate = ma35d1_clk_pll_recalc_rate,
--	.round_rate = ma35d1_clk_pll_round_rate,
-+	.determine_rate = ma35d1_clk_pll_determine_rate,
- };
- 
- static const struct clk_ops ma35d1_clk_fixed_pll_ops = {
- 	.recalc_rate = ma35d1_clk_pll_recalc_rate,
--	.round_rate = ma35d1_clk_pll_round_rate,
-+	.determine_rate = ma35d1_clk_pll_determine_rate,
- };
- 
- struct clk_hw *ma35d1_reg_clk_pll(struct device *dev, u32 id, u8 u8mode, const char *name,
+@@ -41,11 +46,12 @@ check_counts()
+ test_bpf_counters()
+ {
+ 	printf "Testing --bpf-counters "
+-	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
++	base_instructions=$(perf stat --no-big-num -e instructions:u -- "${workload[@]}" 2>&1 | \
+ 				awk -v i=0 -v c=0 '/instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+ 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+-	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
++	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions:u \
++				-- "${workload[@]}"  2>&1 | \
+ 				awk -v i=0 -v c=0 '/instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+ 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+@@ -57,7 +63,9 @@ test_bpf_counters()
+ test_bpf_modifier()
+ {
+ 	printf "Testing bpf event modifier "
+-	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
++	stat_output=$(perf stat --no-big-num \
++		-e instructions/name=base_instructions/u,instructions/name=bpf_instructions/bu \
++		-- "${workload[@]}" 2>&1)
+ 	base_instructions=$(echo "$stat_output"| \
+ 				awk -v i=0 -v c=0 '/base_instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
 -- 
 2.53.0
 
