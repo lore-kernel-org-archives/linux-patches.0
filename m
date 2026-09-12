@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEB541A575;
-	Sat, 12 Sep 2026 09:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7F63AFD15;
+	Sat, 12 Sep 2026 09:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203685; cv=none; b=VsW/olB85hvHkx1dpiBQ+DqYlqxE+Mhn2uLwih9facyRJMRedMM5XKQRvxBepPuc34xiCg0FiVH7VkT2ZOLQPxmIl3w5XOkZGSEKwDxxc1xNd/D1c0ENsrTO+HinXOuAlvG7OnF4QWWRSCIdDICCDF4bRoT5kAljyXmzRpZVhyY=
+	t=1789203690; cv=none; b=sM2IbDeaoZomy6Ew9nqJt4mgoYL+gEHzlRqJPjSgJjmpFTgnJzZnECmQc662JqUFzsihvlc2J7vGI74rvcJ39oyA10u8/EwjfyBmdVnihfCBhVyjxl7AKb0rYyW03KR50I5UghpfJVK20iml4IOVflIt1OfTAClnzqAdfV7MiTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203685; c=relaxed/simple;
-	bh=ma8lVRz5/2FyYvE4cMH3+0okuXjAsxkE9sZ7zHeCe4U=;
+	s=arc-20240116; t=1789203690; c=relaxed/simple;
+	bh=0tuT0Oe+JEAeKC2u30PGlsTYRQWw4cWZHtYwq3dC+xE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRxVxvpMu9pG8JhkrQdBgcfkVDLFlaYFXj/Yd4UL2oIIAQU79ipIOzMRK2RJIWtZ4CRs2xrAHErTq6MYmj8LdUrQfIZ7CqDYhnPr9jhdf2PNL+yxWrFfTW4RgUSTyckFWsZUzYxV6rQMG7jfjAJmsjgasAUkQwsBGHq0wI4spuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4sNTI19; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pnMg2BCTLsZ3EU2EWpsb/kS1Gr18fgSYoNhNy9Rpmy/Vp3nf484Dhf462wzGGhHGTq+hwa87I/4+VB9qdqQ0+twUGYJu2mr+fNfb6+K0YIy8J5TeAhdXS06N1j88gXyfQlkgdlWdpqkq0qllNTJkxaH7vJ0Wr7gqSlMB3aSClDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mobq09vh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4sNTI19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6891F00899;
-	Sat, 12 Sep 2026 09:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mobq09vh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC9F1F000FF;
+	Sat, 12 Sep 2026 09:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203684;
-	bh=cfhHH2XkZbv3HUd1LGLTcm9eqKvIjTM17NO97nIz6Ew=;
+	s=korg; t=1789203689;
+	bh=wbvw1lIE4HLexpUDstQlRugmm/z5gOL5L6hEdT3xzwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N4sNTI19CmK9gIdXCZrUV5377mxKZYffZT3nFuf+4cX3FfN77icrGb5MbTMPQVHu5
-	 l+vcNVq/mSPkkCqVSO1gU9ZyTM179gKJNH/wZdNGpLbulKhcUEDUJRPuzZ4pfFfr4Y
-	 UEpWLbjP44yWHzrrsf/KElCfNsqlMJp0Pr2+vryU=
+	b=Mobq09vhpBicwGhIIFLe2V8cJNf3MrmdkgzrpVmvFrtmWwAyehX+L8a6ojSotUZyw
+	 IZ//UZkgm9Y6dsQwh6rHvGLmnKFjac6z6qzUjLUpmm2W3FgUid5CXAiGH4t2Wf9OTN
+	 652MDlR5Yqc3sB9B3BSKCrIwDOernHbuAtm5VJ5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykyta Yatsenko <yatsenko@meta.com>,
+	Pu Lehui <pulehui@huawei.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1456/1815] bpf: Fix arm64 KASAN false positive after bpf_throw
-Date: Sat, 12 Sep 2026 08:53:26 +0200
-Message-ID: <20260912065723.195031484@linuxfoundation.org>
+Subject: [PATCH 7.2 1457/1815] riscv, bpf: Fix missing sign-ext for signed 1-byte and 2-byte kfunc args
+Date: Sat, 12 Sep 2026 08:53:27 +0200
+Message-ID: <20260912065723.218083074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,47 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit b0e872a31e157d48479507c2821ba8bf6323b7ad ]
+[ Upstream commit f2aaa621591093cfe8224a25ef2f04a3b1e304b0 ]
 
-arm64 passes zero as the stack pointer while walking BPF frames, so
-bpf_throw() leaves stale KASAN stack poison after jumping to the
-exception callback.
+On RV64, the ABI requires sign-extension for signed 1-byte and 2-byte kfunc
+args. However, the RV64 JIT currently does not perform sign-extension for
+such kfunc args.
 
-Use the frame pointer as the fallback stack watermark.
+Before commit 7ce090afbf72 ("bpf: Infer zext_dst based on static register
+liveness analysis"), state pruning could potentially omit zero-extension
+of 32-bit subregisters, which inadvertently masked the above issue by making
+the args appear as if they had been properly sign-extended. After that
+commit, the problem is exposed, causing the kfunc_call/kfunc_call_test4
+selftest to fail.
 
-Fixes: e74cb1b42213 ("arm64: stacktrace: Implement arch_bpf_stack_walk() for the BPF JIT")
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Fix this by extending the existing sign-extension logic to handle signed
+1-byte and 2-byte kfunc args as well.
+
+Fixes: 443574b03387 ("riscv, bpf: Fix kfunc parameters incompatibility between bpf and riscv abi")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/bpf/20260812-hello_world-v1-1-c3c2ddcb362d@meta.com
+Link: https://lore.kernel.org/bpf/20260814064726.3607615-1-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 88b38db47de92..61805d8c95aef 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -3395,11 +3395,13 @@ __bpf_kfunc void bpf_throw(u64 cookie)
- 		WARN_ON_ONCE(!ctx.aux->exception_boundary);
- 	WARN_ON_ONCE(!ctx.bp);
- 	WARN_ON_ONCE(!ctx.cnt);
--	/* Prevent KASAN false positives for CONFIG_KASAN_STACK by unpoisoning
-+	/*
-+	 * Prevent KASAN false positives for CONFIG_KASAN_STACK by unpoisoning
- 	 * deeper stack depths than ctx.sp as we do not return from bpf_throw,
--	 * which skips compiler generated instrumentation to do the same.
-+	 * which skips compiler generated instrumentation to do the same. Some
-+	 * architectures cannot recover sp while unwinding, so fall back to bp.
- 	 */
--	kasan_unpoison_task_stack_below((void *)(long)ctx.sp);
-+	kasan_unpoison_task_stack_below((void *)(long)(ctx.sp ?: ctx.bp));
- 	ctx.aux->bpf_exception_cb(cookie, ctx.sp + ctx.aux->stack_arg_sp_adjust, ctx.bp, 0, 0);
- 	WARN(1, "A call to BPF exception callback should never return\n");
- }
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index a5b987a824e38..a3af5070ac66d 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -1830,9 +1830,10 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 
+ 			for (idx = 0; idx < fm->nr_args; idx++) {
+ 				u8 reg = bpf_to_rv_reg(BPF_REG_1 + idx, ctx);
++				bool sign = fm->arg_flags[idx] & BTF_FMODEL_SIGNED_ARG;
+ 
+-				if (fm->arg_size[idx] == sizeof(int))
+-					emit_sextw(reg, reg, ctx);
++				if (sign_extend(reg, reg, fm->arg_size[idx], sign, ctx))
++					return -EINVAL;
+ 			}
+ 		}
+ 
 -- 
 2.53.0
 
