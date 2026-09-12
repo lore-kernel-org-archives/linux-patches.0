@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7014038F255;
-	Sat, 12 Sep 2026 19:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FB238F236;
+	Sat, 12 Sep 2026 19:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242769; cv=none; b=bJQz+qq0J78WQDZwSAtPzEY1j2DfkSoQ8o6o/isaNhGrgc9RVvYp8p0aVCIfevKiArRIq6bKKCI4rGwYGGY6RkrhYBhI9kEoGtzl2Y/XLPoUC00oQLO7l74dMGFhkIq2a1U+MLk3VtP11nBKiFvy9SdXkisTa6dfOWIyqW8mQtk=
+	t=1789242773; cv=none; b=Fdq/qxRz3TRrxLq5SEPuVDuwKLT5EK0T+EQNcps8TSrKm7G7fWZBBhaH0S85K7MJWaU/lLJ9Zykf+eJki5P9sY+5FUJk73vjVTT9MnGQxTuVszTHIHUY/3seo/iTct7fJVUtSm3ygapPOJAWcTEsnbLRPHu0Yc8i1FZhiwpi9o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242769; c=relaxed/simple;
-	bh=tZgzeFkRZkNhp7nszQsmu32RpegEIvzbvgkqlQYDdEo=;
+	s=arc-20240116; t=1789242773; c=relaxed/simple;
+	bh=phgpN9UVKsg6orID/oKHjtLTyKzMBFKvb4hLFZ8rZ4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F45GBPSM/ESfhv4xl+sTiNbD5LEADhxJBYbPfGvmnuHEvIt4yZCZeZNLHrfEtkO3Wf1U4uBuvCGhy+494bFDOrko+Nqo2SQOiXJ+Xpzyz5yoKXDqfi0EomA0NaiG5EI3ceQ584f+7l7hwo1L+YI/zEZcmwCaunra722Jffpj6bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHuQpJ/Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F3gFwl9fqlXMy3tk9kYpJi8bCbocs09e7d+mNht9dZ4DtU4vVmbaQEij9qAlDBpP6ok8uQTURV26j/v53OAaFQ+YacPBCf3mRRX2tEaut0I8JJTaFwfJFzTG6/4UkJpEs7RV6NRUYCZyLTouzXQx53EXuosygRM95u1c7Qc92/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QH2AMLv2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHuQpJ/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1421F000FF;
-	Sat, 12 Sep 2026 19:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QH2AMLv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3031F00898;
+	Sat, 12 Sep 2026 19:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242768;
-	bh=YNc6/r9Aed3i7yB1XD0jsyz/N+lTIeKmD2LAkEBdl1Q=;
+	s=korg; t=1789242771;
+	bh=tkLIx5MX5V4L6ShYwzcoACzt3c1BWqsaxCwa8DHuITo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nHuQpJ/ZzD3iFc8sN0lM2xLG9RjKQTYcfw2yDC7VF1j9SvH0ODgLw/0GVt8EBvpAi
-	 RokVbQeAEp5WTkk0+n92h0H6yzsq+na6RYppkNLG/pYaMgJwAG3SqxKLEKVPIgYkKl
-	 BlUrzH1+YUw31MgZ5IcDhrqg8KlfFJGpa08AU6qA=
+	b=QH2AMLv2SSR0TiLaJBko6yCPMNhJDRSOPKAa+jiYnIOrWNxIx0HBLeToAqoQF/FFv
+	 SzqKCS4HlxvRUm4cGxICG43oyWV2260GCtTXKrdkACPN/Zj05Bsx3Pn0zqB7juIoLy
+	 d6L8Z91WtVb7TgYrwilGS1meWuPvUUP8b2kAUZeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
+	Md Shofiqul Islam <shofiqtest@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 477/798] dmaengine: dw-edma: Serialize channel state checks
-Date: Sat, 12 Sep 2026 09:01:45 +0200
-Message-ID: <20260912065528.075074071@linuxfoundation.org>
+Subject: [PATCH 5.10 468/798] soc: ti: knav_qmss_queue: Implement resource cleanup in remove()
+Date: Sat, 12 Sep 2026 09:01:36 +0200
+Message-ID: <20260912065527.871990865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,73 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Md Shofiqul Islam <shofiqtest@gmail.com>
 
-[ Upstream commit f7d1619f3e10c619b62c6cd6d95371b5c526c85a ]
+[ Upstream commit 10a1969353b20caa50c320717e054601631c0d3e ]
 
-pause() and resume() read and update channel state without holding vc.lock,
-while the interrupt handlers update the same state under it. Take the same
-lock around those state checks so that request, status, and configured stay
-consistent.
+Implement the TODO in knav_queue_remove() by stopping PDSPs and
+freeing queue regions and queue ranges before disabling runtime PM,
+mirroring the cleanup performed in the probe error path.
 
-For example, pause() can observe EDMA_ST_BUSY right before the interrupt
-handler completes the final descriptor and moves the channel to
-EDMA_ST_IDLE, and then record EDMA_REQ_PAUSE on an already idle channel. No
-further interrupt will acknowledge the request, and since issue_pending()
-requires EDMA_REQ_NONE, the channel is wedged for good: terminate_all()
-leaves the stale request behind, so even reconfiguring the channel does not
-recover it.
+Set device_ready to false before cleanup to prevent any further
+use of the device during teardown.
 
-issue_pending() already runs under vc.lock, but it tests configured before
-taking it. Move that test under the lock as well, so configured, request,
-and status are evaluated as one channel-state snapshot.
+This ensures resources are released on driver unbind and avoids
+leaking queue/region state.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260717180639.2643243-6-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Suggested-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Md Shofiqul Islam <shofiqtest@gmail.com>
+Link: https://lore.kernel.org/linux-arm-kernel/20260506154114.2288-1-shofiqtest@gmail.com/
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: 3c8178627599 ("soc: ti: knav_qmss: Remove debugfs file on teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/soc/ti/knav_qmss_queue.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index b740dbc878f5c..5de7586b2b601 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -216,6 +216,8 @@ static int dw_edma_device_pause(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	int err = 0;
+diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
+index 20c84741639e1..1075ab64fd320 100644
+--- a/drivers/soc/ti/knav_qmss_queue.c
++++ b/drivers/soc/ti/knav_qmss_queue.c
+@@ -1885,7 +1885,12 @@ static int knav_queue_probe(struct platform_device *pdev)
  
-+	guard(spinlock_irqsave)(&chan->vc.lock);
+ static int knav_queue_remove(struct platform_device *pdev)
+ {
+-	/* TODO: Free resources */
++	struct knav_device *kdev = platform_get_drvdata(pdev);
 +
- 	if (!chan->configured)
- 		err = -EPERM;
- 	else if (chan->status != EDMA_ST_BUSY)
-@@ -233,6 +235,8 @@ static int dw_edma_device_resume(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	int err = 0;
- 
-+	guard(spinlock_irqsave)(&chan->vc.lock);
-+
- 	if (!chan->configured) {
- 		err = -EPERM;
- 	} else if (chan->status != EDMA_ST_PAUSE) {
-@@ -282,11 +286,9 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	unsigned long flags;
- 
--	if (!chan->configured)
--		return;
--
- 	spin_lock_irqsave(&chan->vc.lock, flags);
--	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
-+	if (chan->configured && vchan_issue_pending(&chan->vc) &&
-+	    chan->request == EDMA_REQ_NONE &&
- 	    chan->status == EDMA_ST_IDLE) {
- 		chan->status = EDMA_ST_BUSY;
- 		dw_edma_start_transfer(chan);
++	device_ready = false;
++	knav_queue_stop_pdsps(kdev);
++	knav_queue_free_regions(kdev);
++	knav_free_queue_ranges(kdev);
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	return 0;
 -- 
 2.53.0
 
