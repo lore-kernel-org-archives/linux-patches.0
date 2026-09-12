@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAF22FFF90;
-	Sat, 12 Sep 2026 18:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4602FFF90;
+	Sat, 12 Sep 2026 18:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236986; cv=none; b=sHyG8zdk/Mv2smJdtCBkGzMlE2+tQ+VnYgs3Q75kQr/o5OGxuqfyhn59/dygE6UY72L3ZoFwlyu3v39zlly5VGQvq2xtmhdTU16vjAC+Zj8aBZaRsLPJTopC32ax734A/JQlRrDEbULEyEGNqjubJ7d6rNOOyHseI88H6DorUlQ=
+	t=1789236991; cv=none; b=WzqzNQZF+RJ16D5VKMqwQEtxAafCjicLWXUAt/lAJz51rTmeCjHB1YbSfRCUWkxy/oPB3+aCv59mQd6fJYmzqVhWWJzpBETS/exyPr5LikwG7xecAjPAsVguMpM/FgzGcZ7rhYtULM6I9uj8tp04PlUuJdmbMPI36JsoJ5B6+ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236986; c=relaxed/simple;
-	bh=uQUJMeOZRJmQ2d964QMvh7NYb9UUWSiNYetkS1AC44g=;
+	s=arc-20240116; t=1789236991; c=relaxed/simple;
+	bh=UTo9iEZaOt/qzOBjnPe7fAZ4mzDxSCnG2bYh6MBSYxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cQoAYvGpM+pGjfEzq9QxBmotCExWXG/pyEC4TqZkch5dKn3PtzTwYhntP3SleVq7m3aQU6Grm5TfULyZnkYNixeKlk1ysQaZpS4/2MBHHgP0OTVxcX9scdaURubbg4KMPUnfhYGwDTvX1so15z7BIUmhoqTBGl9CEyNqjADcldw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyb6i5Tz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CR4dFrKY4ixBOlWji3LD0o/1pGU8o0P0oxZ6uex2PLXTTjQOOthaSHuSDa+SXY2gMwDiMrzJe20m7MN8Vieb6x6u9/D/XTP1F7yLPDBfjP/4MNw6R8rLIlPrv1ZU70p2Z2dkPFQtkGKSRMFjzmE2wF0kojAZ/qT6KdVSOt2UAik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIRAuhbY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyb6i5Tz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC3921F000FF;
-	Sat, 12 Sep 2026 18:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIRAuhbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8531F000FF;
+	Sat, 12 Sep 2026 18:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789236985;
-	bh=ki5iNiVdGBe4MmJpxEpZ1PWgCBNVeeA/6LjQc1FG+ms=;
+	s=korg; t=1789236990;
+	bh=u7ZT3+HR+VOTALRRCStIR9RuzIaoeu5dy3OLh3iy1Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gyb6i5TzjMHjiaBw2B/yu1/iX80QYb60IFmjKb9boh+s6SdwrVmJdNuoC/jRylvDD
-	 qFAc/nwXOwGoYjFEXEXQ6n65jH7VwM80OjBbbC39hkup2lKe18ZiAIb6KagVGGqp55
-	 mEFv9xwbdvWqSkMPnVgnojgVXIF0DtXKOBAYjbdQ=
+	b=vIRAuhbYUZKt0bVSdtZYbPYxK4QhRRQqCGu2opq2g8WPfSn4iWLQpawJBny4Qsca7
+	 fXPWHB+q2aX/l8dWZHxBN5Atoqod8KBH4bOs3jLFAd4LvhrH6c89uYFDX5QFlxhoVN
+	 s69Ph84LEfwMLZ6rtp+B1ALs4zLLaRkzHmwe/Rlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 5.15 165/935] PCI/proc: Use file_ns_capable() when checking config space read access
-Date: Sat, 12 Sep 2026 08:53:15 +0200
-Message-ID: <20260912065530.604079447@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 5.15 166/935] iommu/vt-d: Fix no_iommu to disable platform opt-in
+Date: Sat, 12 Sep 2026 08:53:16 +0200
+Message-ID: <20260912065530.625359809@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -44,67 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Kevin Tian <kevin.tian@intel.com>
 
-commit f82f53e75eff382fc8f56b73279b54f7cf5a5c65 upstream.
+commit 219cc978d69ce9b538d0d73936c569d4ca5b0a24 upstream.
 
-proc_bus_pci_read() decides how much of the config space is readable based
-on capable(CAP_SYS_ADMIN), which checks the credentials of the task calling
-read(), not the credentials of the process that opened the file.
+If user explicitly requests to disable iommu (via "iommu=off" or
+"intel_iommu=off"), there is no reason to force enabling it due
+to platform opt-in (for external-facing devices). User should be
+aware of any security implication of doing so.
 
-The sysfs equivalent, pci_read_config(), has checked the credentials of the
-opening process since commit de139a339395 ("pci: check caps from sysfs file
-open to read device dependent config space"), so a privileged process can
-open the config space file and pass the file descriptor to an unprivileged
-process (for example, a process running a KVM guest with an assigned
-device), which can then read the entire config space.  The check was
-subsequently routed through the LSM framework in commit 47970b1b2aa6 ("pci:
-use security_capable() when checking capablities during config space read")
-and converted to the dedicated helper in commit ab0fa82b2df9 ("pci-sysfs:
-use proper file capability helper function").
+"intel_iommu=off" implements this policy by setting no_platform_optin
+to skip platform opt-in in platform_optin_force_iommu().
 
-Thus, the two interfaces check the same capability against different
-credentials.  Checking the credentials of the task calling read() makes the
-outcome depend on who reads rather than who opened, so the restriction is
-bypassed whenever a more privileged process reads through the descriptor.
-Checking the credentials recorded in file->f_cred settles the decision at
-open() time and ties it to the file, where it cannot change with the
-caller.
+However, "iommu=off" (no_iommu=1) doesn't set no_platform_optin
+hence is broken in this aspect:
 
-Use file_ns_capable() to check CAP_SYS_ADMIN against the credentials in
-effect when the file was opened, bringing the procfs interface in line with
-the sysfs behaviour.
+  - detect_intel_iommu() doesn't request ACS if no_iommu=1
+  - platform_optin_force_iommu() forces iommu on if external-facing
+    devices exist and no_platform_optin is not set
 
-As a result, a file descriptor opened by a privileged process and passed to
-an unprivileged one now allows the entire config space to be read through
-procfs, matching sysfs.
+This leads to a bad configuration with ACS disabled while DMA
+remapping is enabled.
 
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Instead of setting no_platform_optin (will soon be removed) for
+no_iommu=1, directly check no_iommu in platform_optin_force_iommu().
+
+Fixes: 89a6079df791 ("iommu/vt-d: Force IOMMU on for platform opt in hint")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260720204145.1500105-1-kwilczynski@kernel.org
+Signed-off-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/intel/iommu.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/proc.c
-+++ b/drivers/pci/proc.c
-@@ -38,7 +38,7 @@ static ssize_t proc_bus_pci_read(struct
- 	 * undefined locations (think of Intel PIIX4 as a typical example).
- 	 */
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -4243,10 +4243,11 @@ static inline bool has_external_pci(void
  
--	if (capable(CAP_SYS_ADMIN))
-+	if (file_ns_capable(file, &init_user_ns, CAP_SYS_ADMIN))
- 		size = dev->cfg_size;
- 	else if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS)
- 		size = 128;
+ static int __init platform_optin_force_iommu(void)
+ {
+-	if (!dmar_platform_optin() || no_platform_optin || !has_external_pci())
++	if (no_iommu || !dmar_platform_optin() || no_platform_optin ||
++	    !has_external_pci())
+ 		return 0;
+ 
+-	if (no_iommu || dmar_disabled)
++	if (dmar_disabled)
+ 		pr_info("Intel-IOMMU force enabled due to platform opt in\n");
+ 
+ 	/*
+@@ -4257,7 +4258,6 @@ static int __init platform_optin_force_i
+ 		iommu_set_default_passthrough(false);
+ 
+ 	dmar_disabled = 0;
+-	no_iommu = 0;
+ 
+ 	return 1;
+ }
 
 
