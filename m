@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6CC37A498;
-	Sat, 12 Sep 2026 11:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9276C37A498;
+	Sat, 12 Sep 2026 11:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212062; cv=none; b=D65Z07/PyK++IGIo0XMW5nGMUd60BZFtH7jInGo+5+eXK+BudMDoLa/viPAJqGZEAZd2xylOzXhFpJTxNlAD0/z9CcBI+4HDbfjLjxo7BHbHYEHLGD399MAuyNbvxN4e4kt8soToV0PlMWYofWSNiAXyZWT4GL+cP6C7rMJ2NE0=
+	t=1789212066; cv=none; b=G6Zg1pnK0tXcjnNL8/2CqHYsrjsb9w6djE93Pd2f+NK5NNmr5aIVJetyb152/thYQxPEvLpe09j7qBSUwj8raWIZprZJXP/A69rk7JvzDvfb7QA+L9nfmcFgPJzh1G8faoYgEf7CkH7EbojS+ebjQ5p+EL040WwDj+kFLamMsLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212062; c=relaxed/simple;
-	bh=bR5wmS7wBfUDIGMmPwTj4vSG9MJ+/mwAjyON0lfOihM=;
+	s=arc-20240116; t=1789212066; c=relaxed/simple;
+	bh=mz9zIMGkTpCG9R9Av0CvLoLSq8rKkQrTP9z1RjEF2uQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZGx9rmDKSXop1PxnJQxtRxm/plpPYu1T8bvdpEmhWkw19nTLxkOv8Ebk/xN3ffvWMb42SGg6F29LNpNQ/Gc83F6STTtb75kOn9E9j1ZWec6NfP4K1aV4pX4a1pxpg1tTcXWaB9cgJejZ65MUOz34BpAqmgWWajC5XL2KVohN7IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2C+rzMI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WsxR8xd9Vniy5yogm6A9r9rUPQEWU0Gg6x9ZTBkZrtfOJTWYWB9hgIC7KJO8nC+i8AQK6KollffWato8iX3V1INU0mQ5H+CxdTFGDtOZ/Va+hqja/WQDa9wrvlSUJje0A4myWz8xueMH1iUTj2EVG2z2NAqdtP7RbfCIssq7pNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tq+SOxS4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2C+rzMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A831F000FF;
-	Sat, 12 Sep 2026 11:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tq+SOxS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981731F0089C;
+	Sat, 12 Sep 2026 11:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212060;
-	bh=I5W8JaYLVJxUSznoL2j3GBVK0quUkX5u3TMZDFxPYYQ=;
+	s=korg; t=1789212065;
+	bh=+Hb6gWG1mjFxiX2MepFGbkoffIuPt3yP08unmfEXkV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N2C+rzMIC0T+9tl35CC8u8CEEFiKykpu5HV58L6wPXjiEMHi5bKt5i6X4x6KcJZlH
-	 0K4a9JQ3RJ3abpFInwDXSb/np/7MQWbK2NV1ijsBJYFSgB22mQ1GUsGyiUV3gekVyd
-	 NW09gHlJLdUpH6Sw9ATvM2kIZaJHD59NhwB2k3KM=
+	b=Tq+SOxS4rS9/tLjn5Qp0wtZaxUrQfnEpVh1TRF84kuqVsY78M1xsWrhyA/nOcHMWP
+	 U8kBZz4WUT1NMdyiPD2GUBHPuUiQ4qHnwS+id112B0UBolMPg9UfM5f1YpUiUu95zS
+	 fbUPm6/LmRH+bY0yjNXkl2bhtxMWMhLPIcGAGaFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Fan Ye <fy15309206903@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Mika Westerberg <westeri@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1359/1518] ipmr: Free mr_table after RCU grace period.
-Date: Sat, 12 Sep 2026 08:58:48 +0200
-Message-ID: <20260912065654.275824353@linuxfoundation.org>
+Subject: [PATCH 6.18 1333/1518] net: thunderbolt: Count delivered packets in rx_packets and rx_bytes
+Date: Sat, 12 Sep 2026 08:58:22 +0200
+Message-ID: <20260912065653.685320215@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,335 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Fan Ye <fy15309206903@gmail.com>
 
-[ Upstream commit b3b6babf47517fde6b6de2493dea28e8831b9347 ]
+[ Upstream commit c5ae83ee02c04487b1be1d143b791ec2caca888e ]
 
-With CONFIG_IP_MROUTE_MULTIPLE_TABLES=n, ipmr_fib_lookup()
-does not check if net->ipv4.mrt is NULL.
+tbnet_poll() increments rx_packets once per received frame because that is
+the NAPI work unit, and then adds the same number to stats.rx_packets. An
+skb is handed to the stack only when the last frame of a packet arrives,
+so once the MTU exceeds TBNET_MAX_PAYLOAD_SIZE the statistic reports
+frames. tx_packets is bumped once per skb, so the two ends of a link
+disagree: at MTU 65330 the receiver reports 16 times the packets its
+sender sent.
 
-Since default_device_exit_batch() is called after ->exit_rtnl(),
-a device could receive IGMP packets and access net->ipv4.mrt
-during/after ipmr_rules_exit_rtnl().
+rx_bytes has the matching problem: frames of a packet that is later
+dropped mid-assembly are already accounted, so it does not correspond to
+rx_packets as documented. Account for both where the packet is completed,
+and leave the NAPI work counter alone.
 
-If ipmr_rules_exit_rtnl() had already cleared it and freed the
-memory, the access would trigger null-ptr-deref or use-after-free.
-
-Let's fix it by using RCU helper and free mrt after RCU grace
-period.
-
-In addition, check_net(net) is added to mroute_clean_tables()
-and ipmr_cache_unresolved() to synchronise via mfc_unres_lock.
-This prevents ipmr_cache_unresolved() from putting skb into
-c->_c.mfc_un.unres.unresolved after mroute_clean_tables()
-purges it.
-
-For the same reason, timer_shutdown_sync() is moved after
-mroute_clean_tables().
-
-Since rhltable_destroy() holds mutex internally, rcu_work is
-used, and it is placed as the first member because rcu_head
-must be placed within <4K offset.  mr_table is alraedy 3864
-bytes without rcu_work.
-
-Note that IP6MR is not yet converted to ->exit_rtnl(), so this
-change is not needed for now but will be.
-
-Fixes: b22b01867406 ("ipmr: Convert ipmr_net_exit_batch() to ->exit_rtnl().")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260423053456.4097409-1-kuniyu@google.com
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Signed-off-by: Fan Ye <fy15309206903@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Mika Westerberg <westeri@kernel.org>
+Link: https://patch.msgid.link/20260815-tbnet-rx-stats-v1-1-8da375c2cd09@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 235b42b58601 ("ip6mr: do not clone dst in ip6mr_cache_report()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mroute_base.h |   3 +
- net/ipv4/ipmr.c             | 108 +++++++++++++++++++-----------------
- net/ipv4/ipmr_base.c        |  16 ++++++
- 3 files changed, 77 insertions(+), 50 deletions(-)
+ drivers/net/thunderbolt/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/mroute_base.h b/include/linux/mroute_base.h
-index 0075f6e5c3da9..f887ffba95ca2 100644
---- a/include/linux/mroute_base.h
-+++ b/include/linux/mroute_base.h
-@@ -227,6 +227,7 @@ struct mr_table_ops {
+diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
+index 7bb9aa20fab9f..096f3ff36a437 100644
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -907,9 +907,11 @@ static int tbnet_poll(struct napi_struct *napi, int budget)
+ 		       le32_to_cpu(net->rx_hdr.frame_count) - 1;
  
- /**
-  * struct mr_table - a multicast routing table
-+ * @work: used for table destruction
-  * @list: entry within a list of multicast routing tables
-  * @net: net where this table belongs
-  * @ops: protocol specific operations
-@@ -244,6 +245,7 @@ struct mr_table_ops {
-  * @mroute_reg_vif_num: PIM-device vif index
-  */
- struct mr_table {
-+	struct rcu_work		work;
- 	struct list_head	list;
- 	possible_net_t		net;
- 	struct mr_table_ops	ops;
-@@ -275,6 +277,7 @@ void vif_device_init(struct vif_device *v,
- 		     unsigned short flags,
- 		     unsigned short get_iflink_mask);
+ 		rx_packets++;
+-		net->stats.rx_bytes += frame_size;
  
-+void mr_table_free(struct mr_table *mrt);
- struct mr_table *
- mr_table_alloc(struct net *net, u32 id,
- 	       struct mr_table_ops *ops,
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 18e3ad5ae8be2..c6d5d30a98301 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -151,16 +151,6 @@ static struct mr_table *__ipmr_get_table(struct net *net, u32 id)
- 	return NULL;
- }
- 
--static struct mr_table *ipmr_get_table(struct net *net, u32 id)
--{
--	struct mr_table *mrt;
--
--	rcu_read_lock();
--	mrt = __ipmr_get_table(net, id);
--	rcu_read_unlock();
--	return mrt;
--}
--
- static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
- 			   struct mr_table **mrt)
- {
-@@ -288,7 +278,7 @@ static void __net_exit ipmr_rules_exit_rtnl(struct net *net,
- 	struct mr_table *mrt, *next;
- 
- 	list_for_each_entry_safe(mrt, next, &net->ipv4.mr_tables, list) {
--		list_del(&mrt->list);
-+		list_del_rcu(&mrt->list);
- 		ipmr_free_table(mrt, dev_kill_list);
- 	}
- 
-@@ -312,28 +302,30 @@ bool ipmr_rule_default(const struct fib_rule *rule)
- }
- EXPORT_SYMBOL(ipmr_rule_default);
- #else
--#define ipmr_for_each_table(mrt, net) \
--	for (mrt = net->ipv4.mrt; mrt; mrt = NULL)
--
- static struct mr_table *ipmr_mr_table_iter(struct net *net,
- 					   struct mr_table *mrt)
- {
- 	if (!mrt)
--		return net->ipv4.mrt;
-+		return rcu_dereference(net->ipv4.mrt);
- 	return NULL;
- }
- 
--static struct mr_table *ipmr_get_table(struct net *net, u32 id)
-+static struct mr_table *__ipmr_get_table(struct net *net, u32 id)
- {
--	return net->ipv4.mrt;
-+	return rcu_dereference_check(net->ipv4.mrt,
-+				     lockdep_rtnl_is_held() ||
-+				     !rcu_access_pointer(net->ipv4.mrt));
- }
- 
--#define __ipmr_get_table ipmr_get_table
-+#define ipmr_for_each_table(mrt, net)				\
-+	for (mrt = __ipmr_get_table(net, 0); mrt; mrt = NULL)
- 
- static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
- 			   struct mr_table **mrt)
- {
--	*mrt = net->ipv4.mrt;
-+	*mrt = rcu_dereference(net->ipv4.mrt);
-+	if (!*mrt)
-+		return -EAGAIN;
- 	return 0;
- }
- 
-@@ -344,16 +336,18 @@ static int __net_init ipmr_rules_init(struct net *net)
- 	mrt = ipmr_new_table(net, RT_TABLE_DEFAULT);
- 	if (IS_ERR(mrt))
- 		return PTR_ERR(mrt);
--	net->ipv4.mrt = mrt;
-+
-+	rcu_assign_pointer(net->ipv4.mrt, mrt);
- 	return 0;
- }
- 
- static void __net_exit ipmr_rules_exit_rtnl(struct net *net,
- 					    struct list_head *dev_kill_list)
- {
--	ipmr_free_table(net->ipv4.mrt, dev_kill_list);
-+	struct mr_table *mrt = rcu_dereference_protected(net->ipv4.mrt, 1);
- 
--	net->ipv4.mrt = NULL;
-+	RCU_INIT_POINTER(net->ipv4.mrt, NULL);
-+	ipmr_free_table(mrt, dev_kill_list);
- }
- 
- static int ipmr_rules_dump(struct net *net, struct notifier_block *nb,
-@@ -374,6 +368,17 @@ bool ipmr_rule_default(const struct fib_rule *rule)
- EXPORT_SYMBOL(ipmr_rule_default);
- #endif
- 
-+static struct mr_table *ipmr_get_table(struct net *net, u32 id)
-+{
-+	struct mr_table *mrt;
-+
-+	rcu_read_lock();
-+	mrt = __ipmr_get_table(net, id);
-+	rcu_read_unlock();
-+
-+	return mrt;
-+}
-+
- static inline int ipmr_hash_cmp(struct rhashtable_compare_arg *arg,
- 				const void *ptr)
- {
-@@ -434,12 +439,11 @@ static void ipmr_free_table(struct mr_table *mrt, struct list_head *dev_kill_lis
- 
- 	WARN_ON_ONCE(!mr_can_free_table(net));
- 
--	timer_shutdown_sync(&mrt->ipmr_expire_timer);
- 	mroute_clean_tables(mrt, MRT_FLUSH_VIFS | MRT_FLUSH_VIFS_STATIC |
- 			    MRT_FLUSH_MFC | MRT_FLUSH_MFC_STATIC,
- 			    &ipmr_dev_kill_list);
--	rhltable_destroy(&mrt->mfc_hash);
--	kfree(mrt);
-+	timer_shutdown_sync(&mrt->ipmr_expire_timer);
-+	mr_table_free(mrt);
- 
- 	WARN_ON_ONCE(!net_initialized(net) && !list_empty(&ipmr_dev_kill_list));
- 	list_splice(&ipmr_dev_kill_list, dev_kill_list);
-@@ -1128,12 +1132,19 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- static int ipmr_cache_unresolved(struct mr_table *mrt, vifi_t vifi,
- 				 struct sk_buff *skb, struct net_device *dev)
- {
-+	struct net *net = read_pnet(&mrt->net);
- 	const struct iphdr *iph = ip_hdr(skb);
--	struct mfc_cache *c;
-+	struct mfc_cache *c = NULL;
- 	bool found = false;
- 	int err;
- 
- 	spin_lock_bh(&mfc_unres_lock);
-+
-+	if (!check_net(net)) {
-+		err = -EINVAL;
-+		goto err;
-+	}
-+
- 	list_for_each_entry(c, &mrt->mfc_unres_queue, _c.list) {
- 		if (c->mfc_mcastgrp == iph->daddr &&
- 		    c->mfc_origin == iph->saddr) {
-@@ -1146,10 +1157,8 @@ static int ipmr_cache_unresolved(struct mr_table *mrt, vifi_t vifi,
- 		/* Create a new entry if allowable */
- 		c = ipmr_cache_alloc_unres();
- 		if (!c) {
--			spin_unlock_bh(&mfc_unres_lock);
--
--			kfree_skb(skb);
--			return -ENOBUFS;
-+			err = -ENOBUFS;
-+			goto err;
+ 		if (last) {
++			/* Before eth_type_trans() pulls the Ethernet header. */
++			net->stats.rx_packets++;
++			net->stats.rx_bytes += skb->len;
+ 			skb->protocol = eth_type_trans(skb, net->dev);
+ 			trace_tbnet_rx_skb(skb);
+ 			napi_gro_receive(&net->napi, skb);
+@@ -917,8 +919,6 @@ static int tbnet_poll(struct napi_struct *napi, int budget)
  		}
+ 	}
  
- 		/* Fill in the new cache entry */
-@@ -1159,17 +1168,8 @@ static int ipmr_cache_unresolved(struct mr_table *mrt, vifi_t vifi,
- 
- 		/* Reflect first query at mrouted. */
- 		err = ipmr_cache_report(mrt, skb, vifi, IGMPMSG_NOCACHE);
+-	net->stats.rx_packets += rx_packets;
 -
--		if (err < 0) {
--			/* If the report failed throw the cache entry
--			   out - Brad Parker
--			 */
--			spin_unlock_bh(&mfc_unres_lock);
--
--			ipmr_cache_free(c);
--			kfree_skb(skb);
--			return err;
--		}
-+		if (err < 0)
-+			goto err;
- 
- 		atomic_inc(&mrt->cache_resolve_queue_len);
- 		list_add(&c->_c.list, &mrt->mfc_unres_queue);
-@@ -1182,18 +1182,26 @@ static int ipmr_cache_unresolved(struct mr_table *mrt, vifi_t vifi,
- 
- 	/* See if we can append the packet */
- 	if (c->_c.mfc_un.unres.unresolved.qlen > 3) {
--		kfree_skb(skb);
-+		c = NULL;
- 		err = -ENOBUFS;
--	} else {
--		if (dev) {
--			skb->dev = dev;
--			skb->skb_iif = dev->ifindex;
--		}
--		skb_queue_tail(&c->_c.mfc_un.unres.unresolved, skb);
--		err = 0;
-+		goto err;
-+	}
-+
-+	if (dev) {
-+		skb->dev = dev;
-+		skb->skb_iif = dev->ifindex;
- 	}
- 
-+	skb_queue_tail(&c->_c.mfc_un.unres.unresolved, skb);
-+
- 	spin_unlock_bh(&mfc_unres_lock);
-+	return 0;
-+
-+err:
-+	spin_unlock_bh(&mfc_unres_lock);
-+	if (c)
-+		ipmr_cache_free(c);
-+	kfree_skb(skb);
- 	return err;
- }
- 
-@@ -1337,7 +1345,7 @@ static void mroute_clean_tables(struct mr_table *mrt, int flags,
- 	}
- 
- 	if (flags & MRT_FLUSH_MFC) {
--		if (atomic_read(&mrt->cache_resolve_queue_len) != 0) {
-+		if (atomic_read(&mrt->cache_resolve_queue_len) != 0 || !check_net(net)) {
- 			spin_lock_bh(&mfc_unres_lock);
- 			list_for_each_entry_safe(c, tmp, &mrt->mfc_unres_queue, list) {
- 				list_del(&c->list);
-diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
-index 28d77d454d442..e6bb023e8dbd4 100644
---- a/net/ipv4/ipmr_base.c
-+++ b/net/ipv4/ipmr_base.c
-@@ -28,6 +28,20 @@ void vif_device_init(struct vif_device *v,
- }
- EXPORT_SYMBOL(vif_device_init);
- 
-+static void __mr_free_table(struct work_struct *work)
-+{
-+	struct mr_table *mrt = container_of(to_rcu_work(work),
-+					    struct mr_table, work);
-+
-+	rhltable_destroy(&mrt->mfc_hash);
-+	kfree(mrt);
-+}
-+
-+void mr_table_free(struct mr_table *mrt)
-+{
-+	queue_rcu_work(system_unbound_wq, &mrt->work);
-+}
-+
- struct mr_table *
- mr_table_alloc(struct net *net, u32 id,
- 	       struct mr_table_ops *ops,
-@@ -50,6 +64,8 @@ mr_table_alloc(struct net *net, u32 id,
- 		kfree(mrt);
- 		return ERR_PTR(err);
- 	}
-+
-+	INIT_RCU_WORK(&mrt->work, __mr_free_table);
- 	INIT_LIST_HEAD(&mrt->mfc_cache_list);
- 	INIT_LIST_HEAD(&mrt->mfc_unres_queue);
+ 	if (cleaned_count)
+ 		tbnet_alloc_rx_buffers(net, cleaned_count);
  
 -- 
 2.53.0
