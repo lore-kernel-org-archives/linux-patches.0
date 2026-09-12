@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52602368D47;
-	Sat, 12 Sep 2026 15:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD6F368D47;
+	Sat, 12 Sep 2026 15:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228644; cv=none; b=Ne8QMYyl9ghOijoP2lhmqbrGAGhvf0a2DtiwB1aYm7ku16adesPoUnsyKZ+Yugz8hpvhOkTar3+WhfroDq9eCfLSXYS2eUZ2bWsaYBFFzBF6woDe2P5VTamAcCP+iLwrI75zGulrDSLRgLwe0ubOXI2BvrcCl2TSB2SXnQuBH2k=
+	t=1789228648; cv=none; b=IB+jsbuURtQ7HDM9+yDv9Z6WnnFs2moSk472HUPd9eKJVvkzgZlSSsTAW6FPbm+r1AnseMhN3JKVbKxQWL9yghjhm3+IFJOvRc5SUhHvZgCdaBZolQNxYvx6wQ0GieFjDzUS1WLbcMR/81vwCAOMNaNf/0Be3PiijBFolQK2t8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228644; c=relaxed/simple;
-	bh=YgNM21H0IctumxZVd7pR79a8UD80tPZ9UsS1/h0yNNI=;
+	s=arc-20240116; t=1789228648; c=relaxed/simple;
+	bh=hTI3ORAWyjyViYVdO0mK0YwwClzCZxeyKHNIk7TbMCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MRZpEJ828LvzjaDQJLAnRCQ5OCv5gJ8yRuHG4bh/HNUH4+vf4Ch9K2I+3doyly9YY0x9SelBnohxuxeHMGRlaDbYyzHOFtsMv7Yjdei2wRLfFt0eOrx5oHM7aEWcLMU3H7UG0dq/YTAdidt4MddqrbpGNh2lg/u/h0FilflZVJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDOlMqtQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gY8C/w2TA6yQMW9az+pm1iw2hr1jijxS7+dWRn03VaPJ8AZPF45Xv7Qxs7qDULym3YD81pRBPYXbXFJQqtZ9Q85aBb2qvOTlYjtBWV+gUJiRVum5/j2ZD+qb91iuKqUN3M+D/VYAZwyB+1AtNs/guZ4i+SQ364e7ILP5ST9UmZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfUQ2RR/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDOlMqtQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2416B1F000FF;
-	Sat, 12 Sep 2026 15:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfUQ2RR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92701F000FF;
+	Sat, 12 Sep 2026 15:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228643;
-	bh=TsaclXw8YuCfHnXjMBu2r8yFjSDj+09TN++ebHjqo2c=;
+	s=korg; t=1789228647;
+	bh=OoJekDk0JFKCCXL6/mTiUQ/fNHnM1KK0jv/4RYTJWRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDOlMqtQo9usF1P3X/AEhhY2bXm/ZWzE1GXd9LgjYA8PyNXYqr7bCtPbUd4J305PV
-	 vCXk5OCoreZPBNbYKfibDhQB2ka08lPNPIj/FQ2z/ulbY5idDvZPX+3VmIdElptwpO
-	 XXNZ+203mqFFHkHeD1gMd8ynmwvu6WH6SJJT6wGo=
+	b=gfUQ2RR/h/x31PoaXCeBNgH7jnD7K2LTblZB8YcycZAN185qarYPa+a3sXbJ/mqV7
+	 kO9JKS5Af+vxBQcixFg/+YkDSYuM6f4FhLBvSWxYHH37Dqizf5TX0PcKgVcK1ppHuz
+	 GBiuuZNdylvIvGHH4xxUuMzqZDtVr8HLRHnqY65Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Sunil Khatri <sunil.khatri@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 0428/1191] drm/amdgpu: fix autosuspend cleanup during removal
-Date: Sat, 12 Sep 2026 08:52:36 +0200
-Message-ID: <20260912065557.850020917@linuxfoundation.org>
+Subject: [PATCH 6.1 0429/1191] drm/amdgpu: use AMDGPU_GPU_PAGE_SHIFT instead of PAGE_SHIFT
+Date: Sat, 12 Sep 2026 08:52:37 +0200
+Message-ID: <20260912065557.871336012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,51 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit ef5fcf2a6c320676bf8be2dadac93d9023b468b7 upstream.
+commit d6e16df7df4d2c39e2b04b355d0434fb90e2d62c upstream.
 
-amdgpu_pci_probe() calls pm_runtime_use_autosuspend(), but
-amdgpu_pci_remove() does not call the matching
-pm_runtime_dont_use_autosuspend().
+For different address types the variable PAGE_SHIFT might
+not work well and it's better to use the GPU specific one
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
-
-The documentation for pm_runtime_use_autosuspend() also notes that it
-is important to undo it with pm_runtime_dont_use_autosuspend() at
-driver exit time, unless runtime PM was initially enabled with
-devm_pm_runtime_enable().
-
-Add the missing pm_runtime_dont_use_autosuspend() call to the remove
-path.
-
-This issue was found by manual code inspection.
-
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260808120934.2813010-1-lgs201920130244@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 3494b77d10375e0f9ab784e9b20763339844b55b)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2251,6 +2251,7 @@ amdgpu_pci_remove(struct pci_dev *pdev)
- 	if (adev->pm.rpm_mode != AMDGPU_RUNPM_NONE) {
- 		pm_runtime_get_sync(dev->dev);
- 		pm_runtime_forbid(dev->dev);
-+		pm_runtime_dont_use_autosuspend(dev->dev);
- 	}
- 
- 	if (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 2) &&
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1659,7 +1659,7 @@ int amdgpu_vm_bo_clear_mappings(struct a
+ 			after->start = eaddr + 1;
+ 			after->last = tmp->last;
+ 			after->offset = tmp->offset;
+-			after->offset += (after->start - tmp->start) << PAGE_SHIFT;
++			after->offset += (after->start - tmp->start) << AMDGPU_GPU_PAGE_SHIFT;
+ 			after->flags = tmp->flags;
+ 			after->bo_va = tmp->bo_va;
+ 			list_add(&after->list, &tmp->bo_va->invalids);
 
 
