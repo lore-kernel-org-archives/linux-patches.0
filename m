@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B56238AC7D;
-	Sat, 12 Sep 2026 14:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F16D332EAE;
+	Sat, 12 Sep 2026 14:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224854; cv=none; b=TTGs3sOzWyIMMQEbq3b7HRNMjtw0EBmrwoz3Ygvmy7I+O/K8Je0uQvUny6beBRD0HKEPUnVWJ7ic1OhdnKgyWzSh14lJLjpWoGBfZrf31jInFV9jLhE+PO9DdD2BGTLta3zUnlEx3gQHekdmqzHaDMaRxKAe9kHQMZ1Edgv8d8k=
+	t=1789224859; cv=none; b=NsbNpKLDMjHcvXWAhAucdnPUExD0nEMMwtEcsJYfMQGM9y0MgLqUJ1ItwZGHhP7Sh8798qBAY0NIvGyzCvNP/uXsfjt+yUOqsGNLJKa3WdiJQjCtwXbO1ON6mUSkZvp9GnVsQS1v+K90g97uwT0s5jpx61KcuQ6ngvXcf8DYT9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224854; c=relaxed/simple;
-	bh=8EWyfh7X2JbMUjP4160u05E+Y1KaAhsLU5MAgDD5f1I=;
+	s=arc-20240116; t=1789224859; c=relaxed/simple;
+	bh=WI07GYZQ2gtKM0IGFLOTtHmuwvbXnxaic9UWQd6083E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShYfxG6DIPkQbUGygs6udXIRgxRuhmwhX4HFBgjbRdypHp8K2NbYP6rTgm8uAry/LZ/7YESoxLC5CUlGgJ70sxC0k4ZRGSAKeSl/tRQVBXBwaSTqz9E7VBv2oJsp5J0lvuJ9VLZ8qsJkNXX9/YWfDa0tHdqw+TaecB2U0zXD0WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0e6lWG6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bevEz25EsiEqjtKr/LuIc7p7TcBEmdqkUvITKi/dYZNAZmK4tQR9OqzuLaeyHK+/PI5qMmJ80v4e861iWu+YLgVdSMhOHpZbD6hmKugnvRUsyiWWBSgHk5SSarszkwRLSQxoekOMc1le6QizbBPWvqevFibwCgeAj77kswCaCa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4EPHTow; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0e6lWG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4336A1F000FF;
-	Sat, 12 Sep 2026 14:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4EPHTow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797061F000FF;
+	Sat, 12 Sep 2026 14:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224852;
-	bh=t2meoh4329xi+HIWLNy02mqVjluUldG6XvWCfOlAJro=;
+	s=korg; t=1789224857;
+	bh=+mgSJ6pmZMb2vT6KUhm4MdXzYd6BLHCtbq6eU4IITtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H0e6lWG6n8CDgcxOphFANzyMlrIhEwi2MzIuIAP/44WANwkDA/ZkUPi0APevAFKHS
-	 2pw7EQ6m+kaOTDxk2bgVTlNwhHkIwFlWXwTvtUGEXzFY8DBjk2VTS9XFxZQQCY3OrY
-	 nMovdTEYxhBjfBxE4LZzS05P1hXmXng3Y65x2IHo=
+	b=t4EPHTowr4B8CT6K4wRE7AZMaHBpEtsCd7NIVC9sNRGitglTnpFBPRhgizlokXKNd
+	 9pdEEkH+aR/sPR+P6IARVQfzZmmJXCeGTcgLq6NKt/ZbRikspUqabx6GD4ziXDlJ1N
+	 2R4G07KGQoBEkU1QhuQj28/yBbneyo9XELulRctg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1077/1424] drm/sun4i: hdmi-phy: Fix H6 8-bit MPLL config at 594 MHz
-Date: Sat, 12 Sep 2026 08:58:29 +0200
-Message-ID: <20260912065631.423450368@linuxfoundation.org>
+Subject: [PATCH 6.6 1078/1424] cpufreq: imx6q: fix devres accumulation across driver rebind
+Date: Sat, 12 Sep 2026 08:58:30 +0200
+Message-ID: <20260912065631.446441027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,43 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 0ba6deddaae74f0539c0303bfb5f860adbe1a68b ]
+[ Upstream commit 22c23c72c3b21fa3ec3db5070dfc0582794e0ef9 ]
 
-The 8-bit entry of the last MPLL row (594 MHz) doesn't lock reliably on
-H6. 4K@60 RGB/YUV444, which is the mode that reaches this entry, doesn't
-come up.
+imx6_soc_volt is allocated with devm_kcalloc(cpu_dev, ...), where cpu_dev
+is the CPU device from get_cpu_device(0). That device is never unbound, so
+its devres list is never released, and imx6q_cpufreq_remove() does not free
+the array either. Every probe therefore adds an allocation that stays for
+the lifetime of the system.
 
-Align the value with the vendor driver. Other entries are left alone,
-they are used by lower pixel clocks which work fine.
+Allocate against the platform device instead. Its devres is released when
+the driver is unbound, which is exactly the lifetime the array wants:
+imx6q_set_target() reads it, and nothing may reach that after
+cpufreq_unregister_driver().
 
-Tested with 4K@60 on a LG TV.
+That makes the array actually go away on unbind, so also clear the
+file-scope pointer in remove and on the failed-probe path, rather than
+leave it pointing at memory devres is about to release.
 
-Fixes: 0fb4b858b102 ("drm/sun4i: Add support for H6 HDMI PHY")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://patch.msgid.link/aec9060209473b8176eb43bc7c63c20b21306adf.1785772659.git.jernej.skrabec@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Tested by rebinding the driver on qemu's mcimx6ul-evk.
+
+Fixes: b4573d1d657a ("cpufreq: imx6q: correct VDDSOC/PU voltage scaling when cpufreq is changed")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/imx6q-cpufreq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c b/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-index 4fa69c463dc46..489ea94693ffa 100644
---- a/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-+++ b/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-@@ -91,7 +91,7 @@ static const struct dw_hdmi_mpll_config sun50i_h6_mpll_cfg[] = {
- 		},
- 	},  {
- 		594000000, {
--			{ 0x1a40, 0x0003 },
-+			{ 0x1a7c, 0x0003 },
- 			{ 0x3b4c, 0x0003 },
- 			{ 0x5a64, 0x0003 },
- 		},
+diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
+index 33728c242f66c..431595b680deb 100644
+--- a/drivers/cpufreq/imx6q-cpufreq.c
++++ b/drivers/cpufreq/imx6q-cpufreq.c
+@@ -416,7 +416,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	/* Make imx6_soc_volt array's size same as arm opp number */
+-	imx6_soc_volt = devm_kcalloc(cpu_dev, num, sizeof(*imx6_soc_volt),
++	imx6_soc_volt = devm_kcalloc(&pdev->dev, num, sizeof(*imx6_soc_volt),
+ 				     GFP_KERNEL);
+ 	if (imx6_soc_volt == NULL) {
+ 		ret = -ENOMEM;
+@@ -501,6 +501,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ free_freq_table:
++	imx6_soc_volt = NULL;
+ 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
+ out_free_opp:
+ 	dev_pm_opp_of_remove_table(cpu_dev);
+@@ -522,6 +523,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ static void imx6q_cpufreq_remove(struct platform_device *pdev)
+ {
+ 	cpufreq_unregister_driver(&imx6q_cpufreq_driver);
++	imx6_soc_volt = NULL;
+ 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
+ 	dev_pm_opp_of_remove_table(cpu_dev);
+ 	regulator_put(arm_reg);
 -- 
 2.53.0
 
