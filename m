@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49BB2D739C;
-	Sat, 12 Sep 2026 13:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14BA1B983F;
+	Sat, 12 Sep 2026 13:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220613; cv=none; b=TC1lRV54oQmyuG8Itqx5Wpp4H6XpqpeydqnJBP8wLwPEnYN8feyomoGO96hdzlrs1h6NCH4fZqA4Ma7wF52DOrYhUBRBKeGu210u0QSFNhByftqfOHn72eyB5ZgG7OaBsa5dTLY6LqYteYMQRR7DTnt3GOZMK6UdgPgbf2LN26k=
+	t=1789220619; cv=none; b=S90MFnfxHthtpL91yJ/7Ei+IgzICT4ZV7BWYjNeZugGq7tF4+6VS0xcCQBC61JN1drBKkQQAbjwlN2IO87RI5SC2oHT52EP/S+L4HQIGZpApq008aDQeklSZzbGWAfaNBRwlWveqUyf/45dLXWWQST50Rb+wxzHmMgfcU/d32xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220613; c=relaxed/simple;
-	bh=aBdN4HBVfln29sRy0BxQBTpRm4hBFL5GFiQjvAM3kgw=;
+	s=arc-20240116; t=1789220619; c=relaxed/simple;
+	bh=mpsjKoAcsHjWm2jUf2h3sV+x2PU3qN5n4ZO017rl6Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UCc34DTIksdo/86B2SbaUj753AxHG/BTc5p1Ae6Z00SQLllFHc0UsUz6KQZ1vQGDpXqOhfjsb+qiStR+Rxmmv3/OrePNEnfHevZlMEO3uvYaTLgeUrbk6z6+VPXHx0NmN+P9nIoC/lt/uxeq7DX4x0BDg/UymcaB+Hdoo8iq9nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ey8MI/8r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tfUecPuq3U2KRCJLByh3O55vvBtsibmM7SlBoCjOy7Rp5O8Zla/cyD3I/ZBbTJ/cqsdk/3ApIzmCINutuIFQA52Vy2BJMlONPf4o/dWwFz0ixL2geN6zQbyZMs0ZbzBrtKb8AjYmWp3iNC+G50GUONcML5G3dMJd6ghWQ/qfd/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJlKFQ91; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ey8MI/8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433A31F00893;
-	Sat, 12 Sep 2026 13:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJlKFQ91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBA81F00893;
+	Sat, 12 Sep 2026 13:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220612;
-	bh=y/apfXvm5LYAQGTKbXn+BH/CsG3Lf6T8cgz6CGugP6Q=;
+	s=korg; t=1789220617;
+	bh=OzdKgGvZGftda84vBZ1T849AA4ZV62TsDnub75tvGQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ey8MI/8rjAi2xvku2DOjCKJPFa+0yaqvqOIaHfklaIHvl+mwNzz6uDDdiKtGXnU0p
-	 88m6qk4QABaMYLIgyRvVnvfJIhC4QROMG7uHBLG/bGf1Tx6y9XPMwjqB5EgW7uGXJR
-	 yZY/T25OJtXD9SBCC6m2uN7/LTdQY7BnEt4jYMxY=
+	b=rJlKFQ91a3WABV7knDMp2E2IzWXZvJjGglItaFVgwYldV0ykmEa30quxZPMwSjo1P
+	 2wzDKwlwSi1Jisj7AzO4HuM691DmCzD4uYlGixlMZUN5kJnEjUDSoPfEEAWRdrf3oX
+	 E+NF4j6XngJGFAvq7iVjaFa4/q+EfQHUVavX7ip8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Chuck Lever <cel@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.6 0160/1424] SUNRPC: wait for in-flight client TLS handshake callback
-Date: Sat, 12 Sep 2026 08:43:12 +0200
-Message-ID: <20260912065610.877672004@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.6 0207/1424] power: supply: bq256xx: drain usb_work before freeing the charger
+Date: Sat, 12 Sep 2026 08:43:59 +0200
+Message-ID: <20260912065611.924468759@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,64 +44,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit a89dd597458848b463d284b15e42a8078beeb046 upstream.
+commit 2dd6cd823777bea6d9a880a12a92a73ec76aee0b upstream.
 
-xs_tls_handshake_sync() gives xs_tls_handshake_done() a reference to the
-lower transport before submitting the handshake request. On timeout or
-signal, the synchronous waiter drops that reference after calling
-tls_handshake_cancel().
+The USB-PHY notifier queues usb_work, whose handler calls
+power_supply_changed(bq->charger). The reset devm action only unregisters
+the notifier and was registered before the power supplies, so devm frees
+bq->charger on unwind before the action runs; a usb_work still queued can
+then dereference it.
 
-handshake_req_cancel() returns false when handshake_complete() has
-already marked the request complete. In that case the completion callback
-can still be running, so dropping the callback-owned reference in the
-waiter can free the lower transport before xs_tls_handshake_done() stores
-xprt_err or drops its own reference.
+Register the reset action after the power supplies, so it unregisters
+the notifiers and drains usb_work before the supplies are released.
+Initialize usb_work and obtain the PHY references before registering
+the notifiers, so the worker cannot run before the supplies exist.
 
-If cancellation loses to completion, wait until xs_tls_handshake_done()
-signals handshake_done and let the callback release its reference. This
-mirrors the server-side handshake lifetime handling and keeps the timeout
-or signal return value unchanged.
+Found by static analysis.
 
-Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
+Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Chuck Lever <cel@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260804145511.103470-1-fanwu01@zju.edu.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtsock.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/power/supply/bq256xx_charger.c |   29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2627,7 +2627,17 @@ static int xs_tls_handshake_sync(struct
- 	rc = wait_for_completion_interruptible_timeout(&lower_transport->handshake_done,
- 						       XS_TLS_HANDSHAKE_TO);
- 	if (rc <= 0) {
--		tls_handshake_cancel(sk);
-+		if (!tls_handshake_cancel(sk)) {
-+			/*
-+			 * Cancellation lost to handshake_complete(): the
-+			 * callback still owns its xprt reference and is in
-+			 * flight. Wait for it to finish before returning.
-+			 */
-+			wait_for_completion(&lower_transport->handshake_done);
-+			if (rc == 0)
-+				rc = -ETIMEDOUT;
-+			goto out;
-+		}
- 		if (rc == 0)
- 			rc = -ETIMEDOUT;
- 		goto out_put_xprt;
+--- a/drivers/power/supply/bq256xx_charger.c
++++ b/drivers/power/supply/bq256xx_charger.c
+@@ -905,6 +905,8 @@ static void bq256xx_charger_reset(void *
+ 
+ 	if (!IS_ERR_OR_NULL(bq->usb3_phy))
+ 		usb_unregister_notifier(bq->usb3_phy, &bq->usb_nb);
++
++	cancel_work_sync(&bq->usb_work);
+ }
+ 
+ static int bq256xx_set_charger_property(struct power_supply *psy,
+@@ -1727,24 +1729,12 @@ static int bq256xx_probe(struct i2c_clie
+ 		return ret;
+ 	}
+ 
+-	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
+-	if (ret)
+-		return ret;
++	INIT_WORK(&bq->usb_work, bq256xx_usb_work);
++	bq->usb_nb.notifier_call = bq256xx_usb_notifier;
+ 
+ 	/* OTG reporting */
+ 	bq->usb2_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
+-	if (!IS_ERR_OR_NULL(bq->usb2_phy)) {
+-		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
+-		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
+-		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
+-	}
+-
+ 	bq->usb3_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB3);
+-	if (!IS_ERR_OR_NULL(bq->usb3_phy)) {
+-		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
+-		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
+-		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
+-	}
+ 
+ 	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
+ 	if (ret) {
+@@ -1752,6 +1742,17 @@ static int bq256xx_probe(struct i2c_clie
+ 		return ret;
+ 	}
+ 
++	/* Register after the power supplies so devm runs it first. */
++	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
++	if (ret)
++		return ret;
++
++	if (!IS_ERR_OR_NULL(bq->usb2_phy))
++		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
++
++	if (!IS_ERR_OR_NULL(bq->usb3_phy))
++		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
++
+ 	if (client->irq) {
+ 		ret = devm_request_threaded_irq(dev, client->irq, NULL,
+ 						bq256xx_irq_handler_thread,
 
 
