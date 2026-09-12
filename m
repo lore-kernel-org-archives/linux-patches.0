@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E6838398F;
-	Sat, 12 Sep 2026 18:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019183AFB1A;
+	Sat, 12 Sep 2026 18:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237289; cv=none; b=MY4ydqKm8szwHeK5z40Zb7jbpgwHhaoBfa7eiWJWCwrDNyGAoZB1MY5iAf6IZ8vvW6VWFyAmcqgoXswXstuU00WH6ha7bp/Kp1kW/LmEp3PjBoblP7uaAqUB8cQzM76496ZvBCnWOjEcdf3+8zDpwDrVljRQW+rUtN5UVDWKfjA=
+	t=1789237294; cv=none; b=sSr2WiP/v/cdGpiY+wfMX5iSyO+FWQMkjul1MW6sNIf1gFAtAYYmXKLfvhF56tAFTW5iL48Phaw3aVZPyX4FWiYHW6dlPPBPN9U/gg3AmKyQgIP+GDK5cUxyQNCrq/NZjEDiBwFhmj/hR1tq14Pw5OiQnr2Y65WfZcqRrVHBZy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237289; c=relaxed/simple;
-	bh=P3OxwaXXKQKFbno/PuMg3UIBwDKSOkSN+K6cx9hQq2A=;
+	s=arc-20240116; t=1789237294; c=relaxed/simple;
+	bh=wYE4GtfxtTseTgyli56AloPS+OUtz8bhvfj9cD+aptk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+oPmHxy7WiUP4HZ9Hlzim4WthIhpHCWnSpf0HyIpKMSfvVwQdItL1Aqek+YUJAlSkREier6uKn4G654OYPbskR54BHs2f1Li5k97TY1Oay9AiWnUdKmDBurF4VABBryc0s8itT0xqiQ4LX0Zh6495E44fe/IvDP+tZXwizCepM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ct8Gpu8D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pr/kR6W9gKHm+lIhw4Cni8PNQHtNk/Lb+1GRxcpIKjjUBPZUwcIAs3xF9quPW1Glvu39MMMJI6fZMHaUeW0eiQE8kG9OmcKlaTZJgZnWvwg8rNLxZxC4aWQj4AzN0WPC+Uct9mWFKiRDMTNB3A0YuPkDBd0HKJ9dn1ENrPgFIAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSZxpuhe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ct8Gpu8D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355C61F000FF;
-	Sat, 12 Sep 2026 18:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSZxpuhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EC21F000FF;
+	Sat, 12 Sep 2026 18:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237288;
-	bh=+JJLhTPXWvdfes4nsbTl2V+RBLQV1makuwllqLubBzc=;
+	s=korg; t=1789237292;
+	bh=RLTk3/j+50+kE4dE6xBufGZfQqyJbj2ri4l0et+CjH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ct8Gpu8DNzPf8OOGC1O0gbQ4Mj0T7DI8NEthBoyxbFLY1Ku7j6ol2e1NkrnLhAoIv
-	 V+mUXmKtCMlSVeiUSTKJOsBDs00pu4ZIR+Yj+iRP06mr8WpbRLM6Kk8xvyX2lKqBpp
-	 /bEBq9pQPjUTH4cbTFlvyQOxE4DwG5uF5wK/829Y=
+	b=cSZxpuheRDSvJK8cYcC8M2MdvCzefiBrchfxCUCLJbuEvJfEgk3JOChlN7BNgJ7gV
+	 IVFUyTWohlzDjBghraJIJrlCBTck5KyKQmG8B3vnghx2tCQZ1kuTBpEutIW2nDw30Y
+	 lPFKrgxZJx9xI4ZSSgCXyGxpb1zZgAOkp4T3p4tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Alexander Martyniuk <alexevgmart@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 229/935] drm/vmwgfx: drop dma_buf reference on foreign-fd prime import
-Date: Sat, 12 Sep 2026 08:54:19 +0200
-Message-ID: <20260912065532.079468615@linuxfoundation.org>
+Subject: [PATCH 5.15 230/935] tracing/mmiotrace: Remove reference to unused per CPU data pointer
+Date: Sat, 12 Sep 2026 08:54:20 +0200
+Message-ID: <20260912065532.102471121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,56 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit f739416dc555fa205a785e5135d73fa39b26f35d upstream.
+commit 6936298393d8d8bc3cec6b704f6a774162cf9bd3 upstream.
 
-ttm_prime_fd_to_handle() returns -ENOSYS when the imported fd's
-dma_buf->ops do not match the ttm_object_device's ops, but does so
-without releasing the reference acquired by dma_buf_get().  Any
-unprivileged renderD client passing a non-vmwgfx prime fd through the
-DRM_VMW_GB_SURFACE_REF{,_EXT} path leaks one dma_buf reference per
-call and indefinitely pins the foreign exporter's GEM resources.
+The mmiotracer referenced the per CPU array_buffer->data descriptor but
+never actually used it. Remove the references to it.
 
-Funnel the error path through the existing dma_buf_put() so the
-reference is always dropped.
-
-Fixes: 65981f7681ab ("drm/ttm: Add a minimal prime implementation for ttm base objects")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.7
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-6-zack.rusin@broadcom.com
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/20250505212234.696945463@goodmis.org
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/ttm_object.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/trace/trace_mmiotrace.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/ttm_object.c b/drivers/gpu/drm/vmwgfx/ttm_object.c
-index 123ab2cbec484..40862775916be 100644
---- a/drivers/gpu/drm/vmwgfx/ttm_object.c
-+++ b/drivers/gpu/drm/vmwgfx/ttm_object.c
-@@ -658,14 +658,17 @@ int ttm_prime_fd_to_handle(struct ttm_object_file *tfile,
- 	if (IS_ERR(dma_buf))
- 		return PTR_ERR(dma_buf);
+diff --git a/kernel/trace/trace_mmiotrace.c b/kernel/trace/trace_mmiotrace.c
+index c523ce5aa4958..74f378fca5187 100644
+--- a/kernel/trace/trace_mmiotrace.c
++++ b/kernel/trace/trace_mmiotrace.c
+@@ -292,7 +292,6 @@ __init static int init_mmio_trace(void)
+ device_initcall(init_mmio_trace);
  
--	if (dma_buf->ops != &tdev->ops)
--		return -ENOSYS;
-+	if (dma_buf->ops != &tdev->ops) {
-+		ret = -ENOSYS;
-+		goto out;
-+	}
+ static void __trace_mmiotrace_rw(struct trace_array *tr,
+-				struct trace_array_cpu *data,
+ 				struct mmiotrace_rw *rw)
+ {
+ 	struct trace_event_call *call = &event_mmiotrace_rw;
+@@ -318,12 +317,10 @@ static void __trace_mmiotrace_rw(struct trace_array *tr,
+ void mmio_trace_rw(struct mmiotrace_rw *rw)
+ {
+ 	struct trace_array *tr = mmio_trace_array;
+-	struct trace_array_cpu *data = per_cpu_ptr(tr->array_buffer.data, smp_processor_id());
+-	__trace_mmiotrace_rw(tr, data, rw);
++	__trace_mmiotrace_rw(tr, rw);
+ }
  
- 	prime = (struct ttm_prime_object *) dma_buf->priv;
- 	base = &prime->base;
- 	*handle = base->handle;
- 	ret = ttm_ref_object_add(tfile, base, TTM_REF_USAGE, NULL, false);
+ static void __trace_mmiotrace_map(struct trace_array *tr,
+-				struct trace_array_cpu *data,
+ 				struct mmiotrace_map *map)
+ {
+ 	struct trace_event_call *call = &event_mmiotrace_map;
+@@ -349,12 +346,7 @@ static void __trace_mmiotrace_map(struct trace_array *tr,
+ void mmio_trace_mapping(struct mmiotrace_map *map)
+ {
+ 	struct trace_array *tr = mmio_trace_array;
+-	struct trace_array_cpu *data;
+-
+-	preempt_disable();
+-	data = per_cpu_ptr(tr->array_buffer.data, smp_processor_id());
+-	__trace_mmiotrace_map(tr, data, map);
+-	preempt_enable();
++	__trace_mmiotrace_map(tr, map);
+ }
  
-+out:
- 	dma_buf_put(dma_buf);
- 
- 	return ret;
+ int mmio_trace_printk(const char *fmt, va_list args)
 -- 
 2.53.0
 
