@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8F3399CF5;
-	Sat, 12 Sep 2026 20:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D47C39CCF6;
+	Sat, 12 Sep 2026 20:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243348; cv=none; b=KXXpLhBKOu8aPxYYyrwwE3qwvOzvy+sqo2rLtSUKmEUYqdlqCIfYk0wqSK6jfKOwa00Z5WAZyG/RIs/RUBhOBcCrYuyqE3o29WwfX96FBa0Yd0ecvLqR67HJas18LaVa4fpUqFvcSXTCCDWod9FYpfN1ZdrMS92oq+HlS2mBWcU=
+	t=1789243350; cv=none; b=ZePREM5zm/n3FCudtApbeDLw5nnKDX8iXMezoz9NcijG9TbzwjB0FagdOHMRJE9Xw6nZkSTLG1lqfzkdrJlMxFo+/5GBdh9Btq8VtWc3Xqa19b2txB6n+/abtAKjGh1v1BaS8QVQRef2Ts8UFU8CJyyXVCus5TtP5uCiZsNWBNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243348; c=relaxed/simple;
-	bh=mHjY4O6FdRdBGZZyByM37JlCef69BfXn6+3bGZwcZkQ=;
+	s=arc-20240116; t=1789243350; c=relaxed/simple;
+	bh=VI/MqKdc4k5SHlF7TGFilYGzqlc2ysvI39lBcWDEPgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSbcPp/QMphDcFJba7dWSO965rtKXi3TaJz6gWD3prmIEd9VEu53CVJUWHgVzV3Oezf05ByPqchWng7ojkUPekQFRMYCKqh/g7kF1AppLD1H0ufBtresl4lTUyvhRzyWFSsEPrXVWzUcFIDdSLt1DdldhaL+2i429IyTzIPQaeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0OUbqlt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EFFenIVJ4PCigH1e9QoUqCGWhdu0jD+wZKycS9mbRWV33K43OBGUGpweKNO4SlJZ/7sgR8FSftLFOTOG9i9omS/3NOfUlX1/TF70uvl5C3XDmUEYXIwJfkpYH07+lcKFsjFp4hgbrV9Jji51R5zBmtuQYRCoEf6ppM0gDWVXeb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7ZBaPCC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0OUbqlt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DE21F000FF;
-	Sat, 12 Sep 2026 20:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7ZBaPCC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C38C1F00893;
+	Sat, 12 Sep 2026 20:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243344;
-	bh=nfoB++x9chePoBD1r5WXJzZCzZ9Tt1Ivs6aWIcSqEdk=;
+	s=korg; t=1789243347;
+	bh=2t4khSZQrSUttJF4IhLWYDP0Xtlq5AKCvNjTQdEUVog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A0OUbqlt8EpGpbm8R5IINx4N6asX1bf57fY6Vs/YYzc/p0dI+tFTkrFwlSD80OOZm
-	 lqR8lA9jiGnYCMa41q9MK/432ADiQ3/vowUS8VRbs5g9mX5otg9UzgjppvuijzITL3
-	 SZ1UxyvjeQOFZV70yGCnEOxytkCXyO34ch6vJYW0=
+	b=w7ZBaPCC9tqLo9WWkeFzA+N8lQZ4a2aKgpJ28HqCyBDO1qqd+pty4vJyoxQAiRNd4
+	 NBRmy96LaGdqigC19Bh5bhtofQikOuXAquBJSoLW2+GRql2gzfEr11k3w6een4FfYh
+	 qrQbSkPHaXZnnUxxPgkkcFShdXpUNJhgJKIfWawc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Agatha Isabelle Moreira <code@agatha.dev>,
-	Arnaud Bonnet <abo@medichon.fr>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Kalle Niemi <kaleposti@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 723/798] nfs: refactor pNFS functions using clear_and_wake_up_bit
-Date: Sat, 12 Sep 2026 09:05:51 +0200
-Message-ID: <20260912065533.652124636@linuxfoundation.org>
+Subject: [PATCH 5.10 697/798] power: supply: bd99954: Drop bad register fields
+Date: Sat, 12 Sep 2026 09:05:25 +0200
+Message-ID: <20260912065533.070654964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -46,140 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaud Bonnet <abo@medichon.fr>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 187bfc974eefa9e5d88a0b4ee9d08ae8fe485df4 ]
+[ Upstream commit 177299384a224377b4152242d875e752e5958c02 ]
 
-Commit 8236b0ae31c83 ("bdi: wake up concurrent wb_shutdown() callers.")
-introduces the clear_and_wake_up_bit() helper as a wrapper for the
-common clear -> barrier -> wake up bitops sequence.
+The bd99954 driver creates regmap fields for all the registers. All the
+fields for VBUS_UCD_FCTRL_SET (extended command 0x33) are accidentally
+created for VCC_UCD_FCTRL_SET (extended command 0x2b), causing all
+reads/writes for the fields to access wrong register. Luckily the fields
+for VBUS_UCD_FCTRL_SET are unused.
 
-The file pnfs.c has several helpers with identical contents. Thus they
-are replaced with the more recent clean_and_wake_up_bit() global helper
-which describes accurately its effects at the call and still specifies
-the cleared bit. This also homogenizes the code with other subsystems.
+Taking a look at the data-sheet all the fields in the VBUS_UCD_FCTRL_SET
+are marked as: "In normal operation, please don’t set these registers"
+with not much of additional documentation. As the fields are wrong and
+because there seems to be no users of the fields - it is better to just
+drop them. This will also decrease the memory footprint.
 
-Since the helpers are no longer used after this, they can be safely
-removed.
+Drop incorrect VBUS_UCD_FCTRL_SET fields.
 
-Suggested-by: Agatha Isabelle Moreira <code@agatha.dev>
-Link: https://kernelnewbies.org/Beginner%20Cleanup%20and%20Refactor%20Tasks%20by%20Agatha%20Isabelle%20Moreira#task_007
-Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
-Signed-off-by: Arnaud Bonnet <abo@medichon.fr>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Datasheet: https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/battery_management/bd99954xxx-e.pdf
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 0902f8366491 ("power: supply: Support ROHM bd99954 charger")
+Tested-by: Kalle Niemi <kaleposti@gmail.com>
+Link: https://patch.msgid.link/758fd430d02286a6f18603a8aecfe443f5ddeb8e.1786356145.git.mazziesaccount@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs.c | 35 ++++++++++-------------------------
- 1 file changed, 10 insertions(+), 25 deletions(-)
+ drivers/power/supply/bd99954-charger.h | 23 +----------------------
+ 1 file changed, 1 insertion(+), 22 deletions(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index a627ce98b4561..22de4c6616739 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1946,15 +1946,6 @@ static bool pnfs_is_first_layoutget(struct pnfs_layout_hdr *lo)
- 	return test_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
- }
+diff --git a/drivers/power/supply/bd99954-charger.h b/drivers/power/supply/bd99954-charger.h
+index f588979253830..d053ac901274c 100644
+--- a/drivers/power/supply/bd99954-charger.h
++++ b/drivers/power/supply/bd99954-charger.h
+@@ -279,17 +279,7 @@ enum bd9995x_fields {
+ 	F_VBUS_EXTID,
+ 	F_VBUS_IDRDET,
+ 	F_VBUS_INDO,
+-	F_VBUS_UCDSWEN,
+-	F_VBUS_RREF_EN,
+-	F_VBUS_DPPU_EN,
+-	F_VBUS_DPREF_EN,
+-	F_VBUS_DMREF_EN,
+-	F_VBUS_DPDET_EN,
+-	F_VBUS_DMDET_EN,
+-	F_VBUS_DPSINK_EN,
+-	F_VBUS_DMSINK_EN,
+-	F_VBUS_DP_BUFF_EN,
+-	F_VBUS_DM_BUFF_EN,
++
+ 	F_VBUS_EXTCLKENBL,
+ 	F_VBUS_PLSTESTEN,
+ 	F_VBUS_UCDSWEN_TSTENB,
+@@ -626,17 +616,6 @@ static const struct reg_field bd9995x_reg_fields[] = {
+ 	    [F_VBUS_EXTID] = REG_FIELD(VBUS_IDD_STATUS, 5, 5),
+ 	    [F_VBUS_IDRDET] = REG_FIELD(VBUS_IDD_STATUS, 4, 4),
+ 	    [F_VBUS_INDO] = REG_FIELD(VBUS_IDD_STATUS, 0, 3),
+-	    [F_VBUS_UCDSWEN] = REG_FIELD(VCC_UCD_FCTRL_SET, 10, 10),
+-	    [F_VBUS_RREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 9, 9),
+-	    [F_VBUS_DPPU_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 8, 8),
+-	    [F_VBUS_DPREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 7, 7),
+-	    [F_VBUS_DMREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 6, 6),
+-	    [F_VBUS_DPDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 5, 5),
+-	    [F_VBUS_DMDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 4, 4),
+-	    [F_VBUS_DPSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 3, 3),
+-	    [F_VBUS_DMSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 2, 2),
+-	    [F_VBUS_DP_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 1, 1),
+-	    [F_VBUS_DM_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 0, 0),
  
--static void pnfs_clear_first_layoutget(struct pnfs_layout_hdr *lo)
--{
--	unsigned long *bitlock = &lo->plh_flags;
--
--	clear_bit_unlock(NFS_LAYOUT_FIRST_LAYOUTGET, bitlock);
--	smp_mb__after_atomic();
--	wake_up_bit(bitlock, NFS_LAYOUT_FIRST_LAYOUTGET);
--}
--
- static void _add_to_server_list(struct pnfs_layout_hdr *lo,
- 				struct nfs_server *server)
- {
-@@ -2128,7 +2119,8 @@ pnfs_update_layout(struct inode *ino,
- 					iomode, lo, lseg,
- 					PNFS_UPDATE_LAYOUT_INVALID_OPEN);
- 			nfs4_schedule_stateid_recovery(server, ctx->state);
--			pnfs_clear_first_layoutget(lo);
-+			clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+				&lo->plh_flags);
- 			pnfs_put_layout_hdr(lo);
- 			goto lookup_again;
- 		}
-@@ -2195,7 +2187,8 @@ pnfs_update_layout(struct inode *ino,
- 		}
- 		if (lseg) {
- 			if (first)
--				pnfs_clear_first_layoutget(lo);
-+				clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+					&lo->plh_flags);
- 			trace_pnfs_update_layout(ino, pos, count,
- 				iomode, lo, lseg, PNFS_UPDATE_LAYOUT_RETRY);
- 			pnfs_put_layout_hdr(lo);
-@@ -2207,7 +2200,7 @@ pnfs_update_layout(struct inode *ino,
- 
- out_put_layout_hdr:
- 	if (first)
--		pnfs_clear_first_layoutget(lo);
-+		clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
- 	trace_pnfs_update_layout(ino, pos, count, iomode, lo, lseg,
- 				 PNFS_UPDATE_LAYOUT_EXIT);
- 	pnfs_put_layout_hdr(lo);
-@@ -2299,7 +2292,7 @@ static void _lgopen_prepare_attached(struct nfs4_opendata *data,
- 	lgp = pnfs_alloc_init_layoutget_args(ino, ctx, &current_stateid,
- 					     &rng, GFP_KERNEL);
- 	if (!lgp) {
--		pnfs_clear_first_layoutget(lo);
-+		clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
- 		nfs_layoutget_end(lo);
- 		pnfs_put_layout_hdr(lo);
- 		return;
-@@ -2403,7 +2396,8 @@ void nfs4_lgopen_release(struct nfs4_layoutget *lgp)
- {
- 	if (lgp != NULL) {
- 		if (lgp->lo) {
--			pnfs_clear_first_layoutget(lgp->lo);
-+			clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+				&lgp->lo->plh_flags);
- 			nfs_layoutget_end(lgp->lo);
- 		}
- 		pnfs_layoutget_free(lgp);
-@@ -3128,15 +3122,6 @@ pnfs_generic_pg_readpages(struct nfs_pageio_descriptor *desc)
- }
- EXPORT_SYMBOL_GPL(pnfs_generic_pg_readpages);
- 
--static void pnfs_clear_layoutcommitting(struct inode *inode)
--{
--	unsigned long *bitlock = &NFS_I(inode)->flags;
--
--	clear_bit_unlock(NFS_INO_LAYOUTCOMMITTING, bitlock);
--	smp_mb__after_atomic();
--	wake_up_bit(bitlock, NFS_INO_LAYOUTCOMMITTING);
--}
--
- /*
-  * There can be multiple RW segments.
-  */
-@@ -3161,7 +3146,7 @@ static void pnfs_list_write_lseg_done(struct inode *inode, struct list_head *lis
- 		pnfs_put_lseg(lseg);
- 	}
- 
--	pnfs_clear_layoutcommitting(inode);
-+	clear_and_wake_up_bit(NFS_INO_LAYOUTCOMMITTING, &NFS_I(inode)->flags);
- }
- 
- void pnfs_set_lo_fail(struct pnfs_layout_segment *lseg)
-@@ -3301,7 +3286,7 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
- 	spin_unlock(&inode->i_lock);
- 	kfree(data);
- clear_layoutcommitting:
--	pnfs_clear_layoutcommitting(inode);
-+	clear_and_wake_up_bit(NFS_INO_LAYOUTCOMMITTING, &NFS_I(inode)->flags);
- 	goto out;
- }
- EXPORT_SYMBOL_GPL(pnfs_layoutcommit_inode);
+ 	    [F_VBUS_EXTCLKENBL] = REG_FIELD(VBUS_UCD_FCTRL_EN, 15, 15),
+ 	    [F_VBUS_PLSTESTEN] = REG_FIELD(VBUS_UCD_FCTRL_EN, 14, 14),
 -- 
 2.53.0
 
