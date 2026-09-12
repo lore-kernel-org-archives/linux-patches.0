@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A696E392836;
-	Sat, 12 Sep 2026 07:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155AD396B6F;
+	Sat, 12 Sep 2026 07:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196681; cv=none; b=NoO3LMGnDEgO8DuWm0l8lPjnHdBwhYmch4ioGb8QKt1itJmq8hgc1Eq3kzezO1eNjB+QEeUrxCJw97NfRZWvn+kWxajzjaVdCQKRP+aaOKIAPnXWfq829gs0A96EIkVl54f2wuXfmkNqKKzV/kzX3lii3nyzSsU0LJrWnk7aFtA=
+	t=1789196684; cv=none; b=XkMStcLDPzzwkIf6lsBKe2ru/rqa/gbSXVNvIJs8KZ5exIc0wFWwQrxufptxGGUALEEXxCPtECjeMN9KuixycL+Fdt3oSB/JopZj5TMFv9z5IZTVBp4JWTXwV3y6ZNNbijB5QMqgnzkZ7Zrh2t/U+njCbAex0NRY+fpQvhrrZXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196681; c=relaxed/simple;
-	bh=L1Xr1fGfo81pGFef+LK6Qj0P91z8nY+xAUAt+gbtgkg=;
+	s=arc-20240116; t=1789196684; c=relaxed/simple;
+	bh=L9yROu3Zja8ue0mtPYfk64cq3qQdnoMfLrVh42LmDy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dixx6vWfhUzaNnkqqRG8fYKyIe8/FgO6PFakFP7pn3O1bgt8NP7zFX0e8JsshQPIGuUmsC2yBF5nYJe967aG78t4wYtPPe1UeVYQep2wY3Hqg7gaJ6bnbCE9sWARpPEKXVD5Q5fhCrikWKkT41Lv8aWhKd12qCTQeevoDUcg58Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRP10bXc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HBg1y8LuFMW+HggrtAwqGQVgwgR8ZA1XMBrjhD+hoU59KNpn7LW0/oOOfFaDSFq7Lp1wV0TLF5YZcyAJD/4tH9c4IMn3ZpToJViIOwFQ2MzTZl2uTPH423DhX8e2qDGiZKfBYsGQYffS4Pc84laXs6DHaggSySlDeENY9oRMHDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9LEUsj5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRP10bXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF831F00893;
-	Sat, 12 Sep 2026 07:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9LEUsj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54D21F000FF;
+	Sat, 12 Sep 2026 07:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196674;
-	bh=pwkeXxBFHxWgNj/m3dhoYLtpQN6vJf8j7MbaWzS51IU=;
+	s=korg; t=1789196679;
+	bh=lLx3ok5lqf0KqaNWUpdt+qpROuj9v5e7jnwOYoL58Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pRP10bXcR3A/07HA9wdHB3OKsSe3nkuguluTGZAmFR/4ffJ9b3YNwxReYMH/ODXcm
-	 M1S1+fq0J59O4UlsD0XzueZNZdixIfWF+rt8s+HMtBof4cv1F40Z7BMuHD951zMGSf
-	 uyZ/j7dvJ5b3hY8mDTj7XXz27VFlIB8+It8vFBSI=
+	b=n9LEUsj55+kVw1q54DMbFdbTBrRGZUONmZLPXSn0GV+7LFynOuaAoVsf9+OznrDOJ
+	 YSk/3TOfgkJT8DvMo7/W/3jjCD7dWwMi+cNcWPlNPxSwIhoyqNM7nuJmzgyqUlaKu/
+	 bTKzW4aj80rS4RtlnIKeqX++PjtCfEu+SNOpz+mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Boris Burkov <boris@bur.io>,
+	"jlayton@meta.com" <jlayton@meta.com>,
+	Leo Martins <loemra.dev@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0015/1815] tracing/probes: Fix BTF kflag check for anonymous struct member access
-Date: Sat, 12 Sep 2026 08:29:25 +0200
-Message-ID: <20260912065649.366787953@linuxfoundation.org>
+Subject: [PATCH 7.2 0016/1815] btrfs: abort transaction before releasing tree_log_mutex on commit failure
+Date: Sat, 12 Sep 2026 08:29:26 +0200
+Message-ID: <20260912065649.390463439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,128 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+From: Leo Martins <loemra.dev@gmail.com>
 
-[ Upstream commit 47e93045a2db80d24f5fef65adecc6b2b32efa23 ]
+[ Upstream commit 529c01c3dc0d322c103611c35b01d71ea04562b2 ]
 
-btf_find_struct_member() traverses into nested anonymous structures and
-unions to find a struct member. However, get_bitoffset_of_field() in
-trace_probe.c checked btf_type_kflag(type) using the outer parent type
-instead of the actual anonymous structure/union that directly contains
-the found member.
+When transaction metadata writeout fails in btrfs_commit_transaction(),
+the current code only logs the error, drops tree_log_mutex and then goes
+through cleanup_transaction(), which aborts the transaction and records
+the fs error.
 
-If the parent structure and anonymous structure have mismatched kflags
-(e.g., the parent has kflag=0 while the anonymous structure has kflag=1
-because it contains bitfields), the bitfield size encoded in the upper
-8 bits of member->offset is erroneously treated as part of the byte/bit
-offset, corrupting the resolved offset and failing to set last_bitsize.
-Similarly, btf_find_struct_member() pushed anonymous member offsets
-onto anon_stack without masking BTF_MEMBER_BIT_OFFSET() when kflag is set.
+That is too late for the tree log side. A log sync can already be
+waiting on tree_log_mutex, because the committing transaction is moved
+to TRANS_STATE_UNBLOCKED while that mutex is held, which lets fsyncs
+join the next transaction and queue up in btrfs_sync_log(). Once the
+failed commit drops tree_log_mutex, such a log sync acquires it, sees
+BTRFS_FS_ERROR() still clear, and writes super_for_commit. That
+superblock holds the roots prepared for the transaction that has just
+failed to write out its metadata, so it can point at tree blocks that
+never reached the disk, and the next mount fails with a parent transid
+mismatch.
 
-To fix this problem, update btf_find_struct_member() to return actual
-containing structure/union type via member_type, use appropriate
-__btf_member_bit_offset() to get bit offset, and use member_type for
-btf_type_kflag() in get_bitoffset_of_field().
+Commit 165ea85f1483 ("btrfs: do not write supers if we have an fs
+error") fixed this class of problem by making btrfs_sync_log() check for
+an fs error right after taking tree_log_mutex. That check only works if
+the commit path publishes the fs error before it releases the same
+mutex, and commit 68d4ece9c30e ("btrfs: don't call
+btrfs_handle_fs_error() in btrfs_commit_transaction()") removed the only
+thing that did so.
 
-Link: https://lore.kernel.org/all/178827250904.123716.17452648791331881284.stgit@devnote2/
+Restore the ordering by aborting the transaction while tree_log_mutex is
+still held. We have a transaction handle here, so this does not need to
+bring back the btrfs_handle_fs_error() call: __btrfs_abort_transaction()
+records the fs error itself, which is all btrfs_sync_log() looks at, and
+the error message put in its place is kept.
 
-Fixes: c440adfbe302 ("tracing/probes: Support BTF based data structure field access")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260822095110.0772E1F000E9@smtp.kernel.org/
-Assisted-by: Antigravity:gemini-3.7-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
-[ applied changes to parse_btf_field() because get_bitoffset_of_field() is absent. ]
+This is what commit 3810ab40afa5 ("btrfs: abort transaction on error in
+write_all_supers()") already does for the next call in this function.
+
+This is reproducible on an unmodified kernel by failing the first
+couple of bios of a transaction commit with fail_make_request while a
+concurrent fsync workload keeps log syncs queued on tree_log_mutex.
+
+Fixes: 68d4ece9c30e ("btrfs: don't call btrfs_handle_fs_error() in btrfs_commit_transaction()")
+CC: stable@vger.kernel.org # 7.0+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: jlayton@meta.com <jlayton@meta.com>
+Signed-off-by: Leo Martins <loemra.dev@gmail.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ adjusted error-message context to retain `%d` with `ret` instead of `%pe` with `ERR_PTR(ret)`. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_btf.c   |   19 +++++++++++--------
- kernel/trace/trace_btf.h   |    3 ++-
- kernel/trace/trace_probe.c |    5 +++--
- 3 files changed, 16 insertions(+), 11 deletions(-)
+ fs/btrfs/transaction.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/trace/trace_btf.c
-+++ b/kernel/trace/trace_btf.c
-@@ -61,16 +61,17 @@ struct btf_anon_stack {
- 
- /*
-  * Find a member of data structure/union by name and return it.
-- * Return NULL if not found, or -EINVAL if parameter is invalid.
-- * If the member is an member of anonymous union/structure, the offset
-- * of that anonymous union/structure is stored into @anon_offset. Caller
-- * can calculate the correct offset from the root data structure by
-- * adding anon_offset to the member's offset.
-+ * Return NULL if not found, or ERR_PTR(-EINVAL) if parameter is invalid.
-+ * If the member is a member of an anonymous union/structure, the bit offset
-+ * of that anonymous union/structure is stored into @anon_offset.
-+ * If @member_type is non-NULL, the actual containing structure/union type
-+ * of the found member is stored into @member_type.
-  */
- const struct btf_member *btf_find_struct_member(struct btf *btf,
- 						const struct btf_type *type,
- 						const char *member_name,
--						u32 *anon_offset)
-+						u32 *anon_offset,
-+						const struct btf_type **member_type)
- {
- 	struct btf_anon_stack *anon_stack;
- 	const struct btf_member *member;
-@@ -94,14 +95,16 @@ retry:
- 			if (mtype && btf_type_is_struct(mtype) &&
- 			    top < BTF_ANON_STACK_MAX) {
- 				anon_stack[top].tid = tid;
--				anon_stack[top++].offset =
--					cur_offset + member->offset;
-+				anon_stack[top++].offset = cur_offset +
-+					__btf_member_bit_offset(type, member);
- 			}
- 		} else {
- 			name = btf_name_by_offset(btf, member->name_off);
- 			if (name && !strcmp(member_name, name)) {
- 				if (anon_offset)
- 					*anon_offset = cur_offset;
-+				if (member_type)
-+					*member_type = type;
- 				goto out;
- 			}
- 		}
---- a/kernel/trace/trace_btf.h
-+++ b/kernel/trace/trace_btf.h
-@@ -8,4 +8,5 @@ const struct btf_param *btf_get_func_par
- const struct btf_member *btf_find_struct_member(struct btf *btf,
- 						const struct btf_type *type,
- 						const char *member_name,
--						u32 *anon_offset);
-+						u32 *anon_offset,
-+						const struct btf_type **member_type);
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -578,6 +578,7 @@ static int parse_btf_field(char *fieldna
- {
- 	struct fetch_insn *code = *pcode;
- 	const struct btf_member *field;
-+	const struct btf_type *mtype;
- 	u32 bitoffs, anon_offs;
- 	bool is_struct = ctx->struct_btf != NULL;
- 	struct btf *btf = ctx_btf(ctx);
-@@ -612,7 +613,7 @@ static int parse_btf_field(char *fieldna
- 
- 			anon_offs = 0;
- 			field = btf_find_struct_member(btf, type, fieldname,
--						       &anon_offs);
-+						       &anon_offs, &mtype);
- 			if (IS_ERR(field)) {
- 				trace_probe_log_err(ctx->offset, BAD_BTF_TID);
- 				return PTR_ERR(field);
-@@ -625,7 +626,7 @@ static int parse_btf_field(char *fieldna
- 			bitoffs += anon_offs;
- 
- 			/* Accumulate the bit-offsets of the dot-connected fields */
--			if (btf_type_kflag(type)) {
-+			if (btf_type_kflag(mtype)) {
- 				bitoffs += BTF_MEMBER_BIT_OFFSET(field->offset);
- 				ctx->last_bitsize = BTF_MEMBER_BITFIELD_SIZE(field->offset);
- 			} else {
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -2589,6 +2589,12 @@ int btrfs_commit_transaction(struct btrf
+ 	ret = btrfs_write_and_wait_transaction(trans);
+ 	if (unlikely(ret)) {
+ 		btrfs_err(fs_info, "error while writing out transaction: %d", ret);
++		/*
++		 * Abort before releasing tree_log_mutex, so a log sync waiting
++		 * on it sees the fs error and skips writing super_for_commit
++		 * for this failed transaction. See btrfs_sync_log().
++		 */
++		btrfs_abort_transaction(trans, ret);
+ 		mutex_unlock(&fs_info->tree_log_mutex);
+ 		goto scrub_continue;
+ 	}
 
 
