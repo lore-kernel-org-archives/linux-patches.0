@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158882AEEB;
-	Sat, 12 Sep 2026 15:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7112C237E;
+	Sat, 12 Sep 2026 15:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227222; cv=none; b=Z6t0gf3phh+iroCQyL70Y0oN8s+f8bDu32JPJvDl1mAK3+JttnnpCo5RwX7RKBnU+n2S6QunxvYPwidhu2sA0gyq0PP4QSJKLsKprNr1pFYdBa6XffxpPygLattozmsXUTWWYCn1WBvQLS5F7yNtcc1MSfjWiwl/Ijsbkk7OV+g=
+	t=1789227227; cv=none; b=H4lUQrq5dtAVGj0FgLALZQ13UaB+E+s7eflmiX/BVEvF2ZEnmXqo/oqu5aVCg652Q9T+oUlTvDGyzdSafC3dU+9SvWrq0Ghr2KlZZ6bt5u2A8+A+fF9EUHLxWv/0qTs4zsdxlCmx9Ki9mC2YZjGF3dyrpY729feDoMQhGwXVSiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227222; c=relaxed/simple;
-	bh=wMjw1Nnz6+yTsPYoC03V2n1OuT5f05vRHgwQTked4Vw=;
+	s=arc-20240116; t=1789227227; c=relaxed/simple;
+	bh=PZJ7dDT5A8vcIqCBVTgIik+l8u9VFc+ddDy8k/MdS8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6T/wCm52rI3EO56gdD5VgIXZABWK/WQjTSG4VbHEtJ3QHZlXDXzHJJumApFjqOOrWYbQSphpvFnrCX7AxcrvMxtgFfKAXgXlVZCVakSCxoWWWiVpOHwA4XqZEroWN2GZ1BwrSCV6AjHb1pawRQdcrRiorslkDLYmHW0xWog9Qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/H6S1Vh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NdYbxNYEDJPVS0lNeXhafB69ixy8fQvs8aoNo6mIZ9Z5LQttrfRrDgDQMUbmRy+mL0vPHqzPalzp5rhQlYzon36rs+yagkqnjCF4JDjCDLERjn9OJcNxMSCIfN2X+6BCHKUZOMY/teBeplmJ7C+xmTPEZV8eBpTtomfJvSiRxio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAjBLuiE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/H6S1Vh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7981F000FF;
-	Sat, 12 Sep 2026 15:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAjBLuiE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DA81F000FF;
+	Sat, 12 Sep 2026 15:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227221;
-	bh=UMEDndHsiBK5qDw+rnzmJuK6LKg4qWAHLVv/FCiLFH4=;
+	s=korg; t=1789227226;
+	bh=rfIWo8ZZ0lyz77QylgXTOGC9BmTpEmnKNu624SAj01s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/H6S1Vh038CeY5uyTOSsfYb1yfrnWOjyflHVxSUm8XSil4OE4vsp+1Cchu3lb5xK
-	 MV12bTA75Cjbp0QBSf+W9Kl35RfOM+39m+7HrmnRpkaouIAOmyH224XYlLvtx/OzNT
-	 9kJmP3H8P7pkRk4JMFQ8Guvy4q7gI1FyoZbOUJg4=
+	b=VAjBLuiEmVt2EhIfriq9p+8UoY7UaxS5hH1WdQQQ9bK48eMQTDp5VfTotGOgZlOKu
+	 jqoBqzAGOQla5WjvOs7Ll229Y0JUxSG1r0y4AsRBhz1rZ3RsiIfI7pcPOmetDemEOV
+	 AF5W95kyZg4XoDcFJpG2jWKRPncS8Wm92mJZ3dkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 0135/1191] svcrdma: Fix pcl_for_each_segment for empty chunks
-Date: Sat, 12 Sep 2026 08:47:43 +0200
-Message-ID: <20260912065551.229353428@linuxfoundation.org>
+	David Lee <david.lee@trailofbits.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.1 0136/1191] udf: reject VAT indexes equal to the entry count
+Date: Sat, 12 Sep 2026 08:47:44 +0200
+Message-ID: <20260912065551.251915844@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,70 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: David Lee <david.lee@trailofbits.com>
 
-commit b7713a784c59515d0aba558c8f5df6a0164dd3a9 upstream.
+commit cac0cb07f29ccfb373fd4a36c81e908ef3ce608c upstream.
 
-When a parsed chunk list contains a chunk whose ch_segcount is zero,
-pcl_for_each_segment computes its inclusive upper bound as
-&chunk->ch_segments[ch_segcount - 1]. ch_segcount is u32, so the
-subtraction wraps to 0xFFFFFFFF and the bound lands far past the
-ch_segments flex array. The loop body then walks unrelated memory at
-sizeof(struct svc_rdma_segment) stride until it faults.
+UDF 1.50 virtual partition mapping uses the VAT as an array of physical
+block mappings. s_num_entries stores the number of entries in that array,
+not the highest valid index. The valid VAT indexes are therefore below
+s_num_entries.
 
-A zero-segcount chunk is reachable from the wire:
-xdr_check_write_chunk() only rejects segcount values greater than
-rc_maxpages, and pcl_alloc_write() links a freshly allocated chunk
-onto rc_write_pcl/rc_reply_pcl before its segment-fill loop runs,
-so a Write or Reply chunk advertising zero segments leaves
-ch_segcount == 0 on the list. When the transport has negotiated
-Send-With-Invalidate, svc_rdma_get_inv_rkey() iterates all four
-PCLs with pcl_for_each_segment and dereferences segment->rs_handle
-on each iteration, turning the underflow into an out-of-bounds read
-and a general protection fault.
+udf_get_pblock_virt15() currently rejects only indexes greater than
+s_num_entries. A crafted image can request index s_num_entries, pass the
+bounds check, and make the kernel read one entry past the allocated VAT table.
 
-    xdr_check_write_list / xdr_check_reply_chunk
-      pcl_alloc_write()
-        chunk = pcl_alloc_chunk(...)  /* ch_segcount = 0 */
-        list_add_tail(&chunk->ch_list, &pcl->cl_chunks)
-        /* fill loop iterates zero times for wire segcount 0 */
+Change the check to reject block >= s_num_entries, so the count is handled as
+an exclusive upper bound.
 
-    svc_rdma_get_inv_rkey()
-      pcl_for_each_chunk(rc_write_pcl)
-        pcl_for_each_segment(segment, chunk)
-          pos <= &ch_segments[0u - 1u]  /* 0xFFFFFFFF */
-          segment->rs_handle            /* OOB read -> GPF */
+A crafted UDF image reproduced this on origin/master commit
+0e35b9b6ec0ffcc5e23cbdec09f5c622ad532b53 with a KASAN slab-out-of-bounds
+report in udf_get_pblock_virt15().
 
-Fix by switching the macro to a half-open upper bound that uses
-ch_segcount directly. For ch_segcount == 0 the loop start equals the
-loop end and the body is skipped; for ch_segcount > 0 the iteration
-range is unchanged. All six existing call sites in
-net/sunrpc/xprtrdma/svc_rdma_recvfrom.c and
-net/sunrpc/xprtrdma/svc_rdma_rw.c remain correct under the new bound,
-so no caller changes are needed.
+Trail of Bits has a reproducer that triggers kernel panic demonstrating the bug, and can share it if needed.
 
-Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-4-e251306ccca9@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Link: https://patch.msgid.link/20260708101712.1706564-1-david.lee@trailofbits.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sunrpc/svc_rdma_pcl.h |    2 +-
+ fs/udf/partition.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/sunrpc/svc_rdma_pcl.h
-+++ b/include/linux/sunrpc/svc_rdma_pcl.h
-@@ -97,7 +97,7 @@ pcl_next_chunk(const struct svc_rdma_pcl
-  */
- #define pcl_for_each_segment(pos, chunk) \
- 	for (pos = &(chunk)->ch_segments[0]; \
--	     pos <= &(chunk)->ch_segments[(chunk)->ch_segcount - 1]; \
-+	     pos < &(chunk)->ch_segments[(chunk)->ch_segcount]; \
- 	     pos++)
+--- a/fs/udf/partition.c
++++ b/fs/udf/partition.c
+@@ -58,7 +58,7 @@ uint32_t udf_get_pblock_virt15(struct su
+ 	map = &sbi->s_partmaps[partition];
+ 	vdata = &map->s_type_specific.s_virtual;
  
- /**
+-	if (block > vdata->s_num_entries) {
++	if (block >= vdata->s_num_entries) {
+ 		udf_debug("Trying to access block beyond end of VAT (%u max %u)\n",
+ 			  block, vdata->s_num_entries);
+ 		return 0xFFFFFFFF;
 
 
