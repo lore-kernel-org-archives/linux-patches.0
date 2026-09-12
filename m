@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8601D38B7D2;
-	Sat, 12 Sep 2026 11:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0904B3F788A;
+	Sat, 12 Sep 2026 11:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213211; cv=none; b=let+Z62hcGvAgHTao3xa5RQqLFYa4oB8RetjA9uC39+p+OUDb+MQwczCNAsC8/phs4wNawrGTqX2yfYYOoqfIbZbAb4/F0aBP+Ip08vBCPRSYX5gsBC9RoYOamUfgFjYnxLIRSFMvsnUWQlqcM871WxOGWoMFaJRvYlndQbASAg=
+	t=1789213217; cv=none; b=hSvUahqxvfkExpIHIxs1duh/j2mXEJ2p0SNx5r+o/x6E7FNNefTWCLPzocoz+LfYdppvv3P++Mf1MCNwHJvOgsynLaR2xafOugDFpwjWNivGEIbIGzriDamTMN662+lR7IcWyX0nD3wAi7wB8lYXQHPN+y8bJ4l3ciCyfIRocb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213211; c=relaxed/simple;
-	bh=1tXHKN2P0oz2DuwV8Y3zcr7Y41VwFbUuhOOVXHHzpHw=;
+	s=arc-20240116; t=1789213217; c=relaxed/simple;
+	bh=eZOJmGR4ijIgRd+6KNROEU8klMkyAqEfoCFzF+KPOWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hafBWinRkB8WgCSs2nN3p7FIXfC4nldOyUKtdkhuii0ey2rcBgaQbuUm/IW4agTJld11S9MHPezx6k4cUDd9djvEkpe91YrRoIBu3uYPoce2HbZ4qrwER2LiM6dY7ErYGaQxPc2thecnkD8ElnCh65R0q+c4ODotGy4dR3cUhXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pV7j5LMZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eXjq/nb3emgx9jwDne9uIS5lveQSxemoHhBff6mBaOcC1nhGQf3IFK4KR+BWkarq5sbQv1e1wTGupg21qKUTE1Hmc4u1FuZRrPAmSVDKwan9c8vb678KnqTA7oL9O55lXtxZ2/rE1g0cI2YZTaDNh09GVPWlt/etX2VneAVnZWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKlFF9H5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pV7j5LMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87AB31F000FF;
-	Sat, 12 Sep 2026 11:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKlFF9H5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F011F000FF;
+	Sat, 12 Sep 2026 11:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213210;
-	bh=tZFbnjhgi17fsk6QiGOJYuP7SV3JnAmVHj9ivZx5tTk=;
+	s=korg; t=1789213215;
+	bh=h8StEW3gSp8FNlX6/SCr/DwWbB+6ogg9h2L2YA1PzKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pV7j5LMZ/46uw+tiu/MsyPnWgci5TGJyPVHq0YyP2QsS96nQJFpshBrEesK78Zk/O
-	 5DRng4DTDft5/offv2L5TWttd3778nk4BHSPRom8fHiRInAjso659sX/TXb2o6mgIl
-	 oIl2B1CREfSGnRkSe5vAk1qXkuED5YPUcECD8+Ig=
+	b=fKlFF9H5/nL3hbGwKgrk9YagPFWZ8jmyDg0leI9PgvdYeiELFt+GadWCxgsUbcwQ/
+	 VmiVjLDTp9jARJy1OpP/yCFtIpaYem7eIApAD8wM4V2vJdu78QHFvUwEHkdLM/G+np
+	 XlzGSG5dvBv5cThdpBjd5LaKpJBRTECxJK6xTVu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 0048/1376] mm/damon/sysfs: kobject_del() target (normal), context and kdamond dirs
-Date: Sat, 12 Sep 2026 08:41:14 +0200
-Message-ID: <20260912065608.628611227@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.12 0075/1376] perf/x86/intel: Fix kernel address leakages in LBR stack
+Date: Sat, 12 Sep 2026 08:41:41 +0200
+Message-ID: <20260912065609.229522241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,143 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-commit 263af33a72d1995ae6cdc22b08d527e2bda17259 upstream.
+commit e2b0575900ff72aa82748af96e7bd564ade5157a upstream.
 
-Patch series "mm/damon/sysfs: kobject_del() directories that users can
-create/remove".
+Before Arch LBR gained CPL filtering support, a user-only branch stack
+could still contain kernel addresses. As a result, kernel branch records
+may be exposed to user space even when PERF_SAMPLE_BRANCH_USER is
+requested.
 
-DAMON sysfs interface allows users to create and remove arbitrary number
-of directories on sysfs, using a few files having 'nr_' prefix.  For
-example, 'nr_kdamonds'.  When the user writes a number 'N' to the files,
-directories having name starting from '0' to 'N - 1' are created in the
-same directory.  The pre-existing number-named directories are removed
-before creating the new directories.
+For example, on Intel Tiger Lake, the following command can still report
+SYSRET/ERET entries with kernel-space from addresses:
 
-For the removal of the existing directories, DAMON sysfs interface use
-only kobject_put().  Because DAMON sysfs interface is the only kernel
-component that manages the directories, there is no problem in normal
-situations.  However, if CONFIG_DEBUG_KOBJECT_RELEASE is enabled, the
-removal of dirs are delayed.  Let's suppose a user writes a non-zero
-number to the 'nr_*' files while there are pre-existing number-named
-directories, on the config enabled kernel.  DAMON sysfs interface
-decreases the reference counts of the existing directories and immediately
-creates new directories.  Because the removal of the sysfs directories is
-delayed, it shows some pre-existing directories of the same names when it
-tries to create the new directories, and fails.
+$ ./perf record -e cycles:p -o - --branch-filter any,save_type,u -- \
+ 	./perf bench syscall basic --loop 1000 | \
+	./perf script -i - --fields brstack|tr ' ' '\n'| \
+	grep -E '0x[89a-f][0-9a-f]{15}'
 
-For example, the issue can be triggered like below:
+    Total time: 0.000 [sec]
 
-    # grep DEBUG_KOBJECT_RELEASE /boot/config-$(uname -r)
-    CONFIG_DEBUG_KOBJECT_RELEASE=y
-    # ls
-    nr_kdamonds
-    # echo 1 > nr_kdamonds
-    # echo 1 > nr_kdamonds
-    bash: echo: write error: File exists
-    # dmesg
-    [...]
-    [  300.880458] kobject: kobject_add_internal failed for 0 with -EEXIST, don't try to register things with the same name in the same directory.
-    [...]
+      0.219000 usecs/op
+     4,566,210 ops/sec
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 0.551 MB - ]
+0xffffffff93c001c8/0x7f12a2b1d647/P/-/-/16959/SYSRET/-
+0xffffffff93c001c8/0x7f12a2b1d5c2/P/-/-/17535/SYSRET/-
+0xffffffff93c01928/0x7f12a2861000/P/-/-/6719/ERET/-
+0xffffffff93c01928/0x7f12a297a000/P/-/-/8575/ERET/-
 
-Some of the error handling paths of the directories also lack the
-kobject_del() call.  If the user uses nr_* file right after the errors,
-similar issues can happen.
+The problem is that intel_pmu_lbr_filter() does not fully validate the
+privilege level of sampled entries. It filters some mismatches based on
+the branch type and the to address, but it does not reject entries whose
+from address violates the requested branch privilege filter.
 
-This doesn't cause catastrophic issues like kernel panics or memory
-corruptions.  Users can work around by removing all directories first
-(write 0 to the nr_* files) and then create new directories after
-confirming the old directories are gone.  But, this is definitely a bug
-that causes a bad user experience.
+Fix this by extending software filtering to validate both from and to
+addresses against br_sel. Any LBR entry contains kernel address does not
+match the requested user filter is dropped. This prevents kernel
+addresses from appearing in user-only branch stacks.
 
-Fix the issues by calling kobject_del() before creating new directories.
-
-
-This patch (of 11)
-
-On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
-could cause directories creation failures due to the name conflicts.  Fix
-those issues for normal creation paths of target, context and kdamond
-directories, and error paths of context and kdamond directories by adding
-kobject_del() calls.
-
-Note that this fix for target directories is not complete since it has a
-similar issue in the damon_sysfs_targets_add_dirs() error path.  Because
-the normal path issue and the error path issue are introduced by different
-commits, this commit is fixing only the normal path issue.  A commit for
-the error path will be added next.
-
-Link: https://lore.kernel.org/20260628220121.97360-1-sj@kernel.org
-Link: https://lore.kernel.org/20260628220121.97360-2-sj@kernel.org
-Fixes: c951cd3b8901 ("mm/damon: implement a minimal stub for sysfs-based DAMON interface")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 47125db27e47 ("perf/x86/intel/lbr: Support Architectural LBR")
+Reported-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260616044654.3468742-5-dapeng1.mi@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/lbr.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -307,6 +307,7 @@ static void damon_sysfs_targets_rm_dirs(
+--- a/arch/x86/events/intel/lbr.c
++++ b/arch/x86/events/intel/lbr.c
+@@ -1202,7 +1202,7 @@ intel_pmu_lbr_filter(struct cpu_hw_event
+ {
+ 	u64 from, to;
+ 	int br_sel = cpuc->br_sel;
+-	int i, j, type, to_plm;
++	int i, j, type, from_plm, to_plm;
+ 	bool compress = false;
  
- 	for (i = 0; i < targets->nr; i++) {
- 		damon_sysfs_target_rm_dirs(targets_arr[i]);
-+		kobject_del(&targets_arr[i]->kobj);
- 		kobject_put(&targets_arr[i]->kobj);
- 	}
- 	targets->nr = 0;
-@@ -833,6 +834,7 @@ static void damon_sysfs_contexts_rm_dirs
+ 	/* if sampling all branches, then nothing to filter */
+@@ -1234,8 +1234,14 @@ intel_pmu_lbr_filter(struct cpu_hw_event
+ 				type |= X86_BR_NO_TX;
+ 		}
  
- 	for (i = 0; i < contexts->nr; i++) {
- 		damon_sysfs_context_rm_dirs(contexts_arr[i]);
-+		kobject_del(&contexts_arr[i]->kobj);
- 		kobject_put(&contexts_arr[i]->kobj);
- 	}
- 	contexts->nr = 0;
-@@ -871,13 +873,15 @@ static int damon_sysfs_contexts_add_dirs
- 
- 		err = damon_sysfs_context_add_dirs(context);
- 		if (err)
--			goto out;
-+			goto del_out;
- 
- 		contexts_arr[i] = context;
- 		contexts->nr++;
- 	}
- 	return 0;
- 
-+del_out:
-+	kobject_del(&context->kobj);
- out:
- 	damon_sysfs_contexts_rm_dirs(contexts);
- 	kobject_put(&context->kobj);
-@@ -1692,6 +1696,7 @@ static void damon_sysfs_kdamonds_rm_dirs
- 
- 	for (i = 0; i < kdamonds->nr; i++) {
- 		damon_sysfs_kdamond_rm_dirs(kdamonds_arr[i]);
-+		kobject_del(&kdamonds_arr[i]->kobj);
- 		kobject_put(&kdamonds_arr[i]->kobj);
- 	}
- 	kdamonds->nr = 0;
-@@ -1747,13 +1752,15 @@ static int damon_sysfs_kdamonds_add_dirs
- 
- 		err = damon_sysfs_kdamond_add_dirs(kdamond);
- 		if (err)
--			goto out;
-+			goto del_out;
- 
- 		kdamonds_arr[i] = kdamond;
- 		kdamonds->nr++;
- 	}
- 	return 0;
- 
-+del_out:
-+	kobject_del(&kdamond->kobj);
- out:
- 	damon_sysfs_kdamonds_rm_dirs(kdamonds);
- 	kobject_put(&kdamond->kobj);
+-		/* if type does not correspond, then discard */
+-		if (type == X86_BR_NONE || (br_sel & type) != type) {
++		from_plm = kernel_ip(from) ? X86_BR_KERNEL : X86_BR_USER;
++		/*
++		 * If type does not correspond, then discard.
++		 * Specifically reject entries whose from address is in
++		 * kernel space when only X86_BR_USER is requested.
++		 */
++		if (type == X86_BR_NONE || (br_sel & type) != type ||
++		    (!(br_sel & X86_BR_KERNEL) && (from_plm & X86_BR_KERNEL))) {
+ 			cpuc->lbr_entries[i].from = 0;
+ 			compress = true;
+ 		}
 
 
