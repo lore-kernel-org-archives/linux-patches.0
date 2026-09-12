@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B11335F61E;
-	Sat, 12 Sep 2026 07:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13443806C6;
+	Sat, 12 Sep 2026 07:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197261; cv=none; b=Zx+Wu6TcHLkza9DAlwzyH/umKz8Z3s397aK4tkuaEeiqJ80Ql1qU3aWjL9DF4CIs9C7SUIduZJDI54//9HH056TCDPOTTwc5H9LAlb4ikAuxQdtb7TLLUv7gBJ9dibpksrJikZXI9YjPFSEcLmOPEarJYSgK7YD1Nbrsv6yq2OU=
+	t=1789197264; cv=none; b=TNxGWKinye1ob7HcAHzAkTiSYZuFE7qh6xrAN/tCPmPGSfOjsDrDm6999AnZ4OpaecQuY+wmZAeVBLUeKIosRvA3OZGTepFOE7sOsADTY+/aZfFzR02os2JsO/w9bMU6WkxQcT2oDHAmgfe4ivXs05wTtXLD3UAvtrgCoQLugsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197261; c=relaxed/simple;
-	bh=2XlIx8qguAhd2RK5jplO5RloZwJl+krqRZJs6OOniKg=;
+	s=arc-20240116; t=1789197264; c=relaxed/simple;
+	bh=xOFBCaq4FZ17UUuKx4tWVBCg241WD18b85erCp/dFxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+uk0VuNvDweiIniYmYZUaUzyzGNU6WDrutkXd/m52LbsC3hytYUgvlHDNe+sTXCFQOpJiQTtxnnqbpc3LQ3kQuMbhQ3tmFMkxOhrknP2t/YIPvSp8bth6uMVnY4cyq/CIh758eoXjDuRWuww7RvXTCVfY5gseAnw6aM5U/biTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saJDHelp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bUrLLPOd0mxKz3Tij4qi/MOgKkUY+EfnMzW2JlugNmCcv5WPg33eI065mYOax9ddpB/4PNcZgMw/WRx20hTKBJRzGAC7AYfNjOyAWmv+FUaGqJ8VHWNalKFLdCq9YJlzHPqtQXbJxnZssNMpfoAJZfy88HUGBQv5wD4v2mUDDr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oM9NLQVx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saJDHelp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40A91F000FF;
-	Sat, 12 Sep 2026 07:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oM9NLQVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C209B1F000FF;
+	Sat, 12 Sep 2026 07:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197260;
-	bh=3v7ZCaBQPbLQhWVcC523OE8b549ui3hQZCcF9Gjko/k=;
+	s=korg; t=1789197263;
+	bh=15kugHcC4BF2wPE4UuknllUEkXuPs6RDDs1zUV+Ohfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=saJDHelpSi+3JUcL87lgmsdkC8wtHUYD3uX/9yRXxFzdUEr/k4E1/3aiwtN8gi9mS
-	 8pRZN9ZGxC7NBCuydUtgXudkhOPY/rH9IaDkBl4wUJM6EiJS8KWKMw3ZqxGTgJwZLA
-	 Hf557eivglMiaCngGa6LjDyserVvFqDt/gNCx5HM=
+	b=oM9NLQVxNbem6FIGhNY/V6aSHjqFI7mh4Nf2hzGI9DCdYQcZ7dmbk0oBbSD/tfyDh
+	 D+tetaN5sbGoJ4SLbwYKt2ucp1LqQSZzvFZuBOMLAB2dBG+l00DjvUPXAejsHGctF5
+	 yJnqPtK71KwXDnsVZz5FKHcl3QcXIEcR3vR+R79g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0094/1815] arm64: dts: imx93-kontron: set memory node to 0x80000000/1GiB
-Date: Sat, 12 Sep 2026 08:30:44 +0200
-Message-ID: <20260912065651.214197594@linuxfoundation.org>
+Subject: [PATCH 7.2 0095/1815] arm64: dts: freescale: imx95-toradex-smarc: add alias for lpuart5
+Date: Sat, 12 Sep 2026 08:30:45 +0200
+Message-ID: <20260912065651.240154353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,34 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frieder Schrempf <frieder.schrempf@kontron.de>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 9c269fe7eae8cb60d8d6c326dd8955818722fae9 ]
+[ Upstream commit 3385e2f77182469940c136b9eeedf01f27b7441f ]
 
-The start address of the DRAM area is 0x80000000. The minimal size of the
-DDR on the SoM is 1 GiB.
+Add alias for lpuart5 so the UART gets a stable line number.
+Without this alias, the lpuart driver fails:
 
-Fixes: 2b52fd6035b7 ("arm64: dts: Add support for Kontron i.MX93 OSM-S SoM and BL carrier board")
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+  fsl-lpuart 42590000.serial: failed to get alias id, errno -19
+
+This prevents the Bluetooth controller connected to this UART from
+working.
+
+Fixes: 104a391bb6ff ("arm64: dts: freescale: imx95-toradex-smarc: Enable bluetooth on lpuart5")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Acked-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi b/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
-index c79b1df339db1..f881912cde460 100644
---- a/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
-@@ -15,9 +15,9 @@ aliases {
- 		rtc1 = &bbnsm_rtc;
- 	};
- 
--	memory@40000000 {
-+	memory@80000000 {
- 		device_type = "memory";
--		reg = <0x0 0x40000000 0 0x80000000>;
-+		reg = <0x0 0x80000000 0 0x40000000>;
+diff --git a/arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi b/arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi
+index 7d760470201fa..a6c5398a81e3c 100644
+--- a/arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi
+@@ -24,6 +24,7 @@ aliases {
+ 		serial1 = &lpuart1;
+ 		serial2 = &lpuart6;
+ 		serial3 = &lpuart3;
++		serial4 = &lpuart5;
  	};
  
  	chosen {
