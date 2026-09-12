@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB861242D65;
-	Sat, 12 Sep 2026 12:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63FA4BEE22;
+	Sat, 12 Sep 2026 12:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216402; cv=none; b=JVdLgvi7I8S85CEr+Vx1/0ASBvh3thC+MVVs6LoSkRykKp/jPOelp84lJ+hFDeusc2h6Kv8z8bVal44ohlr/bAHkMOpqGZ4s4+GVfCPJD2nfmJ0b3yU02htfg0HsjwvOBSXpv8+bRJKQhjNeUkWh+rKjZ1Sejto2Ash1AGLqlHo=
+	t=1789216407; cv=none; b=CUckxxue29b2QfQTxPilwKQr4ZAZAhNd02/y5YmhWzsHJ+V0ywDdOhPGlMcf1mmUMLaOo1pr109vQDiPLdjtBUsiRL+7WurMjEydHYyj/+bTb4u17589d5Q5T74VQE12M78r+vdiqZ2K5NkSwV5hcE8RfZlSaCOpnAyFg2FwXac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216402; c=relaxed/simple;
-	bh=fVZngn/TGDVCppF5q+X4AO47E2GjUWDbNfX84i1503U=;
+	s=arc-20240116; t=1789216407; c=relaxed/simple;
+	bh=rHaTtp4399nabxNrLDeAHK4WelxOCkLyatZ4NiuvHnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fiv4XiNgx5/CuWKjLZUEth5wA8VzdnSJ7G4pkynIMAkFEnZ/FBD3uhBYecAv9w2mitXKDIfuYWSo2D0pcKjGMMXw2nw00ajaXRbN7oBQuc+BmHX2PSLoaTYL3WpixuiI5kchNCXjs8yQCy7qFg767i777J2gjOLj/+0o/Tcw81c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuQkPQsD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ja/bdMzN7EFbuboIt606pS1Gj69tRo0hDUJmYdXcnZqwtn1n2pfaNZeHFPMa6ZCljkOQAnDx8JVQoyzopTM7QgsZL4mkTlGg7x1ryQhOQjyQc9tqweAkHilC/aVtAt7IGpHeNnM91koLDNouwHkx0b9gQf1+eJ9gymIjVeyWHVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxVW15bq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuQkPQsD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD511F00893;
-	Sat, 12 Sep 2026 12:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxVW15bq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95731F000FF;
+	Sat, 12 Sep 2026 12:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216401;
-	bh=/8kvGRor0x2nfEVcNAq7gGGW8s+tn90ZdqWmaSF1G7Q=;
+	s=korg; t=1789216405;
+	bh=rqokwz5fk7phLm97dwcOjTDZSc7MY6Jv4+td4U0mJ5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TuQkPQsDwdEOPCJ2XNUETT6uXtSAYF977c2acGgq5QwSBI3l6keqzzclD1agjuiKJ
-	 XHV8DhqlBsjQcM0fSE89BbuOyuLEAJ9l3f3DlxWcuwFd/fHIUwClm/8KhDWEyOK06n
-	 R2QY0nfr0aaBgR2pFw4PQ0NOLPfTJ3lxSFkAm0uA=
+	b=OxVW15bqJDzzwGYKSQWeeUbZMo6wqE1d73dWL69CBmWt6UPsLrOkO9MAxug4uFjTS
+	 zujm78RX96VH9JYHG5DQdYK7U1J4B3Dhez029ckTmIiCXLoI+o+Of5rqlkpOZdZcyp
+	 W9eem5RUo61Z96aPGzRq65RQTVvUwmGVUCDbhTVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0728/1376] nvme-fc: unmap cmd_iu DMA on rsp_iu mapping failure in init_request
-Date: Sat, 12 Sep 2026 08:52:34 +0200
-Message-ID: <20260912065623.773167735@linuxfoundation.org>
+Subject: [PATCH 6.12 0729/1376] spi: davinci: switch to managed controller allocation
+Date: Sat, 12 Sep 2026 08:52:35 +0200
+Message-ID: <20260912065623.794970481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,50 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit f49d0c3a8d56a7cda1628ae17341a4a42063563c ]
+[ Upstream commit ea408a05dc8f18b4a184b88d6e19d2fd1acc1527 ]
 
-__nvme_fc_init_request() maps cmd_iu and then rsp_iu for DMA. If the
-rsp_iu mapping fails, the original code only recorded the error and fell
-through: it left the already-mapped cmd_iu unmapped and still marked the
-op as FCPOP_STATE_IDLE before returning. Since blk-mq does not call
-.exit_request() when .init_request() fails, the cmd_iu mapping is leaked
-for every op whose rsp_iu mapping fails.
+The controller is allocated with the non-managed spi_alloc_host() while
+the interrupt is registered with devm_request_threaded_irq().  During
+removal, spi_bitbang_stop() only unregisters the controller; the
+subsequent spi_controller_put() then frees the controller together with
+its embedded davinci_spi devdata, which is the IRQ handler's dev_id.
+The devm_request_threaded_irq() release action (free_irq()), which
+drains the handler, does not run until after .remove() returns.  A late
+or latched interrupt can therefore reach davinci_spi_irq() and
+dereference already-freed memory.
 
-Jump to an error path on rsp_iu mapping failure that unmaps cmd_iu and
-returns the error without marking the op idle, so it stays in the
-FCPOP_STATE_UNINIT state set by the initial memset().
+Switch to devm_spi_alloc_host() so that the devres LIFO order releases
+the controller only after free_irq() has drained the handler, and drop
+the now-redundant spi_controller_put() from .remove().  The probe error
+path is simplified to direct returns.
 
-Fixes: e399441de911 ("nvme-fabrics: Add host support for FC transport")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+The clock is acquired with devm_clk_get_enabled(), which is registered
+after the IRQ and thus released before it by the devres LIFO order.
+Drain the interrupt explicitly with devm_free_irq() before disabling the
+controller so that a late interrupt cannot access the registers of a
+clock-gated controller.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 5b3bb5963ff2 ("spi: davinci: Use devm_*() functions")
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719010014.3163356-2-fanwu01@zju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-davinci.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index 2bee5873d1558..fd0d99c0f97d9 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -2092,9 +2092,15 @@ __nvme_fc_init_request(struct nvme_fc_ctrl *ctrl,
- 		dev_err(ctrl->dev,
- 			"FCP Op failed - rspiu dma mapping failed.\n");
- 		ret = -EFAULT;
-+		goto out_unmap;
- 	}
+diff --git a/drivers/spi/spi-davinci.c b/drivers/spi/spi-davinci.c
+index ad26c8409733c..cfe4f8edfcbdf 100644
+--- a/drivers/spi/spi-davinci.c
++++ b/drivers/spi/spi-davinci.c
+@@ -868,7 +868,7 @@ static int davinci_spi_probe(struct platform_device *pdev)
+ 	int ret = 0;
+ 	u32 spipc0;
  
- 	atomic_set(&op->state, FCPOP_STATE_IDLE);
-+	return 0;
-+
-+out_unmap:
-+	fc_dma_unmap_single(ctrl->lport->dev, op->fcp_req.cmddma,
-+			sizeof(op->cmd_iu), DMA_TO_DEVICE);
- out_on_error:
+-	host = spi_alloc_host(&pdev->dev, sizeof(struct davinci_spi));
++	host = devm_spi_alloc_host(&pdev->dev, sizeof(struct davinci_spi));
+ 	if (host == NULL) {
+ 		ret = -ENOMEM;
+ 		goto err;
+@@ -998,7 +998,6 @@ static int davinci_spi_probe(struct platform_device *pdev)
+ 		dma_release_channel(dspi->dma_tx);
+ 	}
+ free_host:
+-	spi_controller_put(host);
+ err:
  	return ret;
  }
+@@ -1022,6 +1021,8 @@ static void davinci_spi_remove(struct platform_device *pdev)
+ 
+ 	spi_bitbang_stop(&dspi->bitbang);
+ 
++	devm_free_irq(&pdev->dev, dspi->irq, dspi);
++
+ 	/* This bit needs to be cleared to disable dpsi->clk */
+ 	clear_io_bits(dspi->base + SPIGCR1, SPIGCR1_POWERDOWN_MASK);
+ 
+@@ -1029,8 +1030,6 @@ static void davinci_spi_remove(struct platform_device *pdev)
+ 		dma_release_channel(dspi->dma_rx);
+ 		dma_release_channel(dspi->dma_tx);
+ 	}
+-
+-	spi_controller_put(host);
+ }
+ 
+ static struct platform_driver davinci_spi_driver = {
 -- 
 2.53.0
 
