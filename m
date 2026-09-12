@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B834519D8BC;
-	Sat, 12 Sep 2026 10:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073DA42AF9A;
+	Sat, 12 Sep 2026 10:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209497; cv=none; b=PJo2X59GX5olQ1O1Yi4vgH8Q1UvOihzFe910CaEggKLipIv4/0FUFA1HWzglpoNSaAFQBjh+LWKYmxd6aBzIday9Zj4wNrldkXnUp6NKUcSziE4M76WS6ttiZj9FwkYFnw2dm4B0Rb99WNyQUtno6rlYMoN6hd0UrLezmlEpuFY=
+	t=1789209501; cv=none; b=esxW6b6FGSTVKFWNQusqeAU+aUujVKViKE2HgKWJvfBVjU804TE5txjAJyzzeIFOem/pHUUDVAMv30aM4ZZvuIMLuSZcVaNZD8mwHfR+Dtl+Y6RdGTT73ILeLiwn5SPaLOaIUfgv3wLTZ6kzF7lV7x3EY67QpRjrX2zVb72bfmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209497; c=relaxed/simple;
-	bh=fvrEQaEA+xe93oqr2ibUM5Ka/YLFd/YTttGGJW4Aox8=;
+	s=arc-20240116; t=1789209501; c=relaxed/simple;
+	bh=h4y3QdXagiKTEG2cm2+mbIcYnXN3Z1CV310qOXfnaHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZW78a7vy4zS6awlLYbcfWwpZc0RUvsLqg5NOXoxC8AXPWp3EMuGSs9rKb13InfSC6Dyio+1AaLtgK/tcb/5RnNaID67s9R1sIQtR/YtUsr8X+x2jTQiwvoNHEJGw3Laa8SC695we9O3j5qeGtIrysLQ1FeYTsdtQ6+z4DV4S5Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUDcQswM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LKhwCLoI8Y8wT+egsOcGlTQqRNC1t2dkhYmizMVkIkYKziSxpJZy22EuI43eeUSxm6M+Fac3ObdQvwlcs2HTfQhtao77Asq248ZsVbAyS+DTO/VCKnQpDr1vq4NfNpFWZ87hHG3IsVQ3SL5TQiXxEEqE3YNhSRDXU2QfK+PveWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ef16dVgf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUDcQswM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12181F000FF;
-	Sat, 12 Sep 2026 10:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ef16dVgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAE61F000FF;
+	Sat, 12 Sep 2026 10:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209493;
-	bh=/7aCPXb348r6k05WsHQ1CAw/BG1mxXGUym8OkwfLaQw=;
+	s=korg; t=1789209498;
+	bh=bGs6ErsAKXEaa0/rmZC5ZeRptTPfyDOLYFff0gEXeBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FUDcQswMD/i4YnKZYZrqY2e9gCIMv54bPIkcR+WdVYYMsAaSCoNzdMJLqnWZ9Ja05
-	 scFPXZwjwL47CpNhxs4z4eyposMuNmyhtFfEyfUd2MbrbiebiUwBwpemd4f4C2yb/Q
-	 s/6IU8CP5ASaKFmsE/IXJApfU5Uzi9WPDf9EPPMw=
+	b=ef16dVgf3H8TELEjVwoJ7t7rQGKnhyvXBUgpun2cm/bma0nodykSM8XRM8OC2GpE9
+	 AEIeF49coLfLpmc8Hd+8qOMCnFas9dOpWdh1i465gPxGsNDNRzT7ewDQaPRhqVe3Re
+	 8oOtscaG1+PI9tp1aNa9aypRnxec2WFYSgauu8Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0789/1518] wifi: mt76: mt7996: skip key upload when adding an offchannel link
-Date: Sat, 12 Sep 2026 08:49:18 +0200
-Message-ID: <20260912065641.283343872@linuxfoundation.org>
+Subject: [PATCH 6.18 0780/1518] perf machine: Fix NULL parent dereference in fork event processing
+Date: Sat, 12 Sep 2026 08:49:09 +0200
+Message-ID: <20260912065641.082027297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,42 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit ccb4bda277999959bc852480d8684b13b926e657 ]
+[ Upstream commit 73ac546bd6ba8ed4dc8d7a90fcb9bb8236de1568 ]
 
-No hw keys are ever uploaded for scanning/roc links and the link remove
-path already skips the key iteration for them. The add path still runs
-it, and since mt7996_set_hw_key() resolves the target through
-mvif->link[link_id] rather than the offchannel link, starting a scan on
-another band re-uploads the group keys of the link sharing the same
-link_id, re-sending its BSS cipher info and, for BIGTK with beacon
-protection on an AP link, toggling its beacons off and on.
+machine__process_fork_event() calls machine__findnew_thread() for the
+parent thread, which can return NULL on allocation failure.  The code
+then dereferences parent via thread__pid(parent) without a NULL check
+when validating whether the parent PID matches.  The later NULL check
+at thread__fork() does not prevent this earlier dereference.
 
-Skip the key iteration for offchannel links, mirroring the remove path.
+Add a NULL guard before accessing the parent thread.
 
-Fixes: 69d54ce7491d ("wifi: mt76: mt7996: switch to single multi-radio wiphy")
-Link: https://patch.msgid.link/20260724124813.3961474-18-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 5cb73340d92a ("perf tools: Make fork event processing more resilient")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 3 ++-
+ tools/perf/util/machine.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 45cdbe727c8b7..a319a99b5056e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -362,7 +362,8 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 				   CONN_STATE_PORT_SECURE, true);
- 	rcu_assign_pointer(dev->mt76.wcid[idx], &msta_link->wcid);
- 
--	ieee80211_iter_keys(mphy->hw, vif, mt7996_key_iter, &it);
-+	if (!mlink->wcid->offchannel)
-+		ieee80211_iter_keys(mphy->hw, vif, mt7996_key_iter, &it);
- 
- 	if (vif->txq && !mlink->wcid->offchannel &&
- 	    mvif->mt76.deflink_id == IEEE80211_LINK_UNSPECIFIED) {
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index a2f5ca35141bb..8b6869582b076 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -1880,7 +1880,8 @@ int machine__process_fork_event(struct machine *machine, union perf_event *event
+ 	 * (fork) event that would have removed the thread was lost. Assume the
+ 	 * latter case and continue on as best we can.
+ 	 */
+-	if (thread__pid(parent) != (pid_t)event->fork.ppid) {
++	if (parent != NULL &&
++	    thread__pid(parent) != (pid_t)event->fork.ppid) {
+ 		dump_printf("removing erroneous parent thread %d/%d\n",
+ 			    thread__pid(parent), thread__tid(parent));
+ 		machine__remove_thread(machine, parent);
 -- 
 2.53.0
 
