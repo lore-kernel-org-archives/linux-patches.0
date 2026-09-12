@@ -1,141 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1D138655A;
-	Sat, 12 Sep 2026 13:10:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218642; cv=none; b=dwTgtk1vv0hXAV+gPT3EiNKX8HvbXjVyoeLcyMsVKFIA/hIkc1mXWZdUdGvazayRalwjCiCpR4e/F8HXesjCBuVp+mpRnfYNTq1BS0uu1EunJEjv55kwBT7i4iIK6FUmR/fiPhZ88z6MKV2fCbqWr+j3zDweuTBI4HEzXVImioU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218642; c=relaxed/simple;
-	bh=y0Ng4FefhOKesN+b0hmB7+Mr8IdlrcKkiwcpI/O6dwM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rl7F1ApUsJZEc0zvWD+tHhXSG8Tq9XyGWbGwSsXu7D7DFPbyW7f0kapCx8QAo0x1zsS2FeTpcJecDBxYe0FFH9U02EnKX/L7N5zVhlhni83kW6mq0paqtlAI4zAem9vRZH76CMF+ohcrdUZMEuZTZAaiczH9nR32nIdXqmrQP1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9Tpar8Z; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D282D456296
+	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 13:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789218646; cv=pass; b=tPRTk7tzUjjN1GzvJni5fwHjvV5/4PpA4STegsaZ0n36eV9myWS2AnupxwGT9c2ARJcSHfEv8bmxHX6eEaSTKOGgS12jUSXApB1QVe+ROSBqkbrXwqnbmzID2e5bYNWGeeHh9Gz56oNiKzJGPOS+fVQ4k8SXFKtB7N9a4OkqgxI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789218646; c=relaxed/simple;
+	bh=b3BuLr4nksiuTdGGbza0+L/t26x7/BGw9nuugk+E24I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=i8tOtSsVGvf2lJz2JCkxrWlwVqmym9TEIDEXacaBkX2fbXLEVJ1c0f/4L1oexwVj30YNedfdr9o2hacMdr9cuJ1RVIIVT5tBhv6hKkP+yxiLO2HQWs4OTcsGBVbMeAWJ4EafYO9FgXLPHRToGCcTz9FObeZRy1ou8v/WON2XTWg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HoQyhE1J; arc=pass smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9Tpar8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01D41F000FF;
-	Sat, 12 Sep 2026 13:10:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218640;
-	bh=GRh7lLpeodT4RATQEOL55kHKpCrTp9YCi2x2wajgnUE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O9Tpar8ZOvOqE5VhthPzh3x/E0AeiqeSSnCTa2rwlYDgDZqUa9qKrztjzzYpTeuoM
-	 Su3HF2evfD+x0EpQi1suhPef6dGqmqsrPtJSD3CW+/Ej3/45u3JUYeXjWGkvl+eljL
-	 2NqetWyTSB528DQ+GFBUPlQGvbHdqEvrwQ/UmOmM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Michael Nemanov <michael.nemanov@vastdata.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1185/1376] nfs: fix ENXIO on O_CREAT open of existing symlink over NFSv3
-Date: Sat, 12 Sep 2026 09:00:11 +0200
-Message-ID: <20260912065633.962235690@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
-References: <20260912065607.535295758@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HoQyhE1J"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2d715f4a587so25352355ad.2
+        for <patches@lists.linux.dev>; Sat, 12 Sep 2026 06:10:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789218644; cv=none;
+        d=google.com; s=arc-20260327;
+        b=a5xHpFuLF0+pkyowQtn9Wb5fZtHxkgVBpXebaPnR9y4cyvsZAW8k5Lf8XrMOMlIhMr
+         MNxpt+nUHB3UODYvF3Xb8VmLGxnboreQ0AgS/MdAai+44yhr78Xgsl1bHqhog1K6btjV
+         oNbsiPzUMg+dD0RzyQsU+a8eys0vl9VIE7EbH7d/mRWMBHAyGPgTW6YjdPA6fzQc8VzR
+         AFXJjYMUjbsPvUIwPHVp17dTT9uqtKVuNyWzm4hG9Sbzr4Tj212lE4xHQ8ji8DfFyQSv
+         Cjt3xi7Yk85CCVZfR2FV/s2Wa2WCglzQLg4gKCX9tM1xjCVRd5k5afPyJFr22vveFZwX
+         CbgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=b3BuLr4nksiuTdGGbza0+L/t26x7/BGw9nuugk+E24I=;
+        fh=04VH9cbA/3j6Cf928kaGKAz3fi5CFdHDQxrC3lCZ9NY=;
+        b=M/kBIC0c1md5giOqKJAUrQnUj75y++J0dGryHAee0+9l0cvpw7gSMX7XjmnV0u2DeV
+         OlQCkUsVrpcSdpH7huOIgjW0UHgMhjuFEujiXZ0QM7GXuQnhBmhAfc5fabQhce8AjpVK
+         BLuGwMfvG1gng2hAlVuHdG9nF580aHCxN7hWC95DJF/UfxEeFXS2wtR0MW/8V7xQwXtS
+         vYAXwb1u0C2eoJFY2mZqyRhTee+QzVb5Vfxp4AIhjp6uYmeQVeICybmjEEqgWhFDZQqM
+         YIEtJe5nU7agX4A4aUx2EjCtQRpnApYLcKcMBAVfWxLsoCSeLHT9COUPK5rDrUooj/CI
+         gD2w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789218644; x=1789823444; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=b3BuLr4nksiuTdGGbza0+L/t26x7/BGw9nuugk+E24I=;
+        b=HoQyhE1JmVIS2Tw5Azh1ku3HUU1qSr3rsx9xmvnvws13Ydtnt/wHmD/3mRxjldd0zk
+         ZqsWsfgmvYULVVopjd276TIno+d6WwwFX7wj26YaI3ZfJi+sLBdJHmCHgG2vPL623M39
+         Ao1RyQeQIUNAvHminMoysUlT/ssvX94rLzav6XtmGdzuR3i5NZ12ZoQgqOxZkvTkR59J
+         NSJQcx8m/qZgvmT+ehDlz7nqAO6Y+/iiysXFkv0jlTDRv+QYo2IkkpsCaWKVe/njb8al
+         taUCGtabmVEfWtS483nZrK+wWKPRLsQpJAN8yNBQJUz7OdbmMZkCFPyr0KVSEN0gwhJi
+         B9ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789218644; x=1789823444;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=b3BuLr4nksiuTdGGbza0+L/t26x7/BGw9nuugk+E24I=;
+        b=BXDvhcQppYnajxZxbeQ9OlMVsPx1A0GQt8x3NuIZg0wOblOVGYwElrBxCRXJIryrnq
+         blvB1I+xeZnU6jgGE0Ng9H0WAUqkkFWYxQRES1NkM8S1A7Uhw/3h1W/0noGlTiyYz6A9
+         8VjMuHesYipyPtm3O1DcRC5g8nP50BP8IMYg0oUewIbEVqZRzf4C5plgeErVRpXr6QiE
+         Gk0LxwyODqJLTX+BmrlVT0D4J2AfbF4ruggkrSnvOJKLi8CgcsH27ubUpoI7iVgmsLBd
+         fFnRlyrXyLrVAoedtVgfY8qlPGGy8x67aqG3C+eZC2bPOh5k/HnqwFGoZuwt2s/WHRWH
+         fIMg==
+X-Forwarded-Encrypted: i=1; AKwUvByPnaj+0GDHfeU01DDTddLi8WtEG+6VqpSYkdpmzsjQ3OBUPbjA1ryXLf/LjRGI4tv82csJ0RAT@lists.linux.dev
+X-Gm-Message-State: AFuF++meFkVnnwKtG0zBjRFNLKxZgHz27gLprU44+Qam8hqeg8BuMkTM
+	+lB65VIXizMsz1mtS4b94TsjiIc0ontUJB/ZXKws8isM+KbtSJ1B8tLyfH+ckYWkJYEl8cf6S2H
+	atTf1AkTjQfM/+ndn1IuR12S2oX6HcjA=
+X-Gm-Gg: AYBFou24enm8OVfm1ZGQuS9PztdvX+MxPdzNS6/MrVu8LDi0b/Y1ZimDtT5K2vzSseo
+	/SMr/AA8G21m7OxTWw8loDFO6vkZPxDqkl7lcO9YxKo1q12tLR1XO+JAqmUX3FQGh1C8SLVmLN3
+	hKu0yYzT8ZI7yiXEzVVjOrq76kBPz4Q0e+GRh54Xu8qCnKbiSuK+Kq1f2Py7PeevmTMTMpuUEhv
+	Pg6bTdADIGLgC53qzoG4nLYdAQ5kk94qtDybIbF1M9NKjoWLodm/ZFMkN5+93oUJ9e8Cs7QV/Bt
+	eFTpjReVvjUIVCa68r9BccYCt/HEi5sY8ORDTwE2lBnl/n5RpSDnCHvtRUTOzgURqqkFyMQtLQ=
+	=
+X-Received: by 2002:a17:903:198e:b0:2bf:dd0:c8b1 with SMTP id
+ d9443c01a7336-2dd29ffa6b4mr172203635ad.0.1789218644005; Sat, 12 Sep 2026
+ 06:10:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260912065648.999753832@linuxfoundation.org> <20260912065657.541103882@linuxfoundation.org>
+In-Reply-To: <20260912065657.541103882@linuxfoundation.org>
+From: Yee Li <seven.yi.lee@gmail.com>
+Date: Sat, 12 Sep 2026 21:10:01 +0800
+X-Gm-Features: AcwNN1Vk9KvM0MoUqi-HCq56xMnk-5e8FkCUOTA2kTsLggWab9zKiXk997gdL4I
+Message-ID: <CALX8JfSjnAd6bY8zBCHuG=_+f4JiVCrhT+sW4DPEpUM6+5LF-w@mail.gmail.com>
+Subject: Re: [PATCH 7.2 0368/1815] iommufd/selftest: Fix dmabuf leak in iommufd_test_dmabuf_get()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Jason Gunthorpe <jgg@nvidia.com>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+Hi Greg,
 
-------------------
+Success path return rc was changed to return 0.
 
-From: Michael Nemanov <michael.nemanov@vastdata.com>
-
-[ Upstream commit 10f307e525a1783570a39eb9ac146d45f4f16b3e ]
-
-When open(2) is called with O_CREAT on a path that already exists as a
-symlink, over an NFSv3 mount with a cold dcache, the kernel returns
-ENXIO instead of following the symlink to its target.
-
-Reproducer script (MNT is an NFSv3 mount, kernel is 7.1-rc6):
-
-MNT=/mnt/export
-ln -sf /tmp/target $MNT/mylink
-echo 3 | sudo tee /proc/sys/vm/drop_caches   # cold dcache
-
-python3 - <<'EOF'
-import os
-fd = os.open('/mnt/export/mylink', os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o666)
-os.close(fd)
-EOF
-
-Expected: success (follow symlink, open target)
-Actual:   OSError: [Errno 6] No such device or address
-
-The bug does not trigger when the dcache is warm (e.g. after a prior
-stat(2)), because lookup_open() then finds a positive dentry and skips
-atomic_open entirely, leaving symlink resolution to the VFS.
-
-Root cause:
-nfs_atomic_open_v23(), registered as inode->i_op->atomic_open for
-NFSv3, handles O_CREAT by sending a CREATE UNCHECKED RPC. As
-implemented in nfsd3_create_file() (fs/nfsd/nfs3proc.c) and as required
-by RFC 1813 (3.3.8), when the name already exists as a non-regular file
-the server returns NFS3_OK with the existing object's file handle rather
-than NFS3ERR_EXIST causing nfs_do_create() to return 0 with the
-dentry now pointing to a symlink.
-The code then unconditionally calls finish_open(), which dispatches
-through inode->i_fop->open(). Symlink inodes never have i_fop set — the
-VFS initialises it to &no_open_fops because POSIX requires open(2) to
-follow symlinks, never open them directly. no_open() returns -ENXIO.
-
-Fix:
-After nfs_do_create() succeeds, verify the returned inode is a regular
-file before calling finish_open(). If the object is not regular, return
-finish_no_open(file, NULL) so the VFS follows the symlink through the
-normal open path. NULL is passed because nfs_do_create() instantiates
-the inode on the dentry already owned by the caller; passing dentry back
-would cause atomic_open() to dput() it a second time.
-!S_ISREG() is used rather than S_ISLNK() to cover any other non-regular
-types a server might return.
-
-Changes in v2:
-- Pass NULL to finish_no_open() per Trond's feedback.
-
-Fixes: 7c6c5249f061 ("NFS: add atomic_open for NFSv3 to handle O_TRUNC correctly.")
-Link: https://lore.kernel.org/linux-nfs/20260614122911.3485467-1-michael.nemanov@vastdata.com/ (v1)
-Signed-off-by: Michael Nemanov <michael.nemanov@vastdata.com>
-Tested-by: Michael Nemanov <michael.nemanov@vastdata.com>
-[trond.myklebust@hammerspace.com: use d_is_reg() to catch negative dentries]
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- fs/nfs/dir.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index d409239fb00f7..5c9c156838678 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2287,6 +2287,13 @@ int nfs_atomic_open_v23(struct inode *dir, struct dentry *dentry,
- 	if (open_flags & O_CREAT) {
- 		error = nfs_do_create(dir, dentry, mode, open_flags);
- 		if (!error) {
-+			/* With UNCHECKED mode, a server may return NFS3_OK for
-+			 * a pre-existing non-regular file (e.g. a symlink).
-+			 * Let the VFS handle it; calling finish_open() would
-+			 * hit no_open() and return -ENXIO.
-+			 */
-+			if (!d_is_reg(dentry))
-+				return finish_no_open(file, NULL);
- 			file->f_mode |= FMODE_CREATED;
- 			return finish_open(file, dentry, NULL);
- 		} else if (error != -EEXIST || open_flags & O_EXCL)
--- 
-2.53.0
-
-
-
+Please refer,
+https://lore.kernel.org/linux-iommu/20260902085414.549830-1-qinyuntan@linux.alibaba.com/
