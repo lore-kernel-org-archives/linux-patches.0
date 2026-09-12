@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9BA384232;
-	Sat, 12 Sep 2026 17:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E236C345EA7;
+	Sat, 12 Sep 2026 17:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232956; cv=none; b=S/wb6Bny7S3MaK7bMPHmvCjMQfOLQBaBK9x2SvnWu2IhojugN8m5T8dhkyBsQrJzm8bJ9DEBOnrEB/tbuystvl4Y4x6RFjb4F/ClDkc/6WYicrFVKA75S7SDLWKN6JNMSkixbLUQgt71RwZctY81RfhtRKVckIQTvStaGLGar4g=
+	t=1789232961; cv=none; b=Ax4Q46ov/aBQdDQuAFBXnz4LekNgeio2uyGzkK8d49lK1Qhab8Jj0yV23V1McHsqVMnfWD+fowMBEuP2dwoi25LiJ395xwwQ39Pt7R5I1ijMnvUHxtnxCphwhBuGjHsrrSy1Y+rbEI9qS7ydEQQzNSaq2nsdM9hw6tfdwjYBnZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232956; c=relaxed/simple;
-	bh=f9WpneddE4NIJ1+Ulnjtut9p2pnMesjPmnrJXdcrEds=;
+	s=arc-20240116; t=1789232961; c=relaxed/simple;
+	bh=fBD/w8gJy4GRaFGFwHpYBrlBmDjKZEEV8y/F5bQx6i0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXtdnnkshjiV31y9bwJCcJEJKMh39DydLwhdoOfLMMJ/w7YhRLLo4HRrdyXLCoAxHYhn4/gNBAnS+MqkC2Z/oaCAn1wSUclfLtH/z72FcCGs6YQvufQLVg1wNPChiqBZ5P5Vrq/kWKwj2Kn8e/OyU4flZ0ase/2u9yEyOD11cqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDaK8Vwr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nuJzTZAkEJ6ToSswI2vfNlNm5Ovu6grQzJ/ptrsdICUAnRK8cCEcCnKlFx9i7GIIAoTwSianATPJ5OZa+9Tx8vfcd33Sm3cigPJI2aKcdjXVBTeYu4TCpjyt5WsdQ9pEFdE6hIz+dQtOaLrKE9jNxDlBFBZy1sM4TgeZnGrB7O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIaMoefW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDaK8Vwr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E291F000FF;
-	Sat, 12 Sep 2026 17:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIaMoefW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5D21F000FF;
+	Sat, 12 Sep 2026 17:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232954;
-	bh=lojH26vp04LRtCcb7B4mT7oUwnlcU1nW5MxoeXYbBF8=;
+	s=korg; t=1789232959;
+	bh=h9wp1XP0ur8q/YFxfVPH0REuZUr20WvUwLh30ahE/VA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XDaK8VwriMNWip8Y6hikmUSw+rLShzg/CoaoyRQZQfU3C5SS4HijC8vo7WdEIjHqE
-	 laYOtRyQPa6hnQQjc6Jc0LEhm8WY1ULI6E45AtIM+FSU5M++WmM/ED1UpA+HVw+Y0F
-	 WtmR/T9gn8aAru7rSywMy0AZaE8J83s2HOTcakHE=
+	b=qIaMoefW+oVUxO/GgFVNex+n2J8YB1bH5GotGNwrrU4t4Kq+ao/FwPG1uaTVQHy1F
+	 O9URHq3cGbrlGfTK5I3rksKmpH2uvkzVhggnwdSFq1auHJOkoa0jPY4N5V0/VIMOxt
+	 ecnLzIe62WOTxzBUts3RpL9TSFBSSBNUInsBsvJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tien Sung Ang <tien.sung.ang@altera.com>,
-	Tze Yee Ng <tze.yee.ng@altera.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 5.15 079/935] fpga: stratix10-soc: Fix SVC mailbox handling during reconfiguration
-Date: Sat, 12 Sep 2026 08:51:49 +0200
-Message-ID: <20260912065528.643628011@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 115/935] svcrdma: Fix pcl_for_each_segment for empty chunks
+Date: Sat, 12 Sep 2026 08:52:25 +0200
+Message-ID: <20260912065529.458197460@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,86 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tien Sung Ang <tien.sung.ang@altera.com>
+From: Chris Mason <clm@meta.com>
 
-commit c14a8b15c87b49efc3ef898cec8ac7c30336a080 upstream.
+commit b7713a784c59515d0aba558c8f5df6a0164dd3a9 upstream.
 
-Fix incorrect stratix10_svc_done() usage during FPGA reconfiguration.
+When a parsed chunk list contains a chunk whose ch_segcount is zero,
+pcl_for_each_segment computes its inclusive upper bound as
+&chunk->ch_segments[ch_segcount - 1]. ch_segcount is u32, so the
+subtraction wraps to 0xFFFFFFFF and the bound lands far past the
+ch_segments flex array. The loop body then walks unrelated memory at
+sizeof(struct svc_rdma_segment) stride until it faults.
 
-Do not call stratix10_svc_done() at the end of write_init() on success, so
-the SVC session remains active through write() and write_complete(). Call
-stratix10_svc_done() on failure in write_init() and write() so the shared
-SVC mailbox is released when reconfiguration aborts, allowing coexistence
-with other SVC clients such as soc64-hwmon.
+A zero-segcount chunk is reachable from the wire:
+xdr_check_write_chunk() only rejects segcount values greater than
+rc_maxpages, and pcl_alloc_write() links a freshly allocated chunk
+onto rc_write_pcl/rc_reply_pcl before its segment-fill loop runs,
+so a Write or Reply chunk advertising zero segments leaves
+ch_segcount == 0 on the list. When the transport has negotiated
+Send-With-Invalidate, svc_rdma_get_inv_rkey() iterates all four
+PCLs with pcl_for_each_segment and dereferences segment->rs_handle
+on each iteration, turning the underflow into an out-of-bounds read
+and a general protection fault.
 
-Fixes: e7eef1d7633a ("fpga: add intel stratix10 soc fpga manager driver")
-Cc: stable@vger.kernel.org # 5.1+
-Signed-off-by: Tien Sung Ang <tien.sung.ang@altera.com>
-Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/8768ce3260489c9febdfce08e27d03f5f5ed9c33.1782801986.git.tze.yee.ng@altera.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+    xdr_check_write_list / xdr_check_reply_chunk
+      pcl_alloc_write()
+        chunk = pcl_alloc_chunk(...)  /* ch_segcount = 0 */
+        list_add_tail(&chunk->ch_list, &pcl->cl_chunks)
+        /* fill loop iterates zero times for wire segcount 0 */
+
+    svc_rdma_get_inv_rkey()
+      pcl_for_each_chunk(rc_write_pcl)
+        pcl_for_each_segment(segment, chunk)
+          pos <= &ch_segments[0u - 1u]  /* 0xFFFFFFFF */
+          segment->rs_handle            /* OOB read -> GPF */
+
+Fix by switching the macro to a half-open upper bound that uses
+ch_segcount directly. For ch_segcount == 0 the loop start equals the
+loop end and the body is skipped; for ch_segcount > 0 the iteration
+range is unchanged. All six existing call sites in
+net/sunrpc/xprtrdma/svc_rdma_recvfrom.c and
+net/sunrpc/xprtrdma/svc_rdma_rw.c remain correct under the new bound,
+so no caller changes are needed.
+
+Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
+Cc: stable@vger.kernel.org
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-4-e251306ccca9@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/stratix10-soc.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ include/linux/sunrpc/svc_rdma_pcl.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/fpga/stratix10-soc.c
-+++ b/drivers/fpga/stratix10-soc.c
-@@ -194,20 +194,18 @@ static int s10_ops_write_init(struct fpg
- 	ret = s10_svc_send_msg(priv, COMMAND_RECONFIG,
- 			       &ctype, sizeof(ctype));
- 	if (ret < 0)
--		goto init_done;
-+		goto init_error;
+--- a/include/linux/sunrpc/svc_rdma_pcl.h
++++ b/include/linux/sunrpc/svc_rdma_pcl.h
+@@ -97,7 +97,7 @@ pcl_next_chunk(const struct svc_rdma_pcl
+  */
+ #define pcl_for_each_segment(pos, chunk) \
+ 	for (pos = &(chunk)->ch_segments[0]; \
+-	     pos <= &(chunk)->ch_segments[(chunk)->ch_segcount - 1]; \
++	     pos < &(chunk)->ch_segments[(chunk)->ch_segcount]; \
+ 	     pos++)
  
--	ret = wait_for_completion_timeout(
--		&priv->status_return_completion, S10_RECONFIG_TIMEOUT);
--	if (!ret) {
-+	if (!wait_for_completion_timeout(&priv->status_return_completion,
-+					 S10_RECONFIG_TIMEOUT)) {
- 		dev_err(dev, "timeout waiting for RECONFIG_REQUEST\n");
- 		ret = -ETIMEDOUT;
--		goto init_done;
-+		goto init_error;
- 	}
- 
--	ret = 0;
- 	if (!test_and_clear_bit(SVC_STATUS_OK, &priv->status)) {
- 		ret = -ETIMEDOUT;
--		goto init_done;
-+		goto init_error;
- 	}
- 
- 	/* Allocate buffers from the service layer's pool. */
-@@ -216,14 +214,16 @@ static int s10_ops_write_init(struct fpg
- 		if (IS_ERR(kbuf)) {
- 			s10_free_buffers(mgr);
- 			ret = PTR_ERR(kbuf);
--			goto init_done;
-+			goto init_error;
- 		}
- 
- 		priv->svc_bufs[i].buf = kbuf;
- 		priv->svc_bufs[i].lock = 0;
- 	}
- 
--init_done:
-+	return 0;
-+
-+init_error:
- 	stratix10_svc_done(priv->chan);
- 	return ret;
- }
-@@ -341,6 +341,9 @@ static int s10_ops_write(struct fpga_man
- 	if (!s10_free_buffers(mgr))
- 		dev_err(dev, "%s not all buffers were freed\n", __func__);
- 
-+	if (ret < 0)
-+		stratix10_svc_done(priv->chan);
-+
- 	return ret;
- }
- 
+ /**
 
 
