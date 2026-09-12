@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D1A2576E;
-	Sat, 12 Sep 2026 07:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF1B25393E;
+	Sat, 12 Sep 2026 07:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199952; cv=none; b=ed3XhXwMB4jqlBTWDiVJ5v4Bo8TPeBgCzgyq/B7gxiN6cUuPR5i7sUvuZlr4+WODl+u9jBgquYPKSCEeCeFuXYEq8mn8yH2hc76j9Ge/9Yyth3hS6rjWiwrF75VaSWi0jTaNvIKEUSx2Lwv0gfwXsxkaLA1TVcd3II3hLysyfFk=
+	t=1789199957; cv=none; b=ABFIvTocaheVncAqRKUEm32XwcGPdQpKG9a77PxUUSuY7NZg7WAWUybdLr2VrzBKayF9x+jUOtfGodBATSyq1NxqPgI6uL6hSvoZACE2K2vYYXKhPjbdL6zvXSodFhreWSMBM+754X6ATLC7VZ7wPLBjuluNOysyhAuYqwUy6R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199952; c=relaxed/simple;
-	bh=oVzxpIt5QiTXylcqMmJfqQ04oqPQ2AfrIgBpRfzbJEs=;
+	s=arc-20240116; t=1789199957; c=relaxed/simple;
+	bh=X2fuHEQbHAQwTi9x/CQv2/t0n5DRbUS9yvGyfdo1iro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Et7yLUy/PTw73QSOdL4y/XOOV3Andv16GzrRO54c68IucPHwfRlNFSbBmpbIiHGpFwcVVQkt/SDBE3QjEJmTfemoVD+aNTq14Um6RgqAvnZERGxkCQh/1eDEw44WmH8WA+C49E06HIiDp9CwgkYZ4rM9z/UuV2HYbhlNJh2P18Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouvl2S2v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S2WXWWyAkfhyZWTkHugLoX0ZnntPQW1eYRm2enmwEd5oyc1LJYA0zjO70IByZOw2mZth5b9I/2WND/LU2Smgfe8LvI2KRfNwpo6f9t0gTShJbPGEmO72YRZWIEp4MiSOM1BWMsp7RZuPoTo07xQ7hOP5/IVs2TFV8nBjZCJV6yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrwHDqHK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouvl2S2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58381F000FF;
-	Sat, 12 Sep 2026 07:59:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrwHDqHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17CC1F000FF;
+	Sat, 12 Sep 2026 07:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199950;
-	bh=4S90oSchML2aB+aflHg/gBSeYrxhrM9PvODXBoaXETo=;
+	s=korg; t=1789199955;
+	bh=BH87+yBMOH/Jqf90rYmv+Dhe4UPbMF4A5/TKZAw3XUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ouvl2S2vbxeyYPYifmTWPG8AAcScQ2ezvmTMXdl6ywKVnDYB/tW8ZDazSUjFdB3IN
-	 TDy2FCvopeNZNDtXfh3dA1Tb2eNUrdfMKEiEEb2rHd/ZSZh4+gT8kgpqf3dygLa0Cb
-	 Z+F4qpgiRpA+8crHT+P4PvokS5+necDHOcINvhyY=
+	b=PrwHDqHK03NAcW5ZiKumQW8ajpG0J3YYPoiCvp7wD/rgj0TDYtFkS1saZG+TKz6Tk
+	 f6Me9JCWDGsi5prq6Itq+bRqJobjj0eULx3LjJ4asIyNx502Gn+Vw0LuR7Ba6DdXUf
+	 c+ePdBxYKWsX66sok2JNeB08pDP/PjNmW/1JdLGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Elder <elder@riscstar.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0683/1815] PCI/pwrctrl: tc9563: Power off only the external ports in tc9563_pwrctrl_disable_port()
-Date: Sat, 12 Sep 2026 08:40:33 +0200
-Message-ID: <20260912065704.922531586@linuxfoundation.org>
+Subject: [PATCH 7.2 0692/1815] perf annotate: Be robust to annotating without a thread
+Date: Sat, 12 Sep 2026 08:40:42 +0200
+Message-ID: <20260912065705.136529099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,52 +51,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit e41bbfc4c109f2db741eef5cd0ac55600930c449 ]
+[ Upstream commit b84e081e071da548a531875258fa4b513d786331 ]
 
-TC9563 supports powering off only the external facing ports like DSP1 and
-DSP2. It is not recommended to power off USP and DSP3 as they have fixed
-ports/endpoint connected.
+If a thread isn't given to map_symbol__get_arch(), try harder to determine
+the arch for disassembly. Do this by utilizing fallback paths such as
+reading the e_machine from a map's DSO ELF header for user-space libraries.
+Additionally, rely on map__kmaps() and maps__machine() to reliably extract
+the recorded machine environment and e_machine for kernel and kallsyms maps,
+perfectly preventing silent, incorrect host fallbacks to uname() during
+cross-platform Capstone annotation sessions.
 
-Fix tc9563_pwrctrl_disable_port() to power off only DSP1 and DSP2.
+At the same time, ensure all remaining uses of a map_symbol's thread pointer
+do not assume it is non-NULL to eliminate UI segmentation faults, and remove
+the fragile, redundant thread__get_arch() function to streamline the
+annotate and disassembly subsystem architecture.
 
-Fixes: 4c9c7be47310 ("PCI: pwrctrl: Add power control driver for TC9563")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260725-tc9563-fix-v1-3-ec4286e31331@oss.qualcomm.com
+Fixes: 0e26ba5a8774 ("perf disasm: Refactor arch__find and initialization of arch structs")
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/perf/ui/browsers/annotate.c |  2 +-
+ tools/perf/util/annotate.c        | 51 ++++++++++++++++++++++---------
+ tools/perf/util/annotate.h        |  3 +-
+ tools/perf/util/capstone.c        | 42 ++++++++++++++++++++-----
+ 4 files changed, 74 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c b/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
-index a6d8518c50026..b0efe7560c914 100644
---- a/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
-+++ b/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
-@@ -240,12 +240,18 @@ static int tc9563_pwrctrl_disable_port(struct tc9563_pwrctrl *tc9563,
- 	if (!cfg->disable_port)
- 		return 0;
+diff --git a/tools/perf/ui/browsers/annotate.c b/tools/perf/ui/browsers/annotate.c
+index d25761a8d25eb..e47a467750890 100644
+--- a/tools/perf/ui/browsers/annotate.c
++++ b/tools/perf/ui/browsers/annotate.c
+@@ -1201,7 +1201,7 @@ int __hist_entry__tui_annotate(struct hist_entry *he, struct map_symbol *ms,
+ 				ui__warning("Annotation has no source code.");
+ 		}
+ 	} else {
+-		err = thread__get_arch(ms->thread, &browser.arch);
++		err = map_symbol__get_arch(ms, &browser.arch);
+ 		if (err) {
+ 			annotate_browser__symbol_annotate_error(&browser, err);
+ 			return -1;
+diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
+index 53b2a224b21df..df70e95a84704 100644
+--- a/tools/perf/util/annotate.c
++++ b/tools/perf/util/annotate.c
+@@ -982,24 +982,43 @@ void symbol__calc_percent(struct symbol *sym, struct evsel *evsel)
+ 	annotation__calc_percent(notes, evsel, symbol__size(sym));
+ }
  
--	if (port == TC9563_DSP1) {
-+	switch (port) {
-+	case TC9563_DSP1:
- 		seq = dsp1_pwroff_seq;
- 		len = ARRAY_SIZE(dsp1_pwroff_seq);
--	} else {
-+		break;
-+	case TC9563_DSP2:
- 		seq = dsp2_pwroff_seq;
- 		len = ARRAY_SIZE(dsp2_pwroff_seq);
-+		break;
-+	default:
-+		/* Only external downstream ports DSP1/DSP2 can be powered off */
-+		return 0;
+-int thread__get_arch(struct thread *thread, const struct arch **parch)
++
++
++int map_symbol__get_arch(struct map_symbol *ms, const struct arch **parch)
+ {
+ 	const struct arch *arch;
+-	struct machine *machine;
+-	uint32_t e_flags;
+-	uint16_t e_machine;
++	struct machine *machine = NULL;
++	struct map *map = ms->map;
++	struct dso *dso = map ? map__dso(map) : NULL;
++	uint32_t e_flags = 0;
++	uint16_t e_machine = EM_NONE;
+ 
+-	if (!thread) {
+-		*parch = NULL;
+-		return -1;
++	const char *cpuid = NULL;
++
++	if (ms->thread) {
++		machine = maps__machine(thread__maps(ms->thread));
++		e_machine = thread__e_machine(ms->thread, machine, &e_flags);
++		if (machine && machine->env)
++			cpuid = machine->env->cpuid;
++	} else if (dso) {
++		struct maps *kmaps = (map && dso__kernel(dso)) ? map__kmaps(map) : NULL;
++		struct machine *kmap_machine = kmaps ? maps__machine(kmaps) : NULL;
++
++		e_machine = dso__e_machine(dso, kmap_machine, &e_flags);
++		if (kmap_machine && kmap_machine->env)
++			cpuid = kmap_machine->env->cpuid;
  	}
  
- 	ret = tc9563_pwrctrl_i2c_bulk_write(tc9563->client, seq, len);
+-	machine = maps__machine(thread__maps(thread));
+-	e_machine = thread__e_machine(thread, machine, &e_flags);
+-	arch = arch__find(e_machine, e_flags, machine->env ? machine->env->cpuid : NULL);
++	if (e_machine == EM_NONE)
++		e_machine = thread__e_machine(NULL, NULL, &e_flags);
++
++	arch = arch__find(e_machine, e_flags, cpuid);
+ 	if (arch == NULL) {
+ 		pr_err("%s: unsupported arch %d\n", __func__, e_machine);
+-		return errno;
++		/* TODO: Refactor annotate/disassemble subsystem error
++		 * codes to uniformly return negative integers.
++		 */
++		return errno ? errno : ENOTSUP;
+ 	}
+ 	if (parch)
+ 		*parch = arch;
+@@ -1018,7 +1037,7 @@ int symbol__annotate(struct map_symbol *ms, struct evsel *evsel,
+ 	const struct arch *arch = NULL;
+ 	int err, nr;
+ 
+-	err = thread__get_arch(ms->thread, &arch);
++	err = map_symbol__get_arch(ms, &arch);
+ 	if (err)
+ 		return err;
+ 
+@@ -1251,6 +1270,11 @@ int hist_entry__annotate_printf(struct hist_entry *he, struct evsel *evsel)
+ 		evsel_name = buf;
+ 	}
+ 
++	if (map_symbol__get_arch(ms, &apd.arch)) {
++		free(filename);
++		return ENOTSUP;
++	}
++
+ 	graph_dotted_len = printf(" %-*.*s|	Source code & Disassembly of %s for %s (%" PRIu64 " samples, "
+ 				  "percent: %s)\n",
+ 				  width, width, symbol_conf.show_total_period ? "Period" :
+@@ -1266,7 +1290,6 @@ int hist_entry__annotate_printf(struct hist_entry *he, struct evsel *evsel)
+ 
+ 	apd.addr_fmt_width = annotated_source__addr_fmt_width(&notes->src->source,
+ 							      notes->src->start);
+-	thread__get_arch(ms->thread, &apd.arch);
+ 	apd.dbg = dso__debuginfo(dso);
+ 
+ 	list_for_each_entry(pos, &notes->src->source, node) {
+@@ -1371,7 +1394,7 @@ static int symbol__annotate_fprintf2(struct symbol *sym, FILE *fp,
+ 	struct annotation_line *al;
+ 
+ 	if (annotate_opts.code_with_type) {
+-		thread__get_arch(apd->he->ms.thread, &apd->arch);
++		map_symbol__get_arch(&apd->he->ms, &apd->arch);
+ 		apd->dbg = dso__debuginfo(map__dso(apd->he->ms.map));
+ 	}
+ 
+diff --git a/tools/perf/util/annotate.h b/tools/perf/util/annotate.h
+index 1aa6df7d16187..fa08d09b80f76 100644
+--- a/tools/perf/util/annotate.h
++++ b/tools/perf/util/annotate.h
+@@ -584,5 +584,6 @@ int annotation_br_cntr_entry(char **str, int br_cntr_nr, u64 *br_cntr,
+ 			     int num_aggr, struct evsel *evsel);
+ int annotation_br_cntr_abbr_list(char **str, struct evsel *evsel, bool header);
+ 
+-int thread__get_arch(struct thread *thread, const struct arch **parch);
++
++int map_symbol__get_arch(struct map_symbol *ms, const struct arch **parch);
+ #endif	/* __PERF_ANNOTATE_H */
+diff --git a/tools/perf/util/capstone.c b/tools/perf/util/capstone.c
+index 00e0141cae8db..74213daf87862 100644
+--- a/tools/perf/util/capstone.c
++++ b/tools/perf/util/capstone.c
+@@ -392,7 +392,7 @@ int symbol__disassemble_capstone(const char *filename, struct symbol *sym,
+ 	char disasm_buf[512];
+ 	struct disasm_line *dl;
+ 	bool disassembler_style = false;
+-	uint16_t e_machine;
++	uint16_t e_machine = EM_NONE;
+ 	bool is_big_endian = false;
+ 
+ 	if (args->options->objdump_path)
+@@ -423,9 +423,22 @@ int symbol__disassemble_capstone(const char *filename, struct symbol *sym,
+ 	    !strcmp(args->options->disassembler_style, "att"))
+ 		disassembler_style = true;
+ 
+-	e_machine = thread__e_machine_endian(args->ms->thread,
+-					     /*machine=*/NULL,
+-					     /*e_flags=*/NULL, &is_big_endian);
++	if (args->ms->thread) {
++		e_machine = thread__e_machine_endian(args->ms->thread,
++						     /*machine=*/NULL,
++						     /*e_flags=*/NULL, &is_big_endian);
++	} else if (dso) {
++		struct maps *kmaps = (map && dso__kernel(dso)) ? map__kmaps(map) : NULL;
++		struct machine *kmap_machine = kmaps ? maps__machine(kmaps) : NULL;
++
++		e_machine = dso__e_machine_endian(dso, kmap_machine, /*e_flags=*/NULL,
++						  &is_big_endian);
++	}
++	if (!e_machine || e_machine == EM_NONE) {
++		e_machine = thread__e_machine_endian(NULL,
++						     /*machine=*/NULL,
++						     /*e_flags=*/NULL, &is_big_endian);
++	}
+ 	if (capstone_init(e_machine, &handle, is_64bit, is_big_endian, disassembler_style) < 0)
+ 		goto err;
+ 
+@@ -518,7 +531,7 @@ int symbol__disassemble_capstone_powerpc(const char *filename __maybe_unused,
+ 	struct disasm_line *dl;
+ 	u32 *line;
+ 	bool disassembler_style = false;
+-	uint16_t e_machine;
++	uint16_t e_machine = EM_NONE;
+ 	bool is_big_endian = false;
+ 
+ 	if (args->options->objdump_path)
+@@ -538,9 +551,22 @@ int symbol__disassemble_capstone_powerpc(const char *filename __maybe_unused,
+ 	    !strcmp(args->options->disassembler_style, "att"))
+ 		disassembler_style = true;
+ 
+-	e_machine = thread__e_machine_endian(args->ms->thread,
+-					     /*machine=*/NULL,
+-					     /*e_flags=*/NULL, &is_big_endian);
++	if (args->ms->thread) {
++		e_machine = thread__e_machine_endian(args->ms->thread,
++						     /*machine=*/NULL,
++						     /*e_flags=*/NULL, &is_big_endian);
++	} else if (dso) {
++		struct maps *kmaps = (map && dso__kernel(dso)) ? map__kmaps(map) : NULL;
++		struct machine *kmap_machine = kmaps ? maps__machine(kmaps) : NULL;
++
++		e_machine = dso__e_machine_endian(dso, kmap_machine, /*e_flags=*/NULL,
++						  &is_big_endian);
++	}
++	if (!e_machine || e_machine == EM_NONE) {
++		e_machine = thread__e_machine_endian(NULL,
++						     /*machine=*/NULL,
++						     /*e_flags=*/NULL, &is_big_endian);
++	}
+ 	if (capstone_init(e_machine, &handle, is_64bit, is_big_endian, disassembler_style) < 0)
+ 		goto err;
+ 
 -- 
 2.53.0
 
