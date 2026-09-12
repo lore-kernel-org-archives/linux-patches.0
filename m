@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3970947D477;
-	Sat, 12 Sep 2026 13:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A163047CA92;
+	Sat, 12 Sep 2026 13:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218120; cv=none; b=Mz+II/L61eB3mHpPmwJVz4J87f29ibfZM5MQrb6BqiiGQZ8sYkQlzMzC1oBTDfWQoq4o5kHZUhRVJ6eRAriMveTmVUm4jb/T7as8ZbgUo7UtawPJPI3baqBBDXpEp4cxO4S/eekhdiSfb/bmSkdX9ifwD1OXfdZXClmgHbhtNEM=
+	t=1789218124; cv=none; b=aliLHwqRyyTzfb8zzBv+92a/RFWnn8nPw5cm1J7pMDEA+vZRYto4ScVZYEJGb6hKLZrzJF5FMcVouaxpztF0wsuaTiAXDNJOolhBxJ39G5KhDinShsH4YCLpg3b+1d65V/OR7MFKUDqk7WaUfJ+0IZPJcNhRU8yKUvGOHIq2VqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218120; c=relaxed/simple;
-	bh=dQEhDuP6Fm8uLgb2z7LLlh2jCvdSBBqpsoSK5L1adyU=;
+	s=arc-20240116; t=1789218124; c=relaxed/simple;
+	bh=rXBeOp/ZeOJNC0Dj/YO44axJsb5vJDKoMczxbOaO2os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oPf/4dqrukXpgOo5uOqu0vuvS/9lpmsaaut/8VW6TjaElQKcohMCvjNzuF8dOEDccPftHChEQSlZ0o79f7e2MUS0cyeOHUx8U4/Ei8MQ6H7Q15qW3FYEtRswttxytdRllixCT9D6nMDXt+ZlnwMaVrWiOYiTLJgqCG+pGbLH9O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XiIRh3C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=azBS+0KVDMMhI0l9akO5lT8AeuMBK0f4J2VgMqqXzrYi4b3rnw/eP45aLViOF5Uo/tzhW8AaO/SLFY8MKxiWxM0jHNtBMoWXvdqcTx0gNz3s4B86LxXp9nnJ1CYR3gdX3+cJqs2lnXJHM50DFEejn+yLon8fYxRbVl6m7RDb72U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mU5BKdZK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XiIRh3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B091D1F000FF;
-	Sat, 12 Sep 2026 13:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mU5BKdZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B23E1F000FF;
+	Sat, 12 Sep 2026 13:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218118;
-	bh=EDG6Re1mFJV6U42RQwWd6r7nxUKkWDMsFPIcv2ioBV4=;
+	s=korg; t=1789218123;
+	bh=0h308MZ3lRO1n9+v6vKyl7krzhfz/2+opzLfT2i1UnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0XiIRh3CaU1+mKf2dLFCO+r2UmK5IVld5A5aujoeFCWc2+iYmmoYFpC4oeyH9dOCb
-	 tpWtgmLpbhngdmT2B3rXzMII3XmPL2WzkmBgSzxUnnOwStJtZwyto8xpcVOU2D5azl
-	 4TDEvsRK5VtdL4aMtR5BtRefFbiRob2ESyRoQbQA=
+	b=mU5BKdZKVKBVw/fg5Ty1/erSH9no2qhkR9qa37MiH35BAEPCh+Ct7LDZ9xqctKbTP
+	 dtHCNg8FDMBbCpS0iN3MePqYW1PhIntiO8PtX6V2hxkhpnGmCaV1WRcCTdUXnksICF
+	 fTE+211/yUzYpnx9IQo1GtDpYr2NJi96NSowSeVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1080/1376] UBI: fastmap: Pass to_be_tortured when reusing old fastmap PEBs
-Date: Sat, 12 Sep 2026 08:58:26 +0200
-Message-ID: <20260912065631.631544543@linuxfoundation.org>
+Subject: [PATCH 6.12 1081/1376] ubi: Fix rollback for explicit UBI device numbers
+Date: Sat, 12 Sep 2026 08:58:27 +0200
+Message-ID: <20260912065631.654717875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,67 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit be04fce9945aac2a843f5d16725391eb80d948ef ]
+[ Upstream commit 5b0a6b554e12a97f9771a9a9f4ea1f5457373c73 ]
 
-In ubi_update_fastmap(), when no fresh PEB is available to replace an
-old fastmap PEB, the old PEB is reused by erasing it synchronously
-via ubi_sync_erase() with the torture flag hardcoded to zero.
+ubi_init_attach() rolls back module initialization failures by scanning
+ubi_devices[0..i-1], where i is the mtd= parameter index. That assumes
+the parameter index matches the UBI device number.
 
-However, old_fm->to_be_tortured[] may be non-zero: it is set during
-fastmap scanning when ubi_io_read_data()/ubi_io_read_ec_hdr() reports
-UBI_IO_BITFLIPS, meaning the PEB showed signs of bit decay and should
-be tortured to verify it is still reliable.
+That assumption is not true when mtd= specifies an explicit ubi_num. A
+successfully attached device can be stored at a higher ubi_devices[]
+slot, and a later failure can miss it during rollback.
 
-When the old PEB is instead returned to the WL sub-system via
-ubi_wl_put_fm_peb(), the to_be_tortured flag is honored. The
-synchronous reuse path is inconsistent: it silently skips the torture
-test for PEBs that exhibited bit-flips.
+Scan the full ubi_devices[] array and detach by the actual array index,
+matching the way UBI devices are stored.
 
-Fix it by passing &old_fm->to_be_tortured[i] to ubi_sync_erase().
-
-Fixes: dbb7d2a88d2a ("UBI: Add fastmap core")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mtd/ubi/build.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
-index 465ea97463e6d..12dd05fd37789 100644
---- a/drivers/mtd/ubi/fastmap.c
-+++ b/drivers/mtd/ubi/fastmap.c
-@@ -1488,7 +1488,7 @@ static void return_fm_pebs(struct ubi_device *ubi,
-  */
- int ubi_update_fastmap(struct ubi_device *ubi)
- {
--	int ret, i, j, torture = 0;
-+	int ret, i, j;
- 	struct ubi_fastmap_layout *new_fm, *old_fm;
- 	struct ubi_wl_entry *tmp_e;
+diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
+index ef6a22f372f95..d8d3317f9763a 100644
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -1317,10 +1317,10 @@ static int __init ubi_init_attach(void)
+ 	return 0;
  
-@@ -1526,7 +1526,8 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 
- 		if (!tmp_e) {
- 			if (old_fm && old_fm->e[i]) {
--				ret = ubi_sync_erase(ubi, old_fm->e[i], &torture);
-+				ret = ubi_sync_erase(ubi, old_fm->e[i],
-+						    &old_fm->to_be_tortured[i]);
- 				if (ret < 0) {
- 					ubi_err(ubi, "could not erase old fastmap PEB");
- 
-@@ -1578,7 +1579,8 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 	if (old_fm) {
- 		/* no fresh anchor PEB was found, reuse the old one */
- 		if (!tmp_e) {
--			ret = ubi_sync_erase(ubi, old_fm->e[0], &torture);
-+			ret = ubi_sync_erase(ubi, old_fm->e[0],
-+					     &old_fm->to_be_tortured[0]);
- 			if (ret < 0) {
- 				ubi_err(ubi, "could not erase old anchor PEB");
- 
+ out_detach:
+-	for (k = 0; k < i; k++)
++	for (k = 0; k < UBI_MAX_DEVICES; k++)
+ 		if (ubi_devices[k]) {
+ 			mutex_lock(&ubi_devices_mutex);
+-			ubi_detach_mtd_dev(ubi_devices[k]->ubi_num, 1);
++			ubi_detach_mtd_dev(k, 1);
+ 			mutex_unlock(&ubi_devices_mutex);
+ 		}
+ 	return err;
 -- 
 2.53.0
 
