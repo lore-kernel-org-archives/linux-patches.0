@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDFD34252D;
-	Sat, 12 Sep 2026 09:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BFD4BEE54;
+	Sat, 12 Sep 2026 09:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205956; cv=none; b=UeHbFSakEOrS1dG2/JUeBjF6Eo/BW3lNCg/JBqBr+9K6TBe9JjsThBQwitgw+6rpF+2uxY+yJFN9Vw7zKS/zbxXEVew9opHJNVddDcEQ4SIIzLwI9wl/TUBgD7LfiOeZEotRTi4+T3/e/iYxy6oOw1mSIt9t8SeM4MftGDlvEQA=
+	t=1789205960; cv=none; b=Er0KLytkKIy3ct/eXRrBb92rSbfKI5Wtn+w7kBkBHHoPQYUuiUfLw1n/bNSqDKRLqsTukYJP9r3YtTQ5pBi6HGM8WBDvToj5M8Q5zIsW1n6uDvzCDUMzq6CwM+XvjLwWvM0eXcquqqqj/tFlj/U1FLT5upnOPSSsLwMmtQLs+Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205956; c=relaxed/simple;
-	bh=gPz5Bzlm4sWkO+fMvdXVaN5FjO/+6GEQ3l+crC+F7Oo=;
+	s=arc-20240116; t=1789205960; c=relaxed/simple;
+	bh=oeZcbSSiLkOKS76E12RBfjGU61KE9d5UeW7iadgFKHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWdOOYNVsmcQXxWME4YpuJoN5VrOw+DgjAp0E3lKat2l3mwnVsYdUT/eskfcg2ImxrV+U6ViSD84ZSBWSK7gMrKLY/pYzpsCVvEia8SYVajus7PMTvoE+sSvGkl0YhsAiUgHa5Jy+ybmNPIzQ6m4eyoERoN2VY4Em7sjk2w3Amw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyB+Jgb+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q0lj+nuVs2RWwXi58lKMZUiJBRsp0KpSDQ7vfUFutXJMUTtiBG5oM2RAUueE/FpMgR1JC3OVYPvqyCN/qVV8UitrI0yqyzabehwBmpzO5qKn1vFrmo4O9fffzjtclcWD1G3+yTrGJqMqseAKhZ2ro1fn89NP7HYGDWmshpJsFd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCVmDM+W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyB+Jgb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B903A1F000FF;
-	Sat, 12 Sep 2026 09:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCVmDM+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06D31F000FF;
+	Sat, 12 Sep 2026 09:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205954;
-	bh=Sy0kqIm0uhli6Vl3EhxmJfdks+2Aa3wSabp00CCc5aM=;
+	s=korg; t=1789205959;
+	bh=i2SWWLUH3ILSCv0OhEzIMUEEv5QWrp1CXEr5EMXl518=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WyB+Jgb+zprkGN2BnUIlU/VLrQ6eJ+UjV/ZDpRbiDRd/P3EGA5jYLRSpgDJKu+l6s
-	 zzmjRRH6f3r5q/12kqRhOfHAwKdwQlIjV/8aN09gxABcrf9ll4/ArB8HU4izGcfqCe
-	 J6bkvIfJ/pDDa/8pDDvWgF6UTDtkeYP4c6tQ+s3s=
+	b=FCVmDM+WjlTWwMJdJjVk4ELodxtUt4sQuHgHptoywF2eIgxUZlIxweI9zXIXKAESX
+	 oBV7Evk/YsmtEiUMWmq+BzDG20wAFET6C89XdgfqL7gEUJNtVFh3A1OJtPbQjPpmsX
+	 EyCgLT3f3k2XHMc+D+EhD7DughUM9A/wvvrUjmKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Daniel Stone <daniel@fooishbar.org>,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Daniel Stone <daniels@collabora.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0108/1518] drm/rockchip: vop2: Recognise 10-bit YUV422 as YUV format
-Date: Sat, 12 Sep 2026 08:37:57 +0200
-Message-ID: <20260912065625.920015927@linuxfoundation.org>
+Subject: [PATCH 6.18 0109/1518] drm/bridge: cdns-dsi: Return an error pointer on allocation failure
+Date: Sat, 12 Sep 2026 08:37:58 +0200
+Message-ID: <20260912065625.943506746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,43 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit c1bfe8dac0a79d47eed313b9bcaa2658898684ec ]
+[ Upstream commit 79ac5c68f1a49a9fdec596ee47577d5a1d52738f ]
 
-The Rockchip VOP2 video output driver has a "is_yuv_output" function,
-which returns true when a given bus format is a YUV format, and false
-otherwise.
+The drm_bridge_funcs.atomic_reset documentation states that the hook
+must return either a valid drm_bridge_state object or an ERR_PTR().
 
-This switch statement is lacking the bus format used for YUV422 10-bit.
+The cdns_dsi_bridge_atomic_reset() callback returns NULL when the
+allocation of its state fails, violating this contract.
 
-Add the two component orderings of the YUV422 10-bit bus formats to the
-switch statement.
+Return ERR_PTR(-ENOMEM) instead.
 
-Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Daniel Stone <daniel@fooishbar.org>
-Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Link: https://patch.msgid.link/20260609-color-format-v17-13-35739b5782cc@collabora.com
-Signed-off-by: Daniel Stone <daniels@collabora.com>
+Fixes: a53d987756ea ("drm/bridge: cdns-dsi: Move DSI mode check to _atomic_check()")
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # imx8mp + sn65dsi84 + bridge hotplug
+Link: https://patch.msgid.link/20260619-drm-no-more-bridge-reset-v3-1-ff399263111b@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index a9ae9e472f56b..3c48984d62448 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -351,6 +351,8 @@ static bool is_yuv_output(u32 bus_format)
- 	switch (bus_format) {
- 	case MEDIA_BUS_FMT_YUV8_1X24:
- 	case MEDIA_BUS_FMT_YUV10_1X30:
-+	case MEDIA_BUS_FMT_YUYV10_1X20:
-+	case MEDIA_BUS_FMT_UYVY10_1X20:
- 	case MEDIA_BUS_FMT_UYYVYY8_0_5X24:
- 	case MEDIA_BUS_FMT_UYYVYY10_0_5X30:
- 	case MEDIA_BUS_FMT_YUYV8_2X8:
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
+index de2a32112913e..16b7e56142006 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
+@@ -1015,7 +1015,7 @@ cdns_dsi_bridge_atomic_reset(struct drm_bridge *bridge)
+ 
+ 	dsi_state = kzalloc(sizeof(*dsi_state), GFP_KERNEL);
+ 	if (!dsi_state)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	memset(dsi_state, 0, sizeof(*dsi_state));
+ 	dsi_state->base.bridge = bridge;
 -- 
 2.53.0
 
