@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD4B315785;
-	Sat, 12 Sep 2026 13:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C139317145;
+	Sat, 12 Sep 2026 13:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221116; cv=none; b=lq7HffH4Fj5TaPBwVQ5/lHqbIdi4Bai6VOd223MJXpHX1UGN4DR517JxRx+ZlgPHtT/97bzS+upBnOkQulG895mBGskOdEOc8OGL78Xfabq++V12zilnXP/TurEt1QQtK+RWc7Av1ZhnjZGMKvcInd9gECcGav/eNx8WauopdBY=
+	t=1789221120; cv=none; b=NtgRXVf23uzHvUUXS42tKo1gEiMGnFzFpelQ/F91Yp5HU7aOAr3J8RDpXYNU5fr6rVu/muJBJEN1ShwKt62d4nCF6rglMXCg1fDxs8uQ32vMXEbqF2ht8IA2JGts5PucgMNVy4AFTX6EJJzU98xI9JCWjG3atpWuIcNwAyIiL3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221116; c=relaxed/simple;
-	bh=TVUqbsZcYXb/GTYsX73t76aDZNqp/4GtBwxi+nBrQ94=;
+	s=arc-20240116; t=1789221120; c=relaxed/simple;
+	bh=d2Qu6Em1S3xEb4xGoAtsRKdqwXZ0B2friTDvt3yBcCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAN8TFqSKvgw9BY1sVosXskC0PW+kJOrenmbJySIwwEG8jq1UMkNZ/jLGIKPEuqAyu9BmFx3yAR9RnV0bxYQJqFuxgDrQ1I3WR8rIDBkXg9Vwth3DllLZFex7kfqSQ33Y5FBkSVcCRrlfba3tCnDe+Ro9bBmNBfRQiOtWqudIPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TozFehCG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eXOVgXgEakkQF72bz9bTbXwclaDBn1Jh2B5x/UvDzTSxNgOQdMyFIr1MiyzgYNpe9YWMvJ411FAnrxusR0sqajlZEKceX/yqUzajzAGvn4Rp6+5RxvMJUUrQHWJgotxmnXKQ7I/yn5uvCIVdtChrijqQNRGgLn/0NKamPLiELNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JzaSAAGN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TozFehCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880F11F000FF;
-	Sat, 12 Sep 2026 13:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzaSAAGN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722971F00893;
+	Sat, 12 Sep 2026 13:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221114;
-	bh=vcGNHrw4BcHRJU0fUNiDHd23aFeq2JN9JdVR/Q3XUfQ=;
+	s=korg; t=1789221119;
+	bh=L70nK3T2MsPQ2C77F7zVXIj9ioZbZ5ORq0HJFPFrLTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TozFehCGYH2Hvox+3wnxusSw9YGpo9FSByu3MLyHhf31jux/9gGtzUy4Q5mn17dMd
-	 W+7JyIjEnS0uaNP1cqCsvdsHYz8YghmWApNFmD92QeN7sCb4Tbzcr5IBRBtKDrlgaA
-	 xd1tcD6JJ4YFcUFx88Rrw+NTiI8Q/CjMRyLZ7oIo=
+	b=JzaSAAGN7gO8V1Gis9oI3ANegbfMushBaNwlOlXSTl6qwvmejOCIoCwr2n4HtQxZP
+	 YZL8BWLOl8HDxyKEak6lII2OhAStHFxyP4FBat4jijcHPIpI/NYhVVfFj5Rh04KXnq
+	 pfDMnuj9veKBvQCyz0LZ40lJSS1ZLxZZ0EQY6c6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	William Kucharski <william.kucharski@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0300/1424] xarray: honor XA_FLAGS_ACCOUNT in xas_split_alloc()
-Date: Sat, 12 Sep 2026 08:45:32 +0200
-Message-ID: <20260912065614.005023756@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0318/1424] tracing/mmiotrace: Remove reference to unused per CPU data pointer
+Date: Sat, 12 Sep 2026 08:45:50 +0200
+Message-ID: <20260912065614.406230384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -61,51 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 789763523fb43cdc328de5cb5dcd19240ccf90d8 upstream.
+commit 6936298393d8d8bc3cec6b704f6a774162cf9bd3 upstream.
 
-XArray operations that allocate xa_nodes, such as xas_nomem() and
-xas_alloc(), add __GFP_ACCOUNT when the array has XA_FLAGS_ACCOUNT set.
-This charges the allocated memory and avoids the workingset convergence
-issue described by commit 7b785645e8f13 ("mm: fix page cache convergence
-regression").
+The mmiotracer referenced the per CPU array_buffer->data descriptor but
+never actually used it. Remove the references to it.
 
-xas_split_alloc() does not add _GFP_ACCOUNT when XA_FLAGS_ACCOUNT is
-present.  Fix it.
-
-Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-2-38cb3ff325c5@nvidia.com
-Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: William Kucharski <william.kucharski@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/20250505212234.696945463@goodmis.org
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/xarray.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/trace/trace_mmiotrace.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
---- a/lib/xarray.c
-+++ b/lib/xarray.c
-@@ -1012,6 +1012,9 @@ void xas_split_alloc(struct xa_state *xa
- 	if (xas->xa_shift + XA_CHUNK_SHIFT > order)
- 		return;
+diff --git a/kernel/trace/trace_mmiotrace.c b/kernel/trace/trace_mmiotrace.c
+index c523ce5aa4958..74f378fca5187 100644
+--- a/kernel/trace/trace_mmiotrace.c
++++ b/kernel/trace/trace_mmiotrace.c
+@@ -292,7 +292,6 @@ __init static int init_mmio_trace(void)
+ device_initcall(init_mmio_trace);
  
-+	if (xas->xa->xa_flags & XA_FLAGS_ACCOUNT)
-+		gfp |= __GFP_ACCOUNT;
-+
- 	do {
- 		unsigned int i;
- 		void *sibling = NULL;
+ static void __trace_mmiotrace_rw(struct trace_array *tr,
+-				struct trace_array_cpu *data,
+ 				struct mmiotrace_rw *rw)
+ {
+ 	struct trace_event_call *call = &event_mmiotrace_rw;
+@@ -318,12 +317,10 @@ static void __trace_mmiotrace_rw(struct trace_array *tr,
+ void mmio_trace_rw(struct mmiotrace_rw *rw)
+ {
+ 	struct trace_array *tr = mmio_trace_array;
+-	struct trace_array_cpu *data = per_cpu_ptr(tr->array_buffer.data, smp_processor_id());
+-	__trace_mmiotrace_rw(tr, data, rw);
++	__trace_mmiotrace_rw(tr, rw);
+ }
+ 
+ static void __trace_mmiotrace_map(struct trace_array *tr,
+-				struct trace_array_cpu *data,
+ 				struct mmiotrace_map *map)
+ {
+ 	struct trace_event_call *call = &event_mmiotrace_map;
+@@ -349,12 +346,7 @@ static void __trace_mmiotrace_map(struct trace_array *tr,
+ void mmio_trace_mapping(struct mmiotrace_map *map)
+ {
+ 	struct trace_array *tr = mmio_trace_array;
+-	struct trace_array_cpu *data;
+-
+-	preempt_disable();
+-	data = per_cpu_ptr(tr->array_buffer.data, smp_processor_id());
+-	__trace_mmiotrace_map(tr, data, map);
+-	preempt_enable();
++	__trace_mmiotrace_map(tr, map);
+ }
+ 
+ int mmio_trace_printk(const char *fmt, va_list args)
+-- 
+2.53.0
+
 
 
