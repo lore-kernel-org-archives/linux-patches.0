@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84139CA6F;
-	Sat, 12 Sep 2026 14:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA6A30568E;
+	Sat, 12 Sep 2026 14:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223583; cv=none; b=IybUquA9FtZTvIIQOgscuhsD9yuzP1DAz+dp2cggguqoUAJ0cEGgI+ANnxDi0ZM7WeHgpx5aVINVVLvXJ0v1dqQ0SNf0jAPMtlpmUmzYlHeSkoue145EWYnIekKwxRdRx1Dq3kMkx43c+OALBW7rLkKWiEkZwrIfrKwUDfUZmjo=
+	t=1789223588; cv=none; b=HPJQZgkRl1bJu5BNNGP9xmlkGNQNPv6nMvpgLkr24B8ipNgjaD9dhbmczQDzYm5ZEUuXOu7P1vHiDgkyU4EmktK5Fg5fASTMZvhD+OCAwF1v0qviv2ZkGEvPmBD6BOhy5kJzS1VMRPlYVV4NXEu2/S8yKW6E5N6jXSl61sBsVvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223583; c=relaxed/simple;
-	bh=AmLxH6BCdU+gtHdHrXWav/GyZrlbUJj5OJTucHpmBt4=;
+	s=arc-20240116; t=1789223588; c=relaxed/simple;
+	bh=M4ufhDR1wR+GOZCFrIM/oEKXsYLqf3I4gcjeUOr48fQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mu2+kbG2IH0GnNEL+w6+qWqp6NfylCh1MtPurLSW+bFYN7OkslagNO1zl6Kjhp1NZ7NvbCJH4rsnTRxrOPBy/HIR0JiiRowHL9LA5UiUIxiQHgB7ZtHEjzmaXxAuwzyPSLOedKQy1iyUP5nW9bCBmurlN1796Vvcj29HywUv27U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXRqo7Ly; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BEc/SeZXDUBcQ/FP7cz9SLp9iLPdKJ1q3wmpHOBS7eBNjzRvzTdrfKB3XxChJPNYpbi7WdvMolGO/h+hl4Q6By2tjJx66a5bs0hoz9Rnm0mB2q6MvLXV6KY19r5rp/8QTzPnTx7/BCWQXcdi3tV0sTU11IquOZGh2bdfJ1xSdfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHVYt375; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXRqo7Ly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0301F000FF;
-	Sat, 12 Sep 2026 14:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHVYt375"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0A61F000FF;
+	Sat, 12 Sep 2026 14:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223582;
-	bh=upGTstKfJR3zaGLcj1MeNWm9NIcurtPewM+OWm6myV4=;
+	s=korg; t=1789223587;
+	bh=6NW6fLpexxYY9XEAjZLFBPsDu8kWQizH3anPW3TfPIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXRqo7Lyf0k9X3kTzh23f1KN4K+KYWXohgWfuzw3bDkHYYT0og+B1SF4bWWzlIScl
-	 aBb0LYH4rCGZAOE3BOBSwOzxFOYCC9I9p4JyFaqSwmdDqKH9W07Z5IAiOxl3DcrTZF
-	 IiDzcZe66XBr6JoRzfQVqaV6N/K/k8mEUpwT9z+I=
+	b=QHVYt3753KPRsJPbDUESuGF7AHVlfgNXHqsQnvXfVlkJzuMic1KVdrjW1QEaoXOO8
+	 qtLQLKkXKhnvSVC86oSywb/yAlGwrr9WYGVv3fnAeI3XdXqYhyO3b5sMNHb6vGNmYu
+	 tfpFD2f4yXEKfkTeXumxWvBQNRgt7fmGCO3K/B7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Herve Codina <herve.codina@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0766/1424] genirq/generic_chip: Introduce irq_domain_{alloc,remove}_generic_chips()
-Date: Sat, 12 Sep 2026 08:53:18 +0200
-Message-ID: <20260912065624.451191480@linuxfoundation.org>
+Subject: [PATCH 6.6 0813/1424] dmaengine: dw-edma: Serialize abort state updates
+Date: Sat, 12 Sep 2026 08:54:05 +0200
+Message-ID: <20260912065625.501902910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,215 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit e25f553a92973eaf59ff3a00fe7f61ab01b2877f ]
+[ Upstream commit dd80e259f65d932634e26d366570d71669ef6654 ]
 
-The existing __irq_alloc_domain_generic_chips() uses a bunch of parameters
-to describe the generic chips that need to be allocated.
+dw_edma_abort_interrupt() drops vc.lock before changing request and
+status. issue_pending() can acquire the lock in that small window,
+observe the old busy state, and skip starting queued descriptors. Then
+the abort handler overwrites the channel status as idle, leaving the new
+descriptors stranded for good.
 
-Adding more parameters and wrappers to hide new parameters in the existing
-code leads to more and more code without any relevant values and without
-any flexibility.
+Keep descriptor completion and the state transition in the same critical
+section.
 
-Introduce irq_domain_alloc_generic_chips() where the generic chips
-description is done using the irq_domain_chip_generic_info structure
-instead of the bunch of parameters to allow flexibility and easy evolution.
-
-Also introduce irq_domain_remove_generic_chips() to revert the operations
-done by irq_domain_alloc_generic_chips().
-
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240614173232.1184015-14-herve.codina@bootlin.com
-Stable-dep-of: 616dd89d81ad ("irqchip/renesas-irqc: Fix generic interrupt chip leak on remove")
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260717180639.2643243-4-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/irq.h       | 25 +++++++++++
- kernel/irq/generic-chip.c | 91 +++++++++++++++++++++++++++++----------
- 2 files changed, 93 insertions(+), 23 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/irq.h b/include/linux/irq.h
-index 90081afa10ce5..7bbd613c9e5a9 100644
---- a/include/linux/irq.h
-+++ b/include/linux/irq.h
-@@ -1117,6 +1117,27 @@ struct irq_domain_chip_generic {
- 	struct irq_chip_generic	*gc[];
- };
- 
-+/**
-+ * struct irq_domain_chip_generic_info - Generic chip information structure
-+ * @name:		Name of the generic interrupt chip
-+ * @handler:		Interrupt handler used by the generic interrupt chip
-+ * @irqs_per_chip:	Number of interrupts each chip handles (max 32)
-+ * @num_ct:		Number of irq_chip_type instances associated with each
-+ *			chip
-+ * @irq_flags_to_clear:	IRQ_* bits to clear in the mapping function
-+ * @irq_flags_to_set:	IRQ_* bits to set in the mapping function
-+ * @gc_flags:		Generic chip specific setup flags
-+ */
-+struct irq_domain_chip_generic_info {
-+	const char		*name;
-+	irq_flow_handler_t	handler;
-+	unsigned int		irqs_per_chip;
-+	unsigned int		num_ct;
-+	unsigned int		irq_flags_to_clear;
-+	unsigned int		irq_flags_to_set;
-+	enum irq_gc_flags	gc_flags;
-+};
-+
- /* Generic chip callback functions */
- void irq_gc_noop(struct irq_data *d);
- void irq_gc_mask_disable_reg(struct irq_data *d);
-@@ -1153,6 +1174,10 @@ int devm_irq_setup_generic_chip(struct device *dev, struct irq_chip_generic *gc,
- 
- struct irq_chip_generic *irq_get_domain_generic_chip(struct irq_domain *d, unsigned int hw_irq);
- 
-+int irq_domain_alloc_generic_chips(struct irq_domain *d,
-+				   const struct irq_domain_chip_generic_info *info);
-+void irq_domain_remove_generic_chips(struct irq_domain *d);
-+
- int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
- 				     int num_ct, const char *name,
- 				     irq_flow_handler_t handler,
-diff --git a/kernel/irq/generic-chip.c b/kernel/irq/generic-chip.c
-index 5a452b94b6434..59f0685b4ec42 100644
---- a/kernel/irq/generic-chip.c
-+++ b/kernel/irq/generic-chip.c
-@@ -272,21 +272,14 @@ irq_gc_init_mask_cache(struct irq_chip_generic *gc, enum irq_gc_flags flags)
- }
- 
- /**
-- * __irq_alloc_domain_generic_chips - Allocate generic chips for an irq domain
-- * @d:			irq domain for which to allocate chips
-- * @irqs_per_chip:	Number of interrupts each chip handles (max 32)
-- * @num_ct:		Number of irq_chip_type instances associated with this
-- * @name:		Name of the irq chip
-- * @handler:		Default flow handler associated with these chips
-- * @clr:		IRQ_* bits to clear in the mapping function
-- * @set:		IRQ_* bits to set in the mapping function
-- * @gcflags:		Generic chip specific setup flags
-+ * irq_domain_alloc_generic_chips - Allocate generic chips for an irq domain
-+ * @d:		irq domain for which to allocate chips
-+ * @info:	Generic chip information
-+ *
-+ * Return: 0 on success, negative error code on failure
-  */
--int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
--				     int num_ct, const char *name,
--				     irq_flow_handler_t handler,
--				     unsigned int clr, unsigned int set,
--				     enum irq_gc_flags gcflags)
-+int irq_domain_alloc_generic_chips(struct irq_domain *d,
-+				   const struct irq_domain_chip_generic_info *info)
- {
- 	struct irq_domain_chip_generic *dgc;
- 	struct irq_chip_generic *gc;
-@@ -300,23 +293,23 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
- 	if (d->gc)
- 		return -EBUSY;
- 
--	numchips = DIV_ROUND_UP(d->revmap_size, irqs_per_chip);
-+	numchips = DIV_ROUND_UP(d->revmap_size, info->irqs_per_chip);
- 	if (!numchips)
- 		return -EINVAL;
- 
- 	/* Allocate a pointer, generic chip and chiptypes for each chip */
--	gc_sz = struct_size(gc, chip_types, num_ct);
-+	gc_sz = struct_size(gc, chip_types, info->num_ct);
- 	dgc_sz = struct_size(dgc, gc, numchips);
- 	sz = dgc_sz + numchips * gc_sz;
- 
- 	tmp = dgc = kzalloc(sz, GFP_KERNEL);
- 	if (!dgc)
- 		return -ENOMEM;
--	dgc->irqs_per_chip = irqs_per_chip;
-+	dgc->irqs_per_chip = info->irqs_per_chip;
- 	dgc->num_chips = numchips;
--	dgc->irq_flags_to_set = set;
--	dgc->irq_flags_to_clear = clr;
--	dgc->gc_flags = gcflags;
-+	dgc->irq_flags_to_set = info->irq_flags_to_set;
-+	dgc->irq_flags_to_clear = info->irq_flags_to_clear;
-+	dgc->gc_flags = info->gc_flags;
- 	d->gc = dgc;
- 
- 	/* Calc pointer to the first generic chip */
-@@ -324,11 +317,12 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
- 	for (i = 0; i < numchips; i++) {
- 		/* Store the pointer to the generic chip */
- 		dgc->gc[i] = gc = tmp;
--		irq_init_generic_chip(gc, name, num_ct, i * irqs_per_chip,
--				      NULL, handler);
-+		irq_init_generic_chip(gc, info->name, info->num_ct,
-+				      i * dgc->irqs_per_chip, NULL,
-+				      info->handler);
- 
- 		gc->domain = d;
--		if (gcflags & IRQ_GC_BE_IO) {
-+		if (dgc->gc_flags & IRQ_GC_BE_IO) {
- 			gc->reg_readl = &irq_readl_be;
- 			gc->reg_writel = &irq_writel_be;
- 		}
-@@ -341,6 +335,57 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index e8ac14e7691e2..7e1b270738ce0 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -710,9 +710,9 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
+ 		list_del(&vd->node);
+ 		vchan_cookie_complete(vd);
  	}
- 	return 0;
+-	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ 	chan->request = EDMA_REQ_NONE;
+ 	chan->status = EDMA_ST_IDLE;
++	spin_unlock_irqrestore(&chan->vc.lock, flags);
  }
-+EXPORT_SYMBOL_GPL(irq_domain_alloc_generic_chips);
-+
-+/**
-+ * irq_domain_remove_generic_chips - Remove generic chips from an irq domain
-+ * @d: irq domain for which generic chips are to be removed
-+ */
-+void irq_domain_remove_generic_chips(struct irq_domain *d)
-+{
-+	struct irq_domain_chip_generic *dgc = d->gc;
-+	unsigned int i;
-+
-+	if (!dgc)
-+		return;
-+
-+	for (i = 0; i < dgc->num_chips; i++)
-+		irq_remove_generic_chip(dgc->gc[i], ~0U, 0, 0);
-+
-+	d->gc = NULL;
-+	kfree(dgc);
-+}
-+EXPORT_SYMBOL_GPL(irq_domain_remove_generic_chips);
-+
-+/**
-+ * __irq_alloc_domain_generic_chips - Allocate generic chips for an irq domain
-+ * @d:			irq domain for which to allocate chips
-+ * @irqs_per_chip:	Number of interrupts each chip handles (max 32)
-+ * @num_ct:		Number of irq_chip_type instances associated with this
-+ * @name:		Name of the irq chip
-+ * @handler:		Default flow handler associated with these chips
-+ * @clr:		IRQ_* bits to clear in the mapping function
-+ * @set:		IRQ_* bits to set in the mapping function
-+ * @gcflags:		Generic chip specific setup flags
-+ */
-+int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
-+				     int num_ct, const char *name,
-+				     irq_flow_handler_t handler,
-+				     unsigned int clr, unsigned int set,
-+				     enum irq_gc_flags gcflags)
-+{
-+	struct irq_domain_chip_generic_info info = {
-+		.irqs_per_chip		= irqs_per_chip,
-+		.num_ct			= num_ct,
-+		.name			= name,
-+		.handler		= handler,
-+		.irq_flags_to_clear	= clr,
-+		.irq_flags_to_set	= set,
-+		.gc_flags		= gcflags,
-+	};
-+
-+	return irq_domain_alloc_generic_chips(d, &info);
-+}
- EXPORT_SYMBOL_GPL(__irq_alloc_domain_generic_chips);
  
- static struct irq_chip_generic *
+ static inline irqreturn_t dw_edma_interrupt_write(int irq, void *data)
 -- 
 2.53.0
 
