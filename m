@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2572E2E738F;
-	Sat, 12 Sep 2026 07:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FD02E738F;
+	Sat, 12 Sep 2026 07:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199917; cv=none; b=rTTceM702Q/mPCn8k0l8NPYVDh6eyVdbXM0c6iPiDPpfsXkuxpERd768iwUHndjv4Iv/qd35WSQOS8CgLDkaM5zXsbkjJZxRuWTtr4UmDIu+yYyj5HZnNWiEp5KilIeOowiZR71OIGnpUX1bO6jD9bwnKHAQqkTzbnf10IN2NK0=
+	t=1789199922; cv=none; b=kL+X8PcgDVQE/y0rdROtNyCKjJ/X3/AC+l60JnDge5iFuYQCV+0nkHeXFgFomF/IARLZbUgMPQHMIlpAuHihSF46hgMY1tdmCVKQq1Ei0KBkaSADPUn2IrQMH30hSgtJ9nqITv7DQCMq0NJBQwcjYtD5Hri7er4cR3IbfkM2774=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199917; c=relaxed/simple;
-	bh=y0jIjnG3Qoo4Od9+00zP2KcLnZmk0BQZtcxRHa7cdOw=;
+	s=arc-20240116; t=1789199922; c=relaxed/simple;
+	bh=0ap+zxFf/fls+STVZr1bjU5mx0SHjyiFJ4eNFgqVTvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxcwR7Wp61nJ/MrGp3+/y+CKXdFw+aeZ++lh+cAR+cggzx5f1p0kMO4RBndiHhzDGmakln7SrRh4NZESUsDYc65NEpXszDiq2QwYacLunp0WSSQZDz4R4LY0FZHZQSyHFqDemWbam397EFh2j88Z2cPrSvmqGBYeL1K3VqFbj68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0eaWmAe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CZufPdJz6BuP6S+wPTYhwtSTmKAlEXHC9++hbhgA7Hklz38vH9lQz5Usbor6vCVXjKk8PzNu2Ehg5BBHGQC/GxYtmqDRhptITZHshHOtK0TTB9BBkUz3Zxwj52NEp61feTelowDdUCHhGxblVn8RtMGsJgrCfSn5bes7GD/Spvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eneLMk+F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0eaWmAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166881F000FF;
-	Sat, 12 Sep 2026 07:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eneLMk+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFC71F000FF;
+	Sat, 12 Sep 2026 07:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199916;
-	bh=Ivh0PKCkonB/dnm0veFOGnOZ/PvPmaTxYGDwEzw7u44=;
+	s=korg; t=1789199920;
+	bh=lTZSX7aWubQ+M+g2CevsgU3NbEx4jr1iBRZg4DrcVVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f0eaWmAerkS7z1e7rGHaWTFfjRWDke2pyTN+9QdLuc/Mvu9EQ9LYjlzu73p07+k3z
-	 lzK3kdzOfcAV7P40s4M6JvFnQhMbhMnHBX7dD4qIyPYB7CFYLAn+sZyaf67Jf6oVwz
-	 IqDFFJoSZLSe5J81bPjRROd1DCnLAFdfWkX/JYUA=
+	b=eneLMk+FfJXVjwai5oF0TloIMYSQmoWDshjBC7OSG6UhPAP77cfQkwMCH5bBJaz2q
+	 YkOQ4rr2ilLUIxc/PZHBgT2IumF5oR7+5Ev3dHAwmoakDFKi8hpDuE5wGsqXbz8Y0k
+	 dtEhHcPZuoGbkPm76v/KGOhesxQZn4cBOBVKB4N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Jan Kara <jack@suse.cz>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0681/1815] isofs: release zisofs block pointer buffer head
-Date: Sat, 12 Sep 2026 08:40:31 +0200
-Message-ID: <20260912065704.874702226@linuxfoundation.org>
+Subject: [PATCH 7.2 0641/1815] exfat: fix valid_size extension over a shared writable mapping
+Date: Sat, 12 Sep 2026 08:39:51 +0200
+Message-ID: <20260912065703.928808349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,35 +51,335 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2f7dd9b86fe4076059e6a4a2a2c5d565afd76b9e ]
+[ Upstream commit 1135704ed22f54873eb0498a232611d9eca30dd4 ]
 
-zisofs_fill_pages() reads the compressed block pointer table.  The error
-paths release the current buffer_head, the loop also releases the old
-buffer_head when it advances. However, the success path leaves the last
-buffer_head referenced. Release it before returning success.
+When a shared writable mapping has its valid_size extended by a buffered
+write or a page fault, exfat zeroes the page-cache gap below the new
+valid_size. A store through the mapping can race with this zeroing and be
+overwritten.
 
-Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Link: https://patch.msgid.link/20260721091152.1450622-1-chenyichong@uniontech.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fix this by zeroing the gap lazily. Drop ->map_pages so that every first
+write fault goes through exfat_page_mkwrite(), which advances valid_size to
+cover the faulting page. With fault-around enabled, a store could install a
+writable PTE, skip ->page_mkwrite(), and land past valid_size without
+advancing it. Extending valid_size one faulting page at a time also leaves
+never-written pages in a large mapping alone.
+
+The gap is filled with block granularity, zeroing only the not-uptodate
+blocks and preserving blocks that may hold data stored through the mapping.
+On the buffered-write path the invalidate lock is held and the gap is
+unmapped before zeroing, so a racing store re-faults and, under the inode
+lock, completes only after the gap has been zeroed and valid_size covers
+it.
+
+Fixes: 82a81a7352bc ("exfat: add iomap buffered I/O support")
+Co-developed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/compress.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/exfat/exfat_fs.h |   2 +-
+ fs/exfat/file.c     | 180 +++++++++++++++++++++++++++++++++++---------
+ fs/exfat/iomap.c    |  11 ++-
+ 3 files changed, 153 insertions(+), 40 deletions(-)
 
-diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
-index 3fda92358e225..f9869d62b8509 100644
---- a/fs/isofs/compress.c
-+++ b/fs/isofs/compress.c
-@@ -293,6 +293,7 @@ static int zisofs_fill_pages(struct inode *inode, int full_page, int pcount,
- 		memzero_page(*pages, poffset, PAGE_SIZE - poffset);
- 		SetPageUptodate(*pages);
- 	}
-+	brelse(bh);
- 	return 0;
+diff --git a/fs/exfat/exfat_fs.h b/fs/exfat/exfat_fs.h
+index 9be50949ce34f..1f020b041a3d6 100644
+--- a/fs/exfat/exfat_fs.h
++++ b/fs/exfat/exfat_fs.h
+@@ -294,7 +294,7 @@ struct exfat_inode_info {
+ 	/* on-disk position of directory entry or 0 */
+ 	loff_t i_pos;
+ 	loff_t valid_size;
+-	/* page-aligned size that has been zeroed out for mmap */
++	/* block-aligned size zeroed in the page cache (>= valid_size) */
+ 	loff_t zeroed_size;
+ 	/* hash by i_location */
+ 	struct hlist_node i_hash_fat;
+diff --git a/fs/exfat/file.c b/fs/exfat/file.c
+index 5fc13378d35f7..5e9b47ecc614e 100644
+--- a/fs/exfat/file.c
++++ b/fs/exfat/file.c
+@@ -16,6 +16,7 @@
+ #include <linux/falloc.h>
+ #include <linux/fileattr.h>
+ #include <linux/iomap.h>
++#include <linux/pagemap.h>
+ 
+ #include "exfat_raw.h"
+ #include "exfat_fs.h"
+@@ -654,6 +655,104 @@ int exfat_file_fsync(struct file *filp, loff_t start, loff_t end, int datasync)
+ 	return blkdev_issue_flush(inode->i_sb->s_bdev);
  }
+ 
++/*
++ * exfat_zero_new_range - zero [start, end) without overwriting uptodate blocks
++ *
++ * Uptodate blocks may contain data written through a shared mapping beyond
++ * valid_size.
++ */
++static int exfat_zero_new_range(struct inode *inode, loff_t start, loff_t end)
++{
++	struct address_space *mapping = inode->i_mapping;
++	unsigned int blocksize = i_blocksize(inode);
++	loff_t pos = start;
++	int err;
++
++	while (pos < end) {
++		loff_t next = min_t(loff_t,
++				round_down(pos, PAGE_SIZE) + PAGE_SIZE, end);
++		struct folio *folio;
++		loff_t bpos;
++
++		folio = filemap_get_folio(mapping, pos >> PAGE_SHIFT);
++		if (IS_ERR(folio)) {
++			err = iomap_zero_range(inode, pos, next - pos, NULL,
++					       &exfat_iomap_ops, NULL, NULL);
++			if (err < 0)
++				return err;
++			pos = next;
++			continue;
++		}
++
++		if (folio_test_uptodate(folio)) {
++			folio_lock(folio);
++			if (folio->mapping == mapping)
++				folio_mark_dirty(folio);
++			folio_unlock(folio);
++			folio_put(folio);
++			pos = next;
++			continue;
++		}
++
++		/*
++		 * Zero not-uptodate block runs. iomap_zero_range() requires an
++		 * unlocked folio, so recheck ->mapping after each call.
++		 */
++		folio_lock(folio);
++		bpos = pos;
++		while (bpos < next) {
++			loff_t rstart, rend;
++
++			if (folio->mapping != mapping) {
++				folio_unlock(folio);
++				err = iomap_zero_range(inode, bpos, next - bpos,
++						NULL, &exfat_iomap_ops, NULL, NULL);
++				if (err < 0) {
++					folio_put(folio);
++					return err;
++				}
++				folio_lock(folio);
++				break;
++			}
++
++			if (iomap_is_partially_uptodate(folio,
++					offset_in_folio(folio, bpos), blocksize)) {
++				bpos += blocksize;
++				continue;
++			}
++
++			rstart = bpos;
++			rend = min_t(loff_t, bpos + blocksize, next);
++			while (rend < next &&
++			       !iomap_is_partially_uptodate(folio,
++					offset_in_folio(folio, rend), blocksize))
++				rend = min_t(loff_t, rend + blocksize, next);
++
++			folio_unlock(folio);
++			err = iomap_zero_range(inode, rstart, rend - rstart,
++					NULL, &exfat_iomap_ops, NULL, NULL);
++			if (err < 0) {
++				folio_put(folio);
++				return err;
++			}
++			folio_lock(folio);
++			bpos = rend;
++		}
++
++		/*
++		 * Dirty only a fully uptodate folio. Dirtying a partial folio could
++		 * write uninitialised cache contents over valid on-disk blocks.
++		 */
++		if (folio->mapping == mapping && folio_test_uptodate(folio))
++			folio_mark_dirty(folio);
++		folio_unlock(folio);
++		folio_put(folio);
++		pos = next;
++	}
++
++	return 0;
++}
++
+ static int exfat_extend_valid_size(struct inode *inode, loff_t new_valid_size)
+ {
+ 	struct exfat_inode_info *ei = EXFAT_I(inode);
+@@ -661,18 +760,41 @@ static int exfat_extend_valid_size(struct inode *inode, loff_t new_valid_size)
+ 	int ret = 0;
+ 
+ 	if (old_valid_size < new_valid_size) {
++		/* Do not re-zero blocks already covered by zeroed_size. */
++		loff_t gap_start = max(old_valid_size, ei->zeroed_size);
++
+ 		if (i_size_read(inode) < new_valid_size) {
+-			i_size_write(inode, new_valid_size);
+-			mark_inode_dirty(inode);
++			/*
++			 * Allocate clusters before increasing i_size. The gap
++			 * may already be zeroed, so the subsequent zeroing
++			 * can be skipped.
++			 */
++			ret = exfat_cont_expand(inode, new_valid_size);
++			if (ret)
++				return ret;
+ 		}
+ 
+-		ret = iomap_zero_range(inode, old_valid_size,
+-				new_valid_size - old_valid_size, NULL,
+-				&exfat_write_iomap_ops, NULL, NULL);
++		/*
++		 * Revoke writable PTEs while zeroing the gap. A racing mmap
++		 * store re-faults through exfat_page_mkwrite() after valid_size
++		 * is updated.
++		 */
++		filemap_invalidate_lock(inode->i_mapping);
++		if (gap_start < new_valid_size)
++			unmap_mapping_range(inode->i_mapping, gap_start,
++					new_valid_size - gap_start, 0);
++		ret = exfat_zero_new_range(inode, gap_start, new_valid_size);
++		filemap_invalidate_unlock(inode->i_mapping);
+ 		if (ret) {
+ 			truncate_setsize(inode, old_valid_size);
+ 			exfat_truncate(inode);
++			return ret;
+ 		}
++
++		ei->valid_size = new_valid_size;
++		if (ei->zeroed_size < round_up(new_valid_size, i_blocksize(inode)))
++			ei->zeroed_size = round_up(new_valid_size, i_blocksize(inode));
++		mark_inode_dirty(inode);
+ 	}
+ 
+ 	return ret;
+@@ -825,39 +947,39 @@ static vm_fault_t exfat_page_mkwrite(struct vm_fault *vmf)
+ 	struct inode *inode = file_inode(vmf->vma->vm_file);
+ 	struct exfat_inode_info *ei = EXFAT_I(inode);
+ 	vm_fault_t ret;
+-	loff_t new_valid_size, mmap_valid_size;
++	loff_t new_valid_size, mmap_valid_size, fault_page_start;
+ 
+ 	if (!inode_trylock(inode))
+ 		return VM_FAULT_RETRY;
+ 
+ 	mmap_valid_size = ((loff_t)vmf->pgoff + 1) << PAGE_SHIFT;
++	fault_page_start = ((loff_t)vmf->pgoff) << PAGE_SHIFT;
+ 	new_valid_size = min(mmap_valid_size, i_size_read(inode));
+ 
+ 	if (ei->valid_size < new_valid_size) {
+-		if (ei->zeroed_size < mmap_valid_size) {
++		if (ei->zeroed_size < fault_page_start) {
+ 			int err;
+ 
+ 			/*
+-			 * Only zero the range that hasn't been zeroed yet for
+-			 * this mmap write path. zeroed_size tracks the largest
+-			 * page-aligned offset that has already been zeroed.
+-			 *
+-			 * This prevents unnecessarily zeroing out the entire
+-			 * tail page on every page fault when userspace writes
+-			 * data byte-by-byte through mmap (after a small
+-			 * fallocate). It fixes data corruption in the tail page
+-			 * while preserving the existing valid_size semantics.
++			 * Zero only the gap below the faulting page. The read
++			 * fault populated its folio and iomap_page_mkwrite()
++			 * will dirty it.
+ 			 */
+-			err = iomap_zero_range(inode, ei->zeroed_size,
+-					mmap_valid_size - ei->zeroed_size, NULL,
+-					&exfat_iomap_ops, NULL, NULL);
++			err = exfat_zero_new_range(inode, ei->zeroed_size,
++					fault_page_start);
+ 			if (err < 0) {
+ 				inode_unlock(inode);
+ 				return vmf_fs_error(err);
+ 			}
+-			ei->zeroed_size = mmap_valid_size;
+ 		}
+ 
++		/*
++		 * Track zeroed_size by block, not page, because writeback stops
++		 * at i_size recording blocks wholly beyond it could skip a
++		 * later required zeroing.
++		 */
++		if (ei->zeroed_size < round_up(new_valid_size, i_blocksize(inode)))
++			ei->zeroed_size = round_up(new_valid_size, i_blocksize(inode));
+ 		ei->valid_size = new_valid_size;
+ 		mark_inode_dirty(inode);
+ 	}
+@@ -866,7 +988,7 @@ static vm_fault_t exfat_page_mkwrite(struct vm_fault *vmf)
+ 	file_update_time(vmf->vma->vm_file);
+ 
+ 	filemap_invalidate_lock_shared(inode->i_mapping);
+-	ret = iomap_page_mkwrite(vmf, &exfat_write_iomap_ops, NULL);
++	ret = iomap_page_mkwrite(vmf, &exfat_iomap_ops, NULL);
+ 	filemap_invalidate_unlock_shared(inode->i_mapping);
+ 	sb_end_pagefault(inode->i_sb);
+ 	inode_unlock(inode);
+@@ -876,7 +998,6 @@ static vm_fault_t exfat_page_mkwrite(struct vm_fault *vmf)
+ 
+ static const struct vm_operations_struct exfat_file_vm_ops = {
+ 	.fault		= filemap_fault,
+-	.map_pages	= filemap_map_pages,
+ 	.page_mkwrite	= exfat_page_mkwrite,
+ };
+ 
+@@ -887,21 +1008,6 @@ static int exfat_file_mmap_prepare(struct vm_area_desc *desc)
+ 	if (unlikely(exfat_forced_shutdown(file_inode(desc->file)->i_sb)))
+ 		return -EIO;
+ 
+-	if (vma_desc_test_all(desc, VMA_SHARED_BIT, VMA_MAYWRITE_BIT)) {
+-		struct inode *inode = file_inode(file);
+-		loff_t from, to;
+-		int err;
+-
+-		from = ((loff_t)desc->pgoff << PAGE_SHIFT);
+-		to = min_t(loff_t, i_size_read(inode),
+-				from + vma_desc_size(desc));
+-		if (EXFAT_I(inode)->valid_size < to) {
+-			err = exfat_extend_valid_size(inode, to);
+-			if (err)
+-				return err;
+-		}
+-	}
+-
+ 	file_accessed(file);
+ 	desc->vm_ops = &exfat_file_vm_ops;
+ 	return 0;
+diff --git a/fs/exfat/iomap.c b/fs/exfat/iomap.c
+index 190fc6471f849..d4d3ed933a63d 100644
+--- a/fs/exfat/iomap.c
++++ b/fs/exfat/iomap.c
+@@ -175,11 +175,18 @@ static int exfat_write_iomap_end(struct inode *inode, loff_t pos, loff_t length,
+ 
+ 	if (ei->valid_size < end) {
+ 		ei->valid_size = end;
+-		if (ei->zeroed_size < end)
+-			ei->zeroed_size = end;
+ 		dirtied = true;
+ 	}
+ 
++	/*
++	 * IOMAP_F_ZERO_TAIL zeroes the remainder of the last block. Track that
++	 * block as zeroed so later valid_size extensions do not zero it again.
++	 */
++	if (iomap->flags & IOMAP_F_ZERO_TAIL)
++		end = round_up(end, i_blocksize(inode));
++	if (ei->zeroed_size < end)
++		ei->zeroed_size = end;
++
+ 	if (dirtied || iomap->flags & IOMAP_F_SIZE_CHANGED)
+ 		mark_inode_dirty(inode);
  
 -- 
 2.53.0
