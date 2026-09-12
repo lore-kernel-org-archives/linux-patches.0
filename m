@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ABD26982C;
-	Sat, 12 Sep 2026 07:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BF13644BE;
+	Sat, 12 Sep 2026 07:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199723; cv=none; b=jG9SCEbmjN97w55GqFgQ4CB1iywdam+8JIhpsuWbAsGSGgItwaE1j5XRo1PLUo2mJd3J+D/YtF6IRpG1xfT2NbVOMKF+ZVy59KVVX/ZbwcnR3SXg0qXLftCyCA0HbaeLbxwzqMQHN5LwpKRICNTUd7071wvUhoEgmyCsV/k8MSc=
+	t=1789199728; cv=none; b=bGa+uy5+IBck4Y4nqVW7pYrhs4rmg72fLTCv+HLMwx4/7JV4VzfMwLFWKcs1C6RmI1orj5I1+uxXfbG0N1vTtaczrZTFagblR5qIpam06rk2TXnyNSwGqYaALkxkMKE9pl7Dn897bUGfSjNPWFU93ucIUGtTQkmSujLEjSIF3Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199723; c=relaxed/simple;
-	bh=l6tAK3M8Yj7MONheXqFxk3oIYao7A/QENuNhX0WN0Vk=;
+	s=arc-20240116; t=1789199728; c=relaxed/simple;
+	bh=//edd/z4Nn25ADPLXiR7ieP5lYm04yNsePnQSAkmbdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebaQKrX2Bu07TGd8x7kk3qic+nsnUWDeM/f7yhecEHpWmgd/DwzrfEkr+ppiZLp/d1pYGe+uZloo12Twrj0v9T10tpW3LAUtDcaThpDWR9FpJ1apqZzwD7zN52/In7O+v9eRhjODrDyJPYPVVBVk1y09DoL9Mk6axKZNW1OIM/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jE+pdv6A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K9Z5iTWSoeC1d8CAfxrflzB0l8g0INCVnHWDdjS0mY9Z76IsPKsNIyDDE2FWRaXKgR/q04YnkrNLNgbO3RurIM7PH3UI4xMZWq7SnqnPcSGf6NiAPSKUFpYGYgAJ3i59K3oDq7tH3m72kBABkTZxBNYS1c7suTM4zn3XLUHbriY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFLZert0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jE+pdv6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE791F000FF;
-	Sat, 12 Sep 2026 07:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFLZert0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F321F00893;
+	Sat, 12 Sep 2026 07:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199721;
-	bh=5hVO8mIbnxjTxWWu3ZmJteMPvuMlQ9uo8wX6jg6u1yE=;
+	s=korg; t=1789199726;
+	bh=EUUGqRcZKeaWXejG5NyVUJpI7xKV6i8CBoEEjXhFUEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jE+pdv6AteyS0qQgtnTl+ui1Ym7V0uLH9sUSVXakSzoEFyMNewngCx0vNR1Z51uk6
-	 VBTrvMglfXQsx4OqCG6BJwpUNEmAbRNJfH+qsBqwQJiL4P5edtAo/MwUHVFKDocVOg
-	 21Ox6h05D+P0ExZKNnLyy5fGQMalE+ixhbRG6b6c=
+	b=NFLZert0qNgqE3l5XsSRP4nPdr1PkeSXLK3ZUpsI7cQHoJG7WdwJn/Q/GBligUm/P
+	 WwPFU3Gvl82T65JFGMtAaQRHEAxBtLFxa1mS3Cn0IZnzyCISSazh1XX/5YccbUD8X5
+	 oS8mH/T+nnLk/36q51QqRuAEVcuKAWrJ9l9MHTmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
+	Can Peng <pengcan@kylinos.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0591/1815] iommu/arm-smmu-v3: Declare eats_s1chk and eats_trans as host-endian u64
-Date: Sat, 12 Sep 2026 08:39:01 +0200
-Message-ID: <20260912065702.755710934@linuxfoundation.org>
+Subject: [PATCH 7.2 0637/1815] drm/tve200: add OF module alias for autoloading
+Date: Sat, 12 Sep 2026 08:39:47 +0200
+Message-ID: <20260912065703.834561247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,52 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 4455286274474e95f223c68c215d32c864404889 ]
+[ Upstream commit b6c3585f2058e0fbfa8cb403458f5cc6cf5c5e06 ]
 
-arm_smmu_get_ste_update_safe() declares the eats_s1chk and eats_trans
-locals as __le64, but initializes them from FIELD_PREP(), which returns a
-host-endian value, and passes them through cpu_to_le64() at the use sites.
+The TVE200 DRM driver can be built as a module and uses tve200_of_match
+as its OF match table, but the table is not exported for module alias
+generation.
 
-Sparse reports the following warnings:
+Add the MODULE_DEVICE_TABLE(of, ...) entry so modpost can generate OF
+module aliases for OF based module autoloading.
 
->> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1122:38: sparse: sparse: cast from restricted __le64
-   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1124:33: sparse: sparse: cast from restricted __le64
-
-Declare both locals as u64 so the type matches FIELD_PREP() and the
-existing cpu_to_le64() at the use sites performs the host-to-little-endian
-conversion. No functional change.
-
-Fixes: 7cad80048595 ("iommu/arm-smmu-v3: Mark EATS_TRANS safe when computing the update sequence")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202606151017.QU0evpH9-lkp@intel.com/
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 179c02fe90a4 ("drm/tve200: Add new driver for TVE200")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260715024130.186416-1-pengcan@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/tve200/tve200_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 5f933d806a147..966d329d27441 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1240,9 +1240,9 @@ VISIBLE_IF_KUNIT
- void arm_smmu_get_ste_update_safe(const __le64 *cur, const __le64 *target,
- 				  __le64 *safe_bits)
- {
--	const __le64 eats_s1chk =
-+	const u64 eats_s1chk =
- 		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_S1CHK);
--	const __le64 eats_trans =
-+	const u64 eats_trans =
- 		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_TRANS);
+diff --git a/drivers/gpu/drm/tve200/tve200_drv.c b/drivers/gpu/drm/tve200/tve200_drv.c
+index 562f3f11812a3..f5ef468538f9b 100644
+--- a/drivers/gpu/drm/tve200/tve200_drv.c
++++ b/drivers/gpu/drm/tve200/tve200_drv.c
+@@ -263,6 +263,7 @@ static const struct of_device_id tve200_of_match[] = {
+ 	},
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, tve200_of_match);
  
- 	/*
+ static struct platform_driver tve200_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
