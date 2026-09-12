@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FAE372EF0;
-	Sat, 12 Sep 2026 11:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED630376A18;
+	Sat, 12 Sep 2026 11:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214145; cv=none; b=sp/a9QHx5pCH4GqPI7hb0An0cJU7UmyVepsXYISmarx/oD5IKXrON8f7wguA7X/DP9EtcZeIs7axL/7nvTT5zTYaHNA9bC7GMfTL6c1w9NQH6S9TDsOVQRwrw4q3Q9sBP73uV95ZtBiDN0y7kKDgPFLRCYO4/x0RouG0mO5V7Ak=
+	t=1789214150; cv=none; b=hg7O51N1xKcc18MuV3YtNkJjMw4lvx5c+qR9OC9pQTeq2RzVxZA1PU2PLHMtqQGicqNyEWdA9XAMgkghjfKXUCT36CD90Ws6tmJGRQKuTwGSWf6TlW2L7lkQh1Pptnr6cWPX25pgZlVjhCnN3yjNPhvkGWqAfP5tTipZmzgK52o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214145; c=relaxed/simple;
-	bh=cbpTXfSgCxqlJiu9sos5519Oy8AVHQLDphvMdW59C7g=;
+	s=arc-20240116; t=1789214150; c=relaxed/simple;
+	bh=OVvPMMSHnVInhIzsC+wFhjrdKzo/04HRjSPCedctwo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E51I6wp5PSRqw99ZSr/9K0luPtzOciQ3Eyz3ESupSqS92ep1miFiN8Eh8dgDfAU7e936aCfFKCMRchcdveNphMbKw/zRDXa8NUHYOwBf8aBNmHUisEvFw3/dyEz6Px4kdUug7MQprWhIekp5OMP1P1WRvja3ufYoxO5JFf9MqQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PR2PQb1p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gGCZDtz34Mqun34S7+RFJt0I+N7/Lsb/01aP7v0FfiZbjgeUzrSnBsP3nTlIJdPjN5EMc7H8Bnjf1DRDUHOuG//PsATpTiomjKgHEj/zYb20QvRtz9N0MIHRbKjbkMwv8A8gVjR5Hr6H67mqnhfZcP0d3fxk4AOm01t1QEAVHZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okS3Mo1M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PR2PQb1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECFB1F000FF;
-	Sat, 12 Sep 2026 11:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okS3Mo1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77CF1F000FF;
+	Sat, 12 Sep 2026 11:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214144;
-	bh=mLmE5m8spYk0EnXs8YU3aR96MyEYJG3MFi0wkDRB4zg=;
+	s=korg; t=1789214148;
+	bh=3aGBvpnkCRuJEwbxGDvn1ppVmakcqySQJsycnm5UmmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PR2PQb1pVVjdKsI075pbtt+dJIk5YhRMfinnsDuQpnpG4HkcL3qMj567OL/wcfX61
-	 cLQ/+Tew0RswbtdcxKkpCcY3Hve6rxBYXNd+faT6U+xpS7KOFUevfP6AVPFFmlZQkG
-	 DJW41ArWf+YBESGwSzwqZTt6VSxqE52b9H3cWARw=
+	b=okS3Mo1Mj4M68EjaQPB+BW7Ljt2hqYIaWWD6WTKOCajurQDpBO8atCiNI895Pc5X5
+	 SxbfdrDiyX62HYJANXzbmd6S9z3ZYh+XiT0PPn+SisCtLLvyyKv12Ys5VaUy3a7jXu
+	 PATuwq6684l1i+490NPjuz5bpB77B+9pmLi9ZgPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Yongbang Shi <shiyongbang@huawei.com>,
-	Rongrong Zou <zourongrong@gmail.com>,
-	Sean Paul <seanpaul@chromium.org>,
-	Xinliang Liu <xinliang.liu@linaro.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Baihan Li <libaihan@huawei.com>
-Subject: [PATCH 6.12 0267/1376] drm/hibmc: Use drm_atomic_helper_check_plane_state()
-Date: Sat, 12 Sep 2026 08:44:53 +0200
-Message-ID: <20260912065613.492305839@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 0268/1376] drm/amd/display: avoid divide-by-zero in __is_lut_linear()
+Date: Sat, 12 Sep 2026 08:44:54 +0200
+Message-ID: <20260912065613.517569198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,115 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 715c5db68bdbd4a524b79ebf20fb61e880fffea0 upstream.
+commit 4f40873f8a4107df2b9c8e68c947c4fd0cd519d2 upstream.
 
-Call drm_atomic_helper_check_plane_state() from the primary plane's
-atomic-check helper and replace the custom implementation.
+__is_lut_linear() computes the expected value of each entry with
 
-All plane's implementations of atomic_check should call the shared
-_check_plane_state() helper first. It adjusts the plane state for
-correct positioning, rotation and scaling of the plane. Do this
-even if the plane's CRTC has been disabled by setting the parameter
-can_update_disabled. The original code returned early in this case,
-but it's safe to so and cleaner to have all plane state initialized.
+	expected = i * MAX_DRM_LUT_VALUE / (size - 1);
 
-As we don't set can_position, drm_atomic_helper_check_plane_state()'s
-visibility check tests if the plane covers all of the CRTC. This is
-a small change from the original code, which tested if the plane is
-exactly the size of the CRTC. With the new test, the plane still has
-to cover all of the CRTC, but can be larger than the CRTC's size. A
-later patch can fully implement this feature in hibmc.
+If it is ever called with a single-entry LUT, size - 1 is zero and the
+kernel takes a divide error (#DE). A LUT with fewer than two entries
+cannot describe a linear mapping anyway, so return false early instead
+of dividing by zero.
 
-If the plane is disabled, the helper clears the visibility flag in the
-plane state. On errors or if the plane is not visible, the atomic-check
-helper can return early. Implement all this in hibmc and drop the custom
-code that does some of it.
-
-v2:
-- extend the commit description (Yongbang)
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
-Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
-Cc: Rongrong Zou <zourongrong@gmail.com>
-Cc: Sean Paul <seanpaul@chromium.org>
-Cc: Xinliang Liu <xinliang.liu@linaro.org>
-Cc: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Baihan Li <libaihan@huawei.com>
-Cc: Yongbang Shi <shiyongbang@huawei.com>
-Cc: <stable@vger.kernel.org> # v4.10+
-Link: https://patch.msgid.link/20260618123142.92298-2-tzimmermann@suse.de
+Fixes: 086247a4b2fb ("drm/amd/display: Use 4096 lut entries")
+Cc: stable@vger.kernel.org
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c |   50 ++++++++-----------------
- 1 file changed, 16 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-@@ -72,46 +72,28 @@ static int hibmc_get_best_clock_idx(cons
- static int hibmc_plane_atomic_check(struct drm_plane *plane,
- 				    struct drm_atomic_state *state)
- {
--	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
--										 plane);
--	struct drm_framebuffer *fb = new_plane_state->fb;
--	struct drm_crtc *crtc = new_plane_state->crtc;
--	struct drm_crtc_state *crtc_state;
--	u32 src_w = new_plane_state->src_w >> 16;
--	u32 src_h = new_plane_state->src_h >> 16;
--
--	if (!crtc || !fb)
--		return 0;
--
--	crtc_state = drm_atomic_get_crtc_state(state, crtc);
--	if (IS_ERR(crtc_state))
--		return PTR_ERR(crtc_state);
--
--	if (src_w != new_plane_state->crtc_w || src_h != new_plane_state->crtc_h) {
--		drm_dbg_atomic(plane->dev, "scale not support\n");
--		return -EINVAL;
--	}
--
--	if (new_plane_state->crtc_x < 0 || new_plane_state->crtc_y < 0) {
--		drm_dbg_atomic(plane->dev, "crtc_x/y of drm_plane state is invalid\n");
--		return -EINVAL;
--	}
--
--	if (!crtc_state->enable)
-+	struct drm_plane_state *new_plane_state =
-+		drm_atomic_get_new_plane_state(state, plane);
-+	struct drm_crtc_state *new_crtc_state = NULL;
-+	int ret;
-+
-+	if (new_plane_state->crtc)
-+		new_crtc_state = drm_atomic_get_new_crtc_state(state, new_plane_state->crtc);
-+
-+	ret = drm_atomic_helper_check_plane_state(new_plane_state, new_crtc_state,
-+						  DRM_PLANE_NO_SCALING,
-+						  DRM_PLANE_NO_SCALING,
-+						  false, true);
-+	if (ret)
-+		return ret;
-+	else if (!new_plane_state->visible)
- 		return 0;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
+@@ -360,6 +360,12 @@ static bool __is_lut_linear(const struct
+ 	uint32_t expected;
+ 	int delta;
  
--	if (new_plane_state->crtc_x + new_plane_state->crtc_w >
--	    crtc_state->adjusted_mode.hdisplay ||
--	    new_plane_state->crtc_y + new_plane_state->crtc_h >
--	    crtc_state->adjusted_mode.vdisplay) {
--		drm_dbg_atomic(plane->dev, "visible portion of plane is invalid\n");
--		return -EINVAL;
--	}
--
- 	if (new_plane_state->fb->pitches[0] % 128 != 0) {
- 		drm_dbg_atomic(plane->dev, "wrong stride with 128-byte aligned\n");
- 		return -EINVAL;
- 	}
++	/* A LUT with fewer than two entries can't be interpolated and would
++	 * divide by zero below (size - 1); it can't be treated as linear.
++	 */
++	if (size < 2)
++		return false;
 +
- 	return 0;
- }
- 
+ 	for (i = 0; i < size; i++) {
+ 		/* All color values should equal */
+ 		if ((lut[i].red != lut[i].green) || (lut[i].green != lut[i].blue))
 
 
