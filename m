@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF84F47ACFB;
-	Sat, 12 Sep 2026 13:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D326377EC5;
+	Sat, 12 Sep 2026 13:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218353; cv=none; b=gcURW8uhSkzDe8n1szEKhEnXAReqEz8R5TvAH+tUSG8qstNIiaalcYhfDNEbvKdUU1Q2y6/cTqb5mUapbvHux3YwxL89//rHmxMj2LSPwbZcQqz3yDXDBDPQZ//wjJrvsGX31AbBtr7qIMaje/Uh9o/uaFr8cUGyX5Z8fZuQcB8=
+	t=1789218357; cv=none; b=fz8DDu7T+pSE/pWfDv2J2UkWOAb7ADR+YosPOZ1/puATY0eDvqCvvdiqZZsnNzi9E0zXrKUKD0ooMrQnDgvAQXLmIHr70Ywl/ZYH8ecqf3Lo0kboZG5zSkhGSMf6oQru51SnU8kTzM/efxU1TNcQR6dsDIhYe9wuLTAzV/Zgfo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218353; c=relaxed/simple;
-	bh=M2Gcdf9FgNqqagDDHjo/qURT8LjWEyZflPnqE+LEvvQ=;
+	s=arc-20240116; t=1789218357; c=relaxed/simple;
+	bh=oKzXnfulxH56DhjXzUHi/E2fhwo3G1zJABrmNAjeQF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SF9npzPJkW4TL0YMZ6ipmrpbbnjouVKUHYXd/HCbZu9QLJpSmYEA+OkZQAetF1J90xm2tVnLRRlBus8osX+6HNbvqIIuXmbLIEfia2AKlouzGSnYxHuVULb7WnX14ZKOKm/EMf/aP02MWfLH+x9Pv53ogscjDhwwiREtpQhjn9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnPC94KL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SV3KszSVGMSIP9aCulPBWINxbzvouot9e8eQNasWAQOFvGFKVlmZCC2OqjP2Rx4HaJM1HUxzwXDHbgQbvFGqOxmhpnufiSZV7MYFbTrplCAdWz68vrN2Rv8VqMaBjZAkjitLYWO1rtTJnD135wRmwKB3m9aHTChqCsKfQ9lQ8SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOSHEqr+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnPC94KL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BBE1F000FF;
-	Sat, 12 Sep 2026 13:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOSHEqr+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB761F000FF;
+	Sat, 12 Sep 2026 13:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218351;
-	bh=iNs9qFT8+Y7Qg2/U6IV1jouYvmXiXlIX02WOMABsVSU=;
+	s=korg; t=1789218356;
+	bh=JLRuYI/26IF8XaV3teV7tjTZXh3Qh9pf7JRZvqeCmdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnPC94KLBLfRIzM+MQNg8p+sFJLavQ0RQ2AIjnSfCxDNpnWzbzR9IRFc8JILy3jcP
-	 d+QT1d+PtPGU0Dg7+/1TfTc1F7QFv4wPolfA48t+gMRimxQy6YB4x1S++lYIQnJtEZ
-	 xi3E/Hd15fwtbtL04TUVcMJmB0RM+dgjZzhO2WE4=
+	b=xOSHEqr+xANLI9n/PljaynyVFlMRqNOKVfe6en4rZDqQbwdRQpYfQuMLIk3wlYLDT
+	 FF7F3Eqi0mRefxXqJGf71/P92lngkgrVhunKu+jqnEM6zPkJPu1cUjE5Ls+GvUnjyO
+	 RrB+Q1wCVyIkQsPz5i6OY3vVjWn8fTrtOA9DU6DA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7061d72c26b7daebe2b4@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Everest K.C." <everestkc@everestkc.com.np>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1128/1376] ALSA: core: Fix use-after-free in snd_card_do_free()
-Date: Sat, 12 Sep 2026 08:59:14 +0200
-Message-ID: <20260912065632.705042515@linuxfoundation.org>
+Subject: [PATCH 6.12 1111/1376] cgroup/cpuset: Fix spelling errors in file kernel/cgroup/cpuset.c
+Date: Sat, 12 Sep 2026 08:58:57 +0200
+Message-ID: <20260912065632.323195526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,104 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: everestkc <everestkc@everestkc.com.np>
 
-[ Upstream commit 5ae1a690c522fea2900ff56c8c2ace7b059f5e04 ]
+[ Upstream commit 95a616d89ccd2d2af0bd26c13c50143b301d82e8 ]
 
-A use-after-free was detected in snd_card_do_free() when a sound card
-managed by devres is unbound while a user-space application still holds an
-open file descriptor.
+Corrected the spelling errors repoted by codespell as follows:
+	temparary ==> temporary
+        Proprogate ==> Propagate
+        constrainted ==> constrained
 
-For managed cards, the memory is allocated using devres_alloc(), and its
-release function is set to __snd_card_release(), which calls
-snd_card_free(). When the device is unbound, the unbind thread calls
-snd_card_free(), which drops a reference to the card's device. If the user
-thread still has an open file descriptor, the reference count does not
-reach zero, and the unbind thread blocks on wait_for_completion(&released).
-
-When the user thread closes the file descriptor, it drops the final
-reference, invoking the device release callback release_card_device(),
-which calls snd_card_do_free(). snd_card_do_free() performs cleanup and
-calls complete(card->release_completion). This wakes up the unbind thread,
-which returns from snd_card_free() and __snd_card_release(). The devres
-core then immediately frees the memory block containing the snd_card
-structure.
-
-Meanwhile, the user thread continues execution in snd_card_do_free() and
-evaluates `if (!card->managed)`. It reads the `managed` boolean from the
-snd_card structure that was just freed by the unbind thread, triggering a
-KASAN use-after-free.
-
-Fix this by caching the value of card->managed in a local variable before
-calling complete(). This ensures that the card pointer is not dereferenced
-after the unbind thread has been woken up and potentially freed the card.
-
-BUG: KASAN: use-after-free in snd_card_do_free sound/core/init.c:604
-[inline]
-BUG: KASAN: use-after-free in release_card_device+0x1ab/0x1b0
-sound/core/init.c:153
-Read of size 1 at addr ffff8881912ec909 by task syz-executor130/5857
-
-Call Trace:
- <TASK>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description+0x55/0x1e0 mm/kasan/report.c:378
- print_report+0x58/0x70 mm/kasan/report.c:482
- kasan_report+0x117/0x150 mm/kasan/report.c:595
- snd_card_do_free sound/core/init.c:604 [inline]
- release_card_device+0x1ab/0x1b0 sound/core/init.c:153
- device_release+0xc4/0x1f0 drivers/base/core.c:-1
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x222/0x550 lib/kobject.c:737
- snd_card_file_remove+0x331/0x390 sound/core/init.c:1125
- snd_pcm_release+0x12c/0x160 sound/core/pcm_native.c:2986
- __fput+0x418/0xa50 fs/file_table.c:512
- fput_close_sync+0x11f/0x240 fs/file_table.c:617
- __do_sys_close fs/open.c:1511 [inline]
- __se_sys_close fs/open.c:1496 [inline]
- __x64_sys_close+0x7e/0x110 fs/open.c:1496
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-Fixes: e8ad415b7a55 ("ALSA: core: Add managed card creation")
-Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+7061d72c26b7daebe2b4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7061d72c26b7daebe2b4
-Link: https://syzkaller.appspot.com/ai_job?id=24752a23-f0b6-49c1-bf20-4fa89c2e7eb2
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://patch.msgid.link/02042186-27b7-42a9-b64e-f93ce8fbe05a@mail.kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Everest K.C. <everestkc@everestkc.com.np>
+Acked-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: ddabc5dbd262 ("selftests/cgroup: Preserve CPU hotplug write errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/cgroup/cpuset.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/sound/core/init.c b/sound/core/init.c
-index e0be609812850..c35e105ef132a 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -579,6 +579,8 @@ EXPORT_SYMBOL_GPL(snd_card_disconnect_sync);
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 425d1cbe73793..a5909bba7542a 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1386,7 +1386,7 @@ static inline bool is_local_partition(struct cpuset *cs)
+  * remote_partition_enable - Enable current cpuset as a remote partition root
+  * @cs: the cpuset to update
+  * @new_prs: new partition_root_state
+- * @tmp: temparary masks
++ * @tmp: temporary masks
+  * Return: 0 if successful, errcode if error
+  *
+  * Enable the current cpuset to become a remote partition root taking CPUs
+@@ -1425,7 +1425,7 @@ static int remote_partition_enable(struct cpuset *cs, int new_prs,
+ 	cs->prs_err = 0;
  
- static int snd_card_do_free(struct snd_card *card)
- {
-+	bool managed = card->managed;
-+
- 	card->releasing = true;
- #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
- 	if (snd_mixer_oss_notify_callback)
-@@ -593,7 +595,7 @@ static int snd_card_do_free(struct snd_card *card)
- 	}
- 	if (card->release_completion)
- 		complete(card->release_completion);
--	if (!card->managed)
-+	if (!managed)
- 		kfree(card);
- 	return 0;
- }
+ 	/*
+-	 * Proprogate changes in top_cpuset's effective_cpus down the hierarchy.
++	 * Propagate changes in top_cpuset's effective_cpus down the hierarchy.
+ 	 */
+ 	cpuset_update_tasks_cpumask(&top_cpuset, tmp->new_cpus);
+ 	update_sibling_cpumasks(&top_cpuset, NULL, tmp);
+@@ -1435,7 +1435,7 @@ static int remote_partition_enable(struct cpuset *cs, int new_prs,
+ /*
+  * remote_partition_disable - Remove current cpuset from remote partition list
+  * @cs: the cpuset to update
+- * @tmp: temparary masks
++ * @tmp: temporary masks
+  *
+  * The effective_cpus is also updated.
+  *
+@@ -1463,7 +1463,7 @@ static void remote_partition_disable(struct cpuset *cs, struct tmpmasks *tmp)
+ 	update_unbound_workqueue_cpumask(isolcpus_updated);
+ 
+ 	/*
+-	 * Proprogate changes in top_cpuset's effective_cpus down the hierarchy.
++	 * Propagate changes in top_cpuset's effective_cpus down the hierarchy.
+ 	 */
+ 	cpuset_update_tasks_cpumask(&top_cpuset, tmp->new_cpus);
+ 	update_sibling_cpumasks(&top_cpuset, NULL, tmp);
+@@ -1473,7 +1473,7 @@ static void remote_partition_disable(struct cpuset *cs, struct tmpmasks *tmp)
+  * remote_cpus_update - cpus_exclusive change of remote partition
+  * @cs: the cpuset to be updated
+  * @newmask: the new effective_xcpus mask
+- * @tmp: temparary masks
++ * @tmp: temporary masks
+  *
+  * top_cpuset and subpartitions_cpus will be updated or partition can be
+  * invalidated.
+@@ -1522,7 +1522,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *newmask,
+ 	update_unbound_workqueue_cpumask(isolcpus_updated);
+ 
+ 	/*
+-	 * Proprogate changes in top_cpuset's effective_cpus down the hierarchy.
++	 * Propagate changes in top_cpuset's effective_cpus down the hierarchy.
+ 	 */
+ 	cpuset_update_tasks_cpumask(&top_cpuset, tmp->new_cpus);
+ 	update_sibling_cpumasks(&top_cpuset, NULL, tmp);
+@@ -1537,7 +1537,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *newmask,
+  * @cs: the cpuset to be updated
+  * @newmask: the new effective_xcpus mask
+  * @delmask: temporary mask for deletion (not in tmp)
+- * @tmp: temparary masks
++ * @tmp: temporary masks
+  *
+  * This should be called before the given cs has updated its cpus_allowed
+  * and/or effective_xcpus.
+@@ -2248,7 +2248,7 @@ static int update_cpumask(struct cpuset *cs, struct cpuset *trialcs,
+ 			return -EINVAL;
+ 
+ 		/*
+-		 * When exclusive_cpus isn't explicitly set, it is constrainted
++		 * When exclusive_cpus isn't explicitly set, it is constrained
+ 		 * by cpus_allowed and parent's effective_xcpus. Otherwise,
+ 		 * trialcs->effective_xcpus is used as a temporary cpumask
+ 		 * for checking validity of the partition root.
 -- 
 2.53.0
 
