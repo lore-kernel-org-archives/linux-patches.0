@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5EB4908B9;
-	Sat, 12 Sep 2026 18:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5823B3C10;
+	Sat, 12 Sep 2026 18:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236914; cv=none; b=KpSnzzwBHcCN8bOdgtHDN2D+Ttmn0j5fWDrszCqVwl6EsJqMEz8X3ohiBiI+Bm4lstgtXCOpcDuLhd23L6lf0gV0E5tJVEi0oYA6quspinNoH8DtndTLB8GQ87Rb82mO82sxF9Ic8NuFEHjEHrfBkiabzXpmKtsy0IHvfdqUux0=
+	t=1789236918; cv=none; b=GAx92L7JfPEOnpz6JFTg9JepmESugR6EQDvnWpORjoCdD+sJuJ4H0dsDZ31eGwtHGRvAschAzoAgC8/7SbNEb/dwRUlw1yPEhwO3nFI56U1bAZdYFCfytV9HP6xcoig6/zrM+xuAPo7FQz9K6ByURAqTKU6KfDwXOLqGQTWxhRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236914; c=relaxed/simple;
-	bh=LAW2Bt/zatDlR1QRWa3SG5Kq4DU7LNvpHnXztJKiLfA=;
+	s=arc-20240116; t=1789236918; c=relaxed/simple;
+	bh=IFUBL+q2Cn4DIkU/FF225p0dRsIDqvreV8Me7puYjEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKivZdoKTZ0vvIPQMnagI5AAQLFv9fhDhkIgA6OQyqzt2uT05oO1Rr+OnjDhXUoyQc1rvkQ77xlkUZNDEOV5o7qVoKZFeVOdpgKhb4X2yStq9RIbBbxrvZKbzUxTqxpAzORy3LshuIXpKbfs7Lq3p7tkObLTGcMEY2qy9SsgvZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ydiFWRG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pBZPaQjDEA+DFcafgS09VhmMNBSQqMw7wyRqBnYYEXm7g9eS0BA8exMUOOCKVRR33Xep9SzimDQKsrbVJKieDW+X67oNxa8hcs7W/TeDHvBRo2xgMO94j1AU/Lwc6rRIBITDzn3kkpnerYY/IOLWLb931yg4ugsU3i7cSXjlJ2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/thKbjW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ydiFWRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753741F000FF;
-	Sat, 12 Sep 2026 18:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/thKbjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF8B1F000FF;
+	Sat, 12 Sep 2026 18:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789236911;
-	bh=SpXVr71dwAhXJ2/KN0WT9LFnlvo4xY9EjoUZboP09w4=;
+	s=korg; t=1789236916;
+	bh=vdpqvEK6mxW/q6vYCkJIR+o2aEjXQwQZuTYmAMEvUt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ydiFWRGg1VEApGODsF/X8hF+z1IWXzGDVxY6gAvi49/hb+bSad0epUF3Fe163y7h
-	 /pATOsr3lH1H5TVaLGYatVMNGwQe/Tv2djmMVhp+XtYMKOCJovCXjUxuToVmaW+EBa
-	 ftlSyeF8ammzG9OJiFS8GYGkKtLeKN8yBHuzN6Io=
+	b=I/thKbjWOvuKhkL6n0nTCggBNQKLfvNtCzgN3kg/rHbu5pcxVRv1CC81EWcSxDj5/
+	 9x40Rx/bbf+tj6nI0wTQ9KIh/jLYBgO55sGTe5NETUU6FHVlc6Gg5JUYueZXZHJC1p
+	 4z6QEForey44tn4kTjiWV2B2puc4z5Tryw6eT7nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.15 151/935] power: supply: bq256xx: drain usb_work before freeing the charger
-Date: Sat, 12 Sep 2026 08:53:01 +0200
-Message-ID: <20260912065530.286256009@linuxfoundation.org>
+Subject: [PATCH 5.15 152/935] power: supply: cros_usbpd-charger: bound the EC-reported port count
+Date: Sat, 12 Sep 2026 08:53:02 +0200
+Message-ID: <20260912065530.310540689@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,89 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 2dd6cd823777bea6d9a880a12a92a73ec76aee0b upstream.
+commit 48355ce49359740f52e94d3623f6fc557ce341f0 upstream.
 
-The USB-PHY notifier queues usb_work, whose handler calls
-power_supply_changed(bq->charger). The reset devm action only unregisters
-the notifier and was registered before the power supplies, so devm frees
-bq->charger on unwind before the action runs; a usb_work still queued can
-then dereference it.
+cros_usbpd_charger_probe() reads two port counts from the EC and uses
+one of them, num_charger_ports, as the loop bound when populating a
+fixed-size array:
 
-Register the reset action after the power supplies, so it unregisters
-the notifiers and drains usb_work before the supplies are released.
-Initialize usb_work and obtain the PHY references before registering
-the notifiers, so the worker cannot run before the supplies exist.
+	struct port_data *ports[EC_USB_PD_MAX_PORTS];	/* 8 entries */
+	...
+	for (i = 0; i < charger->num_charger_ports; i++)
+		charger->ports[charger->num_registered_psy++] = port;
 
-Found by static analysis.
+Both num_usbpd_ports (from EC_CMD_USB_PD_PORTS) and num_charger_ports
+(from EC_CMD_CHARGE_PORT_COUNT) are u8 values reported by the EC. The
+only validation is a sanity check that compares the two EC-reported
+values against each other:
 
-Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
+	if (num_charger_ports < num_usbpd_ports ||
+	    num_charger_ports > num_usbpd_ports + 1)
+		return -EPROTO;
+
+It never checks either count against EC_USB_PD_MAX_PORTS, the size of
+the ports[] array. A malfunctioning, malicious or compromised EC that
+reports num_usbpd_ports == num_charger_ports == N for any N > 8 (for
+example both 255) passes this check, and the loop then writes N pointers
+into the 8-entry ports[] array embedded in the devm_kzalloc()'d
+charger_data, overflowing it by up to 255 - 8 = 247 entries (~1976
+bytes): a slab out-of-bounds write.
+
+Reject a port count larger than the ports[] array can hold.
+
+Fixes: f68b883e8fad ("power: supply: add cros-ec USBPD charger driver.")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260804145511.103470-1-fanwu01@zju.edu.cn
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260616-b4-disp-5e197080-v2-1-8aa5bffce945@proton.me
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq256xx_charger.c |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/power/supply/cros_usbpd-charger.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/power/supply/bq256xx_charger.c
-+++ b/drivers/power/supply/bq256xx_charger.c
-@@ -866,6 +866,8 @@ static void bq256xx_charger_reset(void *
+--- a/drivers/power/supply/cros_usbpd-charger.c
++++ b/drivers/power/supply/cros_usbpd-charger.c
+@@ -600,10 +600,13 @@ static int cros_usbpd_charger_probe(stru
  
- 	if (!IS_ERR_OR_NULL(bq->usb3_phy))
- 		usb_unregister_notifier(bq->usb3_phy, &bq->usb_nb);
-+
-+	cancel_work_sync(&bq->usb_work);
- }
- 
- static int bq256xx_set_charger_property(struct power_supply *psy,
-@@ -1656,24 +1658,12 @@ static int bq256xx_probe(struct i2c_clie
- 		return ret;
- 	}
- 
--	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
--	if (ret)
--		return ret;
-+	INIT_WORK(&bq->usb_work, bq256xx_usb_work);
-+	bq->usb_nb.notifier_call = bq256xx_usb_notifier;
- 
- 	/* OTG reporting */
- 	bq->usb2_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
--	if (!IS_ERR_OR_NULL(bq->usb2_phy)) {
--		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
--		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
--		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
--	}
--
- 	bq->usb3_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB3);
--	if (!IS_ERR_OR_NULL(bq->usb3_phy)) {
--		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
--		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
--		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
--	}
- 
- 	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
- 	if (ret) {
-@@ -1681,6 +1671,17 @@ static int bq256xx_probe(struct i2c_clie
- 		return ret;
- 	}
- 
-+	/* Register after the power supplies so devm runs it first. */
-+	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
-+	if (ret)
-+		return ret;
-+
-+	if (!IS_ERR_OR_NULL(bq->usb2_phy))
-+		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
-+
-+	if (!IS_ERR_OR_NULL(bq->usb3_phy))
-+		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
-+
- 	if (client->irq) {
- 		ret = devm_request_threaded_irq(dev, client->irq, NULL,
- 						bq256xx_irq_handler_thread,
+ 	/*
+ 	 * Sanity checks on the number of ports:
+-	 *  there should be at most 1 dedicated port
++	 *  there should be at most 1 dedicated port, and the count must
++	 *  not exceed the maximum number of supported ports
++	 *  (EC_USB_PD_MAX_PORTS).
+ 	 */
+ 	if (charger->num_charger_ports < charger->num_usbpd_ports ||
+-	    charger->num_charger_ports > (charger->num_usbpd_ports + 1)) {
++	    charger->num_charger_ports > (charger->num_usbpd_ports + 1) ||
++	    charger->num_charger_ports > EC_USB_PD_MAX_PORTS) {
+ 		dev_err(dev, "Unexpected number of charge port count\n");
+ 		ret = -EPROTO;
+ 		goto fail_nowarn;
 
 
