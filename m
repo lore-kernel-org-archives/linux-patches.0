@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099C12E738A;
-	Sat, 12 Sep 2026 07:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BBD3839B8;
+	Sat, 12 Sep 2026 07:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199846; cv=none; b=gk4P+BWtn4B2NmrG/TFaGCAcEiBiLNxDNPDg7r2+wNvpv5X7fz1/TJBxBBs1VUjaP1qq70/4EgIqLRP1mZ0lx4+f2RBdPBGBNDrah1ns0smz4okOdknMBtWK5evcCl2MkwOVmjLCQBH/4w3pdjriJ4ofsPqTYuvhfFI9g0J0R6Q=
+	t=1789199853; cv=none; b=SRAnRVyWM5dTrTLacUivRULJREz58oOdOpdIkfFfhWdscRu08yLLVqBH0+beUOiU9yF/j8cux9QltjoaM43kB+J0/w6ObDtxBmnpoDpL+TlQyWqTIPEkzZ3NbNhRnFkvs6PCJTYw+B8al4GtnkGpHT6wZxWpt3cCgsoqDJUZRmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199846; c=relaxed/simple;
-	bh=lzPi7VdY6s4RTt3MgYgenPw6qz+sQixXBYY+N7i38vc=;
+	s=arc-20240116; t=1789199853; c=relaxed/simple;
+	bh=KO7gY9QXGSrCripG5SIu6z7EYTMWiQhdbb0nE9gzi7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcFfmCKTBK3hMGg+wOsM0QCJgfigBQd+7S/Uck3dsJHh/bDHBWaH57Oei/ApAg4j+LqST4ChRC8a2FOH4svm0xVPCwQnJEO6Qt3mZ7R7fGJkehG0/vrzJy/aetA/sKIUDFj7LeMN/22EPrw6SkXcmFc0XQtwddufyBW1x3GySnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYOyXysM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N3g6QeRqJkQ56KlbrpnG1ylZgaEmmrwr5zdaLzQKefO9wDwacHvK4VP3E+72mVhmjxY+kZen+95wWazwnaTg9r2DUGjgxFRWBEqZ7Hs0dF9MVYx8llGQOYxbymb9J+AxFz+p6CrdHrurAnuYlbJ1TC/B3rd7y0tSjhSRY4WZXM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+yDycYi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYOyXysM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3425B1F000FF;
-	Sat, 12 Sep 2026 07:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+yDycYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F331F000FF;
+	Sat, 12 Sep 2026 07:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199844;
-	bh=kZq4DiE/MWG1V7Dbf5fp8t6S6WBve4fBFXUNrZM9QqI=;
+	s=korg; t=1789199849;
+	bh=QfwOdG4s3yQi4OyNb83+mYbKiY8Zv1WvxMiS0zmsR6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GYOyXysMN0UTbKCfOZacfvnr7M0KNq7Ki+VJl2eLh2RIK2YbXnpbvSghb+9VQ+sGQ
-	 ADZH/Caz4QGoeD5cSWMXwMl7j9aKpGQcDASziU7iolxahzs43VN/ZEwtMEwjfpPmG0
-	 bV+uULqZVr9R7pDlNqGg92ZwVSoqU9A/vXRiJ2w4=
+	b=f+yDycYi3YfQ2FsKwUuSj9+YwY1Qftcz7umKGUk9IMfjuLiibwjZfCqkqvxFOjryT
+	 /d7N81zcJM+agUXEtzBZxJMf2FaQ0poXx8rwTkCnyBTs9Dk4XVQ3/fT79lopMJqFKi
+	 gyfEtfwDKIUxE4gabLjTdeyQCJKa57ByVI8ZqqKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Li Qiang <liqiang01@kylinos.cn>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0667/1815] power: supply: sbs-battery: Use a per-device serial number buffer
-Date: Sat, 12 Sep 2026 08:40:17 +0200
-Message-ID: <20260912065704.544549176@linuxfoundation.org>
+Subject: [PATCH 7.2 0668/1815] scsi: ufs: core: Validate string descriptors
+Date: Sat, 12 Sep 2026 08:40:18 +0200
+Message-ID: <20260912065704.569977633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,78 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit 6027892925b8d19d2245c2d077e2ae35b49cc2b1 ]
+[ Upstream commit d96e83d028d7d8762e424e49c671d49ac2ecf14f ]
 
-sbs_get_battery_serial_number() formats the battery serial number into
-sbs_serial[], a single file-scope buffer shared by every sbs-battery
-instance, and points val->strval at it.
+The string descriptor length includes a two-byte header while the UTF-16
+payload starts after it. utf16s_to_utf8s() expects a count of UTF-16 code
+units, not bytes. Passing the payload byte count can make it read beyond
+the descriptor buffer.
 
-Nothing restricts this driver to one instance. It binds per I2C client,
-and sbs-manager registers one muxed I2C channel per supported battery
-specifically so that the smart battery driver can be bound to each of
-them, so several sbs-battery instances on one system is a supported
-configuration.
+Validate that the payload has an even byte count, pass a code-unit count to
+the converter, and allocate sufficient UTF-8 output space.
 
-The power supply core reads strval after the driver's get_property()
-callback has returned: power_supply_show_property() fills a local
-union power_supply_propval, then formats it with sysfs_emit(). Two
-concurrent POWER_SUPPLY_PROP_SERIAL_NUMBER reads on different batteries
-therefore race for the shared buffer - battery B's sprintf() can land
-between battery A filling the buffer and the core reading it, and
-battery A then reports battery B's serial number.
+The raw string buffer starts after the descriptor header but its size is
+bLength. Copying bLength bytes from that pointer can read beyond the
+response buffer.
 
-Move the buffer into struct sbs_info so that each battery formats into
-its own storage. It is deliberately not added to the chip->strings[]
-array: those entries hold the cached constant strings that
-sbs_invalidate_cached_props() clears on presence changes, whereas the
-serial number is re-read from its word register on every access.
+Allocate a zeroed bLength-sized buffer and copy only the UTF-16
+payload. This preserves the raw buffer size consumed by the RPMB device-ID
+ABI while avoiding the overread.
 
-Fixes: d3ab61ecbab2 ("bq20z75: Add support for more power supply properties")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Link: https://patch.msgid.link/20260726072206.7-2-bbnpreetsingh@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 4b828fe156a6 ("scsi: ufs: revamp string descriptor reading")
+Fixes: d794b499f948 ("scsi: ufs: core: fix incorrect buffer duplication in ufshcd_read_string_desc()")
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260717153914.26321-2-liqiang01@kylinos.cn
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sbs-battery.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/ufs/core/ufshcd.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/power/supply/sbs-battery.c b/drivers/power/supply/sbs-battery.c
-index 017ec06be7666..9bdb6c599c5f6 100644
---- a/drivers/power/supply/sbs-battery.c
-+++ b/drivers/power/supply/sbs-battery.c
-@@ -217,6 +217,7 @@ struct sbs_info {
- 	u32				flags;
- 	int				technology;
- 	char				strings[NR_STRING_BUFFERS][I2C_SMBUS_BLOCK_MAX + 1];
-+	char				serial[5];
- };
- 
- static char *sbs_get_string_buf(struct sbs_info *chip,
-@@ -821,18 +822,18 @@ static int sbs_get_battery_capacity(struct i2c_client *client,
- 	return 0;
- }
- 
--static char sbs_serial[5];
- static int sbs_get_battery_serial_number(struct i2c_client *client,
- 	union power_supply_propval *val)
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index a41b56dbf3b7f..bcfc1b031f260 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3865,7 +3865,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index, u8 **buf, enum u
  {
-+	struct sbs_info *chip = i2c_get_clientdata(client);
- 	int ret;
+ 	struct uc_string_id *uc_str;
+ 	u8 *str;
+-	int ret;
++	int ret, uc_len;
  
- 	ret = sbs_read_word_data(client, sbs_data[REG_SERIAL_NUMBER].addr);
- 	if (ret < 0)
- 		return ret;
+ 	if (!buf)
+ 		return -EINVAL;
+@@ -3890,11 +3890,19 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index, u8 **buf, enum u
+ 		goto out;
+ 	}
  
--	sprintf(sbs_serial, "%04x", ret);
--	val->strval = sbs_serial;
-+	sprintf(chip->serial, "%04x", ret);
-+	val->strval = chip->serial;
++	uc_len = uc_str->len - QUERY_DESC_HDR_SIZE;
++	if (uc_len % sizeof(*uc_str->uc)) {
++		dev_err(hba->dev, "String Desc has an odd UTF-16 payload length\n");
++		str = NULL;
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	if (fmt == SD_ASCII_STD) {
+ 		ssize_t ascii_len;
+ 		int i;
+-		/* remove header and divide by 2 to move from UTF16 to UTF8 */
+-		ascii_len = (uc_str->len - QUERY_DESC_HDR_SIZE) / 2 + 1;
++		/* Allow up to three UTF-8 bytes per UTF-16 code unit plus a NUL. */
++		ascii_len = uc_len / sizeof(*uc_str->uc) * 3 + 1;
+ 		str = kzalloc(ascii_len, GFP_KERNEL);
+ 		if (!str) {
+ 			ret = -ENOMEM;
+@@ -3906,7 +3914,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index, u8 **buf, enum u
+ 		 * we need to convert to utf-8 so it can be displayed
+ 		 */
+ 		ret = utf16s_to_utf8s(uc_str->uc,
+-				      uc_str->len - QUERY_DESC_HDR_SIZE,
++				      uc_len / sizeof(*uc_str->uc),
+ 				      UTF16_BIG_ENDIAN, str, ascii_len - 1);
  
- 	return 0;
- }
+ 		/* replace non-printable or non-ASCII characters with spaces */
+@@ -3916,11 +3924,17 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index, u8 **buf, enum u
+ 		str[ret++] = '\0';
+ 
+ 	} else {
+-		str = kmemdup(uc_str->uc, uc_str->len, GFP_KERNEL);
++		/*
++		 * Keep the bLength-sized raw output for the RPMB device ID ABI.
++		 * The two bytes beyond the UTF-16 payload are explicitly zeroed
++		 * instead of being read past the descriptor buffer.
++		 */
++		str = kzalloc(uc_str->len, GFP_KERNEL);
+ 		if (!str) {
+ 			ret = -ENOMEM;
+ 			goto out;
+ 		}
++		memcpy(str, uc_str->uc, uc_len);
+ 		ret = uc_str->len;
+ 	}
+ out:
 -- 
 2.53.0
 
