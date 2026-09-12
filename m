@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F6923BD03;
-	Sat, 12 Sep 2026 14:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C696AEED8;
+	Sat, 12 Sep 2026 14:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224548; cv=none; b=Xd3Hs2YBiDex9jp2hEyzihjSCTf41atSC7R+pU7F4AXZ34cNlFgHakNwjbgQuBwkKnG2rIJX8ugessbr9vUeUDM5qyh+o4M7ORPfVLVlkmkQ6c6EL5uj8EDaOH6YJfR0VqGL9Wai7CeDNeEn+Z1tCMOof+AZfA4+YpYqmP18YJY=
+	t=1789224552; cv=none; b=K0fDQfpVY1bLTLbUWAomFzdyaKxbTv61j2tX3n+Hsqu+u+/qrcdllHRnFdgT1++6mrhFzKef6xWCcjEdzst1f+fF1jOHJ3kFMOPF5tXQsDzQ6NdJBf/DYu34RAQu2wBlwXP/UTgMoBKuhTepicxoPI8JdaC7BW2WYbYqwTJr9Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224548; c=relaxed/simple;
-	bh=fS7MHwLOUL3XI40lrgs1BZW59c2T5uTvW4jwCE9FxKU=;
+	s=arc-20240116; t=1789224552; c=relaxed/simple;
+	bh=oc4MOfyw00HdwlCOTnH84t3Hv+mcvaKHRuROrVTZ+wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qC3FFIzJDD5Cg/AgXHKW4IjBPJ7NkW7XUM74slffVvkTgsM6IsbsGzsky2OKLFNtY0rzMSfecjZrK9ctzZqGUpdqkMXe+hP/xooHgwBfsiHMnP8wIDfFrRjq2MYRMlcGHg+RWrMqY+mNwhUiPfd+DgK4y3DuCuo5lV/TiAy63zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB4JekAN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=shC9TTL0sE2/fsXAX2S6/iWsXv642F7tReiZL1p+NLJ6NwBMfJ2qXLWWm2LyS5s1eP22xw7a2jWKx3g/IgQiutdzpLP2Zn10LSOs1/qTRvkWNBOJffB0VMl886qR3e+Y6EwM6Hmzw3WWOz9Yqbz4B1zLjI4xzat4Sw2t0+nUv2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFLcZrRJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB4JekAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F821F000FF;
-	Sat, 12 Sep 2026 14:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFLcZrRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8271C1F000FF;
+	Sat, 12 Sep 2026 14:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224546;
-	bh=+QNUNMLnR3MYf9Gy2ivF1mRzYJicnO+RQ3mejoSttbY=;
+	s=korg; t=1789224551;
+	bh=YfVTyjg6lPNFuXFGyHVJIEeKdc25Rm5KO79XS6d8LCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YB4JekANr9CAF32emp1bUmolSq4ZtlDyuBMbA/if1+bKTG3YPAYihDG2GeH6L9e/x
-	 J24LieDuxG0DUQhgXZfheQJKIJKia8LEscRF2yvloDr9FeW7DpKurjr/wj1gKwvgA4
-	 NfR+zJum71QQjV1245XDM4eYFUV/nuCcOFNC+ftU=
+	b=sFLcZrRJizwpT7zxOgn59JE0nuPzkmYv+APt3G1CQ5njU65Nkou4N4gp195EWfugB
+	 OCj0aORFLKok5U2MBYB964g18e6nteNTnpxbS+cYX0UfyXV4luRAL5+5Cu/PbJ3CAE
+	 05SA9PQxxJU/dpZrn9GsDheHKvuQK/vJebssM4ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1016/1424] HID: synchronize input before cleaning up a failed probe
-Date: Sat, 12 Sep 2026 08:57:28 +0200
-Message-ID: <20260912065630.064843978@linuxfoundation.org>
+Subject: [PATCH 6.6 0999/1424] wifi: mt76: mt7996: fix reg addr remap when addr is 0
+Date: Sat, 12 Sep 2026 08:57:11 +0200
+Message-ID: <20260912065629.688204594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,45 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit 207853d46f7ef2e28042344a1468da8754c3ddbf ]
+[ Upstream commit eb906eeff2d1e84b628dc210dada325269c71383 ]
 
-hid_device_io_start() allows reports to run concurrently with probe. If
-the probe subsequently fails, __hid_device_probe() releases driver
-resources and clears hdev->driver without first excluding those report
-callbacks.
+When addr is less than the hardcoded threshold in __mt7996_reg_addr,
+it indicates that remapping is unnecessary.
+Currently, the flow remaps address 0x0 to MT_HIF_REMAP_BASE_L2,
+which is incorrect.
+To address this, modify __mt7996_reg_addr to return INVALID_REG_ADDR
+if the address is not below the hardcoded value or is not present in
+the mt7996_reg_map array.
+Additionally, update the remap condition to check if addr is equal to
+INVALID_REG_ADDR.
 
-For example, a report may enter hidraw_report_event() while the failure
-path frees the associated hidraw object, leading to a use-after-free when
-the report takes the object's list lock.
-
-Stop input before performing failed-probe cleanup. This reacquires
-driver_input_lock and waits for any report callback already in progress.
-
-Fixes: c849a6143bec ("HID: Separate struct hid_device's driver_lock into two locks.")
-Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 3687854d3e7e ("wifi: mt76: mt7996: add locking for accessing mapped registers")
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Link: https://patch.msgid.link/20260727150434.1778520-5-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 241dfec35d1c0..446ed394dc488 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2701,6 +2701,8 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
- 	 */
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+index f0fa0f513be90..5f3b3ca156241 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+@@ -11,6 +11,8 @@
+ #include "mac.h"
+ #include "../trace.h"
  
- 	if (ret) {
-+		if (hdev->io_started)
-+			hid_device_io_stop(hdev);
- 		devres_release_group(&hdev->dev, hdev->devres_group_id);
- 		hid_close_report(hdev);
- 		hdev->driver = NULL;
++#define INVALID_REG_ADDR	0xffffffff
++
+ static const struct __base mt7996_reg_base[] = {
+ 	[WF_AGG_BASE]		= { { 0x820e2000, 0x820f2000, 0x830e2000 } },
+ 	[WF_ARB_BASE]		= { { 0x820e3000, 0x820f3000, 0x830e3000 } },
+@@ -125,7 +127,7 @@ static u32 __mt7996_reg_addr(struct mt7996_dev *dev, u32 addr)
+ 		return dev->reg.map[i].mapped + ofs;
+ 	}
+ 
+-	return 0;
++	return INVALID_REG_ADDR;
+ }
+ 
+ static u32 __mt7996_reg_remap_addr(struct mt7996_dev *dev, u32 addr)
+@@ -154,7 +156,7 @@ void mt7996_memcpy_fromio(struct mt7996_dev *dev, void *buf, u32 offset,
+ {
+ 	u32 addr = __mt7996_reg_addr(dev, offset);
+ 
+-	if (addr) {
++	if (addr != INVALID_REG_ADDR) {
+ 		memcpy_fromio(buf, dev->mt76.mmio.regs + addr, len);
+ 		return;
+ 	}
+@@ -170,7 +172,7 @@ static u32 mt7996_rr(struct mt76_dev *mdev, u32 offset)
+ 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
+ 	u32 addr = __mt7996_reg_addr(dev, offset), val;
+ 
+-	if (addr)
++	if (addr != INVALID_REG_ADDR)
+ 		return dev->bus_ops->rr(mdev, addr);
+ 
+ 	spin_lock_bh(&dev->reg_lock);
+@@ -185,7 +187,7 @@ static void mt7996_wr(struct mt76_dev *mdev, u32 offset, u32 val)
+ 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
+ 	u32 addr = __mt7996_reg_addr(dev, offset);
+ 
+-	if (addr) {
++	if (addr != INVALID_REG_ADDR) {
+ 		dev->bus_ops->wr(mdev, addr, val);
+ 		return;
+ 	}
+@@ -200,7 +202,7 @@ static u32 mt7996_rmw(struct mt76_dev *mdev, u32 offset, u32 mask, u32 val)
+ 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
+ 	u32 addr = __mt7996_reg_addr(dev, offset);
+ 
+-	if (addr)
++	if (addr != INVALID_REG_ADDR)
+ 		return dev->bus_ops->rmw(mdev, addr, mask, val);
+ 
+ 	spin_lock_bh(&dev->reg_lock);
 -- 
 2.53.0
 
