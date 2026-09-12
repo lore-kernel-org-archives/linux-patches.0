@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C669647CA6D;
-	Sat, 12 Sep 2026 12:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C2947C0F7;
+	Sat, 12 Sep 2026 12:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217211; cv=none; b=JPWwX5mP5nS5rggwr/tnYysNz/yiwStrtMu12lK0+Zs51WSKoZgGD++9HgKZnoavNl8fM3g82JoPgRutuuHRV1cYcM4wxvkkJaD7GKAQj8vLCLMKIQHmeFPVxAC2caLjnrJuEd6t8z8KSVr9aFEIP4YSOqf0+lC4yNfWxb7ZhAg=
+	t=1789217215; cv=none; b=ESITc1N4tYIQEda8MCRXXZT80eN5sAgy58+g4l54g9pVGFv5xe4IPLVM/PKgeBKpCHg97rid2MbK5A5FSX4Myh0lD+9m0WJfibPvxEqAbtHE+ER2VWTiPRZrqtxeBASra+U92HicowzQgpxNsjmYOKRGllmfuml5Zxd6OSAn58A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217211; c=relaxed/simple;
-	bh=yc5CuF/lc/vA36VsW7Tcx+PcLpFcqBMpVaVGBQHTpHo=;
+	s=arc-20240116; t=1789217215; c=relaxed/simple;
+	bh=hoi2w3bvSuJhrocWig5WBCjA4feynngKTU72O/aQfSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBl+YmXIoiM4BBv8O3vwDfbDu7yfwX/ZbElR6eb2eKVMZiB9fm5ZPKyEDcyQ9OqQn6g7waVsrsoFPn0ZPZXIpYJ4uebNzF+Mgm0/3gm0apXhLrrxVHLey67sxCqayLLemwawQWikOenXUBsF4NMwiPef6HWHxxf+tcOCTXsctqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7XBo5HG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hh6H855kXS4+DckIZCoDVphr4Qc3JoRAhFX2IOHgCgcXX9Pvax9npvlLfiKd/O/xgl649yoZ4jrCe/uU81elIpMXWiaaLf+dXaZkpKaoxYe//58XUn2+0EFfwhQUIeGETgH6wehMAKZwwRuBMqEmr+bqKiju3+1gRZgrt9tleSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lE1vU7CQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7XBo5HG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21FA1F000FF;
-	Sat, 12 Sep 2026 12:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lE1vU7CQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024891F000FF;
+	Sat, 12 Sep 2026 12:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217209;
-	bh=XszCj53v6knnyMXPr8ZD/K7Vn5ZY4IC/E0D4C8yEKMY=;
+	s=korg; t=1789217213;
+	bh=X5rVuLEjfp0xn00ZuNHJzgWGPj0HEv+bgaHzXXCTZGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K7XBo5HG1VzdMs1bv5LQx3ASIH9RmGwYZJNczRrZIgyDlbUJZDMikbN71rUUqOutO
-	 LCtVkiJi76iEI4VR6naMXegGD/Vf5Jxtg6mc1QukZX51H5lcTvedQkpO6wFsOroryn
-	 ecHSPoMFinBB36d1/jlwY3FuXOvp3c5j3IGH18pQ=
+	b=lE1vU7CQ5CLHJFcOmEzHTXegXESBkxSk37MayRPf4k0pDg0kXgWhFWraxAD0oi1Cd
+	 C/uwW+D16H3UmSxaOIPgA/4YzPld1sC481PGZMW9U4UH3TMZYnM+bz/pToLM84ff5F
+	 2Jf0O8hqYJdWUiIfqXh3pl2JU1ZWYgQamZWBRxL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Pu Lehui <pulehui@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0895/1376] bpf, cgroup: Fix invalid storage access after __cgroup_bpf_attach failed
-Date: Sat, 12 Sep 2026 08:55:21 +0200
-Message-ID: <20260912065627.511646270@linuxfoundation.org>
+Subject: [PATCH 6.12 0896/1376] selftests/mm: add new test cases to the migration test
+Date: Sat, 12 Sep 2026 08:55:22 +0200
+Message-ID: <20260912065627.532489586@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,93 +57,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-[ Upstream commit 6655c409707ec8ce9ce0850ffe4fe02331fd4d9c ]
+[ Upstream commit 901083d8f5c55dc125834bbc5ac1720014e66758 ]
 
-A potential invalid storage access issue can occur after replacing a
-cgroup bpf prog.
+Added three new test cases to the migration tests:
 
-This occurs in the following scenario:
-1. prog1 with storage is attached to a cgroup in multi-attach mode.
-2. prog1 is replaced with prog2 using BPF_F_REPLACE in multi-attach
-   mode, but fails midway (e.g. in bpf_trampoline_link_cgroup_shim or
-   update_effective_progs).
-3. A new prog3 is attached to the cgroup in multi-attach mode.
+1. Shared anon THP migration test
+This test will mmap shared anon memory, madvise it to
+MADV_HUGEPAGE, then do migration entry testing. One thread
+will move pages back and forth between nodes whilst other
+threads try and access them.
 
-The reason is that __cgroup_bpf_attach overwrites pl->storage with the
-new storage prior to attachment completion. When attachment fails
-midway, the cleanup path calls bpf_cgroup_storages_free(new_storage) to
-free the newly allocated storage, but fails to restore pl->storage back
-to old_storage.
+2. Private anon hugetlb migration test
+This test will mmap private anon hugetlb memory and then
+do the migration entry testing.
 
-Consequently, the still-active prog1 holds invalid or dangling storage
-pointers, leading to an invalid memory access when prog1 executes and
-calls bpf_get_local_storage. Additionally, original pl->flags and
-cgrp->bpf.flags[atype] are left unrestored.
+3. Shared anon hugetlb migration test
+This test will mmap shared anon hugetlb memory and then
+do the migration entry testing.
 
-Fix this by saving old_pl_flags, old_storage, and old_flags prior to the
-update, and properly restoring all of them in the cleanup path on error.
+Test results
+============
+ # ./tools/testing/selftests/mm/migration
+ TAP version 13
+ 1..6
+ # Starting 6 tests from 1 test cases.
+ #  RUN           migration.private_anon ...
+ #            OK  migration.private_anon
+ ok 1 migration.private_anon
+ #  RUN           migration.shared_anon ...
+ #            OK  migration.shared_anon
+ ok 2 migration.shared_anon
+ #  RUN           migration.private_anon_thp ...
+ #            OK  migration.private_anon_thp
+ ok 3 migration.private_anon_thp
+ #  RUN           migration.shared_anon_thp ...
+ #            OK  migration.shared_anon_thp
+ ok 4 migration.shared_anon_thp
+ #  RUN           migration.private_anon_htlb ...
+ #            OK  migration.private_anon_htlb
+ ok 5 migration.private_anon_htlb
+ #  RUN           migration.shared_anon_htlb ...
+ #            OK  migration.shared_anon_htlb
+ ok 6 migration.shared_anon_htlb
+ # PASSED: 6 / 6 tests passed.
+ # Totals: pass:6 fail:0 xfail:0 xpass:0 skip:0 error:0
+ #
 
-Fixes: 7d9c3427894f ("bpf: Make cgroup storages shared between programs on the same cgroup")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260803013934.4036646-1-pulehui@huaweicloud.com
+Link: https://lkml.kernel.org/r/20241219102720.4487-1-donettom@linux.ibm.com
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 15828a150c58 ("selftests/mm: fix ksm NUMA merge test for systems with memoryless NUMA nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/mm/migration.c | 99 ++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index ad054a4c782ea..7b8b4e09131dd 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -646,8 +646,10 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
- 	struct bpf_prog *old_prog = NULL;
- 	struct bpf_cgroup_storage *storage[MAX_BPF_CGROUP_STORAGE_TYPE] = {};
- 	struct bpf_cgroup_storage *new_storage[MAX_BPF_CGROUP_STORAGE_TYPE] = {};
-+	struct bpf_cgroup_storage *old_storage[MAX_BPF_CGROUP_STORAGE_TYPE] = {};
- 	struct bpf_prog *new_prog = prog ? : link->link.prog;
- 	enum cgroup_bpf_attach_type atype;
-+	u32 old_flags, old_pl_flags;
- 	struct bpf_prog_list *pl;
- 	struct hlist_head *progs;
- 	int err;
-@@ -693,6 +695,8 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
- 
- 	if (pl) {
- 		old_prog = pl->prog;
-+		old_pl_flags = pl->flags;
-+		bpf_cgroup_storages_assign(old_storage, pl->storage);
- 	} else {
- 		struct hlist_node *last = NULL;
- 
-@@ -716,6 +720,7 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
- 	pl->link = link;
- 	pl->flags = flags;
- 	bpf_cgroup_storages_assign(pl->storage, storage);
-+	old_flags = cgrp->bpf.flags[atype];
- 	cgrp->bpf.flags[atype] = saved_flags;
- 
- 	if (type == BPF_LSM_CGROUP) {
-@@ -746,12 +751,15 @@ static int __cgroup_bpf_attach(struct cgroup *cgrp,
- 	if (old_prog) {
- 		pl->prog = old_prog;
- 		pl->link = NULL;
-+		pl->flags = old_pl_flags;
-+		bpf_cgroup_storages_assign(pl->storage, old_storage);
- 	}
- 	bpf_cgroup_storages_free(new_storage);
- 	if (!old_prog) {
- 		hlist_del(&pl->node);
- 		kfree(pl);
- 	}
-+	cgrp->bpf.flags[atype] = old_flags;
- 	return err;
+diff --git a/tools/testing/selftests/mm/migration.c b/tools/testing/selftests/mm/migration.c
+index c883ef420d3ba..cfd01e951e89c 100644
+--- a/tools/testing/selftests/mm/migration.c
++++ b/tools/testing/selftests/mm/migration.c
+@@ -205,4 +205,103 @@ TEST_F_TIMEOUT(migration, private_anon_thp, 2*RUNTIME)
+ 		ASSERT_EQ(pthread_cancel(self->threads[i]), 0);
  }
  
++/*
++ * migration test with shared anon THP page
++ */
++
++TEST_F_TIMEOUT(migration, shared_anon_thp, 2*RUNTIME)
++{
++	pid_t pid;
++	uint64_t *ptr;
++	int i;
++
++	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
++		SKIP(return, "Not enough threads or NUMA nodes available");
++
++	ptr = mmap(NULL, 2 * TWOMEG, PROT_READ | PROT_WRITE,
++		MAP_SHARED | MAP_ANONYMOUS, -1, 0);
++	ASSERT_NE(ptr, MAP_FAILED);
++
++	ptr = (uint64_t *) ALIGN((uintptr_t) ptr, TWOMEG);
++	ASSERT_EQ(madvise(ptr, TWOMEG, MADV_HUGEPAGE), 0);
++
++	memset(ptr, 0xde, TWOMEG);
++	for (i = 0; i < self->nthreads - 1; i++) {
++		pid = fork();
++		if (!pid) {
++			prctl(PR_SET_PDEATHSIG, SIGHUP);
++			/* Parent may have died before prctl so check now. */
++			if (getppid() == 1)
++				kill(getpid(), SIGHUP);
++			access_mem(ptr);
++		} else {
++			self->pids[i] = pid;
++		}
++	}
++
++	ASSERT_EQ(migrate(ptr, self->n1, self->n2), 0);
++	for (i = 0; i < self->nthreads - 1; i++)
++		ASSERT_EQ(kill(self->pids[i], SIGTERM), 0);
++}
++
++/*
++ * migration test with private anon hugetlb page
++ */
++TEST_F_TIMEOUT(migration, private_anon_htlb, 2*RUNTIME)
++{
++	uint64_t *ptr;
++	int i;
++
++	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
++		SKIP(return, "Not enough threads or NUMA nodes available");
++
++	ptr = mmap(NULL, TWOMEG, PROT_READ | PROT_WRITE,
++		MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
++	ASSERT_NE(ptr, MAP_FAILED);
++
++	memset(ptr, 0xde, TWOMEG);
++	for (i = 0; i < self->nthreads - 1; i++)
++		if (pthread_create(&self->threads[i], NULL, access_mem, ptr))
++			perror("Couldn't create thread");
++
++	ASSERT_EQ(migrate(ptr, self->n1, self->n2), 0);
++	for (i = 0; i < self->nthreads - 1; i++)
++		ASSERT_EQ(pthread_cancel(self->threads[i]), 0);
++}
++
++/*
++ * migration test with shared anon hugetlb page
++ */
++TEST_F_TIMEOUT(migration, shared_anon_htlb, 2*RUNTIME)
++{
++	pid_t pid;
++	uint64_t *ptr;
++	int i;
++
++	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
++		SKIP(return, "Not enough threads or NUMA nodes available");
++
++	ptr = mmap(NULL, TWOMEG, PROT_READ | PROT_WRITE,
++		MAP_SHARED | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
++	ASSERT_NE(ptr, MAP_FAILED);
++
++	memset(ptr, 0xde, TWOMEG);
++	for (i = 0; i < self->nthreads - 1; i++) {
++		pid = fork();
++		if (!pid) {
++			prctl(PR_SET_PDEATHSIG, SIGHUP);
++			/* Parent may have died before prctl so check now. */
++			if (getppid() == 1)
++				kill(getpid(), SIGHUP);
++			access_mem(ptr);
++		} else {
++			self->pids[i] = pid;
++		}
++	}
++
++	ASSERT_EQ(migrate(ptr, self->n1, self->n2), 0);
++	for (i = 0; i < self->nthreads - 1; i++)
++		ASSERT_EQ(kill(self->pids[i], SIGTERM), 0);
++}
++
+ TEST_HARNESS_MAIN
 -- 
 2.53.0
 
