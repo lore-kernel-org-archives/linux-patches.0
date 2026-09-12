@@ -1,36 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E9F3161A1;
-	Sat, 12 Sep 2026 13:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA73D1EB5FD;
+	Sat, 12 Sep 2026 13:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221427; cv=none; b=OGCnrBvzdra3v4bTfYOSyZF7TlFklWfymmeUr66TpavLyJWRJk5FItDOdIZru6fGpxUInnzGQmFNYBn8R4cE7g0vOJe/t6c9ZGOqRj+Mfhh/A2Q8H0g3/VDHcad09TcKe4JDk6aju14q1CgxVp8EAYxpJlo5o51CH17+oJ81KZk=
+	t=1789221432; cv=none; b=NTokRQ3gZzfF+lctFmQxKq/3bjLyaWfxDGZJytY2sWMgJddWbRI0nGtL/eRnd4RF51VVBvsWVSi3hFMe8qmE1LS0wQwciTBK1VR/zeF6bwae3lY3EQE+S4GwxiJe/2Gq5myBbs8GaPNCIt63dZm609HYYvL5QgRNU67fQfoth0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221427; c=relaxed/simple;
-	bh=Lil95C4M6rk3wtRH8VPcA/Bxs0klgOYkjzJUm/06SrI=;
+	s=arc-20240116; t=1789221432; c=relaxed/simple;
+	bh=a6/IjnvomfTl2aoZZSvmgpZFaatoo+5GkAmyBsu69zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6oPaUp5SnVw6qV7729/d5kkUvdSedH2BDB2Gs6oLhfgr8QvZ2lNPO41z1wywhACGmTjjAq6ouTB//pAx/YGL14H53yxTmZSgsWG4xnj8CuEvZZQaNLmkCYzqUe3Db1BQhLHrF4uyvyqCBckxyeKsqPdHTwXLajWR4Agv/Ehvc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0Vt+t+w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q6uUeoqk89VciRSWu0T4Dd/Ra4EhoF2dciAytTDSBLnn/HBhx/wzzoFtHj1kOd03Ltl59I2MNgd0Gtf3VVZQ9MxUSWBHTcW5NJegdv6rzid5wL5D/VY8EdOg9lwxXbgZgcrfQ9V3q67W8K1b25e8qyRoyJDDJm212xJtUfSypKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBn4IfOj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0Vt+t+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67981F000FF;
-	Sat, 12 Sep 2026 13:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBn4IfOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35531F000FF;
+	Sat, 12 Sep 2026 13:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221425;
-	bh=MOh06Uv78sD1A6gzJUcsWiyovdTkLaxC5huLAZAvtAA=;
+	s=korg; t=1789221430;
+	bh=OtRhcKHhFaYK1aj5+tVi1poK52R4rH3PN0zIy5whUyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X0Vt+t+wD0OtBPYB2JQbU6mscrdWpElt/ztUQshUJfmlZN0lQZx2VLHsA1KAf3MZP
-	 hTb0ehsmoW9bCINBLHIkaM1f4W/3eWHvgATluV0HrXFCNaLLWg7cNTp5Y+ClrGE8gK
-	 yRD0v8/jkq5gqbnx1AUnKZsW/W3foMqFjDMfFLNM=
+	b=fBn4IfOjK/Qr31J90FeOyGsIY6WxjilYQlicDMhTL0hxvHG6qmwa87BnpWuxd+R84
+	 3+MnMU2hX9bv73SGqRtAV/RhRPAbLIzTu27o/vXPiXLJmgJDvaR7wI0cnBSGR4QSWo
+	 GDVkzc1ybwJovYFPiGhLXoFXfTm9kzxQ6BaOb8mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 0379/1424] parisc: Fix alignment of asm statements in head.S
-Date: Sat, 12 Sep 2026 08:46:51 +0200
-Message-ID: <20260912065615.780376793@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	David Hildenbrand <david@kernel.org>,
+	Frank van der Linden <fvdl@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
+	Usama Arif <usama.arif@linux.dev>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0380/1424] powerpc/mm: fix wrong addr_pfn tracking in compound vmemmap population
+Date: Sat, 12 Sep 2026 08:46:52 +0200
+Message-ID: <20260912065615.802909875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -49,30 +64,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 04cf68c9a76e3c6b67ad056a66a14923abf85925 upstream.
+commit 89a4ae32764172468dea303eb6ae90fe6c859712 upstream.
 
-All assembler statements need to be 4-byte aligned. Prevent a possible
-misalignment if someone changes the preceeding string and it's length is
-then suddenly not a multiple of 4 any longer.
+vmemmap_populate_compound_pages() uses addr_pfn to determine the PFN
+offset within a compound page and to decide whether the current vmemmap
+slot should be populated as a head page mapping or should reuse a tail
+page mapping.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+However, addr_pfn is advanced manually in parallel with addr.  The loop
+itself progresses in vmemmap address space, so each PAGE_SIZE step in addr
+covers PAGE_SIZE / sizeof(struct page) struct page slots.  Since addr_pfn
+is compared against nr_pages in data-PFN units, it should advance by the
+same number of PFNs.  The existing manual increments do not match that and
+therefore do not reliably track the PFN corresponding to the current addr.
+
+As a result, pfn_offset can be computed from the wrong PFN and the code
+can make the head/tail decision for the wrong compound-page position.
+
+Fix this by deriving addr_pfn directly from the current vmemmap address
+instead of carrying it as loop state.
+
+Link: https://lore.kernel.org/20260612035903.2468601-4-songmuchun@bytedance.com
+Fixes: f2b79c0d7968 ("powerpc/book3s64/radix: add support for vmemmap optimization for radix")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Frank van der Linden <fvdl@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Oscar Salvador (SUSE) <osalvador@kernel.org>
+Cc: Usama Arif <usama.arif@linux.dev>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/head.S |    1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/mm/book3s64/radix_pgtable.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/arch/parisc/kernel/head.S
-+++ b/arch/parisc/kernel/head.S
-@@ -105,6 +105,7 @@ $iodc_panic:
- 	or		%r10,%r10,%r10	/* qemu idle sleep */
- msg1:	.ascii "Can't boot kernel which was built for PA8x00 CPUs on this machine.\r\n"
- msg1_end:
-+	.align 4
+--- a/arch/powerpc/mm/book3s64/radix_pgtable.c
++++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
+@@ -1318,7 +1318,6 @@ int __meminit vmemmap_populate_compound_
+ 	 * covering out both edges.
+ 	 */
+ 	unsigned long addr;
+-	unsigned long addr_pfn = start_pfn;
+ 	unsigned long next;
+ 	pgd_t *pgd;
+ 	p4d_t *p4d;
+@@ -1339,7 +1338,6 @@ int __meminit vmemmap_populate_compound_
  
- $cpu_ok:
- #endif
+ 		if (pmd_leaf(READ_ONCE(*pmd))) {
+ 			/* existing huge mapping. Skip the range */
+-			addr_pfn += (PMD_SIZE >> PAGE_SHIFT);
+ 			next = pmd_addr_end(addr, end);
+ 			continue;
+ 		}
+@@ -1352,11 +1350,11 @@ int __meminit vmemmap_populate_compound_
+ 			 * page whose VMEMMAP_RESERVE_NR pages were mapped and
+ 			 * this request fall in those pages.
+ 			 */
+-			addr_pfn += 1;
+ 			next = addr + PAGE_SIZE;
+ 			continue;
+ 		} else {
+ 			unsigned long nr_pages = pgmap_vmemmap_nr(pgmap);
++			unsigned long addr_pfn = page_to_pfn((struct page *)addr);
+ 			unsigned long pfn_offset = addr_pfn - ALIGN_DOWN(addr_pfn, nr_pages);
+ 			pte_t *tail_page_pte;
+ 
+@@ -1380,7 +1378,6 @@ int __meminit vmemmap_populate_compound_
+ 				if (!pte)
+ 					return -ENOMEM;
+ 
+-				addr_pfn += 2;
+ 				next = addr + 2 * PAGE_SIZE;
+ 				continue;
+ 			}
+@@ -1396,7 +1393,6 @@ int __meminit vmemmap_populate_compound_
+ 					return -ENOMEM;
+ 				vmemmap_verify(pte, node, addr, addr + PAGE_SIZE);
+ 
+-				addr_pfn += 1;
+ 				next = addr + PAGE_SIZE;
+ 				continue;
+ 			}
+@@ -1406,7 +1402,6 @@ int __meminit vmemmap_populate_compound_
+ 				return -ENOMEM;
+ 			vmemmap_verify(pte, node, addr, addr + PAGE_SIZE);
+ 
+-			addr_pfn += 1;
+ 			next = addr + PAGE_SIZE;
+ 			continue;
+ 		}
 
 
