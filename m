@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029883803CF;
-	Sat, 12 Sep 2026 07:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C62534752E;
+	Sat, 12 Sep 2026 07:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199802; cv=none; b=IerS7gqlvT39ALF13ySHfyRDHuuckGZYK9LxCe2W0STu5DG2J4MqJ0wotUXY0hW9hi8k9doBV5ZUE9KWDK1uSpA5e079l/ZITBsGipGXm/m3d0wwvGpSFd8CsqCjUPpn5Ymz119QEeHg/aGrZ3tlVLi+q5XeFoorI/sI7QE+nvE=
+	t=1789199806; cv=none; b=hFxEnIZj0yoXmKRl6Usxhtj+uReY4aYu2uE9V0O7EAFcAZcuqzelC+DfnbbcWqIygmAMmrev+yiUqjXmLIizacaY5EbjQvzGJo5Yx9YcI8UaRhwHN1NVEGpxePrMly4wAAYl96syQSxYNA0sHgw+woVANRsVdvOSxbTDfflSeAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199802; c=relaxed/simple;
-	bh=HYKHl+dPJxFA68M9iHvKGmjqgVrrI+TzeeF2v1BSd1Q=;
+	s=arc-20240116; t=1789199806; c=relaxed/simple;
+	bh=K/YQLjdd1zwEbumeSPeZjxv4rbQf2i2RiLd64meyYps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CSuOca3PAJ0gFpoTOJ5ATkj2/Q4vlCnMSDJtmM8BLUvpzvf2LExwou7myiSFLZ1t7R/k9ctk1s+/38wQaG1ZgtzYHzu7FxiyzTLk46FKQAy1mjRYApSPjg6PF7KXVNqzIMyRMHWbFfBnLIaJBOrezaHSSUUk0u2lurHd+9FLZUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fduTKfp2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HJu7ATodpy95heyvs6omGE5O8QqiKuMar+M4PgxVOzDHZME822YXWS2vUamZyGwyb+/IpN7d+h4LLOfBZ2GROUdZcc/hhSr8hWLptt7IyVJxYN+tmkRsuRalTdDIzxx1zBkz6aFr+syoQl4vD2f9gG0fPpiLYW4/4cOpKIr6eW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNFOSZjs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fduTKfp2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3941F000FF;
-	Sat, 12 Sep 2026 07:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNFOSZjs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE9B1F000FF;
+	Sat, 12 Sep 2026 07:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199800;
-	bh=2rZiEkRcRGeCQCTwnv4L/OhkCxCzWlGbBBFxjflDaYU=;
+	s=korg; t=1789199805;
+	bh=U+bufcH1cL5kT7sClz6s+xLxHgSz7ipl/pvHlsOLXI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fduTKfp2yPJEN8AzEuNEWzSMv4sgM4YzMeuLCunWqzhS14xrGfWtwJRrc9nBAwSma
-	 /qb94BMRt/q0pmQnKXQzQ/eE+6WgM+B7iHET13bdo70WwqSY5nrwkwyY+dj5dBLg3E
-	 3CyTLMxTGR9mrBJUjJyaiMbK0rjwxKJsiizZFsX0=
+	b=MNFOSZjsNRX3BQGqWwyeUiDFjrU4uv9mGikkPit3NuKlaig6qb0ZcEg2rSMMRkfJU
+	 Qc40SCExOCvaAEaef/U5mkXridAcDc7l8kFTrT4WgqpFqvl0iOo2+0IMQ+eUKvHc0/
+	 lWbWzaRCxzeCsreZP9DEi4nr7YXmgLxhs1+6MCXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Matlack <dmatlack@google.com>,
 	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0659/1815] liveupdate: Reference count outgoing FLB data
-Date: Sat, 12 Sep 2026 08:40:09 +0200
-Message-ID: <20260912065704.351289131@linuxfoundation.org>
+Subject: [PATCH 7.2 0660/1815] liveupdate: Remember FLB retrieve() status
+Date: Sat, 12 Sep 2026 08:40:10 +0200
+Message-ID: <20260912065704.374137786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,101 +55,114 @@ Content-Transfer-Encoding: 8bit
 
 From: David Matlack <dmatlack@google.com>
 
-[ Upstream commit 36882f3392395704c8a3fe7fac831fb6f5737e7d ]
+[ Upstream commit 5c4a03afcb21783987ffc64562b76ddd5a21b12b ]
 
-Increment the outgoing FLB refcount in liveupdate_flb_get_outgoing() so
-that the FLB structure cannot be freed while the caller is actively
-using it. Add an additional liveupdate_flb_put_outgoing() function so
-the caller can explicitly indicate when it is done using the outgoing
-FLB.
+LUO keeps track of successful retrieve attempts on an FLB. It does so
+to avoid multiple retrievals of the same FLB. Multiple retrievals cause
+problems because once the FLB is retrieved, the serialized data
+structures are likely freed and the FLB is likely in a very different
+state from what the code expects.
 
-During a Live Update, the kernel may need to fetch the outgoing FLB
-outside of the scope of a file handler's preserve() and unpreserve()
-callbacks. In that situation there is no way for the caller to protect
-itself against the outgoing FLB from being freed while it is using it.
-Incrementing the reference count in liveupdate_flb_get_outgoing()
-ensures it cannot be freed.
+All this works well when retrieve succeeds. When it fails,
+luo_flb_retrieve_one() returns the error immediately, without ever
+storing anywhere that a retrieve was attempted or what its error code
+was. If the user attempts to retrieve another file registered with the
+same FLB, LUO will attempt to call the FLB's retrieve() callback again.
 
-This change also aligns the outgoing FLB lifecycle management with the
-incoming FLB, since the latter uses the same get/put semantics.
+The retry is problematic for much of the same reasons listed above. The
+FLB is likely in a very different state than what the retrieve logic
+normally expects (e.g. some KHO pages may have already been restored and
+freed).
+
+There is no sane way of attempting the retrieve again. Remember the
+error retrieve returned and directly return it on a retry.
+
+This is done by changing the retrieved bool to a retrieve_status
+integer. A value of 0 means retrieve was never attempted, a positive
+value means it succeeded, and a negative value means it failed and the
+error code is the value.
+
+This is similar to commit f85b1c6af5bc ("liveupdate: luo_file: remember
+retrieve() status") which did the same for LUO files.
 
 Fixes: cab056f2aae7 ("liveupdate: luo_flb: introduce File-Lifecycle-Bound global state")
 Assisted-by: Gemini:gemini-3-pro-preview
 Signed-off-by: David Matlack <dmatlack@google.com>
 Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Link: https://patch.msgid.link/20260528174140.1921129-2-dmatlack@google.com
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Link: https://patch.msgid.link/20260528174140.1921129-3-dmatlack@google.com
 Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
 Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/liveupdate.h  |  5 +++++
+ include/linux/liveupdate.h  |  6 ++++--
  kernel/liveupdate/luo_flb.c | 10 +++++++---
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/include/linux/liveupdate.h b/include/linux/liveupdate.h
-index 88722e5caf020..c344bf987b63a 100644
+index c344bf987b63a..63ea5417de849 100644
 --- a/include/linux/liveupdate.h
 +++ b/include/linux/liveupdate.h
-@@ -243,6 +243,7 @@ int liveupdate_flb_get_incoming(struct liveupdate_flb *flb, void **objp);
- void liveupdate_flb_put_incoming(struct liveupdate_flb *flb);
+@@ -173,7 +173,9 @@ struct liveupdate_flb_ops {
+  * @lock:      A mutex that protects all fields within this structure, providing
+  *             the synchronization service for the FLB's ops.
+  * @finished:  True once the FLB's finish() callback has run.
+- * @retrieved: True once the FLB's retrieve() callback has run.
++ * @retrieve_status: Status code indicating whether retrieve() has been
++ *                   attempted. 0 means not attempted, 1 means successful,
++ *                   and negative value means it failed with that error code.
+  */
+ struct luo_flb_private_state {
+ 	refcount_t count;
+@@ -181,7 +183,7 @@ struct luo_flb_private_state {
+ 	void *obj;
+ 	struct mutex lock;
+ 	bool finished;
+-	bool retrieved;
++	int retrieve_status;
+ };
  
- int liveupdate_flb_get_outgoing(struct liveupdate_flb *flb, void **objp);
-+void liveupdate_flb_put_outgoing(struct liveupdate_flb *flb);
- 
- #else /* CONFIG_LIVEUPDATE */
- 
-@@ -292,5 +293,9 @@ static inline int liveupdate_flb_get_outgoing(struct liveupdate_flb *flb,
- 	return -EOPNOTSUPP;
- }
- 
-+static inline void liveupdate_flb_put_outgoing(struct liveupdate_flb *flb)
-+{
-+}
-+
- #endif /* CONFIG_LIVEUPDATE */
- #endif /* _LINUX_LIVEUPDATE_H */
+ /*
 diff --git a/kernel/liveupdate/luo_flb.c b/kernel/liveupdate/luo_flb.c
-index 5c27134ce7ba5..02b449e1e98ba 100644
+index 02b449e1e98ba..cd715a7c1d992 100644
 --- a/kernel/liveupdate/luo_flb.c
 +++ b/kernel/liveupdate/luo_flb.c
-@@ -133,7 +133,7 @@ static int luo_flb_file_preserve_one(struct liveupdate_flb *flb)
- 	return 0;
- }
+@@ -168,7 +168,10 @@ static int luo_flb_retrieve_one(struct liveupdate_flb *flb)
+ 	if (private->incoming.finished)
+ 		return -ENODATA;
  
--static void luo_flb_file_unpreserve_one(struct liveupdate_flb *flb)
-+void liveupdate_flb_put_outgoing(struct liveupdate_flb *flb)
- {
- 	struct luo_flb_private *private = luo_flb_get_private(flb);
- 
-@@ -264,7 +264,7 @@ int luo_flb_file_preserve(struct liveupdate_file_handler *fh)
- 
- exit_err:
- 	list_for_each_entry_continue_reverse(iter, flb_list, list)
--		luo_flb_file_unpreserve_one(iter->flb);
-+		liveupdate_flb_put_outgoing(iter->flb);
- 	up_read(&luo_register_rwlock);
- 
- 	return err;
-@@ -289,7 +289,7 @@ void luo_flb_file_unpreserve(struct liveupdate_file_handler *fh)
- 
- 	guard(rwsem_read)(&luo_register_rwlock);
- 	list_for_each_entry_reverse(iter, flb_list, list)
--		luo_flb_file_unpreserve_one(iter->flb);
-+		liveupdate_flb_put_outgoing(iter->flb);
- }
- 
- /**
-@@ -544,6 +544,10 @@ int liveupdate_flb_get_outgoing(struct liveupdate_flb *flb, void **objp)
- 		return -EOPNOTSUPP;
- 
- 	guard(mutex)(&private->outgoing.lock);
-+	if (!private->outgoing.obj)
-+		return -ENOENT;
+-	if (private->incoming.retrieved)
++	if (private->incoming.retrieve_status < 0)
++		return private->incoming.retrieve_status;
 +
-+	refcount_inc(&private->outgoing.count);
- 	*objp = private->outgoing.obj;
++	if (private->incoming.retrieve_status > 0)
+ 		return 0;
+ 
+ 	if (!fh->active)
+@@ -194,12 +197,13 @@ static int luo_flb_retrieve_one(struct liveupdate_flb *flb)
+ 
+ 	err = flb->ops->retrieve(&args);
+ 	if (err) {
++		private->incoming.retrieve_status = err;
+ 		module_put(flb->ops->owner);
+ 		return err;
+ 	}
+ 
+ 	private->incoming.obj = args.obj;
+-	private->incoming.retrieved = true;
++	private->incoming.retrieve_status = 1;
  
  	return 0;
+ }
+@@ -213,7 +217,7 @@ void liveupdate_flb_put_incoming(struct liveupdate_flb *flb)
+ 		if (!refcount_dec_and_test(&private->incoming.count))
+ 			return;
+ 
+-		if (!private->incoming.retrieved) {
++		if (private->incoming.retrieve_status <= 0) {
+ 			int err = luo_flb_retrieve_one(flb);
+ 
+ 			if (WARN_ON(err))
 -- 
 2.53.0
 
