@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666022BDC0E;
-	Sat, 12 Sep 2026 07:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B88A29B799;
+	Sat, 12 Sep 2026 07:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199489; cv=none; b=bEovtcW5wSPI0+o1dGoTbM8fpc1yOeDzNOHI4kXKU5PiKqlD6Wr9OfBTb/VH3dpHVfk7G4vcuf8XNm9/FxZ/ktzCAuVaLCD+eEoTZEO4u35GgEOqFHwj2qLqiD1/6T6lHL6/39RZip2qAxC24UL2ZaB3Orq7Frv+GKbN9lbo4bE=
+	t=1789199494; cv=none; b=Wvg1jea8dQKarOoLC0hhc2pOLB9lNkzOiXOpC81RFrlqwzSEXDKfm8LArpIlvcYuAiYH2c6tvcASGIiE44PkpiJi0CESV7aIU1JcwCH2P25oZH5z19iQ7Bc2PC0i3qynT+m6mialieZG6GPGrsuA15d3uGK/bkcrs1ezlv6iu6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199489; c=relaxed/simple;
-	bh=aljWuZp8s8sBXGq767ksYGxtY37e1IEz9gZoWHvY30M=;
+	s=arc-20240116; t=1789199494; c=relaxed/simple;
+	bh=zPKNkn3DNo9IM9w/aXGqrhIB7C5X84Ob4+8waRnBgqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qGGUJx8pJaJji3U9uPRl0ewyZGZBf8bYcU59PUe+rMaoYfvnGsKudomV056cMfBnJCtFuWN62iG0A1pyUdOlABet1kZ7N5X12r3VXv/WH+7mb/t8gXOQ4tRltakZ9z/dxsWUw1YYfJDcsmxPDCMrfN0bNGaqSZCwQSMAw+zXg8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMRocqbJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aeJIP9cDsOy5w92m/eo5cM6kQZz9yfzKj5qt36cvIeJvZmoGStYT3rs2wM90jTzqXJqHYjNlLXnTFzqZTpgSBHcp6H3OB/e6MgqdwTxoo74jHJEq6+Hebzg4L/6Z30zPerlbUowxZ2qHenbPeCInN3deAHXN9hP65J5CyY7nJDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHbvz+nJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMRocqbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E2D1F000FF;
-	Sat, 12 Sep 2026 07:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHbvz+nJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9431F000FF;
+	Sat, 12 Sep 2026 07:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199488;
-	bh=+RJhBqpocGj4/Iki69rxra64E6pylJVbh0k10rrDyYo=;
+	s=korg; t=1789199493;
+	bh=M/ccjKpgxkYdFLof/xKE3ID2rRcVwuSn9CRhrmN+Fag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SMRocqbJGWtsA5mI/hSJCSVSoaJbXKJdZrblqB/UKEECUJdmfgxp/Xw63MxY6aepw
-	 Mo/nDAFol3Cy86f8mMjc0jb9HIQC/8U/jzaDpeIoFUW3r3OFlyDg3Qkm1J/huTdKTz
-	 jbgC5j5HP8jrduEhwStzATUIyzSbS4e07zz183v8=
+	b=FHbvz+nJusCkLfJPhd31eNfs+kP/F8R3K+e26vVhOzyEvzFC7xRlic5MMC1nUL+dj
+	 3eWAmjBOMtd7gwgcRzxCZATKCn+E0m/X8cN8azVPfQiGiOM76UP/Z9p024w1BRavUJ
+	 4t7uQcTic/ZJU/XFWBUgYdpeNgIMJjwGscdIigcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gary Guo <gary@garyguo.net>,
+	Alexandre Courbot <acourbot@nvidia.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0552/1815] rust: device: make lifetime on `Core` and `CoreInternal` invariant
-Date: Sat, 12 Sep 2026 08:38:22 +0200
-Message-ID: <20260912065701.843605649@linuxfoundation.org>
+Subject: [PATCH 7.2 0553/1815] samples: rust: debugfs: fix excessive stack use
+Date: Sat, 12 Sep 2026 08:38:23 +0200
+Message-ID: <20260912065701.866181575@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,97 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit f7acb19abcd867e5d2e1feb6197dcc65aa3b8e45 ]
+[ Upstream commit f5256ad60651fc010e2cf6dc7fe195415f496fc9 ]
 
-Currently the lifetime on `Core` and `CoreInternal` is covariant. This
-means that they can be coerced into shorter living lifetimes. On `probe`
-function, signature has `&'bound Device<Core<'a>>`; the type's wellformness
-would imply `'a: 'bound` and thus the type can be coerced `&'bound
-Device<Core<'bound>>`, defeating the purpose of having the lifetime bound
-to prevent users of the `Core` type to escape the function.
+The current implementation creates a 4K array and move it into the box.
+Klint reports that this causes excesssive stack usage:
 
-Fix this by making the lifetime invariant, so the coercion is impossible.
-The lifetime here only needs to be "branded" so it does not coerce or unify
-with other lifetimes, so we do not need to ensure `'bound: 'a`.
+warning: stack size of `create_file_write` is 4472 bytes, exceeds the 2048-byte limit
+  --> samples/rust/rust_debugfs_scoped.rs:54:1
+   |
+54 | / fn create_file_write(
+55 | |     mod_data: &ModuleData,
+56 | |     reader: &mut kernel::uaccess::UserSliceReader,
+57 | | ) -> Result {
+   | |___________^
+   |
+   = note: the stack size is inferred from instruction `sub $0x1178,%rsp` at .text+2205
 
-This requires modifying `nova-core` which relies on this implied bound due
-to pre-2024 capture rule. The "use" bound can be removed if built with
-edition 2024.
+Use pin-init to create the array in-place instead.
 
-Fixes: 24799831d631 ("rust: device: make Core and CoreInternal lifetime-parameterized")
+Fixes: f656279afde1 ("samples: rust: debugfs_scoped: add example for blobs")
 Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260713201455.640151-1-gary@kernel.org
-[ Fixup the debugfs sample to use an explicit lifetime instead of
-  Core<'_>. - Danilo ]
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Link: https://patch.msgid.link/20260716144144.3665719-1-gary@kernel.org
+[ Make the patch rustfmtcheck complient. - Danilo ]
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/nova-core/gpu.rs |  6 +++---
- rust/kernel/device.rs        | 10 ++++++++--
- samples/rust/rust_debugfs.rs |  4 +++-
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ samples/rust/rust_debugfs_scoped.rs | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/nova-core/gpu.rs b/drivers/gpu/nova-core/gpu.rs
-index b3c91731db45d..b603b0bd2692b 100644
---- a/drivers/gpu/nova-core/gpu.rs
-+++ b/drivers/gpu/nova-core/gpu.rs
-@@ -285,10 +285,10 @@ pub(crate) struct Gpu<'gpu> {
- }
- 
- impl<'gpu> Gpu<'gpu> {
--    pub(crate) fn new(
--        pdev: &'gpu pci::Device<device::Core<'_>>,
-+    pub(crate) fn new<'a>(
-+        pdev: &'gpu pci::Device<device::Core<'a>>,
-         bar: Bar0<'gpu>,
--    ) -> impl PinInit<Self, Error> + 'gpu {
-+    ) -> impl PinInit<Self, Error> + use<'gpu, 'a> {
-         try_pin_init!(Self {
-             device: pdev.as_ref(),
-             spec: Spec::new(pdev.as_ref(), bar).inspect(|spec| {
-diff --git a/rust/kernel/device.rs b/rust/kernel/device.rs
-index 1a38b3bbdfb7d..09ad8ec31548c 100644
---- a/rust/kernel/device.rs
-+++ b/rust/kernel/device.rs
-@@ -511,7 +511,11 @@ pub struct Normal;
- /// callback it appears in. It is intended to be used for synchronization purposes. Bus device
- /// implementations can implement methods for [`Device<Core>`], such that they can only be called
- /// from bus callbacks.
--pub struct Core<'a>(PhantomData<&'a ()>);
-+///
-+/// The lifetime `'a` is for "lifetime branding" purpose. Callbacks need to polymorphic over this
-+/// lifetime so the `&'bound Device<Core<'_>>` provided to them cannot outlive the scope of the
-+/// function. For this reason, it needs to be invariant.
-+pub struct Core<'a>(PhantomData<fn(&'a ()) -> &'a ()>);
- 
- /// Semantically the same as [`Core`], but reserved for internal usage of the corresponding bus
- /// abstraction.
-@@ -522,7 +526,9 @@ pub struct Core<'a>(PhantomData<&'a ()>);
- ///
- /// This context mainly exists to share generic [`Device`] infrastructure that should only be called
- /// from bus callbacks with bus abstractions, but without making them accessible for drivers.
--pub struct CoreInternal<'a>(PhantomData<&'a ()>);
-+///
-+/// Lifetime `'a` is invariant for the same reason as [`Core`].
-+pub struct CoreInternal<'a>(PhantomData<fn(&'a ()) -> &'a ()>);
- 
- /// The [`Bound`] context is the [`DeviceContext`] of a bus specific device when it is guaranteed to
- /// be bound to a driver.
-diff --git a/samples/rust/rust_debugfs.rs b/samples/rust/rust_debugfs.rs
-index 1f59e08aaa4b0..0b27ad96ecbfa 100644
---- a/samples/rust/rust_debugfs.rs
-+++ b/samples/rust/rust_debugfs.rs
-@@ -147,7 +147,9 @@ impl RustDebugFs {
-         dir.read_write_file(c"pair", new_mutex!(Inner { x: 3, y: 10 }))
+diff --git a/samples/rust/rust_debugfs_scoped.rs b/samples/rust/rust_debugfs_scoped.rs
+index 6a575a15a2c2f..ca2b154be3842 100644
+--- a/samples/rust/rust_debugfs_scoped.rs
++++ b/samples/rust/rust_debugfs_scoped.rs
+@@ -75,7 +75,10 @@ fn create_file_write(
+             GFP_KERNEL,
+         )?;
      }
+-    let blob = KBox::pin_init(new_mutex!([0x42; SZ_4K]), GFP_KERNEL)?;
++    let blob = KBox::pin_init(
++        new_mutex!(pin_init::init_array_from_fn(|_| 0x42)),
++        GFP_KERNEL,
++    )?;
  
--    fn new<'a>(pdev: &'a platform::Device<Core<'_>>) -> impl PinInit<Self, Error> + 'a {
-+    fn new<'a, 'b>(
-+        pdev: &'a platform::Device<Core<'b>>,
-+    ) -> impl PinInit<Self, Error> + use<'a, 'b> {
-         let debugfs = Dir::new(c"sample_debugfs");
-         let dev = pdev.as_ref();
- 
+     let scope = KBox::pin_init(
+         mod_data.device_dir.scope(
 -- 
 2.53.0
 
