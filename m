@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783143403F5;
-	Sat, 12 Sep 2026 08:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A6335F184;
+	Sat, 12 Sep 2026 08:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200335; cv=none; b=YCzReXi7k4Zm1xx6YAxtf1PFM7B2fgOyJkNj6hxd0E4z5iMcJWDVG872oD3NKxuqjuwadbBhNSa5yi9ZTUZyFckJTExMOwqNU/H2wm8MuF74yY2r8D0vNgRXPB9CAya/1ZX1bZE77jn+kesNrsRZZ744DmIyEUxal4EdOJsYuS0=
+	t=1789200340; cv=none; b=lnac/iKnty2JYAFpv+a1ElaHYZXsouhSjuB/7QCrvXQU20UL9Ya5uCFH8BuLao/IxT02C1FQ5aEyf8yvPSJ65eBAJQhPZW0lWbHPpiC4qIGOIHM0ImHWo0BDOR03WXIyheDkXf0Bpea9y+dcqQfqPjTEM0oW4BadOR8GQrQ4UyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200335; c=relaxed/simple;
-	bh=+I8Obml1+0gJcBJerfbr5MRp/5R3a55pjeokcgeLqGY=;
+	s=arc-20240116; t=1789200340; c=relaxed/simple;
+	bh=xv5BzWGiKHGnq4GbuO5/msDnhVdbXqkDhhMdYAsmBTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=isDX/L3WkFA/YInhR3RKvcUdefmPPFbPUZRE2u1L5vmggjwTV1cNiSGGrZjrXxqM0aP0DCdQsUSe8VeRxJNpixmWHqT82Rg77Ps5Kvnh3x8priBg+dndU5DTLwX563EKFzuDzAJaTOaPE1VIEae33uNBQo45urNzSa4zXVnttm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvvpn6j+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EDIe6fOyFqk7dKEMqi8Y9itE2Q8LXfUKD0tpTkEm0pFOQDJIsUduB+XeFlyzf0FaJSTCjhr0K1WPGoczGRInaYbj4THzVTvGb7KE4PNzV3ACbatvcoM347Q3xQeKHkiavFG7K77oHzaQQOd1Vcn2voiUC7/nFnHFrltX5Kh9bmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALYdf8YX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvvpn6j+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169E01F000FF;
-	Sat, 12 Sep 2026 08:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALYdf8YX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679BC1F000FF;
+	Sat, 12 Sep 2026 08:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200334;
-	bh=alw0jcjhho6VZUyuWkzIRU5r/Df03Qj26weUI6K6YWg=;
+	s=korg; t=1789200339;
+	bh=DEEK6+OiTuuNluoLFAAjOIBW68FEHnZ6EVsLKP35mmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zvvpn6j+KCVcTEDj5H9NQyFfbVrwCBajUsABCqMSHzSlj7mX9dWolgvA/HxcIZbRp
-	 A8LL+CLk96EsGf6/Z8OJH2NETUagZNSPY+A/rTgfPkElIGsKyOShXJraTKMEvFaxdI
-	 9g3NpjH6bziB9uSY7hbzfVWv/9sMgmqCRgM4BVfw=
+	b=ALYdf8YX2w8yiTPFoxl7CIV1Z8TH3wt0LNMcP6ex5f791mALlLE9ir4cz3k0qfAFo
+	 6eX6kG9hhg3+bH3bFJ25DhiAj2qFtLrmu8iKW+wFzUtGu9cF4RS4lHSTGs7+FArArg
+	 tQOf/RXbpJsOHQnWw6AvpiVHA0RId4fW7oOEX/Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Jan Kara <jack@suse.cz>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0767/1815] fanotify: stop permission watchdog when timeout is zero
-Date: Sat, 12 Sep 2026 08:41:57 +0200
-Message-ID: <20260912065706.911769707@linuxfoundation.org>
+Subject: [PATCH 7.2 0768/1815] tools/nolibc/powerpc: mark ctr and xer as clobbered by system call
+Date: Sat, 12 Sep 2026 08:41:58 +0200
+Message-ID: <20260912065706.935729730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,57 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 17463fe751309330b74618560f181426f643aa3d ]
+[ Upstream commit b9fc5a1742b0c8fb7edf066cc17fa0b18b7be623 ]
 
-The fanotify permission watchdog can be disabled by writing zero to
-fs/fanotify/watchdog_timeout.  fanotify_perm_watchdog_group_add() already
-checks for a zero timeout before scheduling the watchdog.
+The system call can clobber the ctr and xer registers.
 
-However, once the watchdog work has been scheduled, perm_group_watchdog()
-unconditionally schedules itself again with the current timeout.  If the
-sysctl is changed to zero while the work is active, secs_to_jiffies(0)
-causes the work to be rescheduled immediately, resulting in a kworker
-busy loop.
+Make sure the compiler takes this into account.
 
-Read the timeout once in perm_group_watchdog_schedule() and do not
-schedule the work when it is zero.  This lets a running watchdog stop
-after the next execution when the sysctl is set to zero.
+The missing clobbers only seem to be an issue with newer compilers.
 
-Fixes: b8cf8fda522d ("fanotify: add watchdog for permission events")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Link: https://patch.msgid.link/20260730070648.549458-1-chenyichong@uniontech.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 0cb0675ec37e ("tools/nolibc: add support for powerpc")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20260727-nolibc-powerpc-clobber-v1-1-e0911cc99ce1@linutronix.de
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/include/nolibc/arch-powerpc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 7278286f5a6d9..9ec8fa6a27a67 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -112,7 +112,12 @@ static DECLARE_DELAYED_WORK(perm_group_work, perm_group_watchdog);
+diff --git a/tools/include/nolibc/arch-powerpc.h b/tools/include/nolibc/arch-powerpc.h
+index a1ab91d553845..dbe2e5205aaaf 100644
+--- a/tools/include/nolibc/arch-powerpc.h
++++ b/tools/include/nolibc/arch-powerpc.h
+@@ -26,7 +26,7 @@
+  */
  
- static void perm_group_watchdog_schedule(void)
- {
--	schedule_delayed_work(&perm_group_work, secs_to_jiffies(perm_group_timeout));
-+	int timeout = READ_ONCE(perm_group_timeout);
-+
-+	if (!timeout)
-+		return;
-+
-+	schedule_delayed_work(&perm_group_work, secs_to_jiffies(timeout));
- }
+ #define _NOLIBC_SYSCALL_CLOBBERLIST \
+-	"memory", "cr0", "r12", "r11", "r10", "r9"
++	"memory", "cr0", "ctr", "xer", "r12", "r11", "r10", "r9"
  
- static void perm_group_watchdog(struct work_struct *work)
+ #define __nolibc_syscall0(num)                                               \
+ ({                                                                           \
 -- 
 2.53.0
 
