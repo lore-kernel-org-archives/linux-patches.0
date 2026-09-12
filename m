@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551D62E7631;
-	Sat, 12 Sep 2026 13:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B7B3161A1;
+	Sat, 12 Sep 2026 13:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221164; cv=none; b=VpA+oC4YMYpPwyDKhSF87Jesq7uhI49MZn9/WVnoW5LvAlpglu2rILSNx9oPrvEJhBs8TQ2H0nLxJjk44KGiDYHnZlLOdqfggZWd9nkmJs9am20G72A1HbG69uCo0aY1aXFktzgGUbgzJCKEY+KKBOLj02+OzDIdIXg9QtstdTw=
+	t=1789221169; cv=none; b=crgXvin7Xz39A/y0zKM0q83p8pA+AXfQ4preGjTJJspPHtjxZfGG+zs8Al303JkpQrddAW6eQ5g8O8ZnpDJDBo3QM5h5PIodBYxJhekIP4pvQ2IWWiIqE4/nyg841HmNV6/q11JXkj2dHSz3T3tJh/xo08oovp37gTCpR1Hv1gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221164; c=relaxed/simple;
-	bh=4cdn8DDZcWqwrUJixU4cNkfIG1g74R2K3VmhLxaDovs=;
+	s=arc-20240116; t=1789221169; c=relaxed/simple;
+	bh=wi9jRzG0vuKmAKEAHDBfGoOWGGHoTWYi5DYlZ4KnLR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jW8C4XM/dV2sKvHKFGykknAbxtXnvWMzmm0gkHlqRAPiP6h5//pM8ziDhcwNdEuIbqI/gGEiMPOHuOvBAGfyrhdk26cCag3+1WoELcMKLg3sh0K+gch6KGE+LFQjNV4oJPh0J+HQdkgU0zv/g0Dat+G5L2A57tsoAHl6Oi4VWvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxAlHJVK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ig1N1DwpAnOb8eN6kw6d4kAwRNwQYCCcu0SMN66JibXm7aJwRn1lK1iEeeBJYhlz1jVMM+czSW/xSdpaJKudqq7DflJlj+769MUq9x+PfFD3+nKPf47oaQeSmO8AnYtBYzm8wmPRlIFOVoXy+FB9zF3hztpVOmk/YPeSsFq3VUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXRBneJX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxAlHJVK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEECF1F000FF;
-	Sat, 12 Sep 2026 13:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXRBneJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A1D1F000FF;
+	Sat, 12 Sep 2026 13:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221163;
-	bh=lx/8JW9TLrrF/d6s2oQa7n+r8lKMkD2QvabqF0rSlfw=;
+	s=korg; t=1789221167;
+	bh=mgZwuK+ejY4ab6zb9mc8KCkE6RYdxZfm7JoKpw5+TPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vxAlHJVKZW4/Ol6Oi71NQRNqXKjZMAYooSUUdAgJKMjuHTozt4Qud6Gc7PwUnG7Te
-	 9wSPZ7yK3qYSW/gIIAfWVDF9Ki8q2DgZYtJv42wBBl3F3mObpqeTESsRdXVVV9fYfs
-	 t+qulwBYIuxHLviDvaSVrrg0ilbmFv3bqqHpEkz8=
+	b=AXRBneJX6xZ7bx5Td5qJKAG4+fIRPmARTN8jRsssmac/3J6w9jzweDBSt32UoMgqG
+	 2h2wCI5FxHvdIE/OJIfXJPszJUn5d+RxPQtqwhFKH1fx/j1Wae8F9IG8OkhYU1sMR5
+	 96tDwGzmByENykyNoZ2Tco/FJ+dbDuBzocwA9Vt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.6 0327/1424] usb: f_mass_storage: Bump local buffer size in fsg_common_create_luns()
-Date: Sat, 12 Sep 2026 08:45:59 +0200
-Message-ID: <20260912065614.610279028@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 0301/1424] tpm: tpm_i2c_nuvoton: disable IRQ on wait timeout
+Date: Sat, 12 Sep 2026 08:45:33 +0200
+Message-ID: <20260912065614.026517808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,49 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 9f6f095beec82a80daa666a3b2186a5b95841e9a upstream.
+commit 705c4ed0643366963547b2616d53165f2519c81f upstream.
 
-GCC (Debian 14.2.0-19) is not happy about the buffer size:
+i2c_nuvoton_wait_for_stat() enables the IRQ before waiting for the
+interrupt handler to report a status change. If the wait times out, or is
+interrupted before the handler runs, the function returns without
+balancing the enable_irq() call.
 
-drivers/usb/gadget/function/f_mass_storage.c:2970:48: error: ‘%d’ directive output may be truncated writing between 1 and 9 bytes into a region of size 5 [-Werror=format-truncation=]
+Disable the IRQ before leaving the failed wait path. Also preserve an
+interrupted wait's original error code instead of converting it to
+-ETIMEDOUT inside the helper.
 
-Bump the size to get it enough for all possible values.
-
-Note, although cfg->nluns is limited to FSG_MAX_LUNS (16), the compiler
-doesn't realize this and complains about the buffer size.
-
-Also note, the existing comment is wrong as size 8 for the whole buffer
-doesn't cover 100 mil numbers, hence drop it altogether.
-
-Fixes: b27c08c953e9 ("usb: gadget: f_mass_storage: create lun creation helpers for use in fsg_common_init")
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260817161239.1448582-1-andriy.shevchenko@linux.intel.com
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: 4c336e4b1556 ("tpm: Add support for the Nuvoton NPCT501 I2C TPM")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260626091653.54929-1-mhun512@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/tpm_i2c_nuvoton.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -2961,7 +2961,7 @@ EXPORT_SYMBOL_GPL(fsg_common_create_lun)
- 
- int fsg_common_create_luns(struct fsg_common *common, struct fsg_config *cfg)
- {
--	char buf[8]; /* enough for 100000000 different numbers, decimal */
-+	char buf[14];
- 	int i, rc;
- 
- 	fsg_common_remove_luns(common);
+--- a/drivers/char/tpm/tpm_i2c_nuvoton.c
++++ b/drivers/char/tpm/tpm_i2c_nuvoton.c
+@@ -181,8 +181,10 @@ static int i2c_nuvoton_wait_for_stat(str
+ 						      timeout);
+ 		if (rc > 0)
+ 			return 0;
+-		/* At this point we know that the SINT pin is asserted, so we
+-		 * do not need to do i2c_nuvoton_check_status */
++
++		disable_irq(priv->irq);
++		if (rc < 0)
++			return rc;
+ 	} else {
+ 		unsigned long ten_msec, stop;
+ 		bool status_valid;
 
 
