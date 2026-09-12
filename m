@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41032371887;
-	Sat, 12 Sep 2026 10:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9C4422E08;
+	Sat, 12 Sep 2026 10:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208111; cv=none; b=AymA+oFytgGo+TJb0diTnbgKHBVxdqG6v/KXglGhYFmtbt1vXshaJTFpIQY1NOX25h6EwmtTI/kCmr8jwvFvjalqeSZoPXKrIrs7P11Ker5svtGDl/rK5zMlMSJW+tWFpoyVJoQSIzCRf2sejujv1+kdGa8LCF7q0MYJnM29aVY=
+	t=1789208116; cv=none; b=PrI/el1Qw3tyaKTVq4IcrXncQ7X9eGEcd5No94QpK6EGFC5OTP+LwF/zJkfKTCHlYbek/1C/73mCaHD2DtNBJP042uOtvJll1CZHulxiXQl7qVHfRVe0I9+uFq0IS7N5a2XcJ4PnXvtknX9LmPirCtDLUgMWxYxIOEB4aXrewP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208111; c=relaxed/simple;
-	bh=VA9CQUj1XyzBq5VPxsBArCMxyVlsZlYjLCPRSoYvl2k=;
+	s=arc-20240116; t=1789208116; c=relaxed/simple;
+	bh=p9XvlL7DywVXEj/KSB+Y2fsRaevKAZwYpSnQ+5HbV1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBHsabowf/1qYUGxUndQf2AdL/BM90/K/sMnAP3mW+dVU6dXxoLC4ZlwY5IKoV6ePimPGmox6aJmDHhTscSl/T5dWVYm1Cp1l/4+zYX4YWrQpZSFbIklIp7sVXVNrYIuntky8c0JtL3rNIkD3Re+lc1a5Hf2S56eC/qOZy4Z6eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gX6QkgAn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRpLMCDlJdDzVQpOv+AppfUVJntXXR+uHGGMOQbjZzwVmR32GbkMx7xwnnn/Q0wnHAI8LFmJFM9KjPhBD0hY3Vzl4AhTuoMGecLlfOszZz2fFc3Kamc6kQpHPPO6gjiFiIoU8e/QHKGsEmK8qgdF9qcfEWY3Z3qD22+zbM0rF90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPj0sKfT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gX6QkgAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB731F000FF;
-	Sat, 12 Sep 2026 10:15:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPj0sKfT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0087D1F000FF;
+	Sat, 12 Sep 2026 10:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208110;
-	bh=Hxm34tqlFH4XsZ0L5HWrY7L4h+fGGowdJi2ij9/wx2A=;
+	s=korg; t=1789208114;
+	bh=prO5nV7ol7xHUoceBY2NkcJXhgTwhspk8IQXEQX4+Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gX6QkgAngqCFCOX8PxLK4inKQ+oKgjC2GLBaaDww+PnZsY1G1Uy81IxzuWxoB/oyx
-	 r+P2q63Osm8cqfcBO3XeRxjzJkMsqlveKSwZ6HmzDqYGKo0cmDb+bww2Zd5cg1r3mF
-	 PMDIG6RIDFhaUETKNOWq3wIOM6fg6GpdijCbwKj0=
+	b=bPj0sKfTF6xFvQwfFauxIFnrRdrXcscEYk7sZze+TtFVbmJvdqAwHVyq3y8BisMsu
+	 IDhQ+r5+lQixFRMV98ITwWJZyYAn8ZDzbV0qiaBaRw/HzdKjrctTrFuvtMiGBHa7fp
+	 eihYCflrhS2FnB6L5Uf+DVGTgHpUpBSQ8UDLT5xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Marco Scardovi <scardracs@disroot.org>,
-	K Prateek Nayak <kprateek.anayk@amd.com>,
-	Mario Limonciello <superm1@kernel.org>,
+	Takuma Fujiwara <t-fujiwara1@ti.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0549/1518] cpufreq/amd-pstate: Fix EPP return type and handle errors during initialization
-Date: Sat, 12 Sep 2026 08:45:18 +0200
-Message-ID: <20260912065635.859552569@linuxfoundation.org>
+Subject: [PATCH 6.18 0509/1518] PCI: j721e: Fix incorrect max_lanes for J7200
+Date: Sat, 12 Sep 2026 08:44:38 +0200
+Message-ID: <20260912065634.959630005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,96 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Takuma Fujiwara <t-fujiwara1@ti.com>
 
-[ Upstream commit 57476909c3000a04e84a1d6018d63ba1b2aa20ab ]
+[ Upstream commit 7147a7bfce47acd48c3738130bf0bd692bfd80de ]
 
-Currently, the EPP getter helper functions (msr_get_epp, shmem_get_epp, and
-the static call wrapper amd_pstate_get_epp) return u8 or s16. This makes it
-difficult to correctly propagate negative error values returned by the
-underlying MSR read or CPPC helpers (such as rdmsrq_on_cpu or
-cppc_get_epp_perf).
+The PCIe Controller in the J7200 SoC supports a 4-lane configuration.
+However, j7200_pcie_rc_data and j7200_pcie_ep_data incorrectly set
+.max_lanes = 2, limiting operation to fewer lanes than the hardware
+supports.
 
-Modify the return type of these functions to int, allowing them to return
-negative error codes properly.
+Set .max_lanes = 4 for both j7200_pcie_rc_data and j7200_pcie_ep_data to
+match the hardware capability.
 
-Additionally, in amd_pstate_epp_cpu_init(), fetch the firmware-programmed
-default EPP value and validate it before assigning it to the EPP variables.
-If amd_pstate_get_epp() returns an error code, propagate the error and abort
-the CPU initialization to prevent subsequent configuration failures.
+See J7200 Technical Reference Manual (SPRUIU1D), section 12.2.3.1.1
+for further details: https://www.ti.com/lit/pdf/spruiu1d
 
-Fixes: 555bbe67a622 ("cpufreq/amd-pstate: Convert all perf values to u8")
-Assisted-by: Antigravity:gemini-3.5-flash
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Reviewed-by: K Prateek Nayak <kprateek.anayk@amd.com>
-Link: https://lore.kernel.org/r/20260609073042.81275-2-scardracs@disroot.org
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Fixes: 3ac7f14084f5 ("PCI: j721e: Add per platform maximum lane settings")
+Signed-off-by: Takuma Fujiwara <t-fujiwara1@ti.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://patch.msgid.link/20260721155743.3347659-1-t-fujiwara1@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/pci/controller/cadence/pci-j721e.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 9bec26f4e842d..259f04d89a79c 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -197,7 +197,7 @@ static inline int get_mode_idx_from_str(const char *str, size_t size)
+diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
+index 0413d163cfea0..e2ec684cc54ca 100644
+--- a/drivers/pci/controller/cadence/pci-j721e.c
++++ b/drivers/pci/controller/cadence/pci-j721e.c
+@@ -381,7 +381,7 @@ static const struct j721e_pcie_data j7200_pcie_rc_data = {
+ 	.quirk_detect_quiet_flag = true,
+ 	.linkdown_irq_regfield = J7200_LINK_DOWN,
+ 	.byte_access_allowed = true,
+-	.max_lanes = 2,
++	.max_lanes = 4,
+ };
  
- static DEFINE_MUTEX(amd_pstate_driver_lock);
+ static const struct j721e_pcie_data j7200_pcie_ep_data = {
+@@ -389,7 +389,7 @@ static const struct j721e_pcie_data j7200_pcie_ep_data = {
+ 	.quirk_detect_quiet_flag = true,
+ 	.linkdown_irq_regfield = J7200_LINK_DOWN,
+ 	.quirk_disable_flr = true,
+-	.max_lanes = 2,
++	.max_lanes = 4,
+ };
  
--static u8 msr_get_epp(struct amd_cpudata *cpudata)
-+static int msr_get_epp(struct amd_cpudata *cpudata)
- {
- 	u64 value;
- 	int ret;
-@@ -213,12 +213,12 @@ static u8 msr_get_epp(struct amd_cpudata *cpudata)
- 
- DEFINE_STATIC_CALL(amd_pstate_get_epp, msr_get_epp);
- 
--static inline s16 amd_pstate_get_epp(struct amd_cpudata *cpudata)
-+static inline int amd_pstate_get_epp(struct amd_cpudata *cpudata)
- {
- 	return static_call(amd_pstate_get_epp)(cpudata);
- }
- 
--static u8 shmem_get_epp(struct amd_cpudata *cpudata)
-+static int shmem_get_epp(struct amd_cpudata *cpudata)
- {
- 	u64 epp;
- 	int ret;
-@@ -1716,6 +1716,7 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
- 	struct amd_cpudata *cpudata;
- 	union perf_cached perf;
- 	struct device *dev;
-+	int default_epp;
- 	int ret;
- 
- 	/*
-@@ -1767,6 +1768,13 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
- 
- 	policy->boost_supported = READ_ONCE(cpudata->boost_supported);
- 
-+	/* Fetch the firmware programmed default EPP value */
-+	default_epp = amd_pstate_get_epp(cpudata);
-+	if (default_epp < 0) {
-+		ret = default_epp;
-+		goto free_cpudata1;
-+	}
-+
- 	/*
- 	 * Set the policy to provide a valid fallback value in case
- 	 * the default cpufreq governor is neither powersave nor performance.
-@@ -1774,7 +1782,7 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
- 	if (amd_pstate_acpi_pm_profile_server() ||
- 	    amd_pstate_acpi_pm_profile_undefined()) {
- 		policy->policy = CPUFREQ_POLICY_PERFORMANCE;
--		cpudata->epp_default_ac = cpudata->epp_default_dc = amd_pstate_get_epp(cpudata);
-+		cpudata->epp_default_ac = cpudata->epp_default_dc = default_epp;
- 		cpudata->current_profile = PLATFORM_PROFILE_PERFORMANCE;
- 	} else {
- 		policy->policy = CPUFREQ_POLICY_POWERSAVE;
+ static const struct j721e_pcie_data am64_pcie_rc_data = {
 -- 
 2.53.0
 
