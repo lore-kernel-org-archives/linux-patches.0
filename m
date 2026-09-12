@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A7D2931FB;
-	Sat, 12 Sep 2026 08:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952F930567B;
+	Sat, 12 Sep 2026 08:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200106; cv=none; b=besKgMW3k5eFMWC8fBdcHSGtBgn6569w8GchPyI8cd8D8BkOMZAvNY/+afmCkBQzV0azNa2usXPZaJ/q5n9AeBXWoYy4A0LzktmKdBhKPD0nJKnivt+KcAGwcWAkA/GaA3OGTn+BwmLUZeymREmNLf3xgavp19oHxgyOg5OVE7c=
+	t=1789200110; cv=none; b=LBMNjq+7AnM0JUhHhng/nS4rO4jvnLeOIM0fpZbSKYiwJLDh3+e6mv/Dhnd8cTLxzIVBY+WfjFHde8l3g5Kujk64PmyU7PobbBcfqljFr9up6GGlXTtCDLmE1jfdLFUttV4lb+IXG4uXGzhhdoBqiKK1FsEvJRKjLW/EzLz0KLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200106; c=relaxed/simple;
-	bh=PAkc75i7nb81vhWcmqL5rBLMPZmW47Tz5S2YrPeMcEE=;
+	s=arc-20240116; t=1789200110; c=relaxed/simple;
+	bh=WOoU1teFocNXQBihqnLWFl+RRC0hlDEbVmCPF69KzVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4h+6redev0x/CA3P9cjD8xCSV6d0yg8Fr6UlOxcPr8nadgg+HV49gDyVYmnPWQi9kDzGNoSh9Qn7PavkUuVkFb/bJKpbDYA3qZpIlU0GBH0fr3YcR9j/cypwqgIBR8xQmM6voM7dUzfTmmKy+NPAURuoF7BZH0DZ9+QVOv0emo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsMyyZ2/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ImVVW7aAr9ppcRvXMn3kdw96LvSFHAbVx5JtgEB14ZlPxjGB9IErcbKI2YZjmP+gX5ss9ChfZBpezl6PHYn0GN8GTZjfVCd387uaKzXSwAuF8XzVwoev29IKrwLWgwB+ETA6sZMQT5MbVRZeEYdmBGQA75w6YlemtbPsROMiodY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYJf0DoL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsMyyZ2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE601F000FF;
-	Sat, 12 Sep 2026 08:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYJf0DoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7CD1F000FF;
+	Sat, 12 Sep 2026 08:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200104;
-	bh=427m0LO6IZR69uVJZNNMMCvyrUKIoWluzWmqptr/B8U=;
+	s=korg; t=1789200109;
+	bh=hpVBQ2zIRVZH1jycT51U+QGXMFKwj5u70EbLZuEOoG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vsMyyZ2/FkLZqCqnFueFnoAEWBi8KVS+oujvvsHCIUHQLK+4KRnAjMiepOvnSNq77
-	 d0CmX0DRZpg0N2fGFXRVxnZVfxu6/OnCVWiGPa7UOXaxB4qlN6Re2/x6JkqevBMOnI
-	 E2wx8ykjs56C+t1kBZrL/q2MM+Kfl7ZuNP1OuvqI=
+	b=lYJf0DoLf+rAlWaVk55D0BW0l6mvdCrxyoq8sLF54hsUab70BJstVX6faWo5Qfoo0
+	 cgwRatFnfudez9aeUawn27hpwEwA/8QOaU6UkSpmeQ9gcNCjBSCxWjLy7QOsIRTsLM
+	 leedgEhG3C4wk7Fj0ogOglW4PzKyrMw/C17D2IEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0721/1815] PCI: Fix dyn_id add TOCTOU
-Date: Sat, 12 Sep 2026 08:41:11 +0200
-Message-ID: <20260912065705.826775274@linuxfoundation.org>
+Subject: [PATCH 7.2 0686/1815] w1: ds2482: Fix signedness bug in ds2482_w1_triplet()
+Date: Sat, 12 Sep 2026 08:40:36 +0200
+Message-ID: <20260912065704.995325536@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,258 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit 04fde70f782b6ce984f9f80c2023786caea28287 ]
+[ Upstream commit 4d3721b204f961e905714954ff95633337b768e3 ]
 
-Currently there is a TOCTOU issue in new_id_store() as the dyn ID insertion
-in pci_add_dynid() and the pci_match_device() are in separate critical
-sections.
+ds2482_wait_1wire_idle() returns the status register value (0..255) on
+success, or a negative value on I2C failure: -1 when selecting the
+status register fails, or a negative errno from i2c_smbus_read_byte().
 
-Fix this by moving the existing ID check to inside pci_add_dynid() and only
-check against the static ID table outside the critical section.
+ds2482_w1_triplet() feeds that result into "return (status >> 5);"
+without checking for errors, and the function returns u8. For a
+negative status the arithmetic shift keeps the sign and the u8
+truncation fabricates a triplet result whose meaning depends on the
+errno value: -1 and -EIO happen to become 0xff, whose set low bits make
+w1_search() abort, but -ETIMEDOUT (-110 >> 5 = -4) becomes 0xfc -
+"devices responded on both branches, wrote 1" - and -EOPNOTSUPP
+(-95 >> 5 = -3) becomes 0xfd - "only the zero branch responded".
+w1_search() then continues the ROM search with a fabricated direction
+bit instead of aborting, and the corrupted id is either rejected by the
+ROM CRC (existing device missed) or registers a phantom slave.
 
-Fixes: 3853f9123c18 ("PCI: Avoid duplicate IDs in driver dynamic IDs list")
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260723-pci_id_fix-v4-8-3580726844e1@garyguo.net
+The function already defines an in-band error value: status is
+initialized to (3 << 5), which decodes to 3 (both branch bits set, "no
+device responded") and makes w1_search() terminate the search when
+sending the triplet command fails. Decode a negative status to the same
+value.
+
+Found by smatch:
+drivers/w1/masters/ds2482.c:314 ds2482_w1_triplet() warn: signedness bug returning '(-67108864)'
+
+Fixes: baf12ae29ab4 ("[PATCH] W1: Add the DS2482 I2C-to-w1 bridge driver.")
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Link: https://patch.msgid.link/20260714041011.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 140 ++++++++++++++++++++-------------------
- 1 file changed, 72 insertions(+), 68 deletions(-)
+ drivers/w1/masters/ds2482.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index c9424edb45481..ab3bb756ce89a 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -29,6 +29,47 @@ struct pci_dynid {
- 	struct pci_device_id id;
- };
+diff --git a/drivers/w1/masters/ds2482.c b/drivers/w1/masters/ds2482.c
+index 0069e6f854d7f..7622c87828442 100644
+--- a/drivers/w1/masters/ds2482.c
++++ b/drivers/w1/masters/ds2482.c
+@@ -310,6 +310,10 @@ static u8 ds2482_w1_triplet(void *data, u8 dbit)
  
-+/**
-+ * do_pci_add_dynid - Add a new PCI device ID to this driver and re-probe
-+ * @drv: target PCI driver
-+ * @id: ID to be added
-+ * @check_dup: whether to check if matching ID is already present
-+ *
-+ * Add a new dynamic PCI device ID to this driver and causes the driver to
-+ * probe for all devices again.  @drv must have been registered prior to calling
-+ * this function.
-+ *
-+ * Context: Does GFP_KERNEL allocation.
-+ *
-+ * Return: 0 on success, -errno on failure.
-+ */
-+static int do_pci_add_dynid(struct pci_driver *drv,
-+			    const struct pci_device_id *id,
-+			    bool check_dup)
-+{
-+	struct pci_dynid *dynid, *existing_dynid;
-+
-+	dynid = kzalloc_obj(*dynid);
-+	if (!dynid)
-+		return -ENOMEM;
-+
-+	dynid->id = *id;
-+
-+	scoped_guard(spinlock, &drv->dynids.lock) {
-+		if (check_dup) {
-+			list_for_each_entry(existing_dynid, &drv->dynids.list, node) {
-+				if (pci_match_one_id(&existing_dynid->id, id)) {
-+					kfree(dynid);
-+					return -EEXIST;
-+				}
-+			}
-+		}
-+		list_add_tail(&dynid->node, &drv->dynids.list);
-+	}
-+
-+	return driver_attach(&drv->driver);
-+}
-+
- /**
-  * pci_add_dynid - add a new PCI device ID to this driver and re-probe devices
-  * @drv: target pci driver
-@@ -56,25 +97,17 @@ int pci_add_dynid(struct pci_driver *drv,
- 		  unsigned int class, unsigned int class_mask,
- 		  unsigned long driver_data)
- {
--	struct pci_dynid *dynid;
--
--	dynid = kzalloc_obj(*dynid);
--	if (!dynid)
--		return -ENOMEM;
-+	struct pci_device_id id = {
-+		.vendor = vendor,
-+		.device = device,
-+		.subvendor = subvendor,
-+		.subdevice = subdevice,
-+		.class = class,
-+		.class_mask = class_mask,
-+		.driver_data = driver_data,
-+	};
+ 	mutex_unlock(&pdev->access_lock);
  
--	dynid->id.vendor = vendor;
--	dynid->id.device = device;
--	dynid->id.subvendor = subvendor;
--	dynid->id.subdevice = subdevice;
--	dynid->id.class = class;
--	dynid->id.class_mask = class_mask;
--	dynid->id.driver_data = driver_data;
--
--	spin_lock(&drv->dynids.lock);
--	list_add_tail(&dynid->node, &drv->dynids.list);
--	spin_unlock(&drv->dynids.lock);
--
--	return driver_attach(&drv->driver);
-+	return do_pci_add_dynid(drv, &id, false);
++	/* On bus error, decode to 3 (no device responded) to abort the search */
++	if (status < 0)
++		status = 3 << 5;
++
+ 	/* Decode the status */
+ 	return (status >> 5);
  }
- EXPORT_SYMBOL_GPL(pci_add_dynid);
- 
-@@ -94,16 +127,20 @@ static void pci_free_dynids(struct pci_driver *drv)
-  * do_pci_match_id - See if a PCI ID matches a given pci_id table
-  * @ids: array of PCI device ID structures to search in
-  * @dev_id: the actual PCI device ID structure to match against.
-+ * @include_override_only: also match against device ID entries marked as
-+ *                         override only.
-  *
-  * Return: the matching pci_device_id structure or %NULL if there is no match.
-  */
- static const struct pci_device_id *
- do_pci_match_id(const struct pci_device_id *ids,
--		const struct pci_device_id *dev_id)
-+		const struct pci_device_id *dev_id,
-+		bool include_override_only)
- {
- 	if (ids) {
- 		while (ids->vendor || ids->subvendor || ids->class_mask) {
--			if (pci_match_one_id(ids, dev_id))
-+			if ((!ids->override_only || include_override_only) &&
-+			    pci_match_one_id(ids, dev_id))
- 				return ids;
- 			ids++;
- 		}
-@@ -128,7 +165,7 @@ const struct pci_device_id *pci_match_id(const struct pci_device_id *ids,
- {
- 	struct pci_device_id dev_id = pci_id_from_device(dev);
- 
--	return do_pci_match_id(ids, &dev_id);
-+	return do_pci_match_id(ids, &dev_id, true);
- }
- EXPORT_SYMBOL(pci_match_id);
- 
-@@ -153,7 +190,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- 						    struct pci_dev *dev)
- {
- 	struct pci_dynid *dynid;
--	const struct pci_device_id *found_id = NULL, *ids;
-+	const struct pci_device_id *found_id = NULL;
- 	struct pci_device_id dev_id;
- 	int ret;
- 
-@@ -176,20 +213,9 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- 	if (found_id)
- 		return found_id;
- 
--	for (ids = drv->id_table; (found_id = do_pci_match_id(ids, &dev_id));
--	     ids = found_id + 1) {
--		/*
--		 * The match table is split based on driver_override.
--		 * In case override_only was set, enforce driver_override
--		 * matching.
--		 */
--		if (found_id->override_only) {
--			if (ret > 0)
--				return found_id;
--		} else {
--			return found_id;
--		}
--	}
-+	found_id = do_pci_match_id(drv->id_table, &dev_id, ret > 0);
-+	if (found_id)
-+		return found_id;
- 
- 	/* driver_override will always match, send a dummy id */
- 	if (ret > 0)
-@@ -197,11 +223,6 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
- 	return NULL;
- }
- 
--static void _pci_free_device(struct device *dev)
--{
--	kfree(to_pci_dev(dev));
--}
--
- /**
-  * new_id_store - sysfs frontend to pci_add_dynid()
-  * @driver: target device driver
-@@ -215,38 +236,22 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
- {
- 	struct pci_driver *pdrv = to_pci_driver(driver);
- 	const struct pci_device_id *ids = pdrv->id_table;
--	u32 vendor, device, subvendor = PCI_ANY_ID,
--		subdevice = PCI_ANY_ID, class = 0, class_mask = 0;
--	unsigned long driver_data = 0;
-+	struct pci_device_id id = {
-+		.subvendor = PCI_ANY_ID,
-+		.subdevice = PCI_ANY_ID
-+	};
- 	int fields;
- 	int retval = 0;
- 
- 	fields = sscanf(buf, "%x %x %x %x %x %x %lx",
--			&vendor, &device, &subvendor, &subdevice,
--			&class, &class_mask, &driver_data);
-+			&id.vendor, &id.device, &id.subvendor, &id.subdevice,
-+			&id.class, &id.class_mask, &id.driver_data);
- 	if (fields < 2)
- 		return -EINVAL;
- 
- 	if (fields != 7) {
--		struct pci_dev *pdev = kzalloc_obj(*pdev);
--		if (!pdev)
--			return -ENOMEM;
--
--		pdev->vendor = vendor;
--		pdev->device = device;
--		pdev->subsystem_vendor = subvendor;
--		pdev->subsystem_device = subdevice;
--		pdev->class = class;
--		pdev->dev.release = _pci_free_device;
--
--		device_initialize(&pdev->dev);
--		if (pci_match_device(pdrv, pdev))
--			retval = -EEXIST;
--
--		put_device(&pdev->dev);
--
--		if (retval)
--			return retval;
-+		if (do_pci_match_id(pdrv->id_table, &id, false))
-+			return -EEXIST;
- 	}
- 
- 	/* Only accept driver_data values that match an existing id_table
-@@ -254,7 +259,7 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
- 	if (ids) {
- 		retval = -EINVAL;
- 		while (ids->vendor || ids->subvendor || ids->class_mask) {
--			if (driver_data == ids->driver_data) {
-+			if (id.driver_data == ids->driver_data) {
- 				retval = 0;
- 				break;
- 			}
-@@ -264,8 +269,7 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
- 			return retval;
- 	}
- 
--	retval = pci_add_dynid(pdrv, vendor, device, subvendor, subdevice,
--			       class, class_mask, driver_data);
-+	retval = do_pci_add_dynid(pdrv, &id, fields != 7);
- 	if (retval)
- 		return retval;
- 	return count;
 -- 
 2.53.0
 
