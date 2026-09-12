@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9773B14D7;
-	Sat, 12 Sep 2026 07:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B513AD534;
+	Sat, 12 Sep 2026 07:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196780; cv=none; b=D2Mp4hdbCzQJb4FYec/pnYjmVqw3nqI7qWR7i7T0Wv46JBqiCLjZqEzEMG3UiWplZMiNegq7eqe3BhmBN0C6g2DA+h7BjsNuw2HCZwni0bnCed5GyAu4XMn82NTlFxdU05eshhFayU4cLdDjRqgj+NSpK4l4aSdmWNWeRu/AjkE=
+	t=1789196786; cv=none; b=oatacYC7kh7xBAh6vavCi89BO8hcb5K2CGJTd9PVBKKKOppMvPgEYOL+0yeI9EuY/9e9OlKyUOc/ORxdSQtYCurt0GPjxsD6I0ajNP8kE1WdgVTqgi+anOdv/H4D6g7to6AgRh5HlGgJNSiTtUkW8Kdp2T22ycnWSeg0Tg4Eiis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196780; c=relaxed/simple;
-	bh=3o2ZyTgiGimoCl+UpF3qiD8G0GLCde/f5QC4npkS+6Y=;
+	s=arc-20240116; t=1789196786; c=relaxed/simple;
+	bh=PsrJGhXDzgAsG3xfvjB8cjDzG1WnxoNJzXIDo/LmQmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fiPWNY+MCpekM/OxC8YgZjCCSwuOPBd5j5FecDFZ+A9zKSJl3qQx6uVw5s3Xn48OTpizy8EjwoLRUnMJ70Dx+XcvgSbb2qOpcl0UM2xqS9CkXh/jC6D3oqkeR/+xLcwn38SQ+MySB9huHw5C8g2T8FoNfM9bXovTYiieMtVc2xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgPvEUQw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cHBLXii3/7K/4zvVBXnOVmAdTV327PqOOEAUDNyxi/Ch/mndy3yD11Yy4OLo55vH6mdLUrWfAo6NVU/+r2LqF+VccvR+mshN4lgNURdKCjfKuFzDqTCh0Tc8+trewwlYshvbuYHWaaHuXGC3iLYxmhi8XcI3BHym9peH8jMtNVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+gzE+Mj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgPvEUQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977AF1F00893;
-	Sat, 12 Sep 2026 07:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+gzE+Mj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839BD1F00893;
+	Sat, 12 Sep 2026 07:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196777;
-	bh=xst0GKi5OFZ0wIgFe40RqGCBxSk7HnUn3rkiFxAolbE=;
+	s=korg; t=1789196782;
+	bh=HzcFmEWIteGGEgYvsD05J0ux2DB5fZAktIXuqxjR6II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UgPvEUQweiNkw0tWqpmipTSVGXKxym3Pdg6lIR2LkGQeIMSFBL4fQ0ef25EGGSOtM
-	 UXjBVLIKweuVe2IuEZ46YchVTmDRxzh4ai0d4Z0njIkjwaaPwwFY6SuIihWKZaQYya
-	 9BkdkMSPuBfgJGL5XVVqSZqIhPy0L9emn+Q8OQ7o=
+	b=A+gzE+MjfhrhkeDyXnWVZ8Y2qEC6xPbH1JvQ8Ozt+5A+y/uE4BszxN4m3o3Umdw5G
+	 WimXL3s288lro7QCNgU3LRFEqTh4Q8UyzuvjZmUpmzlhr8TxhorWHYneXyTRl+9nSe
+	 fPK/+PKulkCXucgyg4P3laZI0VwsYq1Kp9EqIUKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bumjin Im <imbumjin@gmail.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Yicong Hui <yiconghui@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0034/1815] Smack: Fix error in capability bypass
-Date: Sat, 12 Sep 2026 08:29:44 +0200
-Message-ID: <20260912065649.816419886@linuxfoundation.org>
+Subject: [PATCH 7.2 0035/1815] drm: Remove unused header in drm_dumb_buffers.c
+Date: Sat, 12 Sep 2026 08:29:45 +0200
+Message-ID: <20260912065649.843940201@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,38 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Schaufler <casey@schaufler-ca.com>
+From: Yicong Hui <yiconghui@gmail.com>
 
-[ Upstream commit b2faddc13112489f8f11eb40b9456db8c1b58362 ]
+[ Upstream commit 38b4ce17ef3421fb0e5e6dbdab1974282bde1165 ]
 
-A bug in smack_inode_xattr_skipcap() was introduced in the inode
-capability handling. The strncmp guard at the top of the function
-is coded backwards, resulting in consistently incorrect results.
-Correct the check, and the code functions as it should. The error
-manifests as requiring CAP_SYS_ADMIN as well as CAP_MAC_ADMIN to
-change an inode's MAC attributes.
+Remove the header #include "drm_internal.h" from drm_dumb_buffers.c,
+which is included but not used.
 
-Fixes: 61df7b828204 ("lsm: fixup the inode xattr capability handling")
-Reported-by: Bumjin Im <imbumjin@gmail.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Header was introduced in commit 47f10854ca89 ("drm: Don't export the
+drm_gem_dumb_destroy() function") when moving functions, but was not
+removed in commit 96a7b60f6ddb ("drm: remove dumb_destroy callback")
+when the drm_gem_dumb_destroy function was removed.
+
+Compiles successfully with DRM enabled, pass kunit tests and
+IGT-tests in a vng virtual machine.
+
+Fixes: 96a7b60f6ddb ("drm: remove dumb_destroy callback")
+Signed-off-by: Yicong Hui <yiconghui@gmail.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260409154826.8955-1-yiconghui@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_dumb_buffers.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index bbe6cd6b03f75..374873f2f4d9b 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -1312,7 +1312,7 @@ static int smack_inode_getattr(const struct path *path)
-  */
- static int smack_inode_xattr_skipcap(const char *name)
- {
--	if (strncmp(name, XATTR_SMACK_SUFFIX, strlen(XATTR_SMACK_SUFFIX)))
-+	if (strncmp(name, XATTR_SMACK_SUFFIX, strlen(XATTR_SMACK_SUFFIX)) == 0)
- 		return 0;
+diff --git a/drivers/gpu/drm/drm_dumb_buffers.c b/drivers/gpu/drm/drm_dumb_buffers.c
+index 2156dbe601c9c..8e9ff17538e73 100644
+--- a/drivers/gpu/drm/drm_dumb_buffers.c
++++ b/drivers/gpu/drm/drm_dumb_buffers.c
+@@ -32,7 +32,6 @@
+ #include <drm/drm_print.h>
  
- 	if (strcmp(name, XATTR_NAME_SMACK) == 0 ||
+ #include "drm_crtc_internal.h"
+-#include "drm_internal.h"
+ 
+ /**
+  * DOC: overview
 -- 
 2.53.0
 
