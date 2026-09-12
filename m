@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BB43905E6;
-	Sat, 12 Sep 2026 16:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4298C3905E6;
+	Sat, 12 Sep 2026 16:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230475; cv=none; b=iIf8XGrxL7WJCTo0W/f+DzkUTPuM610XZ51UPiajuE7oO+QRV1S5R+3SwMk4BTLiGG7gEdG2c+TP9GEpuFppW77X08VfyMxzufXF1Xt4dqDK8ljlqt1/M+6Uxfu+ss0+gPl9NdnuxXVQYBh5PNS5SekJ19XqIErIfPHiMYy94+g=
+	t=1789230478; cv=none; b=Bbj4tS96kkyH6ndYaVyGxJ989t5sr07yqcHiu6Aoz1w9f5F6nHKIW91ouI/k4pstXXyOKLuo04adpUpyrR1fZVqbR5M9vGuXG6dM8GUWAilDcijRNU8HFMyE3zow6NVXf1h0LnrHg7xHdN2FtGIWzZmNNcPJtaPRxM0tqqH/dCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230475; c=relaxed/simple;
-	bh=PCIefjN9U/2LJZDfO0kDerza3uzHHTWKPHFztnEl7p0=;
+	s=arc-20240116; t=1789230478; c=relaxed/simple;
+	bh=qZswwdSMX4TSXaUIyIny4S/wtINPXNQybEmOxECFe2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pzf9Cr8bi+ppOgIRPJAqYlIdVOAqAOKWiUGvyRXqX6p/KRtLXNMq7LOT89ydTiK7W0tfmuwH6dz9xB7GpLdROBbB5lU4ej7/Aet4NeieBYQ7mQGuXDRGZcGPqE3/gu+273Ls6bFPXpGQA00dRFnYrCkbthkT/b340QDht4ejoaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnO7xfd4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G9/HSi58I6EZ82FKIKkYqH1d/Fs1APsaq+2+P5x/7y+lZvvO07sCmh4OzCrFdfeyIjF/3EtmMwveOdebzDy204IeRhnmBFZEcNb9+9mB4wf15gzOS7WdFptkqXDsmUvOCOXMAGeGSikkMk2oPnfY6cb/wcmVGqtYhqvKvPES2+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvifdt4j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnO7xfd4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836951F000FF;
-	Sat, 12 Sep 2026 16:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvifdt4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7C51F000FF;
+	Sat, 12 Sep 2026 16:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230472;
-	bh=bgYYCyLkpaIzR+AyP4PTiHg2tKMPh1CX7Xhr/GYH6Vw=;
+	s=korg; t=1789230476;
+	bh=NLKhOeqRfIUciqtqyo4LRPnlAXEgrXHoANXbjGNft/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnO7xfd4b9FooHoaqCoNH9xarqeJZ79Swz1md+4kAqBNSYNGULKW+NdPjukgwPIhB
-	 UhB02E5FXmhzv7vm1K3n3WX+Ha7mgKGJDTab+RUfdxu8ZIu4eUQll/npjJVxH2s1rj
-	 2VERTXM5i/0KpzkWkZKeIJ4Hv6Zp5JSNqYmbeA28=
+	b=xvifdt4j+cy0laK1v70KQ2P1EziPiKchZWJHtcJ8WKQd2zi1bsfclB5p0gGp5a2/G
+	 /Hly11Is+O+SwSaPEHioOUstbrL3CmD6ZD3A4LV2gNZqna2k6jRnqKo9jcQ7TuhfBU
+	 zAblp/vwEn2/eO+EDpHtkkSTaomsae44qiyl3tLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0784/1191] power: supply: sc2731_charger: Convert to platform remove callback returning void
-Date: Sat, 12 Sep 2026 08:58:32 +0200
-Message-ID: <20260912065605.886553406@linuxfoundation.org>
+Subject: [PATCH 6.1 0802/1191] wifi: mt76: mt7915: avoid nss underflow in mt7915_mcu_get_sta_nss
+Date: Sat, 12 Sep 2026 08:58:50 +0200
+Message-ID: <20260912065606.285149167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,66 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 0569d4cfa800ba303647dbf8170d1e89bdee3ed9 ]
+[ Upstream commit 4a2f4be532e3ea4e2b536e411793a05aaa51af25 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() is renamed to .remove().
+If a peer's VHT/HE MCS map has no supported spatial stream (all fields
+0x3), the loop exits with nss == 0 and the function returned (u8)-1 (255),
+which was then written into the firmware sta_rec_bf beamforming fields.
+Clamp the result to 0.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230918133700.1254499-25-u.kleine-koenig@pengutronix.de
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: dfc859bb8d33 ("power: supply: sc2731_charger: cancel work on remove")
+Fixes: 89029a85482c ("mt76: mt7915: add Tx beamformer support")
+Link: https://patch.msgid.link/20260722082610.2699628-9-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sc2731_charger.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/sc2731_charger.c b/drivers/power/supply/sc2731_charger.c
-index 9ac17cf7a1260..b3d8b1ca97da7 100644
---- a/drivers/power/supply/sc2731_charger.c
-+++ b/drivers/power/supply/sc2731_charger.c
-@@ -511,13 +511,11 @@ static int sc2731_charger_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index 32f15974c04a1..ce4e69e04111e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -44,7 +44,7 @@ mt7915_mcu_get_sta_nss(u16 mcs_map)
+ 			break;
+ 	}
+ 
+-	return nss - 1;
++	return nss ? nss - 1 : 0;
  }
  
--static int sc2731_charger_remove(struct platform_device *pdev)
-+static void sc2731_charger_remove(struct platform_device *pdev)
- {
- 	struct sc2731_charger_info *info = platform_get_drvdata(pdev);
- 
- 	usb_unregister_notifier(info->usb_phy, &info->usb_notify);
--
--	return 0;
- }
- 
- static const struct of_device_id sc2731_charger_of_match[] = {
-@@ -532,7 +530,7 @@ static struct platform_driver sc2731_charger_driver = {
- 		.of_match_table = sc2731_charger_of_match,
- 	},
- 	.probe = sc2731_charger_probe,
--	.remove = sc2731_charger_remove,
-+	.remove_new = sc2731_charger_remove,
- };
- 
- module_platform_driver(sc2731_charger_driver);
+ static void
 -- 
 2.53.0
 
