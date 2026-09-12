@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D5847CC7F;
-	Sat, 12 Sep 2026 13:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD6A370AFD;
+	Sat, 12 Sep 2026 13:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220004; cv=none; b=uCj+XE8DWAcB0FXnUg5ZyCX5fDxq5SLMEC67jMKyXyvinrKcKuWHn5vUrhQyyF5yzqo6SE/jkC68eUEzMt15C7IXI0yle53AW3s493irffUsnmGWRP2rV+n2X4pA9GOBzLZquU25hyvBsQe2Ik9nu8N598AWnvMiT1Pm9cfo+nI=
+	t=1789220008; cv=none; b=KpUwOoLS+IyB8pwvairZ5d4NXRA6T3p+DdUmr4rGjqLZlMe+4XvuMviXHdCIK4tHREE9rnX7xwR6si5Dt4OnxO0zUYVnQOBqq66hnWIqzZwsCs7C2Porbi4uw/baXA0bd/LCA16p2Sh8RA8ubnxAmZtdrEVZAuqp/mydehyJktI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220004; c=relaxed/simple;
-	bh=M9N3OWPl7geMrMZxcIqxVOE8CqrccdJZuBPRMRYwPmU=;
+	s=arc-20240116; t=1789220008; c=relaxed/simple;
+	bh=8tOQvPIxeILoFRa1vjccSsPlDCwwMCroHgAhjfsFbiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GnaiwvkMVIasvBmgONtuTcVuLfwWu+S+SpvrRrnvhTV5tPSh64eqsrecJ4rRrtzBBCojUZZt2Hyu1mfX9FXdurV9HrOhC7TewuwhbS/D9CXfUvjTNS5A29GqjRfKq/eYxtqrpyPf19uXkkhz5RbMhW2GbKC7vq7ObVfVnr3lptw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UymwZEXL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GLyc4Uphr+vcdMhqz6K8gGAfTFs8yRmoVA+zU961ZI2RrFLNGncxZZQZdfVCfCCzr/HKn0hq9KikF5GPBfW1ZUvK0UuFzTOLRyLBgTwuhyElZG8zAgA5BJayMNFJ1Ne3OfhQ9c7Eued9n8To4zNr/T+72O8QwcXf8gfSxeD0mHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FmsOx/b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UymwZEXL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7705E1F000FF;
-	Sat, 12 Sep 2026 13:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FmsOx/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608891F000FF;
+	Sat, 12 Sep 2026 13:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220002;
-	bh=t9xUu0spmBFJQuWrWbF6ajT07XmcjZWAzp7V8+h5n1s=;
+	s=korg; t=1789220007;
+	bh=OZ8uTMOaXxHzK6XqukNGN3aEJWrOFVOxK7SuO6Egq10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UymwZEXLZ5KC3POWS0U7BIlUpandFeWgWVyVNRrRC32aMF6/zMNj4TKQWG/TyCX3d
-	 B9NrfBO6ChCg8aiSzA4UqlAJ7nbLkdUMNwZF7yQUljai2AIUUPJw1KMtB6OezxGTVG
-	 ZYSXVM8ZXsrNGe4eITp4n1X05dhFgcpN3P1jDrJ8=
+	b=2FmsOx/bqZyVTnFVvHbOeAjILGZjEXx9yqLYawMBsqdVb++jLmC8s9IsPS7bus/xy
+	 6hw9U8JUyu7nnmhHYlIoi/vAcURx8RjTYagj5XWxDSaFcSolr6XVJLhhGgbJ1xwqoS
+	 1emw/5qtwwdFz6QFhBcp5OMexaSiyg6w9A/CPjYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 0071/1424] libceph: validate OSD extent maps before cursor advance
-Date: Sat, 12 Sep 2026 08:41:43 +0200
-Message-ID: <20260912065608.897508139@linuxfoundation.org>
+	syzbot+3ef80b4ed02226d04a06@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.6 0089/1424] eventfs: Initialize ei->children and ei->list in init_ei()
+Date: Sat, 12 Sep 2026 08:42:01 +0200
+Message-ID: <20260912065609.299363501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,93 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 9ec08b7499a62c6d4afa93d36ab47a43fcad57d1 upstream.
+commit 1704aaaf5d22bc765c168402350d191e24e245bc upstream.
 
-net/ceph/osd_client.c:osd_sparse_read() validates that the sparse-read
-data length matches the summed extent lengths, but it does not validate
-that each OSD-supplied extent is monotonic and lies inside the original
-request range. A malformed authenticated OSD reply can advertise a
-far-forward nonzero extent offset with a matching data length and make
-the client advance the message-data cursor beyond the request buffer.
-This reaches the BUG_ON(!*length) assertion in ceph_msg_data_next() from
-the client receive path.
+eventfs_create_dir() allocates the eventfs_inode and initializes it with
+init_ei(). But this does not initialize the eventfs_inode list_heads. If
+the eventfs_create_dir() fails due to memory pressure, it will call
+free_ei() before it initialized the lists, and that checks to make sure
+the eventfs_inode has no children. But because the list wasn't
+initialized, it will give a false warning.
 
-Impact: A malicious or compromised authenticated Ceph OSD peer can crash
-a kernel Ceph client via a malformed sparse-read reply.
-
-Reject sparse extent maps that overflow, move backwards, overlap, or
-extend outside the original sparse-read request before advancing the
-cursor.
-
-[ idryomov: perform sparse_extent_map_valid() check a bit earlier,
-  in CEPH_SPARSE_READ_DATA_LEN instead of CEPH_SPARSE_READ_DATA_PRE
-  state ]
+Fix it by moving the list initialization into init_ei().
 
 Cc: stable@vger.kernel.org
-Fixes: f628d7999727 ("libceph: add sparse read support to OSD client")
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 5790b1fb3d67 ("eventfs: Remove eventfs_file and just use eventfs_inode")
+Reported-by: syzbot+3ef80b4ed02226d04a06@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3ef80b4ed02226d04a06
+Link: https://patch.msgid.link/20260824144653.54044-1-kartikey406@gmail.com
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+[ Rewrote change log ]
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ fs/tracefs/event_inode.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -6,6 +6,7 @@
- #include <linux/err.h>
- #include <linux/highmem.h>
- #include <linux/mm.h>
-+#include <linux/overflow.h>
- #include <linux/pagemap.h>
- #include <linux/slab.h>
- #include <linux/uaccess.h>
-@@ -5864,6 +5865,31 @@ static inline void convert_extent_map(st
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -511,6 +511,8 @@ static inline struct eventfs_inode *init
+ 	if (!ei->name)
+ 		return NULL;
+ 	kref_init(&ei->kref);
++	INIT_LIST_HEAD(&ei->children);
++	INIT_LIST_HEAD(&ei->list);
+ 	return ei;
+ }
  
- #define MAX_EXTENTS 4096
+@@ -797,8 +799,6 @@ struct eventfs_inode *eventfs_create_dir
+ 	ei->entries = entries;
+ 	ei->nr_entries = size;
+ 	ei->data = data;
+-	INIT_LIST_HEAD(&ei->children);
+-	INIT_LIST_HEAD(&ei->list);
  
-+static bool sparse_extent_map_valid(struct ceph_sparse_read *sr)
-+{
-+	u64 req_end, pos;
-+	int i;
-+
-+	if (check_add_overflow(sr->sr_req_off, sr->sr_req_len, &req_end))
-+		return false;
-+
-+	pos = sr->sr_req_off;
-+	for (i = 0; i < sr->sr_count; i++) {
-+		struct ceph_sparse_extent *ext = &sr->sr_extent[i];
-+		u64 end;
-+
-+		if (ext->off < pos)
-+			return false;
-+		if (check_add_overflow(ext->off, ext->len, &end))
-+			return false;
-+		if (end > req_end)
-+			return false;
-+		pos = end;
-+	}
-+
-+	return true;
-+}
-+
- static int osd_sparse_read(struct ceph_connection *con,
- 			   struct ceph_msg_data_cursor *cursor,
- 			   char **pbuf)
-@@ -5922,6 +5948,10 @@ next_op:
- 		fallthrough;
- 	case CEPH_SPARSE_READ_DATA_LEN:
- 		convert_extent_map(sr);
-+		if (!sparse_extent_map_valid(sr)) {
-+			pr_warn_ratelimited("invalid sparse extent map\n");
-+			return -EREMOTEIO;
-+		}
- 		ret = sizeof(sr->sr_datalen);
- 		*pbuf = (char *)&sr->sr_datalen;
- 		sr->sr_state = CEPH_SPARSE_READ_DATA_PRE;
+ 	mutex_lock(&eventfs_mutex);
+ 	if (!parent->is_freed)
+@@ -874,9 +874,6 @@ struct eventfs_inode *eventfs_create_eve
+ 	 */
+ 	ei->attr.mode |= EVENTFS_SAVE_UID | EVENTFS_SAVE_GID;
+ 
+-	INIT_LIST_HEAD(&ei->children);
+-	INIT_LIST_HEAD(&ei->list);
+-
+ 	ti = get_tracefs(inode);
+ 	ti->flags |= TRACEFS_EVENT_INODE;
+ 	ti->private = ei;
 
 
