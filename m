@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FA931F9A6;
-	Sat, 12 Sep 2026 13:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587722D0C94;
+	Sat, 12 Sep 2026 13:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221230; cv=none; b=Ov8hLtSLhdhhfNYE3jVhzr6VvC2Em1uDyNGizYKbXPZomNmOh0Bw/afva8a4EGn5IvLKRzg338AKDMpAZhzQo7rTqXiXC7YUWooTh0RWzzjx7UWYQp4DIPrp/GP0axmxHWJYiuFVDQoHejY2jCTdp9KbwUSY8hg+SxyWc0oHatY=
+	t=1789221232; cv=none; b=G2oFydffmeBWJTEn01/OSzMxNSfDCAZLkwqW7OKV+hq8thYt4CaWpunGQbfOLnpEoLn/3cm9K9wHQk2RZfjZzJ6m3iqkuLsiXDzUC0jzlUwGMVnHtC76o2zNNmZqAOM9xng4RJ5spGXc0JWbc6VyqQzkW6TX7evAgS3KlkqRw5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221230; c=relaxed/simple;
-	bh=j8C6zsb2h9tIflckmGq6TcOpI5lcYE+shrmrsmlcRXs=;
+	s=arc-20240116; t=1789221232; c=relaxed/simple;
+	bh=BTsq98QBynlr0q7a1LAubP+KCEIIjnBUoOr1lV6M+uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZ4Z7ZNxlDxttg83b19tov+zyF5RsZicmHb+gZB+KDxQRyITilDtiN9ZCdT76x2h0FCnqfmrkCO1CalQWy0U8SKPw7NKWamils3t7F9Hko2P+QzieiBnHwSgw6Dp9zhh2iEc2+/ktpBNioTA2H35JvNV+oZ3pGjQOdemnRnSs0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4loILVv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dVPuDKJDu9LAyRLYCxNFbARc1eMlr4f0Hjk+TxbzHOo6Y5EuvrLI7r6TRnF7V4vEF8YiQngZp+pXlrF6ZnsrvDL6ATh7h02LCECVFtOTCCM91Y2T1ID8Kte7O15it1ccHB3Kbt7QB1Ke5jbuF2ITIJ6D8gQ7/q82ZgjbTrjVu/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTEuAswt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4loILVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28ACB1F00893;
-	Sat, 12 Sep 2026 13:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTEuAswt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF80A1F000FF;
+	Sat, 12 Sep 2026 13:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221226;
-	bh=ZN6vbqyLZkZCcp6fXGgl7COVQfvJZlbVETOQI9Z4QJE=;
+	s=korg; t=1789221231;
+	bh=x4+jowEEixlH612SDL90ZHHTa7hqLJ7MqZC5+ZoV3Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4loILVveZJO3CmHIPzZG/lbkvX9EJkrJ2h6Mk9awMMreXXkkQOQYT0b6gmS4VVr4
-	 o2c45Fj6y7hqcqMpsvsIdUoBFf1QcQOgw74m1ZBZ7MejQLNDgpt2YlIBrFskP+9d2J
-	 kjUfccy+MchdJ5DYl9K/qo0BE+YJbYqcFV4JbMZA=
+	b=fTEuAswt6wkYPldseYo1615FLc6W0+XTr8j8mLo5/gzyLmV2Q7a8bucrt/SUhK5gc
+	 h00EP84O98B+Rx0gO8zh5mFKBHvUYXncrqnPtgJIK0imSXFcCDgYftJY3Tqpx4pbxP
+	 hb04w+bT960SENsgBfrfK0qtcZAK9ovVEjeYtuqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 0302/1424] sticon/parisc: Detect default STI graphics card for console output
-Date: Sat, 12 Sep 2026 08:45:34 +0200
-Message-ID: <20260912065614.048942588@linuxfoundation.org>
+	Kanishka De Silva <kpskanna1915@gmail.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 0338/1424] ublk: clear VM_MAYWRITE on read-only ublk char device mmap
+Date: Sat, 12 Sep 2026 08:46:10 +0200
+Message-ID: <20260912065614.854935827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -49,69 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Kanishka De Silva <kpskanna1915@gmail.com>
 
-commit de508ece1d37cdbbbfa52f074954310f9b066b13 upstream.
+commit 6e2b571b0a54755b06e092501913e1dfefe75d6c upstream.
 
-If a machine has multiple graphic cards, detect the graphic card which is used
-to display firmware messages and use that one as the default graphic card for
-sticon and fbcon.
+ublk_ch_mmap() rejects mmap requests with VM_WRITE set, but never
+clears VM_MAYWRITE on the resulting read-only mapping. This allows
+a userspace daemon to mmap the per-queue command buffer PROT_READ,
+then upgrade it to PROT_WRITE via mprotect(), since VM_MAYWRITE was
+never cleared.
 
-On parisc machines the default graphic card used for BCH (boot console
-handler, aka BIOS menu) is stored in the stable storage (equivalent to CMOS
-storage on x86) or in the console path in page zero. Extract that path and
-store it as default STI path for later comparism. Take care that the graphic
-card can be a GSC or a PCI card which use different path strings.
+The command buffer holds struct ublksrv_io_desc entries that are
+kernel-written ABI; a writable mapping lets an unprivileged daemon
+process corrupt fields such as addr, op_flags, nr_sectors, and
+start_sector.
 
-Increase max string size for default_sti_path to 32 chars as the
-print_pa_hwpath() function formats a hardware path using unbounded sprintf
-calls for up to 6 bus converter components and 1 module component (e.g.,
-255/255/...), which can produce a string up to 28 bytes long.
+Same bug class as the drm/panthor and drm/vc4 VM_MAYWRITE fixes, and
+the 2026-08-13 ptp/vmclock fix (a5edadbae57e).
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+Verified via mprotect() PoC: before the fix, a PROT_READ mapping can
+be upgraded to PROT_READ|PROT_WRITE and a write into the command
+buffer corrupts io_desc fields (confirmed under KASAN). After the
+fix, mprotect() returns -EACCES.
+
+Fixes: 3fee8d7599e1 ("ublk_drv: add io_uring based userspace block driver")
 Cc: stable@vger.kernel.org
+Signed-off-by: Kanishka De Silva <kpskanna1915@gmail.com>
+Reviewed-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20260830070133.559-1-kpskanna1915@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/sticore.c |   22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ drivers/block/ublk_drv.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/video/sticore.c
-+++ b/drivers/video/sticore.c
-@@ -325,7 +325,7 @@ static void sti_rom_copy(unsigned long b
- 
- 
- 
--static char default_sti_path[21] __read_mostly;
-+static char default_sti_path[32] __read_mostly;
- 
- #ifndef MODULE
- static int __init sti_setup(char *str)
-@@ -1143,6 +1143,26 @@ static void sti_init_roms(void)
- 	pr_info("STI GSC/PCI core graphics driver "
- 			STI_DRIVERVERSION "\n");
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1437,6 +1437,12 @@ static int ublk_ch_mmap(struct file *fil
+ 	if (vma->vm_flags & VM_WRITE)
+ 		return -EPERM;
  
 +	/*
-+	 * Find default console by hardware path which is either stored in
-+	 * console entry in stable storage or alternatively from console path
-+	 * in PAGE0 used by BCH and PDC.
++	 * The per-queue command buffer is kernel-written ABI; prevent
++	 * the daemon from upgrading to writable via mprotect().
 +	 */
-+	if (!default_sti_path[0]) {
-+		struct pdc_module_path conspath;
-+		struct device *dev = NULL;
++	vm_flags_clear(vma, VM_MAYWRITE);
 +
-+		if (pdc_stable_read(0x60, &conspath, sizeof(conspath)) == PDC_OK)
-+			dev = hwpath_to_device(&conspath.path);
-+		if (!dev)
-+			dev = hwpath_to_device(&PAGE0->mem_cons.dp.path);
-+		if (dev && dev_is_pci(dev))
-+			print_pci_hwpath(to_pci_dev(dev), default_sti_path);
-+		else if (dev && !dev_is_pci(dev))
-+			print_pa_hwpath(to_parisc_device(dev), default_sti_path);
-+		pr_debug("default graphic card: %s\n", default_sti_path);
-+	}
-+
- 	/* Register drivers for native & PCI cards */
- 	register_parisc_driver(&pa_sti_driver);
- 	WARN_ON(pci_register_driver(&pci_sti_driver));
+ 	end = UBLKSRV_CMD_BUF_OFFSET + ub->dev_info.nr_hw_queues * max_sz;
+ 	if (phys_off < UBLKSRV_CMD_BUF_OFFSET || phys_off >= end)
+ 		return -EINVAL;
 
 
