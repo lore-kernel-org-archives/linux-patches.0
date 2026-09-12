@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0DF42DA5A;
-	Sat, 12 Sep 2026 08:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A2F41D212;
+	Sat, 12 Sep 2026 08:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202567; cv=none; b=uEL/HFGl+S76AYwrBCwDj4kkSwoikDe9sTxh3MuLX1sVlX7p319WixJjenkxiAAh2U5ssMR97jQT/qmNSCQ1tciGAjgZk3l7nRk8bVYgmzYPUWj6L46z8UKFRZnTRKrkUTSQNeb5lYLllfuHAg2er4MsRK/zTZhryX+B1fGzD2c=
+	t=1789202572; cv=none; b=rkIyxajlhjDfOSLSHazNVkYa1BhLwcuHRMPK1whVDGmtuYWCMAwf8+1/klvh863PGQQsjrGT1BRalrAzDNiDsEo7tZxFZa3Fi0JtG7P6xQtmLwsBhdfa4aGaWf7Y1sYMOfAMLwYjEI1Xwtuj44COzX/NyJBnWZxC0C1GQOLP/3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202567; c=relaxed/simple;
-	bh=XH9/bPfgM3Gea/nlEvFVHR9TR+QNddmPUo10rzt6hN4=;
+	s=arc-20240116; t=1789202572; c=relaxed/simple;
+	bh=W+pHPn2B+XcN18Sk7IpUVl+NAM9S4lMs+k061OFaLfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtH6AnvXEQjm/WxnjoFUUrMIioDKknW83b7Od7DYTPrcDFYedTTFDsYObxYSO6a3HAb+fApJdTQryNk9Asn8gs2N0MLaNgqUGY+Gk70glfH3yV4ZTei61xBmlxnAPDhZoFxRk99vlR59QjAnwOVBMgg3AWs7zxeGylYslZhEn/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xml6pkdp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PknLiC3cGIsgIscoMACbI5AQH74jTu3hrM+2LhmfxkFR3ITF5YUatXHf//IyLmPCA8hgeeSJLubCcN9zFYST2XGpVndK2Z6w/vy5hJOxZkqjVFBvRz7zoJ9vuHZLK6bIRv/f1BsNv9lUpWoMo9O2oJx9qhql4C0Ohs0PglxIrVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2Cilb6A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xml6pkdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB331F000FF;
-	Sat, 12 Sep 2026 08:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2Cilb6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A191F000FF;
+	Sat, 12 Sep 2026 08:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202565;
-	bh=yn+QEcD1xCFIhbwb7rwDZL2214qFmPLelRdUqh+kuvY=;
+	s=korg; t=1789202570;
+	bh=3PCRF82rSrahU9kaZbCCcwt9rWE6Q55f3RUW1vi7cp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xml6pkdp4mhVXgWoaUBIhq1+2otbL8VZJF0TcVG4r0kUrBATb6i2+qkt3rLUBerLh
-	 Lfx6jyljJP+BSA39Gm3/Ztnzx7EwWCyD6y6URGhpyGlD04mM2iMVnHTVU50eBeP57u
-	 /6HY2BPC3z1lbjTNz3JR9A+lFkbF6QKXHbV07Byw=
+	b=m2Cilb6APgC2QJ0/Na0iqC9g/7R2R1JK3m5bR2CIaRWFX3ZN5//eCH1CvG26mZAo1
+	 wfLtC28FyNSQX03RSIHwRXlxFKGnjn8MslUcI6E7Fgllacf+rA2emUg2EoTU00uew6
+	 1mjXeMTSk2qhcqxngb1h534JjlgKUvREyTrBL6uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Yue <glass.su@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
+	Sun YangKai <sunyangkai@fnnas.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1227/1815] btrfs: make sure EXTENT_BUFFER_READING is cleared under refs_lock
-Date: Sat, 12 Sep 2026 08:49:37 +0200
-Message-ID: <20260912065717.816270691@linuxfoundation.org>
+Subject: [PATCH 7.2 1228/1815] btrfs: check if root is readonly when setting posix acl
+Date: Sat, 12 Sep 2026 08:49:38 +0200
+Message-ID: <20260912065717.840652217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,228 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Sun YangKai <sunyangkai@fnnas.com>
 
-[ Upstream commit 690c2accacb1aca91ab8186d15dee56da8723f31 ]
+[ Upstream commit 01c2f41fc441f75b3f9326443372faceb1cb6638 ]
 
-[FALSE ALERTS]
-There is a bug report that the warning inside
-invalidate_and_check_btree_folios() got triggered during btrfs/298:
+For a filesystem which has btrfs read-only property set to true, all
+write operations including acl and xattr should be denied. However, acl
+can still be set even if btrfs ro property is true.
 
- BTRFS info (device sdd): first mount of filesystem f9bf732a-a19b-44b9-99a7-614ddff168e2
- BTRFS info (device sdd): using crc32c checksum algorithm
- BTRFS error (device sdd): failed to find fsid cb2fdb42-b638-4f2f-badd-4127467ba674 when attempting to open seed devices
- BTRFS error (device sdd): failed to read chunk tree: -2
- ------------[ cut here ]------------
- WARNING: disk-io.c:3342 at invalidate_and_check_btree_folios+0x260/0x3c0 [btrfs], CPU#4: mount/125993
- CPU: 4 UID: 0 PID: 125993 Comm: mount Tainted: G        W  OE       7.1.0-rc7-custom+ #1 PREEMPT(full)
- Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20250812-19.fc42 08/12/2025
- Call trace:
-  invalidate_and_check_btree_folios+0x260/0x3c0 [btrfs] (P)
-  open_ctree+0x1f50/0x23b0 [btrfs]
-  btrfs_get_tree+0x89c/0xc48 [btrfs]
-  vfs_get_tree+0x30/0x110
-  vfs_cmd_create+0x58/0xe8
-  __arm64_sys_fsconfig+0x39c/0x518
-  invoke_syscall.constprop.0+0x48/0x120
-  el0_svc_common.constprop.0+0x40/0xe8
-  do_el0_svc+0x24/0x38
-  el0_svc+0x50/0x310
-  el0t_64_sync_handler+0xa0/0xe8
-  el0t_64_sync+0x198/0x1a0
- ---[ end trace 0000000000000000 ]---
- BTRFS warning (device sdd): unable to release extent buffer 365985792 owner 3 gen 17 refs 3 flags 0x5
+This happens because no function on the set_acl code path checks the root
+is readonly or not. It was checked in btrfs_setxattr_trans() but got
+removed in commit 353c2ea735e4 ("btrfs: remove redundant readonly root
+check in btrfs_setxattr_trans")
 
-[CAUSE]
-In that invalidate_and_check_btree_folios() we wait for the eb to finish
-its read, then check if it's only held by us and the btree inode.
+That commit didn't check if all the callers properly check the root's
+read-only flag. A previous fix is commit b51111271b03 ("btrfs: check if
+root is readonly while setting security xattr").
 
-If not, then do a warning as it may be still held, and could cause
-problems.
+Always check if the root is read-only before performing the set acl
+operation.
 
-But there is a small window where the check can lead to false alerts:
-
-    Thread A (Read endio)         |        Thread B (Unmount)
-----------------------------------+-------------------------------------
- end_bbio_meta_read()             |
- | The eb has one extra ref held  |
- | by the reader, and has         |
- | EXTENT_BUFFER_READING flag set | invalidate_and_check_btree_folios()
- |                                | |
- |- clear_extent_buffer_reading() | |
- |                                | |- wait_on_bit_io();
- |                                | |  The EXTENT_BUFFER_READING flag is
- |                                | |  cleared
- |                                | |- if (refcount_read(eb->refs) > 2)
- |                                |    The eb is held by the read, us
- |                                |    and btree inode, thus it
- |                                |    will trigger the warning
- |- free_extent_buffer()          |
-
-[FIX]
-Introduce a helper, free_extent_buffer_clear_reading().
-
-If the new parameter, @clear_reading, is set, we will hold the spinlock
-at the beginning of free_extent_buffer_clear_reading() to make sure the
-EXTENT_BUFFER_READING flag is cleared inside the same critical section
-of decreasing refs.
-
-Now free_extent_buffer() will just call
-free_extent_buffer_clear_reading() with @clear_reading set to false, so
-no behavior change.
-
-But for end_bbio_meta_read(), it will not clear_extent_buffer_reading()
-directly, but pass @clear_reading as true.
-
-Then inside invalidate_and_check_btree_folios(), hold the refs_lock
-before reading refs.
-So that we eliminate the race window completely.
-
-Reported-by: Su Yue <glass.su@suse.com>
-Link: https://lore.kernel.org/linux-btrfs/DC0C775E-13B3-47D9-9AB2-895BB11C029D@suse.com/
-Fixes: 83f7e52b7ed1 ("btrfs: warn about extent buffer that can not be released")
+Fixes: 353c2ea735e4 ("btrfs: remove redundant readonly root check in btrfs_setxattr_trans")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Sun YangKai <sunyangkai@fnnas.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c   | 16 ++++++++++++++--
- fs/btrfs/extent_io.c | 43 +++++++++++++++++++++++++++++++++----------
- 2 files changed, 47 insertions(+), 12 deletions(-)
+ fs/btrfs/acl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 2f1666d9544e1..ca55c886d6068 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3314,6 +3314,8 @@ static void invalidate_and_check_btree_folios(struct btrfs_fs_info *fs_info)
- 	 */
- 	rcu_read_lock();
- 	xa_for_each(&fs_info->buffer_tree, index, eb) {
-+		unsigned int refs;
-+
- 		/* Increase the ref so that the eb won't disappear. */
- 		if (!refcount_inc_not_zero(&eb->refs))
- 			continue;
-@@ -3323,17 +3325,27 @@ static void invalidate_and_check_btree_folios(struct btrfs_fs_info *fs_info)
- 		if (test_bit(EXTENT_BUFFER_READING, &eb->bflags))
- 			wait_on_bit_io(&eb->bflags, EXTENT_BUFFER_READING,
- 				       TASK_UNINTERRUPTIBLE);
-+		/*
-+		 * We hold the spinlock to make sure above
-+		 * EXTENT_BUFFER_READING flag is cleared with the held
-+		 * ref dropped.
-+		 * Or we can hit a race window and lead to false alerts.
-+		 */
-+		spin_lock(&eb->refs_lock);
-+		refs = refcount_read(&eb->refs);
-+		spin_unlock(&eb->refs_lock);
-+
- 		/*
- 		 * The refs threshold is 2, one held by us at the beginning
- 		 * of the loop, one for the ownership in the buffer tree.
- 		 */
--		if (unlikely(refcount_read(&eb->refs) > 2 || extent_buffer_under_io(eb))) {
-+		if (unlikely(refs > 2 || extent_buffer_under_io(eb))) {
- 			WARN_ON_ONCE(IS_ENABLED(CONFIG_BTRFS_DEBUG));
- 			btrfs_warn(fs_info,
- 			"unable to release extent buffer %llu owner %llu gen %llu refs %u flags 0x%lx",
- 				   eb->start, btrfs_header_owner(eb),
- 				   btrfs_header_generation(eb),
--				   refcount_read(&eb->refs), eb->bflags);
-+				   refs, eb->bflags);
- 		}
- 		free_extent_buffer(eb);
- 		rcu_read_lock();
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 45c4d4a3b29b1..78f73f91d5775 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -3842,12 +3842,31 @@ static int release_extent_buffer(struct extent_buffer *eb)
- 	return 0;
- }
+diff --git a/fs/btrfs/acl.c b/fs/btrfs/acl.c
+index e55b686fe1ab8..662cdd1cbdef6 100644
+--- a/fs/btrfs/acl.c
++++ b/fs/btrfs/acl.c
+@@ -15,6 +15,7 @@
+ #include "xattr.h"
+ #include "acl.h"
+ #include "misc.h"
++#include "btrfs_inode.h"
  
--void free_extent_buffer(struct extent_buffer *eb)
-+static void clear_extent_buffer_reading(struct extent_buffer *eb)
-+{
-+	clear_and_wake_up_bit(EXTENT_BUFFER_READING, &eb->bflags);
-+}
-+
-+static void free_extent_buffer_clear_reading(struct extent_buffer *eb,
-+					     bool clear_reading)
+ struct posix_acl *btrfs_get_acl(struct inode *inode, int type, bool rcu)
  {
- 	int refs;
+@@ -107,6 +108,9 @@ int btrfs_set_acl(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	struct inode *inode = d_inode(dentry);
+ 	umode_t old_mode = inode->i_mode;
+ 
++	if (btrfs_root_readonly(BTRFS_I(inode)->root))
++		return -EROFS;
 +
- 	if (!eb)
- 		return;
- 
-+	/*
-+	 * We want to clear EXTENT_BUFFER_READING flag and decrease refs
-+	 * in the same critical section.
-+	 * This will make sure invalidate_and_check_btree_folios() won't
-+	 * see an eb with EXTENT_BUFFER_READING cleared but refs not yet
-+	 * decreased.
-+	 */
-+	if (clear_reading) {
-+		spin_lock(&eb->refs_lock);
-+		clear_extent_buffer_reading(eb);
-+	}
-+
- 	refs = refcount_read(&eb->refs);
- 	while (1) {
- 		if (test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags)) {
-@@ -3858,11 +3877,16 @@ void free_extent_buffer(struct extent_buffer *eb)
- 		}
- 
- 		/* Optimization to avoid locking eb->refs_lock. */
--		if (atomic_try_cmpxchg(&eb->refs.refs, &refs, refs - 1))
-+		if (atomic_try_cmpxchg(&eb->refs.refs, &refs, refs - 1)) {
-+			if (clear_reading)
-+				spin_unlock(&eb->refs_lock);
- 			return;
-+		}
- 	}
- 
--	spin_lock(&eb->refs_lock);
-+	if (!clear_reading)
-+		spin_lock(&eb->refs_lock);
-+
- 	if (refcount_read(&eb->refs) == 2 &&
- 	    test_bit(EXTENT_BUFFER_STALE, &eb->bflags) &&
- 	    !extent_buffer_under_io(eb) &&
-@@ -3876,6 +3900,11 @@ void free_extent_buffer(struct extent_buffer *eb)
- 	release_extent_buffer(eb);
- }
- 
-+void free_extent_buffer(struct extent_buffer *eb)
-+{
-+	return free_extent_buffer_clear_reading(eb, false);
-+}
-+
- void free_extent_buffer_stale(struct extent_buffer *eb)
- {
- 	if (!eb)
-@@ -4001,11 +4030,6 @@ void set_extent_buffer_uptodate(struct extent_buffer *eb)
- 		btrfs_meta_folio_set_uptodate(eb->folios[i], eb);
- }
- 
--static void clear_extent_buffer_reading(struct extent_buffer *eb)
--{
--	clear_and_wake_up_bit(EXTENT_BUFFER_READING, &eb->bflags);
--}
--
- static void end_bbio_meta_read(struct btrfs_bio *bbio)
- {
- 	struct extent_buffer *eb = bbio->private;
-@@ -4029,8 +4053,7 @@ static void end_bbio_meta_read(struct btrfs_bio *bbio)
- 	else
- 		clear_extent_buffer_uptodate(eb);
- 
--	clear_extent_buffer_reading(eb);
--	free_extent_buffer(eb);
-+	free_extent_buffer_clear_reading(eb, true);
- 
- 	bio_put(&bbio->bio);
- }
+ 	if (type == ACL_TYPE_ACCESS && acl) {
+ 		ret = posix_acl_update_mode(idmap, inode,
+ 					    &inode->i_mode, &acl);
 -- 
 2.53.0
 
