@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E726D36492C;
-	Sat, 12 Sep 2026 08:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4061A364059;
+	Sat, 12 Sep 2026 08:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201501; cv=none; b=ke0YkmP+Gw2tsqyaHuAZfs02O26zP2Vxy4RtJDhBHOm77zm0hthtx9TD4/FbF7vijelxUF2o8d6ZphrkNCftA4XUyrKPh2t4OiJys5bqI2td3UBf7bjleZ+n7pOSzwhNbl3BTjOWI6JTOmR9NyPaa8n0UdZMhLgvTBTY8iidl0k=
+	t=1789201506; cv=none; b=L8agyPxSZsK/hhViGUAUNIUdAWYATyfpIbJL9kGdMQ6DOWTRsc317kiMCRy/sYqSCLTu6l4Sc9YWNs/gO2w5NLONWi57L6dXshU4oApS2xXlKFTbhPtq3xYGhRmDECgcNU60oiquAHMpN0Z2kEbEt4G+TuYSTYwArQpqNnLHsr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201501; c=relaxed/simple;
-	bh=ChQRw+dJFO/4aqvGx5pWUOgQOYmg2szFflnM5AqwUjw=;
+	s=arc-20240116; t=1789201506; c=relaxed/simple;
+	bh=JMR7gPg1pirwb/5q3ZXUC9jVLlnLVURxPrQPQImCTxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1WDM5whXF0ugnf7MOgXTSAvff4SZBYaPnPdznQvcSQdrXR5S3Z7fRZRFTPI38fxp91VMxnGZbEjtcuvwXx5kwmGfobjUqTliIcJY2XLExuGJ+a37e/KduYPl/ISIbkWwzjPHs21hmi5Y206oTeQaeZWOSZW9ZPH6SboYB2TtIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rjzs1yJ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RUtdV0BgXASYCewCG23folWDtzW3TRsxpUjwOsa0+r0FGHwdm3nDd4DJc4LhiYMVahOue62gkWk9JiAHAdkUJVv0O1z593OXzsHkGor7VrApaDc0ekR5cKEoGeqQCTc6JAlFCDiAOB1T1zqbIMIt8V8fn9E92NUd6eUNjzVuG5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp/W9iPQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rjzs1yJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09721F0089B;
-	Sat, 12 Sep 2026 08:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp/W9iPQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E566E1F000FF;
+	Sat, 12 Sep 2026 08:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201499;
-	bh=ccRfkcVHFHpy1rDDMUyEs/clVNbGzDrh7ve5NXMxBL4=;
+	s=korg; t=1789201504;
+	bh=Sjre8dGTOaZF7fahRzN7KLl1jHqP/PggpSps/fh0Vis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rjzs1yJ72zOg/pzANadvSjNYJWF/+mFSHM8KL/jCn5NGZmjmAD/7tXJk3uW7Tn2sw
-	 rPTIdUxxCc9ypgyyNYUd45Z0BfJ5pThHKmdN5R49lA326WT3z5BrlUwwzUaSN64m2o
-	 cd+TPg8FGUnQJckR5mok1hI2sD20FQo6gwDJIFS8=
+	b=qp/W9iPQE1Ml9Q6sJJrK/dg0imh4Zn3r1ATdf+iMN6eKGQ4M40pKpv4W+Tl89St84
+	 v34mvEDLVofeK3aP3odylC8XlVb6Wh2KRh+rRD7DjxoqaX2tHYj6sXkY8qvi2b+LKf
+	 /JYwRkWjIyzhSnhcnklv2mNm9VEwwNkTaAWrI/hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0ec3d1a6cf1fbe79c153@syzkaller.appspotmail.com,
-	Slawomir Stepien <sst@poczta.fm>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Shanker Donthineni <sdonthineni@nvidia.com>,
+	Fenghua Yu <fenghuay@nvidia.com>,
+	Ben Horgan <ben.horgan@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0966/1815] wifi: zd1211rw: reject secondary interfaces to prevent conflicts
-Date: Sat, 12 Sep 2026 08:45:16 +0200
-Message-ID: <20260912065711.652422229@linuxfoundation.org>
+Subject: [PATCH 7.2 0957/1815] arm_mpam: Apply T241-MPAM-6 to 63-bit counters
+Date: Sat, 12 Sep 2026 08:45:07 +0200
+Message-ID: <20260912065711.436735301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,69 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slawomir Stepien <sst@poczta.fm>
+From: Shanker Donthineni <sdonthineni@nvidia.com>
 
-[ Upstream commit 0e4532ec658606f76f62eb277e7a933919d36cbb ]
+[ Upstream commit 2c43aced9be353f8428678a75495ca9d631dc927 ]
 
-The zd1211rw driver is designed for single-function Wi-Fi dongles and
-hardcodes its USB endpoints. When a malformed USB device exposes multiple
-interfaces that match the driver's device ID, the driver blindly binds to
-all of them.
+T241-MPAM-6 causes all MBWU counter formats to count 64-byte
+requests instead of bytes. Commit dc48eb1ff27c excluded the 63-bit
+MSMON_MBWU_LWD format while scaling the shorter counters. Systems
+selecting the preferred 63-bit counter consequently report bandwidth
+values that are 64 times too small.
 
-During probe(), the driver calls usb_reset_device(), which iterates over
-all interfaces and invokes the pre_reset() callback for each bound
-interface. Since multiple interfaces are bound to zd1211rw, pre_reset() is
-called sequentially for each instance, acquiring their respective
-&mac->chip.mutex. Because all instances initialize their mutexes with the
-same lock class, lockdep detects a task acquiring a lock of the same class
-it already holds and flags it as a possible recursive deadlock:
+Apply the scale to both the sampled value and overflow correction for
+the 63-bit format. Unsigned arithmetic retains modulo-u64 behavior
+when the scaled counter range exceeds u64.
 
-WARNING: possible recursive locking detected
-kworker/0:1/11 is trying to acquire lock:
-ffff88810371dde0 (&chip->mutex){+.+.}-{4:4}, at:
-zd_chip_disable_rxtx+0x20/0x50
-drivers/net/wireless/zydas/zd1211rw/zd_chip.c:1465
-
-but task is already holding lock:
-ffff8881138ddde0 (&chip->mutex){+.+.}-{4:4}, at: pre_reset+0x28c/0x380
-drivers/net/wireless/zydas/zd1211rw/zd_usb.c:1505
-
-Fix this by explicitly rejecting secondary interfaces (bInterfaceNumber !=
-0) during probe(). This ensures that only a single instance of the driver
-binds to the device, eliminating the recursive locking scenario.
-
-Fixes: e85d0918b54f ("[PATCH] ZyDAS ZD1211 USB-WLAN driver")
-Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+0ec3d1a6cf1fbe79c153@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0ec3d1a6cf1fbe79c153
-Link: https://syzkaller.appspot.com/ai_job?id=00724ef7-fd77-4cde-9779-895b8f63c2f6
-Signed-off-by: Slawomir Stepien <sst@poczta.fm>
-Link: https://patch.msgid.link/20260730065231.1644030-1-sst@poczta.fm
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: dc48eb1ff27c ("arm_mpam: Add workaround for T241-MPAM-6")
+Link: https://lore.kernel.org/lkml/20240816131432.993859-1-sdonthineni@nvidia.com/
+Signed-off-by: Shanker Donthineni <sdonthineni@nvidia.com>
+Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
+Tested-by: Fenghua Yu <fenghuay@nvidia.com>
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+Signed-off-by: Ben Horgan <ben.horgan@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/zydas/zd1211rw/zd_usb.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/resctrl/mpam_devices.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/zydas/zd1211rw/zd_usb.c b/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
-index 966d8ccb0dbcd..98102c663434b 100644
---- a/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
-+++ b/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
-@@ -1353,6 +1353,14 @@ static int probe(struct usb_interface *intf, const struct usb_device_id *id)
- 	struct zd_usb *usb;
- 	struct ieee80211_hw *hw = NULL;
+diff --git a/drivers/resctrl/mpam_devices.c b/drivers/resctrl/mpam_devices.c
+index 2f09f4b78bd3b..b68f5599e8dbe 100644
+--- a/drivers/resctrl/mpam_devices.c
++++ b/drivers/resctrl/mpam_devices.c
+@@ -1196,8 +1196,7 @@ static u64 mpam_msmon_overflow_val(enum mpam_device_features type,
+ {
+ 	u64 overflow_val = __mpam_msmon_overflow_val(type);
  
-+	/*
-+	 * ZD1211 devices are single-function. Reject secondary interfaces
-+	 * to prevent multiple instances from conflicting on hardcoded endpoints
-+	 * and triggering recursive locking warnings.
-+	 */
-+	if (intf->cur_altsetting->desc.bInterfaceNumber != 0)
-+		return -ENODEV;
-+
- 	print_id(udev);
+-	if (mpam_has_quirk(T241_MBW_COUNTER_SCALE_64, msc) &&
+-	    type != mpam_feat_msmon_mbwu_63counter)
++	if (mpam_has_quirk(T241_MBW_COUNTER_SCALE_64, msc))
+ 		overflow_val *= 64;
  
- 	if (id->driver_info & DEVICE_INSTALLER)
+ 	return overflow_val;
+@@ -1293,8 +1292,7 @@ static void __ris_msmon_read(void *arg)
+ 			now = FIELD_GET(MSMON___VALUE, now);
+ 		}
+ 
+-		if (mpam_has_quirk(T241_MBW_COUNTER_SCALE_64, msc) &&
+-		    m->type != mpam_feat_msmon_mbwu_63counter)
++		if (mpam_has_quirk(T241_MBW_COUNTER_SCALE_64, msc))
+ 			now *= 64;
+ 
+ 		if (nrdy)
 -- 
 2.53.0
 
