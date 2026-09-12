@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F7D47DD4E;
-	Sat, 12 Sep 2026 13:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD32147DD4A;
+	Sat, 12 Sep 2026 13:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219510; cv=none; b=elJv2qlt8kMR8eTlSeamKaCL33eWoxoA/t7EX9lYiByizBtZJhNEPKNpfJYiK+GBYoqLvmz5OSagAOnU50Z73D6TzK8TDQMX8UYdX/hblWllgH4S9Jh/8+ULRGRFzH23TDlmDbK0fiRkjlu83PBvMIj1PUd3wCCiCtaGARBQS0o=
+	t=1789219514; cv=none; b=rDxYkisFInS80exQPw65/95fQihHU0SRaa/TF/zQq1D/VP7qBeBxHZogkqExVQI9P6EETtDnDfpefR+ItoqyNZtUv3oYPdEAqHt7wMVUxg5qjDVmGxaBGUZmMmtmpLOKA7mZcZM1DFBqCDIFlBCnAmFoY5tLo3H36e+cuuBzB74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219510; c=relaxed/simple;
-	bh=f+7QB3fUQ6r0HnZis6WOn1GKje2b0rit1SJSXmMs7Zo=;
+	s=arc-20240116; t=1789219514; c=relaxed/simple;
+	bh=xaCNiKA6Ent1ndOVpvTV71SKcgyBVURUw7CxZWJmrWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grJkeWITJ1Lc3kQn0fAj3JvqXrbCqi1RTUnF2fgaQEsNBoUjRJrS253BK1Op0yXhSkHHTV3RT6Y7Cad0lpX1jhJ4mG0fCu/6s2KQUBrzLlmjCB9CwUNrT3WrSyEd+zezMpTddHNLJKVci14ADJKbPbL60jgDzn/Or0E/fNq4BXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyrNOVf1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MNqMQBjQ8xITnaOWhX+aUQyobykG5tHrYXa5kEQCPgle8djW3rCv+R80UUJTy84djGbxIFxXCT8cjCZNcLhlDXKuj3DV2Si3I9+1Io276XI/yFVAiRFDSHme9xJPmNkGzEJ0Jk3D5aw9fVGj95ZL7w9W7AP8JwBT6jpa05cuG/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5u4XjK+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyrNOVf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52E41F000FF;
-	Sat, 12 Sep 2026 13:25:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5u4XjK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C9B1F000FF;
+	Sat, 12 Sep 2026 13:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219508;
-	bh=dNCFnS+YLpK66ZKAAzXQ4vObR2Q3sEFM1B4q+3fQazo=;
+	s=korg; t=1789219513;
+	bh=bwFV3bcN9QE/lYASh3ooGERazDfXbwK+gFlEDBesdUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vyrNOVf1BzdDNCwg/rOibYPdlP4Qwxxz3LE4VbhZzC/xavfIWbQ0vW02pqMhzOsDw
-	 HVH+ON5vzOS4m0PZk399GzGLGyVrtrVslcbdH6x+GQaStead5jZPr/SAE9DjByMKHE
-	 X/Uhw3cQfUYYqGmt8QSZm3oKEGVdW/UsQgdcZQwY=
+	b=e5u4XjK+Jd336hyLCI+ttaitTGabqay3tg7XUUQxMbwZ9AlIIia6SFNyIZeNgf9bf
+	 MLBfW1VM47lN5ym/eLylYXhkMcIPFZVZuWkNCVpHp29ONAiuyngP2uxxzIxs1Gn/Pq
+	 8yjB8pcwAzb/tFISqpP9v56w6PggaGW+ly0aT5zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1365/1376] net_sched: act_ct: use RCU in tcf_ct_dump()
-Date: Sat, 12 Sep 2026 09:03:11 +0200
-Message-ID: <20260912065637.955479802@linuxfoundation.org>
+Subject: [PATCH 6.12 1366/1376] net_sched: act_ctinfo: use RCU in tcf_ctinfo_dump()
+Date: Sat, 12 Sep 2026 09:03:12 +0200
+Message-ID: <20260912065637.977897240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,124 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 554e66bad84ce4181ad91a2ae9cc74c7c440e836 ]
+[ Upstream commit 799c94178cf9c9e80575b05b7479396de8b42b61 ]
 
-Also storing tcf_action into struct tcf_ct_params
-makes sure there is no discrepancy in tcf_ct_act().
+Also storing tcf_action into struct tcf_ctinfo_params
+makes sure there is no discrepancy in tcf_ctinfo_act().
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250709090204.797558-5-edumazet@google.com
+Link: https://patch.msgid.link/20250709090204.797558-7-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 3016024d7514 ("net_sched: add back BH safety to tcf_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tc_act/tc_ct.h |  2 +-
- net/sched/act_ct.c         | 30 +++++++++++++++---------------
- 2 files changed, 16 insertions(+), 16 deletions(-)
+ include/net/tc_act/tc_ctinfo.h |  1 +
+ net/sched/act_ctinfo.c         | 23 +++++++++++------------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/tc_act/tc_ct.h b/include/net/tc_act/tc_ct.h
-index 77f87c622a2ef..c18e7cf22d035 100644
---- a/include/net/tc_act/tc_ct.h
-+++ b/include/net/tc_act/tc_ct.h
-@@ -13,7 +13,7 @@ struct tcf_ct_params {
- 	struct nf_conntrack_helper *helper;
- 	struct nf_conn *tmpl;
- 	u16 zone;
--
+diff --git a/include/net/tc_act/tc_ctinfo.h b/include/net/tc_act/tc_ctinfo.h
+index a04bcac7adf4b..7fe01ab236da4 100644
+--- a/include/net/tc_act/tc_ctinfo.h
++++ b/include/net/tc_act/tc_ctinfo.h
+@@ -7,6 +7,7 @@
+ struct tcf_ctinfo_params {
+ 	struct rcu_head rcu;
+ 	struct net *net;
 +	int action;
- 	u32 mark;
- 	u32 mark_mask;
+ 	u32 dscpmask;
+ 	u32 dscpstatemask;
+ 	u32 cpmarkmask;
+diff --git a/net/sched/act_ctinfo.c b/net/sched/act_ctinfo.c
+index 3a32a8d8a0f83..17abb1d064deb 100644
+--- a/net/sched/act_ctinfo.c
++++ b/net/sched/act_ctinfo.c
+@@ -88,13 +88,11 @@ TC_INDIRECT_SCOPE int tcf_ctinfo_act(struct sk_buff *skb,
+ 	struct tcf_ctinfo_params *cp;
+ 	struct nf_conn *ct;
+ 	int proto, wlen;
+-	int action;
  
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index f735cf9bfd403..8aed25cad9eef 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -994,7 +994,7 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 	cp = rcu_dereference_bh(ca->params);
  
- 	p = rcu_dereference_bh(c->params);
+ 	tcf_lastuse_update(&ca->tcf_tm);
+ 	tcf_action_update_bstats(&ca->common, skb);
+-	action = READ_ONCE(ca->tcf_action);
  
--	retval = READ_ONCE(c->tcf_action);
-+	retval = p->action;
- 	commit = p->ct_action & TCA_CT_ACT_COMMIT;
- 	clear = p->ct_action & TCA_CT_ACT_CLEAR;
- 	tmpl = p->tmpl;
-@@ -1443,6 +1443,7 @@ static int tcf_ct_init(struct net *net, struct nlattr *nla,
- 	if (err)
- 		goto cleanup;
- 
-+	params->action = parm->action;
- 	spin_lock_bh(&c->tcf_lock);
- 	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
- 	params = rcu_replace_pointer(c->params, params,
-@@ -1476,8 +1477,8 @@ static void tcf_ct_cleanup(struct tc_action *a)
+ 	wlen = skb_network_offset(skb);
+ 	switch (skb_protocol(skb, true)) {
+@@ -141,7 +139,7 @@ TC_INDIRECT_SCOPE int tcf_ctinfo_act(struct sk_buff *skb,
+ 	if (thash)
+ 		nf_ct_put(ct);
+ out:
+-	return action;
++	return cp->action;
  }
  
- static int tcf_ct_dump_key_val(struct sk_buff *skb,
--			       void *val, int val_type,
--			       void *mask, int mask_type,
-+			       const void *val, int val_type,
-+			       const void *mask, int mask_type,
- 			       int len)
- {
- 	int err;
-@@ -1498,9 +1499,9 @@ static int tcf_ct_dump_key_val(struct sk_buff *skb,
- 	return 0;
- }
+ static const struct nla_policy ctinfo_policy[TCA_CTINFO_MAX + 1] = {
+@@ -258,6 +256,8 @@ static int tcf_ctinfo_init(struct net *net, struct nlattr *nla,
+ 		cp_new->mode |= CTINFO_MODE_CPMARK;
+ 	}
  
--static int tcf_ct_dump_nat(struct sk_buff *skb, struct tcf_ct_params *p)
-+static int tcf_ct_dump_nat(struct sk_buff *skb, const struct tcf_ct_params *p)
++	cp_new->action = actparm->action;
++
+ 	spin_lock_bh(&ci->tcf_lock);
+ 	goto_ch = tcf_action_set_ctrlact(*a, actparm->action, goto_ch);
+ 	cp_new = rcu_replace_pointer(ci->params, cp_new,
+@@ -282,25 +282,24 @@ static int tcf_ctinfo_init(struct net *net, struct nlattr *nla,
+ static int tcf_ctinfo_dump(struct sk_buff *skb, struct tc_action *a,
+ 			   int bind, int ref)
  {
--	struct nf_nat_range2 *range = &p->range;
-+	const struct nf_nat_range2 *range = &p->range;
- 
- 	if (!(p->ct_action & TCA_CT_ACT_NAT))
- 		return 0;
-@@ -1538,7 +1539,8 @@ static int tcf_ct_dump_nat(struct sk_buff *skb, struct tcf_ct_params *p)
- 	return 0;
- }
- 
--static int tcf_ct_dump_helper(struct sk_buff *skb, struct nf_conntrack_helper *helper)
-+static int tcf_ct_dump_helper(struct sk_buff *skb,
-+			      const struct nf_conntrack_helper *helper)
- {
- 	if (!helper)
- 		return 0;
-@@ -1555,9 +1557,8 @@ static inline int tcf_ct_dump(struct sk_buff *skb, struct tc_action *a,
- 			      int bind, int ref)
- {
- 	unsigned char *b = skb_tail_pointer(skb);
--	struct tcf_ct *c = to_ct(a);
--	struct tcf_ct_params *p;
--
-+	const struct tcf_ct *c = to_ct(a);
-+	const struct tcf_ct_params *p;
- 	struct tc_ct opt = {
- 		.index   = c->tcf_index,
- 		.refcnt  = refcount_read(&c->tcf_refcnt) - ref,
-@@ -1565,10 +1566,9 @@ static inline int tcf_ct_dump(struct sk_buff *skb, struct tc_action *a,
+-	struct tcf_ctinfo *ci = to_ctinfo(a);
++	const struct tcf_ctinfo *ci = to_ctinfo(a);
++	unsigned char *b = skb_tail_pointer(skb);
++	const struct tcf_ctinfo_params *cp;
+ 	struct tc_ctinfo opt = {
+ 		.index   = ci->tcf_index,
+ 		.refcnt  = refcount_read(&ci->tcf_refcnt) - ref,
+ 		.bindcnt = atomic_read(&ci->tcf_bindcnt) - bind,
  	};
+-	unsigned char *b = skb_tail_pointer(skb);
+-	struct tcf_ctinfo_params *cp;
  	struct tcf_t t;
  
--	spin_lock_bh(&c->tcf_lock);
--	p = rcu_dereference_protected(c->params,
--				      lockdep_is_held(&c->tcf_lock));
--	opt.action = c->tcf_action;
+-	spin_lock_bh(&ci->tcf_lock);
+-	cp = rcu_dereference_protected(ci->params,
+-				       lockdep_is_held(&ci->tcf_lock));
 +	rcu_read_lock();
-+	p = rcu_dereference(c->params);
-+	opt.action = p->action;
++	cp = rcu_dereference(ci->params);
  
- 	if (tcf_ct_dump_key_val(skb,
- 				&p->ct_action, TCA_CT_ACTION,
-@@ -1613,11 +1613,11 @@ static inline int tcf_ct_dump(struct sk_buff *skb, struct tc_action *a,
- 	tcf_tm_dump(&t, &c->tcf_tm);
- 	if (nla_put_64bit(skb, TCA_CT_TM, sizeof(t), &t, TCA_CT_PAD))
+ 	tcf_tm_dump(&t, &ci->tcf_tm);
+ 	if (nla_put_64bit(skb, TCA_CTINFO_TM, sizeof(t), &t, TCA_CTINFO_PAD))
  		goto nla_put_failure;
--	spin_unlock_bh(&c->tcf_lock);
-+	rcu_read_unlock();
  
+-	opt.action = ci->tcf_action;
++	opt.action = cp->action;
+ 	if (nla_put(skb, TCA_CTINFO_ACT, sizeof(opt), &opt))
+ 		goto nla_put_failure;
+ 
+@@ -337,11 +336,11 @@ static int tcf_ctinfo_dump(struct sk_buff *skb, struct tc_action *a,
+ 			      TCA_CTINFO_PAD))
+ 		goto nla_put_failure;
+ 
+-	spin_unlock_bh(&ci->tcf_lock);
++	rcu_read_unlock();
  	return skb->len;
+ 
  nla_put_failure:
--	spin_unlock_bh(&c->tcf_lock);
+-	spin_unlock_bh(&ci->tcf_lock);
 +	rcu_read_unlock();
  	nlmsg_trim(skb, b);
  	return -1;
