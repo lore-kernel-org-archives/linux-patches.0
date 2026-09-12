@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B67524CEEA;
-	Sat, 12 Sep 2026 11:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346C0221F26;
+	Sat, 12 Sep 2026 11:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211069; cv=none; b=r+krrm60UewlYK4c5jjmrmzxisk261SpOAqlRDl7uvF8HLvvoHVgygzwxMs+4M15PdCHE4Pl5JfB6Wag7sWuHlE8PzKs+9MzWNIHLioSenH1PrGNP3ltYc1Cmshser3KcMTuGKbESbT6xRN3SDXExI/fWScYneqOyUoOMQg1SqU=
+	t=1789211074; cv=none; b=NM8VM+uknkvCy+g0ClvRfDOMlRnyWTFHDBfWDjOfWh3/X3Q5KBAdOLUwGKZnOf3N/Dea1ItjdGfosJnV6blOsqnM6xliLTiEHAJKizUdvT60hMlLV09wGts25ahw8LCF05Hx9EKMHkyECnM7wx/OwyZ4zo5bmaTp4BJKRAXraUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211069; c=relaxed/simple;
-	bh=VYk7CNkBjs04roX2siik/AXuQtfqyfAwOwdFNtbJLvI=;
+	s=arc-20240116; t=1789211074; c=relaxed/simple;
+	bh=RLFlKHJ+W29+B4VvjP7VOTM4WatWK3pNGgcSQr2hJFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Phx96YRUHF2sFZUpJNfBaZIbWdTkCs5YnopjlIFPa+R7mon9WcrumGOF6BJGZnz5uTXfX8KKgE687XH7keNdPm7hXv3rNtKOAnbpZd3TqjOsfGjwxlak0xN0IHQQpuw+NTskU1U+DsSlSqQs/eJtamTib+LTHMkcXUFonKSlwm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYM/QE7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U0qiflldGJUX6yRGpumU80D5u/rQ4EJDYGRkIOsZ5GUqwcMx8H9yFYi8LqCUHxMWITjcdULiSkoXL/GPKUd3Fd4c3HzTWhN9+pGnYgt9+jbqFhv9BQWIsnnOSJYW9b+/a+1BK/SewYOtP6hfQl8JXlcLFIez0wA7hxFOgjItz/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fxbbuymr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYM/QE7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209351F000FF;
-	Sat, 12 Sep 2026 11:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fxbbuymr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52A71F000FF;
+	Sat, 12 Sep 2026 11:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211068;
-	bh=4889CwU3IZDPzPcHHZRg12lGh0vL7YQJGwxm93gddyo=;
+	s=korg; t=1789211072;
+	bh=hMCPZkamzZrzqv6bJrUvXeegO/0MMN5lAUH0Hb3xCa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dYM/QE7HxSoFvlCPPRJaEpmf56M/YqjrqIEE972nnmWYokoq2m0ft8XIKaucLpXck
-	 OHhMbX5CI+CzcAlyZbNHaw9d14WrGov4+hAdJR0mGBkmv6uRNt9Jd6zL21hr5xWQYN
-	 SPrbbBUdbSvD8BMMAYWOtj+aTeLGEF8qB/XijDWg=
+	b=Fxbbuymr15bKTRnhWUenc75jBKpYfQmPz6uQ9crNQqDDJV5WEsSuuEIFXKLotCAgX
+	 LF97A55OB3VWsZjQq9EBX3IdQt3F8Z2vwZiR2Cf87/OfP3MuPrIoCWu3FeIa5nDEOW
+	 Akr3p67ZxOHSXWvjdVPkckpDzzwr2lwnbtT+XAwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ran Hongyun <ranhongyun1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1148/1518] UBI: fix two issues in the ubi.mtd MODULE_PARM_DESC
-Date: Sat, 12 Sep 2026 08:55:17 +0200
-Message-ID: <20260912065649.426955767@linuxfoundation.org>
+Subject: [PATCH 6.18 1157/1518] perf build: Remove leftover feature tests for removed cxx and clang support
+Date: Sat, 12 Sep 2026 08:55:26 +0200
+Message-ID: <20260912065649.630593084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,52 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ran Hongyun <ranhongyun1@huawei.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit ff7937d14f5333ec7e6fb50d00a152d7974f4105 ]
+[ Upstream commit b60f6bc128b972e018de6bcfa7007b4021f4a31a ]
 
-Fix two issues introduced before:
+56b11a2126bf2f42 ("perf bpf: Remove support for embedding clang for
+compiling BPF events (-e foo.c)") removed the test-cxx.cpp and
+test-clang.cpp sources, but left behind their entries in the feature
+test FILES list, the build rules and the cxx and clang entries in
+FEATURE_TESTS_EXTRA.
 
- - The parameter format string was missing the enable_fm and
-    need_resv_pool tokens introduced in an earlier commit.
+Since the sources no longer exist, those rules would always fail,
+making the artificial feature-cxx and feature-clang results to be
+perpetually disabled/absent, remove the leftover entries, making the
+feature test scripts list match the available sources.
 
- - The bad-block reservation note was misplaced after Example 5
-    instead of after Example 3. It was misplaced due to an earlier patch.
-
-Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
-Signed-off-by: Ran Hongyun <ranhongyun1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 56b11a2126bf2f42 ("perf bpf: Remove support for embedding clang for compiling BPF events (-e foo.c)")
+Cc: Ian Rogers <irogers@google.com>
+Assisted-by: opencode:deepseek-v4-flash-free
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/build/Makefile.feature |  2 --
+ tools/build/feature/Makefile | 14 --------------
+ 2 files changed, 16 deletions(-)
 
-diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index 3b30c80cad43f..fb121b6d08484 100644
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -1575,7 +1575,7 @@ static int ubi_mtd_param_parse(const char *val, const struct kernel_param *kp)
- }
+diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
+index 32bbe29fe5f6c..a0133d52aa8a0 100644
+--- a/tools/build/Makefile.feature
++++ b/tools/build/Makefile.feature
+@@ -119,9 +119,7 @@ FEATURE_TESTS_EXTRA :=                  \
+          libbfd-liberty-z               \
+          libopencsd                     \
+          libperl                        \
+-         cxx                            \
+          llvm                           \
+-         clang                          \
+          libbpf                         \
+          libpfm4                        \
+          libdebuginfod			\
+diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
+index 95646290cb89c..c972304c32117 100644
+--- a/tools/build/feature/Makefile
++++ b/tools/build/feature/Makefile
+@@ -58,7 +58,6 @@ FILES=                                          \
+          test-libbpf.bin                        \
+          test-get_cpuid.bin                     \
+          test-sdt.bin                           \
+-         test-cxx.bin                           \
+          test-gettid.bin			\
+          test-jvmti.bin				\
+          test-jvmti-cmlr.bin			\
+@@ -66,7 +65,6 @@ FILES=                                          \
+          test-sched_getcpu.bin			\
+          test-setns.bin				\
+          test-libopencsd.bin			\
+-         test-clang.bin				\
+          test-llvm.bin				\
+          test-llvm-perf.bin   \
+          test-libaio.bin			\
+@@ -330,9 +328,6 @@ $(OUTPUT)test-libbpf.bin:
+ $(OUTPUT)test-sdt.bin:
+ 	$(BUILD)
  
- module_param_call(mtd, ubi_mtd_param_parse, NULL, NULL, 0400);
--MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num]]].\n"
-+MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num[,enable_fm[,need_resv_pool]]]]].\n"
- 		      "Multiple \"mtd\" parameters may be specified.\n"
- 		      "MTD devices may be specified by their number, name, or path to the MTD character device node.\n"
- 		      "Optional \"vid_hdr_offs\" parameter specifies UBI VID header position to be used by UBI. (default value if 0)\n"
-@@ -1588,9 +1588,9 @@ MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|pa
- 		      "Example 1: mtd=/dev/mtd0 - attach MTD device /dev/mtd0.\n"
- 		      "Example 2: mtd=content,1984 mtd=4 - attach MTD device with name \"content\" using VID header offset 1984, and MTD device number 4 with default VID header offset.\n"
- 		      "Example 3: mtd=/dev/mtd1,0,25 - attach MTD device /dev/mtd1 using default VID header offset and reserve 25*nand_size_in_blocks/1024 erase blocks for bad block handling.\n"
-+		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).\n"
- 		      "Example 4: mtd=/dev/mtd1,0,0,5 - attach MTD device /dev/mtd1 to UBI 5 and using default values for the other fields.\n"
--		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n"
--		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).");
-+		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n");
- #ifdef CONFIG_MTD_UBI_FASTMAP
- module_param(fm_autoconvert, bool, 0644);
- MODULE_PARM_DESC(fm_autoconvert, "Set this parameter to enable fastmap automatically on images without a fastmap.");
+-$(OUTPUT)test-cxx.bin:
+-	$(BUILDXX) -std=gnu++11
+-
+ $(OUTPUT)test-gettid.bin:
+ 	$(BUILD)
+ 
+@@ -358,15 +353,6 @@ $(OUTPUT)test-llvm-perf.bin:
+ 		$(shell $(LLVM_CONFIG) --system-libs)		\
+ 		> $(@:.bin=.make.output) 2>&1
+ 
+-$(OUTPUT)test-clang.bin:
+-	$(BUILDXX) -std=gnu++17					\
+-		-I$(shell $(LLVM_CONFIG) --includedir) 		\
+-		-L$(shell $(LLVM_CONFIG) --libdir)		\
+-		-Wl,--start-group -lclang-cpp -Wl,--end-group	\
+-		$(shell $(LLVM_CONFIG) --libs Core option)	\
+-		$(shell $(LLVM_CONFIG) --system-libs)		\
+-		> $(@:.bin=.make.output) 2>&1
+-
+ -include $(OUTPUT)*.d
+ 
+ $(OUTPUT)test-libaio.bin:
 -- 
 2.53.0
 
