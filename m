@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86152F6931;
-	Sat, 12 Sep 2026 16:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3231FBEA6;
+	Sat, 12 Sep 2026 16:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230745; cv=none; b=CqAi7oz3uP/1BYm3aP9RLG2/WHjRMpMVrGEsM+hYEJGf80xjS9yvX2MzZRmBuy0LvSdVzQVcITioaFakrvwjQPLWzSsPEYbK8kgkLqs7X0CjMVuqeuo+2Bgyw77ilCnQB1m2b/nFoLC83mRQPC1je9x01BYQ0jolKEOdK8qQsG8=
+	t=1789230749; cv=none; b=StOiB4oQw/tHesqu6CDyOv3nW3OV61eKKzXZ5FJc6+b+G8GhVGWwxLEYgDbFsX02hm0ouZDuwaT7OOiKK8Qd3EqByeE4T5IgAxWVOW5ZFp7QjSmhIHXRhM+0UZsaN8qRuF9qBzG3iJZCiRjsUI6g81HZo2u84JQ31tMGBzOZJAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230745; c=relaxed/simple;
-	bh=iY75Ei+HHODYEGNtMADB2li8NMqVw57uqzIXQNVDrIw=;
+	s=arc-20240116; t=1789230749; c=relaxed/simple;
+	bh=TYEP6PVnF33yCvF8ov4mVDYBKYKc6Liuh78BP9zEfz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjR/NcJQTkgdmKQZIVJfpgImxELDvDROOt+ocwpQrTHcc32J0mXlK+JljpzAwHlKYxZSwB45BH9VjCDdJwtCBUVYFb9DeBcQQZU0BoD1gs3cL3G0ryHh3QlUK+YITvkn+ILlhAKr8ng6wyHbFhaP5vN34mVda7Uz7fUAtY3xyyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpNmakvy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oM2dcWoxfW32/e8PuM4GpGNJ/+p2ApBJYct7fvYnf7xRjHJEPfh/DjNsqqkJj1ipGph5iAe8ENcPD22NyshBnt4yxn299byGHxgIyvw0wwg75aMXVGJGHbvhTZBE/qKN7XIRjxoND0EQOI9CSm6HBDqT1s4pDRN6rgEW7nUYLWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGBKfAme; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpNmakvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CFF1F000FF;
-	Sat, 12 Sep 2026 16:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGBKfAme"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6177E1F000FF;
+	Sat, 12 Sep 2026 16:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230743;
-	bh=gSAzHkLaCV91eLdmg2c2+axFpdxpETM33vUwrtX+n/4=;
+	s=korg; t=1789230748;
+	bh=iLFOF1dGPLwtdxP5lF+1fZjqvuyE75rTRKUGwJ7RqHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mpNmakvyUzpbJEpXojoDBsUIGJNfM9ygeI+TO+2rvdtf79s7PTkZQpb9uWfpM5RPx
-	 EU8V06RYYwcLxL25FqaPL0EQRiIo2/phW/LX2qnTvgqpCYsTp1vBDEcyUHQL1fq/D3
-	 2dtIkZhplrNONjY/s2yB2HNi1p2jCa/93CqETkdE=
+	b=qGBKfAmeYOm3g741+YutiJL000MlbWWJhS9ObIWZyVd0GplfEiqWMvq7WP1vSR4/C
+	 IhUJaERRAEx6hhmIN+Vt/bySc3qXJXxjB0e4cIFdKSQrGJH08YdLBoFzhxhy+FImrX
+	 VcRy+hD00++MSNZEA7l4UVAzpSIou6st5/vfS12M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Titouan Ameline de Cadeville <titouan.ameline@gmail.com>,
-	Julius Werner <jwerner@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Bastien Curutchet <bastien.curutchet@bootlin.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0830/1191] firmware: google: Add bounds checks in coreboot_table_populate()
-Date: Sat, 12 Sep 2026 08:59:18 +0200
-Message-ID: <20260912065606.906808354@linuxfoundation.org>
+Subject: [PATCH 6.1 0857/1191] pps: clients: gpio: Bypass edges direction check when not needed
+Date: Sat, 12 Sep 2026 08:59:45 +0200
+Message-ID: <20260912065607.499475828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,78 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
+From: Bastien Curutchet <bastien.curutchet@bootlin.com>
 
-[ Upstream commit 7b1a1af4556a4f95ef273e91435fe804cbfcd223 ]
+[ Upstream commit a01f6287c244f35eeec11ca932d09061181eed8c ]
 
-coreboot_table_populate() iterates over firmware-provided table entries
-with no validation that the entries stay within the mapped memory
-region.  A corrupt table with a large `entry->size` advances `ptr_entry`
-past the mapped region, causing an out-of-bounds read on the next
-iteration.
+In the IRQ handler, the GPIO's state is read to verify the direction of
+the edge that triggered the interruption before generating the PPS event.
+If a pulse is too short, the GPIO line can reach back its original state
+before this verification and the PPS event is lost.
 
-Add a check before dereferencing `ptr_entry` to ensure the entry header
-is readable, and a second check after reading `entry->size` to ensure
-the full entry stays within the mapped region.
+This check is needed when info->capture_clear is set because it needs
+interruptions on both rising and falling edges. When info->capture_clear
+is not set, interruption is triggered by one edge only so this check can
+be omitted.
 
-Pass `len` from coreboot_table_probe() into coreboot_table_populate() to
-make the mapped region size available for validation.
+Add a warning if irq_handler is left without triggering any PPS event.
+Bypass the edge's direction verification when info->capture_clear is not
+set.
 
-Signed-off-by: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
-Reviewed-by: Julius Werner <jwerner@chromium.org>
-Link: https://lore.kernel.org/r/20260426214739.117131-1-titouan.ameline@gmail.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Stable-dep-of: a58a57a1076f ("firmware: coreboot: Validate table bounds")
+Signed-off-by: Bastien Curutchet <bastien.curutchet@bootlin.com>
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://lore.kernel.org/r/20250108153012.514925-1-bastien.curutchet@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b899e0279f90 ("pps-gpio: remove dead capture_clear code")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/coreboot_table.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/pps/clients/pps-gpio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
-index f3694d3478019..95fc2e4d0cccf 100644
---- a/drivers/firmware/google/coreboot_table.c
-+++ b/drivers/firmware/google/coreboot_table.c
-@@ -81,16 +81,20 @@ void coreboot_driver_unregister(struct coreboot_driver *driver)
+diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
+index 41e1fdbcda165..dbe598d092099 100644
+--- a/drivers/pps/clients/pps-gpio.c
++++ b/drivers/pps/clients/pps-gpio.c
+@@ -52,7 +52,9 @@ static irqreturn_t pps_gpio_irq_handler(int irq, void *data)
+ 
+ 	info = data;
+ 
+-	rising_edge = gpiod_get_value(info->gpio_pin);
++	/* Small trick to bypass the check on edge's direction when capture_clear is unset */
++	rising_edge = info->capture_clear ?
++		      gpiod_get_value(info->gpio_pin) : !info->assert_falling_edge;
+ 	if ((rising_edge && !info->assert_falling_edge) ||
+ 			(!rising_edge && info->assert_falling_edge))
+ 		pps_event(info->pps, &ts, PPS_CAPTUREASSERT, data);
+@@ -60,6 +62,8 @@ static irqreturn_t pps_gpio_irq_handler(int irq, void *data)
+ 			((rising_edge && info->assert_falling_edge) ||
+ 			(!rising_edge && !info->assert_falling_edge)))
+ 		pps_event(info->pps, &ts, PPS_CAPTURECLEAR, data);
++	else
++		dev_warn_ratelimited(&info->pps->dev, "IRQ did not trigger any PPS event\n");
+ 
+ 	return IRQ_HANDLED;
  }
- EXPORT_SYMBOL(coreboot_driver_unregister);
- 
--static int coreboot_table_populate(struct device *dev, void *ptr)
-+static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_t len)
- {
- 	int i, ret;
- 	void *ptr_entry;
- 	struct coreboot_device *device;
- 	struct coreboot_table_entry *entry;
- 	struct coreboot_table_header *header = ptr;
-+	void *ptr_end;
- 
-+	ptr_end = ptr + len;
- 	ptr_entry = ptr + header->header_bytes;
- 	for (i = 0; i < header->table_entries; i++) {
-+		if (ptr_entry + sizeof(*entry) > ptr_end)
-+			return -EINVAL;
- 		entry = ptr_entry;
- 
- 		if (entry->size < sizeof(*entry)) {
-@@ -98,6 +102,9 @@ static int coreboot_table_populate(struct device *dev, void *ptr)
- 			return -EINVAL;
- 		}
- 
-+		if (ptr_entry + entry->size > ptr_end)
-+			return -EINVAL;
-+
- 		device = kzalloc(sizeof(device->dev) + entry->size, GFP_KERNEL);
- 		if (!device)
- 			return -ENOMEM;
-@@ -154,7 +161,7 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 	if (!ptr)
- 		return -ENOMEM;
- 
--	ret = coreboot_table_populate(dev, ptr);
-+	ret = coreboot_table_populate(dev, ptr, len);
- 
- 	memunmap(ptr);
- 
 -- 
 2.53.0
 
