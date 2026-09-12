@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2612882DE;
-	Sat, 12 Sep 2026 16:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7B03290D1;
+	Sat, 12 Sep 2026 16:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231098; cv=none; b=Jmbr1ArwV3opXHCeTuW/2h7QzVOtQGAR+glnZQhGHoHpmdOlBIcMZ5xV81rZvlp8RMh0Z7q1qLrppmmiXvJafWJv4DBbFvQfqvw261lz4wwXhB3qFcsALdzCK/HSGZ+L0GGsasUouCJJZEjuDWZ66LleVV+g7Ok+uhKsF2eOLCY=
+	t=1789231103; cv=none; b=O8irELuKWnF20qI2I4hsREsLR0n/NEW/+jWBEsvCLABAVq6t3MACjEX3CjS9ld0SJxwKcMhoVmG5US52GgKG4fLNLyRK32gckyKXTnadtf67yhyypnBpMBfRs2MrT5CajYnRGK2nDfKT1Kgr0z2fsGmR+GKI9xbJIKdS95PrGEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231098; c=relaxed/simple;
-	bh=tH4YS4ibmP1peYRDGHeTa3wpSKtl8TlAsOv4rltlNgQ=;
+	s=arc-20240116; t=1789231103; c=relaxed/simple;
+	bh=ty9ezX+iZvuHvjedi6ur8wfqM6GWPGvJBx2rJIjflws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eul778LnE4pjwRk20T1Zu9dzUaKoLmIQPww8VRZrUCgqQd1IAKaAZQ2+TAeDVG8KhHu+HD/q/XGkGDF/014RCqeup/BRw8RUJ+gnTPYDmUeq4FAMgmScgI7nwyTShObd9PhEtr1XkQAS79+fogE5SwE815GoUh6Fhq4CAMUdx9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdLaXbMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g0OcwtyxLZtbkjVD6G3xHowfA6mpdbPZi/D6wdiwqgeYK5+C1PRGcppnqNRa3KiiRx08xq8FjKBS1GUAIhkHtwHR3PSMgEO/X3wjL0IOh854T/kDYJesc4taHoYy+nVshsb+nGlqRDCnxS0Al2t7e/B9sYAOB5FQsM35OhSJYck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IY4rEBvf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdLaXbMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118A91F000FF;
-	Sat, 12 Sep 2026 16:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IY4rEBvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A791F000FF;
+	Sat, 12 Sep 2026 16:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231097;
-	bh=i0kDu+n0daYxDjNw8hX3SFQHGXqSXzjYh7e/XyUx2xk=;
+	s=korg; t=1789231102;
+	bh=S7De5VuwbY7rrNQDQCeZGY8RMHULf8e1uTaDrpcheeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TdLaXbMhOkf4tchFI2v2N/QR+PeMVryNfs8JNbnYhm8+8LzOgxzBquWQTcbDp8OoH
-	 0fNi9RAoasrT5TPwlJ4siF78UcVFHZq3h8tZ39viBkD6BdEHDQRAGqrr09dCVugKOb
-	 MiJNHUbUdnItFVANJ9G5fpURJ0Y388rzL12+bhmw=
+	b=IY4rEBvfaB7P+gHkHtJsagf/0/LzbTTxU/b8LH/GJj/aDjzPtSaTHlC1PNZsTrK3m
+	 H8QXniRGdMns9l6ek+a2+M9Dgm25xDW3F46nJjo1eAyKJ00k8FUOBPiyY8UatMyGqq
+	 hBN2bND4mcmZXTK/l7M3sPL54TBV3Q+dm37v6Y/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linmao Li <lilinmao@kylinos.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0930/1191] Bluetooth: hci_conn: fix the SCO setup context lifetime
-Date: Sat, 12 Sep 2026 09:00:58 +0200
-Message-ID: <20260912065609.117547277@linuxfoundation.org>
+Subject: [PATCH 6.1 0931/1191] Bluetooth: hci_sync: free the advertising instance on the failure and cancel paths
+Date: Sat, 12 Sep 2026 09:00:59 +0200
+Message-ID: <20260912065609.138901530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,81 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 42de40abe25db9211107af8896d0fd741f10648d ]
+[ Upstream commit 120d8dc042e3d45073bb6e50ee7b058a0b182627 ]
 
-hci_setup_sync() queues a conn_handle_t with a NULL destroy callback, so
-the context is only freed if hci_enhanced_setup_sync() actually runs. An
-entry that is cancelled instead is leaked, as
-_hci_cmd_sync_cancel_entry() does not release entry->data when there is
-no destroy callback, and hci_cmd_sync_clear() cancels every pending entry
-when the controller is unregistered.
+adv_timeout_expire() hands a kmalloc()ed instance byte to
+hci_cmd_sync_queue() with a NULL destroy callback, and only
+adv_timeout_expire_sync() frees it. That leaks on two paths:
 
-The context also stores a bare hci_conn pointer, so the connection can be
-freed while the work is queued. The dequeue in hci_conn_del() does not
-cover it either, as it matches on entry->data == conn and entry->data is
-the wrapper here. Same problem as commit 2f5d635ad590 ("Bluetooth:
-hci_sync: hold conn in hci_connect_acl/le_sync() callbacks").
+ - the return value is not checked, and hci_cmd_sync_queue() does not
+   take ownership when it fails (-ENETDOWN, -ENODEV, -ENOMEM);
 
-Hold the connection and release both from a destroy callback. The
-submission failure path drops both, since hci_cmd_sync_submit() does not
-call the destroy callback when it fails to queue.
+ - a cancelled entry is not released, as _hci_cmd_sync_cancel_entry()
+   does not free entry->data when there is no destroy callback.
+   hci_cmd_sync_clear() cancels every pending entry when the controller
+   is unregistered.
 
-Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
+Free the buffer from a destroy callback, and in the caller when the entry
+could not be queued at all.
+
+Fixes: c249ea9b4309 ("Bluetooth: Move Adv Instance timer to hci_sync")
 Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_sync.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 1af9fb7840e89..9d94b4f55574d 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -393,8 +393,6 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
- 	struct hci_cp_enhanced_setup_sync_conn cp;
- 	const struct sco_param *param;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 005e38a79c73d..d5856448d4678 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -606,8 +606,6 @@ static int adv_timeout_expire_sync(struct hci_dev *hdev, void *data)
+ {
+ 	u8 instance = *(u8 *)data;
  
--	kfree(conn_handle);
+-	kfree(data);
 -
- 	if (!hci_conn_valid(hdev, conn))
- 		return -ECANCELED;
+ 	hci_clear_adv_instance_sync(hdev, NULL, instance, false);
  
-@@ -563,6 +561,15 @@ static bool hci_setup_sync_conn(struct hci_conn *conn, __u16 handle)
- 	return true;
+ 	if (list_empty(&hdev->adv_instances))
+@@ -616,6 +614,12 @@ static int adv_timeout_expire_sync(struct hci_dev *hdev, void *data)
+ 	return 0;
  }
  
-+static void hci_enhanced_setup_sync_destroy(struct hci_dev *hdev, void *data,
-+					    int err)
++static void adv_timeout_expire_destroy(struct hci_dev *hdev, void *data,
++				       int err)
 +{
-+	struct conn_handle_t *conn_handle = data;
-+
-+	hci_conn_put(conn_handle->conn);
-+	kfree(conn_handle);
++	kfree(data);
 +}
 +
- bool hci_setup_sync(struct hci_conn *conn, __u16 handle)
+ static void adv_timeout_expire(struct work_struct *work)
  {
- 	int result;
-@@ -574,12 +581,15 @@ bool hci_setup_sync(struct hci_conn *conn, __u16 handle)
- 		if (!conn_handle)
- 			return false;
+ 	u8 *inst_ptr;
+@@ -636,7 +640,9 @@ static void adv_timeout_expire(struct work_struct *work)
+ 		goto unlock;
  
--		conn_handle->conn = conn;
-+		conn_handle->conn = hci_conn_get(conn);
- 		conn_handle->handle = handle;
- 		result = hci_cmd_sync_queue(conn->hdev, hci_enhanced_setup_sync,
--					    conn_handle, NULL);
--		if (result < 0)
-+					    conn_handle,
-+					    hci_enhanced_setup_sync_destroy);
-+		if (result < 0) {
-+			hci_conn_put(conn);
- 			kfree(conn_handle);
-+		}
+ 	*inst_ptr = hdev->cur_adv_instance;
+-	hci_cmd_sync_queue(hdev, adv_timeout_expire_sync, inst_ptr, NULL);
++	if (hci_cmd_sync_queue(hdev, adv_timeout_expire_sync, inst_ptr,
++			       adv_timeout_expire_destroy) < 0)
++		kfree(inst_ptr);
  
- 		return result == 0;
- 	}
+ unlock:
+ 	hci_dev_unlock(hdev);
 -- 
 2.53.0
 
