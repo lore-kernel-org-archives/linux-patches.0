@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AE019D8BC;
-	Sat, 12 Sep 2026 09:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CB636921B;
+	Sat, 12 Sep 2026 09:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206955; cv=none; b=GIBD+K9CInXAwx63WsTz9vMU7CkVmtWhR3PI0VqM3nBjU+UOGQa8kV//moJmK2SgMoAS/h9zRffQhJpt9RD6T2NyLJsjfgip2zIVGnPZ/64byqh3tlNnaMFNv3hUqSz1xzWjeKA68gkNrZSFutLbKKX/I2jlPny4kWrnwpdgoeM=
+	t=1789206960; cv=none; b=Zoo3qUz7WfmrYyWkjtCgzZAUoLep/NEW2p7OSe1YBJeQtPg4QGDAnzEUMw2CE3cyk5AqBnB9nzzW5nBheaRF9ZW21zg6Fddu/G0bEkpg6w/Uxxtoe+G8g7s+TL4yENt2OTeU/6GB/maQpE5f43G1azCirCXVFP2aZWNwYI2sh6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206955; c=relaxed/simple;
-	bh=eN8DbuvhYhBAh9nQ2yLinz2KypT/H40I6rzXzPE+CW0=;
+	s=arc-20240116; t=1789206960; c=relaxed/simple;
+	bh=cqN+FGlgQkMJyzsg4NyCFiwL3D+LQTlSIMPqeppM/g4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilQkIf0ssklDFtfMlUofKxJJetvlLDShS/HY1Q4MDYhHfOEssSvaNeVzKGRT7qCISI178dYNB4/OXL1cSgZO4QJfG7nl596O+/Yfi9lfReVKGdXfxolN9x1fWnwlJkovCVAQKRN16hvTOpzd/wswXDSDlE9cA45k9kGBUOkMrs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEc443N2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jWn0NmOjR2SbfuwqC/nmH7RNB+Iti09qVXWx/KwI39FKX0vACa4lXTzqJLIyU7o4MBnLrqw4ozq2nslw55Ha7a51C8nFVw+v2F0+j83zf5S/P1EQmIA/ur63AF+96mHZ5IEWMaWaQgmVpPTM0jluuV6AsORtQRLlfg9ynF3lBXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yy+Q6w/+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEc443N2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5CD1F0089A;
-	Sat, 12 Sep 2026 09:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yy+Q6w/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003801F000FF;
+	Sat, 12 Sep 2026 09:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206954;
-	bh=hTrtslW0/dzMscmhkQBPZjIFJk4GDi7QNNbDjst56js=;
+	s=korg; t=1789206959;
+	bh=5hImxlDt1pN1b8qy8+PIGIgJeKwZKwdsXTAZn86NlWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jEc443N2XCR+zEBohaGeuegS+TYF6roPgKoELp8qhTYkSTN7JX6pj1kLwnGQ0LxI/
-	 UUrOlySo/MUwG1NwUNSQyRYByRPKyqhU19LEMxFHjW5Ad+lXpXsV7id2wPM2N+vOhD
-	 KypHTTJ+h6QCNOfb+7X/VzbGjX4Abe/iHFFJm9y8=
+	b=Yy+Q6w/+KSm/3ZHJOX1O/LDMocucoh0VtbTAcv6NvBDk6DxKLKRFhODcFRMiBnFER
+	 nmngp9gQqBlmoRdS0ZyjBBVPKTKz8d1qdAxguUStpiLiIXGwPxRrUiRV7NGZZAy2hV
+	 IsfHY0LNAhmutYN3IvtiPhqZydIVoL47NiczuV9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fushuai Wang <wangfushuai@baidu.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0312/1518] serial: 8250: Clear CON_PRINTBUFFER on port re-registration
-Date: Sat, 12 Sep 2026 08:41:21 +0200
-Message-ID: <20260912065630.538066740@linuxfoundation.org>
+Subject: [PATCH 6.18 0313/1518] serial: ma35d1: Fix OF node reference leaks in console init
+Date: Sat, 12 Sep 2026 08:41:22 +0200
+Message-ID: <20260912065630.560874885@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,49 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fushuai Wang <wangfushuai@baidu.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit d338ab1d90603f875c4f7ed223406535378173a5 ]
+[ Upstream commit 8dfea56f350b3dc826f35711802ad6ae8fae0748 ]
 
-When two PnP devices map to the same physical port, the serial8250 driver
-removes and re-registers the console structure for the same port.
+ma35d1serial_console_init_port() stores matching UART device nodes in
+ma35d1serial_uart_nodes[] with an extra of_node_get() so that console
+setup can later read the "reg" property.  However, the stored references
+are never released after console setup has finished using them.
 
-During re-registration, the console structure still has CON_PRINTBUFFER set
-from the initial registration, which causes console_init_seq() to set
-console->seq to syslog_seq. This results in re-printing the entire
-system log buffer, which may lead to RCU stall on slow serial consoles.
+Drop the stored node reference after ma35d1serial_console_setup() reads
+the "reg" property, and clear the array slot to avoid leaving a stale
+pointer behind.  Also release the iterator reference before breaking out
+of for_each_matching_node(), since the normal iterator advance will not
+run in that path.
 
-Clear CON_PRINTBUFFER when re-registering a port to prevent duplicate
-log printing.
-
-Fixes: 835d844d1a28 ("8250_pnp: do pnp probe before legacy probe")
-Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
-Link: https://patch.msgid.link/20260522101042.21976-1-fushuai.wang@linux.dev
+Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260630214043.1887351-1-dbgh9129@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/tty/serial/ma35d1_serial.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
-index ccd5a18f53356..b6568880f750d 100644
---- a/drivers/tty/serial/8250/8250_core.c
-+++ b/drivers/tty/serial/8250/8250_core.c
-@@ -716,8 +716,12 @@ int serial8250_register_8250_port(const struct uart_8250_port *up)
- 	/* Preserve specified console flow control. */
- 	cons_flow = uart_cons_flow_enabled(&uart->port);
+diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
+index 285b0fe41a86a..920fe7ff5083b 100644
+--- a/drivers/tty/serial/ma35d1_serial.c
++++ b/drivers/tty/serial/ma35d1_serial.c
+@@ -608,8 +608,14 @@ static int __init ma35d1serial_console_setup(struct console *co, char *options)
+ 	if (!np || !p)
+ 		return -ENODEV;
  
--	if (uart->port.dev)
-+	if (uart->port.dev) {
-+		if (uart_console(&uart->port))
-+			uart->port.cons->flags &= ~CON_PRINTBUFFER;
-+
- 		uart_remove_one_port(&serial8250_reg, &uart->port);
+-	if (of_property_read_u32_array(np, "reg", val32, ARRAY_SIZE(val32)) != 0)
++	if (of_property_read_u32_array(np, "reg", val32, ARRAY_SIZE(val32)) != 0) {
++		of_node_put(np);
++		ma35d1serial_uart_nodes[co->index] = NULL;
+ 		return -EINVAL;
 +	}
++
++	of_node_put(np);
++	ma35d1serial_uart_nodes[co->index] = NULL;
  
- 	uart->port.ctrl_id	= up->port.ctrl_id;
- 	uart->port.port_id	= up->port.port_id;
+ 	p->port.iobase = val32[1];
+ 	p->port.membase = ioremap(p->port.iobase, MA35_UART_REG_SIZE);
+@@ -648,8 +654,10 @@ static void ma35d1serial_console_init_port(void)
+ 			of_node_get(np);
+ 			ma35d1serial_uart_nodes[i] = np;
+ 			i++;
+-			if (i == MA35_UART_NR)
++			if (i == MA35_UART_NR) {
++				of_node_put(np);
+ 				break;
++			}
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
