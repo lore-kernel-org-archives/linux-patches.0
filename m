@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4232353A6B;
-	Sat, 12 Sep 2026 18:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B9A331A6E;
+	Sat, 12 Sep 2026 18:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238770; cv=none; b=F4/EOOLnkIvb4de6ENtD1y5sGLlG78+x1b48FZ7jfkDBKxjrhpQjrMtCS6dSW1TiEvhG29Qg3FimiZQzWcjmbIF07DKIJoq5zZj5Me2IOih4TrCjrl+kvshqkhfXfovE6Q58BY/EknDWEeS3hPEJVrhKYSYknaiTk+CDew6s9EA=
+	t=1789238774; cv=none; b=U441YUDBDlbZf98A/2tQ/BFpSxZ19jcKwqp4Qg5E10xyPJl3IAeWGDSKyXl8QmtxfeQvzrxC9WUcretrkW2QoCYkBCw+aNXQidT5aldAOmIE8Hf/UTKyq79oEqMauQlyxep7pTrZIFvZDXJN81q+Q1QLAlqXLAzhq2dz/vnyMF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238770; c=relaxed/simple;
-	bh=TDag50d+N1m7JVBymJvIHOV9jrroViMxLNP3nbWip5E=;
+	s=arc-20240116; t=1789238774; c=relaxed/simple;
+	bh=BPXc3FhQ6zZXteEnL0+O3ZJzt5CQmukmUIGi/612nAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNh6GRMGWYpqHgt5zKMw9RgY4SNGo441k1KTMjgXGGfhs9O8gvyWgYyoWcPf0Z2S3pXeEEOkcIU70RZwqWO2ksWqPL2ONZVGstJaGnJC7q3ddhPL6AUSYxNyhHa+w3OttpFJSxde8yviCBEKpaMuDQ32CkbOVAKTLVXMwKBN7vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bymREJLr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SP76y9M3dK10op7Q3FAm8GKylJhxWulNQWk7oo5pHckktGPbVq+JOxvLQUuEEMxO2S0nX9RW+qW5mrj65SiJ61JTIE+YNmlxCzN1URnTzK1W14yNSvPLjeS+eZ5boaInA6BbnoJ4V6eMSiwDnpApDO8tAg++ZO7PgswjvY0vqA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8BC5711; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bymREJLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F901F000FF;
-	Sat, 12 Sep 2026 18:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8BC5711"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CD01F000FF;
+	Sat, 12 Sep 2026 18:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238768;
-	bh=aJFafRL7F7nOP8j8K3HVmABqbl8q51NMgkX+JenogNs=;
+	s=korg; t=1789238773;
+	bh=nw7BYp5ydccuReDHSkybGEyjjGHXFh/W9uvNZc71z9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bymREJLrX4SnJb3ZhnoUF/5Nk6gGAUiOWCoYPULk54RVWeGjWSB1GaplG/1aSpO8n
-	 L0BtWCBE0bhZf87SsJZWxmFjxJm1AJWEjzo+ss9vZI4PWuLH5Ndf2OW9xujZFYXlDX
-	 2cb2foP6NSQ7czrSw4HmaEaOtX/vYG/FTfoXYI3U=
+	b=W8BC5711y6ncypTGSwQu1fmTXjkAMAfMQ4KAeewhL5T5qh2YiDvBvZwrQfsy596PY
+	 ZGqskFhzFLyUaMSMCkczQ3Hzk//fjT5umXFcrg872Kc32nexTGU51hFo8wZlbKgXPO
+	 2gVcHHut5aBSbH8pakA56Zg+D6AG9mbVsG6JCwHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 528/935] remoteproc: qcom: Fix glink->node reference leak in qcom_add_glink_subdev
-Date: Sat, 12 Sep 2026 08:59:18 +0200
-Message-ID: <20260912065538.932668590@linuxfoundation.org>
+Subject: [PATCH 5.15 493/935] drm/panel: samsung-s6d16d0: Power off on prepare failure
+Date: Sat, 12 Sep 2026 08:58:43 +0200
+Message-ID: <20260912065538.124095609@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,44 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 44f4911ab8e6f4d69afad5f2571bbd2da421c918 ]
+[ Upstream commit a9f950adfe2147318d75e7a6eab5e814851802ac ]
 
-In qcom_add_glink_subdev(), the device node reference acquired via
-of_get_child_by_name() is stored in glink->node. If the subsequent
-kstrdup_const() allocation for glink->ssr_name fails, the function
-returns early without calling of_node_put() on glink->node, leaking
-the reference count.
+If enabling tearing mode or exiting sleep mode fails after the
+regulator is enabled, s6d16d0_prepare() returns without asserting
+reset or disabling the supply. Since the DRM panel core leaves the
+panel unprepared, a later unprepare call skips the driver callback
+and the supply remains enabled.
 
-Fix this by adding of_node_put(glink->node) on the error path before
-returning.
+Assert reset and disable the supply before returning the DSI command error.
 
-Fixes: cd9fc8f1b35b ("remoteproc: qcom: Pass ssr_name to glink subdevice")
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
-Link: https://lore.kernel.org/r/20260618132054.11010-1-udaykhare77@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: ac1d6d74884e ("drm/panel: Add driver for Samsung S6D16D0 panel")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260704070648.35249-1-acharyalaxman8848@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-samsung-s6d16d0.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-index b7960f047b66c..60c5b588e0e66 100644
---- a/drivers/remoteproc/qcom_common.c
-+++ b/drivers/remoteproc/qcom_common.c
-@@ -231,8 +231,10 @@ void qcom_add_glink_subdev(struct rproc *rproc, struct qcom_rproc_glink *glink,
- 		return;
+diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+index 70560cac53a99..f8f98eb84c54c 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
++++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+@@ -89,16 +89,22 @@ static int s6d16d0_prepare(struct drm_panel *panel)
+ 				       MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+ 	if (ret) {
+ 		dev_err(s6->dev, "failed to enable vblank TE (%d)\n", ret);
+-		return ret;
++		goto err_power_off;
+ 	}
+ 	/* Exit sleep mode and power on */
+ 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+ 	if (ret) {
+ 		dev_err(s6->dev, "failed to exit sleep mode (%d)\n", ret);
+-		return ret;
++		goto err_power_off;
+ 	}
  
- 	glink->ssr_name = kstrdup_const(ssr_name, GFP_KERNEL);
--	if (!glink->ssr_name)
-+	if (!glink->ssr_name) {
-+		of_node_put(glink->node);
- 		return;
-+	}
+ 	return 0;
++
++err_power_off:
++	gpiod_set_value_cansleep(s6->reset_gpio, 1);
++	regulator_disable(s6->supply);
++
++	return ret;
+ }
  
- 	glink->dev = dev;
- 	glink->subdev.start = glink_subdev_start;
+ static int s6d16d0_enable(struct drm_panel *panel)
 -- 
 2.53.0
 
