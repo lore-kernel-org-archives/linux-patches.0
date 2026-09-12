@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7F03AFB1A;
-	Sat, 12 Sep 2026 18:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4BA2F260C;
+	Sat, 12 Sep 2026 18:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237382; cv=none; b=TAPDjzIojeI0dIZM3/ZhGGcuBkV2hEI6A2fTvOVJ0/roB4XbFDQJfd4O36oRqpcKzOqqMP1wLLOXeP0VY6JaVk0+I3m9t2fkhZk5oIZWonYXXYtxbRxENabQIwtI7P5h5Sncy6Mlqe1aep+3Wdoc7GHdds38jDcE76bGaX4LnHU=
+	t=1789237387; cv=none; b=DI2Ydg28rpTkW7vAiJBUvhFwYzKDBsDmmRP7q5U3Wd8DVSbkcWHTh8QRRvmUYFZ9xxXiwl0BH9iUFxfPK7a5Ciy3LxH4iiKIngD77iLb+0R2IY8J92wp/fldTjccPik0Fk9eQQG2HHEMSi/xjokxjht0pgs/AHAdDxueuT2Zf+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237382; c=relaxed/simple;
-	bh=qbtAkTaAi6yb0iJ8fvI86fJiYoh7Oe1qjkUlUTUy2p8=;
+	s=arc-20240116; t=1789237387; c=relaxed/simple;
+	bh=smiev2S8U687qu9MQp6yXA6KWPH0CCDv5MFUyMTtLbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlAKRnP04aSOojzmUrZzt6YkvvsJXlwk7qOGo5q64LWWa6uR9qBgc+2d7GEuEx3pTK+mxl5snfu3ZVNqlVqUz3YQt8VZr9ZsrzLID6AfHJr4vUZmxFtSflmmYyUrXA5kaWx9ekNL21VECQZnT3bbFMUjFs2hXTMpgEj/00i+3Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmZGz13X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eag5ZPsamKhRVzmJ+r/ztN/Ebn7Ru/F75o1553zhuX/vIF+U4o+wZ/PLgygQkxngR0ET0TYgOgj6hGkAYOR4t0EVfcT6qkEFqcA1NFBNtJC9WpH1NjPSqAkpljRueRjqjbsNgjWQetD+1HApI28+eU3VXHRiiIbLBs5UpWHagG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BF/HlwD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmZGz13X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C851F000FF;
-	Sat, 12 Sep 2026 18:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BF/HlwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7FF1F000FF;
+	Sat, 12 Sep 2026 18:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237381;
-	bh=8h6FTEVvVxuo95RWI+W14h874x40OYVIiiETtEGqh+s=;
+	s=korg; t=1789237386;
+	bh=Y8eNEO4QMMle48igUlhvCh6yrFcRx3MKxjBRUPV9seM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmZGz13XxAI01fIxfYo3nZlcSVhLG6jt9gWHv8Tw0bt+GB5JzY4kZuS9Ix3ksIybf
-	 UPUWnCk9N5x+6rnVbwwbkrZzKDqXQgz5TjPnx9SN+SE2iQjjSqo27K8agjVN/sfIzr
-	 SYSjGSfKCu8d04CDdvlHJXjeHRoT01j60li/y4ks=
+	b=2BF/HlwD+ClPCOwpzk7USt+UV0xCIJ9Qy2R+SEju/9xsz71T2ysh5SOYxDiCNxBcH
+	 T8581OMEqeIzZLP+7cTlXjWkgr7n1Frpo+logqW+Dl81bvZpkeU9h/YemzVktciTwP
+	 53yybNDUGrtq+uH7/tU5IboRnlLa5XTSKTeMTR+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>
-Subject: [PATCH 5.15 246/935] thermal/drivers/qoriq: Disable clock on resume failure
-Date: Sat, 12 Sep 2026 08:54:36 +0200
-Message-ID: <20260912065532.468165322@linuxfoundation.org>
+	Sujal Tuladhar <sujaltuladhar1231@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 5.15 247/935] scsi: target: iscsi: Reserve a terminator byte for the login payload
+Date: Sat, 12 Sep 2026 08:54:37 +0200
+Message-ID: <20260912065532.492014328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,53 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Sujal Tuladhar <sujaltuladhar1231@gmail.com>
 
-commit fcbf9964b67a6d6704c50ed28daa24c3b164f01c upstream.
+commit f4825922d2fb371e2b969697d792077f1b62b62c upstream.
 
-qoriq_tmu_resume() enables the TMU clock before clearing the
-power-down bit and enabling monitoring.
+iscsi_target_check_login_request() rejects a login PDU whose
+DataSegmentLength exceeds MAX_KEY_VALUE_PAIRS, but the test is '>' and
+login->req_buf is allocated with exactly MAX_KEY_VALUE_PAIRS
+bytes. Since iscsit_get_login_rx() receives payload_length + padding
+bytes, where
 
-If either register update fails, the function returns with the clock
-still enabled. This leaves the clock enable count unbalanced after a
-failed resume.
+	padding = ((-payload_length) & 3);
 
-Disable the clock on those failure paths before returning the error.
+any payload_length from 8189 to 8192 fills the whole 8192 byte
+buffer. The write stays in bounds, but no byte is left for a NUL
+terminator.
 
-Fixes: 51904045d4aa ("thermal: qoriq: Add clock operations")
+The buffer is subsequently consumed as a C string. In the CHAP path
+chap_check_algorithm() calls kstrdup(a_str), and extract_param() calls
+strstr(in_buf, pattern) followed by strlen_semi(), none of which take a
+length. convert_null_to_semi() additionally rewrites every embedded NUL
+to ';', so even a payload made of well formed NUL separated key=value
+records is left without a terminator. These walk past the end of the
+object into adjacent slab memory. It is reachable by an unauthenticated
+initiator against a portal configured for CHAP; when authentication is
+not required iscsi_login_zero_tsih_s2() rewrites AuthMethod to None and
+the CHAP path is never entered.
+
+Allocate one extra byte. kzalloc() zeroes it and nothing ever writes to
+it, as every writer copies to offset 0 for at most MAX_KEY_VALUE_PAIRS
+bytes, so the buffer is always terminated.
+
+Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
+Assisted-by: Claude Opus5 (custom harness)
 Cc: stable@vger.kernel.org
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260722075625.452684-1-pengcan@kylinos.cn
+Signed-off-by: Sujal Tuladhar <sujaltuladhar1231@gmail.com>
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/qoriq_thermal.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/target/iscsi/iscsi_target_login.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thermal/qoriq_thermal.c
-+++ b/drivers/thermal/qoriq_thermal.c
-@@ -369,11 +369,20 @@ static int __maybe_unused qoriq_tmu_resu
- 	if (data->ver > TMU_VER1) {
- 		ret = regmap_clear_bits(data->regmap, REGS_TMR, TMR_CMD);
- 		if (ret)
--			return ret;
-+			goto disable_clk;
- 	}
+--- a/drivers/target/iscsi/iscsi_target_login.c
++++ b/drivers/target/iscsi/iscsi_target_login.c
+@@ -48,7 +48,7 @@ static struct iscsi_login *iscsi_login_i
+ 	login->conn = conn;
+ 	login->first_request = 1;
  
- 	/* Enable monitoring */
--	return regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
-+	ret = regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
-+	if (ret)
-+		goto disable_clk;
-+
-+	return 0;
-+
-+disable_clk:
-+	clk_disable_unprepare(data->clk);
-+
-+	return ret;
- }
- 
- static SIMPLE_DEV_PM_OPS(qoriq_tmu_pm_ops,
+-	login->req_buf = kzalloc(MAX_KEY_VALUE_PAIRS, GFP_KERNEL);
++	login->req_buf = kzalloc(MAX_KEY_VALUE_PAIRS + 1, GFP_KERNEL);
+ 	if (!login->req_buf) {
+ 		pr_err("Unable to allocate memory for response buffer.\n");
+ 		goto out_login;
 
 
