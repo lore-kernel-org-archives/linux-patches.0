@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DC547DF87;
-	Sat, 12 Sep 2026 13:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162D647CA76;
+	Sat, 12 Sep 2026 13:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218391; cv=none; b=lGLSndyit3Ir0lbgOtVEoUse0YEm+g0lRnl2nzt6cBxOmOBvMXVcRDDe0ZTr/ARJc3nev+Hm5PPqbV7812ouacGVrK17n7MjIJCmdnLNw6eYuSfWyaUB3gDh0hgLWvao/WaEnpGXZyru8mzMNRtCxydnPe+7us3U3OoOHKF4bOI=
+	t=1789218396; cv=none; b=jG5usVoa4S5bMVl3yadlR2+tJaHMZgI2NmniGILkL/QZcr0OAJj7ZSJWcQe+DZWiTqzu66mLTX0mjozjcFDmh6V7XS9l3xNBE6x5EdtcYMDIcU6bRDhzv0EnBRkx7BFB93pqy4weCKdY5u2017Gq17ouQnG7gDFmb4hpy55lgcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218391; c=relaxed/simple;
-	bh=oB2hZhHEAgevo4Ko1TCCNvYrdqQwaZg/hG8YMN50bg4=;
+	s=arc-20240116; t=1789218396; c=relaxed/simple;
+	bh=Le43Zc3XirindtigbzsdUnUarxgqvLXldUZ6VwjlsMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsMnBYxe3SMeOgg2sRQTF+cqYBCpI5t7A5k13ZJfUZ/B8QIKfS8WaTSLPqqzrk/xPDUvNgo2MbOJjP3SxJgMI4Z/fV8tDZn8yratn0pY4VubTY3byQf/Gww2Wibh2iFipC3TQmccZmJft0e3BVvAUgvEqfGm8jEAzwMJdN6NDss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jm0JWZwF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rm234S/MD45tukX3e7diw63K3JNLelh9G0Q5IYA3rWkd35K/tMPbZbevlX81s5XLwDU87UHtfI3FjHrXixHIknVyJeJWge1KCTjQAu4NV+15VGLEeMBOBZ3fC1G3rViICtquw0fAzjl+XxIqO8BFbqp/iDlCS3Rv0+47xMWbNVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSCrE6ct; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jm0JWZwF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FAB1F000FF;
-	Sat, 12 Sep 2026 13:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSCrE6ct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD321F000FF;
+	Sat, 12 Sep 2026 13:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218389;
-	bh=dB+hg8fRtBMU5oQF3aKeUie0KuzEay7cFbHqkMPwDN8=;
+	s=korg; t=1789218394;
+	bh=kEwCat/5b6IsLf6a624GXWlCfKJJgUEfhJfkxIxARBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jm0JWZwFbBdtd2keB5+ppkrMvC1B+C8cLoQpNyVnX8G0zh1FBVcnOvRpZmhdB9IG5
-	 coN0Z0T4rQjZ6xtWicAX96yKdczTrPM7cSSj4XW6wHLXVxZay7qMDwtIKtIZbhe0pQ
-	 bFIyVgplda1ecdHypnmuFPSKaqcpANtncupl6Ii4=
+	b=fSCrE6ct21Gp5ca5MLOo+y/GfV5EPHcsIk9Hx8cqlc5ytzLjUZp2AkMRBh9gKAbP/
+	 pAqtF40Jx0K8RCPLF3mYBxGj+w7tm6dNsril2Gpgiulto56TRfOYtK5BcvBkgiaU14
+	 Ru5+VvKy3j9c2X+CAgbj23ieO4YpsPdl1OaFKsxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1135/1376] ACPI: scan: fix bus ID cleanup on device_add() failures
-Date: Sat, 12 Sep 2026 08:59:21 +0200
-Message-ID: <20260912065632.857778482@linuxfoundation.org>
+Subject: [PATCH 6.12 1136/1376] bpf: Fix pending_pos walk on 32-bit ring position wrap
+Date: Sat, 12 Sep 2026 08:59:22 +0200
+Message-ID: <20260912065632.880005214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,83 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Israel Téllez García <i.tellez@btesa.com>
 
-[ Upstream commit a414485ebc2aa50907d0ce97cde2b1a353696897 ]
+[ Upstream commit 6ff5b56a50c5351aeeb180e34327736576c038fa ]
 
-When device_add() fails after acpi_device_set_name() has allocated an
-instance ID and a new acpi_device_bus_id has been linked into
-acpi_bus_id_list, the rollback path only removes wakeup_list and
-detaches the ACPI handle data.
+The reservation path caches the position of the oldest not-yet-committed
+record in rb->pending_pos and advances it past already committed records
+on every reservation:
 
-That leaves the bus-ID bookkeeping behind and keeps the allocated
-instance number consumed.
+	while (pend_pos < prod_pos) {
 
-Move the bus-ID cleanup and wakeup-list removal into a single helper.
+consumer_pos, producer_pos and pending_pos are unsigned long, i.e.
+32-bit on 32-bit architectures, and Documentation/bpf/ringbuf.rst states
+that these counters may wrap around there. Every other comparison in the
+file is written as a difference, so modular arithmetic keeps them
+correct across the wrap. This one is an ordering comparison, and it is
+not wrap-safe.
 
-Use it from both the normal device teardown path and the device_add()
-rollback path. The wakeup list node is initialized before registration,
-so it can be deleted without checking whether the device is wakeup-
-capable like in the original teardown path.
+Once producer_pos wraps past 2^32, prod_pos is small while pend_pos
+still holds its pre-wrap value, so the loop condition is false and
+pending_pos is never advanced again. Reservations keep succeeding for a
+while, because bpf_ringbuf_has_space() uses differences, but
+new_prod_pos - pend_pos grows as the producer advances, and once it
+exceeds rb->mask every subsequent __bpf_ringbuf_reserve() call fails:
+the kernel believes a pending record spans the whole buffer. The ring
+never recovers, bpf_ringbuf_output() drops every event from then on, and
+nothing is logged.
 
-Fixes: d783156ea384 ("ACPI / scan: Define non-empty device removal handler")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-[ rjw: Rename acpi_device_del_list() to acpi_device_cleanup() ]
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20260808085943.526-1-getshell@seu.edu.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Observed on four armv7 devices (i.MX7 Dual, 6.6.52) running a
+tracepoint-based collector with a 512 KiB ring and 160-byte records.
+Every one of them stopped delivering after exactly 26846821 records and
+4295491360 bytes had passed through the ring, at event rates between 441
+and 862 records/s, that is after 8 h to 17 h of uptime: the trigger is
+the byte count, not time or load. That figure is 2^32 plus 524064 bytes,
+and the excess is one ring's worth of grace period, as expected while
+new_prod_pos - pend_pos is still below rb->mask. The last reservation
+that fits is the largest record boundary X with X + 160 <= 524287, and
+since 2^32 mod 160 = 96 the boundaries after the wrap sit at
+X = 64 (mod 160), giving X = 524064. Userspace kept consuming normally
+until the producer stopped, then read zero records for good. With this
+patch applied, one of the four devices took 10 GiB through the same ring
+with no stall, while the three unpatched ones kept wedging at the same
+byte count.
+
+64-bit hosts are unaffected in practice: their counters would need
+16 EiB to wrap.
+
+Compare the two positions as a difference instead. pending_pos never
+runs ahead of producer_pos, so the unsigned difference is the real
+distance between them and stays correct across the wrap.
+
+Fixes: cfa1a2329a69 ("bpf: Fix overrunning reservations in ringbuf")
+Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260814124843.22041-2-i.tellez@btesa.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/scan.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ kernel/bpf/ringbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 4b9c81fbdc3bb..42f0840212e87 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -521,12 +521,10 @@ static void acpi_device_release(struct device *dev)
- 	kfree(acpi_dev);
- }
+diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
+index 1f2c504809023..9e6037d88bda0 100644
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -429,7 +429,7 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
+ 	prod_pos = rb->producer_pos;
+ 	new_prod_pos = prod_pos + len;
  
--static void acpi_device_del(struct acpi_device *device)
-+static void acpi_device_cleanup(struct acpi_device *device)
- {
- 	struct acpi_device_bus_id *acpi_device_bus_id;
- 
--	mutex_lock(&acpi_device_lock);
--
- 	list_for_each_entry(acpi_device_bus_id, &acpi_bus_id_list, node)
- 		if (!strcmp(acpi_device_bus_id->bus_id,
- 			    acpi_device_hid(device))) {
-@@ -541,6 +539,13 @@ static void acpi_device_del(struct acpi_device *device)
- 		}
- 
- 	list_del(&device->wakeup_list);
-+}
-+
-+static void acpi_device_del(struct acpi_device *device)
-+{
-+	mutex_lock(&acpi_device_lock);
-+
-+	acpi_device_cleanup(device);
- 
- 	mutex_unlock(&acpi_device_lock);
- 
-@@ -803,7 +808,7 @@ int acpi_device_add(struct acpi_device *device)
- err:
- 	mutex_lock(&acpi_device_lock);
- 
--	list_del(&device->wakeup_list);
-+	acpi_device_cleanup(device);
- 
- err_unlock:
- 	mutex_unlock(&acpi_device_lock);
+-	while (pend_pos < prod_pos) {
++	while (prod_pos - pend_pos > 0) {
+ 		hdr = (void *)rb->data + (pend_pos & rb->mask);
+ 		hdr_len = READ_ONCE(hdr->len);
+ 		if (hdr_len & BPF_RINGBUF_BUSY_BIT)
 -- 
 2.53.0
 
