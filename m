@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD86363C6C;
-	Sat, 12 Sep 2026 07:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD25331209;
+	Sat, 12 Sep 2026 07:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197844; cv=none; b=BxpefwGg2hbTrJPAr65sQ7IfpHG8r4/lIMf/7XEHJdOeEt7bRL4Ed8apqDmt5Bha7+l89UKBkmehbK4/Nnu2ZSM+Ewvh78h1W8DAOvlvGse8jfYCFdDw0L3BSAXfosMP4NN6jLfTV3WJd65tHl+jFUjJZAJG8RgFOLR/9gXZeF8=
+	t=1789197847; cv=none; b=AhL4hpIkJOTdnJhPGb0AUvqnGRfCfh/raqKArCjsNOewYY7msGCzLDs6K6NvsfraeMugwb7LztG+ctSueu93Wa0+po2KGfjSmtJtwCODKVJfMKtOH9msRMNZriOtvTZSWycQGXwAQxH6VB/bhbPUWl8UMPm2PnsmQPsDQ7YJ6No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197844; c=relaxed/simple;
-	bh=k8sx5ImRgX6fADxbZVZa2sCknSaay3U7dta0WxT7S0g=;
+	s=arc-20240116; t=1789197847; c=relaxed/simple;
+	bh=8Ca25Cok3+lidPzxa1M9hoBlNGDnxCpqyCyHbetEz1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RIriLfrctRLfrHvkihiNosJ21GIwrEb3FA7uqSoN4fesVEo2nlJeLiG2ZU+OTzpeNYoJrdblMVnhBYnUONszT8aqM0ImEe1gWpWZc4BCLTre5cTQNjJeYucat3fJals2Zr1+g8QBsS14M9KzPyQpelN5FG9EFC6QOikw5Pgp7EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDrqcD7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cA5QCUYkCEFpE+qTO3yCkB83QDO7Y+3mA3gKA3PxRS5DwAfzicedpiUj0CRPoHraaOiVmBZk7HxfNNDRsPhzSRpOThqKytBn7urpaK7lKd4nVMmVIz51m3Sz4yUACBT5NcfM9UqgZmuSVLdSn5ZYq48LVijlLsM7DOT2WSjTqRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9LPdS8s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDrqcD7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5441F1F000FF;
-	Sat, 12 Sep 2026 07:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9LPdS8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85341F000FF;
+	Sat, 12 Sep 2026 07:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197843;
-	bh=ftymbTNpM9Gkzm4Dj4Cy4g+upz/CKxFx6cWra4In9/s=;
+	s=korg; t=1789197846;
+	bh=B2pJbN3cF7f++PtiiJs0+u3lrHYTZQ4p/jglDxL566A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uDrqcD7HIgZD9wY9OQ+vD+iBrF+oVPM9CpQEhFQgxzG0jBsZ20hKWxu9lTcFwntjE
-	 Z0gs/9R8TMrTUdGCmCMaFPk4W7GhdQozVM8zWjJYU6/g6fMnfjWs9k47iIYziuC+o5
-	 OxuFUHaCe/23lEGwHrYzFKYc56wVeTxBDqD8PWEY=
+	b=j9LPdS8scm5Faz3ltZzXPCym4y4JwAeGuFC42PyHZaYZa2Ja6AgLU1YT2fY7Tfts2
+	 6zimtY6KFAMdDlFsZNaRQ1+9PFbLyim6VH0iMg2KpTc+W3I9n056E0rsO8zHqB6cC8
+	 6S58sxB2QCY43XWWegkZYnn1H3W+2Ptu4x/gPZk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Yedaya Katsman <yedaya.ka@gmail.com>,
+	David Heidelberg <david@ixit.cz>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20de=20Bretagne?= <jerome.debretagne@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0257/1815] arm64: dts: qcom: sc8280xp-arcata: Fix top USB-C DP alt mode
-Date: Sat, 12 Sep 2026 08:33:27 +0200
-Message-ID: <20260912065655.012222431@linuxfoundation.org>
+Subject: [PATCH 7.2 0258/1815] arm64: dts: qcom: sm6125-xiaomi-laurel-sprout: Fixup panel compatible
+Date: Sat, 12 Sep 2026 08:33:28 +0200
+Message-ID: <20260912065655.035861973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,62 +47,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+From: Yedaya Katsman <yedaya.ka@gmail.com>
 
-[ Upstream commit 16065c4ec1e7ca595f4fa363dc2251c6bdf1f6b3 ]
+[ Upstream commit f135fd1bc76d052f1bf4b1cc987cd47fe0a71d8a ]
 
-The top USB-C port (usb0) didn't switch to DP alt mode, as reusing the
-same GPIO 101 as on the SC8280XP CRD or Lenovo ThinkPad X13s was not
-working on the Surface Pro 9 5G.
+The change to the panel compatible was missed, fix it. This compatible is
+already in the driver.
 
-Investigation [1] by Jens on the Windows Dev Kit (WDK2023), the other
-sc8280xp-based "blackrock" model from Microsoft, found a reference
-to GPIO 100 in the DSDT in addition to 101. Switching to GPIO 100
-fixed the issue on blackrock, as it does on arcata to enable
-external screen when using the left-side top USB-C port.
-
-[1] https://lore.kernel.org/all/20250609-blackrock-usb0-mux-v1-1-7903c3b071e4@oldschoolsolutions.biz/
-
-Cc: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Fixes: f6231a2eefd4 ("arm64: dts: qcom: sc8280xp: Add Microsoft Surface Pro 9 5G")
+Fixes: 493cb869874c ("arm64: dts: qcom: sm6125-xiaomi-laurel-sprout: Enable MDSS and add panel")
+Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>
+Reviewed-by: David Heidelberg <david@ixit.cz>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-Link: https://lore.kernel.org/r/20260604-surface-sp9-5g-for-next-v3-4-6aa6f6612c10@gmail.com
+Link: https://lore.kernel.org/r/20260608-b4-compatible-s6e8fc0-fixup-v2-1-d23f373603a3@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-index f2b4470d4407f..aa79704b5d552 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-@@ -243,7 +243,7 @@ map1 {
- 	usb0-sbu-mux {
- 		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
+diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
+index b9d9439e230b4..139f2b401af50 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
++++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
+@@ -198,7 +198,7 @@ &mdss_dsi0 {
+ 	status = "okay";
  
--		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
-+		enable-gpios = <&tlmm 100 GPIO_ACTIVE_LOW>;
- 		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
+ 	panel@0 {
+-		compatible = "samsung,s6e8fco-m1906f9";
++		compatible = "samsung,s6e8fc0-m1906f9";
+ 		reg = <0>;
  
- 		pinctrl-0 = <&usb0_sbu_default>;
-@@ -996,7 +996,7 @@ tx-pins {
- 
- 	usb0_sbu_default: usb0-sbu-state {
- 		oe-n-pins {
--			pins = "gpio101";
-+			pins = "gpio100";
- 			function = "gpio";
- 			bias-disable;
- 			drive-strength = <16>;
+ 		reset-gpios = <&tlmm 90 GPIO_ACTIVE_LOW>;
 -- 
 2.53.0
 
