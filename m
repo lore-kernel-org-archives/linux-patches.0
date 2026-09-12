@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2143B3BE175;
-	Sat, 12 Sep 2026 07:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560803BCD19;
+	Sat, 12 Sep 2026 07:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196908; cv=none; b=PrKLf7K0RRhBnTWdIv8mYPMkAjzV40mv+ZteF31h0Ak9FrsYzg5vGsHIfMSaa29Bg9Me89Tl70wieFiv5aBDJtNVhwavKii9VGYFnxh8VRJCtHULpeuMsn8HFYByt7ryqDjKW2XjJ/0RsEapuKQZOoQRwk3GKYlj3oNnQBAElUY=
+	t=1789196912; cv=none; b=Nh78koPuOyo3RZuIo65Yn6OlPstr5uyoSCB0NUFEYO6whrSeO57HLqFyOTdmX20loFt7i7gteCC8kxSfmDWhuaAsdOKJS6GjzCywzNBm+Uhr1Y0EODT+4/HtJOCSz/1zGWRMQp9egDyKBDEdSqqp30RKYsbbSFD3rVICTDw9rw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196908; c=relaxed/simple;
-	bh=G6ntpvuiQkYHDyhJyN7VCKUWE8S9VgoWldLp91J/1VI=;
+	s=arc-20240116; t=1789196912; c=relaxed/simple;
+	bh=21kkgdLSn+HjqnLccYe5xu1PSNrk+1y8F8u29oUXUu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oR5fu3eMzOmCNmNjxSjxTuuJZJzBzM2orZwBHkk1eWRJ0HJL/Ukd9wO9tVwTvlS5C3YTKU+uxkBOTio7n34H00EEuMDw1Fob6kEDG/ZSih1W7eyJakFGlFd9UT62Dfv9+jjG8ccrw9bVPCxj+glI2L7NJFKF+TAiIL+5xWLOTS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJrAOrZS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lpr1uuRE4ZKermpXvSfUHc6WSJ7xXNGX/mt3Xm6mUnSSsDdahJm2CiAHlRa+Dpi1L6hlihwgFJ6jD60WQnSGn2fkj3mJnDr9wMMSLtNlPKC6cWmp98NiN4DbVQy0+bbNniSbMQQxRvufuuBzpgBt3ZDvxuVGm0R7HGuea2vb+WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Siql3Bqp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJrAOrZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E783F1F000FF;
-	Sat, 12 Sep 2026 07:08:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Siql3Bqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF871F000FF;
+	Sat, 12 Sep 2026 07:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196907;
-	bh=pdCj8Bzs0tmJZ2vDQ6CFSIXPbU2sFopqNw7uDnmw5NU=;
+	s=korg; t=1789196911;
+	bh=Y+9unwXHmsdCLymILy8gU5y5iWWI55Qd8uUvTAXJleY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJrAOrZSfZCaNMsq6RWSm/aMqkMD35uMtGD0NNOm/xyAcgnXJZkNnx5Vuy5KG7deE
-	 HrbUspRsxgOlh99YwO3kLG8nlsnQuI9z1JynH+A5P89nfp2pjesSFjw4grXADXaRdI
-	 20sO0mv3Belg2Ll+OLXPBmsugBHFwpFyMrPnjVUg=
+	b=Siql3BqpfRTlfAP74Z0njOUP4tvVNnzspxQBGjiH6FkRAYIbiXfzzkLl9lJDJIozv
+	 hAHclm1zLKB6CsajMMOGr9xdWFuAEUzJoBKRhHkWIJnp+lCMC111xHR6UOKmIWCS7B
+	 vC74o12b11rrL7DfhHEdCMoU6SOGLnrKw2TOiw5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Damon Ding <damon.ding@rock-chips.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0062/1815] drm/bridge: of-display-mode-bridge: Fix missing static const for the bridge funcs
-Date: Sat, 12 Sep 2026 08:30:12 +0200
-Message-ID: <20260912065650.466071217@linuxfoundation.org>
+Subject: [PATCH 7.2 0045/1815] drm/rockchip: analogix_dp: Fix OF node reference leak via auto cleanup
+Date: Sat, 12 Sep 2026 08:29:55 +0200
+Message-ID: <20260912065650.078039127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,44 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Damon Ding <damon.ding@rock-chips.com>
 
-[ Upstream commit 6648301c5bb2ef23f0fb15bcb01d21ff66f36799 ]
+[ Upstream commit 87e060521371257ddbb77964b66e60d80afcc7b2 ]
 
-Add static qualifier for of_display_mode_bridge_funcs to resolve the
-sparse warning:
+Sashiko reported a reference leak in rockchip_dp_drm_encoder_enable(),
+the of_get_child_by_name() function does not call of_node_put() in a
+symmetrical way [1].
 
-drivers/gpu/drm/bridge/of-display-mode-bridge.c:54:25: sparse: sparse:
-symbol 'of_display_mode_bridge_funcs' was not declared. Should it be
-static?
+Fix the device node reference leak by using __free(device_node) to
+automatically manage of_node_put() for all device nodes.
 
-Also mark the structure const as required by devm_drm_bridge_alloc()
-parameter type constraints.
-
-Fixes: ba2db93cf3d5 ("drm/bridge: Move legacy bridge driver out of imx directory for multi-platform use")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606170744.FUStcWaB-lkp@intel.com/
+Fixes: 729f8eefdcad ("drm/rockchip: analogix_dp: Add support for RK3588")
+Link: https://sashiko.dev/#/patchset/20260527024336.191433-1-damon.ding@rock-chips.com?part=5 #1
 Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://patch.msgid.link/20260617080755.186368-1-damon.ding@rock-chips.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260601065100.1103873-7-damon.ding@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/of-display-mode-bridge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/analogix_dp-rockchip.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/of-display-mode-bridge.c b/drivers/gpu/drm/bridge/of-display-mode-bridge.c
-index cb15713f3a796..e66dae168fd0d 100644
---- a/drivers/gpu/drm/bridge/of-display-mode-bridge.c
-+++ b/drivers/gpu/drm/bridge/of-display-mode-bridge.c
-@@ -51,7 +51,7 @@ static int of_display_mode_bridge_get_modes(struct drm_bridge *bridge,
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+index d2af5eb29dbb5..b1ed25cefe5ed 100644
+--- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
++++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+@@ -8,6 +8,7 @@
+  *         Jeff Chen <jeff.chen@rock-chips.com>
+  */
  
--struct drm_bridge_funcs of_display_mode_bridge_funcs = {
-+static const struct drm_bridge_funcs of_display_mode_bridge_funcs = {
- 	.attach = of_display_mode_bridge_attach,
- 	.get_modes = of_display_mode_bridge_get_modes,
- };
++#include <linux/cleanup.h>
+ #include <linux/component.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/of.h>
+@@ -206,7 +207,6 @@ static void rockchip_dp_drm_encoder_enable(struct drm_encoder *encoder,
+ 	struct drm_crtc *crtc;
+ 	struct drm_crtc_state *old_crtc_state;
+ 	struct of_endpoint endpoint;
+-	struct device_node *remote_port, *remote_port_parent;
+ 	char name[32];
+ 	u32 port_id;
+ 	int ret;
+@@ -230,18 +230,22 @@ static void rockchip_dp_drm_encoder_enable(struct drm_encoder *encoder,
+ 	if (ret < 0)
+ 		return;
+ 
+-	remote_port_parent = of_graph_get_remote_port_parent(endpoint.local_node);
++	struct device_node *remote_port_parent __free(device_node) =
++		of_graph_get_remote_port_parent(endpoint.local_node);
+ 	if (remote_port_parent) {
+-		if (of_get_child_by_name(remote_port_parent, "ports")) {
+-			remote_port = of_graph_get_remote_port(endpoint.local_node);
++		struct device_node *ports __free(device_node) =
++			of_get_child_by_name(remote_port_parent, "ports");
++
++		if (ports) {
++			struct device_node *remote_port __free(device_node) =
++				of_graph_get_remote_port(endpoint.local_node);
++
+ 			of_property_read_u32(remote_port, "reg", &port_id);
+-			of_node_put(remote_port);
+ 			sprintf(name, "%s vp%d", remote_port_parent->full_name, port_id);
+ 		} else {
+ 			sprintf(name, "%s %s",
+ 				remote_port_parent->full_name, endpoint.id ? "vopl" : "vopb");
+ 		}
+-		of_node_put(remote_port_parent);
+ 
+ 		DRM_DEV_DEBUG(dp->dev, "vop %s output to dp\n", (ret) ? "LIT" : "BIG");
+ 	}
 -- 
 2.53.0
 
