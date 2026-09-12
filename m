@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884A8368D66;
-	Sat, 12 Sep 2026 11:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69EE3F788A;
+	Sat, 12 Sep 2026 11:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213246; cv=none; b=fC9GQaC+aD8y+bOBbdQ5k2KPSagcU9j/oxBs2u6EgIFHlOAxbX00ij5cAIEpJMyhyGTct/5eD6oN2w5PrUSSH4lPP8wkccRiJG1/zDp6UAV5i6lmn7ofY8SU4SDaNYGB7yEAEvRN9AJaFd5PFefmE7zSkthQmqE4Efxls5TsDCg=
+	t=1789213251; cv=none; b=D4KBWnsXKfPGCU2TfmwfD2DZnJDPjvkzJlqxKxQbjqUElLdfONGOC0A5ec+XLICM5hwG/BMw4IFwe889x5UVmeeuF6UJC9R44efEyO0FQGXIsJrKlnPyFT9E1xzUG+dejKQ/fZwvWR/lJ3oforZcqsJfR7KlbWpASTYynVhviyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213246; c=relaxed/simple;
-	bh=uoN5gNnfoFJg716UjeQUuqPOde8Wuu1EY/lhKAWMdZQ=;
+	s=arc-20240116; t=1789213251; c=relaxed/simple;
+	bh=T8De91tI/WpKB8hiqgvLUTyULziaWHMIBR6k9KAMjns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FiuzemLLWT3xCiQBKDfhyR1c2mrK75cRBHd1zvWHpWN0zMSt44cUO+3B0nA+BxaFEnPxsUYHaZoPTK4AQ+8KrQTmlG+woXnTy7cGuvpUUQD3+ArrTV2tmU+7saEIrOzqcuQjpqLg6hf/WruD01zKq+N657HjW63g5HZRNHvHRNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3QeqCvt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KF+iOJcBapNTOJKSeoHUHKqNxFUW612WeT4eXjocwF3qh2WgP6X7aVDLM9hrcDxz+ox23wgk0x6viN42Emzxx+dikjiIKIEDzTmZJvlCk7BsGfnHd8vzubP5xSJPXv5nukZE4A26nWETJ2jv/OBbWBMrFJVxbDpf7WXP/SYyZJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LB5Rre8b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3QeqCvt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DB41F000FF;
-	Sat, 12 Sep 2026 11:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LB5Rre8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E011F000FF;
+	Sat, 12 Sep 2026 11:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213245;
-	bh=QcYrHqrhGai5on37lFwPqNU82amNqo7FbZhbqEOCIZs=;
+	s=korg; t=1789213250;
+	bh=CzuxmKcjAd3ynQa27/kTZ9HDBC7LpmjCY557bjIAZY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s3QeqCvtKauzf2HNLDne4PZ7SjnFvVQh7HOdQhb5ABqJs5vztCJ9GnS9j2wJ/6gnx
-	 sPvOyExbuXF+K3RZ6es+iKLiFGE9lHGyYLFLr57UD2nNx8dga1cuiQaEoeou8Nb+oS
-	 uYJShRUZIu+RetqIxXlzpM74okpkkX3YIVgZ7/6U=
+	b=LB5Rre8bu41nfmqEzpsP+sHPzv4MQQ0o+6fNv558C9L0ZfQ2DvF7uOb+wDJ0Kr6as
+	 CZFRb1qJ/MKCVwUmMSwR3A2/E2IQL+twclVeC/0uxjHY32OXG9RQ15eypttfk4w7OZ
+	 aQK8P2XV/EU6NIDOG5lRzzJzHFXO3d0OnqO6/MEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 0081/1376] arm64: mm: Fix the lockless page-table walk in show_pte()
-Date: Sat, 12 Sep 2026 08:41:47 +0200
-Message-ID: <20260912065609.365556366@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 0082/1376] ALSA: rawmidi: Return the error from snd_rawmidi_input_params()
+Date: Sat, 12 Sep 2026 08:41:48 +0200
+Message-ID: <20260912065609.387905061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,87 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit a77644d009dece1104b6fcc6e322b0e4503db0d6 upstream.
+commit f4a23e17d84fd2a152d9e12369761934e1af0ee8 upstream.
 
-show_pte() walks page tables locklessly and can run with interrupts
-enabled. A concurrent teardown can free a table page while it is being
-walked. It can also clear a parent entry after show_pte() checked it; the
-regular pXd_offset() helpers then reread the cleared entry and can derive a
-bogus lower-level pointer and fault again.
+The snd_rawmidi_input_params() computes err for the three invalid mode
+combinations and for resize_runtime_buffer(), applies the new framing
+and clock type only when err is zero, and then returns 0 anyway.  A
+caller that asked for parameters the kernel rejected is told the change
+succeeded, and the substream keeps its old buffer.
 
-Use the lockless offset helpers with the saved parent entries, as
-gup_fast() does, and pass the saved PMD to pte_offset_map().
+The open_mutex conversion turned the early returns into assignments.
+It handled the output sibling correctly, which still returns err, and
+left this one behind.
 
-For task page tables, arm64 selects MMU_GATHER_RCU_TABLE_FREE. Disable
-local interrupts around the walk to hold off RCU-deferred table frees and
-block the tlb_remove_table_sync_one() IPI until the walk is finished.
-
-Place the IRQ guard after the header print. This does not make the output a
-consistent snapshot, but prevents the task page-table walk from
-dereferencing a released table page or deriving a pointer from a different
-parent value.
-
-Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
+Fixes: 94b98194b62e ("ALSA: rawmidi: Take open_mutex around parameter changes")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260902125058.19499-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/fault.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ sound/core/rawmidi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -15,6 +15,7 @@
- #include <linux/mm.h>
- #include <linux/hardirq.h>
- #include <linux/init.h>
-+#include <linux/irqflags.h>
- #include <linux/kasan.h>
- #include <linux/kprobes.h>
- #include <linux/uaccess.h>
-@@ -151,6 +152,9 @@ static void show_pte(unsigned long addr)
- 	pr_alert("%s pgtable: %luk pages, %llu-bit VAs, pgdp=%016lx\n",
- 		 mm == &init_mm ? "swapper" : "user", PAGE_SIZE / SZ_1K,
- 		 vabits_actual, mm_to_pgd_phys(mm));
-+
-+	guard(irqsave)();
-+
- 	pgdp = pgd_offset(mm, addr);
- 	pgd = READ_ONCE(*pgdp);
- 	pr_alert("[%016lx] pgd=%016llx", addr, pgd_val(pgd));
-@@ -164,25 +168,25 @@ static void show_pte(unsigned long addr)
- 		if (pgd_none(pgd) || pgd_bad(pgd))
- 			break;
- 
--		p4dp = p4d_offset(pgdp, addr);
-+		p4dp = p4d_offset_lockless(pgdp, pgd, addr);
- 		p4d = READ_ONCE(*p4dp);
- 		pr_cont(", p4d=%016llx", p4d_val(p4d));
- 		if (p4d_none(p4d) || p4d_bad(p4d))
- 			break;
- 
--		pudp = pud_offset(p4dp, addr);
-+		pudp = pud_offset_lockless(p4dp, p4d, addr);
- 		pud = READ_ONCE(*pudp);
- 		pr_cont(", pud=%016llx", pud_val(pud));
- 		if (pud_none(pud) || pud_bad(pud))
- 			break;
- 
--		pmdp = pmd_offset(pudp, addr);
-+		pmdp = pmd_offset_lockless(pudp, pud, addr);
- 		pmd = READ_ONCE(*pmdp);
- 		pr_cont(", pmd=%016llx", pmd_val(pmd));
- 		if (pmd_none(pmd) || pmd_bad(pmd))
- 			break;
- 
--		ptep = pte_offset_map(pmdp, addr);
-+		ptep = pte_offset_map(&pmd, addr);
- 		if (!ptep)
- 			break;
+--- a/sound/core/rawmidi.c
++++ b/sound/core/rawmidi.c
+@@ -779,7 +779,7 @@ int snd_rawmidi_input_params(struct snd_
+ 		substream->framing = framing;
+ 		substream->clock_type = clock_type;
+ 	}
+-	return 0;
++	return err;
+ }
+ EXPORT_SYMBOL(snd_rawmidi_input_params);
  
 
 
