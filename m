@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0950246BCD;
-	Sat, 12 Sep 2026 10:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FE125B0AA;
+	Sat, 12 Sep 2026 10:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207762; cv=none; b=AyUq+Wb87PZlblFavrCZWEmXzjAa8bHetgbCUxf5Lb4Vr13Bqcf21PwXIOYotK/1xUlV6huI7yIgMyJdnKyfFbyNSIgoAmZ2WSF19ZfCTxyXCeyMm2Q+QXbORj7GT+XAClZ6oEKFNt79vEO4kcocyIVJ6vtCuBEpwad76ov8HRc=
+	t=1789207766; cv=none; b=e+DNRhBYg4JvcbPddayD61kAevMp+JM6S1anxDrF4erDz4PomqC7lCScv/wt/aSeEDYBGzWmdS8l3c9oQeHIO4hf1QKpHWfvif/hWpRBHF6ID6a8RfTNRCP7kM4T8R+zcp5KFff2MwnkiROD9kkJO2iaw6BkiSyZYYOPbKcJ4Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207762; c=relaxed/simple;
-	bh=1NTe9RtGZlDUY+BLExp489EtfT179R5UCkEnViPLbpw=;
+	s=arc-20240116; t=1789207766; c=relaxed/simple;
+	bh=gXFR1opC0HDEu5jlad0gkwwzbs/V+ntolqV85ST4gIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EM4QI3DvB1mF0e4qD7N17LI0Y3p5NhU7HHOYsbGsI66d27VOmVgV9b4/aTIH5sJEbKLsIYbVPGCbG/Ctpyzd5zQZrhArWdsBq5+5R3xL2W3N/31ayENtD9HhyqxrEmdKvjoXIgTJc3akD3h5zUxKxem22w8TRa/NhDdwtUpu1PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdnksZ5n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J4uK8HwT+6kLZl1ZF9y3YmA6iZsYWHBkDzmzyWym8gypinwywZlGYtwQDf0kMbSI4RswWo2RsgRQrBuJO/VLOVrJFpi4czVhHZL0t+KSmj8/a5ji48aeZ+gmNWZtPxCJd5PyU0AAK4wQ5h/77H1g53aAVZfV18EwKfxXyX/zbQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUy1pPdX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdnksZ5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002D11F000FF;
-	Sat, 12 Sep 2026 10:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUy1pPdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641571F000FF;
+	Sat, 12 Sep 2026 10:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207760;
-	bh=8UmqrFYovWBhleISSicF0wkx+79xgcHF9yoN08ObmLU=;
+	s=korg; t=1789207765;
+	bh=BN/zeIgLNDB5PK1sN2+Hlx6xBNv1oDUSr8BGorhvZoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CdnksZ5nmINk66EKjEaCabtGx7RUNXTw7bT/DtXQ/7M21ujadok4FB6wQk8GL22pQ
-	 62wCE7T2/pSI/M3nSu36B1OT3rQ7uJXrT/1cEBStRwid0XkJJ2INrbQm4XAkKuQ0Qr
-	 Can2PqmLU6mlMKKUP6rC5vKpDHctETmkES+OWPdI=
+	b=cUy1pPdXIueG/9hEp4W3dJL2OXRGpkuoaRskm7zJ2ffDzuuPs3S+3daVD4jKd86YC
+	 bvzLvwy0e8n0w75WIAhkAn9zVV4sP0ypWI7Qwv+2BZYbTJyzabHS5lrTlgE+bjNFvN
+	 U2bui7/3UECuOJwYy53yRzK7wxaYnTopY9BOpTR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0479/1518] arm64: dts: amlogic: meson-axg: Add missing nand_rb0 pin to nand_all_pins
-Date: Sat, 12 Sep 2026 08:44:08 +0200
-Message-ID: <20260912065634.283189736@linuxfoundation.org>
+Subject: [PATCH 6.18 0480/1518] arm64: dts: amlogic: meson-axg-s400: enable mipi_pcie_analog_dphy for PCIe
+Date: Sat, 12 Sep 2026 08:44:09 +0200
+Message-ID: <20260912065634.305428816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,37 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Jun Yan <jerrysteve1101@gmail.com>
 
-[ Upstream commit 45eb76f9ab6854f79690d56d04df227429a536b8 ]
+[ Upstream commit 7f1d0cc86cb70fa550163b6f70fd1d484c03218e ]
 
-The nand_all_pins pinctrl node was missing the nand_rb0 (ready/busy)
-pin description, which is required for NAND controller operation.
+The PCIe PHY node references mipi_pcie_analog_dphy via its phys property.
+Enable this analog PHY node to make PCIe functionally viable.
 
-Add it to the pinmux list.
-
-Fixes: be18d53c32b2 ("arm64: dts: amlogic: meson-axg: pinctrl node for NAND")
+Fixes: 9715b01da6cf ("arm64: dts: meson-axg-s400: enable PCIe M.2 Key E slots")
 Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
 Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20260624135650.727077-3-jerrysteve1101@gmail.com
+Link: https://patch.msgid.link/20260624135650.727077-5-jerrysteve1101@gmail.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-axg.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-axg-s400.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-index 3058b60338dbf..e9c1aae95fe7c 100644
---- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-@@ -481,7 +481,8 @@ mux {
- 							 "nand_ale",
- 							 "nand_cle",
- 							 "nand_wen_clk",
--							 "nand_ren_wr";
-+							 "nand_ren_wr",
-+							 "nand_rb0";
- 						function = "nand";
- 						input-enable;
- 						bias-pull-up;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts b/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
+index 9611775b81eee..7c8a8529dbc5f 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
+@@ -432,6 +432,10 @@ gpio_speaker: gpio-controller@1f {
+ 	};
+ };
+ 
++&mipi_pcie_analog_dphy {
++	status = "okay";
++};
++
+ &pdm {
+ 	pinctrl-0 = <&pdm_dclk_a14_pins>, <&pdm_din0_pins>,
+ 		    <&pdm_din1_pins>, <&pdm_din2_pins>, <&pdm_din3_pins>;
 -- 
 2.53.0
 
