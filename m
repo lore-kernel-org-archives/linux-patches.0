@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0132C39DBC9;
-	Sat, 12 Sep 2026 20:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1843A453F;
+	Sat, 12 Sep 2026 20:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243368; cv=none; b=OFqagHvd1smptf2lxNdKF8hmfEOIPvg+WgtbRwQ00918aiOInhrFE4cI04n0YW2FK4bXaTqWu0EUK8DO6aNqBNpMiN8+yRNEZvq6CkWnEPYFbeFIoDoHtlocwjKKHFeaiYoY27cOVYfzVs8/kh811aT97U8gRKBXdFDwCoF0C4U=
+	t=1789243370; cv=none; b=ncakQl0YAjLNhRjpInyPWRBV+khJfxCIF7dtBDdLIGljHfMSmJuRO9plO+rYPvMCZRrHkNjBoUVfobF7C398JVu/+iL02rxzkvf1CfGH0urfDB3yspEY2WISm58+1KmsCnH4xzGk+0n1pDOovT4EVaqwyS5LKsYguKNZX0cNLV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243368; c=relaxed/simple;
-	bh=KuC2lvyRGzWnFV7uaYRDSImoGdD3bhyRwwB77S/sE4Q=;
+	s=arc-20240116; t=1789243370; c=relaxed/simple;
+	bh=g4xTh3/ls+27+pCPenBWkmCnD84/7wIIn10PbpD3LCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zb97Yr+gBL38rcz9lzuo/+f/vdK1pBczCbarImgD2hZpSeFnVcIh3TzKQfga3ZmcQ8ooa9ptsU+YlWCLnbTM9aiWJeTSAR/qoIgJCC9gDSwzFCZiBhgpWwe03r3bXxiL8/nzP2vn2bt0tLaZY4LJqfs+z/fxR1yBB6uFtGTpJqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jx+EWzmO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OU8qvtYsuEvKzu2wHlTELX0iHWflDRc3eUa67eM2Dd/IW0DY863tdO7y1GuCcN4BiZ0SZUMU54SvrU6O8C/SwPRpAltFjpBfVmuSGdP4B7pLhQdcZKTu/0NMpumJo8udpU3OB2k0K1IobQQOlE2YWiCUJCKyEMpELdEtCRur36o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHOqKMZz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jx+EWzmO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DE01F00893;
-	Sat, 12 Sep 2026 20:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHOqKMZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D66F1F00898;
+	Sat, 12 Sep 2026 20:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243364;
-	bh=7G63AV1ELVKdt4d7LjJgEwiPg9O3Wkt4WxzzeFr3jHA=;
+	s=korg; t=1789243367;
+	bh=yQi5xBPg0V0UXmDRTxrhQDSGHKI/++a0Erc7lsq0724=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jx+EWzmOyTJ46WCxejVjFY6yWtpoCsVPSH8BYXJztUmLJKK0nfrGtqP72NqlAelw2
-	 WsbTdsyjizX/rA/cCJtdCqGhm8UhDinWV3gdUu1HXQBbeJgdbpeb6gbS40cbFIpiGr
-	 UdZTqnBQBSs/le0KVNWLNdhRmvly6qU7EvfgYSPg=
+	b=FHOqKMZz1uOARTdD9uknkJppZ+wq8kfwHl7JrbnZeUQSVv8rXhsx+S++8CfJ3IJxA
+	 Qf3QTuZq3ifdrb9+IyFUSeDXfuVUYnndNID6FsdtLIzDluHWLEXGMWMHZ+B7VK4+AC
+	 2+QdbUBYXAl1MO7rWatiyqUoZwmz2rv61rHIx2Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 729/798] ipvs: fix integer overflow in ftp helper port/address parsing
-Date: Sat, 12 Sep 2026 09:05:57 +0200
-Message-ID: <20260912065533.787980574@linuxfoundation.org>
+Subject: [PATCH 5.10 730/798] net: bridge: vlan: fix inverted default vlan notification
+Date: Sat, 12 Sep 2026 09:05:58 +0200
+Message-ID: <20260912065533.809316730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,66 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit e625a9477d12baaff4025c5f9989184a907ea8fc ]
+[ Upstream commit 21040c7f931502070dcc66bb0f1aeed07dec032b ]
 
-ip_vs_ftp_get_addrport() accumulates decimal digits into a __u16
-(hport) and into unsigned char (p[]) without checking for overflow.
-A crafted FTP PASV/EPSV response with an over-long port or address
-octet wraps the value, so the helper configures the data connection
-with a truncated port/address.
+A notification should be emitted only when the vlan delete was successful
+and not otherwise. The proper check is if br/nbp_vlan_delete returned 0.
 
-The netfilter conntrack FTP helper had the same defect, fixed in
-commit 2b413fc689ba ("netfilter: nf_conntrack_ftp: avoid u16
-overflows"). Apply the equivalent fix here: widen the port accumulator
-to u32 and reject values above 65535, and reject address octets above
-255.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f545923b4a6b ("net: bridge: vlan: notify on vlan add/delete/change flags")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260814141640.64958-1-razor@blackwall.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ftp.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/bridge/br_vlan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ftp.c b/net/netfilter/ipvs/ip_vs_ftp.c
-index 67d0d4f1f0db1..aacb1675db9c1 100644
---- a/net/netfilter/ipvs/ip_vs_ftp.c
-+++ b/net/netfilter/ipvs/ip_vs_ftp.c
-@@ -103,7 +103,7 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
- 	char *s, c;
- 	unsigned char p[6];
- 	char edelim;
--	__u16 hport;
-+	__u32 hport;
- 	int i = 0;
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 759bed457d9f5..f57ec26539e90 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -1045,7 +1045,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
+ 		if (err)
+ 			goto out;
  
- 	if (data_limit - data < plen) {
-@@ -145,7 +145,11 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
- 				return -1;
- 			c = *data;
- 			if (isdigit(c)) {
--				p[i] = p[i]*10 + c - '0';
-+				unsigned int val = p[i] * 10 + c - '0';
-+
-+				if (val > 255)
-+					return -1;
-+				p[i] = val;
- 			} else if (c == ',' && i < 5) {
- 				i++;
- 				p[i] = 0;
-@@ -223,6 +227,8 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
- 		if (!isdigit(*s))
- 			break;
- 		hport = hport * 10 + *s - '0';
-+		if (hport > 65535)
-+			return -1;
- 	}
- 	if (s == data_limit || !hport || *s != edelim)
- 		return -1;
+-		if (br_vlan_delete(br, old_pvid))
++		if (!br_vlan_delete(br, old_pvid))
+ 			br_vlan_notify(br, NULL, old_pvid, 0, RTM_DELVLAN);
+ 		br_vlan_notify(br, NULL, pvid, 0, RTM_NEWVLAN);
+ 		set_bit(0, changed);
+@@ -1067,7 +1067,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
+ 				   &vlchange, extack);
+ 		if (err)
+ 			goto err_port;
+-		if (nbp_vlan_delete(p, old_pvid))
++		if (!nbp_vlan_delete(p, old_pvid))
+ 			br_vlan_notify(br, p, old_pvid, 0, RTM_DELVLAN);
+ 		br_vlan_notify(p->br, p, pvid, 0, RTM_NEWVLAN);
+ 		set_bit(p->port_no, changed);
 -- 
 2.53.0
 
