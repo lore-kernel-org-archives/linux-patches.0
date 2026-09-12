@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C803420465;
-	Sat, 12 Sep 2026 09:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799D83DB313;
+	Sat, 12 Sep 2026 09:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207053; cv=none; b=dN+ZvptlBQ5CEocyC42mEH/XaMBlJLPxVoZMoDhc8alx8Wom0ov8xZOn4aEVG7PV19v1ImAg231Dm8je88+v0YB0a9cZhnoAwuLYYBgYunhUnZN5hSJ+HbtwjP5c5fBw0y5HmoONq5bJOTRdvjtI0Ole4PvHqPHx65wIVChMNlE=
+	t=1789207058; cv=none; b=WFf1w6nmf8dlbD1zdgEAOyLUt/28ty9p68eWy3sVRbsIGNbqrssxJj9brtYwKLrfMY1BPe+ImKhpsVcMY2ovIkdCD3W7XdAQLb2q/5CSF6/Gtu3gjpoQLae2qR8ABlq5Ntz6ZqPRnO0mp5c6y4R8uY9iS3c4wuvxD7FwoZ2FRRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207053; c=relaxed/simple;
-	bh=hY9k4TZT/yRTVTzORHOI3mB1Yt+peQhuxagryeb9opk=;
+	s=arc-20240116; t=1789207058; c=relaxed/simple;
+	bh=n0ixPr/w3vcQ31qYveIEeP7Lnt5dwm+bTIoYuIHlI+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQhYtP7GGMByZ8z5V99BOP4VgOBs080zmr6HJ2dNvxXDT/YgojWjKYNCsEYSi3ZIiLdq9I0v0cLK5Om4yCFzhKUJLpRDXYcre9IkTOFM4Bkh/GTxW9/m7Zk2adCOff8dNbMMUJDtQGxkV5L6qmG2h41bCA+88D/6o0OG8aBW3Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UGTs/DC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FnMGIU4PsgPf5QYyodtadPjpe/8yz1/azfTWPlAYL7+gY/HU6mNyFwOIldoyS+VSdp0d78x/rsYL4vePqAU9uhTehxJngmlSml7NAwmbxdQBY+kuLwH7faCDx9uRflbP1EHNU33ePTJpLCOS71XTonIUBy9NS/G1dNePydrYtck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNp0fuJp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UGTs/DC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2601F000FF;
-	Sat, 12 Sep 2026 09:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNp0fuJp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F0E1F000FF;
+	Sat, 12 Sep 2026 09:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207051;
-	bh=bnipUPcJS/BRrrOpwzS7zKH7HJYzz0foLq2e+S13aPE=;
+	s=korg; t=1789207057;
+	bh=X0wTdBI7A3jZAe6/d1s4r+N7pFzW6gcdVscH1m+qLJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1UGTs/DCgTsTT/3m82e8Yw2tL1ayfbhfows0FE49NsouW6mUVwlXkqvhmS1RO+Vn7
-	 kl0ky5dInGQhD8upn/H5byl0DeU8prjKkJupBsnqUAj2A4nFldEFUu8dXYN7+Yk/PO
-	 QH7gxG0EZIdIf8BiH6uNOD3E2OMYTYNaKmLlfQnQ=
+	b=ZNp0fuJp9dkSZw+rwyS2hsw5cKpN3FXj9WMqgNcZs8V5L7MX4vd/NBXS6tHT5O/sR
+	 fExEjEmJVjQpCiDhq9WK/CzzGdHR3CBMQBrLzMTcekTAa0WS0+Nn9auVmEO5GyfTi9
+	 nCLDTylNeUPaLXh2X2jzMJy2o/wuYorJtseUdZx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0334/1518] wifi: rtw89: fw: parse firmware element of DIAG_MAC
-Date: Sat, 12 Sep 2026 08:41:43 +0200
-Message-ID: <20260912065631.026144092@linuxfoundation.org>
+Subject: [PATCH 6.18 0335/1518] wifi: rtw89: debug: add parser to diagnose along DIAG_MAC fw element
+Date: Sat, 12 Sep 2026 08:41:44 +0200
+Message-ID: <20260912065631.048349272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,107 +52,379 @@ Content-Transfer-Encoding: 8bit
 
 From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit de19cc7def5a9c646264a1e7a2a183a3baad112f ]
+[ Upstream commit 7bf433c6767ffe2ad5b7ac8680c6e93e7d0be3e4 ]
 
-The firmware element ID 28 is a set of rules to diagnose if MAC get
-abnormal. The latter patch will use these rules via debugfs to know
-the status.
+The rules to diagnose MAC have a common header, and a cmd field is used
+to know the exact command and its format. The rules with the same tuple of
+fields {sheet, seq} can be seen as a set of compound rules, which treat
+it as positive rule if just one of the rules is positive.
 
-The element contains rules with their textual messages shown as below:
+Take EQUALV rules as example, if value of {addr, mask} is equal to
+predefined value as field val, a rule is positive. Fields addr_name_offset
+and msg_offset are offsets related to textual messages for human readable.
 
-   +------------------------------------+
-   |                                    |
-   |                +-----------+       |
-   |                | rule_size |-------|----------+
-   +----------------+-----------+-------+ --       |
-   |             rule[0]                |   \      |
-   |             rule[1]                |   |  <---+
-   |                :                   |   /
-   +------------------------------------+ --
-   | msg[0]      msg[1]                 |  each msg has variable length
-   |        msg[2]    msg[3] ...        |  (with address align 2)
-   | ...                                |
-   +------------------------------------+
+Format of common rule header (8 bytes)
+ +-------+-----+--------+-----------+-----+---------+
+ | sheet | cmd | seq[2] | io / band | len | rsvd[2] |
+ +-------+-----+--------+-----------+-----+---------+
+
+Format of rule command is EQUALV (equal value) (24 bytes):
+ +------+------------------+------+-----+------------+---------+
+ | addr | addr_name_offset | mask | val | msg_offset | rsvd[4] |
+ +------+------------------+------+-----+------------+---------+
+
+Format of message:
+ +-----+----------+
+ | len | string[] |
+ +-----+----------+
+
+An example of output:
+ Plain(Ignore)/Rules/Positive: 115(4)/86/81
+
+ Where, Plain is total rules written in firmware element.
+        Ignore is the ignored rules, such as USB IO, but current is PCIE.
+        Rules is number of set of compound rules.
+        Positive is number of positive Rules.
 
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251111022452.28093-3-pkshih@realtek.com
+Link: https://patch.msgid.link/20251111022452.28093-4-pkshih@realtek.com
 Stable-dep-of: 9bf6bd6ed5ac ("wifi: rtw89: 8852a: fix RSSI report when average beacon RSSI is not ready")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.h |  1 +
- drivers/net/wireless/realtek/rtw89/fw.c   | 15 +++++++++++++++
- drivers/net/wireless/realtek/rtw89/fw.h   |  6 ++++++
- 3 files changed, 22 insertions(+)
+ drivers/net/wireless/realtek/rtw89/debug.c | 299 +++++++++++++++++++++
+ 1 file changed, 299 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
-index d3531630a7023..3998a53b4ee90 100644
---- a/drivers/net/wireless/realtek/rtw89/core.h
-+++ b/drivers/net/wireless/realtek/rtw89/core.h
-@@ -4705,6 +4705,7 @@ struct rtw89_fw_elm_info {
- 	struct rtw89_phy_rfk_log_fmt *rfk_log_fmt;
- 	const struct rtw89_regd_data *regd;
- 	const struct rtw89_fw_element_hdr *afe;
-+	const struct rtw89_fw_element_hdr *diag_mac;
+diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
+index a82df3814069c..987eef8170f2b 100644
+--- a/drivers/net/wireless/realtek/rtw89/debug.c
++++ b/drivers/net/wireless/realtek/rtw89/debug.c
+@@ -87,6 +87,7 @@ struct rtw89_debugfs {
+ 	struct rtw89_debugfs_priv disable_dm;
+ 	struct rtw89_debugfs_priv mlo_mode;
+ 	struct rtw89_debugfs_priv beacon_info;
++	struct rtw89_debugfs_priv diag_mac;
  };
  
- enum rtw89_fw_mss_dev_type {
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index 81cd3ea2c3b69..4191fbbc2161c 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -1299,6 +1299,18 @@ int rtw89_build_afe_pwr_seq_from_elm(struct rtw89_dev *rtwdev,
- 	return 0;
+ struct rtw89_debugfs_iter_data {
+@@ -4361,6 +4362,302 @@ rtw89_debug_priv_mlo_mode_set(struct rtw89_dev *rtwdev,
+ 	return count;
  }
  
-+static
-+int rtw89_recognize_diag_mac_from_elm(struct rtw89_dev *rtwdev,
-+				      const struct rtw89_fw_element_hdr *elm,
-+				      const union rtw89_fw_element_arg arg)
++enum __diag_mac_cmd {
++	__CMD_EQUALV,
++	__CMD_EQUALO,
++	__CMD_NEQUALV,
++	__CMD_NEQUALO,
++	__CMD_SETEQUALV,
++	__CMD_SETEQUALO,
++	__CMD_CMPWCR,
++	__CMD_CMPWWD,
++	__CMD_NEQ_CMPWCR,
++	__CMD_NEQ_CMPWWD,
++	__CMD_INCREMENT,
++	__CMD_MESSAGE,
++};
++
++enum __diag_mac_io {
++	__IO_NORMAL,
++	__IO_NORMAL_PCIE,
++	__IO_NORMAL_USB,
++	__IO_NORMAL_SDIO,
++	__IO_PCIE_CFG,
++	__IO_SDIO_CCCR,
++};
++
++struct __diag_mac_rule_header {
++	u8 sheet;
++	u8 cmd;
++	u8 seq_major;
++	u8 seq_minor;
++	u8 io_band;
++	#define __DIAG_MAC_IO GENMASK(3, 0)
++	#define __DIAG_MAC_N_BAND BIT(4)
++	#define __DIAG_MAC_HAS_BAND BIT(5)
++	u8 len; /* include header. Unit: 4 bytes */
++	u8 rsvd[2];
++} __packed;
++
++struct __diag_mac_rule_equal {
++	struct __diag_mac_rule_header header;
++	__le32 addr;
++	__le32 addr_name_offset;
++	__le32 mask;
++	__le32 val;
++	__le32 msg_offset;
++	u8 rsvd[4];
++} __packed;
++
++struct __diag_mac_rule_increment {
++	struct __diag_mac_rule_header header;
++	__le32 addr;
++	__le32 addr_name_offset;
++	__le32 mask;
++	__le16 sel;
++	__le16 delay;
++	__le32 msg_offset;
++	u8 rsvd[4];
++} __packed;
++
++struct __diag_mac_msg_buf {
++	__le16 len;
++	char string[];
++} __packed;
++
++static ssize_t rtw89_mac_diag_do_equalv(struct rtw89_dev *rtwdev,
++					char *buf, size_t bufsz,
++					const struct __diag_mac_rule_equal *r,
++					const void *msg_start,
++					u64 *positive_bmp)
 +{
-+	struct rtw89_fw_elm_info *elm_info = &rtwdev->fw.elm_info;
++	const struct __diag_mac_msg_buf *name = msg_start +
++						le32_to_cpu(r->addr_name_offset);
++	const struct __diag_mac_msg_buf *msg = msg_start +
++					       le32_to_cpu(r->msg_offset);
++	bool want_eq = r->header.cmd == __CMD_EQUALV;
++	char *p = buf, *end = buf + bufsz;
++	bool equal = false;
++	u32 val;
 +
-+	elm_info->diag_mac = elm;
++	*positive_bmp <<= 1;
 +
-+	return 0;
++	if (u8_get_bits(r->header.io_band, __DIAG_MAC_IO) == __IO_PCIE_CFG)
++		val = rtw89_read32_pci_cfg(rtwdev, le32_to_cpu(r->addr));
++	else
++		val = rtw89_read32(rtwdev, le32_to_cpu(r->addr));
++
++	if ((val & le32_to_cpu(r->mask)) == le32_to_cpu(r->val))
++		equal = true;
++
++	if (want_eq == equal) {
++		*positive_bmp |= BIT(0);
++		return p - buf;
++	}
++
++	p += scnprintf(p, end - p, "sheet: %d, cmd: %d, Reg: %.*s => %x, %.*s\n",
++		       r->header.sheet, r->header.cmd, le16_to_cpu(name->len),
++		       name->string, val, le16_to_cpu(msg->len), msg->string);
++
++	return p - buf;
 +}
 +
- static const struct rtw89_fw_element_handler __fw_element_handlers[] = {
- 	[RTW89_FW_ELEMENT_ID_BBMCU0] = {__rtw89_fw_recognize_from_elm,
- 					{ .fw_type = RTW89_FW_BBMCU0 }, NULL},
-@@ -1387,6 +1399,9 @@ static const struct rtw89_fw_element_handler __fw_element_handlers[] = {
- 	[RTW89_FW_ELEMENT_ID_AFE_PWR_SEQ] = {
- 		rtw89_build_afe_pwr_seq_from_elm, {}, "AFE",
- 	},
-+	[RTW89_FW_ELEMENT_ID_DIAG_MAC] = {
-+		rtw89_recognize_diag_mac_from_elm, {}, NULL,
-+	},
++static ssize_t rtw89_mac_diag_do_increment(struct rtw89_dev *rtwdev,
++					   char *buf, size_t bufsz,
++					   const struct __diag_mac_rule_increment *r,
++					   const void *msg_start,
++					   u64 *positive_bmp)
++{
++	const struct __diag_mac_msg_buf *name = msg_start +
++						le32_to_cpu(r->addr_name_offset);
++	const struct __diag_mac_msg_buf *msg = msg_start +
++					       le32_to_cpu(r->msg_offset);
++	char *p = buf, *end = buf + bufsz;
++	u32 addr = le32_to_cpu(r->addr);
++	u32 mask = le32_to_cpu(r->mask);
++	u16 sel = le16_to_cpu(r->sel);
++	u32 val1, val2;
++
++	*positive_bmp <<= 1;
++
++	rtw89_write32(rtwdev, addr, sel);
++
++	if (u8_get_bits(r->header.io_band, __DIAG_MAC_IO) == __IO_PCIE_CFG)
++		val1 = rtw89_read32_pci_cfg(rtwdev, addr);
++	else
++		val1 = rtw89_read32(rtwdev, addr);
++
++	mdelay(le16_to_cpu(r->delay));
++
++	if (u8_get_bits(r->header.io_band, __DIAG_MAC_IO) == __IO_PCIE_CFG)
++		val2 = rtw89_read32_pci_cfg(rtwdev, addr);
++	else
++		val2 = rtw89_read32(rtwdev, addr);
++
++	if ((val2 & mask) > (val1 & mask)) {
++		*positive_bmp |= BIT(0);
++		return p - buf;
++	}
++
++	p += scnprintf(p, end - p, "sheet: %d, cmd: %d, Reg: %.*s [%d]=> %x, %.*s\n",
++		       r->header.sheet, r->header.cmd, le16_to_cpu(name->len),
++		       name->string, le16_to_cpu(r->sel), val1,
++		       le16_to_cpu(msg->len), msg->string);
++
++	return p - buf;
++}
++
++static bool rtw89_mac_diag_match_hci(struct rtw89_dev *rtwdev,
++				     const struct __diag_mac_rule_header *rh)
++{
++	switch (u8_get_bits(rh->io_band, __DIAG_MAC_IO)) {
++	case __IO_NORMAL:
++	default:
++		return true;
++	case __IO_NORMAL_PCIE:
++	case __IO_PCIE_CFG:
++		if (rtwdev->hci.type == RTW89_HCI_TYPE_PCIE)
++			return true;
++		break;
++	case __IO_NORMAL_USB:
++		if (rtwdev->hci.type == RTW89_HCI_TYPE_USB)
++			return true;
++		break;
++	case __IO_NORMAL_SDIO:
++	case __IO_SDIO_CCCR:
++		if (rtwdev->hci.type == RTW89_HCI_TYPE_SDIO)
++			return true;
++		break;
++	}
++
++	return false;
++}
++
++static bool rtw89_mac_diag_match_band(struct rtw89_dev *rtwdev,
++				      const struct __diag_mac_rule_header *rh)
++{
++	u8 active_bands;
++	bool has_band;
++	u8 band;
++
++	has_band = u8_get_bits(rh->io_band, __DIAG_MAC_HAS_BAND);
++	if (!has_band)
++		return true;
++
++	band = u8_get_bits(rh->io_band, __DIAG_MAC_N_BAND);
++	active_bands = rtw89_get_active_phy_bitmap(rtwdev);
++
++	if (active_bands & BIT(band))
++		return true;
++
++	return false;
++}
++
++static ssize_t rtw89_mac_diag_iter_all(struct rtw89_dev *rtwdev,
++				       char *buf, size_t bufsz)
++{
++	const struct rtw89_fw_element_hdr *elm = rtwdev->fw.elm_info.diag_mac;
++	u32 n_plains = 0, n_rules = 0, n_positive = 0, n_ignore = 0;
++	char *p = buf, *end = buf + bufsz, *p_rewind;
++	const void *rule, *rule_end;
++	u32 elm_size, rule_size;
++	const void *msg_start;
++	u64 positive_bmp = 0;
++	u8 prev_sheet = 0;
++	u8 prev_seq = 0;
++	int limit;
++
++	if (!elm) {
++		p += scnprintf(p, end - p, "No diag_mac entry\n");
++		goto out;
++	}
++
++	rule_size = le32_to_cpu(elm->u.diag_mac.rule_size);
++	elm_size = le32_to_cpu(elm->size);
++
++	if (ALIGN(rule_size, 16) > elm_size) {
++		p += scnprintf(p, end - p, "rule size (%u) exceed elm_size (%u)\n",
++			       ALIGN(rule_size, 16), elm_size);
++		goto out;
++	}
++
++	rule = &elm->u.diag_mac.rules_and_msgs[0];
++	rule_end = &elm->u.diag_mac.rules_and_msgs[rule_size];
++	msg_start = &elm->u.diag_mac.rules_and_msgs[ALIGN(rule_size, 16)];
++
++	for (limit = 0; limit < 5000 && rule < rule_end; limit++) {
++		const struct __diag_mac_rule_header *rh = rule;
++		u8 sheet = rh->sheet;
++		u8 seq = rh->seq_major;
++
++		if (!rtw89_mac_diag_match_hci(rtwdev, rh) ||
++		    !rtw89_mac_diag_match_band(rtwdev, rh)) {
++			n_ignore++;
++			goto next;
++		}
++
++		if (!seq || prev_sheet != sheet || prev_seq != seq) {
++			if (positive_bmp) {
++				n_positive++;
++				/*
++				 * discard output for negative results if one in
++				 * a sequence set is positive.
++				 */
++				if (p_rewind)
++					p = p_rewind;
++			}
++			p_rewind = seq ? p : NULL;
++			positive_bmp = 0;
++			n_rules++;
++		}
++
++		switch (rh->cmd) {
++		case __CMD_EQUALV:
++		case __CMD_NEQUALV:
++			p += rtw89_mac_diag_do_equalv(rtwdev, p, end - p, rule,
++						      msg_start, &positive_bmp);
++			break;
++		case __CMD_INCREMENT:
++			p += rtw89_mac_diag_do_increment(rtwdev, p, end - p, rule,
++							 msg_start, &positive_bmp);
++			break;
++		default:
++			p += scnprintf(p, end - p, "unknown rule cmd %u\n", rh->cmd);
++			break;
++		}
++
++next:
++		n_plains++;
++		rule += rh->len * 4;
++		prev_seq = seq;
++		prev_sheet = sheet;
++	}
++
++	if (positive_bmp) {
++		n_positive++;
++		if (p_rewind)
++			p = p_rewind;
++	}
++
++	p += scnprintf(p, end - p, "\nPlain(Ignore)/Rules/Positive: %u(%u)/%u/%u\n",
++		       n_plains, n_ignore, n_rules, n_positive);
++
++out:
++	return p - buf;
++}
++
++static ssize_t
++rtw89_debug_priv_diag_mac_get(struct rtw89_dev *rtwdev,
++			      struct rtw89_debugfs_priv *debugfs_priv,
++			      char *buf, size_t bufsz)
++{
++	lockdep_assert_wiphy(rtwdev->hw->wiphy);
++
++	rtw89_leave_lps(rtwdev);
++
++	return rtw89_mac_diag_iter_all(rtwdev, buf, bufsz);
++}
++
+ static ssize_t
+ rtw89_debug_priv_beacon_info_get(struct rtw89_dev *rtwdev,
+ 				 struct rtw89_debugfs_priv *debugfs_priv,
+@@ -4478,6 +4775,7 @@ static const struct rtw89_debugfs rtw89_debugfs_templ = {
+ 	.disable_dm = rtw89_debug_priv_set_and_get(disable_dm, RWLOCK),
+ 	.mlo_mode = rtw89_debug_priv_set_and_get(mlo_mode, RWLOCK),
+ 	.beacon_info = rtw89_debug_priv_get(beacon_info),
++	.diag_mac = rtw89_debug_priv_get(diag_mac, RSIZE_16K, RLOCK),
  };
  
- int rtw89_fw_recognize_elements(struct rtw89_dev *rtwdev)
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.h b/drivers/net/wireless/realtek/rtw89/fw.h
-index 7c3cb6d85ca5d..98078a3ef89e6 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.h
-+++ b/drivers/net/wireless/realtek/rtw89/fw.h
-@@ -3989,6 +3989,7 @@ enum rtw89_fw_element_id {
- 	RTW89_FW_ELEMENT_ID_TXPWR_DA_LMT_RU_5GHZ = 25,
- 	RTW89_FW_ELEMENT_ID_TXPWR_DA_LMT_RU_6GHZ = 26,
- 	RTW89_FW_ELEMENT_ID_AFE_PWR_SEQ = 27,
-+	RTW89_FW_ELEMENT_ID_DIAG_MAC = 28,
+ #define rtw89_debugfs_add(name, mode, fopname, parent)				\
+@@ -4524,6 +4822,7 @@ void rtw89_debugfs_add_sec1(struct rtw89_dev *rtwdev, struct dentry *debugfs_top
+ 	rtw89_debugfs_add_rw(disable_dm);
+ 	rtw89_debugfs_add_rw(mlo_mode);
+ 	rtw89_debugfs_add_r(beacon_info);
++	rtw89_debugfs_add_r(diag_mac);
+ }
  
- 	RTW89_FW_ELEMENT_ID_NUM,
- };
-@@ -4166,6 +4167,11 @@ struct rtw89_fw_element_hdr {
- 				__le32 val;
- 			} __packed infos[];
- 		} __packed afe;
-+		struct {
-+			__le32 rule_size;
-+			u8 rsvd[4];
-+			u8 rules_and_msgs[];
-+		} __packed diag_mac;
- 		struct __rtw89_fw_txpwr_element txpwr;
- 		struct __rtw89_fw_regd_element regd;
- 	} __packed u;
+ void rtw89_debugfs_init(struct rtw89_dev *rtwdev)
 -- 
 2.53.0
 
