@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB7A3AAF53;
-	Sat, 12 Sep 2026 18:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D435748F826;
+	Sat, 12 Sep 2026 18:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238184; cv=none; b=EgqyfjYs16vIO7UA2Vpg96Q0Cfs7g4osxDzniKpsLXLX2H/ygn2Spck2dAh6H2540C3CCkL1IvT8RrBF8LMKhKcGBnyjphik7GaG/BcIg+3ffzfRn+AJ62kBd1Y+O0pmSYOYTuY8iYNnfcVrK5RYPI4rC8Zc5LMP4JQlW/1XG1s=
+	t=1789238187; cv=none; b=GRwaA738GIawiGBRmaPi2yNowh9uabxpjVq/kUT+I7lbqZD5BHhUbItbxD0XZ95yEJHnmTQK8MQc3RDT2uNkGZPhNQqXH95GGvBhDu5ISNwyBDPzw6DOFnhX0nWyWadRCwupAoqGR7FahjlTVMbE8fbfUwtif617Ndgtj89iZOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238184; c=relaxed/simple;
-	bh=YNnaYV72Rjf3zMO0MxhoIXxuAjcLr14qC8Lt3lV5tIs=;
+	s=arc-20240116; t=1789238187; c=relaxed/simple;
+	bh=Q2O4qXhrMfWEP/ZwEZlV3jSfNiGCwDdSY6KLQs6iHKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3uyseytKBSIT39z1bdaTxD+njj/NVWtR+vroLYR5LmUcMJZ1ONaljHSIKvYlKpbLgYShMsIVaDTF5pnSfSR2lMV/0q4x5U3/+id2ery1511aya6X8hO+0zpmH6xoYQjlRU+cGBinHUxtJOTUO8EPQF2OmJyTOJ1BSM98szmEfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltElzQvr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PGIVedzm49aeavflXDr85r0eFhn8FUwgE0EgIbqUFA+w8bZHYAj/a3QvKpzXqUPbbArKpgsUTPrqVoShegeIVNRGWp7eRAt4g7IRZenFtf795lm6rFaNUYpfSaviE3bqnET3dCGDSNicFxno2KBBuYRh9KPzJzltW6fL7xe8v5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFI8k1ZC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltElzQvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92751F000FF;
-	Sat, 12 Sep 2026 18:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFI8k1ZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FD41F00893;
+	Sat, 12 Sep 2026 18:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238178;
-	bh=fI+dPtepbT1GzFcg/gwVivXJPyROF/fR8qSl901aIIU=;
+	s=korg; t=1789238183;
+	bh=Ynll/p32nYYVKFF6BLeN/bwoa04nSQTEDWK+st/QrzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ltElzQvr1Cs8GwKsbkWkO62vdg8c+h/zg3ioKMTFV3Bu20WpUmht4zLIht9AjbIic
-	 4mL1KQbf+MRhhcRtbTwtUJ0Eeg5ORnmLE5rtSUOEi0FvCVNrRYQuB4OY0kuMXIg/Kh
-	 DARHUADjMKtF/T7wJxTx0kWb4zHaO+irYsn7lzFI=
+	b=xFI8k1ZCWZbQcN/oF1AkyK2RnJ9ZJB/w1H8c+JGbmBrVi1hdfCdPzBHj5toWqDmP5
+	 qHCdye0E2j2PF7xyNiQTWhiMf2Kho81M+XYZ3vlCQEOpxBg230gG91txQUgFc7QxW5
+	 kkXzWlWYdQwsji1lLMgdZifHB93RjCybFXnc2Z6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrik Grimler <henrik.grimler@axis.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ian Rogers <irogers@google.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 410/935] drm/lima: call drm_mm_init() with a valid allocation range
-Date: Sat, 12 Sep 2026 08:57:20 +0200
-Message-ID: <20260912065536.227674795@linuxfoundation.org>
+Subject: [PATCH 5.15 411/935] perf/x86/intel/uncore: Keep PCI PMUs working when MMIO/MSR setup fails
+Date: Sat, 12 Sep 2026 08:57:21 +0200
+Message-ID: <20260912065536.249717791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,69 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Grimler <henrik.grimler@axis.com>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit 3b3bce4a692ac60d9f4a341e6b597dd1fd0a28f9 ]
+[ Upstream commit 3012af7df3430788eddd30b3c6654d0a0a5f06c6 ]
 
-lima_vm_create() is currently run before va_start and va_end are set up,
-meaning they are both 0. lima_vm_create() runs drm_mm_init() with them
-as arguments for the allocator, and if DRM_DEBUG_MM is enabled the
-DRM_MM_BUG_ON check in drm_mm_init then fires, as seen here on
-exynos4412-odroid-u2:
+uncore_event_cpu_online() returns -ENOMEM early when both the MSR and
+MMIO box allocations fail.  This also aborts PCI uncore setup, even
+though PCI PMUs are independent of the MSR/MMIO paths.
 
-[    1.736297] ------------[ cut here ]------------
-[    1.740370] kernel BUG at drivers/gpu/drm/drm_mm.c:931!
-[    1.745574] Internal error: Oops - BUG: 0 [#1] SMP ARM
-[    1.750697] Modules linked in:
-[    1.753734] CPU: 0 UID: 0 PID: 41 Comm: kworker/u16:1 Not tainted 7.0.10-postmarketos-exynos4 #11 PREEMPT
-[    1.763372] Hardware name: Samsung Exynos (Flattened Device Tree)
-[    1.769446] Workqueue: events_unbound deferred_probe_work_func
-[    1.775261] PC is at drm_mm_init+0x9c/0xa4
-[    1.779339] LR is at lima_vm_create+0x144/0x17c
-[ ... ]
+Remove the early return so PCI uncore setup always runs regardless
+of whether MSR or MMIO box allocation succeeds.
 
-Fix the issue by moving the lima_vm_create() call after va_start and
-va_end are set up.
-
-Fixes: a1d2a6339961 ("drm/lima: driver for ARM Mali4xx GPUs")
-Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patch.msgid.link/20260601-lima-alloc-fix-v1-1-16d3f3b7b780@axis.com
+Fixes: 3da04b8a00dd ("perf/x86/intel/uncore: Support MMIO type uncore blocks")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20260611160033.66760-5-zide.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_device.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/x86/events/intel/uncore.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/lima/lima_device.c b/drivers/gpu/drm/lima/lima_device.c
-index 36c9905894278..234789c00d964 100644
---- a/drivers/gpu/drm/lima/lima_device.c
-+++ b/drivers/gpu/drm/lima/lima_device.c
-@@ -367,12 +367,6 @@ int lima_device_init(struct lima_device *ldev)
- 	if (err)
- 		goto err_out0;
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index 7e16c590f2593..25bf8dcaa9a28 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -1585,8 +1585,6 @@ static int uncore_event_cpu_online(unsigned int cpu)
+ 	die = topology_logical_die_id(cpu);
+ 	msr_ret = uncore_box_ref(uncore_msr_uncores, die, cpu);
+ 	mmio_ret = uncore_box_ref(uncore_mmio_uncores, die, cpu);
+-	if (msr_ret && mmio_ret)
+-		return -ENOMEM;
  
--	ldev->empty_vm = lima_vm_create(ldev);
--	if (!ldev->empty_vm) {
--		err = -ENOMEM;
--		goto err_out1;
--	}
--
- 	ldev->va_start = 0;
- 	if (ldev->id == lima_gpu_mali450) {
- 		ldev->va_end = LIMA_VA_RESERVE_START;
-@@ -386,6 +380,12 @@ int lima_device_init(struct lima_device *ldev)
- 	} else
- 		ldev->va_end = LIMA_VA_RESERVE_END;
- 
-+	ldev->empty_vm = lima_vm_create(ldev);
-+	if (!ldev->empty_vm) {
-+		err = -ENOMEM;
-+		goto err_out1;
-+	}
-+
- 	ldev->iomem = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(ldev->iomem)) {
- 		dev_err(ldev->dev, "fail to ioremap iomem\n");
+ 	/*
+ 	 * Check if there is an online cpu in the package
 -- 
 2.53.0
 
