@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DA33F1AC6;
-	Sat, 12 Sep 2026 09:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7298F3F1AC6;
+	Sat, 12 Sep 2026 09:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206684; cv=none; b=HbynbE5X479KHSPNept1EPsSFEzzbY9Y5asUIpZW4ZGZeNzCcC5SMW7J7kCy3dyeruPGV2Dikuo89YnyhkXkXKnRxYDdJ6AkNVGandjeHKJg7ml//3O6sft1qSu0cvxN1NB2+l9sb4xLXZafgrWLz7cyCt/dGLim0vbppyzZlL4=
+	t=1789206688; cv=none; b=IN2r7VPEr+YBafqiTQztj7AmhtOCHgSUXxwzJCmS/lEnuETFGFf2AT5OxpZwmXSGfTKBBwRojUfj9GfyXtPvEvUp/UkiqYqj+oiGwDE/XjF3bf08gzeLVRHZOhG64hJ+OXPLLQEDgv0NfynNYjJnck1YnFyMaWBEKDRRIJdQv0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206684; c=relaxed/simple;
-	bh=3hFwarC1wODsQWEaVOPcjdaUK1kV3Xcg72AvuA+iB7U=;
+	s=arc-20240116; t=1789206688; c=relaxed/simple;
+	bh=br9mWPrGzR5otEb8Y7OnZXyQ3H6kODMiL2dAV96TG/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEERSatIW6evzF01/O9+Jn+eXpkrwdQqLYR4CFfwe+GaV+MlQqNisKai3AWrfgGVn13Vx2jEFcRoO72C2UXaBQ1LTD8sLFv5zGvdCAKEdOIbYASxVMun0OPpyVFI52GYEfgKmQV0e2Bcq+YYnugNIrj22d2zxFu+vI5BzSq4YIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yq8t7zqY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y37uIw0garP3fnNvG1vpogA6US4p565/VvNhI8OGUgUGYYN+LFHhtL7MTlA8Wd5Nr1Q7qkqwk4cDebq8/cmXcRDoYeo8P7inG+dJGLqk7TAoW1wpdCbE/D7aMNh+nHt9uEocpBXcRYD5C7DeEMigiipVjgsUzWa3A0t6Jc3mgpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7FIxSzf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq8t7zqY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AAF1F000FF;
-	Sat, 12 Sep 2026 09:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7FIxSzf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9095E1F000FF;
+	Sat, 12 Sep 2026 09:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206680;
-	bh=dWt9QwOf475QWop2qLBqroi7mV7LDGoJyl+Rf6duak8=;
+	s=korg; t=1789206685;
+	bh=kIEjmKjfRWaUoJxXWt/sbu6QZJpRuPbJdW8etIcojj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yq8t7zqYKYYjwcIxG6G+7YtbE7dUGzsTRODl1jc6lvbQ7snT5PcOSu3gPQQ6nkGDa
-	 YE8m07p832XaLFx5mR1JzEWFVVATlQqSsFYjDG8mShWILSur1hV8iAGh9q/2L+HJYA
-	 NSovhvFvvwmMz0laMaF1Q8yA+MjZWnhuf+PgFNr4=
+	b=j7FIxSzf24UB86j2RlxzwzHH9nrnRJ9rOmZOsJAIAO9OFLs2BXR62lJg+nSh5Xjig
+	 2zs2eqVj06tEsgHQdtKr84RSwCai1Pw5FrdJuS+nAadslRZaz4wxyexihwuPgTLmHR
+	 5DzP2SCb0y01NWxxW6SPHSv22dMcvClAkkg4LK5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yuvraj Singh Chauhan <ysinghcin@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0257/1518] clk: qcom: gdsc: tear down per-domain genpds in gdsc_unregister()
-Date: Sat, 12 Sep 2026 08:40:26 +0200
-Message-ID: <20260912065629.296997890@linuxfoundation.org>
+Subject: [PATCH 6.18 0231/1518] staging: octeon: fix free_irq dev_id mismatch in cvm_oct_rx_shutdown
+Date: Sat, 12 Sep 2026 08:40:00 +0200
+Message-ID: <20260912065628.711782639@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,74 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
 
-[ Upstream commit 86b23609d5e17a770d03037e53c6a443e742a6e6 ]
+[ Upstream commit 41db5b76eeb4cc11a1097384caba7cfc659f7293 ]
 
-gdsc_unregister() removes the OF provider entry and tears down the
-parent/subdomain wiring, but never calls pm_genpd_remove() on the
-individual generic_pm_domain structures registered by gdsc_init():
+In cvm_oct_rx_initialize(), request_irq() is called with
+&oct_rx_group[i].napi as the dev_id:
 
-	void gdsc_unregister(struct gdsc_desc *desc)
-	{
-		struct device *dev = desc->dev;
-		size_t num = desc->num;
+	request_irq(oct_rx_group[i].irq, cvm_oct_do_interrupt, 0, "Ethernet",
+							&oct_rx_group[i].napi);
 
-		gdsc_pm_subdomain_remove(desc, num);
-		of_genpd_del_provider(dev->of_node);
-	}
+However, cvm_oct_rx_shutdown() passes cvm_oct_device (an array of
+struct net_device pointers) as the dev_id to free_irq():
 
-That leaves dangling entries on the global gpd_list. After a provider
-unbind/rebind cycle (deferred-probe replay during early boot, real
-module unload of a clk driver that owns GDSCs, or an OF-overlay tear-
-down) the next gdsc_init() will end up trying to re-register a name
-that is still in the list and pm_genpd_init() returns -EEXIST.
+  free_irq(oct_rx_group[i].irq, cvm_oct_device);
 
-While we are here, flip the order so the consumer-facing OF provider
-entry is the first thing removed -- otherwise a fresh
-of_genpd_get_from_provider() call racing with the teardown could
-attach to a domain that is mid-removal.
+Since __free_irq() matches the action to remove by comparing
+dev_id pointers, the mismatched cookie means the IRQ handler is
+never found, triggering a WARN and leaving the IRQ line permanently
+allocated. This prevents proper driver cleanup on module removal.
 
-Iterate the scs[] array and pm_genpd_remove() each registered domain
-after the subdomain links are torn down. The regulators stay devm-
-managed (devm_regulator_get_optional() in gdsc_register()), so the
-release happens automatically when the underlying device is unbound;
-just the genpd accounting needs to be undone explicitly.
+Fix the mismatch by passing &oct_rx_group[i].napi as the dev_id
+to free_irq(), matching what was used during request_irq().
 
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: 45dd0e55317c ("clk: qcom: Add support for GDSCs")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-4-github.com@herrie.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+Link: https://patch.msgid.link/20260212171903.1417804-1-ysinghcin@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c0a9a8586a63 ("staging: octeon: add missing napi_disable in cvm_oct_rx_shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/staging/octeon/ethernet-rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index a80a489763edc..71826ccbd9bd1 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -645,10 +645,18 @@ int gdsc_register(struct gdsc_desc *desc,
- void gdsc_unregister(struct gdsc_desc *desc)
- {
- 	struct device *dev = desc->dev;
-+	struct gdsc **scs = desc->scs;
- 	size_t num = desc->num;
-+	int i;
+diff --git a/drivers/staging/octeon/ethernet-rx.c b/drivers/staging/octeon/ethernet-rx.c
+index 965330eec80a8..d0b43d50b83ce 100644
+--- a/drivers/staging/octeon/ethernet-rx.c
++++ b/drivers/staging/octeon/ethernet-rx.c
+@@ -535,7 +535,7 @@ void cvm_oct_rx_shutdown(void)
+ 			cvmx_write_csr(CVMX_POW_WQ_INT_THRX(i), 0);
  
--	gdsc_pm_subdomain_remove(desc, num);
- 	of_genpd_del_provider(dev->of_node);
-+	gdsc_pm_subdomain_remove(desc, num);
-+
-+	for (i = 0; i < num; i++) {
-+		if (!scs[i])
-+			continue;
-+		pm_genpd_remove(&scs[i]->pd);
-+	}
- }
+ 		/* Free the interrupt handler */
+-		free_irq(oct_rx_group[i].irq, cvm_oct_device);
++		free_irq(oct_rx_group[i].irq, &oct_rx_group[i].napi);
  
- /*
+ 		netif_napi_del(&oct_rx_group[i].napi);
+ 	}
 -- 
 2.53.0
 
