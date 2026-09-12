@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8414284B37;
-	Sat, 12 Sep 2026 12:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845B836B924;
+	Sat, 12 Sep 2026 12:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217455; cv=none; b=fY3fjV34EYYnCA9CQTQgFAbaSNgYUebyaeI8Cugkt4ZvGrsPQOQ77MY3CYfY5FeeeTQ99Guhiwv+9MoFLxzd1mYXvuTZFv/E7k78Qlv2oGkOOlFXHQjCY8Qr5Br86lyuwGFJJIA12RU+dABQTThRqZgB/4JJ6BQQQezU6ObZSQE=
+	t=1789217459; cv=none; b=PkXMwo0Opa+R70mR1h2XCcJaOskpJWVRw7ysTayury+0yiPK9Af39JoZNdhzF9+GwFlxNn0HOivSh6F5D72YzgseCcDUgzRBLv7r1lbrbNirNpDFwVjxT891Nb3G93V7PuNP2vHAhOj/dtaw+qx3y9AMWY6hBObhgAF8Y16OLOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217455; c=relaxed/simple;
-	bh=N3ax2SNxp1Vugpo+Cma63MG5rapfIdSpdpjwT7zzH88=;
+	s=arc-20240116; t=1789217459; c=relaxed/simple;
+	bh=bqfurgw+7o0lcqe77BKu6wXklwFdPPqU0ydvuJOUhys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgaDODDxxSWdNRuNKzQomlKrMKV++ccymYO77sCORF3BWCHUi71CqOysLjI+z5K5ipOpHwNb7NVHf93OXPkntuphWoU1s7q90VZHb3MAIMvIajI+N/j4TxBJo9QKllbMhybtMGiKpNVnpgeO9PMTPBp9524qVHHfPYhZyf3XBoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AK0kKJsb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z3st3x2zPDL/epvJKaRCOnrmViV31qw1jUI/+w2pxMN+GawykCZduO78ICSKe5uW3oiKFn70Cdl/h0ZKQDS1CmoKcAgvKyhiMqKl4D5LgxsCmPTcXr2C8tbSR8kM5fwjamnoybTsnABeI8b9uc7Db9XeYEoHueZ+9Bq7VNYW5Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmQJVayB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AK0kKJsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3484E1F00893;
-	Sat, 12 Sep 2026 12:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmQJVayB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3953B1F000FF;
+	Sat, 12 Sep 2026 12:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217453;
-	bh=ZiaXsMuxa3CQtYX9Adz9IJnBUdFUD2ayAt1v+TBke1k=;
+	s=korg; t=1789217458;
+	bh=xA3oFPI8dwRKTi6eiPjvyRVkL/mlzx0M18x3OFYd0Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AK0kKJsbTIvPco9ujD2r1/N311FmGMtGyjpieBuzTCAnB3kMhLWuRprpcb7pjaJqp
-	 N374BCJEL9dvLQKSREHQiUoMB78nsKruTxa4Org6Rri6n8Q8/QEbVmcyOEgyEpXNOU
-	 CUF7P3qQfXRDIuc7X3LXHnlB+HAz92MW3EvTcu00=
+	b=AmQJVayBn9GQfgpS0j/eUDIGLMMB9NHwPkdAcjw6X3nRnk1zO34VqtyyilvSjmB8j
+	 OfQ3LapyEFRpgYojr60Fbh3hasWumOsD63B3kZJzJrcybwMWGHIQJxzdvvCeQNccx0
+	 S/q3sS+Z4qmxa13QzivgBc7ZCLznIDS+pDQGY3Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Marco Crivellari <marco.crivellari@suse.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0927/1376] module: replace use of system_wq with system_dfl_wq
-Date: Sat, 12 Sep 2026 08:55:53 +0200
-Message-ID: <20260912065628.225668583@linuxfoundation.org>
+Subject: [PATCH 6.12 0945/1376] scsi: qla2xxx: Remove redundant VPD flash read in sysfs read path
+Date: Sat, 12 Sep 2026 08:56:11 +0200
+Message-ID: <20260912065628.621907657@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,59 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-[ Upstream commit 581ac2d4a58b81669cc6abf645a558bce5cf14ab ]
+[ Upstream commit 5cbc49d5c4cd20c18041e86958103045216d2190 ]
 
-Currently if a user enqueues a work item using schedule_delayed_work() the
-used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
-WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
-schedule_work() that is using system_wq and queue_work(), that makes use
-again of WORK_CPU_UNBOUND.
+qla2x00_sysfs_read_vpd() called ha->isp_ops->read_optrom() a second time
+after releasing optrom_mutex. The repeated read is redundant and, unlike
+the first, runs without optrom_mutex held, exposing flash access to
+concurrent optrom operations. Drop the duplicate call.
 
-This lack of consistency cannot be addressed without refactoring the API.
-
-This continues the effort to refactor workqueue APIs, which began with
-the introduction of new workqueues and a new alloc_workqueue flag in:
-
-commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
-commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
-
-Switch to using system_dfl_wq, the new unbound workqueue, because the
-users do not benefit from a per-cpu workqueue.
-
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Stable-dep-of: 5eecb11b543f ("module/dups: Fix use-after-free in kmod_dup_req lifetime handling")
+Fixes: 5fa8774c7f38 ("scsi: qla2xxx: Add 28xx flash primary/secondary status/image mechanism")
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-7-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/dups.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_attr.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/module/dups.c b/kernel/module/dups.c
-index bd2149fbe1173..0b633f2edda6b 100644
---- a/kernel/module/dups.c
-+++ b/kernel/module/dups.c
-@@ -113,7 +113,7 @@ static void kmod_dup_request_complete(struct work_struct *work)
- 	 * let this linger forever as this is just a boot optimization for
- 	 * possible abuses of vmalloc() incurred by finit_module() thrashing.
- 	 */
--	queue_delayed_work(system_wq, &kmod_req->delete_work, 60 * HZ);
-+	queue_delayed_work(system_dfl_wq, &kmod_req->delete_work, 60 * HZ);
+diff --git a/drivers/scsi/qla2xxx/qla_attr.c b/drivers/scsi/qla2xxx/qla_attr.c
+index a8b62bf31be20..a5c031f92b0a8 100644
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -580,7 +580,6 @@ qla2x00_sysfs_read_vpd(struct file *filp, struct kobject *kobj,
+ 	ha->isp_ops->read_optrom(vha, ha->vpd, faddr, ha->vpd_size);
+ 	mutex_unlock(&ha->optrom_mutex);
+ 
+-	ha->isp_ops->read_optrom(vha, ha->vpd, faddr, ha->vpd_size);
+ skip:
+ 	return memory_read_from_buffer(buf, count, &off, ha->vpd, ha->vpd_size);
  }
- 
- bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
-@@ -240,7 +240,7 @@ void kmod_dup_request_announce(char *module_name, int ret)
- 	 * There is no rush. But we also don't want to hold the
- 	 * caller up forever or introduce any boot delays.
- 	 */
--	queue_work(system_wq, &kmod_req->complete_work);
-+	queue_work(system_dfl_wq, &kmod_req->complete_work);
- 
- out:
- 	mutex_unlock(&kmod_dup_mutex);
 -- 
 2.53.0
 
