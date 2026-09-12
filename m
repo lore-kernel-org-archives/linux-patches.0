@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57664344DBD;
-	Sat, 12 Sep 2026 17:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05305344DBD;
+	Sat, 12 Sep 2026 17:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232735; cv=none; b=q1cKugsPhJeA+VoeJGWSe1+0gYXoUdv8yuQQrxx2KYJv+Napoz+rLzraxMB+WFJfL10p4N6js2XA9F4fKJdjWqiVtn+0SchqRM133T9u8K64s/JttDnP9+4SABmaAyTwMlYBbAN+lnTUQ6xS8nq72ljCh0URHwrJaALALnMutns=
+	t=1789232739; cv=none; b=L4utRPfCc7claugnx9VMCQ1S/KmgGWsCYzPwQFTSeaw94AHgMkz9zKhRRe4y+9K0avj5YiSoad8oEPSojsQDTNSQ1LKbAKqeXe2IPAJh1yEUO0wcnDd2hEh14cOJ3Cmz3oyUbjLliY7vWAZy3517LS7Ov4Ra+l4YisWUCMTVa6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232735; c=relaxed/simple;
-	bh=5a0Fra/WMF0ldQDjd0cVKARym+32qRkQxj8PzyJ/Inw=;
+	s=arc-20240116; t=1789232739; c=relaxed/simple;
+	bh=tcLOhs+7wZISa2PShDYr5D3M6ZILHBcCUEDijEItZn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TDL6IlSBIPx0XoirLABGPjFKwJtAy61/F6dcqseFjGIIxWaMFDgsN8jW6T9qvodhWbQ7UV4Ev8wnXo5rvEuZWkk3yPLX/BehNoE+xfE4lsciAJlrYelGhZHl3+LU3J1Ai0AtevtSjTng3G47p6woG64+gQRYSX2hkXN71Cfd46U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNOvQwKU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ABuQBXIKMIJVgS+Rk1RILYJjkYuNyYsaxl4hx7J4ZqJhCaV2q/eycRqwOgoao1X/Bb0bKeCn/LSh9H+XY2vK8JW59FS8aIuYYJJx7heIfzrGreEGwFblEzT6ee+LOxH3bayZz/rQq5A4GaheaCLtTSMTwsqnvts7mzOZSpeFAh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceKC72ax; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNOvQwKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AEB1F000FF;
-	Sat, 12 Sep 2026 17:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceKC72ax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087561F000FF;
+	Sat, 12 Sep 2026 17:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232733;
-	bh=6SEZs7dfirqiJ+G2FpKtL7t1sKG+1NWjosGZ40faNUI=;
+	s=korg; t=1789232737;
+	bh=Qi3O7DbfiWSXQzda7toL7HDKB6cxadvzxBUnrv+ptOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eNOvQwKUPlKZu17DQ1WRmVvysRylVxXGFtM8An9JC0ElPXjBz3Z9OTvVTi2ifom+9
-	 /X7/1XC+udMl/m5cH/8RkJJZkQpulEjsCuPwCAqCgOmWE1v4KIxap5/3gCHfys7eS4
-	 6EmgQXOvqrF2SN1F8/fZi1fdAW34P8+bYn+aPsRg=
+	b=ceKC72axN7FfopqjZP27zlmGjRzbq/ySHM71TPm5l/M4Y+v5GXC/BTQr9CMXXqUem
+	 pxJt+q0BAPQg6x9S2e2lPXFEEveDlGkVqlhKjDsJY2PXc8ymSGZ6o2G0l9JJo0zvQi
+	 iIqW7XKXTkCDHQ2VtEzh/tD9+4eDmBupili0xyYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 033/935] NFSD: restart ssc_expire_umount walk after dropping nfsd_ssc_lock
-Date: Sat, 12 Sep 2026 08:51:03 +0200
-Message-ID: <20260912065527.598975013@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Tyler Hicks <code@tyhicks.com>
+Subject: [PATCH 5.15 069/935] ecryptfs: pass packet set buffer size to parser
+Date: Sat, 12 Sep 2026 08:51:39 +0200
+Message-ID: <20260912065528.420400609@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,99 +50,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 036c1b182f4da65363e79ec0ac276edc6b7296e5 upstream.
+commit 2602b79c5b3e2f6fce12e38a670f8e3fda4e46a2 upstream.
 
-nfsd4_ssc_expire_umount() walks nn->nfsd_ssc_mount_list with
-list_for_each_entry_safe(ni, tmp, ...).  For each expired entry it
-sets nsui_busy = true, drops nfsd_ssc_lock to run mntput() on the
-source vfsmount, then reacquires the lock to list_del + kfree the
-entry and continue iterating via the macro's saved tmp pointer.
+ecryptfs_parse_packet_set() receives a pointer into the file header, but
+it calculates the remaining packet buffer size from PAGE_SIZE - 8.  For
+version 1 headers the packet set starts later in the header, so this can
+overstate the available buffer.
 
-The nsui_busy flag protects the current ni from concurrent
-nfsd4_ssc_setup_dul() finders during the lock-drop window, but it
-does not pin tmp.  Another nfsd RPC thread that fails its source-
-server mount and reaches nfsd4_ssc_cancel_dul() will, during that
-same window, take nfsd_ssc_lock, list_del + kfree its own ssc_umount
-item, and release the lock.  If that item is the saved tmp of the
-expire walk, the next iteration dereferences a freed
-nfsd4_ssc_umount_item.
+Pass the actual packet set buffer length from the caller and calculate
+per-packet limits from the remaining bytes in that buffer.  Recompute the
+remaining length after consuming a tag 3 packet before parsing the
+following tag 11 packet.
 
-Restart the walk from the head after the mntput() unlock window so
-no saved next pointer survives the lock-drop.  The list is bounded
-by the number of active inter-server source mounts (typically small)
-and the expire delayed-work runs periodically rather than per-IO,
-so the restart is cheap.
-
-Fixes: f4e44b393389 ("NFSD: delay unmount source's export after inter-server copy completed.")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260524130654.1924556-1-michael.bommarito@gmail.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 237fead61998 ("[PATCH] ecryptfs: fs/Makefile and fs/Kconfig")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   44 +++++++++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+ fs/ecryptfs/crypto.c          |    2 +-
+ fs/ecryptfs/ecryptfs_kernel.h |    3 ++-
+ fs/ecryptfs/keystore.c        |   23 ++++++++++++++++++++---
+ 3 files changed, 23 insertions(+), 5 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6018,30 +6018,36 @@ static void nfsd4_ssc_shutdown_umount(st
- static void nfsd4_ssc_expire_umount(struct nfsd_net *nn)
+--- a/fs/ecryptfs/crypto.c
++++ b/fs/ecryptfs/crypto.c
+@@ -1306,7 +1306,7 @@ static int ecryptfs_read_headers_virt(ch
+ 	} else
+ 		set_default_header_data(crypt_stat);
+ 	rc = ecryptfs_parse_packet_set(crypt_stat, (page_virt + offset),
+-				       ecryptfs_dentry);
++				       PAGE_SIZE - offset, ecryptfs_dentry);
+ out:
+ 	return rc;
+ }
+--- a/fs/ecryptfs/ecryptfs_kernel.h
++++ b/fs/ecryptfs/ecryptfs_kernel.h
+@@ -590,7 +590,8 @@ int ecryptfs_generate_key_packet_set(cha
+ 				     size_t *len, size_t max);
+ int
+ ecryptfs_parse_packet_set(struct ecryptfs_crypt_stat *crypt_stat,
+-			  unsigned char *src, struct dentry *ecryptfs_dentry);
++			  unsigned char *src, size_t src_size,
++			  struct dentry *ecryptfs_dentry);
+ int ecryptfs_truncate(struct dentry *dentry, loff_t new_length);
+ ssize_t
+ ecryptfs_getxattr_lower(struct dentry *lower_dentry, struct inode *lower_inode,
+--- a/fs/ecryptfs/keystore.c
++++ b/fs/ecryptfs/keystore.c
+@@ -1743,6 +1743,7 @@ out:
+  * ecryptfs_parse_packet_set
+  * @crypt_stat: The cryptographic context
+  * @src: Virtual address of region of memory containing the packets
++ * @src_size: Size of the packet set buffer
+  * @ecryptfs_dentry: The eCryptfs dentry associated with the packet set
+  *
+  * Get crypt_stat to have the file's session key if the requisite key
+@@ -1753,7 +1754,7 @@ out:
+  * conditions.
+  */
+ int ecryptfs_parse_packet_set(struct ecryptfs_crypt_stat *crypt_stat,
+-			      unsigned char *src,
++			      unsigned char *src, size_t src_size,
+ 			      struct dentry *ecryptfs_dentry)
  {
- 	bool do_wakeup = false;
--	struct nfsd4_ssc_umount_item *ni = NULL;
--	struct nfsd4_ssc_umount_item *tmp;
-+	struct nfsd4_ssc_umount_item *ni;
- 
-+restart:
- 	spin_lock(&nn->nfsd_ssc_lock);
--	list_for_each_entry_safe(ni, tmp, &nn->nfsd_ssc_mount_list, nsui_list) {
--		if (time_after(jiffies, ni->nsui_expire)) {
--			if (refcount_read(&ni->nsui_refcnt) > 1)
--				continue;
-+	list_for_each_entry(ni, &nn->nfsd_ssc_mount_list, nsui_list) {
-+		if (!time_after(jiffies, ni->nsui_expire))
+ 	size_t i = 0;
+@@ -1777,7 +1778,11 @@ int ecryptfs_parse_packet_set(struct ecr
+ 	 * added the our &auth_tok_list */
+ 	next_packet_is_auth_tok_packet = 1;
+ 	while (next_packet_is_auth_tok_packet) {
+-		size_t max_packet_size = ((PAGE_SIZE - 8) - i);
++		size_t max_packet_size;
++
++		if (i >= src_size)
 +			break;
-+		if (refcount_read(&ni->nsui_refcnt) > 1)
-+			continue;
++		max_packet_size = src_size - i;
  
--			/* mark being unmount */
--			ni->nsui_busy = true;
--			spin_unlock(&nn->nfsd_ssc_lock);
--			mntput(ni->nsui_vfsmount);
--			spin_lock(&nn->nfsd_ssc_lock);
-+		/* Prevent concurrent setup during unmount */
-+		ni->nsui_busy = true;
-+		spin_unlock(&nn->nfsd_ssc_lock);
-+		mntput(ni->nsui_vfsmount);
-+		spin_lock(&nn->nfsd_ssc_lock);
- 
--			/* waiters need to start from begin of list */
--			list_del(&ni->nsui_list);
--			kfree(ni);
-+		/* Force concurrent scanners to restart */
-+		list_del(&ni->nsui_list);
-+		kfree(ni);
- 
--			/* wakeup ssc_connect waiters */
--			do_wakeup = true;
--			continue;
--		}
--		break;
-+		/* wakeup ssc_connect waiters */
-+		do_wakeup = true;
-+		/*
-+		 * Concurrent nfsd4_ssc_cancel_dul() can free any item
-+		 * on the list under nfsd_ssc_lock while mntput() runs
-+		 * above.  Restart from the head; the list is short and
-+		 * the expire worker is periodic, so this is cheap.
-+		 */
-+		spin_unlock(&nn->nfsd_ssc_lock);
-+		goto restart;
- 	}
- 	if (do_wakeup)
- 		wake_up_all(&nn->nfsd_ssc_waitq);
+ 		switch (src[i]) {
+ 		case ECRYPTFS_TAG_3_PACKET_TYPE:
+@@ -1792,12 +1797,16 @@ int ecryptfs_parse_packet_set(struct ecr
+ 				goto out_wipe_list;
+ 			}
+ 			i += packet_size;
++			if (i > src_size) {
++				rc = -EIO;
++				goto out_wipe_list;
++			}
+ 			rc = parse_tag_11_packet((unsigned char *)&src[i],
+ 						 sig_tmp_space,
+ 						 ECRYPTFS_SIG_SIZE,
+ 						 &tag_11_contents_size,
+ 						 &tag_11_packet_size,
+-						 max_packet_size);
++						 src_size - i);
+ 			if (rc) {
+ 				ecryptfs_printk(KERN_ERR, "No valid "
+ 						"(ecryptfs-specific) literal "
+@@ -1809,6 +1818,10 @@ int ecryptfs_parse_packet_set(struct ecr
+ 				goto out_wipe_list;
+ 			}
+ 			i += tag_11_packet_size;
++			if (i > src_size) {
++				rc = -EIO;
++				goto out_wipe_list;
++			}
+ 			if (ECRYPTFS_SIG_SIZE != tag_11_contents_size) {
+ 				ecryptfs_printk(KERN_ERR, "Expected "
+ 						"signature of size [%d]; "
+@@ -1836,6 +1849,10 @@ int ecryptfs_parse_packet_set(struct ecr
+ 				goto out_wipe_list;
+ 			}
+ 			i += packet_size;
++			if (i > src_size) {
++				rc = -EIO;
++				goto out_wipe_list;
++			}
+ 			crypt_stat->flags |= ECRYPTFS_ENCRYPTED;
+ 			break;
+ 		case ECRYPTFS_TAG_11_PACKET_TYPE:
 
 
