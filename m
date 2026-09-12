@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2032F6931;
-	Sat, 12 Sep 2026 19:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00A835C69C;
+	Sat, 12 Sep 2026 19:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240664; cv=none; b=skHgB7dKlYR8iq1sITr/lNCtiDhWretaJRop52keyVOrHQUN3aaARHeBphmFLGFvtn0jdgpR0ApOKxm3Sv5Af1Adnpt85mSXokdn7BCEKTe5SckLmJdDDDXX69iB40A+n8TfpDPc2jfg1N24RSxbzXQlOMzZtt47Z+wQ2uUO01k=
+	t=1789240668; cv=none; b=YowBffadaZSZOVPw2olIPgVhH9mEa62Svdzn0BwRzmt8inNW3EzC62m/6s3m5eZqYo/jTeplWFvIN2eNK0/VhIv7TBXDZ9u3dBmwwZXYbJUseNERu7Mrr7cL75EznCMXmmMAGbtMCDjYi2lxIw0DVGJDyWzWXiVdaghrp7GVTZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240664; c=relaxed/simple;
-	bh=n7ZBaHy6U88bwg2aR+EfwN0429tmwdAZuN5ZbklDYBU=;
+	s=arc-20240116; t=1789240668; c=relaxed/simple;
+	bh=VmcAuDXZCLgJiWejEKveBP+0nC3mZpJZncV05XiJ4CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iffTH7792VmZ1+mWJySvvDQISdcpslnNVGXVECHkDvCBtln2ubT2ddJVOOFEdDvO3R0UKRxIhDvopFlW/G2eCKG2ZsFpq9tt8HkLPbrjDgSjkGNqKOg6fdjUPfZjJwuXYQuUVIKefS0kKaqudCBL9XDy0/isoE56IM6YI/toOzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhLUA0aU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HiCCC/0MrMERwaBTTeV/4AElkU3/5F6h1BiYOBOhheMSPhU5YthVocpwH13iBlU708YOgAizq6XOhvbLps11FglrqCSWD98KoL8ef9wE0AX4wYvk3z5HQDI9MbVI5BNcUB1Tm+1zmQYhyWVl0/MnwOf4Hf8p/rg9zI9qTS0IZEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2bTfOoo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhLUA0aU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD971F000FF;
-	Sat, 12 Sep 2026 19:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2bTfOoo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5043F1F000FF;
+	Sat, 12 Sep 2026 19:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240662;
-	bh=p28EhmwCNAWYdy9EimBMqkG2/ILA4dnvsQzE//HkX0I=;
+	s=korg; t=1789240667;
+	bh=yBB849bFDXDXNy1LAERgeHvzQj4ETn8tNvfsLB9jdUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vhLUA0aUSQUMrGKCowLMq3vSqgVJXiXekWLPN2qxk+WIWopLQw8avXNzHsWTzmpje
-	 gDqG+pxnEQH/onlK/Y4C+QK1TdwfVUcLEsUd0I6lWpdP65FZ1kla0DU503/emg4Af3
-	 xQVNAYiWTP83YpdmYRAYUjMVMJKsi0m/dQzfplZA=
+	b=s2bTfOook+feh1Znq3ROJ8CHrVFRBpF1/+0lG6J4QOvBQPd1WCuIv35JMEXu2R88H
+	 N9WDYkx7UtZwZf35PknTgyz8gOExRQsJGsjh6UxfJ7NdroyplrwITAU5IwbKLj+5ga
+	 ljgYKJh8wWCRwGJFVyXjBL4xMrKDzNkpqCEp1jlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 915/935] selftests/arm64: Treat KSM merge_across_nodes as optional
-Date: Sat, 12 Sep 2026 09:05:45 +0200
-Message-ID: <20260912065547.805263828@linuxfoundation.org>
+Subject: [PATCH 5.15 916/935] net: stmmac: selftests: Check multiple MMC counters
+Date: Sat, 12 Sep 2026 09:05:46 +0200
+Message-ID: <20260912065547.829072744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,108 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 1a0dba077f34a2f8faa98308d30d4b546d073145 ]
+[ Upstream commit d29b399150b07796dfa81d8778d4804c08c2a41d ]
 
-The MTE KSM test requires write access to KSM sysfs but does not check
-that it is running as root. It also unconditionally saves, enables and
-restores the merge_across_nodes attribute. The kernel only creates this
-attribute when CONFIG_NUMA=y, so a non-NUMA kernel prints the following
-message three times even though every KSM subtest passes:
+The MMC counters report MAC statistics. Multiple counters can be
+enabled when the IP is integrated, however there's no way to know
+exactly which ones. Un-implemented counters seem to report 0.
 
-  # ERR: missing /sys/kernel/mm/ksm/merge_across_nodes
+It was found that on StarFive JH7110 and Amlogic SM1, the counter that's
+used by the selftest (mmc_tx_framecount_g) isn't implemented, triggering
+an MMC selftest failure.
 
-Skip the test when it is not running as root. Check that the optional
-attribute is readable and writable, treating ENOENT as its expected
-absence on non-NUMA kernels and skipping the test for other access
-failures. Only save, enable and restore the attribute when it is
-available.
+Both the above SoCs seem to implement mmc_rx_framecount_gb, let's use
+this counter as well for MMC counter validation.
 
-Check MTE availability before the privilege and sysfs checks so systems
-without MTE retain the existing feature-unavailable skip result.
+Note that this doesn't guarantee that we won't encounter the same issue
+again if another IP implements yet another set of counters that don't
+include that new one.
 
-This preserves the existing behavior on NUMA kernels without requiring
-NUMA or reducing KSM coverage on single-node systems.
+If the game of whack-a-mole with implemented counters becomes too hard to
+maintain, we may simply consider removing the MMC selftest entirely.
 
-Fixes: f981d8fa2646 ("kselftest/arm64: Verify KSM page merge for MTE pages")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Reviewed-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260826140500.616466-2-maxime.chevallier@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/arm64/mte/check_ksm_options.c   | 29 +++++++++++++++++--
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_selftests.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/mte/check_ksm_options.c b/tools/testing/selftests/arm64/mte/check_ksm_options.c
-index b5c0845fdbb35..a947e6413e562 100644
---- a/tools/testing/selftests/arm64/mte/check_ksm_options.c
-+++ b/tools/testing/selftests/arm64/mte/check_ksm_options.c
-@@ -6,6 +6,7 @@
- #include <errno.h>
- #include <fcntl.h>
- #include <signal.h>
-+#include <stdbool.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
-@@ -22,6 +23,20 @@
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index c338c7b8658e9..0cf3bbfd10589 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -415,11 +415,17 @@ static int stmmac_test_mmc(struct stmmac_priv *priv)
+ 	stmmac_mmc_read(priv, priv->mmcaddr, &final);
  
- static size_t page_sz;
- static unsigned long ksm_sysfs[5];
-+static bool has_merge_across_nodes;
-+
-+static bool merge_across_nodes_available(void)
-+{
-+	const char *path = PATH_KSM "merge_across_nodes";
-+
-+	if (!access(path, R_OK | W_OK))
-+		return true;
-+	if (errno == ENOENT)
-+		return false;
-+
-+	ksft_exit_skip("Unable to read and write %s: %s\n", path,
-+		       strerror(errno));
-+}
+ 	/*
+-	 * The number of MMC counters available depends on HW configuration
+-	 * so we just use this one to validate the feature. I hope there is
+-	 * not a version without this counter.
++	 * The number of MMC counters available depends on HW configuration,
++	 * and there doesn't seem to be a way to enumerate the implemented
++	 * counters.
++	 *
++	 * Let's check a hand-picked set of counters, knowing that :
++	 *  - Starfive JH7110 doesn't implement mmc_tx_framecount_g
++	 *  - Amlogic SM1 doesn't implement any mmc_tx_*
++	 *
+ 	 */
+-	if (final.mmc_tx_framecount_g <= initial.mmc_tx_framecount_g)
++	if (final.mmc_tx_framecount_g <= initial.mmc_tx_framecount_g &&
++	    final.mmc_rx_framecount_gb <= initial.mmc_rx_framecount_gb)
+ 		return -EINVAL;
  
- static unsigned long read_sysfs(char *str)
- {
-@@ -56,8 +71,10 @@ static void write_sysfs(char *str, unsigned long val)
- 
- static void mte_ksm_setup(void)
- {
--	ksm_sysfs[0] = read_sysfs(PATH_KSM "merge_across_nodes");
--	write_sysfs(PATH_KSM "merge_across_nodes", 1);
-+	if (has_merge_across_nodes) {
-+		ksm_sysfs[0] = read_sysfs(PATH_KSM "merge_across_nodes");
-+		write_sysfs(PATH_KSM "merge_across_nodes", 1);
-+	}
- 	ksm_sysfs[1] = read_sysfs(PATH_KSM "sleep_millisecs");
- 	write_sysfs(PATH_KSM "sleep_millisecs", 0);
- 	ksm_sysfs[2] = read_sysfs(PATH_KSM "run");
-@@ -70,7 +87,8 @@ static void mte_ksm_setup(void)
- 
- static void mte_ksm_restore(void)
- {
--	write_sysfs(PATH_KSM "merge_across_nodes", ksm_sysfs[0]);
-+	if (has_merge_across_nodes)
-+		write_sysfs(PATH_KSM "merge_across_nodes", ksm_sysfs[0]);
- 	write_sysfs(PATH_KSM "sleep_millisecs", ksm_sysfs[1]);
- 	write_sysfs(PATH_KSM "run", ksm_sysfs[2]);
- 	write_sysfs(PATH_KSM "max_page_sharing", ksm_sysfs[3]);
-@@ -137,6 +155,11 @@ int main(int argc, char *argv[])
- 	err = mte_default_setup();
- 	if (err)
- 		return err;
-+
-+	if (geteuid() != 0)
-+		ksft_exit_skip("Please run the test as root\n");
-+
-+	has_merge_across_nodes = merge_across_nodes_available();
- 	page_sz = getpagesize();
- 	if (!page_sz) {
- 		ksft_print_msg("ERR: Unable to get page size\n");
+ 	return 0;
 -- 
 2.53.0
 
