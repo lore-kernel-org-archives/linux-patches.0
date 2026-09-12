@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E51274B46;
-	Sat, 12 Sep 2026 19:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C504B3A7F47;
+	Sat, 12 Sep 2026 19:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240071; cv=none; b=AlQE3VeDpjzKF9crmehQhnTIgW+/IMfTur2kYWPS/l/sEDVBv8grPvIQS/LehZAzW5bAvvG7Ir/2DlVg4i7hXc/OPTw1Avmc38Tn1uZ1tPFXYyXauC57vkIw94ZYTFlkTfNg+09YC9jBCBzDyydw/n2EfCfC3a5n0Zc8JhJPTZc=
+	t=1789240075; cv=none; b=bP3J3sno5dbc8IQslPvQa40zR8wzWzqQ1QfZ83aV7I//S/yWECRW8XEdpRzEnAVEbFZIxGM9MA18PBuy3MqdQSAtsY0UqDmr9iHcub0sohUujj5GCI+Lr33OCUuB3Gst/XFX1lFNytNG6EbEUvc2YSc+TcblH0YTprLaWMLw9Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240071; c=relaxed/simple;
-	bh=3BHlqqlOkKJUhrH9JoTp/tUVQHaqXgNntWjqjgkm0cQ=;
+	s=arc-20240116; t=1789240075; c=relaxed/simple;
+	bh=61oQgopr2NpYYy2Gps2OsccerfrNslV0+W33s4bwSjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtI+IZWNjYOKeovY7lEmg5Dwzvx6iqhNSaSTM9JReVz3uoky6jCqcs8sle7ZDe3ZdCuOV/STr6vBIeJDIw80ZNuOJIrTn8kap/eAHoEIBmd6ch5+m4RkqapBnkRmVJDoeDs6Bg9JJDp2mxE10PrQkJP8I6cIYbzZlh84a2NAbtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g82MxUDM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sp6/I5kCjRNp1cKofRrM2/0kkfu0ZPc+vBjZ/8eXhWQ4FN3MGnwY7l0UIxVAlJWXQfc75N8t589G8Flnp6CRmROwJ3Iz7bnd9pnE2FkWKILRF7YIkrpnjCxUY727N/aVUqYBYDPDQ+oFHShOvwSnWkzmR3L5KLRkWfHSTAzF8P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7UP9sFH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g82MxUDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A541F000FF;
-	Sat, 12 Sep 2026 19:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7UP9sFH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72C71F00898;
+	Sat, 12 Sep 2026 19:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240069;
-	bh=qJKkM1aKjxGCyMmz5G1MD7rZ74MHbbi7anQ8rM9ailg=;
+	s=korg; t=1789240073;
+	bh=3mQimo7dwBdu25jYzjIXO+7L3Q4KsmkquScZ0PunLuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g82MxUDM9vitAr+cNI1oH1cUQymgB56ihdB5ToGTM8nhDTpRQJ5LtnZnNPtR0C0Zc
-	 7aBYze48vi/wFCkOHJ8IMBW9hD4QUI8TYJHA0QrxvDaw+3b8dToKOLiWO0e1vLFvaL
-	 nyspddRGS3Faas7beT1Fi5lDcGcD7okjDnwFT0J0=
+	b=w7UP9sFH3irlWA28ia4oVvqPcK0rAoPhFDA3gPyVc/wsOyZJKqdXtMGY48tuiXDB7
+	 5v3+DiqUcMc2sGhi2OyIphebdoX2WKuEBLfrpzrlIOn9idyPUVh23vqH1Rc+0lqyvH
+	 CJrXW6i5Mqn2KKrmjJ1+Yd6sk5CkiMKCN8cN4xuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Desnes Nunes <desnesn@redhat.com>,
+	Tao Liu <ltao@redhat.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 793/935] ubi: fastmap: Add fastmap control support for UBI_IOCATT ioctl
-Date: Sat, 12 Sep 2026 09:03:43 +0200
-Message-ID: <20260912065545.021294046@linuxfoundation.org>
+Subject: [PATCH 5.15 767/935] iommu/vt-d: Fix UCTP context table slot when copying root entries
+Date: Sat, 12 Sep 2026 09:03:17 +0200
+Message-ID: <20260912065544.423576063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,157 +54,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Desnes Nunes <desnesn@redhat.com>
 
-[ Upstream commit 669d204469c46e91d99da24914130f78277a71d3 ]
+[ Upstream commit c6e63fc8e8fcefa5c32145dc0a3c82975b0ce152 ]
 
-[1] suggests that fastmap is suitable for large flash devices. Module
-parameter 'fm_autoconvert' is a coarse grained switch to enable all
-ubi devices to generate fastmap, which may turn on fastmap even for
-small flash devices.
+When translation is already enabled at boot (e.g. kdump), the vt-d driver
+copies context tables from the previous kernel's root table. In scalable
+mode, buses that only populate the upper root half (UCTP, devfn >= 0x80)
+should be written to ctxt_tbls[tbl_idx + 1] through copy_context_table().
+However, the current copy path always uses tbl[tbl_idx + 0] in this situa-
+tion. Since idx wraps to 0 at devfn 0x80 due to a zeroed LCTP, new_ce for
+LCTP will be NULL and keep pos equals to 0. Thus, UCTP entries will be co-
+pied into tbl[tbl_idx + 0] instead of tbl[tbl_idx + 1], and written after-
+wards to root_entry[bus].lo instead of .hi in copy_translation_tables().
 
-This patch imports a new field 'disable_fm' in struct 'ubi_attach_req'
-to support following situations by ioctl 'UBI_IOCATT'.
- [old functions]
- A. Disable 'fm_autoconvert': Disbable fastmap for all ubi devices
- B. Enable 'fm_autoconvert': Enable fastmap for all ubi devices
- [new function]
- C. Enable 'fm_autoconvert', set 'disable_fm' for given device: Don't
-    create new fastmap and do full scan (existed fastmap will be
-    destroyed) for the given ubi device.
+In short, devices on bus 0x80 with devfn >= 0x80 fail DMA with fault 0x39,
+which will break drivers running in kernels with translation pre-enabled.
+This fixes NO_PASID DMAR faults for UCTP-only buses such as:
 
-A simple test case in [2].
+DMAR: [DMA Read NO_PASID] Request device [80:14.0] fault addr 0xe81759000
+      [fault reason 0x39] SM: Present bit in Root Entry is clear
 
-[1] http://www.linux-mtd.infradead.org/doc/ubi.html#L_fastmap
-[2] https://bugzilla.kernel.org/show_bug.cgi?id=216278
+For instance, this fault yielded to locking issues between systemd and
+xHCI, blocking a system's reboot after a vmcore was captured with kdump:
 
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Stable-dep-of: 5b0a6b554e12 ("ubi: Fix rollback for explicit UBI device numbers")
+ systemd-udevd[246]: usb3: Worker [255] processing SEQNUM=2193 is taking a long time
+ dracut-initqueue[277]: Timed out while waiting for udev queue to empty.
+ systemd-udevd[246]: usb3: Worker [255] processing SEQNUM=2193 killed
+ systemd-udevd[246]: usb3: Worker [255] terminated by signal 9 (KILL).
+ ...
+ kdump[569]: saving vmcore complete
+ ...
+ systemd-shutdown[1]: Rebooting.
+ INFO: task kworker/0:1:11 blocked for more than 122 seconds.
+       Not tainted 7.0.0-clean #1
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:kworker/0:1 state:D stack:0 pid:11 tgid:11 ppid:2 task_flags:0x4208160 flags:0x00080000
+ Workqueue: usb_hub_wq hub_event
+ Call Trace:
+  <TASK>
+  __schedule+0x299/0x5c0
+  schedule+0x27/0x80
+  schedule_timeout+0xbd/0x100
+  __wait_for_common+0x97/0x1b0
+  ? __pfx_schedule_timeout+0x10/0x10
+  xhci_alloc_dev+0x9e/0x2b0
+  usb_alloc_dev+0x7a/0x3b0
+  hub_port_connect+0x285/0x960
+  hub_port_connect_change+0x94/0x290
+  port_event+0x4bb/0x840
+  hub_event+0x141/0x460
+  process_one_work+0x196/0x390
+  worker_thread+0x1af/0x320
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xe3/0x120
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x199/0x260
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ INFO: task systemd-shutdow:1 blocked for more than 122 seconds.
+       Not tainted 7.0.0-clean #1
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:systemd-shutdow state:D stack:0 pid:1 tgid:1 ppid:0 task_flags:0x400100 flags:0x00080000
+ Call Trace:
+  <TASK>
+  __schedule+0x299/0x5c0
+  schedule+0x27/0x80
+  schedule_preempt_disabled+0x15/0x30
+  __mutex_lock.constprop.0+0x547/0xac0
+  device_shutdown+0xac/0x1b0
+  kernel_restart+0x3a/0x70
+  __do_sys_reboot+0x147/0x240
+  do_syscall_64+0x11b/0x6a0
+  ? handle_mm_fault+0x110/0x350
+  ? do_user_addr_fault+0x206/0x680
+  ? irqentry_exit+0x7a/0x4d0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ RIP: 0033:0x7fe2958da917
+ RSP: 002b:00007ffc5c458618 EFLAGS: 00000206 ORIG_RAX: 00000000000000a9
+ RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fe2958da917
+ RDX: 0000000001234567 RSI: 0000000028121969 RDI: 00000000fee1dead
+ RBP: 00007ffc5c458790 R08: 0000000000000069 R09: 00000000ffffffff
+ R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
+ R13: 0000000000000000 R14: 00007ffc5c4588b8 R15: 0000000000000000
+  </TASK>
+ INFO: task systemd-shutdow:1 is blocked on a mutex likely owned by task kworker/0:1:11.
+
+Fixes: 091d42e43d21 ("iommu/vt-d: Copy translation tables from old kernel")
+Signed-off-by: Desnes Nunes <desnesn@redhat.com>
+Tested-by: Tao Liu <ltao@redhat.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c     | 14 ++++++++++----
- drivers/mtd/ubi/cdev.c      |  2 +-
- drivers/mtd/ubi/ubi.h       |  3 ++-
- include/uapi/mtd/ubi-user.h |  8 +++++++-
- 4 files changed, 20 insertions(+), 7 deletions(-)
+ drivers/iommu/intel/iommu.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index 8b247ce73bb6e..6fbd77dc1d18f 100644
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -823,6 +823,7 @@ static int autoresize(struct ubi_device *ubi, int vol_id)
-  * @ubi_num: number to assign to the new UBI device
-  * @vid_hdr_offset: VID header offset
-  * @max_beb_per1024: maximum expected number of bad PEB per 1024 PEBs
-+ * @disable_fm: whether disable fastmap
-  *
-  * This function attaches MTD device @mtd_dev to UBI and assign @ubi_num number
-  * to the newly created UBI device, unless @ubi_num is %UBI_DEV_NUM_AUTO, in
-@@ -830,11 +831,15 @@ static int autoresize(struct ubi_device *ubi, int vol_id)
-  * automatically. Returns the new UBI device number in case of success and a
-  * negative error code in case of failure.
-  *
-+ * If @disable_fm is true, ubi doesn't create new fastmap even the module param
-+ * 'fm_autoconvert' is set, and existed old fastmap will be destroyed after
-+ * doing full scanning.
-+ *
-  * Note, the invocations of this function has to be serialized by the
-  * @ubi_devices_mutex.
-  */
- int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
--		       int vid_hdr_offset, int max_beb_per1024)
-+		       int vid_hdr_offset, int max_beb_per1024, bool disable_fm)
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 959c237b150f0..3bf0acf46d4e8 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -2976,7 +2976,7 @@ static int copy_context_table(struct intel_iommu *iommu,
+ 			      struct context_entry **tbl,
+ 			      int bus, bool ext)
  {
- 	struct ubi_device *ubi;
- 	int i, err;
-@@ -944,7 +949,7 @@ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
- 		UBI_FM_MIN_POOL_SIZE);
+-	int tbl_idx, pos = 0, idx, devfn, ret = 0, did;
++	int tbl_idx, tbl_slot = 0, idx, devfn, ret = 0, did;
+ 	struct context_entry *new_ce = NULL, ce;
+ 	struct context_entry *old_ce = NULL;
+ 	struct root_entry re;
+@@ -2992,10 +2992,9 @@ static int copy_context_table(struct intel_iommu *iommu,
+ 		if (idx == 0) {
+ 			/* First save what we may have and clean up */
+ 			if (new_ce) {
+-				tbl[tbl_idx] = new_ce;
++				tbl[tbl_idx + tbl_slot] = new_ce;
+ 				__iommu_flush_cache(iommu, new_ce,
+ 						    VTD_PAGE_SIZE);
+-				pos = 1;
+ 			}
  
- 	ubi->fm_wl_pool.max_size = ubi->fm_pool.max_size / 2;
--	ubi->fm_disabled = !fm_autoconvert;
-+	ubi->fm_disabled = (!fm_autoconvert || disable_fm) ? 1 : 0;
- 	if (fm_debug)
- 		ubi_enable_dbg_chk_fastmap(ubi);
+ 			if (old_ce)
+@@ -3017,6 +3016,9 @@ static int copy_context_table(struct intel_iommu *iommu,
+ 				}
+ 			}
  
-@@ -985,7 +990,7 @@ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
- 	if (!ubi->fm_buf)
- 		goto out_free;
- #endif
--	err = ubi_attach(ubi, 0);
-+	err = ubi_attach(ubi, disable_fm ? 1 : 0);
- 	if (err) {
- 		ubi_err(ubi, "failed to attach mtd%d, error %d",
- 			mtd->index, err);
-@@ -1265,7 +1270,8 @@ static int __init ubi_init(void)
++			/* Track if saving UCTP or LCTP entries in scalable mode */
++			tbl_slot = ext && devfn >= 0x80 ? 1 : 0;
++
+ 			ret = -ENOMEM;
+ 			old_ce = memremap(old_ce_phys, PAGE_SIZE,
+ 					MEMREMAP_WB);
+@@ -3044,7 +3046,7 @@ static int copy_context_table(struct intel_iommu *iommu,
+ 		new_ce[idx] = ce;
+ 	}
  
- 		mutex_lock(&ubi_devices_mutex);
- 		err = ubi_attach_mtd_dev(mtd, p->ubi_num,
--					 p->vid_hdr_offs, p->max_beb_per1024);
-+					 p->vid_hdr_offs, p->max_beb_per1024,
-+					 false);
- 		mutex_unlock(&ubi_devices_mutex);
- 		if (err < 0) {
- 			pr_err("UBI error: cannot attach mtd%d\n",
-diff --git a/drivers/mtd/ubi/cdev.c b/drivers/mtd/ubi/cdev.c
-index 1d3bbcfb4bb59..f43430b9c1e65 100644
---- a/drivers/mtd/ubi/cdev.c
-+++ b/drivers/mtd/ubi/cdev.c
-@@ -1041,7 +1041,7 @@ static long ctrl_cdev_ioctl(struct file *file, unsigned int cmd,
- 		 */
- 		mutex_lock(&ubi_devices_mutex);
- 		err = ubi_attach_mtd_dev(mtd, req.ubi_num, req.vid_hdr_offset,
--					 req.max_beb_per1024);
-+					 req.max_beb_per1024, !!req.disable_fm);
- 		mutex_unlock(&ubi_devices_mutex);
- 		if (err < 0)
- 			put_mtd_device(mtd);
-diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
-index 589221981524a..80d23e05a7a49 100644
---- a/drivers/mtd/ubi/ubi.h
-+++ b/drivers/mtd/ubi/ubi.h
-@@ -938,7 +938,8 @@ int ubi_io_write_vid_hdr(struct ubi_device *ubi, int pnum,
+-	tbl[tbl_idx + pos] = new_ce;
++	tbl[tbl_idx + tbl_slot] = new_ce;
  
- /* build.c */
- int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
--		       int vid_hdr_offset, int max_beb_per1024);
-+		       int vid_hdr_offset, int max_beb_per1024,
-+		       bool disable_fm);
- int ubi_detach_mtd_dev(int ubi_num, int anyway);
- struct ubi_device *ubi_get_device(int ubi_num);
- void ubi_put_device(struct ubi_device *ubi);
-diff --git a/include/uapi/mtd/ubi-user.h b/include/uapi/mtd/ubi-user.h
-index b69e9ba6742b9..dcb179de43585 100644
---- a/include/uapi/mtd/ubi-user.h
-+++ b/include/uapi/mtd/ubi-user.h
-@@ -247,6 +247,7 @@ enum {
-  * @vid_hdr_offset: VID header offset (use defaults if %0)
-  * @max_beb_per1024: maximum expected number of bad PEB per 1024 PEBs
-  * @padding: reserved for future, not used, has to be zeroed
-+ * @disable_fm: whether disable fastmap
-  *
-  * This data structure is used to specify MTD device UBI has to attach and the
-  * parameters it has to use. The number which should be assigned to the new UBI
-@@ -281,13 +282,18 @@ enum {
-  * eraseblocks for new bad eraseblocks, but attempts to use available
-  * eraseblocks (if any). The accepted range is 0-768. If 0 is given, the
-  * default kernel value of %CONFIG_MTD_UBI_BEB_LIMIT will be used.
-+ *
-+ * If @disable_fm is not zero, ubi doesn't create new fastmap even the module
-+ * param 'fm_autoconvert' is set, and existed old fastmap will be destroyed
-+ * after doing full scanning.
-  */
- struct ubi_attach_req {
- 	__s32 ubi_num;
- 	__s32 mtd_num;
- 	__s32 vid_hdr_offset;
- 	__s16 max_beb_per1024;
--	__s8 padding[10];
-+	__s8 disable_fm;
-+	__s8 padding[9];
- };
+ 	__iommu_flush_cache(iommu, new_ce, VTD_PAGE_SIZE);
  
- /*
 -- 
 2.53.0
 
