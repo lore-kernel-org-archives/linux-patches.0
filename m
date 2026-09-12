@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31ADE369990;
-	Sat, 12 Sep 2026 09:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35610374A12;
+	Sat, 12 Sep 2026 09:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204926; cv=none; b=Qb66gU8EXbQlK/25CJH+D4iO/Vw8QXIYN3mFPjHz4TgTySqW3BQbeAI6CsUb9YOIlKNU2jZUv0VbKVtVuhlDPwT2sLAPQ3R5g6KIR5GnfaEfWAOsmp0XF+CT32nTU48CRCgF/Bx0zkou/+9E+v5m1VioCXRvUfaJ+8HbMqF7W3w=
+	t=1789204931; cv=none; b=qQCOlkAfqgLwqe1RqhyyJrH+fe6MPdLbAhlj2qrs523t6cKq5OI7STn8wkvBwk6mjbcL1cwo/HpPPUx2HfeuJYn8/DdUaeL9cIBqUC1+1uJOC6J8tscUEOjOEm2M/e07nneYBcCsOBoqNqlmgTu3lnaCHj3yjU6z+dvLWfXnvAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204926; c=relaxed/simple;
-	bh=0ov+hljo2PDFHHg8+QE58pqFPFysiAyw9aEd0Oa07As=;
+	s=arc-20240116; t=1789204931; c=relaxed/simple;
+	bh=CIfGP5lXmGWLdfo4cw4P28OarzWLBOUKeqIn0RR6ujE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YpwCiOpeMnwkPvPcwmFZnAfMmcpDbJYPy5T/BmwO74gnFdYmIBfw6AcXrnKoxH6yrznCp6ohyxIn5RwXVCQ+0DqdefSyq1DHna0OlNrQwkfGRmTScaGP4C6ud17mnUOA1GvSGF2espK+NMfCUkIoKqxixLm3AAwWmRynkEu4BWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Do75uvI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G74DASRTsw0WGVj+y7rUjNQq5WbyGCoAwqqiNWJK1Fvuvd9gejEZszQY0gSYVx20+vw3+XQVCJH1KYD9VfX23zfToBg5l47veqpNk8gWv47f34ZHA8rGSMOHxUKQRXPvCxMBsCKqM30fIlyx6/iCBGH5Tp6XsYfX+srz9uerBu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAYzYCO3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Do75uvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052EF1F000FF;
-	Sat, 12 Sep 2026 09:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAYzYCO3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AE81F00893;
+	Sat, 12 Sep 2026 09:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204925;
-	bh=3zJmao7eLpouIu/Lu+NWxkmcwAhQXu+FvbizZ2tDSdQ=;
+	s=korg; t=1789204930;
+	bh=Xo1w6x1XzPZ+JXMOfQ4B9Qec7+SymifWadiBCZvEtX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Do75uvIF2+dc1gtuWgWhuuzAWQ6Zbk8FLYQVQVC+slzBnh/hcggHdBBJvzWOj5Xf
-	 uwxDeogP5386kc/5v96AHmvrAwdcJuWG1YihqafSkAE/ddre3C09jyDx/kKL1Dm+IM
-	 OGd4xk+8Lj2mTUTPBJjDjtwN7lX4lQLmD39CMqeY=
+	b=zAYzYCO3q0Vf5s5e5soAuGjTLItN+7tZS4LGrQdxkEmsDOZu4DBWf2X6+BpyM83tR
+	 IMfM+Q0b0bsAJ5gsXORY4+gULTY8wqtY9OCBTBv/JNBHKZPnjVg/GiBMQ7y7wrIqVJ
+	 slzuWZn8nMriRnsTtInSPVuQrFz5HGox2a9C3a4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Seongjae Jeong <jsjlee1020@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1713/1815] arm64: process: Fix context switching MTE store-only tag check
-Date: Sat, 12 Sep 2026 08:57:43 +0200
-Message-ID: <20260912065729.189449507@linuxfoundation.org>
+Subject: [PATCH 7.2 1714/1815] f2fs: use adjusted write range after f2fs_write_checks()
+Date: Sat, 12 Sep 2026 08:57:44 +0200
+Message-ID: <20260912065729.212058022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,40 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Murzin <vladimir.murzin@arm.com>
+From: Seongjae Jeong <jsjlee1020@gmail.com>
 
-[ Upstream commit b8f070ac3167595069feb1f794c127b805115645 ]
+[ Upstream commit 3b2c5d35cf4398edf47c4a3ad076838654a30015 ]
 
-SCTLR_EL1.TCSO0 is set when user opt-in for MTE store-only tag check
-mode. However, it is not part of SCTLR_USER_MASK which imply that on
-context switch we never clear SCTLR_EL1.TCSO0, so we are leaking that
-setting into another task.
+generic_write_checks() in f2fs_write_checks() can adjust iocb->ki_pos
+for append writes and truncate the iterator to limit the number of bytes
+to write.
 
-Fix that by including SCTLR_EL1_TCSO0_MASK into SCTLR_USER_MASK
+In f2fs_file_write_iter(), the pinned-file overwrite check currently
+uses the position and count saved before f2fs_write_checks(), so it
+can check a range different from the actual write range.
 
-Fixes: 4d51ff5bba00 ("arm64/kernel: Support store-only mte tag check")
-Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+The forced buffered I/O cleanup also uses orig_pos saved before
+f2fs_write_checks(). For O_APPEND writes, this can make the cleanup
+flush and invalidate the wrong page cache range.
+
+Move the pinned-file overwrite check after f2fs_write_checks() and use
+the adjusted iocb->ki_pos and iov_iter_count(from). Also save the
+adjusted write position and use it for the forced buffered I/O cleanup.
+
+Fixes: 3fdd89b452c2 ("f2fs: prevent writing without fallocate() for pinned files")
+Fixes: 92318f20d703 ("f2fs: preserve direct write semantics when buffering is forced")
+Signed-off-by: Seongjae Jeong <jsjlee1020@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/processor.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/file.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/include/asm/processor.h b/arch/arm64/include/asm/processor.h
-index c2a627f393144..6dfbcacd9ba09 100644
---- a/arch/arm64/include/asm/processor.h
-+++ b/arch/arm64/include/asm/processor.h
-@@ -264,7 +264,7 @@ static inline void task_set_sve_vl_onexec(struct task_struct *task,
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 67fcea7408b1b..f5c169dced2dd 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -5379,9 +5379,8 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	bool dio;
+ 	bool may_need_sync = true;
+ 	int preallocated;
+-	const loff_t pos = iocb->ki_pos;
+-	const ssize_t count = iov_iter_count(from);
+ 	ssize_t ret;
++	loff_t bufio_start_pos;
  
- #define SCTLR_USER_MASK                                                        \
- 	(SCTLR_ELx_ENIA | SCTLR_ELx_ENIB | SCTLR_ELx_ENDA | SCTLR_ELx_ENDB |   \
--	 SCTLR_EL1_TCF0_MASK)
-+	 SCTLR_EL1_TCF0_MASK | SCTLR_EL1_TCSO0_MASK)
+ 	if (unlikely(f2fs_cp_error(F2FS_I_SB(inode)))) {
+ 		ret = -EIO;
+@@ -5402,15 +5401,17 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 		inode_lock(inode);
+ 	}
  
- static inline void arch_thread_struct_whitelist(unsigned long *offset,
- 						unsigned long *size)
++	ret = f2fs_write_checks(iocb, from);
++	if (ret <= 0)
++		goto out_unlock;
++
+ 	if (f2fs_is_pinned_file(inode) &&
+-	    !f2fs_overwrite_io(inode, pos, count)) {
++	    !f2fs_overwrite_io(inode, iocb->ki_pos, iov_iter_count(from))) {
+ 		ret = -EIO;
+ 		goto out_unlock;
+ 	}
+ 
+-	ret = f2fs_write_checks(iocb, from);
+-	if (ret <= 0)
+-		goto out_unlock;
++	bufio_start_pos = iocb->ki_pos;
+ 
+ 	/* Determine whether we will do a direct write or a buffered write. */
+ 	dio = f2fs_should_use_dio(inode, iocb, from);
+@@ -5465,8 +5466,8 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	 */
+ 	if (ret > 0 && !dio && (iocb->ki_flags & IOCB_DIRECT))
+ 		f2fs_flush_buffered_write(iocb->ki_filp->f_mapping,
+-					  orig_pos,
+-					  orig_pos + ret - 1);
++					  bufio_start_pos,
++					  bufio_start_pos + ret - 1);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
