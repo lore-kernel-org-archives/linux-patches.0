@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5D7CA6F;
-	Sat, 12 Sep 2026 14:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512C9326938;
+	Sat, 12 Sep 2026 14:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223593; cv=none; b=SyKEh2Lp1q5lA+0XJGdkD+2HbqcV+bqtH9C+zPiaoEzrrUNXksT7zWDdnpeD999u3PhpASHGL+Ola2YHsQfXLqjjLMh49PQoxw0Kgt8H9+AOw17IEPCxLipGM3x+x6iDd+OCWfzMwwpqEFm5MaWRFPYGw0pKleoSw+7txbH9rZ0=
+	t=1789223598; cv=none; b=bIzryLAk4YRBkifus7zXiA0CoYO5b8w1/WSJ1+Th49u2P1ghJbPUtOOqGcT6MCfVyIn0wLHg9aqXuiOzFEO73ucdcaUwVRmkTOQZg0vVRWCZv1bwGXqL0Agu71NP9shfA1+DzpiR5rYlOOa4xHBgXgqU1jIeYbahPdZHu9rV6kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223593; c=relaxed/simple;
-	bh=4Q8l+9lmuILAu302olEySGdDRULZY2IguNzpIcTZflg=;
+	s=arc-20240116; t=1789223598; c=relaxed/simple;
+	bh=umYGE6V14HwhFI5psRMQXlYgwlKlImxcA3qNdfedOeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2i5ZjOvegDdAH9kXDc9LyUATjunY8NAmtuZztOwIyU5HQRi0ClQVV+ABxu0rNx+KWNNMqfnOnAElBAQxDb3ldqPw22BHVSttTu06Pf7/Hv7pMlCgbKmyDMKkDNR/nChbswwFWX7DbhAnmOCB1LBGxjgyU6gmSb4SnNI1q/p/j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEEx0XPB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UtZl7aU0uF8C6ObMoK11+W/QiDmuJuredtt96MIBs/I8fjI8xI5MAI/SfxL+iBwr34NSA2OAa2B63cv/33QX3INxIhEfVuckkyLB+zMXit4U+3I8tiasfyABy20XRJvbrPa1nplw2BFg20Te4RbyuyIahrp/60wem10H4gPoy/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsTZXsfW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEEx0XPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2100E1F000FF;
-	Sat, 12 Sep 2026 14:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsTZXsfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27DF1F000FF;
+	Sat, 12 Sep 2026 14:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223592;
-	bh=aF+Zn8y0z8xc0WCm1h0B8nUvhm/zzVQMeH1rNyVwEa8=;
+	s=korg; t=1789223596;
+	bh=KcT/irmwQQZrUD1TGNH8MaWn50+5TjqJyVzKIylaGUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WEEx0XPByx/JYheslXiGNrXhET2DaifxprJQb2iFh8GELau6GkMjk97P1mgyGKNS/
-	 wITkxqhHQgQnvBg21Ta86JCgkEugVB7+ZuM5ZPDrMz+i/V5j1V+cV28r2R6ai/5yPl
-	 K8y+XHQhuAPRDxCx0MdDBeBJvi/pZX8KnqiCqqT4=
+	b=dsTZXsfWNE7LTzIU8Pl4o5fkRT3rNv2zb0fpHl8E1prGR7Ypawd1EX2gvoq7uZhVv
+	 RcNXT08OBpFNHD2j88oDx4hABv3nPjJktzfv5FYe/jzy4+zrvuETFocEHh+ge/h+k4
+	 FeLGbY/N0xQ/wnlGpSMtgSxoClf88s40QVpY01Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
+	Viktor Malik <vmalik@redhat.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0822/1424] kcsan: avoid unintended access checking in NMIs
-Date: Sat, 12 Sep 2026 08:54:14 +0200
-Message-ID: <20260912065625.712559990@linuxfoundation.org>
+Subject: [PATCH 6.6 0823/1424] selftests/bpf: Silence array bounds warning in global_map_resize
+Date: Sat, 12 Sep 2026 08:54:15 +0200
+Message-ID: <20260912065625.735281024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -44,64 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit a8488ecbd7ba44d65b912dfe88a73f438eba2447 ]
+[ Upstream commit dcd164ec67f89e0db5ee025ee9e91280052eb737 ]
 
-If a watcher deliberately disables interrupts (either by user choice, or
-because we're dealing with a scoped reordered access) to avoid detecting
-any data races in interrupts, NMIs are still able to fire.
+When compiling BPF selftests with -O2, GCC reports an array bounds
+violation warning in global_map_resize test:
 
-When we set up a watchpoint on a scoped reordered access, we disabled
-interrupts because the same CPU cannot observe reordering of its own
-accesses. To ensure we observe no false positives from NMIs, disable
-access checking for interrupt contexts as well.
+    In function ‘global_map_resize_bss_subtest’,
+        inlined from ‘test_global_map_resize’ at /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:228:3:
+    /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:64:33: error: array subscript 1 is above array bounds of ‘int[1]’ [-Werror=array-bounds=]
+       64 |                 skel->bss->array[i] = 1;
+          |                 ~~~~~~~~~~~~~~~~^~~
+    In file included from /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:6:
+    ./test_global_map_resize.skel.h: In function ‘test_global_map_resize’:
+    ./test_global_map_resize.skel.h:44:21: note: while referencing ‘array’
+       44 |                 int array[1];
+          |                     ^~~~~
 
-Fixes: 69562e4983d9 ("kcsan: Add core support for a subset of weak memory modeling")
-Signed-off-by: Marco Elver <elver@google.com>
+This is a false positive because `array` (a BPF map) has been resized
+from within the BPF program. GCC doesn't know that so let us silence the
+warning by accessing the array via a plain pointer.
+
+Fixes: 08b089567573 ("libbpf: Selftests for resizing datasec maps")
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Link: https://lore.kernel.org/bpf/57765bc465a27923c3c093eba222cc24d08d8c40.1784112948.git.vmalik@redhat.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcsan/core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ .../testing/selftests/bpf/prog_tests/global_map_resize.c  | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/kcsan/core.c b/kernel/kcsan/core.c
-index 8a7baf4e332e3..2db82661cd60a 100644
---- a/kernel/kcsan/core.c
-+++ b/kernel/kcsan/core.c
-@@ -585,8 +585,14 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type, unsigned
- 	 * information is lost if dirtied by KCSAN.
+diff --git a/tools/testing/selftests/bpf/prog_tests/global_map_resize.c b/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
+index 56b5baef35c8c..602ce30f1720c 100644
+--- a/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
++++ b/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
+@@ -23,6 +23,7 @@ static void global_map_resize_bss_subtest(void)
+ 	struct bpf_map *map;
+ 	const __u32 desired_sz = sizeof(skel->bss->sum) + sysconf(_SC_PAGE_SIZE) * 2;
+ 	size_t array_len, actual_sz, new_sz;
++	int *array;
+ 
+ 	skel = test_global_map_resize__open();
+ 	if (!ASSERT_OK_PTR(skel, "test_global_map_resize__open"))
+@@ -58,10 +59,13 @@ static void global_map_resize_bss_subtest(void)
+ 		goto teardown;
+ 
+ 	/* fill the newly resized array with ones,
+-	 * skipping the first element which was previously set
++	 * skipping the first element which was previously set;
++	 * access through a plain pointer to avoid -Warray-bounds
++	 * since the array was resized beyond its declared length.
  	 */
- 	kcsan_save_irqtrace(current);
--	if (!interrupt_watcher)
-+	if (!interrupt_watcher) {
- 		local_irq_save(irq_flags);
-+		/*
-+		 * NMIs can still fire, disable checking for all interrupt
-+		 * contexts.
-+		 */
-+		raw_cpu_ptr(&kcsan_cpu_ctx)->disable_count++;
-+	}
++	array = skel->bss->array;
+ 	for (int i = 1; i < array_len; i++)
+-		skel->bss->array[i] = 1;
++		array[i] = 1;
  
- 	watchpoint = insert_watchpoint((unsigned long)ptr, size, is_write);
- 	if (watchpoint == NULL) {
-@@ -699,8 +705,10 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type, unsigned
- 	atomic_long_dec(&kcsan_counters[KCSAN_COUNTER_USED_WATCHPOINTS]);
- 
- out_unlock:
--	if (!interrupt_watcher)
-+	if (!interrupt_watcher) {
-+		raw_cpu_ptr(&kcsan_cpu_ctx)->disable_count--;
- 		local_irq_restore(irq_flags);
-+	}
- 	kcsan_restore_irqtrace(current);
- 	ctx->disable_scoped--;
- 
+ 	/* set global const values before loading */
+ 	skel->rodata->pid = getpid();
 -- 
 2.53.0
 
