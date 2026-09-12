@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F3E274B46;
-	Sat, 12 Sep 2026 14:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AF3274B46;
+	Sat, 12 Sep 2026 14:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224110; cv=none; b=lSv5cmoUU6kqSBGfS8Zhou0EOZtF0IWLbbaf/PhgMxzei6NQDXqUNcgG6hrtZ0e8GDV+vmEhPSwAMEawRomQ4fQLCDIvDMATobDDmdbfOcsc2mPBc8Sr53UVgNYc9g1sZ3Tm23IFrTQ8B6fBBEEILiVhNU7wguAuT+z7L5EOZw8=
+	t=1789224115; cv=none; b=Q29AIgi7qG5IRHU9avI0I5Ig4UFcQ1Vds/vXTpuTpv9p+zq4XNnAlVENIDSjAQQMMFrKMKVH8KnuzBAHeSQ7NX9dWBcooM/7ComT7XfcVqgsf1O6EavXModVregjDe7rs3m4Ubrdx6P/vN48x3QNA0DBcn2isxsjVPzWF+WtuXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224110; c=relaxed/simple;
-	bh=Nul9sseF1OiGFVTULY3nibgjMW3iF1nN48wU76DfMNc=;
+	s=arc-20240116; t=1789224115; c=relaxed/simple;
+	bh=3seWKDJp1geAVhA77Fcobm43x3iRaZ6MeAjGFIftfEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZAFI1Pnu3gEs/J37qHLhtbDu4bSL3qrrTm3cVHM0JsHrzAofUKDUQEVXsINtVvD/CzhlJ2bWTEIZ5lklZKu2xljlaTOZTwcOPG74CtPVFkdhqB0TtKE3S4kfe9kiCKgR1sw/nqZkk9kSiYkanAeI3l9CzMjejJEtjcsP2LPOsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFjw2E+c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ghHAU4A29cOQ/WD4fdjw9BnO1IXtd/kiIOp1tN1ONkzCfKbY7EB4zo6TvJ6VNsN23sPhqVcPNB/DBLWgYzIKa0cL43fkKvO3VAeBZc+wl5eERwxyuqvYk7nqwwJn+j8iLzw5f/ATqWcxiFFnka4zuILjIyuASknbLRhx4MHZv8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5FbVpgh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFjw2E+c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3F41F000FF;
-	Sat, 12 Sep 2026 14:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5FbVpgh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6451F000FF;
+	Sat, 12 Sep 2026 14:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224108;
-	bh=HQSCka33/21mNKIWO4H93Yvsy5UWYlnfEaJuxbGzi0w=;
+	s=korg; t=1789224113;
+	bh=Y5oA2WDT3GbbjsHKbwmbVgLp7ZMEFQDA+e3YTZJm9eU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MFjw2E+cm+wRQTrzVWcuIZ0kL9Xd8pMzbXeer0NtQee3OJ5XzTsc0jdsTX1Tf/MUP
-	 C4R6yqmnahTz4WChm/vBQoEPLI7iOOjWVMkmHTkmJtx67g6acGE48zDFUO6t3TLQ7U
-	 aUp0IXIS7nkIcHFVtLd183NW614La6O+6ZvzoNc8=
+	b=w5FbVpghWvPleHisxmGYDCAnHdrvLLV6sEckeIJuNHcHFbY3/WQNj/6DBuzSrxuz+
+	 yy8+HKQ04XBL9kcG+zWV0tabvLo7krjlthFGYzrZmp7JDsXJ4JEDHRyZjia2wpuKj1
+	 jfiv8BvTDUa4FVaDfucr8+G8Nnpsw91Rn+KHouMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kang Yang <quic_kangyang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0926/1424] wifi: ath11k: refactor ath11k_wmi_tlv_parse_alloc()
-Date: Sat, 12 Sep 2026 08:55:58 +0200
-Message-ID: <20260912065628.062249755@linuxfoundation.org>
+Subject: [PATCH 6.6 0927/1424] wifi: ath11k: implement handling of P2P NoA event
+Date: Sat, 12 Sep 2026 08:55:59 +0200
+Message-ID: <20260912065628.084273563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,353 +52,389 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Kang Yang <quic_kangyang@quicinc.com>
 
-[ Upstream commit f5e6c0c4b0877e0ec0221df6c0041c0f39b6ce0f ]
+[ Upstream commit 2408379f15a1039eb47da01c6d197112332fc4a7 ]
 
-Since 'ath11k_wmi_tlv_parse_alloc()' always operates on
-'skb->data, skb->len' tuple, it may be simplified to pass
-the only 'skb' argument instead (which also implies
-refactoring of 'ath11k_pull_bcn_tx_status_ev()' and
-'ath11k_pull_chan_info_ev()' in the same way). Compile
-tested only.
+The NoA(Notice of Absence) attribute is used by the P2P Group Owner to
+signal its absence due to power save timing, concurrent operation, or
+off-channel scanning. It is also used in the P2P Presence Request-Response
+mechanism.
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+The NoA attribute shall be present in the P2P IE in the beacon frames
+transmitted by a P2P Group Owner when a NoA schedule is being advertised,
+or when the CTWindow is non-zero.
+
+So add support to update P2P information after P2P GO is up through
+event WMI_P2P_NOA_EVENTID, and always put it in probe resp.
+
+Create p2p.c and p2p.h for P2P related functions and definitions.
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
+Tested-on: QCA2066 hw2.1 PCI WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.2
+
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20231214161117.75145-1-dmantipov@yandex.ru
+Link: https://msgid.link/20240228093537.25052-4-quic_kangyang@quicinc.com
 Stable-dep-of: 208d7fdb8597 ("wifi: ath11k: fix overreads in ath11k_wmi_process_csa_switch_count_event()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/testmode.c |  2 +-
- drivers/net/wireless/ath/ath11k/wmi.c      | 73 +++++++++++-----------
- drivers/net/wireless/ath/ath11k/wmi.h      |  4 +-
- 3 files changed, 39 insertions(+), 40 deletions(-)
+ drivers/net/wireless/ath/ath11k/Makefile |   3 +-
+ drivers/net/wireless/ath/ath11k/p2p.c    | 149 +++++++++++++++++++++++
+ drivers/net/wireless/ath/ath11k/p2p.h    |  22 ++++
+ drivers/net/wireless/ath/ath11k/wmi.c    |  68 ++++++++++-
+ drivers/net/wireless/ath/ath11k/wmi.h    |  31 +++++
+ 5 files changed, 271 insertions(+), 2 deletions(-)
+ create mode 100644 drivers/net/wireless/ath/ath11k/p2p.c
+ create mode 100644 drivers/net/wireless/ath/ath11k/p2p.h
 
-diff --git a/drivers/net/wireless/ath/ath11k/testmode.c b/drivers/net/wireless/ath/ath11k/testmode.c
-index b9f0ef458988c..7aa62a7d9a272 100644
---- a/drivers/net/wireless/ath/ath11k/testmode.c
-+++ b/drivers/net/wireless/ath/ath11k/testmode.c
-@@ -198,7 +198,7 @@ static void ath11k_tm_wmi_event_segmented(struct ath11k_base *ab, u32 cmd_id,
- 	u16 length;
- 	int ret;
+diff --git a/drivers/net/wireless/ath/ath11k/Makefile b/drivers/net/wireless/ath/ath11k/Makefile
+index 2c94d50ae36f7..43d2d8ddcdc05 100644
+--- a/drivers/net/wireless/ath/ath11k/Makefile
++++ b/drivers/net/wireless/ath/ath11k/Makefile
+@@ -18,7 +18,8 @@ ath11k-y += core.o \
+ 	    dbring.o \
+ 	    hw.o \
+ 	    pcic.o \
+-	    fw.o
++	    fw.o \
++	    p2p.o
  
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse ftm event tlv: %d\n", ret);
+ ath11k-$(CONFIG_ATH11K_DEBUGFS) += debugfs.o debugfs_htt_stats.o debugfs_sta.o
+ ath11k-$(CONFIG_NL80211_TESTMODE) += testmode.o
+diff --git a/drivers/net/wireless/ath/ath11k/p2p.c b/drivers/net/wireless/ath/ath11k/p2p.c
+new file mode 100644
+index 0000000000000..01e14523f1fe7
+--- /dev/null
++++ b/drivers/net/wireless/ath/ath11k/p2p.c
+@@ -0,0 +1,149 @@
++// SPDX-License-Identifier: BSD-3-Clause-Clear
++/*
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#include "core.h"
++#include "wmi.h"
++#include "mac.h"
++#include "p2p.h"
++
++static void ath11k_p2p_noa_ie_fill(u8 *data, size_t len,
++				   const struct ath11k_wmi_p2p_noa_info *noa)
++{
++	struct ieee80211_p2p_noa_attr *noa_attr;
++	u8 noa_descriptors, ctwindow;
++	bool oppps;
++	__le16 *noa_attr_len;
++	u16 attr_len;
++	int i;
++
++	ctwindow = u32_get_bits(noa->noa_attr, WMI_P2P_NOA_INFO_CTWIN_TU);
++	oppps = u32_get_bits(noa->noa_attr, WMI_P2P_NOA_INFO_OPP_PS);
++	noa_descriptors = u32_get_bits(noa->noa_attr,
++				       WMI_P2P_NOA_INFO_DESC_NUM);
++
++	/* P2P IE */
++	data[0] = WLAN_EID_VENDOR_SPECIFIC;
++	data[1] = len - 2;
++	data[2] = (WLAN_OUI_WFA >> 16) & 0xff;
++	data[3] = (WLAN_OUI_WFA >> 8) & 0xff;
++	data[4] = (WLAN_OUI_WFA >> 0) & 0xff;
++	data[5] = WLAN_OUI_TYPE_WFA_P2P;
++
++	/* NOA ATTR */
++	data[6] = IEEE80211_P2P_ATTR_ABSENCE_NOTICE;
++	noa_attr_len = (__le16 *)&data[7]; /* 2 bytes */
++	noa_attr = (struct ieee80211_p2p_noa_attr *)&data[9];
++
++	noa_attr->index = u32_get_bits(noa->noa_attr,
++				       WMI_P2P_NOA_INFO_INDEX);
++	noa_attr->oppps_ctwindow = ctwindow;
++	if (oppps)
++		noa_attr->oppps_ctwindow |= IEEE80211_P2P_OPPPS_ENABLE_BIT;
++
++	for (i = 0; i < noa_descriptors; i++) {
++		noa_attr->desc[i].count = noa->descriptors[i].type_count;
++		noa_attr->desc[i].duration =
++			cpu_to_le32(noa->descriptors[i].duration);
++		noa_attr->desc[i].interval =
++			cpu_to_le32(noa->descriptors[i].interval);
++		noa_attr->desc[i].start_time =
++			cpu_to_le32(noa->descriptors[i].start_time);
++	}
++
++	attr_len = 2; /* index + oppps_ctwindow */
++	attr_len += noa_descriptors * sizeof(struct ieee80211_p2p_noa_desc);
++	*noa_attr_len = __cpu_to_le16(attr_len);
++}
++
++static size_t
++ath11k_p2p_noa_ie_len_compute(const struct ath11k_wmi_p2p_noa_info *noa)
++{
++	size_t len = 0;
++	u8 noa_descriptors = u32_get_bits(noa->noa_attr,
++					  WMI_P2P_NOA_INFO_DESC_NUM);
++
++	if (!(noa_descriptors) &&
++	    !(u32_get_bits(noa->noa_attr, WMI_P2P_NOA_INFO_OPP_PS)))
++		return 0;
++
++	len += 1 + 1 + 4; /* EID + len + OUI */
++	len += 1 + 2; /* noa attr + attr len */
++	len += 1 + 1; /* index + oppps_ctwindow */
++	len += noa_descriptors *
++		sizeof(struct ieee80211_p2p_noa_desc);
++
++	return len;
++}
++
++static void ath11k_p2p_noa_ie_assign(struct ath11k_vif *arvif, void *ie,
++				     size_t len)
++{
++	struct ath11k *ar = arvif->ar;
++
++	lockdep_assert_held(&ar->data_lock);
++
++	kfree(arvif->u.ap.noa_data);
++
++	arvif->u.ap.noa_data = ie;
++	arvif->u.ap.noa_len = len;
++}
++
++static void __ath11k_p2p_noa_update(struct ath11k_vif *arvif,
++				    const struct ath11k_wmi_p2p_noa_info *noa)
++{
++	struct ath11k *ar = arvif->ar;
++	void *ie;
++	size_t len;
++
++	lockdep_assert_held(&ar->data_lock);
++
++	ath11k_p2p_noa_ie_assign(arvif, NULL, 0);
++
++	len = ath11k_p2p_noa_ie_len_compute(noa);
++	if (!len)
++		return;
++
++	ie = kmalloc(len, GFP_ATOMIC);
++	if (!ie)
++		return;
++
++	ath11k_p2p_noa_ie_fill(ie, len, noa);
++	ath11k_p2p_noa_ie_assign(arvif, ie, len); }
++
++void ath11k_p2p_noa_update(struct ath11k_vif *arvif,
++			   const struct ath11k_wmi_p2p_noa_info *noa)
++{
++	struct ath11k *ar = arvif->ar;
++
++	spin_lock_bh(&ar->data_lock);
++	__ath11k_p2p_noa_update(arvif, noa);
++	spin_unlock_bh(&ar->data_lock);
++}
++
++static void ath11k_p2p_noa_update_vdev_iter(void *data, u8 *mac,
++					    struct ieee80211_vif *vif)
++{
++	struct ath11k_vif *arvif = ath11k_vif_to_arvif(vif);
++	struct ath11k_p2p_noa_arg *arg = data;
++
++	if (arvif->vdev_id != arg->vdev_id)
++		return;
++
++	ath11k_p2p_noa_update(arvif, arg->noa);
++}
++
++void ath11k_p2p_noa_update_by_vdev_id(struct ath11k *ar, u32 vdev_id,
++				      const struct ath11k_wmi_p2p_noa_info *noa)
++{
++	struct ath11k_p2p_noa_arg arg = {
++		.vdev_id = vdev_id,
++		.noa = noa,
++	};
++
++	ieee80211_iterate_active_interfaces_atomic(ar->hw,
++						   IEEE80211_IFACE_ITER_NORMAL,
++						   ath11k_p2p_noa_update_vdev_iter,
++						   &arg);
++}
+diff --git a/drivers/net/wireless/ath/ath11k/p2p.h b/drivers/net/wireless/ath/ath11k/p2p.h
+new file mode 100644
+index 0000000000000..d907940a9b096
+--- /dev/null
++++ b/drivers/net/wireless/ath/ath11k/p2p.h
+@@ -0,0 +1,22 @@
++/* SPDX-License-Identifier: BSD-3-Clause-Clear */
++/*
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef ATH11K_P2P_H
++#define ATH11K_P2P_H
++
++#include "wmi.h"
++
++struct ath11k_wmi_p2p_noa_info;
++
++struct ath11k_p2p_noa_arg {
++	u32 vdev_id;
++	const struct ath11k_wmi_p2p_noa_info *noa;
++};
++
++void ath11k_p2p_noa_update(struct ath11k_vif *arvif,
++			   const struct ath11k_wmi_p2p_noa_info *noa);
++void ath11k_p2p_noa_update_by_vdev_id(struct ath11k *ar, u32 vdev_id,
++				      const struct ath11k_wmi_p2p_noa_info *noa);
++#endif
 diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index aa6f89ccfeae4..538ac38aaf0bd 100644
+index 538ac38aaf0bd..e7052c6f07368 100644
 --- a/drivers/net/wireless/ath/ath11k/wmi.c
 +++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -238,8 +238,8 @@ static int ath11k_wmi_tlv_parse(struct ath11k_base *ar, const void **tb,
- 				   (void *)tb);
+@@ -20,6 +20,7 @@
+ #include "hw.h"
+ #include "peer.h"
+ #include "testmode.h"
++#include "p2p.h"
+ 
+ struct wmi_tlv_policy {
+ 	size_t min_len;
+@@ -154,6 +155,10 @@ static const struct wmi_tlv_policy wmi_tlv_policies[] = {
+ 		.min_len = sizeof(struct wmi_per_chain_rssi_stats) },
+ 	[WMI_TAG_TWT_ADD_DIALOG_COMPLETE_EVENT] = {
+ 		.min_len = sizeof(struct wmi_twt_add_dialog_event) },
++	[WMI_TAG_P2P_NOA_INFO] = {
++		.min_len = sizeof(struct ath11k_wmi_p2p_noa_info) },
++	[WMI_TAG_P2P_NOA_EVENT] = {
++		.min_len = sizeof(struct wmi_p2p_noa_event) },
+ };
+ 
+ #define PRIMAP(_hw_mode_) \
+@@ -981,7 +986,7 @@ int ath11k_wmi_vdev_start(struct ath11k *ar, struct wmi_vdev_start_req_arg *arg,
+ 		      FIELD_PREP(WMI_TLV_LEN, 0);
+ 
+ 	/* Note: This is a nested TLV containing:
+-	 * [wmi_tlv][wmi_p2p_noa_descriptor][wmi_tlv]..
++	 * [wmi_tlv][ath11k_wmi_p2p_noa_descriptor][wmi_tlv]..
+ 	 */
+ 
+ 	ptr += sizeof(*tlv);
+@@ -8653,6 +8658,64 @@ static void ath11k_wmi_gtk_offload_status_event(struct ath11k_base *ab,
+ 	kfree(tb);
  }
  
--const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab, const void *ptr,
--					size_t len, gfp_t gfp)
-+const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab,
-+					struct sk_buff *skb, gfp_t gfp)
++static int ath11k_wmi_p2p_noa_event(struct ath11k_base *ab,
++				    struct sk_buff *skb)
++{
++	const void **tb;
++	const struct wmi_p2p_noa_event *ev;
++	const struct ath11k_wmi_p2p_noa_info *noa;
++	struct ath11k *ar;
++	int ret, vdev_id;
++	u8 noa_descriptors;
++
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
++	if (IS_ERR(tb)) {
++		ret = PTR_ERR(tb);
++		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
++		return ret;
++	}
++
++	ev = tb[WMI_TAG_P2P_NOA_EVENT];
++	noa = tb[WMI_TAG_P2P_NOA_INFO];
++
++	if (!ev || !noa) {
++		ret = -EPROTO;
++		goto out;
++	}
++
++	vdev_id = ev->vdev_id;
++	noa_descriptors = u32_get_bits(noa->noa_attr,
++				       WMI_P2P_NOA_INFO_DESC_NUM);
++
++	if (noa_descriptors > WMI_P2P_MAX_NOA_DESCRIPTORS) {
++		ath11k_warn(ab, "invalid descriptor num %d in P2P NoA event\n",
++			    noa_descriptors);
++		return -EINVAL;
++		goto out;
++	}
++
++	ath11k_dbg(ab, ATH11K_DBG_WMI,
++		   "wmi tlv p2p noa vdev_id %i descriptors %u\n",
++		   vdev_id, noa_descriptors);
++
++	rcu_read_lock();
++	ar = ath11k_mac_get_ar_by_vdev_id(ab, vdev_id);
++	if (!ar) {
++		ath11k_warn(ab, "invalid vdev id %d in P2P NoA event\n",
++			    vdev_id);
++		ret = -EINVAL;
++		goto unlock;
++	}
++
++	ath11k_p2p_noa_update_by_vdev_id(ar, vdev_id, noa);
++
++unlock:
++	rcu_read_unlock();
++out:
++	kfree(tb);
++	return 0;
++}
++
+ static void ath11k_wmi_tlv_op_rx(struct ath11k_base *ab, struct sk_buff *skb)
  {
- 	const void **tb;
- 	int ret;
-@@ -248,7 +248,7 @@ const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab, const void *ptr,
- 	if (!tb)
- 		return ERR_PTR(-ENOMEM);
- 
--	ret = ath11k_wmi_tlv_parse(ab, tb, ptr, len);
-+	ret = ath11k_wmi_tlv_parse(ab, tb, skb->data, skb->len);
- 	if (ret) {
- 		kfree(tb);
- 		return ERR_PTR(ret);
-@@ -3933,7 +3933,7 @@ ath11k_wmi_obss_color_collision_event(struct ath11k_base *ab, struct sk_buff *sk
- 	struct ath11k_vif *arvif;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -5006,7 +5006,7 @@ static int ath11k_pull_vdev_start_resp_tlv(struct ath11k_base *ab, struct sk_buf
- 	const struct wmi_vdev_start_resp_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -5105,7 +5105,7 @@ static int ath11k_pull_reg_chan_list_update_ev(struct ath11k_base *ab,
- 
- 	ath11k_dbg(ab, ATH11K_DBG_WMI, "processing regulatory channel list\n");
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -5281,7 +5281,7 @@ static int ath11k_pull_reg_chan_list_ext_update_ev(struct ath11k_base *ab,
- 
- 	ath11k_dbg(ab, ATH11K_DBG_WMI, "processing regulatory ext channel list\n");
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -5636,7 +5636,7 @@ static int ath11k_pull_peer_del_resp_ev(struct ath11k_base *ab, struct sk_buff *
- 	const struct wmi_peer_delete_resp_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -5668,7 +5668,7 @@ static int ath11k_pull_vdev_del_resp_ev(struct ath11k_base *ab,
- 	const struct wmi_vdev_delete_resp_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -5688,15 +5688,15 @@ static int ath11k_pull_vdev_del_resp_ev(struct ath11k_base *ab,
- 	return 0;
- }
- 
--static int ath11k_pull_bcn_tx_status_ev(struct ath11k_base *ab, void *evt_buf,
--					u32 len, u32 *vdev_id,
--					u32 *tx_status)
-+static int ath11k_pull_bcn_tx_status_ev(struct ath11k_base *ab,
-+					struct sk_buff *skb,
-+					u32 *vdev_id, u32 *tx_status)
- {
- 	const void **tb;
- 	const struct wmi_bcn_tx_status_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, evt_buf, len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -5724,7 +5724,7 @@ static int ath11k_pull_vdev_stopped_param_tlv(struct ath11k_base *ab, struct sk_
- 	const struct wmi_vdev_stopped_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -5881,7 +5881,7 @@ static int ath11k_pull_mgmt_tx_compl_param_tlv(struct ath11k_base *ab,
- 	const struct wmi_mgmt_tx_compl_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -6057,7 +6057,7 @@ static int ath11k_pull_scan_ev(struct ath11k_base *ab, struct sk_buff *skb,
- 	const struct wmi_scan_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -6090,7 +6090,7 @@ static int ath11k_pull_peer_sta_kickout_ev(struct ath11k_base *ab, struct sk_buf
- 	const struct wmi_peer_sta_kickout_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -6117,7 +6117,7 @@ static int ath11k_pull_roam_ev(struct ath11k_base *ab, struct sk_buff *skb,
- 	const struct wmi_roam_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -6158,14 +6158,14 @@ static int freq_to_idx(struct ath11k *ar, int freq)
- 	return idx;
- }
- 
--static int ath11k_pull_chan_info_ev(struct ath11k_base *ab, u8 *evt_buf,
--				    u32 len, struct wmi_chan_info_event *ch_info_ev)
-+static int ath11k_pull_chan_info_ev(struct ath11k_base *ab, struct sk_buff *skb,
-+				    struct wmi_chan_info_event *ch_info_ev)
- {
- 	const void **tb;
- 	const struct wmi_chan_info_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, evt_buf, len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -6204,7 +6204,7 @@ ath11k_pull_pdev_bss_chan_info_ev(struct ath11k_base *ab, struct sk_buff *skb,
- 	const struct wmi_pdev_bss_chan_info_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -6244,7 +6244,7 @@ ath11k_pull_vdev_install_key_compl_ev(struct ath11k_base *ab, struct sk_buff *sk
- 	const struct wmi_vdev_install_key_compl_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -6275,7 +6275,7 @@ static int ath11k_pull_peer_assoc_conf_ev(struct ath11k_base *ab, struct sk_buff
- 	const struct wmi_peer_assoc_conf_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -7000,7 +7000,7 @@ static int ath11k_reg_11d_new_cc_event(struct ath11k_base *ab, struct sk_buff *s
- 	const void **tb;
- 	int ret, i;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -7391,8 +7391,7 @@ static void ath11k_bcn_tx_status_event(struct ath11k_base *ab, struct sk_buff *s
- 	struct ath11k_vif *arvif;
- 	u32 vdev_id, tx_status;
- 
--	if (ath11k_pull_bcn_tx_status_ev(ab, skb->data, skb->len,
--					 &vdev_id, &tx_status) != 0) {
-+	if (ath11k_pull_bcn_tx_status_ev(ab, skb, &vdev_id, &tx_status) != 0) {
- 		ath11k_warn(ab, "failed to extract bcn tx status");
- 		return;
- 	}
-@@ -7423,7 +7422,7 @@ static void ath11k_wmi_event_peer_sta_ps_state_chg(struct ath11k_base *ab,
- 	enum ath11k_wmi_peer_ps_state peer_previous_ps_state;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -7891,7 +7890,7 @@ static void ath11k_chan_info_event(struct ath11k_base *ab, struct sk_buff *skb)
- 	/* HW channel counters frequency value in hertz */
- 	u32 cc_freq_hz = ab->cc_freq_hz;
- 
--	if (ath11k_pull_chan_info_ev(ab, skb->data, skb->len, &ch_info_ev) != 0) {
-+	if (ath11k_pull_chan_info_ev(ab, skb, &ch_info_ev) != 0) {
- 		ath11k_warn(ab, "failed to extract chan info event");
- 		return;
- 	}
-@@ -8223,7 +8222,7 @@ static void ath11k_pdev_ctl_failsafe_check_event(struct ath11k_base *ab,
- 	const struct wmi_pdev_ctl_failsafe_chk_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -8288,7 +8287,7 @@ ath11k_wmi_pdev_csa_switch_count_status_event(struct ath11k_base *ab,
- 	const u32 *vdev_ids;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -8322,7 +8321,7 @@ ath11k_wmi_pdev_dfs_radar_detected_event(struct ath11k_base *ab, struct sk_buff
- 	struct ath11k *ar;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -8376,7 +8375,7 @@ ath11k_wmi_pdev_temperature_event(struct ath11k_base *ab,
- 	const struct wmi_pdev_temperature_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
-@@ -8416,7 +8415,7 @@ static void ath11k_fils_discovery_event(struct ath11k_base *ab,
- 	const struct wmi_fils_discovery_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab,
-@@ -8448,7 +8447,7 @@ static void ath11k_probe_resp_tx_status_event(struct ath11k_base *ab,
- 	const struct wmi_probe_resp_tx_status_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab,
-@@ -8574,7 +8573,7 @@ static void ath11k_wmi_twt_add_dialog_event(struct ath11k_base *ab,
- 	const struct wmi_twt_add_dialog_event *ev;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab,
-@@ -8611,7 +8610,7 @@ static void ath11k_wmi_gtk_offload_status_event(struct ath11k_base *ab,
- 	u64    replay_ctr;
- 	int ret;
- 
--	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
-+	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
- 	if (IS_ERR(tb)) {
- 		ret = PTR_ERR(tb);
- 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+ 	struct wmi_cmd_hdr *cmd_hdr;
+@@ -8782,6 +8845,9 @@ static void ath11k_wmi_tlv_op_rx(struct ath11k_base *ab, struct sk_buff *skb)
+ 	case WMI_GTK_OFFLOAD_STATUS_EVENTID:
+ 		ath11k_wmi_gtk_offload_status_event(ab, skb);
+ 		break;
++	case WMI_P2P_NOA_EVENTID:
++		ath11k_wmi_p2p_noa_event(ab, skb);
++		break;
+ 	default:
+ 		ath11k_dbg(ab, ATH11K_DBG_WMI, "unsupported event id 0x%x\n", id);
+ 		break;
 diff --git a/drivers/net/wireless/ath/ath11k/wmi.h b/drivers/net/wireless/ath/ath11k/wmi.h
-index fa3b480b9d24f..9f6280d87b898 100644
+index 9f6280d87b898..6276d420db1f2 100644
 --- a/drivers/net/wireless/ath/ath11k/wmi.h
 +++ b/drivers/net/wireless/ath/ath11k/wmi.h
-@@ -6320,8 +6320,8 @@ enum wmi_sta_keepalive_method {
- #define WMI_STA_KEEPALIVE_INTERVAL_DEFAULT	30
- #define WMI_STA_KEEPALIVE_INTERVAL_DISABLE	0
+@@ -3584,6 +3584,37 @@ struct wmi_ftm_event_msg {
+ 	u8 data[];
+ } __packed;
  
--const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab, const void *ptr,
--					size_t len, gfp_t gfp);
-+const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab,
-+					struct sk_buff *skb, gfp_t gfp);
- int ath11k_wmi_cmd_send(struct ath11k_pdev_wmi *wmi, struct sk_buff *skb,
- 			u32 cmd_id);
- struct sk_buff *ath11k_wmi_alloc_skb(struct ath11k_wmi_base *wmi_sc, u32 len);
++#define WMI_P2P_MAX_NOA_DESCRIPTORS		4
++
++struct wmi_p2p_noa_event {
++	u32 vdev_id;
++} __packed;
++
++struct ath11k_wmi_p2p_noa_descriptor {
++	u32 type_count; /* 255: continuous schedule, 0: reserved */
++	u32 duration;  /* Absent period duration in micro seconds */
++	u32 interval;   /* Absent period interval in micro seconds */
++	u32 start_time; /* 32 bit tsf time when in starts */
++} __packed;
++
++#define WMI_P2P_NOA_INFO_CHANGED_FLAG		BIT(0)
++#define WMI_P2P_NOA_INFO_INDEX			GENMASK(15, 8)
++#define WMI_P2P_NOA_INFO_OPP_PS			BIT(16)
++#define WMI_P2P_NOA_INFO_CTWIN_TU		GENMASK(23, 17)
++#define WMI_P2P_NOA_INFO_DESC_NUM		GENMASK(31, 24)
++
++struct ath11k_wmi_p2p_noa_info {
++	/* Bit 0 - Flag to indicate an update in NOA schedule
++	 * Bits 7-1 - Reserved
++	 * Bits 15-8 - Index (identifies the instance of NOA sub element)
++	 * Bit  16 - Opp PS state of the AP
++	 * Bits 23-17 -  Ctwindow in TUs
++	 * Bits 31-24 -  Number of NOA descriptors
++	 */
++	u32 noa_attr;
++	struct ath11k_wmi_p2p_noa_descriptor descriptors[WMI_P2P_MAX_NOA_DESCRIPTORS];
++} __packed;
++
+ #define WMI_BEACON_TX_BUFFER_SIZE	512
+ 
+ #define WMI_EMA_TMPL_IDX_SHIFT            8
 -- 
 2.53.0
 
