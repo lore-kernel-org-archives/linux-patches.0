@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1C6479891;
-	Sat, 12 Sep 2026 12:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F8D479899;
+	Sat, 12 Sep 2026 12:21:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215674; cv=none; b=vGt1YeJgDKTd9YPxXki5a8IYeIQcX1PjB0jS6B77IXRUR0pNQYsCq/BXNcG0S84ydvQaSzmPp3+SXbiX13UtsOgwPXWANU1HSrWFtbJcLHB+cZRtgft/yrhnun3uho84gBZnnSmFUpO4KfV+BrkbPqro68uT/jtzbjaNck7e1lc=
+	t=1789215679; cv=none; b=u8zsfI1r5mlhqIuybwDF4CqfdlT/CpPCNGz4cu1wDCd1m//cbEj22Ui9oAm8P530g4ynEJqmRPl/LAIsLDv0yhKrGtTk7A7ftCc9PFztz8j+0ejKKaQfHTJi5GZX3qRMXhlMZUiMyCbOPfCHpQA2eIm4wJHMdSCbvXFh/wGYR/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215674; c=relaxed/simple;
-	bh=QxRvy4unBhhhgvzIWCttI0HqNS9s6DTRak7s0C/b3QA=;
+	s=arc-20240116; t=1789215679; c=relaxed/simple;
+	bh=8dW135GumAradpb93+zpeJ2haYGLHGlC1VD2Xtun1Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZoaOzQoMckzDJhvnICHBBFg3fjbxsAmtz9Gjj2Wyy9qRlvpp/0CwyGwwYJj+JBdzRbw8A4K3XDTKoZODFxlPCb8yrb4+4bGcKvwpzxMdPWv/XkEC3cPW4hAehDSDBNrG/5jmVl0D4Sgh6H8zyk6pD4ND0fplIhawyAINpYoqpp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCi4gMCH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nUZX+8QFSki+Jl8LyxdQMGGscPts/jGaRUHSLY0YU1sdQuVLOfY3ZAeW0fKOzvtNDDcM2gLAatMgevJ5PqabZcrCTR1RKbmyR3yglAq2HIAFeSMX+BcLZPTLAInZdzGwte5k7rLjF0Q0D7FjMOp1veCtZGPogxd/a0HlL5CALFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWHC1VoU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCi4gMCH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172611F00893;
-	Sat, 12 Sep 2026 12:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWHC1VoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3206A1F000FF;
+	Sat, 12 Sep 2026 12:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215673;
-	bh=ZqH3JE9hjGTZiKf4nBPzSAS5HvxYnxve42ny1zekg+A=;
+	s=korg; t=1789215678;
+	bh=3QNorcrlE7LhdEOsZ7fClZCoi4Dc8jcGZXHxwAm9hGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uCi4gMCHPJxJ5wOd1q/hxO92mnmCcBTvTcttoC60wFurTI0qL2R9ujgo7hO+sC02l
-	 QJgPT9OzGL/sNKXIxlP/CpEnAE5W7uzVTqwHNiLWBfTNIWzEOkU9P/dBhyVqL7TzkT
-	 6+rmihlTIHHac4fXHaKAim0Jh5s84+d4Ib3+giAg=
+	b=eWHC1VoUDzY3v6g51yJ4yIOc5uON/H0DkYQrwbs5OZ7pZ8HEo6OGH/qgYUWlpIO08
+	 6fAdMKw7GeTIToItAV3mkwceIXVw9CCgDTCI8LT7QIJW3xrwS5h3trZ4GZMnlYvP2U
+	 Q72VG2KSWjzJ7K/epKy8OZ0T9AsJZ8pjn+Zcz5DA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0580/1376] speakup: keyhelp: guard letter_offsets possible out-of-range indexing
-Date: Sat, 12 Sep 2026 08:50:06 +0200
-Message-ID: <20260912065620.459450022@linuxfoundation.org>
+Subject: [PATCH 6.12 0581/1376] misc: bcm-vk: Use acquire/release for msgq_inited
+Date: Sat, 12 Sep 2026 08:50:07 +0200
+Message-ID: <20260912065620.481553790@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,96 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 6a19ad4d68c95185308cd9e5d169b10a2cf236c8 ]
+[ Upstream commit 61b101c6a150057b6d512421ed108aed16e822ea ]
 
-help_init() builds letter_offsets[] by using the first byte of each
-function name as an index via `(start & 31) - 1`. If function_names are
-overridden from sysfs (root) with a name starting outside [a–z], the
-index underflows or exceeds the array, leading to OOB write.
+bcm_vk_sync_msgq() fills the message queue information and then sets
+msgq_inited. Readers call bcm_vk_drv_access_ok() before accessing the
+message queues and their cached queue information.
 
-Function names can be overridden with the following commands as root:
+atomic_set()/atomic_read() do not order those accesses. A reader can see
+msgq_inited set while still seeing stale queue information. Use release
+when publishing the initialized queues and acquire when checking the gate.
 
-    modprobe speakup_soft
-    echo "0 _bad" > /sys/accessibility/speakup/i18n/function_names
-    # then press Insert+2 on /dev/tty
+Keep the clear in bcm_vk_blk_drv_access() as atomic_set(). It closes the
+gate and does not publish queue state to readers.
 
-This fix checks the first letter in help_init(), and if it is not in the
-[a–z] range the function returns an error to the caller. Eventually this
-error is propagated to drivers/accessibility/speakup/main.c:2217, which
-causes a bleep sound.
-
-Fixes: c6e3fd22cd53 ("Staging: add speakup to the staging directory")
-Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Link: https://patch.msgid.link/20260531230804.254962-10-samuel.thibault@ens-lyon.org
+Fixes: 111d746bb476 ("misc: bcm-vk: add VK messaging support")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260603021127.3285057-1-hanguidong02@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accessibility/speakup/keyhelp.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/misc/bcm-vk/bcm_vk_msg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accessibility/speakup/keyhelp.c b/drivers/accessibility/speakup/keyhelp.c
-index 822ceac830683..e632c53d6246e 100644
---- a/drivers/accessibility/speakup/keyhelp.c
-+++ b/drivers/accessibility/speakup/keyhelp.c
-@@ -8,6 +8,7 @@
-  */
+diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
+index 665a3888708ac..a36a6c7d384a9 100644
+--- a/drivers/misc/bcm-vk/bcm_vk_msg.c
++++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
+@@ -108,7 +108,8 @@ u32 msgq_avail_space(const struct bcm_vk_msgq __iomem *msgq,
  
- #include <linux/keyboard.h>
-+#include <linux/ctype.h>
- #include "spk_priv.h"
- #include "speakup.h"
- 
-@@ -111,7 +112,7 @@ static void say_key(int key)
- 			     spk_msg_get(MSG_KEYNAMES_START + (key - 1)));
- }
- 
--static int help_init(void)
-+static void help_init(void)
+ bool bcm_vk_drv_access_ok(struct bcm_vk *vk)
  {
- 	char start = SPACE;
- 	int i;
-@@ -120,13 +121,19 @@ static int help_init(void)
- 	state_tbl = spk_our_keys[0] + SHIFT_TBL_SIZE + 2;
- 	for (i = 0; i < num_funcs; i++) {
- 		char *cur_funcname = spk_msg_get(MSG_FUNCNAMES_START + i);
-+		char first_letter;
- 
--		if (start == *cur_funcname)
-+		first_letter = tolower(*cur_funcname);
-+
-+		/* Accept only 'a'..'z' to index letter_offsets[] safely */
-+		if (first_letter < 'a' || first_letter > 'z')
-+			continue;
-+
-+		if (start == first_letter)
- 			continue;
--		start = *cur_funcname;
-+		start = first_letter;
- 		letter_offsets[(start & 31) - 1] = i;
- 	}
--	return 0;
+-	return (!!atomic_read(&vk->msgq_inited));
++	/* Pair with the release store after message queue initialization. */
++	return !!atomic_read_acquire(&vk->msgq_inited);
  }
  
- int spk_handle_help(struct vc_data *vc, u_char type, u_char ch, u_short key)
-@@ -144,7 +151,7 @@ int spk_handle_help(struct vc_data *vc, u_char type, u_char ch, u_short key)
- 			synth_printf("%s\n", spk_msg_get(MSG_LEAVING_HELP));
- 			return 1;
+ void bcm_vk_set_host_alert(struct bcm_vk *vk, u32 bit_mask)
+@@ -501,7 +502,8 @@ int bcm_vk_sync_msgq(struct bcm_vk *vk, bool force_sync)
+ 			msgq++;
  		}
--		ch |= 32; /* lower case */
-+		ch = tolower(ch);
- 		if (ch < 'a' || ch > 'z')
- 			return -1;
- 		if (letter_offsets[ch - 'a'] == -1) {
+ 	}
+-	atomic_set(&vk->msgq_inited, 1);
++	/* Publish message queue info before allowing driver access. */
++	atomic_set_release(&vk->msgq_inited, 1);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
