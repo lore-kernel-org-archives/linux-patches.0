@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA08147277C;
-	Sat, 12 Sep 2026 16:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DE03F788A;
+	Sat, 12 Sep 2026 16:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230611; cv=none; b=adsjNjpDYVFHNnGRDVKtkWbhtPLH6ihKBnPPRYvyKouE5OoAjSfk/8paOZwtIsIo9CmaU76RYRlK70vSw/e6a3h+fptBu8CquwtP3oQWnVf+dIJBsGERJhpD9fos6LZkeoVM/70hX/cuppsHP8i1k6jZwGL9iBfMEMiPXGCcvtE=
+	t=1789230615; cv=none; b=clcJ5+fDd+QVkgi/appVU4yXQIwSLD+6hNo0xkjGIS7/KkFiF/YXJuGwsrqbM/F5eT3bPsaMKkDGHmGoBcPxGHKKwwYcBbpuV4Ytqkff4xePOFLTXagsH76o6Oo3Janmq1dlOlWVjg+798+ljLSyQGQ7zWxloHzLRbmGHMImtOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230611; c=relaxed/simple;
-	bh=19H0ch6DOacu52MMGm6QzXnnBejSbZp1IEVVECPKEbA=;
+	s=arc-20240116; t=1789230615; c=relaxed/simple;
+	bh=iS3AgJe2VEDzJ4+sbJGuopPGIJ7dTZ1qWI3u4BlkQsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fAhxifz99F93S330Z2wWID9pOeQNUCnZnqVUQxjEWAuD/N0usMHjQlwapdrs+3SvVATaTmiA5yysAQ8ednlBEGXESTwj46z9n+cvxp6Yxtt+GmJHOeOkh0trkIkJD3i8GVLvl1Uwn6AAzHD0dC0tN+6H0lj0Z6y/l7TWtOcUdSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AF7QfUfj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p1a8CfKv4MqQUp0fq6wt/OZS/q0D4YGfe1SqEuVm04gj9umiTgUy1SC4KnclmAxMqhu24hJgh8c9A0bZFY5ZOzEBtCB+ioyWmaVg+6UStpfQbKMFNuvYdDUJjEu/D8DHbCovt3fEILPaIZpO8C+okZkMWiO+OtXOFszxoTqZ93o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvGa65jP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AF7QfUfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8505E1F000FF;
-	Sat, 12 Sep 2026 16:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvGa65jP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2507D1F000FF;
+	Sat, 12 Sep 2026 16:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230609;
-	bh=YnnQchPtUjV/A/DIPruM4v7u+eT9R8NRCvdakqlmCdQ=;
+	s=korg; t=1789230614;
+	bh=4NeKiUvWoebznrDMJGpiH6bgcnhJvgKKoue5KtbSlCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AF7QfUfjJciV4NoZIRiDMybU/CW+jCLgp76x3cj9xpKQXaqT3LadTL/xMy5jSj6N4
-	 N8sXg8EjXEpeH7xBUwduvSFSc6z/yV7NiAdiVEnBJny1KZ0n1eoQdikOLSytMyUk3P
-	 b0Md29GIWpUJzA/urK/lBKD8XoyQ0lL2GSeMXAfU=
+	b=XvGa65jPouBykFtxJF9U6j2lZqZQbsy/eL7KAj51nKGEfzFVDtllpeUPs5XZ8GDX/
+	 OuwnLq/7eb0kCauVz4m6wcaL2zxrWk9eP162iCUOtHaRvWs40crPQT3vfe6LXanB0H
+	 zmo25fe7ZGXN+NijGFI9NkKO+UYP2f7hxpJ1F6OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0787/1191] lib/test_hmm: fail dmirror_fault() when the mirrored mm is gone
-Date: Sat, 12 Sep 2026 08:58:35 +0200
-Message-ID: <20260912065605.953113021@linuxfoundation.org>
+Subject: [PATCH 6.1 0788/1191] clk: qcom: Return expected ENOMEM error on dynamic allocation failure
+Date: Sat, 12 Sep 2026 08:58:36 +0200
+Message-ID: <20260912065605.975126133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,48 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+From: Vladimir Zapolskiy <vz@kernel.org>
 
-[ Upstream commit 6a8024511ddf4877435c34fb3d6028aa8e590649 ]
+[ Upstream commit 22d9257f08913b6eec3e8ece4d13d9c41f14428b ]
 
-dmirror_fault() is called from the dmirror_read() and dmirror_write()
-retry loops after dmirror_do_read() or dmirror_do_write() finds a missing
-device page table entry.
+If a dynamic memory allocation fails, the returned error code in clock
+controller driver probe functions on a few legacy platforms should be
+set to -ENOMEM instead of -EINVAL.
 
-If the mirrored mm has already exited, mmget_not_zero() fails.  The
-current code returns 0 in that case, which tells the caller that faulting
-succeeded even though no page was faulted and no device page table entry
-was installed.  The caller then retries the same address, hits -ENOENT
-again, and can loop forever without making progress.
-
-Return -EFAULT instead, so the ioctl fails when the mirrored mm is no
-longer faultable.
-
-Link: https://lore.kernel.org/178294308408.327222.3319445682023999403.stgit@skinsburskii
-Fixes: b2ef9f5a5cb37 ("mm/hmm/test: add selftest driver for HMM")
-Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ee15faffef11 ("clk: qcom: common: Add API to register board clocks backwards compatibly")
+Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260629162127.3910603-1-vz@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_hmm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/lib/test_hmm.c b/lib/test_hmm.c
-index 210564b67dd1d..b0010b15aec5c 100644
---- a/lib/test_hmm.c
-+++ b/lib/test_hmm.c
-@@ -391,7 +391,7 @@ static int dmirror_fault(struct dmirror *dmirror, unsigned long start,
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index 86a5283381ae7..946a6c7fdb3a8 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -146,7 +146,7 @@ static int _qcom_cc_register_board_clk(struct device *dev, const char *path,
+ 	if (!node) {
+ 		fixed = devm_kzalloc(dev, sizeof(*fixed), GFP_KERNEL);
+ 		if (!fixed)
+-			return -EINVAL;
++			return -ENOMEM;
  
- 	/* Since the mm is for the mirrored process, get a reference first. */
- 	if (!mmget_not_zero(mm))
--		return 0;
-+		return -EFAULT;
+ 		fixed->fixed_rate = rate;
+ 		fixed->hw.init = &init_data;
+@@ -163,7 +163,7 @@ static int _qcom_cc_register_board_clk(struct device *dev, const char *path,
+ 	if (add_factor) {
+ 		factor = devm_kzalloc(dev, sizeof(*factor), GFP_KERNEL);
+ 		if (!factor)
+-			return -EINVAL;
++			return -ENOMEM;
  
- 	for (addr = start; addr < end; addr = range.end) {
- 		range.start = addr;
+ 		factor->mult = factor->div = 1;
+ 		factor->hw.init = &init_data;
 -- 
 2.53.0
 
