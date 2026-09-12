@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB253B3BF5;
-	Sat, 12 Sep 2026 10:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203AC3DBD5E;
+	Sat, 12 Sep 2026 10:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208249; cv=none; b=WfOuyPGp+/9WobkMvQSnBoQjnsU6QQs4MMef/R68qrr+EPeOvhfDME9oU73IQ8fKTqQ2zb6SfFta4PP9x/49rinxHXLbgBenPF4DIZJmbcDTS0VjUCHUo4AggGgcXgfLkauvqgftSRjGFRME6LuQnhWT/w1KOA2XOTrz1/YbZCc=
+	t=1789208253; cv=none; b=Xw28err4DMcWrCPbIipfF9M4MNXasGfOi2MncuFJ6e/3LsJF5BRhDglfmPoj6b8CULWLkPzwnn7kMjdCu592TLrVzuM7vVhlOE58UIeyJF+oCl/hEfTYxMYqAT8hn9GJsAqlqxGhQfNgk+dx7/ITmXe60C9ZUZeruDBw1CMnf4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208249; c=relaxed/simple;
-	bh=ntAMU64pbT7N1ZwKjb4lQkdaAfThnbwhbhikk7jS95Q=;
+	s=arc-20240116; t=1789208253; c=relaxed/simple;
+	bh=sGtjEhUBpI2z9VaALcncST6+IqDYs7bXy2d0MywFec4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Egg8rr2pBdZEcbuRMKLO88zRtfATL0BmxMuC3haPnZJ05x9oUgDYo9ToBXP7wcIEwK29qslVtiKIly6l7wLC/DvfhEBATaEuQwkAP4Wn5FeQufZ1Ta1ZrewfVR5diCWo+493AalDZ7ZWQVwSJ/870gfN1KS25yAgkrqtxWGwd5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5qRw41t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sw0dH/njV3ExAyZXG1Bx1JzX8aDuT5HyWUsyYJs5vXCrVt82PDeW5+eQkmt0LoipjEh6TA/Y93l80heSvNyrMp79Ai5UEkMYQLO9ZIX7BOPwsPGeoRTXk04u3YxXYHVSwfZb0d0sdI2hcJjzA9U1CBuUSQuIfv298NsA9YJLcwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zz1SsTFJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5qRw41t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E0A1F00898;
-	Sat, 12 Sep 2026 10:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zz1SsTFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9511F000FF;
+	Sat, 12 Sep 2026 10:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208247;
-	bh=9O3N42JDizHKA1kN2zdIz9pdHaFTZ+yi/J7JVag7SrE=;
+	s=korg; t=1789208251;
+	bh=5iTdBztczicCiTjj94mSJIH0S7fQlDtztmbPPWJMgoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y5qRw41t3AOCLHAUe2zEIz9M6xEq8mBseN8u4FRaZi2irpCQisNNRpSs3/WMr3Q2+
-	 TsfgtoarJFNT9fcFr91NlN6hpRTG8KFvvF8jnIUzfUrWn6734cuXi3GRIJsuZYHIUZ
-	 C/ZdrUwO54iuL1k7c06VjtajHU9Dgto6UZTfbQKE=
+	b=Zz1SsTFJufkfvc2QCmIBYvmQllkUsxU2rQCc31nmdGxKlOYM2D2n16kAhixwnxxyg
+	 izEd0I5wJhXb6uh5eDvdt/X7BdIHN2S2E+hLoUDM7g567UA/Rt4uufbasnNJ61IaCI
+	 Vu/EIuIR2RoXBFIbh/lWSsqxiHLZgsVfzNLDmokg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@gentoo.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0579/1518] power: supply: sbs-battery: Use a per-device serial number buffer
-Date: Sat, 12 Sep 2026 08:45:48 +0200
-Message-ID: <20260912065636.527319703@linuxfoundation.org>
+Subject: [PATCH 6.18 0553/1518] riscv: dts: spacemit: add MusePi Pro board device tree
+Date: Sat, 12 Sep 2026 08:45:22 +0200
+Message-ID: <20260912065635.948081921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,78 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-[ Upstream commit 6027892925b8d19d2245c2d077e2ae35b49cc2b1 ]
+[ Upstream commit 0ee59934662dfb89b43a8392e64ac4880c2fca88 ]
 
-sbs_get_battery_serial_number() formats the battery serial number into
-sbs_serial[], a single file-scope buffer shared by every sbs-battery
-instance, and points val->strval at it.
+Add initial device tree support for the MusePi Pro board [1].
+The board is using the SpacemiT K1/M1 SoC.
 
-Nothing restricts this driver to one instance. It binds per I2C client,
-and sbs-manager registers one muxed I2C channel per supported battery
-specifically so that the smart battery driver can be bound to each of
-them, so several sbs-battery instances on one system is a supported
-configuration.
+This device tree is adapted from the SpacemiT vendor tree [2] and
+enables basic board functionality, including UART console, LED, eMMC,
+Ethernet, and PDMA.
 
-The power supply core reads strval after the driver's get_property()
-callback has returned: power_supply_show_property() fills a local
-union power_supply_propval, then formats it with sysfs_emit(). Two
-concurrent POWER_SUPPLY_PROP_SERIAL_NUMBER reads on different batteries
-therefore race for the shared buffer - battery B's sprintf() can land
-between battery A filling the buffer and the core reading it, and
-battery A then reports battery B's serial number.
-
-Move the buffer into struct sbs_info so that each battery formats into
-its own storage. It is deliberately not added to the chip->strings[]
-array: those entries hold the cached constant strings that
-sbs_invalidate_cached_props() clears on presence changes, whereas the
-serial number is re-read from its word register on every access.
-
-Fixes: d3ab61ecbab2 ("bq20z75: Add support for more power supply properties")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Link: https://patch.msgid.link/20260726072206.7-2-bbnpreetsingh@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
+Link: https://gitee.com/bianbu-linux/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x_MUSE-Pi-Pro.dts [2]
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Link: https://lore.kernel.org/r/20251023-k1-musepi-pro-dts-v4-2-01836303e10f@linux.spacemit.com
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+Stable-dep-of: 8270311d70fd ("riscv: dts: spacemit: k1: Split gmac_clk_ref into independent pinctrl groups")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sbs-battery.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/riscv/boot/dts/spacemit/Makefile         |  1 +
+ .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 79 +++++++++++++++++++
+ 2 files changed, 80 insertions(+)
+ create mode 100644 arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
 
-diff --git a/drivers/power/supply/sbs-battery.c b/drivers/power/supply/sbs-battery.c
-index 43c48196c1674..3947429f6f819 100644
---- a/drivers/power/supply/sbs-battery.c
-+++ b/drivers/power/supply/sbs-battery.c
-@@ -217,6 +217,7 @@ struct sbs_info {
- 	u32				flags;
- 	int				technology;
- 	char				strings[NR_STRING_BUFFERS][I2C_SMBUS_BLOCK_MAX + 1];
-+	char				serial[5];
- };
- 
- static char *sbs_get_string_buf(struct sbs_info *chip,
-@@ -821,18 +822,18 @@ static int sbs_get_battery_capacity(struct i2c_client *client,
- 	return 0;
- }
- 
--static char sbs_serial[5];
- static int sbs_get_battery_serial_number(struct i2c_client *client,
- 	union power_supply_propval *val)
- {
-+	struct sbs_info *chip = i2c_get_clientdata(client);
- 	int ret;
- 
- 	ret = sbs_read_word_data(client, sbs_data[REG_SERIAL_NUMBER].addr);
- 	if (ret < 0)
- 		return ret;
- 
--	sprintf(sbs_serial, "%04x", ret);
--	val->strval = sbs_serial;
-+	sprintf(chip->serial, "%04x", ret);
-+	val->strval = chip->serial;
- 
- 	return 0;
- }
+diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
+index 1528326448706..942ecb38bea03 100644
+--- a/arch/riscv/boot/dts/spacemit/Makefile
++++ b/arch/riscv/boot/dts/spacemit/Makefile
+@@ -1,4 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
++dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
+diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+new file mode 100644
+index 0000000000000..29e333b670cf0
+--- /dev/null
++++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+@@ -0,0 +1,79 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++/*
++ * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
++ * Copyright (C) 2025 SpacemiT, Inc
++ * Copyright (C) 2025 Troy Mitchell <troy.mitchell@linux.spacemit.com>
++ */
++
++/dts-v1/;
++
++#include "k1.dtsi"
++#include "k1-pinctrl.dtsi"
++
++/ {
++	model = "SpacemiT MusePi Pro";
++	compatible = "spacemit,musepi-pro", "spacemit,k1";
++
++	aliases {
++		ethernet0 = &eth0;
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0";
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		led1 {
++			label = "sys-led";
++			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "heartbeat";
++			default-state = "on";
++		};
++	};
++};
++
++&emmc {
++	bus-width = <8>;
++	mmc-hs400-1_8v;
++	mmc-hs400-enhanced-strobe;
++	non-removable;
++	no-sd;
++	no-sdio;
++	status = "okay";
++};
++
++&eth0 {
++	phy-handle = <&rgmii0>;
++	phy-mode = "rgmii-id";
++	pinctrl-0 = <&gmac0_cfg>;
++	pinctrl-names = "default";
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <0>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii0: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
++
++&pdma {
++	status = "okay";
++};
++
++&uart0 {
++	pinctrl-0 = <&uart0_2_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
 -- 
 2.53.0
 
