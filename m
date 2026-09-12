@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF13946AA73;
-	Sat, 12 Sep 2026 10:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749D2466B0C;
+	Sat, 12 Sep 2026 10:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210129; cv=none; b=PlyxofpHGwk78GkVduCG+giW4/DFxI/rAUVsU3POm+TghA1r1akwXWjoaMQgujk9PmoJvhs1UHM05gbgJRz9vr28rHk2C+MlIszIpdzEh8W7ElnFGOJYctLN4ZISI1FZxzM6GUlgZrg01oRTUkL5CbN0/iqYyLYhc3u/pB2xG1Y=
+	t=1789210131; cv=none; b=BNmrAKGua8GRkrCHQeaH1aTW9nMTUTP0Za/p5f5n+5dYJAxqkGR5OcKDI4ylnFxZJ4SfaP1wATsRatm+nzgtitjsU9QiAqRWWI5kZ27CXsOiIUea/hItDpCJw6/w9UusFPRjRH5zXqd7zhYU68I1+T/WnbQo89EYGz4xzmsoS0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210129; c=relaxed/simple;
-	bh=SfUvuCj6OxtTOg7XKaYaAHNq/2DlcKbwCf5YGhnKOds=;
+	s=arc-20240116; t=1789210131; c=relaxed/simple;
+	bh=RdqAhbmOKMHAWeJAMKYddZiGya8EdE/pUlVA5B1E5u4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMm/1HBs4OAmcP5UK0H/9sg4IVbYBGvUY9DQoPqp6hVCjWpGRlnX3wuSln3v8kAj3vBjm6MIgIMJlK2Sx4A+9CWBWNzFRrTHd3v7mgEcIdKQClmzrDYaa1+dbvBl4fzyrL6lL5dLBMVYLd95hBexdMRyHViHxWZXUx0c+52kNy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhJZBM4+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h9JMny5Ipi8RDBxbJ9Zug1gOjqqZk07asWotHZiQMeDiWDPzG106A/b9Kw7XXQw1AgbWwKz+kPKdFbLjmfqkXC/QGvTcvdQbY7R9bb8IBptxu9SUCbYu9ye8g+yRpvtloc+/By1AhkpWgDheGz4CRbLVr8iWcOPkY2uir7+MOvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrtIPdqh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhJZBM4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54281F0089A;
-	Sat, 12 Sep 2026 10:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrtIPdqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB8A1F0089C;
+	Sat, 12 Sep 2026 10:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210124;
-	bh=a9OMvtwiFEV74HUh6OBfg7Plt9ILGrcDvpYYVwO0OVg=;
+	s=korg; t=1789210128;
+	bh=kbP9OgAezlhrbNkU2obb0Sa3e1rV39U/6DHm3ZF1hCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NhJZBM4+NvSHUnd6GDZwBRWwqZ/mJRmpL3YZIx39Whjpod4dOpYR4s0q16MKOtTk4
-	 1vMMylBtRhiR4myolVPFFqEJ8XwEf2gm8d7hfNb01e0KpKdtETlGRsJQItnWux4Eym
-	 cF0S46y1m+7JrfoPNApvkgiGBZBcHpvBhHWLKl8E=
+	b=xrtIPdqh6/TjDpatBpRwvL0xyLhsDD5Hr42OWtETtXhVYiy0Z949fZkwnrUpTDrBM
+	 bALUpTrvPtysGmBbeesjvNPlwvE/NhBZc4nhN9SO4Ck2d0OqIpGnqQ7Wc7LGPHbOab
+	 MZ9L2+WjB+kdk24PYuR5UMpJcx6fwRDEMWiQksdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Esteban Urrutia <esteuwu@proton.me>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0960/1518] phy: qcom: qmp-usb: Fix possible NULL-deref on early runtime suspend
-Date: Sat, 12 Sep 2026 08:52:09 +0200
-Message-ID: <20260912065645.177180068@linuxfoundation.org>
+Subject: [PATCH 6.18 0961/1518] phy: qcom: qmp-pcie: Add pcs_lane1 offset to V5 offsets
+Date: Sat, 12 Sep 2026 08:52:10 +0200
+Message-ID: <20260912065645.199685608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,91 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Esteban Urrutia <esteuwu@proton.me>
 
-[ Upstream commit 142c5593379273264474f31d5956b1a0065cd576 ]
+[ Upstream commit f8b4493d5e7e19682abcf538a9faad012b5ef69e ]
 
-There is a small window where the runtime suspend callback may run
-after pm_runtime_enable() and before pm_runtime_forbid(). In this
-case, a crash occurs because runtime suspend/resume dereferences
-qmp->phy pointer, which is not yet initialized:
-        `if (!qmp->phy->init_count) {`
+Some SoCs such as SM8475 write data to registers using this offset,
+specifically SW_CTRL2 and MX_CTRL2.
+Add pcs_lane1 offset to V5 offsets to support this.
 
-This can also happen if user re-enables runtime-pm via the sysfs
-attribute before qmp phy is initialized.
-
-Similarly to other qcom phy drivers, introduce a qmp->phy_initialized
-variable that can be used to avoid relying on the possibly uninitialized
-phy pointer.
-
-Fixes: e464a3180a43 ("phy: qcom-qmp-usb: split off the legacy USB+dp_com support")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260722-qcom-usb-phy-fix-null-v6-6-534f7e61b9a6@oss.qualcomm.com
+Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
+Fixes: 0fd0b31965b0 ("phy: qualcomm: qmp-pcie: add support for SAR2130P")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260715-sm8475-bup-pcie-v2-2-48bd91a19abf@proton.me
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index ed646a7e705ba..e7dd140ad29e7 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1300,6 +1300,8 @@ struct qmp_usb {
- 
- 	enum phy_mode mode;
- 
-+	bool phy_initialized;
-+
- 	struct phy *phy;
- 
- 	struct clk_fixed_rate pipe_clk_fixed;
-@@ -1848,6 +1850,7 @@ static int qmp_usb_power_off(struct phy *phy)
- 
- static int qmp_usb_enable(struct phy *phy)
- {
-+	struct qmp_usb *qmp = phy_get_drvdata(phy);
- 	int ret;
- 
- 	ret = qmp_usb_init(phy);
-@@ -1857,14 +1860,19 @@ static int qmp_usb_enable(struct phy *phy)
- 	ret = qmp_usb_power_on(phy);
- 	if (ret)
- 		qmp_usb_exit(phy);
-+	else
-+		qmp->phy_initialized = true;
- 
- 	return ret;
- }
- 
- static int qmp_usb_disable(struct phy *phy)
- {
-+	struct qmp_usb *qmp = phy_get_drvdata(phy);
- 	int ret;
- 
-+	qmp->phy_initialized = false;
-+
- 	ret = qmp_usb_power_off(phy);
- 	if (ret)
- 		return ret;
-@@ -1940,7 +1948,7 @@ static int __maybe_unused qmp_usb_runtime_suspend(struct device *dev)
- 
- 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->mode);
- 
--	if (!qmp->phy->init_count) {
-+	if (!qmp->phy_initialized) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
- 	}
-@@ -1960,7 +1968,7 @@ static int __maybe_unused qmp_usb_runtime_resume(struct device *dev)
- 
- 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->mode);
- 
--	if (!qmp->phy->init_count) {
-+	if (!qmp->phy_initialized) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
- 	}
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 62b1c845b6275..456cdb6e7213c 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -3288,6 +3288,7 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v5 = {
+ 	.pcs_misc	= 0x0600,
+ 	.tx		= 0x0e00,
+ 	.rx		= 0x1000,
++	.pcs_lane1	= 0x1400,
+ 	.tx2		= 0x1600,
+ 	.rx2		= 0x1800,
+ };
 -- 
 2.53.0
 
