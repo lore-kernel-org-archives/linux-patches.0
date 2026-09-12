@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286F019D8BC;
-	Sat, 12 Sep 2026 07:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB133F0AAC;
+	Sat, 12 Sep 2026 07:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197438; cv=none; b=b4w2wV5Hx52I4fI36TiQoI3xyEhLvCNYkdgN+acyDvkQmNgnmaNGFpYX+nNRSKAPdXc2RozjXtbyZEjtBDGH4IfgQn/huiP7IGXk3DmmD837NX47S579mxycaSD02xepCAg0zRs1tjxa/OmgT5hrUnjnCKxYUyDo1pZomMxcrb4=
+	t=1789197443; cv=none; b=mHczocYaP5naomHIQQqVVT2qk243ZwjMSF495nfRnFnScy/CDuALO14+r7UU7L1IE+LPXJw3/EJZSEhmulEsWFsMU0EojS/motFAqcNj1818fWe+WrNz2XC79eFi8nHSaOKQcifJnY8otCiQg+geYWZ9Qc2dpxE748kWkkwkNr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197438; c=relaxed/simple;
-	bh=wbgCuXTsoA2DjbyzP7/SIJ0CSPMFBkf585ufSeaCsDQ=;
+	s=arc-20240116; t=1789197443; c=relaxed/simple;
+	bh=vwWDNP1emQRB9RHJD7m8vX3w2A3DRxDsvjvBqwAzRio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PY5aKQtthCnHC6OxRXsrNurZuYJQlSsdKwLlMIV6jLrNoSJbVdS0ubF8kKq9FMlV7N2v7agaXJnqx5fRbkcca9G+hz6eEgrfvj01fid38dUBUWYdbp3ADfddngnJc6qNNfzk5SgSd58ITFbs1EEV73Af4CO5wdZjy8NTKHA2tk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juacGBLO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pDsOxoZOsL3dkm0cr7httRH6HjzasWfmCWy+tmpRATBsJGSRWLNZahhdYVpuDgrfeEOWWH3CFWaTRjXlB0FvmqwFQT1TOynQlWEg1ByEDxegUyxIrPoAit1rlEEpvjZHq5drHNlfpnK0m2Z+cyl/GPUClJiw9Ln80+bfTNBp3oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALNgj8Eb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juacGBLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE19B1F000FF;
-	Sat, 12 Sep 2026 07:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALNgj8Eb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41321F000FF;
+	Sat, 12 Sep 2026 07:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197437;
-	bh=xKdOe+Gksqc67MxrVUFngGokq/rShZAo1FEoi+5btqE=;
+	s=korg; t=1789197441;
+	bh=4iu6/YgNqVN3cZGQ8t/y9FWWUTz2q2aKxID+mfKP7K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=juacGBLOllODSSwRiIEn9jybECqSLC/FL5vfqOaaghJRtpL+XAKNQxokoUEW7tNdp
-	 MOr0CWSc0nHrhU1gDeybK8r+XMwY+BnlmH0AdCIrCfwaPVtpvHKvjmwYoRwe/wZ4mQ
-	 V4Pmb2sby/lnJaKpsw1PFsVO8WgzZX0yTAFO1w5s=
+	b=ALNgj8Eb5XMCDxft/EI1DMPKURAd3LGyV5FqFEyK8CExVwwcLjI0Qpnd2kFPWT5y7
+	 jqNvrO/8YG+F235YkPOt/UiKQ2TSYq+UEJaQpeMfc0VGUzcnPbJfyH2++//H1AgcTz
+	 3l1bHxt3B6lL86emtVUzqZmt93y9QR4eEJobVk/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0173/1815] uprobes/x86: Remove struct uprobe_trampoline object
-Date: Sat, 12 Sep 2026 08:32:03 +0200
-Message-ID: <20260912065653.068901521@linuxfoundation.org>
+Subject: [PATCH 7.2 0138/1815] perf tests: Fix flakiness in branch stack sampling tests
+Date: Sat, 12 Sep 2026 08:31:28 +0200
+Message-ID: <20260912065652.254744321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,242 +51,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 38af0dd6a266057002eacb170c08298ea912fb0a ]
+[ Upstream commit 344d3aec164dba83a5520f23a0d46e13e904a205 ]
 
-Removing struct uprobe_trampoline object and it's tracking code,
-because it's not needed. We can do same thing directly on top of
-struct vm_area_struct objects.
+The branch stack sampling test (test 130) runs short iteration-based
+workloads to verify syscall, kernel, and trap branch stack sampling.
+Specifically, `test_syscall()` and `test_kernel_branches()` run `perf
+bench syscall basic` with loop counts of 8000 and 1000, and
+`test_trap_eret_branches()` runs `traploop` with 1000 iterations.
 
-This makes the code simpler and allows easy propagation of the
-trampoline vma object into child process in following change.
+Because these loop limits are extremely small, the total benchmark
+runtimes last only a few milliseconds (or less). Under high load,
+virtualization, or coarse sampling conditions, PMU cycle sampling fails to
+capture enough samples inside the brief benchmark loops. This leads to
+false negatives where the script output lacks the expected syscall,
+kernel, or trap branch entries (e.g. "ERROR: Branches missing getppid[^
+]*/SYSCALL/").
 
-Note the original code called destroy_uprobe_trampoline if the
-optimiation failed, but it only freed the struct uprobe_trampoline
-object, not the vma. The new vma leak is fixed in following change.
+Fix this by increasing the workload loop counts to 100,000 across all
+three test sections. Running 100,000 loops still finishes virtually
+instantaneously (less than 0.1 seconds), but generates enough iterations
+to guarantee robust branch stack capture.
 
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://patch.msgid.link/20260703114917.238144-3-jolsa@kernel.org
-Stable-dep-of: 07c308eb2bcf ("uprobes/x86: Do not leak trampoline vma mapping on optimization failure")
+Fixes: b55878c90ab9 ("perf test: Add test for branch stack sampling")
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/uprobes.c | 106 ++++++++------------------------------
- include/linux/uprobes.h   |   5 --
- kernel/events/uprobes.c   |  10 ----
- kernel/fork.c             |   1 -
- 4 files changed, 22 insertions(+), 100 deletions(-)
+ tools/perf/tests/shell/test_brstack.sh | 107 +++++++++++++++----------
+ 1 file changed, 66 insertions(+), 41 deletions(-)
 
-diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index 3af979fb41d38..a76203a33a7b0 100644
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -631,11 +631,6 @@ static struct vm_special_mapping tramp_mapping = {
- 	.pages  = tramp_mapping_pages,
- };
- 
--struct uprobe_trampoline {
--	struct hlist_node	node;
--	unsigned long		vaddr;
--};
+diff --git a/tools/perf/tests/shell/test_brstack.sh b/tools/perf/tests/shell/test_brstack.sh
+index eb5837f82e390..71550e0b37baa 100755
+--- a/tools/perf/tests/shell/test_brstack.sh
++++ b/tools/perf/tests/shell/test_brstack.sh
+@@ -110,20 +110,29 @@ test_trap_eret_branches() {
+ 		return
+ 	fi
+ 	start_err=$err
+-	err=0
+-	perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u,k -- \
+-		perf test -w traploop 1000 > "$TMPDIR/record.txt" 2>&1
+-	perf script -i $TMPDIR/perf.data --fields brstacksym | \
+-		tr ' ' '\n' > $TMPDIR/perf.script
 -
- static bool is_reachable_by_call(unsigned long vtramp, unsigned long vaddr)
- {
- 	long delta = (long)(vaddr + 5 - vtramp);
-@@ -682,83 +677,28 @@ static unsigned long find_nearest_trampoline(unsigned long vaddr)
- 	return high_tramp;
- }
- 
--static struct uprobe_trampoline *create_uprobe_trampoline(unsigned long vaddr)
-+static struct vm_area_struct *get_uprobe_trampoline(struct mm_struct *mm, unsigned long vaddr)
- {
--	struct pt_regs *regs = task_pt_regs(current);
--	struct mm_struct *mm = current->mm;
--	struct uprobe_trampoline *tramp;
-+	VMA_ITERATOR(vmi, mm, 0);
- 	struct vm_area_struct *vma;
- 
--	if (!user_64bit_mode(regs))
--		return NULL;
-+	if (vaddr > TASK_SIZE || vaddr < PAGE_SIZE)
-+		return ERR_PTR(-EINVAL);
+-	# BRBINF<n>.TYPE == TRAP are mapped to PERF_BR_IRQ by the BRBE driver
+-	check_branches "^trap_bench\+[^ ]+/[^ ]/IRQ/"
+-	check_branches "^[^ ]+/trap_bench\+[^ ]+/ERET/"
+-	if [ $err -eq 0 ]; then
++	local ret=1
++	for loops in 1000 10000 100000; do
++		err=0
++		perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u,k -- \
++			perf test -w traploop $loops > "$TMPDIR/record.txt" 2>&1
++		perf script -i $TMPDIR/perf.data --fields brstacksym | \
++			tr ' ' '\n' > $TMPDIR/perf.script
 +
-+	for_each_vma(vmi, vma) {
-+		if (!vma_is_special_mapping(vma, &tramp_mapping))
-+			continue;
-+		if (is_reachable_by_call(vma->vm_start, vaddr))
-+			return vma;
-+	}
- 
- 	vaddr = find_nearest_trampoline(vaddr);
- 	if (IS_ERR_VALUE(vaddr))
--		return NULL;
-+		return ERR_PTR(vaddr);
- 
--	tramp = kzalloc_obj(*tramp);
--	if (unlikely(!tramp))
--		return NULL;
--
--	tramp->vaddr = vaddr;
--	vma = _install_special_mapping(mm, tramp->vaddr, PAGE_SIZE,
-+	return _install_special_mapping(mm, vaddr, PAGE_SIZE,
- 				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_DONTCOPY|VM_IO,
- 				&tramp_mapping);
--	if (IS_ERR(vma)) {
--		kfree(tramp);
--		return NULL;
--	}
--	return tramp;
--}
--
--static struct uprobe_trampoline *get_uprobe_trampoline(unsigned long vaddr, bool *new)
--{
--	struct uprobes_state *state = &current->mm->uprobes_state;
--	struct uprobe_trampoline *tramp = NULL;
--
--	if (vaddr > TASK_SIZE || vaddr < PAGE_SIZE)
--		return NULL;
--
--	hlist_for_each_entry(tramp, &state->head_tramps, node) {
--		if (is_reachable_by_call(tramp->vaddr, vaddr)) {
--			*new = false;
--			return tramp;
--		}
--	}
--
--	tramp = create_uprobe_trampoline(vaddr);
--	if (!tramp)
--		return NULL;
--
--	*new = true;
--	hlist_add_head(&tramp->node, &state->head_tramps);
--	return tramp;
--}
--
--static void destroy_uprobe_trampoline(struct uprobe_trampoline *tramp)
--{
--	/*
--	 * We do not unmap and release uprobe trampoline page itself,
--	 * because there's no easy way to make sure none of the threads
--	 * is still inside the trampoline.
--	 */
--	hlist_del(&tramp->node);
--	kfree(tramp);
--}
--
--void arch_uprobe_init_state(struct mm_struct *mm)
--{
--	INIT_HLIST_HEAD(&mm->uprobes_state.head_tramps);
--}
--
--void arch_uprobe_clear_state(struct mm_struct *mm)
--{
--	struct uprobes_state *state = &mm->uprobes_state;
--	struct uprobe_trampoline *tramp;
--	struct hlist_node *n;
--
--	hlist_for_each_entry_safe(tramp, n, &state->head_tramps, node)
--		destroy_uprobe_trampoline(tramp);
++		# BRBINF<n>.TYPE == TRAP are mapped to PERF_BR_IRQ by the BRBE driver
++		check_branches "^trap_bench\+[^ ]+/[^ ]/IRQ/"
++		check_branches "^[^ ]+/trap_bench\+[^ ]+/ERET/"
++		if [ $err -eq 0 ]; then
++			ret=0
++			break
++		fi
++	done
++
++	if [ $ret -eq 0 ]; then
+ 		echo "Testing trap & eret branches [Passed]"
+ 		err=$start_err
+ 	else
+ 		echo "Testing trap & eret branches [Failed]"
++		err=1
+ 	fi
  }
  
- static bool __in_uprobe_trampoline(struct mm_struct *mm, unsigned long ip)
-@@ -1111,21 +1051,19 @@ int set_orig_insn(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- static int __arch_uprobe_optimize(struct arch_uprobe *auprobe, struct mm_struct *mm,
- 				  unsigned long vaddr)
- {
--	struct uprobe_trampoline *tramp;
--	struct vm_area_struct *vma;
--	bool new = false;
--	int err = 0;
-+	struct pt_regs *regs = task_pt_regs(current);
-+	struct vm_area_struct *vma, *tramp;
-+	int ret;
- 
-+	if (!user_64bit_mode(regs))
-+		return -EINVAL;
- 	vma = find_vma(mm, vaddr);
- 	if (!vma)
- 		return -EINVAL;
--	tramp = get_uprobe_trampoline(vaddr, &new);
--	if (!tramp)
--		return -EINVAL;
--	err = swbp_optimize(auprobe, vma, vaddr, tramp->vaddr);
--	if (WARN_ON_ONCE(err) && new)
--		destroy_uprobe_trampoline(tramp);
--	return err;
-+	tramp = get_uprobe_trampoline(mm, vaddr);
-+	if (IS_ERR(tramp))
-+		return PTR_ERR(tramp);
-+	return WARN_ON_ONCE(swbp_optimize(auprobe, vma, vaddr, tramp->vm_start));
+@@ -135,32 +144,40 @@ test_kernel_branches() {
+ 		return
+ 	fi
+ 	start_err=$err
+-	err=0
+-	perf record -o $TMPDIR/perf.data --branch-filter any,k -- \
+-		perf bench syscall basic --loop 1000 > "$TMPDIR/record.txt" 2>&1
+-	perf script -i $TMPDIR/perf.data --fields brstack | \
+-		tr ' ' '\n' > $TMPDIR/perf.script
+-
+-	# Example of branch entries:
+-	#       "0xffffffff93bda241/0xffffffff93bda20f/M/-/-/..."
+-	# Source addresses come first in user or kernel code. Next is the target
+-	# address that must be in the kernel.
+-
+-	# Look for source addresses with top bit set
+-	if ! grep -q -E -m1 "^0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
+-		echo "Testing kernel branch sampling [Failed kernel branches missing]"
+-		err=1
+-	fi
+-	# Look for no target addresses without top bit set
+-	if grep -q -E -m1 "^0x[0-9a-f]{0,16}/0x[0-7][0-9a-f]{1,15}/" $TMPDIR/perf.script; then
+-		echo "Testing kernel branch sampling [Failed user branches found]"
+-		err=1
+-	fi
+-	if [ $err -eq 0 ]; then
++	local ret=1
++	for loops in 1000 10000 100000; do
++		err=0
++		perf record -o $TMPDIR/perf.data --branch-filter any,k -- \
++			perf bench syscall basic --loop $loops > "$TMPDIR/record.txt" 2>&1
++		perf script -i $TMPDIR/perf.data --fields brstack | \
++			tr ' ' '\n' > $TMPDIR/perf.script
++
++		# Example of branch entries:
++		#       "0xffffffff93bda241/0xffffffff93bda20f/M/-/-/..."
++		# Source addresses come first in user or kernel code. Next is the target
++		# address that must be in the kernel.
++
++		# Look for source addresses with top bit set
++		if ! grep -q -E -m1 "^0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
++			err=1
++		fi
++		# Look for no target addresses without top bit set
++		if grep -q -E -m1 "^0x[0-9a-f]{0,16}/0x[0-7][0-9a-f]{1,15}/" \
++			$TMPDIR/perf.script; then
++			err=1
++		fi
++		if [ $err -eq 0 ]; then
++			ret=0
++			break
++		fi
++	done
++
++	if [ $ret -eq 0 ]; then
+ 		echo "Testing kernel branch sampling [Passed]"
+ 		err=$start_err
+ 	else
+ 		echo "Testing kernel branch sampling [Failed]"
++		err=1
+ 	fi
  }
  
- void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr)
-diff --git a/include/linux/uprobes.h b/include/linux/uprobes.h
-index f548fea2adec8..18be159bbc341 100644
---- a/include/linux/uprobes.h
-+++ b/include/linux/uprobes.h
-@@ -186,9 +186,6 @@ struct xol_area;
+@@ -206,20 +223,28 @@ test_syscall() {
+ 		return
+ 	fi
+ 	start_err=$err
+-	err=0
+-	perf record -o $TMPDIR/perf.data --branch-filter \
+-		any_call,save_type,u,k -c 10007 -- \
+-		perf bench syscall basic --loop 8000  > "$TMPDIR/record.txt" 2>&1
+-	perf script -i $TMPDIR/perf.data --fields brstacksym | \
+-		tr ' ' '\n' > $TMPDIR/perf.script
+-
+-	check_branches "getppid[^ ]*/SYSCALL/"
++	local ret=1
++	for loops in 8000 30000 100000; do
++		err=0
++		perf record -o $TMPDIR/perf.data --branch-filter \
++			any_call,save_type,u,k -c 10007 -- \
++			perf bench syscall basic --loop $loops  > "$TMPDIR/record.txt" 2>&1
++		perf script -i $TMPDIR/perf.data --fields brstacksym | \
++			tr ' ' '\n' > $TMPDIR/perf.script
++
++		check_branches "getppid[^ ]*/SYSCALL/"
++		if [ $err -eq 0 ]; then
++			ret=0
++			break
++		fi
++	done
  
- struct uprobes_state {
- 	struct xol_area		*xol_area;
--#ifdef CONFIG_X86_64
--	struct hlist_head	head_tramps;
--#endif
- };
- 
- typedef int (*uprobe_write_verify_t)(struct page *page, unsigned long vaddr,
-@@ -238,8 +235,6 @@ extern void uprobe_handle_trampoline(struct pt_regs *regs);
- extern void *arch_uretprobe_trampoline(unsigned long *psize);
- extern unsigned long uprobe_get_trampoline_vaddr(void);
- extern void uprobe_copy_from_page(struct page *page, unsigned long vaddr, void *dst, int len);
--extern void arch_uprobe_clear_state(struct mm_struct *mm);
--extern void arch_uprobe_init_state(struct mm_struct *mm);
- extern void handle_syscall_uprobe(struct pt_regs *regs, unsigned long bp_vaddr);
- extern void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr);
- extern unsigned long arch_uprobe_get_xol_area(void);
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index 6300b216012cb..e4f526c9bfbf0 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -1806,14 +1806,6 @@ static struct xol_area *get_xol_area(void)
- 	return area;
+-	if [ $err -eq 0 ]; then
++	if [ $ret -eq 0 ]; then
+ 		echo "Testing syscalls [Passed]"
+ 		err=$start_err
+ 	else
+ 		echo "Testing syscalls [Failed]"
++		err=1
+ 	fi
  }
- 
--void __weak arch_uprobe_clear_state(struct mm_struct *mm)
--{
--}
--
--void __weak arch_uprobe_init_state(struct mm_struct *mm)
--{
--}
--
- /*
-  * uprobe_clear_state - Free the area allocated for slots.
-  */
-@@ -1825,8 +1817,6 @@ void uprobe_clear_state(struct mm_struct *mm)
- 	delayed_uprobe_remove(NULL, mm);
- 	mutex_unlock(&delayed_uprobe_lock);
- 
--	arch_uprobe_clear_state(mm);
--
- 	if (!area)
- 		return;
- 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index f0e2e131a9a5a..abc2f01ac3573 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1069,7 +1069,6 @@ static void mm_init_uprobes_state(struct mm_struct *mm)
- {
- #ifdef CONFIG_UPROBES
- 	mm->uprobes_state.xol_area = NULL;
--	arch_uprobe_init_state(mm);
- #endif
- }
- 
+ set -e
 -- 
 2.53.0
 
