@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9AD3FF1AE;
-	Sat, 12 Sep 2026 12:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A015F3FF1AE;
+	Sat, 12 Sep 2026 12:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217056; cv=none; b=Tydyl6KurGJBzhNVlAaB0ah1xpjWi8ihMpnRBYnWdcdjdRU6TBq6pe5+ckBccgEQNRsRsCT6Av6pCmbBBW8X+Yo6WFp6yC43mQLnNxeBDoFC0E7xlIt3ymWKbMnpi02FrigZ/H7g9z/9Y1Qm+RbpzAfnziVp8b4V0G7IkT/PBe4=
+	t=1789217061; cv=none; b=ZsA97E98vm9GugnXYnPti5kFoZV6VoAMh8vvhrwEb1YOgOwFhIVmR68EnQGCMjVEykPx4u62CpmHYzMt/VS2BSCaO+60l2n7mKbI5k1iKqXk3NgRk6KtkW5sikBUGLjiXqJRQnIEXxz9/6HnPj4dGsL+O6+yzF4rGcIH/B6kpYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217056; c=relaxed/simple;
-	bh=G+eGN5eY0dOAk/HtsOhO4W28e123DDh+dxddG6Od444=;
+	s=arc-20240116; t=1789217061; c=relaxed/simple;
+	bh=InmXO/Lj5rv2EwWG2Z97ERrAqVj28/bLnkYuISOYVH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLyvB71u6in2AiMziqaNZR6guWogz8qHWQaqKKkvJ4OyfMBJAUwvzhLPerniX3YNxQC1D0PUfnNfwK3G8mr6h3Wxvl4uUhDWGvA9rbsLSPOktZOLDoa3E///81E8EWdvJ0DdTIPg9i+QpAeHN1v1cyG9VSWhR9OyyTRjksRLjiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY+vuXkJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nFvllMG4j9Xs89TU1v3jFPIN802pQyeDFmJEVFA1H4Jnq0cIb58CoZWgrLIv9yySWGjyKdB696HxvcvzQhVk2JDswnqDDvF06IHeW3sH8apYiKM/M1cUczdbYyqkOK99c9CFTUbq68bvonWooWKuXfwNxie385pp5Ugw94r6B8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0akcoOl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY+vuXkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B611F000FF;
-	Sat, 12 Sep 2026 12:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0akcoOl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B067F1F000FF;
+	Sat, 12 Sep 2026 12:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217055;
-	bh=M/OeWxGfOppPHs/TEfSSeGRYt2V/u2MgiZTNxIF+pr8=;
+	s=korg; t=1789217060;
+	bh=35a8GtXYr6thZspKJedEY5/nQ43+migW5MrGxUnmU9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YY+vuXkJyiYA+4LirZyhKZB39MWqTFBKLNmhCKkDAMjQCpS8ydCRm0NMoWePWkVRR
-	 C0EOMEDQj11rdC73wKBhwLUiYkApP7Bh1jcl0Esxn4+9TX6fIlBN3gTCCbJylL43Bw
-	 Yz3vyardm2gtNDOtwsINohVyqDFoOPGabR2WU+Dk=
+	b=U0akcoOljMzFmfrmaPzbWKcq6C0O539qhT26hjlhuRAppP1HObLWJH8pQJX+TvGVg
+	 C7wV2tF5iEPplWzGtfMN6oqEqzbirQkfVO4YkhVTH9vpGJSEPbukmFhSNiAtJWVtJr
+	 fcsf0A2micwEQbrOGueciq+rhue362KuHt0tdcoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ai Chao <aichao@kylinos.cn>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0836/1376] perf machine: Check snprintf truncation for guest kallsyms path
-Date: Sat, 12 Sep 2026 08:54:22 +0200
-Message-ID: <20260912065626.180234537@linuxfoundation.org>
+Subject: [PATCH 6.12 0863/1376] HID: i2c-hid: Fix "(null)" output when reading report descriptor fails
+Date: Sat, 12 Sep 2026 08:54:49 +0200
+Message-ID: <20260912065626.794548242@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,51 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Ai Chao <aichao@kylinos.cn>
 
-[ Upstream commit d04ef71492fad7230d474efe33d05f4c0563d409 ]
+[ Upstream commit 8da0f0951deec9f0728ed2d9c54ded1c344b7542 ]
 
-machines__create_guest_kernel_maps() builds the guest kallsyms path
-with snprintf() without checking the return value.  A truncated path
-could pass the access() check if a prefix directory happens to contain
-a file named "kallsyms", leading to the wrong file being used for
-symbol resolution.
+When i2c-hid fails to read the HID report descriptor during device
+initialization, the error message prints as:
 
-Check for truncation and skip the directory.
+  hid (null): reading report descriptor failed
 
-Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+The HID device name is set in hid_add_device() after calling
+hdev->ll_driver->parse(), so when i2c_hid_parse() fails and calls
+hid_err(), the device name has not been set yet, resulting in "(null)"
+output.
+
+Use dev_err(&client->dev, ...) instead of hid_err(hid, ...) because
+the I2C client device is fully initialized with a proper name, providing
+meaningful error messages for debugging.
+
+Before: hid (null): reading report descriptor failed
+After:  i2c_hid i2c-TPD0001:00: reading report descriptor failed
+
+Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
+
+Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index a958184d3bb38..77050eff8fcb5 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1223,9 +1223,14 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 				free(namelist[i]);
- 				continue;
- 			}
--			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
--				 symbol_conf.guestmount,
--				 namelist[i]->d_name);
-+			if (snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
-+				     symbol_conf.guestmount,
-+				     namelist[i]->d_name) >= (int)sizeof(path)) {
-+				pr_debug("Guest kallsyms path too long for %s. Skipping.\n",
-+					 namelist[i]->d_name);
-+				free(namelist[i]);
-+				continue;
-+			}
- 			if (access(path, R_OK)) {
- 				pr_debug("Can't access file %s\n", path);
- 				free(namelist[i]);
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 8ce0535fc42d6..0e1adfa9b2931 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -784,7 +784,7 @@ static int i2c_hid_parse(struct hid_device *hid)
+ 					    ihid->hdesc.wReportDescRegister,
+ 					    rdesc, rsize);
+ 		if (ret) {
+-			hid_err(hid, "reading report descriptor failed\n");
++			dev_err(&client->dev, "reading report descriptor failed\n");
+ 			goto out;
+ 		}
+ 	}
 -- 
 2.53.0
 
