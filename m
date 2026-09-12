@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658BB23BD06;
-	Sat, 12 Sep 2026 14:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47EA23BD06;
+	Sat, 12 Sep 2026 14:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224702; cv=none; b=mS33XIB+Rrea+m1Biqc7M1YnzvmwBfmWLK/pveJCQXDGDD/kNWKDCaRsTSeMtYIfn1GL8dYVYip4gkbO4K40an2rs6gT99MaNAUTBDII52F60oHlu3Plhu1kWlwvMCIgbDY4Ezd9guuTMEYxc9FqjTizTUExvoZl1dCle47YScY=
+	t=1789224707; cv=none; b=R4Dc+lewnoCoRafEC7Nx6e2ualqHC9UI23vZxfeb1OHRD74H18Usfc775FMdd5SIqCKs1H+0r48cXsVI83Dag5eEMeptmsz0NgrDKEkIN7Fu9qxJA061/7yF3sul0uAHiIAN2qqEEwcjy9wjvwAoX4gsfsG+OSwMWDuzmlKYy3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224702; c=relaxed/simple;
-	bh=lzdTui0uzjBRyMaUFLi4Jgs6Dz/7Pr3X47yN4ib+N9I=;
+	s=arc-20240116; t=1789224707; c=relaxed/simple;
+	bh=ol7uaowQjjoXOk/QojHl7tb+PQ7iB3ptW5Z70IRWneI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YT2Jx/UypycJa7S/JIgZK3WaD8eDKX4Uc5yRiFYp6yH1MxcXLjUfmJKB519qJUXmSVkhNGmLuYkkyOIN+CjC4bvDTpjRE/xOYTBCoq4m5SFTT2NaszvRPC1DB9COGOUcoU/MKNUuwAVqjys5kZ2UVuOh+EOPP6AW5RbH676pdEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+kY2SEr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MGmLfcWqPYMhIeu5A05cvvWaLXhywZiGJBrQ0eX4wMKau1xIO2ivfGrERuG/wvFEAVi0slUPBEpL7oEx+I3MX0lhcAqfGdZ4oemM0dF7K+TgxtC6igwg8SNUckfZ5pyl19BMaw2T0c1jQyh4/OIY+fS5oCmlD0OU5WiCs3khhZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7C6ODKA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+kY2SEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C12D1F000FF;
-	Sat, 12 Sep 2026 14:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7C6ODKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401E21F000FF;
+	Sat, 12 Sep 2026 14:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224701;
-	bh=8kYMBqqocwe++tslPGWJu1QdvANkIIn+btU1gI0rx1o=;
+	s=korg; t=1789224706;
+	bh=RkUsDiDMfw3k8cUP1qQNYUEc2hJR1QaLZUgGBs5Gz64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+kY2SErZGScKNgvgB5RTh0TJDjPZ2qEPU1AONByZdryVBPWT0tgpWijOwGG7uaKz
-	 G9f+1ViNo09PCRTYfSMA6+w82zbRYcuVEO9x4ADD5x3VCP8rtdYhTlASBe5x0eUY7g
-	 E4ObyoWRdu/+d+YRM8zynM1Of7pIRetDsSpMyhUE=
+	b=q7C6ODKAgO28Ifr5oe+X0y+COk306WTQMPsfLrtPZf3AVV4pURYE6YttF4iPnJ9av
+	 na4IPaSZmpRtpdPcBGPEnP/0ADcsqOZgzy7WkxrhYM0zJ65eGhv1BTOXYmMWo0JGrB
+	 sw4nauQJPpEz2ZuAxjquHgDQE/ZbJ0mw4k9HR+jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Richard Cheng <icheng@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Will Deacon <will@kernel.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1004/1424] perf/cxlpmu: Fix 64-bit write to 32-bit HDM filter register
-Date: Sat, 12 Sep 2026 08:57:16 +0200
-Message-ID: <20260912065629.796068458@linuxfoundation.org>
+Subject: [PATCH 6.6 1005/1424] wifi: mac80211: send TWT teardown to peer after setup TX failure
+Date: Sat, 12 Sep 2026 08:57:17 +0200
+Message-ID: <20260912065629.818439197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,39 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit ea434e8fd3a539e9c53285b10d3c7e539e228591 ]
+[ Upstream commit a28fcce6ee74be8a4526e6cfa16dc7786d62a784 ]
 
-The HDM decoder filter configuration register is 32 bits wide, but the
-driver programs it with a 64-bit writeq(). The filter value never
-exceeds 32 bits, so the upper half of the write is always zero and
-lands in the adjacent Filter ID 1 (Channel/Rank/Bank) configuration
-register at offset+4.
+When an AP's TWT Setup response is not acknowledged,
+ieee80211_s1g_tx_twt_setup_fail() asks the driver to tear down the local
+agreement and sends a TWT teardown action as the peer notification. It
+uses the response SA as the destination, but
+ieee80211_s1g_send_twt_setup() built that response with SA set to the
+AP's address. The teardown is therefore queued with DA, SA and BSSID all
+set to the AP address and never reaches the station.
 
-Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+The in-tree driver callbacks update local hardware state and emit no
+action frame. The station receives no notification that mac80211 asked
+the driver to remove the agreement and can keep following the TWT
+schedule, leaving the peers' power-save state desynchronized.
+
+Address the teardown to the response DA, the station to which the failed
+response was sent. This also matches the station lookup the transmit
+status path already performs on the same frame.
+
+Fixes: f5a4c24e689f ("mac80211: introduce individual TWT support in AP mode")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260729173607.13340-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/cxl_pmu.c | 2 +-
+ net/mac80211/s1g.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
-index 3e1a4f9006119..2455af65ae271 100644
---- a/drivers/perf/cxl_pmu.c
-+++ b/drivers/perf/cxl_pmu.c
-@@ -643,7 +643,7 @@ static void cxl_pmu_event_start(struct perf_event *event, int flags)
- 			cfg = cxl_pmu_config2_get_hdm_decoder(event);
- 		else
- 			cfg = GENMASK(31, 0); /* No filtering if 0xFFFF_FFFF */
--		writeq(cfg, base + CXL_PMU_FILTER_CFG_REG(hwc->idx, 0));
-+		writel(cfg, base + CXL_PMU_FILTER_CFG_REG(hwc->idx, 0));
- 	}
+diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
+index 9914390ff31ff..337d8d4ea5f57 100644
+--- a/net/mac80211/s1g.c
++++ b/net/mac80211/s1g.c
+@@ -146,7 +146,7 @@ ieee80211_s1g_tx_twt_setup_fail(struct ieee80211_sub_if_data *sdata,
  
- 	cfg = readq(base + CXL_PMU_COUNTER_CFG_REG(hwc->idx));
+ 	drv_twt_teardown_request(sdata->local, sdata, &sta->sta, flowid);
+ 
+-	ieee80211_s1g_send_twt_teardown(sdata, mgmt->sa, sdata->vif.addr,
++	ieee80211_s1g_send_twt_teardown(sdata, mgmt->da, sdata->vif.addr,
+ 					flowid);
+ }
+ 
 -- 
 2.53.0
 
