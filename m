@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA93847ACFF;
-	Sat, 12 Sep 2026 12:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892D0431A5C;
+	Sat, 12 Sep 2026 12:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214508; cv=none; b=dUx1lr8sS0CuhTCFrgdRBebTryx3EjmZWJW2xPjRQlvTnTunsywPSM/tPc48xA+WPkWvfT9St/R6IHIO2pyg7BoRjAS1y4qIeQAamdirC9j2vwNCZSOdBer2zAam4MqjrQ1fyaEg5jADmOCFfPnP8wwdQQHmXNZzbAbFIiGIznM=
+	t=1789214512; cv=none; b=ghwjBO8lzVBoordMWTow1JP6pNNc1uIHCPpDHNzVAjvYRX8uqgBHvLRjb9J2PEq75K14ROzWmR6jHAJC99UPsfo5cpuVTa1g67hGxJkABIfFdzL9iBVVpbvPJqDL1wb0YpOt47APVc1MWOXwdz9cl2ZPxMWmjcPZIRTERnq6nto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214508; c=relaxed/simple;
-	bh=JQ4Z4HOnkgcEAHhBbaze4Pd9R3ghd1QEq+Qo765uD1Q=;
+	s=arc-20240116; t=1789214512; c=relaxed/simple;
+	bh=fQxwM0wC8fQGB2jwj4rr8gzu5nDL0TLmE3JhwdClWcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+cMTYLIkwhLL4u8Hm3pM+Uy8CLlEPjXnqtIdouwMapuMPSPNHoAkbtrqpi7mM3Do9Stdvip0lkPOknnSpG8B/w2R7zEpMtZ9kBJRCSqUZY/U1enpFiDgoH4rDMnTu9hV4zd5U+n+uGZ2DO/znZ54ejOjAUaaAZ9IducEzeecPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ph+JS+C0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KgpNcaVUr9FiV9z1dGfIh1WjKCYbMNGsfMENbV/y77Z2pTg34QoZfgdmwqeSr3/K8tfp8RxTm+tF9t0/E6pD2cX5sWVwl9XM/aC4Aa+juUAfhY/ZlA5VGHG/q/l9UjF3P8pKx5+llaOpJ8CMLYOuTzHP9ex3mGfDzUvQJKvM2Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgLNgUpz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ph+JS+C0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD731F000FF;
-	Sat, 12 Sep 2026 12:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgLNgUpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270021F000FF;
+	Sat, 12 Sep 2026 12:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214506;
-	bh=+eIhFE90mOTUX3D2E6swyUyuNXz9D5Nji8iX2qVdZS4=;
+	s=korg; t=1789214511;
+	bh=FgXRc4q4wYOZOPxpLqbRft0L8TRiZ+UHMPnpnRupJtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ph+JS+C0Xzg5kOCHozRyhgtOq+L2keObrB/1RMkBduJk4qR+GNQ3EUo1lO0MNSDmG
-	 +SMke5/czgkhXm8sIr4E4LZpiv0pzFYfegkLt3a3cvKA9hoB8ck812WG5oETnbELMY
-	 VSaIx2Fn2zd7NYbSKPWVEEJ1mxg/08W5YPrHj5hc=
+	b=VgLNgUpzZq8PZfMwqCw9f4XWC7Fv6IrGbJQOhjprZjS/JkjS/rBR7BmFpd0f5wFwX
+	 SqWL5eJUnE0g/Kl+TyfG+ydvIRcotgsDc/RBeqX/j7gX57d+NhSw/egaz5uCaqjc7P
+	 kwaGkRg6OUkQw3vrm0gqO7ANU7z6OqjIggfLoHRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Henrik Grimler <henrik.grimler@axis.com>,
+	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0341/1376] clk: imx: scu: drop redundant init.ops variable assignment
-Date: Sat, 12 Sep 2026 08:46:07 +0200
-Message-ID: <20260912065615.150705663@linuxfoundation.org>
+Subject: [PATCH 6.12 0342/1376] drm/lima: call drm_mm_init() with a valid allocation range
+Date: Sat, 12 Sep 2026 08:46:08 +0200
+Message-ID: <20260912065615.173656071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,34 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Henrik Grimler <henrik.grimler@axis.com>
 
-[ Upstream commit 5f2db1ce201216e81333ecc2ab51494410b2fe0d ]
+[ Upstream commit 3b3bce4a692ac60d9f4a341e6b597dd1fd0a28f9 ]
 
-The init.ops is assigned a default value, however right below it is an
-if, else if, and else where all of them also assign a value to init.ops.
-Drop the redundant init.ops assignment at the top.
+lima_vm_create() is currently run before va_start and va_end are set up,
+meaning they are both 0. lima_vm_create() runs drm_mm_init() with them
+as arguments for the allocator, and if DRM_DEBUG_MM is enabled the
+DRM_MM_BUG_ON check in drm_mm_init then fires, as seen here on
+exynos4412-odroid-u2:
 
-Fixes: 3b9ea606cda53 ("clk: imx: scu: add cpu frequency scaling support")
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+[    1.736297] ------------[ cut here ]------------
+[    1.740370] kernel BUG at drivers/gpu/drm/drm_mm.c:931!
+[    1.745574] Internal error: Oops - BUG: 0 [#1] SMP ARM
+[    1.750697] Modules linked in:
+[    1.753734] CPU: 0 UID: 0 PID: 41 Comm: kworker/u16:1 Not tainted 7.0.10-postmarketos-exynos4 #11 PREEMPT
+[    1.763372] Hardware name: Samsung Exynos (Flattened Device Tree)
+[    1.769446] Workqueue: events_unbound deferred_probe_work_func
+[    1.775261] PC is at drm_mm_init+0x9c/0xa4
+[    1.779339] LR is at lima_vm_create+0x144/0x17c
+[ ... ]
+
+Fix the issue by moving the lima_vm_create() call after va_start and
+va_end are set up.
+
+Fixes: a1d2a6339961 ("drm/lima: driver for ARM Mali4xx GPUs")
+Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+Link: https://patch.msgid.link/20260601-lima-alloc-fix-v1-1-16d3f3b7b780@axis.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-scu.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/lima/lima_device.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
-index 75a6d91c0711c..ffbb05fb91bc7 100644
---- a/drivers/clk/imx/clk-scu.c
-+++ b/drivers/clk/imx/clk-scu.c
-@@ -483,7 +483,6 @@ struct clk_hw *__imx_clk_scu(struct device *dev, const char *name,
- 	clk->clk_type = clk_type;
+diff --git a/drivers/gpu/drm/lima/lima_device.c b/drivers/gpu/drm/lima/lima_device.c
+index 0bf7105c8748b..7c873e62c16da 100644
+--- a/drivers/gpu/drm/lima/lima_device.c
++++ b/drivers/gpu/drm/lima/lima_device.c
+@@ -368,12 +368,6 @@ int lima_device_init(struct lima_device *ldev)
+ 	if (err)
+ 		goto err_out0;
  
- 	init.name = name;
--	init.ops = &clk_scu_ops;
- 	if (rsrc_id == IMX_SC_R_A35 || rsrc_id == IMX_SC_R_A53 || rsrc_id == IMX_SC_R_A72)
- 		init.ops = &clk_scu_cpu_ops;
- 	else if (rsrc_id == IMX_SC_R_PI_0_PLL)
+-	ldev->empty_vm = lima_vm_create(ldev);
+-	if (!ldev->empty_vm) {
+-		err = -ENOMEM;
+-		goto err_out1;
+-	}
+-
+ 	ldev->va_start = 0;
+ 	if (ldev->id == lima_gpu_mali450) {
+ 		ldev->va_end = LIMA_VA_RESERVE_START;
+@@ -387,6 +381,12 @@ int lima_device_init(struct lima_device *ldev)
+ 	} else
+ 		ldev->va_end = LIMA_VA_RESERVE_END;
+ 
++	ldev->empty_vm = lima_vm_create(ldev);
++	if (!ldev->empty_vm) {
++		err = -ENOMEM;
++		goto err_out1;
++	}
++
+ 	ldev->iomem = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(ldev->iomem)) {
+ 		dev_err(ldev->dev, "fail to ioremap iomem\n");
 -- 
 2.53.0
 
