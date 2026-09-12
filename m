@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5343F23BE;
-	Sat, 12 Sep 2026 09:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B851541D212;
+	Sat, 12 Sep 2026 09:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204736; cv=none; b=OhHviOlYDxLEPXAYLxGVRCNBjwSY5LnV0G29pFki325R+2sDhGLzyZ9/4kowxwrGXrSSLB9W6zNXZlHQOIrBF5LF3VQoGsyo5EzA3kzBKjAGOEHHBCa7z2B8Dq/9zxFqWBgLALkMilqEWf2naeFNzsdoE4mya4KB9pjNDUKTmBc=
+	t=1789204739; cv=none; b=YRXcPVcB8EYkpwyOJsuUaL+9V+JpSHmcSUzKysytHZ4pUQrmEzj17BYe/kVr+GyrI4PJbfZgvDZZK2wgkYuuRQ8DwhF0SifLXBc1v18TyJahy9Oo+Jzhlg+uH36A2FG1thfC67BjeTf0Ac+o3L/MikMMe1cBVgURqpYjONGpI14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204736; c=relaxed/simple;
-	bh=e+qO6TG5WUMUgh7JS6ODhbj8gwZDpC0p1lYqNFgUzqE=;
+	s=arc-20240116; t=1789204739; c=relaxed/simple;
+	bh=tqQb5lLbObxOgC7cP7+wUnrd7Xxj7GWV/4I9KgJ/TYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfGFwQdwsUOWC9kqhJNOwCFIRxnMfQQZpp6MlD5RfZ/3QYj8UIAYy/wvvEsUPgJ4P4c2lqYeLN15+MdJPCuYcnePVq8tQaFegwwuardLMxS/NT/cAUTLD1xsCLmUlplpmb5FpZOptYSV7r6EZEYzBmiOxSGiok441fbRHQhMXWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjl/A1S6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LWuiM3xv9Ruqzja1TGUDKt3M0sswqh5g1hgRZ0YYE3vQZOak2JIu+RDCAa/FaBmNXiL/h6KO+KjsQiHK8u2q73esGiqsboFdXd8HKlbMqqtHW4C1kTCLXVEBkxWFCUP6yxI4qkFFb9maJwpr9UkLt+kqVxVEjdbqQLmEvG2oZ2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxv172ex; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjl/A1S6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E4D1F00893;
-	Sat, 12 Sep 2026 09:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxv172ex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF7C1F000FF;
+	Sat, 12 Sep 2026 09:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204731;
-	bh=xHi44Un1hoA9e4Lpmt9GHhlSw+2xghYIZbq3ltX/Th4=;
+	s=korg; t=1789204735;
+	bh=9HDPV6KZbnlUHi7I8CUshC4feFErrwft+y4OwIdHJHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjl/A1S6HIQW+MK/9oiZDYh7TgylUJXsLRrhUbwrC33ZF9dQ6hf3/6J8ONu2Cp5Af
-	 gYynrJ026ybPHXrkAjxNDL5IHz0wUhAYb8oVrf4OQ/I/sIMexm8YLehaB26AMRzxOy
-	 LQQoT23kXILrZ1UUxYHlCK2xtw5koMauKvfyT/NQ=
+	b=bxv172ex/icUdjW2AUavlY1pxsZi43U2nnJbm9fpszPNpd3AoIgGuFtLyK0x6paIb
+	 FNwjbKKUy37tCX/iJLeBVd8uX3k8ityRn5nSHfdjZqwobz6Zkn44fREOrUODdh4oAC
+	 jadflXzAikw42O4NrhEnXgLXvq9zVBOotLbgoInw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Marek Czernohous <marek@czernohous.de>,
 	Simon Horman <horms@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1673/1815] net/mlx5: E-Switch, preserve max tx speed on vport state modification
-Date: Sat, 12 Sep 2026 08:57:03 +0200
-Message-ID: <20260912065728.262951205@linuxfoundation.org>
+Subject: [PATCH 7.2 1674/1815] forcedeth: stop the tx_timeout register dump past the requested window
+Date: Sat, 12 Sep 2026 08:57:04 +0200
+Message-ID: <20260912065728.286416496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,97 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Marek Czernohous <marek@czernohous.de>
 
-[ Upstream commit ad0ae7aefa7a6ede28a549d8dac87456d87ef6d4 ]
+[ Upstream commit cfa9178ce2e5b4f2e2a9e8b577a6cff841665aa0 ]
 
-When modifying vport state, the firmware interprets a zero in the max tx
-speed field as an intentional reset, which can overwrite previously set
-values. This patch attempts to fix this by querying the current max tx
-speed from firmware before modifying the vport state and passing it back
-in the modification command. If the query fails, fall back to the cached
-agg_max_tx_speed value to avoid inadvertently resetting the speed.
+nv_tx_timeout() dumps the register window in rows of eight dwords:
 
-Fixes: 50f1d188c580 ("net/mlx5: Propagate LAG effective max_tx_speed to vports")
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+	for (i = 0; i <= np->register_size; i += 32) {
+		netdev_info(dev, "%3x: %08x ... %08x\n", i,
+			    readl(base + i + 0), ..., readl(base + i + 28));
+
+The loop bound only checks the row's starting offset, so the final row
+reads a full 32 bytes from a position that is below the end of the window
+but too close to it. base is mapped with exactly that length:
+
+	np->base = ioremap(addr, np->register_size);
+
+so the tail of that row is read from beyond the length the driver asked
+for. Per variant, the last iteration reads past register_size by:
+
+	NV_PCI_REGSZ_VER1 (0x270): row 0x260 reads to 0x27f, 16 bytes over
+	NV_PCI_REGSZ_VER2 (0x2d4): row 0x2c0 reads to 0x2df, 12 bytes over
+	NV_PCI_REGSZ_VER3 (0x604): row 0x600 reads to 0x61f, 28 bytes over
+
+This happens on every supported device, not just one of them. Note that
+it is not a consequence of the sizes being odd: with i <= register_size
+the offending row is reached whatever the size, and a size that were a
+multiple of 32 would overrun by a full row rather than by a remainder.
+
+To be precise about the severity: the reads stay inside the BAR. Memory
+BAR sizes are powers of two, the driver only accepts a region with
+pci_resource_len() >= register_size (forcedeth.c:5757-5762), and the
+next power of two at or above each register_size already covers the
+offending row: 0x400 for 0x270 and 0x2d4, 0x800 for 0x604. ioremap()
+also rounds the mapped length up to page granularity, so the reads land
+inside the mapping the CPU has as well. What they leave is the window
+the driver asked for, not the BAR and not the mapping. That is still a
+driver reading registers it did not ask for, and it is trivial to
+avoid, but nobody should expect a fault from it.
+
+Changing <= to < is not enough: register_size is a length and every size
+above is larger than its last row start, so i still reaches the offending
+row. Check that the whole row fits instead.
+
+The trade-off is that a partial trailing row is no longer dumped: 16 bytes
+for VER1, 20 for VER2, 4 for VER3. That seemed preferable to reading
+outside the requested window, and to open-coding a second, narrower dump
+for the remainder in what is a debug-only path. Extending the dump to
+cover the tail can be done on top if anyone misses those registers.
+
+Only reachable with the debug_tx_timeout module parameter, which defaults
+to false. It has not been observed at runtime: forcing a genuine TX
+timeout on the reference machine is not something I can do safely, so this
+rests on the arithmetic above and on a build test, not on a reproduction.
+UBSAN does not catch it either, since these are MMIO reads rather than an
+array access. It was found by reading the function while fixing the
+saved_config_space off-by-one in nv_suspend() and nv_resume().
+
+The dump was introduced with a fixed 0x400 bound while ioremap() mapped
+only NV_PCI_REGSZ (0x270), so it read about 0x190 bytes too far from the
+start. Commit 86a0f04387bf ("[PATCH] forcedeth: fix initialization")
+later replaced 0x400 with np->register_size, which shrank the overrun to
+the remainder but did not remove it.
+
+Fixes: c2dba06dae7d ("[PATCH] forcedeth: rewritten tx irq handling")
+Signed-off-by: Marek Czernohous <marek@czernohous.de>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260816065015.3280733-4-tariqt@nvidia.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/178682367886.3748309.6978554332066826294@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/esw/adj_vport.c        | 20 ++++++++++++++++
- .../net/ethernet/mellanox/mlx5/core/vport.c   | 24 +++++++++++++++++++
- 2 files changed, 44 insertions(+)
+ drivers/net/ethernet/nvidia/forcedeth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
-index 3624c680a861a..7950b82d8b8ae 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
-@@ -11,6 +11,26 @@ int mlx5_esw_adj_vport_modify(struct mlx5_core_dev *dev, u16 vport,
+diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
+index dc804e1115641..f0218a0eab5ca 100644
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -2740,7 +2740,7 @@ static void nv_tx_timeout(struct net_device *dev, unsigned int txqueue)
  
- 	lockdep_assert_held(&dev->priv.eswitch->state_lock);
- 
-+	if (MLX5_CAP_ESW(dev, esw_vport_state_max_tx_speed)) {
-+		u8 op_mod = MLX5_VPORT_STATE_OP_MOD_ESW_VPORT;
-+		struct mlx5_vport *esw_vport;
-+		u32 speed = 0;
-+		int err;
-+
-+		err = mlx5_query_vport_max_tx_speed(dev, op_mod, vport,
-+						    true, &speed, NULL);
-+		if (err) {
-+			esw_vport = mlx5_eswitch_get_vport(dev->priv.eswitch,
-+							   vport);
-+			speed = IS_ERR(esw_vport) ? 0 :
-+				esw_vport->agg_max_tx_speed;
-+			mlx5_core_dbg(dev,
-+				      "Failed to query vport %d max tx speed, err=%d, using cached %u\n",
-+				      vport, err, speed);
-+		}
-+		MLX5_SET(modify_vport_state_in, in, max_tx_speed, speed);
-+	}
-+
- 	MLX5_SET(modify_vport_state_in, in, opcode,
- 		 MLX5_CMD_OP_MODIFY_VPORT_STATE);
- 	MLX5_SET(modify_vport_state_in, in, op_mod,
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/vport.c b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-index edac2d694e0f0..8aa94ec87a0e3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -93,6 +93,30 @@ int mlx5_modify_vport_admin_state(struct mlx5_core_dev *mdev, u8 opmod,
- 	lockdep_assert_held(&mdev->priv.eswitch->state_lock);
- #endif
- 
-+	if (MLX5_CAP_ESW(mdev, esw_vport_state_max_tx_speed) &&
-+	    opmod == MLX5_VPORT_STATE_OP_MOD_ESW_VPORT &&
-+	    vport != MLX5_VPORT_UPLINK) {
-+		u32 speed = 0;
-+		int err;
-+
-+		err = mlx5_query_vport_max_tx_speed(mdev, opmod, vport,
-+						    other_vport, &speed, NULL);
-+		if (err) {
-+#ifdef CONFIG_MLX5_ESWITCH
-+			struct mlx5_vport *esw_vport;
-+
-+			esw_vport = mlx5_eswitch_get_vport(mdev->priv.eswitch,
-+							   vport);
-+			speed = IS_ERR(esw_vport) ? 0 :
-+				esw_vport->agg_max_tx_speed;
-+#endif
-+			mlx5_core_dbg(mdev,
-+				      "Failed to query vport %d max tx speed, err=%d, using cached %u\n",
-+				      vport, err, speed);
-+		}
-+		MLX5_SET(modify_vport_state_in, in, max_tx_speed, speed);
-+	}
-+
- 	MLX5_SET(modify_vport_state_in, in, opcode,
- 		 MLX5_CMD_OP_MODIFY_VPORT_STATE);
- 	MLX5_SET(modify_vport_state_in, in, op_mod, opmod);
+ 		netdev_info(dev, "Ring at %lx\n", (unsigned long)np->ring_addr);
+ 		netdev_info(dev, "Dumping tx registers\n");
+-		for (i = 0; i <= np->register_size; i += 32) {
++		for (i = 0; i + 32 <= np->register_size; i += 32) {
+ 			netdev_info(dev,
+ 				    "%3x: %08x %08x %08x %08x "
+ 				    "%08x %08x %08x %08x\n",
 -- 
 2.53.0
 
