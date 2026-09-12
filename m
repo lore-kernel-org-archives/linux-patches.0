@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79F8309EE2;
-	Sat, 12 Sep 2026 19:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845663382CB;
+	Sat, 12 Sep 2026 19:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242080; cv=none; b=LS4YfGUEUi16A+HEpYsoVbvwByPAt+U3cihOM5IqxAOE+R/jliDnVw3fJx4ethjx1CUSvusP5EjL8eYtecoYgqadl0YjAoTTNIjDJG7VhkjD3lBkAaDYvz+cZ9n2FzaCWhsUNfXgBMDJDufKbCcfBLJHLWG8GDPpZUoMmx0h0vs=
+	t=1789242082; cv=none; b=cQsdWYwmNzffWgfeYx9Hsi2dkC/GgDbPCSSk1fE6fnbrCRgOVj99R2qUFcag+Wdlpj6DxHY0Rr40jv3ZEdrHKKiKj8rLX264HG6KVUpgB8+/hsjS/iG3MAySl98skXNr9g3oYWRmbLGfwXklIkSDx/btLSYiN+OBzCpxQVHaIBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242080; c=relaxed/simple;
-	bh=CBvEkGA679Z8nnVIGFKtPDS4Q9AMTNx6NrEM7DtzQ08=;
+	s=arc-20240116; t=1789242082; c=relaxed/simple;
+	bh=BsJzdPWtrnwTx/kGPoef7wH8x119RXQlSaEdFJKZ1kQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQfdUhNhftBLXcsaHYElyW3nT2kOICNJXRCpNj7GchsyIgTuwp/6qXg7Vz310h56yxFT6mfSzEMEqNkVF10qwIZ3lBOFmNsz3kxhGiWWqxaVWTiyU1ZT2ncz9JBLmG3INXNZIpBZyasMaJIgQzp0sqeKCyzGfwzKGDi9mtebRFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/gKpAPE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fJfAdm7ij0XoDhS1fLK0niB6TailrAY+Z1PGMFQkUIhnRoXUV2idcbfZPkq5ZUudqukP6vMiXvWjBtV4ZVmb6kXCtAj2UPbZheNZZdWQirpiqCeaziiX709Hjm46/emtAUvBCu+qUyY4TS1l9bCRnIc3wU/czMwVUW0byfJ2lbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToIY8MWW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/gKpAPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2911F000FF;
-	Sat, 12 Sep 2026 19:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToIY8MWW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DC11F000FF;
+	Sat, 12 Sep 2026 19:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242078;
-	bh=y23n/T1MVPR8HuyVsMhI58yKz3+9lSCLf4wRDFR9N1I=;
+	s=korg; t=1789242081;
+	bh=CDRXm2iFYQQohPQvGkdkDv61Q5lWt3eHiuZMCgy1pP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S/gKpAPE9VhMNBEconYUw/WyHe8OfI/iQQ/kEGLZb0ZiW5pl4go9EjB4U8eakFsTK
-	 HanDW4tpVyAUBLv+0/C6EvCwElHWmXdAEIiaOCl1w/pH5J1H3MKUcKixtiianvpeTS
-	 DUcQL5PhTmgf9yPmUyT8xQifNAyLIp0dJF0yzsY8=
+	b=ToIY8MWWENXcV7MRdybaAkxZbYK1DlVBW6+9GXOZ/1svmqTjcDCfMA5zTMsjw8+t5
+	 wBs6q6qzR2iP05300ikJp/q8wLOoZEMsSIBvIgzneXQpkiMg8uFitVeunN2o7SWCwn
+	 hwQdao7lPnLijwRysoLsX+3FeI6a0XiDCZjsOn0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+99d6c66dbbc484f50e1c@syzkaller.appspotmail.com,
-	"Jiangong.Han" <jiangong.han@windriver.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 277/798] media: em28xx: fix use-after-free of dev_next->devlist on disconnect
-Date: Sat, 12 Sep 2026 08:58:25 +0200
-Message-ID: <20260912065523.506181662@linuxfoundation.org>
+Subject: [PATCH 5.10 278/798] media: go7007: defer the ALSA v4l2 put until card release
+Date: Sat, 12 Sep 2026 08:58:26 +0200
+Message-ID: <20260912065523.529479291@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,52 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangong.Han <jiangong.han@windriver.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit 826915b6b65e2d3251e7248ea54289a22d748c84 upstream.
+commit 1bd456afeb8a515137e567967069fce6f8fcd23e upstream.
 
-When a device with has_dual_ts=1 is probed and the is_audio_only path
-is taken, both dev and dev->dev_next are added to the global
-em28xx_devlist via em28xx_init_extension(). However, during disconnect,
-em28xx_close_extension(dev) only calls list_del(&dev->devlist), leaving
-dev->dev_next->devlist still linked in the global list. When dev_next is
-subsequently freed via kref_put(), its devlist entry becomes a dangling
-pointer in em28xx_devlist. The next device probe that calls
-em28xx_init_extension() triggers a list corruption BUG when list_add_tail
-detects the freed node.
+go7007_snd_init() already takes a v4l2_device reference for the ALSA
+side, but go7007_snd_remove() drops it immediately after calling
+snd_card_free_when_closed().
 
-This bug was exposed by commit a368ecde8a50 ("USB: core: Fix duplicate
-endpoint bug by clearing reserved bits in the descriptor") which clears
-reserved bits in bEndpointAddress during endpoint parsing. This causes
-fuzzed endpoint addresses like 0xf3 to be normalized to 0x83, which
-em28xx interprets as a vendor audio endpoint, enabling the
-is_audio_only + has_dual_ts code path that was previously unreachable
-with such descriptors.
+That is too early when a userspace process still has the capture PCM open.
+The ALSA card and its PCM callbacks remain alive until the last file is
+closed, so the release path can still reach struct go7007 through
+pcm->private_data and call go7007_snd_hw_free() after the V4L2 release path
+has freed the object.
 
-Fix this by removing dev->dev_next->devlist from the global list in
-em28xx_close_extension() before the device is freed.
+Move the matching v4l2_device_put() to the ALSA card private_free callback
+so the existing ALSA reference covers the whole deferred card lifetime.
 
-Fixes: f410b4093fdd ("media: em28xx: split up em28xx_dvb_init to reduce stack size")
+Closes: https://lore.kernel.org/r/178144969601.60470.6005237146425573205@gmail.com
+Fixes: d5d3a7cc127d ("[media] go7007: fix unregister/disconnect handling")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+99d6c66dbbc484f50e1c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=99d6c66dbbc484f50e1c
-Signed-off-by: Jiangong.Han <jiangong.han@windriver.com>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/em28xx/em28xx-core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/usb/go7007/snd-go7007.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/em28xx/em28xx-core.c
-+++ b/drivers/media/usb/em28xx/em28xx-core.c
-@@ -1141,6 +1141,8 @@ void em28xx_close_extension(struct em28x
- 			ops->fini(dev);
- 		}
- 	}
-+	if (dev->dev_next)
-+		list_del(&dev->dev_next->devlist);
- 	list_del(&dev->devlist);
- 	mutex_unlock(&em28xx_devlist_mutex);
+--- a/drivers/media/usb/go7007/snd-go7007.c
++++ b/drivers/media/usb/go7007/snd-go7007.c
+@@ -195,6 +195,13 @@ static struct snd_device_ops go7007_snd_
+ 	.dev_free	= go7007_snd_free,
+ };
+ 
++static void go7007_snd_card_free(struct snd_card *card)
++{
++	struct go7007 *go = card->private_data;
++
++	v4l2_device_put(&go->v4l2_dev);
++}
++
+ int go7007_snd_init(struct go7007 *go)
+ {
+ 	static int dev;
+@@ -245,6 +252,8 @@ int go7007_snd_init(struct go7007 *go)
+ 	gosnd->substream = NULL;
+ 	go->snd_context = gosnd;
+ 	v4l2_device_get(&go->v4l2_dev);
++	gosnd->card->private_data = go;
++	gosnd->card->private_free = go7007_snd_card_free;
+ 	++dev;
+ 
+ 	return 0;
+@@ -263,7 +272,6 @@ int go7007_snd_remove(struct go7007 *go)
+ 
+ 	snd_card_disconnect(gosnd->card);
+ 	snd_card_free_when_closed(gosnd->card);
+-	v4l2_device_put(&go->v4l2_dev);
+ 	return 0;
  }
+ EXPORT_SYMBOL(go7007_snd_remove);
 
 
