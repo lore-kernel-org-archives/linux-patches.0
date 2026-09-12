@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA6B38398F;
-	Sat, 12 Sep 2026 18:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E6838398F;
+	Sat, 12 Sep 2026 18:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237284; cv=none; b=dm72J7uBKj1KDUXhpYxLJ6fqdn3Jr2VFcTLlYtOIxk3MMVijQoVmdekVxCZq/rtSTxxEEyNZpq8apcWoA00+9blmtz/qvGc8TutQR5wMoQP0LFaMBHkGXV8Gu1Hl9pkma1J5gDhf/aCRcyXVEP6tEHYTEc637m0Z699qoJzifKY=
+	t=1789237289; cv=none; b=MY4ydqKm8szwHeK5z40Zb7jbpgwHhaoBfa7eiWJWCwrDNyGAoZB1MY5iAf6IZ8vvW6VWFyAmcqgoXswXstuU00WH6ha7bp/Kp1kW/LmEp3PjBoblP7uaAqUB8cQzM76496ZvBCnWOjEcdf3+8zDpwDrVljRQW+rUtN5UVDWKfjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237284; c=relaxed/simple;
-	bh=1bYSAxCz440VSfDPsQ6t4StfoQ9AUXqRHVtBDHd9UU0=;
+	s=arc-20240116; t=1789237289; c=relaxed/simple;
+	bh=P3OxwaXXKQKFbno/PuMg3UIBwDKSOkSN+K6cx9hQq2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKD+UkPyKGVXqTtWt5mBcwnpQq9cnu1fpGkN3OH7ON1TDmRAXSz1pOHJ8AygNsV3V0IYq6xWct482bF/YZyQEaBbO2Z6LcApIY7raKg/oKrzkFVD3y9TNGX5uRbVOZ91LvaFbkwl3l5FAtPrYSY3mvK5ubYSBMMTasYAPVfPcfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rz2OJZK/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q+oPmHxy7WiUP4HZ9Hlzim4WthIhpHCWnSpf0HyIpKMSfvVwQdItL1Aqek+YUJAlSkREier6uKn4G654OYPbskR54BHs2f1Li5k97TY1Oay9AiWnUdKmDBurF4VABBryc0s8itT0xqiQ4LX0Zh6495E44fe/IvDP+tZXwizCepM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ct8Gpu8D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rz2OJZK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F841F000FF;
-	Sat, 12 Sep 2026 18:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ct8Gpu8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355C61F000FF;
+	Sat, 12 Sep 2026 18:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237282;
-	bh=uuaDj+gFHyqFsrXBX5QM/6wGypKn7SaxA7HfkGS7S1Q=;
+	s=korg; t=1789237288;
+	bh=+JJLhTPXWvdfes4nsbTl2V+RBLQV1makuwllqLubBzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rz2OJZK/pvnjrGMiAACqMUNkx9eBQnRWAWMmi+4lkIgXWjWTe4lBvbi47yAntHfYG
-	 qnxl8LIvUv7vYeH9zlzxpIjWiI6No4Qrly3AujNtJijtPdTzff+D7NGdyWNyjON1Q7
-	 LqAtqGEH+pIbQPdTYxuU08a4bx1vFyv0aqeJOdBA=
+	b=ct8Gpu8DNzPf8OOGC1O0gbQ4Mj0T7DI8NEthBoyxbFLY1Ku7j6ol2e1NkrnLhAoIv
+	 V+mUXmKtCMlSVeiUSTKJOsBDs00pu4ZIR+Yj+iRP06mr8WpbRLM6Kk8xvyX2lKqBpp
+	 /bEBq9pQPjUTH4cbTFlvyQOxE4DwG5uF5wK/829Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Alexander Martyniuk <alexevgmart@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 228/935] net: ntb_netdev: Fix TX busy and drop handling
-Date: Sat, 12 Sep 2026 08:54:18 +0200
-Message-ID: <20260912065532.056274932@linuxfoundation.org>
+Subject: [PATCH 5.15 229/935] drm/vmwgfx: drop dma_buf reference on foreign-fd prime import
+Date: Sat, 12 Sep 2026 08:54:19 +0200
+Message-ID: <20260912065532.079468615@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,97 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit 8aaa47351db0f93a5c5297fbafdfa8bc75e8ae49 ]
+commit f739416dc555fa205a785e5135d73fa39b26f35d upstream.
 
-Currently, ntb_netdev returns NETDEV_TX_BUSY for every enqueue error. It
-also increments the drop and error counters while leaving the skb owned
-by the qdisc, and may return BUSY with the subqueue still awake.
-Retrying a permanent error cannot succeed either.
+ttm_prime_fd_to_handle() returns -ENOSYS when the imported fd's
+dma_buf->ops do not match the ttm_object_device's ops, but does so
+without releasing the reference acquired by dma_buf_get().  Any
+unprivileged renderD client passing a non-vmwgfx prime fd through the
+DRM_VMW_GB_SURFACE_REF{,_EXT} path leaks one dma_buf reference per
+call and indefinitely pins the foreign exporter's GEM resources.
 
-The unconditional BUSY return and premature accounting date back to the
-initial driver. The error-path queue stop was later removed without
-changing that return value. The current flow-control code includes a
-resource check, but ntb_netdev does not honor its result before enqueue.
+Funnel the error path through the existing dma_buf_put() so the
+reference is always dropped.
 
-Honor the resource check before enqueue. For -EAGAIN and -EBUSY, stop
-the subqueue, arm the existing reaper timer, and return BUSY without
-touching the skb. For other errors, free the skb, increment tx_dropped,
-and return NETDEV_TX_OK.
-
-Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
-Fixes: d723485cb4ca ("ntb_netdev: remove tx timeout")
-Fixes: e74bfeedad08 ("NTB: Add flow control to the ntb_netdev")
+Fixes: 65981f7681ab ("drm/ttm: Add a minimal prime implementation for ttm base objects")
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260817053519.4135287-3-den@valinux.co.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[den: adapt to the single-queue implementation, as 5.15.y lacks commit:
- ee970634c777 ("net: ntb_netdev: Introduce per-queue context")]
-Stable-dep-of: 873ce713fef5 ("NTB: ntb_transport: Fail TX enqueue when the QP link is down")
-Stable-dep-of: a4f2387db6f1 ("NTB: ntb_transport: Reject oversized TX buffers")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-6-zack.rusin@broadcom.com
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ntb_netdev.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/vmwgfx/ttm_object.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index ed698f05c537d..af6230da5e008 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -164,8 +164,10 @@ static int __ntb_netdev_maybe_stop_tx(struct net_device *netdev,
- static int ntb_netdev_maybe_stop_tx(struct net_device *ndev,
- 				    struct ntb_transport_qp *qp, int size)
- {
--	if (netif_queue_stopped(ndev) ||
--	    (ntb_transport_tx_free_entry(qp) >= size))
-+	if (netif_queue_stopped(ndev))
-+		return -EBUSY;
-+
-+	if (ntb_transport_tx_free_entry(qp) >= size)
- 		return 0;
+diff --git a/drivers/gpu/drm/vmwgfx/ttm_object.c b/drivers/gpu/drm/vmwgfx/ttm_object.c
+index 123ab2cbec484..40862775916be 100644
+--- a/drivers/gpu/drm/vmwgfx/ttm_object.c
++++ b/drivers/gpu/drm/vmwgfx/ttm_object.c
+@@ -658,14 +658,17 @@ int ttm_prime_fd_to_handle(struct ttm_object_file *tfile,
+ 	if (IS_ERR(dma_buf))
+ 		return PTR_ERR(dma_buf);
  
- 	return __ntb_netdev_maybe_stop_tx(ndev, qp, size);
-@@ -208,21 +210,30 @@ static netdev_tx_t ntb_netdev_start_xmit(struct sk_buff *skb,
- 	struct ntb_netdev *dev = netdev_priv(ndev);
- 	int rc;
- 
--	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
-+	if (unlikely(ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop)))
-+		return NETDEV_TX_BUSY;
- 
- 	rc = ntb_transport_tx_enqueue(dev->qp, skb, skb->data, skb->len);
--	if (rc)
--		goto err;
-+	if (rc) {
-+		if (rc == -EAGAIN || rc == -EBUSY) {
-+			netif_stop_queue(ndev);
-+			mod_timer(&dev->tx_timer,
-+				  jiffies + usecs_to_jiffies(tx_time));
-+			return NETDEV_TX_BUSY;
-+		}
-+
-+		goto drop;
+-	if (dma_buf->ops != &tdev->ops)
+-		return -ENOSYS;
++	if (dma_buf->ops != &tdev->ops) {
++		ret = -ENOSYS;
++		goto out;
 +	}
  
- 	/* check for next submit */
- 	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
+ 	prime = (struct ttm_prime_object *) dma_buf->priv;
+ 	base = &prime->base;
+ 	*handle = base->handle;
+ 	ret = ttm_ref_object_add(tfile, base, TTM_REF_USAGE, NULL, false);
  
- 	return NETDEV_TX_OK;
++out:
+ 	dma_buf_put(dma_buf);
  
--err:
-+drop:
-+	dev_kfree_skb_any(skb);
- 	ndev->stats.tx_dropped++;
--	ndev->stats.tx_errors++;
--	return NETDEV_TX_BUSY;
-+	return NETDEV_TX_OK;
- }
- 
- static void ntb_netdev_tx_timer(struct timer_list *t)
+ 	return ret;
 -- 
 2.53.0
 
