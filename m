@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B3C416CFA;
-	Sat, 12 Sep 2026 09:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215FF38DC59;
+	Sat, 12 Sep 2026 09:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204524; cv=none; b=YHoL34iKBPJiiuDMZ+w3rD8NsmIHKt3WvFOhe6iOKP2ZXvrWkwUQB6Q70ujNPo3TTfavu7MbcDfjVehP5wTd6s6uQcnyONP27TUtH4T4sf2XJ+WiD27MpMGyBQah4Vtlm2uLLdwCC81AWVU41pikh/oAMBeF25NiXuzJrGMA9po=
+	t=1789204529; cv=none; b=fZqlzdDXxZMmH7ouWUBThdUofvhQwNp7dtalObaslvYjmn29GqfzWIDMm8HNFxsB0Bp6jf3Zg5ISHRQU1iqm+1yjSU7ABhyCPkS8s1bree3oPdE6H2BmdYwzdiYbXRZneIB7b7OTyJC8rkwAQ7tvKFpQiwcbnfswGHOpSSsjbC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204524; c=relaxed/simple;
-	bh=JGWhclwtRjSsI3meNDt/LZH9wuymA/Wv16BXqftBNLg=;
+	s=arc-20240116; t=1789204529; c=relaxed/simple;
+	bh=vqPSRDJXEUubTRTUk9KK6gpfcVvyBdEmSFdXGV/eL2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNoyfOi9gCVaqh2+B7R/psNnKCnq/45wxU8jZn3ThA2/BJHp1Rqlvtbs5FDIfNj0iwDg5Kzo//pT3r4KlFl7jxSuyfmgEXsGDgXrw8qHkzXrObR+vSDCMwKYXvmo+9YndU2hKUIF4rSsY9XsrsbJ2DbtO732sxyGCj2OhB0I3kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHJtn8eJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fbQ+0t2kYvnWCKioCdVj5O4WOkrqkQc1nnZLKTT3xH+6nwEbQ9YcbQM5ST4opDVNP9j8dwsQOToru/zFPhXGxDbUDcxZvxoji/Sjd0lxeBprzXtYkolGdrDsV+3HKTx36KRy/1rq1Cv8KLLNryUnXwDPQSiUq016jeI9WYJK+YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KUI1bWF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHJtn8eJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0531F000FF;
-	Sat, 12 Sep 2026 09:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KUI1bWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B0F1F000FF;
+	Sat, 12 Sep 2026 09:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204522;
-	bh=QZ5X4c0cSuymJz+W55S3D2GBFC7GREJmktfkinyuMqQ=;
+	s=korg; t=1789204527;
+	bh=6GZXmUHgmg6m8vadTJ8iOijdhS6OHhgThu0Y1sTfi2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WHJtn8eJrb4vNrS6Pmgiw6S4RHiJJyp6BSxHTCX4BEP9yujEwHu1LPVm55ygtjepd
-	 jO4yWm4wbD6+i9hdpCrqvGoYKYXDEdXM/ccz2VtDiMgHMcYHSOU2prIpGjT8UU7eab
-	 E339ZDRXP7ku45MHppYwfnPd/k9ONRRkJgp8xQn0=
+	b=0KUI1bWF5v0HtM+iGTSrDeuymkUrnbT6aAIVQ4vFARad1zT6+t/n2Q66F2Sg+6L7q
+	 B/Zh3Ov8bMJwUvAj78cnDxuYk2m5uMYMNWCGpseWpf1I2Q+0HrP2h0p6ny0JnHNaHa
+	 QHsBlcqFiwHhQEqwoC3beQRERoS8lhgFdHbf92hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Elder <elder@riscstar.com>,
-	Surendra Singh Chouhan <kr494167@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Mikhail Stefantsev <mikhail@mstefan99.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1629/1815] rtc: spacemit: handle regmap_test_bits() error return
-Date: Sat, 12 Sep 2026 08:56:19 +0200
-Message-ID: <20260912065727.229972234@linuxfoundation.org>
+Subject: [PATCH 7.2 1630/1815] smb/client: return EOPNOTSUPP for unsupported O_TMPFILE
+Date: Sat, 12 Sep 2026 08:56:20 +0200
+Message-ID: <20260912065727.254356293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,48 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Surendra Singh Chouhan <kr494167@gmail.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 092755367e1a5fcf0f5405e9425e86907199dfce ]
+[ Upstream commit a2f9fb451c68adf2b3f7cae1bb66fb5801769ac6 ]
 
-p1_rtc_read_time() called if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
-to check if the RTC was enabled.
+Some SMB servers return STATUS_OBJECT_NAME_NOT_FOUND or
+STATUS_DELETE_PENDING when creating an O_TMPFILE.
+The SMB client maps them to ENOENT.
 
-regmap_test_bits() returns 1 if the bit is set, 0 if not set, and a
-negative error code (e.g. -EIO) if reading the control register fails.
-Using !regmap_test_bits(...) evaluates a negative error code as boolean
-false, causing I2C/regmap read failures to be ignored and incorrectly
-proceeding to read time registers from a failing device.
+The ENOENT error is supposed to be returned when the path
+(a target directory in this case) does not exist, while a
+lack of support of O_TMPFILE by the target file system should
+be indicated by EOPNOTSUPP.
 
-Fix this by capturing the return value of regmap_test_bits() and returning
-the error code if negative, or -EINVAL if the RTC is disabled.
-
-Fixes: a6de182daa2b ("rtc: spacemit: support the SpacemiT P1 RTC")
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Signed-off-by: Surendra Singh Chouhan <kr494167@gmail.com>
-Link: https://patch.msgid.link/20260724135803.81223-1-kr494167@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reported-by: Mikhail Stefantsev <mikhail@mstefan99.com>
+Fixes: 3e7d63037a2b ("smb: client: add support for O_TMPFILE")
+Closes: https://lore.kernel.org/linux-cifs/75fb5359-b268-492d-8d4a-504d1af60f2a@app.fastmail.com/
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-spacemit-p1.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/smb/client/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/rtc-spacemit-p1.c b/drivers/rtc/rtc-spacemit-p1.c
-index 43ab62494bb4b..1de7bd995d296 100644
---- a/drivers/rtc/rtc-spacemit-p1.c
-+++ b/drivers/rtc/rtc-spacemit-p1.c
-@@ -57,8 +57,9 @@ static int p1_rtc_read_time(struct device *dev, struct rtc_time *t)
- 	u8 time[6];
- 	int ret;
+diff --git a/fs/smb/client/dir.c b/fs/smb/client/dir.c
+index 88a4a1787ff04..b0ddcaa2d8159 100644
+--- a/fs/smb/client/dir.c
++++ b/fs/smb/client/dir.c
+@@ -1138,6 +1138,8 @@ int cifs_tmpfile(struct mnt_idmap *idmap, struct inode *dir,
+ 	} while (unlikely(rc == -EEXIST) && ++retries < max_retries);
  
--	if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
--		return -EINVAL;		/* RTC is disabled */
-+	ret = regmap_test_bits(regmap, RTC_CTRL, RTC_EN);
-+	if (ret <= 0)
-+		return ret ?: -EINVAL;	/* RTC is disabled or error */
- 
- 	ret = regmap_bulk_read(regmap, RTC_TIME, time, sizeof(time));
- 	if (ret)
+ 	if (rc) {
++		if (rc == -ENOENT)
++			rc = -EOPNOTSUPP;
+ 		cifs_del_pending_open(&open);
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
