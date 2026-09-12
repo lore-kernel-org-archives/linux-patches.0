@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FCF369990;
-	Sat, 12 Sep 2026 08:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449FA369990;
+	Sat, 12 Sep 2026 08:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203464; cv=none; b=dv1riizuZZxGkr8+IUOvc3e+nUdWhPb3JhwlJWQ4VM7s9hkrUaLrJ/wgSDUV/fhk8K/UdplQfV2jc0lGwK/2HVBogYEeVyx/gqGv6ZAoZMm2ROVDHimjYJoLTD0h2GQCupWbiyVUVaLlvpoEuONSB2pe/AwcPyfmYc4EzA8T+eM=
+	t=1789203469; cv=none; b=Fxfxc4bP3sxL3SU6Do1eLgVZQJGATGzLpgFCd5GfcDl2nppsS7Qaf/N7ZW0u0udFRAThuV9t+rF7Zdq5VcL3lZPBqPCNSc9jejuvYXUCCvIkUeYe7kljThlqHTqNy9iZyvKNNtuQ86Hkaqaj8yFSIqehR2iva+GeVr3fc9V6dpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203464; c=relaxed/simple;
-	bh=q/uVnt9g3nqxDbWDexAf5oER99Sz9MET/E7Im/PSJzM=;
+	s=arc-20240116; t=1789203469; c=relaxed/simple;
+	bh=Fny6j+MYqorOMSa/HXnXhliWOXXxScbEz/7a443hQPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkhPXH1vlGaGxXHJX2siKtYdBnI2MZm8tUUefFLPHmvcNQ6i7ym52CYQz7oRztTMmDz5Mb9adi6GYCVBle2z1ksnOtY4ImMEaixx+WidG+uW4rqSggiJt1zjHuCqq/zJ7fRFp8s/WQvVxOJVV1qUa6NhFRdSs4BFtzp2DV7kGpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5CqmRdY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MIBQw6wzRipyHUP9hMtoqYoePzLd4F2dTxQq5VCQJ9wfU3eg6ZeXHNkIgFC8yMmCdmtFYBk5cC7YJVH91Tp13CgM0FFnupBH3SedhGOZW/rRkAT76gDa6B1cXw5LvnzB+sRWsjUquM9diEgQv7zzf/wBoXVLJPLD02fxK+1h8zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIt3kvpn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5CqmRdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66001F000FF;
-	Sat, 12 Sep 2026 08:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIt3kvpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279B31F000FF;
+	Sat, 12 Sep 2026 08:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203463;
-	bh=JmKQJTHJDUzfPPCeJyEhoIKcR9ZONT1FrBHgTjkoELs=;
+	s=korg; t=1789203468;
+	bh=hiFzCkN7bPMNGdoayNmJC7zvQMhZnaKR91IMkbdcqw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r5CqmRdYeYDFM2Oa2pU6NFpswTT9C0kzSlSeraEd58RClym+meF94x3yPtdr7IWcA
-	 H/R3plTrf4/U0eXtTKrhVi3poZOAXM6BDz6Op8G7ALt0EwVvjznh+rv29SVauQE1pc
-	 8DWQYHeO2up6GL7AGuPI6QumjIkfBk2d3QFMGrDM=
+	b=AIt3kvpn7wrCOMMq/vcXK+0ESZzvKFJW5j499MnJgZqf/d8vIvkP6fHIQdtkAr3+d
+	 f4jch6a6pFY5WS1jqjJi2zg8Zr9p4OBjwFaoL+3NUGdbnyJCgAK7Bf6fDyIUo5d/uY
+	 oke37dde7s7wRPVwftJWd2X9cqm4L+H7nVKlzXBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1411/1815] spi: img-spfi: dont disable runtime PM on DMA deferred probe
-Date: Sat, 12 Sep 2026 08:52:41 +0200
-Message-ID: <20260912065722.147790561@linuxfoundation.org>
+Subject: [PATCH 7.2 1412/1815] PCI/ASPM: Disable/restore ASPM on every function for multi-function devices
+Date: Sat, 12 Sep 2026 08:52:42 +0200
+Message-ID: <20260912065722.170734240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,56 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-[ Upstream commit 923e41ed59511cffe98357c7d58d0294a1c157ee ]
+[ Upstream commit 733cd811b3ac50586164a0864c4351fe23e21890 ]
 
-When dma_request_chan() returns -EPROBE_DEFER, the error path jumps to
-disable_pm and calls pm_runtime_disable() even though pm_runtime_enable()
-was never called, leaving disable_depth unbalanced and the device
-permanently PM-disabled.
+pcie_aspm_cap_init() disables ASPM L0s/L1 before touching L1SS config, then
+restores the pre-existing state afterward. Both steps only ever touched
+link->downstream, i.e. function 0 of the downstream component, leaving
+sibling functions (>0) on a multi-function device untouched.
 
-Route the defer path through free_dma to skip pm_runtime_disable().
+This means the "disable" step does not actually disable ASPM link-wide on a
+multi-function device: a sibling function can still have L1 enabled even
+after this step runs. PCIe r7.0, sec 7.5.3.7, recommends programming the
+same ASPM Control value for all functions of a multi-function device, and
+pcie_config_aspm_link() already loops over every function on the bus for
+exactly this reason.
 
-Fixes: 6bfbf4d0aa0c ("spi: img-spfi: Use dma_request_chan() instead dma_request_slave_channel()")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260808-spfi-v1-1-6bc4345be430@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Loop over every function on linkbus->devices for both the disable and
+restore steps, keeping the existing sec 7.5.3.7 ordering (disable
+downstream functions before upstream, restore upstream before downstream
+functions). The masked pcie_capability_clear_and_set_word() accessor from
+the previous commit makes this safe: it only ever touches the ASPM Control
+bits, so function-specific bits elsewhere in LNKCTL (e.g. Read Completion
+Boundary, CLKREQ Enable) on sibling functions are left untouched.
+
+Fixes: 7447990137bf ("PCI/ASPM: Disable L1 before disabling L1 PM Substates")
+Closes: https://lore.kernel.org/all/20260721143945.86E7D1F000E9@smtp.kernel.org/
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260727-aspm-v6-2-2ebb3ee7ef71@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-img-spfi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pci/pcie/aspm.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-img-spfi.c b/drivers/spi/spi-img-spfi.c
-index aec724e3f8246..a9310a1b0354f 100644
---- a/drivers/spi/spi-img-spfi.c
-+++ b/drivers/spi/spi-img-spfi.c
-@@ -611,7 +611,7 @@ static int img_spfi_probe(struct platform_device *pdev)
- 		ret = PTR_ERR(spfi->tx_ch);
- 		spfi->tx_ch = NULL;
- 		if (ret == -EPROBE_DEFER)
--			goto disable_pm;
-+			goto free_dma;
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 50ff78a62e8a4..9b3548544a85e 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -861,6 +861,7 @@ static void pcie_aspm_override_default_link_state(struct pcie_link_state *link)
+ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+ {
+ 	struct pci_dev *child = link->downstream, *parent = link->pdev;
++	struct pci_dev *fn;
+ 	u16 parent_lnkctl, child_lnkctl;
+ 	struct pci_bus *linkbus = parent->subordinate;
+ 
+@@ -894,8 +895,9 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+ 	/* Disable L0s/L1 before updating L1SS config */
+ 	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
+ 	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
+-		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
+-					PCI_EXP_LNKCTL_ASPMC, 0);
++		list_for_each_entry(fn, &linkbus->devices, bus_list)
++			pcie_capability_clear_and_set_word(fn, PCI_EXP_LNKCTL,
++						PCI_EXP_LNKCTL_ASPMC, 0);
+ 		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
+ 						PCI_EXP_LNKCTL_ASPMC, 0);
  	}
- 
- 	spfi->rx_ch = dma_request_chan(spfi->dev, "rx");
-@@ -619,7 +619,7 @@ static int img_spfi_probe(struct platform_device *pdev)
- 		ret = PTR_ERR(spfi->rx_ch);
- 		spfi->rx_ch = NULL;
- 		if (ret == -EPROBE_DEFER)
--			goto disable_pm;
-+			goto free_dma;
+@@ -930,7 +932,8 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+ 		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
+ 					PCI_EXP_LNKCTL_ASPMC,
+ 					parent_lnkctl & PCI_EXP_LNKCTL_ASPMC);
+-		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
++		list_for_each_entry(fn, &linkbus->devices, bus_list)
++			pcie_capability_clear_and_set_word(fn, PCI_EXP_LNKCTL,
+ 					PCI_EXP_LNKCTL_ASPMC,
+ 					child_lnkctl & PCI_EXP_LNKCTL_ASPMC);
  	}
- 
- 	if (!spfi->tx_ch || !spfi->rx_ch) {
-@@ -647,6 +647,7 @@ static int img_spfi_probe(struct platform_device *pdev)
- 
- disable_pm:
- 	pm_runtime_disable(spfi->dev);
-+free_dma:
- 	if (spfi->rx_ch)
- 		dma_release_channel(spfi->rx_ch);
- 	if (spfi->tx_ch)
 -- 
 2.53.0
 
