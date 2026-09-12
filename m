@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3112747ECF4;
-	Sat, 12 Sep 2026 13:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7676F47ECDE;
+	Sat, 12 Sep 2026 13:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219829; cv=none; b=H6P19K5flHqfEJXU9etsFFQbZpZpR1zvjMYyJzfGefMy/rjOo/LyT+5P0ZF2Ym1mQ95xw3HKyoZc/blkXiawvAi8RkHxMO8+oqkU6vpconwittk2kMy4v8TX5nhrDxtpIjsv0Lgi2Dx0w0RTppKU1o5/5OqZcSpYsHcSSzQqh38=
+	t=1789219833; cv=none; b=IpCarWV+AXvqaJHuyQ3HbbUp6rG4WXweyBXIuCJiScoFGEB7FQBx3xrfoSJyc50JiKUuNjdM59HcDIFWmIaGHilH1+Nuj+8fzJUOo9I4OrRsj2PXTU/aexKoXbl7FOqM2r6/Nqz0hQijqhz7aQCb0bv/yw/T4j2DVE1POUhoCk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219829; c=relaxed/simple;
-	bh=5N1nZf3BHFc95j/7xitSAWvUbst34DUX/wuL1myitg4=;
+	s=arc-20240116; t=1789219833; c=relaxed/simple;
+	bh=Ttc6j20XQAr1HbszAZG0s6nq0IwgEoVLk/nB3HDVgFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3aYBCjOl16XirWrY418wxDp1nmYrxY1M64LdUAYZwc10oRNCAUl/PViHg4gMjf0TPMXl/9/0WzUspvPEO1VzvCIqOR77CvD8be0wrMYM5wbsKUjy683drxKnfk1phWVU+5/iNX3P2CfdHF+O20tfhqJ4FEGyu5hWBky3HETJIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edLQ/eWZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I32B4y7HeE2yYihJ0+ZYBFUkc6qyp9hi6yLABh9G3ZUqx5wrZhOx+9oUsWUANs6DbVG2Pwh3yneHlWULWZeoQbO8qqdlsByOu7WYPCjC8l6emu1aph9D1wwBgdj3m+nLIVsC5h46chUyn/AroTCncOprkKDkyWhywiywp903Xbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwZNJWv+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edLQ/eWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F192A1F000FF;
-	Sat, 12 Sep 2026 13:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwZNJWv+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A771F000FF;
+	Sat, 12 Sep 2026 13:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219827;
-	bh=+Sffa6XY023PABy11hZ3W3nFdKlIiPa5vhGzkcUnGUs=;
+	s=korg; t=1789219832;
+	bh=24mJv1bTDhUujxaWKK+nsyypXNA7JE2FFRiWjFpcy6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=edLQ/eWZxK+HBPCOhC4ydsTvE1rhh3EJ6+rrneq8UP3Pgbya1iw1uiw3fwlivOPBW
-	 Kn4eHofhXjFuqfEuzFs8wi5tqdtqK7ad2QK2AhkMefQxlDb5au2xPHxuZGgEY5bBA8
-	 gSPlr5TIL4gqzrt2prmppLvfZmS2NFm4SXHg3iTE=
+	b=zwZNJWv+iZHXOuDJUNTzzy8JUFuHV8Z9CtZKOCe4l+INTuUl34RHIdnUVcr6YlW0y
+	 h49sSKdI0ndhorvCvYqLvgK3VUTHrPRNQuP2cLYNn2hFEbU6+yF+ZrinWCzu5CcU1c
+	 cTHSG+npOhOzClxZtr+mtJA9MChGmCM/HquNhlgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.6 0026/1424] powerpc/powermac: fix OF node refcount
-Date: Sat, 12 Sep 2026 08:40:58 +0200
-Message-ID: <20260912065607.890359787@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.6 0053/1424] nfsd: return NFS4ERR_NOTSUPP for unsupported netloc4 types
+Date: Sat, 12 Sep 2026 08:41:25 +0200
+Message-ID: <20260912065608.489941246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,38 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit bd0abfe6b013aeb2a1aebc5fbc7ceeb50355bda3 upstream.
+commit 45b06a75086f331f52cbb81223a59421d43f8809 upstream.
 
-Platform devices created with platform_device_alloc() call
-platform_device_release() when the last reference to the device's
-kobject is dropped. This function calls of_node_put() unconditionally.
-This works fine for devices created with platform_device_register_full()
-but users of the split approach (platform_device_alloc() +
-platform_device_add()) must bump the reference of the of_node they
-assign manually. Add the missing call to of_node_get().
+nfsd4_decode_nl4_server() handled only NL4_NETADDR and returned
+nfserr_bad_xdr for NL4_NAME and NL4_URL. Those forms are well-formed XDR,
+so BADXDR is misleading -- the request is unsupported, not malformed.
 
+Decode and discard the utf8str_cis for NL4_NAME and NL4_URL to keep the
+stream consistent, and return nfserr_notsupp. nfsd4_proc_compound() honors
+a decode-time op->status, so the op fails without executing.
+
+Fixes: 84e1b21d5ec4 ("NFSD add ca_source_server<> to COPY")
 Cc: stable@vger.kernel.org
-Fixes: 81e5d8646ff6 ("i2c/powermac: Register i2c devices from device-tree")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260706-pdev-fwnode-ref-v3-1-1ff028e33779@oss.qualcomm.com
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260710-nfsd-testing-v3-7-a0ff7db6aa3e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/powermac/low_i2c.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/arch/powerpc/platforms/powermac/low_i2c.c
-+++ b/arch/powerpc/platforms/powermac/low_i2c.c
-@@ -1502,7 +1502,7 @@ static int __init pmac_i2c_create_platfo
- 		if (bus->platform_dev == NULL)
- 			return -ENOMEM;
- 		bus->platform_dev->dev.platform_data = bus;
--		bus->platform_dev->dev.of_node = bus->busnode;
-+		bus->platform_dev->dev.of_node = of_node_get(bus->busnode);
- 		platform_device_add(bus->platform_dev);
- 	}
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1918,6 +1918,7 @@ static __be32 nfsd4_decode_nl4_server(st
+ {
+ 	struct nfs42_netaddr *naddr;
+ 	__be32 *p;
++	u32 str_len;
  
+ 	if (xdr_stream_decode_u32(argp->xdr, &ns->nl4_type) < 0)
+ 		return nfserr_bad_xdr;
+@@ -1947,6 +1948,18 @@ static __be32 nfsd4_decode_nl4_server(st
+ 			return nfserr_bad_xdr;
+ 		memcpy(naddr->addr, p, naddr->addr_len);
+ 		break;
++	case NL4_NAME:
++	case NL4_URL:
++		/*
++		 * Well-formed XDR, but only NL4_NETADDR is supported. Consume
++		 * the utf8str_cis to keep the stream aligned, then return
++		 * NFS4ERR_NOTSUPP rather than the misleading NFS4ERR_BADXDR.
++		 */
++		if (xdr_stream_decode_u32(argp->xdr, &str_len) < 0)
++			return nfserr_bad_xdr;
++		if (!xdr_inline_decode(argp->xdr, str_len))
++			return nfserr_bad_xdr;
++		return nfserr_notsupp;
+ 	default:
+ 		return nfserr_bad_xdr;
+ 	}
 
 
