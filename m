@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A263B3BE9;
-	Sat, 12 Sep 2026 19:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F33492E58;
+	Sat, 12 Sep 2026 19:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240360; cv=none; b=N1/pmH/maayqBbnkdo40F6wpDJVU+3/qpVYV9viE9f9pyHr7NRhSaynDxpWZRC/CFmv4CrB+n35YiGTduDDdZ79yfr7vOFn0INNu+JYuk8FAyiWEYNcf/qIVMmamvdc3v9bmkUnndEj0GTrpUGBnDPBfc/ieQCYdiQupXB25hnQ=
+	t=1789240365; cv=none; b=fr7kHniJ2IbgJ2f6mSbZST+NM75XmExa2lA9JWhAPOnn7zDSgSNl4C648lNh8cajrp1eOIz6RtICeYptxmBWJdgT90+m01gguvnNuDBzHkPCOY/uNG4NW8QuPcDVv1IKyQjWWW+40WzOCvfEXSDoNmsLcpbQHnlCB/iiH2on0ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240360; c=relaxed/simple;
-	bh=07I15dW1Tw6gFSMWDdJGAH+6eud8SIBhfT1juoW9LKA=;
+	s=arc-20240116; t=1789240365; c=relaxed/simple;
+	bh=UYDQaAMt5dTZPVk5F0jm4h633xFjPF5kmaaDjeRaPJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ky3GwmEw1NBsqvjpOur8Djm+KRL+nbASQf6hqdja2c0VVB/9guuWLbKDE2Vk81kfBhiIDD0cm9UwuE9ulD5sLjzzeDd12H1Ui+aLRgsC6yOLHa22JddePTn3kcMNOvTrLL89WDFBH7KMkWGvBUMJCSGttm39VQ8a6z/zV2XHg8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyTN+MyE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m9J0zMU4oMr4XxgTmmg+X2MrbuIKj7COnFVDyBzwXZnsmxmMANNDsiWC1gzVf/ueRYusAc+X2MU+dqpJEcCy3YHaWXPe/MDnU2rAEpYWKGFITID7wEjMJUzUkKgeqpBgnqyrsytlsq8e5tIxP48dpZjUZPfhSYp2yVeu9SpvJL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkqhxhfE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyTN+MyE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D418E1F000FF;
-	Sat, 12 Sep 2026 19:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkqhxhfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69281F00893;
+	Sat, 12 Sep 2026 19:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240358;
-	bh=y53Lme68a7FM6c1iqUBY3zM2MBRqTTD2bbdGEPbmAjw=;
+	s=korg; t=1789240363;
+	bh=nzfmw7adUFJl1jWuw5IB6aL6ne02dRsXkwEcbU9En5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iyTN+MyE6LfBvNrWExRuPUWd3JfFcg5G0c2lPF1EaZIFA59wbjPP9ANfkn6aWtNfc
-	 OIRmpv/4CddoDQnLtFX9UELWKkEdP9xuFOkxAISuOL+9UPFiRhnlUeAbbJdGxQBMM4
-	 i7O8Z+zE8MXADa373lTK5kd1BpVn/oAR41FBDtjc=
+	b=NkqhxhfEKGsu8F/c48z4O/WaICNb2Qtb5FQtp8du8WpIWH4hapc05PLY8FymY9UdP
+	 lpuD+vJm4z4cLttSCExcjsw0rplG+mHAVUBWWfqHmA9Sd/gCszaVySrvxiUJG6LOOZ
+	 9mQJYmJ7ZC9NIVGzSLZmAK/sgjH7+sVXJIzVTOEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 815/935] xenbus: Unregister reboot notifier on init failure
-Date: Sat, 12 Sep 2026 09:04:05 +0200
-Message-ID: <20260912065545.526765629@linuxfoundation.org>
+Subject: [PATCH 5.15 851/935] 8139cp: fix Rx and Tx not being disabled in cp_suspend
+Date: Sat, 12 Sep 2026 09:04:41 +0200
+Message-ID: <20260912065546.346743332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,64 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit d330fb86a7170f845123ae82d95df440fad9b707 ]
+[ Upstream commit cb7643b78d35392f0f434774d78b4c77b80f677f ]
 
-xs_init() registers xs_reboot_nb before initializing XenStore
-communications and starting xenwatch. If either operation fails, the
-notifier remains registered and a later initialization attempt can hit a
-duplicate registration.
+On QEMU rtl8139 model, frames that arrive while the interface is
+suspended still end up in the stack after resume. With pm_test=devices,
+which keeps devices suspended for 5s, 200 frames sent to interface
+during that time and 50 frames after resume, eth0 reports 113
+received frames.
 
-Check the notifier registration result and unregister it on every
-subsequent failure path.
+cp_suspend() is supposed to stop receiver and the transmitter, but
+the mask is wrong: (~RxOn | ~TxOn) is ~0, nothing is cleared and Cmd
+still reads 0x0d when cp_suspend() returns.
 
-Fixes: fd8aa9095a95 ("xen: optimize xenbus driver for multiple concurrent xenstore accesses")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260807032326.940377-1-dbgh9129@gmail.com>
+Use ~(RxOn | TxOn) so both bits are actually cleared.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260817043057.20099-1-kmehltretter@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xenbus/xenbus_xs.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/realtek/8139cp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/xen/xenbus/xenbus_xs.c b/drivers/xen/xenbus/xenbus_xs.c
-index a4dd92719e7ae..d59bc4f5169af 100644
---- a/drivers/xen/xenbus/xenbus_xs.c
-+++ b/drivers/xen/xenbus/xenbus_xs.c
-@@ -952,19 +952,27 @@ int xs_init(void)
- 	int err;
- 	struct task_struct *task;
+diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
+index 2b84b4565e64f..6938093e36ace 100644
+--- a/drivers/net/ethernet/realtek/8139cp.c
++++ b/drivers/net/ethernet/realtek/8139cp.c
+@@ -2063,7 +2063,7 @@ static int __maybe_unused cp_suspend(struct device *device)
  
--	register_reboot_notifier(&xs_reboot_nb);
-+	err = register_reboot_notifier(&xs_reboot_nb);
-+	if (err)
-+		return err;
+ 	/* Disable Rx and Tx */
+ 	cpw16 (IntrMask, 0);
+-	cpw8  (Cmd, cpr8 (Cmd) & (~RxOn | ~TxOn));
++	cpw8  (Cmd, cpr8 (Cmd) & ~(RxOn | TxOn));
  
- 	/* Initialize the shared memory rings to talk to xenstored */
- 	err = xb_init_comms();
- 	if (err)
--		return err;
-+		goto err_unregister_reboot_notifier;
+ 	spin_unlock_irqrestore (&cp->lock, flags);
  
- 	task = kthread_run(xenwatch_thread, NULL, "xenwatch");
--	if (IS_ERR(task))
--		return PTR_ERR(task);
-+	if (IS_ERR(task)) {
-+		err = PTR_ERR(task);
-+		goto err_unregister_reboot_notifier;
-+	}
- 
- 	/* shutdown watches for kexec boot */
- 	xs_reset_watches();
- 
- 	return 0;
-+
-+err_unregister_reboot_notifier:
-+	unregister_reboot_notifier(&xs_reboot_nb);
-+	return err;
- }
 -- 
 2.53.0
 
