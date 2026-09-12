@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16FC78C9C;
-	Sat, 12 Sep 2026 19:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A4F78C9C;
+	Sat, 12 Sep 2026 19:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241256; cv=none; b=fklebGu7wT6CaxkVnTu/+dCLEUjNts9TPMRJtb8rkZDIQ6YiIEbSUuNZ5cyVxdKQ44fHli3G1pNbTGZZKqYXY83KHMK8ZjBEyssS3gkN9K7/CgfEnwTnYCdMOHWJosYj15mM6t+LRP+0smszNt4Ati9WTZ+soIz31V05NyeDSfg=
+	t=1789241260; cv=none; b=OmZdexdzpvhaFSvRK83EEozIyg9iBXdpRpJJwaGhU9QV4uOcfrSsvHhpAg1tluyt8p+EEkjGg4ANrmCpU/gp4Ewk+LsTMMfskwiRXmD4m3UUiWgk44tLxGAlX3o5ojqh1q6M7W6DEuEArYEmg6WWDNPkmqiS/8vySSRhhsHXj1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241256; c=relaxed/simple;
-	bh=1H3U2oLLoD/1gPWPja+zl58UJuOW3ueG2gh1Igat8ls=;
+	s=arc-20240116; t=1789241260; c=relaxed/simple;
+	bh=RdgtIDY7EvGpfRSyBGeEU+qmQMMf8dACXmJnh4VzOnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ba7WMIUOjrOR/xsu8k7HRK+ApLKtKh1tlVI2CZ4OlAeKOICC5+FUaQDRZwsLi/769kRH911kLafDiCGAetzHL3DVsaIGD3uXfgdoTHb9oVF+PwChxwJPrqe7+0wit5AcUtDIyxzB4bHfeZj7vxS2U2L0rhXRWYkRlzVDqALUr4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8rliT86; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B1rqQ+OVKsy2jU7aclPTxbvOl3PdSsUpA2F3zpVfJke3QHFRKZAplbu4Im3jAP4fqw1KrZbGh03RdeiPNHrnh3BThVNlEafAnYn0wSnbm9AL8x2YTAMbCt0DeHR3GFf0IPfXCAUbXB3/p7RjqumsSHtgzDWWw59ibsVVORacjOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjgOGHB8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8rliT86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C301F000FF;
-	Sat, 12 Sep 2026 19:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjgOGHB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7711F000FF;
+	Sat, 12 Sep 2026 19:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241254;
-	bh=6wKZkA96olEsJAiTQz5HImlLFfeLXTFuZUM2C516Af8=;
+	s=korg; t=1789241259;
+	bh=7flqHJ29pkdSn+3CmPJOnbcc5uFpqg1VUFc5dhCPXbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S8rliT86gdxLTBSeHLpuufTT5PsY8qu9zVPYoLvg3fs6l9mqXCq3lUbHlxZ/tzXDf
-	 cqn+LLQ/1D1kTwPk+kg7n3cwFMwDpHpQli0HFeO1oQpvJ4bKFHu6bDQgNWBJM0Qatn
-	 ytB7JoKHDbvOq5Z1KZvbIS3ixj+rXOD1vYDTq3Ro=
+	b=EjgOGHB8UdTcfMWbF+YiDKxaKacD4kDIOO6QTyFC0/mNYrfM27vSwGPK9/z7HQ14J
+	 LC9lmc3XPONQbg0Cf2GS9aSJB52PihGgMM3QlEW6dqHVaHIKE0vr54EROmydpBM44d
+	 fQXIW+RUSaChr1Ezv2Ic560p7Xl1eqKCYBAldreA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.10 096/798] sunrpc: route to a populated pool in svc_pool_for_cpu()
-Date: Sat, 12 Sep 2026 08:55:24 +0200
-Message-ID: <20260912065519.157517736@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 097/798] SUNRPC: always drain cache_cleaner before destroying a cache_detail
+Date: Sat, 12 Sep 2026 08:55:25 +0200
+Message-ID: <20260912065519.180759081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,81 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit f6310491c4cdb88af73aa551ec9df1f10a90c709 upstream.
+commit f42d0fda0c67695db6bc704b04b7c10240805377 upstream.
 
-svc_set_num_threads() spreads the requested threads evenly across the
-service's pools (base = nrservs / sv_nrpools).  When a service runs
-fewer threads than it has pools -- e.g. an nfsd configured with fewer
-threads than the host has NUMA nodes while running in "pernode" or
-"percpu" mode -- the trailing pools are left with no threads at all.
+sunrpc_destroy_cache_detail() only cancels the global cache_cleaner
+delayed_work when cache_list is empty.  During per-netns teardown
+cache_list is never empty because init_net's caches remain registered,
+so the cancel never fires.  After unlink, the caller proceeds to
+cache_destroy_net() which kfrees the cache_detail while cache_clean()
+may still hold a dangling pointer to it.  The result is a
+use-after-free: cache_dequeue() takes cd->queue_lock on freed memory,
+and cache_put() dereferences cd->cache_put as a function pointer from
+freed slab.
 
-svc_xprt_enqueue() selects a pool from the CPU servicing the transport,
-queues the transport on that pool's sp_xprts, and only wakes a thread
-from the same pool.  Each thread services exclusively its own pool, so a
-transport that lands on a threadless pool is enqueued on sp_xprts and
-never picked up: the connection hangs indefinitely.
+Drop the list_empty guard so that cancel_delayed_work_sync() always
+runs, ensuring any in-flight cache_clean() completes before the
+cache_detail is freed.  Re-arm the cleaner afterwards if other caches
+are still registered.
 
-Have svc_pool_for_cpu() skip pools that currently have no threads,
-falling back to the next populated pool.  This trades NUMA locality for
-a guarantee that the work is actually serviced.  sp_nrthreads is only
-updated under the service mutex; the lockless read here is a best-effort
-routing hint, so annotate it with data_race().
-
-Fixes: bfd241600a3b ("[PATCH] knfsd: make rpc threads pools numa aware")
+Fixes: 820f9442e711 ("SUNRPC: split cache creation and PipeFS registration")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260706-sunrpc-pool-mode-v5-1-6c4ee7cd89aa@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20260526-cache_cleaner_vs_destroy_no_sync-v1-1-a707a6fcfd32@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc.c |   29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ net/sunrpc/cache.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -364,6 +364,7 @@ svc_pool_for_cpu(struct svc_serv *serv,
- {
- 	struct svc_pool_map *m = &svc_pool_map;
- 	unsigned int pidx = 0;
-+	unsigned int i;
- 
- 	if (serv->sv_nrpools <= 1)
- 		return serv->sv_pools;
-@@ -376,8 +377,34 @@ svc_pool_for_cpu(struct svc_serv *serv,
- 		pidx = m->to_pool[cpu_to_node(cpu)];
- 		break;
- 	}
-+	pidx %= serv->sv_nrpools;
- 
--	return &serv->sv_pools[pidx % serv->sv_nrpools];
-+	/*
-+	 * It's possible to have a pool with no threads. Userland can just set
-+	 * things up this way directly. Also, when threads are autodistributed
-+	 * they are spread evenly across the pools, but when there are fewer
-+	 * threads than pools some pools can end up with none.
-+	 *
-+	 * A transport enqueued on a threadless pool would never be picked up,
-+	 * since each thread only services its own pool. Fall back to the next
-+	 * populated pool, trading NUMA locality for a guarantee that the
-+	 * transport is serviced.
-+	 */
-+	for (i = 0; i < serv->sv_nrpools; i++) {
-+		struct svc_pool *pool = &serv->sv_pools[pidx];
-+
-+		/* This is set under the service mutex and rarely ever
-+		 * changes. A data race here is harmless.
-+		 */
-+		if (data_race(pool->sp_nrthreads))
-+			return pool;
-+
-+		if (++pidx >= serv->sv_nrpools)
-+			pidx = 0;
-+	}
-+
-+	/* No pool has any threads; nothing can service the transport. */
-+	return &serv->sv_pools[pidx];
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -410,10 +410,9 @@ void sunrpc_destroy_cache_detail(struct
+ 	list_del_init(&cd->others);
+ 	spin_unlock(&cd->hash_lock);
+ 	spin_unlock(&cache_list_lock);
+-	if (list_empty(&cache_list)) {
+-		/* module must be being unloaded so its safe to kill the worker */
+-		cancel_delayed_work_sync(&cache_cleaner);
+-	}
++	cancel_delayed_work_sync(&cache_cleaner);
++	if (!list_empty(&cache_list))
++		queue_delayed_work(system_power_efficient_wq, &cache_cleaner, 0);
  }
+ EXPORT_SYMBOL_GPL(sunrpc_destroy_cache_detail);
  
- int svc_rpcb_setup(struct svc_serv *serv, struct net *net)
 
 
