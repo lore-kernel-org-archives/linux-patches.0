@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E7B47CC81;
-	Sat, 12 Sep 2026 16:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760C32594BD;
+	Sat, 12 Sep 2026 16:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229447; cv=none; b=IM+JVajuKZuPWNBQyaND2MFbniXL5L97uJVEtEo8OdF82NEXA06LuuCfxaGJ+W+Gwl2trP/Mu2RzM38J1jcuv5BGG77VkoJt0ioKdrQhq7L3XWW0JlTQ+beqoQAaEIwty1h8bSLl2cVirXtOZh0WaEaIYEH1EWI1uWGocG6XRrI=
+	t=1789229452; cv=none; b=lWmPq2fTYNOelIhtvYib3V09+siNcRFG7zU7/aQvTF8sY0lUV2ZM1+EnlysGbU/RatYbWiXWRYHCuPi6b18Ew06HcrfksWqQGCLvHRTlQjvk+G3FSivi7ORMbdJt84Puws0J20eNOfFBpOigMWfsaYI/4iphZXKUTrO6Vo+2/S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229447; c=relaxed/simple;
-	bh=gV6xjRQbROvEr2SUQtPnhpCP3P80iNDhiMyGkk8V9lI=;
+	s=arc-20240116; t=1789229452; c=relaxed/simple;
+	bh=Cbgzf09JhdO1KKHLlNLEI4hfGdkY1LLWGvZIZ69ZW9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqOQDb22VGz4LzJ8GaShP1LxGkSbqtDLBkQOzDr1XLmhok9cPG+6vSqa9dHTXeh1de94PsGTSH4bSDY0OApIhEEAR8HLVmSCNX9/UYgxy75nfE1uNdGzv9kUPucgFBOlipELXv4lfr3IAZHFtgI9g0sKH7MTycxGwHs2RPw01BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVdSNoDM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jVCdP612WWKIevhmRfOS/H6zyhJLNuFJhiiTb+3lnSi8qiqc0xstORflcSGVFnxjXy+SJGfuPaS91Bf6Ju1Tzpt/OFBddlaVJO7KFCYBdK7u0ODJqzz2vCgn85ur8t/UCn9m+qnaDncBAvlOJ1JJWnNN+yUKaHDV942TRzeq2IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFQRO4V9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVdSNoDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B2C1F000FF;
-	Sat, 12 Sep 2026 16:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFQRO4V9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0464B1F00893;
+	Sat, 12 Sep 2026 16:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229438;
-	bh=lANnLpcOsAuiuvca+muDna7OIYQ1x/rsAoAGF0iAIVs=;
+	s=korg; t=1789229444;
+	bh=Kxv5yBk5Uk84ZAYuk6CEJGi+nHHtn3BYYAT5Pj/yY7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yVdSNoDM1wV1fNebF39j+xX9PrqLD7ef9BcpqeZAZDhHHL/J/aNx1Hq0l182tZTXw
-	 aEtfLz/ry7nbAMTDif6HDXsf8Qc4a3krhsltY+EVEBktgpT8QkEirHt4nlG/EX9vnH
-	 XDCU8pZtUuAXHS0svKcpW2XcYJ/bL0YXZ7oYelow=
+	b=OFQRO4V9MfGKwgfH75655ROtDXFAHU68GxBsQocDKwsY0G3zoRMoHsASl9Xu/586r
+	 EHGtLe0zn2kX8D0zaVFD5g0Xj8+w25OxmY2U7ujv0en7EK6tK5amTYsT7QDoAXzzCQ
+	 NZBurSqLMNM0uOV9jDf2WNFXNKf7L8rLSs5aFw8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Yu Peng <pengyu@kylinos.cn>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0589/1191] perf metricgroups: Use zfree() to reduce chances of use after free
-Date: Sat, 12 Sep 2026 08:55:17 +0200
-Message-ID: <20260912065601.477034985@linuxfoundation.org>
+Subject: [PATCH 6.1 0590/1191] perf metricgroup: Fix metric expression copy leaks
+Date: Sat, 12 Sep 2026 08:55:18 +0200
+Message-ID: <20260912065601.498629358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,82 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Yu Peng <pengyu@kylinos.cn>
 
-[ Upstream commit 11ff9bcd7dfeefa6a9a9fcd4c7775b8066c46a31 ]
+[ Upstream commit ef3af1df4f3372bd8ad47619452a283048b3bc8d ]
 
-Do defensive programming by using zfree() to initialize freed pointers
-to NULL, so that eventual use after free result in a NULL pointer deref
-instead of more subtle behaviour.
+metricgroup__copy_metric_events() allocates a new metric expression and
+duplicates metric_name before linking the expression into the destination
+metric event.
 
-This file already used zfree() in other places, so this just plugs some
-leftovers.
+Free new_expr when strdup() fails, and free the duplicated metric_name on
+the later error paths.
 
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: ef3af1df4f33 ("perf metricgroup: Fix metric expression copy leaks")
+Fixes: b85a4d61d302 ("perf metric: Allow modifiers on metrics")
+Signed-off-by: Yu Peng <pengyu@kylinos.cn>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/metricgroup.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ tools/perf/util/metricgroup.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/metricgroup.c b/tools/perf/util/metricgroup.c
-index 4c98ac29ee13f..c05463a91719f 100644
+index c05463a91719f..96c965162c78c 100644
 --- a/tools/perf/util/metricgroup.c
 +++ b/tools/perf/util/metricgroup.c
-@@ -87,9 +87,9 @@ static void metric_event_delete(struct rblist *rblist __maybe_unused,
- 	struct metric_expr *expr, *tmp;
+@@ -1776,8 +1776,10 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
  
- 	list_for_each_entry_safe(expr, tmp, &me->head, nd) {
--		free((char *)expr->metric_name);
--		free(expr->metric_refs);
--		free(expr->metric_events);
-+		zfree(&expr->metric_name);
-+		zfree(&expr->metric_refs);
-+		zfree(&expr->metric_events);
- 		free(expr);
- 	}
+ 			new_expr->metric_expr = old_expr->metric_expr;
+ 			new_expr->metric_name = strdup(old_expr->metric_name);
+-			if (!new_expr->metric_name)
++			if (!new_expr->metric_name) {
++				free(new_expr);
+ 				return -ENOMEM;
++			}
  
-@@ -184,9 +184,9 @@ static void metric__free(struct metric *m)
- 	if (!m)
- 		return;
- 
--	free(m->metric_refs);
-+	zfree(&m->metric_refs);
- 	expr__ctx_free(m->pctx);
--	free((char *)m->modifier);
-+	zfree(&m->modifier);
- 	evlist__delete(m->evlist);
- 	free(m);
- }
-@@ -723,7 +723,7 @@ static int decode_all_metric_ids(struct evlist *perf_evlist, const char *modifie
- 		if (strstr(ev->name, "metric-id=")) {
- 			bool has_slash = false;
- 
--			free(ev->name);
-+			zfree(&ev->name);
- 			for (cur = strchr(sb.buf, '@') ; cur; cur = strchr(++cur, '@')) {
- 				*cur = '/';
- 				has_slash = true;
-@@ -1805,7 +1805,7 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+ 			new_expr->metric_unit = old_expr->metric_unit;
+ 			new_expr->runtime = old_expr->runtime;
+@@ -1789,6 +1791,7 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+ 				alloc_size = sizeof(*new_expr->metric_refs);
+ 				new_expr->metric_refs = calloc(nr + 1, alloc_size);
+ 				if (!new_expr->metric_refs) {
++					zfree(&new_expr->metric_name);
+ 					free(new_expr);
+ 					return -ENOMEM;
+ 				}
+@@ -1805,6 +1808,7 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
  			alloc_size = sizeof(*new_expr->metric_events);
  			new_expr->metric_events = calloc(nr + 1, alloc_size);
  			if (!new_expr->metric_events) {
--				free(new_expr->metric_refs);
-+				zfree(&new_expr->metric_refs);
++				zfree(&new_expr->metric_name);
+ 				zfree(&new_expr->metric_refs);
  				free(new_expr);
  				return -ENOMEM;
- 			}
-@@ -1815,8 +1815,8 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+@@ -1815,6 +1819,7 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
  				evsel = old_expr->metric_events[idx];
  				evsel = evlist__find_evsel(evlist, evsel->core.idx);
  				if (evsel == NULL) {
--					free(new_expr->metric_events);
--					free(new_expr->metric_refs);
-+					zfree(&new_expr->metric_events);
-+					zfree(&new_expr->metric_refs);
++					zfree(&new_expr->metric_name);
+ 					zfree(&new_expr->metric_events);
+ 					zfree(&new_expr->metric_refs);
  					free(new_expr);
- 					return -EINVAL;
- 				}
 -- 
 2.53.0
 
