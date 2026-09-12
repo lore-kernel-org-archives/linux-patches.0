@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356B537267E;
-	Sat, 12 Sep 2026 10:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FE528030E;
+	Sat, 12 Sep 2026 10:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207247; cv=none; b=FHs+i2qBIbMjIEsHMIsOOxJsekz1Pqp9Udy2ZLYaiWIKfEDNxQi7Ou0hWg3xsdTtM7bif20pDDt5sbAIsyeFNpPyMwpZ9BzNPvbkMvlX685kxTqjmmLEHqpXb7AwkEjuTnOT1hItFdxbJq3nsE/uMees9m4hIRDHN0EJsB4uNDM=
+	t=1789207252; cv=none; b=hJQFHx5QDUJu32Aai1YZCUsh9plkPP4IdOJPee/EQs3fHFvME3M8xoddm+jvoWVnv6/THHJkXZ/dzUJ95uDjL6wKwlJjskc71NKqwTroDq1H600RWHjkn4njyrhVIzXx4feT6E8XcbQIKOt3NihV8Ji/HRiOW2XrBM8hJtFM1ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207247; c=relaxed/simple;
-	bh=obqWiLqYDGKMSd3N/KqMPBQt3Jz5OL7PdAc3uzfts/s=;
+	s=arc-20240116; t=1789207252; c=relaxed/simple;
+	bh=X+f+ljRZNmRhx3j2c7pmjuwJpYXQt+QRxKKToGhDtLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lwbkhRnQnHRkPdqByScF0P4QzmUtRicCyNH/PA0wQ0NeDgQ8bWWs/O5MfAeZ1KPMas9qfcJXm0/IKUN+R/xJRyCMvGxRbjZsl5aND4JHOjRj6XyC5pFsxZIz7F+aGgVN+dER7EkEg8tHuelewB36J25D/Fn/ilzKMZS3qnP8sTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjFxqTzp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EMakygtPI1x6nQH8jB9E3W6Djvhd+q0JrHft0wsWDznSKlpNGd3Z6WJgAnGQHuoOlcS7NBE0+g4ZtKnIehfRaVNOgX1F59bb3XK9DReTNDK2T8StJVZqDbvNnqP9GBZqyxNI5U2ddGVqdS0ZXeTk8BeLv/Kw+I7awHUpip5ZhoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0g2LBvE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjFxqTzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974C91F000FF;
-	Sat, 12 Sep 2026 10:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0g2LBvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD88D1F000FF;
+	Sat, 12 Sep 2026 10:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207245;
-	bh=uO0zBRRpOj/bhUudfW+WRq1aKUIqcz+DpmywUJEgjXk=;
+	s=korg; t=1789207250;
+	bh=W2oIN3V3iE57Zqj1L8e5aFtTcp9wfCjvUN2tgHKtfUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xjFxqTzp+ABoYw1LYICPibjzJSAQTwILrx2AWHAmhWMZbyz/blt4VrOPrXUKRptDD
-	 r/CN0jRaQlQ8fD5NU/0tZIxI8WyvimyswAKzvAeKbApCV/zWRNTZkGnAXrfwN/VI8O
-	 Pqd7d6vys0KQiFjJAkbfJn2w4XFqA4HBeyggKE0I=
+	b=z0g2LBvEdj9pYIFHdeJTfnxjLDM9uVi6aSovS//jFODhBxVB2HURHhIuifOKEj7l8
+	 B9Pg2dKbAL2pfCDdX3IbV6i9NY6nsGD3sndYf9ZAoDoN5s25N0Dr7OZlt5IH03iU8S
+	 jjmRaJDAm5zZ9GI7O0dGfbjAj2gNQOJi2wKf8sJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0320/1518] platform/mellanox: mlxbf-pmc: Check ACPI_COMPANION() against NULL
-Date: Sat, 12 Sep 2026 08:41:29 +0200
-Message-ID: <20260912065630.716628881@linuxfoundation.org>
+Subject: [PATCH 6.18 0367/1518] rpmsg: glink: remove duplicate code for rpmsg device remove
+Date: Sat, 12 Sep 2026 08:42:16 +0200
+Message-ID: <20260912065631.774340454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,65 +45,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit c38cce70adef874c2a7b5132c14d6c221401deff ]
+[ Upstream commit 112766cdf2e5ea0a0f72b0304d57a6f74c066670 ]
 
-Every platform driver can be forced to match a device that doesn't match
-its list of device IDs because of device_match_driver_override(), so
-platform drivers that rely on the existence of a device's ACPI companion
-object need to verify its presence.
+rpmsg device remove code is duplicated in at-least 2-3 places, add a
+helper function to remove this duplicated code.
 
-mlxbf_pmc_probe() passes the result of ACPI_COMPANION() to
-acpi_device_hid(), which dereferences it, so force-binding the driver to
-a device without an ACPI companion leads to a NULL pointer dereference.
-
-Accordingly, add a requisite ACPI_COMPANION() check against NULL to the
-mlxbf-pmc driver and return -ENODEV when the companion is missing.
-
-Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260706012056.524096-1-lilinmao@kylinos.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250822100043.2604794-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 5a5a48e788e0 ("rpmsg: glink: fix deadlock in endpoint destroy during driver detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-pmc.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c | 43 ++++++++++++-------------------
+ 1 file changed, 16 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
-index 5ec1ad4716967..2ad9e2b0493c4 100644
---- a/drivers/platform/mellanox/mlxbf-pmc.c
-+++ b/drivers/platform/mellanox/mlxbf-pmc.c
-@@ -2262,13 +2262,19 @@ static int mlxbf_pmc_map_counters(struct device *dev)
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 833ff9cb8afe6..df9e98d76847b 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1395,11 +1395,23 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
+ 	return 0;
+ }
  
- static int mlxbf_pmc_probe(struct platform_device *pdev)
++static void qcom_glink_remove_rpmsg_device(struct qcom_glink *glink, struct glink_channel *channel)
++{
++	struct rpmsg_channel_info chinfo;
++
++	if (channel->rpdev) {
++		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
++		chinfo.src = RPMSG_ADDR_ANY;
++		chinfo.dst = RPMSG_ADDR_ANY;
++		rpmsg_unregister_device(glink->dev, &chinfo);
++	}
++	channel->rpdev = NULL;
++}
++
+ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
  {
--	struct acpi_device *acpi_dev = ACPI_COMPANION(&pdev->dev);
--	const char *hid = acpi_device_hid(acpi_dev);
- 	struct device *dev = &pdev->dev;
-+	struct acpi_device *acpi_dev;
- 	struct arm_smccc_res res;
-+	const char *hid;
- 	guid_t guid;
- 	int ret;
+ 	struct glink_channel *channel = to_glink_channel(ept);
+ 	struct qcom_glink *glink = channel->glink;
+-	struct rpmsg_channel_info chinfo;
+ 	unsigned long flags;
  
-+	acpi_dev = ACPI_COMPANION(&pdev->dev);
-+	if (!acpi_dev)
-+		return -ENODEV;
-+
-+	hid = acpi_device_hid(acpi_dev);
-+
- 	/* Ensure we have the UUID we expect for this service. */
- 	arm_smccc_smc(MLXBF_PMC_SIP_SVC_UID, 0, 0, 0, 0, 0, 0, 0, &res);
- 	guid_parse(mlxbf_pmc_svc_uuid_str, &guid);
+ 	spin_lock_irqsave(&channel->recv_lock, flags);
+@@ -1407,14 +1419,7 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
+ 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+ 
+ 	/* Decouple the potential rpdev from the channel */
+-	if (channel->rpdev) {
+-		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
+-		chinfo.src = RPMSG_ADDR_ANY;
+-		chinfo.dst = RPMSG_ADDR_ANY;
+-
+-		rpmsg_unregister_device(glink->dev, &chinfo);
+-	}
+-	channel->rpdev = NULL;
++	qcom_glink_remove_rpmsg_device(glink, channel);
+ 
+ 	qcom_glink_send_close_req(glink, channel);
+ }
+@@ -1704,7 +1709,6 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
+ 
+ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
+ {
+-	struct rpmsg_channel_info chinfo;
+ 	struct glink_channel *channel;
+ 	unsigned long flags;
+ 
+@@ -1720,14 +1724,7 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
+ 	/* cancel pending rx_done work */
+ 	cancel_work_sync(&channel->intent_work);
+ 
+-	if (channel->rpdev) {
+-		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
+-		chinfo.src = RPMSG_ADDR_ANY;
+-		chinfo.dst = RPMSG_ADDR_ANY;
+-
+-		rpmsg_unregister_device(glink->dev, &chinfo);
+-	}
+-	channel->rpdev = NULL;
++	qcom_glink_remove_rpmsg_device(glink, channel);
+ 
+ 	qcom_glink_send_close_ack(glink, channel);
+ 
+@@ -1741,7 +1738,6 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
+ 
+ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
+ {
+-	struct rpmsg_channel_info chinfo;
+ 	struct glink_channel *channel;
+ 	unsigned long flags;
+ 
+@@ -1763,14 +1759,7 @@ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
+ 	spin_unlock_irqrestore(&glink->idr_lock, flags);
+ 
+ 	/* Decouple the potential rpdev from the channel */
+-	if (channel->rpdev) {
+-		strscpy(chinfo.name, channel->name, sizeof(chinfo.name));
+-		chinfo.src = RPMSG_ADDR_ANY;
+-		chinfo.dst = RPMSG_ADDR_ANY;
+-
+-		rpmsg_unregister_device(glink->dev, &chinfo);
+-	}
+-	channel->rpdev = NULL;
++	qcom_glink_remove_rpmsg_device(glink, channel);
+ 
+ 	kref_put(&channel->refcount, qcom_glink_channel_release);
+ }
 -- 
 2.53.0
 
