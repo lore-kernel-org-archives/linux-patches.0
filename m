@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4422525A640;
-	Sat, 12 Sep 2026 15:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628DD331203;
+	Sat, 12 Sep 2026 15:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227803; cv=none; b=AlMoTS1ILkKA1cXfn078v/1nvD+0sNp8Uc1e1gU+bQRS+0Lzmz5oBEcvbWVaAzrtyPoowMC3RZ35eaCqf8tdDnwDHLifKdXQW1udSnF45F9EXg4Y32suzCBBEIjLEpw5Ifo0eO8eLsvq5nDRl5xGuQK/GNAVX2Fp1T9pN8HtfQE=
+	t=1789227808; cv=none; b=k2PnYbx6TfZcynaICHbOBxdvSUOW9FkDpmg6i5/QFPPnEXKJwMvBbpMg1JTHNS/W8gRTIG5eAY6sNFFFPxG22CxqR4aOh77Es/FXFJNAtSh7mDiP1Dfcqumz+4uUAbkoC6/noHePiU7mj2r8VyLfzzrFtIacrkJTOmvT46rHVoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227803; c=relaxed/simple;
-	bh=4j/IraHCijsgS7aA63RE2lYWiPi+yzYflUOlmY+hBLs=;
+	s=arc-20240116; t=1789227808; c=relaxed/simple;
+	bh=q5sho56/5qsmNVICq97NeimuS/r/6AjOt4E/d1Rfo4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4izYz8swVRy/S3JM5MJXKJjXSazfckeNUmQRdQfqdwQzLELQfaaxPyrZIdK0dL3qRv36Dn0/58k3mjkYOA+L7OyscrPZofnBpZgcc1c20+fJcjuR0CE+V78HTXGrTApmUYs1Haz/dgFyefB1o6EZvrtxIQobdg4zzIymjU02nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF5Chemb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bnTu5icL6z20zPcGpNHRq5+OaInVRaZiHOIt+jLCoRxQ3UcRDAbDdoj5u0J27d8DZkFjAuREIQFS5+K/MQXE37rwdaMpaHv6/aLY7G0MuZHCPxvkp8PNAPcWCtRiSuvVFO5tPfl3pAw5mDHra4XiU22/ayG+undom+bY2c6YKSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLYtDcN0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF5Chemb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E2C1F000FF;
-	Sat, 12 Sep 2026 15:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLYtDcN0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B3F1F000FF;
+	Sat, 12 Sep 2026 15:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227801;
-	bh=5q4iMMFapUJ+KrYRU2oPk3CP7NIHjm6K6zUw4KWKU3k=;
+	s=korg; t=1789227807;
+	bh=j07BB4QO758ExFGuoj1aeFaisOFrKVG1cBOFIXJMv20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SF5ChembtbMuDttpUHh2ATdL9CSAVw8MvloNMa9y6HSkNvkFAxG/zWlbLxs+8Zhiu
-	 A/pLtcsNF0R71ymFRime4lR1GoRXY+UJ8E1jIYJLN/WjBioCHHgSnZAXElCpVO8y+k
-	 FwnJmlnwhUV0NwXn/ubwowi8YLYXoOAOu5n6DvgU=
+	b=SLYtDcN02SkYZBoDV8K51ncem3RO2BJBvuz7h1ae2MROHh6lPzA0yP5NqtUHhgJpn
+	 W9dh2vdIT0umOUn80ruC1ouULyjTyxi8slvhkyWAabl++YlUdUA0iVvam/8NbSaIjT
+	 Psdg7ZXnZ8hyvzGoQbtZZGR0WDBWYQRSyX9ID178=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Suraj Jitindar Singh <surajjs@amazon.com>,
+	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Youngjae Kwon <yjkwon0026@snu.ac.kr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0256/1191] netfilter: nf_tables: make nft_object rhltable per table
-Date: Sat, 12 Sep 2026 08:49:44 +0200
-Message-ID: <20260912065553.968742605@linuxfoundation.org>
+Subject: [PATCH 6.1 0257/1191] fsnotify: Fix stale object mask after concurrent mark updates
+Date: Sat, 12 Sep 2026 08:49:45 +0200
+Message-ID: <20260912065553.991982127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,218 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Youngjae Kwon <yjkwon0026@snu.ac.kr>
 
-commit f4f699790590bd0896c48a71e9232a65198f92f0 upstream.
+[ Upstream commit e422777fdd4746de1109575c51e65038d4c5c1be ]
 
-The nft_object rhltable is global, this allows for accessing objects
-that are being dismangled from lookup path by other existing netns.
-Given the nft_obj_destroy() releases the object inmediately, this might
-lead to use-after-free of these objects that are being released.
-Make the existing rhltable per table to address this issue to deal with
-with the nft_rcv_nl_event() path too.
+When a mark gets a new event bit, fanotify and inotify may avoid
+recalculating the object mask if the cached aggregate already contains that
+bit. This is racy with a recalculation triggered by a concurrent update to
+another mark on the same connector.
 
-Update nft_obj_lookup() to take the table as non-const, otherwise,
-compiler complains when passing the objname_ht to rhltable_lookup().
+The concurrent scan can read the mark before the new bit is added, while
+the updater reads the old aggregate before that scan publishes its result.
+The updater then skips recalculation and the scan publishes a mask without
+the bit, leaving the object mask stale after both updates complete.
 
-Fixes: 4d44175aa5bb ("netfilter: nf_tables: handle nft_object lookups via rhltable")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ 6.1: Conflicts in nf_tables_api.c because 6.1 lacks three mainline
-  refactors: 0be908750162 ("netfilter: nf_tables: pass nft_table to
-  destroy function", v6.11), e169285f8c56 ("netfilter: nf_tables: do
-  not store nft_ctx in transaction objects", v6.11) and f80a612dd77c
-  ("netfilter: nf_tables: add support to destroy operation", v6.3).
-  As a result 6.1's nf_tables_table_destroy() still takes an nft_ctx;
-  struct nft_trans still embeds an nft_ctx (so the owning table is
-  trans->ctx.table, not a per-transaction table local); and the commit
-  path has no NFT_MSG_DESTROYOBJ case. Resolved by destroying the
-  per-table objname_ht via ctx->table in nf_tables_table_destroy(), and
-  by passing the owning table trans->ctx.table to nft_obj_del() in the
-  commit and abort paths; 6.1's single NFT_MSG_DELOBJ case is retained.
-  The header and all other hunks applied cleanly. ]
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+This can be reproduced with two fanotify groups watching the same inode:
+one thread removes FAN_MODIFY from one existing mark while another thread
+adds FAN_MODIFY to the other mark. After both fanotify_mark() calls return,
+writes can fail to produce FAN_MODIFY for the group whose mark now contains
+the bit. This was reproduced on an unmodified v6.12.95 kernel. The
+equivalent inotify interleaving loses IN_MODIFY events.
 
+For normal fanotify additions, recalculate whenever the raw mark mask
+changes. The normal mask is not cleared asynchronously, so an unchanged
+addition cannot introduce missing interest. Always recalculate ignore-mask
+updates because FS_MODIFY handling may clear the ignore mask without taking
+mark->lock, making snapshot comparisons unreliable.
+
+Always recalculate after updating an existing inotify watch. Its replace
+path temporarily sets mark->mask to zero, so a concurrent scan can observe
+zero even when the old and final masks are equal. Assigning the replacement
+mask directly would avoid the transient zero, but existing-watch updates
+are infrequent, so unconditional recalculation is simpler.
+
+Link: https://lore.kernel.org/all/CACwKKmCZdiZDoFuYm6LZhQ=XvHPk0fNKH=X3LmoXMqakYqJaNw@mail.gmail.com/
+Fixes: 63c882a05416 ("inotify: reimplement inotify using fsnotify")
+Fixes: 912ee3946c5e ("fanotify: do not call fanotify_update_object_mask in fanotify_add_mark")
+Cc: stable@vger.kernel.org # needs adjustments for <= 7.0
+Suggested-by: Jan Kara <jack@suse.cz>
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Youngjae Kwon <yjkwon0026@snu.ac.kr>
+Link: https://patch.msgid.link/20260802015801.2426818-1-yjkwon0026@snu.ac.kr
+Signed-off-by: Jan Kara <jack@suse.cz>
+(cherry picked from commit e422777fdd4746de1109575c51e65038d4c5c1be)
+[yjkwon0026: Resolve the inotify conflict by retaining the branch-native
+inode->i_fsnotify_marks argument to fsnotify_recalc_mask(). This tree
+lacks 35ceae44742e ("fsnotify: Avoid data race between
+fsnotify_recalc_mask() and fsnotify_object_watched()") and
+4520b96b8136 ("fsnotify: inotify: pass mark connector to
+fsnotify_recalc_mask()"). The differing READ_ONCE() line and connector
+call are in the conditional deleted by this patch, so neither commit is
+a prerequisite for this fix.]
+Signed-off-by: Youngjae Kwon <yjkwon0026@snu.ac.kr>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  4 +++-
- net/netfilter/nf_tables_api.c     | 34 +++++++++++++++----------------
- 2 files changed, 19 insertions(+), 19 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 12 +++++++-----
+ fs/notify/inotify/inotify_user.c   | 15 +--------------
+ 2 files changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index e0b6c328d5377..7e63281f2d5a8 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1212,6 +1212,7 @@ static inline void nft_use_inc_restore(u32 *use)
-  *	@sets: sets in the table
-  *	@objects: stateful objects in the table
-  *	@flowtables: flow tables in the table
-+ *	@objname_ht: hashtable for objects lookup by name
-  *	@hgenerator: handle generator state
-  *	@handle: table handle
-  *	@use: number of chain references to this table
-@@ -1227,6 +1228,7 @@ struct nft_table {
- 	struct list_head		sets;
- 	struct list_head		objects;
- 	struct list_head		flowtables;
-+	struct rhltable			objname_ht;
- 	u64				hgenerator;
- 	u64				handle;
- 	u32				use;
-@@ -1305,7 +1307,7 @@ static inline void *nft_obj_data(const struct nft_object *obj)
- #define nft_expr_obj(expr)	*((struct nft_object **)nft_expr_priv(expr))
- 
- struct nft_object *nft_obj_lookup(const struct net *net,
--				  const struct nft_table *table,
-+				  struct nft_table *table,
- 				  const struct nlattr *nla, u32 objtype,
- 				  u8 genmask);
- 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index b6f74fa699f22..1baf5253d635a 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -42,8 +42,6 @@ enum {
- 	NFT_VALIDATE_DO,
- };
- 
--static struct rhltable nft_objname_ht;
--
- static u32 nft_chain_hash(const void *data, u32 len, u32 seed);
- static u32 nft_chain_hash_obj(const void *data, u32 len, u32 seed);
- static int nft_chain_hash_cmp(struct rhashtable_compare_arg *, const void *);
-@@ -1415,6 +1413,10 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (err)
- 		goto err_chain_ht;
- 
-+	err = rhltable_init(&table->objname_ht, &nft_objname_ht_params);
-+	if (err < 0)
-+		goto err_obj_ht;
-+
- 	INIT_LIST_HEAD(&table->chains);
- 	INIT_LIST_HEAD(&table->sets);
- 	INIT_LIST_HEAD(&table->objects);
-@@ -1433,6 +1435,8 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
- 	list_add_tail_rcu(&table->list, &nft_net->tables);
- 	return 0;
- err_trans:
-+	rhltable_destroy(&table->objname_ht);
-+err_obj_ht:
- 	rhltable_destroy(&table->chains_ht);
- err_chain_ht:
- 	kfree(table->udata);
-@@ -1595,6 +1599,7 @@ static void nf_tables_table_destroy(struct nft_ctx *ctx)
- 		return;
- 
- 	rhltable_destroy(&ctx->table->chains_ht);
-+	rhltable_destroy(&ctx->table->objname_ht);
- 	kfree(ctx->table->name);
- 	kfree(ctx->table->udata);
- 	kfree(ctx->table);
-@@ -7149,7 +7154,7 @@ void nft_unregister_obj(struct nft_object_type *obj_type)
- EXPORT_SYMBOL_GPL(nft_unregister_obj);
- 
- struct nft_object *nft_obj_lookup(const struct net *net,
--				  const struct nft_table *table,
-+				  struct nft_table *table,
- 				  const struct nlattr *nla, u32 objtype,
- 				  u8 genmask)
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index 9df5db0f10ff2..48984f039fded 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1126,16 +1126,18 @@ static bool fanotify_mark_update_flags(struct fsnotify_mark *fsn_mark,
+ static bool fanotify_mark_add_to_mask(struct fsnotify_mark *fsn_mark,
+ 				      __u32 mask, unsigned int fan_flags)
  {
-@@ -7165,7 +7170,7 @@ struct nft_object *nft_obj_lookup(const struct net *net,
- 		     !lockdep_commit_lock_is_held(net));
++	__u32 old_mask;
+ 	bool recalc;
  
- 	rcu_read_lock();
--	list = rhltable_lookup(&nft_objname_ht, &k, nft_objname_ht_params);
-+	list = rhltable_lookup(&table->objname_ht, &k, nft_objname_ht_params);
- 	if (!list)
- 		goto out;
- 
-@@ -7444,7 +7449,7 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (err < 0)
- 		goto err_trans;
- 
--	err = rhltable_insert(&nft_objname_ht, &obj->rhlhead,
-+	err = rhltable_insert(&table->objname_ht, &obj->rhlhead,
- 			      nft_objname_ht_params);
- 	if (err < 0)
- 		goto err_obj_ht;
-@@ -7640,8 +7645,8 @@ nf_tables_getobj_single(u32 portid, const struct nfnl_info *info,
- 	struct netlink_ext_ack *extack = info->extack;
- 	u8 genmask = nft_genmask_cur(info->net);
- 	u8 family = info->nfmsg->nfgen_family;
--	const struct nft_table *table;
- 	struct net *net = info->net;
-+	struct nft_table *table;
- 	struct nft_object *obj;
- 	struct sk_buff *skb2;
- 	u32 objtype;
-@@ -9319,9 +9324,9 @@ static void nf_tables_commit_chain(struct net *net, struct nft_chain *chain)
- 		nf_tables_commit_chain_free_rules_old(g0);
- }
- 
--static void nft_obj_del(struct nft_object *obj)
-+static void nft_obj_del(struct nft_table *table, struct nft_object *obj)
- {
--	rhltable_remove(&nft_objname_ht, &obj->rhlhead, nft_objname_ht_params);
-+	rhltable_remove(&table->objname_ht, &obj->rhlhead, nft_objname_ht_params);
- 	list_del_rcu(&obj->list);
- }
- 
-@@ -9972,7 +9977,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 			}
- 			break;
- 		case NFT_MSG_DELOBJ:
--			nft_obj_del(nft_trans_obj(trans));
-+			nft_obj_del(trans->ctx.table, nft_trans_obj(trans));
- 			nf_tables_obj_notify(&trans->ctx, nft_trans_obj(trans),
- 					     NFT_MSG_DELOBJ);
- 			break;
-@@ -10231,7 +10236,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 				nft_trans_destroy(trans);
- 			} else {
- 				nft_use_dec_restore(&trans->ctx.table->use);
--				nft_obj_del(nft_trans_obj(trans));
-+				nft_obj_del(trans->ctx.table, nft_trans_obj(trans));
- 			}
- 			break;
- 		case NFT_MSG_DELOBJ:
-@@ -10870,7 +10875,7 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
- 		nft_set_destroy(&ctx, set);
- 	}
- 	list_for_each_entry_safe(obj, ne, &table->objects, list) {
--		nft_obj_del(obj);
-+		nft_obj_del(table, obj);
- 		nft_use_dec(&table->use);
- 		nft_obj_destroy(&ctx, obj);
- 	}
-@@ -11033,10 +11038,6 @@ static int __init nf_tables_module_init(void)
- 	if (err < 0)
- 		goto err_netdev_notifier;
- 
--	err = rhltable_init(&nft_objname_ht, &nft_objname_ht_params);
--	if (err < 0)
--		goto err_rht_objname;
+ 	spin_lock(&fsn_mark->lock);
+-	if (!(fan_flags & FANOTIFY_MARK_IGNORE_BITS))
++	if (!(fan_flags & FANOTIFY_MARK_IGNORE_BITS)) {
++		old_mask = fsn_mark->mask;
+ 		fsn_mark->mask |= mask;
+-	else
++		recalc = old_mask != fsn_mark->mask;
++	} else {
+ 		fsn_mark->ignore_mask |= mask;
 -
- 	err = nft_offload_init();
- 	if (err < 0)
- 		goto err_offload;
-@@ -11059,8 +11060,6 @@ static int __init nf_tables_module_init(void)
- err_netlink_notifier:
- 	nft_offload_exit();
- err_offload:
--	rhltable_destroy(&nft_objname_ht);
--err_rht_objname:
- 	unregister_netdevice_notifier(&nf_tables_flowtable_notifier);
- err_netdev_notifier:
- 	nf_tables_core_module_exit();
-@@ -11084,7 +11083,6 @@ static void __exit nf_tables_module_exit(void)
- 	cancel_work_sync(&trans_gc_work);
- 	cancel_work_sync(&trans_destroy_work);
- 	rcu_barrier();
--	rhltable_destroy(&nft_objname_ht);
- 	nf_tables_core_module_exit();
- }
+-	recalc = fsnotify_calc_mask(fsn_mark) &
+-		~fsnotify_conn_mask(fsn_mark->connector);
++		recalc = true;
++	}
  
+ 	recalc |= fanotify_mark_update_flags(fsn_mark, fan_flags);
+ 	spin_unlock(&fsn_mark->lock);
+diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
+index 804af9d6078b0..b2c75477f5497 100644
+--- a/fs/notify/inotify/inotify_user.c
++++ b/fs/notify/inotify/inotify_user.c
+@@ -540,7 +540,6 @@ static int inotify_update_existing_watch(struct fsnotify_group *group,
+ {
+ 	struct fsnotify_mark *fsn_mark;
+ 	struct inotify_inode_mark *i_mark;
+-	__u32 old_mask, new_mask;
+ 	int replace = !(arg & IN_MASK_ADD);
+ 	int create = (arg & IN_MASK_CREATE);
+ 	int ret;
+@@ -556,27 +555,15 @@ static int inotify_update_existing_watch(struct fsnotify_group *group,
+ 	i_mark = container_of(fsn_mark, struct inotify_inode_mark, fsn_mark);
+ 
+ 	spin_lock(&fsn_mark->lock);
+-	old_mask = fsn_mark->mask;
+ 	if (replace) {
+ 		fsn_mark->mask = 0;
+ 		fsn_mark->flags &= ~INOTIFY_MARK_FLAGS;
+ 	}
+ 	fsn_mark->mask |= inotify_arg_to_mask(inode, arg);
+ 	fsn_mark->flags |= inotify_arg_to_flags(arg);
+-	new_mask = fsn_mark->mask;
+ 	spin_unlock(&fsn_mark->lock);
+ 
+-	if (old_mask != new_mask) {
+-		/* more bits in old than in new? */
+-		int dropped = (old_mask & ~new_mask);
+-		/* more bits in this fsn_mark than the inode's mask? */
+-		int do_inode = (new_mask & ~inode->i_fsnotify_mask);
+-
+-		/* update the inode with this new fsn_mark */
+-		if (dropped || do_inode)
+-			fsnotify_recalc_mask(inode->i_fsnotify_marks);
+-
+-	}
++	fsnotify_recalc_mask(inode->i_fsnotify_marks);
+ 
+ 	/* return the wd */
+ 	ret = i_mark->wd;
 -- 
 2.53.0
 
