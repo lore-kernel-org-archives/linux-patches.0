@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0920B3C1F41;
-	Sat, 12 Sep 2026 07:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B333C2BA2;
+	Sat, 12 Sep 2026 07:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196846; cv=none; b=XfHbywee2mTUX0NZ4sWt/5WB6mZ+OoMEoVZJyo/fgAczTmkaZIp+xxpfN0r05CTxwmt5oIrFgFrcE/mJWDyNPyfQqQBkSMOLtw5GPfKI2J0bdoeqTFCsdXYcNA0d4E+OH68PC/6MXJTQdVVH96qK2v6mdYzmscmP7024gyi5eLk=
+	t=1789196851; cv=none; b=PV9VtOJinhgxM6m9KPxR2UPyQqKNl3VqmDef0L8b3AiMnNxgo9QxCrmEfvsWIHoSQETm3MpQo3wgqmr1MScut8gIMIFF2VkdtC7pq6ScjL/JZeKj6O5YO2vG0UTvk/v68SvJ3yQDHqZQLZTedMKW3UOjTsJtRBglrc6Q0b8X4Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196846; c=relaxed/simple;
-	bh=xRWEguOCervlYAkKnwF0KPfH+aabfTAyW0P83m7kCJs=;
+	s=arc-20240116; t=1789196851; c=relaxed/simple;
+	bh=4zMrLh3DrSaDMwcMwJ7AFbGyQfY10co6w0ym04n6xXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xz9Zgb1y2erE8tCgm4PE96OnD1Vtmip6rt8YogBPAqyg0xYW5a34uup3hmlthABgv0OlzpkAqF9qn5wIPblRxjWw44fS5vfR5pjAdEoqk0O2LuUqoOuOvwA3ncsOq1iQOGbkQVH+lkcSMo0ZQQ6OJUHn2l28RH4oxEZnACbCV0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HblfslE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=riqEiggDTLy7xAWfFXXEDBLMCZQtr+ZeaLXFPAxYdhUflLZKXN9a5jbRaXG9a3M4TaHDlotoiKl+15BfXyDKQZ7WGyur2vgXdZICg/Tjct5HE/BfrgXxjhKnFVsDkrVcMUJwZUC2GAZx4dkqV6qWdvNXEcmBgK45b9jCYtqzQEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rS8X1JLZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HblfslE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202FC1F000FF;
-	Sat, 12 Sep 2026 07:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rS8X1JLZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FCD1F00893;
+	Sat, 12 Sep 2026 07:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196842;
-	bh=eHSNOQWkzG/7S2S701hmh/b739fpOgDRi33VYmNm530=;
+	s=korg; t=1789196846;
+	bh=0XTu9Xgnj1RZEV5dMIETHBA50Cv+69y6TOrGGhHJggY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0HblfslEyCqk0NF/lffcS8RXZjXok6OtLsyam3Q/QqPlPBnTmgIk22cxlnU/I8zwi
-	 +7StaWrLIdjaoI3animvc08PcFCcGhkMxvw2X/6UXwxexLYn2pUbyANXfZMocPSvx8
-	 uOF0VN76UvJjGBWypSzGp74fYXjO7NvrBeHZcdEE=
+	b=rS8X1JLZSohwnXQoVSy1lTZ+Bk4n5W57D268Ta3V9hnAlWwAb6QMUdbjoypjJoNji
+	 FYPXswaQq1OV5qsoQp31DsAnTu2E3KVcKjWz+PWJBDt12EG1FdBAt0y7mHgnVcXm4m
+	 SdPyIlNGIxrk1fsFczasDV9/8nXQ5LlI0YQf1TOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Frank Li <Frank.Li@nxp.com>,
+	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0008/1815] i3c: master: Fix use-after-free of master->this
-Date: Sat, 12 Sep 2026 08:29:18 +0200
-Message-ID: <20260912065649.202819701@linuxfoundation.org>
+Subject: [PATCH 7.2 0009/1815] i3c: master: Do not treat master device as a duplicate target
+Date: Sat, 12 Sep 2026 08:29:19 +0200
+Message-ID: <20260912065649.226499454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,89 +56,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit feb0ed76601f3c2f91f08688c5a7d8b9d382f720 ]
+[ Upstream commit 4dc1b3eeba7991905a5b5b8129ebea51be7d87b7 ]
 
-sysfs attribute callbacks for the master controller device dereference
-master->this.  However, master->this is freed in
-i3c_master_detach_free_devs() before the master device itself is
-released.
+i3c_master_search_i3c_dev_duplicate() searches the bus for another I3C
+device with the same PID as the reference device.  The search can match
+master->this, causing the controller itself to be returned as a
+duplicate.
 
-As a result, sysfs accesses can dereference a freed master->this
-pointer, leading to a use-after-free.
-
-Keep master->this alive until i3c_masterdev_release(), which is called
-after the master device and its sysfs state are being torn down. Do not
-free master->this as part of the normal device detach path.
-
-On the error path in i3c_master_set_info(), reset master->this and
-bus.cur_master to NULL before freeing the allocated device.
+Since the controller is not a target device, it cannot be a duplicate of
+one.  Exclude master->this from matching so that the function only
+returns real duplicate target devices.
 
 Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260807145638.168865-5-adrian.hunter@intel.com
+Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260807145638.168865-4-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-[ retained of_node_put(dev->of_node) instead of upstream’s fwnode_handle_put(dev->fwnode). ]
+[ adjusted the duplicate-device comparison to match the older branch’s PID handling without nonzero-PID checks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/i3c/master.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/i3c/master.c
 +++ b/drivers/i3c/master.c
-@@ -820,6 +820,11 @@ static struct attribute *i3c_masterdev_a
- };
- ATTRIBUTE_GROUPS(i3c_masterdev);
+@@ -2349,7 +2349,8 @@ i3c_master_search_i3c_dev_duplicate(stru
+ 	struct i3c_dev_desc *i3cdev;
  
-+static void i3c_master_free_i3c_dev(struct i3c_dev_desc *dev)
-+{
-+	kfree(dev);
-+}
-+
- static void i3c_masterdev_release(struct device *dev)
- {
- 	struct i3c_master_controller *master = dev_to_i3cmaster(dev);
-@@ -832,6 +837,8 @@ static void i3c_masterdev_release(struct
- 	i3c_bus_cleanup(bus);
- 
- 	of_node_put(dev->of_node);
-+
-+	i3c_master_free_i3c_dev(master->this);
- }
- 
- static const struct device_type i3c_masterdev_type = {
-@@ -1042,11 +1049,6 @@ static void i3c_device_release(struct de
- 	kfree(i3cdev);
- }
- 
--static void i3c_master_free_i3c_dev(struct i3c_dev_desc *dev)
--{
--	kfree(dev);
--}
--
- static struct i3c_dev_desc *
- i3c_master_alloc_i3c_dev(struct i3c_master_controller *master,
- 			 const struct i3c_device_info *info)
-@@ -2092,6 +2094,8 @@ int i3c_master_set_info(struct i3c_maste
- 	return 0;
- 
- err_free_dev:
-+	master->bus.cur_master = NULL;
-+	master->this = NULL;
- 	i3c_master_free_i3c_dev(i3cdev);
- 
- 	return ret;
-@@ -2112,7 +2116,8 @@ static void i3c_master_detach_free_devs(
- 					i3cdev->boardinfo->init_dyn_addr,
- 					I3C_ADDR_SLOT_FREE);
- 
--		i3c_master_free_i3c_dev(i3cdev);
-+		if (i3cdev != master->this)
-+			i3c_master_free_i3c_dev(i3cdev);
+ 	i3c_bus_for_each_i3cdev(&master->bus, i3cdev) {
+-		if (i3cdev != refdev && i3cdev->info.pid == refdev->info.pid)
++		if (i3cdev != refdev && i3cdev->info.pid == refdev->info.pid &&
++		    i3cdev != master->this)
+ 			return i3cdev;
  	}
  
- 	list_for_each_entry_safe(i2cdev, i2ctmp, &master->bus.devs.i2c,
 
 
