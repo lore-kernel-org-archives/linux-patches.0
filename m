@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2991A37F30B;
-	Sat, 12 Sep 2026 19:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2004637F8D7;
+	Sat, 12 Sep 2026 19:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241528; cv=none; b=glQ0g/v001HI663eDoLqt2txZtE6NK4o33WZUrSncfZOLtQQFQPkEnYIZ1STVocRYWuCGO/Z+afsAzmKBSN0pq4JpEYpx5psFKF34W4NAjLEDP7ChnXd3kaRfbnqF2SXvFh9PYZHk0ETJNXhxwbu/RfntJJBBNSymb2iFH/b4Ng=
+	t=1789241533; cv=none; b=A2RT0hn4VnxADdJqA3ceB9zWXFMAJjM0e5dCn5MfKMtHoO0sZsXL1qbhG2Pllriharsp84cylhhUcMB+68Vm5/9n8vq3cFxKWf8lmQKREL6tRsNo7NmkbNthbEQxuMEz7vsLLX+UUw2pWBfGdieYI9nUxovjXKb/mpApUQCD1KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241528; c=relaxed/simple;
-	bh=ZGKAT3oWCHCu8/AIrEsW9qkdzw1llhe2PLOG28Bv17s=;
+	s=arc-20240116; t=1789241533; c=relaxed/simple;
+	bh=280d9X8uoyKO6JkJBdPoN+iZhiDnB2IUQR4Fitm7zI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OKadUlc/JJJHiaUWoU0KJ6oLA53dT32NqJ92pJPzhUbbcuwmyLTrkw/7rZzqsk4DcAdUzJ/p4wOH5wMuAjqCwa93z6TaKef/xXi+gbM21X26iYqW2/YrGSEfjGN5im8BSlfjrpeyk8v2sDEmK0pA0E1FeXAff02ZHcDBYJBDKLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gukUHGX9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DyH3AceXyuAbrfuDVrB8Gp6uVeS2SyrhOJNL31qbMlGTZdDr7zBfMPV+oCQMdUj9NkkYVlifRXDooMd2b4eJBOL4jVIuXWatmXFpTwn3QdFAvYENDCswxM56PpcEqDMpw7jL0pm7BVOfOMaRnjHcrdOEaGGd3idb8Ug5s/2o4xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xxrzyp+e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gukUHGX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC231F000FF;
-	Sat, 12 Sep 2026 19:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xxrzyp+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36F11F00893;
+	Sat, 12 Sep 2026 19:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241527;
-	bh=esjJerYCv8Uju0B1ADNJfL7/QAcbg+YAuiv/WE3or1w=;
+	s=korg; t=1789241532;
+	bh=zven9hwxFnFP2QwCWqsTqDm4zch46bp6UuK6p0PpB28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gukUHGX980CZDtq3rSlT7PXopya9zxSGxJrkLH03I0lOUSO6xupRy2eceBZzfk3IW
-	 Fiv87OGr5mJx+QKpm7flGwAV5aC9uJj1ei4S7AtX7/DyMZrLERHOLlHSW9h/azYXJP
-	 EFsaeVkl7ZBFhLDpyBeCtKLrXD6//F525U6eiTVs=
+	b=Xxrzyp+eRNmKX81bt4Yyi5MaBjscnYf8ajLxfRlfuDG5gZZ2oMl77ZkiakuO8Bem5
+	 t54SV85LG3vak2qOY9tKBuWvXYzKxGYuNjcAkekLVyWCSLPwhCWe/QlHE6ysujnyyL
+	 fOmFO4gzp5ibATrvWY2bcHpvPFJXNWiEhECtLE48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.10 101/798] sunrpc: init gssp_lock before publishing proc entry
-Date: Sat, 12 Sep 2026 08:55:29 +0200
-Message-ID: <20260912065519.270174233@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.10 148/798] mmc: via-sdmmc: stop card-detect handling on probe failure
+Date: Sat, 12 Sep 2026 08:56:16 +0200
+Message-ID: <20260912065520.388707282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,112 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 5ce1ed6159731a41fdd0b03eedbed4e147036a5a upstream.
+commit 088eaa92fcebaa6b957ccf9635afdf39643a577d upstream.
 
-create_use_gss_proxy_proc_entry() publishes /proc/net/rpc/use-gss-proxy
-via proc_create_data() before init_gssp_clnt() runs mutex_init() on
-sn->gssp_lock.  Once the dentry is linked under proc_subdir_lock it is
-immediately reachable from userspace, so a write that lands in the
-window drives set_gssp_clnt() into mutex_lock() on a zero-initialized
-struct mutex.
+request_irq() registers the SD card-detect interrupt and the probe enables
+it before mmc_add_host() runs. If mmc_add_host() fails, the error path only
+unmaps the registers and returns: the interrupt stays registered, so the
+handler keeps running against the host once it is freed. via_sdc_isr()
+dereferences sdhost and its MMIO base and schedules carddet_work, which
+via_sdc_card_detect() also runs against freed memory through its
+container_of() dereference.
 
-    create_use_gss_proxy_proc_entry(net)
-      proc_create_data("use-gss-proxy", ...)   /* dentry live */
-      init_gssp_clnt(sn)
-        mutex_init(&sn->gssp_lock)             /* too late */
+Add a probe-error path that disables and frees the interrupt and cancels
+carddet_work before unmapping. carddet_work can re-enable the device
+interrupt via via_reset_pcictrl(), which restores PCIINTCTRL, so mask it
+again after cancelling the work.
 
-    write_gssp()
-      set_gssp_clnt(net)
-        mutex_lock(&sn->gssp_lock)             /* uninitialized */
-        gssp_rpc_create(...)
-        sn->gssp_clnt = clnt
-        mutex_unlock(&sn->gssp_lock)
+This issue was found by an in-house static analysis tool and confirmed by
+manual code review.
 
-The window spans only the two statements between proc_create_data()
-returning and init_gssp_clnt(), so a writer reaches it only if the
-registering thread is preempted there while another task is already
-opening the freshly published file.  register_pernet_subsys() runs in
-preemptible context under pernet_ops_rwsem, so that preemption is
-possible, and the window widens on auth_rpcgss module load, when the
-proc entry is created for every live net namespace whose tasks are
-already running.  A writer that wins the race locks a zero-filled
-struct mutex.  On CONFIG_DEBUG_MUTEXES the missing magic value trips a
-"lock used without init" splat; on a production kernel the fast path
-acquires the lock via CMPXCHG(owner, 0, current).  In the latter case
-a second writer that arrives before init_gssp_clnt() re-zeroes owner
-can enter set_gssp_clnt() concurrently, shut down the first writer's
-clnt while it is still in use, and leak the loser's clnt.
-
-Fix by initializing sn->gssp_lock in sunrpc_init_net() so its lifetime
-matches the sunrpc_net it lives in.  sn->gssp_clnt is already NULL from
-the kzalloc that backs net_generic storage, so the lazy helper is no
-longer needed; drop init_gssp_clnt(), its prototype, and the call from
-create_use_gss_proxy_proc_entry().  sunrpc.ko is a build-time
-dependency of auth_rpcgss.ko, so sunrpc_init_net() has always run on
-every netns before any auth_gss pernet init can publish the proc
-entry.
-
-Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
+Fixes: e4e46fb61e3b ("mmc: via-sdmmc: fix return value check of mmc_add_host()")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-tier2-local-v2-1-5a0fd532db57@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/gss_rpc_upcall.c |    6 ------
- net/sunrpc/auth_gss/gss_rpc_upcall.h |    1 -
- net/sunrpc/auth_gss/svcauth_gss.c    |    1 -
- net/sunrpc/sunrpc_syms.c             |    1 +
- 4 files changed, 1 insertion(+), 8 deletions(-)
+ drivers/mmc/host/via-sdmmc.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/auth_gss/gss_rpc_upcall.c
-+++ b/net/sunrpc/auth_gss/gss_rpc_upcall.c
-@@ -120,12 +120,6 @@ out:
- 	return result;
- }
+--- a/drivers/mmc/host/via-sdmmc.c
++++ b/drivers/mmc/host/via-sdmmc.c
+@@ -1156,10 +1156,16 @@ static int via_sd_probe(struct pci_dev *
  
--void init_gssp_clnt(struct sunrpc_net *sn)
--{
--	mutex_init(&sn->gssp_lock);
--	sn->gssp_clnt = NULL;
--}
--
- int set_gssp_clnt(struct net *net)
- {
- 	struct sunrpc_net *sn = net_generic(net, sunrpc_net_id);
---- a/net/sunrpc/auth_gss/gss_rpc_upcall.h
-+++ b/net/sunrpc/auth_gss/gss_rpc_upcall.h
-@@ -29,7 +29,6 @@ int gssp_accept_sec_context_upcall(struc
- 				struct gssp_upcall_data *data);
- void gssp_free_upcall_data(struct gssp_upcall_data *data);
+ 	ret = mmc_add_host(mmc);
+ 	if (ret)
+-		goto unmap;
++		goto free_irq;
  
--void init_gssp_clnt(struct sunrpc_net *);
- int set_gssp_clnt(struct net *);
- void clear_gssp_clnt(struct sunrpc_net *);
- 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1495,7 +1495,6 @@ static int create_use_gss_proxy_proc_ent
- 			      &use_gss_proxy_proc_ops, net);
- 	if (!*p)
- 		return -ENOMEM;
--	init_gssp_clnt(sn);
- 	return 0;
- }
- 
---- a/net/sunrpc/sunrpc_syms.c
-+++ b/net/sunrpc/sunrpc_syms.c
-@@ -53,6 +53,7 @@ static __net_init int sunrpc_init_net(st
- 	INIT_LIST_HEAD(&sn->all_clients);
- 	spin_lock_init(&sn->rpc_client_lock);
- 	spin_lock_init(&sn->rpcb_clnt_lock);
-+	mutex_init(&sn->gssp_lock);
  	return 0;
  
- err_pipefs:
++free_irq:
++	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
++	free_irq(pcidev->irq, sdhost);
++	cancel_work_sync(&sdhost->carddet_work);
++	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
++	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
+ unmap:
+ 	iounmap(sdhost->mmiobase);
+ free_mmc_host:
 
 
