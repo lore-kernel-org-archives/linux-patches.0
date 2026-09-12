@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6136E1FC110;
-	Sat, 12 Sep 2026 07:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA74C1FC110;
+	Sat, 12 Sep 2026 07:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199155; cv=none; b=GQ44zLo/SajjQ/GJiMGqp9iDYwRIgThG+fIOma1SjyoClAr6lfUyO5OzeBk84uqBHcUUNUCbbbmAOmtubLySghrlpULrNAodRUKQqw6thtaIgi0q7GuGk7+1bBRQiROAO9AIW0XqdbIpd+KUCxDEDj5BRmlzC+XPbm73NwAW7CQ=
+	t=1789199160; cv=none; b=m7L+C1Be/OayRozXm+3nxzDAZH+kVLssx4MPzGkG9S2hFnQCMrybIVzFg3zL9vFigBO8HfcbsUm4NhBU5TWfsyFwlPQNZcYE8QXrk7R3FWiz5QnNK7X6NUWeiXn/pvyY/ksaGM1+Mg47Q/uZ75SRjelNqL4b/W5UYcbQ+BwZh+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199155; c=relaxed/simple;
-	bh=2vu6hh57DLuPW53dextD3MKfjS/Bwe6eAL3GbaXHHp8=;
+	s=arc-20240116; t=1789199160; c=relaxed/simple;
+	bh=wz5GkSfO6kL3T8LiFC8G5lZ9cDJAI7rqAd2UWaRVdlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Azbh+PrBf0U86JX0ogIqqqmsppU2+jp9vq788SBHVfJNKqrhYvLpvAqaX1o48i6dnqy9aHjrCnyl9oVmEeihZ8tl72hSS26iNIWhkPZGvmpUJCJrPibUPuYtCuPcxG3vFY7uEYIr0KeyT63oBvOpojeU0oUrm+ZgMl3Ah/xDWiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kv+S80Qn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GSRdg012KRSGgNYwySDXPTOExigmeEvqFE05t6ExcgvpPxDLE+mydcb5Hl+bmvY905Bhajl73MR9TcZ15MQ7MqYISVYuHnmRdwKruruWkApPN8Ahnxig24vyo7f6Q8hCCu72MNxLPn3O8y4lqdUVbLHmbagZeQ7cBMLEN9mAsJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i97XXMbg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kv+S80Qn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E379B1F000FF;
-	Sat, 12 Sep 2026 07:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i97XXMbg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4281F000FF;
+	Sat, 12 Sep 2026 07:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199154;
-	bh=DcMSQ3b8qUb3o99RL4eD5AGq0TsLWX5mjbFDDHKqfTk=;
+	s=korg; t=1789199158;
+	bh=JI6IzlDZfgJLygJlkDrB60ufauugUn3/sxB3RAJTGek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kv+S80QnQ1JOkvitq8OGNkYuG9Am1PQPVRQPQhos4WcBRQOkv2h+0QNwaeOEqZzaa
-	 vTit7Ua66kxVQ2s1xvZNUWtvZrQmPOIg6GfQaLNU3+ZvkReZWqrfdTHgj0/3gUwkQn
-	 z6m4uUV1FyL2GyuzAKK+kV1G3fgx6ZDn25fU/B/I=
+	b=i97XXMbg72SiJGJA9aYbAqYl1WMpGCNUdphtnlza02AVTjgamPIhMO8Ucqd3esYv6
+	 WOvnHpKK1ecCp5O1STBlSAhmiaGW3DjEdRqCtM+aPP9Do6YV1LdTfD5gHbyds+8Glk
+	 Ecap401XSjfl5YFgUu80uVBbNH/JcWBnNfn/Rdvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leon Hwang <leon.hwang@linux.dev>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0527/1815] bpf: Disallow interpreter fallback for arena-related insns
-Date: Sat, 12 Sep 2026 08:37:57 +0200
-Message-ID: <20260912065701.259432301@linuxfoundation.org>
+Subject: [PATCH 7.2 0528/1815] bpf: Disallow interpreter fallback for gotox insn
+Date: Sat, 12 Sep 2026 08:37:58 +0200
+Message-ID: <20260912065701.281318081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,26 +53,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit 34746b5a84ec37c0ea2bf6808c65c5ed8790eb51 ]
+[ Upstream commit 905f716362e1186c1a23447ca279e6d21f795cdb ]
 
-Since the interpreter does not support the arena-related insns,
-interpreter fallback should not be allowed for these insns in
+The interpreter does not recognize the BPF_JMP|BPF_JA|BPF_X insn, which
+is used for insn_array map. Thereafter, it would hit the BUG_ON() in
+___bpf_prog_run() at run time.
+
+[    2.563726] BPF interpreter: unknown opcode 0d (imm: 0x0)
+[    2.564557] ------------[ cut here ]------------
+[    2.565206] kernel BUG at kernel/bpf/core.c:2349!
+[    2.565882] Oops: invalid opcode: 0000 [#1] SMP PTI
+
+Set jit_required as true when insn_array map is used in the prog in
+order to disallow interpreter fallback for gotox insn in
 core.c::__bpf_prog_select_runtime().
 
-Currently, when the interpreter executes the arena ST/LDX/STX insns,
-it would hit the BUG_ON() in ___bpf_prog_run() at run time.
-
-[    2.579196] BPF interpreter: unknown opcode a2 (imm: 0x0)
-[    2.579998] ------------[ cut here ]------------
-[    2.580652] kernel BUG at kernel/bpf/core.c:2349!
-[    2.581314] Oops: invalid opcode: 0000 [#1] SMP PTI
-
-Set jit_required as true when arena map is used in the prog to disallow
-interpreter fallback for arena-related insns.
-
-Fixes: 6082b6c328b5 ("bpf: Recognize addr_space_cast instruction in the verifier.")
+Fixes: 493d9e0d6083 ("bpf, x86: add support for indirect jumps")
 Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260715141122.15783-2-leon.hwang@linux.dev
+Link: https://lore.kernel.org/bpf/20260715141122.15783-3-leon.hwang@linux.dev
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -80,17 +78,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index b8b45044ab65a..2c4b52ba52413 100644
+index 2c4b52ba52413..22a122403a2e3 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -17851,6 +17851,7 @@ static int check_map_prog_compatibility(struct bpf_verifier_env *env,
- 			return -EOPNOTSUPP;
+@@ -17899,6 +17899,7 @@ static int __add_used_map(struct bpf_verifier_env *env, struct bpf_map *map)
+ 			return err;
  		}
- 		env->prog->aux->arena = (void *)map;
+ 		env->insn_array_maps[env->insn_array_map_cnt++] = map;
 +		env->prog->jit_required = true;
- 		if (!bpf_arena_get_user_vm_start(env->prog->aux->arena)) {
- 			verbose(env, "arena's user address must be set via map_extra or mmap()\n");
- 			return -EINVAL;
+ 	}
+ 
+ 	return env->used_map_cnt - 1;
 -- 
 2.53.0
 
