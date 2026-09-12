@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140032ECD1D;
-	Sat, 12 Sep 2026 14:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65104326938;
+	Sat, 12 Sep 2026 14:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223613; cv=none; b=HxzVeY3Xxz7KfsNlNZzeeWUTgpjSNMO6DcJkcD0ffydLDKAv7XGHBK1ozoJ3t/fsP4FYvbwetLQiffbsh/RbXgUXdhRFeqE/cJZVJxTh1h+gSPNMSqjrtLwWsQiJN7QW93xqtvpsB+XzhuIfLebDU4tON7ZQfVS7RiG9zAx7yC4=
+	t=1789223618; cv=none; b=N+XlsO49mH8N9aA/drd/slT0v9WtGKikcc5DBmkcGBANAT0kJuy0OcDfap1FE4sza/NoxsRlurwWLza+89Wh0DAhHXAr9Awhl8jsz1fHMdcyyQXa0bsxL1oW7zrrEoUTHebXtUfUiLRXMwKGAnKW9tWCo/r6BGnKnxZZjKRdof4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223613; c=relaxed/simple;
-	bh=vmaANTUgK6qKtvz67kqX6zY88DpAsO/K0vfptXF3rJ4=;
+	s=arc-20240116; t=1789223618; c=relaxed/simple;
+	bh=nw3jWw/wH0k3OhxUAKeewkGZSU/RNi4mzws+jyFzIM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mR7p+UEQOvlJezpiNwSHQb9hHc2Buj6lQ6ZAUpDtHmZaBEpVoc615uStRqhNtk7NCfgBRHsYwjTDP0xFJaL6oh55nx87dy/qAiHF4moZUC0raOvKrAvmo/rhUvpUk7cPOAuUmUtUxn/6dY5oEy8VEUwE8wGzJ1PxT3lnFc6PqbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeU4ZCt6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JPAuG/t5AeEzOehje03f3hlN2OvKY2CVLvallymJ2Nx/bFqS7T2IdCXAjH6k+GnLMT8YAwCjTRayy0jlPi7tHqgNMbRXtxiFk6h5qemV30r2psZAyYXCEmJTtpfKF3uadjlQhJExJDrSEoYCVBf4QcKxOXOmGCu+BSXkwe8Odyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Aq5y0X2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeU4ZCt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7721F000FF;
-	Sat, 12 Sep 2026 14:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Aq5y0X2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042A51F000FF;
+	Sat, 12 Sep 2026 14:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223612;
-	bh=2zSEbji+3W1pyIYcIlksJx+IJh7C6UlUIFDTdq4yGIQ=;
+	s=korg; t=1789223617;
+	bh=TxgQPtg5aaz/VhLWREPOf2EdgMozNmjaHP3bN9X444s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yeU4ZCt63ogKHFCZUo8BmEcxZ3SSyUzKZVeO2D6YbbkwanCtrNjP7a35Zjgilezbg
-	 MdWCVp/ZefnKxwf948zIxs+zu8NPXa2g6f4EW8uP5/fTmoq4HaSEO/slTboajehwvj
-	 0W8qvSlRKkPLBCh4ss52Vry9iBGkSMep2laYcWUE=
+	b=1Aq5y0X2bhO6YUtmDNbIV8/ycouHTqBAX1suZv0WajDQ0p1A4PhyL5iRzxKWHVwsc
+	 q/bWdCc6Ep8qy6Av3ZDcqolee7n+lU10EVm9wlzi0VazZwbJ61VxBwVGlV864RaEwC
+	 /otDScl/2ItSR9QwOPUx6nGi7moWmXfSf3IzOX1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Ling <zhuling2709@phytium.com.cn>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0826/1424] ACPI: EC: Avoid _REG disconnect on GPIO IRQ defer
-Date: Sat, 12 Sep 2026 08:54:18 +0200
-Message-ID: <20260912065625.804155994@linuxfoundation.org>
+Subject: [PATCH 6.6 0827/1424] ACPI: processor: validate MADT IOAPIC entry bounds
+Date: Sat, 12 Sep 2026 08:54:19 +0200
+Message-ID: <20260912065625.827897730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,115 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Ling <zhuling2709@phytium.com.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e71bdbce27dcaa7f467a3a198cbe723924f05569 ]
+[ Upstream commit 2c50ffdc73f3a70d745d249f509fc290754121e6 ]
 
-EC event delivery uses either a GPE or, on ACPI reduced hardware
-platforms, a GpioInt resource.  The GPE path does not have a provider
-lookup that can defer, but acpi_dev_gpio_irq_get() can return
--EPROBE_DEFER for the GpioInt path.
+The IOAPIC hotplug lookup parses both MADT and _MAT records directly.
+The MADT walk previously used a subtable's declared length to advance
+the cursor after only locating a generic header.  The _MAT path likewise
+passed a generic header to the IOAPIC helper.
 
-ec_install_handlers() currently installs the EC address space handler and
-executes _REG before looking up the GPIO IRQ.  If the GPIO lookup then
-defers, acpi_ec_setup() tears the handlers down again.  Removing the EC
-address space handler causes ACPICA to execute _REG for disconnect, so
-firmware may observe an EC OpRegion connected -> disconnected transition
-during one failed probe attempt.
+Validate that a current record has a complete generic header, that its
+declared length is contained in the available record range, and that a
+typed IOAPIC record contains the full fixed IOAPIC body before reading
+its fields.  Use the same relation for both MADT and _MAT provider
+paths.
 
-This is observable when the namespace EC reuses a boot EC that has already
-installed the EC address space handler.  A deferred namespace EC probe can
-disconnect the already usable boot EC OpRegion until a later reprobe
-connects it again.  AML that gates EC field accesses on _REG state can
-then return fallback values to other drivers during that window.
-
-Prepare the GPIOInt IRQ before publishing EC OpRegion availability to AML.
-This leaves the GPE path unchanged, keeps non-deferred GPIO lookup errors
-non-fatal as before, and still lets the existing acpi_ec_setup() error
-path clean up real handler installation failures.
-
-Fixes: f6484cadbcaf ("ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()")
-Signed-off-by: Zhu Ling <zhuling2709@phytium.com.cn>
-[ rjw: Added an empty code line after a conditional ]
-Link: https://patch.msgid.link/20260715012556.12043-1-zhuling2709@phytium.com.cn
+Fixes: ecf5636dcd59 ("ACPI: Add interfaces to parse IOAPIC ID for IOAPIC hotplug")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260715083253.22831-1-pengpeng@iscas.ac.cn
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/ec.c | 40 ++++++++++++++++++++++++++--------------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+ drivers/acpi/processor_core.c | 31 +++++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
-index f94cddbbb55ac..1515e79d0a2e3 100644
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -1510,6 +1510,24 @@ static bool install_gpio_irq_event_handler(struct acpi_ec *ec)
- 			   "ACPI EC", ec) >= 0;
- }
+diff --git a/drivers/acpi/processor_core.c b/drivers/acpi/processor_core.c
+index dea60d694343f..0c8ebd2e01826 100644
+--- a/drivers/acpi/processor_core.c
++++ b/drivers/acpi/processor_core.c
+@@ -320,11 +320,26 @@ int acpi_get_cpuid(acpi_handle handle, int type, u32 acpi_id)
+ EXPORT_SYMBOL_GPL(acpi_get_cpuid);
  
-+static int ec_prepare_gpio_irq(struct acpi_ec *ec, struct acpi_device *device)
+ #ifdef CONFIG_ACPI_HOTPLUG_IOAPIC
+-static int get_ioapic_id(struct acpi_subtable_header *entry, u32 gsi_base,
++static bool madt_entry_is_valid(struct acpi_subtable_header *entry,
++				unsigned long end)
 +{
-+	int irq;
++	unsigned long start = (unsigned long)entry;
 +
-+	if (!device || ec->gpe >= 0 || ec->irq >= 0)
-+		return 0;
++	if (start >= end || end - start < sizeof(*entry))
++		return false;
 +
-+	/* ACPI reduced hardware platforms use a GpioInt from _CRS. */
-+	irq = acpi_dev_gpio_irq_get(device, 0);
-+	if (irq == -EPROBE_DEFER)
-+		return irq;
-+
-+	if (irq >= 0)
-+		ec->irq = irq;
-+
-+	return 0;
++	return entry->length >= sizeof(*entry) && entry->length <= end - start;
 +}
 +
- /**
-  * ec_install_handlers - Install service callbacks and register query methods.
-  * @ec: Target EC.
-@@ -1524,7 +1542,6 @@ static bool install_gpio_irq_event_handler(struct acpi_ec *ec)
-  * Return:
-  * -ENODEV if the address space handler cannot be installed, which means
-  *  "unable to handle transactions",
-- * -EPROBE_DEFER if GPIO IRQ acquisition needs to be deferred,
-  * or 0 (success) otherwise.
-  */
- static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
-@@ -1557,19 +1574,6 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
- 	if (!device)
++static int get_ioapic_id(struct acpi_subtable_header *entry,
++			 const unsigned long end, u32 gsi_base,
+ 			 u64 *phys_addr, int *ioapic_id)
+ {
+ 	struct acpi_madt_io_apic *ioapic = (struct acpi_madt_io_apic *)entry;
+ 
++	if (!madt_entry_is_valid(entry, end) || BAD_MADT_ENTRY(ioapic, end))
++		return 0;
++
+ 	if (ioapic->global_irq_base != gsi_base)
  		return 0;
  
--	if (ec->gpe < 0) {
--		/* ACPI reduced hardware platforms use a GpioInt from _CRS. */
--		int irq = acpi_dev_gpio_irq_get(device, 0);
--		/*
--		 * Bail out right away for deferred probing or complete the
--		 * initialization regardless of any other errors.
--		 */
--		if (irq == -EPROBE_DEFER)
--			return -EPROBE_DEFER;
--		else if (irq >= 0)
--			ec->irq = irq;
--	}
--
- 	if (!test_bit(EC_FLAGS_QUERY_METHODS_INSTALLED, &ec->flags)) {
- 		/* Find and register all query methods */
- 		acpi_walk_namespace(ACPI_TYPE_METHOD, ec->handle, 1,
-@@ -1647,6 +1651,14 @@ static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device, bool ca
- {
- 	int ret;
+@@ -345,17 +360,19 @@ static int parse_madt_ioapic_entry(u32 gsi_base, u64 *phys_addr)
+ 		return apic_id;
  
-+	/*
-+	 * GPIO IRQ lookup can defer.  Do it before publishing the EC
-+	 * OpRegion to AML to avoid a spurious _REG(disconnect).
-+	 */
-+	ret = ec_prepare_gpio_irq(ec, device);
-+	if (ret)
-+		return ret;
-+
- 	/* First EC capable of handling transactions */
- 	if (!first_ec)
- 		first_ec = ec;
+ 	entry = (unsigned long)madt;
++	if (madt->header.length < sizeof(*madt))
++		return apic_id;
+ 	madt_end = entry + madt->header.length;
+ 
+ 	/* Parse all entries looking for a match. */
+ 	entry += sizeof(struct acpi_table_madt);
+-	while (entry + sizeof(struct acpi_subtable_header) < madt_end) {
++	while (madt_entry_is_valid((struct acpi_subtable_header *)entry,
++				   madt_end)) {
+ 		hdr = (struct acpi_subtable_header *)entry;
+ 		if (hdr->type == ACPI_MADT_TYPE_IO_APIC &&
+-		    get_ioapic_id(hdr, gsi_base, phys_addr, &apic_id))
++		    get_ioapic_id(hdr, madt_end, gsi_base, phys_addr, &apic_id))
+ 			break;
+-		else
+-			entry += hdr->length;
++		entry += hdr->length;
+ 	}
+ 
+ 	return apic_id;
+@@ -382,7 +399,9 @@ static int parse_mat_ioapic_entry(acpi_handle handle, u32 gsi_base,
+ 
+ 	header = (struct acpi_subtable_header *)obj->buffer.pointer;
+ 	if (header->type == ACPI_MADT_TYPE_IO_APIC)
+-		get_ioapic_id(header, gsi_base, phys_addr, &apic_id);
++		get_ioapic_id(header,
++			      (unsigned long)header + obj->buffer.length,
++			      gsi_base, phys_addr, &apic_id);
+ 
+ exit:
+ 	kfree(buffer.pointer);
 -- 
 2.53.0
 
