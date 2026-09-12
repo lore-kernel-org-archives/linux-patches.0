@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E643438BE;
-	Sat, 12 Sep 2026 19:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5743931E823;
+	Sat, 12 Sep 2026 19:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240955; cv=none; b=LK+zSsd6vJUUgUWsWqmJE3lrKo5UDvStvPMMXTzM6vs8C0Z03bWp0vLOpJqhjwycx6NfM0mvayTP1qX/WkweX2aXQXNH5VtYwNEb8SzVpqd36HbxdN1S24gfCT5TY18yOYwVuR1R0Q1oyY+I8UtTlZMJ2I211vDgBNDfKk//+bE=
+	t=1789240960; cv=none; b=oSXz6TyJwyZHbf/d7P8QISTqncltAPjgW+w/TmmGwOWnIUM+qksk4BoJLY9W/vArzddN48gig9zcmmTnrNM7dgH/cuujscYVUn1EPNilvYxAsg7Feou4qSaNgD7CdEOI0VvchkTjpakeEH/NV5cWP4VvwIh/4CRxRaomz3BEoho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240955; c=relaxed/simple;
-	bh=h8d/Nyy+ySYTUiKkLOzEzl9NhRfZ74kP7A5GlVeVbak=;
+	s=arc-20240116; t=1789240960; c=relaxed/simple;
+	bh=4iP4vKVFA4y7Im/Bl+fqak/RHBW3obJA2fsBb3nMc88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdeQUENcaCy0KGD0biq079IUhVvQuDssggmvRKlIRCkHjEynrOFVmES4EA6BYDxGQjJwvJXj27qsFzBKwcNv8bSGzBZqAzRoMdh2kkVVJLrs6HjQeqdTDh7qVIab7MUTls4GS9QjCeOj7kCgraQvZOaxOSjI9M6N02zfq/9Qq/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHKudp9H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HPlXOeboFU3oW12MU/BcXx5tHGnX4+3Lv+sXtiWlD1MNm6YSOxEgY1KooUE4Eo9OqUicowUc12mMXY9T34zvmVth6sQnIWqSFKhJi9uqs3fE5pgllAbFRNtC2ADduhslyrhBg4aY//d24RRebOudZoDqf5pZVwcdDkom4WmENtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rs8DTcYN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHKudp9H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82461F000FF;
-	Sat, 12 Sep 2026 19:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rs8DTcYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1281F000FF;
+	Sat, 12 Sep 2026 19:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240954;
-	bh=2PABVKQVHfhdVhTAYa7B3vd5BQk/IOwYzOS1HeTkx10=;
+	s=korg; t=1789240959;
+	bh=W3cgisMvf5i6TLPZ8xYSSGpSg8pe3hfxSM2xutNxfzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SHKudp9HFxt3FRgBCVa1Jp+bOr9mc0IhM0QfB/PDyN6Pdno7sJ8eG9uzkQAY+pvgz
-	 5YdPV9id35NZgiuQVov/7eV1CUNsjH09fC/BooFjWXlpSka5JWpC7NrutI+dIoS2vd
-	 qFR4gVdPtQHkO167oDyN2oY1trde9ti5bR0J4bWE=
+	b=rs8DTcYNdEip5A5Vrml5CKzLq+3cZtVBmsi2ulHURmYCSmiTPRwsUl1GpHPOwE7LH
+	 0fnjU5uDIEcsc3M3rMmlxZyuVNWcV8BViO36IPPjJkp3ZE8TOI6z1q9BaNYYujfoAd
+	 XeXLoUx77HOXKcNWmwdDfIO6VZcnBb/6+r5qMgEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.10 037/798] nfsd: add filehandle match check to nfsd4_delegreturn()
-Date: Sat, 12 Sep 2026 08:54:25 +0200
-Message-ID: <20260912065517.813131304@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 038/798] nfsd: block non-SAVEFH ops after FOREIGN PUTFH to prevent NULL deref
+Date: Sat, 12 Sep 2026 08:54:26 +0200
+Message-ID: <20260912065517.835725758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,39 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 04cce9d79f2b1a114f7128e08bf60a473e10f1ec upstream.
+commit c59738a00aa51b16adc1b5ceb7c80877168efb4d upstream.
 
-nfsd4_delegreturn() is the only stateful NFSv4 operation that does
-not call nfs4_check_fh() to verify the delegation's file matches
-cstate->current_fh. A client can DELEGRETURN with a mismatched
-filehandle, destroying the correct delegation but waking the wrong
-inode's waiters.
+When CONFIG_NFSD_V4_2_INTER_SSC is enabled, nfsd4_putfh() can return
+success with fh_dentry and fh_export both NULL if fh_verify() returns
+nfserr_stale and putfh->no_verify is true. The NFSD4_FH_FOREIGN flag
+is set, but the compound dispatch loop only uses this flag to bypass
+the nfserr_nofilehandle check -- it does not prevent subsequent ops
+from running with a NULL fh_dentry.
 
-Add the missing nfs4_check_fh() call after the generation check.
+A remote client can exploit this by crafting a COMPOUND that includes
+an inter-SSC COPY (which causes check_if_stalefh_allowed() to set
+no_verify=true on the saved PUTFH) with an additional op inserted
+between the source PUTFH and SAVEFH. For example, SETATTR calls
+fh_want_write() which dereferences fh_export->ex_path.mnt without
+calling fh_verify() first, causing a NULL pointer dereference in the
+nfsd kthread.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fix this by gating the dispatch loop: when NFSD4_FH_FOREIGN is set
+and fh_dentry is NULL, only OP_SAVEFH (needed for the inter-SSC flow)
+and ops with ALLOWED_WITHOUT_FH (which don't need a resolved
+filehandle) may proceed. All other ops receive nfserr_stale, per
+RFC 7862 Section 15.2.3 which specifies that foreign filehandle
+validation is deferred to the consuming operation and NFS4ERR_STALE
+returned at that point.
+
+Fixes: b9e8638e3d9e ("NFSD: allow inter server COPY to have a STALE source server fh")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
+Assisted-by: Claude:claude-opus-4-6
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-6-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20260527-putfh_foreign_fh_null_deref_consumers-v1-1-1b8a5aa28c59@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfsd/nfs4proc.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7128,6 +7128,10 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
- 	if (status)
- 		goto put_stateid;
- 
-+	status = nfs4_check_fh(&cstate->current_fh, &dp->dl_stid);
-+	if (status)
-+		goto put_stateid;
-+
- 	trace_nfsd_deleg_return(stateid);
- 	wake_up_var(d_inode(cstate->current_fh.fh_dentry));
- 	destroy_delegation(dp);
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -2642,9 +2642,22 @@ nfsd4_proc_compound(struct svc_rqst *rqs
+ 				op->status = nfsd4_open_omfg(rqstp, cstate, op);
+ 			goto encode_op;
+ 		}
+-		if (!current_fh->fh_dentry &&
+-				!HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
+-			if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
++		if (!current_fh->fh_dentry) {
++			if (HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
++				/*
++				 * FOREIGN fh from inter-SSC PUTFH: only
++				 * SAVEFH may proceed with a NULL fh_dentry.
++				 * Per RFC 7862 S15.2.3, validation of a
++				 * foreign fh is deferred to the operation
++				 * that consumes it, and NFS4ERR_STALE is
++				 * returned at that point.
++				 */
++				if (op->opnum != OP_SAVEFH &&
++				    !(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
++					op->status = nfserr_stale;
++					goto encode_op;
++				}
++			} else if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
+ 				op->status = nfserr_nofilehandle;
+ 				goto encode_op;
+ 			}
 
 
