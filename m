@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB5333F368;
-	Sat, 12 Sep 2026 14:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79593326938;
+	Sat, 12 Sep 2026 14:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223689; cv=none; b=NOrc0+2reC/mcuK9cabWiibYy/4ZadWvrjOVIpn8SEre6FnWtYKI59efni0NIl0Jx4zdb9WNotpf5PBEklz4epKS77z6m6Yx+yOmM+TfRlR8QGs1O0MbEk2au3zz0okQJ15yUmSQd5pHnN6W98OPdrtSbfO876TcneFlNAObIJc=
+	t=1789223694; cv=none; b=Ho3QRfPyOBBaQaS48glDLi+h0pj/7OgoPiDCy3C2NPO/Qrtm5v65CN+6gtbK8Ky68ayAkPNAfvi2txrA78dxHSbvchP774sRTkQyPEAdd6p8ywOh2+hiko1+ThHu70Yn4CKe6YbpRjx1p8gdwTyBNTUDhUdko5wrSPxYhKzfd/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223689; c=relaxed/simple;
-	bh=mxCTDyEiRDJvoLfe12JYOL0FuG53aFFsFaG/1VyH5gA=;
+	s=arc-20240116; t=1789223694; c=relaxed/simple;
+	bh=Vsqk4zL9x+9ojwcAJZgOeeKbOyCX03B3VMMWvGBJGZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uibr+AI/vlvv7obM09RTz4n1FTQVlVPxuaLppaSk3oz0g9/mUnjBpgRQduPAIijfFbr/AXMqe+Y18/npDKeBubvl2v+6MEG4V9h13DbxwHm6JIaRoSbZwO3DgLctsFhsJgqpJXFpevXGLEEpRAKsUkUWEh0/PvMVlvRyoS4/ofk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8hodmgs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E/pIByNdzuZ/+nmTK2SiPxaZ3hhfFAYI1cdhfeceLkTYzGMQQVn4RuM64rmT/yF7UhVhOwXAQ1e/hdBKXMoJ5s0rqRXPt0gJ38xwlWlT1PfW71JHP9efWxl9j5cQwLvTFv1sxaFhupZLYhc4vac2YxVGujuX8sug/MBsLxoYa8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5xVUm8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8hodmgs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF25F1F000FF;
-	Sat, 12 Sep 2026 14:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5xVUm8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194961F000FF;
+	Sat, 12 Sep 2026 14:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223688;
-	bh=1x0eJ+MjlBQZzNWuv9zY8/NI+nhghMAp9P/GA95bY58=;
+	s=korg; t=1789223693;
+	bh=2vY9L8Z8k0Tysn4o8solBzBERlrHK00ZV3NuhCfValg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d8hodmgsCPwh+V+LgjO+FTQXgEgAIJfUHt8AICM0bjGa+/8+zHXBrdT9Si+n31cC7
-	 74Jmq4nG57Yk7ylnsqq4MC+ivUAAs7XF7BpZGFTLEXXGEggUfw9ss3Lw8RCk9Qym5A
-	 esOfmU0ogAyr9D1NZ4Q0fb97ZdsDEFDhYyKZsze8=
+	b=K5xVUm8/j8DSl7KifavF+W84Mm4zuXN2AfgtdAGdw5R7wJ4Ti5otU+1u1RpvjStu1
+	 ApRIRxJeRHz+a8aeSciZ1nDbQSUZ1iMC5VpBtcb8t0ypab5ehnaJ3WrwZ+g02uxUll
+	 Rkl6Iw/rv+ZOPvZRArbZgulDoLGpZPeAFkvqwYqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Edward Srouji <edwards@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0840/1424] RDMA/core: Add rdma_restrack_begin/abort/commit_del() operations
-Date: Sat, 12 Sep 2026 08:54:32 +0200
-Message-ID: <20260912065626.118959150@linuxfoundation.org>
+Subject: [PATCH 6.6 0841/1424] RDMA/core: Fix use after free in ib_query_qp()
+Date: Sat, 12 Sep 2026 08:54:33 +0200
+Message-ID: <20260912065626.142613064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -55,291 +55,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 8d186210677c0322db886973bcec9aa4d21b51cd ]
+[ Upstream commit 709ba0e5311bd034eb4d9c1c00cc4e1109d6dc3e ]
 
-Add rdma_restrack_abort_del(), rdma_restrack_begin_del() and
-rdma_restrack_commit_del() functions to allow deleting a resource from
-the xarray to effectively prevent future access to it and wait for all
-current users to finish while preserving its index in the xarray to
-allow to re-insert it if needed with guaranteed success.
+When querying a QP via the netlink flow the only synchronization
+mechanism for the said QP is rdma_restrack_get(), meanwhile during the
+QP destroy path rdma_restrack_del() is called at the end of the
+ib_destroy_qp_user() function which is too late, since by then the
+vendor specific resources for said QP would already be destroyed, and
+till the rdma_restrack_del() is called this QP can still be accessed,
+which could cause the use after free below.
 
-This is a preparatory change for subsequent patches in the series
-which will use these functions to fix the cleanup flow.
+Fix this by moving the rdma_restrack_begin_del() to the start of the
+ib_destroy_qp_user(), which in turn waits for all usages of the QP to be
+done then removes it from the database to prevent access to it while it
+is being destroyed.
 
+RIP: 0010:ib_query_qp+0x15/0x50 [ib_core]
+Code: 48 83 05 5d 8e b9 ff 01 eb b5 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 c7 46 40 00 00 00 00 48 c7 46 78 00 00 00 00 <48> 8b 07 48 8b 80 88 01 00 00 48 85 c0 74 1a 48 83 05 54 91 b9 ff
+RSP: 0018:ff11000108a8f2f0 EFLAGS: 00010202
+RAX: 0000000000000000 RBX: ff11000108a8f370 RCX: ff11000108a8f370
+RDX: 0000000000000000 RSI: ff11000108a8f3d8 RDI: 0000000000000000
+RBP: ff1100010de5a000 R08: 0000000000000e80 R09: 0000000000000004
+R10: ff110001057a604c R11: 0000000000000000 R12: ff11000108a8f370
+R13: ff110001090e8000 R14: 0000000000000000 R15: ff110001057a602c
+FS:  00007f2ffd8db6c0(0000) GS:ff110008dc90b000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 000000010b9a7004 CR4: 0000000000373eb0
+Call Trace:
+ <TASK>
+ mlx5_ib_gsi_query_qp+0x21/0x50 [mlx5_ib]
+ mlx5_ib_query_qp+0x689/0x9d0 [mlx5_ib]
+ ib_query_qp+0x35/0x50 [ib_core]
+ fill_res_qp_entry_query.isra.0+0x47/0x280 [ib_core]
+ ? __wake_up+0x40/0x50
+ ? netlink_broadcast_filtered+0x15a/0x550
+ ? kobject_uevent_env+0x562/0x710
+ ? ep_poll_callback+0x242/0x270
+ ? __nla_put+0xc/0x20
+ ? nla_put+0x28/0x40
+ ? nla_put_string+0x2e/0x40 [ib_core]
+ fill_res_qp_entry+0x138/0x190 [ib_core]
+ res_get_common_dumpit+0x4a5/0x800 [ib_core]
+ ? fill_res_qp_entry_query.isra.0+0x280/0x280 [ib_core]
+ nldev_res_get_qp_dumpit+0x1e/0x30 [ib_core]
+ netlink_dump+0x16f/0x450
+ __netlink_dump_start+0x1ce/0x2e0
+ rdma_nl_rcv_msg+0x1d3/0x330 [ib_core]
+ ? nldev_res_get_qp_raw_dumpit+0x30/0x30 [ib_core]
+ rdma_nl_rcv_skb.constprop.0.isra.0+0x108/0x180 [ib_core]
+ rdma_nl_rcv+0x12/0x20 [ib_core]
+ netlink_unicast+0x255/0x380
+ ? __alloc_skb+0xfa/0x1e0
+ netlink_sendmsg+0x1f3/0x420
+ __sock_sendmsg+0x38/0x60
+ ____sys_sendmsg+0x1e8/0x230
+ ? copy_msghdr_from_user+0xea/0x170
+ ___sys_sendmsg+0x7c/0xb0
+ ? __futex_wait+0x95/0xf0
+ ? __futex_wake_mark+0x40/0x40
+ ? futex_wait+0x67/0x100
+ ? futex_wake+0xac/0x1b0
+ __sys_sendmsg+0x5f/0xb0
+ do_syscall_64+0x55/0xb90
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fixes: 514aee660df4 ("RDMA: Globally allocate and release QP memory")
 Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
 Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
 Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-1-bbe8bb270d51@nvidia.com
+Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-2-bbe8bb270d51@nvidia.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 709ba0e5311b ("RDMA/core: Fix use after free in ib_query_qp()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/restrack.c | 165 +++++++++++++++++++++++------
- drivers/infiniband/core/restrack.h |   3 +
- 2 files changed, 135 insertions(+), 33 deletions(-)
+ drivers/infiniband/core/verbs.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
-index 82d0865b32290..c03042dc1ca5a 100644
---- a/drivers/infiniband/core/restrack.c
-+++ b/drivers/infiniband/core/restrack.c
-@@ -127,6 +127,46 @@ static void rdma_restrack_attach_task(struct rdma_restrack_entry *res,
- 	res->user = true;
- }
+diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
+index ac00b070d320b..90cb7904ba11f 100644
+--- a/drivers/infiniband/core/verbs.c
++++ b/drivers/infiniband/core/verbs.c
+@@ -2086,6 +2086,8 @@ int ib_destroy_qp_user(struct ib_qp *qp, struct ib_udata *udata)
+ 	if (qp->real_qp != qp)
+ 		return __ib_destroy_shared_qp(qp);
  
-+static struct rdma_restrack_root *res_to_rt(struct rdma_restrack_entry *res)
-+{
-+	struct ib_device *dev = res_to_dev(res);
++	rdma_restrack_begin_del(&qp->res);
 +
-+	if (WARN_ON(!dev))
-+		return NULL;
-+
-+	return &dev->res[res->type];
-+}
-+
-+static void restrack_drain_res(struct rdma_restrack_root *rt,
-+			       struct rdma_restrack_entry *res)
-+{
-+	if (rt) {
-+		struct rdma_restrack_entry *old;
-+
-+		old = xa_cmpxchg(&rt->xa, res->id, res, XA_ZERO_ENTRY,
-+				 GFP_KERNEL);
-+		WARN_ON(old != res);
-+	}
-+
-+	rdma_restrack_put(res);
-+	wait_for_completion(&res->comp);
-+}
-+
-+static void restrack_restore_res(struct rdma_restrack_root *rt,
-+				 struct rdma_restrack_entry *res)
-+{
-+	reinit_completion(&res->comp);
-+	kref_init(&res->kref);
-+
-+	if (rt) {
-+		struct rdma_restrack_entry *old;
-+
-+		old = xa_cmpxchg(&rt->xa, res->id, XA_ZERO_ENTRY, res,
-+				 GFP_KERNEL);
-+		WARN_ON(old);
-+	}
-+}
-+
- /**
-  * rdma_restrack_set_name() - set the task for this resource
-  * @res:  resource entry
-@@ -175,22 +215,23 @@ void rdma_restrack_new(struct rdma_restrack_entry *res,
- EXPORT_SYMBOL(rdma_restrack_new);
- 
- /**
-- * rdma_restrack_add() - add object to the resource tracking database
-+ * rdma_restrack_add() - add object to the resource tracking database.
-+ * If this resource reuses an ID of a resource that was already destroyed
-+ * after calling rdma_restrack_begin() but didn't yet call
-+ * rdma_restrack_commit_del() it can result in an untracked QP.
-  * @res:  resource entry
-  */
- void rdma_restrack_add(struct rdma_restrack_entry *res)
- {
--	struct ib_device *dev = res_to_dev(res);
- 	struct rdma_restrack_root *rt;
- 	int ret = 0;
- 
--	if (!dev)
--		return;
--
- 	if (res->no_track)
- 		goto out;
- 
--	rt = &dev->res[res->type];
-+	rt = res_to_rt(res);
-+	if (!rt)
-+		return;
- 
- 	if (res->type == RDMA_RESTRACK_QP) {
- 		/* Special case to ensure that LQPN points to right QP */
-@@ -227,6 +268,28 @@ void rdma_restrack_add(struct rdma_restrack_entry *res)
- }
- EXPORT_SYMBOL(rdma_restrack_add);
- 
-+/**
-+ * rdma_restrack_abort_del() - re-add object to the resource tracking database
-+ * it can only be used after rdma_restrack_begin_del().
-+ * @res:  resource entry
-+ */
-+void rdma_restrack_abort_del(struct rdma_restrack_entry *res)
-+{
-+	struct rdma_restrack_root *rt = NULL;
-+
-+	if (!res->valid)
-+		return;
-+
-+	if (!res->no_track) {
-+		rt = res_to_rt(res);
-+		if (!rt)
-+			return;
-+	}
-+
-+	restrack_restore_res(rt, res);
-+}
-+EXPORT_SYMBOL(rdma_restrack_abort_del);
-+
- int __must_check rdma_restrack_get(struct rdma_restrack_entry *res)
- {
- 	return kref_get_unless_zero(&res->kref);
-@@ -263,7 +326,7 @@ static void restrack_release(struct kref *kref)
- 	struct rdma_restrack_entry *res;
- 
- 	res = container_of(kref, struct rdma_restrack_entry, kref);
--	if (res->task) {
-+	if (res->task && !res->valid) {
- 		put_task_struct(res->task);
- 		res->task = NULL;
+ 	sec  = qp->qp_sec;
+ 	if (sec)
+ 		ib_destroy_qp_security_begin(sec);
+@@ -2098,6 +2100,7 @@ int ib_destroy_qp_user(struct ib_qp *qp, struct ib_udata *udata)
+ 	if (ret) {
+ 		if (sec)
+ 			ib_destroy_qp_security_abort(sec);
++		rdma_restrack_abort_del(&qp->res);
+ 		return ret;
  	}
-@@ -289,37 +352,20 @@ EXPORT_SYMBOL(rdma_restrack_put);
-  */
- void rdma_restrack_sync(struct rdma_restrack_entry *res)
- {
--	struct rdma_restrack_entry *old;
- 	struct rdma_restrack_root *rt;
--	struct task_struct *task;
--	struct ib_device *dev;
  
- 	if (!res->valid || res->no_track)
- 		return;
+@@ -2110,7 +2113,7 @@ int ib_destroy_qp_user(struct ib_qp *qp, struct ib_udata *udata)
+ 	if (sec)
+ 		ib_destroy_qp_security_end(sec);
  
--	dev = res_to_dev(res);
--	if (WARN_ON(!dev))
-+	rt = res_to_rt(res);
-+	if (!rt)
- 		return;
- 
--	rt = &dev->res[res->type];
- 	if (WARN_ON(xa_get_mark(&rt->xa, res->id, RESTRACK_DD)))
- 		return;
- 
--	old = xa_cmpxchg(&rt->xa, res->id, res, XA_ZERO_ENTRY, GFP_KERNEL);
--	if (WARN_ON(old != res))
--		return;
--
--	task = res->task;
--	if (task)
--		get_task_struct(task);
--	rdma_restrack_put(res);
--	wait_for_completion(&res->comp);
--	reinit_completion(&res->comp);
--	if (task)
--		res->task = task;
--	kref_init(&res->kref);
--
--	xa_cmpxchg(&rt->xa, res->id, XA_ZERO_ENTRY, res, GFP_KERNEL);
-+	restrack_drain_res(rt, res);
-+	restrack_restore_res(rt, res);
+-	rdma_restrack_del(&qp->res);
++	rdma_restrack_commit_del(&qp->res);
+ 	kfree(qp);
+ 	return ret;
  }
- EXPORT_SYMBOL(rdma_restrack_sync);
- 
-@@ -331,7 +377,6 @@ void rdma_restrack_del(struct rdma_restrack_entry *res)
- {
- 	struct rdma_restrack_entry *old;
- 	struct rdma_restrack_root *rt;
--	struct ib_device *dev;
- 
- 	if (!res->valid) {
- 		if (res->task) {
-@@ -344,12 +389,10 @@ void rdma_restrack_del(struct rdma_restrack_entry *res)
- 	if (res->no_track)
- 		goto out;
- 
--	dev = res_to_dev(res);
--	if (WARN_ON(!dev))
-+	rt = res_to_rt(res);
-+	if (!rt)
- 		return;
- 
--	rt = &dev->res[res->type];
--
- 	old = xa_erase(&rt->xa, res->id);
- 	WARN_ON(old != res);
- 
-@@ -357,5 +400,61 @@ void rdma_restrack_del(struct rdma_restrack_entry *res)
- 	res->valid = false;
- 	rdma_restrack_put(res);
- 	wait_for_completion(&res->comp);
-+	if (res->task) {
-+		put_task_struct(res->task);
-+		res->task = NULL;
-+	}
- }
- EXPORT_SYMBOL(rdma_restrack_del);
-+
-+/**
-+ * rdma_restrack_begin_del() - invalidate the object from the resource tracking
-+ * database but preserve its index in the array.
-+ * Since this preserves the index in the array until rdma_restrack_commit_del()
-+ * is called, if rdma_restrack_add() is called in between with an old QP ID it
-+ * can result in an untracked QP.
-+ * @res:  resource entry
-+ */
-+void rdma_restrack_begin_del(struct rdma_restrack_entry *res)
-+{
-+	struct rdma_restrack_root *rt = NULL;
-+
-+	if (!res->valid)
-+		return;
-+
-+	if (!res->no_track) {
-+		rt = res_to_rt(res);
-+		if (!rt)
-+			return;
-+	}
-+
-+	restrack_drain_res(rt, res);
-+}
-+EXPORT_SYMBOL(rdma_restrack_begin_del);
-+
-+/**
-+ * rdma_restrack_commit_del() - delete object from the resource tracking
-+ * database and free the task.
-+ * @res:  resource entry
-+ */
-+void rdma_restrack_commit_del(struct rdma_restrack_entry *res)
-+{
-+	struct rdma_restrack_root *rt;
-+
-+	if (!res->valid || res->no_track)
-+		goto out;
-+
-+	rt = res_to_rt(res);
-+	if (!rt)
-+		return;
-+
-+	xa_erase(&rt->xa, res->id);
-+
-+out:
-+	res->valid = false;
-+	if (res->task) {
-+		put_task_struct(res->task);
-+		res->task = NULL;
-+	}
-+}
-+EXPORT_SYMBOL(rdma_restrack_commit_del);
-diff --git a/drivers/infiniband/core/restrack.h b/drivers/infiniband/core/restrack.h
-index 75b8d1005a984..2df78e084e107 100644
---- a/drivers/infiniband/core/restrack.h
-+++ b/drivers/infiniband/core/restrack.h
-@@ -26,8 +26,11 @@ struct rdma_restrack_root {
- int rdma_restrack_init(struct ib_device *dev);
- void rdma_restrack_clean(struct ib_device *dev);
- void rdma_restrack_add(struct rdma_restrack_entry *res);
-+void rdma_restrack_abort_del(struct rdma_restrack_entry *res);
- void rdma_restrack_del(struct rdma_restrack_entry *res);
- void rdma_restrack_sync(struct rdma_restrack_entry *res);
-+void rdma_restrack_begin_del(struct rdma_restrack_entry *res);
-+void rdma_restrack_commit_del(struct rdma_restrack_entry *res);
- void rdma_restrack_new(struct rdma_restrack_entry *res,
- 		       enum rdma_restrack_type type);
- void rdma_restrack_set_name(struct rdma_restrack_entry *res,
 -- 
 2.53.0
 
