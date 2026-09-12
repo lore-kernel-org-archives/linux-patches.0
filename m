@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65D5384232;
-	Sat, 12 Sep 2026 10:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D333B455181;
+	Sat, 12 Sep 2026 10:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210405; cv=none; b=X/PyghwXlg9bBkVVrR4FHf7JnB77dbCTOQWxDuFWU6ItuUpKoscaLRiFTkfMBfspJDwd54G1k//cqyt3estVG//YhY8Ebczw3JQkRI99I/3FHU203ZTsF9Y/+lay6NmcngNVSbL3dUCEWsiOzsODJ8jttFOFW+hXH8hd24lSpwQ=
+	t=1789210409; cv=none; b=DzOQLIxHTyu2VaZXOdbfIxa8NZn3yAktfwlNb9uJDzwsj1j9pDEulyw08v1m/BhPH6LrCkxcDI5L51rN4Zzqd4Pxz7IQqu7fNuKmhxnzpeEsv4FMjuI+eLGdQAjshkI195Wub7BdiWfVHDNErn5QlDhDu/MlZaMWYxBHVhWpNHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210405; c=relaxed/simple;
-	bh=Yrwl3i9PPMajrEKpO8/rd9hRUOdbY22IUh8RVBM0AqA=;
+	s=arc-20240116; t=1789210409; c=relaxed/simple;
+	bh=wOsGytF83+FovkOqjs8eKnGVXtqJ1aRWJXDtnRPh1dU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0IWfgDO9wCW8opVIbKqbeqY5nc29cQdK6UlDFdUaxOiUEW31u3tsUjjRSKxGQ6uBYd6soYuTPBwUILGaqr+htjGXrHaohMLl9VNyATGjoP1cB6BlsUgQIri7WypcnSiGdNmwJ5Bu8kOWoZkQmA9/Fg/+GYfvE00A+VNcVeVOi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfyndSoF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dPHrVjSzCoFG8jTblhgROqaxWWcJPklJkmFzLd6ukus5NtbwSFKbKOiA6LonmUO6cLDGS71vHVf/FqPX6S9JwdTeCWjLahcOKCQzxLKixK3kSxyChbkn9vel05QQAs0eJGhPBwkuvsj7iXZlTCdaTei/E4l0ESq2rM7DhsHjD2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRfn+WIX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfyndSoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD80F1F000FF;
-	Sat, 12 Sep 2026 10:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRfn+WIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADBD1F000FF;
+	Sat, 12 Sep 2026 10:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210403;
-	bh=wQTASG4rmJ4PcYvR4dkCLMCa+VkZKlDcs85mFUY6+Zs=;
+	s=korg; t=1789210408;
+	bh=rVJbk7UWEjtkuNXGuwjOK+nvD7Yaz6KmYpGvNgyox+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mfyndSoFKQlwfAmrXBtFQHd3rZKqsTTiBMgLPUWc0In98NH5IvBUKnsrfjjR66Toc
-	 jb0XQONhjTDgq2+m1wsrAS+Hn0ymjqJpNW9RZ6FzxkCgVcYCyY76O+rlqcGaGoRHcH
-	 dhk/Go70rejZdOXOTCGB3S9gwl7fk+IyuJye/uD0=
+	b=qRfn+WIXH0/Mvvs057LbYWtOxKJ7OKXW0CpzSpF1Dhfd0a5S6Jn9lndVOtwow0eR4
+	 dZrRElXeNhtzxX7NWiHbVa9BF5/l8szCxloGetqMvsT3bu2i4LTGPEHE1w/Rfs39Pt
+	 46u8uSKhDKQRF2Kz1tLg/sLKr9pWaQRkZBLwJadY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1020/1518] pinctrl: airoha: add missed IRQ resource helpers
-Date: Sat, 12 Sep 2026 08:53:09 +0200
-Message-ID: <20260912065646.525379822@linuxfoundation.org>
+Subject: [PATCH 6.18 1021/1518] pinctrl: airoha: fix IRQ mask/unmask code
+Date: Sat, 12 Sep 2026 08:53:10 +0200
+Message-ID: <20260912065646.547488377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,11 +54,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit a02fa031b9520e46e98bff17e12b472eba770670 ]
+[ Upstream commit 20b996280640f492ebdd41c2d2c991801df75e61 ]
 
-Without hooking .irq_request_resources, gpiolib cannot set
-GPIOD_FLAG_USED_AS_IRQ. This breaks pin direction locking and can allow
-userspace or another driver to reconfigure an active IRQ pin as an output
+When using IRQCHIP_IMMUTABLE, airoha_irq_unmask() must manually call
+gpiochip_enable_irq() and airoha_irq_mask() must call
+gpiochip_disable_irq(). Without these calls, gpiolib never sets the
+GPIOD_FLAG_IRQ_IS_ENABLED bit. Because this bit is missing,
+gpiod_direction_output() will not realize the pin is actively used
+as an interrupt.
 
 Fixes: 1c8ace2d0725 ("pinctrl: airoha: Add support for EN7581 SoC")
 Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
@@ -66,21 +69,29 @@ Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-airoha.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-index 9465de3e148bb..2163532f9af01 100644
+index 2163532f9af01..059f1d32f6255 100644
 --- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
 +++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-@@ -2638,6 +2638,7 @@ static const struct irq_chip airoha_gpio_irq_chip = {
- 	.irq_mask_ack = airoha_irq_mask,
- 	.irq_set_type = airoha_irq_type,
- 	.flags = IRQCHIP_SET_TYPE_MASKED | IRQCHIP_IMMUTABLE,
-+	GPIOCHIP_IRQ_RESOURCE_HELPERS,
- };
+@@ -2544,6 +2544,7 @@ static void airoha_irq_unmask(struct irq_data *data)
+ 	if (WARN_ON_ONCE(data->hwirq >= ARRAY_SIZE(gpiochip->irq_type)))
+ 		return;
  
- static int airoha_pinctrl_add_gpiochip(struct airoha_pinctrl *pinctrl,
++	gpiochip_enable_irq(gc, irqd_to_hwirq(data));
+ 	switch (gpiochip->irq_type[data->hwirq]) {
+ 	case IRQ_TYPE_LEVEL_LOW:
+ 		val = val << 1;
+@@ -2578,6 +2579,7 @@ static void airoha_irq_mask(struct irq_data *data)
+ 
+ 	regmap_clear_bits(pinctrl->regmap, gpiochip->level[index], mask);
+ 	regmap_clear_bits(pinctrl->regmap, gpiochip->edge[index], mask);
++	gpiochip_disable_irq(gc, irqd_to_hwirq(data));
+ }
+ 
+ static int airoha_irq_type(struct irq_data *data, unsigned int type)
 -- 
 2.53.0
 
