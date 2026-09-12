@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1C73A6F09;
-	Sat, 12 Sep 2026 19:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951873DD51A;
+	Sat, 12 Sep 2026 19:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240451; cv=none; b=f1aWa9UOHkV+j7ufVqRzWu2bspzT4fn65z+CjDJWodPVcEumP96jxDz3B6J6AQI19xFwmI0NLAhLf8YLgNvSYdzqjje90U24DbdpHhYQziX8IPFU/lqAmkznsaXA9mJPtOS250LsmFpaibFPeou5G92erXzPtEz0IFZkkIX+D2w=
+	t=1789240456; cv=none; b=TZZPGRa9zVuopBR8BbdXUhG0FJf9f5b1qWj1pimAJIQdzGHLGPJEM/sFWapRGlLkw3DLNia0zjJVgGw+GMoTJJxKdvLdj0UOrIwPV6Wo4gjHg3zZXKak7NO5CsVFg6vsDZmYNmcgqrvACNuNhJq2yjSAAts4n123rgiAwr5wWls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240451; c=relaxed/simple;
-	bh=aFyESu23Ju1fGT1gHZMyGuT4f7a0fGHrtB5MPxM0qiI=;
+	s=arc-20240116; t=1789240456; c=relaxed/simple;
+	bh=9mfdFuDDXNU3FtPSqTx/XhmnjO5DuoPooRu2xwa685w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/F7TDpoqLVvaEiYvDzHrI14+3O+H7XanFriztnWb1vhR7O4p8faYBdN9i7/iRFfKhvGQ1EqDHgd+6uF23/QKgkpnBPrNEwiuhUaATXkS5GHdqY/fFiehAogP+KtLTyj7h2YlHebEIo2x9yRo2a9ijxpK85kgMVkc3hioMDzBbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2Cr65Al; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nMteqRMyD6uLCoHKYnIX8jbOekXgqLFLUpOE7XgG1gothqBFX6zEeJWAS504CT/4YGCkFxl8DW5w1xCzZARDKRIO6ohOt99tWztetqJTSXFF9chHFJYwsTAwuXPjVTzUcoPCa0ohSBtMEy9qzVXBfczSZqGjeReL/lFXs8ccIWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkxVHY2Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2Cr65Al"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125F41F000FF;
-	Sat, 12 Sep 2026 19:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkxVHY2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B5C1F000FF;
+	Sat, 12 Sep 2026 19:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240449;
-	bh=yhjE3C7vA7kk2GBpYuKqxMCBhTbl5ggbMoYynStd9PE=;
+	s=korg; t=1789240454;
+	bh=PxeKGPst+dVd2/VpY2ZsHk3YS5PYY0g3vGoQkoqZCwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x2Cr65AlF0oKSlP88CdCx+oX4gAOpIMIEcpRYksBLr8Nx0dFVbABE2LZu2+NFdB/P
-	 GYfjeeBam0lfPAXPOkCqerze5pEHyd+51LSG4WgrE/cXjTbMi15yhqgwOojtx7Tj3x
-	 XjGCooDkGbU52bRAi6yOgFS4NgxNYoL8uY1PeWbU=
+	b=DkxVHY2QhTvTPn+L4z+uhita+qE5fRwhDf8yR+uILaNYxp3h9jZr2ohP7Bsb6vQEO
+	 rHyW9a9NWWdO5/2J5M7MYkYJ8AaJh9+91GiJCYTLQoO6RlKfctnqhWv1BAGU3e4vtS
+	 KXSkK1wqSWMRAQhf/fm1F0Mo31HzvJeLYB130bBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Alex Elder <elder@riscstar.com>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 872/935] net: ipa: balance runtime PM reference on remove error
-Date: Sat, 12 Sep 2026 09:05:02 +0200
-Message-ID: <20260912065546.816991270@linuxfoundation.org>
+Subject: [PATCH 5.15 873/935] net/smc: free pending qentry in smc_llc_flow_stop() before memset
+Date: Sat, 12 Sep 2026 09:05:03 +0200
+Message-ID: <20260912065546.840400026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,56 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Mahanta Jambigi <mjambigi@linux.ibm.com>
 
-[ Upstream commit 6b9eaa61ff2df63c6eb35d5cd025e2cef0861d76 ]
+[ Upstream commit 5ee0ceddc7785c6dcf4a8107fef01f0414a354f4 ]
 
-ipa_remove() takes a runtime PM reference before accessing IPA hardware
-during teardown. If a concurrent modem start or stop keeps
-ipa_modem_stop() busy across both attempts, the callback intentionally
-returns without releasing the remaining resources because proceeding
-with teardown could crash. That return also skips the matching
-pm_runtime_put_noidle(), leaving the callback's usage-count reference
-held.
+smc_llc_flow_stop() resets a flow struct with a blind memset:
 
-Drop only this runtime PM reference before returning.
-pm_runtime_put_noidle() does not request an idle transition, so the
-hardware and resources retained on this exceptional path remain
-untouched while the usage count stays balanced.
+	spin_lock_bh(&lgr->llc_flow_lock);
+	memset(flow, 0, sizeof(*flow));
+	flow->type = SMC_LLC_FLOW_NONE;
+	spin_unlock_bh(&lgr->llc_flow_lock);
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+If flow->qentry is non-NULL at this point the pointer is overwritten without the
+allocation being freed, leaking one kmalloc object.
 
-Fixes: 923a6b698447 ("net: ipa: get clock in ipa_probe()")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20260815151737.3758320-1-ruoyuw560@gmail.com
+A late-arriving duplicate CONFIRM_LINK or ADD_LINK_CONT message can set
+flow->qentry after the legitimate message has been consumed by the waiter via
+smc_llc_flow_qentry_clr() (which NULLs the pointer but leaves flow->type
+non-zero) but before the flow completes and smc_llc_flow_stop() runs.  In that
+window the duplicate is stashed into flow->qentry, and then lost when
+smc_llc_flow_stop() zeros the struct.
+
+Call smc_llc_flow_qentry_del() inside the lock before the memset.
+smc_llc_flow_qentry_del() already checks flow->qentry before freeing, so the
+normal case where no entry is pending is a no-op.
+
+Fixes: 555da9af827d ("net/smc: add event-based llc_flow framework")
+Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
+Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Link: https://patch.msgid.link/20260818073943.1108383-1-mjambigi@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/ipa_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/smc/smc_llc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-index 8a5dd0b595601..540abd0f8c7b2 100644
---- a/drivers/net/ipa/ipa_main.c
-+++ b/drivers/net/ipa/ipa_main.c
-@@ -820,12 +820,12 @@ static void ipa_remove(struct platform_device *pdev)
- 		}
- 		if (ret) {
- 			/*
--			 * Not cleaning up here properly might also yield a
--			 * crash later on. As the device is still unregistered
--			 * in this case, this might even yield a crash later on.
-+			 * Continuing teardown after failing to stop the modem
-+			 * could crash, so leave the remaining resources allocated.
- 			 */
- 			dev_err(dev, "Failed to stop modem (%pe), leaking resources\n",
- 				ERR_PTR(ret));
-+			pm_runtime_put_noidle(dev);
- 			return;
- 		}
- 
+diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
+index 572d02bfd3eda..e4d2abec8ec86 100644
+--- a/net/smc/smc_llc.c
++++ b/net/smc/smc_llc.c
+@@ -276,6 +276,7 @@ int smc_llc_flow_initiate(struct smc_link_group *lgr,
+ void smc_llc_flow_stop(struct smc_link_group *lgr, struct smc_llc_flow *flow)
+ {
+ 	spin_lock_bh(&lgr->llc_flow_lock);
++	smc_llc_flow_qentry_del(flow);
+ 	memset(flow, 0, sizeof(*flow));
+ 	flow->type = SMC_LLC_FLOW_NONE;
+ 	spin_unlock_bh(&lgr->llc_flow_lock);
 -- 
 2.53.0
 
