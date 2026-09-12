@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA78246BCD;
-	Sat, 12 Sep 2026 10:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C446246BCD;
+	Sat, 12 Sep 2026 10:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207371; cv=none; b=CyxTUS6uRvg+dSaRplY2pFVcQfYlHQlvS3yDMQF5Gt/X90+JlqBKuoCne7Uzh6RrOF4/xbPux0Ks3BTjghzADV3XHi86oGakSHfcnrdL2w03D7QvyeGDx3F3fjVFo29yKBShUr3/h3kh9MvJb2x2QnE0paLR8QzEsT0u/+algEk=
+	t=1789207376; cv=none; b=GhdzX8tDwuB3aYRE70XtDTFOkfJvkOwv1GWF0qXfjjiCAJ4AA5LXM7r4RdY/vpG0b5Zgg/UmitcZQd5XuVSW4llxyGGm9TxhKfnmWzF06xSLLxGQd20MV5/vxXnBniK/R1FGQvzUTtPFJsKy6+tQv3AiCvdkcN06DDFMv8GSZDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207371; c=relaxed/simple;
-	bh=uLQ88KDYdegqIQgznO1gV0jTgspvO+nRQjluzhq5+x4=;
+	s=arc-20240116; t=1789207376; c=relaxed/simple;
+	bh=r5b5RoSvoQtV4IVI69ENzbPj3wTPov6VzwwITEl+xSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXHEkKhOzmu8lBx9jjwtYfw3cr5pYMidyhjiCh/XQTtW+bbW3ZmVCj6L2wVnFqtfwPGzdM5JpPgUuyj7yRC9m6USo78pMQ3kYXFXjqXf7e1viMdvsg3AoCHKrhdjX4ANWGs788vj1n6kHm8Yh6qgpRYT/a0IAWlBJj9CcOBRRzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5pJX+ok; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pb7Ewo32iIAQEGEGbyd8lWFd++WYo9UHsi22eHFJSvCAwQbQSJqUfvub6L1O57VGuo0dOJriq3QfnQNnnI2ZX9HxPrY2XwifrQkzAucNXAWpLH2n6lz3i4AG13Su7iwovtNtOyoj0pTt6aG2mQMLgbU5Vq/+gmls3SSJFaeQxbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMWtQHrD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5pJX+ok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4661F000FF;
-	Sat, 12 Sep 2026 10:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMWtQHrD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E838F1F000FF;
+	Sat, 12 Sep 2026 10:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207369;
-	bh=vziY26q3TNJQrpXzm+uunzUrAzcjWSO68tRpEXgG96U=;
+	s=korg; t=1789207375;
+	bh=BN/8sw7ZqfKjf6U9JktGkT8CQHHa1eJTialJgTmU+GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u5pJX+okcqc3kRxAlovMtK4dFypfl6x0zaELqk+6YBD6l5dUWcHTvprUf1I9+ePVZ
-	 qW+vVqTbFkjiXXb8zdKH4lkyeNKyN5AEXJrlHSxbulKGZmZOQ3TJDWdVMFCkX49pt3
-	 RX5O89t3XmgKERtiZ9rqodo/PRt3k3TUJDEBfKgY=
+	b=JMWtQHrDfOHd0Jjva6W2Vaa/bqdJOWuph9cikXL9rZWRD1QsNMsbWbUBMdkqjuaCf
+	 2kkDiI90aGOfiGQUIOsTw/ZBRHfmdmS5922mb004PBRLkwai12FeDyCjpyDDzz51lU
+	 Kk4Llmi58ao3P8OT80efbKoV5OsLSWjXEQTnfzgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0398/1518] PCI: xgene: Drop unnecessary OF node reference
-Date: Sat, 12 Sep 2026 08:42:47 +0200
-Message-ID: <20260912065632.460540028@linuxfoundation.org>
+Subject: [PATCH 6.18 0399/1518] irqchip/renesas-irqc: Fix generic interrupt chip leak on remove
+Date: Sat, 12 Sep 2026 08:42:48 +0200
+Message-ID: <20260912065632.483273610@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,65 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-[ Upstream commit 4869db344e76c9adfb1d9654df442db5371fac71 ]
+[ Upstream commit 616dd89d81ad9a3cf1cfff4088a4c43e4e00d6ba ]
 
-xgene_pcie_probe() stores dev->of_node in port->node with
-of_node_get(), but the cached node is only used during probe by
-xgene_pcie_parse_map_dma_ranges(). The driver never releases the extra
-reference, so the node reference is leaked.
+The driver allocates domain generic chips probe. However, on driver
+removal, the generic chips are not automatically freed when the interrupt
+domain is removed because the domain flags do not include
+IRQ_DOMAIN_FLAG_DESTROY_GC.
 
-There is no need for private OF node ownership here. Use the device's
-existing of_node directly in xgene_pcie_parse_map_dma_ranges() and remove
-the cached port->node pointer.
+This causes both the domain generic chips structure and the associated
+generic chips to be leaked. Additionally, the generic chips remain on the
+global list and may later be accessed by generic interrupt chip suspend,
+resume, or shutdown callbacks after the driver has been removed,
+potentially resulting in a use-after-free and kernel crash.
 
-Fixes: 5f6b6ccdbe1c ("PCI: xgene: Add APM X-Gene PCIe driver")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260630195234.1871951-1-dbgh9129@gmail.com
+Fix the resource leak by setting IRQ_DOMAIN_FLAG_DESTROY_GC on the
+interrupt domain; this lets the interrupt domain core automatically
+release all generic chips when irq_domain_remove() is invoked, removing
+the need for manual cleanup calls in error paths and remove callback.
+
+Fixes: 99c221df33fbfa1b ("irqchip/renesas-irqc: Move over to nested generic chip")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260708100846.506314-1-fffsqian@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-xgene.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/irqchip/irq-renesas-irqc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
-index b95afa35201d0..83c9a2930eeca 100644
---- a/drivers/pci/controller/pci-xgene.c
-+++ b/drivers/pci/controller/pci-xgene.c
-@@ -58,7 +58,6 @@
- #define XGENE_PCIE_IP_VER_2		2
+diff --git a/drivers/irqchip/irq-renesas-irqc.c b/drivers/irqchip/irq-renesas-irqc.c
+index a20a6471b0e48..1ff3535a4617f 100644
+--- a/drivers/irqchip/irq-renesas-irqc.c
++++ b/drivers/irqchip/irq-renesas-irqc.c
+@@ -176,6 +176,7 @@ static int irqc_probe(struct platform_device *pdev)
+ 		goto err_runtime_pm_disable;
+ 	}
  
- struct xgene_pcie {
--	struct device_node	*node;
- 	struct device		*dev;
- 	struct clk		*clk;
- 	void __iomem		*csr_base;
-@@ -526,7 +525,7 @@ static void xgene_pcie_setup_ib_reg(struct xgene_pcie *port,
- 
- static int xgene_pcie_parse_map_dma_ranges(struct xgene_pcie *port)
- {
--	struct device_node *np = port->node;
-+	struct device_node *np = port->dev->of_node;
- 	struct of_pci_range range;
- 	struct of_pci_range_parser parser;
- 	struct device *dev = port->dev;
-@@ -612,7 +611,6 @@ static bool xgene_check_pcie_msi_ready(void)
- static int xgene_pcie_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *dn = dev->of_node;
- 	struct xgene_pcie *port;
- 	struct pci_host_bridge *bridge;
- 	int ret;
-@@ -627,7 +625,6 @@ static int xgene_pcie_probe(struct platform_device *pdev)
- 
- 	port = pci_host_bridge_priv(bridge);
- 
--	port->node = of_node_get(dn);
- 	port->dev = dev;
- 	port->version = XGENE_PCIE_IP_VER_1;
- 
++	p->irq_domain->flags |= IRQ_DOMAIN_FLAG_DESTROY_GC;
+ 	ret = irq_alloc_domain_generic_chips(p->irq_domain, p->number_of_irqs,
+ 					     1, "irqc", handle_level_irq,
+ 					     0, 0, IRQ_GC_INIT_NESTED_LOCK);
 -- 
 2.53.0
 
