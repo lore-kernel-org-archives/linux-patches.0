@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EDC274B46;
-	Sat, 12 Sep 2026 18:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D65F2D0C94;
+	Sat, 12 Sep 2026 18:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237694; cv=none; b=MXJ50mVhIxTFtqXlk0K3xzLbCQLUFBve9cQwv4EnZfqIW9uFK9YC5guVD6uh7gDVVNDZh4mlBK4bmbAX2Lyi1HwZBa6bTC7FD0FVOZGw4+dufgR4+/JgrCr+V5Ko1kuCM1w9tmnEB0Iz4a1YuoDiYvyhR6jXG3i182h01pN0FzE=
+	t=1789237698; cv=none; b=W4jJzW8dP/2M9jeojGfA8CsTxYTwpcXW+a6KdmGpqUawHAxtyfvTefZi1pKqygo8ktccfntVCbb75r9py8FBTSVom6HTw2v0zE5Spy+yOy4on/KdsR000Zr0N57/Spgw177lBeZoUGZ+nwrjdVretW5lJHxBSck/IZkGjPU6tsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237694; c=relaxed/simple;
-	bh=GHZ+HVQC8KRR8Mv84FTBpys33p/lQjbhJGEPf0JlGMk=;
+	s=arc-20240116; t=1789237698; c=relaxed/simple;
+	bh=IEdldheKqvoYxbzXvkYQrImRcNDgWHaU4mwRJN6sORg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEzLg4X00c2dWdGDjgDNNu2UvxGRJDkZIkoOiCW7LTn6K/OL5UlR5ilWg5gHNatWwVuwN2xDFPyuEhX2Z8TeI1Kfp9pIp7HUwjEXz4kwke8i3wPsuIQ9ecKSy+pfUy22HBKSbLfvlXEysmTBOfi5N7swk2jV0NOaGVl9Bvx/8tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRhzEEcU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U50+Z1DovM/oE7KIiaIn4sbCD727JirI8GFfxRoQz5Nzo72BVSEsLg5l6DNz7hlkXAtoJ7NbAyutGMgbKlr64Xvc+i4poAnrJyDePD2NhQWnESpCN1oULMyxGYqmkxfsUX5E4RgZmYtslXULTH0F34Z6epddMC4PEUHBJ1drM6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKZg3rUr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRhzEEcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1EB1F000FF;
-	Sat, 12 Sep 2026 18:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKZg3rUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954231F000FF;
+	Sat, 12 Sep 2026 18:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237693;
-	bh=QTMyupEGO9tc5ctXsO0l5nkogcjNuXryc9a4Pa41+kE=;
+	s=korg; t=1789237697;
+	bh=EjCozH2myEicoo0AExKhI5vhZstxTP1xSMIbjote19Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kRhzEEcUPediXa3T9Yz19L07pFfdeu9rkxnCCFiuGft9QKsM//4aKAlh21IU5Rcwf
-	 z9KcxbCZnPTrlJgmc/lTFnCxUuVvQ8INtyLNCL3qAEUUgXSVlE5qIJuMmBao/aU1nE
-	 HynWvzlfD2GzBv6neVXC+WaXwWCKQDx+cNHKahXI=
+	b=dKZg3rUrcYfa8MwmGMz0dH0Ry6hcv6+zJ8HHjdhh/B5ysPvnKhbGAlZ4AnLyowtJ2
+	 yV4CXrYfquuRccpuXWjAzGTqoMigSzEdJ0V/MF88/7PumaeoXrz+kN2xFwqWO3n+Aj
+	 vVq1zCkP4x0wFFIDaHz+Wqvw1+AWKfdK94edQdb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	caina <caina@uniontech.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Yipeng Zou <zouyipeng@huawei.com>
-Subject: [PATCH 5.15 267/935] Revert "irqchip/mbigen: Fix mbigen node address layout"
-Date: Sat, 12 Sep 2026 08:54:57 +0200
-Message-ID: <20260912065532.949271323@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Miguel Garcia <miguelgarciaroman8@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 258/935] Input: aiptek - switch to using dev_groups for driver-specific attributes
+Date: Sat, 12 Sep 2026 08:54:48 +0200
+Message-ID: <20260912065532.744399994@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,114 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: caina <caina@uniontech.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit e67091609cf85962f64391c1b0f93d4cbfcd4e22 upstream.
+commit f4e7a254299bcdfe7bced700a7d96690b1b9a6f2 upstream.
 
-This reverts commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20.
+On 5.15.y, the attributes are removed manually from disconnect after
+intfdata has been cleared and the input device unregistered. A concurrent
+sysfs callback can therefore observe cleared driver data or use the input
+device after unregistration. Letting the driver core manage the group
+removes and drains it before the disconnect callback.
 
-Commit 6be6cba9c437 ("irqchip/mbigen: Fix mbigen node address layout")
-appears to cause a regression on Hi1616.
+The driver core now has the ability to handle the creation and removal
+of device-specific sysfs files, let's use it instead of registering and
+unregistering attributes by hand.
 
-On-board hns NIC has two ports, enahisic2i0 and enahisic2i1, both
-behind mbigen-v2.  Port 0 works; port 1 cannot pass any traffic.
-
-Their interrupt pins fall on different mbigen nodes:
-
-  enahisic2i0: pins 1152-1198 -> all in node 9
-  enahisic2i1: pins 1200-1246 -> node 9 (1200-1215) + node 10 (1216-1246)
-
-  (nid = (hwirq - 64) / 128 + 1; pin 1215 = node 9, pin 1216 = node 10)
-
-/proc/interrupts shows the break happens exactly at the node boundary:
-
-  enahisic2i1-rx0  pin 1200  count 102   <- node 9
-  enahisic2i1-rx5  pin 1215  count   1   <- node 9, last pin
-  enahisic2i1-tx5  pin 1216  count   0   <- node 10, first pin
-  enahisic2i1-rx6  pin 1218  count   0   <- node 10
-  ...all node 10 pins stay at zero.
-
-Port 0 (entirely node 9) is unaffected.  Reverting the commit restores
-normal operation.
-
-The commit assumes CLEAR occupies a full 4 KB page at [0xa000, 0xb000)
-and collides with node 10, so node 10+ gets shifted by 0x1000.
-
-But get_mbigen_clear_reg() uses flat, chip-wide addressing -- it never
-multiplies by the node ID:
-
-    *addr = (hwirq / 32) * 4 + REG_MBIGEN_CLEAR_OFFSET;  /* 0xa000 */
-
-Over the valid hwirq range [64, 1407], CLEAR only spans 0xa008-0xa0af
-(168 bytes).  Node 10's registers are:
-
-    TYPE: 0xa000-0xa00f  (16 B)   overlaps CLEAR by 8 B (0xa008-0xa00f)
-    VEC:  0xa200-0xa3ff  (512 B)  no overlap with CLEAR
-
-Shifting the whole page moves VEC from 0xa200 to 0xb200.  The hardware
-reads the event ID from the fixed silicon address 0xa200 on interrupt
-firing, but software wrote it to 0xb200 -- so the hardware gets an
-uninitialised value and the interrupt is lost.
-
-The only real overlap is 8 bytes of TYPE.  It can only trigger when a
-single mbigen instance has devices on both node 1 (CLEAR 0xa008) and
-node 10 (TYPE 0xa008).  On Hi1616 those nodes are on separate mbigen
-instances, so it never triggers.
-
-Fixes: 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ("irqchip/mbigen: Fix mbigen node address layout")
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: caina <caina@uniontech.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Yipeng Zou <zouyipeng@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260821091720.16665-1-caina@uniontech.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20220903051119.1332808-3-dmitry.torokhov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Miguel Garcia <miguelgarciaroman8@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mbigen.c |   20 ++++----------------
+ drivers/input/tablet/aiptek.c | 20 ++++----------------
  1 file changed, 4 insertions(+), 16 deletions(-)
 
---- a/drivers/irqchip/irq-mbigen.c
-+++ b/drivers/irqchip/irq-mbigen.c
-@@ -64,20 +64,6 @@ struct mbigen_device {
- 	void __iomem		*base;
+diff --git a/drivers/input/tablet/aiptek.c b/drivers/input/tablet/aiptek.c
+index 64113810e16dc..e1705aaf8f649 100644
+--- a/drivers/input/tablet/aiptek.c
++++ b/drivers/input/tablet/aiptek.c
+@@ -1623,7 +1623,7 @@ static ssize_t show_firmwareCode(struct device *dev, struct device_attribute *at
+ 
+ static DEVICE_ATTR(firmware_code, S_IRUGO, show_firmwareCode, NULL);
+ 
+-static struct attribute *aiptek_attributes[] = {
++static struct attribute *aiptek_dev_attrs[] = {
+ 	&dev_attr_size.attr,
+ 	&dev_attr_pointer_mode.attr,
+ 	&dev_attr_coordinate_mode.attr,
+@@ -1647,9 +1647,7 @@ static struct attribute *aiptek_attributes[] = {
+ 	NULL
  };
  
--static inline unsigned int get_mbigen_node_offset(unsigned int nid)
--{
--	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
--
--	/*
--	 * To avoid touched clear register in unexpected way, we need to directly
--	 * skip clear register when access to more than 10 mbigen nodes.
+-static const struct attribute_group aiptek_attribute_group = {
+-	.attrs	= aiptek_attributes,
+-};
++ATTRIBUTE_GROUPS(aiptek_dev);
+ 
+ /***********************************************************************
+  * This routine is called when a tablet has been identified. It basically
+@@ -1848,26 +1846,16 @@ aiptek_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ 	 */
+ 	usb_set_intfdata(intf, aiptek);
+ 
+-	/* Set up the sysfs files
 -	 */
--	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
--		offset += MBIGEN_NODE_OFFSET;
+-	err = sysfs_create_group(&intf->dev.kobj, &aiptek_attribute_group);
+-	if (err) {
+-		dev_warn(&intf->dev, "cannot create sysfs group err: %d\n",
+-			 err);
+-		goto fail3;
+-        }
 -
--	return offset;
--}
--
- static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
- {
- 	unsigned int nid, pin;
-@@ -86,7 +72,8 @@ static inline unsigned int get_mbigen_ve
- 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
- 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
+ 	/* Register the tablet as an Input Device
+ 	 */
+ 	err = input_register_device(aiptek->inputdev);
+ 	if (err) {
+ 		dev_warn(&intf->dev,
+ 			 "input_register_device returned err: %d\n", err);
+-		goto fail4;
++		goto fail3;
+         }
+ 	return 0;
  
--	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
-+	return pin * 4 + nid * MBIGEN_NODE_OFFSET
-+			+ REG_MBIGEN_VEC_OFFSET;
- }
+- fail4:	sysfs_remove_group(&intf->dev.kobj, &aiptek_attribute_group);
+  fail3: usb_free_urb(aiptek->urb);
+  fail2:	usb_free_coherent(usbdev, AIPTEK_PACKET_LENGTH, aiptek->data,
+ 			  aiptek->data_dma);
+@@ -1892,7 +1880,6 @@ static void aiptek_disconnect(struct usb_interface *intf)
+ 		 */
+ 		usb_kill_urb(aiptek->urb);
+ 		input_unregister_device(aiptek->inputdev);
+-		sysfs_remove_group(&intf->dev.kobj, &aiptek_attribute_group);
+ 		usb_free_urb(aiptek->urb);
+ 		usb_free_coherent(interface_to_usbdev(intf),
+ 				  AIPTEK_PACKET_LENGTH,
+@@ -1906,6 +1893,7 @@ static struct usb_driver aiptek_driver = {
+ 	.probe = aiptek_probe,
+ 	.disconnect = aiptek_disconnect,
+ 	.id_table = aiptek_ids,
++	.dev_groups = aiptek_dev_groups,
+ };
  
- static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
-@@ -101,7 +88,8 @@ static inline void get_mbigen_type_reg(i
- 	*mask = 1 << (irq_ofst % 32);
- 	ofst = irq_ofst / 32 * 4;
- 
--	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
-+	*addr = ofst + nid * MBIGEN_NODE_OFFSET
-+		+ REG_MBIGEN_TYPE_OFFSET;
- }
- 
- static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
+ module_usb_driver(aiptek_driver);
+-- 
+2.53.0
+
 
 
