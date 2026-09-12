@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5293241DDE3;
-	Sat, 12 Sep 2026 08:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F039423EAD;
+	Sat, 12 Sep 2026 08:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202449; cv=none; b=twf9N5uZ3ekJbDXP48L5bCr/e2/CVQy7wnL9RWn6FKnC+4esy95utry1tdVuUoPbHfambp3n63av8kxetSJ0XbnG7n34qm2xvh5eqbkKAg3H6yVRqwm36Zzeijha6jpe5rWCIuEZ4U1IXD69FCogQ7Vm7CTqqavL30eOylVIdPI=
+	t=1789202454; cv=none; b=AiIt6Qz1zIT0Eg6JN2ca3ti00TPvu/AIQh4Qr7FKt5aoAL5FH10NBfHv/RZjgAdoHJctXllXsdXrCtBLGvg+1NW9voMk300zWHmovQNKUtOLepZYIDohPCLZm7jsH8Q6czhHURWZva/osE6gR0LIgr/UK2VzxfjBLByRbfFemDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202449; c=relaxed/simple;
-	bh=XlpHF335lvDXUyVDJZ0BoUkxhM35kJhoDI6BjwRQTzY=;
+	s=arc-20240116; t=1789202454; c=relaxed/simple;
+	bh=cx2KqRuuvK7zAnBXzm6Dp6QXrcvHh4cUNc4oEttMNGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5nrWFe3bh3WvE9SmNU8r5YTmpKtSeO8luZrja/hCmHXPJYgEP353goMtlATHAQoQW7EK3aWd1TXO4fuGpYi/Oc23qAJ7MWAH+aALcqBqXGNC5ScA57/SVSoDt3nm8C8fCnUDxz95UTFft76COmFQMQNejWZGDE531HdxItwJqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSuCpQzu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ABLn+g1RISdURgWEr9lmm2zovl0JQXtxIYIx5Ndnu9GrPsYIK8o5Pts9FKwQN2Q2EV6fBULbBqUFpNQfW2uFKgyzTYuKrG0W7PWfDioC/luG8zuLbRZS3kliWK17q1Cpo9WF6pyCOkHYOHAtkGQU63RqmEdL1yzyCQ8nbEf8Pms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1Yj5mZl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSuCpQzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CE41F000FF;
-	Sat, 12 Sep 2026 08:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1Yj5mZl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32F01F000FF;
+	Sat, 12 Sep 2026 08:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202448;
-	bh=y13eZQzseBiqfeTHMZkPueiyJn4EAFtpS9kKQWzybos=;
+	s=korg; t=1789202452;
+	bh=mFjOrkQqthzJR1oLGFAQ1xdwto0DSMKNXd433mmjd7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mSuCpQzu8PxhCpX7Akf7xFHukKJXarifZqy/RVfC/fAZ5yABKImK8zx6uhNvRLh/0
-	 NHw2albZyxVALXTu2HsSA4WesGuTfEX+oRouOKLS3KRTqpCwnFgDpr04vROgmK1hFW
-	 oov6+Kia70VJDtKGXvUXu5pMpn3E8UJzgqXer4J0=
+	b=S1Yj5mZlWqPGEIS20YLoEicCFNT/9oG9U0f0YBmVjWNfNABoL5kJkThOYrOEkfExQ
+	 2b0J//f2VQnxHE/KSOb+GR5hoQkTYQzjNR10th5uxOl+VWd6pBMdDF7BdarYhuCfCl
+	 nXq/jPLjfWRzFeGnax3zvXw568kLA7V/gpQNCxRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykola Marzhan <mykola@meshstor.io>,
-	Yu Kuai <yukuai@fygo.io>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1188/1815] md/raid5: round bitmap stripes with sector division
-Date: Sat, 12 Sep 2026 08:48:58 +0200
-Message-ID: <20260912065716.900371523@linuxfoundation.org>
+Subject: [PATCH 7.2 1206/1815] ASoC: tas675x: sort the register default table
+Date: Sat, 12 Sep 2026 08:49:16 +0200
+Message-ID: <20260912065717.319926695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,69 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 17ea021ae74987d6064c8195c4922fa025753892 ]
+[ Upstream commit 3521d209ca70bf77b8c1dcccab5ca4df9468877f ]
 
-raid5_bitmap_sector_map() aligns the array range to full RAID5 stripe
-widths before converting it to component sectors. That width is
-chunk_sectors multiplied by the number of data disks, and it is not
-always a power of two.
+reg_defaults must be sorted by ascending register address, as
+regcache_lookup_reg() locates entries in it with bsearch().  See commit
+fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-Reproduce with a 4-disk RAID5, 1024-sector chunks, and three data disks.
-The full-stripe width is 3072 sectors. For a one-sector write at array
-sector 3072, correct rounding gives array range [3072, 6144), which maps
-to component range [1024, 2048). The old round_down()/round_up() logic
-instead gives [1024, 4096), which maps to [0, 1024).
+TAS675X_AC_LDG_CTRL_REG (0xb5), TAS675X_TWEETER_DETECT_CTRL_REG (0xb6),
+TAS675X_TWEETER_DETECT_THRESH_REG (0xb7) and TAS675X_AC_LDG_FREQ_CTRL_REG
+(0xb8) are listed before the 0x7c - 0xa0 block, which leaves 14 of the
+69 entries unreachable.  regcache_reg_needs_sync() then cannot compare
+them against their default and reports that a sync is needed, so they
+are written to the device on every regcache_sync() even when they were
+never touched.
 
-Use sector_div() based arithmetic so the rounded range is aligned to the
-actual RAID5 stripe width.
+Sort the table by register address.
 
-The deterministic mapper test now reports the fixed component range as
-[1024, 2048), while the old mask-based range was [0, 1024).
-
-Fixes: 9c89f604476c ("md/raid5: implement pers->bitmap_sector()")
-Reported-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://lore.kernel.org/all/20260726185916.2223460-1-mykola@meshstor.io/
-Tested-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260802195038.164272-6-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 133c81f84471 ("ASoC: codecs: Add TAS67524 quad-channel audio amplifier driver")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20260805104149.9795-6-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ sound/soc/codecs/tas675x.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 83531b4c1068c..d236a0d772d14 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5950,8 +5950,11 @@ static void raid5_bitmap_sector(struct mddev *mddev, sector_t *offset,
- 
- 	sectors_per_chunk = conf->chunk_sectors *
- 		(conf->raid_disks - conf->max_degraded);
--	start = round_down(start, sectors_per_chunk);
--	end = round_up(end, sectors_per_chunk);
-+	sector_div(start, sectors_per_chunk);
-+	start *= sectors_per_chunk;
-+	if (sector_div(end, sectors_per_chunk))
-+		end++;
-+	end *= sectors_per_chunk;
- 
- 	start = raid5_compute_sector(conf, start, 0, &dd_idx, NULL);
- 	end = raid5_compute_sector(conf, end, 0, &dd_idx, NULL);
-@@ -5969,8 +5972,10 @@ static void raid5_bitmap_sector(struct mddev *mddev, sector_t *offset,
- 
- 	sectors_per_chunk = conf->prev_chunk_sectors *
- 		(conf->previous_raid_disks - conf->max_degraded);
--	prev_start = round_down(prev_start, sectors_per_chunk);
--	prev_end = round_down(prev_end, sectors_per_chunk);
-+	sector_div(prev_start, sectors_per_chunk);
-+	prev_start *= sectors_per_chunk;
-+	sector_div(prev_end, sectors_per_chunk);
-+	prev_end *= sectors_per_chunk;
- 
- 	prev_start = raid5_compute_sector(conf, prev_start, 1, &dd_idx, NULL);
- 	prev_end = raid5_compute_sector(conf, prev_end, 1, &dd_idx, NULL);
+diff --git a/sound/soc/codecs/tas675x.c b/sound/soc/codecs/tas675x.c
+index 82526362de7be..404706b621567 100644
+--- a/sound/soc/codecs/tas675x.c
++++ b/sound/soc/codecs/tas675x.c
+@@ -1924,15 +1924,6 @@ static const struct reg_default tas675x_reg_defaults[] = {
+ 	{ TAS675X_PWM_PHASE_M_CTRL_CH2_REG, 0x00 },
+ 	{ TAS675X_PWM_PHASE_M_CTRL_CH3_REG, 0x00 },
+ 	{ TAS675X_PWM_PHASE_M_CTRL_CH4_REG, 0x00 },
+-	{ TAS675X_DC_LDG_CTRL_REG,         0x00 },
+-	{ TAS675X_DC_LDG_LO_CTRL_REG,      0x00 },
+-	{ TAS675X_DC_LDG_TIME_CTRL_REG,    0x00 },
+-	{ TAS675X_DC_LDG_SL_CH1_CH2_CTRL_REG, 0x11 },
+-	{ TAS675X_DC_LDG_SL_CH3_CH4_CTRL_REG, 0x11 },
+-	{ TAS675X_AC_LDG_CTRL_REG,         0x10 },
+-	{ TAS675X_TWEETER_DETECT_CTRL_REG, 0x08 },
+-	{ TAS675X_TWEETER_DETECT_THRESH_REG, 0x00 },
+-	{ TAS675X_AC_LDG_FREQ_CTRL_REG,    0xC8 },
+ 	{ TAS675X_REPORT_ROUTING_1_REG,    0x00 },
+ 	{ TAS675X_OTSD_RECOVERY_EN_REG,    0x00 },
+ 	{ TAS675X_REPORT_ROUTING_2_REG,    0xA2 },
+@@ -1943,6 +1934,15 @@ static const struct reg_default tas675x_reg_defaults[] = {
+ 	{ TAS675X_GPIO1_OUTPUT_SEL_REG,    0x00 },
+ 	{ TAS675X_GPIO2_OUTPUT_SEL_REG,    0x00 },
+ 	{ TAS675X_GPIO_CTRL_REG,           TAS675X_GPIO_CTRL_RSTVAL },
++	{ TAS675X_DC_LDG_CTRL_REG,         0x00 },
++	{ TAS675X_DC_LDG_LO_CTRL_REG,      0x00 },
++	{ TAS675X_DC_LDG_TIME_CTRL_REG,    0x00 },
++	{ TAS675X_DC_LDG_SL_CH1_CH2_CTRL_REG, 0x11 },
++	{ TAS675X_DC_LDG_SL_CH3_CH4_CTRL_REG, 0x11 },
++	{ TAS675X_AC_LDG_CTRL_REG,         0x10 },
++	{ TAS675X_TWEETER_DETECT_CTRL_REG, 0x08 },
++	{ TAS675X_TWEETER_DETECT_THRESH_REG, 0x00 },
++	{ TAS675X_AC_LDG_FREQ_CTRL_REG,    0xC8 },
+ 	{ TAS675X_OTW_CTRL_CH1_CH2_REG,    0x11 },
+ 	{ TAS675X_OTW_CTRL_CH3_CH4_REG,    0x11 },
+ };
 -- 
 2.53.0
 
