@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34AF47A0C7;
-	Sat, 12 Sep 2026 11:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF904477281;
+	Sat, 12 Sep 2026 11:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212933; cv=none; b=WWfXChRr509B/ScH5TA/gJivApab3NRIVNs+kC+txQiS9rEWqivmI0db1lHXS8hlxW5UjAynxK1u5TteQpv0UH7+HUQn/vba4FjNRj8m1ERfpDlsPqamiDhEk2stLTKPX4ouKdPSa3Gy45VlZbwO7UOZbovBIkWbJzNITBLm6OE=
+	t=1789212937; cv=none; b=XJmKBcxvDbfCiGHL/rp/m9e8bu6Get5EjFai1QE3Y/87kd2LKdlRa6T43GLDtq63Gzj+m90/PHPhfEpVZoV96BbVUcrzuxHooW1FgU6RMygmi8d+XAIHi2Qo/+c6dc1JFefU/M80wfcVNSvMrb6x7dTDNyMVvNuHZOkZNnvQHoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212933; c=relaxed/simple;
-	bh=+iPRmSkKxI9ShrloX4kkdNWvlREanad9uZwu4eYuAI4=;
+	s=arc-20240116; t=1789212937; c=relaxed/simple;
+	bh=O8ET9WMw8h/9pRnjKQh8V5ogCirVX/bcxayHHKfIkL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIls08k5sVanPEqFbKy7ExrmwelCfkrKQsw8ZCUWE7GbRwP98/yTWUJrIp6930tzab6wY/1EIeiB0vRFJ7uemjuFLGUVQIRYaCerhzp9sRG89ZLNi8lq22X/ssznMwrBWenRKrTbFmLLSzAbdsZ3cRxx17rj7p67+JVagunV6Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeK+J9nr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EIDtlQY7O/Gl3scoq9IpXO0Epa2YXyn/EdfBG040uML1nBoW4jOGtJ23UdrD6AHMFTYZjPNrLiHG7KRBFOW3oENoG9a9rH2sAxMqiAqUtyBLW9wJixmf/i7OJ2Yp6I6roplZYOSqkinjyeiKv8xQS/jNPrf1TBkVahKfksAedlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwRUwAMs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeK+J9nr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A561F000FF;
-	Sat, 12 Sep 2026 11:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwRUwAMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941B61F000FF;
+	Sat, 12 Sep 2026 11:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212930;
-	bh=fWKZWQE8XEr/lIBxrRh0LdR0HFhCQk1dzee98pw9DHg=;
+	s=korg; t=1789212935;
+	bh=W4CiPrnArO/kysLucZY3IqpMYXM0uhrxduCrlDXxcUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XeK+J9nr5e0T9+aXXkTVkaf/1Xx8UhkOAJfhM3fZPfZVJdRRcLCg7/Uvo/j9L/JUS
-	 LO9EagkliR1dvvhpnswiFaKd3dd6miZzhe9zDUddNfajqNpX2OlZ6+ZlKOvMugpRP/
-	 89ZJOsTKTGDUSk8RqF08V0x7wL+1IfC40NDmj8sE=
+	b=uwRUwAMsJC6qlEHccBQaOKKsnaPgOmb4jr6yH6qVoJSRX0+CiVnS7ow21BXc3Obum
+	 lOkdPH7AElaBQV+Rgbl1laRiYShTnzHNd63dyc8NL1oE5Xdu2VNPDFlMMUsidJ97lT
+	 zEgNfbSiu87OTguEWv7Xm01KncU/CqqskoLwMPVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 0019/1376] clk: qcom: gcc-mdm9607: Increase delay for USB PHY reset
-Date: Sat, 12 Sep 2026 08:40:45 +0200
-Message-ID: <20260912065607.976821757@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0002/1376] net: openvswitch: fix kernel-doc warnings in internal headers
+Date: Sat, 12 Sep 2026 08:40:28 +0200
+Message-ID: <20260912065607.599034611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,36 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit c99bc8e83848358bd4a0436e4bdae5b7919babb2 upstream.
+[ Upstream commit 6bb0dcb3d321c14be7ca33b71a149034d6a2cde8 ]
 
-To conform to the specifications of the USB PHY, the reset signal should be
-asserted for at least 10us. Guarantee that by increasing the delay for the
-USB2_HS_PHY_ONLY_BCR reset control similar to commit dcc6c9fb7128 ("clk:
-qcom: gcc-msm8909: Increase delay for USB PHY reset").
+Some field descriptions were missing, some were not very accurate.
+Not touching the uAPI header or .c files for now.
 
-Cc: stable@vger.kernel.org
-Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-5-745565101869@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Formatting of those comments isn't great in general, but at least
+they are not missing anything now.
+
+Before:
+  $ ./scripts/kernel-doc -none -Wall net/openvswitch/*.h 2>&1 | wc -l
+  16
+
+After:
+  $ ./scripts/kernel-doc -none -Wall net/openvswitch/*.h 2>&1 | wc -l
+  0
+
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20250320224431.252489-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-mdm9607.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/openvswitch/datapath.h | 20 ++++++++++++++------
+ net/openvswitch/vport.h    |  9 +++++++++
+ 2 files changed, 23 insertions(+), 6 deletions(-)
 
---- a/drivers/clk/qcom/gcc-mdm9607.c
-+++ b/drivers/clk/qcom/gcc-mdm9607.c
-@@ -1567,7 +1567,7 @@ static const struct qcom_reset_map gcc_m
- 	[USB_HS_HSIC_BCR] = { 0x3d05c },
- 	[GCC_MSS_RESTART] = { 0x3e000 },
- 	[USB_HS_BCR] = { 0x41000 },
--	[USB2_HS_PHY_ONLY_BCR] = { 0x41034 },
-+	[USB2_HS_PHY_ONLY_BCR] = { .reg = 0x41034, .udelay = 15 },
- 	[QUSB2_PHY_BCR] = { 0x4103c },
+diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
+index 8453da5507e11..67250d7df1ab2 100644
+--- a/net/openvswitch/datapath.h
++++ b/net/openvswitch/datapath.h
+@@ -29,8 +29,8 @@
+  * datapath.
+  * @n_hit: Number of received packets for which a matching flow was found in
+  * the flow table.
+- * @n_miss: Number of received packets that had no matching flow in the flow
+- * table.  The sum of @n_hit and @n_miss is the number of packets that have
++ * @n_missed: Number of received packets that had no matching flow in the flow
++ * table.  The sum of @n_hit and @n_missed is the number of packets that have
+  * been received by the datapath.
+  * @n_lost: Number of received packets that had no matching flow in the flow
+  * table that could not be sent to userspace (normally due to an overflow in
+@@ -40,6 +40,7 @@
+  *   up per packet.
+  * @n_cache_hit: The number of received packets that had their mask found using
+  * the mask cache.
++ * @syncp: Synchronization point for 64bit counters.
+  */
+ struct dp_stats_percpu {
+ 	u64 n_hit;
+@@ -74,8 +75,10 @@ struct dp_nlsk_pids {
+  * ovs_mutex and RCU.
+  * @stats_percpu: Per-CPU datapath statistics.
+  * @net: Reference to net namespace.
+- * @max_headroom: the maximum headroom of all vports in this datapath; it will
++ * @user_features: Bitmap of enabled %OVS_DP_F_* features.
++ * @max_headroom: The maximum headroom of all vports in this datapath; it will
+  * be used by all the internal vports in this dp.
++ * @meter_tbl: Meter table.
+  * @upcall_portids: RCU protected 'struct dp_nlsk_pids'.
+  *
+  * Context: See the comment on locking at the top of datapath.c for additional
+@@ -128,10 +131,13 @@ struct ovs_skb_cb {
+ #define OVS_CB(skb) ((struct ovs_skb_cb *)(skb)->cb)
+ 
+ /**
+- * struct dp_upcall - metadata to include with a packet to send to userspace
++ * struct dp_upcall_info - metadata to include with a packet sent to userspace
+  * @cmd: One of %OVS_PACKET_CMD_*.
+  * @userdata: If nonnull, its variable-length value is passed to userspace as
+  * %OVS_PACKET_ATTR_USERDATA.
++ * @actions: If nonnull, its variable-length value is passed to userspace as
++ * %OVS_PACKET_ATTR_ACTIONS.
++ * @actions_len: The length of the @actions.
+  * @portid: Netlink portid to which packet should be sent.  If @portid is 0
+  * then no packet is sent and the packet is accounted in the datapath's @n_lost
+  * counter.
+@@ -152,6 +158,10 @@ struct dp_upcall_info {
+  * struct ovs_net - Per net-namespace data for ovs.
+  * @dps: List of datapaths to enable dumping them all out.
+  * Protected by genl_mutex.
++ * @dp_notify_work: A work notifier to handle port unregistering.
++ * @masks_rebalance: A work to periodically optimize flow table caches.
++ * @ct_limit_info: A hash table of conntrack zone connection limits.
++ * @xt_label: Whether connlables are configured for the network or not.
+  */
+ struct ovs_net {
+ 	struct list_head dps;
+@@ -160,8 +170,6 @@ struct ovs_net {
+ #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+ 	struct ovs_ct_limit_info *ct_limit_info;
+ #endif
+-
+-	/* Module reference for configuring conntrack. */
+ 	bool xt_label;
  };
  
+diff --git a/net/openvswitch/vport.h b/net/openvswitch/vport.h
+index 3e71ca8ad8a78..9f67b9dd49f98 100644
+--- a/net/openvswitch/vport.h
++++ b/net/openvswitch/vport.h
+@@ -97,6 +97,8 @@ struct vport {
+  * @desired_ifindex: New vport's ifindex.
+  * @dp: New vport's datapath.
+  * @port_no: New vport's port number.
++ * @upcall_portids: %OVS_VPORT_ATTR_UPCALL_PID attribute from Netlink message,
++ * %NULL if none was supplied.
+  */
+ struct vport_parms {
+ 	const char *name;
+@@ -125,6 +127,8 @@ struct vport_parms {
+  * have any configuration.
+  * @send: Send a packet on the device.
+  * zero for dropped packets or negative for error.
++ * @owner: Module that implements this vport type.
++ * @list: List entry in the global list of vport types.
+  */
+ struct vport_ops {
+ 	enum ovs_vport_type type;
+@@ -144,6 +148,7 @@ struct vport_ops {
+ /**
+  * struct vport_upcall_stats_percpu - per-cpu packet upcall statistics for
+  * a given vport.
++ * @syncp:     Synchronization point for 64bit counters.
+  * @n_success: Number of packets that upcall to userspace succeed.
+  * @n_fail:    Number of packets that upcall to userspace failed.
+  */
+@@ -164,6 +169,8 @@ void ovs_vport_free(struct vport *);
+  *
+  * @vport: vport to access
+  *
++ * Returns: A void pointer to a private data allocated in the @vport.
++ *
+  * If a nonzero size was passed in priv_size of vport_alloc() a private data
+  * area was allocated on creation.  This allows that area to be accessed and
+  * used for any purpose needed by the vport implementer.
+@@ -178,6 +185,8 @@ static inline void *vport_priv(const struct vport *vport)
+  *
+  * @priv: Start of private data area.
+  *
++ * Returns: A reference to a vport structure that contains @priv.
++ *
+  * It is sometimes useful to translate from a pointer to the private data
+  * area to the vport, such as in the case where the private data pointer is
+  * the result of a hash table lookup.  @priv must point to the start of the
+-- 
+2.53.0
+
 
 
