@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1552124CEEA;
-	Sat, 12 Sep 2026 09:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A143AFD15;
+	Sat, 12 Sep 2026 09:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205484; cv=none; b=HbFZZeGMEVYvnmx8RsoKUmC/ikhAysDSdWimT/M/LtKHvw/agI4fbEOfDMNOAFXyhz1lyeao8Hi6xrLDhCZ0MuF8rIMKEF4K8cOrHocR/APqZq357xvh2uJlJKZIDVLhRR33Cl6Hx02y0el8jlxW7VqciuK21FcFlv5CJBeJ2kQ=
+	t=1789205489; cv=none; b=Lt+r3h8wXIqCS4exVVPHyqss8Iy5y5tyqXOz2SDFOssANmvV/9ByTGjE3r0X4ugfjm8Dyz/mWC0FzXTBSgDDH698cmUaE15efwtBJShN/jsO/QPbEUN0dV0juS5UKUCx1k2XIzGi13Y+6lNAsD9cFQiaqI6yaBgulCVL7rAKF3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205484; c=relaxed/simple;
-	bh=Qypgwtjmb1WFxYS71WccClSSOj5f3Eim0M4X0CqsIas=;
+	s=arc-20240116; t=1789205489; c=relaxed/simple;
+	bh=/10YaKQ2hbNdCFR9qjNWyWC/yC9r9CZilf7HZLtS0XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RETwke/0fjsUiHC9iIvYh0hHCTnpLhGWYIABrJTruPFOUzx399qkodq7FLqnmiImMBSEtNrpoxFMR0ZSlK8mQFRXucafjZxjV6l3hcLcRwCKVQtz4XodPugQ7uFW408G+xDMJov4ly0UF54ANrE/zNWL7mmyxMpShOxifvVQHrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksdukPKK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tyj4eurjYcTPGMTAZgxUDiIDo45zpQFvBokoEgnu0C1XQooybchhx0q6gC0/GTPCIxTcmI1+0WBiylNw1JQV20ctCXO958afYTBI3C/M8oC1FgghziDBKhb+6SXFwstRzYQjfNYmn3fm4q4ekCzKmd2SFhuMXHFERmqzpgMyFOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgboCRyY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksdukPKK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321911F000FF;
-	Sat, 12 Sep 2026 09:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgboCRyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65561F000FF;
+	Sat, 12 Sep 2026 09:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205483;
-	bh=D8WpSrtvulZTNf0DiH5q7zNkclyA3p4djYqf8sE+LBs=;
+	s=korg; t=1789205487;
+	bh=2CqCyaI+pKGe9DsIen1UOS/RkRgJueOCsYA93+r5uFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ksdukPKKRD+zEokmJ2h7Sot/0xlHi9/Nc8sEm4Ld+KMAF5Ur/IEtiCBrCYLuim2ZW
-	 oOs8m5CFy9kyXGVT/SQfnWl0pxDmADFsw4cAzyrs74V8qwp8idhQd9AfONaElmp3iF
-	 Lo7cyQyA4y91ntUyFmUjTpZhxRpeMk0Ej7GvpT9o=
+	b=VgboCRyYmWnBdw9qs0VtX1F8u3oiN8gnQiuS77ZqVzgLDXzQiR+PvPGaa6rjPwE+i
+	 EWl0969qhQO6FPMQxAQS8NoWFjyEPYYRhxy6Rx7PcoYAtIDe2iUM3v0DXV5qe3y4SR
+	 v9i2Hv5o76rdwtRcpZlIvpt4q/UHxq5DmlhjWzTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Scian <andrea.scian@dave.eu>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0012/1518] mtd: rawnand: pl353: Add message about ECC mode
-Date: Sat, 12 Sep 2026 08:36:21 +0200
-Message-ID: <20260912065623.689226708@linuxfoundation.org>
+Subject: [PATCH 6.18 0013/1518] net/mlx5e: SHAMPO, Always calculate page size
+Date: Sat, 12 Sep 2026 08:36:22 +0200
+Message-ID: <20260912065623.717126683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,41 +53,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Scian <andrea.scian@dave.eu>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 1e06dbfdfb851170b243d6498e442b449324c664 ]
+[ Upstream commit dff1c3164a69284ac9fedb1c25d4c008139e9fb8 ]
 
-This just add some information on kernel log about the selected ECC
+Adapt the rx path in SHAMPO mode to calculate page size based on
+configured page_shift when dealing with payload data.
 
-Signed-off-by: Andrea Scian <andrea.scian@dave.eu>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Stable-dep-of: 80ecacd054ff ("mtd: rawnand: pl353: Make sure we use the monolithic helpers for raw accesses")
+This is necessary as an upcoming patch will add support for using
+different page sizes.
+
+This change has no functional changes.
+
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260223204155.1783580-9-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+
+Backport to 6.18: preserve the XDP fragment accounting fix from
+7d7342a18fadc ("net/mlx5e: RX, Fix XDP multi-buf frag counting for
+striding RQ"). Keep new_nr_frags and the original frag_page endpoint;
+only replace PAGE_SIZE with page_size in the truesize adjustment.
+Reintroducing the old frag_page rewind would break page reference
+accounting for fragments consumed by XDP.
+
+Retain the page-size calculations and SHAMPO space-check changes so
+e2466392a0b8496000e12181cb1ee1535eb0da25 ("net/mlx5e: do not HW-GRO
+coalesce small frames") applies without modification. No functions
+are added.
+
+Stable-dep-of: e2466392a0b8 ("net/mlx5e: do not HW-GRO coalesce small frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c |   34 +++++++++++++++---------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
 
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -973,15 +973,18 @@ static int pl35x_nand_attach_chip(struct
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -2014,11 +2014,14 @@ mlx5e_shampo_fill_skb_data(struct sk_buf
+ 			   struct mlx5e_frag_page *frag_page,
+ 			   u32 data_bcnt, u32 data_offset)
+ {
++	u32 page_size = BIT(rq->mpwqe.page_shift);
++
+ 	net_prefetchw(skb->data);
  
- 	switch (chip->ecc.engine_type) {
- 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
-+		dev_dbg(nfc->dev, "Using on-die ECC\n");
- 		/* Keep these legacy BBT descriptors for ON_DIE situations */
- 		chip->bbt_td = &bbt_main_descr;
- 		chip->bbt_md = &bbt_mirror_descr;
- 		fallthrough;
- 	case NAND_ECC_ENGINE_TYPE_NONE:
- 	case NAND_ECC_ENGINE_TYPE_SOFT:
-+		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
- 		chip->ecc.write_page_raw = nand_monolithic_write_page_raw;
- 		break;
- 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
-+		dev_dbg(nfc->dev, "Using hardware ECC\n");
- 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
- 		if (ret)
- 			return ret;
+ 	do {
+ 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
+-		u32 pg_consumed_bytes = min_t(u32, PAGE_SIZE - data_offset, data_bcnt);
++		u32 pg_consumed_bytes = min_t(u32, page_size - data_offset,
++					      data_bcnt);
+ 		unsigned int truesize = pg_consumed_bytes;
+ 
+ 		mlx5e_add_skb_frag(rq, skb, frag_page, data_offset,
+@@ -2039,6 +2042,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
+ 	u16 headlen = min_t(u16, MLX5E_RX_MAX_HEAD, cqe_bcnt);
+ 	struct mlx5e_frag_page *head_page = frag_page;
+ 	struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
++	u32 page_size = BIT(rq->mpwqe.page_shift);
+ 	u32 frag_offset    = head_offset;
+ 	u32 byte_cnt       = cqe_bcnt;
+ 	struct skb_shared_info *sinfo;
+@@ -2084,9 +2088,9 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
+ 		linear_hr = skb_headroom(skb);
+ 		linear_data_len = headlen;
+ 		linear_frame_sz = MLX5_SKB_FRAG_SZ(skb_end_offset(skb));
+-		if (unlikely(frag_offset >= PAGE_SIZE)) {
++		if (unlikely(frag_offset >= page_size)) {
+ 			frag_page++;
+-			frag_offset -= PAGE_SIZE;
++			frag_offset -= page_size;
+ 		}
+ 	}
+ 
+@@ -2098,7 +2102,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
+ 	while (byte_cnt) {
+ 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
+ 		pg_consumed_bytes =
+-			min_t(u32, PAGE_SIZE - frag_offset, byte_cnt);
++			min_t(u32, page_size - frag_offset, byte_cnt);
+ 
+ 		if (test_bit(MLX5E_RQ_STATE_SHAMPO, &rq->state))
+ 			truesize += pg_consumed_bytes;
+@@ -2135,7 +2139,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
+ 		new_nr_frags = sinfo->nr_frags;
+ 		nr_frags_free = old_nr_frags - new_nr_frags;
+ 		if (unlikely(nr_frags_free))
+-			truesize -= (nr_frags_free - 1) * PAGE_SIZE +
++			truesize -= (nr_frags_free - 1) * page_size +
+ 				ALIGN(pg_consumed_bytes,
+ 				      BIT(rq->mpwqe.log_stride_sz));
+ 
+@@ -2349,15 +2353,16 @@ mlx5e_shampo_flush_skb(struct mlx5e_rq *
+ 	rq->hw_gro_data->skb = NULL;
+ }
+ 
+-static bool
+-mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb, u16 data_bcnt)
++static bool mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb,
++					      u16 data_bcnt,
++					      u32 page_size)
+ {
+ 	int nr_frags = skb_shinfo(skb)->nr_frags;
+ 
+-	if (PAGE_SIZE >= GRO_LEGACY_MAX_SIZE)
++	if (page_size >= GRO_LEGACY_MAX_SIZE)
+ 		return skb->len + data_bcnt <= GRO_LEGACY_MAX_SIZE;
+ 	else
+-		return PAGE_SIZE * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
++		return page_size * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
+ }
+ 
+ static void mlx5e_handle_rx_cqe_mpwrq_shampo(struct mlx5e_rq *rq, struct mlx5_cqe64 *cqe)
+@@ -2366,18 +2371,19 @@ static void mlx5e_handle_rx_cqe_mpwrq_sh
+ 	u16 header_index	= mlx5e_shampo_get_cqe_header_index(rq, cqe);
+ 	u32 wqe_offset		= be32_to_cpu(cqe->shampo.data_offset);
+ 	u16 cstrides		= mpwrq_get_cqe_consumed_strides(cqe);
+-	u32 data_offset		= wqe_offset & (PAGE_SIZE - 1);
+ 	u32 cqe_bcnt		= mpwrq_get_cqe_byte_cnt(cqe);
+ 	u16 wqe_id		= be16_to_cpu(cqe->wqe_id);
+-	u32 page_idx		= wqe_offset >> PAGE_SHIFT;
+ 	u16 head_size		= cqe->shampo.header_size;
+ 	struct sk_buff **skb	= &rq->hw_gro_data->skb;
+ 	bool flush		= cqe->shampo.flush;
+ 	bool match		= cqe->shampo.match;
++	u32 page_size = BIT(rq->mpwqe.page_shift);
+ 	struct mlx5e_rq_stats *stats = rq->stats;
+ 	struct mlx5e_rx_wqe_ll *wqe;
+ 	struct mlx5e_mpw_info *wi;
+ 	struct mlx5_wq_ll *wq;
++	u32 data_offset;
++	u32 page_idx;
+ 
+ 	wi = mlx5e_get_mpw_info(rq, wqe_id);
+ 	wi->consumed_strides += cstrides;
+@@ -2393,7 +2399,11 @@ static void mlx5e_handle_rx_cqe_mpwrq_sh
+ 		goto mpwrq_cqe_out;
+ 	}
+ 
+-	if (*skb && (!match || !(mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt)))) {
++	data_offset = wqe_offset & (page_size - 1);
++	page_idx = wqe_offset >> rq->mpwqe.page_shift;
++	if (*skb &&
++	    !(match && mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt,
++							 page_size))) {
+ 		match = false;
+ 		mlx5e_shampo_flush_skb(rq, cqe, match);
+ 	}
 
 
