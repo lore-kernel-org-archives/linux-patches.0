@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43736299920;
-	Sat, 12 Sep 2026 09:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28A0299920;
+	Sat, 12 Sep 2026 09:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204139; cv=none; b=aKYV4CmcUYrUeMCK57zQ18vXoJYBTZteSdgyEwqfSCJe7XR6+WTAveGKCkLZQi5+XSqkQ2IUVWWpbH/qVKfD6KB119je9saRI+TioQ0++2U64XHZGCR2udqzrE+KdjdM6b6b9aIKoxZVH4lGJEexe+N9ZcrZMPLJbg2rvpV97/A=
+	t=1789204143; cv=none; b=LhEGt6tBootGHaa1OQKcEKOng6tJLEFCIImbYRLL2C53TKCM5u4UOnNYcqW1ECWuYuHtDi8Q8n8oiK/AeqkN5BSehRqo5pgFv84OlubcPKawlpFZRxY7fYzQvGGRWrN173hoDHhrqy+v/XqU2Ue1/TRgtLJ2z9QtrxjrVEshe5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204139; c=relaxed/simple;
-	bh=cdlC0fhL1CgFW5gS+VoFlreXHIEfuPWXcyN4/hgc9mc=;
+	s=arc-20240116; t=1789204143; c=relaxed/simple;
+	bh=4DZu+tvFJtvRlOzJWR4n9TxW33XMY1os2xF03uC5Bj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zh0mUiuNNRly5Q729GK34cM5FoInkoeX3SaxJMXpiAf81/bk82EFM2H2NdGEOy1gZhIqSShsIdV0lOr+P7t/vgPuBJ9854J8yal4qm1eDcjzEzSq5+WwoB2+G08+lPqgTOsHFa6Mi0MNeeEfsd2uNbwzGuseWJMdrbnoz0hvuF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JI5z6Xvd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nw9mCkWXeaJZA32JxknhkuuK7N4kFvPObpX2ggeL9L2YsKdRV+Fbv/fS6pkr/ZnBlVIGkx+UEtHZTcgfQesRWgbGVOFOkgMp7qq7HDql2q9cS5/zH8zMpzOUewmwL5PfPJkLwC8WKfL1Z9ic/OQVGojokDrAh52XrjvttPffhxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adwZX0nI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JI5z6Xvd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6321F000FF;
-	Sat, 12 Sep 2026 09:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adwZX0nI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBB01F000FF;
+	Sat, 12 Sep 2026 09:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204138;
-	bh=b0AL/exC0BTL5TeLoCYnrpldpJ9jq+THI6c1VOXq+Mo=;
+	s=korg; t=1789204142;
+	bh=ygQVHivMhIRzfBKqNkpoa2F4rP26RfV986PjiiEyi40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JI5z6XvdLcrQfRvWQSCOaNm14BqSIF7ZoK5M1AswNDKJS8SddTxe+cMzAPgPhaDiJ
-	 4kx7cPgt0qH6b3D9YpGB/b7iEgKhlLy3L1WCfNe93/c7pJqW2KLNDNvU7NDdqmLtsB
-	 OgOfSCLP/0YZJ3+YFAYOvO18+gzKRMgUDCwXTBLw=
+	b=adwZX0nIOTFcHXNRmDHW0nf65YhVvWA79L2kuKFEivE8R7TkgkCmpWFlz2dzeFn+m
+	 eFHs2b7cGfdH1XPCtyVJYyuTyv80eOlnhc3BJUkK1HKJA/e7YRUY3SMQ71UZhoQdgZ
+	 y5O7Ae5GZrTlrsHWd9ywcGefmrdpdM0Bkd5vGKhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1549/1815] pnfs/blocklayout: Fix device leaks on parse failure
-Date: Sat, 12 Sep 2026 08:54:59 +0200
-Message-ID: <20260912065725.363964525@linuxfoundation.org>
+Subject: [PATCH 7.2 1550/1815] NFS: Fix delayed delegation return list handling
+Date: Sat, 12 Sep 2026 08:55:00 +0200
+Message-ID: <20260912065725.388943067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,92 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit c056f817e4200fb18079d5052c273a22f191ff0a ]
+[ Upstream commit 68c03755577ac90e31e38c7ec787301cf6be5331 ]
 
-bl_parse_concat() and bl_parse_stripe() allocate a child device array and
-then parse each child in turn.  If parsing a child fails, the failed child is
-not counted in nr_children and the parent may be left with a children array
-that bl_free_device() will not release when nr_children is zero.
+The delayed delegation return handling added a separate
+delegations_delayed list to keep delegations whose return needs to be
+retried later. The delayed list is then spliced back to
+delegations_return by nfs_server_clear_delayed_delegations(), which also
+causes the state manager to retry the delegation return.
 
-Release the failed child and the already parsed children before returning the
-error.  Also make bl_free_device() release the child array whenever the
-children pointer is set, so that partially initialised concat or stripe
-devices are cleaned up correctly.
+However, nfs_end_delegation_return() still moves delayed delegations to
+delegations_return instead of delegations_delayed. As a result, the new
+delayed list is never populated, nfs_server_clear_delayed_delegations()
+always returns false, and NFS4CLNT_DELEGRETURN is not set again to drive
+a retry.
 
-bl_parse_scsi() can also fail after assigning d->bdev_file and dropping the
-file reference.  Clear the pointer after fput() so that an outer cleanup path
-does not put it again.
+Move delayed delegations to delegations_delayed so that the delayed
+return path can splice them back to delegations_return and schedule the
+retry as intended.
 
-Fixes: 5c83746a0cf2 ("pnfs/blocklayout: in-kernel GETDEVICEINFO XDR parsing")
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Fixes: 4039fbedcbcb ("NFS: fix delayed delegation return handling")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/dev.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ fs/nfs/delegation.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
-index bb35f88501cea..db4bb0a6283e5 100644
---- a/fs/nfs/blocklayout/dev.c
-+++ b/fs/nfs/blocklayout/dev.c
-@@ -85,15 +85,17 @@ bl_free_device(struct pnfs_block_dev *dev)
- {
- 	bl_unregister_dev(dev);
- 
--	if (dev->nr_children) {
-+	if (dev->children) {
- 		int i;
- 
- 		for (i = 0; i < dev->nr_children; i++)
- 			bl_free_device(&dev->children[i]);
- 		kfree(dev->children);
--	} else {
--		if (dev->bdev_file)
--			fput(dev->bdev_file);
-+		dev->children = NULL;
-+		dev->nr_children = 0;
-+	} else if (dev->bdev_file) {
-+		fput(dev->bdev_file);
-+		dev->bdev_file = NULL;
- 	}
- }
- 
-@@ -437,6 +439,7 @@ bl_parse_scsi(struct nfs_server *server, struct pnfs_block_dev *d,
- 
- out_blkdev_put:
- 	fput(d->bdev_file);
-+	d->bdev_file = NULL;
- 	return error;
- }
- 
-@@ -472,8 +475,11 @@ bl_parse_concat(struct nfs_server *server, struct pnfs_block_dev *d,
- 	for (i = 0; i < v->concat.volumes_count; i++) {
- 		ret = bl_parse_deviceid(server, &d->children[i],
- 				volumes, v->concat.volumes[i], gfp_mask);
--		if (ret)
-+		if (ret) {
-+			bl_free_device(&d->children[i]);
-+			bl_free_device(d);
- 			return ret;
-+		}
- 
- 		d->nr_children++;
- 		d->children[i].start += len;
-@@ -501,8 +507,11 @@ bl_parse_stripe(struct nfs_server *server, struct pnfs_block_dev *d,
- 	for (i = 0; i < v->stripe.volumes_count; i++) {
- 		ret = bl_parse_deviceid(server, &d->children[i],
- 				volumes, v->stripe.volumes[i], gfp_mask);
--		if (ret)
-+		if (ret) {
-+			bl_free_device(&d->children[i]);
-+			bl_free_device(d);
- 			return ret;
-+		}
- 
- 		d->nr_children++;
- 		len += d->children[i].len;
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 284437fa3f872..ab3e441464a66 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -604,7 +604,7 @@ static int nfs_end_delegation_return(struct inode *inode,
+ 	spin_lock(&server->delegations_lock);
+ 	if (list_empty(&delegation->entry))
+ 		refcount_inc(&delegation->refcount);
+-	list_move_tail(&delegation->entry, &server->delegations_return);
++	list_move_tail(&delegation->entry, &server->delegations_delayed);
+ 	spin_unlock(&server->delegations_lock);
+ 	set_bit(NFS4CLNT_DELEGRETURN_DELAYED, &server->nfs_client->cl_state);
+ abort:
 -- 
 2.53.0
 
