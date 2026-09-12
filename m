@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BF034250E;
-	Sat, 12 Sep 2026 16:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1507E47277D;
+	Sat, 12 Sep 2026 16:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229008; cv=none; b=Oyl9W56stGUEM/O7GVd7yqa79hIEFCcewziEzD9KHG41/XZqPo5zKPJJZvh4woYRV0me2s9gp0QmeuXVkT3Gwbi2nXx8TNPiY93PFZb4pYfqdLhS3+ndHa7lnCFvdqVWkiR95Os4mhIAZAHzShHQEgv71yrk5cTA4U2XYd3n+fk=
+	t=1789229015; cv=none; b=B5yh8j6JJCzE7MXJDU8QXT/GnHPPhgK9si6u8SS65/Es9tTiCQSceHf9fEUk/ysHnvJbG7IBrGkfhvjdYBQAaqJk5N2QkBkNloikKXXkbH0JSucLxNuupVA9kp46CV7Xshfr+XgtyGNJH24wabUJsNvEvhPNqwMRNtvj+Z4Pseg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229008; c=relaxed/simple;
-	bh=2wdNue1IDX/TJD+3Osb3OTIByX8UvgrwDJZ8YO2JVxw=;
+	s=arc-20240116; t=1789229015; c=relaxed/simple;
+	bh=e/QUrAh9seK1w3VQkbyP3ITb1p56zDJQI8FMBgaUluU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYbJFnXaL9idXe6A//tEQdGRvgL7gEoUO77AfnG0s0pXogT6rTNgKmdJLda8i4c9c8k+wKOK0a1jOzuW30/WN7iaGSUQ43fLr+8hUHvRVB8yeCo0mlArJeqh0FW/eIDPCks64LTnZ8i3By10KKUTPCR4oV93EHEKWRgMHosqB/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWxzBklB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G33bu3D9J/A1nqQrrOY4UGs6mLKYvjrfUiKe5CWjZSGLiAfpx7Jkqu4e+Y6HiiMyBMtwhAI550/UBIrH359G0TVXgryVMsjBehpd60pWzWVOhJff8N7SeCTtnklM2+/bqfUhN2SEi44oH2WG++XSy+LH620ctqalyQCLxNH/qfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bmf9Hu12; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWxzBklB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBEA1F000FF;
-	Sat, 12 Sep 2026 16:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bmf9Hu12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492701F000FF;
+	Sat, 12 Sep 2026 16:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229007;
-	bh=dYpgKahD6f9nn3Jgtzql0kvAr9+wQHZDvNCAhwF47N8=;
+	s=korg; t=1789229012;
+	bh=BtDuote4ez65875OtkiwsknBr77QhaWy2JSX+HInFZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hWxzBklBj/n4wMnJ2eS/zFvPVPEF3LoqcdpgzxuQBDCA26L5sBmREfcjoOtVjtFal
-	 lLq6Oux8PTJ/FDNTU2zPZ6DyTo3wsl7Mycr/t09SEyDEy9dYe0W3NMpzjKs/N4nfMm
-	 0VNN0LGOtQs1Q4I9PxAX65Ncc9Q5kdyGQtuF/uBs=
+	b=Bmf9Hu12+TS/uMcf4aHvTVwHCS4Dn5EhyZd5RqK/XDUM4QmVg6A5RDJOuGi0Ax/Xu
+	 Wm2ndpQFuLoWTypPcegZS/q56iFLRbNTntP48udYIbrvc325qbfTRjPe9EL34wdQak
+	 lkWAQjxc9kMsrVjZkVjUsKRQPoYyU/PazMn1x1bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0501/1191] drm/amdgpu/pm/powerplay: bounds-check voltage index in Vega10 lookup
-Date: Sat, 12 Sep 2026 08:53:49 +0200
-Message-ID: <20260912065559.489806209@linuxfoundation.org>
+Subject: [PATCH 6.1 0466/1191] drm/bridge: cdns-mhdp8546: Return an error pointer on allocation failure
+Date: Sat, 12 Sep 2026 08:53:14 +0200
+Message-ID: <20260912065558.701193270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,97 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit 6fa33f594e46e775a94097f71b486d7b006b6917 ]
+[ Upstream commit 30ac1d403438a6c6039f0af5bb2df3d021f96036 ]
 
-vddInd, vddciInd and mvddInd from VBIOS-parsed tables index into vddc,
-vddci and vddmem lookup tables without bounds checks across nine sites.
-Return -EINVAL when any index is out of range.
+The drm_bridge_funcs.atomic_reset documentation states that the hook
+must return either a valid drm_bridge_state object or an ERR_PTR().
 
-Fixes: f83a9991648b ("drm/amd/powerplay: add Vega10 powerplay support (v5)")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The cdns_mhdp_bridge_atomic_reset() callback returns NULL when the
+allocation of its state fails, violating this contract.
+
+Return ERR_PTR(-ENOMEM) instead.
+
+Fixes: fb43aa0acdfd ("drm: bridge: Add support for Cadence MHDP8546 DPI/DP bridge")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # imx8mp + sn65dsi84 + bridge hotplug
+Link: https://patch.msgid.link/20260619-drm-no-more-bridge-reset-v3-2-ff399263111b@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 35 ++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index c4d81c0aa18ee..eb75ff1c75363 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -686,10 +686,18 @@ static int vega10_patch_voltage_dependency_tables_with_lookup_table(
- 			case 3: vdt = table_info->vdd_dep_on_pixclk; break;
- 			case 4: vdt = table_info->vdd_dep_on_dispclk; break;
- 			case 5: vdt = table_info->vdd_dep_on_phyclk; break;
-+			default:
-+				continue;
- 		}
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+index aaa9f44d27be5..e363189793b49 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+@@ -2145,7 +2145,7 @@ cdns_mhdp_bridge_atomic_reset(struct drm_bridge *bridge)
  
- 		for (entry_id = 0; entry_id < vdt->count; entry_id++) {
- 			voltage_id = vdt->entries[entry_id].vddInd;
-+			if (voltage_id >= table_info->vddc_lookup_table->count) {
-+				pr_err("amdgpu: clk_dep[%u][%u] vddc index %u out of bounds (%u)\n",
-+				       i, entry_id, voltage_id,
-+				       table_info->vddc_lookup_table->count);
-+				return -EINVAL;
-+			}
- 			vdt->entries[entry_id].vddc =
- 					table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
- 		}
-@@ -697,23 +705,48 @@ static int vega10_patch_voltage_dependency_tables_with_lookup_table(
+ 	cdns_mhdp_state = kzalloc(sizeof(*cdns_mhdp_state), GFP_KERNEL);
+ 	if (!cdns_mhdp_state)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
  
- 	for (entry_id = 0; entry_id < mm_table->count; ++entry_id) {
- 		voltage_id = mm_table->entries[entry_id].vddcInd;
-+		if (voltage_id >= table_info->vddc_lookup_table->count) {
-+			pr_err("amdgpu: mm[%u] vddc index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddc_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mm_table->entries[entry_id].vddc =
- 			table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
- 	}
+ 	__drm_atomic_helper_bridge_reset(bridge, &cdns_mhdp_state->base);
  
- 	for (entry_id = 0; entry_id < mclk_table->count; ++entry_id) {
- 		voltage_id = mclk_table->entries[entry_id].vddInd;
-+		if (voltage_id >= table_info->vddc_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddc index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddc_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].vddc =
- 				table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
-+
- 		voltage_id = mclk_table->entries[entry_id].vddciInd;
-+		if (voltage_id >= table_info->vddci_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddci index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddci_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].vddci =
- 				table_info->vddci_lookup_table->entries[voltage_id].us_vdd;
-+
- 		voltage_id = mclk_table->entries[entry_id].mvddInd;
-+		if (voltage_id >= table_info->vddmem_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddmem index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddmem_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].mvdd =
- 				table_info->vddmem_lookup_table->entries[voltage_id].us_vdd;
- 	}
- 
--
- 	return 0;
- 
- }
 -- 
 2.53.0
 
