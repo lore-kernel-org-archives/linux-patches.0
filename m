@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE0A472790;
-	Sat, 12 Sep 2026 11:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078C94734C5;
+	Sat, 12 Sep 2026 11:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210826; cv=none; b=HnYRMOwAVivw51xpGuAsFl+jh4Rf4inSravckFoGN8NHkQABPRUYQShO25b6gCXdyTfQbm9TowrKFJHUnUHsuuQgVviaGQtXC6YmF4uq0GQHSHvfbhhGeO1sRlRMBGy0EsTLoqbXU5nZMvngvfvdR7hISWUpwPHNN30pNXNwz2Q=
+	t=1789210831; cv=none; b=Ss92jvKNmus3fDVnToQrpuu3FD52/kURd0aSwMrNOHjLFFWMAIMJMPAEIaMDcx9l/WBdlgDTG+VgNH+2QWVvCvh3M7QJqAITVxDqXk3t3IIAXH/4wSldxBXQLAd+OnCzurtjYGKj6XJ4wILJ0j0Ya73CmTW93hlF1UIM5XxePRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210826; c=relaxed/simple;
-	bh=A//1oNLNd+n0s0x4JAQOfgwFdG2PbhIjMU/MYcBY/CU=;
+	s=arc-20240116; t=1789210831; c=relaxed/simple;
+	bh=mRfNu509wpzAEPZ7flQawyBXbWe7Hk2hhzHTLeCq368=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0/y5DVmU7kYGq6d+VXoJe6CDN8k9FjleighmXdoVLZZo47a/5MteRjNx3td7/L18GSYoCikTUqyZNUJnLWDqjiiT2VwQaUor6Tt3MRPWWk/kS6pZ/8oTQHkECqwXbLI/k6u8meTcU9CCBPTMwzNsQWDAf4hPJcpdN04gr5tS54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwP7sGgl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qgJVeQE9TQj1/uL2vHMyIOfJg00Cila2N2sDuYz2PXQVDbSleJJl1KKcvAUPOkZ22xgegGwEl5yH4XHG0M9WBE74F2cyRFgJtSLv5CBEtClqJEWcUaU1HbmbMtjr16PMYp9Xauk2VXYRsxgHAesUBDR3ke3ZFPMx/565v4NOPlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiJTAKaq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwP7sGgl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0820D1F000FF;
-	Sat, 12 Sep 2026 11:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiJTAKaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87491F000FF;
+	Sat, 12 Sep 2026 11:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210825;
-	bh=TX6DVylv0ov8oV7F3WlEc++caCU2wgFCBKiaQ2+Bqoo=;
+	s=korg; t=1789210829;
+	bh=5Ar6Gv+xWkLl7JJ5/npCQTkAu1cgR4VcD2iomNl8EBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AwP7sGglpiQeYyWwBnEpKAU/YbAZMtT3lSu1RfDRHHCDzB2mJTida7zRfBxJu4qEt
-	 KZJG/4IZb+rZDIc/nIaVQUvT2Q20GhsQbBKeHklQdpHOPJL8+r0+M2yBuo+eTs45Mc
-	 kKO29teIaMZ/7ppo4d14uXL9Np+hoHI/nkfQQVlo=
+	b=MiJTAKaquGuQ0Cc1OnbqFZoTB1hZIZNBvRFz/yjQQq/zDN3gfjpFNSa3yUutL6GZS
+	 2WykWQnQfw3+sBKUt6V88FJtG8bR2eOCUlzzz3nB5FSxTsIgXAGRbZ2YKCqLJGp6lI
+	 CfboMT+vh6mMn3YvDZhMiGjCc+SvJsPm+vJHQF30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jones <andrew.jones@oss.qualcomm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nutty Liu <nutty.liu@hotmail.com>,
-	Robin Murphy <robin.murphy@arm.com>,
+	Desnes Nunes <desnesn@redhat.com>,
+	Tao Liu <ltao@redhat.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1062/1518] iommu/dma: Restore locking around msi_page_list
-Date: Sat, 12 Sep 2026 08:53:51 +0200
-Message-ID: <20260912065647.474759069@linuxfoundation.org>
+Subject: [PATCH 6.18 1063/1518] iommu/vt-d: Fix UCTP context table slot when copying root entries
+Date: Sat, 12 Sep 2026 08:53:52 +0200
+Message-ID: <20260912065647.496670197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,71 +54,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+From: Desnes Nunes <desnesn@redhat.com>
 
-[ Upstream commit 5a9e89ea34e0e34ac5d7e949042d665533549e40 ]
+[ Upstream commit c6e63fc8e8fcefa5c32145dc0a3c82975b0ce152 ]
 
-Unlike a group's default domain, which is always freshly allocated
-and privately owned (iommu_group_alloc_default_domain()), VFIO type1's
-legacy container merges any newly attached group into an existing
-domain whenever their iommu_ops and cache-coherency enforcement match.
+When translation is already enabled at boot (e.g. kdump), the vt-d driver
+copies context tables from the previous kernel's root table. In scalable
+mode, buses that only populate the upper root half (UCTP, devfn >= 0x80)
+should be written to ctxt_tbls[tbl_idx + 1] through copy_context_table().
+However, the current copy path always uses tbl[tbl_idx + 0] in this situa-
+tion. Since idx wraps to 0 at devfn 0x80 due to a zeroed LCTP, new_ce for
+LCTP will be NULL and keep pos equals to 0. Thus, UCTP entries will be co-
+pied into tbl[tbl_idx + 0] instead of tbl[tbl_idx + 1], and written after-
+wards to root_entry[bus].lo instead of .hi in copy_translation_tables().
 
-iommu_dma_get_msi_page() only asserts the caller's own group mutex is
-held (iommu_group_mutex_assert()). On an IOMMU that publishes
-IOMMU_RESV_SW_MSI, e.g. ARM SMMU, a VM with two such devices assigned
-through the legacy container can have their guest drivers probe and
-allocate MSIs in parallel; each host-side VFIO_DEVICE_SET_IRQS lands
-on a different device fd and group mutex, but both devices' domains
-are the same merged domain, so both can enter
-iommu_dma_get_msi_page() concurrently and corrupt msi_page_list.
+In short, devices on bus 0x80 with devfn >= 0x80 fail DMA with fault 0x39,
+which will break drivers running in kernels with translation pre-enabled.
+This fixes NO_PASID DMAR faults for UCTP-only buses such as:
 
-commit 288683c92b1a ("iommu: Make iommu_dma_prepare_msi() into a
-generic operation") dropped the prior msi_prepare_lock on the
-reasoning that "each iommu_domain is unique to a group," which holds
-for default domains but not this VFIO type1 case. Restore the static
-lock, since it's only guarding a corner case and will likely never
-be contended.
+DMAR: [DMA Read NO_PASID] Request device [80:14.0] fault addr 0xe81759000
+      [fault reason 0x39] SM: Present bit in Root Entry is clear
 
-iommufd avoids the equivalent problem by having its own callers
-(iommufd_sw_map_msi()) take a ctx-wide sw_msi_lock before ever
-reaching the shared list. VFIO type1 can't mirror that since it
-dispatches to iommu_dma_sw_msi() which is outside VFIO's jurisdiction.
+For instance, this fault yielded to locking issues between systemd and
+xHCI, blocking a system's reboot after a vmcore was captured with kdump:
 
-Fixes: 288683c92b1a ("iommu: Make iommu_dma_prepare_msi() into a generic operation")
-Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+ systemd-udevd[246]: usb3: Worker [255] processing SEQNUM=2193 is taking a long time
+ dracut-initqueue[277]: Timed out while waiting for udev queue to empty.
+ systemd-udevd[246]: usb3: Worker [255] processing SEQNUM=2193 killed
+ systemd-udevd[246]: usb3: Worker [255] terminated by signal 9 (KILL).
+ ...
+ kdump[569]: saving vmcore complete
+ ...
+ systemd-shutdown[1]: Rebooting.
+ INFO: task kworker/0:1:11 blocked for more than 122 seconds.
+       Not tainted 7.0.0-clean #1
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:kworker/0:1 state:D stack:0 pid:11 tgid:11 ppid:2 task_flags:0x4208160 flags:0x00080000
+ Workqueue: usb_hub_wq hub_event
+ Call Trace:
+  <TASK>
+  __schedule+0x299/0x5c0
+  schedule+0x27/0x80
+  schedule_timeout+0xbd/0x100
+  __wait_for_common+0x97/0x1b0
+  ? __pfx_schedule_timeout+0x10/0x10
+  xhci_alloc_dev+0x9e/0x2b0
+  usb_alloc_dev+0x7a/0x3b0
+  hub_port_connect+0x285/0x960
+  hub_port_connect_change+0x94/0x290
+  port_event+0x4bb/0x840
+  hub_event+0x141/0x460
+  process_one_work+0x196/0x390
+  worker_thread+0x1af/0x320
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xe3/0x120
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x199/0x260
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ INFO: task systemd-shutdow:1 blocked for more than 122 seconds.
+       Not tainted 7.0.0-clean #1
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:systemd-shutdow state:D stack:0 pid:1 tgid:1 ppid:0 task_flags:0x400100 flags:0x00080000
+ Call Trace:
+  <TASK>
+  __schedule+0x299/0x5c0
+  schedule+0x27/0x80
+  schedule_preempt_disabled+0x15/0x30
+  __mutex_lock.constprop.0+0x547/0xac0
+  device_shutdown+0xac/0x1b0
+  kernel_restart+0x3a/0x70
+  __do_sys_reboot+0x147/0x240
+  do_syscall_64+0x11b/0x6a0
+  ? handle_mm_fault+0x110/0x350
+  ? do_user_addr_fault+0x206/0x680
+  ? irqentry_exit+0x7a/0x4d0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ RIP: 0033:0x7fe2958da917
+ RSP: 002b:00007ffc5c458618 EFLAGS: 00000206 ORIG_RAX: 00000000000000a9
+ RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fe2958da917
+ RDX: 0000000001234567 RSI: 0000000028121969 RDI: 00000000fee1dead
+ RBP: 00007ffc5c458790 R08: 0000000000000069 R09: 00000000ffffffff
+ R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
+ R13: 0000000000000000 R14: 00007ffc5c4588b8 R15: 0000000000000000
+  </TASK>
+ INFO: task systemd-shutdow:1 is blocked on a mutex likely owned by task kworker/0:1:11.
+
+Fixes: 091d42e43d21 ("iommu/vt-d: Copy translation tables from old kernel")
+Signed-off-by: Desnes Nunes <desnesn@redhat.com>
+Tested-by: Tao Liu <ltao@redhat.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/dma-iommu.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/iommu/intel/iommu.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 3773984068684..039e84a452d77 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -2163,6 +2163,19 @@ static struct iommu_dma_msi_page *iommu_dma_get_msi_page(struct device *dev,
- 	dma_addr_t iova;
- 	int prot = IOMMU_WRITE | IOMMU_NOEXEC | IOMMU_MMIO;
- 	size_t size = cookie_msi_granule(domain);
-+	static DEFINE_MUTEX(msi_prepare_lock);
-+
-+	/*
-+	 * Normally a device's default domain is only ever attached to that
-+	 * device's own group, and the group mutex held by
-+	 * iommu_group_mutex_assert()'s callers is enough on its own. A VFIO
-+	 * type1 container is the one case that breaks that assumption: it
-+	 * can merge devices from different groups onto one domain, so two
-+	 * devices' group mutexes don't serialize each other here. A static
-+	 * lock is sufficient due to the expectation that this is a corner
-+	 * case that will never be contended in practice.
-+	 */
-+	guard(mutex)(&msi_prepare_lock);
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index aec1a05d48d02..633c8053df05f 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -1924,7 +1924,7 @@ static int copy_context_table(struct intel_iommu *iommu,
+ 			      struct context_entry **tbl,
+ 			      int bus, bool ext)
+ {
+-	int tbl_idx, pos = 0, idx, devfn, ret = 0, did;
++	int tbl_idx, tbl_slot = 0, idx, devfn, ret = 0, did;
+ 	struct context_entry *new_ce = NULL, ce;
+ 	struct context_entry *old_ce = NULL;
+ 	struct root_entry re;
+@@ -1940,10 +1940,9 @@ static int copy_context_table(struct intel_iommu *iommu,
+ 		if (idx == 0) {
+ 			/* First save what we may have and clean up */
+ 			if (new_ce) {
+-				tbl[tbl_idx] = new_ce;
++				tbl[tbl_idx + tbl_slot] = new_ce;
+ 				__iommu_flush_cache(iommu, new_ce,
+ 						    VTD_PAGE_SIZE);
+-				pos = 1;
+ 			}
  
- 	msi_addr &= ~(phys_addr_t)(size - 1);
- 	list_for_each_entry(msi_page, msi_page_list, list)
+ 			if (old_ce)
+@@ -1965,6 +1964,9 @@ static int copy_context_table(struct intel_iommu *iommu,
+ 				}
+ 			}
+ 
++			/* Track if saving UCTP or LCTP entries in scalable mode */
++			tbl_slot = ext && devfn >= 0x80 ? 1 : 0;
++
+ 			ret = -ENOMEM;
+ 			old_ce = memremap(old_ce_phys, PAGE_SIZE,
+ 					MEMREMAP_WB);
+@@ -1993,7 +1995,7 @@ static int copy_context_table(struct intel_iommu *iommu,
+ 		new_ce[idx] = ce;
+ 	}
+ 
+-	tbl[tbl_idx + pos] = new_ce;
++	tbl[tbl_idx + tbl_slot] = new_ce;
+ 
+ 	__iommu_flush_cache(iommu, new_ce, VTD_PAGE_SIZE);
+ 
 -- 
 2.53.0
 
