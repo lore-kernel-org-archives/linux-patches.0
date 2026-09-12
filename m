@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284532F617C;
-	Sat, 12 Sep 2026 12:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5104746A9;
+	Sat, 12 Sep 2026 12:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215475; cv=none; b=r07acy7pEBIO0ypwX2Bf8qRlgSIbPU4hEX2zuNJxaZXkfb1klvfsP/rs41UYsYHhBVGtbUSQKfoHchvSzHe9GwFBvPqibTk+CJRDVKupsxZnyJwrkMd2qJoZvSNlO9iXL2GmwqVSTINURz+ReCgjfw/LgHRAOJ8/0YzBjmx3qCs=
+	t=1789215478; cv=none; b=FthtDL3CuNHxvSX0T8xg50zgBasjADJspLwr+YGG6Vr1O6OYQfPt51vLnmvHF8ZGZMGR6S3jNZ1OPgMQShMPhLOGe4RSauGLY7PhslWCX8Uwhj0OfzyX7ZCDu2qD48smKBz8/E+r+h7d6VOcORpbcfhfPvKNudXEvD2zgvsoLSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215475; c=relaxed/simple;
-	bh=IxK4EKO7xvwf9JVOTvnWhdKLtjs9xXnN18VQ7aseZ4w=;
+	s=arc-20240116; t=1789215478; c=relaxed/simple;
+	bh=GnCYR0QsoixVeng8onuwigpQupOoDcD6Hxx0oiex0jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jyjCt/MbnN+sMTWnoMfPJ0lIlFlFWl9Ci8+1aXT+LZKckx5Z5vQju7FtCfKJDkZ91Q4US47/Cz9BQT9+1hNMM/jxzEiaR2emcZwogO26TlTP7vZWYemKM0RgSLtFENYURaycPPyF4yhzNpy7G59wy5QunsP6O6yWbgTGVgFTACA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7ngLlOI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c6UX/ZX/d+MsCEb07CVRNNsGyCmDeLR6SMMLXm/gl+eV5/wfK9aYUePnr8CcOLxZJAwTfzTdfAcK+0wMAY7pnOW2XM419dczl9AvVagXGJH7IeB2kmMPyHED5aTWdxRQVIzr5XMqx8k8+fpgKTXHoZ1XA1bgTntNh1KnwG0Pqvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I14HREFZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7ngLlOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26D41F000FF;
-	Sat, 12 Sep 2026 12:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I14HREFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB451F00893;
+	Sat, 12 Sep 2026 12:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215468;
-	bh=VNUHD+RUnhtXZxfFvtyk2Ry5NAlPTNxzVM8bknCzE5Y=;
+	s=korg; t=1789215473;
+	bh=OBRDJ8hMldYAdmMf0OpIV1OFhRInIn5J+NbLeyCID6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o7ngLlOIEo1LIE4vFE22AKZq2T3yqLNrzfxSuvpxTGQ/BUeoNF/FOLl3GGgfoxZdT
-	 MhWdP5JMIzI1Q+llALjbcpC7X0dpr2vFKhSozYGtQJ8NE2Xp/9RYk0r0kRJ83y3qOt
-	 mdR+df8ivm9Inbc37Ck0MZlBZfzU/cphyHM4kbno=
+	b=I14HREFZgBFSmkl7rfRD1zxiunFPDJ9swthI6Hs/HOZfmJZafyCwgEllqpB476kg3
+	 +QqUInDxYsEwbMacNzoZ60cQf8iffpEF3yLRRlSySCB5i6eDFEkmyJUpeW9svtHQOV
+	 WZ064IqdpIE4K3JwRMBBTd5eLKmgmgrKk+5PNl6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0538/1376] firmware: arm_scmi: Avoid IDR updates while cleaning channels
-Date: Sat, 12 Sep 2026 08:49:24 +0200
-Message-ID: <20260912065619.533325231@linuxfoundation.org>
+Subject: [PATCH 6.12 0539/1376] firmware: arm_scmi: Reject out of range DT protocol IDs
+Date: Sat, 12 Sep 2026 08:49:25 +0200
+Message-ID: <20260912065619.555374266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,53 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit c38b1e19485aaa820e52cfe162525a8af67563da ]
+[ Upstream commit 59407ccb52130f2c81f4b3cbe4f14114afceb54f ]
 
-scmi_cleanup_channels() walks the TX/RX channel IDRs with
-idr_for_each() to free transport resources and destroy the dedicated
-transport devices before calling idr_destroy().
+SCMI protocol IDs carried in message headers are limited by
+MSG_PROTOCOL_ID_MASK. The DT parsing paths noticed protocol IDs
+outside that range, but only logged an error and then kept processing
+the invalid value.
 
-The destroy callback removed each entry from the same IDR being walked.
-That is not needed for this cleanup path, and it is unsafe because
-idr_for_each() has not advanced its radix-tree iterator while the
-callback is running. Removing the current entry from the callback can
-invalidate the iterator state. The callback also cannot be protected by
-rcu_read_lock(), because scmi_device_destroy() may sleep.
+That lets a malformed 32-bit DT reg value reach helpers which take a u8
+protocol ID, where it can be truncated and/or treated as a different
+protocol.
 
-Leave IDR teardown to the following idr_destroy() call and keep the
-callback limited to device destruction.
+For channel setup, two different out-of-range values can also be used as
+distinct IDR keys while aliasing the generated SCMI protocol identity.
+
+Skip DT protocol nodes whose reg value does not fit the SCMI protocol ID
+field before setting up channels or creating protocol devices.
 
 Fixes: 05a2801d8b90 ("firmware: arm_scmi: Use dedicated devices to initialize channels")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-6-3afe499d46e3@kernel.org
+Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-7-3afe499d46e3@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/firmware/arm_scmi/driver.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index c0be4584397d3..0c30e2ddbd1e3 100644
+index 0c30e2ddbd1e3..f9d6b5eb89191 100644
 --- a/drivers/firmware/arm_scmi/driver.c
 +++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2760,7 +2760,7 @@ static int scmi_channels_setup(struct scmi_info *info)
- 	return 0;
- }
+@@ -2748,9 +2748,11 @@ static int scmi_channels_setup(struct scmi_info *info)
+ 		if (of_property_read_u32(child, "reg", &prot_id))
+ 			continue;
  
--static int scmi_chan_destroy(int id, void *p, void *idr)
-+static int scmi_chan_destroy(int id, void *p, void *data)
- {
- 	struct scmi_chan_info *cinfo = p;
+-		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id))
++		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id)) {
+ 			dev_err(info->dev,
+ 				"Out of range protocol %d\n", prot_id);
++			continue;
++		}
  
-@@ -2773,8 +2773,6 @@ static int scmi_chan_destroy(int id, void *p, void *idr)
- 		cinfo->dev = NULL;
- 	}
+ 		ret = scmi_txrx_setup(info, child, prot_id);
+ 		if (ret)
+@@ -3188,8 +3190,10 @@ static int scmi_probe(struct platform_device *pdev)
+ 		if (of_property_read_u32(child, "reg", &prot_id))
+ 			continue;
  
--	idr_remove(idr, id);
--
- 	return 0;
- }
+-		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id))
++		if (!FIELD_FIT(MSG_PROTOCOL_ID_MASK, prot_id)) {
+ 			dev_err(dev, "Out of range protocol %d\n", prot_id);
++			continue;
++		}
  
+ 		if (!scmi_is_protocol_implemented(handle, prot_id)) {
+ 			dev_err(dev, "SCMI protocol %d not implemented\n",
 -- 
 2.53.0
 
