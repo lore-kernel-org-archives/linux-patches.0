@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A1A3D9DC0;
-	Sat, 12 Sep 2026 11:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A77F429000;
+	Sat, 12 Sep 2026 11:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211459; cv=none; b=JPMawp1u6v+YXwqkUDbaUgTauNjcaagcsJnXBVtrg8o5mRWeUvOSUQmrnhNSfxa482oaT0EvcvPz6ePMRDcHjWJQGKvVXXMTzk8pEMXJgGzMwjg0X8ZTDD9A6rs8EUdkQ4HxRZ12Hwd4sH3PuNLB+TyB6J7k6AesSrGNaMQMd0o=
+	t=1789211464; cv=none; b=d9exCdw7Zv0D6qZutni17TV3pu0MJFYJEeEDU1UiP3eGGVP5WT3CYBKy6IuLHi8EEpZzCRfrW9MN9u4hE8uj7L5iRXJgedd4f64JVRqvmqzXuvOZf2rhQcMKGnFqf6mvWOy5crKb9Z331xb13JkEt098S05ej3NJ8SbEPFhzYkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211459; c=relaxed/simple;
-	bh=FFnIrnNb5OAp4h0sWADCd49jUCKXcOg2ngUcst/JhiI=;
+	s=arc-20240116; t=1789211464; c=relaxed/simple;
+	bh=1Un1naqLcZ9H+ooVYZeJ8c8Tgt7umIif0otxjtU7nOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KGQ9Yc0kKpQz7iDyPm3/kvReiU1Ml1nJ202rqIwsuTIqZJmv6kfhKbDwStu7Zy8Frcpq/zbhhIDU1FESgB89SB3h1ZatIxa6uo8CuQjQfZKrVbvVMVuoONX0pol8XUj0uaCy/WuedYTkr0RYf+jDRRC7PLv8AjslvdPuPYLgTDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BToncT3A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=am+Z5nLDeszBr2bHJgjapYPpzWQIZpg1Jac9iqGxPWKsoMQlbx7C9RsQwP9vx99vlFjMqfUvMlinP2q1bTSz8sH5HAb5yn6RJgMhcawljOUogWlkCKZ8yPFE/0QyN9RyOxY/AxrVO5tEaeFSXL5NRPwD20mEl8BcTWIY0FNMy5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/VrcaA1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BToncT3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5841F000FF;
-	Sat, 12 Sep 2026 11:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/VrcaA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313F21F000FF;
+	Sat, 12 Sep 2026 11:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211458;
-	bh=WyqhlDFkT2lbT2NZv+37urPt1cl726+hYlrNBlBXF4k=;
+	s=korg; t=1789211462;
+	bh=BmCOlOt24a+8JXMksBXd+dpNNyNBLevyIkYLgQnQL7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BToncT3AyW66gU1xWPpJKzca8JdWkWPpYr59EzCVocDlQkdvWIXT4KrerEGcxomH3
-	 Z+Lw6xppXBscQe4OA5Lr6UMMZmiZ0VEMYs65UnVuZ23FiFthxkJG53ityr84PWv7M9
-	 z1EtNY0dyv23KwMrY8DlJa4KS1O7815iOdx0J11k=
+	b=r/VrcaA1dm1OiNtBs3U2DFdHl2BnucYDcO6/bW28/uO22N9kJqL/f1SAfGOv6GN5k
+	 0RXCUgxoSWWELICLVeDlYX0roUAou13R/T/zp3Q4jztlJh1Zx3UNfnbCXz72NHbuON
+	 8qEfCPS6aUz4WCjLjqMOT3SQIxaOsX9bgyz8YX50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1233/1518] smb/server: preserve error status in smb2_handle_negotiate()
-Date: Sat, 12 Sep 2026 08:56:42 +0200
-Message-ID: <20260912065651.398320879@linuxfoundation.org>
+Subject: [PATCH 6.18 1234/1518] erofs: clean up encoded map flags
+Date: Sat, 12 Sep 2026 08:56:43 +0200
+Message-ID: <20260912065651.421475234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,44 +50,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 73541bd2bab77e7e8e89b1edb5d342f4190dd4d0 ]
+[ Upstream commit 5c40d2e9e3ce9e81d76773c68756e9b07cce802c ]
 
-smb2_handle_negotiate() records specific failures such as
-STATUS_INVALID_PARAMETER or STATUS_NOT_SUPPORTED.
+- Remove EROFS_MAP_ENCODED since it was always set together with
+  EROFS_MAP_MAPPED for compressed extents and checked redundantly;
 
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+- Replace the EROFS_MAP_FULL_MAPPED flag with the opposite
+  EROFS_MAP_PARTIAL_MAPPED flag so that extents are implicitly
+  fully mapped initially to simplify the logic;
+
+- Make fragment extents independent of EROFS_MAP_MAPPED since
+  they are not directly allocated on disk; thus fragment extents
+  are no longer twisted with mapped extents.
+
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Stable-dep-of: 862427ebb81d ("erofs: fix interlaced ztailpacking pclusters")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/erofs/internal.h          | 23 +++++++++++------------
+ fs/erofs/zdata.c             | 19 +++++++++----------
+ fs/erofs/zmap.c              | 19 ++++++++++---------
+ include/trace/events/erofs.h |  7 +++----
+ 4 files changed, 33 insertions(+), 35 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 696d4473b7f13..89febfb8fc906 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1170,7 +1170,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
- 				KSMBD_DEFAULT_GFP);
- 		if (!conn->preauth_info) {
- 			rc = -ENOMEM;
--			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
-+			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
- 			goto err_out;
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index 87edbb4366d16..a2ffdd11bd052 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -338,20 +338,19 @@ static inline struct folio *erofs_grab_folio_nowait(struct address_space *as,
+ 			readahead_gfp_mask(as) & ~__GFP_RECLAIM);
+ }
+ 
+-/* Has a disk mapping */
+-#define EROFS_MAP_MAPPED	0x0001
++/* Allocated on disk at @m_pa (e.g. NOT a fragment extent) */
++#define EROFS_MAP_MAPPED		0x0001
+ /* Located in metadata (could be copied from bd_inode) */
+-#define EROFS_MAP_META		0x0002
+-/* The extent is encoded */
+-#define EROFS_MAP_ENCODED	0x0004
+-/* The length of extent is full */
+-#define EROFS_MAP_FULL_MAPPED	0x0008
++#define EROFS_MAP_META			0x0002
++/* @m_llen may be truncated by the runtime compared to the on-disk record */
++#define EROFS_MAP_PARTIAL_MAPPED	0x0004
++/* The on-disk @m_llen may cover only part of the encoded data */
++#define EROFS_MAP_PARTIAL_REF		0x0008
+ /* Located in the special packed inode */
+-#define __EROFS_MAP_FRAGMENT	0x0010
+-/* The extent refers to partial decompressed data */
+-#define EROFS_MAP_PARTIAL_REF	0x0020
+-
+-#define EROFS_MAP_FRAGMENT	(EROFS_MAP_MAPPED | __EROFS_MAP_FRAGMENT)
++#define EROFS_MAP_FRAGMENT		0x0010
++/* The encoded on-disk data will be fully handled (decompressed) */
++#define EROFS_MAP_FULL(f)	(!((f) & (EROFS_MAP_PARTIAL_MAPPED | \
++					  EROFS_MAP_PARTIAL_REF)))
+ 
+ struct erofs_map_blocks {
+ 	struct erofs_buf buf;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index a02ce7c06f9e1..691e39cf3c332 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -520,7 +520,7 @@ static bool z_erofs_should_alloc_cache(struct z_erofs_frontend *fe)
+ 	if (cachestrategy <= EROFS_ZIP_CACHE_DISABLED)
+ 		return false;
+ 
+-	if (!(fe->map.m_flags & EROFS_MAP_FULL_MAPPED))
++	if (fe->map.m_flags & EROFS_MAP_PARTIAL_MAPPED)
+ 		return true;
+ 
+ 	if (cachestrategy >= EROFS_ZIP_CACHE_READAROUND &&
+@@ -1034,10 +1034,7 @@ static int z_erofs_scan_folio(struct z_erofs_frontend *f,
+ 		/* bump split parts first to avoid several separate cases */
+ 		++split;
+ 
+-		if (!(map->m_flags & EROFS_MAP_MAPPED)) {
+-			folio_zero_segment(folio, cur, end);
+-			tight = false;
+-		} else if (map->m_flags & __EROFS_MAP_FRAGMENT) {
++		if (map->m_flags & EROFS_MAP_FRAGMENT) {
+ 			erofs_off_t fpos = offset + cur - map->m_la;
+ 
+ 			err = z_erofs_read_fragment(inode->i_sb, folio, cur,
+@@ -1046,6 +1043,9 @@ static int z_erofs_scan_folio(struct z_erofs_frontend *f,
+ 			if (err)
+ 				break;
+ 			tight = false;
++		} else if (!(map->m_flags & EROFS_MAP_MAPPED)) {
++			folio_zero_segment(folio, cur, end);
++			tight = false;
+ 		} else {
+ 			if (!f->pcl) {
+ 				err = z_erofs_pcluster_begin(f);
+@@ -1081,14 +1081,13 @@ static int z_erofs_scan_folio(struct z_erofs_frontend *f,
+ 				f->pcl->length = offset + end - map->m_la;
+ 				f->pcl->pageofs_out = map->m_la & ~PAGE_MASK;
+ 			}
+-			if ((map->m_flags & EROFS_MAP_FULL_MAPPED) &&
+-			    !(map->m_flags & EROFS_MAP_PARTIAL_REF) &&
++			if (EROFS_MAP_FULL(map->m_flags) &&
+ 			    f->pcl->length == map->m_llen)
+ 				f->pcl->partial = false;
  		}
+ 		/* shorten the remaining extent to update progress */
+ 		map->m_llen = offset + cur - map->m_la;
+-		map->m_flags &= ~EROFS_MAP_FULL_MAPPED;
++		map->m_flags |= EROFS_MAP_PARTIAL_MAPPED;
+ 		if (cur <= pgs) {
+ 			split = cur < pgs;
+ 			tight = (bs == PAGE_SIZE);
+@@ -1829,7 +1828,7 @@ static void z_erofs_pcluster_readmore(struct z_erofs_frontend *f,
+ 		map->m_la = end;
+ 		err = z_erofs_map_blocks_iter(inode, map,
+ 					      EROFS_GET_BLOCKS_READMORE);
+-		if (err || !(map->m_flags & EROFS_MAP_ENCODED))
++		if (err || !(map->m_flags & EROFS_MAP_MAPPED))
+ 			return;
  
-@@ -1267,7 +1267,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
- 	ksmbd_conn_set_need_setup(conn);
+ 		/* expand ra for the trailing edge if readahead */
+@@ -1841,7 +1840,7 @@ static void z_erofs_pcluster_readmore(struct z_erofs_frontend *f,
+ 		end = round_up(end, PAGE_SIZE);
+ 	} else {
+ 		end = round_up(map->m_la, PAGE_SIZE);
+-		if (!(map->m_flags & EROFS_MAP_ENCODED) || !map->m_llen)
++		if (!(map->m_flags & EROFS_MAP_MAPPED) || !map->m_llen)
+ 			return;
+ 	}
  
- err_out:
--	if (rc)
-+	if (rc && rsp->hdr.Status == STATUS_SUCCESS)
- 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index abf7ddc64c63b..103c56b408f4e 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -418,7 +418,7 @@ static int z_erofs_map_blocks_fo(struct inode *inode,
  
- 	if (!rc)
+ 	if ((flags & EROFS_GET_BLOCKS_FINDTAIL) && ztailpacking)
+ 		vi->z_fragmentoff = m.nextpackoff;
+-	map->m_flags = EROFS_MAP_MAPPED | EROFS_MAP_ENCODED;
++	map->m_flags = EROFS_MAP_MAPPED | EROFS_MAP_PARTIAL_MAPPED;
+ 	end = (m.lcn + 1ULL) << lclusterbits;
+ 
+ 	if (m.type != Z_EROFS_LCLUSTER_TYPE_NONHEAD && endoff >= m.clusterofs) {
+@@ -434,7 +434,7 @@ static int z_erofs_map_blocks_fo(struct inode *inode,
+ 	} else {
+ 		if (m.type != Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
+ 			end = (m.lcn << lclusterbits) | m.clusterofs;
+-			map->m_flags |= EROFS_MAP_FULL_MAPPED;
++			map->m_flags &= ~EROFS_MAP_PARTIAL_MAPPED;
+ 			m.delta[0] = 1;
+ 		}
+ 		/* get the corresponding first chunk */
+@@ -495,7 +495,7 @@ static int z_erofs_map_blocks_fo(struct inode *inode,
+ 	      map->m_llen >= i_blocksize(inode))) {
+ 		err = z_erofs_get_extent_decompressedlen(&m);
+ 		if (!err)
+-			map->m_flags |= EROFS_MAP_FULL_MAPPED;
++			map->m_flags &= ~EROFS_MAP_PARTIAL_MAPPED;
+ 	}
+ 
+ unmap_out:
+@@ -593,8 +593,7 @@ static int z_erofs_map_blocks_ext(struct inode *inode,
+ 			if (recsz > offsetof(struct z_erofs_extent, pstart_lo))
+ 				vi->z_fragmentoff |= map->m_pa << 32;
+ 		} else if (map->m_plen & Z_EROFS_EXTENT_PLEN_MASK) {
+-			map->m_flags |= EROFS_MAP_MAPPED |
+-				EROFS_MAP_FULL_MAPPED | EROFS_MAP_ENCODED;
++			map->m_flags |= EROFS_MAP_MAPPED;
+ 			fmt = map->m_plen >> Z_EROFS_EXTENT_PLEN_FMT_BIT;
+ 			if (map->m_plen & Z_EROFS_EXTENT_PLEN_PARTIAL)
+ 				map->m_flags |= EROFS_MAP_PARTIAL_REF;
+@@ -713,7 +712,7 @@ static int z_erofs_map_sanity_check(struct inode *inode,
+ 	struct erofs_sb_info *sbi = EROFS_I_SB(inode);
+ 	u64 pend;
+ 
+-	if (!(map->m_flags & EROFS_MAP_ENCODED))
++	if (!(map->m_flags & EROFS_MAP_MAPPED))
+ 		return 0;
+ 	if (unlikely(map->m_algorithmformat >= Z_EROFS_COMPRESSION_RUNTIME_MAX)) {
+ 		erofs_err(inode->i_sb, "unknown algorithm %d @ pos %llu for nid %llu, please upgrade kernel",
+@@ -780,10 +779,12 @@ static int z_erofs_iomap_begin_report(struct inode *inode, loff_t offset,
+ 	iomap->bdev = inode->i_sb->s_bdev;
+ 	iomap->offset = map.m_la;
+ 	iomap->length = map.m_llen;
+-	if (map.m_flags & EROFS_MAP_MAPPED) {
++	if (map.m_flags & EROFS_MAP_FRAGMENT) {
+ 		iomap->type = IOMAP_MAPPED;
+-		iomap->addr = map.m_flags & __EROFS_MAP_FRAGMENT ?
+-			      IOMAP_NULL_ADDR : map.m_pa;
++		iomap->addr = IOMAP_NULL_ADDR;
++	} else if (map.m_flags & EROFS_MAP_MAPPED) {
++		iomap->type = IOMAP_MAPPED;
++		iomap->addr = map.m_pa;
+ 	} else {
+ 		iomap->type = IOMAP_HOLE;
+ 		iomap->addr = IOMAP_NULL_ADDR;
+diff --git a/include/trace/events/erofs.h b/include/trace/events/erofs.h
+index dad7360f42f95..59f3ef397bff3 100644
+--- a/include/trace/events/erofs.h
++++ b/include/trace/events/erofs.h
+@@ -26,10 +26,9 @@ struct erofs_map_blocks;
+ #define show_mflags(flags) __print_flags(flags, "",	\
+ 	{ EROFS_MAP_MAPPED,		"M" },		\
+ 	{ EROFS_MAP_META,		"I" },		\
+-	{ EROFS_MAP_ENCODED,		"E" },		\
+-	{ EROFS_MAP_FULL_MAPPED,	"F" },		\
+-	{ EROFS_MAP_FRAGMENT,		"R" },		\
+-	{ EROFS_MAP_PARTIAL_REF,	"P" })
++	{ EROFS_MAP_PARTIAL_MAPPED,	"T" },		\
++	{ EROFS_MAP_PARTIAL_REF,	"P" },		\
++	{ EROFS_MAP_FRAGMENT,		"R" })
+ 
+ TRACE_EVENT(erofs_lookup,
+ 
 -- 
 2.53.0
 
