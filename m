@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569D43624DE;
-	Sat, 12 Sep 2026 18:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E72332D7F8;
+	Sat, 12 Sep 2026 18:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238470; cv=none; b=lXWNleOyVVyIoVWceRWK0NxgXa9IbRP3+fDQRjH53z5pfngUXlrJ7v/H3MQDy5m/Rmp1OZlFDBT4E88fP5lYOdP9XjP2dz2+t3zSqIh1A+95L+y441fep8CDOBEt7INEKNVBKMCM82aGAg3nfbRJMuKOsvSkLFn88RWYsvOkGJ8=
+	t=1789238474; cv=none; b=cbJvKGhdP5foUGqE6KrWHm1wcOfSAwv7M/JwDuXkktuzwZxnpVHfCl0dDZbHGLN0usxWySyN6GPR2OtTA7Zc7YBJThzUWI4EWJVyhSx0f9Ej79dLTG34BY7HbnKTaoi5pE48P+mEjzK5Z/N/9sSUKQcQaYYKBQuDFlsB9SGkcfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238470; c=relaxed/simple;
-	bh=sDMnBZ5mQanyfuK2kf3WcigVlETCyyPLxlF7cmdy0GE=;
+	s=arc-20240116; t=1789238474; c=relaxed/simple;
+	bh=v/dle7CkwkXa7q0m6FB/HlZLWyTxtnGrwGubRBvIoF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EtOXVqg19yXQcRhy5R0qpndr5Q8+j4UA11yMG/rZ0irvg0cO8BCC7IM3SDJe4ORqajUc2B5m6HG8/u23KD0P16w6yb5VG0yOoOScHZa/hGzlVOg0UNBcdMITCQzQIDJ1ip6CfTe2dpvI63s4/m6bPdPulYWVjLVZEcJk5rptuN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kUAqjfV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ppquj5SLskYtHPAzlOdGWe2XBb3caJ9+i1TR6zHhZtX5QWGHatmZKc3/8/QNj+WHlFckWyznelu7OEhRO1q4pr7fSwBpfceIh2bSveVNvKDZkQ1EPmEsXWof/431ICa/2XGy2ZqiEOax1AxeeIqNwyd3Fm6fEBvHagmMK77Swiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAI2SjHT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kUAqjfV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F265F1F000FF;
-	Sat, 12 Sep 2026 18:41:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAI2SjHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940651F000FF;
+	Sat, 12 Sep 2026 18:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238469;
-	bh=kMVSix0bg9tF51JHSkcookBAhzt4E0uiUZrdd1NtUpQ=;
+	s=korg; t=1789238473;
+	bh=CGxGFMbSLA7P+OBUhU94xvsfAT9ADVQrOvWKHSxRbDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0kUAqjfVSHwXxwj/G0hG8Pm8UzdStYgVzdf5P8598+W9Pt3JTBXpNVxFYM6z8h0cu
-	 kd3SZBb/9BSwdcVZ2fFbEhxhI3+XzuS4kvoLpgAGIpO9Sng1+bqW1TQU2ksbQ7jRbV
-	 Ia93OZ5+FOKvh2/InY6+H/UJjQgpqmARhK9Ky09Y=
+	b=qAI2SjHTLtPJKnyjCoy0ngqQKjbSPFY0i291aFkOXyiOrXnoLaUveLxXe86lTPXMg
+	 ysMZPWHe5wiVAoVgmnJsOuIrEm1d61E+GvXY7CUOkJAmxA1hTZJuzoo5L/PRd5ZmJJ
+	 z2pRBK4UbgLuv6ZimAkXst0n98QyLOoQ7LIX0ghY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Thomas Gleixner <tglx@kernel.org>,
-	John Stultz <jstultz@google.com>,
+	Herman van Hazendonk <github.com@herrie.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 468/935] timekeeping: Account for monotonicity adjustment in ntp_error
-Date: Sat, 12 Sep 2026 08:58:18 +0200
-Message-ID: <20260912065537.560847991@linuxfoundation.org>
+Subject: [PATCH 5.15 469/935] clk: qcom: gdsc: propagate gdsc_check_status() errors from gdsc_poll_status
+Date: Sat, 12 Sep 2026 08:58:19 +0200
+Message-ID: <20260912065537.584594764@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -46,89 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Herman van Hazendonk <github.com@herrie.org>
 
-[ Upstream commit b7befd6d91207cf3f4cecd68fea0c212093906cf ]
+[ Upstream commit d69f0c2b8d292b4890c9f0fbe184dfc26c4de86c ]
 
-timekeeping_apply_adjustment() modifies xtime_nsec to ensure monotonicity
-when mult changes:
+gdsc_check_status() returns negative errno when the underlying
+regmap_read() fails -- e.g. when a parent regmap dies during system
+suspend, a CSR is removed by an HW debug tool, or the bus controller
+goes into protection. gdsc_poll_status() treats the result as a plain
+boolean ("is the GDSC in the requested state?"), so any negative error
+return is truncated to "true" and the poll exits with success even
+though the rail's real state is unknown:
 
-    xtime_nsec -= offset
+	do {
+		if (gdsc_check_status(sc, status))
+			return 0;
+	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
 
-This ensures that the time reported to userspace does not jump when the
-multiplier is adjusted from one tick to the next. However, the ntp_error
-accumulator which tracks the difference between intended and actual
-clock position was not being updated to reflect this additional
-discrepancy.
+	if (gdsc_check_status(sc, status))
+		return 0;
 
-An earlier attempt at this compensation existed as:
+	return -ETIMEDOUT;
 
-    ntp_error -= (interval - offset) << ntp_error_shift
+This silently misleads gdsc_toggle_logic() (which writes/un-writes
+SW_COLLAPSE on the strength of the poll succeeding) and the gdsc_init()
+sync path (which assumes the readback represents real silicon state).
 
-but was removed in commit c2cda2a5bda9 ("timekeeping/ntp: Don't align
-NTP frequency adjustments to ticks") because it was a major source of
-NTP error. That's because (interval - offset) was wrong: the subtraction
-of "interval" prematurely accounted for the changed xtime_interval of
-the next tick, which would be correctly accounted in the next
-accumulation anyway — a double subtraction.
+Latch the return value, propagate negative errno immediately, and only
+treat a strictly-positive value as "reached the target state". Make the
+same change in the post-timeout final check so a regmap that comes back
+after the deadline does not silently degrade to -ETIMEDOUT.
 
-What is actually needed is just the "offset" part: ntp_error must be
-told that xtime_nsec moved by "offset" without a corresponding change
-in the intended position. For the normal ±1 mult dithering this is
-negligible (the adjustments cancel over time), but for larger mult
-changes — such as when an external reference clock sets a new
-frequency — the one-time uncompensated offset is significant.
-
-Fix by adjusting ntp_error by the correct amount:
-
-    ntp_error += offset << ntp_error_shift
-
-This keeps ntp_error consistent with the actual xtime_nsec position
-after the adjustment, and ensures the discrepancy is correctly smoothed
-away over time and the clock returns to where it should have been.
-
-Fixes: c2cda2a5bda9 ("timekeeping/ntp: Don't align NTP frequency adjustments to ticks")
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: Kiro:claude-opus-4.6-1m
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260621220051.1030462-3-dwmw2@infradead.org
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+Fixes: 77b1067a19b4 ("clk: qcom: gdsc: Add support for gdscs with gds hw controller")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260602140934.796697-2-github.com@herrie.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timekeeping.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/clk/qcom/gdsc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
-index 07c949c10de28..20d506209a047 100644
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -1966,6 +1966,11 @@ static __always_inline void timekeeping_apply_adjustment(struct timekeeper *tk,
- 	 *	xtime_nsec_2 = xtime_nsec_1 - offset
- 	 * Which simplifies to:
- 	 *	xtime_nsec -= offset
-+	 *
-+	 * When subtracting offset from xtime_nsec, the same amount
-+	 * (in appropriate units) has to be added to ntp_error, in
-+	 * order to correctly track the delta between the time
-+	 * reported in xtime_nsec, and the intended time.
- 	 */
- 	if ((mult_adj > 0) && (tk->tkr_mono.mult + mult_adj < mult_adj)) {
- 		/* NTP adjustment caused clocksource mult overflow */
-@@ -1976,6 +1981,7 @@ static __always_inline void timekeeping_apply_adjustment(struct timekeeper *tk,
- 	tk->tkr_mono.mult += mult_adj;
- 	tk->xtime_interval += interval;
- 	tk->tkr_mono.xtime_nsec -= offset;
-+	tk->ntp_error += offset << tk->ntp_error_shift;
- }
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index da3797241f319..8dc3f70ef2e43 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -102,14 +102,21 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
+ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
+ {
+ 	ktime_t start;
++	int ret;
  
- /*
+ 	start = ktime_get();
+ 	do {
+-		if (gdsc_check_status(sc, status))
++		ret = gdsc_check_status(sc, status);
++		if (ret < 0)
++			return ret;
++		if (ret)
+ 			return 0;
+ 	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
+ 
+-	if (gdsc_check_status(sc, status))
++	ret = gdsc_check_status(sc, status);
++	if (ret < 0)
++		return ret;
++	if (ret)
+ 		return 0;
+ 
+ 	return -ETIMEDOUT;
 -- 
 2.53.0
 
