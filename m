@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FB1CA6F;
-	Sat, 12 Sep 2026 14:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84139CA6F;
+	Sat, 12 Sep 2026 14:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223578; cv=none; b=OT4kTMY75PoZLLNH6FCf4m4w+FUikIm464Sll83uCPeEJe5/8DNv7HBQd8AYaGby05LQUniO5fYO0S6dw5VzeAaZLTN5X/tq5DZw3RIHHfrXoITyPq/5CTTh8U2/vtNGssftbwmtY0SvkX4fr3tPODdSvyp45Gm58pAeZpV/4X0=
+	t=1789223583; cv=none; b=IybUquA9FtZTvIIQOgscuhsD9yuzP1DAz+dp2cggguqoUAJ0cEGgI+ANnxDi0ZM7WeHgpx5aVINVVLvXJ0v1dqQ0SNf0jAPMtlpmUmzYlHeSkoue145EWYnIekKwxRdRx1Dq3kMkx43c+OALBW7rLkKWiEkZwrIfrKwUDfUZmjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223578; c=relaxed/simple;
-	bh=/2jEJG6gzXvHBPYe1N44Nv5C+6Y9amkiBJEYBdCd0TU=;
+	s=arc-20240116; t=1789223583; c=relaxed/simple;
+	bh=AmLxH6BCdU+gtHdHrXWav/GyZrlbUJj5OJTucHpmBt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJj7+soJBrzqabzIJ70QbiCKxdq03CNOzUTVdDb8rrdCsZsT+6/y3PprIB5xllk4LoVhZ71FmikKJa0PkJRaPkuG0wOk7L/aNaW+BliA/Cqb9ZeJrSWRqt4iBQn1AwPv3xXBh4Ejp0d8rQH/1IoEObdM7WXW4cqiLhcASqjqgyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzivnkwb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mu2+kbG2IH0GnNEL+w6+qWqp6NfylCh1MtPurLSW+bFYN7OkslagNO1zl6Kjhp1NZ7NvbCJH4rsnTRxrOPBy/HIR0JiiRowHL9LA5UiUIxiQHgB7ZtHEjzmaXxAuwzyPSLOedKQy1iyUP5nW9bCBmurlN1796Vvcj29HywUv27U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXRqo7Ly; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzivnkwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ECEE1F000FF;
-	Sat, 12 Sep 2026 14:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXRqo7Ly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0301F000FF;
+	Sat, 12 Sep 2026 14:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223577;
-	bh=tbuP74EsOf49wuHOPl9AnRIvX9skGrxn0NoOFQg+gLg=;
+	s=korg; t=1789223582;
+	bh=upGTstKfJR3zaGLcj1MeNWm9NIcurtPewM+OWm6myV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tzivnkwbiOM/BDe2dSpeFtfJpNBt2YjsGt4lxhcaVyfimuSo10Imwxd2nKTkNY3FV
-	 Ets5PQiEPdqFPuJQTBka8p4DkOiZJdOuPHZ740jc7x5w6gNmQk+wY2HsWy34D8eTvX
-	 4lqFKpkr4uH2sjwHQ7c7bbsjww3LKnP/GRAQMeOY=
+	b=PXRqo7Lyf0k9X3kTzh23f1KN4K+KYWXohgWfuzw3bDkHYYT0og+B1SF4bWWzlIScl
+	 aBb0LYH4rCGZAOE3BOBSwOzxFOYCC9I9p4JyFaqSwmdDqKH9W07Z5IAiOxl3DcrTZF
+	 IiDzcZe66XBr6JoRzfQVqaV6N/K/k8mEUpwT9z+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Herve Codina <herve.codina@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0775/1424] arm64: dts: qcom: sm8250: sort out Iris power domains
-Date: Sat, 12 Sep 2026 08:53:27 +0200
-Message-ID: <20260912065624.654639683@linuxfoundation.org>
+Subject: [PATCH 6.6 0766/1424] genirq/generic_chip: Introduce irq_domain_{alloc,remove}_generic_chips()
+Date: Sat, 12 Sep 2026 08:53:18 +0200
+Message-ID: <20260912065624.451191480@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,79 +51,215 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit d5c8efda722eb1f67cfe299b71f13dab93746934 ]
+[ Upstream commit e25f553a92973eaf59ff3a00fe7f61ab01b2877f ]
 
-On SM8250 Iris core requires two power rails to function, MX (for PLLs)
-and MMCX (for everything else). The commit fa245b3f06cd ("arm64: dts:
-qcom: sm8250: Add venus DT node") added only MX power rail, but omitted
-MMCX voltage levels.
+The existing __irq_alloc_domain_generic_chips() uses a bunch of parameters
+to describe the generic chips that need to be allocated.
 
-Add MMCX domain to the Iris device node.
+Adding more parameters and wrappers to hide new parameters in the existing
+code leads to more and more code without any relevant values and without
+any flexibility.
 
-Fixes: fa245b3f06cd ("arm64: dts: qcom: sm8250: Add venus DT node")
-Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260604-iris-venus-fix-sm8250-v7-1-7bd2f0e5bae8@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Introduce irq_domain_alloc_generic_chips() where the generic chips
+description is done using the irq_domain_chip_generic_info structure
+instead of the bunch of parameters to allow flexibility and easy evolution.
+
+Also introduce irq_domain_remove_generic_chips() to revert the operations
+done by irq_domain_alloc_generic_chips().
+
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240614173232.1184015-14-herve.codina@bootlin.com
+Stable-dep-of: 616dd89d81ad ("irqchip/renesas-irqc: Fix generic interrupt chip leak on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ include/linux/irq.h       | 25 +++++++++++
+ kernel/irq/generic-chip.c | 91 +++++++++++++++++++++++++++++----------
+ 2 files changed, 93 insertions(+), 23 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index d8086dae6e4f8..3086549b5f537 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3950,8 +3950,12 @@ venus: video-codec@aa00000 {
- 			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
- 			power-domains = <&videocc MVS0C_GDSC>,
- 					<&videocc MVS0_GDSC>,
--					<&rpmhpd RPMHPD_MX>;
--			power-domain-names = "venus", "vcodec0", "mx";
-+					<&rpmhpd RPMHPD_MX>,
-+					<&rpmhpd RPMHPD_MMCX>;
-+			power-domain-names = "venus",
-+					     "vcodec0",
-+					     "mx",
-+					     "mmcx";
- 			operating-points-v2 = <&venus_opp_table>;
+diff --git a/include/linux/irq.h b/include/linux/irq.h
+index 90081afa10ce5..7bbd613c9e5a9 100644
+--- a/include/linux/irq.h
++++ b/include/linux/irq.h
+@@ -1117,6 +1117,27 @@ struct irq_domain_chip_generic {
+ 	struct irq_chip_generic	*gc[];
+ };
  
- 			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
-@@ -3985,22 +3989,26 @@ venus_opp_table: opp-table {
++/**
++ * struct irq_domain_chip_generic_info - Generic chip information structure
++ * @name:		Name of the generic interrupt chip
++ * @handler:		Interrupt handler used by the generic interrupt chip
++ * @irqs_per_chip:	Number of interrupts each chip handles (max 32)
++ * @num_ct:		Number of irq_chip_type instances associated with each
++ *			chip
++ * @irq_flags_to_clear:	IRQ_* bits to clear in the mapping function
++ * @irq_flags_to_set:	IRQ_* bits to set in the mapping function
++ * @gc_flags:		Generic chip specific setup flags
++ */
++struct irq_domain_chip_generic_info {
++	const char		*name;
++	irq_flow_handler_t	handler;
++	unsigned int		irqs_per_chip;
++	unsigned int		num_ct;
++	unsigned int		irq_flags_to_clear;
++	unsigned int		irq_flags_to_set;
++	enum irq_gc_flags	gc_flags;
++};
++
+ /* Generic chip callback functions */
+ void irq_gc_noop(struct irq_data *d);
+ void irq_gc_mask_disable_reg(struct irq_data *d);
+@@ -1153,6 +1174,10 @@ int devm_irq_setup_generic_chip(struct device *dev, struct irq_chip_generic *gc,
  
- 				opp-720000000 {
- 					opp-hz = /bits/ 64 <720000000>;
--					required-opps = <&rpmhpd_opp_low_svs>;
-+					required-opps = <&rpmhpd_opp_svs>,
-+							<&rpmhpd_opp_low_svs>;
- 				};
+ struct irq_chip_generic *irq_get_domain_generic_chip(struct irq_domain *d, unsigned int hw_irq);
  
- 				opp-1014000000 {
- 					opp-hz = /bits/ 64 <1014000000>;
--					required-opps = <&rpmhpd_opp_svs>;
-+					required-opps = <&rpmhpd_opp_svs>,
-+							<&rpmhpd_opp_svs>;
- 				};
++int irq_domain_alloc_generic_chips(struct irq_domain *d,
++				   const struct irq_domain_chip_generic_info *info);
++void irq_domain_remove_generic_chips(struct irq_domain *d);
++
+ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
+ 				     int num_ct, const char *name,
+ 				     irq_flow_handler_t handler,
+diff --git a/kernel/irq/generic-chip.c b/kernel/irq/generic-chip.c
+index 5a452b94b6434..59f0685b4ec42 100644
+--- a/kernel/irq/generic-chip.c
++++ b/kernel/irq/generic-chip.c
+@@ -272,21 +272,14 @@ irq_gc_init_mask_cache(struct irq_chip_generic *gc, enum irq_gc_flags flags)
+ }
  
- 				opp-1098000000 {
- 					opp-hz = /bits/ 64 <1098000000>;
--					required-opps = <&rpmhpd_opp_svs_l1>;
-+					required-opps = <&rpmhpd_opp_svs_l1>,
-+							<&rpmhpd_opp_svs_l1>;
- 				};
+ /**
+- * __irq_alloc_domain_generic_chips - Allocate generic chips for an irq domain
+- * @d:			irq domain for which to allocate chips
+- * @irqs_per_chip:	Number of interrupts each chip handles (max 32)
+- * @num_ct:		Number of irq_chip_type instances associated with this
+- * @name:		Name of the irq chip
+- * @handler:		Default flow handler associated with these chips
+- * @clr:		IRQ_* bits to clear in the mapping function
+- * @set:		IRQ_* bits to set in the mapping function
+- * @gcflags:		Generic chip specific setup flags
++ * irq_domain_alloc_generic_chips - Allocate generic chips for an irq domain
++ * @d:		irq domain for which to allocate chips
++ * @info:	Generic chip information
++ *
++ * Return: 0 on success, negative error code on failure
+  */
+-int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
+-				     int num_ct, const char *name,
+-				     irq_flow_handler_t handler,
+-				     unsigned int clr, unsigned int set,
+-				     enum irq_gc_flags gcflags)
++int irq_domain_alloc_generic_chips(struct irq_domain *d,
++				   const struct irq_domain_chip_generic_info *info)
+ {
+ 	struct irq_domain_chip_generic *dgc;
+ 	struct irq_chip_generic *gc;
+@@ -300,23 +293,23 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
+ 	if (d->gc)
+ 		return -EBUSY;
  
- 				opp-1332000000 {
- 					opp-hz = /bits/ 64 <1332000000>;
--					required-opps = <&rpmhpd_opp_nom>;
-+					required-opps = <&rpmhpd_opp_svs_l1>,
-+							<&rpmhpd_opp_nom>;
- 				};
- 			};
- 		};
+-	numchips = DIV_ROUND_UP(d->revmap_size, irqs_per_chip);
++	numchips = DIV_ROUND_UP(d->revmap_size, info->irqs_per_chip);
+ 	if (!numchips)
+ 		return -EINVAL;
+ 
+ 	/* Allocate a pointer, generic chip and chiptypes for each chip */
+-	gc_sz = struct_size(gc, chip_types, num_ct);
++	gc_sz = struct_size(gc, chip_types, info->num_ct);
+ 	dgc_sz = struct_size(dgc, gc, numchips);
+ 	sz = dgc_sz + numchips * gc_sz;
+ 
+ 	tmp = dgc = kzalloc(sz, GFP_KERNEL);
+ 	if (!dgc)
+ 		return -ENOMEM;
+-	dgc->irqs_per_chip = irqs_per_chip;
++	dgc->irqs_per_chip = info->irqs_per_chip;
+ 	dgc->num_chips = numchips;
+-	dgc->irq_flags_to_set = set;
+-	dgc->irq_flags_to_clear = clr;
+-	dgc->gc_flags = gcflags;
++	dgc->irq_flags_to_set = info->irq_flags_to_set;
++	dgc->irq_flags_to_clear = info->irq_flags_to_clear;
++	dgc->gc_flags = info->gc_flags;
+ 	d->gc = dgc;
+ 
+ 	/* Calc pointer to the first generic chip */
+@@ -324,11 +317,12 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
+ 	for (i = 0; i < numchips; i++) {
+ 		/* Store the pointer to the generic chip */
+ 		dgc->gc[i] = gc = tmp;
+-		irq_init_generic_chip(gc, name, num_ct, i * irqs_per_chip,
+-				      NULL, handler);
++		irq_init_generic_chip(gc, info->name, info->num_ct,
++				      i * dgc->irqs_per_chip, NULL,
++				      info->handler);
+ 
+ 		gc->domain = d;
+-		if (gcflags & IRQ_GC_BE_IO) {
++		if (dgc->gc_flags & IRQ_GC_BE_IO) {
+ 			gc->reg_readl = &irq_readl_be;
+ 			gc->reg_writel = &irq_writel_be;
+ 		}
+@@ -341,6 +335,57 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
+ 	}
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(irq_domain_alloc_generic_chips);
++
++/**
++ * irq_domain_remove_generic_chips - Remove generic chips from an irq domain
++ * @d: irq domain for which generic chips are to be removed
++ */
++void irq_domain_remove_generic_chips(struct irq_domain *d)
++{
++	struct irq_domain_chip_generic *dgc = d->gc;
++	unsigned int i;
++
++	if (!dgc)
++		return;
++
++	for (i = 0; i < dgc->num_chips; i++)
++		irq_remove_generic_chip(dgc->gc[i], ~0U, 0, 0);
++
++	d->gc = NULL;
++	kfree(dgc);
++}
++EXPORT_SYMBOL_GPL(irq_domain_remove_generic_chips);
++
++/**
++ * __irq_alloc_domain_generic_chips - Allocate generic chips for an irq domain
++ * @d:			irq domain for which to allocate chips
++ * @irqs_per_chip:	Number of interrupts each chip handles (max 32)
++ * @num_ct:		Number of irq_chip_type instances associated with this
++ * @name:		Name of the irq chip
++ * @handler:		Default flow handler associated with these chips
++ * @clr:		IRQ_* bits to clear in the mapping function
++ * @set:		IRQ_* bits to set in the mapping function
++ * @gcflags:		Generic chip specific setup flags
++ */
++int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
++				     int num_ct, const char *name,
++				     irq_flow_handler_t handler,
++				     unsigned int clr, unsigned int set,
++				     enum irq_gc_flags gcflags)
++{
++	struct irq_domain_chip_generic_info info = {
++		.irqs_per_chip		= irqs_per_chip,
++		.num_ct			= num_ct,
++		.name			= name,
++		.handler		= handler,
++		.irq_flags_to_clear	= clr,
++		.irq_flags_to_set	= set,
++		.gc_flags		= gcflags,
++	};
++
++	return irq_domain_alloc_generic_chips(d, &info);
++}
+ EXPORT_SYMBOL_GPL(__irq_alloc_domain_generic_chips);
+ 
+ static struct irq_chip_generic *
 -- 
 2.53.0
 
