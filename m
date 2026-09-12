@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A751CA6F;
-	Sat, 12 Sep 2026 14:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FB1CA6F;
+	Sat, 12 Sep 2026 14:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223573; cv=none; b=JAPcpBU5iBxZcKA9y6oFey8zjYbTciD6X0nf9N7Uq1ZcS9z6Fbz/M/DKsGPKFZZaN/3dcXozJbp19tnsKaLeuGEmQNi/KyUKKMlMD8bd4JBV+ORw7zPib1tbSelsin31TMEu2Y4nxwPBqKzCAoI5ZhjrJIR1W2YDL7OMhTnQwUA=
+	t=1789223578; cv=none; b=OT4kTMY75PoZLLNH6FCf4m4w+FUikIm464Sll83uCPeEJe5/8DNv7HBQd8AYaGby05LQUniO5fYO0S6dw5VzeAaZLTN5X/tq5DZw3RIHHfrXoITyPq/5CTTh8U2/vtNGssftbwmtY0SvkX4fr3tPODdSvyp45Gm58pAeZpV/4X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223573; c=relaxed/simple;
-	bh=dTWprmdt2MBZ6yZAXY6twhFFPgN04uJGQYPNEUl4vn0=;
+	s=arc-20240116; t=1789223578; c=relaxed/simple;
+	bh=/2jEJG6gzXvHBPYe1N44Nv5C+6Y9amkiBJEYBdCd0TU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUdoP+LoKE4O+0/MIlxWJWOC2fUxF+Uff3E6B/iHrkPduQbSlRva2VAh+MgpO1UUdsezxQkyuFe2l3wJSUqwrDTYTLWK5g9LzaF1FcSGGgusb/lwa802VvUidWbNZ44UrGroEaENqviu8Gm1cgt6yOe/hmwmS/LrHcJpy+fzd3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6E+c07U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GJj7+soJBrzqabzIJ70QbiCKxdq03CNOzUTVdDb8rrdCsZsT+6/y3PprIB5xllk4LoVhZ71FmikKJa0PkJRaPkuG0wOk7L/aNaW+BliA/Cqb9ZeJrSWRqt4iBQn1AwPv3xXBh4Ejp0d8rQH/1IoEObdM7WXW4cqiLhcASqjqgyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzivnkwb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6E+c07U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74ACE1F000FF;
-	Sat, 12 Sep 2026 14:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzivnkwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ECEE1F000FF;
+	Sat, 12 Sep 2026 14:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223572;
-	bh=ZZmPFng+Gykn4F42ZEsav01bNkWsEYU3S2jmi5GFl9E=;
+	s=korg; t=1789223577;
+	bh=tbuP74EsOf49wuHOPl9AnRIvX9skGrxn0NoOFQg+gLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W6E+c07Ux7aGRHuwQmvSV4AuBp8ETmB63dnQVKiTh1oaOye5v8zImocehGWKmeMyo
-	 Mw8vu0exx/Z0lPhtE6XZojQGHmeowY00hUc74wjJgqo9ESt2WTduvvqBzU/VnW6eXR
-	 lItCM8uhg+3+EoC3C/Pq06BLiZeWUSiA7WgnTA40=
+	b=tzivnkwbiOM/BDe2dSpeFtfJpNBt2YjsGt4lxhcaVyfimuSo10Imwxd2nKTkNY3FV
+	 Ets5PQiEPdqFPuJQTBka8p4DkOiZJdOuPHZ740jc7x5w6gNmQk+wY2HsWy34D8eTvX
+	 4lqFKpkr4uH2sjwHQ7c7bbsjww3LKnP/GRAQMeOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0774/1424] arm64: dts: qcom: msm8996-xiaomi-gemini: Fix up ti,drv2604 enable GPIO
-Date: Sat, 12 Sep 2026 08:53:26 +0200
-Message-ID: <20260912065624.633463337@linuxfoundation.org>
+Subject: [PATCH 6.6 0775/1424] arm64: dts: qcom: sm8250: sort out Iris power domains
+Date: Sat, 12 Sep 2026 08:53:27 +0200
+Message-ID: <20260912065624.654639683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,37 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 569413a98a1761782a0770aa85d20a2c78893279 ]
+[ Upstream commit d5c8efda722eb1f67cfe299b71f13dab93746934 ]
 
-Update the 'enable-gpio' property name to 'enable-gpios' to conform to
-the bindings for the TI DRV2604 haptics module. While at it, use the
-GPIO_ACTIVE_HIGH define instead of the raw literal.
+On SM8250 Iris core requires two power rails to function, MX (for PLLs)
+and MMCX (for everything else). The commit fa245b3f06cd ("arm64: dts:
+qcom: sm8250: Add venus DT node") added only MX power rail, but omitted
+MMCX voltage levels.
 
-Fixes: 4ac46b3682c5 ("arm64: dts: qcom: msm8996: xiaomi-gemini: Add support for Xiaomi Mi 5")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260625-topic-ti_drv2604_dtwarn-v1-1-76e91fcafbe8@oss.qualcomm.com
+Add MMCX domain to the Iris device node.
+
+Fixes: fa245b3f06cd ("arm64: dts: qcom: sm8250: Add venus DT node")
+Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260604-iris-venus-fix-sm8250-v7-1-7bd2f0e5bae8@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-index dbad8f57f2fa3..f145e8ee5f80b 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-@@ -39,7 +39,7 @@ &blsp2_i2c3 {
- 	haptics: drv2604@5a {
- 		compatible = "ti,drv2604";
- 		reg = <0x5a>;
--		enable-gpio = <&tlmm 93 0x00>;
-+		enable-gpios = <&tlmm 93 GPIO_ACTIVE_HIGH>;
- 		mode = <DRV260X_LRA_MODE>;
- 		library-sel = <DRV260X_LIB_LRA>;
- 		pinctrl-names = "default","sleep";
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index d8086dae6e4f8..3086549b5f537 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -3950,8 +3950,12 @@ venus: video-codec@aa00000 {
+ 			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+ 			power-domains = <&videocc MVS0C_GDSC>,
+ 					<&videocc MVS0_GDSC>,
+-					<&rpmhpd RPMHPD_MX>;
+-			power-domain-names = "venus", "vcodec0", "mx";
++					<&rpmhpd RPMHPD_MX>,
++					<&rpmhpd RPMHPD_MMCX>;
++			power-domain-names = "venus",
++					     "vcodec0",
++					     "mx",
++					     "mmcx";
+ 			operating-points-v2 = <&venus_opp_table>;
+ 
+ 			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
+@@ -3985,22 +3989,26 @@ venus_opp_table: opp-table {
+ 
+ 				opp-720000000 {
+ 					opp-hz = /bits/ 64 <720000000>;
+-					required-opps = <&rpmhpd_opp_low_svs>;
++					required-opps = <&rpmhpd_opp_svs>,
++							<&rpmhpd_opp_low_svs>;
+ 				};
+ 
+ 				opp-1014000000 {
+ 					opp-hz = /bits/ 64 <1014000000>;
+-					required-opps = <&rpmhpd_opp_svs>;
++					required-opps = <&rpmhpd_opp_svs>,
++							<&rpmhpd_opp_svs>;
+ 				};
+ 
+ 				opp-1098000000 {
+ 					opp-hz = /bits/ 64 <1098000000>;
+-					required-opps = <&rpmhpd_opp_svs_l1>;
++					required-opps = <&rpmhpd_opp_svs_l1>,
++							<&rpmhpd_opp_svs_l1>;
+ 				};
+ 
+ 				opp-1332000000 {
+ 					opp-hz = /bits/ 64 <1332000000>;
+-					required-opps = <&rpmhpd_opp_nom>;
++					required-opps = <&rpmhpd_opp_svs_l1>,
++							<&rpmhpd_opp_nom>;
+ 				};
+ 			};
+ 		};
 -- 
 2.53.0
 
