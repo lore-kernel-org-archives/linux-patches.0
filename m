@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFE92D0C94;
-	Sat, 12 Sep 2026 18:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037D92D0C94;
+	Sat, 12 Sep 2026 18:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237766; cv=none; b=c2Q02uMNE7pRUWz3/nDXluKhvbjnj0NuuH7egarRT4u6UeTEXB+xMtL6A3uTdVF3aGhrt+XTM9+DMVLlnOcSE0tTpK/QKKcYQVbbrMIkBgr9FHAxTJ6rCXXeLTJyZccUZpYCFkr2DTD0XGA3fdRoh7vkLThqvPwywvpP/pgp0CM=
+	t=1789237772; cv=none; b=k8dF9QPJ/jFNyEejVMvYGsSjU9enHtwOiR+cyrWvGQ+0MnPO5yuNUlH6//uok6E/6GIqm2cRm8T0YzfXs/ppEAVjKpkQWKEWFsindB4Azor2D5UFOyRVOUyh0SM+syLz6im522PhFY2tT7XK9euqBBfXMSycTtftFgf3k2D9n8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237766; c=relaxed/simple;
-	bh=0UvtiX1B/h3nltfecBvytL5LP4xB4mnKyIl31Qbp5Mk=;
+	s=arc-20240116; t=1789237772; c=relaxed/simple;
+	bh=ZVQVtyb3weMeyzjH8gyVugtWc1rfwLYhU+rveq7oYn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5LHa50gAfpC/7XLBZCuRH01mk1SS2kGSoFkd0C4DTaC885xXCZxuCO2xt+llx40V+QG7shwNJIz/omX0rSmsv2EujGa+hEM7cHaR82/mvdQ1zyycK/aQeF631MaFI/Nusa9H9X/v7ZxX6CcmVWbBcr7nYH8Pt/xF0gjJG41vu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mp2sti91; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cy+n9M3GkBFBwbpULDK4BkxVU40DhjdxVJLPQCHoI8DlATi20V5+LAVM2ohb3Rc4giTurIQIakQQ7iD8QFQX01K07/SO6GQBp+xZ9aZ+NOCn/NJ6lGm6upL+C7lgDLAX/pO5kN5lzbSfuudDkosEg+1miw5dn8QCmuhgU8CJHyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZFF7Kne; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mp2sti91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA341F000FF;
-	Sat, 12 Sep 2026 18:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZFF7Kne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17F51F000FF;
+	Sat, 12 Sep 2026 18:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237765;
-	bh=fxPEdciu2t8rHj/YrKkSldAKInHNlnqwKAQ3GhBYhNU=;
+	s=korg; t=1789237770;
+	bh=U0vGyV3cydLk7Oeoj4bKzWTOSVZchMowS0qzaSGX9Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mp2sti913Myxv1/b3uR7uUjn1gcGRV/lw05WI1Fh83NNtw85PO7V/AN+gtiku8q1Y
-	 OxAko0LbOMp9t5r96PG5FGCvqpeCoQO4reMDsp4s0vWVOr9Ezz337i0vUU+rDgDDdo
-	 rPYhJbQDRYAQtzpUoZeyxMWdJ0U5GgSBMlThS6fc=
+	b=JZFF7Kne4YhlthYMyyilEMBEyI09J8Qbx8Tb0g9zka4qcADMukSivweqrGtiOglSc
+	 MjiKDk9G2jNfqQfiXWNJBKayYPDhGtECv3MH+Rrjh4JwFKR2oTlbKfdePw/POUFMBA
+	 QC/J9+1/xpwQrLyVAk/Hz50io1cLdEBlIGm0xLwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Huang <huanglei@kylinos.cn>,
+	Ilya Krutskih <devsec@tpz.ru>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 325/935] media: s2255: check firmware size before reading trailing marker
-Date: Sat, 12 Sep 2026 08:55:55 +0200
-Message-ID: <20260912065534.258176183@linuxfoundation.org>
+Subject: [PATCH 5.15 326/935] media: tda18250: fix possible integer overflow
+Date: Sat, 12 Sep 2026 08:55:56 +0200
+Message-ID: <20260912065534.279733040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,37 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lei Huang <huanglei@kylinos.cn>
+From: Ilya Krutskih <devsec@tpz.ru>
 
-commit 330f2936ab768c7215322a476f033143e8891d28 upstream.
+commit 6dd8e257f7cafda7fbf10d81b3c55c9bba4825f4 upstream.
 
-s2255_probe() reads a 4-byte marker and version from the last 8 bytes
-of the firmware blob (fw->data[fw_size - 8] and [fw_size - 4]). If the
-firmware file is shorter than 8 bytes, fw_size - 8 underflows and the
-access reads out of bounds. Validate the firmware size before indexing.
+Integer overflow may occur, when variable exp equals to zero. Result
+of shift 1 << (exp - 1) may then leads to undefined behavior.
 
-Fixes: 14d962602c8b ("V4L/DVB (8752): s2255drv: firmware improvement patch")
+Fixes: 148abd3b5b14 ("media: tda18250: support for new silicon tuner")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lei Huang <huanglei@kylinos.cn>
+Signed-off-by: Ilya Krutskih <devsec@tpz.ru>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/s2255/s2255drv.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/tuners/tda18250.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/s2255/s2255drv.c
-+++ b/drivers/media/usb/s2255/s2255drv.c
-@@ -2288,6 +2288,11 @@ static int s2255_probe(struct usb_interf
- 	}
- 	/* check the firmware is valid */
- 	fw_size = dev->fw_data->fw->size;
-+	if (fw_size < 8) {
-+		dev_err(&interface->dev, "Firmware invalid: too small.\n");
-+		retval = -ENODEV;
-+		goto errorFWMARKER;
-+	}
- 	pdata = (__le32 *) &dev->fw_data->fw->data[fw_size - 8];
+--- a/drivers/media/tuners/tda18250.c
++++ b/drivers/media/tuners/tda18250.c
+@@ -440,8 +440,8 @@ static int tda18250_pll_calc(struct dvb_
+ 		goto err;
  
- 	if (*pdata != S2255_FW_MARKER) {
+ 	exp = (uval & 0x70) >> 4;
+-	if (exp > 5)
+-		exp = 0;
++	if (exp == 0 || exp > 5)
++		exp = 1;
+ 	lopd = 1 << (exp - 1);
+ 	scale = uval & 0x0f;
+ 	fvco = lopd * scale * ((c->frequency / 1000) + dev->if_frequency);
 
 
