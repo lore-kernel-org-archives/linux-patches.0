@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AD5400DF6;
-	Sat, 12 Sep 2026 09:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8EF4195DA;
+	Sat, 12 Sep 2026 09:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204051; cv=none; b=lqqssoa9PyjhhPZ2gtmhFqksCMVhVb9zzyv4RU+RzwSDggIX31Q/KDRoAwreeCeSQGTA91fKDHvsVVRnIsLgNiu0v4rT8AGYcc8spdENxBsuhBycvv8zCTFSI61TBTpZB/alY60jcX+0OmsT47cHh4IcAc5y/3Rx35lvjDcidsE=
+	t=1789204055; cv=none; b=tpwoj99bGGfkoAvwGbQqNT/Ish8vG7xKT9HeYYq27oG+h3Ag9tL9fVzN4CMZNxOJ7sZKKLmaGWtY6kPiNh+lQHPJSc8lC0sM9SatB3UZPoPoaRrnFEva/Nnbm08IlfIKrlN2dzkmgcC4nEEeOQPmVjFgU272FpRiw01r93t8a+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204051; c=relaxed/simple;
-	bh=LXN6ubiJcKxr/AIeaBocftqNUrPceZtBFVddDiTSzZ4=;
+	s=arc-20240116; t=1789204055; c=relaxed/simple;
+	bh=nEOBQP+ABbbXQO6wCN4RWeaWFPrdUrHXsTRVDFzhaYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPadSIeivS+5j+XD8XKXtkWbHGHtgPhlWywVfZ5pu4KaAzyM0zDb2KpmxnTNUiSTM+hwcYWSVD5jOQdJ17cdgOdzD7aHgqD9Vzsi8+a0txGLfr7jxV6yOsafPDMwYWdrRl1akRoQ9y+pTRt3IIOCq4kyAP9Bm8uE0xlfOblEh9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BH4AZw6E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mRFkdsvtwqvcaPvDzi8opk3cF/rGa/TU5XcbJei9BHX05N8x1fAw5DTp+5WcpIQQmJ2iRPNlvFiQK6ZKuR7YkoGVWb2L2TNb+YGjL1DXPiwxk4c4fXh4HogOv0ioSwh0oD3FsQTFniN62MSqvd6pIDmI6Nxo44SDlnbdJR8axNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6+06gms; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BH4AZw6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45991F000FF;
-	Sat, 12 Sep 2026 09:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6+06gms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4EB1F000FF;
+	Sat, 12 Sep 2026 09:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204049;
-	bh=uIzhtdU+eNgUuvNPc7P21f31lIeKYhBybLPCerYUjcI=;
+	s=korg; t=1789204054;
+	bh=MSE1/biUW6n53wqHfZCDU2FcyRlluFaN4Tmmi1GbqOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BH4AZw6EDCaP4xMalfQGqxxBAWMMDgxRqHsY/PGkX/5o6KK48alUiBNbvOw/+Wihc
-	 IwTqrPiQKKSxRsebJXRtUw7lHowB389S5N8M0PDw4CJE3t7rb04+FgLTuUAv8PLnNb
-	 98riYq3JMIm4AFAbRxZv8SEv0TcG517F1XebuR5s=
+	b=Y6+06gmsWLBb1xyC69MBoYzPRkveA9ChJkkn6ktK/7slGfG+fHwqQ10ub/IDbuikL
+	 LYnzLRbqDErlydELI0M3NAGEht0kKDa8yH2/jgP4TXAp5pDmdSqdf1YME6xQy6xnrL
+	 h9389odtNI6O6gf9p/T37siK+NCFoFfbjnBykMfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1533/1815] ksmbd: expire SMB sessions when Kerberos tickets expire
-Date: Sat, 12 Sep 2026 08:54:43 +0200
-Message-ID: <20260912065724.994184934@linuxfoundation.org>
+Subject: [PATCH 7.2 1534/1815] ksmbd: fix encrypted request lookup on bound channels
+Date: Sat, 12 Sep 2026 08:54:44 +0200
+Message-ID: <20260912065725.018835213@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,668 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit a47634cd729b42dfe372048b056d98ba4e128eaa ]
+[ Upstream commit 2cbd4a8bf460cdf414a2d7e4912c5bcfe3d0fdc2 ]
 
-Store the expiry time from the Kerberos authentication response in
-the session and reject requests after that time with
-STATUS_NETWORK_SESSION_EXPIRED.
+An SMB3 multichannel binding registers the secondary connection in the
+session channel list, but does not insert the session into the secondary
+connection's session xarray.
 
-Allow an expired Kerberos session to be reauthenticated. Keep the old SMB
-signing key until its SESSION_SETUP response has been signed, then install
-the new session key and regenerate the SMB3 keys.
+The decryption path only searches the connection-local xarray.  As a
+result, every encrypted request received on a bound channel fails with
+"Could not get decryption key".
 
+Use the channel-aware session lookup for decryption.  Also stop using the
+temporary conn->binding flag to decide whether the global lookup is
+allowed.  Validate the permanent channel association under chann_lock
+instead.
+
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Stable-dep-of: 2cbd4a8bf460 ("ksmbd: fix encrypted request lookup on bound channels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/auth.c              |  18 +-
- fs/smb/server/ksmbd_netlink.h     |   1 +
- fs/smb/server/ksmbd_work.h        |   1 +
- fs/smb/server/mgmt/user_session.c |  14 +-
- fs/smb/server/mgmt/user_session.h |   3 +
- fs/smb/server/server.c            |   9 +-
- fs/smb/server/smb2pdu.c           | 270 +++++++++++++++++++++---------
- 7 files changed, 236 insertions(+), 80 deletions(-)
+ fs/smb/server/auth.c              |  2 +-
+ fs/smb/server/mgmt/user_session.c | 11 +++++++++--
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
-index f2100e3ec54c9..d51f32095adad 100644
+index d51f32095adad..8bcd2a8a574e3 100644
 --- a/fs/smb/server/auth.c
 +++ b/fs/smb/server/auth.c
-@@ -463,6 +463,7 @@ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
- 	memcpy(out_blob, resp->payload + resp->session_key_len,
- 	       resp->spnego_blob_len);
- 	*out_len = resp->spnego_blob_len;
-+	sess->kerberos_expiry = resp->session_expiry;
- 	retval = 0;
- out:
- 	kvfree(resp);
-@@ -717,8 +718,21 @@ static int ksmbd_get_encryption_key(struct ksmbd_work *work, __u64 ses_id,
- 
- 	if (enc)
- 		sess = work->sess;
--	else
--		sess = ksmbd_session_lookup_all(work->conn, ses_id);
-+	else {
-+		/*
-+		 * An encrypted SESSION_SETUP request may reauthenticate an expired
-+		 * Kerberos session.  Keep using the established decryption key so
-+		 * that the command can reach the session setup handler. Other
-+		 * commands are rejected there with STATUS_NETWORK_SESSION_EXPIRED.
-+		 */
-+		sess = ksmbd_session_lookup(work->conn, ses_id);
-+		if (sess && sess->state != SMB2_SESSION_VALID &&
-+		    (sess->state != SMB2_SESSION_EXPIRED ||
-+		     !sess->kerberos_expiry)) {
-+			ksmbd_user_session_put(sess);
-+			sess = NULL;
-+		}
-+	}
- 	if (!sess)
- 		return -EINVAL;
- 
-diff --git a/fs/smb/server/ksmbd_netlink.h b/fs/smb/server/ksmbd_netlink.h
-index 1ea0a367b3969..af1e760453d9c 100644
---- a/fs/smb/server/ksmbd_netlink.h
-+++ b/fs/smb/server/ksmbd_netlink.h
-@@ -286,6 +286,7 @@ struct ksmbd_spnego_authen_response {
- 				  * stored in SecurityBuffer of SMB2 SESSION
- 				  * SETUP response
- 				  */
-+	__u64	session_expiry;	/* Kerberos ticket expiry time */
- 	__u8	payload[]; /* session key + AP_REP */
- };
- 
-diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
-index 52d0c4dee65c9..5f1d3ebab4fb5 100644
---- a/fs/smb/server/ksmbd_work.h
-+++ b/fs/smb/server/ksmbd_work.h
-@@ -95,6 +95,7 @@ struct ksmbd_work {
- 	bool				owns_conn_ref:1;
- 	bool                            need_invalidate_rkey:1;
- 	bool				request_open_chseq_tracked:1;
-+	bool				session_setup_reauth:1;
- 
- 	unsigned int                    remote_key;
- 	/* cancel works */
+@@ -725,7 +725,7 @@ static int ksmbd_get_encryption_key(struct ksmbd_work *work, __u64 ses_id,
+ 		 * that the command can reach the session setup handler. Other
+ 		 * commands are rejected there with STATUS_NETWORK_SESSION_EXPIRED.
+ 		 */
+-		sess = ksmbd_session_lookup(work->conn, ses_id);
++		sess = ksmbd_session_lookup_all_states(work->conn, ses_id);
+ 		if (sess && sess->state != SMB2_SESSION_VALID &&
+ 		    (sess->state != SMB2_SESSION_EXPIRED ||
+ 		     !sess->kerberos_expiry)) {
 diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index b5d79924439ff..01c8bfb2606bb 100644
+index 01c8bfb2606bb..25220371775cf 100644
 --- a/fs/smb/server/mgmt/user_session.c
 +++ b/fs/smb/server/mgmt/user_session.c
-@@ -531,8 +531,8 @@ struct ksmbd_session *ksmbd_session_lookup_slowpath(unsigned long long id)
- 	return sess;
- }
- 
--struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
--					       unsigned long long id)
-+struct ksmbd_session *ksmbd_session_lookup_all_states(struct ksmbd_conn *conn,
-+						      unsigned long long id)
+@@ -535,11 +535,18 @@ struct ksmbd_session *ksmbd_session_lookup_all_states(struct ksmbd_conn *conn,
+ 						      unsigned long long id)
  {
  	struct ksmbd_session *sess;
++	bool channel_found;
  
-@@ -544,6 +544,15 @@ struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
+ 	sess = ksmbd_session_lookup(conn, id);
+-	if (!sess && conn->binding) {
++	if (!sess) {
+ 		sess = ksmbd_session_lookup_slowpath(id);
+-		if (sess && !xa_load(&sess->ksmbd_chann_list, (long)conn)) {
++		if (!sess)
++			return NULL;
++
++		down_read(&sess->chann_lock);
++		channel_found = xa_load(&sess->ksmbd_chann_list, (long)conn);
++		up_read(&sess->chann_lock);
++		if (!channel_found) {
+ 			ksmbd_user_session_put(sess);
  			sess = NULL;
  		}
- 	}
-+	return sess;
-+}
-+
-+struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
-+					       unsigned long long id)
-+{
-+	struct ksmbd_session *sess;
-+
-+	sess = ksmbd_session_lookup_all_states(conn, id);
- 	if (sess && sess->state != SMB2_SESSION_VALID) {
- 		ksmbd_user_session_put(sess);
- 		sess = NULL;
-@@ -623,6 +632,7 @@ void destroy_previous_session(struct ksmbd_conn *conn,
- 	}
- 
- 	ksmbd_destroy_file_table(prev_sess);
-+	prev_sess->kerberos_expiry = 0;
- 	prev_sess->state = SMB2_SESSION_EXPIRED;
- 	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
- 	ksmbd_launch_ksmbd_durable_scavenger();
-diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
-index 2a0168e083286..f8a24c33f7fe4 100644
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -47,6 +47,7 @@ struct ksmbd_session {
- 	__u8				*Preauth_HashValue;
- 
- 	char				sess_key[CIFS_KEY_SIZE];
-+	u64				kerberos_expiry;
- 
- 	struct hlist_node		hlist;
- 	struct rw_semaphore		chann_lock;
-@@ -100,6 +101,8 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn);
- struct ksmbd_session *__session_lookup(unsigned long long id);
- struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
- 					       unsigned long long id);
-+struct ksmbd_session *ksmbd_session_lookup_all_states(struct ksmbd_conn *conn,
-+						      unsigned long long id);
- void destroy_previous_session(struct ksmbd_conn *conn,
- 			      struct ksmbd_user *user, u64 id);
- struct preauth_session *ksmbd_preauth_session_alloc(struct ksmbd_conn *conn,
-diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index c629a33bfa4a8..943c619cbf848 100644
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -205,6 +205,9 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
- 				if (rc == -EINVAL)
- 					conn->ops->set_rsp_status(work,
- 						STATUS_INVALID_PARAMETER);
-+				else if (rc == -EKEYEXPIRED)
-+					conn->ops->set_rsp_status(work,
-+						STATUS_NETWORK_SESSION_EXPIRED);
- 				else
- 					conn->ops->set_rsp_status(work,
- 						STATUS_USER_SESSION_DELETED);
-@@ -212,7 +215,11 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
- 					struct smb2_hdr *rsp_hdr;
- 
- 					rsp_hdr = ksmbd_resp_buf_curr(work);
--					rsp_hdr->Flags |= SMB2_FLAGS_SIGNED;
-+					if (rc == -EKEYEXPIRED && work->sess &&
-+					    conn->ops->set_sign_rsp)
-+						conn->ops->set_sign_rsp(work);
-+					else
-+						rsp_hdr->Flags |= SMB2_FLAGS_SIGNED;
- 				}
- 				goto send;
- 			} else if (rc > 0) {
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index acf664a5183da..9492bdb99d59d 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -15,6 +15,7 @@
- #include <linux/mount.h>
- #include <linux/filelock.h>
- #include <linux/fileattr.h>
-+#include <linux/timekeeping.h>
- 
- #include "glob.h"
- #include "../common/smbfsctl.h"
-@@ -55,6 +56,10 @@ static void __wbuf(struct ksmbd_work *work, void **req, void **rsp)
- 	}
- }
- 
-+static struct ksmbd_work *smb2_notify_cancel_claim(void **argv);
-+static void smb2_notify_cancel_fn(void **argv);
-+static void smb2_complete_notify_cancel(struct ksmbd_work *in_work);
-+
- #define WORK_BUFFERS(w, rq, rs)	__wbuf((w), (void **)&(rq), (void **)&(rs))
- 
- #define SMB2_CREATE_FILE_ATTRIBUTE_MASK \
-@@ -67,29 +72,6 @@ static void __wbuf(struct ksmbd_work *work, void **req, void **rsp)
- /* MAXFILESIZE in [MS-FSA] 2.1.5.3 Server Requests a Write. */
- #define SMB2_MAX_FILE_SIZE		0xfffffff0000ULL
- 
--/**
-- * check_session_id() - check for valid session id in smb header
-- * @conn:	connection instance
-- * @id:		session id from smb header
-- *
-- * Return:      1 if valid session id, otherwise 0
-- */
--static inline bool check_session_id(struct ksmbd_conn *conn, u64 id)
--{
--	struct ksmbd_session *sess;
--
--	if (id == 0 || id == -1)
--		return false;
--
--	sess = ksmbd_session_lookup_all(conn, id);
--	if (sess) {
--		ksmbd_user_session_put(sess);
--		return true;
--	}
--	pr_err("Invalid user session id: %llu\n", id);
--	return false;
--}
--
- struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn *conn)
- {
- 	struct channel *chann;
-@@ -890,6 +872,47 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
- 	return 0;
- }
- 
-+static bool smb2_session_expired_cmd_allowed(struct ksmbd_work *work,
-+					      unsigned int cmd)
-+{
-+	struct smb2_lock_req *req;
-+	unsigned int len, lock_count, i;
-+
-+	if (cmd == SMB2_CANCEL_HE || cmd == SMB2_CLOSE_HE ||
-+	    cmd == SMB2_LOGOFF_HE)
-+		return true;
-+	if (cmd != SMB2_LOCK_HE)
-+		return false;
-+
-+	req = ksmbd_req_buf_next(work);
-+	if (req->hdr.NextCommand)
-+		len = le32_to_cpu(req->hdr.NextCommand);
-+	else {
-+		len = get_rfc1002_len(work->request_buf);
-+		if (len < work->next_smb2_rcv_hdr_off)
-+			return false;
-+		len -= work->next_smb2_rcv_hdr_off;
-+	}
-+
-+	lock_count = le16_to_cpu(req->LockCount);
-+	if (!lock_count || len < offsetof(struct smb2_lock_req, locks) ||
-+	    lock_count > (len - offsetof(struct smb2_lock_req, locks)) /
-+			 sizeof(struct smb2_lock_element))
-+		return false;
-+
-+	for (i = 0; i < lock_count; i++) {
-+		if (le32_to_cpu(req->locks[i].Flags) != SMB2_LOCKFLAG_UNLOCK)
-+			return false;
-+	}
-+	return true;
-+}
-+
-+static bool smb2_session_kerberos_expired(struct ksmbd_session *sess)
-+{
-+	return sess->kerberos_expiry &&
-+		ktime_get_real_seconds() >= sess->kerberos_expiry;
-+}
-+
- /**
-  * smb2_check_user_session() - check for valid session for a user
-  * @work:	smb work containing smb request buffer
-@@ -904,19 +927,37 @@ int smb2_check_user_session(struct ksmbd_work *work)
- 	unsigned long long sess_id;
- 
- 	/*
--	 * SMB2_ECHO, SMB2_NEGOTIATE, SMB2_SESSION_SETUP command do not
--	 * require a session id, so no need to validate user session's for
--	 * these commands.
-+	 * SMB2_NEGOTIATE and SMB2_SESSION_SETUP do not require a session id.
-+	 * SMB2_ECHO may omit it, but an echo carrying a session id still needs
-+	 * the session attached to work so that its signature can be checked and
-+	 * the response can be signed, including after Kerberos expiry.
- 	 */
--	if (cmd == SMB2_ECHO_HE || cmd == SMB2_NEGOTIATE_HE ||
--	    cmd == SMB2_SESSION_SETUP_HE)
-+	if (cmd == SMB2_NEGOTIATE_HE || cmd == SMB2_SESSION_SETUP_HE)
- 		return 0;
- 
-+	sess_id = le64_to_cpu(req_hdr->SessionId);
-+	if (cmd == SMB2_ECHO_HE) {
-+		/*
-+		 * ECHO remains valid without a live session, including after
-+		 * LOGOFF. Attach an existing session only to authenticate a signed
-+		 * ECHO and sign its response; a stale SessionId is not an error.
-+		 */
-+		if (!work->next_smb2_rcv_hdr_off && sess_id)
-+			work->sess = ksmbd_session_lookup_all_states(conn, sess_id);
-+		if (work->sess) {
-+			if (smb2_session_kerberos_expired(work->sess)) {
-+				work->sess->state = SMB2_SESSION_EXPIRED;
-+			} else if (work->sess->state != SMB2_SESSION_VALID) {
-+				ksmbd_user_session_put(work->sess);
-+				work->sess = NULL;
-+			}
-+		}
-+		return 0;
-+	}
-+
- 	if (!ksmbd_conn_good(conn))
- 		return -EIO;
- 
--	sess_id = le64_to_cpu(req_hdr->SessionId);
--
- 	/*
- 	 * If request is not the first in Compound request,
- 	 * Just validate session id in header with work->sess->id.
-@@ -931,18 +972,35 @@ int smb2_check_user_session(struct ksmbd_work *work)
- 					sess_id, work->sess->id);
- 			return -EINVAL;
- 		}
-+		if (smb2_session_kerberos_expired(work->sess))
-+			work->sess->state = SMB2_SESSION_EXPIRED;
- 		if (work->sess->state != SMB2_SESSION_VALID) {
- 			pr_err("compound request on a non-valid session (state %d)\n",
- 					work->sess->state);
--			return -EINVAL;
-+			if (smb2_session_kerberos_expired(work->sess) &&
-+			    smb2_session_expired_cmd_allowed(work, cmd))
-+				return 1;
-+			return smb2_session_kerberos_expired(work->sess) ?
-+				-EKEYEXPIRED : -EINVAL;
- 		}
- 		return 1;
- 	}
- 
- 	/* Check for validity of user session */
--	work->sess = ksmbd_session_lookup_all(conn, sess_id);
--	if (work->sess)
-+	work->sess = ksmbd_session_lookup_all_states(conn, sess_id);
-+	if (work->sess) {
-+		if (smb2_session_kerberos_expired(work->sess)) {
-+			work->sess->state = SMB2_SESSION_EXPIRED;
-+			return smb2_session_expired_cmd_allowed(work, cmd) ?
-+				1 : -EKEYEXPIRED;
-+		}
-+		if (work->sess->state != SMB2_SESSION_VALID) {
-+			ksmbd_user_session_put(work->sess);
-+			work->sess = NULL;
-+			return -ENOENT;
-+		}
- 		return 1;
-+	}
- 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
- 	return -ENOENT;
- }
-@@ -2013,7 +2071,9 @@ static int krb5_authenticate(struct ksmbd_work *work,
- 	struct ksmbd_session *sess = work->sess;
- 	char *in_blob, *out_blob;
- 	char channel_key[CIFS_KEY_SIZE] = {};
--	char *auth_key = conn->binding ? channel_key : sess->sess_key;
-+	char reauth_key[CIFS_KEY_SIZE] = {};
-+	char *auth_key = conn->binding ? channel_key :
-+		(work->session_setup_reauth ? reauth_key : sess->sess_key);
- 	u64 prev_sess_id;
- 	bool binding = conn->binding;
- 	int in_len, out_len;
-@@ -2032,7 +2092,7 @@ static int krb5_authenticate(struct ksmbd_work *work,
- 	if (retval) {
- 		ksmbd_debug(SMB, "krb5 authentication failed\n");
- 		if (retval != -EKEYREJECTED)
--			retval = -EINVAL;
-+			retval = -EPERM;
- 		goto out;
- 	}
- 
-@@ -2048,12 +2108,21 @@ static int krb5_authenticate(struct ksmbd_work *work,
- 	 * that it is reauthentication. And the user/password
- 	 * has been verified, so return it here.
- 	 */
--	if (sess->state == SMB2_SESSION_VALID) {
-+	if (sess->state == SMB2_SESSION_VALID && !work->session_setup_reauth) {
- 		if (conn->binding)
- 			goto binding_session;
- 		return 0;
- 	}
- 
-+	/*
-+	 * Reauthentication verifies the new Kerberos credentials but keeps
-+	 * the established SMB session keys.
-+	 */
-+	if (work->session_setup_reauth) {
-+		retval = 0;
-+		goto out;
-+	}
-+
- 	if ((rsp->SessionFlags != SMB2_SESSION_FLAG_IS_GUEST_LE &&
- 	    (conn->sign || server_conf.enforced_signing)) ||
- 	    (req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED))
-@@ -2091,6 +2160,7 @@ static int krb5_authenticate(struct ksmbd_work *work,
- 	}
- 	retval = 0;
- out:
-+	memzero_explicit(reauth_key, sizeof(reauth_key));
- 	if (binding)
- 		memzero_explicit(channel_key, sizeof(channel_key));
- 	return retval;
-@@ -2234,8 +2304,13 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 		}
- 
- 		if (sess->state == SMB2_SESSION_EXPIRED) {
--			rc = -EFAULT;
--			goto out_err;
-+			if (sess->kerberos_expiry &&
-+			    ktime_get_real_seconds() >= sess->kerberos_expiry) {
-+				work->session_setup_reauth = true;
-+			} else {
-+				rc = -EFAULT;
-+				goto out_err;
-+			}
- 		}
- 
- 		if (ksmbd_conn_need_reconnect(conn)) {
-@@ -2279,10 +2354,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 		if (conn->preferred_auth_mech &
- 				(KSMBD_AUTH_KRB5 | KSMBD_AUTH_MSKRB5)) {
- 			rc = krb5_authenticate(work, req, rsp);
--			if (rc) {
--				rc = -EINVAL;
-+			if (rc)
- 				goto out_err;
--			}
- 
- 			if (!ksmbd_conn_need_reconnect(conn)) {
- 				ksmbd_conn_set_good(conn);
-@@ -2393,6 +2466,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 			 */
- 			if (!(req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
- 				sess->last_active = jiffies;
-+				sess->kerberos_expiry = 0;
- 				sess->state = SMB2_SESSION_EXPIRED;
- 			}
- 			/*
-@@ -2746,6 +2820,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
- 	}
- 
- 	down_write(&conn->session_lock);
-+	sess->kerberos_expiry = 0;
- 	sess->state = SMB2_SESSION_EXPIRED;
- 	up_write(&conn->session_lock);
- 
-@@ -6879,7 +6954,6 @@ int smb2_close(struct ksmbd_work *work)
- 	u64 sess_id;
- 	struct smb2_close_req *req;
- 	struct smb2_close_rsp *rsp;
--	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_file *fp;
- 	u64 time;
- 	int err = 0;
-@@ -6902,7 +6976,7 @@ int smb2_close(struct ksmbd_work *work)
- 		sess_id = work->compound_sid;
- 
- 	work->compound_sid = 0;
--	if (check_session_id(conn, sess_id)) {
-+	if (work->sess && work->sess->id == sess_id) {
- 		work->compound_sid = sess_id;
- 	} else {
- 		rsp->hdr.Status = STATUS_USER_SESSION_DELETED;
-@@ -8378,6 +8452,7 @@ int smb2_cancel(struct ksmbd_work *work)
- 	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
- 	struct smb2_hdr *chdr;
- 	struct ksmbd_work *iter;
-+	struct ksmbd_work *cancelled_notify = NULL;
- 	struct list_head *command_list;
- 
- 	if (work->next_smb2_rcv_hdr_off)
-@@ -8415,11 +8490,23 @@ int smb2_cancel(struct ksmbd_work *work)
- 				    le64_to_cpu(hdr->Id.AsyncId),
- 				    le16_to_cpu(chdr->Command));
- 			iter->state = KSMBD_WORK_CANCELLED;
--			if (iter->cancel_fn)
-+			if (iter->cancel_fn == smb2_notify_cancel_fn)
-+				cancelled_notify =
-+					smb2_notify_cancel_claim(iter->cancel_argv);
-+			else if (iter->cancel_fn)
- 				iter->cancel_fn(iter->cancel_argv);
- 			break;
- 		}
- 		spin_unlock(&conn->request_lock);
-+
-+		/*
-+		 * Complete a cancelled notify before this CANCEL handler returns.
-+		 * Deferring it to the system workqueue lets a following request and
-+		 * its response overtake STATUS_CANCELLED, leaving clients waiting
-+		 * for the original notify even though the cancellation was accepted.
-+		 */
-+		if (cancelled_notify)
-+			smb2_complete_notify_cancel(cancelled_notify);
- 	} else {
- 		command_list = &conn->requests;
- 
-@@ -10196,37 +10283,54 @@ int smb2_oplock_break(struct ksmbd_work *work)
-  * it from here would self-deadlock the very thread processing the
-  * client's CANCEL command. ksmbd_conn_write() can also sleep (it takes
-  * conn's write mutex). So: do only the non-sleeping, no-relock cleanup
-- * inline here (the async_requests removal itself is safe without
-- * re-locking, since the caller already holds that lock), and defer the
-- * actual response send + work-struct free to a workqueue, matching the
-- * minimal, non-blocking style of the existing smb2_remove_blocked_lock()
-- * cancel_fn (which only wakes a waiter, never sends network data itself).
-+ * inline here. smb2_cancel() sends and frees the claimed notify after it
-+ * drops request_lock, preserving response order for a client CANCEL. The
-+ * connection teardown caller has no such post-unlock path, so its wrapper
-+ * defers the send and free to a workqueue.
-  */
- struct notify_cancel_ctx {
- 	struct work_struct	work;
- 	struct ksmbd_work	*in_work;
- };
- 
-+static void smb2_send_notify_cancelled(struct ksmbd_work *work)
-+{
-+	struct smb2_hdr *hdr = smb_get_msg(work->response_buf);
-+	struct ksmbd_conn *conn = work->conn;
-+	struct ksmbd_session *sess;
-+
-+	sess = ksmbd_session_lookup(conn, le64_to_cpu(hdr->SessionId));
-+	if (sess) {
-+		work->sess = sess;
-+		if (work->encrypted && sess->enc && conn->ops->encrypt_resp) {
-+			conn->ops->encrypt_resp(work);
-+		} else if (conn->ops->is_sign_req && conn->ops->set_sign_rsp &&
-+			   conn->ops->is_sign_req(work,
-+						 conn->ops->get_cmd_val(work))) {
-+			conn->ops->set_sign_rsp(work);
-+		}
-+	}
-+
-+	ksmbd_conn_write(work);
-+	if (sess) {
-+		ksmbd_user_session_put(sess);
-+		work->sess = NULL;
-+	}
-+}
-+
- static void smb2_notify_cancel_deferred(struct work_struct *w)
- {
- 	struct notify_cancel_ctx *ctx =
- 		container_of(w, struct notify_cancel_ctx, work);
--	struct ksmbd_work *in_work = ctx->in_work;
--	struct smb2_hdr *in_hdr;
- 
--	in_hdr = smb_get_msg(in_work->response_buf);
--	in_hdr->Status = STATUS_CANCELLED;
--	ksmbd_conn_write(in_work);
--	ksmbd_free_work_struct(in_work);
-+	smb2_complete_notify_cancel(ctx->in_work);
- 	kfree(ctx);
- }
- 
--static void smb2_notify_cancel_fn(void **argv)
-+static struct ksmbd_work *smb2_notify_cancel_claim(void **argv)
- {
- 	struct ksmbd_work *in_work = (struct ksmbd_work *)argv[0];
- 	struct ksmbd_file *fp = (struct ksmbd_file *)argv[1];
--	struct ksmbd_conn *conn = in_work->conn;
--	struct notify_cancel_ctx *ctx;
- 	bool claimed;
- 
- 	spin_lock(&fp->f_lock);
-@@ -10236,22 +10340,44 @@ static void smb2_notify_cancel_fn(void **argv)
- 	spin_unlock(&fp->f_lock);
- 
- 	if (!claimed)
--		return;
-+		return NULL;
- 
--	/* conn->request_lock is already held by the caller (smb2_cancel()). */
--	list_del_init(&in_work->async_request_entry);
--	in_work->asynchronous = false;
-+	/* conn->request_lock is held by smb2_cancel() or connection teardown. */
- 	in_work->cancel_fn = NULL;
- 	kfree(in_work->cancel_argv);
- 	in_work->cancel_argv = NULL;
--	if (in_work->async_id) {
--		ksmbd_release_id(&conn->async_ida, in_work->async_id);
--		in_work->async_id = 0;
--	}
-+	return in_work;
-+}
-+
-+static void smb2_complete_notify_cancel(struct ksmbd_work *in_work)
-+{
-+	struct smb2_hdr *in_hdr = smb_get_msg(in_work->response_buf);
-+
-+	in_hdr->Status = STATUS_CANCELLED;
-+	smb2_send_notify_cancelled(in_work);
-+	release_async_work(in_work);
-+	ksmbd_free_work_struct(in_work);
-+}
-+
-+static void smb2_notify_cancel_fn(void **argv)
-+{
-+	struct ksmbd_work *in_work = smb2_notify_cancel_claim(argv);
-+	struct ksmbd_conn *conn;
-+	struct notify_cancel_ctx *ctx;
-+
-+	if (!in_work)
-+		return;
-+	conn = in_work->conn;
- 
- 	ctx = kmalloc(sizeof(*ctx), GFP_ATOMIC);
- 	if (!ctx) {
- 		/* Can't defer the response -- free without sending one. */
-+		list_del_init(&in_work->async_request_entry);
-+		in_work->asynchronous = false;
-+		if (in_work->async_id) {
-+			ksmbd_release_id(&conn->async_ida, in_work->async_id);
-+			in_work->async_id = 0;
-+		}
- 		ksmbd_free_work_struct(in_work);
- 		return;
- 	}
-@@ -10372,6 +10498,8 @@ int smb2_notify(struct ksmbd_work *work)
- 		smb2_set_err_rsp(work);
- 		return 0;
- 	}
-+	memcpy(smb_get_msg(in_work->request_buf), req,
-+	       __SMB2_HEADER_STRUCTURE_SIZE);
- 
- 	if (setup_async_work(work, NULL, NULL)) {
- 		ksmbd_free_work_struct(in_work);
-@@ -10386,6 +10514,7 @@ int smb2_notify(struct ksmbd_work *work)
- 	/* Keep the async IDA alive until the deferred work is released. */
- 	in_work->conn = ksmbd_conn_get(work->conn);
- 	in_work->owns_conn_ref = true;
-+	in_work->encrypted = work->encrypted;
- 	in_hdr = smb_get_msg(in_work->response_buf);
- 	memcpy(in_hdr, ksmbd_resp_buf_next(work), __SMB2_HEADER_STRUCTURE_SIZE);
- 	in_hdr->Flags |= SMB2_FLAGS_ASYNC_COMMAND;
-@@ -10719,7 +10848,6 @@ bool smb3_is_transform_hdr(void *buf)
- 
- int smb3_decrypt_req(struct ksmbd_work *work)
- {
--	struct ksmbd_session *sess;
- 	char *buf = work->request_buf;
- 	unsigned int pdu_length = get_rfc1002_len(buf);
- 	struct kvec iov[2];
-@@ -10739,14 +10867,6 @@ int smb3_decrypt_req(struct ksmbd_work *work)
- 		return -ECONNABORTED;
- 	}
- 
--	sess = ksmbd_session_lookup_all(work->conn, le64_to_cpu(tr_hdr->SessionId));
--	if (!sess) {
--		pr_err("invalid session id(%llx) in transform header\n",
--		       le64_to_cpu(tr_hdr->SessionId));
--		return -ECONNABORTED;
--	}
--	ksmbd_user_session_put(sess);
--
- 	iov[0].iov_base = buf;
- 	iov[0].iov_len = sizeof(struct smb2_transform_hdr) + 4;
- 	iov[1].iov_base = buf + sizeof(struct smb2_transform_hdr) + 4;
 -- 
 2.53.0
 
