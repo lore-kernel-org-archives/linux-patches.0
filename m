@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404C3457E75;
-	Sat, 12 Sep 2026 10:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1412B456DEA;
+	Sat, 12 Sep 2026 10:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210056; cv=none; b=BXNQ2F2tNOW27CUptOOsejMMIlXKgIe5oNqkG0uz4FIpLTJWms/k4zc0+jakjhaqPEbXB8ABoPnXidYjJZ2R7TScuBf9avkWNB7wqkBV2gAChpTH24577AU3mEcmp0uHHswNubN9i7O/JkESsILl9iWOPGEpqxBDh+e7EPVC9Uo=
+	t=1789210061; cv=none; b=FfyifOGTntCVkj8QZzWfYFMsxALBxiiIqCVwdKlDszyaz8JO9MmWbk6Q1WETQ8PcCiqnj4UGtpZg27kp19opk/1Fnr688sbq6M5NUpNXlLSTwxy65RGTdlOl93TsaRsP8I6s3M2fnfT+rfKOps67EG7ctX6dgtSNh7pmltaFlQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210056; c=relaxed/simple;
-	bh=7xJJK6tcD90kCu/lJ7jIKMFKWZRefbGhuibbTJ2ptME=;
+	s=arc-20240116; t=1789210061; c=relaxed/simple;
+	bh=CzhkWyoP6P26j169zLjE+BJmwq3akT5a1dqiyO1oKLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VThxIq9ZuFMc1JaS6B1zLvaQf1TSPxRsc8+6mluLIbnPcAVJZS8ezytbno3uf8wOkuAc73MSnVgSFls9Jv7P8YhNRPtfs66Hb42fpHQEg8i2VAHSsJTutCCVNBNLY8CtRpygHyMn1eBN/rOMEXovCK2PCx+4jbjiGh22qitPrkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1yvTfLe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b+rTIb0at+Q58wihP0vrjyMezHxVq7EaQOX+zUN8ptKdnMu4DN/3GuC8GJOPmBIKqwgMnHSVw8T7MFQcEQiSW0KneWPNewdUDksA0xZiNZc3r0P2Kl+nkwF2tO0yMme8WyvKZv2UfpJ8d8whSV9lH5bkmSrcu2pH7hzz227+qEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/9waopO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1yvTfLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E031F000FF;
-	Sat, 12 Sep 2026 10:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/9waopO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE701F000FF;
+	Sat, 12 Sep 2026 10:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210054;
-	bh=HQJH49vI9a45ko9dRPN903uEDObpSg81wu5s4r5fCyg=;
+	s=korg; t=1789210060;
+	bh=BXPhmyZpDHPSHoujarW7P7Lf0lNnwR3rcuC0xBpppD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u1yvTfLez5MxS2R2+tPzvgc5AMWthIkePmjJU30vjyMaWUWAlBiOTqiVGcF9w62H8
-	 b50/N5pQU7vLwCe8o/EQb3I58FvI1o1W1tGXDy0hyu/4yVPg35vATcGoT+y985y/lU
-	 ffPutX/DoeHMgGosENozOlJo7CMpDRnxltsgGJc8=
+	b=Y/9waopOyEQ4Ovb1kkE+hjabfVVlmBVqkISaA3H502D1KcBsBCwdeMaEGwxqMky0F
+	 4T1Upjl985fOXRgsMFXmF2vUInVuysd4loLwiudl5fd4MYBmT4LWwEdifAZKj6uUV2
+	 M5eF6M8HZY6mLmANNQWyO7W58cts4W2Ulxwe8DSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Riesch <michael.riesch@collabora.com>,
-	Gerald Loacker <gerald.loacker@wolfvision.net>,
-	Vinod Koul <vkoul@kernel.org>,
+	Tanushree Shah <tshah@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0947/1518] phy: rockchip: phy-rockchip-inno-csidphy: fix rk1808 hsfreq table
-Date: Sat, 12 Sep 2026 08:51:56 +0200
-Message-ID: <20260912065644.878633345@linuxfoundation.org>
+Subject: [PATCH 6.18 0948/1518] perf trace-event: Fix buffer overflow in read_string()
+Date: Sat, 12 Sep 2026 08:51:57 +0200
+Message-ID: <20260912065644.902553849@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,40 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerald Loacker <gerald.loacker@wolfvision.net>
+From: Tanushree Shah <tshah@linux.ibm.com>
 
-[ Upstream commit 4fae43e33a7c10951fbdc6baf409d51bd66aaefb ]
+[ Upstream commit 1121a7af1833f8b5723f1e32685b461614353d5d ]
 
-The rk1808 hsfreq table capped at 2499 Mbps, preventing a data rate of
-exactly 2500 Mbps. Extend the final entry to 2500 Mbps to support this
-rate.
+read_string() writes into buf[BUFSIZ] one byte at a time without
+checking 'size' against the buffer bound before each write. A
+string longer than BUFSIZ in the input overflows the stack buffer.
 
-This is essential for RK3588 reusing this array and fully supporting
-rates up to 2500 Mbps.
+Add a bounds check before each write to prevent overflow. On
+overflow the function returns NULL, matching its other error paths.
 
-Fixes: bd1f775d6027 ("phy/rockchip: add Innosilicon-based CSI dphy")
-Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
-Signed-off-by: Gerald Loacker <gerald.loacker@wolfvision.net>
-Link: https://patch.msgid.link/20260725-feature-mipi-csi-dphy-4k60-v4-1-5b2c4626d31e@wolfvision.net
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 9215545e99d8 ("perf: Convert perf tracing data into a tracing_data event")
+Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-inno-csidphy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/trace-event-read.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
-index c79fb53d8ee5c..5281f8dea0ad3 100644
---- a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
-+++ b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
-@@ -170,7 +170,7 @@ static const struct hsfreq_range rk1808_mipidphy_hsfreq_ranges[] = {
- 	{ 299, 0x06}, { 399, 0x08}, { 499, 0x0b}, { 599, 0x0e},
- 	{ 699, 0x10}, { 799, 0x12}, { 999, 0x16}, {1199, 0x1e},
- 	{1399, 0x23}, {1599, 0x2d}, {1799, 0x32}, {1999, 0x37},
--	{2199, 0x3c}, {2399, 0x41}, {2499, 0x46}
-+	{2199, 0x3c}, {2399, 0x41}, {2500, 0x46}
- };
+diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
+index ecbbb93f01853..afd458cf1387d 100644
+--- a/tools/perf/util/trace-event-read.c
++++ b/tools/perf/util/trace-event-read.c
+@@ -127,6 +127,11 @@ static char *read_string(void)
+ 			}
+ 		}
  
- static const struct hsfreq_range rk3326_mipidphy_hsfreq_ranges[] = {
++		if (size >= (int)sizeof(buf) - 1) {
++			pr_debug("string too long (max %zu bytes)", sizeof(buf) - 1);
++			goto out;
++		}
++
+ 		buf[size++] = c;
+ 
+ 		if (!c)
 -- 
 2.53.0
 
