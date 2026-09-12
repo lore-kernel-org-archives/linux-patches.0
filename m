@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015683939B1;
-	Sat, 12 Sep 2026 18:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EDC274B46;
+	Sat, 12 Sep 2026 18:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237690; cv=none; b=fb6Z2TyN01U0eU+axFjxZJLcEvrItTvhnhtxv1D+myCgawXaa4srE5ZKug7OcUVS0OgeaanCGeC5dZsKeg2jLzdIL2oqj7AlIIqDct5Zh7vw+C8S/JiDeeDZ9esgg2ODxXzQyv2VzhVpj66n90cOmYfKFZXLMGoc1KO872/KhNg=
+	t=1789237694; cv=none; b=MXJ50mVhIxTFtqXlk0K3xzLbCQLUFBve9cQwv4EnZfqIW9uFK9YC5guVD6uh7gDVVNDZh4mlBK4bmbAX2Lyi1HwZBa6bTC7FD0FVOZGw4+dufgR4+/JgrCr+V5Ko1kuCM1w9tmnEB0Iz4a1YuoDiYvyhR6jXG3i182h01pN0FzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237690; c=relaxed/simple;
-	bh=dzYBQEgUD2Kss0xSVcAY++EDkX/zVy1aDbiHav3wY5M=;
+	s=arc-20240116; t=1789237694; c=relaxed/simple;
+	bh=GHZ+HVQC8KRR8Mv84FTBpys33p/lQjbhJGEPf0JlGMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhLj7ClMDJj9fBB8dQxaEzWnh9zMx12zfkI2PUyamCnQkpY31TsZPXo+ZuHMRM0PCgIfd36mOLkNnCspUPHJdaEZaG7NCaK5kKSRPjAzbOn1ap4n05V05MrOWLU9x/QQ7CJi4yPrCOiFXK+daM61GELLA2yRIB+5XFqgsuT9Wy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwlCq14Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tEzLg4X00c2dWdGDjgDNNu2UvxGRJDkZIkoOiCW7LTn6K/OL5UlR5ilWg5gHNatWwVuwN2xDFPyuEhX2Z8TeI1Kfp9pIp7HUwjEXz4kwke8i3wPsuIQ9ecKSy+pfUy22HBKSbLfvlXEysmTBOfi5N7swk2jV0NOaGVl9Bvx/8tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRhzEEcU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwlCq14Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D561F000FF;
-	Sat, 12 Sep 2026 18:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRhzEEcU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1EB1F000FF;
+	Sat, 12 Sep 2026 18:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237688;
-	bh=iftl5me3JA+E6Bs71RkNDzZ8+Bc8FcEYz3YlPOB/0TE=;
+	s=korg; t=1789237693;
+	bh=QTMyupEGO9tc5ctXsO0l5nkogcjNuXryc9a4Pa41+kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IwlCq14Q/TkvwwxdqxHziOUxXha6P5LrcLyFAe5R7QonfyLSxQfmNfpcYi89Gfpwk
-	 WXDCoLXKA+SIiH14CkEo6BdH2qklz31raYFD91RIqKNjO2JJk2nij6R7ga0TWO5xwZ
-	 DeV7KtxhLQwIRyaiqMYhpCM11mn86uduSz0pHPX0=
+	b=kRhzEEcUPediXa3T9Yz19L07pFfdeu9rkxnCCFiuGft9QKsM//4aKAlh21IU5Rcwf
+	 z9KcxbCZnPTrlJgmc/lTFnCxUuVvQ8INtyLNCL3qAEUUgXSVlE5qIJuMmBao/aU1nE
+	 HynWvzlfD2GzBv6neVXC+WaXwWCKQDx+cNHKahXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Shivam Kumar <kumar.shivam43666@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.15 266/935] nvmet-tcp: reject unsolicited H2CData PDUs
-Date: Sat, 12 Sep 2026 08:54:56 +0200
-Message-ID: <20260912065532.926630649@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	caina <caina@uniontech.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Yipeng Zou <zouyipeng@huawei.com>
+Subject: [PATCH 5.15 267/935] Revert "irqchip/mbigen: Fix mbigen node address layout"
+Date: Sat, 12 Sep 2026 08:54:57 +0200
+Message-ID: <20260912065532.949271323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,76 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivam Kumar <kumar.shivam43666@gmail.com>
+From: caina <caina@uniontech.com>
 
-commit db62b35cbca052860c519cbcabe7650708528738 upstream.
+commit e67091609cf85962f64391c1b0f93d4cbfcd4e22 upstream.
 
-nvmet_tcp_handle_h2c_data_pdu() accepts an H2CData PDU after only checking
-that its TTAG is a valid in-range command index and that the command's
-data buffers are mapped. It never checks that the target has actually
-solicited that data by sending an R2T for the command.
+This reverts commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20.
 
-A remote host can abuse this. It submits a write command that takes the
-R2T path and, before the target transmits the R2T, sends an H2CData PDU
-for that command's tag. The data completes the command early, and when
-the command then fails synchronously (e.g. a length mismatch caught by
-nvmet_check_transfer_len()), it is completed a second time. Each
-completion calls nvmet_tcp_queue_response(), so the same command is added
-to queue->resp_list twice while it is still linked; the second llist_add()
-makes the node point to itself (lentry->next == lentry).
+Commit 6be6cba9c437 ("irqchip/mbigen: Fix mbigen node address layout")
+appears to cause a regression on Hi1616.
 
-nvmet_tcp_process_resp_list() then walks that self-referential node and
-adds the command to resp_send_list twice. With CONFIG_DEBUG_LIST this
-trips the "list_add double add" check (kernel BUG); without it the loop
-never terminates and the nvmet_tcp workqueue wedges (soft-lockup). It is
-remotely triggerable and needs no authentication on an allow_any_host
-subsystem.
+On-board hns NIC has two ports, enahisic2i0 and enahisic2i1, both
+behind mbigen-v2.  Port 0 works; port 1 cannot pass any traffic.
 
-Track whether an R2T has been transmitted for a command and reject an
-H2CData PDU that arrives before it. The flag is cleared on command reuse
-(nvmet_tcp_get_cmd() zeroes cmd->flags) and stays set across the multiple
-H2CData PDUs of a single solicited transfer.
+Their interrupt pins fall on different mbigen nodes:
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+  enahisic2i0: pins 1152-1198 -> all in node 9
+  enahisic2i1: pins 1200-1246 -> node 9 (1200-1215) + node 10 (1216-1246)
+
+  (nid = (hwirq - 64) / 128 + 1; pin 1215 = node 9, pin 1216 = node 10)
+
+/proc/interrupts shows the break happens exactly at the node boundary:
+
+  enahisic2i1-rx0  pin 1200  count 102   <- node 9
+  enahisic2i1-rx5  pin 1215  count   1   <- node 9, last pin
+  enahisic2i1-tx5  pin 1216  count   0   <- node 10, first pin
+  enahisic2i1-rx6  pin 1218  count   0   <- node 10
+  ...all node 10 pins stay at zero.
+
+Port 0 (entirely node 9) is unaffected.  Reverting the commit restores
+normal operation.
+
+The commit assumes CLEAR occupies a full 4 KB page at [0xa000, 0xb000)
+and collides with node 10, so node 10+ gets shifted by 0x1000.
+
+But get_mbigen_clear_reg() uses flat, chip-wide addressing -- it never
+multiplies by the node ID:
+
+    *addr = (hwirq / 32) * 4 + REG_MBIGEN_CLEAR_OFFSET;  /* 0xa000 */
+
+Over the valid hwirq range [64, 1407], CLEAR only spans 0xa008-0xa0af
+(168 bytes).  Node 10's registers are:
+
+    TYPE: 0xa000-0xa00f  (16 B)   overlaps CLEAR by 8 B (0xa008-0xa00f)
+    VEC:  0xa200-0xa3ff  (512 B)  no overlap with CLEAR
+
+Shifting the whole page moves VEC from 0xa200 to 0xb200.  The hardware
+reads the event ID from the fixed silicon address 0xa200 on interrupt
+firing, but software wrote it to 0xb200 -- so the hardware gets an
+uninitialised value and the interrupt is lost.
+
+The only real overlap is 8 bytes of TYPE.  It can only trigger when a
+single mbigen instance has devices on both node 1 (CLEAR 0xa008) and
+node 10 (TYPE 0xa008).  On Hi1616 those nodes are on separate mbigen
+instances, so it never triggers.
+
+Fixes: 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ("irqchip/mbigen: Fix mbigen node address layout")
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: caina <caina@uniontech.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Yipeng Zou <zouyipeng@huawei.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://patch.msgid.link/20260821091720.16665-1-caina@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/irqchip/irq-mbigen.c |   20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -61,6 +61,7 @@ enum nvmet_tcp_recv_state {
- 
- enum {
- 	NVMET_TCP_F_INIT_FAILED = (1 << 0),
-+	NVMET_TCP_F_R2T_SENT	= (1 << 1),
+--- a/drivers/irqchip/irq-mbigen.c
++++ b/drivers/irqchip/irq-mbigen.c
+@@ -64,20 +64,6 @@ struct mbigen_device {
+ 	void __iomem		*base;
  };
  
- struct nvmet_tcp_cmd {
-@@ -726,6 +727,7 @@ static int nvmet_try_send_r2t(struct nvm
- 		return -EAGAIN;
+-static inline unsigned int get_mbigen_node_offset(unsigned int nid)
+-{
+-	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
+-
+-	/*
+-	 * To avoid touched clear register in unexpected way, we need to directly
+-	 * skip clear register when access to more than 10 mbigen nodes.
+-	 */
+-	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
+-		offset += MBIGEN_NODE_OFFSET;
+-
+-	return offset;
+-}
+-
+ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ {
+ 	unsigned int nid, pin;
+@@ -86,7 +72,8 @@ static inline unsigned int get_mbigen_ve
+ 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
+ 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
  
- 	cmd->queue->snd_cmd = NULL;
-+	cmd->flags |= NVMET_TCP_F_R2T_SENT;
- 	return 1;
+-	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
++	return pin * 4 + nid * MBIGEN_NODE_OFFSET
++			+ REG_MBIGEN_VEC_OFFSET;
  }
  
-@@ -990,6 +992,12 @@ static int nvmet_tcp_handle_h2c_data_pdu
- 		cmd = &queue->connect;
- 	}
+ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+@@ -101,7 +88,8 @@ static inline void get_mbigen_type_reg(i
+ 	*mask = 1 << (irq_ofst % 32);
+ 	ofst = irq_ofst / 32 * 4;
  
-+	if (unlikely(!(cmd->flags & NVMET_TCP_F_R2T_SENT))) {
-+		pr_err("queue %d: unsolicited H2CData (ttag %u)\n",
-+		       queue->idx, data->ttag);
-+		goto err_proto;
-+	}
-+
- 	if (le32_to_cpu(data->data_offset) != cmd->rbytes_done) {
- 		pr_err("ttag %u unexpected data offset %u (expected %u)\n",
- 			data->ttag, le32_to_cpu(data->data_offset),
+-	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
++	*addr = ofst + nid * MBIGEN_NODE_OFFSET
++		+ REG_MBIGEN_TYPE_OFFSET;
+ }
+ 
+ static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
 
 
