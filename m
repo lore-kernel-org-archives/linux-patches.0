@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24C04772A1;
-	Sat, 12 Sep 2026 11:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B831A477E39;
+	Sat, 12 Sep 2026 11:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210856; cv=none; b=N+pgBZPMawVmDgdnyfAdm/z1EhbQK1VIDjd0LV880+hbXqTWXzeUavN2GlM79DW2jeLFKdyOAYzDruLovnRQUHutvXRV1InTVcgIOD+AjfOIsGFgJ59u8qBw9iHdVeki/dzr4muYJmmaJXYHeS3IjsEh9N2H6MoxEidcNKqUsA4=
+	t=1789210861; cv=none; b=KeNTOXyELYyLa5/6wa+XBZXK9o+Mss2S6D9+FAmF+N87I5+vMIqJQMkrnHJksGEehn2gmu956BPpjXCJZvF3aQVTD3U83K+fYAGAY7S9ZFxLr6cvE6zaRCH+Jfu2TbyI4jjfCaTEDuTDy0Jk4CfK/q634IRNda2/k0lM+0OVX30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210856; c=relaxed/simple;
-	bh=ZrbmQCOZoV0B8vd53SKD7quiDf3ZVLqZ6nn7eVgKatE=;
+	s=arc-20240116; t=1789210861; c=relaxed/simple;
+	bh=c3mivJUme9srDX7zMziOXxh2y4yfSDObefxzwvZry8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fSSNxeZ2Xz++fEz61neV5C1eEKbuXlMe3fzQnF0gUQxiYxNSWuLauVfxp4Amn8Vpz2wdv7Gnkp4Klbl8j1E+AFlpoezhFBC86xjEZhcVgJtU7xAgqVgBRfsJLCK4TRMU30glVaTSP3XuKXKWvFdYMYAvYkEOB15bRNry1FtQoOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ce0jmLzC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ltp+mwm4U4XXgnhPcC2a4rbsLOHRbCPd0jkH9eyVqyNGXCJ2a4EuprzNkxORp17baqDO/1PC+/CgXxlFjQX4qlUkyUjWBQ7BdmSGeA0knMGmCBohOLcivzD0STB1re2MBPDZDfwZWbnnLlEleF+o1yCQQNPrC6Strny/KjgNozM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOjuyiB+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ce0jmLzC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB4C1F000FF;
-	Sat, 12 Sep 2026 11:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOjuyiB+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3861C1F000FF;
+	Sat, 12 Sep 2026 11:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210854;
-	bh=APwhy+2jA9o7BHz5ulXRQ4I6hMaPKx6FRdtJsjmBy6Y=;
+	s=korg; t=1789210859;
+	bh=1MDyV2IO6eWMm3ziz1Az+PIU0PMWXiiipcNWfPwNVVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ce0jmLzC1zZCZEDd2TrTUK/rXj46PAwggsYzC57bUFASdFFTt32tTTr0hsy2rTl/j
-	 3I9O8BI/INBJ98qP6hKYShbGAJ4q68vRWPkcFjaE2HQ0VWSmPvBHKWrS0b44W+uHX6
-	 3hmNeyV5C4gh+NdNj1vywy0PnuRjeNWBGcCkTV/E=
+	b=tOjuyiB+LW5dbgaV+oU25sBzNte+OWMn5l03wetWGUwz3DESRxumEF9T+ElGeCQ81
+	 FVdaASWW5n2SqnNXLHosVy9N0WQCVB6dxHLDJaVZjdlrFuk1jnZQC/4o9Px4gpeezV
+	 1X0eJlNsivhn+SB0ShhlB7brvbMuSlSbkkCUtLrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@kernel.org>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Joshua Peisach <jpeisach@ubuntu.com>,
+	Janne Grunau <j@jannau.net>,
+	Nick Chan <towinchenmi@gmail.com>,
+	Sven Peter <sven@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1112/1518] nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate()
-Date: Sat, 12 Sep 2026 08:54:41 +0200
-Message-ID: <20260912065648.605192535@linuxfoundation.org>
+Subject: [PATCH 6.18 1113/1518] nvme-apple: Destroy the admin queue on removal
+Date: Sat, 12 Sep 2026 08:54:42 +0200
+Message-ID: <20260912065648.629295893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,80 +53,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Sven Peter <sven@kernel.org>
 
-[ Upstream commit 5bb96cc218835769ab74ec7f3ea2bf81fbffe955 ]
+[ Upstream commit 87d5b9864c8118d26f54de4b66d2bddf2c659272 ]
 
-nvmet_execute_auth_send() allocates the DH-HMAC-CHAP message buffer with
-the host-supplied transfer length (tl) and hands it to
-nvmet_auth_negotiate() without passing tl along. nvmet_auth_negotiate()
-then reads the negotiate header and, for each of the halen hash
-identifiers and dhlen DH group identifiers, indexes into the fixed
-idlist[60] array (hashes at idlist[0..halen), groups at idlist[30..]).
+The admin queue is allocated with blk_mq_alloc_queue() but never
+destroyed. nvme_free_ctrl() only drops the last reference and
+blk_mq_exit_queue() and blk_sync_queue() never run: the hctx is never
+moved to q->unused_hctx_list and the timeout timer and work stay armed on
+a queue that is about to be freed which will eventually oops inside
+blk_mq_timeout_work().
 
-Neither the transfer length nor halen/dhlen is validated. A malicious or
-non-conformant host can report a tl smaller than the negotiate structure,
-or a halen/dhlen larger than the array (both are u8, up to 255), making
-the loops read past the end of the allocated buffer (heap out-of-bounds
-read). The sibling nvmet_auth_reply() already validates tl against the
-structure size; the negotiate path did not.
+This can only be triggered when the controller fails to come up and is
+then immediately torn down again which is why no one ever ran into this
+before.
 
-Pass tl into nvmet_auth_negotiate(), reject a tl that does not cover the
-negotiate data plus one full protocol descriptor, and reject halen/dhlen
-larger than NVME_AUTH_DHCHAP_MAX_DH_IDS.
+Let's just copy what the pcie driver does: unquiesce and destroy the admin
+queue before nvme_uninit_ctrl().
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+With this the following WARN followed by a panic no longer happens:
+
+  WARNING: block/blk-mq.c:4390 at blk_mq_release+0x194/0x238, CPU#4: kworker/u34:4/119
+  CPU: 4 UID: 0 PID: 119 Comm: kworker/u34:4 Not tainted 7.2.0-rc1-dirty #248 PREEMPT
+  Hardware name: Apple Mac mini (M1, 2020) (DT)
+  Workqueue: nvme-wq apple_nvme_remove_dead_ctrl_work
+  pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : blk_mq_release+0x194/0x238
+  lr : blk_mq_release+0x58/0x238
+  sp : ffffc000833a3b50
+  x29: ffffc000833a3b50 x28: ffff80001d0450f8 x27: ffff800020c95200
+  x26: 0000000000000088 x25: 0000000000000000 x24: ffff800020f36805
+  x23: 0000000000000000 x22: ffffc00081a86878 x21: ffff800020be9c60
+  x20: 0000000000000000 x19: ffff800022501698 x18: 000000000000000a
+  x17: 7365757165722066 x16: 666f7265776f7020 x15: 0000000000000000
+  x14: 0000000000000028 x13: 0000000000004def x12: 0000000000000003
+  x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc000805b4fc8
+  x8 : ffffc00081915820 x7 : ffffc00081c4f3c8 x6 : 0000000000000001
+  x5 : 0000000000000004 x4 : ffff800022498d80 x3 : ffffc000833a3b14
+  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff800022501698
+  Call trace:
+   blk_mq_release+0x194/0x238 (P)
+   blk_put_queue+0x8c/0xf0
+   nvme_free_ctrl+0x4c/0x260
+   device_release+0x44/0x128
+   kobject_put+0xa0/0x120
+   put_device+0x1c/0x40
+   nvme_uninit_ctrl+0x48/0x60
+   apple_nvme_remove+0x54/0xb0
+   platform_remove+0x28/0x40
+   device_remove+0x54/0x98
+   device_release_driver_internal+
+   device_release_driver+0x20/0x38
+   apple_nvme_remove_dead_ctrl_wor
+   process_one_work+0x1f4/0x770
+   worker_thread+0x1b8/0x360
+   kthread+0x140/0x160
+   ret_from_fork+0x10/0x20
+  irq event stamp: 448
+  hardirqs last  enabled at (447):in_unlock_irqrestore+0x74/0x80
+  hardirqs last disabled at (448): [<ffffc000811cf5c0>] el1_brk64+0x20/0x60
+  softirqs last  enabled at (0): [ess+0xb28/0x2698
+  softirqs last disabled at (0): [<0000000000000000>] 0x0
+  ---[ end trace 0000000000000000
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  Mem abort info:
+    ESR = 0x0000000096000005
+    EC = 0x25: DABT (current EL),
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+    FSC = 0x05: level 1 translation fault
+  Data abort info:
+    ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+    CM = 0, WnR = 0, TnD = 0, TagA
+    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+  [0000000000000000] user address
+  Internal error: Oops: 0000000096000005 [#1]  SMP
+  CPU: 7 UID: 0 PID: 54 Comm: kwor          7.2.0-rc1-dirty #248PREEMPT
+  Tainted: [W]=WARN
+  Hardware name: Apple Mac mini (M1, 2020) (DT)
+  Workqueue: kblockd blk_mq_timeou
+  pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  pc : percpu_ref_tryget_many.cons
+  lr : percpu_ref_tryget_many.constprop.0+0xc0/0x168
+  sp : ffffc000829cbce0
+  x29: ffffc000829cbce0 x28: ffff800020be9f48 x27: ffff800013e503c0
+  x26: 0000000000000108 x25: 000009c05
+  x23: 0000000000000000 x22: ffffc000819f5000 x21: ffff800020be9f48
+  x20: ffff8001deda4808 x19: ffff8000a
+  x17: 00000000580e1fac x16: ffffc00082bbbb7c x15: 0000000000000000
+  x14: 0000000000000028 x13: 000000001
+  x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc000829cbc20
+  x8 : ffffc00081915820 x7 : ffffc0001
+  x5 : ffff80001ca77d08 x4 : 0000000000000000 x3 : ffff80001ca77cb8
+  x2 : 0000000000000000 x1 : 000000007
+  Call trace:
+   percpu_ref_tryget_many.constpro
+   blk_mq_timeout_work+0x48/0x298
+   process_one_work+0x1f4/0x770
+   worker_thread+0x1b8/0x360
+   kthread+0x140/0x160
+   ret_from_fork+0x10/0x20
+  Code: 91282000 97ed44b2 17ffffd2
+  ---[ end trace 0000000000000000 ]---
+
+Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
+Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
+Tested-by: Janne Grunau <j@jannau.net>
+Tested-by: Nick Chan <towinchenmi@gmail.com>
+Signed-off-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/nvme/host/apple.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 27c15748fc7b8..9642f13601656 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -31,12 +31,16 @@ void nvmet_auth_sq_init(struct nvmet_sq *sq)
- 	sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
- }
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index b0ae46bda4031..ef3a969d68430 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1651,6 +1651,15 @@ static void apple_nvme_remove(struct platform_device *pdev)
+ 	nvme_stop_ctrl(&anv->ctrl);
+ 	nvme_remove_namespaces(&anv->ctrl);
+ 	apple_nvme_disable(anv, true);
++	if (anv->ctrl.admin_q && !blk_queue_dying(anv->ctrl.admin_q)) {
++		/*
++		 * If the controller was reset during removal, it's possible
++		 * user requests may be waiting on a stopped queue. Start the
++		 * queue to flush these to completion.
++		 */
++		nvme_unquiesce_admin_queue(&anv->ctrl);
++		blk_mq_destroy_queue(anv->ctrl.admin_q);
++	}
+ 	nvme_uninit_ctrl(&anv->ctrl);
  
--static u8 nvmet_auth_negotiate(struct nvmet_req *req, void *d)
-+static u8 nvmet_auth_negotiate(struct nvmet_req *req, void *d, u32 tl)
- {
- 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
- 	struct nvmf_auth_dhchap_negotiate_data *data = d;
- 	int i, hash_id = 0, fallback_hash_id = 0, dhgid, fallback_dhgid;
- 
-+	if (tl < sizeof(*data) +
-+			sizeof(struct nvmf_auth_dhchap_protocol_descriptor))
-+		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
-+
- 	pr_debug("%s: ctrl %d qid %d: data sc_d %d napd %d authid %d halen %d dhlen %d\n",
- 		 __func__, ctrl->cntlid, req->sq->qid,
- 		 data->sc_c, data->napd, data->auth_protocol[0].dhchap.authid,
-@@ -72,6 +76,10 @@ static u8 nvmet_auth_negotiate(struct nvmet_req *req, void *d)
- 	    NVME_AUTH_DHCHAP_AUTH_ID)
- 		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
- 
-+	if (data->auth_protocol[0].dhchap.dhlen > NVME_AUTH_DHCHAP_MAX_DH_IDS ||
-+	    data->auth_protocol[0].dhchap.halen > NVME_AUTH_DHCHAP_MAX_HASH_IDS)
-+		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
-+
- 	for (i = 0; i < data->auth_protocol[0].dhchap.halen; i++) {
- 		u8 host_hmac_id = data->auth_protocol[0].dhchap.idlist[i];
- 
-@@ -317,7 +325,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 		} else if (data->auth_id != req->sq->dhchap_step)
- 			goto done_failure1;
- 		/* Validate negotiation parameters */
--		dhchap_status = nvmet_auth_negotiate(req, d);
-+		dhchap_status = nvmet_auth_negotiate(req, d, tl);
- 		if (dhchap_status == 0)
- 			req->sq->dhchap_step =
- 				NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE;
+ 	if (apple_rtkit_is_running(anv->rtk)) {
 -- 
 2.53.0
 
