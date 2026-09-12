@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F154373BF2;
-	Sat, 12 Sep 2026 10:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB942BDC0E;
+	Sat, 12 Sep 2026 10:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208459; cv=none; b=fJlPNJCVGdPR4bFo0+t/YuTvUGAS7BUaNgmVllc8vyuUPu+d7tkcfnbbi8pCzCo1CFd5H0VNiJzvkNQMOIMHnkbt2F8CB+3HZsUZFzaaMMujVCkbWhGAjsKSfR2U7wapJNoUafc2rs2zSmxovosAcP3jHUnmtvy0fFjvbJP4bQA=
+	t=1789208464; cv=none; b=PaRN2RAsYPTBYJYpizYuvcptQS5vSQSCBRjL+4epkOhd9L2/d71ujusv8h7e9/tTqqmlw9Jzwb6pBHcV9nQL1sKSp/cfI7p+D4hI2RJVv9IcgW8gF+R/m8gnbfUd3XVnYkAN+MifCRSPuc9PJDN6Yx0juDyUCIpi79+8hkoHK0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208459; c=relaxed/simple;
-	bh=Mpd+GtAUICBNlUUbbAbrrTfL87i3QhYt2L5ZqMFLVk8=;
+	s=arc-20240116; t=1789208464; c=relaxed/simple;
+	bh=30eEm6MYOlsJA3y64yc0byjIFBg/EryU6Zny6LH2fFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aw5F6Q74WVxjQIzlWpKPBTGdoqfTqz3c1dxfQsIVfYqZoE1s4l3KX6hARMC0gdR6Ib2/5ULrclh4wChSJXb+K12MCNIOzoAkM2oizPU5ppFbKAEGjYOtUUATmB+IlMbZdwwzqs6QyLLlKDB4Fcn0AZ5Lzo1pdMAZyigQa/fKkLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2+BUlCU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T+q1q9vKYqHCajJJ6LDrbzVxRhiBTSNEgkTr4gpfZsMOjQ4U+3z4hBKmv/aWgVdh002MC9j+AJjSF3bR8n8cEuUGRC2qfOdbO7BHGlQhmHWWthJ2bxLZhswPZl6pCpkOrIGCWkdvnR4EMz8s4vhB1UfyHhtsqXA0t+EuH8vK5E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm/RxJna; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2+BUlCU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD15D1F000FF;
-	Sat, 12 Sep 2026 10:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm/RxJna"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0DC1F000FF;
+	Sat, 12 Sep 2026 10:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208457;
-	bh=ibTgxsk3sOFLnSCmchFoh95er7A65JW8r3qqkbWNmco=;
+	s=korg; t=1789208462;
+	bh=m63l2pUC0rjtvYprk7hz9ImQjIfuRBOOTyP2nBHjpMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p2+BUlCUpOwhSBaa/yz5/XMZ6Qu7aU8q/c1Nbz+naHLgTH3klQwLl84Nv+PHHACMt
-	 K8Qk/XNCbT/B8rUWqijD2EJTcVSO+lOTpY14QEJl60Bduww6l95Ajz1bPFJewlebd1
-	 Cd7pN5FJCFih7m2G0L+OmfaaWk/olFfl9xaO4r4Q=
+	b=zm/RxJnaz9p+YCcZV3nG50o7OWJLfrvjSgc2UEqeAGpT9NiBJj6q40+J5+VgB1fHy
+	 uk2cV3l4XYFX/mzvAOOHnWHb7N/egD7O4aG1CiYeFECzM5/CObZsNncJhiPkp31yPi
+	 SqILCfUKTvvuMbss/C1Uf70kfKNJvcPSUDlWZSy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
+	syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0621/1518] nilfs2: prevent out-of-bounds read in super root block parsing
-Date: Sat, 12 Sep 2026 08:46:30 +0200
-Message-ID: <20260912065637.478455025@linuxfoundation.org>
+Subject: [PATCH 6.18 0622/1518] nilfs2: fix BUG in nilfs_copy_dirty_pages() on dirty state mismatch
+Date: Sat, 12 Sep 2026 08:46:31 +0200
+Message-ID: <20260912065637.500993505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,45 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 7cb2f76a6a2ba2130b577cb8ac13e1e46c4fc689 ]
+[ Upstream commit 66f4ad3ce158902e5f98afea93189972ed8750c2 ]
 
-super-root inode metadata size is trusted before nilfs_read_inode_common().
+Syzbot reported a kernel BUG triggered within nilfs_copy_dirty_pages(),
+which copies dirty DAT file folios/pages to its shadow page cache.  The
+BUG occurs when a retrieved dirty folio/page unexpectedly loses its
+'dirty' status.
 
-Reject super-root inode sizes whose computed on-disk footprint exceeds the
-filesystem block size. This prevents malformed filesystem images from
-making nilfs_read_inode_common() read past the end of the super-root block.
+This issue arises because, since the commit referenced below, the 'dirty'
+flag of a folio/page can be cleared asynchronously after the filesystem
+detects metadata corruption and transitions to read-only mode.
 
-[ryusuke: clarify the commit title]
+Resolve the issue by returning an -EROFS error if the filesystem has
+transitioned to read-only mode.  Also change the behavior to issue a
+kernel warning only once instead of triggering a kernel BUG when this
+unexpected 'dirty' state is detected while the filesystem is not in
+read-only mode.
 
-Fixes: 8a9d2191e9f4 ("nilfs2: operations for the_nilfs core object")
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: Codex:gpt-5.5
+Reported-by: syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8baf9a79a3ffc6271cb6
+Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/the_nilfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/nilfs2/page.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index d0bcf744c553a..9911a484398a0 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -461,6 +461,12 @@ static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
- 			  nilfs->ns_inode_size);
- 		return -EINVAL;
- 	}
-+	if (NILFS_SR_BYTES(nilfs->ns_inode_size) > nilfs->ns_blocksize) {
-+		nilfs_err(nilfs->ns_sb,
-+			  "too large inode size for super root: %d bytes",
-+			  nilfs->ns_inode_size);
-+		return -EINVAL;
-+	}
+diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
+index 56c4da417b6a1..89180e2f59fef 100644
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -243,6 +243,7 @@ static void nilfs_copy_folio(struct folio *dst, struct folio *src,
+ int nilfs_copy_dirty_pages(struct address_space *dmap,
+ 			   struct address_space *smap)
+ {
++	struct inode *smap_inode = smap->host;
+ 	struct folio_batch fbatch;
+ 	unsigned int i;
+ 	pgoff_t index = 0;
+@@ -258,8 +259,19 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
+ 		struct folio *folio = fbatch.folios[i], *dfolio;
  
- 	nilfs->ns_first_ino = le32_to_cpu(sbp->s_first_ino);
- 	if (nilfs->ns_first_ino < NILFS_USER_INO) {
+ 		folio_lock(folio);
+-		if (unlikely(!folio_test_dirty(folio)))
+-			NILFS_FOLIO_BUG(folio, "inconsistent dirty state");
++		if (unlikely(!folio_test_dirty(folio))) {
++			if (WARN_ONCE(!sb_rdonly(smap_inode->i_sb),
++					"inconsistent dirty state\n"))
++				goto unlock_folio;
++
++			/*
++			 * If the filesystem has been forced to read-only
++			 * due to metadata corruption.
++			 */
++			folio_unlock(folio);
++			err = -EROFS;
++			break;
++		}
+ 
+ 		dfolio = filemap_grab_folio(dmap, folio->index);
+ 		if (IS_ERR(dfolio)) {
+@@ -277,6 +289,7 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
+ 
+ 		folio_unlock(dfolio);
+ 		folio_put(dfolio);
++unlock_folio:
+ 		folio_unlock(folio);
+ 	}
+ 	folio_batch_release(&fbatch);
 -- 
 2.53.0
 
