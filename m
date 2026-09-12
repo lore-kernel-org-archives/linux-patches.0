@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83393B71DA;
-	Sat, 12 Sep 2026 10:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C09343889;
+	Sat, 12 Sep 2026 10:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209212; cv=none; b=mBuLJB7eUtKlWBPdfUIfE3UVidyrsMDcZMImx3+a5TIWKUrp4byIY7ZR4QolbZafkGz9yv8v8fCnmj64qQiCP3OBj6DbD8mtwZF+LyXRE83EryKW0KGlT1cn5v7XO4IKKb4zu8mvjcWbALikChnLAtz6Hw9IU1CqdSATRG+cmhc=
+	t=1789209217; cv=none; b=dyGmMsmxbLlGwg5xELHOtQ3SI0BfvqeUjjrBc+A+F+CWhVsx3aSDmogU8FvUGHZ4A26oi1PxBwm+tA+d96TP8dAoFLSDOwaaTNBew7fJeBesrS0DIBo9sjr6Qpp0IASNv/mO3u23fBJ1sahvOa5fUszedcfIdxEHezn3Gwhw5HA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209212; c=relaxed/simple;
-	bh=thAMMS8aU8M8Rx5FPh0aUDwKIJur3gdtslEYzvor/gM=;
+	s=arc-20240116; t=1789209217; c=relaxed/simple;
+	bh=8waCSu6G2zgfgPwBj6GSDrG98PC8CKObr0nX0Dj3iPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d63A7Gw+uS0n/+XPrbppQxpyTcxFf19Uc0siBGzJx8UExvNevLF9iSoM9w/n+pox59k5zk1D0WCIkdR3BgY/1xkVMxeCjVFD2O/rDwrUO/9L8DwyLVJ/lWnc7q7w2SJ6jIHWsPSAMtRukhvytgFzEHk3a/TUHHizkMzQpxECjek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6SUpMku; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aGuYMTm3cY84o9yhseyQElLT/1A5jTZq69dH/rfhZG8Bfd4RPSRCwxBnxUlq3XdBrcxjoos700hnnV9TbkgUtTCCveTr4/vxN88Xe3u9OJmTmSflsFZoGIYRL0p5CaaV0knNVydjo7hnel5JOhFeJnyChY9lORqO/qc2XkV7WOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcPvnAdr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6SUpMku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B621F000FF;
-	Sat, 12 Sep 2026 10:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcPvnAdr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990CE1F0089A;
+	Sat, 12 Sep 2026 10:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209211;
-	bh=MOhTi/b/X5JPFmVgAVj+D5wFzrQyyLWQ2Je7BYBwk+k=;
+	s=korg; t=1789209216;
+	bh=UFVW1uZkqE2jdw/QABpiPEEqGepYGnn27kmrQH2Juo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T6SUpMkuMwzdYCLBsH8Bcjs1IAlPVueYIiqY46uqpjHOo45IoZAtZPeZy8/velfqB
-	 YxmWjauj3SazNurCmp6HzO/Km6cZSvyijs3HeLf/m5QcJMrG18DascMxkF7wRaCczZ
-	 zoRYNNHRQLyZE5ZjLEznGe4W5ptp86ww2b9b+uOM=
+	b=gcPvnAdr6JlIwgbqC2oHveq0X1b+LvR4uy1mDGpNBU5JOWTLGl72HrhTkntXvgZnW
+	 8l5nKHsqNJRgVvqLKzEMg8/+6Biyi4T6S2GWfysY+jFJb1PCtPfp7LoI1jIOJu7RjD
+	 ZKE4WqAW/WgAoJUVPxmjN5Qyd7IRg4obJHWzfba4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Lu <rex.lu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Vinod Koul <vkoul@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0738/1518] wifi: mt76: fix RX data queuing of RRO 3.0
-Date: Sat, 12 Sep 2026 08:48:27 +0200
-Message-ID: <20260912065640.129754098@linuxfoundation.org>
+Subject: [PATCH 6.18 0774/1518] soundwire: Add a helper function to wait for device initialisation
+Date: Sat, 12 Sep 2026 08:49:03 +0200
+Message-ID: <20260912065640.946368345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,53 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rex Lu <rex.lu@mediatek.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 86897f106669c07eea4c34b54c3268d448d41426 ]
+[ Upstream commit 3492e8b494c18028044d4a2e03db5c7331fbd789 ]
 
-For RRO 3.0, RX data released from a RRO data queue should be put to
-the indicator queue. The frames are processed and completed in the
-context of the indicator queue NAPI, which only polls skbs queued on
-the MT_RXQ_RRO_IND list; frames queued under the data queue id are
-left sitting on that list until the data queue NAPI happens to run,
-stalling and reordering RX data.
+Add a new helper function to wait for the device to enumerate
+and be initialised by the SoundWire core. Most of the SoundWire
+drivers have very similar boiler plate code in their runtime
+resume, and that boiler plate tends to access various internals
+of the SoundWire structs which is a mild layering violation.
 
-Fixes: b1e58e137b61 ("wifi: mt76: mt7996: Introduce RRO MSDU callbacks")
-Signed-off-by: Rex Lu <rex.lu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20260722082610.2699628-1-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Adding a new core helper function greatly eases both of these
+issues.
+
+Acked-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260512103022.1154645-2-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: b627da430357 ("ASoC: tas2783-sdw: drop stale regcache on uninitialized re-attach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/soundwire/bus.c       | 31 +++++++++++++++++++++++++++++++
+ include/linux/soundwire/sdw.h |  8 ++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 030e9103283f3..2d8cd627ef4c6 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -886,6 +886,7 @@ static void mt76_rx_release_amsdu(struct mt76_phy *phy, enum mt76_rxq_id q)
- 	struct sk_buff *skb = phy->rx_amsdu[q].head;
- 	struct mt76_rx_status *status = (struct mt76_rx_status *)skb->cb;
- 	struct mt76_dev *dev = phy->dev;
-+	struct mt76_queue *rxq = &dev->q_rx[q];
+diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
+index 14e1351a3f8ae..45d786f379d84 100644
+--- a/drivers/soundwire/bus.c
++++ b/drivers/soundwire/bus.c
+@@ -1372,6 +1372,37 @@ int sdw_slave_get_current_bank(struct sdw_slave *slave)
+ }
+ EXPORT_SYMBOL_GPL(sdw_slave_get_current_bank);
  
- 	phy->rx_amsdu[q].head = NULL;
- 	phy->rx_amsdu[q].tail = NULL;
-@@ -914,6 +915,13 @@ static void mt76_rx_release_amsdu(struct mt76_phy *phy, enum mt76_rxq_id q)
- 			return;
- 		}
- 	}
++/**
++ * sdw_slave_wait_for_init - Wait for device initialisation
++ * @slave: Pointer to the SoundWire peripheral.
++ * @timeout_ms: Timeout in milliseconds.
++ *
++ * Wait for a peripheral device to enumerate and be initialised by the
++ * SoundWire core.
++ *
++ * Return: Zero on success, and a negative error code on failure.
++ */
++int sdw_slave_wait_for_init(struct sdw_slave *slave, int timeout_ms)
++{
++	unsigned long time;
 +
-+	/* RRO 3.0 data queue skbs are processed and completed in the context
-+	 * of the indicator queue NAPI, which only polls its own skb list
-+	 */
-+	if (mt76_queue_is_wed_rro_data(rxq) && dev->hwrro_mode == MT76_HWRRO_V3)
-+		q = MT_RXQ_RRO_IND;
++	if (!slave->unattach_request)
++		return 0;
 +
- 	__skb_queue_tail(&dev->rx_skb[q], skb);
++	time = wait_for_completion_timeout(&slave->initialization_complete,
++					   msecs_to_jiffies(timeout_ms));
++	if (!time) {
++		dev_err(&slave->dev, "Initialization not complete\n");
++		sdw_show_ping_status(slave->bus, true);
++		return -ETIMEDOUT;
++	}
++
++	slave->unattach_request = 0;
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(sdw_slave_wait_for_init);
++
+ static int sdw_slave_set_frequency(struct sdw_slave *slave)
+ {
+ 	int scale_index;
+diff --git a/include/linux/soundwire/sdw.h b/include/linux/soundwire/sdw.h
+index e6a3476bcef1a..bf2ddd429620f 100644
+--- a/include/linux/soundwire/sdw.h
++++ b/include/linux/soundwire/sdw.h
+@@ -1093,6 +1093,8 @@ int sdw_slave_get_current_bank(struct sdw_slave *sdev);
+ 
+ int sdw_slave_get_scale_index(struct sdw_slave *slave, u8 *base);
+ 
++int sdw_slave_wait_for_init(struct sdw_slave *slave, int timeout_ms);
++
+ /* messaging and data APIs */
+ int sdw_read(struct sdw_slave *slave, u32 addr);
+ int sdw_write(struct sdw_slave *slave, u32 addr, u8 value);
+@@ -1136,6 +1138,12 @@ static inline int sdw_slave_get_current_bank(struct sdw_slave *sdev)
+ 	return -EINVAL;
  }
  
++static inline int sdw_slave_wait_for_init(struct sdw_slave *slave, int timeout_ms)
++{
++	WARN_ONCE(1, "SoundWire API is disabled");
++	return -EINVAL;
++}
++
+ /* messaging and data APIs */
+ static inline int sdw_read(struct sdw_slave *slave, u32 addr)
+ {
 -- 
 2.53.0
 
