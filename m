@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76CB35E1D5;
-	Sat, 12 Sep 2026 19:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B96E349CE2;
+	Sat, 12 Sep 2026 19:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242448; cv=none; b=G4jQuXAO3JSdc+tXVdE9iIswH7Wr2sYBORgRDsab13IVUlOrZEZQoMbRVU86XVUPuanpQm/tD4jOUG76stTp3HBGU2lM4oNN//eeYKiE1PxxKKnSCZ2KEJxonQckVKyrxoytKZxh1ZG+OyNBQbVeN4z1G7pijEc8T1Tp+XynU/4=
+	t=1789242451; cv=none; b=A6xLmY09dSU8ns249VTBzQCkacKQvnnLbpuKimtlUFO2EhFLXmqfEvFLN8pb1AzIehMKwJBco1WZVd/aIatLa7p6+slCiPOYVP3sMkMwgXGq+q7ea4Ro8YNFmRFb9UBtgDenV0omMkP8V2YzuB6pKwtF+4lYicCMA068xjQ43hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242448; c=relaxed/simple;
-	bh=T036zFcvie93EyHkIRHmOixI1WRu//rf+b5TGyteHWA=;
+	s=arc-20240116; t=1789242451; c=relaxed/simple;
+	bh=+MCepYYD9sBXQYiv/GMzaN0t/4s7WYfJzjxO9aig23Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btn6GnhMWE2ZGE0mvmq0wziORPBCO+2+pekR4E55HVwoHJhkCLBczpctkEQbR1fvPVUZFAIX5z2VfFJEiPrrIL7Hz9UtA7hAcOuoYT9orZd71kOuB0H1j51EZd1bGVAtjE/ahmWVMbwMqidVIhzqElZy64RAoHGYuxt2qg+Nofk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIvoo34E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=no7IDHFR16BWHJBBba0FgL2p7Q5q9Uy6xAEIxsh3AgPn8HnWYCX4MDHmhFE2a9M2Hp+2AjM+/3Z7Fu5SB9pFmNfe6eoIbBkDrlmTGspYJzcTBe13bptqUET0YzCzBrmHJ4kDoM7JPbHDcJgkxjvNZDzceJoNAPkm1kRAnMm1oOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FFr4B71; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIvoo34E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2065D1F000FF;
-	Sat, 12 Sep 2026 19:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FFr4B71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E307B1F000FF;
+	Sat, 12 Sep 2026 19:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242447;
-	bh=xJTDK2kzVq4G8mRkMLH7SVtWJIE+lsEqHPG91Cob73g=;
+	s=korg; t=1789242450;
+	bh=G5x/MxPb5/sJytHLfRJyDgBHhacnsWn6INeQIKvnDPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fIvoo34EoMHVJPLtwaCzw5De30698yuFSZE7P2BDmrZ6ian8mjzJbj0WBzPhyMnAl
-	 zEgM73tlC4g1p+dX7c1meeWPCfvZhHlYRl1/ymZmnEvUJsBbzreOFDkvw5AX7bfamj
-	 6K2AWsUReWVrtyinOBU/6jDGBAyNUmVaXgXta+1M=
+	b=1FFr4B71sZgZpN9+cTU2yr9QYwf7wrQJgVqHAM2E6U3pY6MEI/qrv9/v+fPmFEaBI
+	 sbWPxhvA8gyWxJ+4pygEcrBONIIgP90mvHHdJMiPmw8Wh08Xlvt4W3iwn92z1eINNb
+	 dW8bxyKPgjO5UjlRR5dZPrtgRmFckDB8btCeD9MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Rob Herring <robh@kernel.org>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Yongwei Xu <xuyongwei@open-hieco.net>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 380/798] of: Add cleanup.h based auto release via __free(device_node) markings
-Date: Sat, 12 Sep 2026 09:00:08 +0200
-Message-ID: <20260912065525.864941848@linuxfoundation.org>
+Subject: [PATCH 5.10 407/798] iommu/amd: Prevent SB IOAPIC from overriding IVRS validation errors
+Date: Sat, 12 Sep 2026 09:00:35 +0200
+Message-ID: <20260912065526.479065418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,70 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Wei Wang <wei.w.wang@hotmail.com>
 
-[ Upstream commit 9448e55d032d99af8e23487f51a542d51b2f1a48 ]
+[ Upstream commit 854056480f9217568e3ab5edd81a9347a173ea79 ]
 
-The recent addition of scope based cleanup support to the kernel
-provides a convenient tool to reduce the chances of leaking reference
-counts where of_node_put() should have been called in an error path.
+The check_ioapic_information() function validates IOAPICs against the
+IVRS table to safely disable Interrupt Remapping (IR) if the BIOS provides
+a broken topology.
 
-This enables
-	struct device_node *child __free(device_node) = NULL;
+Currently, the validation loop contains a bug: If an unmapped secondary
+IOAPIC is encountered, 'ret' is set to false. But if the Southbridge (SB)
+IOAPIC is enumerated after it in the MADT, the loop overwrites 'ret' to
+true.
 
-	for_each_child_of_node(np, child) {
-		if (test)
-			return test;
-	}
+This bypasses the validation failure and leaves IR enabled. When devices
+attached to the unmapped secondary IOAPIC fire interrupts, the IOMMU drops
+them due to the missing Requestor ID, leading to localized device hangs.
 
-with no need for a manual call of of_node_put().
-A following patch will reduce the scope of the child variable to the
-for loop, to avoid an issues with ordering of autocleanup, and make it
-obvious when this assigned a non NULL value.
+Fix this by initializing 'ret' to true and only toggling it to false
+upon encountering a validation error, ensuring failures are never erased.
 
-In this simple example the gains are small but there are some very
-complex error handling cases buried in these loops that will be
-greatly simplified by enabling early returns with out the need
-for this manual of_node_put() call.
-
-Note that there are coccinelle checks in
-scripts/coccinelle/iterators/for_each_child.cocci to detect a failure
-to call of_node_put(). This new approach does not cause false positives.
-Longer term we may want to add scripting to check this new approach is
-done correctly with no double of_node_put() calls being introduced due
-to the auto cleanup. It may also be useful to script finding places
-this new approach is useful.
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20240225142714.286440-2-jic23@kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Stable-dep-of: 64774dea5896 ("bus: qcom-ebi2: Fix clock leak on probe failure")
+Fixes: c2ff5cf5294b ("iommu/amd: Work around wrong IOAPIC device-id in IVRS table")
+Signed-off-by: Wei Wang <wei.w.wang@hotmail.com>
+Tested-by: Yongwei Xu <xuyongwei@open-hieco.net>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/of.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/amd/init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/of.h b/include/linux/of.h
-index 4ed8dce624e7b..d8cd02433f910 100644
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -13,6 +13,7 @@
-  */
- #include <linux/types.h>
- #include <linux/bitops.h>
-+#include <linux/cleanup.h>
- #include <linux/errno.h>
- #include <linux/kobject.h>
- #include <linux/mod_devicetable.h>
-@@ -128,6 +129,7 @@ static inline struct device_node *of_node_get(struct device_node *node)
- }
- static inline void of_node_put(struct device_node *node) { }
- #endif /* !CONFIG_OF_DYNAMIC */
-+DEFINE_FREE(device_node, struct device_node *, if (_T) of_node_put(_T))
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 1b7a0fae423ce..9b99994c97943 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -2576,7 +2576,7 @@ static bool __init check_ioapic_information(void)
+ 	int idx;
  
- /* Pointer for first entry in chain of all nodes. */
- extern struct device_node *of_root;
+ 	has_sb_ioapic = false;
+-	ret           = false;
++	ret           = true;
+ 
+ 	/*
+ 	 * If we have map overrides on the kernel command line the
+@@ -2596,7 +2596,6 @@ static bool __init check_ioapic_information(void)
+ 			ret = false;
+ 		} else if (devid == IOAPIC_SB_DEVID) {
+ 			has_sb_ioapic = true;
+-			ret           = true;
+ 		}
+ 	}
+ 
+@@ -2610,6 +2609,7 @@ static bool __init check_ioapic_information(void)
+ 		 * device id for the IOAPIC in the system.
+ 		 */
+ 		pr_err("%s: No southbridge IOAPIC found\n", fw_bug);
++		ret = false;
+ 	}
+ 
+ 	if (!ret)
 -- 
 2.53.0
 
