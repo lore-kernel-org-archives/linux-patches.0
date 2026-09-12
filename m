@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7AA3264D4;
-	Sat, 12 Sep 2026 14:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409151DE4EF;
+	Sat, 12 Sep 2026 14:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222289; cv=none; b=D4IKCVIM8sXO/KHNeNzpQvkNvMmlW1fcIxEv62QuVXWVMr79EyBRvQiNMBKmXkZiD4dZ3Tv0J49TazA2TjMBIGsfIo6wMRadKLVhALxvv2UNjqvw5MIkj+ZJFA+7oIUUHHo8YzbGQt3STRMxWsbldEjmATZD3+ZIMzmSW4ihsQI=
+	t=1789222294; cv=none; b=ADQhc9U7QwhXuo/UcIRMQ3adSBWUat5NUz/XDCTmzLGRmW27RylljRKB5UliWkEkVg1hdBh9pJXjtTR8F22yjnEBMI2kJnudNrFdszCXIQsSnntAvfjga+/PsWaAqj3vn6lRphGFAw3xjq9pzAeAQBLhypkyYJBRLCFhPW3T/YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222289; c=relaxed/simple;
-	bh=I9TwkM826kyvo6iEBI8BkscjvdKrsWnjTMQItCtiRAA=;
+	s=arc-20240116; t=1789222294; c=relaxed/simple;
+	bh=CGbXTmoNNJJmwnOa7wm8ZtrWWX+wjVVGCr4iSeI1SiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PpvXcb3Z7JfxUrlUb8s0lbgYfhYtXNPQVaJJPrZnShy/SPu8y97t36WNvStecwAGEHgMLkSGE9xSo4UeuW2aqwy/1epqALa8ILDCADeJZDx/OAvjCwjcJObSlxOr6/uTugVSvDTWYlPNcPGf7Epc5O2IFVWZilfE+dguSplb5dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6GiygGe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JJvnAACEpZAuej+hQVv6jKeyXhhaT4mPdT92XZiLQbWl7bP7ifjy+YhmKDVGiJd7/i4rBI1yfex571G9vRLshr0xQPQPoaRER4iP9c590K/mWUlR3TTGqrPOD/2jPhGplBGIZhIM2IkG+BpYFKEWyBZxDhg7TXz3pO41UFTKMC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvTAG+ui; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6GiygGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2CF1F000FF;
-	Sat, 12 Sep 2026 14:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvTAG+ui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4764E1F000FF;
+	Sat, 12 Sep 2026 14:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222288;
-	bh=B6GuWfIzsyJBBnuY1KwBSiQKKUFTbAeJ38UuoVztA3Y=;
+	s=korg; t=1789222293;
+	bh=GjACgXW2bOUQgAyRVSDnM1KcysL8NuOHCfankuVsJro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r6GiygGeJatEiTBApSOEQatDFUvFfzq4sx30Sd9Qn3ARXXUT639tmmFV07s9x1HmV
-	 JyefOUuqZMccp2M8tIEXFEwGanNyGbFRvNW4fgi28XIeVxTNLADX5bEZ16ElLA1DMz
-	 WfDgJLagdC8Wi1t03Rz5FRuzEk1myKhNF8ckYJX0=
+	b=rvTAG+uiOemFI7i5BFHT30ZKx90jf9krP1+9YI+MlXJiXZxct9QuBje09pRROOQ7J
+	 fuIU/b4CTUVqz7a5gyapqhufSo9U+ExZtqADJmC1ZvqMcik5HPvHYp0s1GCxSeSQyI
+	 e9MNdF9k9XLY2fxN1WICwbMCVAx/oYv1RnkjJzV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ingo Molnar <mingo@elte.hu>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Bjoern Doebel <doebel@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0539/1424] net: hns3: fix kernel crash when 1588 is sent on HIP08 devices
-Date: Sat, 12 Sep 2026 08:49:31 +0200
-Message-ID: <20260912065619.370973084@linuxfoundation.org>
+Subject: [PATCH 6.6 0557/1424] perf sched: Fix register_pid() overflow, strcpy, and BUG_ON
+Date: Sat, 12 Sep 2026 08:49:49 +0200
+Message-ID: <20260912065619.778231413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -47,102 +47,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 9741e72b2286de8b38de9db685588ac421a95c87 ]
+commit 5949d339f5ec98752d56dcd4e36f619a59d513a5 upstream.
 
-Currently, HIP08 devices does not register the ptp devices, so the
-hdev->ptp is NULL. But the tx process would still try to set hardware time
-stamp info with SKBTX_HW_TSTAMP flag and cause a kernel crash.
+register_pid() has several issues when processing untrusted perf.data:
 
-[  128.087798] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
-...
-[  128.280251] pc : hclge_ptp_set_tx_info+0x2c/0x140 [hclge]
-[  128.286600] lr : hclge_ptp_set_tx_info+0x20/0x140 [hclge]
-[  128.292938] sp : ffff800059b93140
-[  128.297200] x29: ffff800059b93140 x28: 0000000000003280
-[  128.303455] x27: ffff800020d48280 x26: ffff0cb9dc814080
-[  128.309715] x25: ffff0cb9cde93fa0 x24: 0000000000000001
-[  128.315969] x23: 0000000000000000 x22: 0000000000000194
-[  128.322219] x21: ffff0cd94f986000 x20: 0000000000000000
-[  128.328462] x19: ffff0cb9d2a166c0 x18: 0000000000000000
-[  128.334698] x17: 0000000000000000 x16: ffffcf1fc523ed24
-[  128.340934] x15: 0000ffffd530a518 x14: 0000000000000000
-[  128.347162] x13: ffff0cd6bdb31310 x12: 0000000000000368
-[  128.353388] x11: ffff0cb9cfbc7070 x10: ffff2cf55dd11e02
-[  128.359606] x9 : ffffcf1f85a212b4 x8 : ffff0cd7cf27dab0
-[  128.365831] x7 : 0000000000000a20 x6 : ffff0cd7cf27d000
-[  128.372040] x5 : 0000000000000000 x4 : 000000000000ffff
-[  128.378243] x3 : 0000000000000400 x2 : ffffcf1f85a21294
-[  128.384437] x1 : ffff0cb9db520080 x0 : ffff0cb9db500080
-[  128.390626] Call trace:
-[  128.393964]  hclge_ptp_set_tx_info+0x2c/0x140 [hclge]
-[  128.399893]  hns3_nic_net_xmit+0x39c/0x4c4 [hns3]
-[  128.405468]  xmit_one.constprop.0+0xc4/0x200
-[  128.410600]  dev_hard_start_xmit+0x54/0xf0
-[  128.415556]  sch_direct_xmit+0xe8/0x634
-[  128.420246]  __dev_queue_xmit+0x224/0xc70
-[  128.425101]  dev_queue_xmit+0x1c/0x40
-[  128.429608]  ovs_vport_send+0xac/0x1a0 [openvswitch]
-[  128.435409]  do_output+0x60/0x17c [openvswitch]
-[  128.440770]  do_execute_actions+0x898/0x8c4 [openvswitch]
-[  128.446993]  ovs_execute_actions+0x64/0xf0 [openvswitch]
-[  128.453129]  ovs_dp_process_packet+0xa0/0x224 [openvswitch]
-[  128.459530]  ovs_vport_receive+0x7c/0xfc [openvswitch]
-[  128.465497]  internal_dev_xmit+0x34/0xb0 [openvswitch]
-[  128.471460]  xmit_one.constprop.0+0xc4/0x200
-[  128.476561]  dev_hard_start_xmit+0x54/0xf0
-[  128.481489]  __dev_queue_xmit+0x968/0xc70
-[  128.486330]  dev_queue_xmit+0x1c/0x40
-[  128.490856]  ip_finish_output2+0x250/0x570
-[  128.495810]  __ip_finish_output+0x170/0x1e0
-[  128.500832]  ip_finish_output+0x3c/0xf0
-[  128.505504]  ip_output+0xbc/0x160
-[  128.509654]  ip_send_skb+0x58/0xd4
-[  128.513892]  udp_send_skb+0x12c/0x354
-[  128.518387]  udp_sendmsg+0x7a8/0x9c0
-[  128.522793]  inet_sendmsg+0x4c/0x8c
-[  128.527116]  __sock_sendmsg+0x48/0x80
-[  128.531609]  __sys_sendto+0x124/0x164
-[  128.536099]  __arm64_sys_sendto+0x30/0x5c
-[  128.540935]  invoke_syscall+0x50/0x130
-[  128.545508]  el0_svc_common.constprop.0+0x10c/0x124
-[  128.551205]  do_el0_svc+0x34/0xdc
-[  128.555347]  el0_svc+0x20/0x30
-[  128.559227]  el0_sync_handler+0xb8/0xc0
-[  128.563883]  el0_sync+0x160/0x180
+1. Integer overflow: (pid + 1) * sizeof(struct task_desc *) can wrap
+   to a small value on 32-bit systems when pid is large (e.g.
+   0x40000000), causing realloc to return a tiny buffer followed by
+   out-of-bounds writes in the initialization loop.
 
-Fixes: 0bf5eb788512 ("net: hns3: add support for PTP")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250106143642.539698-8-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+2. Heap buffer overflow: strcpy(task->comm, comm) copies the
+   untrusted comm string into a fixed 20-byte COMM_LEN buffer with
+   no length check.
+
+3. BUG_ON on allocation failure: perf.data is untrusted input, so
+   allocation failures should be handled gracefully rather than
+   killing the process.
+
+4. Realloc of sched->tasks assigned directly back, leaking the old
+   pointer on failure; nr_tasks incremented before the realloc,
+   leaving corrupted state on failure.
+
+Cap pid at PID_MAX_LIMIT (4194304, matching the kernel's maximum
+on 64-bit), replace strcpy with strlcpy, guard against NULL comm,
+replace BUG_ON with NULL returns using safe realloc patterns, and
+add NULL checks in callers that dereference the result.
+
+Fixes: ec156764d424 ("perf sched: Import schedbench.c")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Ingo Molnar <mingo@elte.hu>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+[doebel: context adjustment for 6.6]
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/builtin-sched.c | 40 ++++++++++++++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-index c1e88e67ebb65..5e94410d8dc2e 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-@@ -58,6 +58,9 @@ bool hclge_ptp_set_tx_info(struct hnae3_handle *handle, struct sk_buff *skb)
- 	struct hclge_dev *hdev = vport->back;
- 	struct hclge_ptp *ptp = hdev->ptp;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 16cb7278fabaf..dfdfac2a11ad4 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -51,6 +51,7 @@
+ #define COMM_LEN		20
+ #define SYM_LEN			129
+ #define MAX_PID			1024000
++#define PID_MAX_LIMIT		4194304 /* kernel limit on 64-bit */
  
-+	if (!ptp)
-+		return false;
+ static const char *cpu_list;
+ static DECLARE_BITMAP(cpu_bitmap, MAX_NR_CPUS);
+@@ -448,17 +449,28 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
+ static struct task_desc *register_pid(struct perf_sched *sched,
+ 				      unsigned long pid, const char *comm)
+ {
+-	struct task_desc *task;
++	struct task_desc *task, **tasks_p;
+ 	static int pid_max;
+ 
++	/* perf.data is untrusted — cap pid to prevent overflow in size calculations */
++	if (pid >= PID_MAX_LIMIT) {
++		pr_err("pid %lu exceeds limit %d, skipping\n", pid, PID_MAX_LIMIT);
++		return NULL;
++	}
 +
- 	if (!test_bit(HCLGE_PTP_FLAG_TX_EN, &ptp->flags) ||
- 	    test_and_set_bit(HCLGE_STATE_PTP_TX_HANDLING, &hdev->state)) {
- 		ptp->tx_skipped++;
+ 	if (sched->pid_to_task == NULL) {
+ 		if (sysctl__read_int("kernel/pid_max", &pid_max) < 0)
+ 			pid_max = MAX_PID;
+-		BUG_ON((sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *))) == NULL);
++		sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *));
++		if (sched->pid_to_task == NULL)
++			return NULL;
+ 	}
+ 	if (pid >= (unsigned long)pid_max) {
+-		BUG_ON((sched->pid_to_task = realloc(sched->pid_to_task, (pid + 1) *
+-			sizeof(struct task_desc *))) == NULL);
++		void *p = realloc(sched->pid_to_task, (pid + 1) * sizeof(struct task_desc *));
++
++		if (p == NULL)
++			return NULL;
++		sched->pid_to_task = p;
+ 		while (pid >= (unsigned long)pid_max)
+ 			sched->pid_to_task[pid_max++] = NULL;
+ 	}
+@@ -469,9 +481,11 @@ static struct task_desc *register_pid(struct perf_sched *sched,
+ 		return task;
+ 
+ 	task = zalloc(sizeof(*task));
++	if (task == NULL)
++		return NULL;
+ 	task->pid = pid;
+-	task->nr = sched->nr_tasks;
+-	strcpy(task->comm, comm);
++	if (comm)
++		strlcpy(task->comm, comm, sizeof(task->comm));
+ 	/*
+ 	 * every task starts in sleeping state - this gets ignored
+ 	 * if there's no wakeup pointing to this sleep state:
+@@ -479,10 +493,12 @@ static struct task_desc *register_pid(struct perf_sched *sched,
+ 	add_sched_event_sleep(sched, task, 0, 0);
+ 
+ 	sched->pid_to_task[pid] = task;
+-	sched->nr_tasks++;
+-	sched->tasks = realloc(sched->tasks, sched->nr_tasks * sizeof(struct task_desc *));
+-	BUG_ON(!sched->tasks);
+-	sched->tasks[task->nr] = task;
++	tasks_p = realloc(sched->tasks, (sched->nr_tasks + 1) * sizeof(struct task_desc *));
++	if (!tasks_p)
++		return NULL;
++	sched->tasks = tasks_p;
++	sched->tasks[sched->nr_tasks] = task;
++	task->nr = sched->nr_tasks++;
+ 
+ 	if (verbose > 0)
+ 		printf("registered task #%ld, PID %ld (%s)\n", sched->nr_tasks, pid, comm);
+@@ -846,6 +862,8 @@ replay_wakeup_event(struct perf_sched *sched,
+ 
+ 	waker = register_pid(sched, sample->tid, "<unknown>");
+ 	wakee = register_pid(sched, pid, comm);
++	if (waker == NULL || wakee == NULL)
++		return -1;
+ 
+ 	add_sched_event_wakeup(sched, waker, sample->time, wakee);
+ 	return 0;
+@@ -888,6 +906,8 @@ static int replay_switch_event(struct perf_sched *sched,
+ 
+ 	prev = register_pid(sched, prev_pid, prev_comm);
+ 	next = register_pid(sched, next_pid, next_comm);
++	if (prev == NULL || next == NULL)
++		return -1;
+ 
+ 	sched->cpu_last_switched[cpu] = timestamp;
+ 
 -- 
 2.53.0
 
