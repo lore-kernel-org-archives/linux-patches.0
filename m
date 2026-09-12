@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9A419D8BC;
-	Sat, 12 Sep 2026 10:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA0219D8BC;
+	Sat, 12 Sep 2026 10:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208719; cv=none; b=STk4fnLjLPIL7ezIQTc4DtUzvtgeA8NL15u0MRglhiwHI8VCrfZsrsyQAvnxqFvE2A+t7Zyk18xVXnDeB4tqb3Cs0p/YoBdiOns4L6DOPshoeiaVA+l0THs68YxtDgpX4+bsnLCXcA0OBJb+4vW0R/E7uJXKsJlYQgUSqSI/bc4=
+	t=1789208725; cv=none; b=RDoVI7AsKCFjK2GpkPBL/7Cqg7dKJxWKBc2tP4XbhlNXeRb0WJrNZ4ND8G2p0jaDEYegwH7TxNhkzeQFp7zihVk4CMgRaGCNl3o8w+x2V1B83PjLDdZVVgDu0jOLQj5rOaTvqx3LGhdKkCnjWGuStNAsx3ncS0okRuHmW8EXGfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208719; c=relaxed/simple;
-	bh=mT9A3K1CB1wWPkoHBGueeaeWZ6wZNsFvj2n/AEnzVZg=;
+	s=arc-20240116; t=1789208725; c=relaxed/simple;
+	bh=+sMUxa7kMxgQ1qspeW25PED44UaJFt7gk5mUAFYhmzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cbBxEyfAaaPn2AyKliMgMEbjx4hwn65OxTnqlrurIJFh84SZKcclZ6PQ3Ya8UsiGuY9eNqX26d5aaA5RoddvGupAeGXL3yzS27nNXhwymeZE3jiAjeKWfjPL/Un2YgIrBq8+akwC8edKm51LPOy0k7iH8wpxl5xdMf8P+TQwliI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9X1Id08; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lWnQ8jVWSFh6lDt1LlrW8gnmyF0WNubk8TzJhK/V79k6HBhurSrgF599sQjKZwIqfegRR1y744cZUtHVcc+I9Odv48S0Ael0SJV0rbMrjXfICCtKSp68FiX6ARCtoIMsevYGN3MsaoWyHIVoOYOuzKf1C90PtEfDkTBlnFBHRdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLNtUSLG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9X1Id08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092C51F000FF;
-	Sat, 12 Sep 2026 10:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLNtUSLG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8721F000FF;
+	Sat, 12 Sep 2026 10:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208718;
-	bh=ZP6wuD3WF9HbBfvk8rp9wWsQ+I/H0vH4ES+02z5ABs0=;
+	s=korg; t=1789208723;
+	bh=6ymRPRwGofI5o2Xzuq7S3kInp/kKRkRJto4pISsYr8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D9X1Id08ndaHr95Kc9WdkrdRgjzn5U2T4A0E8NWmg10BYj7cejcP+p+Q9gqKPeDht
-	 d48Yv6qJn1oC8AwJFdGlPfY8dLvmoD+lAW4TN+ZoQHlN//sBPMRMn3yrO/e7l9gxGC
-	 E/h/gncewEWODao75x9VvLnxqeeVECqAki7Sy/iA=
+	b=DLNtUSLGQUbSG/bSgU7ZnVgSwBziBhTQgBN0zSRJswfBuHsGNz3/8ba+Ch4ygR+K6
+	 k8d9ar7fVLloJkkD8YbLosob82iqi9UVwWFcF7thN7pisCFeqtE0ylG5WDbCqo2if9
+	 5DsSUUO62gLE5E5i24EYJBzRoqHXyt91S4YIIMFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0673/1518] firmware: qcom: scm: Fix reserved memory cleanup on probe failure
-Date: Sat, 12 Sep 2026 08:47:22 +0200
-Message-ID: <20260912065638.658047536@linuxfoundation.org>
+Subject: [PATCH 6.18 0674/1518] firmware: qcom: scm: Fix tzmem state on probe retry
+Date: Sat, 12 Sep 2026 08:47:23 +0200
+Message-ID: <20260912065638.680320828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,74 +55,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit b697b20cea4374d27e2134da4bb7b0ea39f36c8b ]
+[ Upstream commit 9941fe8a04f3d258e07eb5899db3027252a4190f ]
 
-of_reserved_mem_device_init() adds an entry to a global list with no
-devres counterpart. If qcom_scm_probe() fails after the call the
-assignment is never cleaned up. A probe retry would add a duplicate
-entry, leaking the original one permanently.
+qcom_tzmem_enable() returns -EBUSY if called a second time, but this
+causes probe retries to fail permanently if a later step in
+qcom_scm_probe() defers after qcom_tzmem_enable() has already succeeded.
 
-Add an err_rmem label that calls of_reserved_mem_device_release() and
-route all error paths after of_reserved_mem_device_init() through it.
-of_reserved_mem_device_release() is safe to call unconditionally as it
-simply walks an empty list when nothing was assigned.
+Use DO_ONCE() to ensure qcom_tzmem_init() runs exactly once across all
+calls in a thread-safe manner. qcom_tzmem_dev is set on every call since
+probe retries use the same device pointer. The result of the first
+initialisation is cached and returned to every subsequent caller.
 
-Fixes: a33b2579c8d3 ("firmware: qcom: scm: add support for SHM bridge memory carveout")
+Fixes: 40289e35ca52 ("firmware: qcom: scm: enable the TZ mem allocator")
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260724094939.613844-3-mukesh.ojha@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260724094939.613844-4-mukesh.ojha@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/firmware/qcom/qcom_tzmem.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 73179a99935ba..226265b311fe9 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -2489,9 +2489,11 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 				     "Failed to setup the reserved memory region for TZ mem\n");
- 
- 	ret = qcom_tzmem_enable(scm->dev);
--	if (ret)
--		return dev_err_probe(scm->dev, ret,
--				     "Failed to enable the TrustZone memory allocator\n");
-+	if (ret) {
-+		ret = dev_err_probe(scm->dev, ret,
-+				    "Failed to enable the TrustZone memory allocator\n");
-+		goto err_rmem;
-+	}
- 
- 	memset(&pool_config, 0, sizeof(pool_config));
- 	pool_config.initial_size = 0;
-@@ -2499,9 +2501,11 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	pool_config.max_size = SZ_256K;
- 
- 	scm->mempool = devm_qcom_tzmem_pool_new(scm->dev, &pool_config);
--	if (IS_ERR(scm->mempool))
--		return dev_err_probe(scm->dev, PTR_ERR(scm->mempool),
--				     "Failed to create the SCM memory pool\n");
-+	if (IS_ERR(scm->mempool)) {
-+		ret = dev_err_probe(scm->dev, PTR_ERR(scm->mempool),
-+				    "Failed to create the SCM memory pool\n");
-+		goto err_rmem;
-+	}
- 
- 	ret = qcom_scm_query_waitq_count(scm);
- 	scm->wq_cnt = ret < 0 ? QCOM_SCM_DEFAULT_WAITQ_COUNT : ret;
-@@ -2569,6 +2573,10 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	qcom_scm_qtee_init(scm);
- 
- 	return 0;
-+
-+err_rmem:
-+	of_reserved_mem_device_release(scm->dev);
-+	return ret;
+diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
+index 9f232e53115ea..b867b9d8122a6 100644
+--- a/drivers/firmware/qcom/qcom_tzmem.c
++++ b/drivers/firmware/qcom/qcom_tzmem.c
+@@ -15,6 +15,7 @@
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+ #include <linux/mm.h>
++#include <linux/once.h>
+ #include <linux/radix-tree.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+@@ -508,14 +509,18 @@ phys_addr_t qcom_tzmem_to_phys(void *vaddr)
  }
+ EXPORT_SYMBOL_GPL(qcom_tzmem_to_phys);
  
- static void qcom_scm_shutdown(struct platform_device *pdev)
++static void qcom_tzmem_do_init(int *result)
++{
++	*result = qcom_tzmem_init();
++}
++
+ int qcom_tzmem_enable(struct device *dev)
+ {
+-	if (qcom_tzmem_dev)
+-		return -EBUSY;
++	static int result;
+ 
+ 	qcom_tzmem_dev = dev;
+-
+-	return qcom_tzmem_init();
++	DO_ONCE(qcom_tzmem_do_init, &result);
++	return result;
+ }
+ EXPORT_SYMBOL_GPL(qcom_tzmem_enable);
+ 
 -- 
 2.53.0
 
