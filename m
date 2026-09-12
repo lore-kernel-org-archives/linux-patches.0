@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B617F35F184;
-	Sat, 12 Sep 2026 08:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CF41EB5FD;
+	Sat, 12 Sep 2026 08:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200282; cv=none; b=NZelKIFK6DCWmZIga21jFFFOWdG6WnFfM9bdhE7kXBI9nQ+pfgNZ1GyEDFtG94jHp+wyj2nF+26J+MGV8m7olgRmWG+Sj0W+J+8AzrpVfx2PE9DiMbJuCtlogzaPr53NjxfzY3CL42ZyU1F2duM+XTIK3xEBVDSKoOW5NDZlH+w=
+	t=1789200286; cv=none; b=bOhn0Q1Kl/dmq2t8I3lnRqFK6G8huEpDPXwvzBtpQb+l55KQrdHI0SGIKErtg+8jK6oimmEBIB2cCAb2qU9Bsf1rtaIzk8zPj7rje5XU4EwAleYkHP+s8Z72LzP35VSYcj6Ljfgcmft2vIXpKPjhbVvsQHxKWm6E6ecK2P5F4nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200282; c=relaxed/simple;
-	bh=82o8tt+Zs/hQn2WEAyU2sas6/1hckLZblYHGyFa7oiA=;
+	s=arc-20240116; t=1789200286; c=relaxed/simple;
+	bh=ICnJJnGfORm8dIomGAEqrcW7E0Ukfeb2TtzmwLffOL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EymGws+7UmMEwxab5+K6USdRACXdjV66ZIQqohcSPxaAmN8FL2dSBLBAJBSmFpoer92Cn8t+JkfdNhVYduE2mxA/34XsNABCzda9vF8Q11uLbqrfWnua0am6ILhrcHbVXL7EJMd6xnYqBKJ/QW6IHNXmkwZypXg0S3gh6xPaSeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hu0gd/Gh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qt3db3bFcd9dJEqH2Z63Pudj0Gh4H7Riz0IMwiIeX34yM5V11/2mHVxKthtjwWdT8snlvf1mmxLtTRyihHCRZiMHGxrjx8JQTuwM8s9xg5kK14LIkEuJdHIxXPeR8qUt/QCc+OdCtkQz1HqVWhM06PhPxmAaaX3FyLlUiAz/ik4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1muAbJK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hu0gd/Gh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF111F000FF;
-	Sat, 12 Sep 2026 08:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1muAbJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552D91F000FF;
+	Sat, 12 Sep 2026 08:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200280;
-	bh=mfxDmQDtg2Y6Iz48DSG4T6+JQjZAjc73MgEvUi+amrg=;
+	s=korg; t=1789200285;
+	bh=ycg5FYH95Fbkp0B6OAdH5MRC5I37Ys6MZ6PRGtDIQLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hu0gd/Gh11koenc+lkN5F4NjNvI+tNn6w3ntEVNXDdpO39hFRzYBD7n4V7hCv9AUX
-	 SAG8wzAmU4ypWt1GLfnYo+FSmFQcMg9HSNtEjLht+zIuwASLAcyx4qajkc91vXAKpR
-	 jaI+83IO8yc5T8fbZU4kJmm/E6NSGRf7cBs6MP7E=
+	b=V1muAbJKLJePVtm32IYxWPGNOtFakLP6mERGuKl/pWlhbLhDVM3EaUJDkeXND+4iO
+	 aXVu5sdUgDLAMZzp4HgXETUe2bZ0QUkCn0OX8eXiUWb23xRiB1uX/fWySeRIjyWnVV
+	 7ph0tUAUHQ0/M1poIm899v6vppmtmBP4qdcLfiHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hongyan Xu <getshell@seu.edu.cn>,
 	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0757/1815] platform/chrome: cros_ec_debugfs: Clean up console log on probe failure
-Date: Sat, 12 Sep 2026 08:41:47 +0200
-Message-ID: <20260912065706.680118204@linuxfoundation.org>
+Subject: [PATCH 7.2 0758/1815] platform/chrome: cros_ec_debugfs: Unregister panic notifier
+Date: Sat, 12 Sep 2026 08:41:48 +0200
+Message-ID: <20260912065706.703042162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,42 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 5d187600c4603b8f7812b12ce359a11ad7a7fd3a ]
+[ Upstream commit e5954d3031fb55dd31aa59bae477d63c68e941c0 ]
 
-Add a dedicated error label for failures after successful console log
-setup.
+cros_ec_debugfs_probe() registers notifier_panic with the EC panic
+notifier chain. The remove path tears down debugfs and the console log,
+but leaves the notifier registered. A later panic notification can call
+back into the removed instance and queue work that accesses released
+data.
+
+Unregister the panic notifier before tearing down the debugfs and
+console log state.
+
+This issue was found by a static analysis tool.
 
 Fixes: d90fa2c64d59 ("platform/chrome: cros_ec: Poll EC log on EC panic")
 Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://lore.kernel.org/r/c00974953a1b952f51f0f021d7f9fad134159909.1785320940.git.getshell@seu.edu.cn
+Link: https://lore.kernel.org/r/f3ab74ef8034be63bb45a325f3d54656d658817f.1785320940.git.getshell@seu.edu.cn
 Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_debugfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_debugfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/platform/chrome/cros_ec_debugfs.c b/drivers/platform/chrome/cros_ec_debugfs.c
-index 139cab6fcba17..6d7ff624540ac 100644
+index 6d7ff624540ac..c0cb50bd24413 100644
 --- a/drivers/platform/chrome/cros_ec_debugfs.c
 +++ b/drivers/platform/chrome/cros_ec_debugfs.c
-@@ -512,7 +512,7 @@ static int cros_ec_debugfs_probe(struct platform_device *pd)
- 	ret = blocking_notifier_chain_register(&ec->ec_dev->panic_notifier,
- 					       &debug_info->notifier_panic);
- 	if (ret)
--		goto remove_debugfs;
-+		goto cleanup_console_log;
+@@ -531,6 +531,8 @@ static void cros_ec_debugfs_remove(struct platform_device *pd)
+ {
+ 	struct cros_ec_dev *ec = dev_get_drvdata(pd->dev.parent);
  
- 	ec->debug_info = debug_info;
- 
-@@ -520,6 +520,8 @@ static int cros_ec_debugfs_probe(struct platform_device *pd)
- 
- 	return 0;
- 
-+cleanup_console_log:
-+	cros_ec_cleanup_console_log(debug_info);
- remove_debugfs:
- 	debugfs_remove_recursive(debug_info->dir);
- 	return ret;
++	blocking_notifier_chain_unregister(&ec->ec_dev->panic_notifier,
++					   &ec->debug_info->notifier_panic);
+ 	debugfs_remove_recursive(ec->debug_info->dir);
+ 	cros_ec_cleanup_console_log(ec->debug_info);
+ }
 -- 
 2.53.0
 
