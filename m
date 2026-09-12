@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3715A2F7F17;
-	Sat, 12 Sep 2026 16:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E7B47CC81;
+	Sat, 12 Sep 2026 16:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229435; cv=none; b=PL1HMoaUqrTDo3NFxRm2gLygLROHyrjt6dmwPj23XahheugSWmxPnFUB2thr9nufOwYWK8radic0Qbp1zIbaHcEBd3zZsfK9qXa//zz4MX8w3w2QU8miD4HNcQ5qy7E/VR9knWHU+ySJx1EScJC05XlKr4ZlbT4sXx/uW+eHDHI=
+	t=1789229447; cv=none; b=IM+JVajuKZuPWNBQyaND2MFbniXL5L97uJVEtEo8OdF82NEXA06LuuCfxaGJ+W+Gwl2trP/Mu2RzM38J1jcuv5BGG77VkoJt0ioKdrQhq7L3XWW0JlTQ+beqoQAaEIwty1h8bSLl2cVirXtOZh0WaEaIYEH1EWI1uWGocG6XRrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229435; c=relaxed/simple;
-	bh=2B0hUVu+RODH918AQ1LNKh0bBCczGqkIAg1R4dTPGno=;
+	s=arc-20240116; t=1789229447; c=relaxed/simple;
+	bh=gV6xjRQbROvEr2SUQtPnhpCP3P80iNDhiMyGkk8V9lI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZoOzb/OHP6dBgHu3m3L4AcYoLnO5mLIO4JorkximtKc7pBnqo2CwH0hR8cVd3wOragc6mYRGjo7Xcmf0OF+HS6dOK/gsuv1ebs1L2b1nQ16zl24fRq5RCGFMwI5uhXi+n6yQqQ0bdR4Q/6Y1DJkGAVJZlvu8VT+6bhQeMRleN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDM4GEuE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BqOQDb22VGz4LzJ8GaShP1LxGkSbqtDLBkQOzDr1XLmhok9cPG+6vSqa9dHTXeh1de94PsGTSH4bSDY0OApIhEEAR8HLVmSCNX9/UYgxy75nfE1uNdGzv9kUPucgFBOlipELXv4lfr3IAZHFtgI9g0sKH7MTycxGwHs2RPw01BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVdSNoDM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDM4GEuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734571F000FF;
-	Sat, 12 Sep 2026 16:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVdSNoDM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B2C1F000FF;
+	Sat, 12 Sep 2026 16:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229433;
-	bh=yJltfFek75ovhK4mR8R4455v0Qn+g3Y31z/V0alGGdk=;
+	s=korg; t=1789229438;
+	bh=lANnLpcOsAuiuvca+muDna7OIYQ1x/rsAoAGF0iAIVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rDM4GEuEosKAuPsa9p5j+x0+EdRLOSOf+jLz41aTjbxbuMJ2kojqlWZYz4/NM79xE
-	 LTDCweaP6B+B1QTjmqoCk7RvWguW+r7YWrPrHTKNbjTJEKtxM6UEmjb7cMGxI0LObg
-	 tRGGKahr0u2hkm6g0YPaMfbzVmE8jKS7+5cEWJzw=
+	b=yVdSNoDM1wV1fNebF39j+xX9PrqLD7ef9BcpqeZAZDhHHL/J/aNx1Hq0l182tZTXw
+	 aEtfLz/ry7nbAMTDif6HDXsf8Qc4a3krhsltY+EVEBktgpT8QkEirHt4nlG/EX9vnH
+	 XDCU8pZtUuAXHS0svKcpW2XcYJ/bL0YXZ7oYelow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0588/1191] drm/panel: samsung-s6d16d0: Power off on prepare failure
-Date: Sat, 12 Sep 2026 08:55:16 +0200
-Message-ID: <20260912065601.454939850@linuxfoundation.org>
+Subject: [PATCH 6.1 0589/1191] perf metricgroups: Use zfree() to reduce chances of use after free
+Date: Sat, 12 Sep 2026 08:55:17 +0200
+Message-ID: <20260912065601.477034985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,57 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit a9f950adfe2147318d75e7a6eab5e814851802ac ]
+[ Upstream commit 11ff9bcd7dfeefa6a9a9fcd4c7775b8066c46a31 ]
 
-If enabling tearing mode or exiting sleep mode fails after the
-regulator is enabled, s6d16d0_prepare() returns without asserting
-reset or disabling the supply. Since the DRM panel core leaves the
-panel unprepared, a later unprepare call skips the driver callback
-and the supply remains enabled.
+Do defensive programming by using zfree() to initialize freed pointers
+to NULL, so that eventual use after free result in a NULL pointer deref
+instead of more subtle behaviour.
 
-Assert reset and disable the supply before returning the DSI command error.
+This file already used zfree() in other places, so this just plugs some
+leftovers.
 
-Fixes: ac1d6d74884e ("drm/panel: Add driver for Samsung S6D16D0 panel")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260704070648.35249-1-acharyalaxman8848@gmail.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: ef3af1df4f33 ("perf metricgroup: Fix metric expression copy leaks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-samsung-s6d16d0.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/perf/util/metricgroup.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-index 008e2b0d6652b..ae8bb9d90d2a8 100644
---- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-@@ -89,16 +89,22 @@ static int s6d16d0_prepare(struct drm_panel *panel)
- 				       MIPI_DSI_DCS_TEAR_MODE_VBLANK);
- 	if (ret) {
- 		dev_err(s6->dev, "failed to enable vblank TE (%d)\n", ret);
--		return ret;
-+		goto err_power_off;
- 	}
- 	/* Exit sleep mode and power on */
- 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
- 	if (ret) {
- 		dev_err(s6->dev, "failed to exit sleep mode (%d)\n", ret);
--		return ret;
-+		goto err_power_off;
+diff --git a/tools/perf/util/metricgroup.c b/tools/perf/util/metricgroup.c
+index 4c98ac29ee13f..c05463a91719f 100644
+--- a/tools/perf/util/metricgroup.c
++++ b/tools/perf/util/metricgroup.c
+@@ -87,9 +87,9 @@ static void metric_event_delete(struct rblist *rblist __maybe_unused,
+ 	struct metric_expr *expr, *tmp;
+ 
+ 	list_for_each_entry_safe(expr, tmp, &me->head, nd) {
+-		free((char *)expr->metric_name);
+-		free(expr->metric_refs);
+-		free(expr->metric_events);
++		zfree(&expr->metric_name);
++		zfree(&expr->metric_refs);
++		zfree(&expr->metric_events);
+ 		free(expr);
  	}
  
- 	return 0;
-+
-+err_power_off:
-+	gpiod_set_value_cansleep(s6->reset_gpio, 1);
-+	regulator_disable(s6->supply);
-+
-+	return ret;
+@@ -184,9 +184,9 @@ static void metric__free(struct metric *m)
+ 	if (!m)
+ 		return;
+ 
+-	free(m->metric_refs);
++	zfree(&m->metric_refs);
+ 	expr__ctx_free(m->pctx);
+-	free((char *)m->modifier);
++	zfree(&m->modifier);
+ 	evlist__delete(m->evlist);
+ 	free(m);
  }
+@@ -723,7 +723,7 @@ static int decode_all_metric_ids(struct evlist *perf_evlist, const char *modifie
+ 		if (strstr(ev->name, "metric-id=")) {
+ 			bool has_slash = false;
  
- static int s6d16d0_enable(struct drm_panel *panel)
+-			free(ev->name);
++			zfree(&ev->name);
+ 			for (cur = strchr(sb.buf, '@') ; cur; cur = strchr(++cur, '@')) {
+ 				*cur = '/';
+ 				has_slash = true;
+@@ -1805,7 +1805,7 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+ 			alloc_size = sizeof(*new_expr->metric_events);
+ 			new_expr->metric_events = calloc(nr + 1, alloc_size);
+ 			if (!new_expr->metric_events) {
+-				free(new_expr->metric_refs);
++				zfree(&new_expr->metric_refs);
+ 				free(new_expr);
+ 				return -ENOMEM;
+ 			}
+@@ -1815,8 +1815,8 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+ 				evsel = old_expr->metric_events[idx];
+ 				evsel = evlist__find_evsel(evlist, evsel->core.idx);
+ 				if (evsel == NULL) {
+-					free(new_expr->metric_events);
+-					free(new_expr->metric_refs);
++					zfree(&new_expr->metric_events);
++					zfree(&new_expr->metric_refs);
+ 					free(new_expr);
+ 					return -EINVAL;
+ 				}
 -- 
 2.53.0
 
