@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BEC3CB57E;
-	Sat, 12 Sep 2026 07:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A5C3CF211;
+	Sat, 12 Sep 2026 07:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197355; cv=none; b=iAkQbSEllmW614JIzTcRqBdgLeDtClnEkqfjSmA2z2iSnIen6Xce09ac6vK4ix3Yl8Zvv4lRrqYzB6L986712S3edWKnbwITGxdQnyxkxFFCoXZIFzQ8/KyvVlzeTh4qN6DdeM/2cSCdlnk7uAAL1Bi/INBhWvqNwISF7Jze0MM=
+	t=1789197360; cv=none; b=PMmn5tJyyuUyw41YENQ9Lh8r1dojVT0nQ/LXPFeWguCk7e+CiIfuqs4eSpUoSr8Wh6kAykO0gXYFapoP82lmgz8Ej6xt+5Dz1ZEUoTvcyNgqj9swt2dEwZBL96juNbcQ5UcSHn7Sf90bKTMdvh+qM2JLtD++/0+FOOeHA85dNcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197355; c=relaxed/simple;
-	bh=TNbJwzPcnEuI/gpd0mtxhudLHwVG5qVIUrGNL2eiTbw=;
+	s=arc-20240116; t=1789197360; c=relaxed/simple;
+	bh=jWA4xsRy1VwyDGHYdsPTtRcy0hiib0gVTIxkuWMAyPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDkwS8HB8/EdDlUc1tmEckDiaMkUKmywqlWdtYZIpoH8+aVpOhMOnbqal9SKtTSVFG2UoM8TfRQjWCLhEsUW0xNmPDK+J7n9sELmez357d87Q5TDH68NuXVndE1N763TaJNUZ6Vtr6WeAXIXbuaZUtEmaqV3PHUnD7hYLlONHNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+vU1eQk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lEhmdcIAQQh3bHY9GppDDHLhJzBT4Fir0nEL2Bs7tC1vo+3hk29NChG8fmbeJ/s5Q/geTNnWEOqdbOs4o2e/YCsICqsz7Zcx5BW1im8AXQ47DBkm1NDhVG5pbV9TmYECc2pTqsJ3ZoH0rzQYU64hZ0QwxU1o3bHpeAcTOcjuFzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAvnKQCz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+vU1eQk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395311F000FF;
-	Sat, 12 Sep 2026 07:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAvnKQCz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89B21F000FF;
+	Sat, 12 Sep 2026 07:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197354;
-	bh=uA+bcBaky/xuuo3iznfNPXq/PbDa3okqk8NfjhkS12o=;
+	s=korg; t=1789197358;
+	bh=s+gyRyMpgKnqJ3nV/BMSBFhMeOgcyp2KwmGiM/64TQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v+vU1eQkp64y8rdumw1zk9agwdGjx1Rsm7Kwhs50vJ5A2Q2IAgTmj99bTgOvHZpVF
-	 Pnc+MQMEz8u/LRhTHXHoJkMV3l+YwcI4paQNPzQmx2ZuEXyGX+PZekGxrWKlJzuBGd
-	 GUIRj1NptHVzLsA0s625hGmPHsoRnmHEKSfeE0Ao=
+	b=RAvnKQCz5tS8u8r8hoFPX3zxskvWxXybLs7z5tRWXmFCPjADb2dlxFl4IPQAh/yIW
+	 01CMps6X97RPrQ7Fr6cwZNmRBZv5MQejw3AtuqxMmdWWggF0DlL2mtTHmflaFcj8XE
+	 qlS31BXNkhCHA6ccoNtsYRd/7iPrlr1pnh6cqmSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lee Jones <lee@kernel.org>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0157/1815] leds: lp5860-spi: Fix an error handling path
-Date: Sat, 12 Sep 2026 08:31:47 +0200
-Message-ID: <20260912065652.696836210@linuxfoundation.org>
+Subject: [PATCH 7.2 0158/1815] dmaengine: mediatek: mtk-uart-apdma: Return -ENOMEM on memory allocation failure
+Date: Sat, 12 Sep 2026 08:31:48 +0200
+Message-ID: <20260912065652.720564756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,58 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Vladimir Zapolskiy <vz@kernel.org>
 
-[ Upstream commit f647a2266289a35eaa4865f629f2ab7046900d9b ]
+[ Upstream commit 467265c750edd7ab43803deeafe7d3120a791d32 ]
 
-If lp5860_device_init() fails, a missing mutex_destroy() should be called.
+If dynamic memory allocation in driver's probe function execution fails, it
+should be reported to the driver's framework with -ENOMEM error code.
 
-Use devm_mutex_init() instead of mutex_init() to fix it.
-This also simplifies the remove function.
-
-Fixes: f0a66563aa2d ("leds: Add support for TI LP5860 LED driver chip")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://patch.msgid.link/311792e767ab803d4744bc26155e6dac253d9b45.1781970783.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
+Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://patch.msgid.link/20260701200703.117929-1-vz@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/rgb/leds-lp5860-spi.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/dma/mediatek/mtk-uart-apdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/rgb/leds-lp5860-spi.c b/drivers/leds/rgb/leds-lp5860-spi.c
-index 5e0c44854a680..6bf6a625c28af 100644
---- a/drivers/leds/rgb/leds-lp5860-spi.c
-+++ b/drivers/leds/rgb/leds-lp5860-spi.c
-@@ -38,6 +38,7 @@ static int lp5860_probe(struct spi_device *spi)
- 	struct device *dev = &spi->dev;
- 	struct lp5860 *lp5860;
- 	unsigned int multi_leds;
-+	int ret;
- 
- 	multi_leds = device_get_child_node_count(dev);
- 	if (!multi_leds) {
-@@ -61,7 +62,10 @@ static int lp5860_probe(struct spi_device *spi)
- 				     "Failed to initialise Regmap.\n");
- 
- 	lp5860->dev = dev;
--	mutex_init(&lp5860->lock);
-+
-+	ret = devm_mutex_init(dev, &lp5860->lock);
-+	if (ret)
-+		return ret;
- 
- 	spi_set_drvdata(spi, lp5860);
- 
-@@ -70,10 +74,6 @@ static int lp5860_probe(struct spi_device *spi)
- 
- static void lp5860_remove(struct spi_device *spi)
- {
--	struct lp5860 *lp5860 = spi_get_drvdata(spi);
--
--	mutex_destroy(&lp5860->lock);
--
- 	lp5860_device_remove(&spi->dev);
- }
+diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
+index c269d84d7bd2b..f74e9a3285887 100644
+--- a/drivers/dma/mediatek/mtk-uart-apdma.c
++++ b/drivers/dma/mediatek/mtk-uart-apdma.c
+@@ -531,7 +531,7 @@ static int mtk_uart_apdma_probe(struct platform_device *pdev)
+ 	for (i = 0; i < mtkd->dma_requests; i++) {
+ 		c = devm_kzalloc(mtkd->ddev.dev, sizeof(*c), GFP_KERNEL);
+ 		if (!c) {
+-			rc = -ENODEV;
++			rc = -ENOMEM;
+ 			goto err_no_dma;
+ 		}
  
 -- 
 2.53.0
