@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FF8202F71;
-	Sat, 12 Sep 2026 12:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A5B2E06E4;
+	Sat, 12 Sep 2026 12:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216766; cv=none; b=N82nsaQiFJ6HhD4b9oGUV5+c3oRYFre6D7H8FT6Ws8tfhzavzttP242igw3HsS3zErcPez4c+V2Wsd9MVP6+9yjFO8yjgCOuMlOFjBtcO9xbHGCIKhnvahTfdeJurzYZ3VPVXgqEjnH0iRX91eJ21sFt2eDDURQrvzBBh8rGwxQ=
+	t=1789216770; cv=none; b=AVzQKWnNjM1rTj6nMZzz60ZSMUu/flNlxIt5URTnHz5fzGSbBSZmN04AsrwgaB60sHXPwKbt1m4tMTYWH12et/TLkaPifh6xUEs+jIiYL42mvDta/j4yDFCcrNwo3f0cYsjJ3nrxNRVkBTtTQQ+Df5ccjSZUJAAKcgE6Tuo+UM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216766; c=relaxed/simple;
-	bh=xT0XT3DCPEaxH6KZlAhbSlunFB/dWnKfjJ6eVOKMBoo=;
+	s=arc-20240116; t=1789216770; c=relaxed/simple;
+	bh=sUtgE4m8xGuxWiMV6z0cWbqF96PsRryj0zvf+6ddrzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBBCDd8QikmBDc27RkrxH5Bxn7G+j9O5LOx4EebVCBNnJy2Z/eDgljBlyv5ovIHPw13R/8iuxG3u8UnNHJcRebJrXqN9SFQ1yjk/lz0XA6bQUPTqdhsgmww3r9rVw7tAwU1Pw/newH42LOJ55mFFQRKiseztO+YS59W0rG9WXeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGhjoty0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NBg34VOXTCM1kQCnr3/Co/NZTBIlNUtdJ9zpxwz0nSU/9lpOGY1rqquqZmPoi1o/ZHvTMgSn5ToNY23xca1CPo3iHrnTs5VOF9ii2edNHbX+f+JJ5OpI7rL60FhKmh/vzLKuYFHKu8R9h2APcXG+ozVueDVx77C+xWStRIoQIUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pX9lC7/G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGhjoty0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3421F000FF;
-	Sat, 12 Sep 2026 12:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pX9lC7/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E251F000FF;
+	Sat, 12 Sep 2026 12:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216764;
-	bh=ZL0kTN1KIdqFbM/6qpwz2WE3M5J5WapbT74ahF+D1tk=;
+	s=korg; t=1789216769;
+	bh=MZMAvlAgiLdwTLc1A/YynClV+THgtc2Stj9ZadiP3FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rGhjoty0SFE/JkKqULK1aNJxHkL/icK7AM9MsKhYXse90/P4B86rVE1dGrXzgRkKJ
-	 SgunbvOXOQsKPsiloRMh/2hY+ttptk95pXCoIjzsxl0/hJZ4ZKnUIh+Tnbo4Uekeum
-	 Vet6lG1CncvkHkbLP7uqzWp3GfI+RJD/AGhEa6ps=
+	b=pX9lC7/Gdb48ayggGWwavLBjmkofaveBF6AsxP8t6NdyPF95gES9VpPvE5ZK5P8de
+	 tMLJ/zyPoSwbuakSCG/RZyVBut2Kb8eGQLxAaJFQnFE8IF2ggUiYkcSI7x6xVO+3P4
+	 8lmpA51LytomqcW4wyHosdrNhyoQ7fkfMrZYdI0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jared.Huang" <jared.huang@mediatek.com>,
+	Eason Lai <Eason.Lai@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0804/1376] wifi: mt76: mt7925: fix msg len mismatch between driver and firmware
-Date: Sat, 12 Sep 2026 08:53:50 +0200
-Message-ID: <20260912065625.453836324@linuxfoundation.org>
+Subject: [PATCH 6.12 0805/1376] wifi: mt76: mt792x: Fix memory leak in SDIO TX path
+Date: Sat, 12 Sep 2026 08:53:51 +0200
+Message-ID: <20260912065625.478019552@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,38 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared.Huang <jared.huang@mediatek.com>
+From: Eason Lai <Eason.Lai@mediatek.com>
 
-[ Upstream commit 9ddb7487aa7cccb6e1880b4151ab5895109eb8d6 ]
+[ Upstream commit 808f2767d4217a5b96f674288573b9b89d432eed ]
 
-The mt7925_tx_power_limit_tlv struct begins with a 4-byte rsv[] field
-that acts as a UNI command header prefix. The firmware dispatcher did
-not use the 4-byte rsv[] and will only check the payloads after the
-4-byte rsv[] As a result, the total message length minus the 4-byte
-prefix. Fix this by setting len to msg_len - 4.
+When tx_prepare_skb() returns an error in the SDIO TX path, the
+skb is not freed, leading to a memory leak. This can occur when
+zero-length frames (such as WNM NULL frames) are dropped to prevent
+potential hardware TX hangs.
 
-Fixes: ccb186326bb6 ("wifi: mt76: mt7925: fix incorrect length field in txpower command")
-Signed-off-by: Jared.Huang <jared.huang@mediatek.com>
-Link: https://patch.msgid.link/20260617071320.1808499-1-jb.tsai@mediatek.com
+Fix this by properly releasing the skb with ieee80211_tx_status_ext()
+when tx_prepare_skb() fails.
+
+Fixes: b747fa343817 ("mt76: mt7915: drop zero-length packet to avoid Tx hang")
+Signed-off-by: Eason Lai <Eason.Lai@mediatek.com>
+Link: https://patch.msgid.link/20260703005945.2244533-1-eason.lai@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/sdio.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 910775a2c39fe..ac241c2dfb980 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -3602,7 +3602,7 @@ mt7925_mcu_rate_txpower_band(struct mt76_phy *phy,
- 		memcpy(tx_power_tlv->alpha2, dev->alpha2, sizeof(dev->alpha2));
- 		tx_power_tlv->n_chan = num_ch;
- 		tx_power_tlv->tag = cpu_to_le16(0x1);
--		tx_power_tlv->len = cpu_to_le16(msg_len);
-+		tx_power_tlv->len = cpu_to_le16(msg_len - 4);
+diff --git a/drivers/net/wireless/mediatek/mt76/sdio.c b/drivers/net/wireless/mediatek/mt76/sdio.c
+index 8e9576747052d..e4c3dcc34f68a 100644
+--- a/drivers/net/wireless/mediatek/mt76/sdio.c
++++ b/drivers/net/wireless/mediatek/mt76/sdio.c
+@@ -519,6 +519,10 @@ mt76s_tx_queue_skb(struct mt76_phy *phy, struct mt76_queue *q,
+ 		   enum mt76_txq_id qid, struct sk_buff *skb,
+ 		   struct mt76_wcid *wcid, struct ieee80211_sta *sta)
+ {
++	struct ieee80211_tx_status status = {
++		.sta = sta,
++	};
++
+ 	struct mt76_tx_info tx_info = {
+ 		.skb = skb,
+ 	};
+@@ -531,8 +535,13 @@ mt76s_tx_queue_skb(struct mt76_phy *phy, struct mt76_queue *q,
  
- 		switch (band) {
- 		case NL80211_BAND_2GHZ:
+ 	skb->prev = skb->next = NULL;
+ 	err = dev->drv->tx_prepare_skb(dev, NULL, qid, wcid, sta, &tx_info);
+-	if (err < 0)
++	if (err < 0) {
++		status.skb = tx_info.skb;
++		spin_lock_bh(&dev->rx_lock);
++		ieee80211_tx_status_ext(dev->hw, &status);
++		spin_unlock_bh(&dev->rx_lock);
+ 		return err;
++	}
+ 
+ 	q->entry[q->head].skb = tx_info.skb;
+ 	q->entry[q->head].buf_sz = len;
 -- 
 2.53.0
 
