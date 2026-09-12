@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FAA3B813A;
-	Sat, 12 Sep 2026 07:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AFC3BCD19;
+	Sat, 12 Sep 2026 07:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196873; cv=none; b=HvjubA2FHkUBQbMtkYHHEY6HRWsjGoU6rGSHdhozjzB/LHyIeHl86K+xJvq2uSv2Qk0mrflPnlBjfltzPH+Pona9PcvY/zh6E+h/jEded801QLNIMByFziwGs67yoJEJoztE2M7V+MBXQdhoFwEv5s+rdNUzmMZJAO3B3hCIgBE=
+	t=1789196878; cv=none; b=YjJeNcGmf8ZfMZW5FHNOPlkWex4Jf5pMi3xQQoDmy4u3IZjJrPkVyNQtgn12dOGLPE5DmsCLZ+P0SUHZHMHSCOp5NkxZJuXYWsDDUtag1RJBUNkNE9ZM6XNoxRfMOBPQzxtgqTkvO/2KMCZ8YqiIVuaReeHVa2YrA4SaSM7PEzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196873; c=relaxed/simple;
-	bh=4pM4OmVZI0AXPgVH8mnEXVz1m9P9OYLYsYBynvJ1Bxo=;
+	s=arc-20240116; t=1789196878; c=relaxed/simple;
+	bh=2tAr5usg/CQAeFxvll4UzQW1uE82fsYLhueuOUHjcy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQKEtPpedcZyIHB8qHHFg07bR89KRUK3RJP7Pcf7p0tDzScOJU/IBEzb1YWOfKwdeU/hQPjlCGnZ5qFUwspx4AsACMyIXM4RxdBhXPBFwyBGfYK1oRCtQQVmuBNBaZECLY0V+/FIA19ISlIZ3FLLRqCz2rsD2gy8cxvOko2vlkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKoNBw1J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dxi356R5xahID40HOVBTd4XpRzyVrhCFuzRTiXOYKzvT77F+lwmC3Y9p5gdPGLqb1f9w/y8hFWdbjZcTFb8xLq/WzFwXqVT/FAibhYGvNpPCOBd0X3n5JHfwiLSFIO4CA+Pnjoj70V0GixTE51hrjxB9pmpQDuXkd2OyN1APFPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ousJunrb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKoNBw1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20AF01F000FF;
-	Sat, 12 Sep 2026 07:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ousJunrb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDAD51F000FF;
+	Sat, 12 Sep 2026 07:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196872;
-	bh=JXrc1kIq9Wl5NLIJGUVFOKwj3sc+az3V1BQHEz07yUE=;
+	s=korg; t=1789196876;
+	bh=eDsq9tPCu3yVcQa3V8S9Qa+AipFxpUWzQPy1TFDuDCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oKoNBw1JXtN98IoUgaV+Wx9MorrQOIyMLMctf1IAfbjr7tomGoH2flzrrLqC84G0X
-	 Nvq4Xi5kFyab3NQIxOmnQumZIw+UvRENGTmPyhBAb2Ow/EGChkgySvjsb3M3skNGU/
-	 vatXinJJlWpILXKfYO9/48THPbQcwBBen3BrP2sk=
+	b=ousJunrbNAZk5rY2rnwDGG1LpUh0McPmDBMNkbWrKmsSyAee7MiplmfTCTPEyN3Rb
+	 kUiq0NWjv672JPBVIIErxUXKO319yh0QaWab16NOvRyQK7o3RHSL9/P3+Xst6DB7nY
+	 DcCQL+1TbOxTukRBygAS7txph/7xYqIQaGmMEBn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0055/1815] drm/bridge: cdns-mhdp8546: Return an error pointer on allocation failure
-Date: Sat, 12 Sep 2026 08:30:05 +0200
-Message-ID: <20260912065650.307318321@linuxfoundation.org>
+Subject: [PATCH 7.2 0056/1815] smack: fix incorrect task context in smack_msg_queue_msgrcv
+Date: Sat, 12 Sep 2026 08:30:06 +0200
+Message-ID: <20260912065650.331694919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,48 +45,195 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit 30ac1d403438a6c6039f0af5bb2df3d021f96036 ]
+[ Upstream commit fba3d32825f4bbc8e20f0cdc3b14df57965b8fe5 ]
 
-The drm_bridge_funcs.atomic_reset documentation states that the hook
-must return either a valid drm_bridge_state object or an ERR_PTR().
+The smack_msg_queue_msgrcv() function incorrectly checks
+the permissions of the 'current' task instead of the
+'target' task.
 
-The cdns_mhdp_bridge_atomic_reset() callback returns NULL when the
-allocation of its state fails, violating this contract.
+In the msgsnd() syscall path, if a receiver is already waiting,
+the pipelined_send() optimization is used to push the message
+directly to the receiver task:
 
-Return ERR_PTR(-ENOMEM) instead.
+    ipc/msg.c`pipelined_send():
+    ` smp_store_release(&msr->r_msg, msg)
 
-Fixes: fb43aa0acdfd ("drm: bridge: Add support for Cadence MHDP8546 DPI/DP bridge")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # imx8mp + sn65dsi84 + bridge hotplug
-Link: https://patch.msgid.link/20260619-drm-no-more-bridge-reset-v3-2-ff399263111b@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+In this case, the 'sender' (current) task performs the check
+on behalf of the 'receiver' task (msr->r_tsk, passed as the
+'target' parameter):
+
+  ipc/msg.c`pipelined_send():
+  ` security_msg_queue_msgrcv(,, target := msr->r_tsk,,)
+
+However, smack_msg_queue_msgrcv() ignores the 'target' and
+checks 'current':
+
+  smack_msg_queue_msgrcv(…)
+  ` smk_curacc_msq(isp, MAY_READWRITE); // current task
+
+'current' MAY satisfy smack_msg_queue_msgrcv r/w requirement,
+but 'target' (the receiver task) might NOT;
+as a result, an unauthorized receiver gets the message,
+violating MAC policy.
+
+Test:
+1) create a sysv message queue with label “foo”
+2) echo "bar foo r" >/smack/load2
+3) msgrcv(,,,0,MSG_NOERROR) in "bar"-labeled task.
+    The task is waiting for the messages ...
+4) msgsnd() from a "foo"-labeled task:
+"bar"-labeled task gets the message.
+
+This patch fixes the issue by checking permission on the
+'target' task instead of 'current'.
+
+(2008-02-04, Casey Schaufler)
+Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/smack/smack_lsm.c | 65 +++++++++++++++++++++++++++-----------
+ 1 file changed, 47 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index 36c07b71fe04b..46779b49545bd 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -1927,7 +1927,7 @@ cdns_mhdp_bridge_atomic_reset(struct drm_bridge *bridge)
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 374873f2f4d9b..9a706f37df36b 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -130,12 +130,13 @@ static int smk_bu_note(char *note, struct smack_known *sskp,
+ #define smk_bu_note(note, sskp, oskp, mode, RC) (RC)
+ #endif
  
- 	cdns_mhdp_state = kzalloc_obj(*cdns_mhdp_state);
- 	if (!cdns_mhdp_state)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
+-#ifdef CONFIG_SECURITY_SMACK_BRINGUP
+-static int smk_bu_current(char *note, struct smack_known *oskp,
+-			  int mode, int rc)
++static int
++smk_bu_tsk_to_obj(struct task_struct *tsk, const struct task_smack *tsp,
++		  char *note, struct smack_known *oskp, int mode, int rc)
+ {
+-	struct task_smack *tsp = smack_cred(current_cred());
++#ifdef CONFIG_SECURITY_SMACK_BRINGUP
+ 	char acc[SMK_NUM_ACCESS_TYPE + 1];
++	char comm[TASK_COMM_LEN];
  
- 	__drm_atomic_helper_bridge_reset(bridge, &cdns_mhdp_state->base);
+ 	if (rc <= 0)
+ 		return rc;
+@@ -143,14 +144,22 @@ static int smk_bu_current(char *note, struct smack_known *oskp,
+ 		rc = 0;
  
+ 	smk_bu_mode(mode, acc);
++
+ 	pr_info("Smack %s: (%s %s %s) %s %s\n", smk_bu_mess[rc],
+-		tsp->smk_task->smk_known, oskp->smk_known,
+-		acc, current->comm, note);
++		smk_of_task(tsp)->smk_known, oskp->smk_known,
++		acc, get_task_comm(comm, tsk), note);
+ 	return 0;
+-}
+ #else
+-#define smk_bu_current(note, oskp, mode, RC) (RC)
++	return rc;
+ #endif
++}
++
++static int smk_bu_current(char *note, struct smack_known *oskp,
++			  int mode, int rc)
++{
++	return smk_bu_tsk_to_obj(current, smack_cred(current_cred()),
++				 note, oskp, mode, rc);
++}
+ 
+ #ifdef CONFIG_SECURITY_SMACK_BRINGUP
+ static int smk_bu_task(struct task_struct *otp, int mode, int rc)
+@@ -3348,14 +3357,20 @@ static int smack_sem_semop(struct kern_ipc_perm *isp, struct sembuf *sops,
+ }
+ 
+ /**
+- * smk_curacc_msq : helper to check if current has access on msq
+- * @isp : the msq
++ * smk_tskacc_msq : helper to check if tsk has access on msq
++ * @tsk: the task that requests access
++ * @isp : the sysv msg queue permissions
+  * @access : access requested
+  *
+- * return 0 if current has access, error otherwise
++ * return 0 if tsk has access, error otherwise
+  */
+-static int smk_curacc_msq(struct kern_ipc_perm *isp, int access)
++static int
++smk_tskacc_msq(struct task_struct *tsk, struct kern_ipc_perm *isp, int access)
+ {
++	const bool tsk_is_current = (tsk == current);
++	const struct cred * const tsk_cred =
++			(tsk_is_current ? current_cred() : get_task_cred(tsk));
++	struct task_smack * const tsp = smack_cred(tsk_cred);
+ 	struct smack_known *msp = smack_of_ipc(isp);
+ 	struct smk_audit_info ad;
+ 	int rc;
+@@ -3364,11 +3379,25 @@ static int smk_curacc_msq(struct kern_ipc_perm *isp, int access)
+ 	smk_ad_init(&ad, __func__, LSM_AUDIT_DATA_IPC);
+ 	ad.a.u.ipc_id = isp->id;
+ #endif
+-	rc = smk_curacc(msp, access, &ad);
+-	rc = smk_bu_current("msq", msp, access, rc);
++	rc = smk_tskacc(tsp, msp, access, &ad);
++	rc = smk_bu_tsk_to_obj(tsk, tsp, "msq", msp, access, rc);
++	if (!tsk_is_current)
++		put_cred(tsk_cred);
+ 	return rc;
+ }
+ 
++/**
++ * smk_curacc_msq : helper to check if current has access on msq
++ * @isp : the sysv msg queue permissions
++ * @access : access requested
++ *
++ * return 0 if current has access, error otherwise
++ */
++static int smk_curacc_msq(struct kern_ipc_perm *isp, int access)
++{
++	return smk_tskacc_msq(current, isp, access);
++}
++
+ /**
+  * smack_msg_queue_associate - Smack access check for msg_queue
+  * @isp: the object
+@@ -3436,21 +3465,21 @@ static int smack_msg_queue_msgsnd(struct kern_ipc_perm *isp, struct msg_msg *msg
+ }
+ 
+ /**
+- * smack_msg_queue_msgrcv - Smack access check for msg_queue
++ * smack_msg_queue_msgrcv - check it target has r/w access to msg_queue
+  * @isp: the object
+  * @msg: unused
+- * @target: unused
++ * @target: the task that msgrcv() from the queue
+  * @type: unused
+  * @mode: unused
+  *
+- * Returns 0 if current has read and write access, error code otherwise
++ * Returns 0 if target has read and write access, error code otherwise
+  */
+ static int smack_msg_queue_msgrcv(struct kern_ipc_perm *isp,
+ 				  struct msg_msg *msg,
+ 				  struct task_struct *target, long type,
+ 				  int mode)
+ {
+-	return smk_curacc_msq(isp, MAY_READWRITE);
++	return smk_tskacc_msq(target, isp, MAY_READWRITE);
+ }
+ 
+ /**
 -- 
 2.53.0
 
