@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EAC47988C;
-	Sat, 12 Sep 2026 16:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972C947988C;
+	Sat, 12 Sep 2026 16:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230699; cv=none; b=FQWjco34QqYSU0Tj7P6LcJdllkoFOgBUhyxYRVXmvP+0sJs7xjlQZ7HtZDaOdCghvnAAzTPfme6GD8NMCo9FyfF+HEvuIicUwuH58DvqFdR7bMkq+wwlY0hnk88YWcqIe8x2Zp42hTklIr2s3Hl+8g7M/ljYcOnTnCAmQG71o5A=
+	t=1789230702; cv=none; b=d0xqmk1GHGqreGjYyDSWXAj/hSPY9WD+WC3b+uk34gdti2LS9JuwPkRZzuM9cMwVC1f2mCBMdcPL2MGlR2h/odnhiyA1jhydr3AOtxLtz+1rRNk3c2uYpEucSenohQzXSN998ibVEzL92pfVlNB3uwWYOTzehPR3Dvh1q1GRaUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230699; c=relaxed/simple;
-	bh=UvFeAxhDZPKPQiaUCq7jkODKUILgD4xjFukAC3LDCvc=;
+	s=arc-20240116; t=1789230702; c=relaxed/simple;
+	bh=sWigH+YwMJQ7T1kWMoiSIkM2BBvhEq+PfchVbwGkRk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/tur9DCeQjEt/kBIiT0/zXv16G6p7cMNMdZFXLEcIa5Hz5sms5/aHUWjxwi7aW/gQKJF+hDieyni3wTxqoJSUKenioFjXNEEfTjx2LXd3SBoNSghwAUA6sdIbwkSu/RrAQPxx3xFgv8CMRGuBN8QGwEumwkpy1dVtHBKf8xal0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEMzK1a6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rRiBhWNUEJyKaWxSGLV6qiqPymbuNQ4RxHyPMVpXLbizxKdGSeH6Th6r8r+5tg4UF4jcE7+onYSTuBz0DdmJax+UjaCxrXpFMfXN5B6Sx4Bbn+2Rvv+iAzUEJGSi8VKvEpSvijCocpmXJxfrdvoHeayZgCJcWvWfJWQErQpuBUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/RajgAT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEMzK1a6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC6E1F000FF;
-	Sat, 12 Sep 2026 16:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/RajgAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A990F1F000FF;
+	Sat, 12 Sep 2026 16:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230697;
-	bh=l9/WnvzkZ87SdLrYWepebVSHhDQttyiMshXivY4JAPI=;
+	s=korg; t=1789230701;
+	bh=Jhqkrm0I6SeE+407VcJu4KmG7ovjzB53ksWpjiK5SaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iEMzK1a6Wj8VRLUOwHcDIIBEEDyA7upYDHjUohRY875ebKycUBK6l9arngrZlPDpX
-	 VvhZ6SzX2+fIjfhCecF5WZXW1UXCmt7Hs9aX3AIGU63TnL4qu0t1dzklFy58qPrdVE
-	 sBBb5k6SfO9LO3ogqXR3tvIk+dKOGSzLnSYrlLUE=
+	b=Q/RajgATUuoH1IsrVPmJoOWDcrivCHGVcjnxnLyxFJxqkSZC+zCDUFGuSQk2E4Va1
+	 qTAhP2ZpreW5dD4aRe5KKZVQi/DAy8wOS97OuaHlcmpK2RLK+nWJOQqqMA4VYVK8mi
+	 6S1pvIqiEQrPPq9N4ebRifWJyuXOQ+qSi2I0/oMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanshen Cao <alex.caoys@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0847/1191] iio: light: tsl2772: fix ALS calibscale readback
-Date: Sat, 12 Sep 2026 08:59:35 +0200
-Message-ID: <20260912065607.281356591@linuxfoundation.org>
+Subject: [PATCH 6.1 0848/1191] iio: light: isl29028: return zero in write_raw() on success
+Date: Sat, 12 Sep 2026 08:59:36 +0200
+Message-ID: <20260912065607.302950573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,50 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanshen Cao <alex.caoys@gmail.com>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-[ Upstream commit ac75550ab5b5d73649bffea245c2075fd9249bd0 ]
+[ Upstream commit 55b75622829779223b9e32aa9600a8651d3e2df4 ]
 
-The read_raw() implementation uses IIO_LIGHT to distinguish between the
-ambient light and proximity channels when handling
-IIO_CHAN_INFO_CALIBSCALE.
+isl29028_write_raw() returns the value of pm_runtime_put_autosuspend(),
+which is 1 if the device is already runtime suspended.
 
-However, the ALS channel is registered as IIO_INTENSITY, while
-write_raw() correctly writes to IIO_INTENSITY. As a result, reading
-in_intensity0_calibscale incorrectly returns the proximity gain instead
-of the ALS gain.
+In that case write() on the sysfs attribute returns 1 instead of the
+number of bytes written. Make isl29028_write_raw() always return zero
+on success.
 
-This causes the following user-visible behavior:
-- Writing in_intensity0_calibscale appears to have no effect because the
-  readback reports the proximity gain.
-- Writing in_proximity0_calibscale causes both in_proximity0_calibscale
-  and in_intensity0_calibscale to report the same value.
-
-Fix this by checking for IIO_INTENSITY in read_raw(), matching the
-channel definition and the existing write_raw() implementation.
-
-Fixes: 3c97c08b5735 ("staging: iio: add TAOS tsl2x7x driver")
-Signed-off-by: Yuanshen Cao <alex.caoys@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
+Fixes: 2db5054ac28d ("staging: iio: isl29028: add runtime power management support")
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/tsl2772.c | 2 +-
+ drivers/iio/light/isl29028.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/tsl2772.c b/drivers/iio/light/tsl2772.c
-index 13a6c3d078616..ed554927c6c30 100644
---- a/drivers/iio/light/tsl2772.c
-+++ b/drivers/iio/light/tsl2772.c
-@@ -1263,7 +1263,7 @@ static int tsl2772_read_raw(struct iio_dev *indio_dev,
- 		}
- 		break;
- 	case IIO_CHAN_INFO_CALIBSCALE:
--		if (chan->type == IIO_LIGHT)
-+		if (chan->type == IIO_INTENSITY)
- 			*val = tsl2772_als_gain[chip->settings.als_gain];
- 		else
- 			*val = tsl2772_prox_gain[chip->settings.prox_gain];
+diff --git a/drivers/iio/light/isl29028.c b/drivers/iio/light/isl29028.c
+index 32d58e18f26da..ce82ecff59d76 100644
+--- a/drivers/iio/light/isl29028.c
++++ b/drivers/iio/light/isl29028.c
+@@ -414,7 +414,7 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int isl29028_read_raw(struct iio_dev *indio_dev,
 -- 
 2.53.0
 
