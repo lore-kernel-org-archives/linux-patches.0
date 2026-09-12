@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B191EB5FD;
-	Sat, 12 Sep 2026 08:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5551EB5FD;
+	Sat, 12 Sep 2026 08:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200316; cv=none; b=lCVsaphLPLtB2SZrk6YO/l4jX6l8d78rxcuip4mLSWoFnuESKI+0H8CkyaSnVDyKmm4WwiP5U5bEWJSV7Y3Q0dU+U7HJD5uu2+LI13JwbPDATkVjEl6Nzw3Gunq6aJGOMxUBmc3VvOc1vvkCy/ojNAZbrRANIwMk9yeEyjQQ5Is=
+	t=1789200321; cv=none; b=Z5oqVzMRdJOKbWcZ8gubHwE1z6iDLyC14QJIV1FMC7cZi/YiRUhfQxfC7q2T5hiGQHTliUO0OMpYxYevuCwgN5B4YhAvxJLzBlxgISbnFrP9deLTR+4ve02EuZHZheqPXYjz2T9ecrUMoLTYkt3qdXpI7kFXUbINOnPIdKRZL7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200316; c=relaxed/simple;
-	bh=RMbRuWoPfGA3Un1qM87RLmWBmXLv++fsvVbzTNOQhcQ=;
+	s=arc-20240116; t=1789200321; c=relaxed/simple;
+	bh=2ELTNtMKtykxGy6cCi3UrjFCRH/WddwLwX7CDT818uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqSmAHzg4FMiwhzq3IamMU4xtMCRZH8d8+VIRabrifwxcgrZiz7f9IZfVjfxb8wK+5JICKqVUfODMeM16xNor4O7QDUIJj/0YikoehwiFqY2rVyLP8GsSXT2iR2rutNkwPQa5kTDaBfgYylaBczCxIjGst5hQ6EsSHfaW+KT+j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGuUrwmJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i0vi/nFKk1JCQJ3RpjDIJDbYoclGalTqbRgYrd2i6d2kGwkKWfc/bXiBDftimMN5pP0ZVSn+b9anCo0ov8uixG3bJx6Z8LZBnMBK8f1cZO7LhXbZivZ7aKO2g3udf7qQVfj8b/U/XMjtsVodHOv9q8mhQUNo5Twxcmu3jGa0rKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJ2Q18VE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGuUrwmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4321F000FF;
-	Sat, 12 Sep 2026 08:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJ2Q18VE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABFB1F000FF;
+	Sat, 12 Sep 2026 08:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200314;
-	bh=wAdYUHntSIrRFysWZqezUud3tE9TSW+1xtW30MPk1fU=;
+	s=korg; t=1789200319;
+	bh=iZgC4FBu7sahP8FVQVCP0WYebBOZwlsJzikg8q1GSeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sGuUrwmJKGrJAYpk8H7lqExxBy7nkCyw0IqdhqQrNH6uzpvfH/5Tr+I6WaRDfoOge
-	 PVCO5IE4QgmadH5Au+q2PlcRTOkpaBCfWa97BywKufcnkvL6fvpmM/n54aKoCd9mCA
-	 viO0tC41saiw0BvQY/NazpQbBouDBOk1G0fP8oFU=
+	b=rJ2Q18VEZRfbtnlfX9lp3JBz4Dpgy2Rdb9Yh4bqaaP16gt8HkhknvL0xPSa/pfI/B
+	 jDxCnH3ZGhpvjyAys3Fcfx69DDMWJSzBE6pL4axk9ddGi86izMlLr/F/nE+wGmiF+f
+	 RGHmJ/+hRbI4K21fyNXObyY8+lcj4dG2jCVnoi7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Simon Horman <horms@kernel.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0764/1815] md/raid5: fix lockless max_nr_stripes reads
-Date: Sat, 12 Sep 2026 08:41:54 +0200
-Message-ID: <20260912065706.844076761@linuxfoundation.org>
+Subject: [PATCH 7.2 0765/1815] net: airoha: fix ETS QoS stats counter underflow and cross-channel corruption
+Date: Sat, 12 Sep 2026 08:41:55 +0200
+Message-ID: <20260912065706.866582802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,88 +54,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 6cb6ab75bdf2f49c0adb0fd6971886b082932eaa ]
+[ Upstream commit 8b9a508819880c0c41d70f5b655bbd0baa231395 ]
 
-max_nr_stripes is updated under cache_size_mutex in the stripe cache
-grow/shrink paths, while is_inactive_blocked() and
-raid5_end_read_request() read it without that lock.
+airoha_qdma_get_tx_ets_stats() has two bugs:
+- The hardware counters read via airoha_qdma_rr() are 32-bit values
+  but are stored in u64 locals and subtracted from u64 baselines. When
+  a 32-bit hardware counter wraps around, the subtraction produces a
+  large underflow value passed to _bstats_update().
+- The baseline counters (cpu_tx_packets, fwd_tx_packets) are stored as
+  single per-device fields, but airoha_qdma_get_tx_ets_stats() is
+  called with different channel values (0-3). Each call reads a
+  different channel's hardware counter but overwrites the same
+  baseline, corrupting the delta computation for other channels.
 
-Use READ_ONCE() for those reads in lockless path to match the WRITE_ONCE()
-updates and avoid KCSAN data race reports.
+Fix both by:
+- Narrowing the counter locals and baselines to u32 so that 32-bit
+  unsigned subtraction handles wrap-around naturally.
+- Grouping the baselines into a per-channel qos_stats array so each
+  channel tracks its own previous counter value independently.
+- Splitting the delta addition into two statements so the first u32
+  delta is widened to u64 on assignment and the second is added in
+  u64 arithmetic, preventing overflow when both deltas are large.
 
-A similar issue was previously fixed in commit-id:
-	dfd2bf436709b2bccb78c2dda550dde93700efa7.
-
-Fixes: 0009fad03337 ("raid5 improve too many read errors msg by adding limits")
-Fixes: 3514da58be9c ("md/raid5: Make is_inactive_blocked() helper")
-
-KCSAN report:
-=================
-
-BUG: KCSAN: data-race in grow_one_stripe / is_inactive_blocked
-
-write (marked) to 0xffff8f01f0b5a268 of 4 bytes by task 12616 on cpu 9:
- grow_one_stripe+0x2d8/0x320
- raid5d+0xb57/0xba0
- md_thread+0x15a/0x2d0
- [..........]
-
-read to 0xffff8f01f0b5a268 of 4 bytes by task 12670 on cpu 11:
- is_inactive_blocked+0x97/0xc0
- raid5_get_active_stripe+0x2fd/0xa70
- raid5_make_request+0x4aa/0x2940
- [..........]
-
-value changed: 0x000003b9 -> 0x000003ba
-
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260624024042.2561803-1-chencheng@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 20bf7d07c956 ("net: airoha: Add sched ETS offload support")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260725-airoha-ethtool-priv_flags-v12-2-5136a30b2157@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 18 +++++++++++-------
+ drivers/net/ethernet/airoha/airoha_eth.h |  7 ++++---
+ 2 files changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index a6c52fb1fe68e..992d0b14822e7 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -801,7 +801,7 @@ static bool is_inactive_blocked(struct r5conf *conf, int hash)
- 		return true;
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index 79418e682f71f..2fc8c91f210c6 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -2521,16 +2521,20 @@ static int airoha_qdma_get_tx_ets_stats(struct net_device *netdev, int channel,
+ {
+ 	struct airoha_gdm_dev *dev = netdev_priv(netdev);
+ 	struct airoha_qdma *qdma = dev->qdma;
++	u32 cpu_tx_packets, fwd_tx_packets;
++	u64 tx_packets;
  
- 	return (atomic_read(&conf->active_stripes) <
--		(conf->max_nr_stripes * 3 / 4));
-+		(READ_ONCE(conf->max_nr_stripes) * 3 / 4));
+-	u64 cpu_tx_packets = airoha_qdma_rr(qdma, REG_CNTR_VAL(channel << 1));
+-	u64 fwd_tx_packets = airoha_qdma_rr(qdma,
+-					    REG_CNTR_VAL((channel << 1) + 1));
+-	u64 tx_packets = (cpu_tx_packets - dev->cpu_tx_packets) +
+-			 (fwd_tx_packets - dev->fwd_tx_packets);
++	cpu_tx_packets = airoha_qdma_rr(qdma, REG_CNTR_VAL(channel << 1));
++	fwd_tx_packets = airoha_qdma_rr(qdma,
++					REG_CNTR_VAL((channel << 1) + 1));
++	tx_packets = (u32)(cpu_tx_packets -
++			   dev->qos_stats[channel].cpu_tx_packets);
++	tx_packets += (u32)(fwd_tx_packets -
++			    dev->qos_stats[channel].fwd_tx_packets);
+ 
+ 	_bstats_update(opt->stats.bstats, 0, tx_packets);
+-	dev->cpu_tx_packets = cpu_tx_packets;
+-	dev->fwd_tx_packets = fwd_tx_packets;
++	dev->qos_stats[channel].cpu_tx_packets = cpu_tx_packets;
++	dev->qos_stats[channel].fwd_tx_packets = fwd_tx_packets;
+ 
+ 	return 0;
  }
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
+index fe934f9ffe8a1..b894828b13752 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.h
++++ b/drivers/net/ethernet/airoha/airoha_eth.h
+@@ -580,9 +580,10 @@ struct airoha_gdm_dev {
+ 	struct airoha_eth *eth;
  
- struct stripe_head *raid5_get_active_stripe(struct r5conf *conf,
-@@ -2785,6 +2785,7 @@ static void raid5_end_read_request(struct bio * bi)
- 	} else {
- 		int retry = 0;
- 		int set_bad = 0;
-+		int max_nr_stripes = READ_ONCE(conf->max_nr_stripes);
+ 	DECLARE_BITMAP(qos_sq_bmap, AIROHA_NUM_QOS_CHANNELS);
+-	/* qos stats counters */
+-	u64 cpu_tx_packets;
+-	u64 fwd_tx_packets;
++	struct {
++		u32 cpu_tx_packets;
++		u32 fwd_tx_packets;
++	} qos_stats[AIROHA_NUM_QOS_CHANNELS];
  
- 		clear_bit(R5_UPTODATE, &sh->dev[i].flags);
- 		if (!(bi->bi_status == BLK_STS_PROTECTION))
-@@ -2810,13 +2811,12 @@ static void raid5_end_read_request(struct bio * bi)
- 				mdname(conf->mddev),
- 				(unsigned long long)s,
- 				rdev->bdev);
--		} else if (atomic_read(&rdev->read_errors)
--			 > conf->max_nr_stripes) {
-+		} else if (atomic_read(&rdev->read_errors) > max_nr_stripes) {
- 			if (!test_bit(Faulty, &rdev->flags)) {
- 				pr_warn("md/raid:%s: %d read_errors > %d stripes\n",
- 				    mdname(conf->mddev),
- 				    atomic_read(&rdev->read_errors),
--				    conf->max_nr_stripes);
-+				    max_nr_stripes);
- 				pr_warn("md/raid:%s: Too many read errors, failing device %pg.\n",
- 				    mdname(conf->mddev), rdev->bdev);
- 			}
+ 	u32 flags;
+ 	int nbq;
 -- 
 2.53.0
 
