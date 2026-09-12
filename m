@@ -1,47 +1,44 @@
-Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5592931F5;
-	Sat, 12 Sep 2026 14:13:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2307032B13B;
+	Sat, 12 Sep 2026 14:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222419; cv=none; b=il0iaffEx+BZnJXJ450p4FAftEUrmlYH1ct3RyLPADttfOSpbvrs4yybQQ0R+ZqPZqaREfO47fCwfJkWmwcRW9ojaVFfCmXC43ai65IRRs7otCnjMJeAjIAqjKPDJD94bqlRAmaTtYFz225tNW1GTf6YO9wEUEQZ3tbJPxmuqwI=
+	t=1789222423; cv=none; b=nz8B8Sf8TCFcjH7mQG7spEstP0Anmh/kZsZRr/65Y3XencoLwvn3APN16lfCHoaGBiDgMi0h/fqXzlyJe7lCXKweQO/hntJCcXNAIfUoJCmrGSO3XJzHBcIHQIRZNLpMop1YYGdIlbI6XZOox3tsSuOIpUJGB2hq1LxTwSQ+7OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222419; c=relaxed/simple;
-	bh=gTstbM2OaV8sMp9OoqyaQPZUBmQCjLK7jO6s6uCqT6I=;
+	s=arc-20240116; t=1789222423; c=relaxed/simple;
+	bh=QyCneNUQpwAZqBbrHtmNmW9MOSEEQtjbSHHUVOMTuw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HeIek0H5JDY+Qh8fD16m7a4hYYnOpVdiK23tN+IA8R1c40K4ZU7dDLHZtVptqh21AA8dsu3cURnD4l7cXxLQzFIAQjhqf5OyB+01e6uQoko8q0+thUeOqeJX2J7118AfSUPJ/QDi9I9dTzVdBDm8Nf4W369uAGjqwkH403+EY3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
-From: Brett A C Sheffield <bacs@librecast.net>
-To: gregkh@linuxfoundation.org
-Cc: stable@vger.kernel.org,
+	 MIME-Version; b=d4lJJpaJtmjOcqE0JuWIFYBra75HyX95GTIyPeqfCWM4uhTrQhY2cCNy6urOBHZ/m9k1ND7/JprMvsklErE0VsfG1MebQiri+akgYFDnPmbByV2b+/jXaZgiotWJf6E4GOGjJ+AbHn2aUf4CzJGsIaBB/mUhO4Fubn6bu0GJ/mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAEfMP5V; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAEfMP5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAF81F000FF;
+	Sat, 12 Sep 2026 14:13:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1789222421;
+	bh=TcHwzFys322f6SyN+Kv7CugjCEAzbmRZ0s9tEKcMbh0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=CAEfMP5VHecPj2+joASez8Nb4rGLaHfsd1yd2BAtGihyQNUxX8bcPADEU8iWHYiYk
+	 BOiXoYtrLbI0nteV8OFSARuB9VfWSy7I6B2WQ0Fa8mpvlCXZPyKXBDyAaxeiu/Md/N
+	 8amGWFSxKTe13MAoPpH1cORp8Pp8pcJy185SihNU=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 6.6 0000/1424] 6.6.157-rc1 review
-Date: Sat, 12 Sep 2026 14:13:20 +0000
-Message-ID: <20260912141325.28613-1-bacs@librecast.net>
+	Joey Lu <a0987203069@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0581/1424] clk: nuvoton: ma35d1: fix ma35d1_clk_pll_determine_rate logic
+Date: Sat, 12 Sep 2026 08:50:13 +0200
+Message-ID: <20260912065620.305838311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,12 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-# Librecast Test Results
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-020/020 [ OK ] liblcrq
-010/010 [ OK ] libmld
-120/120 [ OK ] liblibrecast
+------------------
 
-CPU/kernel: Linux auntie 6.6.157-rc1-gfcb8c41a77e1 #1 SMP PREEMPT_DYNAMIC Sat Sep 12 13:50:15 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+From: Joey Lu <a0987203069@gmail.com>
 
-Tested-by: Brett A C Sheffield <bacs@librecast.net>
+[ Upstream commit e1311954cb600d5f95cd9e2fe9a7376edc2ac3c5 ]
+
+ma35d1_clk_pll_determine_rate() called ma35d1_pll_find_closest()
+unconditionally before the switch statement, and then every case
+branch overwrote pll_freq by reading the current hardware registers.
+For CAPLL and DDRPLL this means find_closest() ran unnecessarily
+(and incorrectly, since those PLLs are read-only) and its result
+was silently discarded.
+
+Fix by moving the find_closest() call inside the APLL/EPLL/VPLL
+branch where it belongs.  Group CAPLL and DDRPLL together as
+read-only PLLs that simply report their current rate; handle them
+with an explicit if/else to keep the CAPLL (SMIC design) and DDRPLL
+(standard design) paths distinct.
+
+Fixes: 691521a367cf ("clk: nuvoton: Add clock driver for ma35d1 clock controller")
+Signed-off-by: Joey Lu <a0987203069@gmail.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/clk/nuvoton/clk-ma35d1-pll.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/clk/nuvoton/clk-ma35d1-pll.c b/drivers/clk/nuvoton/clk-ma35d1-pll.c
+index eb9d69d2077b1..c7c0dc91a012c 100644
+--- a/drivers/clk/nuvoton/clk-ma35d1-pll.c
++++ b/drivers/clk/nuvoton/clk-ma35d1-pll.c
+@@ -255,32 +255,32 @@ static int ma35d1_clk_pll_determine_rate(struct clk_hw *hw,
+ 	if (req->best_parent_rate < PLL_FREF_MIN_FREQ || req->best_parent_rate > PLL_FREF_MAX_FREQ)
+ 		return -EINVAL;
+ 
+-	ret = ma35d1_pll_find_closest(pll, req->rate, req->best_parent_rate,
+-				      reg_ctl, &pll_freq);
+-	if (ret < 0)
+-		return ret;
+-
+ 	switch (pll->id) {
+ 	case CAPLL:
++	case DDRPLL:
++		/* Read-only PLLs: return current rate */
+ 		reg_ctl[0] = readl_relaxed(pll->ctl0_base);
+-		pll_freq = ma35d1_calc_smic_pll_freq(reg_ctl[0], req->best_parent_rate);
++		if (pll->id == CAPLL) {
++			pll_freq = ma35d1_calc_smic_pll_freq(reg_ctl[0], req->best_parent_rate);
++		} else {
++			reg_ctl[1] = readl_relaxed(pll->ctl1_base);
++			pll_freq = ma35d1_calc_pll_freq(pll->mode, reg_ctl, req->best_parent_rate);
++		}
+ 		req->rate = pll_freq;
+-
+ 		return 0;
+-	case DDRPLL:
+ 	case APLL:
+ 	case EPLL:
+ 	case VPLL:
+-		reg_ctl[0] = readl_relaxed(pll->ctl0_base);
+-		reg_ctl[1] = readl_relaxed(pll->ctl1_base);
+-		pll_freq = ma35d1_calc_pll_freq(pll->mode, reg_ctl, req->best_parent_rate);
++		/* Configurable PLLs: find closest achievable rate */
++		ret = ma35d1_pll_find_closest(pll, req->rate, req->best_parent_rate,
++					      reg_ctl, &pll_freq);
++		if (ret < 0)
++			return ret;
+ 		req->rate = pll_freq;
+-
+ 		return 0;
+ 	}
+ 
+ 	req->rate = 0;
+-
+ 	return 0;
+ }
+ 
+-- 
+2.53.0
+
+
+
