@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C842264AB;
-	Sat, 12 Sep 2026 16:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCC02264AB;
+	Sat, 12 Sep 2026 16:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230562; cv=none; b=clDtTNzaj0dIQr/UHwVUmPgK0VNYx6P5jesruOYLLz4CiYh9jBBE1B+QU0p3KrUNM79Uw5jMwokHaO2dyCTr0YWgObUikuY/TFKqWKlr+gPu3cfk1mSv9VhOuDcxFkR1Cxfgj4zk/3qmhAHIU1feQ9tFOY4pi0uaIGkXIHWnhfQ=
+	t=1789230567; cv=none; b=QYqWut1Y2O9DnuzxF3FS7z5G6Zuv8r18JaxJz+3pW1ju6g7eLW/KEZLbgKFDEpTearzeNMhMzEszrEmtlRn2NqlGNGMBGIeiZsTeQFI3+fOE+gPYlbZ7rsLjxVBPdT80eBMXxfM9voniGyGwtBoWa8WjLrqxGv5Ng1/QHyWqhuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230562; c=relaxed/simple;
-	bh=Zz+VECm1rKI5XTUoyDErE/ktWBHGymjHKht3T3xuzio=;
+	s=arc-20240116; t=1789230567; c=relaxed/simple;
+	bh=uVTPbBL935I8gi6jwZnjK//O3GSr5Gc2iN3r4QefFug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tyxq1+Fo6WxWV13C6Pu87JiHe3m8kNXWv4+e8ysCZ8C/2t7kxLQRBRNoeuzZyEAWF3BwoMA+onCx85KIpW9d+KxxNlGC2Vsw9MLBhd8QCodyHmcN437zuBT/ENjGq2/ZYJwS6HvxXV7PhmEbFnrMKMg6pRePVFJOtKRmDNyLzvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCCsr4cK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DvBmh/YaoCdcz8b27HkiNvuN8eYu+akhYgq6H6syJS3dfUPXgIppEB2OPpj4G4nZRe/i4E3rWA+/eA561fI8FgZUDzRrUarETP5m7iemqDH91DAjbrmDmDBAjjwnoAof41MAP1U+y1dkNGurwsUSz6fFdBYTUNcG1eDcrqP47Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9gpoFht; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCCsr4cK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D54D1F000FF;
-	Sat, 12 Sep 2026 16:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9gpoFht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975BF1F000FF;
+	Sat, 12 Sep 2026 16:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230561;
-	bh=A29nKjXiqhF3712iI4Wo/L3DlbEeb4gR7vIRYd5D6RI=;
+	s=korg; t=1789230565;
+	bh=LG1eY8BYx+RT+g4bgeV1ipu9NSE8w3VmpXX7tf2rcZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xCCsr4cKk6XSD91e5lO+dJ9ONLQagGBt7nz8eJSOJEqNxxcnRrZTPTilrrPNbqlcp
-	 kVvPTsoirFC3fFo8cFrtbu8LbZRqXboM8JQceT6Sq7XfzsNgNwhrG1na14ieqSsKAQ
-	 rezJ27wBLOqrKFYND9Vd45TsbsESiwkZ+W061GqY=
+	b=w9gpoFhtaiFLs7vHeYH3ZbmBUOwmYjtwcD4yy0AB/+TU+M3qmBqCCd71jChXSzl3n
+	 40qaaaqo/fViotwmz1Umyg2nAHJn0MCj2jBr3b4jH/f3DPrpuqec+27FPIY8TZxGyO
+	 Y5X5d6qaCrkLkDWSmMqx8cc64bZKu5L5IxLxhyys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Bo Jiao <Bo.Jiao@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0818/1191] wifi: mt76: mt7915: fix double hif2 init on the non-WED path
-Date: Sat, 12 Sep 2026 08:59:06 +0200
-Message-ID: <20260912065606.642533878@linuxfoundation.org>
+Subject: [PATCH 6.1 0819/1191] wifi: mt76: mt7915: rework mt7915_dma_reset()
+Date: Sat, 12 Sep 2026 08:59:07 +0200
+Message-ID: <20260912065606.665274482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,38 +52,265 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Bo Jiao <bo.jiao@mediatek.com>
 
-[ Upstream commit 3ae8ad277e2819a281b0e36b55633c8515c16ce7 ]
+[ Upstream commit d493bb5b9d98cbbd37eda1619ae56a626298c8e3 ]
 
-mt7915_pci_init_hif2() was called unconditionally and again inside the
-WED-inactive branch. The helper increments the global hif_idx, writes the
-PCIe RECOG_ID register and takes a get_device() reference via
-mt7915_pci_get_hif2(), while removal only drops one reference. On non-WED
-dual-hif hardware this double-incremented hif_idx, wrote RECOG_ID twice and
-leaked a device reference. Only the call inside the WED-inactive branch is
-correct; drop the unconditional one. hif2 is already initialised to NULL.
+Reuse mt7915_dma_disable() to reduce duplicated code.
+This is a preliminary patch to enable full system reset.
 
-Fixes: cacdd67812c6 ("mt76: mt7915: add mt7915_mmio_probe() as a common probing function")
-Link: https://patch.msgid.link/20260727150434.1778520-2-nbd@nbd.name
+Co-developed-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Bo Jiao <Bo.Jiao@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 15b960014f24 ("wifi: mt76: mt7915: fix ext PHY use-after-free on register error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 1 -
- 1 file changed, 1 deletion(-)
+ .../net/wireless/mediatek/mt76/mt7915/dma.c   | 110 ++++++++++++++----
+ .../net/wireless/mediatek/mt76/mt7915/mac.c   |  69 +----------
+ .../wireless/mediatek/mt76/mt7915/mt7915.h    |   1 +
+ 3 files changed, 91 insertions(+), 89 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-index 39132894e8ea2..8e125daa90747 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-@@ -134,7 +134,6 @@ static int mt7915_pci_probe(struct pci_dev *pdev,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/dma.c b/drivers/net/wireless/mediatek/mt76/mt7915/dma.c
+index e4fa240834d84..38360f9407476 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/dma.c
+@@ -50,23 +50,37 @@ static void mt7915_dma_config(struct mt7915_dev *dev)
+ #define TXQ_CONFIG(q, wfdma, int, id)	Q_CONFIG(__TXQ(q), (wfdma), (int), (id))
  
- 	mdev = &dev->mt76;
- 	mt7915_wfsys_reset(dev);
--	hif2 = mt7915_pci_init_hif2(pdev);
+ 	if (is_mt7915(&dev->mt76)) {
+-		RXQ_CONFIG(MT_RXQ_MAIN, WFDMA0, MT_INT_RX_DONE_BAND0, MT7915_RXQ_BAND0);
+-		RXQ_CONFIG(MT_RXQ_MCU, WFDMA1, MT_INT_RX_DONE_WM, MT7915_RXQ_MCU_WM);
+-		RXQ_CONFIG(MT_RXQ_MCU_WA, WFDMA1, MT_INT_RX_DONE_WA, MT7915_RXQ_MCU_WA);
+-		RXQ_CONFIG(MT_RXQ_BAND1, WFDMA0, MT_INT_RX_DONE_BAND1, MT7915_RXQ_BAND1);
+-		RXQ_CONFIG(MT_RXQ_BAND1_WA, WFDMA1, MT_INT_RX_DONE_WA_EXT, MT7915_RXQ_MCU_WA_EXT);
+-		RXQ_CONFIG(MT_RXQ_MAIN_WA, WFDMA1, MT_INT_RX_DONE_WA_MAIN, MT7915_RXQ_MCU_WA);
++		RXQ_CONFIG(MT_RXQ_MAIN, WFDMA0, MT_INT_RX_DONE_BAND0,
++			   MT7915_RXQ_BAND0);
++		RXQ_CONFIG(MT_RXQ_MCU, WFDMA1, MT_INT_RX_DONE_WM,
++			   MT7915_RXQ_MCU_WM);
++		RXQ_CONFIG(MT_RXQ_MCU_WA, WFDMA1, MT_INT_RX_DONE_WA,
++			   MT7915_RXQ_MCU_WA);
++		RXQ_CONFIG(MT_RXQ_BAND1, WFDMA0, MT_INT_RX_DONE_BAND1,
++			   MT7915_RXQ_BAND1);
++		RXQ_CONFIG(MT_RXQ_BAND1_WA, WFDMA1, MT_INT_RX_DONE_WA_EXT,
++			   MT7915_RXQ_MCU_WA_EXT);
++		RXQ_CONFIG(MT_RXQ_MAIN_WA, WFDMA1, MT_INT_RX_DONE_WA_MAIN,
++			   MT7915_RXQ_MCU_WA);
+ 		TXQ_CONFIG(0, WFDMA1, MT_INT_TX_DONE_BAND0, MT7915_TXQ_BAND0);
+ 		TXQ_CONFIG(1, WFDMA1, MT_INT_TX_DONE_BAND1, MT7915_TXQ_BAND1);
+-		MCUQ_CONFIG(MT_MCUQ_WM, WFDMA1, MT_INT_TX_DONE_MCU_WM, MT7915_TXQ_MCU_WM);
+-		MCUQ_CONFIG(MT_MCUQ_WA, WFDMA1, MT_INT_TX_DONE_MCU_WA, MT7915_TXQ_MCU_WA);
+-		MCUQ_CONFIG(MT_MCUQ_FWDL, WFDMA1, MT_INT_TX_DONE_FWDL, MT7915_TXQ_FWDL);
++		MCUQ_CONFIG(MT_MCUQ_WM, WFDMA1, MT_INT_TX_DONE_MCU_WM,
++			    MT7915_TXQ_MCU_WM);
++		MCUQ_CONFIG(MT_MCUQ_WA, WFDMA1, MT_INT_TX_DONE_MCU_WA,
++			    MT7915_TXQ_MCU_WA);
++		MCUQ_CONFIG(MT_MCUQ_FWDL, WFDMA1, MT_INT_TX_DONE_FWDL,
++			    MT7915_TXQ_FWDL);
+ 	} else {
+-		RXQ_CONFIG(MT_RXQ_MCU, WFDMA0, MT_INT_RX_DONE_WM, MT7916_RXQ_MCU_WM);
+-		RXQ_CONFIG(MT_RXQ_BAND1_WA, WFDMA0, MT_INT_RX_DONE_WA_EXT_MT7916, MT7916_RXQ_MCU_WA_EXT);
+-		MCUQ_CONFIG(MT_MCUQ_WM, WFDMA0, MT_INT_TX_DONE_MCU_WM, MT7915_TXQ_MCU_WM);
+-		MCUQ_CONFIG(MT_MCUQ_WA, WFDMA0, MT_INT_TX_DONE_MCU_WA_MT7916, MT7915_TXQ_MCU_WA);
+-		MCUQ_CONFIG(MT_MCUQ_FWDL, WFDMA0, MT_INT_TX_DONE_FWDL, MT7915_TXQ_FWDL);
++		RXQ_CONFIG(MT_RXQ_MCU, WFDMA0, MT_INT_RX_DONE_WM,
++			   MT7916_RXQ_MCU_WM);
++		RXQ_CONFIG(MT_RXQ_BAND1_WA, WFDMA0, MT_INT_RX_DONE_WA_EXT_MT7916,
++			   MT7916_RXQ_MCU_WA_EXT);
++		MCUQ_CONFIG(MT_MCUQ_WM, WFDMA0, MT_INT_TX_DONE_MCU_WM,
++			    MT7915_TXQ_MCU_WM);
++		MCUQ_CONFIG(MT_MCUQ_WA, WFDMA0, MT_INT_TX_DONE_MCU_WA_MT7916,
++			    MT7915_TXQ_MCU_WA);
++		MCUQ_CONFIG(MT_MCUQ_FWDL, WFDMA0, MT_INT_TX_DONE_FWDL,
++			    MT7915_TXQ_FWDL);
  
- 	ret = mt7915_mmio_wed_init(dev, pdev, true, &irq);
- 	if (ret < 0)
+ 		if (is_mt7916(&dev->mt76) && mtk_wed_device_active(&dev->mt76.mmio.wed)) {
+ 			RXQ_CONFIG(MT_RXQ_MAIN, WFDMA0, MT_INT_WED_RX_DONE_BAND0_MT7916,
+@@ -77,16 +91,23 @@ static void mt7915_dma_config(struct mt7915_dev *dev)
+ 				   MT7916_RXQ_BAND1);
+ 			RXQ_CONFIG(MT_RXQ_MAIN_WA, WFDMA0, MT_INT_WED_RX_DONE_WA_MAIN_MT7916,
+ 				   MT7916_RXQ_MCU_WA_MAIN);
+-			TXQ_CONFIG(0, WFDMA0, MT_INT_WED_TX_DONE_BAND0, MT7915_TXQ_BAND0);
+-			TXQ_CONFIG(1, WFDMA0, MT_INT_WED_TX_DONE_BAND1, MT7915_TXQ_BAND1);
++			TXQ_CONFIG(0, WFDMA0, MT_INT_WED_TX_DONE_BAND0,
++				   MT7915_TXQ_BAND0);
++			TXQ_CONFIG(1, WFDMA0, MT_INT_WED_TX_DONE_BAND1,
++				   MT7915_TXQ_BAND1);
+ 		} else {
+-			RXQ_CONFIG(MT_RXQ_MAIN, WFDMA0, MT_INT_RX_DONE_BAND0_MT7916, MT7916_RXQ_BAND0);
+-			RXQ_CONFIG(MT_RXQ_MCU_WA, WFDMA0, MT_INT_RX_DONE_WA, MT7916_RXQ_MCU_WA);
+-			RXQ_CONFIG(MT_RXQ_BAND1, WFDMA0, MT_INT_RX_DONE_BAND1_MT7916, MT7916_RXQ_BAND1);
++			RXQ_CONFIG(MT_RXQ_MAIN, WFDMA0, MT_INT_RX_DONE_BAND0_MT7916,
++				   MT7916_RXQ_BAND0);
++			RXQ_CONFIG(MT_RXQ_MCU_WA, WFDMA0, MT_INT_RX_DONE_WA,
++				   MT7916_RXQ_MCU_WA);
++			RXQ_CONFIG(MT_RXQ_BAND1, WFDMA0, MT_INT_RX_DONE_BAND1_MT7916,
++				   MT7916_RXQ_BAND1);
+ 			RXQ_CONFIG(MT_RXQ_MAIN_WA, WFDMA0, MT_INT_RX_DONE_WA_MAIN_MT7916,
+ 				   MT7916_RXQ_MCU_WA_MAIN);
+-			TXQ_CONFIG(0, WFDMA0, MT_INT_TX_DONE_BAND0, MT7915_TXQ_BAND0);
+-			TXQ_CONFIG(1, WFDMA0, MT_INT_TX_DONE_BAND1, MT7915_TXQ_BAND1);
++			TXQ_CONFIG(0, WFDMA0, MT_INT_TX_DONE_BAND0,
++				   MT7915_TXQ_BAND0);
++			TXQ_CONFIG(1, WFDMA0, MT_INT_TX_DONE_BAND1,
++				   MT7915_TXQ_BAND1);
+ 		}
+ 	}
+ }
+@@ -514,6 +535,53 @@ int mt7915_dma_init(struct mt7915_dev *dev, struct mt7915_phy *phy2)
+ 	return 0;
+ }
+ 
++int mt7915_dma_reset(struct mt7915_dev *dev, bool force)
++{
++	struct mt76_phy *mphy_ext = dev->mt76.phys[MT_BAND1];
++	int i;
++
++	/* clean up hw queues */
++	for (i = 0; i < ARRAY_SIZE(dev->mt76.phy.q_tx); i++) {
++		mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[i], true);
++		if (mphy_ext)
++			mt76_queue_tx_cleanup(dev, mphy_ext->q_tx[i], true);
++	}
++
++	for (i = 0; i < ARRAY_SIZE(dev->mt76.q_mcu); i++)
++		mt76_queue_tx_cleanup(dev, dev->mt76.q_mcu[i], true);
++
++	mt76_for_each_q_rx(&dev->mt76, i)
++		mt76_queue_rx_cleanup(dev, &dev->mt76.q_rx[i]);
++
++	/* reset wfsys */
++	if (force)
++		mt7915_wfsys_reset(dev);
++
++	mt7915_dma_disable(dev, force);
++
++	/* reset hw queues */
++	for (i = 0; i < __MT_TXQ_MAX; i++) {
++		mt76_queue_reset(dev, dev->mphy.q_tx[i]);
++		if (mphy_ext)
++			mt76_queue_reset(dev, mphy_ext->q_tx[i]);
++	}
++
++	for (i = 0; i < __MT_MCUQ_MAX; i++)
++		mt76_queue_reset(dev, dev->mt76.q_mcu[i]);
++
++	mt76_for_each_q_rx(&dev->mt76, i)
++		mt76_queue_reset(dev, &dev->mt76.q_rx[i]);
++
++	mt76_tx_status_check(&dev->mt76, true);
++
++	mt7915_dma_enable(dev);
++
++	mt76_for_each_q_rx(&dev->mt76, i)
++		mt76_queue_rx_reset(dev, i);
++
++	return 0;
++}
++
+ void mt7915_dma_cleanup(struct mt7915_dev *dev)
+ {
+ 	mt7915_dma_disable(dev, true);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index f4f8953254970..2c6ba6feeee23 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -1301,73 +1301,6 @@ mt7915_update_beacons(struct mt7915_dev *dev)
+ 		mt7915_update_vif_beacon, mphy_ext->hw);
+ }
+ 
+-static void
+-mt7915_dma_reset(struct mt7915_dev *dev)
+-{
+-	struct mt76_phy *mphy_ext = dev->mt76.phys[MT_BAND1];
+-	u32 hif1_ofs = MT_WFDMA0_PCIE1(0) - MT_WFDMA0(0);
+-	int i;
+-
+-	mt76_clear(dev, MT_WFDMA0_GLO_CFG,
+-		   MT_WFDMA0_GLO_CFG_TX_DMA_EN |
+-		   MT_WFDMA0_GLO_CFG_RX_DMA_EN);
+-
+-	if (is_mt7915(&dev->mt76))
+-		mt76_clear(dev, MT_WFDMA1_GLO_CFG,
+-			   MT_WFDMA1_GLO_CFG_TX_DMA_EN |
+-			   MT_WFDMA1_GLO_CFG_RX_DMA_EN);
+-	if (dev->hif2) {
+-		mt76_clear(dev, MT_WFDMA0_GLO_CFG + hif1_ofs,
+-			   MT_WFDMA0_GLO_CFG_TX_DMA_EN |
+-			   MT_WFDMA0_GLO_CFG_RX_DMA_EN);
+-
+-		if (is_mt7915(&dev->mt76))
+-			mt76_clear(dev, MT_WFDMA1_GLO_CFG + hif1_ofs,
+-				   MT_WFDMA1_GLO_CFG_TX_DMA_EN |
+-				   MT_WFDMA1_GLO_CFG_RX_DMA_EN);
+-	}
+-
+-	usleep_range(1000, 2000);
+-
+-	for (i = 0; i < __MT_TXQ_MAX; i++) {
+-		mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[i], true);
+-		if (mphy_ext)
+-			mt76_queue_tx_cleanup(dev, mphy_ext->q_tx[i], true);
+-	}
+-
+-	for (i = 0; i < __MT_MCUQ_MAX; i++)
+-		mt76_queue_tx_cleanup(dev, dev->mt76.q_mcu[i], true);
+-
+-	mt76_for_each_q_rx(&dev->mt76, i)
+-		mt76_queue_rx_reset(dev, i);
+-
+-	mt76_tx_status_check(&dev->mt76, true);
+-
+-	/* re-init prefetch settings after reset */
+-	mt7915_dma_prefetch(dev);
+-
+-	mt76_set(dev, MT_WFDMA0_GLO_CFG,
+-		 MT_WFDMA0_GLO_CFG_TX_DMA_EN | MT_WFDMA0_GLO_CFG_RX_DMA_EN);
+-	if (is_mt7915(&dev->mt76))
+-		mt76_set(dev, MT_WFDMA1_GLO_CFG,
+-			 MT_WFDMA1_GLO_CFG_TX_DMA_EN |
+-			 MT_WFDMA1_GLO_CFG_RX_DMA_EN |
+-			 MT_WFDMA1_GLO_CFG_OMIT_TX_INFO |
+-			 MT_WFDMA1_GLO_CFG_OMIT_RX_INFO);
+-	if (dev->hif2) {
+-		mt76_set(dev, MT_WFDMA0_GLO_CFG + hif1_ofs,
+-			 MT_WFDMA0_GLO_CFG_TX_DMA_EN |
+-			 MT_WFDMA0_GLO_CFG_RX_DMA_EN);
+-
+-		if (is_mt7915(&dev->mt76))
+-			mt76_set(dev, MT_WFDMA1_GLO_CFG + hif1_ofs,
+-				 MT_WFDMA1_GLO_CFG_TX_DMA_EN |
+-				 MT_WFDMA1_GLO_CFG_RX_DMA_EN |
+-				 MT_WFDMA1_GLO_CFG_OMIT_TX_INFO |
+-				 MT_WFDMA1_GLO_CFG_OMIT_RX_INFO);
+-	}
+-}
+-
+ void mt7915_tx_token_put(struct mt7915_dev *dev)
+ {
+ 	struct mt76_txwi_cache *txwi;
+@@ -1421,7 +1354,7 @@ void mt7915_mac_reset_work(struct work_struct *work)
+ 	mt76_wr(dev, MT_MCU_INT_EVENT, MT_MCU_INT_EVENT_DMA_STOPPED);
+ 
+ 	if (mt7915_wait_reset_state(dev, MT_MCU_CMD_RESET_DONE)) {
+-		mt7915_dma_reset(dev);
++		mt7915_dma_reset(dev, false);
+ 
+ 		mt7915_tx_token_put(dev);
+ 		idr_init(&dev->mt76.token);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+index a1bf1d7e7734d..176f6b302432f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+@@ -442,6 +442,7 @@ s8 mt7915_eeprom_get_power_delta(struct mt7915_dev *dev, int band);
+ int mt7915_dma_init(struct mt7915_dev *dev, struct mt7915_phy *phy2);
+ void mt7915_dma_prefetch(struct mt7915_dev *dev);
+ void mt7915_dma_cleanup(struct mt7915_dev *dev);
++int mt7915_dma_reset(struct mt7915_dev *dev, bool force);
+ int mt7915_mcu_init(struct mt7915_dev *dev);
+ int mt7915_mcu_twt_agrt_update(struct mt7915_dev *dev,
+ 			       struct mt7915_vif *mvif,
 -- 
 2.53.0
 
