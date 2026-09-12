@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C40D2594BD;
-	Sat, 12 Sep 2026 16:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3FE29D288;
+	Sat, 12 Sep 2026 16:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229471; cv=none; b=kjzXj8kMbo3OSrTDSpJO23IKt5WK8FXq2YICoqkWoE0Dw9NsjK0Ucdy0x0btRrj0I51ofLowOT6S7JdDDhuj5/+WfoGDAj36HRn5ui30Uh4BCUl0MJnUb6UdqquMjQCINigKBKu8u6ZDVJnGQQ7dcmWSBM2LH4JMGuw2GMTp5y8=
+	t=1789229475; cv=none; b=hRjRMRDCeJeohonowuKzyyRZ7pzARUU1yG3l4VVGLXCLGI0McVHexrOTO5GWY5gxmFFzwgmo77Tb86KDgPRpqkNiZoyyrhD2j6pp2pBJlk4rptm7Rlx/sU28f9nw2w1ifj/IOQ6K3bNL8EsakUwMdEYWkMV3NpcjShmcnfEcLOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229471; c=relaxed/simple;
-	bh=KlRfjIBMjfMYJsb3grovw+bYIeCeyGt+c8SFTrUAkuo=;
+	s=arc-20240116; t=1789229475; c=relaxed/simple;
+	bh=Mig2u0G9IBEe4NkzZVwfzcv6fuRBhLPIsk2sr2lolQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTemknvUuwKi4Nj/b4UMxnRrQxPMHHeWjWzwu0w8Q6IQmgQysBYsUNk+SlQxNmQ7BJgMadHNV0QcziC2bICmZSclVBGdPVfrMrymd/1BOqYkgH9eat0nDuWdqLv7nP3n/73g6xW+HZBiSXXNT4gPP6jiRHEdw1EZwS3UV40YQSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFMh8j30; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pj95o9RAwSE3OmPXDsTgH8rs2F5mwB4bQonLnzqJZK0mSQF/gfMKDdIQrWxeyFhDNZNRNLFlqbcxbu6t5g0UgUKUtwoBTqHpeWX656jybOLjfaCwPs8hDN2fn7b5JhBY7cLy35fxblRXHGYoQIIyW9k5gFwh5ZSVnJf4qehZl6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGI/1s6k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFMh8j30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7871F000FF;
-	Sat, 12 Sep 2026 16:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGI/1s6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4F71F000FF;
+	Sat, 12 Sep 2026 16:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229469;
-	bh=x6pox1CHpq9XL8kba0HU+wWsZ0gR88LGQ29kQNxx97U=;
+	s=korg; t=1789229474;
+	bh=4NQx2uhDpECBXhfRMlqI/zy9qVWjIIYiyEirnk1Qq0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZFMh8j303tBm87K58d3657J5hRAPCkIrT7H/GXiMGWJuEsDOc4JAMia+SuCjjccw1
-	 3GxLTliSKuhDVVD9hjKCE2q2OMQjlYhIxHf1HOpba4+5Z68BcdnlFeloHkTryvKcI4
-	 YmHPEcWWxm1R1De1H7+FVGbqxvUE4FCOko+JZ9XU=
+	b=oGI/1s6k+tJWCUYEDoEoAYcMw5iWyA8hZMxb8oaPNOBTSIbEKxtbN5C8/cFGoMwpn
+	 8oT47Ul3PwdO+9kaad0QnbMwio+nNuc35uhOTuEqbNCiQF6xxuoPuQrd5b/nd/KJj7
+	 hnXnGnd1e9nLcYUtQ30ElGEtssPph37Gr86xArqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0594/1191] RDMA/mlx: Calling qp event handler in workqueue context
-Date: Sat, 12 Sep 2026 08:55:22 +0200
-Message-ID: <20260912065601.589543860@linuxfoundation.org>
+Subject: [PATCH 6.1 0595/1191] RDMA/mlx5: Drain RCU callbacks during module teardown
+Date: Sat, 12 Sep 2026 08:55:23 +0200
+Message-ID: <20260912065601.611989160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,500 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 312b8f79eb05479628ee71357749815b2eeeeea8 ]
+[ Upstream commit e37cdd75f8d61c1123d324ae5667ac3da562290e ]
 
-Move the call of qp event handler from atomic to workqueue context,
-so that the handler is able to block. This is needed by following
-patches.
+devx_free_subscription() can remain queued after the last DevX event file
+drops its module reference or an auxiliary driver detaches its devices.
+mlx5_ib can then unload before the callback runs.
 
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Link: https://lore.kernel.org/r/0cd17b8331e445f03942f4bb28d447f24ac5669d.1672821186.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: e37cdd75f8d6 ("RDMA/mlx5: Drain RCU callbacks during module teardown")
+Registration error unwind has the same risk because driver registration
+can attach existing devices before failing. Wait after all drivers have
+stopped.
+
+Fixes: 6898d1c661d7 ("RDMA/mlx5: Use RCU and direct refcounts to keep memory alive")
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Closes: https://lore.kernel.org/linux-rdma/20260708092316.Qb39F_B0@linutronix.de/
+Link: https://patch.msgid.link/20260709-unload-rcu-v1-2-fccd27211e5a@nvidia.com
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/main.c       |   8 ++
- drivers/infiniband/hw/mlx4/mlx4_ib.h    |   3 +
- drivers/infiniband/hw/mlx4/qp.c         | 121 +++++++++++++++++-------
- drivers/infiniband/hw/mlx5/main.c       |   7 ++
- drivers/infiniband/hw/mlx5/qp.c         | 119 ++++++++++++++++-------
- drivers/infiniband/hw/mlx5/qp.h         |   2 +
- drivers/infiniband/hw/mlx5/qpc.c        |   3 +-
- drivers/net/ethernet/mellanox/mlx4/qp.c |  14 ++-
- include/linux/mlx4/qp.h                 |   1 +
- include/rdma/ib_verbs.h                 |   2 +-
- 10 files changed, 202 insertions(+), 78 deletions(-)
+ drivers/infiniband/hw/mlx5/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
-index 7c3dc86ab7f04..0f0b130cc8aac 100644
---- a/drivers/infiniband/hw/mlx4/main.c
-+++ b/drivers/infiniband/hw/mlx4/main.c
-@@ -3307,6 +3307,10 @@ static int __init mlx4_ib_init(void)
- 	if (!wq)
- 		return -ENOMEM;
- 
-+	err = mlx4_ib_qp_event_init();
-+	if (err)
-+		goto clean_qp_event;
-+
- 	err = mlx4_ib_cm_init();
- 	if (err)
- 		goto clean_wq;
-@@ -3328,6 +3332,9 @@ static int __init mlx4_ib_init(void)
- 	mlx4_ib_cm_destroy();
- 
- clean_wq:
-+	mlx4_ib_qp_event_cleanup();
-+
-+clean_qp_event:
- 	destroy_workqueue(wq);
- 	return err;
- }
-@@ -3337,6 +3344,7 @@ static void __exit mlx4_ib_cleanup(void)
- 	mlx4_unregister_interface(&mlx4_ib_interface);
- 	mlx4_ib_mcg_destroy();
- 	mlx4_ib_cm_destroy();
-+	mlx4_ib_qp_event_cleanup();
- 	destroy_workqueue(wq);
- }
- 
-diff --git a/drivers/infiniband/hw/mlx4/mlx4_ib.h b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-index 110083471f4dc..c9368eb13a873 100644
---- a/drivers/infiniband/hw/mlx4/mlx4_ib.h
-+++ b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-@@ -941,4 +941,7 @@ int mlx4_ib_umem_calc_optimal_mtt_size(struct ib_umem *umem, u64 start_va,
- int mlx4_ib_cm_init(void);
- void mlx4_ib_cm_destroy(void);
- 
-+int mlx4_ib_qp_event_init(void);
-+void mlx4_ib_qp_event_cleanup(void);
-+
- #endif /* MLX4_IB_H */
-diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
-index ac479e81ddee8..9d08aa99f3cb0 100644
---- a/drivers/infiniband/hw/mlx4/qp.c
-+++ b/drivers/infiniband/hw/mlx4/qp.c
-@@ -102,6 +102,14 @@ enum mlx4_ib_source_type {
- 	MLX4_IB_RWQ_SRC	= 1,
- };
- 
-+struct mlx4_ib_qp_event_work {
-+	struct work_struct work;
-+	struct mlx4_qp *qp;
-+	enum mlx4_event type;
-+};
-+
-+static struct workqueue_struct *mlx4_ib_qp_event_wq;
-+
- static int is_tunnel_qp(struct mlx4_ib_dev *dev, struct mlx4_ib_qp *qp)
- {
- 	if (!mlx4_is_master(dev->dev))
-@@ -200,50 +208,77 @@ static void stamp_send_wqe(struct mlx4_ib_qp *qp, int n)
- 	}
- }
- 
-+static void mlx4_ib_handle_qp_event(struct work_struct *_work)
-+{
-+	struct mlx4_ib_qp_event_work *qpe_work =
-+		container_of(_work, struct mlx4_ib_qp_event_work, work);
-+	struct ib_qp *ibqp = &to_mibqp(qpe_work->qp)->ibqp;
-+	struct ib_event event = {};
-+
-+	event.device = ibqp->device;
-+	event.element.qp = ibqp;
-+
-+	switch (qpe_work->type) {
-+	case MLX4_EVENT_TYPE_PATH_MIG:
-+		event.event = IB_EVENT_PATH_MIG;
-+		break;
-+	case MLX4_EVENT_TYPE_COMM_EST:
-+		event.event = IB_EVENT_COMM_EST;
-+		break;
-+	case MLX4_EVENT_TYPE_SQ_DRAINED:
-+		event.event = IB_EVENT_SQ_DRAINED;
-+		break;
-+	case MLX4_EVENT_TYPE_SRQ_QP_LAST_WQE:
-+		event.event = IB_EVENT_QP_LAST_WQE_REACHED;
-+		break;
-+	case MLX4_EVENT_TYPE_WQ_CATAS_ERROR:
-+		event.event = IB_EVENT_QP_FATAL;
-+		break;
-+	case MLX4_EVENT_TYPE_PATH_MIG_FAILED:
-+		event.event = IB_EVENT_PATH_MIG_ERR;
-+		break;
-+	case MLX4_EVENT_TYPE_WQ_INVAL_REQ_ERROR:
-+		event.event = IB_EVENT_QP_REQ_ERR;
-+		break;
-+	case MLX4_EVENT_TYPE_WQ_ACCESS_ERROR:
-+		event.event = IB_EVENT_QP_ACCESS_ERR;
-+		break;
-+	default:
-+		pr_warn("Unexpected event type %d on QP %06x\n",
-+			qpe_work->type, qpe_work->qp->qpn);
-+		goto out;
-+	}
-+
-+	ibqp->event_handler(&event, ibqp->qp_context);
-+
-+out:
-+	mlx4_put_qp(qpe_work->qp);
-+	kfree(qpe_work);
-+}
-+
- static void mlx4_ib_qp_event(struct mlx4_qp *qp, enum mlx4_event type)
- {
--	struct ib_event event;
- 	struct ib_qp *ibqp = &to_mibqp(qp)->ibqp;
-+	struct mlx4_ib_qp_event_work *qpe_work;
- 
- 	if (type == MLX4_EVENT_TYPE_PATH_MIG)
- 		to_mibqp(qp)->port = to_mibqp(qp)->alt_port;
- 
--	if (ibqp->event_handler) {
--		event.device     = ibqp->device;
--		event.element.qp = ibqp;
--		switch (type) {
--		case MLX4_EVENT_TYPE_PATH_MIG:
--			event.event = IB_EVENT_PATH_MIG;
--			break;
--		case MLX4_EVENT_TYPE_COMM_EST:
--			event.event = IB_EVENT_COMM_EST;
--			break;
--		case MLX4_EVENT_TYPE_SQ_DRAINED:
--			event.event = IB_EVENT_SQ_DRAINED;
--			break;
--		case MLX4_EVENT_TYPE_SRQ_QP_LAST_WQE:
--			event.event = IB_EVENT_QP_LAST_WQE_REACHED;
--			break;
--		case MLX4_EVENT_TYPE_WQ_CATAS_ERROR:
--			event.event = IB_EVENT_QP_FATAL;
--			break;
--		case MLX4_EVENT_TYPE_PATH_MIG_FAILED:
--			event.event = IB_EVENT_PATH_MIG_ERR;
--			break;
--		case MLX4_EVENT_TYPE_WQ_INVAL_REQ_ERROR:
--			event.event = IB_EVENT_QP_REQ_ERR;
--			break;
--		case MLX4_EVENT_TYPE_WQ_ACCESS_ERROR:
--			event.event = IB_EVENT_QP_ACCESS_ERR;
--			break;
--		default:
--			pr_warn("Unexpected event type %d "
--			       "on QP %06x\n", type, qp->qpn);
--			return;
--		}
-+	if (!ibqp->event_handler)
-+		goto out_no_handler;
- 
--		ibqp->event_handler(&event, ibqp->qp_context);
--	}
-+	qpe_work = kzalloc(sizeof(*qpe_work), GFP_ATOMIC);
-+	if (!qpe_work)
-+		goto out_no_handler;
-+
-+	qpe_work->qp = qp;
-+	qpe_work->type = type;
-+	INIT_WORK(&qpe_work->work, mlx4_ib_handle_qp_event);
-+	queue_work(mlx4_ib_qp_event_wq, &qpe_work->work);
-+	return;
-+
-+out_no_handler:
-+	mlx4_put_qp(qp);
- }
- 
- static void mlx4_ib_wq_event(struct mlx4_qp *qp, enum mlx4_event type)
-@@ -4472,3 +4507,17 @@ void mlx4_ib_drain_rq(struct ib_qp *qp)
- 
- 	handle_drain_completion(cq, &rdrain, dev);
- }
-+
-+int mlx4_ib_qp_event_init(void)
-+{
-+	mlx4_ib_qp_event_wq = alloc_ordered_workqueue("mlx4_ib_qp_event_wq", 0);
-+	if (!mlx4_ib_qp_event_wq)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
-+void mlx4_ib_qp_event_cleanup(void)
-+{
-+	destroy_workqueue(mlx4_ib_qp_event_wq);
-+}
 diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 7102c3a78ee9d..c0c3c26a14db4 100644
+index c0c3c26a14db4..987e9087c9d92 100644
 --- a/drivers/infiniband/hw/mlx5/main.c
 +++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -4410,6 +4410,10 @@ static int __init mlx5_ib_init(void)
- 		return -ENOMEM;
- 	}
- 
-+	ret = mlx5_ib_qp_event_init();
-+	if (ret)
-+		goto qp_event_err;
-+
- 	mlx5_ib_odp_init();
- 	ret = mlx5r_rep_init();
- 	if (ret)
-@@ -4427,6 +4431,8 @@ static int __init mlx5_ib_init(void)
+@@ -4431,6 +4431,7 @@ static int __init mlx5_ib_init(void)
  mp_err:
  	mlx5r_rep_cleanup();
  rep_err:
-+	mlx5_ib_qp_event_cleanup();
-+qp_event_err:
++	rcu_barrier();
+ 	mlx5_ib_qp_event_cleanup();
+ qp_event_err:
  	destroy_workqueue(mlx5_ib_event_wq);
- 	free_page((unsigned long)xlt_emergency_page);
- 	return ret;
-@@ -4438,6 +4444,7 @@ static void __exit mlx5_ib_cleanup(void)
+@@ -4443,6 +4444,7 @@ static void __exit mlx5_ib_cleanup(void)
+ 	auxiliary_driver_unregister(&mlx5r_driver);
  	auxiliary_driver_unregister(&mlx5r_mp_driver);
  	mlx5r_rep_cleanup();
++	rcu_barrier();
  
-+	mlx5_ib_qp_event_cleanup();
+ 	mlx5_ib_qp_event_cleanup();
  	destroy_workqueue(mlx5_ib_event_wq);
- 	free_page((unsigned long)xlt_emergency_page);
- }
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index a431f9665b720..b23bdc3edede4 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -71,6 +71,14 @@ struct mlx5_modify_raw_qp_param {
- 	u32 port;
- };
- 
-+struct mlx5_ib_qp_event_work {
-+	struct work_struct work;
-+	struct mlx5_core_qp *qp;
-+	int type;
-+};
-+
-+static struct workqueue_struct *mlx5_ib_qp_event_wq;
-+
- static void get_cqs(enum ib_qp_type qp_type,
- 		    struct ib_cq *ib_send_cq, struct ib_cq *ib_recv_cq,
- 		    struct mlx5_ib_cq **send_cq, struct mlx5_ib_cq **recv_cq);
-@@ -302,51 +310,78 @@ int mlx5_ib_read_wqe_srq(struct mlx5_ib_srq *srq, int wqe_index, void *buffer,
- 	return mlx5_ib_read_user_wqe_srq(srq, wqe_index, buffer, buflen, bc);
- }
- 
-+static void mlx5_ib_handle_qp_event(struct work_struct *_work)
-+{
-+	struct mlx5_ib_qp_event_work *qpe_work =
-+		container_of(_work, struct mlx5_ib_qp_event_work, work);
-+	struct ib_qp *ibqp = &to_mibqp(qpe_work->qp)->ibqp;
-+	struct ib_event event = {};
-+
-+	event.device = ibqp->device;
-+	event.element.qp = ibqp;
-+	switch (qpe_work->type) {
-+	case MLX5_EVENT_TYPE_PATH_MIG:
-+		event.event = IB_EVENT_PATH_MIG;
-+		break;
-+	case MLX5_EVENT_TYPE_COMM_EST:
-+		event.event = IB_EVENT_COMM_EST;
-+		break;
-+	case MLX5_EVENT_TYPE_SQ_DRAINED:
-+		event.event = IB_EVENT_SQ_DRAINED;
-+		break;
-+	case MLX5_EVENT_TYPE_SRQ_LAST_WQE:
-+		event.event = IB_EVENT_QP_LAST_WQE_REACHED;
-+		break;
-+	case MLX5_EVENT_TYPE_WQ_CATAS_ERROR:
-+		event.event = IB_EVENT_QP_FATAL;
-+		break;
-+	case MLX5_EVENT_TYPE_PATH_MIG_FAILED:
-+		event.event = IB_EVENT_PATH_MIG_ERR;
-+		break;
-+	case MLX5_EVENT_TYPE_WQ_INVAL_REQ_ERROR:
-+		event.event = IB_EVENT_QP_REQ_ERR;
-+		break;
-+	case MLX5_EVENT_TYPE_WQ_ACCESS_ERROR:
-+		event.event = IB_EVENT_QP_ACCESS_ERR;
-+		break;
-+	default:
-+		pr_warn("mlx5_ib: Unexpected event type %d on QP %06x\n",
-+			qpe_work->type, qpe_work->qp->qpn);
-+		goto out;
-+	}
-+
-+	ibqp->event_handler(&event, ibqp->qp_context);
-+
-+out:
-+	mlx5_core_res_put(&qpe_work->qp->common);
-+	kfree(qpe_work);
-+}
-+
- static void mlx5_ib_qp_event(struct mlx5_core_qp *qp, int type)
- {
- 	struct ib_qp *ibqp = &to_mibqp(qp)->ibqp;
--	struct ib_event event;
-+	struct mlx5_ib_qp_event_work *qpe_work;
- 
- 	if (type == MLX5_EVENT_TYPE_PATH_MIG) {
- 		/* This event is only valid for trans_qps */
- 		to_mibqp(qp)->port = to_mibqp(qp)->trans_qp.alt_port;
- 	}
- 
--	if (ibqp->event_handler) {
--		event.device     = ibqp->device;
--		event.element.qp = ibqp;
--		switch (type) {
--		case MLX5_EVENT_TYPE_PATH_MIG:
--			event.event = IB_EVENT_PATH_MIG;
--			break;
--		case MLX5_EVENT_TYPE_COMM_EST:
--			event.event = IB_EVENT_COMM_EST;
--			break;
--		case MLX5_EVENT_TYPE_SQ_DRAINED:
--			event.event = IB_EVENT_SQ_DRAINED;
--			break;
--		case MLX5_EVENT_TYPE_SRQ_LAST_WQE:
--			event.event = IB_EVENT_QP_LAST_WQE_REACHED;
--			break;
--		case MLX5_EVENT_TYPE_WQ_CATAS_ERROR:
--			event.event = IB_EVENT_QP_FATAL;
--			break;
--		case MLX5_EVENT_TYPE_PATH_MIG_FAILED:
--			event.event = IB_EVENT_PATH_MIG_ERR;
--			break;
--		case MLX5_EVENT_TYPE_WQ_INVAL_REQ_ERROR:
--			event.event = IB_EVENT_QP_REQ_ERR;
--			break;
--		case MLX5_EVENT_TYPE_WQ_ACCESS_ERROR:
--			event.event = IB_EVENT_QP_ACCESS_ERR;
--			break;
--		default:
--			pr_warn("mlx5_ib: Unexpected event type %d on QP %06x\n", type, qp->qpn);
--			return;
--		}
-+	if (!ibqp->event_handler)
-+		goto out_no_handler;
- 
--		ibqp->event_handler(&event, ibqp->qp_context);
--	}
-+	qpe_work = kzalloc(sizeof(*qpe_work), GFP_ATOMIC);
-+	if (!qpe_work)
-+		goto out_no_handler;
-+
-+	qpe_work->qp = qp;
-+	qpe_work->type = type;
-+	INIT_WORK(&qpe_work->work, mlx5_ib_handle_qp_event);
-+	queue_work(mlx5_ib_qp_event_wq, &qpe_work->work);
-+	return;
-+
-+out_no_handler:
-+	mlx5_core_res_put(&qp->common);
- }
- 
- static int set_rq_size(struct mlx5_ib_dev *dev, struct ib_qp_cap *cap,
-@@ -5750,3 +5785,17 @@ int mlx5_ib_qp_set_counter(struct ib_qp *qp, struct rdma_counter *counter)
- 	mutex_unlock(&mqp->mutex);
- 	return err;
- }
-+
-+int mlx5_ib_qp_event_init(void)
-+{
-+	mlx5_ib_qp_event_wq = alloc_ordered_workqueue("mlx5_ib_qp_event_wq", 0);
-+	if (!mlx5_ib_qp_event_wq)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
-+void mlx5_ib_qp_event_cleanup(void)
-+{
-+	destroy_workqueue(mlx5_ib_qp_event_wq);
-+}
-diff --git a/drivers/infiniband/hw/mlx5/qp.h b/drivers/infiniband/hw/mlx5/qp.h
-index 5d4e140db99ce..fb2f4e030bb8f 100644
---- a/drivers/infiniband/hw/mlx5/qp.h
-+++ b/drivers/infiniband/hw/mlx5/qp.h
-@@ -44,4 +44,6 @@ void mlx5_core_res_put(struct mlx5_core_rsc_common *res);
- int mlx5_core_xrcd_alloc(struct mlx5_ib_dev *dev, u32 *xrcdn);
- int mlx5_core_xrcd_dealloc(struct mlx5_ib_dev *dev, u32 xrcdn);
- int mlx5_ib_qp_set_counter(struct ib_qp *qp, struct rdma_counter *counter);
-+int mlx5_ib_qp_event_init(void);
-+void mlx5_ib_qp_event_cleanup(void);
- #endif /* _MLX5_IB_QP_H */
-diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
-index d75ec5e57c5fd..24787ad71a947 100644
---- a/drivers/infiniband/hw/mlx5/qpc.c
-+++ b/drivers/infiniband/hw/mlx5/qpc.c
-@@ -137,7 +137,8 @@ static int rsc_event_notifier(struct notifier_block *nb,
- 	case MLX5_RES_SQ:
- 		qp = (struct mlx5_core_qp *)common;
- 		qp->event(qp, event_type);
--		break;
-+		/* Need to put resource in event handler */
-+		return NOTIFY_OK;
- 	case MLX5_RES_DCT:
- 		dct = (struct mlx5_core_dct *)common;
- 		if (event_type == MLX5_EVENT_TYPE_DCT_DRAINED)
-diff --git a/drivers/net/ethernet/mellanox/mlx4/qp.c b/drivers/net/ethernet/mellanox/mlx4/qp.c
-index 48cfaa7eaf50c..913ed255990f4 100644
---- a/drivers/net/ethernet/mellanox/mlx4/qp.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/qp.c
-@@ -46,6 +46,13 @@
- #define MLX4_BF_QP_SKIP_MASK	0xc0
- #define MLX4_MAX_BF_QP_RANGE	0x40
- 
-+void mlx4_put_qp(struct mlx4_qp *qp)
-+{
-+	if (refcount_dec_and_test(&qp->refcount))
-+		complete(&qp->free);
-+}
-+EXPORT_SYMBOL_GPL(mlx4_put_qp);
-+
- void mlx4_qp_event(struct mlx4_dev *dev, u32 qpn, int event_type)
- {
- 	struct mlx4_qp_table *qp_table = &mlx4_priv(dev)->qp_table;
-@@ -64,10 +71,8 @@ void mlx4_qp_event(struct mlx4_dev *dev, u32 qpn, int event_type)
- 		return;
- 	}
- 
-+	/* Need to call mlx4_put_qp() in event handler */
- 	qp->event(qp, event_type);
--
--	if (refcount_dec_and_test(&qp->refcount))
--		complete(&qp->free);
- }
- 
- /* used for INIT/CLOSE port logic */
-@@ -523,8 +528,7 @@ EXPORT_SYMBOL_GPL(mlx4_qp_remove);
- 
- void mlx4_qp_free(struct mlx4_dev *dev, struct mlx4_qp *qp)
- {
--	if (refcount_dec_and_test(&qp->refcount))
--		complete(&qp->free);
-+	mlx4_put_qp(qp);
- 	wait_for_completion(&qp->free);
- 
- 	mlx4_qp_free_icm(dev, qp->qpn);
-diff --git a/include/linux/mlx4/qp.h b/include/linux/mlx4/qp.h
-index b6b626157b03a..b9a7b1319f5d3 100644
---- a/include/linux/mlx4/qp.h
-+++ b/include/linux/mlx4/qp.h
-@@ -504,4 +504,5 @@ static inline u16 folded_qp(u32 q)
- 
- u16 mlx4_qp_roce_entropy(struct mlx4_dev *dev, u32 qpn);
- 
-+void mlx4_put_qp(struct mlx4_qp *qp);
- #endif /* MLX4_QP_H */
-diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
-index f622adb5e8607..4806be124127b 100644
---- a/include/rdma/ib_verbs.h
-+++ b/include/rdma/ib_verbs.h
-@@ -1162,7 +1162,7 @@ enum ib_qp_create_flags {
-  */
- 
- struct ib_qp_init_attr {
--	/* Consumer's event_handler callback must not block */
-+	/* This callback occurs in workqueue context */
- 	void                  (*event_handler)(struct ib_event *, void *);
- 
- 	void		       *qp_context;
 -- 
 2.53.0
 
