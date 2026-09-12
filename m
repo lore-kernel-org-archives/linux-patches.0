@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3C529DB64;
-	Sat, 12 Sep 2026 15:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA492D9792;
+	Sat, 12 Sep 2026 15:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228595; cv=none; b=ip+0FU3UHhMRSFAjRfc29h6KKNY7+/3UqA8ny2lZKfZx0Yad+UWKyz88rEPqWbqZebvgZPdEQxpCaygmzoJhpokvNpehLvlucPPY8vHv2On9dyT9YBGqQ27hnZbQsIyJqfj75/09wEeqDlLd8Q+Vm0wYXw9JEHYRnU61c3zO5/k=
+	t=1789228600; cv=none; b=osgq6sjpDgfPqo2fBmdRAiGxd5joUyVPULEnHq3lF9+1DeUiy3AZ/xsevyP+oCzS6h2LrHtsMhfECdvVVY4sLmEmebSvhu5uLOTypjWxWbu2Lqzq0+0cW0VPu4ArJGd4yEEG/EwFgvcLub9EwyB40w8W+v5wf8rUXR1FWxuKwA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228595; c=relaxed/simple;
-	bh=0M3GCxs+NlMyTMcM2vxDholOgPEy8x1Am+9mvy7t0uQ=;
+	s=arc-20240116; t=1789228600; c=relaxed/simple;
+	bh=akX+V4SaUsV5nag4r0RaFAPVdia+DN8Fwh4dsKWOB2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1F0CHL3J8HYbiqeZvgogvL6bg5jn1DDNLzebV5fPUpawVqI4Gxep6YiUpacC0ezOG2IVwbgRI8hK0I1mqsw7MDZeMadWUQx3XAaUsFVHZCkt5y8iwPf1+XXj6pGZpWiWf621sWt4j1UVjYbY/OLA/ENx+o5NzE2LySg6csj0aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wkj89Qz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=liY8wqiC/kCN1M3NN6PRWoV+d4Lz3mvAbZ2nN+8QtJIex5Zl6cqchqU8C73st/I+Y1opFAR/whaqmUHs9Pvifzggpmht05PhIV9esFsS/bJE35fk9fnvKQrDWWtIOGiiNAmw3cEl2OnfAX0SJs4UefXjluscLKivi/8s+xgGcL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZriJI+O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wkj89Qz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97F61F000FF;
-	Sat, 12 Sep 2026 15:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZriJI+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929641F000FF;
+	Sat, 12 Sep 2026 15:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228593;
-	bh=AhQquNzWGDUv+YF9Nfg7kJKooN/lX6NbDzkat+T1+qo=;
+	s=korg; t=1789228598;
+	bh=60EI0Jk/0/M/ed7pvor1VEwZxZMGD0iNM9ODLY7jTqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1wkj89QzkJ4Sw1UikcDbsP0GHaUIs0bpSOWSMNEEYmurgSBDNUWwdekqTBV8KvVrw
-	 Ze0pZFHXxrXROQB38HZoV4FDPryS4PKEWe9Gcfq5hwNSQDTlQ9csrjC6q8VRprXCKf
-	 L0jpmdHYVoMh2UOFoSSpj4uymnvBPEPvNeQw/jF8=
+	b=bZriJI+OvfyWMvVOKXtuCEkJkenA3yQ/jPUJQNbMDeU4TVIz2T/SYOR3YisOSw4Dn
+	 qYKM2V3iu4FazsX0Q9nlgaJ4rqsCqrdAQpZbbUu94wOn0bqgZpMGAg2BEhzkZMEirR
+	 kbmCclCdS/MVM1Px9q76xSkCN5uYPcMibmW7NO+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 0415/1191] drm/panel-edp: fix i2c adapter leak on probe failure
-Date: Sat, 12 Sep 2026 08:52:23 +0200
-Message-ID: <20260912065557.559326167@linuxfoundation.org>
+	Valery Borovsky <vebohr@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 0376/1191] media: rtl2832_sdr: release URBs and stream buffers on start_streaming() failure
+Date: Sat, 12 Sep 2026 08:51:44 +0200
+Message-ID: <20260912065556.678555881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,82 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit e2a9e291275a74e309a21cbb1def6296a72d6aed upstream.
+commit fe50cdaebf12cd32ff9a44d92bfd6fbc2300dbd4 upstream.
 
-Make sure to drop the i2c adapter reference on probe failure (e.g.
-probe deferral) and on driver unbind also if a devicetree redundantly
-uses the 'ddc-i2c-bus' property to point to the aux ddc bus.
+rtl2832_sdr_start_streaming() calls rtl2832_sdr_alloc_stream_bufs(),
+rtl2832_sdr_alloc_urbs() and rtl2832_sdr_submit_urbs() in sequence and
+shares a single err: label that only unlocks the mutex and returns.
+When alloc_urbs() succeeds but submit_urbs() fails, or when alloc_urbs()
+itself returns -ENOMEM after alloc_stream_bufs() has already succeeded,
+the URBs and/or the coherent DMA stream buffers stay allocated while
+streaming reports failure to vb2. Two latent defects follow on the next
+VIDIOC_STREAMON:
 
-Fixes: cc5a3fc041f0 ("drm/panel: panel-simple: Stash DP AUX bus; allow using it for DDC")
-Cc: stable@vger.kernel.org	# 5.15
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/CAD=FV=VZPhzHU+Pet2m3L+Pqc7mOPfZC-f5p0OuNL79wNZPxRg@mail.gmail.com
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260717143119.1815106-2-johan@kernel.org
+1) rtl2832_sdr_alloc_stream_bufs() unconditionally resets dev->buf_num
+   to 0 and overwrites dev->buf_list[]/dev->dma_addr[], permanently
+   leaking the coherent DMA memory allocated by the previous attempt.
+
+2) rtl2832_sdr_alloc_urbs() never resets dev->urbs_initialized and only
+   increments it. After a second successful pass urbs_initialized can
+   exceed MAX_BULK_BUFS, so the subsequent rtl2832_sdr_free_urbs() walks
+   from urbs_initialized - 1 down to 0 and reads past the end of
+   dev->urb_list[], passing garbage pointers to usb_free_urb().
+
+Mirror the teardown that stop_streaming() already performs: on the error
+path call rtl2832_sdr_free_urbs() and rtl2832_sdr_free_stream_bufs()
+before unlocking. Both helpers are idempotent (free_urbs kills and zeros
+urbs_initialized; free_stream_bufs is gated on URB_BUF and clears the
+buf_num counter), so partial-failure paths and the no-allocation paths
+remain safe.
+
+Issue identified by automated review of the INV-003 series at
+https://sashiko.dev/
+
+Fixes: 771138920eaf ("[media] rtl2832_sdr: Realtek RTL2832 SDR driver module")
+Cc: stable@vger.kernel.org
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-edp.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/media/dvb-frontends/rtl2832_sdr.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -830,6 +830,13 @@ exit:
- 	return ret;
- }
+--- a/drivers/media/dvb-frontends/rtl2832_sdr.c
++++ b/drivers/media/dvb-frontends/rtl2832_sdr.c
+@@ -905,9 +905,12 @@ static int rtl2832_sdr_start_streaming(s
+ 		goto err;
  
-+static void panel_edp_put_adapter(void *_adap)
-+{
-+	struct i2c_adapter *adap = _adap;
+ 	mutex_unlock(&dev->v4l2_lock);
 +
-+	put_device(&adap->dev);
-+}
-+
- static int panel_edp_probe(struct device *dev, const struct panel_desc *desc,
- 			   struct drm_dp_aux *aux)
- {
-@@ -877,6 +884,11 @@ static int panel_edp_probe(struct device
+ 	return 0;
  
- 		if (!panel->ddc)
- 			return -EPROBE_DEFER;
-+
-+		err = devm_add_action_or_reset(dev, panel_edp_put_adapter,
-+					       panel->ddc);
-+		if (err)
-+			return err;
- 	} else if (aux) {
- 		panel->ddc = &aux->ddc;
- 	}
-@@ -890,7 +902,7 @@ static int panel_edp_probe(struct device
+ err:
++	rtl2832_sdr_free_urbs(dev);
++	rtl2832_sdr_free_stream_bufs(dev);
+ 	rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
+ 	mutex_unlock(&dev->v4l2_lock);
  
- 	err = drm_panel_of_backlight(&panel->base);
- 	if (err)
--		goto err_finished_ddc_init;
-+		return err;
- 
- 	/*
- 	 * We use runtime PM for prepare / unprepare since those power the panel
-@@ -931,9 +943,6 @@ static int panel_edp_probe(struct device
- err_finished_pm_runtime:
- 	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
--err_finished_ddc_init:
--	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
--		put_device(&panel->ddc->dev);
- 
- 	return err;
- }
-@@ -948,8 +957,6 @@ static int panel_edp_remove(struct devic
- 
- 	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
--	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
--		put_device(&panel->ddc->dev);
- 
- 	kfree(panel->edid);
- 	panel->edid = NULL;
 
 
