@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AF048124E;
-	Sat, 12 Sep 2026 19:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB484492E57;
+	Sat, 12 Sep 2026 19:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239614; cv=none; b=nkbn1Ilajzo3gmZppzsGWLXlCEzUZiU9CEegGTP4Pejsr4kMf9rkrHhgbFrAw/7N9DyLnHFdzjo+bbr45ulqvcsU/HppIcBgcFokKE3eUoQ8Om8Xw47+J+lJh48F0jQIHyRAsEt6nV/aUf3SRqrdAYn5v0ijKsp4+a1akGZMhlM=
+	t=1789239619; cv=none; b=akbrHAkus7bYWALWvVKfTqlXUjp9iCefp7DNTsg5fxY4oqeJElyucu+H9swiJEnk12lZudC2StCMpwH1l4NOPwUZfvV205pE2VGfs6dE1rKR50UvZFWtSF/LF7G6v6f02dtvHEJFegICPqhIteaTtpN5jE1IFqQaegk8gtS7DlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239614; c=relaxed/simple;
-	bh=rLFo/Jmstve30mqvGTfZtAPwCHzPw1BIipf43b+LD7E=;
+	s=arc-20240116; t=1789239619; c=relaxed/simple;
+	bh=HLMreAU/EOe0V9cMPtcq4pjZgt6OX+KempeZDaXb1lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZiFxUhdR+1V0TuWXtVX+L0+MTsSWskE264rof4WWOZHjbc6xstzMFXk2SD0uYJdfbgoNISh9488XSPZSO/QxCAp9wtM0grkmbzR0CCqx+5iRB4pyWoXI7GhTlsl4O3H/Wt1SLh25aIzUWHYV01wcPGMshBPux782pGdyqKviEGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4sFvYhN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pRg5y4piBabNRPOVCn0KKNxVBFvK3vzpVDzHFH7qr5DWDx0Z65CSqtR4yk+NsOyooRkXnlqGzZ0GA+6LHK0KR9Yt/LhB6ETnSojY9qOyPKo8pMkJ4lVogZ/3QEItdV30zvReY+xo9n7I7inIaSePep0kWoGgLH3qHLz8PFnsSUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGCLbuNJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4sFvYhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF391F000FF;
-	Sat, 12 Sep 2026 19:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGCLbuNJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E7F1F000FF;
+	Sat, 12 Sep 2026 19:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239613;
-	bh=xAT/bP+QQEZnutyhN4f4BZkE1ceWFSXJ1+AYrBV0rnw=;
+	s=korg; t=1789239618;
+	bh=wFTUErPjklidToG9XrnpZLV0Qet4V6pfLyiBpE4m2ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E4sFvYhNqY/CgjskVnEv2fCH93aRAoyIUwtotPphlZG/w9QcD0TJJuo7cikV63kXZ
-	 CBQAWIDOeX/yuZgLe0J8f65rzFInkLXiqkAPXdSIUB2ODUZh/ynCjzd52BEBU2Pt3t
-	 tdt7DMtnuTRwSW/wcboOD7jsHoLSLel2e7FuH/s4=
+	b=PGCLbuNJurNvXb2KBKJshuNMB4Oz1XvXPnhvcGZVPLIy7nukwRaqw5G7SHN8+ua6a
+	 ZaSh8IeBCgzGJhdwd/0XoyeAaMBp/UTF+tBPr7BJ5oWZETpX4ar1dWnfIMJ+J0l3MO
+	 B5LTLw7zRDPC6HicQC9iTMbkrxy5McVgK1iPRAZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jialu Xu <xujialu@vimux.org>,
+	Carlos Llamas <cmllamas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 700/935] remoteproc: fix OOB read via signed offset in rsc_table_for_each_entry()
-Date: Sat, 12 Sep 2026 09:02:10 +0200
-Message-ID: <20260912065542.893771212@linuxfoundation.org>
+Subject: [PATCH 5.15 701/935] scripts/tags.sh: improve compiled sources generation
+Date: Sat, 12 Sep 2026 09:02:11 +0200
+Message-ID: <20260912065542.915796642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,62 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Jialu Xu <xujialu@vimux.org>
 
-[ Upstream commit bb840ea69347aff7bde5a208e7b5b180669a7656 ]
+[ Upstream commit 82089b00ae026f638277c51bf3f36c68ed4021c7 ]
 
-table->offset[i] is a u32 from firmware, but was stored into a signed
-int.  A crafted offset like 0xFFFFFFF0 becomes -16, placing hdr 16 bytes
-before the table buffer.  The subsequent avail check was bypassed
-because the negative int was promoted to a large size_t in the
-expression "table_sz - offset - sizeof(*hdr)", yielding a large positive
-avail and letting the out-of-bounds hdr->type read proceed undetected.
+Use grep instead of sed for all compiled sources generation, it is three
+times more efficient.
 
-Store the offset as u32 and validate it with unsigned comparisons before
-any pointer arithmetic.
-
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Fixes: fd2c15ec1dd3 ("remoteproc: resource table overhaul")
-Link: https://lore.kernel.org/r/20260803114331.3277263-6-mukesh.ojha@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Jialu Xu <xujialu@vimux.org>
+Tested-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20230601010402.71040-1-xujialu@vimux.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: a9b93c34625a ("scripts/tags.sh: Prevent binary files appearing in cscope.files")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rsc_table.h | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ scripts/tags.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/rsc_table.h b/include/linux/rsc_table.h
-index c6d6d553d8f11..4cef11a2e3a2c 100644
---- a/include/linux/rsc_table.h
-+++ b/include/linux/rsc_table.h
-@@ -337,17 +337,22 @@ static inline int rsc_table_for_each_entry(struct resource_table *table,
- 	int i, ret;
- 
- 	for (i = 0; i < table->num; i++) {
--		int offset = table->offset[i];
--		struct fw_rsc_hdr *hdr = (void *)table + offset;
--		int avail = table_sz - offset - sizeof(*hdr);
--		int rsc_offset = offset + sizeof(*hdr);
--		void *rsc = (void *)hdr + sizeof(*hdr);
-+		u32 offset = table->offset[i];
-+		struct fw_rsc_hdr *hdr;
-+		int avail, rsc_offset;
-+		void *rsc;
- 
--		if (avail < 0) {
-+		if (offset < sizeof(*table) || offset >= table_sz ||
-+		    table_sz - offset < sizeof(*hdr)) {
- 			dev_err(dev, "rsc table is truncated\n");
- 			return -EINVAL;
- 		}
- 
-+		hdr = (void *)table + offset;
-+		avail = table_sz - offset - sizeof(*hdr);
-+		rsc_offset = offset + sizeof(*hdr);
-+		rsc = (void *)hdr + sizeof(*hdr);
-+
- 		ret = cb(hdr->type, rsc, rsc_offset, avail, data);
- 		if (ret)
- 			return ret;
+diff --git a/scripts/tags.sh b/scripts/tags.sh
+index d40cae4e7ea28..b030fc5fb76ca 100755
+--- a/scripts/tags.sh
++++ b/scripts/tags.sh
+@@ -105,7 +105,7 @@ all_compiled_sources()
+ 	{
+ 		echo include/generated/autoconf.h
+ 		find $ignore -name "*.cmd" -exec \
+-			sed -n -E 's/^source_.* (.*)/\1/p; s/^  (\S.*) \\/\1/p' {} \+ |
++			grep -Poh '(?<=^  )\S+|(?<== )\S+[^\\](?=$)' {} \+ |
+ 		awk '!a[$0]++'
+ 	} | xargs realpath -es $([ -z "$KBUILD_ABS_SRCTREE" ] && echo --relative-to=.) |
+ 	sort -u
 -- 
 2.53.0
 
