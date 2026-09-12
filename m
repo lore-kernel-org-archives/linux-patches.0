@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F75D344DB5;
-	Sat, 12 Sep 2026 08:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8740344DB5;
+	Sat, 12 Sep 2026 08:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203222; cv=none; b=dqeWPh65sG5A7ObmylELBDONJ3URSu6As+4p1NrvXM9e6TM0ZcJStbXGmomJasdLrDt+OiMrhLyZBndh2yNPKborb3W5ZyvIaBYTitraaWlQUCVP8HDaH5F9o4he19k+1BvvyGC6fBJurr6pu4OdZc85023v5HG8eOUJXSW9FxI=
+	t=1789203226; cv=none; b=lrHMp+iLMLjDZOvVbrehVpMztIoCF9bcRj5zrbAvCnIyvwG9OzT1cFVxnURGRhHFGNSkF7jPdiiG00gVyAPbbkjkV8T80vYzCHY3yguCI0b054MJ8FXSl4/ywO8iKc4SaEN2FZf3LLvM9HFzyN/1Hj8LaGZgHi54Dh7Ck9R4Doc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203222; c=relaxed/simple;
-	bh=kJBtjy+Xz1EXJvbx169hsxD+FIcGSkkftdLk02ZGZUo=;
+	s=arc-20240116; t=1789203226; c=relaxed/simple;
+	bh=H7CWkHhXD2nVcrJ/G4ncDN90snrUcs9t7k4kDvmbLoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3uhWb+cII+WJT7GhR12n2pem2zR53L6xQxzkSp8vP8uYj5jBIaIU3CDLN78ZrQi3iptw3nFgYliqybPD4KvrH5iyWQi313IOGvooDOYBOkICbNWqxYZCo8oCTuEjQ16zX0I7oFuKmH6nX4udFXS+IppjDJzefrHR3oRxRgh4H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TAyqe7U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nq/TFI/K5PlkRjxr+u5TWA0s/V38vOPrUDqyEfPaKSFViCwbo4XSJG6SenFG+TRWQ2R0g2Fuh4AbnVPttg2qaS28bDAEM3T+evEEI8kmPBp4HBMvvrIikPmtpfdiFkpREgK8WAFE681Vl8KodKanl7Lmc3farLFzr1VO1ZSfJLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPf62TEL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TAyqe7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7991F000FF;
-	Sat, 12 Sep 2026 08:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPf62TEL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFDA1F000FF;
+	Sat, 12 Sep 2026 08:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203220;
-	bh=F5vx5xflM8lpb41muzE9zTHicPKo6GxJGbYc+RXaBJ8=;
+	s=korg; t=1789203225;
+	bh=pxC2c+t7Z4j1jzGr7eLlkGCgSAkh7SEgs5RLkRDn0/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0TAyqe7UHjOg1zSyjiYFjvkY0y9Dfpt1AFoHF+37kkDpdS+z2wY0Fda8uYHjv+YQ2
-	 X24CGNLjemXziuNgJunBytNPlP4sHl3IM+5oxGuYsDEShlnLjMJu182UnyfqDJ9HEP
-	 oNeJgBNtrdNNyBwwYdkR6SZCXvYj1oAsGFAbVClQ=
+	b=hPf62TELXoIEdT13KSNmx1wOFDb6WRIB6pQkoqtavtENdiV7ntwHV0Svxe759vRWx
+	 aqblwxFxVTcA1ZaRqJUtpUbCHTjTXkiOZDwBiCeBvK4vP/32U2qL7yy+XoNktdlTyC
+	 LXmpt6KXcMpJfufz1INkLxFO7KDVcqqN81df43ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Diederik de Haas <diederik@cknow-tech.com>
-Subject: [PATCH 7.2 1363/1815] phy: rockchip: samsung-hdptx: Fix rate recalculation for 3.2GHz FRL
-Date: Sat, 12 Sep 2026 08:51:53 +0200
-Message-ID: <20260912065721.025149478@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 1328/1815] selftests: drv-net: so_txtime: only send test traffic to sch_etf
+Date: Sat, 12 Sep 2026 08:51:18 +0200
+Message-ID: <20260912065720.200412964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,80 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 9ac3daadb9060360e937a5993a5fd88360d6fdad ]
+[ Upstream commit ef3d6cca02c8a7b6465fb1691823524b86d1cb99 ]
 
-rk_hdptx_phy_clk_calc_rate_from_pll_cfg() is currently unable to handle
-cascade mode for the 3.2GHz FRL operating mode, as it relies solely on
-LCPLL_LCVCO_MODE_EN_MASK to determinate the rate from the
-rk_hdptx_frl_lcpll_cfg array.  Since there is no entry for this
-particular rate, the function returns 0.
+The ETF qdiscs drops traffic without a socket or txtime. Even with
+parameter skip_sock_check regular traffic is affected by ETF.
 
-This is the only rate which requires LC_REF_CLK_SEL to be set in
-GRF_HDPTX_CON0, hence extend the FRL matching accordingly.
+This test ran fine when run manually in a pure software environment.
+But with drv-net across two hosts tests fail as early as when calling
+cfg.remote.deploy due to effectively losing connectivity.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260611-hdptx-clk-fixes-v3-0-67b1b0c00e16@collabora.com?part=1
-Fixes: de5dba833118 ("phy: rockchip: samsung-hdptx: Add HDMI 2.1 FRL support")
-Tested-by: Diederik de Haas <diederik@cknow-tech.com>  # NanoPC-T6 LTS
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20260811-hdptx-clk-fixes-v6-4-75bca0ee5753@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Isolate the intended test traffic:
+- mark that with SO_MARK 100
+- install a regular permissive root prio qdisc for background traffic
+- install the ETF qdisc as leaf
+- install a filter that only directs SO_MARK 100 traffic to this leaf
+
+Technically other high prio traffic will map onto this leaf based on
+ToS band mapping too. But that is immaterial in practice.
+
+Fixes: 5c6baef3885c ("selftests: drv-net: convert so_txtime to drv-net")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260808160129.890119-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../phy/rockchip/phy-rockchip-samsung-hdptx.c | 35 +++++++++++++------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ tools/testing/selftests/drivers/net/config       |  2 ++
+ tools/testing/selftests/drivers/net/so_txtime.py | 16 +++++++++++++---
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-index 3a65c26f3efab..d7d8414fdddd6 100644
---- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-+++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-@@ -2206,16 +2206,31 @@ static u64 rk_hdptx_phy_clk_calc_rate_from_pll_cfg(struct rk_hdptx_phy *hdptx)
- 			return 0;
- 		lcpll_hw.sdc_n = (val & LCPLL_SDC_N_MASK) >> 1;
+diff --git a/tools/testing/selftests/drivers/net/config b/tools/testing/selftests/drivers/net/config
+index f3933cf3e6be6..b6989c7d3d9d1 100644
+--- a/tools/testing/selftests/drivers/net/config
++++ b/tools/testing/selftests/drivers/net/config
+@@ -8,6 +8,7 @@ CONFIG_NET_ACT_SKBEDIT=m
+ CONFIG_NET_CLS_ACT=y
+ CONFIG_NET_CLS_BPF=y
+ CONFIG_NET_CLS_FLOWER=m
++CONFIG_NET_CLS_FW=m
+ CONFIG_NET_CLS_MATCHALL=m
+ CONFIG_NETCONSOLE=m
+ CONFIG_NETCONSOLE_DYNAMIC=y
+@@ -17,6 +18,7 @@ CONFIG_NETKIT=y
+ CONFIG_NET_SCH_ETF=m
+ CONFIG_NET_SCH_FQ=m
+ CONFIG_NET_SCH_INGRESS=y
++CONFIG_NET_SCH_PRIO=m
+ CONFIG_PPP=y
+ CONFIG_PPPOE=y
+ CONFIG_VLAN_8021Q=m
+diff --git a/tools/testing/selftests/drivers/net/so_txtime.py b/tools/testing/selftests/drivers/net/so_txtime.py
+index adf6c848d6d80..9fbc0278d28bc 100755
+--- a/tools/testing/selftests/drivers/net/so_txtime.py
++++ b/tools/testing/selftests/drivers/net/so_txtime.py
+@@ -27,7 +27,7 @@ def test_so_txtime(cfg, clockid, ipver, args_tx, args_rx, expect_success):
+     cmd_addr = f"-S {cfg.addr_v[ipver]} -D {cfg.remote_addr_v[ipver]}"
+     cmd_args = f"-{ipver} -c {clockid} -t {tstart} {cmd_addr}"
+     cmd_rx = f"{cfg.bin_remote} {cmd_args} {args_rx} -r"
+-    cmd_tx = f"{cfg.bin_local} {cmd_args} {args_tx}"
++    cmd_tx = f"{cfg.bin_local} -m 100 {cmd_args} {args_tx}"
  
--		for (i = 0; i < ARRAY_SIZE(rk_hdptx_frl_lcpll_cfg); i++) {
--			const struct lcpll_config *cfg = &rk_hdptx_frl_lcpll_cfg[i];
--
--			if (cfg->pms_mdiv == lcpll_hw.pms_mdiv &&
--			    cfg->pms_sdiv == lcpll_hw.pms_sdiv &&
--			    cfg->sdm_num_sign == lcpll_hw.sdm_num_sign &&
--			    cfg->sdm_num == lcpll_hw.sdm_num &&
--			    cfg->sdm_deno == lcpll_hw.sdm_deno &&
--			    cfg->sdc_n == lcpll_hw.sdc_n)
--				return cfg->rate;
-+		ret = regmap_read(hdptx->grf, GRF_HDPTX_CON0, &val);
-+		if (ret)
-+			return 0;
-+
-+		if (val & LC_REF_CLK_SEL) {
-+			if (lcpll_hw.pms_mdiv == 0x6b &&
-+			    lcpll_hw.sdm_num_sign == 0x01 &&
-+			    lcpll_hw.sdm_num == 0x02 &&
-+			    lcpll_hw.sdm_deno == 0x09 &&
-+			    lcpll_hw.sdc_n == FIELD_GET(LCPLL_SDC_N_MASK, 0x02))
-+				return FRL_8G4L_RATE;
-+		} else {
-+			const struct lcpll_config *cfg;
-+
-+			for (i = 0; i < ARRAY_SIZE(rk_hdptx_frl_lcpll_cfg); i++) {
-+				cfg = &rk_hdptx_frl_lcpll_cfg[i];
-+
-+				if (cfg->pms_mdiv == lcpll_hw.pms_mdiv &&
-+				    cfg->pms_sdiv == lcpll_hw.pms_sdiv &&
-+				    cfg->sdm_num_sign == lcpll_hw.sdm_num_sign &&
-+				    cfg->sdm_num == lcpll_hw.sdm_num &&
-+				    cfg->sdm_deno == lcpll_hw.sdm_deno &&
-+				    cfg->sdc_n == lcpll_hw.sdc_n)
-+					return cfg->rate;
-+			}
- 		}
+     expect_fail = not expect_success
+     if slow_machine:
+@@ -45,7 +45,7 @@ def _qdisc_setup(ifname, qdisc, optargs=""):
+     """
+     orig = tc(f"qdisc show dev {ifname} root", json=True)[0].get("kind", None)
+     defer(tc, f"qdisc replace dev {ifname} root {orig}")
+-    tc(f"qdisc replace dev {ifname} root {qdisc} {optargs}")
++    tc(f"qdisc replace dev {ifname} root handle 1: {qdisc} {optargs}")
  
- 		dev_dbg(hdptx->dev, "%s no FRL match found\n", __func__);
+ 
+ def _test_variants_fq():
+@@ -96,11 +96,21 @@ def _test_variants_etf():
+ def test_so_txtime_etf(cfg, ipver, args_tx, args_rx, expect_fail):
+     """Run all variants of etf tests."""
+     cfg.require_ipver(ipver)
++
++    # root qdisc for background traffic (e.g., bkg())
++    _qdisc_setup(cfg.ifname, "prio")
++
++    # leaf ETF qdisc only for intended packets
+     try:
+-        _qdisc_setup(cfg.ifname, "etf", "clockid CLOCK_TAI delta 400000")
++        etf_args = "clockid CLOCK_TAI delta 400000"
++        tc(f"qdisc add dev {cfg.ifname} parent 1:1 handle 10: etf {etf_args}")
+     except Exception as e:
+         raise KsftSkipEx("tc does not support qdisc etf. skipping") from e
+ 
++    # redirect mark 100 to leaf
++    filter_args = "protocol all handle 100 fw flowid 1:1"
++    tc(f"filter add dev {cfg.ifname} parent 1: {filter_args}")
++
+     test_so_txtime(cfg, "tai", ipver, args_tx, args_rx, expect_fail)
+ 
+ 
 -- 
 2.53.0
 
