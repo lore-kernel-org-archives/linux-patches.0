@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42C52E06E4;
-	Sat, 12 Sep 2026 12:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D662E06E4;
+	Sat, 12 Sep 2026 12:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216689; cv=none; b=ZtFqwHeAJkys3n0JPsR2fN0qUqOrfx4ZlLKviOm6kWZZ3XvAoEF1pYkn0ZIG5Op7nR2l9+S+lPK1dAyEPlIzaFS1vqlLELpLGYQLG86YqCkRdqRrpWa3IfJkDkuqdcjb08ajviRZdB8gwFPZi4n29npxZCsEjyndJli922JUjHU=
+	t=1789216693; cv=none; b=iQL/eC/E7zgg7NTpTPNbLq8nS/PlVm0uunncMvRKtaZ8PpILLfOJFKI6WKvot0iVjiiHDqeigU3IAPav4NdC7KBomtAKm3I9y9ixvfq1rZxUvbmpKDj5XoZqtfmtdbhEQ/bWOsn353z4el4t6f5HhASCtopdf1sMoCEtAbhgIjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216689; c=relaxed/simple;
-	bh=f3V+Ban9yw5dLDxkCG1wvJYIUpjL7WSme6Al8OZLrRk=;
+	s=arc-20240116; t=1789216693; c=relaxed/simple;
+	bh=K3j2mlZfygqCYFERp8xJjjIZlOajDuOV0rmzU1wSvLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szC4ycR0nlGMpkfGXSO6v8Ny8vTgoeTOqzRI1YY18+dznv4tOhZXGccWQgce6CZ+cO40fPZ14rLqO/aVQMQBuh7AcmnIY/1CkqeFbcaVuMO7FHDyCc416VRiJKskyfQAvPuqGaJeXnHEHYSzAC+yRQj4SaCmfQiOPT/Wk0kiZ4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBz+GO0S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=URtCUWaDF5wpv+d/O4ybGBAB09i0IS3D95pXM/V5SD1WhgaEPpW7YCQ2S+5ba6gjzl9qIZZQygwrScO12DHwqC6WLD1z22nH0B5biMPdLpPj/HUHYXXc+WVBzRPBWIb0OJP6II9udcY6xTvk1Gd0nc1oTvf+kF1ZzSxbLVN3zlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7xR7rak; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBz+GO0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5C71F000FF;
-	Sat, 12 Sep 2026 12:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7xR7rak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88341F000FF;
+	Sat, 12 Sep 2026 12:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216687;
-	bh=lL/CrdohlQnssIupUo25bl88choUdCcuDXsAenX3MP4=;
+	s=korg; t=1789216692;
+	bh=j/Q7JxACYMKAisJw5PYnfZG2Kzb7lski472MU1KKDig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vBz+GO0SJE1sU6E8ivp8AwJHQMLafi/MWOn5py463twsEuq6GoKlvobMMrCplCicJ
-	 0imNjaaaGykd/fBn7Ak8FqkFakW8oU16B5hzAAdPNHvzzVbQnI3/qX1tNuAwWUl8tv
-	 iAO1RvrqWJEJrjOmkiMFmS9ecGYOm2UsTPYqv9fQ=
+	b=S7xR7rakA6NfjKa4NAXGKaK+hr5wVg6DjR+T+5U86i7yL8SCgPVNGMfjpZoh4g7PF
+	 66pa9rbWd6e1byQkIoFqlPeoNSIffGWFE6xEn4eSMKU9NdfgUD2LmMQjqOcOzQ8O2Z
+	 TgFJrAzBH1gYWDfE6Fj5GCt5K6aWF5Db/GpnXink=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Petr Tesarik <ptesarik@suse.com>,
+	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0785/1376] md: scope memalloc_noio to allocation critical sections
-Date: Sat, 12 Sep 2026 08:53:31 +0200
-Message-ID: <20260912065625.032338718@linuxfoundation.org>
+Subject: [PATCH 6.12 0786/1376] iommu/dma: Check atomic pool allocation result directly
+Date: Sat, 12 Sep 2026 08:53:32 +0200
+Message-ID: <20260912065625.054347643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,395 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 
-[ Upstream commit bace2010dd7ac07bc980575afb135c406730a7fe ]
+[ Upstream commit af95a0ebc0a0db0762be75f51eadf770bad01aaa ]
 
-Storing a memalloc_noio_save() token in mddev->noio_flags lets one task
-save the token and another task restore it. With concurrent suspend sysfs
-writes, task A can enter PF_MEMALLOC_NOIO, return to userspace still in
-that scope, and later task B can restore A's saved token.
+The non-blocking, non-coherent allocation path uses dma_alloc_from_pool(),
+which returns the allocated page and fills cpu_addr only on success.
 
-Avoid tying the token lifetime to mddev. Keep mddev_suspend() and
-mddev_resume() only responsible for array suspension, and enter
-PF_MEMALLOC_NOIO only in the MD paths that allocate memory after the array
-has been suspended. Restore the token before resuming the array.
+Do not rely on cpu_addr to detect allocation failure in this path. Check
+the returned page directly before using it for the IOMMU mapping.
 
-A reproducer repeatedly writes suspend_lo and suspend_hi from concurrent
-workers and checks each worker's /proc/self/stat flags before and after the
-sysfs write.
-
-Link: https://github.com/chencheng-fnnas/reproducer/blob/main/repro-md-noio-token-leak.sh
-Fixes: 78f57ef9d50a ("md: use memalloc scope APIs in mddev_suspend()/mddev_resume()")
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260718084218.417895-1-chencheng@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 9420139f516d ("dma-pool: fix coherent pool allocations for IOMMU mappings")
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Petr Tesarik <ptesarik@suse.com>
+Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+Link: https://lore.kernel.org/r/20260717180442.110954-4-aneesh.kumar@kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c |  3 +++
- drivers/md/md.c        | 53 ++++++++++++++++++++++++++++--------------
- drivers/md/md.h        |  1 -
- drivers/md/raid5.c     | 14 +++++++----
- 4 files changed, 48 insertions(+), 23 deletions(-)
+ drivers/iommu/dma-iommu.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 67f1b716e2936..b0bd83ba237d7 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2612,10 +2612,12 @@ static ssize_t
- location_store(struct mddev *mddev, const char *buf, size_t len)
- {
- 	int rv;
-+	unsigned int noio_flags;
- 
- 	rv = mddev_suspend_and_lock(mddev);
- 	if (rv)
- 		return rv;
-+	noio_flags = memalloc_noio_save();
- 
- 	if (mddev->pers) {
- 		if (mddev->recovery || mddev->sync_thread) {
-@@ -2689,6 +2691,7 @@ location_store(struct mddev *mddev, const char *buf, size_t len)
- 	}
- 	rv = 0;
- out:
-+	memalloc_noio_restore(noio_flags);
- 	mddev_unlock_and_resume(mddev);
- 	if (rv)
- 		return rv;
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 27d8b973c89b1..9ad6835a3c143 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -226,23 +226,21 @@ static int rdev_need_serial(struct md_rdev *rdev)
- void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev)
- {
- 	int ret = 0;
-+	unsigned int noio_flags;
- 
- 	if (rdev && !rdev_need_serial(rdev) &&
- 	    !test_bit(CollisionCheck, &rdev->flags))
- 		return;
- 
-+	noio_flags = memalloc_noio_save();
- 	if (!rdev)
- 		ret = rdevs_init_serial(mddev);
- 	else
- 		ret = rdev_init_serial(rdev);
- 	if (ret)
--		return;
-+		goto out;
- 
- 	if (mddev->serial_info_pool == NULL) {
--		/*
--		 * already in memalloc noio context by
--		 * mddev_suspend()
--		 */
- 		mddev->serial_info_pool =
- 			mempool_create_kmalloc_pool(NR_SERIAL_INFOS,
- 						sizeof(struct serial_info));
-@@ -251,6 +249,8 @@ void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev)
- 			pr_err("can't alloc memory pool for serialization\n");
- 		}
- 	}
-+out:
-+	memalloc_noio_restore(noio_flags);
- }
- 
- /*
-@@ -500,9 +500,6 @@ int mddev_suspend(struct mddev *mddev, bool interruptible)
- 	 */
- 	WRITE_ONCE(mddev->suspended, mddev->suspended + 1);
- 
--	/* restrict memory reclaim I/O during raid array is suspend */
--	mddev->noio_flag = memalloc_noio_save();
--
- 	mutex_unlock(&mddev->suspend_mutex);
- 	return 0;
- }
-@@ -519,9 +516,6 @@ static void __mddev_resume(struct mddev *mddev, bool recovery_needed)
- 		return;
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 0f0caf59023c7..059463664b418 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1648,13 +1648,16 @@ void *iommu_dma_alloc(struct device *dev, size_t size, dma_addr_t *handle,
  	}
  
--	/* entred the memalloc scope from mddev_suspend() */
--	memalloc_noio_restore(mddev->noio_flag);
--
- 	percpu_ref_resurrect(&mddev->active_io);
- 	wake_up(&mddev->sb_wait);
- 
-@@ -3898,6 +3892,7 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
- 	char clevel[16];
- 	ssize_t rv;
- 	size_t slen = len;
-+	unsigned int noio_flags;
- 	struct md_personality *pers, *oldpers;
- 	long level;
- 	void *priv, *oldpriv;
-@@ -3909,6 +3904,7 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
- 	rv = mddev_suspend_and_lock(mddev);
- 	if (rv)
- 		return rv;
-+	noio_flags = memalloc_noio_save();
- 
- 	if (mddev->pers == NULL) {
- 		memcpy(mddev->clevel, buf, slen);
-@@ -4088,6 +4084,7 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
- 	md_new_event();
- 	rv = len;
- out_unlock:
-+	memalloc_noio_restore(noio_flags);
- 	mddev_unlock_and_resume(mddev);
- 	return rv;
- }
-@@ -4187,6 +4184,7 @@ static ssize_t
- raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
- {
- 	unsigned int n;
-+	unsigned int noio_flags;
- 	int err;
- 
- 	err = kstrtouint(buf, 10, &n);
-@@ -4196,6 +4194,7 @@ raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
- 	err = mddev_suspend_and_lock(mddev);
- 	if (err)
- 		return err;
-+	noio_flags = memalloc_noio_save();
- 	if (mddev->pers) {
- 		if (n != mddev->raid_disks)
- 			err = update_raid_disks(mddev, n);
-@@ -4219,6 +4218,7 @@ raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
- 	} else
- 		mddev->raid_disks = n;
- out_unlock:
-+	memalloc_noio_restore(noio_flags);
- 	mddev_unlock_and_resume(mddev);
- 	return err ? err : len;
- }
-@@ -4599,6 +4599,7 @@ new_dev_store(struct mddev *mddev, const char *buf, size_t len)
- 	int minor;
- 	dev_t dev;
- 	struct md_rdev *rdev;
-+	unsigned int noio_flags;
- 	int err;
- 
- 	if (!*buf || *e != ':' || !e[1] || e[1] == '\n')
-@@ -4614,6 +4615,7 @@ new_dev_store(struct mddev *mddev, const char *buf, size_t len)
- 	err = mddev_suspend_and_lock(mddev);
- 	if (err)
- 		return err;
-+	noio_flags = memalloc_noio_save();
- 	if (mddev->persistent) {
- 		rdev = md_import_device(dev, mddev->major_version,
- 					mddev->minor_version);
-@@ -4632,6 +4634,7 @@ new_dev_store(struct mddev *mddev, const char *buf, size_t len)
- 		rdev = md_import_device(dev, -1, -1);
- 
- 	if (IS_ERR(rdev)) {
-+		memalloc_noio_restore(noio_flags);
- 		mddev_unlock_and_resume(mddev);
- 		return PTR_ERR(rdev);
- 	}
-@@ -4639,6 +4642,7 @@ new_dev_store(struct mddev *mddev, const char *buf, size_t len)
-  out:
- 	if (err)
- 		export_rdev(rdev);
-+	memalloc_noio_restore(noio_flags);
- 	mddev_unlock_and_resume(mddev);
- 	if (!err)
- 		md_new_event();
-@@ -7709,8 +7713,10 @@ static int md_ioctl(struct block_device *bdev, blk_mode_t mode,
- 			unsigned int cmd, unsigned long arg)
- {
- 	int err = 0;
-+	unsigned int noio_flags = 0;
- 	void __user *argp = (void __user *)arg;
- 	struct mddev *mddev = NULL;
-+	bool suspend;
- 
- 	err = md_ioctl_valid(cmd);
- 	if (err)
-@@ -7760,13 +7766,15 @@ static int md_ioctl(struct block_device *bdev, blk_mode_t mode,
- 	if (!md_is_rdwr(mddev))
- 		flush_work(&mddev->sync_work);
- 
--	err = md_ioctl_need_suspend(cmd) ? mddev_suspend_and_lock(mddev) :
--					   mddev_lock(mddev);
-+	suspend = md_ioctl_need_suspend(cmd);
-+	err = suspend ? mddev_suspend_and_lock(mddev) : mddev_lock(mddev);
- 	if (err) {
- 		pr_debug("md: ioctl lock interrupted, reason %d, cmd %d\n",
- 			 err, cmd);
- 		goto out;
- 	}
-+	if (suspend)
-+		noio_flags = memalloc_noio_save();
- 
- 	if (cmd == SET_ARRAY_INFO) {
- 		err = __md_set_array_info(mddev, argp);
-@@ -7891,8 +7899,12 @@ static int md_ioctl(struct block_device *bdev, blk_mode_t mode,
- 	    err != -EINVAL)
- 		mddev->hold_active = 0;
- 
--	md_ioctl_need_suspend(cmd) ? mddev_unlock_and_resume(mddev) :
--				     mddev_unlock(mddev);
-+	if (suspend) {
-+		memalloc_noio_restore(noio_flags);
-+		mddev_unlock_and_resume(mddev);
+ 	if (IS_ENABLED(CONFIG_DMA_DIRECT_REMAP) &&
+-	    !gfpflags_allow_blocking(gfp) && !coherent)
++	    !gfpflags_allow_blocking(gfp) && !coherent) {
+ 		page = dma_alloc_from_pool(dev, PAGE_ALIGN(size), &cpu_addr,
+-					       gfp, NULL);
+-	else
++					   gfp, NULL);
++		if (!page)
++			return NULL;
 +	} else {
-+		mddev_unlock(mddev);
+ 		cpu_addr = iommu_dma_alloc_pages(dev, size, &page, gfp, attrs);
+-	if (!cpu_addr)
+-		return NULL;
++		if (!cpu_addr)
++			return NULL;
 +	}
  
- out:
- 	if (cmd == STOP_ARRAY_RO || (err && cmd == STOP_ARRAY))
-@@ -9578,6 +9590,7 @@ static void md_start_sync(struct work_struct *ws)
- 	struct mddev *mddev = container_of(ws, struct mddev, sync_work);
- 	int spares = 0;
- 	bool suspend = false;
-+	unsigned int noio_flags = 0;
- 	char *name;
- 
- 	/*
-@@ -9588,6 +9601,7 @@ static void md_start_sync(struct work_struct *ws)
- 	    md_spares_need_change(mddev)) {
- 		suspend = true;
- 		mddev_suspend(mddev, false);
-+		noio_flags = memalloc_noio_save();
- 	}
- 
- 	mddev_lock_nointr(mddev);
-@@ -9601,6 +9615,7 @@ static void md_start_sync(struct work_struct *ws)
- 		mddev_unlock(mddev);
- 		mddev_suspend_and_lock_nointr(mddev);
- 		suspend = true;
-+		noio_flags = memalloc_noio_save();
- 	}
- 
- 	if (!md_is_rdwr(mddev)) {
-@@ -9646,8 +9661,10 @@ static void md_start_sync(struct work_struct *ws)
- 	 *     https://bugzilla.kernel.org/show_bug.cgi?id=218200
- 	 * Therefore, use __mddev_resume(mddev, false).
- 	 */
--	if (suspend)
-+	if (suspend) {
-+		memalloc_noio_restore(noio_flags);
- 		__mddev_resume(mddev, false);
-+	}
- 	md_wakeup_thread(mddev->sync_thread);
- 	sysfs_notify_dirent_safe(mddev->sysfs_action);
- 	md_new_event();
-@@ -9666,8 +9683,10 @@ static void md_start_sync(struct work_struct *ws)
- 	 *     https://bugzilla.kernel.org/show_bug.cgi?id=218200
- 	 * Therefore, use __mddev_resume(mddev, false).
- 	 */
--	if (suspend)
-+	if (suspend) {
-+		memalloc_noio_restore(noio_flags);
- 		__mddev_resume(mddev, false);
-+	}
- 
- 	wake_up(&resync_wait);
- 	if (test_and_clear_bit(MD_RECOVERY_RECOVER, &mddev->recovery) &&
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index 22a1ec3aa18d6..9a44676102f20 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -577,7 +577,6 @@ struct mddev {
- 	void (*sync_super)(struct mddev *mddev, struct md_rdev *rdev);
- 	struct md_cluster_info		*cluster_info;
- 	unsigned int			good_device_nr;	/* good device num within cluster raid */
--	unsigned int			noio_flag; /* for memalloc scope API */
- 
- 	/*
- 	 * Temporarily store rdev that will be finally removed when
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 1daf043a5e524..78f3f2d4d1dcb 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -2460,11 +2460,6 @@ static int scribble_alloc(struct raid5_percpu *percpu,
- 		sizeof(unsigned int) * (num + 2);
- 	void *scribble;
- 
--	/*
--	 * If here is in raid array suspend context, it is in memalloc noio
--	 * context as well, there is no potential recursive memory reclaim
--	 * I/Os with the GFP_KERNEL flag.
--	 */
- 	scribble = kvmalloc_array(cnt, obj_size, GFP_KERNEL);
- 	if (!scribble)
- 		return -ENOMEM;
-@@ -2479,6 +2474,7 @@ static int scribble_alloc(struct raid5_percpu *percpu,
- static int resize_chunks(struct r5conf *conf, int new_disks, int new_sectors)
- {
- 	unsigned long cpu;
-+	unsigned int noio_flags;
- 	int err = 0;
- 
- 	/* Never shrink. */
-@@ -2487,6 +2483,7 @@ static int resize_chunks(struct r5conf *conf, int new_disks, int new_sectors)
- 		return 0;
- 
- 	raid5_quiesce(conf->mddev, true);
-+	noio_flags = memalloc_noio_save();
- 	cpus_read_lock();
- 
- 	for_each_present_cpu(cpu) {
-@@ -2500,6 +2497,7 @@ static int resize_chunks(struct r5conf *conf, int new_disks, int new_sectors)
- 	}
- 
- 	cpus_read_unlock();
-+	memalloc_noio_restore(noio_flags);
- 	raid5_quiesce(conf->mddev, false);
- 
- 	if (!err) {
-@@ -6990,6 +6988,7 @@ raid5_store_stripe_size(struct mddev  *mddev, const char *page, size_t len)
- {
- 	struct r5conf *conf;
- 	unsigned long new;
-+	unsigned int noio_flags = 0;
- 	int err;
- 	int size;
- 
-@@ -7030,6 +7029,7 @@ raid5_store_stripe_size(struct mddev  *mddev, const char *page, size_t len)
- 		goto out_unlock;
- 	}
- 
-+	noio_flags = memalloc_noio_save();
- 	mutex_lock(&conf->cache_size_mutex);
- 	size = conf->max_nr_stripes;
- 
-@@ -7046,6 +7046,7 @@ raid5_store_stripe_size(struct mddev  *mddev, const char *page, size_t len)
- 	mutex_unlock(&conf->cache_size_mutex);
- 
- out_unlock:
-+	memalloc_noio_restore(noio_flags);
- 	mddev_unlock_and_resume(mddev);
- 	return err ?: len;
- }
-@@ -8912,6 +8913,7 @@ static void *raid6_takeover(struct mddev *mddev)
- static int raid5_change_consistency_policy(struct mddev *mddev, const char *buf)
- {
- 	struct r5conf *conf;
-+	unsigned int noio_flags;
- 	int err;
- 
- 	err = mddev_suspend_and_lock(mddev);
-@@ -8923,6 +8925,7 @@ static int raid5_change_consistency_policy(struct mddev *mddev, const char *buf)
- 		return -ENODEV;
- 	}
- 
-+	noio_flags = memalloc_noio_save();
- 	if (strncmp(buf, "ppl", 3) == 0) {
- 		/* ppl only works with RAID 5 */
- 		if (!raid5_has_ppl(conf) && conf->level == 5) {
-@@ -8962,6 +8965,7 @@ static int raid5_change_consistency_policy(struct mddev *mddev, const char *buf)
- 	if (!err)
- 		md_update_sb(mddev, 1);
- 
-+	memalloc_noio_restore(noio_flags);
- 	mddev_unlock_and_resume(mddev);
- 
- 	return err;
+ 	*handle = __iommu_dma_map(dev, page_to_phys(page), size, ioprot,
+ 			dev->coherent_dma_mask);
 -- 
 2.53.0
 
