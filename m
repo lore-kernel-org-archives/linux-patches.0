@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DB53FE348;
-	Sat, 12 Sep 2026 09:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028F83FE348;
+	Sat, 12 Sep 2026 09:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206595; cv=none; b=BQ1Aec2gwAygRkXWDW5XHY574WUfUKdEE99zcdb4E16KhSUfLKqZJAE8K0Kw42kd8Iof051KbJmtj3C+6x3WOzmF4HIdxhWPjuclS999l1CuItOZ93M1lzL1nvdB8RwGYdGydN4Be3XC+qezdqM4xb49YR1lkf9ATE8JdLMekCc=
+	t=1789206599; cv=none; b=TfasiOsESjwAZ3sSQW4gO7ZmkWuhv1NG62yxeXZi4ATE7CznQsuLca23eusyuwXtNd1jRDzqk9sz24VGKfMth0ooPWyfEy2cMAySs8vvROKiBIFtxPZl5GDdYlkks0a44849lgsR+JGxIefjYHhdKDhBZETM6qS908WfqeXZLHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206595; c=relaxed/simple;
-	bh=hN6NWf9cZ2dLgdT4bbVccV+CQyf32FRZI2AOTZCoAeE=;
+	s=arc-20240116; t=1789206599; c=relaxed/simple;
+	bh=K3wCbz0OqyBoRPRHxhi9nVVbL9h4UkdKNgKZ5gQ2bxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gbqEyrCxBZpb9LJrlkTpzyk3AvjUlBIKhU8VAFzkPJYghu0Pi6Bj87X/9DJf8fXUONOmfQT0B/gnx+7tNaTOAbGqhE497P/mC7L2KtFH9aH0FJqDAhtzsAfOmyNcBcCTZFVyVpH+wUc2oRxPdttjCsSr4THotPUx3/2McI4TSBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IG04SFk1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qw14u1Ady7LJqmRHg/QcmDmEmWQwkk4qGQ6zCG5H3nNfRVqNlGTfLT0jmsTCgZ3DynflWVxsE+7h8R/ga2zZwRxbntycNG5i2vAObhD1dtJMN2YQD38pB1g3ntAKbbtQSFoabj7FhsgV1/MAhzmYaT906JeWE+/KA80vEbNKXak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qd+kkl/g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IG04SFk1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70A31F000FF;
-	Sat, 12 Sep 2026 09:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qd+kkl/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DA21F000FF;
+	Sat, 12 Sep 2026 09:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206593;
-	bh=UXHviGJgMOQh4E0LhyLTNh7KVS1fPgOEAPCgdS3ahgY=;
+	s=korg; t=1789206597;
+	bh=R87NsRmmpMUxGM6wiEY06ASqGopNK5DsItDuHbTuFMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IG04SFk1SOuqvnQiyWRt07MaHk/f7oGFj+UMKhZOzLAsXuz51qx4NJqjzRkBkfyOw
-	 QYqzTIoWiIeL5e35i2oexMG4ZjgUyBfZXY8eNk16ABkH7x3FYhCUk0nQwYdJOEBy6N
-	 Z5MVZOXno3oQtK2H1byb60un+FgWXHTGZhSxF0Rg=
+	b=Qd+kkl/gwb28ZZ+rr57+uVJDJ1eMVaKmUt5KEG5SWbr78sD0xdlWL+QMlgjTPIiUk
+	 RyZfBjgvBWFz3aU9QUfF6kiaO/9XlJiJ9a/3tAE3I1QUnHPwxn65vY5NIGBz/QPGCn
+	 fHeuHIxeo2M2UWKXaoPz+GhqgYscANYrBCIAOBPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0240/1518] irqchip/gic-v3-its: Fix memleak in its_probe_one()
-Date: Sat, 12 Sep 2026 08:40:09 +0200
-Message-ID: <20260912065628.912430660@linuxfoundation.org>
+Subject: [PATCH 6.18 0241/1518] irqchip/gic-v3-its: Fix its node leak in gic_acpi_parse_madt_its()
+Date: Sat, 12 Sep 2026 08:40:10 +0200
+Message-ID: <20260912065628.933831653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,42 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 1efffab6fe336a5c4fd3c2886f255cd2f998e65f ]
+[ Upstream commit 698a8648ca8051d34722b09b8a8088c741120ac3 ]
 
-Fix collection leak when its_init_domain() failed in its_probe_one().
+Fix its node leak when its_probe_one() failed in
+gic_acpi_parse_madt_its().
 
-Fixes: 4c21f3c26ecc2 ("irqchip: GICv3: ITS: DT probing and initialization")
+Fixes: 9585a495ac936 ("irqchip/gic-v3-its: Split allocation from initialisation of its_node")
 Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260702033050.1583-2-shikemeng@huaweicloud.com
+Link: https://patch.msgid.link/20260702033050.1583-3-shikemeng@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index a1661657391d6..fb67456e301e4 100644
+index fb67456e301e4..627b708c96264 100644
 --- a/drivers/irqchip/irq-gic-v3-its.c
 +++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -5322,7 +5322,7 @@ static int __init its_probe_one(struct its_node *its)
+@@ -5744,9 +5744,13 @@ static int __init gic_acpi_parse_madt_its(union acpi_subtable_headers *header,
+ 		its->flags |= ITS_FLAGS_FORCE_NON_SHAREABLE;
  
- 	err = its_init_domain(its);
- 	if (err)
--		goto out_free_tables;
-+		goto out_free_collection;
+ 	err = its_probe_one(its);
+-	if (!err)
+-		return 0;
++	if (err)
++		goto probe_err;
++
++	return 0;
  
- 	raw_spin_lock(&its_lock);
- 	list_add(&its->entry, &its_nodes);
-@@ -5330,6 +5330,8 @@ static int __init its_probe_one(struct its_node *its)
- 
- 	return 0;
- 
-+out_free_collection:
-+	kfree(its->collections);
- out_free_tables:
- 	its_free_tables(its);
- out_free_cmd:
++probe_err:
++	its_node_destroy(its);
+ node_err:
+ 	iort_deregister_domain_token(its_entry->translation_id);
+ dom_err:
 -- 
 2.53.0
 
