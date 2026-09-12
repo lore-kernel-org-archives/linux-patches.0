@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1856F373BE6;
-	Sat, 12 Sep 2026 08:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D993A0B36;
+	Sat, 12 Sep 2026 08:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201539; cv=none; b=osJyX3PCv9ttt4ZzV58g0Q074MKiUJOVFC3X4k+ey2YEZ45AwndprZWbdQstEBq183NST0qUoZYiXi/gaqdAIrXiTzDMpQptMc20r3qcQyjWpstPZw/t7du7ezny81C1ovXgfwVvVwiUijSpHmSL0LPwgkW/N/3IIXOS9HxqPLo=
+	t=1789201544; cv=none; b=IGz4gPWv0L+6CmOahe2YVRJy1oWD+2LwbzkTnAG+YDP9OSqgKvxYju68Zs0yz15sHPL97jFgZHZmnKdpl0n22KIPK1Mi9HLRIjK4cQOtDNUwBZg9bAEBYap/RfbhVttMdi0dVXWiwZrH02LXPGOV2yttFVrS228ejxsab7t3iqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201539; c=relaxed/simple;
-	bh=xKKxjY3dKMi48//bTeyaIDD5dzZCAbsRifaUCCTAMPg=;
+	s=arc-20240116; t=1789201544; c=relaxed/simple;
+	bh=PqSBMMoTr523l6Bf7czLhtVpsJ6ONJx2LKwpMRnLZps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pnta3b4zVcM9biujlDqXLYjfVwVzl9ezoJBttC8Fuup2ACoe48Wf2mFN8WkudWg+18WsxVNxs4RFzpVPbGz5qWHYAWruTrtYQsZLvBcpT1ODOjx3mB9sO/W8T5UWuOc4XGADAz4fNzYD3p6arHBFiN69bqQDfqHKYbyiedaKlvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxmSnYTd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yw+5j1e5bGLeeMITGBrA6XVHFX0cA4YDSfpJVW4CUu+n/oFixj9oQEXNXlQJiHOBtql56TVLK0loKPHya1Rk/vrBALMKJy/2xt3d/ZmK0bPevo2dQPLQG3TIUQS3OZwmZ/xzi0GkQLZb22n6DTqm3ajZm/bYWNNRKTL8aXwMdmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4Htdxor; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxmSnYTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3001F00899;
-	Sat, 12 Sep 2026 08:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4Htdxor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6658D1F00899;
+	Sat, 12 Sep 2026 08:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201538;
-	bh=W5+ITiLXOh0S7/lOEGkqyww6EosBuMc/03fYVzQBrrs=;
+	s=korg; t=1789201542;
+	bh=tqyORYogv1lQdL6OHWuNLIaJn5CZx3vEBFa17nAZcT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BxmSnYTdMSKsfR1oaVrycCe+CGXGUJVf1zqYu93AEpzrAuLy9huRlxiAZziKL7RhB
-	 y39xObjQl+LP976NeoIZ1rQBNSGH2a6zSBu71nv1luT53U7c9Y4qxy4vmpv9xdPFmz
-	 WrsoouJIaQ8awWra0Jj3GTVAMXEGLU2JmWYQAgg4=
+	b=v4HtdxorhiXzo0x7a6HR8o1TL51sPJSCQBx/l4tOSOXsJeFfiSIcb43sVnjaT3qfu
+	 wlZ7N8KRPhUR7g6STzqbIhGI35QiORILkOTcDQl1N620lU2AUmdwoiKhjgbhk+tvlL
+	 qxQfZ1awFpcO4u7ROrm/gMAzdNRXWYWY7yVy4vrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiancheng Huang <jchuang@seu.edu.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1017/1815] HID: lg4ff: validate report length before fixed offsets
-Date: Sat, 12 Sep 2026 08:46:07 +0200
-Message-ID: <20260912065712.886813419@linuxfoundation.org>
+Subject: [PATCH 7.2 1018/1815] perf thread-stack: Fix heap buffer overflow on branch stack wrap copy
+Date: Sat, 12 Sep 2026 08:46:08 +0200
+Message-ID: <20260912065712.910580823@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,63 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiancheng Huang <jchuang@seu.edu.cn>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit be00988cce4ed44db1e61231d0ab71a64bab44cd ]
+[ Upstream commit ab9c84d1cd59e6b3b73de34982a35a76e3a9b032 ]
 
-lg4ff_raw_event() rewrites fixed report offsets when combined pedals are
-enabled. It currently assumes that each product report contains every
-source and destination byte used by the rewrite.
+thread_stack__br_sample() copies the wrap-around portion of the branch
+stack ring buffer with:
 
-Return without rewriting a short report before each product-specific
-access. Apply the same bound to the computed offset path.
+  nr = min(ts->br_stack_pos, sz);
+  memcpy(be, &src->entries[0], bsz * ts->br_stack_pos);
 
-Fixes: c832f86effbc ("HID: hid-logitech: Add combined pedal support Logitech wheels")
-Signed-off-by: Jiancheng Huang <jchuang@seu.edu.cn>
-Assisted-by: Codex:gpt-5.6-luna
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+'nr' is correctly bounded to min(br_stack_pos, sz) but the memcpy uses
+the unbounded ts->br_stack_pos directly.  When br_stack_pos exceeds
+the remaining destination space 'sz', this writes past the destination
+buffer.
+
+Use 'nr' (the bounded value) in the memcpy size, matching the pattern
+of the first memcpy in the same function.
+
+Fixes: 86d67180b920 ("perf thread-stack: Add branch stack support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-lg4ff.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/perf/util/thread-stack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-lg4ff.c b/drivers/hid/hid-lg4ff.c
-index e901fdb7d033c..62f99a93210c9 100644
---- a/drivers/hid/hid-lg4ff.c
-+++ b/drivers/hid/hid-lg4ff.c
-@@ -336,6 +336,8 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
- 	if (entry->wdata.combine) {
- 		switch (entry->wdata.product_id) {
- 		case USB_DEVICE_ID_LOGITECH_WHEEL:
-+			if (size < 7)
-+				return 0;
- 			rd[5] = rd[3];
- 			rd[6] = 0x7F;
- 			return 1;
-@@ -343,10 +345,14 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
- 		case USB_DEVICE_ID_LOGITECH_WINGMAN_FFG:
- 		case USB_DEVICE_ID_LOGITECH_MOMO_WHEEL:
- 		case USB_DEVICE_ID_LOGITECH_MOMO_WHEEL2:
-+			if (size < 6)
-+				return 0;
- 			rd[4] = rd[3];
- 			rd[5] = 0x7F;
- 			return 1;
- 		case USB_DEVICE_ID_LOGITECH_DFP_WHEEL:
-+			if (size < 7)
-+				return 0;
- 			rd[5] = rd[4];
- 			rd[6] = 0x7F;
- 			return 1;
-@@ -366,6 +372,8 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
- 		}
+diff --git a/tools/perf/util/thread-stack.c b/tools/perf/util/thread-stack.c
+index c5ce741b07446..1360f44421ef8 100644
+--- a/tools/perf/util/thread-stack.c
++++ b/tools/perf/util/thread-stack.c
+@@ -642,7 +642,7 @@ void thread_stack__br_sample(struct thread *thread, int cpu,
+ 		sz -= nr;
+ 		be = &dst->entries[nr];
+ 		nr = min(ts->br_stack_pos, sz);
+-		memcpy(be, &src->entries[0], bsz * ts->br_stack_pos);
++		memcpy(be, &src->entries[0], bsz * nr);
+ 	}
+ }
  
- 		/* Compute a combined axis when wheel does not supply it */
-+		if (size <= offset + 1)
-+			return 0;
- 		rd[offset] = (0xFF + rd[offset] - rd[offset+1]) >> 1;
- 		rd[offset+1] = 0x7F;
- 		return 1;
 -- 
 2.53.0
 
