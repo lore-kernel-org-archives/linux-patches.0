@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAED47A88C;
-	Sat, 12 Sep 2026 17:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7DC47986A;
+	Sat, 12 Sep 2026 17:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232526; cv=none; b=fr9Mj3K3fa7rvu6DRZwQpgu+jMaYPQS7CsJBNpjw+TPjk3SKI8BMR1pmbaJgXItH81mReO+qVG35h6f52hzaO/PhE7sawTx3B2BZR7J2VkW41HPMgySHqDo/UdCc5DlCVHyHukfLzLuA9rk1SZ6EslXc/fQCfUcklYwJ9dtwR8k=
+	t=1789232531; cv=none; b=DsFYUFIWJOCEWe1nGBkrE/sxJ7yz3iKRcXm3Ffx48pAn3sH/gWvB+pGhAguIxnJIIos3EgO9o//xYv3jvo+fQUtBmdk4IyPfsPvstV0RP0tT9oLYM18gjYb9JtY/acmWVGYJiVD850+mDujSPnKQkzsvg8PuABUVry7KU0dy6ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232526; c=relaxed/simple;
-	bh=gwLRRQvuzaptTsGDCSQy6NphdyTr2EQsH3Oy34AEKXA=;
+	s=arc-20240116; t=1789232531; c=relaxed/simple;
+	bh=HPRRZg6oQXhokjGtlM8ormAVlrwbtTagPGfE4pXVXpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYX6ZE7MUGNfSms5/+gsTCoAkOG5WADIgS2MhAyt1swkf+DaP6ekRMQn2rS/02d0tME5TS27qO6lZm8i6hY6znQ+er3RnPoWUF4s++ZcU1XmbmO8rBUB9lk8kf/wHKedm6bKINLkIcYyVJg7By3yaJluVw6nHLb7ZEdhd3Gy7Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhlMfq68; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hqfRJ04J+CPTcroTYqFhO2qlx/BiOaGmrCJqpuKplFtl3IKuEQ8lp8ccejRcleonn+vKsP0qq6ywPLNTvLZpMKxkvllFZVZ3YW8GrozSewBRuGkorpOG8YFqoiIUz/nBu5XH/7eP7mvB7lyuNQdn64i6c/QL/22Vdv2ak0ncvvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1V0eUR/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhlMfq68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA691F000FF;
-	Sat, 12 Sep 2026 17:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1V0eUR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9D51F000FF;
+	Sat, 12 Sep 2026 17:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232525;
-	bh=6PjWIN8+Oey5OXy1lzvHFgtv+g4WVA0SUK/ZSv33EUc=;
+	s=korg; t=1789232529;
+	bh=AxJNTdee4X7Pr14scG0RE09GdTCOrNVEdoUUSMmugxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhlMfq68bujQqWA+Hu0M/SmOSxNvurGJX8AYYBt4cA/jRRH8dHgoFJv3+paDovusa
-	 QloeS0QaDkosCWjGPNdTUbbNtKDv74pUfoiiCkDan73Ba5ipKGm3cbQYBkLwF54wdJ
-	 zSXK7nOHUKic9jOTJE98C+1bYf2w6YxSoaDFhl2s=
+	b=E1V0eUR/TcRcoQWxrP0ThwNPB120UPhTdLBjd9Pv+kMMRo3JUTyl7pfqYTJtQuylq
+	 9lYq//m0cUypO4bukBj8CXpdQgVI8OjCx70SLnxUcBS6Y5/R+lI3sVmjxh91+GELPH
+	 8H3B6QjLjfvtXnQqAygsU3WUCfKE6tOsDw3+qLxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>
-Subject: [PATCH 5.15 028/935] nilfs2: fix slab-out-of-bounds in nilfs_direct_propagate after truncation
-Date: Sat, 12 Sep 2026 08:50:58 +0200
-Message-ID: <20260912065527.485256723@linuxfoundation.org>
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>
+Subject: [PATCH 5.15 003/935] alpha: dont leak hardware-fabricated FP exception bits to user space
+Date: Sat, 12 Sep 2026 08:50:33 +0200
+Message-ID: <20260912065526.917292728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,172 +50,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Matt Turner <mattst88@gmail.com>
 
-commit 45662dedb8f272ef7f16e69f13424c4bd0399240 upstream.
+commit bcfe3187412e342b4619efb92c945f073855ebc0 upstream.
 
-Shuangpeng Bai reported that KASAN detected a slab-out-of-bounds error
-in nilfs_direct_propagate() during testing.
+On EV6 and later the hardware records exception status bits in the FPCR
+before delivering a software completion trap, and those bits can be wrong
+for the instruction that trapped.  Converting a double that is exactly
+representable as a subnormal float sets FPCR_UNF even though the result
+is exact, and an underflow trap additionally sets FPCR_INE even when the
+emulated operation turns out to be exact.
 
-Analysis revealed that after truncating a file, a node block immediately
-below the B-tree root was not deleted.  Instead, it remained in the B-tree
-node cache in a dirty state.  The log writer subsequently detected this
-block and incorrectly invoked nilfs_direct_propagate() on it, which is
-designed to handle only data blocks in direct mapping.
+alpha_fp_emul() only wrote the FPCR when soft-fp raised an exception, so
+whenever it determined that the instruction was exact the fabricated bits
+stayed in the FPCR and were reported to user space by fetestexcept().
 
-B-tree nodes in the cache are managed by virtual block numbers, and their
-logical keys typically exceed the range expected by direct mapping.
-Consequently, processing such a node as a direct mapping entry triggers
-a slab-out-of-bounds access.
+Pass the exception summary register down from do_entArith() so the
+handler can tell which exceptions the hardware attributed to the trapping
+instruction, and always write the FPCR.  Clear the exceptions that the
+trap reported but that soft-fp did not raise.  EXC_SUM reports only the
+underflow or overflow when the hardware also set INE, so treat INE as a
+candidate in that case, and treat a trap with no reported exception as a
+denormal operand trap, for which the hardware can fabricate INE and UNF
+as well.  Bits that software has already confirmed in ieee_state belong
+to this or an earlier instruction and are never cleared.
 
-The root cause is that when a B-tree mapping collapses into a direct
-mapping during truncation, an intermediate node block pointed to by the
-root node is left behind as garbage instead of being explicitly deleted.
+The imprecise path passes no summary.  There the trap was taken somewhere
+in the trap shadow, so EXC_SUM is not attribution for the instruction
+being re-executed -- and only EV6, which traps precisely and so never
+takes that path, has fabricated bits to clear.  For the same reason the
+clearing is guarded by implver(), matching swcr_update_status().
 
-This resolves the issue by adding a nilfs_btree_discard() operation
-to delete the remaining intermediate node block during the conversion.
-A 'deform' flag is added to the bop_delete interface to explicitly signal
-that the deletion is part of a mapping transformation.  This allows the
-B-tree mapping implementation to perform the necessary cleanup and
-discarding of the residual node structure that would be otherwise be left
-orphaned after the transition.
+On an UP1500 (EV68) this takes the glibc math testsuite from 831 failures
+to 28, the remainder being unrelated to exception status.
 
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/r/08A3603A-ADB6-484C-9015-9AC1340E6FB8@gmail.com
-Fixes: 36a580eb489f ("nilfs2: direct block mapping")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+This belongs with the preceding fix to ieee_swcr_to_fpcr(), and should
+not be backported without it -- nor it without this.  That fix stops
+FPCR_DNOD being set unconditionally, so denormal operand traps start
+firing again.  Those traps very often find an exact result, which is
+precisely the case where the old code left the FPCR unwritten and the
+fabricated bits visible.  Applied alone it would make spurious exception
+flags more common, not less.
+
+One case cannot be resolved here: an inexact instruction without the
+software completion suffix never traps, so its INE reaches the FPCR
+without being recorded anywhere else.  Such a bit is indistinguishable
+from an INE the hardware fabricated for a trapping instruction, and is
+lost if an underflow or overflow trap with an exact result follows it.
+The FPCR is the only record of those instructions and it carries no
+attribution.
+
+The bug predates the git history, so there is no commit to reference in a
+Fixes tag.
+
+Cc: stable@vger.kernel.org # 5.15+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-2-c99d75608e60@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/bmap.c   |    2 +-
- fs/nilfs2/bmap.h   |    2 +-
- fs/nilfs2/btree.c  |   39 ++++++++++++++++++++++++++++++++-------
- fs/nilfs2/direct.c |    4 ++--
- 4 files changed, 36 insertions(+), 11 deletions(-)
+ arch/alpha/kernel/traps.c  |    6 +--
+ arch/alpha/math-emu/math.c |   88 +++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 80 insertions(+), 14 deletions(-)
 
---- a/fs/nilfs2/bmap.c
-+++ b/fs/nilfs2/bmap.c
-@@ -181,7 +181,7 @@ static int nilfs_bmap_do_delete(struct n
- 			return ret;
- 	}
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -200,12 +200,12 @@ static long dummy_emul(void) { return 0;
+ long (*alpha_fp_emul_imprecise)(struct pt_regs *regs, unsigned long writemask)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul_imprecise);
+-long (*alpha_fp_emul) (unsigned long pc)
++long (*alpha_fp_emul) (unsigned long pc, unsigned long summary)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul);
+ #else
+ long alpha_fp_emul_imprecise(struct pt_regs *regs, unsigned long writemask);
+-long alpha_fp_emul (unsigned long pc);
++long alpha_fp_emul (unsigned long pc, unsigned long summary);
+ #endif
  
--	return bmap->b_ops->bop_delete(bmap, key);
-+	return bmap->b_ops->bop_delete(bmap, key, false);
- }
+ asmlinkage void
+@@ -219,7 +219,7 @@ do_entArith(unsigned long summary, unsig
+ 		   emulate the instruction.  If the processor supports
+ 		   precise exceptions, we don't have to search.  */
+ 		if (!amask(AMASK_PRECISE_TRAP))
+-			si_code = alpha_fp_emul(regs->pc - 4);
++			si_code = alpha_fp_emul(regs->pc - 4, summary);
+ 		else
+ 			si_code = alpha_fp_emul_imprecise(regs, write_mask);
+ 		if (si_code == 0)
+--- a/arch/alpha/math-emu/math.c
++++ b/arch/alpha/math-emu/math.c
+@@ -57,13 +57,13 @@ MODULE_DESCRIPTION("FP Software completi
+ MODULE_LICENSE("GPL v2");
  
- /**
---- a/fs/nilfs2/bmap.h
-+++ b/fs/nilfs2/bmap.h
-@@ -50,7 +50,7 @@ struct nilfs_bmap_operations {
- 	int (*bop_lookup_contig)(const struct nilfs_bmap *, __u64, __u64 *,
- 				 unsigned int);
- 	int (*bop_insert)(struct nilfs_bmap *, __u64, __u64);
--	int (*bop_delete)(struct nilfs_bmap *, __u64);
-+	int (*bop_delete)(struct nilfs_bmap *bmap, __u64 key, bool deform);
- 	void (*bop_clear)(struct nilfs_bmap *);
+ extern long (*alpha_fp_emul_imprecise)(struct pt_regs *, unsigned long);
+-extern long (*alpha_fp_emul) (unsigned long pc);
++extern long (*alpha_fp_emul) (unsigned long pc, unsigned long summary);
  
- 	int (*bop_propagate)(struct nilfs_bmap *, struct buffer_head *);
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -1426,6 +1426,28 @@ static void nilfs_btree_shrink(struct ni
- 	path[level].bp_bh = NULL;
- }
+ static long (*save_emul_imprecise)(struct pt_regs *, unsigned long);
+-static long (*save_emul) (unsigned long pc);
++static long (*save_emul) (unsigned long pc, unsigned long summary);
  
-+/**
-+ * nilfs_btree_discard - discard the last node for the mapping transformation
-+ * @btree: bmap struct of btree
-+ * @path: array of nilfs_btree_path struct
-+ * @level: level of the B-tree node being operated on
-+ * @keyp: argument for passing a key (unused)
-+ * @ptrp: argument for passing a pointer (unused)
+ long do_alpha_fp_emul_imprecise(struct pt_regs *, unsigned long);
+-long do_alpha_fp_emul(unsigned long);
++long do_alpha_fp_emul(unsigned long, unsigned long);
+ 
+ static int alpha_fp_emul_init_module(void)
+ {
+@@ -91,7 +91,22 @@ module_exit(alpha_fp_emul_cleanup_module
+ 
+ 
+ /*
+- * Emulate the floating point instruction at address PC.  Returns -1 if the
++ * Exception bits of the exception summary register (EXC_SUM).  Bit 0 is the
++ * software completion bit; bits 1 through 5 report the exceptions the
++ * hardware attributed to the trapping instruction, and lie at the same
++ * positions as the corresponding IEEE_TRAP_ENABLE_* bits.
 + */
-+static void nilfs_btree_discard(struct nilfs_bmap *btree,
-+				struct nilfs_btree_path *path, int level,
-+				__u64 *keyp, __u64 *ptrp)
-+{
-+	struct nilfs_btree_node *root = nilfs_btree_get_root(btree);
++#define EXC_SUM_INV	(1UL << 1)
++#define EXC_SUM_DZE	(1UL << 2)
++#define EXC_SUM_OVF	(1UL << 3)
++#define EXC_SUM_UNF	(1UL << 4)
++#define EXC_SUM_INE	(1UL << 5)
++#define EXC_SUM_MASK	(EXC_SUM_INV | EXC_SUM_DZE | EXC_SUM_OVF	\
++			 | EXC_SUM_UNF | EXC_SUM_INE)
 +
-+	nilfs_btree_node_delete(root, 0, NULL, NULL,
-+				NILFS_BTREE_ROOT_NCHILDREN_MAX);
-+	nilfs_btree_node_set_level(root, level);
-+
-+	nilfs_btnode_delete(path[level].bp_bh);
-+	path[level].bp_bh = NULL;
-+}
-+
- static void nilfs_btree_nop(struct nilfs_bmap *btree,
- 			    struct nilfs_btree_path *path,
- 			    int level, __u64 *keyp, __u64 *ptrp)
-@@ -1436,7 +1458,7 @@ static int nilfs_btree_prepare_delete(st
- 				      struct nilfs_btree_path *path,
- 				      int *levelp,
- 				      struct nilfs_bmap_stats *stats,
--				      struct inode *dat)
-+				      struct inode *dat, bool deform)
++/*
++ * Emulate the floating point instruction at address PC.  SUMMARY is the
++ * exception summary register the trap was delivered with.  Returns -1 if the
+  * instruction to be emulated is illegal (such as with the opDEC trap), else
+  * the SI_CODE for a SIGFPE signal, else 0 if everything's ok.
+  *
+@@ -100,7 +115,7 @@ module_exit(alpha_fp_emul_cleanup_module
+  * stick the result of the operation into the appropriate register.
+  */
+ long
+-alpha_fp_emul (unsigned long pc)
++alpha_fp_emul (unsigned long pc, unsigned long summary)
  {
- 	struct buffer_head *bh;
- 	struct nilfs_btree_node *node, *parent, *sib;
-@@ -1523,15 +1545,17 @@ static int nilfs_btree_prepare_delete(st
- 			if (nilfs_btree_node_get_nchildren(node) - 1 <=
- 			    NILFS_BTREE_ROOT_NCHILDREN_MAX) {
- 				path[level].bp_op = nilfs_btree_shrink;
--				stats->bs_nblocks += 2;
--				level++;
--				path[level].bp_op = nilfs_btree_nop;
--				goto shrink_root_child;
-+			} else if (deform) {
-+				path[level].bp_op = nilfs_btree_discard;
- 			} else {
- 				path[level].bp_op = nilfs_btree_do_delete;
- 				stats->bs_nblocks++;
- 				goto out;
- 			}
-+			stats->bs_nblocks += 2;
-+			level++;
-+			path[level].bp_op = nilfs_btree_nop;
-+			goto shrink_root_child;
+ 	FP_DECL_EX;
+ 	FP_DECL_S(SA); FP_DECL_S(SB); FP_DECL_S(SR);
+@@ -305,12 +320,56 @@ done:
+ 		swcr |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
+ 		current_thread_info()->ieee_state
+ 		  |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
++	}
+ 
+-		/* Update hardware control register.  */
+-		fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
+-		fpcr |= ieee_swcr_to_fpcr(swcr);
+-		wrfpcr(fpcr);
++	/*
++	 * EV6 records exception status bits in the FPCR before delivering the
++	 * software completion trap, and swcr_update_status() above merged them
++	 * into SWCR.  Some can be wrong for the instruction we just emulated:
++	 * a CVTTS of a value exactly representable as a subnormal sets FPCR_UNF
++	 * even though the result is exact.  Clear the exceptions the trap
++	 * reported but that soft-fp did not raise.
++	 */
++	if (implver() == IMPLVER_EV6) {
++		unsigned long spurious = summary & EXC_SUM_MASK;
++
++		if (spurious & (EXC_SUM_UNF | EXC_SUM_OVF)) {
++			/*
++			 * EXC_SUM reports only the underflow or overflow,
++			 * but the hardware sets INE alongside it in the FPCR.
++			 */
++			spurious |= EXC_SUM_INE;
++		} else if (!spurious) {
++			/*
++			 * No exception reported, so this was a denormal
++			 * operand trap, for which INE and UNF can be
++			 * fabricated as well.
++			 */
++			spurious = EXC_SUM_INE | EXC_SUM_UNF;
++		}
+ 
++		/*
++		 * Never clear an exception software has confirmed.  Every
++		 * instruction that genuinely raises one traps for software
++		 * completion and is recorded in ieee_state above, so a bit
++		 * found there -- including one just set from _fex -- belongs
++		 * to this or an earlier instruction and must survive.
++		 */
++		spurious &= ~(current_thread_info()->ieee_state
++			      >> IEEE_STATUS_TO_EXCSUM_SHIFT);
++
++		swcr &= ~(spurious << IEEE_STATUS_TO_EXCSUM_SHIFT);
++	}
++
++	/*
++	 * Update hardware control register.  This has to happen even when
++	 * soft-fp raised nothing, to clear any fabricated bits.
++	 */
++	fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
++	fpcr |= ieee_swcr_to_fpcr(swcr);
++	wrfpcr(fpcr);
++
++	if (_fex) {
+ 		/* Do we generate a signal?  */
+ 		_fex = _fex & swcr & IEEE_TRAP_ENABLE_MASK;
+ 		si_code = 0;
+@@ -392,9 +451,16 @@ alpha_fp_emul_imprecise (struct pt_regs
+ 			break;
  		}
- 	}
- 
-@@ -1582,7 +1606,7 @@ static void nilfs_btree_commit_delete(st
- 		nilfs_bmap_set_dirty(btree);
- }
- 
--static int nilfs_btree_delete(struct nilfs_bmap *btree, __u64 key)
-+static int nilfs_btree_delete(struct nilfs_bmap *btree, __u64 key, bool deform)
- 
- {
- 	struct nilfs_btree_path *path;
-@@ -1602,7 +1626,8 @@ static int nilfs_btree_delete(struct nil
- 
- 	dat = NILFS_BMAP_USE_VBN(btree) ? nilfs_bmap_get_dat(btree) : NULL;
- 
--	ret = nilfs_btree_prepare_delete(btree, path, &level, &stats, dat);
-+	ret = nilfs_btree_prepare_delete(btree, path, &level, &stats, dat,
-+			deform);
- 	if (ret < 0)
- 		goto out;
- 	nilfs_btree_commit_delete(btree, path, level, dat);
---- a/fs/nilfs2/direct.c
-+++ b/fs/nilfs2/direct.c
-@@ -144,7 +144,7 @@ static int nilfs_direct_insert(struct ni
- 	return ret;
- }
- 
--static int nilfs_direct_delete(struct nilfs_bmap *bmap, __u64 key)
-+static int nilfs_direct_delete(struct nilfs_bmap *bmap, __u64 key, bool deform)
- {
- 	union nilfs_bmap_ptr_req req;
- 	struct inode *dat;
-@@ -234,7 +234,7 @@ int nilfs_direct_delete_and_convert(stru
- 	/* no need to allocate any resource for conversion */
- 
- 	/* delete */
--	ret = bmap->b_ops->bop_delete(bmap, key);
-+	ret = bmap->b_ops->bop_delete(bmap, key, true);
- 	if (ret < 0)
- 		return ret;
- 
+ 		if (!write_mask) {
+-			/* Re-execute insns in the trap-shadow.  */
++			/*
++			 * Re-execute insns in the trap-shadow.  Pass no
++			 * exception summary: it describes the trap, which
++			 * was taken anywhere in the shadow, and so is not
++			 * attribution for this instruction.  Nothing is
++			 * lost, since only EV6 -- which traps precisely and
++			 * never comes this way -- needs it.
++			 */
+ 			regs->pc = trigger_pc + 4;
+-			si_code = alpha_fp_emul(trigger_pc);
++			si_code = alpha_fp_emul(trigger_pc, 0);
+ 			goto egress;
+ 		}
+ 		trigger_pc -= 4;
 
 
