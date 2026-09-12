@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF5D78C9C;
-	Sat, 12 Sep 2026 12:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1017F78C9C;
+	Sat, 12 Sep 2026 12:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217430; cv=none; b=urpLXJvi5HPgGTKsBVJ5i6sS+UXBgb5n4++kmZ/3IKmpcCFutfkSfHtvAC6tHckv+I50dRYDFT0vthjYKeYZza0i5mhSrZOShNkQ9ptWzwkJ+/s0lRsB1kyPPBBLUwbUtPmtbl7w0QfFmD1zCKvu7DwCjICtp+JP/A3pYZJwRAs=
+	t=1789217438; cv=none; b=ea5O1gT1Crwnz+5hDuaX00GieDNJlkIib8XEWBpcwEbEmdrTJyyJtIWK+JIVQJh/ckIEoqkFtogXClTTUWewd/F6OvzSperOtehKM676mslXlSGH3tOi/OIsIfJt6GeE3XaFAZ+173QcrzOlp3xolRx5dI7n/ulArybBMEsraYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217430; c=relaxed/simple;
-	bh=Pjjc6TtI51nZExazow7Ges5Mc6CSdu7MNc/z6qlIoVk=;
+	s=arc-20240116; t=1789217438; c=relaxed/simple;
+	bh=Zxsv5cOAgwIhO44c9IC8LjQHMMacX6fXcHuyfT9LpME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jW+FqYzNyU2/SOM5FAbHpAANs9lpuLlTTKT8QlqVOfNOMI2HZxGkrMNW10ZyIDA/XpbjE6YGuKC0WYnI1ZiDofgEpqwuhsQBAwfVQ8j9LwtaN9eM7ix1AUlNR1MPBLGgcwfkgkufq1CGSpG/RqpX3whr1FXSO8gcy9i/o+sm5eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3yUTztI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pZAxFWexzfY81YnxGNglo8miTw+U/8v1/LDL5ulL8CtmS5k/ZNFxxu3v9aFm3yotH+foZrw3kwmzDKU3NMtJcGv8VlP3ga7cxTgFuDWOVQIAIMAcOiZh4Q8OXD5qpxHyKWmw0sPQxDblwRfHsvyw3w6XaDkL+sA973nySwAe9U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiRS5uH6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3yUTztI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC95C1F000FF;
-	Sat, 12 Sep 2026 12:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiRS5uH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41431F000FF;
+	Sat, 12 Sep 2026 12:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217428;
-	bh=w1Oql3y+cvDqyf9mkw75VJxjNsFimSa8qrM/MZjAj5A=;
+	s=korg; t=1789217434;
+	bh=mf6Wgj7hUzxscQTais3Bsr9PvgOQFIn3CFs77PIetns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F3yUTztIn79dFdUZVvMk6r/4XyCHl2JcDB6xWzK+PhjN/U3ukkFCUilbZUMtuTsdp
-	 zWKXSD7pPmZTeiBEX8ZyN/fKHF/N7CIz6my1JLHP1UcQWKrlKeCsjbQXtaI/VaPEpa
-	 7ME6ik9DSSRb+oPrMfczDhbAA7OX7rPg7Dh+7NY0=
+	b=SiRS5uH6ftIKVVgntXvbdZuR26cvyboRU958yy6NB/wk6NfpQ2AANrqE/ikFFv4Xe
+	 ZKBD1EXcsUigwclVKCL2Ml/qztRgyOK0z6h42TnzxrL9PO2XfXvbNHwg1h+mEFXVwi
+	 UhT+fYWLimQ1z07hu4thizEJss3xVdkbyOEAm1tI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Michael Riesch <michael.riesch@collabora.com>,
+	Gerald Loacker <gerald.loacker@wolfvision.net>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0940/1376] phy: sunplus: fix error handling in sp_uphy_init()
-Date: Sat, 12 Sep 2026 08:56:06 +0200
-Message-ID: <20260912065628.510543821@linuxfoundation.org>
+Subject: [PATCH 6.12 0941/1376] phy: rockchip: phy-rockchip-inno-csidphy: fix rk1808 hsfreq table
+Date: Sat, 12 Sep 2026 08:56:07 +0200
+Message-ID: <20260912065628.532135911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,52 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Gerald Loacker <gerald.loacker@wolfvision.net>
 
-[ Upstream commit 8b2683bc4cc18c581b7cd24f227cbe61abca7f4d ]
+[ Upstream commit 4fae43e33a7c10951fbdc6baf409d51bd66aaefb ]
 
-Fix the error paths of sp_uphy_init() to undo exactly what each stage
-did: return directly if clk_prepare_enable() fails, release only the clock
-if reset_control_deassert() fails, and jump to err_reset if
-update_disc_vol() fails so the clock and reset are not leaked.
+The rk1808 hsfreq table capped at 2499 Mbps, preventing a data rate of
+exactly 2500 Mbps. Extend the final entry to 2500 Mbps to support this
+rate.
 
-Fixes: 99d9ccd97385 ("phy: usb: Add USB2.0 phy driver for Sunplus SP7021")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patch.msgid.link/20260803-sunplus-usb3-v1-1-5a562524c869@gmail.com
+This is essential for RK3588 reusing this array and fully supporting
+rates up to 2500 Mbps.
+
+Fixes: bd1f775d6027 ("phy/rockchip: add Innosilicon-based CSI dphy")
+Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
+Signed-off-by: Gerald Loacker <gerald.loacker@wolfvision.net>
+Link: https://patch.msgid.link/20260725-feature-mipi-csi-dphy-4k60-v4-1-5b2c4626d31e@wolfvision.net
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/sunplus/phy-sunplus-usb2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-inno-csidphy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/sunplus/phy-sunplus-usb2.c b/drivers/phy/sunplus/phy-sunplus-usb2.c
-index 637a5fbae6d9a..0ad4c7160d17c 100644
---- a/drivers/phy/sunplus/phy-sunplus-usb2.c
-+++ b/drivers/phy/sunplus/phy-sunplus-usb2.c
-@@ -116,11 +116,11 @@ static int sp_uphy_init(struct phy *phy)
+diff --git a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
+index 279e19e7546b6..2c1f8e3645df1 100644
+--- a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
+@@ -157,7 +157,7 @@ static const struct hsfreq_range rk1808_mipidphy_hsfreq_ranges[] = {
+ 	{ 299, 0x06}, { 399, 0x08}, { 499, 0x0b}, { 599, 0x0e},
+ 	{ 699, 0x10}, { 799, 0x12}, { 999, 0x16}, {1199, 0x1e},
+ 	{1399, 0x23}, {1599, 0x2d}, {1799, 0x32}, {1999, 0x37},
+-	{2199, 0x3c}, {2399, 0x41}, {2499, 0x46}
++	{2199, 0x3c}, {2399, 0x41}, {2500, 0x46}
+ };
  
- 	ret = clk_prepare_enable(usbphy->phy_clk);
- 	if (ret)
--		goto err_clk;
-+		return ret;
- 
- 	ret = reset_control_deassert(usbphy->rstc);
- 	if (ret)
--		goto err_reset;
-+		goto err_clk;
- 
- 	/* Default value modification */
- 	writel(HIGH_MASK_BITS | 0x4002, usbphy->moon4_regs + UPHY_CONTROL0);
-@@ -129,7 +129,7 @@ static int sp_uphy_init(struct phy *phy)
- 	/* disconnect voltage */
- 	ret = update_disc_vol(usbphy);
- 	if (ret < 0)
--		return ret;
-+		goto err_reset;
- 
- 	/* board uphy 0 internal register modification for tid certification */
- 	val = readl(usbphy->phy_regs + CONFIG9);
+ static const struct hsfreq_range rk3326_mipidphy_hsfreq_ranges[] = {
 -- 
 2.53.0
 
