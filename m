@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F5447CA85;
-	Sat, 12 Sep 2026 13:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3962F531B;
+	Sat, 12 Sep 2026 13:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219204; cv=none; b=DIKSCthg8pFcjOQ1JUuPPW7foJ8shFy9Ly41eGadCS3HnOx3fbcA9jWFuKMVkucMRGFFkg3B7G6zUc51pVxlCzHiRZMjTruVdEnYYAJSQnY7w4JLU3tWDl7cki6YtXmqwKwGM2QyrJfP8CyI3gPismYECG2mofpDRsiYvFzfU2w=
+	t=1789219209; cv=none; b=Vx4yLtMxSBFxB12RwmPy187vxZgpJGzFa5pXt4dcZkfj5+EWDbfbhqTloVrIjWCas79kSgQQ69KSyNxi/Ji7SvA2bgq0afcVlc7o7WQoRh26rAyqygTK8/gz37/ichmqsz7Qm2+45iUkhlDsMPIBKMcXdCAZaKjeZjud7eQOsqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219204; c=relaxed/simple;
-	bh=/QlugXUGimnxK2YjsmnJoALbq7J30tuiTMAKWBcHsLo=;
+	s=arc-20240116; t=1789219209; c=relaxed/simple;
+	bh=agADPxyFO7iwrRX4HwoTXo9VPlHuL0xkARRiWeUs37s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzwm6iYy5W+BmtEDNmN3S6NCy9uQFb114q1cfgJFVseEGHGu+Dvi903AJcroUcTt2QRdDlxgPI0D+nkKSIdqtGaWzHgmHNbGtnVn4+syhUZ498uOi4LJeS5LvFAdkpvpCSBLEi/ab/LWiV7sEyefZpEphRHPWTmdIo6SFgdOOl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohrSIHau; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rRMFZ2plPbLwA509J9DfzRTdGw2++/WpWtiKnJLRWXWJv2MabCkheTgeSTUCiFYPt48mQjMWOuTeDdNVq2ZYtIRRpYeFaSRrjsEBX7a+cryXzN5Rc8N6MKPTIIlLTPYjqxC9Ba7solldgj5xEd8uWWqor13CrTLHFZq4JUAjfVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbS5DjHh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohrSIHau"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825051F000FF;
-	Sat, 12 Sep 2026 13:20:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbS5DjHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73291F000FF;
+	Sat, 12 Sep 2026 13:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219202;
-	bh=9F0NEp+YI76ZUCstkymtLFB7Lg0sjvgdiKuCaIsjGOM=;
+	s=korg; t=1789219207;
+	bh=mVDais0PixGO0aJosP88FtCmFH4Tm1VLz4Y4qhwkMKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ohrSIHaufzmN1pp5tQO1eteE6VOVj/B3XAMZCK6ICWoDjfux7krt72fs2+fbFQe4C
-	 oHBo9s3Gj0164IJuavxQJAcA/CiZeyX/vOsLIRj5mCn+i30XI4kAuud+fN6QfDXGGl
-	 2FW9db5j+DM/P8xsZQRLWGi+sEoXGn96HeGKhr3M=
+	b=FbS5DjHhPFYtWtiEILLBLLEl3gnzyNqUb0uBQtCjeCvx6ir1qrzNrFZcJqfQMqgyf
+	 Xvy8pw2xG74W1BE7zgfS4+ZTOXNPoTti4DO9gq3E7aKMUGUrEj4nG2gmZ/0kLrmH2A
+	 gxJAdYREF5Gl1EYJzUMfq60jEZEPrmj603QFPSzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1304/1376] net/sched: sch_teql: restore skb->dev on the slave failure path
-Date: Sat, 12 Sep 2026 09:02:10 +0200
-Message-ID: <20260912065636.597248545@linuxfoundation.org>
+Subject: [PATCH 6.12 1305/1376] tpm: st33zp24: Return zero on status read failure
+Date: Sat, 12 Sep 2026 09:02:11 +0200
+Message-ID: <20260912065636.618666734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,92 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit dc4b95b8fee95113587e93ca116356032d271371 ]
+[ Upstream commit 8b92687708f5ef980de01c2042dbd76d11f78547 ]
 
-teql_master_xmit() sets skb->dev = slave before calling the slave's
-ndo_start_xmit(), but never restores it when that transmit fails. The
-skb then walks on to the next slave still pointing at the previous one.
+st33zp24_status() ignores the result of the transport read and returns
+data even when no byte was received. The I2C transport, for example,
+skips i2c_master_recv() when the register-select write is short or fails,
+leaving data uninitialized. The resulting stack value can be interpreted
+as TPM_STS flags and let status checks complete spuriously.
 
-If a later slave has no resolved neighbour, teql_resolve() hands the skb
-to neigh_event_send(), which queues it on that neighbour's arp_queue
-with the stale skb->dev. skb->dev holds no reference, so deleting the
-previous slave frees the net_device while the skb is still queued.
-Whatever runs next on that skb - arp_error_report() on timeout, or
-neigh_direct_output() -> dev_queue_xmit() once the neighbour resolves -
-causes a UAF like the one below:
+The status callback cannot propagate a transport error. Return zero
+unless recv() reports exactly one byte. With no status bits set, callers
+retry or take their existing timeout or error path instead of acting on
+an invalid status value.
 
-BUG: KASAN: slab-use-after-free in __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
-Read of size 4 at addr ffff888106e100b0 by task flood_packet/527
-CPU: 0 UID: 0 PID: 527 Comm: flood_packet Not tainted 7.2.0-rc6-g594d90519502 #1 PREEMPT(lazy)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
-<IRQ>
-dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-? __pfx__raw_spin_lock_irqsave (./include/asm-generic/qrwlock.h:122 (discriminator 4))
-? __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
-kasan_report (mm/kasan/report.c:595)
-? __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
-__icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
-[...]
-ipv4_link_failure (net/ipv4/route.c:1251 net/ipv4/route.c:1258)
-? __pfx_ipv4_link_failure (./include/linux/skbuff.h:4327)
-? _raw_write_lock (./include/linux/instrumented.h:55 ./include/linux/atomic/atomic-instrumented.h:1301 ./include/asm-generic/qrwlock.h:98 ./include/linux/rwlock_api_smp.h:230 kernel/locking/spinlock.c:304)
-? __pfx__raw_write_lock (kernel/locking/spinlock.c:175)
-arp_error_report (./include/net/dst.h:438 net/ipv4/arp.c:296)
-neigh_invalidate (net/core/neighbour.c:1077)
-neigh_timer_handler (net/core/neighbour.c:1169)
-[...]
-Allocated by task 505:
-kasan_save_stack (mm/kasan/common.c:57)
-kasan_save_track (mm/kasan/common.c:78)
-__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-__kvmalloc_node_noprof (./include/linux/kasan.h:263 mm/slub.c:5334 mm/slub.c:6905)
-alloc_netdev_mqs (net/core/dev.c:12055 (discriminator 2))
-rtnl_create_link (net/core/rtnetlink.c:3721)
-rtnl_newlink (net/core/rtnetlink.c:3903 net/core/rtnetlink.c:4044 net/core/rtnetlink.c:4159)
-rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
-[...]
-Freed by task 536:
-kasan_save_stack (mm/kasan/common.c:57)
-kasan_save_track (mm/kasan/common.c:78)
-kasan_save_free_info (mm/kasan/generic.c:584)
-__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
-kfree (./include/linux/kasan.h:235 mm/slub.c:2677 mm/slub.c:6377 mm/slub.c:6692)
-device_release (drivers/base/core.c:2636)
-kobject_put (lib/kobject.c:689 lib/kobject.c:720 ./include/linux/kref.h:65 lib/kobject.c:737)
-netdev_run_todo (net/core/dev.c:11756)
-rtnl_dellink (net/core/rtnetlink.c:157 ./include/linux/rtnetlink.h:135 net/core/rtnetlink.c:3651)
-rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
-[...]
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-Fix this by restoring skb->dev to the master at the end of each slave's
-iteration.
-
-Fixes: 0cc0c2e661af ("net/sched: teql: fix NULL pointer dereference in iptunnel_xmit on TEQL slave xmit")
-Reported-by: Vega <vega@nebusec.ai>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260824115928.4099988-1-victor@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 251a7b08213a ("TPM: STMicroelectronics ST33 I2C KERNEL 3.x")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://lore.kernel.org/r/20260813153032.3951878-1-ruoyuw560@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_teql.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/tpm/st33zp24/st33zp24.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
-index 4d463ba5ce725..eb424b20027e5 100644
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -377,6 +377,7 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
- 			nores = 1;
- 			break;
- 		}
-+		skb->dev = dev;
- 		__skb_pull(skb, skb_network_offset(skb));
- 	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
+diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
+index 06caf53a42ee5..ebb6f4ec54a22 100644
+--- a/drivers/char/tpm/st33zp24/st33zp24.c
++++ b/drivers/char/tpm/st33zp24/st33zp24.c
+@@ -93,7 +93,9 @@ static u8 st33zp24_status(struct tpm_chip *chip)
+ 	struct st33zp24_dev *tpm_dev = dev_get_drvdata(&chip->dev);
+ 	u8 data;
+ 
+-	tpm_dev->ops->recv(tpm_dev->phy_id, TPM_STS, &data, 1);
++	if (tpm_dev->ops->recv(tpm_dev->phy_id, TPM_STS, &data, 1) != 1)
++		return 0;
++
+ 	return data;
+ }
  
 -- 
 2.53.0
