@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3CC368D5A;
-	Sat, 12 Sep 2026 07:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B1C3644BE;
+	Sat, 12 Sep 2026 07:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199762; cv=none; b=Xm9rq4/nJi/l3A87tGvSaLjqSeJrXc3L75zQ2g0JOMEb2VdEV/cjLzDbfZ7aw4nKkOYX/q8iFJhnTqhnLvoAdovsyak18K0sVPPPx8uMxQ4LMXex3LK+gaoPC0YFUyg6GDgjTOouGIehZbEcyUooP1LdhOZnLG8lFZ+85FFVgb8=
+	t=1789199766; cv=none; b=ZLdVTazW7FJxtBKpqzcFAGsHMd6mAFAaSMOosXwajPsmDqgytli0PfbTj7dXipfC46o0cD6ABvX097XwXp6dZTnTgxywtEFQw8kJRPs3Anhwkz6jiMq6NgxTchOgQhJAACMmy+TZNBw8ppbxcpZnIy2BI/7xe9MvY7RiYbtjUmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199762; c=relaxed/simple;
-	bh=ILt8U5tU5MktgkQtZrfkBBNComqFqORwREUIqhTi9WY=;
+	s=arc-20240116; t=1789199766; c=relaxed/simple;
+	bh=zu/v0kicPXCXZcAJ7+E/xZSZv5jYG3Rx7qQrk6WLr7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5COC1oF+INzoAHvPbZrGpJcNKS+RSwFCo0EmVOpXab4wkamWZfwxU1ujpHyJgkFS4+odJQIZBx2xfc3Gz1XEFg0XCxvFmo0nEK0tRhoBYq1z4Dy3Yib63IDKr1NMUOYO/iQyaJNB5BX0vnQmSll5cWwkPnfDb7cnYNIHy41JHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikejGM3e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I5n1CHOsbhjS6z3YRYP8GWbLb0U3x/GgPGcUgJjDOHpen4Z9FAdRELvzU3aY41d+92/40nMIFBcuYXdHnQHzeuzwIS976nBbw547Ul85yiTGl+bLn3p12btskpme1MM8FAqz40gHj7erBIQ+JOAf56G/hRruoDgGWDBZzqBCwlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnRunRxD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikejGM3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443E91F000FF;
-	Sat, 12 Sep 2026 07:55:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnRunRxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B9B1F000FF;
+	Sat, 12 Sep 2026 07:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199760;
-	bh=wbudPQQBVPdzS8R73HmhTwHYjIbls//qN8EmsWKe6kE=;
+	s=korg; t=1789199765;
+	bh=Ag0kTkzVMEXh9fe6s36xPthLAIk+V10akye/7NRR944=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ikejGM3eBgnljGwajyoyxhQ27gS4tOacjoVn5WFi/oFy/VDsLMpm8srikeYcoh03C
-	 Ay9+QPPQLtpLXC/ikBxZM3TgPUy5DXtQOvmq9EF8U4mFwdXhqzcZbTi3Wf3bHCQNLR
-	 g12DlvGkBsZC36x36ithoZNjIMeFeHFA6UKtiwog=
+	b=VnRunRxDokVRcgYx2xL8z8x7YzGhaywTCF6/9tudPMRYVx18gNFCqWXGjvso0LIh6
+	 ExRqlIoGs+GklXhzIwgZFwCcKQSHMeQ472i7Bmb4Jjlj6AU7c3/0Si69avl+w/WXjm
+	 hDpjrqJpe1Gm+IckOJ9iIgvQL+SXettMTAp+pwX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Braha <julianbraha@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Linus Walleij <linusw@kernel.org>,
+	Li Ming <ming.li@zohomail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0652/1815] pinctrl: fix unmet dependencies from missing GPIOLIB
-Date: Sat, 12 Sep 2026 08:40:02 +0200
-Message-ID: <20260912065704.185526286@linuxfoundation.org>
+Subject: [PATCH 7.2 0653/1815] cxl/region: Fix use-after-free in find_pos_and_ways() error path
+Date: Sat, 12 Sep 2026 08:40:03 +0200
+Message-ID: <20260912065704.208121181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,78 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 46840fa8c9f53b9c90db4b4be2b808bbc626cde2 ]
+[ Upstream commit 15da704b732332cc1e8f121f624e5e6c05124c5d ]
 
-These 4 options, PINCTRL_PIC32, PINCTRL_PIC32, PINCTRL_IPROC_GPIO, and
-PINCTRL_NSP_GPIO all select GPIOLIB_IRQCHIP without ensuring GPIOLIB is
-enabled, causing unmet dependencies, such as:
+The error path releases its reference to a switch decoder before
+logging an error that includes the decoder name. If the released
+reference is the last one, the decoder can be freed before the error
+message accesses its name.
 
-WARNING: unmet direct dependencies detected for GPIOLIB_IRQCHIP
-  Depends on [n]: GPIOLIB [=n]
-  Selected by [y]:
-  - PINCTRL_PIC32 [=y] && PINCTRL [=y] && OF [=y] && (MACH_PIC32 || COMPILE_TEST [=y])
+Drop the reference after the error is reported.
 
-Similar options in this subsystem select GPIOLIB, so let's do the same here.
-
-These unmet dependency bugs were found by kconfirm, a static analysis tool for
-Kconfig.
-
-Fixes: 2ba384e6c381 ("pinctrl: pinctrl-pic32: Add PIC32 pin control driver")
-Fixes: 1490d9f841b1 ("pinctrl: Add STMFX GPIO expander Pinctrl/GPIO driver")
-Fixes: b64333ce769c ("pinctrl: cygnus: add gpio/pinconf driver")
-Fixes: 8bfcbbbcabe0 ("pinctrl: nsp: add gpio-a driver support for Broadcom NSP SoC")
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: d90acdf49e18 ("cxl/region: Add a dev_err() on missing target list entries")
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/10deb519b543ef693ce23148b509a03fe1c07d0c.1784931354.git.alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/Kconfig     | 2 ++
- drivers/pinctrl/bcm/Kconfig | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/cxl/core/region.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/Kconfig b/drivers/pinctrl/Kconfig
-index eda54aa5fde6f..e5618b51ac144 100644
---- a/drivers/pinctrl/Kconfig
-+++ b/drivers/pinctrl/Kconfig
-@@ -488,6 +488,7 @@ config PINCTRL_PIC32
- 	depends on MACH_PIC32 || COMPILE_TEST
- 	select PINMUX
- 	select GENERIC_PINCONF
-+	select GPIOLIB
- 	select GPIOLIB_IRQCHIP
- 	help
- 	  This is the pin controller and gpio driver for Microchip PIC32
-@@ -564,6 +565,7 @@ config PINCTRL_STMFX
- 	depends on I2C
- 	depends on HAS_IOMEM
- 	select GENERIC_PINCONF
-+	select GPIOLIB
- 	select GPIOLIB_IRQCHIP
- 	select MFD_STMFX
- 	help
-diff --git a/drivers/pinctrl/bcm/Kconfig b/drivers/pinctrl/bcm/Kconfig
-index 206f3f1249cf5..19d22e7fd11ed 100644
---- a/drivers/pinctrl/bcm/Kconfig
-+++ b/drivers/pinctrl/bcm/Kconfig
-@@ -121,6 +121,7 @@ source "drivers/pinctrl/bcm/Kconfig.stb"
- config PINCTRL_IPROC_GPIO
- 	bool "Broadcom iProc GPIO (with PINCONF) driver"
- 	depends on ARCH_BCM_IPROC || COMPILE_TEST
-+	select GPIOLIB
- 	select GPIOLIB_IRQCHIP
- 	select PINCONF
- 	select GENERIC_PINCONF
-@@ -186,6 +187,7 @@ config PINCTRL_NS
- config PINCTRL_NSP_GPIO
- 	bool "Broadcom NSP GPIO (with PINCONF) driver"
- 	depends on ARCH_BCM_NSP || COMPILE_TEST
-+	select GPIOLIB
- 	select GPIOLIB_IRQCHIP
- 	select PINCONF
- 	select GENERIC_PINCONF
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 578622240401d..8b0005a57d03c 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1939,14 +1939,13 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
+ 			break;
+ 		}
+ 	}
+-	put_device(dev);
+-
+ 	if (rc)
+ 		dev_err(port->uport_dev,
+ 			"failed to find %s:%s in target list of %s\n",
+ 			dev_name(&port->dev),
+-			dev_name(port->parent_dport->dport_dev),
+-			dev_name(&cxlsd->cxld.dev));
++			dev_name(port->parent_dport->dport_dev), dev_name(dev));
++
++	put_device(dev);
+ 
+ 	return rc;
+ }
 -- 
 2.53.0
 
