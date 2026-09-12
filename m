@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC9C3B813A;
-	Sat, 12 Sep 2026 07:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB1135F61E;
+	Sat, 12 Sep 2026 07:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196954; cv=none; b=kBWJY2+f0/9YCZh1bp6eOfhGbBowWOxqgwkkYt4k9o+h6ovDZU5FANeh5NjQwAorjw8p93GSRpmrCRjZ5l3Rzbmf1vQDbJqOida2eliNkY8BBGXhw5MSi5S7vZV91lxYI4iJ3AQtbIwtEUGxkCIddtl2yWzm4wnMLNP4lyrGx2g=
+	t=1789196959; cv=none; b=ExMMIKMsXWaTuiSmeMyIr6dAlskrkWQSXCg60DJJhygscJe9qoP47scT2PFBTGCnXbhxIZawzixhW37LYR+L/g9VPoSPLjB0qvp1pNLHa2+iUoF/+5YOo46ERn4yrOsPKZkFyJFRiaAI75stgTEOFQy2yv1p+N8sonjhppSca1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196954; c=relaxed/simple;
-	bh=HNUYGwvvsm24uYqyoNdMTaH+XL8wjDMUMTT4qycC4FU=;
+	s=arc-20240116; t=1789196959; c=relaxed/simple;
+	bh=dqJBMckxGsgK6uRcrU1wiS8zdJ8oFiGlwOoIBtedcXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJPsDp1Vq3ByXZuSKz9fDKEUSjd2XDWh3z+8NK/RUin2lNzgt0dFT5Z/kq0MFJaqZTnlpBKLBjqpVL2PU31NU3u/j5Jjo4jTNfMFqm3b63yycy0Bt0ncLMGwCyyHZCv0Ptu2RLGa2s+vlViHiOyg3cEiqzrOX5SuUW0wfwkYJZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMHomBlt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TTuNk9PAQjr0hDSxa5FRlN22FSDYiNvPCe3WoeQuRcrNVh0l4HgwQKLrUbAiXP4qPfHW6L9hS0uvUcNURrP8qMrQHzacYtNoqm7FJp5CPeMAvhfr6k9up9c86K84ueNqMrcEiJdc7RgtN7cb61aU5JeYtDEOGZgTaggxlJC4dVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ezo9SqO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMHomBlt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511B91F00899;
-	Sat, 12 Sep 2026 07:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ezo9SqO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244001F00893;
+	Sat, 12 Sep 2026 07:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196953;
-	bh=+ttAzx9iqc8fcS1pe8slcDTEqTWk0XGyjGhIHoePkXs=;
+	s=korg; t=1789196958;
+	bh=x8t8j3uxf+P6LuHoLlcxeFVLtFvJrFIJHTDb0+5jw0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMHomBltUTcUSxtDdjhc9SQtZXZ1fi6FnF/sIg6jYVON5wAwSwRLDhfnboearaCW+
-	 IvasrcCBiaxGINTSTbC/UJEfUU+05smf7WkBaOA36jPi/uNG2UdbALS/gVRGmbfDy5
-	 XAR6H+PJvP79slcrkCcfnLSluM2Y+W0ZdJoNIFxA=
+	b=1ezo9SqOqtFuiLRKo2BXbNVD9wcAigq9PY9Rog/vfJZM7AOMPZPYDi49YY0gcKU5n
+	 T217YLzVkbBQddk7/D1xIp+RPzmB7VQGUysCc/dOX6eWEztPrJlaYSWfae7fSW2gCj
+	 Rh8QP5e5bBsESa/K0E+kt0wm6/1r/vfOdwUvOKSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Miquel Raynal (DAVE)" <miquel.raynal@bootlin.com>,
-	Michal Simek <michal.simek@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Mert Seftali <mertsftl@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0071/1815] mtd: rawnand: pl353: Fix debug prints
-Date: Sat, 12 Sep 2026 08:30:21 +0200
-Message-ID: <20260912065650.682901290@linuxfoundation.org>
+Subject: [PATCH 7.2 0072/1815] ASoC: SOF: ipc4-topology: Return error for invalid number of formats
+Date: Sat, 12 Sep 2026 08:30:22 +0200
+Message-ID: <20260912065650.705726991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,53 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
+From: Mert Seftali <mertsftl@gmail.com>
 
-[ Upstream commit 2b7baaddf1bc3e39206a0354449fdc349945b86b ]
+[ Upstream commit 11e828cd6b0f283ebe9dc6b4cffd38e3321e7725 ]
 
-They are partially incorrect since "software" engine does not mean
-hamming, the "none" cae is also falling into this print, and on-die
-means there is some kind of hardware support; we prefer to use the
-wording on-host vs. on-die.
+When the number of input or output formats is zero,
+sof_ipc4_widget_setup_comp_src() and sof_ipc4_widget_setup_comp_asrc()
+print an error and jump to the cleanup label. At that point 'ret' is
+still 0, because the earlier sof_ipc4_get_audio_fmt() call succeeded, so
+the function returns success and the caller never finds out that the
+widget setup actually failed.
 
-Fix all those prints.
+Set ret to -EINVAL before the goto so the error gets reported.
 
-Fixes: 1e06dbfdfb85 ("mtd: rawnand: pl353: Add message about ECC mode")
-Signed-off-by: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 21a5adffad46 ("ASoC: SOF: ipc4-topology: Validate the number of in/out formats for src/asrc")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202606111431.Uky3T0tF-lkp@intel.com/
+Signed-off-by: Mert Seftali <mertsftl@gmail.com>
+Link: https://patch.msgid.link/20260614124019.19259-1-mertsftl@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/sof/ipc4-topology.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-index 7d43506b1654d..12b9e0936c8f1 100644
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -972,17 +972,19 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
+diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
+index 6fdfb667cce8d..8f37fbdd3f7fa 100644
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -1127,6 +1127,7 @@ static int sof_ipc4_widget_setup_comp_src(struct snd_sof_widget *swidget)
+ 			"Invalid number of formats: input: %d, output: %d\n",
+ 			src->available_fmt.num_input_formats,
+ 			src->available_fmt.num_output_formats);
++		ret = -EINVAL;
+ 		goto err;
+ 	}
  
- 	switch (chip->ecc.engine_type) {
- 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
--		dev_dbg(nfc->dev, "Using on-die ECC\n");
-+		dev_dbg(nfc->dev, "Using on-die hardware ECC\n");
- 		/* Keep these legacy BBT descriptors for ON_DIE situations */
- 		chip->bbt_td = &bbt_main_descr;
- 		chip->bbt_md = &bbt_mirror_descr;
- 		fallthrough;
- 	case NAND_ECC_ENGINE_TYPE_NONE:
-+		dev_dbg(nfc->dev, "Using no ECC engine\n");
-+		break;
- 	case NAND_ECC_ENGINE_TYPE_SOFT:
--		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
-+		dev_dbg(nfc->dev, "Using software ECC\n");
- 		break;
- 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
--		dev_dbg(nfc->dev, "Using hardware ECC\n");
-+		dev_dbg(nfc->dev, "Using on-host hardware ECC\n");
- 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
- 		if (ret)
- 			return ret;
+@@ -1179,6 +1180,7 @@ static int sof_ipc4_widget_setup_comp_asrc(struct snd_sof_widget *swidget)
+ 			"Invalid number of formats: input: %d, output: %d\n",
+ 			asrc->available_fmt.num_input_formats,
+ 			asrc->available_fmt.num_output_formats);
++		ret = -EINVAL;
+ 		goto err;
+ 	}
+ 
 -- 
 2.53.0
 
