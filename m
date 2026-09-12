@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2748847C0F7;
-	Sat, 12 Sep 2026 12:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0845373BF2;
+	Sat, 12 Sep 2026 12:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216615; cv=none; b=tFgVQTzHuOLeBzpGLs47eKjnU9NLxihq/hb6gDU3a6QqMgoZeorDYvgFBFYUw5oZaP/SQYkq1X51ZuvOqBj937VX9tLkHOm80HlhgTf3rXekvkLnf7TGXlwNIfhjVQoNda4LQgeyJoDhKX8EFcgp21hyxWEsX6GsQzdEQTP5N70=
+	t=1789216620; cv=none; b=qUH5eHTE3imeD8o9hXr2jpFZldkJh5quCsDP9kgEOs8mQDfbHqxxhuvpln7POMIQrdNxhD6NXr50raMqnp1+Op70YW0ISoj0bMppwQzy8rwk4rCr6Ro+oxT277Sq9nyKoRptwVYHjS4GkdLg0k7YBJywCsZGS96cmo/tmilskq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216615; c=relaxed/simple;
-	bh=z/R0Q2haPwsdfqVJchowiU5RNS2ogwJcYCKnkXETGT0=;
+	s=arc-20240116; t=1789216620; c=relaxed/simple;
+	bh=bmsHrnVmQoJNeOTe8/Kc5PfE/Ah0VqQDebozLvGxMn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cO5/g6l9hVLk4RSoFmdlJxjlRGP7PyslNPFAySaxBNymGsbLJS350FRDT6iu45lERxTW5cRB2CpB2/DNaSA6NaGsTybsVkBjJqm2+sCvlAzBWr4y6Db050AXKnDMqFOlFXu5WcHcZDDNSxUd/DMuKW1rMcNDleiPjmDeYYfKvXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5AkHteO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZDIEo/2pDQqr/8MISwmxGpyzhviGxYOALJ8ZXrjiR67s/3SUAcGZ58rvdrNwU7iaokKcuc/F/TO1MVOQ49SM5YDkZ9I+RD2s++LrB3xjloTXt+hWe5zVKlT02R0YZU89FKh2Pnnh1zO9vU7IDXc7Q5Ri8yU7qZBpZCmAo3S04hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2xpwo1B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5AkHteO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A201F000FF;
-	Sat, 12 Sep 2026 12:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2xpwo1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AEB1F000FF;
+	Sat, 12 Sep 2026 12:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216613;
-	bh=8hW6QtabBxbIXUPg4qua88V2cL5el0e+v7BZvgjykKc=;
+	s=korg; t=1789216617;
+	bh=sQutPebe4FksUUCnyDUKGA6zwH7GdXl0ZhkIRezEp4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B5AkHteOL/U9uYfRlXKM02w42JizycGvZqIHqYbbsIfL8EdnhyT83JRL/XAfBoL9W
-	 Tq+Fa6aZ7oHVPjnIyKq8dYN82p4mP+AmJ+mLFYe0l5/do5HX5oyMrP8kPQ+iZvEaoi
-	 gPz2pLJhTYt01NLLL6BJN3C4BCMzThf8sfoiwQbw=
+	b=n2xpwo1BPO/FfhkNVPWXz8E+yXUp085XXXnFVqhbr9i8u62ksi29RqMEuXzPxiSUC
+	 To6E080QNvhEmAr6HE0JVi4H3pnCWkQ2xFnJuXQdsN9873Yba++vBbdNZSwy4b23Zb
+	 5ThE969NBYpy0DUZPpjPmb5DJwXSMlxhqVTPp+o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0745/1376] tools/nolibc/powerpc: mark ctr and xer as clobbered by system call
-Date: Sat, 12 Sep 2026 08:52:51 +0200
-Message-ID: <20260912065624.148253177@linuxfoundation.org>
+Subject: [PATCH 6.12 0772/1376] arm64: dts: qcom: sm8550: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:53:18 +0200
+Message-ID: <20260912065624.743926132@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,45 +48,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit b9fc5a1742b0c8fb7edf066cc17fa0b18b7be623 ]
+[ Upstream commit 16d98ee918d63018eaa6cc260791b71319aa4faa ]
 
-The system call can clobber the ctr and xer registers.
+The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+iommu-map entries specify only one cell for the SID, omitting the SID
+mask. This went unnoticed until the OF core started warning with commit
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
-Make sure the compiler takes this into account.
+  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
 
-The missing clobbers only seem to be an issue with newer compilers.
+So fix the entries to match the provider's '#iommu-cells' property.
 
-Fixes: 0cb0675ec37e ("tools/nolibc: add support for powerpc")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20260727-nolibc-powerpc-clobber-v1-1-e0911cc99ce1@linutronix.de
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Fixes: 7d1158c984d3 ("arm64: dts: qcom: sm8550: Add PCIe PHYs and controllers nodes")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-10-83405d37ba41@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/arch-powerpc.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/include/nolibc/arch-powerpc.h b/tools/include/nolibc/arch-powerpc.h
-index ee2fdb8d601dc..f468b6750543a 100644
---- a/tools/include/nolibc/arch-powerpc.h
-+++ b/tools/include/nolibc/arch-powerpc.h
-@@ -23,7 +23,7 @@
-  */
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 38b15db0676ce..7f06bea09d0ac 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -1771,8 +1771,8 @@ pcie0: pcie@1c00000 {
  
- #define _NOLIBC_SYSCALL_CLOBBERLIST \
--	"memory", "cr0", "r12", "r11", "r10", "r9"
-+	"memory", "cr0", "ctr", "xer", "r12", "r11", "r10", "r9"
+ 			msi-map = <0x0 &gic_its 0x1400 0x1>,
+ 				  <0x100 &gic_its 0x1401 0x1>;
+-			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+-				    <0x100 &apps_smmu 0x1401 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1400 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1401 0x0 0x1>;
  
- #define my_syscall0(num)                                                     \
- ({                                                                           \
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -1892,8 +1892,8 @@ pcie1: pcie@1c08000 {
+ 
+ 			msi-map = <0x0 &gic_its 0x1480 0x1>,
+ 				  <0x100 &gic_its 0x1481 0x1>;
+-			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
+-				    <0x100 &apps_smmu 0x1481 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1480 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1481 0x0 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_1_BCR>,
+ 				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
 -- 
 2.53.0
 
