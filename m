@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AA239183A;
-	Sat, 12 Sep 2026 19:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC17391E72;
+	Sat, 12 Sep 2026 19:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243121; cv=none; b=qzP/Z6ioeodY4mfe7zPC539V/W0p6fjNdG2pqXrRgrJNiCwP9Chml9GbFaCrnU+YeG2ud+2GQZYqNeDALJ2St83Qi5gkyafDu5P/iAWcOyvfFHZs8EikUQ/PeLPYUSstvn+E2yj6gwpDSwPMxcMERHydRh27Al8YN3lGIzDrKTU=
+	t=1789243125; cv=none; b=pjx2EMf2na/mW2snWoUjNu1aDKTdFgGkjnjvjRu7KYrHt1uL3t8+FpttDfuaOkvZNc/Ml6LilaikybCMOYHvu2KEtTgBN6s2OxSZQD/lU31+Lwql9lGSi/ehemuD8vnlrmVvfMmogMhHdfF1JM7st8rCPlvZhg7/ETpHlA8gY1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243121; c=relaxed/simple;
-	bh=zuNyzr87ghUcwXpBU5mfEdsCmnE37V7cY+Q8xHC9ts0=;
+	s=arc-20240116; t=1789243125; c=relaxed/simple;
+	bh=q1L64ael0V+5NG4brB2a9/ShDAXi3F6MOpPPAZtyK0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCWc4GE5+Rda9oRHF3eCHsifeGKaCTk9KgJGAmroixQt2/2TfeAzxKeQloxOxWOiuJN4JtyxgEHQqcypPVyuc2EBqFKRNgPU7Zpa1/ShXRtz9t2CcJJZm+bwBAsiXDuAk6jCtGgJ8IqJXiXBpmriGZptme+G4fw2hM3GFQkPQhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVOltIv9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=No1g0Q12Gk+uraFJPrg99MKCFR+iHzGHMrFy+L+1irqIYs7DnjsyjRYDaR+Owyy5rVRE14gvKeTmHVs1+Vb1I4GXJlpea9akIFSjCP5vgCwICi74VNQc2zTEUEZbYSA25mxj4LAImB0mXytdYw6bppATUQttIffL/4oIvwSUydE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKtB/mHq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVOltIv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D11A1F00893;
-	Sat, 12 Sep 2026 19:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKtB/mHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EE91F000FF;
+	Sat, 12 Sep 2026 19:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243120;
-	bh=ZUdcf0eg8ShzSCBkveS+/dwwxxuzdS9TNJtEGVF2D4I=;
+	s=korg; t=1789243123;
+	bh=bcoGruZt8wRsFlmUgjdDJ+6xf6PCbPFq+dVTpHkmjCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zVOltIv9o2/7TVJh0wntSgx4DEBdfsq5T+z9zgDfP8MCMM8CHw6rJr6n6o3f2R9Fh
-	 d3OHBdRfV0446kcqDa+B9s5ECbsOYNdNev9aKHngaQIS05As9QGSd9RC0iMSc3Ykhi
-	 ipALIIEllnB3iTO5syQ+78iXcgHbRxw+qk6tS3V0=
+	b=QKtB/mHqiRbFqDQEueCDpayKY5mJFXRS/mcDx47gRrytbPAYgGBIAihkheusQ9Kd5
+	 1LRPet04wrr5OdwcHjjeJaJEITLpA9YvRH3V5+3TSPbJdHvq0B+cFnhB7lOCAqjiIj
+	 riEUdOPyJGaymdcUujipFphl6Y7jLRQrER4cht7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Simon Glass <sjg@chromium.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 642/798] firmware_loader: do not queue completed sysfs fallback requests
-Date: Sat, 12 Sep 2026 09:04:30 +0200
-Message-ID: <20260912065531.833137464@linuxfoundation.org>
+Subject: [PATCH 5.10 643/798] pinctrl: rockchip: Reset the pin count when recalculating SoC data
+Date: Sat, 12 Sep 2026 09:04:31 +0200
+Message-ID: <20260912065531.853929022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,59 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Simon Glass <sjg@chromium.org>
 
-[ Upstream commit b48373c901951fad1a26bd7c33ad91172b3945b5 ]
+[ Upstream commit 5b695c191cc85f0fd62eec885b55d01468dc9f2c ]
 
-fw_load_sysfs_fallback() calls device_add() before adding the fw_priv to
-pending_fw_head. device_add() publishes the fallback loading interface, so
-a userspace helper which discovers the device by scanning sysfs can write 0
-to the loading attribute and complete the request before it is queued as
-pending.
+rockchip_pinctrl_get_soc_data() mutates the static per-SoC data. The
+iomux and drive offsets are recalculated idempotently, since a rerun
+anchors at the values calculated before, but the total pin count only
+accumulates: each run adds every bank's pins again. When the probe is
+deferred and runs a second time, nr_pins doubles and every bank's
+pin_base shifts, so later pin lookups resolve to the wrong bank and
+the wrong registers.
 
-In that interleaving firmware_loading_store() calls fw_state_done() while
-pending_list still points to itself, so it cannot remove an entry from
-pending_fw_head. The subsequent unconditional list_add() then queues an
-already-completed fw_priv. Once the request is released, pending_fw_head
-can retain a pointer to freed memory and the next fallback request can
-fault while validating the list.
+Reset the pin count at the start of the calculation, so that a rerun
+produces the same values.
 
-Only in-flight fallback requests need suspend or reboot abort handling. If
-the request is already DONE after device_add(), return success from the
-fallback path without sending another uevent, waiting again, or queueing it
-as pending. This preserves the invariant that pending_fw_head contains only
-active fallback requests.
+This is verified on a Luckfox Pico Mini B (RV1103, with the pending
+RV1106 series applied) by forcing the probe to defer once: without
+this patch the second probe calculates nr_pins=304 instead of 152 and
+no GPIO bank comes up; with it the recalculation matches the first
+run and all banks work.
 
-Fixes: 75d95e2e39b2 ("firmware_loader: fix use-after-free in firmware_fallback_sysfs")
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260716081601.1674470-1-mukesh.ojha@oss.qualcomm.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: d3e5116119bd ("pinctrl: add pinctrl driver for Rockchip SoCs")
+Link: https://sashiko.dev/#/patchset/20260729132736.3807082-1-sjg@chromium.org?part=4
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Simon Glass <sjg@chromium.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/firmware_loader/fallback.c | 10 ++++++++++
+ drivers/pinctrl/pinctrl-rockchip.c | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
-diff --git a/drivers/base/firmware_loader/fallback.c b/drivers/base/firmware_loader/fallback.c
-index 359773d833883..f2058c3e5b761 100644
---- a/drivers/base/firmware_loader/fallback.c
-+++ b/drivers/base/firmware_loader/fallback.c
-@@ -504,6 +504,16 @@ static int fw_load_sysfs_fallback(struct fw_sysfs *fw_sysfs, long timeout)
- 		retval = -EINTR;
- 		goto out;
- 	}
+diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
+index b85c1ce210f6e..50c051abcacaa 100644
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -3193,6 +3193,16 @@ static struct rockchip_pin_ctrl *rockchip_pinctrl_get_soc_data(
+ 	pmu_offs = ctrl->pmu_mux_offset;
+ 	drv_pmu_offs = ctrl->pmu_drv_offset;
+ 	drv_grf_offs = ctrl->grf_drv_offset;
 +
 +	/*
-+	 * device_add() exposes the loading interface before pending_list is
-+	 * linked into pending_fw_head, so fw_state_done() may run first.
++	 * This function mutates the static per-SoC data. Most of it is
++	 * idempotent: recalculated iomux and drv offsets anchor at the
++	 * values calculated by a previous run. The pin count is not, so
++	 * reset it here; otherwise it accumulates when the probe runs
++	 * again after a probe deferral, shifting every bank's pin_base.
 +	 */
-+	if (fw_state_is_done(fw_priv)) {
-+		mutex_unlock(&fw_lock);
-+		goto out;
-+	}
++	ctrl->nr_pins = 0;
 +
- 	list_add(&fw_priv->pending_list, &pending_fw_head);
- 	mutex_unlock(&fw_lock);
- 
+ 	bank = ctrl->pin_banks;
+ 	for (i = 0; i < ctrl->nr_banks; ++i, ++bank) {
+ 		int bank_pins = 0;
 -- 
 2.53.0
 
