@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C044B32E757;
-	Sat, 12 Sep 2026 16:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B272C3537FF;
+	Sat, 12 Sep 2026 16:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231606; cv=none; b=MuWSQsLk7fGt8xpB0MFZ0SISLKgrn8BTu46Gq1AqMfEvPGxkM8iLlUp+HOrny5A3VYkonKVGX6DgtRY5qa5LDNKhMBmVqwDkE9/3AQffHZ7YEm7xHl4nj+Q1CGIK1ijBZuoXSyOtIa+YF9wBqLzSLGwbUpatCkBA6kAfQy5DRgU=
+	t=1789231611; cv=none; b=jSrjxvNDZmHy0Q0MmT9VQOsvyK/byY5sL4U/c6ruffEkmKtRRN0Dqq45GOH2HpqJbTL3vjDbRwdVC+jTsmqOIJQj+nouXa6G/MBQlZ62aHqky134NVPRdIkpyxNfhXuBLisnPRDYRFKGlqJX8sQkzwV0gfHAohv1B/5ByOWIFRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231606; c=relaxed/simple;
-	bh=AxsKCaWfNk70CzjbBZA6J5buX0nMkFH6oB7bS7vnOfc=;
+	s=arc-20240116; t=1789231611; c=relaxed/simple;
+	bh=g7+SKD/BZxXg92st/+NJQxn8tmb8Eh7d4l6UyNX81B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KPuU33AVTCBvwFqmbJXq0FxUWFeP3lWzFktzS+pWGi7xGIODiw0H8KGRsAV7Y1FAbsS83+qw+bk1shifYwmmO8AR9f/TGUnh0VWTlwjBY75vM/9ixNN1kytHUOTZLhCDEnSwgPmlVP6qw248vkKQgzUW6rkI7RmRqHdXkFxUPvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3zm6QZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IEAkJlRf45nmD0ylUmvxFjb6k6H9LNvicJvQeADEja8koGCLdcNoXmnHL3o/O+YBDVi76DyVidBezlfrZeofrNbRncGs9GEvGieBLDH2gOjJ05cmP2wAV8uGdVOGI219EwK5FBHFEDye8V6mgRP07ZGuqXKQE1Hh48aFaueM/sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Az2GuXC1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3zm6QZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782891F000FF;
-	Sat, 12 Sep 2026 16:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Az2GuXC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD401F000FF;
+	Sat, 12 Sep 2026 16:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231605;
-	bh=CpWwU2Lo0KlpUKolV0a5XDTNNRlUFOr8ZIw200WbMio=;
+	s=korg; t=1789231610;
+	bh=9pRihTC+LIp1tcEeVPQ4vosJgNVtuf4kKBPgUdEQUtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x3zm6QZ1hDzjV1jUQngz9hD6q2xvqXkDPGZGMSNjzFogQqnOMbb/w0KEzRpY9OVJp
-	 YlvY45K6CKqKuXxAHzhfWM5LNxyefckX8yRcvFyPqacCJhFSYsDCz9PocCFhYPqnPC
-	 3/hEDu3rEeY6nbREIOQH1WbY9O10yje8R45x8uYc=
+	b=Az2GuXC1GKBmI910RoVyiSjbHmF+78cRfg4epFflTUnB2grOzHoqQ4GJEMcyLcAGe
+	 LIIENAeQ9YcIGPkj+qDSq4xXstQJfjgZRZ3LxjOjplnk3BhRrHUxMNojo1nqqU4Wr3
+	 agcfd2Jwb8CNwkthI7mzBVVuF2P4/DbGCPb0PkKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Jens Axboe <axboe@kernel.dk>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1033/1191] block: mtip32xx: synchronize ioctls with device removal
-Date: Sat, 12 Sep 2026 09:02:41 +0200
-Message-ID: <20260912065611.383844318@linuxfoundation.org>
+Subject: [PATCH 6.1 1034/1191] ksmbd: Do not skip lock checks for single-byte ranges
+Date: Sat, 12 Sep 2026 09:02:42 +0200
+Message-ID: <20260912065611.406110620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,95 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 68940f841d013192086a0f6d7cfbac2cd079e228 ]
+[ Upstream commit d40c24634fe077a0dc91fd11fccf44ce12b454d5 ]
 
-The ioctl handlers only test REMOVE_PENDING before entering
-mtip_hw_ioctl(). Removal can set that bit immediately afterwards and free
-dd->port in mtip_hw_exit() while an ioctl still dereferences it. An already
-open block device can reach the handlers while del_gendisk() is in
-progress.
+check_lock_range() uses inclusive ranges. Its callers pass the end
+offset as start + length - 1, so start == end represents a valid
+single-byte range rather than an empty range.
 
-Serialize both native and compat ioctls with removal. Set REMOVE_PENDING
-before taking the mutex so new callers fail after an in-flight ioctl has
-drained, and hold the mutex until the port has been torn down.
+The start == end shortcut therefore skips mandatory byte-range lock
+checks for one-byte reads, writes, copychunk operations and one-byte
+truncate ranges. A conflicting lock covering that byte is not checked
+and the operation is allowed to proceed.
 
-Fixes: 88523a61558a ("block: Add driver for Micron RealSSD pcie flash cards")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/20260806060441.676-1-getshell@seu.edu.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Remove the shortcut. The truncate size == inode->i_size case is already
+handled by only calling check_lock_range() when the new size differs
+from the current file size.
+
+Fixes: 5d510ac31626 ("ksmbd: skip lock-range check on equal size to avoid size==0 underflow")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/mtip32xx/mtip32xx.c | 7 +++++++
- drivers/block/mtip32xx/mtip32xx.h | 2 ++
- 2 files changed, 9 insertions(+)
+ fs/smb/server/vfs.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/block/mtip32xx/mtip32xx.c b/drivers/block/mtip32xx/mtip32xx.c
-index 815d77ba63819..c52b05daccdd0 100644
---- a/drivers/block/mtip32xx/mtip32xx.c
-+++ b/drivers/block/mtip32xx/mtip32xx.c
-@@ -3053,6 +3053,8 @@ static int mtip_block_ioctl(struct block_device *dev,
- 	if (!dd)
- 		return -ENOTTY;
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 1834dd4f255ec..2915f7e98fe93 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -330,9 +330,6 @@ static int check_lock_range(struct file *filp, loff_t start, loff_t end,
+ 	struct file_lock_context *ctx = file_inode(filp)->i_flctx;
+ 	int error = 0;
  
-+	guard(mutex)(&dd->ioctl_mutex);
-+
- 	if (unlikely(test_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag)))
- 		return -ENOTTY;
- 
-@@ -3091,6 +3093,8 @@ static int mtip_block_compat_ioctl(struct block_device *dev,
- 	if (!dd)
- 		return -ENOTTY;
- 
-+	guard(mutex)(&dd->ioctl_mutex);
-+
- 	if (unlikely(test_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag)))
- 		return -ENOTTY;
- 
-@@ -3716,6 +3720,7 @@ static int mtip_pci_probe(struct pci_dev *pdev,
- 	dd = kzalloc_node(sizeof(struct driver_data), GFP_KERNEL, my_node);
- 	if (!dd)
- 		return -ENOMEM;
-+	mutex_init(&dd->ioctl_mutex);
- 
- 	/* Attach the private data to this PCI device.  */
- 	pci_set_drvdata(pdev, dd);
-@@ -3888,6 +3893,7 @@ static void mtip_pci_remove(struct pci_dev *pdev)
- 	}
- 
- 	set_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag);
-+	mutex_lock(&dd->ioctl_mutex);
- 
- 	if (test_bit(MTIP_DDF_INIT_DONE_BIT, &dd->dd_flag))
- 		del_gendisk(dd->disk);
-@@ -3916,6 +3922,7 @@ static void mtip_pci_remove(struct pci_dev *pdev)
- 
- 	/* De-initialize the protocol layer. */
- 	mtip_hw_exit(dd);
-+	mutex_unlock(&dd->ioctl_mutex);
- 
- 	if (dd->isr_workq) {
- 		destroy_workqueue(dd->isr_workq);
-diff --git a/drivers/block/mtip32xx/mtip32xx.h b/drivers/block/mtip32xx/mtip32xx.h
-index f7328f19ac5c2..0963c07b58457 100644
---- a/drivers/block/mtip32xx/mtip32xx.h
-+++ b/drivers/block/mtip32xx/mtip32xx.h
-@@ -12,6 +12,7 @@
- #define __MTIP32XX_H__
- 
- #include <linux/spinlock.h>
-+#include <linux/mutex.h>
- #include <linux/rwsem.h>
- #include <linux/ata.h>
- #include <linux/interrupt.h>
-@@ -432,6 +433,7 @@ struct driver_data {
- 	struct request_queue *queue; /* Our request queue. */
- 
- 	struct blk_mq_tag_set tags; /* blk_mq tags */
-+	struct mutex ioctl_mutex;
- 
- 	struct mtip_port *port; /* Pointer to the port data structure. */
+-	if (start == end)
+-		return 0;
+-
+ 	if (!ctx || list_empty_careful(&ctx->flc_posix))
+ 		return 0;
  
 -- 
 2.53.0
