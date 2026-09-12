@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3AD2AEEB;
-	Sat, 12 Sep 2026 15:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6382AEEB;
+	Sat, 12 Sep 2026 15:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227191; cv=none; b=QfbmFwbB0b6eL5OAMcZWHZU6zSgifIYdiDsxcTxLU2nzPLwL+BwHA9eUszpSJ5K1DrkSXnuS8MWD38+ZWyWzliLJRdGb3oo4qJLZpJDFo2UmRoWF82qs7Qm4UVTjchuGnehdGrDAbuvmsYW8q9UoWCvf15JMIsG6dCHErvNX9xg=
+	t=1789227197; cv=none; b=RH26cbQuZd4MpwEmkCFYhppY++nzetEo7f6kO2S/wBLkD62jxGLynWBxqYOJefZXjEIQUeHFaN/RdPEItINqIcxo1X12Cz+J1hiYVxEf4meI4rKmgU5J5XA96S4EPg5kQgFWJeOLY6Htn4fkSyaxSUVE4RqUIKJOgfvIMrHRRbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227191; c=relaxed/simple;
-	bh=t2eY67v2i0e9z5ax5bZKZQGF7fgc54nFrv12Bv203uo=;
+	s=arc-20240116; t=1789227197; c=relaxed/simple;
+	bh=vOFwlqnOucAfLXNF4mWEu5MGjLxyubnYOC6X2NtNhFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnUzpw6uHqzDHfAqqfjc39y/O1oM5GUeQz3ChENjQxMklg99qZzTqyH0c7VlVIvc2Ldb7UyOAe2Fd+7kelQQbjK5Y+fe3VKpdrtRJWoEQD5R/3rWD72GIpkx3ZwjVnHGRLDPmcSoSNTVfPkqr+i0pApdxX/arlifU92Z461ZHxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k03+IsXM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TkzLbfi1W64wpCMUCx9Rfj1k0AkWsCm72z2BByfLg8iS/OS84lg0X7ta/Im4UQR5o00icUK1RuPj609WwzSROYbIXeRO+DDzO4iaVICLO3tvm4K5iaO+PK93DYNjIDQw2fhaUyGpOOhLc9lI6LWOaiAXOwr+H4hWwtktB6owr7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zz3u7cjj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k03+IsXM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D651F000FF;
-	Sat, 12 Sep 2026 15:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zz3u7cjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5961F000FF;
+	Sat, 12 Sep 2026 15:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227190;
-	bh=87TAbhDcU+PnpcpQ4IzuYTJATdf1HhbJau7JhbpKI4A=;
+	s=korg; t=1789227195;
+	bh=hJQ3Ym4llFrSd7p5hpxosWYHSpFe4Q9NBetzm8U634g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k03+IsXMqd5txwcT67/FCNy9ZqV0vXfVU3bi0D3SOliBAba98jEVQ7A0kof/CpMiT
-	 p/WmlckB/suAh/HoJJkmkoJMAT6Bp++am+Cdp3GdoNzmMlrqUUL5Y4OXElz//XOwbn
-	 TigVO+tqHuQTEAyQWaOUx/rWNx5Ke0itvlsCv5pE=
+	b=zz3u7cjj0at6eMdCD1xVVc1otuRtJgyvMRg5/5hPl4kmifX45nPY5aGNDIy9XxIkg
+	 Dr5kjSUhZqFxDPNiheRVNgIFM2k8W5PP+5VmO+qtCr2+ZlXLX6rY2A5frB66bkYoQy
+	 A14fYXdD2KFUvuFo7kH90VHz6Ngvr2SDt4ZfoH2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 0130/1191] SUNRPC: harden gss_krb5_unwrap_v2 against short tokens
-Date: Sat, 12 Sep 2026 08:47:38 +0200
-Message-ID: <20260912065551.114346285@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Andrii Nakryiko <andrii@kernel.org>
+Subject: [PATCH 6.1 0104/1191] bpf: Harden bloom filter sizing and indexing on 32-bit kernels
+Date: Sat, 12 Sep 2026 08:47:12 +0200
+Message-ID: <20260912065550.520568755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,109 +44,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 6959297aaa9572783d620a226d73c3fb94494888 upstream.
+commit 11c1e836710dcba03e50454a4eedfdbaf8d3050e upstream.
 
-gss_krb5_unwrap_v2() reads the EC and RRC header fields at ptr+4 and
-ptr+6 before validating that the token is at least GSS_KRB5_TOK_HDR_LEN
-(16) bytes long, and its rotate_left() helper passes buf->len - base
-to xdr_buf_subsegment() without verifying that base <= buf->len. When
-a caller hands in a sub-16-byte token, or a token whose declared len
-leaves base past the end of the buffer, three distinct failures follow:
+bloom_map_alloc() has two 32-bit-specific problems when the computed
+bitmap reaches the U32_MAX fallback case.
 
-    gss_krb5_unwrap_v2(offset, len, buf)
-      ptr = buf->head[0].iov_base + offset
-      ec  = *(ptr + 4)              /* OOB read on short head */
-      rrc = *(ptr + 6)              /* OOB read on short head */
-      rotate_left(offset + 16, buf, rrc)
-        xdr_buf_subsegment(buf, &subbuf,
-                           base, buf->len - base)   /* u32 wrap when base > len */
-        _rotate_left(&subbuf, shift)
-          shift %= buf->len         /* divide-by-zero when base == len */
+First, BITS_TO_BYTES(U32_MAX) is evaluated with 32-bit arithmetic. The
+addition performed by DIV_ROUND_UP wraps, so the map allocates only the
+fixed-size bloom filter object while keeping bitset_mask == U32_MAX.
+Subsequent updates can then write past the allocated object.
 
-After decryption, the cleanup arithmetic has the same shape:
+Second, fixing only the allocation size is not sufficient. The bloom hash
+is a u32, but set_bit() takes a signed long bit number and x86 test_bit()
+eventually feeds the index to variable_test_bit(long, ...). On 32-bit
+kernels, hashes in [0x80000000, U32_MAX] therefore become negative bit
+offsets. x86 bt/bts with a memory operand interpret those offsets relative
+to the supplied base, so a map with bitset_mask == U32_MAX can read or
+write before bloom->bitset even after allocating the full 512 MiB bitmap.
 
-    movelen = min_t(unsigned int, buf->head[0].iov_len, len);
-    movelen -= offset + GSS_KRB5_TOK_HDR_LEN + headskip;
-    BUG_ON(offset + GSS_KRB5_TOK_HDR_LEN + headskip + movelen >
-                                            buf->head[0].iov_len);
+Keep the U32_MAX fallback, but split each hash into a word pointer and an
+in-word bit number before calling test_bit() or set_bit(). The bitops
+argument is then always in [0, BITS_PER_LONG - 1], while BIT_WORD(h) still
+selects the intended word in the full bitmap.
 
-The BUG_ON re-adds the value just subtracted, so it reduces to
-min(A, B) > A and is permanently false; it cannot catch the unsigned
-underflow of movelen, which then drives a ~UINT_MAX-byte memmove().
+Compute the bitset size from (u64)bitset_mask + 1 before passing the final
+size to bpf_map_area_alloc(). This fixes the original under-allocation and
+keeps the allocated storage consistent with the addressable bitset.
 
-Add four defense-in-depth guards inside the unwrap core so it is safe
-regardless of what its callers validate:
+Exploitation note: local privilege escalation is possible on a 32-bit x86
+kernel using the under-allocation bug from a binary with CAP_BPF.
 
-  - reject tokens with len - offset < GSS_KRB5_TOK_HDR_LEN before
-    touching ptr+4/ptr+6;
-  - bail from rotate_left() when buf->len <= base, covering both the
-    underflow and zero-length cases;
-  - return early from _rotate_left() when buf->len is zero, so the
-    shift %= buf->len modulo cannot fault;
-  - replace the dead BUG_ON with a live check that returns
-    GSS_S_DEFECTIVE_TOKEN before the movelen subtraction.
-
-Fixes: de9c17eb4a91 ("gss_krb5: add support for new token formats in rfc4121")
+Fixes: 9330986c0300 ("bpf: Add bloom filter map implementation")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260524010213.557424-5-cel@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/bpf/20260805060228.2703051-1-Jeremy.Jean@oss.cyber.gouv.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/sunrpc/auth_gss/gss_krb5_wrap.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
-+++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
-@@ -389,6 +389,8 @@ static void _rotate_left(struct xdr_buf
- 	int shifted = 0;
- 	int this_shift;
+Assisted-by: Codex:gpt-5
+---
+ kernel/bpf/bloom_filter.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+--- a/kernel/bpf/bloom_filter.c
++++ b/kernel/bpf/bloom_filter.c
+@@ -49,7 +49,7 @@ static int bloom_map_peek_elem(struct bp
  
-+	if (!buf->len)
-+		return;
- 	shift %= buf->len;
- 	while (shifted < shift) {
- 		this_shift = min(shift - shifted, LOCAL_BUF_LEN);
-@@ -401,6 +403,8 @@ static void rotate_left(u32 base, struct
+ 	for (i = 0; i < bloom->nr_hash_funcs; i++) {
+ 		h = hash(bloom, value, map->value_size, i);
+-		if (!test_bit(h, bloom->bitset))
++		if (!test_bit(h % BITS_PER_LONG, bloom->bitset + BIT_WORD(h)))
+ 			return -ENOENT;
+ 	}
+ 
+@@ -65,9 +65,13 @@ static int bloom_map_push_elem(struct bp
+ 	if (flags != BPF_ANY)
+ 		return -EINVAL;
+ 
++	/*
++	 * On 32-bit architectures, hashes larger than INT_MAX would be
++	 * treated as negative by set_bit().
++	 */
+ 	for (i = 0; i < bloom->nr_hash_funcs; i++) {
+ 		h = hash(bloom, value, map->value_size, i);
+-		set_bit(h, bloom->bitset);
++		set_bit(h % BITS_PER_LONG, bloom->bitset + BIT_WORD(h));
+ 	}
+ 
+ 	return 0;
+@@ -102,9 +106,10 @@ static int bloom_map_alloc_check(union b
+ 
+ static struct bpf_map *bloom_map_alloc(union bpf_attr *attr)
  {
- 	struct xdr_buf subbuf;
+-	u32 bitset_bytes, bitset_mask, nr_hash_funcs, nr_bits;
++	u32 bitset_mask, nr_hash_funcs, nr_bits;
+ 	int numa_node = bpf_map_attr_numa_node(attr);
+ 	struct bpf_bloom_filter *bloom;
++	u64 bitset_bytes;
  
-+	if (buf->len <= base)
-+		return;
- 	xdr_buf_subsegment(buf, &subbuf, base, buf->len - base);
- 	_rotate_left(&subbuf, shift);
- }
-@@ -476,6 +480,9 @@ gss_unwrap_kerberos_v2(struct krb5_ctx *
- 	if (kctx->gk5e->decrypt_v2 == NULL)
- 		return GSS_S_FAILURE;
+ 	if (!bpf_capable())
+ 		return ERR_PTR(-EPERM);
+@@ -138,22 +143,16 @@ static struct bpf_map *bloom_map_alloc(u
+ 	if (check_mul_overflow(attr->max_entries, nr_hash_funcs, &nr_bits) ||
+ 	    check_mul_overflow(nr_bits / 5, (u32)7, &nr_bits) ||
+ 	    nr_bits > (1UL << 31)) {
+-		/* The bit array size is 2^32 bits but to avoid overflowing the
+-		 * u32, we use U32_MAX, which will round up to the equivalent
+-		 * number of bytes
+-		 */
+-		bitset_bytes = BITS_TO_BYTES(U32_MAX);
+ 		bitset_mask = U32_MAX;
+ 	} else {
+ 		if (nr_bits <= BITS_PER_LONG)
+ 			nr_bits = BITS_PER_LONG;
+ 		else
+ 			nr_bits = roundup_pow_of_two(nr_bits);
+-		bitset_bytes = BITS_TO_BYTES(nr_bits);
+ 		bitset_mask = nr_bits - 1;
+ 	}
  
-+	if (len - offset <= GSS_KRB5_TOK_HDR_LEN)
-+		return GSS_S_DEFECTIVE_TOKEN;
-+
- 	ptr = buf->head[0].iov_base + offset;
+-	bitset_bytes = roundup(bitset_bytes, sizeof(unsigned long));
++	bitset_bytes = BITS_TO_LONGS((u64)bitset_mask + 1) * sizeof(unsigned long);
+ 	bloom = bpf_map_area_alloc(sizeof(*bloom) + bitset_bytes, numa_node);
  
- 	if (be16_to_cpu(*((__be16 *)ptr)) != KG2_TOK_WRAP)
-@@ -542,9 +549,9 @@ gss_unwrap_kerberos_v2(struct krb5_ctx *
- 	 * head buffer space rather than that actually occupied.
- 	 */
- 	movelen = min_t(unsigned int, buf->head[0].iov_len, len);
-+	if (movelen < offset + GSS_KRB5_TOK_HDR_LEN + headskip)
-+		return GSS_S_DEFECTIVE_TOKEN;
- 	movelen -= offset + GSS_KRB5_TOK_HDR_LEN + headskip;
--	BUG_ON(offset + GSS_KRB5_TOK_HDR_LEN + headskip + movelen >
--							buf->head[0].iov_len);
- 	memmove(ptr, ptr + GSS_KRB5_TOK_HDR_LEN + headskip, movelen);
- 	buf->head[0].iov_len -= GSS_KRB5_TOK_HDR_LEN + headskip;
- 	buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
+ 	if (!bloom)
 
 
