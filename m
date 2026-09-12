@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8654F288B2;
-	Sat, 12 Sep 2026 10:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC34288B2;
+	Sat, 12 Sep 2026 10:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208630; cv=none; b=s15R3cbyPrmbHIOGfmcnnFZLv4DNn4oK2UevVKYHK1QbTEDcTI2rUGYpBKYGqgZ0+ith+JCJsQjWrFDcEeXLax3QglcimgLylOjop0LkfoubVHKAFVdGu669Ulx5N0CgAII0iDlltfrsr7ln8w8OSiHxfT8iDli5h21wrucJnwQ=
+	t=1789208635; cv=none; b=MHnOyEtFa3VThmpUoQ+h0BxgI94FZ6Merto8UHapPkJyUsFwwCuC00APUVSGi/XEk3MP5zKms7F0ve5EqMiHKgU6HBzKCoD5ZpOUK3vtSuv7iGEQ4X+o9U6xsIPQzAL6RuzL91JCRak3ol20u3ByFyouOzyswqxjtYywmzjOKQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208630; c=relaxed/simple;
-	bh=zhJhm9BkBrVCTQ7fzyCPuy5zI++HnVbso3XoHxOpt/E=;
+	s=arc-20240116; t=1789208635; c=relaxed/simple;
+	bh=4Etl1ot5MRpcwOPgdec+fGgdaVfbfBirKjg84J/jpyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IWhJKFPC0Dy1jEfqClEPokp1ncK88cjZIAEoROxKrqcJP4SIRq5gVdWE25u+/VR89NDSc+AaYk7LMTwQLmwOj4spHYRAcCleBT8LioCxh3B7Cm42MslqlVT6xeJ2br/VByQR2uSrWeBYGPnVgF88awgJEcTcpXrrP5ei4PJ2c8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3Cenbq6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jZuW4TvdENXfasoL90fSyyoqtSs4ksmQzlPb02+qHC5n4PbblKFK8CtU0H0kIbugoM1pn/6w8x/5Nbrp6T7AHHqW5hqzogQ17YAN96ykftzAPMMfhUOYpv2bF1wSCg6j8ssrn+537ChHK/H6L1GPBRTM40I799kdeUyLUXmNtJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbzVwAQ3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3Cenbq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED911F000FF;
-	Sat, 12 Sep 2026 10:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbzVwAQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5021F000FF;
+	Sat, 12 Sep 2026 10:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208629;
-	bh=V6uLj61Ct/00rkD5gGHFfepE7hgoEFlKdm06ZIc8W5Y=;
+	s=korg; t=1789208633;
+	bh=qQbUyu0W3I0JdTYufapAqJS9Qx7YZzCfQkVKE3ylpGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H3Cenbq66xkwAwzMxOYfXSPHoA26rwM2t//PGr0/rdaKO7QBEtBSZRnOqqFeZ99jZ
-	 rKrMu1WHTHTIcV1N3K89OZU9woMpTcUUJ1xxMvignoE++FvWTzupA3xD06sG8Onn4J
-	 X58FphMBGw/gIEg2bdFLAKwLpb8yvcTVkyEqKiX4=
+	b=lbzVwAQ3tYhhzTFh/K8IWEl1qUL6AV1Q0ZFFxtJfl05/zoQ/mYsfc2KihFSAlawQk
+	 YYvxasmmgiucuLTEY5VZZxESNWEJWQrGujtIjsCV97NpkX5ePvTFhYVoylO58Iv1kV
+	 jgMEFs046lMvuNehCW/jgLScpA6XoHkUxmWaroYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	Fushuai Wang <wangfushuai@baidu.com>,
-	John Ogness <john.ogness@linutronix.de>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0657/1518] Revert "serial: 8250: Clear CON_PRINTBUFFER on port re-registration"
-Date: Sat, 12 Sep 2026 08:47:06 +0200
-Message-ID: <20260912065638.291153686@linuxfoundation.org>
+Subject: [PATCH 6.18 0658/1518] wifi: ath12k: fix stride mismatch in mac_phy_caps_parse()
+Date: Sat, 12 Sep 2026 08:47:07 +0200
+Message-ID: <20260912065638.317209053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,52 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fushuai Wang <wangfushuai@baidu.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 57c0741b8c15b93ba4aa92c6618cde6f3f4115b2 ]
+[ Upstream commit 4c6eb712a91fa079be6f9f1419c96e0ad2227081 ]
 
-This reverts commit d338ab1d90603f875c4f7ed223406535378173a5.
+Currently, in ath12k_wmi_mac_phy_caps_parse(), kzalloc() sizes the
+mac_phy_caps buffer as tot_phy_id * len, where len is clamped to
+min(firmware_len, sizeof(struct ath12k_wmi_mac_phy_caps_params)). The
+subsequent memcpy() destination advances by sizeof(full struct) per slot
+via C pointer arithmetic, not by the clamped len. When firmware sends
+short TLVs, the second and later slots are written past the end of the
+allocation.
 
-uart_console() only indicates that the port is selected as the console.
-It does not mean that the console has already been registered or has
-printed the buffered messages.
+The reader in ath12k_pull_mac_phy_cap_svc_ready_ext() also indexes the
+buffer with full-struct pointer arithmetic, so the allocation must match
+that stride.
 
-On platforms where an initial 8250 port is replaced when the real UART
-device is registered, clearing CON_PRINTBUFFER causes the console to
-start at the end of the printk ring buffer. Without earlycon, all
-messages logged before UART registration are therefore lost.
+Fix by using kzalloc_objs(), which derives the element size from the
+pointer type, making allocation size and pointer stride provably
+consistent regardless of what len the firmware provides.
 
-Fixes: d338ab1d9060 ("serial: 8250: Clear CON_PRINTBUFFER on port re-registration")
-Reported-by: Mark Brown <broonie@kernel.org>
-Reported-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Link: https://lore.kernel.org/all/20260522101042.21976-1-fushuai.wang@linux.dev/
-Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Link: https://patch.msgid.link/20260724093151.53216-1-fushuai.wang@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260728-mac_phy_caps_parse-stride-mismatch-v1-1-27a9c1a3fbd0@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_core.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
-index b6568880f750d..ccd5a18f53356 100644
---- a/drivers/tty/serial/8250/8250_core.c
-+++ b/drivers/tty/serial/8250/8250_core.c
-@@ -716,12 +716,8 @@ int serial8250_register_8250_port(const struct uart_8250_port *up)
- 	/* Preserve specified console flow control. */
- 	cons_flow = uart_cons_flow_enabled(&uart->port);
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 6221bf43936bc..f4392462ae3a2 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -4525,14 +4525,16 @@ static int ath12k_wmi_mac_phy_caps_parse(struct ath12k_base *soc,
+ 	if (svc_rdy_ext->n_mac_phy_caps >= svc_rdy_ext->tot_phy_id)
+ 		return -ENOBUFS;
  
--	if (uart->port.dev) {
--		if (uart_console(&uart->port))
--			uart->port.cons->flags &= ~CON_PRINTBUFFER;
--
-+	if (uart->port.dev)
- 		uart_remove_one_port(&serial8250_reg, &uart->port);
--	}
+-	len = min_t(u16, len, sizeof(struct ath12k_wmi_mac_phy_caps_params));
+ 	if (!svc_rdy_ext->n_mac_phy_caps) {
+-		svc_rdy_ext->mac_phy_caps = kzalloc((svc_rdy_ext->tot_phy_id) * len,
+-						    GFP_ATOMIC);
++		svc_rdy_ext->mac_phy_caps =
++			kzalloc_objs(*svc_rdy_ext->mac_phy_caps,
++				     svc_rdy_ext->tot_phy_id,
++				     GFP_ATOMIC);
+ 		if (!svc_rdy_ext->mac_phy_caps)
+ 			return -ENOMEM;
+ 	}
  
- 	uart->port.ctrl_id	= up->port.ctrl_id;
- 	uart->port.port_id	= up->port.port_id;
++	len = min_t(u16, len, sizeof(struct ath12k_wmi_mac_phy_caps_params));
+ 	memcpy(svc_rdy_ext->mac_phy_caps + svc_rdy_ext->n_mac_phy_caps, ptr, len);
+ 	svc_rdy_ext->n_mac_phy_caps++;
+ 	return 0;
 -- 
 2.53.0
 
