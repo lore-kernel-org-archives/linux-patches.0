@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3CE2D8382;
-	Sat, 12 Sep 2026 07:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12AE3148DA;
+	Sat, 12 Sep 2026 07:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199791; cv=none; b=h2506fW6WPjRN6r7bjPjFNdbYaV5KHEOCdw1DerZVwTUI/nQbhVS0Sv0NglYV4ErX5kFsfv0KIk1fRM+MTUNpB8lVXBv1k1NSAm6QUGoiThRxM3MPALPuQ22n0gCEJlg+ykQ0VrF2CBOkfgm8+DONPdPtOmX47C48+vvAqtMF9o=
+	t=1789199797; cv=none; b=msG0oXUCggN1MrJmrWDxQPhCNWLI480iiwsQZvlBzFfXCz36WhDPBdB4thvDBC43ko2XQRo9B2WpMfbNU0QV9iy3CsMZJYmI/NS+Y59SaPlgpWO56lnUSqp86jII7s+nD0J7Bqzm9yNO+6A5U6KjSgBhnxqR9V9W3kosDNjvWps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199791; c=relaxed/simple;
-	bh=FF8i5CxwlMuSwpfye3zmysKcb558CqatfnGlKsPvZJo=;
+	s=arc-20240116; t=1789199797; c=relaxed/simple;
+	bh=I5JcFphysvQHM9CGlkuCbTfegqxDK6M/b0CGLpn+FzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMfspOb7tor/56mzlRwjItQIf2TYedXKzUusIlM7avEjQPLZiDoK45LLo8PPrcuMyKdh0GEacpMfV1NqPEEoCm2jlD6yXAXjR1Gx8hSElHtywnWrOIj+HsjEgRIVB5T3bnljXfZq1QBmMfrhD9U1yRwvhvuRbK/nFghzXlkUKEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dnft8v/8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FtHJHSOrulhLHji9wQA7SNp6G9Tlnko28Opf4sMc01YDCmn41xDAWBhw1AO9a3bv+fMj3JLp3aKvSdnR3a9wd8vuqFjmebtQMaKvzbmjQhvsmAieHciO4i7WOKyY0rYfcFubFQaunUZPgOJm8+E5zFu3rQpXADRTKQxl7kF5KqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaIZ6hww; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dnft8v/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23501F000FF;
-	Sat, 12 Sep 2026 07:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaIZ6hww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D1B1F000FF;
+	Sat, 12 Sep 2026 07:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199790;
-	bh=f7vUzuNghARERKUKq9ig4U1rQKJa1iASARFrC0loRp8=;
+	s=korg; t=1789199795;
+	bh=xn3z40+RHY8Rt2NQuoMIpwZHMzW5Q1SpZOoocydcYRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dnft8v/8bg+l5IExnMV6Mkg4iZDlydmVq5livuGZjOfR/OVuqfnp8TxczQpDLed3Y
-	 LwqlRhvyFI+5YameBED6P4ykaEEKZKpGx5HCG5ymA1KQzxYBG6vRMc/JosSS7PYmzD
-	 g5UsS8u5L34j6o/mRoYz3a0aC/QWb5mvzSNeeNZg=
+	b=xaIZ6hwwaaV95JpuWg++wFuq0IPGwzIisKVo7X1T3cZXZmgxs6Pb/eFVAeH7NHqdt
+	 pvjpSTWpLvpp5AWkwjrXpUwXjIG3E+EbZ2K2zf8TOwVcJ3RLAWzKNW+ehccGJODOY4
+	 lDIExnc/D0wtRU/jV2cmgOpNpEXCOK8qM6FbWhiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Yixun Lan <dlan@kernel.org>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	Jackie Liu <liuyun01@kylinos.cn>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0657/1815] riscv: dts: spacemit: Add enough deassert time for the PHY on com260 board
-Date: Sat, 12 Sep 2026 08:40:07 +0200
-Message-ID: <20260912065704.304275615@linuxfoundation.org>
+Subject: [PATCH 7.2 0658/1815] liveupdate: reject nonzero reserved value for SESSION_FINISH
+Date: Sat, 12 Sep 2026 08:40:08 +0200
+Message-ID: <20260912065704.327834927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,35 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Jackie Liu <liuyun01@kylinos.cn>
 
-[ Upstream commit 12b0d602e8642297ec369eeb99366d37c8a3a120 ]
+[ Upstream commit 05cf3d87a0bf23e328a7f7db488860fe14acc335 ]
 
-RTL8211F require at least 50ms deassert to guarantee the register
-access, 10ms is only enough for the PHY reset.
+The UAPI documents liveupdate_session_finish::reserved as requiring zero,
+but luo_session_finish() currently ignores it and finishes the session.
+Accepting nonzero values prevents the field from being safely repurposed
+by a future extension.
 
-Fixes: cfe5c91cb73c ("riscv: dts: spacemit: k3: Initial support for CoM260-IFX board")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Link: https://patch.msgid.link/20260710063314.1030249-2-inochiama@gmail.com
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Reject nonzero reserved values before changing session state, matching
+LIVEUPDATE_SESSION_GET_NAME.
+
+Fixes: 16cec0d26521 ("liveupdate: luo_session: add ioctls for file preservation")
+Assisted-by: Codex:gpt-5.6-sol
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
+Link: https://patch.msgid.link/20260716012607.22020-2-liu.yun@linux.dev
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/liveupdate/luo_session.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-index a38d7b738258d..b704b537385c7 100644
---- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-@@ -178,7 +178,7 @@ phy1: phy@1 {
- 			reg = <1>;
- 			reset-gpios = <&gpio 1 5 GPIO_ACTIVE_LOW>;
- 			reset-assert-us = <10000>;
--			reset-deassert-us = <10000>;
-+			reset-deassert-us = <50000>;
- 		};
- 	};
- };
+diff --git a/kernel/liveupdate/luo_session.c b/kernel/liveupdate/luo_session.c
+index f38b5b18f3f81..b4a9f55c44987 100644
+--- a/kernel/liveupdate/luo_session.c
++++ b/kernel/liveupdate/luo_session.c
+@@ -316,8 +316,12 @@ static int luo_session_finish(struct luo_session *session,
+ 			      struct luo_ucmd *ucmd)
+ {
+ 	struct liveupdate_session_finish *argp = ucmd->cmd;
+-	int err = luo_session_finish_one(session);
++	int err;
++
++	if (argp->reserved)
++		return -EINVAL;
+ 
++	err = luo_session_finish_one(session);
+ 	if (err)
+ 		return err;
+ 
 -- 
 2.53.0
 
