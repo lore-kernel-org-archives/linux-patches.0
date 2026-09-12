@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DBE32D43C;
-	Sat, 12 Sep 2026 18:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D7D3932DA;
+	Sat, 12 Sep 2026 18:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237675; cv=none; b=iuT4fCHjliQGV7PPDS6cTBiOZLeFpJvhwLUaTY3dWR7Q3iUIqGq12qyVmeSoLxg0/GmPBvdrDitxm8+hIrXSoXjmiQK49wDkpFt/Irs+4g8vAfCiffgDWBEZ3Xfm3xlqIaDwujgkgjnv+UfWcHU45T/6bVSFMmiETxub7BKVb7g=
+	t=1789237680; cv=none; b=ohI/O77tuAMVQsnOMnJ/azr/gnT0f5RYNDoYccGPgUZOKQojMWfa0jjwodMyvTXuy46QNGrF/FAekTXkn7e683yMHpzk7fsqO8Ho00e0UtPihBJxY1HqS/mADljWaob9sGnDw1Io6gbL5i/vqiiQz8mUmfkz3RRMueDYAYeXVww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237675; c=relaxed/simple;
-	bh=XODJPCsLMzDVGsyB5tW7lfwwSJS0a6gvmbeIOxr9lxw=;
+	s=arc-20240116; t=1789237680; c=relaxed/simple;
+	bh=yHUz+lffLENVb6lsoMAPZblcaP5T2x54/LcYtgni5yQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfTVkRhLgWQyzrR1wpD+53fNymdt/RXs0G+PCInDm9OWbW5oozIhNqMG3ny+DrchfrHHIBRLiHj/KK0IoC25mexGJI48uCb5I5FPFpI55SK2eBREg09ptTf+Q/5ZPOSAdh0fbOE3oMNKeoRXKkEiDQfpoDN7/Vwr/ljo9p4D738=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xKwBcaT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=huUAYfG1RSLvw7sydriMKZli+xpDwKlx1srlyd2AyUWCqSx/Xmxwwy/Tb/av3iVxXIroIkWe6cYJc1bJm1R8QoW0SVeAVT/HNI7nRbbzhfMpWKfaQx34ExGxkr0AIC9A+/y/aHhKn5leyKjSzY5vr4cm2mXiWcl8W0qcToGV4/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+4SSJQs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xKwBcaT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8661F000FF;
-	Sat, 12 Sep 2026 18:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+4SSJQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E4B1F000FF;
+	Sat, 12 Sep 2026 18:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237673;
-	bh=KYyrNLHyAUWGuRdneAwk0Zm0hVK7w49iyWxvMSrPlxg=;
+	s=korg; t=1789237678;
+	bh=x8CB1swAQwP6NTzrfqpsMl/RSJ0RLfhHIsmpVsIHnkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1xKwBcaTUwuS4xbANXJbqvgi9QY2vmH7rK4MCAIc6qoC8Fg3bvRXra01aT6nlWAaP
-	 vAgo1v4Jr2W2AlK8l9E3H1oiSmkbmRwdrbz0nUqlNiQCOR0GZoXmJ++TfQFxEaZibw
-	 /mh3yQ9pPABZSOjcRjrD2sufJ3ytnq9EaARbVrmA=
+	b=S+4SSJQsD/xanWTeeDmS6AZEUWhVzFiCIkHk5u8q70PhSzq4jXK/Wat4njWZuEAb4
+	 qDDJOSCd29CshCcQVLlWLtAbDnqKs+isO3X6AumzXs/CFPnNA4j+5OKFZnuIT7stAZ
+	 tlS1CTW3r2c3/mvmbtlpcJaZs+7QBe7kYWfZhhwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+225231fce6755d40d078@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 263/935] ALSA: pcm: Fix race between non-atomic ops and trigger-start
-Date: Sat, 12 Sep 2026 08:54:53 +0200
-Message-ID: <20260912065532.856738744@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 264/935] nvme-tcp: check the data direction of a C2HData PDU
+Date: Sat, 12 Sep 2026 08:54:54 +0200
+Message-ID: <20260912065532.880444846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,56 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit acac7b5e07349a9d10d78873afb4b93cd1dc721f upstream.
+commit f83af377c148f6ad94b41c0e8313f12adf45e1c1 upstream.
 
-We protect the races of the concurrent state transitions between
-atomic PCM ops, but the checks between the non-atomic ops (hw_params,
-hw_free and prepare) and the atomic ops aren't perfect; there is a
-check of the conflicting PCM state at the beginning of hw_params & co,
-but the atomic PCM ops can be still issued during the non-atomic PCM
-operations.  An example such scenario is that a thread A re-issues the
-PREPARE or HW_PARAMS for the already prepared stream, while another
-thread B triggers the PCM start in the middle of the prepare
-operation.  Although this usually doesn't lead to much serious issues,
-it can give some inconsistency as reported by syzkaller (such as
-ODEBUG warning).
+nvme_tcp_handle_c2h_data() finds the request by command id and checks
+that it has a payload, but it does not check that the command asked for
+data to be read.  A controller that answers a write command with C2HData
+therefore reaches nvme_tcp_recv_data(), where _copy_to_iter() hits
+WARN_ON_ONCE(i->data_source) and returns 0.  The receive path turns that
+into -EFAULT and resets the controller.
 
-There are various atomic PCM ops, and basically the only problem is
-the PCM start as it operates from the PREPARED state.  Other trigger
-commands (stop, etc) are for the running or the other special state,
-hence they are filtered as pre-condition.
+No data is copied, so this is not memory corruption.  What a controller
+gets is a kernel warning it can raise at will, which is fatal on a host
+booted with panic_on_warn.
 
-This patch is for preventing the PCM trigger-start during the non-
-atomic operations in order to address the problems above.
-Fortunately, the hw_params, hw_free and prepare operations call
-snd_pcm_buffer_access_lock(), and this can be used for checking the
-concurrent operations at the PCM trigger -- which sets the
-runtime->buffer_accessing to a negative (if possible), so the PCM
-trigger just needs to check the runtime->buffer_accessing value; if
-it's negative, it means the concurrent non-atomic PCM ops is running.
+The send path already knows the direction - it consults rq_data_dir()
+when it builds a command - and nvme_tcp_handle_r2t() checks the length
+and the offset of the request it names.  The C2HData path does not check
+the direction at all.
 
-Reported-by: syzbot+225231fce6755d40d078@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/6a8f0de8.1d9ded08.62e62.00b5.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260828115542.3999-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reject a C2HData PDU whose command is not a read.  Rejecting it fails
+the command and resets the controller, as the neighbouring check in this
+function does; what goes away is the warning.
+
+  [    6.885580] ------------[ cut here ]------------
+  [    6.886457] WARNING: lib/iov_iter.c:193 at _copy_to_iter+0x289/0x1330, CPU#0: kworker/0:1H/71
+  [    6.888137] CPU: 0 UID: 0 PID: 71 Comm: kworker/0:1H Not tainted 7.2.0-rc5-NVMETCP-gf5098b6bae76 #1 PREEMPT(lazy)
+  [    6.891165] Workqueue: nvme_tcp_wq nvme_tcp_io_work
+  [    6.891875] RIP: 0010:_copy_to_iter+0x289/0x1330
+  [    6.903739] Call Trace:
+  [    6.904085]  <TASK>
+  [    6.909254]  __skb_datagram_iter+0x433/0x820
+  [    6.911026]  skb_copy_datagram_iter+0x37/0x120
+  [    6.911622]  nvme_tcp_recv_skb+0xa07/0x4320
+  [    6.913378]  __tcp_read_sock+0x1ab/0x810
+  [    6.915788]  nvme_tcp_try_recv+0x152/0x1e0
+  [    6.918222]  nvme_tcp_io_work+0x1e4/0x6c0
+  [    6.926906]  </TASK>
+  [    6.927226] ---[ end trace 0000000000000000 ]---
+  [    6.927878] nvme nvme0: queue 1 failed to copy request 0x71 data
+  [    6.928709] nvme nvme0: receive failed:  -14
+
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_native.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/host/tcp.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -1430,6 +1430,8 @@ static int snd_pcm_pre_start(struct snd_
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	if (runtime->state != SNDRV_PCM_STATE_PREPARED)
- 		return -EBADFD;
-+	if (atomic_read(&runtime->buffer_accessing) < 0)
-+		return -EBADFD; /* during hw_params, hw_free or prepare */
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
- 	    !snd_pcm_playback_data(substream))
- 		return -EPIPE;
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -592,6 +592,13 @@ static int nvme_tcp_handle_c2h_data(stru
+ 		return -ENOENT;
+ 	}
+ 
++	if (rq_data_dir(rq) != READ) {
++		dev_err(queue->ctrl->ctrl.device,
++			"queue %d tag %#x unexpected data for a write\n",
++			nvme_tcp_queue_id(queue), rq->tag);
++		return -EIO;
++	}
++
+ 	req = blk_mq_rq_to_pdu(rq);
+ 	if (!blk_rq_payload_bytes(rq) || !req->curr_bio || !req->data_len) {
+ 		dev_err(queue->ctrl->ctrl.device,
 
 
