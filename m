@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D993B325726;
-	Sat, 12 Sep 2026 17:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAEF325726;
+	Sat, 12 Sep 2026 17:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232838; cv=none; b=DLozJvh0q0N2sN5WTglufAHndCRzS16NUH2L9V8X06xDeAEhiV3WDokEKxGnHAFaaxMLSzn92Qu3s4O0m5qhshTB4wOwTKY1wxOSJZGNJIaGvZ7Ie0eLZHROHVWBM/i++YF1eL4OPSrzpLZ9gbCzQtiz6i+an5PNH8zm9wl0vTo=
+	t=1789232843; cv=none; b=HJBaskjVpcpbJ+7VBVHfO4G2hOrZGExnWXfdaDsGi3L0yZamD4cWaZVK9O6O3Ci8ym54QQlofBCyG7m9HSjWX7JUlZ1EaMNDnu1ATzLZOaqyv+5kZEdTKvAbgVL5aPHUpZ6wf6WakFdysav+J06ilMvTjzAD01pRP0bKjbugeGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232838; c=relaxed/simple;
-	bh=rSjYYe3mwWbjEFvX8Fmqkb83Neowuu1vp2QZtRxtaRU=;
+	s=arc-20240116; t=1789232843; c=relaxed/simple;
+	bh=p9+EvyJ8LrEtHQ/nQfnCoFbjdC9ztUlY6NMtRLxmbPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SViKy8scjGE3XDsyPXrmTGtkMo+w9J/r858O/WYhujwOFs4cU93xN3D+UanZGUmpTzmLXWdIxD/RZCrB3U+pIQzZvoJj1bI/jIqY8J8mPCTVg9aU5A/Z0Nfsw2GfKB7SIOnSbJpI5mfo/lD+4WXoXHHwmRxPaRFazvSoq8YSop8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VF2OIJ04; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kbjzpy5A+txPa16SIPIY5uYsc/g91nv3oaUIneakvO1GcvVwvjdSdSMreiQT+Cbi5nj9XHjEkezWcPW+HxJnnxAykdLVM4wbZrdt87jbaRYiu9D5voFRuc73MKvubWIxdIrmCfnf4XRr5Q2hVU1U6Dl4y+ms4zEviNcdhX8b1cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfwhFLkC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VF2OIJ04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73CE1F00893;
-	Sat, 12 Sep 2026 17:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfwhFLkC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D9E1F000FF;
+	Sat, 12 Sep 2026 17:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232837;
-	bh=WN2+hwUDDkOcXfK5nyI1MZFjNQy1xcIvZ25yhomehjo=;
+	s=korg; t=1789232842;
+	bh=tdEpamvjLtzoBMSUICe+Eq9eUXwIwt7heDFkifDMkZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VF2OIJ04K/7k2utyYnfrqExdzuqhJQK6decemx7hou/uUdcIqEmXM9p6hJ460ghPe
-	 MgDYlVZCmgkgCLoLVlntKcfqDUcvS4az5K0+z8nR1c0N+41MCE+IDEnVNoEih4kykO
-	 zmdjxEGLqbWlTnbDbfjO1zd+1tKfe+PQlfeGscYI=
+	b=zfwhFLkCRkZwMtooT/+pEjV0IYSzqHiOoSrfGq9CM8SFaqlShET0nq7NiLIylCINO
+	 nb2RwlyerphbirVrLgLAVxOett4NmrFHvrjaHlCI0/fZY8qjjTQ5mhXkbJxKPWtpE6
+	 n+HFv6WY5gzkD5YsoU1evMn2lF6oHzLVHl76raZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Gongwei Li <ligongwei@kylinos.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 093/935] Bluetooth: hci_bcm: fix usage_count leak when autosuspend_delay is negative
-Date: Sat, 12 Sep 2026 08:52:03 +0200
-Message-ID: <20260912065528.959138048@linuxfoundation.org>
+Subject: [PATCH 5.15 094/935] Bluetooth: hci_uart: Fix false success return in hci_uart_setup()
+Date: Sat, 12 Sep 2026 08:52:04 +0200
+Message-ID: <20260912065528.980721746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,43 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Gongwei Li <ligongwei@kylinos.cn>
 
-commit dc6b7c771a963e20aedf4a21ffa22543b9837ba8 upstream.
+commit a9355799343e10014f2acfd4b6844d2335ecafea upstream.
 
-bcm_request_irq() calls pm_runtime_use_autosuspend(), but bcm_close()
-does not call the matching pm_runtime_dont_use_autosuspend() when
-tearing down runtime PM.
+When reading the local version information for vendor detection
+fails, the error is only printed and 0 is returned, which masks the
+setup failure from the HCI core.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during driver teardown, this reference is not dropped and usage_count
-remains unbalanced.
+Return PTR_ERR(skb) instead.
 
-Add the missing pm_runtime_dont_use_autosuspend() call before disabling
-runtime PM.
-
-This issue was found by manual code inspection.
-
-Fixes: e88ab30d3669 ("Bluetooth: hci_bcm: Add suspend/resume runtime PM functions")
+Fixes: fb2ce8d11f039 ("Bluetooth: hci_uart: Add support for vendor detection flag")
+Fixes: 82f5169bf3d3b ("Bluetooth: hci_uart: add serdev driver support library")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_bcm.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/hci_ldisc.c  |    2 +-
+ drivers/bluetooth/hci_serdev.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/bluetooth/hci_bcm.c
-+++ b/drivers/bluetooth/hci_bcm.c
-@@ -529,6 +529,7 @@ static int bcm_close(struct hci_uart *hu
- 		if (IS_ENABLED(CONFIG_PM) && bdev->irq_acquired) {
- 			devm_free_irq(bdev->dev, bdev->irq, bdev);
- 			device_init_wakeup(bdev->dev, false);
-+			pm_runtime_dont_use_autosuspend(bdev->dev);
- 			pm_runtime_disable(bdev->dev);
- 		}
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -445,7 +445,7 @@ static int hci_uart_setup(struct hci_dev
+ 	if (IS_ERR(skb)) {
+ 		BT_ERR("%s: Reading local version information failed (%ld)",
+ 		       hdev->name, PTR_ERR(skb));
+-		return 0;
++		return PTR_ERR(skb);
+ 	}
  
+ 	if (skb->len != sizeof(*ver)) {
+--- a/drivers/bluetooth/hci_serdev.c
++++ b/drivers/bluetooth/hci_serdev.c
+@@ -221,7 +221,7 @@ static int hci_uart_setup(struct hci_dev
+ 	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Reading local version info failed (%ld)",
+ 			   PTR_ERR(skb));
+-		return 0;
++		return PTR_ERR(skb);
+ 	}
+ 
+ 	if (skb->len != sizeof(*ver))
 
 
