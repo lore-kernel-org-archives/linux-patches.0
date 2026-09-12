@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB632DBF75;
-	Sat, 12 Sep 2026 14:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE372D23A6;
+	Sat, 12 Sep 2026 14:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221958; cv=none; b=LFc77sy6BCx1TRJCjzg6QrdYFQ0qpZIE90xnmCXj09T3OopD9BNj+YmuXK7IRLR4pkfVRm5Bath/XHU3/GApX0xx8hS/e/HWw9ejdNNYV8oucUmiWPiAprZMqAMtoOWHnGi46LHNeXH3ebi9gf9eXcelx3ihYxK/WYJvcRjqbco=
+	t=1789221963; cv=none; b=tm0kMQYx3MxP0ZAhVrsXM1nAKLdYQfuKUxrtXIGHrGvndJaoQ+4P9oloxmqwZE2oGj47tP9cF56aMIQkS6QxeYVulTdUrW/60PkUbRj1tSfZyJ4GOB8MUmj6jWEsFGwdu33rlmQZggSRHtYusKcQXB+BSMNiLMYzexAwMc/yihY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221958; c=relaxed/simple;
-	bh=O3QIX8rZPCaPIHYgYQoOTBM4L69+tGcWSOsejjcRHZY=;
+	s=arc-20240116; t=1789221963; c=relaxed/simple;
+	bh=zXMxbIZIQUMB0nhCEqZq0goiEXXzRiB9Mvc54NaivhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PN8/ApoBVHWS2tfTF/KkqMQYKhvpBtLlj1xQMnzlng6Nk5rwcRg6ITumUATjhOsgAT6FrcccYbmP+OISroyamxHg6tb0QVQNwyrxhdwB9vZnqEuqMdJrP7NDHQFg6LJ9S4pHv2A/RI1RSPdL6atyf/ps1weAKtdqsSAOOf+IzEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2Unj5Fv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j3GbAyBFrKgzHkTirVVuEISos3ufaOcXTnG1GeNh76nF+IOXR4meHP0/Lt8PYr6zz2sbWAKtxeHX6WMf3CQCx6rYesbFAkC54WXxZIKQVb9JuN0iz9MnqSHZkhhCsB+Wm3kIujhnLgqyzFaBF9t3+cEImxgTZOfBhb4BNzfbqxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5gNL4Ho; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2Unj5Fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B7A1F000FF;
-	Sat, 12 Sep 2026 14:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5gNL4Ho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D1E1F000FF;
+	Sat, 12 Sep 2026 14:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221957;
-	bh=5G2qz+ZoedafdGyapjT98I4xy6ZsWKAEXR87Woxv3Cs=;
+	s=korg; t=1789221962;
+	bh=DB3MOMpmW3YATUZEKybAnhzUJ1OcHTYMsHukI6Wuv9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2Unj5FvuT6jKQTVP7QoSwWvnaCiPNBa1VHPXEIwGluWkNEzdy+zMoV0qDC1Fkagh
-	 YmJMeR6ZkZz0/x2Iu2jjchoeTt7kOZLDoGiIrJbfzunDBLgTwAyihMKTsQ1OoEXKdF
-	 1c1O3TvD3zQE/tHDnvUMTf2F9C9AIN0l0C+ashlc=
+	b=J5gNL4Ho2wr+o2WonehTTUFzl5HCSK/Wc0MTvDMOW6FJbVoAXEVGGittTGyV6w26E
+	 LNV5G08h3EiDEqxf5MLjE/dkt0k2+7MADwfFCGisBVXUTJMplX4t4YBsJQv9SVl8+F
+	 /JS7TV5iY2AtqhHgjSrCjpet9x99l1ZvXW6PWQgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0445/1424] media: cedrus: fix memory leak in cedrus_init_ctrls()
-Date: Sat, 12 Sep 2026 08:47:57 +0200
-Message-ID: <20260912065617.251254511@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 6.6 0436/1424] KVM: s390: Zero initialize irq in reinject_machine_check
+Date: Sat, 12 Sep 2026 08:47:48 +0200
+Message-ID: <20260912065617.046506667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,53 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit 9df2fbe563194da1967a5db083442186c1323efe upstream.
+commit b239410c7653ff6781d4cf1d63cfc52a1bb71788 upstream.
 
-In cedrus_init_ctrls(), the V4L2 control handler is initialized before
-allocating memory for ctx->ctrls. If this allocation fails, the function
-returns -ENOMEM without freeing the previously allocated handler
-resources, leading to a memory leak.
+kvm_s390_reinject_machine_check() fills cr14, mcic, ext_damage_code and
+failing_storage_address of the on-stack struct kvm_s390_irq, but struct
+kvm_s390_mchk_info also has a pad word and a 16 byte fixed_logout array.
+struct mcck_volatile_info carries no logout data, so there is nothing to
+copy there and both stay whatever was on the stack.
 
-Fix this by calling v4l2_ctrl_handler_free() on the ctx->ctrls allocation
-failure path.
+__inject_mchk() then memcpy()s fixed_logout into the vcpu local
+interrupt state unconditionally. This will reach the guest during
+deliver and userspace during migration.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
+Reflecting zeroes is the correct behaviour here, as KVM has no logout
+data for a reinjected machine check.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-Allwinner SoC or board with a Cedrus VPU available to test with, no
-runtime testing was able to be performed.
+This needs a host machine check while the cpu is in SIE so not trivial
+to trigger.
 
-Fixes: 50e761516f2b ("media: platform: Add Cedrus VPU decoder driver")
+Fixes: 4d62fcc0b692 ("KVM: s390: Inject machine check into the guest")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260805110455.7200-4-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/sunxi/cedrus/cedrus.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/kvm/interrupt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/media/sunxi/cedrus/cedrus.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
-@@ -285,8 +285,10 @@ static int cedrus_init_ctrls(struct cedr
- 	ctrl_size = sizeof(ctrl) * CEDRUS_CONTROLS_COUNT + 1;
- 
- 	ctx->ctrls = kzalloc(ctrl_size, GFP_KERNEL);
--	if (!ctx->ctrls)
-+	if (!ctx->ctrls) {
-+		v4l2_ctrl_handler_free(hdl);
- 		return -ENOMEM;
-+	}
- 
- 	j = 0;
- 	for (i = 0; i < CEDRUS_CONTROLS_COUNT; i++) {
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -2863,7 +2863,7 @@ void kvm_s390_reinject_machine_check(str
+ 				     struct mcck_volatile_info *mcck_info)
+ {
+ 	struct kvm_s390_interrupt_info inti;
+-	struct kvm_s390_irq irq;
++	struct kvm_s390_irq irq = {};
+ 	struct kvm_s390_mchk_info *mchk;
+ 	union mci mci;
+ 	__u64 cr14 = 0;         /* upper bits are not used */
 
 
