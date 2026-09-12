@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB942BDC0E;
-	Sat, 12 Sep 2026 10:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56374CA6F;
+	Sat, 12 Sep 2026 10:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208464; cv=none; b=PaRN2RAsYPTBYJYpizYuvcptQS5vSQSCBRjL+4epkOhd9L2/d71ujusv8h7e9/tTqqmlw9Jzwb6pBHcV9nQL1sKSp/cfI7p+D4hI2RJVv9IcgW8gF+R/m8gnbfUd3XVnYkAN+MifCRSPuc9PJDN6Yx0juDyUCIpi79+8hkoHK0c=
+	t=1789208469; cv=none; b=cL9nA2RR/M/NTjG+tjmX7VO1boVbfadUWLlWCIIlGcntKZSjoSFKARYraoEd46mHTBj4sMP4KbE3/orbONjzyA8Opf8+Y4IPsFNMgJr24MMDC9HkOzOP4mFe/Lcf3paHWY7v96kyR1lOgNslA1YDHOsfNW7s5+iVecvp1mx+39E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208464; c=relaxed/simple;
-	bh=30eEm6MYOlsJA3y64yc0byjIFBg/EryU6Zny6LH2fFE=;
+	s=arc-20240116; t=1789208469; c=relaxed/simple;
+	bh=nYe9ivs2XInBqHj5TTmZPn/9qjDVgqiFIsfUg0jxEdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+q1q9vKYqHCajJJ6LDrbzVxRhiBTSNEgkTr4gpfZsMOjQ4U+3z4hBKmv/aWgVdh002MC9j+AJjSF3bR8n8cEuUGRC2qfOdbO7BHGlQhmHWWthJ2bxLZhswPZl6pCpkOrIGCWkdvnR4EMz8s4vhB1UfyHhtsqXA0t+EuH8vK5E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm/RxJna; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T+bZb7bUFn81VTduxzjHjuVleG9gwPiNt+X909Xp80U9oM6HzzoM/K2kNkkT08nY09KP6wYH9Y7nHnQbCJXY9h+LnMwngQUX7QkKNlpObEc3AEG91fy95kxXGRCQHTccBJsfMfwlW3eG+GYNQxgJ00F4RCprzPYkZq0n9PCf15w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+ahsOBC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm/RxJna"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0DC1F000FF;
-	Sat, 12 Sep 2026 10:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+ahsOBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7D61F000FF;
+	Sat, 12 Sep 2026 10:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208462;
-	bh=m63l2pUC0rjtvYprk7hz9ImQjIfuRBOOTyP2nBHjpMI=;
+	s=korg; t=1789208468;
+	bh=DSXPM9opMiDeod7oPb9ZY7FXx1vQ9w4Dr8VZQXfs9Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zm/RxJnaz9p+YCcZV3nG50o7OWJLfrvjSgc2UEqeAGpT9NiBJj6q40+J5+VgB1fHy
-	 uk2cV3l4XYFX/mzvAOOHnWHb7N/egD7O4aG1CiYeFECzM5/CObZsNncJhiPkp31yPi
-	 SqILCfUKTvvuMbss/C1Uf70kfKNJvcPSUDlWZSy4=
+	b=S+ahsOBCs9+c9G2p7WlGWOel5RtcNmv6GgoYyuqhajomH3rDe1qsEfhqBOL7QZUiC
+	 bdRH0yXJv7eTt0bSBM35EcLIG/gwe2HcG/DTN3yK4ae9yxT36nvbRJyqJbeuF9JL+6
+	 o+J6ti8WJVB0HRtUIvgCldSkCrMOHOAjRZioViRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	David Strahan <david.strahan@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0622/1518] nilfs2: fix BUG in nilfs_copy_dirty_pages() on dirty state mismatch
-Date: Sat, 12 Sep 2026 08:46:31 +0200
-Message-ID: <20260912065637.500993505@linuxfoundation.org>
+Subject: [PATCH 6.18 0623/1518] scsi: smartpqi: Fix AIO retry marker cleared by SCSI core between dispatches.
+Date: Sat, 12 Sep 2026 08:46:32 +0200
+Message-ID: <20260912065637.526539708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,77 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: David Strahan <David.Strahan@microchip.com>
 
-[ Upstream commit 66f4ad3ce158902e5f98afea93189972ed8750c2 ]
+[ Upstream commit 225548863f0a2350c6f34231ca56710c3dd1a5d5 ]
 
-Syzbot reported a kernel BUG triggered within nilfs_copy_dirty_pages(),
-which copies dirty DAT file folios/pages to its shadow page cache.  The
-BUG occurs when a retrieved dirty folio/page unexpectedly loses its
-'dirty' status.
+On recent Linux kernels the driver can enter a retry loop on the AIO fast
+path when a request is retried, looping until timeout.  A diagnostic path
+that takes a physical drive offline on AIO-bypass failure is also never
+entered on affected kernels.
 
-This issue arises because, since the commit referenced below, the 'dirty'
-flag of a folio/page can be cleared asynchronously after the filesystem
-detects metadata corruption and transitions to read-only mode.
+Register a per-command initialization callback with the SCSI core. Its
+presence causes the core to skip the per-dispatch clear, so the retry
+marker now survives across the requeue and the AIO-to-RAID fallback
+proceeds as intended. The driver takes over the marker's lifetime: it is
+zeroed at tag allocation, preserved across the retry requeue so the error
+path can act on it, and cleared on terminal completion so the tag starts
+clean on its next use.
 
-Resolve the issue by returning an -EROFS error if the filesystem has
-transitioned to read-only mode.  Also change the behavior to issue a
-kernel warning only once instead of triggering a kernel BUG when this
-unexpected 'dirty' state is detected while the filesystem is not in
-read-only mode.
-
-Reported-by: syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8baf9a79a3ffc6271cb6
-Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: dce5c4afd035 ("scsi: core: Clear driver private data when retrying request")
+Co-developed-by: Mike McGowen <mike.mcgowen@microchip.com>
+Signed-off-by: Mike McGowen <mike.mcgowen@microchip.com>
+Acked-by: Don Brace <don.brace@microchip.com>
+Signed-off-by: David Strahan <david.strahan@microchip.com>
+Link: https://lore.kernel.org/linux-scsi/20260722220401.6357-1-david.strahan@microchip.com/
+Link: https://patch.msgid.link/20260722220401.6357-2-david.strahan@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/page.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
-index 56c4da417b6a1..89180e2f59fef 100644
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -243,6 +243,7 @@ static void nilfs_copy_folio(struct folio *dst, struct folio *src,
- int nilfs_copy_dirty_pages(struct address_space *dmap,
- 			   struct address_space *smap)
- {
-+	struct inode *smap_inode = smap->host;
- 	struct folio_batch fbatch;
- 	unsigned int i;
- 	pgoff_t index = 0;
-@@ -258,8 +259,19 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
- 		struct folio *folio = fbatch.folios[i], *dfolio;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 090e786470b39..88cffb1fb59ce 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -66,6 +66,12 @@ static struct pqi_cmd_priv *pqi_cmd_priv(struct scsi_cmnd *cmd)
+ 	return scsi_cmd_priv(cmd);
+ }
  
- 		folio_lock(folio);
--		if (unlikely(!folio_test_dirty(folio)))
--			NILFS_FOLIO_BUG(folio, "inconsistent dirty state");
-+		if (unlikely(!folio_test_dirty(folio))) {
-+			if (WARN_ONCE(!sb_rdonly(smap_inode->i_sb),
-+					"inconsistent dirty state\n"))
-+				goto unlock_folio;
++static int pqi_init_cmd_priv(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
++{
++	memset(pqi_cmd_priv(cmd), 0, sizeof(struct pqi_cmd_priv));
++	return 0;
++}
 +
-+			/*
-+			 * If the filesystem has been forced to read-only
-+			 * due to metadata corruption.
-+			 */
-+			folio_unlock(folio);
-+			err = -EROFS;
-+			break;
-+		}
+ static void pqi_verify_structures(void);
+ static void pqi_take_ctrl_offline(struct pqi_ctrl_info *ctrl_info,
+ 	enum pqi_ctrl_shutdown_reason ctrl_shutdown_reason);
+@@ -5943,6 +5949,17 @@ void pqi_prep_for_scsi_done(struct scsi_cmnd *scmd)
+ 	struct pqi_scsi_dev *device;
+ 	struct completion *wait;
  
- 		dfolio = filemap_grab_folio(dmap, folio->index);
- 		if (IS_ERR(dfolio)) {
-@@ -277,6 +289,7 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
++	/*
++	 * Clear the AIO-retry marker on final completion so the tag
++	 * starts clean on its next dispatch.  On DID_IMM_RETRY leave
++	 * it intact: pqi_aio_io_complete() sets DID_IMM_RETRY and
++	 * bumps the marker to steer the requeue onto the RAID path,
++	 * and pqi_process_raid_io_error() consumes the non-zero
++	 * marker to offline a misbehaving drive.
++	 */
++	if (host_byte(scmd->result) != DID_IMM_RETRY)
++		pqi_cmd_priv(scmd)->this_residual = 0;
++
+ 	if (!scmd->device) {
+ 		set_host_byte(scmd, DID_NO_CONNECT);
+ 		return;
+@@ -7596,6 +7613,7 @@ static const struct scsi_host_template pqi_driver_template = {
+ 	.sdev_groups = pqi_sdev_groups,
+ 	.shost_groups = pqi_shost_groups,
+ 	.cmd_size = sizeof(struct pqi_cmd_priv),
++	.init_cmd_priv = pqi_init_cmd_priv,
+ };
  
- 		folio_unlock(dfolio);
- 		folio_put(dfolio);
-+unlock_folio:
- 		folio_unlock(folio);
- 	}
- 	folio_batch_release(&fbatch);
+ static int pqi_register_scsi(struct pqi_ctrl_info *ctrl_info)
 -- 
 2.53.0
 
