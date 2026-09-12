@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDAB41A503;
-	Sat, 12 Sep 2026 09:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9574078E8;
+	Sat, 12 Sep 2026 09:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207137; cv=none; b=KSz6KW+bRT7IPS9Q4tiMO1439/SvG5yIJ1Zq1NsRUJxl8hhYGN7rpFTHGN0fGcOu4WUfYSNm4xuvHeo1FctfYQ3z/0zMyBC9VOm608vml/QYkFC1shytkLBXBdkNfjZrwtQY5E3T51Bd/lGDj6/+dUAhxWrofH61jq0/7QrcoGw=
+	t=1789207142; cv=none; b=ncNMmyio5sNeywk/s7LFfuLr8/U2KQ/viCpzJt8E/tR4hOZkdKs+0W2JlM2WhJbPv8cffqiiMJXgmiOoVmcd+PovH1iL5oeIs0oybA21yBc1PnsMB2jr4c8T6rTTp17hzLDpMU9MKudAjQn2Ii2OcBs4LDY99njPbHkpbE1arP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207137; c=relaxed/simple;
-	bh=P1NiagmljIVcFmN31Ia9Kj1cnlOrYP0afvo6ttg2Y1I=;
+	s=arc-20240116; t=1789207142; c=relaxed/simple;
+	bh=j8fIcRtCLWKPeCJF3+qjblPTxHZxYnJaXYcOoFdNe/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONH1eZaEf7kHTHDS1fyFah98ayKOgY4BoHv5tC4IFG5BzXv0LVa3U3q/1WDPTIVS7tfFacmPevz/7DLOJOuyH3mzxV5g+vVHd/4t5EefLX5ALNX0XYplgxgcFYjdRxury7G88L0jP0qXOh/OWeoOpOxT5aEeMJVJbOsNllnbwVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5iN0rSF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n1qh3vgBIH4g34zFFy77Qi8obRWgzv86/STQeJUBNihTwL7BWBb+04x2ZwQHZu6YoH6uhR6J+LZM/f9+T2aQ4O0eP4UA1RzVQ33RLYOGvm9RBC6h7+u3018c5p1dxhpELvJQSVus3x/dJ2Z7HkR8R9eexe4YVdLiPRkNbrpjptY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeBX+7BE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5iN0rSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897781F00893;
-	Sat, 12 Sep 2026 09:58:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeBX+7BE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A05F1F000FF;
+	Sat, 12 Sep 2026 09:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207136;
-	bh=wgrv8P7QDdN2CN/BFH9rR+diOaLQrXBKTyHngv6WJUo=;
+	s=korg; t=1789207141;
+	bh=rbCt5QBu18j8uRGa7BrBbeoNZfo+OjR/lhUbGZU1myo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M5iN0rSFiixtk2PvmN/nuGf8bUxII+VYJ2CExmxy9AMLGK3ghPIEhJgG2TLUyQa9I
-	 XRX1GMPjZNRgCHASqNic5d9CYJsXRWdddFLCT3FO7dzHVKdxxbIcgs6R4BeCz2eP/o
-	 sUfvdQ04k9OVMb0o0466JQ11ezgxAkkOHnAzANLk=
+	b=IeBX+7BEiCllzN18LZUwRuKmPn4RGGbsl2hxLp/S5S0rijbbniY6pNNdlKUEN0rgV
+	 6qi96pgwKhlDsEWiCcr51eoKjs05JJtUZe4nhAA021XvXat7hhc5xXf5wlRIQWmt9P
+	 E5bwcDaLdB52785Ac7IfdG/fpkC2Phv1Lq2KVtNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evgenii Burenchev <evg28bur@yandex.ru>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0350/1518] ALSA: hpi: Check transport errors during HPI6000 adapter initialization
-Date: Sat, 12 Sep 2026 08:41:59 +0200
-Message-ID: <20260912065631.391470331@linuxfoundation.org>
+Subject: [PATCH 6.18 0351/1518] pmdomain: bcm: bcm2835: handle genpd provider registration errors
+Date: Sat, 12 Sep 2026 08:42:00 +0200
+Message-ID: <20260912065631.414880128@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,48 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgenii Burenchev <evg28bur@yandex.ru>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit cc15c329663e3ef1aeed0b68e49a5d5ce4ae0d5c ]
+[ Upstream commit a1d9d3b958d69a13783613304f524f489fecdd1f ]
 
-create_adapter_obj() retrieves adapter information by calling
-hpi6000_message_response_sequence(). This function reports transport-level
-errors through its return value and DSP-reported errors via hr0.error.
+bcm2835_power_probe() initializes all power domains and then registers
+the onecell genpd provider, but ignores of_genpd_add_provider_onecell()
+failures. Probe can therefore return success even though no provider was
+published.
 
-The current code only checks hr0.error, causing transport-level errors to
-be ignored. As a result, adapter initialization may continue with an
-invalid response.
+Check the provider registration return value and jump to the existing
+cleanup path on failure.
 
-Check the return value of hpi6000_message_response_sequence() before
-examining hr0.error.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 719f82d3987a ("ALSA: Add support of AudioScience ASI boards")
-Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
-Link: https://patch.msgid.link/20260708141147.18253-1-evg28bur@yandex.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/asihpi/hpi6000.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pmdomain/bcm/bcm2835-power.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/asihpi/hpi6000.c b/sound/pci/asihpi/hpi6000.c
-index b08578c93c6a2..57a730be26745 100644
---- a/sound/pci/asihpi/hpi6000.c
-+++ b/sound/pci/asihpi/hpi6000.c
-@@ -537,6 +537,11 @@ static short create_adapter_obj(struct hpi_adapter_obj *pao,
- 		hr1.size = sizeof(hr1);
+diff --git a/drivers/pmdomain/bcm/bcm2835-power.c b/drivers/pmdomain/bcm/bcm2835-power.c
+index f2472f1e17521..f3df1198ec7e2 100644
+--- a/drivers/pmdomain/bcm/bcm2835-power.c
++++ b/drivers/pmdomain/bcm/bcm2835-power.c
+@@ -675,7 +675,12 @@ static int bcm2835_power_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto fail;
  
- 		error = hpi6000_message_response_sequence(pao, 0, &hm, &hr0);
-+		if (error) {
-+			HPI_DEBUG_LOG(ERROR, "message transport error %d\n",
-+						  error);
-+			return error;
-+		}
- 		if (hr0.error) {
- 			HPI_DEBUG_LOG(DEBUG, "message error %d\n", hr0.error);
- 			return hr0.error;
+-	of_genpd_add_provider_onecell(dev->parent->of_node, &power->pd_xlate);
++	ret = of_genpd_add_provider_onecell(dev->parent->of_node,
++					    &power->pd_xlate);
++	if (ret) {
++		dev_err_probe(dev, ret, "failed to add genpd provider\n");
++		goto fail;
++	}
+ 
+ 	dev_info(dev, "Broadcom BCM2835 power domains driver");
+ 	return 0;
 -- 
 2.53.0
 
