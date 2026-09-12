@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B262DC792;
-	Sat, 12 Sep 2026 10:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F0A4BEE25;
+	Sat, 12 Sep 2026 10:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207426; cv=none; b=SSoBR42IXPlb9NmMtAzHkSyJHLnc7/rZ5U4dlCMkI6tGkNOgBB5nXnnzxvLzzMWDzCfjpEHsebs9SgeSqom7DZ+A15qlmjkH7qVkhaXq3Nanwu42B+1BXf74E3fVl3hhY/I0J4Z0pvnomIIeSWuCxIS6ncijIt509+Aw6kTlqZQ=
+	t=1789207431; cv=none; b=GIupRpWouuZwz9PRJakKDgWZ2xH0b5GicpEP8aFAvQurHh6iVywFwz7OxpFaHCC9MPSGtdE7cxG0m2mQei7XGUp1N1O8UC40vHgpsmMNgydiIENnGJmdcDJeTiJn/7J3Qe6W8vkh9PC81a4+du7PYE860xWkknE7JVijo0b414I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207426; c=relaxed/simple;
-	bh=oRHG23q2QS7o60Zk7NLwgXLBB6MECofrLep5vefk/4w=;
+	s=arc-20240116; t=1789207431; c=relaxed/simple;
+	bh=Sh7CleKO9mEQrM4eAegyf20SBCvpYg8tNqQFeoJG4ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hP04E8uGBraGq5FnUyaMW1ki2s7H1ViaITCzDs7geB5ZhkqorK2nEICkPS4MTMpdB5oH+XXxUF9OGzTHb7wfdl/Ao9syXT4zholFFdwRURAVPMeXFnqdzjRHSQNkSMn8PkVJh+Y20Qi05XJy7gTPOK2f28V4kD5PrkKN7DcenEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7wfuBE+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LxkHAsdGf61ILtouyXqDm6jyQeEXyHMC4nr0yogascJRraTAYucT2TmEdNNu1gaQgEQJTBPhyh0fkU8tGORcnQ7Uto8yc47gxrmR2/iInud0cpN/xyIiJPcgtwjrUSDsFR37qU71AYx4BVrwiqFg5q9Qm9f4r+UOMTaO3sPurjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK+TGyao; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7wfuBE+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9D11F000FF;
-	Sat, 12 Sep 2026 10:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK+TGyao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65131F000FF;
+	Sat, 12 Sep 2026 10:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207424;
-	bh=bbkv6mDTQjBa1Q2Fdwb0yM7Eb/nYp32rY4iVtmUhg1o=;
+	s=korg; t=1789207429;
+	bh=ChUopa+zz66P7KD3C7aa2MuhxEXxBFfgPDR2Ow6zyEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u7wfuBE+lnKOXMU3GlpZiRMiiyuK67mItRkWGFvMPRfyZ4XZLVn4LeR2ENgCaCN83
-	 sG9huCF8981vwimqc4MSVb8vf+VvrRvKmdJQxfopWs58tOwBkAJL/kRBvgFvff9ieh
-	 ZePzO+EcYfEWDTv2NjkFDELLe2OzdCsdNcRnB4sU=
+	b=pK+TGyaok3kf23edHLhso3fkj6ZYEl5zZeqpk8kNgtKWpXcXnEO6hEccD7HLLwOP+
+	 v58CMlBZC6Cp5nzzZvgTUtSabvZN5mrqNkEcj21SCzuBmF7JMfzuLE+vrojhw6uOuJ
+	 iBzHHpnppSuXuBmJ5yHEsErNtJm0ou8cCfB6OwlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0408/1518] perf: evsel: Fix error handling in tp_format lookup
-Date: Sat, 12 Sep 2026 08:42:57 +0200
-Message-ID: <20260912065632.688252581@linuxfoundation.org>
+Subject: [PATCH 6.18 0409/1518] drm/bridge: tc358767: clamp the reported AUX read size to the request
+Date: Sat, 12 Sep 2026 08:42:58 +0200
+Message-ID: <20260912065632.710579653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,38 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 4968708beaad53940b67e4952e34a97d8768091d ]
+[ Upstream commit ec6444a00c49e6c2b5e9a507272a28126677f9ee ]
 
-In evsel__tp_format(), when trace_event__tp_format*() returns an error,
-IS_ERR() checks the local variable 'tp_format', but PTR_ERR() incorrectly
-uses 'evsel->tp_format' which hasn't been assigned yet.
+tc_aux_transfer() clamps an AUX read to the payload limit:
 
-Fix this by using PTR_ERR(tp_format) to extract the error code from the
-correct variable.
+	size_t size = min_t(size_t, DP_AUX_MAX_PAYLOAD_BYTES - 1, msg->size);
 
-Fixes: 6c8310e8380d ("perf evsel: Allow evsel__newtp without libtraceevent")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+After the transfer it replaces size with the byte count the controller
+reports in AUX_BYTES:
+
+	if (size)
+		size = FIELD_GET(AUX_BYTES, auxstatus);
+
+AUX_BYTES is GENMASK(15, 8), so it can be up to 255. Nothing clamps it
+back to the request. tc_aux_read_data() reads that many bytes into the
+16-byte auxrdata stack buffer, then copies them into the caller buffer. A
+reported count of 255 makes the read run to 256 bytes and overruns both.
+
+The controller should never report more than it was asked to transfer, so
+this is defense in depth rather than a live hole. The reported count is
+only lightly trusted, and the check is cheap. Clamp it back to the request,
+the same way ti-sn65dsi86 does in commit aca58eac52b8 ("drm/bridge:
+ti-sn65dsi86: Never store more than msg->size bytes in AUX xfer").
+
+Fixes: 12dfe7c4d9c5 ("drm/bridge: tc358767: Use reported AUX transfer size")
+Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260701064440.1541418-1-maoyixie.tju@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 2 +-
+ drivers/gpu/drm/bridge/tc358767.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 22e43a57dc95f..e01103443b23f 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -646,7 +646,7 @@ struct tep_event *evsel__tp_format(struct evsel *evsel)
- 		tp_format = trace_event__tp_format(evsel->tp_sys, evsel->tp_name);
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 4097fef4b86b5..26ba5a6c1b742 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -527,7 +527,7 @@ static ssize_t tc_aux_transfer(struct drm_dp_aux *aux,
+ 	 * address-only transfer
+ 	 */
+ 	if (size)
+-		size = FIELD_GET(AUX_BYTES, auxstatus);
++		size = min_t(size_t, size, FIELD_GET(AUX_BYTES, auxstatus));
+ 	msg->reply = FIELD_GET(AUX_STATUS, auxstatus);
  
- 	if (IS_ERR(tp_format)) {
--		int err = -PTR_ERR(evsel->tp_format);
-+		int err = -PTR_ERR(tp_format);
- 
- 		errno = err;
- 		pr_err("Error getting tracepoint format '%s': %m\n",
+ 	switch (request) {
 -- 
 2.53.0
 
