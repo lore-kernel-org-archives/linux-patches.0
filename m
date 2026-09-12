@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F116337E5D1;
-	Sat, 12 Sep 2026 12:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481E7429000;
+	Sat, 12 Sep 2026 12:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216668; cv=none; b=Dz58TJ694VSJIVyLPiiZsEqse6WWA5wrtlZk1IUkevS9qX3mEXBFgiEHUbBxqZ2ay4FsLGivu1vgrI/PmNmw5vF/jW6Oio3V8NOY/RKdMdX2QDIKJHjA17SDO7OHHZBW6+YHxBEZCL347k3W/P8BarYIxPSJcmya47InZDJvpJA=
+	t=1789216673; cv=none; b=R9S7pVX3rIHuX9/vdQpJXnaXDeP9qTB2dta270JfOtglOQKYgdROQlnXc/Go+4X1biTuziC7rUVed8Nych6B8pTJyis6DEvxkm6Wv7nmtScqfmAqnQ/e3w2l2pn0yaN5a8NtYXvBIJgpVQp/i+p3JybKpvTbpoPjB3aLGrB+8AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216668; c=relaxed/simple;
-	bh=jFmlKHEiPHzO2D6fpgcuib9QGV/MBLnIMibJivwRwZ4=;
+	s=arc-20240116; t=1789216673; c=relaxed/simple;
+	bh=uNjYgEXpNgGSrTODTDcCJXo2vZKI3YP5vcBUy7Y/sFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KAWWt91mBkxvuJ7MmWrn+FHC8GDN6irR+Q5SJunjH8J/heWORxNaEtizmBA0A/iAFNNXIzPgQjObtsh6PKnN79rkMPASybO4ebc+5UND3aQgRGe3SNl7h/Ibcv5t9Wc21rMgebxx5EaT8vQaejBi/298kZwLLvyc/ieHVLfR3IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBTm4ZAS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eSVm9MeaVPAmC26flVtny2rq9IRdT+XJ0ZaIw37teczhuIAKCz2kgIMFFIxm2kUsGmjU6O0WKis2tPNxvfwzwh9fdN1b0nocKLj0KgZMidfq4WirjeE9rILRo2yRsULmz3DMOE1rHjhucLx8bEOg7HDAHx8vJfsmvC3mnT4t/Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUkmKjLe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBTm4ZAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76821F00893;
-	Sat, 12 Sep 2026 12:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUkmKjLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012801F000FF;
+	Sat, 12 Sep 2026 12:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216666;
-	bh=AD0hmiafu6AZjKmL8nVojeuDuErYkjLaHrmryzrEqjs=;
+	s=korg; t=1789216672;
+	bh=QmOZYJt+xWIO93pnkZVgsf3JJwqBlF7HWX2+ay8rSho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UBTm4ZASlovy6A3bNM2hCZp2CaeXipFv9EvDm7/ZS6fZS+Dawrgrw8J9mqs79jh0Z
-	 LjAPdz92KWrLUo3+k7PHhx9hbNLUguQp6LkSIC2mxXVXVvw+zwx6HE3a1CygZdYsoG
-	 vCTwaPe6lwPvmP95yMMkR5w5enhqXDXAH0P4Pg8M=
+	b=CUkmKjLeDhnOoBLvbswdVXMaR6N9yhbLh0XafVtPyEg5uylUkiqBKpYqeUx3eREpr
+	 WhVhAi3xHZEVS12KbIgbYsGg1IoMCFbPjmvO/BXlzve0ArbsoyO8zmPgucJZPBFsKn
+	 tl6bmwlzUPLtvqntzFzYVsRAzqmwC4KWsz2R6q3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Chen Cheng <chencheng@fnnas.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0746/1376] md: recheck spare changes before starting sync
-Date: Sat, 12 Sep 2026 08:52:52 +0200
-Message-ID: <20260912065624.170376735@linuxfoundation.org>
+Subject: [PATCH 6.12 0782/1376] md/bitmap: resume array on backlog_store() error path
+Date: Sat, 12 Sep 2026 08:53:28 +0200
+Message-ID: <20260912065624.966967635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,104 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit c7d34d17ea43ebc86b45d439ebb435e11ca44bca ]
+[ Upstream commit 2911cd0a0f4366a7e06832bc5f0a7fdcc138e4dc ]
 
-remove_spares() and remove_and_add_spares() modify the array's rdev
-configuration. These operations are only safe after the array has been
-suspended.
+backlog_store() suspends the array before checking whether a write-mostly
+device exists. If no such device exists, the error path only unlocks
+reconfig_mutex and leaves the array suspended, blocking subsequent I/O.
 
-md_start_sync() checks whether spare configuration changes are needed
-before taking reconfig_mutex. However, the rdev state can change before
-the mutex is acquired, so the initial check can become stale. In that
-case, md_choose_sync_action() may remove or replace rdevs while normal
-I/O is still accessing them.
+Use mddev_unlock_and_resume() to release both states.
 
-The race can occur as follows:
+Fixes: 58226942ad3d ("md: use new apis to suspend array before mddev_create/destroy_serial_pool")
 
-raid10d          Worker                      Normal IO
-____________     _______________________     ______________________
-
-                                             raid10_write_request()
-                                             wait_blocked_dev()
-set Blocked
-set Faulty
-                                             Skip Faulty rdev
-                                             rrdev->nr_pending++
-                                             .repl_bio = bio
-                 removeable_rdev = false     .
-                 array not suspended         .
-lock mddev                                   goto err_handle
-                 lock mddev (wait)
-                 .
-update sb        .
-clear Blocked    .
-                 .
-unlock mddev     .
-                 lock mddev (acquires)
-                 remove_spares()
-                 removeable_rdev = true
-
-                 raid10_remove_disk()
-                 rdev = replacement
-                 replacement = NULL
-                                             rdev_dec_pending(NULL)
-                 unlock mddev                (NULL)->nr_pending--
-
-In this case, rdev_dec_pending() is called with a NULL pointer,
-resulting in a NULL pointer dereference when attempting to decrement
-nr_pending.
-
-Fix this by suspending the array when spare configuration changes are
-needed, including for non-read-write arrays, and checking again after
-taking reconfig_mutex. If the array was not already suspended and a
-change is now needed, release the mutex, suspend the array, and
-reacquire the mutex before continuing.
-
-Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260628142420.1051027-1-abd.masalkhi@gmail.com?part=3
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
 Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260708112003.474537-1-abd.masalkhi@gmail.com
+Link: https://patch.msgid.link/20260718034236.4119093-1-chencheng@fnnas.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/md/md-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 889711a24b1cb..3e683b9626df5 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9583,13 +9583,25 @@ static void md_start_sync(struct work_struct *ws)
- 	 * If reshape is still in progress, spares won't be added or removed
- 	 * from conf until reshape is done.
- 	 */
--	if (mddev->reshape_position == MaxSector &&
-+	if ((mddev->reshape_position == MaxSector || !md_is_rdwr(mddev)) &&
- 	    md_spares_need_change(mddev)) {
- 		suspend = true;
- 		mddev_suspend(mddev, false);
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 33b92b864f70c..67f1b716e2936 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2816,7 +2816,7 @@ backlog_store(struct mddev *mddev, const char *buf, size_t len)
+ 	if (!has_write_mostly) {
+ 		pr_warn_ratelimited("%s: can't set backlog, no write mostly device available\n",
+ 				    mdname(mddev));
+-		mddev_unlock(mddev);
++		mddev_unlock_and_resume(mddev);
+ 		return -EINVAL;
  	}
  
- 	mddev_lock_nointr(mddev);
-+
-+	/*
-+	 * The spare configuration can change before reconfig_mutex is acquired.
-+	 * Recheck while holding the lock and suspend if needed.
-+	 */
-+	if (!suspend && (mddev->reshape_position == MaxSector || !md_is_rdwr(mddev)) &&
-+	    md_spares_need_change(mddev)) {
-+		mddev_unlock(mddev);
-+		mddev_suspend_and_lock_nointr(mddev);
-+		suspend = true;
-+	}
-+
- 	if (!md_is_rdwr(mddev)) {
- 		/*
- 		 * On a read-only array we can:
 -- 
 2.53.0
 
