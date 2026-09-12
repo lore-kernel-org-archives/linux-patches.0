@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E55133C18B;
-	Sat, 12 Sep 2026 15:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA4733939A;
+	Sat, 12 Sep 2026 15:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226571; cv=none; b=cr3nuIC7Aes0L69jyL03zk9lGkl2xLaluv+LZQ5oT3JUemL5AzXAjvyiU9RlW+kHyIv2Alo+mmkMcgmZN7eb+02ENcTYH3MNjcAtLfTNKoOCWimhBtuxDOJq7hxJURzGY7vJ72lUXfB8juH17sH+Twwv3gF/EznJ7YEnxk5gEhU=
+	t=1789226576; cv=none; b=oJfaH2MyNf9/NtqMeN96FE6K+n92GORkTrw+bZ2KYvOVRwWdzuhqB3+x2i7v7lvbMq/KiPPnF4jheSLMC3RGZ0olHxOhyERMcLWQ7uQvUy0hpK6lNWE+D4EqICwqcDAkgLMoKvXHW3bqgUa77gQYdcfyc2pUTr7X/FF1YwOsAIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226571; c=relaxed/simple;
-	bh=P2darfTgk8A5LYYvKxZPVXMeEiIQqCdilMBNxYdRCXk=;
+	s=arc-20240116; t=1789226576; c=relaxed/simple;
+	bh=/rFbs122q7Pm3HHZUHqBfQbbYIhZWgV4w8pYtZkDDW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1gwO0vOr8vl3BsBIsgUvqqUFZ9vatkFPvl4QNuW81RRLjC09B9ndOjcBnKQTe9z8BwkGGAcsp2djI7RH73xMjjArpZeOPJLw3pNqf16+8xdMc/kJwgaLfljNXShMUpUK8Vah+cnr5v+uQ57tcehqSRmugsYmjHcgz2/yDtl3yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgBhgmh7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bvfXDhMrgrCnfaJHIo16wd8QgUv0jLqbO05Kis9X624Itt+uS69gviDliU0aeS88R41k/mkyf8Pei8yvczYEKJn9uXyqXXLvwlWBb1qhXNMMDr3Nn7NYgWuBwlhuBYUB3fQQkQSWAqqs7XatpmfvBDhr8ttcojgAsg+aDdR8YX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvv6dHfd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgBhgmh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2418D1F000FF;
-	Sat, 12 Sep 2026 15:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvv6dHfd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5461F000FF;
+	Sat, 12 Sep 2026 15:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226570;
-	bh=shrIGZxOVIX+uF2S6VoOCDGGhF7TQvPEemiHTQhACBk=;
+	s=korg; t=1789226574;
+	bh=GcjKnoW7cu7D+/hBbsDzr3LkL3aIxmTsacK+C0J7kpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OgBhgmh7h1GrhRbFuPhEsCGgsvH4NFAr4+uNaiqVrPHzR+2zc52DpFSC9SH+0M/ln
-	 yaS+5bDJ2zB1WXxCL95j9OC6Fmcut3Arby1gJdQ27iYKAi+DhF2+PKisBpKAvyZjiK
-	 JQKM1Sr5qx3PAQk38V1KuXaZD7xanJS0a/4fR8O0=
+	b=mvv6dHfd76OKKwmeBermEau1SMPFpZh/g6gKnBIAdp4tGO2O07a1rf7YhtHC6YZof
+	 VglZwsy8QadhX4Kt4slbfCcHnnrS6oP6GFQgZAqVT++XnnhaWprvUJcfIYM1q2dNvN
+	 NZ2bdHb9+Ec0QRuRFS+YbFMIyCfOBs4v5b0KimsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	syzbot+3d602af7549af539274e@syzkaller.appspotmail.com,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Lukasz Majewski <lukma@denx.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1416/1424] net: hsr: enable promiscuous mode on interlink port with fwd offload
-Date: Sat, 12 Sep 2026 09:04:08 +0200
-Message-ID: <20260912065638.969601267@linuxfoundation.org>
+Subject: [PATCH 6.6 1417/1424] net: hsr: Use the seqnr lock for frames received via interlink port.
+Date: Sat, 12 Sep 2026 09:04:09 +0200
+Message-ID: <20260912065638.992747278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,66 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MD Danish Anwar <danishanwar@ti.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit a2dc179481d18f6df7274522571b64dd50f31e81 ]
+[ Upstream commit 430d67bdcb04ee8502c2b10dcbaced4253649189 ]
 
-hsr_portdev_setup() skips promiscuous mode on non-master ports when
-hsr->fwd_offloaded is set. fwd_offloaded is derived only from the ring
-slaves' NETIF_F_HW_HSR_FWD bit, so this also skips it for the interlink
-port, which never gets forwarding offload. Without promiscuous mode,
-the interlink NIC drops unicast frames addressed to hsr_dev's MAC
-(e.g. SAN traffic to the RedBox), breaking RedBox whenever the ring is
-HW-offloaded.
+syzbot reported that the seqnr_lock is not acquire for frames received
+over the interlink port. In the interlink case a new seqnr is generated
+and assigned to the frame.
+Frames, which are received over the slave port have already a sequence
+number assigned so the lock is not required.
 
-Fixes: 5055cccfc2d1 ("net: hsr: Provide RedBox support (HSR-SAN)")
-Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260908090856.2876114-1-danishanwar@ti.com
+Acquire the hsr_priv::seqnr_lock during in the invocation of
+hsr_forward_skb() if a packet has been received from the interlink port.
+
+Reported-by: syzbot+3d602af7549af539274e@syzkaller.appspotmail.com
+Closes: https://groups.google.com/g/syzkaller-bugs/c/KppVvGviGg4/m/EItSdCZdBAAJ
+Fixes: 5055cccfc2d1c ("net: hsr: Provide RedBox support (HSR-SAN)")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Lukasz Majewski <lukma@denx.de>
+Tested-by: Lukasz Majewski <lukma@denx.de>
+Link: https://patch.msgid.link/20240906132816.657485-2-bigeasy@linutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_slave.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/hsr/hsr_slave.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index 5c98e24587f59..8c6694245b282 100644
+index 8c6694245b282..75566a1fbd768 100644
 --- a/net/hsr/hsr_slave.c
 +++ b/net/hsr/hsr_slave.c
-@@ -139,9 +139,12 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
- 	int res;
+@@ -73,7 +73,16 @@ static rx_handler_result_t hsr_handle_frame(struct sk_buff **pskb)
+ 	}
+ 	skb_reset_mac_len(skb);
  
- 	/* Don't use promiscuous mode for offload since L2 frame forward
--	 * happens at the offloaded hardware.
-+	 * happens at the offloaded hardware. The interlink port never
-+	 * gets forwarding offload (RedBox forwarding to/from it is done
-+	 * by this driver), so it still needs promiscuous mode to receive
-+	 * frames addressed to hsr_dev's MAC rather than its own.
- 	 */
--	if (!port->hsr->fwd_offloaded) {
-+	if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK) {
- 		res = dev_set_promiscuity(dev, 1);
- 		if (res)
- 			return res;
-@@ -164,7 +167,7 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
- fail_rx_handler:
- 	netdev_upper_dev_unlink(dev, hsr_dev);
- fail_upper_dev_link:
--	if (!port->hsr->fwd_offloaded)
-+	if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK)
- 		dev_set_promiscuity(dev, -1);
+-	hsr_forward_skb(skb, port);
++	/* Only the frames received over the interlink port will assign a
++	 * sequence number and require synchronisation vs other sender.
++	 */
++	if (port->type == HSR_PT_INTERLINK) {
++		spin_lock_bh(&hsr->seqnr_lock);
++		hsr_forward_skb(skb, port);
++		spin_unlock_bh(&hsr->seqnr_lock);
++	} else {
++		hsr_forward_skb(skb, port);
++	}
  
- 	return res;
-@@ -227,7 +230,7 @@ void hsr_del_port(struct hsr_port *port)
- 		netdev_update_features(master->dev);
- 		dev_set_mtu(master->dev, hsr_get_max_mtu(hsr));
- 		netdev_rx_handler_unregister(port->dev);
--		if (!port->hsr->fwd_offloaded)
-+		if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK)
- 			dev_set_promiscuity(port->dev, -1);
- 		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
- 			vlan_vids_del_by_dev(port->dev, master->dev);
+ finish_consume:
+ 	return RX_HANDLER_CONSUMED;
 -- 
 2.53.0
 
