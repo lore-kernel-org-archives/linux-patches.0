@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EB435F602;
-	Sat, 12 Sep 2026 09:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E045D35F602;
+	Sat, 12 Sep 2026 09:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204174; cv=none; b=civHDkT/TJzQV2Puuc9e48045eqk2IZNJkmlSBlvnJUu1g7hTMlJ/bdtjQS/TsG+8qIqIMVSvbnlq0VQp+56qtF+YLugJG0tFm276chaHFqKkbmUZfg2sQQ4afPrOWExZVrZLFJnQMJJM45KM5aM2R2BI9yee7YJcxc1deo0dSw=
+	t=1789204179; cv=none; b=Pd74BxOYcqYJ9snScD0BSF8TL7uCXiqMTCtCwmm2GrTrKRJv5rYDnTf4DoDm7MyHzd+n8BNKhzsNpikZVAdpc8/hmmj6AJIPBsBuJ9HVLvHpgg5MbrV7OfL/3c6oJNJdwBiQYkrsoY5tz6ycUJD4PdehEKay1gfetPTCEeNplnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204174; c=relaxed/simple;
-	bh=5DsOHqpVU345OoSd1tLkAEXru3YXTUOvf/yLwZh8AbM=;
+	s=arc-20240116; t=1789204179; c=relaxed/simple;
+	bh=JaU31ehF0o8P640/YhDocKUaD0RbzVnKTJ/U/qB2PiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovNx7U1ol5xCE6rgj4TnOyVB+Hqk+sZGNySOi1+wSDQzQGug/pFAI2tQ1twb+Kc7WMxMPI10TumpJ6yqIYFRPXMurqGEmnxkRQOvEOl4HRJaXXJGl3q3Hij7w6xz7Qjb/q40g2oc29v8mC1sryURNvkZGPc9yme43t2xm7X+2YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ar+pwVsA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q/pYH1SSZ5VI54knebdqZfZTL/Y6enbMs+pRrVJNIyPihHEfLjakVMG+nZMDo+Fc/LKz972wF8Wdxeyrs+dSpDwRN0GamDcHpt4Bnp7oK6v18akUATR5GubnO9gAm3KD4MSymMztFPD9UPNjYaHxvtA/0AUw4hgblxuxxbvGi2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srVaU8td; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ar+pwVsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6BDA1F000FF;
-	Sat, 12 Sep 2026 09:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srVaU8td"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1F11F000FF;
+	Sat, 12 Sep 2026 09:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204172;
-	bh=tkHJuT7cU4p1z71qYeJkVvW/BRdu9bHHctpaI1fbXAM=;
+	s=korg; t=1789204177;
+	bh=r2b0nj/xPi9z7wghjG/Hv2c0ZvFq1MKxnfvRRUEyS/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ar+pwVsAC2Jg86lB6RjXoOh228C2b9+47cR9d1pWpOcvnyGEBspBvfRumxri/rYuJ
-	 sWtUbqsZp2GxZ2zf35Y3YLMJ4JnznDCED923c2C13BiwBrnDT/8R3uqpHqMwcodAv+
-	 ZZYwSO9+8TjV4sf5KZsURf4YpTl07kS4cHLl0E4I=
+	b=srVaU8tdzQL5wx5QjppbJqUkW5PmxaI4uAqvc2I62InZFysoT75aeKKl2JYOyB4Qn
+	 DF2ONh70UTvTcYDCJkZy56EZDZBpCqSN4lojh7H1450E7JTUzoc2eP1S3UGIgpeqWz
+	 tfmNoIyROsEIJx/g3/S7LJ7Ey6gFZBEUeG9ALM/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1515/1815] smb/server: fix null-ptr-deref in ksmbd_ipc_tree_connect_request()
-Date: Sat, 12 Sep 2026 08:54:25 +0200
-Message-ID: <20260912065724.566655908@linuxfoundation.org>
+Subject: [PATCH 7.2 1516/1815] smb/server: fix invalid pointer dereference in ksmbd_stop_durable_scavenger()
+Date: Sat, 12 Sep 2026 08:54:26 +0200
+Message-ID: <20260912065724.590779526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,52 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit d2ccf905f47d2344270749f4dfa905afcd3edeb0 ]
+[ Upstream commit bef46b604732d83f8da29f782868de4d25bf972c ]
 
 See the procedure below:
 
-  ksmbd_tree_conn_connect
-    ksmbd_share_config_get
-      share->name = kstrdup() // fail
-      if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) // false
-      // do not check `share->name`
-    ksmbd_ipc_tree_connect_request
-      strlen(share->name) // null-ptr-deref
+  ksmbd_launch_ksmbd_durable_scavenger
+    durable_scavenger_running = true
+    server_conf.dh_task = kthread_run() // fail, dh_task is an ERR_PTR()
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+  server_ctrl_handle_reset
+    ksmbd_stop_durable_scavenger
+    kthread_stop(server_conf.dh_task) // invalid pointer
+
+Fixes: d484d621d40f ("ksmbd: add durable scavenger timer")
 Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/share_config.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/vfs_cache.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
-index 6f97f8d39657c..b4f56e7338659 100644
---- a/fs/smb/server/mgmt/share_config.c
-+++ b/fs/smb/server/mgmt/share_config.c
-@@ -158,6 +158,11 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 	atomic_set(&share->refcount, 1);
- 	INIT_LIST_HEAD(&share->veto_list);
- 	share->name = kstrdup(name, KSMBD_DEFAULT_GFP);
-+	if (!share->name) {
-+		kill_share(share);
-+		share = NULL;
-+		goto out;
-+	}
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 0efef8c8176c2..460684624678f 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -1499,9 +1499,12 @@ void ksmbd_launch_ksmbd_durable_scavenger(void)
  
- 	if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) {
- 		int path_len = PATH_MAX;
-@@ -203,7 +208,7 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 				share->path = NULL;
- 			}
- 		}
--		if (ret || !share->name) {
-+		if (ret) {
- 			kill_share(share);
- 			share = NULL;
- 			goto out;
+ 	server_conf.dh_task = kthread_run(ksmbd_durable_scavenger,
+ 				     (void *)NULL, "ksmbd-durable-scavenger");
+-	if (IS_ERR(server_conf.dh_task))
++	if (IS_ERR(server_conf.dh_task)) {
+ 		pr_err("cannot start conn thread, err : %ld\n",
+ 		       PTR_ERR(server_conf.dh_task));
++		server_conf.dh_task = NULL;
++		durable_scavenger_running = false;
++	}
+ 	mutex_unlock(&durable_scavenger_lock);
+ }
+ 
 -- 
 2.53.0
 
