@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E19373BF2;
-	Sat, 12 Sep 2026 10:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94FF43932A;
+	Sat, 12 Sep 2026 10:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209814; cv=none; b=V4+rNOwEp3qvlTIFgrrJc34UABP9YMyKeqEKGoKKh5s+hqqvshsVAyfVVqg3QVptIlHkcnV17sac4BmP+YINMyQWhqTKfcWwPgql7HZtBVbHNHixGAFNjFLxGk65GkOIlPhWZrQNDYAI30ShLewr0b+cWcV6jAGjvHG9wzwrqbk=
+	t=1789209817; cv=none; b=t/Atm7/ozYZs5vs/NzYJfQlzpVVPh1d51A+rHz2gL+k/pgkzkXvoGNPL0Ez6EdrkQB386eHyry41tDydADGOQ40Ho3HiyRN41CFixrTb9SVR/QZGsBLlnILmAwPtUnvY39XKQWXljMJbKAXBRfxRqywk2Hv55vo9oUka1Zq+0ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209814; c=relaxed/simple;
-	bh=b1kcvS6mf1F9hwOhIu2a2fK+eXHvEkQhsplFgsnD5fI=;
+	s=arc-20240116; t=1789209817; c=relaxed/simple;
+	bh=04cWWNalua9OzrsbmO4/XUYmD7cA1VEqpwBLKzj1MTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjP4x7mozlQjkMbajUhko/6kmxKn0YdqApgH76E6Wv6XvAG93UOv1eTwwYp3nEWAm1D0wvs3qGEU4n+Ir/S2pB6w4ybZYsXd/CSUONnJH/htHCui5+tyMNQdzUAunKC7kJJ7AweoresEhU8j6DHQ0wJ80UxWpK97j4unzGTp82k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7WhlcIA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YRkswXLy08yBDQaL7oDp9kfL6AIcI6ch6NeVkhcbcCIi2fdZFJGOv8AY2lfIe3XFVi+u0JCjt9warTK5meOJ+4W8SHGNCbw21Et8vVV/oERw5YAYOUhJLcuWk3ZQry63K+wqP+iWfTJt+Aur2oL9OfNw4A3MUzX0jv1Two+vyO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBbp/R4w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7WhlcIA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F1B1F00893;
-	Sat, 12 Sep 2026 10:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBbp/R4w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081AD1F000FF;
+	Sat, 12 Sep 2026 10:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209809;
-	bh=yh+8ShgdaxP6pQqUgmo3qqqbShE1i/fkjMvBVUh+jTQ=;
+	s=korg; t=1789209814;
+	bh=8Oh5jdC5Z445AoAMuAfm9j4Sxnyke0k/0M+O8pG9/BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7WhlcIAWiZqiZXCHO63MkO/Dv4TymRpmLV8NT1bEEUawsASNtHxONS+/kb5L+AtL
-	 2N2Bi/ZQ1iOkpaVnaWfpbb/TuJ+3yLgt2Ul6pcrHYPRNFyLcVYQbmpoi0f2JT79xYy
-	 VUCFiVPQKJSs8d3NTpFlfAegyr6Dec4fs4keDOtE=
+	b=KBbp/R4wLbWfrytQKVYeqr0/WR1aQLLXodat8TwDPHjvk9bi+r4ANUath7JLfYY9C
+	 gSLg9SQ/Oo0VOULngoWtlaa1afIVQWm7p6NQcDQz6r2LGztMu0HU5vxc0iKh05t+LE
+	 5Y1eLWlDJ0W2hMIDUOBxw20Jdi1Ans/kDY/Z+8nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	slipher <slipher@protonmail.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0897/1518] RDMA/srp: fix heap information leak on a truncated SRP_CRED_REQ
-Date: Sat, 12 Sep 2026 08:51:06 +0200
-Message-ID: <20260912065643.746667970@linuxfoundation.org>
+Subject: [PATCH 6.18 0898/1518] ARM: 9481/2: breakpoint: CFI breakpoints only on demand
+Date: Sat, 12 Sep 2026 08:51:07 +0200
+Message-ID: <20260912065643.767898518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,134 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 961ac0f0c5e414abdd6b33fae84b311d9fde0bd0 ]
+[ Upstream commit 8ed9bff906cf8036531d1559f10e82733a52b41f ]
 
-srp_recv_done() passes wc->byte_len to srp_process_rsp(). It passes
-nothing to srp_process_cred_req() and srp_process_aer_req(), which read
-fixed-size fields from the receive buffer without checking that those
-fields were received.
+This removes the stub hw_breakpoint_cfi_handler() from ARM, making
+it not steal breakpoint type 0x03 (ARM_ENTRY_CFI_BREAKPOINT) unless
+CFI is actively used in the kernel.
 
-The buffer size is max_ti_iu_len, which comes from the login response
-and is not validated. A target that advertises 8 and then sends an
-8-byte SRP_CRED_REQ makes the initiator read req->tag from beyond the
-end of the buffer. req->tag is copied into the SRP_CRED_RSP and sent
-back, so those bytes reach the target. SRP_AER_REQ behaves the same way
-and also reads req->lun.
+When not instrumenting with CFI, or when a breakpoint is issued in
+userspace, we fall through to return 1 from hw_breakpoint_pending()
+"unhandled fault" so userspace can make use of this breakpoint.
 
-The leak is 8 bytes per response. max_ti_iu_len also decides which slab
-cache the buffer comes from. With 8 the buffer is a kmalloc-8 object and
-the read is entirely outside it:
+Tested with LKDTM and this command line:
+echo CFI_FORWARD_PROTO > /sys/kernel/debug/provoke-crash/DIRECT
+still works as expected.
 
-  BUG: KASAN: slab-out-of-bounds in srp_recv_done+0x172b/0x1aa0
-  Read of size 8 at addr ffff888104714da8 by task kworker/u8:3/50
-   which belongs to the cache kmalloc-8 of size 8
-  The buggy address is located 0 bytes to the right of
-   allocated 8-byte region [ffff888104714da0, ffff888104714da8)
+Closes: https://lore.kernel.org/lkml/kJqktbpLphg_Pk5I5SPptgTLjl3E3eq5mN5UzCslyFj7Q1Irp-wDid4mj5eQVd2iZtRGXgeZd8goq195EkXdjyt864YMc8mVb2B9NGH91NQ=@protonmail.com/
 
-Without KASAN the returned bytes are whatever is next in the slab. One
-run returned ".strtab".
-
-rsp->data[3] in srp_process_rsp() has the same problem: only
-resp_data_len is checked before it is read.
-
-Drop a request that is shorter than the structure being parsed, and
-check byte_len before the tsk_mgmt read.
-
-Fixes: bb12588a38e6 ("IB/srp: Implement SRP_CRED_REQ and SRP_AER_REQ")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260729093203.1503201-1-yhlee@isslab.korea.ac.kr
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: c3f89986fde7 ("ARM: 9391/2: hw_breakpoint: Handle CFI breakpoints")
+Reported-by: slipher <slipher@protonmail.com>
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 45 +++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ arch/arm/kernel/hw_breakpoint.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index 7b696a07e6033..99131492abf70 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -1943,7 +1943,8 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp,
- 		ch->req_lim += be32_to_cpu(rsp->req_lim_delta);
- 		if (rsp->tag == ch->tsk_mgmt_tag) {
- 			ch->tsk_mgmt_status = -1;
--			if (be32_to_cpu(rsp->resp_data_len) >= 4)
-+			if (be32_to_cpu(rsp->resp_data_len) >= 4 &&
-+			    byte_len >= sizeof(*rsp) + 4)
- 				ch->tsk_mgmt_status = rsp->data[3];
- 			complete(&ch->tsk_mgmt_done);
- 		} else {
-@@ -2043,13 +2044,20 @@ static int srp_response_common(struct srp_rdma_ch *ch, s32 req_delta,
+diff --git a/arch/arm/kernel/hw_breakpoint.c b/arch/arm/kernel/hw_breakpoint.c
+index cd4b34c96e35e..38feb30dfb5f8 100644
+--- a/arch/arm/kernel/hw_breakpoint.c
++++ b/arch/arm/kernel/hw_breakpoint.c
+@@ -929,10 +929,6 @@ static void hw_breakpoint_cfi_handler(struct pt_regs *regs)
+ 		break;
+ 	}
  }
+-#else
+-static void hw_breakpoint_cfi_handler(struct pt_regs *regs)
+-{
+-}
+ #endif
  
- static void srp_process_cred_req(struct srp_rdma_ch *ch,
--				 struct srp_cred_req *req)
-+				 struct srp_cred_req *req, u32 byte_len)
- {
--	struct srp_cred_rsp rsp = {
--		.opcode = SRP_CRED_RSP,
--		.tag = req->tag,
--	};
--	s32 delta = be32_to_cpu(req->req_lim_delta);
-+	struct srp_cred_rsp rsp = { .opcode = SRP_CRED_RSP };
-+	s32 delta;
-+
-+	if (byte_len < sizeof(*req)) {
-+		shost_printk(KERN_ERR, ch->target->scsi_host, PFX
-+			     "dropping truncated SRP_CRED_REQ (%u bytes received, %zu expected)\n",
-+			     byte_len, sizeof(*req));
-+		return;
-+	}
-+
-+	rsp.tag = req->tag;
-+	delta = be32_to_cpu(req->req_lim_delta);
- 
- 	if (srp_response_common(ch, delta, &rsp, sizeof(rsp)))
- 		shost_printk(KERN_ERR, ch->target->scsi_host, PFX
-@@ -2057,14 +2065,21 @@ static void srp_process_cred_req(struct srp_rdma_ch *ch,
- }
- 
- static void srp_process_aer_req(struct srp_rdma_ch *ch,
--				struct srp_aer_req *req)
-+				struct srp_aer_req *req, u32 byte_len)
- {
- 	struct srp_target_port *target = ch->target;
--	struct srp_aer_rsp rsp = {
--		.opcode = SRP_AER_RSP,
--		.tag = req->tag,
--	};
--	s32 delta = be32_to_cpu(req->req_lim_delta);
-+	struct srp_aer_rsp rsp = { .opcode = SRP_AER_RSP };
-+	s32 delta;
-+
-+	if (byte_len < sizeof(*req)) {
-+		shost_printk(KERN_ERR, target->scsi_host, PFX
-+			     "dropping truncated SRP_AER_REQ (%u bytes received, %zu expected)\n",
-+			     byte_len, sizeof(*req));
-+		return;
-+	}
-+
-+	rsp.tag = req->tag;
-+	delta = be32_to_cpu(req->req_lim_delta);
- 
- 	shost_printk(KERN_ERR, target->scsi_host, PFX
- 		     "ignoring AER for LUN %llu\n", scsilun_to_int(&req->lun));
-@@ -2106,11 +2121,11 @@ static void srp_recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ /*
+@@ -964,9 +960,14 @@ static int hw_breakpoint_pending(unsigned long addr, unsigned int fsr,
+ 	case ARM_ENTRY_SYNC_WATCHPOINT:
+ 		watchpoint_handler(addr, fsr, regs);
  		break;
- 
- 	case SRP_CRED_REQ:
--		srp_process_cred_req(ch, iu->buf);
-+		srp_process_cred_req(ch, iu->buf, wc->byte_len);
++#ifdef CONFIG_CFI
+ 	case ARM_ENTRY_CFI_BREAKPOINT:
+-		hw_breakpoint_cfi_handler(regs);
++		if (user_mode(regs))
++			ret = 1; /* Don't handle userspace BKPT */
++		else
++			hw_breakpoint_cfi_handler(regs);
  		break;
- 
- 	case SRP_AER_REQ:
--		srp_process_aer_req(ch, iu->buf);
-+		srp_process_aer_req(ch, iu->buf, wc->byte_len);
- 		break;
- 
- 	case SRP_T_LOGOUT:
++#endif
+ 	default:
+ 		ret = 1; /* Unhandled fault. */
+ 	}
 -- 
 2.53.0
 
