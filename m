@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE572F617C;
-	Sat, 12 Sep 2026 18:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F51331203;
+	Sat, 12 Sep 2026 18:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238588; cv=none; b=X2f41fOQyE2CcrYTny1y80YeUvci7qIf9G2uet/flNsFdhy6Bh2KFmqjnXQo5/qPEF4JpTspLlK7lwY9XyA+738uuHozrsEip8EE6lmInRib2vWXtKy/YaFH/4Is++VByAmr2XES9af6fupkGyj6sjYT5xRYHGdkot63DNq/kpA=
+	t=1789238592; cv=none; b=UMdlRBDRqQPoLAXaGxG8QCezjahZ3tlLgVnzfU9SxC19Vo+MgwjWzn4GliJMKRdWDzmUy6I9vXe1Rfeh1srSm/b2O1ppnC/urapgyx5LXBzXdFdZnHbv6BJv9NEh2crxWwXQgEXBTyICV54T9Zebq283EOqajBPh+B1u3OBVVHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238588; c=relaxed/simple;
-	bh=iKRt8TNjon5fXPFgfKtw0pgFImkPtzV3XIlBAIVt6yM=;
+	s=arc-20240116; t=1789238592; c=relaxed/simple;
+	bh=cgeBf8xTPoPxr6+y/80Ob3Hl7XsKdj6zsgZEWG569MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJbQfHZu3SYBQaXc4j5N/7beNBFRHGRqzLmoybmQAhQL4VZ72hhytpHNk3hVNsHknmD9WEI1fbuUXESZglW7rO3QInqwHoWieBGBQLGYaD/b0jmmg9B6J+X8VApJsdoZ5urTYb9Vs/R3YRH8EGHZhubxGdXoEUa3enjO3PhnvjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwXV/2Dh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r2Cjo6zBi46HFsltRv8oweGaPP9EC7R4pKfW2d/ncz7O7FhvwP+cEULvlKgOV5u58pxSGcJaIk0fZGTGkK41Su0bk5WuC3EvkjVVg+PMoWV+uh8Den3cWifLdGKy2nZifmlyCUPvw8JUGO+G9d11aosgr7Jqr0mklbd0LPh03AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaJxy7s6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwXV/2Dh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21DD1F000FF;
-	Sat, 12 Sep 2026 18:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaJxy7s6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DD61F000FF;
+	Sat, 12 Sep 2026 18:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238585;
-	bh=pG5fSduuTgkcyD7SJB5kmB/ToK9QOAdrDfXvSCHV9/E=;
+	s=korg; t=1789238590;
+	bh=LUKaZAv9oW9sOrzIc7Gwdn6sOYAs49Vsq7DZfoS41J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JwXV/2DhAxkUIZ7Y4YuwrDiRjybnKq/F5/NiauGqkR4JXz8wxv5nviKxZExHKNccT
-	 gfLv1KdnfyjwcehvKBWlQr8ujasOZR4BzamYQoGsZj88YXSmvy9BKMlD+ju17fDd8r
-	 7W/nK6+c1rQA1fdJJ6VWsu1hEp83KLmZxr//zhz8=
+	b=yaJxy7s6qYyjBW3gGUNHVjMcUR8OS39kpxx7AWDzH6JSafzcgc4NZ1pZFHYBVkTR4
+	 jQ3t97n3fAjJXyHYmj/hKr4bYRlPRa+bfdNLu9tmdOExBs1hch1uNeQQ1M2pAe96T3
+	 rJJbgi2B/2slYgGGXVxk2mxYW/JJ80RFyMlI1PrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	Ahmet Sezgin Duran <ahmet@sezginduran.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 449/935] staging: greybus: audio: correct sscanf() return value check
-Date: Sat, 12 Sep 2026 08:57:59 +0200
-Message-ID: <20260912065537.127850889@linuxfoundation.org>
+Subject: [PATCH 5.15 450/935] staging: sm750fb: gate dualview dataflow using g_dualview
+Date: Sat, 12 Sep 2026 08:58:00 +0200
+Message-ID: <20260912065537.150602109@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,36 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Ahmet Sezgin Duran <ahmet@sezginduran.net>
 
-[ Upstream commit f883fa1a0a0212f63acb18c50e5f900301f3bb1e ]
+[ Upstream commit d352778979d2eed09e266ed0f3a5e3ccd3983940 ]
 
-manager_sysfs_add_store() passes 6 pointers to sscanf(),
-but required latter to return 7 which always failed the operation.
-I corrected it to 6.
+In sm750fb_setup and sm750fb_set_drv functions, the dualview
+related code is guarded by `sm750_dev->fb_count > 1` condition.
+That value is updated only after each framebuffer is registered,
+while both guards are used before any increment.
 
-Fixes: 49b9137a6002 ("staging: greybus: audio: remove redundant slot field")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Link: https://patch.msgid.link/20260521182331.22685-1-grandmaster@al2klimov.de
+Current flow:
+
+  lynxfb_pci_probe()
+    sm750fb_setup()                 // fb_count is 0
+    for each fb:
+      sm750fb_framebuffer_alloc()
+        lynxfb_set_fbinfo()
+          sm750fb_set_drv()         // fb_count is 0 or 1
+        register_framebuffer()
+        sm750_dev->fb_count++;      // fb_count is incremented
+
+Thus even if `dualview=1` parameter is passed down to the driver,
+fb_count is never > 1 at either check, so dualview dataflows are
+not selected and crtc->vidmem_size is never halved.
+
+Use `g_dualview` global variable instead of fb_count > 1 to correctly
+enable dualview capabilities.
+
+Fixes: a3f92cc94c61 ("staging: sm750fb: replace dual member of sm750_dev with fb_count")
+Signed-off-by: Ahmet Sezgin Duran <ahmet@sezginduran.net>
+Link: https://patch.msgid.link/20260521204425.82627-1-ahmet@sezginduran.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/audio_manager_sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/sm750fb/sm750.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/greybus/audio_manager_sysfs.c b/drivers/staging/greybus/audio_manager_sysfs.c
-index fcd518f9540cd..ff323ca8154f3 100644
---- a/drivers/staging/greybus/audio_manager_sysfs.c
-+++ b/drivers/staging/greybus/audio_manager_sysfs.c
-@@ -23,7 +23,7 @@ static ssize_t manager_sysfs_add_store(struct kobject *kobj,
- 			desc.name, &desc.vid, &desc.pid, &desc.intf_id,
- 			&desc.ip_devices, &desc.op_devices);
+diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
+index d0260fd935272..90f0983767f33 100644
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -597,7 +597,7 @@ static int sm750fb_set_drv(struct lynxfb_par *par)
+ 	crtc = &par->crtc;
  
--	if (num != 7)
-+	if (num != 6)
- 		return -EINVAL;
+ 	crtc->vidmem_size = sm750_dev->vidmem_size;
+-	if (sm750_dev->fb_count > 1)
++	if (g_dualview)
+ 		crtc->vidmem_size >>= 1;
  
- 	num = gb_audio_manager_add(&desc);
+ 	/* setup crtc and output member */
+@@ -925,7 +925,7 @@ static void sm750fb_setup(struct sm750_dev *sm750_dev, char *src)
+ 
+ NO_PARAM:
+ 	if (sm750_dev->revid != SM750LE_REVISION_ID) {
+-		if (sm750_dev->fb_count > 1) {
++		if (g_dualview) {
+ 			if (swap)
+ 				sm750_dev->dataflow = sm750_dual_swap;
+ 			else
 -- 
 2.53.0
 
