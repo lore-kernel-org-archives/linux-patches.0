@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB66274B46;
-	Sat, 12 Sep 2026 18:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14688274B46;
+	Sat, 12 Sep 2026 18:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237460; cv=none; b=gneDhaCDMWWFvs1RJqfwA4+y9kFcvsCnannVJUSiDz0pzrH7SZUk/JCze8hw1SwCpI+79MOhXeEfz39BnUJgYkWS0JnYXyrY/rQd9FSfWWKQjyr+iUmHyr8QnOO0eBeQbTKPHK4polo0Nyd8cX5p2V5j5ChRqVszYwC3Jt7KCjc=
+	t=1789237465; cv=none; b=ccp0tH0htjUdyMdq4PtcMFq6EKGrPqKa1mVoS4Wz5NJliLO20n6KZRHbZGE0cwZE1++vgAwjsx+Nn1TPzBp5/vfxhB5FWX+7xepGHMsXJBdTkGOW79KYXNl2kOTGbcTxIY3hZzSLZmtwpJkOWW5Dg3uoFDDFT8tldI/F9SEwS4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237460; c=relaxed/simple;
-	bh=WHfY8v4yfwNtZ2IcZZH1+1t0xQrBjxLFbIGwWTY+Gfw=;
+	s=arc-20240116; t=1789237465; c=relaxed/simple;
+	bh=x/skUAwloU/jH+F/QRPXnLMspGuRwFHRVY9cdXVTJ3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJOQH8kSpTcHFUpGC6HkjAe06l1eNF7RrYjteQEtKErHv7lfB/DbbuBJi0tdflatlYFEUAbgnRvD/RZoL8/uiHAW8O+KrvDk2uTM/wp3K5IQJh2INKO5g+B5Ho//4I8anFB+0MoIYvhqBUbI8ggtSCwbhWAIQVK/xHV5gGm5g58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeB97E0R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dBuEggne93LEeNGZ/9pnu31w/7roRSLl67xbULhAwhlq+XF28JZfiB8aHPGnyq8OZD18hwZVh43ZWPSSsWWbhMYUsGXTcTXtiG2p/9Cf7q7Veb1fi0YeFHkS4K/d1xlJVLgGfiE1paeOsIkFt0QPhtPbRrGOwtO76UJtrWpWdpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZrowOnG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeB97E0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01D71F000FF;
-	Sat, 12 Sep 2026 18:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZrowOnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682311F000FF;
+	Sat, 12 Sep 2026 18:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237458;
-	bh=JbBkf3X4FuXTggNWd/zpAqDPwy/ExLmyV7eIgko8AYY=;
+	s=korg; t=1789237463;
+	bh=fqgPLrjanJmaqBnYzFFd8g9LE7FI0eBkzxE1FA3ed6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SeB97E0R9xXl5xuPQ+aidO9JuZzV5KuMKzb8wHhiU8QL9bGs7HyW6MChDa3LVfLCQ
-	 2d+1StlpJbd2jKq5h+MybxVQjqiFFUcjkfVLud3ddzZSQqskdZuVk0BmGShJEniRhp
-	 hM3ysqQp1wt3mc6lkIDGCJWfxjtPWWfoiYvxIx+s=
+	b=jZrowOnGCnZJ8duVCGpx1ECRvl5lQCgd9/Gza2WOHTRnBGCW2d3C9bcsBsiLytvjf
+	 IyCCsYXnBNhXuzy66W/7ATrTGqgPVN4Cqwp8yl7BactAMVUdrFgzPvFLueDRQfhboD
+	 ce3Wo9TybAxUXTyTZDV915RJcbvUzoIRi222Gib4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/935] RDMA/rxe: Fix TOCTOU heap overflow in get_srq_wqe
-Date: Sat, 12 Sep 2026 08:54:11 +0200
-Message-ID: <20260912065531.891288893@linuxfoundation.org>
+Subject: [PATCH 5.15 222/935] entry: Fix seccomp bypass after ptrace with TSYNC
+Date: Sat, 12 Sep 2026 08:54:12 +0200
+Message-ID: <20260912065531.914186842@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,61 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 22b8fbded65b8c441b634a185f8da67657df6c50 ]
+commit 4a3591287fb7f808e209b4974ed337f609a2006b upstream.
 
-get_srq_wqe() reads wqe->dma.num_sge from the shared receive queue
-buffer, which is mapped into userspace. It validates num_sge against
-max_sge, but then re-reads the same field to calculate the memcpy
-size. A concurrent userspace thread can modify num_sge between
-validation and use, causing a heap buffer overflow when copying the
-WQE into qp->resp.srq_wqe.
+Sashiko review pointed out the following issue.
 
-Read num_sge into a local variable and use it for both the bounds
-check and the size calculation.
+If a thread is stopped in syscall_trace_enter() for ptrace, another
+thread can install a seccomp filter with SECCOMP_FILTER_FLAG_TSYNC
+(e.g., via seccomp_attach_filter()). This will successfully set
+SYSCALL_WORK_SECCOMP on the stopped thread, but syscall_trace_enter()
+evaluates a cached 'work' variable sampled on entry. Consequently,
+the subsequent check for SYSCALL_WORK_SECCOMP misses the newly
+assigned flag, and the filter is silently bypassed.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://patch.msgid.link/r/20260518215040.1598586-2-tristan@talencesecurity.com
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-[doebel: cherry-picked from v6.1.178 (3cfa2a3adc51), adjusted for
- context]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+This race condition could allow an unprivileged process to execute
+a prohibited system call (e.g., execve) that the newly installed filter
+was intended to block, especially since the tracer might have modified
+the system call number during the ptrace stop.
+
+Fix this by re-reading the syscall_work flags after ptrace handling,
+so that any new SYSCALL_WORK_SECCOMP flag set by another thread via
+TSYNC during the ptrace stop is observed before the subsequent
+seccomp check.
+
+Fixes: 142781e108b1 ("entry: Provide generic syscall entry functionality")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20260629132914.1135C1F000E9@smtp.kernel.org/
+Link: https://patch.msgid.link/20260713025712.416366-1-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_resp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/entry/common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index e7dec84810614..27f24c77993ca 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -296,6 +296,7 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
- 	struct rxe_recv_wqe *wqe;
- 	struct ib_event ev;
- 	unsigned int count;
-+	unsigned int num_sge;
- 	size_t size;
- 
- 	if (srq->error)
-@@ -310,12 +311,13 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
+diff --git a/kernel/entry/common.c b/kernel/entry/common.c
+index d11d4047a0ca8..67ee2f276e7ea 100644
+--- a/kernel/entry/common.c
++++ b/kernel/entry/common.c
+@@ -61,6 +61,9 @@ static long syscall_trace_enter(struct pt_regs *regs, long syscall,
+ 		ret = arch_syscall_enter_tracehook(regs);
+ 		if (ret || (work & SYSCALL_WORK_SYSCALL_EMU))
+ 			return -1L;
++
++		/* ptrace might have changed work flags */
++		work = READ_ONCE(current_thread_info()->syscall_work);
  	}
  
- 	/* don't trust user space data */
--	if (unlikely(wqe->dma.num_sge > srq->rq.max_sge)) {
-+	num_sge = wqe->dma.num_sge;
-+	if (unlikely(num_sge > srq->rq.max_sge)) {
- 		spin_unlock_bh(&srq->rq.consumer_lock);
- 		pr_warn("%s: invalid num_sge in SRQ entry\n", __func__);
- 		return RESPST_ERR_MALFORMED_WQE;
- 	}
--	size = sizeof(*wqe) + wqe->dma.num_sge*sizeof(struct rxe_sge);
-+	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
- 	memcpy(&qp->resp.srq_wqe, wqe, size);
- 
- 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
+ 	/* Do seccomp after ptrace, to catch any tracer changes. */
 -- 
 2.53.0
 
