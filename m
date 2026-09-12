@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A8E33993;
-	Sat, 12 Sep 2026 17:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21D933993;
+	Sat, 12 Sep 2026 17:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232858; cv=none; b=P8vAW3D8AHUB1XT0U07tWK+pP+uuGFG0Naj5K+Syzs7hOp5b71foYaXM8nwro4mFzpkgoMf7C6TloJKlJqbp7fbKs5Yox4c7BlKF8f7aulql74/sJ9BtRrzDP6PLxBtAazi00agm1eWI4nqISz9xPzEeFNvWUTWSpYRcEeK/3Cw=
+	t=1789232863; cv=none; b=CBLchlb0grve+d+nEecsoIOeSXeIuzEb5PgZfMrf6CjdxbC/OTwCBqVFzpUldjPT2uwHcIToEgLSdeqdJyOlwd8jQqRVs/k6MEMMxXq6K6ZZ3lJpmFZzY65KoeWyYRNlTz3M1i41ZFsnCbMUuLhY7z76TifkKPC7fKAGdUF7g4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232858; c=relaxed/simple;
-	bh=XKA5cUa+bvlb9V9MnVYdOBIrCOr6tjI2kIlEkNT//C4=;
+	s=arc-20240116; t=1789232863; c=relaxed/simple;
+	bh=0ncR02q1469umx3NzgZGX2zoCsA/x7qFbC2yDjrE+Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhsqvG+3H8nk/VOzGv7IO3GwqirziQX2KbW/iyHrUFe/gb0hYkEEAUAEqBmpmGqvyih9dCMxK1mnLG4tm+MtvnVP7NvHw27jGguPyPSJIDY0nk0FzvuJg/HU1xcm3nKj6c7UTIpAV7xFxMAWRGLMd4Ga4Yt7zPq7VZxTsO01w8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzU0t939; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qT0FCd1CTfJI1LNjCfcWbUpy7389gxJeEdCKmDGJK0XSUmd466Gq2KVYqYKXcFXhBYaVJFK/XGt9dukCggp0YW4VviaxNddA6LwZsWJ/MDadqOM/C52Xh+JwCwtNO4AOTBncwXmdjc/IAz/RPQK6o+otfWBCyY9PHVpD+QZkdvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cw0qwuGY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzU0t939"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27B21F000FF;
-	Sat, 12 Sep 2026 17:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cw0qwuGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852961F000FF;
+	Sat, 12 Sep 2026 17:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232856;
-	bh=iXJRK050U4cwrxnFhqNkk5YiRMb+PYrYNEqQNd6y3Ws=;
+	s=korg; t=1789232861;
+	bh=teYC/W7a+qLm7F6h3GFGXPlk7EQ32kGXrWvbQj6M8Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XzU0t939orb/NIQAn1Bk6SHqNbIM1lRvD7Ox/jGMgjpWwhkPtu3vGFFkwHpvhRwCG
-	 hUhCZYgEBCFxxGBnWdtm2PpVOLhmG+vVl5Z4RibIqeeIKcRD/t/9PgodL/P/inG0J5
-	 C2152x+Ipd9JZEm6D+MMPunXpLs5TRRQ7/a68JIA=
+	b=Cw0qwuGYLbZV6+798edBdBR0Sr5ocgzqisM87Ga+79W1gzJB5IAVAHjoO0lJt+zFv
+	 uhXLBkQsAMdXdto0Sk7LNvUVigmz90W05uEkFmc+JU64S0QXwcgntnXKiTMrJhu7ZT
+	 2NjtoFuqLuqkJNCudxa5PeCPwE8TFezO8ocjYzz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 096/935] Bluetooth: hci_event: clear HCI_LE_ADV only on a created connection
-Date: Sat, 12 Sep 2026 08:52:06 +0200
-Message-ID: <20260912065529.025522281@linuxfoundation.org>
+Subject: [PATCH 5.15 097/935] Bluetooth: hci_h5: fix usage_count leak when autosuspend_delay is negative
+Date: Sat, 12 Sep 2026 08:52:07 +0200
+Message-ID: <20260912065529.047522503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,103 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 941929abe5feaed672b9a52e330e547d333240c6 upstream.
+commit 853a92b97ca547a7ddd9790ff90651b2fd943498 upstream.
 
-le_conn_complete_evt() clears HCI_LE_ADV before looking at the event
-status, on the premise stated in its comment that all controllers stop
-advertising when a connection is created.
+h5_btrtl_open() calls pm_runtime_use_autosuspend(), but
+h5_btrtl_close() does not call the matching
+pm_runtime_dont_use_autosuspend() when tearing down runtime PM.
 
-That premise only holds when a connection was actually created. On a
-non-zero status none was, and the controller is still advertising: after
-the host issues LE Create Connection Cancel the event arrives with
-Unknown Connection Identifier (0x02), and a connection timeout behaves
-the same way. Clearing the flag there leaves the host believing
-advertising is off while the controller has it on.
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during driver teardown, this reference is not dropped and usage_count
+remains unbalanced.
 
-It is also wrong for extended advertising, where several sets can be
-advertising at once. hci_cc_le_set_ext_adv_enable() is careful about
-this - on disabling one set it walks hdev->adv_instances and only clears
-HCI_LE_ADV once no instance is still enabled. The unconditional clear
-here discards that bookkeeping, so one set connecting drops the flag
-while the others keep advertising.
+Add the missing pm_runtime_dont_use_autosuspend() call before disabling
+runtime PM.
 
-The direction of the error matters. A flag left set is self-correcting:
-hci_disable_advertising_sync() sends LE Set Advertising Enable(0) and
-the command complete puts the state back. A flag left clear is not,
-because that same function returns early without sending anything while
-the flag is clear:
+This issue was found by manual code inspection.
 
-  - LE Set Advertising Parameters is then sent to a controller that is
-    still advertising, and is correctly rejected with Command Disallowed
-    (0x0c);
-  - hci_enable_advertising_sync() returns at that point, before the
-    LE Set Advertising Enable that would set HCI_LE_ADV again.
-
-On a controller without LE Extended Advertising that is reachable from
-here: hci_schedule_adv_instance_sync() re-arms adv_instance_expire every
-HCI_DEFAULT_ADV_DURATION (2 s) and its "already advertising" shortcut
-tests HCI_LE_ADV, which can no longer become true, so the parameter
-write is retried for as long as advertising is configured:
-
-  Bluetooth: hci0: Opcode 0x2006 failed: -16
-
-Only clear the flag when a connection was established.
-
-Note this is not on its own sufficient to stop that retry loop - the
-redundant enable queued by hci_le_conn_failed() clears HCI_LE_ADV itself
-and recreates the same mismatch, which patch 1 addresses. This patch
-fixes the event handler reporting a state the controller is not in.
-
-Verified on the affected device (BCM43455, legacy advertising only) with
-this patch and patch 1 applied. A 221 s btmon capture with an out-of-range
-peer at -90 dBm contains two outgoing connection attempts that the host
-cancelled, each producing exactly the event this patch changes:
-
-  < LE Set Advertising Parameters  0x2006   Success
-  < LE Set Advertising Enable      0x200a   Success
-  < LE Create Connection Cancel    0x200e   Success
-  > LE Connection Complete   Unknown Connection Identifier (0x02), central
-
-Nothing follows either one; the next command is an unrelated scan restart
-70 ms later. Over the whole capture: 7 LE Set Advertising Parameters sent,
-all Success; 10 LE Set Advertising Enable, all Success; no Command
-Disallowed of any opcode, and no 2 s cadence anywhere. Two central
-connections to other peers completed normally afterwards, with feature
-exchange and a connection parameter update, so advertising was still live
-across the cancelled attempts.
-
-The extended advertising case above is a code argument, not a measurement:
-this controller has no LE Extended Advertising, so that path is not
-exercised by the capture.
-
-Fixes: fbd96c151cdc ("Bluetooth: Fix clearing HCI_LE_ADV for LE connections")
+Fixes: d9dd833cf6d2 ("Bluetooth: hci_h5: Add runtime suspend")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5 btmon
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_h5.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5330,10 +5330,11 @@ static void le_conn_complete_evt(struct
+--- a/drivers/bluetooth/hci_h5.c
++++ b/drivers/bluetooth/hci_h5.c
+@@ -981,8 +981,10 @@ static void h5_btrtl_open(struct h5 *h5)
  
- 	hci_dev_lock(hdev);
+ static void h5_btrtl_close(struct h5 *h5)
+ {
+-	if (!test_bit(H5_WAKEUP_DISABLE, &h5->flags))
++	if (!test_bit(H5_WAKEUP_DISABLE, &h5->flags)) {
++		pm_runtime_dont_use_autosuspend(&h5->hu->serdev->dev);
+ 		pm_runtime_disable(&h5->hu->serdev->dev);
++	}
  
--	/* All controllers implicitly stop advertising in the event of a
--	 * connection, so ensure that the state bit is cleared.
-+	/* Advertising stops when a connection is created. On a failed
-+	 * connection it keeps running, so leave the state bit alone.
- 	 */
--	hci_dev_clear_flag(hdev, HCI_LE_ADV);
-+	if (!status)
-+		hci_dev_clear_flag(hdev, HCI_LE_ADV);
- 
- 	conn = hci_lookup_le_connect(hdev);
- 	if (!conn) {
+ 	gpiod_set_value_cansleep(h5->device_wake_gpio, 0);
+ 	gpiod_set_value_cansleep(h5->enable_gpio, 0);
 
 
