@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8150B192D8A;
-	Sat, 12 Sep 2026 07:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5577F2BDC0E;
+	Sat, 12 Sep 2026 07:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198042; cv=none; b=f0aGPd2uN/a1Zyciz8Lu8uS/GH+CTXorBCQhhSvHtiBTucjcJ1nUidM3GBGK37kr4Iz9k5MBAPc7TVYWUXft063iFbx69OMcImBNdnHShiycQnjWvsZiWD4vQcnBMQzu6pc/+V1+/Euz5MFNWj4mSh6bWy9f61uU1iBBqW3YQMI=
+	t=1789198047; cv=none; b=q41n9zUpDbJ2Dc8oxsPkiWiCCXLU8/vtcTdn0Y0qFckq/8rmsICKdkf3ap2EoWFpBElZtcTkEkdeIUwVfoWZZmQoBYv4UxCpHXAjg0pRZDx2pj92bInvd+KpLK4k6O2El9R+41+b0oPAxzX0PTU6kKSFz6P+D/V5e39HHQMXv1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198042; c=relaxed/simple;
-	bh=hNa5F0VvAeWxX8aYT1c0nSfoxsHTtjToYVA/0X2cFZ0=;
+	s=arc-20240116; t=1789198047; c=relaxed/simple;
+	bh=dQ8I04OLGYXVnJ5pH1aV6qUXUr/BS5jZXmoEFLlf7+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATbO+pK3oy7kL64WjRyOxC+UezNfIoRnVOlY/ysMYqQYo859ObYZ7MJn1pwiDFXLOwf9xKstAUsM126OrKBAOkO0KBl90GHYChsdaLDvgnpCjXxob+jzUJyO5VDV6aOVhB4IjoiJ7yAsEXo/XW4KI8PNbUrA49loAS74nfhI4Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIlFWYv6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TnyyMOaDCFzBlCx5316wkmV6cN1KTxRBZ0p4pDRb9Yg+mv6u94i4ji3S2AFxOlzhB0EGda681lyZpL7+8HcVJ7WMCYXjC9IgAYgqr3bJSkRpQj0z3hEmXPs15EreBrvJHZEztn3UWy0Y3tmtqNoVv8dJzOhDE6EXSTIXcREbXfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgbbUPJZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIlFWYv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B979D1F000FF;
-	Sat, 12 Sep 2026 07:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgbbUPJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7299A1F00893;
+	Sat, 12 Sep 2026 07:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198041;
-	bh=WG2R68zlrGkRmZFpQBnVBtL7defA4/JyeCyEIbLgeiE=;
+	s=korg; t=1789198046;
+	bh=5gKpuBK9+Dw+8pz3Tk8UZOWQghNHkvpS47UEtKrEVEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nIlFWYv6Qa7+Fw/eSFIud3AeWnQuHXR4dX8DBFq+BFrX3NFF3hg6unwKzRZMMpJXA
-	 +GIdMPArgkXf8jtGEDOcOtYIe0a5vx9/hiayhVywEvHbWo4x8P3HtBM5xeeElJa5pk
-	 oukt02JNdoAZns1L/XgnzsT8s+wTk09WoF1cZppo=
+	b=CgbbUPJZPZtjI5/xaEtjZdfm5K64swa7YikNJYJevluTFOyelT/s7UZGBFniM0nmN
+	 jcKhO70TIfJbkT7DreIf5ZXiKxsbEXfQAsslNVWtHxiXpiRvc6mlw8oL6GXPUgU+8Y
+	 Irg+cw/7tGdM+YV5KzSjXq3kt/FsfbvBiD+C1dLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Sunil V L <sunilvl@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0299/1815] printk: Fix possible console use-after-free
-Date: Sat, 12 Sep 2026 08:34:09 +0200
-Message-ID: <20260912065655.969690265@linuxfoundation.org>
+Subject: [PATCH 7.2 0300/1815] ACPI: RISC-V: Fix riscv_acpi_irq_get_dep() loop termination
+Date: Sat, 12 Sep 2026 08:34:10 +0200
+Message-ID: <20260912065655.992273762@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,65 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
 
-[ Upstream commit 36630cafbeede0b64c370edb2f7b4094327ee1e0 ]
+[ Upstream commit 64ae310bffa477cd11029c818bec489f4b8a845e ]
 
-When emitting a record via legacy printing, it is possible that a handover
-to another legacy printing context occurs. When a context has performed a
-handover, the console SRCU read lock is released and the pointer to the
-console struct might now be invalid. Therefore, after calling
-nbcon_legacy_emit_next_record() or console_emit_next_record(), it is
-necessary to check if a handover occurred _before_ further @con usage.
+In riscv_acpi_add_irq_dep() the main loop condition would currently stop
+the loop if an interrupt descriptor contains an interrupt for which the
+respective GSI handle is NULL, which is not correct because subsequent
+interrupts in the interrupt descriptor might still have a GSI dependency
+that must not be skipped.
 
-Sashiko pointed out that console_flush_one_record() was not doing this.
+Rework riscv_acpi_add_irq_dep() and the riscv_acpi_irq_get_dep() call chain
+to fix it - by not forcing the loop to stop in order to guarantee
+dependency detection for all the interrupt entries in the CRS descriptor.
 
-In console_flush_one_record(), after emitting a record, move the further
-usage of @con after the handover check.
-
-Fixes: c158834b223f ("printk: nbcon: Use nbcon consoles in console_flush_all()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/lkml/20260630170903.099D61F000E9@smtp.kernel.org
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://patch.msgid.link/20260703141521.202813-1-john.ogness@linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: 1b173cc4bfcd ("ACPI: RISC-V: Implement function to add implicit dependencies")
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Tested-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260709-gic-v5-acpi-iwb-probe-deferral-v4-2-48dae790f871@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/acpi/riscv/irq.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index 2fe9a963c823a..6d363e42e2a05 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -3264,10 +3264,8 @@ static bool console_flush_one_record(bool do_cond_resched, u64 *next_seq, bool *
- 		if (flags & CON_NBCON) {
- 			progress = nbcon_legacy_emit_next_record(con, handover, cookie,
- 								 !do_cond_resched);
--			printk_seq = nbcon_seq_read(con);
- 		} else {
- 			progress = console_emit_next_record(con, handover, cookie);
--			printk_seq = con->seq;
- 		}
+diff --git a/drivers/acpi/riscv/irq.c b/drivers/acpi/riscv/irq.c
+index 9b88d0993e880..cd83c3035cf6b 100644
+--- a/drivers/acpi/riscv/irq.c
++++ b/drivers/acpi/riscv/irq.c
+@@ -299,6 +299,7 @@ static acpi_status riscv_acpi_irq_get_parent(struct acpi_resource *ares, void *c
+ 			return AE_OK;
  
- 		/*
-@@ -3277,6 +3275,15 @@ static bool console_flush_one_record(bool do_cond_resched, u64 *next_seq, bool *
- 		if (*handover)
- 			goto fail;
+ 		ctx->handle = riscv_acpi_get_gsi_handle(eirq->interrupts[ctx->index]);
++		ctx->rc = 0;
+ 		return AE_CTRL_TERMINATE;
+ 	}
  
-+		/*
-+		 * @con can be used here now that it is certain that this
-+		 * context is still holding the SRCU read lock.
-+		 */
-+		if (flags & CON_NBCON)
-+			printk_seq = nbcon_seq_read(con);
-+		else
-+			printk_seq = con->seq;
+@@ -314,10 +315,8 @@ static int riscv_acpi_irq_get_dep(acpi_handle handle, unsigned int index, acpi_h
+ 
+ 	acpi_walk_resources(handle, METHOD_NAME__CRS, riscv_acpi_irq_get_parent, &ctx);
+ 	*gsi_handle = ctx.handle;
+-	if (*gsi_handle)
+-		return 1;
+ 
+-	return 0;
++	return ctx.rc;
+ }
+ 
+ static u32 riscv_acpi_add_prt_dep(acpi_handle handle)
+@@ -381,8 +380,11 @@ static u32 riscv_acpi_add_irq_dep(acpi_handle handle)
+ 	int i;
+ 
+ 	for (i = 0;
+-	     riscv_acpi_irq_get_dep(handle, i, &gsi_handle);
++	     !riscv_acpi_irq_get_dep(handle, i, &gsi_handle);
+ 	     i++) {
++		if (!gsi_handle)
++			continue;
 +
- 		/* Track the next of the highest seq flushed. */
- 		if (printk_seq > *next_seq)
- 			*next_seq = printk_seq;
+ 		dep_devices.count = 1;
+ 		dep_devices.handles = kzalloc_objs(*dep_devices.handles, 1);
+ 		if (!dep_devices.handles) {
 -- 
 2.53.0
 
