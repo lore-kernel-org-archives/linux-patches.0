@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7726F330647;
-	Sat, 12 Sep 2026 14:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3423264D4;
+	Sat, 12 Sep 2026 14:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222303; cv=none; b=o2OAjjXv6Kq5yPUfXiu/1kahmcL6q5/Ws+Z0dZ1eUsD7Jie4KUXB//EnESY9QnCaI7wMoHqtELjyTHOHt1k7fUB1KyBqjWXOk/rnt5X43mc358NqL5xeGhlA/JWweonPcOKAHaQ9ymA5Ve67TMXwd8Y3giGVkYuuNE68/EwJ94Y=
+	t=1789222308; cv=none; b=hGzbDSXokv6dq5fPDLxwLQbFZTxVgDAb25qO6PNhbpXN2quQbsAy9IOOF88ilqcBVKIyzmhEM709fBekhIIsFcvssu0gr+TEEeWhzSxfphQlzsL4aJu00N8dBlZhlO6HYiT5VrDvkKwtuv4Qx5ip2IdeFApj0W76CqlOMXwuhAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222303; c=relaxed/simple;
-	bh=VHAjLjAE6LuwAbVkuWVNnxSxtPAw9eTg0Q68W9EPKQs=;
+	s=arc-20240116; t=1789222308; c=relaxed/simple;
+	bh=ippR9xdTb3AGrSDkPNgQLyxU0XTk62AQs1YzMg/YwL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BP9X2H+CRQJHQao7S1W4cwYh1P1qIs3xq11hn1CrMkLn2xTh3aWa5km3H7uZbn7xpshrHGCeuvDa+V9cOPCe4NG3vldza3NPlB/A+ciUs3VB2RWHXRZL9G+lUau5YFCw9v392rbrETPw1nc6PXbMeSx47wqSRcxfUfBPjxc9V9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndYzKKxA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nJWrgyHNtnvWtVXPAtBdb4tmWZ9OerL2YAQUy7rkLy60MnyI/K+9E8lJKSivUEhv7qS1TY2mVLDgq4SmB4TsyKWWaMOHQn7W+Ak+Opy2tdZcGhL/LKwLwJPn1rdKcKkF4Wt+mYYzpxs2mNlwK4z5MHtP8+hWVdRV81+yXdxA0ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCKZ8Pu7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndYzKKxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805111F000FF;
-	Sat, 12 Sep 2026 14:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCKZ8Pu7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7551F000FF;
+	Sat, 12 Sep 2026 14:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222302;
-	bh=n+96PSctEp7IfQ8QSd6s5AdonjiM8BZt4QTKmWf+uMc=;
+	s=korg; t=1789222307;
+	bh=Herh9m9/momacKUuCTqlIistNKyZUS4uoosNThArnns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ndYzKKxAUHCqUcC4kKiDqU76BLZDDsPCbJu8tRiRpEbXB4tefoJx8B3TeZuH2hMf9
-	 /9kukpAK1yzEdW3TIOhV1TO1xoxBLUqBfe7WdxmtGCsKiCUfjR2/Ktcg6xslkbRHUx
-	 F+GxRzUY5cB7SHQTt5EM2kLdsfBlF0J17BxyePTo=
+	b=bCKZ8Pu7tkwCLirFLdEHJ1Sg9u0DTY4/1O9/60UOLE2KprWtDMTmOdILKpsIsoEUF
+	 TLa3lfsV2CKIXv2Y87HdllCQVczjcs3R9xx+S6jcMM/WBsiaafSpGCT5VFEBrVUe9B
+	 /WI0B18c6/JhbgwDjnQmWAf2p8mEd/xDM52T3oKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huang Wei <huangwei@kylinos.cn>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0559/1424] usb: typec: ucsi: use UCSI_TIMEOUT_MS for sync command completion
-Date: Sat, 12 Sep 2026 08:49:51 +0200
-Message-ID: <20260912065619.822713170@linuxfoundation.org>
+Subject: [PATCH 6.6 0560/1424] mm/damon/core: skip aging from repeated aggressive merging
+Date: Sat, 12 Sep 2026 08:49:52 +0200
+Message-ID: <20260912065619.845186302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,92 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang Wei <huangwei@kylinos.cn>
+From: SJ Park <sj@kernel.org>
 
-commit eb4573cf2fd860b20adfae050c3f6ec6ddc3abdb upstream.
+[ Upstream commit 0250dbe08c730d003ef9f484da56ae09a1ea0c4c ]
 
-The synchronous command completion path in ucsi_acpi_sync_write() hardcodes
-a 5 second (5 * HZ) timeout when waiting for the PPM to signal command
-completion via ACPI notification. This value matched UCSI_TIMEOUT_MS when it
-was still 5000 ms, but it was not updated when that macro was later raised
-to 10000 ms to fix PPM reset timeouts.
+The number of DAMON regions could temporarily exceed the user-defined
+maximum number of regions limit for corner cases.  For example, users
+could lower the limit via runtime parameters update.  For such a case,
+kdamond_merge_regions() repeats merging regions in the case doubling the
+merge threshold.  The repeated merge operation could update the age of
+regions multiple times.  This corrupts the monitoring results.  Fix the
+issue by asking the merge operation to skip aging for the corner case.
 
-As a result, the two PPM communication paths are now inconsistent: the
-polling path in ucsi_reset_ppm() respects the 10 second timeout, while the
-event-driven completion path still uses 5 seconds. On machines where the
-firmware is slow to respond during boot (e.g. some Lenovo ThinkPad models
-such as the E14 Gen 7), commands sent after the PPM reset, such as
-SET_NOTIFICATION_ENABLE and GET_CAPABILITY, can exceed 5 seconds and cause
-UCSI initialization to fail with:
+The user impact is degradation of the monitoring quality.  The impact
+should be mild, since the degradation is only temporal, and it is not
+common to happen in realistic setups.
 
-    ucsi_acpi USBC000:00: error -ETIMEDOUT: PPM init failed
+The issue was discovered [1,2] by Sashiko.
 
-Once UCSI init aborts, USB-C PD negotiation never completes, which in turn
-blocks USB-C dock enumeration since the dock depends on a successful PD
-contract.
-
-Replace the hardcoded 5 * HZ with msecs_to_jiffies(UCSI_TIMEOUT_MS) so that
-both communication paths share a single, consistent timeout value. Move the
-UCSI_TIMEOUT_MS definition to ucsi.h so the ACPI backend can use it.
-
-Fixes: bf4f9ae1cb08c ("usb: typec: ucsi: increase timeout for PPM reset operations")
-Signed-off-by: Huang Wei <huangwei@kylinos.cn>
+Link: https://lore.kernel.org/20260712165432.87609-1-sj@kernel.org
+Link: https://lore.kernel.org/20260621203548.10718-1-sj@kernel.org [1]
+Link: https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org [2]
+Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.10
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c      | 10 ----------
- drivers/usb/typec/ucsi/ucsi.h      |  3 +++
- drivers/usb/typec/ucsi/ucsi_acpi.c |  3 ++-
- 3 files changed, 5 insertions(+), 11 deletions(-)
+ mm/damon/core-test.h |  2 +-
+ mm/damon/core.c      | 17 +++++++++++------
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index b0d5f071664fe..8cfde3cb85af0 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -17,16 +17,6 @@
- #include "ucsi.h"
- #include "trace.h"
+diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
+index e6c19a23b0806..dd91b0eea61ff 100644
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -255,7 +255,7 @@ static void damon_test_merge_regions_of(struct kunit *test)
+ 		damon_add_region(r, t);
+ 	}
  
--/*
-- * UCSI_TIMEOUT_MS - PPM communication timeout
-- *
-- * Ideally we could use MIN_TIME_TO_RESPOND_WITH_BUSY (which is defined in UCSI
-- * specification) here as reference, but unfortunately we can't. It is very
-- * difficult to estimate the time it takes for the system to process the command
-- * before it is actually passed to the PPM.
-- */
--#define UCSI_TIMEOUT_MS		10000
--
- /*
-  * UCSI_SWAP_TIMEOUT_MS - Timeout for role swap requests
-  *
-diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-index 9ac5ad87f4015..f0cf52c6ddeba 100644
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -26,6 +26,9 @@ struct dentry;
- #define UCSI_MESSAGE_OUT		32
- #define UCSIv2_MESSAGE_OUT		272
+-	damon_merge_regions_of(t, 9, 9999);
++	damon_merge_regions_of(t, 9, 9999, true);
+ 	/* 0-112, 114-130, 130-156, 156-170 */
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
+ 	if (damon_nr_regions(t) != 5)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 734ab958ec576..0713fda22682c 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1192,15 +1192,17 @@ static void damon_merge_two_regions(struct damon_target *t,
+  * sz_limit	size upper limit of each region
+  */
+ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
+-				   unsigned long sz_limit)
++		unsigned long sz_limit, bool count_age)
+ {
+ 	struct damon_region *r, *prev = NULL, *next;
  
-+/* PPM communication timeout in milliseconds */
-+#define UCSI_TIMEOUT_MS		10000
-+
- /* UCSI versions */
- #define UCSI_VERSION_1_2	0x0120
- #define UCSI_VERSION_2_0	0x0200
-diff --git a/drivers/usb/typec/ucsi/ucsi_acpi.c b/drivers/usb/typec/ucsi/ucsi_acpi.c
-index e40f3bf650ad8..1054947497bb2 100644
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -88,7 +88,8 @@ static int ucsi_acpi_sync_write(struct ucsi *ucsi, unsigned int offset,
- 	if (ret)
- 		goto out_clear_bit;
+ 	damon_for_each_region_safe(r, next, t) {
+-		if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
+-			r->age = 0;
+-		else
+-			r->age++;
++		if (count_age) {
++			if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
++				r->age = 0;
++			else
++				r->age++;
++		}
  
--	if (!wait_for_completion_timeout(&ua->complete, 5 * HZ))
-+	if (!wait_for_completion_timeout(&ua->complete,
-+					 msecs_to_jiffies(UCSI_TIMEOUT_MS)))
- 		ret = -ETIMEDOUT;
+ 		if (prev && prev->ar.end == r->ar.start &&
+ 		    abs(prev->nr_accesses - r->nr_accesses) <= thres &&
+@@ -1234,15 +1236,18 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+ 	struct damon_target *t;
+ 	unsigned int nr_regions;
+ 	unsigned int max_thres;
++	bool count_age = true;
  
- out_clear_bit:
+ 	max_thres = c->attrs.aggr_interval /
+ 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
+ 	do {
+ 		nr_regions = 0;
+ 		damon_for_each_target(t, c) {
+-			damon_merge_regions_of(t, threshold, sz_limit);
++			damon_merge_regions_of(t, threshold, sz_limit,
++					count_age);
+ 			nr_regions += damon_nr_regions(t);
+ 		}
++		count_age = false;
+ 		threshold = max(1, threshold * 2);
+ 	} while (nr_regions > c->attrs.max_nr_regions &&
+ 			threshold / 2 < max_thres);
 -- 
 2.53.0
 
