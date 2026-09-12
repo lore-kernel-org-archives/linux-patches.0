@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3409739F18A;
-	Sat, 12 Sep 2026 19:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6104D2F0673;
+	Sat, 12 Sep 2026 19:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240137; cv=none; b=jbQfdbJLmXy5ruaymLI2KD3/0Qy1xS6+wDUAxfRPn7PYBOT112EpTGhHRHyWkq/7ya5pi1tt2PxD2gsz1zmYmWhsTef7R0fm3+SvxV6dgh9ngHNoAhcNIlXAfOlXRHkVuLh9itQ0fvVc14TLHdJbmyEurERGr9t7MhB+8m7RoZg=
+	t=1789240142; cv=none; b=ltVVpzSqBO/DLMnLTJR1MDGyCFxvm+iDeumjue8l6AS2zwf7K0r9t4UW8FyrgeXsycpXNlvEr9EH0TgdrLEg5StxpC3MrRG1DHPfUqpLtilapH+7k3SA7QTOniWio/i5+MKTkiBWcXgMFrLy+luRYnWYdTmDEE2gXpvlIhwEFeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240137; c=relaxed/simple;
-	bh=UvGxl8LTKwq4HX/Dons4dXgNLT9kjjgeltpdeTFdfN8=;
+	s=arc-20240116; t=1789240142; c=relaxed/simple;
+	bh=2/hMKM3JiwugRdoKvrGcXYoxIrGZyELkqKXwfSkkS5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k0HVMzSK5yLX0TpujHmKMXTUanXki/ukKO1j7o4o9odW+CvRHmLznBzOE7gorIhIF2NJV4e/e1DIIQhmS8PdJwyl5nTjfCNBPNzDF9zsP7SgD8KnELbTLV6sdowp9PCMQMXEwPQhFsAX9kMz7mSrQbz5rS5FRz9AIY9wTLLY04c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7Kw1LGm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gbm9yygcmYss3zUFGmCjGzJhlnrB+q32etZv8QiVeUemSRfMyobdF3SqfiJb4GqymKXegQdd4PrSQTy4PuOn/gNr+Dwm1OiOFP+lIz8n3ouHo0KodFJup6RML9jRKonK7/u7F3Url2eOM+BD6EX+Tfs36gBgZTfzEnfEnBcvo70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gb5QeMal; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7Kw1LGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127AF1F000FF;
-	Sat, 12 Sep 2026 19:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gb5QeMal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F147A1F000FF;
+	Sat, 12 Sep 2026 19:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240136;
-	bh=TpM9rTKMfZGAomgoFn1Y9EnNXQdWqJ8k4KbrnfQwKQg=;
+	s=korg; t=1789240141;
+	bh=aWdw2KUa/hV9Szr9WMAXopShs6UgWhVj4im8ip0uCa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c7Kw1LGm6dCmoRLIQpYLO0OEAVznXUVjHyrzIlThfAmsalslTWX2AWhGzQlcJmncs
-	 aNGcIT749YmojCYhrI4KTjH3wDelBb7UY02S+yRfhqA4O88kzDns32ekr61lFOJild
-	 y1NYsvtkZTs2C4uo+8nm4LeUTYPDH04fIFUy1Q9Q=
+	b=gb5QeMal2t2QJqi9ZKF5yW9y38B05u8XABnzfRgasBSjKIOKaQIVzXvlFKjr062Vn
+	 yMZx8wTfp1l62XxZuZdgXhejndC+hm3xa+ErXftXekloUvbPSql4QlFklFBAonDnQb
+	 zYVUln2ZZpv3omW1ZWCIuJI5UQsFkqI7YIiahS2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Xu <dxu@dxuuu.xyz>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	=?UTF-8?q?Daniel=20M=C3=BCller?= <deso@posteo.net>,
+	Pu Lehui <pulehui@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 805/935] selftests/bpf: Fix vmtest.sh getopts optstring
-Date: Sat, 12 Sep 2026 09:03:55 +0200
-Message-ID: <20260912065545.302555111@linuxfoundation.org>
+Subject: [PATCH 5.15 806/935] selftests/bpf: Limit URLS parsing logic to actual scope in vmtest
+Date: Sat, 12 Sep 2026 09:03:56 +0200
+Message-ID: <20260912065545.326902976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -46,58 +45,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Xu <dxu@dxuuu.xyz>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit a7be0ab1eb1949f3564739784b4360e1233305f6 ]
+[ Upstream commit 0c3fc330be6d85febd0f68b66c657c752e9cd63c ]
 
-Before, you could see the following errors:
+The URLS array is only valid in the download_rootfs function and does
+not need to be parsed globally in advance. At the same time, the logic
+of loading rootfs is refactored to prepare vmtest for supporting local
+rootfs.
 
-  $ ./vmtest.sh -j
-  ./vmtest.sh: option requires an argument -- j
-  ./vmtest.sh: line 357: OPTARG: unbound variable
-
-  $ ./vmtest.sh -z
-  ./vmtest.sh: illegal option -- z
-  ./vmtest.sh: line 357: OPTARG: unbound variable
-
-Fix by adding ':' as first character of optstring. Reason is that getopts
-requires ':' as the first character for OPTARG to be set in the `?` and `:`
-error cases.
-
-Note that the ':' as the first character of the optstring switches getopts
-to silent mode. The desire to run in this mode seems to have been there all
-along, as the script takes care of reporting errors.
-
-Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Müller <deso@posteo.net>
-Link: https://lore.kernel.org/bpf/0f93b56198328b6b4da7b4cf4662d05c3edb5fd2.1660064925.git.dxu@dxuuu.xyz
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Link: https://lore.kernel.org/r/20240905081401.1894789-5-pulehui@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Stable-dep-of: 3a59f11e0f98 ("selftests/bpf: vmtest.sh: Preserve command quoting when running in the VM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/vmtest.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/vmtest.sh | 39 +++++++++++++--------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
 diff --git a/tools/testing/selftests/bpf/vmtest.sh b/tools/testing/selftests/bpf/vmtest.sh
-index 5e43c79ddc6e6..e0c733cf705ba 100755
+index e0c733cf705ba..d594cc4c6545c 100755
 --- a/tools/testing/selftests/bpf/vmtest.sh
 +++ b/tools/testing/selftests/bpf/vmtest.sh
-@@ -304,7 +304,7 @@ main()
- 	local exit_command="poweroff -f"
- 	local debug_shell="no"
+@@ -85,19 +85,6 @@ populate_url_map()
+ 	fi
+ }
  
--	while getopts 'hskid:j:' opt; do
-+	while getopts ':hskid:j:' opt; do
- 		case ${opt} in
- 		i)
- 			update_image="yes"
+-download()
+-{
+-	local file="$1"
+-
+-	if [[ ! -v URLS[$file] ]]; then
+-		echo "$file not found" >&2
+-		return 1
+-	fi
+-
+-	echo "Downloading $file..." >&2
+-	curl -Lsf "${URLS[$file]}" "${@:2}"
+-}
+-
+ newest_rootfs_version()
+ {
+ 	{
+@@ -111,16 +98,30 @@ newest_rootfs_version()
+ 
+ download_rootfs()
+ {
+-	local rootfsversion="$1"
+-	local dir="$2"
++	populate_url_map
++
++	local rootfsversion="$(newest_rootfs_version)"
++	local file="${ARCH}/libbpf-vmtest-rootfs-$rootfsversion.tar.zst"
++
++	if [[ ! -v URLS[$file] ]]; then
++		echo "$file not found" >&2
++		return 1
++	fi
++
++	echo "Downloading $file..." >&2
++	curl -Lsf "${URLS[$file]}" "${@:2}"
++}
++
++load_rootfs()
++{
++	local dir="$1"
+ 
+ 	if ! which zstd &> /dev/null; then
+ 		echo 'Could not find "zstd" on the system, please install zstd'
+ 		exit 1
+ 	fi
+ 
+-	download "${ARCH}/libbpf-vmtest-rootfs-$rootfsversion.tar.zst" |
+-		zstd -d | sudo tar -C "$dir" -x
++	download_rootfs | zstd -d | sudo tar -C "$dir" -x
+ }
+ 
+ recompile_kernel()
+@@ -220,7 +221,7 @@ create_vm_image()
+ 	mkfs.ext4 -q "${rootfs_img}"
+ 
+ 	mount_image
+-	download_rootfs "$(newest_rootfs_version)" "${mount_dir}"
++	load_rootfs "${mount_dir}"
+ 	unmount_image
+ }
+ 
+@@ -363,8 +364,6 @@ main()
+ 		make_command="${make_command} KBUILD_OUTPUT=${KBUILD_OUTPUT}"
+ 	fi
+ 
+-	populate_url_map
+-
+ 	local rootfs_img="${OUTPUT_DIR}/${ROOTFS_IMAGE}"
+ 	local mount_dir="${OUTPUT_DIR}/${MOUNT_DIR}"
+ 
 -- 
 2.53.0
 
