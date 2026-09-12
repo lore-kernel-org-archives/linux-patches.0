@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88173C1D67;
-	Sat, 12 Sep 2026 11:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A385F221F26;
+	Sat, 12 Sep 2026 11:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211104; cv=none; b=EmDJ5I4lG68AR+szMAs4pjvmrERuQrtuj1njEvH5i9tf24CtdbHxzLseccXY6vAWxOYbS+sgmuqK20THtxQ63UCPaS4pYMusCTcjeEryXABW08qUnbQsWeoKzNbB+PYcagvqR6hT0RT6PTjLM/pU/HNnEFhSvRMwIOYzVWXFOfg=
+	t=1789211110; cv=none; b=oPHNmolYRZkI351C7ZeS4tUsqSd9eB8YkIdBSzpFwivuIrBY4pre9pXDsmEw4so24tacp3ECmFf5PScRhSqVlJiOuDX3eamacppjAppmU7FALz6rKU4G0Brz2V/Ru4mFhRfvgXa+1uEEdu0FGiYi9009heYzX3jbneAOZ7M+luE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211104; c=relaxed/simple;
-	bh=Q1ifvc4RZGEQ7/Gh8noOGJVlwKxgoAyJWH/IF3TKIpk=;
+	s=arc-20240116; t=1789211110; c=relaxed/simple;
+	bh=OXo2xNAvSG92bYRlveRFezHPrxiagPKCSepz10/ZZvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=REo6v5mpkI4Z+EZ9ZFry4bF1A7Pwoka9Li+tZLaaJEkdPvJfPItQvZTfNpLCUTLTcbBYa/iCSqaDpjqGBLxBIlJBP2Lk8uvGznbhzr4MoSUeVS4DHBqyfdxjo+HnXpGksPNXtvzzqOQsTPBT013hExvhO1DubhCK2LY5EDpORds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyGSjkNi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=h7Kx1SlR3G2iCbhoQA1lhBybprZiJKop8kvK4QolVnJox0u39k2bC2RcYMYP82kvomRupiUpaKxWnjtLcaNW4dIglJs8VaPYQvO3aR3UyPxQ9QVtUuVFAPJsgdJIoz0Hju8WNjMVNescm11u5GqxNUdB6MrVnJWttmDvylbTR20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giRxskxr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyGSjkNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4C21F000FF;
-	Sat, 12 Sep 2026 11:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giRxskxr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C99F1F00898;
+	Sat, 12 Sep 2026 11:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211103;
-	bh=ylOJIm5S8ylKjgkGizJ/0lmXLt19GkjFKAnam8y1aA8=;
+	s=korg; t=1789211108;
+	bh=NP99WOcYuZ4b/vMqv/t2zOEmBxbRKvrGYQHmFaae7cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyGSjkNil7AHYqSko8tjUdtRPpInQI7wuRAu4qBjRaIFdBSxAgs7JRPuZg6CNFYtc
-	 c2xAdIkl4diG4ryeAZ75JtZdV5sK1DuZNAvOorK6A43x/hwOH0irQWk3DmmrV0xK57
-	 O6ZshNAMcqWhbdoHCxKxzdFubhBB8eaRcMo2ATs4=
+	b=giRxskxriBYqDyYHT7obtLbs1/z3N/1tjWvxjZFLerCLcp9Wg3U5teu9lQnYxaEot
+	 TOyB3OlDFwQMYVdE5GGFq9ZETHHzv1rBawDxHP1wZxz8OnML/eQiCX0rP+BOHCdSla
+	 4a/qRmR3ue5/Iaf6UmxmnEfpj248TtuefehhYGoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Kalle Niemi <kaleposti@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1163/1518] PCI/ASPM: Disable/restore ASPM on every function for multi-function devices
-Date: Sat, 12 Sep 2026 08:55:32 +0200
-Message-ID: <20260912065649.768170125@linuxfoundation.org>
+Subject: [PATCH 6.18 1164/1518] power: supply: bd99954: Drop bad register fields
+Date: Sat, 12 Sep 2026 08:55:33 +0200
+Message-ID: <20260912065649.791511960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,81 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 733cd811b3ac50586164a0864c4351fe23e21890 ]
+[ Upstream commit 177299384a224377b4152242d875e752e5958c02 ]
 
-pcie_aspm_cap_init() disables ASPM L0s/L1 before touching L1SS config, then
-restores the pre-existing state afterward. Both steps only ever touched
-link->downstream, i.e. function 0 of the downstream component, leaving
-sibling functions (>0) on a multi-function device untouched.
+The bd99954 driver creates regmap fields for all the registers. All the
+fields for VBUS_UCD_FCTRL_SET (extended command 0x33) are accidentally
+created for VCC_UCD_FCTRL_SET (extended command 0x2b), causing all
+reads/writes for the fields to access wrong register. Luckily the fields
+for VBUS_UCD_FCTRL_SET are unused.
 
-This means the "disable" step does not actually disable ASPM link-wide on a
-multi-function device: a sibling function can still have L1 enabled even
-after this step runs. PCIe r7.0, sec 7.5.3.7, recommends programming the
-same ASPM Control value for all functions of a multi-function device, and
-pcie_config_aspm_link() already loops over every function on the bus for
-exactly this reason.
+Taking a look at the data-sheet all the fields in the VBUS_UCD_FCTRL_SET
+are marked as: "In normal operation, please don’t set these registers"
+with not much of additional documentation. As the fields are wrong and
+because there seems to be no users of the fields - it is better to just
+drop them. This will also decrease the memory footprint.
 
-Loop over every function on linkbus->devices for both the disable and
-restore steps, keeping the existing sec 7.5.3.7 ordering (disable
-downstream functions before upstream, restore upstream before downstream
-functions). The masked pcie_capability_clear_and_set_word() accessor from
-the previous commit makes this safe: it only ever touches the ASPM Control
-bits, so function-specific bits elsewhere in LNKCTL (e.g. Read Completion
-Boundary, CLKREQ Enable) on sibling functions are left untouched.
+Drop incorrect VBUS_UCD_FCTRL_SET fields.
 
-Fixes: 7447990137bf ("PCI/ASPM: Disable L1 before disabling L1 PM Substates")
-Closes: https://lore.kernel.org/all/20260721143945.86E7D1F000E9@smtp.kernel.org/
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260727-aspm-v6-2-2ebb3ee7ef71@oss.qualcomm.com
+Datasheet: https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/battery_management/bd99954xxx-e.pdf
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 0902f8366491 ("power: supply: Support ROHM bd99954 charger")
+Tested-by: Kalle Niemi <kaleposti@gmail.com>
+Link: https://patch.msgid.link/758fd430d02286a6f18603a8aecfe443f5ddeb8e.1786356145.git.mazziesaccount@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/power/supply/bd99954-charger.h | 23 +----------------------
+ 1 file changed, 1 insertion(+), 22 deletions(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index af1a2c2b1f7d8..dac81130edd3d 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -821,6 +821,7 @@ static void pcie_aspm_override_default_link_state(struct pcie_link_state *link)
- static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
- {
- 	struct pci_dev *child = link->downstream, *parent = link->pdev;
-+	struct pci_dev *fn;
- 	u16 parent_lnkctl, child_lnkctl;
- 	struct pci_bus *linkbus = parent->subordinate;
+diff --git a/drivers/power/supply/bd99954-charger.h b/drivers/power/supply/bd99954-charger.h
+index f588979253830..d053ac901274c 100644
+--- a/drivers/power/supply/bd99954-charger.h
++++ b/drivers/power/supply/bd99954-charger.h
+@@ -279,17 +279,7 @@ enum bd9995x_fields {
+ 	F_VBUS_EXTID,
+ 	F_VBUS_IDRDET,
+ 	F_VBUS_INDO,
+-	F_VBUS_UCDSWEN,
+-	F_VBUS_RREF_EN,
+-	F_VBUS_DPPU_EN,
+-	F_VBUS_DPREF_EN,
+-	F_VBUS_DMREF_EN,
+-	F_VBUS_DPDET_EN,
+-	F_VBUS_DMDET_EN,
+-	F_VBUS_DPSINK_EN,
+-	F_VBUS_DMSINK_EN,
+-	F_VBUS_DP_BUFF_EN,
+-	F_VBUS_DM_BUFF_EN,
++
+ 	F_VBUS_EXTCLKENBL,
+ 	F_VBUS_PLSTESTEN,
+ 	F_VBUS_UCDSWEN_TSTENB,
+@@ -626,17 +616,6 @@ static const struct reg_field bd9995x_reg_fields[] = {
+ 	    [F_VBUS_EXTID] = REG_FIELD(VBUS_IDD_STATUS, 5, 5),
+ 	    [F_VBUS_IDRDET] = REG_FIELD(VBUS_IDD_STATUS, 4, 4),
+ 	    [F_VBUS_INDO] = REG_FIELD(VBUS_IDD_STATUS, 0, 3),
+-	    [F_VBUS_UCDSWEN] = REG_FIELD(VCC_UCD_FCTRL_SET, 10, 10),
+-	    [F_VBUS_RREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 9, 9),
+-	    [F_VBUS_DPPU_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 8, 8),
+-	    [F_VBUS_DPREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 7, 7),
+-	    [F_VBUS_DMREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 6, 6),
+-	    [F_VBUS_DPDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 5, 5),
+-	    [F_VBUS_DMDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 4, 4),
+-	    [F_VBUS_DPSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 3, 3),
+-	    [F_VBUS_DMSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 2, 2),
+-	    [F_VBUS_DP_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 1, 1),
+-	    [F_VBUS_DM_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 0, 0),
  
-@@ -854,8 +855,9 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
- 	/* Disable L0s/L1 before updating L1SS config */
- 	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
- 	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
--		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
--					PCI_EXP_LNKCTL_ASPMC, 0);
-+		list_for_each_entry(fn, &linkbus->devices, bus_list)
-+			pcie_capability_clear_and_set_word(fn, PCI_EXP_LNKCTL,
-+						PCI_EXP_LNKCTL_ASPMC, 0);
- 		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
- 						PCI_EXP_LNKCTL_ASPMC, 0);
- 	}
-@@ -890,7 +892,8 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
- 		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
- 					PCI_EXP_LNKCTL_ASPMC,
- 					parent_lnkctl & PCI_EXP_LNKCTL_ASPMC);
--		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
-+		list_for_each_entry(fn, &linkbus->devices, bus_list)
-+			pcie_capability_clear_and_set_word(fn, PCI_EXP_LNKCTL,
- 					PCI_EXP_LNKCTL_ASPMC,
- 					child_lnkctl & PCI_EXP_LNKCTL_ASPMC);
- 	}
+ 	    [F_VBUS_EXTCLKENBL] = REG_FIELD(VBUS_UCD_FCTRL_EN, 15, 15),
+ 	    [F_VBUS_PLSTESTEN] = REG_FIELD(VBUS_UCD_FCTRL_EN, 14, 14),
 -- 
 2.53.0
 
