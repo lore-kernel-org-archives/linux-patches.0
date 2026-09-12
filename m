@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18507379C38;
-	Sat, 12 Sep 2026 10:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57D1CA6F;
+	Sat, 12 Sep 2026 10:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208283; cv=none; b=Lu9cwLvlU6JNDFUAwcgYDkJ+Ds4X6AUdC2w//0OTRJvsRkBC7DJPZ36Bz+3xTFArHomJcOSY35AdcjDdFVB5BRF0ZVPqfZgqGvUUkhz7zcjHMN7u0uVv2KLFHAWjb0y65gIYjR8Tnm2S8KU8gLKcVBZbXTyO1PXPAnpMgkKuY3w=
+	t=1789208287; cv=none; b=bzdpkWsOPcrSJ73sp19lRgi2N7X1GWRkZmMsAuRI7Q8+5Wy3vzDz4OaiSOOAltEudYOt5U9IqKxgCVuGwGnrG5MG0GrKuSxOqciZ/ZqV0BcpbYLFFkYm0DidGH/Y+eE1X02DloGTFzvXNje5NjrGXs4lOU19ua8PjW4u/x9lxqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208283; c=relaxed/simple;
-	bh=Vx5YLf9VyYJIkFR3RFlnduwC3FpFA+jMps9sdJCCFIQ=;
+	s=arc-20240116; t=1789208287; c=relaxed/simple;
+	bh=23GZKVFxSDuai9e8Xthi6T6vietJNNc0bVqtgL8X3tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejZa5YyfyKHVkjqig8QjmHOltW3fnVZtfEJbwXmdGGcF9eSfZESHf/cBXaXKnUH+Y7+76EUkl+UxfdpDvQG+YuqOIfAEw/dFhr+lqX4XhIa+oUQfAFmduXWGXsaJT6z/MLF7V/g80GZWx6N7+YfqsERVKG2nEwFmEGAguOmBVzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXXsHPnj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dg9Gw69yuwP4Rt4yKKamJ31mj91AULBLmrQfjfL8Jfs9XFhlUIm0Wo/74d0fnGDrBPegCf3KzMX0BT8Rb/ew270y8hf2vOho6YZwLXKrQS7P0z3ycappNRyHYalBigUdhyf77FhOjopvRX4C8i4UJc2d9VWUw2wm1RObGiARrSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pG7mfljA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXXsHPnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7A81F000FF;
-	Sat, 12 Sep 2026 10:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pG7mfljA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674C51F000FF;
+	Sat, 12 Sep 2026 10:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208281;
-	bh=WCpEtcPLy8BoKu+LyrMTioACjKtZa/ibLuOoFO6MKDI=;
+	s=korg; t=1789208286;
+	bh=9tw8JSGOwNUIIx4/z+FWcLWWbOpfxIVOQAusJZMfovI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXXsHPnj/IorXmFe2IQqxluQDqCBkEa7O6irM1vK56Zg5cGUeMDNAxBJpliX+lxjJ
-	 +8C5N8uS7NXbhj+Bp/j82u7XtjLv+lkXxgt9SAc1CKLqQYWB+FXZI+suYJy7Ycb4ZZ
-	 ood9QtvD8pT2ZukPcpab2/um2gkhiAX5r0CLBMtM=
+	b=pG7mfljAWAR1EEzJ73Rvd6MRt7dfaT5Eyg13/gRD965Buk5Xibx0V0xhv9BnWz9en
+	 yUTuk4LCdJS/SdNYgbhUggN8kqAvLUcO0Gk0JejkvMRsoAGoXDoIi/nkaK46KOCryg
+	 SgPHTdJGW8LpOQUOnxDDLKPVhfVi5+F3zEArGGig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
+	Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Wayen Yan <win847@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0585/1518] thermal/drivers/airoha: Fix copy paste error for sen internal
-Date: Sat, 12 Sep 2026 08:45:54 +0200
-Message-ID: <20260912065636.661430102@linuxfoundation.org>
+Subject: [PATCH 6.18 0586/1518] thermal/drivers/qcom-spmi-adc-tm5: Drop IIO_VAL_INT check in adc_tm5_get_temp
+Date: Sat, 12 Sep 2026 08:45:55 +0200
+Message-ID: <20260912065636.683825948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,37 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
 
-[ Upstream commit 6791265d609549be55bb35b747c9648d0b570c12 ]
+[ Upstream commit 0c569e22020f53ddfac0099b0aa193907bfbcd6f ]
 
-In airoha_thermal_setup_monitor there is a copy paste error on configuring
-the internval for temp monitor. Fix the error and use the correct mask for
-the sen interval for the EN7581_TEMPMONCTL2 register.
+Commit bb21ee31f575 ("iio: Fix iio_multiply_value use in
+iio_read_channel_processed_scale") fixed the
+iio_read_channel_processed_scale to return 0 on success instead
+of IIO_VAL_INT (1). The existing check in adc_tm5_get_temp()
+treated a successful return as an error because it expected
+IIO_VAL_INT. Drop the redundant `ret != IIO_VAL_INT` condition
+and rely solely on the negative error check.
 
-Fixes: 42de37f40e1b ("thermal/drivers: Add support for Airoha EN7581 thermal sensor")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Fixes: bb21ee31f575 ("iio: Fix iio_multiply_value use in iio_read_channel_processed_scale")
+Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Wayen Yan <win847@gmail.com>
-Link: https://patch.msgid.link/20260702094846.17325-3-ansuelsmth@gmail.com
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260724-adc-tm5-drop-iio-val-int-check-v1-1-0b85a0895dd7@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/airoha_thermal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/thermal/airoha_thermal.c b/drivers/thermal/airoha_thermal.c
-index 439aa011b75c7..829a7327fc403 100644
---- a/drivers/thermal/airoha_thermal.c
-+++ b/drivers/thermal/airoha_thermal.c
-@@ -403,7 +403,7 @@ static void airoha_thermal_setup_monitor(struct airoha_thermal_priv *priv)
- 	 * sen interval is 379 * 52.715us = 19.97ms
- 	 */
- 	writel(FIELD_PREP(EN7581_FILT_INTERVAL, 1) |
--	       FIELD_PREP(EN7581_FILT_INTERVAL, 379),
-+	       FIELD_PREP(EN7581_SEN_INTERVAL, 379),
- 	       priv->base + EN7581_TEMPMONCTL2);
+diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+index d7f2e6ca92c2c..d1b086737bcd2 100644
+--- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
++++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+@@ -369,9 +369,6 @@ static int adc_tm5_get_temp(struct thermal_zone_device *tz, int *temp)
+ 	if (ret < 0)
+ 		return ret;
  
- 	/* AHB poll is set to 146 * 68.64 = 10.02us */
+-	if (ret != IIO_VAL_INT)
+-		return -EINVAL;
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
