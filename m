@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B851541D212;
-	Sat, 12 Sep 2026 09:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17AC2E2286;
+	Sat, 12 Sep 2026 09:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204739; cv=none; b=YRXcPVcB8EYkpwyOJsuUaL+9V+JpSHmcSUzKysytHZ4pUQrmEzj17BYe/kVr+GyrI4PJbfZgvDZZK2wgkYuuRQ8DwhF0SifLXBc1v18TyJahy9Oo+Jzhlg+uH36A2FG1thfC67BjeTf0Ac+o3L/MikMMe1cBVgURqpYjONGpI14=
+	t=1789204742; cv=none; b=G8eXh19EqVzF4wxNXjr0QW+3uMngMlgrZHA9L/C5EXAklEd1fyjCfUSonc3z11sNp1H7bCAi0qOJyFhHHLwxAyt8oT00d1LPQUi8XX2gqWiUTlJB7NLHywPyJ9QMlxWby8YCUxKiV71x5aalSFri6/NJIrstjluMh8tAYSdPWXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204739; c=relaxed/simple;
-	bh=tqQb5lLbObxOgC7cP7+wUnrd7Xxj7GWV/4I9KgJ/TYc=;
+	s=arc-20240116; t=1789204742; c=relaxed/simple;
+	bh=fgNnuyzPQ+WJB733UuADleIvQ7ec7NQMhYay2uA8sOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWuiM3xv9Ruqzja1TGUDKt3M0sswqh5g1hgRZ0YYE3vQZOak2JIu+RDCAa/FaBmNXiL/h6KO+KjsQiHK8u2q73esGiqsboFdXd8HKlbMqqtHW4C1kTCLXVEBkxWFCUP6yxI4qkFFb9maJwpr9UkLt+kqVxVEjdbqQLmEvG2oZ2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxv172ex; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bp1K4ocRZZWUK3oXtbcjhK1N+t2A8JMCSuW1fGSoe84McJQ1kxE5fLi/xRmYStWZemGJGsk6d6DQb1xOhCVsrfu0x1mTytZNutjsEcqjtXTzGbLbc1DEOE+2mmoRc/91HUBa+WyNUGyGyHjuzQxLU62CPuZuAmgwuuMHC41maAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unaWVOvI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxv172ex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF7C1F000FF;
-	Sat, 12 Sep 2026 09:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unaWVOvI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB9C1F000FF;
+	Sat, 12 Sep 2026 09:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204735;
-	bh=9HDPV6KZbnlUHi7I8CUshC4feFErrwft+y4OwIdHJHc=;
+	s=korg; t=1789204740;
+	bh=XhLxAW8jsWH6lNdRrhQAd39Mh1f3J2ycUUPe7gCAD5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bxv172ex/icUdjW2AUavlY1pxsZi43U2nnJbm9fpszPNpd3AoIgGuFtLyK0x6paIb
-	 FNwjbKKUy37tCX/iJLeBVd8uX3k8ityRn5nSHfdjZqwobz6Zkn44fREOrUODdh4oAC
-	 jadflXzAikw42O4NrhEnXgLXvq9zVBOotLbgoInw=
+	b=unaWVOvIKdDyekR/tEYnNn6hZ7dp4GRZg264OU2uvJENxZZuKPGXGtDZHrvfNTFsa
+	 bRBf1fVokQIGrc9uti4y+mQZARj9xfBmJPpa1LFE2B8u4q1RgGQA/C0M3fQyxejQy0
+	 4JvT4kLvt06BXTvNWRUBXVOFS3x8cDX1m/gm+O3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Czernohous <marek@czernohous.de>,
-	Simon Horman <horms@kernel.org>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1674/1815] forcedeth: stop the tx_timeout register dump past the requested window
-Date: Sat, 12 Sep 2026 08:57:04 +0200
-Message-ID: <20260912065728.286416496@linuxfoundation.org>
+Subject: [PATCH 7.2 1648/1815] irqchip/gic-v5: Disable IRSes on probe failures
+Date: Sat, 12 Sep 2026 08:56:38 +0200
+Message-ID: <20260912065727.682183267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,93 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Czernohous <marek@czernohous.de>
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
 
-[ Upstream commit cfa9178ce2e5b4f2e2a9e8b577a6cff841665aa0 ]
+[ Upstream commit 79b115c2a29204cb7e836b0df0b8c466be4b2250 ]
 
-nv_tx_timeout() dumps the register window in rows of eight dwords:
+GICv5 driver probe failures cause IRSes initialized by the kernel to be
+unmapped and their data structures to be destroyed but the current driver
+leaves the probed IRSes enabled, whereas they should be disabled.
 
-	for (i = 0; i <= np->register_size; i += 32) {
-		netdev_info(dev, "%3x: %08x ... %08x\n", i,
-			    readl(base + i + 0), ..., readl(base + i + 28));
+Disable IRSes on driver probe failures so that the IRSes are brought back
+to their quiescent HW state.
 
-The loop bound only checks the row's starting offset, so the final row
-reads a full 32 bytes from a position that is below the end of the window
-but too close to it. base is mapped with exactly that length:
-
-	np->base = ioremap(addr, np->register_size);
-
-so the tail of that row is read from beyond the length the driver asked
-for. Per variant, the last iteration reads past register_size by:
-
-	NV_PCI_REGSZ_VER1 (0x270): row 0x260 reads to 0x27f, 16 bytes over
-	NV_PCI_REGSZ_VER2 (0x2d4): row 0x2c0 reads to 0x2df, 12 bytes over
-	NV_PCI_REGSZ_VER3 (0x604): row 0x600 reads to 0x61f, 28 bytes over
-
-This happens on every supported device, not just one of them. Note that
-it is not a consequence of the sizes being odd: with i <= register_size
-the offending row is reached whatever the size, and a size that were a
-multiple of 32 would overrun by a full row rather than by a remainder.
-
-To be precise about the severity: the reads stay inside the BAR. Memory
-BAR sizes are powers of two, the driver only accepts a region with
-pci_resource_len() >= register_size (forcedeth.c:5757-5762), and the
-next power of two at or above each register_size already covers the
-offending row: 0x400 for 0x270 and 0x2d4, 0x800 for 0x604. ioremap()
-also rounds the mapped length up to page granularity, so the reads land
-inside the mapping the CPU has as well. What they leave is the window
-the driver asked for, not the BAR and not the mapping. That is still a
-driver reading registers it did not ask for, and it is trivial to
-avoid, but nobody should expect a fault from it.
-
-Changing <= to < is not enough: register_size is a length and every size
-above is larger than its last row start, so i still reaches the offending
-row. Check that the whole row fits instead.
-
-The trade-off is that a partial trailing row is no longer dumped: 16 bytes
-for VER1, 20 for VER2, 4 for VER3. That seemed preferable to reading
-outside the requested window, and to open-coding a second, narrower dump
-for the remainder in what is a debug-only path. Extending the dump to
-cover the tail can be done on top if anyone misses those registers.
-
-Only reachable with the debug_tx_timeout module parameter, which defaults
-to false. It has not been observed at runtime: forcing a genuine TX
-timeout on the reference machine is not something I can do safely, so this
-rests on the arithmetic above and on a build test, not on a reproduction.
-UBSAN does not catch it either, since these are MMIO reads rather than an
-array access. It was found by reading the function while fixing the
-saved_config_space off-by-one in nv_suspend() and nv_resume().
-
-The dump was introduced with a fixed 0x400 bound while ioremap() mapped
-only NV_PCI_REGSZ (0x270), so it read about 0x190 bytes too far from the
-start. Commit 86a0f04387bf ("[PATCH] forcedeth: fix initialization")
-later replaced 0x400 with np->register_size, which shrank the overrun to
-the remainder but did not remove it.
-
-Fixes: c2dba06dae7d ("[PATCH] forcedeth: rewritten tx irq handling")
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/178682367886.3748309.6978554332066826294@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5cb1b6dab2de ("irqchip/gic-v5: Add GICv5 IRS/SPI support")
+Fixes: 35866efa52fe ("irqchip/gic-v5: Add ACPI IRS probing")
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://sashiko.dev/#/message/20260810104747.E5CE71F000E9%40smtp.kernel.org
+Link: https://patch.msgid.link/20260812-gicv5-7-2-fixes-v1-3-3743e82c69a4@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v5-irs.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
-index dc804e1115641..f0218a0eab5ca 100644
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -2740,7 +2740,7 @@ static void nv_tx_timeout(struct net_device *dev, unsigned int txqueue)
+diff --git a/drivers/irqchip/irq-gic-v5-irs.c b/drivers/irqchip/irq-gic-v5-irs.c
+index 0bd9ae9ae12ef..9d25ce8bfd8c9 100644
+--- a/drivers/irqchip/irq-gic-v5-irs.c
++++ b/drivers/irqchip/irq-gic-v5-irs.c
+@@ -488,6 +488,12 @@ static int gicv5_irs_wait_for_idle(struct gicv5_irs_chip_data *irs_data)
+ 					GICV5_IRS_CR0_IDLE, NULL);
+ }
  
- 		netdev_info(dev, "Ring at %lx\n", (unsigned long)np->ring_addr);
- 		netdev_info(dev, "Dumping tx registers\n");
--		for (i = 0; i <= np->register_size; i += 32) {
-+		for (i = 0; i + 32 <= np->register_size; i += 32) {
- 			netdev_info(dev,
- 				    "%3x: %08x %08x %08x %08x "
- 				    "%08x %08x %08x %08x\n",
++static void __init gicv5_irs_disable(struct gicv5_irs_chip_data *irs_data)
++{
++	irs_writel_relaxed(irs_data, 0, GICV5_IRS_CR0);
++	gicv5_irs_wait_for_idle(irs_data);
++}
++
+ void gicv5_irs_syncr(void)
+ {
+ 	struct gicv5_irs_chip_data *irs_data;
+@@ -786,6 +792,7 @@ static int __init gicv5_irs_of_init(struct device_node *node)
+ 
+ out_iomem:
+ 	gicv5_irs_clear_affinity(irs_data);
++	gicv5_irs_disable(irs_data);
+ 	iounmap(irs_base);
+ out_err:
+ 	kfree(irs_data);
+@@ -801,6 +808,7 @@ void __init gicv5_irs_remove(void)
+ 
+ 	list_for_each_entry_safe(irs_data, tmp_data, &irs_nodes, entry) {
+ 		gicv5_irs_clear_affinity(irs_data);
++		gicv5_irs_disable(irs_data);
+ 		iounmap(irs_data->irs_base);
+ 		list_del(&irs_data->entry);
+ 		kfree(irs_data);
+@@ -968,6 +976,7 @@ static int __init gic_acpi_parse_madt_irs(union acpi_subtable_headers *header,
+ 
+ out_map:
+ 	gicv5_irs_clear_affinity(irs_data);
++	gicv5_irs_disable(irs_data);
+ 	iounmap(irs_base);
+ out_release:
+ 	release_mem_region(r->start, resource_size(r));
 -- 
 2.53.0
 
