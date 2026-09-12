@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51DB2F617C;
-	Sat, 12 Sep 2026 18:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AFD2F617C;
+	Sat, 12 Sep 2026 18:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238606; cv=none; b=Edm4IcQ8axVNMYcjI3k2UJfwK9Q8EALT+HEpSd6D9pxKwIY6Lj3v3TBzSufPSsotULLOlv5bSdeHBh1/AmAzYdljWu8xcVaCgyJCjwc4NqQYjEjBNvSLEKXK46I6G0WoU26bLyE+7BJqAUpaWPZ7iYyqeUp3otcsnZ+hCahIAuM=
+	t=1789238610; cv=none; b=fVyDUmKw1RpCwQkJ+o7bbC8Ng1/vmb5SmfkDJ8uBlUOicAQY6ML4qSluIWGUdfGmVDzPCb9zZy9omessFi1i3jbnnL7wK2r/Z+XRGckpclfo02wpPo6Z2O3oCflibRMlJW8ptgEGRNhiFwLwzPiobu8f4EiQn6OeM7lMs/ohLkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238606; c=relaxed/simple;
-	bh=lB6GbOjneTef4TA+nXEny+qz+sz7uniq94zLIRJV4BI=;
+	s=arc-20240116; t=1789238610; c=relaxed/simple;
+	bh=/E13G3wVsjPMHfMFFwTf/cR7c+ik60k+1TNo4zAG5CY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNw1i3dC2IX65aQbiQ+RXcNbVDgTtIj5SErPfpgBadjR8mpL33Ec0ddIP4CNqonz1tcaQGPRoLUW/1z2cUBYZowjtsgz0t4u/jHMdsh0Ju670moW34bfvONyI5S/yHTgGkHvqt/VS8gKuf8ueU4dIZs4xgJycfaJNWEGTWJc3u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsgCledt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Mg/88jPhUbh6hIV6QKe4qxRnwj0LDklfBOdI8i3X7S+lpAbCHuFoQgBLsIIdJpMQOzBipmHkuo0PxHhj0XZCKxnM1Ov3qrN51aCvDELDNYc8qapVqbKsB1Jp4e+8ba9xn/P5SZnC9n7MFub41JmkJgzM+q+rAuKd+sEM8565Vas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zANRBCgj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsgCledt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5161F000FF;
-	Sat, 12 Sep 2026 18:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zANRBCgj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008B21F000FF;
+	Sat, 12 Sep 2026 18:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238605;
-	bh=iBeM+paYB0ulpXYUIyo11f/tRS/njC8NsNOvIMZzjkk=;
+	s=korg; t=1789238609;
+	bh=EwnzW/kXBWrfkP0ILGcinXevciRJnR0mnlWQs3wOrWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QsgCledt8kRPcJtj1yaavKCwi0VejtJBVxAMI7kp414JEj5x5TwG8hNaXO99/9MKM
-	 6Y0MHQoDrEFzDW8qH2sWMBLGIbeU39bf/9LNc1t7+UdsGanhYM3nJFF+dDHTepM1MV
-	 SACXGkvKBrva5tDRHau2P4ufoMCqZpBd5kZ0Ztco=
+	b=zANRBCgjdLdgkjo69XboIFHm4JUwUQqmgTvFvWIb3cwejdhrrF+jrFM+ykSyD018R
+	 abxTh5S6zR8xcr89wrLcqgV3oFWuJoAQCjhcuEfqn0o1JnnCny3zpvHkhDRsJnzxf1
+	 61MM+SVkYspEuDhCMgd6NvxnA9CfSMrTKC2l3jkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 443/935] nvmet-rdma: avoid circular locking dependency on install_queue()
-Date: Sat, 12 Sep 2026 08:57:53 +0200
-Message-ID: <20260912065536.991672518@linuxfoundation.org>
+Subject: [PATCH 5.15 490/935] platform/surface: acpi-notify: Check ACPI companion before use
+Date: Sat, 12 Sep 2026 08:58:40 +0200
+Message-ID: <20260912065538.056750335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -47,77 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 31deaeb11ba7a885116c9c30892b9f763c04d59c ]
+[ Upstream commit 2b3a5dabe89e330413af403246b648c1890f368f ]
 
-nvmet_rdma_install_queue() is driven from the ->io_work workqueue
-function, but will call flush_workqueue() which might trigger
-->release_work() which in itself calls flush_work on ->io_work.
+Since every platform driver can be forced to match a device that doesn't
+match its list of device IDs because of device_match_driver_override(),
+platform drivers that rely on the existence of a device's ACPI companion
+object should verify its presence.
 
-To avoid that check for pending queue in disconnecting status,
-and return 'controller busy' when we reached a certain threshold.
+san_probe() dereferences the result of ACPI_COMPANION() when installing
+the GSBUS address space handler, so force-binding the driver to a device
+without an ACPI companion leads to a NULL pointer dereference.  The
+dereference was introduced when the probe function was switched from
+ACPI_HANDLE() to ACPI_COMPANION().
 
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 0114dd303b37 ("nvmet-rdma: fix response resource leak on queue teardown")
+Check the ACPI companion against NULL and return -ENODEV when it is
+missing, like commit e4865a56d013 ("ACPI: driver: Check ACPI_COMPANION()
+against NULL during probe") does for the core ACPI platform drivers.
+
+Fixes: a9e10e587304 ("ACPI: scan: Extend acpi_walk_dep_device_list()")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260706012512.524359-2-lilinmao@kylinos.cn
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/platform/surface/surface_acpi_notify.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index ca21cd66b1f4e..afdbe0506df5d 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -36,6 +36,8 @@
- #define NVMET_RDMA_MAX_MDTS			8
- #define NVMET_RDMA_MAX_METADATA_MDTS		5
+diff --git a/drivers/platform/surface/surface_acpi_notify.c b/drivers/platform/surface/surface_acpi_notify.c
+index 8339988d95c1b..c8f27686b5723 100644
+--- a/drivers/platform/surface/surface_acpi_notify.c
++++ b/drivers/platform/surface/surface_acpi_notify.c
+@@ -798,12 +798,16 @@ static int san_consumer_links_setup(struct platform_device *pdev)
  
-+#define NVMET_RDMA_BACKLOG 128
+ static int san_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *san = ACPI_COMPANION(&pdev->dev);
+ 	struct ssam_controller *ctrl;
++	struct acpi_device *san;
+ 	struct san_data *data;
+ 	acpi_status astatus;
+ 	int status;
+ 
++	san = ACPI_COMPANION(&pdev->dev);
++	if (!san)
++		return -ENODEV;
 +
- struct nvmet_rdma_srq;
- 
- struct nvmet_rdma_cmd {
-@@ -1589,8 +1591,19 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
- 	}
- 
- 	if (queue->host_qid == 0) {
--		/* Let inflight controller teardown complete */
--		flush_workqueue(nvmet_wq);
-+		struct nvmet_rdma_queue *q;
-+		int pending = 0;
-+
-+		/* Check for pending controller teardown */
-+		mutex_lock(&nvmet_rdma_queue_mutex);
-+		list_for_each_entry(q, &nvmet_rdma_queue_list, queue_list) {
-+			if (q->nvme_sq.ctrl == queue->nvme_sq.ctrl &&
-+			    q->state == NVMET_RDMA_Q_DISCONNECTING)
-+				pending++;
-+		}
-+		mutex_unlock(&nvmet_rdma_queue_mutex);
-+		if (pending > NVMET_RDMA_BACKLOG)
-+			return NVME_SC_CONNECT_CTRL_BUSY;
- 	}
- 
- 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
-@@ -1886,7 +1899,7 @@ static int nvmet_rdma_enable_port(struct nvmet_rdma_port *port)
- 		goto out_destroy_id;
- 	}
- 
--	ret = rdma_listen(cm_id, 128);
-+	ret = rdma_listen(cm_id, NVMET_RDMA_BACKLOG);
- 	if (ret) {
- 		pr_err("listening to %pISpcs failed (%d)\n", addr, ret);
- 		goto out_destroy_id;
+ 	ctrl = ssam_client_bind(&pdev->dev);
+ 	if (IS_ERR(ctrl))
+ 		return PTR_ERR(ctrl) == -ENODEV ? -EPROBE_DEFER : PTR_ERR(ctrl);
 -- 
 2.53.0
 
