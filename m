@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9270337883C;
-	Sat, 12 Sep 2026 19:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E696E382292;
+	Sat, 12 Sep 2026 19:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242296; cv=none; b=BAf5DDZTPcId3ZAxWikwPczI+YJeJmPOlDyANiDpy6aqjyP0m7PHWnFw+u/Ev7mwmLw7yjvg46pvw0tzzEVEn2ZTuGP2Qw/hV5GZplRVwkV34tqpE0Mj9m1PFNRIk9LLZfi5pJs9qWRRhXOS8snLcG6+PDIVMj6Kmi96CPO3ylQ=
+	t=1789242298; cv=none; b=eBCu404Zohrh0MTg96rvrJIzL0CLWg7cIM86Ka1xx4fIn8Gb/Jm+LRYF35AdAv5F9/6CpvmOK53rrCOc6CNRD+BTX+wMEM7Rk0goXxiCCpg0X21eovV+1J82Qe+K00XN//zVKfKOAio0htpEBr42BhAlaxXMcX/seZbow/92Wfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242296; c=relaxed/simple;
-	bh=3ZLy4f5irsiSPVVfTUo8C8Vs/D1DTgeJa3vnvuW7qSU=;
+	s=arc-20240116; t=1789242298; c=relaxed/simple;
+	bh=lKH6OrEb10/G0fZihRR6Z5NXkTDkrx7SH8RBqpPF490=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POB77YeXNXZ8gW3lRi+3Zf/f96iTgIRBYsW9uQ039pZYq9yswtg96/5AnVT7YkoplZsiLXBWyKDGo/pK83OQsGX5iaJgxA3COiLBVo53rDa2xYWJ40fZRSpuqi9OSZ6q+CzvH9B0tO5j/ITKLVukfJ9kyJBjzQkfyoqJZhoW2+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcAzTxDB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EA4f6jKxE4byjiarb4Rr/Bb9H64w4jdgbCAQLiSg94hDR3fJU+SFqhWBN5JGpIaFZ7l0hQrYkJghp4FQcGwJ7qsnlt+YZmBJx00A2VgrlS+g0suldRLY4j6NHKwyfAJNoPrMwuaq5a5CPPNZtXzYaMIcup1/8dRnk5sSPV6MQas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTd4k+IA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcAzTxDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5FC1F000FF;
-	Sat, 12 Sep 2026 19:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTd4k+IA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EAC91F000FF;
+	Sat, 12 Sep 2026 19:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242294;
-	bh=I9huQuk2J1OCriCX4b5b0NkL3CFjIMh6hAo4L+RYrhY=;
+	s=korg; t=1789242296;
+	bh=E6i9UIB0QS7ZybDbSdlbglz9Hhq/0x93ygr4UKYO4Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TcAzTxDBKSVLmHTHfRr3NyukUMxvHUiVcODIVV5YA3Fhl1sQNB2IcIxwAC+/Ycn0h
-	 UX+AW/IGiReWjM60zZn4hN24ChD9KxtFYmKgrkqJt2ARY1UR2q9s4CjOiXqTFWfXko
-	 zjgCRy0Ll69upWS34EPhWV4B92DwJ0oohYtS+dZw=
+	b=qTd4k+IApHcOFk88WaJ1ZHkHpZjM19fZnPMzmInaeeHQudUkKP1XYdw0gerK2nCZr
+	 LWl5qlx16BBG6WO7HXQYZTnCQq+54CabJiiyjtNByf7nb+GsG7NDW5wEhkq/w8Ol6i
+	 n8GpdvrmfuLFj9xsKJAT1/qeF8iNjayjEBZaKVp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Young <sean@mess.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 354/798] media: keymaps: Remove obsolete RC_MAP_RC5_TV keymap define
-Date: Sat, 12 Sep 2026 08:59:42 +0200
-Message-ID: <20260912065525.275254225@linuxfoundation.org>
+Subject: [PATCH 5.10 355/798] media: keymaps: Remove obsolete RC_MAP_HAUPPAUGE_NEW keymap define
+Date: Sat, 12 Sep 2026 08:59:43 +0200
+Message-ID: <20260912065525.297190922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,12 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-[ Upstream commit 5370facb7b4461166a4610d456fefeb92ef50a82 ]
+[ Upstream commit 6e5deb2923b0d1b73c77a1a77c30b0da43d9e022 ]
 
-Since commit 206241069ecf ("[media] rc/keymaps: Remove the obsolete
-rc-rc5-tv keymap"), the rc-rc5-tv keymap is no longer in the tree.
+Since commit af86ce79f020 ("[media] remove the old RC_MAP_HAUPPAUGE_NEW
+RC map"), the RC_MAP_HAUPPAUGE_NEW define is no longer used.
 
-Fixes: 206241069ecf ("[media] rc/keymaps: Remove the obsolete rc-rc5-tv keymap")
+Fixes: af86ce79f020 ("[media] remove the old RC_MAP_HAUPPAUGE_NEW RC map")
 Signed-off-by: Sean Young <sean@mess.org>
 Acked-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -67,17 +67,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/include/media/rc-map.h b/include/media/rc-map.h
-index c3effcdf2a641..3e01cb92feb5a 100644
+index 3e01cb92feb5a..ac79f2cae1d14 100644
 --- a/include/media/rc-map.h
 +++ b/include/media/rc-map.h
-@@ -300,7 +300,6 @@ struct rc_map *rc_map_get(const char *name);
- #define RC_MAP_PROTEUS_2309              "rc-proteus-2309"
- #define RC_MAP_PURPLETV                  "rc-purpletv"
- #define RC_MAP_PV951                     "rc-pv951"
--#define RC_MAP_RC5_TV                    "rc-rc5-tv"
- #define RC_MAP_RC6_MCE                   "rc-rc6-mce"
- #define RC_MAP_REAL_AUDIO_220_32_KEYS    "rc-real-audio-220-32-keys"
- #define RC_MAP_REDDO                     "rc-reddo"
+@@ -259,7 +259,6 @@ struct rc_map *rc_map_get(const char *name);
+ #define RC_MAP_GENIUS_TVGO_A11MCE        "rc-genius-tvgo-a11mce"
+ #define RC_MAP_GOTVIEW7135               "rc-gotview7135"
+ #define RC_MAP_HAUPPAUGE                 "rc-hauppauge"
+-#define RC_MAP_HAUPPAUGE_NEW             "rc-hauppauge"
+ #define RC_MAP_HISI_POPLAR               "rc-hisi-poplar"
+ #define RC_MAP_HISI_TV_DEMO              "rc-hisi-tv-demo"
+ #define RC_MAP_IMON_MCE                  "rc-imon-mce"
 -- 
 2.53.0
 
