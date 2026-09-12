@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1BB1E1024;
-	Sat, 12 Sep 2026 07:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8993B165F16;
+	Sat, 12 Sep 2026 07:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199557; cv=none; b=cO1oxSERBMyGSitirg6TyFs9f6vbPq7ljaMfKsPQEo3rB9XXfbE60Cs7aKw3M5CdvFJHlZZO3lXO5yTnyFBEVopGk9RnR9LmRxvR5IedQAYPG8Rvbu7u5GY5vw78bvsPDzIauizwEjSoaLBVqfbGJ9lHTlATGQk/ELDFaZPUpGE=
+	t=1789199562; cv=none; b=Qr0eAguQ41QMciQYNEmZ64B7khlE9oG86BcDNH/5SrgFUlUxAT1inhCc/VA4aAzHJ3+nYHCvSoh1DZ/61MHIvCexzPVeM4JvZOan9IFRoX8WlViEi88hG0M6KHHI+DXQi8Lz4t70yFdQ6GDqQQdSwJsOnpxrH61ffBwetOzuN9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199557; c=relaxed/simple;
-	bh=iTAET+BE9vUpZdI9OIuLUJbtsa09u1fo48BE11O5M08=;
+	s=arc-20240116; t=1789199562; c=relaxed/simple;
+	bh=vXE/5xnNL7UL13j6YBMm815AdWZ2U9cHHwPp7SHL/ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R6+EjABaxeo0j698kxzr1M7DMSW4GDRg7wYpbAJcAs6T5JqOfXtY7qWqHNZggKudw2l/WmtI/sc68st6yo/4jh3nUXyEuv7oeatqM39sBvILVz7v5K/X139iGq0RTAcUKtLxqKe+jitzD84of0RCDLATjLWb5CFaPsH16Bk1+c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbonky2B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HzCVDq1HafNyTomfRLY2yLp6S+qm8euQ0H7FCgmXPSBOi3ZuLGT6VDChhKWGTnAFmvu2BFSIxqaE0bo+MjjishRxuteM9WDbHRz2xC733AFkny80j2Ge6GbnygI0jWV/1cWgJZltPpj4bSSsTWnak88YsuM9Z3WeYFC/VFc69rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIuP7kqY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbonky2B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27AB1F000FF;
-	Sat, 12 Sep 2026 07:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIuP7kqY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437251F000FF;
+	Sat, 12 Sep 2026 07:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199556;
-	bh=tiSvJqhFKxF/6liRWHopXUgz35QHwxBlWbk5KwhWBX8=;
+	s=korg; t=1789199561;
+	bh=vIscc1ThZLzWiow0wdQUtqMdry48iIe4U5W4aefsNzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mbonky2B63RfNl4RuCQFdhvV/YQcunYWS+pZFxYRKi8eiNNdEYk+YPFt+xQJzpp2v
-	 TjH069O9vH10dMaViLyA+OHjxWyw7l6Xekws0kMJaTSMQvPOhfLQalMB/GwkfjzhbG
-	 /XYxE6zf6s4jEIPpLJqJoug9krWbrM4/mbgI8L8s=
+	b=RIuP7kqYAd8Pyjqinwi9mAeynQjKFc4nKToZxxas4tKnQuHwFxo9u5FxX7K5jYUb3
+	 mADJuEa/EOq2V/F96NklvVVlP7bvbNOmycE37ObkoT03dAk+l43OI72J4Q49fufP1f
+	 N2gYOAVrhA2PecJuBvWQL7MPn3FC5MwGGEGkpy+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jan Kara <jack@suse.cz>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Aditya Prakash Srivastava <aditya.ansh182@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0610/1815] wifi: ath11k: Avoid buffer overread in ath11k_wmi_tlv_op_rx()
-Date: Sat, 12 Sep 2026 08:39:20 +0200
-Message-ID: <20260912065703.202026290@linuxfoundation.org>
+Subject: [PATCH 7.2 0593/1815] ext4: fix ABBA deadlock in ext4_xattr_inode_cache_find()
+Date: Sat, 12 Sep 2026 08:39:03 +0200
+Message-ID: <20260912065702.804248427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,55 +53,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
 
-[ Upstream commit 9ef9dd30058cc9223c72f711dca1a28a5947d0c5 ]
+[ Upstream commit 03438084a7b8621fb5c762dd3d04cff5f2630fb2 ]
 
-Currently, in ath11k_wmi_tlv_op_rx(), the firmware buffer is read
-without first verifying that the buffer has enough data to hold a
-header. This could result in a buffer overread.
+Syzbot/stress-ng reported an ABBA deadlock in ext4 when exercising
+concurrent xattr workloads (using the ea_inode mount/format option).
 
-Add an upfront length check before dereferencing skb->data as a
-wmi_cmd_hdr. The check is placed before the trace_ath11k_wmi_event()
-call to preserve the existing trace semantics (tracing the full raw
-WMI event including the header), unlike the analogous ath12k fix which
-could use skb_pull_data() directly.
+The deadlock occurs between the running transaction and the eviction
+thread:
+- Task 1 (stress-ng): Holds a reference to a shared mbcache_entry (ce)
+  and calls ext4_xattr_inode_cache_find() -> ext4_iget() to retrieve
+  the corresponding EA inode. Since the EA inode is currently being
+  evicted, ext4_iget() blocks in __wait_on_freeing_inode() waiting for
+  eviction to complete.
+- Task 2 (eviction thread): Currently evicting the same EA inode in
+  ext4_evict_ea_inode(). It calls mb_cache_entry_wait_unused(oe) which
+  blocks waiting for Task 1 to release the reference to the mbcache_entry.
 
-Compile tested only.
+To break this deadlock, implement a new ext4_iget() configuration flag
+named EXT4_IGET_NOWAIT. When set, perform a non-blocking lookup of the
+inode via VFS's find_inode_nowait() API.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260716-ath11k_wmi_tlv_op_rx-overread-v1-1-0b972b3f1368@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+If the inode is currently being evicted (marked with I_FREEING or
+I_WILL_FREE) or created (I_CREATING), or if it is not present in the VFS
+inode cache (cache miss), simply skip it (returning -ENOENT) rather than
+waiting for eviction/creation to complete, breaking the ABBA cycle.
+
+Since we return -ENOENT immediately on a cache miss, we never attempt to
+allocate a new inode or call iget_locked(), completely eliminating any
+TOCTOU race window.
+
+If the returned inode is I_NEW, wait for its initialization to clear via
+wait_on_new_inode(). If initialization fails and the inode is unhashed
+during wait_on_new_inode() waking up (e.g., due to an I/O read error in
+another thread), safely drop the reference and return -ENOENT. This
+unhashed check is executed unconditionally on all cache-hit pathways to
+properly handle concurrent initialization failures.
+
+Finally, standard validation checks (including is_bad_inode,
+EXT4_EA_INODE_FL, file_acl, and xattr flags) are executed as normal inside
+check_igot_inode() to fully guarantee VFS-layer safety.
+
+In ext4_xattr_inode_cache_find(), invoke ext4_iget() with the new
+EXT4_IGET_NOWAIT flag to perform the non-blocking cache search.
+
+Suggested-by: Jan Kara <jack@suse.cz>
+Reported-by: Colin Ian King <colin.i.king@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219283
+Fixes: 0a46ef234756 ("ext4: do not create EA inode under buffer lock")
+Signed-off-by: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
+Tested-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260626054821.1729-1-aditya.ansh182@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ext4/ext4.h  |  3 ++-
+ fs/ext4/inode.c | 35 ++++++++++++++++++++++++++++++++---
+ fs/ext4/xattr.c |  2 +-
+ 3 files changed, 35 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index c54f50b98a133..72e0b2305e853 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -8895,13 +8895,15 @@ static void ath11k_wmi_tlv_op_rx(struct ath11k_base *ab, struct sk_buff *skb)
- 	struct wmi_cmd_hdr *cmd_hdr;
- 	enum wmi_tlv_event_id id;
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index b37c136ea3ab3..c76dd0bdd3d86 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3144,7 +3144,8 @@ typedef enum {
+ 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
+ 	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
+ 	EXT4_IGET_BAD =		0x0004, /* Allow to iget a bad inode */
+-	EXT4_IGET_EA_INODE =	0x0008	/* Inode should contain an EA value */
++	EXT4_IGET_EA_INODE =	0x0008,	/* Inode should contain an EA value */
++	EXT4_IGET_NOWAIT =	0x0010	/* Non-blocking lookup (skip if freeing) */
+ } ext4_iget_flags;
  
-+	if (skb->len < sizeof(*cmd_hdr))
-+		goto out;
+ extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index ad25b85b98366..9cf0a8a212970 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5271,6 +5271,20 @@ void ext4_set_inode_mapping_order(struct inode *inode)
+ 	mapping_set_folio_order_range(inode->i_mapping, min_order, max_order);
+ }
+ 
++static int ext4_iget_match(struct inode *inode, u64 ino, void *data)
++{
++	if (inode->i_ino != ino)
++		return 0;
++	spin_lock(&inode->i_lock);
++	if (inode_state_read(inode) & (I_FREEING | I_WILL_FREE | I_CREATING)) {
++		spin_unlock(&inode->i_lock);
++		return -1;
++	}
++	__iget(inode);
++	spin_unlock(&inode->i_lock);
++	return 1;
++}
 +
- 	cmd_hdr = (struct wmi_cmd_hdr *)skb->data;
- 	id = FIELD_GET(WMI_CMD_HDR_CMD_ID, (cmd_hdr->cmd_id));
+ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 			  ext4_iget_flags flags, const char *function,
+ 			  unsigned int line)
+@@ -5299,9 +5313,24 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 		return ERR_PTR(-EFSCORRUPTED);
+ 	}
  
- 	trace_ath11k_wmi_event(ab, id, skb->data, skb->len);
+-	inode = iget_locked(sb, ino);
+-	if (!inode)
+-		return ERR_PTR(-ENOMEM);
++	if (flags & EXT4_IGET_NOWAIT) {
++		inode = find_inode_nowait(sb, ino, ext4_iget_match, NULL);
++		if (!inode)
++			return ERR_PTR(-ENOENT);
++
++		if (inode_state_read_once(inode) & I_NEW)
++			wait_on_new_inode(inode);
++
++		if (unlikely(inode_unhashed(inode))) {
++			iput(inode);
++			return ERR_PTR(-ENOENT);
++		}
++	} else {
++		inode = iget_locked(sb, ino);
++		if (!inode)
++			return ERR_PTR(-ENOMEM);
++	}
++
+ 	if (!(inode_state_read_once(inode) & I_NEW)) {
+ 		ret = check_igot_inode(inode, flags, function, line);
+ 		if (ret) {
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index 77512e709543e..6fa41c48f3971 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1550,7 +1550,7 @@ ext4_xattr_inode_cache_find(struct inode *inode, const void *value,
  
--	if (skb_pull(skb, sizeof(struct wmi_cmd_hdr)) == NULL)
--		goto out;
-+	skb_pull(skb, sizeof(*cmd_hdr));
- 
- 	switch (id) {
- 		/* Process all the WMI events here */
+ 	while (ce) {
+ 		ea_inode = ext4_iget(inode->i_sb, ce->e_value,
+-				     EXT4_IGET_EA_INODE);
++				     EXT4_IGET_EA_INODE | EXT4_IGET_NOWAIT);
+ 		if (IS_ERR(ea_inode))
+ 			goto next_entry;
+ 		ext4_xattr_inode_set_class(ea_inode);
 -- 
 2.53.0
 
