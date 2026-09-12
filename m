@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC4647D922;
-	Sat, 12 Sep 2026 13:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2726315D49;
+	Sat, 12 Sep 2026 13:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218051; cv=none; b=lGjR2wjGxywrv6sZwZ2wP0JJE6LbyiGBKaQO3Mn/CQkNBcH3Kt5svLSlVEbMPpYso7iTQdZET37XoZlF/W9N6kpK9SxigdfcLSpsNa5cTsdKeL6tOQ/s4FpzneTvkhmavQOleHOBwwWuKv5F/l6r4Z5mYUkugWjFZrxijNi0tD0=
+	t=1789218056; cv=none; b=XBm6XOsJhg4opQu2Q9sdUpHiw+VGEbWO0VXaanLfCQ/GsyDWIkQZw7Do7N8hl28RiSCt4j4zyer7LNhbNiXLl1DDaknjxFBGE/nA/wuLh3vVZOnCKI25AuNZsg4AI81VlCYlS4Kpty1yMwubcvhRQoo9GgdSEbRtI+WwApSjZN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218051; c=relaxed/simple;
-	bh=zY9mX9VGV2sW5PwqNe1FsQavmyp2E1eBBfiHuWjQu9E=;
+	s=arc-20240116; t=1789218056; c=relaxed/simple;
+	bh=gRMhbLxSUdR4Q1wD5OtUJcti6t+gyGRCwPCh4M9z9DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bny3zKtkyih8q0n64Wu8rv18pBYWdAuX83y8weFkv4Soob2hOUzU6LIb7cySQv+AtoV5cMnLVH6gcux81T31MNVjOPoodW5vBF8jjHWVgyj1tWVqmQFsmPmE2Oz8f5xpwvYwgghU5YVUUCbFWSmXmtxQyvpus6kk9dorIFHV1QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMLO0ILO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e15RxHPs/Qy3vgEalkFoDD8sPHtTI7PXEifH2QdQRl0KVZgoManEfJLwSaOUVIe/DPv/HZmwj7tivvOq/zb4fcTKi+hmxunWL4uxA6TL5PjGfspOueXgIoyhHLy0t7qYm7vfdfD6nHinFaWnsYxXCPJhsn0hWY86TwBfv0X9JFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OThW/2vF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMLO0ILO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D951F000FF;
-	Sat, 12 Sep 2026 13:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OThW/2vF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8071F000FF;
+	Sat, 12 Sep 2026 13:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218050;
-	bh=5MqOYn7Lx3vGFyr3waZDrKzdwUeasKTDAdMWkhrCDog=;
+	s=korg; t=1789218055;
+	bh=ukK26Pn9KtlI2dfUQr4f3A2kkKRkaPQRPizJc2QnN/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dMLO0ILOOlyr6PD1GFliy6r+E6Cj3F3l+XBDd6mOFN/rMAvW3Ll3xVW+PaweaglIY
-	 WF/o6dAKqROBMLlUHf4J6TA18i68Ic/0Gr43b/X5qdzIR3CHo+XRcxWgo7Fgi4As9c
-	 FD9ycgUAQotLk/zW9Jj4alfGbaGIe8YGEfLxBONA=
+	b=OThW/2vFva3X3CCAiPIpUUiJRXdGvysHrSX6oqZI/Cdr2NESZHQKWtMjRv0WkEFPw
+	 cyDuZe4+ONWNm1xrUawXSBWkO0oE3WXsMh0xeg26sAlY+fLvuP8awlEc7aq23STx42
+	 0wos/9e0oe6sPzPax77Cxw7djYw8OgqHyJXACH14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	Danila Chernetsov <listdansp@mail.ru>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1022/1376] fbdev: tdfxfb: fix PCI enable cleanup with pcim_enable_device()
-Date: Sat, 12 Sep 2026 08:57:28 +0200
-Message-ID: <20260912065630.340395305@linuxfoundation.org>
+Subject: [PATCH 6.12 1023/1376] fbdev: kyro: Validate overlay viewport coordinates
+Date: Sat, 12 Sep 2026 08:57:29 +0200
+Message-ID: <20260912065630.363509910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,49 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 95a627143a696f70e17be5ed3b1e733bb6724b46 ]
+[ Upstream commit 7b5c7bc55e13e7f5ac7b1eaf5c6d690389ea5ee3 ]
 
-tdfxfb_probe() enables the PCI device with pci_enable_device(), but
-several failure paths after that point return without disabling it. The
-framebuffer_alloc() failure path returns -ENOMEM directly, and the later
-shared out_err path releases the framebuffer and returns -ENXIO without
-balancing the PCI enable state.
+The overlay viewport end coordinates are computed from the viewport
+origin and dimensions using 32-bit unsigned arithmetic. Large input
+values can cause these calculations to wrap around before the resulting
+coordinates are passed to SetOverlayViewPort().
 
-The successful probe path has the same imbalance because tdfxfb_remove()
-releases the framebuffer, mappings and regions, but never calls
-pci_disable_device().
+SetOverlayViewPort() packs the viewport coordinates into 16-bit
+register fields. The X coordinates are additionally adjusted by +2
+and +1 before being written. Validate the coordinate calculations
+for 32-bit wraparound and ensure that the adjusted coordinates fit
+within their 16-bit register fields before calling
+SetOverlayViewPort().
 
-Use pcim_enable_device() so the PCI device is disabled automatically on
-probe failure and driver detach.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/tdfxfb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/kyro/fbdev.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/tdfxfb.c b/drivers/video/fbdev/tdfxfb.c
-index c5095358209e1..eb8f33ae94e77 100644
---- a/drivers/video/fbdev/tdfxfb.c
-+++ b/drivers/video/fbdev/tdfxfb.c
-@@ -1383,7 +1383,7 @@ static int tdfxfb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (err)
- 		return err;
+diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
+index 08ee8baa79f85..cf6062210c8bb 100644
+--- a/drivers/video/fbdev/kyro/fbdev.c
++++ b/drivers/video/fbdev/kyro/fbdev.c
+@@ -369,6 +369,9 @@ static int kyro_dev_overlay_create(u32 ulWidth,
  
--	err = pci_enable_device(pdev);
-+	err = pcim_enable_device(pdev);
- 	if (err) {
- 		printk(KERN_ERR "tdfxfb: Can't enable pdev: %d\n", err);
- 		return err;
+ static int kyro_dev_overlay_viewport_set(u32 x, u32 y, u32 ulWidth, u32 ulHeight)
+ {
++	u32 right;
++	u32 bottom;
++
+ 	if (deviceInfo.ulOverlayOffset == 0)
+ 		/* probably haven't called CreateOverlay yet */
+ 		return -EINVAL;
+@@ -378,11 +381,30 @@ static int kyro_dev_overlay_viewport_set(u32 x, u32 y, u32 ulWidth, u32 ulHeight
+ 	    (x < 2 && ulWidth + 2 == 0))
+ 		return -EINVAL;
+ 
++	/*
++	 * SetOverlayViewPort() adjusts X coordinates by +2 (left) and +1
++	 * (right) before packing them into 16-bit register fields.
++	 */
++	if (x > U16_MAX - 2 || y > U16_MAX)
++		return -EINVAL;
++
++	right = x + ulWidth;
++	bottom = y + ulHeight;
++
++	if (right < x || bottom < y)
++		return -EINVAL;
++
++	right--;
++	bottom--;
++
++	if (right > U16_MAX - 1 || bottom > U16_MAX)
++		return -EINVAL;
++
+ 	/* Stop Ramdac Output */
+ 	DisableRamdacOutput(deviceInfo.pSTGReg);
+ 
+ 	SetOverlayViewPort(deviceInfo.pSTGReg,
+-			   x, y, x + ulWidth - 1, y + ulHeight - 1);
++			x, y, right, bottom);
+ 
+ 	EnableOverlayPlane(deviceInfo.pSTGReg);
+ 	/* Start Ramdac Output */
 -- 
 2.53.0
 
