@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371AB34252D;
-	Sat, 12 Sep 2026 09:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC7436492C;
+	Sat, 12 Sep 2026 09:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206360; cv=none; b=V7LdVP3N2Lc1wPnS0+TTyydYtHzpnQB2m5+YUj8y0G+5+qYRnivCQsP/xSQtUTQv+wJVcMB4qlCVxQVQN7dSfzDNgmalvhV30e3KxLRAU/ePW0ppaC9JTczwwaRTUBYna8FPsBP+g38p0ZpyruUzBkJW+WReZ3+x8gvVE790KTk=
+	t=1789206364; cv=none; b=SsNT9JxApBsPmcs8inXKQCPzW6VPr8UQN8yAogVD/R2yDY2YIEqQzMu1XGKi0JZzDPQjGqvFOR2e5hjWC6q+8Ap2GGLf47MT0sxime/DgQbSP8TgOIbVtxNvxPr+d84DMWSB9SdgB9lEDfIir67Ruvr6XKYhswmhSetLXIxPBpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206360; c=relaxed/simple;
-	bh=UhRYiBTRM0+SYRrfsZzB1VjGvrKFMARU8ILR190XaZY=;
+	s=arc-20240116; t=1789206364; c=relaxed/simple;
+	bh=/c9J6r7aczh0ZsGdb4J28jFXcinzu18CMM6SiFA8HvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OW3SdGmlHsKppdfoJ194ONosvEW7MYhgJQW0hbNh9Lp+/yZZioqzh48uzYUZZOvG4waj1gLhlX6KpTxZbirB1i9qG5rI3xb0/xNBhcFDawAjGMp5xyUDFKej1jX7kMcmg2tDLmsiAavxXWqXKejvZtd3JKWJuFVxFWJx9pv230w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9WaC+2i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HLqQWhOrbhqaTpM4J+Ndr9RutglTQhbYN1/PpjmGhVURCDyUNrerusUP1eRQI+KCsITV/2V5f+aB1JXmvoZ++j5kFipziyt2Mc1i2BiuFiRnL6ChLtmhiLPDkBsfJBUx/v/p6eLrk4fWNTtOpN6qQDPBCYQZT9H51Vb1Aq13BnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHF58oKb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9WaC+2i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0920D1F000FF;
-	Sat, 12 Sep 2026 09:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHF58oKb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7631F000FF;
+	Sat, 12 Sep 2026 09:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206359;
-	bh=d19xBI4FndS7v3yZh+3PUB0fD9lBgcKfE9osLKOUFzA=;
+	s=korg; t=1789206362;
+	bh=OzTy/LCIh7RnpfcZ3o3FbeSuOwG/o67TL2NUWihx/PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x9WaC+2iydtpkgCx+iOwulZcsY9j1BxILf+mhxm2WOOxk74x46C4X3j4DbSvkg/eN
-	 Hwso1THMzI/cIZ+eSJ1zVzib4nQvZWsy7ejCE/cvDiVL20dQHWTbvMwLosZzc7pmhp
-	 gurNOXdJAdHZPKGAwRFbe0pDdKD8fs8ICH5tu2nc=
+	b=aHF58oKbRGnCEcwf6TiYPDA/pLtQeuUu4WJnFC8hMRHdOfiZBmSFrXnqhK9IEYn4S
+	 OpZnhfjaQnSxSsw5HB94wM3tbvQgYKwL6qkntyaoc1VJ6TZbe07DM7vjNp0y1pYZ21
+	 uNsGzgcYZ2CukX9CjQyiyr6G7RZBRKatn2npxurQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0192/1518] wifi: rtw89: fix HE extended capability length check
-Date: Sat, 12 Sep 2026 08:39:21 +0200
-Message-ID: <20260912065627.834492135@linuxfoundation.org>
+Subject: [PATCH 6.18 0193/1518] fanotify: initialize permission event watchdog state
+Date: Sat, 12 Sep 2026 08:39:22 +0200
+Message-ID: <20260912065627.856114600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 2aba608a86e9b099c9af2ea70b620552dee2b628 ]
+[ Upstream commit a3aa899823dda059ab88a58254f9a605e03ec275 ]
 
-rtw89_mac_check_he_obss_narrow_bw_ru_iter() reads extended capability
-byte 10, but rejects only datalen values below 10.  Byte 10 requires at
-least 11 bytes.
+fanotify permission events are allocated with kmem_cache_alloc(), but
+fanotify_alloc_perm_event() does not initialize watchdog_cnt.
 
-Require datalen >= 11 before reading data[10].
+The watchdog reads watchdog_cnt after the event is moved to access_list.
+A stale value can make it warn too early or skip the warning.
 
-Fixes: 8d540f9d2916 ("wifi: rtw89: disable 26-tone RU HE TB PPDU transmissions")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/2026063009025530.2-ccfa108-0024-wifi-rtw89-fix-HE-extended--pengpeng@iscas.ac.cn
+Initialize watchdog_cnt when allocating a permission event.
+
+Fixes: b8cf8fda522d ("fanotify: add watchdog for permission events")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260703031345.9354-1-xuanqiang.luo@linux.dev
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/notify/fanotify/fanotify.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 8194ae570ee94..f0773f7c3749a 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -4885,7 +4885,7 @@ static void rtw89_mac_check_he_obss_narrow_bw_ru_iter(struct wiphy *wiphy,
- 	elem = cfg80211_find_elem(WLAN_EID_EXT_CAPABILITY, ies->data,
- 				  ies->len);
- 
--	if (!elem || elem->datalen < 10 ||
-+	if (!elem || elem->datalen < 11 ||
- 	    !(elem->data[10] & WLAN_EXT_CAPA10_OBSS_NARROW_BW_RU_TOLERANCE_SUPPORT))
- 		*tolerated = false;
- 	rcu_read_unlock();
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index cf57eabfed456..cdb69c23e2e6c 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -601,6 +601,7 @@ static struct fanotify_event *fanotify_alloc_perm_event(const void *data,
+ 	pevent->hdr.pad = 0;
+ 	pevent->hdr.len = 0;
+ 	pevent->state = FAN_EVENT_INIT;
++	pevent->watchdog_cnt = 0;
+ 	pevent->path = *path;
+ 	pevent->pos = range ? range->pos : FANOTIFY_NO_RANGE;
+ 	pevent->count = range ? range->count : 0;
 -- 
 2.53.0
 
