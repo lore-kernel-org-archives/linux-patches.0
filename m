@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D143A311967;
-	Sat, 12 Sep 2026 14:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1084D1DE4EF;
+	Sat, 12 Sep 2026 14:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222166; cv=none; b=sapbinjNXbuOK9vweIozRr4VIgrKptHJ8FjF+Z0r8zsietVWokrTFDqJ5Yod0d+bMbxjzKj2iL1ohok0m/QVPrMWk2ZOPm11SqdN8iXzOY5GGt1YDCnpVDddjOcCE/MoUcQ5DwM9jAj5rzTlkxQopWiI+6aRd7KYtWqOwmQpK/Q=
+	t=1789222171; cv=none; b=UkAqqdilDTz+35J3zYYebKi5zI8Gisx29LThMMRmtW0xXX5JfhxJqDXxAOd5YYiB3cdgjc+Ea1QMATLCMN1e2FLVIvkv1UAxmdur5C1voWfTeJhBgJ+hYrWNGz0+CWC6Xvfk5l/VTvqcaE5qMLwTVRyEvogIWJ5C3vHduhd2gSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222166; c=relaxed/simple;
-	bh=P2tjvCmgd0sR07bM8R0cZf0ZLWRePRSdaGKzP8x+vD8=;
+	s=arc-20240116; t=1789222171; c=relaxed/simple;
+	bh=kAO8uFhjZEx+HKoEzW5AnDWqYzIFzHgIhxn5bz6Gl5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbZXKdultHUgTq1i7Hzpkp3iVHZiP60cwGM+Ujc9nHYt93nZCCJPsK1oxMrQJ2JRsaQkPI5Z84yJKucnBdV1rVBl6rmF89EmhFTFm8cDVG+qB0b9D8RYV+BTDZ23HNwSSIXDTGXB/IBer5r2+xf59ljBZ8mhA5DhRMV9IoXUNDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ny9eNQ+o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F9zYcabw95rwc9JrdLNlAkJSIiuaOS85mvLl2nzPtbPAfoHMBO5LskO9njn/biJSN8xbmPYShzM+fZntRqct+wr95zqL3J13HbC8rEblFRXhKZwBW+H6HKD9cRP09KoQU8lQFD0AfG7WU6Z5bad7MASbr/mV+5RUXqEImV2iYbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOm0QGeu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ny9eNQ+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AA31F000FF;
-	Sat, 12 Sep 2026 14:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOm0QGeu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07D81F000FF;
+	Sat, 12 Sep 2026 14:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222164;
-	bh=eiBV1Xin6jvPTn10NgAJpZ3cAAk3o5zrb+FS4OT27yo=;
+	s=korg; t=1789222170;
+	bh=rpT4yqOCw5RvK9/p4yYu6hHUIwG7Fgi/VktQr6zA5+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ny9eNQ+oi6FPjMNWanCsnWoCQtc2CIl5r0iZkvz7hGde86RG3P/MicOjtIrY/iItq
-	 WffY0PjD8sVoTOXFN0u3wSMyvKtrfe/eWbx6ZPJTpi4P8ijqIr6PUjFWn85otv6l8I
-	 8a2qbANjLetQUY5ALxG1CaPFFpdTCqBpxzGLhErE=
+	b=gOm0QGeu+7ztgX+3fU5EvuS2kdG+4NigodFqTYMk/UcQjKPDRIxwmzL/L80Qg016u
+	 yhifqCSJUePW3dNjKZGn2F3JjGs5DVeZCs5xCvBstZ/y/EZBe/J7c15s/IgTfre5wy
+	 F4Ew834ck+6O/9bNt115+B9dOIzaBSjT65MLgWKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Hanai <hnkz.64@gmail.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0531/1424] nvmet-auth: Synchronize timeout work during SQ teardown
-Date: Sat, 12 Sep 2026 08:49:23 +0200
-Message-ID: <20260912065619.185144360@linuxfoundation.org>
+Subject: [PATCH 6.6 0532/1424] mm/damon/core-kunit: check region count before testing in split_at()
+Date: Sat, 12 Sep 2026 08:49:24 +0200
+Message-ID: <20260912065619.207374216@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,85 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kazuki Hanai <hnkz.64@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit eaa948c0e19b1bb2d93262207bca0c3d19cc3406 ]
+[ Upstream commit 9b18ef3c3aa1ce24176e340061caf15fa2742564 ]
 
-nvmet_auth_sq_free() cancels auth_expired_work with
-cancel_delayed_work(). If the work has already started, cancellation does
-not wait for the callback. Transport teardown can consequently free or
-reuse the queue containing struct nvmet_sq while
-nvmet_auth_expired_work() still accesses that SQ.
+damon_test_split_at() test next region that is assumed to be created by
+damon_split_region_at() invocation.  But the split might fail.  In this
+case, the succeeding test may dereference invalid pointers returned by
+damon_next_region().
 
-Add a teardown-specific helper that synchronously drains the delayed work
-before freeing authentication state, and use it from nvmet_sq_destroy().
-Keep the non-synchronous helper for in-band authentication state cleanup,
-where the SQ owner remains alive.
+The invalid pointer may not cause a really bad user impact, because of the
+implementation detail.  It would only read wrong contents in the belonging
+damon_target struct.  Depending on the future change of the offset from
+the link header to the accessing field, this could also be really
+dangerous, though.  Still, the realistic user impact would be limited.  It
+would affect only test run setups.
 
-Fixes: 1a70200f404a ("nvmet-auth: expire authentication sessions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
+Fix it by testing if the number of regions was also changed as expected
+and exit early for the failure.
+
+The issue was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260718001442.87129-3-sj@kernel.org
+Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org [1]
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/auth.c  | 6 ++++++
- drivers/nvme/target/core.c  | 2 +-
- drivers/nvme/target/nvmet.h | 2 ++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ mm/damon/core-test.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
-index 9fe6ad89bf83a..b3a0e19464539 100644
---- a/drivers/nvme/target/auth.c
-+++ b/drivers/nvme/target/auth.c
-@@ -227,6 +227,12 @@ void nvmet_auth_sq_free(struct nvmet_sq *sq)
- 	sq->dhchap_skey = NULL;
- }
- 
-+void nvmet_auth_sq_destroy(struct nvmet_sq *sq)
-+{
-+	cancel_delayed_work_sync(&sq->auth_expired_work);
-+	nvmet_auth_sq_free(sq);
-+}
+diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
+index a2aa410d6d0d0..f2f0978495086 100644
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -162,6 +162,10 @@ static void damon_test_split_at(struct kunit *test)
+ 	}
+ 	damon_add_region(r, t);
+ 	damon_split_region_at(t, r, 25);
++	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
++	if (damon_nr_regions(t) != 2)
++		goto out;
 +
- void nvmet_destroy_auth(struct nvmet_ctrl *ctrl)
- {
- 	ctrl->shash_id = 0;
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index e435996c55374..3b1b72022a979 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -804,7 +804,7 @@ void nvmet_sq_destroy(struct nvmet_sq *sq)
- 	wait_for_completion(&sq->confirm_done);
- 	wait_for_completion(&sq->free_done);
- 	percpu_ref_exit(&sq->ref);
--	nvmet_auth_sq_free(sq);
-+	nvmet_auth_sq_destroy(sq);
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, 25ul);
  
- 	/*
- 	 * we must reference the ctrl again after waiting for inflight IO
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index c0648216b9e4b..c037d1daf94d1 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -704,6 +704,7 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl);
- void nvmet_auth_sq_init(struct nvmet_sq *sq);
- void nvmet_destroy_auth(struct nvmet_ctrl *ctrl);
- void nvmet_auth_sq_free(struct nvmet_sq *sq);
-+void nvmet_auth_sq_destroy(struct nvmet_sq *sq);
- int nvmet_setup_dhgroup(struct nvmet_ctrl *ctrl, u8 dhgroup_id);
- bool nvmet_check_auth_status(struct nvmet_req *req);
- int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
-@@ -728,6 +729,7 @@ static inline void nvmet_auth_sq_init(struct nvmet_sq *sq)
+@@ -169,6 +173,7 @@ static void damon_test_split_at(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, 25ul);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, 100ul);
+ 
++out:
+ 	damon_free_target(t);
+ 	damon_destroy_ctx(c);
  }
- static inline void nvmet_destroy_auth(struct nvmet_ctrl *ctrl) {};
- static inline void nvmet_auth_sq_free(struct nvmet_sq *sq) {};
-+static inline void nvmet_auth_sq_destroy(struct nvmet_sq *sq) {};
- static inline bool nvmet_check_auth_status(struct nvmet_req *req)
- {
- 	return true;
 -- 
 2.53.0
 
