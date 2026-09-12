@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AFF486424;
-	Sat, 12 Sep 2026 18:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FE947B436;
+	Sat, 12 Sep 2026 18:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237060; cv=none; b=hdZv5c0ceB1ASvuL5xAhXBqb96q6ahkvy3enousVOSOUgl9ltvEH0T/+vkre/4wAprbZrZOJ67Z4VsizI796wlVujiOcsfyvCP/n4w6pPoazvtskJjaW0DPjmDBJKUcuZweBY4JKWjXCRUackFCs58nqYzUZuZN7RKQYMP2yr9Q=
+	t=1789237066; cv=none; b=GbkUmGUbez2IW9EcSDBxPEfS28+ArC1Fu0vNK4fzaaQzuUp1IML66Wb9azvyyyN0dmOS4Cv9md0QUUD92JGR8JnYpUFjK7xd54m4kqWTcFTK+HGvMQfJDG6aYLgSxx+LYwu/Xgl9IQ8zhCVFANREAb7AySQPgUUR2Ja8z4VPKQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237060; c=relaxed/simple;
-	bh=J5xup4qNU6KpY4u2gif3lc1AFIdBsMSolBx+dS7N+qs=;
+	s=arc-20240116; t=1789237066; c=relaxed/simple;
+	bh=nHrQsIDeIcp60b1tGGVV5XeO0k/TNwwfnZr4t88j6jQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X4UjQwkJAE5mciXlcLrgF9+j8TZNXJePHoBeCOydmNuRhE92djV6tI4wH32D+WU9B5EQwCuwbevDv+ZbeewfZChjZcBHSaFssoJt1sjSAmH8OYRbxRAIUqz05bbDZ86dyGDnB2+4dAalKQ95z6ZoGgWT/8pX2Kh5cAezIPgSx0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9oZfa1F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WsplWiOi1yFGcoI/01uSECIcmGIXmouCxPom+5TGzmrbzeMP3x2oiaIzVNfpS8qpnEtHjZIt72eJTvCb7PW0cIBxmfGwAJabdxLTJ042mK4lgGlCkWlkoDbEWnfawT7NUDTjIBjMw72eGU9mrSbxl77f6CLcojvtzwu4QhlZ4Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVZXlwkh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9oZfa1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8798A1F000FF;
-	Sat, 12 Sep 2026 18:17:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVZXlwkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C971F000FF;
+	Sat, 12 Sep 2026 18:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237059;
-	bh=FKDrAU/OEr1IZw4+mRJb00/fZpqYfJvTYQy4jlSXgyQ=;
+	s=korg; t=1789237064;
+	bh=uYxvGlFuul+vd+JScqix0J7/oEDtOxLZHL3U4geTsuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o9oZfa1FpM1IMCoep1Wi0JMoeyHWksWr+eedkCO7rtn5Jv1YWRkJ19k5KNCLjfqF5
-	 GKHzag6x3rdUPzL1ndLr0mHHZKlMz7kW0cuUa1qBlC8GbJ4+ugCz7/ioKek7THj3N0
-	 445ZKNryiA1sM71DBV1ttecB99RcsZVpJlIOFAgc=
+	b=NVZXlwkhJxIlcx/sJw+GN8Lqk3gQFORL+nSVahmHSbGl5bdJ99R/O51YWMmwIrGpB
+	 ztH109sY5TmCcqJcfizD+/ynI23LsaMp+WOYnQdXgoL6xjRxrnr9kRgOZZOmxg2yzh
+	 iGk1SliDhIv74dgJGVCAxhrqlPq8XHfD20iGIcGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Koichiro Den <den@valinux.co.jp>
-Subject: [PATCH 5.15 183/935] net: ntb_netdev: Avoid double-accounting netif_rx() drops
-Date: Sat, 12 Sep 2026 08:53:33 +0200
-Message-ID: <20260912065531.014003196@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 184/935] net: ntb_netdev: Count packets dropped on RX refill failure
+Date: Sat, 12 Sep 2026 08:53:34 +0200
+Message-ID: <20260912065531.035986042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,41 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Koichiro Den <den@valinux.co.jp>
 
-commit 82e15be2d8b9efa6fb1750528d9b6f40e6a8eea7 upstream.
+commit 31ded341c375bb2faac1d77ab0012a732ba3e2a6 upstream.
 
-netif_rx() already accounts packets it drops in the core rx_dropped
-counter. ntb_netdev counts them again as both errors and drops.
+When replacement skb allocation fails, ntb_netdev drops a packet that
+was received successfully and requeues the original buffer. The drop is
+counted, but rx_packets and rx_bytes are not.
 
-Leave netif_rx() drops to the core. Count the packet and bytes
-unconditionally since it was received successfully by the driver.
+Count every good packet before allocating its replacement.
 
-Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
+Fixes: d2121faf133a ("NTB: ntb_netdev: Preserve RX queue depth on allocation failure")
 Cc: stable@vger.kernel.org
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260819172539.1450821-2-den@valinux.co.jp
+Link: https://patch.msgid.link/20260819172539.1450821-3-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ntb_netdev.c |   10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/net/ntb_netdev.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/ntb_netdev.c
 +++ b/drivers/net/ntb_netdev.c
-@@ -125,13 +125,9 @@ static void ntb_netdev_rx_handler(struct
- 	skb->protocol = eth_type_trans(skb, ndev);
- 	skb->ip_summed = CHECKSUM_NONE;
+@@ -115,6 +115,9 @@ static void ntb_netdev_rx_handler(struct
+ 		goto enqueue_again;
+ 	}
  
--	if (netif_rx(skb) == NET_RX_DROP) {
--		ndev->stats.rx_errors++;
--		ndev->stats.rx_dropped++;
--	} else {
--		ndev->stats.rx_packets++;
--		ndev->stats.rx_bytes += len;
--	}
-+	netif_rx(skb);
 +	ndev->stats.rx_packets++;
 +	ndev->stats.rx_bytes += len;
++
+ 	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
+ 	if (!new_skb) {
+ 		ndev->stats.rx_dropped++;
+@@ -126,8 +129,6 @@ static void ntb_netdev_rx_handler(struct
+ 	skb->ip_summed = CHECKSUM_NONE;
+ 
+ 	netif_rx(skb);
+-	ndev->stats.rx_packets++;
+-	ndev->stats.rx_bytes += len;
  
  	skb = new_skb;
  
