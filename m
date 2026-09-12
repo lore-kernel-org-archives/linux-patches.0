@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6225C202F71;
-	Sat, 12 Sep 2026 16:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEBB2F0673;
+	Sat, 12 Sep 2026 16:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229901; cv=none; b=dYrseqLgeUmavwyi4R82O6/Yv0EoSVRs/1x62V6vmYJFdnKDPNdlT1BSVohCw7naO23lbcQ5f54R9hUFuU2L7cOKG2JI9nIJSI+UQ5hl3WZMkU5F5Asf/YF/XBv93lYwQukpKTUwKaFd3D6DGW3lKsBcMLYAWFw+n4dTX6K8/Ig=
+	t=1789229907; cv=none; b=CA8m8udcutdxUVRFNlRidQLjnx+c+fBFAGI1nDM0W+NXsIj0MqG4krrhzr9PQEphWJEmj0KP8JyzrbFG3fC76C9coaobkptr3f1lfanB53EZ5pfa2gc5FgDghFxEOsToWpeWPZbkE2C8ossiLbp1PtJglY1C2+HmI7eoi3qZFo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229901; c=relaxed/simple;
-	bh=R3pY2DDWeFeqJU+zWbM9OCnwnvtM5cnbp0XfDXOtuJY=;
+	s=arc-20240116; t=1789229907; c=relaxed/simple;
+	bh=0nFP4/MoT7Qc2FX1hKeGbqtwyrw1k882XwgzmVSY8NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fa5shd92YkBGnZDQ5dRUsm0lORKfoHghQ72nog1+LMPAYtx1zBQx/gW09SF/oPRi2ddojhIm2+6qlo4PK1DRFHRBKZDRgAuhPuZ6KDHpsxwykXbEvb6Xax4ejbLekSAX8Q3IVWYNAGoOUJ4UabPrJz5lsyVFeS7pQ+CnWVVHNYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GM2lXxoZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jJ+75q7kNpYwxPqaUM9yhx4ru4TGThZoZPNaELYUCL3bcqsGO8YZEGH/SZGGZiHsG+4dZk5LWvJ+kYCp0GwUv3cYO3u1J3m8fabqlhdKIHpUL02WllA7dRbXhkuzehuBs8Du9YokVOX6vb1BSAOS6NDA/DPv5oyJ0dYpoNLNBL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkfYDCA9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GM2lXxoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBA91F000FF;
-	Sat, 12 Sep 2026 16:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkfYDCA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C931F000FF;
+	Sat, 12 Sep 2026 16:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229900;
-	bh=GFNdzOTaa428b2IQzAjjEbST0rKB/5I/K39o5YaPhGM=;
+	s=korg; t=1789229905;
+	bh=ffQP/81tKiebLhKWdEZ9MyzT/gTXzYc5WxnENm/fI9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GM2lXxoZI0+mJVMSjgWhmNYVT89YbMoJ0E9Fhnl5oN7vj26RSsDzYk8kAtq5ek5/w
-	 AIdpQZmyUTLBRleW2HYhntAFmIDwaSk6IvK1PTsUlnMg6MLVgmX8rqmTZN+A1w36n5
-	 84Iyu+WN2lnj2+wfhajMoxzNcy8dVWOqDZR/TrZE=
+	b=QkfYDCA9brrGza8X3nklnq4vky1r1YR0YwvtIMzxIHQl/ddLwTcb5MD14d9iZHYLc
+	 RLNctl7ZpP/6l1UagDtzNnFnwzPC3LD86zHHGuaUamNq0AJWn2FjTXG9UaSSEcl/HR
+	 DILDJFHPXnNzHDn1IvGsBaqiuBzhfL8wCQ/x11bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0683/1191] RDMA/core: Add support to set privileged QKEY parameter
-Date: Sat, 12 Sep 2026 08:56:51 +0200
-Message-ID: <20260912065603.600105528@linuxfoundation.org>
+Subject: [PATCH 6.1 0648/1191] s390/con3270: fix formatting issues
+Date: Sat, 12 Sep 2026 08:56:16 +0200
+Message-ID: <20260912065602.809650635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,197 +52,593 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 465d6b42f1a3b855c06da1d4d3b09907d261af69 ]
+[ Upstream commit e6d98bb823af51ad8b89ee705111dbb1ed8a4aff ]
 
-Add netlink command that enables/disables privileged QKEY by default.
+fix function prototypes split over two lines like:
 
-It is disabled by default, since according to IB spec only privileged
-users are allowed to use privileged QKEY.
-According to the IB specification rel-1.6, section 3.5.3:
-"QKEYs with the most significant bit set are considered controlled
-QKEYs, and a HCA does not allow a consumer to arbitrarily specify a
-controlled QKEY."
+static void
+foobar(void)
 
-Using rdma tool,
-$rdma system set privileged-qkey on
+and fix superfluous spaces in declarations like
 
-When enabled non-privileged users would be able to use
-controlled QKEYs which are considered privileged.
+foo * bar
 
-Using rdma tool,
-$rdma system set privileged-qkey off
-
-When disabled only privileged users would be able to use
-controlled QKEYs.
-
-You can also use the command below to check the parameter state:
-$rdma system show
-netns shared privileged-qkey off copy-on-fork on
-
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Link: https://lore.kernel.org/r/90398be70a9d23d2aa9d0f9fd11d2c264c1be534.1696848201.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 709ba0e5311b ("RDMA/core: Fix use after free in ib_query_qp()")
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Stable-dep-of: b6b5d64cb161 ("ipack: ipoctal: fix UAF, null-ptr-deref, and use-after-free in cleanup on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/core_priv.h  |  1 +
- drivers/infiniband/core/nldev.c      | 63 ++++++++++++++++++++++++----
- drivers/infiniband/core/uverbs_cmd.c |  3 +-
- include/uapi/rdma/rdma_netlink.h     |  2 +
- 4 files changed, 60 insertions(+), 9 deletions(-)
+ drivers/s390/char/tty3270.c | 172 ++++++++++++------------------------
+ 1 file changed, 58 insertions(+), 114 deletions(-)
 
-diff --git a/drivers/infiniband/core/core_priv.h b/drivers/infiniband/core/core_priv.h
-index 149dacf5b64d8..a7bcf13ada64a 100644
---- a/drivers/infiniband/core/core_priv.h
-+++ b/drivers/infiniband/core/core_priv.h
-@@ -376,4 +376,5 @@ void rdma_umap_priv_init(struct rdma_umap_priv *priv,
- 
- void ib_cq_pool_cleanup(struct ib_device *dev);
- 
-+bool rdma_nl_get_privileged_qkey(void);
- #endif /* _CORE_PRIV_H */
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 5aff8e284db2e..b010f78ed808b 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -43,6 +43,13 @@
- #include "restrack.h"
- #include "uverbs.h"
- 
-+/*
-+ * This determines whether a non-privileged user is allowed to specify a
-+ * controlled QKEY or not, when true non-privileged user is allowed to specify
-+ * a controlled QKEY.
-+ */
-+static bool privileged_qkey;
-+
- typedef int (*res_fill_func_t)(struct sk_buff*, bool,
- 			       struct rdma_restrack_entry*, uint32_t);
- 
-@@ -156,6 +163,7 @@ static const struct nla_policy nldev_policy[RDMA_NLDEV_ATTR_MAX] = {
- 	[RDMA_NLDEV_SYS_ATTR_COPY_ON_FORK]	= { .type = NLA_U8 },
- 	[RDMA_NLDEV_ATTR_STAT_HWCOUNTER_INDEX]	= { .type = NLA_U32 },
- 	[RDMA_NLDEV_ATTR_STAT_HWCOUNTER_DYNAMIC] = { .type = NLA_U8 },
-+	[RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE] = { .type = NLA_U8 },
- };
- 
- static int put_driver_name_print_type(struct sk_buff *msg, const char *name,
-@@ -237,6 +245,12 @@ int rdma_nl_put_driver_u64_hex(struct sk_buff *msg, const char *name, u64 value)
- }
- EXPORT_SYMBOL(rdma_nl_put_driver_u64_hex);
- 
-+bool rdma_nl_get_privileged_qkey(void)
-+{
-+	return privileged_qkey || capable(CAP_NET_RAW);
-+}
-+EXPORT_SYMBOL(rdma_nl_get_privileged_qkey);
-+
- static int fill_nldev_handle(struct sk_buff *msg, struct ib_device *device)
+diff --git a/drivers/s390/char/tty3270.c b/drivers/s390/char/tty3270.c
+index 1932077e96500..2ccfe14765e6f 100644
+--- a/drivers/s390/char/tty3270.c
++++ b/drivers/s390/char/tty3270.c
+@@ -134,8 +134,7 @@ static void tty3270_set_timer(struct tty3270 *tp, int expires)
+ /*
+  * The input line are the two last lines of the screen.
+  */
+-static void
+-tty3270_update_prompt(struct tty3270 *tp, char *input, int count)
++static void tty3270_update_prompt(struct tty3270 *tp, char *input, int count)
  {
- 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_DEV_INDEX, device->index))
-@@ -1883,6 +1897,12 @@ static int nldev_sys_get_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		return err;
+ 	struct string *line;
+ 	unsigned int off;
+@@ -161,8 +160,7 @@ tty3270_update_prompt(struct tty3270 *tp, char *input, int count)
+ 	tp->update_flags |= TTY_UPDATE_INPUT;
+ }
+ 
+-static void
+-tty3270_create_prompt(struct tty3270 *tp)
++static void tty3270_create_prompt(struct tty3270 *tp)
+ {
+ 	static const unsigned char blueprint[] =
+ 		{ TO_SBA, 0, 0, 0x6e, TO_SF, TF_INPUT,
+@@ -192,8 +190,7 @@ tty3270_create_prompt(struct tty3270 *tp)
+  * The status line is the last line of the screen. It shows the string
+  * "Running"/"Holding" in the lower right corner of the screen.
+  */
+-static void
+-tty3270_update_status(struct tty3270 * tp)
++static void tty3270_update_status(struct tty3270 *tp)
+ {
+ 	char *str;
+ 
+@@ -203,8 +200,7 @@ tty3270_update_status(struct tty3270 * tp)
+ 	tp->update_flags |= TTY_UPDATE_STATUS;
+ }
+ 
+-static void
+-tty3270_create_status(struct tty3270 * tp)
++static void tty3270_create_status(struct tty3270 *tp)
+ {
+ 	static const unsigned char blueprint[] =
+ 		{ TO_SBA, 0, 0, TO_SF, TF_LOG, TO_SA, TAT_COLOR, TAC_GREEN,
+@@ -226,8 +222,7 @@ tty3270_create_status(struct tty3270 * tp)
+  * Set output offsets to 3270 datastream fragment of a tty string.
+  * (TO_SBA offset at the start and TO_RA offset at the end of the string)
+  */
+-static void
+-tty3270_update_string(struct tty3270 *tp, struct string *line, int nr)
++static void tty3270_update_string(struct tty3270 *tp, struct string *line, int nr)
+ {
+ 	unsigned char *cp;
+ 
+@@ -242,8 +237,7 @@ tty3270_update_string(struct tty3270 *tp, struct string *line, int nr)
+ /*
+  * Rebuild update list to print all lines.
+  */
+-static void
+-tty3270_rebuild_update(struct tty3270 *tp)
++static void tty3270_rebuild_update(struct tty3270 *tp)
+ {
+ 	struct string *s, *n;
+ 	int line, nr_up;
+@@ -273,8 +267,7 @@ tty3270_rebuild_update(struct tty3270 *tp)
+  * Alloc string for size bytes. If there is not enough room in
+  * freemem, free strings until there is room.
+  */
+-static struct string *
+-tty3270_alloc_string(struct tty3270 *tp, size_t size)
++static struct string *tty3270_alloc_string(struct tty3270 *tp, size_t size)
+ {
+ 	struct string *s, *n;
+ 
+@@ -304,8 +297,7 @@ tty3270_alloc_string(struct tty3270 *tp, size_t size)
+ /*
+  * Add an empty line to the list.
+  */
+-static void
+-tty3270_blank_line(struct tty3270 *tp)
++static void tty3270_blank_line(struct tty3270 *tp)
+ {
+ 	static const unsigned char blueprint[] =
+ 		{ TO_SBA, 0, 0, TO_SA, TAT_EXTHI, TAX_RESET,
+@@ -324,8 +316,7 @@ tty3270_blank_line(struct tty3270 *tp)
+ /*
+  * Create a blank screen and remove all lines from the history.
+  */
+-static void
+-tty3270_blank_screen(struct tty3270 *tp)
++static void tty3270_blank_screen(struct tty3270 *tp)
+ {
+ 	struct string *s, *n;
+ 	int i;
+@@ -345,8 +336,7 @@ tty3270_blank_screen(struct tty3270 *tp)
+ /*
+  * Write request completion callback.
+  */
+-static void
+-tty3270_write_callback(struct raw3270_request *rq, void *data)
++static void tty3270_write_callback(struct raw3270_request *rq, void *data)
+ {
+ 	struct tty3270 *tp = container_of(rq->view, struct tty3270, view);
+ 
+@@ -362,8 +352,7 @@ tty3270_write_callback(struct raw3270_request *rq, void *data)
+ /*
+  * Update 3270 display.
+  */
+-static void
+-tty3270_update(struct timer_list *t)
++static void tty3270_update(struct timer_list *t)
+ {
+ 	struct tty3270 *tp = from_timer(tp, t, timer);
+ 	static char invalid_sba[2] = { 0xff, 0xff };
+@@ -456,8 +445,7 @@ tty3270_update(struct timer_list *t)
+ /*
+  * Command recalling.
+  */
+-static void
+-tty3270_rcl_add(struct tty3270 *tp, char *input, int len)
++static void tty3270_rcl_add(struct tty3270 *tp, char *input, int len)
+ {
+ 	struct string *s;
+ 
+@@ -476,8 +464,7 @@ tty3270_rcl_add(struct tty3270 *tp, char *input, int len)
+ 	tp->rcl_nr++;
+ }
+ 
+-static void
+-tty3270_rcl_backward(struct kbd_data *kbd)
++static void tty3270_rcl_backward(struct kbd_data *kbd)
+ {
+ 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
+ 	struct string *s;
+@@ -503,8 +490,7 @@ tty3270_rcl_backward(struct kbd_data *kbd)
+ /*
+  * Deactivate tty view.
+  */
+-static void
+-tty3270_exit_tty(struct kbd_data *kbd)
++static void tty3270_exit_tty(struct kbd_data *kbd)
+ {
+ 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
+ 
+@@ -514,8 +500,7 @@ tty3270_exit_tty(struct kbd_data *kbd)
+ /*
+  * Scroll forward in history.
+  */
+-static void
+-tty3270_scroll_forward(struct kbd_data *kbd)
++static void tty3270_scroll_forward(struct kbd_data *kbd)
+ {
+ 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
+ 	int nr_up;
+@@ -536,8 +521,7 @@ tty3270_scroll_forward(struct kbd_data *kbd)
+ /*
+  * Scroll backward in history.
+  */
+-static void
+-tty3270_scroll_backward(struct kbd_data *kbd)
++static void tty3270_scroll_backward(struct kbd_data *kbd)
+ {
+ 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
+ 	int nr_up;
+@@ -558,8 +542,7 @@ tty3270_scroll_backward(struct kbd_data *kbd)
+ /*
+  * Pass input line to tty.
+  */
+-static void
+-tty3270_read_tasklet(unsigned long data)
++static void tty3270_read_tasklet(unsigned long data)
+ {
+ 	struct raw3270_request *rrq = (struct raw3270_request *)data;
+ 	static char kreset_data = TW_KR;
+@@ -615,8 +598,7 @@ tty3270_read_tasklet(unsigned long data)
+ /*
+  * Read request completion callback.
+  */
+-static void
+-tty3270_read_callback(struct raw3270_request *rq, void *data)
++static void tty3270_read_callback(struct raw3270_request *rq, void *data)
+ {
+ 	struct tty3270 *tp = container_of(rq->view, struct tty3270, view);
+ 	raw3270_get_view(rq->view);
+@@ -627,8 +609,7 @@ tty3270_read_callback(struct raw3270_request *rq, void *data)
+ /*
+  * Issue a read request. Call with device lock.
+  */
+-static void
+-tty3270_issue_read(struct tty3270 *tp, int lock)
++static void tty3270_issue_read(struct tty3270 *tp, int lock)
+ {
+ 	struct raw3270_request *rrq;
+ 	int rc;
+@@ -655,8 +636,7 @@ tty3270_issue_read(struct tty3270 *tp, int lock)
+ /*
+  * Hang up the tty
+  */
+-static void
+-tty3270_hangup_tasklet(unsigned long data)
++static void tty3270_hangup_tasklet(unsigned long data)
+ {
+ 	struct tty3270 *tp = (struct tty3270 *)data;
+ 	tty_port_tty_hangup(&tp->port, true);
+@@ -666,8 +646,7 @@ tty3270_hangup_tasklet(unsigned long data)
+ /*
+  * Switch to the tty view.
+  */
+-static int
+-tty3270_activate(struct raw3270_view *view)
++static int tty3270_activate(struct raw3270_view *view)
+ {
+ 	struct tty3270 *tp = container_of(view, struct tty3270, view);
+ 
+@@ -676,16 +655,14 @@ tty3270_activate(struct raw3270_view *view)
+ 	return 0;
+ }
+ 
+-static void
+-tty3270_deactivate(struct raw3270_view *view)
++static void tty3270_deactivate(struct raw3270_view *view)
+ {
+ 	struct tty3270 *tp = container_of(view, struct tty3270, view);
+ 
+ 	del_timer(&tp->timer);
+ }
+ 
+-static void
+-tty3270_irq(struct tty3270 *tp, struct raw3270_request *rq, struct irb *irb)
++static void tty3270_irq(struct tty3270 *tp, struct raw3270_request *rq, struct irb *irb)
+ {
+ 	/* Handle ATTN. Schedule tasklet to read aid. */
+ 	if (irb->scsw.cmd.dstat & DEV_STAT_ATTENTION) {
+@@ -714,8 +691,7 @@ tty3270_irq(struct tty3270 *tp, struct raw3270_request *rq, struct irb *irb)
+ /*
+  * Allocate tty3270 structure.
+  */
+-static struct tty3270 *
+-tty3270_alloc_view(void)
++static struct tty3270 *tty3270_alloc_view(void)
+ {
+ 	struct tty3270 *tp;
+ 	int pages;
+@@ -785,8 +761,7 @@ tty3270_alloc_view(void)
+ /*
+  * Free tty3270 structure.
+  */
+-static void
+-tty3270_free_view(struct tty3270 *tp)
++static void tty3270_free_view(struct tty3270 *tp)
+ {
+ 	int pages;
+ 
+@@ -804,8 +779,7 @@ tty3270_free_view(struct tty3270 *tp)
+ /*
+  * Allocate tty3270 screen.
+  */
+-static struct tty3270_line *
+-tty3270_alloc_screen(unsigned int rows, unsigned int cols)
++static struct tty3270_line *tty3270_alloc_screen(unsigned int rows, unsigned int cols)
+ {
+ 	struct tty3270_line *screen;
+ 	unsigned long size;
+@@ -833,8 +807,7 @@ tty3270_alloc_screen(unsigned int rows, unsigned int cols)
+ /*
+  * Free tty3270 screen.
+  */
+-static void
+-tty3270_free_screen(struct tty3270_line *screen, unsigned int rows)
++static void tty3270_free_screen(struct tty3270_line *screen, unsigned int rows)
+ {
+ 	int lines;
+ 
+@@ -886,8 +859,7 @@ static void tty3270_resize_work(struct work_struct *work)
+ 	tty_kref_put(tty);
+ }
+ 
+-static void
+-tty3270_resize(struct raw3270_view *view, int model, int rows, int cols)
++static void tty3270_resize(struct raw3270_view *view, int model, int rows, int cols)
+ {
+ 	struct tty3270 *tp = container_of(view, struct tty3270, view);
+ 
+@@ -902,8 +874,7 @@ tty3270_resize(struct raw3270_view *view, int model, int rows, int cols)
+ /*
+  * Unlink tty3270 data structure from tty.
+  */
+-static void
+-tty3270_release(struct raw3270_view *view)
++static void tty3270_release(struct raw3270_view *view)
+ {
+ 	struct tty3270 *tp = container_of(view, struct tty3270, view);
+ 	struct tty_struct *tty = tty_port_tty_get(&tp->port);
+@@ -920,8 +891,7 @@ tty3270_release(struct raw3270_view *view)
+ /*
+  * Free tty3270 data structure
+  */
+-static void
+-tty3270_free(struct raw3270_view *view)
++static void tty3270_free(struct raw3270_view *view)
+ {
+ 	struct tty3270 *tp = container_of(view, struct tty3270, view);
+ 
+@@ -933,8 +903,7 @@ tty3270_free(struct raw3270_view *view)
+ /*
+  * Delayed freeing of tty3270 views.
+  */
+-static void
+-tty3270_del_views(void)
++static void tty3270_del_views(void)
+ {
+ 	int i;
+ 
+@@ -1042,8 +1011,7 @@ tty3270_install(struct tty_driver *driver, struct tty_struct *tty)
+ /*
+  * This routine is called whenever a 3270 tty is opened.
+  */
+-static int
+-tty3270_open(struct tty_struct *tty, struct file *filp)
++static int tty3270_open(struct tty_struct *tty, struct file *filp)
+ {
+ 	struct tty3270 *tp = tty->driver_data;
+ 	struct tty_port *port = &tp->port;
+@@ -1057,8 +1025,7 @@ tty3270_open(struct tty_struct *tty, struct file *filp)
+  * This routine is called when the 3270 tty is closed. We wait
+  * for the remaining request to be completed. Then we clean up.
+  */
+-static void
+-tty3270_close(struct tty_struct *tty, struct file * filp)
++static void tty3270_close(struct tty_struct *tty, struct file *filp)
+ {
+ 	struct tty3270 *tp = tty->driver_data;
+ 
+@@ -1081,8 +1048,7 @@ static void tty3270_cleanup(struct tty_struct *tty)
+ /*
+  * We always have room.
+  */
+-static unsigned int
+-tty3270_write_room(struct tty_struct *tty)
++static unsigned int tty3270_write_room(struct tty_struct *tty)
+ {
+ 	return INT_MAX;
+ }
+@@ -1116,8 +1082,7 @@ static void tty3270_put_character(struct tty3270 *tp, char ch)
+ /*
+  * Convert a tty3270_line to a 3270 data fragment usable for output.
+  */
+-static void
+-tty3270_convert_line(struct tty3270 *tp, int line_nr)
++static void tty3270_convert_line(struct tty3270 *tp, int line_nr)
+ {
+ 	struct tty3270_line *line;
+ 	struct tty3270_cell *cell;
+@@ -1223,8 +1188,7 @@ tty3270_convert_line(struct tty3270 *tp, int line_nr)
+ /*
+  * Do carriage return.
+  */
+-static void
+-tty3270_cr(struct tty3270 *tp)
++static void tty3270_cr(struct tty3270 *tp)
+ {
+ 	tp->cx = 0;
+ }
+@@ -1232,8 +1196,7 @@ tty3270_cr(struct tty3270 *tp)
+ /*
+  * Do line feed.
+  */
+-static void
+-tty3270_lf(struct tty3270 *tp)
++static void tty3270_lf(struct tty3270 *tp)
+ {
+ 	struct tty3270_line temp;
+ 	int i;
+@@ -1253,8 +1216,7 @@ tty3270_lf(struct tty3270 *tp)
+ 	tty3270_rebuild_update(tp);
+ }
+ 
+-static void
+-tty3270_ri(struct tty3270 *tp)
++static void tty3270_ri(struct tty3270 *tp)
+ {
+ 	if (tp->cy > 0) {
+ 	    tty3270_convert_line(tp, tp->cy);
+@@ -1265,8 +1227,7 @@ tty3270_ri(struct tty3270 *tp)
+ /*
+  * Insert characters at current position.
+  */
+-static void
+-tty3270_insert_characters(struct tty3270 *tp, int n)
++static void tty3270_insert_characters(struct tty3270 *tp, int n)
+ {
+ 	struct tty3270_line *line;
+ 	int k;
+@@ -1296,8 +1257,7 @@ tty3270_insert_characters(struct tty3270 *tp, int n)
+ /*
+  * Delete characters at current position.
+  */
+-static void
+-tty3270_delete_characters(struct tty3270 *tp, int n)
++static void tty3270_delete_characters(struct tty3270 *tp, int n)
+ {
+ 	struct tty3270_line *line;
+ 	int i;
+@@ -1317,8 +1277,7 @@ tty3270_delete_characters(struct tty3270 *tp, int n)
+ /*
+  * Erase characters at current position.
+  */
+-static void
+-tty3270_erase_characters(struct tty3270 *tp, int n)
++static void tty3270_erase_characters(struct tty3270 *tp, int n)
+ {
+ 	struct tty3270_line *line;
+ 	struct tty3270_cell *cell;
+@@ -1340,8 +1299,7 @@ tty3270_erase_characters(struct tty3270 *tp, int n)
+  *  Esc [ 1 K	Erase from beginning of line to current position inclusive
+  *  Esc [ 2 K	Erase entire line (without moving cursor)
+  */
+-static void
+-tty3270_erase_line(struct tty3270 *tp, int mode)
++static void tty3270_erase_line(struct tty3270 *tp, int mode)
+ {
+ 	struct tty3270_line *line;
+ 	struct tty3270_cell *cell;
+@@ -1370,8 +1328,7 @@ tty3270_erase_line(struct tty3270 *tp, int mode)
+  *  Esc [ 1 J	Erase from top of screen to current position inclusive
+  *  Esc [ 2 J	Erase entire screen (without moving the cursor)
+  */
+-static void
+-tty3270_erase_display(struct tty3270 *tp, int mode)
++static void tty3270_erase_display(struct tty3270 *tp, int mode)
+ {
+ 	int i;
+ 
+@@ -1400,8 +1357,7 @@ tty3270_erase_display(struct tty3270 *tp, int mode)
+  * Set attributes found in an escape sequence.
+  *  Esc [ <attr> ; <attr> ; ... m
+  */
+-static void
+-tty3270_set_attributes(struct tty3270 *tp)
++static void tty3270_set_attributes(struct tty3270 *tp)
+ {
+ 	static unsigned char f_colors[] = {
+ 		TAC_DEFAULT, TAC_RED, TAC_GREEN, TAC_YELLOW, TAC_BLUE,
+@@ -1454,14 +1410,12 @@ tty3270_set_attributes(struct tty3270 *tp)
  	}
- 
-+	err = nla_put_u8(msg, RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE,
-+			 (u8)privileged_qkey);
-+	if (err) {
-+		nlmsg_free(msg);
-+		return err;
-+	}
- 	/*
- 	 * Copy-on-fork is supported.
- 	 * See commits:
-@@ -1899,18 +1919,11 @@ static int nldev_sys_get_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	return rdma_nl_unicast(sock_net(skb->sk), msg, NETLINK_CB(skb).portid);
  }
  
--static int nldev_set_sys_set_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
--				  struct netlink_ext_ack *extack)
-+static int nldev_set_sys_set_netns_doit(struct nlattr *tb[])
+-static inline int
+-tty3270_getpar(struct tty3270 *tp, int ix)
++static inline int tty3270_getpar(struct tty3270 *tp, int ix)
  {
--	struct nlattr *tb[RDMA_NLDEV_ATTR_MAX];
- 	u8 enable;
- 	int err;
- 
--	err = nlmsg_parse(nlh, 0, tb, RDMA_NLDEV_ATTR_MAX - 1,
--			  nldev_policy, extack);
--	if (err || !tb[RDMA_NLDEV_SYS_ATTR_NETNS_MODE])
--		return -EINVAL;
--
- 	enable = nla_get_u8(tb[RDMA_NLDEV_SYS_ATTR_NETNS_MODE]);
- 	/* Only 0 and 1 are supported */
- 	if (enable > 1)
-@@ -1920,6 +1933,40 @@ static int nldev_set_sys_set_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	return err;
+ 	return (tp->esc_par[ix] > 0) ? tp->esc_par[ix] : 1;
  }
  
-+static int nldev_set_sys_set_pqkey_doit(struct nlattr *tb[])
-+{
-+	u8 enable;
-+
-+	enable = nla_get_u8(tb[RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE]);
-+	/* Only 0 and 1 are supported */
-+	if (enable > 1)
-+		return -EINVAL;
-+
-+	privileged_qkey = enable;
-+	return 0;
-+}
-+
-+static int nldev_set_sys_set_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
-+				  struct netlink_ext_ack *extack)
-+{
-+	struct nlattr *tb[RDMA_NLDEV_ATTR_MAX];
-+	int err;
-+
-+	err = nlmsg_parse(nlh, 0, tb, RDMA_NLDEV_ATTR_MAX - 1,
-+			  nldev_policy, extack);
-+	if (err)
-+		return -EINVAL;
-+
-+	if (tb[RDMA_NLDEV_SYS_ATTR_NETNS_MODE])
-+		return nldev_set_sys_set_netns_doit(tb);
-+
-+	if (tb[RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE])
-+		return nldev_set_sys_set_pqkey_doit(tb);
-+
-+	return -EINVAL;
-+}
-+
-+
- static int nldev_stat_set_mode_doit(struct sk_buff *msg,
- 				    struct netlink_ext_ack *extack,
- 				    struct nlattr *tb[],
-diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
-index 2e4265ba35b7f..0890f56c0ec48 100644
---- a/drivers/infiniband/core/uverbs_cmd.c
-+++ b/drivers/infiniband/core/uverbs_cmd.c
-@@ -1859,7 +1859,8 @@ static int modify_qp(struct uverbs_attr_bundle *attrs,
- 	if (cmd->base.attr_mask & IB_QP_PATH_MIG_STATE)
- 		attr->path_mig_state = cmd->base.path_mig_state;
- 	if (cmd->base.attr_mask & IB_QP_QKEY) {
--		if (cmd->base.qkey & IB_QP_SET_QKEY && !capable(CAP_NET_RAW)) {
-+		if (cmd->base.qkey & IB_QP_SET_QKEY &&
-+		    !rdma_nl_get_privileged_qkey()) {
- 			ret = -EPERM;
- 			goto release_qp;
- 		}
-diff --git a/include/uapi/rdma/rdma_netlink.h b/include/uapi/rdma/rdma_netlink.h
-index e50c357367db0..6e05b8ecb8a91 100644
---- a/include/uapi/rdma/rdma_netlink.h
-+++ b/include/uapi/rdma/rdma_netlink.h
-@@ -554,6 +554,8 @@ enum rdma_nldev_attr {
- 	RDMA_NLDEV_ATTR_STAT_HWCOUNTER_INDEX,	/* u32 */
- 	RDMA_NLDEV_ATTR_STAT_HWCOUNTER_DYNAMIC, /* u8 */
+-static void
+-tty3270_goto_xy(struct tty3270 *tp, int cx, int cy)
++static void tty3270_goto_xy(struct tty3270 *tp, int cx, int cy)
+ {
+ 	int max_cx = max(0, cx);
+ 	int max_cy = max(0, cy);
+@@ -1494,8 +1448,7 @@ tty3270_goto_xy(struct tty3270 *tp, int cx, int cy)
+  *  Pn is a numeric parameter, a string of zero or more decimal digits.
+  *  Ps is a selective parameter.
+  */
+-static void
+-tty3270_escape_sequence(struct tty3270 *tp, char ch)
++static void tty3270_escape_sequence(struct tty3270 *tp, char ch)
+ {
+ 	enum { ESnormal, ESesc, ESsquare, ESgetpars };
  
-+	RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE, /* u8 */
-+
- 	/*
- 	 * Always the end
- 	 */
+@@ -1643,9 +1596,8 @@ tty3270_escape_sequence(struct tty3270 *tp, char ch)
+ /*
+  * String write routine for 3270 ttys
+  */
+-static void
+-tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
+-		const unsigned char *buf, int count)
++static void tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
++			     const unsigned char *buf, int count)
+ {
+ 	int i_msg, i;
+ 
+@@ -1717,9 +1669,8 @@ tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
+ /*
+  * String write routine for 3270 ttys
+  */
+-static int
+-tty3270_write(struct tty_struct * tty,
+-	      const unsigned char *buf, int count)
++static int tty3270_write(struct tty_struct *tty,
++			 const unsigned char *buf, int count)
+ {
+ 	struct tty3270 *tp;
+ 
+@@ -1752,8 +1703,7 @@ static int tty3270_put_char(struct tty_struct *tty, unsigned char ch)
+  * Flush all characters from the ttys characeter buffer put there
+  * by tty3270_put_char.
+  */
+-static void
+-tty3270_flush_chars(struct tty_struct *tty)
++static void tty3270_flush_chars(struct tty_struct *tty)
+ {
+ 	struct tty3270 *tp;
+ 
+@@ -1769,8 +1719,7 @@ tty3270_flush_chars(struct tty_struct *tty)
+ /*
+  * Check for visible/invisible input switches
+  */
+-static void
+-tty3270_set_termios(struct tty_struct *tty, const struct ktermios *old)
++static void tty3270_set_termios(struct tty_struct *tty, const struct ktermios *old)
+ {
+ 	struct tty3270 *tp;
+ 	int new;
+@@ -1793,8 +1742,7 @@ tty3270_set_termios(struct tty_struct *tty, const struct ktermios *old)
+ /*
+  * Disable reading from a 3270 tty
+  */
+-static void
+-tty3270_throttle(struct tty_struct * tty)
++static void tty3270_throttle(struct tty_struct *tty)
+ {
+ 	struct tty3270 *tp;
+ 
+@@ -1807,8 +1755,7 @@ tty3270_throttle(struct tty_struct * tty)
+ /*
+  * Enable reading from a 3270 tty
+  */
+-static void
+-tty3270_unthrottle(struct tty_struct * tty)
++static void tty3270_unthrottle(struct tty_struct *tty)
+ {
+ 	struct tty3270 *tp;
+ 
+@@ -1823,8 +1770,7 @@ tty3270_unthrottle(struct tty_struct * tty)
+ /*
+  * Hang up the tty device.
+  */
+-static void
+-tty3270_hangup(struct tty_struct *tty)
++static void tty3270_hangup(struct tty_struct *tty)
+ {
+ 	struct tty3270 *tp;
+ 
+@@ -1844,8 +1790,7 @@ tty3270_hangup(struct tty_struct *tty)
+ 	tty3270_set_timer(tp, 1);
+ }
+ 
+-static void
+-tty3270_wait_until_sent(struct tty_struct *tty, int timeout)
++static void tty3270_wait_until_sent(struct tty_struct *tty, int timeout)
+ {
+ }
+ 
+@@ -1953,8 +1898,7 @@ static int __init tty3270_init(void)
+ 	return 0;
+ }
+ 
+-static void __exit
+-tty3270_exit(void)
++static void __exit tty3270_exit(void)
+ {
+ 	struct tty_driver *driver;
+ 
 -- 
 2.53.0
 
