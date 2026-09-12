@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F7E42CB1C;
-	Sat, 12 Sep 2026 15:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9163317145;
+	Sat, 12 Sep 2026 15:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227741; cv=none; b=K04Zb2h937iGg7/DMs5WokiaPxo4SqIRah6ti3zF92s8vyp24eQeN/SW2zrMgVHPZ68HvSMSz49T1A0Y5Rzm33tHTQQIdtPVZmo3aSpWSg1jsxZNWS+gaWKrsB0u6l9XgkkDx8qwQZP02UFs8VlGVSV9WDZqvmmjPqIeUyzyRxo=
+	t=1789227741; cv=none; b=gH+e2YCnvMUCM2F3ypv9KdHhrLkTFNGUsotvJLAjsYbMLuBfmHa8h2bYrKZhsTFEy9sVi758rCtpSn3wy8uHJPedukns8CnlckTpShlIb7sl7pMtpuyigYKQ+cOe6reiFUIgbkFp8/qoPYuSQXBmUc732iOCjWHf6/YVIfxZfok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789227741; c=relaxed/simple;
-	bh=E57c92D+o88X0PsmepxViGs+SM7jHh7XSOCL1kEcPww=;
+	bh=MX1QA5ueHCXn5iJ6EVAhm42bReFYCfS6lfv4GfQUGcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lSHAEu8eJ9efwxcxncGc9+GLCKWlopUaIZeAJL6E+FxJmyN7m7NIdZ7nu1h5wsy/hsxHGNAZRn4x2+8W1XChG6+J0t4Hr5YI1/6Zdh8sRge+hhtwalMyiH5FEYt1j/SG4umainC7RDgTM/jfwni5bJDThHPxSuodQKNH97Ktz+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QptYQVg9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SRWjM87Ph2wDnVKSLa1I45NQncbQI5JLaMFMZfu249gPzApTRsDpLW6J0qHWSyUFlR293d4k7Zc/xkZcrGr2y3aQaBwhpaOIEue0ijvTuYXqyIs3BmnYxzRFQdU+IMt7NfarU8qBYLFLIEmmauWX8v2mPVzw+IoT6eDw/nJ9RmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7ssH73R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QptYQVg9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8C51F000FF;
-	Sat, 12 Sep 2026 15:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7ssH73R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD531F00893;
+	Sat, 12 Sep 2026 15:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227739;
-	bh=SII1E159nMvNWYEE2na2CescXqS/fpmq9ZJD8f4U/To=;
+	s=korg; t=1789227734;
+	bh=NsafhOk2kfIlOfIFMOurkbCrX8P+Z0JhOT2RR+B7Onw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QptYQVg9z14Hfkz8gZhTGYYj/vPHetesoqRs+UKg0JjxllY+gQ0V36cXhAptGlhwM
-	 ZBU0Qzgr44Hd7ycFWE+9gWKOFnCtWblSnGhsIFw2tjaR4Pr2hJv3CIDWcOa7CIE1R/
-	 3pmlDFVs/m5rrS8oH9Aq6XtSYMSw2PvjwyfavtpE=
+	b=Q7ssH73RCiyIsLBu5cK7ItPXrXOn6uz0q7/x2d3cSTCEhYHgVAXOohWLod/HsCVbD
+	 odtMejSSYTjQSQi6Lpk9rNSAU2xIPCehFmYOFJF6xGZeDEBv+lzCBddJQmX+TMqFiB
+	 0Ghs3Q1GBAeiLhCYxNLZ1bZlKa0cQWI6j+vVCbcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.1 0191/1191] PCI/proc: Use file_ns_capable() when checking config space read access
-Date: Sat, 12 Sep 2026 08:48:39 +0200
-Message-ID: <20260912065552.504731761@linuxfoundation.org>
+	Seiji Nishikawa <snishika@redhat.com>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 6.1 0200/1191] ipmi: si: Fix NULL pointer dereference after failed registration
+Date: Sat, 12 Sep 2026 08:48:48 +0200
+Message-ID: <20260912065552.705511890@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -44,67 +44,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Seiji Nishikawa <snishika@redhat.com>
 
-commit f82f53e75eff382fc8f56b73279b54f7cf5a5c65 upstream.
+commit 6d920a75df9a83ab096b3cde7a643b656e4fdfeb upstream.
 
-proc_bus_pci_read() decides how much of the config space is readable based
-on capable(CAP_SYS_ADMIN), which checks the credentials of the task calling
-read(), not the credentials of the process that opened the file.
+try_smi_init() allocates new_smi->si_sm and later calls
+ipmi_register_smi_mod(), which maps to ipmi_add_smi().
 
-The sysfs equivalent, pci_read_config(), has checked the credentials of the
-opening process since commit de139a339395 ("pci: check caps from sysfs file
-open to read device dependent config space"), so a privileged process can
-open the config space file and pass the file descriptor to an unprivileged
-process (for example, a process running a KVM guest with an assigned
-device), which can then read the entire config space.  The check was
-subsequently routed through the LSM framework in commit 47970b1b2aa6 ("pci:
-use security_capable() when checking capablities during config space read")
-and converted to the dedicated helper in commit ab0fa82b2df9 ("pci-sysfs:
-use proper file capability helper function").
+During ipmi_add_smi(), the upper IPMI message handler obtains the
+initial BMC device information through __bmc_get_device_id(). This can
+fail if the BMC does not return a successful response to the Get Device
+ID command.
 
-Thus, the two interfaces check the same capability against different
-credentials.  Checking the credentials of the task calling read() makes the
-outcome depend on who reads rather than who opened, so the restriction is
-bypassed whenever a more privileged process reads through the descriptor.
-Checking the credentials recorded in file->f_cred settles the decision at
-open() time and ties it to the file, where it cannot change with the
-caller.
+When the BMC returns a nonzero completion code, the device-id helper
+retries the command and eventually returns -EIO if the device ID still
+cannot be fetched.
 
-Use file_ns_capable() to check CAP_SYS_ADMIN against the credentials in
-effect when the file was opened, bringing the procfs interface in line with
-the sysfs behaviour.
+On this failure path, ipmi_add_smi() logs "Unable to get the device id"
+and goes to out_err_started, where it invokes the lower driver's
+shutdown callback. try_smi_init() then logs the returned registration
+failure:
 
-As a result, a file descriptor opened by a privileged process and passed to
-an unprivileged one now allows the entire config space to be read through
-procfs, matching sysfs.
+ ipmi_si IPI0001:00: IPMI message handler: Unable to get the device id: -5
+ ipmi_si IPI0001:00: Unable to register device: error -5
 
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+For ipmi_si, the shutdown callback is shutdown_smi(), which cleans up
+the SI state machine data, frees smi_info->si_sm, and sets
+smi_info->si_sm and smi_info->intf to NULL.
+
+However, intf->in_shutdown is not set on this failed-registration
+rollback path. Therefore, the asynchronous redo_bmc_reg work item can
+still retry BMC device-id probing after the lower driver has already
+cleared its SI state machine data. In the observed case, that retry path
+reached start_next_msg(), which passed the NULL smi_info->si_sm pointer
+to the selected KCS state machine handler:
+
+BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
+Workqueue: events redo_bmc_reg [ipmi_msghandler]
+RIP: start_kcs_transaction+0x2c/0x190 [ipmi_si]
+Call Trace:
+ start_next_msg+0x50/0x80 [ipmi_si]
+ check_start_timer_thread.part.9+0x3b/0x50 [ipmi_si]
+ sender+0x69/0x80 [ipmi_si]
+ i_ipmi_request+0x2ac/0x9d0 [ipmi_msghandler]
+ __get_device_id.isra.29+0xaa/0x180 [ipmi_msghandler]
+ __bmc_get_device_id+0xef/0x950 [ipmi_msghandler]
+ redo_bmc_reg+0x52/0x60 [ipmi_msghandler]
+ process_one_work+0x1a7/0x360
+
+Set intf->in_shutdown on the out_err_started path before invoking the
+lower driver's shutdown callback. This prevents later redo_bmc_reg
+retries from using an interface whose lower driver state has been
+cleaned up, and applies the same shutdown state to other IPMI interfaces
+as well.
+
+Fixes: 2512e40e48d2 ("ipmi: Rework SMI registration failure")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260720204145.1500105-1-kwilczynski@kernel.org
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Message-ID: <20260630174348.1483814-1-snishika@redhat.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pci/proc.c
-+++ b/drivers/pci/proc.c
-@@ -38,7 +38,7 @@ static ssize_t proc_bus_pci_read(struct
- 	 * undefined locations (think of Intel PIIX4 as a typical example).
- 	 */
- 
--	if (capable(CAP_SYS_ADMIN))
-+	if (file_ns_capable(file, &init_user_ns, CAP_SYS_ADMIN))
- 		size = dev->cfg_size;
- 	else if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS)
- 		size = 128;
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3693,6 +3693,7 @@ int ipmi_add_smi(struct module         *
+  out_err_bmc_reg:
+ 	ipmi_bmc_unregister(intf);
+  out_err_started:
++	intf->in_shutdown = true;
+ 	if (intf->handlers->shutdown)
+ 		intf->handlers->shutdown(intf->send_info);
+  out_err:
 
 
