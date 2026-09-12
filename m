@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0E73148DA;
-	Sat, 12 Sep 2026 07:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B1937AA65;
+	Sat, 12 Sep 2026 07:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199830; cv=none; b=ACCaHcqkHZ6uScIAPkVjS/BCxHFRD5Y9jujpvT7tuJmz36EKjoWFG7FNLWm+vjz5BspI+wM6Tcu4Ip5LuDZjoZkfOIJAg0ueGGzleKoc5rp0nTin4ln6vzk6eT9S5VsUI/E7EiQDO4kqXHJ9BuiaJhlTOA5byUY5muvecClMBTQ=
+	t=1789199836; cv=none; b=DTRw3llMQBGZbHco4xgynGkF7DizhJRet1O9ZyTuk7C0NyDAtLC2B/Og2rYYi8MEFdldKdxvvJz2THKSMiNlTZM+Vjj0Uc5yQ8Uu0elfboARP2i6VyeETSo/PkuFKzvOmvEqBOqVdH2yosgfPCTpVilKtXcW9ZTrjjW9raas/bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199830; c=relaxed/simple;
-	bh=EOGraD/WzTP4FpgSxSlofu47HumlggasmY4sJN4BMMg=;
+	s=arc-20240116; t=1789199836; c=relaxed/simple;
+	bh=te1WoRr77PUgnTD1Iv0PFhP7OnVbbPTpyDryZdXYNuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S//LYB+RISExnjndTZHyti4Q7XPovnZ+47AQlw8E8EYe99m01dVu3bwMXheUqrdz8v22CBAj3pdDcY6rw91Htx2DQEDjiUdhnGCRwc4KyJPPe4TuSYd8e9iqhLip8GYsS4SrutIrbNW07/rnWR+xeTG3iOD3PHMBjDmnhKVi+xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0wVg9UU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HnTLG7bmbFR4EN5ZwAQLwAxUd6RvTfNrmusSbeYuXw+cUxEPjIPLH0paB/RT/nx8OcNxycmMRbH3VESE1Q0fhV6NlqHT/stbDbWnIEeqx/tSUUP5zosUaJUjxMywakEnFaSjQH17yDF5/erE9QTsE7iqyKYmbNyEgFNNugUR4mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRiiYlCN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0wVg9UU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259521F000FF;
-	Sat, 12 Sep 2026 07:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRiiYlCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3291F00893;
+	Sat, 12 Sep 2026 07:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199829;
-	bh=XOyrUrHy3+EgShX+f/sZmTp4xr+5hFU0K/hrOYwwYcE=;
+	s=korg; t=1789199834;
+	bh=bhEX1rZRPTVjN7dZXbXidxWSk4qEUuXx3A2mczFZtz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0wVg9UUpibR7VrYPVbVKDdmFzEAfzOQVFryN0Utfamf2nOpAeqHuoBEAamI+rQui
-	 eJFOeNchm8gpXIm6eBWrkWFOMRqBzcCm8NXeQX4yphx/rEbaiqUIhWEY31pBsbShbF
-	 Yi1HOiGUX/Y6LSPY982cbbZb/fhbG2SVtrhcVjcU=
+	b=uRiiYlCN+GdKtQQYRalFyh5PPUVXmsvYzGZY9knIom/ZUv3sONGex9MQYXkWT5SMA
+	 mCNWTVGbnjoXZnztWGXKVjcbruFtVlmx/5NhtL9dGl+YRLRLyowIHb5xdgm52cG/UC
+	 K/SCR43A23sSfAUYshlNcAVhBtR9IrNHEXee119A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Yixun Lan <dlan@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Wu <weiming3@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0665/1815] riscv: dts: spacemit: Fix phy id check for the phy on com260 board
-Date: Sat, 12 Sep 2026 08:40:15 +0200
-Message-ID: <20260912065704.496935350@linuxfoundation.org>
+Subject: [PATCH 7.2 0639/1815] fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init
+Date: Sat, 12 Sep 2026 08:39:49 +0200
+Message-ID: <20260912065703.882821324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,37 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Weiming Wu <weiming3@asu.edu>
 
-[ Upstream commit 9db839d52ccd9af67d460cb9ac893276a74b88e5 ]
+[ Upstream commit 2064bc663f89e61b8681c1fb9d1ce445de72063d ]
 
-Current phy framework can not re-initialize the phy correctly, as it will
-assert the phy reset GPIO so the phy id can not be read. Setting the
-phy id of board com260 manually so the phy id dectection can be skipped.
+ntfs_reparse_init() and ntfs_objid_init() parse the index root of the
+$Extend/$Reparse and $Extend/$ObjId metafiles (the INDEX_ROOT attributes
+named $R and $O). They read its type and rule fields through
+resident_data(), which does not check that the resident attribute is
+large enough to hold them.
 
-Fixes: cfe5c91cb73c ("riscv: dts: spacemit: k3: Initial support for CoM260-IFX board")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://patch.msgid.link/20260725233351.55004-3-inochiama@gmail.com
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+mi_enum_attr() accepts a resident attribute with data_off == asize and
+data_size == 0. For such an attribute placed last in its MFT record,
+resident_data() returns a pointer to the end of the record_size buffer,
+so reading root->type / root->rule reads past the allocation.
+
+Use resident_data_ex(attr, sizeof(struct INDEX_ROOT)) and bail out when
+it returns NULL, as ntfs_security_init() already does for $SDH / $SII.
+
+The attribute is only parsed while mounting a crafted image, so this
+needs CAP_SYS_ADMIN.
+
+ BUG: KASAN: slab-out-of-bounds in ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
+ Read of size 4 at addr ffff88801219dc00 by task mount
+  ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
+  ntfs_fill_super (fs/ntfs3/super.c:1604)
+  get_tree_bdev_flags (fs/super.c:1703)
+  vfs_get_tree (fs/super.c:1758)
+  path_mount (fs/namespace.c:4131)
+  __x64_sys_mount (fs/namespace.c:4360)
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Wu <weiming3@asu.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/fsntfs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-index b704b537385c7..2a07cd8f2a562 100644
---- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-@@ -174,7 +174,7 @@ &eth1 {
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index bc7469d0a34d4..7c4db816c43d3 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2302,8 +2302,8 @@ int ntfs_reparse_init(struct ntfs_sb_info *sbi)
+ 		goto out;
+ 	}
  
- 	mdio {
- 		phy1: phy@1 {
--			compatible = "ethernet-phy-ieee802.3-c22";
-+			compatible = "ethernet-phy-id001c.c916";
- 			reg = <1>;
- 			reset-gpios = <&gpio 1 5 GPIO_ACTIVE_LOW>;
- 			reset-assert-us = <10000>;
+-	root_r = resident_data(attr);
+-	if (root_r->type != ATTR_ZERO ||
++	root_r = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
++	if (!root_r || root_r->type != ATTR_ZERO ||
+ 	    root_r->rule != NTFS_COLLATION_TYPE_UINTS) {
+ 		err = -EINVAL;
+ 		goto out;
+@@ -2340,8 +2340,8 @@ int ntfs_objid_init(struct ntfs_sb_info *sbi)
+ 		goto out;
+ 	}
+ 
+-	root = resident_data(attr);
+-	if (root->type != ATTR_ZERO ||
++	root = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
++	if (!root || root->type != ATTR_ZERO ||
+ 	    root->rule != NTFS_COLLATION_TYPE_UINTS) {
+ 		err = -EINVAL;
+ 		goto out;
 -- 
 2.53.0
 
