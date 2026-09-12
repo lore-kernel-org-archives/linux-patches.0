@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0643414A1D;
-	Sat, 12 Sep 2026 08:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A5538F259;
+	Sat, 12 Sep 2026 08:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202289; cv=none; b=PpwnuPDIpBvUIxpQCia1TV2dA3+ZhXSXvxbjzB41M7Os3iyTGzxTipU6BlqrjrEyjO2bOukxcxo/sTmCWbs89fFM4M/gv9+bQWQ1aTvrn1kGuyGUJ8N6uDsfk03LzZgNb4wUHVaJMbUHiB1/y6tCK6s57uDHoKEjwHjmfP4DcU0=
+	t=1789202294; cv=none; b=rfAfyK6r7UQSWuMZmhYVVnxMkFy+sBlfqyHmELfC7OWqRctIRs2ABbvmngMBLaZxIDgTnRQ/Ki3tOH+O9HSp1P3kdXmEjthP0bONXGT/T6bEV+dfTBs1Wr8vcHCXb5Khxx4fgQn9jnO/VDwQybuRoFs63uiUTBqyJr+nYkQYaPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202289; c=relaxed/simple;
-	bh=b2NdcGaHMAzloTyuJvEh7OEC4xwnIsp8HkjBZy/eS1s=;
+	s=arc-20240116; t=1789202294; c=relaxed/simple;
+	bh=OHH0uYm6WkeBrnqFHYdUSJ49i71wHe9ykCZAO7d1PxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TBYlLGdjf3ZI7IMiH8q7rASvbosPRhsHfvxzJb8nU3FCtLHX+Cw76/dMuYPOJ9QK0Baqud34nN80DKsKcqUz39gYYBi833jbNBkwR0+Mjn9Dxzranq/FhAsjzeLscWM/m7yp158f2qej+pPLrZl+6exNtth6Agzg/qHadzgiO9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwlSfJRX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gxvYG5osZO3HlOQshYC9b7gF0ivvbyYFlzEqmTkwZcbIcC6fUUSFCo0xmlQkZMJ8Q5ajRpURvJ+g6/GYS2jA7qpd09PdShZzfXF20F3drPaPhu52fCueWW5327BwB7Xl2s6YsU9QrdALQ8JG4nBQyJESenKv6hWMjHR6/JRj7Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zq6SdQ67; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwlSfJRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9A61F000FF;
-	Sat, 12 Sep 2026 08:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zq6SdQ67"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACBC1F000FF;
+	Sat, 12 Sep 2026 08:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202287;
-	bh=xbmpNSmBz6qMArCk902HBFHIT1c+tqgwc65wCVWugSo=;
+	s=korg; t=1789202292;
+	bh=ErlnmFqMzLE0NVLbpACtuKAlinlJ4YbUxqKiJOruDCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PwlSfJRX0OGEwDw8to17Crz4jGwzDAQfDwsXV5zkfkTc4LXOpAZ+vjDHLlkAoG7Bm
-	 z9rftsocRcjpKIQ1o4gVDk/JnX4su2vQko8vnTesAm3SCiajPj7UL+sL4p6XIoxsN1
-	 dn51YPh11xicO0wSexiP8g6GZqBRoygQATxdO+ik=
+	b=Zq6SdQ67F2LuNBytz29aRhwN7vUIX31RnkNxmiuhhtR3G/kXGqRMdWIkyGTRL9NyY
+	 szB/JvP5JseyoVHrE92Dvc1jhpwwSumbJ2G7OYro3zOUTeaBYUjr0GMzmE7yjSLpAF
+	 YmmFf3XVcfF9uUhnvWLaM3Wr0ox7eeUWP536HySk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Aksh Garg <a-garg7@ti.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1171/1815] drm/amdgpu/gfx6: Use PFP on the compute queues too
-Date: Sat, 12 Sep 2026 08:48:41 +0200
-Message-ID: <20260912065716.506396656@linuxfoundation.org>
+Subject: [PATCH 7.2 1172/1815] PCI: cadence: Fix host/endpoint dependencies for cadence-plat driver
+Date: Sat, 12 Sep 2026 08:48:42 +0200
+Message-ID: <20260912065716.528120864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,85 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Aksh Garg <a-garg7@ti.com>
 
-[ Upstream commit 60f20946cd318518ddc2c0da12103c666b2b9564 ]
+[ Upstream commit 79752653c136493ae8c3b4260f9f80de0b91d0bf ]
 
-On GFX6, the compute rings use the same CP path as
-the graphics ring. The only difference is that they
-don't support draw commands. (As opposed to GFX7 and
-newer which have a separate command parser that is
-called MEC for compute queues.)
+The cadence-plat driver has a single platform driver that can be built-in
+or a loadable module, but it calls two separate backend drivers depending
+on whether it is a host or endpoint.
 
-This means that we have to take into consideration
-that the PFP also exists on compute queues on GFX6:
+If one of the mode is build as built-in and another as loadable module,
+we end up with a situation where the built-in pcie-cadence-plat driver
+tries to call the modular host or endpoint driver, which causes a link
+failure:
 
-Use PFP for register writes on both graphics and
-compute queues.
+  ld: error: undefined symbol: cdns_pcie_ep_setup
+  >>> referenced by pcie-cadence-plat.c
+  >>>               drivers/pci/controller/cadence/pcie-cadence-plat.o:(cdns_plat_pcie_probe) in archive vmlinux.a
 
-In the pipeline sync, use the PFP to wait for the
-previous fence (and not the ME) to prevent the PFP
-from starting to execute the next submission while
-the ME is still in the previous submission.
+  ld: error: undefined symbol: cdns_pcie_host_setup
+  >>> referenced by pcie-cadence-plat.c
+  >>>               drivers/pci/controller/cadence/pcie-cadence-plat.o:(cdns_plat_pcie_probe) in archive vmlinux.a
 
-After a VM flush, emit PFP_SYNC_ME on compute
-queues as well.
+Fix this by moving the 'select' of PCIE_CADENCE_HOST and PCIE_CADENCE_EP
+from the individual PLAT_HOST/PLAT_EP symbols into the common PCIE_CADENCE_PLAT
+symbol, conditioned on which backends (modes) are enabled.
 
-Fixes: 2cd46ad22383 ("drm/amdgpu: add graphic pipeline implementation for si v8")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 611627a4e5e4 ("PCI: cadence: Add module support for platform controller driver")
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Closes: https://lore.kernel.org/linux-next/589ea512-93c6-4e1c-83d7-ba45a0b35843@infradead.org/
+Signed-off-by: Aksh Garg <a-garg7@ti.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://patch.msgid.link/20260805105014.3952686-1-a-garg7@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pci/controller/cadence/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-index 1a9866e409125..8f3f90d5ce375 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-@@ -2347,7 +2347,7 @@ static int gfx_v6_0_cp_resume(struct amdgpu_device *adev)
+diff --git a/drivers/pci/controller/cadence/Kconfig b/drivers/pci/controller/cadence/Kconfig
+index 9e651d5459735..fd704dec47dda 100644
+--- a/drivers/pci/controller/cadence/Kconfig
++++ b/drivers/pci/controller/cadence/Kconfig
+@@ -20,11 +20,12 @@ config PCIE_CADENCE_EP
  
- static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
- {
--	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
-+	int usepfp = 1;
- 	uint32_t seq = ring->fence_drv.sync_seq;
- 	uint64_t addr = ring->fence_drv.gpu_addr;
+ config PCIE_CADENCE_PLAT
+ 	tristate
++	select PCIE_CADENCE_HOST if PCIE_CADENCE_PLAT_HOST != n
++	select PCIE_CADENCE_EP if PCIE_CADENCE_PLAT_EP != n
  
-@@ -2365,7 +2365,7 @@ static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
- static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
- 					unsigned vmid, uint64_t pd_addr)
- {
--	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
-+	int usepfp = 1;
- 
- 	amdgpu_gmc_emit_flush_gpu_tlb(ring, vmid, pd_addr);
- 
-@@ -2389,7 +2389,7 @@ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
- static void gfx_v6_0_ring_emit_wreg(struct amdgpu_ring *ring,
- 				    uint32_t reg, uint32_t val)
- {
--	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
-+	int usepfp = 1;
- 
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
- 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(usepfp) |
-@@ -3556,7 +3556,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
- 	.emit_frame_size =
- 		5 + 5 + /* hdp flush / invalidate */
- 		7 + /* gfx_v6_0_ring_emit_pipeline_sync */
--		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + /* gfx_v6_0_ring_emit_vm_flush */
-+		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 2 + /* gfx_v6_0_ring_emit_vm_flush */
- 		14 + 14 + 14 + /* gfx_v6_0_ring_emit_fence x3 for user fence, vm fence */
- 		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
- 		5, /* SURFACE_SYNC */
+ config PCIE_CADENCE_PLAT_HOST
+ 	tristate "Cadence platform PCIe controller (host mode)"
+ 	depends on OF
+-	select PCIE_CADENCE_HOST
+ 	select PCIE_CADENCE_PLAT
+ 	help
+ 	  Say Y here if you want to support the Cadence PCIe platform controller in
+@@ -35,7 +36,6 @@ config PCIE_CADENCE_PLAT_EP
+ 	tristate "Cadence platform PCIe controller (endpoint mode)"
+ 	depends on OF
+ 	depends on PCI_ENDPOINT
+-	select PCIE_CADENCE_EP
+ 	select PCIE_CADENCE_PLAT
+ 	help
+ 	  Say Y here if you want to support the Cadence PCIe platform controller in
 -- 
 2.53.0
 
