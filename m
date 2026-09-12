@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF55C2AEEB;
-	Sat, 12 Sep 2026 15:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75C3352017;
+	Sat, 12 Sep 2026 15:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227102; cv=none; b=okFXJModwLL3jGysw8A4MiIqruC3woIJeV6eFLMTbk6K5jcDJ5hKZ778vz0f17tmuKEQCNhGFw4TB4M2GtGQLVsNvTPPcOUDZ5FGYhUkDGBnnCek+Z9fNmGSmvkcjyqZsxMVpw7qtYw2VhVenA0bMIyHedDQUL/vEsYo5VVyZiY=
+	t=1789227107; cv=none; b=Ad08w1GvFofoPmRdgXPKwU4+X7xDjYjA1KlGeAp7TCBqjOyUjb5k59RBUO3MwXsY/2Mxa81ZUxv/IQslwYTl5HVLQH+fm1Pouy/dWMahY5AKZmYu+H0qb/Rn3gz3WwN5RDjtytj5SEdghvq+Rh4o4Z/4Fp7AA4xjrCZzfMN949M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227102; c=relaxed/simple;
-	bh=eOLfa8+hIjrBidz5u0/XDFphBMheZ2sK3lyleZf7ni4=;
+	s=arc-20240116; t=1789227107; c=relaxed/simple;
+	bh=jF68DOwRF+VxDcfZ+ZZxYIeVtBwksvILc/fJGR1O3eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6ABEzmbSGCe39c7GW4osEjtIlNXJiUL884R8d7zCueMwiBGpu4YzqiHM3xRKFSp4fWPpCcFo/ORAPee/5G0YvK0pOFHit+Y+tMQsjsxbKQ3GF1q1gFBwDsugmT5Hajzd5tl9zLeeeiglkmpobvi3NVgA5j2F56uF29QQKMGpF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3Zu2hfr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y63Q8j9OaB354KbzAyRQmyFfiu/yIIrLDT6KdWQawZLLTsPE0U5ienMIMnyBRvCSwdPumfz5SB8L15hVVKzo8Mo8GdHUgY+eqATyjS3TmKuy7ReUJoDqYJzrDzoplvLs6MvLK2ajQ+P22S7gQBecGgWcJYanjZzI/n05cfr7OM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAaRZuIl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3Zu2hfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DD01F000FF;
-	Sat, 12 Sep 2026 15:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAaRZuIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDAB1F000FF;
+	Sat, 12 Sep 2026 15:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227100;
-	bh=xARB0U2PRGM5QVYM2YLIr4LfuWsbSfIrDvxokQTNrDU=;
+	s=korg; t=1789227105;
+	bh=j8BmMmGNNXoUrwoyt0OsaJ0MPHJqcxwB84hTcDByG+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P3Zu2hfrUCSIXY8cyIzBZOo7+w4ck4iMHXiAzCfIwGyin4moIhwSYrq/cy7l1iqzq
-	 mVfwL0IMvxXn6XPBghNJ9Ttw01X3okaagsFtl6m0FZZH5CSIvcFP/EJ+vl9TfBXYHb
-	 yl9jpihncoJNIuKMUxzLBY21dXfBoN9u9+8Btayc=
+	b=wAaRZuIlSxWvlHAtS6YHJ+guo9GawUw3LxkJg2mjetcBkgQl2Pcz0T3ysmDhBRgKs
+	 jrelwuthrTNO1nsvKz1MrvACPwgvw7Q9Nojo0SwrsmuPpcttQCxl29mX/0XcabypAH
+	 OokGuqXvqoPKVWp7rNj3OyilBkXKNGIc7NyzQDhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 0113/1191] Bluetooth: hci_conn: re-enable advertising only for peripheral role
-Date: Sat, 12 Sep 2026 08:47:21 +0200
-Message-ID: <20260912065550.726187074@linuxfoundation.org>
+Subject: [PATCH 6.1 0114/1191] Bluetooth: hci_event: clear HCI_LE_ADV only on a created connection
+Date: Sat, 12 Sep 2026 08:47:22 +0200
+Message-ID: <20260912065550.749609851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,92 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 
-commit ed5fb41d3b6b6e665e7f97fd54bd1f9531c7477f upstream.
+commit 941929abe5feaed672b9a52e330e547d333240c6 upstream.
 
-hci_le_conn_failed() unconditionally calls hci_enable_advertising(),
-although its own comment states advertising should be re-enabled only
-when the failed attempt was made as a peripheral.
+le_conn_complete_evt() clears HCI_LE_ADV before looking at the event
+status, on the premise stated in its comment that all controllers stop
+advertising when a connection is created.
 
-hci_le_conn_failed() is reached from hci_conn_failed() for every failed
-LE connection, including outgoing central connections. For a central
-attempt this enable is redundant: hci_le_create_conn_sync() already
-restores advertising via hci_resume_advertising_sync() in its done:
-block. Because hci_enable_advertising() only queues the work on
-cmd_sync_work, it runs *after* that resume has already succeeded and
-set HCI_LE_ADV.
+That premise only holds when a connection was actually created. On a
+non-zero status none was, and the controller is still advertising: after
+the host issues LE Create Connection Cancel the event arrives with
+Unknown Connection Identifier (0x02), and a connection timeout behaves
+the same way. Clearing the flag there leaves the host believing
+advertising is off while the controller has it on.
 
-The resulting HCI sequence, captured on a BCM43455 (no LE Extended
-Advertising, so legacy advertising is used):
+It is also wrong for extended advertising, where several sets can be
+advertising at once. hci_cc_le_set_ext_adv_enable() is careful about
+this - on disabling one set it walks hdev->adv_instances and only clears
+HCI_LE_ADV once no instance is still enabled. The unconditional clear
+here discards that bookkeeping, so one set connecting drops the flag
+while the others keep advertising.
 
-  LE Create Connection                     Status Success
-  ... 13.8 s, peer never answers ...
-  LE Set Advertising Parameters (0x2006)   Success   <- done: resume,
-  LE Set Advertising Enable     (0x200a)   Success      HCI_LE_ADV set
-  LE Create Connection Cancel   (0x200e)   Success
-  LE Connection Complete                   Unknown Conn Id
-  LE Set Advertising Parameters (0x2006)   Command Disallowed (0x0c)
+The direction of the error matters. A flag left set is self-correcting:
+hci_disable_advertising_sync() sends LE Set Advertising Enable(0) and
+the command complete puts the state back. A flag left clear is not,
+because that same function returns early without sending anything while
+the flag is clear:
 
-The last command is the queued enable from hci_le_conn_failed() running
-as a second hci_enable_advertising_sync() pass. It clears HCI_LE_ADV
-(hci_sync.c, "Clear the HCI_LE_ADV bit temporarily"), then sends
-LE Set Advertising Parameters while the controller is still advertising,
-which the controller correctly rejects with Command Disallowed.
+  - LE Set Advertising Parameters is then sent to a controller that is
+    still advertising, and is correctly rejected with Command Disallowed
+    (0x0c);
+  - hci_enable_advertising_sync() returns at that point, before the
+    LE Set Advertising Enable that would set HCI_LE_ADV again.
 
-The disable-first call at the top of hci_enable_advertising_sync()
-cannot prevent this: hci_disable_advertising_sync() returns early
-without sending anything when HCI_LE_ADV is clear, so it is a no-op
-exactly when the flag is wrong.
-
-hci_enable_advertising_sync() then returns without sending LE Set
-Advertising Enable, so HCI_LE_ADV is never set again. The legacy
-software rotation loop re-arms hci_schedule_adv_instance_sync() every
-HCI_DEFAULT_ADV_DURATION (2 s), and its "already advertising" shortcut
-tests HCI_LE_ADV, which can no longer become true. The command is
-therefore retried every 2 s indefinitely:
+On a controller without LE Extended Advertising that is reachable from
+here: hci_schedule_adv_instance_sync() re-arms adv_instance_expire every
+HCI_DEFAULT_ADV_DURATION (2 s) and its "already advertising" shortcut
+tests HCI_LE_ADV, which can no longer become true, so the parameter
+write is retried for as long as advertising is configured:
 
   Bluetooth: hci0: Opcode 0x2006 failed: -16
 
-Observed on a gateway as 5326 occurrences over 3 hours, ending only when
-bluetoothd was restarted. Connection attempts that succeed do not call
-hci_le_conn_failed() and never trigger this.
+Only clear the flag when a connection was established.
 
-Add the role test the comment already describes. Both other
-hci_enable_advertising() call sites reached from a failed/closed LE
-connection (hci_cs_disconnect() and hci_disconn_complete_evt()) already
-guard on conn->role == HCI_ROLE_SLAVE; this one was missed.
+Note this is not on its own sufficient to stop that retry loop - the
+redundant enable queued by hci_le_conn_failed() clears HCI_LE_ADV itself
+and recreates the same mismatch, which patch 1 addresses. This patch
+fixes the event handler reporting a state the controller is not in.
 
-Reproducing needs legacy advertising (ext_adv_capable() false, so the
-software rotation loop is used), simultaneous peripheral advertising and
-outgoing central connects, and a central connect that times out rather
-than failing fast.
+Verified on the affected device (BCM43455, legacy advertising only) with
+this patch and patch 1 applied. A 221 s btmon capture with an out-of-range
+peer at -90 dBm contains two outgoing connection attempts that the host
+cancelled, each producing exactly the event this patch changes:
 
-The Fixes tag points at the commit that introduced the advertising
-restart into this path for the directed-advertising (peripheral) case;
-the role test that the later commit 0b1db38ca26b ("Bluetooth: Fix check
-for direct advertising") added to the sibling paths was never applied
-here.
+  < LE Set Advertising Parameters  0x2006   Success
+  < LE Set Advertising Enable      0x200a   Success
+  < LE Create Connection Cancel    0x200e   Success
+  > LE Connection Complete   Unknown Connection Identifier (0x02), central
 
-Fixes: 3c857757ef6e ("Bluetooth: Add directed advertising support through connect()")
+Nothing follows either one; the next command is an unrelated scan restart
+70 ms later. Over the whole capture: 7 LE Set Advertising Parameters sent,
+all Success; 10 LE Set Advertising Enable, all Success; no Command
+Disallowed of any opcode, and no 2 s cadence anywhere. Two central
+connections to other peers completed normally afterwards, with feature
+exchange and a connection parameter update, so advertising was still live
+across the cancelled attempts.
+
+The extended advertising case above is a code argument, not a measurement:
+this controller has no LE Extended Advertising, so that path is not
+exercised by the capture.
+
+Fixes: fbd96c151cdc ("Bluetooth: Fix clearing HCI_LE_ADV for LE connections")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5 btmon
 Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_event.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1252,7 +1252,8 @@ static void hci_le_conn_failed(struct hc
- 	/* Enable advertising in case this was a failed connection
- 	 * attempt as a peripheral.
- 	 */
--	hci_enable_advertising(hdev);
-+	if (conn->role == HCI_ROLE_SLAVE)
-+		hci_enable_advertising(hdev);
- }
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5608,10 +5608,11 @@ static void le_conn_complete_evt(struct
  
- /* This function requires the caller holds hdev->lock */
+ 	hci_dev_lock(hdev);
+ 
+-	/* All controllers implicitly stop advertising in the event of a
+-	 * connection, so ensure that the state bit is cleared.
++	/* Advertising stops when a connection is created. On a failed
++	 * connection it keeps running, so leave the state bit alone.
+ 	 */
+-	hci_dev_clear_flag(hdev, HCI_LE_ADV);
++	if (!status)
++		hci_dev_clear_flag(hdev, HCI_LE_ADV);
+ 
+ 	/* Check for existing connection:
+ 	 *
 
 
