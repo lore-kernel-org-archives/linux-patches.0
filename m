@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271B035201F;
-	Sat, 12 Sep 2026 11:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D794C368D66;
+	Sat, 12 Sep 2026 11:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212858; cv=none; b=eAtoPgXhVUtBzvAoz+3XkttQjdRaibMQTrPV8C8+nhPCCkJ81P14068FpBxTNOGz3bg7+7FLU+5C0Big7w6FSP4V4bbMi8sxssszHFOd88HfThMYCTyellcInw6zIARO5mtsHOeq1Qb6SKumKoZ9kU4CI22I1KwE4iQv+38rvk0=
+	t=1789212863; cv=none; b=twlIXYmOwzPDOtmnZVWvZxbNwAccHHsLwNY9qswRGQvRPdTvK37nj7BVOAaZjIJXL0r2iI/p7TjDS4Bg/tDQ8nTAi72QbMqLRMdzWUb6B/ihnNK8bazgKSMumnCN2etx+nbiVpQtmnhyXgprxkQj4bhwpiOv6z+O8DDTgo1swM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212858; c=relaxed/simple;
-	bh=cbng9b8fQ7PAWG40+FQfhQq7Gu6vIBDMqAvicO7UtCU=;
+	s=arc-20240116; t=1789212863; c=relaxed/simple;
+	bh=FRIfvaFU0P1AKrpZTPsWAilonPZnQ875+oLB6hyDlnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeHS4lMyZENh1vEYuZVgHc5OfMMquNVw7/GVrpPWfC6bS8aTo21rDziMKgmK/1TGiCpHDz0uyCrsDVt60l5QqqnHcSwQJnXM3oBKZbemx8Zlz+XQwBDKhfgKxOJddvHVt6PoYu37QMdpuUhTg/JBQHXQEMggfOreRf2+eSQN5pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTujWvFI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eGSX3gwU4dV9Xqv9Xg/MRyXrqBk4qKaO0tMzx1r38/nfuqyoAHsqXpb8CCYf/tT0MtlmKrmoEOZr0alSN12Hjjzew5Gj2+OPs7uuL/KickQvhpE1ASljk509zLs8kwT7HugR1fB79Ma3SzaNzXHwTsIJYlTizG2wTWjbr4/USAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jzQwxLf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTujWvFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3321F000FF;
-	Sat, 12 Sep 2026 11:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jzQwxLf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CC21F000FF;
+	Sat, 12 Sep 2026 11:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212857;
-	bh=F76DjSgNNmFIeoHpCAtj/8lRfPkNJ4RTsqk5+ZUuBfE=;
+	s=korg; t=1789212861;
+	bh=dyc8gB6PSCYPB1QEPLzpy0teBtj4Y41LlUddvbD1bes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTujWvFIn2VcYztPej41Ii6SodRE2mUCCzb4l9glwd+fwsSbXH5tTM5RFiDPeZyIq
-	 XfDlw1y3vg7XAUdNZZr+dpXEcGqfHtn18E1nqo09k9pLzuGvC/WOAB6TVZyF7pwrOo
-	 L2G0tOBD5Q5RnPuT6cFfqZVjIFgb1vZLoYNeGF8Q=
+	b=0jzQwxLf227kpHYBvcxr2yVBPeEliRoDKBOy24vAvfKVdMOBrWizry9Nn7gEyo3+M
+	 tdsPmL9OsP/4vaOBJIstM8lnCvED/p5HbCViEG8irBh8eHm66+1HTnPXRPgaiZ5r+6
+	 QhPrsvL2hx9GZTUiNBL1SQqzd1SDyVAPLDRfW6tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	Linus Walleij <linusw@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1515/1518] pinctrl: airoha: an7583: add missed gpio22 pin group
-Date: Sat, 12 Sep 2026 09:01:24 +0200
-Message-ID: <20260912065657.837840588@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Shyam Sunder Reddy Padira <shyamsunderreddypadira@gmail.com>,
+	Dan Carpenter <error27@gmail.com>
+Subject: [PATCH 6.18 1516/1518] staging: rtl8723bs: os_dep: avoid NULL pointer dereference in rtw_cbuf_alloc
+Date: Sat, 12 Sep 2026 09:01:25 +0200
+Message-ID: <20260912065657.860588072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,42 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Shyam Sunder Reddy Padira <shyamsunderreddypadira@gmail.com>
 
-[ Upstream commit 9ef86358855d5fd89db019ace33c097d2d752b9d ]
+commit bc851db06045a40c18233dd76ef0562d7f8bb6db upstream.
 
-gpio22 pin group is missed, fix it.
+The return value of kzalloc_flex() is used without
+ensuring that the allocation succeeded, and the
+pointer is dereferenced unconditionally.
 
-Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Guard the access to the allocated structure to
+avoid a potential NULL pointer dereference if the
+allocation fails.
+
+Fixes: 980cd426a257 ("staging: rtl8723bs: replace rtw_zmalloc() with kzalloc()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Shyam Sunder Reddy Padira <shyamsunderreddypadira@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/20260414071308.4781-2-shyamsunderreddypadira@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/rtl8723bs/os_dep/osdep_service.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-index 9821e2f6f27dd..bdb5e7012d46b 100644
---- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-@@ -768,6 +768,7 @@ static const int an7583_gpio18_pins[] = { 20 };
- static const int an7583_gpio19_pins[] = { 21 };
- static const int an7583_gpio20_pins[] = { 22 };
- static const int an7583_gpio21_pins[] = { 23 };
-+static const int an7583_gpio22_pins[] = { 24 };
- static const int an7583_gpio23_pins[] = { 25 };
- static const int an7583_gpio24_pins[] = { 26 };
- static const int an7583_gpio25_pins[] = { 27 };
-@@ -851,6 +852,7 @@ static const struct pingroup an7583_pinctrl_groups[] = {
- 	PINCTRL_PIN_GROUP("gpio19", an7583_gpio19),
- 	PINCTRL_PIN_GROUP("gpio20", an7583_gpio20),
- 	PINCTRL_PIN_GROUP("gpio21", an7583_gpio21),
-+	PINCTRL_PIN_GROUP("gpio22", an7583_gpio22),
- 	PINCTRL_PIN_GROUP("gpio23", an7583_gpio23),
- 	PINCTRL_PIN_GROUP("gpio24", an7583_gpio24),
- 	PINCTRL_PIN_GROUP("gpio25", an7583_gpio25),
--- 
-2.53.0
-
+--- a/drivers/staging/rtl8723bs/os_dep/osdep_service.c
++++ b/drivers/staging/rtl8723bs/os_dep/osdep_service.c
+@@ -224,7 +224,8 @@ struct rtw_cbuf *rtw_cbuf_alloc(u32 size
+ 	struct rtw_cbuf *cbuf;
+ 
+ 	cbuf = kzalloc(struct_size(cbuf, bufs, size), GFP_KERNEL);
+-	cbuf->size = size;
++	if (cbuf)
++		cbuf->size = size;
+ 
+ 	return cbuf;
+ }
 
 
