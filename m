@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561E026ED46;
-	Sat, 12 Sep 2026 19:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C247331203;
+	Sat, 12 Sep 2026 19:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242412; cv=none; b=ERyE6BgpXX0FS3daEbmcDkxcUVYQQcCHg+7JR66sI8mZ+nTWkI19p3TFHhGT2N3I1tfY/bgronTKR0glGXd5IXCegt9uLHg1bt6v02RQuuQfnOl1sDJthLBxQxRMrU0IvmckCedjOqhopuhsQzWdk+9xYhBiBUWuhWH+518VoVA=
+	t=1789242415; cv=none; b=LtdMxvF4gMK93RIwMJUK9TG4hHaCppBAWKgWBjX8PzDZdxgwBTkkoPQ/fgF6FWc1J4KoUbGY94wl9jZG6PAk5TpqyMq1Nu+ODnN7z5X/pLT67ASTX4jg6phQGzNeXRSLd24+8ExxpDKD2Dag9BqertpTKIl9tqNh9Bqi8Scw35Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242412; c=relaxed/simple;
-	bh=YXOnLzelEK1KiDmo6XecR7vvG80z5sewZOjsTl1khX0=;
+	s=arc-20240116; t=1789242415; c=relaxed/simple;
+	bh=qq1T1TQaZLy0usF8QBcUnXyLuQcK0P8SJ2305GSgDW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vg68kPdssLClL0btOgC1pgI9gp0PQsDAgkwCtL7aCfvuQ3jkCs7Dgk52IPMYHH9HwEkyhh30F+vk1QMIDV8r29KAEWtHqk1jGbXK85c34a//+vqawsqqX2+PfCM3gbUGqDWdjlaHVgAcD2p1VBu+yidrKmsOD+erdNKWdkMLSSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1HFoqBG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DKHfucsTm4KrhUKQOs3KXO8cusL96IzkkH3mJ1BrGZF168dI/oNPRVuP6uTJr6j6l6YiF+/GXMo1ohW4UCwmZrmpSEg3qA1BhDm80xUHWgu69XuNdmVGC0gE6YwZqwZm8zUJXdfqagHTjLasG5rtwymiwYwVCBp+jBB9hNUzkXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVCkPCG9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1HFoqBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712E91F000FF;
-	Sat, 12 Sep 2026 19:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVCkPCG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C641F000FF;
+	Sat, 12 Sep 2026 19:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242411;
-	bh=VyUBvKUQwgb8RdM60kCjrUqGyS9e2uCPsiCjKzbc4a0=;
+	s=korg; t=1789242413;
+	bh=CvXvAkGPQkESHMbYDQeOxJZYkVh/1IMUIlxMqkbvtlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R1HFoqBGgBeAYM/w9u/3hgfDabj2iOHF/Gl/vnS+BcELdhSH85/GdFk93LG1LfJvA
-	 i4aWPlqJ8VZr4Py/AdOiOIRkT5VjQJFZ8Q/jTmIQ/JE59oZmprZxg4J+NIb3Yfdflv
-	 IMwS+v2Snnx3fuvR01eddM2ibR1HV1A+EDIkEeMc=
+	b=OVCkPCG9q9KxsTFAAqbvWYoUsM1FGBMXR1+oF8CXpKiSVBO1BC7UTZjrFBgETb6ii
+	 ZfxIDxtcB0p8XpTzm6fHwBMMF4pBsiw1RyGPuGwoBo9ZO5nXi96HTIntNLpQkdsskH
+	 m4JiRrvSJ9EFlu9VIVpj9psj4ajnpZZNvch3VZU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	David Woodhouse <dwmw@amazon.co.uk>,
 	Thomas Gleixner <tglx@kernel.org>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 395/798] y2038: uapi: Use 64-bit __kernel_old_timespec::tv_nsec on x32
-Date: Sat, 12 Sep 2026 09:00:23 +0200
-Message-ID: <20260912065526.201659969@linuxfoundation.org>
+Subject: [PATCH 5.10 396/798] timekeeping: Account for monotonicity adjustment in ntp_error
+Date: Sat, 12 Sep 2026 09:00:24 +0200
+Message-ID: <20260912065526.225481864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,59 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-[ Upstream commit 79ced850e549e8c86b772a79ea417a1425b5c04b ]
+[ Upstream commit b7befd6d91207cf3f4cecd68fea0c212093906cf ]
 
-'struct __kernel_old_timespec' represents the 'native' time ABI of the
-kernel. On 32-bit systems it uses 32-bit fields and on 64-bit systems
-it uses 64-bit fields.
+timekeeping_apply_adjustment() modifies xtime_nsec to ensure monotonicity
+when mult changes:
 
-However the x86 x32 ABI uses the 64-bit time ABI natively.  This is
-correctly handled for the 'tv_sec' fields, through the typedefs of
-'__kernel_old_time_t' -> '__kernel_long_t' -> 'long long'. The same
-treatment was missed for 'tv_nsec'.
+    xtime_nsec -= offset
 
-In practice this might not make much of a difference as the value of
-'tv_nsec' will always fit into 32 bits and the missing bits fall
-into the padding of the structure.
+This ensures that the time reported to userspace does not jump when the
+multiplier is adjusted from one tick to the next. However, the ntp_error
+accumulator which tracks the difference between intended and actual
+clock position was not being updated to reflect this additional
+discrepancy.
 
-When introspecting the structure however, a difference can be observed.
+An earlier attempt at this compensation existed as:
 
-Switch to 64-bit tv_nsec on x32.  No other architectures or ABIs are
-affected.
+    ntp_error -= (interval - offset) << ntp_error_shift
 
-While this could be interpreted as violating the POSIX requirement of
-'timespec::tv_nsec' being 'long':
+but was removed in commit c2cda2a5bda9 ("timekeeping/ntp: Don't align
+NTP frequency adjustments to ticks") because it was a major source of
+NTP error. That's because (interval - offset) was wrong: the subtraction
+of "interval" prematurely accounted for the changed xtime_interval of
+the next tick, which would be correctly accounted in the next
+accumulation anyway — a double subtraction.
 
-  * __kernel_old_timespec is not actually the POSIX timespec type
+What is actually needed is just the "offset" part: ntp_error must be
+told that xtime_nsec moved by "offset" without a corresponding change
+in the intended position. For the normal ±1 mult dithering this is
+negligible (the adjustments cancel over time), but for larger mult
+changes — such as when an external reference clock sets a new
+frequency — the one-time uncompensated offset is significant.
 
-  * the requirement is gone in newer versions of POSIX
+Fix by adjusting ntp_error by the correct amount:
 
-  * this matches glibc
+    ntp_error += offset << ntp_error_shift
 
-Fixes: 94c467ddb273 ("y2038: add __kernel_old_timespec and __kernel_old_time_t")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+This keeps ntp_error consistent with the actual xtime_nsec position
+after the adjustment, and ensures the discrepancy is correctly smoothed
+away over time and the clock returns to where it should have been.
+
+Fixes: c2cda2a5bda9 ("timekeeping/ntp: Don't align NTP frequency adjustments to ticks")
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260504-timespec-x32-v2-1-0739c9047fc4@linutronix.de
+Assisted-by: Kiro:claude-opus-4.6-1m
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/20260621220051.1030462-3-dwmw2@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/time_types.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/timekeeping.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/uapi/linux/time_types.h b/include/uapi/linux/time_types.h
-index bcc0002115d39..03a0d8aaadca5 100644
---- a/include/uapi/linux/time_types.h
-+++ b/include/uapi/linux/time_types.h
-@@ -30,7 +30,7 @@ struct __kernel_old_timeval {
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index 629a07e6a0bfc..d45718d327c89 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -1956,6 +1956,11 @@ static __always_inline void timekeeping_apply_adjustment(struct timekeeper *tk,
+ 	 *	xtime_nsec_2 = xtime_nsec_1 - offset
+ 	 * Which simplfies to:
+ 	 *	xtime_nsec -= offset
++	 *
++	 * When subtracting offset from xtime_nsec, the same amount
++	 * (in appropriate units) has to be added to ntp_error, in
++	 * order to correctly track the delta between the time
++	 * reported in xtime_nsec, and the intended time.
+ 	 */
+ 	if ((mult_adj > 0) && (tk->tkr_mono.mult + mult_adj < mult_adj)) {
+ 		/* NTP adjustment caused clocksource mult overflow */
+@@ -1966,6 +1971,7 @@ static __always_inline void timekeeping_apply_adjustment(struct timekeeper *tk,
+ 	tk->tkr_mono.mult += mult_adj;
+ 	tk->xtime_interval += interval;
+ 	tk->tkr_mono.xtime_nsec -= offset;
++	tk->ntp_error += offset << tk->ntp_error_shift;
+ }
  
- struct __kernel_old_timespec {
- 	__kernel_old_time_t	tv_sec;		/* seconds */
--	long			tv_nsec;	/* nanoseconds */
-+	__kernel_long_t		tv_nsec;	/* nanoseconds */
- };
- 
- struct __kernel_old_itimerval {
+ /*
 -- 
 2.53.0
 
