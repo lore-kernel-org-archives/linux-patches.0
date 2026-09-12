@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F12356744;
-	Sat, 12 Sep 2026 11:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6A2427F91;
+	Sat, 12 Sep 2026 11:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211234; cv=none; b=hzHuX3Tc1XzoobPjLtmz620qGHPIdGY4fOcYAfkBljyS5AVjXebIOccYHw103bgCK9B6jBkyt7DG9m8nWlZlXlTlgXQfj5V3qx22ENWOkG49ags67gpiu1ZoDP4pzzxjpgg9ssX/XeQkO2gapOe7rQ+Zi8uOqT9jRnc61BhI0lI=
+	t=1789211239; cv=none; b=KEpLz+Jl3gF5LVFb+6mrrq1ft3RJ3FgwIiRTXlPPaV7desGALRzbLqNNnSd9qEouXphAVSwfc9mMRYeu1VpcOlWm46wKrOrbF4e2e5uuSJjrvgWrPw0SxBg/Yw5O17wk8vPiFheN3yDJmvdpnwaou36hpNfYesVz7KcZwl5HaDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211234; c=relaxed/simple;
-	bh=wZwyXBuVqMI62jqCu/gfoGqWTVApEnSn6xfHqsHCnHQ=;
+	s=arc-20240116; t=1789211239; c=relaxed/simple;
+	bh=PRKFqspIxmm/IUA0d+qulX2AcUc2IrWyMt44yfBici0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+wCmki7bTRT1nyOOhoMhFfsgq00mk8S+J8sgQ/B49/4C0mEqIfbOh0IwLqVqvEeY5tgmdyoruUMSJyFF8IEX15ImW7eCa9brctqmdFRHCdzzCBBZRnqxFwozlq9K6nQdzvp3enM8IXkWc4JVDQvsXcAWr+hq1gN1e70wNl4tP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6Bc71NR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OPiOWcUv+bAtDqROc+ddleLuQaUfQcR0wFb2UpXaXtgcaJlEk6I/Wb4qztQHiOyDbCjp7XLL6sGQ7zNTlVEut2GJsDVNkQT94LW3o6W1IWCRWBSbSmqzdkd+Q2KmLy5xmy0tFlgFqWaBnM59DD3f2ljICt/OTrsufQWSpB4u300=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqJIz0Qi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6Bc71NR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198F81F000FF;
-	Sat, 12 Sep 2026 11:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqJIz0Qi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EFA1F000FF;
+	Sat, 12 Sep 2026 11:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211233;
-	bh=ArBx4wEdprzlaKIwGi+I05FXUS34tZlljsula4wStEA=;
+	s=korg; t=1789211237;
+	bh=WnI8NGBP/X6GRPzCA6c2CtHFqUvZw8EgV1e6TvUFndY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f6Bc71NRnLlwcAW8rPdrnb/e0kBell7SZCtYDgi0t5wfWCOd8V1q4Lx/+r0mufVgy
-	 neR6poR7izXwiP6p/3BmkfBbZHSrVp55Xb+oVcIem0Xup4xbySci8k2oYBniXkT3vv
-	 8jQvxhmVRHpFkwSnJYipOHASS7SqRa8mwiPzfoCE=
+	b=XqJIz0QiEdyRZIH1GsFBD8T18AXTabSEVyLUbFActTsTh9vu/10DiPcs8lTPbLnQ0
+	 38nzspC8niJutvUDKSDoWMIiKTFfP49iwRhaokpVhVdGsgqLyV/hDscyE5A2S2AaEo
+	 EfIYcQAUyI9TQxEQ5kzAQtMP30XxoeohJ3CjxeLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	syzbot+7061d72c26b7daebe2b4@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1187/1518] fs/ntfs3: reject out-of-range evcn in mi_enum_attr()
-Date: Sat, 12 Sep 2026 08:55:56 +0200
-Message-ID: <20260912065650.329338754@linuxfoundation.org>
+Subject: [PATCH 6.18 1188/1518] ALSA: core: Fix use-after-free in snd_card_do_free()
+Date: Sat, 12 Sep 2026 08:55:57 +0200
+Message-ID: <20260912065650.352440018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,101 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit 20fd9f64c0050658f2031e6bd5d552c6f0c8f7e3 ]
+[ Upstream commit 5ae1a690c522fea2900ff56c8c2ace7b059f5e04 ]
 
-In mi_enum_attr(), the start/end VCN validation for non-resident
-attributes is:
+A use-after-free was detected in snd_card_do_free() when a sound card
+managed by devres is unbound while a user-space application still holds an
+open file descriptor.
 
-	if (svcn > evcn + 1) goto out;
+For managed cards, the memory is allocated using devres_alloc(), and its
+release function is set to __snd_card_release(), which calls
+snd_card_free(). When the device is unbound, the unbind thread calls
+snd_card_free(), which drops a reference to the card's device. If the user
+thread still has an open file descriptor, the reference count does not
+reach zero, and the unbind thread blocks on wait_for_completion(&released).
 
-When evcn is U64_MAX the "evcn + 1" expression wraps to 0 and any svcn
-passes the check. For evcn values close to U64_MAX (but not equal to it)
-the right-hand side is still a meaningless near-wrap upper bound, so a
-malformed on-disk attribute with svcn == 0 and evcn near U64_MAX can pass
-mi_enum_attr() unrejected.
+When the user thread closes the file descriptor, it drops the final
+reference, invoking the device release callback release_card_device(),
+which calls snd_card_do_free(). snd_card_do_free() performs cleanup and
+calls complete(card->release_completion). This wakes up the unbind thread,
+which returns from snd_card_free() and __snd_card_release(). The devres
+core then immediately frees the memory block containing the snd_card
+structure.
 
-VCN (virtual cluster number) is a cluster index, so any valid evcn is
-bounded by the volume's total cluster count, which ntfs3 holds in
-sbi->used.bitmap.nbits (set up in ntfs_init_from_boot() before any caller
-of mi_enum_attr() runs). Reject evcn values that fall outside this range.
+Meanwhile, the user thread continues execution in snd_card_do_free() and
+evaluates `if (!card->managed)`. It reads the `managed` boolean from the
+snd_card structure that was just freed by the unbind thread, triggering a
+KASAN use-after-free.
 
-However, an empty non-resident attribute (no allocated clusters) is
-legitimately encoded with svcn == 0 and evcn == -1 (U64_MAX), e.g. via
-attr->nres.evcn = cpu_to_le64((u64)vcn - 1) with vcn == 0. That sentinel
-must keep passing, so exclude evcn == U64_MAX from the range check. The
-existing "svcn > evcn + 1" test still tolerates the sentinel ("0 > 0" is
-false) and continues to require svcn == 0 for it, while the range check
-rejects every other out-of-range evcn and thereby also defuses the
-"evcn + 1" wraparound.
+Fix this by caching the value of card->managed in a local variable before
+calling complete(). This ensures that the card pointer is not dereferenced
+after the unbind thread has been woken up and potentially freed the card.
 
-svcn does not need its own bound: once evcn < nbits, "svcn > evcn + 1"
-implies svcn <= nbits.
+BUG: KASAN: use-after-free in snd_card_do_free sound/core/init.c:604
+[inline]
+BUG: KASAN: use-after-free in release_card_device+0x1ab/0x1b0
+sound/core/init.c:153
+Read of size 1 at addr ffff8881912ec909 by task syz-executor130/5857
 
-Fixes: 013ff63b6494 ("fs/ntfs3: Add more attributes checks in mi_enum_attr()")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-[almaz.alexandrovich@paragon-software.com: fixed evcn check]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+ print_address_description+0x55/0x1e0 mm/kasan/report.c:378
+ print_report+0x58/0x70 mm/kasan/report.c:482
+ kasan_report+0x117/0x150 mm/kasan/report.c:595
+ snd_card_do_free sound/core/init.c:604 [inline]
+ release_card_device+0x1ab/0x1b0 sound/core/init.c:153
+ device_release+0xc4/0x1f0 drivers/base/core.c:-1
+ kobject_cleanup lib/kobject.c:689 [inline]
+ kobject_release lib/kobject.c:720 [inline]
+ kref_put include/linux/kref.h:65 [inline]
+ kobject_put+0x222/0x550 lib/kobject.c:737
+ snd_card_file_remove+0x331/0x390 sound/core/init.c:1125
+ snd_pcm_release+0x12c/0x160 sound/core/pcm_native.c:2986
+ __fput+0x418/0xa50 fs/file_table.c:512
+ fput_close_sync+0x11f/0x240 fs/file_table.c:617
+ __do_sys_close fs/open.c:1511 [inline]
+ __se_sys_close fs/open.c:1496 [inline]
+ __x64_sys_close+0x7e/0x110 fs/open.c:1496
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+
+Fixes: e8ad415b7a55 ("ALSA: core: Add managed card creation")
+Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+7061d72c26b7daebe2b4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7061d72c26b7daebe2b4
+Link: https://syzkaller.appspot.com/ai_job?id=24752a23-f0b6-49c1-bf20-4fa89c2e7eb2
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Link: https://patch.msgid.link/02042186-27b7-42a9-b64e-f93ce8fbe05a@mail.kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/record.c | 34 +++++++++++++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 3 deletions(-)
+ sound/core/init.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
-index 714c7ecedca83..0f8ba76094fe1 100644
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -202,7 +202,7 @@ struct ATTRIB *mi_enum_attr(struct ntfs_inode *ni, struct mft_inode *mi,
- 	u32 used = le32_to_cpu(rec->used);
- 	u32 t32, off, asize, prev_type;
- 	u16 t16;
--	u64 data_size, alloc_size, tot_size;
-+	u64 svcn, evcn, data_size, alloc_size, tot_size;
+diff --git a/sound/core/init.c b/sound/core/init.c
+index c8f992cff4a43..bc5182c5ce12b 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -579,6 +579,8 @@ EXPORT_SYMBOL_GPL(snd_card_disconnect_sync);
  
- 	if (!attr) {
- 		u32 total = le32_to_cpu(rec->total);
-@@ -310,10 +310,38 @@ struct ATTRIB *mi_enum_attr(struct ntfs_inode *ni, struct mft_inode *mi,
- 	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
- 		goto out;
- 
--	/* Check start/end vcn. */
--	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
-+	/*
-+	 * Check start/end vcn.  svcn == 0 with evcn == -1 (U64_MAX) is the
-+	 * sentinel for an empty non-resident attribute (no allocated
-+	 * clusters) and must be accepted: "svcn > evcn + 1" tolerates it,
-+	 * since "(u64)-1 + 1" is 0 and "0 > 0" is false.
-+	 *
-+	 * For a non-empty attribute evcn is a cluster index and must lie
-+	 * within the volume (sbi->used.bitmap.nbits, set up in
-+	 * ntfs_init_from_boot() before any caller of mi_enum_attr() runs).
-+	 * Bounding evcn also prevents a malformed value close to U64_MAX
-+	 * from slipping through the near-wrap "evcn + 1" upper bound.
-+	 */
-+	svcn = le64_to_cpu(attr->nres.svcn);
-+	evcn = le64_to_cpu(attr->nres.evcn);
-+	if (svcn > evcn + 1)
- 		goto out;
- 
-+	if (is_attr_ext(attr)) {
-+		/* sparsed/compressed attribute. */
-+#ifdef CONFIG_NTFS3_64BIT_CLUSTER
-+		/* No limits. */
-+#else
-+		/* Check evcn fits into 32 bits. */
-+		if (evcn != U64_MAX && evcn >= (1ull << 32))
-+			goto out;
-+#endif
-+	} else {
-+		/* Check out of volume for normal attribute. */
-+		if (evcn != U64_MAX && evcn >= mi->sbi->used.bitmap.nbits)
-+			goto out;
-+	}
+ static int snd_card_do_free(struct snd_card *card)
+ {
++	bool managed = card->managed;
 +
- 	data_size = le64_to_cpu(attr->nres.data_size);
- 	if (le64_to_cpu(attr->nres.valid_size) > data_size)
- 		goto out;
+ 	card->releasing = true;
+ #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
+ 	if (snd_mixer_oss_notify_callback)
+@@ -593,7 +595,7 @@ static int snd_card_do_free(struct snd_card *card)
+ 	}
+ 	if (card->release_completion)
+ 		complete(card->release_completion);
+-	if (!card->managed)
++	if (!managed)
+ 		kfree(card);
+ 	return 0;
+ }
 -- 
 2.53.0
 
