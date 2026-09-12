@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4E94BEE43;
-	Sat, 12 Sep 2026 16:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099263603DB;
+	Sat, 12 Sep 2026 16:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230493; cv=none; b=sXEdnfhoxlTCj4V2ek1KxIV6UwczuIQnfpM6mCii6UOiKhPP54ulrZnX+Ddgj8E1f0wrxbndiN8vdaaoajPYcdckZop4zD7g9BE6X+EbjkNTVitJOr33A7Db+/RUm9C8u1jsNYJ5AcnAynlH1x3dKprBsgGgxfsrZH7jTwj6EjI=
+	t=1789230498; cv=none; b=UPFsayQxDYNGDOVir19f/EJvscHgeNegeFpQg6rTLpGpcwW6KGULIcF2r1/EE51r1eGL6fKa0PQQpR9y3V2k+CgMXttKRl85QctvWB4d8WHCPL2mrSEa1A50aC1VHimKkwySKisvk63QwFkBu+VBWY1cmGO7KTFSD0vNHPOXVdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230493; c=relaxed/simple;
-	bh=CZkyDIRZiJ1Bc/5baqXbjNuC4BbaKcOQ80qGJpmm6Ko=;
+	s=arc-20240116; t=1789230498; c=relaxed/simple;
+	bh=3yFTSQ9V8Er19c51RQpC9lX/J+tyPdXqEM6/olxGBqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILTVVG/nwMTZgbh97sT51M0dwN2gdoVDzQqPNN+Co5mR+ER7XVt2955+17XRrP+HkTjc/EKTr74g25/uGa1V8FqrDanWzooROTwBMNcsWEJ+4aXHdOjfuhpNi5K1dH4WXpc0lukCYU990eV4viK2fKloLPFA4gLUIgqyoZ7lbDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prrcuQAV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r0v44sFerP7d0k7JEWltWbS2Mz7a5v6kjmXzVkPuGBgfSzrc8J+mw103rrhFLDKFM6+4ZwBdQAyTimLeq++MF39uC0/ElFBEX6X19gfrt4QJPtSR9rKaK4XEHk0QuexChRBU5yNKpEvUZiG/jAoU6Di3f0LTg91nfe0+DOPnQd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sryi/o3J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prrcuQAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DD01F000FF;
-	Sat, 12 Sep 2026 16:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sryi/o3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014301F000FF;
+	Sat, 12 Sep 2026 16:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230492;
-	bh=IR52/G8731hbEq8bH5x9HpfKdeBdgJrpxmEIKmPK9GE=;
+	s=korg; t=1789230496;
+	bh=Q1J/h3PsRgkKuPTvnKbDngqF3z6DCW+z4ekNhSER1aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=prrcuQAVZomNzXbE6SXIm2XiR9MFvZ7kAu9mB81Ft6ooU/eeOFzJL7naoxN4AmNZ0
-	 I37jpfB5KrpWy7MdsepCiud6qDXxZFIZamwd/LDbnzw4piZy/gFqImbcOoK5b0VTPP
-	 irfEqrynqNlLSx5lPdiryJwrmS3rchHF1z6oMLlg=
+	b=sryi/o3J5mxtPaUWXfJVzNp7nVMYIYt0NkugrvxhWhrwX9WCqVsk3A7NNMl4zWuNa
+	 YVxQwy2GEvnJghbGou+KAr8aoJ1i+cC0oT+d9/ecy/OZJwzI3/nou0jEx4/hvua7nw
+	 +0E/XZ9P/d+hHL/PrvdGtbBk7f5FjVrO50UIbzkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0805/1191] perf: arm_spe: Make wakeup range check overflow safe
-Date: Sat, 12 Sep 2026 08:58:53 +0200
-Message-ID: <20260912065606.351641281@linuxfoundation.org>
+Subject: [PATCH 6.1 0806/1191] drm/msm/dpu: Drop sneaky dev_pm_opp_set_rate(0)
+Date: Sat, 12 Sep 2026 08:58:54 +0200
+Message-ID: <20260912065606.375330828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,45 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit fcc5eaea2d234162dfb8258372dd897bc2a1b862 ]
+[ Upstream commit 811c38907eab0f66c22c5e5708e6f8eab14d76fa ]
 
-The current code checks whether the wakeup point is in the current
-writable range by comparing it with handle->head + handle->size.
+dev_pm_opp_set_rate(0) removes the vote specified in required-opps but
+does not actually park the clock, making it run without the necessary
+power backing. Prevent that from happening when
+_dpu_core_perf_get_core_clk_rate() returns 0.
 
-The perf AUX head is a monotonically increasing index, so that addition
-can overflow when head is close to ULONG_MAX. In that case, a wakeup
-point which is still inside the free space range can be missed.
-
-Use unsigned subtraction to compare the distance from head to wakeup
-against the handle->size. This can dismiss the issue when addition
-overflow.
-
-This is unlikely to happen in practice, but the change makes the
-watermark check logically correct.
-
-Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/742779/
+Link: https://lore.kernel.org/r/20260728-topic-dpu_power-v1-1-e7783b859a70@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_spe_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index 815bf2e2dffa4..c9b5ac48d5e31 100644
---- a/drivers/perf/arm_spe_pmu.c
-+++ b/drivers/perf/arm_spe_pmu.c
-@@ -459,7 +459,7 @@ static u64 __arm_spe_pmu_next_off(struct perf_output_handle *handle)
- 	 * the page boundary following it. Keep the tail boundary if
- 	 * that's lower.
- 	 */
--	if (handle->wakeup < (handle->head + handle->size) && head <= wakeup)
-+	if ((handle->wakeup - handle->head) < handle->size && head <= wakeup)
- 		limit = min(limit, round_up(wakeup, PAGE_SIZE));
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+index 72f043732f939..7f7557e17fafb 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+@@ -394,6 +394,10 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
  
- 	if (limit > head)
+ 		trace_dpu_core_perf_update_clk(kms->dev, stop_req, clk_rate);
+ 
++		/* If we're going offline, PM callbacks will disable the clocks instead */
++		if (!clk_rate)
++			return 0;
++
+ 		clk_rate = min(clk_rate, kms->perf.max_core_clk_rate);
+ 		ret = dev_pm_opp_set_rate(&kms->pdev->dev, clk_rate);
+ 		if (ret) {
 -- 
 2.53.0
 
