@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD554570EC;
-	Sat, 12 Sep 2026 10:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFE945561A;
+	Sat, 12 Sep 2026 10:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210033; cv=none; b=N002rEgPBPVzpiprNsX1YPpC1XPgpugtGFrnrKUHg6hzSP8rRMuslORmtSJXJQkyg5mbOe43cWa2stMSQvL8BzAhPUthF04vowlzIGWn/RNRu2H0lZnTz5Tup2CxgmwayL/77eof6OXqkaQLPruuAIl8NHSoQn9GzpfUjWkQges=
+	t=1789210039; cv=none; b=fXPP2+b9oYiMHFNbDvmV1N2uq3rfcoj0uvLKjaAUjmgT38CEM34koVOhTLAicwmbzmUv1Z90Fvv4wwFykqsdzJciHhmfPQaRkDpyAPTzXYjuwJPXZj/m2CoXl8vIFTFgcpr0UmgycAqn3/11zXPPNIMUeE5HUaoL2uCsS2B6bTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210033; c=relaxed/simple;
-	bh=SAWdpvqNniw1+dq1q8OMvdmCWu/SN4cWPtFPd99L780=;
+	s=arc-20240116; t=1789210039; c=relaxed/simple;
+	bh=6dGZ+30/UcJICQYnGzdpJ8jwG+aYIqvFj2/3ccPL+4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1rOwvbUB9cZ2wV/MkHtmg1jLpvzcjveTvLR44GNjU0rbLhKUn0lNGEuO9pSTdaavRm+283yFONK9mS/7U0x6wL/e/GSFmpaJ/otcuDjTR/mAsez7DYvCSnwHcbMy0LaN/BXl74SnrCjFgvyY57W+Lsiksi13Ix/L9hVIm/cAsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wq+g6eQf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=smvsbJpRa5uWHdSqPCJO4XkJvSPUxfsWfkHLL3Mv+/FzzkFvIFEftSD4aET8z8z7Vbuo5oUBs8zv0gAI8btOc3IseqDv/p2bM7b8rt9L3h3zJev5BYXjjoGZvxdNwUHN4kqhUMiWnTIquY8Dz+fd9djKLg6oofrEyrzJ8AwT+FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sax102nB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wq+g6eQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6687B1F000FF;
-	Sat, 12 Sep 2026 10:47:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sax102nB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 057351F000FF;
+	Sat, 12 Sep 2026 10:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210030;
-	bh=6ell62kywtVc/lgjE/ZUwTkAUC/kzwTZHXwKaS82IG8=;
+	s=korg; t=1789210035;
+	bh=3NUdedWD8ukulON8bp2fTA04/v31N13NoHsffpCvp7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wq+g6eQfMLPqMd/IeR7vWZMfb4rl8CV8ViCfBrw9jqGSfZbokN7QQKF1In0CFWbWS
-	 znn2yjCuxVsCPubTGtmSIMaTYB2jgEBHJQSZCdesR2ChcFD1JImKYZDPJ0km6G+kDM
-	 zEe5rYXY7ugsrFwDuJzewRXPld2ncccJDfDxsfg4=
+	b=sax102nBnIn2a+lRjodxC0y+RtivhrmzBfmDWoQKMxaOaRXfrUeJWWyggAd50S5WR
+	 nwGDWCkY2wxnl/4PvncuxRT86mI6qXNenRSAI7gyq605DOT3Ax6LZlQYOSG8y4fcfP
+	 sS5hrSLS8H3eed6eyVCrdNnwtgekMVtd0RncXW2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0943/1518] phy: renesas: rcar-gen3-usb2: Factor out VBUS control logic
-Date: Sat, 12 Sep 2026 08:51:52 +0200
-Message-ID: <20260912065644.784814075@linuxfoundation.org>
+Subject: [PATCH 6.18 0944/1518] phy: renesas: rcar-gen3-usb2: Add regulator for OTG VBUS control
+Date: Sat, 12 Sep 2026 08:51:53 +0200
+Message-ID: <20260912065644.808891404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,76 +53,221 @@ Content-Transfer-Encoding: 8bit
 
 From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 
-[ Upstream commit d6db3b3af74a26b65d1ec1e86f9738c784e7ae29 ]
+[ Upstream commit b6d7dd157763e0c8937f60241fb4af9eb546a7fb ]
 
-Refactor the VBUS control logic into a new helper function to improve
-code clarity and reduce duplication. This makes it easier to handle
-different VBUS control register cases and aids future maintenance.
+Enable OTG VBUS control on R-Car Gen3 USB2 PHY by registering a regulator
+driver that manages the VBOUT line. This change allows the controller to
+handle VBUS output for OTG ports using the regulator framework when the
+platform requires hardware-based VBUS control.
+
+Without this, some platforms cannot properly manage VBUS power on OTG-
+capable ports, leading to potential USB functionality issues.
 
 Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/2d94c9876b965bdf7cd74cdbbc0c54689e122798.1766405010.git.tommaso.merciai.xr@bp.renesas.com
+Link: https://patch.msgid.link/6c1aebf60b4d8ff0c51a8243c68b397c1a384867.1766405010.git.tommaso.merciai.xr@bp.renesas.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: 49c9b71b4508 ("phy: renesas: phy-rcar-gen3-usb2: Fix devm action registration for disabled VBUS regulator")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/renesas/phy-rcar-gen3-usb2.c | 34 +++++++++++++++---------
- 1 file changed, 22 insertions(+), 12 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c | 142 ++++++++++++++++++++++-
+ 1 file changed, 137 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-index a38ead7c8055d..d4588a936f92d 100644
+index d4588a936f92d..03ea292bbfd4c 100644
 --- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
 +++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-@@ -203,28 +203,38 @@ static void rcar_gen3_set_linectrl(struct rcar_gen3_chan *ch, int dp, int dm)
- 	writel(val, usb2_base + USB2_LINECTRL1);
- }
+@@ -22,6 +22,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/regulator/driver.h>
+ #include <linux/reset.h>
+ #include <linux/string.h>
+ #include <linux/usb/of.h>
+@@ -140,6 +141,7 @@ struct rcar_gen3_chan {
+ 	bool extcon_host;
+ 	bool is_otg_channel;
+ 	bool uses_otg_pins;
++	bool otg_internal_reg;
+ };
  
--static void rcar_gen3_enable_vbus_ctrl(struct rcar_gen3_chan *ch, int vbus)
-+static void rcar_gen3_phy_usb2_set_vbus(struct rcar_gen3_chan *ch,
-+					u32 vbus_ctrl_reg,
-+					u32 vbus_ctrl_val,
-+					bool enable)
+ struct rcar_gen3_phy_drv_data {
+@@ -224,6 +226,11 @@ static void rcar_gen3_phy_usb2_set_vbus(struct rcar_gen3_chan *ch,
+ 
+ static void rcar_gen3_enable_vbus_ctrl(struct rcar_gen3_chan *ch, int vbus)
  {
- 	void __iomem *usb2_base = ch->base;
--	u32 vbus_ctrl_reg = USB2_ADPCTRL;
--	u32 vbus_ctrl_val = USB2_ADPCTRL_DRVVBUS;
- 	u32 val;
- 
-+	val = readl(usb2_base + vbus_ctrl_reg);
-+	if (enable)
-+		val |= vbus_ctrl_val;
-+	else
-+		val &= ~vbus_ctrl_val;
-+	writel(val, usb2_base + vbus_ctrl_reg);
++	if (ch->otg_internal_reg) {
++		regulator_hardware_enable(ch->vbus, vbus);
++		return;
++	}
 +
-+	dev_vdbg(ch->dev, "%s: reg=0x%08x, val=%08x, enable=%d\n",
-+		 __func__, vbus_ctrl_reg, val, enable);
-+}
-+
-+static void rcar_gen3_enable_vbus_ctrl(struct rcar_gen3_chan *ch, int vbus)
-+{
  	if (ch->phy_data->no_adp_ctrl || ch->phy_data->vblvl_ctrl) {
  		if (ch->vbus)
  			regulator_hardware_enable(ch->vbus, vbus);
+@@ -592,7 +599,7 @@ static int rcar_gen3_phy_usb2_power_on(struct phy *p)
+ 	u32 val;
+ 	int ret = 0;
  
--		vbus_ctrl_reg = USB2_VBCTRL;
--		vbus_ctrl_val = USB2_VBCTRL_VBOUT;
-+		rcar_gen3_phy_usb2_set_vbus(ch, USB2_VBCTRL,
-+					    USB2_VBCTRL_VBOUT, vbus);
-+		return;
+-	if (channel->vbus) {
++	if (channel->vbus && !channel->otg_internal_reg) {
+ 		ret = regulator_enable(channel->vbus);
+ 		if (ret)
+ 			return ret;
+@@ -633,7 +640,7 @@ static int rcar_gen3_phy_usb2_power_off(struct phy *p)
+ 		}
  	}
  
--	val = readl(usb2_base + vbus_ctrl_reg);
--	if (vbus)
--		val |= vbus_ctrl_val;
--	else
--		val &= ~vbus_ctrl_val;
--	dev_vdbg(ch->dev, "%s: %08x, %d\n", __func__, val, vbus);
--	writel(val, usb2_base + vbus_ctrl_reg);
-+	rcar_gen3_phy_usb2_set_vbus(ch, USB2_ADPCTRL,
-+				    USB2_ADPCTRL_DRVVBUS, vbus);
+-	if (channel->vbus)
++	if (channel->vbus && !channel->otg_internal_reg)
+ 		ret = regulator_disable(channel->vbus);
+ 
+ 	return ret;
+@@ -819,6 +826,128 @@ static int rcar_gen3_phy_usb2_init_bus(struct rcar_gen3_chan *channel)
+ 	return ret;
  }
  
- static void rcar_gen3_control_otg_irq(struct rcar_gen3_chan *ch, int enable)
++static int rcar_gen3_phy_usb2_regulator_endisable(struct regulator_dev *rdev,
++						  bool enable)
++{
++	struct rcar_gen3_chan *channel = rdev_get_drvdata(rdev);
++	struct device *dev = channel->dev;
++	int ret;
++
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret < 0) {
++		dev_warn(dev, "pm_runtime_get failed: %i\n", ret);
++		return ret;
++	}
++
++	rcar_gen3_phy_usb2_set_vbus(channel, USB2_VBCTRL,
++				    USB2_VBCTRL_VBOUT, enable);
++	pm_runtime_put_noidle(dev);
++
++	return ret;
++}
++
++static int rcar_gen3_phy_usb2_regulator_enable(struct regulator_dev *rdev)
++{
++	return rcar_gen3_phy_usb2_regulator_endisable(rdev, true);
++}
++
++static int rcar_gen3_phy_usb2_regulator_disable(struct regulator_dev *rdev)
++{
++	return rcar_gen3_phy_usb2_regulator_endisable(rdev, false);
++}
++
++static int rcar_gen3_phy_usb2_regulator_is_enabled(struct regulator_dev *rdev)
++{
++	struct rcar_gen3_chan *channel = rdev_get_drvdata(rdev);
++	void __iomem *usb2_base = channel->base;
++	struct device *dev = channel->dev;
++	u32 vbus_ctrl_reg = USB2_VBCTRL;
++	u32 val;
++	int ret;
++
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret < 0) {
++		dev_warn(dev, "pm_runtime_get failed: %i\n", ret);
++		return ret;
++	}
++
++	val = readl(usb2_base + vbus_ctrl_reg);
++
++	pm_runtime_put_noidle(dev);
++	dev_dbg(channel->dev, "%s: %08x\n", __func__, val);
++
++	return (val & USB2_VBCTRL_VBOUT) ? 1 : 0;
++}
++
++static const struct regulator_ops rcar_gen3_phy_usb2_regulator_ops = {
++	.enable = rcar_gen3_phy_usb2_regulator_enable,
++	.disable = rcar_gen3_phy_usb2_regulator_disable,
++	.is_enabled = rcar_gen3_phy_usb2_regulator_is_enabled,
++};
++
++static const struct regulator_desc rcar_gen3_phy_usb2_regulator = {
++	.name = "otg-vbus-regulator",
++	.of_match = of_match_ptr("vbus-regulator"),
++	.ops = &rcar_gen3_phy_usb2_regulator_ops,
++	.type = REGULATOR_VOLTAGE,
++	.owner = THIS_MODULE,
++	.fixed_uV = 5000000,
++	.n_voltages = 1,
++};
++
++static void rcar_gen3_phy_usb2_vbus_disable_action(void *data)
++{
++	struct regulator *vbus = data;
++
++	regulator_disable(vbus);
++}
++
++static int rcar_gen3_phy_usb2_vbus_regulator_get_exclusive_enable(struct rcar_gen3_chan *channel,
++								  bool enable)
++{
++	struct device *dev = channel->dev;
++	int ret;
++
++	channel->vbus = devm_regulator_get_exclusive(dev, "vbus");
++	if (IS_ERR(channel->vbus))
++		return PTR_ERR(channel->vbus);
++
++	if (!enable)
++		return 0;
++
++	ret = regulator_enable(channel->vbus);
++	if (ret)
++		return ret;
++
++	return devm_add_action_or_reset(dev, rcar_gen3_phy_usb2_vbus_disable_action,
++					channel->vbus);
++}
++
++static int rcar_gen3_phy_usb2_vbus_regulator_register(struct rcar_gen3_chan *channel)
++{
++	struct device *dev = channel->dev;
++	struct regulator_config rcfg = { .dev = dev, };
++	struct regulator_dev *rdev;
++	bool enable = false;
++
++	rcfg.of_node = of_get_available_child_by_name(dev->of_node,
++						      "vbus-regulator");
++	if (rcfg.of_node) {
++		rcfg.driver_data = channel;
++		rdev = devm_regulator_register(dev, &rcar_gen3_phy_usb2_regulator,
++					       &rcfg);
++		of_node_put(rcfg.of_node);
++		if (IS_ERR(rdev))
++			return dev_err_probe(dev, PTR_ERR(rdev),
++					     "Failed to create vbus-regulator\n");
++
++		channel->otg_internal_reg = true;
++		enable = true;
++	}
++
++	return rcar_gen3_phy_usb2_vbus_regulator_get_exclusive_enable(channel, enable);
++}
++
+ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -891,10 +1020,13 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ 		phy_set_drvdata(channel->rphys[i].phy, &channel->rphys[i]);
+ 	}
+ 
+-	if (channel->phy_data->no_adp_ctrl && channel->is_otg_channel)
+-		channel->vbus = devm_regulator_get_exclusive(dev, "vbus");
+-	else
++	if (channel->phy_data->no_adp_ctrl && channel->is_otg_channel) {
++		ret = rcar_gen3_phy_usb2_vbus_regulator_register(channel);
++		if (ret)
++			return ret;
++	} else {
+ 		channel->vbus = devm_regulator_get_optional(dev, "vbus");
++	}
+ 	if (IS_ERR(channel->vbus)) {
+ 		if (PTR_ERR(channel->vbus) == -EPROBE_DEFER) {
+ 			ret = PTR_ERR(channel->vbus);
 -- 
 2.53.0
 
