@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CADBCA6F;
-	Sat, 12 Sep 2026 11:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10AC35E549;
+	Sat, 12 Sep 2026 11:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211557; cv=none; b=L0R8eu4wqVHoRg1fexHLVfHkig3atIaD2ZpmErRcjHrTdfQ2uGhVmwQ5qY2iprFnwZT8Dio+a1jPkBVxv8YgR2tMUJj0/KpP8E9fxmhPdzCtdBcB/2whVGB482b9TaXLUbnLUVm//L5rbZ+b0k+Sshu1b7MHjsg5NVcdDx1bmHA=
+	t=1789211562; cv=none; b=jDlAHMCqtzEY3uW1dZwHZgjojkMTqQP3COG+DnoRelVb4n7Pe4oGhTaCkePqpc9vIkbpgV3vHbOkkRgE/poNyOPR1MWLu6yxCJH0477zoNYLY9wsBDDgs+bskDPMfu87mBO5UXKU0bo1QN1ikkOEXzG+uRfUQZ4kghzkGwhsE6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211557; c=relaxed/simple;
-	bh=hA0kXd1nt/tj9kwi4xzg0eBfJ/y8wBELO0lLjo6sD44=;
+	s=arc-20240116; t=1789211562; c=relaxed/simple;
+	bh=jHJT8lrmm+UH+qOs/s+N5RQHfdXnSnHk8B3AlKbsi7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdS3HM1z/9k91vyxFpsC8LPZjXGbTgwzL8bwVhd1Jw5m+XuTzAvcs/ZVGGO4R9w5zo8G1B9JWw5KIUuZGYhf4Ovxx4q3TpMSk6+eCqht5qWFbZ3EqlrxvyzeqzPWcCKuIBdnOZoWfu4t/0eq83SwRMXZ7WIS7K59SZhRub40JgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fA/vL4DM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fuKdfVYkV/l1rP9Q7oVmsmTZ3MHM9bzkxWdOmZwBjFwMk6I53CozECrgICphfi8mb6s4nS43izL8nXY9Mg//hsEsL7heRPKt1GChzD9jC61UPrONginL2HKIZ+eraRvf4L8Ut97gvlZSGipKFVC2gMIA51ZG6i8uxoMxjeuH278=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5QO7CzK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fA/vL4DM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4251F000FF;
-	Sat, 12 Sep 2026 11:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5QO7CzK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B561F000FF;
+	Sat, 12 Sep 2026 11:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211555;
-	bh=DL5h4j9rxGR+ztuX61ScCVSmMGaxzo/eGztH0XxnHyY=;
+	s=korg; t=1789211560;
+	bh=wH4PzQao5NmiTiHFbBe+UB/EI+lMAHWCnyRWm3wV+v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fA/vL4DMPqt7ZCQzcDuGMTTEjeF5NuUUxQ2u6v4at9cnSoerKb2knuAMTfB7ZI/Ia
-	 NJlwzhOy7uGmq9lZFiH408CmatNh4x7uv3F5kHgxOw70YCt+buqPWE6TzTnC9metNj
-	 SVinDUpHQayWEdiUeFC31tluanKl5qjubssWDZqM=
+	b=G5QO7CzKn97Lc7sxlBMtsabZzMhH4tRk0yxn95YvchFbmvw8qxaebPHfH58UtK9Wh
+	 qvY50vMD0QWiV+kOgLwcqDBhrCAnT/zIKxLg/CkFqqtErruFKMKrRHjHGobXA6MoEJ
+	 eldGu+uezvq6l2QyBdBfd2QZFLtcejOlmpnybUjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Teng Peisen <tengpeisen@huawei.com>,
+	Wu Di <wudi234@huawei.com>,
+	Fan Gong <gongfan1@huawei.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1256/1518] octeontx2-af: initialize lmac_bmap in rvu_mcs_set_lmac_bmap()
-Date: Sat, 12 Sep 2026 08:57:05 +0200
-Message-ID: <20260912065651.923821016@linuxfoundation.org>
+Subject: [PATCH 6.18 1257/1518] hinic3: Fix skb linearization mismatch and drop skb when skb_checksum_help() failed
+Date: Sat, 12 Sep 2026 08:57:06 +0200
+Message-ID: <20260912065651.946424594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,44 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Fan Gong <gongfan1@huawei.com>
 
-[ Upstream commit 4b92a3710d4a1d850ed6421c773e735cdca69b07 ]
+[ Upstream commit d0c2bed6927cbfa2cb51f240b4812bf6916bce0e ]
 
-rvu_mcs_set_lmac_bmap() declares lmac_bmap without initializing it and
-only sets bits for valid lmacs with set_bit(), which ORs into the word
-without clearing it first. Bits for invalid or skipped ports keep
-whatever was on the stack, and the garbage is stored into
-mcs->hw->lmac_bmap.
+Previously, hinic3_send_one_skb() cached the skb fragment count before
+calling hinic3_tx_offload(). If hinic3_tx_csum() falls back to
+skb_checksum_help() for unsupported tunnel packets, the skb may be
+linearized. Continuing to build the TX descriptor with the stale
+fragment count leads to a descriptor mismatch, which can trigger
+out-of-bounds DMA reads or IOMMU faults.
 
-Initialize lmac_bmap to 0 so only valid lmacs are marked.
+Furthermore, the old code ignored the return value of skb_checksum_help(),
+transmitting corrupted packets with incomplete checksums upon failure.
 
-Found with Clang's -Wconditional-uninitialized.
+Fix this by:
+1. Moving the hinic3_tx_offload() call before calculating 'num_sge' to
+   ensure the correct fragment count is used if the SKB is linearized.
+2. Propagating skb_checksum_help() errors and returning
+   HINIC3_TX_OFFLOAD_INVALID to properly drop the skb.
 
-Fixes: ca7f49ff8846 ("octeontx2-af: cn10k: Introduce driver for macsec block.")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Fixes: 17fcb3dc12bb ("hinic3: module initialization and tx/rx logic")
+Co-developed-by: Teng Peisen <tengpeisen@huawei.com>
+Signed-off-by: Teng Peisen <tengpeisen@huawei.com>
+Co-developed-by: Wu Di <wudi234@huawei.com>
+Signed-off-by: Wu Di <wudi234@huawei.com>
+Signed-off-by: Fan Gong <gongfan1@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260812060730.6181-1-kmehltretter@gmail.com
+Link: https://patch.msgid.link/78d8c61cab588240948eaddcb437d59add9f77ae.1786448013.git.tengpeisen@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/huawei/hinic3/hinic3_tx.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
-index a80c8e7c94f28..d6c69ea7f10d7 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
-@@ -856,7 +856,7 @@ int rvu_mbox_handler_mcs_ctrl_pkt_rule_write(struct rvu *rvu,
- static void rvu_mcs_set_lmac_bmap(struct rvu *rvu)
- {
- 	struct mcs *mcs = mcs_get_pdata(0);
--	unsigned long lmac_bmap;
-+	unsigned long lmac_bmap = 0;
- 	int cgx, lmac, port;
+diff --git a/drivers/net/ethernet/huawei/hinic3/hinic3_tx.c b/drivers/net/ethernet/huawei/hinic3/hinic3_tx.c
+index 92c43c05e3f2d..6e29c892a97d8 100644
+--- a/drivers/net/ethernet/huawei/hinic3/hinic3_tx.c
++++ b/drivers/net/ethernet/huawei/hinic3/hinic3_tx.c
+@@ -240,8 +240,7 @@ static int hinic3_tx_csum(struct hinic3_txq *txq, struct hinic3_sq_task *task,
+ 		    ((struct udphdr *)skb_transport_header(skb))->dest !=
+ 		    VXLAN_OFFLOAD_PORT_LE) {
+ 			/* Unsupported tunnel packet, disable csum offload */
+-			skb_checksum_help(skb);
+-			return 0;
++			return skb_checksum_help(skb);
+ 		}
+ 	}
  
- 	for (port = 0; port < mcs->hw->lmac_cnt; port++) {
+@@ -391,6 +390,10 @@ static u32 hinic3_tx_offload(struct sk_buff *skb, struct hinic3_sq_task *task,
+ 		offload |= HINIC3_TX_OFFLOAD_TSO;
+ 	} else {
+ 		tso_cs_en = hinic3_tx_csum(txq, task, skb);
++		if (tso_cs_en < 0) {
++			offload = HINIC3_TX_OFFLOAD_INVALID;
++			return offload;
++		}
+ 		if (tso_cs_en)
+ 			offload |= HINIC3_TX_OFFLOAD_CSUM;
+ 	}
+@@ -524,6 +527,7 @@ static netdev_tx_t hinic3_send_one_skb(struct sk_buff *skb,
+ 		skb->len = MIN_SKB_LEN;
+ 	}
+ 
++	offload = hinic3_tx_offload(skb, &task, &queue_info, txq);
+ 	num_sge = skb_shinfo(skb)->nr_frags + 1;
+ 	/* assume normal wqe format + 1 wqebb for task info */
+ 	wqebb_cnt = num_sge + 1;
+@@ -539,7 +543,6 @@ static netdev_tx_t hinic3_send_one_skb(struct sk_buff *skb,
+ 		return NETDEV_TX_BUSY;
+ 	}
+ 
+-	offload = hinic3_tx_offload(skb, &task, &queue_info, txq);
+ 	if (unlikely(offload == HINIC3_TX_OFFLOAD_INVALID)) {
+ 		goto err_drop_pkt;
+ 	} else if (!offload) {
 -- 
 2.53.0
 
