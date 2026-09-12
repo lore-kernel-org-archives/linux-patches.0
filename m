@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E9438F656;
-	Sat, 12 Sep 2026 19:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605EE29D288;
+	Sat, 12 Sep 2026 19:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242874; cv=none; b=j4Snox5wxPKe4I/UNFR9CR/4TqDesKAE9H/9t/Zi4509Rp5itkCGNITn2M2jnpe5+QCBNErR+DebyOYC1BqR9NYqKD8RWI1HPlybUAbH7bOTUQfjz+mVLUN+WIegn1yRWwfqsvxX4vUrqkmqR11EP+geCehhRa4Lg4m7tGiekew=
+	t=1789242877; cv=none; b=hYEfFLl80MBth55a0Wg+v25H0SSZF/hWYNZoLXThtxPYrCbPtgufjKgipdQGyUgnJKM3yV1FpabUmBwmdZ7Cv0Rqyu0libfeKeywVtR209egCyrJdL8xgyKdIHIAejAMEJ6QO39sFeOz5H0tFvkDjrplUf/QtsUYIH4BVPzrNmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242874; c=relaxed/simple;
-	bh=8spsnrMPdcbTJfTlaCjDKkFsD/9/AvQLZtW4JRgb6pU=;
+	s=arc-20240116; t=1789242877; c=relaxed/simple;
+	bh=YIPgdiXW4+2ZHP8VxymjRhzrOKFwboK8DxLJG7YzSlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yp6bNSd87E8O0Qzkd8OcQeGQ4ByIr6VM8aGxQ/HiTV7iNCAxhK1chQYAFCOQ5dMzSO5DGlBamwKsaEk6vAcgQPtsRYfZ75ie6U5pHC/cMZM8Sze2yZE2EUF4YhDz0F3h8N6j1Q2JdoYhMAfrNUL9sr5vU91NxYG0qoEVrQxdGAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6EHj0Hg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lv/FnbA77594wtmkEZsNRuN1uvA/oO5ZuDT31iu8xrzwnD6xmvklnkcLgzLDVLb2a67InRYJ8gM5UljgNAfKyZNmQunTKgXJ4wy6GE27MFqBzZxsZ67b4PopZtF+2QqhdlnyzHrAOhDX4Tnwi74MQNcOhsHUCJDrokAMfdfWCig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvWx0bqf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6EHj0Hg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE9D1F000FF;
-	Sat, 12 Sep 2026 19:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvWx0bqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804B01F000FF;
+	Sat, 12 Sep 2026 19:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242873;
-	bh=zUNyRFMyTflx2cUmW7ZLCZWQr5IGY9y5AikUOpLj2kQ=;
+	s=korg; t=1789242876;
+	bh=/kxAVWa2VX2z41+7yg0cejA9NjGujGrW7dx2tFl9jm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z6EHj0Hg8z5yq95JxUokcML+iWEmtmJDQ8dfgU5QEjpiuT25G+N5B/eBHb6nWVJUr
-	 9hvA12yBj9YexGZ3wPNUuT7fQ4HZz8e8lLGOQDpwapdHPqLeMO93JOX8WW02ZyufTA
-	 hbPINw0fy9yAXbYRWQEOhyCqqD8Xcy3uNKi2ep60=
+	b=fvWx0bqfbnoU3OgIKIW5mUmbNeqQONd2G16fqlfQy133G3q9TgqOrMkDBzu/oVrTm
+	 Y0oFOTSVWmZ/c35RLK4QmLTt2NVPSvxLMwCGzPfwQuYIbGCV3PAcrU+0Y/j20MHNy7
+	 L+HJA8gCBVX0g79oon05Ny8xrAJQR9WN7EXrlwm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivy Lopez <skunkolee@gmail.com>,
+	Firas Jahjah <firasj@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 526/798] staging: rtl8723bs: use kfree_sensitive() for key material
-Date: Sat, 12 Sep 2026 09:02:34 +0200
-Message-ID: <20260912065529.189378835@linuxfoundation.org>
+Subject: [PATCH 5.10 527/798] RDMA/efa: Fix PBL chunk length computation
+Date: Sat, 12 Sep 2026 09:02:35 +0200
+Message-ID: <20260912065529.212564777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,64 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivy Lopez <skunkolee@gmail.com>
+From: Yonatan Nachum <ynachum@amazon.com>
 
-[ Upstream commit d205dfa8cb825f1954ca1cfa474fc50bf06ee4aa ]
+[ Upstream commit 229b42d7450c1cf96f45ec39ebb69211b06bc036 ]
 
-The set_stakey_parm struct contains a 16-byte encryption key.
-Use kfree_sensitive() instead of kfree() to ensure the key
-material is zeroed before the memory is freed, preventing
-potential information leaks.
+On register MR, when creating the PBL, if it's an indirect PBL we create
+a chunk list to hold the PBL pages pointers. Each chunk is 4KB in size
+and can hold 510 addresses (EFA_PTRS_PER_CHUNK) and has a 12-byte
+control buffer at the end of it holding the next chunk's pointer and its
+length.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Ivy Lopez <skunkolee@gmail.com>
-Link: https://patch.msgid.link/20260717220135.17836-1-skunkolee@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If the PBL number of pages is a multiple of EFA_PTRS_PER_CHUNK, the
+calculated last chunk length is wrongly computed as 0, even though that
+chunk is fully populated with 510 real page pointers. This wrong length
+is used both to DMA map the chunk and is propagated to the device,
+causing the device to see the chunk as empty and reject the memory
+registration.
+
+Fix the calculation so it will be performed only if the number of pages
+isn't a multiple of EFA_PTRS_PER_CHUNK, if it is, its already handled in
+the above loop correctly.
+Also prevent out-of-bounds reach in the chunks array in such scenario.
+
+Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
+Reviewed-by: Firas Jahjah <firasj@amazon.com>
+Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
+Link: https://patch.msgid.link/20260727090255.1175120-1-ynachum@amazon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_cmd.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/efa/efa_verbs.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_cmd.c b/drivers/staging/rtl8723bs/core/rtw_cmd.c
-index 0af22e013db36..93ae6b9ae4971 100644
---- a/drivers/staging/rtl8723bs/core/rtw_cmd.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_cmd.c
-@@ -989,7 +989,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 	if (enqueue) {
- 		ph2c = rtw_zmalloc(sizeof(struct cmd_obj));
- 		if (!ph2c) {
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
- 		}
-@@ -997,7 +997,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 		psetstakey_rsp = rtw_zmalloc(sizeof(struct set_stakey_rsp));
- 		if (!psetstakey_rsp) {
- 			kfree(ph2c);
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
- 		}
-@@ -1008,7 +1008,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 		res = rtw_enqueue_cmd(pcmdpriv, ph2c);
- 	} else {
- 		set_stakey_hdl(padapter, (u8 *)psetstakey_para);
--		kfree(psetstakey_para);
-+		kfree_sensitive(psetstakey_para);
+diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+index 15086856581f7..3cb1aebae7006 100644
+--- a/drivers/infiniband/hw/efa/efa_verbs.c
++++ b/drivers/infiniband/hw/efa/efa_verbs.c
+@@ -1217,9 +1217,11 @@ static int pbl_chunk_list_create(struct efa_dev *dev, struct pbl_context *pbl)
+ 
+ 		chunk_list->chunks[i].length = EFA_CHUNK_USED_SIZE;
  	}
- exit:
- 	return res;
-@@ -1046,7 +1046,7 @@ u8 rtw_clearstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 enqueu
- 		psetstakey_rsp = rtw_zmalloc(sizeof(struct set_stakey_rsp));
- 		if (!psetstakey_rsp) {
- 			kfree(ph2c);
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
+-	chunk_list->chunks[chunk_list_size - 1].length =
+-		((page_cnt % EFA_PTRS_PER_CHUNK) * EFA_CHUNK_PAYLOAD_PTR_SIZE) +
+-			EFA_CHUNK_PTR_SIZE;
++
++	if (page_cnt % EFA_PTRS_PER_CHUNK != 0)
++		chunk_list->chunks[chunk_list_size - 1].length =
++			((page_cnt % EFA_PTRS_PER_CHUNK) * EFA_CHUNK_PAYLOAD_PTR_SIZE) +
++				EFA_CHUNK_PTR_SIZE;
+ 
+ 	/* fill the dma addresses of sg list pages to chunks: */
+ 	chunk_idx = 0;
+@@ -1231,9 +1233,12 @@ static int pbl_chunk_list_create(struct efa_dev *dev, struct pbl_context *pbl)
+ 			rdma_block_iter_dma_address(&biter);
+ 
+ 		if (payload_idx == EFA_PTRS_PER_CHUNK) {
++			payload_idx = 0;
+ 			chunk_idx++;
++			if (chunk_idx >= chunk_list_size)
++				break;
++
+ 			cur_chunk_buf = chunk_list->chunks[chunk_idx].buf;
+-			payload_idx = 0;
  		}
+ 	}
+ 
 -- 
 2.53.0
 
