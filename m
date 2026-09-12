@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC50932D43C;
-	Sat, 12 Sep 2026 13:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5673322749;
+	Sat, 12 Sep 2026 13:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221511; cv=none; b=rR5tURofEetsoncqCTu3QGMfFlj1TzIEctd0qocTAE67hXouAEG7l+gMe/ifMpafo9Izdu2z6FFDbWcT7oxnblPiPvmXQU4FdHj5DwFJ8poHo6msYQictZjROqwRoLunZVmgiWfAi+IvLkO98Ahe8AFWTL+hEvVW1ESyOfciAUA=
+	t=1789221517; cv=none; b=rdmLWldzYybqZaElPD8rk5Bgav17TQt+uhjQ8QwHXLjTbkEvqr/KB9CtuLVINa+KU7K2XhHLox0iDYwllp/wM6kVHWF2PAMZHS3DN9TkqOiMMeeCcCU1zq4F2uRAEOkHd4gHbCWwQFBgy7ZjXvewH3I48RK9xSip9NRKYbhnllg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221511; c=relaxed/simple;
-	bh=Zy0rENGOc6aOe3MC8GVIWCEc6YBEVB2ipsrBplU65rk=;
+	s=arc-20240116; t=1789221517; c=relaxed/simple;
+	bh=GtGTAwANJ+A2Ypfuxm0QcqdOW8b6Wh6vW7GgidM0QSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PY7i9wD/1H9hfOij8xdKNiqZKlZK5ZEIz/vBVVlDo67vgiEzixArcBozvPWFUBZerY+4cHxqB56Oe7Ti9v/IAtw+DWrRlq/IVH2yL4zMtLESZv7YcjvzSDwvS2x1T5lANrmhJCpDZ6gUo45VMJA6Rg6ZPllNlrDtAmhtgmkGB48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJJ88A3t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BckbU+1rn8OkFYXEPy8Sj/Rvc0V/6UCnS+WcGhcMJJ00Fago+4It+ejqamIc4TT/RZAgZA6pnRbvbqRmGtPHzbw43ZwUUcd84i61qlytc8jZWE7JDg+sxGDS8QXWZILVQ7VzJnCioyRf9AwWwIyVTKHi6lD8LRQSfXYba1s+zaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoY67+5c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJJ88A3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962351F000FF;
-	Sat, 12 Sep 2026 13:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoY67+5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A491F000FF;
+	Sat, 12 Sep 2026 13:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221509;
-	bh=KWh7WDJuRHKo1Lruqh6yg/Gtv8UL8wPGZU0bYl3i3eE=;
+	s=korg; t=1789221515;
+	bh=+r6D7nlEbzkiHHFhBtXHucgPe6kBTKDhgA6hITXZzdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJJ88A3t7U+SeW76XXw++8Edc15iRRrpRuIEoiu8D34UV6eFtd+L1Y7xe62KKQ6Wl
-	 IWuLiqxCO/dbxyGsJVWu/aBX5Ldu08luBL/ndDUFqKNQoNIVNnMi0swWpIVmkPTNlb
-	 Waz3Fodr6ROzIYI+Z92eTHNXKhTrgYg8kUiwTmK4=
+	b=EoY67+5cAK+h0AqyrNyZBjTC9fNeMX0f07TkHQjfY7+9kDhCritUqltHBC7AgJPiG
+	 8a0mRihg5en5NuBpaujQJtDb8uApLFyBqGaIQjgZhkpFm/bJmGQbs/oCnuc8aNjM5/
+	 E2WZCc2uMfZD6Mqj2G9uqsQRZGXb6jMtq6CT+T/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0344/1424] mm/damon/sysfs-schemes: kobject_del() scheme dirs
-Date: Sat, 12 Sep 2026 08:46:16 +0200
-Message-ID: <20260912065614.990559727@linuxfoundation.org>
+	Anthony Krowiak <akrowiak@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 6.6 0391/1424] s390/vfio-ap: Fix required lock not held during update of ap_matrix_mdev object
+Date: Sat, 12 Sep 2026 08:47:03 +0200
+Message-ID: <20260912065616.045686021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,50 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
 
-commit 05fb6ac98c49be870c5f9ccdfdf95f0107e564ae upstream.
+commit 5883528250be57fa92270459b33603ff52de0a91 upstream.
 
-On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
-could cause directories creation failures due to the name conflicts.  Fix
-those issues for scheme directories by adding kobject_del() calls.
+In the vfio_ap_mdev_cfg_add function, the apm_add, aqm_add and adm_add
+fields of an ap_matrix_mdev object fields are modified while not holding
+the matrix_dev->mdevs_lock. This lock must be held while making these
+to guard against a race condition with another caller that may be
+concurrently modifying these fields or any of the fields in the
+matrix_mdev->matrix.
 
-Link: https://lore.kernel.org/20260628220121.97360-4-sj@kernel.org
-Fixes: 7e84b1f8212a ("mm/damon/sysfs: support DAMON-based Operation Schemes")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: eeb386aeb5b7c ("s390/vfio-ap: handle config changed and scan complete notification")
+Cc: stable@vger.kernel.org
+Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/s390/crypto/vfio_ap_ops.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1402,6 +1402,7 @@ void damon_sysfs_schemes_rm_dirs(struct
+--- a/drivers/s390/crypto/vfio_ap_ops.c
++++ b/drivers/s390/crypto/vfio_ap_ops.c
+@@ -2541,12 +2541,20 @@ static void vfio_ap_mdev_cfg_add(unsigne
+ 	vfio_ap_filter_apid_by_qtype(apm_add, aqm_add);
  
- 	for (i = 0; i < schemes->nr; i++) {
- 		damon_sysfs_scheme_rm_dirs(schemes_arr[i]);
-+		kobject_del(&schemes_arr[i]->kobj);
- 		kobject_put(&schemes_arr[i]->kobj);
+ 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
++		/*
++		 * The mdevs_lock must be held in order to access fields
++		 * within matrix_mdev
++		 */
++		mutex_lock(&matrix_dev->mdevs_lock);
++
+ 		bitmap_and(matrix_mdev->apm_add,
+ 			   matrix_mdev->matrix.apm, apm_add, AP_DEVICES);
+ 		bitmap_and(matrix_mdev->aqm_add,
+ 			   matrix_mdev->matrix.aqm, aqm_add, AP_DOMAINS);
+ 		bitmap_and(matrix_mdev->adm_add,
+ 			   matrix_mdev->matrix.adm, adm_add, AP_DEVICES);
++
++		mutex_unlock(&matrix_dev->mdevs_lock);
  	}
- 	schemes->nr = 0;
-@@ -1439,13 +1440,15 @@ static int damon_sysfs_schemes_add_dirs(
- 			goto out;
- 		err = damon_sysfs_scheme_add_dirs(scheme);
- 		if (err)
--			goto out;
-+			goto del_out;
+ }
  
- 		schemes_arr[i] = scheme;
- 		schemes->nr++;
- 	}
- 	return 0;
- 
-+del_out:
-+	kobject_del(&scheme->kobj);
- out:
- 	damon_sysfs_schemes_rm_dirs(schemes);
- 	kobject_put(&scheme->kobj);
 
 
