@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8C7221F26;
-	Sat, 12 Sep 2026 11:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B67524CEEA;
+	Sat, 12 Sep 2026 11:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211064; cv=none; b=KrDml81WxBjjEw+gXdhYHUi/piggVqX0d9HgUEuMLAsTix6r+1m0NIUOkKd2L20JXPfrnWmRX87m5nSBliK2SkrgozDua9BJsubHQaens2pPq2ry6ItSboO+oHKw2Twtj/3rjFA9O0fuYZPDcZdxcAJvIQcSiWqTs8mYlkQS+vg=
+	t=1789211069; cv=none; b=r+krrm60UewlYK4c5jjmrmzxisk261SpOAqlRDl7uvF8HLvvoHVgygzwxMs+4M15PdCHE4Pl5JfB6Wag7sWuHlE8PzKs+9MzWNIHLioSenH1PrGNP3ltYc1Cmshser3KcMTuGKbESbT6xRN3SDXExI/fWScYneqOyUoOMQg1SqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211064; c=relaxed/simple;
-	bh=gNgEMkL4osg0BbmjzMtzkDJOlfeAH4BAC79hGkoHcjk=;
+	s=arc-20240116; t=1789211069; c=relaxed/simple;
+	bh=VYk7CNkBjs04roX2siik/AXuQtfqyfAwOwdFNtbJLvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6s8AYen4iVwDEQHc7r3FA+QMywuB9OWgaqRlMHJH1WIdNbEXUIrR3HrNS7wZn4Z80YfQEAKLR6v6Sw7FCQ70jW51THzya4FdTs0r7Lds6w/22T26yGoGtAxhhgAZ/YewvKoMs4qexhCFFikPQLkTAxHXR233CN0cxNOfL5nsgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcSGk53v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Phx96YRUHF2sFZUpJNfBaZIbWdTkCs5YnopjlIFPa+R7mon9WcrumGOF6BJGZnz5uTXfX8KKgE687XH7keNdPm7hXv3rNtKOAnbpZd3TqjOsfGjwxlak0xN0IHQQpuw+NTskU1U+DsSlSqQs/eJtamTib+LTHMkcXUFonKSlwm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYM/QE7H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcSGk53v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE2B1F00893;
-	Sat, 12 Sep 2026 11:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYM/QE7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209351F000FF;
+	Sat, 12 Sep 2026 11:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211062;
-	bh=UZ9T9bFh1lAiTJ2cxpgzmlL8ebP1NrMhJOXQvyiHXaY=;
+	s=korg; t=1789211068;
+	bh=4889CwU3IZDPzPcHHZRg12lGh0vL7YQJGwxm93gddyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jcSGk53vSlBW7PXmN3roTW27zpavkxotLJx0PPZe5+n2fHADikb60wnAiyRKd/88z
-	 bp5pXxOsXmyMkwKYfbrX9awM2sNe9eD16i9+sonNpQl21hYlzHL3FNOh3jbK85OSgy
-	 qj3j6Qcsad/hIyBQHErnTzHkLj/tRAXcUFoAJC8I=
+	b=dYM/QE7HxSoFvlCPPRJaEpmf56M/YqjrqIEE972nnmWYokoq2m0ft8XIKaucLpXck
+	 OHhMbX5CI+CzcAlyZbNHaw9d14WrGov4+hAdJR0mGBkmv6uRNt9Jd6zL21hr5xWQYN
+	 SPrbbBUdbSvD8BMMAYWOtj+aTeLGEF8qB/XijDWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Elson Roy Serrao <quic_eserrao@quicinc.com>,
-	Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ran Hongyun <ranhongyun1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1101/1518] phy: qualcomm: Update the QMP clamp register for V6
-Date: Sat, 12 Sep 2026 08:54:30 +0200
-Message-ID: <20260912065648.357900332@linuxfoundation.org>
+Subject: [PATCH 6.18 1148/1518] UBI: fix two issues in the ubi.mtd MODULE_PARM_DESC
+Date: Sat, 12 Sep 2026 08:55:17 +0200
+Message-ID: <20260912065649.426955767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,208 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+From: Ran Hongyun <ranhongyun1@huawei.com>
 
-[ Upstream commit c9543cca9417d83f8ca6a8ce0a5279a3fba7a02b ]
+[ Upstream commit ff7937d14f5333ec7e6fb50d00a152d7974f4105 ]
 
-QMP combo phy V6 and above use the clamp register from the PCS always on
-(AON) address space.  Update the driver accordingly.
+Fix two issues introduced before:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
-Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://patch.msgid.link/20251209-linux-next-12825-v8-7-42133596bda0@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 8fd2b30d187f ("phy: qcom: qmp-combo: Drop qmp_v4_calibrate_dp_phy")
+ - The parameter format string was missing the enable_fm and
+    need_resv_pool tokens introduced in an earlier commit.
+
+ - The bad-block reservation note was misplaced after Example 5
+    instead of after Example 3. It was misplaced due to an earlier patch.
+
+Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
+Signed-off-by: Ran Hongyun <ranhongyun1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 38 ++++++++++++++++---
- .../phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h    | 12 ++++++
- .../phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h   | 12 ++++++
- 3 files changed, 57 insertions(+), 5 deletions(-)
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
+ drivers/mtd/ubi/build.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index ec0643cecaca5..69333d7bfdb87 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -29,7 +29,10 @@
- #include "phy-qcom-qmp-common.h"
- 
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-aon-v6.h"
- #include "phy-qcom-qmp-pcs-misc-v3.h"
-+#include "phy-qcom-qmp-pcs-misc-v4.h"
-+#include "phy-qcom-qmp-pcs-misc-v5.h"
- #include "phy-qcom-qmp-pcs-usb-v4.h"
- #include "phy-qcom-qmp-pcs-usb-v5.h"
- #include "phy-qcom-qmp-pcs-usb-v6.h"
-@@ -78,6 +81,7 @@ enum qphy_reg_layout {
- 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
- 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
- 	QPHY_PCS_POWER_DOWN_CONTROL,
-+	QPHY_PCS_CLAMP_ENABLE,
- 
- 	QPHY_COM_RESETSM_CNTRL,
- 	QPHY_COM_C_READY_STATUS,
-@@ -105,6 +109,8 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
- 
-+	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V3_PCS_MISC_CLAMP_ENABLE,
-+
- 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V3_COM_RESETSM_CNTRL,
- 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V3_COM_C_READY_STATUS,
- 	[QPHY_COM_CMN_STATUS]		= QSERDES_V3_COM_CMN_STATUS,
-@@ -130,6 +136,8 @@ static const unsigned int qmp_v45_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V4_PCS_USB3_AUTONOMOUS_MODE_CTRL,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V4_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
- 
-+	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V4_PCS_MISC_CLAMP_ENABLE,
-+
- 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V4_COM_RESETSM_CNTRL,
- 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V4_COM_C_READY_STATUS,
- 	[QPHY_COM_CMN_STATUS]		= QSERDES_V4_COM_CMN_STATUS,
-@@ -155,6 +163,8 @@ static const unsigned int qmp_v5_5nm_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V5_PCS_USB3_AUTONOMOUS_MODE_CTRL,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V5_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
- 
-+	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V5_PCS_MISC_CLAMP_ENABLE,
-+
- 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V5_COM_RESETSM_CNTRL,
- 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V5_COM_C_READY_STATUS,
- 	[QPHY_COM_CMN_STATUS]		= QSERDES_V5_COM_CMN_STATUS,
-@@ -180,6 +190,8 @@ static const unsigned int qmp_v6_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V6_PCS_USB3_AUTONOMOUS_MODE_CTRL,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V6_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
- 
-+	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V6_PCS_AON_CLAMP_ENABLE,
-+
- 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V6_COM_RESETSM_CNTRL,
- 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V6_COM_C_READY_STATUS,
- 	[QPHY_COM_CMN_STATUS]		= QSERDES_V6_COM_CMN_STATUS,
-@@ -205,6 +217,8 @@ static const unsigned int qmp_v6_n4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V6_PCS_USB3_AUTONOMOUS_MODE_CTRL,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V6_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
- 
-+	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V6_PCS_AON_CLAMP_ENABLE,
-+
- 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V6_COM_RESETSM_CNTRL,
- 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V6_COM_C_READY_STATUS,
- 	[QPHY_COM_CMN_STATUS]		= QSERDES_V6_COM_CMN_STATUS,
-@@ -1750,6 +1764,7 @@ struct qmp_combo_offsets {
- 	u16 usb3_serdes;
- 	u16 usb3_pcs_misc;
- 	u16 usb3_pcs;
-+	u16 usb3_pcs_aon;
- 	u16 usb3_pcs_usb;
- 	u16 dp_serdes;
- 	u16 dp_txa;
-@@ -1831,6 +1846,7 @@ struct qmp_combo {
- 	void __iomem *tx2;
- 	void __iomem *rx2;
- 	void __iomem *pcs_misc;
-+	void __iomem *pcs_aon;
- 	void __iomem *pcs_usb;
- 
- 	void __iomem *dp_serdes;
-@@ -1955,6 +1971,7 @@ static const struct qmp_combo_offsets qmp_combo_offsets_v8 = {
- 	.usb3_serdes	= 0x1000,
- 	.usb3_pcs_misc	= 0x1c00,
- 	.usb3_pcs	= 0x1e00,
-+	.usb3_pcs_aon	= 0x2000,
- 	.usb3_pcs_usb	= 0x2100,
- 	.dp_serdes	= 0x3000,
- 	.dp_txa		= 0x3400,
-@@ -3340,6 +3357,7 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_combo *qmp)
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 	void __iomem *pcs_usb = qmp->pcs_usb ?: qmp->pcs;
- 	void __iomem *pcs_misc = qmp->pcs_misc;
-+	void __iomem *pcs_aon = qmp->pcs_aon;
- 	u32 intr_mask;
- 
- 	if (qmp->phy_mode == PHY_MODE_USB_HOST_SS ||
-@@ -3359,9 +3377,14 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_combo *qmp)
- 	/* Enable required PHY autonomous mode interrupts */
- 	qphy_setbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL], intr_mask);
- 
--	/* Enable i/o clamp_n for autonomous mode */
--	if (pcs_misc)
--		qphy_clrbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
-+	/*
-+	 * Enable i/o clamp_n for autonomous mode
-+	 * V6 and later versions use pcs aon clamp register
-+	 */
-+	if (pcs_aon)
-+		qphy_clrbits(pcs_aon, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
-+	else if (pcs_misc)
-+		qphy_clrbits(pcs_misc, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
+diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
+index 3b30c80cad43f..fb121b6d08484 100644
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -1575,7 +1575,7 @@ static int ubi_mtd_param_parse(const char *val, const struct kernel_param *kp)
  }
  
- static void qmp_combo_disable_autonomous_mode(struct qmp_combo *qmp)
-@@ -3369,10 +3392,13 @@ static void qmp_combo_disable_autonomous_mode(struct qmp_combo *qmp)
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 	void __iomem *pcs_usb = qmp->pcs_usb ?: qmp->pcs;
- 	void __iomem *pcs_misc = qmp->pcs_misc;
-+	void __iomem *pcs_aon = qmp->pcs_aon;
- 
- 	/* Disable i/o clamp_n on resume for normal mode */
--	if (pcs_misc)
--		qphy_setbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
-+	if (pcs_aon)
-+		qphy_setbits(pcs_aon, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
-+	else if (pcs_misc)
-+		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
- 
- 	qphy_clrbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL],
- 		     ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL | ALFPS_DTCT_EN);
-@@ -4037,6 +4063,8 @@ static int qmp_combo_parse_dt(struct qmp_combo *qmp)
- 	qmp->serdes = base + offs->usb3_serdes;
- 	qmp->pcs_misc = base + offs->usb3_pcs_misc;
- 	qmp->pcs = base + offs->usb3_pcs;
-+	if (offs->usb3_pcs_aon)
-+		qmp->pcs_aon = base + offs->usb3_pcs_aon;
- 	qmp->pcs_usb = base + offs->usb3_pcs_usb;
- 
- 	qmp->dp_serdes = base + offs->dp_serdes;
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
-new file mode 100644
-index 0000000000000..52db31a7cf22e
---- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#ifndef QCOM_PHY_QMP_PCS_AON_V6_H_
-+#define QCOM_PHY_QMP_PCS_AON_V6_H_
-+
-+/* Only for QMP V6 PHY - PCS_AON registers */
-+#define QPHY_V6_PCS_AON_CLAMP_ENABLE			0x00
-+
-+#endif
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
-new file mode 100644
-index 0000000000000..77d04c6a1644c
---- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#ifndef QCOM_PHY_QMP_PCS_MISC_V5_H_
-+#define QCOM_PHY_QMP_PCS_MISC_V5_H_
-+
-+/* Only for QMP V5 PHY - PCS_MISC registers */
-+#define QPHY_V5_PCS_MISC_CLAMP_ENABLE			0x0c
-+
-+#endif
+ module_param_call(mtd, ubi_mtd_param_parse, NULL, NULL, 0400);
+-MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num]]].\n"
++MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num[,enable_fm[,need_resv_pool]]]]].\n"
+ 		      "Multiple \"mtd\" parameters may be specified.\n"
+ 		      "MTD devices may be specified by their number, name, or path to the MTD character device node.\n"
+ 		      "Optional \"vid_hdr_offs\" parameter specifies UBI VID header position to be used by UBI. (default value if 0)\n"
+@@ -1588,9 +1588,9 @@ MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|pa
+ 		      "Example 1: mtd=/dev/mtd0 - attach MTD device /dev/mtd0.\n"
+ 		      "Example 2: mtd=content,1984 mtd=4 - attach MTD device with name \"content\" using VID header offset 1984, and MTD device number 4 with default VID header offset.\n"
+ 		      "Example 3: mtd=/dev/mtd1,0,25 - attach MTD device /dev/mtd1 using default VID header offset and reserve 25*nand_size_in_blocks/1024 erase blocks for bad block handling.\n"
++		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).\n"
+ 		      "Example 4: mtd=/dev/mtd1,0,0,5 - attach MTD device /dev/mtd1 to UBI 5 and using default values for the other fields.\n"
+-		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n"
+-		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).");
++		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n");
+ #ifdef CONFIG_MTD_UBI_FASTMAP
+ module_param(fm_autoconvert, bool, 0644);
+ MODULE_PARM_DESC(fm_autoconvert, "Set this parameter to enable fastmap automatically on images without a fastmap.");
 -- 
 2.53.0
 
