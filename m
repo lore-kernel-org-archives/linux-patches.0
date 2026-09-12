@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FB832B125;
-	Sat, 12 Sep 2026 19:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC30A309EE2;
+	Sat, 12 Sep 2026 19:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242051; cv=none; b=iNqmEyp8bVmCDJrpR/KMVCbh7/TlYoflpAO6OXa0MPbEo98/wzP9vq3BoMNhDHRIkYSXpDb1HcdpXhF5f3NnQLUiISjGChWo325g4guWwBedO9oQNlFSmuBoz4b/yE+HwJv0fhHJITGbW/jXmIt70rCjvWbVA9MnD/8CODo6z58=
+	t=1789242054; cv=none; b=qWUHBIHLU5FtDhZEb9+Kf1TzCs37LsWQQBmw6At28ecyG8t1sEzJ0GC9bXmJV61i6HJbtJkmTOLjdXjBEMreqghzFV7WSUYsDhequBbdvvXqBWANBYZlIisaK+rHVaFdwcVR9S1AV4nIzIUi58ugHlotitNvmdJThC1XVNttAuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242051; c=relaxed/simple;
-	bh=+7I/UDtnwGHZF8SkIlkSU4hRtxFZARJWuRM6d+rgvXk=;
+	s=arc-20240116; t=1789242054; c=relaxed/simple;
+	bh=1aNMH4lQAzrTqpw06coAnFrNPv3xsON3yGtEbHoyyBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bm8szdMCrcBIew63+nBSStu9U9eAUUfJqLkPoMG6Lmt3t0TDY61O4MWqtHh+bCFyqY6kMA0VlgMh8WA03F8upSaV73kdhuonYyG44rIvY34k4tYjJnOUwF4GrkTHbDb0eQQkIwTdAHBnhVA5cuvLAnNrI3M3MQZAgmICOAkvCXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUSxuDWR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CupygJAOI68VjFEnnceGY47p22XtI9kkhY2xbdomvcPh3E6rsKDQgB+fQBYC9P1bvt80vffNg0lcPCL3yJkMYF+hw/U5YYra6JqBllNat/QAzUCDne8jqJ2MQiEcQWHvm20lkJmirkfCYz4832SONzU3rGPA2qmJkwVW9WGFUyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gjc6SbU2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUSxuDWR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DB91F000FF;
-	Sat, 12 Sep 2026 19:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gjc6SbU2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAB81F000FF;
+	Sat, 12 Sep 2026 19:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242050;
-	bh=CSfPj4OZ6ZX4AzCBsO43k3bCXN1C5ZsigfNUDknidk0=;
+	s=korg; t=1789242053;
+	bh=JN7i5KZ1vRj6HRzT7KDBD7AgKjg2LFxyvfvhs/xFgFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nUSxuDWRan4H0ZDqdSsSWsGoJ2Y0EC3nFd1YgciS7CuigSKGnrtGSleJr5gSUlN6K
-	 SbIbREbJz8IE76Let6tEvqWrzsKFBnapM3kEKW6lwh6j2bsMp4820bhYgM0J/eecCi
-	 wOVUVPKi72fi6e6SHY1+YoJQL1/6sK4iygcQrDHo=
+	b=Gjc6SbU2CKEa3ynScWIT+mnriiVc++eJOWvRnz8Fa+jdgMTm80FEtLR1GBq/szsqS
+	 8Wlokp08MA+slvufR6JLsTuEk0aaOcOA4wS9SCrQJ8sFL0sEBxivNloQGJCYlTWrDM
+	 bjD6Iq9uoMzpL6b6TQ/l5ZvEj4ITgOGJfE0Gkq80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 5.10 268/798] KVM: s390: Restore sigset on error path
-Date: Sat, 12 Sep 2026 08:58:16 +0200
-Message-ID: <20260912065523.299308810@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 242/798] mtd: mtdoops: free page bitmap when the backing MTD is removed
+Date: Sat, 12 Sep 2026 08:57:50 +0200
+Message-ID: <20260912065522.704742417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,52 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit c44d36d8e6501c4934412d9014e5e02da9efdb8f upstream.
+commit 956e7da12c114f13c63d126ab1d79c3b6a819060 upstream.
 
-kvm_sigset_activate() installs vcpu->sigset via sigprocmask() and
-stashes the caller's mask in current->real_blocked; only
-kvm_sigset_deactivate() restores it.
+mtdoops_notify_add() allocates oops_page_used when the configured MTD
+device is registered.  mtdoops_notify_remove() detaches from that device
+but leaves the bitmap allocated.  If the same MTD device is later
+registered again, the add path allocates a new bitmap and overwrites the
+old pointer, leaking one vmalloc allocation per remove/add cycle.
 
-For KVM_RUN on a STOPPED vcpu the error path will not restore the
-userspace mask.  Re-arrange the error handling to also restore the
-signal mask.
+This is only visible when the backing MTD device can disappear and be
+registered again while mtdoops remains loaded, so the usual static MTD
+case does not expose it.
 
-Fixes: 6352e4d2dd9a3 ("KVM: s390: implement KVM_(S|G)ET_MP_STATE for user space state control")
+Free the bitmap after unregistering the dumper and flushing the pending
+workers, then clear the pointer and page count before a later attach can
+allocate fresh state.  Clearing the pointer also keeps the module exit
+path from freeing the same bitmap a second time after a remove event.
+
+Fixes: be95745f0167 ("mtd: mtdoops: keep track of used/unused pages in an array")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260811153738.206885-5-borntraeger@linux.ibm.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/kvm-s390.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mtd/mtdoops.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -4401,7 +4401,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 		pr_err_ratelimited("can't run stopped vcpu %d\n",
- 				   vcpu->vcpu_id);
- 		rc = -EINVAL;
--		goto out;
-+		goto out_sigset;
- 	}
+--- a/drivers/mtd/mtdoops.c
++++ b/drivers/mtd/mtdoops.c
+@@ -355,6 +355,9 @@ static void mtdoops_notify_remove(struct
+ 	cxt->mtd = NULL;
+ 	flush_work(&cxt->work_erase);
+ 	flush_work(&cxt->work_write);
++	vfree(cxt->oops_page_used);
++	cxt->oops_page_used = NULL;
++	cxt->oops_pages = 0;
+ }
  
- 	sync_regs(vcpu);
-@@ -4428,9 +4428,11 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 	disable_cpu_timer_accounting(vcpu);
- 	store_regs(vcpu);
  
-+	vcpu->stat.exit_userspace++;
-+
-+out_sigset:
- 	kvm_sigset_deactivate(vcpu);
- 
--	vcpu->stat.exit_userspace++;
- out:
- 	vcpu_put(vcpu);
- 	return rc;
 
 
