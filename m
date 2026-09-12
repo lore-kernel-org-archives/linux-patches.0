@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F44F332610;
-	Sat, 12 Sep 2026 11:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F382D0C94;
+	Sat, 12 Sep 2026 11:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212845; cv=none; b=W5EzMN20dmIy80gmOVYiSYtkIZ7oWpDkVqliEabMelbJj8rEzyhA3FNaaH1BZP4GhT3Al3uzXf9fZpZzZIk0UijBj8zudNOeNtFMy/5mYrK/wYtld2mCmPvr262J2/TH20dHmuWYMMMe4HeW04k0zyn2QDMCC9UB8Y0bKnKcU70=
+	t=1789212848; cv=none; b=br999LDyKF4l2qXi7L/Ihr6eEYTJFHwJWiEpO5tcFCIs7aiivUZE3kTSmstk50QMZweWx7yhbc/q19lf2VnNoIDnuXUCSJ1snLfgWzdUjoercBCXKjLbVhfSBeF0ZX7+OHHZLx4KPkKpn68dV2jDTX+K26OAzGndlSArmrzKugo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212845; c=relaxed/simple;
-	bh=20sShSTWXbdDyV1rhQpZyzjv385O8FMQDn7NpuIrSEQ=;
+	s=arc-20240116; t=1789212848; c=relaxed/simple;
+	bh=jF+On38/eBpCFTGLYZh6car61Yx9zld45rv9mAhZ+8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HDqSKnsU/4oEwqb46biySZFB6GuXBVqFc69XKCEASaT5JsxlV2f9edcnkn+zONYi22UKol/eFJD1TdCBArSMwIBNxQ1l/vYhwaxqrUu/zGIOh/5rWecnMm/NfU79GAmAh5x91XukvgFS5N0SbGBwu7n6hGsIQti28/wWanbe1bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjSeJ/o/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uSIzFsQpgB3Wu6pptSpjGeAukhpornqwLLUfIw7SeXjXoL1FFk+zENrc5z1irhXFq7lBqeNm681AOZ4b0+HtiNZre3yQXeOBbXy0xCOnMwWKhT0GWAZetWsoPj4Uz/c6Ddiaw018HZE+za8l9/mzKURXNfvV+SPw4qgmm52UT1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHWkz97O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjSeJ/o/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E651F000FF;
-	Sat, 12 Sep 2026 11:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHWkz97O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F5C1F000FF;
+	Sat, 12 Sep 2026 11:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212843;
-	bh=XmqAXaNE/kPiMf+tBplsb/h4m8Ph1mRdWIAcUtpik+E=;
+	s=korg; t=1789212847;
+	bh=kdjQjOSiMaG1mi62zd/EA2UmUPll7jSPwMC9vkcxNYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PjSeJ/o/12xomf+u5LCaXMpVdNh57M6HXlTWXOkCUZpRd+FvRgH+tReriYagglaS2
-	 wBOMNYW3lD80kJ0EwwvQ2QeosdRY7OsNYh2KbRMBdjHJRxjATQRmGQsRMAZvk5hk3Q
-	 r5gVn13Sei3wSJAn3t8oWbFnig8qpo7d6MD30xm0=
+	b=vHWkz97Omd5ZHVKjqqaxa1aSdZ2lBJTmnwGFOS7TnkKNE3AKyi1DFd1xm+picJ41P
+	 6u0AqxyTtrGLEv1RR6bvE9L4+urisuZsFEq8HL4jloX1JlCnByhBls38NIDPixIPzU
+	 jj3ja6xROxA6cZgRGzXqq+/LHQttQ9OaGq6ZM76s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Nikita Dubrovskii <nikita@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1475/1518] selftests: vDSO: getrandom: Fix path to s390 chacha implementation
-Date: Sat, 12 Sep 2026 09:00:44 +0200
-Message-ID: <20260912065656.923592408@linuxfoundation.org>
+Subject: [PATCH 6.18 1476/1518] s390/kexec: Disable stack protector in s390_reset_system()
+Date: Sat, 12 Sep 2026 09:00:45 +0200
+Message-ID: <20260912065656.946328044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,42 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit d045e166d3c51b7aec069669bb243e057d80d04f ]
+[ Upstream commit 1623a554c68f352c17d0a358bc62580dc187f06b ]
 
-The s390 vDSO source directory was recently moved,
-but this reference was not updated.
+s390_reset_system() calls set_prefix(0), which switches back to the
+absolute lowcore. At that point the stack protector canary no longer
+matches the canary from the lowcore the function was entered with, so
+the stack check fails.
 
-Fixes: c0087d807ae8 ("s390/vdso: Rename vdso64 to vdso")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Mark s390_reset_system() __no_stack_protector. This is safe here since
+its callers (__do_machine_kdump() and __do_machine_kexec()) are
+effectively no-return and fall back to disabled_wait() on failure.
+
+Fixes: f5730d44e05e ("s390: Add stackprotector support")
+Reported-by: Nikita Dubrovskii <nikita@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vDSO/vgetrandom-chacha.S | 2 +-
+ arch/s390/kernel/ipl.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/vDSO/vgetrandom-chacha.S b/tools/testing/selftests/vDSO/vgetrandom-chacha.S
-index a4a82e1c28a90..8c3cbf4dfd6a1 100644
---- a/tools/testing/selftests/vDSO/vgetrandom-chacha.S
-+++ b/tools/testing/selftests/vDSO/vgetrandom-chacha.S
-@@ -14,7 +14,7 @@
- #elif defined(__riscv) && __riscv_xlen == 64
- #include "../../../../arch/riscv/kernel/vdso/vgetrandom-chacha.S"
- #elif defined(__s390x__)
--#include "../../../../arch/s390/kernel/vdso64/vgetrandom-chacha.S"
-+#include "../../../../arch/s390/kernel/vdso/vgetrandom-chacha.S"
- #elif defined(__x86_64__)
- #include "../../../../arch/x86/entry/vdso/vgetrandom-chacha.S"
- #endif
+diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
+index 0068d824306f6..2d01a17139387 100644
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -2378,7 +2378,7 @@ void __init setup_ipl(void)
+ 	atomic_notifier_chain_register(&panic_notifier_list, &on_panic_nb);
+ }
+ 
+-void s390_reset_system(void)
++void __no_stack_protector s390_reset_system(void)
+ {
+ 	/* Disable prefixing */
+ 	set_prefix(0);
 -- 
 2.53.0
 
