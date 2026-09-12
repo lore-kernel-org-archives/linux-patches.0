@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFF23A7587;
-	Sat, 12 Sep 2026 20:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35EE3A2576;
+	Sat, 12 Sep 2026 20:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243449; cv=none; b=izlE9g8NPWi0NhWYi+eI129COh1KHRsYwc8uLFntHWdaDXG/mq9U/L1Y0R85WhYT6fGWmzvctbFzqmTXb2ywFXqU7O8BwHuSelP57lXVk7660ez3GdZmbVNaHKuk0HiEIY6vPu+CmvwdIAkVvDMIghgUEtNdSsI4q+lxK2rvK00=
+	t=1789243452; cv=none; b=XvRPGBoAfCmsRt84Pmjmgehp86MCQuB5j/v3AEiKVNyzt5ggqGltGHOeRcwdGrfc30cuahHjToXEC4OETLVCQEd6KIvJahBJyZg/s5jubCoe24RBA/z6SKM8FLC3Q/RNQAzIMVwqvwK4kMAFTiAm8EKcqH4msom9ZOiTlLO6oTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243449; c=relaxed/simple;
-	bh=fZ+gv3SpfoBmdir+EZWRQ+S7iG0iAqeeOdbmNt7QHLg=;
+	s=arc-20240116; t=1789243452; c=relaxed/simple;
+	bh=ppsbylFx/o1LMCOpriJAbzilfQKkzc0pIf3ADB736Es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALJDXvgwm+ur2C5rAj3+8ReWRODHWApikUDYUBwbkO9ThWoFG9Ti8ounr5haqNObAGvIHPiFoa/gCHFc8gA4Em+6P/1o/d4pVn90sxkInxyNIofnk0teQpyCyKdYdPCxTE9CVyWbGkh3piMm4RMlzQtlfxgUbvBGApyyXal8VFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kMQoL/N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CXX382bv4YQ+JFwgjd3MzaCEZAg8cn26nO58FNxIb3vVartP5liaKzsQAa8mphM4oLEVyYj8NvRYa8LPKuW0zTUB1y8ImQXWzcC1GN6C6/zlSlMHAdbkXWMwxVEOIaptXT21tvO4wi8eEVyXT7apZe26RXFHySAUxkCaLFnLyZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSWg5gPj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kMQoL/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0861F000FF;
-	Sat, 12 Sep 2026 20:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSWg5gPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3848C1F000FF;
+	Sat, 12 Sep 2026 20:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243447;
-	bh=NHGOeHr2BXEaS+khI6FbIT16NSzyRD+f26cZQAJz32Q=;
+	s=korg; t=1789243450;
+	bh=OOypUdwTwKfcrKL2TLG6muY8x1OGJxbiNjavbfsUMEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2kMQoL/N22ehTgyvK9NDKBHkCLT43H86m8toQ6+DWJF90SfNASHQrtnY4HSZVS3hQ
-	 H+RLT8/XrHYZNQvHXGAV+qS7Igmaspz7fwCPZ1PlAoF3FV8RnWSVprklPS6Nt+B54d
-	 /ifnXWLysprOUueyo3D4iA2DgZU34pCdlHEDVJMk=
+	b=aSWg5gPjqUvLDbUedNfaKR7qHb2KPvDkLDurz67eqZpazcc1CBRWMS6G8rltEH5Uj
+	 k7fwE7drVHzCnpU2X80i9Hbd6p6SlDJ+TNFRH83t8r9tsKZ1Fs5BBcoG8yr8/K5un8
+	 Cfy3skCjAP1XE+qi+6FD+UrcVaWJM8+C6+GKlBE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marek Czernohous <marek@czernohous.de>,
+	Simon Horman <horms@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 759/798] net_sched: sch_fq: change how @inactive is tracked
-Date: Sat, 12 Sep 2026 09:06:27 +0200
-Message-ID: <20260912065534.465464299@linuxfoundation.org>
+Subject: [PATCH 5.10 742/798] forcedeth: stop the tx_timeout register dump past the requested window
+Date: Sat, 12 Sep 2026 09:06:10 +0200
+Message-ID: <20260912065534.079818279@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,95 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Marek Czernohous <marek@czernohous.de>
 
-[ Upstream commit ee9af4e14d166c34ec78896bb1ba545249445df0 ]
+[ Upstream commit cfa9178ce2e5b4f2e2a9e8b577a6cff841665aa0 ]
 
-Currently, when one fq qdisc has no more packets to send, it can still
-have some flows stored in its RR lists (q->new_flows & q->old_flows)
+nv_tx_timeout() dumps the register window in rows of eight dwords:
 
-This was a design choice, but what is a bit disturbing is that
-the inactive_flows counter does not include the count of empty flows
-in RR lists.
+	for (i = 0; i <= np->register_size; i += 32) {
+		netdev_info(dev, "%3x: %08x ... %08x\n", i,
+			    readl(base + i + 0), ..., readl(base + i + 28));
 
-As next patch needs to know better if there are active flows,
-this change makes inactive_flows exact.
+The loop bound only checks the row's starting offset, so the final row
+reads a full 32 bytes from a position that is below the end of the window
+but too close to it. base is mapped with exactly that length:
 
-Before the patch, following command on an empty qdisc could have returned:
+	np->base = ioremap(addr, np->register_size);
 
-lpaa17:~# tc -s -d qd sh dev eth1 | grep inactive
-  flows 1322 (inactive 1316 throttled 0)
-  flows 1330 (inactive 1325 throttled 0)
-  flows 1193 (inactive 1190 throttled 0)
-  flows 1208 (inactive 1202 throttled 0)
+so the tail of that row is read from beyond the length the driver asked
+for. Per variant, the last iteration reads past register_size by:
 
-After the patch, we now have:
+	NV_PCI_REGSZ_VER1 (0x270): row 0x260 reads to 0x27f, 16 bytes over
+	NV_PCI_REGSZ_VER2 (0x2d4): row 0x2c0 reads to 0x2df, 12 bytes over
+	NV_PCI_REGSZ_VER3 (0x604): row 0x600 reads to 0x61f, 28 bytes over
 
-lpaa17:~# tc -s -d qd sh dev eth1 | grep inactive
-  flows 1322 (inactive 1322 throttled 0)
-  flows 1330 (inactive 1330 throttled 0)
-  flows 1193 (inactive 1193 throttled 0)
-  flows 1208 (inactive 1208 throttled 0)
+This happens on every supported device, not just one of them. Note that
+it is not a consequence of the sizes being odd: with i <= register_size
+the offending row is reached whatever the size, and a size that were a
+multiple of 32 would overrun by a full row rather than by a remainder.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
+To be precise about the severity: the reads stay inside the BAR. Memory
+BAR sizes are powers of two, the driver only accepts a region with
+pci_resource_len() >= register_size (forcedeth.c:5757-5762), and the
+next power of two at or above each register_size already covers the
+offending row: 0x400 for 0x270 and 0x2d4, 0x800 for 0x604. ioremap()
+also rounds the mapped length up to page granularity, so the reads land
+inside the mapping the CPU has as well. What they leave is the window
+the driver asked for, not the BAR and not the mapping. That is still a
+driver reading registers it did not ask for, and it is trivial to
+avoid, but nobody should expect a fault from it.
+
+Changing <= to < is not enough: register_size is a length and every size
+above is larger than its last row start, so i still reaches the offending
+row. Check that the whole row fits instead.
+
+The trade-off is that a partial trailing row is no longer dumped: 16 bytes
+for VER1, 20 for VER2, 4 for VER3. That seemed preferable to reading
+outside the requested window, and to open-coding a second, narrower dump
+for the remainder in what is a debug-only path. Extending the dump to
+cover the tail can be done on top if anyone misses those registers.
+
+Only reachable with the debug_tx_timeout module parameter, which defaults
+to false. It has not been observed at runtime: forcing a genuine TX
+timeout on the reference machine is not something I can do safely, so this
+rests on the arithmetic above and on a build test, not on a reproduction.
+UBSAN does not catch it either, since these are MMIO reads rather than an
+array access. It was found by reading the function while fixing the
+saved_config_space off-by-one in nv_suspend() and nv_resume().
+
+The dump was introduced with a fixed 0x400 bound while ioremap() mapped
+only NV_PCI_REGSZ (0x270), so it read about 0x190 bytes too far from the
+start. Commit 86a0f04387bf ("[PATCH] forcedeth: fix initialization")
+later replaced 0x400 with np->register_size, which shrank the overrun to
+the remainder but did not remove it.
+
+Fixes: c2dba06dae7d ("[PATCH] forcedeth: rewritten tx irq handling")
+Signed-off-by: Marek Czernohous <marek@czernohous.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/178682367886.3748309.6978554332066826294@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/nvidia/forcedeth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 8114291a95133..7c8e63ec7b964 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -125,7 +125,7 @@ struct fq_sched_data {
- /* Read/Write fields. */
+diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
+index dc916d140f5cb..0abc2f2f088ce 100644
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -2759,7 +2759,7 @@ static void nv_tx_timeout(struct net_device *dev, unsigned int txqueue)
  
- 	u32		flows;
--	u32		inactive_flows;
-+	u32		inactive_flows; /* Flows with no packet to send. */
- 	u32		throttled_flows;
- 
- 	u64		stat_throttled;
-@@ -402,9 +402,12 @@ static void fq_erase_head(struct Qdisc *sch, struct fq_flow *flow,
- static void fq_dequeue_skb(struct Qdisc *sch, struct fq_flow *flow,
- 			   struct sk_buff *skb)
- {
-+	struct fq_sched_data *q = qdisc_priv(sch);
-+
- 	fq_erase_head(sch, flow, skb);
- 	skb_mark_not_on_list(skb);
--	flow->qlen--;
-+	if (--flow->qlen == 0)
-+		q->inactive_flows++;
- 	qdisc_qstats_backlog_dec(sch, skb);
- 	sch->q.qlen--;
- }
-@@ -484,13 +487,13 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return qdisc_drop(skb, sch, to_free);
- 	}
- 
--	f->qlen++;
-+	if (f->qlen++ == 0)
-+		q->inactive_flows--;
- 	qdisc_qstats_backlog_inc(sch, skb);
- 	if (fq_flow_is_detached(f)) {
- 		fq_flow_add_tail(&q->new_flows, f);
- 		if (time_after(jiffies, f->age + q->flow_refill_delay))
- 			f->credit = max_t(u32, f->credit, q->quantum);
--		q->inactive_flows--;
- 	}
- 
- 	/* Note: this overwrites f->age */
-@@ -597,7 +600,6 @@ static struct sk_buff *fq_dequeue(struct Qdisc *sch)
- 			fq_flow_add_tail(&q->old_flows, f);
- 		} else {
- 			fq_flow_set_detached(f);
--			q->inactive_flows++;
- 		}
- 		goto begin;
- 	}
+ 		netdev_info(dev, "Ring at %lx\n", (unsigned long)np->ring_addr);
+ 		netdev_info(dev, "Dumping tx registers\n");
+-		for (i = 0; i <= np->register_size; i += 32) {
++		for (i = 0; i + 32 <= np->register_size; i += 32) {
+ 			netdev_info(dev,
+ 				    "%3x: %08x %08x %08x %08x "
+ 				    "%08x %08x %08x %08x\n",
 -- 
 2.53.0
 
