@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3B433F59A;
-	Sat, 12 Sep 2026 12:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4837433F59A;
+	Sat, 12 Sep 2026 12:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215145; cv=none; b=E/VQd5YlC5ynzdkve8SU+lbUV9c2mZDNcsIJBSQHJUfU7aQDxsjbFpE4eppdljtOOUu13Z1bQk4hCVrL8N8zt/jDLIGJThGQAvB9KH8Q7spo4SmwnXs30sSvuiRggJFKzqUDFHw3ndjyIvuw+5dt885VrgmKmPW26hgwOj91vqc=
+	t=1789215150; cv=none; b=pOblNSOFkYlZC4RswXYNlUEUUUusoPMVisZzl0p+2kg1iRU/X4jN4jJb2YaJcu8R7qosO33h0Ikh+zM2HplGRHc8MAyHycWD7spAzTlmSBF8k9MVgw1c7b8V9uQafYBgqw4x7Zb48noSYmqU2DNcshnKgIH1noMktyBzYN6T5R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215145; c=relaxed/simple;
-	bh=ipp9Dv2mthpB6djgkRBAOBrOVP7Bzr2NqUEXyRHhrfU=;
+	s=arc-20240116; t=1789215150; c=relaxed/simple;
+	bh=b5OoAUXRznVeWeZN+UFARmmLq9h+qJEAlGgWSZI1IJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UK84X11OYhDBLPmxuFBTU7xFw/+loWJ/fMyniCe64cpkcz9Abf4vJ8qAg0QJSqdwAF9ZjL/1ld9ZhzRFonoGxp0YBOW6FslkvyrxaxDu6y79/XNho9vqRKCOG2FLr+jgo6SfQJHhsuBlsoySQ5vH2xIRzPsywGiBl7C7NDefBr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzmhpZ5z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nSDSaMNLSqt9NlLyddekj+eB2Vtfzs6eMbCU5QL9VSAnAEzekDlb6UjvZO79gVKtx1JQ/sFJO0bu9HV67jAEQZlsYC4bO6+/gHXW57njE0AGtNNGo9/KeV9/sLdMpiigJj+p5+4899Bd3Zf+gbtgMappz7jrm76hGbZ/e07U7wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKBhPJNS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzmhpZ5z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2346F1F000FF;
-	Sat, 12 Sep 2026 12:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKBhPJNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019A81F000FF;
+	Sat, 12 Sep 2026 12:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215144;
-	bh=fIOLzDni1N905RIpwNFZ4TLFl9a7Hh5wJga2Vn3Vamw=;
+	s=korg; t=1789215149;
+	bh=ISZp2ekpgb9cV5y4VFWV1cv9/66igW4cvKMv35U3H0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yzmhpZ5zvJMRRiWrNmtwRuOeIIgj0w4WAOSp7n9qtmpd0Zgujy8iUT+B2+irjXfLd
-	 8vuqp9Sv8VVkBci7akDG/HXHVO1rdqWI0msX4euiHUFswtTDCgal2W5fX+zCi0o2T7
-	 I28mNd8y7gD2OKVCjrO3hyFitsIOZTagqW96HRn0=
+	b=WKBhPJNSFc000HRokhpgFGRBcL77MyzlTrqWwzfn1UEJr6vn3TG8m1YWkmrJZ+sXI
+	 S0ikrEjjjXfWChnYZRo1u0aEfzA4d5khQODXmS5H+uk6yF05h9cs/izFPjQcKiv7a/
+	 TICIk1rP3kGc19JzK+mHw5+vaMG3l6RA6AjYyGvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ayush Mukkanwar <ayushmukkanwar@gmail.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0429/1376] staging: octeon: add missing napi_disable in cvm_oct_rx_shutdown
-Date: Sat, 12 Sep 2026 08:47:35 +0200
-Message-ID: <20260912065617.096479264@linuxfoundation.org>
+Subject: [PATCH 6.12 0430/1376] staging: rtl8723bs: fix mismatched free of HalData in rtw_sdio_if1_init()
+Date: Sat, 12 Sep 2026 08:47:36 +0200
+Message-ID: <20260912065617.118230412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,42 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-[ Upstream commit c0a9a8586a63fda49e61a6b83360feac2a60d898 ]
+[ Upstream commit 264676418b726baca7be49171e306b6aa05cceb0 ]
 
-cvm_oct_rx_shutdown calls free_irq and netif_napi_del without
-disabling the napi instance first. As the free_irq only waits
-for completion of hard interrupt handlers, the napi poll
-function could still be active. If cvm_oct_remove proceeds to
-free the plat structure (which holds the NAPI instances), the
-active poll function will access freed memory, resulting in a
-use-after-free crash.
+padapter->HalData is allocated via vzalloc(), but incorrectly freed
+using kfree() in the rtw_sdio_if1_init() error path. Using kfree() to
+release this vmalloc-backed buffer can lead to memory corruption.
 
-Fixes: 3368c784bcf7 ("Staging: Octeon Ethernet: Convert to NAPI.")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260511150931.93382-1-ayushmukkanwar%40gmail.com
-Signed-off-by: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
-Link: https://patch.msgid.link/20260615172734.42038-2-ayushmukkanwar@gmail.com
+Use rtw_hal_data_deinit() to pair the free correctly and free
+HalData with vfree().
+
+The bug was first flagged by an experimental static analysis tool we
+are developing for kernel memory-management bugs. Manual inspection
+confirms that the issue is still present in current mainline.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+suitable RTL8723BS SDIO hardware to test with, no runtime testing was
+able to be performed.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/20260525091836.812565-1-dawei.feng@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/octeon/ethernet-rx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/octeon/ethernet-rx.c b/drivers/staging/octeon/ethernet-rx.c
-index cd36b5ba6f6c2..3e9d58d321560 100644
---- a/drivers/staging/octeon/ethernet-rx.c
-+++ b/drivers/staging/octeon/ethernet-rx.c
-@@ -535,6 +535,8 @@ void cvm_oct_rx_shutdown(struct platform_device *pdev)
- 		else
- 			cvmx_write_csr(CVMX_POW_WQ_INT_THRX(i), 0);
+diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+index d64998be6b2bb..c9a90d5293b02 100644
+--- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
++++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+@@ -309,8 +309,8 @@ static struct adapter *rtw_sdio_if1_init(struct dvobj_priv *dvobj, const struct
+ 	status = _SUCCESS;
  
-+		napi_disable(&plat->rx_group[i].napi);
-+
- 		/* Free the interrupt handler */
- 		free_irq(plat->rx_group[i].irq, &plat->rx_group[i].napi);
+ free_hal_data:
+-	if (status != _SUCCESS && padapter->HalData)
+-		kfree(padapter->HalData);
++	if (status != _SUCCESS)
++		rtw_hal_data_deinit(padapter);
  
+ 	if (status != _SUCCESS) {
+ 		rtw_wdev_unregister(padapter->rtw_wdev);
 -- 
 2.53.0
 
