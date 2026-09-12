@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F339F3BED6A;
-	Sat, 12 Sep 2026 07:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E198F3C1D57;
+	Sat, 12 Sep 2026 07:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197175; cv=none; b=DybU57kb6GNMMPd8rHc2baPxEelvjYlXRFv1Q3+Ca1BGlgf4vsTvcRSGKYA8U8HZcBTobrOEWpRgMlIp3Il/+RaF42ZoSaANnnoxHKw5FTbGGp6tHJvWbKpWfq1gmvJgSLEtQxuPAAcwvjhk00jTIJ73CYRY4PDEQnFCvBrd39M=
+	t=1789197179; cv=none; b=TEWuSP1AN323Yg6ZjrBlqKQeiucZfhNyG8V0Zo3ZYdo6DaQZA24/gD3+ThFclSwQWKoQLpWJLe0Ry2MCYG+DvCfhJIcQ/0CKEFE3pOG/j/+VCxw0qEgldH+8sMh4eWTyw8Q2wy6GRTIXmTcp8x58BS+ZiAMP+7nvEXm69JvUhJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197175; c=relaxed/simple;
-	bh=9UmEWKtgdVEzNztCYIAlvFgEDR6nQg+ZQinDDnGPiGU=;
+	s=arc-20240116; t=1789197179; c=relaxed/simple;
+	bh=Qjqbxara1tXybGutLqJl/z3H6gfFDi+rmU2qQfaHU1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ki+hsqXI1SQE8EaKeXiVglpH6BgLBAsTUiyQB45YsBIe/pQW6aadgAIrf55wnUg1SuUXGr1NKk14t+zYi1hgVN6DWs2eee0xDyA+GnNn/ftaE0k8WOCdVHjWWVjg13xRT3JVaD0RQRJBTEXUfd/Fxp2CkYx3FQCjxf4MyEQcfBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/8Q+VGy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bAr6eeGrI6wFp1FN0Zh97I0RwZJyv6jOPyFD8qDl9YOkSE8GAqmEBysdAUTLGXf2NrxiDjAbNiP9Yw6265907VUUg6l4gCj2xlxEAY3xkDhNeQ4HyzR9ZnqGjFcxRME0ChgBRN6+Rra5bGJld8I2JFtWR/eF9lNR+eTEKQ4X9nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPrrsnBN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/8Q+VGy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4B51F000FF;
-	Sat, 12 Sep 2026 07:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPrrsnBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4780B1F000FF;
+	Sat, 12 Sep 2026 07:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197173;
-	bh=5tiDbeOGEpLX3tKoVocJVp25YAXF0FzsBtOcAVE4a5c=;
+	s=korg; t=1789197177;
+	bh=Z3Cdk1F/RkvbEyiHAQqBXrxT0j7rroXOJe4QPBCJ3Dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t/8Q+VGyTNGy+R7h16YnllIK/s3OGuA39NLI0zHmZ5jdOPcWI/pIbokhzBsv7psvf
-	 solt/FgtGdb7aUywlDBHjGlNwgdoyLWVBRK3tTgSFQONMfz9u7Uh03ThX8GOrJ8G4G
-	 PZC6QWZibYOaHDKmCbipoWyPX7o+A+KL0y1C3YxI=
+	b=bPrrsnBN7uFY1neeHU/e7mPDuopLey282isn28rEp3NYzunzrA7xqWvWqIhD3SxLg
+	 HSz4DYbiN6CMI9ZqE3kNk8KMw7F66mSOw86jLMmJGsqX2hOQBYkhPERGgFvzI6G5+A
+	 4aDVfW4ScswVKGo16N1epHdJNauBnF7Ic4nJmiec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Breno Leitao <leitao@debian.org>,
-	Tejun Heo <tj@kernel.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0116/1815] workqueue: only show running workers in stall diagnostics
-Date: Sat, 12 Sep 2026 08:31:06 +0200
-Message-ID: <20260912065651.731251427@linuxfoundation.org>
+Subject: [PATCH 7.2 0117/1815] perf test: Skip failing perf test aslr test case
+Date: Sat, 12 Sep 2026 08:31:07 +0200
+Message-ID: <20260912065651.755287464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,104 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 7ddfa24d3f12ab9f3ac0e0b4e8e573ff45574d86 ]
+[ Upstream commit 5786fa53dc7a4ae027ee2dbf321ed2286c4c20b5 ]
 
-show_cpu_pool_busy_workers() dumps every in-flight worker in the pool's
-busy_hash, including workers that are not currently running on the CPU.
-Restore the task_is_running() filter so only running workers are dumped.
+The test case 'perf test aslr' fails on s390. The root cause of the
+failure is subtest test_callchain_aslr. This test invokes command
 
-When no running worker is found the pool may be stuck, unable to wake an
-idle worker to process pending work, and the watchdog would otherwise
-give no feedback.  Add show_pool_no_running_worker() to report the pool
-id, CPU, idle state, and worker counts in that case.
+ # ./perf record -g -e task-clock:u -o /tmp/perf-test-aslr \
+	-- perf test -w noploop 3
 
-The pool info message is printed inside pool->lock using
-printk_deferred_enter/exit, the same pattern used by the existing
-busy-worker loop, to avoid deadlocks with console drivers that queue
-work while holding locks also taken in their write paths.
+to generate a call stack using event task-clock:u. On s390 this defaults
+to '--call-graph dwarf' whereas on x86_64 this defaults to framepointer
+(fp) format. The command
 
-This has been running on the Meta fleet for a while and caught some real
-issues, for instance EFI stalls stalling the workqueue [1].
+ # ./perf inject --aslr -i /tmp/perf-test-aslr
 
-Link: https://lore.kernel.org/all/20260616-efi_timeout-v3-0-76dd1d26657b@debian.org/ [1]
-Suggested-by: Petr Mladek <pmladek@suse.com>
-Fixes: 8823eaef45da7 ("workqueue: Show all busy workers in stall diagnostics")
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+now scans all SAMPLE entries recorded in the perf.data file to convert
+possible addresses. This is done in aslr_tool__process_sample() looking
+at sample_type bits PERF_SAMPLE_IP, PERF_SAMPLE_TID,
+PERF_SAMPLE_TIME, PERF_SAMPLE_PERIOD, PERF_SAMPLE_CALLCHAIN,
+PERF_SAMPLE_REGS_USER and PERF_SAMPLE_STACK_USER.
+On s390 the samples do not contain FP entries
+of type PERF_SAMPLE_CALLCHAIN (the bit is set in sample_type, but the
+number of FP entries is 0).
+The processing enters the PERF_SAMPLE_STACK_USER portion where the
+data is copied to the newly constructed sample and then aborted with
+this warning:
+
+ /* TODO: can this be less conservative? */
+ pr_debug("Dropping stack user sample as possible ASLR leak\n");
+
+With command line option '--call-graph dwarf' the new output file
+does not contain any samples at all. This leads to a missing $new_addr
+value in the shell script and a failure.
+
+Fix this and skip this subtest. Emit a hint that this subtest is
+currently unsupported on all platform when option --call-graph dwarf
+is selected.
+Since one subtest is skipped, the complete test is reported as
+skipped.
+
+Fixes: 190c45463844 ("perf test: Add inject ASLR test")
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Suggested-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 38 ++++++++++++++++++++++++++++++++++----
- 1 file changed, 34 insertions(+), 4 deletions(-)
+ tools/perf/tests/shell/inject_aslr.sh | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 78068ae8f28a6..929c04a9581bd 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -7689,13 +7689,31 @@ module_param_named(panic_on_stall_time, wq_panic_on_stall_time, uint, 0644);
- MODULE_PARM_DESC(panic_on_stall_time, "Panic if stall exceeds this many seconds (0=disabled)");
- 
- /*
-- * Show workers that might prevent the processing of pending work items.
-- * A busy worker that is not running on the CPU (e.g. sleeping in
-- * wait_event_idle() with PF_WQ_WORKER cleared) can stall the pool just as
-- * effectively as a CPU-bound one, so dump every in-flight worker.
-+ * Report that a pool has no worker in running state, which is a sign that the
-+ * pool may be stuck. Print pool info. Must be called with pool->lock held and
-+ * inside a printk_deferred_enter/exit region.
-+ */
-+static void show_pool_no_running_worker(struct worker_pool *pool)
-+{
-+	lockdep_assert_held(&pool->lock);
-+
-+	printk_deferred_enter();
-+	pr_info("pool %d: no worker in running state, cpu=%d is %s (nr_workers=%d nr_idle=%d)\n",
-+		pool->id, pool->cpu,
-+		idle_cpu(pool->cpu) ? "idle" : "busy",
-+		pool->nr_workers, pool->nr_idle);
-+	pr_info("The pool might have trouble waking an idle worker.\n");
-+	printk_deferred_exit();
-+}
-+
-+/*
-+ * Show running workers that might prevent the processing of pending work items.
-+ * If no running worker is found, the pool may be stuck waiting for an idle
-+ * worker to be woken, so report the pool state.
-  */
- static void show_cpu_pool_busy_workers(struct worker_pool *pool)
- {
-+	bool found_running = false;
- 	struct worker *worker;
- 	unsigned long irq_flags;
- 	int bkt;
-@@ -7703,6 +7721,11 @@ static void show_cpu_pool_busy_workers(struct worker_pool *pool)
- 	raw_spin_lock_irqsave(&pool->lock, irq_flags);
- 
- 	hash_for_each(pool->busy_hash, bkt, worker, hentry) {
-+		/* Skip workers that are not actively running on the CPU. */
-+		if (!task_is_running(worker->task))
-+			continue;
-+
-+		found_running = true;
- 		/*
- 		 * Defer printing to avoid deadlocks in console
- 		 * drivers that queue work while holding locks
-@@ -7716,6 +7739,13 @@ static void show_cpu_pool_busy_workers(struct worker_pool *pool)
- 		printk_deferred_exit();
- 	}
- 
-+	/*
-+	 * If no running worker was found, the pool is likely stuck. Print pool
-+	 * state.
-+	 */
-+	if (!found_running)
-+		show_pool_no_running_worker(pool);
-+
- 	raw_spin_unlock_irqrestore(&pool->lock, irq_flags);
- }
- 
+diff --git a/tools/perf/tests/shell/inject_aslr.sh b/tools/perf/tests/shell/inject_aslr.sh
+index c00461828ea79..d83c2591db8f6 100755
+--- a/tools/perf/tests/shell/inject_aslr.sh
++++ b/tools/perf/tests/shell/inject_aslr.sh
+@@ -135,8 +135,14 @@ test_callchain_aslr() {
+     echo "Callchain ASLR test [Failed - no noploop samples in original file]"
+     err=1
+   elif [ -z "$new_addr" ]; then
+-    echo "Callchain ASLR test [Failed - could not find remapped address]"
+-    err=1
++    if perf evlist -v -i "${data}" | grep -q 'sample_type:.*STACK_USER'; then
++      echo "Dropping stack user sample as possible ASLR leak"
++      echo "Call-graph dwarf not supported with 'perf inject --aslr'"
++      echo "Callchain ASLR test [Skip]"
++    else
++      echo "Callchain ASLR test [Failed - could not find remapped address]"
++      err=1
++    fi
+   elif [ "$orig_addr" = "$new_addr" ]; then
+     echo "Callchain ASLR test [Failed - addresses are not remapped]"
+     err=1
 -- 
 2.53.0
 
