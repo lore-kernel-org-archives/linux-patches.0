@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C685F4BEE32;
-	Sat, 12 Sep 2026 11:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6580341F35E;
+	Sat, 12 Sep 2026 11:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211935; cv=none; b=BQumPefMW+fEb0Wh0YiH7VeDuZDiNNhxvFjExCBXMvvMKMH1NdFzN0z0juNd9w7nChSzOhkxN84mL1DeVLNA7tZoFTqW0MWWjHvtpxQRFBsR7ecX7LH/bACNnqucsGRbucPXVtMZrwbVINmHmjViDd//x8NBaV2Nt7rDuX7+jyM=
+	t=1789211939; cv=none; b=CxchmM5ERzHGtzAtFhr75WW8RZPhX24zCWUZdiN8mPG4ujno77cAiVGSh0PDHM2JZXU93Q7Rfrzj7hfTTS3DRUMiD4ODyEhG3fJBHjvLD8w+3dpDjWdJz1UglIOv+gbEVz8O3J4JO+UpK2dL4l78cuNuP6+UBcHzcz52NVXTef8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211935; c=relaxed/simple;
-	bh=CCobzFPMkCnkQWmDvaadcH7Zbaspxm1E+8uoJwV9luY=;
+	s=arc-20240116; t=1789211939; c=relaxed/simple;
+	bh=M0gdb8doUbrM7PowDWc0zdgbdtBJjr+6YRgzgN3YTX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlvQeaG4TvIC0BA3L7ohuH2PcdsJzHiMcAX0RBGgbkSjtWK6iq2FMAcmAAMQ1gyz04OmkOgGtfpvuNuGoxf1JPlSS8A2+g6rSmsxjFJjwLiuQNDs9/CcXheX+FBFLgx2E+jJI4rOwpL7diXdQvn1Ej9poPitp6wIyq1s8bxZ4Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2R5omfYx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VVwQfQHbKQuevGveyAnS1t52UHunktPlGb99Lr03kSuTQUXrTziG4xDd3jBVQuzUhV6fKhU3keHTSzkSXsFDrWANYSwbRVbhemSBnokOLkg5nkskgIM25XB6sSS7/kyvF82albKbMK6J7QHyIitC+3m2keW1iJugVKcJhmLqWDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYCQS7hg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2R5omfYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFBD1F000FF;
-	Sat, 12 Sep 2026 11:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYCQS7hg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DEA1F000FF;
+	Sat, 12 Sep 2026 11:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211933;
-	bh=T4xphYyyzDTO3FLfOYf8L+5UZXQpT7kYByfxIN9vQqY=;
+	s=korg; t=1789211938;
+	bh=rTcVj+8bJXUVMIWjKA5w2m8HBRCWNp+QR6ZVy7qRzd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2R5omfYx6JgZPHpJCoQctnsUIWVX3pcdcV28vYfmHtBJnlHU2u4cUuU7s76KPOgg3
-	 TQTbADBpUR2EnHWmmoWKPgRMdnTRuLDXIFe8mDWpbWaVVnN1sitNw4tH/vwYmP1mXW
-	 m2cb/63gfJouXddbMiDS71n5SbWMTyZ0g2gANH7g=
+	b=eYCQS7hgoFOH0371KI7/qHyUw5IHHAPsB0CrgSmMwIE9sI90M4A7sQy7QXPl/H6Kj
+	 hZodXk7PKbGAq2m46zAtwwgvKYNtA/1UWauxKkiNuBak7RLnw4dBbLhdk79sWdQGQ1
+	 evreV/l0RPpLQsF/kr0kEwwEF9tCGciJnKmpuVf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1290/1518] net: add missing ref_tracker_dir_exit() to alloc_netdev_mqs()
-Date: Sat, 12 Sep 2026 08:57:39 +0200
-Message-ID: <20260912065652.696128007@linuxfoundation.org>
+Subject: [PATCH 6.18 1291/1518] virtio_balloon: disable indirect descriptors
+Date: Sat, 12 Sep 2026 08:57:40 +0200
+Message-ID: <20260912065652.720874160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,38 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 0b1c2af8a22c35cb099c735c2f63ea3ba757557d ]
+[ Upstream commit 281eb4732aae5473141b84e106fe906c69b2ff3d ]
 
-sashiko is reporting that trying to read /sys/kernel/debug/ref_tracker/*
-causes use-afer-free crash when either alloc_percpu() or dev_addr_init()
-in alloc_netdev_mqs() failed, for commit 4d92b95ff2f9 ("net: add net device
-refcount tracker infrastructure") added ref_tracker_dir_exit() to only
-free_netdev() path.
+The page reporting callback submits an sg list to the reporting
+virtqueue.  With VIRTIO_RING_F_INDIRECT_DESC negotiated and
+total_sg > 1 (which it typically is), virtqueue_add reports it to the
+host by allocating an indirect descriptor via kmalloc(GFP_KERNEL).
 
-Closes: https://sashiko.dev/#/patchset/56c707e7-1fb0-43ec-b8fb-cf6f451e513e%40I-love.SAKURA.ne.jp
-Fixes: 4d92b95ff2f9 ("net: add net device refcount tracker infrastructure")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/b06ce35d-e7bc-47a5-8e0a-e82be7e4dd08@I-love.SAKURA.ne.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is not pretty: the reporting worker isolates potentially hundreds
+of MB of free pages from the buddy allocator (reported pages are at
+least pageblock_order, and the sg can contain up to
+PAGE_REPORTING_CAPACITY entries of varying orders).  As the result,
+very theoretically, the kmalloc might trigger OOM when we have in fact a
+ton of free memory.
+
+Clear VIRTIO_RING_F_INDIRECT_DESC, to avoid using indirect descriptors.
+
+Fixes: b0c504f15471 ("virtio-balloon: add support for providing free page reports to host")
+Assisted-by: Claude:claude-opus-4-6
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <73fac8a629fd9aca7bb3265ac243a769c28af25d.1783232420.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/virtio/virtio_balloon.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 966617838f403..ae5e8dfd2fc21 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -12082,6 +12082,7 @@ struct net_device *alloc_netdev_mqs(int sizeof_priv, const char *name,
- 	free_percpu(dev->pcpu_refcnt);
- free_dev:
- #endif
-+	ref_tracker_dir_exit(&dev->refcnt_tracker);
- 	kvfree(dev);
- 	return NULL;
+diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
+index 1b93d8c643612..04c9b601ae4da 100644
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include <linux/virtio.h>
++#include <uapi/linux/virtio_ring.h>
+ #include <linux/virtio_balloon.h>
+ #include <linux/swap.h>
+ #include <linux/workqueue.h>
+@@ -1185,6 +1186,11 @@ static int virtballoon_validate(struct virtio_device *vdev)
+ 	else if (!virtio_has_feature(vdev, VIRTIO_BALLOON_F_PAGE_POISON))
+ 		__virtio_clear_bit(vdev, VIRTIO_BALLOON_F_REPORTING);
+ 
++	/*
++	 * Disable indirect descriptors to avoid memory allocation in
++	 * virtqueue_add during page reporting.
++	 */
++	__virtio_clear_bit(vdev, VIRTIO_RING_F_INDIRECT_DESC);
+ 	__virtio_clear_bit(vdev, VIRTIO_F_ACCESS_PLATFORM);
+ 	return 0;
  }
 -- 
 2.53.0
