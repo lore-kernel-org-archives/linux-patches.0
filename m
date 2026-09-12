@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D792336886;
-	Sat, 12 Sep 2026 13:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A1E31E106;
+	Sat, 12 Sep 2026 13:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221370; cv=none; b=oZuDticUMzpvKlmKxjfCR/NbD3Sra7Ana/Lzm8b7j4UOdWDobAAYrIZouh1qWKvlxBgCFa5pCc5RFZa/Yxt5ffmU6u2XKV+hgXSckrccPim3FxVuCYrMBhCDHQEg5Z8IzRpJildYj6XU1UVpx4IQaXvxr2M6HaWvAhAkHwekGOc=
+	t=1789221374; cv=none; b=JCF9gBkssWu+ROYMta43s50wZyzUuHZFkmYjRZY2a+2ukWqOge5oqm0883SI9ugGf7xF8HkGWwiEoGJSpxWQWEQsVmtPsHDUstIdLf+ZKKd4tdxLun2HVTnHI1+CE7wJ79Pgo4VNKK+6WR1sjk00GqnUs6zG+O9W1hcpmiEoP8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221370; c=relaxed/simple;
-	bh=eCmKN+wG91hTt5vY8YgxsOaG0DEB9PbvM5MIDfVUEe4=;
+	s=arc-20240116; t=1789221374; c=relaxed/simple;
+	bh=2T+6irnyvW2hMUnGKN8TW+quuF6vFsbyybUKoqIQ35w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHh4pJNszh2qPAATpn1nOqR4SPjFyz1uvPBbhyQTbgDESxjPcVH5bp9THaYcjd8qT3M5Wusb+MpJzCC6vcBRywvaPX0pqzI32Bbi0OVsHbyRKUdrNKMAbpJqPbMWRj1bV9NgVQLK/88VIcU7YWwrlpTgLJ6Nq74UGdeqt+3OuFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B62lgPFz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CcMLq6Vi2ZDIbZT4dGLYBPR/T6EFmw37cjpgu9dJ0d1cfXfFAD9bN/6Rp798XhidZpOVD9I2lE1lkHTFOOIogLMFiD11jT8SRllAdSOf299k61aoMpGfZM9sGuGG5Iq4ULCFzOoY0L5w9qHb2ryqaokMcbj4jFAzTZXwUyop6Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAHur1Rt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B62lgPFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDE11F00898;
-	Sat, 12 Sep 2026 13:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAHur1Rt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CE71F000FF;
+	Sat, 12 Sep 2026 13:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221366;
-	bh=NHF1bII+/QDAZLFaIgVbKc7df6h9FUoWLkV7Iot4xDw=;
+	s=korg; t=1789221371;
+	bh=jgRl3tb2bsRseJT71xBY3E3fuRStYekTYLJTG8Ckytg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B62lgPFzLf3/sTNMF51C/jFsGsEvjBdNWI18UeyDESK0P5XpnpBKlYlpnEB9+fImL
-	 lX3mPArYIbtgvCBUgu+ZgZyt1B274K9nx53RiG/th/BmoL//CIomgrrkYcJIEqqLZq
-	 ryzXOamoztRsxhkNgNBGDk3EXDrFywyVzOCvIrac=
+	b=GAHur1RtgSVVhdTCctNQJ8AoOeAP6izCheLBbvvJM6mReyQAmFGU4XfBiSJ3LLQRd
+	 34hOsScIAXlY98xtZmWmSJBRebRJfGh9jpw+yb2xRruoWjzr2X2tCsqWpaAKRS4yzH
+	 sk3qrYQF3G6Tb7XcldiEk6jgKbaW7IVuIty/U764=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Byagowi <ahmadexp@gmail.com>,
-	Peter Rosin <peda@lysator.liu.se>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 0368/1424] i2c: mux: Fix channel node leak on adapter add failure
-Date: Sat, 12 Sep 2026 08:46:40 +0200
-Message-ID: <20260912065615.533798481@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.6 0369/1424] arm64: mm: Fix the lockless page-table walk in show_pte()
+Date: Sat, 12 Sep 2026 08:46:41 +0200
+Message-ID: <20260912065615.556879615@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,36 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Byagowi <ahmadexp@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 385c7af4e3b95d0769fd211831674e83b16a2ebf upstream.
+commit a77644d009dece1104b6fcc6e322b0e4503db0d6 upstream.
 
-i2c_mux_add_adapter() takes a reference to the Device Tree channel node
-before registering the new adapter. If adapter registration fails, the
-error path frees the private data without dropping that reference.
+show_pte() walks page tables locklessly and can run with interrupts
+enabled. A concurrent teardown can free a table page while it is being
+walked. It can also clear a parent entry after show_pte() checked it; the
+regular pXd_offset() helpers then reread the cleared entry and can derive a
+bogus lower-level pointer and fault again.
 
-Release the channel node before freeing the private data.
+Use the lockless offset helpers with the saved parent entries, as
+gup_fast() does, and pass the saved PMD to pte_offset_map().
 
-Fixes: bc45449b1444 ("i2c/of: Automatically populate i2c mux busses from device tree data.")
-Signed-off-by: Ahmad Byagowi <ahmadexp@gmail.com>
-Cc: <stable@vger.kernel.org> # v3.5+
-Acked-by: Peter Rosin <peda@lysator.liu.se>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/b3e46bbee781b3cb4029aca9a71316cc5e36dc17.1787502619.git.ahmadexp@gmail.com
+For task page tables, arm64 selects MMU_GATHER_RCU_TABLE_FREE. Disable
+local interrupts around the walk to hold off RCU-deferred table frees and
+block the tlb_remove_table_sync_one() IPI until the walk is finished.
+
+Place the IRQ guard after the header print. This does not make the output a
+consistent snapshot, but prevents the task page-table walk from
+dereferencing a released table page or deriving a pointer from a different
+parent value.
+
+Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-mux.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/mm/fault.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/i2c-mux.c
-+++ b/drivers/i2c/i2c-mux.c
-@@ -433,6 +433,7 @@ int i2c_mux_add_adapter(struct i2c_mux_c
- 	return 0;
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -15,6 +15,7 @@
+ #include <linux/mm.h>
+ #include <linux/hardirq.h>
+ #include <linux/init.h>
++#include <linux/irqflags.h>
+ #include <linux/kasan.h>
+ #include <linux/kprobes.h>
+ #include <linux/uaccess.h>
+@@ -156,6 +157,9 @@ static void show_pte(unsigned long addr)
+ 	pr_alert("%s pgtable: %luk pages, %llu-bit VAs, pgdp=%016lx\n",
+ 		 mm == &init_mm ? "swapper" : "user", PAGE_SIZE / SZ_1K,
+ 		 vabits_actual, mm_to_pgd_phys(mm));
++
++	guard(irqsave)();
++
+ 	pgdp = pgd_offset(mm, addr);
+ 	pgd = READ_ONCE(*pgdp);
+ 	pr_alert("[%016lx] pgd=%016llx", addr, pgd_val(pgd));
+@@ -169,25 +173,25 @@ static void show_pte(unsigned long addr)
+ 		if (pgd_none(pgd) || pgd_bad(pgd))
+ 			break;
  
- err_free_priv:
-+	of_node_put(priv->adap.dev.of_node);
- 	kfree(priv);
- 	return ret;
- }
+-		p4dp = p4d_offset(pgdp, addr);
++		p4dp = p4d_offset_lockless(pgdp, pgd, addr);
+ 		p4d = READ_ONCE(*p4dp);
+ 		pr_cont(", p4d=%016llx", p4d_val(p4d));
+ 		if (p4d_none(p4d) || p4d_bad(p4d))
+ 			break;
+ 
+-		pudp = pud_offset(p4dp, addr);
++		pudp = pud_offset_lockless(p4dp, p4d, addr);
+ 		pud = READ_ONCE(*pudp);
+ 		pr_cont(", pud=%016llx", pud_val(pud));
+ 		if (pud_none(pud) || pud_bad(pud))
+ 			break;
+ 
+-		pmdp = pmd_offset(pudp, addr);
++		pmdp = pmd_offset_lockless(pudp, pud, addr);
+ 		pmd = READ_ONCE(*pmdp);
+ 		pr_cont(", pmd=%016llx", pmd_val(pmd));
+ 		if (pmd_none(pmd) || pmd_bad(pmd))
+ 			break;
+ 
+-		ptep = pte_offset_map(pmdp, addr);
++		ptep = pte_offset_map(&pmd, addr);
+ 		if (!ptep)
+ 			break;
+ 
 
 
