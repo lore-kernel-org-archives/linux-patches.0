@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDAB38333C;
-	Sat, 12 Sep 2026 19:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B746931F9B1;
+	Sat, 12 Sep 2026 19:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241156; cv=none; b=ijv8hJBdwerMJvTLGRIx3dPsVz3c4CiwdUl8PTNvX96Sq+BWfuQ9dZyqm0C2t7a7OS3sFl4BXj8cIVYG0QGXeVp60e6qOgAQJmsctqnvlxUzgdBrawlb2Bx5eJ6qFenVxI+DTs25Mx5Y4gmzwSrMx3LHhGn/003gycPpLPX2M5A=
+	t=1789241160; cv=none; b=If254Jr5y65os/epWAq3d7iH28KbnpwYpuDQh8hh2cqbDrmUsevBmrPXDVgwqmT7IWQcpauEpRcsWx2NJyozPdpKK+7LhcK1PWDoijEwdZnsqoj7ylZZ8/SYlY5veg2lv0bdupKGsbUw7GpJ1Qfljucvfbk5F3evV4jqIyK/wA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241156; c=relaxed/simple;
-	bh=7urkWv5jDTqyLboa2Mz3ruX1Np6oLHSVlKs3O0fpE9c=;
+	s=arc-20240116; t=1789241160; c=relaxed/simple;
+	bh=Mv9/yPqlQaRCHS7vRcVcfTlH6077/bgjKCtSVold4UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eInjl2qOhlRqdwTQXf15h4ExGThN+oYYn5zRxobLwHqDEqB+KUhAKi/xmJ34TsShrK6ZDghCzqYOu5GXp0+H/iBuh9/Wcs5yAEzWZCg9B51g0e6Ctr9muRH2/fjwVIyzDnB7mMRgKFj5sczkOAuIbGRNvV5+8rYf7LsHAIxnaic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRNW4AHF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=txOYeRGtjSrT9qtCuV/ujmihfdIoVZOZse3BSs/0uZepBExKMeMHKbrXVEbQKTEUQG7g5iZSvfxxw7nkIaKLKXCzoyYS3Yw5fnlBPaV7SaYSh9f7y580hVQ/qIE1Wav8hQ0tC2alnHA7Z/wqGcPYSyoEIdbLrOnA8ft9szK3Dic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKbykD6p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRNW4AHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1A51F000FF;
-	Sat, 12 Sep 2026 19:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKbykD6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1751F000FF;
+	Sat, 12 Sep 2026 19:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241154;
-	bh=8SKi+lePPyU+tCtt6wMhuKOKlKtq7TmXqjQSlr+/7is=;
+	s=korg; t=1789241159;
+	bh=V2t13yHZdNIgtwSMR8ihk97CPBQxwLykE5lZz/88EIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wRNW4AHFZ5ySI7IMuRZMcCWVO4fLpI0leE1lDPgbfAHHF+wbd/A40G7rWYtJzWzIs
-	 kzkfzz7+Dby5V3b/rnuu5ozOXi8wkP+9hYt/yBM1aPfsc0DVN5pymravchd7vTML3o
-	 LeROdUDCSiy75LGRsFYY5OpOtMezz2LtO+BWlyQE=
+	b=lKbykD6pPCbmRzD4+Iyq+lneOX1PDoQV4NYAaKwAOEh/006eQWbQ+taBdV/tIac27
+	 8kC20mCcGUx7BFhWnZKF0tnEw0R+DH1xz4enQytI9nEztPKmdVcqXWD7O/vVhqsJf9
+	 UOu0nGXctlfuDYYLAQkbx8qyeL6aoCISjWdtNnb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 078/798] bnx2x: fix double free in bnx2x_init_firmware() error path
-Date: Sat, 12 Sep 2026 08:55:06 +0200
-Message-ID: <20260912065518.752974080@linuxfoundation.org>
+	liyouhong <liyouhong@kylinos.cn>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.10 079/798] dm-era: fix shadowed superblock leak on take-snap failure
+Date: Sat, 12 Sep 2026 08:55:07 +0200
+Message-ID: <20260912065518.774980692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,46 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: liyouhong <liyouhong@kylinos.cn>
 
-commit d2796ffe38cb4155afe0eab23636295b096c27a5 upstream.
+commit 39c5aa3bd8ec3912d2cd0b3fe092642b0d2b0713 upstream.
 
-bnx2x_init_firmware() frees bp->init_ops, bp->init_data and
-bp->init_ops_offsets in its error path without setting them to NULL.
-The cleanup function bnx2x_release_firmware() frees the same three
-pointers unconditionally, so if init_firmware fails and
-release_firmware is later called (e.g. from __bnx2x_remove or through
-the function state machine), all three are freed a second time.
+metadata_take_snap() bumps the live superblock refcount and then
+dm_tm_shadow_block() allocates a new block for the metadata snapshot.
+If the subsequent dm_sm_inc_block() of writeset_tree_root or
+era_array_root fails, the function only unlocks the clone and
+returns.  The newly allocated shadow block is never returned to the
+metadata space map, so each failed take-snap permanently leaks one
+metadata block.
 
-Set each pointer to NULL after kfree() in the error path so that the
-subsequent kfree(NULL) in bnx2x_release_firmware() is a safe no-op.
+Free the clone with dm_sm_dec_block() on those error paths, matching
+the final step of metadata_drop_snap().
 
-Fixes: 94a78b79cb5f ("bnx2x: Separated FW from the source.")
+Fixes: eec40579d848 ("dm: add era target")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260815122149.951215-1-yijiangshan@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: liyouhong <liyouhong@kylinos.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/dm-era-target.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_main.c
-@@ -13548,10 +13548,13 @@ static int bnx2x_init_firmware(struct bn
+--- a/drivers/md/dm-era-target.c
++++ b/drivers/md/dm-era-target.c
+@@ -1015,6 +1015,7 @@ static int metadata_checkpoint(struct er
+ static int metadata_take_snap(struct era_metadata *md)
+ {
+ 	int r, inc;
++	dm_block_t location;
+ 	struct dm_block *clone;
  
- iro_alloc_err:
- 	kfree(bp->init_ops_offsets);
-+	bp->init_ops_offsets = NULL;
- init_offsets_alloc_err:
- 	kfree(bp->init_ops);
-+	bp->init_ops = NULL;
- init_ops_alloc_err:
- 	kfree(bp->init_data);
-+	bp->init_data = NULL;
- request_firmware_exit:
- 	release_firmware(bp->firmware);
- 	bp->firmware = NULL;
+ 	if (md->metadata_snap != SUPERBLOCK_LOCATION) {
+@@ -1052,7 +1053,9 @@ static int metadata_take_snap(struct era
+ 	r = dm_sm_inc_block(md->sm, md->writeset_tree_root);
+ 	if (r) {
+ 		DMERR("%s: couldn't inc writeset tree root", __func__);
++		location = dm_block_location(clone);
+ 		dm_tm_unlock(md->tm, clone);
++		dm_sm_dec_block(md->sm, location);
+ 		return r;
+ 	}
+ 
+@@ -1060,7 +1063,9 @@ static int metadata_take_snap(struct era
+ 	if (r) {
+ 		DMERR("%s: couldn't inc era tree root", __func__);
+ 		dm_sm_dec_block(md->sm, md->writeset_tree_root);
++		location = dm_block_location(clone);
+ 		dm_tm_unlock(md->tm, clone);
++		dm_sm_dec_block(md->sm, location);
+ 		return r;
+ 	}
+ 
 
 
