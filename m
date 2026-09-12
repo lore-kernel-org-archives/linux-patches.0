@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24E037CD21;
-	Sat, 12 Sep 2026 07:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6EA1EB5FD;
+	Sat, 12 Sep 2026 07:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197795; cv=none; b=MynXBzXzC9jfx1c0lDMmLAYdZflFrKgV7o9pIrfqmP0DE2cHzBJNDG7F2cdz336G76BlQfDz9xccpbBDVfW5kthvwin0kel3kCDy7291RbdGp0Flew5TVktbMizmdt9kSPPi0JKc03zHhsJU+CBNPDE6QQiRbX285J9CdH0yvno=
+	t=1789197799; cv=none; b=h5TLWKLdynDkF4J7tcLTuHAPnLGME11qU5n0r4AFuuV+2tWYN3kqanhu906pkfEJVV0F6JbbDWp/H14RP06Cc9Uk7ykvjiSyaqCF6kuB3D8U3wblZbt2v1ZUn9XlGBMEsBW2plOWEkTOI1n4i2bglzEuCpvOZya++BAQ0Qov9fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197795; c=relaxed/simple;
-	bh=Zc0oL74wQGc1KNnA9fsMI6XERmxHlEryLSfrLDiukns=;
+	s=arc-20240116; t=1789197799; c=relaxed/simple;
+	bh=Ww6UeixRK51UlE4/S2qMgy28zOAzCQior7sTDKexf4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J98RF2kHMuKfhigiwZprbWLx5ZCnzyX05QroNhZQZFpFNPoVSWdQksPwS1lp332+LU6EIa5joWmH0mo3DVnWznqun5MUjR+zWXURN8YXzX1EUDlv/V9XJRh2KaU1kTLzn75UNjd4xqhxdvsBPYUmQiZWuKiWJ9tMdXJdJgKEkyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2fRhKb2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pzQYUHZaNkaoAxeUA8Y/NVkIWAUlqPFo/fHWlF4nloAP5WfFSidCoVOprqnGFBgpg4S2ZPoJ/rWvugRm3ev/nFus+dCILYDlsC4+860v3rIWFYU0l1XvTchwHAZuTOTHvWkTFadBIXfHa3BXljfLEpAvKRVVoVxPqri75gHDvlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQt71PE8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2fRhKb2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D255F1F000FF;
-	Sat, 12 Sep 2026 07:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQt71PE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C541F000FF;
+	Sat, 12 Sep 2026 07:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197793;
-	bh=jfVlwTTIGz+7kOEPShSFB4L7dLz7xPwIkDsQOVvlp08=;
+	s=korg; t=1789197798;
+	bh=A6rUYvSbwoniwWIT7M0AzhqruTPU2l6OypdhHUCBuL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z2fRhKb2+PbrxgRkB3DqcXyOTFlGwjvVnSaFusPgMZ6EUr4sIYg440aKEuIy1+fQJ
-	 YpkT3rMaBrq0IN15vwTBx2/xiW57tRe+cjKUakzRGFqIbAUx2AeporOfMt7IreXSrA
-	 a6QI65NE1d1fx2i2ppipeoGMyCgq3UllgLRMGdT4=
+	b=SQt71PE8bPaUgImI7CLx9eZV1QT4gUMr8Ksag7pUoG6/SjdF7eLthGxIbgIhlik3o
+	 nsp5DkHvuFyV1C44UupPUNxI/+VNxfcMCW0YSpsCtTi8VgSiq8g7bC+7oQ29wPgpBu
+	 oGNsAo41kek37G2p9+8MXSRWK7QtzlIife7Yfvt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Malaya Kumar Rout <malayarout91@gmail.com>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0248/1815] timekeeping: Unwind aux clock sysfs children on failure
-Date: Sat, 12 Sep 2026 08:33:18 +0200
-Message-ID: <20260912065654.807801028@linuxfoundation.org>
+Subject: [PATCH 7.2 0249/1815] timers/migration: Fix memory leak in tmigr_setup_groups() error path
+Date: Sat, 12 Sep 2026 08:33:19 +0200
+Message-ID: <20260912065654.830739909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,75 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Malaya Kumar Rout <malayarout91@gmail.com>
 
-[ Upstream commit f2eee7e31ccd4bc87d047d8670cc2ec39cf36647 ]
+[ Upstream commit eddfded4196542deda7cb2da3d7ebef83f7ccfa4 ]
 
-tk_aux_sysfs_init() creates one child kobject per auxiliary clock. If a
-later child or sysfs group creation fails, the current error path only
-puts the parent kobjects and leaves earlier children and groups behind.
+When the WARN_ON_ONCE(i >= tmigr_hierarchy_levels) assertion triggers,
+the function returns -EINVAL without freeing the 'stack' memory allocated
+via kzalloc_objs() at the beginning of the function.
 
-Store the child kobjects during init and remove the successfully created
-groups and kobjects on failure.
+Add kfree(stack) before returning to prevent the memory leak.
 
-Fixes: 7b5ab04f035f ("timekeeping: Fix resource leak in tk_aux_sysfs_init() error paths")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Fixes: 6c181b5667ee ("timers/migration: Convert "while" loops to use "for"")
+Signed-off-by: Malaya Kumar Rout <malayarout91@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260703165337.168445-1-dbgh9129@gmail.com
+Link: https://patch.msgid.link/20260704085533.87098-1-malayarout91@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timekeeping.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ kernel/time/timer_migration.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
-index 696bb119c56ef..49f81336aae21 100644
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -3315,7 +3315,9 @@ static const struct attribute_group aux_clock_enable_attr_group = {
- static int __init tk_aux_sysfs_init(void)
- {
- 	struct kobject *auxo, *tko = kobject_create_and_add("time", kernel_kobj);
-+	struct kobject *clks[MAX_AUX_CLOCKS];
- 	int ret = -ENOMEM;
-+	int i;
- 
- 	if (!tko)
- 		return ret;
-@@ -3324,21 +3326,28 @@ static int __init tk_aux_sysfs_init(void)
- 	if (!auxo)
- 		goto err_clean;
- 
--	for (int i = 0; i < MAX_AUX_CLOCKS; i++) {
-+	for (i = 0; i < MAX_AUX_CLOCKS; i++) {
- 		char id[2] = { [0] = '0' + i, };
--		struct kobject *clk = kobject_create_and_add(id, auxo);
-+		clks[i] = kobject_create_and_add(id, auxo);
- 
--		if (!clk) {
-+		if (!clks[i]) {
- 			ret = -ENOMEM;
--			goto err_clean;
-+			goto err_clks;
- 		}
- 
--		ret = sysfs_create_group(clk, &aux_clock_enable_attr_group);
-+		ret = sysfs_create_group(clks[i], &aux_clock_enable_attr_group);
- 		if (ret)
--			goto err_clean;
-+			goto err_clk;
+diff --git a/kernel/time/timer_migration.c b/kernel/time/timer_migration.c
+index 806c23cf71fc9..059d43355e650 100644
+--- a/kernel/time/timer_migration.c
++++ b/kernel/time/timer_migration.c
+@@ -1847,8 +1847,10 @@ static int tmigr_setup_groups(struct tmigr_hierarchy *hier, unsigned int cpu,
  	}
- 	return 0;
  
-+err_clk:
-+	kobject_put(clks[i]);
-+err_clks:
-+	while (--i >= 0) {
-+		sysfs_remove_group(clks[i], &aux_clock_enable_attr_group);
-+		kobject_put(clks[i]);
+ 	/* Assert single root without parent */
+-	if (WARN_ON_ONCE(i >= tmigr_hierarchy_levels))
++	if (WARN_ON_ONCE(i >= tmigr_hierarchy_levels)) {
++		kfree(stack);
+ 		return -EINVAL;
 +	}
- err_clean:
- 	kobject_put(auxo);
- 	kobject_put(tko);
+ 
+ 	for (; i >= start_lvl; i--) {
+ 		group = stack[i];
 -- 
 2.53.0
 
