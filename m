@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9902369224;
-	Sat, 12 Sep 2026 09:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596EF418355;
+	Sat, 12 Sep 2026 09:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203861; cv=none; b=Zf4WDXHA3kpHrz9NRxW5AUAb1YCPZpmXqkbBwnThup8rLVs74oSIi4v8zp9Vbz7otcyPfQ5RnpFpWM9f8aRkp//bDKIdbiGUvwlywqmcXg9+KOHjtnUN1kfCa74JLdFHhxbTRz11oiTBZSLo+2CgTWQF63I2ANpDSpYeKJoO8UU=
+	t=1789203866; cv=none; b=iwwLcZrGPKcznv7bQ+V1Ul9gODxOhS19cnyVfqDnPOsWcTkVJN+NuK3REjgQDAOR1uSy8JI+fRF0hCgxktJFXnrFM7dRQ0BP47hPLRR0bpu20ey8F7lVU8jQhi7ZAK/3KvwxkY4br8aaSHk0HqqqF8MsSTVvS+GpCHpLMIYtLpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203861; c=relaxed/simple;
-	bh=2V1K2qey3ORjijv85UWw6XTdiCkLLQhGZaErl2FJtPI=;
+	s=arc-20240116; t=1789203866; c=relaxed/simple;
+	bh=eM82MG5k0HGRm33WPwTBW7OGtHQrWnEN4P2jcTTwkQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSFJJzRiKJT7Bii8FrXHZkounYNGVAavYDMuSV1y0zAUhVrWkhbSo+ndNpYS1Prl3nhPRUJCXMHsDYX4miOYGhRd/7Ms96ZwkuVex/GHSG5SMfkowsV5mq5TlsLBFgK9w/tjDBJyjC+BXK5MJLFQWZr1sJXp2lqlswSi/9jEC7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eObL4oYh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FVVxrjE3TjkDJA5Ju/4dQIX55VoF+caVQdn19XH0olflOv0kwBCloTqSaI+cNa+9jwUjJGg+55D0aOmxlzeFaGUvVgC1nvFPcIR7JZNaf6p8fj/YAFvpW+joDYYfs4cYr28TBzAUQ70RyXva5BUUOLFgH/0+PoKbxupuWe8PD78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJL7BN8v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eObL4oYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405C11F000FF;
-	Sat, 12 Sep 2026 09:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJL7BN8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30AA1F000FF;
+	Sat, 12 Sep 2026 09:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203860;
-	bh=admYzrpB2RiC6tqDRUWH2DRb6DRRfyyiYlZJ3hDKfho=;
+	s=korg; t=1789203864;
+	bh=6yUtk3SONkdjEA1sMj6JKIhTB5yuv+gyCNWMtia8z/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eObL4oYhm7fxZzDZtl0GG7WHPk1XAT0np3CA/WFZoLooRSww6Rt92Lt8mCIzvNmsS
-	 7PvS8hQtvKYQ84qrPb5ihpCylxr2jFWru2b0YmgRDN+UVX/IvLkx9qk/4bvmfOSx/3
-	 pzt9VxRP4jgGzjPdtoNT9PlFnXvaA/MJ6+FwWUA4=
+	b=BJL7BN8v9qePviwGY63pIMkQYxs2zrbOp0LbNfRpuuZyfEL3G3jqtbz9S2f/TPFNK
+	 wB6esqz0WG0+3kvadvNOMH3VND/at/xtF/yCxcCZ3F98ENsF+27ukhyp2FFn0I3/6A
+	 8+jeh+5cQIVnT/EWf2e0la9T1M9s5a4wKJXWeMQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Martin Petricek <mp@petricek.net>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1493/1815] selftests/mm: thuge-gen: fix test_shmget() for PAGE_SIZE check
-Date: Sat, 12 Sep 2026 08:54:03 +0200
-Message-ID: <20260912065724.051391170@linuxfoundation.org>
+Subject: [PATCH 7.2 1494/1815] apparmor: fix deadlock in complain-mode change_hat
+Date: Sat, 12 Sep 2026 08:54:04 +0200
+Message-ID: <20260912065724.074470571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -59,88 +51,286 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 08745c62350126bc31b09548137be87e2866f628 ]
+[ Upstream commit 4ec11f14d1d6fdda787d991b142537be7841d395 ]
 
-Commit 49a4e7186b08 ("selftests/mm: thuge-gen: add setup of HugeTLB
-pages") changed thuge-gen test to use common functions for reading hugetlb
-attributes from sysfs, but it missed that the original read_free()
-function special cased PAGE_SIZE tests.
+The use of change_hat when in complain mode can cause a deadlock
+when the hat doesn't exist and a new learning profile is created
+for the missing profile. This is because change_hat() has taken
+the lock to search the hat list and creating the new learning
+profile needs to take the lock to add it to the list.
 
-For PAGE_SIZE tests, failure to read sysfs was ignored and read_free()
-returned 0.
+>From the bug report:
 
-This allowed test_shmget() to essentially skip the check of how many huge
-pages was consumed when it ran with PAGE_SIZE.
+Originally found in 7.0.0 in LTS ubuntu 26.04 with pam_apparmor + su
+in complain mode set to change hats.  Then verified in newest
+available vanilla kernel I've compiled to see if still present:
 
-Commit 3199b0c09efa ("selftests/mm: fix read_file() return value check")
-fixed checks for read_file() return value and this exposed the issue in
-test_shmget() that checks the number of free hugetlb pages even for
-PAGE_SIZE test, tries to access
+7.2-rc7 vanilla -> affected
 
-/sys/kernel/mm/hugepages/hugepages-<PAGE_SIZE>/free_hugepages
+checked also some other kernels:
+6.18.44 vanilla -> affected
+6.12.95 with debian patches -> unaffected
 
-and obviously fails there.
+On systems without bug (for example 6.12.95 debian) it just prints:
 
-Gate the checks for free huge pages on size != getpagesize() and
-initialize before and after variables to values matching PAGE_SIZE test.
+aa_change_hat rc=0
 
-Link: https://lore.kernel.org/20260812-selftests-thuge-gen-fix-v2-1-9adaa693e73b@kernel.org
-Fixes: 49a4e7186b08 ("selftests/mm: thuge-gen: add setup of HugeTLB pages")
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+On systems with bug, the executable always hangs, prints nothing and
+becomes unkillable.  (And once stuck this way, it will cause any
+further hat changes to also cause the changing process to get stuck)
+
+Then in syslog you can find hint about cause:
+
+kernel: INFO: task hat:3409 blocked for more than 483 seconds.
+kernel:       Not tainted 7.2.0-rc7 #1
+kernel: "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+kernel: task:hat             state:D stack:0     pid:3409  tgid:3409  ppid:2605   task_flags:0x400000 flags:0x00080800
+kernel: Call Trace:
+kernel:  <TASK>
+kernel:  __schedule+0x48f/0xfe0
+kernel:  schedule+0x27/0xa0
+kernel:  schedule_preempt_disabled+0x15/0x30
+kernel:  __mutex_lock.constprop.0+0x569/0xa10
+kernel:  aa_new_learning_profile+0x15f/0x210
+kernel:  build_change_hat+0x19f/0x3b0
+kernel:  change_hat.isra.0+0x5dd/0xd60
+kernel:  aa_change_hat+0x2f3/0x710
+kernel:  aa_setprocattr_changehat+0x121/0x1f0
+kernel:  do_setattr+0x28c/0x340
+kernel:  apparmor_setselfattr+0x20/0x50
+kernel:  security_setselfattr+0xf6/0x110
+kernel:  __x64_sys_lsm_set_self_attr+0x53/0x90
+kernel:  do_syscall_64+0xdd/0x5e0
+kernel:  ? __mod_memcg_lruvec_state+0xfd/0x260
+kernel:  ? lruvec_stat_mod_folio+0x8d/0xd0
+kernel:  ? __folio_mod_stat+0x2d/0x90
+kernel:  ? map_anon_folio_pte_nopf+0xd1/0x1f0
+kernel:  ? do_anonymous_page+0x184/0xa10
+kernel:  ? __handle_mm_fault+0x805/0x870
+kernel:  ? count_memcg_events+0xef/0x230
+kernel:  ? handle_mm_fault+0x1f0/0x2f0
+kernel:  ? do_user_addr_fault+0x2bb/0x7b0
+kernel:  ? do_syscall_64+0x94/0x5e0
+kernel:  ? exc_page_fault+0x75/0x160
+kernel:  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+kernel: RIP: 0033:0x7f815e134c8d
+kernel: RSP: 002b:00007fff6df94ea8 EFLAGS: 00000246 ORIG_RAX: 00000000000001cc
+kernel: RAX: ffffffffffffffda RBX: 0000556d8c81d040 RCX: 00007f815e134c8d
+kernel: RDX: 0000000000000046 RSI: 0000556d8c81d040 RDI: 0000000000000064
+kernel: RBP: 00007fff6df94ef0 R08: 00007f815e212ac8 R09: 000000000000000c
+kernel: R10: 0000000000000000 R11: 0000000000000246 R12: 0000556d8c81d010
+kernel: R13: 0000000000000026 R14: 0000000000000046 R15: 0000000000000064
+kernel:  </TASK>
+kernel: INFO: task hat:3409 is blocked on a mutex likely owned by task hat:3409.
+
+To fix the issue, lift the locking out of the core of
+aa_new_learning_profile(), introduce a wrapper function that takes the
+lock where needed, and have build_change_hat() call the core function
+that no longer takes the lock.
+
+In addition fix 4 other issues introduced by commit
+32e92764d6f8d ("apparmor: grab ns lock and refresh when looking up changehat child profiles")
+- aa_get_profile_rcu() was replaced-by: aa_get_profile without the
+  accompanying rcu_dereference_protected()
+- an extra aa_get_label(label) was introduced at the start of
+  change_hat() without an accompanying aa_put_label() causing a
+  reference count leak.
+- a reference count leak was introduced in the label_is_stale(label)
+  case, where the newest profile would be leaked instead of the
+  label passed to the function.
+- a potential UAF when the lookup walks up the tree with new_ns != ns
+  the new label reference is put, and then used for the next lookup.
+  The mutex_lock, will block replacement, and removal in the locked
+  ns. However there are two cases where putting the reference can
+  result in the label being freed even with the lock held.
+
+  1. the label does not have a list reference (possible for temporary
+     or special profiles) in which case the put can trigger the
+     cleanup.
+  2. the new label reference is in a different namespace, which does
+     not have a lock held on it. This extends case 1 to also include
+     replacement, and removal that could be occurring in the namespace
+     new is in.
+
+Reported-by: Martin Petricek <mp@petricek.net>
+Link: https://lists.ubuntu.com/archives/apparmor/2026-August/014907.html
+Fixes: 32e92764d6f8d ("apparmor: grab ns lock and refresh when looking up changehat child profiles")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/thuge-gen.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ security/apparmor/domain.c         | 26 +++++++++++++++++---------
+ security/apparmor/include/policy.h |  3 +++
+ security/apparmor/policy.c         | 22 +++++++++++++++++-----
+ 3 files changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/thuge-gen.c b/tools/testing/selftests/mm/thuge-gen.c
-index 22b9c2f1c35d2..50d0805b65db9 100644
---- a/tools/testing/selftests/mm/thuge-gen.c
-+++ b/tools/testing/selftests/mm/thuge-gen.c
-@@ -71,12 +71,16 @@ void test_mmap(unsigned long size, unsigned flags)
+diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
+index 578f7cabebd51..e88c19c9b175a 100644
+--- a/security/apparmor/domain.c
++++ b/security/apparmor/domain.c
+@@ -1133,8 +1133,8 @@ static struct aa_label *build_change_hat(const struct cred *subj_cred,
+ 	if (!hat) {
+ 		error = -ENOENT;
+ 		if (COMPLAIN_MODE(profile)) {
+-			hat = aa_new_learning_profile(profile, true, name,
+-						      GFP_KERNEL);
++			hat = __aa_new_learning_profile(profile, true, name,
++							GFP_KERNEL);
+ 			if (!hat) {
+ 				info = "failed null profile create";
+ 				error = -ENOMEM;
+@@ -1172,6 +1172,7 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	bool sibling = false;
+ 	const char *name, *info = NULL;
+ 	int i, error;
++	bool needput = false;
  
- void test_shmget(unsigned long size, unsigned flags)
- {
--	int id;
--	unsigned long before, after;
-+	/* values for PAGE_SIZE test */
-+	unsigned long before = NUM_PAGES;
-+	unsigned long after = 0;
- 	struct shm_info i;
- 	char *map;
-+	int id;
+ 	AA_BUG(!label);
+ 	AA_BUG(!hats);
+@@ -1184,7 +1185,6 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	 * the profiles and label, we can rely on the namespaces being live
+ 	 * and avoid incrementing their refcounts while grabbing the lock.
+ 	 */
+-	label = aa_get_label(label);
+ 	ns = labels_ns(label);
+ 
+ retry:
+@@ -1192,15 +1192,19 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	if (label_is_stale(label)) {
+ 		new = aa_get_newest_label(label);
+ 		new_ns = labels_ns(new);
 +
-+	if (size != getpagesize())
-+		before = hugetlb_free_pages(size);
++		if (needput)
++			/* aa_put_label() is safe to call when under lock */
++			aa_put_label(label);
++		label = new;
++		needput = true;
++		/* check if replaced with label in parent ns, and lock there */
+ 		if (new_ns != ns) {
+-			aa_put_label(new);
+ 			mutex_unlock(&ns->lock);
+ 			ns = new_ns;
+-			label = new;
++			/* retry will bottom out at the root of the tree */
+ 			goto retry;
+ 		}
+-		aa_put_label(label);
+-		label = new;
+ 	}
  
--	before = hugetlb_free_pages(size);
- 	id = shmget(IPC_PRIVATE, size * NUM_PAGES, IPC_CREAT|0600|flags);
- 	if (id < 0) {
- 		if (errno == EPERM) {
-@@ -97,10 +101,11 @@ void test_shmget(unsigned long size, unsigned flags)
- 	shmctl(id, IPC_RMID, NULL);
+ 	if (PROFILE_IS_HAT(labels_profile(label)))
+@@ -1211,7 +1215,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 		name = hats[i];
+ 		label_for_each_in_scope(it, labels_ns(label), label, profile) {
+ 			if (sibling && PROFILE_IS_HAT(profile)) {
+-				root = aa_get_profile(profile->parent);
++				root = aa_get_profile(rcu_dereference_protected(profile->parent,
++						      mutex_is_locked(&ns->lock)));
+ 			} else if (!sibling && !PROFILE_IS_HAT(profile)) {
+ 				root = aa_get_profile(profile);
+ 			} else {	/* conflicting change type */
+@@ -1272,6 +1277,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 		}
+ 	}
+ 	mutex_unlock(&ns->lock);
++	if (needput)
++		aa_put_label(label);
+ 	return ERR_PTR(error);
  
- 	memset(map, 0xff, size*NUM_PAGES);
--	after = hugetlb_free_pages(size);
-+	if (size != getpagesize())
-+		after = hugetlb_free_pages(size);
+ build:
+@@ -1282,7 +1289,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	mutex_unlock(&ns->lock);
+ 	AA_BUG(!new);
+ 	/* return new label or error ptr */
+-
++	if (needput)
++		aa_put_label(label);
+ 	return new;
+ }
  
- 	show(size);
--	ksft_test_result(size == getpagesize() || (before - after) == NUM_PAGES,
-+	ksft_test_result((before - after) == NUM_PAGES,
- 			 "%s: mmap %lu %x\n", __func__, size, flags);
- 	if (shmdt(map))
- 		ksft_exit_fail_msg("%s: shmdt: %s\n", __func__, strerror(errno));
+diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
+index 3895f8774a3f9..c6439ce6e436a 100644
+--- a/security/apparmor/include/policy.h
++++ b/security/apparmor/include/policy.h
+@@ -295,6 +295,9 @@ struct aa_profile *aa_alloc_profile(const char *name, struct aa_proxy *proxy,
+ 				    gfp_t gfp);
+ struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
+ 				 gfp_t gfp);
++struct aa_profile *__aa_new_learning_profile(struct aa_profile *parent,
++					     bool hat, const char *base,
++					     gfp_t gfp);
+ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 					   const char *base, gfp_t gfp);
+ void aa_free_profile(struct aa_profile *profile);
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 94b4a7e727cc1..cd87370578dda 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -719,7 +719,7 @@ struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
+ }
+ 
+ /**
+- * aa_new_learning_profile - create or find a null-X learning profile
++ * __aa_new_learning_profile - create or find a null-X learning profile
+  * @parent: profile that caused this profile to be created (NOT NULL)
+  * @hat: true if the null- learning profile is a hat
+  * @base: name to base the null profile off of
+@@ -736,8 +736,9 @@ struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
+  *
+  * Returns: new refcounted profile else NULL on failure
+  */
+-struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+-					   const char *base, gfp_t gfp)
++struct aa_profile *__aa_new_learning_profile(struct aa_profile *parent,
++					     bool hat, const char *base,
++					     gfp_t gfp)
+ {
+ 	struct aa_profile *p, *profile;
+ 	const char *bname;
+@@ -745,6 +746,7 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 	size_t name_sz;
+ 
+ 	AA_BUG(!parent);
++	AA_BUG(!mutex_is_locked(&parent->ns->lock));
+ 
+ 	if (base) {
+ 		name_sz = strlen(parent->base.hname) + 8 + strlen(base);
+@@ -778,7 +780,6 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 	if (hat)
+ 		profile->label.flags |= FLAG_HAT;
+ 
+-	mutex_lock_nested(&profile->ns->lock, profile->ns->level);
+ 	p = __find_child(&parent->base.profiles, bname);
+ 	if (p) {
+ 		aa_free_profile(profile);
+@@ -786,7 +787,6 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 	} else {
+ 		__add_profile(&parent->base.profiles, profile);
+ 	}
+-	mutex_unlock(&profile->ns->lock);
+ 
+ 	/* refcount released by caller */
+ out:
+@@ -800,6 +800,18 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 	return NULL;
+ }
+ 
++struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
++					   const char *base, gfp_t gfp)
++{
++	struct aa_profile *profile;
++
++	mutex_lock_nested(&parent->ns->lock, parent->ns->level);
++	profile = __aa_new_learning_profile(parent, hat, base, gfp);
++	mutex_unlock(&parent->ns->lock);
++
++	return profile;
++}
++
+ /**
+  * replacement_allowed - test to see if replacement is allowed
+  * @profile: profile to test if it can be replaced  (MAYBE NULL)
 -- 
 2.53.0
 
