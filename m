@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A442F37B036;
-	Sat, 12 Sep 2026 10:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD2637B036;
+	Sat, 12 Sep 2026 10:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207656; cv=none; b=dDH5w5yEw4b1rYd2e3EFqieX3UK5heJiBNMxOJaafB90xkYAs9o6+TYR+PSnvOoz9dhw1czYpumotQvtK996hD87Rry7cTpBn4J9WO5YGhsAaVCYvW3ClfYkLmezPjQTRCsuU9hKzGZzNjqaFuRi42tXE+EhClE1fM14YJ9Crss=
+	t=1789207661; cv=none; b=lnbWb5PNybFDet59pStbutSkxZ5wCRzQk0LNj1/18j+qPdP+Z5Nxsid/LV/mVr2cBwh58ZR93Tmnufi3l3WFDLUbGcnbEUoWfEvzLTSUql3K6d5bGH0y60f553vOVPYtKcAK0bZlQD4+LDrN6FKewsom/+F8+75Yj/Qiac3WMhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207656; c=relaxed/simple;
-	bh=MjKGc7qr87a2tw8jD0nbpsccC9ki/uX51H9KMR5W1cE=;
+	s=arc-20240116; t=1789207661; c=relaxed/simple;
+	bh=1tUwE92CgvhEaR1xPRrSobCXcySrtRMrgfl651RMdPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYsVNAvw8xkb3PAILUCBZqAhD7B/GhZOldTtlpNYQMAypiRN6uNoZGwNn4h+AC6cRre9xUPCdqFGAVTNFZwIqpRicraPFcaN06YrLCkTYYCvUmOoEIleQOMQBknlOfTCuUFgtRuz1yOVTbOmoWGJujnpmLjyQeBEmNslnTHx0nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NS9dEAiH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qs8YmF2nr8bn7aHHh8rdGxLUzhoYh68N5ZZrVOq8FF/SW27/uqTCOKMHD5CvX0knjWoDmPVfpEeaU2PEfvB8WxHL/wStDk260ytUwYqksmKe+AM+Fw2thYHo7rbZya2MEhXrCTreY1rDT1VGykuCIx8pYSeBRH7j0auoaYrUxNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BC+Kk5qf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NS9dEAiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B781F000FF;
-	Sat, 12 Sep 2026 10:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BC+Kk5qf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E9E1F000FF;
+	Sat, 12 Sep 2026 10:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207655;
-	bh=qP+OjVud4pCEv2pUS6MiFKPuj9dMae8crHINsb24PpQ=;
+	s=korg; t=1789207660;
+	bh=WxFP2AX62s9QTGozU0Nre8bimXnhF3r2Z7cVFC+ZUg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NS9dEAiHJSTozbgUOKB+doA+uRt1+ZCzDSnvmc17/UzDFNxu2cpL2eIliiKpSZY//
-	 l9mKWP1cZ+zq2bwVlTvMok9rDZIZWEfwsdslOswwkHa4IXfZesvsG+EcbeHseQAREo
-	 z5bihmTHpf6TgoV7li2NjRyW+8/5SDpV7fAp/kCs=
+	b=BC+Kk5qfKxcQlBFctQbhDVkDKCL3mL38DYUxypnN8+/mS6Ntks74Sa+6k59Aik0jB
+	 dr1ruyLwZTVfiOZzwry2bfOwZzqOTF7Jzfp/idfZzjkOuXnTS9Pa8TyHPtDk5dGZCN
+	 v5+u5eerHTI2hci0LMGE2aOmmZcKew/VXUL5xadM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0455/1518] misc: lan966x_pci: depopulate children on populate failure
-Date: Sat, 12 Sep 2026 08:43:44 +0200
-Message-ID: <20260912065633.743198194@linuxfoundation.org>
+Subject: [PATCH 6.18 0456/1518] cacheinfo: dont propagate DT/ACPI error when arch supplies info (arm64)
+Date: Sat, 12 Sep 2026 08:43:45 +0200
+Message-ID: <20260912065633.765929674@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,38 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f6e2ed54db95286d9512b1cff38264e2f6299814 ]
+[ Upstream commit 274259391c14166fcabae74f9fc0104223ff27a1 ]
 
-lan966x_pci_probe() applies a device-tree overlay and then populates
-platform children from the overlaid node. If
-of_platform_default_populate() creates some children and then fails, the
-current error path only unloads the overlay.
+cache_setup_properties() sets use_arch_info = true when DT/ACPI
+provide no cache nodes and the arch can derive the topology from
+CPU registers (e.g. arm64 reading CLIDR_EL1), but still returns the
+original -ENOENT. cache_shared_cpu_map_setup() bails on that error
+before the new flag can take effect, so the first CPU brought online
+always trips a misleading warning:
 
-Depopulate the children before unloading the overlay on that failure
-path, matching the remove path order.
+  cacheinfo: Unable to detect cache hierarchy for CPU 0
 
-Fixes: 185686beb464 ("misc: Add support for LAN966x PCI device")
-Reviewed-by: Herve Codina <herve.codina@bootlin.com>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260623015248.22721-1-pengpeng@iscas.ac.cn
+Subsequent CPUs skip cache_setup_properties() entirely because
+use_arch_info is now true, which is why only CPU0 hits it. This is
+reproducible on arm64 with the QEMU 'virt' machine, whose default DT
+has no cache nodes.
+
+Clear ret after setting use_arch_info so the caller proceeds and
+populates the shared cpu map via the arch-supplied leaves.
+
+Fixes: ef9f643a9f8b ("cacheinfo: Add use_arch[|_cache]_info field/function")
+Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Link: https://patch.msgid.link/20260611-cacheinfo-v2-1-6069ef066cf3@debian.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/lan966x_pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/cacheinfo.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/lan966x_pci.c b/drivers/misc/lan966x_pci.c
-index 9c79b58137e52..f6e358389af77 100644
---- a/drivers/misc/lan966x_pci.c
-+++ b/drivers/misc/lan966x_pci.c
-@@ -183,6 +183,7 @@ static int lan966x_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
- 	return 0;
+diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
+index 613410705a47e..338804742dce3 100644
+--- a/drivers/base/cacheinfo.c
++++ b/drivers/base/cacheinfo.c
+@@ -382,9 +382,14 @@ static int cache_setup_properties(unsigned int cpu)
+ 	else if (!acpi_disabled)
+ 		ret = cache_setup_acpi(cpu);
  
- err_unload_overlay:
-+	of_platform_depopulate(dev);
- 	lan966x_pci_unload_overlay(data);
+-	// Assume there is no cache information available in DT/ACPI from now.
+-	if (ret && use_arch_cache_info())
++	/*
++	 * No DT/ACPI cache nodes; fall back to arch-derived topology (e.g.
++	 * arm64 CLIDR_EL1) and clear the error to avoid a spurious warning.
++	 */
++	if (ret && use_arch_cache_info()) {
+ 		use_arch_info = true;
++		ret = 0;
++	}
+ 
  	return ret;
  }
 -- 
