@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E8739EF1F;
-	Sat, 12 Sep 2026 18:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050FC38B15B;
+	Sat, 12 Sep 2026 18:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238383; cv=none; b=QWBlsNps6F3AI31v3NE2Ggoc7uE4ZCUrKHtWh/9cySg5T58VtQQ0otT5prcGV0Wld4GE3dCWJpGzCW9yFu1UNTDWbZk8136Y3kVB21Uxfm0zhjFvi46GWNYJkoUbS0z7Cc9zluz0wiYvW/PpI2BJrQHOBnCvs5zMl2BpUvhXJmM=
+	t=1789238388; cv=none; b=doy5jvE/5inYLjANBv3zW2vC0pbvKF4aqRkY4MEzsSQZRnVOG6saBHPN/pJoD4A1/5xytprOUTFwsRUejyRz042P0y9mvbMSbQXV0zBXgmVsfO/MgykeuLyP5LKMa9rODGBEVWqA6ovGzb6Tu5WHWOaQ7/GsHfzT7RhR8OhejI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238383; c=relaxed/simple;
-	bh=mXvjTIogdcTcfEQQ4vrzLSAERzjOy3/qoPN0hqGcjig=;
+	s=arc-20240116; t=1789238388; c=relaxed/simple;
+	bh=3FT7lxnUE3s+3ARWtM+uuKqLRGDqxWdiXL+hy4UvcRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paZI8urrvX8/ffHT507PI/GiU2UBX7tmTRKiRIHVaRDpD4tBXCx1QYMP5MAuDZjEREJyAkJxRlrkMB3DXVMLGknrR7hrtOV8MmUwK3jJqJZHhbCMrri1wp2EVcxdOQ0QM52/t5tupxNqntKNlvZgtqYbl8xmHzv7okoc2aJtggE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPGo5UJZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DWY4dB4yp4zNlPojF++EJtYgpLDEKedaAXknZwxSDU9S8e+uLJO0IX4ZIZOcpwMau2aIftHf+tXn9AiuuINL2ork2HwSbvKUCLDmCdT67xyhl4Gy614EZGPYUz5n/0R8SZsZbkN2UYyO6gamxlfr/JGkh3lSfdInfPK/awPBmVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFRmrEEI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPGo5UJZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1474C1F00893;
-	Sat, 12 Sep 2026 18:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFRmrEEI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBECF1F000FF;
+	Sat, 12 Sep 2026 18:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238378;
-	bh=GUtP+lTBqLc7zxx7xd4WqHU1wxKFPIm1ZSh87Edc5KM=;
+	s=korg; t=1789238384;
+	bh=3wqx21AdqlDr59y2UwTl1rfd/HAF2J8dnZZRJC94f2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IPGo5UJZ6ndhzC6R//jhOoW72VkD7iLwJTqUnFo/uWTwMZhknbFcAxiX2U8ZFmeA9
-	 PvubEMaun1gGbOvEKkcwtZTsFwlbD4Qg8U5dVvj2lpf5DTR7txHDIK7ZCsco5Jedyu
-	 YMiSAE76ZfcsaBYM7vnlxGxAE3q/p/zvI6isQQz8=
+	b=ZFRmrEEI8fl4vS7wpN4kTgwq5aT1dQZ5qhD19TO1f9k5yoWyImzld2POVZnosNfxx
+	 LzrwXdB2TrPNmSVmT3BD+fYg7FSR7T5DamtNmyfBT9CT9VWruhcK2xrkeW3g6KOLEO
+	 +b7L5wI4dNvuenbBFM8X9Maxv/I+FTIZzHEDP5B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 397/935] smack: deduplicate smackfs/{direct,mapped} file_operations
-Date: Sat, 12 Sep 2026 08:57:07 +0200
-Message-ID: <20260912065535.928623965@linuxfoundation.org>
+Subject: [PATCH 5.15 444/935] nvmet-rdma: use sbitmap to replace rsp free list
+Date: Sat, 12 Sep 2026 08:57:54 +0200
+Message-ID: <20260912065537.015783617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,257 +51,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 577dc3b6a8cf200e6e27b2d9967cac14a1fed2f3 ]
+[ Upstream commit 40f0e5dc2f3c866bef3fccf398114b90c6136dfa ]
 
-The file_operations for smackfs/direct and smackfs/mapped are
-identical up to a textual replacement of "direct" with "mapped"
+We can use sbitmap to manage all the nvmet_rdma_rsp instead of using
+free lists and spinlock, and we can use an additional tag to
+determine whether the nvmet_rdma_rsp is extra allocated.
 
-This patch combines two instances of file_operations into one,
-handling both files.
+In addition, performance has improved:
+1. testing environment is local rxe rdma devie and mem-based
+backstore device.
+2. fio command, test the average 5 times:
+fio -filename=/dev/nvme0n1 --ioengine=libaio -direct=1
+-size=1G -name=1 -thread -runtime=60 -time_based -rw=read -numjobs=16
+-iodepth=128 -bs=4k -group_reporting
+3. Before: 241k IOPS, After: 256k IOPS, an increase of about 5%.
 
-Fixes: f7112e6c9abf ("Smack: allow for significantly longer Smack labels v4")
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 0114dd303b37 ("nvmet-rdma: fix response resource leak on queue teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack.h   |   5 +-
- security/smack/smackfs.c | 133 ++++++++++++---------------------------
- 2 files changed, 42 insertions(+), 96 deletions(-)
+ drivers/nvme/target/rdma.c | 56 ++++++++++++++++++--------------------
+ 1 file changed, 27 insertions(+), 29 deletions(-)
 
-diff --git a/security/smack/smack.h b/security/smack/smack.h
-index 99ef9610fd5f5..2a2eb2a8ca96e 100644
---- a/security/smack/smack.h
-+++ b/security/smack/smack.h
-@@ -304,8 +304,9 @@ int smack_populate_secattr(struct smack_known *skp);
-  * Shared data.
-  */
- extern int smack_enabled __initdata;
--extern int smack_cipso_direct;
--extern int smack_cipso_mapped;
-+extern int smack_cipso_auto_level[2];
-+#define smack_cipso_direct (+smack_cipso_auto_level[0])
-+#define smack_cipso_mapped (+smack_cipso_auto_level[1])
- extern struct smack_known *smack_net_ambient;
- extern struct smack_known *smack_syslog_label;
- #ifdef CONFIG_SECURITY_SMACK_BRINGUP
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index 9479d0e01048b..1b5147578bfe2 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -80,18 +80,27 @@ static DEFINE_MUTEX(smk_net6addr_lock);
- struct smack_known *smack_net_ambient;
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index afdbe0506df5d..153008946087d 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -38,6 +38,8 @@
  
- /*
-- * This is the level in a CIPSO header that indicates a
-+ * Sensitivity levels for automatically created CIPSO labels.
-+ * See smack_access.c`smack_populate_secattr()
-+ *
-+ * [0] "direct" labeling, label length < SMK_CIPSOLEN(24):
-  * smack label is contained directly in the category set.
-  * It can be reset via smackfs/direct
-- */
--int smack_cipso_direct = SMACK_CIPSO_DIRECT_DEFAULT;
--
--/*
-- * This is the level in a CIPSO header that indicates a
-+ *
-+ * [1] "mapped" labeling, label length >= SMK_CIPSOLEN(24):
-  * secid is contained directly in the category set.
-  * It can be reset via smackfs/mapped
-  */
--int smack_cipso_mapped = SMACK_CIPSO_MAPPED_DEFAULT;
-+int smack_cipso_auto_level[2] = {
-+	SMACK_CIPSO_DIRECT_DEFAULT,
-+	SMACK_CIPSO_MAPPED_DEFAULT,
-+};
+ #define NVMET_RDMA_BACKLOG 128
+ 
++#define NVMET_RDMA_DISCRETE_RSP_TAG		-1
 +
-+static int
-+smk_cipso_auto_level_idx(const struct file *file)
-+{
-+	return (file_inode(file)->i_ino != SMK_DIRECT);
-+}
+ struct nvmet_rdma_srq;
  
- #ifdef CONFIG_SECURITY_SMACK_BRINGUP
- /*
-@@ -1639,15 +1648,15 @@ static const struct file_operations smk_doi_ops = {
+ struct nvmet_rdma_cmd {
+@@ -75,7 +77,7 @@ struct nvmet_rdma_rsp {
+ 	u32			invalidate_rkey;
+ 
+ 	struct list_head	wait_list;
+-	struct list_head	free_list;
++	int			tag;
  };
  
- /**
-- * smk_read_direct - read() for /smack/direct
-- * @filp: file pointer, not actually used
-+ * smk_read_cipso_auto_level - read() for smackfs/direct and smackfs/mapped
-+ * @filp: file pointer
-  * @buf: where to put the result
-  * @count: maximum to send along
-  * @ppos: where to start
-  *
-  * Returns number of bytes read or error code, as appropriate
-  */
--static ssize_t smk_read_direct(struct file *filp, char __user *buf,
-+static ssize_t smk_read_cipso_auto_level(struct file *filp, char __user *buf,
- 			       size_t count, loff_t *ppos)
+ enum nvmet_rdma_queue_state {
+@@ -98,8 +100,7 @@ struct nvmet_rdma_queue {
+ 	struct nvmet_sq		nvme_sq;
+ 
+ 	struct nvmet_rdma_rsp	*rsps;
+-	struct list_head	free_rsps;
+-	spinlock_t		rsps_lock;
++	struct sbitmap		rsp_tags;
+ 	struct nvmet_rdma_cmd	*cmds;
+ 
+ 	struct work_struct	release_work;
+@@ -172,7 +173,8 @@ static void nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue);
+ static void nvmet_rdma_free_rsp(struct nvmet_rdma_device *ndev,
+ 				struct nvmet_rdma_rsp *r);
+ static int nvmet_rdma_alloc_rsp(struct nvmet_rdma_device *ndev,
+-				struct nvmet_rdma_rsp *r);
++				struct nvmet_rdma_rsp *r,
++				int tag);
+ 
+ static const struct nvmet_fabrics_ops nvmet_rdma_ops;
+ 
+@@ -210,15 +212,12 @@ static inline bool nvmet_rdma_need_data_out(struct nvmet_rdma_rsp *rsp)
+ static inline struct nvmet_rdma_rsp *
+ nvmet_rdma_get_rsp(struct nvmet_rdma_queue *queue)
  {
- 	char temp[80];
-@@ -1656,26 +1665,28 @@ static ssize_t smk_read_direct(struct file *filp, char __user *buf,
- 	if (*ppos != 0)
- 		return 0;
+-	struct nvmet_rdma_rsp *rsp;
+-	unsigned long flags;
++	struct nvmet_rdma_rsp *rsp = NULL;
++	int tag;
  
--	sprintf(temp, "%d", smack_cipso_direct);
-+	sprintf(temp, "%d", smack_cipso_auto_level[
-+			      smk_cipso_auto_level_idx(filp)]);
- 	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
+-	spin_lock_irqsave(&queue->rsps_lock, flags);
+-	rsp = list_first_entry_or_null(&queue->free_rsps,
+-				struct nvmet_rdma_rsp, free_list);
+-	if (likely(rsp))
+-		list_del(&rsp->free_list);
+-	spin_unlock_irqrestore(&queue->rsps_lock, flags);
++	tag = sbitmap_get(&queue->rsp_tags);
++	if (tag >= 0)
++		rsp = &queue->rsps[tag];
  
- 	return rc;
- }
- 
- /**
-- * smk_write_direct - write() for /smack/direct
-- * @file: file pointer, not actually used
-+ * smk_write_cipso_auto_level - write() for smackfs/direct and smackfs/mapped
-+ * @filp: file pointer
-  * @buf: where to get the data from
-  * @count: bytes sent
-  * @ppos: where to start
-  *
-  * Returns number of bytes written or error code, as appropriate
-  */
--static ssize_t smk_write_direct(struct file *file, const char __user *buf,
--				size_t count, loff_t *ppos)
-+static ssize_t
-+smk_write_cipso_auto_level(struct file *filp, const char __user *buf,
-+			   size_t count, loff_t *ppos)
- {
- 	struct smack_known *skp;
--	int i, ret;
-+	int i, ret, idx, old_lvl;
- 
- 	if (!smack_privileged(CAP_MAC_ADMIN))
- 		return -EPERM;
-@@ -1687,94 +1698,28 @@ static ssize_t smk_write_direct(struct file *file, const char __user *buf,
- 	/*
- 	 * Don't do anything if the value hasn't actually changed.
- 	 * If it is changing reset the level on entries that were
--	 * set up to be direct when they were created.
-+	 * set up to be "auto" level when they were created.
- 	 */
--	if (smack_cipso_direct != i) {
--		mutex_lock(&smack_known_lock);
--		list_for_each_entry_rcu(skp, &smack_known_list, list)
--			if (skp->smk_netlabel.attr.mls.lvl ==
--			    smack_cipso_direct)
--				skp->smk_netlabel.attr.mls.lvl = i;
--		smack_cipso_direct = i;
--		mutex_unlock(&smack_known_lock);
--	}
+ 	if (unlikely(!rsp)) {
+ 		int ret;
+@@ -226,13 +225,12 @@ nvmet_rdma_get_rsp(struct nvmet_rdma_queue *queue)
+ 		rsp = kzalloc(sizeof(*rsp), GFP_KERNEL);
+ 		if (unlikely(!rsp))
+ 			return NULL;
+-		ret = nvmet_rdma_alloc_rsp(queue->dev, rsp);
++		ret = nvmet_rdma_alloc_rsp(queue->dev, rsp,
++				NVMET_RDMA_DISCRETE_RSP_TAG);
+ 		if (unlikely(ret)) {
+ 			kfree(rsp);
+ 			return NULL;
+ 		}
 -
--	return count;
--}
-+	idx = smk_cipso_auto_level_idx(filp);
-+	old_lvl = smack_cipso_auto_level[idx];
- 
--static const struct file_operations smk_direct_ops = {
--	.read		= smk_read_direct,
--	.write		= smk_write_direct,
--	.llseek		= default_llseek,
--};
--
--/**
-- * smk_read_mapped - read() for /smack/mapped
-- * @filp: file pointer, not actually used
-- * @buf: where to put the result
-- * @count: maximum to send along
-- * @ppos: where to start
-- *
-- * Returns number of bytes read or error code, as appropriate
-- */
--static ssize_t smk_read_mapped(struct file *filp, char __user *buf,
--			       size_t count, loff_t *ppos)
--{
--	char temp[80];
--	ssize_t rc;
--
--	if (*ppos != 0)
--		return 0;
--
--	sprintf(temp, "%d", smack_cipso_mapped);
--	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
--
--	return rc;
--}
--
--/**
-- * smk_write_mapped - write() for /smack/mapped
-- * @file: file pointer, not actually used
-- * @buf: where to get the data from
-- * @count: bytes sent
-- * @ppos: where to start
-- *
-- * Returns number of bytes written or error code, as appropriate
-- */
--static ssize_t smk_write_mapped(struct file *file, const char __user *buf,
--				size_t count, loff_t *ppos)
--{
--	struct smack_known *skp;
--	int i, ret;
--
--	if (!smack_privileged(CAP_MAC_ADMIN))
--		return -EPERM;
--
--	ret = kstrtos32_from_user(buf, count, 10, &i);
--	if (unlikely(ret))
--		return ret;
--
--	/*
--	 * Don't do anything if the value hasn't actually changed.
--	 * If it is changing reset the level on entries that were
--	 * set up to be mapped when they were created.
--	 */
--	if (smack_cipso_mapped != i) {
-+	if (old_lvl != i) {
- 		mutex_lock(&smack_known_lock);
- 		list_for_each_entry_rcu(skp, &smack_known_list, list)
- 			if (skp->smk_netlabel.attr.mls.lvl ==
--			    smack_cipso_mapped)
-+			    old_lvl)
- 				skp->smk_netlabel.attr.mls.lvl = i;
--		smack_cipso_mapped = i;
-+		smack_cipso_auto_level[idx] = i;
- 		mutex_unlock(&smack_known_lock);
+-		rsp->allocated = true;
  	}
  
- 	return count;
+ 	return rsp;
+@@ -241,17 +239,13 @@ nvmet_rdma_get_rsp(struct nvmet_rdma_queue *queue)
+ static inline void
+ nvmet_rdma_put_rsp(struct nvmet_rdma_rsp *rsp)
+ {
+-	unsigned long flags;
+-
+-	if (unlikely(rsp->allocated)) {
++	if (unlikely(rsp->tag == NVMET_RDMA_DISCRETE_RSP_TAG)) {
+ 		nvmet_rdma_free_rsp(rsp->queue->dev, rsp);
+ 		kfree(rsp);
+ 		return;
+ 	}
+ 
+-	spin_lock_irqsave(&rsp->queue->rsps_lock, flags);
+-	list_add_tail(&rsp->free_list, &rsp->queue->free_rsps);
+-	spin_unlock_irqrestore(&rsp->queue->rsps_lock, flags);
++	sbitmap_clear_bit(&rsp->queue->rsp_tags, rsp->tag);
  }
  
--static const struct file_operations smk_mapped_ops = {
--	.read		= smk_read_mapped,
--	.write		= smk_write_mapped,
-+static const struct file_operations
-+smk_cipso_auto_level_ops = {
-+	.read		= smk_read_cipso_auto_level,
-+	.write		= smk_write_cipso_auto_level,
- 	.llseek		= default_llseek,
- };
+ static void nvmet_rdma_free_inline_pages(struct nvmet_rdma_device *ndev,
+@@ -404,7 +398,7 @@ static void nvmet_rdma_free_cmds(struct nvmet_rdma_device *ndev,
+ }
  
-@@ -2867,7 +2812,7 @@ static int smk_fill_super(struct super_block *sb, struct fs_context *fc)
- 		[SMK_DOI] = {
- 			"doi", &smk_doi_ops, S_IRUGO|S_IWUSR},
- 		[SMK_DIRECT] = {
--			"direct", &smk_direct_ops, S_IRUGO|S_IWUSR},
-+			"direct", &smk_cipso_auto_level_ops, 0644},
- 		[SMK_AMBIENT] = {
- 			"ambient", &smk_ambient_ops, S_IRUGO|S_IWUSR},
- 		[SMK_NET4ADDR] = {
-@@ -2881,7 +2826,7 @@ static int smk_fill_super(struct super_block *sb, struct fs_context *fc)
- 		[SMK_ACCESSES] = {
- 			"access", &smk_access_ops, S_IRUGO|S_IWUGO},
- 		[SMK_MAPPED] = {
--			"mapped", &smk_mapped_ops, S_IRUGO|S_IWUSR},
-+			"mapped", &smk_cipso_auto_level_ops, 0644},
- 		[SMK_LOAD2] = {
- 			"load2", &smk_load2_ops, S_IRUGO|S_IWUSR},
- 		[SMK_LOAD_SELF2] = {
+ static int nvmet_rdma_alloc_rsp(struct nvmet_rdma_device *ndev,
+-		struct nvmet_rdma_rsp *r)
++		struct nvmet_rdma_rsp *r, int tag)
+ {
+ 	/* NVMe CQE / RDMA SEND */
+ 	r->req.cqe = kmalloc(sizeof(*r->req.cqe), GFP_KERNEL);
+@@ -432,6 +426,7 @@ static int nvmet_rdma_alloc_rsp(struct nvmet_rdma_device *ndev,
+ 	r->read_cqe.done = nvmet_rdma_read_data_done;
+ 	/* Data Out / RDMA WRITE */
+ 	r->write_cqe.done = nvmet_rdma_write_data_done;
++	r->tag = tag;
+ 
+ 	return 0;
+ 
+@@ -454,21 +449,23 @@ nvmet_rdma_alloc_rsps(struct nvmet_rdma_queue *queue)
+ {
+ 	struct nvmet_rdma_device *ndev = queue->dev;
+ 	int nr_rsps = queue->recv_queue_size * 2;
+-	int ret = -EINVAL, i;
++	int ret = -ENOMEM, i;
++
++	if (sbitmap_init_node(&queue->rsp_tags, nr_rsps, -1, GFP_KERNEL,
++			NUMA_NO_NODE, false, true))
++		goto out;
+ 
+ 	queue->rsps = kcalloc(nr_rsps, sizeof(struct nvmet_rdma_rsp),
+ 			GFP_KERNEL);
+ 	if (!queue->rsps)
+-		goto out;
++		goto out_free_sbitmap;
+ 
+ 	for (i = 0; i < nr_rsps; i++) {
+ 		struct nvmet_rdma_rsp *rsp = &queue->rsps[i];
+ 
+-		ret = nvmet_rdma_alloc_rsp(ndev, rsp);
++		ret = nvmet_rdma_alloc_rsp(ndev, rsp, i);
+ 		if (ret)
+ 			goto out_free;
+-
+-		list_add_tail(&rsp->free_list, &queue->free_rsps);
+ 	}
+ 
+ 	return 0;
+@@ -477,6 +474,8 @@ nvmet_rdma_alloc_rsps(struct nvmet_rdma_queue *queue)
+ 	while (--i >= 0)
+ 		nvmet_rdma_free_rsp(ndev, &queue->rsps[i]);
+ 	kfree(queue->rsps);
++out_free_sbitmap:
++	sbitmap_free(&queue->rsp_tags);
+ out:
+ 	return ret;
+ }
+@@ -489,6 +488,7 @@ static void nvmet_rdma_free_rsps(struct nvmet_rdma_queue *queue)
+ 	for (i = 0; i < nr_rsps; i++)
+ 		nvmet_rdma_free_rsp(ndev, &queue->rsps[i]);
+ 	kfree(queue->rsps);
++	sbitmap_free(&queue->rsp_tags);
+ }
+ 
+ static int nvmet_rdma_post_recv(struct nvmet_rdma_device *ndev,
+@@ -1463,8 +1463,6 @@ nvmet_rdma_alloc_queue(struct nvmet_rdma_device *ndev,
+ 	INIT_LIST_HEAD(&queue->rsp_wait_list);
+ 	INIT_LIST_HEAD(&queue->rsp_wr_wait_list);
+ 	spin_lock_init(&queue->rsp_wr_wait_lock);
+-	INIT_LIST_HEAD(&queue->free_rsps);
+-	spin_lock_init(&queue->rsps_lock);
+ 	INIT_LIST_HEAD(&queue->queue_list);
+ 
+ 	queue->idx = ida_simple_get(&nvmet_rdma_queue_ida, 0, 0, GFP_KERNEL);
 -- 
 2.53.0
 
