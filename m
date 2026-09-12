@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646DB36728D;
-	Sat, 12 Sep 2026 08:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967FC381B0F;
+	Sat, 12 Sep 2026 08:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201825; cv=none; b=swymnOTKcJrUXqsjqRQv374empcCvS/BA0RjIoRIvahBYGhUwIHT394DoKT047ca+OYG8aacq56NckTRoTnyZIRZu2QEcDh14VGtxfm/q7c6hUehqa+ABzXITsBP303r0Y7xb75nULOnBKQb1pisE/NjCa06VdLA9dEkh8ypd7k=
+	t=1789201829; cv=none; b=cULM8AvhwgDvNLHkuKcCMItw3Hm7ehu0enHfR0eSOdm3DwXVxgI7lz5nxJj6Jlnyhd0wqOMLdu/rUkB083qVAL7/FxQnOQ04JlpX4fJq2ljhqhNRXf5Jj0d+bkcxJq0Ig9S0Gkkb0NEcgggHlr86fRxCGfYjtRXSW7FcZ6sKJrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201825; c=relaxed/simple;
-	bh=JUYkwt70HBWXXEwT6YSJzFsgr0OF4cnSut8sbNgf33M=;
+	s=arc-20240116; t=1789201829; c=relaxed/simple;
+	bh=DZVW6LqzoCQk8E3aJhCYkkYtQ0yoCBHu+HAT+8Tqew0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aT4Dst4MRV8sFQ5O7pXB5y6hmnRPRMETQPtXDYMp1lQ9fOmztAmE6nWby1BgDaHL6ke+CBOaqwoE700OJwGWpgFK2epRbzBSfcFeHLsBntPZ7wdZak+c4RwkF1XId9Q/3vitT/nKyXCVWLWULC0MuejE2EbQjAgUR60dMsJxWG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LfJG54ol; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WMp1RZQj2QKfa+pyulupD0wLOGk5et032MIeed8g2jJLssUogqzqJmijhE7w5VPNFt7A0BBmm1LaBbe75iOfHJD73BKPoWwVLXembJ25RLnL7MTENWsUNZJFPcFTpDbmQpXcaaxtU3e3BAay8pV97oUZR3KNxC+IrlYpKiu3syE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttwDZu2h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfJG54ol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0401F000FF;
-	Sat, 12 Sep 2026 08:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttwDZu2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26021F000FF;
+	Sat, 12 Sep 2026 08:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201824;
-	bh=O/u4nr481471Dvb2r77eUQi5OaQo11DrDVqMKfMmt6Q=;
+	s=korg; t=1789201828;
+	bh=lZp7RrFcrEzwXEmtUahnVVCkjYeVLnXo1aTdWZ2vdJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LfJG54ol3CChWFsCMuSWGR2NRj5l9OSn4MyG2q+p59KIwQvHXEEoE7ozKqbyZ9jtw
-	 0sFjKZaeBIrPzta5gTZnbCvq98ZYosqvuuMA5NixzOrk5AaX4yvj09Yb8GtEc98SXJ
-	 2ZyJRSrS9M+DQ4GJsWcs2PzSpGMtOa8KRm0/J60Q=
+	b=ttwDZu2hmyZRFYPJaNHR4Tle6fJv3ditWq5bxp7RgWumPmduF/FxF9Jux7IMbTRO4
+	 kP64iJqPJKc/Gz2jgJBtr9olQXNDWlOheTjwA5YltJt4J27V44WYdfme2buNvevzAo
+	 M8wQMOHa4ty4+XC4l9LD5vXPYQtS6+Wgg1XV64bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1076/1815] arm64: dts: qcom: sm7225-fairphone-fp4: Fix swapped USB QMP PHY vdda-phy/vdda-pll supplies
-Date: Sat, 12 Sep 2026 08:47:06 +0200
-Message-ID: <20260912065714.281944135@linuxfoundation.org>
+Subject: [PATCH 7.2 1077/1815] arm64: dts: qcom: sc7180: Fix swapped USB QMP PHY vdda-phy/vdda-pll supplies
+Date: Sat, 12 Sep 2026 08:47:07 +0200
+Message-ID: <20260912065714.304968094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,42 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit a3b3a060b696d964c769a7d9dc5835c79e4fe964 ]
+[ Upstream commit 2c45c4df3079acba14920b14286cebfea24ec603 ]
 
 The QMP PHY expects the vdda-phy supply to be around 0.88V and the
 vdda-pll supply to be 1.2V. But these two supplies are swapped for the
-USB QMP PHY on this board, feeding 1.2V to vdda-phy and 0.9V to
+USB QMP PHYs on these boards, feeding 1.2V to vdda-phy and 0.9V to
 vdda-pll.
 
 Fix it by swapping the two supplies back.
 
-Fixes: 4cbea668767d ("arm64: dts: qcom: sm7225: Add device tree for Fairphone 4")
+Fixes: 0b766e7fe5a2 ("arm64: dts: qcom: sc7180: Add USB related nodes")
+Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+Fixes: 4a9f8f8f2ada ("arm64: dts: qcom: Add Acer Aspire 1")
+Fixes: de8eed359759 ("arm64: dts: qcom: Add support for ECS LIVA QC710")
 Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Assisted-by: Claude:opus-4-8
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20260803-phy-supply-fix-v1-14-5880630cde3e@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260803-phy-supply-fix-v1-15-5880630cde3e@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts   | 4 ++--
+ arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts | 4 ++--
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts            | 4 ++--
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       | 4 ++--
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index 97efa2e0cfc36..ce97e5bddecb1 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -1247,8 +1247,8 @@ &usb_1_hsphy {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+index 1514da6362698..d9c70897b6f1c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+@@ -631,8 +631,8 @@ &usb_1_hsphy {
  };
  
  &usb_1_qmpphy {
--	vdda-phy-supply = <&vreg_l22a>;
--	vdda-pll-supply = <&vreg_l16a>;
-+	vdda-phy-supply = <&vreg_l16a>;
-+	vdda-pll-supply = <&vreg_l22a>;
+-	vdda-phy-supply = <&vreg_l3c_1p2>;
+-	vdda-pll-supply = <&vreg_l4a_0p8>;
++	vdda-phy-supply = <&vreg_l4a_0p8>;
++	vdda-pll-supply = <&vreg_l3c_1p2>;
  
  	status = "okay";
  };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts b/arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts
+index b84da371581b9..3100fab18787a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts
+@@ -563,8 +563,8 @@ &usb_1_hsphy {
+ };
+ 
+ &usb_1_qmpphy {
+-	vdda-phy-supply = <&vreg_l3c_1p2>;
+-	vdda-pll-supply = <&vreg_l4a_0p8>;
++	vdda-phy-supply = <&vreg_l4a_0p8>;
++	vdda-pll-supply = <&vreg_l3c_1p2>;
+ 
+ 	/delete-property/ mode-switch;
+ 	/delete-property/ orientation-switch;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index 0bce3eefca2e9..acfb9937651d6 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -461,8 +461,8 @@ &usb_1_hsphy {
+ 
+ &usb_1_qmpphy {
+ 	status = "okay";
+-	vdda-phy-supply = <&vreg_l3c_1p2>;
+-	vdda-pll-supply = <&vreg_l4a_0p8>;
++	vdda-phy-supply = <&vreg_l4a_0p8>;
++	vdda-pll-supply = <&vreg_l3c_1p2>;
+ };
+ 
+ &venus {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index cd4a0e281cf8f..0e0bc8543f714 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -998,8 +998,8 @@ &usb_1_hsphy {
+ 
+ &usb_1_qmpphy {
+ 	status = "okay";
+-	vdda-phy-supply = <&vdda_usb_ss_dp_1p2>;
+-	vdda-pll-supply = <&vdda_usb_ss_dp_core>;
++	vdda-phy-supply = <&vdda_usb_ss_dp_core>;
++	vdda-pll-supply = <&vdda_usb_ss_dp_1p2>;
+ };
+ 
+ &venus {
 -- 
 2.53.0
 
