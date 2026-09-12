@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B2241A795;
-	Sat, 12 Sep 2026 13:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E7241A795;
+	Sat, 12 Sep 2026 13:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219445; cv=none; b=Mh9UvLVJj07ZupLH7Oqq4s3G+RBTB9fHa6+cVtzoEdrt7hXOAs/hxMs5RjLVAE3Wi78iS937avsJYoMEgpuO5LvlDxAZGR9UcWTGmau2TfXpGZPLN0mdZtcyg/5nHuL5mMdMwDUZUbuVcyeTmLM5NtRn4/hbqsblwNp9yia0iRY=
+	t=1789219450; cv=none; b=ZA1z1mJyVueCeckz39w/6nmyK/CtidqKmOE8631JKIsv48UMTddJv8FFvt2Z9bKaQuIUwiTH98hceqGrZTlxkwYx9e/4r7Lv+hHOOsNd5TOIclU6OrLtnWI/3I9A4cKj3tzG2oQbQBgiQo05KGy2bZ0/EX/3WoPX/RQw0726LP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219445; c=relaxed/simple;
-	bh=zqoxM2xuyACHVxKtr1RN1O7tw+Xha61O9OdjafRBQes=;
+	s=arc-20240116; t=1789219450; c=relaxed/simple;
+	bh=DxKLfA3BHI2ZaxRyaNiEpWZ+l2dbfjaWVE68NrEP/Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jvpgZmcg6JUpLS3MjrrI8dgNKTBgSFOD0/pBRpZxyRTg+KnGGubvG2NUpto+53tjri9OIP9eWI6DmgsVcxJoSZGOZQeCGVYCigeSWtcKupcXrNaUFBh3pL9Byq/Lcz+Cpd5V+mUuXHENQxSJ81SfgIOhGG+tE2LWCFea4PrmV0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abGMW2bX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KJcFg/r/J6WaI7g5QuR70rBcqffnxcVxYDdezu8g1BUEk1Zi4mhiwUj5YJ5G4UpF9IW0pi+7/UKPhEwUbZiYSQiPdjTSaopMy3dykiAIbQEqY1jfb3C3rl5cq1AgCdgshOQamFlqP0pqZXp21bXE9mZeYmvp3I/qOxacEvZxydE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfbGhLnx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abGMW2bX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD9C1F000FF;
-	Sat, 12 Sep 2026 13:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfbGhLnx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9BC1F00893;
+	Sat, 12 Sep 2026 13:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219444;
-	bh=K2c9G4GsBrFfOtXpfK8jiSI7QOL/yhvI3B14NG7BkB0=;
+	s=korg; t=1789219449;
+	bh=2DVAJj8mZ+Xwuxs5q3/nu8/pQjOTc6o7UgrzWdP8uJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=abGMW2bXtViEcHHO7/W0+0965/S3DmRKZuaXpzehstylx7K5R26G59KJWPbpWrT0G
-	 xrQhUNx3b+New7jYzgALTzktf0bpq5BfFnJ/MCFgSWGJGrgLkfJxJhHB3DrOqCul8O
-	 l3RmKZ+uXZMhryXKYpnezVblBAHZ4sZQCxt1s75s=
+	b=XfbGhLnxlX7/PVEOTVzC6UrwuCGmu4pXiCUuZWFBlH1ypeIUE7MZALtoWjwbT+9s/
+	 7GnUNePrB2ZNr5U38vPGt3ZUNke5C0y6Vr7XgQQ0lUzVm/UJ50T4bxHLADYmuaXWuE
+	 5B2jWs17L5Oh5NMSJBAYchgQ3YjCDcG97cQ+INgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Sven Peter <sven@kernel.org>,
+	Nick Chan <towinchenmi@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1353/1376] powerpc/vdso: Remove unused clockmode asm offsets
-Date: Sat, 12 Sep 2026 09:02:59 +0200
-Message-ID: <20260912065637.688834048@linuxfoundation.org>
+Subject: [PATCH 6.12 1354/1376] nvme-apple: Prevent shared tags across queues on Apple A11
+Date: Sat, 12 Sep 2026 09:03:00 +0200
+Message-ID: <20260912065637.710882753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -46,42 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Nick Chan <towinchenmi@gmail.com>
 
-[ Upstream commit d7a82238cb8c77d4ed8cc97cd556c5f3e64bc749 ]
+[ Upstream commit 6fe0687245e8406bf26143bd45eb16441bbe5280 ]
 
-These offsets are not used anymore, delete them.
+On Apple A11, tags of pending commands must be unique across the admin
+and IO queues, else the firmware crashes with
+"duplicate tag error for tag N", with N being the tag.
 
-Fixes: c39b1dcf055d ("powerpc/vdso: Add a page for non-time data")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241113-vdso-powerpc-asm-offsets-v1-1-3f7e589f090d@linutronix.de
+Apply the existing workaround for M1 of reserving two tags for the admin
+queue to A11.
+
+Cc: stable@vger.kernel.org
+Fixes: 04d8ecf37b5e ("nvme: apple: Add Apple A11 support")
+Reviewed-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Nick Chan <towinchenmi@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/asm-offsets.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/nvme/host/apple.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/kernel/asm-offsets.c b/arch/powerpc/kernel/asm-offsets.c
-index cbeeda45c00a2..757ba2a3d4c88 100644
---- a/arch/powerpc/kernel/asm-offsets.c
-+++ b/arch/powerpc/kernel/asm-offsets.c
-@@ -348,8 +348,6 @@ int main(void)
- #else
- 	OFFSET(CFG_SYSCALL_MAP32, vdso_arch_data, syscall_map);
- #endif
--	OFFSET(VDSO_CLOCKMODE_OFFSET, vdso_arch_data, data[0].clock_mode);
--	DEFINE(VDSO_CLOCKMODE_TIMENS, VDSO_CLOCKMODE_TIMENS);
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index 5f745bf615fe7..1cc222fdbf22e 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -239,7 +239,7 @@ static unsigned int apple_nvme_queue_depth(struct apple_nvme_queue *q)
+ {
+ 	struct apple_nvme *anv = queue_to_apple_nvme(q);
  
- #ifdef CONFIG_BUG
- 	DEFINE(BUG_ENTRY_SIZE, sizeof(struct bug_entry));
+-	if (q->is_adminq && anv->hw->has_lsq_nvmmu)
++	if (q->is_adminq)
+ 		return APPLE_NVME_AQ_DEPTH;
+ 
+ 	return anv->hw->max_queue_depth;
+@@ -317,7 +317,7 @@ static void apple_nvme_submit_cmd_t8015(struct apple_nvme_queue *q,
+ 		memcpy((void *)q->sqes + (q->sq_tail << APPLE_NVME_IOSQES),
+ 			cmd, sizeof(*cmd));
+ 
+-	if (++q->sq_tail == anv->hw->max_queue_depth)
++	if (++q->sq_tail == apple_nvme_queue_depth(q))
+ 		q->sq_tail = 0;
+ 
+ 	writel(q->sq_tail, q->sq_db);
+@@ -1130,10 +1130,7 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 	}
+ 
+ 	/* Setup the admin queue */
+-	if (anv->hw->has_lsq_nvmmu)
+-		aqa = APPLE_NVME_AQ_DEPTH - 1;
+-	else
+-		aqa = anv->hw->max_queue_depth - 1;
++	aqa = APPLE_NVME_AQ_DEPTH - 1;
+ 	aqa |= aqa << 16;
+ 	writel(aqa, anv->mmio_nvme + NVME_REG_AQA);
+ 	writeq(anv->adminq.sq_dma_addr, anv->mmio_nvme + NVME_REG_ASQ);
+@@ -1316,8 +1313,7 @@ static int apple_nvme_alloc_tagsets(struct apple_nvme *anv)
+ 	 * both queues. The admin queue gets the first APPLE_NVME_AQ_DEPTH which
+ 	 * must be marked as reserved in the IO queue.
+ 	 */
+-	if (anv->hw->has_lsq_nvmmu)
+-		anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
++	anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
+ 	anv->tagset.queue_depth = anv->hw->max_queue_depth - 1;
+ 	anv->tagset.timeout = NVME_IO_TIMEOUT;
+ 	anv->tagset.numa_node = NUMA_NO_NODE;
 -- 
 2.53.0
 
