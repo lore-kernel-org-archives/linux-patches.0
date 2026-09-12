@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE193B3C19;
-	Sat, 12 Sep 2026 19:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41644486424;
+	Sat, 12 Sep 2026 19:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240022; cv=none; b=DnGCp53GoS+AmGul/LZVtMegVE7OIOuyIEBcXiq0aUVwlCwDIrp5vHjpQ3FDuweRoKhONorTS9jCIiBT+FZF1sdTgc1juaMZxm1CF8iS+9fUY1bC9Sax89BpTYE1UwYMvadkeLDrckkAmeAFN0HyoJmJ7BNjtZXIfEVcviRJt4M=
+	t=1789240027; cv=none; b=LcUWPh4qA1gAx7A0j3Lp/dmNrVLks3cpGAQZxMJTOTZI4P5R7dFcMReIaRuqsZEi1VGbZ5txAV34sz/smL/svxb6i9JsRz+QVdW4xAWm3ZC6wc5qPXy2P9GoY0S9WzUQdeiSgyJhhSfxorGQDUsOIQ5zNaPojXySMLIsd+uC+WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240022; c=relaxed/simple;
-	bh=vOojhBa32kpqCvm5K7q2VpTRyDEIKjYzyMEumcnIdHU=;
+	s=arc-20240116; t=1789240027; c=relaxed/simple;
+	bh=xaEXuepYBx1zCbcf8xeUHn2LSe3asc2agfR4O15S0mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJsUeoy/uFR0TMsctSeomVSjil2uZPMh64qzt+l21utdWP1OTGPm4/wt88Fus4L8Q8CrNtLxFQLBgyoLJ0S+PctBan0E5ONBnvfUDapoExjRfe+GLW1DU8Tq0iId/ckl242Z2rR2K2G5mLLc/1QMt4lekf/39XWdH1PYiF0TKu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwOj0fYt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mrTKY++RxUP3d940lQsEu6M2ir/PPsx08Ov5dGjaKyJnSSrdy6up50blBFLul6jTvwn9GMqAnfoE+GkepPLjpoS32VTHlyHpKL3NIJ/8Hq4JCp0U7Tp3qYzvQg+p5JKMTR7+AfcFobIl2E/IEG/a08OZKTzDbjS2W+YURDEuLXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ue9qVABX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwOj0fYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278771F000FF;
-	Sat, 12 Sep 2026 19:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ue9qVABX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC86B1F000FF;
+	Sat, 12 Sep 2026 19:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240019;
-	bh=qmQn0Rsq6lowVbM9fGCLrrnbst4V5WgaTWb58Cg/6Ss=;
+	s=korg; t=1789240025;
+	bh=3/EKk7Z4VIpPOFUQAwlpTfwepRrn1AEvfNMksxbERS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gwOj0fYt00yuu1CoNpcml2+GSVXh+hxUzB7sBrijcB/rTY7G4q5Ye/z4q9ybVWx7U
-	 sOtH+YRSYt0XGUzCQl5lzFL7Y8wOOsohiqr4uB3Lv6hG5F4/Z6SMdbdMunFmLbIEHp
-	 elFl+WE2mvFn8y7V3J0NVUuOt0OyvH2TjQqm/y4Q=
+	b=ue9qVABXbs+qenwP8Gjw7i+yw9YfvEmdX1Y87Mltjsw/7GXl/7galpKvP9lPiQXOH
+	 bfgQ0GW7dsdHdwtwV+N1KIVO5hugt7aJVh8Nxt5vXhfCY9UN1b/sGHfGwB+2+5lII/
+	 VyE7l1Rdtuot6dXFdaGfUN9yEAUpdtXBZz29FTkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	Helge Deller <deller@gmx.de>,
+	LiangCheng Wang <zaq14760@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 766/935] fbdev: kyro: Validate overlay viewport coordinates
-Date: Sat, 12 Sep 2026 09:03:16 +0200
-Message-ID: <20260912065544.400311474@linuxfoundation.org>
+Subject: [PATCH 5.15 784/935] ASoC: fsl-asoc-card: defer probe when the CPU DAI device is not ready
+Date: Sat, 12 Sep 2026 09:03:34 +0200
+Message-ID: <20260912065544.811950597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,78 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: LiangCheng Wang <zaq14760@gmail.com>
 
-[ Upstream commit 7b5c7bc55e13e7f5ac7b1eaf5c6d690389ea5ee3 ]
+[ Upstream commit 0286324da660875dc504fd65b3be87e9c8b9a547 ]
 
-The overlay viewport end coordinates are computed from the viewport
-origin and dimensions using 32-bit unsigned arithmetic. Large input
-values can cause these calculations to wrap around before the resulting
-coordinates are passed to SetOverlayViewPort().
+fsl_asoc_card_probe() hard-fails with -EINVAL when the CPU DAI (SAI)
+platform device is not found. Like the codec, the CPU DAI may just be
+probed later than the machine driver; the order is not guaranteed and
+varies across kernel versions, so a permanent -EINVAL leaves the card
+unregistered with no analog playback or capture.
 
-SetOverlayViewPort() packs the viewport coordinates into 16-bit
-register fields. The X coordinates are additionally adjusted by +2
-and +1 before being written. Validate the coordinate calculations
-for 32-bit wraparound and ensure that the adjusted coordinates fit
-within their 16-bit register fields before calling
-SetOverlayViewPort().
+Defer probe instead, mirroring commit e396dec46c56 ("ASoC:
+fsl-asoc-card: Defer probe when fail to find codec device").
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Tested on i.MX8MP with an ALC5672 on SAI3: the card that failed to
+register on v6.18 now comes up during boot.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 708b4351f08c ("ASoC: fsl: Add Freescale Generic ASoC Sound Card with ASRC support")
+Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
+Link: https://patch.msgid.link/20260805-fsl-asoc-defer-cpu-dai-v1-1-43f7f538e384@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/kyro/fbdev.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl-asoc-card.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
-index 25801e8e3f74a..4979339dbc008 100644
---- a/drivers/video/fbdev/kyro/fbdev.c
-+++ b/drivers/video/fbdev/kyro/fbdev.c
-@@ -368,6 +368,9 @@ static int kyro_dev_overlay_create(u32 ulWidth,
+diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
+index 98a157e46637a..be18100efd0e5 100644
+--- a/sound/soc/fsl/fsl-asoc-card.c
++++ b/sound/soc/fsl/fsl-asoc-card.c
+@@ -562,8 +562,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
  
- static int kyro_dev_overlay_viewport_set(u32 x, u32 y, u32 ulWidth, u32 ulHeight)
- {
-+	u32 right;
-+	u32 bottom;
-+
- 	if (deviceInfo.ulOverlayOffset == 0)
- 		/* probably haven't called CreateOverlay yet */
- 		return -EINVAL;
-@@ -377,11 +380,30 @@ static int kyro_dev_overlay_viewport_set(u32 x, u32 y, u32 ulWidth, u32 ulHeight
- 	    (x < 2 && ulWidth + 2 == 0))
- 		return -EINVAL;
+ 	cpu_pdev = of_find_device_by_node(cpu_np);
+ 	if (!cpu_pdev) {
+-		dev_err(&pdev->dev, "failed to find CPU DAI device\n");
+-		ret = -EINVAL;
++		ret = dev_err_probe(&pdev->dev, -EPROBE_DEFER,
++				    "failed to find CPU DAI device\n");
+ 		goto fail;
+ 	}
  
-+	/*
-+	 * SetOverlayViewPort() adjusts X coordinates by +2 (left) and +1
-+	 * (right) before packing them into 16-bit register fields.
-+	 */
-+	if (x > U16_MAX - 2 || y > U16_MAX)
-+		return -EINVAL;
-+
-+	right = x + ulWidth;
-+	bottom = y + ulHeight;
-+
-+	if (right < x || bottom < y)
-+		return -EINVAL;
-+
-+	right--;
-+	bottom--;
-+
-+	if (right > U16_MAX - 1 || bottom > U16_MAX)
-+		return -EINVAL;
-+
- 	/* Stop Ramdac Output */
- 	DisableRamdacOutput(deviceInfo.pSTGReg);
- 
- 	SetOverlayViewPort(deviceInfo.pSTGReg,
--			   x, y, x + ulWidth - 1, y + ulHeight - 1);
-+			x, y, right, bottom);
- 
- 	EnableOverlayPlane(deviceInfo.pSTGReg);
- 	/* Start Ramdac Output */
 -- 
 2.53.0
 
