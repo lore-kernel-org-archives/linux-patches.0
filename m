@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833C33A1690;
-	Sat, 12 Sep 2026 08:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EB83FC5B5;
+	Sat, 12 Sep 2026 08:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202043; cv=none; b=QrR6/Sb4QKFZ+g1WbA8gVMhAg95WDygLiKpsh4tzbr8WPtJNFyFSVzf7VWvopJlzWfdyu+S1Qiw+rDrk0LkkQFcvqsII1+R2aMuUMqRyeb7sqYoN+Uuvc1druQnBk5qbU3FHI4JRjreX9/4yIz+s3lIrQjGMqqp6xkIi02cyXL8=
+	t=1789202047; cv=none; b=tvAbrx4VnLasjTwAZH8VKB8Yn1rNhhBtdoNE99aKqpwxGOHYjVvddZYUMw/n7nvBckQDfi4uofUsrLk8xZpDCUm/TzLfJOfpmUpT8I7NwSuB8tMqvUgojLNVo/rO8qUh45PfZVhUhMiI/spQ6QQH1tAg0SNa2IBnQQWPZaDH24s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202043; c=relaxed/simple;
-	bh=TecaWvIVMEjSMPuMHR7iCrISnLvTAuc/iFmn2KyepPU=;
+	s=arc-20240116; t=1789202047; c=relaxed/simple;
+	bh=f1wbr7//Afe6UGh8WFUxxOLWFlBoBsdEGKb7ek0XHLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iVUVHzGNzIuMGuZz5oSPIZ/5eeIXL6L1bR+ocTY+cJryKtlGOlybJs1kru/tHy78J1z5tg7SCULjmHgR/a0xmt7jqzhlTleBwX4mTd89H4FTqrVbEPU28Bs1UIVWqeHAX5Xz3v5T3wD9QstfXJLEkFkvCHAgZp9tIafZuBvZIgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIfCysmq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jD21w7EaFRkL2bF6ProW4enEKGFIt/okcgANLtlUlc+WLKdoDGf5u/RyNiHCSfWS23/RuNE7kI8Rb1HO2deCbKR1xtWsyH8U8psZrFtXMsffzvLQWK7Ak1qP49xBuAzJSkAKu+tZ+XE/Im3QfWisYwweXKVTKih7IdmEw/bty4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQejU5QA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIfCysmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030121F000FF;
-	Sat, 12 Sep 2026 08:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQejU5QA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E96D1F000FF;
+	Sat, 12 Sep 2026 08:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202041;
-	bh=bFMMym0lORJfn16sXr6bR7xg5EHtUmN76NZUCVLg6YI=;
+	s=korg; t=1789202046;
+	bh=odKxMEBzPwRyVE2gn+Wqf62FrRrc3qwxQwhLl9Vg/0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wIfCysmqYEqIVpQwlCDktyXcYVZYr+uZIXUDPwbPpTtHWRBjDDDywsZ78vCF4foB3
-	 cFZZ0FQE3nV4d8YL7ExMElVL5O4Bc7gcN8ntRcaowSboJT8ZhVsA9ZpKWOF8+e0YiX
-	 B3svYx2qyFdBzbPt4S0nFLvG0VMZNsmsCsbnHmHA=
+	b=JQejU5QAcoZJKjSrUtr8QFbdtA3b5ONQS5hR0IcGbp4LNbBWWcvPI8dLffN622okE
+	 n98OJ6/PY0GZfOA7sNOoJxu58PCKe3LMnWSrH8oOb0cWbBt+d4IO2CkzqScF93VB12
+	 JLE9SpTFtjSVAZC1qKFiF7ijaDIuBrvVX9JzAiow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Viktor Malik <vmalik@redhat.com>,
+	Alexey Charkov <alchark@flipper.net>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1121/1815] bpf: Fix sleepable check for tracing/lsm prog
-Date: Sat, 12 Sep 2026 08:47:51 +0200
-Message-ID: <20260912065715.336252412@linuxfoundation.org>
+Subject: [PATCH 7.2 1122/1815] clk: rockchip: rk3576: fix source muxes for SPI0..SPI4
+Date: Sat, 12 Sep 2026 08:47:52 +0200
+Message-ID: <20260912065715.359413907@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,51 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Alexey Charkov <alchark@flipper.net>
 
-[ Upstream commit 00244bdaa423d93f4571f3f6854378ce3365e524 ]
+[ Upstream commit 586ff159ec02533c17dd928641529cb0b52e9c62 ]
 
-When CONFIG_FUNCTION_ERROR_INJECTION is disabled, a sleepable tracing prog
-is allowed to attach to '__x64_'-alike prefix symbols.
+The TRM defines available source muxes for SPI0..SPI4 as
+ - b00: clk_gpll_div6_src
+ - b01: clk_gpll_div8_src
+ - b10: clk_cpll_div10_src
+ - b11: clk_xin_osc0_func
 
-It is because the verifier does not verify whether the symbol is a kernel
-function or a bpf prog. That said, a sleepable tracing prog is allowed to
-attach to a bpf prog target whose name has '__x64_'-alike prefix.
+Which doesn't match what the current clock driver implements, making it
+impossible to derive some SPI clock rates such as 37.125 MHz (which
+requires clk_gpll_div8_src as the source mux).
 
-For example, a sleepable fentry prog attaches to a '__x64_sys_nop' XDP
-prog, and copies buffer from a user pointer with bpf_copy_from_user()
-helper. After attaching the XDP prog to lo interface, the kernel BUG
-could be triggered by 'ping -c 1 -W 1 127.0.0.1':
+Add a correct mux definition per TRM and point SPI0..SPI4 clocks at it.
 
-[    3.460756] BUG: sleeping function called from invalid context at kernel/bpf/trampoline.c:1324
-
-Fix it by disallowing sleepable prog always when its target
-btf is not a kernel's btf.
-
-Fixes: 16d9c5660692 ("bpf: Always allow sleepable programs on syscalls")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Viktor Malik <vmalik@redhat.com>
-Link: https://lore.kernel.org/bpf/20260805150810.34907-2-leon.hwang@linux.dev
+Fixes: cc40f5baa91b ("clk: rockchip: Add clock controller for the RK3576")
+Signed-off-by: Alexey Charkov <alchark@flipper.net>
+Link: https://patch.msgid.link/20260805-rk3576-spi-clk-v1-1-2f040d0d163b@flipper.net
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/rockchip/clk-rk3576.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 34cf85d868d82..85cae5684f59b 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -18866,6 +18866,9 @@ static int btf_id_allow_sleepable(u32 btf_id, unsigned long addr, const struct b
- 	const struct btf_type *t;
- 	const char *tname;
- 
-+	if (!btf_is_kernel(btf))
-+		return -EINVAL;
-+
- 	switch (prog->type) {
- 	case BPF_PROG_TYPE_TRACING:
- 		t = btf_type_by_id(btf, btf_id);
+diff --git a/drivers/clk/rockchip/clk-rk3576.c b/drivers/clk/rockchip/clk-rk3576.c
+index 63f229e73a454..2cdd667f40041 100644
+--- a/drivers/clk/rockchip/clk-rk3576.c
++++ b/drivers/clk/rockchip/clk-rk3576.c
+@@ -315,6 +315,7 @@ PNAME(mux_100m_24m_lclk0_p)		= { "clk_cpll_div10", "xin24m", "lclk_asrc_src_0" }
+ PNAME(mux_100m_24m_lclk1_p)		= { "clk_cpll_div10", "xin24m", "lclk_asrc_src_1" };
+ PNAME(mux_150m_100m_50m_24m_p)		= { "clk_gpll_div8", "clk_cpll_div10", "clk_cpll_div20", "xin24m" };
+ PNAME(mux_200m_100m_50m_24m_p)		= { "clk_gpll_div6", "clk_cpll_div10", "clk_cpll_div20", "xin24m" };
++PNAME(mux_200m_150m_100m_24m_p)		= { "clk_gpll_div6", "clk_gpll_div8", "clk_cpll_div10", "xin24m" };
+ PNAME(mux_400m_200m_100m_24m_p)		= { "clk_gpll_div3", "clk_gpll_div6", "clk_cpll_div10", "xin24m" };
+ PNAME(mux_500m_250m_100m_24m_p)		= { "clk_cpll_div2", "clk_cpll_div4", "clk_cpll_div10", "xin24m" };
+ PNAME(mux_600m_400m_300m_24m_p)		= { "clk_gpll_div2", "clk_gpll_div3", "clk_gpll_div4", "xin24m" };
+@@ -706,19 +707,19 @@ static struct rockchip_clk_branch rk3576_clk_branches[] __initdata = {
+ 			RK3576_CLKGATE_CON(16), 0, GFLAGS),
+ 	GATE(PCLK_SPI4, "pclk_spi4", "pclk_bus_root", 0,
+ 			RK3576_CLKGATE_CON(16), 1, GFLAGS),
+-	COMPOSITE_NODIV(CLK_SPI0, "clk_spi0", mux_200m_100m_50m_24m_p, 0,
++	COMPOSITE_NODIV(CLK_SPI0, "clk_spi0", mux_200m_150m_100m_24m_p, 0,
+ 			RK3576_CLKSEL_CON(70), 13, 2, MFLAGS,
+ 			RK3576_CLKGATE_CON(16), 2, GFLAGS),
+-	COMPOSITE_NODIV(CLK_SPI1, "clk_spi1", mux_200m_100m_50m_24m_p, 0,
++	COMPOSITE_NODIV(CLK_SPI1, "clk_spi1", mux_200m_150m_100m_24m_p, 0,
+ 			RK3576_CLKSEL_CON(71), 0, 2, MFLAGS,
+ 			RK3576_CLKGATE_CON(16), 3, GFLAGS),
+-	COMPOSITE_NODIV(CLK_SPI2, "clk_spi2", mux_200m_100m_50m_24m_p, 0,
++	COMPOSITE_NODIV(CLK_SPI2, "clk_spi2", mux_200m_150m_100m_24m_p, 0,
+ 			RK3576_CLKSEL_CON(71), 2, 2, MFLAGS,
+ 			RK3576_CLKGATE_CON(16), 4, GFLAGS),
+-	COMPOSITE_NODIV(CLK_SPI3, "clk_spi3", mux_200m_100m_50m_24m_p, 0,
++	COMPOSITE_NODIV(CLK_SPI3, "clk_spi3", mux_200m_150m_100m_24m_p, 0,
+ 			RK3576_CLKSEL_CON(71), 4, 2, MFLAGS,
+ 			RK3576_CLKGATE_CON(16), 5, GFLAGS),
+-	COMPOSITE_NODIV(CLK_SPI4, "clk_spi4", mux_200m_100m_50m_24m_p, 0,
++	COMPOSITE_NODIV(CLK_SPI4, "clk_spi4", mux_200m_150m_100m_24m_p, 0,
+ 			RK3576_CLKSEL_CON(71), 6, 2, MFLAGS,
+ 			RK3576_CLKGATE_CON(16), 6, GFLAGS),
+ 	GATE(PCLK_WDT0, "pclk_wdt0", "pclk_bus_root", 0,
 -- 
 2.53.0
 
