@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D91D3F3264;
-	Sat, 12 Sep 2026 07:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C5733D505;
+	Sat, 12 Sep 2026 07:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198204; cv=none; b=sMK1dgqBSA6eucYtatkwpNNfhqwG8zPT6g/Rq0Rj05TmSSUxKlZMk7du5uXFNQQF8n2DTOD6hRRabZRnqztIwqowxNz8y2FcnjeImfub/X7nnAZrtnO5Ky9pl73H901FrEYx6mWzkPUo2z/fEDmj85T0I+tu8iINC2oFma2JY9A=
+	t=1789198209; cv=none; b=deIPU0nbs51KYJyXM4Ugaufzq3dsvMFNL16nMzrNiaoKQE2U/DnkaHhUUDu1Re3hg/sAk0gC5oFCCwu8xNdt63XDLHH6LbAPNiswMTx5nrH97CEybsc0eLicbkXCXZvtR/8QV5FYuurFO9yW8aV0qGfKMnXoxl+x1aUg1oPcW94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198204; c=relaxed/simple;
-	bh=7yCOoVZMS2OQmdBwWIr45yuuNkG2i/1vaxcOmFjUtCg=;
+	s=arc-20240116; t=1789198209; c=relaxed/simple;
+	bh=EoiqxuDnVKxwhfxNq72BKUhnRr6lKPARMZu4VtM5B2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXN2qDIRa5iHc0Vhy7S8OQAY5pXIMELP2tc8QefyLGFmowxLjPfz0ruzLc6bxrtnoBtY1hb+sjvZAQPn72SQndUUtoWt4sG68p5qVQoOih5O6o0gW8KN1HnTUIS89WNUdKfc0sUIwetmSX8j2rCkXhGfs6vPL/RDrbNAIovC1M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4TjHmoX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SyvJRAu50TAeYjC+ZMLhRAT40ubqDGBtJBqJSXmWmpUPkDuC1APXprvdpMF1KOSkJ09ntCk7OFjNHLiQoKunNCN+FChQv8pCoF7dcNn3xUF3vlLmA80GQXwBfOj2AqlvhClpS744QM+yimJ7FcChvwKEtDj/bp3TgEmWOr2JEr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VV4tGnt5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4TjHmoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218111F000FF;
-	Sat, 12 Sep 2026 07:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VV4tGnt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54421F000FF;
+	Sat, 12 Sep 2026 07:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198203;
-	bh=Ila/5dHAzL66rL2Bq3EHQsQDPXJg8ixjku63kqcqDnw=;
+	s=korg; t=1789198207;
+	bh=4Ug04afzapcrRdBaS8Gc6eAPGjGUoJKtJpRlU5imMgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m4TjHmoXuLRsSAK2pRZ5eO7/hSLBefp8u0uddwrqsIo7IGH17yhaahqEYrwmARGD0
-	 3/yXi/RdGfWC/VS+hKpwIYiCGyyHAK0P/TANY2SGruyyA/O2VZ6z3R33/GjH0UxfGK
-	 uJxsXIGeiirxv2MbTHhuBahivBpDEdiYYXku2jHg=
+	b=VV4tGnt5VaKJBfP7OEdN13K8Wvzsf7VJa2uMwxMBkQSu+vmtceLV+l+c80M+6RFZC
+	 eTer2xFNAvXtC7CAm+j+OzNGg2m1tbWVhRNKVLkrdiiiakw9drzs1vNVQfGN47H0w8
+	 v/rCc/tW73bR6HqtMZjKqwwfaVLV9fRny3sTNmBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0333/1815] usb: chipidea: imx: fix missing ret assignment for dev_err_probe
-Date: Sat, 12 Sep 2026 08:34:43 +0200
-Message-ID: <20260912065656.741734181@linuxfoundation.org>
+Subject: [PATCH 7.2 0334/1815] drm/panel: samsung-s6d16d0: Power off on prepare failure
+Date: Sat, 12 Sep 2026 08:34:44 +0200
+Message-ID: <20260912065656.764247373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,38 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 1db5c6b0b9834aee2f14e39764becfcc29d09ccf ]
+[ Upstream commit a9f950adfe2147318d75e7a6eab5e814851802ac ]
 
-Assign the return value of dev_err_probe() to ret so that the correct
-error code is propagated when goto err_clk is taken.
+If enabling tearing mode or exiting sleep mode fails after the
+regulator is enabled, s6d16d0_prepare() returns without asserting
+reset or disabling the supply. Since the DRM panel core leaves the
+panel unprepared, a later unprepare call skips the driver callback
+and the supply remains enabled.
 
-Fixes: 2e9762f45efb ("usb: chipidea: ci_hdrc_imx: use "wakeup" suffix for wakeup interrupt name")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202607031656.FR3Xrved-lkp@intel.com/
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260710070834.2744357-1-xu.yang_2@oss.nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assert reset and disable the supply before returning the DSI command error.
+
+Fixes: ac1d6d74884e ("drm/panel: Add driver for Samsung S6D16D0 panel")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260704070648.35249-1-acharyalaxman8848@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-samsung-s6d16d0.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/chipidea/ci_hdrc_imx.c b/drivers/usb/chipidea/ci_hdrc_imx.c
-index 56d2ba824a0b2..282314eea7fc1 100644
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -528,7 +528,7 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
- 	if (data->wakeup_irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s:wakeup", pdata.name);
- 		if (!irq_name) {
--			dev_err_probe(dev, -ENOMEM, "failed to create irq_name\n");
-+			ret = dev_err_probe(dev, -ENOMEM, "failed to create irq_name\n");
- 			goto err_clk;
- 		}
+diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+index 1b14aa4efe359..54a65abf7e890 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
++++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+@@ -88,16 +88,22 @@ static int s6d16d0_prepare(struct drm_panel *panel)
+ 				       MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+ 	if (ret) {
+ 		dev_err(s6->dev, "failed to enable vblank TE (%d)\n", ret);
+-		return ret;
++		goto err_power_off;
+ 	}
+ 	/* Exit sleep mode and power on */
+ 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+ 	if (ret) {
+ 		dev_err(s6->dev, "failed to exit sleep mode (%d)\n", ret);
+-		return ret;
++		goto err_power_off;
+ 	}
  
+ 	return 0;
++
++err_power_off:
++	gpiod_set_value_cansleep(s6->reset_gpio, 1);
++	regulator_disable(s6->supply);
++
++	return ret;
+ }
+ 
+ static int s6d16d0_enable(struct drm_panel *panel)
 -- 
 2.53.0
 
