@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C251735C6A9;
-	Sat, 12 Sep 2026 10:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631D6426D03;
+	Sat, 12 Sep 2026 10:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209391; cv=none; b=qpg3qC6DqZ6RuVzpSo61yT3V5zRWmmzeauHxHcCwtVwIB47iHQwkj1APm6HdD2C9DxAMKmeM8Pw4LmPUYfSto4ZzSXArWTetFb0mlYDoEFTJytTkdyST7ZfZnqKIbVsEF6vB39QtIJqqOekaRiW6IB4dS04skbwgUTqnm2/ZEjg=
+	t=1789209396; cv=none; b=ZdZCfGUug7eoTivlQtGYctOt1KEHq3BDH+UMpl9Mo79Q9rlLBDKdu7wj60OLyeFlbF391Kh3qxkxYQDzja91DWWyMpsB6YttTmUKTg3108lN2qHhqYJlUS8yEX1TxuNXOjw3Q2f4NUFInoP0IRsEo4aYoy+fNGc2bccxJPCjhcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209391; c=relaxed/simple;
-	bh=0bazWuMSTEYna8F/sylmKEz76wVdxUzr+XJrUh6IK5E=;
+	s=arc-20240116; t=1789209396; c=relaxed/simple;
+	bh=qM6uhT0avmo+47YGfzs2ePZE17RyNjYp5Cx826/krZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMK/G86r8SybGaSQxI0XckmnT6OpxusbRerIe3l+vwCf+NvHzowAXXXjT0Po5r4zLSwxVmnwAN4oKc0yNooQsbVkvyaFXazriI2aP9qD9d2aujjgnU7Kq4RqFdeViI/tqNV5AbHe3ix/5+g2MCaodTRPYo0DqDWPh1tIs3K+XDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhWHz2vr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZeVQlCDzeHBKnzPcKO8RbOAu8Oe7TfZCJ+xnm2t4AuqRrtiDpaH5rSg+dFfIsh9Uz+gza48je4ADxtUsHa3a7doQ/1hW83Utm/tH01vnwjrf5LR/VN6S7z8MExgJ9PfEtoyf2GzRhEY1T9uezuF/tUBWQ/gP8D9L8XqobfsiSoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzOBbMXf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhWHz2vr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DA31F000FF;
-	Sat, 12 Sep 2026 10:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzOBbMXf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342651F000FF;
+	Sat, 12 Sep 2026 10:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209390;
-	bh=oB0fn1KNDD7wnUyW2WvZs6yfNje80T+GMCoMaw1KnLE=;
+	s=korg; t=1789209395;
+	bh=BEDvDljs//wLc1rx/VF3SKnrV3OEZOQyNgRqadAqO8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZhWHz2vr0e6fHAgTIMd4u93IckV9AAthotX95/gtOnbXdFb2wDH2cek1WAvdym54i
-	 sDt/3oXlvzNP293Be1d/bGTkfQZbSFGmZ2FqBaEfbDpNPNQMJ6jJcc9/o69HcGdu3v
-	 hmeklZTfILljmKr3NyflxhvLdJcZ28KmWz0PZ3jc=
+	b=qzOBbMXfKJFm9jYPp8k93nTP5LClVmKl8m9+ByNQ1qXc0hoSPJcHAxMwKCc/SrjOE
+	 PH4ShyEbE8m8MBD81TUHZeloOOSdBlyy/AsGyJHA/4NaJ7XRYWMwaOsfmrPxW5Q046
+	 3/xgsKlCqYIftSUgJ0uxvT0e2gMeKzITuma8jXX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Pranjal Shrivastava <praan@google.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0810/1518] kselftest/arm64: Dont write to P0 in irritator on SME only systems
-Date: Sat, 12 Sep 2026 08:49:39 +0200
-Message-ID: <20260912065641.759474888@linuxfoundation.org>
+Subject: [PATCH 6.18 0811/1518] iommu/arm-smmu-v3: Convert to use atomic poll timeout
+Date: Sat, 12 Sep 2026 08:49:40 +0200
+Message-ID: <20260912065641.782841080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,55 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit 2b989c411ab98fa76b7bb3b87ba7a2a4c3b5e946 ]
+[ Upstream commit eced8058c82a3a81ae480a6546e2da32100dddfa ]
 
-Commit 3e360ef0c0a1f ("kselftest/arm64: Corrupt P0 in the irritator when
-testing SSVE") added corruption of P0 to the sve-test case in order to
-ensure that the predicate registers were covered as part of the
-corruption.  On SME only systems this results in an illegal instruction
-since signal handlers are run out of streaming mode and the predicate
-registers do not exist out of streaming mode without SVE.  Switch to
-entering and exiting streaming mode in the irritator, this will reset
-all relevant registers to 0 if they somehow weren't already by the
-signal entry.
+The arm_smmu_write_reg_sync() helper is currently implemented using
+readl_relaxed_poll_timeout() (that relies on usleep_range() internally)
+which becomes a critical issue when used in the gerror irq handler.
 
-Fixes: 3e360ef0c0a1f ("kselftest/arm64: Corrupt P0 in the irritator when testing SSVE")
-Reported-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If the SMMU hits a gerror and enters Service Failure Mode
+(GERROR_SFM_ERR), the gerror handler calls arm_smmu_device_disable() in
+hard-irq context. This becomes a problem as arm_smmu_device_disable()
+inevitably calls arm_smmu_write_reg_sync() which might attempt to sleep
+inside a hard-irq context.
+
+Fix this by converting the arm_smmu_write_reg_sync to use the
+readl_relaxed_poll_timeout_atomic() polling helper.
+
+(Discovered while running Sashiko locally on another patch series).
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 48ec83bcbcf5 ("iommu/arm-smmu: Add initial driver support for ARM SMMUv3 devices")
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/fp/sve-test.S | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/fp/sve-test.S b/tools/testing/selftests/arm64/fp/sve-test.S
-index 80e072f221cde..7ef7835389e76 100644
---- a/tools/testing/selftests/arm64/fp/sve-test.S
-+++ b/tools/testing/selftests/arm64/fp/sve-test.S
-@@ -298,15 +298,20 @@ function irritator_handler
- 	add	x0, x0, #1
- 	str	x0, [x2, #ucontext_regs + 8 * 23]
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index d645f7edbd107..b677390e95bb9 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3992,8 +3992,9 @@ static int arm_smmu_write_reg_sync(struct arm_smmu_device *smmu, u32 val,
+ 	u32 reg;
  
-+#ifndef SSVE
- 	// Corrupt some random Z-regs
- 	movi	v0.8b, #1
- 	movi	v9.16b, #2
- 	movi	v31.8b, #3
- 	// And P0
- 	ptrue	p0.d
--#ifndef SSVE
- 	// And FFR
- 	wrffr	p15.b
-+#else
-+	// Enter and exit streaming mode, will reset all of the V, Z, P
-+	// and FFR registers that the system has.
-+	smstart_sm
-+	smstop
- #endif
+ 	writel_relaxed(val, smmu->base + reg_off);
+-	return readl_relaxed_poll_timeout(smmu->base + ack_off, reg, reg == val,
+-					  1, ARM_SMMU_POLL_TIMEOUT_US);
++	return readl_relaxed_poll_timeout_atomic(smmu->base + ack_off, reg,
++						reg == val, 1,
++						ARM_SMMU_POLL_TIMEOUT_US);
+ }
  
- 	ret
+ /* GBPA is "special" */
 -- 
 2.53.0
 
