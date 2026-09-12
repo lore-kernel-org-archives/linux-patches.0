@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AD61FBEA6;
-	Sat, 12 Sep 2026 16:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFE5390615;
+	Sat, 12 Sep 2026 16:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230868; cv=none; b=CGwnH3A88C7Wl6dPYSp2iB8Q328DK8/tHuAamiQBp9OcWa0RMTP5bCqIr5aKoLSZmx7DVN2GClE6szjF1nTdfCTE+x/qVX9RXuaWmDqpBdSklMco7RGXuIsK0WjnU8vuWTtHqHJkPBO98cLOaTGgRpO/u/O7wUQ16gN2z2hrbYA=
+	t=1789230872; cv=none; b=e6XdXOxZQEpru8wR54C8T8EtIyIW6eg7DG1r6n0r8nMCTFjKzazcX6AkjLuB1C12Esu603pRKvZrDEpsbPS6tChLfXP5yWPZRMQloXUtKM2FdLtWJYs+Pp7pCfmOvZJmm2WMwZqd+iIz8iArH23My6KaQuf2F8+ofBV1I+9HJlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230868; c=relaxed/simple;
-	bh=dGHL/y5trhoi+HyHj6Wf+RBXOjBip3/SkrRjmOwdK7w=;
+	s=arc-20240116; t=1789230872; c=relaxed/simple;
+	bh=zkJj8y/q3WI6DfEudbnm6CW+Fh5enR/WF0uYH7BT6CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=csjjweCaOUTnKZNximFTcYsKZpR+bwava5hz72qfg5lDzGAcis4Qt912dQ/x27MHu5GkPAFheeDe/qf3GAn6gD+FJy1YfXsfwBHAUOlO+EExcI7SRxztu7KyxBgQV1bfuN5ZlsibGrym97sJXSqpJjtivg3Guwke2GB1mL5/69g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuNYQSQ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bK0fZo0OUqKrdQM67dDD7vb3jqoayr1uzb3sGD1OroicKByG0hyAeEQNRSNDYW+AXDhcKZOupMFktcTa5C2kelJbd5erxRgrgWHNZbiRBU75+HorOPuUxfGMsVqP7oPfHMDhlbhliOVxTho8hBftFDLv1wR7uoZRRldosmTOP/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkdEkWW7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuNYQSQ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3B21F000FF;
-	Sat, 12 Sep 2026 16:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkdEkWW7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443861F000FF;
+	Sat, 12 Sep 2026 16:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230866;
-	bh=j0wz/Dx91bN11E5zdJZLO05Hbgy92mQxr58OfWkDwBM=;
+	s=korg; t=1789230871;
+	bh=wJ8mV2lnROyUhuI9eEHvYf7NEP4MIAka87WJjBU5eGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xuNYQSQ3oQHKTQqJB5PInyXtk20vNgJNRtRupbN8FbjxAfcWEdQOCQlQxBDhRO6g3
-	 V/7QJJMMySLZzJodWgCyK+1NZLsFwWy5v4CASoXALNkhhJXWhPu+TdIkR1uoOGgPN1
-	 3Z3AgY9yoPZqD8pTRcbNCnBcMoevDFVPYfxEfXCI=
+	b=JkdEkWW7FKiRN8qzUQ7QniaHh0UGgVcxvy53GHjaLCe/DJtqasJflEzrRC2aj9S5j
+	 nPEfKXhEKKunwuOLfKg61/8gqDo+xRblnGMXW3ZDYa4Gh0Gx5/oQD2zOZ4GPL11BXo
+	 CY0YpOcNEoXUhdXH6+1mUmJKMyOP0gr/wj4gqquQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Crt Mori <cmo@melexis.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Richard Genoud <richard.genoud@bootlin.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0883/1191] bitfield: Add non-constant field_{prep,get}() helpers
-Date: Sat, 12 Sep 2026 09:00:11 +0200
-Message-ID: <20260912065608.074625466@linuxfoundation.org>
+Subject: [PATCH 6.1 0884/1191] drm/sun4i: tcon-top: Keep mixer routes distinct
+Date: Sat, 12 Sep 2026 09:00:12 +0200
+Message-ID: <20260912065608.096626380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,127 +45,181 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit c1c6ab80b25c8db1e2ef5ae3ac8075d2c242ae13 ]
+[ Upstream commit 62bac3202042a8cfd4d4969a6d057cebd8b7cc1a ]
 
-The existing FIELD_{GET,PREP}() macros are limited to compile-time
-constants.  However, it is very common to prepare or extract bitfield
-elements where the bitfield mask is not a compile-time constant.
+Both mixer selectors reset to TCON 0. Selecting the same TCON for both
+mixers causes black or corrupted output.
 
-To avoid this limitation, the AT91 clock driver and several other
-drivers already have their own non-const field_{prep,get}() macros.
-Make them available for general use by adding them to
-<linux/bitfield.h>, and improve them slightly:
-  1. Avoid evaluating macro parameters more than once,
-  2. Replace "ffs() - 1" by "__ffs()",
-  3. Support 64-bit use on 32-bit architectures,
-  4. Wire field_{get,prep}() to FIELD_{GET,PREP}() when mask is
-     actually constant.
+When a route would collide, park the other mixer on another described
+TCON, or an unused selector if none exists.
 
-This is deliberately not merged into the existing FIELD_{GET,PREP}()
-macros, as people expressed the desire to keep stricter variants for
-increased safety, or for performance critical paths.
+Since the TCON index is now used as a shift, also reject negative
+values.
 
-Yury: use __mask withing new macros.
+Tested on Orange Pi 3 with TCON_LCD0 and TCON_TV0.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Acked-by: Crt Mori <cmo@melexis.com>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Acked-by: Richard Genoud <richard.genoud@bootlin.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
-Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
-Stable-dep-of: 62bac3202042 ("drm/sun4i: tcon-top: Keep mixer routes distinct")
+Link: https://lore.kernel.org/linux-sunxi/Zn8GVkpwXwhaUFno@titan/
+Link: https://lore.kernel.org/linux-sunxi/20241108-tcon_fix-v1-1-616218cc0d5f@jookia.org/
+Fixes: 05db311a792d ("drm/sun4i: tcon-top: Add helpers for mux switching")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/52eb247169b268054302afa71e598add0b04748d.1785772659.git.jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bitfield.h | 59 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ drivers/gpu/drm/sun4i/sun8i_tcon_top.c | 71 +++++++++++++++++++++-----
+ drivers/gpu/drm/sun4i/sun8i_tcon_top.h |  6 +++
+ 2 files changed, 65 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
-index 3efe29d662952..35622ff2c9951 100644
---- a/include/linux/bitfield.h
-+++ b/include/linux/bitfield.h
-@@ -16,6 +16,7 @@
-  * FIELD_{GET,PREP} macros take as first parameter shifted mask
-  * from which they extract the base mask and shift amount.
-  * Mask must be a compilation time constant.
-+ * field_{get,prep} are variants that take a non-const mask.
-  *
-  * Example:
-  *
-@@ -196,4 +197,62 @@ __MAKE_OP(64)
- #undef __MAKE_OP
- #undef ____MAKE_OP
+diff --git a/drivers/gpu/drm/sun4i/sun8i_tcon_top.c b/drivers/gpu/drm/sun4i/sun8i_tcon_top.c
+index da97682b68351..2e5d673750758 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_tcon_top.c
++++ b/drivers/gpu/drm/sun4i/sun8i_tcon_top.c
+@@ -25,6 +25,49 @@ static bool sun8i_tcon_top_node_is_tcon_top(struct device_node *node)
+ 	return !!of_match_node(sun8i_tcon_top_of_table, node);
+ }
  
-+#define __field_prep(mask, val)						\
-+	({								\
-+		__auto_type __mask = (mask);				\
-+		typeof(__mask) __val = (val);				\
-+		unsigned int __shift = BITS_PER_TYPE(__mask) <= 32 ?	\
-+				       __ffs(__mask) : __ffs64(__mask);	\
-+		(__val << __shift) & __mask;				\
-+	})
++static unsigned int sun8i_tcon_top_get_tcon_map(struct device_node *node)
++{
++	static const u32 out_ports[] = {
++		TCON_TOP_MIXER0_OUT_PORT,
++		TCON_TOP_MIXER1_OUT_PORT,
++	};
++	unsigned int i, map = 0;
 +
-+#define __field_get(mask, reg)						\
-+	({								\
-+		__auto_type __mask = (mask);				\
-+		typeof(__mask) __reg =  (reg);				\
-+		unsigned int __shift = BITS_PER_TYPE(__mask) <= 32 ?	\
-+				       __ffs(__mask) : __ffs64(__mask);	\
-+		(__reg & __mask) >> __shift;				\
-+	})
++	for (i = 0; i < ARRAY_SIZE(out_ports); i++) {
++		struct device_node *port;
 +
-+/**
-+ * field_prep() - prepare a bitfield element
-+ * @mask: shifted mask defining the field's length and position, must be
-+ *        non-zero
-+ * @val:  value to put in the field
-+ *
-+ * Return: field value masked and shifted to its final destination
-+ *
-+ * field_prep() masks and shifts up the value.  The result should be
-+ * combined with other fields of the bitfield using logical OR.
-+ * Unlike FIELD_PREP(), @mask is not limited to a compile-time constant.
-+ * Typical usage patterns are a value stored in a table, or calculated by
-+ * shifting a constant by a variable number of bits.
-+ * If you want to ensure that @mask is a compile-time constant, please use
-+ * FIELD_PREP() directly instead.
-+ */
-+#define field_prep(mask, val)						\
-+	(__builtin_constant_p(mask) ? __FIELD_PREP(mask, val, "field_prep: ") \
-+				    : __field_prep(mask, val))
++		port = of_graph_get_port_by_id(node, out_ports[i]);
++		if (!port)
++			continue;
 +
-+/**
-+ * field_get() - extract a bitfield element
-+ * @mask: shifted mask defining the field's length and position, must be
-+ *        non-zero
-+ * @reg:  value of entire bitfield
-+ *
-+ * Return: extracted field value
-+ *
-+ * field_get() extracts the field specified by @mask from the
-+ * bitfield passed in as @reg by masking and shifting it down.
-+ * Unlike FIELD_GET(), @mask is not limited to a compile-time constant.
-+ * Typical usage patterns are a value stored in a table, or calculated by
-+ * shifting a constant by a variable number of bits.
-+ * If you want to ensure that @mask is a compile-time constant, please use
-+ * FIELD_GET() directly instead.
-+ */
-+#define field_get(mask, reg)						\
-+	(__builtin_constant_p(mask) ? __FIELD_GET(mask, reg, "field_get: ") \
-+				    : __field_get(mask, reg))
++		for_each_of_graph_port_endpoint(port, ep) {
++			struct of_endpoint endpoint;
 +
- #endif
++			if (of_graph_parse_endpoint(ep, &endpoint))
++				continue;
++
++			if (endpoint.id < TCON_TOP_PORT_TCON_NUM)
++				map |= BIT(endpoint.id);
++		}
++
++		of_node_put(port);
++	}
++
++	return map;
++}
++
++static unsigned int sun8i_tcon_top_park_index(struct sun8i_tcon_top *tcon_top,
++					      int tcon)
++{
++	unsigned int candidates;
++
++	candidates = tcon_top->tcon_map & ~BIT(tcon);
++	if (!candidates)
++		candidates = GENMASK(TCON_TOP_PORT_TCON_NUM - 1, 0) & ~BIT(tcon);
++
++	return ffs(candidates) - 1;
++}
++
+ int sun8i_tcon_top_set_hdmi_src(struct device *dev, int tcon)
+ {
+ 	struct sun8i_tcon_top *tcon_top = dev_get_drvdata(dev);
+@@ -57,6 +100,7 @@ EXPORT_SYMBOL(sun8i_tcon_top_set_hdmi_src);
+ int sun8i_tcon_top_de_config(struct device *dev, int mixer, int tcon)
+ {
+ 	struct sun8i_tcon_top *tcon_top = dev_get_drvdata(dev);
++	u32 mixer_msk, other_msk;
+ 	unsigned long flags;
+ 	u32 reg;
+ 
+@@ -70,21 +114,27 @@ int sun8i_tcon_top_de_config(struct device *dev, int mixer, int tcon)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (tcon > 3) {
+-		dev_err(dev, "TCON index is too high!\n");
++	if (tcon < 0 || tcon >= TCON_TOP_PORT_TCON_NUM) {
++		dev_err(dev, "TCON index is invalid!\n");
+ 		return -EINVAL;
+ 	}
+ 
++	mixer_msk = mixer ? TCON_TOP_PORT_DE1_MSK : TCON_TOP_PORT_DE0_MSK;
++	other_msk = mixer ? TCON_TOP_PORT_DE0_MSK : TCON_TOP_PORT_DE1_MSK;
++
+ 	spin_lock_irqsave(&tcon_top->reg_lock, flags);
+ 
+ 	reg = readl(tcon_top->regs + TCON_TOP_PORT_SEL_REG);
+-	if (mixer == 0) {
+-		reg &= ~TCON_TOP_PORT_DE0_MSK;
+-		reg |= FIELD_PREP(TCON_TOP_PORT_DE0_MSK, tcon);
+-	} else {
+-		reg &= ~TCON_TOP_PORT_DE1_MSK;
+-		reg |= FIELD_PREP(TCON_TOP_PORT_DE1_MSK, tcon);
++
++	reg &= ~mixer_msk;
++	reg |= field_prep(mixer_msk, tcon);
++
++	if (field_get(other_msk, reg) == tcon) {
++		reg &= ~other_msk;
++		reg |= field_prep(other_msk,
++				  sun8i_tcon_top_park_index(tcon_top, tcon));
+ 	}
++
+ 	writel(reg, tcon_top->regs + TCON_TOP_PORT_SEL_REG);
+ 
+ 	spin_unlock_irqrestore(&tcon_top->reg_lock, flags);
+@@ -142,6 +192,7 @@ static int sun8i_tcon_top_bind(struct device *dev, struct device *master,
+ 	if (!clk_data)
+ 		return -ENOMEM;
+ 	tcon_top->clk_data = clk_data;
++	tcon_top->tcon_map = sun8i_tcon_top_get_tcon_map(dev->of_node);
+ 
+ 	spin_lock_init(&tcon_top->reg_lock);
+ 
+@@ -174,10 +225,6 @@ static int sun8i_tcon_top_bind(struct device *dev, struct device *master,
+ 		goto err_assert_reset;
+ 	}
+ 
+-	/*
+-	 * At least on H6, some registers have some bits set by default
+-	 * which may cause issues. Clear them here.
+-	 */
+ 	writel(0, regs + TCON_TOP_PORT_SEL_REG);
+ 	writel(0, regs + TCON_TOP_GATE_SRC_REG);
+ 
+diff --git a/drivers/gpu/drm/sun4i/sun8i_tcon_top.h b/drivers/gpu/drm/sun4i/sun8i_tcon_top.h
+index 0390584a330e5..2b887470a49f8 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_tcon_top.h
++++ b/drivers/gpu/drm/sun4i/sun8i_tcon_top.h
+@@ -14,6 +14,10 @@
+ #define TCON_TOP_PORT_SEL_REG		0x1C
+ #define TCON_TOP_PORT_DE0_MSK			GENMASK(1, 0)
+ #define TCON_TOP_PORT_DE1_MSK			GENMASK(5, 4)
++#define TCON_TOP_PORT_TCON_NUM			4
++
++#define TCON_TOP_MIXER0_OUT_PORT		1
++#define TCON_TOP_MIXER1_OUT_PORT		3
+ 
+ #define TCON_TOP_GATE_SRC_REG		0x20
+ #define TCON_TOP_HDMI_SRC_MSK			GENMASK(29, 28)
+@@ -29,6 +33,8 @@ struct sun8i_tcon_top {
+ 	void __iomem			*regs;
+ 	struct reset_control		*rst;
+ 
++	unsigned int			tcon_map;
++
+ 	/*
+ 	 * spinlock is used to synchronize access to same
+ 	 * register where multiple clock gates can be set.
 -- 
 2.53.0
 
