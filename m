@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C9F3612F6;
-	Sat, 12 Sep 2026 07:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEE329B799;
+	Sat, 12 Sep 2026 07:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199344; cv=none; b=BXrfC8NMMNmgM8k4GlTh1OLHkvDDchYvdbX4Bfj47roU2Mg1nqwX1EbfIJeTuFsoWpcJsdjxzDcK/Uuz6vfLSb/kPQHNfRcqluyVMbd9oW0VUfubuFGco1u9Vh3+QubXMnxpBnIqZR8xl6n/0aeylgEnByWj0IISF9AoFGMug8E=
+	t=1789199349; cv=none; b=my4SROumx6M6J/99gsGskAM69BWndpSEhFd4eQdpJEccvbK8R697daDrkK87hareKxktMnfELgmoNA3DWjh1EFlSPtwhsGAzcWrgOO/j9urh/H6zndF8Gx/riaa2wSExppKFOV3pYHNXxxWCkxLKqY951HgSMOT5pcFbYttSZUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199344; c=relaxed/simple;
-	bh=5nEnXnYuhghZ7nFYcRI17nK2KcDFJR/ixr+6vGAL86Y=;
+	s=arc-20240116; t=1789199349; c=relaxed/simple;
+	bh=dXxKfpVi+o0wpBM2SLQM58AlWJ2bANbNjKxP+bMxNfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=So+qj0sljDf5+aIPwRHXudZ8etrlnk0zgynLNL8v3yRVgnTxShnTKYICNELrVkpnp1dcLWWvkZ1lHK8wnz2oGvrsIwOs3bgwG3LLui+qGLOaS7Z2ddn5n3MegTJF3U5raFUIXvj2uhNEF2wwxEHh+bYj+RzvV8jTh40+gNQBTsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8M42xwC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bztcFFLJHzYeI+6bOKuLfZba0nn3dK/WVhEU4VbYWfvvBVb6YvgdOm/+eGCl0cO4ekGP3+VxAAPYNgbK0j4Y6WeKl62f6B220W0e+hWlnfmgCHukZopYqE9HKusZZZJjGj4cwFxS6Q4yTj8FFB8opNWhM1sTqYx+niAbYy/UH1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EfZyUdQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8M42xwC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B2D1F000FF;
-	Sat, 12 Sep 2026 07:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EfZyUdQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1311F1F000FF;
+	Sat, 12 Sep 2026 07:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199342;
-	bh=QzRytk+0Tmn/YKaSpeVJaXN/QHEoZOJW4Dv3iE2UQco=;
+	s=korg; t=1789199347;
+	bh=qbttJbq9OYNeaENGr4gSm06vaLhvzQe1X2sHgg0ZYLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8M42xwCmfqxFVf1KVUZZyc7VrkOpmym7Y80Lte30C6fJg3bmNaHtvA6QLMQLIj7/
-	 niKcSk3+kOz8Kh/DbeGJQwVE+aG7v0uQsyh8eri+/wd5/AJgycPIUhWj8svVyvETpx
-	 j5aKnmarP+a5r+SwU9Hxox3HxiEF/ReMEl9gPmnE=
+	b=1EfZyUdQdVNxaUPvIqfKfvxCPA14uyyp0RHTTvGSoIQUl3VKYKn+/D0R6Gd/asDNT
+	 c0i41UEA0UaOW1mXcZ9qhnbjCimR200pPSAWtMjBiELIeUf427446y7zJxguoWMP5l
+	 d2GZnS6r6DEmZKyHBKZFfi2/J6TtUG1MuwuAz9P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0565/1815] selftests/bpf: Fix lsm_bdev dev_t encoding mismatch
-Date: Sat, 12 Sep 2026 08:38:35 +0200
-Message-ID: <20260912065702.146838003@linuxfoundation.org>
+Subject: [PATCH 7.2 0566/1815] libbpf: Search /lib64 and /lib in resolve_full_path()
+Date: Sat, 12 Sep 2026 08:38:36 +0200
+Message-ID: <20260912065702.169315922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,56 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 71cf3f3275e5f4d7f31bd540608c80535343b427 ]
+[ Upstream commit 7b5ae0481efdac040cea72b4fabd1398109f975b ]
 
-progs/lsm_bdev.c keys its verity_devices hashmap with the raw kernel dev_t
-read straight off bdev->bd_dev, i.e. MKDEV(major, minor) = (major << 20) |
-minor. prog_tests/lsm_bdev.c instead builds its lookup key with dev_key =
-(__u32)st.st_rdev from stat(2), but the stat(2) syscall fills st_rdev via
-the kernel's new_encode_dev(), a different bit layout: (minor & 0xff) |
-(major << 8) | ((minor & ~0xff) << 12).
+attach_probe/uprobe-lib and uprobe_autoattach selftests fail with "failed
+to resolve full path for libc.so.6" on older non-usrmerged distros, where
+libc.so.6 lives under a top-level /lib64 or /lib rather than /usr/lib64 or
+/usr/lib. Add /lib64:/lib to the search paths, alongside the existing
+/usr/lib64:/usr/lib and Debian multiarch entries.
 
-For any device with a non-trivial major these two values differ, so the
-lookup can never find what the BPF program stored, and test_lsm_bdev()
-always fails with:
-
-  test_lsm_bdev:FAIL:map lookup unexpected error: -2 (errno 2)
-
-Reconstruct the raw kernel dev_t from the decoded major/minor instead of
-casting st_rdev directly, restoring the layout the BPF program actually
-reads.
-
-Fixes: 96f4c251a087 ("selftests/bpf: add block device management selftests")
+Fixes: 1ce3a60e3c28 ("libbpf: auto-resolve programs/libraries when necessary for uprobes")
 Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
 Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/bpf/20260720-selftests-bpf_fixes-v2-2-b450eda93dfe@suse.com
+Link: https://lore.kernel.org/bpf/20260720-selftests-bpf_fixes-v2-3-b450eda93dfe@suse.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/lsm_bdev.c | 3 ++-
+ tools/lib/bpf/libbpf.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/lsm_bdev.c b/tools/testing/selftests/bpf/prog_tests/lsm_bdev.c
-index a970798e11735..28bc4b117f415 100644
---- a/tools/testing/selftests/bpf/prog_tests/lsm_bdev.c
-+++ b/tools/testing/selftests/bpf/prog_tests/lsm_bdev.c
-@@ -17,6 +17,7 @@
- #include <stdlib.h>
- #include <string.h>
- #include <sys/stat.h>
-+#include <sys/sysmacros.h>
- #include <sys/types.h>
- #include <unistd.h>
- #include "lsm_bdev.skel.h"
-@@ -172,7 +173,7 @@ void test_lsm_bdev(void)
- 	if (!ASSERT_OK(stat(DM_DEV_PATH, &st), "stat dm dev"))
- 		goto remove_dm;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 1368752aa13c3..1ab939dfb7f08 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -12973,13 +12973,14 @@ static const char *arch_specific_lib_paths(void)
+ /* Get full path to program/shared library. */
+ static int resolve_full_path(const char *file, char *result, size_t result_sz)
+ {
+-	const char *search_paths[3] = {};
++	const char *search_paths[4] = {};
+ 	int i, perm;
  
--	dev_key = (__u32)st.st_rdev;
-+	dev_key = (major(st.st_rdev) << 20) | minor(st.st_rdev);
- 
- 	/* Look up the device in the BPF map and verify. */
- 	err = bpf_map__lookup_elem(skel->maps.verity_devices,
+ 	if (str_has_sfx(file, ".so") || strstr(file, ".so.")) {
+ 		search_paths[0] = getenv("LD_LIBRARY_PATH");
+ 		search_paths[1] = "/usr/lib64:/usr/lib";
+ 		search_paths[2] = arch_specific_lib_paths();
++		search_paths[3] = "/lib64:/lib";
+ 		perm = R_OK;
+ 	} else {
+ 		search_paths[0] = getenv("PATH");
 -- 
 2.53.0
 
