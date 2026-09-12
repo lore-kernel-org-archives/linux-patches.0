@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB91D37FF76;
-	Sat, 12 Sep 2026 18:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C786037FF76;
+	Sat, 12 Sep 2026 18:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237250; cv=none; b=QJAsziTM/Jaq//UojgnCJbyjwkzbRoq1zJRnPy8P+9TMt79yUOuSPcRgkQGXNSCu47NFpaVD8eJYMjE/XiVWD77LGjsi8OYmRfMmzIYHuZfCBjFWKhYPdnYASFGV99I5GhI3yRQaFfBsr5MX6Ive4oOWJmDU3GLEIkvqILlNKGk=
+	t=1789237254; cv=none; b=IM0naTg0iB0Ss8cZG32awOhH0kDqav8hqgPdKEogYPn3wRC6e7bz1ukP2fENoZJ1yPJt19CbPnZJD+DQuzK5VofxHlWJIHsToR2/M9zbc8nWxjmMbMP/cy48BUF/+LEfRFrZMHpHt/aWat+outzkWoLkqeTPCGZ7g4KzcwhU7FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237250; c=relaxed/simple;
-	bh=D8HKqDrV2fHgGoLA3iuyoHNnhZtrgmfBHBtMlI6j47w=;
+	s=arc-20240116; t=1789237254; c=relaxed/simple;
+	bh=ncB2r2PwuvVfyPZvw/qr5W/8JwA0h/CQpFjj8LfS2mA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fAW7aqIw+VZl7golnBpMklqED5xEYNrs0VFaRbz87f5W1qBmiXmxIIu8Lf0F8/2w7qsMLx0Pt1G8HKTjFM0kCZ1CAIXtYyXJvhVYqj34T2usnYWANACz6bbmalEeRBvRZsqUgYkpx1vVG2HP7VlPz05bd1RQUIArYkv3uPUuTJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6XSfx6W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PnhN+oIh9HhgcURiWlxLib1FnG65mcz+46+CKD2QXSm+uuj3Bdammzg8FRtTZ4+S5/tMPYf1dBP5d8srsaXy3TSfsQWz/o2PDzwarBCaXS8xXWp8ZWEB2vItjQma30HUCHjDBq4kef9voN25QCxtk6DoHr/Dx35/K6cuvd8GOCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWBInPnj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6XSfx6W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A351F000FF;
-	Sat, 12 Sep 2026 18:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWBInPnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD65F1F000FF;
+	Sat, 12 Sep 2026 18:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237248;
-	bh=ySaERNr4cE3RddVYFpUNuuitoRVScasna6eBMkS1A8o=;
+	s=korg; t=1789237253;
+	bh=5LQEccrxqvslpH3+s4gbQ7hOuGoHWxtxM76jAZICLzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r6XSfx6W0DSSWCTmQykD0fO1sfEXQlOHqKdzc0m7LpOSwPrksbB4ZHFl5C1J3+oQJ
-	 LlcKQt6g/PlfQpxP4FQ0kjSdXstMhAF6esKmnlobndkjBvKx31C1fymIZKTH7uxSO9
-	 IX2B6w5TgeeVs/ynVQD28KyKMs1tsGwqXqjoRQ/Y=
+	b=vWBInPnj+j61f7OsCjBzX9OA1DJifDo37f8kuO8eDtjcb7koigr3B4YBY8flhEgMR
+	 AaUvr9jBA7iktOaWwbwc2tVDtVP9EHfNhydVhN08x6neNLdgyzlxAAbSk5TSXIZQMX
+	 7rAeM+ODF45klsARBOxSRl22WsyRt5BofgELubz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.15 167/935] platform/x86: dell-wmi-sysman: Dont hex dump attribute security buffer
-Date: Sat, 12 Sep 2026 08:53:17 +0200
-Message-ID: <20260912065530.647788494@linuxfoundation.org>
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 5.15 214/935] timer: Keep debugobjects state consistent in migrate_timer_list()
+Date: Sat, 12 Sep 2026 08:54:04 +0200
+Message-ID: <20260912065531.731676217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -44,48 +43,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit 83c80495e45eddf64c6525fb582d8db68f256b71 upstream.
+commit c793bbfc4a0a9f5a66978fc91559e9681748dbeb upstream.
 
-set_attribute() populates the security area of the BIOS attribute request
-buffer with the current admin password via populate_security_buffer(), then
-dumps the whole request buffer with print_hex_dump_bytes(). This can expose
-the plaintext admin password in the kernel log.
+When timers are migrated away from an offline CPU the debugobjects state
+gets corrupted. The timer is accounted as inactive on deletion, but the
+enqueue on the alive CPU lacks the activation call.
 
-The same issue was fixed for the password attribute path by
-commit d1a196e0a6dc ("platform/x86: dell-wmi-sysman: Don't hex dump
-plaintext password data"). Remove the remaining dump from the BIOS
-attribute path.
+That used to work, but got broken when the trace point and the debug
+objects call got separated. That change missed to fixup
+migrate_timer_list().
 
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
+Add the missing debug_timer_activate() invocation to fix it.
+
+Fixes: dc1e7dc5ac62 ("timer: Move trace point to get proper index")
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260614045353.143500-1-sammiee5311@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/87bjb0l7ha.ffs@fw13
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c |    1 -
- 1 file changed, 1 deletion(-)
+ kernel/time/timer.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c
-@@ -84,7 +84,6 @@ int set_attribute(const char *a_name, co
- 	if (ret < 0)
- 		goto out;
- 
--	print_hex_dump_bytes("set attribute data: ", DUMP_PREFIX_NONE, buffer, buffer_size);
- 	ret = call_biosattributes_interface(wmi_priv.bios_attr_wdev,
- 					    buffer, buffer_size,
- 					    SETATTRIBUTE_METHOD_ID);
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -2173,6 +2173,7 @@ static void migrate_timer_list(struct ti
+ 		timer = hlist_entry(head->first, struct timer_list, entry);
+ 		detach_timer(timer, false);
+ 		timer->flags = (timer->flags & ~TIMER_BASEMASK) | cpu;
++		debug_timer_activate(timer);
+ 		internal_add_timer(new_base, timer);
+ 	}
+ }
 
 
