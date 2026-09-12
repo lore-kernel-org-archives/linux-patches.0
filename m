@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E07736828B;
-	Sat, 12 Sep 2026 19:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091BD331203;
+	Sat, 12 Sep 2026 19:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242491; cv=none; b=V3K24+PCJFjKVobc7/hc59tY8HGMB50gGoTAwppNl+jXiWIHbMkpW37J2nqSR4OJnEUR94EtYKdfarMITXCPiYHXl1tRama9ff7kvP9h/mO4bL3Q1T+K3NNENhsLNpor/F3kmlCFf81Gj789jHgfU4/aISWSjj1jthw1mQ8/+zs=
+	t=1789242494; cv=none; b=i7sMEGH8yhAvq83NHBvIE7K/FxnTNbJz8rIrI/DUObUxYrJbvvCEjv9YgWFUIrO+anUM2dQswIjs0pJlDaISgMdAPcyVJ6AeFSeuusCDP/YJqsM73j64IOGOaNDQbeHG23kKv0VzMoxK2HY+LdM9LR9x/sj0RRXYezXzPNm7mz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242491; c=relaxed/simple;
-	bh=3CqCOuZsqR1cP3tWdGuwbfM4qwXFYNyBjHbpd72Hrpo=;
+	s=arc-20240116; t=1789242494; c=relaxed/simple;
+	bh=nr1HAaZBy15/Xzq1pyatHOKfYePEuREnu8cvUwmPCFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9BXjVog8tM16MERq0WU4re2i1R1uHW5/e4K13011hC0yoGpytDnT5mOL4vMBf7hT9hMKOyN25KPCpRsHE5vhH+MXZEayiGA7zYXFoEYWEqtgHpCfUSdEZfpXvf/5BRuzvt1KxnDDLi/ApbvMJi04pDLE3iSMkk6A0rF8yd6C90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItXiOMBb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E4lSm+4NvhdaABW9ooV88Hud8k1NuOW2prgUhDkNe011zlEme9nEaHKghzis0EF79ygvuJAwem7n4LN7xrlyFUMN3Aw2IiAZzbeKYasaSb0UHf7wETg37lenHY8vmpmi8YDhXPMp+OqRvEPevOXYiBiUHWsTU/eACncc3xDMC38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjkAjkTx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItXiOMBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898A21F000FF;
-	Sat, 12 Sep 2026 19:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjkAjkTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640431F000FF;
+	Sat, 12 Sep 2026 19:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242490;
-	bh=kpnJZ7L6WOk5t0RIPIZPd4/ZI+krpxDgerF4WciMu+I=;
+	s=korg; t=1789242492;
+	bh=1cjiAHyYOze7hEZLGCXGQlkNeHlttEM8mo2vqOtcbzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ItXiOMBb8qSvD6D2fpmU2z8j5udOG4vDtJZswsy1BvfzkBFhku5eci3HEB1aczhoS
-	 KyHaj8vs/uqe20jyVxOsRKdS3gkDl1oyBWih/eaTD3RLdvXprdASjvHlPI+RlgVwcm
-	 MbL4t3ubrutJk/obSKtJIgEKL9hbmxdAgMrCPIGE=
+	b=NjkAjkTxpzZW6hN2jsDE5LPMCCgPgYSK6rRR1y667FlEoKvvlPFNMTU6y/aQAhLb6
+	 ToWIXK2/B6gKXpcddSwYAv+9moqOTtVVJ4vfVLAwzTSu3t1pFm5Qu9Evqj1bsm0wrl
+	 OSSHb9YgXXatsa6I9xnHPR+ekBOwcpucZTo4hbnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mert Seftali <mertsftl@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 420/798] iio: accel: dmard09: Implement IIO_CHAN_INFO_SCALE
-Date: Sat, 12 Sep 2026 09:00:48 +0200
-Message-ID: <20260912065526.776366602@linuxfoundation.org>
+Subject: [PATCH 5.10 421/798] RDMA/core: Avoid flush_workqueue(system_unbound_wq) usage
+Date: Sat, 12 Sep 2026 09:00:49 +0200
+Message-ID: <20260912065526.799333755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,75 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mert Seftali <mertsftl@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit aa58ecc73466d0cb8c418de98e2225490bf600e3 ]
+[ Upstream commit ff815a89398d8bbfdc14ced98252bdae92126225 ]
 
-Reading the in_accel_scale attribute on the DMARD09 has always returned
--EINVAL: the channels advertise scale via info_mask_shared_by_type so the
-IIO core exposes the attribute, but dmard09_read_raw() only handles
-IIO_CHAN_INFO_RAW, so a SCALE read falls through to 'default: return
--EINVAL':
+Flushing system-wide workqueues is dangerous and will be forbidden.
+Replace system_unbound_wq with local ib_unreg_wq.
 
-    $ cat .../iio:deviceX/in_accel_scale
-    cat: in_accel_scale: Invalid argument
-
-leaving userspace with raw counts it cannot convert to m/s^2.
-
-The driver was written from a vendor source [1] without a datasheet, and
-the scale was declared but never implemented. The vendor source carries
-the sensitivity: its conversion is
-
-    acc = raw * GRAVITY_EARTH_1000 / sensitivity   (then / 1000 -> m/s^2)
-
-with sensitivity = 32 and GRAVITY_EARTH_1000 = 9807 ("about
-(9.80665)*1000"), i.e. 32 counts correspond to 1 g.
-
-That sensitivity applies to the value this driver already reports as raw:
-the vendor reduces each 16-bit sample to a signed 9-bit value, and the
-preparation in dmard09_read_raw() yields the same value. It is
-self-consistent: 256 counts / 32 = 8 g full scale, matching the +/-8g
-range.
-
-Implement the scale derived from that sensitivity using standard gravity:
-
-    scale = 9.80665 / 32 = 0.3064578125 m/s^2 per LSB
-
-Link: https://github.com/minstrelsy/mediatek/blob/1f49d8c87b839651bc89afc870277e8e0f2e2d55/custom/common/kernel/accelerometer/dmard09/dmard09.c [1]
-Fixes: a4fa6509dda4 ("iio: accel: add support for the Domintech DMARD09 3-axis accelerometer")
-Signed-off-by: Mert Seftali <mertsftl@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/252cefb0-a400-83f6-2032-333d69f52c1b@I-love.SAKURA.ne.jp
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 7d75592114d1 ("RDMA/core: Wait for RCU callbacks before unloading ib_core")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/dmard09.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/infiniband/core/device.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/iio/accel/dmard09.c b/drivers/iio/accel/dmard09.c
-index e6e28c9647776..e2f470d801493 100644
---- a/drivers/iio/accel/dmard09.c
-+++ b/drivers/iio/accel/dmard09.c
-@@ -8,6 +8,7 @@
- #include <asm/unaligned.h>
- #include <linux/module.h>
- #include <linux/i2c.h>
-+#include <linux/units.h>
- #include <linux/iio/iio.h>
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index 55b303348fcb2..fdc1c09931a38 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -58,6 +58,7 @@ struct workqueue_struct *ib_comp_wq;
+ struct workqueue_struct *ib_comp_unbound_wq;
+ struct workqueue_struct *ib_wq;
+ EXPORT_SYMBOL_GPL(ib_wq);
++static struct workqueue_struct *ib_unreg_wq;
  
- #define DMARD09_DRV_NAME	"dmard09"
-@@ -79,6 +80,12 @@ static int dmard09_read_raw(struct iio_dev *indio_dev,
- 		*val = accel;
+ /*
+  * Each of the three rwsem locks (devices, clients, client_data) protects the
+@@ -1563,7 +1564,7 @@ void ib_unregister_device_queued(struct ib_device *ib_dev)
+ 	WARN_ON(!refcount_read(&ib_dev->refcount));
+ 	WARN_ON(!ib_dev->ops.dealloc_driver);
+ 	get_device(&ib_dev->dev);
+-	if (!queue_work(system_unbound_wq, &ib_dev->unregistration_work))
++	if (!queue_work(ib_unreg_wq, &ib_dev->unregistration_work))
+ 		put_device(&ib_dev->dev);
+ }
+ EXPORT_SYMBOL(ib_unregister_device_queued);
+@@ -2752,27 +2753,28 @@ static const struct rdma_nl_cbs ibnl_ls_cb_table[RDMA_NL_LS_NUM_OPS] = {
  
- 		return IIO_VAL_INT;
-+	case IIO_CHAN_INFO_SCALE:
-+		*val = 0;
-+		/* 1 g / 32 LSB, in m/s^2 */
-+		*val2 = IIO_G_TO_M_S_2(NANO / 32);
+ static int __init ib_core_init(void)
+ {
+-	int ret;
++	int ret = -ENOMEM;
+ 
+ 	ib_wq = alloc_workqueue("infiniband", 0, 0);
+ 	if (!ib_wq)
+ 		return -ENOMEM;
+ 
++	ib_unreg_wq = alloc_workqueue("ib-unreg-wq", WQ_UNBOUND,
++				      WQ_UNBOUND_MAX_ACTIVE);
++	if (!ib_unreg_wq)
++		goto err;
 +
-+		return IIO_VAL_INT_PLUS_NANO;
- 	default:
- 		return -EINVAL;
- 	}
+ 	ib_comp_wq = alloc_workqueue("ib-comp-wq",
+ 			WQ_HIGHPRI | WQ_MEM_RECLAIM | WQ_SYSFS, 0);
+-	if (!ib_comp_wq) {
+-		ret = -ENOMEM;
+-		goto err;
+-	}
++	if (!ib_comp_wq)
++		goto err_unbound;
+ 
+ 	ib_comp_unbound_wq =
+ 		alloc_workqueue("ib-comp-unb-wq",
+ 				WQ_UNBOUND | WQ_HIGHPRI | WQ_MEM_RECLAIM |
+ 				WQ_SYSFS, WQ_UNBOUND_MAX_ACTIVE);
+-	if (!ib_comp_unbound_wq) {
+-		ret = -ENOMEM;
++	if (!ib_comp_unbound_wq)
+ 		goto err_comp;
+-	}
+ 
+ 	ret = class_register(&ib_class);
+ 	if (ret) {
+@@ -2840,6 +2842,8 @@ static int __init ib_core_init(void)
+ 	destroy_workqueue(ib_comp_unbound_wq);
+ err_comp:
+ 	destroy_workqueue(ib_comp_wq);
++err_unbound:
++	destroy_workqueue(ib_unreg_wq);
+ err:
+ 	destroy_workqueue(ib_wq);
+ 	return ret;
+@@ -2861,7 +2865,7 @@ static void __exit ib_core_cleanup(void)
+ 	destroy_workqueue(ib_comp_wq);
+ 	/* Make sure that any pending umem accounting work is done. */
+ 	destroy_workqueue(ib_wq);
+-	flush_workqueue(system_unbound_wq);
++	destroy_workqueue(ib_unreg_wq);
+ 	WARN_ON(!xa_empty(&clients));
+ 	WARN_ON(!xa_empty(&devices));
+ }
 -- 
 2.53.0
 
