@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4376423D2B1;
-	Sat, 12 Sep 2026 13:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720D11F419A;
+	Sat, 12 Sep 2026 13:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218530; cv=none; b=dDWoehMlTWRS0zI2QKRkx1qldna1//kr0t4VKm/BoZ0NPduinwFgU5sWRu6BLSTGowQ4pebUoRgVh7JKegMgZAUOgL70pUcq5bnTdGLPFrQpNAe3U/c+CLPFXSN4ly8rkRJde8HXRuocHL7VhExs+qh5cLBBTdEHL4Q/2WlXFSU=
+	t=1789218533; cv=none; b=SUzlhojfCM7/da4Sd4yp/xQLCZJSwNeNxufQS0BaTMKa5GNU0FVAKzb63Ly7GA8m6sjgcQ5gmOxTHqfe2/8dXQTfu2mkyt79p/fc6lJbMnZerwl1mXdTQUpdKEAKTpxAQMu9dar3GiprpglzRYHG0QFHXd5v3SplWpEnc16HSzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218530; c=relaxed/simple;
-	bh=lMamYZn/82G2Wi0E7S+kbJDGmb5gHrfGHkK4vLo4TAA=;
+	s=arc-20240116; t=1789218533; c=relaxed/simple;
+	bh=7Z6w3/KQZpPTNIE1fF0eZBnNLasebBDtnZ+QTxwKhGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GN118z3T23kP4mws3+YUbdnA7tLcWpHgCbFYQ4eudI6z/BBW8zx6eVvW8ojtuReGD1aQFR+SVd9lM8PeSmpTBRo8zEuOHZq8GC9h4ul37MDaJgRnt91jpFnZy4It2NDTDUZXr7ohf9wqNihbpu8mbLGTLYP+q0QG0kfvx7C1kK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPPNKB8n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1eHKYbWFxEzjdTy52PFDFFEvV+TlNIJraV6ofczUa5C9XS5I73YSr0wWwCyzaX4+dhmVKOYeTHzjld+S6FHzKWba/jQvesmMwKrnzVd0bLwslOVf17qEd1wFfjnn9NwCHiQkk9l0wS7QFHqqkw4q+//CSK0nSZZ6kwdavsF57I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGTWKJ8C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPPNKB8n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCDD1F000FF;
-	Sat, 12 Sep 2026 13:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGTWKJ8C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F981F000FF;
+	Sat, 12 Sep 2026 13:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218528;
-	bh=mbUA1D+8ZSpKGN4USNQfcrDHoRQ1HxY7ANqTke7ZZy4=;
+	s=korg; t=1789218532;
+	bh=K5Jhv3K+VNedU8olOenqo/xS/tkZCIRPeC9BXJQYmx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XPPNKB8nceWBCMdMcvztZmW6lFlet6j9wQkSUlC8/2adQjBLyLQzIcDW/jQRESbW6
-	 JD+4lpaqztoc1KSR1F8jBASwMR80nEchcImUGXXb+HWIgl/HQmd+fuOEvOyFQOvA94
-	 Mobue7nDEHrDJP3HWwkmCZXXpaQVGJNCWVpjDVTc=
+	b=DGTWKJ8CsihG3AjDP8RDrdDgoixK98S8fmgOBo1tcRoFIFGf9VCWphRRkYXQ0962U
+	 YjFznwsAouax3crpytRA9Ut0oq6Km+QoTGRkQB3fzQ9YjIpyAIYKXyAMFFIF6L18ik
+	 +BmbWUyZYES1IIGVVFxfiF8vXa2nULC1TL5VfeFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+643a6dd130546afdf1fb@syzkaller.appspotmail.com,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1156/1376] null_blk: serialize configfs attribute updates with device setup
-Date: Sat, 12 Sep 2026 08:59:42 +0200
-Message-ID: <20260912065633.318814527@linuxfoundation.org>
+Subject: [PATCH 6.12 1165/1376] ksmbd: do not advertise unimplemented CA support
+Date: Sat, 12 Sep 2026 08:59:51 +0200
+Message-ID: <20260912065633.516755166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,111 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 4e1f23f9c33c156be7e313b40695af5a3a834739 ]
+[ Upstream commit eebdd3f1157e35a50df5ff2d3d9a305901df3254 ]
 
-The attribute store methods generated with NULLB_DEVICE_ATTR() refuse to
-change the configuration of a live device by testing
-NULLB_DEV_FL_CONFIGURED, but that flag is only set by
-nullb_device_power_store() after null_add_dev() has returned, and the
-store methods take no lock at all. configfs only serializes writes to
-the same open file (buffer->mutex), so a write to any attribute can run
-concurrently with null_add_dev() and change the device configuration
-while it is being used.
+ksmbd durable handles are currently in-memory state. There is no persistent
+open recovery, cluster ownership epoch, fencing, or failover implementation
+behind the continuous-availability share flag.
 
-null_add_dev() reads the configuration several times, e.g. dev->zoned is
-read once to set up the queue limits and once to initialize the zone
-resources:
+Do not advertise SMB2 persistent-handle or continuous-availability
+capabilities until those guarantees exist. A client requesting DH2Q then
+falls back to the existing durable V2 behavior rather than being promised a
+persistent handle that cannot survive a server failure.
 
-  CPU0: echo 1 > nullb0/power         CPU1: echo 1 > nullb0/zoned
-  nullb_device_power_store()
-    mutex_lock(&lock)
-    null_add_dev()
-      if (dev->zoned) -> false
-        /* no BLK_FEAT_ZONED */       nullb_device_zoned_store()
-                                        test_bit(FL_CONFIGURED) -> 0
-                                        dev->zoned = true
-      blk_mq_alloc_disk()
-        /* queue is not zoned */
-      if (nullb->dev->zoned) -> true
-        null_register_zoned_dev()
-          blk_revalidate_disk_zones()
-
-blk_revalidate_disk_zones() is then called for a queue that does not
-have BLK_FEAT_ZONED set, which triggers its WARN_ON_ONCE() and fails the
-device setup with -EIO:
-
-  WARNING: CPU: 2 PID: 322 at block/blk-zoned.c:2357 blk_revalidate_disk_zones+0x4c/0x560
-
-Clearing dev->zoned in the same window is worse: the queue is created
-with BLK_FEAT_ZONED but the zone resources are never initialized, so
-add_disk() succeeds for a zoned disk that has no zones. And a store that
-lands after the last dev->zoned test leaves dev->zoned set while
-dev->zones is still NULL, which null_process_zoned_cmd() dereferences on
-the first write.
-
-Fix this by taking the global lock, which nullb_device_power_store()
-already holds across null_add_dev() and null_del_dev(), around both the
-NULLB_DEV_FL_CONFIGURED test and the update of the device configuration.
-The submit_queues and poll_queues apply callbacks are now called with
-that lock held, so remove the locking they did themselves.
-
-Since the store methods can run as soon as configfs_register_subsystem()
-returns, that is, before null_init() gets to mutex_init(&lock), also
-initialize the lock statically with DEFINE_MUTEX().
-
-Fixes: 3bf2bd20734e ("nullb: add configfs interface")
-Reported-by: syzbot+643a6dd130546afdf1fb@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-block/6a7d0b3f.ac361c09.22ff0a.004c.GAE@google.com/
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260813141456.1625857-2-cassel@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 06c7b1d731bc ("ksmbd: free preauth sessions on connection teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2ops.c |  9 +++++----
+ fs/smb/server/smb2pdu.c | 11 +++++------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 671bd6729fa7b..a0086307b4606 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -336,7 +336,15 @@ static ssize_t nullb_device_bool_attr_store(bool *val, const char *page,
- 	return count;
+diff --git a/fs/smb/server/smb2ops.c b/fs/smb/server/smb2ops.c
+index bcf05caa2304d..9455abbfe1c0a 100644
+--- a/fs/smb/server/smb2ops.c
++++ b/fs/smb/server/smb2ops.c
+@@ -262,8 +262,10 @@ void init_smb3_02_server(struct ksmbd_conn *conn)
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
+ 		conn->vals->req_capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
+ 
+-	if (server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE)
+-		conn->vals->req_capabilities |= SMB2_GLOBAL_CAP_PERSISTENT_HANDLES;
++	/*
++	 * Durable handles are in-memory only.  Do not advertise persistent
++	 * handles until CA recovery and fencing are implemented.
++	 */
  }
  
--/* The following macro should only be used with TYPE = {uint, ulong, bool}. */
-+/*
-+ * The following macro should only be used with TYPE = {uint, ulong, bool}.
-+ *
-+ * The device configuration is modified under the global lock to serialize
-+ * attribute changes against null_add_dev() and null_del_dev(): without this,
-+ * an attribute could be changed while null_add_dev() is running, that is,
-+ * before NULLB_DEV_FL_CONFIGURED is set, which would let null_add_dev()
-+ * observe inconsistent values for the device configuration.
-+ */
- #define NULLB_DEVICE_ATTR(NAME, TYPE, APPLY)				\
- static ssize_t								\
- nullb_device_##NAME##_show(struct config_item *item, char *page)	\
-@@ -376,6 +384,8 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
- 	struct blk_mq_tag_set *set;
- 	int ret, nr_hw_queues;
+ /**
+@@ -286,8 +288,7 @@ int init_smb3_11_server(struct ksmbd_conn *conn)
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
+ 		conn->vals->req_capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
  
-+	lockdep_assert_held(&lock);
-+
- 	if (!dev->nullb)
- 		return 0;
+-	if (server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE)
+-		conn->vals->req_capabilities |= SMB2_GLOBAL_CAP_PERSISTENT_HANDLES;
++	/* See init_smb3_02_server(): persistent handles require CA recovery. */
  
-@@ -2158,8 +2168,6 @@ static void __exit null_exit(void)
- 
- 	if (tag_set.ops)
- 		blk_mq_free_tag_set(&tag_set);
--
--	mutex_destroy(&lock);
- }
- 
- module_init(null_init);
+ 	INIT_LIST_HEAD(&conn->preauth_sess_table);
+ 	return 0;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 7e4473ddba022..52df4cafe8a84 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2056,12 +2056,11 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	write_unlock(&sess->tree_conns_lock);
+ 	rsp->StructureSize = cpu_to_le16(16);
+ out_err1:
+-	if (server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE && share &&
+-	    test_share_config_flag(share,
+-				   KSMBD_SHARE_FLAG_CONTINUOUS_AVAILABILITY))
+-		rsp->Capabilities = SMB2_SHARE_CAP_CONTINUOUS_AVAILABILITY;
+-	else
+-		rsp->Capabilities = 0;
++	/*
++	 * A configured CA share is not continuously available until persistent
++	 * open recovery, ownership fencing, and failover are implemented.
++	 */
++	rsp->Capabilities = 0;
+ 	rsp->Reserved = 0;
+ 	/* default manual caching */
+ 	rsp->ShareFlags = SMB2_SHAREFLAG_MANUAL_CACHING;
 -- 
 2.53.0
 
