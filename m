@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF4E33A9E2;
-	Sat, 12 Sep 2026 15:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66B8331203;
+	Sat, 12 Sep 2026 15:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226850; cv=none; b=QBcBD0s9JwTQIS7Qka2M887qIDpJnvn/mDuiYhzQrOuTZr8lGNuvw6HA0QiJzgCheRf3yXp/5FEK7UXlS1nrC3Ddnd5gFLpjItRThU0IUniiF8Wc+m+G0//VUE9dEUA/cc9d66Ptj89gBSd0s/Ev0C4ej4+8joZZcJFnw0T1oAU=
+	t=1789226855; cv=none; b=PznFbJFSOkr+eo6KsINV9pbleq2yAxZ8UFYmD6T2o2Rqu8/nASZLBrqRZJR8N89+JbtQTGR9IOzKJxUPkSgE4P8y7XwsOX6xI9cBiOuCecXFPk2BqSGpc6FLokZ9Y708V0/vlQwskxAO+vGboeAPQN5ThXe4nGLfSP9ICUT6r8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226850; c=relaxed/simple;
-	bh=NjCwr4sBFcmaUE/fvuzZh+319looUStTZlU63Ya2/1g=;
+	s=arc-20240116; t=1789226855; c=relaxed/simple;
+	bh=HCVTInrb7mpP49ActK88dSrlBbetBkMh7RZBgWEytCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CpY1vfGjlkGkwI9xzTqAx+vbz0SzwlLtL7Up1WT+xOeffZRjAeYqexmovuwJeOi7PKaX0lxrWnfY/vTVTCYZVtpaY8JfnnDvvOA6PM8J8nfBcl2T3w144Lkut0A5MpXoX68fKWXWilfTeJrRwyF1N0skkSuX5jNtD96i/Ns/bbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUJ2xeUC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oKQftd9XYxMxsYHtEJhnAkNcJaaQneez0eYD5LxB9mbvhaHNIO+ny7lJ6NWJChk70eIoNicJjSZY7pl/NpS/edpmmMdWc2AYf/yLhjUxriI38YrL8ulrJeQQarJq5BHGvv5xbtzFHaOPob+MXvL4xxvkq0r0Pw+U2VHwdyn8u0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXOC1haT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUJ2xeUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE091F000FF;
-	Sat, 12 Sep 2026 15:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXOC1haT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5561F000FF;
+	Sat, 12 Sep 2026 15:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226849;
-	bh=dO+ttp/VSaQiQ0o2rvtoCgXcAfSImK4C/UVjG44pTUM=;
+	s=korg; t=1789226853;
+	bh=QLVmacuTOvL/EaBI7cBDcny6TpUIoChKOQLfGNTBHkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUJ2xeUCy9v+b6P+nCWa1JqPHyCfF0G3Tl2CqSiioX25w1qBedazXg7+o1TUck1s9
-	 fn9XKwukvdvK3MZMCoBOjmeUsrTZIXV7EF5wKCS2XWIuQv0cosWiPxPCheJbubwGws
-	 jopbDsVaLBZCCXouiYinnkGG/KVO+YQKIhQxZxWk=
+	b=VXOC1haTeuF69i/r+JnfYFPe7jl9DTxEtEZyWIguvONcCFjRiLJAjvJD2gKJU/tru
+	 LfGTXgLmb8nqVum0LjmkFNO+D1GsZJs0saCKf3fr0pdn4QQfJApG7Xt55jjL7tXbnj
+	 23AWkkWHYPgiic7HureI5FW5ZdZI3Lwcoj4Tpw9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.1 0018/1191] device property: fix infinite loop in fwnode_for_each_child_node()
-Date: Sat, 12 Sep 2026 08:45:46 +0200
-Message-ID: <20260912065548.520026892@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Gregory Price <gourry@gourry.net>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 0009/1191] mm/migrate: report RCU-tasks quiescent states in migrate_pages_batch()
+Date: Sat, 12 Sep 2026 08:45:37 +0200
+Message-ID: <20260912065548.312312006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -44,100 +54,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 1900692555826753adab8799a1a8d50bb1ee200c upstream.
+commit efe8f86c0916f0f74eea74ae21a3b37f728c6bad upstream.
 
-When iterate over children of a fwnode that has a secondary fwnode,
-fwnode_get_next_child_node() can enter an infinite loop if the secondary
-fwnode has more than one child.
+migrate_pages_batch() unmaps each folio before moving it, and every
+unmap runs the mmu_notifier invalidate callbacks.  On KVM hosts
+try_to_migrate() ends up in kvm_mmu_notifier_invalidate_range_start() ->
+tdp_mmu_zap_leafs(), which is expensive, so unmapping a large batch keeps
+the CPU busy for a long time.
 
-                       Parent        Child
-      (Primary fwnode)   FWa:   {FWa1, FWa2, FWa3}
-    (Secondary fwnode)   FWb:   {FWb1, FWb2}
+The loop already calls cond_resched(), but on PREEMPTION kernels that is
+a no-op, and involuntary preemption is not a Tasks-RCU quiescent state.
 
-In this case:
+A long batch therefore never reports a quiescent state, and the
+migrating task (e.g. kcompactd) becomes a Tasks-RCU holdout, stalling the
+Tasks-RCU grace period for minutes, which is common at Meta fleet:
 
- ┌─> fwnode_get_next_child_node(FWa, FWa1)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa1) returns FWa2
- │
- │   ...
- │
- │   fwnode_get_next_child_node(FWa, FWa3)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa3) returns NULL
- │    - fwnode_call_ptr_op(FWb, get_next_child_node, FWa3) returns FWb1
- │
- │   fwnode_get_next_child_node(FWa, FWb1)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWb1) returns FWa1
- └────┘
+  INFO: rcu_tasks detected stalls on tasks:
+  0000000055349ecc: .. nvcsw: 1157401/1157401 holdout: 1 idle_cpu: -1/56 task:kcompactd0      state:R  running task
+  Call Trace:
+   tdp_mmu_zap_leafs
+   tdp_mmu_next_root
+   gfn_to_pfn_cache_invalidate_start
+   kvm_mmu_notifier_invalidate_range_start
+   __mmu_notifier_invalidate_range_start
+   try_to_migrate_one
+   try_to_migrate
+   migrate_pages_batch
+   migrate_pages
+   compact_zone
+   compact_node
+   kcompactd
+   kthread
 
-This cause fwnode_for_each_child_node() to loop indefinitely, reapeatedly
-output {FWa1, FWa2, FWa3, FWb1, FWa1, ...}.
+Use cond_resched_tasks_rcu_qs() so a quiescent state is reported even
+when cond_resched() does nothing.
 
-The root cause is that when the current child (FWb1) belongs to the
-secondary fwnode, calling get_next_child_node() on the parimary fwnode
-incorrectly returns the first child (FWa1) again instead of NULL.
+This has also been discussed at [1]
 
-Fix this by dynamically checking the parent fwnode of the current child
-before calling get_next_child_node(). This approach follows the pattern
-established in commit b5b41ab6b0c1 ("device property: Check
-fwnode->secondary in fwnode_graph_get_next_endpoint()").
-
-Fixes: 2692c614f8f0 ("device property: Allow secondary lookup in fwnode_get_next_child_node()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Tested-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260611203537.1786399-2-andriy.shevchenko@linux.intel.com
+Link: https://lore.kernel.org/20260727-kcompact-v1-1-bdfefddd6874@debian.org
+Link: https://lore.kernel.org/all/amdWVTs0WKOxguxP@gmail.com/ [1]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/property.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ mm/migrate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -749,18 +749,31 @@ struct fwnode_handle *
- fwnode_get_next_child_node(const struct fwnode_handle *fwnode,
- 			   struct fwnode_handle *child)
- {
-+	const struct fwnode_handle *parent;
-+	struct fwnode_handle *child_parent __free(fwnode_handle) = NULL;
- 	struct fwnode_handle *next;
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1630,7 +1630,7 @@ split_folio_migration:
+ 			is_thp = is_large && folio_test_pmd_mappable(folio);
+ 			nr_pages = folio_nr_pages(folio);
  
--	if (IS_ERR_OR_NULL(fwnode))
-+	/*
-+	 * If this function is in a loop and the previous iteration returned
-+	 * an child from fwnode->secondary, then we need to use the secondary
-+	 * as parent rather than @fwnode.
-+	 */
-+	if (child) {
-+		child_parent = fwnode_get_parent(child);
-+		parent = child_parent;
-+	} else {
-+		parent = fwnode;
-+	}
-+	if (IS_ERR_OR_NULL(parent))
- 		return NULL;
+-			cond_resched();
++			cond_resched_tasks_rcu_qs();
  
- 	/* Try to find a child in primary fwnode */
--	next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
-+	next = fwnode_call_ptr_op(parent, get_next_child_node, child);
- 	if (next)
- 		return next;
- 
- 	/* When no more children in primary, continue with secondary */
--	return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
-+	return fwnode_get_next_child_node(parent->secondary, NULL);
- }
- EXPORT_SYMBOL_GPL(fwnode_get_next_child_node);
- 
+ 			rc = migrate_folio_unmap(get_new_page, put_new_page, private,
+ 						 folio, &dst, pass > 2, mode,
 
 
