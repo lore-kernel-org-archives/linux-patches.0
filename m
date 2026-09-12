@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66030CA6F;
-	Sat, 12 Sep 2026 10:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0497E35AC3E;
+	Sat, 12 Sep 2026 10:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208425; cv=none; b=iwEOCtUw/m2pno0sE98eT75TpITTtXiLKPjMe+6hp7ZKnwrqKFO2rZ+94A98/3ripZjRXXbwJI9GbF/EFeeptN9KHMFPOdt7ZbcAD79oHp1gJBbUAxoZtcjKRAvWXir/WAppKDNcwU19Ik9O0F+51J6owGj6whwCbQsZ/AtKUH4=
+	t=1789208429; cv=none; b=Z5rgaxNn1TNIDa3gz1Y5ThP2jWHVhe7tqC+W1AKWGZOtzZ5D8ez0F3rMfOG9TAoP+v/SpM/5Kob3fTNGG/zIEdss7Wuj0RZQqWSJ5aAEvh4luWGCsmel8KXFwwKe+NERwycNDHoLhFf2dTkodVg6mgLX349R7KO37Aw4Scn1Lyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208425; c=relaxed/simple;
-	bh=b2O19cLRwSHP1ceiOhBNdJm9iJ9d9HZNrAPNmOqMCNI=;
+	s=arc-20240116; t=1789208429; c=relaxed/simple;
+	bh=u+dz9yJWRZ+SG3TU0axdaaoq9a2ImNeDuXb2TrAPH5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+IBgsBDicai2HrnmJPUb8r2d539ctMyQE0+0l/uydnaQMWpoGDK7lPv3sv/pFKfXfDq/v4b9rmHLFTm+HT6qQcq7W9t4ASds+iPEAzooGM3oaA3jMLG9gsYyVfd2iqdVtX2m3CzRGbQV+BwzvP2FM23R5JQHQI7qGHcEMaFldw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2zpJSGz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K5XX3EszNld+UFWQXJduNlw0eXFBKlZWLpAAWRbgAxQdI5UdxPwcLPWj8tIiXPxutGiC+OhtkLWkufcAYxSJpY+miaul6NInkjxJWrP5TQ0rJQGpXkMNEKPIuvBYCJzq0aLJXlWmM1Rr8i41sYeHpePr46sUOsn9ujo6H9XGCFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGUB/Z4H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2zpJSGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A791F000FF;
-	Sat, 12 Sep 2026 10:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGUB/Z4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AB81F000FF;
+	Sat, 12 Sep 2026 10:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208423;
-	bh=u6Qvd/jT90umm2lJb/U26CUfscto0ozVbz8iLHskEKY=;
+	s=korg; t=1789208427;
+	bh=D7oM+sSVsyHYgks7YhZ7OvkZhm1zTewVj+Fe+qX5JCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w2zpJSGzepfRP39/+COZKwRJrphS+KgaoaTRdcVP12YFFKhcBropiKTkY4Q2rGCrO
-	 N5oF7mrTDjgaiS+1YrQ0kVAt9eOTOAja9S8+VshdqYq+iMfCI792pDxgrPh0pjbeiq
-	 yF2l/QhtmtvJUuheIs5HfgHCVGle6kureMnl97Iw=
+	b=dGUB/Z4HwHumDpPLvkt6tSZhiQU8uaPp7MNxWQJ6U/yQ2SzUW8XozQGujCbEjcSHr
+	 HlhKqtNxTOL9vW2dIIz0YoBfU1TTG7Gvnosb/X0SZEBAXaeFw6/rthSTTWXllvSgJo
+	 SQOEqbUEwYDVHYyjMemX9zgNpZ7U8OCF8y+qR6tE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Brian Masney <bmasney@redhat.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0615/1518] clk: mediatek: pllfh: Fix IO remapping leak in register_pllfhs error path
-Date: Sat, 12 Sep 2026 08:46:24 +0200
-Message-ID: <20260912065637.338593667@linuxfoundation.org>
+Subject: [PATCH 6.18 0616/1518] clk: palmas: Manage external-control prepare with devm
+Date: Sat, 12 Sep 2026 08:46:25 +0200
+Message-ID: <20260912065637.361752207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,165 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 540d91480bcb1b28a62d7023aa70947ea44c55b9 ]
+[ Upstream commit ccda84fcbf3a972973f772384935928f41817b3a ]
 
-When mtk_clk_register_pllfhs function fails to register a PLL, it
-unregisters all PLLs and cleans up itself in its error path before
-returning, so the function callers don't need to do it.
+palmas_clks_init_configure() prepares the clock when an external control
+pin is configured. The current driver only drops that prepare reference
+when external control configuration fails.
 
-But contrary to mtk_clk_unregister_pllfhs function, that does almost
-the same sequence, it does not free the IO memory mapped on fhctl node,
-leading to a leak.
+If provider registration fails after that point, or if the driver is later
+removed, the prepare reference remains held.
 
-Fix this leak by factorizing the cleanup sequence in a new private
-function and use it both mtk_clk_register_pllfhs and
-mtk_clk_unregister_pllfhs functions.
+Register a device-managed action after clk_prepare() succeeds. This
+balances the prepare reference on subsequent probe failure and driver
+removal.
 
-Also, change the loop index start value to avoid the -1 operation on
-index at each loop.
-
-Fixes: d7964de8a8ea ("clk: mediatek: Add new clock driver to handle FHCTL hardware")
-Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+Fixes: 942d1d674931 ("clk: Add driver for Palmas clk32kg and clk32kgaudio clocks")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-pllfh.c | 98 ++++++++++++++++----------------
- 1 file changed, 49 insertions(+), 49 deletions(-)
+ drivers/clk/clk-palmas.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/mediatek/clk-pllfh.c b/drivers/clk/mediatek/clk-pllfh.c
-index 8ad11023d9112..d8b7eb6d18e1c 100644
---- a/drivers/clk/mediatek/clk-pllfh.c
-+++ b/drivers/clk/mediatek/clk-pllfh.c
-@@ -197,12 +197,56 @@ static void mtk_clk_unregister_pllfh(struct clk_hw *hw)
- 	kfree(fh);
+diff --git a/drivers/clk/clk-palmas.c b/drivers/clk/clk-palmas.c
+index 39049f62dbbb3..86a51edac8272 100644
+--- a/drivers/clk/clk-palmas.c
++++ b/drivers/clk/clk-palmas.c
+@@ -194,6 +194,13 @@ static void palmas_clks_get_clk_data(struct platform_device *pdev,
+ 	cinfo->ext_control_pin = prop;
  }
  
-+static void mtk_clk_cleanup_pllfhs(void __iomem *iomem_base,
-+				   const struct mtk_pll_data *plls, int num_plls,
-+				   void __iomem *iomem_fhctl_base,
-+				   struct mtk_pllfh_data *pllfhs, int num_fhs,
-+				   struct clk_hw_onecell_data *clk_data)
++static void palmas_clks_unprepare_ext_control(void *data)
 +{
-+	void __iomem *base = iomem_base;
-+	void __iomem *fhctl_base = iomem_fhctl_base;
-+	int i;
++	struct palmas_clock_info *cinfo = data;
 +
-+	for (i = num_plls - 1; i >= 0; i--) {
-+		const struct mtk_pll_data *pll = &plls[i];
-+		struct mtk_pllfh_data *pllfh;
-+		bool use_fhctl;
-+
-+		if (IS_ERR_OR_NULL(clk_data->hws[pll->id]))
-+			continue;
-+
-+		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
-+		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
-+
-+		if (!base)
-+			base = mtk_clk_pll_get_base(clk_data->hws[pll->id],
-+							pll);
-+
-+		if (use_fhctl) {
-+			if (!fhctl_base)
-+				fhctl_base = pllfh->state.base;
-+			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
-+		} else {
-+			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
-+		}
-+
-+		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
-+	}
-+
-+	if (fhctl_base)
-+		iounmap(fhctl_base);
-+
-+	if (base)
-+		iounmap(base);
++	clk_unprepare(cinfo->hw.clk);
 +}
 +
+ static int palmas_clks_init_configure(struct palmas_clock_info *cinfo)
+ {
+ 	int ret;
+@@ -214,13 +221,18 @@ static int palmas_clks_init_configure(struct palmas_clock_info *cinfo)
+ 			return ret;
+ 		}
+ 
++		ret = devm_add_action_or_reset(cinfo->dev,
++					       palmas_clks_unprepare_ext_control,
++					       cinfo);
++		if (ret)
++			return ret;
 +
- int mtk_clk_register_pllfhs(struct device *dev,
- 			    const struct mtk_pll_data *plls, int num_plls,
- 			    struct mtk_pllfh_data *pllfhs, int num_fhs,
- 			    struct clk_hw_onecell_data *clk_data)
- {
--	void __iomem *base;
-+	void __iomem *base, *fhctl_base = NULL;
- 	int i;
- 	struct clk_hw *hw;
- 
-@@ -238,24 +282,8 @@ int mtk_clk_register_pllfhs(struct device *dev,
- 	return 0;
- 
- err:
--	while (--i >= 0) {
--		const struct mtk_pll_data *pll = &plls[i];
--		struct mtk_pllfh_data *pllfh;
--		bool use_fhctl;
--
--		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
--		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
--
--		if (use_fhctl)
--			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
--		else
--			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
--
--		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
--	}
--
--	iounmap(base);
--
-+	mtk_clk_cleanup_pllfhs(base, plls, i, fhctl_base, pllfhs, num_fhs,
-+			       clk_data);
- 	return PTR_ERR(hw);
- }
- EXPORT_SYMBOL_GPL(mtk_clk_register_pllfhs);
-@@ -264,38 +292,10 @@ void mtk_clk_unregister_pllfhs(const struct mtk_pll_data *plls, int num_plls,
- 			       struct mtk_pllfh_data *pllfhs, int num_fhs,
- 			       struct clk_hw_onecell_data *clk_data)
- {
--	void __iomem *base = NULL, *fhctl_base = NULL;
--	int i;
--
- 	if (!clk_data)
- 		return;
- 
--	for (i = num_plls; i > 0; i--) {
--		const struct mtk_pll_data *pll = &plls[i - 1];
--		struct mtk_pllfh_data *pllfh;
--		bool use_fhctl;
--
--		if (IS_ERR_OR_NULL(clk_data->hws[pll->id]))
--			continue;
--
--		pllfh = get_pllfh_by_id(pllfhs, num_fhs, pll->id);
--		use_fhctl = fhctl_is_supported_and_enabled(pllfh);
--
--		if (use_fhctl) {
--			fhctl_base = pllfh->state.base;
--			mtk_clk_unregister_pllfh(clk_data->hws[pll->id]);
--		} else {
--			base = mtk_clk_pll_get_base(clk_data->hws[pll->id],
--						    pll);
--			mtk_clk_unregister_pll(clk_data->hws[pll->id]);
--		}
--
--		clk_data->hws[pll->id] = ERR_PTR(-ENOENT);
--	}
--
--	if (fhctl_base)
--		iounmap(fhctl_base);
--
--	iounmap(base);
-+	mtk_clk_cleanup_pllfhs(NULL, plls, num_plls, NULL, pllfhs,
-+			       num_fhs, clk_data);
- }
- EXPORT_SYMBOL_GPL(mtk_clk_unregister_pllfhs);
+ 		ret = palmas_ext_control_req_config(cinfo->palmas,
+ 					cinfo->clk_desc->sleep_reqstr_id,
+ 					cinfo->ext_control_pin, true);
+ 		if (ret < 0) {
+ 			dev_err(cinfo->dev, "Ext config for %s failed, %d\n",
+ 				cinfo->clk_desc->clk_name, ret);
+-			clk_unprepare(cinfo->hw.clk);
+ 			return ret;
+ 		}
+ 	}
 -- 
 2.53.0
 
