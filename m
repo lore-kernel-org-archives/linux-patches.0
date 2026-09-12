@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EAA369D56;
-	Sat, 12 Sep 2026 09:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B6919D8BC;
+	Sat, 12 Sep 2026 09:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207043; cv=none; b=mF4WS6YgvwPpZactNf2pHeali5ZK97Aon9I3aYs2QFZQMuUBkVKLnDw51wx1IBn//oZkS6EYHIR3+LT9PYHN8sPcXdlApjVUX7h3i8zX4Jt77IJN1QtYuk4dKa1iwUozqAMsqiireNM+1ioR6OqvmIkBsG+D1qvKmXJGaM7qrd8=
+	t=1789207048; cv=none; b=O/1N4K1/6Bz0A097XbArxxQdngzVnn8O7XSa3C0EjW/VMLYQXF3HtWNBwMWP63xbVnp01L+IgTzpdXkdaXQcxdhkVOOAJ10UEHyY8PR5uUclPH7QTV5RSwhhjfEI9pch6wou9KECjrFEEi/uvFIGNcMqQBr9x9c6l2+u0fQSvTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207043; c=relaxed/simple;
-	bh=Epvitdz+v/ADp3CMVoWKEl31QjIzw28e2sJLJmVUNcc=;
+	s=arc-20240116; t=1789207048; c=relaxed/simple;
+	bh=pZJyoKq1ZWlas+9xMtY27518d1M34P1/wX35gLf9hOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DukcQrePjk+yOhWYDpZ/cZ0WEKntewMnnILeDAKt12m6A0+2V5wuN/pdsYMzCHDvnRqpPjPCkaYMPvXoAR9ir4E6KVhCOY2UUmFQ20AU9Pur2VclNxjX0g586FNeAXz7gLAPEGuEgtC5RpWsi8Kc2VAt7GrR/9FcrB6H3IQl0OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnILgQTT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jASheiJhbdL2upaukFrC3Qy6FyL4PGwKK8UVK84EteLFPl+HHlQPAM8eaX6VI+/0uumOcLnhhPy88JYqihEH97XA9pSTcLWc/l+vX/gyUnJ+04SIvI/8bxysAkPtTVNeNZBLiDyhSAHEmnZpdGgFz19NXPCqyNar6Ihfhv32zzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3cNKz8o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnILgQTT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E733D1F000FF;
-	Sat, 12 Sep 2026 09:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3cNKz8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22F11F000FF;
+	Sat, 12 Sep 2026 09:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207041;
-	bh=twmeCSe34MAjaTXs2kNQTd0JMm40DZXLt2wGNvo/Rzo=;
+	s=korg; t=1789207047;
+	bh=O2e6m6kKHsWwH31jf0Zv7up7jfPDinYrZzf7pGQVgwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hnILgQTTitvXAaPuEK4Tk3kEWB4Qp5oYx99s435XpJrYk4+Z9LgU0gIGEnD+vac3G
-	 Fsh4lbhgXj63JrymVzIH2JVhKB1zJHaPjHJINMMsm75GaqpyZZhXMPF4Beo3dC6MOU
-	 NxMKOSY+aQtL65rLBY6ccawPPYmGpQskkTg8hc10=
+	b=s3cNKz8owQ1jLgRSusJyzlbSJbbB58HsbCgjTZcHIrX5p1cMLqB2LCmINnRBeYNCF
+	 kyCrUhJ7y7WeLqCxYnWobFCE9bSPuY/Kj8UsJlyf0c4Vg7RwKff+8tNYN6lL4pX4/F
+	 fcROBaLbm7wnAxZfBd8FljyFSR/qwHP5D8lusxCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Dudar <main.kalliope@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0332/1518] bpf: Require a BPF cpumask for bpf_cpumask_populate()
-Date: Sat, 12 Sep 2026 08:41:41 +0200
-Message-ID: <20260912065630.981173321@linuxfoundation.org>
+Subject: [PATCH 6.18 0333/1518] wifi: rtw89: pci: add to read PCI configuration space from common code
+Date: Sat, 12 Sep 2026 08:41:42 +0200
+Message-ID: <20260912065631.003955667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,73 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Dudar <main.kalliope@gmail.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 8740156ad33be5071b588b594c55f279457f667c ]
+[ Upstream commit dae8d7d63b740d8f5972b8438b139a6488e0f9fa ]
 
-bpf_cpumask_populate() writes to its destination with bitmap_copy(), but
-the destination is typed as struct cpumask *. That allows the verifier to
-accept borrowed cpumask pointers returned by read-only kfuncs, such as
-scx_bpf_get_online_cpumask(), as a writable destination.
+Normally only access PCI device in pci.c. However for debug purpose,
+a set of registers predefined in firmware element including PCI
+configuration space should be read for diagnosis.
 
-Make the destination a struct bpf_cpumask * so populate follows the same
-ownership rule as the other mutating cpumask kfuncs. Query kfuncs continue
-to accept const struct cpumask * inputs.
-
-Fixes: 950ad93df2fc ("bpf: add kfunc for populating cpumask bits")
-Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260709182800.2037938-2-main.kalliope@gmail.com
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20251111022452.28093-2-pkshih@realtek.com
+Stable-dep-of: 9bf6bd6ed5ac ("wifi: rtw89: 8852a: fix RSSI report when average beacon RSSI is not ready")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cpumask.c                     | 6 +++---
- tools/sched_ext/include/scx/compat.bpf.h | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.h | 13 +++++++++++++
+ drivers/net/wireless/realtek/rtw89/mac.h  |  2 --
+ drivers/net/wireless/realtek/rtw89/pci.c  | 16 ++++++++++++++++
+ 3 files changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/cpumask.c b/kernel/bpf/cpumask.c
-index 9876c5fe6c2a2..341f80bb72ff2 100644
---- a/kernel/bpf/cpumask.c
-+++ b/kernel/bpf/cpumask.c
-@@ -449,12 +449,12 @@ __bpf_kfunc u32 bpf_cpumask_weight(const struct cpumask *cpumask)
-  * @src__sz: Length of the BPF memory region in bytes.
-  *
-  * Return:
-- * * 0 if the struct cpumask * instance was populated successfully.
-+ * * 0 if the struct bpf_cpumask * instance was populated successfully.
-  * * -EACCES if the memory region is too small to populate the cpumask.
-  * * -EINVAL if the memory region is not aligned to the size of a long
-  *   and the architecture does not support efficient unaligned accesses.
-  */
--__bpf_kfunc int bpf_cpumask_populate(struct cpumask *cpumask, void *src, size_t src__sz)
-+__bpf_kfunc int bpf_cpumask_populate(struct bpf_cpumask *cpumask, void *src, size_t src__sz)
- {
- 	unsigned long source = (unsigned long)src;
+diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
+index 30bc177808352..d3531630a7023 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.h
++++ b/drivers/net/wireless/realtek/rtw89/core.h
+@@ -38,6 +38,8 @@ extern const struct ieee80211_ops rtw89_ops;
+ #define RFREG_MASK 0xfffff
+ #define INV_RF_DATA 0xffffffff
+ #define BYPASS_CR_DATA 0xbabecafe
++#define RTW89_R32_EA 0xEAEAEAEA
++#define RTW89_R32_DEAD 0xDEADBEEF
  
-@@ -467,7 +467,7 @@ __bpf_kfunc int bpf_cpumask_populate(struct cpumask *cpumask, void *src, size_t
- 		!IS_ALIGNED(source, sizeof(long)))
- 		return -EINVAL;
+ #define RTW89_TRACK_WORK_PERIOD	round_jiffies_relative(HZ * 2)
+ #define RTW89_TRACK_PS_WORK_PERIOD msecs_to_jiffies(100)
+@@ -3652,6 +3654,8 @@ struct rtw89_hci_ops {
+ 	void (*write16)(struct rtw89_dev *rtwdev, u32 addr, u16 data);
+ 	void (*write32)(struct rtw89_dev *rtwdev, u32 addr, u32 data);
  
--	bitmap_copy(cpumask_bits(cpumask), src, nr_cpu_ids);
-+	bitmap_copy(cpumask_bits(&cpumask->cpumask), src, nr_cpu_ids);
- 
- 	return 0;
++	u32 (*read32_pci_cfg)(struct rtw89_dev *rtwdev, u32 addr);
++
+ 	int (*mac_pre_init)(struct rtw89_dev *rtwdev);
+ 	int (*mac_pre_deinit)(struct rtw89_dev *rtwdev);
+ 	int (*mac_post_init)(struct rtw89_dev *rtwdev);
+@@ -6626,6 +6630,15 @@ rtw89_write_rf(struct rtw89_dev *rtwdev, enum rtw89_rf_path rf_path,
+ 	mutex_unlock(&rtwdev->rf_mutex);
  }
-diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-index d979f16a3ae2b..3ffd14e9c948f 100644
---- a/tools/sched_ext/include/scx/compat.bpf.h
-+++ b/tools/sched_ext/include/scx/compat.bpf.h
-@@ -20,7 +20,7 @@
-  *
-  * Compat macro will be dropped on v6.19 release.
-  */
--int bpf_cpumask_populate(struct cpumask *dst, void *src, size_t src__sz) __ksym __weak;
-+int bpf_cpumask_populate(struct bpf_cpumask *dst, void *src, size_t src__sz) __ksym __weak;
  
- #define __COMPAT_bpf_cpumask_populate(cpumask, src, size__sz)		\
- 	(bpf_ksym_exists(bpf_cpumask_populate) ?			\
++static inline u32 rtw89_read32_pci_cfg(struct rtw89_dev *rtwdev, u32 addr)
++{
++	if (rtwdev->hci.type != RTW89_HCI_TYPE_PCIE ||
++	    !rtwdev->hci.ops->read32_pci_cfg)
++		return RTW89_R32_EA;
++
++	return rtwdev->hci.ops->read32_pci_cfg(rtwdev, addr);
++}
++
+ static inline struct ieee80211_txq *rtw89_txq_to_txq(struct rtw89_txq *rtwtxq)
+ {
+ 	void *p = rtwtxq;
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
+index 51e37c183a35e..1ac1d0cd79594 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.h
++++ b/drivers/net/wireless/realtek/rtw89/mac.h
+@@ -574,8 +574,6 @@ enum rtw89_mac_bf_rrsc_rate {
+ 	RTW89_MAC_BF_RRSC_MAX = 32
+ };
+ 
+-#define RTW89_R32_EA		0xEAEAEAEA
+-#define RTW89_R32_DEAD		0xDEADBEEF
+ #define MAC_REG_POOL_COUNT	10
+ #define ACCESS_CMAC(_addr) \
+ 	({typeof(_addr) __addr = (_addr); \
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
+index 6c1f66e65497f..b24237c1e7df7 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -2071,6 +2071,20 @@ static void rtw89_pci_ops_write32(struct rtw89_dev *rtwdev, u32 addr, u32 data)
+ 	writel(data, rtwpci->mmap + addr);
+ }
+ 
++static u32 rtw89_pci_ops_read32_pci_cfg(struct rtw89_dev *rtwdev, u32 addr)
++{
++	struct rtw89_pci *rtwpci = (struct rtw89_pci *)rtwdev->priv;
++	struct pci_dev *pdev = rtwpci->pdev;
++	u32 value;
++	int ret;
++
++	ret = pci_read_config_dword(pdev, addr, &value);
++	if (ret)
++		return RTW89_R32_EA;
++
++	return value;
++}
++
+ static void rtw89_pci_ctrl_dma_trx(struct rtw89_dev *rtwdev, bool enable)
+ {
+ 	const struct rtw89_pci_info *info = rtwdev->pci_info;
+@@ -4691,6 +4705,8 @@ static const struct rtw89_hci_ops rtw89_pci_ops = {
+ 	.write16	= rtw89_pci_ops_write16,
+ 	.write32	= rtw89_pci_ops_write32,
+ 
++	.read32_pci_cfg	= rtw89_pci_ops_read32_pci_cfg,
++
+ 	.mac_pre_init	= rtw89_pci_ops_mac_pre_init,
+ 	.mac_pre_deinit	= rtw89_pci_ops_mac_pre_deinit,
+ 	.mac_post_init	= rtw89_pci_ops_mac_post_init,
 -- 
 2.53.0
 
