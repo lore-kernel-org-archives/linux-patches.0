@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F6933EAF3;
-	Sat, 12 Sep 2026 11:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D6A2D7380;
+	Sat, 12 Sep 2026 11:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212529; cv=none; b=EkVNb8IPHUn/42JImsDIYHwuPjBv/3lBOHjpVxH2tucd7ThnAQI9XEg3nPKfvCwi2Om/ymcBk15BqX+13oVphkTzdiNgI6kZCg+HqwWeL6O8SHEidFQQE90mPHxKRfG7LZoq+AB+ettf+dkhLcgeUklUkT8HP60uv5X7nfTW6Wo=
+	t=1789212534; cv=none; b=jJSBSZEtHJ8q4811+HFuYiugW3ieOLdLC1nx2i93BDEkx+WnGYAIPvHFJ9W/xOr+SQcr74Dd7SUANEInv+RuKsRaroNFUX8eRmnYVQCY2qgZqMaO7PjRbvHt/z6hjx35VlwU1A3cx1XQAOrgIxgEBgP4/srEpViEjNHmHYnLjDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212529; c=relaxed/simple;
-	bh=roCPPliBrtaqfMh8DdSiL3l40O3vU9H0UiVp0J91xwQ=;
+	s=arc-20240116; t=1789212534; c=relaxed/simple;
+	bh=hEOBrZk/nO7KmjeyrP5D6+T05HSqd8LJE4z/YAd0V/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fn5jZ2Jxtv5x+XVq1mBNmngf5iU3UVbaA9v/MJwfG3heaRvuiBi5hBo7y20h1nz3NptdketGH88EKm/2GuvAzZ/MmBl3zKh3ScqJ8wBuUKJP0Uq9ndC7RhQ54OZl6fB9jMrdjEJYnzTaMtIC+zsGXH4P0GqPzaMptxu02HW6a5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOEKLw7k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IFFAnybkK6bbEH3sgkXoylP+90FyZnemWtvrDHKDA2m/WsS9KBzKgmqh+fOuxiOaTadu6E2LtiX8guQkBCgn0xyJF/xDDDCuemBGqZTzvk884GgrswVhG9t+J+zuZhL9xLI/gC7TvH0So1C7TUiAzZGDmpJtOEP2W71RnEyYvb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfKdRgiC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOEKLw7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4461F000FF;
-	Sat, 12 Sep 2026 11:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfKdRgiC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70081F000FF;
+	Sat, 12 Sep 2026 11:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212527;
-	bh=AAMwF6LTVnBzFYhIIbIahm4zD9TviQTP+78rVjV4KDM=;
+	s=korg; t=1789212533;
+	bh=hQcehqn+x+mfLtaTfqDVjW5ZGcKKi9DD6BvcsVqi2j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hOEKLw7kDK0830xFBul0tdJfMf2f8re/bo6jMhLt21LqlSbXnwUDza4IHqh/XGtjY
-	 cwJi4z8b/8Rwx98Dj1LkO/aUZxVwWVt3X1KWU9emZK/T+/ek0z9eE/DWBU4I4J4xUX
-	 hemdQkGBhpJX+3giN3u5wNKy3TzWvchsdNgPojo8=
+	b=hfKdRgiC144LH/4uhTDUiKsaknqhpYzCpMfgG/y/QT6AyWDpU01YkJ/RrgbMmgD5h
+	 tFR5/teci7e8JY/yAXP6saiREicTARvp3uE9wfDFn6xOiBLRe5LvAlG3usk2X0e0Lr
+	 T6/5HuYGraUrrW0ncogGk0jvXmHkOg6ZqhPr08A4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Daniel Baldin <DBaldin@dspace.de>,
+	Pascal Kneuper <PKneuper@dspace.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1454/1518] net: stmmac: selftests: Account for the UC filter list for filtering tests
-Date: Sat, 12 Sep 2026 09:00:23 +0200
-Message-ID: <20260912065656.446227570@linuxfoundation.org>
+Subject: [PATCH 6.18 1455/1518] net: stmmac: restore NET_IP_ALIGN in the RX DMA offset
+Date: Sat, 12 Sep 2026 09:00:24 +0200
+Message-ID: <20260912065656.469089987@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,94 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Pascal Kneuper <PKneuper@dspace.de>
 
-[ Upstream commit cd8c3b2752c684141eab2282e294cae2971a9759 ]
+[ Upstream commit 23680bf5f8c69c923546b84a8e6c401bef8b88fe ]
 
-On dwmac, one of the Unicast filter entries is used to store the local
-HW addr. This means that we have to use promisc mode for any kind of
-unicast filtering if we only have one slot in our unicast filter.
+Since the RX path was converted to zero-copy, the page pool page is handed
+to the stack directly as the skb head, and the offset the DMA engine writes
+at is what determines the alignment of the packet headers.
 
-The number of slots available depends on how the IP is integrated, and
-we can't autodiscover how many of these slots we have available, so
-the DT property snps,perfect-filter-entries can be used to specify how
-many are available.
+Before the conversion the payload was copied into an skb obtained from
+napi_alloc_skb(), which reserves NET_SKB_PAD + NET_IP_ALIGN. The
+conversion moved the headroom into stmmac_rx_offset() but did not carry
+over NET_IP_ALIGN, so on architectures where NET_IP_ALIGN is 2 the IP
+header now lands misaligned:
 
-Most IP variants default to 1 if this isn't specified, which is the case
-for the amlogic variants (in this case, S905X3).
+  64 (NET_SKB_PAD) + 14 (ethernet) + 20 (IP) = 98
 
-The stmmac selftests for UC filtering look if we have enough slots in
-the filter to store the dev->uc list, but doesn't account for the
-device's own MAC address. The dev->uc list's size we get with
-netdev_uc_count() also doesn't account for the HW addr.
+Same for the XDP branch:
 
-As the selftest only requires one available slot, in the case of
-single-slot platforms, that means we erroneously consider we have enough
-room for the test, when we actually don't, and the filtering test fails.
+  256 (XDP_PACKET_HEADROOM) + 14 (ethernet) + 20 (IP) = 290
 
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260826140500.616466-6-maxime.chevallier@bootlin.com
+On ARM32 this is fatal, because ldm and ldrd trap on unaligned addresses
+even when CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS is set.
+
+Any received echo request panics the machine, e.g:
+
+  Unhandled fault: alignment exception (0x001) at 0x81873062
+  Internal error: : 1 [#1] SMP ARM
+  Hardware name: Altera SOCFPGA Arria10
+  PC is at icmp_echo+0x38/0xa8
+  LR is at icmp_rcv+0x22c/0x370
+  Call trace:
+   icmp_echo from icmp_rcv+0x22c/0x370
+   icmp_rcv from ip_protocol_deliver_rcu+0x2c/0x224
+   ip_protocol_deliver_rcu from ip_local_deliver+0xc8/0x1a0
+   ip_local_deliver from ip_sublist_rcv_finish+0x3c/0x50
+   ip_sublist_rcv_finish from ip_list_rcv_finish+0x110/0x118
+   ip_list_rcv_finish from ip_list_rcv+0xc8/0xdc
+   ip_list_rcv from __netif_receive_skb_list_core+0x170/0x1c0
+   ...
+   napi_complete_done from stmmac_napi_poll_rx+0xcb0/0x1030
+  Code: e24dd068 e59020a0 e28dc010 e0822001 (e8920003)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+The faulting instruction is the ldm of *icmp_hdr(skb) in icmp_echo().
+
+Fix by adding NET_IP_ALIGN back to the RX offset, which restores the
+alignment the stack used to get.
+
+Note that commit a955318fe67e ("stmmac: align RX buffers") made a similar
+change in 2021 and was reverted by commit 12d125b4574b ("stmmac: Revert
+"stmmac: align RX buffers"") because it caused packet corruption. That
+patch raised the offset from 0 without adjusting the buffer size
+accounting, so the DMA engine could arguably write past the end of the RX
+buffers, though this was never root caused.
+Commit df542f669307 ("net: stmmac: Switch to zero-copy in non-XDP RX
+path") since derives the page pool allocation from stmmac_rx_offset(), so
+the extra bytes are accounted for.
+
+Fixes: df542f669307 ("net: stmmac: Switch to zero-copy in non-XDP RX path")
+Cc: Daniel Baldin <DBaldin@dspace.de>
+Signed-off-by: Pascal Kneuper <PKneuper@dspace.de>
+Link: https://patch.msgid.link/20260824125014.47862-1-PKneuper@dspace.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/stmmac_selftests.c         | 21 ++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index f83bb0d33e443..3f215ef3c89b7 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -499,6 +499,21 @@ static int stmmac_filter_check(struct stmmac_priv *priv)
- 	return -EOPNOTSUPP;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index f6cf44d7bb642..a3eeb68c8d3f4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1326,9 +1326,9 @@ static void stmmac_display_rings(struct stmmac_priv *priv,
+ static unsigned int stmmac_rx_offset(struct stmmac_priv *priv)
+ {
+ 	if (stmmac_xdp_is_enabled(priv))
+-		return XDP_PACKET_HEADROOM;
++		return XDP_PACKET_HEADROOM + NET_IP_ALIGN;
+ 
+-	return NET_SKB_PAD;
++	return NET_SKB_PAD + NET_IP_ALIGN;
  }
  
-+static int stmmac_uc_filter_check(struct stmmac_priv *priv)
-+{
-+	/* For tests involving the UC filter, we need at least one empty
-+	 * slot in the UC filter. The UC filters contains netdev_uc_count() + 1
-+	 * entries: The dev->uc list + one entry for the HW address.
-+	 *
-+	 * Having an empty slot therefore means netdev_uc_count() + 2 entries
-+	 * can fit in the filter
-+	 */
-+	if (netdev_uc_count(priv->dev) + 2 > priv->hw->unicast_filter_entries)
-+		return -EOPNOTSUPP;
-+
-+	return 0;
-+}
-+
- static bool stmmac_hash_check(struct stmmac_priv *priv, unsigned char *addr)
- {
- 	int mc_offset = 32 - priv->hw->mcast_bits_log2;
-@@ -590,7 +605,7 @@ static int stmmac_test_pfilt(struct stmmac_priv *priv)
- 
- 	if (stmmac_filter_check(priv))
- 		return -EOPNOTSUPP;
--	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
-+	if (stmmac_uc_filter_check(priv))
- 		return -EOPNOTSUPP;
- 
- 	while (--tries) {
-@@ -634,7 +649,7 @@ static int stmmac_test_mcfilt(struct stmmac_priv *priv)
- 
- 	if (stmmac_filter_check(priv))
- 		return -EOPNOTSUPP;
--	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
-+	if (stmmac_uc_filter_check(priv))
- 		return -EOPNOTSUPP;
- 	if (netdev_mc_count(priv->dev) >= priv->hw->multicast_filter_bins)
- 		return -EOPNOTSUPP;
-@@ -680,7 +695,7 @@ static int stmmac_test_ucfilt(struct stmmac_priv *priv)
- 
- 	if (stmmac_filter_check(priv))
- 		return -EOPNOTSUPP;
--	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
-+	if (stmmac_uc_filter_check(priv))
- 		return -EOPNOTSUPP;
- 	if (netdev_mc_count(priv->dev) >= priv->hw->multicast_filter_bins)
- 		return -EOPNOTSUPP;
+ static int stmmac_set_bfsize(int mtu, int bufsize)
 -- 
 2.53.0
 
