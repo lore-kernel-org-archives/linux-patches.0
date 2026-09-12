@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94443A1690;
-	Sat, 12 Sep 2026 08:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7703F58F7;
+	Sat, 12 Sep 2026 08:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202024; cv=none; b=gK45BCT/0re2FtXbrtlIey3rW+S0z5ZSFh1q+GYJYD+MKYhIX04oLVfIAjFlWH+W1VYEyLFHJnb+iNNl4QUBfQWFqowI7NgyRArW5j8qrvNGQTEaX3MeuWvQ25x3Rr7mjPiHwB7cI1y6cBA15cc79qmQOwQJoZUyluziEnocWHQ=
+	t=1789202028; cv=none; b=LO04IQyTRHQ84XsyvhO43e2fW9b6MW5q/Mlk0yKGV8fsvCLTdcL5PBWIY4O33RPkH93uaT4xJjNphcN/EWzBXR1kmQZmb5oVHmtDfF4OM6poqQVkC96fYgj6j0l5gwfZKBCBYZsyo3pixn4IYoxDH71udAc6pd0Y+z4BP8it+eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202024; c=relaxed/simple;
-	bh=USzQPZtYfMTCRG/lkpUDiU5WlRLwLpx9uYMyla11ldw=;
+	s=arc-20240116; t=1789202028; c=relaxed/simple;
+	bh=FbTSgiEhdMQg08Zx+T3Utjx+pcsGE7Jk3yEe7Ebu/0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCa+XqOQXZRoIfbzQlpWTD7CMF5+OZ3yKcuADcsN5opTgWeLS6yWBhi1q45qHgm0owMJKBaJmBeq11Mo0NynmPulCy3y/E9kAdf5y/cAx7S++Jzw51rid0nPbDpSz36RhbH/OS74VWPDb1MDaU0saJ8qecXyaLQf8ynBWJDpchs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g37Wwnt9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hbw6XUlNB+Q4uFlFWV/iXDPMdL/w37HLIikNKk0TKaXtzD+KSnuBNwd0iLD1GUgCajWiRe1j+stb/L4U8C3OvvA3vfPwxzDtNZ+L62E/1thIzn9OngVBC8/6gQVuzAPWPMi5OhXvSRVi/OKiJOZ5vHTJ+1rSWnbzn6RGCKVRSPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1EOa14u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g37Wwnt9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E041F000FF;
-	Sat, 12 Sep 2026 08:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1EOa14u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB941F000FF;
+	Sat, 12 Sep 2026 08:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202022;
-	bh=oG3ug6CYOv7FrbpVHiEqFqOA/xADmNjL5lD7+DIawdg=;
+	s=korg; t=1789202027;
+	bh=uuHaUF3+IJubUVGWUkCBhQEZFf03CKmClxoM4g+vb6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g37Wwnt9nHhsyTA5hXaQh7hGtVu84UoflQDR4lOIYwLM2b8zLIwCKxCIdbzZIQNr0
-	 0UwVUljlyZqKeaTV77sximZzsAnZlRUtSS2c2ljoJZ8PC4EK/oE1qgUne5BHAHGO2/
-	 +libCNtK22kzPyopPcoHffxVDRYMPRcSt/5VLr4c=
+	b=z1EOa14uWrAGhJiN9VUkI0WctAPBQHhpP9TAdZvt5zmt1e+OR9j/EZKDWg4nBY7X9
+	 VhH1gq/zgXFq13m4A1/8fAF4xZIiUy6U7+uBlXmNPrR5MXWFfDVWexMuOILXjJSkQS
+	 q9ivOvPj85dgnTH9MtKxcP3Bud/WebW+iiapgj+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1117/1815] bpf: Factor callchain_store function from __bpf_get_stack
-Date: Sat, 12 Sep 2026 08:47:47 +0200
-Message-ID: <20260912065715.242417459@linuxfoundation.org>
+Subject: [PATCH 7.2 1118/1815] bpf: Factor callchain_finalize function from __bpf_get_stack
+Date: Sat, 12 Sep 2026 08:47:48 +0200
+Message-ID: <20260912065715.265215118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,86 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit cbb99938e7935c9f62c891573a4b09690e5e22de ]
+[ Upstream commit 014fbe5902dccdaef69114abdcdb15e3dbe55e34 ]
 
-The new callchain_store function stores trace entries buffer into
-user supplied buffer. It covers both just-ip and buildid data.
+The new callchain_finalize function calls the build-id retrieval
+(if needed) and zeroes the buffer. This makes things easier for
+preemption fix in following change.
 
 Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260803210149.296496-7-jolsa@kernel.org
+Link: https://lore.kernel.org/bpf/20260803210149.296496-8-jolsa@kernel.org
 Stable-dep-of: f5d242825ca4 ("bpf: Clear buf on error in __bpf_get_task_stack")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stackmap.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ kernel/bpf/stackmap.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
-index 9b086ecbf1594..e953c3105ca0a 100644
+index e953c3105ca0a..5611ad5ff98df 100644
 --- a/kernel/bpf/stackmap.c
 +++ b/kernel/bpf/stackmap.c
-@@ -741,6 +741,29 @@ const struct bpf_func_proto bpf_get_stackid_proto_pe = {
- 	.arg3_type	= ARG_ANYTHING,
- };
+@@ -764,16 +764,31 @@ static u32 callchain_store(struct perf_callchain_entry *trace, void *buf,
+ 	return trace_nr;
+ }
  
-+static u32 callchain_store(struct perf_callchain_entry *trace, void *buf,
-+			   u32 elem_size, u64 flags)
++static long callchain_finalize(void *buf, u32 size, u32 trace_nr, u32 elem_size,
++			       u64 flags, bool may_fault)
 +{
 +	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
-+	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
-+	u32 trace_nr, copy_len;
-+	u64 *ips;
++	bool user = flags & BPF_F_USER_STACK;
++	u32 copy_len = trace_nr * elem_size;
 +
-+	trace_nr = trace->nr - skip;
-+	copy_len = trace_nr * elem_size;
++	if (user_build_id)
++		stack_map_get_build_id_offset(buf, trace_nr, user, may_fault);
 +
-+	ips = trace->ip + skip;
-+	if (user_build_id) {
-+		struct bpf_stack_build_id *id_offs = buf;
-+
-+		for (u32 i = 0; i < trace_nr; i++)
-+			id_offs[i].ip = ips[i];
-+	} else {
-+		memcpy(buf, ips, copy_len);
-+	}
-+	return trace_nr;
++	if (size > copy_len)
++		memset(buf + copy_len, 0, size - copy_len);
++	return copy_len;
 +}
 +
  static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
  			    struct perf_callchain_entry *trace_in,
  			    void *buf, u32 size, u64 flags, bool may_fault)
-@@ -753,7 +776,6 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ {
+-	u32 trace_nr, copy_len, elem_size, max_depth;
+ 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
+ 	bool crosstask = task && task != current;
+ 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+ 	bool user = flags & BPF_F_USER_STACK;
  	struct perf_callchain_entry *trace;
++	u32 trace_nr, elem_size, max_depth;
  	bool kernel = !user;
  	int err = -EINVAL;
--	u64 *ips;
  
- 	if (unlikely(flags & ~(BPF_F_SKIP_FIELD_MASK | BPF_F_USER_STACK |
- 			       BPF_F_USER_BUILD_ID)))
-@@ -800,21 +822,10 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
- 		goto err_fault;
+@@ -823,19 +838,13 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
  	}
  
--	trace_nr = trace->nr - skip;
-+	trace_nr = callchain_store(trace, buf, elem_size, flags);
- 	copy_len = trace_nr * elem_size;
+ 	trace_nr = callchain_store(trace, buf, elem_size, flags);
+-	copy_len = trace_nr * elem_size;
  
--	ips = trace->ip + skip;
--	if (user_build_id) {
--		struct bpf_stack_build_id *id_offs = buf;
--		u32 i;
--
--		for (i = 0; i < trace_nr; i++)
--			id_offs[i].ip = ips[i];
--	} else {
--		memcpy(buf, ips, copy_len);
--	}
--
--	/* trace/ips should not be dereferenced after this point */
-+	/* trace should not be dereferenced after this point */
+ 	/* trace should not be dereferenced after this point */
  	if (may_fault)
  		rcu_read_unlock();
  	preempt_enable();
+ 
+-	if (user_build_id)
+-		stack_map_get_build_id_offset(buf, trace_nr, user, may_fault);
+-
+-	if (size > copy_len)
+-		memset(buf + copy_len, 0, size - copy_len);
+-	return copy_len;
++	return callchain_finalize(buf, size, trace_nr, elem_size, flags, may_fault);
+ 
+ err_fault:
+ 	err = -EFAULT;
 -- 
 2.53.0
 
