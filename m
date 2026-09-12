@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E71B3603D5;
-	Sat, 12 Sep 2026 16:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CE947CA67;
+	Sat, 12 Sep 2026 16:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231806; cv=none; b=Kv0fVfTs741chiNzVZ+BPBg7qjdbQ1uUL0iY5utmqBYSQoEpOqvlUuY+BiBBlnuOgwXdDK+yGUzyVr8MM0Jkq+CVoUL7U0IZRP1rItLIn2wr1Z9bYbpFyW4K8nOUO0PxO49u/w03hoOhiSZouItwETnJgcCvjg5gJW/3Ol95yqU=
+	t=1789231813; cv=none; b=eHXRAUaCNHTKL/OsqpbwpjhnERp5JOxDY9S1cVDM/OfKk188BpEbL3E/6+QKusY/j4Mx7y4zda0U7S2Nqy8CP1jU29lAkaxYFWOKRjBt95uigdnVCg7C2FOppyb9xlSdiPoyh7JwtImqry2IAQMEhQx/DzOAqKbRpHOAEbg8z28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231806; c=relaxed/simple;
-	bh=L+AtLhefAIi47lxgXZEAZV3ZdjQWNRrZrppaQ3iGZL4=;
+	s=arc-20240116; t=1789231813; c=relaxed/simple;
+	bh=y4MvWYmj8JNZgMDFpHYhi8ZXZfxaeuWwbg9vWI/qc80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZt6kLegLKAyf31ZWF48mKywW1lCZ4ZsUp9ZFTRJ4NhbsN7yDXnrMXGaWn8ebEsOD9V4oY7yod9wAksuPfD0DA5foVKZW5qL6TgQRbW8dgjx+qPQ6h63t5jtBqT7QVzjWi3sDizhD3L+irrQMtWDSbASWwmV7P5aw5Zsby61XP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIcYmqVm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dgJIU7Y4JfW+XFI3TbtmJuLZyQ/cdKvPhGXAwqxZb2Q523ERllegUkFXEj4TxowMVYreLuKCPLkKQQPrgsaJQhCGF9OuGCjXMY6bFY67L5YCjJT8L2pxmOonV8PcIHSEEz9bzGvpAQ8NTu6FuKKOkc5sRQEQFhzmGHFzjQjkRnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sm4vfEhF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIcYmqVm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3D91F000FF;
-	Sat, 12 Sep 2026 16:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sm4vfEhF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AD61F000FF;
+	Sat, 12 Sep 2026 16:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231805;
-	bh=ppYBUjs4bybIuID/Yuk7MKppt2ok26Uqkt/GJfHZwCM=;
+	s=korg; t=1789231810;
+	bh=lx4F9w3reQnLvL25T/Ri9tWXWAtU7N/VLnUjFXKk+TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZIcYmqVmWcD9eN9j7FvVSh1OCyzlK89qxHEdpboRETxD5edCoMmvrnAms/9zPcuZW
-	 BFcs3BoNmQlUSdexotiJfZSS/FKS49TPlqxrqp876EdhFg3WOA+PXruQifuSBr/GcD
-	 setzSAmufIJkGcF8kmtQ/bqYqmp9w1xxkcsm6W1A=
+	b=Sm4vfEhF6n5rwj7q7Nhoedv2M6vteTPI447jsT5NYXnq65ipi1Yj7lMyy6zfkdAu/
+	 RAbO8wEsosGO07HvjM4DIlfbgWQfoZ6Ip7SgDLus5UTQVypIOaioRTesuwPMHI6THx
+	 3bSVf7JzBVDB1V8wqYE5zOa+xkXTnMatOVyg2iQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Cyrill Gorcuno <gorcunov@openvz.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1075/1191] prctl: fix PR_SET_MM_AUXV losing the forced AT_NULL terminator
-Date: Sat, 12 Sep 2026 09:03:23 +0200
-Message-ID: <20260912065612.316304707@linuxfoundation.org>
+Subject: [PATCH 6.1 1058/1191] ALSA: hda: Fix connection list comparison in proc output
+Date: Sat, 12 Sep 2026 09:03:06 +0200
+Message-ID: <20260912065611.936216728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,83 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 5146e0688d86f0654263e4b0e4ff1719b4072f16 ]
+[ Upstream commit c139e7e44f58a6f8ddc9d850ea9924d34963b5da ]
 
-prctl_set_auxv() copies the user vector into a stack buffer, forces
-AT_NULL on the last two entries there, and then copies only len bytes into
-mm->saved_auxv.  Which is fine until the vector is shorter than the
-buffer, because then the forced terminator sits past the end of the copy
-and never lands in saved_auxv at all.
+print_conn_list() compares the raw hardware connection list with the
+connection list cached by the HDA driver.  When they differ, it prints an
+additional "In-driver Connection" line so that /proc/asound/card*/codec#*
+shows the topology actually used by the driver.
 
-The code even says
+The comparison currently passes conn_len directly to memcmp().  However,
+conn_len is a number of connection-list entries, while memcmp() expects a
+size in bytes.  Both list and conn are arrays of hda_nid_t, which is u16,
+so only half of the connection data is compared.
 
-	/* Make sure the last entry is always AT_NULL */
+For example, for two-entry lists such as:
 
-and it does, just not in the part that gets copied.
+  hardware: 0x0c 0x0d
+  cached:   0x0c 0x0e
 
-So mm->saved_auxv keeps the stale tail from exec.  Reproducing it is easy:
-from a process with CAP_SYS_RESOURCE (just run it as root), call
-prctl(PR_SET_MM, PR_SET_MM_AUXV, ...) with a vector that has a couple of
-entries and no AT_NULL inside len (32 bytes on arm64), and then hexdump
-/proc/self/auxv, or gcore the process and look at the AUXV note with
-readelf -n.  This is arm64, the new vector was just { AT_UID, 0x1111,
-AT_GID, 0x2222 }:
+conn_len is 2, and the current comparison checks only the first hda_nid_t.
+The lists are therefore incorrectly treated as identical even though the
+second connection differs.
 
-    idx  before (from exec)               after the prctl
-    [0]  AT_SYSINFO_EHDR   0x7ed1d6e000   AT_UID    0x1111    <- new
-    [1]  AT_MINSIGSTKSZ    0x1270         AT_GID    0x2222    <- new
-    [2]  AT_HWCAP          0x119fff       AT_HWCAP  0x119fff  <- stale
-    [3]  AT_PAGESZ         0x1000         AT_PAGESZ 0x1000    <- stale
-    ...  16 more entries                  ...                 <- stale
-    [20] AT_NULL           0x0            AT_NULL   0x0
+This can happen legitimately when codec fixups replace a cached connection
+list with snd_hda_override_conn_list().  The codec routing used by the
+driver is not affected, but the proc output can hide the overridden
+driver-visible routing and provide misleading topology information during
+codec debugging.
 
-21 entries before the prctl, still 21 after: the two new ones plus all 19
-left over from exec.
+Convert the entry count to a byte size so that memcmp() covers the
+complete connection list.
 
-Every consumer walks the vector until AT_NULL, so what they get now is a
-vector that never existed at exec, the head from the prctl glued onto the
-tail of the old binary.  gdb and crash pull the AUXV note out of coredumps
-to find AT_PHDR, AT_ENTRY, AT_SYSINFO_EHDR and friends, and a mixed vector
-points them at the wrong layout.  /proc/<pid>/auxv and PR_GET_AUXV hand
-the same mess out to live processes too.  Nothing crashes, everything just
-quietly reads a frankenstein auxv.
-
-And callers that terminate their own vector hide the whole thing, which is
-likely why nobody noticed since PR_SET_MM_AUXV landed in 2012.  Nothing
-exciting security wise either, I mean it needs CAP_SYS_RESOURCE to begin
-with.
-
-prctl_set_mm_map() right above already copies the whole buffer for exactly
-this reason, so just do the same here.  user_auxv is zero initialized and
-only partially filled from userspace, so the rest is zeros and nothing
-leaks.
-
-Link: https://lore.kernel.org/20260809002901.32591-1-include@grrlz.net
-Fixes: fe8c7f5cbf91 ("c/r: prctl: extend PR_SET_MM to set up more mm_struct entries")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Cyrill Gorcuno <gorcunov@openvz.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8b2c7a5c404d ("ALSA: hda - Add In-driver connection info")
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/7B802A4E225CC808+20260818083808.2735120-1-raoxu@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sys.c | 2 +-
+ sound/pci/hda/hda_proc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sys.c b/kernel/sys.c
-index 3076e65309136..efce340fd9724 100644
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -2142,7 +2142,7 @@ static int prctl_set_auxv(struct mm_struct *mm, unsigned long addr,
- 	BUILD_BUG_ON(sizeof(user_auxv) != sizeof(mm->saved_auxv));
- 
- 	task_lock(current);
--	memcpy(mm->saved_auxv, user_auxv, len);
-+	memcpy(mm->saved_auxv, user_auxv, sizeof(user_auxv));
- 	task_unlock(current);
- 
- 	return 0;
+diff --git a/sound/pci/hda/hda_proc.c b/sound/pci/hda/hda_proc.c
+index 00c2eeb2c472d..e8a4cf3c84d82 100644
+--- a/sound/pci/hda/hda_proc.c
++++ b/sound/pci/hda/hda_proc.c
+@@ -624,7 +624,7 @@ static void print_conn_list(struct snd_info_buffer *buffer,
+ 	/* Get Cache connections info */
+ 	cache_len = snd_hda_get_conn_list(codec, nid, &list);
+ 	if (cache_len >= 0 && (cache_len != conn_len ||
+-			      memcmp(list, conn, conn_len) != 0)) {
++			      memcmp(list, conn, conn_len * sizeof(*conn)) != 0)) {
+ 		snd_iprintf(buffer, "  In-driver Connection: %d\n", cache_len);
+ 		if (cache_len > 0) {
+ 			snd_iprintf(buffer, "    ");
 -- 
 2.53.0
 
