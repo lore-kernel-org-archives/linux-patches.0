@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEFD414A1D;
-	Sat, 12 Sep 2026 08:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775E3415F3F;
+	Sat, 12 Sep 2026 08:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202348; cv=none; b=UscBAsPqxAns+Ys0zbg/+qsW3mMRr6sjYHXCjtOCnErt/r6xIiRGLylQFEQjKRQcHHZ42ux3tPFLcchxnVZcl0l4IMc2xdyMT1avih1ilKgo+Ixt5C1ZqOFJhikM8J4LRY6kTe3Ucr576ekJUIQ3SyQUyATf6MryCUtg+IAORbY=
+	t=1789202353; cv=none; b=KdxICLeaVck6DCWDIKEc61QGI6Z7EpAbv+oknXS6gDN/fo7dMsAU+KiRvZG41dW6m9Cv99NtqM5LyJ0Bn12Rd0PiEcgwcEyqomh7hgWytKHN562e+86ry2FSkyAAJMVGCv1ZQ/Ke9kYjoU8TLionIsPZS/0M5XRmX/TBZyLFPdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202348; c=relaxed/simple;
-	bh=TVV5C6ysHjs72UjNWPq0ym+igb+n42LqYfVbz90iSis=;
+	s=arc-20240116; t=1789202353; c=relaxed/simple;
+	bh=Z4WMlKN+lQ876TOqTpXEqhqk9IpCWXZRsXqe3Ed77sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mqqnrzCVALpsJiEaoOB/CY5ppSH33SPi0pgrf6DZFnSD1k1bay1bIVmm4SPW7jX+o+ly4xIo9cL4+QyqikslB5AYmnPvp+NZhzRtPS48TuAEp1myDpEVNsrA6nJYuVcGaA8T/+dFK+1lREENM63N95MaKp93pnB54J7edCjM0yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLWEb7HR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cd+K+kXQCqDyHi94auMM1tH2jLcHravFDG600MboDrQU9EbniHNX9/JSC2OEJdQAS6+Qaj2osNKFOwx3ZM08f6FeRAWF3vJ8Gqw2VauUvFj2bpAeXwIogCDpgeO56fPCzofAwPSotLJbujgCvCnXeQpZn3zwSvcO2ZsI4S7aPEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXU0K7TA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLWEb7HR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D2F1F000FF;
-	Sat, 12 Sep 2026 08:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXU0K7TA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EE51F000FF;
+	Sat, 12 Sep 2026 08:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202347;
-	bh=ElBMJrdr/xxWlzP3LuFnz1qCVpAP/Cmxl63taWrKEvY=;
+	s=korg; t=1789202352;
+	bh=zIemwPvogoEdtNME5Ih5Ber6huIc+qyvtAHE1assVgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HLWEb7HR1mbP6PntgFxvv4gwfIzbvSuUdI8EHVg9lXD7/pDc5YVPX7zAQj+AHDqfm
-	 IGq1+qB7AAqtcUHJob5YQn2dhHktb2xRLMwseSIZ209Ef7SNWy4Yl5uwRc4g9caYCL
-	 2qG7qgrwWojVwnQiWvfWt5pETECFERVnA/wg4Jww=
+	b=rXU0K7TAyMoEwrbI2Bxp0ZM+LIdaOzAEIQhkIgxCaKE0GzirSc9WrZKUdP3VJvZqf
+	 evo5qmill4ge4SdFiv1mVM2PBaA1B82eNpN3Fdg1AhlAsn59kpmbARd+mxjqcIG0rk
+	 EskhL/OsKt0qaufzi+tx8ik2Q49yaQFY4cEa1rTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Maxim Kochetkov <fido_max@inbox.ru>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1182/1815] soc: fsl: qe: check platform_driver_register() in qe_ic_of_init()
-Date: Sat, 12 Sep 2026 08:48:52 +0200
-Message-ID: <20260912065716.763589406@linuxfoundation.org>
+Subject: [PATCH 7.2 1183/1815] phy: qcom: sgmii-eth: vote for both voltage rails with correct current loads
+Date: Sat, 12 Sep 2026 08:48:53 +0200
+Message-ID: <20260912065716.786852293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,36 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
 
-[ Upstream commit fbdba2a67fa7c0e7570bcbf9f28b782d6100270d ]
+[ Upstream commit 4f81684a1d1018d7d0e5579f08d95e7701279358 ]
 
-qe_ic_of_init() ignored the return value of platform_driver_register()
-and always returned success. Propagate the error to the initcall.
+The SerDes PHY has two voltage supply rails, vdda-0p9 and vdda-1p2,
+that must both be enabled for calibration to succeed. Without them:
 
-Fixes: be7ecbd240b2 ("soc: fsl: qe: convert QE interrupt controller to platform_device")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Reviewed-by: Maxim Kochetkov <fido_max@inbox.ru>
-Link: https://lore.kernel.org/r/20260731094608.1883391-1-gonglinkai@kylinos.cn
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+  qcom-dwmac-sgmii-phy 8909000.phy: QSERDES_COM_C_READY_STATUS timed-out
+  qcom-ethqos 23040000.ethernet eth0: __stmmac_open: Serdes powerup failed
+
+The driver relied solely on the PHY framework's implicit enable of
+'phy-supply', which only voted for a single rail and set no current
+load. Use devm_regulator_bulk_get_const() to acquire both supplies and
+set the peak current loads (46 mA for vdda-0p9, 15 mA for vdda-1p2)
+as required by the hardware.
+
+Fixes: 601d06277007 ("phy: qcom: add the SGMII SerDes PHY driver")
+Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-2-c4bc688177dd@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qe/qe_ic.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-sgmii-eth.c | 37 ++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/fsl/qe/qe_ic.c b/drivers/soc/fsl/qe/qe_ic.c
-index 943911053af68..bccc7d612009b 100644
---- a/drivers/soc/fsl/qe/qe_ic.c
-+++ b/drivers/soc/fsl/qe/qe_ic.c
-@@ -473,7 +473,6 @@ static struct platform_driver qe_ic_driver =
+diff --git a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+index f48faa2929a68..7137200c3f310 100644
+--- a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
++++ b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+@@ -11,6 +11,7 @@
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
++#include <linux/regulator/consumer.h>
  
- static int __init qe_ic_of_init(void)
- {
--	platform_driver_register(&qe_ic_driver);
--	return 0;
-+	return platform_driver_register(&qe_ic_driver);
+ #include "phy-qcom-qmp-pcs-sgmii.h"
+ #include "phy-qcom-qmp-qserdes-com-v5.h"
+@@ -26,7 +27,15 @@
+ #define QSERDES_PCS_SGMIIPHY_READY			BIT(7)
+ #define QSERDES_COM_C_PLL_LOCKED			BIT(1)
+ 
++static const struct regulator_bulk_data qcom_dwmac_sgmii_phy_vregs[] = {
++	{ .supply = "vdda-0p9", .init_load_uA = 46000 },
++	{ .supply = "vdda-1p2", .init_load_uA = 15000 },
++};
++
++#define QCOM_SGMII_NUM_SUPPLIES		ARRAY_SIZE(qcom_dwmac_sgmii_phy_vregs)
++
+ struct qcom_dwmac_sgmii_phy_data {
++	struct regulator_bulk_data *vregs;
+ 	struct regmap *regmap;
+ 	struct clk *refclk;
+ 	phy_interface_t interface;
+@@ -273,13 +282,24 @@ static int qcom_dwmac_sgmii_phy_power_on(struct phy *phy)
+ 	struct qcom_dwmac_sgmii_phy_data *data = phy_get_drvdata(phy);
+ 	int ret;
+ 
+-	ret = clk_prepare_enable(data->refclk);
+-	if (ret < 0)
++	ret = regulator_bulk_enable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
++	if (ret)
+ 		return ret;
+ 
++	ret = clk_prepare_enable(data->refclk);
++	if (ret)
++		goto err_disable_regulators;
++
+ 	ret = qcom_dwmac_sgmii_phy_calibrate(phy);
+-	if (ret < 0)
+-		clk_disable_unprepare(data->refclk);
++	if (ret)
++		goto err_disable_clk;
++
++	return 0;
++
++err_disable_clk:
++	clk_disable_unprepare(data->refclk);
++err_disable_regulators:
++	regulator_bulk_disable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
+ 
+ 	return ret;
  }
- subsys_initcall(qe_ic_of_init);
+@@ -296,6 +316,8 @@ static int qcom_dwmac_sgmii_phy_power_off(struct phy *phy)
+ 
+ 	clk_disable_unprepare(data->refclk);
+ 
++	regulator_bulk_disable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
++
+ 	return 0;
+ }
+ 
+@@ -357,6 +379,7 @@ static int qcom_dwmac_sgmii_phy_probe(struct platform_device *pdev)
+ 	struct phy_provider *provider;
+ 	void __iomem *base;
+ 	struct phy *phy;
++	int ret;
+ 
+ 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+@@ -381,6 +404,12 @@ static int qcom_dwmac_sgmii_phy_probe(struct platform_device *pdev)
+ 	if (IS_ERR(data->refclk))
+ 		return PTR_ERR(data->refclk);
+ 
++	ret = devm_regulator_bulk_get_const(dev, QCOM_SGMII_NUM_SUPPLIES,
++					    qcom_dwmac_sgmii_phy_vregs,
++					    &data->vregs);
++	if (ret)
++		return ret;
++
+ 	provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+ 	if (IS_ERR(provider))
+ 		return PTR_ERR(provider);
 -- 
 2.53.0
 
