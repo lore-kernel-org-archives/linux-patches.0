@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97682D0C94;
-	Sat, 12 Sep 2026 19:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B422931E823;
+	Sat, 12 Sep 2026 19:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241692; cv=none; b=JUA92CnmI6ik9ASyyDIOGF24RUbhNPBTCtOAO4ywljP7z+Jl4TgUrWZRG0WNfuBelVa1OE9Hc8kW5rPR9cyRTiuDH0qbUva4gHYcbA414oXRLRl5Cy4Pn33/9QbIp93xbFrBWN+uEULf68XsVMnbwu1wPO4C6ytWlSRDefa5J5A=
+	t=1789241697; cv=none; b=Uyy0BED5X56NEl3ETJ7MnuvsLK3Sqif689VJUD3J6UWzPTEgiv5zphs5h5QE1207WRMbWoZR4OVqVcciFbAE34rdkf0VRztwhMy1d4YoU2PVLkEvSWLJOGXnTR3MH8AmLKVyMyhoMx3apR51qX33swV2jdX1dtyWGsevLboTCn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241692; c=relaxed/simple;
-	bh=qu8vQ/m5GCkPvz/mYMrf/eRHCkiZ0bUItppvcqfRNKU=;
+	s=arc-20240116; t=1789241697; c=relaxed/simple;
+	bh=hOG1VSo1iBhBDliwSjJ+SNVdnIM3xy38g3k+TqP+KEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZPcLFctiPGFOZM+tKq0A652xwSqQlSPWt9K0Maiq/nGZqEjyrUOM0RuB8l6IqeSKZm/MwHGCkYiUgU+3rYYlyRuUKYi+hL0rVleRPdLDgl+POTdv2LDN2VajTkWwVFQNcXZDWT6qqkOp1Ci9C6PI0/6BA6ERJNK2FU+TBM5BDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVKyjC9b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T2HrDKzmRpQhEd2fJNQRix+8KIQREek4W3/XxvB22mHV/Mu4KmIt4Uj13PpoxHtNwcn0iO/6ItnTb3PNXLk8jJ2UfgV+uejqPaLxqpkzY7f596uPFwGEkw4hJcJOCHaek96oKJUsTFq7jYTYX16HE6htsCNEps09VqR+JMDspEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjgBGSuu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVKyjC9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8465B1F000FF;
-	Sat, 12 Sep 2026 19:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjgBGSuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712271F000FF;
+	Sat, 12 Sep 2026 19:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241691;
-	bh=KRWzmQunfPu9VmRUcwwdVWpYvlQGqZdXKj0KR9Q1X60=;
+	s=korg; t=1789241696;
+	bh=4rFDutulAmNRn89bItZd7oBEuzOqYoMIu7DXTuKl7y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aVKyjC9baL8J6N0qgSki0dM5u+J8IX+R27HHL5nI+MWHC32VbqxMXV1iuTzATorch
-	 NwKZMj1WXFzPKXCuFAtBZEZI+MXhGz6hI6bW/azmDB3GMC5P1/Rkke7iqPrGNfZ+cY
-	 3+Dt5d3KHSHMGjOlbIFFnvN1XL7TSiJBhKezHkEw=
+	b=PjgBGSuuItIpI/Kp3lZ7xbMdzJ0WYv6npojYSQTKnhNm2Oh2DZXqIqvQcwJHhtF0b
+	 2BsxnUOhpUHYCUq7vXP/ICRiMrq8/GYdekRT5I1V6kXb/xq4jsbApSGz2q9LJVSLL5
+	 d4tsKYPBypUXBhgGluad5I5mp6zAKeu98UIglrYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 5.10 151/798] ipmi: ipmb: validate write message length
-Date: Sat, 12 Sep 2026 08:56:19 +0200
-Message-ID: <20260912065520.464918871@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Adrian Huang <adrianhuang0701@gmail.com>,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Marco Elver <elver@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 187/798] signal: avoid shared siginfo namespace rewrites
+Date: Sat, 12 Sep 2026 08:56:55 +0200
+Message-ID: <20260912065521.332732584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,48 +60,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Bradley Morgan <include@grrlz.net>
 
-commit 53637506884dbd5c91a89b1a3547d99d80f8ed2c upstream.
+commit d19cdc167e696714509e87d3f7ae765b6e164589 upstream.
 
-ipmb_write() read message fields before validating the length byte.
+send_signal_locked() rewrites sender ids for the target namespace.  Group
+sends reuse the same siginfo, so one recipient can affect the next.
 
-A zero or short write can read uninitialized stack bytes.
+Copy the siginfo before changing it.
 
-A length smaller than the SMBus header underflows the block write length.
-
-Require a non-empty buffer and the minimum IPMB request length.
-
-Also require the length byte plus payload before parsing the message.
-
-Fixes: 51bd6f291583 ("Add support for IPMB driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Message-ID: <20260624175353.8592-1-alhouseenyousef@gmail.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Link: https://lore.kernel.org/86a8857d58d43ee26a8b365b837fd24830343494.1782159692.git.include@grrlz.net
+Fixes: 7a0cf094944e ("signal: Correct namespace fixups of si_pid and si_uid")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Adrian Huang <adrianhuang0701@gmail.com>
+Cc: Aleksandr Nogikh <nogikh@google.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmb_dev_int.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/signal.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/char/ipmi/ipmb_dev_int.c
-+++ b/drivers/char/ipmi/ipmb_dev_int.c
-@@ -141,13 +141,14 @@ static ssize_t ipmb_write(struct file *f
- 	u8 msg[MAX_MSG_LEN];
- 	ssize_t ret;
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -1209,6 +1209,7 @@ static inline bool has_si_pid_and_uid(st
+ static int send_signal(int sig, struct kernel_siginfo *info, struct task_struct *t,
+ 			enum pid_type type)
+ {
++	struct kernel_siginfo rewritten;
+ 	/* Should SIGKILL or SIGSTOP be received by a pid namespace init? */
+ 	bool force = false;
  
--	if (count > sizeof(msg))
-+	if (!count || count > sizeof(msg))
- 		return -EINVAL;
+@@ -1222,6 +1223,9 @@ static int send_signal(int sig, struct k
+ 		/* SIGKILL and SIGSTOP is special or has ids */
+ 		struct user_namespace *t_user_ns;
  
- 	if (copy_from_user(&msg, buf, count))
- 		return -EFAULT;
- 
--	if (count < msg[0])
-+	if (msg[IPMB_MSG_LEN_IDX] < IPMB_REQUEST_LEN_MIN ||
-+	    count < (size_t)msg[IPMB_MSG_LEN_IDX] + 1)
- 		return -EINVAL;
- 
- 	rq_sa = GET_7BIT_ADDR(msg[RQ_SA_8BIT_IDX]);
++		rewritten = *info;
++		info = &rewritten;
++
+ 		rcu_read_lock();
+ 		t_user_ns = task_cred_xxx(t, user_ns);
+ 		if (current_user_ns() != t_user_ns) {
 
 
