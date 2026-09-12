@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC87127FB37;
-	Sat, 12 Sep 2026 16:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4306233E346;
+	Sat, 12 Sep 2026 16:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229655; cv=none; b=CmS0I13PPipBOLDBLzVPHzjZYksEOmG3zt7t7OTi/Qe3PYUmF3MuhoOp3904B/lyP5ZQrh9/6g4tVrNlRYOBEdpQofDheLTqSvy4LyxCohAJgouv6xzYirIDS0/fkBk/HVTquZ8HbDImfR6ibiFz5VJiNXEF5a6E1racvBHYUuA=
+	t=1789229661; cv=none; b=kcdgLTR5nEmbbuo6ihpYMWM+HvlUPnbFW/t2TQaL8GD+zy7wu2Aj63oQF+AkTKZHtKKuxoyb41xCr5Lbob9uWBVe1erVaXtwSdh6lebQHwpZ8XO8+eGS6SoJcnawRqLrz6i+NHQpmSIB+o9KieRv13hIqYj0q37oNC/ZmCd8+Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229655; c=relaxed/simple;
-	bh=UQ9mPh20E8Es4R3JYXai8LPJs40U/3AkK6DuKnaWiN0=;
+	s=arc-20240116; t=1789229661; c=relaxed/simple;
+	bh=5tEFVW5s0KIsJNNUYW9B7CTGBwnUzHeOWqIFEyUTEME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fc08HhzfyBJIccqMabcY9LfOjOWVBbdu1UY0X3aFYpES+YEZb5D4SVMvnMnrpqrD5GTHZ6GLE/wsS2agWFdhbpVN/WodyvHuhMof/5q/N+mrYR3bteU6HPrFQpNAzT7S+jMueFq03F1bxpeCXn02nSsJ8ngBgT7F0oyta7Q09OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTooD3Oq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gAFKpi8UsWEWJONoOaupGPW/LpDGEzz+dIyFoKigNfnwp1tg693I/PA+d2kXYcqWo3Wn5mUe40Px5lGG/KRIKU90Whgp8hZrvQIg2yTz/E8xpQAFaewnA32OLDbsO9KNEZRZM7kFUBmJKbaa6Bw/YZblBBtgEjI04RXMBRpClmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdcBrQsk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTooD3Oq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C991F000FF;
-	Sat, 12 Sep 2026 16:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdcBrQsk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F021F000FF;
+	Sat, 12 Sep 2026 16:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229654;
-	bh=O/tkkr6+PmE/uByoo/jAdjLW0mC6X6DyRrZrkgw1nOQ=;
+	s=korg; t=1789229660;
+	bh=QkhLb+rHjHjfc9mhRTyg4ZMPNfdOOGhT2b0nAY5V+xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HTooD3OqTrUE/2wZGCfgI8hEiYARacuzNnVPguosgN5ua08ePqAo+q0F2hbFDcZgL
-	 i8OyKAIG/gzzQKEHWfo5TwhR/MIL/drQgkQO/wGilyPcTmLNgKL2wB86rVF/QpFbYB
-	 dKhU4cH8j3yiyWkyBkjbhrtpMgt6yyNhouV0pR14=
+	b=VdcBrQsk9m9/Gwo+kzTrM4LGNSqgZfdMsJN8rakszcXz6NdUaJRl5h1qruSEQ7ztO
+	 HLMs41atEIzdKgqxtkT0PLRy/nkrzZRkJHS8Ac/Y0KlFa0urwWLOkpq+V3m5lnHURX
+	 mq+dVwb0DTgwWyxFif50ehlMlFmI9dueeWbP7NE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Linus Walleij <linusw@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Huisong Li <lihuisong@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0633/1191] crypto: sl3516 - drop invalid sg_dma_len checks before DMA mapping
-Date: Sat, 12 Sep 2026 08:56:01 +0200
-Message-ID: <20260912065602.473013285@linuxfoundation.org>
+Subject: [PATCH 6.1 0634/1191] ACPI: processor: idle: Expand _LPI package sanity checks
+Date: Sat, 12 Sep 2026 08:56:02 +0200
+Message-ID: <20260912065602.495672707@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,54 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 3ae59a2eba64b3648f069aa52eeaaeefdfe4bb2f ]
+[ Upstream commit d5c13047a132162d2649be876906ead691d12948 ]
 
-sg_dma_len() is only valid after mapping the scatterlist with
-dma_map_sg(). However, sl3516_ce_need_fallback() checks it before the
-source and destination scatterlists are mapped. Thus, a stale DMA length
-that is not a multiple of 16 could incorrectly force a software fallback
-when CONFIG_NEED_SG_DMA_LENGTH=y.
+The _LPI package sanity checks in acpi_processor_evaluate_lpi() miss
+a couple of things, so expand them by adding a buffer size check
+before retrieving a struct acpi_power_register from it (and skip the
+given state if the buffer is not large enough to hold a register
+structure) and making the function avoid copying the state description
+from the ACPI table if there are too few elements in the package
+supposed to hold it.
 
-Remove the invalid checks; the existing scatterlist length checks are
-sufficient.
+While at it, relocate and rephrase a comment about skipping _LPI state
+package elements [7-8].
 
-Fixes: 46c5338db7bd ("crypto: sl3516 - Add sl3516 crypto engine")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Acked-by: Huisong Li <lihuisong@huawei.com>
+Link: https://patch.msgid.link/5084143.GXAFRqVoOG@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/gemini/sl3516-ce-cipher.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/acpi/processor_idle.c | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/crypto/gemini/sl3516-ce-cipher.c b/drivers/crypto/gemini/sl3516-ce-cipher.c
-index 14d0d83d388d8..fa96ce25ed599 100644
---- a/drivers/crypto/gemini/sl3516-ce-cipher.c
-+++ b/drivers/crypto/gemini/sl3516-ce-cipher.c
-@@ -52,10 +52,6 @@ static bool sl3516_ce_need_fallback(struct skcipher_request *areq)
- 			ce->fallback_mod16++;
- 			return true;
+diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
+index afa3b4ac367a3..8df8e789a0dbe 100644
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -952,6 +952,13 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
+ 		if (obj->type == ACPI_TYPE_BUFFER) {
+ 			struct acpi_power_register *reg;
+ 
++			if (obj->buffer.length < sizeof(*reg)) {
++				acpi_handle_debug(handle,
++					"Invalid register data for _LPI state %d\n",
++					state_idx);
++				continue;
++			}
++
+ 			reg = (struct acpi_power_register *)obj->buffer.pointer;
+ 			if (reg->space_id != ACPI_ADR_SPACE_SYSTEM_IO &&
+ 			    reg->space_id != ACPI_ADR_SPACE_FIXED_HARDWARE)
+@@ -968,13 +975,6 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
+ 			continue;
  		}
--		if ((sg_dma_len(sg) % 16) != 0) {
--			ce->fallback_mod16++;
--			return true;
--		}
- 		if (!IS_ALIGNED(sg->offset, 16)) {
- 			ce->fallback_align16++;
- 			return true;
-@@ -68,10 +64,6 @@ static bool sl3516_ce_need_fallback(struct skcipher_request *areq)
- 			ce->fallback_mod16++;
- 			return true;
- 		}
--		if ((sg_dma_len(sg) % 16) != 0) {
--			ce->fallback_mod16++;
--			return true;
--		}
- 		if (!IS_ALIGNED(sg->offset, 16)) {
- 			ce->fallback_align16++;
- 			return true;
+ 
+-		/* elements[7,8] skipped for now i.e. Residency/Usage counter*/
+-
+-		obj = pkg_elem + 9;
+-		if (obj->type == ACPI_TYPE_STRING)
+-			strscpy(lpi_state->desc, obj->string.pointer,
+-				ACPI_CX_DESC_LEN);
+-
+ 		lpi_state->index = state_idx;
+ 		if (obj_get_integer(pkg_elem + 0, &lpi_state->min_residency)) {
+ 			pr_debug("No min. residency found, assuming 10 us\n");
+@@ -997,6 +997,20 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
+ 
+ 		if (obj_get_integer(pkg_elem + 5, &lpi_state->enable_parent_state))
+ 			lpi_state->enable_parent_state = 0;
++
++		/* Skip elements [7-8] i.e. Residency/Usage counters. */
++
++		/*
++		 * Avoid out-of-bounds access if the size of the package is less
++		 * than expected.
++		 */
++		if (element->package.count < 10)
++			continue;
++
++		obj = pkg_elem + 9;
++		if (obj->type == ACPI_TYPE_STRING)
++			strscpy(lpi_state->desc, obj->string.pointer,
++				ACPI_CX_DESC_LEN);
+ 	}
+ 
+ 	acpi_handle_debug(handle, "Found %d power states\n", state_idx);
 -- 
 2.53.0
 
