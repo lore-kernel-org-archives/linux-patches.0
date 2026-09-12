@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5A64718E5;
-	Sat, 12 Sep 2026 12:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66632F617C;
+	Sat, 12 Sep 2026 12:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215435; cv=none; b=tiRe26ebWwXPXIexVKQn9gZsu6PE6/LVG3+SGCI5m1bmWQgC5shmoMcYZLwZSEYedrdhUGHI2OaC/b76mvswF4pxNxTP3V8Mz5cVFznO/cvuc0AY+Lzq6XMcskFH028o9qmjGQYqZbyeIf9X1DHn/gkNdcqk9SVFq/Jadkgwgc8=
+	t=1789215440; cv=none; b=Ipa8tlnPwUrBWSjc3/CI+WG4zUyMlFlpXld/iiWqCFM10YJt6aWsmETot09zEWqRrnGxnrdcSxY3hz3T3eRPJYK8/oA46JQ7O84jpjg+hon4RwKc7wNqXjz+tIkcSfHvaLFRvl8cSSUm5aoWyWWxqwJrVhTnYIs3fT25Za4mEoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215435; c=relaxed/simple;
-	bh=xDzJjunQkFCfURarTL8jr1XhPhZwjveMsQz2pgDjX+4=;
+	s=arc-20240116; t=1789215440; c=relaxed/simple;
+	bh=GVrNVQgdEa+coKPuVzPUvDShGbWsPT1cxcs4Kn7RIvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4V0TWsSuI4JQRvKqUyUBQBMZFrVlJk5VDXuig+V/l+pljSN0d8wAjhDLE0Ogf1EnRT+TPoqJG9qsZQDpBpRqEZM8FsgtZybBm07wYe06bFxx54D5SfkYkTlf1vKDL1V+YJL2P2ry6QNd1EtP2iGJmOn0/6cNdPotYL73//LmVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SoyOzV5R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V/Wq5aFnCUCnGniF+mB4ZDCl1TiG3xPuWZrr/VLVd4yrom6GwQwoVDnHSOvprlx+d1uzScg0SXc9F6OGNvkUAS4DdYJV1Xt7pz0dIudMOfyDhEBBykYwSAfBQ1KHzJPE5DLBCaT4f5gqfxNLHBWwiEqMBLDQAx7AcqTzd6y1rWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxF6ZVn6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SoyOzV5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CEE1F000FF;
-	Sat, 12 Sep 2026 12:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxF6ZVn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A857D1F000FF;
+	Sat, 12 Sep 2026 12:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215433;
-	bh=VoU57YqqQYZW99sIi2ommpuCxiLgHRwEG4Pjrv2Alug=;
+	s=korg; t=1789215438;
+	bh=tjTWVlxwwBGy4wBY9twsA95OWwNIlkwxSi4HvTe+Qh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SoyOzV5RNIuy5iT3Vh6fYZyr+wEEuXks0KJ02GtWN3iKBVNTIIodH9Cfs0xUo9Fwh
-	 VpHXHHE6hFMMrOXd3k7i8+7JsjtdN5xHPisfLCYU2jDDZnA+UEbSPvHKB3QgDnHyRV
-	 Jp7M+nW31GHlh0pVpSObSNybPie968j7lfEN/wag=
+	b=ZxF6ZVn6VWULuie2BM6Zidfq8OBRv1sj8AIUit2Fe+NejIl6w9EZVJuByGlUzgd6u
+	 tRGSj7G1q3sd+JCHGPOWTeTt8ekjoFo9Hd2kmnOpr2dchHs3VmCwpDCYJGSimHOC7x
+	 CmndUVIXSbqqZbzzKEWUAWRq6TKqzcjXUl2+0kOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	David Stevens <stevensd@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0514/1376] RDMA/hfi1: Create workqueues before device initialization
-Date: Sat, 12 Sep 2026 08:49:00 +0200
-Message-ID: <20260912065618.994165607@linuxfoundation.org>
+Subject: [PATCH 6.12 0532/1376] x86/entry/fred: Encode frame pointer on entry
+Date: Sat, 12 Sep 2026 08:49:18 +0200
+Message-ID: <20260912065619.397967250@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,122 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: David Stevens <stevensd@google.com>
 
-[ Upstream commit 0d5618c1b2fc9dd4fc086f0226acd8a077ab6c1b ]
+[ Upstream commit dab01c597f6bd40e0efe7da967b8374ca1971b79 ]
 
-create_workqueues() only needs fields set up by hfi1_alloc_devdata().
-Call it before hfi1_init_dd() so a workqueue allocation failure happens
-before chip resources are initialized.
+Add missing ENCODE_FRAME_POINTER macro invocation into FRED_ENTER macro,
+to prevent the unwinder from encountering a NULL stack frame pointer
+when CONFIG_UNWINDER_FRAME_POINTER is enabled
 
-To keep the reordered error paths safe, make init_one() own hfi1_devdata.
-hfi1_init_dd() unwinds its partial setup but leaves the allocation for the
-caller to free. If device initialization fails, destroy the workqueues
-before freeing the device data.
-
-Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-6-b9e9641268a5@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Stable-dep-of: 9f674ba674a0 ("RDMA/hfi1: Allocate device data after PCI initialization")
+Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
+Signed-off-by: David Stevens <stevensd@google.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Link: https://patch.msgid.link/20260424191456.2679717-12-stevensd@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/chip.c |  4 +---
- drivers/infiniband/hw/hfi1/hfi.h  |  2 --
- drivers/infiniband/hw/hfi1/init.c | 19 ++++++++++---------
- 3 files changed, 11 insertions(+), 14 deletions(-)
+ arch/x86/entry/entry_64_fred.S | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/chip.c b/drivers/infiniband/hw/hfi1/chip.c
-index c52e6b2c9914d..db96a7547fb7c 100644
---- a/drivers/infiniband/hw/hfi1/chip.c
-+++ b/drivers/infiniband/hw/hfi1/chip.c
-@@ -15065,7 +15065,7 @@ int hfi1_init_dd(struct hfi1_devdata *dd)
- 	 */
- 	ret = hfi1_pcie_ddinit(dd, pdev);
- 	if (ret < 0)
--		goto bail_free;
-+		goto bail;
+diff --git a/arch/x86/entry/entry_64_fred.S b/arch/x86/entry/entry_64_fred.S
+index 0ca9db540b16d..3c1bf47af56c2 100644
+--- a/arch/x86/entry/entry_64_fred.S
++++ b/arch/x86/entry/entry_64_fred.S
+@@ -6,6 +6,7 @@
+ #include <linux/export.h>
  
- 	/* Save PCI space registers to rewrite after device reset */
- 	ret = save_pci_variables(dd);
-@@ -15320,8 +15320,6 @@ int hfi1_init_dd(struct hfi1_devdata *dd)
- bail_cleanup:
- 	hfi1_free_rx(dd);
- 	hfi1_pcie_ddcleanup(dd);
--bail_free:
--	hfi1_free_devdata(dd);
- bail:
- 	return ret;
- }
-diff --git a/drivers/infiniband/hw/hfi1/hfi.h b/drivers/infiniband/hw/hfi1/hfi.h
-index eb38f81aeeb1e..67df5c65c6e51 100644
---- a/drivers/infiniband/hw/hfi1/hfi.h
-+++ b/drivers/infiniband/hw/hfi1/hfi.h
-@@ -2044,9 +2044,7 @@ struct cc_state *get_cc_state_protected(struct hfi1_pportdata *ppd)
- 		/* waiting for an urgent packet to arrive */
- #define HFI1_CTXT_WAITING_URG 4
+ #include <asm/asm.h>
++#include <asm/frame.h>
+ #include <asm/fred.h>
+ #include <asm/segment.h>
  
--/* free up any allocated data at closes */
- int hfi1_init_dd(struct hfi1_devdata *dd);
--void hfi1_free_devdata(struct hfi1_devdata *dd);
+@@ -18,6 +19,7 @@
+ 	UNWIND_HINT_END_OF_STACK
+ 	ANNOTATE_NOENDBR
+ 	PUSH_AND_CLEAR_REGS
++	ENCODE_FRAME_POINTER
+ 	movq	%rsp, %rdi	/* %rdi -> pt_regs */
+ .endm
  
- /* LED beaconing functions */
- void hfi1_start_led_override(struct hfi1_pportdata *ppd, unsigned int timeon,
-diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
-index fc6c01d64050e..904a426115c54 100644
---- a/drivers/infiniband/hw/hfi1/init.c
-+++ b/drivers/infiniband/hw/hfi1/init.c
-@@ -630,8 +630,6 @@ void hfi1_init_pportdata(struct pci_dev *pdev, struct hfi1_pportdata *ppd,
- 	ppd->sm_trap_qp = 0x0;
- 	ppd->sa_qp = 0x1;
- 
--	ppd->hfi1_wq = NULL;
--
- 	spin_lock_init(&ppd->cca_timer_lock);
- 
- 	for (i = 0; i < OPA_MAX_SLS; i++) {
-@@ -1164,7 +1162,7 @@ static void finalize_asic_data(struct hfi1_devdata *dd,
-  * It cleans up and frees all data structures set up by
-  * by hfi1_alloc_devdata().
-  */
--void hfi1_free_devdata(struct hfi1_devdata *dd)
-+static void hfi1_free_devdata(struct hfi1_devdata *dd)
- {
- 	struct hfi1_asic_data *ad;
- 	unsigned long flags;
-@@ -1616,17 +1614,17 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (ret)
- 		goto bail;
- 
-+	ret = create_workqueues(dd);
-+	if (ret)
-+		goto free_devdata;
-+
- 	/*
- 	 * Do device-specific initialization, function table setup, dd
- 	 * allocation, etc.
- 	 */
- 	ret = hfi1_init_dd(dd);
- 	if (ret)
--		goto clean_bail; /* error already printed */
--
--	ret = create_workqueues(dd);
--	if (ret)
--		goto clean_bail;
-+		goto destroy_workqueues; /* error already printed */
- 
- 	/* do the generic initialization */
- 	initfail = hfi1_init(dd, 0);
-@@ -1680,7 +1678,10 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	return 0;
- 
--clean_bail:
-+destroy_workqueues:
-+	destroy_workqueues(dd);
-+free_devdata:
-+	hfi1_free_devdata(dd);
- 	hfi1_pcie_cleanup(pdev);
- bail:
- 	return ret;
 -- 
 2.53.0
 
