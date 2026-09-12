@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7298F3F1AC6;
-	Sat, 12 Sep 2026 09:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786F2246BCD;
+	Sat, 12 Sep 2026 09:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206688; cv=none; b=IN2r7VPEr+YBafqiTQztj7AmhtOCHgSUXxwzJCmS/lEnuETFGFf2AT5OxpZwmXSGfTKBBwRojUfj9GfyXtPvEvUp/UkiqYqj+oiGwDE/XjF3bf08gzeLVRHZOhG64hJ+OXPLLQEDgv0NfynNYjJnck1YnFyMaWBEKDRRIJdQv0Y=
+	t=1789206691; cv=none; b=DpqmgDdQJvMZ198yjpjruooYXJfsHMCK+Oo/5ze9+Cn8Ie0R/mdsHXbDlXgPTx6YSR2SJsFkJJNEAooqX/kkkaXNbC9FLUOkYkRzVFmvFpu0VRug0Zr0TTZ6Wc2p96HuDFQyDzoSBVnabO0HDnH0eAwZnqnmbNCCWOd3dbUZHwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206688; c=relaxed/simple;
-	bh=br9mWPrGzR5otEb8Y7OnZXyQ3H6kODMiL2dAV96TG/w=;
+	s=arc-20240116; t=1789206691; c=relaxed/simple;
+	bh=RzQze1ZLg6zh30kBOlXzswWmRNkuCBH/89KQf1X0Fpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y37uIw0garP3fnNvG1vpogA6US4p565/VvNhI8OGUgUGYYN+LFHhtL7MTlA8Wd5Nr1Q7qkqwk4cDebq8/cmXcRDoYeo8P7inG+dJGLqk7TAoW1wpdCbE/D7aMNh+nHt9uEocpBXcRYD5C7DeEMigiipVjgsUzWa3A0t6Jc3mgpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7FIxSzf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cm2to+7Y9PTiHEQkKpg9LvHC9mOe7NFet4OG8Y5eetEJMgVvjpyuupsQPFiqrgVjB3V61mptQgKFv2kXMZ6a6/dPwASyX4g7l+Wt5cRYLVc54707rygv7zPqFqQCzRYKikHEpewF+kysIKfZJ32f/dAO3Q0mLjbZtezEw87t77g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0POCRZCG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7FIxSzf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9095E1F000FF;
-	Sat, 12 Sep 2026 09:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0POCRZCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3EB1F000FF;
+	Sat, 12 Sep 2026 09:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206685;
-	bh=kIEjmKjfRWaUoJxXWt/sbu6QZJpRuPbJdW8etIcojj0=;
+	s=korg; t=1789206690;
+	bh=HrJevnDkkWR+CxXudZhe8Bxgdlg+xrsAJAhrIueySR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j7FIxSzf24UB86j2RlxzwzHH9nrnRJ9rOmZOsJAIAO9OFLs2BXR62lJg+nSh5Xjig
-	 2zs2eqVj06tEsgHQdtKr84RSwCai1Pw5FrdJuS+nAadslRZaz4wxyexihwuPgTLmHR
-	 5DzP2SCb0y01NWxxW6SPHSv22dMcvClAkkg4LK5s=
+	b=0POCRZCGBueYJizNn+O0DX0zleN+kShTzdsDNqqyWcYDyMELNrJhmiItzggTG8IM7
+	 NH0byWjr2RRACSbetjMMK4W24aXFFzS1OdCOr0EqKnSvQb0gzOFyb52UFFVLrnBDhX
+	 N+vFGRfwwKhegKhp/rWZ5uEuMeBp6VDjD7z1hIS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuvraj Singh Chauhan <ysinghcin@gmail.com>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20de=20Bretagne?= <jerome.debretagne@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0231/1518] staging: octeon: fix free_irq dev_id mismatch in cvm_oct_rx_shutdown
-Date: Sat, 12 Sep 2026 08:40:00 +0200
-Message-ID: <20260912065628.711782639@linuxfoundation.org>
+Subject: [PATCH 6.18 0258/1518] arm64: dts: qcom: sc8280xp-arcata: Fix top USB-C DP alt mode
+Date: Sat, 12 Sep 2026 08:40:27 +0200
+Message-ID: <20260912065629.319433055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -44,57 +47,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 
-[ Upstream commit 41db5b76eeb4cc11a1097384caba7cfc659f7293 ]
+[ Upstream commit 16065c4ec1e7ca595f4fa363dc2251c6bdf1f6b3 ]
 
-In cvm_oct_rx_initialize(), request_irq() is called with
-&oct_rx_group[i].napi as the dev_id:
+The top USB-C port (usb0) didn't switch to DP alt mode, as reusing the
+same GPIO 101 as on the SC8280XP CRD or Lenovo ThinkPad X13s was not
+working on the Surface Pro 9 5G.
 
-	request_irq(oct_rx_group[i].irq, cvm_oct_do_interrupt, 0, "Ethernet",
-							&oct_rx_group[i].napi);
+Investigation [1] by Jens on the Windows Dev Kit (WDK2023), the other
+sc8280xp-based "blackrock" model from Microsoft, found a reference
+to GPIO 100 in the DSDT in addition to 101. Switching to GPIO 100
+fixed the issue on blackrock, as it does on arcata to enable
+external screen when using the left-side top USB-C port.
 
-However, cvm_oct_rx_shutdown() passes cvm_oct_device (an array of
-struct net_device pointers) as the dev_id to free_irq():
+[1] https://lore.kernel.org/all/20250609-blackrock-usb0-mux-v1-1-7903c3b071e4@oldschoolsolutions.biz/
 
-  free_irq(oct_rx_group[i].irq, cvm_oct_device);
-
-Since __free_irq() matches the action to remove by comparing
-dev_id pointers, the mismatched cookie means the IRQ handler is
-never found, triggering a WARN and leaving the IRQ line permanently
-allocated. This prevents proper driver cleanup on module removal.
-
-Fix the mismatch by passing &oct_rx_group[i].napi as the dev_id
-to free_irq(), matching what was used during request_irq().
-
-Signed-off-by: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
-Link: https://patch.msgid.link/20260212171903.1417804-1-ysinghcin@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: c0a9a8586a63 ("staging: octeon: add missing napi_disable in cvm_oct_rx_shutdown")
+Cc: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Fixes: f6231a2eefd4 ("arm64: dts: qcom: sc8280xp: Add Microsoft Surface Pro 9 5G")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+Link: https://lore.kernel.org/r/20260604-surface-sp9-5g-for-next-v3-4-6aa6f6612c10@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/octeon/ethernet-rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/octeon/ethernet-rx.c b/drivers/staging/octeon/ethernet-rx.c
-index 965330eec80a8..d0b43d50b83ce 100644
---- a/drivers/staging/octeon/ethernet-rx.c
-+++ b/drivers/staging/octeon/ethernet-rx.c
-@@ -535,7 +535,7 @@ void cvm_oct_rx_shutdown(void)
- 			cvmx_write_csr(CVMX_POW_WQ_INT_THRX(i), 0);
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+index aeed3ef152eba..cdc2b0dcca27b 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+@@ -248,7 +248,7 @@ map1 {
+ 	usb0-sbu-mux {
+ 		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
  
- 		/* Free the interrupt handler */
--		free_irq(oct_rx_group[i].irq, cvm_oct_device);
-+		free_irq(oct_rx_group[i].irq, &oct_rx_group[i].napi);
+-		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
++		enable-gpios = <&tlmm 100 GPIO_ACTIVE_LOW>;
+ 		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
  
- 		netif_napi_del(&oct_rx_group[i].napi);
- 	}
+ 		pinctrl-0 = <&usb0_sbu_default>;
+@@ -1002,7 +1002,7 @@ tx-pins {
+ 
+ 	usb0_sbu_default: usb0-sbu-state {
+ 		oe-n-pins {
+-			pins = "gpio101";
++			pins = "gpio100";
+ 			function = "gpio";
+ 			bias-disable;
+ 			drive-strength = <16>;
 -- 
 2.53.0
 
