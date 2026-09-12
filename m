@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12ED6242D65;
-	Sat, 12 Sep 2026 13:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A8547887F;
+	Sat, 12 Sep 2026 13:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218686; cv=none; b=qSF/8dDE1fXybQMvVoCpWXanP+e1x9Z/ZjIEqrxXiXCwtPIOVl8bA+4sB8auxtp9bq2Neh+pQhLqeOPdkN2tbkITg3B7A1AnbXYV8NxdHa+6rEh60SK4AYK5oF2c7CNy9cAkMTPIkd6yZnCvdTCAFxNAxow77GyHuhrgTHzEhkg=
+	t=1789218691; cv=none; b=u/D7CjE4eUEUKjEqul5oY6KKbKe1lcthJK2PDmGFj7y7C102Iqp9UUx2nRYgojrtKqp1A/wVAWpleOwwnjD6jZMrXK3SOBD4C+Ez0xbAaXipDBoVksQYdB9YXCzdAs2GQpM098uJff1HGCDtjk0mhwXkg1rq312FIaRfRFhQkiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218686; c=relaxed/simple;
-	bh=8rr0efSvatxXgq2O4GrTwoW9V0JXIOp4wzPSbvHzc0c=;
+	s=arc-20240116; t=1789218691; c=relaxed/simple;
+	bh=318NGNeL7tSeFZMWxpY/2/IjHGRd9BcaouDsY3p3PHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8TM6qEMJF8A21OANaZcE/qJ63aeAG4xlGBiRj2y5xMBE/OpT4yxiynsIbxkneMf45y+0SsURXofmC4j4nVbT10RHnV+qaE3z3okmgYuR2DSsg4EcabnB5HX67lh4OgsHuH2yg4hzG8DuTAo+F6I9RLZWPNbNfEcnvwCUyFy9Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8nzyM+M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mZVZGELy9guXxYEC1G0J0vukjht25lsHk+pN5h3MPvl+yli1ptqZpsmlmFMTbZnQl7Kj32q0AXeODZ+cFf30r+XgHBFERiXnmhfapI7llQcg8Yze9uN1AaRTcJidW7Ucgi2ZggKMi0j9RSnJB+Ir/6a5EmaCTM6BvXkkLnGFNco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1Ebw+od; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8nzyM+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB5A1F000FF;
-	Sat, 12 Sep 2026 13:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1Ebw+od"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51CA1F000FF;
+	Sat, 12 Sep 2026 13:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218685;
-	bh=NdeeN9CJ3SjeopWXg1CSo1W5hmV/0xlv9Ym7eEzP9Uo=;
+	s=korg; t=1789218690;
+	bh=5y3B0eRs0+Wo9dgMO2XnOK1sBiBtDGzpBeeJKcxFKYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z8nzyM+MyFMcCvMdYd7bwtZ93dihPS0T5AawkA8e59mqIfQpjvvDuHH1djW9s187q
-	 TYI0AiPFt9LJ3CoyaFrz95juBeCwdlZ3q1flkTU8MghbD+8Jls3qMjvuU4WuE3kSnF
-	 NJJ/Xff8gaERbrIFkoPrJU1y7tWzzDH9Y7/umCLU=
+	b=O1Ebw+odkpj9YzYFJ959qV5VwTJyC/+qBLYAyUrDL5Hv/GTK1CxruBdvbjcDun5S/
+	 sPEXTGyx6EbuxHWZWUEZvTP0AkJakJeOZOjVIBV/Hn3cDZud2wBmB1PYf3uDZBAoZG
+	 9yY6L+5haenMUZQdiG27hE3TsIfcFtqaou1cI2Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Szymon Wilczek <swilczek.lx@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1194/1376] pppox: drain queued packets on channel handoff
-Date: Sat, 12 Sep 2026 09:00:20 +0200
-Message-ID: <20260912065634.160824912@linuxfoundation.org>
+Subject: [PATCH 6.12 1159/1376] hwmon: (coretemp) Fix core_data leak on CPUs without PTS
+Date: Sat, 12 Sep 2026 08:59:45 +0200
+Message-ID: <20260912065633.384936286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,66 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Szymon Wilczek <swilczek.lx@gmail.com>
 
-[ Upstream commit 92c1bf630abf0af646562398eaa36f80b5ff677d ]
+[ Upstream commit 0cd8450c257faa0cece0e0c43d3b55d1a389acc7 ]
 
-PPPIOCGCHAN both returns the channel index and marks a PPPOX socket as
-bound to generic PPP, despite its getter semantic. Packets received
-before that transition are queued on sk_receive_queue, but a bound
-socket is no longer readable. Such packets therefore remain queued until
-the socket is destroyed.
+pdata->core_data is allocated in init_temp_data() when the first core
+temp_data of a package is created, but it is only released from
+destroy_temp_data(), and only in the branch that handles the package
+temp_data.
 
-After marking a socket bound, wait for receive paths that observed the
-old state to finish queueing packets, and then drain the queue into
-generic PPP.
+Package temp_data is created solely when the CPU supports
+X86_FEATURE_PTS. On a CPU without it, coretemp_cpu_online() never calls
+coretemp_add_core() with pkg_flag set, so pdata->pkg_data stays NULL.
+coretemp_cpu_offline() then skips the removal of the package interface,
+destroy_temp_data() is never called for package data, and the array is
+still allocated when coretemp_device_remove() frees the platform data
+that pointed at it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Link: https://patch.msgid.link/20260811035314.302878-1-qingfang.deng@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Release the array in coretemp_device_remove(). destroy_temp_data() sets
+pdata->core_data to NULL when it frees it, so the added kfree() is a
+no-op on CPUs that do have PTS.
+
+Tested on an Intel Core i5-1135G7. The driver was instrumented to log
+every allocation and release of pdata->core_data, and the PTS check in
+coretemp_cpu_online() was patched out to emulate a CPU without package
+thermal support. Without this change the array was allocated and never
+released, and coretemp_device_remove() still saw a non-NULL pointer.
+With it the array is released and the pointer accounting balances. On an
+unmodified build the release still happens via the package temp_data and
+the added kfree() sees NULL, with no slab warnings over repeated module
+load and unload cycles.
+
+Fixes: 1a793caf6f69 ("hwmon: (coretemp) Use dynamic allocated memory for core temp_data")
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
+Link: https://lore.kernel.org/r/20260810192344.3733721-1-swilczek.lx@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pppox.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/hwmon/coretemp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ppp/pppox.c b/drivers/net/ppp/pppox.c
-index 08364f10a43fa..61b3453469dce 100644
---- a/drivers/net/ppp/pppox.c
-+++ b/drivers/net/ppp/pppox.c
-@@ -74,7 +74,9 @@ int pppox_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index 1b9203b20d709..afa481b08c8eb 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -656,6 +656,7 @@ static void coretemp_device_remove(int zoneid)
+ 	struct platform_data *pdata = platform_get_drvdata(pdev);
  
- 	switch (cmd) {
- 	case PPPIOCGCHAN: {
-+		struct sk_buff *skb;
- 		int index;
-+
- 		rc = -ENOTCONN;
- 		if (!(sk->sk_state & PPPOX_CONNECTED))
- 			break;
-@@ -85,7 +87,22 @@ int pppox_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 			break;
- 
- 		rc = 0;
-+		/* PPPIOCGCHAN historically marks the userspace handoff to
-+		 * generic PPP; pppd then attaches the returned channel to
-+		 * /dev/ppp.
-+		 */
- 		sk->sk_state |= PPPOX_BOUND;
-+		/* Let lockless receive paths finish queueing against the old
-+		 * state.
-+		 */
-+		synchronize_net();
-+		/* Drain packets queued before the handoff because a bound
-+		 * socket is no longer readable.
-+		 */
-+		while ((skb = skb_dequeue(&sk->sk_receive_queue))) {
-+			skb_orphan(skb);
-+			ppp_input(&po->chan, skb);
-+		}
- 		break;
- 	}
- 	default:
+ 	ida_destroy(&pdata->ida);
++	kfree(pdata->core_data);
+ 	kfree(pdata);
+ 	platform_device_unregister(pdev);
+ }
 -- 
 2.53.0
 
