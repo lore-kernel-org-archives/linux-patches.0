@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560803BCD19;
-	Sat, 12 Sep 2026 07:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5C33BCD19;
+	Sat, 12 Sep 2026 07:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196912; cv=none; b=Nh78koPuOyo3RZuIo65Yn6OlPstr5uyoSCB0NUFEYO6whrSeO57HLqFyOTdmX20loFt7i7gteCC8kxSfmDWhuaAsdOKJS6GjzCywzNBm+Uhr1Y0EODT+4/HtJOCSz/1zGWRMQp9egDyKBDEdSqqp30RKYsbbSFD3rVICTDw9rw0=
+	t=1789196917; cv=none; b=g4/+JHOknTG9uncaAsriHASCWNftuWjcMabSzuyuS8kcla0xKFPTXMeHRWTaSuNwGlh3U77NWWmCe8qgihDADvwlezKI6YAjTxWrwH0Q+b48i8fQcVvHIAEpw+/vfS4jfgh3g2zJYp/j5HLZLEiXAiBQOgoMBnhVu5f7FInhkHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196912; c=relaxed/simple;
-	bh=21kkgdLSn+HjqnLccYe5xu1PSNrk+1y8F8u29oUXUu0=;
+	s=arc-20240116; t=1789196917; c=relaxed/simple;
+	bh=7601rEpACXIGb6jx34J6+ei9b0QJrSf5wTPUEDHORvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lpr1uuRE4ZKermpXvSfUHc6WSJ7xXNGX/mt3Xm6mUnSSsDdahJm2CiAHlRa+Dpi1L6hlihwgFJ6jD60WQnSGn2fkj3mJnDr9wMMSLtNlPKC6cWmp98NiN4DbVQy0+bbNniSbMQQxRvufuuBzpgBt3ZDvxuVGm0R7HGuea2vb+WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Siql3Bqp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jn3nq30UeBWgmooR3ft0ZbIu7ND4lXShfHKZbbsyiEHeOlTjbglWOACWHwrzENLbvsnupoVmrIgZb3AYTdon6yZFyAURgSnXS+X166i4oJBoPEkRv+5AkdeGETcY5UGArs2J3jG0Wh9ydSr3wRo4O50rLx9szxRLDs8LO2Co7ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He38nQxw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Siql3Bqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF871F000FF;
-	Sat, 12 Sep 2026 07:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He38nQxw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289D41F000FF;
+	Sat, 12 Sep 2026 07:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196911;
-	bh=Y+9unwXHmsdCLymILy8gU5y5iWWI55Qd8uUvTAXJleY=;
+	s=korg; t=1789196916;
+	bh=TBrfyy78hHzvDj4+0dIoZdjyVkVsR0GLWxT36G6qEZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Siql3BqpfRTlfAP74Z0njOUP4tvVNnzspxQBGjiH6FkRAYIbiXfzzkLl9lJDJIozv
-	 hAHclm1zLKB6CsajMMOGr9xdWFuAEUzJoBKRhHkWIJnp+lCMC111xHR6UOKmIWCS7B
-	 vC74o12b11rrL7DfhHEdCMoU6SOGLnrKw2TOiw5I=
+	b=He38nQxwvUCN/qYXbv3HkZhEFNVaG52qLI3xyIY5S7gFHH7qelHF1CafD3zJI5c5j
+	 6KHFes0Zq5iP7/asB5z9ERxhB1ALWJywC/l3ABn4+gXIq92pKjWSuY7YoQpVisiWsU
+	 FLjCnuycJ8y3mU1fN7AqSOaNa0JZXiXgySa3bwtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damon Ding <damon.ding@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jens Remus <jremus@linux.ibm.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0045/1815] drm/rockchip: analogix_dp: Fix OF node reference leak via auto cleanup
-Date: Sat, 12 Sep 2026 08:29:55 +0200
-Message-ID: <20260912065650.078039127@linuxfoundation.org>
+Subject: [PATCH 7.2 0063/1815] x86/cfi: Use symmetric SYM_START and SYM_END in __CFI_TYPE()
+Date: Sat, 12 Sep 2026 08:30:13 +0200
+Message-ID: <20260912065650.488628064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,75 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damon Ding <damon.ding@rock-chips.com>
+From: Jens Remus <jremus@linux.ibm.com>
 
-[ Upstream commit 87e060521371257ddbb77964b66e60d80afcc7b2 ]
+[ Upstream commit 0cfdf974f133e0ff17ed80e7895adbe7889d9522 ]
 
-Sashiko reported a reference leak in rockchip_dp_drm_encoder_enable(),
-the of_get_child_by_name() function does not call of_node_put() in a
-symmetrical way [1].
+Commit
 
-Fix the device node reference leak by using __free(device_node) to
-automatically manage of_node_put() for all device nodes.
+  ccace936eec7 ("x86: Add types to indirectly called assembly functions")
 
-Fixes: 729f8eefdcad ("drm/rockchip: analogix_dp: Add support for RK3588")
-Link: https://sashiko.dev/#/patchset/20260527024336.191433-1-damon.ding@rock-chips.com?part=5 #1
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260601065100.1103873-7-damon.ding@rock-chips.com
+introduced a x86-specific implementation of __CFI_TYPE() using an asymmetric
+combination of SYM_START() and SYM_FUNC_END() to add a symbol to the KCFI type
+identifier that precedes a function.
+
+This asymmetric combination is an issue if SYM_FUNC_END() ever gets extended
+in a way that requires it to be used symmetrically with SYM_FUNC_START*().
+For instance to emit DWARF CFI directives that denote the start/end of
+a function. [1]
+
+Use SYM_END() with SYM_T_FUNC instead.  No functional change, as the generic
+implementation of SYM_FUNC_END(name) expands into SYM_END(name, SYM_T_FUNC).
+
+Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
+Closes: https://sashiko.dev/#/patchset/20260522110427.2816637-1-jremus@linux.ibm.com?part=3 [1]
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Jens Remus <jremus@linux.ibm.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260611155716.830563-1-jremus@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/analogix_dp-rockchip.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/linkage.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
-index d2af5eb29dbb5..b1ed25cefe5ed 100644
---- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
-@@ -8,6 +8,7 @@
-  *         Jeff Chen <jeff.chen@rock-chips.com>
-  */
+diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
+index a7294656ad908..c9769a7b6e66c 100644
+--- a/arch/x86/include/asm/linkage.h
++++ b/arch/x86/include/asm/linkage.h
+@@ -103,7 +103,7 @@
+ 	.byte 0xb8 ASM_NL					\
+ 	.long __kcfi_typeid_##name ASM_NL			\
+ 	CFI_POST_PADDING					\
+-	SYM_FUNC_END(__cfi_##name)
++	SYM_END(__cfi_##name, SYM_T_FUNC)
  
-+#include <linux/cleanup.h>
- #include <linux/component.h>
- #include <linux/mfd/syscon.h>
- #include <linux/of.h>
-@@ -206,7 +207,6 @@ static void rockchip_dp_drm_encoder_enable(struct drm_encoder *encoder,
- 	struct drm_crtc *crtc;
- 	struct drm_crtc_state *old_crtc_state;
- 	struct of_endpoint endpoint;
--	struct device_node *remote_port, *remote_port_parent;
- 	char name[32];
- 	u32 port_id;
- 	int ret;
-@@ -230,18 +230,22 @@ static void rockchip_dp_drm_encoder_enable(struct drm_encoder *encoder,
- 	if (ret < 0)
- 		return;
- 
--	remote_port_parent = of_graph_get_remote_port_parent(endpoint.local_node);
-+	struct device_node *remote_port_parent __free(device_node) =
-+		of_graph_get_remote_port_parent(endpoint.local_node);
- 	if (remote_port_parent) {
--		if (of_get_child_by_name(remote_port_parent, "ports")) {
--			remote_port = of_graph_get_remote_port(endpoint.local_node);
-+		struct device_node *ports __free(device_node) =
-+			of_get_child_by_name(remote_port_parent, "ports");
-+
-+		if (ports) {
-+			struct device_node *remote_port __free(device_node) =
-+				of_graph_get_remote_port(endpoint.local_node);
-+
- 			of_property_read_u32(remote_port, "reg", &port_id);
--			of_node_put(remote_port);
- 			sprintf(name, "%s vp%d", remote_port_parent->full_name, port_id);
- 		} else {
- 			sprintf(name, "%s %s",
- 				remote_port_parent->full_name, endpoint.id ? "vopl" : "vopb");
- 		}
--		of_node_put(remote_port_parent);
- 
- 		DRM_DEV_DEBUG(dp->dev, "vop %s output to dp\n", (ret) ? "LIT" : "BIG");
- 	}
+ /* UML needs to be able to override memcpy() and friends for KASAN. */
+ #ifdef CONFIG_UML
 -- 
 2.53.0
 
