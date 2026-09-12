@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D6B202F71;
-	Sat, 12 Sep 2026 12:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41C2372B57;
+	Sat, 12 Sep 2026 12:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217677; cv=none; b=WAfkfFXhRshm/ghU5f5vR8eTfGdTveyLutNXNC6JyB+u3VjzVkxX/lfj0q4R48SVrPGqFAofBk9f7woMLRNyd1iGBHWIIidE0o+eoVoza3vXSLdXklPzL4rzTr25m5rOx19UG/3D0Ze0P+hGAqK31unCeAiUUR3hiT/a015H2zM=
+	t=1789217682; cv=none; b=IXHNGW8uGemh7CO5WkJ/lM+hn+SFqHjc7m3j7macyJ8GI0lI3uAFNSbpGDMs0nfUusIVb7kdXAx0qM5vTj2+NfG8QxZlm0D2nwpSp98gMsbAMNbZh3DbJ/Q+xIb4gYxOLka1M78dzDuZWrmbEC2AEOoNBwAkeNMSDqDrRp/dC1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217677; c=relaxed/simple;
-	bh=ix3OVpOX+ZcHVr4lmygY0qDME3MDmoDM2oSD/UGDnKI=;
+	s=arc-20240116; t=1789217682; c=relaxed/simple;
+	bh=nKbFxjGlDs5pA1750svvanaeLzZFcOwDOk4vOuvAJ0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJYFz3e2NnCn/zLdDwWrxWZ6KmoiYvvc4TikYYZw548I0MLPvdG4KL8a+RVZL5Cnt7FQCB4WI9aGZRfIYS8M/BZVKL1miPWE0HImOOStwWtASDkfcic6R/VI36/4AMkoqU5a/2nb8uGzcxkx4bWRZ/kHavlhQZvf747bb/zXJCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIOHyjUA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e1pHOQ3kW+S4PtFv6Ug+TlD1+g8C65hSgsWfWJejfDayVtBI92L3hbnC3Z2wibsUbgNnYSfWMzN20Qq8bSgIlg7/QWjrDk7T1uZX7cBN3dTNTyE2w/qE3Kq08cllcKx0sTEHe2g5Cqb99Y52X7Gm3xBkfcQjJ7zTZHyELMmMZ18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svAQhIV5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIOHyjUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2B01F000FF;
-	Sat, 12 Sep 2026 12:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svAQhIV5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E44B1F000FF;
+	Sat, 12 Sep 2026 12:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217675;
-	bh=OKUFb22v9/ve4e7zzDCNAirNDK5YwK4sJqdZWAksZJ0=;
+	s=korg; t=1789217680;
+	bh=8zPycVz1gBmYYUuzg7rlNkxb2Vw60i4Ds1AuC3buPBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIOHyjUAPi4XSQx1zoDEo+m9fkZr2OO0NvhTfGkr0Nz2peG8EXJDt64tVW/hpuoaQ
-	 6vf42mpGC/uPMOJZcpss/e3LELdWYfnrToM4xaQ1S2dPe4GQrZ+pVUNlfLDFrhRRwg
-	 YdUuNXpXMi05Tv5z9wQtjxUVdoVSJ7aHBo/6rWyI=
+	b=svAQhIV5Spo/1lA1mesPtr6frk/8/TPoJb50W0ptW3OyhOwSnbsdr49s6245Ay7AD
+	 a6dcsreHRJw3ClxXiStU9GiVLAUeHQknP/LwUghl8Vz4JyueLSvI9zjpEcMqwTIWnI
+	 9qXtHahwFKByWcLJ47GTE9oIq571BLDk7fZZp5YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sean Wang <sean.wang@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0989/1376] Bluetooth: MGMT: free the mesh send cancel command when it is cancelled
-Date: Sat, 12 Sep 2026 08:56:55 +0200
-Message-ID: <20260912065629.608892102@linuxfoundation.org>
+Subject: [PATCH 6.12 0990/1376] mmc: sdio: add MediaTek MT7902 SDIO device ID
+Date: Sat, 12 Sep 2026 08:56:56 +0200
+Message-ID: <20260912065629.630802740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,62 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 3c742feda8fcabf741a17bcf668b63c8f606f9c5 ]
+[ Upstream commit cde32a92d4562b686f730fc08d4d558ecc99d516 ]
 
-mesh_send_cancel() queues the pending command with a NULL destroy
-callback, so it is only freed if send_cancel() runs. A cancelled entry is
-leaked, as _hci_cmd_sync_cancel_entry() does not release entry->data when
-there is no destroy callback, and hci_cmd_sync_clear() cancels every
-pending entry when the controller is unregistered. Nothing else reclaims
-it either: mgmt_pending_new() does not put the command on
-hdev->mgmt_pending.
+Add SDIO device ID (0x790a) for MediaTek MT7902 to sdio_ids.h.
 
-The leak also pins the socket reference taken by mgmt_pending_new(), so
-the mgmt socket is never released.
-
-Free the command from a destroy callback.
-
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: b0c0b3794011 ("Bluetooth: btmtksdio: fix usage_count leak when autosuspend_delay is negative")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/linux/mmc/sdio_ids.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 13b1ecb83e0e3..d92eb0d4c54da 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2411,11 +2411,15 @@ static int send_cancel(struct hci_dev *hdev, void *data)
+diff --git a/include/linux/mmc/sdio_ids.h b/include/linux/mmc/sdio_ids.h
+index 8fb8e7e87f6ef..77edf50083379 100644
+--- a/include/linux/mmc/sdio_ids.h
++++ b/include/linux/mmc/sdio_ids.h
+@@ -110,6 +110,7 @@
+ #define SDIO_VENDOR_ID_MEDIATEK			0x037a
+ #define SDIO_DEVICE_ID_MEDIATEK_MT7663		0x7663
+ #define SDIO_DEVICE_ID_MEDIATEK_MT7668		0x7668
++#define SDIO_DEVICE_ID_MEDIATEK_MT7902		0x790a
+ #define SDIO_DEVICE_ID_MEDIATEK_MT7961		0x7961
  
- 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
- 			  0, NULL, 0);
--	mgmt_pending_free(cmd);
- 
- 	return 0;
- }
- 
-+static void send_cancel_destroy(struct hci_dev *hdev, void *data, int err)
-+{
-+	mgmt_pending_free(data);
-+}
-+
- static int mesh_send_cancel(struct sock *sk, struct hci_dev *hdev,
- 			    void *data, u16 len)
- {
-@@ -2436,7 +2440,8 @@ static int mesh_send_cancel(struct sock *sk, struct hci_dev *hdev,
- 	if (!cmd)
- 		err = -ENOMEM;
- 	else
--		err = hci_cmd_sync_queue(hdev, send_cancel, cmd, NULL);
-+		err = hci_cmd_sync_queue(hdev, send_cancel, cmd,
-+					 send_cancel_destroy);
- 
- 	if (err < 0) {
- 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
+ #define SDIO_VENDOR_ID_MICROCHIP_WILC		0x0296
 -- 
 2.53.0
 
