@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC452DBF75;
-	Sat, 12 Sep 2026 14:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C9A2E285C;
+	Sat, 12 Sep 2026 14:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221934; cv=none; b=Jg0zzAACu1Xc6cEvRoP/pqb3c7Si90ZzBC0QiTU95jlmsLr7yuW/fosVi+yKwpwqzWxv4QuREd496lPVYVjpWUvSZQgYpt9+CvnJ3BqGB5hir0TOt1dzsLcRyOQyfmEcSQFOq1VHuNTYmt1DsWSwA75qxecJCmgU8xwsFSvxmIo=
+	t=1789221939; cv=none; b=YBJU4EH5zVFjwfbrdVo8fFL6tuYmn/1qI2cyk7HI1tD91z8j2v63+YpoIxgqyOn6zrrFQU5v+2gYzqzOdmn89E3+x8VcHKFVtQPAYrklFrFXVtl63znaXeOUDWJd0iOvfh1goH9Kms/pw2ZBj9J+z4pW+oPkGSFLuq7HnzwBxVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221934; c=relaxed/simple;
-	bh=xmxRfypSAF2/BH9m09O4aro5qNEtJ09BSaZzZZ0FncA=;
+	s=arc-20240116; t=1789221939; c=relaxed/simple;
+	bh=cRrN3I3y0pd0I1DYuxWAhVQCtqxLtQRHk072ogKn0g4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfay7MnYKVW+DRHxK7v2Wgpbo7RXgzF/uFZHb/KWoyeYFQYboXRj8FD/da2irGJmya/nWStXUc4CEWfAH+6VSIPEWvEYZdu2l8fgGLjeSMl8hYQqiRIW6Cl6bhKyoqcLyLZPLJapqFPhcA1ltMq/L62LK/wqXS18F6u/yRcN/BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2S/RVap; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uAh0tt3i1eqzbYOIVQdvn/ryVnYhBvjkFSNH7zJx4yKr5iuJcjY37JKE9smOdy73Sz5uRhVSwe9VHK5q1Jd5XDrG/163Rpz0YZxEbuZ9m4ww3c9wdZZINwHkCeMc4JLjB2+v2dI5uAmZS3HqbmJLUHs25ddygy4lLPJUXvENKIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfeEwhKu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2S/RVap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87DB11F000FF;
-	Sat, 12 Sep 2026 14:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfeEwhKu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A081F000FF;
+	Sat, 12 Sep 2026 14:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221933;
-	bh=ivyw01DuCSC8zDNnvR2u/lBpodTR1ZsMO48YfWmQCWw=;
+	s=korg; t=1789221938;
+	bh=gIddvwXAObSjJkJ4MvwWPjc9OPTJP3vIJig03GQKWLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m2S/RVapiEd/38GBvHQhVVv3ZGgm0Pa7d/QP7AMq5ALrjjNKScTAV2XhZQ0UT1DpQ
-	 SM5lVNtdSBEHrgkmQz6zLw4tEVG59W89le6adYUvECOYNpVTt9PqfPy7iemFRdWeFE
-	 Lc6K0GLFxBZnuPM9yUYPXkM6iICwYCfNN3vXRLOE=
+	b=jfeEwhKu5H3fn2GRE/3QZXEtfNdMv9D0o7ujmOdBIMCLzUe1en4euET2I/rcVhEvD
+	 Pb6bJm1DKwa5RWWl9Wtamzv3yRtHW0/qWGm7Ub7RFs2cH4edg3sOUwuoJipvS6aBxD
+	 3URm/ktssQ8CXDBmmuqgW5wRkjCV1HIXuUG8YeBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.6 0482/1424] scsi: qla2xxx: Clamp MSI-X derived queue counts to avoid truncation
-Date: Sat, 12 Sep 2026 08:48:34 +0200
-Message-ID: <20260912065618.080053902@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Valery Borovsky <vebohr@gmail.com>
+Subject: [PATCH 6.6 0441/1424] media: airspy: use vb2_video_unregister_device() on disconnect to fix NULL deref
+Date: Sat, 12 Sep 2026 08:47:53 +0200
+Message-ID: <20260912065617.161184116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,104 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit ebfd35c64433821bd5619a6d07ccc2df8b5b1de3 upstream.
+commit 2f378dc45e685fc825d2dd08e7864666d6fcc009 upstream.
 
-ha->msix_count is u16, but ha->max_req_queues, ha->max_rsp_queues and
-ha->max_qpairs are u8. Deriving the queue count as
-"ha->max_req_queues = ha->msix_count - 1" therefore truncates: a board
-(or a misconfigured/malicious hot-plugged device) advertising 257 MSI-X
-vectors yields msix_count - 1 == 256, which truncates to 0. An MSI-X
-count of 1 zeroes it as well, and in target mode the subsequent
-"ha->max_req_queues--" then underflows 0 to 255.
+airspy_disconnect() clears s->udev under v4l2_lock, but
+airspy_stop_streaming() unconditionally calls airspy_ctrl_msg() and
+airspy_free_stream_bufs() afterwards. If a streaming user closes the
+device after disconnect, stop_streaming() runs and dereferences the
+NULL s->udev:
 
-When the count is 0, qla2x00_alloc_queues() calls
-kzalloc_objs(struct req_que *, 0), which returns ZERO_SIZE_PTR. That is
-not NULL, so the allocation check passes and the following
-"ha->req_q_map[0] = req" dereferences ZERO_SIZE_PTR, corrupting memory
-or crashing the kernel.
+  airspy_stop_streaming()
+    airspy_ctrl_msg(s, CMD_RECEIVER_MODE, 0, 0, NULL, 0)
+      usb_sndctrlpipe(s->udev, 0)         /* NULL deref */
+    airspy_free_stream_bufs(s)
+      usb_free_coherent(s->udev, ...)     /* NULL deref */
 
-Add qla_calc_queue_count() to clamp the derived value into
-[1, QLA_MAX_QUEUES - 1] so it always fits in u8 and is never zero, and
-use it at all three derivation sites (qla25xx_iospace_config(),
-qla83xx_iospace_config() and qla24xx_enable_msix()). Also guard the
-target-mode decrement so it cannot reintroduce a zero (which would in
-turn underflow max_qpairs).
+The airspy driver uses vb2_fop_release() in its file_operations, so
+replace video_unregister_device(&s->vdev) with
+vb2_video_unregister_device(&s->vdev) and move it before clearing
+s->udev. vb2_video_unregister_device() releases the vb2 queue, which
+synchronously runs airspy_stop_streaming() if streaming is active, so
+the URBs, coherent DMA stream buffers and the hardware stop control
+message all execute while s->udev is still valid.
 
-Fixes: d74595278f4a ("scsi: qla2xxx: Add multiple queue pair functionality.")
+vb2_video_unregister_device() locks vdev->queue->lock (vb_queue_lock)
+internally, and stop_streaming() locks v4l2_lock, so the previous outer
+mutex_lock(&s->vb_queue_lock) / mutex_lock(&s->v4l2_lock) pair around
+the unregister sequence would self-deadlock and has been removed. A
+short v4l2_lock critical section around s->udev = NULL remains so any
+ioctl path that still holds the file descriptor sees coherent state.
+
+Issue identified by automated review of the INV-003 series at
+https://sashiko.dev/
+
+Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-2-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_inline.h |   13 +++++++++++++
- drivers/scsi/qla2xxx/qla_isr.c    |    4 ++--
- drivers/scsi/qla2xxx/qla_os.c     |    6 +++---
- 3 files changed, 18 insertions(+), 5 deletions(-)
+ drivers/media/usb/airspy/airspy.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_inline.h
-+++ b/drivers/scsi/qla2xxx/qla_inline.h
-@@ -54,6 +54,19 @@ qla2x00_debounce_register(volatile __le1
- 	return (first);
- }
+--- a/drivers/media/usb/airspy/airspy.c
++++ b/drivers/media/usb/airspy/airspy.c
+@@ -464,14 +464,21 @@ static void airspy_disconnect(struct usb
  
-+static inline u8
-+qla_calc_queue_count(u16 msix_count)
-+{
+ 	dev_dbg(s->dev, "\n");
+ 
+-	mutex_lock(&s->vb_queue_lock);
 +	/*
-+	 * Request/response queues are bounded by the MSI-X vector count less
-+	 * the mailbox vector.  These counters are u8, so a board advertising
-+	 * e.g. 257 vectors would truncate msix_count - 1 (256) to 0 and hand
-+	 * kzalloc_objs() a zero count (ZERO_SIZE_PTR), faulting on the first
-+	 * ha->req_q_map[0] store.  Clamp into [1, QLA_MAX_QUEUES - 1].
++	 * vb2_video_unregister_device() releases the vb2 queue, which
++	 * triggers airspy_stop_streaming() if streaming is active.
++	 * stop_streaming() dereferences s->udev via airspy_ctrl_msg() and
++	 * airspy_free_stream_bufs(), so it must run before s->udev is
++	 * cleared. vb2_video_unregister_device() locks vb_queue_lock
++	 * internally and stop_streaming() locks v4l2_lock, so neither may
++	 * be held by the caller.
 +	 */
-+	return clamp_t(u16, msix_count - 1, 1, QLA_MAX_QUEUES - 1);
-+}
++	v4l2_device_disconnect(&s->v4l2_dev);
++	vb2_video_unregister_device(&s->vdev);
 +
- static inline void
- qla2x00_poll(struct rsp_que *rsp)
- {
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -4554,10 +4554,10 @@ qla24xx_enable_msix(struct qla_hw_data *
- 		ha->msix_count = ret;
- 		/* Recalculate queue values */
- 		if (ha->mqiobase && (ql2xmqsupport || ql2xnvmeenable)) {
--			ha->max_req_queues = ha->msix_count - 1;
-+			ha->max_req_queues = qla_calc_queue_count(ha->msix_count);
+ 	mutex_lock(&s->v4l2_lock);
+-	/* No need to keep the urbs around after disconnection */
+ 	s->udev = NULL;
+-	v4l2_device_disconnect(&s->v4l2_dev);
+-	video_unregister_device(&s->vdev);
+ 	mutex_unlock(&s->v4l2_lock);
+-	mutex_unlock(&s->vb_queue_lock);
  
- 			/* ATIOQ needs 1 vector. That's 1 less QPair */
--			if (QLA_TGT_MODE_ENABLED())
-+			if (QLA_TGT_MODE_ENABLED() && ha->max_req_queues > 1)
- 				ha->max_req_queues--;
- 
- 			ha->max_rsp_queues = ha->max_req_queues;
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -2126,7 +2126,7 @@ skip_pio:
- 		ha->msix_count = msix + 1;
- 		/* Max queues are bounded by available msix vectors */
- 		/* MB interrupt uses 1 vector */
--		ha->max_req_queues = ha->msix_count - 1;
-+		ha->max_req_queues = qla_calc_queue_count(ha->msix_count);
- 		ha->max_rsp_queues = ha->max_req_queues;
- 		/* Queue pairs is the max value minus the base queue pair */
- 		ha->max_qpairs = ha->max_rsp_queues - 1;
-@@ -2212,10 +2212,10 @@ qla83xx_iospace_config(struct qla_hw_dat
- 		 */
- 		if (ql2xmqsupport || ql2xnvmeenable) {
- 			/* MB interrupt uses 1 vector */
--			ha->max_req_queues = ha->msix_count - 1;
-+			ha->max_req_queues = qla_calc_queue_count(ha->msix_count);
- 
- 			/* ATIOQ needs 1 vector. That's 1 less QPair */
--			if (QLA_TGT_MODE_ENABLED())
-+			if (QLA_TGT_MODE_ENABLED() && ha->max_req_queues > 1)
- 				ha->max_req_queues--;
- 
- 			ha->max_rsp_queues = ha->max_req_queues;
+ 	v4l2_device_put(&s->v4l2_dev);
+ }
 
 
