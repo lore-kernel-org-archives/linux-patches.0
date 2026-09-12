@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAB33B19DB;
-	Sat, 12 Sep 2026 20:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CED3B42F3;
+	Sat, 12 Sep 2026 20:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243530; cv=none; b=Elws+XH9bUc6HOFmkV1tzq1X4+Z7vZY+E3+HZLaC01y6tj603yLmHJ1XS79nPOy+3GfmlBY4gCO4smGaxtAsMqIpRhd1BzhkQdooIrzp4eXAZDrfC1FmEtuGQdwK9vaDwhdTMRD50HmoiodD9FU3CZN5q/y89u6+nuHkz37MLs4=
+	t=1789243532; cv=none; b=E/5hCza1Zl/5GCCX8ohqNpMLgxgZJFJSjG5c2KVf+rNVC53Uh967cxYeV35KA9bTgOop3LDYnG6irh1WrXPbwixmzm6zRCmi2ezlACAdXMd14a6p4jStNXtHRtwg2dZ3F9bTVg3Fpk8WGGorITGZDqf8WEABJzht6H81PjxrR7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243530; c=relaxed/simple;
-	bh=j3rs8717DUzw+jask72lj5QKgg1FRQ1nJSujI1mv+ew=;
+	s=arc-20240116; t=1789243532; c=relaxed/simple;
+	bh=4pQqmo0HVyoXUjRQ1pMZ3WtU9tJwGU7V+GjSDIg4EZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAciZy+6wlhq6t3aZNocPCwcUv2WPpQTlkft6npKGSE7otvImp7awJNHlxiZoftrtfF3CmICQNzcvTEAfxj03A1q9nDf4Iiv4PRC1arRyC4ZkYyPson6WHT8k6mhbuAEPOpl2rPAxcC3gCSXlu4MvBq4WiPrgIrohFQ/455u9ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/DWPNxQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BHRp1lApXcLpZOBsW4KbDgCCAW4AHLSrJ+mEYGEh6/1kiK2b1SETSZtqk7memfwfysXMlkE7XvOuMFJ6Dk2PwjlYXemVyLQmwbJJIXtNq8CE5zXX/hn357KpBuwPGWzvIP90jOTu7G61ET3HPZUDMaBEkxi4J7xpzdlotZbnyX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elr2FgMX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/DWPNxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDF81F00893;
-	Sat, 12 Sep 2026 20:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elr2FgMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB8A1F00898;
+	Sat, 12 Sep 2026 20:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243521;
-	bh=ZEy1iGA1eg9qIe+jbqyoi83Z+6ZVcI7HaV2a9IaAh4Q=;
+	s=korg; t=1789243524;
+	bh=ELsyueTncbyIM/rsn3YLJ348ff/eNPyAyepsuULtA7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/DWPNxQaHWSkh8Rsc5q0fphhqT01ljPOZ2oyRTpzG1SA9lPVUhzEQqVGJqxx6BQj
-	 /g3m2L1en8+gXE7/t5ZxpfvtrbBFZjqYQXyJ6HT6QOsRtuZrrDQBfkoc3wfHxs+uu3
-	 9wr/hVfjW7dMtLbVlzV2jReN7PHGGy2qQqo8dclc=
+	b=elr2FgMXBVbmQqFr54KAKrCy3+v/H6NDcE5kqy0zfGGLtUNByNY5zNddhh4KEV5uI
+	 FdXuTxj3x636F0RjxwZUtcEbtNL8tYkjlJlcIR9TkCDpMT1U3ekVYI4A6uyIkm6q9r
+	 AtYnJGks06d401ApG7JnwOS2AhrsrGOLd3mQ6Q68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 782/798] net: stmmac: selftests: Account for the UC filter list for filtering tests
-Date: Sat, 12 Sep 2026 09:06:50 +0200
-Message-ID: <20260912065534.989219837@linuxfoundation.org>
+Subject: [PATCH 5.10 783/798] net/sched: bound qdisc_pkt_len to prevent qdisc soft lockup
+Date: Sat, 12 Sep 2026 09:06:51 +0200
+Message-ID: <20260912065535.012817136@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,94 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit cd8c3b2752c684141eab2282e294cae2971a9759 ]
+[ Upstream commit 8f735d64382dcf162f4276d6699d03ad2f859c0b ]
 
-On dwmac, one of the Unicast filter entries is used to store the local
-HW addr. This means that we have to use promisc mode for any kind of
-unicast filtering if we only have one slot in our unicast filter.
+qdisc_get_stab() accepts a user-supplied size table, and
+__qdisc_calculate_pkt_len() amplifies qdisc_pkt_len() through the
+overhead, the size-table data (u16), and size_log (up to
+STAB_SIZE_LOG_MAX). A crafted stab can therefore set qdisc_pkt_len()
+to ~1 GiB for an ordinary skb. Per-flow deficit schedulers such as
+DRR and ETS replenish one quantum per loop iteration; with a tiny
+quantum (1) they spin billions of times under the qdisc lock,
+producing a soft lockup / RCU stall as illustrated by vega@nebusec.ai.
 
-The number of slots available depends on how the IP is integrated, and
-we can't autodiscover how many of these slots we have available, so
-the DT property snps,perfect-filter-entries can be used to specify how
-many are available.
+Cap the final qdisc_pkt_len() to QDISC_PKT_LEN_MAX so the size-table
+amplification cannot drive deficit schedulers into an unbounded loop.
+A legitimate size table (e.g. qfq's overhead 999999999, which is
+handled by dropping) is still accepted.
 
-Most IP variants default to 1 if this isn't specified, which is the case
-for the amlogic variants (in this case, S905X3).
+Introduce cap QDISC_PKT_LEN_MAX (1 << 20) = 1 MiB which is well above
+any legitimate single-skb wire length: the largest current skb->len
+is GSO_MAX_SIZE (524280), and an ATM-style size table (53/48 cell tax)
+amplifies that to ~578 KB, both comfortably below 1 MiB. At the same
+time, 1 MiB bounds the deficit refill loop to ~1M iterations per
+packet with quantum=1, which completes in a few milliseconds well
+under the demonstrated softlockup threshold (~10^9 iterations).
 
-The stmmac selftests for UC filtering look if we have enough slots in
-the filter to store the dev->uc list, but doesn't account for the
-device's own MAC address. The dev->uc list's size we get with
-netdev_uc_count() also doesn't account for the HW addr.
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_NET_SCH_DRR=y (or CONFIG_NET_SCH_ETS=y).
+- Attach a DRR (or ETS) root qdisc with a crafted TCA_STAB that
+  amplifies qdisc_pkt_len to ~1 GiB (e.g. size_log=15, data=[32768]).
+- Add a class with a tiny quantum of 1 and send one small packet; the
+  deficit loop spins billions of times under the qdisc lock and trips
+  the softlockup detector (panic with kernel.softlockup_panic=1).
+- Reachable as root or from an unprivileged user in a fresh user+net
+  namespace (unshare -Urn) with namespace-local CAP_NET_ADMIN.
 
-As the selftest only requires one available slot, in the case of
-single-slot platforms, that means we erroneously consider we have enough
-room for the test, when we actually don't, and the filtering test fails.
-
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260826140500.616466-6-maxime.chevallier@bootlin.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260825081403.133992-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/stmmac_selftests.c         | 21 ++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ include/net/pkt_sched.h | 1 +
+ net/sched/sch_api.c     | 7 +++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 702ba192f803d..5a5002fdbc64d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -499,6 +499,21 @@ static int stmmac_filter_check(struct stmmac_priv *priv)
- 	return -EOPNOTSUPP;
+diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
+index 128a583942d74..ddbe1952fe48b 100644
+--- a/include/net/pkt_sched.h
++++ b/include/net/pkt_sched.h
+@@ -12,6 +12,7 @@
+ 
+ #define DEFAULT_TX_QUEUE_LEN	1000
+ #define STAB_SIZE_LOG_MAX	30
++#define QDISC_PKT_LEN_MAX	(1 << 20)	/* 1 MiB */
+ 
+ struct qdisc_walker {
+ 	int	stop;
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 8c1e7d2d67379..f4db694f5d719 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -604,8 +604,11 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
+ 
+ 	pkt_len <<= stab->szopts.size_log;
+ out:
+-	if (unlikely(pkt_len < 1))
+-		pkt_len = 1;
++	/* A size table can inflate qdisc_pkt_len() beyond any real packet
++	 * (via overhead, the data table, or size_log); cap it so deficit
++	 * schedulers such as DRR/ETS terminate their refill loops.
++	 */
++	pkt_len = clamp_t(int, pkt_len, 1, QDISC_PKT_LEN_MAX);
+ 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
  }
  
-+static int stmmac_uc_filter_check(struct stmmac_priv *priv)
-+{
-+	/* For tests involving the UC filter, we need at least one empty
-+	 * slot in the UC filter. The UC filters contains netdev_uc_count() + 1
-+	 * entries: The dev->uc list + one entry for the HW address.
-+	 *
-+	 * Having an empty slot therefore means netdev_uc_count() + 2 entries
-+	 * can fit in the filter
-+	 */
-+	if (netdev_uc_count(priv->dev) + 2 > priv->hw->unicast_filter_entries)
-+		return -EOPNOTSUPP;
-+
-+	return 0;
-+}
-+
- static bool stmmac_hash_check(struct stmmac_priv *priv, unsigned char *addr)
- {
- 	int mc_offset = 32 - priv->hw->mcast_bits_log2;
-@@ -590,7 +605,7 @@ static int stmmac_test_pfilt(struct stmmac_priv *priv)
- 
- 	if (stmmac_filter_check(priv))
- 		return -EOPNOTSUPP;
--	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
-+	if (stmmac_uc_filter_check(priv))
- 		return -EOPNOTSUPP;
- 
- 	while (--tries) {
-@@ -634,7 +649,7 @@ static int stmmac_test_mcfilt(struct stmmac_priv *priv)
- 
- 	if (stmmac_filter_check(priv))
- 		return -EOPNOTSUPP;
--	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
-+	if (stmmac_uc_filter_check(priv))
- 		return -EOPNOTSUPP;
- 	if (netdev_mc_count(priv->dev) >= priv->hw->multicast_filter_bins)
- 		return -EOPNOTSUPP;
-@@ -680,7 +695,7 @@ static int stmmac_test_ucfilt(struct stmmac_priv *priv)
- 
- 	if (stmmac_filter_check(priv))
- 		return -EOPNOTSUPP;
--	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
-+	if (stmmac_uc_filter_check(priv))
- 		return -EOPNOTSUPP;
- 	if (netdev_mc_count(priv->dev) >= priv->hw->multicast_filter_bins)
- 		return -EOPNOTSUPP;
 -- 
 2.53.0
 
