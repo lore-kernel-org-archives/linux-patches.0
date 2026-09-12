@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988652D23A6;
-	Sat, 12 Sep 2026 14:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8511E2D23A6;
+	Sat, 12 Sep 2026 14:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222215; cv=none; b=iGxDWu2vrlOadu31jb+0Ek5bwD/rrzPpUHIXNRCfp/gjyXKKAhW9Le71/nQA2uAxAo9IS7ZUpHzdn4Wsjbw9SHkI7ORI6+YJy+9nXu6bshN/8Df7lqqD/u6zFLuCPHXYyEC0Y+bEm7eQVv/nzWD1IpWreslO6XiJWRbhSHv4aDo=
+	t=1789222220; cv=none; b=X0mlLJneSQ0r6qhyWLV45HYiZJEuYyWvqc6Lyb9jU/PgopwM/w3C/QgOIJe0fdmveyHRJDfuHgYzRwNi/ZHngjb2aCt9UUhlW6uHWrMlP12z6BuOG6/uwZztPOLIF5z5m/3Va6I/U8u6vmVRzPcVtqfKuD19EvZ9vW9d93dUtyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222215; c=relaxed/simple;
-	bh=cCi/0ZDItB2BkA2W/HDNlsNydgXThMoRdLfnJzSFzgk=;
+	s=arc-20240116; t=1789222220; c=relaxed/simple;
+	bh=q88IX/MK8Z+b/cQTpWioSkBzm+NOtvJBCj8dpaJl/Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+H71Yr9Tkvp/KmnI2Yyza/SHZX+Fx5Kz1uDcj45P48s3zfyUSlS1GKldE5D0PM2uyq4A2udQ4O16855Qh6Wbtv8mKGika4Zif7Py6WwRgM+fPQkReoHSzBDH57ixDwGvOltK6BSz/JkEITQp2nHGFRCvRt3r7SScbDQAjr85tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsdfQeSA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WoJmHD00GLIPGK3+w+xxL9jmkslw8q6U8upBBB1coNGUZjB6EiLrGMHgKTu+aJ8L7bFscvcN8iKsaM9vit7aBolztcvGp/vIHBHHP2evHCW/qwKNZCgQs26qDP83xeEjM67Bgwo3g5o0ZG2zWRh3JqKK0U/bdUWPJhGnFpgNdv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZFt2rV8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsdfQeSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5193D1F00893;
-	Sat, 12 Sep 2026 14:10:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZFt2rV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9B81F000FF;
+	Sat, 12 Sep 2026 14:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222214;
-	bh=D6W0GnvLyGK2iomfk42pg0WCknl0Kv9dTw5ct2BtY48=;
+	s=korg; t=1789222219;
+	bh=SaPR7QnrlHfLHZsKsM8s/EqV47qGRiZSqttq3sfVPZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NsdfQeSAKdvX7vW3GiWFS9d0c7AX2VH67VaAJPitjCRws+TnR/UwP3TAaEJ8YPE2p
-	 k0w7t3FO9xVzoly14lFKI93T2RheKg7vMZiUrQ6QKoJnTMScIfrizsn29rF/sN0VRv
-	 O39NA5cfnu7sR3RffbDLzpCfykyFPYW39+mBkepU=
+	b=vZFt2rV8DuugC/PolUQsyeGOpNK7fiY6OVwmB3kJeOfctlVP+ot+tMjejJuVGz2if
+	 HRfoXfmcWcpGjN4hVN7PoAfHFz6Hus1xKv0VSkCV7ZnFkHkMkgMwxhYXHDuhefASC1
+	 DRxatT6KqXYrsi7PLkrR0zgwi5DAjcBbx5TEdyTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Deborah Brouwer <deborah.brouwer@collabora.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.6 0510/1424] drm: fix race between partial drm_dev_register() failure and ioctl
-Date: Sat, 12 Sep 2026 08:49:02 +0200
-Message-ID: <20260912065618.710373244@linuxfoundation.org>
+	syzbot+db96c5ff032f4292a8dc@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.6 0511/1424] drm/i915: Guard against NULL driver_data in i915_pci_probe()
+Date: Sat, 12 Sep 2026 08:49:03 +0200
+Message-ID: <20260912065618.734431094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,98 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit eb197f7d60f00d0f5b1b3505dfc86a7e36045a3e upstream.
+commit 3785d40831ba5601296283e0197e10e089392757 upstream.
 
-If drm_dev_register() fails after registering a minor (e.g. render minor
-registered, primary minor fails), userspace could have opened the first
-minor and entered a drm_dev_enter() critical section. Since the
-unplugged flag was never set, the ioctl proceeds while the error path
-tears down device resources.
+pci_match_device() can return the dummy pci_device_id_any entry
+when a device is force-bound via sysfs driver_override, in which
+case ->driver_data is unset (NULL). i915_pci_probe() casts it to
+struct intel_device_info * unconditionally and dereferences
+intel_info->require_force_probe, causing a NULL-ptr-deref.
 
-Fix this by introducing drm_dev_synchronize_unplug(), which sets the
-unplugged flag and waits for the SRCU barrier, ensuring all in-flight
-drm_dev_enter() critical sections complete before cleanup proceeds; call
-it on the error path of drm_dev_register().
-
-Fixes: bee330f3d672 ("drm: Use srcu to protect drm_device.unplugged")
+Reported-by: syzbot+db96c5ff032f4292a8dc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=db96c5ff032f4292a8dc
+Tested-by: syzbot+db96c5ff032f4292a8dc@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260620190648.2E9F61F000E9@smtp.kernel.org/
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Tested-by: Deborah Brouwer <deborah.brouwer@collabora.com>
-Link: https://patch.msgid.link/20260628145406.2107056-17-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260813064902.367504-1-kartikey406@gmail.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 2727922084672cc274ecea726ea00363c2893731)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_drv.c |   34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/i915/i915_pci.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -470,6 +470,22 @@ void drm_dev_exit(int idx)
- }
- EXPORT_SYMBOL(drm_dev_exit);
+--- a/drivers/gpu/drm/i915/i915_pci.c
++++ b/drivers/gpu/drm/i915/i915_pci.c
+@@ -1014,6 +1014,9 @@ static int i915_pci_probe(struct pci_dev
+ 		(struct intel_device_info *) ent->driver_data;
+ 	int err;
  
-+/*
-+ * Mark the device as unplugged and wait for any in-flight drm_dev_enter()
-+ * critical sections to complete.
-+ */
-+static void drm_dev_synchronize_unplug(struct drm_device *dev)
-+{
-+	/*
-+	 * After synchronizing any critical read section is guaranteed to see
-+	 * the new value of ->unplugged, and any critical section which might
-+	 * still have seen the old value of ->unplugged is guaranteed to have
-+	 * finished.
-+	 */
-+	dev->unplugged = true;
-+	synchronize_srcu(&drm_unplug_srcu);
-+}
++	if (!intel_info)
++		return -ENODEV;
 +
- /**
-  * drm_dev_unplug - unplug a DRM device
-  * @dev: DRM device
-@@ -482,15 +498,7 @@ EXPORT_SYMBOL(drm_dev_exit);
-  */
- void drm_dev_unplug(struct drm_device *dev)
- {
--	/*
--	 * After synchronizing any critical read section is guaranteed to see
--	 * the new value of ->unplugged, and any critical section which might
--	 * still have seen the old value of ->unplugged is guaranteed to have
--	 * finished.
--	 */
--	dev->unplugged = true;
--	synchronize_srcu(&drm_unplug_srcu);
--
-+	drm_dev_synchronize_unplug(dev);
- 	drm_dev_unregister(dev);
- 
- 	/* Clear all CPU mappings pointing to this device */
-@@ -931,6 +939,7 @@ int drm_dev_register(struct drm_device *
- 		goto err_minors;
- 
- 	dev->registered = true;
-+	dev->unplugged = false;
- 
- 	if (driver->load) {
- 		ret = driver->load(dev, flags);
-@@ -956,6 +965,13 @@ err_unload:
- 	if (dev->driver->unload)
- 		dev->driver->unload(dev);
- err_minors:
-+	/*
-+	 * If a minor was registered before the failure, userspace could have
-+	 * opened it and entered a drm_dev_enter() critical section. Ensure all
-+	 * such sections complete before we clean up.
-+	 */
-+	drm_dev_synchronize_unplug(dev);
-+
- 	remove_compat_control_link(dev);
- 	drm_minor_unregister(dev, DRM_MINOR_ACCEL);
- 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
+ 	if (intel_info->require_force_probe && !id_forced(pdev->device)) {
+ 		dev_info(&pdev->dev,
+ 			 "Your graphics device %04x is not properly supported by i915 in this\n"
 
 
