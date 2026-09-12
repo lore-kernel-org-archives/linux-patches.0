@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6FF423A72;
-	Sat, 12 Sep 2026 12:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C951147277D;
+	Sat, 12 Sep 2026 12:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217542; cv=none; b=dmnuB2hSrkUaZjCAcc8kh7xcsapkYRbGb9cdXgHiza62AueGoR6tnkYsv6PhOxLa3f7PU+zarQLMCNwK1DQ2SeiKvSVilMWSDQRCMTY+yoKuNFu16obIpTWtlIc3yMBUB7zMK16cNWkSGlQufiMa9X4q50RobLdjvG34TS6bBVc=
+	t=1789217547; cv=none; b=rerg/3yCJ+nQx3rfFuOCiYaAB6LFKC3zb6deS1w1/IcYRpNThupQg1rA3e0tg//cAM6S6qmv28B/MxV+WoRJZEHchRkWqVt+8ddLVy9X00nyEEy5lVzvw0dENkdo/x0I8P2szPuCvUZ73oPjFukjcOHPkRNRH1QizSL9GSfJb1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217542; c=relaxed/simple;
-	bh=tZqYg3lEZmXCGOQuxVT5r9KUoW5nB680LjQ5BBZ+NVM=;
+	s=arc-20240116; t=1789217547; c=relaxed/simple;
+	bh=lok5PhgmpqL2T8frYtIk9iDF6qez8BEZM+m9mhjGQXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbbbBE6cJCmXz2y3RLv+JL/xQJY3roxuH81HQZShaSxHB0LegvR64HYTeg2UcR91DKrlTpVrJQdop+aq749jhrpKmEkFAGg6qgjV2Ot97iQIzS5+Xl2gSTagV2C7litJ8MMxHV+6eg/7xsyk0abs9AyXOtGjaKo6lEW/noTazUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jx7egLs7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hsho1DXeXI7/xsjPCNrdSXsx/cKEHVjad3HrzB94ubq3C36szt9GWuaaWLy1y7nUvIyKVtifTZjWxZI5oEu/xzm5TFeXW6PRDKlPMPGh3VzR8/PcC9NHyYOR8vTWkk5aSIszJ/W60OWY1siiV0AoChwHu5/aOG8IcS30h3TqnQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNeqyADd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jx7egLs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14F71F000FF;
-	Sat, 12 Sep 2026 12:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNeqyADd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E411F000FF;
+	Sat, 12 Sep 2026 12:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217541;
-	bh=sno1Ji71IICCRrbiYM4w3qxxZqyNnxkeqcp2OInj7Yk=;
+	s=korg; t=1789217545;
+	bh=oxhOnzH8OBJS1CqYHjsWp53LJjSLssIo6gjQc4ralrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jx7egLs7B8Obq8Dhv8o80oNDGlzHRYlvhDDebK625qQAbD0tyRc3ynsZ+xPy58vj1
-	 64DGydea1hAj+KN4MSCsGfZrwp+NwIp371rwbqMCjJODJOj2v/WbWa8zZai2TH2nzy
-	 8+/YyLu23G497m4IoOcachTm8xGHL3lPamTxXeUE=
+	b=gNeqyADdY0isYQ8RyLvVQdPwxOmgNcBp3GT23ze4zPmKxhJOfF2o7wKn3+LgQacnR
+	 72UgKZHdygcJYZjuqamiUCEva8fRs5GgBItQQpmaaf/ZBPo/Njemtye3zYZNwRhGW4
+	 tgpUgVlpOGN4vPywHARpA6oKKpTxKjZDVv6vpjM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0931/1376] RDMA/erdma: restrict the driver to little-endian systems
-Date: Sat, 12 Sep 2026 08:55:57 +0200
-Message-ID: <20260912065628.312033377@linuxfoundation.org>
+Subject: [PATCH 6.12 0932/1376] wifi: mac80211: skip default WMM setup for AP_VLAN links
+Date: Sat, 12 Sep 2026 08:55:58 +0200
+Message-ID: <20260912065628.334394791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit a12d9145145b21c50531afb6e3f711b1f34e1465 ]
+[ Upstream commit 4d8cfff012aaa971d50b01823b1015c1073c3ff6 ]
 
-The eRDMA device interface requires explicit byte ordering, but several
-DMA-visible values that should be little-endian remain native-endian.
-Command request payloads are copied verbatim, data-path SQE headers are
-written without cpu_to_le64(), and kernel doorbell records are assigned
-plain u64 values. The command completion path also reads a little-endian
-SQE header without conversion.
+AP_VLAN interfaces are never passed to the driver, so setting default WMM
+parameters on their links trips the check-sdata-in-driver warning in
+drv_conf_tx(), as well as in the BSS_CHANGED_QOS link info notification.
+Skip it, matching the existing AP_VLAN handling in this function.
 
-These paths are byte-swapped on big-endian kernels and can break command
-processing during probe. Since complete big-endian support requires
-converting every device-visible structure, depend on !CPU_BIG_ENDIAN.
-
-Fixes: ca7fd6cff3b8 ("RDMA/erdma: Add driver to kernel build environment")
-Link: https://patch.msgid.link/20260806-missing-endianness-conversion-for-64-v1-1-896327c1aff1@nvidia.com
-Acked-by: Cheng Xu <chengyou@linux.alibaba.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 2259d14499d1 ("wifi: mac80211: set default WMM parameters on all links")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20260804082608.2011433-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/link.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/erdma/Kconfig b/drivers/infiniband/hw/erdma/Kconfig
-index 267fc1f3c42af..745e5551773f5 100644
---- a/drivers/infiniband/hw/erdma/Kconfig
-+++ b/drivers/infiniband/hw/erdma/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config INFINIBAND_ERDMA
- 	tristate "Alibaba Elastic RDMA Adapter (ERDMA) support"
--	depends on PCI_MSI && 64BIT
-+	depends on PCI_MSI && 64BIT && !CPU_BIG_ENDIAN
- 	depends on INFINIBAND_ADDR_TRANS
- 	depends on INFINIBAND_USER_ACCESS
- 	help
+diff --git a/net/mac80211/link.c b/net/mac80211/link.c
+index 29813394bbff1..7e249e2f93bfa 100644
+--- a/net/mac80211/link.c
++++ b/net/mac80211/link.c
+@@ -340,7 +340,8 @@ static int ieee80211_vif_update_links(struct ieee80211_sub_if_data *sdata,
+ 		link = links[link_id];
+ 		ieee80211_link_init(sdata, link_id, &link->data, &link->conf);
+ 		ieee80211_link_setup(&link->data);
+-		ieee80211_set_wmm_default(&link->data, true, non_sta);
++		if (sdata->vif.type != NL80211_IFTYPE_AP_VLAN)
++			ieee80211_set_wmm_default(&link->data, true, non_sta);
+ 	}
+ 
+ 	if (new_links == 0)
 -- 
 2.53.0
 
