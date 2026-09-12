@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F085F3B7B98;
-	Sat, 12 Sep 2026 20:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7298D3BB136;
+	Sat, 12 Sep 2026 20:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243558; cv=none; b=gcRQZHBRcivqr2Ov5oiBAFjD+sXoXSZP7BHiw5PI+fGSlPBm+/ScgwPr0W321Bp2TEF6g1xwyGPWMGf65eIovWiLcuOpZ7t/9KrSQzXlEahhG490mVgv4802HCkzgD41rRSWrhzv3xLWVRt2XYzEca7oHRNznP8UON1Aawf1ttw=
+	t=1789243560; cv=none; b=jvBs6BennM9jToCLgwsJ0XNvMo2woLeyzpLUtnne6bJ1JnmKn/AoY2sUcBaKo+Y3Rwo1FsLMARMJjPVqQVZ0mvV4GEgWwQEuRstZA8i+eD9+892zSpAW4itgZUmPrAVU5WlssXrjWv1/nXMrgJfMs87MDz7Z9GemJOqVFsq37Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243558; c=relaxed/simple;
-	bh=6df8S8873ui2OlDKQXuxnnMlsY5C0spRrym3facaNQ4=;
+	s=arc-20240116; t=1789243560; c=relaxed/simple;
+	bh=89gVWn0XI3bB8wOVjHDA8ecfRR/am6CJ0IPMdpAQmgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2dmdj9mqMhiSCzvTmnpyGS4X+G2Lr6fS6jX4uKn85bNUcuLF3QxkVg1DiiKG63wMJFm1ifxsgkk1v9xvsmFuJPUrps3bgvJ0qZLfQ1pfCTjmKCngbOowuFUgWQVWF3MXhG1f+NUSghzy0oVgaAcxK6b9J4yPPV/7DCK8or1BAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlaslRhB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pjccnhOEf7fBaY//GoJMtDX3h0eUaSzGgSTKPRnCZ75KmUfYq6+1IPuHGiaml2JB6LZZSICD9U9r+1LfOot+QFesxF+L8p4pjZLZC7SWambH2ok4O/n0E8MEEYQrxvjmeDIr0r5SMs0HPaZeiVNrBYrRSa1eefZyUcrDlEyWKaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppn3lIfK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlaslRhB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931301F00893;
-	Sat, 12 Sep 2026 20:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppn3lIfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6B11F000FF;
+	Sat, 12 Sep 2026 20:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243555;
-	bh=cR496ZSpNMJVRd5ZNt7dGLw2f93O+cNloNw3HcLfNQk=;
+	s=korg; t=1789243558;
+	bh=rqLu4texlv3CKf5g7U008antpTDEHvzMr7NSNTWhavU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vlaslRhBCYMP1wolH3c300DBJGj6i9RduKjQnfrKHvzNZN+RYdU2C3CEP5jEixhKI
-	 g++wAO6WCoew+N2PefZFi8lhsu7sSvjRFMtE/HPPFLzqF5XPi1o7p4zmRiTOFukqhs
-	 Fx7ICTh8IjRAAb6EyBnz8BFGfBMzQtGyTCo7NJXg=
+	b=ppn3lIfKzsJ0B6mOsSdJT8Tzj//NuZdzmv7u6HNqc20XtLcYa5x6x7qEkt4Jp1bsu
+	 6GoDU14yPee1m2Ba5fo31wpiHoId1NJpuPFGvOyvChcH3Fqk4RzjRQTizvGN+mSQX0
+	 xQcTK6gxN3QbEk4iQ+22UR3gT4df0J4QXbVsox9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever III <chuck.lever@oracle.com>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Zhang Chen <zhangchen01@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 797/798] tracing: Handle %.*s in trace_check_vprintf()
-Date: Sat, 12 Sep 2026 09:07:05 +0200
-Message-ID: <20260912065535.328163177@linuxfoundation.org>
+Subject: [PATCH 5.10 798/798] Bluetooth: L2CAP: Fix send LE flow credits in ACL link
+Date: Sat, 12 Sep 2026 09:07:06 +0200
+Message-ID: <20260912065535.351136279@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,101 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (VMware) <rostedt@goodmis.org>
+From: Zhang Chen <zhangchen01@kylinos.cn>
 
-[ Upstream commit eb01f5353bdaa59600b29d864819056a0e3de24d ]
+[ Upstream commit f39f905e55f529b036321220af1ba4f4085564a5 ]
 
-If a trace event uses the %*.s notation, the trace_check_vprintf() will
-fail and will warn about a bad processing of strings, because it does not
-take into account the length field when processing the star (*) part.
-Have it handle this case as well.
+When the L2CAP channel mode is L2CAP_MODE_ERTM/L2CAP_MODE_STREAMING,
+l2cap_publish_rx_avail will be called and le flow credits will be sent in
+l2cap_chan_rx_avail, even though the link type is ACL.
 
-Link: https://lore.kernel.org/linux-nfs/238C0E2D-C2A4-4578-ADD2-C565B3B99842@oracle.com/
+The logs in question as follows:
+> ACL Data RX: Handle 129 flags 0x02 dlen 12
+      L2CAP: Unknown (0x16) ident 4 len 4
+        40 00 ed 05
+< ACL Data TX: Handle 129 flags 0x00 dlen 10
+      L2CAP: Command Reject (0x01) ident 4 len 2
+        Reason: Command not understood (0x0000)
 
-Reported-by: Chuck Lever III <chuck.lever@oracle.com>
-Fixes: 9a6944fee68e2 ("tracing: Add a verifier to check string pointers for trace events")
-Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Bluetooth: Unknown BR/EDR signaling command 0x16
+Bluetooth: Wrong link type (-22)
+
+Fixes: ce60b9231b66 ("Bluetooth: compute LE flow credits based on recvbuf space")
+Signed-off-by: Zhang Chen <zhangchen01@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ net/bluetooth/l2cap_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index bfa6e2fe984b1..6c8f9a401fe0b 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -3708,6 +3708,9 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
- 		goto print;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index f59146ae72439..1122566c4b500 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7781,6 +7781,10 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
+ 	struct l2cap_le_credits pkt;
+ 	u16 return_credits = l2cap_le_rx_credits(chan);
  
- 	while (*p) {
-+		bool star = false;
-+		int len = 0;
++	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
++	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
++		return;
 +
- 		j = 0;
+ 	if (chan->rx_credits >= return_credits)
+ 		return;
  
- 		/* We only care about %s and variants */
-@@ -3729,13 +3732,17 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
- 				/* Need to test cases like %08.*s */
- 				for (j = 1; p[i+j]; j++) {
- 					if (isdigit(p[i+j]) ||
--					    p[i+j] == '*' ||
- 					    p[i+j] == '.')
- 						continue;
-+					if (p[i+j] == '*') {
-+						star = true;
-+						continue;
-+					}
- 					break;
- 				}
- 				if (p[i+j] == 's')
- 					break;
-+				star = false;
- 			}
- 			j = 0;
- 		}
-@@ -3748,6 +3755,9 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
- 		iter->fmt[i] = '\0';
- 		trace_seq_vprintf(&iter->seq, iter->fmt, ap);
- 
-+		if (star)
-+			len = va_arg(ap, int);
-+
- 		/* The ap now points to the string data of the %s */
- 		str = va_arg(ap, const char *);
- 
-@@ -3766,8 +3776,18 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
- 			int ret;
- 
- 			/* Try to safely read the string */
--			ret = strncpy_from_kernel_nofault(iter->fmt, str,
--							  iter->fmt_size);
-+			if (star) {
-+				if (len + 1 > iter->fmt_size)
-+					len = iter->fmt_size - 1;
-+				if (len < 0)
-+					len = 0;
-+				ret = copy_from_kernel_nofault(iter->fmt, str, len);
-+				iter->fmt[len] = 0;
-+				star = false;
-+			} else {
-+				ret = strncpy_from_kernel_nofault(iter->fmt, str,
-+								  iter->fmt_size);
-+			}
- 			if (ret < 0)
- 				trace_seq_printf(&iter->seq, "(0x%px)", str);
- 			else
-@@ -3779,7 +3799,10 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
- 			strncpy(iter->fmt, p + i, j + 1);
- 			iter->fmt[j+1] = '\0';
- 		}
--		trace_seq_printf(&iter->seq, iter->fmt, str);
-+		if (star)
-+			trace_seq_printf(&iter->seq, iter->fmt, len, str);
-+		else
-+			trace_seq_printf(&iter->seq, iter->fmt, str);
- 
- 		p += i + j + 1;
- 	}
 -- 
 2.53.0
 
