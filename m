@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9964535F5F7;
-	Sat, 12 Sep 2026 09:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149473FE375;
+	Sat, 12 Sep 2026 09:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206603; cv=none; b=Z74Pf7EUJKlJORXrqIPflWHKp1EPsAIONFTsFFFSUrPrGw9MsoYfKBQQe2M2/NFpHbeVennUlx4R36F1GYHWgfA8Sj79g6Yko2ReSC9qIZtDg44AtuQxMYO71vIl8XIzL6d52P6E5LlxfoKc/Atz9PjAu2StNUsZhvv27hEhRcs=
+	t=1789206609; cv=none; b=NhpLTIrfUP9T5YHgo9cUus24bqSRiwR85K2UXkG1Ut3haU6ywvmssHRXG+3/kfQArYsdSJbJZVwdOVJ58sQH2py5yLEw/YpaVnEVz9hrQ3Ct7PDTb3IMfshRB+G9yqqzvTkPgT1CqiphbWy4JIOkjSz9pLb3x23vsCx456mHa14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206603; c=relaxed/simple;
-	bh=aHkLviu2ZF0WQHdAe1FFAGwaL8LDGqaTwFkyMjLiGOk=;
+	s=arc-20240116; t=1789206609; c=relaxed/simple;
+	bh=WFgK7RrSZuY0kCRRkJSY6RTxKwI42igfFWYOb64wLZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bS1UrzbLrV8TGu/AcOBfEE9Lfl47H+mRM7gzWY43e/IyPRryDKjLp6evfgNmmqmY/NwXjHSr5o7qtya3ypV7oj6RjbkF2yk9fC6Ww20DDka7VtU0yWBuvmsC7FOE6OKBkiykz+BHHcVdAuhpGTJn6qo4MgmXJfablUduFStD3lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcQCnOGI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cs1jrSEXMu41dvuCycSmTcHztisM+IlC4vcyTBNTbpwzv6AczJozwaqLslhN9pSR4EEzIXgxTvmaTziOtcR1cvu6kif3sxG/uODQMHJ/t3SrvEH+m4bEK7CmGl3r7gyC9a4Ls2Ws1m7Xrk/FmgW5qD6NTR4cRFou2IeR9enccmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=riRQHO8y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcQCnOGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1AF1F000FF;
-	Sat, 12 Sep 2026 09:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="riRQHO8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8938A1F000FF;
+	Sat, 12 Sep 2026 09:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206602;
-	bh=7Y80Tm7sPPWPSAmqhgHrImjP16LH8HwlA4EJ33L64kU=;
+	s=korg; t=1789206607;
+	bh=0nKTW3Rd5tJ3xdHAUwRnwiFPWj8D1zix+ZSYfSg7c/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kcQCnOGISB6HoD6GvcEdbfivIY7E7d6YI8ans5MiyJ9GZpjpoKHNHzOOHKPBT1AGe
-	 GVmCjZjAPFYfaZhGZhLxfL1a45ZAyRbBb4Omsdf5VJ+WEGQYp0+ntkJi99QLaMGWKW
-	 aa1J6GRAX0O8FBA3fTqs3EHzEl7ZGRd6uw1NTKNw=
+	b=riRQHO8ydSb6uqOUTF71Ww+BWVsXeZFke+Ir93vJ/e8oEnlZzS+9IacZSxF4s54Qb
+	 T7EgW06/iTp7MAzF3spCltGtLczojsxF5ZkLMW33iIglRHCVUQR3Rp+BsjoRq9ryHv
+	 wiqBgBb3xrdXBY86/AwYxgb1WNfCJqWw5XGfa/fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Thomas Gleixner <tglx@kernel.org>,
-	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0242/1518] selftests: timers: leap-a-day: Fix -w option and update usage comment
-Date: Sat, 12 Sep 2026 08:40:11 +0200
-Message-ID: <20260912065628.955828390@linuxfoundation.org>
+Subject: [PATCH 6.18 0243/1518] clocksource: Unregister subsystem on device registration failure
+Date: Sat, 12 Sep 2026 08:40:12 +0200
+Message-ID: <20260912065628.977945488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,76 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit b4b66151a71445f3a71574136ddc82968c7b175e ]
+[ Upstream commit 3dee6537e728bd8137fda6eaf859f26e685943f7 ]
 
-Commit 98b74e1f3104 ("kselftests: timers: leap-a-day: Change default
-arguments to help test runs") replaced the -s option with -w and made
-"wait for the leap second" the non-default behaviour, but it only
-updated the switch/case handling. Two things were left inconsistent:
+init_clocksource_sysfs() registers the clocksource subsystem before
+registering the clocksource device. If device_register() fails, the
+function returns the error while leaving the subsystem registered.
 
-  - The getopt() option string still lists 's' instead of 'w', so
-    passing -w is rejected as an invalid option and the new behaviour
-    cannot be selected at all.
+Unregister the clocksource subsystem on that failure path so the
+successful subsystem registration is unwound before returning.
 
-  - The file header comment still documents the removed -s option and
-    an outdated default for -i.
-
-Fix the getopt() string to accept 'w' (matching the existing case 'w':
-handler) and update the header comment to describe -w, -t and the
-current -i default.
-
-Fixes: 98b74e1f3104 ("kselftests: timers: leap-a-day: Change default arguments to help test runs")
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Fixes: d369a5d8fc70 ("clocksource: convert sysdev_class to a regular subsystem")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260702093915.2652638-1-yijiangshan@kylinos.cn
+Link: https://patch.msgid.link/20260702215733.84588-1-dbgh9129@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/timers/leap-a-day.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ kernel/time/clocksource.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/timers/leap-a-day.c b/tools/testing/selftests/timers/leap-a-day.c
-index 04004a7c0934f..e677e31a22110 100644
---- a/tools/testing/selftests/timers/leap-a-day.c
-+++ b/tools/testing/selftests/timers/leap-a-day.c
-@@ -9,16 +9,19 @@
-  *  kernel's leap-second behavior, as well as how well applications
-  *  handle the leap-second discontinuity.
-  *
-- *  Usage: leap-a-day [-s] [-i <num>]
-+ *  Usage: leap-a-day [-w] [-i <num>] [-t]
-  *
-  *  Options:
-- *	-s:	Each iteration, set the date to 10 seconds before midnight GMT.
-- *		This speeds up the number of leapsecond transitions tested,
-- *		but because it calls settimeofday frequently, advancing the
-- *		time by 24 hours every ~16 seconds, it may cause application
-- *		disruption.
-+ *	-w:	Only set the leap-second flag and wait for the leap second
-+ *		each iteration, instead of advancing the time. By default the
-+ *		date is set to 10 seconds before midnight GMT, which speeds up
-+ *		the number of leapsecond transitions tested, but because it
-+ *		calls settimeofday frequently, advancing the time by 24 hours
-+ *		every ~16 seconds, it may cause application disruption.
-  *
-- *	-i:	Number of iterations to run (default: infinite)
-+ *	-i:	Number of iterations to run (-1 = infinite, default: 10)
-+ *
-+ *	-t:	Print TAI time.
-  *
-  *  Other notes: Disabling NTP prior to running this is advised, as the two
-  *		 may conflict in their commands to the kernel.
-@@ -186,7 +189,7 @@ int main(int argc, char **argv)
- 	int opt;
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index df71949616584..c2ce6cea24107 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -1482,8 +1482,12 @@ static int __init init_clocksource_sysfs(void)
+ {
+ 	int error = subsys_system_register(&clocksource_subsys, NULL);
  
- 	/* Process arguments */
--	while ((opt = getopt(argc, argv, "sti:")) != -1) {
-+	while ((opt = getopt(argc, argv, "wti:")) != -1) {
- 		switch (opt) {
- 		case 'w':
- 			printf("Only setting leap-flag, not changing time. It could take up to a day for leap to trigger.\n");
+-	if (!error)
+-		error = device_register(&device_clocksource);
++	if (error)
++		return error;
++
++	error = device_register(&device_clocksource);
++	if (error)
++		bus_unregister(&clocksource_subsys);
+ 
+ 	return error;
+ }
 -- 
 2.53.0
 
