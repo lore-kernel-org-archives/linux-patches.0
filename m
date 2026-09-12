@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4573C472F6C;
-	Sat, 12 Sep 2026 11:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FE1332610;
+	Sat, 12 Sep 2026 11:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212761; cv=none; b=Sm/cMJgtBVOGLclMt/EokOC0Vujmoe8m7jomZc9D20GnnH4ydLXbFS9OxtQmXYc8WrtafMK9drVbBCWIWmMMUj15NZ00I9ikm2gkRypEFOF58zpUbMuHV98LXZI6Ibet60DJIspx6tR4pV1zZStOaSUBC3nA+SUAZl8aGIHAq/k=
+	t=1789212764; cv=none; b=FaN9zMbltSnB0K54Fs9gBCMao9GouttMLD22tfdX8Z216vBxRLoiXlFaTk2BZv/8FZre6SLCLTjJbY+GFu2RW9W1xVhNQc1yEqzEN97YxR8/H1wf2RQHJUJq9gpTfF92jppNVYGL/L6/pPWtbmZa4yNFu0TCNLBD7b+oWsFZFBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212761; c=relaxed/simple;
-	bh=lgO3saXKQVc2W/fbu663TNQMj9XrrVOuYVmlz/sc4MQ=;
+	s=arc-20240116; t=1789212764; c=relaxed/simple;
+	bh=yoMJ+Gt7OrHEmeVk3+2MjNmvpAzQVKQt+Jiy2yKJtIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Laq+z8rT8Hp4iPIoQ4bIux6weHJYcBHn8q6RScMpQ6vpJg5Q4W/UPzhAkYOE8g2IJZ8f0KgPUo014IYIesT28mSdNi19spfkB4xlP6HTdf+VG66j67cYs8JGEZDXyRTyaCwoX7YGmb9Ap3RFmQSQpfTkH7sKdPBABkAFmOKXeyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6rl4Noq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rIzkF+onGsOPfobp+REHfkY+Tq3fskXsSDXAHcidfabZeWYifmhI6FM9r0evhu4lhCdJuPMShH4t6wxXRdaqGwfj672OPU7z94bx8Cy69aI4h+zMurWl/fj5EuR4f3ZEjkz9nJjKQCR+EhS9rmmGRZ1vMj2MZD4DlK5BIVgMZ7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilL5T8OR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6rl4Noq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C361F000FF;
-	Sat, 12 Sep 2026 11:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilL5T8OR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5691F000FF;
+	Sat, 12 Sep 2026 11:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212758;
-	bh=3+OrEZTrvi0BX5DhuegwxLNNK4tQac7BXUyGPpATAXU=;
+	s=korg; t=1789212763;
+	bh=0ouXs65qhq/451giyUep86Byc1EgHAUvtREU/07LDI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6rl4Noq2O8VNXWqlUR15d12enmQBu8CIz/dTEL0Axb/JCtgPP6YsC3907Hqm4eJ5
-	 iHINPkl+pcU+PZZCpEjN1qNjXn3Kgm6ARPi8i7y0UoxmOJm3UuRSZR/HNO0Jk7sgu0
-	 rLBvyEba/M3XsQgOXZZGDZeQYFPWxq6w02TpnCg8=
+	b=ilL5T8ORk2irgzONqLzEuZ9K/JBhssCQMcCxw7KcYZ7vjQ7Fm26ZAuo+TWR8hjvb9
+	 g3L+pwQ0+DOp7Ty18tozPnYiuNLrHJsr0lgQYukxFazac+JAZtmY3ee6ZSDbpZy0es
+	 HdczRMPCJ+cr7q0Yr6FpcU3KmDDkg9lqfIXd3UDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1501/1518] tcp: reject non zerocopy devmem tx
-Date: Sat, 12 Sep 2026 09:01:10 +0200
-Message-ID: <20260912065657.518147515@linuxfoundation.org>
+Subject: [PATCH 6.18 1502/1518] Bluetooth: btmtk: hide unused btmtk_mt6639_devs[] array
+Date: Sat, 12 Sep 2026 09:01:11 +0200
+Message-ID: <20260912065657.541492925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,49 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 125755776bc6d4dd53eaf551c87e3d460625d638 ]
+[ Upstream commit 81f971c6abec59240e2bcfc38756bda8172fa788 ]
 
-Devmem tcp tx doesn't work without zero-copy, however it's not currently
-enforced if NETIF_F_SG isn't present. In this case, tcp_sendmsg_locked()
-will try the copy path and try to copy data from an iovec which consists
-of offsets into the dma-buf and would normally fail. Moreover,
-d9c56501c72fd ("net: tcp: block mixing readable and unreadable frags")
-relies on that and assumes that the devmem binding is present IFF we're
-using the zero-copy path, which can be used to mix net-iov and pages in
-a single skb, and break invariants. Let's reject devmem tx without
-zero-copy.
+When USB support is disabled, the array is not referenced anywhere,
+causing a warning:
 
-Note, the parameter check the patch is modifying is too loose, we can
-create an io_uring request with dmabuf_id and all ZC flags, but which
-won't have the binding. We replace it with stricter validation.
+drivers/bluetooth/btmtk.c:35:3: error: 'btmtk_mt6639_devs' defined but not used [-Werror=unused-const-variable=]
+   35 | } btmtk_mt6639_devs[] = {
+      |   ^~~~~~~~~~~~~~~~~
 
-Fixes: bd61848900bff ("net: devmem: Implement TX path")
-Fixes: d9c56501c72fd ("net: tcp: block mixing readable and unreadable frags")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/fdc2478d8f21268d7078556409887d8e6ba0ad32.1788529053.git.asml.silence@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Move it into the #ifdef block.
+
+Fixes: 28b7c5a6db74 ("Bluetooth: btmtk: Add MT6639 (MT7927) Bluetooth support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/bluetooth/btmtk.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 02f5d53245547..53700d6f6f280 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1132,8 +1132,7 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
- 			zc = MSG_SPLICE_PAGES;
- 	}
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index a4e3f258bcf47..fb097f78ecd85 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -25,22 +25,6 @@
+ /* It is for mt79xx iso data transmission setting */
+ #define MTK_ISO_THRESHOLD	264
  
--	if (!sockc_err && sockc.dmabuf_id &&
--	    (!(flags & MSG_ZEROCOPY) || !sock_flag(sk, SOCK_ZEROCOPY))) {
-+	if (!sockc_err && sockc.dmabuf_id && (zc != MSG_ZEROCOPY || !binding)) {
- 		err = -EINVAL;
- 		goto out_err;
- 	}
+-/* Known MT6639 (MT7927) Bluetooth USB devices.
+- * Used to scope the zero-CHIPID workaround to real MT6639 hardware,
+- * since some boards return 0x0000 from the MMIO chip ID register.
+- */
+-static const struct {
+-	u16 vendor;
+-	u16 product;
+-} btmtk_mt6639_devs[] = {
+-	{ 0x0489, 0xe13a },	/* ASUS ROG Crosshair X870E Hero */
+-	{ 0x0489, 0xe0fa },	/* Lenovo Legion Pro 7 16ARX9 */
+-	{ 0x0489, 0xe10f },	/* Gigabyte Z790 AORUS MASTER X */
+-	{ 0x0489, 0xe110 },	/* MSI X870E Ace Max */
+-	{ 0x0489, 0xe116 },	/* TP-Link Archer TBE550E */
+-	{ 0x13d3, 0x3588 },	/* ASUS ROG STRIX X870E-E */
+-};
+-
+ struct btmtk_patch_header {
+ 	u8 datetime[16];
+ 	u8 platform[4];
+@@ -471,6 +455,22 @@ int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
+ EXPORT_SYMBOL_GPL(btmtk_process_coredump);
+ 
+ #if IS_ENABLED(CONFIG_BT_HCIBTUSB_MTK)
++/* Known MT6639 (MT7927) Bluetooth USB devices.
++ * Used to scope the zero-CHIPID workaround to real MT6639 hardware,
++ * since some boards return 0x0000 from the MMIO chip ID register.
++ */
++static const struct {
++	u16 vendor;
++	u16 product;
++} btmtk_mt6639_devs[] = {
++	{ 0x0489, 0xe13a },	/* ASUS ROG Crosshair X870E Hero */
++	{ 0x0489, 0xe0fa },	/* Lenovo Legion Pro 7 16ARX9 */
++	{ 0x0489, 0xe10f },	/* Gigabyte Z790 AORUS MASTER X */
++	{ 0x0489, 0xe110 },	/* MSI X870E Ace Max */
++	{ 0x0489, 0xe116 },	/* TP-Link Archer TBE550E */
++	{ 0x13d3, 0x3588 },	/* ASUS ROG STRIX X870E-E */
++};
++
+ static void btmtk_usb_wmt_recv(struct urb *urb)
+ {
+ 	struct hci_dev *hdev = urb->context;
 -- 
 2.53.0
 
