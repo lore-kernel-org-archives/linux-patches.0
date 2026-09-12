@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD4533EAF3;
-	Sat, 12 Sep 2026 15:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E951D7E5C;
+	Sat, 12 Sep 2026 15:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225848; cv=none; b=L5jbAfZ0Qv46vIoYtPTEvPImEMfPg+qYFkbDvylsvTvdXhbOBAZf8jHQ/MwEhTV8uy+LVvZYS9CP3t7N9iboCa1Y6E+4tQKqdPJvZBF6G7NgrMo2/81tX5437HA7ltXgfy3Ex9eZ4N5H1W2fgSVBw567urXaT7FaYN7UVcXQMiI=
+	t=1789225851; cv=none; b=iQpYDt5zet8s5nx7M2t8sLN8z1uv2sjOw+wS6cIDEFpyzmx3Z16EhfB4tH6C9sE3CoYw2iSy6UtDNR2ciEOuOW8b7fPTcUAytuwJ0JF+RgJ8xh3YAmFI7jru9IsOR+NNROCIJTouvXOyBy2ddNCi+R6Gh25+gcsCHCLMufai5Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225848; c=relaxed/simple;
-	bh=5xsyS3a+HKV3hnEndT4FE7gAohgf4LcplqeTI/HwRgc=;
+	s=arc-20240116; t=1789225851; c=relaxed/simple;
+	bh=WPb9dDao1OMsrNMfxA4IjXs2IM/xXucCmuUzmYKoOcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSdlew0zDsf2qESs5GVBMVxKu8rX6SoX0YGHK9AqTK788muWECGNQlMYg4XRYZvG8QKGHfs1fxSbdV9Q1Yt7+KMJDqO58QiX8em1/Ykw0vRi+L+8RPCcg2C02ctQZSMrd0oc2TA5Lii5j2l8zi3Rpa1wnX48TBe28cKdxHyXaMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etZlzcUG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WWwQcRgivtpXyyVLo4bGnoeu7YRe292qEqEF5TmpwKbIE4RAZMPt0//fDCamEMzVl4odSud68fwqw8FjuBDG9irS1N/Na4NN3oWicy5kNSOG2vh8UwAxRD3bl1xroD1E/35JIOJE7uGXye/IdMGRLkuL+lzNuNZbbTiuEWyDyWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQ1sDgBG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etZlzcUG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F861F000FF;
-	Sat, 12 Sep 2026 15:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQ1sDgBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97DC1F000FF;
+	Sat, 12 Sep 2026 15:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225844;
-	bh=1AQb/6T3fnNT0zvZpg9hBJIlPYiux9OxWcr9WyqIHRI=;
+	s=korg; t=1789225849;
+	bh=LG0Ku6FIm7q2SV/eD0cSGHwNTZD3ywkXRyafPo+Ru1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=etZlzcUG3twttH3g97R2GY/h+toQQ6cNeFgCtzyCWpHlZbW1BKagoUgMcC/pPWKkJ
-	 S4B9cLV8oS8g6iVsAfm/ZHSCzb0tER4d8Imrl9T/s0Tjc1TsSHG2pefIRG+1skU2M5
-	 v7xWzlXAAVj6qRNREEogMtukwhW1gAaAqLQBAt2Q=
+	b=IQ1sDgBGby1WQtvLdfqbSIOOeW9dpDvRBTe0H88JQwRi5twcvXvuCZH7lI8cx5J3L
+	 na5KWnhJWBcWIwQ/rTiBznZyQgh2RF7+dBWCmY98QqQS61x+Su/EaP5QwNYVunb+sd
+	 kS7AIllRSC6JncpRJTc+QRdIFLZPQDoOlbBP9yZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1282/1424] fuse: check attributes staleness on fuse_iget()
-Date: Sat, 12 Sep 2026 09:01:54 +0200
-Message-ID: <20260912065635.984890404@linuxfoundation.org>
+Subject: [PATCH 6.6 1283/1424] fuse: check for NULL root inode in fuse_fill_super_submount
+Date: Sat, 12 Sep 2026 09:01:55 +0200
+Message-ID: <20260912065636.007530006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,373 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Tianci <zhangtianci.1997@bytedance.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 69eb56f69efb866c791cc87fd7bf62adf2ffcbb3 ]
+[ Upstream commit 928f659a3e3650978a5b4829cc982324f72b474b ]
 
-Function fuse_direntplus_link() might call fuse_iget() to initialize a new
-fuse_inode and change its attributes. If fi->attr_version is always
-initialized with 0, even if the attributes returned by the FUSE_READDIR
-request is staled, as the new fi->attr_version is 0, fuse_change_attributes
-will still set the staled attributes to inode. This wrong behaviour may
-cause file size inconsistency even when there is no changes from
-server-side.
+fuse_iget() can return NULL when its inode allocation fails, but
+fuse_fill_super_submount() passed the result straight to get_fuse_inode()
+and decremented fi->nlookup without checking it:
 
-To reproduce the issue, consider the following 2 programs (A and B) are
-running concurrently,
+        root = fuse_iget(sb, parent_fi->nodeid, ...);
+        fi = get_fuse_inode(root);
+        fi->nlookup--;
 
-        A                                               B
-----------------------------------      --------------------------------
-{ /fusemnt/dir/f is a file path in a fuse mount, the size of f is 0. }
+Inside fuse_iget() the inode allocation can fail and return NULL.  The
+submount root takes the iget5_locked() path, whose alloc_inode() can fail
+under memory pressure (the auto-submount branch can fail the same way in
+new_inode() or fuse_alloc_submount_lookup()):
 
-readdir(/fusemnt/dir) start
-//Daemon set size 0 to f direntry
-                                        fallocate(f, 1024)
-                                        stat(f) // B see size 1024
-                                        echo 2 > /proc/sys/vm/drop_caches
-readdir(/fusemnt/dir) reply to kernel
-Kernel set 0 to the I_NEW inode
+        inode = iget5_locked(sb, nodeid, fuse_inode_eq, fuse_inode_set,
+                             &nodeid);
+        if (!inode)
+                return NULL;
 
-                                        stat(f) // B see size 0
+A NULL root makes get_fuse_inode() a container_of() on NULL and the
+nlookup decrement a write to a bogus address, oopsing the mount.  With
+CONFIG_KASAN the following null pointer dereference is reported when the
+root inode allocation of an auto-submount fails (e.g. under memory
+pressure):
 
-In the above case, only program B is modifying the file size, however, B
-observes file size changing between the 2 'readonly' stat() calls. To fix
-this issue, we should make sure readdirplus still follows the rule of
-attr_version staleness checking even if the fi->attr_version is lost due to
-inode eviction.
+==================================================================
+BUG: KASAN: null-ptr-deref in fuse_get_tree_submount+0x656/0x8b0
+Read of size 8 at addr 00000000000002b0 by task ls/942
+CPU: 0 PID: 942 Comm: ls Tainted: G W 6.6 #15
+Call Trace:
+ <TASK>
+ fuse_get_tree_submount+0x656/0x8b0
+ vfs_get_tree+0x48/0x140
+ fc_mount+0x13/0x50
+ fuse_dentry_automount+0x7a/0xb0
+ __traverse_mounts+0xca/0x330
+ step_into+0x339/0xac0
+ path_lookupat+0xc5/0x2f0
+ filename_lookup+0x163/0x2a0
+ vfs_statx+0xd5/0x200
+ do_statx+0x83/0xd0
+ __x64_sys_statx+0xa0/0xc0
+ do_syscall_64+0x37/0x90
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+ </TASK>
+==================================================================
 
-To identify this situation, the new fc->evict_ctr is used to record whether
-the eviction of inodes occurs during the readdirplus request processing.
-If it does, the result of readdirplus may be inaccurate; otherwise, the
-result of readdirplus can be trusted. Although this may still lead to
-incorrect invalidation, considering the relatively low frequency of
-evict occurrences, it should be acceptable.
+Return -ENOMEM instead; the caller tears down the partially built
+superblock on error, matching the other error returns in this
+function.
 
-Link: https://lore.kernel.org/lkml/20230711043405.66256-2-zhangjiachen.jaycee@bytedance.com/
-Link: https://lore.kernel.org/lkml/20241114070905.48901-1-zhangtianci.1997@bytedance.com/
-
-Reported-by: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
-Suggested-by: Miklos Szeredi <miklos@szeredi.hu>
-Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Fixes: 1866d779d5d2 ("fuse: Allow fuse_fill_super_common() for submounts")
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: 928f659a3e36 ("fuse: check for NULL root inode in fuse_fill_super_submount")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dir.c     | 11 +++++-----
- fs/fuse/fuse_i.h  | 14 ++++++++++--
- fs/fuse/inode.c   | 56 +++++++++++++++++++++++++++++++++++++----------
- fs/fuse/readdir.c | 15 ++++++++-----
- 4 files changed, 71 insertions(+), 25 deletions(-)
+ fs/fuse/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index 82ce279fe3bd5..2b353ff960235 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -366,7 +366,7 @@ int fuse_lookup_name(struct super_block *sb, u64 nodeid, const struct qstr *name
- 	struct fuse_mount *fm = get_fuse_mount_super(sb);
- 	FUSE_ARGS(args);
- 	struct fuse_forget_link *forget;
--	u64 attr_version;
-+	u64 attr_version, evict_ctr;
- 	int err;
- 
- 	*inode = NULL;
-@@ -381,6 +381,7 @@ int fuse_lookup_name(struct super_block *sb, u64 nodeid, const struct qstr *name
- 		goto out;
- 
- 	attr_version = fuse_get_attr_version(fm->fc);
-+	evict_ctr = fuse_get_evict_ctr(fm->fc);
- 
- 	fuse_lookup_init(fm->fc, &args, nodeid, name, outarg);
- 	err = fuse_simple_request(fm, &args);
-@@ -398,7 +399,7 @@ int fuse_lookup_name(struct super_block *sb, u64 nodeid, const struct qstr *name
- 
- 	*inode = fuse_iget(sb, outarg->nodeid, outarg->generation,
- 			   &outarg->attr, ATTR_TIMEOUT(outarg),
--			   attr_version);
-+			   attr_version, evict_ctr);
- 	err = -ENOMEM;
- 	if (!*inode) {
- 		fuse_queue_forget(fm->fc, forget, outarg->nodeid, 1);
-@@ -684,7 +685,7 @@ static int fuse_create_open(struct inode *dir, struct dentry *entry,
- 	ff->nodeid = outentry.nodeid;
- 	ff->open_flags = outopen.open_flags;
- 	inode = fuse_iget(dir->i_sb, outentry.nodeid, outentry.generation,
--			  &outentry.attr, ATTR_TIMEOUT(&outentry), 0);
-+			  &outentry.attr, ATTR_TIMEOUT(&outentry), 0, 0);
- 	if (!inode) {
- 		flags &= ~(O_CREAT | O_EXCL | O_TRUNC);
- 		fuse_sync_release(NULL, ff, flags);
-@@ -812,7 +813,7 @@ static int create_new_entry(struct fuse_mount *fm, struct fuse_args *args,
- 		goto out_put_forget_req;
- 
- 	inode = fuse_iget(dir->i_sb, outarg.nodeid, outarg.generation,
--			  &outarg.attr, ATTR_TIMEOUT(&outarg), 0);
-+			  &outarg.attr, ATTR_TIMEOUT(&outarg), 0, 0);
- 	if (!inode) {
- 		fuse_queue_forget(fm->fc, forget, outarg.nodeid, 1);
- 		return -ENOMEM;
-@@ -1980,7 +1981,7 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
- 
- 	fuse_change_attributes_common(inode, &outarg.attr, NULL,
- 				      ATTR_TIMEOUT(&outarg),
--				      fuse_get_cache_mask(inode));
-+				      fuse_get_cache_mask(inode), 0);
- 	oldsize = inode->i_size;
- 	/* see the comment in fuse_change_attributes() */
- 	if (!is_wb || is_truncate)
-diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
-index 7b9a4e10212b0..8751217aaafa7 100644
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -858,6 +858,9 @@ struct fuse_conn {
- 	/** Version counter for attribute changes */
- 	atomic64_t attr_version;
- 
-+	/** Version counter for evict inode */
-+	atomic64_t evict_ctr;
-+
- 	/** Called on final put */
- 	void (*release)(struct fuse_conn *);
- 
-@@ -947,6 +950,11 @@ static inline u64 fuse_get_attr_version(struct fuse_conn *fc)
- 	return atomic64_read(&fc->attr_version);
- }
- 
-+static inline u64 fuse_get_evict_ctr(struct fuse_conn *fc)
-+{
-+	return atomic64_read(&fc->evict_ctr);
-+}
-+
- static inline bool fuse_stale_inode(const struct inode *inode, int generation,
- 				    struct fuse_attr *attr)
- {
-@@ -1006,7 +1014,8 @@ extern const struct dentry_operations fuse_root_dentry_operations;
-  */
- struct inode *fuse_iget(struct super_block *sb, u64 nodeid,
- 			int generation, struct fuse_attr *attr,
--			u64 attr_valid, u64 attr_version);
-+			u64 attr_valid, u64 attr_version,
-+			u64 evict_ctr);
- 
- int fuse_lookup_name(struct super_block *sb, u64 nodeid, const struct qstr *name,
- 		     struct fuse_entry_out *outarg, struct inode **inode);
-@@ -1105,7 +1114,8 @@ void fuse_change_attributes(struct inode *inode, struct fuse_attr *attr,
- 
- void fuse_change_attributes_common(struct inode *inode, struct fuse_attr *attr,
- 				   struct fuse_statx *sx,
--				   u64 attr_valid, u32 cache_mask);
-+				   u64 attr_valid, u32 cache_mask,
-+				   u64 evict_ctr);
- 
- u32 fuse_get_cache_mask(struct inode *inode);
- 
 diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
-index 84cfb5fcbc154..9205439ba53cf 100644
+index 9205439ba53cf..990411ada7474 100644
 --- a/fs/fuse/inode.c
 +++ b/fs/fuse/inode.c
-@@ -164,6 +164,14 @@ static void fuse_evict_inode(struct inode *inode)
- 			fuse_cleanup_submount_lookup(fc, fi->submount_lookup);
- 			fi->submount_lookup = NULL;
- 		}
-+		/*
-+		 * Evict of non-deleted inode may race with outstanding
-+		 * LOOKUP/READDIRPLUS requests and result in inconsistency when
-+		 * the request finishes.  Deal with that here by bumping a
-+		 * counter that can be compared to the starting value.
-+		 */
-+		if (inode->i_nlink > 0)
-+			atomic64_inc(&fc->evict_ctr);
- 	}
- 	if (S_ISREG(inode->i_mode) && !fuse_is_bad(inode)) {
- 		WARN_ON(!list_empty(&fi->write_files));
-@@ -196,17 +204,30 @@ static ino_t fuse_squash_ino(u64 ino64)
- 
- void fuse_change_attributes_common(struct inode *inode, struct fuse_attr *attr,
- 				   struct fuse_statx *sx,
--				   u64 attr_valid, u32 cache_mask)
-+				   u64 attr_valid, u32 cache_mask,
-+				   u64 evict_ctr)
- {
- 	struct fuse_conn *fc = get_fuse_conn(inode);
- 	struct fuse_inode *fi = get_fuse_inode(inode);
- 
- 	lockdep_assert_held(&fi->lock);
- 
-+	/*
-+	 * Clear basic stats from invalid mask.
-+	 *
-+	 * Don't do this if this is coming from a fuse_iget() call and there
-+	 * might have been a racing evict which would've invalidated the result
-+	 * if the attr_version would've been preserved.
-+	 *
-+	 * !evict_ctr -> this is create
-+	 * fi->attr_version != 0 -> this is not a new inode
-+	 * evict_ctr == fuse_get_evict_ctr() -> no evicts while during request
-+	 */
-+	if (!evict_ctr || fi->attr_version || evict_ctr == fuse_get_evict_ctr(fc))
-+		set_mask_bits(&fi->inval_mask, STATX_BASIC_STATS, 0);
-+
- 	fi->attr_version = atomic64_inc_return(&fc->attr_version);
- 	fi->i_time = attr_valid;
--	/* Clear basic stats from invalid mask */
--	set_mask_bits(&fi->inval_mask, STATX_BASIC_STATS, 0);
- 
- 	inode->i_ino     = fuse_squash_ino(attr->ino);
- 	inode->i_mode    = (inode->i_mode & S_IFMT) | (attr->mode & 07777);
-@@ -285,9 +306,9 @@ u32 fuse_get_cache_mask(struct inode *inode)
- 	return STATX_MTIME | STATX_CTIME | STATX_SIZE;
- }
- 
--void fuse_change_attributes(struct inode *inode, struct fuse_attr *attr,
--			    struct fuse_statx *sx,
--			    u64 attr_valid, u64 attr_version)
-+static void fuse_change_attributes_i(struct inode *inode, struct fuse_attr *attr,
-+				     struct fuse_statx *sx, u64 attr_valid,
-+				     u64 attr_version, u64 evict_ctr)
- {
- 	struct fuse_conn *fc = get_fuse_conn(inode);
- 	struct fuse_inode *fi = get_fuse_inode(inode);
-@@ -321,7 +342,8 @@ void fuse_change_attributes(struct inode *inode, struct fuse_attr *attr,
- 	}
- 
- 	old_mtime = inode_get_mtime(inode);
--	fuse_change_attributes_common(inode, attr, sx, attr_valid, cache_mask);
-+	fuse_change_attributes_common(inode, attr, sx, attr_valid, cache_mask,
-+				      evict_ctr);
- 
- 	oldsize = inode->i_size;
- 	/*
-@@ -362,6 +384,13 @@ void fuse_change_attributes(struct inode *inode, struct fuse_attr *attr,
- 		fuse_dax_dontcache(inode, attr->flags);
- }
- 
-+void fuse_change_attributes(struct inode *inode, struct fuse_attr *attr,
-+			    struct fuse_statx *sx, u64 attr_valid,
-+			    u64 attr_version)
-+{
-+	fuse_change_attributes_i(inode, attr, sx, attr_valid, attr_version, 0);
-+}
-+
- static void fuse_init_submount_lookup(struct fuse_submount_lookup *sl,
- 				      u64 nodeid)
- {
-@@ -416,7 +445,8 @@ static int fuse_inode_set(struct inode *inode, void *_nodeidp)
- 
- struct inode *fuse_iget(struct super_block *sb, u64 nodeid,
- 			int generation, struct fuse_attr *attr,
--			u64 attr_valid, u64 attr_version)
-+			u64 attr_valid, u64 attr_version,
-+			u64 evict_ctr)
- {
- 	struct inode *inode;
- 	struct fuse_inode *fi;
-@@ -477,8 +507,8 @@ struct inode *fuse_iget(struct super_block *sb, u64 nodeid,
- 	fi->nlookup++;
- 	spin_unlock(&fi->lock);
- done:
--	fuse_change_attributes(inode, attr, NULL, attr_valid, attr_version);
--
-+	fuse_change_attributes_i(inode, attr, NULL, attr_valid, attr_version,
-+				 evict_ctr);
- 	return inode;
- }
- 
-@@ -934,6 +964,7 @@ void fuse_conn_init(struct fuse_conn *fc, struct fuse_mount *fm,
- 	fc->initialized = 0;
- 	fc->connected = 1;
- 	atomic64_set(&fc->attr_version, 1);
-+	atomic64_set(&fc->evict_ctr, 1);
- 	get_random_bytes(&fc->scramble_key, sizeof(fc->scramble_key));
- 	fc->pid_ns = get_pid_ns(task_active_pid_ns(current));
- 	fc->user_ns = get_user_ns(user_ns);
-@@ -990,7 +1021,7 @@ static struct inode *fuse_get_root_inode(struct super_block *sb, unsigned mode)
- 	attr.mode = mode;
- 	attr.ino = FUSE_ROOT_ID;
- 	attr.nlink = 1;
--	return fuse_iget(sb, FUSE_ROOT_ID, 0, &attr, 0, 0);
-+	return fuse_iget(sb, FUSE_ROOT_ID, 0, &attr, 0, 0, 0);
- }
- 
- struct fuse_inode_handle {
-@@ -1557,7 +1588,8 @@ static int fuse_fill_super_submount(struct super_block *sb,
- 		return -ENOMEM;
- 
+@@ -1590,6 +1590,8 @@ static int fuse_fill_super_submount(struct super_block *sb,
  	fuse_fill_attr_from_inode(&root_attr, parent_fi);
--	root = fuse_iget(sb, parent_fi->nodeid, 0, &root_attr, 0, 0);
-+	root = fuse_iget(sb, parent_fi->nodeid, 0, &root_attr, 0, 0,
-+			 fuse_get_evict_ctr(fm->fc));
+ 	root = fuse_iget(sb, parent_fi->nodeid, 0, &root_attr, 0, 0,
+ 			 fuse_get_evict_ctr(fm->fc));
++	if (!root)
++		return -ENOMEM;
  	/*
  	 * This inode is just a duplicate, so it is not looked up and
  	 * its nlookup should not be incremented.  fuse_iget() does
-diff --git a/fs/fuse/readdir.c b/fs/fuse/readdir.c
-index f4653df0ba01c..2dad402e049a2 100644
---- a/fs/fuse/readdir.c
-+++ b/fs/fuse/readdir.c
-@@ -153,7 +153,7 @@ static int parse_dirfile(char *buf, size_t nbytes, struct file *file,
- 
- static int fuse_direntplus_link(struct file *file,
- 				struct fuse_direntplus *direntplus,
--				u64 attr_version)
-+				u64 attr_version, u64 evict_ctr)
- {
- 	struct fuse_entry_out *o = &direntplus->entry_out;
- 	struct fuse_dirent *dirent = &direntplus->dirent;
-@@ -237,7 +237,7 @@ static int fuse_direntplus_link(struct file *file,
- 	} else {
- 		inode = fuse_iget(dir->i_sb, o->nodeid, o->generation,
- 				  &o->attr, ATTR_TIMEOUT(o),
--				  attr_version);
-+				  attr_version, evict_ctr);
- 		if (!inode)
- 			inode = ERR_PTR(-ENOMEM);
- 
-@@ -288,7 +288,8 @@ static void fuse_force_forget(struct file *file, u64 nodeid)
- }
- 
- static int parse_dirplusfile(char *buf, size_t nbytes, struct file *file,
--			     struct dir_context *ctx, u64 attr_version)
-+			     struct dir_context *ctx, u64 attr_version,
-+			     u64 evict_ctr)
- {
- 	struct fuse_direntplus *direntplus;
- 	struct fuse_dirent *dirent;
-@@ -323,7 +324,7 @@ static int parse_dirplusfile(char *buf, size_t nbytes, struct file *file,
- 		buf += reclen;
- 		nbytes -= reclen;
- 
--		ret = fuse_direntplus_link(file, direntplus, attr_version);
-+		ret = fuse_direntplus_link(file, direntplus, attr_version, evict_ctr);
- 		if (ret)
- 			fuse_force_forget(file, direntplus->entry_out.nodeid);
- 	}
-@@ -341,7 +342,7 @@ static int fuse_readdir_uncached(struct file *file, struct dir_context *ctx)
- 	struct fuse_io_args ia = {};
- 	struct fuse_args_pages *ap = &ia.ap;
- 	struct fuse_folio_desc desc = { .length = PAGE_SIZE };
--	u64 attr_version = 0;
-+	u64 attr_version = 0, evict_ctr = 0;
- 	bool locked;
- 
- 	folio = folio_alloc(GFP_KERNEL, 0);
-@@ -356,6 +357,7 @@ static int fuse_readdir_uncached(struct file *file, struct dir_context *ctx)
- 	ap->folio_descs = &desc;
- 	if (plus) {
- 		attr_version = fuse_get_attr_version(fm->fc);
-+		evict_ctr = fuse_get_evict_ctr(fm->fc);
- 		fuse_read_args_fill(&ia, file, ctx->pos, PAGE_SIZE,
- 				    FUSE_READDIRPLUS);
- 	} else {
-@@ -373,7 +375,8 @@ static int fuse_readdir_uncached(struct file *file, struct dir_context *ctx)
- 				fuse_readdir_cache_end(file, ctx->pos);
- 		} else if (plus) {
- 			res = parse_dirplusfile(folio_address(folio), res,
--						file, ctx, attr_version);
-+						file, ctx, attr_version,
-+						evict_ctr);
- 		} else {
- 			res = parse_dirfile(folio_address(folio), res, file,
- 					    ctx);
 -- 
 2.53.0
 
