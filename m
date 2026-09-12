@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A8733F59A;
-	Sat, 12 Sep 2026 12:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A195447AF6D;
+	Sat, 12 Sep 2026 12:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215008; cv=none; b=cpgA9Yoqs7V9xis7lfXQ7OUVPNEoFypSe8GC2mmECVZSAspT/YLKccXcKmSU1pgP1hW0PKsEeniH2cwIAQU5j9x/SXrTfJSM3Alxv0PmDoT+HvlucOvdky+3KWy6WEAPm4QWBqB+szRKWwdsCszQamI/HEuL/DDLcBU19VyX3aM=
+	t=1789215012; cv=none; b=J2DWE9/ZposAv8qJlcmZ6EU94UmrEgJk/k0TL068ayPUkHPLFmFfXrZHrVKtcXzh0rchJ9sEh0WpMCOOiI7WyYESlKLwin0hhrFiFYZ/uAhPsR0yhdKy/HV6rANCEanGBkO7m2OSyd3oaEqD47r37509uwZfkwNZz+UIwqts4hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215008; c=relaxed/simple;
-	bh=O/BU9pkN3jia2ryGUVNiHofUHiaAqaY0VrrJhR6isBM=;
+	s=arc-20240116; t=1789215012; c=relaxed/simple;
+	bh=wStCEgWZucSBi3VJQOI7hrwSSNbUeCAMwvwzMjpwEYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIlXRBLp4yos2ESFtugmLaeY4eBynQRslH7BTaPAZ+mV48kjD0zvgeW0AKhYWxRBaUABJzpsS8p52V+fDJ7SgWDujj1WOO/8PCLkZw5HG5FrSCfNsytuh+kaV0XI6zM+negEoJYeOenDbDXsUEFuDW6/daWO8UNhHgIBfn6dJEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgPUqeUF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FfdFJntCLiarK5hHZlOlxp/xSGvRfOrsvEgdt1sLksgcThQLlF9WOC97HTN4Le13tlRyA1SF9KTbMA0h3qdGW5IrlK8sEw/wugrHsLCkXObOmuh1ONQIoFyh4B/4WBK5NSPsVN39d+/VQsjKipptOKKXsU3m4jDz1+wVmWm6BRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqtaB3xS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgPUqeUF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF1E1F000FF;
-	Sat, 12 Sep 2026 12:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqtaB3xS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AAB1F000FF;
+	Sat, 12 Sep 2026 12:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215007;
-	bh=AXtAjFbgqEU1NoU3eyI8nmfSgAukjonIPqur9JH88LE=;
+	s=korg; t=1789215011;
+	bh=+ogvZtLpzVQTPXk45a3GrL4EGU2zt5RiiqwBPVliN2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IgPUqeUFN7el/Y/T1UDgoIZVPKQv2z3jHREHfladJMUn2ikKja9l0sFyF8GB9P7pE
-	 pYtnEkz222ODd3FHU/PXaxyORyJlILf+fdkntqDn0pM9Mm/8IMDnWjGBrKmFhdFlAk
-	 vQx5us7i0srnI407GeiKjKcOSG0rN5PonCfmRhvc=
+	b=rqtaB3xS6SbkEdXAwhHfMmcZOWbdaN1V+l9uVQ5YTG+45QWuX6r+18YnspimctYCW
+	 7uxzzRbmlDz1CtfHWgGwggOMyVpT92Ir4AvKxiEotHwCKmRlMyYkHSQPfyrTa+AF2A
+	 oPOVkZvDhJtVgsl6n17cAKaFDaiC9KjvkSDttFZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0443/1376] clk: qcom: gdsc: tear down per-domain genpds in gdsc_unregister()
-Date: Sat, 12 Sep 2026 08:47:49 +0200
-Message-ID: <20260912065617.407354716@linuxfoundation.org>
+Subject: [PATCH 6.12 0444/1376] arm64: dts: qcom: sc8180x-primus: Rename regulator nodes
+Date: Sat, 12 Sep 2026 08:47:50 +0200
+Message-ID: <20260912065617.429862280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,74 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 86b23609d5e17a770d03037e53c6a443e742a6e6 ]
+[ Upstream commit ae51d9396f9318189e91578878409d8ada152edb ]
 
-gdsc_unregister() removes the OF provider entry and tears down the
-parent/subdomain wiring, but never calls pm_genpd_remove() on the
-individual generic_pm_domain structures registered by gdsc_init():
+The nodes would be sorted correctly, if their names started with
+"regulator-" (which is the style used in the latest submissions).
+Touch that up.
 
-	void gdsc_unregister(struct gdsc_desc *desc)
-	{
-		struct device *dev = desc->dev;
-		size_t num = desc->num;
-
-		gdsc_pm_subdomain_remove(desc, num);
-		of_genpd_del_provider(dev->of_node);
-	}
-
-That leaves dangling entries on the global gpd_list. After a provider
-unbind/rebind cycle (deferred-probe replay during early boot, real
-module unload of a clk driver that owns GDSCs, or an OF-overlay tear-
-down) the next gdsc_init() will end up trying to re-register a name
-that is still in the list and pm_genpd_init() returns -EEXIST.
-
-While we are here, flip the order so the consumer-facing OF provider
-entry is the first thing removed -- otherwise a fresh
-of_genpd_get_from_provider() call racing with the teardown could
-attach to a domain that is mid-removal.
-
-Iterate the scs[] array and pm_genpd_remove() each registered domain
-after the subdomain links are torn down. The regulators stay devm-
-managed (devm_regulator_get_optional() in gdsc_register()), so the
-release happens automatically when the underlying device is unbound;
-just the genpd accounting needs to be undone explicitly.
-
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: 45dd0e55317c ("clk: qcom: Add support for GDSCs")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-4-github.com@herrie.org
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260616-topic-8180_disp_power-v2-1-167785993231@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 80bf2eb87bfb ("arm64: dts: qcom: sc8180x-primus: Describe the display power net")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8180x-primus.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index 119d96dfa853e..83320559d2188 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -600,10 +600,18 @@ int gdsc_register(struct gdsc_desc *desc,
- void gdsc_unregister(struct gdsc_desc *desc)
- {
- 	struct device *dev = desc->dev;
-+	struct gdsc **scs = desc->scs;
- 	size_t num = desc->num;
-+	int i;
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+index 79b4d293ea1e7..09dc42f5f2f86 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
++++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+@@ -165,7 +165,7 @@ reserved-region@9a500000 {
+ 		};
+ 	};
  
--	gdsc_pm_subdomain_remove(desc, num);
- 	of_genpd_del_provider(dev->of_node);
-+	gdsc_pm_subdomain_remove(desc, num);
-+
-+	for (i = 0; i < num; i++) {
-+		if (!scs[i])
-+			continue;
-+		pm_genpd_remove(&scs[i]->pd);
-+	}
- }
+-	vreg_nvme_0p9: nvme-0p9-regulator {
++	vreg_nvme_0p9: regulator-nvme-0p9 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vreg_nvme_0p9";
  
- /*
+@@ -175,7 +175,7 @@ vreg_nvme_0p9: nvme-0p9-regulator {
+ 		regulator-always-on;
+ 	};
+ 
+-	vreg_nvme_3p3: nvme-3p3-regulator {
++	vreg_nvme_3p3: regulator-nvme-3p3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vreg_nvme_3p3";
+ 
+@@ -188,7 +188,7 @@ vreg_nvme_3p3: nvme-3p3-regulator {
+ 		regulator-always-on;
+ 	};
+ 
+-	vdd_kb_tp_3v3: vdd-kb-tp-3v3-regulator {
++	vdd_kb_tp_3v3: regulator-vdd-kb-tp-3v3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vdd_kb_tp_3v3";
+ 		regulator-min-microvolt = <3300000>;
+@@ -203,7 +203,7 @@ vdd_kb_tp_3v3: vdd-kb-tp-3v3-regulator {
+ 		pinctrl-0 = <&kb_tp_3v3_en_active_state>;
+ 	};
+ 
+-	vph_pwr: vph-pwr-regulator {
++	vph_pwr: regulator-vph-pwr {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vph_pwr";
+ 		regulator-min-microvolt = <3700000>;
 -- 
 2.53.0
 
