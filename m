@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F858429CC6;
-	Sat, 12 Sep 2026 13:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5770247D92F;
+	Sat, 12 Sep 2026 13:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219075; cv=none; b=LELsOcyF5T9lT46FBYNxR+YYZTdZ/xYKL9JwWgNHYe9qq3kgXO/2ud8xKyfqfsR7TFLg4+FBln7KBd+rPTIwA2qH5dU4VPs9BVlLFGAFJlt9zbJrfLRz1UW/8lEzcc7p2+M7pucubpz6H+AagXvLMUZ03obpwcoLD571NgAOP9w=
+	t=1789219081; cv=none; b=FvXZo4x+hzLT4rldvjG+lTawQtBXgkDEH0h0eX0ia5gK7fJJ6cMAzJgvsqOVRNEyDLJdTTGJH9KqeOiYuniJG+I/E7mjJvVB6Fbnr1/8JC8lMu7IoihXIGM1tVJrDOaRw8BzkfqE1a0QTkteZZKSDhonNC0/eWDqy5yj2A6iGg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219075; c=relaxed/simple;
-	bh=OLNhRANSUorK/KI7ytmnzw3GemJkJNbuGIGg+yOQeKQ=;
+	s=arc-20240116; t=1789219081; c=relaxed/simple;
+	bh=coZtsTGeCuhSf37e20jARKeo6ZdVovyAUTzFen6C0XE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6+owKUhs6qheH2t74QS2I+MECiE4V00V5I7qWzmzmnvzXmkS8mgtXrahNYI5WtCFaDHVWS7vOiWthpXuQQk7TxOev50vBXFRfFSy/m1T4gVWC/GbozK2IhIHD3c4VT7ZpyovFbh3bEQrBhmt2jp3XIEbJoUzoQ2VeKpVrh2HZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWGSjroD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o9B3wkQYRBrqevk1T8XbojkOHA9EPOKHCc00zgMbCqjAACF0JqMW9O1uTaYq4YrTg/5om5cKTwVJ/i8dwPPM+5D1u+WOBefZbxfpUCMwhzMyJsuOPBsTvFIB1a/rFfCKVCnOBx/zzSM2XSr9Q1Qw6Z77h4Kl8WTX0erEYkJ72cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJynYMfw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWGSjroD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F941F000FF;
-	Sat, 12 Sep 2026 13:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJynYMfw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F2E1F000FF;
+	Sat, 12 Sep 2026 13:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219074;
-	bh=YrCcNrh1/EXONTowoTBiTx46B/29QeoAenqMLNa5HxI=;
+	s=korg; t=1789219079;
+	bh=Q8txaLHMORPp4RFufk9Hm3hzAQpXqVS93SfceSzf7Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lWGSjroD2/ZteEPMWrRudvL81pRVfPH3IYOIgvUzzNOpseOYOOynJ79pkaTcP9PHU
-	 h41pvtFKTHXZqlZxIJBDwLCd1U4go/AnK40rU2PyLBJeGCS/yrV/PFEHehuEx4djbd
-	 6zVlW4D8hcWuUElFV/gS/WFj1B+GD29ztwcbVuyc=
+	b=NJynYMfwreuFcXVXm2q7emyOoD0GU1lqjwcH4HSv+gToKos4mx2Xt9j9OKiVwM4Bt
+	 b1WZ3zuUUcgnhWD2ExoPvbvsgFXdso+DUyfPWbLnaqJk7obQpM2UCe8C12m8sKW79n
+	 mIftbgGUgGpTS+ULpZKPu0Zij1IqZwhvPLI1yOEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e6382a2f53f5fc7453ac@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marek Czernohous <marek@czernohous.de>,
+	Simon Horman <horms@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1276/1376] Bluetooth: L2CAP: fix race l2cap_sock_cleanup_listen() vs. put_chan
-Date: Sat, 12 Sep 2026 09:01:42 +0200
-Message-ID: <20260912065635.977491892@linuxfoundation.org>
+Subject: [PATCH 6.12 1250/1376] forcedeth: stop the tx_timeout register dump past the requested window
+Date: Sat, 12 Sep 2026 09:01:16 +0200
+Message-ID: <20260912065635.401622104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,120 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Marek Czernohous <marek@czernohous.de>
 
-[ Upstream commit 66d6ef18548ae6d7dd452b84115fc82c0a73a4ea ]
+[ Upstream commit cfa9178ce2e5b4f2e2a9e8b577a6cff841665aa0 ]
 
-For L2CAP sockets without owning sk->sk_socket, reading
-l2cap_pi(sk)->chan may race against concurrent l2cap_sock_kill() ->
-l2cap_sock_put_chan().  This excludes simultaneous proto_ops callbacks,
-but access in l2cap_sock_cleanup_listen() has unsafe lockless read.
+nv_tx_timeout() dumps the register window in rows of eight dwords:
 
- [Task 1]                         [Task 2 (hdev->workqueue)]
- l2cap_sock_release(parent)       l2cap_disconn_cfm
-   l2cap_sock_cleanup_listen        l2cap_conn_del
-     bt_accept_dequeue                l2cap_chan_del
-       lock_sock(sk)                    l2cap_sock_teardown_cb
-       bt_accept_unlink
-         bt_sk(sk)->parent = NULL
-       release_sock(sk) ----------------> lock_sock(sk)
-                                          parent = /* NULL */
-     lock_sock(sk) <--------------------- release_sock(sk)
-                                          sock_set_flag(sk, SOCK_ZAPPED)
-                                      l2cap_sock_close_cb
-                                        l2cap_sock_kill(sk)
-                                          l2cap_sock_put_chan
-     chan = READ l2cap_pi(sk)->chan         l2cap_pi(sk)->chan = NULL
-     l2cap_chan_hold_unless_zero            l2cap_put_chan(chan)
-       kref_get_unless_zero(&chan->ref)
+	for (i = 0; i <= np->register_size; i += 32) {
+		netdev_info(dev, "%3x: %08x ... %08x\n", i,
+			    readl(base + i + 0), ..., readl(base + i + 28));
 
-Task 1 may observe NULL which causes null-ptr-deref.
+The loop bound only checks the row's starting offset, so the final row
+reads a full 32 bytes from a position that is below the end of the window
+but too close to it. base is mapped with exactly that length:
 
-Fix the race by taking lock_sock() in l2cap_sock_kill() to
-synchronize with l2cap_sock_cleanup_listen().  hold_unless_zero() is not
-needed here, l2cap_pi(sk)->chan owns reference if it is non-NULL.
+	np->base = ioremap(addr, np->register_size);
 
-Clarify code comments vs. locking.
+so the tail of that row is read from beyond the length the driver asked
+for. Per variant, the last iteration reads past register_size by:
 
-Fixes: 6fef032af009 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()")
-Reported-by: syzbot+e6382a2f53f5fc7453ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e6382a2f53f5fc7453ac
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+	NV_PCI_REGSZ_VER1 (0x270): row 0x260 reads to 0x27f, 16 bytes over
+	NV_PCI_REGSZ_VER2 (0x2d4): row 0x2c0 reads to 0x2df, 12 bytes over
+	NV_PCI_REGSZ_VER3 (0x604): row 0x600 reads to 0x61f, 28 bytes over
+
+This happens on every supported device, not just one of them. Note that
+it is not a consequence of the sizes being odd: with i <= register_size
+the offending row is reached whatever the size, and a size that were a
+multiple of 32 would overrun by a full row rather than by a remainder.
+
+To be precise about the severity: the reads stay inside the BAR. Memory
+BAR sizes are powers of two, the driver only accepts a region with
+pci_resource_len() >= register_size (forcedeth.c:5757-5762), and the
+next power of two at or above each register_size already covers the
+offending row: 0x400 for 0x270 and 0x2d4, 0x800 for 0x604. ioremap()
+also rounds the mapped length up to page granularity, so the reads land
+inside the mapping the CPU has as well. What they leave is the window
+the driver asked for, not the BAR and not the mapping. That is still a
+driver reading registers it did not ask for, and it is trivial to
+avoid, but nobody should expect a fault from it.
+
+Changing <= to < is not enough: register_size is a length and every size
+above is larger than its last row start, so i still reaches the offending
+row. Check that the whole row fits instead.
+
+The trade-off is that a partial trailing row is no longer dumped: 16 bytes
+for VER1, 20 for VER2, 4 for VER3. That seemed preferable to reading
+outside the requested window, and to open-coding a second, narrower dump
+for the remainder in what is a debug-only path. Extending the dump to
+cover the tail can be done on top if anyone misses those registers.
+
+Only reachable with the debug_tx_timeout module parameter, which defaults
+to false. It has not been observed at runtime: forcing a genuine TX
+timeout on the reference machine is not something I can do safely, so this
+rests on the arithmetic above and on a build test, not on a reproduction.
+UBSAN does not catch it either, since these are MMIO reads rather than an
+array access. It was found by reading the function while fixing the
+saved_config_space off-by-one in nv_suspend() and nv_resume().
+
+The dump was introduced with a fixed 0x400 bound while ioremap() mapped
+only NV_PCI_REGSZ (0x270), so it read about 0x190 bytes too far from the
+start. Commit 86a0f04387bf ("[PATCH] forcedeth: fix initialization")
+later replaced 0x400 with np->register_size, which shrank the overrun to
+the remainder but did not remove it.
+
+Fixes: c2dba06dae7d ("[PATCH] forcedeth: rewritten tx irq handling")
+Signed-off-by: Marek Czernohous <marek@czernohous.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/178682367886.3748309.6978554332066826294@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |  5 +++++
- net/bluetooth/l2cap_sock.c    | 23 +++++++++++++----------
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/nvidia/forcedeth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index 8f0df86ee684b..f5f91373022f0 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -702,7 +702,12 @@ struct l2cap_rx_busy {
+diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
+index c9fb3be4fca94..f28ea729ebb4f 100644
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -2754,7 +2754,7 @@ static void nv_tx_timeout(struct net_device *dev, unsigned int txqueue)
  
- struct l2cap_pinfo {
- 	struct bt_sock		bt;
-+
-+	/* With owning sk_socket chan may be read without lock, other access
-+	 * should hold lock_sock.
-+	 */
- 	struct l2cap_chan	*chan;
-+
- 	struct list_head	rx_busy;
- };
- 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 8432baba7bb82..d5b1b5a231a19 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1271,7 +1271,12 @@ static void l2cap_sock_kill(struct sock *sk)
- 
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
- 
-+	/* Take lock to synchronize against access without owning sk->sk_socket,
-+	 * eg. in l2cap_sock_cleanup_listen(). proto_ops etc. don't need lock.
-+	 */
-+	lock_sock(sk);
- 	l2cap_sock_put_chan(sk);
-+	release_sock(sk);
- 
- 	/* Kill poor orphan */
- 	sock_set_flag(sk, SOCK_DEAD);
-@@ -1474,14 +1479,10 @@ static void l2cap_sock_cleanup_listen(struct sock *parent)
- 	 * establish sk_lock -> conn->lock and invert the established
- 	 * conn->lock -> chan->lock -> sk_lock order (lockdep deadlock).
- 	 *
--	 * Instead, briefly take the child sk lock to fetch and pin its chan.
--	 * l2cap_conn_del() reaches the chan free only via
--	 * l2cap_chan_del() -> l2cap_sock_teardown_cb(), which itself takes
--	 * the child sk lock; holding it across l2cap_chan_hold_unless_zero()
--	 * therefore guarantees the chan cannot be freed while we read and
--	 * pin it (hold_unless_zero() additionally skips a chan already past
--	 * its last reference).  We then drop the sk lock before taking
--	 * chan->lock, so sk and chan locks are never held together.
-+	 * Instead, briefly take the child sk lock to synchronize vs.
-+	 * l2cap_sock_kill that puts l2cap_pi(sk)->chan. We then drop the sk
-+	 * lock before taking chan->lock, so sk and chan locks are never held
-+	 * together.
- 	 *
- 	 * Since we cannot call l2cap_chan_close() without conn->lock,
- 	 * schedule l2cap_chan_timeout to close the channel; it already
-@@ -1491,10 +1492,12 @@ static void l2cap_sock_cleanup_listen(struct sock *parent)
- 		struct l2cap_chan *chan;
- 
- 		lock_sock_nested(sk, L2CAP_NESTING_NORMAL);
--		chan = l2cap_chan_hold_unless_zero(l2cap_pi(sk)->chan);
-+		chan = l2cap_pi(sk)->chan;
-+		if (chan)
-+			l2cap_chan_hold(chan);
- 		release_sock(sk);
- 		if (!chan) {
--			/* l2cap_conn_del() already tearing this child down */
-+			/* Already torn down */
- 			sock_put(sk);
- 			continue;
- 		}
+ 		netdev_info(dev, "Ring at %lx\n", (unsigned long)np->ring_addr);
+ 		netdev_info(dev, "Dumping tx registers\n");
+-		for (i = 0; i <= np->register_size; i += 32) {
++		for (i = 0; i + 32 <= np->register_size; i += 32) {
+ 			netdev_info(dev,
+ 				    "%3x: %08x %08x %08x %08x "
+ 				    "%08x %08x %08x %08x\n",
 -- 
 2.53.0
 
