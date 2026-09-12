@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E9247D931;
-	Sat, 12 Sep 2026 13:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5426847CA85;
+	Sat, 12 Sep 2026 13:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219686; cv=none; b=OkJ89RkhOIt1vlMNRWrU1QBMqpXyAEENR7rpWWCBLEGAsk9mjjFmm3x+SoUfbf1GmvVOtIDDbGPc9HAyHANBm14bohKqSqt7X80BPLEVjobje+w4OieetZW7SEEcO3j8o9irUp3GBNVUerKKApYqBlePMz8XX1gBbKly0Ql0YV0=
+	t=1789219691; cv=none; b=jdYZnyze9L4ccpLp7S9iH0aIue+d5Fef0NNJARDV+JTcJ5hiR0mMqCw4zViWBGNGQJnTuNSnCU8J3AZWcyRLBThHP+NY45P9ASlJKYldxIRkoBdsUn8xwSqsGkPUQYQiKdxZVQrKlw5mU8wzlRgaIeLR6vyYoqPDy0lYUQmuGB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219686; c=relaxed/simple;
-	bh=7z37GonTdSPjeWSKkRGm5qrvlDh8yudB9//HlYSUGSI=;
+	s=arc-20240116; t=1789219691; c=relaxed/simple;
+	bh=gy/r9eXjk6Q06igeq/LL6f8Om8d8C11DwvBm7LVbUYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYRwfAGc0SOuBPCBDPklY/7skHeIV8feoLUXy0GtIciqQAelUAsu9IAYDXZArwqVuSMnEW025l3jxnWcv0Wzi/L0FeVVSTN5kfQbOQ5iZvjW4d2URp0iPuK48adt77d5XuDZ81eoNhpY7SLY7lzkDs4XDszx5kmU5OsVrsm+UUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFya8LQN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lJibyRwcZPttwvB9GB6p3XECzb84/jYWzWyk4eJAnIlDJjqP28vzAkw1eVstB7qfTKM6wZfbDgFXJFNmIyJfB018WvKSx7dOnEKq7aGQhGieksZ4FwvZqjaD9bYf1MRz5Fgh+d3bzaOoc48MBIMmjeAuFUwyTxWCX6J/aBNLU3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkR5yuRf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFya8LQN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097451F000FF;
-	Sat, 12 Sep 2026 13:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkR5yuRf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9A71F000FF;
+	Sat, 12 Sep 2026 13:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219685;
-	bh=pEC20+Wzllea+gwhhwlP2kpn4fqnaxIdjmDiLZKnn4g=;
+	s=korg; t=1789219690;
+	bh=tA91vgUhYpSQZ9G8VjK5UocZkiiFR6Kc4qInqffRtGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iFya8LQN94C5EQPNFVThvdVYRIs2FpeQbyrGvXqnfOHs0GTsoSnAT7fUYmJQV/bX8
-	 bCP7x38sD0qUklNxEUS/4pK4OAJgXmNw/bfyIUfIBOSu0bO0LIjgMCNE47i7REb76D
-	 RlLDjh2pC7Zyv4xQovhkARjMdOB51clXBVZrVIBI=
+	b=wkR5yuRfFSF9/JbEz3JnJCw/ms/Rofe9mkSc4jMX/UCzUZ0e48a47fn3EZwQK8rFl
+	 fH5dvfzgT/CZVXFvN3OHxvYyweJof2EvoJEJ/jMBThhM7Ap6u/GOGlYrIuzLM0piO1
+	 9OkZsD/t1dnVMjTyFIpZbL5w18MOZ3EaN4EBmqXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0004/1424] net: dst: introduce dst->dev_rcu
-Date: Sat, 12 Sep 2026 08:40:36 +0200
-Message-ID: <20260912065607.386244620@linuxfoundation.org>
+Subject: [PATCH 6.6 0005/1424] ipv4: start using dst_dev_rcu()
+Date: Sat, 12 Sep 2026 08:40:37 +0200
+Message-ID: <20260912065607.408061267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -55,107 +55,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit caedcc5b6df1b2e2b5f39079e3369c1d4d5c5f50 ]
+[ Upstream commit 6ad8de3cefdb6ffa6708b21c567df0dbf82c43a8 ]
 
-Followup of commit 88fe14253e18 ("net: dst: add four helpers
-to annotate data-races around dst->dev").
+Change icmpv4_xrlim_allow(), ip_defrag() to prevent possible UAF.
 
-We want to gradually add explicit RCU protection to dst->dev,
-including lockdep support.
-
-Add an union to alias dst->dev_rcu and dst->dev.
-
-Add dst_dev_net_rcu() helper.
+Change ipmr_prepare_xmit(), ipmr_queue_fwd_xmit(), ip_mr_output(),
+ipv4_neigh_lookup() to use lockdep enabled dst_dev_rcu().
 
 Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-2-edumazet@google.com
+Link: https://patch.msgid.link/20250828195823.3958522-9-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ minor modifications to fix conflict ]
 Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dst.h | 16 +++++++++++-----
- net/core/dst.c    |  2 +-
- net/ipv4/route.c  |  4 ++--
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ net/ipv4/icmp.c        | 6 +++---
+ net/ipv4/ip_fragment.c | 6 ++++--
+ net/ipv4/ipmr.c        | 2 +-
+ net/ipv4/route.c       | 4 ++--
+ 4 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/dst.h b/include/net/dst.h
-index 1983945dfcdf1..4b54b2f6730ef 100644
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -24,7 +24,10 @@
- struct sk_buff;
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index f0c8c3366740a..5c38af80bc14e 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -320,17 +320,17 @@ static bool icmpv4_xrlim_allow(struct net *net, struct rtable *rt,
+ 		return true;
  
- struct dst_entry {
--	struct net_device       *dev;
-+	union {
-+		struct net_device       *dev;
-+		struct net_device __rcu *dev_rcu;
-+	};
- 	struct  dst_ops	        *ops;
- 	unsigned long		_metrics;
- 	unsigned long           expires;
-@@ -576,9 +579,12 @@ static inline struct net_device *dst_dev(const struct dst_entry *dst)
+ 	/* No rate limit on loopback */
+-	dev = dst_dev(dst);
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
+ 	if (dev && (dev->flags & IFF_LOOPBACK))
+ 		goto out;
  
- static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
+-	rcu_read_lock();
+ 	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr,
+ 			       l3mdev_master_ifindex_rcu(dev));
+ 	rc = inet_peer_xrlim_allow(peer,
+ 				   READ_ONCE(net->ipv4.sysctl_icmp_ratelimit));
+-	rcu_read_unlock();
+ out:
++	rcu_read_unlock();
+ 	if (!rc)
+ 		__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITHOST);
+ 	else
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 46b84d029205b..e79ebe911548a 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -470,14 +470,16 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
+ /* Process an incoming IP datagram fragment. */
+ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
  {
--	/* In the future, use rcu_dereference(dst->dev) */
--	WARN_ON_ONCE(!rcu_read_lock_held());
--	return READ_ONCE(dst->dev);
-+	return rcu_dereference(dst->dev_rcu);
-+}
-+
-+static inline struct net *dst_dev_net_rcu(const struct dst_entry *dst)
-+{
-+	return dev_net_rcu(dst_dev_rcu(dst));
- }
+-	struct net_device *dev = skb->dev ? : skb_dst_dev(skb);
+-	int vif = l3mdev_master_ifindex_rcu(dev);
++	struct net_device *dev;
+ 	struct ipq *qp;
++	int vif;
  
- static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
-@@ -598,7 +604,7 @@ static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
  
- static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
- {
--	return dev_net_rcu(skb_dst_dev(skb));
-+	return dev_net_rcu(skb_dst_dev_rcu(skb));
- }
+ 	/* Lookup (or create) queue header */
+ 	rcu_read_lock();
++	dev = skb->dev ? : skb_dst_dev_rcu(skb);
++	vif = l3mdev_master_ifindex_rcu(dev);
+ 	qp = ip_find(net, ip_hdr(skb), user, vif);
+ 	if (qp) {
+ 		int ret, refs = 0;
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index af9412a507cf3..f39cd565569a5 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -1893,7 +1893,7 @@ static void ipmr_queue_xmit(struct net *net, struct mr_table *mrt,
+ 			goto out_free;
+ 	}
  
- struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
-diff --git a/net/core/dst.c b/net/core/dst.c
-index f65e6be7e2571..46cafba29991c 100644
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -153,7 +153,7 @@ void dst_dev_put(struct dst_entry *dst)
- 		dst->ops->ifdown(dst, dev);
- 	WRITE_ONCE(dst->input, dst_discard);
- 	WRITE_ONCE(dst->output, dst_discard_out);
--	WRITE_ONCE(dst->dev, blackhole_netdev);
-+	rcu_assign_pointer(dst->dev_rcu, blackhole_netdev);
- 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
- 			   GFP_ATOMIC);
- }
+-	dev = rt->dst.dev;
++	dev = dst_dev_rcu(&rt->dst);
+ 
+ 	if (skb->len+encap > dst_mtu(&rt->dst) && (ntohs(iph->frag_off) & IP_DF)) {
+ 		/* Do not fragment multicasts. Alas, IPv4 does not
 diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 5010a9a754187..ce3397583b8fe 100644
+index ce3397583b8fe..b175a8292eb3a 100644
 --- a/net/ipv4/route.c
 +++ b/net/ipv4/route.c
-@@ -1069,7 +1069,7 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
- 		return;
+@@ -416,11 +416,11 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ 					   const void *daddr)
+ {
+ 	const struct rtable *rt = container_of(dst, struct rtable, dst);
+-	struct net_device *dev = dst_dev(dst);
++	struct net_device *dev;
+ 	struct neighbour *n;
  
  	rcu_read_lock();
--	net = dev_net_rcu(dst_dev(dst));
-+	net = dst_dev_net_rcu(dst);
- 	if (mtu < net->ipv4.ip_rt_min_pmtu) {
- 		lock = true;
- 		mtu = min(old_mtu, net->ipv4.ip_rt_min_pmtu);
-@@ -1367,7 +1367,7 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
- 	struct net *net;
- 
- 	rcu_read_lock();
--	net = dev_net_rcu(dst_dev(dst));
-+	net = dst_dev_net_rcu(dst);
- 	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
- 				   net->ipv4.ip_rt_min_advmss);
- 	rcu_read_unlock();
+-
++	dev = dst_dev_rcu(dst);
+ 	if (likely(rt->rt_gw_family == AF_INET)) {
+ 		n = ip_neigh_gw4(dev, rt->rt_gw4);
+ 	} else if (rt->rt_gw_family == AF_INET6) {
 -- 
 2.53.0
 
