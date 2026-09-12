@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AD429D288;
-	Sat, 12 Sep 2026 16:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D16A29D288;
+	Sat, 12 Sep 2026 16:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229528; cv=none; b=pWu1kgxNZUKm+UEugz32EQUS5Cu0ZOUD12ITEb3Moc+KXDL+RztrAFAncLfh4x3k3WWqvvvnH8ypii+BFWug99qyy/Zx9GHSVxeWW0AqgZbi8rBaDsvSY8B59nSuOVYmZ1ukdwwS9G7+yCUZ7fAZf5cjUJ7UBNqDXSQAKrG6O4k=
+	t=1789229533; cv=none; b=hmVfK4H19rrqLNsd7HjgqpCrfPkiPUj9f5VGVUlqKfxCg4k1yYuFfGolt8a+PTlSggDbenGTF8GRcOptsHBYD8CAzANLFiKcpzHQ12IVMqLM0wBVncnFfgKKGxKOxVdutU0UzqTqX7cgi5HxU43KdtFCdoW+XrZgA26t8wqV938=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229528; c=relaxed/simple;
-	bh=xJBzlVBmizHJNNeECOUcwsvVP/tyVWo7EPOC9ehcAQo=;
+	s=arc-20240116; t=1789229533; c=relaxed/simple;
+	bh=NfaAAp3TChodHouQeI0pBBvCFhntw4bSmrq9kPk6P80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpSnQ4Df9g/MDb7hEdLz6YO7wfFY8HlEnsdC2lk8cPlhkV09joTpqm8xRNlpHvrJRyFUO7Mha2YY6aSykBvRDOLvqDZ7Mr0HUaX9tkqhwCLKKXUSHTnShuP9DB9/gsxLn0KJI6Zkgjnl4JrApXgRJR6rX47WFZ0DiYfaSm/CGJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kc/EkwxO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=diLTg0VGAwt7mR4kdkGFYTYIIQUYRjoQm2zDv4zPuZiGnEYdimPhKVv+yyA0otV/Y8V4ymWJ+bDGNvZuSE5sV5N/vTSygNyzCtigojrL+lDI+5SCz31ASAoOR0VdfpC7bbhryOyDG8MLg0xF7fs7x7A6RDZ5MfwKP3Ke9Q1QH+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Trn0Ouk4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kc/EkwxO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4244B1F000FF;
-	Sat, 12 Sep 2026 16:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Trn0Ouk4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62A41F000FF;
+	Sat, 12 Sep 2026 16:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229527;
-	bh=i6wgWMhkKz2ollWTnt3INNwNgVmcWG0V/LhjscdxpaM=;
+	s=korg; t=1789229531;
+	bh=IzlAlQfIWWiXQxd3iNhNw9pG8KaCMIZd+Ld5m2fuPk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kc/EkwxOpczji7siaITrl1OMsXdI2UqFlCKA/PiWm5Z09QtkbcuTnj+L8P5TgnrD4
-	 3DJMQ6WmCeuM+s2M4ez//PAKqZS0lnOH0QnFmGC8besBIlolGW+b6Pul7COdh5mvWi
-	 gcNLz/Gkx07TcKM0vIN+srLFbG8wPFBzW8LZ61U0=
+	b=Trn0Ouk4XLdHyRbCa/oM+nsLS+t14iw5EjNmZnG3yfxeEkoUab60gjmxYFL4imAv3
+	 qmiAaF9ilE8YbMTpA8MZAFx16I5lbgVuegV7k5MXV7cfNR7Fm7LoDK5UoH1zEfnq5S
+	 5R1VCm1iMtPAlugt6JqWEGDMbWoDO8aa0Eq/HHF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0609/1191] ASoC: apple: mca: increase SERDES reset delay
-Date: Sat, 12 Sep 2026 08:55:37 +0200
-Message-ID: <20260912065601.930157175@linuxfoundation.org>
+Subject: [PATCH 6.1 0610/1191] isofs: fix out-of-bounds page array access on empty zisofs block
+Date: Sat, 12 Sep 2026 08:55:38 +0200
+Message-ID: <20260912065601.952323126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,46 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Calligeros <jcalligeros99@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit cccd721e5aab03e92234faee72b363c9ba60611c ]
+[ Upstream commit 68d4d3e78150c7ed7d1195af63ad1e6ace30c661 ]
 
-The SERDES clusters in this peripheral take a long time to warm up.
-We tried polling the reset bit until cleared, however this is not
-a reliable signal of readiness to be configured. Only waiting
-~25 us to give the cluster a chance to settle makes it work
-reliably.
+zisofs_uncompress_block()'s empty-block fast path returns
+pcount << PAGE_SHIFT, ignoring the incoming poffset, unlike the
+decompression path which returns bytes produced relative to poffset.
+zisofs_fill_pages() uses that return to advance its page cursor, so when
+the zisofs block size is below PAGE_SIZE and a sub-page block leaves
+poffset partway into a page, a following empty block over-counts and
+advances pages[] one element past its end, after which
+"if (poffset && *pages)" reads pages[1] out of bounds.  rock.c only
+rejects a block-size shift > 17, so a crafted "ZF" Rock Ridge record can
+set it below PAGE_SHIFT; the bug is reached by an ordinary read() of a
+compressed file on such a mounted ISO9660 image.
 
-Increase the 2 us delay to 25 us and hope we never have to do this
-again.
+Return the byte count relative to poffset and zero only
+[poffset, PAGE_SIZE) of the first page, matching the decompression path.
+The page-aligned case (poffset == 0) is unaffected.
 
-Fixes: d8b3e396088d ("ASoC: apple: mca: Fix SERDES reset sequence")
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20260711-apple-audio-redux-v4-1-2994d87c2f24@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  BUG: KASAN: slab-out-of-bounds in zisofs_read_folio (fs/isofs/compress.c:290)
+  Read of size 8 at addr ffff88800f5eac48 by task exploit/142
+   zisofs_read_folio (fs/isofs/compress.c:290)
+   read_pages (mm/readahead.c:184)
+   ...
+   filemap_read (mm/filemap.c:2814)
+   vfs_read (fs/read_write.c:574)
+   __x64_sys_pread64 (fs/read_write.c:769)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  The buggy address is located 0 bytes to the right of the
+  allocated 8-byte region in the kmalloc-8 cache
+
+Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260712234150.3213467-1-xmei5@asu.edu
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/apple/mca.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/isofs/compress.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
-index 409b3a716ccbc..b51310f2a7141 100644
---- a/sound/soc/apple/mca.c
-+++ b/sound/soc/apple/mca.c
-@@ -210,10 +210,10 @@ static void mca_fe_early_trigger(struct snd_pcm_substream *substream, int cmd,
- 			   SERDES_STATUS_EN | SERDES_STATUS_RST,
- 			   SERDES_STATUS_RST);
- 		/*
--		 * Experiments suggest that it takes at most ~1 us
--		 * for the bit to clear, so wait 2 us for good measure.
-+		 * The SERDES cluster needs a bit of time to reset itself
-+		 * and settle before we start poking it. This is... slow...
- 		 */
--		udelay(2);
-+		udelay(25);
- 		WARN_ON(readl_relaxed(cl->base + serdes_unit + REG_SERDES_STATUS) &
- 			SERDES_STATUS_RST);
- 		mca_modify(cl, serdes_conf, SERDES_CONF_SYNC_SEL,
+diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
+index c4da3f634b92e..b94b56211b5ce 100644
+--- a/fs/isofs/compress.c
++++ b/fs/isofs/compress.c
+@@ -65,12 +65,14 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
+ 	/* Empty block? */
+ 	if (block_size == 0) {
+ 		for ( i = 0 ; i < pcount ; i++ ) {
++			unsigned int off = i ? 0 : poffset;
++
+ 			if (!pages[i])
+ 				continue;
+-			memzero_page(pages[i], 0, PAGE_SIZE);
++			memzero_page(pages[i], off, PAGE_SIZE - off);
+ 			SetPageUptodate(pages[i]);
+ 		}
+-		return ((loff_t)pcount) << PAGE_SHIFT;
++		return (((loff_t)pcount) << PAGE_SHIFT) - poffset;
+ 	}
+ 
+ 	/* Because zlib is not thread-safe, do all the I/O at the top. */
 -- 
 2.53.0
 
