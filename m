@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A755646EF62;
-	Sat, 12 Sep 2026 10:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EE9471273;
+	Sat, 12 Sep 2026 10:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210279; cv=none; b=Km83YZm2r9La1UggKcGfLz6jB5CZIleVt/lSbdHvePgU2zPTae+6fz1ySAPa9EXRGfuTBM8/k2GhicHS0XiZvsIDg7SIMCbpIt//CliYcU6lPQ0cTVxULs5e1xXlYkatZTXtYTuipElx7rYdT3VS3nMO+wTODdRa+BFL8D2dBwk=
+	t=1789210285; cv=none; b=sN2ZOh57cLr7Ff5UjWH1Jo9u584IJwI23ML2HG2Q/tZLGQSqu9pPKncapqJAyfiZZ6mBTJUDBa8cAsV8DhM/99LNnADJNfiv8ipgbL7uTCz/t6f71EeJgyNOCL/X0kyAmX+y+nLR2NAg7RHynl6lEKQAXee2U8zaFjjRR5CXRRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210279; c=relaxed/simple;
-	bh=aVsXpLEnPlvBsDZHza9ufK8zxyis0efLuGjwik7XD1k=;
+	s=arc-20240116; t=1789210285; c=relaxed/simple;
+	bh=P/SvPrL794HMto7/xsibH0hWGNc7nAewB+RkziZNGEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XY3LCeR3zk0vxMtuL26IGC+atep4ZlyxJ7OGI+KHxrVLBS46tBi7rA7AdJxuNb4Ap0XxdCwvG1knfbdnsD7k8TTJBF6vEKjoXTEcjde7aq/6QmhktUQHAGd5/ZVOXu7IgIIi3GrKbOHCg3VXplCVko5v6Cmzf9s0ZxIgvEiqhwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWBydATO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pO5DLYuIoqm3AMjEYHgmHdJAXLy46oIjR4G3lVgEFDVf9yXNlevS4kfZCW128YtxrNzBWLMyvppGHPO9J/gtvAd5uEmr26w5+PU+2jwvjhGHSib+WRwKT9L01srm2HyUBXuj2PkJtpbeaf+LUmACnFG9p9R1nw+DND8QwpJ8z3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0shSXTm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWBydATO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608861F000FF;
-	Sat, 12 Sep 2026 10:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0shSXTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9842B1F000FF;
+	Sat, 12 Sep 2026 10:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210277;
-	bh=PfYgDuGsPk9q41kknY3Uy6ot8REmjvQrZIe2fUTtqYo=;
+	s=korg; t=1789210282;
+	bh=5FMTDOljt2rMmrTTxQI3QN6aR4czc3Hod9e7EZ7VZX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yWBydATOZep2nNclRtJ+WhKmavPB/gpOsT0jAhZ6WXc6eVj5E5yp86ch7PNSMLIav
-	 4EKbveTiUtXjdwjhvKJytZgMzQMK53i9Y30IKsailHaBSIolPWfEVcNz4so6S2x340
-	 i3k1Q2/jKedCawSFhDmFku+S8cCs975pEIuqZL5w=
+	b=u0shSXTmayil9SpjN1VWZLUa4+KX24E39/ZCv7EHLA+Nkf+910Ks0r5IlUcHqpVao
+	 25JMGTvAUbaFOqNRclDz0daW4B7VYRJd1JiYUli73GV25UP/OhOruByvv6/8aASpWf
+	 1Du69YCG0aLekeeZ382kto3eDgW1Rtccg+f3kpb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykola Marzhan <mykola@meshstor.io>,
-	Yu Kuai <yukuai@fygo.io>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0966/1518] md/md-llbitmap: stop daemon timer rearm on destroy
-Date: Sat, 12 Sep 2026 08:52:15 +0200
-Message-ID: <20260912065645.313233032@linuxfoundation.org>
+Subject: [PATCH 6.18 0993/1518] scsi: sd: Convert to SCSI bus methods
+Date: Sat, 12 Sep 2026 08:52:42 +0200
+Message-ID: <20260912065645.919995466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,128 +46,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 5553d64e01d9a995be6c3de38501c6dd4ceede3b ]
+[ Upstream commit 63b541f054e7147f5a19fcd964677c189bad7cff ]
 
-llbitmap_destroy() deletes pending_timer before flushing
-md_llbitmap_io_wq. However, daemon_work can still be queued or running
-after the timer has been deleted, and the daemon path can arm
-pending_timer again when it finds dirty chunks that are not ready to
-flush yet.
+The SCSI subsystem has implemented dedicated callbacks for probe, remove
+and shutdown. Make use of them. This fixes a runtime warning about the
+driver needing to be converted to the bus probe method.
 
-If that happens during teardown, pending_timer can remain armed after
-llbitmap is freed and later dereference freed memory.
-
-Add a BITMAP_SHUTDOWN bit to llbitmap->flags, set it before deleting
-the timer, and make the timer and daemon paths stop queueing or rearming
-work once teardown starts. Cancel daemon_work before flushing the shared
-workqueue so no already queued daemon instance can race with the free.
-Use timer_shutdown_sync() so a daemon instance that passed the shutdown
-check before teardown cannot rearm the timer afterward.
-
-BITMAP_SHUTDOWN is a runtime-only state. Mask it out when reading and
-updating the llbitmap superblock so the shutdown state is never loaded
-from disk or persisted to disk.
-
-Fixes: 5ab829f1971d ("md/md-llbitmap: introduce new lockless bitmap")
-Tested-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260802195038.164272-10-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/8ad5a00c2ad2a64b81350ae3fab02fbe430f306d.1766133330.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: bb31844d88b7 ("scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.h   |  1 +
- drivers/md/md-llbitmap.c | 17 +++++++++++++----
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/scsi/sd.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/md/md-bitmap.h b/drivers/md/md-bitmap.h
-index f46674bdfeb91..7535742982fc0 100644
---- a/drivers/md/md-bitmap.h
-+++ b/drivers/md/md-bitmap.h
-@@ -29,6 +29,7 @@ enum bitmap_state {
- 	BITMAP_FIRST_USE   = 3, /* llbitmap is just created */
- 	BITMAP_CLEAN       = 4, /* llbitmap is created with assume_clean */
- 	BITMAP_DAEMON_BUSY = 5, /* llbitmap daemon is not finished after daemon_sleep */
-+	BITMAP_SHUTDOWN    = 6, /* llbitmap is being destroyed */
- 	BITMAP_HOSTENDIAN  =15,
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index fe5252f06a30c..1dd6fbc5e1674 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -108,7 +108,7 @@ static void sd_config_write_same(struct scsi_disk *sdkp,
+ 		struct queue_limits *lim);
+ static void  sd_revalidate_disk(struct gendisk *);
+ static void sd_unlock_native_capacity(struct gendisk *disk);
+-static void sd_shutdown(struct device *);
++static void sd_shutdown(struct scsi_device *);
+ static void scsi_disk_release(struct device *cdev);
+ 
+ static DEFINE_IDA(sd_index_ida);
+@@ -3894,7 +3894,7 @@ static int sd_format_disk_name(char *prefix, int index, char *buf, int buflen)
+  *	sd_probe - called during driver initialization and whenever a
+  *	new scsi device is attached to the system. It is called once
+  *	for each scsi device (not just disks) present.
+- *	@dev: pointer to device object
++ *	@sdp: pointer to device object
+  *
+  *	Returns 0 if successful (or not interested in this scsi device 
+  *	(e.g. scanner)); 1 when there is an error.
+@@ -3908,9 +3908,9 @@ static int sd_format_disk_name(char *prefix, int index, char *buf, int buflen)
+  *	Assume sd_probe is not re-entrant (for time being)
+  *	Also think about sd_probe() and sd_remove() running coincidentally.
+  **/
+-static int sd_probe(struct device *dev)
++static int sd_probe(struct scsi_device *sdp)
+ {
+-	struct scsi_device *sdp = to_scsi_device(dev);
++	struct device *dev = &sdp->sdev_gendev;
+ 	struct scsi_disk *sdkp;
+ 	struct gendisk *gd;
+ 	int index;
+@@ -4051,15 +4051,16 @@ static int sd_probe(struct device *dev)
+  *	sd_remove - called whenever a scsi disk (previously recognized by
+  *	sd_probe) is detached from the system. It is called (potentially
+  *	multiple times) during sd module unload.
+- *	@dev: pointer to device object
++ *	@sdp: pointer to device object
+  *
+  *	Note: this function is invoked from the scsi mid-level.
+  *	This function potentially frees up a device name (e.g. /dev/sdc)
+  *	that could be re-used by a subsequent sd_probe().
+  *	This function is not called when the built-in sd driver is "exit-ed".
+  **/
+-static int sd_remove(struct device *dev)
++static void sd_remove(struct scsi_device *sdp)
+ {
++	struct device *dev = &sdp->sdev_gendev;
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+ 
+ 	scsi_autopm_get_device(sdkp->device);
+@@ -4067,10 +4068,9 @@ static int sd_remove(struct device *dev)
+ 	device_del(&sdkp->disk_dev);
+ 	del_gendisk(sdkp->disk);
+ 	if (!sdkp->suspended)
+-		sd_shutdown(dev);
++		sd_shutdown(sdp);
+ 
+ 	put_disk(sdkp->disk);
+-	return 0;
+ }
+ 
+ static void scsi_disk_release(struct device *dev)
+@@ -4157,8 +4157,9 @@ static int sd_start_stop_device(struct scsi_disk *sdkp, int start)
+  * the normal SCSI command structure.  Wait for the command to
+  * complete.
+  */
+-static void sd_shutdown(struct device *dev)
++static void sd_shutdown(struct scsi_device *sdp)
+ {
++	struct device *dev = &sdp->sdev_gendev;
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+ 
+ 	if (!sdkp)
+@@ -4326,12 +4327,12 @@ static const struct dev_pm_ops sd_pm_ops = {
  };
  
-diff --git a/drivers/md/md-llbitmap.c b/drivers/md/md-llbitmap.c
-index b4738fe6e2463..5c60b26ad2468 100644
---- a/drivers/md/md-llbitmap.c
-+++ b/drivers/md/md-llbitmap.c
-@@ -662,6 +662,7 @@ static enum llbitmap_state llbitmap_state_machine(struct llbitmap *llbitmap,
- 		if (state == BitNeedSync)
- 			need_resync = !mddev->degraded;
- 		else if (state == BitDirty &&
-+			 !test_bit(BITMAP_SHUTDOWN, &llbitmap->flags) &&
- 			 !timer_pending(&llbitmap->pending_timer))
- 			mod_timer(&llbitmap->pending_timer,
- 				  jiffies + mddev->bitmap_info.daemon_sleep * HZ);
-@@ -854,7 +855,7 @@ static int llbitmap_read_sb(struct llbitmap *llbitmap)
- 		else
- 			mddev->bitmap_info.space = mddev->bitmap_info.default_space;
- 	}
--	llbitmap->flags = le32_to_cpu(sb->state);
-+	llbitmap->flags = le32_to_cpu(sb->state) & ~BIT(BITMAP_SHUTDOWN);
- 	if (test_and_clear_bit(BITMAP_FIRST_USE, &llbitmap->flags)) {
- 		ret = llbitmap_init(llbitmap);
- 		goto out_put_page;
-@@ -910,6 +911,9 @@ static void llbitmap_pending_timer_fn(struct timer_list *pending_timer)
- 	struct llbitmap *llbitmap =
- 		container_of(pending_timer, struct llbitmap, pending_timer);
- 
-+	if (test_bit(BITMAP_SHUTDOWN, &llbitmap->flags))
-+		return;
-+
- 	if (work_busy(&llbitmap->daemon_work)) {
- 		pr_warn("md/llbitmap: %s daemon_work not finished in %lu seconds\n",
- 			mdname(llbitmap->mddev),
-@@ -930,6 +934,9 @@ static void md_llbitmap_daemon_fn(struct work_struct *work)
- 	bool restart;
- 	int idx;
- 
-+	if (test_bit(BITMAP_SHUTDOWN, &llbitmap->flags))
-+		return;
-+
- 	if (llbitmap->mddev->degraded)
- 		return;
- retry:
-@@ -969,7 +976,7 @@ static void md_llbitmap_daemon_fn(struct work_struct *work)
- 		goto retry;
- 
- 	/* If some page is dirty but not expired, setup timer again */
--	if (restart)
-+	if (restart && !test_bit(BITMAP_SHUTDOWN, &llbitmap->flags))
- 		mod_timer(&llbitmap->pending_timer,
- 			  jiffies + llbitmap->mddev->bitmap_info.daemon_sleep * HZ);
- }
-@@ -1052,7 +1059,9 @@ static void llbitmap_destroy(struct mddev *mddev)
- 
- 	mutex_lock(&mddev->bitmap_info.mutex);
- 
--	timer_delete_sync(&llbitmap->pending_timer);
-+	set_bit(BITMAP_SHUTDOWN, &llbitmap->flags);
-+	timer_shutdown_sync(&llbitmap->pending_timer);
-+	cancel_work_sync(&llbitmap->daemon_work);
- 	flush_workqueue(md_llbitmap_io_wq);
- 	flush_workqueue(md_llbitmap_unplug_wq);
- 
-@@ -1376,7 +1385,7 @@ static void llbitmap_update_sb(void *data)
- 
- 	sb = kmap_local_page(sb_page);
- 	sb->events = cpu_to_le64(mddev->events);
--	sb->state = cpu_to_le32(llbitmap->flags);
-+	sb->state = cpu_to_le32(llbitmap->flags & ~BIT(BITMAP_SHUTDOWN));
- 	sb->chunksize = cpu_to_le32(llbitmap->chunksize);
- 	sb->sync_size = cpu_to_le64(mddev->resync_max_sectors);
- 	sb->events_cleared = cpu_to_le64(llbitmap->events_cleared);
+ static struct scsi_driver sd_template = {
++	.probe = sd_probe,
++	.remove = sd_remove,
++	.shutdown = sd_shutdown,
+ 	.gendrv = {
+ 		.name		= "sd",
+-		.probe		= sd_probe,
+ 		.probe_type	= PROBE_PREFER_ASYNCHRONOUS,
+-		.remove		= sd_remove,
+-		.shutdown	= sd_shutdown,
+ 		.pm		= &sd_pm_ops,
+ 	},
+ 	.rescan			= sd_rescan,
 -- 
 2.53.0
 
