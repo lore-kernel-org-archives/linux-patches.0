@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD6747CA67;
-	Sat, 12 Sep 2026 16:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B32F3B14D4;
+	Sat, 12 Sep 2026 16:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229293; cv=none; b=c5sQ/tIsMbg4je9ZepybO3GwjgPIvnZxg0/nxeDZP2PA/FjGoSPORpulZbEEj92kERhSld3xSrQ3ONxAlJXvFXQ9fSMbgDHMEpo2mHRznmXs8dgtN8SOH5LFsaV45ygVrPHL05H2vyJN0QWtyMphkQLzRB+vLkyN8KGaSKyBeeQ=
+	t=1789229296; cv=none; b=lNMKRFT5llhPApuZ23TvJXnTGneK8g03NVQnsLlV1czThLAAYuAIU1k1NjCgISbjhPV1Clx7bElYRVQHYdOJ5jeNwTTZfkGhb/K4ae8hLFSaV6xoGRSt0L4Y06AQi7W4WO/C6nNZF07oYsmMmbWjhA8G2nS18dENCyBBbOO8SKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229293; c=relaxed/simple;
-	bh=3wix9KXvy8sfDzz65xG6whOLL2Yw1vDy0bzTn2gDyMc=;
+	s=arc-20240116; t=1789229296; c=relaxed/simple;
+	bh=wickqQuDA+IQzoC+vaUhRK2mKPHPKCN9NIgeL+LxbPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrHtqChIlQxbzgS2/lAsE4K9SgRoScwDnBnQkhxVuip4CfmlRIKPyrbne90sVp5CeX0L8lLwMGITclwSqdIbQh0cW8a4B2US61ha4wUJvxROEclgG3u+oWJq6YIX3oV+MrGJRIaOPtn7NjyxA2valkYxxtzVVbiAyRU/pA970LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQGbu6+S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sWpLiQyUB+U1QT8M+8ycZtgVesCjHLq9gsr0oeAB6zZjmau6F9c9L7LfQqz2zhK70DdFcdTpK2qnV9p3fSfqnCIBJ4N2H5VTs42Z9hHz5h61SnUhpfOiV7l0IyAzzWHeGHSwk2Yn6MvGaeffX9Tuv2/lVSfEzjtX+tIgDoVeE5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=st68KdZq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQGbu6+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664E01F000FF;
-	Sat, 12 Sep 2026 16:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="st68KdZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE811F00893;
+	Sat, 12 Sep 2026 16:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229290;
-	bh=jdqrEzF/glWiUCUGK6HxY60fA0yQvCV7Bd4kD3O5NhA=;
+	s=korg; t=1789229285;
+	bh=3dkCASnwsoWv4BcljhcMnvF/R66TnvYdKkZyfD9I9wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQGbu6+SNy6MirBzzk6FBtPQmWMirGgVlsXA6rwS77QAL/nPhfNOd1du9tEiEQLGR
-	 T0MiCKyoWyKVI1spUOeWGnRT1PjR2Oj84W1CIC1yiOwX8q9O/HqUynRqmmvjhoChRL
-	 w8MG/tgPdq+6d/0Fe0/Bgp0swpUdWDN/kOWywFs8=
+	b=st68KdZqN9zOuXAXC7PCfJdgrPaKBZChSNtA0cQ751i+eaI+U1KkM9vAMlxrpO79+
+	 B1ttgBi6QFnOB82T61tqDQX83KAxn/pUkjA1YKoOjL9+HzvYjmfg3Ui646EnwXyKtC
+	 +mntFJzA4+nBzW/fpfeHRDjADi2MqbUy7LgDqePM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Srinivas Neeli <srinivas.neeli@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0507/1191] dmaengine: xilinx_dma: Fix channel idle state management in AXIDMA and MCDMA interrupt handlers
-Date: Sat, 12 Sep 2026 08:53:55 +0200
-Message-ID: <20260912065559.629960507@linuxfoundation.org>
+Subject: [PATCH 6.1 0516/1191] perf/x86/amd/uncore: Add group validation
+Date: Sat, 12 Sep 2026 08:54:04 +0200
+Message-ID: <20260912065559.837967050@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,71 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit 0b6d055edb55ecadadf54e930c2b4fab76fa9a5a ]
+[ Upstream commit edda9051e267b7390c7ce24b1b71434414ad156e ]
 
-Fix a race condition in AXIDMA and MCDMA irq handlers where the channel
-could be incorrectly marked as idle and attempt spurious transfers when
-descriptors are still being processed.
+The amd_uncore driver currently does not validate event groups and
+allows creation of groups with more events than the number of available
+hardware counters. Because of this, pmu->event_init() succeeds but
+counter assignment fails later in pmu->add() which returns -EBUSY once
+all counters are exhausted.
 
-The issue occurs when:
-1. Multiple descriptors are queued and active.
-2. An interrupt fires after completing some descriptors.
-3. xilinx_dma_complete_descriptor() moves completed descriptors to
-done_list.
-4. Channel is marked idle and start_transfer() is called even though
-   active_list still contains unprocessed descriptors.
-5. This leads to premature transfer attempts and potential descriptor
-   corruption or missed completions.
+Address this by introducing group validation in the pmu->event_init()
+path. Since the uncore PMUs have no per-event constraints and all
+counters of a PMU are interchangeable, validation is reduced to just
+counting the group members that target a PMU and ensuring that they fit
+within the available set of counters.
 
-Only mark the channel as idle and start new transfers when the active list
-is actually empty, ensuring proper channel state management and avoiding
-spurious transfer attempts.
-
-Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct Memory Access Engine")
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Co-developed-by: Srinivas Neeli <srinivas.neeli@amd.com>
-Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260626092656.1563871-2-suraj.gupta2@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: c43ca5091a37 ("perf/x86/amd: Add support for AMD NB and L2I "uncore" counters")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://patch.msgid.link/750877d66e208603c3047f13eed6399625d43969.1782884387.git.sandipan.das@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arch/x86/events/amd/uncore.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 79a12e248cbd4..914399ba74935 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -1831,8 +1831,10 @@ static irqreturn_t xilinx_mcdma_irq_handler(int irq, void *data)
- 	if (status & XILINX_MCDMA_IRQ_IOC_MASK) {
- 		spin_lock(&chan->lock);
- 		xilinx_dma_complete_descriptor(chan);
--		chan->idle = true;
--		chan->start_transfer(chan);
-+		if (list_empty(&chan->active_list)) {
-+			chan->idle = true;
-+			chan->start_transfer(chan);
-+		}
- 		spin_unlock(&chan->lock);
- 	}
+diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
+index ffcecda13d654..cc84ed9cc63af 100644
+--- a/arch/x86/events/amd/uncore.c
++++ b/arch/x86/events/amd/uncore.c
+@@ -167,6 +167,29 @@ static void amd_uncore_del(struct perf_event *event, int flags)
+ 	hwc->idx = -1;
+ }
  
-@@ -1888,8 +1890,10 @@ static irqreturn_t xilinx_dma_irq_handler(int irq, void *data)
- 		      XILINX_DMA_DMASR_DLY_CNT_IRQ)) {
- 		spin_lock(&chan->lock);
- 		xilinx_dma_complete_descriptor(chan);
--		chan->idle = true;
--		chan->start_transfer(chan);
-+		if (list_empty(&chan->active_list)) {
-+			chan->idle = true;
-+			chan->start_transfer(chan);
-+		}
- 		spin_unlock(&chan->lock);
- 	}
++static bool amd_uncore_group_valid(struct perf_event *event)
++{
++	struct amd_uncore_pmu *pmu = event_to_amd_uncore_pmu(event);
++	struct perf_event *leader = event->group_leader;
++	struct perf_event *sibling;
++	int counters = 0;
++
++	if (leader->pmu == event->pmu)
++		counters++;
++
++	for_each_sibling_event(sibling, leader) {
++		if (sibling->pmu == event->pmu &&
++		    sibling->state > PERF_EVENT_STATE_OFF)
++			counters++;
++	}
++
++	/*
++	 * When pmu->event_init() is called, the event is yet to be linked to
++	 * its leader's sibling list, so it is counted separately
++	 */
++	return (counters + 1) <= pmu->num_counters;
++}
++
+ static int amd_uncore_event_init(struct perf_event *event)
+ {
+ 	struct amd_uncore_pmu *pmu;
+@@ -184,6 +207,14 @@ static int amd_uncore_event_init(struct perf_event *event)
+ 	if (!ctx)
+ 		return -ENODEV;
  
++	/*
++	 * Ensure that all events in a group can be scheduled together so that
++	 * a failure can be reported at perf_event_open() time rather than
++	 * silently at pmu->add() time when no free counter is found
++	 */
++	if (event->group_leader != event && !amd_uncore_group_valid(event))
++		return -EINVAL;
++
+ 	/*
+ 	 * NB and Last level cache counters (MSRs) are shared across all cores
+ 	 * that share the same NB / Last level cache.  On family 16h and below,
 -- 
 2.53.0
 
