@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B35249219A;
-	Sat, 12 Sep 2026 19:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B47B490C1C;
+	Sat, 12 Sep 2026 19:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239638; cv=none; b=IQYEZafNQXjy2tK04PTsE0xp/9tP11kSlN4Leu7YvG9mQmQ+thut2k6MQYXtAsvpQF9Dx1foQluJYkuIzH055vHsQGYjVLJz0Jcjqx1tiBZSrZtrL4yCcgmBzbwhbpn30DZ5h53YBmWH4PNjFWN2T+zf+J9njemLfMAbbnBwbGc=
+	t=1789239640; cv=none; b=LKaZUOkjhFu1IGk2a5qIVMEY1u8VCFujJJToFR6L8jLOpsGgkDjuYlVkM1qS6Aqw5ah/9IFMdbZ8+Aq98P2R0Fxr1HP+kGl0mFF152kP1rUUTPWBxwqc1J/FKcTqtKJqjMn/9K4jpzy2nNcNIMTV+vAXPXAPEcE/duOe4HkTV/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239638; c=relaxed/simple;
-	bh=hJ2238ZiF1z0BO0/7N0tw+axdvWhRC5kV2k3OO+SzAM=;
+	s=arc-20240116; t=1789239640; c=relaxed/simple;
+	bh=Yetn9j4bbh46kTZZ/F+u3iPVEol+9Sq1/3ED+xdHE30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFkHJJGvXCWkgZ/YQjn6G9wUzte6pnbX73njtOsb5PrOwprlSGt3EpuYKGR8Y7miBtT25zb0WXp0e/VO3+PdHp0K1H7ipDiDswnNinrKs5N0oXxrN8CH08Avl2szdc9drrFkHdaRgsS97Cig0tLl2G8EwtiYC0uVRqSqPJxL/ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkjX15g8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tWFtOHvdQbTuh0Y1SckKsgCFM9LbEqoTW6RpdnCKOx4kZzL30AtELQlt8lGiU5u+IvlrjclBveMQJIy5a95DARAI/Pd6ci5rbA5/gEorfLBYkBgT7yrv3gQdXKUM+gWPqJDHWA3Yjbanp8MFVvSoTlvm856tj5tdrWO3sXqqjTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+t2GDIi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkjX15g8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC17E1F000FF;
-	Sat, 12 Sep 2026 19:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+t2GDIi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D561F00893;
+	Sat, 12 Sep 2026 19:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239633;
-	bh=vl2feJwOD0ENmGkON36T5eX55j+vt1enopq/oZgGmKM=;
+	s=korg; t=1789239638;
+	bh=xuFodZUzwIg9HXTdEp2Sw2EaTxdH5stsJVJ/MdlRzVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QkjX15g8rdNYBzbaHOhqdfIvk4gIYmqw+lVzD3Ex6C0xVrxUbSZou5qDBRQ49zgxw
-	 01qRVf19il9XxR0b19v1JrHjqeZZbrb4h23+kimdUk33tVC73jqKl+pNL9E0O2HFIH
-	 tz4wHjUYSol58oumgaDXEGXpFon1NT7d6AhjElp8=
+	b=b+t2GDIiR3l10n9PdPAR+BNws0fGnr87aPj19px1H/yR4CnSqazO2QptlZ46C/w0q
+	 u6GOoa1qcMFWHVGlzhMrrG3c7UuTkvagOjTZoPVuYIe3ZFpybsK+8RenTEYBJLQeus
+	 0E8UDU1WlaOJaT1ZafDle9/7u/nqDSn75xe8U2Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Qi Xi <xiqi2@huawei.com>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 703/935] RDMA/srp: fix heap information leak on a truncated SRP_CRED_REQ
-Date: Sat, 12 Sep 2026 09:02:13 +0200
-Message-ID: <20260912065542.961022966@linuxfoundation.org>
+Subject: [PATCH 5.15 704/935] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
+Date: Sat, 12 Sep 2026 09:02:14 +0200
+Message-ID: <20260912065542.983047295@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,134 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Xie Yuanbin <xieyuanbin1@huawei.com>
 
-[ Upstream commit 961ac0f0c5e414abdd6b33fae84b311d9fde0bd0 ]
+[ Upstream commit 1039bffd6ae9c75b42b7d148d6c1106134107b66 ]
 
-srp_recv_done() passes wc->byte_len to srp_process_rsp(). It passes
-nothing to srp_process_cred_req() and srp_process_aer_req(), which read
-fixed-size fields from the receive buffer without checking that those
-fields were received.
+When CONFIG_DEBUG_USER=y, and cmdline "user_debug=31" is set,
+a user fault may trigger show_pte() without any lock.
+If another thread in the same process concurrently calls munmap(),
+the page table pages may be freed while show_pte() is still traversing
+them, causing a use-after-free in show_pte().
 
-The buffer size is max_ti_iu_len, which comes from the login response
-and is not validated. A target that advertises 8 and then sends an
-8-byte SRP_CRED_REQ makes the initiator read req->tag from beyond the
-end of the buffer. req->tag is copied into the SRP_CRED_RSP and sent
-back, so those bytes reach the target. SRP_AER_REQ behaves the same way
-and also reads req->lun.
+If CONFIG_ARM_LPAE=y, this may cause a kernel panic if the pages table
+of PMD are freed when show_pte() is running.
 
-The leak is 8 bytes per response. max_ti_iu_len also decides which slab
-cache the buffer comes from. With 8 the buffer is a kmalloc-8 object and
-the read is entirely outside it:
+Acquire mmap_write_lock() around show_pte() for user faults to fix the
+contention.
 
-  BUG: KASAN: slab-out-of-bounds in srp_recv_done+0x172b/0x1aa0
-  Read of size 8 at addr ffff888104714da8 by task kworker/u8:3/50
-   which belongs to the cache kmalloc-8 of size 8
-  The buggy address is located 0 bytes to the right of
-   allocated 8-byte region [ffff888104714da0, ffff888104714da8)
+For user faults, additionally restrict that show_pte() is called only
+when the addr is a user-space address (addr < TASK_SIZE). This is because
+the lock of tsk->mm only protects the virtual memory of user address space,
+furthermore, dumping the page tables of a kernel-space address for user
+faults is unnecessary and may have security implications.
 
-Without KASAN the returned bytes are whatever is next in the slab. One
-run returned ".strtab".
+Keep everything unchanged for kernel faults, because the kernel is
+already in the "oops" state, acquiring a lock may risk a deadlock.
 
-rsp->data[3] in srp_process_rsp() has the same problem: only
-resp_data_len is checked before it is read.
+Co-developed-by: Qi Xi <xiqi2@huawei.com>
 
-Drop a request that is shorter than the structure being parsed, and
-check byte_len before the tsk_mgmt read.
-
-Fixes: bb12588a38e6 ("IB/srp: Implement SRP_CRED_REQ and SRP_AER_REQ")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260729093203.1503201-1-yhlee@isslab.korea.ac.kr
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 6d021b724481 ("ARM: dump pgd, pmd and pte states on unhandled data abort faults")
+Link: https://lore.kernel.org/20260716014022.2823-1-xieyuanbin1@huawei.com
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 45 +++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ arch/arm/mm/fault.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index bc10eca37c244..a517869456119 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -1942,7 +1942,8 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp,
- 		ch->req_lim += be32_to_cpu(rsp->req_lim_delta);
- 		if (rsp->tag == ch->tsk_mgmt_tag) {
- 			ch->tsk_mgmt_status = -1;
--			if (be32_to_cpu(rsp->resp_data_len) >= 4)
-+			if (be32_to_cpu(rsp->resp_data_len) >= 4 &&
-+			    byte_len >= sizeof(*rsp) + 4)
- 				ch->tsk_mgmt_status = rsp->data[3];
- 			complete(&ch->tsk_mgmt_done);
- 		} else {
-@@ -2042,13 +2043,20 @@ static int srp_response_common(struct srp_rdma_ch *ch, s32 req_delta,
- }
- 
- static void srp_process_cred_req(struct srp_rdma_ch *ch,
--				 struct srp_cred_req *req)
-+				 struct srp_cred_req *req, u32 byte_len)
- {
--	struct srp_cred_rsp rsp = {
--		.opcode = SRP_CRED_RSP,
--		.tag = req->tag,
--	};
--	s32 delta = be32_to_cpu(req->req_lim_delta);
-+	struct srp_cred_rsp rsp = { .opcode = SRP_CRED_RSP };
-+	s32 delta;
-+
-+	if (byte_len < sizeof(*req)) {
-+		shost_printk(KERN_ERR, ch->target->scsi_host, PFX
-+			     "dropping truncated SRP_CRED_REQ (%u bytes received, %zu expected)\n",
-+			     byte_len, sizeof(*req));
-+		return;
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index bf1577216ffab..c16d6a293b97c 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -154,7 +154,11 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
+ 		pr_err("8<--- cut here ---\n");
+ 		pr_err("%s: unhandled page fault (%d) at 0x%08lx, code 0x%03x\n",
+ 		       tsk->comm, sig, addr, fsr);
+-		show_pte(KERN_ERR, tsk->mm, addr);
++		if (likely(addr < TASK_SIZE)) {
++			mmap_write_lock(tsk->mm);
++			show_pte(KERN_ERR, tsk->mm, addr);
++			mmap_write_unlock(tsk->mm);
++		}
+ 		show_regs(regs);
+ 	}
+ #endif
+@@ -532,7 +536,15 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 	pr_alert("8<--- cut here ---\n");
+ 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
+ 		inf->name, fsr, addr);
+-	show_pte(KERN_ALERT, current->mm, addr);
++	if (likely(user_mode(regs))) {
++		if (addr < TASK_SIZE) {
++			mmap_write_lock(current->mm);
++			show_pte(KERN_ALERT, current->mm, addr);
++			mmap_write_unlock(current->mm);
++		}
++	} else {
++		show_pte(KERN_ALERT, current->mm, addr);
 +	}
-+
-+	rsp.tag = req->tag;
-+	delta = be32_to_cpu(req->req_lim_delta);
  
- 	if (srp_response_common(ch, delta, &rsp, sizeof(rsp)))
- 		shost_printk(KERN_ERR, ch->target->scsi_host, PFX
-@@ -2056,14 +2064,21 @@ static void srp_process_cred_req(struct srp_rdma_ch *ch,
- }
- 
- static void srp_process_aer_req(struct srp_rdma_ch *ch,
--				struct srp_aer_req *req)
-+				struct srp_aer_req *req, u32 byte_len)
- {
- 	struct srp_target_port *target = ch->target;
--	struct srp_aer_rsp rsp = {
--		.opcode = SRP_AER_RSP,
--		.tag = req->tag,
--	};
--	s32 delta = be32_to_cpu(req->req_lim_delta);
-+	struct srp_aer_rsp rsp = { .opcode = SRP_AER_RSP };
-+	s32 delta;
-+
-+	if (byte_len < sizeof(*req)) {
-+		shost_printk(KERN_ERR, target->scsi_host, PFX
-+			     "dropping truncated SRP_AER_REQ (%u bytes received, %zu expected)\n",
-+			     byte_len, sizeof(*req));
-+		return;
-+	}
-+
-+	rsp.tag = req->tag;
-+	delta = be32_to_cpu(req->req_lim_delta);
- 
- 	shost_printk(KERN_ERR, target->scsi_host, PFX
- 		     "ignoring AER for LUN %llu\n", scsilun_to_int(&req->lun));
-@@ -2105,11 +2120,11 @@ static void srp_recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		break;
- 
- 	case SRP_CRED_REQ:
--		srp_process_cred_req(ch, iu->buf);
-+		srp_process_cred_req(ch, iu->buf, wc->byte_len);
- 		break;
- 
- 	case SRP_AER_REQ:
--		srp_process_aer_req(ch, iu->buf);
-+		srp_process_aer_req(ch, iu->buf, wc->byte_len);
- 		break;
- 
- 	case SRP_T_LOGOUT:
+ 	arm_notify_die("", regs, inf->sig, inf->code, (void __user *)addr,
+ 		       fsr, 0);
 -- 
 2.53.0
 
