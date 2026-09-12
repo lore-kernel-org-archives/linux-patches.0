@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3426647CA62;
-	Sat, 12 Sep 2026 13:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0208343893;
+	Sat, 12 Sep 2026 13:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219914; cv=none; b=uQMh9i75FuUSBA7Y0Ss9SGr2g59+X+B5Z/aXq4Awn3oN9xAY9O2HSTBDw5fZ5eTE4SPnJQPNa00MAxVKYh/B/jVT17/+7Qy4HdGucsy1IIwMy1DFGVmWBjd8tMa7Zf9prYs0tXPfbQTlTTTbI9P9J+ntTHKbiYQYNk/b52BF/Os=
+	t=1789219919; cv=none; b=QeIJKYB2/h22uYxz5bOJ9sQtBpkJA8BGiy1iQIbUEUYInUZjMR0+95QV3RHjisyFLbnyTEP13Ut128ALYlDfmQQAIYPnpFTFBAW4tU9MapKdlu7IVrwd1pqzuF61Ud5g4Y3FvGvD4TbRfGT3Q/usb3Acc1EMctS913WL1QEwAfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219914; c=relaxed/simple;
-	bh=4V7IH0j1MaKFvgttQiRzUPjwQC3hz648hA8deWdtPZc=;
+	s=arc-20240116; t=1789219919; c=relaxed/simple;
+	bh=zewbqnXP7DTeeU5RWXZUkDOIwIupC5UlP0GkBQbuYJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ssl+hm5uH0p/s0psosoQJ5EvmDnd+4V9WIob7qEl0vTzKxD1HMfvQyCJgR6j/uDVWDk6AqrmcQEGvE/trFV2AmeCpdPfJ4Qngbx7FP0CH1o1jNDGlZ+bjfLWcYmojVgAZIAyhA4gaaa+D7Bzn2TTgL+fnSz+QrHIBWvgjIng4Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsFQkKyS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CXcuiZpAawFL5ULiMgIIM9HwIiBVY2Az7tKE8e4RisFwRfnsqHSOcYr2NDmaQ4SEr1fVE7QXa8ZdSfHatEQmNJ8nVY9GOv7gHkzVjhrJQWi1ByK6lJLW3pg0wYjYu+AZBSANNPVSTBkUAw9LSVnnZfG0QhDY5RN1fNFZbvk4zoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcp94mYX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsFQkKyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A4F1F000FF;
-	Sat, 12 Sep 2026 13:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcp94mYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90FC1F000FF;
+	Sat, 12 Sep 2026 13:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219913;
-	bh=tKhhpQMoVZmWzE76vu6JYPdqzcsHRTGIcNzcSG8/64w=;
+	s=korg; t=1789219917;
+	bh=MhIZJKi8jZBIFDXtrRiCGy4FL3/fSZVJBS7PPyhAwHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SsFQkKySp4ddhzlXUrD458/D1/0gXiobdG3xBLTW/kFCha0sOtV82IZGKviF63gOT
-	 FYlhqqm2tPDgncI/SDO98yeJqagtTrJr7RKysmAnTPYuUMvAXjKL3YZ/8hL6OExbBI
-	 dPYfZGVSK74HS1B3ZIztjtPFJlPnkZ0UFXzXGf14=
+	b=kcp94mYXnj/Fy00w/Dx1pV8T3RIKwzhRZYZtYdWF6aj20vztZvrcVj8EHdl5NI2AS
+	 fdlcIcTEhnYfrqr84NVVQPI4JTOa9OWPyTKOaGBaNcHEyyA0Fxj/IKoprs12I2Dmkq
+	 uTe8I0VYk5fv/5U+eTP6X6YV22gc9+/2LfsfeXxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0068/1424] nfsd: reject reclaim LOCK after RECLAIM_COMPLETE
-Date: Sat, 12 Sep 2026 08:41:40 +0200
-Message-ID: <20260912065608.828925317@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 0028/1424] Revert "media: v4l2-dev: fix error handling in __video_register_device()"
+Date: Sat, 12 Sep 2026 08:41:00 +0200
+Message-ID: <20260912065607.935765771@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,45 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-commit 2327ba1d9546727a35b17888777e991f68a9b305 upstream.
+commit e7600f5cee5de14065f950807931d6e6d40fb2d7 upstream.
 
-nfsd4_lock() only checks the namespace-wide grace flag when deciding
-whether to accept a reclaim LOCK. It does not check the per-client
-NFSD4_CLIENT_RECLAIM_COMPLETE bit. An NFSv4.1+ client that has
-already sent RECLAIM_COMPLETE can submit lk_reclaim=1 while grace is
-still active (e.g. lockd holds the grace list open), and the server
-accepts it instead of returning NFS4ERR_NO_GRACE as required by
-RFC 8881 section 18.51.3.
+This reverts commit 2a934fdb01db6458288fc9386d3d8ceba6dd551a.
 
-The OPEN path already enforces both tiers: the grace check plus the
-per-client RECLAIM_COMPLETE check in nfs4_check_open_reclaim(). Add
-the equivalent per-client check to the LOCK path.
+The intentions of that patch were good, but it doesn't work.
 
-Fixes: 3b3e7b72239a ("nfsd: reject reclaim request when client has already sent RECLAIM_COMPLETE")
+The idea is that if device_register fails, you have to do a put_device
+to let the ref counter release resources.
+
+However, the V4L2 API says that if video_register_device() fails, then
+you have to call video_device_release(), which kfree()s the video_device
+struct.
+
+But the put_device() will already have freed the struct, so you end
+up in a double-free scenario.
+
+There is not really a good way of fixing this without breaking
+video_register_device() into two parts, one that initializes everything,
+and one that does the actual device_register, and then converting all
+V4L2 drivers to this new model.
+
+That is a massive job, and it is very unlikely that device_register
+will fail.
+
+So rather than ending up in a double-free scenario, just revert this
+patch, and in that case we'll have a small memory leak. Which is a lot
+more robust.
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Fixes: 2a934fdb01db ("media: v4l2-dev: fix error handling in __video_register_device()")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-[ cel: Correct the RFC citations in the commit message ]
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-14-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://lore.kernel.org/linux-media/20260520090624.1071139-1-lgs201920130244@gmail.com/
+Link: https://lore.kernel.org/all/2026042058-charm-storable-4ad8@gregkh/
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/v4l2-core/v4l2-dev.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7684,6 +7684,9 @@ nfsd4_lock(struct svc_rqst *rqstp, struc
- 	status = nfserr_no_grace;
- 	if (!locks_in_grace(net) && lock->lk_reclaim)
- 		goto out;
-+	if (lock->lk_reclaim &&
-+	    test_bit(NFSD4_CLIENT_RECLAIM_COMPLETE, &cstate->clp->cl_flags))
-+		goto out;
+--- a/drivers/media/v4l2-core/v4l2-dev.c
++++ b/drivers/media/v4l2-core/v4l2-dev.c
+@@ -1033,25 +1033,25 @@ int __video_register_device(struct video
+ 	vdev->dev.class = &video_class;
+ 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
+ 	vdev->dev.parent = vdev->dev_parent;
+-	vdev->dev.release = v4l2_device_release;
+ 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
+-
+-	/* Increase v4l2_device refcount */
+-	v4l2_device_get(vdev->v4l2_dev);
+-
+ 	mutex_lock(&videodev_lock);
+ 	ret = device_register(&vdev->dev);
+ 	if (ret < 0) {
+ 		mutex_unlock(&videodev_lock);
+ 		pr_err("%s: device_register failed\n", __func__);
+-		put_device(&vdev->dev);
+-		return ret;
++		goto cleanup;
+ 	}
++	/* Register the release callback that will be called when the last
++	   reference to the device goes away. */
++	vdev->dev.release = v4l2_device_release;
  
- 	if (lock->lk_reclaim)
- 		fl_flags |= FL_RECLAIM;
+ 	if (nr != -1 && nr != vdev->num && warn_if_nr_in_use)
+ 		pr_warn("%s: requested %s%d, got %s\n", __func__,
+ 			name_base, nr, video_device_node_name(vdev));
+ 
++	/* Increase v4l2_device refcount */
++	v4l2_device_get(vdev->v4l2_dev);
++
+ 	/* Part 5: Register the entity. */
+ 	ret = video_register_media_controller(vdev);
+ 
 
 
