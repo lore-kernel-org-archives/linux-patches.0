@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4E831B10B;
-	Sat, 12 Sep 2026 14:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F44534E774;
+	Sat, 12 Sep 2026 14:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222862; cv=none; b=d6oRWz6obpuGmYwmEp7uGsYjfT1y+SQ7q1/RRE4Hw8kjQ4R3mPu6azU93uSToBUrW6y9byK298jx3Fg9o6Cuk5Tc5lTZjm/Hm5uf0U956Zl36fgd41MGPx2UkAvAqIFa+YRmi8PQgOd+8chRd2JhBF/OL4e+DDplV6SitMvvn6M=
+	t=1789222868; cv=none; b=iEe9/f2vyOJj97KWmpyGRH40HZzqBTAiPYOhyEjpXBGRCoeqjOk1zDPtZ42axoUF5llC+Wc8ELRwzlF1pwcHGMo0AIHKlPEEW8YeQZuGrkDDHB7JL22ed/ApLVkVtTx2bvr5VhHBR/MLBNdqtNe8gHfMbjoq2Y9kLvwbNxG7WIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222862; c=relaxed/simple;
-	bh=DME7m89qbOhiqD3A0TyJuKHLdfU9p4kFFAN17aMyCss=;
+	s=arc-20240116; t=1789222868; c=relaxed/simple;
+	bh=ryou2anJy/nNBWfV2SVTR1JNKLfpNlWOdHZqSCHl478=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYadCmZp15ruTkbf13GNh8wEbLvJsGsiUKiJVkk+cX3YHwdswtZmu8jAaUpE5XV2VMVV+nL8ggAXyd2eTJGzIhxzHYH1s2yTuFQ3Ppc4vwvP0m1seu/sCmt+x3UR+WVv0ZFJ5Of2krRp/dwOzWvO03XJZzzKkH1HCg8/xqgdXVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjOuRXHh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J92z64lQT2oVAB4iac2Vx21CvEgNXAKV/PynR7kGxy2IY51Ue+ytIgNlJfJo7tmaS7z40tNrodk/3RwV4gb+mu40oBDTW7PnutXBNclWS0D4a0HfM5gqFFvBpMT75UY7rDLrKEL91Hm8nhO8SddeRlbTp+v7PxwLCuwtxOK6VDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXAk1Nyw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjOuRXHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95E61F00893;
-	Sat, 12 Sep 2026 14:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXAk1Nyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2011F0089B;
+	Sat, 12 Sep 2026 14:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222861;
-	bh=510kf3+hSpOwByVUsRS3CQnSfV1leCg9JjepN/nWKvw=;
+	s=korg; t=1789222865;
+	bh=oNK9AlDkmqcP6SJ8hIE3eNw2erc0vVKCK2idICV3P2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IjOuRXHhjyVDNRfwZL+HtL8nodXLu4Mh4rwUNO4jOXzxXjKa3qyVltsKMsYlBTSSD
-	 ygs78K+zvn/3k1aHQUuei0vLzVQET/dFJ8q/jg5sx2JTkNypqTXTcELWwtqKsro9pE
-	 hvWZpxSIu/uKszyljG4o6sSxnTR1leb18GyxHI08=
+	b=vXAk1NywC8NqDXg4HOESF2fWnSXhrnHX2uthDnKHFP4KWYLdI6oUmUz2zcR9vdyoj
+	 pN8iNoLgJAsAKiMqXlE1TO5fDL9TqyXuu9rCIvvccq02Lqbq/NeIkdOnucc/YLIKxq
+	 iPtjyTA/sWsgTA1BfnjAzjd6ZTLplfZz3V+bKDkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
 	Thomas Gleixner <tglx@kernel.org>,
-	Radu Rendec <radu@rendec.net>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0670/1424] irqchip/gic-v3-its: Fix its node leak in gic_acpi_parse_madt_its()
-Date: Sat, 12 Sep 2026 08:51:42 +0200
-Message-ID: <20260912065622.300962515@linuxfoundation.org>
+Subject: [PATCH 6.6 0671/1424] selftests: timers: leap-a-day: Fix -w option and update usage comment
+Date: Sat, 12 Sep 2026 08:51:43 +0200
+Message-ID: <20260912065622.323131560@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,43 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 698a8648ca8051d34722b09b8a8088c741120ac3 ]
+[ Upstream commit b4b66151a71445f3a71574136ddc82968c7b175e ]
 
-Fix its node leak when its_probe_one() failed in
-gic_acpi_parse_madt_its().
+Commit 98b74e1f3104 ("kselftests: timers: leap-a-day: Change default
+arguments to help test runs") replaced the -s option with -w and made
+"wait for the leap second" the non-default behaviour, but it only
+updated the switch/case handling. Two things were left inconsistent:
 
-Fixes: 9585a495ac936 ("irqchip/gic-v3-its: Split allocation from initialisation of its_node")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+  - The getopt() option string still lists 's' instead of 'w', so
+    passing -w is rejected as an invalid option and the new behaviour
+    cannot be selected at all.
+
+  - The file header comment still documents the removed -s option and
+    an outdated default for -i.
+
+Fix the getopt() string to accept 'w' (matching the existing case 'w':
+handler) and update the header comment to describe -w, -t and the
+current -i default.
+
+Fixes: 98b74e1f3104 ("kselftests: timers: leap-a-day: Change default arguments to help test runs")
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260702033050.1583-3-shikemeng@huaweicloud.com
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/20260702093915.2652638-1-yijiangshan@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/testing/selftests/timers/leap-a-day.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 8160557c1acd4..b79a018f79dc1 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -5586,9 +5586,13 @@ static int __init gic_acpi_parse_madt_its(union acpi_subtable_headers *header,
- 	}
+diff --git a/tools/testing/selftests/timers/leap-a-day.c b/tools/testing/selftests/timers/leap-a-day.c
+index 23eb398c8140a..23d9ed05af65b 100644
+--- a/tools/testing/selftests/timers/leap-a-day.c
++++ b/tools/testing/selftests/timers/leap-a-day.c
+@@ -9,16 +9,19 @@
+  *  kernel's leap-second behavior, as well as how well applications
+  *  handle the leap-second discontinuity.
+  *
+- *  Usage: leap-a-day [-s] [-i <num>]
++ *  Usage: leap-a-day [-w] [-i <num>] [-t]
+  *
+  *  Options:
+- *	-s:	Each iteration, set the date to 10 seconds before midnight GMT.
+- *		This speeds up the number of leapsecond transitions tested,
+- *		but because it calls settimeofday frequently, advancing the
+- *		time by 24 hours every ~16 seconds, it may cause application
+- *		disruption.
++ *	-w:	Only set the leap-second flag and wait for the leap second
++ *		each iteration, instead of advancing the time. By default the
++ *		date is set to 10 seconds before midnight GMT, which speeds up
++ *		the number of leapsecond transitions tested, but because it
++ *		calls settimeofday frequently, advancing the time by 24 hours
++ *		every ~16 seconds, it may cause application disruption.
+  *
+- *	-i:	Number of iterations to run (default: infinite)
++ *	-i:	Number of iterations to run (-1 = infinite, default: 10)
++ *
++ *	-t:	Print TAI time.
+  *
+  *  Other notes: Disabling NTP prior to running this is advised, as the two
+  *		 may conflict in their commands to the kernel.
+@@ -186,7 +189,7 @@ int main(int argc, char **argv)
+ 	int opt;
  
- 	err = its_probe_one(its);
--	if (!err)
--		return 0;
-+	if (err)
-+		goto probe_err;
-+
-+	return 0;
- 
-+probe_err:
-+	its_node_destroy(its);
- node_err:
- 	iort_deregister_domain_token(its_entry->translation_id);
- dom_err:
+ 	/* Process arguments */
+-	while ((opt = getopt(argc, argv, "sti:")) != -1) {
++	while ((opt = getopt(argc, argv, "wti:")) != -1) {
+ 		switch (opt) {
+ 		case 'w':
+ 			printf("Only setting leap-flag, not changing time. It could take up to a day for leap to trigger.\n");
 -- 
 2.53.0
 
