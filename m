@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA697389472;
-	Sat, 12 Sep 2026 18:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDA8481241;
+	Sat, 12 Sep 2026 18:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237071; cv=none; b=P/ai4paveg8FZIAfDr0kzPrXoIftxYELCSBW9ptrabnNBHkpuLzE9o21V/rcpE+8fG7RIZDj3SMWpxi/JrGCDDJy8NGGY3vJsRU3YXBZTac0+/vc/TJSbsrZeQCuUeKiaoTEeKE2KSfjlPNFsk/NCQf4Cw9+O4S5pe8c40vcNyg=
+	t=1789237076; cv=none; b=ht0McOj9H301dRTemoHD3HTmi0qmqQPs3YQylrILSjlSfobTKM+znw7imPQgK8aVeCrIZ0HB/72UHYz5CIdBzPaTlv3qENZQrUCp580V4ynbjrrxgHdu5b6837ZXSykBByRxzBnHm6gTjJIeq4SSZJi3pxwjjx4L4EiEdqwWmGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237071; c=relaxed/simple;
-	bh=XY6+WbRItJFkytj+RnUBty+FTS8kBFyePxsn0aGyipg=;
+	s=arc-20240116; t=1789237076; c=relaxed/simple;
+	bh=hb6I8RItcYHIffXUUUad+h4GEZSq2jTK+iV4VenhKkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSwSXokDy282xcW8liK7clYXsjjC7Bqrws9+Q3IRbwOUUQBQwrrbR/+8KUJBD1PY/6EKaBiqTdXvApCwKHyQDDiyYuBygmokZphDoi0uEUGo0RBFPJUUKKHee3Neey138AbLsdhPYFwX9l6GKg/RzVXbCPvtxZOEkzXYoBIHIOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIbS9I3c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O4xEqBIW2VBrfWgSg6Wy3GHVovcpnb+r8Oq3mp5VOMHeetLKDMkYrP/lZMQ+79SRwxBZmmdydSM+wOVms9UxFYeRqxW/fBChz3d/8LaruOkRperyToeGY/XNhB3scglsfaUQzdpj7HNzFvJD7wR/f7JWbxbsw/Fzbxr5DvMVXzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhLbbg9R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIbS9I3c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F2D1F000FF;
-	Sat, 12 Sep 2026 18:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhLbbg9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA4C1F000FF;
+	Sat, 12 Sep 2026 18:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237069;
-	bh=nv1Vn8QWxHTfRS6RyBLTbPr9xkL2hbt6TXVuVea69f8=;
+	s=korg; t=1789237074;
+	bh=YF40c8y8I7NYNeitAwjsBryY3bCzEKJHSwZb5GJyKvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jIbS9I3cNSkTMyQiGh944JOYQnenVn6EmjAApuOVZBJPh7oZN5kPhLmAjiUkh7TYo
-	 o2X7lCHvCShUFxbwLsMpIDuZqoTMwyzi9tOoCGOoDQJKS2pudo23kUHoY4qeEb38Nq
-	 K2e1/TiLrch/1SdOQcE7d+7wLFACU1IHRexVkKkQ=
+	b=nhLbbg9RQ1eq3s8fTxrdAMRiXXAzB5wB0OdEcEW65jQ8KRilUaotW3Zmr5pfVKLxN
+	 bWistPpPw8/2vqR7OxRgx+UTvSc9fv3rGqWV0XYzbIB8xctsWDNDZYRfYbcOCRP0Pt
+	 2QPjaqqrHg6zDL/91dOarco0mEsFCs2qG1hhlDQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Breno Leitao <leitao@debian.org>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 185/935] net/smc: fix socket refcount leak in smc_switch_conns()
-Date: Sat, 12 Sep 2026 08:53:35 +0200
-Message-ID: <20260912065531.058974437@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 186/935] net: cap advertised IP tunnel headroom
+Date: Sat, 12 Sep 2026 08:53:36 +0200
+Message-ID: <20260912065531.082292137@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,73 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 719296c4aa8213d4ac8002e77d5956d436bc98d0 upstream.
+commit 6b222adeb9340306e2ff97127c76117abb9b3df8 upstream.
 
-smc_switch_conns() takes a reference on the SMC socket before dropping
-lgr->conns_lock, so the connection stays alive while the CDC slot is
-fetched:
+IP tunnel devices derive their advertised needed_headroom from lower
+output devices. A stack of user-created devices can make the derived
+value larger than the 16-bit skb header offsets can represent. Once IP
+output reserves it, skb head expansion can wrap those offsets.
 
-        sock_hold(&smc->sk);
-        read_unlock_bh(&lgr->conns_lock);
-        /* pre-fetch buffer outside of send_lock, might sleep */
-        rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
-        if (rc)
-                goto err_out;
+The runtime transmit path already caps a growing needed_headroom at 512.
+Apply the same cap when tunnel configuration publishes needed_headroom
+derived from a lower output device.
 
-The err_out label only drops the wr_tx link reference, so this early exit
-returns without the matching sock_put(). The second error exit is not
-affected, because sock_put() has already run by then.
+Capping the advertised value is safe: IP tunnel transmit still expands
+the skb when a packet needs more headroom. A nonsensical stacked
+configuration can therefore incur an extra reallocation, but it cannot
+publish an unbounded reservation to upper layers.
 
-A leaked sk_refcnt means the smc_sock is never destroyed. Its send and
-receive buffers stay allocated, and for a user socket the reference held
-on the network namespace is never released, so the netns can no longer be
-torn down.
-
-smc_cdc_get_free_slot() fails when the target link goes down or when the
-connection has been killed while the switch is in progress. Both are
-reachable during the link failover this function implements, so the leak
-is triggered by the same hardware events that make smc_switch_conns() run
-in the first place.
-
-Restructure so there is a single sock_put() covering both outcomes,
-instead of adding a second one to the error path.
-
-Fixes: 95f7f3e7dc6b ("net/smc: improved fix wait on already cleared link")
+Fixes: 1a37e412a022 ("net: Use 16bits for *_headers fields of struct skbuff")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Link: https://patch.msgid.link/20260820144729.1019399-1-hidayath@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/ba04a1fd6bfae2377607fad5d8f80f7eb80fd4c4.1786542637.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_core.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/net/ip_tunnels.h |   11 +++++++++--
+ net/ipv4/ip_tunnel.c     |    2 +-
+ net/ipv6/ip6_gre.c       |    7 +++++--
+ net/ipv6/ip6_tunnel.c    |    7 +++++--
+ net/ipv6/sit.c           |    2 +-
+ 5 files changed, 21 insertions(+), 8 deletions(-)
 
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -981,13 +981,13 @@ again:
- 		read_unlock_bh(&lgr->conns_lock);
- 		/* pre-fetch buffer outside of send_lock, might sleep */
- 		rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
--		if (rc)
--			goto err_out;
--		/* avoid race with smcr_tx_sndbuf_nonempty() */
--		spin_lock_bh(&conn->send_lock);
--		smc_switch_link_and_count(conn, to_lnk);
--		rc = smc_switch_cursor(smc, pend, wr_buf);
--		spin_unlock_bh(&conn->send_lock);
-+		if (!rc) {
-+			/* avoid race with smcr_tx_sndbuf_nonempty() */
-+			spin_lock_bh(&conn->send_lock);
-+			smc_switch_link_and_count(conn, to_lnk);
-+			rc = smc_switch_cursor(smc, pend, wr_buf);
-+			spin_unlock_bh(&conn->send_lock);
-+		}
- 		sock_put(&smc->sk);
- 		if (rc)
- 			goto err_out;
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -470,8 +470,7 @@ struct metadata_dst *iptunnel_metadata_r
+ int skb_tunnel_check_pmtu(struct sk_buff *skb, struct dst_entry *encap_dst,
+ 			  int headroom, bool reply);
+ 
+-static inline void ip_tunnel_adj_headroom(struct net_device *dev,
+-					  unsigned int headroom)
++static inline unsigned int ip_tunnel_limit_headroom(unsigned int headroom)
+ {
+ 	/* we must cap headroom to some upperlimit, else pskb_expand_head
+ 	 * will overflow header offsets in skb_headers_offset_update().
+@@ -481,6 +480,14 @@ static inline void ip_tunnel_adj_headroo
+ 	if (headroom > max_allowed)
+ 		headroom = max_allowed;
+ 
++	return headroom;
++}
++
++static inline void ip_tunnel_adj_headroom(struct net_device *dev,
++					  unsigned int headroom)
++{
++	headroom = ip_tunnel_limit_headroom(headroom);
++
+ 	if (headroom > READ_ONCE(dev->needed_headroom))
+ 		WRITE_ONCE(dev->needed_headroom, headroom);
+ }
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -316,7 +316,7 @@ static int ip_tunnel_bind_dev(struct net
+ 		mtu = min(tdev->mtu, IP_MAX_MTU);
+ 	}
+ 
+-	dev->needed_headroom = t_hlen + hlen;
++	dev->needed_headroom = ip_tunnel_limit_headroom(t_hlen + hlen);
+ 	mtu -= t_hlen + (dev->type == ARPHRD_ETHER ? dev->hard_header_len : 0);
+ 
+ 	if (mtu < IPV4_MIN_MTU)
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1151,8 +1151,11 @@ static void ip6gre_tnl_link_config_route
+ 			return;
+ 
+ 		if (rt->dst.dev) {
+-			dev->needed_headroom = rt->dst.dev->hard_header_len +
+-					       t_hlen;
++			unsigned int headroom;
++
++			headroom = rt->dst.dev->hard_header_len + t_hlen;
++			headroom = ip_tunnel_limit_headroom(headroom);
++			dev->needed_headroom = headroom;
+ 
+ 			if (set_mtu) {
+ 				int mtu = rt->dst.dev->mtu - t_hlen;
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1497,8 +1497,11 @@ static void ip6_tnl_link_config(struct i
+ 			tdev = __dev_get_by_index(t->net, p->link);
+ 
+ 		if (tdev) {
+-			dev->needed_headroom = tdev->hard_header_len +
+-				tdev->needed_headroom + t_hlen;
++			unsigned int headroom;
++
++			headroom = tdev->hard_header_len + tdev->needed_headroom;
++			headroom += t_hlen;
++			dev->needed_headroom = ip_tunnel_limit_headroom(headroom);
+ 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
+ 
+ 			mtu = mtu - t_hlen;
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1139,7 +1139,7 @@ static void ipip6_tunnel_bind_dev(struct
+ 		WRITE_ONCE(dev->mtu, mtu);
+ 		hlen = tdev->hard_header_len + tdev->needed_headroom;
+ 	}
+-	dev->needed_headroom = t_hlen + hlen;
++	dev->needed_headroom = ip_tunnel_limit_headroom(t_hlen + hlen);
+ }
+ 
+ static void ipip6_tunnel_update(struct ip_tunnel *t, struct ip_tunnel_parm *p,
 
 
