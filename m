@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAD122A7F6;
-	Sat, 12 Sep 2026 15:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A627822A7F6;
+	Sat, 12 Sep 2026 15:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225590; cv=none; b=na4oobkvEqVzz3sPqK5dWFtM2m3+g86VrLmMbIAK0fm7DbAwvOMg/RsI0PUpgBW44da2E+8nr5p+wRtNyZ+pTnmKV408onJHoQ1T9CpmPBmyGHra7H6KnGlYbOoLGrdpXyKLTaZOXAFvIo6oCr+be8alflFB+NbMm/GhrN49ddA=
+	t=1789225595; cv=none; b=W8iQrRgZ21Sxmp9wpm0qPocnUxRH385+pZXMHxRqQ5npx7tWtOiST9V960jhakAxEaExDGiyMdB0FOZsFJmMYxpGMDFD8vHMLIega8IqkZfeI4TtqpIa+cbDa/y0QWUPibkpmqw5yiNp2tPKKzffxQZzeo7NDvnIoUWO0ibann4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225590; c=relaxed/simple;
-	bh=2uzlAcVHTdXOxMVec0ZAXreH4QlZ8qzqv9zunfa+uKI=;
+	s=arc-20240116; t=1789225595; c=relaxed/simple;
+	bh=hzITNGJoVDRHVh+Y4fHX6Or1PaMHQWhH+m2fR9L5B6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RhTVujPT3mrHcuC7jxbbQA3WK7z+5iUu5GTlpW6trTjYJHAj9LEp3HmYKokINeqLsmL3WZ4lVJyAO7ioPUwniKtRaRiLjIknDnCWWTsBHohQPQ3ycP2VHcriog0ERwc4fiQdY55sUHO3KpgK8exyLaNJl8ADD4QWQmRcLnIeznI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLeMeRyk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=px53n3a9+DL8I78A2M6YrBlxq9Lu3pn8ocjYPW0rMy7Wk/nxd+laZ9Kta7SEZ6GNNULe+f2m/2ghiNzROhvG9551PHMmTKDKJGGiGqlxThAUXJXyblchKthROkYvwJtus6VdmUNRE6Tfdnq/wp3n4FYI5RovS5w74cBuMBnOH0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nShwiIvM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLeMeRyk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4CE1F000FF;
-	Sat, 12 Sep 2026 15:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nShwiIvM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111BC1F000FF;
+	Sat, 12 Sep 2026 15:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225589;
-	bh=54pConifkiHoQJQcJ15+Imbc4KgUIFpRtKkrLWfSEAU=;
+	s=korg; t=1789225594;
+	bh=iW8wAe0bIhqDFMCNi6zISwdFZm6IgLhU6ddXFaTIiZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WLeMeRykrxhp3hGXUTbHzSUF2BxL9n1rzpyDU4seRzNF2hsyJTVIUZiFant98vaFx
-	 ihz+heMaqV5R03nL0N2LqwR/Vf4AM6WkC86rrTqloCQUyA9AwmTG6MYTp981nKyaDg
-	 Du3LDudZXBKbWYBSejtaOJkWffxXYKCJekPLB540=
+	b=nShwiIvMHJnbsEWpGTwlZ4okOeJLfJ+MIZ84VB9oXX5tgYE6uLGqslQiKqyFM36Zk
+	 Z6qdaAzmw41XXXBLZ6ARnEDVWrX/QHm7OxYzaN1IrfDFH1EslI5p6uXQPn+AgeCMGz
+	 er9HlYdIXZcfXjC3m/t+LSG7nz/xiKuOPjL3sPnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1186/1424] ubi: fastmap: Fix lapsed wear leveling for first 64 PEBs
-Date: Sat, 12 Sep 2026 09:00:18 +0200
-Message-ID: <20260912065633.850091302@linuxfoundation.org>
+Subject: [PATCH 6.6 1187/1424] ubi: fastmap: Add module parameter to control reserving filling pool PEBs
+Date: Sat, 12 Sep 2026 09:00:19 +0200
+Message-ID: <20260912065633.871518685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,166 +53,141 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 90e0be56144b064be1a816cbdd184d2a8be7061b ]
+[ Upstream commit d4c48e5b58f12835de779f5425ef741c4d0fb53e ]
 
-The anchor PEB must be picked from first 64 PEBs, these PEBs could have
-large erase counter greater than other PEBs especially when free space
-is nearly running out.
-The ubi_update_fastmap will be called as long as pool/wl_pool is empty,
-old anchor PEB is erased when updating fastmap. Given an UBI device with
-N PEBs, free PEBs is nearly running out and pool will be filled with 1
-PEB every time ubi_update_fastmap invoked. So t=N/POOL_SIZE[1]/64 means
-that in worst case the erase counter of first 64 PEBs is t times greater
-than other PEBs in theory.
-After running fsstress for 24h, the erase counter statistics for two UBI
-devices shown as follow(CONFIG_MTD_UBI_WL_THRESHOLD=128):
+Adding 6th module parameter in 'mtd=xxx' to control whether or not
+reserving PEBs for filling pool/wl_pool.
 
-Device A(1024 PEBs, pool=50, wl_pool=25):
-=========================================================
-from              to     count      min      avg      max
----------------------------------------------------------
-0        ..        9:        0        0        0        0
-10       ..       99:        0        0        0        0
-100      ..      999:        0        0        0        0
-1000     ..     9999:        0        0        0        0
-10000    ..    99999:      960    29224    29282    29362
-100000   ..      inf:       64   117897   117934   117940
----------------------------------------------------------
-Total               :     1024    29224    34822   117940
-
-Device B(8192 PEBs, pool=256, wl_pool=128):
-=========================================================
-from              to     count      min      avg      max
----------------------------------------------------------
-0        ..        9:        0        0        0        0
-10       ..       99:        0        0        0        0
-100      ..      999:        0        0        0        0
-1000     ..     9999:     8128     2253     2321     2387
-10000    ..    99999:       64    35387    35387    35388
-100000   ..      inf:        0        0        0        0
----------------------------------------------------------
-Total               :     8192     2253     2579    35388
-
-The key point is reducing fastmap updating frequency by enlarging
-POOL_SIZE, so let UBI reserve ubi->fm_pool.max_size PEBs during
-attaching. Then POOL_SIZE will become ubi->fm_pool.max_size/2 even
-in free space running out case.
-Given an UBI device with 8192 PEBs(16384\8192\4096 is common
-large-capacity flash), t=8192/128/64=1. The fastmap updating will
-happen in either wl_pool or pool is empty, so setting fm_pool_rsv_cnt
-as ubi->fm_pool.max_size can fill wl_pool in full state.
-
-After pool reservation, running fsstress for 24h:
-
-Device A(1024 PEBs, pool=50, wl_pool=25):
-=========================================================
-from              to     count      min      avg      max
----------------------------------------------------------
-0        ..        9:        0        0        0        0
-10       ..       99:        0        0        0        0
-100      ..      999:        0        0        0        0
-1000     ..     9999:        0        0        0        0
-10000    ..    99999:     1024    33801    33997    34056
-100000   ..      inf:        0        0        0        0
----------------------------------------------------------
-Total               :     1024    33801    33997    34056
-
-Device B(8192 PEBs, pool=256, wl_pool=128):
-=========================================================
-from              to     count      min      avg      max
----------------------------------------------------------
-0        ..        9:        0        0        0        0
-10       ..       99:        0        0        0        0
-100      ..      999:        0        0        0        0
-1000     ..     9999:     8192     2205     2397     2460
-10000    ..    99999:        0        0        0        0
-100000   ..      inf:        0        0        0        0
----------------------------------------------------------
-Total               :     8192     2205     2397     2460
-
-The difference of erase counter between first 64 PEBs and others is
-under WL_FREE_MAX_DIFF(2*UBI_WL_THRESHOLD=2*128=256).
-  Device A: 34056 - 33801 = 255
-  Device B: 2460 - 2205 = 255
-
-Next patch will add a switch to control whether UBI needs to reserve
-PEBs for filling pool.
-
-Fixes: dbb7d2a88d2a ("UBI: Add fastmap core")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217787
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Stable-dep-of: 5b0a6b554e12 ("ubi: Fix rollback for explicit UBI device numbers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c      | 1 +
- drivers/mtd/ubi/fastmap-wl.c | 2 +-
- drivers/mtd/ubi/ubi.h        | 2 ++
- drivers/mtd/ubi/wl.h         | 6 ++++--
- 4 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/mtd/ubi/build.c | 26 ++++++++++++++++++++++----
+ drivers/mtd/ubi/cdev.c  |  3 ++-
+ drivers/mtd/ubi/ubi.h   |  2 +-
+ 3 files changed, 25 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index 144aa76d13e90..acc3095791e2c 100644
+index acc3095791e2c..1a227c3b08b54 100644
 --- a/drivers/mtd/ubi/build.c
 +++ b/drivers/mtd/ubi/build.c
-@@ -951,6 +951,7 @@ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
+@@ -35,7 +35,7 @@
+ #define MTD_PARAM_LEN_MAX 64
+ 
+ /* Maximum number of comma-separated items in the 'mtd=' parameter */
+-#define MTD_PARAM_MAX_COUNT 5
++#define MTD_PARAM_MAX_COUNT 6
+ 
+ /* Maximum value for the number of bad PEBs per 1024 PEBs */
+ #define MAX_MTD_UBI_BEB_LIMIT 768
+@@ -54,6 +54,7 @@
+  * @vid_hdr_offs: VID header offset
+  * @max_beb_per1024: maximum expected number of bad PEBs per 1024 PEBs
+  * @enable_fm: enable fastmap when value is non-zero
++ * @need_resv_pool: reserve pool->max_size pebs when value is none-zero
+  */
+ struct mtd_dev_param {
+ 	char name[MTD_PARAM_LEN_MAX];
+@@ -61,6 +62,7 @@ struct mtd_dev_param {
+ 	int vid_hdr_offs;
+ 	int max_beb_per1024;
+ 	int enable_fm;
++	int need_resv_pool;
+ };
+ 
+ /* Numbers of elements set in the @mtd_dev_param array */
+@@ -825,6 +827,7 @@ static int autoresize(struct ubi_device *ubi, int vol_id)
+  * @vid_hdr_offset: VID header offset
+  * @max_beb_per1024: maximum expected number of bad PEB per 1024 PEBs
+  * @disable_fm: whether disable fastmap
++ * @need_resv_pool: whether reserve pebs to fill fm_pool
+  *
+  * This function attaches MTD device @mtd_dev to UBI and assign @ubi_num number
+  * to the newly created UBI device, unless @ubi_num is %UBI_DEV_NUM_AUTO, in
+@@ -840,7 +843,8 @@ static int autoresize(struct ubi_device *ubi, int vol_id)
+  * @ubi_devices_mutex.
+  */
+ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
+-		       int vid_hdr_offset, int max_beb_per1024, bool disable_fm)
++		       int vid_hdr_offset, int max_beb_per1024, bool disable_fm,
++		       bool need_resv_pool)
+ {
+ 	struct ubi_device *ubi;
+ 	int i, err;
+@@ -951,7 +955,7 @@ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
  		UBI_FM_MIN_POOL_SIZE);
  
  	ubi->fm_wl_pool.max_size = ubi->fm_pool.max_size / 2;
-+	ubi->fm_pool_rsv_cnt = ubi->fm_pool.max_size;
+-	ubi->fm_pool_rsv_cnt = ubi->fm_pool.max_size;
++	ubi->fm_pool_rsv_cnt = need_resv_pool ? ubi->fm_pool.max_size : 0;
  	ubi->fm_disabled = (!fm_autoconvert || disable_fm) ? 1 : 0;
  	if (fm_debug)
  		ubi_enable_dbg_chk_fastmap(ubi);
-diff --git a/drivers/mtd/ubi/fastmap-wl.c b/drivers/mtd/ubi/fastmap-wl.c
-index 02a2fdc4c0940..16e3c8af85457 100644
---- a/drivers/mtd/ubi/fastmap-wl.c
-+++ b/drivers/mtd/ubi/fastmap-wl.c
-@@ -118,7 +118,7 @@ static void wait_free_pebs_for_pool(struct ubi_device *ubi)
- 	 * 4. beb_rsvd_pebs: This value should be get under lock ubi->wl_lock
- 	 */
- 	int reserved = WL_RESERVED_PEBS + EBA_RESERVED_PEBS +
--		       ubi->fm_size / ubi->leb_size - 1;
-+		       ubi->fm_size / ubi->leb_size - 1 + ubi->fm_pool_rsv_cnt;
+@@ -1274,7 +1278,8 @@ static int __init ubi_init(void)
+ 		mutex_lock(&ubi_devices_mutex);
+ 		err = ubi_attach_mtd_dev(mtd, p->ubi_num,
+ 					 p->vid_hdr_offs, p->max_beb_per1024,
+-					 p->enable_fm == 0);
++					 p->enable_fm == 0,
++					 p->need_resv_pool != 0);
+ 		mutex_unlock(&ubi_devices_mutex);
+ 		if (err < 0) {
+ 			pr_err("UBI error: cannot attach mtd%d\n",
+@@ -1483,6 +1488,18 @@ static int ubi_mtd_param_parse(const char *val, const struct kernel_param *kp)
+ 	} else
+ 		p->enable_fm = 0;
  
- 	do {
- 		spin_lock(&ubi->wl_lock);
++	token = tokens[5];
++	if (token) {
++		int err = kstrtoint(token, 10, &p->need_resv_pool);
++
++		if (err) {
++			pr_err("UBI error: bad value for need_resv_pool parameter: %s\n",
++				token);
++			return -EINVAL;
++		}
++	} else
++		p->need_resv_pool = 0;
++
+ 	mtd_devs += 1;
+ 	return 0;
+ }
+@@ -1496,6 +1513,7 @@ MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|pa
+ 		      __stringify(CONFIG_MTD_UBI_BEB_LIMIT) ") if 0)\n"
+ 		      "Optional \"ubi_num\" parameter specifies UBI device number which have to be assigned to the newly created UBI device (assigned automatically by default)\n"
+ 		      "Optional \"enable_fm\" parameter determines whether to enable fastmap during attach. If the value is non-zero, fastmap is enabled. Default value is 0.\n"
++		      "Optional \"need_resv_pool\" parameter determines whether to reserve pool->max_size pebs during attach. If the value is non-zero, peb reservation is enabled. Default value is 0.\n"
+ 		      "\n"
+ 		      "Example 1: mtd=/dev/mtd0 - attach MTD device /dev/mtd0.\n"
+ 		      "Example 2: mtd=content,1984 mtd=4 - attach MTD device with name \"content\" using VID header offset 1984, and MTD device number 4 with default VID header offset.\n"
+diff --git a/drivers/mtd/ubi/cdev.c b/drivers/mtd/ubi/cdev.c
+index f43430b9c1e65..98aa00344b29b 100644
+--- a/drivers/mtd/ubi/cdev.c
++++ b/drivers/mtd/ubi/cdev.c
+@@ -1041,7 +1041,8 @@ static long ctrl_cdev_ioctl(struct file *file, unsigned int cmd,
+ 		 */
+ 		mutex_lock(&ubi_devices_mutex);
+ 		err = ubi_attach_mtd_dev(mtd, req.ubi_num, req.vid_hdr_offset,
+-					 req.max_beb_per1024, !!req.disable_fm);
++					 req.max_beb_per1024, !!req.disable_fm,
++					 false);
+ 		mutex_unlock(&ubi_devices_mutex);
+ 		if (err < 0)
+ 			put_mtd_device(mtd);
 diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
-index a6714a2945d8c..455d2018a5353 100644
+index 455d2018a5353..5cd4f30edd57c 100644
 --- a/drivers/mtd/ubi/ubi.h
 +++ b/drivers/mtd/ubi/ubi.h
-@@ -494,6 +494,7 @@ struct ubi_debug_info {
-  * @fast_attach: non-zero if UBI was attached by fastmap
-  * @fm_anchor: The next anchor PEB to use for fastmap
-  * @fm_do_produce_anchor: If true produce an anchor PEB in wl
-+ * @fm_pool_rsv_cnt: Number of reserved PEBs for filling pool/wl_pool
-  *
-  * @used: RB-tree of used physical eraseblocks
-  * @erroneous: RB-tree of erroneous used physical eraseblocks
-@@ -604,6 +605,7 @@ struct ubi_device {
- 	int fast_attach;
- 	struct ubi_wl_entry *fm_anchor;
- 	int fm_do_produce_anchor;
-+	int fm_pool_rsv_cnt;
- 
- 	/* Wear-leveling sub-system's stuff */
- 	struct rb_root used;
-diff --git a/drivers/mtd/ubi/wl.h b/drivers/mtd/ubi/wl.h
-index 1d83e552533a5..a69169c35e310 100644
---- a/drivers/mtd/ubi/wl.h
-+++ b/drivers/mtd/ubi/wl.h
-@@ -11,8 +11,10 @@ static bool need_wear_leveling(struct ubi_device *ubi);
- static void ubi_fastmap_close(struct ubi_device *ubi);
- static inline void ubi_fastmap_init(struct ubi_device *ubi, int *count)
- {
--	/* Reserve enough LEBs to store two fastmaps. */
--	*count += (ubi->fm_size / ubi->leb_size) * 2;
-+	if (ubi->fm_disabled)
-+		ubi->fm_pool_rsv_cnt = 0;
-+	/* Reserve enough LEBs to store two fastmaps and to fill pools. */
-+	*count += (ubi->fm_size / ubi->leb_size) * 2 + ubi->fm_pool_rsv_cnt;
- 	INIT_WORK(&ubi->fm_work, update_fastmap_work_fn);
- }
- static struct ubi_wl_entry *may_reserve_for_fm(struct ubi_device *ubi,
+@@ -944,7 +944,7 @@ int ubi_io_write_vid_hdr(struct ubi_device *ubi, int pnum,
+ /* build.c */
+ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
+ 		       int vid_hdr_offset, int max_beb_per1024,
+-		       bool disable_fm);
++		       bool disable_fm, bool need_resv_pool);
+ int ubi_detach_mtd_dev(int ubi_num, int anyway);
+ struct ubi_device *ubi_get_device(int ubi_num);
+ void ubi_put_device(struct ubi_device *ubi);
 -- 
 2.53.0
 
