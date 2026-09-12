@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F881A6816;
-	Sat, 12 Sep 2026 12:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4A542885F;
+	Sat, 12 Sep 2026 12:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217299; cv=none; b=UpUgJ9uB65Q0tGaoocLHMxP9xQbasScglyUrU7AkNKoWLbG5q7QKAPrrUGoTJWj2EUl5EoRo6bQ076JCFkBQVxobre7g7ue5v4+sQ63BSqhM9Km8un/t8+sSGMdCQX4gK9v6fYIUT2dyEbfl8vYFXd3TKAYdVAU0nxJj798pGF8=
+	t=1789217303; cv=none; b=XANetMEm4A4qacyM+MVYgKKLdO2qm0GaEslUbTwOGI6MPR487xOjq+i2oUoCEaIZ7wm8xH5J5PV2iZhuN0iQHl/MjlEeJJJU6wtof10oAFKdxEVVRGQzEn7HZgz36S6YXM0cax+jMXgnxGKMFC6fPeGAin53gXjINRLqADax/PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217299; c=relaxed/simple;
-	bh=ilyqszl09lIrRXPPWpqgZB2hSwnOk6Lv6O+H1rZdAuA=;
+	s=arc-20240116; t=1789217303; c=relaxed/simple;
+	bh=5zcGMCAZi0BwDbrlGs5DtvcT6BPOkSZyWWBjF9Q6wA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=auvImAhlf4LlpU2cZ9+Vg06ejcTi1HtCNqGcjo50htC4ZKdVrMLoHwTWyFH2TOxVD56R+pbPbtNRqXIRUe9aXYGHH2cZFM4rr6cdCQ2WZYGgGPLigcbdGFgtqqD7LEPGIL+MhiDd6FRPjIa8YQ4e+s9HSC/evV9pKGemeqqCHvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=koD7347m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sPvrQjFWWr3f/bCCdcyXILoCJfJ2V0Vk4ZqKEKWJPR+mhrdKmr4UkrtZL3RT8GGD/OC2VxCZXhbdM6mbrSR6e078dFRYKBS0PIfBLco1M/b5gqmCV0IAx8ziVM9Z6JGxxp4IlohZzgKtVbOHSU80uAHO73wEZZjpQUlZEWl+JjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wmt6AgYM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koD7347m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE831F000FF;
-	Sat, 12 Sep 2026 12:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wmt6AgYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C701F000FF;
+	Sat, 12 Sep 2026 12:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217297;
-	bh=FH0wxd2JY9V2R87qHLnHmTnp8l8obhc95+W8P45tapk=;
+	s=korg; t=1789217302;
+	bh=V/PjZOz58DX8qPJcdQLZESZl9V46UhYpbOpc5lkk/rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=koD7347muOgS4OV3p76KqCBTIgAvL2LSzTj3sX+9qGfFQvWwX+mqJjFuXJcTINzbs
-	 uN7Px7pFept4MuxjWS/LLMPMmbweQGGIx+a5sPqVanr9lNikFDTDzCXaQPIzMkGvyy
-	 HbkkXSTDZE587pbvxViArA2SIlsYGzd0wd4zJDCg=
+	b=Wmt6AgYMJkDBRIed+JGiS0pG8GJewJ/frIY9C0zk4nc+Snzv2CgHUDcxiO/ok2/if
+	 0B4T0DbRF3Kn9Jv5hSCL2uVbUu24V9Qyrd6TYuY7qw7HYXKWY1KfbplsLX8lcjCfq8
+	 qhJsgSPBw1c2uUdJwv2MRFM99SxxmaGygxlGrzhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Charkov <alchark@flipper.net>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0911/1376] clk: rockchip: rk3576: fix source muxes for SPI0..SPI4
-Date: Sat, 12 Sep 2026 08:55:37 +0200
-Message-ID: <20260912065627.872559517@linuxfoundation.org>
+Subject: [PATCH 6.12 0912/1376] drm/sun4i: vi scaler: Fix coefficient selection
+Date: Sat, 12 Sep 2026 08:55:38 +0200
+Message-ID: <20260912065627.895288603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,68 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 586ff159ec02533c17dd928641529cb0b52e9c62 ]
+[ Upstream commit 5c31990b21f0b535732deb2b658b78b07464f56c ]
 
-The TRM defines available source muxes for SPI0..SPI4 as
- - b00: clk_gpll_div6_src
- - b01: clk_gpll_div8_src
- - b10: clk_cpll_div10_src
- - b11: clk_xin_osc0_func
+Currently, vertical coefficients are selected based on horizontal
+scaling, which is wrong. Additionally, chroma coefficients should be
+selected based on format subsampling.
 
-Which doesn't match what the current clock driver implements, making it
-impossible to derive some SPI clock rates such as 37.125 MHz (which
-requires clk_gpll_div8_src as the source mux).
+Fix all that.
 
-Add a correct mux definition per TRM and point SPI0..SPI4 clocks at it.
-
-Fixes: cc40f5baa91b ("clk: rockchip: Add clock controller for the RK3576")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Link: https://patch.msgid.link/20260805-rk3576-spi-clk-v1-1-2f040d0d163b@flipper.net
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: b862a648de3b ("drm/sun4i: Add support for HW scaling to DE2")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/263a4a41442a3c8b072b170256b72658f1b90802.1785772659.git.jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-rk3576.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/sun4i/sun8i_vi_scaler.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/rockchip/clk-rk3576.c b/drivers/clk/rockchip/clk-rk3576.c
-index 595e010341f73..0746d2d07095b 100644
---- a/drivers/clk/rockchip/clk-rk3576.c
-+++ b/drivers/clk/rockchip/clk-rk3576.c
-@@ -313,6 +313,7 @@ PNAME(mux_100m_24m_lclk0_p)		= { "clk_cpll_div10", "xin24m", "lclk_asrc_src_0" }
- PNAME(mux_100m_24m_lclk1_p)		= { "clk_cpll_div10", "xin24m", "lclk_asrc_src_1" };
- PNAME(mux_150m_100m_50m_24m_p)		= { "clk_gpll_div8", "clk_cpll_div10", "clk_cpll_div20", "xin24m" };
- PNAME(mux_200m_100m_50m_24m_p)		= { "clk_gpll_div6", "clk_cpll_div10", "clk_cpll_div20", "xin24m" };
-+PNAME(mux_200m_150m_100m_24m_p)		= { "clk_gpll_div6", "clk_gpll_div8", "clk_cpll_div10", "xin24m" };
- PNAME(mux_400m_200m_100m_24m_p)		= { "clk_gpll_div3", "clk_gpll_div6", "clk_cpll_div10", "xin24m" };
- PNAME(mux_500m_250m_100m_24m_p)		= { "clk_cpll_div2", "clk_cpll_div4", "clk_cpll_div10", "xin24m" };
- PNAME(mux_600m_400m_300m_24m_p)		= { "clk_gpll_div2", "clk_gpll_div3", "clk_gpll_div4", "xin24m" };
-@@ -702,19 +703,19 @@ static struct rockchip_clk_branch rk3576_clk_branches[] __initdata = {
- 			RK3576_CLKGATE_CON(16), 0, GFLAGS),
- 	GATE(PCLK_SPI4, "pclk_spi4", "pclk_bus_root", 0,
- 			RK3576_CLKGATE_CON(16), 1, GFLAGS),
--	COMPOSITE_NODIV(CLK_SPI0, "clk_spi0", mux_200m_100m_50m_24m_p, 0,
-+	COMPOSITE_NODIV(CLK_SPI0, "clk_spi0", mux_200m_150m_100m_24m_p, 0,
- 			RK3576_CLKSEL_CON(70), 13, 2, MFLAGS,
- 			RK3576_CLKGATE_CON(16), 2, GFLAGS),
--	COMPOSITE_NODIV(CLK_SPI1, "clk_spi1", mux_200m_100m_50m_24m_p, 0,
-+	COMPOSITE_NODIV(CLK_SPI1, "clk_spi1", mux_200m_150m_100m_24m_p, 0,
- 			RK3576_CLKSEL_CON(71), 0, 2, MFLAGS,
- 			RK3576_CLKGATE_CON(16), 3, GFLAGS),
--	COMPOSITE_NODIV(CLK_SPI2, "clk_spi2", mux_200m_100m_50m_24m_p, 0,
-+	COMPOSITE_NODIV(CLK_SPI2, "clk_spi2", mux_200m_150m_100m_24m_p, 0,
- 			RK3576_CLKSEL_CON(71), 2, 2, MFLAGS,
- 			RK3576_CLKGATE_CON(16), 4, GFLAGS),
--	COMPOSITE_NODIV(CLK_SPI3, "clk_spi3", mux_200m_100m_50m_24m_p, 0,
-+	COMPOSITE_NODIV(CLK_SPI3, "clk_spi3", mux_200m_150m_100m_24m_p, 0,
- 			RK3576_CLKSEL_CON(71), 4, 2, MFLAGS,
- 			RK3576_CLKGATE_CON(16), 5, GFLAGS),
--	COMPOSITE_NODIV(CLK_SPI4, "clk_spi4", mux_200m_100m_50m_24m_p, 0,
-+	COMPOSITE_NODIV(CLK_SPI4, "clk_spi4", mux_200m_150m_100m_24m_p, 0,
- 			RK3576_CLKSEL_CON(71), 6, 2, MFLAGS,
- 			RK3576_CLKGATE_CON(16), 6, GFLAGS),
- 	GATE(PCLK_WDT0, "pclk_wdt0", "pclk_bus_root", 0,
+diff --git a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
+index 7ba75011adf9f..328b84df2ee5e 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
++++ b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
+@@ -891,20 +891,26 @@ static void sun8i_vi_scaler_set_coeff(struct regmap *map, u32 base,
+ 			     lan3coefftab32_left[offset + i]);
+ 		regmap_write(map, SUN8I_SCALER_VSU_YHCOEFF1(base, i),
+ 			     lan3coefftab32_right[offset + i]);
++	}
++	offset = sun8i_vi_scaler_coef_index(vstep) *
++			SUN8I_VI_SCALER_COEFF_COUNT;
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
++		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
++			     lan2coefftab32[offset + i]);
++
++	offset = sun8i_vi_scaler_coef_index(hstep / format->hsub) *
++			SUN8I_VI_SCALER_COEFF_COUNT;
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
+ 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF0(base, i),
+ 			     ch_left[offset + i]);
+ 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF1(base, i),
+ 			     ch_right[offset + i]);
+ 	}
+-
+-	offset = sun8i_vi_scaler_coef_index(hstep) *
++	offset = sun8i_vi_scaler_coef_index(vstep / format->vsub) *
+ 			SUN8I_VI_SCALER_COEFF_COUNT;
+-	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
+-		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
+-			     lan2coefftab32[offset + i]);
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
+ 		regmap_write(map, SUN8I_SCALER_VSU_CVCOEFF(base, i),
+ 			     cy[offset + i]);
+-	}
+ }
+ 
+ void sun8i_vi_scaler_enable(struct sun8i_mixer *mixer, int layer, bool enable)
 -- 
 2.53.0
 
