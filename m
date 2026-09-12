@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6774437F8BC;
-	Sat, 12 Sep 2026 09:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47474BEE25;
+	Sat, 12 Sep 2026 09:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205665; cv=none; b=JAnkvW/V3y6JMyUa/tO18M6en7lHB8TIX3NNmYbAJiX0sOku/oJbDRx+ubl/vaVRjD8yPh3FwJNbBmtM/S8ApzitJrVkqTR8v6nXakrH1zRu2BVGJhG7m7zUbPggo0n0cQkP5ZXoOiOUXMZAu8c33969v9CAlVcb4Ff6FeEJhNs=
+	t=1789205670; cv=none; b=ILPINywJXrk9iBZJAtZdL+jlU+yAc06P8UMeRHSWbU92P7OdBKxF+1PnkUZse1M2EIAMpX6UgOcPDNXq0WBOGmYUiNroRFBo/yTE2r9lyBatJdZdBzv536Ila+y6mtOX+8+Y45arvQzXN2CJw3jQS2BlMPyfZIqoi+4jUP6dGOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205665; c=relaxed/simple;
-	bh=7rJ0dDxwRbqBl/e8KqR3FP31cp7Qhr98x1JqkoPl9WY=;
+	s=arc-20240116; t=1789205670; c=relaxed/simple;
+	bh=YdGLKHi5ezqIqpjLM80M/q0mLhx2mNGFopphHcMEZF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHq4j8dKWZgd23VCTsiU2IQ7WPEBYhQxr+aos8F5cxcTruhOsd1LJKFkBldpOWFB/orQ4u1E44HSwbddcac7K+mD09coV+zY4KPd5JRo2ys+6fLz77S6BTHPZEX7/caLBWiKvSsRW5Now1Urnk5i7nV1SZ43RfFvlxBYJSjEjak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lv1vxscq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=btiaxzfE2fxoDD/ZDBjZDXsjT1rz5hIG8Q4LvW+t/N9gY4YtKvhfsnuE5OeY/2ekYHBwo0s8vxnGPWbwRaJEqoOzEQ42E2dEYBzTYlXd/gsE4Ux6GigI2caDzbxej7nK4NQ1wW85S9hLntG9DLME2yElCNXEJ0tyg1es5UHJggo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6JFIl21; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lv1vxscq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD46A1F000FF;
-	Sat, 12 Sep 2026 09:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6JFIl21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72FF1F000FF;
+	Sat, 12 Sep 2026 09:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205663;
-	bh=2gw1U4ZYAZkWWQkRDsVhYu7LT7IMTE/+jSeVAHF+4zU=;
+	s=korg; t=1789205668;
+	bh=y5X67ffjQCRb45368UtK7sAQDeQs1IbDz/kC+WJi68c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lv1vxscqxJaRu6sKBQoY0yAt0GF9jw5/T9xU0x9Z4sQ+eHOm7r+MWu0jnwwW4yrnM
-	 mQvc8UTJqetZV9/jWXfO9zBPrEqBkew5IMA4sl9qXufQwhlKgVePNobTkoMa64bR4O
-	 xg+kHt9lZwrybZN4C9KP3+6I8jQdWA4pCO4Qv8tw=
+	b=S6JFIl21nr59jiEf4tynxeocUtzvirRjAqaI3zPBB4G+1A7rnkbs96pG8wL72/o0b
+	 BkeR/X8d6uyliXNYh8Dx8fw5K7hC+nkKHxda2humg5lZqW6l6TFhiw2sz+2sT4PqTb
+	 gptBXa+86CycPLvq6dfgmkVg/lb6NoMlj5OopQLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0007/1518] batman-adv: fix TX priority extraction for BATADV_FORW_MCAST
-Date: Sat, 12 Sep 2026 08:36:16 +0200
-Message-ID: <20260912065623.571946423@linuxfoundation.org>
+Subject: [PATCH 6.18 0008/1518] ALSA: usb-audio: Relax __free() variable declarations
+Date: Sat, 12 Sep 2026 08:36:17 +0200
+Message-ID: <20260912065623.593576440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,62 +50,277 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 7aedb59b80993c912ab45ce24386a2775150962b upstream.
+[ Upstream commit 03f705b9ca58b91c6dffe64875ea3d9a38cad9b5 ]
 
-batadv_mcast_forw_mode_by_count() pushs the skb->data for BATADV_FORW_MCAST
-forwarding via batadv_mcast_forw_mcsend(). But the
-batadv_skb_set_priority() expects the ethernet header directly before
-(skb->data + offset). With the moved skb->data, just some random data would
-be accessed to get the priority data.
+We used to have a variable declaration with __free() initialized with
+NULL.  This was to keep the old coding style rule, but recently it's
+relaxed and rather recommends to follow the new rule to declare in
+place of use for __free() -- which avoids potential deadlocks or UAFs
+with nested cleanups.
 
-Move the batadv_skb_set_priority() before the decision about the handling
-multicast packets and potential header modifications.
+Although the current code has no bug, per se, let's follow the new
+standard and move the declaration to the place of assignment (or
+directly assign the allocated result) instead of NULL initializations.
 
-Cc: stable@vger.kernel.org
-Fixes: 90039133221e ("batman-adv: mcast: implement multicast packet generation")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Note that there are still a few remaining __free(kfree) with NULL
+initializations; they are because of the code complexity (the data
+size calculation).
+
+Fixes: 43d4940c944c ("ALSA: usb: scarlett2: Clean ups with guard() and __free()")
+Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
+Fixes: f7d306b47a24 ("ALSA: usb-audio: Fix a DMA to stack memory bug")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251216140634.171890-12-tiwai@suse.de
+Stable-dep-of: 4335e3877864 ("ALSA: FCP: do not copy out an uninitialised init response")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/mesh-interface.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/usb/fcp.c             |   36 ++++++++++++++++++------------------
+ sound/usb/mixer_scarlett2.c |   21 ++++++++++-----------
+ sound/usb/quirks.c          |   13 ++++++-------
+ 3 files changed, 34 insertions(+), 36 deletions(-)
 
-diff --git a/net/batman-adv/mesh-interface.c b/net/batman-adv/mesh-interface.c
-index 0d598bf39bfc2..3d49fd7ef3e62 100644
---- a/net/batman-adv/mesh-interface.c
-+++ b/net/batman-adv/mesh-interface.c
-@@ -258,6 +258,8 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
- 	if (batadv_compare_eth(ethhdr->h_dest, ectp_addr))
- 		goto dropped;
+--- a/sound/usb/fcp.c
++++ b/sound/usb/fcp.c
+@@ -187,10 +187,6 @@ static int fcp_usb(struct usb_mixer_inte
+ {
+ 	struct fcp_data *private = mixer->private_data;
+ 	struct usb_device *dev = mixer->chip->dev;
+-	struct fcp_usb_packet *req __free(kfree) = NULL;
+-	struct fcp_usb_packet *resp __free(kfree) = NULL;
+-	size_t req_buf_size = struct_size(req, data, req_size);
+-	size_t resp_buf_size = struct_size(resp, data, resp_size);
+ 	int retries = 0;
+ 	const int max_retries = 5;
+ 	int err;
+@@ -198,10 +194,14 @@ static int fcp_usb(struct usb_mixer_inte
+ 	if (!private->urb)
+ 		return -ENODEV;
  
-+	batadv_skb_set_priority(skb, 0);
++	struct fcp_usb_packet *req __free(kfree) = NULL;
++	size_t req_buf_size = struct_size(req, data, req_size);
+ 	req = kmalloc(req_buf_size, GFP_KERNEL);
+ 	if (!req)
+ 		return -ENOMEM;
+ 
++	struct fcp_usb_packet *resp __free(kfree) = NULL;
++	size_t resp_buf_size = struct_size(resp, data, resp_size);
+ 	resp = kmalloc(resp_buf_size, GFP_KERNEL);
+ 	if (!resp)
+ 		return -ENOMEM;
+@@ -305,16 +305,17 @@ retry:
+ static int fcp_reinit(struct usb_mixer_interface *mixer)
+ {
+ 	struct fcp_data *private = mixer->private_data;
+-	void *step0_resp __free(kfree) = NULL;
+-	void *step2_resp __free(kfree) = NULL;
+ 
+ 	if (private->urb)
+ 		return 0;
+ 
+-	step0_resp = kmalloc(private->step0_resp_size, GFP_KERNEL);
++	void *step0_resp __free(kfree) =
++		kmalloc(private->step0_resp_size, GFP_KERNEL);
+ 	if (!step0_resp)
+ 		return -ENOMEM;
+-	step2_resp = kmalloc(private->step2_resp_size, GFP_KERNEL);
 +
- 	gw_mode = atomic_read(&bat_priv->gw.mode);
- 	if (is_multicast_ether_addr(ethhdr->h_dest)) {
- 		/* if gw mode is off, broadcast every packet */
-@@ -291,6 +293,9 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
++	void *step2_resp __free(kfree) =
++		kmalloc(private->step2_resp_size, GFP_KERNEL);
+ 	if (!step2_resp)
+ 		return -ENOMEM;
  
- send:
- 		if (do_bcast && !is_broadcast_ether_addr(ethhdr->h_dest)) {
-+			/* WARNING batadv_mcast_forw_mode might add more headers
-+			 * in front of the skb. and might even reallocate the skb
-+			 */
- 			forw_mode = batadv_mcast_forw_mode(bat_priv, skb, vid,
- 							   &mcast_is_routable);
- 			switch (forw_mode) {
-@@ -308,8 +313,6 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
- 		}
- 	}
+@@ -472,7 +473,6 @@ static int fcp_ioctl_init(struct usb_mix
+ 	struct fcp_init init;
+ 	struct usb_device *dev = mixer->chip->dev;
+ 	struct fcp_data *private = mixer->private_data;
+-	void *resp __free(kfree) = NULL;
+ 	void *step2_resp;
+ 	int err, buf_size;
  
--	batadv_skb_set_priority(skb, 0);
+@@ -493,7 +493,8 @@ static int fcp_ioctl_init(struct usb_mix
+ 	/* Allocate response buffer */
+ 	buf_size = init.step0_resp_size + init.step2_resp_size;
+ 
+-	resp = kmalloc(buf_size, GFP_KERNEL);
++	void *resp __free(kfree) =
++		kmalloc(buf_size, GFP_KERNEL);
+ 	if (!resp)
+ 		return -ENOMEM;
+ 
+@@ -627,7 +628,6 @@ static int fcp_ioctl_set_meter_map(struc
+ {
+ 	struct fcp_meter_map map;
+ 	struct fcp_data *private = mixer->private_data;
+-	s16 *tmp_map __free(kfree) = NULL;
+ 	int err;
+ 
+ 	if (copy_from_user(&map, arg, sizeof(map)))
+@@ -650,7 +650,8 @@ static int fcp_ioctl_set_meter_map(struc
+ 		return -EINVAL;
+ 
+ 	/* Allocate and copy the map data */
+-	tmp_map = memdup_array_user(arg->map, map.map_size, sizeof(s16));
++	s16 *tmp_map __free(kfree) =
++		memdup_array_user(arg->map, map.map_size, sizeof(s16));
+ 	if (IS_ERR(tmp_map))
+ 		return PTR_ERR(tmp_map);
+ 
+@@ -660,17 +661,16 @@ static int fcp_ioctl_set_meter_map(struc
+ 
+ 	/* If the control doesn't exist, create it */
+ 	if (!private->meter_ctl) {
+-		s16 *new_map __free(kfree) = NULL;
+-		__le32 *meter_levels __free(kfree) = NULL;
 -
- 	/* ethernet packet should be broadcasted */
- 	if (do_bcast) {
- 		primary_if = batadv_primary_if_get_selected(bat_priv);
--- 
-2.53.0
-
+ 		/* Allocate buffer for the map */
+-		new_map = kmalloc_array(map.map_size, sizeof(s16), GFP_KERNEL);
++		s16 *new_map __free(kfree) =
++			kmalloc_array(map.map_size, sizeof(s16), GFP_KERNEL);
+ 		if (!new_map)
+ 			return -ENOMEM;
+ 
+ 		/* Allocate buffer for reading meter levels */
+-		meter_levels = kmalloc_array(map.meter_slots, sizeof(__le32),
+-					     GFP_KERNEL);
++		__le32 *meter_levels __free(kfree) =
++			kmalloc_array(map.meter_slots, sizeof(__le32),
++				      GFP_KERNEL);
+ 		if (!meter_levels)
+ 			return -ENOMEM;
+ 
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -2499,18 +2499,18 @@ static int scarlett2_usb(
+ {
+ 	struct scarlett2_data *private = mixer->private_data;
+ 	struct usb_device *dev = mixer->chip->dev;
+-	struct scarlett2_usb_packet *req __free(kfree) = NULL;
+-	struct scarlett2_usb_packet *resp __free(kfree) = NULL;
+-	size_t req_buf_size = struct_size(req, data, req_size);
+-	size_t resp_buf_size = struct_size(resp, data, resp_size);
+ 	int retries = 0;
+ 	const int max_retries = 5;
+ 	int err;
+ 
++	struct scarlett2_usb_packet *req __free(kfree) = NULL;
++	size_t req_buf_size = struct_size(req, data, req_size);
+ 	req = kmalloc(req_buf_size, GFP_KERNEL);
+ 	if (!req)
+ 		return -ENOMEM;
+ 
++	struct scarlett2_usb_packet *resp __free(kfree) = NULL;
++	size_t resp_buf_size = struct_size(resp, data, resp_size);
+ 	resp = kmalloc(resp_buf_size, GFP_KERNEL);
+ 	if (!resp)
+ 		return -ENOMEM;
+@@ -4065,9 +4065,9 @@ static int scarlett2_input_select_ctl_in
+ 	struct scarlett2_data *private = mixer->private_data;
+ 	int inputs = private->info->gain_input_count;
+ 	int i, err;
+-	char **values __free(kfree) = NULL;
++	char **values __free(kfree) =
++		kcalloc(inputs, sizeof(char *), GFP_KERNEL);
+ 
+-	values = kcalloc(inputs, sizeof(char *), GFP_KERNEL);
+ 	if (!values)
+ 		return -ENOMEM;
+ 
+@@ -9293,8 +9293,6 @@ static long scarlett2_hwdep_read(struct
+ 		__le32 len;
+ 	} __packed req;
+ 
+-	u8 *resp __free(kfree) = NULL;
+-
+ 	/* Flash segment must first be selected */
+ 	if (private->flash_write_state != SCARLETT2_FLASH_WRITE_STATE_SELECTED)
+ 		return -EINVAL;
+@@ -9332,7 +9330,8 @@ static long scarlett2_hwdep_read(struct
+ 	req.offset = cpu_to_le32(*offset);
+ 	req.len = cpu_to_le32(count);
+ 
+-	resp = kzalloc(count, GFP_KERNEL);
++	u8 *resp __free(kfree) =
++		kzalloc(count, GFP_KERNEL);
+ 	if (!resp)
+ 		return -ENOMEM;
+ 
+@@ -9480,7 +9479,6 @@ static ssize_t scarlett2_devmap_read(
+ 	loff_t                 pos)
+ {
+ 	struct usb_mixer_interface *mixer = entry->private_data;
+-	u8           *resp_buf __free(kfree) = NULL;
+ 	const size_t  block_size = SCARLETT2_DEVMAP_BLOCK_SIZE;
+ 	size_t        copied = 0;
+ 
+@@ -9490,7 +9488,8 @@ static ssize_t scarlett2_devmap_read(
+ 	if (pos + count > entry->size)
+ 		count = entry->size - pos;
+ 
+-	resp_buf = kmalloc(block_size, GFP_KERNEL);
++	u8 *resp_buf __free(kfree) =
++		kmalloc(block_size, GFP_KERNEL);
+ 	if (!resp_buf)
+ 		return -ENOMEM;
+ 
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -555,7 +555,6 @@ int snd_usb_create_quirk(struct snd_usb_
+ static int snd_usb_extigy_boot_quirk(struct usb_device *dev, struct usb_interface *intf)
+ {
+ 	struct usb_host_config *config = dev->actconfig;
+-	struct usb_device_descriptor *new_device_descriptor __free(kfree) = NULL;
+ 	int err;
+ 
+ 	if (le16_to_cpu(get_cfg_desc(config)->wTotalLength) == EXTIGY_FIRMWARE_SIZE_OLD ||
+@@ -566,8 +565,8 @@ static int snd_usb_extigy_boot_quirk(str
+ 				      0x10, 0x43, 0x0001, 0x000a, NULL, 0);
+ 		if (err < 0)
+ 			dev_dbg(&dev->dev, "error sending boot message: %d\n", err);
+-
+-		new_device_descriptor = kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
++		struct usb_device_descriptor *new_device_descriptor __free(kfree) =
++			kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
+ 		if (!new_device_descriptor)
+ 			return -ENOMEM;
+ 		err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
+@@ -910,7 +909,6 @@ static void mbox2_setup_48_24_magic(stru
+ static int snd_usb_mbox2_boot_quirk(struct usb_device *dev)
+ {
+ 	struct usb_host_config *config = dev->actconfig;
+-	struct usb_device_descriptor *new_device_descriptor __free(kfree) = NULL;
+ 	int err;
+ 	u8 bootresponse[0x12];
+ 	int fwsize;
+@@ -945,7 +943,8 @@ static int snd_usb_mbox2_boot_quirk(stru
+ 
+ 	dev_dbg(&dev->dev, "device initialised!\n");
+ 
+-	new_device_descriptor = kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
++	struct usb_device_descriptor *new_device_descriptor __free(kfree) =
++		kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
+ 	if (!new_device_descriptor)
+ 		return -ENOMEM;
+ 
+@@ -1267,7 +1266,6 @@ static void mbox3_setup_defaults(struct
+ static int snd_usb_mbox3_boot_quirk(struct usb_device *dev)
+ {
+ 	struct usb_host_config *config = dev->actconfig;
+-	struct usb_device_descriptor *new_device_descriptor __free(kfree) = NULL;
+ 	int err;
+ 	int descriptor_size;
+ 
+@@ -1280,7 +1278,8 @@ static int snd_usb_mbox3_boot_quirk(stru
+ 
+ 	dev_dbg(&dev->dev, "MBOX3: device initialised!\n");
+ 
+-	new_device_descriptor = kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
++	struct usb_device_descriptor *new_device_descriptor __free(kfree) =
++		kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
+ 	if (!new_device_descriptor)
+ 		return -ENOMEM;
+ 
 
 
