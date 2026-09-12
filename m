@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F6530568E;
-	Sat, 12 Sep 2026 14:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C90326938;
+	Sat, 12 Sep 2026 14:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223699; cv=none; b=XNoHY7Zg26bvqOjJ17fxBVyeYIA1TrST8z6KY0pZHoZi9WKIAQzHQUDanf+etZrf9kipmXHG0ePKIwcykJf2umn0iSiZTbgFTdpTuMsMhmXLc5ls0Ca60ziPSRAi7pp+jeiEA3quJIbHPoTc5rXtsZCvB5j/C/GEswpdfcKKUP4=
+	t=1789223704; cv=none; b=Cp8nk8et07E5S8XIKi1G0mlsnxuWbjy4vuB8b7XGDyD8tODju2kMTRPcDWx5q78q2TG0ZVVtHZ+IrVXr5nPC+CPG7ieHmFGkZ87/GkP0ELA6b4IFwsqHz4hJdA/4uRH2GMA8jcDpIa/PKFBvtAEnksszA02eT3nHk8ZF4wzY4d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223699; c=relaxed/simple;
-	bh=K2V+VZ9oAuNYlQTLOeujTjcbUD98muNhc6VoNA0Lw0k=;
+	s=arc-20240116; t=1789223704; c=relaxed/simple;
+	bh=kCjgPG42e+Xr8EcDBrQ+7Dj+YS/Q41XdItD/Lcg905U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWtrGRiy+f2eqUAbD0NP15TcJtqQ02g84lrHxBrTVcvQCRjWYmMVU5b9zrt2N5iN5Q9Q5hkI+gt+EiyjcTCNHEjBQ5XlKFJq3+MrLmALZNkoCRkVUT5YMnH1TRzjpV6bnJcnWuWkXLIhehCP+SHaaHmvwRDlt5lyaJA6swlLPTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtE3IAR/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XDyQRBzIituM1xWDl/IjQkqB8Jyml45gOa/zKVLosfdTngoeYOqeqKiBfRtRLRtf/Vt8m6XyDGlw1j5I82kHVEq+M4Voeyq59Fjc09aGkFlx3boWw9RcTt1EdF4d1p0+pKGYem5PJO6ZkqHmGM7XZzB8NTWmDq+4HOy4LpVYoNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E95ajnjL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtE3IAR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4091F000FF;
-	Sat, 12 Sep 2026 14:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E95ajnjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6311F000FF;
+	Sat, 12 Sep 2026 14:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223698;
-	bh=bcRTRuYfm78d2jAZivEyr2WfzkLEfv9xSU2uqrFHXi8=;
+	s=korg; t=1789223702;
+	bh=m0SpRLkLbxQRVkG9MT3Lg1qGuovOKIDY/Kog/fRYxw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MtE3IAR/q/d9yHOs6ZdwYoHz0OIhw7VYiZ3B0oYOcsPSWnIQIWA3+tKWyFj1/un6s
-	 23HMO+/OCEhpx2geZlIWGJZEkdV7cTLtipWZXqQS31CEd/P3AZ0B0yJ72F9+WT8ZBU
-	 6dAL1pHj7nLUuXO16oXbh9Y9AqKU+2w3vxvGSc/8=
+	b=E95ajnjLfhDYHGxcsJFCNx8Rb/o0yFXdiTt7CRd7qNiKOetDueciKj4L+B3q56ylZ
+	 uj760R8S7L7HGGV8e5ztiRcAcP5I+BrdEdxNC4ogDBuHpydMx2qT6I1satbirVQL8F
+	 rKPqU+9DDkmXCQzAUUxj+1fhf2HnPg2J7/XF63Y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0815/1424] dmaengine: dw-edma: Clear stale requests on termination
-Date: Sat, 12 Sep 2026 08:54:07 +0200
-Message-ID: <20260912065625.552903348@linuxfoundation.org>
+Subject: [PATCH 6.6 0842/1424] RDMA/core: Fix potential use after free in ib_destroy_cq_user()
+Date: Sat, 12 Sep 2026 08:54:34 +0200
+Message-ID: <20260912065626.165565746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,39 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit c0d9c6275adcca7c0ca5f4270bf88026f9864bd1 ]
+[ Upstream commit 3481bec4dfc4aee24ffea5a547ee95b70b67d9d5 ]
 
-terminate_all() can finish immediately when the channel is unconfigured,
-paused, idle, or already stopped in hardware. A pending PAUSE request can
-survive these paths and block issue_pending() even after termination.
+When accessing a CQ via the netlink path the only synchronization
+mechanism for the said CQ is rdma_restrack_get().
+Currently, rdma_restrack_del() is invoked at the end of
+ib_destroy_cq_user(), which is too late, since by that point
+vendor-specific resources associated with the CQ might already be
+freed. This can leave a short window where the CQ remains accessible
+through restrack, leading to a potential use-after-free.
 
-Clear the request whenever termination leaves the channel idle. A running
-channel keeps its STOP request until the interrupt handler consumes it.
+Fix this by moving the rdma_restrack_begin_del() call to the start of
+ib_destroy_cq_user(), ensuring that the CQ is removed from restrack
+before its internal resources are released. This guarantees that no new
+users hold references to a CQ that is in the process of destruction.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260717180639.2643243-7-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+In addition, this change preserves the intended inverted order
+between create and destroy routines: resources are added to
+restrack at the end of successful creation, and hence shall be removed
+from the restrack first thing during the destruction flow, which keeps
+the lifecycle management consistent and predictable.
+
+Fixes: 08f294a1524b ("RDMA/core: Add resource tracking for create and destroy CQs")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-3-bbe8bb270d51@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/core/verbs.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 2526dad096332..1fd2dbc5d7178 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -338,6 +338,8 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
- 	} else {
- 		chan->request = EDMA_REQ_STOP;
- 	}
-+	if (chan->status == EDMA_ST_IDLE)
-+		chan->request = EDMA_REQ_NONE;
+diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
+index 90cb7904ba11f..1526ac853218a 100644
+--- a/drivers/infiniband/core/verbs.c
++++ b/drivers/infiniband/core/verbs.c
+@@ -2178,11 +2178,15 @@ int ib_destroy_cq_user(struct ib_cq *cq, struct ib_udata *udata)
+ 	if (atomic_read(&cq->usecnt))
+ 		return -EBUSY;
  
- 	return err;
++	rdma_restrack_begin_del(&cq->res);
++
+ 	ret = cq->device->ops.destroy_cq(cq, udata);
+-	if (ret)
++	if (ret) {
++		rdma_restrack_abort_del(&cq->res);
+ 		return ret;
++	}
+ 
+-	rdma_restrack_del(&cq->res);
++	rdma_restrack_commit_del(&cq->res);
+ 	kfree(cq);
+ 	return ret;
  }
 -- 
 2.53.0
