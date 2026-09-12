@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F121D9A66;
-	Sat, 12 Sep 2026 14:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E8BCA6F;
+	Sat, 12 Sep 2026 14:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223639; cv=none; b=D1oEf8BuAWGokLMw5W5KYs2I9OpjUKzTkaQ1+HDsvO0FNmsc1Aw9YeknIAfF5AY66eubiI0Va1PgKjMtqM94O26gHt3KiaD+atMd9g+n4uTUAxsIdscVVevpDzzrH3mcJfd2KwbaexOpYy7wKixizGZOTBDgNCrqpNdRHzw2sxg=
+	t=1789223644; cv=none; b=IDKUABnRGpQNWdznNxLBL/7Gnl3VyQa78qRgHgRxPkhfSu5iU971IfpXUqLgfpPKzsEiTomzZiin8ku/zG1ZZRfKNwgh+G3cmy0t0MDvTYeTMAu5vBmPok9o1DZia9bzk3n5ZHCIhTsZKfXqPsPhavATWKafzk1bEdm8qmLtZRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223639; c=relaxed/simple;
-	bh=4DN0Q4eA0zRpms3WEgS8FBXVlfoJeqqkx2uVm6MCPVg=;
+	s=arc-20240116; t=1789223644; c=relaxed/simple;
+	bh=D1xRgCfX99b2TBJfXOg0D46RMqIaJ5udJECpHFy0v9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZg/4h2hiamKQgFmKhXaCulroWNOiwsMUb9hMBDA8jZyIxfByBABn9neHCbd/xddyDBZpfpG+GRvdWCxWeE3O6WUjefSDkjQxbRXSPHaqHekYZDhQfzKuZUSD1nonugaexySgUaOZzabjwYIRtuWZEDzncscMzikDHsV02HH8Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lTPGAY1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RIz2kee6IjgYSqu7bjvpGvS7qLllJ4Az3n4y6TBBuyMKTEwzJjZe98lSzPNo/Qh+DqWKZJ/swlyfajAuLfyNgkHWdw2hsVK0/cRtLcVKD8QblNWH4JiK6H05ZO5PyZR6eOidPKGYJjCjVkEzNJrF1GjcKwgcx0T/d4VHY4RAMBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWOYQK4Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lTPGAY1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3489E1F000FF;
-	Sat, 12 Sep 2026 14:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWOYQK4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED071F000FF;
+	Sat, 12 Sep 2026 14:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223638;
-	bh=D1gN7I49dpbxpyB+f54n9qixG86On7XOTuuR4LvtZfo=;
+	s=korg; t=1789223643;
+	bh=pB7R8LPIowcEVNsw73X4ZTy5kssX46WvbLAvdcHFdNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2lTPGAY10Y/XJOQ8xUoGTOHEFTu4RjPIN7fi0qi5wKj0VqCkIYaKtmPYlIAS38fdn
-	 t973pS6R7zZCuE9KOSWi8uy+yNnoQyTb1i2aSLLYc0uqJ0PauT3SX7s+qnIJ6jbcBR
-	 /XrIlEQZ6SD89Nt8XSV0S0ZkqleP5YYVm3P4TcwM=
+	b=zWOYQK4YClF+tiXSj+obsuUvP8vhQOGnpyLM4jn5KuvFV5/l4Jhc034ek7DBoMBmu
+	 4YM9bOcRqeVkwk7Dz/XWULrQMV9T2/lApxWvwfWOgzsAfhmtxhCeO+HYZupVifC+iz
+	 Ao/jONSBRHp8pe2UKOvu5Q4kN2VGPfLiR0FomYkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5d19358d7eb30ffb0cc5@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0831/1424] ext4: skip extra isize expansion during mount to prevent deadlock
-Date: Sat, 12 Sep 2026 08:54:23 +0200
-Message-ID: <20260912065625.916735024@linuxfoundation.org>
+Subject: [PATCH 6.6 0814/1424] dmaengine: dw-edma: Serialize channel state checks
+Date: Sat, 12 Sep 2026 08:54:06 +0200
+Message-ID: <20260912065625.528658358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,65 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 7461c60b9c6a839b13ad4c3490681a0cf5aa0637 ]
+[ Upstream commit f7d1619f3e10c619b62c6cd6d95371b5c526c85a ]
 
-ext4_try_to_expand_extra_isize() is called from __ext4_mark_inode_dirty()
-while holding an active jbd2 handle.  During mount (!SB_ACTIVE), the
-expand path may move xattrs to external blocks and release ea_inodes via
-iput().  When !SB_ACTIVE, iput() calls write_inode_now() which acquires
-s_writepages_rwsem, creating a circular lock dependency:
+pause() and resume() read and update channel state without holding vc.lock,
+while the interrupt handlers update the same state under it. Take the same
+lock around those state checks so that request, status, and configured stay
+consistent.
 
-  s_writepages_rwsem --> jbd2_handle --> xattr_sem --> s_writepages_rwsem
+For example, pause() can observe EDMA_ST_BUSY right before the interrupt
+handler completes the final descriptor and moves the channel to
+EDMA_ST_IDLE, and then record EDMA_REQ_PAUSE on an already idle channel. No
+further interrupt will acknowledge the request, and since issue_pending()
+requires EDMA_REQ_NONE, the channel is wedged for good: terminate_all()
+leaves the stale request behind, so even reconfiguring the channel does not
+recover it.
 
-This can be triggered via:
+issue_pending() already runs under vc.lock, but it tests configured before
+taking it. Move that test under the lock as well, so configured, request,
+and status are evaluated as one channel-state snapshot.
 
-  ext4_process_orphan() -> ext4_truncate() -> ext4_mark_inode_dirty()
-    -> ext4_try_to_expand_extra_isize()
-
-or:
-
-  ext4_evict_inode() -> ext4_mark_inode_dirty()
-    -> ext4_try_to_expand_extra_isize()
-
-Skip expansion when !SB_ACTIVE.  This is a minor loss of functionality
-(extra isize won't grow for these inodes during mount), which e2fsck
-can resolve later if needed.
-
-Reported-by: syzbot+5d19358d7eb30ffb0cc5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5d19358d7eb30ffb0cc5
-Fixes: c8585c6fcaf2 ("ext4: fix races between changing inode journal mode and ext4_writepages")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260623061903.2148767-1-yun.zhou@windriver.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260717180639.2643243-6-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/dma/dw-edma/dw-edma-core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 6a0afec3542bb..78b520557ab46 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -6015,6 +6015,16 @@ static int ext4_try_to_expand_extra_isize(struct inode *inode,
- 	if (ext4_test_inode_state(inode, EXT4_STATE_NO_EXPAND))
- 		return -EOVERFLOW;
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index 7e1b270738ce0..2526dad096332 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -276,6 +276,8 @@ static int dw_edma_device_pause(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	int err = 0;
  
-+	/*
-+	 * Skip expansion during mount (!SB_ACTIVE).  Expanding extra isize
-+	 * may move xattrs to external blocks and release ea_inodes via iput.
-+	 * When !SB_ACTIVE, iput triggers write_inode_now() which acquires
-+	 * s_writepages_rwsem, causing a deadlock with the caller's active
-+	 * jbd2 handle (lock order: s_writepages_rwsem -> jbd2_handle).
-+	 */
-+	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE)))
-+		return -EBUSY;
++	guard(spinlock_irqsave)(&chan->vc.lock);
 +
- 	/*
- 	 * In nojournal mode, we can immediately attempt to expand
- 	 * the inode.  When journaled, we first need to obtain extra
+ 	if (!chan->configured)
+ 		err = -EPERM;
+ 	else if (chan->status != EDMA_ST_BUSY)
+@@ -293,6 +295,8 @@ static int dw_edma_device_resume(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	int err = 0;
+ 
++	guard(spinlock_irqsave)(&chan->vc.lock);
++
+ 	if (!chan->configured) {
+ 		err = -EPERM;
+ 	} else if (chan->status != EDMA_ST_PAUSE) {
+@@ -343,11 +347,9 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	unsigned long flags;
+ 
+-	if (!chan->configured)
+-		return;
+-
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+-	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
++	if (chan->configured && vchan_issue_pending(&chan->vc) &&
++	    chan->request == EDMA_REQ_NONE &&
+ 	    chan->status == EDMA_ST_IDLE) {
+ 		chan->status = EDMA_ST_BUSY;
+ 		dw_edma_start_transfer(chan);
 -- 
 2.53.0
 
