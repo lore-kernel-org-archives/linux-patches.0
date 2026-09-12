@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF8438C42B;
-	Sat, 12 Sep 2026 09:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AF741A92A;
+	Sat, 12 Sep 2026 09:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205226; cv=none; b=Ttusip6BwEGetpSbKow7CLObW+bR2BhpfLwZ0EZ/e8qXUGiW65zYl41KB/bhvToJVoEsUqzYH4qPCPdDyizGhuiULNVr4vzUov6dgV/bxEKC3R357ebSE/qnZ79dWTxL1UIQVgjSp8L4qmW8UktvySK4XC3X2mG6PryAHvuHUb0=
+	t=1789205229; cv=none; b=HvQUbD3x97UqYUoYbJSK4QS1w7Lujui1C3m+Ybti7E/6yTT2/wq9ZOjSzwYQLhXNBLo42znH87MpmN4FPhsQaVmoLv3Vgb64E9YPzwwwwn4WHKTvCsl+cFzLpP2T3b1GzBfA+g9CKAjJswJo9+O819wXAt+CHe3x9lKMNSeCbrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205226; c=relaxed/simple;
-	bh=+lOTBowdtTHusNGYPxofXomJF8chPeWtl3awDA5qy/4=;
+	s=arc-20240116; t=1789205229; c=relaxed/simple;
+	bh=KApnRKBwkuFjU0WNbMfxrGeTWJv66+E7Xk41pnF7S6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3lkFaCpGri8/j520eQgpdXXkshGadLqE1j19SDApySMOalyoFie+dk1kLuvEh7JXG03IryDHYRX8iu//iNLWid9OWUxkTPBce8ouEg1P9Ax09SJbrGPg5RJYJCin9j6k25dyNr2P9ADGRATPbNoo6kO45Iveme6LPrMrN0dIhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHVqr4X2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YsX9Ym9mT5dAQLo+UHA8RsNM+kL8ds/UBWVBNw/RauuR/5r6c2Ysy6hSZ//0Etr83hiV/MJlB3xTqDUZAh17rwLIYOu/Vs1yd/ahZI+3OlyZnVEcymJ77QZAk9xl8rP+PY7e6li8EXdRG2OaZg7/GrP1ShJd3LOeLXLSSamYhhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJTV8usB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHVqr4X2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9C01F000FF;
-	Sat, 12 Sep 2026 09:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJTV8usB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1961F000FF;
+	Sat, 12 Sep 2026 09:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205223;
-	bh=8kbwZBok273gL5yOh8w319Qcf3eSMNF5BQpKNRM9SnU=;
+	s=korg; t=1789205227;
+	bh=ylbC9gBvclZfsRnEP/4M0ubAPuuoliDkJOV0XKcw6WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aHVqr4X2nzrJ2PkPa1THMg+PI5MghxEB0o0460OfCjnb1v50/cj6ERMGaPcgpwf3o
-	 /cnO3HUdV+R9cxlyB7uEroXn/INJgjgrtKD+IfGUo0mbqIQJHZUjWlvGiB+fEA2+cH
-	 RsaSUCP//IGLIgyWqc9M8tdFiOLTh6LVw8fm5Z3A=
+	b=bJTV8usBvczNbav83NdSUhqj2UMWd/gMl0mNbC87LKeQ4XLolvyJ5UNwLHOma8qci
+	 ef8UJ6bfp0vqfRMwydgLGbA/xn/DFkvz0YF4gJLLA8djPALF/GH7xQr2whnd5WEIz3
+	 GF4eh4wZTo1chkPsNH5AjMungplqFbtMJytORwok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+87c7c2d63c44e41c77a3@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1773/1815] libceph: validate banner payload length
-Date: Sat, 12 Sep 2026 08:58:43 +0200
-Message-ID: <20260912065730.632235673@linuxfoundation.org>
+Subject: [PATCH 7.2 1774/1815] samples/ftrace: Fix kthread_stop() on ERR_PTR in ftrace-direct-modify
+Date: Sat, 12 Sep 2026 08:58:44 +0200
+Message-ID: <20260912065730.656502787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,71 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit f374967fcdf04001c9b66df1c19106fa83cd91f7 ]
+[ Upstream commit d79fb758e7e2e7a181eab630c0545a56041c473d ]
 
-When parsing the Ceph messenger v2 protocol banner, the `payload_len` field
-is decoded from the banner prefix. If a client sends a banner with a
-`payload_len` of 0, the kernel sets up a 0-length socket read. This
-violates an invariant in the state machine, triggering a warning in
-`populate_in_iter()`:
+ftrace_direct_init() assigns kthread_run()'s return value to simple_tsk
+without an IS_ERR() check. When kthread_run() fails it returns
+ERR_PTR(-ENOMEM), but init still returns 0, so the module loads with
+simple_tsk holding an error pointer. On unload, ftrace_direct_exit()
+then passes that ERR_PTR to kthread_stop(), leading to a
+null-pointer-dereference.
 
-------------[ cut here ]------------
-!iov_iter_count(&con->v2.in_iter)
-WARNING: net/ceph/messenger_v2.c:3129 at populate_in_iter
-net/ceph/messenger_v2.c:3129 [inline], CPU#1: kworker/1:3/5070
-WARNING: net/ceph/messenger_v2.c:3129 at ceph_con_v2_try_read+0x6634/0x6810
-net/ceph/messenger_v2.c:3159, CPU#1: kworker/1:3/5070
-...
-Call Trace:
- <TASK>
- ceph_con_workfn+0x1f5/0x14a0 net/ceph/messenger.c:1575
- process_one_work kernel/workqueue.c:3322 [inline]
- process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
- worker_thread+0xa47/0xfb0 kernel/workqueue.c:3486
- kthread+0x388/0x470 kernel/kthread.c:436
- ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
+Check the return value of kthread_run() with IS_ERR(); on failure,
+unregister the ftrace direct call and propagate the error code.
 
-According to the msgr2 protocol specification, the banner payload is
-expected to contain at least two 64-bit integers (`server_feat` and
-`server_req_feat`). Therefore, `payload_len` must be at least 16 bytes.
-
-Fix this by adding a check in `process_banner_prefix()` to reject a
-`payload_len` smaller than 16 bytes. This prevents the 0-length read and
-correctly aborts the connection with a protocol error.
-
-Fixes: cd1a677cad99 ("libceph, ceph: implement msgr2.1 protocol (crc and secure modes)")
-Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+87c7c2d63c44e41c77a3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=87c7c2d63c44e41c77a3
-Link: https://syzkaller.appspot.com/ai_job?id=c8ca3d63-717a-4933-89ec-f3d761b8690d
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://patch.msgid.link/20260826015034.10755-1-vulab@iscas.ac.cn
+Fixes: ae0cc3b7e7f5 ("ftrace/samples: Add a sample module that implements modify_ftrace_direct()")
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/messenger_v2.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ samples/ftrace/ftrace-direct-modify.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/ceph/messenger_v2.c b/net/ceph/messenger_v2.c
-index 05f6eea299fc0..b323b61e70239 100644
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -2142,6 +2142,11 @@ static int process_banner_prefix(struct ceph_connection *con)
- 	payload_len = ceph_decode_16(&p);
- 	dout("%s con %p payload_len %d\n", __func__, con, payload_len);
+diff --git a/samples/ftrace/ftrace-direct-modify.c b/samples/ftrace/ftrace-direct-modify.c
+index 1ba1927b548ee..164d9dd6fd921 100644
+--- a/samples/ftrace/ftrace-direct-modify.c
++++ b/samples/ftrace/ftrace-direct-modify.c
+@@ -320,9 +320,15 @@ static int __init ftrace_direct_init(void)
+ 	ftrace_set_filter_ip(&direct, (unsigned long) my_ip, 0, 0);
+ 	ret = register_ftrace_direct(&direct, my_tramp);
  
-+	if (payload_len < sizeof(u64) + sizeof(u64)) {
-+		con->error_msg = "protocol error, bad banner payload len";
-+		return -EINVAL;
+-	if (!ret)
+-		simple_tsk = kthread_run(simple_thread, NULL, "event-sample-fn");
+-	return ret;
++	if (ret)
++		return ret;
++	simple_tsk = kthread_run(simple_thread, NULL, "event-sample-fn");
++	if (IS_ERR(simple_tsk)) {
++		unregister_ftrace_direct(&direct, my_tramp, true);
++		return PTR_ERR(simple_tsk);
 +	}
 +
- 	return prepare_read_banner_payload(con, payload_len);
++	return 0;
  }
  
+ static void __exit ftrace_direct_exit(void)
 -- 
 2.53.0
 
