@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84153DB62E;
-	Sat, 12 Sep 2026 09:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EEA373BF3;
+	Sat, 12 Sep 2026 09:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204030; cv=none; b=flhJMVMCgNUH1Y4fiZp5H1LemWyk6n54uD3L19QVcfNI+r24zoxqk7QIlw/tjhKEHMqrxR+kEejzIMn5MXW3UczdlqZqRxbYjvvI+xpKI4Z70MHUsVfljEE025AR/JzZxE9zU+x7d7avJWHWQ9tiK4Ga7dFraY/Y7MxGl0cR4KI=
+	t=1789204036; cv=none; b=o5Jg0m52UHZMCAR18XlC/olsOkJSzIWsHQjop5aLWRZo3hIBU0WSqX13aVhZpMSx0v6g5K3Dqi/qBnVsJYfa1EGFHIASn3h06yiTUXwyjCcqyIBe/pkNrS3YMcycvCbHkg0OGOgBH0BWTSaicuI5MBoJMiRPhoRxTUhj4RgcA8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204030; c=relaxed/simple;
-	bh=taT3buY9v8xaOw0FhEKbONEXmBKrXO6d9oeqRJjHV3s=;
+	s=arc-20240116; t=1789204036; c=relaxed/simple;
+	bh=KvcO8WIw/G6HcrDVP8RJgKi4Th3B74oOkyjrK2/9Gmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plmyxpJ3yFyIMawQeCClkQfdTr6HbnCD0leUZY+nITJzBgQ1daHmHp8K2kTEbuMBZPegwJwHfmFj/fVa5bMNZiqp7UUqe+MDCXKIewo2q9HlFL/r+A1HBz1wTFNsBTvlyu5sIaBWFxgl8Y9oGY6KpaL5Ws6p57mUD6TvtqCOcks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Cqeoriw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mZcU5FpilEl3NCLiNQpYN8o8x8+FCkz4grao3n2z1WrHBXDMf2jb41VljiJxYtl21nwo+X4xm+U+BbTQ6NE3d1lWUp5COS0MoCA/fDY4wDat9gfd3zQ/CI/nMDifCATPUFoilOaiwi0pb3Pd5WwQhIPEPaWfN6+1F+xdvsGdci8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmlYu5Te; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Cqeoriw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24371F000FF;
-	Sat, 12 Sep 2026 09:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmlYu5Te"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BF01F000FF;
+	Sat, 12 Sep 2026 09:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204029;
-	bh=JGaXhiJj4aEi44lXhHm3O/cUtXyvzlyf85Bzz3YIKnY=;
+	s=korg; t=1789204034;
+	bh=q5Uk0VMu4GjfGea7BuWPpeLXaAdy/+82c/ff/jmcNUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2CqeoriwgpPBU7PwVdFDfsxk5kQjrrkEeHo8okyB19cXnzFP/KiT63GMknBwkupcW
-	 0lYEEx0JUhADqnyQKX5kR4SCGKDg6zsFbA+hPa2DcI87uGc0K5zWuwVZWuFaWGD+Zt
-	 NgwEHQmI3cghrl6etyItuBAsJBEkApXx1PcwbG8E=
+	b=kmlYu5TeVUPZuGGQyLpDAMZX8ktjEwP9sA6+OS1tMXjt6tnmi5gtAOnJQWd1fa+KZ
+	 8IVFAjdWuCZzkR2+mNmZLR4FL6qv7rLBkuCixuPc4RfrkwGLRtoiE4HgSmxXiSjGOS
+	 9UR6rSfEQQHumVRq1pg63TlM3l3FgCwVIZN/NSVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Junseo Lim <zirajs7@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1529/1815] bpf: Reject negative optlen in cgroup getsockopt hook
-Date: Sat, 12 Sep 2026 08:54:39 +0200
-Message-ID: <20260912065724.901321789@linuxfoundation.org>
+Subject: [PATCH 7.2 1530/1815] ksmbd: safely discard unregistered deferred locks
+Date: Sat, 12 Sep 2026 08:54:40 +0200
+Message-ID: <20260912065724.924749914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,48 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junseo Lim <zirajs7@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1b5aacd5b2419b0790e955e466d389a61c79b4b1 ]
+[ Upstream commit 054bcca4cd9f00719b01f7108b51a2168fb94f15 ]
 
-A cgroup getsockopt BPF program can shrink ctx->optlen after the
-kernel getsockopt handler has run. The kernel-buffer variant, used by
-TCP_ZEROCOPY_RECEIVE, only rejects values larger than the original
-length.
+When vfs_lock_file() defers a lock, smb2_lock() puts its ksmbd_lock on
+rollback_list before allocating and registering the asynchronous work.
+If either operation fails, rollback assumes that smb_lock->conn is
+initialized and dereferences NULL. The deferred file_lock also remains
+linked into the VFS blocked-lock state while it is freed.
 
-If BPF writes a negative optlen, that value is accepted and propagated
-back to the TCP getsockopt code. It can then be passed to
-copy_to_sockptr() as a size_t and trigger the hardened usercopy
-bytes > INT_MAX warning.
+Keep the lock off rollback_list until async setup succeeds. On setup
+failures, explicitly unblock and wake the deferred lock before freeing it
+and its ksmbd wrapper.
 
-Reject negative ctx.optlen in __cgroup_bpf_run_filter_getsockopt_kern(),
-matching the lower-bound validation already present in the sockptr-based
-getsockopt hook.
-
-Fixes: 9cacf81f8161 ("bpf: Remove extra lock_sock for TCP_ZEROCOPY_RECEIVE")
-Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Junseo Lim <zirajs7@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/187a4d756275aaaee5d65eecb63c1477b3b66554.1786448307.git.zirajs7@gmail.com
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 215e8816b1ac ("ksmbd: detach blocked lock requests before freeing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 31c63ff276fa7..44068bdd4f759 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -2260,7 +2260,7 @@ int __cgroup_bpf_run_filter_getsockopt_kern(struct sock *sk, int level,
- 	if (ret < 0)
- 		return ret;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 5e99c48fa0dc4..42ca6125a510c 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8522,6 +8522,13 @@ static void smb2_remove_blocked_lock(void **argv)
+ 	locks_wake_up(flock);
+ }
  
--	if (ctx.optlen > *optlen)
-+	if (ctx.optlen > *optlen || ctx.optlen < 0)
- 		return -EFAULT;
++static void smb2_free_blocked_lock(struct file_lock *flock)
++{
++	ksmbd_vfs_posix_lock_unblock(flock);
++	locks_wake_up(flock);
++	locks_free_lock(flock);
++}
++
+ static inline bool lock_defer_pending(struct file_lock *fl)
+ {
+ 	/* check pending lock waiters */
+@@ -8796,11 +8803,12 @@ int smb2_lock(struct ksmbd_work *work)
  
- 	/* BPF programs can shrink the buffer, export the modifications.
+ 				ksmbd_debug(SMB,
+ 					    "would have to wait for getting lock\n");
+-				list_add(&smb_lock->llist, &rollback_list);
+ 
+ 				argv = kmalloc(sizeof(void *), KSMBD_DEFAULT_GFP);
+ 				if (!argv) {
+ 					err = -ENOMEM;
++					smb2_free_blocked_lock(flock);
++					kfree(smb_lock);
+ 					goto out;
+ 				}
+ 				argv[0] = flock;
+@@ -8811,8 +8819,11 @@ int smb2_lock(struct ksmbd_work *work)
+ 				if (rc) {
+ 					kfree(argv);
+ 					err = -ENOMEM;
++					smb2_free_blocked_lock(flock);
++					kfree(smb_lock);
+ 					goto out;
+ 				}
++				list_add(&smb_lock->llist, &rollback_list);
+ 				spin_lock(&fp->f_lock);
+ 				list_add(&work->fp_entry, &fp->blocked_works);
+ 				spin_unlock(&fp->f_lock);
 -- 
 2.53.0
 
