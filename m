@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1D239DBD3;
-	Sat, 12 Sep 2026 07:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F72B39F166;
+	Sat, 12 Sep 2026 07:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196723; cv=none; b=p0kEN/LRhLkqVSI0WTLIM+EeY7EietUD9r4PNBaU0I9CMB+v3kjxLdAdzFs4i4Nw5hp2kjlfxNzBK2cWvPotAv89YSpBEnWIeTfsRBXinlIqUJhecrgtis0zmC/UwbC3Tt5hHBOiNLYXXMe/0Bk1UBXnAefPISMi+hpiqwAaoE4=
+	t=1789196729; cv=none; b=lbHE7g3e6kXBwBqd7o1bgjZNK6CqIKfOzfgf916QnT8qEzCMFbICsz2X6DfntEtTMsD0qwQ1b2U/F0ZTWf9smTaB+D112KOkt+q06uQ+wA5vz9zrXF0aXYV9z8+A+Bo7k0RRInGqpg2vvvc03/sz7C9UY5GgWdkKN13zRyMUcyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196723; c=relaxed/simple;
-	bh=YqzVi1EOLAlP8/JzVm09pR+PUy/z462V/h9rbdUEEos=;
+	s=arc-20240116; t=1789196729; c=relaxed/simple;
+	bh=pEkoGrDqSfTRUxP8NfVGzqmztOHL2KVlzdSNNBAX2YY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P44nnPuAzCChBPZwEy+++3IcgBNCc4zL2iRJQ6szRCiFoALAcyN4diaZuHfOswRxMx2FX4OELU3cKf4ko8CrCpO+OQq7rRkLV5svR7G235Lpl3APDcWNQYOVEGkAGue00zHDXQreK2U8WaiaTjecUv97wvFzGBpbOyA7Ab1zyqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sg39mmey; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DsxzPgORofLeKJdZuYX9uqxn+AyuB6x2IjQFLVnmFztYT3P2DSKRD0m73++0xN2C6jofiF7YBrMGRtsnwYwgcZ8XPAXs3cT3xmCxB/NbF98SZAii5J4UD0WqYV/CwvB+4MulBwXZEiEcjrGtSXXrhWBvUjcVpq+iLmr2Baupbd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncCJHx7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sg39mmey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E736D1F00893;
-	Sat, 12 Sep 2026 07:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncCJHx7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BFA1F000FF;
+	Sat, 12 Sep 2026 07:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196719;
-	bh=kjXb7HELchsqJBbGCXNn86z+Icm9Nn1qgN22zbCBfvk=;
+	s=korg; t=1789196724;
+	bh=LHtwKGLTJ/ZxamE8fwxCiUf50BUTmwoaM8A5euJRhSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sg39mmeytQUo/y8ixFkBKyI355rxQYNTrq3HGMR+5km4Clg2YqShD8NaqLlxyBj6w
-	 6Ua4lLHecPpgpfQaWbu/05CGstdstHsSXozjPRniSZSq8te7eP3zl9sxMZOVyc9ukr
-	 2/KM330ew0noG2R/7ENhY7b8NcpLM9EgvIyN/MQ0=
+	b=ncCJHx7X/YC7efy0JHMTvyzFV4L8eLA/t3BM+5glTySoxc+Jt10JtKLtBU6eco0yi
+	 bp38BowWIoLQWEf1wr+6Wq4zjj4YQMAeIoXgw3Ld+I1fzWw8EpDjc41VdQcS0Qahwf
+	 jOXGF7/AeiiBfXT1AfcsgrZTZv+jSeriERSxV9Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Li Chen <me@linux.beauty>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0023/1815] nvdimm: virtio_pmem: stop allocating child flush bio
-Date: Sat, 12 Sep 2026 08:29:33 +0200
-Message-ID: <20260912065649.551734133@linuxfoundation.org>
+Subject: [PATCH 7.2 0024/1815] nvdimm: virtio_pmem: always wake -ENOSPC waiters
+Date: Sat, 12 Sep 2026 08:29:34 +0200
+Message-ID: <20260912065649.574023679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,239 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Chen <me@linux.beauty>
 
-[ Upstream commit 40f356e610df95728074b1fc2e2ccb54ca1b5659 ]
+[ Upstream commit 811808761e19fdea1c25b7c76734b8945f758f27 ]
 
-pmem_submit_bio() passes the parent bio to nvdimm_flush() for
-REQ_FUA. For virtio-pmem this makes async_pmem_flush() allocate
-and submit a child PREFLUSH bio chained to the parent.
-
-That child allocation is in the block submit path. Making it
-blocking with GFP_NOIO can consume the same global bio mempool that
-submit_bio() uses, while making it GFP_ATOMIC can fail under
-pressure. A forced failure of the child allocation produced:
-
-virtio_pmem: forcing child bio allocation failure for test
-Buffer I/O error on dev pmem0, logical block 0, lost sync page write
-EXT4-fs (pmem0): I/O error while writing superblock
-EXT4-fs (pmem0): mount failed
-
-Avoid the child bio without turning REQ_FUA into a synchronous
-submit-path wait. Let provider flush callbacks return
-NVDIMM_FLUSH_ASYNC after taking ownership of parent bio completion.
-pmem_submit_bio() returns in that case, and virtio-pmem queues an
-ordered WQ_MEM_RECLAIM work item that runs the existing host flush
-path and completes the parent bio.
-
-This keeps the asynchronous completion model of the child-bio path
-while removing the child bio allocation from the submit path.
+virtio_pmem_host_ack() reclaims virtqueue descriptors with
+virtqueue_get_buf(). The -ENOSPC waiter wakeup is tied to completing the
+returned token. If token completion is skipped for any reason, reclaimed
+descriptors may not wake a waiter and the submitter may sleep forever
+waiting for a free slot. Always wake one -ENOSPC waiter for each virtqueue
+completion before touching the returned token.
 
 Signed-off-by: Li Chen <me@linux.beauty>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630092338.2094628-5-me@linux.beauty>
+Message-ID: <20260630092338.2094628-7-me@linux.beauty>
 Stable-dep-of: e57140944b5a ("nvdimm: virtio_pmem: refcount requests for token lifetime")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/nd_virtio.c   |   54 ++++++++++++++++++++++++++++++-------------
- drivers/nvdimm/pmem.c        |    5 +++
- drivers/nvdimm/region_devs.c |    2 +
- drivers/nvdimm/virtio_pmem.c |   17 ++++++++++++-
- drivers/nvdimm/virtio_pmem.h |    4 +++
- include/linux/libnvdimm.h    |    9 +++++++
- 6 files changed, 73 insertions(+), 18 deletions(-)
+ drivers/nvdimm/nd_virtio.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 --- a/drivers/nvdimm/nd_virtio.c
 +++ b/drivers/nvdimm/nd_virtio.c
-@@ -9,6 +9,12 @@
- #include "virtio_pmem.h"
- #include "nd.h"
+@@ -15,26 +15,33 @@ struct virtio_pmem_flush_work {
+ 	struct bio *bio;
+ };
  
-+struct virtio_pmem_flush_work {
-+	struct work_struct work;
-+	struct nd_region *nd_region;
-+	struct bio *bio;
-+};
++static void virtio_pmem_wake_one_waiter(struct virtio_pmem *vpmem)
++{
++	struct virtio_pmem_request *req_buf;
++
++	if (list_empty(&vpmem->req_list))
++		return;
++
++	req_buf = list_first_entry(&vpmem->req_list,
++				   struct virtio_pmem_request, list);
++	req_buf->wq_buf_avail = true;
++	wake_up(&req_buf->wq_buf);
++	list_del(&req_buf->list);
++}
 +
   /* The interrupt handler */
  void virtio_pmem_host_ack(struct virtqueue *vq)
  {
-@@ -107,30 +113,46 @@ static int virtio_pmem_flush(struct nd_r
- 	return err;
- };
+ 	struct virtio_pmem *vpmem = vq->vdev->priv;
+-	struct virtio_pmem_request *req_data, *req_buf;
++	struct virtio_pmem_request *req_data;
+ 	unsigned long flags;
+ 	unsigned int len;
  
-+static void virtio_pmem_flush_work(struct work_struct *work)
-+{
-+	struct virtio_pmem_flush_work *flush;
-+	int err;
-+
-+	flush = container_of(work, struct virtio_pmem_flush_work, work);
-+	err = virtio_pmem_flush(flush->nd_region);
-+	if (err > 0)
-+		err = -EIO;
-+	if (err)
-+		flush->bio->bi_status = errno_to_blk_status(err);
-+	bio_endio(flush->bio);
-+	kfree(flush);
-+}
-+
- /* The asynchronous flush callback function */
- int async_pmem_flush(struct nd_region *nd_region, struct bio *bio)
- {
--	/*
--	 * Create child bio for asynchronous flush and chain with
--	 * parent bio. Otherwise directly call nd_region flush.
--	 */
--	if (bio && bio->bi_iter.bi_sector != -1) {
--		struct bio *child = bio_alloc(bio->bi_bdev, 0,
--					      REQ_OP_WRITE | REQ_PREFLUSH,
--					      GFP_ATOMIC);
-+	struct virtio_device *vdev = nd_region->provider_data;
-+	struct virtio_pmem *vpmem = vdev->priv;
-+	struct virtio_pmem_flush_work *flush;
-+	int err;
- 
--		if (!child)
-+	if (bio && bio->bi_iter.bi_sector != -1) {
-+		flush = kmalloc_obj(*flush, GFP_NOIO);
-+		if (!flush)
- 			return -ENOMEM;
--		bio_clone_blkg_association(child, bio);
--		child->bi_iter.bi_sector = -1;
--		bio_chain(child, bio);
--		submit_bio(child);
--		return 0;
-+
-+		INIT_WORK(&flush->work, virtio_pmem_flush_work);
-+		flush->nd_region = nd_region;
-+		flush->bio = bio;
-+		queue_work(vpmem->flush_wq, &flush->work);
-+		return NVDIMM_FLUSH_ASYNC;
+ 	spin_lock_irqsave(&vpmem->pmem_lock, flags);
+ 	while ((req_data = virtqueue_get_buf(vq, &len)) != NULL) {
++		virtio_pmem_wake_one_waiter(vpmem);
+ 		req_data->done = true;
+ 		wake_up(&req_data->host_acked);
+-
+-		if (!list_empty(&vpmem->req_list)) {
+-			req_buf = list_first_entry(&vpmem->req_list,
+-					struct virtio_pmem_request, list);
+-			req_buf->wq_buf_avail = true;
+-			wake_up(&req_buf->wq_buf);
+-			list_del(&req_buf->list);
+-		}
  	}
--	if (virtio_pmem_flush(nd_region))
-+
-+	err = virtio_pmem_flush(nd_region);
-+	if (err > 0)
- 		return -EIO;
- 
--	return 0;
-+	return err;
- };
- EXPORT_SYMBOL_GPL(async_pmem_flush);
- MODULE_DESCRIPTION("Virtio Persistent Memory Driver");
---- a/drivers/nvdimm/pmem.c
-+++ b/drivers/nvdimm/pmem.c
-@@ -235,8 +235,11 @@ static void pmem_submit_bio(struct bio *
- 	if (do_acct)
- 		bio_end_io_acct(bio, start);
- 
--	if ((bio->bi_opf & REQ_FUA) && !bio->bi_status)
-+	if ((bio->bi_opf & REQ_FUA) && !bio->bi_status) {
- 		ret = nvdimm_flush(nd_region, bio);
-+		if (ret == NVDIMM_FLUSH_ASYNC)
-+			return;
-+	}
- 
- 	if (ret)
- 		bio->bi_status = errno_to_blk_status(ret);
---- a/drivers/nvdimm/region_devs.c
-+++ b/drivers/nvdimm/region_devs.c
-@@ -1094,6 +1094,8 @@ int nvdimm_flush(struct nd_region *nd_re
- 		rc = generic_nvdimm_flush(nd_region);
- 	else {
- 		rc = nd_region->flush(nd_region, bio);
-+		if (rc > 0)
-+			return rc;
- 		if (rc && rc != -ENOMEM)
- 			rc = -EIO;
- 	}
---- a/drivers/nvdimm/virtio_pmem.c
-+++ b/drivers/nvdimm/virtio_pmem.c
-@@ -67,10 +67,17 @@ static int virtio_pmem_probe(struct virt
- 	mutex_init(&vpmem->flush_lock);
- 	vpmem->vdev = vdev;
- 	vdev->priv = vpmem;
-+	vpmem->flush_wq = alloc_ordered_workqueue("virtio-pmem-flush",
-+						  WQ_MEM_RECLAIM);
-+	if (!vpmem->flush_wq) {
-+		err = -ENOMEM;
-+		goto out_err;
-+	}
-+
- 	err = init_vq(vpmem);
- 	if (err) {
- 		dev_err(&vdev->dev, "failed to initialize virtio pmem vq's\n");
--		goto out_err;
-+		goto out_wq;
- 	}
- 
- 	if (virtio_has_feature(vdev, VIRTIO_PMEM_F_SHMEM_REGION)) {
-@@ -131,6 +138,8 @@ out_nd:
- 	nvdimm_bus_unregister(vpmem->nvdimm_bus);
- out_vq:
- 	vdev->config->del_vqs(vdev);
-+out_wq:
-+	destroy_workqueue(vpmem->flush_wq);
- out_err:
- 	return err;
+ 	spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
  }
-@@ -138,14 +147,20 @@ out_err:
- static void virtio_pmem_remove(struct virtio_device *vdev)
- {
- 	struct nvdimm_bus *nvdimm_bus = dev_get_drvdata(&vdev->dev);
-+	struct virtio_pmem *vpmem = vdev->priv;
- 
- 	nvdimm_bus_unregister(nvdimm_bus);
-+	drain_workqueue(vpmem->flush_wq);
- 	vdev->config->del_vqs(vdev);
- 	virtio_reset_device(vdev);
-+	destroy_workqueue(vpmem->flush_wq);
- }
- 
- static int virtio_pmem_freeze(struct virtio_device *vdev)
- {
-+	struct virtio_pmem *vpmem = vdev->priv;
-+
-+	drain_workqueue(vpmem->flush_wq);
- 	vdev->config->del_vqs(vdev);
- 	virtio_reset_device(vdev);
- 
---- a/drivers/nvdimm/virtio_pmem.h
-+++ b/drivers/nvdimm/virtio_pmem.h
-@@ -15,6 +15,7 @@
- #include <linux/libnvdimm.h>
- #include <linux/mutex.h>
- #include <linux/spinlock.h>
-+#include <linux/workqueue.h>
- 
- struct virtio_pmem_request {
- 	struct virtio_pmem_req req;
-@@ -39,6 +40,9 @@ struct virtio_pmem {
- 	/* Serialize flush requests to the device. */
- 	struct mutex flush_lock;
- 
-+	/* Complete asynchronous FUA flushes outside the submit path. */
-+	struct workqueue_struct *flush_wq;
-+
- 	/* nvdimm bus registers virtio pmem device */
- 	struct nvdimm_bus *nvdimm_bus;
- 	struct nvdimm_bus_descriptor nd_desc;
---- a/include/linux/libnvdimm.h
-+++ b/include/linux/libnvdimm.h
-@@ -126,6 +126,15 @@ struct nd_mapping_desc {
- struct bio;
- struct resource;
- struct nd_region;
-+
-+/*
-+ * Provider flush callback return values:
-+ *   0: flush completed synchronously
-+ *  <0: flush failed
-+ *  >0: flush completion was queued and @bio will be completed later
-+ */
-+#define NVDIMM_FLUSH_ASYNC 1
-+
- struct nd_region_desc {
- 	struct resource *res;
- 	struct nd_mapping_desc *mapping;
 
 
