@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEFD2576E;
-	Sat, 12 Sep 2026 09:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEB541A575;
+	Sat, 12 Sep 2026 09:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203680; cv=none; b=ZutHMTZd0+ulk7Tjz8psA4VPHu48A2JjOPTiZB8fVsg7pI5Gr4hDPsNybpk4iDj2qkjhR5DMOXgYWXmBkr4qAE03HB6Imi4vN+P5dk/ylDimhI9RbKbgiaf49Hbr80XN2hCiIuXXMuELVCvGMYlyP+rX9zn8kledqx5kjXOKR5A=
+	t=1789203685; cv=none; b=VsW/olB85hvHkx1dpiBQ+DqYlqxE+Mhn2uLwih9facyRJMRedMM5XKQRvxBepPuc34xiCg0FiVH7VkT2ZOLQPxmIl3w5XOkZGSEKwDxxc1xNd/D1c0ENsrTO+HinXOuAlvG7OnF4QWWRSCIdDICCDF4bRoT5kAljyXmzRpZVhyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203680; c=relaxed/simple;
-	bh=5EIcKBhFgU8TZdoYyTgMiNSdxrfO8MrrIAfS1sREFqQ=;
+	s=arc-20240116; t=1789203685; c=relaxed/simple;
+	bh=ma8lVRz5/2FyYvE4cMH3+0okuXjAsxkE9sZ7zHeCe4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJ7KlGkvVE4/E7C36Yf7K/pwCIsFFkieeoHNvNQ3KGTZfrTqwu+Y4wuzzGyLsV9CksDNT4T8t12t8Tbi0yTsIOGLWXg910sJCyFr9Y10ucSVzTnDVnJ2qWWDLKZVH7py5WlXRNl+u1vuNTuc8aOleVPIbzEXLsFNWasRfKorMkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xji+Tp5Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IRxVxvpMu9pG8JhkrQdBgcfkVDLFlaYFXj/Yd4UL2oIIAQU79ipIOzMRK2RJIWtZ4CRs2xrAHErTq6MYmj8LdUrQfIZ7CqDYhnPr9jhdf2PNL+yxWrFfTW4RgUSTyckFWsZUzYxV6rQMG7jfjAJmsjgasAUkQwsBGHq0wI4spuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4sNTI19; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xji+Tp5Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015C41F000FF;
-	Sat, 12 Sep 2026 09:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4sNTI19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6891F00899;
+	Sat, 12 Sep 2026 09:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203679;
-	bh=geUzBsZzCtfaEqbyqWC2mlyPQeQe2E/SOY7dx6MwfJE=;
+	s=korg; t=1789203684;
+	bh=cfhHH2XkZbv3HUd1LGLTcm9eqKvIjTM17NO97nIz6Ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xji+Tp5Z7TIw2Rq4j0FVgLy+mZTPlj5L88E373NZOGfaE59kB5sNPh02A1aqGKs93
-	 pyRd+e63qguqj3y0PoEZeoXAa/aU6fvnu5zwG//EdkWaYkmci6lqwX1yz0fygz6CaN
-	 wJhji6UzK91L5RAE6b2kUJCVBfjpbmNnSgZZqW98=
+	b=N4sNTI19CmK9gIdXCZrUV5377mxKZYffZT3nFuf+4cX3FfN77icrGb5MbTMPQVHu5
+	 l+vcNVq/mSPkkCqVSO1gU9ZyTM179gKJNH/wZdNGpLbulKhcUEDUJRPuzZ4pfFfr4Y
+	 UEpWLbjP44yWHzrrsf/KElCfNsqlMJp0Pr2+vryU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Song Liu <song@kernel.org>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1455/1815] selftests/bpf: Use ping_command() for IPv6 pings in lwt_ip_encap
-Date: Sat, 12 Sep 2026 08:53:25 +0200
-Message-ID: <20260912065723.171447495@linuxfoundation.org>
+Subject: [PATCH 7.2 1456/1815] bpf: Fix arm64 KASAN false positive after bpf_throw
+Date: Sat, 12 Sep 2026 08:53:26 +0200
+Message-ID: <20260912065723.195031484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,75 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit 073574da7a8e6055b1687c256bea070ab4b4ebea ]
+[ Upstream commit b0e872a31e157d48479507c2821ba8bf6323b7ad ]
 
-lwt_ip_encap hardcodes the ping6 binary for its IPv6 pings. iputils
-merged ping6 into ping long ago and distros have started dropping the
-compat symlink -- Arch's iputils 20250605 ships only arping, clockdiff,
-ping and tracepath. There, every lwt_ip_encap subtest fails:
+arm64 passes zero as the stack pointer while walking BPF frames, so
+bpf_throw() leaves stale KASAN stack poison after jumping to the
+exception callback.
 
-  check_ping_ok:FAIL:ip netns exec ns-lwt-ip-encap-1-0101330 ping6 -c 1 \
-    -W1 -I veth1 fb04::1 > /dev/null unexpected error: 256 (errno 2)
-  #217/1   lwt_ip_encap_ipv4/egress:FAIL
+Use the frame pointer as the fallback stack watermark.
 
-The IPv4 subtests fail too, because check_ping_ok() pings both families.
-SYS() runs the command through system(), so a missing binary is
-indistinguishable from an unreachable peer.
-
-network_helpers.c has had ping_command() for exactly this since commit
-372642ea83ff ("selftests/bpf: Move netcnt test under test_progs"): it
-falls back to "ping -6" when ping6 is not present. lwt_ip_encap.c is the
-last hardcoded ping6 user. Fix that.
-
-Fixes: f5e288943e2c ("selftests/bpf: Move test_lwt_ip_encap to test_progs")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Fixes: e74cb1b42213 ("arm64: stacktrace: Implement arch_bpf_stack_walk() for the BPF JIT")
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/bpf/20260813213558.3103179-1-andrii@kernel.org
+Tested-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://lore.kernel.org/bpf/20260812-hello_world-v1-1-c3c2ddcb362d@meta.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ kernel/bpf/helpers.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
-index 6606f0ed9a9a9..39e8a3b8b6afb 100644
---- a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
-+++ b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
-@@ -410,7 +410,8 @@ static int test_gso_fix(const char *ns1, const char *ns3, int family)
- static int check_ping_ok(const char *ns1)
- {
- 	SYS(fail, "ip netns exec %s ping -c 1 -W1 -I veth1 %s > /dev/null", ns1, IP4_ADDR_DST);
--	SYS(fail, "ip netns exec %s ping6 -c 1 -W1 -I veth1 %s > /dev/null", ns1, IP6_ADDR_DST);
-+	SYS(fail, "ip netns exec %s %s -c 1 -W1 -I veth1 %s > /dev/null", ns1,
-+	    ping_command(AF_INET6), IP6_ADDR_DST);
- 	return 0;
- fail:
- 	return -1;
-@@ -424,7 +425,8 @@ static int check_ping_fails(const char *ns1)
- 	if (!ret)
- 		return -1;
- 
--	ret = SYS_NOFAIL("ip netns exec %s ping6 -c 1 -W1 -I veth1 %s", ns1, IP6_ADDR_DST);
-+	ret = SYS_NOFAIL("ip netns exec %s %s -c 1 -W1 -I veth1 %s", ns1,
-+			 ping_command(AF_INET6), IP6_ADDR_DST);
- 	if (!ret)
- 		return -1;
- 
-@@ -657,9 +659,10 @@ static void lwt_ip_encap_vxlan(bool ipv4_encap)
- 	skel->bss->fexit_triggered = false;
- 
- 	if (ipv4_encap)
--		SYS(out, "ip netns exec %s ping  -c 1 -W1 %s", ns1, IP4_ADDR_DST);
-+		SYS(out, "ip netns exec %s ping -c 1 -W1 %s", ns1, IP4_ADDR_DST);
- 	else
--		SYS(out, "ip netns exec %s ping6 -c 1 -W1 %s", ns1, IP6_ADDR_DST);
-+		SYS(out, "ip netns exec %s %s -c 1 -W1 %s", ns1,
-+		    ping_command(AF_INET6), IP6_ADDR_DST);
- 
- 	if (!ASSERT_TRUE(skel->bss->fexit_triggered, "fexit_triggered"))
- 		goto out;
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 88b38db47de92..61805d8c95aef 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -3395,11 +3395,13 @@ __bpf_kfunc void bpf_throw(u64 cookie)
+ 		WARN_ON_ONCE(!ctx.aux->exception_boundary);
+ 	WARN_ON_ONCE(!ctx.bp);
+ 	WARN_ON_ONCE(!ctx.cnt);
+-	/* Prevent KASAN false positives for CONFIG_KASAN_STACK by unpoisoning
++	/*
++	 * Prevent KASAN false positives for CONFIG_KASAN_STACK by unpoisoning
+ 	 * deeper stack depths than ctx.sp as we do not return from bpf_throw,
+-	 * which skips compiler generated instrumentation to do the same.
++	 * which skips compiler generated instrumentation to do the same. Some
++	 * architectures cannot recover sp while unwinding, so fall back to bp.
+ 	 */
+-	kasan_unpoison_task_stack_below((void *)(long)ctx.sp);
++	kasan_unpoison_task_stack_below((void *)(long)(ctx.sp ?: ctx.bp));
+ 	ctx.aux->bpf_exception_cb(cookie, ctx.sp + ctx.aux->stack_arg_sp_adjust, ctx.bp, 0, 0);
+ 	WARN(1, "A call to BPF exception callback should never return\n");
+ }
 -- 
 2.53.0
 
