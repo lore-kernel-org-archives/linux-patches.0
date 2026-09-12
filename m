@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E592B373BF3;
-	Sat, 12 Sep 2026 07:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407401BD9C9;
+	Sat, 12 Sep 2026 07:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199205; cv=none; b=LED2KaQE7g0j2xqOql5qsTaQf8YdyuE7ObnmRP9eIq0lB6N+pArK7u/U1nsNsVMt4qpKGUnK1QJ2+IG4lBXYh63eCtAg6rym38QjwBcZa0eKIUDm6MkIx+vraxDIpcYSTuN4GKDPKrCT5Fa2nEws2ixAiqwCMjHwSEBfUtXfAUk=
+	t=1789199210; cv=none; b=RIi8ebgyoUNWo0kmvXsXMRjUGjs28Xi7gt2hMSs4G/maQojtWPY9zMC/zZgzknwTvmHS1pKpfTLzGayAzEIjEpAqFYLCL3CPYzW4AInVZ2FdHDizC/0PCmk6vSarqCkeiSnZMIldollcUF8kq5kTIYQDxqHwj0+X3SWmldKbEaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199205; c=relaxed/simple;
-	bh=NEiDn2oCtups5jEdBvW0z32XHQ3NFYo8B797cpCRXWg=;
+	s=arc-20240116; t=1789199210; c=relaxed/simple;
+	bh=IVpthxzn7sqRYnPBygV7aWjZqKWbhtl5qpeTBn+wxKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWlULUvpfEVLCst0uEJL++TQqM6fbhCY+eYaGH9nZgnp8L4sf6a8N1tD5C/bKjqQ+XHAdJGsLFvDLdjNrmV9tKCCMEXpAUOzZM8K+Y4v8AjZxK3PAcdwkHWXMv/og3QUA4n95AZnOboQyK33xfWL3vKLphmNWqU2uJbB2no4Mr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0bQ2lK5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rnFI7+XdRYF6Jj15G0KKNPpXcJYKM75eA8nNMsrsHrJezoxj+B0lGm7UOgIoUAoVKzGemRZmIFPWIEqGc6BcHkLjiG5S0VlG2OdQ59zRZN36uz14AZgoT7ZHKUpzm2U3EyOiJKAbJM/A6ihE4ERNBsHsYqIxAIm5O3t3+sWFoSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAOEXeyZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0bQ2lK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B551F000FF;
-	Sat, 12 Sep 2026 07:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAOEXeyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06581F000FF;
+	Sat, 12 Sep 2026 07:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199203;
-	bh=6ZYWyFX22R+R5ZPySACH6R1+pD7ojJreMJebD9wprZg=;
+	s=korg; t=1789199208;
+	bh=4UeU0uLXsat4a5ClYv7wqpLwX5iEEXC5cgtTsSmYtpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o0bQ2lK5Pg7Dsayip//9Z9/LzahfjphMi48UpRd5z3DiHAPTL0qZigGyqdvTdCqL1
-	 FTcinELgMBmywQFJ6INjlVEfUX6hpzVaeuAI/PRQc9t1WV0qzFAaQBuiak/XEt8taE
-	 T5HHTm9TbsYpMbTFgS5uX7zVf9Z7MSKq0CbRyXqw=
+	b=jAOEXeyZ+/Lg09vupnNVMNLUJooKP92YhD1Q9//fVKS0g30N1D8ipitpT0cIVQMMe
+	 H9dVEpYlBf7C6wHb9zJpeNOBiVBZmeKvXbYqnOz545CPApljTpVizQp1c4+6kAcLrU
+	 rNEbAklVN4GsI6ZZ7TGAaOa3cFmUHbfS9WNCrWD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Changhuang Liang <changhuang.liang@starfivetech.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0536/1815] phy: starfive: Fix runtime PM cleanup in JH7110 DPHY TX probe
-Date: Sat, 12 Sep 2026 08:38:06 +0200
-Message-ID: <20260912065701.462911250@linuxfoundation.org>
+Subject: [PATCH 7.2 0537/1815] phy: starfive: Fix runtime PM cleanup in JH7110 DPHY RX probe
+Date: Sat, 12 Sep 2026 08:38:07 +0200
+Message-ID: <20260912065701.486801989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,11 +54,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit f40b0241f3a382e99c14de2f28f14a44973407c1 ]
+[ Upstream commit 97bed336f6a25c9d1115ca95e3aa00e05c3bc271 ]
 
-stf_dphy_probe() enables runtime PM before getting the clock and
-reset controls, creating the PHY and registering the PHY provider. If
-any of those steps fails, probe returns with runtime PM still enabled.
+stf_dphy_probe() enables runtime PM before registering the PHY provider.
+If devm_of_phy_provider_register() fails, probe returns with runtime PM
+still enabled.
 
 The driver also has no remove callback, so runtime PM is left enabled
 on driver unbind after a successful probe.
@@ -66,21 +66,21 @@ on driver unbind after a successful probe.
 Use devm_pm_runtime_enable() so runtime PM is disabled automatically
 on later probe failures and on driver unbind.
 
-Fixes: d3ab79553308 ("phy: starfive: Add mipi dphy tx support")
+Fixes: f8aa660841bc ("phy: starfive: Add mipi dphy rx support")
 Signed-off-by: Can Peng <pengcan@kylinos.cn>
 Reviewed-by: Changhuang Liang <changhuang.liang@starfivetech.com>
-Link: https://patch.msgid.link/20260718090054.444513-2-pengcan@kylinos.cn
+Link: https://patch.msgid.link/20260718090054.444513-3-pengcan@kylinos.cn
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/starfive/phy-jh7110-dphy-tx.c | 5 ++++-
+ drivers/phy/starfive/phy-jh7110-dphy-rx.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/starfive/phy-jh7110-dphy-tx.c b/drivers/phy/starfive/phy-jh7110-dphy-tx.c
-index c64d1c91b1307..181491a938079 100644
---- a/drivers/phy/starfive/phy-jh7110-dphy-tx.c
-+++ b/drivers/phy/starfive/phy-jh7110-dphy-tx.c
-@@ -392,6 +392,7 @@ static int stf_dphy_probe(struct platform_device *pdev)
+diff --git a/drivers/phy/starfive/phy-jh7110-dphy-rx.c b/drivers/phy/starfive/phy-jh7110-dphy-rx.c
+index 0b039e1f71c55..d06f21ad63325 100644
+--- a/drivers/phy/starfive/phy-jh7110-dphy-rx.c
++++ b/drivers/phy/starfive/phy-jh7110-dphy-rx.c
+@@ -150,6 +150,7 @@ static int stf_dphy_probe(struct platform_device *pdev)
  {
  	struct phy_provider *phy_provider;
  	struct stf_dphy *dphy;
@@ -88,17 +88,17 @@ index c64d1c91b1307..181491a938079 100644
  
  	dphy = devm_kzalloc(&pdev->dev, sizeof(*dphy), GFP_KERNEL);
  	if (!dphy)
-@@ -406,7 +407,9 @@ static int stf_dphy_probe(struct platform_device *pdev)
- 	if (IS_ERR(dphy->topsys))
- 		return PTR_ERR(dphy->topsys);
+@@ -190,7 +191,9 @@ static int stf_dphy_probe(struct platform_device *pdev)
+ 		return PTR_ERR(dphy->phy);
+ 	}
  
 -	pm_runtime_enable(&pdev->dev);
 +	ret = devm_pm_runtime_enable(&pdev->dev);
 +	if (ret)
 +		return ret;
  
- 	dphy->txesc_clk = devm_clk_get(&pdev->dev, "txesc");
- 	if (IS_ERR(dphy->txesc_clk))
+ 	phy_set_drvdata(dphy->phy, dphy);
+ 	phy_provider = devm_of_phy_provider_register(&pdev->dev,
 -- 
 2.53.0
 
