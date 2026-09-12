@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9EA191F93;
-	Sat, 12 Sep 2026 14:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C282FFDEA;
+	Sat, 12 Sep 2026 14:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224582; cv=none; b=RhxThDMfdSdr1q3JE9QkjsmmmHx0T+X2XTrp/N+Cu6nczJoQNIzl5Qxbo7Hg25GWjdhwr+WoPrxuyVVBKJ93B/zk5d0xWt/5xoaOLeWVp9l9S6H2qE4D6U/kGNACqc8MfBfRsk1sjDjGAqW6cWewnnGStCTpk6i9Lfj58ye/6jc=
+	t=1789224587; cv=none; b=XSDUuJWy4au1ea5CFi+Mu0pR4IdEIgb4SzdEV/2Axq80BiPP3tE7j2KkR7vmRFuh/wgIMkwVd8vzOGcGW9V9SDmyEwczDsaoQUE0GvU0Q7mWx00H4Dgy87YlRQfSHm9n7DP/lBUDCWFGumgK9xJY5GhE0FDIj04O9LiyHrawq6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224582; c=relaxed/simple;
-	bh=TwNy7uZekxKWsWOTOqXSe3DaMQmCgjRB5oVJ/R+YfGE=;
+	s=arc-20240116; t=1789224587; c=relaxed/simple;
+	bh=OmYh5VTEWiNZd58S9cGfx2tg43qlcbaxTEpS/5bn2yA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CMiAHTSlA5BXdRYecgvrfz1g9n4JBi+YbtNFKgB6oBccP26PS5dnZ0eKRD++f9VUJh2JswlgAcIR6pZFgBJ6PR+G+l88TVjIsqWX8MIKi2HCSoL12/ujEijRAeOd+xHw1APIqxvC0hFaPlkwfAAX4dOksa2KupdENie7EBFWfr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+V8AkdQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B6zNz1OnIlFZVvIVFhjgkFny7l7Jxe2wOEel1HOBn9a8wo9mNgf6bX4fOGP+/8Mtg3oN/3Z27f41qfEPTckIg2ntBeru0G4xx9l8FIMXXtRxMhsg6uydl6Cvx819A2zcvfgHeCCP8KLKntaHOY3skLtoozDLFmPVbsSRAjNfQqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utsSQTAN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+V8AkdQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BFC1F000FF;
-	Sat, 12 Sep 2026 14:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utsSQTAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E511F000FF;
+	Sat, 12 Sep 2026 14:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224581;
-	bh=0LbtgFtdUGLEyUUGzW5Zbi+ozv9FP1aVJWlJgvEj6e0=;
+	s=korg; t=1789224586;
+	bh=zfoWbB9L2HYmgkhgJ2P/mWKW34vAMstHT8ZF479SXiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+V8AkdQ9f7ir98u+9FZq6z4CFZDKtMXa1uDGKJrDNJhbxR5PeE5oxVwWJUiyFwPh
-	 B5vpfW5XTMdLGLiPnFu6bBdwDnSrE6Jx4VhfM13rtePIgmnmShiHp66ckbdjuLe3Bm
-	 LEkeQewLRfaN1VF3FUmo13/6s8pIcuL0V3PUhkNQ=
+	b=utsSQTAN47aXEqeKaVQw8/ghBkX14+3+J+VmfGJgB27V5+IEU+7vdlKq09kf6YRXs
+	 SkQISQxldIpLKG3Ktjt6+tydjwbO5KjtUzqJ8MufN+1LC7Tfr8Qg30S0y5fuenZsS3
+	 ulpV86phSBn3cOkVFwt+L1x/9BDSZdrIyG4YbhAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Chao Huang <huangchao@kylinos.cn>,
+	Douglas Anderson <dianders@chromium.org>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1022/1424] HID: i2c-hid: Fix "(null)" output when reading report descriptor fails
-Date: Sat, 12 Sep 2026 08:57:34 +0200
-Message-ID: <20260912065630.197218732@linuxfoundation.org>
+Subject: [PATCH 6.6 1023/1424] HID: i2c-hid: goodix: Disable VDD on VDDIO enable failure
+Date: Sat, 12 Sep 2026 08:57:35 +0200
+Message-ID: <20260912065630.220106697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,50 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Chao Huang <huangchao@kylinos.cn>
 
-[ Upstream commit 8da0f0951deec9f0728ed2d9c54ded1c344b7542 ]
+[ Upstream commit 8e2c560faea0220664169f7be4b498915ea1469f ]
 
-When i2c-hid fails to read the HID report descriptor during device
-initialization, the error message prints as:
+If enabling VDDIO fails after VDD has been enabled, the power-up
+path returns without disabling VDD. This leaves the regulator enabled
+and its enable count unbalanced.
 
-  hid (null): reading report descriptor failed
+Disable VDD before returning the VDDIO error.
 
-The HID device name is set in hid_add_device() after calling
-hdev->ll_driver->parse(), so when i2c_hid_parse() fails and calls
-hid_err(), the device name has not been set yet, resulting in "(null)"
-output.
-
-Use dev_err(&client->dev, ...) instead of hid_err(hid, ...) because
-the I2C client device is fully initialized with a proper name, providing
-meaningful error messages for debugging.
-
-Before: hid (null): reading report descriptor failed
-After:  i2c_hid i2c-TPD0001:00: reading report descriptor failed
-
-Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
-
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Fixes: eb16f59e8e58 ("HID: i2c-hid: goodix: Add mainboard-vddio-supply")
+Signed-off-by: Chao Huang <huangchao@kylinos.cn>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/i2c-hid/i2c-hid-of-goodix.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index aa71388852099..b36284e2d5cbf 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -759,7 +759,7 @@ static int i2c_hid_parse(struct hid_device *hid)
- 					    ihid->hdesc.wReportDescRegister,
- 					    rdesc, rsize);
- 		if (ret) {
--			hid_err(hid, "reading report descriptor failed\n");
-+			dev_err(&client->dev, "reading report descriptor failed\n");
- 			goto out;
- 		}
- 	}
+diff --git a/drivers/hid/i2c-hid/i2c-hid-of-goodix.c b/drivers/hid/i2c-hid/i2c-hid-of-goodix.c
+index f1597ad67e7c8..f4dbcd1d1d472 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-of-goodix.c
++++ b/drivers/hid/i2c-hid/i2c-hid-of-goodix.c
+@@ -51,8 +51,10 @@ static int goodix_i2c_hid_power_up(struct i2chid_ops *ops)
+ 		return ret;
+ 
+ 	ret = regulator_enable(ihid_goodix->vddio);
+-	if (ret)
++	if (ret) {
++		regulator_disable(ihid_goodix->vdd);
+ 		return ret;
++	}
+ 
+ 	if (ihid_goodix->timings->post_power_delay_ms)
+ 		msleep(ihid_goodix->timings->post_power_delay_ms);
 -- 
 2.53.0
 
