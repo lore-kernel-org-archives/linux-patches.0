@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EE14307B0;
-	Sat, 12 Sep 2026 10:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4937442E414;
+	Sat, 12 Sep 2026 10:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209712; cv=none; b=JM9Fj8wIder+IVd9fNJHHFa3Xc948kjb54yCHzVLc5n9ytF6OCr/OYOgQQcmG7kplQRxwEHYj/jRRfEwUbS1gVIKouMzhMyWdiEjdx4xmYWzhZLN3++D8FefIKwCqw2PX3kPkrt6X+7x2mZTfhTvjbb1tx1xh2VFITkpWesxLjU=
+	t=1789209719; cv=none; b=utD4ROelmBqGjEXRZHHWo2UAxoihcANXV1hWGjnfIrJ9CZgarUyfgCjIkxTAJyNcp83bGiuUlTLaetVAI+ARZf9jcQZ0yYTn+0QbA7DONdx824RmqXQYlWwUhxsUi8JafKd5a9/x4GIFixRrcE7WM/ovQjsh0II25WZiIqC0ruw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209712; c=relaxed/simple;
-	bh=F1xkXoXfXazs9OK8ZKwyJ8umvt+ulPmHKJhVPsSmQ24=;
+	s=arc-20240116; t=1789209719; c=relaxed/simple;
+	bh=2J+HbCbcWbkP//U0k4WfsKh2krD9hEpoNQtYhEo3h4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UwDzWv1vd81yp8I3AUA0Q9oQKNbmWYR94+0mdPaPEFlxxcZlaaUOGisLib9ct3rgtpCBQSNBVXI7QaZsx2SoPcSaVi9dV3Zpc6QD4LbzAno5yslOFh24UVawcU5KNwn3TaQJqvGO6v4wKLKUpJLzdzLh48+fNYvYL2jToar2QCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEt3Pc4G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=plmAhsIXsX3r+uIQp1eHDW8+HLgtpQdUCg4rpiMVoEakLXbVPHdS6tGvqdPEiYTUL+3IHcL1Y82GZjiQdm11aqZ2n2/dLexx0QRQS85hqEwN6smnLjtLdc2I6oIX3eP3JMso7z/+v8cjp8APYAogs8sRkbTrLrCq/EWycG/sZHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+1h3/0M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEt3Pc4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F2B1F00893;
-	Sat, 12 Sep 2026 10:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+1h3/0M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DE31F000FF;
+	Sat, 12 Sep 2026 10:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209707;
-	bh=Nm7rpV6G50quTizhNo7xpX2m/tjoYzYIOb15rkBFxj0=;
+	s=korg; t=1789209710;
+	bh=gSa4wwXTOFG7+lXvUXNQ45pu+bD7AZimDorymEZNiBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BEt3Pc4GmmGFe3aKyW2npIA15H6WYBYK6IKRSlJ1fTSEmyW4g92z2DkspFNFNAQHP
-	 k+MELU9hUjNIB8sEHDj45T15KgYFC7nQ53qT5uqX/d4laz2Ct6FQ3HaTAWjfWYndQa
-	 WMaGyRAiXvgWIL+KmXFp3XUzFHoSE+jbotdgbXAY=
+	b=Q+1h3/0MWCVO0QovtP+OQUpKuPdtxexuGK439GpMEJ/iIqEGHluhZ0vD6GkIdSEDv
+	 pBIZR+VszaPoCI6ib1mnUEctUATdVGbck1b7sZy/HLJcQo8cieRJHuI/THp8jq2sE8
+	 chBU2fSKuQySD+mJoIhh+ZyGi3d0esjP0W4FaNu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0833/1518] soc: fsl: qe: implement get_direction()
-Date: Sat, 12 Sep 2026 08:50:02 +0200
-Message-ID: <20260912065642.283436986@linuxfoundation.org>
+Subject: [PATCH 6.18 0834/1518] MIPS: ptrace: Fix syscall skipping via PTRACE_SYSCALL
+Date: Sat, 12 Sep 2026 08:50:03 +0200
+Message-ID: <20260912065642.306389197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,71 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-[ Upstream commit e460ef309f44b39480209970f1dd462f051d6f30 ]
+[ Upstream commit 5475c03fa25f31cfd5f8c7e552f8d10347bbaad9 ]
 
-The lack of get_direction() callback in this driver causes GPIOLIB to
-emit a warning. Implement it.
+If tracer wanted to skip a syscall return value was always
+overwritten with -ENOSYS. Fix this by checking against original
+syscall number and only return -ENOSYS, if it is negative.
 
-Fixes: e623c4303ed1 ("gpiolib: sanitize the return value of gpio_chip::get_direction()")
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/30b3f278a10b46252783458c81dc438df176f86c.1785405882.git.chleroy@kernel.org
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Fixes: b6318a903d06 ("MIPS/ptrace: Pick up ptrace/seccomp changed syscalls")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qe/gpio.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ arch/mips/kernel/ptrace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/fsl/qe/gpio.c b/drivers/soc/fsl/qe/gpio.c
-index c54154b404dfd..e6ef713726549 100644
---- a/drivers/soc/fsl/qe/gpio.c
-+++ b/drivers/soc/fsl/qe/gpio.c
-@@ -135,6 +135,30 @@ static int qe_gpio_dir_out(struct gpio_chip *gc, unsigned int gpio, int val)
- 	return 0;
- }
+diff --git a/arch/mips/kernel/ptrace.c b/arch/mips/kernel/ptrace.c
+index 3f4c94c881241..87102a03b6eaf 100644
+--- a/arch/mips/kernel/ptrace.c
++++ b/arch/mips/kernel/ptrace.c
+@@ -1321,8 +1321,12 @@ long arch_ptrace(struct task_struct *child, long request,
+  */
+ asmlinkage long syscall_trace_enter(struct pt_regs *regs)
+ {
++	long syscall;
++
+ 	user_exit();
  
-+static int qe_gpio_get_direction(struct gpio_chip *gc, unsigned int gpio)
-+{
-+	struct qe_gpio_chip *qe_gc = gpiochip_get_data(gc);
-+	struct qe_pio_regs __iomem *regs = qe_gc->regs;
-+	unsigned long flags;
-+	u32 val, mask;
++	syscall = current_thread_info()->syscall;
 +
-+	spin_lock_irqsave(&qe_gc->lock, flags);
-+
-+	if (gpio < QE_PIO_PINS / 2)
-+		val = ioread32be(&regs->cpdir1);
-+	else
-+		val = ioread32be(&regs->cpdir2);
-+
-+	spin_unlock_irqrestore(&qe_gc->lock, flags);
-+
-+	mask = (u32)QE_PIO_DIR_OUT << (QE_PIO_PINS - 2 - (gpio % (QE_PIO_PINS / 2)) * 2);
-+
-+	if (val & mask)
-+		return GPIO_LINE_DIRECTION_OUT;
-+	else
-+		return GPIO_LINE_DIRECTION_IN;
-+}
-+
- struct qe_pin {
- 	/*
- 	 * The qe_gpio_chip name is unfortunate, we should change that to
-@@ -308,6 +332,7 @@ static int qe_gpio_probe(struct platform_device *ofdev)
- 	gc->ngpio = QE_PIO_PINS;
- 	gc->direction_input = qe_gpio_dir_in;
- 	gc->direction_output = qe_gpio_dir_out;
-+	gc->get_direction = qe_gpio_get_direction;
- 	gc->get = qe_gpio_get;
- 	gc->set = qe_gpio_set;
- 	gc->set_multiple = qe_gpio_set_multiple;
+ 	if (test_thread_flag(TIF_SYSCALL_TRACE)) {
+ 		if (ptrace_report_syscall_entry(regs))
+ 			return -1;
+@@ -1342,7 +1346,7 @@ asmlinkage long syscall_trace_enter(struct pt_regs *regs)
+ 	 * Negative syscall numbers are mistaken for rejected syscalls, but
+ 	 * won't have had the return value set appropriately, so we do so now.
+ 	 */
+-	if (current_thread_info()->syscall < 0)
++	if (syscall < 0)
+ 		syscall_set_return_value(current, regs, -ENOSYS, 0);
+ 	return current_thread_info()->syscall;
+ }
 -- 
 2.53.0
 
