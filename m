@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2302AEEB;
-	Sat, 12 Sep 2026 15:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB882AEEB;
+	Sat, 12 Sep 2026 15:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227092; cv=none; b=NIoNQCoXTrOoQ+OCUornI7zCtyvX3uR8eI3KpaxVl46UtymOzk71ZYoHKEzycuj6yW9cWS8tJM/gSR13NKBYBXRTVPWBy2tc//QUALiN0EO9EhWeCdKeczlonhIroLRxjoJ//m26H8sONfDAazPtGqf3JAhsiRN8Vkj649INX2o=
+	t=1789227097; cv=none; b=Mo+eWg4LHfowBy+CDR8geM/Eca2G1VjRqANxlfvJ6z4GJ9hSGZ4mqO6K/5bZFivagFJcTWp02hB47X0GYoaSxpP2Sb1cr/d63VgHlij0IpgpsLC8+bKCz9IrERSOfwDzeI2gNi0Lvso2jJbXFba1cVy48/YkOyTD7Jmdn5aReBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227092; c=relaxed/simple;
-	bh=/rsKmZVDu6y2CjXjWBdZsW0NWjyItWNYry0GDHk6roA=;
+	s=arc-20240116; t=1789227097; c=relaxed/simple;
+	bh=/D/wkm9G3Ya8WLnmDD2/fXTWbZesdyO9h0xPF653Ba4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgqfS1uDX232yuWnS0abFMD4Ertshr3qkGMqcQDkZLqA2q6jQd4BTY3pueMrtKErcy1INHrd2GWDVgYK9n5gAVb5dbKAs1TN4fNMElkI6ZTUDFO57YSweu1ENBinhazapUfEr4onvEoIeeIZAZlznL73bsXpi6WbWNreg4zFOc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXuDMPQg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IkxZN4BRjX/iBVyNQ3YhN4hS27DizPImNY+7zTG9WWwLvMkxJt8zkif4+aJxRCldhesvObJS3dhKs7yqYnQYp0K8cYOgC9f1ZxRswXsTx6L152CoasTRCJBenhpvnA+BCO/pOqNF+ikd4TE81bsZgoPfsl3WKN6gEM4EC80xG1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFl5aUM0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXuDMPQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FD51F000FF;
-	Sat, 12 Sep 2026 15:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFl5aUM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12AD61F000FF;
+	Sat, 12 Sep 2026 15:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227091;
-	bh=xhTeWHIRTvjJPBiAa0AIY2NOuPeHZmjbmdYcL4K5zpE=;
+	s=korg; t=1789227096;
+	bh=pq+NSyHdHXEckfx3oSlW/hyoQwejOkyi19G4k5i2NiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sXuDMPQgFYFXQDwE8rWXV6F2z0GyZCPwnQikrBTWjDoEGIs9IiCeKgUXows8D0Dez
-	 9nivcnk6H9+LYIk4LbMeXcx6MOSCGOUv/Yw8Ly3fwv6ac2kcTrDvipAKPBQgs0Qt29
-	 EgSi2rXnKCH1YW1R77CIWd/SYrYlOB3+h22lE5+g=
+	b=mFl5aUM0N9Un3hXvq1oSlSpO01+rLfSsY8T5JT0e+s5zNortWXb8f4k5uE14sWY2e
+	 fgrUZ1NneEcbdtNGnJw2lKU7kkIg45A5vtq3055IEEByibngeOEmImp36zUaV1j7fC
+	 iP9XyH6J7Fm/ZEcSW7BGcGO01/wNCQr2ET30gCfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hang Nan <2122295973@qq.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 0111/1191] Bluetooth: ISO: fix use-after-free of listener socket in iso_conn_ready
-Date: Sat, 12 Sep 2026 08:47:19 +0200
-Message-ID: <20260912065550.680796944@linuxfoundation.org>
+Subject: [PATCH 6.1 0112/1191] Bluetooth: RFCOMM: serialize security confirmation handling
+Date: Sat, 12 Sep 2026 08:47:20 +0200
+Message-ID: <20260912065550.703605470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,67 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hang Nan <2122295973@qq.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 560bef609fa5992745929e8d7d458b9d88dd2830 upstream.
+commit 759c185d0bbdb131357408f50b8735e04ed3caff upstream.
 
-iso_conn_ready() looks up the BIS listener socket with iso_get_sock(),
-which takes a reference, and then, without re-checking its state,
-creates a child socket from it:
+rfcomm_security_cfm() looks up a session on session_list and then walks
+its DLC list without holding rfcomm_mutex. Since RFCOMM session teardown
+uses rfcomm_mutex, krfcommd can close and free the same session and DLCs
+concurrently:
 
-    parent = iso_get_sock(hdev, ...);
-    if (!parent)
-        return;
+  hci_rx_work                    krfcommd
+  -----------                    ---------
+  rfcomm_session_get()
+                                 rfcomm_lock()
+                                 rfcomm_session_close()
+                                   rfcomm_dlc_unlink()
+                                   rfcomm_session_del()
+                                     kfree(s)
+                                 rfcomm_unlock()
+  walk s->dlcs
 
-    lock_sock(parent);
-    sk = iso_sock_alloc(sock_net(parent), NULL, BTPROTO_ISO, ...);
-    ...
-    iso_chan_add(conn, sk, parent);
-    ...
-    release_sock(parent);
-    sock_put(parent);
+The callback can then read a freed session list head and touch freed DLCs
+while updating their flags or timers.
 
-If the listener socket is closed concurrently, between iso_get_sock()
-and lock_sock(), the reference taken by iso_get_sock() may be the last
-one: the close path drops the link-list reference, and once
-iso_conn_ready() drops its own reference at the end of the function the
-socket is freed.  The child socket, however, is already linked to the
-freed parent, and a later disconnect of the child runs iso_chan_del()
--> bt_accept_unlink(), which dereferences the dangling parent pointer
-into the freed accept queue (a use-after-free).  The same dangling
-pointer is also dereferenced through parent->***() in
-iso_chan_del().
+Serialize the session lookup and DLC traversal in rfcomm_security_cfm()
+with rfcomm_mutex. This matches the existing RFCOMM session lifetime
+rules and prevents concurrent rfcomm_session_del() / rfcomm_dlc_unlink()
+from tearing the objects down while the callback is using them.
 
-Fix it the same way the connected (non-BIS) path was fixed in commit
-0d255e63fcf3 ("Bluetooth: ISO: hold sk properly in iso_conn_ready"):
-after taking the socket lock, re-check that the parent is still a
-listening, alive socket, and bail out otherwise.
+KASAN reported:
 
-Fixes: ccf74f2390d60 ("Bluetooth: Add BTPROTO_ISO socket type")
+  BUG: KASAN: slab-use-after-free in rfcomm_security_cfm+0x41c/0x440
+  Read of size 8 at addr ffff888111fb3960 by task kworker/u17:1/89
+  Workqueue: hci0 hci_rx_work
+  Call Trace:
+   rfcomm_security_cfm+0x41c/0x440
+   hci_encrypt_cfm+0x139/0x590
+   hci_encrypt_change_evt+0x37b/0xc40
+   hci_event_packet+0x71b/0xb20
+   hci_rx_work+0x293/0x730
+  Allocated by task 69:
+   rfcomm_session_add+0x9e/0x2f0
+   rfcomm_run+0x44b/0x41e0
+  Freed by task 69:
+   kfree+0x131/0x3c0
+   rfcomm_session_del+0x188/0x220
+   rfcomm_run+0x1985/0x41e0
+
+Fixes: 08c30aca9e698faddebd34f81e1196295f9dc063 ("Bluetooth: Remove RFCOMM session refcnt")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hang Nan <2122295973@qq.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/rfcomm/core.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1479,6 +1479,14 @@ static void iso_conn_ready(struct iso_co
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -2203,9 +2203,13 @@ static void rfcomm_security_cfm(struct h
  
- 		lock_sock(parent);
+ 	BT_DBG("conn %p status 0x%02x encrypt 0x%02x", conn, status, encrypt);
  
-+		/* The listener may have been closed concurrently. */
-+		if (parent->sk_state != BT_LISTEN ||
-+		    sock_flag(parent, SOCK_ZAPPED)) {
-+			release_sock(parent);
-+			sock_put(parent);
-+			return;
-+		}
++	rfcomm_lock();
 +
- 		sk = iso_sock_alloc(sock_net(parent), NULL,
- 				    BTPROTO_ISO, GFP_ATOMIC, 0);
- 		if (!sk) {
+ 	s = rfcomm_session_get(&conn->hdev->bdaddr, &conn->dst);
+-	if (!s)
++	if (!s) {
++		rfcomm_unlock();
+ 		return;
++	}
+ 
+ 	list_for_each_entry_safe(d, n, &s->dlcs, list) {
+ 		if (test_and_clear_bit(RFCOMM_SEC_PENDING, &d->flags)) {
+@@ -2237,6 +2241,8 @@ static void rfcomm_security_cfm(struct h
+ 			set_bit(RFCOMM_AUTH_REJECT, &d->flags);
+ 	}
+ 
++	rfcomm_unlock();
++
+ 	rfcomm_schedule();
+ }
+ 
 
 
