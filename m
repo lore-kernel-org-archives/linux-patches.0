@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199FE2931EE;
-	Sat, 12 Sep 2026 15:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB3F282F1F;
+	Sat, 12 Sep 2026 15:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227581; cv=none; b=ne+mbMR54aUMqY/NGgup4ycDllwBBlh3eBVixO4EF0UkMqtClgbxcU4ROGz0hDMyICA7UarEJPrdJOGomfR0j9/jlFF8OaUNmAxZ0X+HHk/h84PlqM9sPEFHeXczw3XqaySYcOON16tRGksmAPjrp7U9+ORpjMvzyU1gLOUIiv4=
+	t=1789227586; cv=none; b=paihgLJgExwMUa3WC23yw+2Tf6busSRMWWuWinxw7XIHTMOOSnM2g6iGA9i77iay/oVm6jSIAk92e9YL8teALWDkuiPFeUrVfd7ZrsKvv0o6bjRzGHTRz1prv6yzrcnnm8Y31VnPb+GqW0Mrd1ZO7NWxrOhhZbces/cBI8PIHzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227581; c=relaxed/simple;
-	bh=7hqqMktctCr+wm+D1PVMk8B6QGp2kA47/W1be48mXYU=;
+	s=arc-20240116; t=1789227586; c=relaxed/simple;
+	bh=FTptnRdEQ6zOmEjQdy5JtvSvLQPoNmmiRA5J5jKXXZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYjupK4kOVEDnb9D8wIj3MBtJD8QUVRqVlyTEsd7uELIv+YRc0w0+Ug0QhI+JRpaLRT4p+H6r6Yr4KcqS4tSlG32sSLrBHbdqAqRrwyRHk3CpWGHTyhsqfcBuO+5oXPl6n9E3192un3zpNZLX1UBili7eWpNn82y9k+nXyByHm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVcrPkLn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=REuRf0KJwsDRd3jP4cGWQRnhaPEpP14AUeBtfpfC9dC/xS+Ep/2HEGV8lQpzF86MIiVpzaWmr4MNUR5vOC2ttQ0CGIuENbTIhLxJ4gkrK1Httjsmpj7bzHSFY1KOZka9YQr2fyhO5ivXrqM110j2X7+8+Ob/s54A4mKLMjV/gpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXdcUdXU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVcrPkLn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22E71F000FF;
-	Sat, 12 Sep 2026 15:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXdcUdXU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226F61F000FF;
+	Sat, 12 Sep 2026 15:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227580;
-	bh=3TKr0GhCep/kCpX0eLPmiHzXhfiqP0pzOSfhHzIvaXE=;
+	s=korg; t=1789227585;
+	bh=+YADl1hdcekVtPP+mEQkh7SFcLKqFP2vBCBTxWs65LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVcrPkLnvrpYbpZFRCbPH7UYalohRrXqNb6QyEnRmaIS9YzIQ9lIU1FtQx4IYaznr
-	 q6jQxdYnztimVp0gcUzmPsT2FpWQL6ZrDB50OKmu6n+a/2D77I8cZdj87LWp9PuFPg
-	 da0ta/yLCxIY9NP8JCIoSExNxMxao4giAND6pIsc=
+	b=nXdcUdXUhaJvYqMIfh4FOVSDB9KLOqEa20qpgy0IC1D4Q6DxCUI3vzciny73a436n
+	 niVsyZE7APwhqesfRCsj9+J5kiyIEEUSyEtYnIwTL5pCtnUt8NWiu79RhkkCvBoeNv
+	 /au2/dKU1QXqnsLzGbFgg7f+gg1pmU4EdtXI0GYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.1 0193/1191] iommu/vt-d: Fix no_iommu to disable platform opt-in
-Date: Sat, 12 Sep 2026 08:48:41 +0200
-Message-ID: <20260912065552.549858936@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 0211/1191] NTB: ntb_transport: Reject oversized TX buffers
+Date: Sat, 12 Sep 2026 08:48:59 +0200
+Message-ID: <20260912065552.949308027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,64 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Tian <kevin.tian@intel.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 219cc978d69ce9b538d0d73936c569d4ca5b0a24 upstream.
+commit a4f2387db6f1cc2f03abba7f3a6807ad61e26ff7 upstream.
 
-If user explicitly requests to disable iommu (via "iommu=off" or
-"intel_iommu=off"), there is no reason to force enabling it due
-to platform opt-in (for external-facing devices). User should be
-aware of any security implication of doing so.
+ntb_process_tx() handles an oversized buffer by calling tx_handler()
+with a NULL data pointer and returning success. ntb_netdev therefore
+neither frees the skb in its completion callback nor takes its enqueue
+error path, leaking it.
 
-"intel_iommu=off" implements this policy by setting no_platform_optin
-to skip platform opt-in in platform_optin_force_iommu().
+Reject oversized buffers in ntb_transport_tx_enqueue() before acquiring
+a queue entry and return -EMSGSIZE. The caller retains ownership of the
+buffer, and the preceding netdev patch frees the skb when enqueue
+returns this permanent error.
 
-However, "iommu=off" (no_iommu=1) doesn't set no_platform_optin
-hence is broken in this aspect:
-
-  - detect_intel_iommu() doesn't request ACS if no_iommu=1
-  - platform_optin_force_iommu() forces iommu on if external-facing
-    devices exist and no_platform_optin is not set
-
-This leads to a bad configuration with ACS disabled while DMA
-remapping is enabled.
-
-Instead of setting no_platform_optin (will soon be removed) for
-no_iommu=1, directly check no_iommu in platform_optin_force_iommu().
-
-Fixes: 89a6079df791 ("iommu/vt-d: Force IOMMU on for platform opt in hint")
+Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260817053519.4135287-5-den@valinux.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/ntb/ntb_transport.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3883,10 +3883,11 @@ static inline bool has_external_pci(void
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1924,15 +1924,6 @@ static int ntb_process_tx(struct ntb_tra
+ 		return -EAGAIN;
+ 	}
  
- static int __init platform_optin_force_iommu(void)
- {
--	if (!dmar_platform_optin() || no_platform_optin || !has_external_pci())
-+	if (no_iommu || !dmar_platform_optin() || no_platform_optin ||
-+	    !has_external_pci())
- 		return 0;
+-	if (entry->len > qp->tx_max_frame - sizeof(struct ntb_payload_header)) {
+-		if (qp->tx_handler)
+-			qp->tx_handler(qp, qp->cb_data, NULL, -EIO);
+-
+-		ntb_list_add(&qp->ntb_tx_free_q_lock, &entry->entry,
+-			     &qp->tx_free_q);
+-		return 0;
+-	}
+-
+ 	ntb_async_tx(qp, entry);
  
--	if (no_iommu || dmar_disabled)
-+	if (dmar_disabled)
- 		pr_info("Intel-IOMMU force enabled due to platform opt in\n");
+ 	qp->tx_index++;
+@@ -2307,6 +2298,9 @@ int ntb_transport_tx_enqueue(struct ntb_
+ 	if (!qp->link_is_up)
+ 		return -ENOLINK;
  
- 	/*
-@@ -3897,7 +3898,6 @@ static int __init platform_optin_force_i
- 		iommu_set_default_passthrough(false);
- 
- 	dmar_disabled = 0;
--	no_iommu = 0;
- 
- 	return 1;
- }
++	if (len > qp->tx_max_frame - sizeof(struct ntb_payload_header))
++		return -EMSGSIZE;
++
+ 	entry = ntb_list_rm(&qp->ntb_tx_free_q_lock, &qp->tx_free_q);
+ 	if (!entry) {
+ 		qp->tx_err_no_buf++;
 
 
