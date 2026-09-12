@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A163047CA92;
-	Sat, 12 Sep 2026 13:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F7547988D;
+	Sat, 12 Sep 2026 13:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218124; cv=none; b=aliLHwqRyyTzfb8zzBv+92a/RFWnn8nPw5cm1J7pMDEA+vZRYto4ScVZYEJGb6hKLZrzJF5FMcVouaxpztF0wsuaTiAXDNJOolhBxJ39G5KhDinShsH4YCLpg3b+1d65V/OR7MFKUDqk7WaUfJ+0IZPJcNhRU8yKUvGOHIq2VqE=
+	t=1789218130; cv=none; b=bzprPgScu5jqnTiS9LyPss+xRtgqqZasdCfyLw9N+22NyPjYdwxB8yYnv3TBDScH8zMr5J7CVFnsnqzHlt2Py2peA5jtzw2hNH18TIy/IIP58TQwwie8O5D7tO4VjYm5uK1pyzjrL/H9HbHfY223ckm4F1vXuno7/E/u9HRb6Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218124; c=relaxed/simple;
-	bh=rXBeOp/ZeOJNC0Dj/YO44axJsb5vJDKoMczxbOaO2os=;
+	s=arc-20240116; t=1789218130; c=relaxed/simple;
+	bh=jDF6vALHapno91uUjpXGquwjDRca46Rvhc/yogmqBy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azBS+0KVDMMhI0l9akO5lT8AeuMBK0f4J2VgMqqXzrYi4b3rnw/eP45aLViOF5Uo/tzhW8AaO/SLFY8MKxiWxM0jHNtBMoWXvdqcTx0gNz3s4B86LxXp9nnJ1CYR3gdX3+cJqs2lnXJHM50DFEejn+yLon8fYxRbVl6m7RDb72U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mU5BKdZK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I7DEhXvtMmHS/nauxRia3xf7K19kkA9JqvZJaTJ5Nj4c/Pf/PA7KO7Kx9QfLu+BUt11wRSaBBdKZp9ztVTbV1UOBEs9D/DJSVKinT3VoVPcDeoBuh6cWmy7AbS3kpklRtiXpTb+rfPyoIHYQtJXu1ayox4EXU05L5qyeLhZHy6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yACgH7np; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mU5BKdZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B23E1F000FF;
-	Sat, 12 Sep 2026 13:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yACgH7np"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B89B1F000FF;
+	Sat, 12 Sep 2026 13:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218123;
-	bh=0h308MZ3lRO1n9+v6vKyl7krzhfz/2+opzLfT2i1UnI=;
+	s=korg; t=1789218128;
+	bh=6wosZp+7T/Ozpv2hW+IKP6Dir/HFMj7Jqo3kqY9MJfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mU5BKdZKVKBVw/fg5Ty1/erSH9no2qhkR9qa37MiH35BAEPCh+Ct7LDZ9xqctKbTP
-	 dtHCNg8FDMBbCpS0iN3MePqYW1PhIntiO8PtX6V2hxkhpnGmCaV1WRcCTdUXnksICF
-	 fTE+211/yUzYpnx9IQo1GtDpYr2NJi96NSowSeVo=
+	b=yACgH7np86MICY5bf56B/pYTlg741tgUJ7/lz4OqZBn8QiALbjV/HQrMVQQEheDUK
+	 uL3HvxPYNrBK/F4/LeGVJP95MGh3Ffs/MKkLRbzFXHFf8jDXRIPxyzzBwKqVliVWfB
+	 q11kSJ/thmUu6+SJwDVZgnh2m2oCvGKZVwrlKkfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yuho Choi <dbgh9129@gmail.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1081/1376] ubi: Fix rollback for explicit UBI device numbers
-Date: Sat, 12 Sep 2026 08:58:27 +0200
-Message-ID: <20260912065631.654717875@linuxfoundation.org>
+Subject: [PATCH 6.12 1082/1376] mtd: ubi: Release device reference on busy detach
+Date: Sat, 12 Sep 2026 08:58:28 +0200
+Message-ID: <20260912065631.677165860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,45 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 5b0a6b554e12a97f9771a9a9f4ea1f5457373c73 ]
+[ Upstream commit 31dd710cd84d5dd63c49f640d3a9f36c9699ca95 ]
 
-ubi_init_attach() rolls back module initialization failures by scanning
-ubi_devices[0..i-1], where i is the mtd= parameter index. That assumes
-the parameter index matches the UBI device number.
+ubi_detach_mtd_dev() obtains a device reference through ubi_get_device()
+before checking whether the UBI device is busy. The busy return path drops
+ubi->ref_count but leaves the device reference held, so the device object
+cannot be released after a later detach.
 
-That assumption is not true when mtd= specifies an explicit ubi_num. A
-successfully attached device can be stored at a higher ubi_devices[]
-slot, and a later failure can miss it during rollback.
+Drop the device reference before returning -EBUSY.
 
-Scan the full ubi_devices[] array and detach by the actual array index,
-matching the way UBI devices are stored.
-
-Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
+Fixes: 7e84c961b2eb ("mtd: ubi: introduce pre-removal notification for UBI volumes")
 Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/ubi/build.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index ef6a22f372f95..d8d3317f9763a 100644
+index d8d3317f9763a..3b30c80cad43f 100644
 --- a/drivers/mtd/ubi/build.c
 +++ b/drivers/mtd/ubi/build.c
-@@ -1317,10 +1317,10 @@ static int __init ubi_init_attach(void)
- 	return 0;
- 
- out_detach:
--	for (k = 0; k < i; k++)
-+	for (k = 0; k < UBI_MAX_DEVICES; k++)
- 		if (ubi_devices[k]) {
- 			mutex_lock(&ubi_devices_mutex);
--			ubi_detach_mtd_dev(ubi_devices[k]->ubi_num, 1);
-+			ubi_detach_mtd_dev(k, 1);
- 			mutex_unlock(&ubi_devices_mutex);
+@@ -1105,6 +1105,7 @@ int ubi_detach_mtd_dev(int ubi_num, int anyway)
+ 	ubi->ref_count -= 1;
+ 	if (ubi->ref_count) {
+ 		if (!anyway) {
++			put_device(&ubi->dev);
+ 			spin_unlock(&ubi_devices_lock);
+ 			return -EBUSY;
  		}
- 	return err;
 -- 
 2.53.0
 
