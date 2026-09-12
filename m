@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3511F2DB788;
-	Sat, 12 Sep 2026 14:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035EB2F8EAE;
+	Sat, 12 Sep 2026 14:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221778; cv=none; b=Cyd+JOxJsCKBq1ROA6T/so30PCSHQadMirPuDS19jaHlK6i/WKIN7tRx4MI65Y/6x8pauVtZy8iCv31Q8abfb+hz0PUHFtzs7nt8+hXuRZouzqA1inbztlxx6H0hPKG5KpV7WHuhEPEhmwwiqdBs+Jzs1JbcrtZD+2JaINiklQg=
+	t=1789221783; cv=none; b=jJcb5TVI/CmgJq4pTJ6/5yAbpkHAOZaWXtwoZhoTVnsMNPaW8Gi+qRM290fomZmK2/+TJlE9127avAFfB515HQMgoJSg/NHd8cjR1Zzps7sOnm1i30b1LbE8FLQBD9q/9pDZCOXQgvtnho9NU8TSOhPlGKzXstmx0ParCmCVNII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221778; c=relaxed/simple;
-	bh=WDkouc5oIVEeZEhPnNAv/EG0YG2rwchhYnO3YGqctwA=;
+	s=arc-20240116; t=1789221783; c=relaxed/simple;
+	bh=o6oO4C6CYgGtWG1dHH2pBHA5cDB1rnd1d/Bq5cKMPjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d15YYTom593q2SEnjONWY7AcxQVqjPB0nTjRNNxRw8DqW+yzZTlbBl2hky5zNw8HFP0l5sv455yMoM6vYOoKp/cs4qZM1HI/0FpTPvN1nN6K1qF83Y1AaKs6LWRtHp/kLS7pKErVSP7Xpg0s47VB36GeGnyCjSm13uFaDe6sELA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gpzcr5U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=orOulpLPd+AvhgN++JtiaBn9oDJZTcZdKuqVgtut3QcAwPwQ2MgVP6mCTY5+LUXnPS2/yCDgQ8d5oYrSxS4f/fr+edScg4gxTXdKSV4aUlFlepYvSXmANQMatvkzOS5P2tp9IAUJXOiil5TN/O8aQa0jDxwrOpRnSankqUyBbsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ya0DwR1y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gpzcr5U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6C11F000FF;
-	Sat, 12 Sep 2026 14:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ya0DwR1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35511F00898;
+	Sat, 12 Sep 2026 14:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221777;
-	bh=7jsSINMZYqOTsHrDN/Yvl2CLIkSFxopIwLwDZilxYfE=;
+	s=korg; t=1789221781;
+	bh=N+Ijg6XVu4Mfqedv9ohem8WtHe/t2g5Pt8oRKWBiUG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0gpzcr5UY0jFjzmJKJipNm1JN0Mf/P3Bs4aBDUuSlLC6/hH53dFAQSpDmXH0y+J8t
-	 My59L37fGaPYy0FRRx9gf8z4Xp7F6iDV2d7nDzyyV+R2Z57sFCts3kq377DRYpJ6nt
-	 KDTtZrk+g1YeivF/AW9GRenB6Nd20/ZYlciMvLkk=
+	b=Ya0DwR1yKFeTB4FjsB2kjvC/gD7rw9ZeFBVyFeQBhecF2Ai+Q1bEmhi/aebL+vLye
+	 7myOC1X7XMva23GOiNP61uBzlFWvpm72Z+pexgRu+a0hc+vS/cDGloGDYPZfnYQLzI
+	 +FsKPiyTAypYxFF+KjEXR7+1zon8qOAGFZJB3cPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biren Pandya <birenpandya@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.6 0453/1424] media: i2c: ov7740: fix use-after-destroy in remove
-Date: Sat, 12 Sep 2026 08:48:05 +0200
-Message-ID: <20260912065617.429087487@linuxfoundation.org>
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 0454/1424] media: meson: vdec: fix NULL pointer deref in vdec_try_fmt_common
+Date: Sat, 12 Sep 2026 08:48:06 +0200
+Message-ID: <20260912065617.451124224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-commit 5d1b3dea5a44124bab6c14a2d71b977dabed54e7 upstream.
+commit 20aa934ace6917262ff579a73ec018d06a7bad1c upstream.
 
-The ov7740_remove() function had a severe teardown order bug where it
-destroyed the driver's mutex before freeing the V4L2 control handler
-which relies on that mutex, leading to a use-after-destroy kernel panic.
-Furthermore, the driver explicitly called v4l2_ctrl_handler_free() and
-mutex_destroy() sequentially, but then called ov7740_free_controls()
-which invokes both of them a second time, resulting in a double-free.
+When VIDIOC_TRY_FMT is called with an unsupported pixel format on the
+OUTPUT queue, vdec_try_fmt_common() falls back to V4L2_PIX_FMT_MPEG2.
+However, if a distro has locally patched MPEG2 support out (as it has
+been broken for some time) the platform format table does not contain
+MPEG2 so find_format() returns NULL and the subsequent dereference of
+fmt_out->max_width triggers a NULL pointer dereference.
 
-This patch fixes the issue by unregistering the subdevice first, and
-relying exclusively on ov7740_free_controls() to safely tear down the
-mutex and control handler in the correct order.
+Fix this by falling back to the first format in the platform's format
+array instead of hardcoding V4L2_PIX_FMT_MPEG2. This is always valid
+since every platform defines at least one format.
 
-Fixes: 39c5c4471b8d ("media: i2c: Add the ov7740 image sensor driver")
+Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov7740.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/staging/media/meson/vdec/vdec.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/ov7740.c
-+++ b/drivers/media/i2c/ov7740.c
-@@ -1158,10 +1158,8 @@ static void ov7740_remove(struct i2c_cli
- 	struct v4l2_subdev *sd = i2c_get_clientdata(client);
- 	struct ov7740 *ov7740 = container_of(sd, struct ov7740, subdev);
- 
--	mutex_destroy(&ov7740->mutex);
--	v4l2_ctrl_handler_free(ov7740->subdev.ctrl_handler);
--	media_entity_cleanup(&ov7740->subdev.entity);
- 	v4l2_async_unregister_subdev(sd);
-+	media_entity_cleanup(&ov7740->subdev.entity);
- 	ov7740_free_controls(ov7740);
- 
- 	pm_runtime_get_sync(&client->dev);
+--- a/drivers/staging/media/meson/vdec/vdec.c
++++ b/drivers/staging/media/meson/vdec/vdec.c
+@@ -505,8 +505,8 @@ vdec_try_fmt_common(struct amvdec_sessio
+ 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+ 		fmt_out = find_format(fmts, size, pixmp->pixelformat);
+ 		if (!fmt_out) {
+-			pixmp->pixelformat = V4L2_PIX_FMT_MPEG2;
+-			fmt_out = find_format(fmts, size, pixmp->pixelformat);
++			pixmp->pixelformat = fmts[0].pixfmt;
++			fmt_out = &fmts[0];
+ 		}
+ 		break;
+ 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
 
 
