@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98DF3438BE;
-	Sat, 12 Sep 2026 14:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A59A3328FC;
+	Sat, 12 Sep 2026 14:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223166; cv=none; b=ZYPIjrtFbjC7gjYm3Ft7zIMnqRCdad6wnas3zYFy6v4rbX9ptc80kCHr9E84XeUj3LVXi+8mjG+OO0AhPBF1ghmTHeaeKfGdxpDmU1nK26r/1s/GVQtT4znQV4FxJODR47qydWGm+6N548belX+G13qVKJucFGfPYRu7EX1GPlA=
+	t=1789223171; cv=none; b=dk0SyhY7KWhu9N6y12zOydmhtYOLGFqRCzydXLthEg35sdQWBePk7TNUsKqPzufjUR9kIkbEYPy1rJvWYUVn4P12J+0g49rZWn3ZtyXLZuBTRoXbLr1c+inzgFuUR19ZcY+OeypNo6Td/VMmr40q3gkqrzSq9Y1TgA8qF6YegWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223166; c=relaxed/simple;
-	bh=82tZKz7lkdqckNNDeW2AEGCUuOP3ng7RJT/gnLixMKs=;
+	s=arc-20240116; t=1789223171; c=relaxed/simple;
+	bh=XgAVSRcKBLFKVkSa+ftKnWR4Kl1wQsbEIy+eiThUTIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJkiaVX110G0LOWsxkT/0A6do4ciGbowVCfrHYaeEoY8aYWG/7XnL+tG25gzuxnpPkROH8X5YDbT5o6ibUEWXveEZRfxDEcXrHUj2dEjpZjXy08bQvm7s7yANOCnqh0O4cnVMEID6LAHGEdpa8OLzMO4aZuiczNdNwiR9nH0Rn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Jcc3az2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ssG+8si8v0U4WbyUZ47W6KKacRtNNgC37lGSDPtfggS4C6fVLyGI/tYWky2r8pc3DY41UBIx3E90GgdwjrlPJAq1//V+dEe8na1zJ9/nOjapBZdxZPCUwCGYJwuR//RoMDoUuWx3Ogsu3Fp8yvDlzPzXU/d+nBvJIqfqpcs14xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1tIg0mi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Jcc3az2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C96F1F000FF;
-	Sat, 12 Sep 2026 14:26:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1tIg0mi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26EB1F000FF;
+	Sat, 12 Sep 2026 14:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223164;
-	bh=4Ph9GsgjffY05WAE+0oq+JGTdnF9nrI/9lNDu4uKTXQ=;
+	s=korg; t=1789223169;
+	bh=4bAMq2Ks2itj67nrTfYqoRVgZO4rgnauziNrQqGjD+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Jcc3az2WDWf4FjYoOcg5IxGUVIrOoU+te7ZRh4Q3RO8OoS9xD26YAwufQTWBXQ7d
-	 rWb57d390jf2X11VKCgc01jQdO08DNSKeqZQjWkCP9EbMcX45sfaRC0Q/IhhYIqbtz
-	 FF+cj1k+uxj5Ayxby3EGU2c+MFYMkRwABRu2a7oU=
+	b=q1tIg0miCnGpsYXeSlpcDDXZl2oOBmNsLQQKhDVCFj8ITlC6sUAxymwfYWvt5U/rQ
+	 eNzCGXGrDxrMF/DSURHXTETdeDBBUmcVs161FXDgjx6Inqr9RRrIyw1ir9sW3IADdA
+	 6/2elErsMd3hTRrbG5y7+rEg+XrlVjjy57+4+TQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jan Kara <jack@suse.cz>,
+	Sebastian Reichel <sre@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0735/1424] isofs: fix out-of-bounds page array access on empty zisofs block
-Date: Sat, 12 Sep 2026 08:52:47 +0200
-Message-ID: <20260912065623.757497010@linuxfoundation.org>
+Subject: [PATCH 6.6 0736/1424] media: v4l: async: Drop useless list move operation
+Date: Sat, 12 Sep 2026 08:52:48 +0200
+Message-ID: <20260912065623.780236812@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,71 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Sebastian Reichel <sre@kernel.org>
 
-[ Upstream commit 68d4d3e78150c7ed7d1195af63ad1e6ace30c661 ]
+[ Upstream commit bec3db03911bd85da29c1c8ee556162153002c9a ]
 
-zisofs_uncompress_block()'s empty-block fast path returns
-pcount << PAGE_SHIFT, ignoring the incoming poffset, unlike the
-decompression path which returns bytes produced relative to poffset.
-zisofs_fill_pages() uses that return to advance its page cursor, so when
-the zisofs block size is below PAGE_SIZE and a sub-page block leaves
-poffset partway into a page, a following empty block over-counts and
-advances pages[] one element past its end, after which
-"if (poffset && *pages)" reads pages[1] out of bounds.  rock.c only
-rejects a block-size shift > 17, so a crafted "ZF" Rock Ridge record can
-set it below PAGE_SHIFT; the bug is reached by an ordinary read() of a
-compressed file on such a mounted ISO9660 image.
+v4l2_async_unbind_subdev_one(), which is called in the line
+following the list_move() operation contains list_move_tail()
+for the same entry and overrides anything list_move() did.
+Thus it can be removed.
 
-Return the byte count relative to poffset and zero only
-[poffset, PAGE_SIZE) of the first page, matching the decompression path.
-The page-aligned case (poffset == 0) is unaffected.
-
-  BUG: KASAN: slab-out-of-bounds in zisofs_read_folio (fs/isofs/compress.c:290)
-  Read of size 8 at addr ffff88800f5eac48 by task exploit/142
-   zisofs_read_folio (fs/isofs/compress.c:290)
-   read_pages (mm/readahead.c:184)
-   ...
-   filemap_read (mm/filemap.c:2814)
-   vfs_read (fs/read_write.c:574)
-   __x64_sys_pread64 (fs/read_write.c:769)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  The buggy address is located 0 bytes to the right of the
-  allocated 8-byte region in the kmalloc-8 cache
-
-Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260712234150.3213467-1-xmei5@asu.edu
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Sebastian Reichel <sre@kernel.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 4e72f13d58c4 ("media: v4l2-async: Unregister sub-device if asc_list is empty")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/compress.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/v4l2-core/v4l2-async.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
-index c4da3f634b92e..b94b56211b5ce 100644
---- a/fs/isofs/compress.c
-+++ b/fs/isofs/compress.c
-@@ -65,12 +65,14 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
- 	/* Empty block? */
- 	if (block_size == 0) {
- 		for ( i = 0 ; i < pcount ; i++ ) {
-+			unsigned int off = i ? 0 : poffset;
-+
- 			if (!pages[i])
- 				continue;
--			memzero_page(pages[i], 0, PAGE_SIZE);
-+			memzero_page(pages[i], off, PAGE_SIZE - off);
- 			SetPageUptodate(pages[i]);
+diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
+index 23e4944e2e26c..76fd95c2a4de8 100644
+--- a/drivers/media/v4l2-core/v4l2-async.c
++++ b/drivers/media/v4l2-core/v4l2-async.c
+@@ -895,9 +895,6 @@ void v4l2_async_unregister_subdev(struct v4l2_subdev *sd)
+ 	if (sd->asc_list.next) {
+ 		list_for_each_entry_safe(asc, asc_tmp, &sd->asc_list,
+ 					 asc_subdev_entry) {
+-			list_move(&asc->asc_entry,
+-				  &asc->notifier->waiting_list);
+-
+ 			v4l2_async_unbind_subdev_one(asc->notifier, asc);
  		}
--		return ((loff_t)pcount) << PAGE_SHIFT;
-+		return (((loff_t)pcount) << PAGE_SHIFT) - poffset;
  	}
- 
- 	/* Because zlib is not thread-safe, do all the I/O at the top. */
 -- 
 2.53.0
 
