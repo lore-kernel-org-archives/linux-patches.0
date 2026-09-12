@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F054BEE24;
-	Sat, 12 Sep 2026 14:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A2A36EAB8;
+	Sat, 12 Sep 2026 14:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225096; cv=none; b=n1OGAVtXWItjxP/tsUz+rY0wwaqoZ46FxEwgupFRQcP+qYKwiV4WWdyloIFtpI4fpyDfiXkHf0W/Em3WRd6noRB2S2NJ8emLtXAdyqfPYr9K83o67rCP2UrTvd4TWzaz/gHfAZmvPtXSAodsTtXUeOpT9yEqjqti7L1QyOkyoLs=
+	t=1789225101; cv=none; b=bgStRB/mX7GeHoMGfKAhawSQi9QMnH5U1K/mrVXLy2TGvNJJkvP7AVyXzI+730OhkYPK2j3I20Z7UlilO4KoGrDKpMoak5vLeNZ/r7QwTszR1v0T8V48SYg/OSivkC5LPMjfFy3osDnOQ7JS0h6Dq8LVRtQ3lwxWSN1oA4Yjpx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225096; c=relaxed/simple;
-	bh=XzkceJtUA1UMUrU7/0eilrg9Q2zOqOU0oyXw5aeHTT0=;
+	s=arc-20240116; t=1789225101; c=relaxed/simple;
+	bh=Rcc79a0WFRVDZyfJdbBWdiqaHe4PDwexFIuJHaE9mTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eghglazWvkPh+1oCxHkn2hOFeuaIoQLSh35YFOHg7T4CbvV9ujUYLSjEGvkWbdbgnS/05jxuSvNDygfs5eSO6+0p5DDX+tLmX8P8d9X4X+VF1dRystdqWyJxVcBMcaWLoaJ0UYarw1lxdIwb/nxrdFARONwip2XUmyHrqS/lZwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCcyPj75; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GF/rVXSu/lPYd+6Hc5QC5SkztHKEa3vZ+VrBvw6mW2+FYVTcq3O94SpnrWDB/3kJa+wZjmIIYXVGXLYLZUnFC2MiaVX2JIuu95+lQ4QXw8Sbhr/8sVmy4hkEEq/kWLpi78zQbmTJgY58t0/0zXZ5sl5YwE3paaR4uFkFL10e1Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxXLBti7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCcyPj75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425821F000FF;
-	Sat, 12 Sep 2026 14:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxXLBti7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF2A1F000FF;
+	Sat, 12 Sep 2026 14:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225095;
-	bh=u2qpZplxHra6SI7Y8xk5cdJRhGf7Z4DDP6TVaNkBu1k=;
+	s=korg; t=1789225100;
+	bh=ooBSxmBzeQtYomVPLu1XbG8q+JF6mgSaGpG3OYK1fyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UCcyPj75/Jm3aqIFCeYYdajkbMflLSQSzH+jB97+PDz/yy+HMdNkzs2JMPiEpGXlR
-	 boHtlvC7T6og8iqjThYJ1sL5ymCpq88fTi4vBkcrjUdCeItI8A8OEGzoeCzHs57Sgu
-	 YrVtxaJP/egN1GngwQxRmwrqKqs8mXUcd68gu5Os=
+	b=MxXLBti7ymd5pgT0CjIAOS6AltQp0VqdGPQbByWoxZrSFDn0O54yclivy8HQ5Da6u
+	 yLVVT8xhKAEIt1hqP3rtJqXbJxvgQda61KdVp4CatblfDj+XTZf+xjSHflw+rdt1LK
+	 ipfNmKaRATkx3fTs/3pmjQ47XHnerVQNyIhnvKg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Meghana Malladi <m-malladi@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1127/1424] Bluetooth: btintel: Fix diagnostics event detection
-Date: Sat, 12 Sep 2026 08:59:19 +0200
-Message-ID: <20260912065632.537773009@linuxfoundation.org>
+Subject: [PATCH 6.6 1092/1424] arm64: dts: ti: k3-am64: Fix MDIO clock reference for ICSSG0 node
+Date: Sat, 12 Sep 2026 08:58:44 +0200
+Message-ID: <20260912065631.762354309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit ad0e7ac7da9a9a0095570bd6add3e27f259de104 ]
+[ Upstream commit 197df050a10fe216971b45a79f07195c86a02236 ]
 
-For a diagnostics VSE, diagnostics_hdr[] sits at the start of the event
-payload, skb->data[2], but btintel_recv_event() wrongly guards its
-memcmp with @len, which is measured from skb->data[3] for the earlier
-INTEL_BOOTLOADER check.
+MDIO clock index changed from 62:3 to 81:0 to match proper clock
+definition in the SoC device tree. Clock Id 81:0 belongs to ICSSG0
+core clock, where as 62 belongs to EQEP2 device.
 
-Fix by using (@len + 1) instead, which ==
-(skb->len - HCI_EVENT_HDR_SIZE) exactly.
+See: https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/am64x/clocks.html
 
-Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: c9087e3898a1d0 ("arm64: dts: ti: k3-am64-main: Add ICSSG nodes")
+Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Link: https://patch.msgid.link/20260706092229.82674-1-m-malladi@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 2 +-
+ arch/arm64/boot/dts/ti/k3-am64-main.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 4784da07dd8a1..43ddde0a4d48c 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -2983,7 +2983,7 @@ int btintel_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
- 		/* Handle all diagnostics events separately. May still call
- 		 * hci_recv_frame.
- 		 */
--		if (len >= sizeof(diagnostics_hdr) &&
-+		if (len + 1 >= sizeof(diagnostics_hdr) &&
- 		    memcmp(&skb->data[2], diagnostics_hdr,
- 			   sizeof(diagnostics_hdr)) == 0) {
- 			return btintel_diagnostics(hdev, skb);
+diff --git a/arch/arm64/boot/dts/ti/k3-am64-main.dtsi b/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
+index 064eb062bb54a..67a7336053d9e 100644
+--- a/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
+@@ -1316,7 +1316,7 @@ tx_pru0_1: txpru@c000 {
+ 		icssg0_mdio: mdio@32400 {
+ 			compatible = "ti,davinci_mdio";
+ 			reg = <0x32400 0x100>;
+-			clocks = <&k3_clks 62 3>;
++			clocks = <&k3_clks 81 0>;
+ 			clock-names = "fck";
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
 -- 
 2.53.0
 
