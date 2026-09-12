@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D22349CE2;
-	Sat, 12 Sep 2026 19:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E778331203;
+	Sat, 12 Sep 2026 19:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242514; cv=none; b=SoVpR3OYhmS/YA2LuNgjyW95CNiQ9V9moJ0MUEtRG52PHRYgPMvTSb5Y42W3LrHCKYhZnWweBCrmwbsd5wngfM1DzTwwY8zWxJ+t1sutCgFS2HJ5O6m+t8Q0+1XYq0LYNpTvmL2Sbx8V/hRnegODiGYHpZmkaGkDGeuBKqlOig4=
+	t=1789242514; cv=none; b=kB5/6Gl2Dh2GK+onYNlyQTPpp45QgH4STnqt5SsU8mc+VsLZQMZgNUc4qmDqWFrJDkPuiDWayHvi6YFTg78/Ad3n+vDe4CeT4gi/Jum1iJkphz/TLMzt8vvFd4rvk0wuVBrWEXbYiGogtMzWTyI06RPyvZvUNfGxOQex56tC4Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789242514; c=relaxed/simple;
-	bh=5gRcBRqetPjVw/XNlcPhBkbhLPLb28K1W2+ayqZCH/8=;
+	bh=Lr1OsRwAhZC3p5809GSNrKOgsM9Ut234V5fs77q1PEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dm0MMImadUKeqB/ZCY/reudO1WHgpQoEM2LP8jgrnAYuVnzlsyFYn5P9/KQcGsIQLQSzF9zK4Jphfel5WrcLbKwCUZl3mKoC4miXeaX+km9sjP++zpqOb5Y95lc3XWQFG8o1SvQLcEpV5XIkglqCmAi6Tyn0suLQHRRBt7jWbR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDHtkEt9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jVQwrfxXodqGbxcRPf+znGC/9A6C2bpNkUs0oAK8Y23Zh9LCQdCrNRx10n1bT9oYbFtwUP25buJycFiAU5orpvJjeqtI52QGfCN+ec45fIA8tiLiF6HxTxoYME52/DIFuhszoOYT22SIlPiPtRUYRNcXQGWg/ABLRx/HGIq1Ua8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqHo2Pzw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDHtkEt9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEDE1F00893;
-	Sat, 12 Sep 2026 19:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqHo2Pzw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A8D1F000FF;
+	Sat, 12 Sep 2026 19:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242512;
-	bh=0j8D9CHxEUjad3ucTV5kKxt8Gd7Q/yZTWxrnx/oBecs=;
+	s=korg; t=1789242510;
+	bh=lfUY0GfpMetbYjoj0u211mA/5WXDJGrBbcZG9njj3h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GDHtkEt9aPq2amwiIkNeHxNSG7rwA4hdtbM5mzsx+zOR+95aFILBCU2uv7rkkc4Yj
-	 tkkT6/LM84J0WhJszVNF0XRAere87IOLqNbV6EpXKYk9TAmECzwNFl8OJeVlseZ+fy
-	 d/BvaoQmRb8f9ihGtWP7snyeUIzmOLo+nZ/Wvfnk=
+	b=cqHo2PzwtiYwxiHbRmoGsX1j1RB87zgQ/CovLx2ploaDmuyZ20lOmSmmjGbDIvdOA
+	 RJvTwGF7fUKtq3xnreJCILqrURMTVyalwRxOcouzrIsbb1vFXH/kHCsuiZtbaV7zwv
+	 Kb6v3XsTf6iTFc9XhxFDk7j7SY0eSrc5iCfwnKZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 423/798] RDMA/ipoib: Drain RCU callbacks during module teardown
-Date: Sat, 12 Sep 2026 09:00:51 +0200
-Message-ID: <20260912065526.842900359@linuxfoundation.org>
+Subject: [PATCH 5.10 377/798] nvmet-rdma: factor out response resource cleanup
+Date: Sat, 12 Sep 2026 09:00:05 +0200
+Message-ID: <20260912065525.797325476@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,48 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit 31b7c700670830a0e8a4cdcd451c88a13cc5dc48 ]
+[ Upstream commit 90096175473f7c86e39c3f74f10343f965f5a05d ]
 
-IPoIB reclamation completions can be signaled from inside an RCU callback.
-Teardown can wake before the callback returns and unload ib_ipoib while its
-code is still executing.
+Move the RDMA read/write context teardown and the request SGL freeing
+out of nvmet_rdma_release_rsp() into a new helper function
+nvmet_rdma_free_rsp_resources().
 
-Client registration failure can also remove already-added devices and queue
-callbacks. Wait after client and workqueue teardown.
+This is a refactoring with no functional change, in preparation for the
+following patch that uses nvmet_rdma_free_rsp_resources().
 
-Fixes: b63b70d87741 ("IPoIB: Use a private hash table for path lookup in xmit path")
-Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Closes: https://lore.kernel.org/linux-rdma/20260708092316.Qb39F_B0@linutronix.de/
-Link: https://patch.msgid.link/20260709-unload-rcu-v1-3-fccd27211e5a@nvidia.com
-Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 0114dd303b37 ("nvmet-rdma: fix response resource leak on queue teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/rdma.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-index 35322d23fc340..6e61c256bb746 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-@@ -2663,6 +2663,7 @@ static int __init ipoib_init_module(void)
- err_sa:
- 	ib_sa_unregister_client(&ipoib_sa_client);
- 	destroy_workqueue(ipoib_workqueue);
-+	rcu_barrier();
- 
- err_fs:
- 	ipoib_unregister_debugfs();
-@@ -2680,6 +2681,7 @@ static void __exit ipoib_cleanup_module(void)
- 	ib_sa_unregister_client(&ipoib_sa_client);
- 	ipoib_unregister_debugfs();
- 	destroy_workqueue(ipoib_workqueue);
-+	rcu_barrier();
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index f3643cad20584..5ce6aa4103d89 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -656,18 +656,25 @@ static void nvmet_rdma_rw_ctx_destroy(struct nvmet_rdma_rsp *rsp)
+ 				    req->sg, req->sg_cnt, nvmet_data_dir(req));
  }
  
- module_init(ipoib_init_module);
+-static void nvmet_rdma_release_rsp(struct nvmet_rdma_rsp *rsp)
++static void nvmet_rdma_free_rsp_resources(struct nvmet_rdma_rsp *rsp)
+ {
+ 	struct nvmet_rdma_queue *queue = rsp->queue;
+ 
+-	atomic_add(1 + rsp->n_rdma, &queue->sq_wr_avail);
+-
+ 	if (rsp->n_rdma)
+ 		nvmet_rdma_rw_ctx_destroy(rsp);
+ 
+ 	if (rsp->req.sg < rsp->cmd->inline_sg ||
+ 	    rsp->req.sg >= rsp->cmd->inline_sg + queue->dev->inline_page_count)
+ 		nvmet_req_free_sgls(&rsp->req);
++}
++
++static void nvmet_rdma_release_rsp(struct nvmet_rdma_rsp *rsp)
++{
++	struct nvmet_rdma_queue *queue = rsp->queue;
++
++	atomic_add(1 + rsp->n_rdma, &queue->sq_wr_avail);
++
++	nvmet_rdma_free_rsp_resources(rsp);
+ 
+ 	if (unlikely(!list_empty_careful(&queue->rsp_wr_wait_list)))
+ 		nvmet_rdma_process_wr_wait_list(queue);
 -- 
 2.53.0
 
