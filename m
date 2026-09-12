@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E9C343893;
-	Sat, 12 Sep 2026 09:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A8E3AFD15;
+	Sat, 12 Sep 2026 09:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206751; cv=none; b=Ei3xLd3Pcd/s3DEYM6DXYnDleyJPlAQTIB4+CqhOj64t9f6uaD0KNUqWJ24D3lfHgK39gzFYQ0oz6Ki4eC8mkkRHMaqCm3S4sO0gpjftypsDEejSO3ke0JCyaSKheYlAjMq2jNc/ryOeUJh0tLsQFBXCkPrPpx3EFunvhhdwsws=
+	t=1789206756; cv=none; b=I6EN+oQT5Jl5B8j5aIS1gickuAl037I8Sav0tabcQnhldWU0vzy6kLV/ngwrQrnHvkOTHmly7Q727eNQAyFOap0QQxf5SEwI+9l1lOcPo1t8gvTfNAaX5Uh1OL68fx42K/ZcTcF6fYZ54VipQed0AsoIA5JOsQt1W8t5p6zkTvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206751; c=relaxed/simple;
-	bh=YTjlA7c0OSX+K970RM14aecxt+UOm40Z3hINsvPzm2Y=;
+	s=arc-20240116; t=1789206756; c=relaxed/simple;
+	bh=nct1MPxQ3GTAPCYg861s46P2g39T+I7mq/wN0FVTF84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kTdzxfTJSvPKJPfXE3IpNFGa3aHSC1NQo8kN2ri8kOqz/BTct7Q+VuzjGDyxW79w93JwC6/oU0ala6FSBa4TCmPxfRU8AiBJ0iClVgeHubPyVcHGS/FNBSfndlwuD+HxsS8j+b3N144UpkyEpYlfUw4rCOCEwcENcEL1RomUolE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWVfbs3R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yzmu9pvl5QCxISgU5qqhPeutc+DTcc467o3fE/e7MLP6YbKh7nrQBcQK3XppDboJiCyKUhGRNmklabdh713v64fzOFdjGVomU7+HhiW1fPvrX3Ju+fT4O4oL7mBgWIoCmEnYyqnbIIBTQVqE2s6KcgGv/tqrTBzCNAK3uyfyi3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rD98MA7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWVfbs3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AB61F000FF;
-	Sat, 12 Sep 2026 09:52:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rD98MA7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA9D1F000FF;
+	Sat, 12 Sep 2026 09:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206750;
-	bh=g0XUrTHN+htG1NfdGE3ONfqAgOG2vZfMlRjLriFSZ6c=;
+	s=korg; t=1789206754;
+	bh=SxwyC8eI0VTUzxzzqU93/HE0W4uDZh619bFUzIXwG/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWVfbs3RYEA3N6wujgRGs+M6kPRZ2QzJJDIInRnmkC7K94Ay6yDHn4B+Bzu8vm/Do
-	 Z+37q/F+mKjDwms+Qi/DcW7BDaGgQHH9D5KNMLZJhVJRvr++levno7LkixMlpcSVF6
-	 eIDOWJlFzmz5MDMV30exztVs3c68XF/xQqjsf9e8=
+	b=rD98MA7XK3m7bdYafRWPvA5hleJUX+lpXT7o3xp+5Becs4A7MTWelSTkfD+hJcAkS
+	 corYwAJ0hDJcCzCq6cB/Jb1pjpu0Gj7xgbTj2y8r0eoDZYtOM+v2vji3HinkJU4oOA
+	 Q6w7Wxa1b2wgukTZ7qot0/cob5V03mqGAFxddTLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Slavin Liu <220245772@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0269/1518] usb: typec: ucsi: unregister debugfs entries on teardown
-Date: Sat, 12 Sep 2026 08:40:38 +0200
-Message-ID: <20260912065629.572136098@linuxfoundation.org>
+Subject: [PATCH 6.18 0270/1518] usb: gadget: r8a66597: avoid double free of ep0_req in probe error path
+Date: Sat, 12 Sep 2026 08:40:39 +0200
+Message-ID: <20260912065629.595908960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,61 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit eed73a65ab609b79d53de88cccc34b36dfe753c4 ]
+[ Upstream commit 41d541e3718db01668a4cd29815ee4b3b55f76d2 ]
 
-ucsi_register() creates per-instance debugfs entries, but
-ucsi_unregister() keeps them around until ucsi_destroy().
+If usb_add_gadget_udc() fails, r8a66597_probe() jumps to err_add_udc
+and frees ep0_req, then falls through to clean_up2 where ep0_req is
+freed again when it is non-NULL.
 
-Drivers like ucsi_glink that unregister/register the same UCSI
-instance across remoteproc restart then try to create an already
-existing debugfs directory and log:
+Remove the redundant free from err_add_udc and keep the cleanup in
+clean_up2 so the request is released exactly once.
 
-  debugfs: 'pmic_glink.ucsi.0' already exists in 'ucsi'
+Fixes: 776976a67ae2 ("usb: gadget: r8a66597-udc: cleanup error path")
+Issue found using a prototype static analysis tool
+and confirmed by code review.
 
-Unregister debugfs entries as part of ucsi_unregister(), and
-clear ucsi->debugfs after freeing it so repeated unregister
-paths remain safe.
-
-Assisted-by: Codex:GPT-5.5
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Fixes: df0383ffad64 ("usb: typec: ucsi: Add debugfs for ucsi commands")
-Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # X1E80100 CRD
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260611-usci-unregister-debugfs-v1-1-f4a518a94f27@oss.qualcomm.com
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Slavin Liu <220245772@seu.edu.cn>
+Link: https://patch.msgid.link/20260624140908.1282-1-getshell@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/debugfs.c | 1 +
- drivers/usb/typec/ucsi/ucsi.c    | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/usb/gadget/udc/r8a66597-udc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/debugfs.c b/drivers/usb/typec/ucsi/debugfs.c
-index f73f2b54554e2..414ffe1d23780 100644
---- a/drivers/usb/typec/ucsi/debugfs.c
-+++ b/drivers/usb/typec/ucsi/debugfs.c
-@@ -129,6 +129,7 @@ void ucsi_debugfs_unregister(struct ucsi *ucsi)
+diff --git a/drivers/usb/gadget/udc/r8a66597-udc.c b/drivers/usb/gadget/udc/r8a66597-udc.c
+index e5c2630e37114..29ae81c95d0a6 100644
+--- a/drivers/usb/gadget/udc/r8a66597-udc.c
++++ b/drivers/usb/gadget/udc/r8a66597-udc.c
+@@ -1951,7 +1951,6 @@ static int r8a66597_probe(struct platform_device *pdev)
+ 	return 0;
  
- 	debugfs_remove_recursive(ucsi->debugfs->dentry);
- 	kfree(ucsi->debugfs);
-+	ucsi->debugfs = NULL;
- }
- 
- void ucsi_debugfs_init(void)
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 85e2e7fcd02cd..2acd48a0a6a2b 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -2275,6 +2275,8 @@ void ucsi_unregister(struct ucsi *ucsi)
- 	cancel_delayed_work_sync(&ucsi->work);
- 	cancel_work_sync(&ucsi->resume_work);
- 
-+	ucsi_debugfs_unregister(ucsi);
-+
- 	/* Disable notifications */
- 	ucsi->ops->async_control(ucsi, cmd);
- 
+ err_add_udc:
+-	r8a66597_free_request(&r8a66597->ep[0].ep, r8a66597->ep0_req);
+ clean_up2:
+ 	if (r8a66597->pdata->on_chip)
+ 		clk_disable_unprepare(r8a66597->clk);
 -- 
 2.53.0
 
