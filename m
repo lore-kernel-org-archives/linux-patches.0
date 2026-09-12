@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88DD2F531B;
-	Sat, 12 Sep 2026 13:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40D3477298;
+	Sat, 12 Sep 2026 13:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219489; cv=none; b=ajA0RyzSZevZw9xr5QvJPCNW3sy3sgyhwRlTYMgKoqarpIIEeOwFgrg3Vvph1xUfhYQZRVd4ZYmvxXXUdC7I1PZT2xpqc5cJ6T41UdVfZeYx1WyyUXH0gtLgbzBFn7CXuqWzPFBLJ0GqrDBW/1K0R/oEETPXOTkUkMzrHdgIW9M=
+	t=1789219494; cv=none; b=ignDWEPE6kJCUHSNCj644gq6tqh54kxbcOwSAEzmamF/M2vrLbQPf02T1xKYkoxphG4iNEg/l062KHaOY7uJATAw/ncBSL0NdDNibSfoy2UsinpKr/aOSC1CKZlZ3Iblx6aw3vd5dq95XDByaMB3vU9kKnhNu1m3OMwK53F/U3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219489; c=relaxed/simple;
-	bh=EHnBeyIAkM+UJqv5O1VVwbjJwsDrLgQdEbBCzOicLhA=;
+	s=arc-20240116; t=1789219494; c=relaxed/simple;
+	bh=wyX9yoAvXNVR0zsWQWWOM6KB7ujQFspwDapE1lALjZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Um273pU9gg/bDyHSk/mhYkntMmte/y8JU7w5ei4ILUMAZeYqAHnoW/MxYHK1jmlFJWqRzvsIf/tdw5vymiGJWWav3BKK9TyHL2Rme5s9ksB00OFsvr2zL4TrNk9M2Ij9gEyknJO78dZH7CQdP3qez16RGf5OGriGD+dux3eTuvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEDn/Crq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ap0fYX9B7a/CPCEqIAnA4hDt5bpEeuoahn1Ms0jiW+EurqS6rzlBVl40ohomvp87azo16c4fonHuPpjPZin8PTpcBDBmZ2ECGjpuhe2Awe85Q9TtFCvjBrU9NNHpvbaJaPxmZry8kFCzOYrwr/uce6pBwE3qHyMfFk1yHsv6g5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZFOu2H8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEDn/Crq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B621F000FF;
-	Sat, 12 Sep 2026 13:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZFOu2H8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D75E1F000FF;
+	Sat, 12 Sep 2026 13:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219488;
-	bh=cEpFQ41Wq3lsCcIBQTKwGMA9OW/ybYVkgqSyBO0/yJs=;
+	s=korg; t=1789219493;
+	bh=ybePo89u9FDM3ND4npb+KtUkt60fI6DzmzNUmpaf31c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vEDn/CrqACjGFwKR3snXzRJUvEmaaYcZVX+fbCWRnOH5X/sU59ZAsGM0YUapvWJXo
-	 /IPXmpqZPhi6P/RksHlm+7T/EWiyOLP2nzG4ZNGQvPZFGGyo3G3g5DBsjG080onIJu
-	 pKrF5XogGIZ4328ppyCNY0gRc7XaAM29GVggWcbA=
+	b=UZFOu2H8holrtnp92KndrLelEMrkc29/iJhOCpZqdzhsE60Exu+Hgot73xQDpMF6D
+	 rM4xDLDtYpKnoJ1FvQPFTVSyfRN5xUgfPoe4DhK8ZkQKWyyS/bP9iG+ikuNFsuHKRM
+	 dvPfy0bU5K0R4g3+e7HJ8PdXvE/EEhQjwP24r//U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Shi <yang@os.amperecomputing.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Dev Jain <dev.jain@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1361/1376] kselftest/arm64: mte: Skip the hugetlb tests if MTE not supported on such mappings
-Date: Sat, 12 Sep 2026 09:03:07 +0200
-Message-ID: <20260912065637.867368948@linuxfoundation.org>
+Subject: [PATCH 6.12 1362/1376] kselftest/arm64: mte: Use the correct naming for tag check modes in check_hugetlb_options.c
+Date: Sat, 12 Sep 2026 09:03:08 +0200
+Message-ID: <20260912065637.889754017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,53 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Catalin Marinas <catalin.marinas@arm.com>
 
-[ Upstream commit 306219d59b72cfca4005229b2c6ad43a16479e3b ]
+[ Upstream commit 7ae95109c64d64cdcf195788cf466ec0b3019a94 ]
 
-While the kselftest was added at the same time with the kernel support
-for MTE on hugetlb mappings, the tests may be run on older kernels. Skip
-the tests if PROT_MTE is not supported on MAP_HUGETLB mappings.
+The architecture doesn't define precise/imprecise MTE tag check modes,
+only synchronous and asynchronous. Use the correct naming and also
+ensure they match the MTE_{ASYNC,SYNC}_ERR type.
 
 Fixes: 27879e8cb6b0 ("selftests: arm64: add hugetlb mte tests")
 Cc: Yang Shi <yang@os.amperecomputing.com>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
 Reviewed-by: Yang Shi <yang@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/20250221093331.2184245-3-catalin.marinas@arm.com
+Link: https://lore.kernel.org/r/20250221093331.2184245-2-catalin.marinas@arm.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/arm64/mte/check_hugetlb_options.c       | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/testing/selftests/arm64/mte/check_hugetlb_options.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/tools/testing/selftests/arm64/mte/check_hugetlb_options.c b/tools/testing/selftests/arm64/mte/check_hugetlb_options.c
-index a8087c9288176..d1dc587b18254 100644
+index d1dc587b18254..cd7667187ed5b 100644
 --- a/tools/testing/selftests/arm64/mte/check_hugetlb_options.c
 +++ b/tools/testing/selftests/arm64/mte/check_hugetlb_options.c
-@@ -227,6 +227,8 @@ static int check_child_hugetlb_memory_mapping(int mem_type, int mode, int mappin
- int main(int argc, char *argv[])
- {
- 	int err;
-+	void *map_ptr;
-+	unsigned long map_size;
+@@ -283,13 +283,13 @@ int main(int argc, char *argv[])
+ 	"Check clear PROT_MTE flags with private mapping and sync error mode and mmap/mprotect memory\n");
  
- 	ksft_print_header();
+ 	evaluate_test(check_child_hugetlb_memory_mapping(USE_MMAP, MTE_SYNC_ERR, MAP_PRIVATE | MAP_HUGETLB),
+-		"Check child hugetlb memory with private mapping, precise mode and mmap memory\n");
++		"Check child hugetlb memory with private mapping, sync error mode and mmap memory\n");
+ 	evaluate_test(check_child_hugetlb_memory_mapping(USE_MMAP, MTE_ASYNC_ERR, MAP_PRIVATE | MAP_HUGETLB),
+-		"Check child hugetlb memory with private mapping, precise mode and mmap memory\n");
++		"Check child hugetlb memory with private mapping, async error mode and mmap memory\n");
+ 	evaluate_test(check_child_hugetlb_memory_mapping(USE_MPROTECT, MTE_SYNC_ERR, MAP_PRIVATE | MAP_HUGETLB),
+-		"Check child hugetlb memory with private mapping, precise mode and mmap/mprotect memory\n");
++		"Check child hugetlb memory with private mapping, sync error mode and mmap/mprotect memory\n");
+ 	evaluate_test(check_child_hugetlb_memory_mapping(USE_MPROTECT, MTE_ASYNC_ERR, MAP_PRIVATE | MAP_HUGETLB),
+-		"Check child hugetlb memory with private mapping, precise mode and mmap/mprotect memory\n");
++		"Check child hugetlb memory with private mapping, async error mode and mmap/mprotect memory\n");
  
-@@ -245,6 +247,15 @@ int main(int argc, char *argv[])
- 		return KSFT_FAIL;
- 	}
- 
-+	/* Check if MTE supports hugetlb mappings */
-+	map_size = default_huge_page_size();
-+	map_ptr = mmap(NULL, map_size, PROT_READ | PROT_MTE,
-+		       MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
-+	if (map_ptr == MAP_FAILED)
-+		ksft_exit_skip("PROT_MTE not supported with MAP_HUGETLB mappings\n");
-+	else
-+		munmap(map_ptr, map_size);
-+
- 	/* Set test plan */
- 	ksft_set_plan(12);
- 
+ 	mte_restore_setup();
+ 	free_hugetlb();
 -- 
 2.53.0
 
