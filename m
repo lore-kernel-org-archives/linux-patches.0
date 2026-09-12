@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258774BEE54;
-	Sat, 12 Sep 2026 09:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDFD34252D;
+	Sat, 12 Sep 2026 09:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205951; cv=none; b=gStYkRrhQJjJgUpCCR6Cbk5Ro9Z/YOIVMMCK/4k9Kn58iDmRgwf6ZZI1EYt2aGwPoNiYxS87+kNZ0uzBhoyS2XGxTIMPOYhwHjwLwmZG7mZS2wxD2Gf0Ut2qxqKGnnZiF/AGXKM4bCKcPt6WU0JAgvlk7yiUja4K7kWUXmHKYD8=
+	t=1789205956; cv=none; b=UeHbFSakEOrS1dG2/JUeBjF6Eo/BW3lNCg/JBqBr+9K6TBe9JjsThBQwitgw+6rpF+2uxY+yJFN9Vw7zKS/zbxXEVew9opHJNVddDcEQ4SIIzLwI9wl/TUBgD7LfiOeZEotRTi4+T3/e/iYxy6oOw1mSIt9t8SeM4MftGDlvEQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205951; c=relaxed/simple;
-	bh=63wOIQ/C8bbFESJhxw5qtXRoM3t+VnR1pR9Fi3v1gsw=;
+	s=arc-20240116; t=1789205956; c=relaxed/simple;
+	bh=gPz5Bzlm4sWkO+fMvdXVaN5FjO/+6GEQ3l+crC+F7Oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZL7+0fcHp7GRmJgz2405Yot6K8VVFe2T4sVyDopofacC4Gl6FVNODR+Q+DS4iv7qDAdxnWBCNw/MjODHtewXkDQqlA1lwUydVkP568PD37RaQsCS4u7Uyemda18dUEVoQBoTb2GbRhbRYT+qpoSfbJHkUI7313OJ8oc/SqzaT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpUBG8sY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bWdOOYNVsmcQXxWME4YpuJoN5VrOw+DgjAp0E3lKat2l3mwnVsYdUT/eskfcg2ImxrV+U6ViSD84ZSBWSK7gMrKLY/pYzpsCVvEia8SYVajus7PMTvoE+sSvGkl0YhsAiUgHa5Jy+ybmNPIzQ6m4eyoERoN2VY4Em7sjk2w3Amw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyB+Jgb+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpUBG8sY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245DB1F000FF;
-	Sat, 12 Sep 2026 09:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyB+Jgb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B903A1F000FF;
+	Sat, 12 Sep 2026 09:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205950;
-	bh=2mhy6cFMGBQinVDyztK1h7Oa5yYavK3ZGwDOZM3nFV8=;
+	s=korg; t=1789205954;
+	bh=Sy0kqIm0uhli6Vl3EhxmJfdks+2Aa3wSabp00CCc5aM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fpUBG8sYNFAOI/cdxseU8/kfPT+xZHSF+Bt8DnjNJPHy6+LgfiBuBK/knC+tSR4uY
-	 uULjvBb/fNIo5AfiUipL315eKtFe4hrfd4OVkNetkpr1Hn1O8fm052DT70LFCN8mTH
-	 3gBYKj2HDVX3j+Wlwy/8mnoHtETnNxKI9eQC391E=
+	b=WyB+Jgb+zprkGN2BnUIlU/VLrQ6eJ+UjV/ZDpRbiDRd/P3EGA5jYLRSpgDJKu+l6s
+	 zzmjRRH6f3r5q/12kqRhOfHAwKdwQlIjV/8aN09gxABcrf9ll4/ArB8HU4izGcfqCe
+	 J6bkvIfJ/pDDa/8pDDvWgF6UTDtkeYP4c6tQ+s3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andyshrk@163.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Daniel Stone <daniel@fooishbar.org>,
 	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
 	Daniel Stone <daniels@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0107/1518] drm/rockchip: vop2: Add RK3576 to the RG swap special case
-Date: Sat, 12 Sep 2026 08:37:56 +0200
-Message-ID: <20260912065625.898496657@linuxfoundation.org>
+Subject: [PATCH 6.18 0108/1518] drm/rockchip: vop2: Recognise 10-bit YUV422 as YUV format
+Date: Sat, 12 Sep 2026 08:37:57 +0200
+Message-ID: <20260912065625.920015927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,39 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit ae4a4e69389d576941522c3c2e01a2254fd00d10 ]
+[ Upstream commit c1bfe8dac0a79d47eed313b9bcaa2658898684ec ]
 
-Much like RK3588, RK3576 requires an RG swap to be performed for YUV444
-8-bit and YUV444 10-bit bus formats.
+The Rockchip VOP2 video output driver has a "is_yuv_output" function,
+which returns true when a given bus format is a YUV format, and false
+otherwise.
 
-Add its version to the already existing check for RK3588, so that YUV444
-output is correct on this platform.
+This switch statement is lacking the bus format used for YUV422 10-bit.
 
-Fixes: 944757a4cba6 ("drm/rockchip: vop2: Add support for rk3576")
-Reviewed-by: Andy Yan <andyshrk@163.com>
+Add the two component orderings of the YUV422 10-bit bus formats to the
+switch statement.
+
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Reviewed-by: Daniel Stone <daniel@fooishbar.org>
 Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Link: https://patch.msgid.link/20260609-color-format-v17-12-35739b5782cc@collabora.com
+Link: https://patch.msgid.link/20260609-color-format-v17-13-35739b5782cc@collabora.com
 Signed-off-by: Daniel Stone <daniels@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 7ec7bea5e38e6..a9ae9e472f56b 100644
+index a9ae9e472f56b..3c48984d62448 100644
 --- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
 +++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -336,7 +336,8 @@ static bool vop2_output_uv_swap(u32 bus_format, u32 output_mode)
- 
- static bool vop2_output_rg_swap(struct vop2 *vop2, u32 bus_format)
- {
--	if (vop2->version == VOP_VERSION_RK3588) {
-+	if (vop2->version == VOP_VERSION_RK3588 ||
-+	    vop2->version == VOP_VERSION_RK3576) {
- 		if (bus_format == MEDIA_BUS_FMT_YUV8_1X24 ||
- 		    bus_format == MEDIA_BUS_FMT_YUV10_1X30)
- 			return true;
+@@ -351,6 +351,8 @@ static bool is_yuv_output(u32 bus_format)
+ 	switch (bus_format) {
+ 	case MEDIA_BUS_FMT_YUV8_1X24:
+ 	case MEDIA_BUS_FMT_YUV10_1X30:
++	case MEDIA_BUS_FMT_YUYV10_1X20:
++	case MEDIA_BUS_FMT_UYVY10_1X20:
+ 	case MEDIA_BUS_FMT_UYYVYY8_0_5X24:
+ 	case MEDIA_BUS_FMT_UYYVYY10_0_5X30:
+ 	case MEDIA_BUS_FMT_YUYV8_2X8:
 -- 
 2.53.0
 
