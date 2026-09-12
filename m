@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8341529B78F;
-	Sat, 12 Sep 2026 12:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5AB47277D;
+	Sat, 12 Sep 2026 12:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217623; cv=none; b=IrK0wSDPZLj1y87sSfPT+O+gvAgLkIyuaxp1cyu+f0+uB5vgNCzD4+HzkNkPlikghyEfnFqUSM5zl069CXh0Ch2t/1sWdkuU0TzKDSMBdDbrygg7qLmsaZz+rmZFF+A2a0Pb7pBch6mbZBFv0oy9sXKVIm+f9wQNuB+EKBMkEcA=
+	t=1789217628; cv=none; b=QEUIS63yT7Aa7TlKkB8eMFJQNfJrwhrif2/HIAaIaQr1RL4MvtOZVi0qaUda8t4lkEOkBJbk1nXAODNxiYvxy1IcaxpwkQHmPsmxX9OXDfrLFRouOTzmXVRrjHrb22ttezseCa4W8UA0Bpg+oS8KWsnKmfKdnnuL3CBeiVMmMYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217623; c=relaxed/simple;
-	bh=InsT9UIT00uThdU60Lm0Lck0Q41XNyoskvLsVvnsIrg=;
+	s=arc-20240116; t=1789217628; c=relaxed/simple;
+	bh=qSmC4S8ZnW6L7fXRRe3WwSGUVrDWV5HEweuuSuOltWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0fSGrbhanNHfOw9/ZZVfP1PfLlw2su9VY8X+PYjij45hU19676P74E9rYE2W45gN0yQnvDC0kguVF3tRQWLEHL/MDCfSUZcynl7V5N7qoF7JB5TJoxihcCHempLV8uyDYwnEwuBXl8AqNLSRGvqSlrWBGwgBiBrQsOZtIJDMTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBGjKagb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E69Be2kwpkeFiaDftORjlInXSUrO+Q2yZI1u2BsS1WEqGyLT0Ciuo6R01zeoyG2fucTChYe38bmabXMUnL2+rb9+0SN8zzxW94d5pwpTEAxQSN+jBLOryC54X7M4Kbv6YdNxMTadaRZdZ0C4QdjAtc3QYd8OfmyiImALFq1pNDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HY7O266n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBGjKagb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125C51F000FF;
-	Sat, 12 Sep 2026 12:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HY7O266n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20E81F000FF;
+	Sat, 12 Sep 2026 12:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217622;
-	bh=3cdmE17BuYuFkFEFlgbHUYO6WF4vszjuQqKvWc+gIl8=;
+	s=korg; t=1789217627;
+	bh=BOeYEY0iwP59TLE8oe19dDVF3B2P+VOAB3YHxzFtdTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MBGjKagbvkwfsIgGZsln/tu57NHlyk9Ss4Z96GtE0zHV0SY2EjgXGzCUuzgqHVglU
-	 X6nuruz4zjxJ+DvbZ4Jb97HkcE6KTr8pfRJ7eOBVtCxj9Aiy/hq5xBVg1W6OlNaKFG
-	 gg2cJndp/uyeM3i32V9R6bj9nbuPpdkxWAaZKEMc=
+	b=HY7O266nMqZMoJsp8L9gOXjYGX9/MvfGQ2Ipu8lVVVgw4J7fkPZD/2AMD0nwDprXb
+	 TaO5yG18prLDXH+cCmRi6UMLV8JaKT3uz4Xkqj/k+YfSZVlt1cEjmYlnCN6VaeH91l
+	 jWMRTWnVVAKrG/EeMDn+boDJpua6HRi7R8ML2Gyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0969/1376] Bluetooth: btqca: Fix qca_set_bdaddr() waiting for wrong HCI event
-Date: Sat, 12 Sep 2026 08:56:35 +0200
-Message-ID: <20260912065629.160663144@linuxfoundation.org>
+Subject: [PATCH 6.12 0970/1376] Bluetooth: btusb: Fix BD_ADDR byte order in btusb_set_bdaddr_wcn6855()
+Date: Sat, 12 Sep 2026 08:56:36 +0200
+Message-ID: <20260912065629.183146531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,44 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit cf81f0a3db2a5c34ee6e4ea379c631fab6d13e01 ]
+[ Upstream commit d0b15d812688d3f0f3fe1c4426e12814d0c294dc ]
 
-qca_set_bdaddr() waits for HCI_EV_VENDOR when sending
-EDL_WRITE_BD_ADDR_OPCODE (0xFC14), but the controller responds with
-Command Complete event as confirmed by btmon on WCN7850:
+btusb_set_bdaddr_wcn6855() sends the address without swapping byte
+order for VSC 0xFC14, but the command expects the address in reversed
+byte order compared to other HCI commands like HCI_Create_Connection,
+resulting in a wrong BD_ADDR being set.
 
-  < HCI Command: Vendor (0x3f|0x0014) plen 6                    #3 [hci0]
+btmon log on WCN6855 shows VSC 0xFC14 is sent with swapped bytes
+11 22 33 44 55 66, and Read BD ADDR returns the expected address
+11:22:33:44:55:66:
+
+  < HCI Command: Vendor (0x3f|0x0014) plen 6                  #3 [hci0]
           11 22 33 44 55 66
-  > HCI Event: Command Complete (0x0e) plen 4                    #4 [hci0]
+  > HCI Event: Command Complete (0x0e) plen 4                  #4 [hci0]
         Vendor (0x3f|0x0014) ncmd 1
           Status: Success (0x00)
+  < HCI Command: Read BD ADDR (0x04|0x0009) plen 0            #11 [hci0]
+  > HCI Event: Command Complete (0x0e) plen 10                #12 [hci0]
+        Read BD ADDR (0x04|0x0009) ncmd 1
+          Status: Success (0x00)
+          Address: 11:22:33:44:55:66 (OUI 11-22-33)
 
-Fix by passing 0 as the event parameter to __hci_cmd_sync_ev() to
-wait for the command complete event instead.
+Fix by swapping the input address before issuing the command.
 
-Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: b40f58b97386 ("Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855 support")
 Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 083a599eec74d..c6709791d59cc 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -996,8 +996,7 @@ int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
- 	baswap(&bdaddr_swapped, bdaddr);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 047652598ab6c..75e84a7e5abfd 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2990,14 +2990,15 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
+ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+ 				const bdaddr_t *bdaddr)
+ {
++	bdaddr_t bdaddr_swapped;
+ 	struct sk_buff *skb;
+-	u8 buf[6];
+ 	long ret;
  
- 	skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6,
--				&bdaddr_swapped, HCI_EV_VENDOR,
--				HCI_INIT_TIMEOUT);
-+				&bdaddr_swapped, 0, HCI_INIT_TIMEOUT);
+-	memcpy(buf, bdaddr, sizeof(bdaddr_t));
++	baswap(&bdaddr_swapped, bdaddr);
+ 
+-	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(buf), buf,
+-				HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
++	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(bdaddr_swapped),
++				&bdaddr_swapped, HCI_EV_CMD_COMPLETE,
++				HCI_INIT_TIMEOUT);
  	if (IS_ERR(skb)) {
- 		err = PTR_ERR(skb);
- 		bt_dev_err(hdev, "QCA Change address cmd failed (%d)", err);
+ 		ret = PTR_ERR(skb);
+ 		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
 -- 
 2.53.0
 
