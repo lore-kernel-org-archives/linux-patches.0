@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C6E2EC09B;
-	Sat, 12 Sep 2026 11:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35054BEE32;
+	Sat, 12 Sep 2026 11:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211833; cv=none; b=Rqtdi4KufPLMVMHCioGigCPzBPYF/u9mu5wSRGlUF6M4/Rw6QdzNCQHg6F2P7aJXLqnYGnL9IFr01PrBwnPY8rSudpSp/g+Kn8L6NLmnsqUGjSj/bE1Eb7cozXFcsKET7JTxHX9VDjXOr1/TaExJHMXBlDjUxGK0m5+qY2p39Vs=
+	t=1789211838; cv=none; b=SG6ovSxxZ3fRi5Od9AiFFYoZkG6qGWu2IH9ZTWYdTAvWvgTzoJ60wAzEjL/xYGA1qRFtoOx8cpQ7SKDZrIt4oOq2fEL9e3n0AI5owWVXdqDgmKbEV4UrTxB3zgV6po4V9z1mWj0oxZxabnVlbUXIWre6fZtTRwA1w2ihsKMeXdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211833; c=relaxed/simple;
-	bh=liiEIbPnmcWWPIw+qwXCXGEsG4EgU+1xzOgISEJ1Vvs=;
+	s=arc-20240116; t=1789211838; c=relaxed/simple;
+	bh=c8UfEB9eP2W8R+x8RFcg7dSN24yCQ6PMTIGEsVIUkDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/cITQ4vg0iRVdDckUTGJZGYbth2tba8KWk7Qw0uWy6c8oZtUDJqiPQgW+ETSV4TdwLbj/sETcxNY0bayCinBrjH6Dl6etC4MRG4AlcHrAljdQ6GsGsNay0KdjqcEfWitygTw/CliPuh8+DhVEYoyeZX0QVWjB2182DHcmBKvKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aa8UsCEC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ixE8BpqcL9vBINumsaAS0JsJtkGGcyBxDX6fMIjyU4oisii54Zyh0Fb8okCXZ7cM14hjXE5mdsEeVJHUamEHsDJ/tfZdbmI2wEdJvcM1MNTz1n7imcg7smmj9ugpjIRVJJB9yHqqPG9VYKottA/x5gn9Wfi21bfltV04f+aN/nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXRmNN/R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aa8UsCEC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE131F000FF;
-	Sat, 12 Sep 2026 11:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXRmNN/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49E51F000FF;
+	Sat, 12 Sep 2026 11:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211831;
-	bh=GlnXTcVn+DQvx2oGQ7TcCLgCz1cuwRLktWyoVCAiIOs=;
+	s=korg; t=1789211836;
+	bh=4wZNNF0Qfo8aVxvdhi4KJ+DQx4nllbd2JGnw8FDAGto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aa8UsCECw8Ru1CuFQCcTr09nblQzAB4wMfCO24WF/Vlxgp2CFN4+PgG7ieCpsfcBb
-	 IPAq7G8xu7+57MjAeIwfvSqsNI8TJUPTIDAENw86xnQrHKxVb24ZPIYhXnjCjcZHsJ
-	 KBFW2jBvgylQD6LcJCXJQd/2QhDfw2vsLZ5MeS68=
+	b=yXRmNN/RCd9z7O5ct2zMwtPPNqcc76wlgEIlnAoUed9zhkq+MzrI2DB2ihIwh42p7
+	 n2jWjNMyqrxw9jQfR1pT1W2phdWc26W8+UTHJ1KYHIhyFK8whc2MZryMvXpA8id/9q
+	 ToJe4JgVp/REY49fvdaX6qMAQV/IgTB39XT3kEHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Bischoff <sascha.bischoff@arm.com>,
-	Thomas Gleixner <tglx@kernel.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1312/1518] irqchip/gic-v5: Synchronize CPU interface disable
-Date: Sat, 12 Sep 2026 08:58:01 +0200
-Message-ID: <20260912065653.205901526@linuxfoundation.org>
+Subject: [PATCH 6.18 1313/1518] irqchip/gic-v5: Check for NULL LPI domain on domain teardown
+Date: Sat, 12 Sep 2026 08:58:02 +0200
+Message-ID: <20260912065653.228352234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Bischoff <Sascha.Bischoff@arm.com>
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
 
-[ Upstream commit ac6db0e0bee18cd4385418c752a007e1aba4ec14 ]
+[ Upstream commit aa079dbf4c2598c2613a0e464efcb2c232753c51 ]
 
-The write disabling the GICv5 CPU interface is only guaranteed to take
-effect after a context synchronization event. Without one, execution can
-return from gicv5_cpu_disable_interrupts() while an interrupt is still
-able to be taken.
+In gicv5_free_lpi_domain() the LPI domain being freed can be NULL.
 
-Add an ISB after the ICC_CR0_EL1 write to ensure interrupts are
-disabled before the function returns. No corresponding ISB is added
-when enabling the interface, as interrupt delivery is asynchronous and
-there is no obvious benefit to waiting for it.
+Check it and return before trying to free it if it is.
 
-Fixes: 7ec80fb3f025 ("irqchip/gic-v5: Add GICv5 PPI support")
-Signed-off-by: Sascha Bischoff <sascha.bischoff@arm.com>
+Fixes: 0f0101325876 ("irqchip/gic-v5: Add GICv5 LPI/IPI support")
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260724104819.1296803-1-sascha.bischoff@arm.com?part=6
-Link: https://patch.msgid.link/20260811152630.942023-3-sascha.bischoff@arm.com
+Link: https://sashiko.dev/#/message/20260810104747.E5CE71F000E9%40smtp.kernel.org
+Link: https://patch.msgid.link/20260812-gicv5-7-2-fixes-v1-2-3743e82c69a4@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v5.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/irq-gic-v5.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/irqchip/irq-gic-v5.c b/drivers/irqchip/irq-gic-v5.c
-index fa86dd03e307c..a04dd56652027 100644
+index a04dd56652027..a4997b3235b08 100644
 --- a/drivers/irqchip/irq-gic-v5.c
 +++ b/drivers/irqchip/irq-gic-v5.c
-@@ -925,6 +925,7 @@ static void gicv5_cpu_disable_interrupts(void)
+@@ -811,6 +811,9 @@ void __init gicv5_init_lpi_domain(void)
  
- 	cr0 = FIELD_PREP(ICC_CR0_EL1_EN, 0);
- 	write_sysreg_s(cr0, SYS_ICC_CR0_EL1);
-+	isb();
+ void __init gicv5_free_lpi_domain(void)
+ {
++	if (!gicv5_global_data.lpi_domain)
++		return;
++
+ 	irq_domain_remove(gicv5_global_data.lpi_domain);
+ 	gicv5_global_data.lpi_domain = NULL;
  }
- 
- static void gicv5_cpu_enable_interrupts(void)
 -- 
 2.53.0
 
