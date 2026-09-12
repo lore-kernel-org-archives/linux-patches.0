@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA6941169F;
-	Sat, 12 Sep 2026 11:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CC547208D;
+	Sat, 12 Sep 2026 11:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211489; cv=none; b=aSYCeqtGEaGIVIuMmAgwksqjMOs187ofsNuSydn9mIrPk8x9z0SLcNjDLdEXjjbeinIDl1mB6WS4UYxc1Z3TzjNv5k3oWDwZ167IDxmEgMV5KU4xHUsSpssC1S8TDC69UcvWhpTbg3gqwrfVi1baMbSehYlWGyKwYu55HEQyQa4=
+	t=1789211494; cv=none; b=eFwYcX24ybgf9CWQUiLP/rCPVgwgS+PEyk+YJkBa+oWnr7LIMvqjoZOWDz3Z9bP7iLqgkUH9tDHdqBRNNJCV/AI4B+oK1FLZKjfE0bKPnw6ctRUQ3dpG21bvWkhBdJduQT3AvegttVYQKPDA2ZqLXuYZh5E3gibTfYuWt7hBcL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211489; c=relaxed/simple;
-	bh=ig8Y7nXnvHIi+5a/j8ATIyuc1z1VP3pK9V6+oVY5rs8=;
+	s=arc-20240116; t=1789211494; c=relaxed/simple;
+	bh=+bCZyYQcNnzdKeg+d4G+LGflvBbv5kDcYAOI8vrpbTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IMLHmDfsS6Tp9+2WUdk4kbizeN9tybS9psfaI6DLMXQKOQnhhKZhBT/mk8JwOM+ZxUfdS0gom1XY56rOEi6SYDjx25Tvl2wXbKX8j5JcrxWdFcquP1fl+Xa4BDEm1/07AV0/K+HkHutpw2BcU2LO+jVoRUrgb8CCeW14/xqusiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d33/nMxT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oAqDM68yN5KiOVyh8HSdDw+HPQLfyKdlNOf4npUSWTXNRLKlqQKTDcNqUxqTQXoUl9Zg+o+LvtklO6oEaZFOcqVPPbD5iw2ZOB4JcRbsIt4HiNUCKl0DKwe/dNmCP4x53mKXlpAMeN4jdfNhSbouBY+IJIP9mxsCjzRNg8gf6Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Jwch+wN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d33/nMxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDC11F000FF;
-	Sat, 12 Sep 2026 11:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Jwch+wN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F9A1F000FF;
+	Sat, 12 Sep 2026 11:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211488;
-	bh=2TIVnalANBF8IOt7L4VEroouX7ua16G0Nd9ZRBzEwPw=;
+	s=korg; t=1789211493;
+	bh=tqC5XI0RRc2W2STWlvh72jFLiCiWsHRnQxmXbt9ScII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d33/nMxTbyi65Dvm2Uc3t3ywK3pV6qCu5RF7xvkTZyepgT5icXlmXZ9hNwpHraYEM
-	 3BMcSr8iyIR+Gh8KAq04TvLlHv+sPcEotG4DRazXZU3y5z418BjBZQDXIfq7xMBxqv
-	 PpsTTBadMAF0dCBOh2hCZJRiqM8qE/+pL2BnVcZg=
+	b=1Jwch+wNhyZUcIRrSq80++B4j+f45X7LMz+fDW7eP7waFjEnizoeIAUjr9GSMAN+2
+	 jA3VLDonwqxxnjSaPFRVNRE9uIdsuNi6VCTC/Ju0oQJydeD7l897Kc31qK4vEVI4rc
+	 EaKBtHL6NEWkTNu9Okop/v1unk72Zp00dqyt+HEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Michal Blaszczyk <michalblk@google.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1198/1518] bpf: Fix pending_pos walk on 32-bit ring position wrap
-Date: Sat, 12 Sep 2026 08:56:07 +0200
-Message-ID: <20260912065650.582496118@linuxfoundation.org>
+Subject: [PATCH 6.18 1199/1518] selftests/sched_ext: Fix flaky ddsp failure tests on busy systems
+Date: Sat, 12 Sep 2026 08:56:08 +0200
+Message-ID: <20260912065650.606555069@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,85 +45,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: Michal Blaszczyk <michalblk@google.com>
 
-[ Upstream commit 6ff5b56a50c5351aeeb180e34327736576c038fa ]
+[ Upstream commit e72979d3264a87a6a2dfb44fe0f5723a17d2ef84 ]
 
-The reservation path caches the position of the oldest not-yet-committed
-record in rb->pending_pos and advances it past already committed records
-on every reservation:
+The ddsp_vtimelocal_fail and ddsp_bogus_dsq_fail tests skip calling
+scx_bpf_dsq_insert_vtime() if scx_bpf_pick_idle_cpu() fails to find an idle
+CPU (returns a negative error code). On loaded systems, this results in the
+tests skipping the very assertions they are meant to verify.
 
-	while (pend_pos < prod_pos) {
+Eliminate this flakiness by falling back to prev_cpu if no idle CPU is
+found, ensuring the illegal dispatch operations are unconditionally
+attempted and tested.
 
-consumer_pos, producer_pos and pending_pos are unsigned long, i.e.
-32-bit on 32-bit architectures, and Documentation/bpf/ringbuf.rst states
-that these counters may wrap around there. Every other comparison in the
-file is written as a difference, so modular arithmetic keeps them
-correct across the wrap. This one is an ordering comparison, and it is
-not wrap-safe.
-
-Once producer_pos wraps past 2^32, prod_pos is small while pend_pos
-still holds its pre-wrap value, so the loop condition is false and
-pending_pos is never advanced again. Reservations keep succeeding for a
-while, because bpf_ringbuf_has_space() uses differences, but
-new_prod_pos - pend_pos grows as the producer advances, and once it
-exceeds rb->mask every subsequent __bpf_ringbuf_reserve() call fails:
-the kernel believes a pending record spans the whole buffer. The ring
-never recovers, bpf_ringbuf_output() drops every event from then on, and
-nothing is logged.
-
-Observed on four armv7 devices (i.MX7 Dual, 6.6.52) running a
-tracepoint-based collector with a 512 KiB ring and 160-byte records.
-Every one of them stopped delivering after exactly 26846821 records and
-4295491360 bytes had passed through the ring, at event rates between 441
-and 862 records/s, that is after 8 h to 17 h of uptime: the trigger is
-the byte count, not time or load. That figure is 2^32 plus 524064 bytes,
-and the excess is one ring's worth of grace period, as expected while
-new_prod_pos - pend_pos is still below rb->mask. The last reservation
-that fits is the largest record boundary X with X + 160 <= 524287, and
-since 2^32 mod 160 = 96 the boundaries after the wrap sit at
-X = 64 (mod 160), giving X = 524064. Userspace kept consuming normally
-until the producer stopped, then read zero records for good. With this
-patch applied, one of the four devices took 10 GiB through the same ring
-with no stall, while the three unpatched ones kept wedging at the same
-byte count.
-
-64-bit hosts are unaffected in practice: their counters would need
-16 EiB to wrap.
-
-Compare the two positions as a difference instead. pending_pos never
-runs ahead of producer_pos, so the unsigned difference is the real
-distance between them and stays correct across the wrap.
-
-Fixes: cfa1a2329a69 ("bpf: Fix overrunning reservations in ringbuf")
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-2-i.tellez@btesa.com
+Fixes: a5db7817af78 ("sched_ext: Add selftests")
+Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../sched_ext/ddsp_bogus_dsq_fail.bpf.c       | 20 +++++++++----------
+ .../sched_ext/ddsp_vtimelocal_fail.bpf.c      | 13 ++++++------
+ 2 files changed, 15 insertions(+), 18 deletions(-)
 
-diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
-index d706c4b7f532d..bdc524c8ed798 100644
---- a/kernel/bpf/ringbuf.c
-+++ b/kernel/bpf/ringbuf.c
-@@ -426,7 +426,7 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
- 	prod_pos = rb->producer_pos;
- 	new_prod_pos = prod_pos + len;
+diff --git a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
+index 6f4c3f5a1c5d9..7ef9de7b27ebf 100644
+--- a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
++++ b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
+@@ -14,18 +14,16 @@ s32 BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_select_cpu, struct task_struct *p,
+ 		   s32 prev_cpu, u64 wake_flags)
+ {
+ 	s32 cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
++	if (cpu < 0)
++		cpu = prev_cpu;
  
--	while (pend_pos < prod_pos) {
-+	while (prod_pos - pend_pos > 0) {
- 		hdr = (void *)rb->data + (pend_pos & rb->mask);
- 		hdr_len = READ_ONCE(hdr->len);
- 		if (hdr_len & BPF_RINGBUF_BUSY_BIT)
+-	if (cpu >= 0) {
+-		/*
+-		 * If we dispatch to a bogus DSQ that will fall back to the
+-		 * builtin global DSQ, we fail gracefully.
+-		 */
+-		scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
+-				       p->scx.dsq_vtime, 0);
+-		return cpu;
+-	}
+-
+-	return prev_cpu;
++	/*
++	 * If we dispatch to a bogus DSQ that will fall back to the
++	 * builtin global DSQ, we fail gracefully.
++	 */
++	scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
++				 p->scx.dsq_vtime, 0);
++	return cpu;
+ }
+ 
+ void BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_exit, struct scx_exit_info *ei)
+diff --git a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
+index e4a55027778fd..82dca4cdc0a6c 100644
+--- a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
++++ b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
+@@ -14,15 +14,14 @@ s32 BPF_STRUCT_OPS(ddsp_vtimelocal_fail_select_cpu, struct task_struct *p,
+ 		   s32 prev_cpu, u64 wake_flags)
+ {
+ 	s32 cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
++	if (cpu < 0)
++		cpu = prev_cpu;
+ 
+-	if (cpu >= 0) {
+-		/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
+-		scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
+-					 p->scx.dsq_vtime, 0);
+-		return cpu;
+-	}
++	/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
++	scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
++				 p->scx.dsq_vtime, 0);
+ 
+-	return prev_cpu;
++	return cpu;
+ }
+ 
+ void BPF_STRUCT_OPS(ddsp_vtimelocal_fail_exit, struct scx_exit_info *ei)
 -- 
 2.53.0
 
