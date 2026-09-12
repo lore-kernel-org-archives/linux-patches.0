@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7021A6816;
-	Sat, 12 Sep 2026 12:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F3321883E;
+	Sat, 12 Sep 2026 12:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217284; cv=none; b=pryJ39WFRkEFtnSuGLhI/vOtPvx4rO4SvcMYxaGqiIb7cFgg6o4iuhO0x1boCbw5YFVz4OaU4ZEBML1emyeQrsnC0xAYsRzmYsT+yvdkbM9/fZL8EugurG7XEnwcir6e+/rYcucHEBBBEf3rTwHltbds1feMxc0bjFz2/wRorYE=
+	t=1789217289; cv=none; b=NOCAkx6/csKIXpzRuhBlJmXDpssyYWKfXddYdBHQ43dyRpvM1uEvcBiI1jXvjVfIKj/zA6T0Uh1N2bD1Bdj+j3If+B1sXW4EY+D+Vx/NQK7SWqsPYGC7SEXPv9JT2ST/20g6YXvAUtrL1hlj1e4ildMrUZUYvrI0nSb/e7xoQFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217284; c=relaxed/simple;
-	bh=Ruk33ypZEzJg0pRyQGR9tLb111EYDZttTA+FvcjiXaI=;
+	s=arc-20240116; t=1789217289; c=relaxed/simple;
+	bh=6LFlA7fHEw8krFHSVulI5223pxWoRSTes10HlwZmdOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9tjY8zrVWbrpiJDmbjtDeBENCIxmiyMC45nQy4n67Jmi8qp2Y/s9med3WWCMfWT9PngieXslIQHoY03yX/gjzVCKxhmULErzycewHtRp+0RCrFnZqKhqwDnog9psfjFl/wvdhB3BOWWBDAkZ8IDVJEa/J2yuONZ/D/OUhPmb80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgFP4RnP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G3ilAQ4RkdxT9qdRTSr7SRHh1mXCx7+u3/9iFK3Z1x+6VKWQkMCx4xlNgJuXCuxzLb/RC8trUmIDtAe3Zq6tQjUj5OKA1ufQCHCswqJSNL/VfNi9S+MTxszd0dF0yjgymMaKmHkN17N75D5Lzijq5cdxMPqYovMrEv6tUpQWyrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDO2uf/S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgFP4RnP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E561F000FF;
-	Sat, 12 Sep 2026 12:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDO2uf/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46A61F000FF;
+	Sat, 12 Sep 2026 12:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217283;
-	bh=bnoIGk4cEvrOsyOGa7BDrhkHfl0/SH1f8Fbugh25Wy8=;
+	s=korg; t=1789217287;
+	bh=Fno+fSxxJ5OIEdFWinL3c8o11jOnnHouCX6AUoqx/gA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GgFP4RnPmmgdg1hEJvmPf/impyJpH6+0dpVypWT5e15+QZpzBLD6hAt4oOOSRTpST
-	 7iT8yW1Oib0YqONi5xkDrKV+uSrO4by0VHqooCKs+/6YqaiItsza43G5iGE37a5nZA
-	 qoLpHC11Xs+l8DlsH3gkD0+6zvNSSmIffpoKqgA4=
+	b=fDO2uf/SwUYAAHz8NJAU9YpnKKBhQMx+R/NILeAVoB3JVFNJcYXkdgndMSsfaKEWA
+	 3+0BFQ6eYT4vHYGUb19/tKgNPeg/QLrY3afKjQ3OR2mG62lI4F0apHH7sInaLcH+Ks
+	 AwQjUoiWhP0wbeQgjRrg7ojkDvbXyQ6Fg5ApbQLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Qi Xi <xiqi2@huawei.com>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Calvin Owens <calvin@wbinvd.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0909/1376] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
-Date: Sat, 12 Sep 2026 08:55:35 +0200
-Message-ID: <20260912065627.826818350@linuxfoundation.org>
+Subject: [PATCH 6.12 0883/1376] pps: dont try to wait for negative timeouts in PPS_FETCH
+Date: Sat, 12 Sep 2026 08:55:09 +0200
+Message-ID: <20260912065627.243710460@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,79 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Yuanbin <xieyuanbin1@huawei.com>
+From: Calvin Owens <calvin@wbinvd.org>
 
-[ Upstream commit 1039bffd6ae9c75b42b7d148d6c1106134107b66 ]
+[ Upstream commit 45217e98987a87ff2372386dbf82fd5325db28ea ]
 
-When CONFIG_DEBUG_USER=y, and cmdline "user_debug=31" is set,
-a user fault may trigger show_pte() without any lock.
-If another thread in the same process concurrently calls munmap(),
-the page table pages may be freed while show_pte() is still traversing
-them, causing a use-after-free in show_pte().
+If userspace passes a negative timeout to PPS_FETCH, it triggers a kernel
+splat from schedule_timeout():
 
-If CONFIG_ARM_LPAE=y, this may cause a kernel panic if the pages table
-of PMD are freed when show_pte() is running.
+    schedule_timeout: wrong timeout value fffffffffff0bfb4
+    CPU: 17 UID: 0 PID: 4720 Comm: a.out Not tainted 7.1.0-rc5-x86-kvm-00150-g331d97e36b37 #1 PREEMPT_RT
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-20240910_120124-localhost 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x4b/0x70
+     schedule_timeout+0xb7/0xe0
+     pps_cdev_pps_fetch.isra.0+0x93/0x150
+     pps_cdev_ioctl+0x70/0x310
+     __x64_sys_ioctl+0x7b/0xc0
+     do_syscall_64+0xb6/0xfc0
+     entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Acquire mmap_write_lock() around show_pte() for user faults to fix the
-contention.
+Here is a trivial reproducer that works with the PPS_CLIENT_KTIMER test
+device enabled in the kernel:
 
-For user faults, additionally restrict that show_pte() is called only
-when the addr is a user-space address (addr < TASK_SIZE). This is because
-the lock of tsk->mm only protects the virtual memory of user address space,
-furthermore, dumping the page tables of a kernel-space address for user
-faults is unnecessary and may have security implications.
+    #include <stdlib.h>
+    #include <fcntl.h>
+    #include <unistd.h>
+    #include <sys/ioctl.h>
+    #include <linux/pps.h>
+    #include <err.h>
 
-Keep everything unchanged for kernel faults, because the kernel is
-already in the "oops" state, acquiring a lock may risk a deadlock.
+    int main() {
+        struct pps_fdata fdata;
+        int fd;
 
-Co-developed-by: Qi Xi <xiqi2@huawei.com>
+        fd = open("/dev/pps0", O_RDWR);
+        if (fd == -1)
+            err(1, "Failed to open /dev/pps0");
 
-Fixes: 6d021b724481 ("ARM: dump pgd, pmd and pte states on unhandled data abort faults")
-Link: https://lore.kernel.org/20260716014022.2823-1-xieyuanbin1@huawei.com
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+        fdata.timeout.sec = -1;
+        fdata.timeout.nsec = 0;
+
+        if (ioctl(fd, PPS_FETCH, &fdata))
+            err(2, "PPS_FETCH failed");
+
+        close(fd);
+        return 0;
+    }
+
+Sashiko imagines this to be some sort of security problem, which is
+obviously really silly.  But I think it is still worth fixing, so buggy
+userspace code can't trigger the splat.
+
+Silence the splat by using timespec64_to_jiffies(), which hard limits the
+timeout to LONG_MAX jiffies.  To be safe, explicitly preserve the
+-ETIMEDOUT return value userspace sees today if it passes a negative
+timeout.
+
+If you really squint, this is still a slight behavior change in that there
+are "denormalized" combinations of tv_sec and tv_nsec which used to work
+but will now return -ETIMEDOUT.  I can't imagine anybody will care about
+that...
+
+Link: https://lore.kernel.org/c5c97c3b3c9d66010382094fd538e59a38f4aacf.1781289959.git.calvin@wbinvd.org
+Fixes: eae9d2ba0cfc ("LinuxPPS: core support")
+Signed-off-by: Calvin Owens <calvin@wbinvd.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/cover.1779733602.git.calvin%40wbinvd.org?part=3
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/pps/pps.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index 16b5a7d214808..6763a7c660780 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -205,7 +205,11 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
- 		pr_err("8<--- cut here ---\n");
- 		pr_err("%s: unhandled page fault (%d) at 0x%08lx, code 0x%03x\n",
- 		       tsk->comm, sig, addr, fsr);
--		show_pte(KERN_ERR, tsk->mm, addr);
-+		if (likely(addr < TASK_SIZE)) {
-+			mmap_write_lock(tsk->mm);
-+			show_pte(KERN_ERR, tsk->mm, addr);
-+			mmap_write_unlock(tsk->mm);
-+		}
- 		show_regs(regs);
- 	}
- #endif
-@@ -649,7 +653,15 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, fsr, addr);
--	show_pte(KERN_ALERT, current->mm, addr);
-+	if (likely(user_mode(regs))) {
-+		if (addr < TASK_SIZE) {
-+			mmap_write_lock(current->mm);
-+			show_pte(KERN_ALERT, current->mm, addr);
-+			mmap_write_unlock(current->mm);
-+		}
-+	} else {
-+		show_pte(KERN_ALERT, current->mm, addr);
-+	}
+diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
+index c6b8b64782761..2e04636f43805 100644
+--- a/drivers/pps/pps.c
++++ b/drivers/pps/pps.c
+@@ -63,13 +63,19 @@ static int pps_cdev_pps_fetch(struct pps_device *pps, struct pps_fdata *fdata)
+ 		err = wait_event_interruptible(pps->queue,
+ 				ev != pps->last_ev);
+ 	else {
++		struct timespec64 ts;
+ 		unsigned long ticks;
  
- 	arm_notify_die("", regs, inf->sig, inf->code, (void __user *)addr,
- 		       fsr, 0);
+ 		dev_dbg(&pps->dev, "timeout %lld.%09d\n",
+ 				(long long) fdata->timeout.sec,
+ 				fdata->timeout.nsec);
+-		ticks = fdata->timeout.sec * HZ;
+-		ticks += fdata->timeout.nsec / (NSEC_PER_SEC / HZ);
++
++		if (fdata->timeout.sec < 0)
++			return -ETIMEDOUT;
++
++		ts.tv_sec = fdata->timeout.sec;
++		ts.tv_nsec = fdata->timeout.nsec;
++		ticks = timespec64_to_jiffies(&ts);
+ 
+ 		if (ticks != 0) {
+ 			err = wait_event_interruptible_timeout(
 -- 
 2.53.0
 
