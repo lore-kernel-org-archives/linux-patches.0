@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B726A288B9;
-	Sat, 12 Sep 2026 16:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C389C288B9;
+	Sat, 12 Sep 2026 16:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230774; cv=none; b=ksM8oNhL+As+W4J8Q/UwvnCter2rmnV9yCaS+KYbJTHd1XepGtN8nzNa454a92Bn5HXWGocxCAix6GlrzHxHkP+V1dgK77DmTGTeso/Pz9v5TlOGZv91HkMBns4kXUUT1U7ygkFMQ38Rm/ZHFSdTBxuDDG23PEFs3ox8Fqdfp6w=
+	t=1789230780; cv=none; b=YF5jd3xF3nHURAc/kldE4cdoyvNBE+2Pb1OcS62/xY35R7kslvuy46ACiJXbOZ9pBVeRigeih0zJmZ5hCzfnK2jW3DSNtHblFHhbXb1mAszTsH+4G93Zr3l2B8J9xRmGKlxG/WpDqFPQ5ePwh071hq6WQG4drZgQtkaaDoXwPDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230774; c=relaxed/simple;
-	bh=lSGvNkBHH1V6xW9I5qrxx7GTQ0L1zT3UllJ78sp45Uo=;
+	s=arc-20240116; t=1789230780; c=relaxed/simple;
+	bh=mSmnAxY356jhwYHAhsBXlmOJn0By4t+p6IeblrtjP1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0p2S2A28OdeX7pakzx+NEhvAamvrc29bT/Wjf2+kdjWYVyZ06VxjxJJ3DJ/8+n/7wBlyVoEUSMislOMgZCGRoMPPeZDY2lKMVx3KlsJ/md6jB2dknFSK2CHBQ2HLS3Xc7R7jtQGIugtSiKHAG/KXvgmTEMcCUmxmN96cKfBT+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14Mugthf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uDSNRfGzzM+oVRXSJiFJh3H5FAheb5uyT6n2fE/wH0tdm8KqCieoTTvsUPD06iz6g7MVchZEtSbg0Oyj3dF+vdxBSO3/XvAriIC49Z7kp1M6GxchYB8VWVY2E6c7jpDX2Jxs+yxvNlV4F6rCwo6koaIAtze3KARJ8idmULgkeEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raKq1abe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14Mugthf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4501B1F000FF;
-	Sat, 12 Sep 2026 16:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raKq1abe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B41F1F000FF;
+	Sat, 12 Sep 2026 16:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230773;
-	bh=3QpGgSOdDys8aqLyjlaA9y3wvWbHGDY2YQ5r40PI0iw=;
+	s=korg; t=1789230778;
+	bh=p3ZSQrY90HURMKfIrLFMlA4B/iNxvjp2S8uelpXBq0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=14Mugthf08pOqHl+gao+9Kv+fDk1cuUMHF+l4UNnXIINk/mRvAMjDJxQ/eAne2vk9
-	 GkOhGpd32S3+mc/VSC/aQJ0kQhtTW47J3h/K/5Gx+eAeLXhWuZwGmFib2rKa8R7W9b
-	 V84ayNB2f8/3by/DNB/nmUIkgBB71A38pjwFtVzc=
+	b=raKq1abe7GWsZNn6+Gk9Eo4yh8q2qXSnVhlulXjsNscZePQGxmKkchmjMOmtH8Bcj
+	 m3qf5yyAcfO2+QJNbe2li3hCJHpLU6w//MWN7rMihA13PsdDMj8U5/OfpOY95qmCQe
+	 ZmVo39dz6iEr6BFex5du+T6JohTFkh91ENrFHdS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0862/1191] drm/omap: dsi: Do not copy isr table
-Date: Sat, 12 Sep 2026 08:59:50 +0200
-Message-ID: <20260912065607.612722791@linuxfoundation.org>
+Subject: [PATCH 6.1 0863/1191] remoteproc: Move resource table data structure to its own header
+Date: Sat, 12 Sep 2026 08:59:51 +0200
+Message-ID: <20260912065607.636514461@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,66 +44,642 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 97c03b32b28a9f7f13f768f2b06e1eaafe850e66 ]
+[ Upstream commit 0590420c2f90de497d342c9a41a618f46f4d09ab ]
 
-To be able to unregister stuff from isrs, the corresponding table was
-copied.  Nobody seems to unregister stuff that way, so it does not help.
-But there are stack-allocated objects passed to these isrs giving chances
-of UAF of these objects if irqs are unregistered while they are handled,
-so better do not copy that table.
+The resource table data structure has traditionally been associated with
+the remoteproc framework, where the resource table is included as a
+section within the remote processor firmware binary. However, it is also
+possible to obtain the resource table through other means—such as from a
+reserved memory region populated by the boot firmware, statically
+maintained driver data, or via a secure SMC call—when it is not embedded
+in the firmware.
 
-Fixes: 4ae2ddddf44cd ("OMAP: DSS2: DSI: Add ISR support")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260702-dsi-uaf-v2-1-dbb4aa0f0b8e@kemnade.info
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+There are multiple Qualcomm remote processors (e.g., Venus, Iris, GPU,
+etc.) in the upstream kernel that do not use the remoteproc framework to
+manage their lifecycle for various reasons.
+
+When Linux is running at EL2, similar to the Qualcomm PAS driver
+(qcom_q6v5_pas.c), client drivers for subsystems like video and GPU may
+also want to use the resource table SMC call to retrieve and map
+resources before they are used by the remote processor.
+
+In such cases, the resource table data structure is no longer tightly
+coupled with the remoteproc headers. Client drivers that do not use the
+remoteproc framework should still be able to parse the resource table
+obtained through alternative means. Therefore, there is a need to
+decouple the resource table definitions from the remoteproc headers.
+
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260506050107.1985033-2-mukesh.ojha@oss.qualcomm.com
+Stable-dep-of: bb840ea69347 ("remoteproc: fix OOB read via signed offset in rsc_table_for_each_entry()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/dss/dsi.c | 7 +------
- drivers/gpu/drm/omapdrm/dss/dsi.h | 2 --
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ include/linux/remoteproc.h | 269 +-------------------------------
+ include/linux/rsc_table.h  | 306 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 307 insertions(+), 268 deletions(-)
+ create mode 100644 include/linux/rsc_table.h
 
-diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
-index 4c1084eb01759..708520e5d4525 100644
---- a/drivers/gpu/drm/omapdrm/dss/dsi.c
-+++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
-@@ -455,15 +455,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
- 		del_timer(&dsi->te_timer);
- #endif
- 
--	/* make a copy and unlock, so that isrs can unregister
--	 * themselves */
--	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
--		sizeof(dsi->isr_tables));
-+	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
- 
- 	spin_unlock(&dsi->irq_lock);
- 
--	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
+diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+index c6d2b1136712a..32f2a75e23832 100644
+--- a/include/linux/remoteproc.h
++++ b/include/linux/remoteproc.h
+@@ -43,274 +43,7 @@
+ #include <linux/completion.h>
+ #include <linux/idr.h>
+ #include <linux/of.h>
 -
- 	dsi_handle_irq_errors(dsi, irqstatus, vcstatus, ciostatus);
+-/**
+- * struct resource_table - firmware resource table header
+- * @ver: version number
+- * @num: number of resource entries
+- * @reserved: reserved (must be zero)
+- * @offset: array of offsets pointing at the various resource entries
+- *
+- * A resource table is essentially a list of system resources required
+- * by the remote processor. It may also include configuration entries.
+- * If needed, the remote processor firmware should contain this table
+- * as a dedicated ".resource_table" ELF section.
+- *
+- * Some resources entries are mere announcements, where the host is informed
+- * of specific remoteproc configuration. Other entries require the host to
+- * do something (e.g. allocate a system resource). Sometimes a negotiation
+- * is expected, where the firmware requests a resource, and once allocated,
+- * the host should provide back its details (e.g. address of an allocated
+- * memory region).
+- *
+- * The header of the resource table, as expressed by this structure,
+- * contains a version number (should we need to change this format in the
+- * future), the number of available resource entries, and their offsets
+- * in the table.
+- *
+- * Immediately following this header are the resource entries themselves,
+- * each of which begins with a resource entry header (as described below).
+- */
+-struct resource_table {
+-	u32 ver;
+-	u32 num;
+-	u32 reserved[2];
+-	u32 offset[];
+-} __packed;
+-
+-/**
+- * struct fw_rsc_hdr - firmware resource entry header
+- * @type: resource type
+- * @data: resource data
+- *
+- * Every resource entry begins with a 'struct fw_rsc_hdr' header providing
+- * its @type. The content of the entry itself will immediately follow
+- * this header, and it should be parsed according to the resource type.
+- */
+-struct fw_rsc_hdr {
+-	u32 type;
+-	u8 data[];
+-} __packed;
+-
+-/**
+- * enum fw_resource_type - types of resource entries
+- *
+- * @RSC_CARVEOUT:   request for allocation of a physically contiguous
+- *		    memory region.
+- * @RSC_DEVMEM:     request to iommu_map a memory-based peripheral.
+- * @RSC_TRACE:	    announces the availability of a trace buffer into which
+- *		    the remote processor will be writing logs.
+- * @RSC_VDEV:       declare support for a virtio device, and serve as its
+- *		    virtio header.
+- * @RSC_LAST:       just keep this one at the end of standard resources
+- * @RSC_VENDOR_START:	start of the vendor specific resource types range
+- * @RSC_VENDOR_END:	end of the vendor specific resource types range
+- *
+- * For more details regarding a specific resource type, please see its
+- * dedicated structure below.
+- *
+- * Please note that these values are used as indices to the rproc_handle_rsc
+- * lookup table, so please keep them sane. Moreover, @RSC_LAST is used to
+- * check the validity of an index before the lookup table is accessed, so
+- * please update it as needed.
+- */
+-enum fw_resource_type {
+-	RSC_CARVEOUT		= 0,
+-	RSC_DEVMEM		= 1,
+-	RSC_TRACE		= 2,
+-	RSC_VDEV		= 3,
+-	RSC_LAST		= 4,
+-	RSC_VENDOR_START	= 128,
+-	RSC_VENDOR_END		= 512,
+-};
+-
+-#define FW_RSC_ADDR_ANY (-1)
+-
+-/**
+- * struct fw_rsc_carveout - physically contiguous memory request
+- * @da: device address
+- * @pa: physical address
+- * @len: length (in bytes)
+- * @flags: iommu protection flags
+- * @reserved: reserved (must be zero)
+- * @name: human-readable name of the requested memory region
+- *
+- * This resource entry requests the host to allocate a physically contiguous
+- * memory region.
+- *
+- * These request entries should precede other firmware resource entries,
+- * as other entries might request placing other data objects inside
+- * these memory regions (e.g. data/code segments, trace resource entries, ...).
+- *
+- * Allocating memory this way helps utilizing the reserved physical memory
+- * (e.g. CMA) more efficiently, and also minimizes the number of TLB entries
+- * needed to map it (in case @rproc is using an IOMMU). Reducing the TLB
+- * pressure is important; it may have a substantial impact on performance.
+- *
+- * If the firmware is compiled with static addresses, then @da should specify
+- * the expected device address of this memory region. If @da is set to
+- * FW_RSC_ADDR_ANY, then the host will dynamically allocate it, and then
+- * overwrite @da with the dynamically allocated address.
+- *
+- * We will always use @da to negotiate the device addresses, even if it
+- * isn't using an iommu. In that case, though, it will obviously contain
+- * physical addresses.
+- *
+- * Some remote processors needs to know the allocated physical address
+- * even if they do use an iommu. This is needed, e.g., if they control
+- * hardware accelerators which access the physical memory directly (this
+- * is the case with OMAP4 for instance). In that case, the host will
+- * overwrite @pa with the dynamically allocated physical address.
+- * Generally we don't want to expose physical addresses if we don't have to
+- * (remote processors are generally _not_ trusted), so we might want to
+- * change this to happen _only_ when explicitly required by the hardware.
+- *
+- * @flags is used to provide IOMMU protection flags, and @name should
+- * (optionally) contain a human readable name of this carveout region
+- * (mainly for debugging purposes).
+- */
+-struct fw_rsc_carveout {
+-	u32 da;
+-	u32 pa;
+-	u32 len;
+-	u32 flags;
+-	u32 reserved;
+-	u8 name[32];
+-} __packed;
+-
+-/**
+- * struct fw_rsc_devmem - iommu mapping request
+- * @da: device address
+- * @pa: physical address
+- * @len: length (in bytes)
+- * @flags: iommu protection flags
+- * @reserved: reserved (must be zero)
+- * @name: human-readable name of the requested region to be mapped
+- *
+- * This resource entry requests the host to iommu map a physically contiguous
+- * memory region. This is needed in case the remote processor requires
+- * access to certain memory-based peripherals; _never_ use it to access
+- * regular memory.
+- *
+- * This is obviously only needed if the remote processor is accessing memory
+- * via an iommu.
+- *
+- * @da should specify the required device address, @pa should specify
+- * the physical address we want to map, @len should specify the size of
+- * the mapping and @flags is the IOMMU protection flags. As always, @name may
+- * (optionally) contain a human readable name of this mapping (mainly for
+- * debugging purposes).
+- *
+- * Note: at this point we just "trust" those devmem entries to contain valid
+- * physical addresses, but this isn't safe and will be changed: eventually we
+- * want remoteproc implementations to provide us ranges of physical addresses
+- * the firmware is allowed to request, and not allow firmwares to request
+- * access to physical addresses that are outside those ranges.
+- */
+-struct fw_rsc_devmem {
+-	u32 da;
+-	u32 pa;
+-	u32 len;
+-	u32 flags;
+-	u32 reserved;
+-	u8 name[32];
+-} __packed;
+-
+-/**
+- * struct fw_rsc_trace - trace buffer declaration
+- * @da: device address
+- * @len: length (in bytes)
+- * @reserved: reserved (must be zero)
+- * @name: human-readable name of the trace buffer
+- *
+- * This resource entry provides the host information about a trace buffer
+- * into which the remote processor will write log messages.
+- *
+- * @da specifies the device address of the buffer, @len specifies
+- * its size, and @name may contain a human readable name of the trace buffer.
+- *
+- * After booting the remote processor, the trace buffers are exposed to the
+- * user via debugfs entries (called trace0, trace1, etc..).
+- */
+-struct fw_rsc_trace {
+-	u32 da;
+-	u32 len;
+-	u32 reserved;
+-	u8 name[32];
+-} __packed;
+-
+-/**
+- * struct fw_rsc_vdev_vring - vring descriptor entry
+- * @da: device address
+- * @align: the alignment between the consumer and producer parts of the vring
+- * @num: num of buffers supported by this vring (must be power of two)
+- * @notifyid: a unique rproc-wide notify index for this vring. This notify
+- * index is used when kicking a remote processor, to let it know that this
+- * vring is triggered.
+- * @pa: physical address
+- *
+- * This descriptor is not a resource entry by itself; it is part of the
+- * vdev resource type (see below).
+- *
+- * Note that @da should either contain the device address where
+- * the remote processor is expecting the vring, or indicate that
+- * dynamically allocation of the vring's device address is supported.
+- */
+-struct fw_rsc_vdev_vring {
+-	u32 da;
+-	u32 align;
+-	u32 num;
+-	u32 notifyid;
+-	u32 pa;
+-} __packed;
+-
+-/**
+- * struct fw_rsc_vdev - virtio device header
+- * @id: virtio device id (as in virtio_ids.h)
+- * @notifyid: a unique rproc-wide notify index for this vdev. This notify
+- * index is used when kicking a remote processor, to let it know that the
+- * status/features of this vdev have changes.
+- * @dfeatures: specifies the virtio device features supported by the firmware
+- * @gfeatures: a place holder used by the host to write back the
+- * negotiated features that are supported by both sides.
+- * @config_len: the size of the virtio config space of this vdev. The config
+- * space lies in the resource table immediate after this vdev header.
+- * @status: a place holder where the host will indicate its virtio progress.
+- * @num_of_vrings: indicates how many vrings are described in this vdev header
+- * @reserved: reserved (must be zero)
+- * @vring: an array of @num_of_vrings entries of 'struct fw_rsc_vdev_vring'.
+- *
+- * This resource is a virtio device header: it provides information about
+- * the vdev, and is then used by the host and its peer remote processors
+- * to negotiate and share certain virtio properties.
+- *
+- * By providing this resource entry, the firmware essentially asks remoteproc
+- * to statically allocate a vdev upon registration of the rproc (dynamic vdev
+- * allocation is not yet supported).
+- *
+- * Note:
+- * 1. unlike virtualization systems, the term 'host' here means
+- *    the Linux side which is running remoteproc to control the remote
+- *    processors. We use the name 'gfeatures' to comply with virtio's terms,
+- *    though there isn't really any virtualized guest OS here: it's the host
+- *    which is responsible for negotiating the final features.
+- *    Yeah, it's a bit confusing.
+- *
+- * 2. immediately following this structure is the virtio config space for
+- *    this vdev (which is specific to the vdev; for more info, read the virtio
+- *    spec). The size of the config space is specified by @config_len.
+- */
+-struct fw_rsc_vdev {
+-	u32 id;
+-	u32 notifyid;
+-	u32 dfeatures;
+-	u32 gfeatures;
+-	u32 config_len;
+-	u8 status;
+-	u8 num_of_vrings;
+-	u8 reserved[2];
+-	struct fw_rsc_vdev_vring vring[];
+-} __packed;
++#include <linux/rsc_table.h>
  
- 	dsi_collect_irq_stats(dsi, irqstatus, vcstatus, ciostatus);
-diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.h b/drivers/gpu/drm/omapdrm/dss/dsi.h
-index 601707c0ecc4e..2b25247ea8935 100644
---- a/drivers/gpu/drm/omapdrm/dss/dsi.h
-+++ b/drivers/gpu/drm/omapdrm/dss/dsi.h
-@@ -379,8 +379,6 @@ struct dsi_data {
+ struct rproc;
  
- 	spinlock_t irq_lock;
- 	struct dsi_isr_tables isr_tables;
--	/* space for a copy used by the interrupt handler */
--	struct dsi_isr_tables isr_tables_copy;
- 
- 	int update_vc;
- #ifdef DSI_PERF_MEASURE
+diff --git a/include/linux/rsc_table.h b/include/linux/rsc_table.h
+new file mode 100644
+index 0000000000000..c32c8b6cd2a77
+--- /dev/null
++++ b/include/linux/rsc_table.h
+@@ -0,0 +1,306 @@
++/*
++ * Resource table and its types data structure
++ *
++ * Copyright(c) 2011 Texas Instruments, Inc.
++ * Copyright(c) 2011 Google, Inc.
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ *
++ * * Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ * * Redistributions in binary form must reproduce the above copyright
++ *   notice, this list of conditions and the following disclaimer in
++ *   the documentation and/or other materials provided with the
++ *   distribution.
++ * * Neither the name Texas Instruments nor the names of its
++ *   contributors may be used to endorse or promote products derived
++ *   from this software without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#ifndef RSC_TABLE_H
++#define RSC_TABLE_H
++
++/**
++ * struct resource_table - firmware resource table header
++ * @ver: version number
++ * @num: number of resource entries
++ * @reserved: reserved (must be zero)
++ * @offset: array of offsets pointing at the various resource entries
++ *
++ * A resource table is essentially a list of system resources required
++ * by the remote processor. It may also include configuration entries.
++ * If needed, the remote processor firmware should contain this table
++ * as a dedicated ".resource_table" ELF section.
++ *
++ * Some resources entries are mere announcements, where the host is informed
++ * of specific remoteproc configuration. Other entries require the host to
++ * do something (e.g. allocate a system resource). Sometimes a negotiation
++ * is expected, where the firmware requests a resource, and once allocated,
++ * the host should provide back its details (e.g. address of an allocated
++ * memory region).
++ *
++ * The header of the resource table, as expressed by this structure,
++ * contains a version number (should we need to change this format in the
++ * future), the number of available resource entries, and their offsets
++ * in the table.
++ *
++ * Immediately following this header are the resource entries themselves,
++ * each of which begins with a resource entry header (as described below).
++ */
++struct resource_table {
++	u32 ver;
++	u32 num;
++	u32 reserved[2];
++	u32 offset[];
++} __packed;
++
++/**
++ * struct fw_rsc_hdr - firmware resource entry header
++ * @type: resource type
++ * @data: resource data
++ *
++ * Every resource entry begins with a 'struct fw_rsc_hdr' header providing
++ * its @type. The content of the entry itself will immediately follow
++ * this header, and it should be parsed according to the resource type.
++ */
++struct fw_rsc_hdr {
++	u32 type;
++	u8 data[];
++} __packed;
++
++/**
++ * enum fw_resource_type - types of resource entries
++ *
++ * @RSC_CARVEOUT:   request for allocation of a physically contiguous
++ *		    memory region.
++ * @RSC_DEVMEM:     request to iommu_map a memory-based peripheral.
++ * @RSC_TRACE:	    announces the availability of a trace buffer into which
++ *		    the remote processor will be writing logs.
++ * @RSC_VDEV:       declare support for a virtio device, and serve as its
++ *		    virtio header.
++ * @RSC_LAST:       just keep this one at the end of standard resources
++ * @RSC_VENDOR_START:	start of the vendor specific resource types range
++ * @RSC_VENDOR_END:	end of the vendor specific resource types range
++ *
++ * For more details regarding a specific resource type, please see its
++ * dedicated structure below.
++ *
++ * Please note that these values are used as indices to the rproc_handle_rsc
++ * lookup table, so please keep them sane. Moreover, @RSC_LAST is used to
++ * check the validity of an index before the lookup table is accessed, so
++ * please update it as needed.
++ */
++enum fw_resource_type {
++	RSC_CARVEOUT		= 0,
++	RSC_DEVMEM		= 1,
++	RSC_TRACE		= 2,
++	RSC_VDEV		= 3,
++	RSC_LAST		= 4,
++	RSC_VENDOR_START	= 128,
++	RSC_VENDOR_END		= 512,
++};
++
++#define FW_RSC_ADDR_ANY (-1)
++
++/**
++ * struct fw_rsc_carveout - physically contiguous memory request
++ * @da: device address
++ * @pa: physical address
++ * @len: length (in bytes)
++ * @flags: iommu protection flags
++ * @reserved: reserved (must be zero)
++ * @name: human-readable name of the requested memory region
++ *
++ * This resource entry requests the host to allocate a physically contiguous
++ * memory region.
++ *
++ * These request entries should precede other firmware resource entries,
++ * as other entries might request placing other data objects inside
++ * these memory regions (e.g. data/code segments, trace resource entries, ...).
++ *
++ * Allocating memory this way helps utilizing the reserved physical memory
++ * (e.g. CMA) more efficiently, and also minimizes the number of TLB entries
++ * needed to map it (in case @rproc is using an IOMMU). Reducing the TLB
++ * pressure is important; it may have a substantial impact on performance.
++ *
++ * If the firmware is compiled with static addresses, then @da should specify
++ * the expected device address of this memory region. If @da is set to
++ * FW_RSC_ADDR_ANY, then the host will dynamically allocate it, and then
++ * overwrite @da with the dynamically allocated address.
++ *
++ * We will always use @da to negotiate the device addresses, even if it
++ * isn't using an iommu. In that case, though, it will obviously contain
++ * physical addresses.
++ *
++ * Some remote processors needs to know the allocated physical address
++ * even if they do use an iommu. This is needed, e.g., if they control
++ * hardware accelerators which access the physical memory directly (this
++ * is the case with OMAP4 for instance). In that case, the host will
++ * overwrite @pa with the dynamically allocated physical address.
++ * Generally we don't want to expose physical addresses if we don't have to
++ * (remote processors are generally _not_ trusted), so we might want to
++ * change this to happen _only_ when explicitly required by the hardware.
++ *
++ * @flags is used to provide IOMMU protection flags, and @name should
++ * (optionally) contain a human readable name of this carveout region
++ * (mainly for debugging purposes).
++ */
++struct fw_rsc_carveout {
++	u32 da;
++	u32 pa;
++	u32 len;
++	u32 flags;
++	u32 reserved;
++	u8 name[32];
++} __packed;
++
++/**
++ * struct fw_rsc_devmem - iommu mapping request
++ * @da: device address
++ * @pa: physical address
++ * @len: length (in bytes)
++ * @flags: iommu protection flags
++ * @reserved: reserved (must be zero)
++ * @name: human-readable name of the requested region to be mapped
++ *
++ * This resource entry requests the host to iommu map a physically contiguous
++ * memory region. This is needed in case the remote processor requires
++ * access to certain memory-based peripherals; _never_ use it to access
++ * regular memory.
++ *
++ * This is obviously only needed if the remote processor is accessing memory
++ * via an iommu.
++ *
++ * @da should specify the required device address, @pa should specify
++ * the physical address we want to map, @len should specify the size of
++ * the mapping and @flags is the IOMMU protection flags. As always, @name may
++ * (optionally) contain a human readable name of this mapping (mainly for
++ * debugging purposes).
++ *
++ * Note: at this point we just "trust" those devmem entries to contain valid
++ * physical addresses, but this isn't safe and will be changed: eventually we
++ * want remoteproc implementations to provide us ranges of physical addresses
++ * the firmware is allowed to request, and not allow firmwares to request
++ * access to physical addresses that are outside those ranges.
++ */
++struct fw_rsc_devmem {
++	u32 da;
++	u32 pa;
++	u32 len;
++	u32 flags;
++	u32 reserved;
++	u8 name[32];
++} __packed;
++
++/**
++ * struct fw_rsc_trace - trace buffer declaration
++ * @da: device address
++ * @len: length (in bytes)
++ * @reserved: reserved (must be zero)
++ * @name: human-readable name of the trace buffer
++ *
++ * This resource entry provides the host information about a trace buffer
++ * into which the remote processor will write log messages.
++ *
++ * @da specifies the device address of the buffer, @len specifies
++ * its size, and @name may contain a human readable name of the trace buffer.
++ *
++ * After booting the remote processor, the trace buffers are exposed to the
++ * user via debugfs entries (called trace0, trace1, etc..).
++ */
++struct fw_rsc_trace {
++	u32 da;
++	u32 len;
++	u32 reserved;
++	u8 name[32];
++} __packed;
++
++/**
++ * struct fw_rsc_vdev_vring - vring descriptor entry
++ * @da: device address
++ * @align: the alignment between the consumer and producer parts of the vring
++ * @num: num of buffers supported by this vring (must be power of two)
++ * @notifyid: a unique rproc-wide notify index for this vring. This notify
++ * index is used when kicking a remote processor, to let it know that this
++ * vring is triggered.
++ * @pa: physical address
++ *
++ * This descriptor is not a resource entry by itself; it is part of the
++ * vdev resource type (see below).
++ *
++ * Note that @da should either contain the device address where
++ * the remote processor is expecting the vring, or indicate that
++ * dynamically allocation of the vring's device address is supported.
++ */
++struct fw_rsc_vdev_vring {
++	u32 da;
++	u32 align;
++	u32 num;
++	u32 notifyid;
++	u32 pa;
++} __packed;
++
++/**
++ * struct fw_rsc_vdev - virtio device header
++ * @id: virtio device id (as in virtio_ids.h)
++ * @notifyid: a unique rproc-wide notify index for this vdev. This notify
++ * index is used when kicking a remote processor, to let it know that the
++ * status/features of this vdev have changes.
++ * @dfeatures: specifies the virtio device features supported by the firmware
++ * @gfeatures: a place holder used by the host to write back the
++ * negotiated features that are supported by both sides.
++ * @config_len: the size of the virtio config space of this vdev. The config
++ * space lies in the resource table immediate after this vdev header.
++ * @status: a place holder where the host will indicate its virtio progress.
++ * @num_of_vrings: indicates how many vrings are described in this vdev header
++ * @reserved: reserved (must be zero)
++ * @vring: an array of @num_of_vrings entries of 'struct fw_rsc_vdev_vring'.
++ *
++ * This resource is a virtio device header: it provides information about
++ * the vdev, and is then used by the host and its peer remote processors
++ * to negotiate and share certain virtio properties.
++ *
++ * By providing this resource entry, the firmware essentially asks remoteproc
++ * to statically allocate a vdev upon registration of the rproc (dynamic vdev
++ * allocation is not yet supported).
++ *
++ * Note:
++ * 1. unlike virtualization systems, the term 'host' here means
++ *    the Linux side which is running remoteproc to control the remote
++ *    processors. We use the name 'gfeatures' to comply with virtio's terms,
++ *    though there isn't really any virtualized guest OS here: it's the host
++ *    which is responsible for negotiating the final features.
++ *    Yeah, it's a bit confusing.
++ *
++ * 2. immediately following this structure is the virtio config space for
++ *    this vdev (which is specific to the vdev; for more info, read the virtio
++ *    spec). The size of the config space is specified by @config_len.
++ */
++struct fw_rsc_vdev {
++	u32 id;
++	u32 notifyid;
++	u32 dfeatures;
++	u32 gfeatures;
++	u32 config_len;
++	u8 status;
++	u8 num_of_vrings;
++	u8 reserved[2];
++	struct fw_rsc_vdev_vring vring[];
++} __packed;
++
++#endif /* RSC_TABLE_H */
 -- 
 2.53.0
 
