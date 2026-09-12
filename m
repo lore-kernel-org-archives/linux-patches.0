@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C88A3F23BE;
-	Sat, 12 Sep 2026 10:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C63641F344;
+	Sat, 12 Sep 2026 10:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208007; cv=none; b=opjy5m02RxmQB4JyXK7gJktWNOG2YSdfmn5DuAJI0QJF9pTFAcRdGX+GQk4nDc34abE/9U4YkuQfEm/R+B/QMBbS7fbQYM9iU9lef0RSfeIa56DJwzAbGlMTQqAwPuMKUrOYgyngW8gYIeg0zNcY8ysN76QhaeZCP2dzu3lIFxY=
+	t=1789208012; cv=none; b=BQ7lTNox8ckXdiwevz3Wnfy8f194fD40/D3H/fLkD5B0/+ZDeAh3Ogl/G7F7vVGgTrU14Aq0LU+1gMqxsYI904A6U9KTmj4i4rwwybIIN1068ENWmn4u9rkFKdnVC0lLgoJb5H5FpRIoauYVgRbRW/n1cs5MFOGEPoZMunbeahk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208007; c=relaxed/simple;
-	bh=QH4y2ZZ+YkNs7qrun2lvdQo/84mQp+pIjEHI3saag9k=;
+	s=arc-20240116; t=1789208012; c=relaxed/simple;
+	bh=2ULAt40LYUYsPZGAw3C8vEqaKmJ0d4+R7WjeNBD61+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbGjcOWt8k5GfO/VspXGSzCkYCcohpCOskgvgisV25shaV5FXQuLndTp4FsE8+t0CSIZoCNMjKrdi7HjiW7JF/wIXUJf0Ipc+g+6oA7Q6ix/WUDYdxoktmJEMyppU+p7G5JDjBZol8180033ElDj8EqxqfARQN2Vgcixxc/tO4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqUPRuj0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W/GTmgSO2ntJ4x3n66+AgPk/RXXTB/p26/brMvJiGmEHMit7s7n06bFjicoiob1bGZ+QYeY7dG43HxlG96qV83VlcuE8sd4IjKopFWLHyzgFWbLMIUZl2+drrfmA0/qTqHMuqo2A4nR3qSbfPU32UV3dKP7k1Pxo+txMBRyo4IE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BTciQi4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqUPRuj0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5371F000FF;
-	Sat, 12 Sep 2026 10:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BTciQi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CC31F000FF;
+	Sat, 12 Sep 2026 10:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208004;
-	bh=TLZ7/VS2Pv1iBw2M9v6UNIeyWU12FuhgKeBXVGc2oEU=;
+	s=korg; t=1789208010;
+	bh=ZPVcXnxAHfSU8o3hJDWLnk49lb/1gOKPVr5Iroi1KXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VqUPRuj0YR0fbUgIICrm26zvH9bhPjJMEnZHAqtTfVvKja9YpJQIBF18aR6YWp7Ex
-	 Dw5RChIej6mdw5HXmqeTH74R/+A70TtsQZwKFx6NBK078QfPS+bDAyRPmH7tY1/Aln
-	 CnspQBeoh3Wl5Lg07fHSPPg/jENmo5UoBC62FTgE=
+	b=2BTciQi4P5PnGhqvS2WFd70NkgIkxx4+bhbtwCGnqM7CEARKPtjIDpGqTAjDYoqzJ
+	 +nqXXOWxNnUYViQFepBuqAl8t9Ypby7pcyCxS1fanH123N7PrsT8VRTsxFiXZRtvQr
+	 gU54iv2sMN14voQSlsarltNGFdFCoBGfstuEAj2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
+	syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com,
 	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
+	Aditya Prakash Srivastava <aditya.ansh182@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0529/1518] ext4: drain in-flight DIO before buffered write fallback
-Date: Sat, 12 Sep 2026 08:44:58 +0200
-Message-ID: <20260912065635.412020236@linuxfoundation.org>
+Subject: [PATCH 6.18 0530/1518] ext4: use fsdata to track inline data write state and fix race
+Date: Sat, 12 Sep 2026 08:44:59 +0200
+Message-ID: <20260912065635.434522682@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,104 +53,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
 
-[ Upstream commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ]
+[ Upstream commit 7edbb323bab2b2a609016014caafdb651c898249 ]
 
-generic/746 started failing intermittently on ext3 (no-extent inodes).
-The test triggers 'Page cache invalidation failure on direct I/O'
-warnings and subsequent fsync returns -EIO. Adding a 50ms delay
-between ext4_buffered_write_iter() and filemap_write_and_wait_range()
-in ext4_dio_write_iter() makes the race almost always reproducible.
+Instead of checking the live inode state (ext4_has_inline_data(inode)
+and ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) in the
+write_end handlers, use the fsdata parameter of the address space
+operations to explicitly pass down the state in which write_begin
+prepared the write.
 
-On no-extent inodes, DIO writes to holes cannot use unwritten extents,
-so ext4_iomap_alloc() leaves m_flags=0 and ext4_map_blocks() returns 0.
-The iomap layer then returns -ENOTBLK, causing fallback to buffered I/O.
+A concurrent thread (such as ext4_page_mkwrite()) can convert the
+inline data to an extent between write_begin and write_end. If this
+happens, the write_end handlers would previously miss the inline
+write_end path and fall through to extent-based write_end logic.
+However, since block buffers were never allocated in write_begin,
+this resulted in NULL pointer dereferences or data loss because
+folio_buffers(folio) was NULL.
 
-The fallback path in ext4_dio_write_iter() calls
-ext4_buffered_write_iter() which dirties pages, then does flush and
-invalidate. However, there's an unprotected window between
-ext4_buffered_write_iter() returning (with inode lock released) and
-the subsequent flush+invalidate.
+Define EXT4_WRITE_DATA_INLINE (4) as a bit flag (Bit 2), treating
+fsdata as bitwise flags rather than mutually exclusive enums to keep
+states of the write path independent. Communicate this state via
+fsdata:
+1) ext4_write_begin() and ext4_da_write_begin() set the
+   EXT4_WRITE_DATA_INLINE bit in *fsdata via bitwise OR when an inline
+   write is successfully prepared.
+2) On entry, ext4_write_begin() clears the EXT4_WRITE_DATA_INLINE bit
+   to safely handle VFS retries (where generic_perform_write() bypasses
+   the fsdata initialization on its retry jump).
+3) The write_end handlers perform a bitwise AND to check if the
+   EXT4_WRITE_DATA_INLINE bit is set and invoke the inline write_end
+   helper accordingly.
 
-Concurrent async DIO completions from other threads can run
-kiocb_invalidate_post_direct_write() during this window. If pages have
-been re-dirtied, post-invalidation finds dirty pages and triggers the
-warning, setting -EIO in the error sequence.
+Furthermore, during a buffered write, ext4_write_inline_data_end()
+acquires the xattr lock after preparing the write. If a concurrent
+page fault (ext4_page_mkwrite()) converts the inline data to an extent
+after the write_end handlers check the state but before
+ext4_write_inline_data_end() acquires the xattr write lock, the
+subsequent check will trigger a kernel panic via
+BUG_ON(!ext4_has_inline_data(inode)).
 
-Consider a file with two 4k extents: [hole][written]. Thread A does
-DIO to the written extent, while thread B does DIO spanning both:
+To keep git history working and bisectability clean, replace the
+BUG_ON check in ext4_write_inline_data_end() with a graceful error-
+handling retry path in this same commit. If the inline data is cleared
+after locking the xattr, we safely release all resources (releasing
+iloc.bh, unlocking/putting the folio, stopping the active journal
+transaction handle) and return 0 (VFS retry) to let the generic write
+path retry the operation safely.
 
-  kworker A (4k DIO, allocated block)    kworker B (8k DIO, fallback)
-  -----------------------------------    ----------------------------
-  inode_lock_shared()                    inode_lock_shared()
-  iomap_dio_rw():                        iomap_dio_rw():
-    kiocb_invalidate_pages -> clean        iomap_begin -> -ENOTBLK
-    submit_bio (async)                     dio->size = 0
-  inode_unlock_shared()                  inode_unlock_shared()
-
-  [bio pending in block layer]           /* fallback: lock released */
-                                         ext4_buffered_write_iter()
-                                           inode_lock(exclusive)
-                                           generic_perform_write()
-                                             -> dirty pages [0, 8k]
-                                           inode_unlock(exclusive)
-
-                                         /* pages dirty, no lock */
-  [bio completes]                        filemap_write_and_wait_range()
-  iomap_dio_complete()                     -> flush dirty pages
-    kiocb_invalidate_post_direct_write() invalidate_mapping_pages()
-      invalidate_inode_pages2_range()
-      -> finds dirty page!
-      -> dio_warn_stale_pagecache()
-      -> errseq_set(-EIO)
-
-This issue can be triggered through normal I/O paths, not just
-intentionally overlapping DIO writes from userspace. For example,
-generic/746 uses a loop device where multiple kworkers issue concurrent
-I/O to the backing file. Additionally, when block_size < folio_size,
-non-overlapping DIO writes that share a large folio can also trigger
-the race.
-
-Add inode_dio_wait() in ext4_buffered_write_iter() before
-ext4_write_checks() to drain all in-flight DIO. This ensures that
-all DIO clears existing pages before submitting IO (via
-kiocb_invalidate_pages()), all BIO waits for all DIO to complete
-(via inode_dio_wait()), and ext4_write_checks() observes the inode
-size after all completed DIO so that ext4_block_zero_eof() does not
-race with in-flight DIO, thus eliminating the race.
-
-Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
-Suggested-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/d1adcf7c-c276-458d-9cac-68a4410f7626@gmail.com
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reported-by: syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0c89d865531d053abb2d
+Fixes: 3fdcfb668fd7 ("ext4: add journalled write support for inline data")
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260629113827.4074335-3-libaokun@linux.alibaba.com
+Link: https://patch.msgid.link/20260703045414.1768-1-aditya.ansh182@gmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/file.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ext4/ext4.h   |  1 +
+ fs/ext4/inline.c | 14 +++++++++++++-
+ fs/ext4/inode.c  | 24 +++++++++++++-----------
+ 3 files changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/fs/ext4/file.c b/fs/ext4/file.c
-index 7a8b309321892..149a7fe5a0962 100644
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -292,6 +292,13 @@ static ssize_t ext4_buffered_write_iter(struct kiocb *iocb,
- 		return -EOPNOTSUPP;
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 54be698b9a1c1..996ffdc2dd13d 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3074,6 +3074,7 @@ int do_journal_get_write_access(handle_t *handle, struct inode *inode,
+ void ext4_set_inode_mapping_order(struct inode *inode);
+ #define FALL_BACK_TO_NONDELALLOC 1
+ #define CONVERT_INLINE_DATA	 2
++#define EXT4_WRITE_DATA_INLINE	 4
  
- 	inode_lock(inode);
+ typedef enum {
+ 	EXT4_IGET_NORMAL =	0,
+diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+index 1a48ccaa364dc..672085e4ec24f 100644
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -812,7 +812,19 @@ int ext4_write_inline_data_end(struct inode *inode, loff_t pos, unsigned len,
+ 			goto out;
+ 		}
+ 		ext4_write_lock_xattr(inode, &no_expand);
+-		BUG_ON(!ext4_has_inline_data(inode));
++		/*
++		 * We could have raced with ext4_page_mkwrite() converting
++		 * the inode and clearing the inline data flag, so we just
++		 * release resources and retry the whole write.
++		 */
++		if (unlikely(!ext4_has_inline_data(inode))) {
++			ext4_write_unlock_xattr(inode, &no_expand);
++			brelse(iloc.bh);
++			folio_unlock(folio);
++			folio_put(folio);
++			ext4_journal_stop(handle);
++			return 0;
++		}
+ 
+ 		/*
+ 		 * ei->i_inline_off may have changed since
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 3fcb5c446c6b6..3b2891f185409 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1300,6 +1300,8 @@ static int ext4_write_begin(const struct kiocb *iocb,
+ 	if (unlikely(ret))
+ 		return ret;
+ 
++	*fsdata = (void *)((unsigned long)*fsdata & ~EXT4_WRITE_DATA_INLINE);
 +
-+	/*
-+	 * Prevent concurrent direct I/O and buffered I/O to the same file
-+	 * range. Wait for in-flight DIO to finish before dirtying pages.
-+	 */
-+	inode_dio_wait(inode);
-+
- 	ret = ext4_write_checks(iocb, from);
- 	if (ret <= 0)
- 		goto out;
+ 	trace_ext4_write_begin(inode, pos, len);
+ 	/*
+ 	 * Reserve one block more for addition to orphan list in case
+@@ -1314,8 +1316,10 @@ static int ext4_write_begin(const struct kiocb *iocb,
+ 						    foliop);
+ 		if (ret < 0)
+ 			return ret;
+-		if (ret == 1)
++		if (ret == 1) {
++			*fsdata = (void *)((unsigned long)*fsdata | EXT4_WRITE_DATA_INLINE);
+ 			return 0;
++		}
+ 	}
+ 
+ 	/*
+@@ -1451,8 +1455,7 @@ static int ext4_write_end(const struct kiocb *iocb,
+ 
+ 	trace_ext4_write_end(inode, pos, len, copied);
+ 
+-	if (ext4_has_inline_data(inode) &&
+-	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
++	if ((unsigned long)fsdata & EXT4_WRITE_DATA_INLINE)
+ 		return ext4_write_inline_data_end(inode, pos, len, copied,
+ 						  folio);
+ 
+@@ -1562,8 +1565,7 @@ static int ext4_journalled_write_end(const struct kiocb *iocb,
+ 
+ 	BUG_ON(!ext4_handle_valid(handle));
+ 
+-	if (ext4_has_inline_data(inode) &&
+-	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
++	if ((unsigned long)fsdata & EXT4_WRITE_DATA_INLINE)
+ 		return ext4_write_inline_data_end(inode, pos, len, copied,
+ 						  folio);
+ 
+@@ -3161,8 +3163,10 @@ static int ext4_da_write_begin(const struct kiocb *iocb,
+ 						     foliop, fsdata, true);
+ 		if (ret < 0)
+ 			return ret;
+-		if (ret == 1)
++		if (ret == 1) {
++			*fsdata = (void *)((unsigned long)*fsdata | EXT4_WRITE_DATA_INLINE);
+ 			return 0;
++		}
+ 	}
+ 
+ retry:
+@@ -3295,17 +3299,15 @@ static int ext4_da_write_end(const struct kiocb *iocb,
+ 			     struct folio *folio, void *fsdata)
+ {
+ 	struct inode *inode = mapping->host;
+-	int write_mode = (int)(unsigned long)fsdata;
++	unsigned long write_mode = (unsigned long)fsdata;
+ 
+-	if (write_mode == FALL_BACK_TO_NONDELALLOC)
++	if (write_mode & FALL_BACK_TO_NONDELALLOC)
+ 		return ext4_write_end(iocb, mapping, pos,
+ 				      len, copied, folio, fsdata);
+ 
+ 	trace_ext4_da_write_end(inode, pos, len, copied);
+ 
+-	if (write_mode != CONVERT_INLINE_DATA &&
+-	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA) &&
+-	    ext4_has_inline_data(inode))
++	if (write_mode & EXT4_WRITE_DATA_INLINE)
+ 		return ext4_write_inline_data_end(inode, pos, len, copied,
+ 						  folio);
+ 
 -- 
 2.53.0
 
