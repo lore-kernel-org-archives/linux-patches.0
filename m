@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A2B345EB9;
-	Sat, 12 Sep 2026 16:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6972D5C68;
+	Sat, 12 Sep 2026 16:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229229; cv=none; b=hwuqh3KJhnt0t/s7sUnx9aRjRLf079pYkU8fZP29D9jDfMW7F/N6OwVZHM56ixBE4EZA2gs8pALk+FsTWW9Jxo7yHnJsF3FuMZsVx1MTgpbF3bqqphc2wjxaLax+QSb97XZ/5goZqL9kuwib3bWAszGieQRoFW6UDZ+ZHDRYQME=
+	t=1789229234; cv=none; b=K7EF7tTLkYUpXbh8vKUeRQN7gncgqA5Rg7uVH/dLog252jveY+lKb9h5Y2wdQDyQoZLmNhmdOcdc4Ey1LivXOrcnVeQMcjMC6VEdHM9TvfoTBnpQTXLgzpAVKSn7qrW/H6vBvl+gWlv/3B65rfWNanVkSMaOS1ciy8rBF/uoEuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229229; c=relaxed/simple;
-	bh=5KEqBK6UOw2NHl92oxpEolmW9fdThb1OyHQnoFHN7BE=;
+	s=arc-20240116; t=1789229234; c=relaxed/simple;
+	bh=3ATVEt/wg5mm5yNOfdEBWtuvkvIYETnM4w17tkZpPTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HlX2/IvLPq9YpAA4z1WF+KztRHdH8XrANeRveVJGF9ZkYbTwQ9jm3Ik6ZfNNvlWmxghadHEhcJbQjdEPFKXXT8+VZIFqV4208g98LKuWNsKX4b0E50TjIje+Zq/bVl6JHQsFME5DigCqkaEdkzOIdZcSYoFzdePjaulsiOnWVAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zL7hRSNy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WaA2ZafbKhAiR8id7n5m8fDB9NNXMmUFVIq0jooEZRFO16T8Dp5iiO/3gOYy68UviixWls8HQoHTE89PO1aeOB+jHHttZcayU27CS2Xin7mjbxKst9DPdsLl04h/KJZsChqBAdYhnTjuws3IGv90UjncAxVqw6V9PQ2ZdDnYQew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epD6vzHT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zL7hRSNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF7B1F000FF;
-	Sat, 12 Sep 2026 16:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epD6vzHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C6E1F00893;
+	Sat, 12 Sep 2026 16:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229226;
-	bh=Ak0fCTiW6b/c+NyK4FJdaXRnWV9mAq5IT1jSfQaY20k=;
+	s=korg; t=1789229230;
+	bh=5jwC/kv2+5CQEOwLWqY/7Phtt/jGZ5y7ayvnfA4TZg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zL7hRSNyariM+AVSHW0uhi28jC3XcqsEE2HXJfkyBdgrs8IIgpspeZdE0RBD4XVIs
-	 omYPpqtd74cmvSMMISemKa5ofdbOJNzTjlvYssuKmIkkChxVZF3beuIYcQo01Ispap
-	 ZXwe900Zbp6Cw1xmfHgJCzlBa8aa5t8eLSiBup8E=
+	b=epD6vzHTh6wtVDC8iECPvDUfrd9dERL0cQCnt24lDxqvM4i2KdHelFvLpLpxnjNpU
+	 tPzqKyQu7RmgYMBCr/AtPwjUUtRu7DAQCnrCEI7a87VitkmFph5+KNtj7BpeWuqbS0
+	 GgbBK+MvIZ6r9KEWhCtikUQmoN+nFAtxDoCb8rwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Guo Ren <guoren@kernel.org>,
+	Hanlin Song <pgeorge8929@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0546/1191] selftests/bpf: Fix memory leak in msg_alloc_iov
-Date: Sat, 12 Sep 2026 08:54:34 +0200
-Message-ID: <20260912065600.508367035@linuxfoundation.org>
+Subject: [PATCH 6.1 0511/1191] csky: Fix a4/a5 restoration in syscall trace path
+Date: Sat, 12 Sep 2026 08:53:59 +0200
+Message-ID: <20260912065559.727498737@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,38 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Hanlin Song <pgeorge8929@gmail.com>
 
-[ Upstream commit 602701718649936eb287bf6c7ecf870ec54c6f71 ]
+[ Upstream commit abb81e5ce7d995baa41556b8125fa59e28ba3be8 ]
 
-In the msg_alloc_iov function, the iov pointer is only assigned to
-msg->msg_iov after all memory allocations complete successfully.
-Therefore, when a calloc failure triggers the unwind_iov cleanup branch,
-we should use the local variable iov instead of msg->msg_iov.
+The syscall trace path reloads syscall arguments from pt_regs before
+calling the syscall handler. On C-SKY ABIv2, the 5th and 6th syscall
+arguments are prepared as stack arguments before invoking syscallid.
 
-Fixes: 753fb2ee0934 ("bpf: sockmap, add msg_peek tests to test_sockmap")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260707081434.539327-1-yangfeng59949@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+The current code adjusts sp before loading LSAVE_A4 and LSAVE_A5. Since
+those offsets are relative to the original pt_regs base, loading them
+after changing sp fetches the wrong slots. As a result, traced syscalls
+that use the 5th or 6th argument may receive corrupted arguments.
+
+This is visible with mmap2(), which takes six arguments. A small
+PTRACE_SYSCALL reproducer opens a file and maps one page with:
+
+  mmap(NULL, 4096, PROT_READ | PROT_EXEC, MAP_PRIVATE, fd, 0)
+
+Before the fix, the traced child fails the mmap and exits with 12.
+After the fix, the mapping succeeds and the child exits with 0.
+
+Fix the trace path by loading a4/a5 from pt_regs before changing sp.
+
+Tested on: ck860f, linux-4.19.15, C-SKY abiv2
+
+Fixes: e0bbb53843b5 ("csky: Fixup abiv2 syscall_trace break a4 & a5")
+Suggested-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Hanlin Song <pgeorge8929@gmail.com>
+Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/csky/kernel/entry.S | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 664be1f108dc3..118da895bbc5e 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -513,7 +513,7 @@ static int msg_alloc_iov(struct msghdr *msg,
- 	return 0;
- unwind_iov:
- 	for (i--; i >= 0 ; i--)
--		free(msg->msg_iov[i].iov_base);
-+		free(iov[i].iov_base);
- 	free(iov);
- 	return -ENOMEM;
- }
+diff --git a/arch/csky/kernel/entry.S b/arch/csky/kernel/entry.S
+index 547b4cd1b24b4..566205156ace3 100644
+--- a/arch/csky/kernel/entry.S
++++ b/arch/csky/kernel/entry.S
+@@ -98,11 +98,11 @@ csky_syscall_trace:
+ 	ldw	a2, (sp, LSAVE_A2)
+ 	ldw	a3, (sp, LSAVE_A3)
+ #if defined(__CSKYABIV2__)
+-	subi	sp, 8
+ 	ldw	r9, (sp, LSAVE_A4)
++	ldw	r10, (sp, LSAVE_A5)
++	subi	sp, 8
+ 	stw	r9, (sp, 0x0)
+-	ldw	r9, (sp, LSAVE_A5)
+-	stw	r9, (sp, 0x4)
++	stw	r10, (sp, 0x4)
+ 	jsr	syscallid                     /* Do system call */
+ 	addi	sp, 8
+ #else
 -- 
 2.53.0
 
