@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D623CDBB5;
-	Sat, 12 Sep 2026 16:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA08147277C;
+	Sat, 12 Sep 2026 16:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230607; cv=none; b=T6Turq11FiJ3iaHeA4OFR4nABgdywqQ5jsuFm6pAM8ARvqfOWfT4F4wrRltHAhib0NMGwWwzQKBqoN4JxapA1I4o5dlOD/RmWy58jZiBTfJy8/qX3xzFD3eJYNYkMeQ66Mpzr8sEvgl21yDUnxggtICbWOXYqM4NAWCwjpVN7/Q=
+	t=1789230611; cv=none; b=adsjNjpDYVFHNnGRDVKtkWbhtPLH6ihKBnPPRYvyKouE5OoAjSfk/8paOZwtIsIo9CmaU76RYRlK70vSw/e6a3h+fptBu8CquwtP3oQWnVf+dIJBsGERJhpD9fos6LZkeoVM/70hX/cuppsHP8i1k6jZwGL9iBfMEMiPXGCcvtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230607; c=relaxed/simple;
-	bh=N1NRgTWtFskIXbHeF8w3+PHKASIDN9Rw5lq2KZkanr0=;
+	s=arc-20240116; t=1789230611; c=relaxed/simple;
+	bh=19H0ch6DOacu52MMGm6QzXnnBejSbZp1IEVVECPKEbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXMy7L5De8CwhQkEN2NxGgmRu2c5mDr9/E99lwmT5N/pareWNeBKCPl7rpTsUHnwrbSB1YGaywilljMIawyTWaJ6Kmx0uUJi+k9VuFOo41WMudDLR2oHLz3UFmFjoAQ4+AZWSfQhhzTngb8GDkkOP+KkxT5KKcoEv/xwhSWSubI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez5WUXSD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fAhxifz99F93S330Z2wWID9pOeQNUCnZnqVUQxjEWAuD/N0usMHjQlwapdrs+3SvVATaTmiA5yysAQ8ednlBEGXESTwj46z9n+cvxp6Yxtt+GmJHOeOkh0trkIkJD3i8GVLvl1Uwn6AAzHD0dC0tN+6H0lj0Z6y/l7TWtOcUdSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AF7QfUfj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez5WUXSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EB31F00893;
-	Sat, 12 Sep 2026 16:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AF7QfUfj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8505E1F000FF;
+	Sat, 12 Sep 2026 16:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230604;
-	bh=Whnj/lWJDTvtD1A1grgRH8ttlCxVmXy38PCkCC4SURk=;
+	s=korg; t=1789230609;
+	bh=YnnQchPtUjV/A/DIPruM4v7u+eT9R8NRCvdakqlmCdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ez5WUXSDrh1T85U4rBMrLL1xVg4ZYVcAWOezpisl4Cuu+A8bLWHtw6ITmbMIfFY+9
-	 I+x3jRPqK7E9smZLejzMmvV+KB0MBy39bEw57B/oTJ+44+e4WnNdMOnhMzqV6qzBnD
-	 NdOT4aQ9844vzWf5EAUTjGTd9+aVilkDC9hUWWUQ=
+	b=AF7QfUfjJciV4NoZIRiDMybU/CW+jCLgp76x3cj9xpKQXaqT3LadTL/xMy5jSj6N4
+	 N8sXg8EjXEpeH7xBUwduvSFSc6z/yV7NiAdiVEnBJny1KZ0n1eoQdikOLSytMyUk3P
+	 b0Md29GIWpUJzA/urK/lBKD8XoyQ0lL2GSeMXAfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
+	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Leon Romanovsky <leon@kernel.org>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0826/1191] iommu/arm-smmu-v3: Convert to use atomic poll timeout
-Date: Sat, 12 Sep 2026 08:59:14 +0200
-Message-ID: <20260912065606.818910449@linuxfoundation.org>
+Subject: [PATCH 6.1 0787/1191] lib/test_hmm: fail dmirror_fault() when the mirrored mm is gone
+Date: Sat, 12 Sep 2026 08:58:35 +0200
+Message-ID: <20260912065605.953113021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,50 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pranjal Shrivastava <praan@google.com>
+From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
 
-[ Upstream commit eced8058c82a3a81ae480a6546e2da32100dddfa ]
+[ Upstream commit 6a8024511ddf4877435c34fb3d6028aa8e590649 ]
 
-The arm_smmu_write_reg_sync() helper is currently implemented using
-readl_relaxed_poll_timeout() (that relies on usleep_range() internally)
-which becomes a critical issue when used in the gerror irq handler.
+dmirror_fault() is called from the dmirror_read() and dmirror_write()
+retry loops after dmirror_do_read() or dmirror_do_write() finds a missing
+device page table entry.
 
-If the SMMU hits a gerror and enters Service Failure Mode
-(GERROR_SFM_ERR), the gerror handler calls arm_smmu_device_disable() in
-hard-irq context. This becomes a problem as arm_smmu_device_disable()
-inevitably calls arm_smmu_write_reg_sync() which might attempt to sleep
-inside a hard-irq context.
+If the mirrored mm has already exited, mmget_not_zero() fails.  The
+current code returns 0 in that case, which tells the caller that faulting
+succeeded even though no page was faulted and no device page table entry
+was installed.  The caller then retries the same address, hits -ENOENT
+again, and can loop forever without making progress.
 
-Fix this by converting the arm_smmu_write_reg_sync to use the
-readl_relaxed_poll_timeout_atomic() polling helper.
+Return -EFAULT instead, so the ioctl fails when the mirrored mm is no
+longer faultable.
 
-(Discovered while running Sashiko locally on another patch series).
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 48ec83bcbcf5 ("iommu/arm-smmu: Add initial driver support for ARM SMMUv3 devices")
-Signed-off-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/178294308408.327222.3319445682023999403.stgit@skinsburskii
+Fixes: b2ef9f5a5cb37 ("mm/hmm/test: add selftest driver for HMM")
+Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ lib/test_hmm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index eba2b2e2da0b9..33f3c5e6b3320 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3134,8 +3134,9 @@ static int arm_smmu_write_reg_sync(struct arm_smmu_device *smmu, u32 val,
- 	u32 reg;
+diff --git a/lib/test_hmm.c b/lib/test_hmm.c
+index 210564b67dd1d..b0010b15aec5c 100644
+--- a/lib/test_hmm.c
++++ b/lib/test_hmm.c
+@@ -391,7 +391,7 @@ static int dmirror_fault(struct dmirror *dmirror, unsigned long start,
  
- 	writel_relaxed(val, smmu->base + reg_off);
--	return readl_relaxed_poll_timeout(smmu->base + ack_off, reg, reg == val,
--					  1, ARM_SMMU_POLL_TIMEOUT_US);
-+	return readl_relaxed_poll_timeout_atomic(smmu->base + ack_off, reg,
-+						reg == val, 1,
-+						ARM_SMMU_POLL_TIMEOUT_US);
- }
+ 	/* Since the mm is for the mirrored process, get a reference first. */
+ 	if (!mmget_not_zero(mm))
+-		return 0;
++		return -EFAULT;
  
- /* GBPA is "special" */
+ 	for (addr = start; addr < end; addr = range.end) {
+ 		range.start = addr;
 -- 
 2.53.0
 
