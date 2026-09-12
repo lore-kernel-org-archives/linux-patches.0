@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A651212FAD;
-	Sat, 12 Sep 2026 09:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031CA361DD0;
+	Sat, 12 Sep 2026 09:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204780; cv=none; b=nScpIoOJmI4ff5rou1JdAYmulyn2UQ6FIsrOWyw9FpsKSP71k4gvduuu2ERsXnDoI5afBvxq48tBDC0pcq8GGwV3ZutWKGs186n4Wtyirww1d7sf3RmoexnDZ9qzuWLW80wHCkHgch990sQxOuRzQyegkWI7iByjwEtwh9v9P0E=
+	t=1789204785; cv=none; b=HBfZT/i0zkHn0bxMDupwXdsvRge/P2QVzdHf5gtx0zW53UHgdJsr54KW0LPAQNVlZg+O/i9Gh159XYYT9VNI1csA74r8GmroQaNCLY5yiJjl69BDXzDLBLm/R0AjSfv2hT+1S87VM3C+PzeZ/uDkzolSorGpG+eHNU/Cn962llI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204780; c=relaxed/simple;
-	bh=1HaB2p/w5k7Ku/FOT0dxJhzTSTYtBfLTDp7t+KHkIMI=;
+	s=arc-20240116; t=1789204785; c=relaxed/simple;
+	bh=FYgq/ap+hNrLd/LcRQQWioqbOUf27RWA3SbqxM7Vo5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WgXT9RxajLQep5TFO66D4rAdW3FMf7YKmHevLmXiLYPEq3aKtQd+IIvi18bpj8i3FQJBjEAf3OOUQPF6t+hnWmGPPlPurhZRZt5KX0bpk1uwtR9CjPg8aBPOF3k7Fu+g00F5qz0eeNrMxr3DFKhrp4bV2LZXxA0kXTPxwC7IgyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvZohJ6k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=keWSO5E5u8THVOwljAUvf5fL7DVVvUOhs4MWXtLuo4uzGh2TuNiEnOLi8CTgfiOYnvRPas26qai/LBY/i1XFp9ZGYSo3bGk3DAehKVnpF5IudKJs3WW6p5D65RQ5aDfTtGn96IfEexk1cwXMywYPupZpr65mBM0TpV2jBfabRHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLjp48We; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvZohJ6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631071F000FF;
-	Sat, 12 Sep 2026 09:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLjp48We"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CC41F000FF;
+	Sat, 12 Sep 2026 09:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204779;
-	bh=WsN/IPSQ4TARyI89Li460myGM0OMIgcP+5PGXM36lE8=;
+	s=korg; t=1789204783;
+	bh=EBKW+hNsXlVKj3bJqSv7rPYn6jbFVwz1yST/FhFx8rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RvZohJ6kx9ejYDb/cXodWDiK3S6ivRvFt/FEDogw9vx7PJlsYy0yrst+KrYdWsXZV
-	 oKnvnhopujwY75pZ+0X8Ke1UQRHeVGbk3NaGBPo/czMYVt6a0U86fjK9GbzHfLAd4k
-	 iHdyqMce7zKhr/8MSormKKwuhQpuSDDiwkm7dmQw=
+	b=GLjp48WeAhxDrxLkpTtItS8Z8qE4o0p0d7HAKn51ADF5ydiIJ4OJp9oTv3YLQT8o6
+	 qAHhxn+7dCEYOwd4EfJAHiOmz0Rs8I4idXQVsMJ0kciO0IL+HAaLMmuzOZDYWu0l1j
+	 zZsGLjdJpezKjk3lxq2CleQV1jwCN+6Yp08LMh8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Bobby Eshleman <bobbyeshleman@gmail.com>,
-	Mina Almasry <almasrymina@google.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1682/1815] net: tcp: block mixing readable and unreadable frags
-Date: Sat, 12 Sep 2026 08:57:12 +0200
-Message-ID: <20260912065728.470501504@linuxfoundation.org>
+Subject: [PATCH 7.2 1683/1815] net: sched: fix 32-bit backlog wrap in gred, bfifo and plug enqueue
+Date: Sat, 12 Sep 2026 08:57:13 +0200
+Message-ID: <20260912065728.493885502@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,43 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mina Almasry <almasrymina@google.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit d9c56501c72fdac937e8b770f31655c46832f1a5 ]
+[ Upstream commit 4c660ee8c809637909f4f7eb1017f7b9401c75c4 ]
 
-Protect tcp_sendmsg_locked() from mistakenly mixing readable and
-unreadable page fragments in the same SKB.
+gred_enqueue(), bfifo_enqueue() and plug_enqueue() admit a packet when the
+current backlog plus the packet length fits within the queue limit:
 
-Check that the devmem binding matches the existing SKB's readability.
-If a mismatch is detected, avoid collapsing and create a new segment.
+  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (gred default VQ)
+  gred_backlog+qdisc_pkt_len(skb) <= q->limit  (gred configured VQ)
+  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (bfifo)
+  sch->qstats.backlog + skb->len <= q->limit             (plug)
 
-Fixes: bd61848900bff ("net: devmem: Implement TX path")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Cc: Pavel Begunkov <asml.silence@gmail.com>
-Cc: Stanislav Fomichev <sdf@fomichev.me>
-Cc: Bobby Eshleman <bobbyeshleman@gmail.com>
-Signed-off-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20260814191336.187243-2-almasrymina@google.com
+sch->qstats.backlog and q->backlog are u32, and qdisc_pkt_len()/skb->len
+are unsigned int, so all sums are computed in 32 bits and wrap at 2^32.
+Once the true backlog exceeds 4 GiB the wrapped sum becomes small and
+admission keeps succeeding, so the queue grows without bound and the kernel
+can be driven to OOM.
+
+Promote the sums to u64 so admission stops once the true backlog exceeds
+the limit.  The limit is u32, so the bounded queue stays below 2^32 and
+the stored u32 backlog never wraps.
+
+The bug can only be reproduced as root (albeit with ridiculous setup):
+ attach a gred (or bfifo/plug) qdisc with a limit near 4 GiB,
+ leaving the default VQ unconfigured (for gred), and drive >4 GiB of
+ queued traffic (e.g. via a size table / stab to inflate qdisc_pkt_len,
+ or sustained high-rate traffic). The u32 backlog+len sum wraps at 2^32,
+ admission keeps succeeding, and the queue grows unboundedly to OOM.
+
+Fixes: a3eb95f891d6 ("net_sched: gred: add TCA_GRED_LIMIT attribute")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260818095927.15901-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_fifo.c | 2 +-
+ net/sched/sch_gred.c | 4 ++--
+ net/sched/sch_plug.c | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 455441f1b6949..b4237d0e994d6 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1240,7 +1240,8 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
+diff --git a/net/sched/sch_fifo.c b/net/sched/sch_fifo.c
+index e6bfd39ff3396..1b6388d50967f 100644
+--- a/net/sched/sch_fifo.c
++++ b/net/sched/sch_fifo.c
+@@ -19,7 +19,7 @@
+ static int bfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			 struct sk_buff **to_free)
+ {
+-	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
++	if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
+ 		   READ_ONCE(sch->limit)))
+ 		return qdisc_enqueue_tail(skb, sch);
  
- 		trace_tcp_sendmsg_locked(sk, msg, skb, size_goal);
+diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
+index fcc1a4c036362..f04f425c6c449 100644
+--- a/net/sched/sch_gred.c
++++ b/net/sched/sch_gred.c
+@@ -179,7 +179,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			 * if no default DP has been configured. This
+ 			 * allows for DP flows to be left untouched.
+ 			 */
+-			if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
++			if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
+ 					sch->limit))
+ 				return qdisc_enqueue_tail(skb, sch);
+ 			else
+@@ -244,7 +244,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		break;
+ 	}
  
--		if (copy <= 0 || !tcp_skb_can_collapse_to(skb)) {
-+		if (copy <= 0 || !tcp_skb_can_collapse_to(skb) ||
-+		    unlikely(skb_frags_readable(skb) != !binding)) {
- 			bool first_skb;
+-	if (gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
++	if ((u64)gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
+ 		q->backlog += qdisc_pkt_len(skb);
+ 		return qdisc_enqueue_tail(skb, sch);
+ 	}
+diff --git a/net/sched/sch_plug.c b/net/sched/sch_plug.c
+index cefb65201e178..b60ddfee6a68a 100644
+--- a/net/sched/sch_plug.c
++++ b/net/sched/sch_plug.c
+@@ -89,7 +89,7 @@ static int plug_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ {
+ 	struct plug_sched_data *q = qdisc_priv(sch);
  
- new_segment:
+-	if (likely(sch->qstats.backlog + skb->len <= q->limit)) {
++	if (likely((u64)sch->qstats.backlog + skb->len <= q->limit)) {
+ 		if (!q->unplug_indefinite)
+ 			q->pkts_current_epoch++;
+ 		return qdisc_enqueue_tail(skb, sch);
 -- 
 2.53.0
 
