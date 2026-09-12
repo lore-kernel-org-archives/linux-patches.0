@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FE73D9DC0;
-	Sat, 12 Sep 2026 11:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7CBCA6F;
+	Sat, 12 Sep 2026 11:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211509; cv=none; b=dZDs+coFQdRV7gF+7ogtVWAG5ptGGdmu7xrek/90rGeBe8XT+eyeR6DJNCQx4xA469ZSGdj0mFpL8v0mUq7UgZ9LbGIRnEv9IU8xvqQ1ZZMaZBU1JycsOxTp5wEkUjaIKUF6uxemh+CsF2GDfB33BVG0eDrqtTGvYFhIpusWwKE=
+	t=1789211514; cv=none; b=KTy9pDd4BevpJdszpgRc5vJ/P/UmBBTNfoyt8kXY1zuk4ic3tgjRbcjfHCm3/AYxQR+GAYCT//+vNqZSIDe4uEVd5jykyBwROsIUgG3kDTMd7Ea2O/99lnY4vi8DuND2VLXXqlAq8TUGOmZxcW+cknE899EXla84iWkYyde2Lmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211509; c=relaxed/simple;
-	bh=NQjvmxAe9rlisGtPDrys067QLI9iok2vdLLOPrh6Y60=;
+	s=arc-20240116; t=1789211514; c=relaxed/simple;
+	bh=+Q93SslfwmMsPErlGLktIIGqobzsAQ20jgHhan0ViEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQLCElEDGENmOis4kcEZLAzs/jeAM9f83x3+4XwUUo0C0QHWE+LeHLIoOBkSUviMD2dJn9KwI6h1CcPcodN58YhFcrOtjveSwE+7f/lkB9qKuOFlyeQMW3obQBrdmFaXKYrOs2kp6tZYUn/z+YhB7G9Zr4OSaDdpfwqmkrDbYBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXiCJRAa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g/JI8nHOV4MEqEW+cCyvb30bS/WNhrbj8YMzSbPq09WFUfvuqBm8jVmRf4zKrmD0LwJavQJ0kTFjWfzxuHuKMRQGQNSD50bePplk+ZZSKLvb1aPtDeLxTR6CASPLsZrqGcha2oBeipwjBXaV2WdEZcmCRdSpJSjJKn9M1vwpblU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fD+jl38; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXiCJRAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE67F1F000FF;
-	Sat, 12 Sep 2026 11:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fD+jl38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6391F000FF;
+	Sat, 12 Sep 2026 11:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211508;
-	bh=hsJzmIsGHSOGTfrNxeXugZvRdlhGxSi0EdzqRvrZZ9w=;
+	s=korg; t=1789211513;
+	bh=+uO9Ckci9Klyrke72vRbvlIZTh38YsHqmU7DcpHFXOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KXiCJRAaC/pTeMTEunrbTmgicrwxpN1w9G8glAI4mOQ7USbrxm+lFuvpE0g7ycGpI
-	 exPFEFbEJfXn0GdRz64andJFfzYKJixe376tdYjkkUumSc2hHBlAvrNNPZviqdtBKr
-	 G2quTP8qpY7QripzYtW8zYXLemkDNi3u860/39H0=
+	b=0fD+jl38cATuMykMDodzc1txfkChGgDSwZmQAK3nyKbLDm2HcTubvLpqDPCpyj+Fn
+	 A/Ci5KCNiHIej/K5nHQ+QFB6gWzK4fLI9FElxggbLkHiY6x4H0jwx0m8NfAELzDuW3
+	 Rb65TXrMCa23h3L3AI6hdPdY//zo4E+H2ZV5pUqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianglin Lin <1021538027@qq.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Shirisha G <shirisha@linux.ibm.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Gao Xiang <xiang@kernel.org>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1192/1518] HID: multitouch: reclassify HTIX5288 to WIN_8_FORCE_MULTI_INPUT_NSMU
-Date: Sat, 12 Sep 2026 08:56:01 +0200
-Message-ID: <20260912065650.444573699@linuxfoundation.org>
+Subject: [PATCH 6.18 1239/1518] erofs: fix unused pcluster_pools for higher page sizes
+Date: Sat, 12 Sep 2026 08:56:48 +0200
+Message-ID: <20260912065651.534874945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,60 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xianglin Lin <1021538027@qq.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-[ Upstream commit 69226cd6fad7a07370ec9a009af1c174de7635c5 ]
+[ Upstream commit 988c3c186c730590a71df8adc1424c5578ef8bae ]
 
-Commit b5e65ae557da ("HID: multitouch: Add quirk for Hantick 5288
-touchpad") assigned MT_CLS_NSMU to the HTIX5288 (0911:5288).  This was
-necessary because the device sometimes fails to send touch release
-signals when transitioning from >=2 fingers to <2 fingers, and
-MT_QUIRK_NOT_SEEN_MEANS_UP fixes stuck touches by treating missing
-contacts as released.
+pcluster_pool[] hardcodes {1,4,16,64,128,Z_EROFS_PCLUSTER_MAX_PAGES+1},
+but the assumption of Z_EROFS_PCLUSTER_MAX_PAGES == 256 is only right
+for 4k page sizes. For higher page sizes like 16k or 64k, This results
+in us ending up with clusters bigger than what we will ever use, since
+we only support upto 1MB of compressed data. For example, on 64k page
+size we will only ever use clusters with nrpages= 1, 4 and 17.
 
-However, MT_CLS_NSMU only carries MT_QUIRK_NOT_SEEN_MEANS_UP.  It
-lacks MT_QUIRK_CONTACT_CNT_ACCURATE and MT_QUIRK_IGNORE_DUPLICATES.
-As a result, after a two-finger scroll finger lift, the device still
-reports stale coordinates from the released contact in subsequent
-frames, and the driver overwrites the remaining active slot with
-those frozen coordinates.  The remaining finger appears stuck at the
-lift position until all fingers are lifted.
+This patch fixes the allocation for such higher pages sizes by adding
+some compile time checks.
 
-This was confirmed via evtest on Arch Linux 7.1.3: after
-TRACKING_ID=-1 for the released slot, every subsequent frame contained
-duplicate position pairs -- the real moving finger's coordinates
-followed by the lifted finger's frozen position, both attributed to
-the active slot.
+Below are the clusters created right after boot on a 64KB page size
+machine
 
-Reclassify the device to MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU
-(0x0018), which preserves the original MT_QUIRK_NOT_SEEN_MEANS_UP
-fix while adding the necessary Win8 quirks (CONTACT_CNT_ACCURATE,
-IGNORE_DUPLICATES), preventing stale coordinate contamination.
+$cat /proc/slabinfo | grep pcluster | cut -d" " -f1:
 
-The additional FORCE_MULTI_INPUT flag is harmless here: it separates
-the mouse and touchpad collections into distinct input devices,
-which is the standard behavior libinput already expects.
+Before the patch:
 
-Fixes: b5e65ae557da ("HID: multitouch: Add quirk for Hantick 5288 touchpad")
-Signed-off-by: Xianglin Lin <1021538027@qq.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+erofs_pcluster-1
+erofs_pcluster-4
+erofs_pcluster-16
+erofs_pcluster-17
+erofs_pcluster-64
+erofs_pcluster-128
+
+After the patch:
+
+erofs_pcluster-1
+erofs_pcluster-4
+erofs_pcluster-17
+
+Fixes: 9f6cc76e6ff0 ("erofs: introduce physical cluster slab pools")
+Reported-by: Shirisha G <shirisha@linux.ibm.com>
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/erofs/zdata.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 1959481dc7820..fd1b45ece4544 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2567,7 +2567,7 @@ static const struct hid_device_id mt_devices[] = {
- 			HID_ANY_ID) },
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 691e39cf3c332..e07c0253893eb 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -128,7 +128,17 @@ struct z_erofs_pcluster_slab {
+ #define _PCLP(n) { .maxpages = n }
  
- 	/* Hantick */
--	{ .driver_data = MT_CLS_NSMU,
-+	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
- 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
- 			   I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288) },
+ static struct z_erofs_pcluster_slab pcluster_pool[] __read_mostly = {
+-	_PCLP(1), _PCLP(4), _PCLP(16), _PCLP(64), _PCLP(128),
++	_PCLP(1),
++	_PCLP(4),
++#if Z_EROFS_PCLUSTER_MAX_PAGES > 16
++	_PCLP(16),
++#endif
++#if Z_EROFS_PCLUSTER_MAX_PAGES > 64
++	_PCLP(64),
++#endif
++#if Z_EROFS_PCLUSTER_MAX_PAGES > 128
++	_PCLP(128),
++#endif
+ 	_PCLP(Z_EROFS_PCLUSTER_MAX_PAGES + 1)
+ };
  
 -- 
 2.53.0
