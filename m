@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96FC31F9B1;
-	Sat, 12 Sep 2026 19:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C427B31F9B1;
+	Sat, 12 Sep 2026 19:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241171; cv=none; b=qg5FNjZM0TOOl41I4IBO35pLojT8HId9ZYj6N518ryc0xtHAiBexMzbnP1nmNsuQywoGBOE+qD3HFLyTLvLN6voJIJdKgiv8Y1/Jw1IlKV1alXOcp1aGPYaKwlcwW1KKDSvWlKzbzBcabdW3sSIrLi8x7pNbBzh0FPpeIEJRLNA=
+	t=1789241175; cv=none; b=XFGW/h2fxqFbS+1U4UQJ58fCMH9uvCX1jbTdJ5uZYQWLLL0wlwnhB2yOC1eLkpES9i25MsUT4sxY0GfB1AfR8pDVA8sTURaBdxE9ki/PV7BU0ERlfTiTy0C/yPY6AL9iI/8MMni+dYXgfMDO/eWo5z3CR+PdoL21dsUHClxOEbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241171; c=relaxed/simple;
-	bh=mGUn1jmNUAzqfGPPiZ+MI7ux+xNkx3UF5NAfz9n296s=;
+	s=arc-20240116; t=1789241175; c=relaxed/simple;
+	bh=WsRyIRNeOo9T8Z2+jEpUc7dvJ5N/MwY1C5hEnBgd0lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCINuP/pSmNJEAA04AePkJr6md7VFt0SyZpXkYPR8qJSiI2JcxHLw3adOnJOfC5ku2XGwSM6xwJRFzXibFTswezgJQbUWnztbtwNHCIIrQyWPeWVGaG37vqVn3eRp+ywJ1NHd4eCXMyj3nbmRn0QizhViA1JK4M0QVzqgnICPb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIm73xjd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kB8UwK0lK0MPvXKq4/Id7BvMaZ2mhMNeN5UxVNBKsPzsI3kYcwTnc6LbCf+FfF6ixtVxKkyyipHRgKRq7xPOpXH+SMjymAes5rPI3eScdDSI2tVkhocweb1tTZ2vkAwxnet5R/9Qf7LTwSJXzI5WYBv6xGun7al6OymCAYS+S9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ng5VzHeq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIm73xjd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4DE1F000FF;
-	Sat, 12 Sep 2026 19:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ng5VzHeq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85A01F000FF;
+	Sat, 12 Sep 2026 19:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241169;
-	bh=/1jSzSopwwoUbcr5f12o6Rb8Td8GDwo8AiUPmdwVTuU=;
+	s=korg; t=1789241174;
+	bh=DJGlJHHd4NP98EM/VpLcSGBpm2pww4WN91KTP2sVVlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GIm73xjdmCUf9aGWrcpalWKuQWPNNU//H6ZzSz+TTQYgiSKbpCRVGXTbEz1OIDSSN
-	 uhCx+J0sM0T5HWNo07korguH7KCB9QKqJTQ7sprcsvOzS18BLWQTxFRcQ+6pTGMyZs
-	 wOQ+Hqd8FzMP87V4F0UFpZ8B7bU7gu3Esx2N6eTQ=
+	b=ng5VzHeqz2fhor0AnEax6lvrO8UWs7iYXnNW5JpsQWhEV5sFbn7bB/ljO7orfqQN0
+	 hzITO9SnLWyiukRtNaoFdE/xp1jXVcN6Co7LeM56jR7tW0YocHL0pmxziAaheEpORc
+	 /Bl79/yX5FJL3NU6uAaJl2tXxiy5S8CmluOj5Om0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 081/798] dm array: reject an array block whose value size is not the callers
-Date: Sat, 12 Sep 2026 08:55:09 +0200
-Message-ID: <20260912065518.819455499@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 082/798] cpufreq: schedutil: Fix rate limit overflow
+Date: Sat, 12 Sep 2026 08:55:10 +0200
+Message-ID: <20260912065518.841609041@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,65 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Hui Su <sh_def@163.com>
 
-commit 4538a287bdf5d0f9a379c678e5262b9f5783f547 upstream.
+commit 3bff8f8e95fdc6ad19c8a1a8f87029094747e4bf upstream.
 
-array_block_check() can only compare the header against itself, so a block
-with value_size 4 and max_entries 1018 is internally consistent and passes.
-dm-cache keeps two arrays -- mappings at 8 bytes and hints at 4 -- and the
-roots for both live in the superblock. Point the mappings root at a hint
-block and __load_mappings() walks it through an info whose value size is 8,
-so element_at() strides 8 bytes over 4-byte entries and reaches offset 8160
-of a 4096-byte block.
+rate_limit_us is an unsigned int, while NSEC_PER_USEC is defined as
+1000L. On 32-bit systems, the multiplication is therefore performed
+using 32-bit unsigned arithmetic before the result is assigned to
+freq_update_delay_ns.
 
-get_ablock() and __shadow_ablock() are the two places that hold the block
-and the caller at once. Reject there when the two value sizes disagree.
-Arrays only ever read their own blocks, so this fires on crafted metadata
-only.
+For example, writing 4294968 to rate_limit_us wraps the delay from
+4294968000 ns to 704 ns. This makes schedutil update far more often
+than configured.
 
-Fixes: 6513c29f44f2 ("dm persistent data: add transactional array")
-Suggested-by: Ming-Hung Tsai <mtsai@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Add sugov_update_rate_limit_us() to widen rate_limit_us to s64 before
+converting it to nanoseconds. Use the helper when updating the tunable
+through sysfs and when starting the governor, so both paths perform the
+conversion without overflow.
+
+Fixes: 9bdcb44e391d ("cpufreq: schedutil: New governor based on scheduler utilization data")
+Signed-off-by: Hui Su <sh_def@163.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260806142304.1761454-1-sh_def@163.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-array.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ kernel/sched/cpufreq_schedutil.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/md/persistent-data/dm-array.c
-+++ b/drivers/md/persistent-data/dm-array.c
-@@ -227,6 +227,14 @@ static int get_ablock(struct dm_array_in
- 		return r;
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -66,6 +66,17 @@ static DEFINE_PER_CPU(struct sugov_cpu,
  
- 	*ab = dm_block_data(*block);
-+	if (le32_to_cpu((*ab)->value_size) != info->value_type.size) {
-+		DMERR_LIMIT("%s failed: value_size %u != wanted %u", __func__,
-+			    le32_to_cpu((*ab)->value_size),
-+			    info->value_type.size);
-+		dm_tm_unlock(info->btree_info.tm, *block);
-+		return -EILSEQ;
-+	}
+ /************************ Governor internals ***********************/
+ 
++static void sugov_update_rate_limit_us(struct sugov_policy *sg_policy)
++{
++	/*
++	 * Cast rate_limit_us before multiplication to force 64-bit arithmetic.
++	 * Otherwise, on 32-bit platforms, both operands are converted to
++	 * 32-bit unsigned long and the multiplication may overflow.
++	 */
++	sg_policy->freq_update_delay_ns =
++		(s64)sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
++}
 +
- 	return 0;
+ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
+ {
+ 	s64 delta_ns;
+@@ -618,7 +629,7 @@ rate_limit_us_store(struct gov_attr_set
+ 	tunables->rate_limit_us = rate_limit_us;
+ 
+ 	list_for_each_entry(sg_policy, &attr_set->policy_list, tunables_hook)
+-		sg_policy->freq_update_delay_ns = rate_limit_us * NSEC_PER_USEC;
++		sugov_update_rate_limit_us(sg_policy);
+ 
+ 	return count;
  }
+@@ -848,7 +859,7 @@ static int sugov_start(struct cpufreq_po
+ 	struct sugov_policy *sg_policy = policy->governor_data;
+ 	unsigned int cpu;
  
-@@ -289,6 +297,14 @@ static int __shadow_ablock(struct dm_arr
- 		return r;
- 
- 	*ab = dm_block_data(*block);
-+	if (le32_to_cpu((*ab)->value_size) != info->value_type.size) {
-+		DMERR_LIMIT("%s failed: value_size %u != wanted %u", __func__,
-+			    le32_to_cpu((*ab)->value_size),
-+			    info->value_type.size);
-+		dm_tm_unlock(info->btree_info.tm, *block);
-+		return -EILSEQ;
-+	}
-+
- 	if (inc)
- 		inc_ablock_entries(info, *ab);
- 
+-	sg_policy->freq_update_delay_ns	= sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
++	sugov_update_rate_limit_us(sg_policy);
+ 	sg_policy->last_freq_update_time	= 0;
+ 	sg_policy->next_freq			= 0;
+ 	sg_policy->work_in_progress		= false;
 
 
