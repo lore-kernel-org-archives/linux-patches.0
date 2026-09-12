@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B8947ACD7;
-	Sat, 12 Sep 2026 18:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BEA3793CA;
+	Sat, 12 Sep 2026 18:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239575; cv=none; b=O0cnLesdaGmzeUrODfMe62bQ4NGkA1j24ug56HfOSZUQRJiVsNv/ClxqOCxE+ElxQK2HqEFaOohp4oFoTKCVA7gQdUDxsUKvQJkURCJlc5q29jDY2OCDXUtKjWggTfLz0wPil0o1iFKcz4E4lTsRp5D8padW6OmNZyrhBAuGbR4=
+	t=1789239580; cv=none; b=kYEAEbG9HWrazzdFznVdaNwE65y+rVdPLmSAiwNsxeCPOKcmi4MCH9Npmmvj/+g+uoZwnDza+9ILnQmmI05dK6hPcY3c1cWqFtw+mkxd95M4r9jOrTHoh5JDQj2vYyzv+RcL59OEk5mhbsEtS0GD7iL4YU1JvkOGdSN6bdOxidU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239575; c=relaxed/simple;
-	bh=aeANF/iPguCUq8Zu4argBTCy/wRKhnjL4t02dgKiGSo=;
+	s=arc-20240116; t=1789239580; c=relaxed/simple;
+	bh=i3hs9MIdlXASVpPs8PgUKbOjoJ/CBuOOsTpDKgMAJsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5BfJ6G3JWdcgiBnsvLJ9ww2EzasR1fU5hc2hi0DS87IglUNmZyTYt3siHZDRm3Ik+o9Vki8UbVkmLycSNQRfZG35TzKcWrmBTnCgLjD38f/9rUaUEE2wGu1OBym8tN5u2OAHWm8iMl3MOh/c8NjO2OenhbpICcJphkTG9cCF3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSMrYhoT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EqpbZE/2iTb/TbA1mHzijV6q0SFWryhf61gi3/Kri4G4UTr1ilUBsQEOnxEeMEFsp62IzSRe6Zh5Vm75OgggS3p25emS8CTNHyIMS0H+wjptNrG+KFiQiNkpqYYqr2HhUikGQPo+fMiFZldgWRnoHAGU0/L2OZ8cZjNxwFzg8xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FToE1hvX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSMrYhoT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA00B1F000FF;
-	Sat, 12 Sep 2026 18:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FToE1hvX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930D11F000FF;
+	Sat, 12 Sep 2026 18:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239573;
-	bh=8UZr2COp+WCgQks++iKB3z3vVcXOqphsWLtugsbUu8M=;
+	s=korg; t=1789239578;
+	bh=ObIH0ZgNBTCUDBH4NtQlB66L6bMNFv1wQFbTntb4/Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JSMrYhoTxfgOaTLt0pstzpZQs527Dnm7LvVd1od6j9mDQzv46wDc7eIb1odWc259j
-	 B0LehUhffiYMXUSBEJMGmqGF8n2FzazDuuaXiDTxCS3sdox22X2Fh8q7k1iomlPhAF
-	 00v0jHF/7GsaEffuRdmXcGldd9wQsCUZW/TeM2pY=
+	b=FToE1hvXdue4HRbW06Gu34pqC7h4XB0fWSVIyBCFSCIwRi9KIkLZuhpUt42sEucuI
+	 NHvLwNWm4imKNje4Kh6texWM7rb19huH9RKYsBJg2BJ6QyU1+C4XxR3XfDXvP/2ohj
+	 3HMp0gEOvlBR2SyXA5V+vAunAsWueFHKYh07Sw6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Byczkowski <by@by-online.de>,
 	Calvin Owens <calvin@wbinvd.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Rodolfo Giometti <giometti@enneenne.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 692/935] pps: pps-gpio: split IRQ handler into hardirq timestamper + threaded handler
-Date: Sat, 12 Sep 2026 09:02:02 +0200
-Message-ID: <20260912065542.713036101@linuxfoundation.org>
+Subject: [PATCH 5.15 693/935] pps-gpio: remove dead capture_clear code
+Date: Sat, 12 Sep 2026 09:02:03 +0200
+Message-ID: <20260912065542.735973129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -54,111 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Byczkowski <by@by-online.de>
+From: Calvin Owens <calvin@wbinvd.org>
 
-[ Upstream commit 93781560b2fdd26fa8499d64db8a95a07e1dc902 ]
+[ Upstream commit b899e0279f90c3ce4099d68b989dd27861cc5c4f ]
 
-Split the pps-gpio interrupt handler into a primary (hardirq) handler that
-captures the PPS timestamp at interrupt entry, and a threaded handler that
-processes the event.  This produces the same two-part handler structure on
-both PREEMPT_RT and non-RT kernels.
+The capture_clear field is never set, and all code conditional on it being
+set has been unreachable since the platform data logic was removed from
+pps-gpio in ee89646619ba ("pps: clients: gpio: Get rid of legacy platform
+data").
 
-On non-RT kernels the threaded portion runs immediately after the primary,
-with no behavioral change compared to the previous single-handler
-implementation.
+I think the only logical thing to do here is to remove it all, since no
+in-tree code ever actually used it in the first place, and it has been
+completely dead code for over five years (since v5.13).
 
-On PREEMPT_RT, where interrupt handlers are force-threaded by default, the
-previous single-handler implementation captured the timestamp inside the
-threaded portion, after IRQ-thread scheduling delay.  With the split, the
-timestamp is captured in true hardirq context as it is on non-RT kernels,
-eliminating a significant source of PPS jitter on RT systems.
+Sashiko asked some questions about the gpiod_get_value() call which caused
+me to look deeper and figure this out, but it did not actually notice
+capture_clear is never set.
 
-Link: https://lore.kernel.org/2e32729029fbf6977ecf04665eb00f2efd3e2c17.1780359378.git.calvin@wbinvd.org
-Signed-off-by: Michael Byczkowski <by@by-online.de>
+Link: https://lore.kernel.org/f70196bafcf75d9782dd36ed784e42345b6e8a1b.1783355507.git.calvin@wbinvd.org
+Fixes: ee89646619ba ("pps: clients: gpio: Get rid of legacy platform data")
 Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Tested-by: Michael Byczkowski <by@by-online.de>
-Tested-by: Calvin Owens <calvin@wbinvd.org>
+Closes: https://sashiko.dev/#/patchset/cover.1779733602.git.calvin%40wbinvd.org?part=1
 Acked-by: Rodolfo Giometti <giometti@enneenne.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: b899e0279f90 ("pps-gpio: remove dead capture_clear code")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps-gpio.c | 37 +++++++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ drivers/pps/clients/pps-gpio.c | 37 ++++------------------------------
+ 1 file changed, 4 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-index dbe598d092099..d21fc4bf0e3df 100644
+index d21fc4bf0e3df..98dfab2dcdb7d 100644
 --- a/drivers/pps/clients/pps-gpio.c
 +++ b/drivers/pps/clients/pps-gpio.c
-@@ -35,33 +35,44 @@ struct pps_gpio_device_data {
- 	bool capture_clear;
+@@ -32,7 +32,6 @@ struct pps_gpio_device_data {
+ 	struct gpio_desc *echo_pin;
+ 	struct timer_list echo_timer;	/* timer to reset echo active state */
+ 	bool assert_falling_edge;
+-	bool capture_clear;
  	unsigned int echo_active_ms;	/* PPS echo active duration */
  	unsigned long echo_timeout;	/* timer timeout value in jiffies */
-+	struct pps_event_time ts;	/* timestamp captured in hardirq */
- };
- 
- /*
-  * Report the PPS event
-  */
- 
--static irqreturn_t pps_gpio_irq_handler(int irq, void *data)
-+/*
-+ * Primary hardirq handler -- runs in hardirq context even on PREEMPT_RT.
-+ * Only captures the timestamp; all other work is deferred to the thread.
-+ */
-+static irqreturn_t pps_gpio_irq_hardirq(int irq, void *data)
+ 	struct pps_event_time ts;	/* timestamp captured in hardirq */
+@@ -62,19 +61,8 @@ static irqreturn_t pps_gpio_irq_hardirq(int irq, void *data)
+ static irqreturn_t pps_gpio_irq_thread(int irq, void *data)
  {
--	const struct pps_gpio_device_data *info;
--	struct pps_event_time ts;
+ 	struct pps_gpio_device_data *info = data;
 -	int rising_edge;
-+	struct pps_gpio_device_data *info = data;
+-
+-	rising_edge = info->capture_clear ?
+-		      gpiod_get_value(info->gpio_pin) : !info->assert_falling_edge;
+-	if ((rising_edge && !info->assert_falling_edge) ||
+-			(!rising_edge && info->assert_falling_edge))
+-		pps_event(info->pps, &info->ts, PPS_CAPTUREASSERT, data);
+-	else if (info->capture_clear &&
+-			((rising_edge && info->assert_falling_edge) ||
+-			(!rising_edge && !info->assert_falling_edge)))
+-		pps_event(info->pps, &info->ts, PPS_CAPTURECLEAR, data);
+-	else
+-		dev_warn_ratelimited(&info->pps->dev, "IRQ did not trigger any PPS event\n");
 +
-+	pps_get_ts(&info->ts);
++	pps_event(info->pps, &info->ts, PPS_CAPTUREASSERT, data);
  
--	/* Get the time stamp first */
--	pps_get_ts(&ts);
-+	return IRQ_WAKE_THREAD;
-+}
- 
--	info = data;
-+/*
-+ * Threaded handler -- processes the PPS event using the timestamp
-+ * captured in hardirq context above.
-+ */
-+static irqreturn_t pps_gpio_irq_thread(int irq, void *data)
-+{
-+	struct pps_gpio_device_data *info = data;
-+	int rising_edge;
- 
--	/* Small trick to bypass the check on edge's direction when capture_clear is unset */
- 	rising_edge = info->capture_clear ?
- 		      gpiod_get_value(info->gpio_pin) : !info->assert_falling_edge;
- 	if ((rising_edge && !info->assert_falling_edge) ||
- 			(!rising_edge && info->assert_falling_edge))
--		pps_event(info->pps, &ts, PPS_CAPTUREASSERT, data);
-+		pps_event(info->pps, &info->ts, PPS_CAPTUREASSERT, data);
- 	else if (info->capture_clear &&
- 			((rising_edge && info->assert_falling_edge) ||
- 			(!rising_edge && !info->assert_falling_edge)))
--		pps_event(info->pps, &ts, PPS_CAPTURECLEAR, data);
-+		pps_event(info->pps, &info->ts, PPS_CAPTURECLEAR, data);
- 	else
- 		dev_warn_ratelimited(&info->pps->dev, "IRQ did not trigger any PPS event\n");
- 
-@@ -210,8 +221,10 @@ static int pps_gpio_probe(struct platform_device *pdev)
+ 	return IRQ_HANDLED;
+ }
+@@ -90,11 +78,6 @@ static void pps_gpio_echo(struct pps_device *pps, int event, void *data)
+ 		if (pps->params.mode & PPS_ECHOASSERT)
+ 			gpiod_set_value(info->echo_pin, 1);
+ 		break;
+-
+-	case PPS_CAPTURECLEAR:
+-		if (pps->params.mode & PPS_ECHOCLEAR)
+-			gpiod_set_value(info->echo_pin, 1);
+-		break;
  	}
  
- 	/* register IRQ interrupt handler */
--	ret = request_irq(data->irq, pps_gpio_irq_handler,
--			  get_irqf_trigger_flags(data), data->info.name, data);
-+	ret = request_threaded_irq(data->irq,
-+			  pps_gpio_irq_hardirq, pps_gpio_irq_thread,
-+			  get_irqf_trigger_flags(data) | IRQF_ONESHOT,
-+			  data->info.name, data);
- 	if (ret) {
- 		pps_unregister_source(data->pps);
- 		dev_err(dev, "failed to acquire IRQ %d\n", data->irq);
+ 	/* fire the timer */
+@@ -156,15 +139,8 @@ static int pps_gpio_setup(struct device *dev)
+ static unsigned long
+ get_irqf_trigger_flags(const struct pps_gpio_device_data *data)
+ {
+-	unsigned long flags = data->assert_falling_edge ?
+-		IRQF_TRIGGER_FALLING : IRQF_TRIGGER_RISING;
+-
+-	if (data->capture_clear) {
+-		flags |= ((flags & IRQF_TRIGGER_RISING) ?
+-				IRQF_TRIGGER_FALLING : IRQF_TRIGGER_RISING);
+-	}
+-
+-	return flags;
++	return data->assert_falling_edge ? IRQF_TRIGGER_FALLING :
++					   IRQF_TRIGGER_RISING;
+ }
+ 
+ static int pps_gpio_probe(struct platform_device *pdev)
+@@ -197,9 +173,6 @@ static int pps_gpio_probe(struct platform_device *pdev)
+ 	/* initialize PPS specific parts of the bookkeeping data structure. */
+ 	data->info.mode = PPS_CAPTUREASSERT | PPS_OFFSETASSERT |
+ 		PPS_ECHOASSERT | PPS_CANWAIT | PPS_TSFMT_TSPEC;
+-	if (data->capture_clear)
+-		data->info.mode |= PPS_CAPTURECLEAR | PPS_OFFSETCLEAR |
+-			PPS_ECHOCLEAR;
+ 	data->info.owner = THIS_MODULE;
+ 	snprintf(data->info.name, PPS_MAX_NAME_LEN - 1, "%s.%d",
+ 		 pdev->name, pdev->id);
+@@ -211,8 +184,6 @@ static int pps_gpio_probe(struct platform_device *pdev)
+ 
+ 	/* register PPS source */
+ 	pps_default_params = PPS_CAPTUREASSERT | PPS_OFFSETASSERT;
+-	if (data->capture_clear)
+-		pps_default_params |= PPS_CAPTURECLEAR | PPS_OFFSETCLEAR;
+ 	data->pps = pps_register_source(&data->info, pps_default_params);
+ 	if (IS_ERR(data->pps)) {
+ 		dev_err(dev, "failed to register IRQ %d as PPS source\n",
 -- 
 2.53.0
 
