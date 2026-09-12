@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F77345CCE;
-	Sat, 12 Sep 2026 15:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D48242D65;
+	Sat, 12 Sep 2026 15:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227774; cv=none; b=DBXjkBR/EIDldgGrePiIuTtdyNjWPdVOAy3IXDnj4GS8m+/pExZnRswA3d8R5GGzq19WekI0p7Z2L242oIQNQVkYFySzQ7D3oyNyVI2Lh2c6VEr2+nXsFcOWI/p3adI4XMZy78uWT6IZ/ChLVFd/HyIQD2ZZuko1naAcXt2lSmM=
+	t=1789227779; cv=none; b=iUNJ/XrnnwrU1qZw6h7XdMIMhuHcpeB7pvRDqLXI7APBzxKWX21ibmQQAG4saJ0mymlnRYTQoqtqjzz/3ps+kNbFUMWb1Dnh97ozOvK1QZ3UKr31ARjtMtrG9yFrQduLQONsqnhuPCQf+McWtOWoVNw6t15Tn7hgtdgPNtKcIxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227774; c=relaxed/simple;
-	bh=Eo+L7jrhOeHcSvKGr3Ci2f/t4bYT76TGKpXFJdYIkqU=;
+	s=arc-20240116; t=1789227779; c=relaxed/simple;
+	bh=1lI4qZylz7LwWnMEuCiOnnsSXl5JedoxHogRhSbNH6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iz6fjBp3oNu8faZPISzOl28Zx8BeG1KpQs0qdlFnm1q/llGKZl7E2nPkidgH7Rto2maIPg1g6le90bQG/0/zMR3qjbh2XmkdaJvdS0YtH/h4evmka+j4HYXidm3MJxiADWGXbagIWi+DWiIdvYfy5bD9ZzcBOMXZPbD3qMxpXYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjMEwfCX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rDnF2yXOXsKa+wJ1vtv2ZYLlmRaM1SETmZ7D0NQFckUID45azwAI4it7taXdvAbcYKN75ObU50hzeRZQadbSb7oZCA4iTgZVzJiWA7zbVhJ95vFz7CcPNLniBydp5YbFjCUO4dT/lEPcAUNbpY9ZdU9nUjZ3ZnsnEiEa8vWhjig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+QvEGX0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjMEwfCX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E4E1F00893;
-	Sat, 12 Sep 2026 15:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+QvEGX0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAFC1F000FF;
+	Sat, 12 Sep 2026 15:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227772;
-	bh=UBiZPkaFgxM4HvZCju0CKKhda5sqnXwBQ+Ma4ymYEEc=;
+	s=korg; t=1789227777;
+	bh=+HRnreTLhjZAIz4ifN8li4pK8tJW4e2LxHx3FfyTr1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yjMEwfCXp5swqgMZrKPtLMBUuho/9AYjw9z8+OM0MZZJWdVgxqyQfSis0FvzrHgsf
-	 SIEakUYiOyx0as3WNaP/wBevk3SNv3p3hRB60kpuk1WV88mP3eDGUmb2gkvgA9OHDu
-	 jHrIqVVMuJ4X7Ayvl8Bh/p/SbfAycRRey01FcgMA=
+	b=I+QvEGX0ICjHAXK4UCzp1fk1mRCRu/eY2eOorsPElSLsuhlzapIx7tGf4m8MufQ/0
+	 LnGVKHPFfr8mf8k41rfqb0oTzBCeocNDALswVhPOX0OfcOKvfVHOuLHuvhuThdrr3n
+	 SzJBFstNl9XB7cKsEk++6GNa3csi7Z55yIsv5Ij8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Figa <tfiga@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 6.1 0251/1191] platform/chrome: sensorhub: Fix dropped timestamp events and log spam
-Date: Sat, 12 Sep 2026 08:49:39 +0200
-Message-ID: <20260912065553.855095362@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0252/1191] net: skbuff: dont skb_tx_error() the source skb in skb_zerocopy()
+Date: Sat, 12 Sep 2026 08:49:40 +0200
+Message-ID: <20260912065553.878148805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,83 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 9a3f43b30373c61477d0d3ab52946c05f9492bf9 upstream.
+[ Upstream commit 8ece906150128d5ec2462aabcc978c568433eca4 ]
 
-Commit 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported
-sensor number") evaluated the `sensor_num` against the bounds limit even
-for timestamp events.  A timestamp event typically has a `sensor_num` of
-0xff [1], causing the driver to flag it as invalid and skip to the next
-event.
+skb_zerocopy() copies frags from @from into @to. On an
+skb_orphan_frags() failure it calls skb_tx_error(@from), a destructive
+operation on the source skb the copy helper does not own. That completes
+@from's zerocopy uarg and clears SKBFL_ALL_ZEROCOPY, including the
+SKBFL_SHARED_FRAG page-ownership marker.
 
-As a result, we'd see a flooding of "Invalid sensor number 255 from EC"
-warning logs and these timestamp events were being dropped.
+Both callers already report the failure on their own drop path.
+nfnetlink_queue does it at nla_put_failure, and Open vSwitch does it in
+the flow-miss drop arm of ovs_dp_process_packet(), so nothing is lost by
+dropping it here.
 
-Move the bounds-check into cros_ec_sensor_ring_process_event() and
-evaluate it only after standalone timestamp events have already been
-processed and returned early.
+On Open vSwitch's OVS_ACTION_ATTR_USERSPACE path the skb is not freed on
+this error: do_execute_actions() ignores output_userspace()'s return
+value and, unless the upcall was the last action, keeps forwarding the
+same skb through the flow's remaining actions. The uarg is completed
+while that skb is still in flight, telling the producer its buffers are
+free, and SKBFL_SHARED_FRAG is cleared on an skb the rest of the stack
+still handles. That flag is what makes esp_input() call skb_cow_data()
+instead of decrypting in place, so a later local ESP delivery can
+decrypt over frags the skb does not own privately.
 
-[1] https://crrev.com/219ca6ef82ba266da788b673ee4ad50bd3ea1285/common/motion_sense_fifo.c#427
+Leave error reporting to the callers.
 
-Fixes: 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported sensor number")
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Link: https://lore.kernel.org/r/20260715024454.4127571-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 36d5fe6a0007 ("core, nfqueue, openvswitch: Orphan frags in skb_zerocopy and handle errors")
+Cc: stable@vger.kernel.org
+Suggested-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/6E3A780D-FB87-421F-9964-B1D457D7D106@doyensec.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ 7.2 and earlier do not have the put_page() call on the error path ]
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub_ring.c |   27 ++++++++++++-----------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ net/core/skbuff.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-@@ -436,6 +436,21 @@ cros_ec_sensor_ring_process_event(struct
- 						  fifo_timestamp,
- 						  *current_timestamp,
- 						  now);
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 48dff94dd938c..4585f7c2af4cf 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3356,10 +3356,9 @@ skb_zerocopy(struct sk_buff *to, struct sk_buff *from, int len, int hlen)
+ 
+ 	skb_len_add(to, len + plen);
+ 
+-	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC))) {
+-		skb_tx_error(from);
++	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC)))
+ 		return -ENOMEM;
+-	}
 +
-+		/*
-+		 * A standalone timestamp event typically has a sensor_num of
-+		 * 0xff.  Return early here to prevent it from hitting the
-+		 * bounds check below and spamming the logs.
-+		 */
-+		return false;
-+	}
-+
-+	/* Skip event if sensor_num from EC is out of bounds. */
-+	if (in->sensor_num >= sensorhub->sensor_num) {
-+		dev_warn_ratelimited(sensorhub->dev,
-+				     "Invalid sensor number %u from EC\n",
-+				     in->sensor_num);
-+		return false;
- 	}
+ 	skb_zerocopy_clone(to, from, GFP_ATOMIC);
  
- 	if (in->flags & MOTIONSENSE_SENSOR_FLAG_ODR) {
-@@ -463,10 +478,6 @@ cros_ec_sensor_ring_process_event(struct
- 		return true;
- 	}
- 
--	if (in->flags & MOTIONSENSE_SENSOR_FLAG_TIMESTAMP)
--		/* If we just have a timestamp, skip this entry. */
--		return false;
--
- 	/* Regular sample */
- 	out->sensor_id = in->sensor_num;
- 	trace_cros_ec_sensorhub_data(in->sensor_num,
-@@ -851,14 +862,6 @@ static void cros_ec_sensorhub_ring_handl
- 
- 		for (in = sensorhub->resp->fifo_read.data, j = 0;
- 		     j < number_data; j++, in++) {
--			/* Skip event if sensor_num from EC is out of bounds. */
--			if (in->sensor_num >= sensorhub->sensor_num) {
--				dev_warn_ratelimited(sensorhub->dev,
--						     "Invalid sensor number %u from EC\n",
--						     in->sensor_num);
--				continue;
--			}
--
- 			if (cros_ec_sensor_ring_process_event(
- 						sensorhub, fifo_info,
- 						fifo_timestamp,
+ 	for (i = 0; i < skb_shinfo(from)->nr_frags; i++) {
+-- 
+2.53.0
+
 
 
