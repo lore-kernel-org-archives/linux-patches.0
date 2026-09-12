@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D5634389C;
-	Sat, 12 Sep 2026 07:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492BC299943;
+	Sat, 12 Sep 2026 07:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198890; cv=none; b=lZ5LtG/f4nGYMgFjwefMSsevIjwq9kbUtl4EglKWGVeaW84qcBtEzveV3YUWzjKTqucq2WbodHwWphpGL2o9VXg2JT40tZguqP87hNMW8CFBMx/Zs7hySeEuKukJQfrbGxxWKqkSBuak5lCJxU0D3bcxcQWuh2EzDipnvLHUdoY=
+	t=1789198895; cv=none; b=URk6nQsbOO2xwgXnfLXcqoVrSRWyaQvONd778xZz9LWPmHtZSnD//zVPOOsB4pV0+qngTpnWx7Y5FT8Y+QHnzmau6DQDqSq+j5xgB4Twp2Afc5JbfGRkBa1e/Gigakv4u7kHKuB2l0XB79bdSF4YfVKjhG1UM+A3iA4FE63OJAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198890; c=relaxed/simple;
-	bh=O5jKdJcyvSSebvEav4vQiPSUGFuA0t4M9wiZDqVWHkA=;
+	s=arc-20240116; t=1789198895; c=relaxed/simple;
+	bh=xkl8iapRsRiof513Ssf/YkWqvZt8CDaYNcas0XYjgW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oE/cmw5ka/jRyFJNtc5yRW4ciYnf+GRDqEfDqWOPyJDJulUcJqePZtOOi3fX05f61NnDXRgZ7ZIyVBqom+jmC88j161zMGNtfP6KCGcaFYMZ9K6Ilp8cPdZpxddz7PYepuMYO/KLBqmQoFMjDD4pjdiK4Yz9SnaFqf3qicqnBVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJvxOlk9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uZnBrSFNq/RznscXLhuKGKnQk3e7TVl5M6vRyzsc1kPM608/jhRkYAIdpZbf6gXwy7Vig8oBKmISr7fNSh7/Dj6M56VGiFySWwB03tRtylMvv4IgDfm+R/OPeHYYPdewk9W1ZHgly8p3powRB434amHz8Q717C8Y4uM2s9iqlsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXSYV5f0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJvxOlk9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA4B1F000FF;
-	Sat, 12 Sep 2026 07:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXSYV5f0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13FE1F000FF;
+	Sat, 12 Sep 2026 07:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198888;
-	bh=IVcm3PY59GBr74Qv2cCykJ4TZ6Wo7i0O/XIkL6VZOdE=;
+	s=korg; t=1789198893;
+	bh=i99RlqYm0as7/akGNInbj4szDT07oFqttz2wICSF0fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NJvxOlk9PEMItZIoa8wqVvrnEXfJaBszi0mdBlrqn6IeunD3AjINdu+ieBZ9bXAlJ
-	 OWyBJPoeI3j3sPfCwrhrNdilrjpTCBluHVakkmCTAbo2lTpdVOVCk+ISJUphQea0IU
-	 8t8BGnEfhh3TfijkqieKUrxr1Kvc0QOMO9cF32Gc=
+	b=xXSYV5f0djbnIjWp3wByjvnOo1jh+31rMo3DR4R3/FBQJlDW0z3EvDR4wLJVz+/IX
+	 bEZ0oJ1cSgNw9x5f5HDYI5I+MJCAbK6ihmMMKN/wSlCCsa3Jdm7uGRZf2GkV8Ap/Hx
+	 dZLPRcs4yZnyDFLLO3jks9SU9M8cLWR5L2ytzm88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Swapnil Sapkal <swapnil.sapkal@amd.com>
-Subject: [PATCH 7.2 0456/1815] perf sched: Fix memory leaks in perf sched stats report
-Date: Sat, 12 Sep 2026 08:36:46 +0200
-Message-ID: <20260912065659.593931952@linuxfoundation.org>
+	Jie Zhang <jie.zhang@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 0474/1815] drm/msm: Recover HW before retire hung submit
+Date: Sat, 12 Sep 2026 08:37:04 +0200
+Message-ID: <20260912065700.014518241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,43 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Jie Zhang <jie.zhang@oss.qualcomm.com>
 
-[ Upstream commit 60de2c6561ae57b5f2c50efecc1fa1f0081f731a ]
+[ Upstream commit b303e1d52811de7d1bcf793560754d4df68d4a1c ]
 
-The second pass data is not saved in the list and only used to calculate
-delta from the first pass.  Let's free the data after use.
+During recovery, it is not safe to retire the hung submit before we
+recover the GPU. Retiring the submit triggers BO free and that can
+result in GPU pagefaults since the GPU may be actively accessing those
+BOs.
 
-Fixes: 5a357ae6ad63 ("perf sched stats: Add support for report subcommand")
-Reviewed-and-tested-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+To fix this, retire the submits after gpu recovery is complete in
+recover_worker().
+
+Fixes: 1a370be9ac51 ("drm/msm: restart queued submits after hang")
+Signed-off-by: Jie Zhang <jie.zhang@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/730655/
+Message-ID: <20260605-assorted-fixes-june-v1-2-2caa04f7287c@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/msm_gpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index a91921fb3b736..11db64ac1c122 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -4627,6 +4627,8 @@ static int perf_sched__process_schedstat(const struct perf_tool *tool __maybe_un
- 			domain_second_pass = list_first_entry(&cpu_second_pass->domain_head,
- 							      struct schedstat_domain, domain_list);
- 			store_schedstat_cpu_diff(temp);
-+			free(temp->cpu_data);
-+			free(temp);
- 		}
- 	} else if (event->header.type == PERF_RECORD_SCHEDSTAT_DOMAIN) {
- 		struct schedstat_cpu *cpu_tail;
-@@ -4647,6 +4649,8 @@ static int perf_sched__process_schedstat(const struct perf_tool *tool __maybe_un
- 		} else {
- 			store_schedstat_domain_diff(temp);
- 			domain_second_pass = list_next_entry(domain_second_pass, domain_list);
-+			free(temp->domain_data);
-+			free(temp);
- 		}
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 18ed00e5f143b..9ac7740a87f01 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -552,11 +552,11 @@ static void recover_worker(struct kthread_work *work)
+ 		msm_update_fence(ring->fctx, fence);
  	}
  
++	gpu->funcs->recover(gpu);
++
+ 	/* retire completed submits, plus the one that hung: */
+ 	retire_submits(gpu);
+ 
+-	gpu->funcs->recover(gpu);
+-
+ 	/*
+ 	 * Replay all remaining submits starting with highest priority
+ 	 * ring
 -- 
 2.53.0
 
