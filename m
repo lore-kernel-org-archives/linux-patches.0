@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF1938F949;
-	Sat, 12 Sep 2026 16:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6058282F03;
+	Sat, 12 Sep 2026 16:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232388; cv=none; b=Lra8/d5GPDpgD0zV3vUs8YpmuprlEBZWnp/wiolW2UdNJXZfSrAiCXId1KMbSI3Olr3pTPtmvchV+rakTb3tInYqGqeSdwzu1k6hbdpDL18czNLPXfML86Kjwjl1klX6UiSUGqMRzrYOwaqQ13lPU/+glbWk7+gOk1UeV0re9yI=
+	t=1789232393; cv=none; b=bf8q2qy7iPfURQcu8PHLJ5WA5BZd0znoOoMKfp4BuHbuu4AlHsvmxpPh6yr1PpzICPojv2Jlq+Ozk91SAEn1ikUfM9zjh0ErtnKquNu7jYZ6ucGGODPaCSl9b0QeWDlRRtFwhaWFLKMw3C59/YnYO3hxl2ByK1WzbzITXSLDevs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232388; c=relaxed/simple;
-	bh=O/PvsZXVYktqEOblQpoAuF9cUSDuPvdFbhCy6FAG/O0=;
+	s=arc-20240116; t=1789232393; c=relaxed/simple;
+	bh=TyuLItlVUNqtfR+J3mW1mNe5pP4pG+c5eVFbEY9C2bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAjFzxi+RLoFhddq/WwEzRU8wCQbf+eWkeZYT2ifkoXuNE06M+K71BmeQAgYYHdPgAXBDsEXUqDST67iIUkHdtBzXVxe/A79am7f+DKHwNkMCZYt2f/TbsUHdO0muebYnvo3g3Vdcx2Qw8EGWvb6hWJrv0475LdkX9LUKO1LjG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EtNZXcvx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PU0MQnzVQs7hqOwKSZ1LI/IlClKi2Yq3vEjFJj/t0MsexVF+EdAWr71aiJ0k0irpWkmE2nD1lTAbgs6Hyif3O6QqNQTdBWjj4TmaOMVidANNg1CiOU+PF00GX/k2CkKKcRIglkVqWpVF1R47DZP0H6oWYMrQ0eLNsFmSk5HiHAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rciDLlbE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EtNZXcvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998401F000FF;
-	Sat, 12 Sep 2026 16:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rciDLlbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534C81F000FF;
+	Sat, 12 Sep 2026 16:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232387;
-	bh=A0a8h7baiQXvSnfWfIXOmDV6jupkDuJ4cEQdkLUdjRw=;
+	s=korg; t=1789232392;
+	bh=CJ2sqlnLu1lPqLgA77pWSKPzz/j6lN2R5eVlwYZORcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EtNZXcvxW62l2f0q/umUsfD9e+A1qHXk/Szm8TZ3cUXOURnJq0+VfelG2VOPTPWnP
-	 xTQEMFyvG5IwHeBOWuDLAWXY1Z1Jl9C0x7PQLnMcksB6kkBmAGa6c8x5nuz2pzbQpo
-	 +USZkzzoi0Tf9Ah3hORIlN/7lgd+3UxTeHQtEqqU=
+	b=rciDLlbENcmKDNkQ6TPHEnOiwzNnD+sQ1T1nBAwkrjUb5EGY/5fLUdC8a80fkvRGp
+	 FkEv7CTa7AL4iO3pxSsDrV2dOkF2rgWN7ep82HlqV6r91VtNrwKSNFeEtcSU8GHKxB
+	 O+teHm3fy3qsBPXyc+BzcaOz0YuTqY0S9YBSkY0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 1190/1191] nvmet-rdma: fix queue leak when connect backlog is exceeded
-Date: Sat, 12 Sep 2026 09:05:18 +0200
-Message-ID: <20260912065614.862118785@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 1191/1191] Bluetooth: Devcoredump: Fix storing u32 without specifying byte order issue
+Date: Sat, 12 Sep 2026 09:05:19 +0200
+Message-ID: <20260912065614.882938096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,58 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit fb1ed67788e21832b614c23767a088c08cfdd2f2 upstream.
+commit 0ab905c3be8c2be368821dd2bd1f8d126064d993 upstream.
 
-When pending disconnecting queues exceed the backlog limit, the
-connect path only drops the device reference and leaks the newly
-allocated queue and its IB resources.
+API hci_devcd_init() stores its u32 type parameter @dump_size into
+skb, but it does not specify which byte order is used to store the
+integer, let us take little endian to store and parse the integer.
 
-Fixes: badc53620fe8 ("nvme: target: rdma: fix ndev refcount leak on queue connect")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: f5cc609d09d4 ("Bluetooth: Add support for hci devcoredump")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/rdma.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ net/bluetooth/coredump.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1628,19 +1628,13 @@ static int nvmet_rdma_queue_connect(stru
- 		mutex_unlock(&nvmet_rdma_queue_mutex);
- 		if (pending > NVMET_RDMA_BACKLOG) {
- 			ret = NVME_SC_CONNECT_CTRL_BUSY;
--			goto put_device;
-+			goto free_queue;
- 		}
+--- a/net/bluetooth/coredump.c
++++ b/net/bluetooth/coredump.c
+@@ -5,6 +5,7 @@
+ 
+ #include <linux/devcoredump.h>
+ 
++#include <asm/unaligned.h>
+ #include <net/bluetooth/bluetooth.h>
+ #include <net/bluetooth/hci_core.h>
+ 
+@@ -180,25 +181,25 @@ hdr_free:
+ 
+ static void hci_devcd_handle_pkt_init(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+-	u32 *dump_size;
++	u32 dump_size;
+ 
+ 	if (hdev->dump.state != HCI_DEVCOREDUMP_IDLE) {
+ 		DBG_UNEXPECTED_STATE();
+ 		return;
  	}
  
- 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
--	if (ret) {
--		/*
--		 * Don't destroy the cm_id in free path, as we implicitly
--		 * destroy the cm_id here with non-zero ret code.
--		 */
--		queue->cm_id = NULL;
-+	if (ret)
- 		goto free_queue;
--	}
+-	if (skb->len != sizeof(*dump_size)) {
++	if (skb->len != sizeof(dump_size)) {
+ 		bt_dev_dbg(hdev, "Invalid dump init pkt");
+ 		return;
+ 	}
  
- 	mutex_lock(&nvmet_rdma_queue_mutex);
- 	list_add_tail(&queue->queue_list, &nvmet_rdma_queue_list);
-@@ -1649,6 +1643,11 @@ static int nvmet_rdma_queue_connect(stru
- 	return 0;
+-	dump_size = skb_pull_data(skb, sizeof(*dump_size));
+-	if (!*dump_size) {
++	dump_size = get_unaligned_le32(skb_pull_data(skb, 4));
++	if (!dump_size) {
+ 		bt_dev_err(hdev, "Zero size dump init pkt");
+ 		return;
+ 	}
  
- free_queue:
-+	/*
-+	 * Don't destroy the cm_id in free path, as we implicitly
-+	 * destroy the cm_id here with non-zero ret code.
-+	 */
-+	queue->cm_id = NULL;
- 	nvmet_rdma_free_queue(queue);
- put_device:
- 	kref_put(&ndev->ref, nvmet_rdma_free_dev);
+-	if (hci_devcd_prepare(hdev, *dump_size)) {
++	if (hci_devcd_prepare(hdev, dump_size)) {
+ 		bt_dev_err(hdev, "Failed to prepare for dump");
+ 		return;
+ 	}
+@@ -441,7 +442,7 @@ int hci_devcd_init(struct hci_dev *hdev,
+ 		return -ENOMEM;
+ 
+ 	hci_dmp_cb(skb)->pkt_type = HCI_DEVCOREDUMP_PKT_INIT;
+-	skb_put_data(skb, &dump_size, sizeof(dump_size));
++	put_unaligned_le32(dump_size, skb_put(skb, 4));
+ 
+ 	skb_queue_tail(&hdev->dump.dump_q, skb);
+ 	queue_work(hdev->workqueue, &hdev->dump.dump_rx);
 
 
