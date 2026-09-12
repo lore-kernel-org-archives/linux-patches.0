@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1DC38398F;
-	Sat, 12 Sep 2026 18:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2382232D43C;
+	Sat, 12 Sep 2026 18:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237654; cv=none; b=ejfEw5tF3DaZvlOoyLHr2pfNkR39EubBf5SJSdN4WdRuuONKRTnLatbeRVNz72FdpfJeg88SQVGIP08pm/EfR88Fqb1g/yGqV1CmxUUDh88AVfrWEg9kYJIzQGDr/3dzT76Pj/p+MxPxEnzhvEJViYvwO1aAyEnYHA/JOfrcLac=
+	t=1789237659; cv=none; b=mcwGSp8fZEQPBfuPTcmLXfRslKcgioyfuwBUwT0CI2xTHlAfjrljxijAs+ykxNeyOgxrQQwy+3otkP48FrlrgPJgon1AL4+POoGcA5w9Xkmp36xZnvdwUTlWp6zF7MRT3n0oO53CE+zaBiSeRiKpqoSaNQDv3PP0srHY3JowSGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237654; c=relaxed/simple;
-	bh=XcKXsv9t+aGXBsAjZvdDwY86hpBSmxa02B8N+HC27jE=;
+	s=arc-20240116; t=1789237659; c=relaxed/simple;
+	bh=pC16gM2A3eiwcVSXcKN59Eh2XrnRUbSy2FQ2rPbt468=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SS2bJZ/Na9SUeTR3L76aUE9ze7KpCMhnQhdTFeM+7U+tU9NxHuo1Ntw5mRkbEsUuhJunnWMTPnEcwo1Pi2Jy0kWjvSyXocRme+N6u6Hxydmfkqq1V35Y/wC4ehHgxts0juXdWm8ksTMeWGoTQ3b93wuWjxYc20i6V/VWQZTbdiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jd2M3PJ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=P1KXgl/pBMOuBzdVPxtIVxDRuc3ODEvEfp8HGTIhCE0sbVZrr24DeXhgO4IvUEw778A8Ovy55aacpIcoL+aDsJ6IoiF9+MwsdvsyXVbYyfukTU1hniUdx5Yun36miR7UXCmERNSzrwf2I0huofXnCB9F3llWUgkm3nNWMDa6xvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuZkBRIH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jd2M3PJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293261F000FF;
-	Sat, 12 Sep 2026 18:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuZkBRIH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF33B1F000FF;
+	Sat, 12 Sep 2026 18:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237652;
-	bh=38I0kcGicGaT2yXdQK8MUGsEc4UfRL2zaTSKI8GSn3g=;
+	s=korg; t=1789237658;
+	bh=sA6e9AmgxIORRht2PzJdrxbUEzD+8khtnR8l3/tzMjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jd2M3PJ7yrt9vKWAbxoEoLv+orC1C6J98rtQ7BJ5FDQXXe+RDJEDqMNvVuPaJqHe0
-	 mYywnJTXuN1Ln8ygNLRX3n5JfCnh+4e2ZcIJIWOcgO/9QjGY+l1pDylyR6OMZUTyG9
-	 x9Dh+8MmRh8aie8lqg6dPkZkQMSdk3RqUk+an624=
+	b=RuZkBRIHkXbSVHDJhhVKC6S54rGSiapU+1ipZjrM/Wa6ehEnTq9YHFfxjz7EIWEuO
+	 fAS6xEixYyyJft7d/H2+e1UxqSVW0wz9B3VMTzB2gp2B0sOXK8VpG/w4efmnoAdO71
+	 TOvgsKU+FGcgnmd4qwQ1EGH/dlhHmaAAXlKfI/pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sashiko <sashiko-bot@kernel.org>
-Subject: [PATCH 5.15 300/935] KVM: nVMX: Service local TLB flushes on failed nested VM-Enter
-Date: Sat, 12 Sep 2026 08:55:30 +0200
-Message-ID: <20260912065533.690458608@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	syzbot+3d5461510f8dc4adfe30@syzkaller.appspotmail.com,
+	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.15 301/935] KVM: x86: hyper-v: Clamp stimer deadline to avoid livelock
+Date: Sat, 12 Sep 2026 08:55:31 +0200
+Message-ID: <20260912065533.714370328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -45,70 +46,183 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Carlos López <clopez@suse.de>
 
-commit 05a0b701d1089fb57beeb8982f23c3bbafe0fa8b upstream.
+commit 0ca49fbd2883cd53d32d85b50feef17fa04d0fbf upstream.
 
-KVM services local TLB flushes on "full" nested VM-Exits (through
-__nested_vmx_vmexit()), but not if a nested VM-Enter fails (e.g. due to
-failed VMCS checks in nested_vmx_enter_non_root_mode()).
+Fix an issue where userspace or the guest can program an Hyper-V
+synthetic timer to have a deadline in the past via integer overflow,
+preventing the CPU from making progress and triggering an RCU stall.
 
-However, it is possible that KVM had queued TLB flushes that need to be
-performed, even if the nested VM-Enter was not successful. For example,
-if VPID is disabled for L2 (via nested_vmx_transition_tlb_flush(), or if
-via the MSR load lists, as the SDM says:
+Hyper-V's SynIC exposes 4 per-vCPU synthetic timers to the
+guest, which are emulated by KVM. Each is programmed through the
+HV_X64_MSR_STIMERi_CONFIG and HV_X64_MSR_STIMERi_COUNT MSRs. Depending
+on CONFIG, COUNT represents either the absolute expiration time or the
+period of a periodic timer, both expressed in 100ns ticks. These timers
+may be set both by the guest (WRMSR) and the host (KVM_SET_MSRS).
 
-  If any MSR is being loaded in such a way that would architecturally
-  require a TLB flush, the TLBs are updated so that, after VM entry, the
-  logical processor will not use any translations that were cached before
-  the transition.
+When the timer is enabled, stimer_start() translates COUNT to an
+absolute monotonic deadline and arms an hrtimer. If COUNT is set to a
+value close to U64_MAX, the deadline calculation can overflow.
 
-The SDM is unclear about when the TLB flush should occur, and whether or
-not a failed VM entry would flush the TLB, so it is safer to always
-do the TLB flush in this case.
+    ktime_add_ns(ktime_now, 100 * (stimer->exp_time - time_now))
 
-More concretely, KVM also updates the last VPID L1 used for L2 in
-nested_vmx_transition_tlb_flush() (i.e. last_vpid), even if the VM entry
-ultimately fails. With the current code, KVM could miss a TLB flush if
-L1 changes L2's VPID, then does a failed VM entry followed by a
-successful one, as the failed VM entry would update last_vpid but not
-actually flush the TLB. Servicing local TLB flushes on failed VM entries
-makes sure that the TLB is always flushed when last_vpid is updated.
+This can result in a CPU livelock. stimer_start() arms the timer
+via hrtimer_start() with a deadline in the past, which causes it to
+immediately fire. The stimer callback then raises KVM_RQ_HV_STIMER, with
+the intention of causing KVM to deliver a synthetic interrupt on the
+next vCPU guest enter.
 
-Fixes: 5c614b3583e7 ("KVM: nVMX: nested VPID emulation")
+Then, once userspace issues KVM_RUN, vcpu_enter_guest() consumes the
+request, calling kvm_hv_process_stimers(). This would normally disable
+the timer via stimer_expiration() once the deadline is in the past.
+However, the deadline comparison is done between the KVM reference
+counter and stime->exp_time, which is a big value close to U64_MAX, so
+this never happens for a few thousand years.
+
+kvm_hv_process_timers() then re-arms the timer via stimer_start(), since
+it was not disabled, which again fires immediately. Before entering
+the guest, kvm_vcpu_exit_request() checks kvm_request_pending(),
+which returns true due to the newly raised KVM_REQ_HV_STIMER. Then
+vcpu_enter_guest() aborts the guest entry, returning early into
+vcpu_run(), which loops back again into vcpu_enter_guest(), restarting
+the cycle.
+
+Since there are no manual yields in this loop, a task with SCHED_FIFO
+may starve RCU grace-period kthreads, which exposes the stalls found
+by syzcaller:
+
+    rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+    rcu:    (detected by 1, t=10502 jiffies, g=14269, q=1142 ncpus=2)
+    rcu: All QSes seen, last rcu_preempt kthread activity 10500 (4294965239-4294954739), jiffies_till_next_fqs=1, root ->qsmask 0x0
+    rcu: rcu_preempt kthread starved for 10500 jiffies! g14269 f0x2 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=0
+    rcu:    Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+        ( ... )
+    Call Trace:
+     <IRQ>
+     __run_hrtimer kernel/time/hrtimer.c:1773 [inline]
+     __hrtimer_run_queues+0x408/0xc30 kernel/time/hrtimer.c:1841
+     hrtimer_interrupt+0x45b/0xaa0 kernel/time/hrtimer.c:1903
+     local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1045 [inline]
+     __sysvec_apic_timer_interrupt+0x102/0x3e0 arch/x86/kernel/apic/apic.c:1062
+     instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1056 [inline]
+     sysvec_apic_timer_interrupt+0xa1/0xc0 arch/x86/kernel/apic/apic.c:1056
+     </IRQ>
+     <TASK>
+     asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:697
+    RIP: 0010:__raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:152 [inline]
+    RIP: 0010:_raw_spin_unlock_irqrestore+0xa8/0x110 kernel/locking/spinlock.c:194
+    Code: 74 05 e8 0b f4 5f f6 48 c7 44 24 20 00 00 00 00 9c 8f 44 24 20 f6 44 24 21 02 75 4f f7 c3 00 02 00 00 74 01 fb bf 01 00 00 00 <e8> 23 6b 27 f6 65 8b 05 7c 60 5a 07 85 c0 74 40 48 c7 04 24 0e 36
+    RSP: 0018:ffffc900040a7320 EFLAGS: 00000206
+    RAX: 5de15cb931505900 RBX: 0000000000000a06 RCX: 5de15cb931505900
+    RDX: 0000000000000007 RSI: ffffffff8daa9dc3 RDI: 0000000000000001
+    RBP: ffffc900040a73b0 R08: ffffffff8fc3d077 R09: 1ffffffff1f87a0e
+    R10: dffffc0000000000 R11: fffffbfff1f87a0f R12: dffffc0000000000
+    R13: 0000000000000000 R14: ffff8880b8628240 R15: 1ffff92000814e64
+     hrtimer_start include/linux/hrtimer.h:259 [inline]
+     stimer_start arch/x86/kvm/hyperv.c:682 [inline]
+     kvm_hv_process_stimers+0xd0a/0x16a0 arch/x86/kvm/hyperv.c:893
+     vcpu_enter_guest arch/x86/kvm/x86.c:11193 [inline]
+     vcpu_run+0x2240/0x76b0 arch/x86/kvm/x86.c:11639
+     kvm_arch_vcpu_ioctl_run+0x1148/0x1c90 arch/x86/kvm/x86.c:11984
+     kvm_vcpu_ioctl+0x99a/0xed0 virt/kvm/kvm_main.c:4492
+     vfs_ioctl fs/ioctl.c:51 [inline]
+     __do_sys_ioctl fs/ioctl.c:597 [inline]
+     __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+     do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+     do_syscall_64+0xfa/0xf80 arch/x86/entry/syscall_64.c:94
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f635278f749
+    Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+    RSP: 002b:00007f635365c038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+    RAX: ffffffffffffffda RBX: 00007f63529e5fa0 RCX: 00007f635278f749
+    RDX: 0000000000000000 RSI: 000000000000ae80 RDI: 0000000000000005
+    RBP: 00007f6352813f91 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+    R13: 00007f63529e6038 R14: 00007f63529e5fa0 R15: 00007ffd5b219358
+     </TASK>
+
+Fix this by clamping the deadline computation to KTIME_MAX, which
+preserves the intent of arming a timer very far in the future.
+ktime_add_safe() already does this type of clamping, so use it after
+checking that that multiplying by the 100ns time tick also does not
+overflow.
+
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Reported-by: syzbot+3d5461510f8dc4adfe30@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3d5461510f8dc4adfe30
+Fixes: 1f4b34f825e8 ("kvm/x86: Hyper-V SynIC timers")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org> # Internal review
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260722230128.1587363-1-yosry@kernel.org
+Signed-off-by: Carlos López <clopez@suse.de>
+Link: https://patch.msgid.link/20260714133212.3916611-3-clopez@suse.de
+[sean: tag for stable]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/kvm/hyperv.c |   25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3525,6 +3525,14 @@ enum nvmx_vmentry_status nested_vmx_ente
- vmentry_fail_vmexit_guest_mode:
- 	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING)
- 		vcpu->arch.tsc_offset -= vmcs12->tsc_offset;
-+
-+	/*
-+	 * Handle any TLB flush requests that were queued for L2 if KVM made it
-+	 * far enough along to switch to L2 context.  Note, loading host state
-+	 * will generate any flushes for L1 required by VM-Exit.
-+	 */
-+	kvm_service_local_tlb_flush_requests(vcpu);
-+
- 	leave_guest_mode(vcpu);
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -597,6 +597,18 @@ static enum hrtimer_restart stimer_timer
+ }
  
- vmentry_fail_vmexit:
+ /*
++ * Translate a stimer expiry given in 100ns reference ticks into an
++ * an absolute deadline. Saturates on overflow.
++ */
++static ktime_t stimer_add_delta(ktime_t now, u64 delta_100ns)
++{
++	if (delta_100ns >= KTIME_MAX / 100)
++		return KTIME_MAX;
++
++	return ktime_add_safe(now, 100 * delta_100ns);
++}
++
++/*
+  * stimer_start() assumptions:
+  * a) stimer->count is not equal to 0
+  * b) stimer->config has HV_STIMER_ENABLE flag
+@@ -605,6 +617,7 @@ static int stimer_start(struct kvm_vcpu_
+ {
+ 	u64 time_now;
+ 	ktime_t ktime_now;
++	ktime_t deadline;
+ 
+ 	time_now = get_time_ref_counter(hv_stimer_to_vcpu(stimer)->kvm);
+ 	ktime_now = ktime_get();
+@@ -627,10 +640,8 @@ static int stimer_start(struct kvm_vcpu_
+ 					stimer->index,
+ 					time_now, stimer->exp_time);
+ 
+-		hrtimer_start(&stimer->timer,
+-			      ktime_add_ns(ktime_now,
+-					   100 * (stimer->exp_time - time_now)),
+-			      HRTIMER_MODE_ABS);
++		deadline = stimer_add_delta(ktime_now, stimer->exp_time - time_now);
++		hrtimer_start(&stimer->timer, deadline, HRTIMER_MODE_ABS);
+ 		return 0;
+ 	}
+ 	stimer->exp_time = stimer->count;
+@@ -649,9 +660,9 @@ static int stimer_start(struct kvm_vcpu_
+ 					   stimer->index,
+ 					   time_now, stimer->count);
+ 
+-	hrtimer_start(&stimer->timer,
+-		      ktime_add_ns(ktime_now, 100 * (stimer->count - time_now)),
+-		      HRTIMER_MODE_ABS);
++	deadline = stimer_add_delta(ktime_now, stimer->count - time_now);
++	hrtimer_start(&stimer->timer, deadline, HRTIMER_MODE_ABS);
++
+ 	return 0;
+ }
+ 
 
 
