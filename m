@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA3247124F;
-	Sat, 12 Sep 2026 11:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3697356A0D;
+	Sat, 12 Sep 2026 11:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211988; cv=none; b=V4Gfca7iGoTIXUn3UjH6I10ht0yFPJvBSdFXmSg7XjFBxb1XXL66UlKkh2z3ufHt/naZ057KWcvGhLAVFoycKKqKv4QpkJczUSLuHffQvf+S+GJo2ppAbA+UYlGDDfI2oYmBdopLD2HffBDkSBjd875rRyTTRjOQcOMaa2LLCiI=
+	t=1789211993; cv=none; b=qdt9jimSLZNvDnUDCv1yy/yRTO+gEcpPU5+kGfmGWERqJqNgIJFh+voKWKbg/rPNm64p5FMz9MFJdN/3NDG4ehgH5Nv9PaY2k0pt9KB7yDnC6xJjSpsDx188ijVcXnonZgvIPgk59bzND96pnwxLfajo4ZrPqLkd3hJwUBL2gwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211988; c=relaxed/simple;
-	bh=V4zplIkk4Rf5ZIlQuuYNZT3x2B/lPsfPlcHBLrLLetY=;
+	s=arc-20240116; t=1789211993; c=relaxed/simple;
+	bh=D7ubwAMStSth9Z+ZOLZpZ4NVFtijYYtMexG51kw/DA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nT95r3Hm53aYzZ3uHAH9Z+0V5qGVy2Paiax6kp8ufBooJa5uH0JjSn6DJtMqeJEElCSIUdqd2zZuhJTGBHETSwxlieuvKfbpWC85Z7sVTpIn2BRpblaPITRwkOGbuS6fMF9AY+drTVikdNOSeRlcft+qepnGzXYYj5pP3IbNp3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TurBuNeU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eo+YiqdDYe6QfKTD2LgwqLv82leEvHg0k6bVV515kNRFEqBxscTFSXIJp1UEPimUXAqYVRZiPEaggKu5n4BW1+JRjsa2DCqymHrNSVTxDJTk+2xq1oyhHPa/C/m6rI5lhEAHTdNnTWR//I1ME9ME+7VjXt3iNZ9GyfTmdEjIP4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kzvHB0J4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TurBuNeU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E7C1F000FF;
-	Sat, 12 Sep 2026 11:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzvHB0J4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D511F000FF;
+	Sat, 12 Sep 2026 11:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211986;
-	bh=LVBtq6S+0+pa/tCA69BE06GKVEz8Rw/e+QMY6SFoFIM=;
+	s=korg; t=1789211991;
+	bh=rsLCYIfVnZvZZAgluzEh/yKe+TiATNwPs0aemlaWS4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TurBuNeU88iZknjBKM5bCgSK/zT+3KZQ1UifBP+RdY6eeQif8ptpbM34niORlLCw1
-	 l4I8e6OfYB+yfY3uW+DmGup6xgSnkdv8vkAHfqEH/3E64o4X4SZ/3Vvj3u+0YJ0NB4
-	 /rc8otmr1vLtlOZ+2VFVmkHslAJKvJ88/Yj+t8AU=
+	b=kzvHB0J4msehts9oIfQOfvl//jU4yxBpD7qNPmihHk4vgboyX99EpOpJmsnR4Xocz
+	 VywfcewF0mxQ8+c4sVjUv03lScm9wv2Sl/F7CPqm6GFQMmjB2SiX9YoESszY8BaEAx
+	 eTxts7Vj7O4/CTgOrXX1ExUxUXy868fSvcbGjbh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Or Har-Toov <ohartoov@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1345/1518] net/mlx5: Skip disabled vports when setting max TX speed
-Date: Sat, 12 Sep 2026 08:58:34 +0200
-Message-ID: <20260912065653.955254333@linuxfoundation.org>
+Subject: [PATCH 6.18 1346/1518] net/mlx5: Move vport DOWN state check out of mlx5_query_vport_max_tx_speed()
+Date: Sat, 12 Sep 2026 08:58:35 +0200
+Message-ID: <20260912065653.978066744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,97 +56,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit c6df9a65cbb0fe7808a4b2872095f4c849b3196a ]
+[ Upstream commit 20f11b5cfa429ba3a2b8ef463d47e820687b4d2e ]
 
-When setting vports max TX speed during LAG activation or bond state
-changes, the code iterates over all eswitch vports. However, some
-vports may not be enabled yet.
+mlx5_query_vport_max_tx_speed() was introduced to serve the
+query_port_speed path, which uses max_tx_speed == 0 when port is down.
 
-Skip vports that are not enabled to avoid sending FW commands for
-uninitialized vports. Save the LAG aggregated speed in the vport
-struct so it can be applied when the vport is enabled later.
+This is incorrect for callers that need the actual configured speed
+regardless of vport state, such as modify-vport-state helpers
+that must preserve the speed across state transitions.
 
-Fixes: 50f1d188c580 ("net/mlx5: Propagate LAG effective max_tx_speed to vports")
+Move this logic to the caller function in the verb flow and let
+mlx5_query_vport_max_tx_speed() return the raw firmware value
+unconditionally.
+
+Fixes: aaecff5e13cd ("RDMA/mlx5: Implement query_port_speed callback")
 Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260513063640.334132-1-tariqt@nvidia.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260816065015.3280733-3-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: ad0ae7aefa7a ("net/mlx5: E-Switch, preserve max tx speed on vport state modification")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch.c | 21 +++++++++++++++++++
- .../net/ethernet/mellanox/mlx5/core/eswitch.h |  1 +
- .../net/ethernet/mellanox/mlx5/core/lag/lag.c |  5 +++++
- 3 files changed, 27 insertions(+)
+ drivers/infiniband/hw/mlx5/main.c               |  5 +++--
+ drivers/net/ethernet/mellanox/mlx5/core/vport.c | 12 ++++--------
+ include/linux/mlx5/vport.h                      |  3 ++-
+ 3 files changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index c38deabcb7b96..bc7ceb4c76e5c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -904,6 +904,24 @@ static void esw_vport_cleanup(struct mlx5_eswitch *esw, struct mlx5_vport *vport
- 	esw_vport_cleanup_acl(esw, vport);
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index a67a2aa2e101c..7c82518e9f046 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -1616,14 +1616,15 @@ static int mlx5_ib_query_port_speed_from_vport(struct mlx5_core_dev *mdev,
+ 					       u32 port_num)
+ {
+ 	u32 max_tx_speed;
++	u8 vport_state;
+ 	int err;
+ 
+ 	err = mlx5_query_vport_max_tx_speed(mdev, op_mod, vport, other_vport,
+-					    &max_tx_speed);
++					    &max_tx_speed, &vport_state);
+ 	if (err)
+ 		return err;
+ 
+-	if (max_tx_speed == 0)
++	if (vport_state == VPORT_STATE_DOWN || max_tx_speed == 0)
+ 		/* Value 0 indicates field not supported, fallback */
+ 		return mlx5_ib_query_port_speed_from_port(dev, port_num,
+ 							  speed);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/vport.c b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
+index 93bd19b9c6f9a..2ee914f9ce933 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
+@@ -131,11 +131,11 @@ int mlx5_modify_vport_max_tx_speed(struct mlx5_core_dev *mdev, u8 opmod,
  }
  
-+static void mlx5_esw_vport_set_max_tx_speed(struct mlx5_eswitch *esw,
-+					    struct mlx5_vport *vport)
-+{
-+	int ret;
-+
-+	if (!MLX5_CAP_ESW(esw->dev, esw_vport_state_max_tx_speed))
-+		return;
-+
-+	ret = mlx5_modify_vport_max_tx_speed(esw->dev,
-+					     MLX5_VPORT_STATE_OP_MOD_ESW_VPORT,
-+					     vport->vport, true,
-+					     vport->agg_max_tx_speed);
-+	if (ret)
-+		mlx5_core_dbg(esw->dev,
-+			      "Failed to set vport %d speed %d, err=%d\n",
-+			      vport->vport, vport->agg_max_tx_speed, ret);
-+}
-+
- int mlx5_esw_vport_enable(struct mlx5_eswitch *esw, struct mlx5_vport *vport,
- 			  enum mlx5_eswitch_vport_event enabled_events)
+ int mlx5_query_vport_max_tx_speed(struct mlx5_core_dev *mdev, u8 op_mod,
+-				  u16 vport, u8 other_vport, u32 *max_tx_speed)
++				  u16 vport, u8 other_vport,
++				  u32 *max_tx_speed, u8 *state)
  {
-@@ -950,6 +968,9 @@ int mlx5_esw_vport_enable(struct mlx5_eswitch *esw, struct mlx5_vport *vport,
+ 	u32 out[MLX5_ST_SZ_DW(query_vport_state_out)] = {};
+ 	u32 in[MLX5_ST_SZ_DW(query_vport_state_in)] = {};
+-	u32 state;
+ 	int err;
  
- 	esw->enabled_vports++;
- 	esw_debug(esw->dev, "Enabled VPORT(%d)\n", vport_num);
-+
-+	if (vport->agg_max_tx_speed)
-+		mlx5_esw_vport_set_max_tx_speed(esw, vport);
- done:
- 	mutex_unlock(&esw->state_lock);
- 	return ret;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index a68af08faeed0..eca24c1929eb4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -246,6 +246,7 @@ struct mlx5_vport {
- 	enum mlx5_eswitch_vport_event enabled_events;
- 	int index;
- 	struct mlx5_devlink_port *dl_port;
-+	u32 agg_max_tx_speed;
- };
+ 	MLX5_SET(query_vport_state_in, in, opcode,
+@@ -148,13 +148,9 @@ int mlx5_query_vport_max_tx_speed(struct mlx5_core_dev *mdev, u8 op_mod,
+ 	if (err)
+ 		return err;
  
- struct mlx5_esw_indir_table;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index 8468e35252fc0..e9ad59f74e46c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -1075,6 +1075,11 @@ static void mlx5_lag_modify_device_vports_speed(struct mlx5_core_dev *mdev,
- 		if (vport->vport == MLX5_VPORT_UPLINK)
- 			continue;
- 
-+		vport->agg_max_tx_speed = speed;
-+
-+		if (!vport->enabled)
-+			continue;
-+
- 		ret = mlx5_modify_vport_max_tx_speed(mdev, op_mod,
- 						     vport->vport, true, speed);
- 		if (ret)
+-	state = MLX5_GET(query_vport_state_out, out, state);
+-	if (state == VPORT_STATE_DOWN) {
+-		*max_tx_speed = 0;
+-		return 0;
+-	}
+-
+ 	*max_tx_speed = MLX5_GET(query_vport_state_out, out, max_tx_speed);
++	if (state)
++		*state = MLX5_GET(query_vport_state_out, out, state);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(mlx5_query_vport_max_tx_speed);
+diff --git a/include/linux/mlx5/vport.h b/include/linux/mlx5/vport.h
+index 69c5f22c2d621..e53a5d033d72d 100644
+--- a/include/linux/mlx5/vport.h
++++ b/include/linux/mlx5/vport.h
+@@ -61,7 +61,8 @@ u8 mlx5_query_vport_state(struct mlx5_core_dev *mdev, u8 opmod, u16 vport);
+ int mlx5_modify_vport_admin_state(struct mlx5_core_dev *mdev, u8 opmod,
+ 				  u16 vport, u8 other_vport, u8 state);
+ int mlx5_query_vport_max_tx_speed(struct mlx5_core_dev *mdev, u8 op_mod,
+-				  u16 vport, u8 other_vport, u32 *max_tx_speed);
++				  u16 vport, u8 other_vport,
++				  u32 *max_tx_speed, u8 *state);
+ int mlx5_modify_vport_max_tx_speed(struct mlx5_core_dev *mdev, u8 opmod,
+ 				   u16 vport, u8 other_vport, u16 max_tx_speed);
+ int mlx5_query_nic_vport_mac_address(struct mlx5_core_dev *mdev,
 -- 
 2.53.0
 
