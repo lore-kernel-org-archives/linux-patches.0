@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDDF2DAFDE;
-	Sat, 12 Sep 2026 15:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8A93AC17;
+	Sat, 12 Sep 2026 15:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225469; cv=none; b=hCVO35SCFWRWJyzSaZYCc+8Qjf4YHhsdsceWNU1jNYx6UoFPmbejTRG9j/uYG4KAgFzcXf28KE4Wu7p45J9C7oqLD/zRfU1jacyg3u50mJ2qy1op54BABWQuFEwea9YTXLODwQOhzazfMVt7xKQmJConxGfvorDVr0MbrzFV+Lo=
+	t=1789225475; cv=none; b=jY14FPHwkanUIuIR2qCEkk0QX+0OFqiOdqEKbofl3a06Tb75k5fUCz+bEM/jxnVZEINSB2PtnZP/f43/vrnxMNzNg67I/zLegJJP3+CboPle1gTdUY9xr3JzdRE1QLm0WFWHOhNLf0lJeP/po87T1lLD+U7NPZ14SO7ySXTE+dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225469; c=relaxed/simple;
-	bh=K6wyIJ0lEsI87knnIY5XNqCWbeuGYXsEOmxfE+oGAXs=;
+	s=arc-20240116; t=1789225475; c=relaxed/simple;
+	bh=31+rV+bvyO1sF53RR+JtjJOrYRVemzdbx+C+9lvoAl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awex7Q7MCuYfMU6t/3jTSBgqTM94FKq50SFhVpOstRzHFQMSoRl3Ka63GB55m+KwsWzEtnc2KZuia/6FI7SKYIV4OOJ1NfKIEDptvTeGVACZE9qTyLa2YFF1cqFqH/B0ohl+SCkiVc2UVnYlX7xq44Jr7XdG8yMWPwRE5UrtxwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqoFaraJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P6IFvTs/h8WuoiGH0V5CIWWMz8DrXYq+fmbaubRtsPZYyD+UAt08XNR2CWdtyGJ0cD5Abs0dWarJn0ITGB5tKajHRfTbDyYeTDFVP71Id4Kb7g+PFZvkm0STDxZ8KE+liwYai6A5rxMSkI38t5vYWcTM0v+NRFyG3oVuN0fAeP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tG290JJJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqoFaraJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B84C1F000FF;
-	Sat, 12 Sep 2026 15:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tG290JJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6961C1F000FF;
+	Sat, 12 Sep 2026 15:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225468;
-	bh=3zSsPwkGeS0B3w1el3VtO7Bo505m9qbyzBxmw5khHUI=;
+	s=korg; t=1789225473;
+	bh=Ocgff8qqx7jVHix1cPXAlWdv/8mUsgcx/BAeS7tpuAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GqoFaraJ1e0G/OsCmyNxN1ElDNR5i+R+tF7XFdeCnGNOKiaCeYfZyzdKo5sW8JwbY
-	 DLvYFSTWcdZ/Cn7pruSJz4+5mRB3h+xmdAH0R1XM67Op3phnxd9/mZCmM8ZzXjedpB
-	 FF2zHbMm7zl7lZj8EXHHaFtTaUCrgMjDFqNH7MwA=
+	b=tG290JJJVq7hsKfHkiYXgboxc1ah4JkjVgQy41rv/Ho7S5yYHbhRrt8us7cYBcSpa
+	 OTy1Z7H+WM3ltt54coAQCENw3F19TvljVosRwgVpVsR4yLVuCVVoENKoGJT8E5BPdQ
+	 qodIWdAcS7cscHoir2ZwCZPAs4Idv4b2tfocgE8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1204/1424] clocksource/drivers/armada: Unwind timer clock on init failure
-Date: Sat, 12 Sep 2026 09:00:36 +0200
-Message-ID: <20260912065634.247874784@linuxfoundation.org>
+Subject: [PATCH 6.6 1205/1424] ALSA: seq: midi: Optimize event_input locking with RCU
+Date: Sat, 12 Sep 2026 09:00:37 +0200
+Message-ID: <20260912065634.270004961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,67 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 8b4127f6db40381229f3564d34ac35f36311c201 ]
+[ Upstream commit 4cc25cdd3cffa475edb8dec8199b3227038ebcfb ]
 
-The Armada timer init paths enable their clock before calling the
-common initialization routine. If that routine returns an error, the
-clock is left enabled even though the timer was not initialized
-successfully.
+The recent fix for serializing the output teardown introduced a
+spinlock invocation at every MIDI output event via event_process_midi.
+Since this is a hot path, let's do performance optimization with RCU.
 
-Fixes: 12549e27c63c ("clocksource/drivers/time-armada-370-xp: Convert init function to return error")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260802213545.565913-1-dbgh9129@gmail.com
+The new output_substream __rcu pointer is published via
+rcu_assign_pointer() in midisynth_use() after output_rfile is set, and
+cleared in midisynth_unuse() before the resource teardown.
+event_process_midi() reads it under rcu_read_lock() and bumps
+output_use_lock inside that section, which is necessary to close the
+window between the pointer dereference and the refcount increment.
+
+midisynth_unuse() calls synchronize_rcu() before snd_use_lock_sync():
+this guarantees that any reader who obtained a non-NULL pointer has
+already called atomic_inc (output_use_lock), so the subsequent
+snd_use_lock_sync() sees the correct in-flight count.
+
+Fixes: ef7607ab1c8a ("ALSA: seq: midi: Serialize output teardown with event_input")
+Link: https://patch.msgid.link/20260813144224.753399-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-armada-370-xp.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ sound/core/seq/seq_midi.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/clocksource/timer-armada-370-xp.c b/drivers/clocksource/timer-armada-370-xp.c
-index 6ec565d6939ad..49735ced52bb8 100644
---- a/drivers/clocksource/timer-armada-370-xp.c
-+++ b/drivers/clocksource/timer-armada-370-xp.c
-@@ -346,7 +346,11 @@ static int __init armada_xp_timer_init(struct device_node *np)
+diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
+index c8a7c39747113..50e39b34f5ac5 100644
+--- a/sound/core/seq/seq_midi.c
++++ b/sound/core/seq/seq_midi.c
+@@ -43,8 +43,8 @@ struct seq_midisynth {
+ 	int device;
+ 	int subdevice;
+ 	struct snd_rawmidi_file input_rfile;
+-	spinlock_t output_lock;		/* protects output_rfile publication */
+ 	snd_use_lock_t output_use_lock;	/* in-flight event_input users */
++	struct snd_rawmidi_substream __rcu *output_substream;
+ 	struct snd_rawmidi_file output_rfile;
+ 	int seq_client;
+ 	int seq_port;
+@@ -134,8 +134,8 @@ static int event_process_midi(struct snd_seq_event *ev, int direct,
+ 	if (snd_BUG_ON(!msynth))
+ 		return -EINVAL;
  
- 	timer_clk = clk_get_rate(clk);
- 
--	return armada_370_xp_timer_common_init(np);
-+	ret = armada_370_xp_timer_common_init(np);
-+	if (ret)
-+		clk_disable_unprepare(clk);
-+
-+	return ret;
+-	scoped_guard(spinlock_irqsave, &msynth->output_lock) {
+-		substream = msynth->output_rfile.output;
++	scoped_guard(rcu) {
++		substream = rcu_dereference(msynth->output_substream);
+ 		if (!substream)
+ 			return -ENODEV;
+ 		snd_use_lock_use(&msynth->output_use_lock);
+@@ -177,7 +177,6 @@ static int snd_seq_midisynth_new(struct seq_midisynth *msynth,
+ 	msynth->card = card;
+ 	msynth->device = device;
+ 	msynth->subdevice = subdevice;
+-	spin_lock_init(&msynth->output_lock);
+ 	snd_use_lock_init(&msynth->output_use_lock);
+ 	return 0;
  }
- TIMER_OF_DECLARE(armada_xp, "marvell,armada-xp-timer",
- 		       armada_xp_timer_init);
-@@ -384,7 +388,11 @@ static int __init armada_375_timer_init(struct device_node *np)
- 		timer25Mhz = false;
+@@ -252,8 +251,8 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
+ 		return err;
  	}
- 
--	return armada_370_xp_timer_common_init(np);
-+	ret = armada_370_xp_timer_common_init(np);
-+	if (ret)
-+		clk_disable_unprepare(clk);
-+
-+	return ret;
+ 	snd_midi_event_reset_decode(msynth->parser);
+-	scoped_guard(spinlock_irqsave, &msynth->output_lock)
+-		msynth->output_rfile = rfile;
++	msynth->output_rfile = rfile;
++	rcu_assign_pointer(msynth->output_substream, rfile.output);
+ 	return 0;
  }
- TIMER_OF_DECLARE(armada_375, "marvell,armada-375-timer",
- 		       armada_375_timer_init);
-@@ -407,7 +415,11 @@ static int __init armada_370_timer_init(struct device_node *np)
- 	timer_clk = clk_get_rate(clk) / TIMER_DIVIDER;
- 	timer25Mhz = false;
  
--	return armada_370_xp_timer_common_init(np);
-+	ret = armada_370_xp_timer_common_init(np);
-+	if (ret)
-+		clk_disable_unprepare(clk);
-+
-+	return ret;
+@@ -261,17 +260,16 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
+ static int midisynth_unuse(void *private_data, struct snd_seq_port_subscribe *info)
+ {
+ 	struct seq_midisynth *msynth = private_data;
+-	struct snd_rawmidi_file rfile = {};
++	struct snd_rawmidi_file rfile;
+ 
+-	scoped_guard(spinlock_irqsave, &msynth->output_lock) {
+-		rfile = msynth->output_rfile;
+-		msynth->output_rfile = (struct snd_rawmidi_file){};
+-	}
++	rcu_assign_pointer(msynth->output_substream, NULL);
++	synchronize_rcu();
++	snd_use_lock_sync(&msynth->output_use_lock);
++	rfile = msynth->output_rfile;
++	msynth->output_rfile = (struct snd_rawmidi_file){};
+ 
+ 	if (snd_BUG_ON(!rfile.output))
+ 		return -EINVAL;
+-
+-	snd_use_lock_sync(&msynth->output_use_lock);
+ 	snd_rawmidi_drain_output(rfile.output);
+ 	return snd_rawmidi_kernel_release(&rfile);
  }
- TIMER_OF_DECLARE(armada_370, "marvell,armada-370-timer",
- 		       armada_370_timer_init);
 -- 
 2.53.0
 
