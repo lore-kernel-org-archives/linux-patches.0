@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADED8369D56;
-	Sat, 12 Sep 2026 09:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B2C35C6B2;
+	Sat, 12 Sep 2026 09:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206180; cv=none; b=AzrMTtUE3Nv1kmGCX2ABxJnZM0GAPNIkHsZ3O8Ym7ySUzg1HqgGESy3/6OtviaoKpXWmVvA0IveK6zCutM1zsZouEPSlg2Wz6d/J9jx2x6ptTZGEU3rwkwkj2IXYyX+htkUzIlGMyF9mRA96HOH7E0+jX/wUyMznDNvr/GEziVY=
+	t=1789206184; cv=none; b=k1TEJ6ldWW3CKqg6HkAlPZW1/z8HsIOr8yoqg7vfYCQpvngX9VE/ilS7ZJPb7MsxB5YtSHaPK5rokey20z9WfzC2VIhO0G4DaXy701H17/12JRQ2fXXANvRX+SA3UC7Tx0+zUdBCgjSoqbj84Jsycc+Q98hX/YNEzl2QvFGMhJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206180; c=relaxed/simple;
-	bh=El3KkXBwpEUaL7BfLmrzGfdAf5xoPO+qb7fbKqnQYZU=;
+	s=arc-20240116; t=1789206184; c=relaxed/simple;
+	bh=wtOb25hAGrJ3wmpjUqXc5fe5BYBJsbVS0TtrU/R7xs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnft3hxmLL6yn6VOfQ7Tzohul4HUyzb0mf74LjK+yBFUDALRnczmA/delu/4pJlbQ9HrsoU5M2SZqO6TuoIvwKGykMZnyK8XtTP9BSMnvmvNILUQG68in0t5qMO1FB4k+4m7KUxAUCQc4x0PKPJRRI4bzi8tOVUcrj2lYJBJND8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkmkxsDV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VUSiLh2SL231fHmfG3EVf5v47OXc4xV86VxKSDZJUqCCDReHM4FHgHlVF6JeI5OhJcDGqAvPHM3TCq2jx1vuG7rUH7c7/+pgLX6swq/IRMqvwNH0eepuMfnATZ22StnVEpW0nBbT1FOiE7jLADMbGtz5zdQ6v4cvuapD9S1AnTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWCUg4FS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkmkxsDV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22041F000FF;
-	Sat, 12 Sep 2026 09:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWCUg4FS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C701F000FF;
+	Sat, 12 Sep 2026 09:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206178;
-	bh=CCCgXuKCdR00KTVuI/+wEO0vBOq4Y4CWCk7RCTHGGDo=;
+	s=korg; t=1789206183;
+	bh=ioVhp6v8osXAj0tSnLc1L6JlNkEA++tuM+PLNPIh6uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NkmkxsDVwuvH4tenFI+PCZAIeuW7HKglxBL6zUPFdcPaI4uwJYS0OPoogEJa7tXZv
-	 DjBvQk5n/xOhr9y4frzorXunQIoio/xo0m8wshrUyevcfCH3NsDyW+Ypsoe2XQOcaX
-	 ygAdWLNCDzWROZ+0mS8exIqv4sF65itlMs242WPA=
+	b=WWCUg4FSyysYzUlp3sB8+goDRBSFOHJWNCGkSaHwZZD7Ng3rwala07MV6KlQfKPMF
+	 DFGWMEi65VsFNy+aT3qSTuZ+k7N4coBeAwsq/uuIcmlWfzbFFBfAX3zHDbtT6bKSFv
+	 68TFT5wW75p5XllO3snoKhD/gs2p+UVssLjDkXac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0155/1518] perf test: Truncate test description to fit terminal width
-Date: Sat, 12 Sep 2026 08:38:44 +0200
-Message-ID: <20260912065626.998816486@linuxfoundation.org>
+Subject: [PATCH 6.18 0138/1518] clk: imx: scu: drop redundant init.ops variable assignment
+Date: Sat, 12 Sep 2026 08:38:27 +0200
+Message-ID: <20260912065626.616283528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,320 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 32e6312f7e397bf0b731b43a6504966398af0788 ]
+[ Upstream commit 5f2db1ce201216e81333ecc2ab51494410b2fe0d ]
 
-The parallel test harness uses the carriage return delete escape sequence
-`PERF_COLOR_DELETE_LINE` ("\033[A\33[2K\r") to erase and update the
-"Running (X active)" progress lines.
+The init.ops is assigned a default value, however right below it is an
+if, else if, and else where all of them also assign a value to init.ops.
+Drop the redundant init.ops assignment at the top.
 
-However, if a test description is longer than the terminal width, the line
-wraps around. When this happens, the cursor up escape sequence `\033[A`
-only moves the cursor to the last wrapped row, leaving the top half of the
-description printed on the previous line. This leads to name duplication
-and output corruption spilling over multiple rows on consoles narrower
-than the maximum description length (e.g., 101 columns wide).
-
-Fix this by dynamically querying the terminal width using
-`get_term_dimensions` and truncating the printed test descriptions using
-the `%-*.*s` printf format. We reserve 35 characters for prefix, status,
-and spacing metrics to guarantee the progress line never wraps.
-
-Fixes: 0e036dcad4e6 ("perf test: Display number of active running tests")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 3b9ea606cda53 ("clk: imx: scu: add cpu frequency scaling support")
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 163 +++++++++++++++++---------------
- 1 file changed, 89 insertions(+), 74 deletions(-)
+ drivers/clk/imx/clk-scu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 8b98b352aa3b8..91d45768f0cac 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -10,37 +10,40 @@
- #ifdef HAVE_BACKTRACE_SUPPORT
- #include <execinfo.h>
- #endif
--#include <poll.h>
--#include <unistd.h>
- #include <setjmp.h>
--#include <string.h>
- #include <stdlib.h>
--#include <sys/types.h>
-+#include <string.h>
-+
- #include <dirent.h>
--#include <sys/wait.h>
-+#include "util/term.h"
-+#include <linux/kernel.h>
-+#include <linux/string.h>
-+#include <linux/zalloc.h>
-+#include <poll.h>
-+#include <sys/ioctl.h>
- #include <sys/stat.h>
- #include <sys/time.h>
--#include <sys/ioctl.h>
--#include "util/term.h"
-+#include <sys/types.h>
-+#include <sys/wait.h>
-+#include <unistd.h>
-+
-+#include <subcmd/exec-cmd.h>
-+#include <subcmd/parse-options.h>
-+#include <subcmd/run-command.h>
-+
- #include "builtin.h"
-+#include "color.h"
- #include "config.h"
-+#include "debug.h"
- #include "hist.h"
- #include "intlist.h"
--#include "tests.h"
--#include "debug.h"
--#include "color.h"
--#include <subcmd/parse-options.h>
--#include <subcmd/run-command.h>
- #include "string2.h"
- #include "symbol.h"
-+#include "tests-scripts.h"
-+#include "tests.h"
- #include "util/rlimit.h"
- #include "util/strbuf.h"
--#include <linux/kernel.h>
--#include <linux/string.h>
--#include <subcmd/exec-cmd.h>
--#include <linux/zalloc.h>
--
--#include "tests-scripts.h"
-+#include "util/term.h"
+diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
+index c03f7821824d1..b2b0e5f05b238 100644
+--- a/drivers/clk/imx/clk-scu.c
++++ b/drivers/clk/imx/clk-scu.c
+@@ -465,7 +465,6 @@ struct clk_hw *__imx_clk_scu(struct device *dev, const char *name,
+ 	clk->clk_type = clk_type;
  
- static const char *junit_filename;
- static struct strbuf junit_xml_buf = STRBUF_INIT;
-@@ -398,73 +401,73 @@ static char *xml_escape(const char *str)
- 	return res ? res : strdup("");
- }
- 
--static const char *format_test_description(const char *desc, int max_desc_width,
--					  char *buf, size_t buf_sz)
-+static int get_term_width(void)
- {
--	int len = strlen(desc);
-+	struct winsize ws;
-+	int cols = 80;
-+	int term_width;
- 
- 	/*
--	 * Clamp to buf_sz to prevent GCC format-truncation warnings
--	 * when terminal width is very large.
-+	 * If output is redirected to a file or piped, we don't need to wrap
-+	 * or truncate at all. Use a massive virtually infinite terminal width
-+	 * so descriptions are printed in full.
- 	 */
--	if (max_desc_width >= (int)buf_sz)
--		max_desc_width = buf_sz - 1;
-+	if (!isatty(fileno(debug_file())))
-+		return 10000;
- 
--	if (len > max_desc_width) {
--		snprintf(buf, buf_sz, "%.*s...", max_desc_width - 3, desc);
--		return buf;
--	}
--	return desc;
-+	get_term_dimensions(&ws);
-+	if (ws.ws_col > 0)
-+		cols = ws.ws_col;
-+
-+	/*
-+	 * Limit description width to fit on a single line. We subtract 35
-+	 * columns of headroom to allocate space for:
-+	 * - The suite index prefix: e.g. " 10.100:" (8 characters) plus 1 space separator.
-+	 * - The trailing colon (1 character) and space before status (1 character).
-+	 * - The longest status results: e.g. "Skip (some metrics failed)" (26 characters)
-+	 *   or "Running (XX active)" (20 characters).
-+	 *
-+	 * A minimum description width of 10 is enforced to ensure names are
-+	 * legible even on very narrow consoles.
-+	 */
-+	term_width = cols - 35;
-+	if (term_width < 10)
-+		term_width = 10;
-+
-+	return term_width;
-+}
-+
-+static int get_max_desc_width(int width)
-+{
-+	int term_width = get_term_width();
-+
-+	return width > term_width ? term_width : width;
- }
- 
- static int print_test_result(struct test_suite *t, int curr_suite, int curr_test_case,
- 			     int result, int width, int running,
- 			     const char *err_output, double elapsed)
- {
--	char desc_buf[256];
--	const char *desc = test_description(t, curr_test_case);
--	struct winsize ws;
--	int max_desc_area_width;
--	int target_desc_area_width;
--	int desc_padding;
--
--	get_term_dimensions(&ws);
--	/*
--	 * Total terminal columns minus space for status e.g. " Running (12 active)"
--	 * which is 20 chars, plus a margin of 3 chars = 23 chars.
--	 */
--	max_desc_area_width = ws.ws_col - 23;
--	if (max_desc_area_width < 40)
--		max_desc_area_width = 40;
--
--	/* Standard test has prefix "%3d: " which is 5 chars */
--	target_desc_area_width = width + 5;
--	if (target_desc_area_width > max_desc_area_width)
--		target_desc_area_width = max_desc_area_width;
-+	int pad_width = get_max_desc_width(width);
-+	int term_width = get_term_width();
- 
- 	if (test_suite__num_test_cases(t) > 1) {
- 		char prefix[32];
- 		int len = snprintf(prefix, sizeof(prefix), "%3d.%1d:",
- 				   curr_suite + 1, curr_test_case + 1);
-+		int pad = len >= 4 ? pad_width + 4 - len : pad_width;
-+		int trunc = len >= 4 ? term_width + 4 - len : term_width;
- 
--		desc_padding = target_desc_area_width - (len + 1);
--		if (desc_padding < 20)
--			desc_padding = 20;
--
--		desc = format_test_description(desc, desc_padding, desc_buf, sizeof(desc_buf));
--		pr_info("%s %-*s:", prefix, desc_padding, desc);
-+		pr_info("%s %-*.*s:", prefix, pad, trunc,
-+			test_description(t, curr_test_case));
- 	} else {
--		desc_padding = target_desc_area_width - 5;
--		if (desc_padding < 20)
--			desc_padding = 20;
--
--		desc = format_test_description(desc, desc_padding, desc_buf, sizeof(desc_buf));
--		pr_info("%3d: %-*s:", curr_suite + 1, desc_padding, desc);
-+		pr_info("%3d: %-*.*s:", curr_suite + 1, pad_width, term_width,
-+			test_description(t, curr_test_case));
- 	}
- 
- 	switch (result) {
- 	case TEST_RUNNING:
--		color_fprintf(stderr, PERF_COLOR_YELLOW, " Running (%d active)\n", running);
-+		color_fprintf(debug_file(), PERF_COLOR_YELLOW, " Running (%d active)\n", running);
- 		break;
- 	case TEST_OK:
- 		if (test_suite__num_test_cases(t) > 1)
-@@ -478,9 +481,9 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
- 
- 		summary_tests_skipped++;
- 		if (reason)
--			color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (%s)\n", reason);
-+			color_fprintf(debug_file(), PERF_COLOR_YELLOW, " Skip (%s)\n", reason);
- 		else
--			color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip\n");
-+			color_fprintf(debug_file(), PERF_COLOR_YELLOW, " Skip\n");
- 	}
- 		break;
- 	case TEST_FAIL:
-@@ -494,7 +497,7 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
- 			strbuf_addf_safe(&summary_failed_tests_buf, "  %3d: %s\n",
- 				    curr_suite + 1,
- 				    test_description(t, curr_test_case));
--		color_fprintf(stderr, PERF_COLOR_RED, " FAILED!\n");
-+		color_fprintf(debug_file(), PERF_COLOR_RED, " FAILED!\n");
- 		break;
- 	}
- 
-@@ -730,6 +733,7 @@ static void finish_test(struct child_test **child_tests, int running_test, int c
- 	int ret;
- 	struct timespec end_time;
- 	double elapsed;
-+	width = get_max_desc_width(width);
- 
- 	if (child_test == NULL) {
- 		/* Test wasn't started. */
-@@ -744,7 +748,8 @@ static void finish_test(struct child_test **child_tests, int running_test, int c
- 	 * sub test names.
- 	 */
- 	if (test_suite__num_test_cases(t) > 1 && curr_test_case == 0)
--		pr_info("%3d: %s:\n", curr_suite + 1, test_description(t, -1));
-+		pr_info("%3d: %-*.*s:\n", curr_suite + 1, width, width,
-+			test_description(t, -1));
- 
- 	/*
- 	 * Busy loop reading from the child's stdout/stderr that are set to be
-@@ -952,6 +957,8 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
- 	int last_suite_printed = -1;
- 	sigset_t set, oldset;
- 
-+	width = get_max_desc_width(width);
-+
- 	sigemptyset(&set);
- 	sigaddset(&set, SIGINT);
- 	sigaddset(&set, SIGTERM);
-@@ -1020,8 +1027,11 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
- 			if (next_child) {
- 				if (test_suite__num_test_cases(next_child->test) > 1 &&
- 				    last_suite_printed != next_child->suite_num) {
--					pr_info("%3d: %s:\n", next_child->suite_num + 1,
--						test_description(next_child->test, -1));
-+					pr_info("%3d: %-*.*s:\n",
-+						next_child->suite_num + 1,
-+						width, width,
-+						test_description(
-+							next_child->test, -1));
- 					last_suite_printed = next_child->suite_num;
- 				}
- 				print_test_result(next_child->test, next_child->suite_num,
-@@ -1084,7 +1094,8 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
- 
- 			if (test_suite__num_test_cases(child->test) > 1 &&
- 			    last_suite_printed != child->suite_num) {
--				pr_info("%3d: %s:\n", child->suite_num + 1,
-+				pr_info("%3d: %-*.*s:\n", child->suite_num + 1,
-+					width, width,
- 					test_description(child->test, -1));
- 				last_suite_printed = child->suite_num;
- 			}
-@@ -1208,12 +1219,12 @@ static void print_tests_summary(void)
- 	pr_info("Passed subtests   : %u\n", summary_subtests_passed);
- 	pr_info("Skipped tests     : %u\n", summary_tests_skipped);
- 	if (summary_tests_failed > 0) {
--		color_fprintf(stderr, PERF_COLOR_RED, "Failed tests      : %u\n",
-+		color_fprintf(debug_file(), PERF_COLOR_RED, "Failed tests      : %u\n",
- 			      summary_tests_failed);
- 		pr_info("List of failed tests:\n");
- 		pr_info("%s", summary_failed_tests_buf.buf);
- 	} else {
--		color_fprintf(stderr, PERF_COLOR_GREEN, "Failed tests      : 0\n");
-+		color_fprintf(debug_file(), PERF_COLOR_GREEN, "Failed tests      : 0\n");
- 	}
- 
- 	if (junit_filename) {
-@@ -1331,9 +1342,13 @@ static int __cmd_test(struct test_suite **suites, int argc, const char *argv[],
- 
- 			if (intlist__find(skiplist, curr_suite + 1)) {
- 				if (pass == 1) {
--					pr_info("%3d: %-*s:", curr_suite + 1, width,
-+					int pad_width = get_max_desc_width(width);
-+					int term_width = get_term_width();
-+
-+					pr_info("%3d: %-*.*s:", curr_suite + 1,
-+						pad_width, term_width,
- 						test_description(*t, -1));
--					color_fprintf(stderr, PERF_COLOR_YELLOW,
-+					color_fprintf(debug_file(), PERF_COLOR_YELLOW,
- 						      " Skip (user override)\n");
- 					summary_tests_skipped++;
- 					if (junit_filename) {
+ 	init.name = name;
+-	init.ops = &clk_scu_ops;
+ 	if (rsrc_id == IMX_SC_R_A35 || rsrc_id == IMX_SC_R_A53 || rsrc_id == IMX_SC_R_A72)
+ 		init.ops = &clk_scu_cpu_ops;
+ 	else if (rsrc_id == IMX_SC_R_PI_0_PLL)
 -- 
 2.53.0
 
