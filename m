@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001C0357CEC;
-	Sat, 12 Sep 2026 10:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F63ACA6F;
+	Sat, 12 Sep 2026 10:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208394; cv=none; b=QjarxrDhXkHEWuxRzLjLoom1wvfG7X8QFn4TvLZB8dwmRrkwXsQdi8lgzZ03yP4L8hf50eVBEuzxgS1EdnaFS7QQWBg8Nf2TufvpL4QgN9ORS1EH5cM+3WgkktWo2oPIonsfCSTIrzygltV+4iiXTA7yKJayGj+CYWNuAjTJo2Y=
+	t=1789208400; cv=none; b=So2yHgOsrP9xRoYexn2HeiJ1Fm0nUZXwk1kCJR18kL0KaW7nf7FQdrNgG8Uz37MfoogJ4AohAj9t7ARFFyOtTu0npbeDuNYXVAwSAbrggOL31GLYakCt6cTgeBDBv6xNN2kyXN7wlMjPg6Lfl61D3WFo021j2CnzHA6cObJyLTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208394; c=relaxed/simple;
-	bh=hhtn3biyHmP2F1w9oe/UfabYTW8F/keVDswM8ku6dBw=;
+	s=arc-20240116; t=1789208400; c=relaxed/simple;
+	bh=PSGu3HTWBcEa5klfOtStaaDtM9FwFZCENUFqFMV6Esw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fg1pidk96Fxd2OS6c/CSUvqvKnVPn6n8AlaGp+756rMv4Y/kboUh1+dSzNdZCiovhL9iWT2oWHIdBRT4aaKLNKAs0eTJuTZ37S8OCRuuSUJuMR9ACNIAL3uifX7ySj64AQNNhXQ6xTYOUu48eRvkvIpH9iexcS6QNWOxP9eOtcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EK+7EpJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebqdZ7/iyKHamCDetNv8zQw0aYcEXCnJrXMvKBd25ThrQv8IShONaib8Gq/vbNCkslBXNAyEMnqX7/Dc7mMx4vdlO6dYHsOhOSsA2Zf3Ki+uyWMhlflyqYSTDYAGyPHloXlfEDYf2mQVVkqwGrxG4SsQ25WwIXuJtopcWn/5lHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdsBYK5G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EK+7EpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDF81F000FF;
-	Sat, 12 Sep 2026 10:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdsBYK5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB721F000FF;
+	Sat, 12 Sep 2026 10:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208392;
-	bh=Ddxl5GZKd+VZcuP1D3qdTmBXTpYyiN0CfWJ7Bla1+Mw=;
+	s=korg; t=1789208398;
+	bh=e7/bMopMoISykd6ZH/FoYi9zafzQTAT9LGPmyR/Chgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1EK+7EpJWqljOgYSkV5K+eQcplLLbW/zNjnI7MU4C1LfwuItqIKBI5k8GF/pBrztq
-	 iB3o00PMXSp/jrtJ8dneSCyKoyj+mBWgchqE4uzkxKOqEn04mYBMEdTjsUplzYkROq
-	 urCu+hE6kxKGKW8LJzEXLEg0hZ2hJfw7c/6l5g+U=
+	b=WdsBYK5Gi+GIxGEyNFaUVN4V3ivayiAXfNJNpX4NRmkTrqQpgE5XiuqHtWftjJ0F2
+	 7gZsi6YYReYRteI43JtImRjYtJXqU3nzfMiVCSM/6W/nz0240gIJkZqym0G1sLjUcM
+	 VuMy0aX4o5+o3e4pY/PsEhClJbpTerFopVpC8gQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ondrej Jirman <megi@xff.cz>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0609/1518] wifi: mac80211: fix per-STA profile length in cross-link CSA parsing
-Date: Sat, 12 Sep 2026 08:46:18 +0200
-Message-ID: <20260912065637.204345932@linuxfoundation.org>
+Subject: [PATCH 6.18 0610/1518] arm64: dts: allwinner: sun50i-a64-pinephone: Fix mpu6050 mount matrix
+Date: Sat, 12 Sep 2026 08:46:19 +0200
+Message-ID: <20260912065637.227368528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,52 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Ondrej Jirman <megi@xff.cz>
 
-[ Upstream commit 4a0bd262df757b25fc4e2a53c947317c119ced4e ]
+[ Upstream commit dfc735fd93e4814e65894916ec5f807f25a391d1 ]
 
-ieee80211_mgd_check_cross_link_csa() starts parsing elements after the
-fixed per-STA profile header and the STA Info field, but subtracts only
-the STA Info length from the profile length. As a result,
-ieee802_11_parse_elems() is given sizeof(*prof) == 3 bytes beyond the
-current profile's element area, and data following the profile may be
-interpreted as belonging to it.
+The current mount matrix for mpu6050 is wrong. The mount matrix is a
+simple transform from the sensor coordinate space to the device
+coordinate space described in DT, where, looking at the screen, X
+points to the right, Y to the top, and Z towards the user.
 
-Subtract the fixed profile header as well. The preceding
-ieee80211_mle_basic_sta_prof_size_ok() check guarantees that the
-corrected calculation cannot underflow, and
-ieee80211_rx_uhr_link_reconfig_req() uses the same calculation.
+The mpu6050 is mounted like this (looking at the screen from the
+front; the sensor is on the near side of the PCB, so its Z axis
+points towards the user; o marks the pin 1 corner):
 
-The call site currently states that cross-link CSA parsing has no effect
-because the broader parsing is still incorrect. This patch does not
-address that broader problem; it only makes the per-STA profile parser
-stop at the end of that profile. No production allocation over-read or
-user-visible failure has been demonstrated.
+           +Xs
+            ^
+            |
+         +------+
+  +Ys <--|      |
+         | o    |
+         +------+
 
-Fixes: 7ef8f6821d16 ("wifi: mac80211: mlme: handle cross-link CSA")
-Assisted-by: Codex:gpt-5.6-sol
-Assisted-by: Kimi:K3
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260728111326.63087-1-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+so this gives:
+
+  Xd = -Ys  [0, -1, 0]
+  Yd =  Xs  [1, 0, 0]
+  Zd =  Zs  [0, 0, 1]
+
+Fixes: 2496b2aaacf1 ("arm64: dts: allwinner: pinephone: Add mount matrix to accelerometer")
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+Link: https://patch.msgid.link/20260725111909.2244868-1-megi@xff.cz
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 9ec4125c06d19..8d782c8782f98 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -7303,7 +7303,7 @@ ieee80211_mgd_check_cross_link_csa(struct ieee80211_sub_if_data *sdata,
- 		prof = (void *)sta_profiles[link_id];
- 		prof_elems = ieee802_11_parse_elems(prof->variable +
- 						    (prof->sta_info_len - 1),
--						    len -
-+						    len - sizeof(*prof) -
- 						    (prof->sta_info_len - 1),
- 						    false, NULL);
- 
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
+index 4bc6c1ef2cde4..f958bdbb0d333 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
+@@ -230,8 +230,8 @@ accelerometer@68 {
+ 		interrupts = <7 5 IRQ_TYPE_EDGE_RISING>; /* PH5 */
+ 		vdd-supply = <&reg_dldo1>;
+ 		vddio-supply = <&reg_dldo1>;
+-		mount-matrix = "0", "1", "0",
+-			       "-1", "0", "0",
++		mount-matrix = "0", "-1", "0",
++			       "1", "0", "0",
+ 			       "0", "0", "1";
+ 	};
+ };
 -- 
 2.53.0
 
