@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4367F3644BE;
-	Sat, 12 Sep 2026 07:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6382576E;
+	Sat, 12 Sep 2026 07:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199874; cv=none; b=lQkYleEc4Hg186aOBk8lmRvIUY2/9oQZ+p//6XVWNJwCFoEqNp2/9mrWiEn26y55oMwne9LZpibEwFkdDvlc703gL0ttnsObJDf47bPo+nenU0QelNOKqETOZvFxDa+Sj3XIKrwLDbZvXg8GEcja2CTqfEW00bU52cSAtA+oX3U=
+	t=1789199879; cv=none; b=ujtWBME8tWTZ0YeGct+nSJbd8k6eFsgqkUlp7EYqlIztQjZILywmzmTw8gWL+qMdVInEjDXeN2BV4ft3xYKmdp8K7zxkaSPAglFV4ZjYAjBB8G0evTyRJ9t+ziw94fa/2nEbYgiJUrEdI2psgU+nOnaEpurj4cv2yrhDYVEA/LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199874; c=relaxed/simple;
-	bh=A354f5N53JBiLkVNzoY2SdrhmE0y5zNggc0dLSuIxZ8=;
+	s=arc-20240116; t=1789199879; c=relaxed/simple;
+	bh=iakJ3HFq428OFE+/bGkaCTib/V2p2EmfAy0PI4yrqhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aIAcJ8IpUCBJ3j6ddhKvkCL8WgtGJxhKLs20wFlkglVLUA3H0qFuZi2wK0VbhrQo0vH1lSMg0dyyXvSbLoTTPqzayxwHnkXwrlgoTfrRDwQeVNOqYYVrkfc18aStcjc/Cl0k4uOn+fLhoU3xzRTuDY5SPTV0LU1CbjowfFYST1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLZ0q37A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oFuMX6TsNqeF1yIW/EyLIpBS8rAlfnSH2BpXojvk8B4S7UmMPxAa7g3ZjPpijYSASMZDyiOc91Q2xaQEEm7WUJNrQHPC2rTiU7IrAs7aL5RgtSnvlSFrVpw27pcSuGrd+MJIj/VU6nHAKMrtTkmmcbKaHCk+IAcLH/jFn+GeX3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ke/S3HCL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLZ0q37A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB921F000FF;
-	Sat, 12 Sep 2026 07:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ke/S3HCL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C621F000FF;
+	Sat, 12 Sep 2026 07:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199873;
-	bh=tVD15vByAiTEZbXjZyIszSbUYBNXjFkp1w6Cf3blmbY=;
+	s=korg; t=1789199877;
+	bh=H+9WDQALgWGco5045OgIL6Bh8EqPbEh2+/yBWYU5klE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLZ0q37AXDFTtEixgW+tqBie0DMmp0k+e6eI8TnqzW/u6X00l9RDjjVZxXId071CN
-	 0NCmSRd4XhPcd/8rmeAKiEPWh5a+VRJ0Je0l/MHZNErt+UiBlEQX09I8c893Xi/CHC
-	 r6DrdJoom1lY4q8aTPv+sJPd7zFMFQOMBoE2JvEE=
+	b=ke/S3HCLc+J/rZqZ18tnkOUnYSs6IpxfnkMBuKwrDI1fW5PJP6eyRDzzjJiYFf2oT
+	 PHRVlm7r0UVhY1OkjR67/tuCFYE7G1y0zlPlh5YnPTcaWAZ1uP92HFQk4H7nlbPAzk
+	 ekWIzpPFS7C13wOVh+lx1QyRl8J7tDCpGw3YeVG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
+	Can Peng <pengcan@kylinos.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0673/1815] crypto: keembay - Initialize completion before requesting IRQ
-Date: Sat, 12 Sep 2026 08:40:23 +0200
-Message-ID: <20260912065704.687159419@linuxfoundation.org>
+Subject: [PATCH 7.2 0674/1815] crypto: keembay - publish OF module alias for OCS AES/SM4
+Date: Sat, 12 Sep 2026 08:40:24 +0200
+Message-ID: <20260912065704.710587444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,49 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit fce20289dd622cc7ab78d72c8a979a9f8b7cb10e ]
+[ Upstream commit 0a94091e29f914e4f233a208599ca4055882c01b ]
 
-kmb_ocs_aes_probe() requests the device IRQ before initializing
-irq_completion. Once the handler is registered it can run immediately,
-and ocs_aes_irq_handler() unconditionally calls complete(). An
-interrupt in this window would therefore use an uninitialized
-completion.
+The Keem Bay OCS AES/SM4 driver has an OF match table wired to
+.of_match_table, but does not export the table with MODULE_DEVICE_TABLE().
 
-Initialize the completion before requesting the IRQ, as the sibling
-OCS HCU and ECC drivers already do.
+Although the match table lives in keembay-ocs-aes-core.o, that object is
+part of the composite keembay-ocs-aes module.  Add the missing
+MODULE_DEVICE_TABLE(of, ...) entry so modpost can generate OF module alias
+information for OF based module autoloading.
+
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by the
+platform driver, and the missing module alias publication.
 
 Fixes: 885743324513 ("crypto: keembay - Add support for Keem Bay OCS AES/SM4")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
-index 0e424024224e5..460a943cca227 100644
+index 460a943cca227..419f88af1031b 100644
 --- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
 +++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
-@@ -1602,6 +1602,8 @@ static int kmb_ocs_aes_probe(struct platform_device *pdev)
- 	if (IS_ERR(aes_dev->base_reg))
- 		return PTR_ERR(aes_dev->base_reg);
+@@ -1561,6 +1561,7 @@ static const struct of_device_id kmb_ocs_aes_of_match[] = {
+ 	},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, kmb_ocs_aes_of_match);
  
-+	init_completion(&aes_dev->irq_completion);
-+
- 	/* Get and request IRQ */
- 	aes_dev->irq = platform_get_irq(pdev, 0);
- 	if (aes_dev->irq < 0)
-@@ -1619,8 +1621,6 @@ static int kmb_ocs_aes_probe(struct platform_device *pdev)
- 	list_add_tail(&aes_dev->list, &ocs_aes.dev_list);
- 	spin_unlock(&ocs_aes.lock);
- 
--	init_completion(&aes_dev->irq_completion);
--
- 	/* Initialize crypto engine */
- 	aes_dev->engine = crypto_engine_alloc_init(dev, true);
- 	if (!aes_dev->engine) {
+ static void kmb_ocs_aes_remove(struct platform_device *pdev)
+ {
 -- 
 2.53.0
 
