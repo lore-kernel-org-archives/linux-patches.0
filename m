@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF7C32D7F8;
-	Sat, 12 Sep 2026 18:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B47039FCC5;
+	Sat, 12 Sep 2026 18:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237040; cv=none; b=hrh4BQrEEbiRcZqS6IiOQ8j3+jpZW9Uyf9Zf/Zw8YdUSxpCUeebW4m3X4AEQWx74ChC8sdDCu4sCmMHQwU/OXZCuZ6v02BgPeWo/01Ov1EYkPVgYBFeyrLu4ZI3DfZVYUyWLqClNLuoHKWVBBMAY5pwvCOq4KIqesHvGFwIn9cI=
+	t=1789237045; cv=none; b=HVmJcE6IOaK0Mo1EvbACqigSjO1ZRpIZaNzuwwcpUc7kIerjz1N8gxPbi+ri0bvfuQigxsP5LeOjyT8qt7jXBXE+3IgT4f1bY95w/GV42YluOxoW5ocn+KzbuQ1QD9B4AIvxaWEt2sGYG7arIMdl3o6zgaN6lk5/U0EKm/5SfEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237040; c=relaxed/simple;
-	bh=KDl3OAXZfadtR5ihENj3TbAQFJ2WAmkigRU/NhvVIfY=;
+	s=arc-20240116; t=1789237045; c=relaxed/simple;
+	bh=4TSsBdUfD7sfEy4cPa56pFyPzFJ+E/i6Ujilkec4jOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrPZjAh9z68XvQS1/6s8FuJ5lTKby9y9ndtqYbkYRkrN0ch9hxmLh7JnUjqciVTo9VpQqOHB7mKfTmBQwwwaW1B9hYlQB3Yl7SpzbLY8DhMAr1agRnAp4UIha1K81k8w4Sl2TyMHtov6gD/38h92MhG4I8hM5LM9emFagKZsXkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=su/4IMpn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HB5pn1Bk1j+FNYu4a40ZjfnWMvJnjuqetNE902jTgv3gcSK0Z1UG47N3562YiGZaQO4xOJ51f96mbsY6cHfWFavtrI22tpeyUT5/ILN9GEgSDwVbqGZvCVMBZsPpROdFvQikgJpvGpQMEPGWFsF3k5QyHyLYag7BV4c/LX7Sr44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QlTdE5hV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="su/4IMpn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4397F1F000FF;
-	Sat, 12 Sep 2026 18:17:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QlTdE5hV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DC31F000FF;
+	Sat, 12 Sep 2026 18:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237039;
-	bh=NlAbUcziJF2qzLdNC+QXcQyBBEqQ6N6ZXZ/92v2i1vc=;
+	s=korg; t=1789237044;
+	bh=saJ/gHy4jeUOHbJmQ1OlSGvxj9shf1iFQ9H2Mu0ffKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=su/4IMpnEIS7zpo5H7v3D5Lulqfolxnar+AMBDP9cl93IFVvHYCNVQY2Z/srFiCzU
-	 Y3lYxOJ/85BQU7WCuGmc1FHJYkqvIueyORnzHei5h0MYX5QIKdCyaA8wKuppIxNdGq
-	 g7FZoNqk9JTWLk0G9nB2mSMV4lCCwlABa5DtMg30=
+	b=QlTdE5hVXOm/bFN+xxgUp2pT1zEebRD++z5Y4CKNJ1BMJv1dTq2fXcSblvUuaLmjo
+	 +IlzaVuXgfFPCxruu7ZwXdOsAONLPE5gQeSBZeht+TW7Fe+9P+bvM/O8/LZBW6aWzc
+	 ruVCRY8P6YK0JeUG50zP5qD1C9marYdcl4IpuKto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 179/935] net: openvswitch: fix nf_connlabels leak in ovs_ct_init
-Date: Sat, 12 Sep 2026 08:53:29 +0200
-Message-ID: <20260912065530.923911269@linuxfoundation.org>
+Subject: [PATCH 5.15 180/935] NTB: ntb_transport: Recycle TX entries before client callbacks
+Date: Sat, 12 Sep 2026 08:53:30 +0200
+Message-ID: <20260912065530.945935007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,63 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit f9de5db270a4c2641de87ee558c16a9bc6eb4cd8 upstream.
+commit 256496397287334a19ed80ec7be92bffcae76b9d upstream.
 
-ovs_ct_init() acquires a connlabels reference before initializing the
-conntrack limit state. If ovs_ct_limit_init() fails, its error is returned
-directly. The pernet core does not invoke the exit callback for the
-operation whose initialization failed, so ovs_ct_exit() cannot drop the
-reference.
+ntb_tx_copy_callback() invokes the client callback before returning the
+entry to tx_free_q. The callback may wake a stopped client queue, only
+for the next enqueue to find no local entry and return -EBUSY. The window
+is narrow, but the retry is unnecessary.
 
-This leaves labels_used elevated when Open vSwitch pernet registration
-fails for an existing network namespace. Subsequent conntrack entries in
-that namespace may allocate label extensions even though Open vSwitch
-failed to register.
+Save the callback data and length, then return the entry to tx_free_q
+before invoking the client. A completion callback then means both the
+client buffer and transport entry are ready for reuse.
 
-Drop the connlabels reference before returning a conntrack limit
-initialization error. ovs_ct_limit_init() already releases its partial
-state, and the original error remains unchanged.
-
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
+Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260815151729.3757984-1-ruoyuw560@gmail.com
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260817053519.4135287-2-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/ntb/ntb_transport.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -2301,6 +2301,7 @@ int ovs_ct_init(struct net *net)
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1732,9 +1732,16 @@ static void ntb_transport_rxc_db(unsigne
+ static void ntb_tx_copy_callback(void *data,
+ 				 const struct dmaengine_result *res)
  {
- 	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
- 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
-+	int err = 0;
++	struct ntb_payload_header __iomem *hdr;
+ 	struct ntb_queue_entry *entry = data;
+-	struct ntb_transport_qp *qp = entry->qp;
+-	struct ntb_payload_header __iomem *hdr = entry->tx_hdr;
++	struct ntb_transport_qp *qp;
++	unsigned int len;
++	void *cb_data;
++
++	qp = entry->qp;
++	hdr = entry->tx_hdr;
++	cb_data = entry->cb_data;
++	len = entry->len;
  
- 	if (nf_connlabels_get(net, n_bits - 1)) {
- 		ovs_net->xt_label = false;
-@@ -2310,10 +2311,11 @@ int ovs_ct_init(struct net *net)
- 	}
+ 	/* we need to check DMA results if we are using DMA */
+ 	if (res) {
+@@ -1774,15 +1781,13 @@ static void ntb_tx_copy_callback(void *d
+ 	 * "link down" or similar.  Since no payload is being sent in these
+ 	 * cases, there is nothing to add to the completion queue.
+ 	 */
+-	if (entry->len > 0) {
+-		qp->tx_bytes += entry->len;
+-
+-		if (qp->tx_handler)
+-			qp->tx_handler(qp, qp->cb_data, entry->cb_data,
+-				       entry->len);
+-	}
++	if (len > 0)
++		qp->tx_bytes += len;
  
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
--	return ovs_ct_limit_init(net, ovs_net);
--#else
--	return 0;
-+	err = ovs_ct_limit_init(net, ovs_net);
-+	if (err && ovs_net->xt_label)
-+		nf_connlabels_put(net);
- #endif
-+	return err;
+ 	ntb_list_add(&qp->ntb_tx_free_q_lock, &entry->entry, &qp->tx_free_q);
++
++	if (len > 0 && qp->tx_handler)
++		qp->tx_handler(qp, qp->cb_data, cb_data, len);
  }
  
- void ovs_ct_exit(struct net *net)
+ static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
 
 
