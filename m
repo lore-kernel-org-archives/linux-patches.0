@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE194195DA;
-	Sat, 12 Sep 2026 12:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA713385A5;
+	Sat, 12 Sep 2026 12:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216970; cv=none; b=NZz5n3k5PClX2uidZOIpB/zbfETvM4K441WB5tHo4ggJyPuw9NqGMfThB+0C/56K1a3wAIcbZycu68OMj9ahDLbtLNG/DkksSrrKe5yb9LCU3gGJdl2YPoBtPt6HyUIblIuzLcbn8WpVHyW9mou3NbdTD0K5kR7vHOLtK7NON00=
+	t=1789216975; cv=none; b=dAFg9U2qYvTLEzvEvsxg7Mc2zg0oByYg46P18msCNuOeqLsuSZ2aCcbTdENAg5ZAXyGQ59UurwZVWD5glJAKgLTcf8Ss/0mTRADvOn3nHkExI7RcvBI6sOgCft+jLJ9ctbm1BoHtoDd49T+1MOzYFn8ntJOXLujVDl2ppp5A7UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216970; c=relaxed/simple;
-	bh=plrJXaUNMhQWxIfdz/8dGelymM/yUd89MpmZBJkjzJI=;
+	s=arc-20240116; t=1789216975; c=relaxed/simple;
+	bh=uqghL1+anKAB9ImNr925HEZ3YFq5vsSltJEj+o8/eQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8OskIJGiUlMviLNT8Co2SOYaf/M9lEWeoWTjdU0Ej6VenUYc5NNipmo3bPQj8utjD0vzAxyN9cwYyMYCjB+Mtx5DClGVsbAvh+NENSWEeEgUhbzT06KeuJeeYBzqLAAQZYX9B7QsauKyKO7pbI9nt0LR2dUGAeaRog+cJ6pYhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lh1k3CJ+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R5IRs/0jW6r+pBuYIAJjuHoEIQ0hDQ+r7SyJffaD023DowflJgFSPYR8Un1V/nfyQ7cPVLFj7UcS1jjZvVlFNltNX0QyXCjS215BtLErwVbvVW/SDHcOcmcsX3WPm4sJWhL9A+ccWvyJqle2/u1ZWy9kSBkBSXRlRl3w7LQElUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFv84G2K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lh1k3CJ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBF41F000FF;
-	Sat, 12 Sep 2026 12:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFv84G2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD151F000FF;
+	Sat, 12 Sep 2026 12:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216968;
-	bh=vodMU7pNd7bx5mU4glNhqpYPYHK/BTWA27w/x/anAMY=;
+	s=korg; t=1789216973;
+	bh=C1om+bHrckxCCHfQpJ1DFymWf+9BAPlr3QB2DkhQGz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lh1k3CJ+nA8n/EEcSRenrvbXFWpxwS+2/eU3vwWaJSB6f8WKkzEBNPkthssiydbfP
-	 7W3/gfsFq4dpY2Z/ddWSxYIxZOzkSKzOYhiO3ZQfEDOy7H/iDoNAg3gNKtecJ6fcdd
-	 4aNLslwy8zYf2TyxPw+z4jASM9lu+8G2p9meFKh0=
+	b=dFv84G2KbpZtk6RO0TPrzqpChp05Ko7gsu3Mu7SNhGFYouU7oQyDZvH/XCZaTgYLH
+	 FF2BlByEIkCD3eU7XRt1E8roP1oq3h0QjhhO6nfFOZ4LkuHL2+Es3/zLpjXmljx4T1
+	 yHB2ooMPxVIuICbyIT+JdNn5pmrSd4bMwJC0bvl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"shengwei.lu" <shengwei.lu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Linghui Wu <linghui.wu@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0846/1376] wifi: mt76: mt7925: Fix EHT Beamformee SS subfields to meet 802.11be minimum
-Date: Sat, 12 Sep 2026 08:54:32 +0200
-Message-ID: <20260912065626.406635732@linuxfoundation.org>
+Subject: [PATCH 6.12 0847/1376] wifi: ath10k: snoc: use memcpy_fromio() for MSA ramdump
+Date: Sat, 12 Sep 2026 08:54:33 +0200
+Message-ID: <20260912065626.429790647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,60 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shengwei.lu <shengwei.lu@mediatek.com>
+From: Linghui Wu <linghui.wu@oss.qualcomm.com>
 
-[ Upstream commit 404c4e564f6b1eeffd10bf2b2d3b86620f5794c3 ]
+[ Upstream commit 4f25071afe9218aaae1c63fbf75e229aa6405319 ]
 
-Per IEEE 802.11be, the Beamformee SS <= 80/160/320 MHz 3-bit subfields
-in the EHT PHY Capabilities are encoded as (Nss - 1) and are required
-to be >= 3 (i.e. at least 4 SS receive capability) whenever SU
-Beamformee is advertised.
+On WCN3990/SNOC the MSA region is mapped with devm_memremap(MEMREMAP_WT).
+On arm64 such a mapping is not Normal-cacheable, so unaligned accesses to
+it are not permitted. ath10k_msa_dump_memory() copies the region with a
+plain memcpy(), whose optimized __pi_memcpy_generic implementation issues
+wide/unaligned loads. This triggers an alignment fault (FSC=0x21) Oops in
+ath10k_snoc_fw_crashed_dump() while collecting the devcoredump:
 
-MT7925 is a 2x2 STA (sts = 2), so directly filling (sts - 1) = 1
-violates the spec minimum. Clamp the encoded value to 3 when sts <= 3,
-otherwise use (sts - 1). This is applied consistently to the
-BEAMFORMEE_SS <= 80 MHz (split across phy_cap_info[0]/[1]), <= 160 MHz
-and <= 320 MHz (6 GHz only) subfields.
+  Unable to handle kernel paging request ... FSC=0x21: alignment fault
+  pc : __pi_memcpy_generic
+  lr : ath10k_snoc_fw_crashed_dump [ath10k_snoc]
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: shengwei.lu <shengwei.lu@mediatek.com>
-Link: https://patch.msgid.link/20260723031108.2017653-1-jb.tsai@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+The Oops both leaves the firmware RAM dump buffer zeroed (no dump is
+captured) and crashes the kernel, which in turn breaks modem SSR
+recovery.
+
+Use memcpy_fromio(), which only performs accesses that are valid for such
+a device-memory mapping. The generic memcpy_fromio() implementation aligns
+the source before issuing word-sized reads and stores the destination with
+put_unaligned(), so it is also safe for the coherent DMA allocation used on
+the non-reserved-memory path. ath11k and ath12k use the same pattern
+when copying target memory into crash dumps, so call it unconditionally
+here too.
+The MEMREMAP_WT pointer is a plain void *, so an explicit __iomem cast is
+needed; use __force to keep sparse happy.
+
+Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.3.7.c5-00107-QCAHLSWMTPL-1
+
+Fixes: 3f14b73c3843 ("ath10k: Enable MSA region dump support for WCN3990")
+Signed-off-by: Linghui Wu <linghui.wu@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727072629.2297208-1-linghui.wu@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath10k/snoc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index c219460549679..bcc5ce829169f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -182,19 +182,21 @@ mt7925_init_eht_caps(struct mt792x_phy *phy, enum nl80211_band band,
- 		eht_cap_elem->phy_cap_info[0] |=
- 			IEEE80211_EHT_PHY_CAP0_320MHZ_IN_6GHZ;
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index 59f7ccb33fde3..ad215de068e1c 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -5,6 +5,7 @@
  
-+	val = (sts > 3) ? sts - 1 : 3;
-+
- 	eht_cap_elem->phy_cap_info[0] |=
--		u8_encode_bits(u8_get_bits(sts - 1, BIT(0)),
-+		u8_encode_bits(u8_get_bits(val, BIT(0)),
- 			       IEEE80211_EHT_PHY_CAP0_BEAMFORMEE_SS_80MHZ_MASK);
+ #include <linux/bits.h>
+ #include <linux/clk.h>
++#include <linux/io.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -1455,11 +1456,15 @@ static void ath10k_msa_dump_memory(struct ath10k *ar,
+ 	hdr->length = cpu_to_le32(ar->msa.mem_size);
  
- 	eht_cap_elem->phy_cap_info[1] =
--		u8_encode_bits(u8_get_bits(sts - 1, GENMASK(2, 1)),
-+		u8_encode_bits(u8_get_bits(val, GENMASK(2, 1)),
- 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_80MHZ_MASK) |
--		u8_encode_bits(sts - 1,
-+		u8_encode_bits(val,
- 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_160MHZ_MASK);
+ 	if (current_region->len < ar->msa.mem_size) {
+-		memcpy(buf, ar->msa.vaddr, current_region->len);
++		memcpy_fromio(buf,
++			      (const void __iomem __force *)ar->msa.vaddr,
++			      current_region->len);
+ 		ath10k_warn(ar, "msa dump length is less than msa size %x, %x\n",
+ 			    current_region->len, ar->msa.mem_size);
+ 	} else {
+-		memcpy(buf, ar->msa.vaddr, ar->msa.mem_size);
++		memcpy_fromio(buf,
++			      (const void __iomem __force *)ar->msa.vaddr,
++			      ar->msa.mem_size);
+ 	}
+ }
  
- 	if (band == NL80211_BAND_6GHZ && is_320mhz_supported(&phy->dev->mt76))
- 		eht_cap_elem->phy_cap_info[1] |=
--			u8_encode_bits(sts - 1,
-+			u8_encode_bits(val,
- 				       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_320MHZ_MASK);
- 
- 	eht_cap_elem->phy_cap_info[2] =
 -- 
 2.53.0
 
