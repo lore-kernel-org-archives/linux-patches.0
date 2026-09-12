@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA89344DBD;
-	Sat, 12 Sep 2026 19:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C5E37F8D7;
+	Sat, 12 Sep 2026 19:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241631; cv=none; b=mmqmsSv7ov1j16lG7dbBB2JMKqR4iLZtxXoUETv+XpjO2lI12gSNisotgu25ysEfYEk7Y72HvmzHpEb4CvtoF88qLNnMfkQi4yS1YBe5KyXtMQKRcrgCLjg9PU1y8MIn4GwdBBfh9mDG+NhW+jcofD47UhnFIgy94yZsrccSxAc=
+	t=1789241635; cv=none; b=MOZt9mjH/k5m8q3tiyatELGYiFlL2tUlpaXmbYy7hfGW/zvSd9Yb6Nl8V2vq8CimnZp0b4sRe5CItZJbChhmcqP9r/5ThZyVjCkWlW/wPOmHYfZix6jWdsQ5nI6b0fC+3/AXPXsQTHU8m78G0bmqmcKd8ezvtu297bIqtbUYl/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241631; c=relaxed/simple;
-	bh=rD3UdxKV76qO9/9DkhqbAdmF8lv69RgoHerE2wedFCM=;
+	s=arc-20240116; t=1789241635; c=relaxed/simple;
+	bh=WSTPgp/8VWm4JromrdtcGVvLXoOmomacCsxLRd/57iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TueDhw0yQFqYH+bzL1SBOIke/sABemIiVNVwT/LKFZ8v5Pj1Pod9aZk/2RKYtpa1iiomRIcPqOKcI5aBM7ZRrioNWjHlUD3pn7B5BDWmrMRs3NZ46gHX1cJ1sdQtKdlXEAIzuqQIbukMCwBy2C4GTPolni3ChYoE68y5DyWcmNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjA3XDvg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MnKZleBQSBZFxD0DK1LgbnRzBMPvbOMrxtBxIxiAbocfZ1/o+sdv/mtFRyMZbaSgrpEK/pOipYYIkhD6cI9Yz29s5I88wtOJYAvavRg7UEpisryORIYjQiyiD0KFvtNKGJJD+4nhYEh64fueIVsS8EgHWvpDdyaQviRZZrQR+oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuOLVhJA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjA3XDvg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22B71F000FF;
-	Sat, 12 Sep 2026 19:33:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuOLVhJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDA81F000FF;
+	Sat, 12 Sep 2026 19:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241629;
-	bh=Xa1SP+KRZSMRrwSpBYgkNGJg4/jqVzDsme6Ybn/OxgQ=;
+	s=korg; t=1789241634;
+	bh=6485rFL7Hgz3KllOUhlbIlkbqHoHf55vUTQ7ToiAbzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cjA3XDvgdvejkw6VTdcE4Wehy7QRK2Ib6lrT8/V9p9saj7Ris7ZqyYsQby7jH5YU0
-	 xsJX2dfqpKBcIRi32OnzD8dVJXrTFhTSJCV7TRKIzmpI9GgnkxAGsYks2LPvj5ORT6
-	 8rlVtex0L9/EnIoOxqhUneUeeYp8LmEWLuXxwAFg=
+	b=JuOLVhJAeB2TIJiZntpTMEE5frysViMCs/2OHXasoSitaD5v4PNluTxx+Ya90n3aj
+	 6Xyd279ocU2JrAMRgypC4N9H8IUOWIZIuC8BFH5uYBnLyV5NmKslu/9bCQnoixAuds
+	 aYB2mfy1odoChbLFEfgb+zLAPRY/Fz70fi2T7zu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Long Li <longli@microsoft.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Aditya Garg <gargaditya@linux.microsoft.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 175/798] mptcp: pm: ADD_ADDR rtx: free sk if last
-Date: Sat, 12 Sep 2026 08:56:43 +0200
-Message-ID: <20260912065521.028023114@linuxfoundation.org>
+Subject: [PATCH 5.10 176/798] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
+Date: Sat, 12 Sep 2026 08:56:44 +0200
+Message-ID: <20260912065521.053595436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,122 +56,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-[ Upstream commit b7b9a461569734d33d3259d58d2507adfac107ed ]
+[ Upstream commit 86bdd16e8f390d51bae9e77a4bc4164ca2f580fe ]
 
-When an ADD_ADDR is retransmitted, the sk is held in sk_reset_timer(),
-and released at the end.
+The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
 
-If at that moment, it was the last reference being held, the sk would
-not be freed. sock_put() should then be called instead of __sock_put().
+On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
+the outgoing CPU to a new target. If an interrupt still has its pending bit
+set in the outgoing CPU's IRR at that point, fixup_irqs() resends it on the
+new target through the irqchip's irq_retrigger() callback. As the Hyper-V
+PCI/MSI chip does not provide that callback, the pending interrupt is
+silently dropped, which can result in lost interrupts, stalls and "No irq
+handler for vector" messages during CPU hotplug.
 
-But that's not enough: if it is the last reference, sock_put() will call
-sk_free(), which will end up calling sk_stop_timer_sync() on the same
-timer, and waiting indefinitely to finish. So it is needed to mark that
-the timer is done at the end of the timer handler when it has not been
-rescheduled, not to call sk_stop_timer_sync() on "itself".
+Install irq_chip_retrigger_hierarchy() as the irq_retrigger() callback for
+the Hyper-V PCI/MSI irqchip, so that a pending interrupt is resent on its
+new target CPU via the parent x86 vector domain.
 
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
+Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-5-fca8091060a4@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Karl Mehltretter: applied to pm_netlink.c and retained v5.10's fixed
-  retransmission delays while centralizing timer rearming. ]
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Suggested-by: Long Li <longli@microsoft.com>
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
+Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/pci/controller/pci-hyperv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index aee3a8dd9287a..89570f83f96b0 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -34,6 +34,7 @@ struct mptcp_pm_add_entry {
- 	struct timer_list	add_timer;
- 	struct mptcp_sock	*sock;
- 	u8			retrans_times;
-+	bool			timer_done;
- 	struct rcu_head		rcu;
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -1595,6 +1595,7 @@ static struct irq_chip hv_msi_irq_chip =
+ 	.irq_compose_msi_msg	= hv_compose_msi_msg,
+ 	.irq_set_affinity	= hv_set_affinity,
+ 	.irq_ack		= irq_chip_ack_parent,
++	.irq_retrigger		= irq_chip_retrigger_hierarchy,
+ 	.irq_mask		= hv_irq_mask,
+ 	.irq_unmask		= hv_irq_unmask,
  };
- 
-@@ -214,24 +215,25 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
- 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
- 	struct mptcp_sock *msk = entry->sock;
- 	struct sock *sk = (struct sock *)msk;
-+	unsigned int timeout = 0;
- 
- 	pr_debug("msk=%p\n", msk);
- 
-+	bh_lock_sock(sk);
- 	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
--		goto exit;
-+		goto out;
- 
- 	if (!entry->addr.id)
--		goto exit;
-+		goto out;
- 
--	bh_lock_sock(sk);
- 	if (sock_owned_by_user(sk)) {
- 		/* Try again later. */
--		sk_reset_timer(sk, timer, jiffies + HZ / 20);
-+		timeout = HZ / 20;
- 		goto out;
- 	}
- 
- 	if (mptcp_pm_should_add_signal(msk)) {
--		sk_reset_timer(sk, timer, jiffies + TCP_RTO_MAX / 8);
-+		timeout = TCP_RTO_MAX / 8;
- 		goto out;
- 	}
- 
-@@ -244,14 +246,18 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
- 	}
- 
- 	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
--		sk_reset_timer(sk, timer, jiffies + TCP_RTO_MAX);
-+		timeout = TCP_RTO_MAX;
- 
- 	spin_unlock_bh(&msk->pm.lock);
- 
- out:
-+	if (timeout)
-+		sk_reset_timer(sk, timer, jiffies + timeout);
-+	else
-+		/* if sock_put calls sk_free: avoid waiting for this timer */
-+		entry->timer_done = true;
- 	bh_unlock_sock(sk);
--exit:
--	__sock_put(sk);
-+	sock_put(sk);
- }
- 
- struct mptcp_pm_add_entry *
-@@ -304,6 +310,7 @@ static bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
- 	add_entry->retrans_times = 0;
- 
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
-+	add_entry->timer_done = false;
- 	sk_reset_timer(sk, &add_entry->add_timer, jiffies + TCP_RTO_MAX);
- 
- 	return true;
-@@ -322,7 +329,8 @@ void mptcp_pm_free_anno_list(struct mptcp_sock *msk)
- 	spin_unlock_bh(&msk->pm.lock);
- 
- 	list_for_each_entry_safe(entry, tmp, &free_list, list) {
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+		if (!entry->timer_done)
-+			sk_stop_timer_sync(sk, &entry->add_timer);
- 		kfree_rcu(entry, rcu);
- 	}
- }
--- 
-2.53.0
-
 
 
