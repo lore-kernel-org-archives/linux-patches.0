@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6CB4D5A1;
-	Sat, 12 Sep 2026 07:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0BD4D5A1;
+	Sat, 12 Sep 2026 07:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198792; cv=none; b=oWWqBdAubVBCwtLcq/PvBFi/hHdCJq0oGKIbZwRzteEpmVVQRVjymli0aTP7O2N4wMWzF8qlmJ72ERGUjz0lvH92oRzfJwVs/n78HebcpCpy9m6FTqR9ZiquhzJAwL5qk3akQXdz+VcXNuNTuMtcWX/FNdYp6pgamUfyJ/DLG80=
+	t=1789198797; cv=none; b=qQ8AvaCaWDiM/wbHdy1dGSNHhRV2Wcq8KBEHmx8S7zzekfzOSrte4x4A8Q+JlcCvFPAmNXIC8fBvRMDqR+AFRmn5P16Zb7MNtc4mo+Qs3JznRCs7rWsVzdX+/sHNJ4Gma9CkknN3cbesppSbhTW0Tj1pnkjIeZDIa+ez64lQAOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198792; c=relaxed/simple;
-	bh=xzV/RCZHDsExCnta8CtF4+m0xQWhL6jvsbUgnaTCgMc=;
+	s=arc-20240116; t=1789198797; c=relaxed/simple;
+	bh=687XwsVnLRIVgCKU1ICsoE+9Ulq13RKtadNDjgcU2nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q53K3CN86c71PWjKq0ybZXSp8yfhrTksecKFEt1MYJNw47nIGmPXX0zCjj2dFraCz5xv6X8tQMkPBJ8++mEUwoQ9I4vc7KE4KPNiWwVRCYJskIuZT8BY97Q/l6ayYdg8cTzAX2fXw2Hbyd0OmkFt5gvmO2yA9OxidURY0P5gJH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CC/e/A9v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NnUqbtYv2slaY8RP8K7XCT1CYciCm3J8bhAxEhnLlMBhBud+ZbBkX9LOyw7WP7RSSDEXxvnp7iODCDUfO4g29SoGdg0NmJwfQh+OIpMjfLC5E1TdzeNKQtTpzEcVs6IycDzVP7malp4b3DhB2KD7tnzjJEYyd3tbBT9uyk++ykg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEWdl0RP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CC/e/A9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680941F000FF;
-	Sat, 12 Sep 2026 07:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEWdl0RP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 536A81F000FF;
+	Sat, 12 Sep 2026 07:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198791;
-	bh=BmRT6JANQVtUhE4H6iLxFzhd78p1utjBK+GKLwP6S/o=;
+	s=korg; t=1789198796;
+	bh=v9kigiqB/xrbyqym/Cv0dxQiV5jyzVGe8d/Ib1umYFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CC/e/A9vaHZ959BFWqzC8GqSfOHNm/LCSgVU/v1VaSatJJXQWfWZFbCI9mY/TztoI
-	 tcIasgFzwNggqCV1DKbsrzHg3JtkjZqjLc30bjemL1xZessKUvDLTTriK+NbMjaBSb
-	 ZXOOcqpv4rrUZJmQc108uLNVBKFGbbgVB8vQUr9U=
+	b=XEWdl0RPqMByyHh3NUcCmCGrPwhmQha6gX/DW8uv9Ej1o2WTlx69Vavqq0n9EDIh0
+	 3YuRVf3Euv5NobE+kfl5GlH0xklxFPnTN4VDquShKrlOsoJSoRYISahIrHPP5mH9PI
+	 Hk27M2O47MdJx9KYlylFK6epX+Gy78UkAZK44Syc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	George Moussalem <george.moussalem@outlook.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0451/1815] arm64: qcom: ipq5018: Add GEPHY RX and TX clocks
-Date: Sat, 12 Sep 2026 08:36:41 +0200
-Message-ID: <20260912065659.478954784@linuxfoundation.org>
+Subject: [PATCH 7.2 0452/1815] arm64: dts: qcom: sm8250: sort out Iris power domains
+Date: Sat, 12 Sep 2026 08:36:42 +0200
+Message-ID: <20260912065659.502068938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,34 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Moussalem <george.moussalem@outlook.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 742dc058588bf1233647dcd95738c0afc621435d ]
+[ Upstream commit d5c8efda722eb1f67cfe299b71f13dab93746934 ]
 
-Add RX and TX clocks for the IPQ5018 GEPHY to enable the datapath.
+On SM8250 Iris core requires two power rails to function, MX (for PLLs)
+and MMCX (for everything else). The commit fa245b3f06cd ("arm64: dts:
+qcom: sm8250: Add venus DT node") added only MX power rail, but omitted
+MMCX voltage levels.
 
-Fixes: f5f2b835e316 ("arm64: dts: qcom: ipq5018: Add GE PHY to internal mdio bus")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-Link: https://lore.kernel.org/r/20260608-ipq5018-gephy-clocks-v4-3-fb2ccd56894b@outlook.com
+Add MMCX domain to the Iris device node.
+
+Fixes: fa245b3f06cd ("arm64: dts: qcom: sm8250: Add venus DT node")
+Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260604-iris-venus-fix-sm8250-v7-1-7bd2f0e5bae8@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq5018.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index f6cf2cca44eb0..52fc2d266b44b 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -229,6 +229,9 @@ ge_phy: ethernet-phy@7 {
- 				compatible = "ethernet-phy-id004d.d0c0";
- 				reg = <7>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 7076720413ab2..6150380795b81 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -4326,8 +4326,12 @@ venus: video-codec@aa00000 {
+ 			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+ 			power-domains = <&videocc MVS0C_GDSC>,
+ 					<&videocc MVS0_GDSC>,
+-					<&rpmhpd RPMHPD_MX>;
+-			power-domain-names = "venus", "vcodec0", "mx";
++					<&rpmhpd RPMHPD_MX>,
++					<&rpmhpd RPMHPD_MMCX>;
++			power-domain-names = "venus",
++					     "vcodec0",
++					     "mx",
++					     "mmcx";
+ 			operating-points-v2 = <&venus_opp_table>;
  
-+				clocks = <&gcc GCC_GEPHY_RX_CLK>,
-+					 <&gcc GCC_GEPHY_TX_CLK>;
-+				clock-names = "rx", "tx";
- 				resets = <&gcc GCC_GEPHY_MISC_ARES>;
+ 			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
+@@ -4353,22 +4357,26 @@ venus_opp_table: opp-table {
+ 
+ 				opp-720000000 {
+ 					opp-hz = /bits/ 64 <720000000>;
+-					required-opps = <&rpmhpd_opp_low_svs>;
++					required-opps = <&rpmhpd_opp_svs>,
++							<&rpmhpd_opp_low_svs>;
+ 				};
+ 
+ 				opp-1014000000 {
+ 					opp-hz = /bits/ 64 <1014000000>;
+-					required-opps = <&rpmhpd_opp_svs>;
++					required-opps = <&rpmhpd_opp_svs>,
++							<&rpmhpd_opp_svs>;
+ 				};
+ 
+ 				opp-1098000000 {
+ 					opp-hz = /bits/ 64 <1098000000>;
+-					required-opps = <&rpmhpd_opp_svs_l1>;
++					required-opps = <&rpmhpd_opp_svs_l1>,
++							<&rpmhpd_opp_svs_l1>;
+ 				};
+ 
+ 				opp-1332000000 {
+ 					opp-hz = /bits/ 64 <1332000000>;
+-					required-opps = <&rpmhpd_opp_nom>;
++					required-opps = <&rpmhpd_opp_svs_l1>,
++							<&rpmhpd_opp_nom>;
+ 				};
  			};
  		};
 -- 
