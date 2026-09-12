@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3DF32B125;
-	Sat, 12 Sep 2026 17:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DD732D43C;
+	Sat, 12 Sep 2026 17:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789233085; cv=none; b=eXN+F7/h0KHxKc502siYGXSEnf0LgUlgyEK+CjFys1zx1oQi1crnGeWj534oNmqKnwZ7n1eUp8mRqh6dR9rVkK973apTI6WWB0zWp/0Ws6l54rkvhN2ku45R29xT59BJYOAi0AvlkU/uZSSRxouOcekYKymWe56jNDCaxueL7Eg=
+	t=1789233090; cv=none; b=irtpKJ+gV42nJG2CKNx7yHvXiu+Es3EgO5KEZ73gY6mJq2Lu2D7UPitKs88MX/AEghs4g1ZmDbQCTMPRC+dJVcZ4b7P1/V2h1YG8kJt8jo28SIzQQDXIGha32Hi7BhS+spFGh0eabdyDCgx2yuAIEpTzLMf53wnkhaJ2KJtc0Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789233085; c=relaxed/simple;
-	bh=vl+umLS0zwCh44sqzDTry+JrGwlMNl+hg66BpO+HWMY=;
+	s=arc-20240116; t=1789233090; c=relaxed/simple;
+	bh=hX0X3/xQJeaRCWn5LOm16b38Ny4OARre6TmJGfw3F2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBKTTAx/+3WorkIb5S27dzvXJuxTVg4E5la40uV48/EfuFGefubi/xYhyVyaP9DYaAGYQkDNTk/QDN7KCVR+VcbjdrgCmckjKv9e1R6D50uSiLqzNd38zpeWOXsUcWOL9pyLdWf0hgIxtJUcJZPDKc3jDPa2BXMBvdJv1eTwb1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDM+aZ92; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oDTPkCgOpionUYhJS4KYzWLdpPPnEiHYsPencHEJBMzIHWqDzpf98c7H4RRxVSAlnG2VqFA2pYZDq9/msbgyKpNrW8aE/H9YIFYNTxMVOUnH7Xc28U50Ukp5icvJ0iKpQYQI9b4alfdCgBCV+knuj4icM3aZGIRRvRD1ius0yv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdWT7Y5N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDM+aZ92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E781F000FF;
-	Sat, 12 Sep 2026 17:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdWT7Y5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A721F000FF;
+	Sat, 12 Sep 2026 17:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789233084;
-	bh=5is6GiR9pEpF6SjurSLcBP7BYlZ9rLpdOZA5RPZvtGo=;
+	s=korg; t=1789233089;
+	bh=5ekjnNkZMFm0lKrnXL1Tgm8nHLJzGJ3lunjq51JOxnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kDM+aZ92+Bi2XDCzeLQPLlvSsA+J605oSPMsoU5My7Gnucmrz4VNcLmszuWBmDORm
-	 Op2yTbL/tnRxio2sN6XEj+ciRaimeLBerTaPuEP0TRrkaa88NyIm7hv+fcnO8G/ueB
-	 GIc38LpsMe4i1RrJklbFxB2/KbxbqzPFmi+Fil1M=
+	b=PdWT7Y5NW/A+mn0r+VZtSEQBK29KmKXgVWoyql9PwS64kSykekyWB8j7F2KmGWyMx
+	 BfR51T+V2NcD9A6tZucvFctgmu40E/IkrrfccUUtQL2SA7apjLZdIsLb8RFfaVw7FF
+	 F9t5U0Qfj5NI7OrTpRNZ5sez36612/iOmWL+TB8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.15 142/935] nvme: zero the discard fallback page
-Date: Sat, 12 Sep 2026 08:52:52 +0200
-Message-ID: <20260912065530.078228634@linuxfoundation.org>
+Subject: [PATCH 5.15 143/935] nvme-tcp: do not accept C2HData based on blk_rq_payload_bytes() alone
+Date: Sat, 12 Sep 2026 08:52:53 +0200
+Message-ID: <20260912065530.100223108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,104 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit bededeaaeff404978a5a8e2a605a6c3017cddd3e upstream.
+commit 3a4aa9e6ad3e35f8e24d5eaf38ee4d437075fb36 upstream.
 
-nvme_setup_discard() always maps sizeof(struct nvme_dsm_range) *
-NVME_DSM_MAX_RANGES = 4096 bytes as the DSM payload however many ranges
-the command declares, because some devices ignore the 'Number of Ranges'
-field - the Fixes: commit records two that read past the declared ranges.
-A single-range discard fills only the first 16 bytes.
+Commit 25e5cb780e62 ("nvme-tcp: fix possible crash in write_zeroes
+processing") established that blk_rq_payload_bytes() must not be read
+without first checking blk_rq_nr_phys_segments(), and recorded the
+result in nvme_tcp_setup_cmd_pdu() as req->data_len. The receive side
+was left as it was.
 
-Normally the buffer comes from kzalloc() and the other 4080 bytes are
-zero.  When that allocation fails the code falls back to the
-per-controller ctrl->discard_page, which nvme_init_ctrl() obtains with
-alloc_page(GFP_KERNEL) and nothing ever zeroes, so those 4080 bytes are
-whatever the page last held and are handed to the controller.  Reaching
-it requires the kzalloc(GFP_ATOMIC | __GFP_NOWARN) to fail, that is
-memory pressure; it is not remotely triggerable.  Failing the allocation
-under KMSAN reproduces it, with the leaked tail full of vmemmap struct
-page pointers.  The extent in the report is a partial transfer of the
-payload, not the whole 4096 bytes; the 16-byte boundary in it is the one
-declared range:
+The two differ for REQ_OP_WRITE_ZEROES, which has no physical segments
+but a non-zero blk_rq_bytes(), so setup leaves req->iter untouched
+while the receive gate lets a C2HData through and nvme_tcp_recv_data()
+copies into whatever the previous command on that tag left there. The
+driver-private area is zeroed only when the tag set is allocated.
 
-[   11.991601] BUG: KMSAN: uninit-value in dma_map_phys+0x14c8/0x1900
-[   11.991969]  dma_map_phys+0x14c8/0x1900
-[   11.992220]  dma_map_page_attrs+0xcf/0x130
-[   11.992485]  e1000_xmit_frame+0x4099/0x6d10
-[   11.992768]  dev_hard_start_xmit+0x22f/0xa80
-[   11.993068]  sch_direct_xmit+0x35c/0xcb0
-[   11.993315]  __dev_queue_xmit+0x1ee5/0x5eb0
-[   11.993608]  ip_finish_output2+0x1903/0x1c30
-[   11.993881]  ip_finish_output+0x288/0x870
-[   11.994125]  ip_output+0x15e/0x400
-[   11.994365]  __ip_queue_xmit+0x1e85/0x1fb0
-[   11.994639]  ip_queue_xmit+0x60/0x80
-[   11.994899]  __tcp_transmit_skb+0x4e71/0x5fa0
-[   11.995210]  tcp_write_xmit+0x3a36/0x9160
-[   11.995533]  __tcp_push_pending_frames+0xc5/0x3c0
-[   11.995854]  tcp_push+0x7dc/0x840
-[   11.996076]  tcp_sendmsg_locked+0x766c/0x8400
-[   11.996371]  tcp_sendmsg+0x4b/0x90
-[   11.996572]  inet_sendmsg+0x134/0x2a0
-[   11.996823]  __sock_sendmsg+0x265/0x360
-[   11.997076]  sock_sendmsg+0x100/0x1e0
-[   11.997293]  nvme_tcp_try_send+0x196f/0x6370
-[   11.997605]  nvme_tcp_queue_rq+0x1d54/0x20b0
-[   11.997882]  blk_mq_dispatch_rq_list+0x5ee/0x2e50
-[   11.998175]  __blk_mq_sched_dispatch_requests+0x16dc/0x24a0
-[   11.998539]  blk_mq_sched_dispatch_requests+0x11b/0x2c0
-[   11.998865]  blk_mq_run_work_fn+0x13b/0x280
-[   11.999146]  process_scheduled_works+0x966/0x1ad0
-[   11.999465]  worker_thread+0xe44/0x1480
-[   11.999709]  kthread+0x53b/0x600
-[   11.999927]  ret_from_fork+0x29f/0x7c0
-[   12.000191]  ret_from_fork_asm+0x1a/0x30
-[   12.000460]
-[   12.000558] Uninit was created at:
-[   12.000788]  __alloc_frozen_pages_noprof+0x8bf/0xd30
-[   12.001096]  alloc_pages_mpol+0x1d0/0x5f0
-[   12.001326]  alloc_pages_noprof+0x102/0x290
-[   12.001627]  nvme_init_ctrl+0x5a3/0x9f0
-[   12.001891]  nvme_tcp_create_ctrl+0xd75/0x19b0
-[   12.002170]  nvmf_dev_write+0x4c68/0x4fd0
-[   12.002426]  vfs_write+0x587/0x1a10
-[   12.002636]  __x64_sys_write+0x207/0x4f0
-[   12.002874]  x64_sys_call+0x2ff0/0x3ea0
-[   12.003123]  do_syscall_64+0x147/0x3b0
-[   12.003400]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[   12.003680]
-[   12.003777] Bytes 16-2843 of 2844 are uninitialized
-[   12.004068] Memory access of size 2844 starts at ffff888109f82000
-[   12.004412]
-[   12.004530] CPU: 0 UID: 0 PID: 101 Comm: kworker/0:1H Not tainted 7.2.0-rc5-NVMECTL-gf5098b6bae76 #1 PREEMPT(lazy)
-[   12.005127] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   12.005762] Workqueue: kblockd blk_mq_run_work_fn
-[   12.006073] =====================================================
+Reproduced with a test target that leaves a residual iterator on a tag
+and then sends a C2HData for a WRITE_ZEROES command on the same tag:
 
-Allocate the page with __GFP_ZERO.  The single allocation site covers
-every use of it: bytes no discard has written stay zero, and bytes one
-did write hold that controller's own range list, which it has already
-been sent.
+BUG: KASAN: wild-memory-access in _copy_to_iter+0x642/0x1330
+Write of size 512 at addr ffe728c2175dfa81 by task kworker/0:1H/103
 
-Fixes: 530436c45ef2 ("nvme: Discard workaround for non-conformant devices")
+CPU: 0 UID: 0 PID: 103 Comm: kworker/0:1H Not tainted 7.2.0-rc5-NVMETCP-gf5098b6bae76 #1 PREEMPT(lazy)
+Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Workqueue: nvme_tcp_wq nvme_tcp_io_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x53/0x70
+ kasan_report+0xce/0x100
+ ? _copy_to_iter+0x642/0x1330
+ kasan_check_range+0x105/0x1b0
+ __asan_memcpy+0x3c/0x60
+ _copy_to_iter+0x642/0x1330
+ ? __pfx_sock_has_perm+0x10/0x10
+ ? worker_thread+0x45b/0xd10
+ ? __pfx__copy_to_iter+0x10/0x10
+ ? _raw_spin_lock_bh+0x83/0xe0
+ ? __pfx__raw_spin_lock_bh+0x10/0x10
+ __skb_datagram_iter+0xf3/0x820
+ ? __pfx_simple_copy_to_iter+0x10/0x10
+ ? __asan_memcpy+0x3c/0x60
+ ? skb_copy_bits+0x58d/0x830
+ skb_copy_datagram_iter+0x37/0x120
+ nvme_tcp_recv_skb+0xa07/0x4320
+ ? __pfx_nvme_tcp_recv_skb+0x10/0x10
+ __tcp_read_sock+0x1ab/0x810
+ ? __pfx_nvme_tcp_recv_skb+0x10/0x10
+ ? __pfx_lock_sock_nested+0x10/0x10
+ ? __pfx___tcp_read_sock+0x10/0x10
+ nvme_tcp_try_recv+0x152/0x1e0
+ ? __pfx_nvme_tcp_try_recv+0x10/0x10
+ ? __pfx_mutex_unlock+0x10/0x10
+ nvme_tcp_io_work+0x1e4/0x6c0
+ ? __schedule+0x181a/0x49f0
+ ? __pfx_nvme_tcp_io_work+0x10/0x10
+ process_one_work+0x633/0x1030
+
+Keep the blk_rq_payload_bytes() test and add req->data_len to it. The
+old test is what rejects a C2HData naming a tag that is no longer in
+flight, because blk_update_request() zeroes rq->__data_len on
+completion; req->data_len and req->curr_bio are driver-private and
+survive completion, so they cannot stand in for it. Setup initialises
+the iterator only when both req->curr_bio and req->data_len are set, so
+the gate now tests the same two.
+
+Fixes: 25e5cb780e62 ("nvme-tcp: fix possible crash in write_zeroes processing")
 Cc: stable@vger.kernel.org
 Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4597,7 +4597,7 @@ int nvme_init_ctrl(struct nvme_ctrl *ctr
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -554,6 +554,7 @@ static int nvme_tcp_process_nvme_cqe(str
+ static int nvme_tcp_handle_c2h_data(struct nvme_tcp_queue *queue,
+ 		struct nvme_tcp_data_pdu *pdu)
+ {
++	struct nvme_tcp_request *req;
+ 	struct request *rq;
  
- 	BUILD_BUG_ON(NVME_DSM_MAX_RANGES * sizeof(struct nvme_dsm_range) >
- 			PAGE_SIZE);
--	ctrl->discard_page = alloc_page(GFP_KERNEL);
-+	ctrl->discard_page = alloc_page(GFP_KERNEL | __GFP_ZERO);
- 	if (!ctrl->discard_page) {
- 		ret = -ENOMEM;
- 		goto out;
+ 	rq = nvme_find_rq(nvme_tcp_tagset(queue), pdu->command_id);
+@@ -564,7 +565,8 @@ static int nvme_tcp_handle_c2h_data(stru
+ 		return -ENOENT;
+ 	}
+ 
+-	if (!blk_rq_payload_bytes(rq)) {
++	req = blk_mq_rq_to_pdu(rq);
++	if (!blk_rq_payload_bytes(rq) || !req->curr_bio || !req->data_len) {
+ 		dev_err(queue->ctrl->ctrl.device,
+ 			"queue %d tag %#x unexpected data\n",
+ 			nvme_tcp_queue_id(queue), rq->tag);
 
 
