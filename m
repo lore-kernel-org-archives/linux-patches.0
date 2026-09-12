@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F5541D11C;
-	Sat, 12 Sep 2026 09:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FEA3AFD15;
+	Sat, 12 Sep 2026 09:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205628; cv=none; b=ehXXGGWoIx4LgLoP9TbuRYIM9SXTFElR9/o3S1aeYSNjlU8kLAzhl35Ug+EGDjlvi2r7PCu0nBw2McLKZYppRcUawJdf8nyAy/XaYTfIA8JhTici9O4F4Edcc1xCKmwl4wpkJT9njcWi4NEovqyBqLY+ur2Dta86RpuuvIkEvGY=
+	t=1789205633; cv=none; b=RqvriZXqt26fi7XwazzPlRKLi3nE1lbbWVlkavMSHIXbtCAb/hqp9qwJ3bDFv7mZ2pKpZUoPZVhkEBwu7BB37nd+7Tz9RvTi5jquP1t3jFoftFRNMTvpWIzy/RGFBe3YF565QavB63X8wnLapOZnHKgAuVv3nsMZBgXDZOQmfJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205628; c=relaxed/simple;
-	bh=tOdTRJu6FAJWay53JcPKJWqIdDUwdjEPjYfTOiJAtjs=;
+	s=arc-20240116; t=1789205633; c=relaxed/simple;
+	bh=Mhzt1t50xeD5M6FwJJ+c/CBVw+B54OZWDTNMB1WnGac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwjgJmcy0v3J/nzdZRUBFYwgHtei0wnGBQFWi4K5bwt2tWTodFvJaGcUY55f5MIvarVHoGc7T327KNPQOqwXSgxXmLhvZsBmtGzdWBigXTq3zsncAGsfp/6JUAQFMy1ieqVjIJj9XyM9+jYuJfEqFAn249v9zywNrmWGSFEIWyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17dud6Ek; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q4j+5EgMIt/O0DMSu/uSm9pNXBhm1I3jx361RthyllSLkeV3JeTEUKhdb8BRTgN0q5v+TTabgnuTCwzHzbcFtg5Bsh9jk+TA9ixS6byPqSfAylTrKl02VrJr8iFGDJG/Bqdvz9axzF3Tw331pGYjVCyogMrjDlQ+/Tjfugc1fuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbCPjvvN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17dud6Ek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F801F000FF;
-	Sat, 12 Sep 2026 09:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbCPjvvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D071F000FF;
+	Sat, 12 Sep 2026 09:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205625;
-	bh=xkqg26ror/UVmymsZr58LhUjVicuIXf+ubCDPBQJvt8=;
+	s=korg; t=1789205629;
+	bh=nY5eotKyqpn/su0M8vrPqq2vXDoZGrncNx+uWeiowoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=17dud6EkPuTtwMtv6pck6Mk/WWMufjo8i6mwCFYh1A8/BMpt9PcjdcYKgKHu7voIL
-	 7I9AW9s9+cJcgDXeq6apZtWW5STwavk3jRtnlEA1RR64ont7XHYBZXiMqy7KxRwmXZ
-	 AOtvG6o50V4UGCj6Ls+Q2sDpOTSxD1/Yug7pdsW8=
+	b=gbCPjvvNpaeZF1M9VLP8fuAyHJL164Hl+scyM5y/ex8mVjZ8hKGeXFEO5zv6MIUZk
+	 5X9E2ItYGpSFpLizWm/hBm7ZuGOgkry73wzFOgeLVh1q+T1niknktU7tPj3X0hWPza
+	 +TdhWWgHO1OlAbutKcKwciNvq5VwQjTOD/TH/W0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Weiming Shi <shiweiming@moonshot.ai>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0039/1518] perf: Fix use-after-free when perf mmap() revival races with the last munmap()
-Date: Sat, 12 Sep 2026 08:36:48 +0200
-Message-ID: <20260912065624.316408122@linuxfoundation.org>
+Subject: [PATCH 6.18 0004/1518] batman-adv: dat: atomically update mac addresses
+Date: Sat, 12 Sep 2026 08:36:13 +0200
+Message-ID: <20260912065623.505569001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,100 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhang <yilinzhang@moonshot.ai>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 58a8108bc73de0740d5b88150465d6690ea5f85f ]
+commit e6de568d3eda3e3c01c868fabd7a9535d5ee4a73 upstream.
 
-perf_mmap_close() drops rb->mmap_count *without* holding
-event->mmap_mutex (the refcount_dec_and_test() right before the
-refcount_dec_and_mutex_lock() of event->mmap_count). A concurrent
-perf_mmap_rb() can slot its entire "revival" path into that window
-(perf_mmap holds event->mmap_mutex for its whole duration, including
-rb_alloc):
+When a MAC address is updated in batadv_dat_entry_add(), it is done using a
+simple copy function. A parallel reader might only see parts of this
+update. In worst case, the reader is transporting the half updated MAC
+address over the network or is creating an ARP response using it -
+poisoning the ARP cache.
 
-  munmap side (perf_mmap_close)          mmap side (perf_mmap_rb)
-  -----------------------------------    --------------------------------
-  rb->mmap_count 1 -> 0   (no lock)      (holds event->mmap_mutex)
-                                         inc_not_zero(rb->mmap_count) fails
-                                         ring_buffer_attach(event, NULL)
-                                         rb_alloc() + attach new rb
-                                         refcount_set(&event->mmap_count, 1)
-  lock; event->mmap_count 1 -> 0
-  ring_buffer_attach(event, NULL)
-  ring_buffer_put() -> frees the *new* rb
+atomic64_t can be used to store the 48 bit of a mac address. A reader will
+then either see the old mac address or the new one - never a mixture of
+both.
 
-The revival's refcount_set(&event->mmap_count, 1) is an invisible
-1 -> 1 write: the close frees the just-revived buffer although the
-other process still has it mapped -- a page-level use-after-free
-allowing local privilege escalation to root by any unprivileged user
-(default kernel.perf_event_paranoid=2).
-
-Swap the order of the two counter updates: event->mmap_count is
-dropped first via refcount_dec_and_mutex_lock(), so its 1 -> 0
-transition and the ring_buffer_attach() stay serialized with
-perf_mmap(). rb->mmap_count == 0 then implies every event using the
-buffer is detached already, so the result of the rb->mmap_count drop
-can gate the remaining teardown directly and detach_rest is no longer
-needed.
-
-An earlier fix for this race from Kyle Zeng and David Lee takes
-event->mmap_mutex around both counter updates [0]; here the not-last
-close stays lockless.
-
-Fixes: 59741451b49c ("perf: Identify the 0->1 transition for event::mmap_count")
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Co-developed-by: Weiming Shi <shiweiming@moonshot.ai>
-Signed-off-by: Weiming Shi <shiweiming@moonshot.ai>
-Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/linux-perf-users/20260804060931.711308-1-david.lee@trailofbits.com/ [0]
-Cc: <stable@vger.kernel.org>
-Cc: stable@vger.kernel.org # 6.18+
-Link: https://patch.msgid.link/20260831162155.1437652-1-yilinzhang@moonshot.ai
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ net/batman-adv/distributed-arp-table.c | 58 +++++++++++++++++---------
+ net/batman-adv/types.h                 |  2 +-
+ 2 files changed, 40 insertions(+), 20 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6753,7 +6753,6 @@ static void perf_mmap_close(struct vm_ar
- 	mapped_f unmapped = get_mapped(event, event_unmapped);
- 	struct perf_buffer *rb = ring_buffer_get(event);
- 	struct user_struct *mmap_user = rb->mmap_user;
--	bool detach_rest = false;
+diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
+index 4bae8df85516c..72717e2952ab9 100644
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -375,18 +375,19 @@ batadv_dat_entry_hash_find(struct batadv_priv *bat_priv, __be32 ip,
+ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 				 u8 *mac_addr, unsigned short vid)
+ {
++	u64 u64_mac = ether_addr_to_u64(mac_addr);
+ 	struct batadv_dat_entry *dat_entry;
+ 	int hash_added;
  
- 	/* FIXIES vs perf_pmu_unregister() */
- 	if (unmapped)
-@@ -6784,17 +6783,18 @@ static void perf_mmap_close(struct vm_ar
- 		mutex_unlock(&rb->aux_mutex);
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip, vid);
+ 	/* if this entry is already known, just update it */
+ 	if (dat_entry) {
+-		if (!batadv_compare_eth(dat_entry->mac_addr, mac_addr))
+-			ether_addr_copy(dat_entry->mac_addr, mac_addr);
++		atomic64_set(&dat_entry->mac_addr, u64_mac);
++
+ 		dat_entry->last_update = jiffies;
+ 		batadv_dbg(BATADV_DBG_DAT, bat_priv,
+ 			   "Entry updated: %pI4 %pM (vid: %d)\n",
+-			   &dat_entry->ip, dat_entry->mac_addr,
++			   &dat_entry->ip, mac_addr,
+ 			   batadv_print_vid(vid));
+ 		goto out;
+ 	}
+@@ -397,7 +398,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 
+ 	dat_entry->ip = ip;
+ 	dat_entry->vid = vid;
+-	ether_addr_copy(dat_entry->mac_addr, mac_addr);
++	atomic64_set(&dat_entry->mac_addr, u64_mac);
+ 	dat_entry->last_update = jiffies;
+ 	kref_init(&dat_entry->refcount);
+ 
+@@ -413,7 +414,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
  	}
  
--	if (refcount_dec_and_test(&rb->mmap_count))
--		detach_rest = true;
--
--	if (!refcount_dec_and_mutex_lock(&event->mmap_count, &event->mmap_mutex))
--		goto out_put;
--
--	ring_buffer_attach(event, NULL);
--	mutex_unlock(&event->mmap_mutex);
-+	/*
-+	 * Drop references in reverse order of perf_mmap() to prevent
-+	 * rb revival after rb->mmap_count reaches zero.
-+	 */
-+	if (refcount_dec_and_mutex_lock(&event->mmap_count,
-+					&event->mmap_mutex)) {
-+		ring_buffer_attach(event, NULL);
-+		mutex_unlock(&event->mmap_mutex);
-+	}
+ 	batadv_dbg(BATADV_DBG_DAT, bat_priv, "New entry added: %pI4 %pM (vid: %d)\n",
+-		   &dat_entry->ip, dat_entry->mac_addr, batadv_print_vid(vid));
++		   &dat_entry->ip, mac_addr, batadv_print_vid(vid));
  
- 	/* If there's still other mmap()s of this buffer, we're done. */
--	if (!detach_rest)
-+	if (!refcount_dec_and_test(&rb->mmap_count))
- 		goto out_put;
+ out:
+ 	batadv_dat_entry_put(dat_entry);
+@@ -868,6 +869,8 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
+ 			    struct netlink_callback *cb,
+ 			    struct batadv_dat_entry *dat_entry)
+ {
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 	int msecs;
+ 	void *hdr;
  
- 	/*
+@@ -880,11 +883,12 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
+ 	genl_dump_check_consistent(cb, hdr);
+ 
+ 	msecs = jiffies_to_msecs(jiffies - dat_entry->last_update);
++	u64_mac = atomic64_read(&dat_entry->mac_addr);
++	u64_to_ether_addr(u64_mac, mac);
+ 
+ 	if (nla_put_in_addr(msg, BATADV_ATTR_DAT_CACHE_IP4ADDRESS,
+ 			    dat_entry->ip) ||
+-	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN,
+-		    dat_entry->mac_addr) ||
++	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN, mac) ||
+ 	    nla_put_u16(msg, BATADV_ATTR_DAT_CACHE_VID, dat_entry->vid) ||
+ 	    nla_put_u32(msg, BATADV_ATTR_LAST_SEEN_MSECS, msecs)) {
+ 		genlmsg_cancel(msg, hdr);
+@@ -1151,6 +1155,8 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 	struct net_device *mesh_iface = bat_priv->mesh_iface;
+ 	int hdr_size = 0;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+ 		goto out;
+@@ -1178,6 +1184,9 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_dst, vid);
+ 	if (dat_entry) {
++		u64_mac = atomic64_read(&dat_entry->mac_addr);
++		u64_to_ether_addr(u64_mac, mac);
++
+ 		/* If the ARP request is destined for a local client the local
+ 		 * client will answer itself. DAT would only generate a
+ 		 * duplicate packet.
+@@ -1186,7 +1195,7 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 		 * additional DAT answer may trigger kernel warnings about
+ 		 * a packet coming from the wrong port.
+ 		 */
+-		if (batadv_is_my_client(bat_priv, dat_entry->mac_addr, vid)) {
++		if (batadv_is_my_client(bat_priv, mac, vid)) {
+ 			ret = true;
+ 			goto out;
+ 		}
+@@ -1196,18 +1205,16 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 		 * the backbone gws belonging to our backbone has claimed the
+ 		 * destination.
+ 		 */
+-		if (!batadv_bla_check_claim(bat_priv,
+-					    dat_entry->mac_addr, vid)) {
++		if (!batadv_bla_check_claim(bat_priv, mac, vid)) {
+ 			batadv_dbg(BATADV_DBG_DAT, bat_priv,
+ 				   "Device %pM claimed by another backbone gw. Don't send ARP reply!",
+-				   dat_entry->mac_addr);
++				   mac);
+ 			ret = true;
+ 			goto out;
+ 		}
+ 
+ 		skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
+-						      dat_entry->mac_addr,
+-						      hw_src, vid);
++						      mac, hw_src, vid);
+ 		if (!skb_new)
+ 			goto out;
+ 
+@@ -1249,6 +1256,8 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
+ 	struct batadv_dat_entry *dat_entry = NULL;
+ 	bool ret = false;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 	int err;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+@@ -1276,8 +1285,11 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
+ 	if (!dat_entry)
+ 		goto out;
+ 
++	u64_mac = atomic64_read(&dat_entry->mac_addr);
++	u64_to_ether_addr(u64_mac, mac);
++
+ 	skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
+-					      dat_entry->mac_addr, hw_src, vid);
++					      mac, hw_src, vid);
+ 	if (!skb_new)
+ 		goto out;
+ 
+@@ -1368,6 +1380,8 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
+ 	u8 *hw_src, *hw_dst;
+ 	bool dropped = false;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+ 		goto out;
+@@ -1396,11 +1410,17 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
+ 	 * this frame would lead to doubled receive of an ARP reply.
+ 	 */
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_src, vid);
+-	if (dat_entry && batadv_compare_eth(hw_src, dat_entry->mac_addr)) {
+-		batadv_dbg(BATADV_DBG_DAT, bat_priv, "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
+-			   hw_src, &ip_src, hw_dst, &ip_dst,
+-			   dat_entry->mac_addr,	&dat_entry->ip);
+-		dropped = true;
++	if (dat_entry) {
++		u64_mac = atomic64_read(&dat_entry->mac_addr);
++		u64_to_ether_addr(u64_mac, mac);
++
++		if (batadv_compare_eth(hw_src, mac)) {
++			batadv_dbg(BATADV_DBG_DAT, bat_priv,
++				   "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
++				   hw_src, &ip_src, hw_dst, &ip_dst,
++				   mac, &dat_entry->ip);
++			dropped = true;
++		}
+ 	}
+ 
+ 	/* Update our internal cache with both the IP addresses the node got
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index ac4494f1b8e2a..51d04f351fdd4 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -2127,7 +2127,7 @@ struct batadv_dat_entry {
+ 	__be32 ip;
+ 
+ 	/** @mac_addr: the MAC address associated to the stored IPv4 */
+-	u8 mac_addr[ETH_ALEN];
++	atomic64_t mac_addr;
+ 
+ 	/** @vid: the vlan ID associated to this entry */
+ 	unsigned short vid;
+-- 
+2.53.0
+
 
 
