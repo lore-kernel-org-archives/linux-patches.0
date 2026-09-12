@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D59124CEEA;
-	Sat, 12 Sep 2026 09:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB3A35C6A4;
+	Sat, 12 Sep 2026 09:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205498; cv=none; b=VtJW7r8tnA/vrWsG156wZI+eqEGKgP79Pv4wKkL0FSqm8+etUpd/4PVWRosnmgpgE1vM1QDY6zfukdGWBlTwnB2whq7YCulf1Nm2HZOQSuBKrD0USRVeFAP6eUdbiwYhN40jczJmqcUUKsK6KYeSg7NfzVWfyS5dg+bYpVHIilI=
+	t=1789205503; cv=none; b=WGSQZSGnXp29xabdLn8OmQ8peiYy8S+/FBeIFZcBwiTDgIF1BoyOTFUWb7CzKfTX+JmeHuIo813II1arByHUxyDlQd0rmka4kaBo/clsyB7Kn6CTt2lu0JUuQ3kjuHnX+f68hJ2dyh12FNu3ziy3eDx9thno59+9/2x3Cu1FnLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205498; c=relaxed/simple;
-	bh=IsAVwCT8nZl+ZH67w7BkKU0oPL5EvjK6GMBLvGsOYpA=;
+	s=arc-20240116; t=1789205503; c=relaxed/simple;
+	bh=AtIc1ZwLga7ee1os5BFeKmxC6opbhFSCkbFIvzWQGNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LY7EKnAD//0gosaJDugHVgvZEl2SwU546MU56RVgI8BFRZQ4RyePMfJvvKbY7D2iyHHRE5AfFQPBcTB2GRm+89ZFgBNqMdPIv+gFm942GiulzGmf7TDVgLPsj/2QM9QLelZNKluzLf1Z8JcVRQ+lfSUixmfIqZ85FWk4h16pulk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CqLPcja; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GfbmAxI7OrTxlzZsmqzQUAL9Yhd1ENs8ucuyZahGpgZHRvto6RyiAtu59EfyYnMI/34r/jeuEXeKAAfVqRMyaIYyXEuqyH+oVR2cFwOeC80adbJRcV8JUf27HnhO56VospCjB+xV31m5/CwetdsNQHigJoj6QNQEnloFbDrUc7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17XaEajE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CqLPcja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A811F000FF;
-	Sat, 12 Sep 2026 09:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17XaEajE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244261F000FF;
+	Sat, 12 Sep 2026 09:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205497;
-	bh=Qeuf2jDxwPLc/wzfsoXpvPvWt6VcJKt+2J/8FUsoeyw=;
+	s=korg; t=1789205502;
+	bh=zly0/MnLOE0/h/rAKyVgZUIjW0MnIQy9XACYnVZBAIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CqLPcjaAvyb4hZ7lVUBjPIVAiBmlQ+ZZfs+Yci5awUjiEdBOmfAGJF1WJTVpd0TY
-	 Rl+1huzQZ4ndljLgbyQa+7S+vEIyfjcOzuFzpXx54xt94BkzjiWtQJ8FoT/Yo4eNM/
-	 EpDOmpSzmc4tS6DmjKMwmk3j8zYUVIFzGBG+N4P4=
+	b=17XaEajEGMA37P6Fjd+bQYKGPjoQ8MqAk/bAxNVFShrvEWwqPjguQ9SPr7jJPpJ+7
+	 AUEhdhDP9YbKVKPFHJ2ozfJQj2aIOKKhJmMFD0xHT0kzAuS/RjBVwulwpJMifgv5k3
+	 zWp1uyf6WDTWEs6tR86qOpEh/x+1nwwCDNMWiHVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Tyrel Datwyler <tyreld@linux.ibm.com>,
-	linuxppc-dev@lists.ozlabs.org,
+	Ian Rogers <irogers@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0015/1518] PCI: Introduce PCI_SLOT_PLACEHOLDER constant for slot_nr placeholder value
-Date: Sat, 12 Sep 2026 08:36:24 +0200
-Message-ID: <20260912065623.762409402@linuxfoundation.org>
+Subject: [PATCH 6.18 0016/1518] perf/core: Fix deadlock in perf_mmap() failure path
+Date: Sat, 12 Sep 2026 08:36:25 +0200
+Message-ID: <20260912065623.786150466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,198 +51,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit c243e6c470c4695965cc8287767925bc1d9a7867 ]
+[ Upstream commit c69df06e4e26e50611190ce04eab92c5cc261b61 ]
 
-Introduce a constant for placeholder value and update the kerneldoc for
-pci_create_slot() to reference PCI_SLOT_PLACEHOLDER instead of -1
-throughout. No functional change.
+Ian noted that commit 77de62ad3de3 ("perf/core: Fix refcount bug and
+potential UAF in perf_mmap") would cause a deadlock due to
+event->mmap_mutex recursion.
 
-Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Tyrel Datwyler <tyreld@linux.ibm.com>
-Cc: linuxppc-dev@lists.ozlabs.org
-Link: https://patch.msgid.link/20260805165518.794-2-alifm@linux.ibm.com
+This happens because we're now calling perf_mmap_close() under
+mmap_mutex, while that function itself can also take mmap_mutex.
 
-Stable backport: this tree predates 102c8b26b54e ("PCI: Allow all bus
-devices to use the same slot"). Include its PCI_SLOT_ALL_DEVICES definition,
-slot-number documentation, and core matching/address handling so that
-subsequent commit dcc5bec09e23 ("PCI: Allow per function PCI slots to fix
-slot reset on s390") applies without conflicts. Keep the PCIe hotplug
-callers unchanged; enabling bus-wide slots there is outside this dependency.
+Solve this by noting that perf_mmap_close() is far more complicated
+than we need at this particular point, since it deals with scenarios
+that cannot happen in this particular case.
 
-Retain the stable tree's kzalloc() and ATTRIBUTE_GROUPS() implementations.
-The placeholder conversion covers both PowerPC hotplug callers and the
-PCI core. All code changes stay within existing functions.
+Replace the call to perf_mmap_close() with a very narrow undo for the
+case of first-exposure. If this is not the first mmap(), there is no
+race and it is fine to drop the lock and call perf_mmap_close() to
+handle to more complicated scenarios.
 
-Stable-dep-of: dcc5bec09e23 ("PCI: Allow per function PCI slots to fix slot reset on s390")
+Note: move the rb->mmap_user (namespace) handling into the rb
+init/free code such that it does not complicate the mmap handling.
+
+Fixes: 77de62ad3de3 ("perf/core: Fix refcount bug and potential UAF in perf_mmap")
+Reported-by: Ian Rogers <irogers@google.com>
+Closes: https://patch.msgid.link/CAP-5%3DfVJyVMZw%3DDqP53Kxg58nUmJ_0bxoaeOKAbC03BVc11HaA%40mail.gmail.com
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260326112821.GK3738786@noisy.programming.kicks-ass.net
+Stable-dep-of: 58a8108bc73d ("perf: Fix use-after-free when perf mmap() revival races with the last munmap()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/pnv_php.c     |    2 -
- drivers/pci/hotplug/rpaphp_slot.c |    2 -
- drivers/pci/slot.c                |   50 ++++++++++++++++++++++++++++----------
- include/linux/pci.h               |   13 +++++++++
- 4 files changed, 51 insertions(+), 16 deletions(-)
+ kernel/events/core.c        |   70 ++++++++++++++++++++++++++++++++++----------
+ kernel/events/internal.h    |    1 
+ kernel/events/ring_buffer.c |    2 +
+ 3 files changed, 58 insertions(+), 15 deletions(-)
 
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -813,7 +813,7 @@ static struct pnv_php_slot *pnv_php_allo
- 	if (dn->child && PCI_DN(dn->child))
- 		php_slot->slot_no = PCI_SLOT(PCI_DN(dn->child)->devfn);
- 	else
--		php_slot->slot_no = -1;   /* Placeholder slot */
-+		php_slot->slot_no = PCI_SLOT_PLACEHOLDER;   /* Placeholder slot */
- 
- 	kref_init(&php_slot->kref);
- 	php_slot->state	                = PNV_PHP_STATE_INITIALIZED;
---- a/drivers/pci/hotplug/rpaphp_slot.c
-+++ b/drivers/pci/hotplug/rpaphp_slot.c
-@@ -85,7 +85,7 @@ int rpaphp_register_slot(struct slot *sl
- 	struct device_node *child;
- 	u32 my_index;
- 	int retval;
--	int slotno = -1;
-+	int slotno = PCI_SLOT_PLACEHOLDER;
- 
- 	dbg("%s registering slot:path[%pOF] index[%x], name[%s] pdomain[%x] type[%d]\n",
- 		__func__, slot->dn, slot->index, slot->name,
---- a/drivers/pci/slot.c
-+++ b/drivers/pci/slot.c
-@@ -37,11 +37,20 @@ static const struct sysfs_ops pci_slot_s
- 
- static ssize_t address_read_file(struct pci_slot *slot, char *buf)
- {
--	if (slot->number == 0xff)
-+	if (slot->number == PCI_SLOT_PLACEHOLDER)
- 		return sysfs_emit(buf, "%04x:%02x\n",
- 				  pci_domain_nr(slot->bus),
- 				  slot->bus->number);
- 
-+	/*
-+	 * Preserve legacy ABI expectations that hotplug drivers that manage
-+	 * multiple devices per slot emit 0 for the device number.
-+	 */
-+	if (slot->number == PCI_SLOT_ALL_DEVICES)
-+		return sysfs_emit(buf, "%04x:%02x:00\n",
-+				  pci_domain_nr(slot->bus),
-+				  slot->bus->number);
-+
- 	return sysfs_emit(buf, "%04x:%02x:%02x\n",
- 			  pci_domain_nr(slot->bus),
- 			  slot->bus->number,
-@@ -73,7 +82,8 @@ static void pci_slot_release(struct kobj
- 
- 	down_read(&pci_bus_sem);
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list)
--		if (PCI_SLOT(dev->devfn) == slot->number)
-+		if (slot->number == PCI_SLOT_ALL_DEVICES ||
-+		    PCI_SLOT(dev->devfn) == slot->number)
- 			dev->slot = NULL;
- 	up_read(&pci_bus_sem);
- 
-@@ -166,7 +176,8 @@ void pci_dev_assign_slot(struct pci_dev
- 
- 	mutex_lock(&pci_slot_mutex);
- 	list_for_each_entry(slot, &dev->bus->slots, list)
--		if (PCI_SLOT(dev->devfn) == slot->number)
-+		if (slot->number == PCI_SLOT_ALL_DEVICES ||
-+		    PCI_SLOT(dev->devfn) == slot->number)
- 			dev->slot = slot;
- 	mutex_unlock(&pci_slot_mutex);
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6737,6 +6737,7 @@ static void perf_mmap_open(struct vm_are
  }
-@@ -188,7 +199,8 @@ static struct pci_slot *get_slot(struct
- /**
-  * pci_create_slot - create or increment refcount for physical PCI slot
-  * @parent: struct pci_bus of parent bridge
-- * @slot_nr: PCI_SLOT(pci_dev->devfn) or -1 for placeholder
-+ * @slot_nr: PCI_SLOT(pci_dev->devfn), PCI_SLOT_PLACEHOLDER for placeholder, or
-+ *	PCI_SLOT_ALL_DEVICES
-  * @name: user visible string presented in /sys/bus/pci/slots/<name>
-  * @hotplug: set if caller is hotplug driver, NULL otherwise
-  *
-@@ -213,15 +225,26 @@ static struct pci_slot *get_slot(struct
-  * In most cases, @pci_bus, @slot_nr will be sufficient to uniquely identify
-  * a slot. There is one notable exception - pSeries (rpaphp), where the
-  * @slot_nr cannot be determined until a device is actually inserted into
-- * the slot. In this scenario, the caller may pass -1 for @slot_nr.
-+ * the slot. In this scenario, the caller may pass PCI_SLOT_PLACEHOLDER for @slot_nr.
-  *
-  * The following semantics are imposed when the caller passes @slot_nr ==
-- * -1. First, we no longer check for an existing %struct pci_slot, as there
-- * may be many slots with @slot_nr of -1.  The other change in semantics is
-- * user-visible, which is the 'address' parameter presented in sysfs will
-- * consist solely of a dddd:bb tuple, where dddd is the PCI domain of the
-- * %struct pci_bus and bb is the bus number. In other words, the devfn of
-- * the 'placeholder' slot will not be displayed.
-+ * PCI_SLOT_PLACEHOLDER. First, we no longer check for an existing %struct
-+ * pci_slot, as there may be many slots with @slot_nr of
-+ * PCI_SLOT_PLACEHOLDER. The other change in semantics is user-visible,
-+ * which is the 'address' parameter presented in sysfs will consist solely
-+ * of a dddd:bb tuple, where dddd is the PCI domain of the %struct pci_bus
-+ * and bb is the bus number. In other words, the devfn of the 'placeholder'
-+ * slot will not be displayed.
-+ *
-+ * Bus-wide slots:
-+ * For PCIe hotplug, the physical slot encompasses the entire secondary
-+ * bus, not just a single device number. If the device supports ARI and ARI
-+ * Forwarding is enabled in the upstream bridge, a multi-function device
-+ * may include functions that appear to have several different device
-+ * numbers, i.e., PCI_SLOT() values.  Pass @slot_nr == PCI_SLOT_ALL_DEVICES
-+ * to create a slot that matches all devices on the bus. Unlike placeholder
-+ * slots, bus-wide slots go through normal slot lookup and reuse existing
-+ * slots if present.
-  */
- struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
- 				 const char *name,
-@@ -234,7 +257,7 @@ struct pci_slot *pci_create_slot(struct
  
- 	mutex_lock(&pci_slot_mutex);
+ static void perf_pmu_output_stop(struct perf_event *event);
++static void perf_mmap_unaccount(struct vm_area_struct *vma, struct perf_buffer *rb);
  
--	if (slot_nr == -1)
-+	if (slot_nr == PCI_SLOT_PLACEHOLDER)
- 		goto placeholder;
+ /*
+  * A buffer can be mmap()ed multiple times; either directly through the same
+@@ -6752,8 +6753,6 @@ static void perf_mmap_close(struct vm_ar
+ 	mapped_f unmapped = get_mapped(event, event_unmapped);
+ 	struct perf_buffer *rb = ring_buffer_get(event);
+ 	struct user_struct *mmap_user = rb->mmap_user;
+-	int mmap_locked = rb->mmap_locked;
+-	unsigned long size = perf_data_size(rb);
+ 	bool detach_rest = false;
  
- 	/*
-@@ -285,7 +308,8 @@ placeholder:
+ 	/* FIXIES vs perf_pmu_unregister() */
+@@ -6848,11 +6847,7 @@ again:
+ 	 * Aside from that, this buffer is 'fully' detached and unmapped,
+ 	 * undo the VM accounting.
+ 	 */
+-
+-	atomic_long_sub((size >> PAGE_SHIFT) + 1 - mmap_locked,
+-			&mmap_user->locked_vm);
+-	atomic64_sub(mmap_locked, &vma->vm_mm->pinned_vm);
+-	free_uid(mmap_user);
++	perf_mmap_unaccount(vma, rb);
  
- 	down_read(&pci_bus_sem);
- 	list_for_each_entry(dev, &parent->devices, bus_list)
--		if (PCI_SLOT(dev->devfn) == slot_nr)
-+		if (slot_nr == PCI_SLOT_ALL_DEVICES ||
-+		    PCI_SLOT(dev->devfn) == slot_nr)
- 			dev->slot = slot;
- 	up_read(&pci_bus_sem);
+ out_put:
+ 	ring_buffer_put(rb); /* could be last */
+@@ -6994,6 +6989,15 @@ static void perf_mmap_account(struct vm_
+ 	atomic64_add(extra, &vma->vm_mm->pinned_vm);
+ }
  
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -72,12 +72,23 @@
- /* return bus from PCI devid = ((u16)bus_number) << 8) | devfn */
- #define PCI_BUS_NUM(x) (((x) >> 8) & 0xff)
- 
-+/*
-+ * PCI_SLOT_ALL_DEVICES indicates a slot that covers all devices on the bus.
-+ * Used for PCIe hotplug where the physical slot is the entire secondary bus,
-+ * and, if ARI Forwarding is enabled, functions may appear to be on multiple
-+ * devices.
-+ */
-+#define PCI_SLOT_ALL_DEVICES	0xfe
++static void perf_mmap_unaccount(struct vm_area_struct *vma, struct perf_buffer *rb)
++{
++	struct user_struct *user = rb->mmap_user;
 +
-+/* Used to identify a slot as a placeholder */
-+#define PCI_SLOT_PLACEHOLDER	0xff
++	atomic_long_sub((perf_data_size(rb) >> PAGE_SHIFT) + 1 - rb->mmap_locked,
++			&user->locked_vm);
++	atomic64_sub(rb->mmap_locked, &vma->vm_mm->pinned_vm);
++}
 +
- /* pci_slot represents a physical slot */
- struct pci_slot {
- 	struct pci_bus		*bus;		/* Bus this slot is on */
- 	struct list_head	list;		/* Node in list of slots */
- 	struct hotplug_slot	*hotplug;	/* Hotplug info (move here) */
--	unsigned char		number;		/* PCI_SLOT(pci_dev->devfn) */
-+	unsigned char		number;		/* Device nr, or PCI_SLOT_ALL_DEVICES */
- 	struct kobject		kobj;
- };
+ static int perf_mmap_rb(struct vm_area_struct *vma, struct perf_event *event,
+ 			unsigned long nr_pages)
+ {
+@@ -7056,8 +7060,6 @@ static int perf_mmap_rb(struct vm_area_s
+ 	if (!rb)
+ 		return -ENOMEM;
  
+-	refcount_set(&rb->mmap_count, 1);
+-	rb->mmap_user = get_current_user();
+ 	rb->mmap_locked = extra;
+ 
+ 	ring_buffer_attach(event, rb);
+@@ -7207,16 +7209,54 @@ static int perf_mmap(struct file *file,
+ 			mapped(event, vma->vm_mm);
+ 
+ 		/*
+-		 * Try to map it into the page table. On fail, invoke
+-		 * perf_mmap_close() to undo the above, as the callsite expects
+-		 * full cleanup in this case and therefore does not invoke
+-		 * vmops::close().
++		 * Try to map it into the page table. On fail undo the above,
++		 * as the callsite expects full cleanup in this case and
++		 * therefore does not invoke vmops::close().
+ 		 */
+ 		ret = map_range(event->rb, vma);
+-		if (ret)
+-			perf_mmap_close(vma);
++		if (likely(!ret))
++			return 0;
++
++		/* Error path */
++
++		/*
++		 * If this is the first mmap(), then event->mmap_count should
++		 * be stable at 1. It is only modified by:
++		 * perf_mmap_{open,close}() and perf_mmap().
++		 *
++		 * The former are not possible because this mmap() hasn't been
++		 * successful yet, and the latter is serialized by
++		 * event->mmap_mutex which we still hold (note that mmap_lock
++		 * is not strictly sufficient here, because the event fd can
++		 * be passed to another process through trivial means like
++		 * fork(), leading to concurrent mmap() from different mm).
++		 *
++		 * Make sure to remove event->rb before releasing
++		 * event->mmap_mutex, such that any concurrent mmap() will not
++		 * attempt use this failed buffer.
++		 */
++		if (refcount_read(&event->mmap_count) == 1) {
++			/*
++			 * Minimal perf_mmap_close(); there can't be AUX or
++			 * other events on account of this being the first.
++			 */
++			mapped = get_mapped(event, event_unmapped);
++			if (mapped)
++				mapped(event, vma->vm_mm);
++			perf_mmap_unaccount(vma, event->rb);
++			ring_buffer_attach(event, NULL);	/* drops last rb->refcount */
++			refcount_set(&event->mmap_count, 0);
++			return ret;
++		}
++
++		/*
++		 * Otherwise this is an already existing buffer, and there is
++		 * no race vs first exposure, so fall-through and call
++		 * perf_mmap_close().
++		 */
+ 	}
+ 
++	perf_mmap_close(vma);
+ 	return ret;
+ }
+ 
+--- a/kernel/events/internal.h
++++ b/kernel/events/internal.h
+@@ -67,6 +67,7 @@ static inline void rb_free_rcu(struct rc
+ 	struct perf_buffer *rb;
+ 
+ 	rb = container_of(rcu_head, struct perf_buffer, rcu_head);
++	free_uid(rb->mmap_user);
+ 	rb_free(rb);
+ }
+ 
+--- a/kernel/events/ring_buffer.c
++++ b/kernel/events/ring_buffer.c
+@@ -340,6 +340,8 @@ ring_buffer_init(struct perf_buffer *rb,
+ 		rb->paused = 1;
+ 
+ 	mutex_init(&rb->aux_mutex);
++	rb->mmap_user = get_current_user();
++	refcount_set(&rb->mmap_count, 1);
+ }
+ 
+ void perf_aux_output_flag(struct perf_output_handle *handle, u64 flags)
 
 
