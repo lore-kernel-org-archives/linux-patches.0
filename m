@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625CB346E75;
-	Sat, 12 Sep 2026 07:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED16B3EFFBA;
+	Sat, 12 Sep 2026 07:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197457; cv=none; b=Iyl0FxOtfMkVMHM+910a1jIwUygGUHj87ezpNfcfewS7filGs8JdRuY+v68zHeTHPawtqenGSJUKmaY6ZnbHrRgr3kLOlEvwLNDTEcmGJqTNg3S6FFKAbgqBIyV44r66VTu0ESQvU3bfKlcgqnZJt8Rc3/NWMx9rhs8a6nbHKgg=
+	t=1789197461; cv=none; b=JJhzk3oGmra/U5w5ElCdEyaP5ui7dSCP9B+nHje/t85Oydz0JybM7CTVSuplLjOXLxLXeVA7X/1KQjehW2mUWZVDjGSiqnvQRS1sZWpvg7ipEv0Yb0dphxmtjXsAESMAb3yEon5uRTMNv4cQ5PDq4tIylbvkf2XM7D6ob8/26/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197457; c=relaxed/simple;
-	bh=TQTOOGuEX53bLeFT/dJqCKaOrxh59hPyjIti9uRPXGA=;
+	s=arc-20240116; t=1789197461; c=relaxed/simple;
+	bh=YGqkmxIiJFCSkVfLaq4482ZlJz1D7DaeLFbX2pUxKBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a5ojrOS/afGa59BsFKCMFLWOQ+j8xgASntvvrWUlNFl/9wBMuDLqNJYpDBv977Fw6rZ2eltfr+JFzQbZViNgPydDeQ2pHt1c0hI90yYK28qAVxbLtQ2xYMbooDGmCPu0AddoEVGD+yr1gnf+O3EBfzL8BQJnwkqHfMPYUO7nEt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7MzU48N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z1ovwiTIzj8SOJ/WEQPcih2kJIGw8fI8cajHqBph0m1v43XFeUUvYYSmyq9AvV1X5AL2uArQEl4k3zu6LyQoKWcoAQwi8xaii2FmqJVWBN0eh6Q7Nc01E0jduWu/B05Nft27SPD+MyoQuLOLhiv6tm70S6rNyB62UCqzXm+ZJz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYPhSrEf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7MzU48N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2061F000FF;
-	Sat, 12 Sep 2026 07:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYPhSrEf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2501F000FF;
+	Sat, 12 Sep 2026 07:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197455;
-	bh=uQK6ekwfM5diC6Imc8s9j04WVZEw1B5So0ORrcDJu1E=;
+	s=korg; t=1789197459;
+	bh=4kCyxd08Aeq0A0AYQXSEyJ+Cl15Qv+lqRa9JuUvWMZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v7MzU48NMv81NvxlZWpM5tq8E9d2H7DsGGw/XBtGYTmueL6essg27yqjyh9vz3Daq
-	 qeK2BTWmsY9PQQWiopWHFEjyzX5nI7bYSY+mc+H8SN8gvvPNdFm7Ls+Gdk1nQBxZh4
-	 mZoWb0xgfkJt32aVkQpg+lQnKt6me2/lsdvuFBDU=
+	b=UYPhSrEfuTm1PV1AzyfpwFIBLYhnvxBl0xeuO9QEtE5bVSDQYEs3d6kvxGeAwwrp7
+	 SBRp+H6PtiZL1StAh38i+MYdvNyT+VjauGyXAXRUD2ZFxQoft8p+E3NBdqSymCWxJv
+	 +zQWh+FGWi/E7yja0yB/oV14uWoCHgl0s8IM2vPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0176/1815] uprobes/x86: Move optimized uprobe from nop5 to nop10
-Date: Sat, 12 Sep 2026 08:32:06 +0200
-Message-ID: <20260912065653.140885586@linuxfoundation.org>
+Subject: [PATCH 7.2 0177/1815] fanotify: initialize permission event watchdog state
+Date: Sat, 12 Sep 2026 08:32:07 +0200
+Message-ID: <20260912065653.162909083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,627 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 554ba38456dad8053a1a80afe6ae6da9eff745cc ]
+[ Upstream commit a3aa899823dda059ab88a58254f9a605e03ec275 ]
 
-Andrii reported an issue with optimized uprobes [1] that can clobber
-redzone area with call instruction storing return address on stack
-where user code may keep temporary data without adjusting rsp.
+fanotify permission events are allocated with kmem_cache_alloc(), but
+fanotify_alloc_perm_event() does not initialize watchdog_cnt.
 
-Fixing this by moving the optimized uprobes on top of 10-bytes nop
-instruction, so we can squeeze another instruction to escape the
-redzone area before doing the call, like:
+The watchdog reads watchdog_cnt after the event is moved to access_list.
+A stale value can make it warn too early or skip the warning.
 
-  lea -0x80(%rsp), %rsp
-  call tramp
+Initialize watchdog_cnt when allocating a permission event.
 
-Note the lea instruction is used to adjust the rsp register without
-changing the flags.
-
-We use nop10 and following transformation to optimized instructions
-above and back as suggested by Peterz [2].
-
-Optimize path (int3_update_optimize):
-
-  1) Initial state after set_swbp() installed the uprobe:
-      cc 2e 0f 1f 84 00 00 00 00 00
-
-     From offset 0 this is INT3 followed by the tail of the original
-     10-byte NOP.
-
-     After a previous unoptimization bytes 5..9 may still contain the
-     old call instruction, which remains valid for threads already there.
-
-  2) Rewrite the LEA tail and call displacement:
-      cc [8d 64 24 80 e8 d0 d1 d2 d3]
-
-     From offset 0 this traps on the uprobe INT3.  Bytes 1..9 are not
-     executable entry points while byte 0 is trapped.
-
-  3) Publish the first LEA byte:
-      [48] 8d 64 24 80 e8 d0 d1 d2 d3
-
-     From offset 0 this is:
-        lea -0x80(%rsp), %rsp
-        call <uprobe-trampoline>
-
-Unoptimize path (int3_update_unoptimize):
-
-  1) Initial optimized state:
-      48 8d 64 24 80 e8 d0 d1 d2 d3
-     Same as 3) above.
-
-  2) Trap new entries before restoring the NOP bytes:
-      [cc] 8d 64 24 80 e8 d0 d1 d2 d3
-
-     From offset 0 this traps. A thread that had already executed the
-     LEA can still reach the intact CALL at offset 5.
-
-  3) Restore bytes 1..4 of the original NOP while keeping byte 0 trapped
-     and byte 5 as CALL.
-      cc [2e 0f 1f 84] e8 d0 d1 d2 d3
-
-     From offset 0 this still traps. Offset 5 is still the CALL for any
-     thread that was already past the first LEA byte.
-
-  4) Publish the first byte of the original NOP:
-      [66] 2e 0f 1f 84 e8 d0 d1 d2 d3
-
-     From offset 0 this is the restored 10-byte NOP; the CALL opcode and
-     displacement are now only NOP operands.  Offset 5 still decodes as
-     CALL for a thread that was already there.
-
-     Tthere is only a single target uprobe-trampoline for the given nop10
-     instruction address, so the CALL instruction will not be changed across
-     unoptimization/optimization cycles.
-     Therefore, any task that is preempted at the CALL instruction is guaranteed
-     to observe that CALL and not anything else.
-
-Note as explained in [2] we need to use following nop10:
-       PF1   PF2   ESC   NOPL  MOD   SIB   DISP32
-NOP10: 0x66, 0x2e, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00 -- cs nopw 0x00000000(%rax,%rax,1)
-
-which means we need to allow 0x2e prefix which maps to INAT_PFX_CS
-attribute in is_prefix_bad function.
-
-Also changing the uprobe syscall error when called out of uprobe
-trampoline to -EPROTO, so we are able to detect the fixed kernel.
-
-The optimized uprobe performance stays the same:
-
-        uprobe-nop     :    3.129 ± 0.013M/s
-        uprobe-push    :    3.045 ± 0.006M/s
-        uprobe-ret     :    1.095 ± 0.004M/s
-  -->   uprobe-nop10   :    7.170 ± 0.020M/s
-        uretprobe-nop  :    2.143 ± 0.021M/s
-        uretprobe-push :    2.090 ± 0.000M/s
-        uretprobe-ret  :    0.942 ± 0.000M/s
-  -->   uretprobe-nop10:    3.381 ± 0.003M/s
-        usdt-nop       :    3.245 ± 0.004M/s
-  -->   usdt-nop10     :    7.256 ± 0.023M/s
-
-[1] https://lore.kernel.org/bpf/20260509003146.976844-1-andrii@kernel.org/
-[2] https://lore.kernel.org/bpf/20260518104306.GU3102624@noisy.programming.kicks-ass.net/#t
-
-Closes: https://lore.kernel.org/bpf/20260509003146.976844-1-andrii@kernel.org/
-Fixes: ba2bfc97b462 ("uprobes/x86: Add support to optimize uprobes")
-Reported-by: Andrii Nakryiko <andrii@kernel.org>
-Assisted-by: Codex:GPT-5.5
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260703114917.238144-6-jolsa@kernel.org
+Fixes: b8cf8fda522d ("fanotify: add watchdog for permission events")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260703031345.9354-1-xuanqiang.luo@linux.dev
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/uprobes.c | 292 ++++++++++++++++++++++++++++----------
- 1 file changed, 216 insertions(+), 76 deletions(-)
+ fs/notify/fanotify/fanotify.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index ba7ca62f96059..65a2de82ecd29 100644
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -276,15 +276,9 @@ static bool is_prefix_bad(struct insn *insn)
- 	return false;
- }
- 
--static int uprobe_init_insn(struct arch_uprobe *auprobe, struct insn *insn, bool x86_64)
-+static int uprobe_init_insn(struct arch_uprobe *auprobe, struct insn *insn)
- {
--	enum insn_mode m = x86_64 ? INSN_MODE_64 : INSN_MODE_32;
- 	u32 volatile *good_insns;
--	int ret;
--
--	ret = insn_decode(insn, auprobe->insn, sizeof(auprobe->insn), m);
--	if (ret < 0)
--		return -ENOEXEC;
- 
- 	if (is_prefix_bad(insn))
- 		return -ENOTSUPP;
-@@ -293,7 +287,7 @@ static int uprobe_init_insn(struct arch_uprobe *auprobe, struct insn *insn, bool
- 	if (insn_masking_exception(insn))
- 		return -ENOTSUPP;
- 
--	if (x86_64)
-+	if (insn->x86_64)
- 		good_insns = good_insns_64;
- 	else
- 		good_insns = good_insns_32;
-@@ -631,9 +625,29 @@ static struct vm_special_mapping tramp_mapping = {
- 	.pages  = tramp_mapping_pages,
- };
- 
-+
-+#define LEA_INSN_SIZE		5
-+#define OPT_INSN_SIZE		(LEA_INSN_SIZE + CALL_INSN_SIZE)
-+#define REDZONE_SIZE		0x80
-+
-+static const u8 lea_rsp[] = { 0x48, 0x8d, 0x64, 0x24, 0x80 };
-+
-+static bool is_opt_insns(const uprobe_opcode_t *insn)
-+{
-+	return !memcmp(insn, lea_rsp, LEA_INSN_SIZE) &&
-+	       insn[LEA_INSN_SIZE] == CALL_INSN_OPCODE;
-+}
-+
-+static bool is_swbp_opt_insns(uprobe_opcode_t *insn)
-+{
-+	return is_swbp_insn(&insn[0]) &&
-+	       !memcmp(&insn[1], &lea_rsp[1], LEA_INSN_SIZE - 1) &&
-+	       insn[LEA_INSN_SIZE] == CALL_INSN_OPCODE;
-+}
-+
- static bool is_reachable_by_call(unsigned long vtramp, unsigned long vaddr)
- {
--	long delta = (long)(vaddr + 5 - vtramp);
-+	long delta = (long)(vaddr + OPT_INSN_SIZE - vtramp);
- 
- 	return delta >= INT_MIN && delta <= INT_MAX;
- }
-@@ -646,7 +660,7 @@ static unsigned long find_nearest_trampoline(unsigned long vaddr)
- 	};
- 	unsigned long low_limit, high_limit;
- 	unsigned long low_tramp, high_tramp;
--	unsigned long call_end = vaddr + 5;
-+	unsigned long call_end = vaddr + OPT_INSN_SIZE;
- 
- 	if (check_add_overflow(call_end, INT_MIN, &low_limit))
- 		low_limit = PAGE_SIZE;
-@@ -754,7 +768,7 @@ SYSCALL_DEFINE0(uprobe)
- 
- 	/* Allow execution only from uprobe trampolines. */
- 	if (!in_uprobe_trampoline(regs->ip))
--		return -ENXIO;
-+		return -EPROTO;
- 
- 	err = copy_from_user(&args, (void __user *)regs->sp, sizeof(args));
- 	if (err)
-@@ -770,8 +784,8 @@ SYSCALL_DEFINE0(uprobe)
- 	regs->ax  = args.ax;
- 	regs->r11 = args.r11;
- 	regs->cx  = args.cx;
--	regs->ip  = args.retaddr - 5;
--	regs->sp += sizeof(args);
-+	regs->ip  = args.retaddr - OPT_INSN_SIZE;
-+	regs->sp += sizeof(args) + REDZONE_SIZE;
- 	regs->orig_ax = -1;
- 
- 	sp = regs->sp;
-@@ -788,12 +802,12 @@ SYSCALL_DEFINE0(uprobe)
- 	 */
- 	if (regs->sp != sp) {
- 		/* skip the trampoline call */
--		if (args.retaddr - 5 == regs->ip)
--			regs->ip += 5;
-+		if (args.retaddr - OPT_INSN_SIZE == regs->ip)
-+			regs->ip += OPT_INSN_SIZE;
- 		return regs->ax;
- 	}
- 
--	regs->sp -= sizeof(args);
-+	regs->sp -= sizeof(args) + REDZONE_SIZE;
- 
- 	/* for the case uprobe_consumer has changed ax/r11/cx */
- 	args.ax  = regs->ax;
-@@ -801,7 +815,7 @@ SYSCALL_DEFINE0(uprobe)
- 	args.cx  = regs->cx;
- 
- 	/* keep return address unless we are instructed otherwise */
--	if (args.retaddr - 5 != regs->ip)
-+	if (args.retaddr - OPT_INSN_SIZE != regs->ip)
- 		args.retaddr = regs->ip;
- 
- 	if (shstk_push(args.retaddr) == -EFAULT)
-@@ -835,7 +849,7 @@ asm (
- 	"pop %rax\n"
- 	"pop %r11\n"
- 	"pop %rcx\n"
--	"ret\n"
-+	"ret $" __stringify(REDZONE_SIZE) "\n"
- 	"int3\n"
- 	".balign " __stringify(PAGE_SIZE) "\n"
- 	".popsection\n"
-@@ -853,7 +867,8 @@ late_initcall(arch_uprobes_init);
- 
- enum {
- 	EXPECT_SWBP,
--	EXPECT_CALL,
-+	EXPECT_OPTIMIZED,
-+	EXPECT_SWBP_OPTIMIZED,
- };
- 
- struct write_opcode_ctx {
-@@ -861,30 +876,29 @@ struct write_opcode_ctx {
- 	int expect;
- };
- 
--static int is_call_insn(uprobe_opcode_t *insn)
--{
--	return *insn == CALL_INSN_OPCODE;
--}
--
- /*
-- * Verification callback used by int3_update uprobe_write calls to make sure
-- * the underlying instruction is as expected - either int3 or call.
-+ * Verification callback used by uprobe_write calls to make sure the underlying
-+ * instruction is in the expected stage of the INT3 update sequence.
-  */
- static int verify_insn(struct page *page, unsigned long vaddr, uprobe_opcode_t *new_opcode,
- 		       int nbytes, void *data)
- {
- 	struct write_opcode_ctx *ctx = data;
--	uprobe_opcode_t old_opcode[5];
-+	uprobe_opcode_t old_opcode[OPT_INSN_SIZE];
- 
--	uprobe_copy_from_page(page, ctx->base, (uprobe_opcode_t *) &old_opcode, 5);
-+	uprobe_copy_from_page(page, ctx->base, old_opcode, OPT_INSN_SIZE);
- 
- 	switch (ctx->expect) {
- 	case EXPECT_SWBP:
- 		if (is_swbp_insn(&old_opcode[0]))
- 			return 1;
- 		break;
--	case EXPECT_CALL:
--		if (is_call_insn(&old_opcode[0]))
-+	case EXPECT_OPTIMIZED:
-+		if (is_opt_insns(&old_opcode[0]))
-+			return 1;
-+		break;
-+	case EXPECT_SWBP_OPTIMIZED:
-+		if (is_swbp_opt_insns(&old_opcode[0]))
- 			return 1;
- 		break;
- 	}
-@@ -893,48 +907,122 @@ static int verify_insn(struct page *page, unsigned long vaddr, uprobe_opcode_t *
- }
- 
- /*
-- * Modify multi-byte instructions by using INT3 breakpoints on SMP.
-+ * Modify the optimized instruction by using INT3 breakpoints on SMP.
-  * We completely avoid using stop_machine() here, and achieve the
-  * synchronization using INT3 breakpoints and SMP cross-calls.
-  * (borrowed comment from smp_text_poke_batch_finish)
-  *
-- * The way it is done:
-- *   - Add an INT3 trap to the address that will be patched
-- *   - SMP sync all CPUs
-- *   - Update all but the first byte of the patched range
-- *   - SMP sync all CPUs
-- *   - Replace the first byte (INT3) by the first byte of the replacing opcode
-- *   - SMP sync all CPUs
-+ * For optimization (int3_update_optimize):
-+ *   1) Start with the uprobe INT3 trap already installed
-+ *   2) Update everything but the first byte
-+ *   3) Replace the first INT3 by the first byte of the LEA instruction
-+ *
-+ * For unoptimization (int3_update_unoptimize):
-+ *   1) Start with the optimized uprobe lea/call instructions
-+ *   2) Add an INT3 trap to the address that will be patched
-+ *   3) Restore the NOP bytes before the call opcode
-+ *   4) Replace the first INT3 by the first byte of the NOP instruction
-+ *
-+ * Note that unoptimization deliberately keeps the call opcode and displacement
-+ * in bytes 5..9. Those bytes become operands of the restored 10-byte NOP.
-+ *
-+ * Since there is only a single target uprobe-trampoline for the given nop10
-+ * instruction address, the CALL instruction will not be changed across
-+ * unoptimization/optimization cycles.
-+ * Therefore, any task that is preempted at the CALL instruction is guaranteed
-+ * to observe that CALL and not anything else.
-  */
--static int int3_update(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
--		       unsigned long vaddr, char *insn, bool optimize)
-+static int int3_update_optimize(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
-+				unsigned long vaddr, uprobe_opcode_t *insn)
- {
--	uprobe_opcode_t int3 = UPROBE_SWBP_INSN;
- 	struct write_opcode_ctx ctx = {
- 		.base = vaddr,
- 	};
- 	int err;
- 
- 	/*
--	 * Write int3 trap.
-+	 * 1) Initial state after set_swbp() installed the uprobe:
-+	 *    cc 2e 0f 1f 84 00 00 00 00 00
- 	 *
--	 * The swbp_optimize path comes with breakpoint already installed,
--	 * so we can skip this step for optimize == true.
-+	 *    After a previous unoptimization bytes 5..9 may still contain the
-+	 *    old call instruction, which remains valid for threads already there.
- 	 */
--	if (!optimize) {
--		ctx.expect = EXPECT_CALL;
--		err = uprobe_write(auprobe, vma, vaddr, &int3, 1, verify_insn,
--				   true /* is_register */, false /* do_update_ref_ctr */,
--				   &ctx);
--		if (err)
--			return err;
--	}
-+	smp_text_poke_sync_each_cpu();
-+
-+	/*
-+	 * 2) Rewrite the LEA tail and call displacement:
-+	 *    cc [8d 64 24 80 e8 d0 d1 d2 d3]
-+	 */
-+	ctx.expect = EXPECT_SWBP;
-+	err = uprobe_write(auprobe, vma, vaddr + 1, insn + 1,
-+			   OPT_INSN_SIZE - 1, verify_insn,
-+			   true /* is_register */, false /* do_update_ref_ctr */,
-+			   &ctx);
-+	if (err)
-+		return err;
-+
-+	smp_text_poke_sync_each_cpu();
-+
-+	/*
-+	 * 3) Publish the first LEA byte:
-+	 *    [48] 8d 64 24 80 e8 d0 d1 d2 d3
-+	 *
-+	 *    From offset 0 this is:
-+	 *      lea -0x80(%rsp), %rsp
-+	 *      call <uprobe-trampoline>
-+	 */
-+	ctx.expect = EXPECT_SWBP_OPTIMIZED;
-+	err = uprobe_write(auprobe, vma, vaddr, insn, 1, verify_insn,
-+			   true /* is_register */, false /* do_update_ref_ctr */,
-+			   &ctx);
-+	if (err)
-+		goto error;
- 
- 	smp_text_poke_sync_each_cpu();
-+	return 0;
- 
--	/* Write all but the first byte of the patched range. */
-+error:
-+	/*
-+	 * In all intermediate states byte 0 is INT3, so EXPECT_SWBP covers every
-+	 * case. Restore NOP bytes 1..4, but keep the valid CALL at bytes 5..9
-+	 * for a thread that had already executed the LEA before a previous
-+	 * unoptimization.
-+	 */
- 	ctx.expect = EXPECT_SWBP;
--	err = uprobe_write(auprobe, vma, vaddr + 1, insn + 1, 4, verify_insn,
-+	uprobe_write(auprobe, vma, vaddr + 1, auprobe->insn + 1,
-+		     LEA_INSN_SIZE - 1, verify_insn, true, false, &ctx);
-+	smp_text_poke_sync_each_cpu();
-+	return err;
-+}
-+
-+static int int3_update_unoptimize(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
-+				  unsigned long vaddr, uprobe_opcode_t *insn)
-+{
-+	uprobe_opcode_t int3 = UPROBE_SWBP_INSN;
-+	struct write_opcode_ctx ctx = {
-+		.base = vaddr,
-+		.expect = EXPECT_OPTIMIZED,
-+	};
-+	int err;
-+
-+	/*
-+	 * Note the first two uprobe_write calls use is_register=true, because they
-+	 * are intermediate patching states while the probe is still active, so
-+	 * we force the exclusive anonymous page for the update.
-+	 * Also we use do_update_ref_ctr=false because refctr was already updated by
-+	 * the initial int3 install.
-+	 *
-+	 * The last uprobe_write to nop10 instruction is called with is_register=false
-+	 * and do_update_ref_ctr=true to trigger the refctr update and to instruct
-+	 * uprobe_write to zap the anonymous page if it now matches the file page.
-+	 *
-+	 * 1) Initial optimized state:
-+	 *    48 8d 64 24 80 e8 d0 d1 d2 d3
-+	 *
-+	 * 2) Trap new entries before restoring the NOP bytes:
-+	 *    [cc] 8d 64 24 80 e8 d0 d1 d2 d3
-+	 */
-+	err = uprobe_write(auprobe, vma, vaddr, &int3, 1, verify_insn,
- 			   true /* is_register */, false /* do_update_ref_ctr */,
- 			   &ctx);
- 	if (err)
-@@ -943,13 +1031,31 @@ static int int3_update(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- 	smp_text_poke_sync_each_cpu();
- 
- 	/*
--	 * Write first byte.
-+	 * 3) Restore bytes 1..4 of the original NOP while keeping byte 0 trapped
-+	 *    and byte 5 as CALL:
-+	 *    cc [2e 0f 1f 84] e8 d0 d1 d2 d3
-+	 */
-+	ctx.expect = EXPECT_SWBP_OPTIMIZED;
-+	err = uprobe_write(auprobe, vma, vaddr + 1, insn + 1,
-+			   LEA_INSN_SIZE - 1, verify_insn,
-+			   true /* is_register */, false /* do_update_ref_ctr */,
-+			   &ctx);
-+	if (err)
-+		return err;
-+
-+	smp_text_poke_sync_each_cpu();
-+
-+	/*
-+	 * 4) Publish the first byte of the original NOP:
-+	 *    [66] 2e 0f 1f 84 e8 d0 d1 d2 d3
- 	 *
--	 * The swbp_unoptimize needs to finish uprobe removal together
--	 * with ref_ctr update, using uprobe_write with proper flags.
-+	 * From offset 0 this is the restored 10-byte NOP; the CALL opcode and
-+	 * displacement are now only NOP operands.  Offset 5 still decodes as
-+	 * CALL for a thread that was already there.
- 	 */
-+	ctx.expect = EXPECT_SWBP;
- 	err = uprobe_write(auprobe, vma, vaddr, insn, 1, verify_insn,
--			   optimize /* is_register */, !optimize /* do_update_ref_ctr */,
-+			   false /* is_register */, true /* do_update_ref_ctr */,
- 			   &ctx);
- 	if (err)
- 		return err;
-@@ -961,17 +1067,25 @@ static int int3_update(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- static int swbp_optimize(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- 			 unsigned long vaddr, unsigned long tramp)
- {
--	u8 call[5];
-+	u8 insn[OPT_INSN_SIZE], *call = &insn[LEA_INSN_SIZE];
- 
--	__text_gen_insn(call, CALL_INSN_OPCODE, (const void *) vaddr,
-+	/*
-+	 * We have nop10 instruction (with first byte overwritten to int3),
-+	 * changing it to:
-+	 *   lea -0x80(%rsp), %rsp
-+	 *   call tramp
-+	 */
-+	memcpy(insn, lea_rsp, LEA_INSN_SIZE);
-+	__text_gen_insn(call, CALL_INSN_OPCODE,
-+			(const void *) (vaddr + LEA_INSN_SIZE),
- 			(const void *) tramp, CALL_INSN_SIZE);
--	return int3_update(auprobe, vma, vaddr, call, true /* optimize */);
-+	return int3_update_optimize(auprobe, vma, vaddr, insn);
- }
- 
- static int swbp_unoptimize(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
- 			   unsigned long vaddr)
- {
--	return int3_update(auprobe, vma, vaddr, auprobe->insn, false /* optimize */);
-+	return int3_update_unoptimize(auprobe, vma, vaddr, auprobe->insn);
- }
- 
- static int copy_from_vaddr(struct mm_struct *mm, unsigned long vaddr, void *dst, int len)
-@@ -993,19 +1107,19 @@ static bool __is_optimized(struct mm_struct *mm, uprobe_opcode_t *insn, unsigned
- 	struct __packed __arch_relative_insn {
- 		u8 op;
- 		s32 raddr;
--	} *call = (struct __arch_relative_insn *) insn;
-+	} *call = (struct __arch_relative_insn *)(insn + LEA_INSN_SIZE);
- 
--	if (!is_call_insn(insn))
-+	if (!is_opt_insns(insn))
- 		return false;
--	return __in_uprobe_trampoline(mm, vaddr + 5 + call->raddr);
-+	return __in_uprobe_trampoline(mm, vaddr + OPT_INSN_SIZE + call->raddr);
- }
- 
- static int is_optimized(struct mm_struct *mm, unsigned long vaddr)
- {
--	uprobe_opcode_t insn[5];
-+	uprobe_opcode_t insn[OPT_INSN_SIZE];
- 	int err;
- 
--	err = copy_from_vaddr(mm, vaddr, &insn, 5);
-+	err = copy_from_vaddr(mm, vaddr, &insn, OPT_INSN_SIZE);
- 	if (err)
- 		return err;
- 	return __is_optimized(mm, (uprobe_opcode_t *)&insn, vaddr);
-@@ -1077,7 +1191,7 @@ static int __arch_uprobe_optimize(struct arch_uprobe *auprobe, struct mm_struct
- void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr)
- {
- 	struct mm_struct *mm = current->mm;
--	uprobe_opcode_t insn[5];
-+	uprobe_opcode_t insn[OPT_INSN_SIZE];
- 
- 	if (!should_optimize(auprobe))
- 		return;
-@@ -1088,7 +1202,7 @@ void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr)
- 	 * Check if some other thread already optimized the uprobe for us,
- 	 * if it's the case just go away silently.
- 	 */
--	if (copy_from_vaddr(mm, vaddr, &insn, 5))
-+	if (copy_from_vaddr(mm, vaddr, &insn, OPT_INSN_SIZE))
- 		goto unlock;
- 	if (!is_swbp_insn((uprobe_opcode_t*) &insn))
- 		goto unlock;
-@@ -1104,16 +1218,32 @@ void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr)
- 	mmap_write_unlock(mm);
- }
- 
-+static bool is_optimizable_nop10(struct insn *insn)
-+{
-+	static const u8 nop10_prefix[] = {
-+		0x66, 0x2e, 0x0f, 0x1f, 0x84
-+	};
-+
-+	/*
-+	 * Restrict this to the 10-byte NOP form whose last 5 bytes are
-+	 * SIB/displacement operands. Unoptimization keeps the call opcode and
-+	 * displacement in those bytes, so other NOP encodings are not safe.
-+	 */
-+	return insn->length == OPT_INSN_SIZE &&
-+	       insn_is_nop(insn) &&
-+	       !memcmp(insn->kaddr, nop10_prefix, ARRAY_SIZE(nop10_prefix));
-+}
-+
- static bool can_optimize(struct insn *insn, unsigned long vaddr)
- {
--	if (!insn->x86_64 || insn->length != 5)
-+	if (!insn->x86_64)
- 		return false;
- 
--	if (!insn_is_nop(insn))
-+	if (!is_optimizable_nop10(insn))
- 		return false;
- 
- 	/* We can't do cross page atomic writes yet. */
--	return PAGE_SIZE - (vaddr & ~PAGE_MASK) >= 5;
-+	return PAGE_SIZE - (vaddr & ~PAGE_MASK) >= OPT_INSN_SIZE;
- }
- #else /* 32-bit: */
- /*
-@@ -1495,16 +1625,26 @@ static int push_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
-  */
- int arch_uprobe_analyze_insn(struct arch_uprobe *auprobe, struct mm_struct *mm, unsigned long addr)
- {
-+	enum insn_mode m = is_64bit_mm(mm) ? INSN_MODE_64 : INSN_MODE_32;
- 	u8 fix_ip_or_call = UPROBE_FIX_IP;
- 	struct insn insn;
- 	int ret;
- 
--	ret = uprobe_init_insn(auprobe, &insn, is_64bit_mm(mm));
--	if (ret)
--		return ret;
-+	ret = insn_decode(&insn, auprobe->insn, sizeof(auprobe->insn), m);
-+	if (ret < 0)
-+		return -ENOEXEC;
- 
--	if (can_optimize(&insn, addr))
-+	/*
-+	 * No need to check instruction in uprobe_init_insn in case we
-+	 * are on top of optimizable nop10.
-+	 */
-+	if (can_optimize(&insn, addr)) {
- 		set_bit(ARCH_UPROBE_FLAG_CAN_OPTIMIZE, &auprobe->flags);
-+	} else {
-+		ret = uprobe_init_insn(auprobe, &insn);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ret = branch_setup_xol_ops(auprobe, &insn);
- 	if (ret != -ENOSYS)
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index b05b6d3abb870..a208a7ec1692a 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -599,6 +599,7 @@ static struct fanotify_event *fanotify_alloc_perm_event(const void *data,
+ 	pevent->hdr.pad = 0;
+ 	pevent->hdr.len = 0;
+ 	pevent->state = FAN_EVENT_INIT;
++	pevent->watchdog_cnt = 0;
+ 	pevent->path = *path;
+ 	pevent->pos = range ? range->pos : FANOTIFY_NO_RANGE;
+ 	pevent->count = range ? range->count : 0;
 -- 
 2.53.0
 
