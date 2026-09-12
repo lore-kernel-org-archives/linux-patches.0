@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FE2278161;
-	Sat, 12 Sep 2026 15:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF4E33A9E2;
+	Sat, 12 Sep 2026 15:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226845; cv=none; b=j0JKmuEZF9wIZBfFYjVCxZtDF0Bh4U02MgKlix0e1HWbb+KHiX6dePSz6GjPR63FeX/5LWObuFGB90lIx+hA4gYW8EHVgtAMhgPjXJNdoqq1lYHKyUmgYsaN/7Nxudv/B8QYX/P29AwCtJtIdTL7tQhnSshwV5RHl7awhkLOM+g=
+	t=1789226850; cv=none; b=QBcBD0s9JwTQIS7Qka2M887qIDpJnvn/mDuiYhzQrOuTZr8lGNuvw6HA0QiJzgCheRf3yXp/5FEK7UXlS1nrC3Ddnd5gFLpjItRThU0IUniiF8Wc+m+G0//VUE9dEUA/cc9d66Ptj89gBSd0s/Ev0C4ej4+8joZZcJFnw0T1oAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226845; c=relaxed/simple;
-	bh=r80KIh1MG3eF3VXQKYgJEeiR6/Z8CwnB36kNCl9lWAk=;
+	s=arc-20240116; t=1789226850; c=relaxed/simple;
+	bh=NjCwr4sBFcmaUE/fvuzZh+319looUStTZlU63Ya2/1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSuJEMFDK21oOhWqrrUAUBbc3DHn1hOpUdzjigRGCQdUGbctYP69mrbnUWHldFLHWoHKhIO63c11mS4NoiWE9HbFzuWwXP5i0L9+OAqITIkBuBl2OICPe2RbodZ+XoBU5NTDaRYhkfe7gJDOuvUZN8R+52pkVkhw4lMWtnuvH4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=quIcLtQs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CpY1vfGjlkGkwI9xzTqAx+vbz0SzwlLtL7Up1WT+xOeffZRjAeYqexmovuwJeOi7PKaX0lxrWnfY/vTVTCYZVtpaY8JfnnDvvOA6PM8J8nfBcl2T3w144Lkut0A5MpXoX68fKWXWilfTeJrRwyF1N0skkSuX5jNtD96i/Ns/bbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUJ2xeUC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="quIcLtQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEEA1F000FF;
-	Sat, 12 Sep 2026 15:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUJ2xeUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE091F000FF;
+	Sat, 12 Sep 2026 15:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226843;
-	bh=pqEfkQeY0mx52TUtdDZwiZKJBAI9ZmsGbAnCF4jz4lw=;
+	s=korg; t=1789226849;
+	bh=dO+ttp/VSaQiQ0o2rvtoCgXcAfSImK4C/UVjG44pTUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=quIcLtQsY4G1awxROVQlIabFv+l1fs7vM5lURo9p6w7VbNZ+R43Pn1jU9FZbcqMym
-	 lJDdUr0xwmggQHzZnecjfVsDIOoea63ntbb/7lY4JZqkIwcj93G2sxn4wXqYqLRD+Y
-	 pLujMlJic6oVRDOhmEtsAQK4qgGq+5F/sYI44pvE=
+	b=KUJ2xeUCy9v+b6P+nCWa1JqPHyCfF0G3Tl2CqSiioX25w1qBedazXg7+o1TUck1s9
+	 fn9XKwukvdvK3MZMCoBOjmeUsrTZIXV7EF5wKCS2XWIuQv0cosWiPxPCheJbubwGws
+	 jopbDsVaLBZCCXouiYinnkGG/KVO+YQKIhQxZxWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 0017/1191] tracing: Fix use-after-free with same-name named triggers
-Date: Sat, 12 Sep 2026 08:45:45 +0200
-Message-ID: <20260912065548.498569133@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.1 0018/1191] device property: fix infinite loop in fwnode_for_each_child_node()
+Date: Sat, 12 Sep 2026 08:45:46 +0200
+Message-ID: <20260912065548.520026892@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -44,90 +44,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit a7318172aa332a161fb9618286e64454c827f8fd upstream.
+commit 1900692555826753adab8799a1a8d50bb1ee200c upstream.
 
-When two hist triggers on different events are registered with the same
-name=, the second one reuses the first as named_data.  Both are added to
-tr->hist_vars by save_hist_vars() during event_hist_trigger_parse(),
-because save_hist_vars() is called before event_trigger_register() while
-the named reuse is only detected later, in hist_register_trigger().
+When iterate over children of a fwnode that has a secondary fwnode,
+fwnode_get_next_child_node() can enter an infinite loop if the secondary
+fwnode has more than one child.
 
-In the named-data branch hist_register_trigger() then frees the second
-histogram's hist_data via destroy_hist_data(), but never removes its
-tr->hist_vars list entry, leaving a dangling pointer and leaking the
-trace_array reference it holds.
+                       Parent        Child
+      (Primary fwnode)   FWa:   {FWa1, FWa2, FWa3}
+    (Secondary fwnode)   FWb:   {FWb1, FWb2}
 
-A later hist trigger that references a variable makes find_var_file()
-walk tr->hist_vars and dereference the freed hist_data.  The bug is
-reproducible from userspace by writing three hist triggers to tracefs:
+In this case:
 
-  cd /sys/kernel/tracing
-  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_switch/trigger
-  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_process_fork/trigger
-  echo 'hist:keys=common_pid:vals=$x' > events/sched/sched_process_exit/trigger
+ ┌─> fwnode_get_next_child_node(FWa, FWa1)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa1) returns FWa2
+ │
+ │   ...
+ │
+ │   fwnode_get_next_child_node(FWa, FWa3)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa3) returns NULL
+ │    - fwnode_call_ptr_op(FWb, get_next_child_node, FWa3) returns FWb1
+ │
+ │   fwnode_get_next_child_node(FWa, FWb1)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWb1) returns FWa1
+ └────┘
 
-The third write panics the kernel:
+This cause fwnode_for_each_child_node() to loop indefinitely, reapeatedly
+output {FWa1, FWa2, FWa3, FWb1, FWa1, ...}.
 
-  BUG: KASAN: slab-use-after-free in find_var_file.part.0+0x272/0x290
-  Read of size 8 at addr ffff888001f8a0e0 by task sh/1
-  CPU: 1 UID: 0 PID: 1 Comm: sh Tainted: G      D          N
-  Call Trace:
-    find_var_file.part.0
-    find_event_var
-    parse_atom
-    parse_expr
-    __create_val_field
-    event_hist_trigger_parse
-    trigger_process_regex
-    event_trigger_write
-    vfs_write
-    ksys_write
-    do_syscall_64
-    entry_SYSCALL_64_after_hwframe
-  Allocated by task 1:
-    event_hist_trigger_parse
-  Freed by task 1:
-    hist_register_trigger+0x618/0xa30
-    event_hist_trigger_parse
-  The buggy address belongs to freed 2048-byte region
-  Oops: general protection fault ... RIP: find_var_file.part.0
-  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+The root cause is that when the current child (FWb1) belongs to the
+secondary fwnode, calling get_next_child_node() on the parimary fwnode
+incorrectly returns the first child (FWa1) again instead of NULL.
 
-Fix by removing the hist_data from tr->hist_vars and releasing the
-trace_array reference in the named-data branch of hist_register_trigger()
-before freeing the hist_data.
+Fix this by dynamically checking the parent fwnode of the current child
+before calling get_next_child_node(). This approach follows the pattern
+established in commit b5b41ab6b0c1 ("device property: Check
+fwnode->secondary in fwnode_graph_get_next_endpoint()").
 
+Fixes: 2692c614f8f0 ("device property: Allow secondary lookup in fwnode_get_next_child_node()")
 Cc: stable@vger.kernel.org
-Fixes: 6f86bdeab633 ("tracing: Fix bad hist from corrupting named_triggers list")
-Link: https://patch.msgid.link/20260816100427.33642-3-sh_def@163.com
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260611203537.1786399-2-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/base/property.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6281,8 +6281,10 @@ static int hist_register_trigger(char *g
- 		tracing_set_filter_buffering(file->tr, true);
- 	}
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -749,18 +749,31 @@ struct fwnode_handle *
+ fwnode_get_next_child_node(const struct fwnode_handle *fwnode,
+ 			   struct fwnode_handle *child)
+ {
++	const struct fwnode_handle *parent;
++	struct fwnode_handle *child_parent __free(fwnode_handle) = NULL;
+ 	struct fwnode_handle *next;
  
--	if (named_data)
-+	if (named_data) {
-+		remove_hist_vars(hist_data);
- 		destroy_hist_data(hist_data);
+-	if (IS_ERR_OR_NULL(fwnode))
++	/*
++	 * If this function is in a loop and the previous iteration returned
++	 * an child from fwnode->secondary, then we need to use the secondary
++	 * as parent rather than @fwnode.
++	 */
++	if (child) {
++		child_parent = fwnode_get_parent(child);
++		parent = child_parent;
++	} else {
++		parent = fwnode;
 +	}
-  out:
- 	return ret;
++	if (IS_ERR_OR_NULL(parent))
+ 		return NULL;
+ 
+ 	/* Try to find a child in primary fwnode */
+-	next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
++	next = fwnode_call_ptr_op(parent, get_next_child_node, child);
+ 	if (next)
+ 		return next;
+ 
+ 	/* When no more children in primary, continue with secondary */
+-	return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
++	return fwnode_get_next_child_node(parent->secondary, NULL);
  }
+ EXPORT_SYMBOL_GPL(fwnode_get_next_child_node);
+ 
 
 
