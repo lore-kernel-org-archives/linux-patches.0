@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A44632A3DA;
-	Sat, 12 Sep 2026 14:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5C730BF69;
+	Sat, 12 Sep 2026 14:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223196; cv=none; b=jmtvtOMzDpNIKc/Fa54OS8CIrV7hYqJrNl7O/7FoCiFswGD+1nGTVzRdTbLJcwAzaljfUJ4KU7MEg8tR6mWiVcFNaEYBGwuoCjpPQAGePLRFawpJOFDHfYMAz1/fMLcoYXbUxELB0BYsUQJ+u/+kWLPl2HQ0cJ28LKAZtyK1NzA=
+	t=1789223200; cv=none; b=E1zjYRHr0pOccrwOgSUNjnvl15Ve5mrnpOgLb82FIPQERA9/VN33wWE71xrFvvoHnXDqx+WIXYnre2+CmyZmTdRNXRJEW2HtfZ/XRq3Bhez6Y+y68OQzm5OnGokT+ANq3pcjSmF0mjpIZmUjklvORC/C93Zyyhg03MZFbWN6QUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223196; c=relaxed/simple;
-	bh=29LpUu4Fj+XL12Kwe+fWCbqrMl/hBc/PdN5ziiIA3OY=;
+	s=arc-20240116; t=1789223200; c=relaxed/simple;
+	bh=SAIxcc3ASBA1yUfYU/Qudf9nsLhQGUQjAGQBuYf2HaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3+yOzZ9YJkCHWjxGxdPdmh0cRvk6Trn/MLB8q5vGojs0b7hSnmJMwS8gOatsJS2n+60BIic2Z2/4F0giqvQr+iDdY0yXYWR32v1nHRkjC9pvmbEsi9xUYEY8en5hWbcwChcCJr/h0OoIOr7LF4VNZFRiRTYKa5M68hP3PwBXEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMEcHx46; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IYIhNv+G5COfUgy6D2LcwXmr3Js4mSBWBIjsQ5KR3AAzUaLC/dbKI8ny5t6uZe3mAb3mcVCcqk05RCn5+189UGFmk27KaCSzf12d69KrRvKJ/vkAIk55oWN1Qlm2/5Z43YiDYRRzmqoH0YG5/gQoVDQAfvnUOaYpMJIRLr183iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4umA9qU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMEcHx46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A441F000FF;
-	Sat, 12 Sep 2026 14:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4umA9qU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57311F000FF;
+	Sat, 12 Sep 2026 14:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223195;
-	bh=QNFTnRl7B1HDFjSfIh6Z/3B1pXdGxXxvWPNasKa8IOQ=;
+	s=korg; t=1789223199;
+	bh=pujY//9BAfJugr6g4tQP/pFuY5+tLP9XxM796D4sjBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IMEcHx46hcDMphRqwMtukEpZiRd2TMXx/Bfjy9HPpLLQt+pgQbN4+RdPHMUuDByVw
-	 roWfO0U84XOhXvULgJRxUKYkviHysTT6oLOtqjtv+NnWN5WKJrW80JrHpgec1Z+4Qe
-	 Tti2waSI+UHxv1KrI4IhNmVUxluSr6N2fKai+p4M=
+	b=f4umA9qU+TZGc3LAgnYoBKDuGC2+YnSOLDi5KPAvhYR7f/l2vHRMZ9r2A2DSzHB22
+	 nYh7owkgSDr90JD5CQ5whvRDrATmMu3/spJ1zzGFzcGga9lsjPtJGsZM7/UJ1vfvk0
+	 oGjSslnS7p48+LZN+PQWumUtKGxt2HUdfROdWINQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Robert Richter <rrichter@amd.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0740/1424] cxl/mbox: Break poison list loop on an empty payload
-Date: Sat, 12 Sep 2026 08:52:52 +0200
-Message-ID: <20260912065623.868415929@linuxfoundation.org>
+Subject: [PATCH 6.6 0741/1424] cxl/pci: Store the endpoints Component Register mappings in struct cxl_dev_state
+Date: Sat, 12 Sep 2026 08:52:53 +0200
+Message-ID: <20260912065623.890692276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,48 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Robert Richter <rrichter@amd.com>
 
-[ Upstream commit 8b301c4afbce4bc3f94528441d8d5ce1366504ad ]
+[ Upstream commit 2dd18279202f6247904e6e23738c1ec6a86b24b1 ]
 
-A device that returns count == 0 with CXL_POISON_FLAG_MORE set on every
-iteration never advances nr_records, so the max_errors guard never
-trips and the do/while loops forever while holding poison.mutex. That
-hangs the sysfs-triggered scan thread and blocks all subsequent poison
-operations on the device. The existing "Protect against an uncleared
-_FLAG_MORE" guard was intended to bound a misbehaving device but does
-not cover the count == 0 case.
+Same as for ports and dports, also store the endpoint's Component
+Register mappings, use struct cxl_dev_state for that.
 
-Stop the loop on an empty payload so a malfunctioning or malicious
-device cannot wedge the poison scan.
+Keep the Component Register base address @component_reg_phys a bit to
+not break functionality. It will be removed after the transition in a
+later patch.
 
-Link: https://sashiko.dev/#/patchset/20260702090849.47501-1-icheng@nvidia.com?part=3
-Fixes: ed83f7ca398b ("cxl/mbox: Add GET_POISON_LIST mailbox command")
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260709155714.1893280-1-dave.jiang@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Terry Bowman <terry.bowman@amd.com>
+Signed-off-by: Robert Richter <rrichter@amd.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20231018171713.1883517-7-rrichter@amd.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 430c502c80e5 ("cxl/pci: Honor -EPROBE_DEFER from component register setup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/mbox.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/cxl/core/mbox.c | 2 ++
+ drivers/cxl/cxlmem.h    | 2 ++
+ drivers/cxl/pci.c       | 9 +++++----
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index fecaa18f4dd20..d98cb4ddca55d 100644
+index d98cb4ddca55d..059e95e086205 100644
 --- a/drivers/cxl/core/mbox.c
 +++ b/drivers/cxl/core/mbox.c
-@@ -1333,6 +1333,11 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
- 		if (rc)
- 			break;
+@@ -1404,6 +1404,8 @@ struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
+ 	mutex_init(&mds->mbox_mutex);
+ 	mutex_init(&mds->event.log_lock);
+ 	mds->cxlds.dev = dev;
++	mds->cxlds.reg_map.host = dev;
++	mds->cxlds.reg_map.resource = CXL_RESOURCE_NONE;
+ 	mds->cxlds.type = CXL_DEVTYPE_CLASSMEM;
  
-+		if (!le16_to_cpu(po->count)) {
-+			dev_dbg(&cxlmd->dev, "Poison empty payload!\n");
-+			break;
-+		}
-+
- 		for (int i = 0; i < le16_to_cpu(po->count); i++)
- 			trace_cxl_poison(cxlmd, cxlr, &po->record[i],
- 					 po->flags, po->overflow_ts,
+ 	return mds;
+diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+index edb46123e3eb0..36c90eafc5fb1 100644
+--- a/drivers/cxl/cxlmem.h
++++ b/drivers/cxl/cxlmem.h
+@@ -400,6 +400,7 @@ enum cxl_devtype {
+  *
+  * @dev: The device associated with this CXL state
+  * @cxlmd: The device representing the CXL.mem capabilities of @dev
++ * @reg_map: component and ras register mapping parameters
+  * @regs: Parsed register blocks
+  * @cxl_dvsec: Offset to the PCIe device DVSEC
+  * @rcd: operating in RCD mode (CXL 3.0 9.11.8 CXL Devices Attached to an RCH)
+@@ -414,6 +415,7 @@ enum cxl_devtype {
+ struct cxl_dev_state {
+ 	struct device *dev;
+ 	struct cxl_memdev *cxlmd;
++	struct cxl_register_map reg_map;
+ 	struct cxl_regs regs;
+ 	int cxl_dvsec;
+ 	bool rcd;
+diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
+index aacd93f9067da..6a6ab285034b9 100644
+--- a/drivers/cxl/pci.c
++++ b/drivers/cxl/pci.c
+@@ -825,15 +825,16 @@ static int cxl_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	 * still be useful for management functions so don't return an error.
+ 	 */
+ 	cxlds->component_reg_phys = CXL_RESOURCE_NONE;
+-	rc = cxl_pci_setup_regs(pdev, CXL_REGLOC_RBI_COMPONENT, &map);
++	rc = cxl_pci_setup_regs(pdev, CXL_REGLOC_RBI_COMPONENT,
++				&cxlds->reg_map);
+ 	if (rc)
+ 		dev_warn(&pdev->dev, "No component registers (%d)\n", rc);
+-	else if (!map.component_map.ras.valid)
++	else if (!cxlds->reg_map.component_map.ras.valid)
+ 		dev_dbg(&pdev->dev, "RAS registers not found\n");
+ 
+-	cxlds->component_reg_phys = map.resource;
++	cxlds->component_reg_phys = cxlds->reg_map.resource;
+ 
+-	rc = cxl_map_component_regs(&map, &cxlds->regs.component,
++	rc = cxl_map_component_regs(&cxlds->reg_map, &cxlds->regs.component,
+ 				    BIT(CXL_CM_CAP_CAP_ID_RAS));
+ 	if (rc)
+ 		dev_dbg(&pdev->dev, "Failed to map RAS capability.\n");
 -- 
 2.53.0
 
