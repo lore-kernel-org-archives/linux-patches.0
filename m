@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308FC2F0673;
-	Sat, 12 Sep 2026 19:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFC9371D1E;
+	Sat, 12 Sep 2026 19:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242309; cv=none; b=T8o/p1ObRx7q9wWo5ZL+5bK8VKeTaEvP7YHn/MyJzyUk67S+fFbYWf+HeL5DU5jTyE1HDF2CXT7k6MC04vy59yxwbM4WHYY+QQ2GkUs9MO5PKOSSC9DgnK5X6g7g7zm1rAt59vpxkZCIyT2MsxF+1N4afuyS80PRt2Ckz5jvILY=
+	t=1789242312; cv=none; b=fX51ZjvGDbPISSpi6GTUQkDe2BK1v7pUVMtT31jeS9miOobS91goZNiK7tTQwMnmbJNap43HkNfkjW2LPZNK8cv4m98oaoz/GsIvO45YuOl4hneOjvqQa0wHWXOyrZrmWJWL6t+TDsR0BELJiFFTKZfgdTDFMN+Kn0dSmpeZCqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242309; c=relaxed/simple;
-	bh=K9E5J8WHE4WNvnZ7Ygc13cAiGPXZyB2VNZv9WY+OUec=;
+	s=arc-20240116; t=1789242312; c=relaxed/simple;
+	bh=Bc5wSw+MepKHW2tAXSsVKFNvOQ4URIMjZgtxbj2F1lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqS3IzZtOsAcsNTZ3a409G1jL20ot3ujzJAQxi6d+srkFopVllj49FCXmhVVyWwrkKaKT22pC7KqPR1yFGvk7oWEkY/uF+CMNbAwjYn5tMWgeb4PbTUo9yvybW2rhh+LHClgzx0HggQ+XFhTe+q3zEfNT2ivhod6cAbCOdP0s3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOCtPOgH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mb9g7YA6Qz7XA/4y7f/jd6NMgzY8BvYhBADHfG5BEA7F/6Iz3gwmPDuofvPACs4yMBigg15Szc07AvtntG6IBm9LDigZJqSC9NZH4jIewp8Zi+0OqZBS2AmCleE6RaLzTTgS27wNu73swylCN/kl08AdVx0cQVEtLHN2hWfrfCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6Wcao/o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOCtPOgH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934CA1F000FF;
-	Sat, 12 Sep 2026 19:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6Wcao/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0261F000FF;
+	Sat, 12 Sep 2026 19:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242308;
-	bh=KOAbwG3B6JussVjxhEB40zulv6xiFT/k2uuCfmwgcok=;
+	s=korg; t=1789242311;
+	bh=N53+9eB1jZA9F/ZRyMmNikOIbF2jzMVsMERjNrlIH/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EOCtPOgH17nxzOUWe/dk9tBaoWzf8N0zsk6LPDFR/QdTrxr/8IbSKO6Y6RBvI867m
-	 qFOjgU7dY5Yjpn2OqsoAo+f1HAiTnL9kzt+f8HMXKbMX/GpQ8Z+WMxaP8rdexzJDvt
-	 e4sUIf3NX2+4lZ9E7/C3RY0e+bP9B8FchEJ+cKBE=
+	b=u6Wcao/orxfpRj47lPKPHyg2XcouOwK2LM3yBjmdQipcyFcZhIeFXxN5U+VmJvq0Q
+	 +5FOTq8GO31D/zmPDxOrJaTpyXaB46ghdzL4T3pH9eLxOeztxva2MVnItJK500sZbV
+	 C2leUXr1yQ58HsczTRSjgtCiqgSykbSKVak5vWLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Srinivas Neeli <srinivas.neeli@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 359/798] dmaengine: xilinx_dma: Fix channel idle state management in AXIDMA and MCDMA interrupt handlers
-Date: Sat, 12 Sep 2026 08:59:47 +0200
-Message-ID: <20260912065525.389391573@linuxfoundation.org>
+Subject: [PATCH 5.10 360/798] dmaengine: hisilicon: Return -ENOMEM on dynamic memory allocation in probe
+Date: Sat, 12 Sep 2026 08:59:48 +0200
+Message-ID: <20260912065525.411884305@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -54,71 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Vladimir Zapolskiy <vz@kernel.org>
 
-[ Upstream commit 0b6d055edb55ecadadf54e930c2b4fab76fa9a5a ]
+[ Upstream commit cbabdd6ce1b313b5877c7fbb2f5e2f7936564d2f ]
 
-Fix a race condition in AXIDMA and MCDMA irq handlers where the channel
-could be incorrectly marked as idle and attempt spurious transfers when
-descriptors are still being processed.
+Out of memory situation on driver's probe is expected to be reported to
+the driver's framework with a proper -ENOMEM error code.
 
-The issue occurs when:
-1. Multiple descriptors are queued and active.
-2. An interrupt fires after completing some descriptors.
-3. xilinx_dma_complete_descriptor() moves completed descriptors to
-done_list.
-4. Channel is marked idle and start_transfer() is called even though
-   active_list still contains unprocessed descriptors.
-5. This leads to premature transfer attempts and potential descriptor
-   corruption or missed completions.
-
-Only mark the channel as idle and start new transfers when the active list
-is actually empty, ensuring proper channel state management and avoiding
-spurious transfer attempts.
-
-Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct Memory Access Engine")
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Co-developed-by: Srinivas Neeli <srinivas.neeli@amd.com>
-Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260626092656.1563871-2-suraj.gupta2@amd.com
+Fixes: e9f08b65250d ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
+Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260630144214.4080302-1-vz@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/dma/hisi_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index ff7fda42b5ca2..44d897f2b0f0b 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -1823,8 +1823,10 @@ static irqreturn_t xilinx_mcdma_irq_handler(int irq, void *data)
- 	if (status & XILINX_MCDMA_IRQ_IOC_MASK) {
- 		spin_lock(&chan->lock);
- 		xilinx_dma_complete_descriptor(chan);
--		chan->idle = true;
--		chan->start_transfer(chan);
-+		if (list_empty(&chan->active_list)) {
-+			chan->idle = true;
-+			chan->start_transfer(chan);
-+		}
- 		spin_unlock(&chan->lock);
- 	}
+diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
+index 8f16513673100..4c82a94fa7aa4 100644
+--- a/drivers/dma/hisi_dma.c
++++ b/drivers/dma/hisi_dma.c
+@@ -535,7 +535,7 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
  
-@@ -1880,8 +1882,10 @@ static irqreturn_t xilinx_dma_irq_handler(int irq, void *data)
- 		      XILINX_DMA_DMASR_DLY_CNT_IRQ)) {
- 		spin_lock(&chan->lock);
- 		xilinx_dma_complete_descriptor(chan);
--		chan->idle = true;
--		chan->start_transfer(chan);
-+		if (list_empty(&chan->active_list)) {
-+			chan->idle = true;
-+			chan->start_transfer(chan);
-+		}
- 		spin_unlock(&chan->lock);
- 	}
+ 	hdma_dev = devm_kzalloc(dev, struct_size(hdma_dev, chan, HISI_DMA_CHAN_NUM), GFP_KERNEL);
+ 	if (!hdma_dev)
+-		return -EINVAL;
++		return -ENOMEM;
  
+ 	hdma_dev->base = pcim_iomap_table(pdev)[PCI_BAR_2];
+ 	hdma_dev->pdev = pdev;
 -- 
 2.53.0
 
