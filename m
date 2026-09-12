@@ -1,89 +1,109 @@
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC9C32D7C7
-	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 19:28:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FAF381AF1;
+	Sat, 12 Sep 2026 19:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241307; cv=none; b=oHEIPTB0dIPeoNGdyvfN/gb6dijK7/W8g+FBwNhBdKindhFeGMv9+43e/jXFKoU2anGX1Wz5J5ynsKHxpvyXDjLqy8NXkm/UPjTk3f+j4is0icstJYnfXWYoHcLIuY/8h5w/t+XwkeiD8kgCbT9Eje18yd/qgSRCKc5TER/Ct1U=
+	t=1789241309; cv=none; b=Zp2lkLSOT27Ywz01D1FfFp/WQppgh/B6jUpdaFeMri+vL1zjYqfQpSGVsEyNDj1pJsTu0gMI2DRf43jzJyMfnMJ083hOwxbnPwam1qeHfY0FVomuxrnJpCM+8AfYC9Fi27WTmaDBK4IOyWhUhgJnUfshp/ZDp6/h7IeB5/zXaJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241307; c=relaxed/simple;
-	bh=KJFi4oJU9yUXpnVSIOw0LyTxY9gpp0T7eB6UGdEUWyc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZvOl3itoBqIjSMORNEfBFOSbgn5ySMJfI3AoQX6ZVBnSyCtNYzuCrj7KSUEcyv7ESeMtweUUx4FoO3xjQI2PNxB9lxGZ7AkEADy3iqquwDB/Ug9AD78BpPVd6nz0rl3uGew+HbQ4DHjGwUdXdJKB6kt4+yoI80GyAxgn8+jGomk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=MHBZ59YC; arc=none smtp.client-ip=178.251.229.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	s=arc-20240116; t=1789241309; c=relaxed/simple;
+	bh=vi6WeGOwQ7AKsK7uJfTFL51cN4QrjkneAslvq0y9W44=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EJZlG5gAqnRQE0YRFJ5cObeKX7BKFuE8Eyreo6ZCi/xHX2GSnh9D3vs5p61s6tWzhxNRke25+ws84dIbHm23LEe5HjNR6TBX5YxMMfcQkZAigHBwCUjnLMVt/AAoVMHy9Ux8ncKX8uZ5GopqT1aD8iN8fnhJ3yZxeTSOBuJW53w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LV7PXJRB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="MHBZ59YC"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 81FC41034BF;
-	Sat, 12 Sep 2026 21:28:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1789241299;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=y7BOmcPqzwgHNB8tpsuWUR+UQP9k6ozYzdCsqHi/B/w=;
-	b=MHBZ59YCyzMkhyIW/16hAXXXmRkRnwsaY87sFH24wKhGqtduMrpei94/uvvXwdO37HolwP
-	ecH1OIPwsX6f5B8MUrV76RBFXjNtZhlm0XBMWmdDndFyHrv9Zjg7qxg2QQn7P9WLEpAVQ1
-	SsWpup/WFDh3ZOCnNUJufAIiwI+RuLAn8Sa4cNbHDa+g4hgXHlNsZevDlHh7gwfdXN+Plg
-	VAXEp/taH7ThSUV5t0bDmC992o3H2asBGVd5PoT01W7aN9v+gdfYe1NAXcXEtQ1GILHwLD
-	57qa0aSxqbnsgevkLewkLc2tk0t8jhdDIFpSZ59Lcrms/3dVcdFXCtXa6ll2UQ==
-Date: Sat, 12 Sep 2026 21:28:14 +0200
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.12 0000/1376] 6.12.110-rc1 review
-Message-ID: <aqWnzsSIMkyM46NV@duo.ucw.cz>
-References: <20260912065607.535295758@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LV7PXJRB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF8C1F00898;
+	Sat, 12 Sep 2026 19:28:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1789241307;
+	bh=E0QeU85SYgprVVwa3GIZZ9JwWkjVQnLj5BrFJFYOlHc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=LV7PXJRBpH9NpeibGjsDnsPk2Glfm7WHpgLnNk5rFKQUV3Ugrl8lWKxC2PHOHVt4w
+	 tgxHJox8C3DYhL9xfMct3toc0y6yt2PYF056uWqAR54yYGDaQBoXBz8eGGAcCAhc7s
+	 0C3KfRI4BsI943G7r9vyEEUGNVjWEgrXln/3eWEE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 102/798] SUNRPC: Reject krb5 v2 wrap tokens with oversized ec field
+Date: Sat, 12 Sep 2026 08:55:30 +0200
+Message-ID: <20260912065519.294116168@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
+References: <20260912065516.948645775@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2nd+0nHZsekXluLM"
-Content-Disposition: inline
-In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+
+5.10-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Chuck Lever <chuck.lever@oracle.com>
+
+commit ad484748eec0a66eac0f13ab53b3fbedb7333c91 upstream.
+
+gss_krb5_unwrap_v2() sets buf->len to a logical
+length, which can be much smaller than head[0].iov_len
+(the allocated receive-page capacity).  It then calls
+xdr_buf_trim() with a trim length derived from the 16-bit
+"extra count" (ec) field in the Kerberos v2 token header.
+
+The ec field is authenticated by the post-decrypt memcmp()
+against the encrypted header copy, so a randomly-mutated
+value is rejected.  However, any peer holding a valid GSS
+context can legitimately encrypt a token whose ec exceeds
+the plaintext length.  Per RFC 4121, such a token is
+structurally malformed.
+
+Although xdr_buf_trim() now clamps the buf->len subtraction
+to avoid unsigned underflow, the buffer is still left in a
+semantically invalid state (zero length, inconsistent iov
+lengths) when ec is oversized.
+
+Reject these tokens before calling xdr_buf_trim(), giving
+callers a well-defined GSS_S_DEFECTIVE_TOKEN error and
+keeping the xdr_buf internally consistent.  The wrapped blob
+begins at a nonzero offset -- both callers pass len as
+offset + opaque_len -- so buf->len still counts the offset
+bytes that precede the blob.  Compare the trim length
+against the remaining wrapped segment, buf->len - offset,
+rather than the whole buffer; comparing against buf->len
+alone leaves an offset-wide window in which an oversized ec
+passes the test and xdr_buf_trim() cuts into the bytes ahead
+of the blob.
+
+Fixes: cf4c024b9083 ("sunrpc: trim off EC bytes in GSSAPI v2 unwrap")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260528-tier2-v1-1-d026a1415e0b@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/sunrpc/auth_gss/gss_krb5_wrap.c |    2 ++
+ 1 file changed, 2 insertions(+)
+
+--- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
++++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
+@@ -557,6 +557,8 @@ gss_unwrap_kerberos_v2(struct krb5_ctx *
+ 	buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
+ 
+ 	/* Trim off the trailing "extra count" and checksum blob */
++	if (ec + GSS_KRB5_TOK_HDR_LEN + tailskip > buf->len - offset)
++		return GSS_S_DEFECTIVE_TOKEN;
+ 	xdr_buf_trim(buf, ec + GSS_KRB5_TOK_HDR_LEN + tailskip);
+ 
+ 	*align = XDR_QUADLEN(GSS_KRB5_TOK_HDR_LEN + headskip);
 
 
---2nd+0nHZsekXluLM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hi!
-
-> This is the start of the stable review cycle for the 6.12.110 release.
-> There are 1376 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-We get build errors in -cip testing:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/2842911949
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/16461797877
-
-drivers/soc/ti/knav_qmss_queue.c: In function 'knav_queue_probe':
-drivers/soc/ti/knav_qmss_queue.c:1874:9: error: 'knav_qdev' undeclared (first use in this function); did you mean 'knav_queue'?
-
-Best regards,
-										Pavel
-
---2nd+0nHZsekXluLM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaqWnzgAKCRAw5/Bqldv6
-8nUMAJ4me87pI5wWPjglhm7/+0F1SGbZsACfdUjR+j+Zdy1TMs/BtA31wuXoCBU=
-=H7ZQ
------END PGP SIGNATURE-----
-
---2nd+0nHZsekXluLM--
