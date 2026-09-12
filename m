@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21010322749;
-	Sat, 12 Sep 2026 13:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225A32C15A9;
+	Sat, 12 Sep 2026 13:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220851; cv=none; b=htZAUJSgv2yUdA+Fvl61OHjaXp4j+WEPcePOBBrjiUBvwnmXQ9z2pbA15b+NVPbS0Omq93fJa/hYBfInqYuot4Cf4lPITdzKnmbh7wnn1uGXqlRkgwSxtwPgN2+TeZhL6eXIN3tuYhdndKUrWOt0FWR1rBsuj8KAGJNNAZo9+U0=
+	t=1789220857; cv=none; b=oJZAOT+fUKIqMxDNH539mLxQfq0RPP9tdSMLGIyL3GtzWffhQrGk7Vdj5orx1YuNzhx3Z9ANfLeFNv5WhyDzitaf+6BQGdywisPvumaaHAr7SjskHzqxEMl0Y2sGoAFReZ2MW03j59M5JLW/MXCJxarBR72XiqYhK7zEeU1Zkdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220851; c=relaxed/simple;
-	bh=GON0NlaoJSc3Tr/DeS3wegtNl5ZwOxh3Sgn3obMcXew=;
+	s=arc-20240116; t=1789220857; c=relaxed/simple;
+	bh=WubfD7KpLvoY0uLemgAFAao9SbZ93yk0d7UUSRxUt6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+Rkxlul9EUEXocHcVqUc04w638884m8Zs3VXLP/ogaRxWvuliH5PSEnbqA+n9glP1bUSwsecmTuGKrVXfrKemL1oqbZzvAqT3jnEaTAamC5o+BGfNYNKLcUdCjwb/DOboxsvkiVa2EsNXTlZuaZxIJerYQRhggm4jyI5ONsCaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAtlQ2Uh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p4Io+L0anYtG39X0afpOliJebzmyhNwy/MDoeXLGbdRpJap2dr66Q/EPZyMJu6x7KGAHpedpQ8XgUmPCETEjlwFx6Q2k8BR0ldn/E4/digeyJ1ZWNbAF/gKtjBqJUsNHGtEvH5YsLSggTAAMqol13kCPL6N7oRsDN188M1tkrJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBmqCm0H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAtlQ2Uh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAA31F000FF;
-	Sat, 12 Sep 2026 13:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBmqCm0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A276F1F000FF;
+	Sat, 12 Sep 2026 13:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220850;
-	bh=LVOXoud3VaBIz1GtTXRabb7QYauMydPx0nt7uSby2NU=;
+	s=korg; t=1789220854;
+	bh=78E9B6OtBwK8QokPYxwz9yzYyqapz/Ggy0PvSADOrqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CAtlQ2UhDKgoP8AwMovgIKLtU89DAdMYcqS/rqyXyoLSyApWOnhj2xK0MUrUM8RVg
-	 o8sVVezPGDLMGiF0N1+wmHpSpgQ6At9YZq6Ysonye+Myba8QoL/5aQC9mmuCyqMU+1
-	 xrznIKxMCf37Seczv1RrpigEN+04fdAKh4jMnwHY=
+	b=CBmqCm0HISjJy/UK4E9/u7tJQMbUHy3t3VtBoWeHHUg5uF0HR+UIB0lUEIXc4kHOS
+	 T/um2hSYfDyqxi51c0Ia7zN2w6+HtFrgWxkW3JWGAXqLWiXBsnVxZtTREIWPz93TjF
+	 nXS+JKWMMrF6Pc4pepYbGJnn9rhbPszSlwBrod/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Koichiro Den <den@valinux.co.jp>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0263/1424] NTB: ntb_transport: Recycle TX entries before client callbacks
-Date: Sat, 12 Sep 2026 08:44:55 +0200
-Message-ID: <20260912065613.168467445@linuxfoundation.org>
+Subject: [PATCH 6.6 0264/1424] NTB: ntb_transport: Fail TX enqueue when the QP link is down
+Date: Sat, 12 Sep 2026 08:44:56 +0200
+Message-ID: <20260912065613.189978353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,69 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Koichiro Den <den@valinux.co.jp>
 
-commit 256496397287334a19ed80ec7be92bffcae76b9d upstream.
+commit 873ce713fef5dde0939220f04f3484ec86a16fba upstream.
 
-ntb_tx_copy_callback() invokes the client callback before returning the
-entry to tx_free_q. The callback may wake a stopped client queue, only
-for the next enqueue to find no local entry and return -EBUSY. The window
-is narrow, but the retry is unnecessary.
+Commit f195a1a6fe41 ("ntb: Drop packets when qp link is down") meant to
+make ntb_transport_tx_enqueue() drop packets submitted while the QP link
+is down, but it only returns 0 without consuming the packet. Zero means
+success by this function's contract, so ntb_netdev reports NETDEV_TX_OK
+and forgets the skb: nothing queued it, nothing frees it, and it leaks,
+one skb for every transmit racing a link-down.
 
-Save the callback data and length, then return the entry to tx_free_q
-before invoking the client. A completion callback then means both the
-client buffer and transport entry are ready for reuse.
+Return -ENOLINK instead, restoring the contract that a non-zero return
+leaves the buffer owned by the caller. With the preceding patch,
+ntb_netdev frees the skb on non-retryable enqueue failures and returns
+NETDEV_TX_OK, so a packet racing with link-down is dropped without leaking
+or entering a busy retry loop.
 
-Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
+Fixes: f195a1a6fe41 ("ntb: Drop packets when qp link is down")
 Cc: stable@vger.kernel.org
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260817053519.4135287-2-den@valinux.co.jp
+Link: https://patch.msgid.link/20260817053519.4135287-4-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/ntb_transport.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/ntb/ntb_transport.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/drivers/ntb/ntb_transport.c
 +++ b/drivers/ntb/ntb_transport.c
-@@ -1745,9 +1745,16 @@ static void ntb_transport_rxc_db(unsigne
- static void ntb_tx_copy_callback(void *data,
- 				 const struct dmaengine_result *res)
- {
-+	struct ntb_payload_header __iomem *hdr;
- 	struct ntb_queue_entry *entry = data;
--	struct ntb_transport_qp *qp = entry->qp;
--	struct ntb_payload_header __iomem *hdr = entry->tx_hdr;
-+	struct ntb_transport_qp *qp;
-+	unsigned int len;
-+	void *cb_data;
-+
-+	qp = entry->qp;
-+	hdr = entry->tx_hdr;
-+	cb_data = entry->cb_data;
-+	len = entry->len;
+@@ -2304,9 +2304,8 @@ int ntb_transport_tx_enqueue(struct ntb_
+ 	if (!qp || !len)
+ 		return -EINVAL;
  
- 	/* we need to check DMA results if we are using DMA */
- 	if (res) {
-@@ -1787,15 +1794,13 @@ static void ntb_tx_copy_callback(void *d
- 	 * "link down" or similar.  Since no payload is being sent in these
- 	 * cases, there is nothing to add to the completion queue.
- 	 */
--	if (entry->len > 0) {
--		qp->tx_bytes += entry->len;
--
--		if (qp->tx_handler)
--			qp->tx_handler(qp, qp->cb_data, entry->cb_data,
--				       entry->len);
--	}
-+	if (len > 0)
-+		qp->tx_bytes += len;
+-	/* If the qp link is down already, just ignore. */
+ 	if (!qp->link_is_up)
+-		return 0;
++		return -ENOLINK;
  
- 	ntb_list_add(&qp->ntb_tx_free_q_lock, &entry->entry, &qp->tx_free_q);
-+
-+	if (len > 0 && qp->tx_handler)
-+		qp->tx_handler(qp, qp->cb_data, cb_data, len);
- }
- 
- static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
+ 	entry = ntb_list_rm(&qp->ntb_tx_free_q_lock, &qp->tx_free_q);
+ 	if (!entry) {
 
 
