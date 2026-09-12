@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF11349CF3;
-	Sat, 12 Sep 2026 16:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F7647CA67;
+	Sat, 12 Sep 2026 16:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232173; cv=none; b=tuoXReOoDuMdoytU6CegntkK1RmubphVsZ7p2Rc3C866KYheBIuXG8l5yqK33G0MopqzHSXtP+6M/QZlOYSG29HvRLTKaFV6wuSPXhcix47LjROrsqsrQ6kCHQJYAqqBt/3D2kq6DDCJQ6+STEJUOH4gHljswAKA5QPrlU7Y87M=
+	t=1789232181; cv=none; b=CXllG8pbLKYkM5yxL1Axw25nO/uvPLMrdnlZgGqo/S7CHx2yvIQSyRi+YHYp+E1+ToP8Xi6LCJOVEvFihvHxdUJ5Flqafkfp+KjeBhbTe8Q1zlVsU4ddwh/xvq+KQy/ddLoAFZk3uZ4qfWtSUN/VD2nvfX0F1lg52PBgvYW+s9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232173; c=relaxed/simple;
-	bh=Jdso4LGJlw2TpiRS02fqAK4HdVpnzZOj4630b3quJhQ=;
+	s=arc-20240116; t=1789232181; c=relaxed/simple;
+	bh=qIPJ79hc8ynqHOI1qWfftPnIrTnTaAvU6rL4eDYpzG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVtIhS5XmNja4M9+GwXPftEpyHvd2946IhFWzpqG6g/p6bhIYWS9DqG1440CgZSnqcwPqhscYElo5cIaj9JAQyCK69F4RuWZcvDcT2ojVndsuNp4qcXiGqSvX9i+mf6eHbJ3b6LlHOgvtF7tsVZLuWhTfXSUDR4JntL9hTDM5L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyjVXRBO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SgrGTsxqR7u8cgflVFZEaimAWKEsI1kTTrI3c0/Ittq26KxqwEDu1Xscvn4QGpfCIrPOTAlZi8ZIjSGWEC6MPShevNbT3985EyQ494c4iRGLwu02vufEGP6dl7uW57JpmzirLAqRDHJffVtmR4+AkNtE7F9vMD/Ds0Hq+J4W/kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afFc1v0o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyjVXRBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F45B1F000FF;
-	Sat, 12 Sep 2026 16:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afFc1v0o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161C21F000FF;
+	Sat, 12 Sep 2026 16:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232172;
-	bh=Q3QE/wQc0P2E14aCyWaodC6soGo3k07t7WLIsxOkTpc=;
+	s=korg; t=1789232177;
+	bh=RowXWHui8n9LXF4sqoGeUkwgophtxdKg1Q1EIW/Holk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zyjVXRBOyR0xqnRENhC81Ud0DQbCEi10vq5J5dMojtPzqZTSsnWghnYkpeBQH2iAd
-	 wRX+76+EACLz4EWHixj7tVInYo38uWnTJH8l46hHlbyajNKFNEkLCBUpNVRhhl9HyE
-	 VfipvyYkbZtdODToSVCOyoA8qQ49Y+QtuS1knFXU=
+	b=afFc1v0oiCPhb5JzrAQXG6f1qVOEw8gbX5B4yhb7oGFwJssrcx3fXcFMtyRGz2r/x
+	 5QYrPM6qkMpePM6J81LgqfcA9D48GpALmZvy8cBgYToL8Iwnad4S8MhqYxVItYArKo
+	 Ie2oxU1Ygh4qXl9Lvwxl7EiL7Lm0l7qLjSNvSng8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hao Chang <ot_chhao.chang@mediatek.com>,
 	Qingliang Li <qingliang.li@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1146/1191] pinctrl: mediatek: eint: Drop base from mtk_eint_chip_write_mask()
-Date: Sat, 12 Sep 2026 09:04:34 +0200
-Message-ID: <20260912065613.887498253@linuxfoundation.org>
+Subject: [PATCH 6.1 1147/1191] pinctrl: mediatek: Fix new design debounce issue
+Date: Sat, 12 Sep 2026 09:04:35 +0200
+Message-ID: <20260912065613.910460960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,66 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Hao Chang <ot_chhao.chang@mediatek.com>
 
-[ Upstream commit 3ca99eed042620d12315e9272ed3ef260ca29877 ]
+[ Upstream commit 34024cf69c51b11c2b608f5d578626b9b1c484f5 ]
 
-When support for multiple EINT base addresses was added in commit
-3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple
-addresses"), mtk_eint_chip_write_mask() was changed to write interrupt
-masks for all base addresses in one call. However the "base" parameter
-was left around and now causes sparse warnings:
-
-    mtk-eint.c:428:44: warning: incorrect type in argument 2 (different address spaces)
-    mtk-eint.c:428:44:    expected void [noderef] __iomem *base
-    mtk-eint.c:428:44:    got void [noderef] __iomem **base
-    mtk-eint.c:436:44: warning: incorrect type in argument 2 (different address spaces)
-    mtk-eint.c:436:44:    expected void [noderef] __iomem *base
-    mtk-eint.c:436:44:    got void [noderef] __iomem **base
-
-Since the "base" parameter is no longer needed, just drop it.
+Calculate the true offset of eint according to index.
 
 Fixes: 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple addresses")
-Cc: Hao Chang <ot_chhao.chang@mediatek.com>
-Cc: Qingliang Li <qingliang.li@mediatek.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Hao Chang <ot_chhao.chang@mediatek.com>
+Signed-off-by: Qingliang Li <qingliang.li@mediatek.com>
+Link: https://lore.kernel.org/20250422075216.14073-1-ot_chhao.chang@mediatek.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/mtk-eint.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pinctrl/mediatek/mtk-eint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
-index 6787596167b92..85a4f2d3701f5 100644
+index 85a4f2d3701f5..4c4ee1d3a3a92 100644
 --- a/drivers/pinctrl/mediatek/mtk-eint.c
 +++ b/drivers/pinctrl/mediatek/mtk-eint.c
-@@ -243,7 +243,7 @@ static int mtk_eint_irq_set_wake(struct irq_data *d, unsigned int on)
- }
+@@ -450,7 +450,7 @@ int mtk_eint_set_debounce(struct mtk_eint *eint, unsigned long eint_num,
+ 		return -EOPNOTSUPP;
  
- static void mtk_eint_chip_write_mask(const struct mtk_eint *eint,
--				     void __iomem *base, unsigned int **buf)
-+				     unsigned int **buf)
- {
- 	int inst, port, port_num;
- 	void __iomem *reg;
-@@ -422,7 +422,7 @@ static void mtk_eint_irq_handler(struct irq_desc *desc)
+ 	virq = irq_find_mapping(eint->domain, eint_num);
+-	eint_offset = (eint_num % 4) * 8;
++	eint_offset = (idx % 4) * 8;
+ 	d = irq_get_irq_data(virq);
  
- int mtk_eint_do_suspend(struct mtk_eint *eint)
- {
--	mtk_eint_chip_write_mask(eint, eint->base, eint->wake_mask);
-+	mtk_eint_chip_write_mask(eint, eint->wake_mask);
- 
- 	return 0;
- }
-@@ -430,7 +430,7 @@ EXPORT_SYMBOL_GPL(mtk_eint_do_suspend);
- 
- int mtk_eint_do_resume(struct mtk_eint *eint)
- {
--	mtk_eint_chip_write_mask(eint, eint->base, eint->cur_mask);
-+	mtk_eint_chip_write_mask(eint, eint->cur_mask);
- 
- 	return 0;
- }
+ 	set_offset = (idx / 4) * 4 + eint->regs->dbnc_set;
 -- 
 2.53.0
 
