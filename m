@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1590032D7F8;
-	Sat, 12 Sep 2026 14:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4997730DED1;
+	Sat, 12 Sep 2026 14:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221627; cv=none; b=BVtQweQC+o7DuEJ46LIvIEaUfS+J7rY2xDxG1o5DCKfgA9kk64gwGgyCeIxKfNsVQ+4ROC/PhSd44Bmq3nx4KrGUcGJMPZBPmIJgZ/79el+07OcU3guIi2tbGxsuMknOXWoR6rucnbuhplU+b6NWTuYkDFu3iYr8hKN/Z6Pj+M4=
+	t=1789221630; cv=none; b=GesBCjgUqBzdS8c+5Xz4CX+s+Azp6E7NwTAPB3lYXh/c7qMZH3LXX0PGUSIW2rU+tWx7s2Han+uLTLpedN0WGLcOHj4tKbFP7dWeO5E0xORj9jErD318KFms5niWVYJms9ZTvMKGmYxQjcLA6y33KOi4JbjA3TYfJNycc19KMZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221627; c=relaxed/simple;
-	bh=ZB4qwuiCTgCTdYhPcPE1cKwBdSk06e6jJrhHgBYBHUo=;
+	s=arc-20240116; t=1789221630; c=relaxed/simple;
+	bh=m7w3FIDfPdFlSXj8A9OyNtW9E1R1zNZBlixgPIAS/3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnsKi3hI8ySIiskpipG/TnYb5fbl4Y8QnIkiRc2qRS0twmklFhI6FLVoYBYXiAr0xB02bwmxSCRHiCVwyxjZmNGFQl8qmokWgA1lCGEh/HSDkjnjWnjk6e0in5k6KLZEF7Q7KwDvNH8Jq94vxrYYEM8a7u1o7vRhuRbL8VkZYnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Axzwocva; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gU5UOLk6cOjJhFuQQhrcPsXbT8SEIfo6EHkFafwcnAsHAODUg4eA7m4/Is5umBqZghpmjqgAEvxFpBEUIisfJBO7jKDtuZYr+JGKU7ZLx/h00ChhQ34mIB7glL+y2c+2bP9/CLc3vucMoffJe+aa78z35xMw8sj7/yozqtEP7Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCzlyA1H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Axzwocva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8ED41F000FF;
-	Sat, 12 Sep 2026 14:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCzlyA1H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679951F000FF;
+	Sat, 12 Sep 2026 14:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221624;
-	bh=/g9dD5dy39PE+JQrp+uKWlK6pD6RWuRPuh4mpUYs4po=;
+	s=korg; t=1789221629;
+	bh=u94DRgLaAz5O8C6KwpJBBOHqsbpkYN3z1LdsqS+dkyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Axzwocva5iGf14CBbf59dYwMee1Fjq+yz8OliO+tLiZZclvBbLhoLGY16sfaiQr8i
-	 v+CYiEFfqRcoa5iJlDuhT0WY4wyB2A2lzz0Fu4OYgy7lb2FWJ6duu3zKvncm1l6PVS
-	 JbFounv8hS/x8BkZtT7telZ7JrNZSEocHMErM+70=
+	b=PCzlyA1HwSI1yrRuU/D5UfA+O20O1ctfaXws2aawyJi8c3p30zStOawmFa54M08my
+	 CufuPvQ9ebHEcEDw7cXNtTjajxxF8Mh5cTESaD2gVsTwpX2O1SXABvx8xmV/Xf06ig
+	 LcIjxfClEiQk6O/2YPmSY975RpkxCGnAMDzK+mBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rupesh Majhi <zoone.rupert@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0420/1424] iio: pressure: dps310: fix NULL pointer dereference on ACPI probe
-Date: Sat, 12 Sep 2026 08:47:32 +0200
-Message-ID: <20260912065616.688308505@linuxfoundation.org>
+	jonathan.cameron@oss.qualcomm.com,
+	Can Peng <pengcan@kylinos.cn>
+Subject: [PATCH 6.6 0421/1424] iio: pressure: mpl115: Fix runtime PM cleanup
+Date: Sat, 12 Sep 2026 08:47:33 +0200
+Message-ID: <20260912065616.710701527@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,46 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rupesh Majhi <zoone.rupert@gmail.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-commit 26e9213898fc949923188ef0aeea31fc87708836 upstream.
+commit 0b5e142ced4bcf20532da051934bd694d1bbd470 upstream.
 
-When the device is enumerated through its ACPI HID (IFX3100),
-i2c_client_get_device_id() returns NULL: the ACPI-derived client name
-does not match the driver's i2c_device_id table. dps310_probe() then
-dereferences that NULL pointer in "iio->name = id->name" and crashes the
-kernel during probe.
+mpl115_probe() enables runtime PM when a shutdown GPIO is present and
+then returns the result of devm_iio_device_register(). If registration
+fails, runtime PM remains enabled and autosuspend remains selected.
 
-The IIO device name is always "dps310", so set it directly and drop the
-now-unused device-id lookup.
+The same unmanaged runtime PM state is also left behind on driver
+unbind, as the IIO device registration is managed but the runtime PM
+setup is not.
 
-Fixes: 72ff282819d0 ("iio: pressure: dps310: Add ACPI HID table")
+Use devm_pm_runtime_enable() so runtime PM is disabled automatically on
+probe failure and driver unbind, and check pm_runtime_set_active() so
+setup errors are reported.
+
+Set the autosuspend parameters before enabling runtime PM. Once probe
+has completed, the driver core queues an idle request for the device, so
+an explicit pm_runtime_get_noresume()/pm_runtime_put() pair is not
+needed to start autosuspend.
+
+Fixes: 0c3a333524a3 ("iio: pressure: mpl115: Implementing low power mode by shutdown gpio")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
+Suggested-by: jonathan.cameron@oss.qualcomm.com
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/dps310.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/pressure/mpl115.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/pressure/dps310.c
-+++ b/drivers/iio/pressure/dps310.c
-@@ -830,7 +830,6 @@ static const struct iio_info dps310_info
+--- a/drivers/iio/pressure/mpl115.c
++++ b/drivers/iio/pressure/mpl115.c
+@@ -205,9 +205,9 @@ int mpl115_probe(struct device *dev, con
  
- static int dps310_probe(struct i2c_client *client)
- {
--	const struct i2c_device_id *id = i2c_client_get_device_id(client);
- 	struct dps310_data *data;
- 	struct iio_dev *iio;
- 	int rc;
-@@ -843,7 +842,7 @@ static int dps310_probe(struct i2c_clien
- 	data->client = client;
- 	mutex_init(&data->lock);
+ 	if (data->shutdown) {
+ 		/* Enable runtime PM */
+-		pm_runtime_get_noresume(dev);
+-		pm_runtime_set_active(dev);
+-		pm_runtime_enable(dev);
++		ret = pm_runtime_set_active(dev);
++		if (ret)
++			return ret;
  
--	iio->name = id->name;
-+	iio->name = DPS310_DEV_NAME;
- 	iio->channels = dps310_channels;
- 	iio->num_channels = ARRAY_SIZE(dps310_channels);
- 	iio->info = &dps310_info;
+ 		/*
+ 		 * As the device takes 3 ms to come up with a fresh
+@@ -217,7 +217,10 @@ int mpl115_probe(struct device *dev, con
+ 		 */
+ 		pm_runtime_set_autosuspend_delay(dev, 2000);
+ 		pm_runtime_use_autosuspend(dev);
+-		pm_runtime_put(dev);
++
++		ret = devm_pm_runtime_enable(dev);
++		if (ret)
++			return ret;
+ 
+ 		dev_dbg(dev, "low-power mode enabled");
+ 	} else
 
 
