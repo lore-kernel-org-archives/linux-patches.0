@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870AC32D43C;
-	Sat, 12 Sep 2026 18:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EA73AFB1A;
+	Sat, 12 Sep 2026 18:21:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237274; cv=none; b=gKyg9fEx9gOSQdI5UFEpHkbTUF52GQz3UIt3p5VqQNMWGATasPhsVr+reKv/jp4O1TIMXk+msgBT8aL83eVC9ZzW+HarSKqoQVtnCdOozqawls2kROuGm+LWjucxv6ibRsOJDu7NxW79l4PFMxmSxzfvq4GyH3d5Ry9qxiqz+Nw=
+	t=1789237279; cv=none; b=k72ol94pP2ZwG3TgOaJkzeo7lQxQD4uxiBiK/t0wPsIcIztXBCc3vApCBV4b66aTqFR5PRDTuX7sv//Ww1r8r28jRrpARHH6lro53Y0nUMfbGkF6wt5P23TQFtYTWkcKfGEQP3JdPjL9rHf7tUD0udLi2b8bRgCOs4l6CtLAyC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237274; c=relaxed/simple;
-	bh=vTPbkcGgBLTbnSwiQYjymEfbzG0FKCc3kSaULkKwOB4=;
+	s=arc-20240116; t=1789237279; c=relaxed/simple;
+	bh=GIpuYGdnL1+kXZ/XeKuOhkSQq3kLe1VZdKgOFWUwwsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hfo+T9CBE8eX0T/v6JUL+/Yhx3PWcUjWp26QEPHDj0w3YFGDMQ065bzyy8+bYQT0CUOLuy/2CXRxRy/mu6prD+xQe5cOUz7cpsaokBj5NyoI+7VOtYDQ4EbLeDQQUBAsgARg4LtHtC/Zz/R30QTUC8Cdz9AHEJKQrQMVmR4Lrdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLfpbaBm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O52IWxnL813h97LpBdOteNkb5IXXfVHxmCdR+sX7xhpQ8M/zYRvRDcNE/cT6aHhMGXMkeHYeKIePDinRIwdJhoWVowJjWojjGjXcejKcZUFrEy0SdBoWXJe2GPX1FxqbgeRkD88u+S1iNMRiWdN7hBD0Dbg+UBQsdlDSnsmcmgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q85wyKyO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLfpbaBm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEE01F000FF;
-	Sat, 12 Sep 2026 18:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q85wyKyO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450941F000FF;
+	Sat, 12 Sep 2026 18:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237273;
-	bh=oH5CgAPzeST8Fjebf4sExlakokR7hBGVH5L90lzoZDg=;
+	s=korg; t=1789237278;
+	bh=J13Q1gFl3oNrPe/RZm89AumRWQ74GY4j346CAt6ixPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TLfpbaBmY1KULR/7yGtLDMCUThn2SwZOjQyQxwTSKu8P2fzOp5i/mKHmpaEHFitq8
-	 N9lyFFlQbR1evCUF1kGSXGdGhxLKdGPWMn4zpgn9FXxL8VNDQ1dtlEk4PZW6ISq9I0
-	 GvsJy16e6Ys8HZcZiOaRxobIOlkZFxm8xeJQo2R0=
+	b=Q85wyKyOviYkZfrfBy1jsYqf8iBshpzBlERnDsRfBjOLgjgcUtkeZWUdiZ8ctSJql
+	 HBAXCWwYYLPXpKAzus1FdElKnaATQllfZK34OPHxE5elrP67/bh6uJLRnTMzQC8QRP
+	 8HMGlkpmD/J8rBuG4q5NAdZ2n9HdCeMnxJL7MjIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 226/935] selinux: reject an unclaimed class value in security_get_classes()
-Date: Sat, 12 Sep 2026 08:54:16 +0200
-Message-ID: <20260912065532.008302337@linuxfoundation.org>
+Subject: [PATCH 5.15 227/935] ALSA: seq: Fix port lock leak in deliver_to_subscribers()
+Date: Sat, 12 Sep 2026 08:54:17 +0200
+Message-ID: <20260912065532.032170071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,80 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 22b05fec62c0fe9864cfceb52f7d0f3a34d9b1dd upstream.
+Commit 46397622a3fa ("ALSA: seq: Add UMP support") mistakenly removed
+the `snd_seq_port_unlock(src_port)` call in deliver_to_subscribers().
+As a result, every time an event is delivered to a subscriber, the
+source port's `use_lock` atomic counter is increased but never
+decreased.
 
-security_get_classes() sizes an array by p_classes.nprim and fills it at
-value - 1, so a class value the policy never defines leaves a NULL.
-sel_make_classes() passes every entry to sel_make_dir(), reaching the same
-d_alloc_name() dereference as the permission array. The class symbol table
-is allowed to be sparse (policydb_class_isvalid() exists to absorb that),
-but this getter builds its own array straight from the hash table and has
-no such predicate.
+The leak prevents ALSA sequencer ports from closing cleanly.  When the
+client process exits or destroys the port, port_delete() hangs forever
+at snd_use_lock_sync().  The process becomes stuck in an unkillable D
+state, triggering the following warning:
 
-Fail the lookup when a value went unclaimed instead of handing out the
-NULL. Conforming policies define every class they declare and are
-unaffected.
+    ALSA: seq_lock: waiting [1 left] in sound/core/seq/seq_ports.c:250
 
-Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Restore the missing `snd_seq_port_unlock(src_port)`.
+
+Note that commit 177ccf811df4 ("ALSA: seq: Support MIDI 2.0 UMP Endpoint
+port") incidentally resolved this issue upstream when it refactored the
+locking logic into a wrapper function.  However, since the commit
+introduces a new feature and might not be suitable for stable release
+branches, this targeted fix is necessary.
+
+Fixes: 6389f2c13531 ("ALSA: seq: Add UMP support")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/ss/services.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ sound/core/seq/seq_clientmgr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/selinux/ss/services.c b/security/selinux/ss/services.c
-index 7593e5ce6daaf..0f9f1295ad8df 100644
---- a/security/selinux/ss/services.c
-+++ b/security/selinux/ss/services.c
-@@ -3411,6 +3411,7 @@ int security_get_classes(struct selinux_policy *policy,
- 			 char ***classes, u32 *nclasses)
- {
- 	struct policydb *policydb;
-+	u32 i;
- 	int rc;
- 
- 	policydb = &policy->policydb;
-@@ -3423,16 +3424,29 @@ int security_get_classes(struct selinux_policy *policy,
- 
- 	rc = hashtab_map(&policydb->p_classes.table, get_classes_callback,
- 			 *classes);
--	if (rc) {
--		u32 i;
-+	if (rc)
-+		goto err;
- 
--		for (i = 0; i < *nclasses; i++)
--			kfree((*classes)[i]);
--		kfree(*classes);
-+	/*
-+	 * The class symtab may be sparse, which policydb_class_isvalid() exists
-+	 * to absorb; the callback fills this array by value, so an unclaimed
-+	 * one leaves a NULL that sel_make_classes() hands to sel_make_dir().
-+	 */
-+	for (i = 0; i < *nclasses; i++) {
-+		if (!(*classes)[i]) {
-+			rc = -EINVAL;
-+			goto err;
-+		}
- 	}
- 
- out:
- 	return rc;
-+
-+err:
-+	for (i = 0; i < *nclasses; i++)
-+		kfree((*classes)[i]);
-+	kfree(*classes);
-+	return rc;
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index f2feeb97765c5..bd2d7a9fab5b8 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -733,6 +733,7 @@ static int deliver_to_subscribers(struct snd_seq_client *client,
+ 		read_unlock(&grp->list_lock);
+ 	else
+ 		up_read(&grp->list_mutex);
++	snd_seq_port_unlock(src_port);
+ 	memcpy(event, &event_saved, saved_size);
+ 	return (result < 0) ? result : num_ev;
  }
- 
- static int get_permissions_callback(void *k, void *d, void *args)
 -- 
 2.53.0
 
