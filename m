@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9D24BEE54;
-	Sat, 12 Sep 2026 09:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9571D37AA92;
+	Sat, 12 Sep 2026 09:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205258; cv=none; b=dJUowxXPrtL2UMh/LsFAwjMcOsMLOMMxLlZJsl2lmmrYD2IrRM1hVgTrseBIFfG4N3dSEGLSZkQ3p53b7GvR3b034Fa4lKy7vO7d4HfB4FR+tTvxfhZKDXNu8iUyaL878RInU4L1cLlHYRpNCvjJEyeEQEdA2PF608+9pivNZdA=
+	t=1789205264; cv=none; b=o48CzZBjqLH9Yh3p2jYCqRJ42g52tEHsmE3GzcwdCdJjiYmg5Q8/oRGyd9DfQP4s1PBXRPUX5M6SGbGgkttF4wJ5KJuJSdXaAXts919wE/yroSzswkMZD/IEurBXCTzGiFN+x50sn15I7xOXgO2xRRZdtc8pkJV0IvtoMUcbnLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205258; c=relaxed/simple;
-	bh=QDELX3IwR+X8H6gtWUNgkxoumFtlo+hJmfD9s+ikHrk=;
+	s=arc-20240116; t=1789205264; c=relaxed/simple;
+	bh=2hjeaGWMIgt5A1Wzf2CVBGvgZVTqhbJu4EnaNmBaVqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcKMJuC4oMYNCo7tiNTu9vOEiq+nVhtjxJgxGaJW2X540p7k7+syEdLnZCW7i5wipgT/XhVpoEyMpckNiPgcQ6+wBuLIWV/vVwL6rYyW88vXwnebS35u/fjYy9OMldXWdKoFXphoYXb5KEsJFXVlXLBPBDl6kytTJFgAmSUGS6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxJrSuAW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QDWkq7prPO2DfcnvAiqmQPagtUqU8tufqlkKp7a8pbPHaKpbpDsl3WAU5hXNIlpGLe62eDCdvRXodEQ0QF9Jm9NbD2Pw3pdZANJOrEfGfXoDPXI4fYMEaesbYs2n8hySTb/W2lOMRfnYpp8gy6oqYkL2mAt4KomvKgu6YoTDa28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=II2j898c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxJrSuAW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F831F000FF;
-	Sat, 12 Sep 2026 09:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="II2j898c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6051F000FF;
+	Sat, 12 Sep 2026 09:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205257;
-	bh=13SFbnE7GgBkYC09Aoof4X8NVAp1zvaJcMN55E3ScNw=;
+	s=korg; t=1789205262;
+	bh=kLMdRxOEmyMztT5CESC9x6wrd0WVy6AcROVaRpw3eTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UxJrSuAWAj92zPfVahxXYfZOoiOfIQ1++/t8tg/H1dimYlhK4uty65RBvqNMox45D
-	 k0mO7blUgCR6sf5FfWBYt2h126TUnE18EPjWe5gfkMP0k6gtIIG8GkRawzhbfJA/YA
-	 RaMtMPFdOwsBXee3mh22ZpTumu9HbKIwjQbjcDm0=
+	b=II2j898cKl2gu86Ee/eUQB8lyCJA/CxHscU0avaoaMJyzXlQyIL6/FRmIQ6goYO5s
+	 SWwAicRrd78TWBn0MMEoo7/rY7FumpYNGzIbmPnLbkVsJUZtePiv6fSZcv6EwGhILC
+	 ZqIQBvAzhwk53EOi+l71mnrYacsJc4hon+lLHzV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Zhilkin <csharper2005@gmail.com>,
-	Vitaliy Sochnev <sochnev.v.74@gmail.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1779/1815] net: phy: air_en8811h: move LED GPIO configuration to config_init
-Date: Sat, 12 Sep 2026 08:58:49 +0200
-Message-ID: <20260912065730.783901845@linuxfoundation.org>
+Subject: [PATCH 7.2 1780/1815] net: wangxun: use BIT_ULL() to prevent shift overflow on 32-bit archs
+Date: Sat, 12 Sep 2026 08:58:50 +0200
+Message-ID: <20260912065730.809533606@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,70 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaliy Sochnev <sochnev.v.74@gmail.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit 03b4702fc5e311cbac9ba8654021a88f0dac914c ]
+[ Upstream commit 63c885688f38a757947d7050b1ee4171215269ce ]
 
-The LED GPIO pins (GPIO3/4/5, mapped to LED2/LED1/LED0) are only ever
-configured as outputs once, in .probe(). But .config_init() restarts
-the MD32 MCU via en8811h_restart_mcu() on every call after the first
-(priv->mcu_needs_restart), and that restart resets buckpbus-mapped MCU
-state, including EN8811H_GPIO_OUTPUT. As a result the LED GPIOs fall
-back to inputs after the first event that re-triggers .config_init()
-(link renegotiation, ifdown/ifup, resume), and the PHY's LEDs stop
-reflecting link/activity state even though they worked right after
-probe.
+The macros TXGBE_INTR_MISC() and WX_INTR_Q() rely on the standard BIT()
+macro to generate interrupt masks based on the queue vector index.
 
-Move the GPIO-as-output configuration from .probe() to the end of
-.config_init(), so it is reapplied every time the MCU may have been
-restarted.
+On 32-bit architectures, BIT() evaluates to a 32-bit `unsigned long`.
+Since the number of queue vectors can be up to 63 on txgbe devices,
+performing a left shift of 32 or more results in an integer overflow
+and undefined behavior. This causes incorrect interrupt masking and
+unmasking logic for both the queue and miscellaneous interrupts on
+32-bit systems.
 
-Fixes: 71e79430117d ("net: phy: air_en8811h: Add the Airoha EN8811H PHY driver")
-Suggested-by: Mikhail Zhilkin <csharper2005@gmail.com>
-Signed-off-by: Vitaliy Sochnev <sochnev.v.74@gmail.com>
-Link: https://patch.msgid.link/20260823130638.1166453-2-sochnev.v.74@gmail.com
+Fix this by replacing BIT() with BIT_ULL() in these macros. This
+ensures that the bitwise shift is always performed safely on a 64-bit
+`unsigned long long` type, regardless of the underlying architecture.
+
+Fixes: e37546ad1f9b ("net: wangxun: revert the adjustment of the IRQ vector sequence")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Link: https://patch.msgid.link/45F5565CE6AC4329+20260824072119.48399-1-jiawenwu@trustnetic.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/air_en8811h.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_type.h    | 2 +-
+ drivers/net/ethernet/wangxun/txgbe/txgbe_type.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/air_en8811h.c b/drivers/net/phy/air_en8811h.c
-index edd49c193e476..0eeb7b9a4e260 100644
---- a/drivers/net/phy/air_en8811h.c
-+++ b/drivers/net/phy/air_en8811h.c
-@@ -1173,13 +1173,6 @@ static int en8811h_probe(struct phy_device *phydev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_type.h b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+index 65e3e55db1cff..0520288d18ab9 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
++++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+@@ -1427,7 +1427,7 @@ struct wx {
+ };
  
--	/* Configure led gpio pins as output */
--	ret = air_phy_buckpbus_reg_modify(phydev, EN8811H_GPIO_OUTPUT,
--					  EN8811H_GPIO_OUTPUT_345,
--					  EN8811H_GPIO_OUTPUT_345);
--	if (ret < 0)
--		return ret;
--
- 	return 0;
- }
+ #define WX_INTR_ALL (~0ULL)
+-#define WX_INTR_Q(i) BIT((i))
++#define WX_INTR_Q(i) BIT_ULL((i))
  
-@@ -1324,6 +1317,17 @@ static int en8811h_config_init(struct phy_device *phydev)
- 		return ret;
- 	}
+ /* register operations */
+ #define wr32(a, reg, value)	writel((value), ((a)->hw_addr + (reg)))
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+index 877234e3fdc2b..fddcb011fa2fd 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+@@ -303,7 +303,7 @@ struct txgbe_fdir_filter {
+ #define TXGBE_DEFAULT_RX_WORK           128
+ #endif
  
-+	/* Configure led gpio pins as output. Must be redone on every
-+	 * .config_init(), not just once in .probe(): en8811h_restart_mcu()
-+	 * resets buckpbus-mapped MCU state (incl. this register) on every
-+	 * call after the first, e.g. on link renegotiation or ifup/ifdown.
-+	 */
-+	ret = air_phy_buckpbus_reg_modify(phydev, EN8811H_GPIO_OUTPUT,
-+					  EN8811H_GPIO_OUTPUT_345,
-+					  EN8811H_GPIO_OUTPUT_345);
-+	if (ret < 0)
-+		return ret;
-+
- 	return 0;
- }
+-#define TXGBE_INTR_MISC(A)    BIT((A)->num_q_vectors)
++#define TXGBE_INTR_MISC(A)    BIT_ULL((A)->num_q_vectors)
+ #define TXGBE_INTR_QALL(A)    (TXGBE_INTR_MISC(A) - 1)
  
+ #define TXGBE_MAX_EITR        GENMASK(11, 3)
 -- 
 2.53.0
 
