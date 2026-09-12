@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA78360EF5;
-	Sat, 12 Sep 2026 08:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3210E367B60;
+	Sat, 12 Sep 2026 08:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200729; cv=none; b=HBu961qmWOK1Rh9kLuGvTBAiTJcd/C8VwJEQKEKAAerBLaYVkbvXQqkRgT4+GmxVAIDCewzpXTk/seQxWTG5OHrxj+qefLd637AkSDe7Zi/T0Ds2qE5dH4+bNcCTGje+n77AmTpTH6F0XSbaC5onyOUft5l18oZBPZ+536lBemc=
+	t=1789200734; cv=none; b=bIaeokVU8QNK9Kyd/HIJqjaQtH8GEjofDLR3zQKbGHnFML6a/xGHreivg8vcMLuHjjHm5op/bTLuOZF3+HUY1DjdDWeArw+3qR9GE7tj1DffaaKN8WsxxcrTmRe62DgTMYirYkj2zV4nIRRFm0SN2BeK9Sb2xbsod/lLItERs+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200729; c=relaxed/simple;
-	bh=BnIXBNpBO/OLOjdK3SbqZaxIn8HHD5LsJyfgbJkAT+4=;
+	s=arc-20240116; t=1789200734; c=relaxed/simple;
+	bh=HaY1cd3wPA8M6wjh7ScNg5hD6hz85AqmC30aCw4hUss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3AgO7L+9tMJtx1OcAOiH/4TS9lIa8jvRWDTU+8fMEytt0SSPyQj8Nw6LveDumD0y/PGUMygbi3hlksxrHEzQnV+ermScCu5A5MrqZd7B+h+bQUuspc2aLn5fgSsHih1nApK+3oVrC3RTaz2+Ekd8V37sgkhoQ5pnm9vODClTK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJfhCz63; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LvVTMiV4pBZgKIngFRBrY1O0M2eiYSnrFRQlP2vOf+lC3AIcnc/WhbF2jMTm/lyWRpsZZOWl/Are6MeXF1SI9OW9jIoL1rI0xibjRGCkwfCu5Ewv6V6KieE7LjKx39PCypH+myV9GGX8xWsaRyU1c+Z68/3sZoq79gZaCgyIlyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d86Sh35o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJfhCz63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066301F000FF;
-	Sat, 12 Sep 2026 08:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d86Sh35o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94A71F000FF;
+	Sat, 12 Sep 2026 08:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200728;
-	bh=KFcK+BlekXYXq9UrSRj2mo9XrwxvLHkUAMc9aEkQHbA=;
+	s=korg; t=1789200732;
+	bh=faJPC4nrCvJ8FtMVM0Lqd2DNzYkH7lRTkIwRqzHBMLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WJfhCz63QNqjD436ZjHqCtGTIXH4TBIheKDZn9RJJNlyXXZKKqFcLpcKZvnpO7nBJ
-	 p3qDcOuSfPVQOfJbd6R0Aa5WzJkZ4iIuyA2g+T1MY6fzejywdUpqgJrsswTRJyxXg4
-	 qvVp0u/I+gzs9BW6h2uw5091WVmHoxYYlFKCfGjk=
+	b=d86Sh35oyddmT1rZX1zrG9xqM+pKwr75byBILoTjahFm9roYJ6Oe0ZxJDR6s0pXTN
+	 QL5/mhdGHJMLveCxACby7/yszk/oKqNm92gmaOpoAOFdYNVpoKI6pTt4qS+kkw1GD1
+	 1kQSD4adihBWuCNfi5NHl/bSvv9nMnHRMuuYtI6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Brian Foster <bfoster@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0849/1815] dcache: keep shrink_dcache_for_umount() making progress on busy roots
-Date: Sat, 12 Sep 2026 08:43:19 +0200
-Message-ID: <20260912065708.849904155@linuxfoundation.org>
+Subject: [PATCH 7.2 0850/1815] iomap: release the folio batch on iomap callback failures
+Date: Sat, 12 Sep 2026 08:43:20 +0200
+Message-ID: <20260912065708.873940603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,84 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Brian Foster <bfoster@redhat.com>
 
-[ Upstream commit 78db93943210df61c8446aae35af6836e2cf04aa ]
+[ Upstream commit 31e3d833d522746a93d135e8b465d16f8ad33453 ]
 
-Commit e9895609cb7f ("wind ->s_roots via ->d_sib instead of ->d_hash")
-moved secondary roots from ->d_hash to ->d_sib.  Secondary roots are now
-d_unhashed(), so __d_drop() returns without removing them from
-->s_roots.  Consequently, d_drop() in do_one_tree() no longer
-guarantees progress through the list.
+A sashiko review of an unrelated patch points out that the folio
+batch mechanism used for iomap zero range fails to release the batch
+in a couple error scenarios. If either calls to ->iomap_end() or
+->iomap_begin() fail, the direct return paths bypass the batch
+cleanup.
 
-If a secondary root is still busy once do_one_tree() is done with it,
-its final dput() cannot evict it.  The root remains ->s_roots.first and
-the loop selects it forever, holding ->s_umount for write and repeatedly
-reporting the same dentry.
+The ->iomap_end() case is not a practical issue at the moment
+because there is no user of the mechanism that returns an error from
+this path. The ->iomap_begin() case is theoretically possible
+because XFS can invoke the fill helper and error out at various
+points thereafter. This subtly complicates things because XFS does
+not transfer iomap_flags to the iomap data structure in the error
+path.
 
-The root does not need a leaked reference of its own for that.  Every
-child pins its parent (d_alloc() takes a reference on it) and
-umount_check() deliberately reports a busy descendant instead of
-complaining about its ancestors, so a single leaked dentry reference
-anywhere below a secondary root is enough.  For filesystems that build
-->s_root with d_obtain_root() - nfs, ceph, nilfs2 snapshot mounts -
-that is the entire tree.
+To deal with both of these issues, first make sure to invoke the
+cleanup helper in the error path for either fs callback. Second,
+update the helper to clear the flag unconditionally and release the
+batch so long as it is populated. This more clearly delineates the
+purpose of the flag to control the I/O path and not necessarily the
+status of the fbatch, so add a comment around this as well.
 
-Before e9895609cb7f, ___d_drop() special-cased IS_ROOT dentries and
-removed them from ->s_roots regardless of their refcount, so the
-d_drop() in do_one_tree() detached the root from the superblock no
-matter what.  Commit 9c8c10e262e0 ("more graceful recovery in
-umount_collect()") deliberately made busy dentries nonfatal: report
-them and finish the unmount rather than BUG() while holding
-->s_umount.
-
-Restore that by detaching the root in do_one_tree() itself, next to
-the d_drop() that used to do it.  That covers both callers - the
-->s_roots loop and ->s_root, which for the filesystems above is a
-secondary root as well.  In the normal case dentry_unlist() finds
-->d_sib already unhashed when eviction occurs.
-
-A permanently leaked reference remains leaked after unmount, as it did
-before e9895609cb7f; if the extra reference is merely delayed, its
-final dput() may run after teardown has advanced.  Leaving the root on
-->s_roots is not an alternative: the superblock would then be freed
-with a live dentry still linked into it, and that dentry's
-dentry_unlist() would take ->s_roots_lock on freed memory.
-
-Christian Brauner <brauner@kernel.org> says:
-Moved the ->s_roots removal from the shrink_dcache_for_umount() loop
-into do_one_tree(), so a busy ->s_root obtained from d_obtain_root() is
-detached on the first pass instead of being reported a second time when
-the loop picks it off ->s_roots.  Extended the commit message with the
-pinned-ancestor case.
-
-Fixes: e9895609cb7f ("wind ->s_roots via ->d_sib instead of ->d_hash")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260729005933.15858-1-kmehltretter@gmail.com
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 395ed1ef0012 ("iomap: optional zero range dirty folio processing")
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Link: https://patch.msgid.link/20260729192737.3190206-2-joannelkoong@gmail.com
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dcache.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/iomap/iter.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/fs/dcache.c b/fs/dcache.c
-index 3e9af9de70746..073c2ce2d4448 100644
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -1794,7 +1794,12 @@ static void do_one_tree(struct dentry *dentry)
+diff --git a/fs/iomap/iter.c b/fs/iomap/iter.c
+index e4a29829591a7..63617ec482500 100644
+--- a/fs/iomap/iter.c
++++ b/fs/iomap/iter.c
+@@ -6,12 +6,18 @@
+ #include <linux/iomap.h>
+ #include "trace.h"
+ 
++/*
++ * Release the iter folio batch. Note that the iomap flag is meant to control
++ * the I/O path for the mapping and may not be set in error situations.
++ */
+ static inline void iomap_iter_clean_fbatch(struct iomap_iter *iter)
  {
- 	shrink_dcache_tree(dentry, true);
- 	d_walk(dentry, dentry, umount_check);
--	d_drop(dentry);
-+	spin_lock(&dentry->d_lock);
-+	__d_drop(dentry);
-+	/* A busy root survives the dput() below so don't leave it on ->s_roots. */
-+	if (unlikely(!hlist_unhashed(&dentry->d_sib)))
-+		unlink_secondary_root(dentry);
-+	spin_unlock(&dentry->d_lock);
- 	dput(dentry);
+-	if (iter->iomap.flags & IOMAP_F_FOLIO_BATCH) {
++	if (!iter->fbatch)
++		return;
++	iter->iomap.flags &= ~IOMAP_F_FOLIO_BATCH;
++	if (folio_batch_count(iter->fbatch)) {
+ 		folio_batch_release(iter->fbatch);
+ 		folio_batch_reinit(iter->fbatch);
+-		iter->iomap.flags &= ~IOMAP_F_FOLIO_BATCH;
+ 	}
  }
  
+@@ -79,7 +85,7 @@ int iomap_iter(struct iomap_iter *iter, const struct iomap_ops *ops)
+ 						  olen),
+ 				advanced, iter->flags, &iter->iomap);
+ 		if (ret < 0 && !advanced)
+-			return ret;
++			goto error;
+ 	}
+ 
+ 	/* detect old return semantics where this would advance */
+@@ -110,7 +116,11 @@ int iomap_iter(struct iomap_iter *iter, const struct iomap_ops *ops)
+ 	ret = ops->iomap_begin(iter->inode, iter->pos, iter->len, iter->flags,
+ 			       &iter->iomap, &iter->srcmap);
+ 	if (ret < 0)
+-		return ret;
++		goto error;
+ 	iomap_iter_done(iter);
+ 	return 1;
++
++error:
++	iomap_iter_clean_fbatch(iter);
++	return ret;
+ }
 -- 
 2.53.0
 
