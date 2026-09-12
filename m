@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE032F617C;
-	Sat, 12 Sep 2026 12:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AF42BDC0E;
+	Sat, 12 Sep 2026 12:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215699; cv=none; b=lrsyeeD6Ri9aNz/IC247Vi5YaklE/Z1ISpT0ptvRtS+YKByesDccBFp/ZVdpVWRC/s8HeEmkAebe2++q0It3nqCcNlH8JhsdGQcOe6OSq6FQXGL6D+MafxLDtxI4CumJSq4ZQwrdm2rqvLmUUOQhicmIeGttazf+SNfAabXT4JE=
+	t=1789215704; cv=none; b=mHGKCmngFROgx/hoIcf/GsljMzRQLpsIZTxQIcyeLLXW9kaflUAB63B0onUFP1cCA9qsCktW0STS//kNApxsJYgZaBlElg9eaoVBc/OCZjATKBdKG6RQvL32P4MT4A8cOimTLicrznGD4F4BeerCOZxWf/uaWvFoUr2DhxnR4mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215699; c=relaxed/simple;
-	bh=JUzDhrjXbAqXepg/19/vgat7LypJfxsyRxhFpxE1FLg=;
+	s=arc-20240116; t=1789215704; c=relaxed/simple;
+	bh=Ym6LVh3n6UoJ+brwXWn7ceCr1qAhCT4TUHpoU0YjETc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRPKmkce9Fye95IX16IrEf+0ORdLTxCi/tkeRouUVSmD37g9C7B/pOq1VG/+5bcD0WpAFZF9ozUukLBGnnvHgVsfaFaS4ygXfyIDkdnQH56bdmjalhgZz5OyDhKy4DhBCDSwN8e18x6wk/4WG2hqUo7FgXWoa0rR4E1qmMYG2VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMQEqQpo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OIhPFjvOAx0biOcNUzxXNn5z7Eczu3UwldmMP5/e0vt60ofbNPugSlCqK5nSDsDK9p1x3lg/fJij3xKWhABHwCT2k0vWBRoNdGpb86xJrRRt+nZWPsYXoaCI9QEXMicse+4BE6ynOim1WvZWbivx32TmUsD4MhfoLMPNFu8Si94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZmQmRdy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMQEqQpo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53731F000FF;
-	Sat, 12 Sep 2026 12:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZmQmRdy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F9E1F000FF;
+	Sat, 12 Sep 2026 12:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215698;
-	bh=C+T5svufULrthYlfU7VMNPZeWhew2ayVYV68Ryj7rEg=;
+	s=korg; t=1789215702;
+	bh=sPr9q9fmp7ztfcQER1bn86KcoEFyTPZS7am2M7IriFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dMQEqQpoJwMda4/iLWuR2lh46tpINcfeUKAlh4ibBQRc+9jC4pRfyCaS1hK72foxg
-	 8Y9QwdDNjGM6JX4kJ32kRsdqa5WhT5SJbzY+rqy877637QtmxXe8ROYDJ2PSC4iXOT
-	 sstA1nOiucqm5PZH6kKiEDV2315bn6PVKEIhS4ko=
+	b=NZmQmRdy9Mi02jiaOR5WBM3ty5o5yyY0yVW09+HZi559tmZOW7uujClZA40Y2uaza
+	 IczvuMtl9g+/TrrQdenXfWW+jBdC/1XDnnXLCdfzQ6t6paLf5x/LO5o+zfYYDEnfmI
+	 gHF0TdFH7FQ2u2g6OE/DE8cYaOec6VSL91fVGuIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0585/1376] ppdev: prevent overflow when setting port timeout
-Date: Sat, 12 Sep 2026 08:50:11 +0200
-Message-ID: <20260912065620.570634029@linuxfoundation.org>
+Subject: [PATCH 6.12 0586/1376] ipack: ipoctal: fix UAF, null-ptr-deref, and use-after-free in cleanup on remove
+Date: Sat, 12 Sep 2026 08:50:12 +0200
+Message-ID: <20260912065620.593112880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,63 +45,234 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 3c0cf801ea2fa40daa5e7d1e6d32adca5ff75ad9 ]
+[ Upstream commit b6b5d64cb161a28347d64dc3168a636c4abb68d5 ]
 
-PPSETTIME64 supplies the timeval fields as s64 values, but
-pp_set_timeout() narrows tv_usec to int and calculates tv_sec * HZ in a
-signed long. Large positive values can therefore be truncated or overflow
-and install an unintended timeout.
+Three issues arise when the device is removed while a tty session is
+still active:
 
-Keep both fields as s64, reject a non-canonical microsecond value, and
-use timespec64_to_jiffies() to cap excessively large timeouts at
-MAX_JIFFY_OFFSET. This is a behavior change because both PPSETTIME
-ioctls could previously accept values with tv_usec >= USEC_PER_SEC.
-The validation follows the precedent set by sock_set_timeout().
+1. UAF of struct ipoctal: the remove callback frees ipoctal via
+   kfree() while tty ops may still access it.  Fix by introducing
+   kref-based lifetime management — kref is taken in install() when
+   a tty is opened and released in cleanup() when the tty is finally
+   destroyed; remove() uses kref_put() instead of kfree().
 
-Fixes: 3b9ab374a1e6 ("ppdev: convert to y2038 safe")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260716013923.19494-1-lilinmao@kylinos.cn
+2. NULL dereference in ipoctal_write_tty(): __ipoctal_remove()
+   frees xmit_buf via tty_port_free_xmit_buf() while a userspace
+   process may still hold the tty fd and call write().  Fix by
+   checking for NULL xmit_buf in ipoctal_write_tty().
+
+3. UAF in ipoctal_cleanup(): ipack_put_carrier(ipoctal->dev)
+   dereferences ipoctal->dev after the ipack_device has been freed
+   by ipack_device_del().  Fix by caching ipoctal->carrier_owner
+   during probe() and calling module_put() on the cached pointer
+   directly in cleanup(), avoiding any access to ipoctal->dev.
+
+Also introduce a "removed" flag in struct ipoctal, set at the start
+of __ipoctal_remove(), and checked in every tty op that accesses
+hardware resources (port_activate, write_tty, set_termios, hangup,
+shutdown).  This prevents page faults when devm_ioremap() regions
+are unmapped after remove() returns.
+
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/lkml/178144969601.60470.1257088106279546587@gmail.com/
+Fixes: 05e5027efc9c ("Staging: ipack: move out of staging")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/e3b0a90b07f079c5bcd5ca90d1dd3b79bb29adb5.1782870760.git.xiaopei01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ppdev.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/ipack/devices/ipoctal.c | 56 ++++++++++++++++++++++++++++++---
+ 1 file changed, 52 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
-index d1dfbd8d4d426..3dec6516a5eb1 100644
---- a/drivers/char/ppdev.c
-+++ b/drivers/char/ppdev.c
-@@ -340,15 +340,17 @@ static enum ieee1284_phase init_phase(int mode)
- 	return IEEE1284_PH_FWD_IDLE;
+diff --git a/drivers/ipack/devices/ipoctal.c b/drivers/ipack/devices/ipoctal.c
+index ba2e9e52d72bf..474b58858dca6 100644
+--- a/drivers/ipack/devices/ipoctal.c
++++ b/drivers/ipack/devices/ipoctal.c
+@@ -10,6 +10,7 @@
+ #include <linux/device.h>
+ #include <linux/module.h>
+ #include <linux/interrupt.h>
++#include <linux/kref.h>
+ #include <linux/sched.h>
+ #include <linux/tty.h>
+ #include <linux/serial.h>
+@@ -25,6 +26,8 @@
+ 
+ static const struct tty_operations ipoctal_fops;
+ 
++static void ipoctal_release(struct kref *kref);
++
+ struct ipoctal_channel {
+ 	struct ipoctal_stats		stats;
+ 	unsigned int			nb_bytes;
+@@ -49,6 +52,9 @@ struct ipoctal {
+ 	struct tty_driver		*tty_drv;
+ 	u8 __iomem			*mem8_space;
+ 	u8 __iomem			*int_space;
++	struct kref			kref;
++	struct module			*carrier_owner;
++	bool				removed;
+ };
+ 
+ static inline struct ipoctal *chan_to_ipoctal(struct ipoctal_channel *chan,
+@@ -70,8 +76,14 @@ static void ipoctal_reset_channel(struct ipoctal_channel *channel)
+ static int ipoctal_port_activate(struct tty_port *port, struct tty_struct *tty)
+ {
+ 	struct ipoctal_channel *channel;
++	struct ipoctal *ipoctal;
+ 
+ 	channel = dev_get_drvdata(tty->dev);
++	ipoctal = chan_to_ipoctal(channel, tty->index);
++
++
++	if (ipoctal->removed)
++		return -ENODEV;
+ 
+ 	/*
+ 	 * Enable RX. TX will be enabled when
+@@ -95,6 +107,7 @@ static int ipoctal_install(struct tty_driver *driver, struct tty_struct *tty)
+ 	if (res)
+ 		goto err_put_carrier;
+ 
++	kref_get(&ipoctal->kref);
+ 	tty->driver_data = channel;
+ 
+ 	return 0;
+@@ -460,8 +473,13 @@ static ssize_t ipoctal_write_tty(struct tty_struct *tty, const u8 *buf,
+ 				 size_t count)
+ {
+ 	struct ipoctal_channel *channel = tty->driver_data;
++	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
+ 	size_t char_copied;
+ 
++
++	if (ipoctal->removed || !channel->tty_port.xmit_buf)
++		return 0;
++
+ 	char_copied = ipoctal_copy_write_buffer(channel, buf, count);
+ 
+ 	/* As the IP-OCTAL 485 only supports half duplex, do it manually */
+@@ -501,8 +519,13 @@ static void ipoctal_set_termios(struct tty_struct *tty,
+ 	unsigned char mr2 = 0;
+ 	unsigned char csr = 0;
+ 	struct ipoctal_channel *channel = tty->driver_data;
++	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
+ 	speed_t baud;
+ 
++
++	if (ipoctal->removed)
++		return;
++
+ 	cflag = tty->termios.c_cflag;
+ 
+ 	/* Disable and reset everything before change the setup */
+@@ -631,10 +654,16 @@ static void ipoctal_hangup(struct tty_struct *tty)
+ {
+ 	unsigned long flags;
+ 	struct ipoctal_channel *channel = tty->driver_data;
++	struct ipoctal *ipoctal;
+ 
+ 	if (channel == NULL)
+ 		return;
+ 
++	ipoctal = chan_to_ipoctal(channel, tty->index);
++
++	if (ipoctal->removed)
++		return;
++
+ 	spin_lock_irqsave(&channel->lock, flags);
+ 	channel->nb_bytes = 0;
+ 	channel->pointer_read = 0;
+@@ -651,10 +680,16 @@ static void ipoctal_hangup(struct tty_struct *tty)
+ static void ipoctal_shutdown(struct tty_struct *tty)
+ {
+ 	struct ipoctal_channel *channel = tty->driver_data;
++	struct ipoctal *ipoctal;
+ 
+ 	if (channel == NULL)
+ 		return;
+ 
++	ipoctal = chan_to_ipoctal(channel, tty->index);
++
++	if (ipoctal->removed)
++		return;
++
+ 	ipoctal_reset_channel(channel);
+ 	tty_port_set_initialized(&channel->tty_port, false);
+ }
+@@ -664,8 +699,9 @@ static void ipoctal_cleanup(struct tty_struct *tty)
+ 	struct ipoctal_channel *channel = tty->driver_data;
+ 	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
+ 
+-	/* release the carrier driver */
+-	ipack_put_carrier(ipoctal->dev);
++	/* release the carrier driver via cached owner */
++	module_put(ipoctal->carrier_owner);
++	kref_put(&ipoctal->kref, ipoctal_release);
  }
  
--static int pp_set_timeout(struct pardevice *pdev, long tv_sec, int tv_usec)
-+static int pp_set_timeout(struct pardevice *pdev, s64 tv_sec, s64 tv_usec)
+ static const struct tty_operations ipoctal_fops = {
+@@ -683,6 +719,13 @@ static const struct tty_operations ipoctal_fops = {
+ 	.cleanup =              ipoctal_cleanup,
+ };
+ 
++static void ipoctal_release(struct kref *kref)
++{
++	struct ipoctal *ipoctal = container_of(kref, struct ipoctal, kref);
++
++	kfree(ipoctal);
++}
++
+ static int ipoctal_probe(struct ipack_device *dev)
  {
-+	struct timespec64 ts;
- 	long to_jiffies;
+ 	int res;
+@@ -692,7 +735,10 @@ static int ipoctal_probe(struct ipack_device *dev)
+ 	if (ipoctal == NULL)
+ 		return -ENOMEM;
  
--	if ((tv_sec < 0) || (tv_usec < 0))
-+	if (tv_sec < 0 || tv_usec < 0 || tv_usec >= USEC_PER_SEC)
- 		return -EINVAL;
++	kref_init(&ipoctal->kref);
++
+ 	ipoctal->dev = dev;
++	ipoctal->carrier_owner = dev->bus->owner;
+ 	res = ipoctal_inst_slot(ipoctal, dev->bus->bus_nr, dev->slot);
+ 	if (res)
+ 		goto out_uninst;
+@@ -701,7 +747,7 @@ static int ipoctal_probe(struct ipack_device *dev)
+ 	return 0;
  
--	to_jiffies = usecs_to_jiffies(tv_usec);
--	to_jiffies += tv_sec * HZ;
-+	ts.tv_sec = tv_sec;
-+	ts.tv_nsec = tv_usec * NSEC_PER_USEC;
-+	to_jiffies = timespec64_to_jiffies(&ts);
- 	if (to_jiffies <= 0)
- 		return -EINVAL;
+ out_uninst:
+-	kfree(ipoctal);
++	kref_put(&ipoctal->kref, ipoctal_release);
+ 	return res;
+ }
  
+@@ -709,6 +755,8 @@ static void __ipoctal_remove(struct ipoctal *ipoctal)
+ {
+ 	int i;
+ 
++	ipoctal->removed = true;
++
+ 	ipoctal->dev->bus->ops->free_irq(ipoctal->dev);
+ 
+ 	for (i = 0; i < NR_CHANNELS; i++) {
+@@ -725,7 +773,7 @@ static void __ipoctal_remove(struct ipoctal *ipoctal)
+ 	tty_unregister_driver(ipoctal->tty_drv);
+ 	kfree(ipoctal->tty_drv->name);
+ 	tty_driver_kref_put(ipoctal->tty_drv);
+-	kfree(ipoctal);
++	kref_put(&ipoctal->kref, ipoctal_release);
+ }
+ 
+ static void ipoctal_remove(struct ipack_device *idev)
 -- 
 2.53.0
 
