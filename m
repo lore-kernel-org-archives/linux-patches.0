@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44843542F8;
-	Sat, 12 Sep 2026 08:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B617F35F184;
+	Sat, 12 Sep 2026 08:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200278; cv=none; b=Hl0IyFVtieihVb2wq2bAre+LCiDgpgQbkOyWcVV7P4YNiboz/yw7fw17X6NfitP2ekPXEiTnECC+r8EH6FzkWZ99ZhrIgnq9uhUttgEo4xFGXoZz2KsIBrkKPylKro1g18g53UOGjN3dFIweRY7onWaSEFKMgEid7wwj6Z9iNTY=
+	t=1789200282; cv=none; b=NZelKIFK6DCWmZIga21jFFFOWdG6WnFfM9bdhE7kXBI9nQ+pfgNZ1GyEDFtG94jHp+wyj2nF+26J+MGV8m7olgRmWG+Sj0W+J+8AzrpVfx2PE9DiMbJuCtlogzaPr53NjxfzY3CL42ZyU1F2duM+XTIK3xEBVDSKoOW5NDZlH+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200278; c=relaxed/simple;
-	bh=H5IsBTOQZPYor3QZlkZS9zLgGPeGWHBFch+PLIOp5ms=;
+	s=arc-20240116; t=1789200282; c=relaxed/simple;
+	bh=82o8tt+Zs/hQn2WEAyU2sas6/1hckLZblYHGyFa7oiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDb/hnnlwpWW++n9A7cSeKBPOMnKdrNaj5MUid1N38cTwvR//b4jbw11xbEMLeaQpxzTlazFKSJ8xcgaufoe4oJXqMw8ryMYKZkzmU2/h+DVgBqUK7aYVEdWwk4XjiAb1VCxwyqOMMKvTm3O//YRt0PUSAHv5TtayJFzVMQKTjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdSnhYrq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EymGws+7UmMEwxab5+K6USdRACXdjV66ZIQqohcSPxaAmN8FL2dSBLBAJBSmFpoer92Cn8t+JkfdNhVYduE2mxA/34XsNABCzda9vF8Q11uLbqrfWnua0am6ILhrcHbVXL7EJMd6xnYqBKJ/QW6IHNXmkwZypXg0S3gh6xPaSeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hu0gd/Gh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdSnhYrq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF511F000FF;
-	Sat, 12 Sep 2026 08:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hu0gd/Gh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF111F000FF;
+	Sat, 12 Sep 2026 08:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200276;
-	bh=/hbQSNmR9LvzUGbjCxRRRc/QKnbkDY4ZmHvTpuEFnBk=;
+	s=korg; t=1789200280;
+	bh=mfxDmQDtg2Y6Iz48DSG4T6+JQjZAjc73MgEvUi+amrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qdSnhYrq5m7u4/vS+qQbSWPn0m9oIxlD2iMGz4qNcewEm4nPg0TLyMax55KCj9HFG
-	 a8pNZlfYehHZz+2RBCttZ50TyXpH4C6n8cF0LmKHoXPhWdUSMh1aZKU2aPq8BAo04L
-	 bEldivcC+sDlMT9by4YO+/VmjpRPA7lKzhCESFmo=
+	b=hu0gd/Gh11koenc+lkN5F4NjNvI+tNn6w3ntEVNXDdpO39hFRzYBD7n4V7hCv9AUX
+	 SAG8wzAmU4ypWt1GLfnYo+FSmFQcMg9HSNtEjLht+zIuwASLAcyx4qajkc91vXAKpR
+	 jaI+83IO8yc5T8fbZU4kJmm/E6NSGRf7cBs6MP7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Yixun Lan <dlan@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0730/1815] riscv: dts: spacemit: Make dtschema recognize the etherent PHY correctly on K3 pico-itx board
-Date: Sat, 12 Sep 2026 08:41:20 +0200
-Message-ID: <20260912065706.037212465@linuxfoundation.org>
+Subject: [PATCH 7.2 0757/1815] platform/chrome: cros_ec_debugfs: Clean up console log on probe failure
+Date: Sat, 12 Sep 2026 08:41:47 +0200
+Message-ID: <20260912065706.680118204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,46 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 9b371a8b13fd0e8e6f3b12f4ef7e58927d6f62ee ]
+[ Upstream commit 5d187600c4603b8f7812b12ce359a11ad7a7fd3a ]
 
-Since the previous commit does not change the phy node name,
-the dtschema can not recognize the type of the ethernet phy,
-so the following error is produced:
+Add a dedicated error label for failures after successful console log
+setup.
 
-/arch/riscv/boot/dts/spacemit/k3-pico-itx.dtb: phy@1 (ethernet-phy-id001c.c916): $nodename:0: 'phy@1' does not match '^ethernet-phy(@[a-f0-9]+)?$'
-        from schema $id: http://devicetree.org/schemas/net/realtek,rtl82xx.yaml
-/arch/riscv/boot/dts/spacemit/k3-pico-itx.dtb: phy@1 (ethernet-phy-id001c.c916): Unevaluated properties are not allowed ('reg', 'reset-assert-us', 're
-set-deassert-us', 'reset-gpios' were unexpected)
-        from schema $id: http://devicetree.org/schemas/net/realtek,rtl82xx.yaml
-
-Change the nodename to make the dtschema can recognize the right
-PHY type.
-
-Fixes: 6d6536c880fe ("riscv: dts: spacemit: Fix phy id check for the phy on pico-itx board")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://patch.msgid.link/20260729012418.154652-1-inochiama@gmail.com
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Fixes: d90fa2c64d59 ("platform/chrome: cros_ec: Poll EC log on EC panic")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://lore.kernel.org/r/c00974953a1b952f51f0f021d7f9fad134159909.1785320940.git.getshell@seu.edu.cn
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_debugfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-index 3ed2bbcd8f836..86210cc6f7733 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -190,7 +190,7 @@ &eth0 {
- 	status = "okay";
+diff --git a/drivers/platform/chrome/cros_ec_debugfs.c b/drivers/platform/chrome/cros_ec_debugfs.c
+index 139cab6fcba17..6d7ff624540ac 100644
+--- a/drivers/platform/chrome/cros_ec_debugfs.c
++++ b/drivers/platform/chrome/cros_ec_debugfs.c
+@@ -512,7 +512,7 @@ static int cros_ec_debugfs_probe(struct platform_device *pd)
+ 	ret = blocking_notifier_chain_register(&ec->ec_dev->panic_notifier,
+ 					       &debug_info->notifier_panic);
+ 	if (ret)
+-		goto remove_debugfs;
++		goto cleanup_console_log;
  
- 	mdio {
--		phy0: phy@1 {
-+		phy0: ethernet-phy@1 {
- 			compatible = "ethernet-phy-id001c.c916";
- 			reg = <1>;
- 			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
+ 	ec->debug_info = debug_info;
+ 
+@@ -520,6 +520,8 @@ static int cros_ec_debugfs_probe(struct platform_device *pd)
+ 
+ 	return 0;
+ 
++cleanup_console_log:
++	cros_ec_cleanup_console_log(debug_info);
+ remove_debugfs:
+ 	debugfs_remove_recursive(debug_info->dir);
+ 	return ret;
 -- 
 2.53.0
 
