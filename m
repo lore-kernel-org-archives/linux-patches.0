@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCCB19D8BC;
-	Sat, 12 Sep 2026 09:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21583806DD;
+	Sat, 12 Sep 2026 09:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207077; cv=none; b=aGJfwRKayKgYk+Ssb54NCdBlR0//oate9YIPkGU2cmLu9Z0Bqi075fGT+J5DPxM/vAPB5pOhPwKHFstL2HLi+yOoQFv6hzbey5scBfN7lJHiFxDVfmwWBOgvPyLjvVn9Uc0vTVdcMLB3UhbGuKXtExZRrU9OU2DlcXAODiOdyYU=
+	t=1789207082; cv=none; b=Rxr/ETD2k9IXOn/KIR6+T7/fraYbmkt1sGITfmZyFp0AtU3HlKLYwESvHNvQIycJXYFgZyTaJ64Eaexpdj2C5GDPt66iYiaXpYLIqTPchr96NuEAvmIKE4xTD4du7GDGmuq97gx2g1hSczstWkNOk5L4SPtb1peKojJ0QG5D3hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207077; c=relaxed/simple;
-	bh=1eve+qJUOhBfcqjLypuVn1mgHXGM3e5KLiVAB6PBxBI=;
+	s=arc-20240116; t=1789207082; c=relaxed/simple;
+	bh=0RtOwW7ZsOUbDGKk9yypZ9RwvuA2N/DsZ0YLTKqJDSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5fJYRMzqcPcOwt1MiI9JhSCqXPIGdASGBdp+m8XdQ8FmTBsq3dHXF1LosY2ZfLA9+9S4bnOCk+ICBq9wngcbynkMUOrWijGGwrRsZmozu42SR4pZUa7w91aoWMSayAOrK94mcf4qHFqgLxwNnS7QvU+uUsiklT3XKWKRZzqd6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Geyhpwz6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UP0odF+H6d18FnBvZX2NenHDA9KHGz7P8PsuhdJOHfZsk5GOLzULFiOVlxM6t5bYVl4DY/66x6D1ouX2wsNFNK4Y2ZOJMoGoIRb8AlWvv2lMOfPm9RJPWNTNLuowmXwF2azI618pdIANsXluWV/ATCLGV2+vwzZOAfxzGh2XwQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlMJigOG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Geyhpwz6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE331F000FF;
-	Sat, 12 Sep 2026 09:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlMJigOG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3C91F000FF;
+	Sat, 12 Sep 2026 09:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207076;
-	bh=A8hIULJocadGqmqSyQPESyjcrvaLMZpeyCG7YH+3BOI=;
+	s=korg; t=1789207081;
+	bh=BcfEEnpmXEMaYQg/NiVApnzhuHedqR3eIfwZBHNdXfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Geyhpwz66bCnlhDc1HYplFm8BDQJbiSeUvn6ZcUzbxGGYJ+Iyf2LdpCQRMsBO+yyk
-	 dpkQ7HQT6cj1T4UBGjaTyPl/nxo0OiBzqrW3w8tU6TyXdHj33Xvfcj9pHxQmDetP/k
-	 dXtlkjIzLq203dU98EoxulHAxcpi+rAvRkar5w2o=
+	b=TlMJigOGuw9Wci6BF5pTiu2tcahB3f2VYbsHtfW+chI9C6vITOJiNZApHeodVYlGh
+	 PY1G8pWjmj/zP5Cbtr6cZh8ZMRuIUEVVcFYELpwTvenxENboAb6N7G9vtzu/PvJqiv
+	 EMoAYzHiL4Nz9O+6O+mQMNFgV1uQHSRu0CecrZKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mert Seftali <mertsftl@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Fei Shao <fshao@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0339/1518] iio: accel: dmard09: Implement IIO_CHAN_INFO_SCALE
-Date: Sat, 12 Sep 2026 08:41:48 +0200
-Message-ID: <20260912065631.142340069@linuxfoundation.org>
+Subject: [PATCH 6.18 0322/1518] usb: mtu3: allow system suspend during active gadget connection
+Date: Sat, 12 Sep 2026 08:41:31 +0200
+Message-ID: <20260912065630.761193432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,75 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mert Seftali <mertsftl@gmail.com>
+From: Fei Shao <fshao@chromium.org>
 
-[ Upstream commit aa58ecc73466d0cb8c418de98e2225490bf600e3 ]
+[ Upstream commit e69027c25361b6044c7928715667586cc5469063 ]
 
-Reading the in_accel_scale attribute on the DMARD09 has always returned
--EINVAL: the channels advertise scale via info_mask_shared_by_type so the
-IIO core exposes the attribute, but dmard09_read_raw() only handles
-IIO_CHAN_INFO_RAW, so a SCALE read falls through to 'default: return
--EINVAL':
+When operating in gadget mode connected to a USB host, system suspend
+fails with -EBUSY because active peripheral connections block suspend
+entry.
 
-    $ cat .../iio:deviceX/in_accel_scale
-    cat: in_accel_scale: Invalid argument
+Fix this by restricting the -EBUSY check to runtime autosuspend
+(PMSG_IS_AUTO). For system suspend (!PMSG_IS_AUTO), perform soft
+disconnect to disconnect from the bus and allow MAC sleep.
 
-leaving userspace with raw counts it cannot convert to m/s^2.
-
-The driver was written from a vendor source [1] without a datasheet, and
-the scale was declared but never implemented. The vendor source carries
-the sensitivity: its conversion is
-
-    acc = raw * GRAVITY_EARTH_1000 / sensitivity   (then / 1000 -> m/s^2)
-
-with sensitivity = 32 and GRAVITY_EARTH_1000 = 9807 ("about
-(9.80665)*1000"), i.e. 32 counts correspond to 1 g.
-
-That sensitivity applies to the value this driver already reports as raw:
-the vendor reduces each 16-bit sample to a signed 9-bit value, and the
-preparation in dmard09_read_raw() yields the same value. It is
-self-consistent: 256 counts / 32 = 8 g full scale, matching the +/-8g
-range.
-
-Implement the scale derived from that sensitivity using standard gravity:
-
-    scale = 9.80665 / 32 = 0.3064578125 m/s^2 per LSB
-
-Link: https://github.com/minstrelsy/mediatek/blob/1f49d8c87b839651bc89afc870277e8e0f2e2d55/custom/common/kernel/accelerometer/dmard09/dmard09.c [1]
-Fixes: a4fa6509dda4 ("iio: accel: add support for the Domintech DMARD09 3-axis accelerometer")
-Signed-off-by: Mert Seftali <mertsftl@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 427c66422e14 ("usb: mtu3: support suspend/resume for device mode")
+Signed-off-by: Fei Shao <fshao@chromium.org>
+Link: https://patch.msgid.link/20260626082218.2750459-2-fshao@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/dmard09.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/mtu3/mtu3_core.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/dmard09.c b/drivers/iio/accel/dmard09.c
-index d9290e3b9c464..5297ab2ee0bbe 100644
---- a/drivers/iio/accel/dmard09.c
-+++ b/drivers/iio/accel/dmard09.c
-@@ -8,6 +8,7 @@
- #include <linux/unaligned.h>
- #include <linux/module.h>
- #include <linux/i2c.h>
-+#include <linux/units.h>
- #include <linux/iio/iio.h>
+diff --git a/drivers/usb/mtu3/mtu3_core.c b/drivers/usb/mtu3/mtu3_core.c
+index a3a6282893d09..ca8cb6c3a01bf 100644
+--- a/drivers/usb/mtu3/mtu3_core.c
++++ b/drivers/usb/mtu3/mtu3_core.c
+@@ -1037,9 +1037,14 @@ int ssusb_gadget_suspend(struct ssusb_mtk *ssusb, pm_message_t msg)
+ 	if (!mtu->gadget_driver)
+ 		return 0;
  
- #define DMARD09_DRV_NAME	"dmard09"
-@@ -79,6 +80,12 @@ static int dmard09_read_raw(struct iio_dev *indio_dev,
- 		*val = accel;
+-	if (mtu->connected)
++	/* Prevent runtime suspend when active connection exists */
++	if (mtu->connected && PMSG_IS_AUTO(msg))
+ 		return -EBUSY;
  
- 		return IIO_VAL_INT;
-+	case IIO_CHAN_INFO_SCALE:
-+		*val = 0;
-+		/* 1 g / 32 LSB, in m/s^2 */
-+		*val2 = IIO_G_TO_M_S_2(NANO / 32);
++	/* Perform soft disconnect for system suspend */
++	if (mtu->softconnect && !PMSG_IS_AUTO(msg))
++		mtu3_dev_on_off(mtu, 0);
 +
-+		return IIO_VAL_INT_PLUS_NANO;
- 	default:
- 		return -EINVAL;
- 	}
+ 	mtu3_dev_suspend(mtu);
+ 	synchronize_irq(mtu->irq);
+ 
+@@ -1055,5 +1060,9 @@ int ssusb_gadget_resume(struct ssusb_mtk *ssusb, pm_message_t msg)
+ 
+ 	mtu3_dev_resume(mtu);
+ 
++	/* Restore soft connect for system resume */
++	if (mtu->softconnect && !PMSG_IS_AUTO(msg))
++		mtu3_dev_on_off(mtu, 1);
++
+ 	return 0;
+ }
 -- 
 2.53.0
 
