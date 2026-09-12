@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F8B1D798E;
-	Sat, 12 Sep 2026 17:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1F347D47A;
+	Sat, 12 Sep 2026 17:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232572; cv=none; b=ADzkGtS6iCUx4YCiJBZYaqethRSxZ+NMpDp8883hP1oCAzafuJmw6vM+34LEAsxy6OMsUqMhJjYOz0cIu7g31bYRWsrSzNL74YAG4BkDqfGb3kvvenz8YcchqneBG2xnHr+s1/2eKwWp1SgzH/9DKQYIEkPr3SP1QD6piXFPi4A=
+	t=1789232578; cv=none; b=tsTRa65v6RtuZI+gtxrKvNSvXRAjTCI3JzyFQ1ExUZJBV7195Pam81ajlf5RbTDDiIW04cIh57DkBizyxl0EvlgLZT0jtR3hdrA8QqQY+y3PkWLolF1zCQ6ChygK1HrUHRWTt703vDDMpvm+4nLjwl1MpNLfqb7wzfRtNW1Ejds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232572; c=relaxed/simple;
-	bh=cuwoS1YUklfObdo5ukJDYvfCQuXFOYNwvfObmbnkdSI=;
+	s=arc-20240116; t=1789232578; c=relaxed/simple;
+	bh=Okvry7e3qyZp9UkjJ64JMUIBTs9i1YRijBwefyLo6z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H28+Rhudl2LGzA4NgFFa2gYvh0FOXm0vZDrSR6BFkxnv9IlExJdEY4pUo6GPAzVDwfZaXRMD8yNCdxwEAGJN3bb02Fzgqc0chXy914MmjOGODBGK+NF63uqkc8/gHHLvcVssATDNUXdaSsINhNUjpjG7ya1qa4XRp6Imvbkk/7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrYZQsCL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LZVJfXprKuV7JoPuokpa+Ve2OnViAG4rkyi+VJaa1LfeInYpSj/6SYlxgLiz8I99NCpKSZphkRnzwue3EnAY+J1D7HL1UZGoIK7ggItVTf8BIuymiWeB6YhtyKJ3X+AAxjy6q3KW5YjqZwi03f0rGZHClp9x4WrTGs7zg2X25zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PeVMzLg2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrYZQsCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29BA1F00893;
-	Sat, 12 Sep 2026 17:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeVMzLg2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0B11F000FF;
+	Sat, 12 Sep 2026 17:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232570;
-	bh=WbHYG20UoZpUDLzk1ugwA/Vt0pJcW+vyP1JOQHA39no=;
+	s=korg; t=1789232574;
+	bh=fwulpXhCdPRMcmL3lx8i1xtUcC1uSYTMvNaKu89anHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rrYZQsCLu3q1RnF0KEN1TmbLa49elasyEaBPrJHy5q+3sutJoLkWTB6OL57mxIKR/
-	 1MhwFqrqu+U49DgOc/+Yu9nSPl23xPhjOz7ObH7OKGN3cVmUKMIKGrn772cldZeWl6
-	 XeEPd+kYsZDYIhR90hEd6GWh6ecPMzh5GWUvetR4=
+	b=PeVMzLg2VgUw6+8MmIyNEHUybHGrvnhsgBA9e7EjTAecXwJFiSlsfcatpP2YtwXW3
+	 AOY+eLl6NdjH7s8TZS19exnKy9si/ZwZaX5deMhbroIziDy3PSax9TOhMfApfcx2hM
+	 E+H/v34iZX95V7LXfSUDJKhk85kdBO1j17fiCUJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Richard Weinberger <richard@nod.at>,
-	Zhihao Cheng <chengzhihao1@huawei.com>
-Subject: [PATCH 5.15 030/935] ubifs: fix out-of-bounds read in signature length check
-Date: Sat, 12 Sep 2026 08:51:00 +0200
-Message-ID: <20260912065527.531341566@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 039/935] nfsd: validate symlink target length in NFSv4 CREATE
+Date: Sat, 12 Sep 2026 08:51:09 +0200
+Message-ID: <20260912065527.735681727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,58 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 95d27c1708bb6e8823c8e7c623f9abc2a91bf4bf upstream.
+commit 041f57056e5fb9c80adc088269322d2c61074406 upstream.
 
-ubifs_sb_verify_signature() bounds the on-disk ubifs_sig_node->len field
-before handing the signature payload to verify_pkcs7_signature(), but the
-check has the wrong sign:
+nfsd4_decode_create() accepts an unbounded cr_datalen from the wire for
+NF4LNK symlink targets, allowing a client to force a kmalloc of up to
+the maximum RPC payload size (several MiB) per COMPOUND op that persists
+until compound teardown.  The VFS rejects oversized targets with
+ENAMETOOLONG, but the allocation has already occurred.
 
-	if (le32_to_cpu(signode->len) > snod->len + sizeof(struct ubifs_sig_node))
+Reject cr_datalen == 0 early with nfserr_inval and cr_datalen greater
+than NFS4_MAXPATHLEN (PATH_MAX) with nfserr_nametoolong to bound the
+allocation.
 
-The signature bytes start sizeof(struct ubifs_sig_node) (UBIFS_SIG_NODE_SZ,
-64 bytes) into the node, so the payload is at most
-
-	snod->len - sizeof(struct ubifs_sig_node)
-
-bytes long. Adding the header size instead of subtracting it accepts a
-declared length up to 2 * UBIFS_SIG_NODE_SZ larger than the node actually
-holds -- past the end of c->sbuf, which is vmalloc(c->leb_size).
-verify_pkcs7_signature() -> pkcs7_parse_message() -> asn1_ber_decoder()
-is then handed that inflated length and reads beyond the allocation while
-walking the DER headers. The node length comes straight from the mounted
-image, so a crafted signed UBIFS image reaches this via
-ubifs_read_superblock() before the signature is cryptographically checked.
-
-snod->len is guaranteed to be >= UBIFS_SIG_NODE_SZ by the node scanner
-(c->ranges[UBIFS_SIG_NODE].min_len == UBIFS_SIG_NODE_SZ), so the corrected
-subtraction cannot underflow. Legitimately signed images are unaffected: a
-correct superblock never declares a signature longer than the node it is
-embedded in.
-
-Fixes: 817aa094842d ("ubifs: support offline signed images")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Reviewed-by: Richard Weinberger <richard@nod.at>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-9-f27e8eb4d974@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ubifs/auth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ubifs/auth.c
-+++ b/fs/ubifs/auth.c
-@@ -218,7 +218,7 @@ int ubifs_sb_verify_signature(struct ubi
- 
- 	signode = snod->node;
- 
--	if (le32_to_cpu(signode->len) > snod->len + sizeof(struct ubifs_sig_node)) {
-+	if (le32_to_cpu(signode->len) > snod->len - sizeof(struct ubifs_sig_node)) {
- 		ubifs_err(c, "invalid signature len %d", le32_to_cpu(signode->len));
- 		err = -EINVAL;
- 		goto out_destroy;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -801,6 +801,10 @@ nfsd4_decode_create(struct nfsd4_compoun
+ 	case NF4LNK:
+ 		if (xdr_stream_decode_u32(argp->xdr, &create->cr_datalen) < 0)
+ 			return nfserr_bad_xdr;
++		if (create->cr_datalen == 0)
++			return nfserr_inval;
++		if (create->cr_datalen > NFS4_MAXPATHLEN)
++			return nfserr_nametoolong;
+ 		p = xdr_inline_decode(argp->xdr, create->cr_datalen);
+ 		if (!p)
+ 			return nfserr_bad_xdr;
 
 
