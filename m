@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DA736167B;
-	Sat, 12 Sep 2026 15:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D369633C1BE;
+	Sat, 12 Sep 2026 15:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228129; cv=none; b=ZSTRBKbhkm0aZZWlkXGnj1Em0eO0ElOuXLKTgAtR/avndOC68Vb24eNy5pv+/e4P49t7+8t12IdmPlJvtvXPgWONP23McBaLzbvMIJlHoU5eqXAj+ry6lsrhxq7VlsKMcafkxamNvwNcIUVwGvpVof35NuPt2y3hGyaTVG/73cs=
+	t=1789228133; cv=none; b=MG5NWuEB2hZjSeBc6+4eeuS2jLMfVqSOhJFHEUSIC1jk8mry2NPuJQFA+Ejo+52jnZ8N+4ts2MJJbvzdEp0wQJrhI9Cyw7zE7Rjzgv6vfJ1k4T+77nNCIJy78aW/F1PwoWpbz/RKULltCx9C+ARoKxkzEIY2pzEgOT2bUL/XPLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228129; c=relaxed/simple;
-	bh=49MWMnv+VYPcXUMzxJrhKTkHbQNCuFj/raH0u0uYjfA=;
+	s=arc-20240116; t=1789228133; c=relaxed/simple;
+	bh=zX6Yp7jC8RwIyjqY3v/GLFz9MA2m2tEgh8gOK68GNvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mu/inX6VQQJSrNtceFLVvDGIoeDhEKWczNm6alAi/78mTgeM1d/CrqJ2UVBsr2rwRxScjFQMnvd24IOJf92i+g6k1GP+2qTuqxLL+gDFWIjYobEEEwhkWP30jvLzEW9EZeTHBURhNt1BU3x+NmNpSjX2a/gEj5UBYdX8Uj3MQgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sjx4YTFr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UBIn3raxaVKrXNvS3+E4ZfswJMNLhz0fkp/cjQ51sA/fMNCOj/ub7ulYFosCe9t/K/qsvf38E3tJhWiNM2Lo0MBsrHVSgVMPdeqeEJ1T3z6tJk56R+LzNC0q4hV3wvpOXMVPVfA/V3nQn9+/qu3F1lH7mSDw6UxwjiwpbYrLocQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tA6IGuc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sjx4YTFr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAB91F000FF;
-	Sat, 12 Sep 2026 15:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tA6IGuc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7CF1F000FF;
+	Sat, 12 Sep 2026 15:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228127;
-	bh=wWQefjy10e0iA67U9Is76ubfLfJYtP48X/Wlg/GmfU4=;
+	s=korg; t=1789228132;
+	bh=uYulMyS3KmEnp1cwLcOJFC3tq2pKnvx/aKLDF6RraIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sjx4YTFrYL4SVmJTXcpv6z1x5f9IENkTtl2Klhp5we/OsmL1xZK8OBBLjR24NQBUU
-	 a9MmCnuuDVkoKlwJZq//Esq2CfVlyZhNgXRSDblo2c6oiHV2ASkbUMY0DrPIf8lGBG
-	 2a2FMHzN26+k/L55pUqCwWE9sBf+GGprl/vMiL+c=
+	b=1tA6IGucOPlTo/EYHkG2Hsx8XLYrLVEwsx+vF2xHPFUws0FfRq2Mj00CNPZcCQZbt
+	 tiyrQVakpk8aR7jdBC4RDxhuocG0puP8/0tGIEVkJIEpd7KLBmuPjmEqVhbZZ0YtdL
+	 ybNetD9QjbvObI53kXhaJvyNJEe5Xlt8HplB4QJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 0285/1191] mm/damon/sysfs: kobject_del() target (normal), context and kdamond dirs
-Date: Sat, 12 Sep 2026 08:50:13 +0200
-Message-ID: <20260912065554.630170617@linuxfoundation.org>
+	Anthony Krowiak <akrowiak@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 6.1 0321/1191] s390/vfio-ap: Fix required lock not held during update of ap_matrix_mdev object
+Date: Sat, 12 Sep 2026 08:50:49 +0200
+Message-ID: <20260912065555.439233563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,143 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
 
-commit 263af33a72d1995ae6cdc22b08d527e2bda17259 upstream.
+commit 5883528250be57fa92270459b33603ff52de0a91 upstream.
 
-Patch series "mm/damon/sysfs: kobject_del() directories that users can
-create/remove".
+In the vfio_ap_mdev_cfg_add function, the apm_add, aqm_add and adm_add
+fields of an ap_matrix_mdev object fields are modified while not holding
+the matrix_dev->mdevs_lock. This lock must be held while making these
+to guard against a race condition with another caller that may be
+concurrently modifying these fields or any of the fields in the
+matrix_mdev->matrix.
 
-DAMON sysfs interface allows users to create and remove arbitrary number
-of directories on sysfs, using a few files having 'nr_' prefix.  For
-example, 'nr_kdamonds'.  When the user writes a number 'N' to the files,
-directories having name starting from '0' to 'N - 1' are created in the
-same directory.  The pre-existing number-named directories are removed
-before creating the new directories.
-
-For the removal of the existing directories, DAMON sysfs interface use
-only kobject_put().  Because DAMON sysfs interface is the only kernel
-component that manages the directories, there is no problem in normal
-situations.  However, if CONFIG_DEBUG_KOBJECT_RELEASE is enabled, the
-removal of dirs are delayed.  Let's suppose a user writes a non-zero
-number to the 'nr_*' files while there are pre-existing number-named
-directories, on the config enabled kernel.  DAMON sysfs interface
-decreases the reference counts of the existing directories and immediately
-creates new directories.  Because the removal of the sysfs directories is
-delayed, it shows some pre-existing directories of the same names when it
-tries to create the new directories, and fails.
-
-For example, the issue can be triggered like below:
-
-    # grep DEBUG_KOBJECT_RELEASE /boot/config-$(uname -r)
-    CONFIG_DEBUG_KOBJECT_RELEASE=y
-    # ls
-    nr_kdamonds
-    # echo 1 > nr_kdamonds
-    # echo 1 > nr_kdamonds
-    bash: echo: write error: File exists
-    # dmesg
-    [...]
-    [  300.880458] kobject: kobject_add_internal failed for 0 with -EEXIST, don't try to register things with the same name in the same directory.
-    [...]
-
-Some of the error handling paths of the directories also lack the
-kobject_del() call.  If the user uses nr_* file right after the errors,
-similar issues can happen.
-
-This doesn't cause catastrophic issues like kernel panics or memory
-corruptions.  Users can work around by removing all directories first
-(write 0 to the nr_* files) and then create new directories after
-confirming the old directories are gone.  But, this is definitely a bug
-that causes a bad user experience.
-
-Fix the issues by calling kobject_del() before creating new directories.
-
-
-This patch (of 11)
-
-On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
-could cause directories creation failures due to the name conflicts.  Fix
-those issues for normal creation paths of target, context and kdamond
-directories, and error paths of context and kdamond directories by adding
-kobject_del() calls.
-
-Note that this fix for target directories is not complete since it has a
-similar issue in the damon_sysfs_targets_add_dirs() error path.  Because
-the normal path issue and the error path issue are introduced by different
-commits, this commit is fixing only the normal path issue.  A commit for
-the error path will be added next.
-
-Link: https://lore.kernel.org/20260628220121.97360-1-sj@kernel.org
-Link: https://lore.kernel.org/20260628220121.97360-2-sj@kernel.org
-Fixes: c951cd3b8901 ("mm/damon: implement a minimal stub for sysfs-based DAMON interface")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: eeb386aeb5b7c ("s390/vfio-ap: handle config changed and scan complete notification")
+Cc: stable@vger.kernel.org
+Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1362,6 +1362,7 @@ static void damon_sysfs_targets_rm_dirs(
+--- a/drivers/s390/crypto/vfio_ap_ops.c
++++ b/drivers/s390/crypto/vfio_ap_ops.c
+@@ -2184,12 +2184,20 @@ static void vfio_ap_mdev_cfg_add(unsigne
+ 	vfio_ap_filter_apid_by_qtype(apm_add, aqm_add);
  
- 	for (i = 0; i < targets->nr; i++) {
- 		damon_sysfs_target_rm_dirs(targets_arr[i]);
-+		kobject_del(&targets_arr[i]->kobj);
- 		kobject_put(&targets_arr[i]->kobj);
+ 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
++		/*
++		 * The mdevs_lock must be held in order to access fields
++		 * within matrix_mdev
++		 */
++		mutex_lock(&matrix_dev->mdevs_lock);
++
+ 		bitmap_and(matrix_mdev->apm_add,
+ 			   matrix_mdev->matrix.apm, apm_add, AP_DEVICES);
+ 		bitmap_and(matrix_mdev->aqm_add,
+ 			   matrix_mdev->matrix.aqm, aqm_add, AP_DOMAINS);
+ 		bitmap_and(matrix_mdev->adm_add,
+ 			   matrix_mdev->matrix.adm, adm_add, AP_DEVICES);
++
++		mutex_unlock(&matrix_dev->mdevs_lock);
  	}
- 	targets->nr = 0;
-@@ -1888,6 +1889,7 @@ static void damon_sysfs_contexts_rm_dirs
+ }
  
- 	for (i = 0; i < contexts->nr; i++) {
- 		damon_sysfs_context_rm_dirs(contexts_arr[i]);
-+		kobject_del(&contexts_arr[i]->kobj);
- 		kobject_put(&contexts_arr[i]->kobj);
- 	}
- 	contexts->nr = 0;
-@@ -1926,13 +1928,15 @@ static int damon_sysfs_contexts_add_dirs
- 
- 		err = damon_sysfs_context_add_dirs(context);
- 		if (err)
--			goto out;
-+			goto del_out;
- 
- 		contexts_arr[i] = context;
- 		contexts->nr++;
- 	}
- 	return 0;
- 
-+del_out:
-+	kobject_del(&context->kobj);
- out:
- 	damon_sysfs_contexts_rm_dirs(contexts);
- 	kobject_put(&context->kobj);
-@@ -2717,6 +2721,7 @@ static void damon_sysfs_kdamonds_rm_dirs
- 
- 	for (i = 0; i < kdamonds->nr; i++) {
- 		damon_sysfs_kdamond_rm_dirs(kdamonds_arr[i]);
-+		kobject_del(&kdamonds_arr[i]->kobj);
- 		kobject_put(&kdamonds_arr[i]->kobj);
- 	}
- 	kdamonds->nr = 0;
-@@ -2772,13 +2777,15 @@ static int damon_sysfs_kdamonds_add_dirs
- 
- 		err = damon_sysfs_kdamond_add_dirs(kdamond);
- 		if (err)
--			goto out;
-+			goto del_out;
- 
- 		kdamonds_arr[i] = kdamond;
- 		kdamonds->nr++;
- 	}
- 	return 0;
- 
-+del_out:
-+	kobject_del(&kdamond->kobj);
- out:
- 	damon_sysfs_kdamonds_rm_dirs(kdamonds);
- 	kobject_put(&kdamond->kobj);
 
 
